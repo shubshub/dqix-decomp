@@ -53,7 +53,7 @@ struct Item0208f168 {
 
 struct Self0208f168 {
     char pad[8];
-    void* obj;      // 0x08
+    void* obj;
     struct Item0208f168* head;
 };
 
