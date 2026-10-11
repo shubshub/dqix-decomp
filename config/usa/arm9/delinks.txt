@@ -19699,3 +19699,28 @@ src/Combat/Main/func_02055ccc.cpp:
 src/Combat/Main/func_020951d8.cpp:
     complete
     .text start:0x020951d8 end:0x02095364
+
+
+src/Combat/Main/FindFreeSlotAndStore02087510.cpp:
+    complete
+    .text start:0x02087510 end:0x02087574
+
+
+src/Combat/Main/func_0206ea8c.cpp:
+    complete
+    .text start:0x0206ea8c end:0x0206eaec
+
+
+src/Combat/Main/func_020b1938.cpp:
+    complete
+    .text start:0x020b1938 end:0x020b19b8
+
+
+src/Combat/Main/func_020321e0.cpp:
+    complete
+    .text start:0x020321e0 end:0x020322c0
+
+
+src/Combat/Main/func_0208f168.cpp:
+    complete
+    .text start:0x0208f168 end:0x0208f36c
