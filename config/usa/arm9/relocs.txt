@@ -989,7 +989,7 @@ from:0x0200ed58 kind:arm_call to:0x0200df80 module:main
 from:0x0200ed68 kind:arm_call to:0x0200ec44 module:main
 from:0x0200ed80 kind:arm_call to:0x0200f2ec module:main
 from:0x0200edc0 kind:arm_call to:0x02001728 module:main
-from:0x0200edf0 kind:load to:0x020eeb18 module:none
+from:0x0200edf0 kind:load to:0x020eeb18 module:main
 from:0x0200ee34 kind:load to:0x020f33b0 module:main
 from:0x0200ee80 kind:arm_call to:0x0200efb8 module:main
 from:0x0200ee88 kind:arm_call to:0x0200ed8c module:main
