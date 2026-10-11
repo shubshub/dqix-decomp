@@ -3120,7 +3120,7 @@ _Z28GetFirstFlaggedValue02086e9cP29FlaggedEntryContainer02086e9c kind:function(a
 _Z17ArrayContainsByteP23ArrayContainsByteStructi kind:function(arm,size=0x34) addr:0x02087810
 func_02087844 kind:function(arm,size=0x574) addr:0x02087844
 _Z31ApplyToListedCombatants020874bcP13Party020874bci kind:function(arm,size=0x54) addr:0x02087db8
-func_02087e0c kind:function(arm,size=0x64) addr:0x02087e0c
+_Z28FindFreeSlotAndStore02087510P12Base02087510cPv kind:function(arm,size=0x64) addr:0x02087e0c
 _Z27FindEntryBySignedId02087574P18EntryTable02087574i kind:function(arm,size=0x50) addr:0x02087e70
 func_02087ec0 kind:function(arm,size=0x64) addr:0x02087ec0
 func_02087f24 kind:function(arm,size=0x54) addr:0x02087f24

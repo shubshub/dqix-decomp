@@ -12369,3 +12369,15 @@ src/Combat/Main/func_02055ccc.cpp:
 src/Combat/Main/func_020951d8.cpp:
     complete
     .text start:0x02096e28 end:0x02096fb4
+
+src/Combat/Main/FindFreeSlotAndStore02087510.cpp:
+    complete
+    .text start:0x02087e0c end:0x02087e70
+
+src/Combat/Main/func_0206ea8c.cpp:
+    complete
+    .text start:0x0206fbe0 end:0x0206fc40
+
+src/Combat/Main/func_020321e0.cpp:
+    complete
+    .text start:0x02031d18 end:0x02031df8
