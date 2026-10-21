@@ -2,7 +2,6 @@
 #include "Resource/CharacterCreationUI.h"
 
 #if defined(jpn)
-#define func_ov009_021855dc func_ov009_021867bc
 #endif
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
@@ -11,10 +10,9 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-extern "C" void func_ov009_021867bc(unsigned char*, int);
-#define func_ov009_021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 extern "C" void func_0202ee38(char* arg0, int arg1, int arg2);
 extern "C" void func_0202ee58(char* arg0, int arg1, int arg2);
@@ -67,21 +65,21 @@ extern "C" ARM void func_ov009_02186c00(Struct_ov009_021842a0* arg0)
         int changed = 0;
         if (result == -2)
         {
-            func_ov009_021855dc((unsigned char*)arg0, 8);
-            var3 = 1;
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 8);
+            changed = 1;
         }
         else if (var2 == -3)
         {
-            func_ov009_021855dc((unsigned char*)arg0, 6);
-            var3 = 1;
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 6);
+            changed = 1;
         }
         else if (var2 >= 101 && var2 <= 108)
         {
             int var4 = var2 - 100;
             if (var4 <= arg0->unknown_da0_[arg0->unknown_da3_] && var4 != arg0->unknown_c58_)
             {
-                func_ov009_021855dc((unsigned char*)arg0, (unsigned char)var4);
-                var3 = 1;
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);
+                changed = 1;
             }
         }
         if (var3)

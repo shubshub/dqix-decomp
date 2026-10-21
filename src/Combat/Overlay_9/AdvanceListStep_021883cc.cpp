@@ -8,9 +8,9 @@
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 #if defined(jpn)
-extern "C" void func_ov009_021867bc(unsigned char*, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-void SetStatValue021855dc(unsigned char*, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #endif
 
 extern "C" ARM void func_ov009_021883cc(unsigned char* storage) {
@@ -28,8 +28,8 @@ extern "C" ARM void func_ov009_021883cc(unsigned char* storage) {
     ResetEntryList0205d6a0((Entry_0205d6a0*)&editor->windows[1], 1);
     ColorEffect_ConfigureBrightnessAdjust(0x04001050, 1, 0);
 #if defined(jpn)
-    func_ov009_021867bc(storage, 12);
+    CharacterCreationUI_SwitchTab(storage, 12);
 #else
-    SetStatValue021855dc(storage, 12);
+    CharacterCreationUI_SwitchTab(storage, 12);
 #endif
 }

@@ -7,10 +7,9 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-extern "C" ARM void func_ov009_021867bc(unsigned char *arg0, int arg1);
-#define func_ov009_021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 #else
-extern "C" ARM void func_ov009_021855dc(unsigned char *arg0, int arg1);
+ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 #endif
 
 // USA: func_ov009_02186aec  (semantic: AdvanceStatStep_02186aec)
@@ -41,11 +40,11 @@ extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
 	}
 	int result = CharacterCreationUI_HandleInput(self);
 	if (result == -2) {
-		SetStatValue021855dc((unsigned char*)self, 7);
+		CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
 		return;
 	}
-	if (var5 == -3) {
-		func_ov009_021855dc((unsigned char*)arg0, 5);
+	if (result == -3) {
+		CharacterCreationUI_SwitchTab((unsigned char*)self, 5);
 		return;
 	}
 	if (var5 < 0x65 || var5 > 0x6c) {
@@ -60,5 +59,5 @@ extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
 	if (var7 == arg0->unknown_c58_) {
 		return;
 	}
-	func_ov009_021855dc((unsigned char*)arg0, var7 & 0xff);
+	CharacterCreationUI_SwitchTab((unsigned char*)self, v & 0xff);
 }

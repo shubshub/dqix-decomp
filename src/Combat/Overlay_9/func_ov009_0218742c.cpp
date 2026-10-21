@@ -70,9 +70,8 @@ struct Struct_ov009_0218742c_6 {
     char unknown_da4_[4]; unsigned char unknown_da8_[1];
 };
 #if defined(jpn)
-struct Struct_ov009_0218742c_8 { char unknown_0_[0x6174]; unsigned char unknown_63d4_; };
-#define func_ov009_021855dc func_ov009_021867bc
-extern "C" void func_ov009_021867bc(unsigned char*, int);
+struct GameFlag0218742c { char field_0[0x6174]; unsigned char changed; };
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
 struct Struct_ov009_0218742c_8 { char unknown_0_[0x63d4]; unsigned char unknown_63d4_; };
 #endif
@@ -91,13 +90,13 @@ extern "C" void func_0204b010(Struct_0204b010*, void*);
 extern "C" void func_0204bc74(void*, int, int, int, int, int, int);
 extern "C" void func_0204b04c(void*, int);
 extern "C" void func_0204b088(void*, int);
-extern "C" void func_0205d1e0(Struct_0205d1e0*);
-extern "C" void func_0205d228(Struct_0205d228*);
-extern "C" void func_0205d274(Struct_0205d274*);
-extern "C" void func_0205d2bc(Struct_0205d2bc*);
-extern "C" void func_ov009_021855dc(unsigned char*, int);
-extern "C" void func_02086404(Struct_ov009_0218742c*);
-extern "C" void func_02083ca0(unsigned char*, int);
+void ClearBuffers0204b010OverList0x98(Cont0205d1e0*);
+void CallFunc0204c8f0OverList0x9c(Cont0205d228*);
+void CallFunc0204b04cOverList0x98(Cont0205d274*);
+void InitEntries0205d2bc(Obj0205d2bc*);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
+extern "C" void func_02086404(Snapshot0218742c*);
+void SetBit0x954StoreIndex0x950_02083ca0(unsigned char*, int);
 extern "C" int sprintf(char*, const char*, ...);
 extern "C" void func_0208247c(void*);
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
@@ -178,12 +177,12 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
             var6->unknown_56a_ = data_ov009_0218a9b4[arg0->unknown_da8_[arg0->unknown_da3_]];
             ((Struct_ov009_0218742c_8*)var0)->unknown_63d4_ = 1;
             ColorEffect_ConfigureBrightnessAdjust(0x04001050, 1, 0);
-            func_0205deb4((Struct_0205d81c*)arg0->unknown_2b4_, 3, 0);
-            func_0205d1e0((Struct_0205d1e0*)arg0->unknown_2b4_);
-            func_0205d228((Struct_0205d228*)arg0->unknown_2b4_);
-            func_0205d274((Struct_0205d274*)arg0->unknown_2b4_);
-            func_0205d2bc((Struct_0205d2bc*)arg0->unknown_2b4_);
-            func_ov009_021855dc((unsigned char*)arg0, 10);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)menu->entryList, 3, 0);
+            ClearBuffers0204b010OverList0x98((Cont0205d1e0*)menu->entryList);
+            CallFunc0204c8f0OverList0x9c((Cont0205d228*)menu->entryList);
+            CallFunc0204b04cOverList0x98((Cont0205d274*)menu->entryList);
+            InitEntries0205d2bc((Obj0205d2bc*)menu->entryList);
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 10);
 #if defined(jpn)
         } else if (arg0->unknown_d95_ == 1) {
             void* var7 = func_02010828(var0);
@@ -238,10 +237,10 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
                 if (var22 >= var23[var24].unknown_2_ && var23[var24].unknown_2_ != 0)
                     func_02083b60((unsigned char*)arg0->unknown_d88_, var23[var24].unknown_0_);
             }
-            func_020830cc(arg0->unknown_d88_, &var8);
-            func_02086778(var7, &var8, 0, 0);
-            arg0->unknown_d9c_ |= 0x400;
-            func_ov009_021855dc((unsigned char*)arg0, 11);
+            func_020830cc(menu->character, &snapshot);
+            func_02086778(members, &snapshot, 0, 0);
+            menu->flags |= 0x400;
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #else
         } else if (arg0->unknown_d95_ == 1) {
@@ -297,10 +296,10 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
                 if (var40 >= var41[var42].unknown_2_ && var41[var42].unknown_2_ != 0)
                     func_02083b60((unsigned char*)var25, var41[var42].unknown_0_);
             }
-            func_020830cc(var25, &var27);
-            func_02086778(var26, &var27, 0, 0);
-            arg0->unknown_d9c_ |= 0x400;
-            func_ov009_021855dc((unsigned char*)arg0, 11);
+            func_020830cc(character, &snapshot);
+            func_02086778(members, &snapshot, 0, 0);
+            menu->flags |= 0x400;
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #endif
     } else if (var1 == 255) {
@@ -312,14 +311,14 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
         func_0205deb4((Struct_0205d81c*)arg0->unknown_2b4_, 3, 0);
         func_0205deb4((Struct_0205d81c*)arg0->unknown_2b4_, 2, 0);
 #if defined(jpn)
-        func_ov009_021855dc((unsigned char*)arg0, 8);
+        CharacterCreationUI_SwitchTab((unsigned char*)menu, 8);
 #else
-        void* var43 = func_ov003_0215f4fc(arg0->unknown_c0_, data_ov009_0218ad26);
-        if (var43) arg0->unknown_c0_->unknown_0_ = var43;
-        arg0->unknown_c0_->inline_ov009_0218742c(1);
-        arg0->unknown_c0_->inline_ov009_0218742c_2(0);
-        func_ov009_021855dc((unsigned char*)arg0, 8);
-        arg0->unknown_c59_ = 1;
+        void* script = func_ov003_0215f4fc(menu->script, data_ov009_0218ad26);
+        if (script) menu->script->script = script;
+        menu->script->SetActive(1);
+        menu->script->SetWaiting(0);
+        CharacterCreationUI_SwitchTab((unsigned char*)menu, 8);
+        menu->step = 1;
 #endif
     }
 }

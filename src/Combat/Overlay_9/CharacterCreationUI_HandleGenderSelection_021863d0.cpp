@@ -15,10 +15,9 @@ extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int c
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 extern "C" void CharacterModel_InvalidatePart(CharacterModel* character, int part);
 #if defined(jpn)
-extern "C" void func_ov009_021867bc(unsigned char*, int);
-#define func_ov009_021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
 // Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
@@ -79,7 +78,7 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
         }
         if (var2 == -2)
         {
-            func_ov009_021855dc((unsigned char*)arg0, 2);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 2);
             return;
         }
         if (var2 == -3)
@@ -92,14 +91,14 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
 #else
                 *((unsigned char*)var0 + 0x63d4) = 0;
 #endif
-            func_ov009_021855dc((unsigned char*)arg0, 11);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
             return;
         }
         if (var2 >= 101 && var2 <= 108)
         {
-            int var4 = var2 - 100;
-            if (var4 <= arg0->unknown_da0_[arg0->unknown_da3_] && var4 != arg0->unknown_c58_)
-                func_ov009_021855dc((unsigned char*)arg0, (unsigned char)var4);
+            int state = result - 100;
+            if (state <= self->furthestState[self->sex] && state != self->state)
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);
         }
     }
 }

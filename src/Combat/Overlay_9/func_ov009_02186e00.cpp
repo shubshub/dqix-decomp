@@ -13,8 +13,8 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI*);
 extern "C" void func_ov009_0218ad0c(void*);
-extern "C" void func_ov009_021867bc(unsigned char*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
 extern char data_ov009_0218bc59[];
 extern const char data_020ef078[];
 extern Struct_02108760 data_02108760;
@@ -48,22 +48,22 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0* arg0)
         if (result == -2) {
             func_ov009_0218ad0c(self);
         } else if (result == -3) {
-            func_ov009_021867bc((unsigned char*)self, 7);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
         } else if (result >= 101 && result <= 108) {
             result -= 100;
             if (result <= self->furthestState[self->sex] && result != self->state)
-                func_ov009_021867bc((unsigned char*)self, (unsigned char)result);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
         }
         if (arg0->unknown_d9c_ & 0x400000) {
             arg0->unknown_d9c_ |= 0x2000;
             arg0->unknown_c59_++;
         }
-        if (arg0->unknown_d9c_ & 0x800) {
-            if (var2 == -2)
-                arg0->unknown_d9c_ |= 0x1000000;
-            Struct_ov005_0215840c_2* var3 = (Struct_ov005_0215840c_2*)arg0->unknown_d88_;
-            sprintf(var3->unknown_3c_, data_020ef078, arg0->unknown_d74_[arg0->unknown_da3_]);
-            func_ov009_021867bc((unsigned char*)arg0, 9);
+        if (self->flags & 0x800) {
+            if (result == -2)
+                self->flags |= 0x1000000;
+            PartyMemberData* member = (PartyMemberData*)self->characterData;
+            sprintf(member->name, data_020ef078, self->names[self->sex]);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 9);
         }
     } else if (arg0->unknown_c59_ == 2) {
         if (g_keyManager.TestKeysPressed(0x401) || g_touchInput.pressed_ != 0) {
@@ -145,7 +145,7 @@ CharacterInfo* FindEntryByKey0204254c(int character, int mode);
 extern "C" int func_ov003_0215f000(Keyboard* keyboard, int ticks);
 extern "C" int CharacterCreationUI_HandleInput(void* self);
 extern "C" void func_ov009_02189a4c(void* self);
-void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
 void BuildFieldTag_021d9e60(char* self);
 extern "C" KeyboardKey* func_ov003_0215f4a4(Keyboard* keyboard, int a);
@@ -235,7 +235,7 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0_2* arg0)
         }
         else if (var5 == -3)
         {
-            func_ov009_021855dc((unsigned char*)arg0, 7);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
             return;
         }
         else if (var5 >= 101 && var5 <= 108)
@@ -243,7 +243,7 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0_2* arg0)
             var5 -= 100;
             if (var5 <= arg0->unknown_da0_[arg0->unknown_da3_] && var5 != arg0->unknown_c58_)
             {
-                func_ov009_021855dc((unsigned char*)arg0, (unsigned char)var5);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
                 return;
             }
         }
@@ -256,7 +256,7 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0_2* arg0)
             break;
         case 9:
             if (!g_keyManager.TestKeysPressed(1) && g_touchInput.pressed_ == 0)
-                func_ov009_021855dc((unsigned char*)arg0, 7);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
             else
                 func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
             arg0->unknown_d9c_ |= 0x8100;
@@ -338,16 +338,16 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0_2* arg0)
         }
         if (arg0->unknown_d9c_ & 0x800)
         {
-            Struct_ov009_02186e00_2* var9 = &arg0->unknown_bec_;
-            func_0205bef8((Struct_0205bef8*)var9);
-            func_0205ba68((Struct_0205ba68*)var9, 11, 6, 1);
-            func_0205bacc((Struct_0205bacc*)var9, 0x42);
-            var9->unknown_4_ = 1;
-            func_0205bb04(var9, 0);
-            func_ov003_0215f4e4(arg0->unknown_c0_, 6);
-            arg0->unknown_d9c_ |= 0x1000000;
-            sprintf(arg0->unknown_d88_->unknown_3c_, data_020ef078, arg0->unknown_db0_[arg0->unknown_da3_]);
-            func_ov009_021855dc((unsigned char*)arg0, 9);
+            WindowCursor* cursor = &self->cursor_;
+            Init0205bef8((Struct_0205bef8*)cursor);
+            SetupPointerTable0205ba68((Struct_0205ba68*)cursor, 11, 6, 1);
+            SetField0AndPropagate0205bacc((Node0205bacc*)cursor, 0x42);
+            cursor->unk_4 = 1;
+            func_0205bb04(cursor, 0);
+            StoreResultIfNonZero_0215f4e4(self->keyboard_, 6);
+            self->flags_ |= 0x1000000;
+            sprintf(self->member_->name_, data_020ef078, self->names_[self->sex_]);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 9);
         }
     }
     else if (arg0->unknown_c59_ == 3)

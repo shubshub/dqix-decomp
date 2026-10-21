@@ -4,9 +4,10 @@ A hand-named function has an origin comment above its definition (an `#if` may s
 `// Overlay N, originally func_...` or `// Main, originally ...`. Each such function needs its own row,
 starting `| name | ...` (name in backticks), in NAMING.md above the Placeholders section.
 
-usage: python tools/naming_check.py      exit 0: all listed, 1: something missing (printed)
+usage: python tools/naming_check.py [--badge out.json]      exit 0: all listed, 1: something missing (printed)
+--badge also writes a shields.io endpoint badge: hand-named functions as a share of every usa function.
 """
-import glob, os, re, sys
+import glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = re.compile(r"^// (?:Overlay \d+|Main), originally ")
@@ -29,4 +30,15 @@ rows = set(re.findall(r"^\| `([\w:]+)` \|", decided, re.M))
 missing = [f"not in NAMING.md: {n} ({p})" for n, p in sorted(named.items()) if n not in rows]
 for line in bad + missing:
     print(line)
+
+if "--badge" in sys.argv:
+    from report_badges import badge
+    out = sys.argv[sys.argv.index("--badge") + 1]
+    total = sum(open(p, encoding="utf-8").read().count(" kind:function")
+                for p in glob.glob(os.path.join(ROOT, "config/usa/arm9/**/symbols.txt"), recursive=True))
+    b = badge("functions named", 100 * len(named) / total)
+    b["message"] += f" ({len(named):,}/{total:,})"
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    json.dump(b, open(out, "w"))
+    print(f"{out}: {b['message']}")
 sys.exit(1 if bad or missing else 0)

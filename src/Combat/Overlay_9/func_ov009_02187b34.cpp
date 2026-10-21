@@ -1,6 +1,5 @@
 #if defined(jpn)
 #define R(j,u) (j)
-#define func_ov009_021855dc func_ov009_021867bc
 #define data_ov009_0218aa28 data_ov009_0218ba04
 #define data_ov009_0218aa34 data_ov009_0218ba10
 #define data_ov009_0218aa98 data_ov009_0218ba4c
@@ -76,10 +75,9 @@ void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
 extern "C" void func_020c39a0(short* reg, int brightness);
 void ForwardField0xc0_0205ebec(void* sound);
 #if defined(jpn)
-#define func_ov009_021855dc func_ov009_021867bc
-extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #else
-extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
 struct Struct_ov009_0218aa28 {
@@ -351,8 +349,8 @@ extern "C" ARM void func_ov009_02187b34(Struct_ov009_021842a0_2* arg0)
         arg0->unknown_c59_ = 11;
         break;
     case 11:
-        arg0->unknown_c59_ = 0xff;
-        func_ov009_021855dc((unsigned char*)arg0, 11);
+        self->step_ = 0xff;
+        CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
         break;
     }
 }
