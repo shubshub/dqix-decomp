@@ -6,6 +6,7 @@
 [![JPN bytes](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FZevyaDev%2Fdqix-decomp%2Fbadges-matching%2Fjpn%2Fbytes.json)](https://github.com/ZevyaDev/dqix-decomp/actions/workflows/match.yml)
 [![EUR functions](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FZevyaDev%2Fdqix-decomp%2Fbadges-matching%2Feur%2Ffunctions.json)](https://github.com/ZevyaDev/dqix-decomp/actions/workflows/match.yml)
 [![EUR bytes](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FZevyaDev%2Fdqix-decomp%2Fbadges-matching%2Feur%2Fbytes.json)](https://github.com/ZevyaDev/dqix-decomp/actions/workflows/match.yml)
+[![Functions named](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fshubshub%2Fdqix-decomp%2Fbadges-naming%2Fnaming.json)](https://github.com/shubshub/dqix-decomp/blob/hand-naming-pass/NAMING.md)
 
 ## 📖 About
 This project aims to create a **1:1 disassembly and decompilation** of *Dragon Quest IX: Sentinels of the Starry Skies* for the Nintendo DS.  

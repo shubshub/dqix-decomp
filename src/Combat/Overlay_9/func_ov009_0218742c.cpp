@@ -71,8 +71,7 @@ struct Menu0218742c {
 };
 #if defined(jpn)
 struct GameFlag0218742c { char field_0[0x6174]; unsigned char changed; };
-#define SetStatValue021855dc func_ov009_021867bc
-extern "C" void func_ov009_021867bc(unsigned char*, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
 struct GameFlag0218742c { char field_0[0x63d4]; unsigned char changed; };
 #endif
@@ -95,7 +94,7 @@ void ClearBuffers0204b010OverList0x98(Cont0205d1e0*);
 void CallFunc0204c8f0OverList0x9c(Cont0205d228*);
 void CallFunc0204b04cOverList0x98(Cont0205d274*);
 void InitEntries0205d2bc(Obj0205d2bc*);
-void SetStatValue021855dc(unsigned char*, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 extern "C" void func_02086404(Snapshot0218742c*);
 void SetBit0x954StoreIndex0x950_02083ca0(unsigned char*, int);
 extern "C" int sprintf(char*, const char*, ...);
@@ -183,7 +182,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             CallFunc0204c8f0OverList0x9c((Cont0205d228*)menu->entryList);
             CallFunc0204b04cOverList0x98((Cont0205d274*)menu->entryList);
             InitEntries0205d2bc((Obj0205d2bc*)menu->entryList);
-            SetStatValue021855dc((unsigned char*)menu, 10);
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 10);
 #if defined(jpn)
         } else if (menu->mode == 1) {
             void* members = GetPtrField0x2a04_02010828(game);
@@ -241,7 +240,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             func_020830cc(menu->character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
             menu->flags |= 0x400;
-            SetStatValue021855dc((unsigned char*)menu, 11);
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #else
         } else if (menu->mode == 1) {
@@ -300,7 +299,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             func_020830cc(character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
             menu->flags |= 0x400;
-            SetStatValue021855dc((unsigned char*)menu, 11);
+            CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #endif
     } else if (step == 255) {
@@ -312,13 +311,13 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
         SetElementFieldC2_0205deb4((Struct_0205d81c*)menu->entryList, 3, 0);
         SetElementFieldC2_0205deb4((Struct_0205d81c*)menu->entryList, 2, 0);
 #if defined(jpn)
-        SetStatValue021855dc((unsigned char*)menu, 8);
+        CharacterCreationUI_SwitchTab((unsigned char*)menu, 8);
 #else
         void* script = func_ov003_0215f4fc(menu->script, data_ov009_0218ad26);
         if (script) menu->script->script = script;
         menu->script->SetActive(1);
         menu->script->SetWaiting(0);
-        SetStatValue021855dc((unsigned char*)menu, 8);
+        CharacterCreationUI_SwitchTab((unsigned char*)menu, 8);
         menu->step = 1;
 #endif
     }

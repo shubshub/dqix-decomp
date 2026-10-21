@@ -1,0 +1,27 @@
+name: Naming badge
+
+on:
+  push:
+    branches: [hand-naming-pass]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python tools/naming_check.py --badge badges/naming.json
+      - name: Publish to badges-naming branch
+        working-directory: badges
+        run: |
+          git init -q -b badges-naming
+          git add naming.json
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com \
+            commit -q -m "Update naming badge for ${{ github.sha }}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" badges-naming

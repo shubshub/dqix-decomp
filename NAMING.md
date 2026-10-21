@@ -34,6 +34,7 @@ Decided table, and the local pre-commit hook runs it.
 | `GameState::GetResources` | `GetWord0x0_0200fb8c` | Main | `0x0200fb8c` (EUR `0x0200fb9c`) | `0x0200f9e8` | Returns the game state's `pResources_` (its first field). A real member of `GameState`; its 104 callers use `->GetResources()` |
 | `CharacterCreationUI_HandleInput` | `func_ov009_02188ee8` | 9 | `0x02188ee8` | `0x02189e04` | Each tab's per-frame input: stylus and D-pad, stores the tab's choice, applies a change; returns -1 (nothing), -2 (confirm), -3 (back) or 101–108 (go to tab 1–8) |
 | `GridCursor_GetSelectedIndex` | `ComputeScaledSum0205bb84` | Main | `0x0205bb84` (EUR `0x0205bb94`) | `0x0205cee4` | Returns the selected item's index: `row × columns + column` plus the page offset. Used by menus across the game (26 files) |
+| `CharacterCreationUI_SwitchTab` | `SetStatValue021855dc` (jpn `func_ov009_021867bc`) | 9 | `0x021855dc` | `0x021867bc` | Switches to tab N: sets `state`, resets `step` to 0, records the furthest tab reached, sets `CreationFlag_TabLoading` (except tabs 9, 11, 12). The new tab's handler loads its layout on the next frame |
 | `CharacterCreationUI_ResetTargetLayout` | `ResetFields021847c4` | 9 | `0x021847c4` | `0x02185828` | Sets every field of the target `CreationSlotLayout` to -1 before a tab's layout is loaded into it |
 | `CharacterCreationUI_HandleGenderSelection` | `func_ov009_021863d0` | 9 | `0x021863d0` | `0x02187500` | Gender tab handler (tab 1), run every frame by the tab table |
 | `CharacterCreationUI_ApplyChoice` | `func_ov009_02188944` | 9 | `0x02188944` | `0x02189704` | Applies the current tab's choice to the preview models |
@@ -97,7 +98,6 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 |---|---|---|---|---|
 | `func_ov009_0218454c` | 9 | `0x0218454c` | Character creation constructor: clears its fields | `CharacterCreationUI_Init` |
 | `func_ov009_02184a18` | 9 | `0x02184a18` | Per-frame update: model updates, then calls the current tab's handler | `CharacterCreationUI_Update` |
-| `SetStatValue021855dc` | 9 | `0x021855dc` | Goes to tab N: sets `state`, resets `step`, records the furthest tab reached | `CharacterCreationUI_GoToTab` |
 | `func_ov009_02185634` | 9 | `0x02185634` | Tab 0: loading and setup, creates both preview models | `CharacterCreationUI_HandleSetup` |
 | `AdvanceStatStep_021865dc` | 9 | `0x021865dc` | Body type tab handler (tab 2) | `CharacterCreationUI_HandleBodyTypeSelection` |
 | `AdvanceStatStep_021868c4` | 9 | `0x021868c4` | Hairstyle tab handler (tab 3) | `CharacterCreationUI_HandleHairStyleSelection` |

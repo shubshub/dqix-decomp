@@ -234,7 +234,7 @@ extern "C" void func_ov023_021d99a4(void* self);
 void SetupTag021d9c7c(void* self);
 void SetupTag021d9da4(void* self);
 void SetElementFieldC2_0205deb4(Struct_0205d81c* s, int key, int value);
-void SetStatValue021855dc(unsigned char* self, int val);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
 
 #if defined(jpn)
 #define data_ov009_0218acb0 data_ov009_0218bc25
@@ -269,12 +269,11 @@ extern const char data_ov009_0218ad26[];
 extern const char data_ov009_0218ad28[];
 
 #if defined(jpn)
-#define SetStatValue021855dc func_ov009_021867bc
 extern "C" void func_020e0484(void* list, SafeAllocator* alloc, const char* name, const void* entries, int count, int flag);
 extern "C" void func_ov009_02185888(void* obj);
 extern "C" void func_ov009_02185850(void* obj);
 extern "C" int func_ov009_02185c58(void* obj);
-extern "C" void func_ov009_021867bc(unsigned char* self, int val);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
 #define MODEL0 self->models_[0]
 #define MODEL1 self->models_[1]
 #define TABLE_A self->tableA_
@@ -757,6 +756,6 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
         self->unk_ee = 1;
         func_ov009_02185c58(self->unk_dc);
 #endif
-        SetStatValue021855dc((unsigned char*)self, 1);
+        CharacterCreationUI_SwitchTab((unsigned char*)self, 1);
     }
 }

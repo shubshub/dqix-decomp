@@ -13,7 +13,7 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI*);
 extern "C" void func_ov009_0218ad0c(void*);
-extern "C" void func_ov009_021867bc(unsigned char*, int);
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
 extern char data_ov009_0218bc59[];
 extern const char data_020ef078[];
@@ -48,11 +48,11 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
         if (result == -2) {
             func_ov009_0218ad0c(self);
         } else if (result == -3) {
-            func_ov009_021867bc((unsigned char*)self, 7);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
         } else if (result >= 101 && result <= 108) {
             result -= 100;
             if (result <= self->furthestState[self->sex] && result != self->state)
-                func_ov009_021867bc((unsigned char*)self, (unsigned char)result);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
         }
         if (self->flags & 0x400000) {
             self->flags |= 0x2000;
@@ -63,7 +63,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
                 self->flags |= 0x1000000;
             PartyMemberData* member = (PartyMemberData*)self->characterData;
             sprintf(member->name, data_020ef078, self->names[self->sex]);
-            func_ov009_021867bc((unsigned char*)self, 9);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 9);
         }
     } else if (self->step == 2) {
         if (g_keyManager.TestKeysPressed(0x401) || g_touchInput.pressed_ != 0) {
@@ -145,7 +145,7 @@ CharacterInfo* FindEntryByKey0204254c(int character, int mode);
 extern "C" int func_ov003_0215f000(Keyboard* keyboard, int ticks);
 extern "C" int CharacterCreationUI_HandleInput(void* self);
 extern "C" void func_ov009_02189a4c(void* self);
-void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
 void BuildFieldTag_021d9e60(char* self);
 extern "C" KeyboardKey* func_ov003_0215f4a4(Keyboard* keyboard, int a);
@@ -235,7 +235,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
         }
         else if (result == -3)
         {
-            SetStatValue021855dc((unsigned char*)self, 7);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
             return;
         }
         else if (result >= 101 && result <= 108)
@@ -243,7 +243,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
             result -= 100;
             if (result <= self->lastStates_[self->sex_] && result != self->state_)
             {
-                SetStatValue021855dc((unsigned char*)self, (unsigned char)result);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
                 return;
             }
         }
@@ -256,7 +256,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
             break;
         case 9:
             if (!g_keyManager.TestKeysPressed(1) && g_touchInput.pressed_ == 0)
-                SetStatValue021855dc((unsigned char*)self, 7);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
             else
                 DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
             self->flags_ |= 0x8100;
@@ -347,7 +347,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
             StoreResultIfNonZero_0215f4e4(self->keyboard_, 6);
             self->flags_ |= 0x1000000;
             sprintf(self->member_->name_, data_020ef078, self->names_[self->sex_]);
-            SetStatValue021855dc((unsigned char*)self, 9);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 9);
         }
     }
     else if (self->step_ == 3)

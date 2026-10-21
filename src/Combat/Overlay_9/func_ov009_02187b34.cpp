@@ -1,6 +1,5 @@
 #if defined(jpn)
 #define R(j,u) (j)
-#define _Z20SetStatValue021855dcPhi func_ov009_021867bc
 #define data_ov009_0218aa28 data_ov009_0218ba04
 #define data_ov009_0218aa34 data_ov009_0218ba10
 #define data_ov009_0218aa98 data_ov009_0218ba4c
@@ -76,10 +75,9 @@ void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
 extern "C" void func_020c39a0(short* reg, int brightness);
 void ForwardField0xc0_0205ebec(void* sound);
 #if defined(jpn)
-#define SetStatValue021855dc func_ov009_021867bc
-extern "C" void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #else
-void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
 struct Vec3 {
@@ -352,7 +350,7 @@ extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
         break;
     case 11:
         self->step_ = 0xff;
-        SetStatValue021855dc((unsigned char*)self, 11);
+        CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
         break;
     }
 }

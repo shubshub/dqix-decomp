@@ -7,10 +7,9 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-extern "C" ARM void func_ov009_021867bc(unsigned char* self, int val);
-#define SetStatValue021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
 #else
-ARM void SetStatValue021855dc(unsigned char* self, int val);
+ARM void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
 #endif
 
 int CallFunc020a0db8AtField0x16c_0202ee38(char* obj, int a, int b);
@@ -69,10 +68,10 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
     int result = CharacterCreationUI_HandleInput(self);
     int flag = 0;
     if (result == -2) {
-        SetStatValue021855dc((unsigned char*)self, 6);
+        CharacterCreationUI_SwitchTab((unsigned char*)self, 6);
         flag = 1;
     } else if (result == -3) {
-        SetStatValue021855dc((unsigned char*)self, 4);
+        CharacterCreationUI_SwitchTab((unsigned char*)self, 4);
         flag = 1;
     } else if (result >= 0x65 && result <= 0x6c) {
         int idx = self->sex;
@@ -81,7 +80,7 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
         if (v <= arrv) {
             signed char cur = self->state;
             if (v != cur) {
-                SetStatValue021855dc((unsigned char*)self, v & 0xff);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, v & 0xff);
                 flag = 1;
             }
         }

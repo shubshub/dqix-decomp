@@ -15,10 +15,9 @@ extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int c
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 extern "C" void CharacterModel_InvalidatePart(CharacterModel* character, int part);
 #if defined(jpn)
-extern "C" void func_ov009_021867bc(unsigned char*, int);
-#define SetStatValue021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
 // Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
@@ -79,7 +78,7 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
         }
         if (result == -2)
         {
-            SetStatValue021855dc((unsigned char*)self, 2);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 2);
             return;
         }
         if (result == -3)
@@ -92,14 +91,14 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
 #else
                 *((unsigned char*)gameState + 0x63d4) = 0;
 #endif
-            SetStatValue021855dc((unsigned char*)self, 11);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
             return;
         }
         if (result >= 101 && result <= 108)
         {
             int state = result - 100;
             if (state <= self->furthestState[self->sex] && state != self->state)
-                SetStatValue021855dc((unsigned char*)self, (unsigned char)state);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);
         }
     }
 }

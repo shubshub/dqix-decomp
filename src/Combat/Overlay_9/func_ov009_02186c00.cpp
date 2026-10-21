@@ -2,7 +2,6 @@
 #include "Resource/CharacterCreationUI.h"
 
 #if defined(jpn)
-#define _Z20SetStatValue021855dcPhi func_ov009_021867bc
 #endif
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
@@ -11,10 +10,9 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-extern "C" void func_ov009_021867bc(unsigned char*, int);
-#define SetStatValue021855dc func_ov009_021867bc
+void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-void SetStatValue021855dc(unsigned char* self, int state);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 void CallFunc020a0db8AtField0x16c_0202ee38(char* camera, int position, int duration);
 void CallFunc020a0db8AtField0x194AndClearFlag2_0202ee58(char* camera, int target, int duration);
@@ -67,12 +65,12 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
         int changed = 0;
         if (result == -2)
         {
-            SetStatValue021855dc((unsigned char*)self, 8);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 8);
             changed = 1;
         }
         else if (result == -3)
         {
-            SetStatValue021855dc((unsigned char*)self, 6);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, 6);
             changed = 1;
         }
         else if (result >= 101 && result <= 108)
@@ -80,7 +78,7 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
             int state = result - 100;
             if (state <= self->furthestState[self->sex] && state != self->state)
             {
-                SetStatValue021855dc((unsigned char*)self, (unsigned char)state);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);
                 changed = 1;
             }
         }

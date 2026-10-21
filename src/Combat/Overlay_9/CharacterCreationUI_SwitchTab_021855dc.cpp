@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 
 struct CharacterCreation {
 #if defined(jpn)
@@ -15,12 +16,8 @@ struct CharacterCreation {
     unsigned char sex;
 };
 
-// USA: func_ov009_021855dc
-#if defined(jpn)
-extern "C" ARM void func_ov009_021867bc(unsigned char* storage, int state) {
-#else
-ARM void SetStatValue021855dc(unsigned char* storage, int state) {
-#endif
+// Overlay 9, originally func_ov009_021855dc (USA/EUR 0x021855dc, JPN 0x021867bc)
+ARM void CharacterCreationUI_SwitchTab(unsigned char* storage, int state) {
     CharacterCreation* editor = (CharacterCreation*)storage;
     signed char selectedState = (signed char)state;
     editor->state = selectedState;
@@ -30,5 +27,5 @@ ARM void SetStatValue021855dc(unsigned char* storage, int state) {
         editor->furthestState[sex] = selectedState;
     editor->flags |= 0x1100;
     if (state != 9 && state != 11 && state != 12)
-        editor->flags |= 0x80;
+        editor->flags |= CreationFlag_TabLoading;
 }

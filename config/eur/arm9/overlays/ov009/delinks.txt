@@ -36,7 +36,7 @@ src/Combat/Overlay_9/CharacterCreationUI_ResetTargetLayout_021847c4.cpp:
     complete
     .text start:0x021847c4 end:0x021847ec
 
-src/Combat/Overlay_9/SetStatValue021855dc.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_SwitchTab_021855dc.cpp:
     complete
     .text start:0x021855dc end:0x02185634
 
