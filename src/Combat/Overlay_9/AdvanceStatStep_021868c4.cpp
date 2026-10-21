@@ -4,7 +4,7 @@
 extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
 extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
-extern "C" void func_ov009_02188944(CharacterCreationUI* self, int val);
+extern "C" void applyCreationChoice(CharacterCreationUI* self, int val);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" ARM void func_ov009_021867bc(unsigned char *self, int val);
@@ -32,7 +32,7 @@ extern "C" ARM void func_ov009_021868c4(CharacterCreationUI* self) {
 		}
 		int idx = self->sex;
 		unsigned char val = self->hairStyle[idx];
-		func_ov009_02188944(self, val);
+		applyCreationChoice(self, val);
 		self->step = self->step + 1;
 		return;
 	}

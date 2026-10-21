@@ -59,8 +59,8 @@ Element020de650* FindElementByKey020dedd0(Container020dedd0* names, int key);
 int GetNibbleField020de2a4(Obj020de2a4* entry, int which, int female);
 extern short data_ov023_021fd68a[];
 
-// USA: func_ov023_021e540c
-extern "C" ARM void func_ov023_021e540c(Character021e540c* self) {
+// Overlay 23, originally func_ov023_021e540c (USA/EUR 0x021e540c, JPN 0x021e55f0)
+extern "C" ARM void applyModelColors(Character021e540c* self) {
     Appearance021e540c* appearance = &self->member->appearance;
     PaletteTable021e540c* colors = (PaletteTable021e540c*)GetVariantShortTable02109928_02099cac();
     unsigned int eye = appearance->eyeColor;

@@ -25,7 +25,7 @@ struct CharacterModel_021e5e68
     Object3D parts_[10];
 };
 
-// USA: func_ov023_021e5e68
+// Overlay 23, originally func_ov023_021e5e68 (USA/EUR 0x021e5e68, JPN 0x021e604c)
 extern "C" ARM void setCharacterScale(CharacterModel_021e5e68* self, int width, int height)
 {
     fix32_t scale = FX_Mul(height, width);

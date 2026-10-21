@@ -78,7 +78,7 @@ struct CharacterModel_021e5020
     char unk_c1f;
 };
 
-extern "C" void func_ov023_021e540c(CharacterModel_021e5020* self);
+extern "C" void applyModelColors(CharacterModel_021e5020* self);
 extern "C" void setCharacterScale(CharacterModel_021e5020* self, int width, int height);
 
 extern "C" const char data_ov023_021fdce0[];
@@ -166,7 +166,7 @@ extern "C" ARM void func_ov023_021e5020(CharacterModel_021e5020* self)
 
         if (!self->loading_ && !self->colored_)
         {
-            func_ov023_021e540c(self);
+            applyModelColors(self);
             self->colored_ = 1;
             self->loading_ = 1;
         }

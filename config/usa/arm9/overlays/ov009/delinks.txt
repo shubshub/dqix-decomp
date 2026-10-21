@@ -131,7 +131,7 @@ src/Combat/Overlay_9/func_ov009_02184e58.cpp:
     .text start:0x02184e58 end:0x021855dc
 
 
-src/Combat/Overlay_9/func_ov009_021863d0.cpp:
+src/Combat/Overlay_9/handleGenderSelection_021863d0.cpp:
     complete
     .text start:0x021863d0 end:0x021865dc
 
@@ -156,7 +156,7 @@ src/Combat/Overlay_9/func_ov009_02188604.cpp:
     .text start:0x02188604 end:0x02188944
 
 
-src/Combat/Overlay_9/func_ov009_02188944.cpp:
+src/Combat/Overlay_9/applyCreationChoice_02188944.cpp:
     complete
     .text start:0x02188944 end:0x02188b14
 

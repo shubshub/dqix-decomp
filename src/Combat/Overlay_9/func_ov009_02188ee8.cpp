@@ -27,7 +27,7 @@ extern "C" void func_0205bb04(CreationNavigation*, int);
 extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
 extern "C" void func_ov009_02188c2c(CharacterCreationUI*);
 extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
-extern "C" void func_ov009_02188944(CharacterCreationUI*, int);
+extern "C" void applyCreationChoice(CharacterCreationUI*, int);
 extern "C" int menuSlotToStyleIndex(CharacterCreationUI*, int, int);
 
 struct PartyMemberAppearance {
@@ -216,7 +216,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
     }
     if (self->flags & 0x10) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
-        func_ov009_02188944(self, choice);
+        applyCreationChoice(self, choice);
         if (self->state == 1) {
             PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
             self->flags |= 0x60000;
@@ -308,7 +308,7 @@ extern "C" void func_0205bb04(Navigation*, int);
 extern "C" int func_0205bf58(Navigation*, unsigned int);
 extern "C" void func_ov009_02188c2c(CharacterCreation*);
 extern "C" void func_ov009_02188e70(CharacterCreation*, int);
-extern "C" void func_ov009_02188944(CharacterCreation*, int);
+extern "C" void applyCreationChoice(CharacterCreation*, int);
 extern "C" int menuSlotToStyleIndex(CharacterCreation*, int, int);
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
@@ -453,7 +453,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
     }
     if (self->flags & 0x10) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
-        func_ov009_02188944(self, choice);
+        applyCreationChoice(self, choice);
         if (self->state == 1) {
             PartyMemberAppearance* appearance = &self->member->appearance;
             self->flags |= 0x60000;
