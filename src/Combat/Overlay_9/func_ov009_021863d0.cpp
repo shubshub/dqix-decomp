@@ -8,13 +8,13 @@ struct Struct_ov009_021863d0 {
     unsigned char unknown_c12_;
 };
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" void func_ov009_02188c2c(Struct_ov009_021842a0* arg0);
-extern "C" void func_ov009_02188d9c(Struct_ov009_021842a0* arg0);
-extern "C" void func_ov009_02188e70(Struct_ov009_021842a0* arg0, int arg1);
-extern "C" void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1);
-extern "C" int func_ov009_02188ee8(Struct_ov009_021842a0* arg0);
-extern "C" void func_ov023_021e6158(Struct_ov009_021863d0* arg0, int arg1);
+int GetWord0x0_0200fb8c(int* gameState);
+extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
+extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
+extern "C" void func_ov009_02188944(CharacterCreationUI* self, int choice);
+extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
+extern "C" void clearModelPart(CharacterModel* character, int part);
 #if defined(jpn)
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 #define func_ov009_021855dc func_ov009_021867bc
@@ -64,15 +64,15 @@ extern "C" ARM void func_ov009_021863d0(Struct_ov009_021842a0* arg0)
             if (var3->unknown_c12_ == 0)
             {
 #if defined(jpn)
-                func_ov023_021e6158((Struct_ov009_021863d0*)arg0->unknown_7fc_, 0);
-                func_ov023_021e6158((Struct_ov009_021863d0*)arg0->unknown_7fc_, 2);
-                func_ov023_021e6158((Struct_ov009_021863d0*)arg0->unknown_7fc_, 3);
-                func_ov023_021e6158((Struct_ov009_021863d0*)arg0->unknown_7fc_, 4);
+                clearModelPart((CharacterModel*)self->nextCharacter, 0);
+                clearModelPart((CharacterModel*)self->nextCharacter, 2);
+                clearModelPart((CharacterModel*)self->nextCharacter, 3);
+                clearModelPart((CharacterModel*)self->nextCharacter, 4);
 #else
-                func_ov023_021e6158(var3, 0);
-                func_ov023_021e6158(var3, 2);
-                func_ov023_021e6158(var3, 3);
-                func_ov023_021e6158(var3, 4);
+                clearModelPart(next, 0);
+                clearModelPart(next, 2);
+                clearModelPart(next, 3);
+                clearModelPart(next, 4);
 #endif
             }
         }

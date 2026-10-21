@@ -18,11 +18,11 @@ struct Struct_ov005_0215840c_2 {
     Struct_ov009_02187b34 unknown_488_;
 };
 
-extern "C" void func_ov023_021e6158(void* arg0, int arg1);
-extern "C" void func_ov009_02188bf8(unsigned char* arg0, int arg1, short* arg2, short* arg3);
-extern "C" void func_ov023_021e5e68(void* arg0, int arg1, int arg2);
-extern "C" int func_ov009_02188b14(void* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021e540c(void* arg0);
+extern "C" void clearModelPart(void* character, int part);
+void GetEntryPair02188bf8(unsigned char* self, int bodyType, short* width, short* height);
+extern "C" void func_ov023_021e5e68(void* character, int width, int height);
+extern "C" int func_ov009_02188b14(void* self, int state, int choice);
+extern "C" void func_ov023_021e540c(void* character);
 
 // USA: func_ov009_02188944
 #if defined(jpn)
@@ -32,12 +32,12 @@ extern "C" ARM void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1)
     int var1 = arg0->unknown_c58_;
     if (var1 == 1)
     {
-        var0->unknown_14_0_ = arg1;
-        func_ov023_021e6158(arg0->unknown_7fc_, 0);
-        func_ov023_021e6158(arg0->unknown_7fc_, 2);
-        func_ov023_021e6158(arg0->unknown_7fc_, 3);
-        func_ov023_021e6158(arg0->unknown_7fc_, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->female_ = choice;
+        clearModelPart(self->nextCharacter, 0);
+        clearModelPart(self->nextCharacter, 2);
+        clearModelPart(self->nextCharacter, 3);
+        clearModelPart(self->nextCharacter, 4);
+        self->flags |= 2;
     }
     else if (var1 == 2)
     {
@@ -47,22 +47,22 @@ extern "C" ARM void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1)
     }
     else if (var1 == 5)
     {
-        var0->unknown_0_[2] = func_ov009_02188b14(arg0, 5, arg1) + 0x233c;
-        func_ov023_021e6158(arg0->unknown_7fc_, 2);
-        arg0->unknown_d9c_ |= 2;
+        appearance->models_[2] = func_ov009_02188b14(self, 5, choice) + 0x233c;
+        clearModelPart(self->nextCharacter, 2);
+        self->flags |= 2;
     }
     else if (var1 == 3)
     {
-        var0->unknown_0_[3] = func_ov009_02188b14(arg0, 3, arg1) + 0x2328;
-        func_ov023_021e6158(arg0->unknown_7fc_, 3);
-        func_ov023_021e6158(arg0->unknown_7fc_, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->models_[3] = func_ov009_02188b14(self, 3, choice) + 0x2328;
+        clearModelPart(self->nextCharacter, 3);
+        clearModelPart(self->nextCharacter, 4);
+        self->flags |= 2;
     }
     else if (var1 == 4)
     {
-        var0->unknown_15_0_ = arg1;
-        func_ov023_021e6158(arg0->unknown_7fc_, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->hairColor_ = choice;
+        clearModelPart(self->nextCharacter, 4);
+        self->flags |= 2;
     }
     else if (var1 == 6)
     {
@@ -84,12 +84,12 @@ extern "C" ARM void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1)
     void* var5 = arg0->unknown_7f8_;
     if (var3 == 1)
     {
-        var2->unknown_14_0_ = arg1;
-        func_ov023_021e6158(var4, 0);
-        func_ov023_021e6158(var4, 2);
-        func_ov023_021e6158(var4, 3);
-        func_ov023_021e6158(var4, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->female_ = choice; //0 = Male, 1 = Female
+        clearModelPart(next, 0); //Something to do with applying the new Model Looks
+        clearModelPart(next, 2);
+        clearModelPart(next, 3);
+        clearModelPart(next, 4);
+        self->flags |= 2;
     }
     else if (var3 == 2)
     {
@@ -99,22 +99,22 @@ extern "C" ARM void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1)
     }
     else if (var3 == 5)
     {
-        var2->unknown_0_[2] = func_ov009_02188b14(arg0, 5, arg1) + 0x233c;
-        func_ov023_021e6158(var4, 2);
-        arg0->unknown_d9c_ |= 2;
+        appearance->models_[2] = func_ov009_02188b14(self, 5, choice) + 0x233c;
+        clearModelPart(next, 2);
+        self->flags |= 2;
     }
     else if (var3 == 3)
     {
-        var2->unknown_0_[3] = func_ov009_02188b14(arg0, 3, arg1) + 0x2328;
-        func_ov023_021e6158(var4, 3);
-        func_ov023_021e6158(var4, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->models_[3] = func_ov009_02188b14(self, 3, choice) + 0x2328;
+        clearModelPart(next, 3);
+        clearModelPart(next, 4);
+        self->flags |= 2;
     }
     else if (var3 == 4)
     {
-        var2->unknown_15_0_ = arg1;
-        func_ov023_021e6158(var4, 4);
-        arg0->unknown_d9c_ |= 2;
+        appearance->hairColor_ = choice;
+        clearModelPart(next, 4);
+        self->flags |= 2;
     }
     else if (var3 == 6)
     {
