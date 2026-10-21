@@ -10,7 +10,7 @@ struct BodyDimensions {
 extern BodyDimensions data_ov009_0218aa70[][5];
 #endif
 
-ARM void GetEntryPair02188bf8(unsigned char* storage, int bodyType, short* width, short* height) {
+ARM void getCharacterDimensions(unsigned char* storage, int bodyType, short* width, short* height) {
     CharacterCreationUI* editor = (CharacterCreationUI*)storage;
 #if defined(jpn)
     if (editor->sex == 0) {

@@ -28,7 +28,7 @@ extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
 extern "C" void func_ov009_02188c2c(CharacterCreationUI*);
 extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
 extern "C" void func_ov009_02188944(CharacterCreationUI*, int);
-extern "C" int func_ov009_02188b14(CharacterCreationUI*, int, int);
+extern "C" int menuSlotToStyleIndex(CharacterCreationUI*, int, int);
 
 struct PartyMemberAppearance {
     short models[10];
@@ -226,8 +226,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
             appearance->skinColor = skinColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = func_ov009_02188b14(self, 5, self->faceStyle[self->sex]) + 0x233c;
-            appearance->models[3] = func_ov009_02188b14(self, 3, self->hairStyle[self->sex]) + 0x2328;
+            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
+            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
         }
         if (!touched) func_ov009_02188e70(self, choice);
         self->flags |= 0x6100;
@@ -309,7 +309,7 @@ extern "C" int func_0205bf58(Navigation*, unsigned int);
 extern "C" void func_ov009_02188c2c(CharacterCreation*);
 extern "C" void func_ov009_02188e70(CharacterCreation*, int);
 extern "C" void func_ov009_02188944(CharacterCreation*, int);
-extern "C" int func_ov009_02188b14(CharacterCreation*, int, int);
+extern "C" int menuSlotToStyleIndex(CharacterCreation*, int, int);
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
     CharacterControls* controls = &self->controls; \
@@ -463,8 +463,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
             appearance->skinColor = skinColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = func_ov009_02188b14(self, 5, self->face[self->gender]) + 0x233c;
-            appearance->models[3] = func_ov009_02188b14(self, 3, self->hair[self->gender]) + 0x2328;
+            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
+            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
         }
         if (!touched) func_ov009_02188e70(self, choice);
         self->flags |= 0x6100;

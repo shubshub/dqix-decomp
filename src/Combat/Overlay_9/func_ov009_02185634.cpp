@@ -199,10 +199,10 @@ void SetFields0x10To0x18_0202e5c8(unsigned char* camera, int a, int b, int c);
 extern "C" void func_0202e0a4(void* camera);
 void SetField0x238False_020a27a0(void* camera);
 void SetField0x3b0Value_020100c4(GameState* gs, int camera);
-void GetEntryPair02188bf8(unsigned char* base, int idx, short* out0, short* out1);
-extern "C" int func_ov009_02188b14(void* self, int type, int idx);
+void getCharacterDimensions(unsigned char* base, int idx, short* out0, short* out1);
+extern "C" int menuSlotToStyleIndex(void* self, int type, int idx);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
-extern "C" void func_ov023_021e5e68(void* model, short a, short b);
+extern "C" void setCharacterScale(void* model, short a, short b);
 void SetByteC11_021e6150(void* model, unsigned char value);
 void ResetList0204af64(List0204af64* background);
 void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* background, int value);
@@ -468,16 +468,16 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
             } while (--n);
             look->unk_15_0_ = eyes;
         }
-        GetEntryPair02188bf8((unsigned char*)self, self->unk_da4[self->sex_], &look->unk_18, &look->unk_1a);
-        short top = func_ov009_02188b14(self, 5, self->unk_da6[self->sex_]) + 0x233c;
-        short bottom = func_ov009_02188b14(self, 3, self->unk_dac[self->sex_]) + 0x2328;
+        getCharacterDimensions((unsigned char*)self, self->unk_da4[self->sex_], &look->unk_18, &look->unk_1a);
+        short top = menuSlotToStyleIndex(self, 5, self->unk_da6[self->sex_]) + 0x233c;
+        short bottom = menuSlotToStyleIndex(self, 3, self->unk_dac[self->sex_]) + 0x2328;
         defaults = data_ov009_0218aa40;
         defaults.unk[2] = top;
         defaults.unk[3] = bottom;
         memcpy(look, &defaults, 0x14);
         look->unk_16 = -1;
-        func_ov023_021e5e68(MODEL0, look->unk_18, look->unk_1a);
-        func_ov023_021e5e68(MODEL1, look->unk_18, look->unk_1a);
+        setCharacterScale(MODEL0, look->unk_18, look->unk_1a);
+        setCharacterScale(MODEL1, look->unk_18, look->unk_1a);
 
         if (self->unk_da2 != 0)
         {

@@ -26,7 +26,7 @@ struct CharacterModel_021e5e68
 };
 
 // USA: func_ov023_021e5e68
-extern "C" ARM void func_ov023_021e5e68(CharacterModel_021e5e68* self, int width, int height)
+extern "C" ARM void setCharacterScale(CharacterModel_021e5e68* self, int width, int height)
 {
     fix32_t scale = FX_Mul(height, width);
     self->parts_[Part_Body].SetScale(scale, height, scale);

@@ -79,7 +79,7 @@ struct CharacterModel_021e5020
 };
 
 extern "C" void func_ov023_021e540c(CharacterModel_021e5020* self);
-extern "C" void func_ov023_021e5e68(CharacterModel_021e5020* self, int width, int height);
+extern "C" void setCharacterScale(CharacterModel_021e5020* self, int width, int height);
 
 extern "C" const char data_ov023_021fdce0[];
 extern "C" const char data_ov023_021fdce9[];
@@ -195,7 +195,7 @@ extern "C" ARM void func_ov023_021e5020(CharacterModel_021e5020* self)
                 SetWords_021e60c4_021e60c4(&self->parts_[6], (Words021e60c4*)&rotation);
                 SetWords_021e60c4_021e60c4(&self->parts_[1], (Words021e60c4*)&rotation);
                 SetWords_021e60c4_021e60c4(&self->parts_[5], (Words021e60c4*)&rotation);
-                func_ov023_021e5e68(self, appearance->width_, appearance->height_);
+                setCharacterScale(self, appearance->width_, appearance->height_);
             }
 
             short models[10];

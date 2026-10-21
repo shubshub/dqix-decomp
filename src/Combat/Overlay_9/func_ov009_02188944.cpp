@@ -19,9 +19,9 @@ struct PartyMemberData {
 };
 
 extern "C" void clearModelPart(void* character, int part);
-void GetEntryPair02188bf8(unsigned char* self, int bodyType, short* width, short* height);
-extern "C" void func_ov023_021e5e68(void* character, int width, int height);
-extern "C" int func_ov009_02188b14(void* self, int state, int choice);
+void getCharacterDimensions(unsigned char* self, int bodyType, short* width, short* height);
+extern "C" void setCharacterScale(void* character, int width, int height);
+extern "C" int menuSlotToStyleIndex(void* self, int state, int choice);
 extern "C" void func_ov023_021e540c(void* character);
 
 // USA: func_ov009_02188944
@@ -41,19 +41,19 @@ extern "C" ARM void func_ov009_02188944(CharacterCreationUI* self, int choice)
     }
     else if (state == 2)
     {
-        GetEntryPair02188bf8((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
-        func_ov023_021e5e68(self->character, appearance->width_, appearance->height_);
-        func_ov023_021e5e68(self->nextCharacter, appearance->width_, appearance->height_);
+        getCharacterDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
+        setCharacterScale(self->character, appearance->width_, appearance->height_);
+        setCharacterScale(self->nextCharacter, appearance->width_, appearance->height_);
     }
     else if (state == 5)
     {
-        appearance->models_[2] = func_ov009_02188b14(self, 5, choice) + 0x233c;
+        appearance->models_[2] = menuSlotToStyleIndex(self, 5, choice) + 0x233c;
         clearModelPart(self->nextCharacter, 2);
         self->flags |= 2;
     }
     else if (state == 3)
     {
-        appearance->models_[3] = func_ov009_02188b14(self, 3, choice) + 0x2328;
+        appearance->models_[3] = menuSlotToStyleIndex(self, 3, choice) + 0x2328;
         clearModelPart(self->nextCharacter, 3);
         clearModelPart(self->nextCharacter, 4);
         self->flags |= 2;
@@ -79,10 +79,10 @@ extern "C" ARM void func_ov009_02188944(CharacterCreationUI* self, int choice)
 extern "C" ARM void func_ov009_02188944(CharacterCreationUI* self, int choice)
 {
     PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance_;
-    int state = self->state;
+    int characterCreationStep = self->state; //Step of the Character Creation Menu
     void* next = self->nextCharacter;
     void* current = self->character;
-    if (state == 1)
+    if (characterCreationStep == 1) //Gender Select
     {
         //This section of the code determines what Gender the Character is
         appearance->female_ = choice; //0 = Male, 1 = Female
@@ -94,37 +94,37 @@ extern "C" ARM void func_ov009_02188944(CharacterCreationUI* self, int choice)
         clearModelPart(next, 4);
         self->flags |= 2;
     }
-    else if (state == 2)
+    else if (characterCreationStep == 2) //Select Body Type
     {
-        GetEntryPair02188bf8((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
-        func_ov023_021e5e68(current, appearance->width_, appearance->height_);
-        func_ov023_021e5e68(next, appearance->width_, appearance->height_);
+        getCharacterDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
+        setCharacterScale(current, appearance->width_, appearance->height_);
+        setCharacterScale(next, appearance->width_, appearance->height_);
     }
-    else if (state == 5)
+    else if (characterCreationStep == 5)
     {
-        appearance->models_[2] = func_ov009_02188b14(self, 5, choice) + 0x233c;
+        appearance->models_[2] = menuSlotToStyleIndex(self, 5, choice) + 0x233c;
         clearModelPart(next, 2);
         self->flags |= 2;
     }
-    else if (state == 3)
+    else if (characterCreationStep == 3) //Select Hair Style
     {
-        appearance->models_[3] = func_ov009_02188b14(self, 3, choice) + 0x2328;
+        appearance->models_[3] = menuSlotToStyleIndex(self, 3, choice) + 0x2328;
         clearModelPart(next, 3);
         clearModelPart(next, 4);
         self->flags |= 2;
     }
-    else if (state == 4)
+    else if (characterCreationStep == 4)
     {
         appearance->hairColor_ = choice;
         clearModelPart(next, 4);
         self->flags |= 2;
     }
-    else if (state == 6)
+    else if (characterCreationStep == 6)
     {
         appearance->eyeColor_ = choice;
         func_ov023_021e540c(current);
     }
-    else if (state == 7)
+    else if (characterCreationStep == 7)
     {
         appearance->skinColor_ = choice;
         func_ov023_021e540c(current);

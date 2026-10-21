@@ -11,7 +11,7 @@ extern CreationOptionOrder data_ov009_0218b998;
 extern CreationOptionOrder data_ov009_0218a9bc;
 #endif
 
-extern "C" ARM int func_ov009_02188b14(void* storage, int type, int index) {
+extern "C" ARM int menuSlotToStyleIndex(void* storage, int type, int index) {
     CharacterCreationUI* editor = (CharacterCreationUI*)storage;
 #if defined(jpn)
     CreationOptionOrder order = data_ov009_0218b998;
