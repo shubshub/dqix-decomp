@@ -2,7 +2,7 @@
 
 #include "World/Object3D.h"
 #include "Memory/SafeAllocator.h"
-#include "Resource/ChoiceGrid.h"
+#include "Resource/CreationSlotLayout.h"
 
 struct Struct_0205ac40;
 struct Struct_0205ac40_2;
@@ -109,7 +109,7 @@ struct CharacterCreationUI {
     Object3D model;
     unsigned char camera[0x2c8];
     CreationNavigation navigation;
-    ChoiceGrid grid;
+    CreationSlotLayout grid;
     short cursorX, cursorY;
     short cursorWidth, cursorHeight;
     short lastCursorX, lastCursorY;

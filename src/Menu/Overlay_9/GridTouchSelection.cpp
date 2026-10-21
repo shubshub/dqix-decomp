@@ -18,7 +18,7 @@ extern "C" {
     int _Z18GetField0_0205bafcPv(void*);
     int _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(void*);
     void func_0205bb04(void*, int);
-    void setupChoiceNavigation(Overlay9TouchView*);
+    void CharacterCreationUI_SetupSlotNavigation(Overlay9TouchView*);
     void func_ov009_02188e70(Overlay9TouchView*, int);
 
     int func_ov009_02189854(Overlay9TouchView* menu, int touchX, int touchY) {
@@ -71,7 +71,7 @@ extern "C" {
         int cursorMode = menu->cursorMode;
         int count = _Z18GetField0_0205bafcPv(menu->cursor);
         if (cursorMode == 1 && count == 8 && selected >= 0 && selected != 0x65 && selected != 0x6c) {
-            setupChoiceNavigation(menu);
+            CharacterCreationUI_SetupSlotNavigation(menu);
             func_0205bb04(menu->cursor, selected);
             menu->flags |= 0x2000;
             int index = _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(menu->cursor);

@@ -18,7 +18,7 @@ src/Combat/Overlay_9/func_ov009_02187b34.cpp:
     complete
     .text start:0x021888f0 end:0x0218918c
 
-src/Combat/Overlay_9/loadChoiceLayout_02188d9c.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_LoadSlotLayout_02188d9c.cpp:
     .text start:0x02189c60 end:0x02189d30
     .rodata start:0x0218bb6c end:0x0218bc00
 
@@ -56,7 +56,7 @@ src/Combat/Overlay_9/func_ov009_021883cc.cpp:
     .text start:0x0218918c end:0x02189214
 
 
-src/Combat/Overlay_9/menuSlotToStyleIndex_02188b14.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_SlotToStyleIndex_02188b14.cpp:
     complete
     .text start:0x021898cc end:0x021899b0
 
@@ -91,17 +91,17 @@ src/Combat/Overlay_9/func_ov009_021868c4.cpp:
     .text start:0x021879f0 end:0x02187b04
 
 
-src/Combat/Overlay_9/setupChoiceNavigation_02188c2c.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_SetupSlotNavigation_02188c2c.cpp:
     complete
     .text start:0x02189af0 end:0x02189c60
 
 
-src/Combat/Overlay_9/getCharacterDimensions_02188bf8.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_GetBodyDimensions_02188bf8.cpp:
     complete
     .text start:0x021899b0 end:0x02189af0
 
 
-src/Combat/Overlay_9/handleGenderSelection_021863d0.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleGenderSelection_021863d0.cpp:
     complete
     .text start:0x02187500 end:0x02187708
 
@@ -126,7 +126,7 @@ src/Combat/Overlay_9/func_ov009_02186c00.cpp:
     .text start:0x02187d2c end:0x02187f2c
 
 
-src/Combat/Overlay_9/applyCreationChoice_02188944.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_ApplyChoice_02188944.cpp:
     complete
     .text start:0x02189704 end:0x021898cc
 

@@ -9,10 +9,10 @@ struct Struct_ov009_021863d0 {
 };
 
 int GetWord0x0_0200fb8c(int* gameState);
-extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
-extern "C" void loadChoiceLayout(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
-extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 extern "C" void clearModelPart(CharacterModel* character, int part);
 #if defined(jpn)
@@ -23,7 +23,7 @@ extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
 #endif
 
 // Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
-extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
+extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationUI* self)
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
@@ -36,8 +36,8 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
                 return;
             SetBrightness(var1, 0, 15);
         }
-        setupChoiceNavigation(self);
-        loadChoiceLayout(self);
+        CharacterCreationUI_SetupSlotNavigation(self);
+        CharacterCreationUI_LoadSlotLayout(self);
         func_ov009_02188e70(self, self->sex);
         self->step++;
     }
@@ -54,7 +54,7 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
     {
         if (arg0->unknown_d9c_ & 0x80)
             return;
-        applyCreationChoice(self, self->sex);
+        CharacterCreationUI_ApplyChoice(self, self->sex);
         self->step++;
     }
     else if (self->step == 3) //Appears to be Idle Waiting for Input

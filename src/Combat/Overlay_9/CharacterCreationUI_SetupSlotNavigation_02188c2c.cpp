@@ -11,7 +11,7 @@ struct SelfBB04;
 extern "C" void func_0205bb04(struct SelfBB04* self, int value);
 
 // Overlay 9, originally func_ov009_02188c2c (USA/EUR 0x02188c2c, JPN 0x02189af0)
-extern "C" ARM void setupChoiceNavigation(CharacterCreationUI* editor) {
+extern "C" ARM void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* editor) {
     int columns, rows, count, pageCount, selected;
     signed char id = editor->state;
 

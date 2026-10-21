@@ -199,8 +199,8 @@ void SetFields0x10To0x18_0202e5c8(unsigned char* camera, int a, int b, int c);
 extern "C" void func_0202e0a4(void* camera);
 void SetField0x238False_020a27a0(void* camera);
 void SetField0x3b0Value_020100c4(GameState* gs, int camera);
-void getCharacterDimensions(unsigned char* base, int idx, short* out0, short* out1);
-extern "C" int menuSlotToStyleIndex(void* self, int type, int idx);
+void CharacterCreationUI_GetBodyDimensions(unsigned char* base, int idx, short* out0, short* out1);
+extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int type, int idx);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
 extern "C" void setCharacterScale(void* model, short a, short b);
 void SetByteC11_021e6150(void* model, unsigned char value);
@@ -468,9 +468,9 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
             } while (--var31);
             var22->unknown_15_0_ = var34;
         }
-        getCharacterDimensions((unsigned char*)self, self->unk_da4[self->sex_], &look->unk_18, &look->unk_1a);
-        short top = menuSlotToStyleIndex(self, 5, self->unk_da6[self->sex_]) + 0x233c;
-        short bottom = menuSlotToStyleIndex(self, 3, self->unk_dac[self->sex_]) + 0x2328;
+        CharacterCreationUI_GetBodyDimensions((unsigned char*)self, self->unk_da4[self->sex_], &look->unk_18, &look->unk_1a);
+        short top = CharacterCreationUI_SlotToStyleIndex(self, 5, self->unk_da6[self->sex_]) + 0x233c;
+        short bottom = CharacterCreationUI_SlotToStyleIndex(self, 3, self->unk_dac[self->sex_]) + 0x2328;
         defaults = data_ov009_0218aa40;
         defaults.unk[2] = top;
         defaults.unk[3] = bottom;

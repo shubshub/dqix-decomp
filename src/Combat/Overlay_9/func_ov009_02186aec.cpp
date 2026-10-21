@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
-extern "C" void loadChoiceLayout(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
-extern "C" void applyCreationChoice(CharacterCreationUI* self, int val);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" ARM void func_ov009_021867bc(unsigned char *arg0, int arg1);
@@ -17,8 +17,8 @@ extern "C" ARM void func_ov009_021855dc(unsigned char *arg0, int arg1);
 extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
 	unsigned char step = self->step;
 	if (step == 0) {
-		setupChoiceNavigation(self);
-		loadChoiceLayout(self);
+		CharacterCreationUI_SetupSlotNavigation(self);
+		CharacterCreationUI_LoadSlotLayout(self);
 		int idx = self->sex;
 		unsigned char val = self->eyeColor[idx];
 		func_ov009_02188e70(self, val);
@@ -32,7 +32,7 @@ extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
 		}
 		int idx = self->sex;
 		unsigned char val = self->eyeColor[idx];
-		applyCreationChoice(self, val);
+		CharacterCreationUI_ApplyChoice(self, val);
 		self->step = self->step + 1;
 		return;
 	}

@@ -2,7 +2,7 @@
 
 // Where a character creation tab's options sit on the touchscreen: option n is at column n % columns,
 // row n / columns, in a width x height box. Used for the highlight box and for touch hits.
-struct ChoiceGrid {
+struct CreationSlotLayout {
     int x, y;
     int width, height;
     int stepX; // Distance from one column to the next
