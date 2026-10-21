@@ -67,15 +67,15 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
 
     int result = CharacterCreationUI_HandleInput(self);
     int flag = 0;
-    if (result == -2) {
-        CharacterCreationUI_SwitchTab((unsigned char*)self, 6);
+    if (result == CreationInput_Confirm) {
+        CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
         flag = 1;
-    } else if (result == -3) {
-        CharacterCreationUI_SwitchTab((unsigned char*)self, 4);
+    } else if (result == CreationInput_Back) {
+        CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_HairColor);
         flag = 1;
-    } else if (result >= 0x65 && result <= 0x6c) {
+    } else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon) {
         int idx = self->sex;
-        int v = result - 0x64;
+        int v = result - CreationInput_TabIcon;
         signed char arrv = self->furthestState[idx];
         if (v <= arrv) {
             signed char cur = self->state;

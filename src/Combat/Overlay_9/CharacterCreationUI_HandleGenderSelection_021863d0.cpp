@@ -76,12 +76,12 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
 #endif
             }
         }
-        if (var2 == -2)
+        if (result == CreationInput_Confirm)
         {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 2);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_BodyType);
             return;
         }
-        if (var2 == -3)
+        if (result == CreationInput_Back)
         {
             if (arg0->unknown_d95_ == 1)
                 arg0->unknown_d9c_ &= ~0x400;
@@ -94,11 +94,12 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
             CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
             return;
         }
-        if (var2 >= 101 && var2 <= 108)
+        if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
-            int state = result - 100;
-            if (state <= self->furthestState[self->sex] && state != self->state)
-                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);
+            int tab = result - CreationInput_TabIcon;
+            bool reached = tab <= self->furthestState[self->sex];
+            if (reached && tab != self->state)
+                CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)tab);
         }
     }
 }

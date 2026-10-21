@@ -64,6 +64,12 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 
 | Name | Original | Where | What it is |
 |---|---|---|---|
+| `CreationTab` | (none) | `include/Resource/CharacterCreationUI.h` | Enum of `CharacterCreationUI::state`, the current tab |
+| `CreationTab_Setup` … `CreationTab_NameEntry` | `0`–`8` | same | Setup, Gender, BodyType, HairStyle, HairColor, Face, EyeColor, SkinColor, NameEntry. Each tab's confirm goes to the next, back to the previous |
+| `CreationTab_Done` | `12` | same | Character creation finished; tabs 9–11 are still numbers |
+| `CreationInput` | (none) | same | Enum of what `CharacterCreationUI_HandleInput` returns |
+| `CreationInput_Back` / `_Confirm` / `_None` | `-3` / `-2` / `-1` | same | B or the touchscreen Back button / A or the touchscreen Confirm button / nothing |
+| `CreationInput_TabIcon` | `100` | same | A tab icon comes back as `CreationInput_TabIcon + tab`; `_FirstTabIcon` (101) and `_LastTabIcon` (108) bound the range |
 | `CreationFlag` | (none) | `include/Resource/CharacterCreationUI.h` | Enum of `CharacterCreationUI::flags` bits whose meaning is known |
 | `CreationFlag_StylusRotation` | `0x1` | same | The preview model can be spun with the stylus; set once a tab's fade-in finishes |
 | `CreationFlag_ChoiceChanged` | `0x10` | same | The input handler stored a different choice this frame |
@@ -88,6 +94,7 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 | Name | Original | In |
 |---|---|---|
 | `currentLayout` | `out` | `CharacterCreationUI_LoadSlotLayout` |
+| `tab`, `reached` | `state` | `CharacterCreationUI_HandleGenderSelection`, step 3's tab icon block |
 | `characterCreationStep` | `state` | `CharacterCreationUI_ApplyChoice` (usa half) |
 
 ## Placeholders
