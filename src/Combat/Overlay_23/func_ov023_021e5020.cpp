@@ -78,8 +78,8 @@ struct Struct_ov023_021e5020_3
     char unknown_c1f_;
 };
 
-extern "C" void func_ov023_021e540c(Struct_ov023_021e5020_3* arg0);
-extern "C" void func_ov023_021e5e68(Struct_ov023_021e5020_3* arg0, int arg1, int arg2);
+extern "C" void func_ov023_021e540c(CharacterModel_021e5020* self);
+extern "C" void setCharacterScale(CharacterModel_021e5020* self, int width, int height);
 
 extern "C" const char data_ov023_021fdce0[];
 extern "C" const char data_ov023_021fdce9[];
@@ -189,13 +189,13 @@ extern "C" ARM void func_ov023_021e5020(Struct_ov023_021e5020_3* arg0)
                     arg0->unknown_0_[0].StopCurrentAnimation();
                     arg0->unknown_0_[0].MaybeSetRegularAnimation(data_ov023_021fdce9, 0);
                 }
-                Struct_ov023_021e5020_2 var6 = {0};
-                var6.unknown_4_ = arg0->unknown_c1c_;
-                func_ov023_021e60c4(&arg0->unknown_0_[0], (Struct_ov009_02188454*)&var6);
-                func_ov023_021e60c4(&arg0->unknown_0_[6], (Struct_ov009_02188454*)&var6);
-                func_ov023_021e60c4(&arg0->unknown_0_[1], (Struct_ov009_02188454*)&var6);
-                func_ov023_021e60c4(&arg0->unknown_0_[5], (Struct_ov009_02188454*)&var6);
-                func_ov023_021e5e68(arg0, var5->unknown_18_, var5->unknown_1a_);
+                Rotation_021e5020 rotation = {0};
+                rotation.y = self->angle_;
+                SetWords_021e60c4_021e60c4(&self->parts_[0], (Words021e60c4*)&rotation);
+                SetWords_021e60c4_021e60c4(&self->parts_[6], (Words021e60c4*)&rotation);
+                SetWords_021e60c4_021e60c4(&self->parts_[1], (Words021e60c4*)&rotation);
+                SetWords_021e60c4_021e60c4(&self->parts_[5], (Words021e60c4*)&rotation);
+                setCharacterScale(self, appearance->width_, appearance->height_);
             }
 
             short var7[10];

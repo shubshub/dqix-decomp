@@ -26,7 +26,7 @@ struct Struct_ov023_021e5e68
 };
 
 // USA: func_ov023_021e5e68
-extern "C" ARM void func_ov023_021e5e68(Struct_ov023_021e5e68* arg0, int arg1, int arg2)
+extern "C" ARM void setCharacterScale(CharacterModel_021e5e68* self, int width, int height)
 {
     fix32_t var0 = inline_ov023_021e5e68(arg2, arg1);
     arg0->unknown_0_[Enum_ov023_021e5e68_0].SetScale(var0, arg2, var0);

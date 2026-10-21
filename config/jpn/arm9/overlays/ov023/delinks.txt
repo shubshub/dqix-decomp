@@ -1608,7 +1608,7 @@ src/Combat/Overlay_23/func_ov023_021e5020.cpp:
     complete
     .text start:0x021e5204 end:0x021e55f0
 
-src/Combat/Overlay_23/func_ov023_021e5e68.cpp:
+src/Combat/Overlay_23/setCharacterScale_021e5e68.cpp:
     complete
     .text start:0x021e604c end:0x021e61c0
 

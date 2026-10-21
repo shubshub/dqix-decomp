@@ -21,14 +21,14 @@ extern "C" int func_02001aec(const void*, const void*, unsigned int);
 extern "C" int func_ov009_0218a8b4(Struct_ov009_021842a0*, int, int);
 extern "C" int func_ov009_0218aab0(Struct_ov009_021842a0*, unsigned char);
 extern "C" void func_ov009_0218ad0c(void*);
-extern "C" void func_ov009_0218b200(Struct_ov009_021842a0*, int);
-extern "C" void func_ov009_0218b850(Struct_ov009_021842a0*);
-extern "C" void func_0205bb04(Struct_ov009_02188c2c*, int);
-extern "C" int func_0205bf58(Struct_ov009_02188c2c*, unsigned int);
-extern "C" void func_ov009_02188c2c(Struct_ov009_021842a0*);
-extern "C" void func_ov009_02188e70(Struct_ov009_021842a0*, int);
-extern "C" void func_ov009_02188944(Struct_ov009_021842a0*, int);
-extern "C" int func_ov009_02188b14(Struct_ov009_021842a0*, int, int);
+extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
+extern "C" void func_ov009_0218b850(CharacterCreationUI*);
+extern "C" void func_0205bb04(CreationNavigation*, int);
+extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
+extern "C" void func_ov009_02188c2c(CharacterCreationUI*);
+extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
+extern "C" void func_ov009_02188944(CharacterCreationUI*, int);
+extern "C" int menuSlotToStyleIndex(CharacterCreationUI*, int, int);
 
 struct Struct_ov009_02187b34 {
     short unknown_0_[10];
@@ -214,20 +214,20 @@ extern "C" ARM int func_ov009_02188ee8(Struct_ov009_021842a0* arg0)
         case 8: if (arg0->unknown1_d8c_ != var1) arg0->unknown_d9c_ |= 0x10; arg0->unknown1_d8c_ = var1; break;
         }
     }
-    if (arg0->unknown_d9c_ & 0x10) {
-        if (arg0->unknown_c58_ != 8 || !var4) func_0205eaa0(&data_02108760, 2, 0);
-        func_ov009_02188944(arg0, var1);
-        if (arg0->unknown_c58_ == 1) {
-            Struct_ov009_02187b34* var11 = &((Struct_ov005_0215840c_2*)arg0->unknown_d88_)->unknown_488_;
-            arg0->unknown_d9c_ |= 0x60000;
-            unsigned char var12 = inline_ov009_02188ee8(arg0);
-            var11->unknown_14_1_ = var12;
-            unsigned char var13 = inline_ov009_02188ee8_2(arg0);
-            var11->unknown_14_4_ = var13;
-            unsigned char var14 = inline_ov009_02188ee8_3(arg0);
-            var11->unknown_15_0_ = var14;
-            var11->unknown_0_[2] = func_ov009_02188b14(arg0, 5, arg0->unknown_da6_[arg0->unknown_da3_]) + 0x233c;
-            var11->unknown_0_[3] = func_ov009_02188b14(arg0, 3, arg0->unknown_dac_[arg0->unknown_da3_]) + 0x2328;
+    if (self->flags & 0x10) {
+        if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
+        func_ov009_02188944(self, choice);
+        if (self->state == 1) {
+            PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
+            self->flags |= 0x60000;
+            unsigned char eyeColor = GetEyeColor(self);
+            appearance->eyeColor = eyeColor;
+            unsigned char skinColor = GetSkinColor(self);
+            appearance->skinColor = skinColor;
+            unsigned char hairColor = GetHairColor(self);
+            appearance->hairColor = hairColor;
+            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
+            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
         }
         if (!var4) func_ov009_02188e70(arg0, var1);
         arg0->unknown_d9c_ |= 0x6100;
@@ -302,14 +302,14 @@ struct Struct_ov009_021842a0_2 {
     char unknown_db0_[5];
     unsigned char unknown_db5_;
 };
-extern Struct_02108760 data_02108760;
-extern "C" int func_ov009_02189854(Struct_ov009_021842a0_2*, int, int);
-extern "C" void func_0205bb04(Struct_ov009_02188ee8*, int);
-extern "C" int func_0205bf58(Struct_ov009_02188ee8*, unsigned int);
-extern "C" void func_ov009_02188c2c(Struct_ov009_021842a0_2*);
-extern "C" void func_ov009_02188e70(Struct_ov009_021842a0_2*, int);
-extern "C" void func_ov009_02188944(Struct_ov009_021842a0_2*, int);
-extern "C" int func_ov009_02188b14(Struct_ov009_021842a0_2*, int, int);
+extern Obj0205eaa0 data_02108760;
+extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
+extern "C" void func_0205bb04(Navigation*, int);
+extern "C" int func_0205bf58(Navigation*, unsigned int);
+extern "C" void func_ov009_02188c2c(CharacterCreation*);
+extern "C" void func_ov009_02188e70(CharacterCreation*, int);
+extern "C" void func_ov009_02188944(CharacterCreation*, int);
+extern "C" int menuSlotToStyleIndex(CharacterCreation*, int, int);
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
     Struct_ov009_02188ee8_3* controls = &arg0->unknown_3ec_; \
@@ -451,20 +451,20 @@ extern "C" ARM int func_ov009_02188ee8(Struct_ov009_021842a0_2* arg0) {
         case 7: { unsigned char* var42 = arg0->unknown_da8_; int var43 = arg0->unknown_da3_; unsigned char var44 = var42[var43]; if (var44 != var16) arg0->unknown_d9c_ |= 0x10; var42[var43] = var16; break; }
         }
     }
-    if (arg0->unknown_d9c_ & 0x10) {
-        if (arg0->unknown_c58_ != 8 || !var19) func_0205eaa0(&data_02108760, 2, 0);
-        func_ov009_02188944(arg0, var16);
-        if (arg0->unknown_c58_ == 1) {
-            Struct_ov009_02187b34* var45 = &arg0->unknown_d88_->unknown_488_;
-            arg0->unknown_d9c_ |= 0x60000;
-            unsigned char var46 = inline_ov009_02188ee8(arg0);
-            var45->unknown_14_1_ = var46;
-            unsigned char var47 = inline_ov009_02188ee8_2(arg0);
-            var45->unknown_14_4_ = var47;
-            unsigned char var48 = inline_ov009_02188ee8_3(arg0);
-            var45->unknown_15_0_ = var48;
-            var45->unknown_0_[2] = func_ov009_02188b14(arg0, 5, arg0->unknown_da6_[arg0->unknown_da3_]) + 0x233c;
-            var45->unknown_0_[3] = func_ov009_02188b14(arg0, 3, arg0->unknown_dac_[arg0->unknown_da3_]) + 0x2328;
+    if (self->flags & 0x10) {
+        if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
+        func_ov009_02188944(self, choice);
+        if (self->state == 1) {
+            PartyMemberAppearance* appearance = &self->member->appearance;
+            self->flags |= 0x60000;
+            unsigned char eyeColor = GetEyeColor(self);
+            appearance->eyeColor = eyeColor;
+            unsigned char skinColor = GetSkinColor(self);
+            appearance->skinColor = skinColor;
+            unsigned char hairColor = GetHairColor(self);
+            appearance->hairColor = hairColor;
+            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
+            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
         }
         if (!var19) func_ov009_02188e70(arg0, var16);
         arg0->unknown_d9c_ |= 0x6100;
