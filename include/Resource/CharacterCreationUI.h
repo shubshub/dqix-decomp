@@ -2,6 +2,7 @@
 
 #include "World/Object3D.h"
 #include "Memory/SafeAllocator.h"
+#include "Resource/ChoiceGrid.h"
 
 struct SpriteContext0205ac40;
 struct B174Outer;
@@ -68,13 +69,6 @@ struct CreationNavigation {
     unsigned char unknown3e[2];
 };
 
-struct CreationChoiceGrid {
-    int x, y;
-    int width, height;
-    int stepX, stepY;
-    int columns, rows;
-};
-
 struct CharacterCreationUI {
 #if defined(jpn)
     SafeAllocator allocators[8];
@@ -115,7 +109,7 @@ struct CharacterCreationUI {
     Object3D model;
     unsigned char camera[0x2c8];
     CreationNavigation navigation;
-    CreationChoiceGrid grid;
+    ChoiceGrid grid;
     short cursorX, cursorY;
     short cursorWidth, cursorHeight;
     short lastCursorX, lastCursorY;

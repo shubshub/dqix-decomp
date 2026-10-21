@@ -1,15 +1,14 @@
 #include <globaldefs.h>
-
-struct Struct021847c4 { int a, b, c, d, e, f, g, h; };
+#include "Resource/ChoiceGrid.h"
 
 // USA: func_ov009_021847c4
-ARM void ResetFields021847c4(struct Struct021847c4 *s) {
-	s->b = -1;
-	s->a = -1;
-	s->d = -1;
-	s->c = -1;
-	s->e = -1;
-	s->f = -1;
-	s->g = -1;
-	s->h = -1;
+ARM void ResetFields021847c4(ChoiceGrid *s) {
+	s->y = -1;
+	s->x = -1;
+	s->height = -1;
+	s->width = -1;
+	s->stepX = -1;
+	s->stepY = -1;
+	s->columns = -1;
+	s->rows = -1;
 }

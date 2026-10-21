@@ -10,8 +10,8 @@ void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
 struct SelfBB04;
 extern "C" void func_0205bb04(struct SelfBB04* self, int value);
 
-// USA: func_ov009_02188c2c  (semantic: DispatchTypeAndInitPair_02188c2c)
-extern "C" ARM void func_ov009_02188c2c(CharacterCreationUI* editor) {
+// Overlay 9, originally func_ov009_02188c2c (USA/EUR 0x02188c2c, JPN 0x02189af0)
+extern "C" ARM void setupChoiceNavigation(CharacterCreationUI* editor) {
     int columns, rows, count, pageCount, selected;
     signed char id = editor->state;
 

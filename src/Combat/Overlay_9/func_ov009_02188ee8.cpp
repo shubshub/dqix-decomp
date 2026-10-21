@@ -25,7 +25,7 @@ extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void func_ov009_0218b850(CharacterCreationUI*);
 extern "C" void func_0205bb04(CreationNavigation*, int);
 extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
-extern "C" void func_ov009_02188c2c(CharacterCreationUI*);
+extern "C" void setupChoiceNavigation(CharacterCreationUI*);
 extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
 extern "C" void applyCreationChoice(CharacterCreationUI*, int);
 extern "C" int menuSlotToStyleIndex(CharacterCreationUI*, int, int);
@@ -175,7 +175,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
                     choice = self->furthestState[self->sex] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
-                    func_ov009_02188c2c(self);
+                    setupChoiceNavigation(self);
                     self->flags |= 0x2000;
                     func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation));
                     return -1;
@@ -306,7 +306,7 @@ extern Obj0205eaa0 data_02108760;
 extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
 extern "C" void func_0205bb04(Navigation*, int);
 extern "C" int func_0205bf58(Navigation*, unsigned int);
-extern "C" void func_ov009_02188c2c(CharacterCreation*);
+extern "C" void setupChoiceNavigation(CharacterCreation*);
 extern "C" void func_ov009_02188e70(CharacterCreation*, int);
 extern "C" void applyCreationChoice(CharacterCreation*, int);
 extern "C" int menuSlotToStyleIndex(CharacterCreation*, int, int);
@@ -410,7 +410,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
                     choice = self->maxSteps[self->gender] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
-                    func_ov009_02188c2c(self);
+                    setupChoiceNavigation(self);
                     self->flags |= 0x2000;
                     func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation));
                     return -1;

@@ -3,6 +3,7 @@
 #include "Memory/SafeAllocator.h"
 #include "Combat/MapDisplay.h"
 #include "World/Object3D.h"
+#include "Resource/ChoiceGrid.h"
 
 struct Struct020dfc40 {
     char unk_0[0x18];
@@ -20,17 +21,6 @@ struct Struct_0205bef8 {
     int words_[0x10];
 };
 
-struct Struct021847c4 {
-    int x_;
-    int y_;
-    int width_;
-    int height_;
-    int stepX_;
-    int stepY_;
-    int columns_;
-    int rows_;
-};
-
 unsigned int* GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
 void ZeroInit020de848(void* table);
@@ -43,7 +33,7 @@ void ResetList0204af64(List0204af64* background);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
 extern "C" void func_0204c684(Canvas* canvas);
 void Init0205bef8(Struct_0205bef8* cursor);
-void ResetFields021847c4(Struct021847c4* grid);
+void ResetFields021847c4(ChoiceGrid* grid);
 int FindEntryIndexByKey020424e4(int text, int mode);
 
 extern char data_ov009_0218aca4[];
@@ -90,7 +80,7 @@ struct CharacterCreation {
     Object3D object_;
     char camera_[0x2c8];
     Struct_0205bef8 cursor_;
-    Struct021847c4 grid_;
+    ChoiceGrid grid_;
     short cursorX_;
     short cursorY_;
     short cursorWidth_;

@@ -9,8 +9,8 @@ struct CharacterModel {
 };
 
 int GetWord0x0_0200fb8c(int* gameState);
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -27,7 +27,7 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
-    if (self->step == 0)
+    if (self->step == 0) //First time setup, Runs one time when we switch into the Gender Tab
     {
         if (GetBrightness((GameResources*)resources, false) == -16 &&
             GetBrightness((GameResources*)resources, true) == -16)
@@ -36,11 +36,13 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
                 return;
             SetBrightness(resources, 0, 15);
         }
-        func_ov009_02188c2c(self);
-        func_ov009_02188d9c(self);
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
         func_ov009_02188e70(self, self->sex);
         self->step++;
     }
+
+    //Looks like Step 1 and Step 2 Trigger when we enter the Gender Tab
     if (self->step == 1)
     {
         if (IsBrightnessTransitionActive(resources))

@@ -18,7 +18,7 @@ src/Combat/Overlay_9/func_ov009_02187b34.cpp:
     complete
     .text start:0x021888f0 end:0x0218918c
 
-src/Combat/Overlay_9/02188d9c.cpp:
+src/Combat/Overlay_9/loadChoiceLayout_02188d9c.cpp:
     .text start:0x02189c60 end:0x02189d30
 
 src/Combat/Overlay_9/func_ov009_0218454c.cpp:
@@ -90,7 +90,7 @@ src/Combat/Overlay_9/AdvanceStatStep_021868c4.cpp:
     .text start:0x021879f0 end:0x02187b04
 
 
-src/Combat/Overlay_9/DispatchTypeAndInitPair_02188c2c.cpp:
+src/Combat/Overlay_9/setupChoiceNavigation_02188c2c.cpp:
     complete
     .text start:0x02189af0 end:0x02189c60
 

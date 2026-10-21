@@ -5,8 +5,8 @@
 #define _Z20SetStatValue021855dcPhi func_ov009_021867bc
 #endif
 
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -41,8 +41,8 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
 {
     if (self->step == 0)
     {
-        func_ov009_02188c2c(self);
-        func_ov009_02188d9c(self);
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
         func_ov009_02188e70(self, self->skinColor[self->sex]);
         Vector3fix position = data_ov009_0218a9f8;
         Vector3fix target = data_ov009_0218aa04;
