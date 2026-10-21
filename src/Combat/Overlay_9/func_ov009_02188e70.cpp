@@ -3,7 +3,7 @@
 #include "Resource/CharacterCreationUI.h"
 
 extern "C" ARM void func_ov009_02188e70(CharacterCreationUI* editor, int choice) {
-    ChoiceGrid* grid = &editor->grid;
+    CreationSlotLayout* grid = &editor->grid;
     int y;
     int width;
     int height;

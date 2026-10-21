@@ -11,7 +11,7 @@ extern CreationOptionOrder data_ov009_0218a9bc;
 #endif
 
 // Overlay 9, originally func_ov009_02188b14 (USA/EUR 0x02188b14, JPN 0x021898cc)
-extern "C" ARM int menuSlotToStyleIndex(void* storage, int type, int index) {
+extern "C" ARM int CharacterCreationUI_SlotToStyleIndex(void* storage, int type, int index) {
     CharacterCreationUI* editor = (CharacterCreationUI*)storage;
 #if defined(jpn)
     CreationOptionOrder order = data_ov009_0218b998;

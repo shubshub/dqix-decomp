@@ -1,6 +1,6 @@
 func_ov009_021842a0 kind:function(arm,size=0x208) addr:0x021853a0
 func_ov009_0218454c kind:function(arm,size=0x280) addr:0x021855a8
-_Z19ResetFields021847c4P10ChoiceGrid kind:function(arm,size=0x28) addr:0x02185828
+_Z19ResetFields021847c4P18CreationSlotLayout kind:function(arm,size=0x28) addr:0x02185828
 func_ov009_02185850 kind:function(arm,size=0x38) addr:0x02185850
 func_ov009_02185888 kind:function(arm,size=0x5c) addr:0x02185888
 func_ov009_02184848 kind:function(arm,size=0x1c8) addr:0x021858e4
@@ -14,7 +14,7 @@ _Z29UpdateCombatantState_02184d70Pv kind:function(arm,size=0xc0) addr:0x02186098
 func_ov009_02184e58 kind:function(arm,size=0x664) addr:0x02186158
 func_ov009_021867bc kind:function(arm,size=0x58) addr:0x021867bc
 func_ov009_02185634 kind:function(arm,size=0xcec) addr:0x02186814
-handleGenderSelection kind:function(arm,size=0x208) addr:0x02187500
+CharacterCreationUI_HandleGenderSelection kind:function(arm,size=0x208) addr:0x02187500
 func_ov009_021865dc kind:function(arm,size=0x114) addr:0x02187708
 func_ov009_021866f0 kind:function(arm,size=0x1d4) addr:0x0218781c
 func_ov009_021868c4 kind:function(arm,size=0x114) addr:0x021879f0
@@ -28,11 +28,11 @@ func_ov009_021883cc kind:function(arm,size=0x88) addr:0x0218918c
 func_ov009_02189214 kind:function(arm,size=0x164) addr:0x02189214
 _Z18UpdateFlag021885b8P14Struct021885b8 kind:function(arm,size=0x4c) addr:0x02189378
 func_ov009_021893c4 kind:function(arm,size=0x340) addr:0x021893c4
-applyCreationChoice kind:function(arm,size=0x1c8) addr:0x02189704
-menuSlotToStyleIndex kind:function(arm,size=0xe4) addr:0x021898cc
-_Z22getCharacterDimensionsPhiPsS0_ kind:function(arm,size=0x140) addr:0x021899b0
-setupChoiceNavigation kind:function(arm,size=0x170) addr:0x02189af0
-loadChoiceLayout kind:function(arm,size=0xd0) addr:0x02189c60
+CharacterCreationUI_ApplyChoice kind:function(arm,size=0x1c8) addr:0x02189704
+CharacterCreationUI_SlotToStyleIndex kind:function(arm,size=0xe4) addr:0x021898cc
+_Z37CharacterCreationUI_GetBodyDimensionsPhiPsS0_ kind:function(arm,size=0x140) addr:0x021899b0
+CharacterCreationUI_SetupSlotNavigation kind:function(arm,size=0x170) addr:0x02189af0
+CharacterCreationUI_LoadSlotLayout kind:function(arm,size=0xd0) addr:0x02189c60
 func_ov009_02188e70 kind:function(arm,size=0xd4) addr:0x02189d30
 func_ov009_02188ee8 kind:function(arm,size=0xab0) addr:0x02189e04
 func_ov009_0218a8b4 kind:function(arm,size=0x1fc) addr:0x0218a8b4
@@ -74,7 +74,7 @@ data_ov009_0218ba4c kind:data(any) addr:0x0218ba4c
 data_ov009_0218aac8 kind:data(any) addr:0x0218ba7c
 data_ov009_0218bab0 kind:data(any) addr:0x0218bab0
 data_ov009_0218bb04 kind:data(any) addr:0x0218bb04
-data_ov009_0218bb6c kind:data(any) addr:0x0218bb6c
+CharacterCreationUI_slotLayoutTable kind:data(any) addr:0x0218bb6c
 data_ov009_0218bc20 kind:data(any) addr:0x0218bc20
 data_ov009_0218bc25 kind:data(any) addr:0x0218bc25
 data_ov009_0218bc3e kind:data(any) addr:0x0218bc3e

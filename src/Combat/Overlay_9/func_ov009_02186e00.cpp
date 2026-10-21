@@ -7,8 +7,8 @@
 
 struct Obj0205eaa0;
 struct PartyMemberData { char unknown[0x3c]; char name[1]; };
-extern "C" void setupChoiceNavigation(CharacterCreationUI*);
-extern "C" void loadChoiceLayout(void*);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
+extern "C" void CharacterCreationUI_LoadSlotLayout(void*);
 extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI*);
@@ -23,8 +23,8 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
 {
     if (self->step == 0) {
         self->keyboardChoice = 0;
-        setupChoiceNavigation(self);
-        loadChoiceLayout(self);
+        CharacterCreationUI_SetupSlotNavigation(self);
+        CharacterCreationUI_LoadSlotLayout(self);
         func_ov009_02188e70(self, self->keyboardChoice);
         self->flags |= 1;
         self->keyboardPage = self->previousKeyboardPage = 0;

@@ -25,10 +25,10 @@ extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void func_ov009_0218b850(CharacterCreationUI*);
 extern "C" void func_0205bb04(CreationNavigation*, int);
 extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
-extern "C" void setupChoiceNavigation(CharacterCreationUI*);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
-extern "C" void applyCreationChoice(CharacterCreationUI*, int);
-extern "C" int menuSlotToStyleIndex(CharacterCreationUI*, int, int);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
+extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, int);
 
 struct PartyMemberAppearance {
     short models[10];
@@ -175,7 +175,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
                     choice = self->furthestState[self->sex] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
-                    setupChoiceNavigation(self);
+                    CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= 0x2000;
                     func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation));
                     return -1;
@@ -216,7 +216,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
     }
     if (self->flags & 0x10) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
-        applyCreationChoice(self, choice);
+        CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == 1) {
             PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
             self->flags |= 0x60000;
@@ -226,8 +226,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
             appearance->skinColor = skinColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
-            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
+            appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
+            appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
         }
         if (!touched) func_ov009_02188e70(self, choice);
         self->flags |= 0x6100;
@@ -306,10 +306,10 @@ extern Obj0205eaa0 data_02108760;
 extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
 extern "C" void func_0205bb04(Navigation*, int);
 extern "C" int func_0205bf58(Navigation*, unsigned int);
-extern "C" void setupChoiceNavigation(CharacterCreation*);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreation*);
 extern "C" void func_ov009_02188e70(CharacterCreation*, int);
-extern "C" void applyCreationChoice(CharacterCreation*, int);
-extern "C" int menuSlotToStyleIndex(CharacterCreation*, int, int);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreation*, int);
+extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreation*, int, int);
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
     CharacterControls* controls = &self->controls; \
@@ -410,7 +410,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
                     choice = self->maxSteps[self->gender] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
-                    setupChoiceNavigation(self);
+                    CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= 0x2000;
                     func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation));
                     return -1;
@@ -453,7 +453,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
     }
     if (self->flags & 0x10) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
-        applyCreationChoice(self, choice);
+        CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == 1) {
             PartyMemberAppearance* appearance = &self->member->appearance;
             self->flags |= 0x60000;
@@ -463,8 +463,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
             appearance->skinColor = skinColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = menuSlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
-            appearance->models[3] = menuSlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
+            appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
+            appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
         }
         if (!touched) func_ov009_02188e70(self, choice);
         self->flags |= 0x6100;

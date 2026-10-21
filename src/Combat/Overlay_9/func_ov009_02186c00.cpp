@@ -5,10 +5,10 @@
 #define _Z20SetStatValue021855dcPhi func_ov009_021867bc
 #endif
 
-extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
-extern "C" void loadChoiceLayout(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
+extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
-extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" void func_ov009_021867bc(unsigned char*, int);
@@ -41,8 +41,8 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
 {
     if (self->step == 0)
     {
-        setupChoiceNavigation(self);
-        loadChoiceLayout(self);
+        CharacterCreationUI_SetupSlotNavigation(self);
+        CharacterCreationUI_LoadSlotLayout(self);
         func_ov009_02188e70(self, self->skinColor[self->sex]);
         Vector3fix position = data_ov009_0218a9f8;
         Vector3fix target = data_ov009_0218aa04;
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
     {
         if (self->flags & 0x80)
             return;
-        applyCreationChoice(self, self->skinColor[self->sex]);
+        CharacterCreationUI_ApplyChoice(self, self->skinColor[self->sex]);
         self->step++;
     }
     else if (self->step == 2)
