@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" void func_ov009_02188c2c(Struct_ov009_021842a0* arg0);
-extern "C" void func_ov009_02188d9c(Struct_ov009_021842a0* arg0);
-extern "C" void func_ov009_02188e70(Struct_ov009_021842a0* arg0, int arg1);
-extern "C" void func_ov009_02188944(Struct_ov009_021842a0* arg0, int arg1);
-extern "C" int func_ov009_02188ee8(Struct_ov009_021842a0* arg0);
+extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
+extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
+extern "C" void applyCreationChoice(CharacterCreationUI* self, int val);
+extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" ARM void func_ov009_021867bc(unsigned char* arg0, int arg1);
 #define func_ov009_021855dc func_ov009_021867bc
@@ -56,10 +56,10 @@ extern "C" ARM void func_ov009_021866f0(Struct_ov009_021842a0* arg0) {
         if (arg0->unknown_d9c_ & 0x80) {
             return;
         }
-        int var5 = arg0->unknown_da3_;
-        unsigned char var6 = arg0->unknown_da6_[var5];
-        func_ov009_02188944(arg0, var6);
-        arg0->unknown_c59_ = arg0->unknown_c59_ + 1;
+        int idx = self->sex;
+        unsigned char val = self->faceStyle[idx];
+        applyCreationChoice(self, val);
+        self->step = self->step + 1;
         return;
     }
     if (var0 != 2) {

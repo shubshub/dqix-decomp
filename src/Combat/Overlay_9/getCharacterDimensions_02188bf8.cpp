@@ -1,5 +1,4 @@
 // KEEP-NAME
-// USA: func_ov009_02188bf8
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
@@ -10,6 +9,7 @@ struct BodyDimensions {
 extern BodyDimensions data_ov009_0218aa70[][5];
 #endif
 
+// Overlay 9, originally func_ov009_02188bf8 (USA/EUR 0x02188bf8, JPN 0x021899b0)
 ARM void getCharacterDimensions(unsigned char* storage, int bodyType, short* width, short* height) {
     CharacterCreationUI* editor = (CharacterCreationUI*)storage;
 #if defined(jpn)

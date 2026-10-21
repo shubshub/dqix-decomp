@@ -59,16 +59,16 @@ extern "C" Struct_0201099c_9* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
 extern "C" int func_020de2a4(Struct_020730e0_2* arg0, int arg1, int arg2);
 extern short data_ov023_021fd68a[];
 
-// USA: func_ov023_021e540c
-extern "C" ARM void func_ov023_021e540c(Struct_ov023_021e540c_5* arg0) {
-    Struct_ov023_021e540c_2* var0 = &arg0->unknown_c18_->unknown_488_;
-    Struct_ov023_021e540c* var1 = (Struct_ov023_021e540c*)func_02099cac();
-    unsigned int var2 = var0->unknown_14_1_;
-    unsigned int var3 = var0->unknown_14_4_;
-    unsigned int var4 = arg0->unknown_794_[2].unknown_68_0_ << 3;
-    StageMemoryToVRAM(VRAMSubregion_TexturePalette, var1->unknown_0_[var0->unknown_15_0_], var4 + 0x24, 4, false, true);
-    StageMemoryToVRAM(VRAMSubregion_TexturePalette, var1->unknown_108_[var3], var4 + 0x28, 4, false, true);
-    StageMemoryToVRAM(VRAMSubregion_TexturePalette, var1->unknown_88_[var2], var4 + 0x30, 0x10, false, true);
+// Overlay 23, originally func_ov023_021e540c (USA/EUR 0x021e540c, JPN 0x021e55f0)
+extern "C" ARM void applyModelColors(Character021e540c* self) {
+    Appearance021e540c* appearance = &self->member->appearance;
+    PaletteTable021e540c* colors = (PaletteTable021e540c*)GetVariantShortTable02109928_02099cac();
+    unsigned int eye = appearance->eyeColor;
+    unsigned int skin = appearance->skinColor;
+    unsigned int paletteOffset = self->vramStates[2].palette << 3;
+    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->hair[appearance->hairColor], paletteOffset + 0x24, 4, false, true);
+    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->skin[skin], paletteOffset + 0x28, 4, false, true);
+    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->eyes8[eye], paletteOffset + 0x30, 0x10, false, true);
 
     short var5[10];
     func_ov023_021e5fdc((void*)arg0->unknown_c15_, var5, var0->unknown_0_);

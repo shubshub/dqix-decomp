@@ -12,7 +12,7 @@ int GetWord0x0_0200fb8c(int* gameState);
 extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
 extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
-extern "C" void func_ov009_02188944(CharacterCreationUI* self, int choice);
+extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
 extern "C" void clearModelPart(CharacterModel* character, int part);
 #if defined(jpn)
@@ -22,8 +22,8 @@ extern "C" void func_ov009_021867bc(unsigned char*, int);
 extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
 #endif
 
-// USA: func_ov009_021863d0
-extern "C" ARM void func_ov009_021863d0(Struct_ov009_021842a0* arg0)
+// Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
+extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
 {
     GameState* var0 = GameState::GetInstance();
     GameResources* var1 = (GameResources*)func_0200fb8c((int*)var0);
@@ -52,8 +52,8 @@ extern "C" ARM void func_ov009_021863d0(Struct_ov009_021842a0* arg0)
     {
         if (arg0->unknown_d9c_ & 0x80)
             return;
-        func_ov009_02188944(arg0, arg0->unknown_da3_);
-        arg0->unknown_c59_++;
+        applyCreationChoice(self, self->sex);
+        self->step++;
     }
     else if (arg0->unknown_c59_ == 3)
     {
