@@ -21,6 +21,33 @@ enum CreationFlag
     CreationFlag_TabLoading = 0x80,    // set on going to a tab, cleared once its graphics have loaded
 };
 
+// CharacterCreationUI::state: the current tab. Each tab's confirm goes to the next tab and back to the
+// previous one; 9-11 aren't identified yet (name entry's confirm goes to 9, the gender tab's back to 11).
+enum CreationTab
+{
+    CreationTab_Setup = 0,
+    CreationTab_Gender = 1,
+    CreationTab_BodyType = 2,
+    CreationTab_HairStyle = 3,
+    CreationTab_HairColor = 4,
+    CreationTab_Face = 5,
+    CreationTab_EyeColor = 6,
+    CreationTab_SkinColor = 7,
+    CreationTab_NameEntry = 8,
+    CreationTab_Done = 12,
+};
+
+// What CharacterCreationUI_HandleInput returns. A tab icon comes back as CreationInput_TabIcon + its tab.
+enum CreationInput
+{
+    CreationInput_Back = -3,
+    CreationInput_Confirm = -2,
+    CreationInput_None = -1,
+    CreationInput_TabIcon = 100,
+    CreationInput_FirstTabIcon = CreationInput_TabIcon + CreationTab_Gender,
+    CreationInput_LastTabIcon = CreationInput_TabIcon + CreationTab_NameEntry,
+};
+
 struct CreationTextEntry {
     int key;
     const char* text;

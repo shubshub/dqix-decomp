@@ -39,19 +39,19 @@ extern "C" ARM void func_ov009_021868c4(CharacterCreationUI* self) {
 		return;
 	}
 	int result = CharacterCreationUI_HandleInput(self);
-	if (result == -2) {
-		CharacterCreationUI_SwitchTab((unsigned char*)self, 4);
+	if (result == CreationInput_Confirm) {
+		CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_HairColor);
 		return;
 	}
-	if (result == -3) {
-		CharacterCreationUI_SwitchTab((unsigned char*)self, 2);
+	if (result == CreationInput_Back) {
+		CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_BodyType);
 		return;
 	}
-	if (result < 0x65 || result > 0x6c) {
+	if (result < CreationInput_FirstTabIcon || result > CreationInput_LastTabIcon) {
 		return;
 	}
 	int idx2 = self->sex;
-	int v = result - 0x64;
+	int v = result - CreationInput_TabIcon;
 	signed char *arr = self->furthestState;
 	if (v > arr[idx2]) {
 		return;

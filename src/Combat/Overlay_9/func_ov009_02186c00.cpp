@@ -63,19 +63,19 @@ extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
             self->flags |= 1;
         int result = CharacterCreationUI_HandleInput(self);
         int changed = 0;
-        if (result == -2)
+        if (result == CreationInput_Confirm)
         {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 8);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_NameEntry);
             changed = 1;
         }
-        else if (result == -3)
+        else if (result == CreationInput_Back)
         {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 6);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
             changed = 1;
         }
-        else if (result >= 101 && result <= 108)
+        else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
-            int state = result - 100;
+            int state = result - CreationInput_TabIcon;
             if (state <= self->furthestState[self->sex] && state != self->state)
             {
                 CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)state);

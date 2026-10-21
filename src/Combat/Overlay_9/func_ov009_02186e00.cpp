@@ -45,12 +45,12 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
         if (!func_ov009_02185c58(self->unknownBeforeTileMaps))
             return;
         int result = CharacterCreationUI_HandleInput(self);
-        if (result == -2) {
+        if (result == CreationInput_Confirm) {
             func_ov009_0218ad0c(self);
-        } else if (result == -3) {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
-        } else if (result >= 101 && result <= 108) {
-            result -= 100;
+        } else if (result == CreationInput_Back) {
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
+        } else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon) {
+            result -= CreationInput_TabIcon;
             if (result <= self->furthestState[self->sex] && result != self->state)
                 CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
         }
@@ -59,7 +59,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
             self->step++;
         }
         if (self->flags & 0x800) {
-            if (result == -2)
+            if (result == CreationInput_Confirm)
                 self->flags |= 0x1000000;
             PartyMemberData* member = (PartyMemberData*)self->characterData;
             sprintf(member->name, data_020ef078, self->names[self->sex]);
@@ -81,6 +81,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
 #include <globaldefs.h>
 #include <std_library_functions.h>
 #include "GameState/GameState.h"
+#include "Resource/CharacterCreationUI.h"
 
 struct KeyboardKey {
     short x_;
@@ -226,21 +227,21 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
         self->keyboardResult_ = func_ov003_0215f000(self->keyboard_, GameState::GetInstance()->GetTickCount());
         int result = CharacterCreationUI_HandleInput(self);
         if (self->keyboardResult_ != 0)
-            result = -1;
+            result = CreationInput_None;
         int checked = 0;
-        if (result == -2)
+        if (result == CreationInput_Confirm)
         {
             checked = 1;
             func_ov009_02189a4c(self);
         }
-        else if (result == -3)
+        else if (result == CreationInput_Back)
         {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
             return;
         }
-        else if (result >= 101 && result <= 108)
+        else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
-            result -= 100;
+            result -= CreationInput_TabIcon;
             if (result <= self->lastStates_[self->sex_] && result != self->state_)
             {
                 CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
@@ -256,7 +257,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
             break;
         case 9:
             if (!g_keyManager.TestKeysPressed(1) && g_touchInput.pressed_ == 0)
-                CharacterCreationUI_SwitchTab((unsigned char*)self, 7);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
             else
                 DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
             self->flags_ |= 0x8100;
@@ -303,7 +304,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
             return;
         default:
             self->flags_ &= ~0x2000;
-            if (g_keyManager.TestKeysPressed(4) && result != -2)
+            if (g_keyManager.TestKeysPressed(4) && result != CreationInput_Confirm)
             {
                 if (self->keyboard_->key_ != NULL)
                 {
