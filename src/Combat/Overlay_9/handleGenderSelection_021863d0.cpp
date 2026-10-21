@@ -55,7 +55,7 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
         applyCreationChoice(self, self->sex);
         self->step++;
     }
-    else if (arg0->unknown_c59_ == 3)
+    else if (self->step == 3) //Appears to be Idle Waiting for Input
     {
         int var2 = func_ov009_02188ee8(arg0);
         if (var2 != arg0->unknown_c58_)
