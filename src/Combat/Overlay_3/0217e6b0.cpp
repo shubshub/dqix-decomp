@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 #include "Memory/SafeAllocator.h"
@@ -207,13 +208,13 @@ extern "C" ARM void func_ov003_0217e6b0(Struct_ov003_0217e6b0_2* arg0) {
         arg0->unknown_8_.Reset();
         arg0->unknown_1c_ = arg0->unknown_8_.Allocate(Enum_ov003_0217e6b0_3512);
         func_020a1940(OVERLAY_ID(9));
-        func_020a1ef0(1);
-        func_ov009_0218454c(arg0->unknown_1c_, arg0->unknown_b4_, 1);
-        func_ov008_021842a0(arg0->unknown_1c_, &arg0->unknown_8_);
-        void* var4 = arg0->unknown_8_.Allocate(Enum_ov003_0217e6b0_2404);
-        if (var4) {
-            func_02082828(var4);
-            *(void**)((char*)arg0->unknown_1c_ + Enum_ov003_0217e6b0_3464) = var4;
+        PushInputLogB_020a1ef0(1);
+        func_ov009_0218454c(self->scene, self->sceneArg, CreationMode_PartyMemberCreation);
+        func_ov008_021842a0(self->scene, &self->allocator);
+        void* extra = self->allocator.Allocate(kRegionValue964_8CC);
+        if (extra) {
+            func_02082828(extra);
+            *(void**)((char*)self->scene + kRegionValueD88_D4C) = extra;
         }
         arg0->unknown_b0_ = func_020100bc(var0);
         func_ov003_0217eea8(1);

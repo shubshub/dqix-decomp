@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/FileIO.h"
@@ -343,7 +344,7 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
         func_ov023_021e4fd8(MODEL1);
         func_ov023_021e6198(MODEL1, (int)arg0->unknown_c8_);
 
-        if (arg0->unknown_d95_ == 0)
+        if (self->mode_ == CreationMode_NewGame)
         {
 #if defined(jpn)
             Enum_ov009_02185634 var17 = Enum_ov009_02185634_3072;
@@ -396,20 +397,20 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
         func_020a27a0(var19->unknown_800_);
         func_020100c4(var1, (int)var19->unknown_800_);
 
-        arg0->unknown_da3_ = 0;
-        arg0->unknown_da4_[0] = 2;
-        arg0->unknown_da4_[1] = 2;
-        arg0->unknown_da6_[0] = 0;
-        arg0->unknown_da6_[1] = 0;
-        arg0->unknown_da8_[0] = 0;
-        arg0->unknown_da8_[1] = 5;
-        arg0->unknown_daa_[0] = 3;
-        arg0->unknown_daa_[1] = 3;
-        arg0->unknown_dac_[0] = 0;
-        arg0->unknown_dac_[1] = 0;
-        arg0->unknown_dae_[0] = 0;
-        arg0->unknown_dae_[1] = 3;
-        if (arg0->unknown_d95_ == 1)
+        self->sex_ = 0;
+        self->unk_da4[0] = 2;
+        self->unk_da4[1] = 2;
+        self->unk_da6[0] = 0;
+        self->unk_da6[1] = 0;
+        self->unk_da8[0] = 0;
+        self->unk_da8[1] = 5;
+        self->unk_daa[0] = 3;
+        self->unk_daa[1] = 3;
+        self->unk_dac[0] = 0;
+        self->unk_dac[1] = 0;
+        self->unk_dae[0] = 0;
+        self->unk_dae[1] = 3;
+        if (self->mode_ == CreationMode_PartyMemberCreation)
         {
             arg0->unknown_da6_[0] = 1;
             arg0->unknown_da6_[1] = 1;
@@ -515,7 +516,7 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
             var22->unknown_2_ = 0x3f55;
             var22->unknown_a_ = 0x43fe;
         }
-        if (arg0->unknown_d95_ == 0)
+        if (self->mode_ == CreationMode_NewGame)
         {
             var22->unknown_0_ = 0x32cf;
             var22->unknown_16_ = 0x36b7;
@@ -559,15 +560,15 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
     {
         if (var2->GetTaskStatus(arg0->unknown_d90_) != 0)
         {
-            char var44[4];
-            void* var45;
-            unsigned int var46;
-            int var47;
-            var2->GetLoadedFileByID(arg0->unknown_d90_, &var45, &var46);
-            int var48 = func_02046900((Struct_02020cb8_4*)var45);
-            if (arg0->unknown_d95_ == 1)
-                var48--;
-            for (int var49 = 0; var49 < var48; var49++)
+            char name[4];
+            void* archive;
+            unsigned int archiveSize;
+            int size;
+            loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+            int count = CountActiveEntries((ActiveEntry02046900*)archive);
+            if (self->mode_ == CreationMode_PartyMemberCreation)
+                count--;
+            for (int i = 0; i < count; i++)
             {
                 void* var50 = func_020467f0((Struct_02020aec*)var45, var49, (void**)var44, &var47);
                 if (var50 != NULL)
@@ -587,23 +588,23 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
                     }
                 }
             }
-            var2->RemoveTask(arg0->unknown_d90_);
-            arg0->unknown_d90_ = -1;
-            int var51 = 1;
-            if (arg0->unknown_d95_ == 1)
-                var51 = 0;
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_138_[0], var51, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[0], 0);
-            func_0204bc74(&arg0->unknown_138_[1], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[1], 0);
-            func_0204bc74(&arg0->unknown_138_[2], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[2], 0);
-            func_0204bc74(&arg0->unknown_138_[5], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[5], 0);
-            arg0->unknown_d9c_ |= 0x1000;
-            func_ov023_021da274(arg0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[1], 0);
-            arg0->unknown_d9c_ &= ~0x1000;
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            int visible = 1;
+            if (self->mode_ == CreationMode_PartyMemberCreation)
+                visible = 0;
+            DispatchEntry0204b8d0((Obj0204b8d0*)&self->backgrounds_[0], visible, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
+            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[0], 0);
+            func_0204bc74(&self->backgrounds_[1], 0, 0, 0, 0x20, 0x19, 0);
+            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[1], 0);
+            func_0204bc74(&self->backgrounds_[2], 0, 0, 0, 0x20, 0x19, 0);
+            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[2], 0);
+            func_0204bc74(&self->backgrounds_[5], 0, 0, 0, 0x20, 0x19, 0);
+            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[5], 0);
+            self->flags_ |= 0x1000;
+            func_ov023_021da274(self);
+            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[1], 0);
+            self->flags_ &= ~0x1000;
 
             arg0->unknown_7d0_ = arg0->unknown_0_[0].Allocate(0x1000);
             Struct_ov006_02158478* var52;
@@ -707,8 +708,8 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
 #if !defined(jpn)
     else if (var3 == 3)
     {
-        if (arg0->unknown_d95_ == 0)
-            arg0->unknown_d90_ = var2->QueueLoadFile(data_ov009_0218acf4, NULL);
+        if (self->mode_ == CreationMode_NewGame)
+            self->task_ = loader->QueueLoadFile(data_ov009_0218acf4, NULL);
         else
             arg0->unknown_d90_ = var2->QueueLoadFile(data_ov009_0218ad0d, NULL);
         arg0->unknown_c59_++;

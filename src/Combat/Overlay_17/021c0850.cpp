@@ -237,11 +237,11 @@ extern "C" ARM void func_ov017_021c0850(Struct_ov017_021c0850_2* arg0) {
                 func_0209c678((Struct_02109bf4_4*)&data_02109bf4, 0xf);
             }
         }
-        unsigned short* var5 = (unsigned short*)func_02012fe4();
-        func_0203e0a0(func_0203cf4c(), *var5);
-        if (GetBrightness((GameResources*)var1, false) != -0x10
-            || GetBrightness((GameResources*)var1, true) != -0x10) {
-            SetBrightness(var1, -0x10, 0xf);
+        unsigned short* id = (unsigned short*)func_02012fe4();
+        func_0203e0a0(GetGlobalPtr021075f4_0203cf4c(), *id);
+        if (GetBrightness((GameResources*)res, false) != Brightness_Black
+            || GetBrightness((GameResources*)res, true) != Brightness_Black) {
+            SetBrightness(res, -0x10, 0xf);
         }
         arg0->unknown_20_++;
     } else if (arg0->unknown_20_ == 1) {

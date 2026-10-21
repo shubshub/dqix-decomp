@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include "NitroSDK/Graphics.h"
 
 static inline unsigned long inline_ov021_0218b5fc_2(volatile unsigned int* arg0) { return *arg0; }
@@ -189,30 +190,30 @@ extern "C" ARM void func_ov021_0218b5fc(Struct_ov021_0218b5fc* arg0) {
     *(unsigned short*)0x4000304 |= 0x8000;
     func_020c5588(0, 0, 0x7fff, 0, 0);
 
-    Struct_ov021_0218bbc4 var4 = data_ov021_0218bbc4;
-    func_020c555c((int)&var4);
-    func_0207de48(arg0->unknown_44_, 0x4000, 0x40);
-    void* var5 = func_020421a0();
-    func_02042c68(var5);
-    func_02043124(var5);
-    func_020440a4(var5);
-    *(char**)((char*)var5 + Enum_ov021_0218b5fc_7720) = arg0->unknown_44_;
-    func_0207df50((Struct_0203d028*)arg0->unknown_44_);
-    func_0207df90(arg0->unknown_44_);
-    func_020432c4(var5);
-    func_0207dfac(arg0->unknown_44_);
-    func_020100a0(var0, 0);
-    arg0->unknown_2c_.CreateTypeA(func_02012d88((AllocatorUnion*)&data_02114e20, Enum_ov021_0218b5fc_307768), Enum_ov021_0218b5fc_307768);
-    arg0->unknown_2c_.Reset();
-    arg0->unknown_40_ = arg0->unknown_2c_.Allocate(Enum_ov021_0218b5fc_3512);
-    func_ov009_0218454c(arg0->unknown_40_, 0, 0);
-    arg0->unknown_b4_ = (char*)func_02010954((char*)var0);
-    *(short*)(arg0->unknown_b4_ + 0x568) = func_020100a8(var0);
-    *(char**)((char*)arg0->unknown_40_ + Enum_ov021_0218b5fc_3464) = arg0->unknown_b4_;
-    func_ov009_021842a0(arg0->unknown_40_, &arg0->unknown_2c_);
-    func_0209c3b4((Struct_0209c3b4_2*)&data_02109bf4, 2);
-    func_020c9820();
-    func_020c38d4();
+    EdgeColors0218b5fc edges = data_ov021_0218bbc4;
+    CallWithAddr4000330_020c555c((int)&edges);
+    func_0207de48(self->state44, 0x4000, 0x40);
+    void* controller = GetGlobalField0x1c020421a0();
+    func_02042c68(controller);
+    func_02043124(controller);
+    TailForward020440a4(controller);
+    *(char**)((char*)controller + kControllerBackupOffset) = self->state44;
+    CopyInternalFields0207df50((Foo0207df50*)self->state44);
+    RestorePairTables0207df90(self->state44);
+    func_020432c4(controller);
+    BackupPairTables0207dfac(self->state44);
+    SetField0x3acValue_020100a0(gs, 0);
+    self->allocator.CreateTypeA(AllocateAligned4_02012d88((AllocatorUnion*)&data_02114e20, kSceneAllocatorSize), kSceneAllocatorSize);
+    self->allocator.Reset();
+    self->scene = self->allocator.Allocate(kSceneSize);
+    func_ov009_0218454c(self->scene, 0, CreationMode_NewGame);
+    self->slot = (char*)FindSlotWithNegShort02010954((char*)gs);
+    *(short*)(self->slot + 0x568) = GetField0x3acValue_020100a8(gs);
+    *(char**)((char*)self->scene + kSceneSlotOffset) = self->slot;
+    func_ov009_021842a0(self->scene, &self->allocator);
+    SetStateAndDispatch0209c3b4((Actor0209c3b4*)&data_02109bf4, 2);
+    DelayThenSyncBit0_020c9820();
+    RestoreDisplayMode_020c38d4();
     DISPCNTSUB |= 0x10000;
     func_02010124((Struct_0200f3a4_9*)var0);
 

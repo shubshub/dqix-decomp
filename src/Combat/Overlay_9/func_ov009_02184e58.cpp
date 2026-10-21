@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include <std_library_functions.h>
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
@@ -132,14 +133,14 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_02184e58_2* arg0)
             if (data_ov009_0218b943[var4] > 0)
                 func_0204af38((Struct_0204af38*)var5, (unsigned char)data_ov009_0218b943[var4], &arg0->unknown_0_[0]);
         }
-        char var6[4];
-        void* var7;
-        unsigned int var8;
-        var2->GetLoadedFileByID(arg0->unknown_d54_, &var7, &var8);
-        int var9 = func_02046900((Struct_02020cb8_4*)var7);
-        if (arg0->unknown_d59_ == 1)
-            var9--;
-        for (int var10 = 0; var10 < var9; var10++)
+        char name[4];
+        void* archive;
+        unsigned int archiveSize;
+        loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+        int count = CountActiveEntries((ActiveEntry02046900*)archive);
+        if (self->mode_ == CreationMode_PartyMemberCreation)
+            count--;
+        for (int i = 0; i < count; i++)
         {
             unsigned int var11;
             void* var12 = func_020467f0((Struct_02020aec*)var7, var10, (void**)var6, (int*)&var11);
@@ -212,11 +213,11 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_02184e58_2* arg0)
         else
             arg0->unknown_d8f_ = 1;
     }
-    if (arg0->unknown_d59_ == 1)
-        var23--;
-    int var24 = var0 * 2 + 1;
-    var1 = var0 + 1;
-    for (int var25 = 0; var25 < var23; var25++)
+    if (self->mode_ == CreationMode_PartyMemberCreation)
+        count--;
+    int pairEnd = first * 2 + 1;
+    firstEnd = first + 1;
+    for (int i = 0; i < count; i++)
     {
         var22 = func_020467f0((Struct_02020aec*)var19, var25, (void**)var18, (int*)&var21);
         if (var22 == NULL)
@@ -226,7 +227,7 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_02184e58_2* arg0)
             Struct_ov003_021594c4* var26 = &arg0->unknown_fc_[4];
             if (var25 < var24)
             {
-                if (arg0->unknown_d59_ == 1)
+                if (self->mode_ == CreationMode_PartyMemberCreation)
                 {
                     if (var25 >= var1)
                         continue;
@@ -262,27 +263,27 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_02184e58_2* arg0)
 
     if (arg0->unknown_d8f_ != 0)
         return;
-    var2->RemoveTask(arg0->unknown_d54_);
-    arg0->unknown_d54_ = -1;
-    int var28 = 0;
-    if (arg0->unknown_d59_ == 0 && arg0->unknown_c1c_ == 1)
-        var28 = 1;
-    func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_fc_[3], var28, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
-    func_0204bc74(&arg0->unknown_fc_[4], 0, 0, 0, 0x20, 0x19, 0);
-    arg0->unknown_d60_ |= 0x2000;
-    if (arg0->unknown_fc_[4].unknown_1d_ != 0)
-        func_ov023_021da274(arg0);
-    arg0->unknown_d60_ &= ~0x2000;
-    func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_fc_[3], 0);
-    func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_fc_[4], 0);
-    arg0->unknown_d60_ |= 0x4000;
-    func_ov023_021d9d34((char*)arg0);
-    arg0->unknown_d60_ &= ~0x4000;
-    arg0->unknown_d60_ |= 0x8000;
-    func_ov023_021d9e60((char*)arg0);
-    arg0->unknown_d60_ &= ~0x8000;
-    arg0->unknown_d60_ &= ~0x80;
-    arg0->unknown_d58_ = 0;
+    loader->RemoveTask(self->task_);
+    self->task_ = -1;
+    int unk = 0;
+    if (self->mode_ == CreationMode_NewGame && self->state_ == 1)
+        unk = 1;
+    DispatchEntry0204b8d0((Obj0204b8d0*)&self->backgrounds_[3], unk, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
+    func_0204bc74(&self->backgrounds_[4], 0, 0, 0, 0x20, 0x19, 0);
+    self->flags_ |= 0x2000;
+    if (self->backgrounds_[4].unk_1d != 0)
+        func_ov023_021da274(self);
+    self->flags_ &= ~0x2000;
+    FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[3], 0);
+    FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[4], 0);
+    self->flags_ |= 0x4000;
+    RefreshFieldIfFlag4000_021d9d34((char*)self);
+    self->flags_ &= ~0x4000;
+    self->flags_ |= 0x8000;
+    BuildFieldTag_021d9e60((char*)self);
+    self->flags_ &= ~0x8000;
+    self->flags_ &= ~0x80;
+    self->loadStep_ = 0;
     DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | 0x1700;
 }
 #else
@@ -314,14 +315,14 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_021842a0_2* arg0)
             if (data_ov009_0218a966[var35] > 0)
                 func_0204af38((Struct_0204af38*)var36, (unsigned char)data_ov009_0218a966[var35], &arg0->unknown_0_[0]);
         }
-        char var37[4];
-        void* var38;
-        unsigned int var39;
-        var30->GetLoadedFileByID(arg0->unknown_d90_, &var38, &var39);
-        int var40 = func_02046900((Struct_02020cb8_4*)var38);
-        if (arg0->unknown_d95_ == 1)
-            var40--;
-        for (int var41 = 0; var41 < var40; var41++)
+        char name[4];
+        void* archive;
+        unsigned int archiveSize;
+        loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+        int count = CountActiveEntries((ActiveEntry02046900*)archive);
+        if (self->mode_ == CreationMode_PartyMemberCreation)
+            count--;
+        for (int i = 0; i < count; i++)
         {
             unsigned int var42;
             void* var43 = func_020467f0((Struct_02020aec*)var38, var41, (void**)var37, (int*)&var42);
@@ -433,12 +434,12 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_021842a0_2* arg0)
 
     if (arg0->unknown_db6_ != 0)
         return;
-    var30->RemoveTask(arg0->unknown_d90_);
-    arg0->unknown_d90_ = -1;
-    int var59 = 0;
-    if (arg0->unknown_d95_ == 0 && var33 == 1)
-        var59 = 1;
-    if (var33 == 8 && arg0->unknown_d95_ == 1)
+    loader->RemoveTask(self->task_);
+    self->task_ = -1;
+    int unk = 0;
+    if (self->mode_ == CreationMode_NewGame && state == 1)
+        unk = 1;
+    if (state == 8 && self->mode_ == CreationMode_PartyMemberCreation)
     {
         void* var60 = func_0204af14((Struct_0204af14*)&arg0->unknown_138_[3], 4);
         for (int var61 = 0; var61 < 4; var61++)

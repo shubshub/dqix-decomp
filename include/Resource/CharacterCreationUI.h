@@ -11,6 +11,13 @@ struct Struct_0205a254;
 // {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
 extern const short CharacterCreationUI_slotLayouts[];
 
+// CharacterCreationUI::mode: why character creation was opened (the constructor's third argument).
+enum CreationMode
+{
+    CreationMode_NewGame = 0,             // the hero, from the new-game flow (overlay 21)
+    CreationMode_PartyMemberCreation = 1, // a new party member, in-game (overlay 3)
+};
+
 // Bits of CharacterCreationUI::flags whose meaning is known; the rest are still bare numbers.
 enum CreationFlag
 {
@@ -19,6 +26,7 @@ enum CreationFlag
     CreationFlag_ConfirmTouched = 0x20, // the confirm button was touched this frame
     CreationFlag_BackTouched = 0x40,    // the back button was touched this frame
     CreationFlag_TabLoading = 0x80,    // set on going to a tab, cleared once its graphics have loaded
+    CreationFlag_MemberCreated = 0x400, // mode 1: a party member was created (tab 9); backing out clears it
 };
 
 // CharacterCreationUI::state: the current tab. Each tab's confirm goes to the next tab and back to the

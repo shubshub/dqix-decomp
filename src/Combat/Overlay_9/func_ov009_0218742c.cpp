@@ -1,5 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
+#include "Resource/CharacterCreationUI.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "NitroSDK/ColorEffects.h"
 #include "Util/Random.h"
@@ -167,15 +168,15 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
 #endif
             arg0->unknown_c59_ = 255;
         }
-    } else if (var1 == 3) {
-        func_0204b010((Struct_0204b010*)arg0->unknown_1b8_, 0);
-        func_0204bc74(arg0->unknown_1b8_, 0, 0, 0, 32, 25, 0);
-        func_0204b04c(arg0->unknown_1b8_, 0);
-        func_0204b088(arg0->unknown_1b8_, 0);
-        if (arg0->unknown_d95_ == 0) {
-            Struct_ov009_0218742c_9* var6 = arg0->unknown_d88_;
-            var6->unknown_56a_ = data_ov009_0218a9b4[arg0->unknown_da8_[arg0->unknown_da3_]];
-            ((Struct_ov009_0218742c_8*)var0)->unknown_63d4_ = 1;
+    } else if (step == 3) {
+        ClearBuffer0204b010((Obj0204b010*)menu->display, 0);
+        func_0204bc74(menu->display, 0, 0, 0, 32, 25, 0);
+        func_0204b04c(menu->display, 0);
+        func_0204b088(menu->display, 0);
+        if (menu->mode == CreationMode_NewGame) {
+            Character0218742c* character = menu->character;
+            character->appearance = data_ov009_0218a9b4[menu->selections[menu->selectedIndex]];
+            ((GameFlag0218742c*)game)->changed = 1;
             ColorEffect_ConfigureBrightnessAdjust(0x04001050, 1, 0);
             SetElementFieldC2_0205deb4((Struct_0205d81c*)menu->entryList, 3, 0);
             ClearBuffers0204b010OverList0x98((Cont0205d1e0*)menu->entryList);
@@ -184,19 +185,19 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
             InitEntries0205d2bc((Obj0205d2bc*)menu->entryList);
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 10);
 #if defined(jpn)
-        } else if (arg0->unknown_d95_ == 1) {
-            void* var7 = func_02010828(var0);
-            Struct_ov009_0218742c var8;
-            func_02086404(&var8);
-            func_02083ca0((unsigned char*)arg0->unknown_d88_, arg0->unknown_da2_);
-            arg0->unknown_d88_->unknown_138_[arg0->unknown_da2_] = 0;
-            arg0->unknown_d88_->unknown_16c_[arg0->unknown_da2_] = 1;
-            arg0->unknown_d88_->unknown_56a_ = NextRandomMax(GetBTRandom(), 16);
-            char var9[32];
-            int var10 = arg0->unknown_d88_->unknown_950_;
-            sprintf(var9, data_ov009_0218ad2c, var10);
-            Struct_ov009_0218742c_2 var11;
-            func_0208247c(&var11);
+        } else if (menu->mode == CreationMode_PartyMemberCreation) {
+            void* members = GetPtrField0x2a04_02010828(game);
+            Snapshot0218742c snapshot;
+            func_02086404(&snapshot);
+            SetBit0x954StoreIndex0x950_02083ca0((unsigned char*)menu->character, menu->vocation);
+            menu->character->experience[menu->vocation] = 0;
+            menu->character->levels[menu->vocation] = 1;
+            menu->character->appearance = NextRandomMax(GetBTRandom(), 16);
+            char filename[32];
+            int characterVocation = menu->character->vocation;
+            sprintf(filename, data_ov009_0218ad2c, characterVocation);
+            LoadedRecord0218742c record;
+            Clear0x54Bytes0208247c(&record);
             BackgroundLoader::AddLockGlobal();
             unsigned int var12;
             void* var13 = LoadFileIntoMemory(var9, data_0211e33c, &var12);
@@ -239,24 +240,24 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
             }
             func_020830cc(menu->character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
-            menu->flags |= 0x400;
+            menu->flags |= CreationFlag_MemberCreated;
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #else
-        } else if (arg0->unknown_d95_ == 1) {
-            Struct_ov009_0218742c_9* var25 = arg0->unknown_d88_;
-            void* var26 = func_02010828(var0);
-            Struct_ov009_0218742c var27;
-            func_02086404(&var27);
-            func_02083ca0((unsigned char*)var25, arg0->unknown_da2_);
-            var25->unknown_138_[arg0->unknown_da2_] = 0;
-            var25->unknown_16c_[arg0->unknown_da2_] = 1;
-            var25->unknown_56a_ = NextRandomMax(GetBTRandom(), 16);
-            char var28[32];
-            int var29 = var25->unknown_950_;
-            sprintf(var28, data_ov009_0218ad2c, var29);
-            Struct_ov009_0218742c_2 var30;
-            func_0208247c(&var30);
+        } else if (menu->mode == CreationMode_PartyMemberCreation) {
+            Character0218742c* character = menu->character;
+            void* members = GetPtrField0x2a04_02010828(game);
+            Snapshot0218742c snapshot;
+            func_02086404(&snapshot);
+            SetBit0x954StoreIndex0x950_02083ca0((unsigned char*)character, menu->vocation);
+            character->experience[menu->vocation] = 0;
+            character->levels[menu->vocation] = 1;
+            character->appearance = NextRandomMax(GetBTRandom(), 16);
+            char filename[32];
+            int characterVocation = character->vocation;
+            sprintf(filename, data_ov009_0218ad2c, characterVocation);
+            LoadedRecord0218742c record;
+            Clear0x54Bytes0208247c(&record);
             BackgroundLoader::AddLockGlobal();
             unsigned int var31;
             void* var32 = LoadFileIntoMemory(var28, data_0211e33c, &var31);
@@ -298,7 +299,7 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
             }
             func_020830cc(character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
-            menu->flags |= 0x400;
+            menu->flags |= CreationFlag_MemberCreated;
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #endif

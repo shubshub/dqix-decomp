@@ -61,36 +61,36 @@ extern "C" ARM void func_ov023_021da274(Struct_ov009_021842a0* arg0) {
                 if (arg0->unknown_d8e_ != arg0->unknown_d8d_) {
                     func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_158_[2], (unsigned char)arg0->unknown_d8d_, 0, 0, 0, 0, 32, 24, 0xffff);
                 }
-                arg0->unknown_d8e_ = arg0->unknown_d8d_;
-                func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_158_[2], 2, 7, 28, 12, 1);
-                if (arg0->unknown_bec_.unknown_c_ != 1) {
-                    short var11 = arg0->unknown1_d8c_ / 11;
-                    short var12 = arg0->unknown1_d8c_ % 11;
-                    short var13 = var12 * 2 + 3;
-                    if (var12 >= 5) var13 += 1;
-                    if (var12 == 10) var13 += 2;
-                    short var14 = var11 * 2 + 7;
-                    if (var12 == 10) {
-                        bool var15 = true;
-                        if (arg0->unknown_d95_ == 0 && var11 == 4) var15 = false;
-                        if (var15) {
-                            int var16 = 3;
-                            if (var11 == 5) var16 = 4;
-                            func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_158_[2], var13, var14, var16, 2, 0);
+                editor->previousKeyboardPage = editor->keyboardPage;
+                func_0204b9b8((PaletteWindow*)&editor->tileMaps[2], 2, 7, 28, 12, 1);
+                if (editor->navigation.rows != 1) {
+                    short row = editor->keyboardChoice / 11;
+                    short column = editor->keyboardChoice % 11;
+                    short x = column * 2 + 3;
+                    if (column >= 5) x += 1;
+                    if (column == 10) x += 2;
+                    short y = row * 2 + 7;
+                    if (column == 10) {
+                        bool highlight = true;
+                        if (editor->mode == CreationMode_NewGame && row == 4) highlight = false;
+                        if (highlight) {
+                            int width = 3;
+                            if (row == 5) width = 4;
+                            func_0204b9b8((PaletteWindow*)&editor->tileMaps[2], x, y, width, 2, 0);
                         }
                     } else {
                         func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_158_[2], var13, var14, 2, 2, 0);
                     }
                 }
             }
-            func_0204b04c(&arg0->unknown_158_[2], NULL);
-        } else if (var3 == 9) {
-            unsigned int var17 = 0;
-            if (arg0->unknown_d95_ == 0) var17 = 1;
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_158_[3], var17, 0, 0, 0, 14, 32, 10, 0xffff);
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_158_[3], 2, 0, 0, 24, 9, 8, 7, 0xffff);
-            func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_158_[2], 2, 7, 28, 12, 1);
-            func_0204b04c(&arg0->unknown_158_[2], NULL);
+            func_0204b04c(&editor->tileMaps[2], NULL);
+        } else if (page == 9) {
+            unsigned int id = 0;
+            if (editor->mode == CreationMode_NewGame) id = 1;
+            DispatchEntry0204b8d0((Obj0204b8d0*)&editor->tileMaps[3], id, 0, 0, 0, 14, 32, 10, 0xffff);
+            DispatchEntry0204b8d0((Obj0204b8d0*)&editor->tileMaps[3], 2, 0, 0, 24, 9, 8, 7, 0xffff);
+            func_0204b9b8((PaletteWindow*)&editor->tileMaps[2], 2, 7, 28, 12, 1);
+            func_0204b04c(&editor->tileMaps[2], NULL);
         }
         func_0204b04c(&arg0->unknown_158_[3], NULL);
     }

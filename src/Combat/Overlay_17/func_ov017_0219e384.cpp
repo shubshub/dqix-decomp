@@ -468,14 +468,14 @@ extern "C" ARM void func_ov017_0219e384(struct Struct_ov017_0219e384_2* arg0, vo
 			if (var25 <= 0) {
 				var22 = 60;
 			}
-			var20 = -16;
-			var21 = 1;
-			if (IsBrightnessZero((GameResources*)var1, false) == 0 &&
-			    IsBrightnessZero((GameResources*)var1, true) == 0 &&
-			    GetBrightnessTransitionStates((GameResources*)var1) != 0x101) {
-				var21 = 0;
-				if (GetBrightness((GameResources*)var1, var21) > 0) {
-					var20 = 16;
+			delta = -16;
+			axis = 1;
+			if (IsBrightnessZero((GameResources*)ov, false) == 0 &&
+			    IsBrightnessZero((GameResources*)ov, true) == 0 &&
+			    GetBrightnessTransitionStates((GameResources*)ov) != 0x101) {
+				axis = 0;
+				if (GetBrightness((GameResources*)ov, axis) > Brightness_Normal) {
+					delta = 16;
 				}
 				var22 = 0;
 			}

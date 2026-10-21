@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include <std_library_functions.h>
 #include "Memory/SafeAllocator.h"
 #include "Combat/MapDisplay.h"
@@ -133,17 +134,17 @@ struct Struct_ov009_021842a0_2 {
 // USA: func_ov009_0218454c
 extern "C" ARM void func_ov009_0218454c(Struct_ov009_021842a0_2* arg0, int arg1, int arg2)
 {
-    arg0->unknown_d95_ = arg2;
-    if (arg0->unknown_d95_ == 1)
-        func_020466e4(func_020d6c00(), 0xf);
-    arg0->unknown_0_[0].ResetAllocatorPointer();
-    arg0->unknown_0_[1].ResetAllocatorPointer();
-    arg0->unknown_0_[2].ResetAllocatorPointer();
-    arg0->unknown_0_[3].ResetAllocatorPointer();
-    arg0->unknown_0_[4].ResetAllocatorPointer();
-    arg0->unknown_0_[5].ResetAllocatorPointer();
-    arg0->unknown_0_[6].ResetAllocatorPointer();
-    arg0->unknown_0_[7].ResetAllocatorPointer();
+    self->mode_ = mode;
+    if (self->mode_ == CreationMode_PartyMemberCreation)
+        OrBitsIntoField0_020466e4(GetDataPtr02114e04_020d6c00(), 0xf);
+    self->allocators_[0].ResetAllocatorPointer();
+    self->allocators_[1].ResetAllocatorPointer();
+    self->allocators_[2].ResetAllocatorPointer();
+    self->allocators_[3].ResetAllocatorPointer();
+    self->allocators_[4].ResetAllocatorPointer();
+    self->allocators_[5].ResetAllocatorPointer();
+    self->allocators_[6].ResetAllocatorPointer();
+    self->allocators_[7].ResetAllocatorPointer();
 #if !defined(jpn)
     arg0->unknown_0_[8].ResetAllocatorPointer();
 #endif

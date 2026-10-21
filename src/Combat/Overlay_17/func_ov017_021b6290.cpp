@@ -93,13 +93,13 @@ extern "C" ARM void func_ov017_021b6290(Struct_ov017_021b6290* arg0) {
             func_0209c480(&data_02109bf4, var6);
             func_0209c2e0(&data_02109bf4, 127, 0);
             func_0205e944(data_02108760, 127);
-            SetFlags04(var1, 0x40);
-            func_02043124(func_020421a0());
-            func_0203e5d8(func_0203cf4c(), 0);
-            if ((int)func_020709ac(var3) > 30 || abs(GetBrightness((GameResources*)var1, false)) == 16) {
-                SetMainBrightness(var1, -16, 0);
-                if (GetBrightness((GameResources*)var1, true) == 0) {
-                    SetSubBrightness(var1, -16, 15);
+            SetFlags04(resources, 0x40);
+            func_02043124(GetGlobalField0x1c020421a0());
+            SetOrClearBit0x10OnEntries_0203e5d8(GetGlobalPtr021075f4_0203cf4c(), 0);
+            if ((int)GetIntAt0xc_020709ac(timing) > 30 || abs(GetBrightness((GameResources*)resources, false)) == 16) {
+                SetMainBrightness(resources, -16, 0);
+                if (GetBrightness((GameResources*)resources, true) == Brightness_Normal) {
+                    SetSubBrightness(resources, -16, 15);
                 }
                 arg0->unknown_fc_ = 4;
             } else arg0->unknown_fc_ = 3;
