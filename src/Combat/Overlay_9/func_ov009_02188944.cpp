@@ -84,8 +84,11 @@ extern "C" ARM void func_ov009_02188944(CharacterCreationUI* self, int choice)
     void* current = self->character;
     if (state == 1)
     {
+        //This section of the code determines what Gender the Character is
         appearance->female_ = choice; //0 = Male, 1 = Female
-        clearModelPart(next, 0); //Something to do with applying the new Model Looks
+
+        //Clear out specific Model Parts so they can be replaced with new ones
+        clearModelPart(next, 0);
         clearModelPart(next, 2);
         clearModelPart(next, 3);
         clearModelPart(next, 4);
