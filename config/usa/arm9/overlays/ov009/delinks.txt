@@ -100,6 +100,7 @@ src/Combat/Overlay_9/DecrementCounterD96ClampZero_0218a930.cpp:
 src/Combat/Overlay_9/loadChoiceLayout_02188d9c.cpp:
     complete
     .text start:0x02188d9c end:0x02188e70
+    .rodata start:0x0218ac04 end:0x0218ac98
 
 
 src/Combat/Overlay_9/func_ov009_02184bbc.cpp:
