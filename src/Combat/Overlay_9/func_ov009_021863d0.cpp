@@ -14,7 +14,7 @@ extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
 extern "C" void func_ov009_02188944(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
-extern "C" void func_ov023_021e6158(CharacterModel* character, int part);
+extern "C" void clearModelPart(CharacterModel* character, int part);
 #if defined(jpn)
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 #define SetStatValue021855dc func_ov009_021867bc
@@ -64,15 +64,15 @@ extern "C" ARM void func_ov009_021863d0(CharacterCreationUI* self)
             if (next->loading_ == 0)
             {
 #if defined(jpn)
-                func_ov023_021e6158((CharacterModel*)self->nextCharacter, 0);
-                func_ov023_021e6158((CharacterModel*)self->nextCharacter, 2);
-                func_ov023_021e6158((CharacterModel*)self->nextCharacter, 3);
-                func_ov023_021e6158((CharacterModel*)self->nextCharacter, 4);
+                clearModelPart((CharacterModel*)self->nextCharacter, 0);
+                clearModelPart((CharacterModel*)self->nextCharacter, 2);
+                clearModelPart((CharacterModel*)self->nextCharacter, 3);
+                clearModelPart((CharacterModel*)self->nextCharacter, 4);
 #else
-                func_ov023_021e6158(next, 0);
-                func_ov023_021e6158(next, 2);
-                func_ov023_021e6158(next, 3);
-                func_ov023_021e6158(next, 4);
+                clearModelPart(next, 0);
+                clearModelPart(next, 2);
+                clearModelPart(next, 3);
+                clearModelPart(next, 4);
 #endif
             }
         }
