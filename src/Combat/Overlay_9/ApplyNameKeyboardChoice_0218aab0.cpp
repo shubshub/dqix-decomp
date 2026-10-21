@@ -51,7 +51,7 @@ extern "C" ARM int func_ov009_0218aab0(CharacterCreationUI* self, unsigned char 
         changedIndex = self->nameFlags[self->sex] - 1;
     } else if (func_02001aec(character, data_ov009_0218bc85, 2) == 0) {
     } else if (func_02001aec(character, data_ov009_0218bc88, 2) == 0) {
-        if (self->mode == 1) {
+        if (self->mode == CreationMode_PartyMemberCreation) {
             func_ov009_0218b850(self);
             self->flags |= 0x8000;
         }

@@ -98,7 +98,7 @@ extern "C" ARM void func_ov017_021b6290(BattleLoad021b6290* self) {
             SetOrClearBit0x10OnEntries_0203e5d8(GetGlobalPtr021075f4_0203cf4c(), 0);
             if ((int)GetIntAt0xc_020709ac(timing) > 30 || abs(GetBrightness((GameResources*)resources, false)) == 16) {
                 SetMainBrightness(resources, -16, 0);
-                if (GetBrightness((GameResources*)resources, true) == 0) {
+                if (GetBrightness((GameResources*)resources, true) == Brightness_Normal) {
                     SetSubBrightness(resources, -16, 15);
                 }
                 self->state = 4;

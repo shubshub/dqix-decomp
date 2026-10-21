@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 #include "Memory/SafeAllocator.h"
@@ -208,7 +209,7 @@ extern "C" ARM void func_ov003_0217e6b0(SceneSwap0217e6b0* self) {
         self->scene = self->allocator.Allocate(kRegionValueDB8_D90);
         func_020a1940(OVERLAY_ID(9));
         PushInputLogB_020a1ef0(1);
-        func_ov009_0218454c(self->scene, self->sceneArg, 1);
+        func_ov009_0218454c(self->scene, self->sceneArg, CreationMode_PartyMemberCreation);
         func_ov008_021842a0(self->scene, &self->allocator);
         void* extra = self->allocator.Allocate(kRegionValue964_8CC);
         if (extra) {

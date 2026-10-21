@@ -474,7 +474,7 @@ extern "C" ARM void func_ov017_0219e384(struct Seq0219e384* self, void* list) {
 			    IsBrightnessZero((GameResources*)ov, true) == 0 &&
 			    GetBrightnessTransitionStates((GameResources*)ov) != 0x101) {
 				axis = 0;
-				if (GetBrightness((GameResources*)ov, axis) > 0) {
+				if (GetBrightness((GameResources*)ov, axis) > Brightness_Normal) {
 					delta = 16;
 				}
 				limit = 0;

@@ -239,8 +239,8 @@ extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
         }
         unsigned short* id = (unsigned short*)func_02012fe4();
         func_0203e0a0(GetGlobalPtr021075f4_0203cf4c(), *id);
-        if (GetBrightness((GameResources*)res, false) != -0x10
-            || GetBrightness((GameResources*)res, true) != -0x10) {
+        if (GetBrightness((GameResources*)res, false) != Brightness_Black
+            || GetBrightness((GameResources*)res, true) != Brightness_Black) {
             SetBrightness(res, -0x10, 0xf);
         }
         self->state++;

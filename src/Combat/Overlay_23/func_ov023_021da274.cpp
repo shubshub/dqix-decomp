@@ -72,7 +72,7 @@ extern "C" ARM void func_ov023_021da274(CharacterCreationUI* editor) {
                     short y = row * 2 + 7;
                     if (column == 10) {
                         bool highlight = true;
-                        if (editor->mode == 0 && row == 4) highlight = false;
+                        if (editor->mode == CreationMode_NewGame && row == 4) highlight = false;
                         if (highlight) {
                             int width = 3;
                             if (row == 5) width = 4;
@@ -86,7 +86,7 @@ extern "C" ARM void func_ov023_021da274(CharacterCreationUI* editor) {
             func_0204b04c(&editor->tileMaps[2], NULL);
         } else if (page == 9) {
             unsigned int id = 0;
-            if (editor->mode == 0) id = 1;
+            if (editor->mode == CreationMode_NewGame) id = 1;
             DispatchEntry0204b8d0((Obj0204b8d0*)&editor->tileMaps[3], id, 0, 0, 0, 14, 32, 10, 0xffff);
             DispatchEntry0204b8d0((Obj0204b8d0*)&editor->tileMaps[3], 2, 0, 0, 24, 9, 8, 7, 0xffff);
             func_0204b9b8((PaletteWindow*)&editor->tileMaps[2], 2, 7, 28, 12, 1);

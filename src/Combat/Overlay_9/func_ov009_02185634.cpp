@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/FileIO.h"
@@ -343,7 +344,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
         InitBlockArray_021e4fd8(MODEL1);
         SetIntC0C_021e6198(MODEL1, (int)self->unk_c8);
 
-        if (self->mode_ == 0)
+        if (self->mode_ == CreationMode_NewGame)
         {
 #if defined(jpn)
             PairTableSize pairSize = kPairTableSize;
@@ -409,7 +410,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
         self->unk_dac[1] = 0;
         self->unk_dae[0] = 0;
         self->unk_dae[1] = 3;
-        if (self->mode_ == 1)
+        if (self->mode_ == CreationMode_PartyMemberCreation)
         {
             self->unk_da6[0] = 1;
             self->unk_da6[1] = 1;
@@ -515,7 +516,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
             look->unk_2 = 0x3f55;
             look->unk_a = 0x43fe;
         }
-        if (self->mode_ == 0)
+        if (self->mode_ == CreationMode_NewGame)
         {
             look->unk_0 = 0x32cf;
             look->unk_16 = 0x36b7;
@@ -565,7 +566,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
             int size;
             loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
             int count = CountActiveEntries((ActiveEntry02046900*)archive);
-            if (self->mode_ == 1)
+            if (self->mode_ == CreationMode_PartyMemberCreation)
                 count--;
             for (int i = 0; i < count; i++)
             {
@@ -590,7 +591,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
             loader->RemoveTask(self->task_);
             self->task_ = -1;
             int visible = 1;
-            if (self->mode_ == 1)
+            if (self->mode_ == CreationMode_PartyMemberCreation)
                 visible = 0;
             DispatchEntry0204b8d0((Obj0204b8d0*)&self->backgrounds_[0], visible, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
             FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[0], 0);
@@ -707,7 +708,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
 #if !defined(jpn)
     else if (step == 3)
     {
-        if (self->mode_ == 0)
+        if (self->mode_ == CreationMode_NewGame)
             self->task_ = loader->QueueLoadFile(data_ov009_0218acf4, NULL);
         else
             self->task_ = loader->QueueLoadFile(data_ov009_0218ad0d, NULL);

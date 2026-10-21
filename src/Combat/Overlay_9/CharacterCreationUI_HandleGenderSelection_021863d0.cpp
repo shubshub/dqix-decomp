@@ -25,14 +25,15 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
+
     if (self->step == 0) //First time setup, Runs one time when we switch into the Gender Tab
     {
-        if (GetBrightness(resources, false) == -16 &&
-            GetBrightness(resources, true) == -16)
+        if (GetBrightness(resources, false) == Brightness_Black &&
+            GetBrightness(resources, true) == Brightness_Black)
         {
             if (self->flags & CreationFlag_TabLoading)
                 return;
-            SetBrightness(resources, 0, 15);
+            SetBrightness(resources, Brightness_Normal, 15);
         }
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
@@ -83,17 +84,15 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
         }
         if (result == CreationInput_Back)
         {
-            if (self->mode == 1)
-                self->flags &= ~0x400;
-            else if (self->mode == 0)
-                #if defined(jpn)
-                *((unsigned char*)gameState + 0x6174) = 0;
-#else
-                *((unsigned char*)gameState + 0x63d4) = 0;
-#endif
+            if (self->mode == CreationMode_PartyMemberCreation)
+                self->flags &= ~CreationFlag_MemberCreated;
+            else if (self->mode == CreationMode_NewGame)
+                gameState->characterCreated_ = 0;
             CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
             return;
         }
+
+        //This is when you click to a tab further away than 1 next to it
         if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
             int tab = result - CreationInput_TabIcon;

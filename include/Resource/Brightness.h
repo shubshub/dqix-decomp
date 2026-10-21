@@ -6,6 +6,15 @@
 #define REG_MASTER_BRIGHT (*(volatile unsigned short*)0x0400006c)
 #define REG_MASTER_BRIGHT_SUB (*(volatile unsigned short*)0x0400106c)
 
+// Master brightness levels (REG_MASTER_BRIGHT), as GetBrightness returns them and the Set*Brightness
+// functions take them: -16 is fully black, 0 normal, 16 fully white.
+enum Brightness
+{
+    Brightness_Black = -16,
+    Brightness_Normal = 0,
+    Brightness_White = 16,
+};
+
 void InitializeBrightnessState(GameResources* resources);
 
 void UpdateBrightnessTransitions(GameResources* resources);

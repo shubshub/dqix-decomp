@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include <std_library_functions.h>
 #include "Memory/SafeAllocator.h"
 
@@ -22,7 +23,7 @@ extern "C" ARM void func_ov009_021842a0(void* scene, SafeAllocator* allocator) {
     self->spriteContext = (SpriteContext0205ac40*)allocator->Allocate(0x54);
     self->sprites = (B174Outer*)allocator->Allocate(0x3e8);
     self->spriteEntries = (Container0205a3d0*)allocator->Allocate(8);
-    if (self->mode != 0) return;
+    if (self->mode != CreationMode_NewGame) return;
     self->modelAllocator = (SafeAllocator*)allocator->Allocate(0x14);
     self->previewAllocators = (SafeAllocator*)allocator->Allocate(0x28);
     self->modelAllocator->ResetAllocatorPointer();
@@ -89,7 +90,7 @@ extern "C" ARM void func_ov009_021842a0(CharacterCreation* self, SafeAllocator* 
     self->renderer2_ = allocator->Allocate(0x54);
     self->sprites2_ = allocator->Allocate(0x3e8);
     self->unk_7ec = allocator->Allocate(8);
-    if (self->mode_ != 0)
+    if (self->mode_ != CreationMode_NewGame)
         return;
 
     self->modelAllocator_ = (SafeAllocator*)allocator->Allocate(0x14);

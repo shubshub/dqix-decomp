@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include <std_library_functions.h>
 #include "Memory/SafeAllocator.h"
 #include "Combat/MapDisplay.h"
@@ -134,7 +135,7 @@ struct CharacterCreation {
 extern "C" ARM void func_ov009_0218454c(CharacterCreation* self, int vocation, int mode)
 {
     self->mode_ = mode;
-    if (self->mode_ == 1)
+    if (self->mode_ == CreationMode_PartyMemberCreation)
         OrBitsIntoField0_020466e4(GetDataPtr02114e04_020d6c00(), 0xf);
     self->allocators_[0].ResetAllocatorPointer();
     self->allocators_[1].ResetAllocatorPointer();

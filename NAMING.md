@@ -70,11 +70,17 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 | `CreationInput` | (none) | same | Enum of what `CharacterCreationUI_HandleInput` returns |
 | `CreationInput_Back` / `_Confirm` / `_None` | `-3` / `-2` / `-1` | same | B or the touchscreen Back button / A or the touchscreen Confirm button / nothing |
 | `CreationInput_TabIcon` | `100` | same | A tab icon comes back as `CreationInput_TabIcon + tab`; `_FirstTabIcon` (101) and `_LastTabIcon` (108) bound the range |
+| `Brightness` | (none) | `include/Resource/Brightness.h` | Master brightness levels, as `GetBrightness` returns them and the `Set*Brightness` functions take them (whose `duration` is in frames: `15` = 250 ms) |
+| `Brightness_Black` / `_Normal` / `_White` | `-16` / `0` / `16` | same | Fully black / normal / fully white. `abs(GetBrightness(...)) == 16` (fully faded either way) is still a number in three overlay 17 files |
+| `CreationMode` | (none) | `include/Resource/CharacterCreationUI.h` | Enum of `CharacterCreationUI::mode`: why character creation was opened (the constructor's third argument) |
+| `CreationMode_NewGame` | `0` | same | The hero, from the new-game flow (overlay 21, `func_ov021_0218b5fc`). Success sets `GameState::characterCreated_` |
+| `CreationMode_PartyMemberCreation` | `1` | same | A new party member, in-game (overlay 3, `0217e6b0.cpp`, which also passes the vocation). Success sets `CreationFlag_MemberCreated` |
 | `CreationFlag` | (none) | `include/Resource/CharacterCreationUI.h` | Enum of `CharacterCreationUI::flags` bits whose meaning is known |
 | `CreationFlag_StylusRotation` | `0x1` | same | The preview model can be spun with the stylus; set once a tab's fade-in finishes |
 | `CreationFlag_ChoiceChanged` | `0x10` | same | The input handler stored a different choice this frame |
 | `CreationFlag_ConfirmTouched` | `0x20` | same | The confirm button was touched this frame (cleared at the start of each input call) |
 | `CreationFlag_BackTouched` | `0x40` | same | The back button was touched this frame (cleared at the start of each input call) |
+| `CreationFlag_MemberCreated` | `0x400` | same | Mode 1 (party member creation): set by tab 9 once the new member is set up and added to the party, cleared on backing out of the gender tab. Mode 0's counterpart is `GameState::characterCreated_` |
 | `CreationFlag_TabLoading` | `0x80` | same | Set on going to a tab (`SetStatValue021855dc`), cleared by `func_ov009_02184e58` once the tab's graphics have loaded |
 
 ### Macros
@@ -88,6 +94,12 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 | Name | Original | Overlay | USA/EUR | JPN | What it is |
 |---|---|---|---|---|---|
 | `CharacterCreationUI_slotLayouts` | `data_ov009_0218ac04` (jpn `data_ov009_0218bb6c`) | 9 | `0x0218ac04` | `0x0218bb6c` | One `{tab, x, y, w, h, stepX, stepY, cols, rows}` entry per tab, ending in -1. Defined in C for usa; jpn and eur still take it from the ROM |
+
+### Fields
+
+| Name | Original | In | What it is |
+|---|---|---|---|
+| `GameState::characterCreated_` | raw `+0x63d4` (jpn `+0x6174`) | `include/GameState/GameState.h` | Set when character creation finishes (tab 9), cleared on backing out of it (gender tab, mode 0) and at game state setup; the scene loop goes on to the main game (overlay 17) only when it's set. Still read through raw offsets in `02000c9c.cpp` (`MOVIE_RETURN_FLAG_OFFSET`), `func_0200f3a4` and `func_ov009_0218742c` |
 
 ### Locals
 

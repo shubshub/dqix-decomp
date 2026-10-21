@@ -1,5 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
+#include "Resource/CharacterCreationUI.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "NitroSDK/ColorEffects.h"
 #include "Util/Random.h"
@@ -172,7 +173,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
         func_0204bc74(menu->display, 0, 0, 0, 32, 25, 0);
         func_0204b04c(menu->display, 0);
         func_0204b088(menu->display, 0);
-        if (menu->mode == 0) {
+        if (menu->mode == CreationMode_NewGame) {
             Character0218742c* character = menu->character;
             character->appearance = data_ov009_0218a9b4[menu->selections[menu->selectedIndex]];
             ((GameFlag0218742c*)game)->changed = 1;
@@ -184,7 +185,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             InitEntries0205d2bc((Obj0205d2bc*)menu->entryList);
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 10);
 #if defined(jpn)
-        } else if (menu->mode == 1) {
+        } else if (menu->mode == CreationMode_PartyMemberCreation) {
             void* members = GetPtrField0x2a04_02010828(game);
             Snapshot0218742c snapshot;
             func_02086404(&snapshot);
@@ -239,11 +240,11 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             }
             func_020830cc(menu->character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
-            menu->flags |= 0x400;
+            menu->flags |= CreationFlag_MemberCreated;
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #else
-        } else if (menu->mode == 1) {
+        } else if (menu->mode == CreationMode_PartyMemberCreation) {
             Character0218742c* character = menu->character;
             void* members = GetPtrField0x2a04_02010828(game);
             Snapshot0218742c snapshot;
@@ -298,7 +299,7 @@ extern "C" ARM void func_ov009_0218742c(Menu0218742c* menu) {
             }
             func_020830cc(character, &snapshot);
             func_02086778(members, &snapshot, 0, 0);
-            menu->flags |= 0x400;
+            menu->flags |= CreationFlag_MemberCreated;
             CharacterCreationUI_SwitchTab((unsigned char*)menu, 11);
         }
 #endif

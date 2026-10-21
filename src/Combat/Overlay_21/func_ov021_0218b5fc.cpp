@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include "NitroSDK/Graphics.h"
 
 static inline unsigned long ReadDisplay(volatile unsigned int* p) { return *p; }
@@ -205,7 +206,7 @@ extern "C" ARM void func_ov021_0218b5fc(Battle0218b5fc* self) {
     self->allocator.CreateTypeA(AllocateAligned4_02012d88((AllocatorUnion*)&data_02114e20, kSceneAllocatorSize), kSceneAllocatorSize);
     self->allocator.Reset();
     self->scene = self->allocator.Allocate(kSceneSize);
-    func_ov009_0218454c(self->scene, 0, 0);
+    func_ov009_0218454c(self->scene, 0, CreationMode_NewGame);
     self->slot = (char*)FindSlotWithNegShort02010954((char*)gs);
     *(short*)(self->slot + 0x568) = GetField0x3acValue_020100a8(gs);
     *(char**)((char*)self->scene + kSceneSlotOffset) = self->slot;

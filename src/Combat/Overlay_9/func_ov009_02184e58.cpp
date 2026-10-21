@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/CharacterCreationUI.h"
 #include <std_library_functions.h>
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
@@ -137,7 +138,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreationJ* self)
         unsigned int archiveSize;
         loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
         int count = CountActiveEntries((ActiveEntry02046900*)archive);
-        if (self->mode_ == 1)
+        if (self->mode_ == CreationMode_PartyMemberCreation)
             count--;
         for (int i = 0; i < count; i++)
         {
@@ -212,7 +213,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreationJ* self)
         else
             self->unk_d8f = 1;
     }
-    if (self->mode_ == 1)
+    if (self->mode_ == CreationMode_PartyMemberCreation)
         count--;
     int pairEnd = first * 2 + 1;
     firstEnd = first + 1;
@@ -226,7 +227,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreationJ* self)
             BackgroundGraphics* background = &self->backgrounds_[4];
             if (i < pairEnd)
             {
-                if (self->mode_ == 1)
+                if (self->mode_ == CreationMode_PartyMemberCreation)
                 {
                     if (i >= firstEnd)
                         continue;
@@ -265,7 +266,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreationJ* self)
     loader->RemoveTask(self->task_);
     self->task_ = -1;
     int unk = 0;
-    if (self->mode_ == 0 && self->state_ == 1)
+    if (self->mode_ == CreationMode_NewGame && self->state_ == 1)
         unk = 1;
     DispatchEntry0204b8d0((Obj0204b8d0*)&self->backgrounds_[3], unk, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
     func_0204bc74(&self->backgrounds_[4], 0, 0, 0, 0x20, 0x19, 0);
@@ -319,7 +320,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreation* self)
         unsigned int archiveSize;
         loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
         int count = CountActiveEntries((ActiveEntry02046900*)archive);
-        if (self->mode_ == 1)
+        if (self->mode_ == CreationMode_PartyMemberCreation)
             count--;
         for (int i = 0; i < count; i++)
         {
@@ -436,9 +437,9 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreation* self)
     loader->RemoveTask(self->task_);
     self->task_ = -1;
     int unk = 0;
-    if (self->mode_ == 0 && state == 1)
+    if (self->mode_ == CreationMode_NewGame && state == 1)
         unk = 1;
-    if (state == 8 && self->mode_ == 1)
+    if (state == 8 && self->mode_ == CreationMode_PartyMemberCreation)
     {
         void* palettes = GetEntryByIndexStride0x10((EntryList0204af14*)&self->backgrounds_[3], 4);
         for (int i = 0; i < 4; i++)
