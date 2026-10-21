@@ -43,7 +43,6 @@ struct MenuWork {
 };
 struct PartySlots { char pad_0[0xf78]; signed char slots[4]; unsigned char count; };
 void CancelPendingAction020397cc(Obj020397cc*, int);
-int GetWord0x0_0200fb8c(int*);
 int GetFieldIfFlag4_020100f8(char*);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
 extern "C" void func_020a0cc4(int);
@@ -71,7 +70,7 @@ extern "C" ARM void func_ov017_021b688c(MenuWork* work) {
     GameState* game = GameState::GetInstance();
     Obj020397cc* object = (Obj020397cc*)game->GetUnknownGameObject();
     CancelPendingAction020397cc(object, 1);
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)game);
+    GameResources* resources = game->GetResources();
     SetFlags04(resources, 0xc0);
     SetFlagsAt0x244_020a28a0((unsigned char*)GetFieldIfFlag4_020100f8((char*)game), 1);
     if (work->state == 0) {

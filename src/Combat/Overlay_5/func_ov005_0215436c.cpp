@@ -10,7 +10,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-int GetWord0x0_0200fb8c(int*);
 extern "C" void func_ov005_02155424(void* self);
 extern "C" void func_ov005_02155544(void* self);
 extern "C" void func_ov005_021555c0(void* self);
@@ -168,7 +167,7 @@ extern "C" ARM int func_ov005_0215436c(Scene0215436c* self) {
     }
 
     GameState* gs = GameState::GetInstance();
-    int word = GetWord0x0_0200fb8c((int*)gs);
+    int word = (int)gs->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (self->state == 0) {

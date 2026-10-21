@@ -106,7 +106,6 @@ extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
 extern "C" void* memset(void* dst, int v, unsigned int n);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
 
-int GetWord0x0_0200fb8c(int* obj);
 
 extern "C" int func_02026780(void* list, void* buf, unsigned int size);
 extern "C" int func_0202c540(void* p);
@@ -291,7 +290,7 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
     struct Frame f;
     char* tbl;
     struct BattleStruct* gs = (BattleStruct*)GameState::GetInstance();
-    int word = GetWord0x0_0200fb8c((int*)gs);
+    int word = (int)((GameState*)gs)->GetResources();
     unsigned short* obj = (unsigned short*)func_02012fe4();
     ActionDataTables* actionTables = GetData02108e10_020797dc();
     tbl = (char*)actionTables;

@@ -16,10 +16,10 @@ struct Overlay9TouchView {
 
 extern "C" {
     int _Z18GetField0_0205bafcPv(void*);
-    int _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(void*);
+    int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
     void func_0205bb04(void*, int);
     void CharacterCreationUI_SetupSlotNavigation(Overlay9TouchView*);
-    void func_ov009_02188e70(Overlay9TouchView*, int);
+    void CharacterCreationUI_MoveCursorToSlot(Overlay9TouchView*, int);
 
     int func_ov009_02189854(Overlay9TouchView* menu, int touchX, int touchY) {
         if (touchY >= 0xa9 && touchY <= 0xb1) {
@@ -74,8 +74,8 @@ extern "C" {
             CharacterCreationUI_SetupSlotNavigation(menu);
             func_0205bb04(menu->cursor, selected);
             menu->flags |= 0x2000;
-            int index = _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(menu->cursor);
-            func_ov009_02188e70(menu, index);
+            int index = _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor);
+            CharacterCreationUI_MoveCursorToSlot(menu, index);
         }
         return selected;
     }

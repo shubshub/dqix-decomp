@@ -21,7 +21,7 @@ struct Dst02157174;
 void CopyThreeFields02157174(Dst02157174*, Src02157174*);
 
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 extern "C" int func_0205bf58(void*, int);
 int CheckFlag30Or401_02157190(void*);
 char* GetField1c_021a193c(int*);
@@ -114,7 +114,7 @@ extern "C" ARM void func_ov005_0215b2bc(Menu* self) {
             found = 1;
             unsigned int tick = GameState::GetInstance()->GetTickCount();
             func_0205bf58(self->scale_, tick ? tick : found);
-            sel = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->scale_[0]);
+            sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->scale_[0]);
             if (CheckFlag30Or401_02157190(self)) flag2 = 1;
         }
         if (found != 0 && self->kind_ != sel) {

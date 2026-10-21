@@ -56,7 +56,6 @@ struct BattleE558 {
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
-GameResources* GetWord0x0_0200fb8c(int*);
 extern "C" ResourceE558* func_ov017_021b8468(void*);
 extern "C" int func_ov000_0217c594(BattleE558*, int);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
@@ -86,7 +85,7 @@ extern "C" ARM void func_ov000_0217e558(BattleE558* battle, int arg1, int arg2) 
     SetElementFlag0x20ByKey0205def8(&battle->list.flags, 1, 0x18);
     SetElementFieldC2_0205deb4(&battle->list.fields, 0x18, 0);
     GameState* game = GameState::GetInstance();
-    GameResources* data = GetWord0x0_0200fb8c((int*)game);
+    GameResources* data = game->GetResources();
     if (func_ov017_021b8468(PTR3718(data))->selected != -1 || !func_ov000_0217c594(battle, 5)) return;
     battle->field956 = 0;
     DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);

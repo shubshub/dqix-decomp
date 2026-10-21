@@ -58,7 +58,6 @@ struct Foo0207df50;
 struct FlagWord020466f4;
 
 extern "C" Object3D* func_ov023_021e6194(void* character);
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 unsigned int* GetDataPtr02114e04_020d6c00();
 extern "C" void func_ov023_021dac40(void* self, unsigned int ticks);
 extern "C" int func_ov009_0218a930(void* self, unsigned int ticks);
@@ -136,7 +135,7 @@ struct CharacterCreation {
 extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
 {
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     Object3D* preview = func_ov023_021e6194(self->character_);
     unsigned int* unknown = GetDataPtr02114e04_020d6c00();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();

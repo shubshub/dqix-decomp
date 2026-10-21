@@ -34,7 +34,6 @@ struct BattleCamera {
     short zoom;
 };
 
-GameResources* GetWord0x0_0200fb8c(int* obj);
 int GetField0x70_0202e7f0(void* obj);
 int IsBrightnessTransitionActive(GameResources* resources);
 int fix32SignedAngleDistance(int a, int b);
@@ -63,7 +62,7 @@ static inline int FxMul(int a, int b) {
 extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
     GameState* gs = GameState::GetInstance();
     GameObject* target = gs->GetGameObjectByIndex(self->followIndex);
-    GameResources* res = GetWord0x0_0200fb8c((int*)gs);
+    GameResources* res = gs->GetResources();
     int angle = GetField0x70_0202e7f0(self);
     int left = 0;
     int right = 0;

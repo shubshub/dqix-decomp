@@ -17,7 +17,6 @@ struct Obj020d8080;
 struct TailList020469b4;
 struct TailNode020469b4;
 extern MapList02164928* data_ov004_02171010;
-GameResources* GetWord0x0_0200fb8c(int*);
 extern "C" Zone3D* func_02012fe4();
 int IsBrightnessTransitionActive(GameResources*);
 int GetScaledStat_021634dc_021634dc(void*);
@@ -44,7 +43,7 @@ void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 extern "C" ARM int func_ov004_02164928(void* self) {
     if (data_ov004_02171010->count == 0) return 0;
     GameState* state = GameState::GetInstance();
-    GameResources* resources = GetWord0x0_0200fb8c(((int*)(state)));
+    GameResources* resources = ((GameState*)((state)))->GetResources();
     Zone3D* zone = func_02012fe4();
     ActiveGrottoClass* area = zone->GetActiveGrotto();
     GrottoStruct* grotto = state->GetGrottoStruct();

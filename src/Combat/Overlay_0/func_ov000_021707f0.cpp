@@ -59,7 +59,6 @@ struct PaletteOwner {
     float phase;
 };
 
-int GetWord0x0_0200fb8c(int*);
 void* GetOffsetPtr02160f08(void*);
 Elem_0205d81c* FindElementByC40205d81c(Struct_0205d81c*, int);
 int IsField0x9cEqual3_0204c7cc(unsigned char*);
@@ -87,7 +86,7 @@ extern "C" ARM void func_ov000_021707f0(PaletteOwner* owner) {
     if (!state) {
         return;
     }
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)state);
+    GameResources* resources = state->GetResources();
     if (!resources || !resources->unknown_ptr_3718) {
         return;
     }

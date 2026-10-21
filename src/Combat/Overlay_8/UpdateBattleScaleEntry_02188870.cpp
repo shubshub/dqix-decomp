@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(struct Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 
 struct Container0205a3d0;
 struct Container0205a330;
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov008_02188870(struct Obj02188870* obj) {
     if (!(obj->flags_b18 & 0x80000)) return;
 
     GameState* battle = GameState::GetInstance();
-    int sum = ComputeScaledSum0205bb84((struct Struct_0205bb84*)((char*)obj + 0x750));
+    int sum = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)obj + 0x750));
     short val = (short)(((sum - obj->b29) << 4) + 7);
 
     SetEntryByte14ByKey0205a42c((struct Container0205a3d0*)obj->f738, 0, 0x3f);

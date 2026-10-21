@@ -4,7 +4,7 @@ struct Words021e60c4 { unsigned int a, b, c; };
 void InitWordsQuad_021e60e0(void* obj, unsigned int val);
 void SetFourWordBlocks_021e6088(void* obj, Words021e60c4* src);
 extern "C" void func_ov023_021e613c(Words021e60c4* dst, char* src);
-extern "C" void clearModelPart(void* obj, int index);
+extern "C" void CharacterModel_InvalidatePart(void* obj, int index);
 
 struct Obj021e447c {
 #if defined(jpn)
@@ -37,13 +37,13 @@ extern "C" ARM void func_ov023_021e447c(Obj021e447c* obj) {
     void* t = obj->f128;
     obj->f128 = obj->f12c;
     obj->f12c = t;
-    clearModelPart(obj->f12c, 0);
-    clearModelPart(obj->f12c, 1);
-    clearModelPart(obj->f12c, 5);
-    clearModelPart(obj->f12c, 6);
-    clearModelPart(obj->f12c, 2);
-    clearModelPart(obj->f12c, 3);
-    clearModelPart(obj->f12c, 4);
+    CharacterModel_InvalidatePart(obj->f12c, 0);
+    CharacterModel_InvalidatePart(obj->f12c, 1);
+    CharacterModel_InvalidatePart(obj->f12c, 5);
+    CharacterModel_InvalidatePart(obj->f12c, 6);
+    CharacterModel_InvalidatePart(obj->f12c, 2);
+    CharacterModel_InvalidatePart(obj->f12c, 3);
+    CharacterModel_InvalidatePart(obj->f12c, 4);
     obj->f634 &= ~0x8;
     obj->f634 &= ~0x40;
 }

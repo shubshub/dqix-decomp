@@ -32,7 +32,7 @@ struct NavigationSteps { int values[4]; };
 struct NavigationKeys { unsigned short values[5]; };
 struct NavigationRepeatDirections { unsigned char values[4]; };
 void ResetState0205bf3c(Struct_0205bf3c*);
-int ComputeScaledSum0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8*, int);
 extern "C" void func_0205bb04(Struct_0205bf3c*, int);
 extern const NavigationKeys data_020e7db8;
@@ -71,16 +71,16 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* navigation, unsigned int ticks
                     else if (navigation->row < 0) navigation->row = navigation->rows - 1;
                     if (navigation->key == 0x40) {
                         int total = navigation->count;
-                        if (total <= ComputeScaledSum0205bb84(navigation))
+                        if (total <= GridCursor_GetSelectedIndex(navigation))
                             func_0205bb04(navigation, total - 1);
                     } else if (navigation->key == 0x80) {
-                        if (navigation->count <= ComputeScaledSum0205bb84(navigation))
+                        if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
                             navigation->row = 0;
                     }
                 } else {
                     if (navigation->rows <= navigation->row) navigation->row = previous;
                     else if (navigation->row < 0) navigation->row = previous;
-                    if (ComputeScaledSum0205bb84(navigation) >= navigation->count)
+                    if (GridCursor_GetSelectedIndex(navigation) >= navigation->count)
                         navigation->row = previous;
                 }
             } else if (navigation->key == 0x20 || navigation->key == 0x10) {
@@ -109,7 +109,7 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* navigation, unsigned int ticks
                         }
                     }
                 }
-                if (ComputeScaledSum0205bb84(navigation) >= navigation->count) {
+                if (GridCursor_GetSelectedIndex(navigation) >= navigation->count) {
                     if (navigation->pages == 1) navigation->column = previous;
                     else {
                         navigation->column = 0;
@@ -133,14 +133,14 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* navigation, unsigned int ticks
                 if (navigation->rows <= navigation->row) navigation->row = navigation->rows - 1;
                 else if (navigation->row < 0) navigation->row = 0;
                 int total = navigation->count;
-                if (total <= ComputeScaledSum0205bb84(navigation))
+                if (total <= GridCursor_GetSelectedIndex(navigation))
                     func_0205bb04(navigation, total - 1);
                 if (navigation->key == 0x40 || navigation->key == 0x20) {
                     int total = navigation->count;
-                    if (total <= ComputeScaledSum0205bb84(navigation))
+                    if (total <= GridCursor_GetSelectedIndex(navigation))
                         func_0205bb04(navigation, total - 1);
                 } else if (navigation->key == 0x80 || navigation->key == 0x10) {
-                    if (navigation->count <= ComputeScaledSum0205bb84(navigation))
+                    if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
                         navigation->row = 0;
                 }
             }
@@ -163,7 +163,7 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* navigation, unsigned int ticks
                     navigation->column = 0;
                     AdvanceWrappedAccumulator0205c4a8(navigation, -1);
                 }
-                if (ComputeScaledSum0205bb84(navigation) >= navigation->count) {
+                if (GridCursor_GetSelectedIndex(navigation) >= navigation->count) {
                     if (navigation->pages == 1) navigation->column = 0;
                     else {
                         navigation->column = 0;

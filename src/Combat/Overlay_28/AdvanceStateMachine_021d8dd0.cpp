@@ -18,7 +18,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-void* GetWord0x0_0200fb8c(int*);
 void OrGlobalFlag0x40_020dc2bc();
 extern "C" void func_02074af4(void*);
 struct GameResources;
@@ -51,7 +50,7 @@ extern "C" ARM void func_ov028_021d8dd0(unsigned char* self) {
     FontBankLoader* g = GetGlobal02109400_02094a00();
     void* data = BackgroundLoader::GetInstance();
     void* battle = GameState::GetInstance();
-    void* word = GetWord0x0_0200fb8c((int*)battle);
+    void* word = (void*)((GameState*)battle)->GetResources();
     unsigned char state = self[0x81];
 
     if (state == 0) {

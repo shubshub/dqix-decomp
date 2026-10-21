@@ -28,7 +28,6 @@ struct List020727d8;
 struct FlagWord020466f4;
 struct Struct0205de24;
 
-int GetWord0x0_0200fb8c(int* obj);
 extern "C" void func_020a1940(unsigned int id);
 extern "C" void func_ov002_021682c0(char* self);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
@@ -85,7 +84,7 @@ extern "C" ARM void func_ov002_021695d8(char* self) {
 extern "C" ARM void func_ov002_02168d54(char* self) {
 #endif
     GameState* gs = GameState::GetInstance();
-    GameResources* res = (GameResources*)GetWord0x0_0200fb8c((int*)gs);
+    GameResources* res = gs->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 0) {

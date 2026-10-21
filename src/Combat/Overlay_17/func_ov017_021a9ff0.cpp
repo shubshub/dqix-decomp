@@ -11,7 +11,6 @@ struct SafeAllocator;
 struct GameResources;
 struct SetFlagStruct;
 
-int GetWord0x0_0200fb8c(int* obj);
 void InitObjState_021b2174(unsigned char* obj);
 void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
 void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
@@ -29,7 +28,7 @@ extern "C" ARM void func_ov017_021a9ff0(int atFront) {
 #else
  enum {regionalOffset0=0x3b4c, regionalOffset1=0x36fc};
 #endif
-    GameResources* res = (GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameResources* res = GameState::GetInstance()->GetResources();
     SetFlagStruct* flags;
     void* list;
     unsigned char* obj;

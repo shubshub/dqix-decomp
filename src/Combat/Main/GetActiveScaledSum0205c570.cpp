@@ -3,7 +3,7 @@
 struct Struct_0205bd04;
 int GetScaledSumIfActive0205bd04(struct Struct_0205bd04*);
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(struct Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84*);
 
 struct Struct_0205c570 {
     char pad0[0x50];
@@ -22,5 +22,5 @@ ARM int GetActiveScaledSum0205c570(struct Struct_0205c570* s) {
     if (s->field95 == 0) {
         return result;
     }
-    return ComputeScaledSum0205bb84((struct Struct_0205bb84*)((char*)s + 0x54));
+    return GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)s + 0x54));
 }

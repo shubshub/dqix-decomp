@@ -117,7 +117,6 @@ struct ProfileEditor021863fc
 
 struct TableA68;
 
-int GetWord0x0_0200fb8c(int* gameState);
 int IsField0Null_02046b08(void** p);
 void* GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int* word, unsigned int bits);
@@ -251,7 +250,7 @@ extern "C" const char data_ov012_0218bfad[];
 extern "C" ARM void func_ov012_021863fc(ProfileEditorJ021863fc* self)
 {
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GetGlobal02109400_02094a00();
     if (self->step_ == 0)
@@ -404,7 +403,7 @@ extern "C" ARM void func_ov012_021863fc(ProfileEditorJ021863fc* self)
 extern "C" ARM void func_ov012_021863fc(ProfileEditor021863fc* self)
 {
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GetGlobal02109400_02094a00();
     if (self->step_ == 0)

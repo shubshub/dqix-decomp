@@ -116,7 +116,6 @@ unsigned char GetEntryField0209618c(FindEntryById02096134Table*, int);
 int LookupArrayFieldByCase0208da18(List0208d994*, int, int);
 int GetElementField0x10ByKey_0208dac4(List0208d994*, int);
 int GetElementField8ByKey0208da00(List0208d994*, int);
-int GetWord0x0_0200fb8c(int*);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 int GetElementField0x14ByKey_0208dadc(List0208d994*, int);
 int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
@@ -264,7 +263,7 @@ extern "C" ARM void func_0208bf78(RecordView0208bf78* view) {
                         if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 0)) {
                             text = GetFieldByKey020e0434(&view->strings, 4);
                         } else if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 1)) {
-                            GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+                            GameResources* resources = GameState::GetInstance()->GetResources();
                             if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->unknown_ptr_array_36fc[0]) == 0x2d) {
                                 text = GetElementField0x14ByKey_0208dadc((List0208d994*)&view->elements, target);
                             }

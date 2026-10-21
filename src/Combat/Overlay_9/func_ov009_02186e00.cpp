@@ -9,9 +9,9 @@ struct Obj0205eaa0;
 struct PartyMemberData { char unknown[0x3c]; char name[1]; };
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_LoadSlotLayout(void*);
-extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
-extern "C" int func_ov009_02188ee8(CharacterCreationUI*);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI*);
 extern "C" void func_ov009_0218ad0c(void*);
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
         self->keyboardChoice = 0;
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
-        func_ov009_02188e70(self, self->keyboardChoice);
+        CharacterCreationUI_MoveCursorToSlot(self, self->keyboardChoice);
         self->flags |= 1;
         self->keyboardPage = self->previousKeyboardPage = 0;
         self->flags &= ~0x800;
@@ -44,7 +44,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreationUI* self)
             return;
         if (!func_ov009_02185c58(self->unknownBeforeTileMaps))
             return;
-        int result = func_ov009_02188ee8(self);
+        int result = CharacterCreationUI_HandleInput(self);
         if (result == -2) {
             func_ov009_0218ad0c(self);
         } else if (result == -3) {
@@ -143,7 +143,7 @@ struct Node0205bacc;
 extern "C" void func_ov003_0215f41c(Keyboard* keyboard, const char* text);
 CharacterInfo* FindEntryByKey0204254c(int character, int mode);
 extern "C" int func_ov003_0215f000(Keyboard* keyboard, int ticks);
-extern "C" int func_ov009_02188ee8(void* self);
+extern "C" int CharacterCreationUI_HandleInput(void* self);
 extern "C" void func_ov009_02189a4c(void* self);
 void SetStatValue021855dc(unsigned char* self, int state);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
@@ -224,7 +224,7 @@ extern "C" ARM void func_ov009_02186e00(CharacterCreation* self)
         if (self->flags_ & 0x80)
             return;
         self->keyboardResult_ = func_ov003_0215f000(self->keyboard_, GameState::GetInstance()->GetTickCount());
-        int result = func_ov009_02188ee8(self);
+        int result = CharacterCreationUI_HandleInput(self);
         if (self->keyboardResult_ != 0)
             result = -1;
         int checked = 0;

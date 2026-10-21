@@ -44,6 +44,7 @@ struct GameObject_021f1868 {
 
 struct GameState {
     static GameState* GetInstance();
+    GameResources* GetResources();
     GameObject_021f1868* GetProtagonist();
 };
 
@@ -213,7 +214,6 @@ const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
 void InitObj_021f222c(Obj_021f222c* page);
 void FormatLabelIntoBufC_021f2304(void* page, char* title);
 void SetOrClearBit10At400_38_021f2348(void* guide, int value);
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsBrightnessTransitionActive(GameResources* resources);
 void ResetFields_021eefac(Reset_021eefac* end);
@@ -607,7 +607,7 @@ extern "C" ARM int func_ov023_021f1868(BattleScene_021f1868* self)
         self->pageCount_ = 0;
         self->firstGuide_ = 0;
         self->busy_ = 0;
-        SetMainBrightness(GetWord0x0_0200fb8c((int*)gameState), 0, 0xf);
+        SetMainBrightness(gameState->GetResources(), 0, 0xf);
         FontBankLoader* music = GetGlobal02109400_02094a00();
         BlankFunction02094b40(music);
         BlankFunction02094b34(music, 0x65, 500, 0, 0);
@@ -620,7 +620,7 @@ extern "C" ARM int func_ov023_021f1868(BattleScene_021f1868* self)
     }
     else if (end->step_ == 9)
     {
-        if (!IsBrightnessTransitionActive(GetWord0x0_0200fb8c((int*)gameState)))
+        if (!IsBrightnessTransitionActive(gameState->GetResources()))
         {
             ResetFields_021eefac((Reset_021eefac*)end);
             return 7;

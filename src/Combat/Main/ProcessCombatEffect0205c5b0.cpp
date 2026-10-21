@@ -13,7 +13,7 @@ void ClearBytes0x4cTo0x4e(struct Struct_0205bc10*);
 struct Struct_0205bc2c;
 int UpdateActiveState0205bc2c(Struct_0205bc2c*, int);
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(struct Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84*);
 extern "C" int func_0205bf58(void*, void*);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc*, int);
@@ -56,12 +56,12 @@ extern "C" ARM int func_0205c5b0(void* selfPtr, void* p1) {
     }
 
     if (self->field95 != 0) {
-        int before = ComputeScaledSum0205bb84((struct Struct_0205bb84*)((char*)self + 0x54));
+        int before = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)self + 0x54));
         if (func_0205bf58((char*)self + 0x54, param1) != 0) {
-            int after = ComputeScaledSum0205bb84((struct Struct_0205bb84*)((char*)self + 0x54));
+            int after = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)self + 0x54));
             if (before != after) {
                 result = 1;
-                int idx = ComputeScaledSum0205bb84((struct Struct_0205bb84*)((char*)self + 0x54));
+                int idx = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)self + 0x54));
                 SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)((char*)self + 0x4), idx);
                 self->field34 = -1;
                 ClearBytes0x4cTo0x4e((struct Struct_0205bc10*)((char*)self + 0x4));

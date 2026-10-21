@@ -8,7 +8,6 @@ enum { kChildPointer = 0x10, kChildFlags = 0xae2 };
 
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
@@ -27,7 +26,7 @@ struct Struct0215b0fc {
 
 // USA: func_ov006_0215b0fc
 extern "C" ARM void func_ov006_0215b0fc(struct Struct0215b0fc* obj) {
-    int ctx = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    int ctx = (int)GameState::GetInstance()->GetResources();
     unsigned char state = obj->f390;
     if (state == 0) {
         unsigned short flags = *(unsigned short*)((char*)obj->f10 + kChildFlags);

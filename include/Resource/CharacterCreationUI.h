@@ -11,6 +11,16 @@ struct Container0205a3d0;
 // {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
 extern const short CharacterCreationUI_slotLayouts[];
 
+// Bits of CharacterCreationUI::flags whose meaning is known; the rest are still bare numbers.
+enum CreationFlag
+{
+    CreationFlag_StylusRotation = 0x1, // the preview model can be spun with the stylus
+    CreationFlag_ChoiceChanged = 0x10, // the input handler stored a different choice this frame
+    CreationFlag_ConfirmTouched = 0x20, // the confirm button was touched this frame
+    CreationFlag_BackTouched = 0x40,    // the back button was touched this frame
+    CreationFlag_TabLoading = 0x80,    // set on going to a tab, cleared once its graphics have loaded
+};
+
 struct CreationTextEntry {
     int key;
     const char* text;

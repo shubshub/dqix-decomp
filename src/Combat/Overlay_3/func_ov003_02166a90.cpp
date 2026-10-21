@@ -61,7 +61,6 @@ struct PartyFlags02166a90 {
 extern Vector3i data_ov003_0217f4b8[3];
 
 extern "C" SelectedEntry02166a90* func_ov003_02160bf8(SelectionPage02166a90*, int);
-int GetWord0x0_0200fb8c(int*);
 extern "C" void* func_02012fe4(void);
 void* FindRecordByShortField020108f0(void*, int);
 void* FindSlotWithNegShort02010954(char*);
@@ -112,7 +111,7 @@ extern "C" ARM int func_ov003_02166a90(SelectionPage02166a90* self, int key) {
         special = 1;
     }
     GameState* state = GameState::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)state);
+    GameResources* resources = state->GetResources();
     unsigned short* field06 = (unsigned short*)func_02012fe4();
     if (self->step == 0) {
         int freeSlot = -1;

@@ -55,7 +55,7 @@ MemberScreen* GetField1c_021a193c(int* p);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int ComputeScaledSum0205bb84(Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov005_0215751c(EquipmentMenu* self) {
         up = 1;
     if (up) {
         func_ov005_0215792c(self, 2);
-        func_ov005_021579ec(self, self->state_, ComputeScaledSum0205bb84((Struct_0205bb84*)self->cursor_));
+        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_));
         return;
     }
     int down = 0;
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov005_0215751c(EquipmentMenu* self) {
         func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
-    if (!func_ov005_02158560(self, ComputeScaledSum0205bb84((Struct_0205bb84*)self->cursor_), 0))
+    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))
         return;
     self->slot_ = self->kind_;
     self->flags_ |= 0x100;

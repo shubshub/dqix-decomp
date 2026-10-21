@@ -5,7 +5,6 @@
 struct Obj021f9bb0;
 struct Info02011930;
 
-int GetWord0x0_0200fb8c(int* obj);
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" void* func_ov011_021849c8(void* obj);
@@ -46,7 +45,7 @@ extern "C" ARM int func_ov004_02165630(void* a) {
     if (!node || func_ov023_021f6f10(node) != 7) return 0;
 
     GameState* state = GameState::GetInstance();
-    if (IsBrightnessTransitionActive((GameResources*)((int*)GetWord0x0_0200fb8c((int*)state))) != 0) {
+    if (IsBrightnessTransitionActive((GameResources*)((int*)state->GetResources())) != 0) {
         node->active = 0;
         return 0;
     }

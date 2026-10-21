@@ -12,7 +12,6 @@ struct Obj020e25e8;
 struct FlagWord02046708;
 struct FlagWord020466f4;
 
-int GetWord0x0_0200fb8c(int *);
 char *GetGlobalField0x1c020421a0();
 void ReinitController02043204(char *);
 int GetInnerFlagBit0020e28dc(struct Outer020e28dc *);
@@ -43,7 +42,7 @@ enum { regionalState = 0, regionalMode = 0, regionalFlags = 0, regionalFlag2456 
 
 // USA: func_ov002_0216c654
 extern "C" ARM void func_ov002_0216c654(char *self) {
-    GameResources *res = (GameResources *) GetWord0x0_0200fb8c((int *) GameState::GetInstance());
+    GameResources *res = GameState::GetInstance()->GetResources();
     int state          = S32(0x1bc0 + regionalState);
     if (state == 0) {
         ReinitController02043204(GetGlobalField0x1c020421a0());

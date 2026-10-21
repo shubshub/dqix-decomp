@@ -52,7 +52,7 @@ struct ListMenu_021e6448 {
 int SelectField0x8Or0x58ByFlags_0205c6e4(unsigned char* obj);
 Element_021e6448* FindElementByC40205d81c(Struct_0205d81c* s, int key);
 void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8* s, int delta);
-int ComputeScaledSum0205bb84(Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc* s, int index);
 extern "C" void func_0205bb04(void* s, int index);
 
@@ -83,7 +83,7 @@ extern "C" ARM int func_ov023_021e6448(ListMenu_021e6448* self) {
                     AdvanceWrappedAccumulator0205c4a8((Struct_0205c4a8*)scroll, 1);
                     self->scrolled_ = 1;
                 }
-                int index = ComputeScaledSum0205bb84((Struct_0205bb84*)scroll);
+                int index = GridCursor_GetSelectedIndex((Struct_0205bb84*)scroll);
                 SetIndexIfValid0205bcdc((Struct_0205bcdc*)&self->list_.states[0], index);
                 func_0205bb04(&self->list_.states[1], index);
             }

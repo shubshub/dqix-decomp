@@ -55,7 +55,7 @@ MemberScreen* GetField1c_021a193c(int* p);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int ComputeScaledSum0205bb84(Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
 extern "C" int func_ov005_021585fc(EquipmentMenu* self, int direction);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov005_0215771c(EquipmentMenu* self) {
     if (index < 4 && g_keyManager.TestKeysPressed(0x40)) {
         func_ov005_0215792c(self, 3);
         self->slot_ = self->kind_;
-        func_ov005_021579ec(self, self->state_, ComputeScaledSum0205bb84((Struct_0205bb84*)self->cursor_));
+        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_));
         return;
     }
     int column = index % 4;
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov005_0215771c(EquipmentMenu* self) {
         self->flags_ &= ~0x20000;
         self->flags_ &= ~0x40000;
     }
-    cursor = ComputeScaledSum0205bb84((Struct_0205bb84*)self->cursor_) + 8;
+    cursor = GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_) + 8;
     slot = self->slot_;
     if (cursor != slot) {
         self->slot_ = cursor;

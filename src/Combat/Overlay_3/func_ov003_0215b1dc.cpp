@@ -31,7 +31,6 @@ struct BattleGlobals {
 };
 
 BattleGlobals* GetGlobalField0x1c020421a0(void);
-GameResources* GetWord0x0_0200fb8c(int*);
 struct Actor0209c678;
 void DispatchContextByState0209c678(Actor0209c678*, int);
 void SetBrightness(GameResources*, int, int);
@@ -53,7 +52,7 @@ extern unsigned char data_02109bf4;
 // USA: func_ov003_0215b1dc
 extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
     BattleGlobals* g = GetGlobalField0x1c020421a0();
-    GameResources* res = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameResources* res = GameState::GetInstance()->GetResources();
 
     if (g->linkState == 3) {
         g->linkPending = 0;

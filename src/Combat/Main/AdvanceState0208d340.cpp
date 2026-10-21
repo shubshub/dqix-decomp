@@ -2,7 +2,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 int IsSubBrightnessTransitionActive(GameResources*);
 
 struct Struct02074bf4;
@@ -26,7 +25,7 @@ struct Obj0208d340 {
 
 // USA: func_0208d340
 ARM void AdvanceState0208d340(struct Obj0208d340* obj) {
-    int val = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    int val = (int)GameState::GetInstance()->GetResources();
 
     if (obj->fd5 == 0) {
         if (!(obj->fda & 0x10)) {
@@ -55,5 +54,5 @@ ARM void AdvanceState0208d340(struct Obj0208d340* obj) {
     *(short*)((char*)reg + 0x50) = 0;
     obj->fd5 = obj->fd5 + 1;
     DestroyStructAllocGroup0208ba54((struct StructAllocGroup0208ba54*)obj);
-    ClearFlags00((GameResources*)(GetWord0x0_0200fb8c((int*)GameState::GetInstance())), 0x6000);
+    ClearFlags00((GameResources*)((int)GameState::GetInstance()->GetResources()), 0x6000);
 }

@@ -31,7 +31,6 @@ struct Ctx02160854 {
     short group_;
 };
 
-int GetWord0x0_0200fb8c(int* obj);
 int IsFieldNotPositive_021a4e70(unsigned char* base);
 int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
 int GetField0x15UnlessInactive_020e2918(signed char* obj);
@@ -48,7 +47,7 @@ void func_ov003_02160794(void* self);
 // USA: func_ov003_02160854
 extern "C" ARM unsigned char func_ov003_02160854(Ctx02160854* self) {
     unsigned char confirmed = 0;
-    unsigned char* battleWord = (unsigned char*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    unsigned char* battleWord = (unsigned char*)(int)GameState::GetInstance()->GetResources();
     if (g_keyManager.TestKeysPressed(0x401)) {
         if (IsFieldNotPositive_021a4e70(battleWord)) {
             confirmed = 1;

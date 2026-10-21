@@ -51,7 +51,7 @@ void ClearBytes0x4cTo0x4e(Struct_0205bc10* obj);
 int GetActiveScaledSum0205d794(Struct_0205c570* chan);
 void UpdateEntryAndField4ea_021694b8(void* self, int v);
 void ResetState0205bf3c(Struct_0205bf3c* obj);
-int ComputeScaledSum0205bb84(Struct_0205bb84* obj);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
 int NormalizeField5_0200fb08(Struct0200fb08* gs);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
 void ClearChannelAFlag0205cf10(void* chan);
@@ -289,7 +289,7 @@ extern "C" ARM int func_ov003_02169eec(Menu02169eec* self, unsigned int sb) {
                 int n = GetField0_0205bafc(self->list);
                 func_0205bb04(self->list, n - 1 - cells[cur]);
                 if (func_0205bf58(self->list, sb) != 0) {
-                    cells[cur] = n - 1 - ComputeScaledSum0205bb84((Struct_0205bb84*)self->list);
+                    cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
                     if (old != cells[cur]) {
                         self->code = 1;
                     }

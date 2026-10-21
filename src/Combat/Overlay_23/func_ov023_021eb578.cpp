@@ -20,7 +20,6 @@ struct Obj0204b8d0;
 struct Struct0205a198;
 struct ClearTarget0205a234;
 
-int GetWord0x0_0200fb8c(int* obj);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsBrightnessTransitionActive(GameResources* resources);
@@ -132,7 +131,7 @@ extern "C" ARM void func_ov023_021eb578(Scene021eb578* self) {
     GameResources* res;
     BackgroundLoader* loader;
     unsigned char state;
-    res = (GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    res = GameState::GetInstance()->GetResources();
     g = GetGlobal02109400_02094a00();
     loader = BackgroundLoader::GetInstance();
     state = self->state;

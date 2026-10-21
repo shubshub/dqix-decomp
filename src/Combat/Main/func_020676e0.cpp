@@ -46,7 +46,6 @@ void SetupAndDispatch0205c904(unsigned char*, int);
 int CheckGlobalObjState2AndInit0205cde8(unsigned char*);
 void InitGlobalObjAndSelfPointer0205cd94(unsigned char*);
 int GetFieldIfFlag4_020100f8(char*);
-int GetWord0x0_0200fb8c(int*);
 int GetIntAt0x23c(IntField0x23c_020a27c4*);
 int IsFieldNotPositive_021a4e70(unsigned char*);
 int GetScaledSumIfActive0205cecc(void*);
@@ -69,7 +68,7 @@ extern "C" ARM void func_020676e0(ControlState* state, int elapsed) {
     int mode = state->mode;
     game = GameState::GetInstance();
     IntField0x23c_020a27c4* field = (IntField0x23c_020a27c4*)GetFieldIfFlag4_020100f8((char*)game);
-    resource = (unsigned char*)GetWord0x0_0200fb8c((int*)game);
+    resource = (unsigned char*)(int)game->GetResources();
     if (mode != 1 && state->alternateInput) {
         if (field) {
             if ((field->flags & 2) || !GetIntAt0x23c(field))

@@ -4,7 +4,6 @@
 #include "NitroSDK/Graphics.h"
 #include "Resource/Brightness.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 void* GetDataPtr02114e04_020d6c00(void);
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
 void OrGlobalFlag0x40_020dc2bc(void);
@@ -52,7 +51,7 @@ struct SubScreenBackground {
 
 // USA: func_ov003_021541b0
 extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameResources* resources = GameState::GetInstance()->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (self->loadState == 0) {

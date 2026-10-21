@@ -5,7 +5,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-void* GetWord0x0_0200fb8c(int*);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 
@@ -23,7 +22,7 @@ extern "C" void func_ov028_021d8b90(void* obj);
 // USA: func_ov028_021d8c20  (semantic: ResetStateAndCounters_021d8c20)  (semantic: ResetStateAndCounters_021d8c20)
 extern "C" ARM void func_ov028_021d8c20(char* self) {
     void* battle = GameState::GetInstance();
-    void* word = GetWord0x0_0200fb8c((int*)battle);
+    void* word = (void*)((GameState*)battle)->GetResources();
     SetBrightness((GameResources*)word, -16, 0);
 
     *(int*)0x4000014 = 0;

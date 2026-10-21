@@ -1,8 +1,8 @@
-// USA: func_ov009_02188e70
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" ARM void func_ov009_02188e70(CharacterCreationUI* editor, int choice) {
+// Overlay 9, originally func_ov009_02188e70 (USA/EUR 0x02188e70, JPN 0x02189d30)
+extern "C" ARM void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* editor, int choice) {
     CreationSlotLayout* grid = &editor->grid;
     int y;
     int width;

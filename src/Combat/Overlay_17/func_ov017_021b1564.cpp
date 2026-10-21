@@ -47,7 +47,6 @@ struct Buffer021b1564 { char pad_0[0x820]; BufferTail021b1564 tail; };
 struct PlayerView021b1564 { char pad_0[0xae]; short angle; };
 struct ResourceBlock021b1564 { char initial[0x5b0]; char restored[1]; };
 struct EntryNode021b1564 { char pad_0[0x114]; void* entry; char pad_118[0xc]; int id; char pad_128[0x11]; unsigned char active; };
-GameResources* GetWord0x0_0200fb8c(int*);
 unsigned int* GetDataPtr02114e04_020d6c00();
 Controller021b1564* GetGlobalField0x1c020421a0();
 unsigned char* GetFieldIfFlag4_020100f8(char*);
@@ -128,7 +127,7 @@ static inline int CurrentZone021b1564(Zone3D* zone) { SDK_NULL_ASSERT(zone); ret
 // USA: func_ov017_021b1564
 extern "C" ARM void func_ov017_021b1564(Transition021b1564* self, TailList020469b4* list) {
     GameState* game = GameState::GetInstance();
-    GameResources* resources = GetWord0x0_0200fb8c((int*)game);
+    GameResources* resources = game->GetResources();
     unsigned int* global = GetDataPtr02114e04_020d6c00();
     Controller021b1564* controller = GetGlobalField0x1c020421a0();
     unsigned char* field = GetFieldIfFlag4_020100f8((char*)game);

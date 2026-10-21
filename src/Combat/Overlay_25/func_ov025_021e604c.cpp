@@ -11,7 +11,6 @@ struct Vec3 {
 void* GetActiveCombatWork_ov000_02160130();
 int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
 void SetSubstructByte0x56_02049f28(unsigned char* obj);
-int GetWord0x0_0200fb8c(int* obj);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
 extern "C" void _Z20GetSubTriple02049b54P11Obj02049b54(struct Vec3* out, struct Obj02049b54* obj);
 void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
@@ -62,7 +61,7 @@ extern "C" ARM int func_ov025_021e604c(void* unused0, int b, int unused2, void* 
     func_ov000_021677fc(work);
     struct Formation021e604c* formation = (struct Formation021e604c*)func_ov000_02160f14(work);
     battle = GameState::GetInstance();
-    GetWord0x0_0200fb8c((int*)battle);
+    battle->GetResources();
     enemyCount = func_ov000_0215eb1c(c, enemyIds, 8, 0);
     center = formation->center;
     centerZ = center.v[2];

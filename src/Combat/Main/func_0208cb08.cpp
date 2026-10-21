@@ -50,7 +50,6 @@ struct Object_0208cb08 {
     unsigned char padding_0xd7[3];
     unsigned short flags;
 };
-int GetWord0x0_0200fb8c(int*);
 unsigned int* GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
@@ -80,7 +79,7 @@ extern char data_020f129e[], data_020f12b2[];
 extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
     if (object->target < 0) return;
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameResources* resources = GameState::GetInstance()->GetResources();
     if (object->state == 0) {
         SetFlags00(resources, 0x6000);
         OrBitsIntoField0_020466e4(GetDataPtr02114e04_020d6c00(), 1);

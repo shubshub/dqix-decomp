@@ -157,7 +157,6 @@ extern "C" void func_0204500c(void*, const char*, int);
 #endif
 
 MessageWork* GetGlobalField0x1c020421a0();
-int GetWord0x0_0200fb8c(int* obj);
 extern "C" void* func_02012fe4(void);
 void* GetDataPtr02114e04_020d6c00();
 void* GetPtrField0x2a04_02010828(GameState* gameState);
@@ -207,7 +206,7 @@ extern "C" ARM void func_ov023_021f4c04(BattleWork* self) {
 
     GameState* gs = GameState::GetInstance();
     MessageWork* ctrl = GetGlobalField0x1c020421a0();
-    int res = GetWord0x0_0200fb8c((int*)gs);
+    int res = (int)gs->GetResources();
     func_02012fe4();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     FlagWord020466f4* flags = (FlagWord020466f4*)GetDataPtr02114e04_020d6c00();

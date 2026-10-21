@@ -12,7 +12,6 @@ enum { kSceneHeapSize = 0x24000, kSceneObjectSize = 0x33c, kSceneFieldOffset = 0
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Resource/Brightness.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 int GetFieldIfFlag4_020100f8(char* obj);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
@@ -51,7 +50,7 @@ struct Obj021c1404 {
 // USA: func_ov017_021c1404  (semantic: AdvanceEncounterSequenceStep_021c1404)
 extern "C" ARM void func_ov017_021c1404(struct Obj021c1404* obj) {
 	GameState* battle = GameState::GetInstance();
-	int* word0 = (int*)GetWord0x0_0200fb8c((int*)battle);
+	int* word0 = (int*)battle->GetResources();
 	GameObject* combatant = battle->GetUnknownGameObject();
 	int fieldVal = GetFieldIfFlag4_020100f8((char*)battle);
 	SetFlags04((GameResources*)word0, 0xc0);

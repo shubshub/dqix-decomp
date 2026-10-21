@@ -13,7 +13,6 @@
 struct Struct0205de24;
 struct Struct_0205def8;
 struct PMFObj021e7bc4;
-int GetWord0x0_0200fb8c(int *p);
 void *GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int mask);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
@@ -39,7 +38,7 @@ extern "C" unsigned char data_ov002_0216cc88[];
 // USA: func_ov002_021650d4
 extern "C" ARM void func_ov002_021650d4(char *base) {
     GameState *gs      = GameState::GetInstance();
-    GameResources *res = (GameResources *) GetWord0x0_0200fb8c((int *) gs);
+    GameResources *res = gs->GetResources();
     if (*(unsigned char *) (base + 0x1000 + RG(0xcc3, 0xb87)) == 0) {
         int state = *(int *) (base + 0x1000 + RG(0xbc0, 0xa88));
         if (state == 0) {

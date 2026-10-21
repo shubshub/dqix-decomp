@@ -221,7 +221,6 @@ void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
 void ClearBitIfValueFound02167434(unsigned char* obj, int value);
 extern "C" void func_ov017_02191aac(char* obj, int mode, int idx, unsigned char mask);
 extern "C" void func_02054028(void* obj, int n);
-int GetWord0x0_0200fb8c(int* obj);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 void DispatchIfField0xc4NonNeg_0205ebfc(void* obj, int a, int b);
 extern "C" void func_ov000_021823dc(unsigned char* obj, int val);
@@ -897,7 +896,7 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
             if (deadly) {
                 if (cleared) {
                     sfx = 0x25;
-                    GameResources* res = (GameResources*)GetWord0x0_0200fb8c((int*)battle);
+                    GameResources* res = battle->GetResources();
                     if (res) {
                         SetMainBrightness(res, 0x10, 0);
                         SetMainBrightness(res, 0, 0x1e);

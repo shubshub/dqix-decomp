@@ -101,7 +101,6 @@ struct Struct020dfc40;
 struct Manager0207f7f0;
 struct Node0207f7f0;
 
-int* GetWord0x0_0200fb8c(int*);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 void Set3DClearColor_020c5588(int, int, int, int, int);
 int GetField4Low12(Field4Low12_02097420*);
@@ -136,7 +135,7 @@ extern const char data_ov014_02189784[];
 // USA: func_ov014_02187568
 extern "C" ARM void func_ov014_02187568(MonsterListScreen* self)
 {
-    int* resources = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    int* resources = (int*)GameState::GetInstance()->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     if (self->listStep_ == 0)
     {

@@ -35,7 +35,6 @@ int AnimateSubBG0Shake0208ca00(ShakeState0208ca00*, int);
 extern "C" void func_0208bf78(ShakeState0208ca00*);
 extern "C" void func_0208b788(int, float, SrcStruct0208baec*, int);
 int SetupDstFromSrcAndScale0208baec(int, DstStruct0208baec*, SrcStruct0208baec*, int, float, int, unsigned char);
-int GetWord0x0_0200fb8c(int*);
 unsigned char NormalizeField5_0200fb08(Struct0200fb08*);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 int* GetGlobal02109418_02094d6c();
@@ -63,7 +62,7 @@ extern "C" ARM int func_0208bb78(ShakeState0208ca00* self, int delta) {
         (self->*actions.actions[self->action])();
     }
     GameState* state = GameState::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)state);
+    GameResources* resources = state->GetResources();
     float scale;
     unsigned char slot;
     HeadNode02046b24** head = (HeadNode02046b24**)resources->unknown_ptr_array_36fc[0];

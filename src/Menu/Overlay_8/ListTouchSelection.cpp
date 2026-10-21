@@ -37,7 +37,7 @@ extern char data_02108760[];
 extern char data_ov008_0218b490[];
 extern "C" {
     int _Z18GetField0_0205bafcPv(void*);
-    int _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(void*);
+    int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
     void func_0205bb04(void*, int);
     void _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(void*, int, int);
 
@@ -59,7 +59,7 @@ extern "C" {
             if (page != 0 && touchY >= 0 && touchY < 8) {
                 menu->page = page - 1;
                 int index = menu->page + 5;
-                if (_Z24ComputeScaledSum0205bb84P15Struct_0205bb84(menu->cursor) > index)
+                if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) > index)
                     func_0205bb04(menu->cursor, index);
                 return -1;
             }
@@ -67,7 +67,7 @@ extern "C" {
                 if (page + 6 < menu->count)
                     ++menu->page;
                 int index = menu->page;
-                if (_Z24ComputeScaledSum0205bb84P15Struct_0205bb84(menu->cursor) < index)
+                if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) < index)
                     func_0205bb04(menu->cursor, index);
                 return -1;
             }

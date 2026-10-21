@@ -50,7 +50,7 @@ struct Overlay8SpriteView {
 extern "C" {
     void* func_0202ae18();
     bool func_0202c540(void*);
-    int _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(void*);
+    int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
     void _Z19SetBitfield0205afb0iPvi(void*, void*, int);
     void _Z19SetBitfield0205af84iPvi(void*, void*, int);
     void func_0205ac40(void*, void*);
@@ -65,7 +65,7 @@ extern "C" {
                 Overlay8SpriteEntry* sprite = &menu->spriteEntries[entry];
                 sprite->x = 0x10000;
                 sprite->y = ((drawn % 6) << 16) + 0x8000;
-                int selected = _Z24ComputeScaledSum0205bb84P15Struct_0205bb84(menu->cursor) - menu->page;
+                int selected = _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) - menu->page;
                 int style = 1;
                 if (selected == i)
                     style = 2;

@@ -12,7 +12,6 @@ struct DialogTask {
     Dialog* dialog_;
     unsigned char mode_; signed char selection_; unsigned char phase_;
 };
-unsigned int* GetWord0x0_0200fb8c(int*);
 unsigned char* GetFieldIfFlag4_020100f8(char*);
 void CancelPendingAction020397cc(Obj020397cc*, int);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
@@ -40,7 +39,7 @@ extern AllocatorUnion data_02114e20;
 // USA: func_ov017_021ba998
 extern "C" ARM void func_ov017_021ba998(DialogTask* self) {
     GameState* state = GameState::GetInstance();
-    unsigned int* flags = GetWord0x0_0200fb8c((int*)state);
+    unsigned int* flags = (unsigned int*)state->GetResources();
     GameObject* actor = state->GetUnknownGameObject();
     unsigned char* field = GetFieldIfFlag4_020100f8((char*)state);
     SetFlags04((GameResources*)flags, 0xc0);

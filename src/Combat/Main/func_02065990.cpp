@@ -92,7 +92,6 @@ int fix32ReduceAngle0To2Pi(int angle);
 extern "C" void func_02065418(int a);
 int CallFunc020e0434With02153694_020e51cc(int a);
 void InitCombatPairState020652d0(char* obj, int a, int b, int c);
-unsigned char* GetWord0x0_0200fb8c(int*);
 struct Obj0208bf28;
 void SetFieldD20208bf28(Obj0208bf28*, int, unsigned char);
 unsigned char* GetGlobal02109418_02094d6c();
@@ -451,7 +450,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
                 int alive = 1;
                 unsigned char* bs = (unsigned char*)GameState::GetInstance();
-                unsigned char* w = GetWord0x0_0200fb8c((int*)bs);
+                unsigned char* w = (unsigned char*)((GameState*)bs)->GetResources();
                 if ((bs + 0x5000)[REGION_VALUE(0xa68, 0xcc8)] == 2) alive = 0;
                 if (w != 0 && alive != 0) (w + 0x4000)[REGION_VALUE(0x134, 0x354)] = 0xa;
                 return;
@@ -474,7 +473,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 message->mode = 6;
                 message->ProcessPendingFlag02045688();
                 DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
-                unsigned char* w = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+                unsigned char* w = (unsigned char*)GameState::GetInstance()->GetResources();
                 if (w != 0) (w + 0x4000)[REGION_VALUE(0x134, 0x354)] = 0xa;
                 return;
             } else if (tok == 0xff0f) {

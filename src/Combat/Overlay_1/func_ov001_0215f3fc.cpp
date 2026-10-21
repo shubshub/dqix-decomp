@@ -59,7 +59,6 @@ struct StreamResources0215f3fc
     StreamRecord0215f3fc records[33];
 };
 void* GetGlobalPtr021075f4_0203cf4c();
-int GetWord0x0_0200fb8c(int*);
 extern "C" const char* func_ov017_021d612c(void*);
 int FindEmptySlotIndex(SlotArray_0203e03c*);
 extern "C" void func_ov017_021d6134(void*, int);
@@ -86,7 +85,7 @@ extern "C" ARM int func_ov001_0215f3fc(TaggedValue0215f3fc* arguments, int count
 {
     GameState* game = GameState::GetInstance();
     void* list = GetGlobalPtr021075f4_0203cf4c();
-    StreamResources0215f3fc* resources = (StreamResources0215f3fc*)GetWord0x0_0200fb8c((int*)game);
+    StreamResources0215f3fc* resources = (StreamResources0215f3fc*)game->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     if (!resources)
     {

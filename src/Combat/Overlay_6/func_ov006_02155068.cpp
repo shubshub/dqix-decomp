@@ -94,7 +94,6 @@ struct AlchemyPot {
     unsigned char resetBlend_;
 };
 
-void* GetWord0x0_0200fb8c(int* gameState);
 void SetForwardAndStore0205ebc0(void* sound, int a, int b);
 void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
 void ForwardField0xc0_0205ebec(void* sound);
@@ -113,7 +112,7 @@ extern char data_ov006_021600a9[];
 
 // USA: func_ov006_02155068
 extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
-    unsigned int* resources = (unsigned int*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    unsigned int* resources = (unsigned int*)(void*)GameState::GetInstance()->GetResources();
     unsigned short flags = self->flags_;
     if (flags & 0x2000) {
         SetFlags04((GameResources*)resources, 0x2000);

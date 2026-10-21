@@ -5,7 +5,6 @@
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 
 int DispatchByMode77c_021ddbb8(void* obj, int a, int b);
 struct Obj021ddbf8;
@@ -58,7 +57,7 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
 #endif
     char* obj = (char*)objRaw;
     int dataResult = (int)BackgroundLoader::GetInstance();
-    GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameState::GetInstance()->GetResources();
 
     if (*(unsigned char*)(obj + regionalOffset0) == 0) {
         if (data_ov023_021ff9e0.field4 == 0) {

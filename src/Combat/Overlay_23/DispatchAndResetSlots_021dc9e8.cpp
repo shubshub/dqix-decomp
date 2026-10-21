@@ -1,7 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 int DispatchByMode77c_021ddbb8(void* obj, int a, int b);
 void ResetIfNonNeg_021db2e4(volatile int* p);
 extern "C" int func_ov023_021dc354(void* obj);
@@ -16,7 +15,7 @@ extern "C" void func_ov023_021dbfd0(void* a, void* b);
 
 // USA: func_ov023_021dc9e8  (semantic: DispatchAndResetSlots_021dc9e8)
 extern "C" ARM void func_ov023_021dc9e8(void* obj, void* arg1, int arg2, int arg3, unsigned short arg5) {
-    GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameState::GetInstance()->GetResources();
     DispatchByMode77c_021ddbb8(obj, -16, 1);
 
     ResetIfNonNeg_021db2e4((volatile int*)((char*)obj + FIELD_OFFSET(0x734)));

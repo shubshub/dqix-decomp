@@ -18,7 +18,6 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
-int GetWord0x0_0200fb8c(int *p);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_0215c2c8(void *base);
@@ -57,7 +56,7 @@ extern "C" ARM void func_ov002_0216257c(char *base) {
             if (!InRange0216257c(v)) return;
             *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
             DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
-            SetNodeFieldsAndInsert_021a120c((GameResources*)GetWord0x0_0200fb8c((int*)GameState::GetInstance()), 3, v);
+            SetNodeFieldsAndInsert_021a120c(GameState::GetInstance()->GetResources(), 3, v);
             *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
             *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
             func_02012fe4();

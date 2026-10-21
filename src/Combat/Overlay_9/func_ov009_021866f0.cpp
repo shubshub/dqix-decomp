@@ -3,9 +3,9 @@
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
-extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int val);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
-extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" ARM void func_ov009_021867bc(unsigned char* self, int val);
 #define SetStatValue021855dc func_ov009_021867bc
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
         CharacterCreationUI_LoadSlotLayout(self);
         int idx = self->sex;
         unsigned char val = self->faceStyle[idx];
-        func_ov009_02188e70(self, val);
+        CharacterCreationUI_MoveCursorToSlot(self, val);
 
         Vector3fix position = data_ov009_0218a9c8;
         Vector3fix target = data_ov009_0218a9d4;
@@ -66,7 +66,7 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
         return;
     }
 
-    int result = func_ov009_02188ee8(self);
+    int result = CharacterCreationUI_HandleInput(self);
     int flag = 0;
     if (result == -2) {
         SetStatValue021855dc((unsigned char*)self, 6);

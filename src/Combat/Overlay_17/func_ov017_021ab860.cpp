@@ -20,7 +20,6 @@ enum { kResourceHeaderOffset = 0x70c, kResourceTailOffset = 0x6fc,
        kTargetIdOffset = 0x44ae, kTargetArgOffset = 0x44b0 };
 #endif
 
-int GetWord0x0_0200fb8c(int* p);
 extern "C" void* func_02012fe4(void);
 extern "C" void* memset(void* dst, int val, unsigned int size);
 extern "C" unsigned char* func_0205ec34(void);
@@ -91,7 +90,7 @@ struct Entry3f8_021ab860 {
 // USA: func_ov017_021ab860
 extern "C" ARM int func_ov017_021ab860(int arg0, unsigned char arg1) {
     GameState* gs = GameState::GetInstance();
-    GetWord0x0_0200fb8c((int*)gs);
+    gs->GetResources();
     data_ov017_021d83b0.header = ((Active021ab860*)func_02012fe4())->header;
     data_ov017_021d83b0.key = 0;
     data_ov017_021d83b0.group = 0;

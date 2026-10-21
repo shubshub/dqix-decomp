@@ -20,7 +20,6 @@ struct Triple02049b54 {
     Vector3fix v;
 };
 
-int GetWord0x0_0200fb8c(int* obj);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
 Triple02049b54 GetSubTriple02049b54(Obj02049b54* obj);
 void SetVecYFromValue02033874(Obj02033874* obj, int angle);
@@ -37,7 +36,7 @@ void func_0203232c(int*, int);
 extern "C" ARM void func_ov026_021daec8(BattleState* battle, BattleView* view, int animate) {
     short ids[8];
     GameState* gs = GameState::GetInstance();
-    GetWord0x0_0200fb8c((int*)gs);
+    gs->GetResources();
 
     int count = func_ov000_0215eb1c(battle, ids, 8, 0);
     int n = 0;

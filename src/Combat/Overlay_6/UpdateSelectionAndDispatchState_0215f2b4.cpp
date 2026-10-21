@@ -8,7 +8,6 @@ enum { kSelectionPointer = 0x18 };
 
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 
 struct Obj020e25e8;
 void ResetSelectionState020e25e8(struct Obj020e25e8* obj);
@@ -32,7 +31,7 @@ struct Struct0215f2b4 {
 
 // USA: func_ov006_0215f2b4  (semantic: UpdateSelectionAndDispatchState_0215f2b4)
 extern "C" ARM void func_ov006_0215f2b4(struct Struct0215f2b4* obj) {
-	int ctx = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+	int ctx = (int)GameState::GetInstance()->GetResources();
 	if (obj->f390 == 0) {
 		if (obj->f18 != 0) {
 			ResetSelectionState020e25e8(obj->f18);

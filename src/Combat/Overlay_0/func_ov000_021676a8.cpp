@@ -16,7 +16,6 @@ struct Owner_021676a8 {
     BattleCore_021676a8* core;
 };
 
-int GetWord0x0_0200fb8c(int* obj);
 extern "C" int func_ov000_0215e9fc(void* obj, short* buf, int max, int start);
 int ClassifyField0x81fe_ov000_0215fc60(char* self);
 int GetSubstructByte0x1c_020493a4(unsigned char* obj);
@@ -36,7 +35,7 @@ static inline Vec2_0216f74c GetFormationPosition(const int& cell) {
 // USA: func_ov000_021676a8
 extern "C" ARM void func_ov000_021676a8(Owner_021676a8* obj) {
     GameState* battle = GameState::GetInstance();
-    GetWord0x0_0200fb8c((int*)battle);
+    battle->GetResources();
     BattleCore_021676a8* core = obj->core;
     short ids[4];
     int count = func_ov000_0215e9fc(core, ids, 4, 0);

@@ -126,7 +126,6 @@ extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, 
 extern "C" void func_ov008_0218b240(void* self);
 extern "C" void func_ov008_0218aa24(void* self);
 
-char* GetWord0x0_0200fb8c(int* gameState);
 int IsField0Null_02046b08(void** field);
 unsigned int* GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
@@ -217,7 +216,7 @@ struct VisitorTalk
 extern "C" ARM void func_ov008_021895a8(VisitorTalk* self)
 {
     GameState* gameState = GameState::GetInstance();
-    char* resources = GetWord0x0_0200fb8c((int*)gameState);
+    char* resources = (char*)gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GetGlobal02109400_02094a00();
     signed char step = self->step_;

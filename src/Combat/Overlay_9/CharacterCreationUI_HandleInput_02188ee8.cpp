@@ -14,7 +14,7 @@ void Init0205bef8(Struct_0205bef8*);
 void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
 void SetField0AndPropagate0205bacc(Node0205bacc*, int);
 int GetField0_0205bafc(void*);
-int ComputeScaledSum0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
 int GetFieldByKey020e0434(Container020e0310*, int);
 extern "C" int func_02001aec(const void*, const void*, unsigned int);
@@ -26,7 +26,7 @@ extern "C" void func_ov009_0218b850(CharacterCreationUI*);
 extern "C" void func_0205bb04(CreationNavigation*, int);
 extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
-extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, int);
 
@@ -51,7 +51,7 @@ extern Obj0205eaa0 data_02108760;
     func_0205bb04(navigation, selected); \
     navigation->flags3d = 0
 
-#define TAB_CURSOR(selected) \
+#define MOVE_CURSOR_TO_TAB_ICON(selected) \
     self->cursorX = ((selected) << 4) + 0x78; \
     self->cursorY = 8; \
     self->cursorWidth = 16; \
@@ -61,10 +61,11 @@ static inline unsigned char GetEyeColor(CharacterCreationUI* self) { return self
 static inline unsigned char GetSkinColor(CharacterCreationUI* self) { return self->skinColor[self->sex]; }
 static inline unsigned char GetHairColor(CharacterCreationUI* self) { return self->hairColor[self->sex]; }
 
-extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
+// Overlay 9, originally func_ov009_02188ee8 (USA/EUR 0x02188ee8, JPN 0x02189e04)
+extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
 {
-    self->flags &= ~0x20;
-    self->flags &= ~0x40;
+    self->flags &= ~CreationFlag_ConfirmTouched;
+    self->flags &= ~CreationFlag_BackTouched;
     int result = -1;
     int choice = -1;
     int x, y;
@@ -75,8 +76,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
         choice = func_ov009_0218a8b4(self, x, y);
         self->touchedChoice = choice;
         if ((unsigned int)(choice + 3) <= 1) {
-            if (choice == -2) self->flags |= 0x20;
-            else if (choice == -3) self->flags |= 0x40;
+            if (choice == -2) self->flags |= CreationFlag_ConfirmTouched;
+            else if (choice == -3) self->flags |= CreationFlag_BackTouched;
             result = choice;
             DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
         } else if (choice >= 101 && choice <= 108) {
@@ -103,7 +104,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
         if (!ticks) ticks = 1;
         int previous = self->navigation.row;
         if (func_0205bf58(&self->navigation, ticks))
-            choice = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation);
+            choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
         if (self->state == 8) {
             int rows = self->navigation.rows;
             int count = GetField0_0205bafc(&self->navigation);
@@ -115,14 +116,14 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(0x80)) {
                     RESET_NAVIGATION(11, 6, 66, self->keyboardChoice);
                     func_0205bb04(&self->navigation, self->navigation.column);
-                    self->keyboardChoice = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation);
+                    self->keyboardChoice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
                     self->flags |= 0x2000;
-                    func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
                     return -1;
                 }
-                if (choice >= 0) { TAB_CURSOR(choice); }
+                if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(1)) {
-                    result = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation) + 101;
+                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + 101;
                     if (result - 100 <= self->furthestState[self->sex] && result - 100 != self->state)
                         DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) {
@@ -138,7 +139,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
                     RESET_NAVIGATION(8, 1, 8, self->state - 1);
                     navigation->flags3c = 0;
-                    TAB_CURSOR(self->state - 1);
+                    MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
                     self->flags |= 0x2000;
                     return -1;
                 }
@@ -177,12 +178,12 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(0x80)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= 0x2000;
-                    func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
                     return -1;
                 }
-                if (choice >= 0) { TAB_CURSOR(choice); }
+                if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(1)) {
-                    result = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->navigation) + 101;
+                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + 101;
                     if (result - 100 <= self->furthestState[self->sex] && result - 100 != self->state)
                         DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) result = -3;
@@ -191,7 +192,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
             if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
                 RESET_NAVIGATION(8, 1, 8, self->state - 1);
                 navigation->flags3c = 0;
-                TAB_CURSOR(self->state - 1);
+                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
                 self->flags |= 0x2000;
                 return -1;
             }
@@ -201,20 +202,20 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
             } else if (g_keyManager.TestKeysPressed(2)) result = -3;
         }
     }
-    self->flags &= ~0x10;
+    self->flags &= ~CreationFlag_ChoiceChanged;
     if (choice >= 0 && !(choice >= 101 && choice <= 108)) {
         switch (self->state) {
-        case 1: if (self->sex != choice) self->flags |= 0x10; self->sex = choice; break;
-        case 2: if (self->bodyType[self->sex] != choice) self->flags |= 0x10; self->bodyType[self->sex] = choice; break;
-        case 3: if (self->hairStyle[self->sex] != choice) self->flags |= 0x10; self->hairStyle[self->sex] = choice; break;
-        case 4: if (self->hairColor[self->sex] != choice) self->flags |= 0x10; self->hairColor[self->sex] = choice; break;
-        case 5: if (self->faceStyle[self->sex] != choice) self->flags |= 0x10; self->faceStyle[self->sex] = choice; break;
-        case 6: if (self->eyeColor[self->sex] != choice) self->flags |= 0x10; self->eyeColor[self->sex] = choice; break;
-        case 7: if (self->skinColor[self->sex] != choice) self->flags |= 0x10; self->skinColor[self->sex] = choice; break;
-        case 8: if (self->keyboardChoice != choice) self->flags |= 0x10; self->keyboardChoice = choice; break;
+        case 1: if (self->sex != choice) self->flags |= CreationFlag_ChoiceChanged; self->sex = choice; break;
+        case 2: if (self->bodyType[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->bodyType[self->sex] = choice; break;
+        case 3: if (self->hairStyle[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->hairStyle[self->sex] = choice; break;
+        case 4: if (self->hairColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->hairColor[self->sex] = choice; break;
+        case 5: if (self->faceStyle[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->faceStyle[self->sex] = choice; break;
+        case 6: if (self->eyeColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->eyeColor[self->sex] = choice; break;
+        case 7: if (self->skinColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->skinColor[self->sex] = choice; break;
+        case 8: if (self->keyboardChoice != choice) self->flags |= CreationFlag_ChoiceChanged; self->keyboardChoice = choice; break;
         }
     }
-    if (self->flags & 0x10) {
+    if (self->flags & CreationFlag_ChoiceChanged) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == 1) {
@@ -229,17 +230,18 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreationUI* self)
             appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
             appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
         }
-        if (!touched) func_ov009_02188e70(self, choice);
+        if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
         self->flags |= 0x6100;
     }
     return result;
 }
 #undef RESET_NAVIGATION
-#undef TAB_CURSOR
+#undef MOVE_CURSOR_TO_TAB_ICON
 
 #else
 #include <globaldefs.h>
 #include <GameState/GameState.h>
+#include "Resource/CharacterCreationUI.h"
 
 struct Struct_0205bef8;
 struct Struct_0205ba68;
@@ -250,7 +252,7 @@ void Init0205bef8(Struct_0205bef8*);
 void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
 void SetField0AndPropagate0205bacc(Node0205bacc*, int);
 int GetField0_0205bafc(void*);
-int ComputeScaledSum0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
 
 struct TouchState {
@@ -307,7 +309,7 @@ extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
 extern "C" void func_0205bb04(Navigation*, int);
 extern "C" int func_0205bf58(Navigation*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreation*);
-extern "C" void func_ov009_02188e70(CharacterCreation*, int);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreation*, int);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreation*, int);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreation*, int, int);
 
@@ -320,7 +322,7 @@ extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreation*, int, int
     func_0205bb04(&controls->navigation, selected); \
     controls->navigation.field3d = 0
 
-#define TAB_CURSOR(selected) \
+#define MOVE_CURSOR_TO_TAB_ICON(selected) \
     self->cursorX = ((selected) << 4) + 0x78; \
     self->cursorY = 8; \
     self->cursorWidth = 16; \
@@ -330,9 +332,9 @@ static inline unsigned char GetEyeColor(CharacterCreation* self) { return self->
 static inline unsigned char GetSkinColor(CharacterCreation* self) { return self->skin[self->gender]; }
 static inline unsigned char GetHairColor(CharacterCreation* self) { return self->hairColor[self->gender]; }
 
-// USA: func_ov009_02188ee8
-extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
-    self->flags &= ~0x60;
+// Overlay 9, originally func_ov009_02188ee8 (USA/EUR 0x02188ee8, JPN 0x02189e04)
+extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
+    self->flags &= ~(CreationFlag_ConfirmTouched | CreationFlag_BackTouched);
     int result = -1;
     int choice = -1;
     int x, y;
@@ -343,8 +345,8 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
         choice = func_ov009_02189854(self, x, y);
         self->touchedChoice = choice;
         if ((unsigned int)(choice + 3) <= 1) {
-            if (choice == -2) self->flags |= 0x20;
-            else if (choice == -3) self->flags |= 0x40;
+            if (choice == -2) self->flags |= CreationFlag_ConfirmTouched;
+            else if (choice == -3) self->flags |= CreationFlag_BackTouched;
             result = choice;
             DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
         } else if (choice >= 101 && choice <= 108) {
@@ -369,7 +371,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
         unsigned int ticks = GameState::GetInstance()->GetTickCount();
         if (!ticks) ticks = 1;
         int previous = self->controls.navigation.selection;
-        if (func_0205bf58(&self->controls.navigation, ticks)) choice = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation);
+        if (func_0205bf58(&self->controls.navigation, ticks)) choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation);
         if (self->state == 8) {
             int rows = self->controls.navigation.rows;
             int count = GetField0_0205bafc(&self->controls.navigation);
@@ -386,9 +388,9 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
                     self->list->counter = 0;
                     return -1;
                 }
-                if (choice >= 0) { TAB_CURSOR(choice); }
+                if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(1)) {
-                    result = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation) + 101;
+                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + 101;
                     if (result - 100 <= self->maxSteps[self->gender] && result - 100 != self->state)
                         DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
                 }
@@ -399,7 +401,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
                 self->list->entries = 0;
                 RESET_NAVIGATION(8, 1, 8, self->state - 1);
                 controls->navigation.field3c = 0;
-                TAB_CURSOR(self->state - 1);
+                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
             }
         } else if (self->state != 8) {
             int rows = self->controls.navigation.rows;
@@ -412,12 +414,12 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
                 if (g_keyManager.TestKeysPressed(0x80)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= 0x2000;
-                    func_ov009_02188e70(self, ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation));
                     return -1;
                 }
-                if (choice >= 0) { TAB_CURSOR(choice); }
+                if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(1)) {
-                    result = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->controls.navigation) + 101;
+                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + 101;
                     if (result - 100 <= self->maxSteps[self->gender] && result - 100 != self->state)
                         DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) result = -3;
@@ -427,7 +429,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
             if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
                 RESET_NAVIGATION(8, 1, 8, self->state - 1);
                 controls->navigation.field3c = 0;
-                TAB_CURSOR(self->state - 1);
+                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
                 self->flags |= 0x2000;
                 return -1;
             }
@@ -437,21 +439,21 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
             } else if (g_keyManager.TestKeysPressed(2)) result = -3;
         }
     }
-    self->flags &= ~0x10;
+    self->flags &= ~CreationFlag_ChoiceChanged;
     if (choice >= 0 && !(choice >= 101 && choice <= 108)) {
         unsigned char* genderValue = &self->gender;
         switch (self->state) {
         case 8: break;
-        case 1: { if (*genderValue != choice) self->flags |= 0x10; *genderValue = choice; break; }
-        case 2: { unsigned char* values = self->body; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
-        case 3: { unsigned char* values = self->hair; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
-        case 4: { unsigned char* values = self->hairColor; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
-        case 5: { unsigned char* values = self->face; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
-        case 6: { unsigned char* values = self->eyes; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
-        case 7: { unsigned char* values = self->skin; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= 0x10; values[gender] = choice; break; }
+        case 1: { if (*genderValue != choice) self->flags |= CreationFlag_ChoiceChanged; *genderValue = choice; break; }
+        case 2: { unsigned char* values = self->body; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case 3: { unsigned char* values = self->hair; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case 4: { unsigned char* values = self->hairColor; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case 5: { unsigned char* values = self->face; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case 6: { unsigned char* values = self->eyes; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case 7: { unsigned char* values = self->skin; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
         }
     }
-    if (self->flags & 0x10) {
+    if (self->flags & CreationFlag_ChoiceChanged) {
         if (self->state != 8 || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == 1) {
@@ -466,7 +468,7 @@ extern "C" ARM int func_ov009_02188ee8(CharacterCreation* self) {
             appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
             appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
         }
-        if (!touched) func_ov009_02188e70(self, choice);
+        if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
         self->flags |= 0x6100;
     }
     if (result == 108 && result - 100 <= self->maxSteps[self->gender] && result - 100 != self->state)

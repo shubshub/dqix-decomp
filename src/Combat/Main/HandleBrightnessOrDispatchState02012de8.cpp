@@ -12,7 +12,6 @@ int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
 int Forward020bbdcc(int a);
 extern "C" int func_020ce89c(int a, int b, int c);
 int DispatchIfEquals1_020cedc0(int a);
-int GetWord0x0_0200fb8c(int* obj);
 void CancelActionIfHeadIdMatches_02199e98(void* obj);
 int IsPowcntBit0Set_020cede0(void);
 
@@ -41,7 +40,7 @@ extern "C" ARM void func_02012de8(void) {
         if (!CheckField0NonZero_0202b7d8(p2)) return;
         if (TestFlags02046708(p1, 0x1000000)) return;
         {
-            int word = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+            int word = (int)GameState::GetInstance()->GetResources();
             if (word == 0) return;
             CancelActionIfHeadIdMatches_02199e98((void*)word);
         }
@@ -51,7 +50,7 @@ extern "C" ARM void func_02012de8(void) {
     if (IsPowcntBit0Set_020cede0()) return;
     DispatchIfEquals1_020cedc0(1);
     {
-        int word = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+        int word = (int)GameState::GetInstance()->GetResources();
         if (word == 0) return;
         WriteBrightnessToHardware((GameResources*)word);
     }

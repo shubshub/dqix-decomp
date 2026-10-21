@@ -2,7 +2,6 @@
 #include "GameState/GameState.h"
 #include "Filesystem/BackgroundLoader.h"
 
-int* GetWord0x0_0200fb8c(int*);
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
 void OrGlobalFlag0x40_020dc2bc();
@@ -15,7 +14,7 @@ void OrGlobalFlag0x40_020dc2bc();
 
 // USA: func_ov008_0218599c
 extern "C" ARM void func_ov008_0218599c(void* obj) {
-    int* word = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    int* word = (int*)GameState::GetInstance()->GetResources();
     BackgroundLoader::GetInstance();
     unsigned char flag = *((unsigned char*)obj + 0xb11);
     if (flag == 0) {

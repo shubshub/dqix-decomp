@@ -71,7 +71,6 @@ EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
 extern "C" Zone3D* func_02012fe4();
 extern "C" NodeList02058564* func_02057924();
 extern "C" int* func_0202ae18();
-GameResources* GetWord0x0_0200fb8c(int*);
 void* GetGlobalField0x1c020421a0();
 void CancelPendingAction020397cc(Obj020397cc*, int);
 void SetBrightness(GameResources*, int, int);
@@ -135,7 +134,7 @@ extern "C" ARM void func_ov017_021a1284(TransferEvent021a1284* self, void* unuse
     NodeList02058564* nodes = func_02057924();
     int* search = func_0202ae18();
     GameObject* player = game->GetUnknownGameObject();
-    GameResources* resources = GetWord0x0_0200fb8c((int*)game);
+    GameResources* resources = game->GetResources();
     void* global = GetGlobalField0x1c020421a0();
     CancelPendingAction020397cc((Obj020397cc*)player, 1);
     ((PlayerTransfer021a1284*)player)->field_b2 = 0;

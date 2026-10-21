@@ -22,7 +22,6 @@ struct Task0217e3b8
     void* menu;
 };
 
-unsigned int* GetWord0x0_0200fb8c(int* gameState);
 char* GetFieldIfFlag4_020100f8(char* gameState);
 void CancelPendingAction020397cc(Obj020397cc* obj, int arg1);
 void SetByteField0x253_020397c0(void* obj);
@@ -47,7 +46,7 @@ extern AllocatorUnion data_02114e20;
 extern "C" ARM void func_ov003_0217e3b8(Task0217e3b8* self)
 {
     GameState* gameState = GameState::GetInstance();
-    unsigned int* resources = GetWord0x0_0200fb8c((int*)gameState);
+    unsigned int* resources = (unsigned int*)gameState->GetResources();
     GameObject* object = gameState->GetUnknownGameObject();
     char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
     SetFlags04((GameResources*)resources, 0xc0);

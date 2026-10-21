@@ -55,7 +55,6 @@ extern int data_02109bf4;
 extern int data_02108760;
 
 extern "C" int *func_0202ae18();
-void * GetWord0x0_0200fb8c(int*);
 Ctl *GetGlobalField0x1c020421a0();
 void *GetGlobalPtr021075f4_0203cf4c();
 unsigned char *GetData02153637_020e2ff8();
@@ -98,7 +97,7 @@ void SetIndexedName02046574(Obj02046574*, int, char*);
 // USA: func_ov003_0215d4fc
 extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
     GameState *gs    = GameState::GetInstance();
-    void *res        = GetWord0x0_0200fb8c((int*)gs);
+    void *res        = (void*)gs->GetResources();
     Ctl *ctl         = GetGlobalField0x1c020421a0();
     int *a           = func_0202ae18();
     void *b          = GetGlobalPtr021075f4_0203cf4c();

@@ -10,7 +10,6 @@ void func_ov003_02158480(void *);
 void _Z20ResetWithSub0208203cP11Obj0208203c(void *);
 void _Z31ResetIfFlagAndCategory_021538f4Pvi(void *, int);
 int _Z29GetArrayEntryByIndex_02156034Pv(void *);
-void *_Z19GetWord0x0_0200fb8cPi(void *);
 int _Z31IsSubBrightnessTransitionActiveP13GameResources(void *);
 int func_ov003_021550dc(void *);
 void _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(void *, int, int);
@@ -153,7 +152,7 @@ extern "C" ARM void func_ov003_0215704c(struct Ctrl0215704c *self) {
         if (o->f5d & 1) {
             ok = 0;
         }
-        void *res = _Z19GetWord0x0_0200fb8cPi(GameState::GetInstance());
+        void *res = GameState::GetInstance()->GetResources();
         if (IsBrightnessWithinValidRange((GameResources*)res, true) == 0) {
             ok = 0;
         }

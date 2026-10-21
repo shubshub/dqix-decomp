@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(struct Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84*);
 extern "C" void func_0205bb04(void*, int);
 
 struct Struct_0205c4a8 {
@@ -21,7 +21,7 @@ ARM void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta)
         s->field14 += s->field4;
     }
     base = s->field0;
-    if (base <= ComputeScaledSum0205bb84((struct Struct_0205bb84*)s)) {
+    if (base <= GridCursor_GetSelectedIndex((struct Struct_0205bb84*)s)) {
         func_0205bb04((void*)s, base - 1);
     }
 }

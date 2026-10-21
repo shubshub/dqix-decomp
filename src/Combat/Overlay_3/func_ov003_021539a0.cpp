@@ -108,7 +108,6 @@ void SetPackedFields_021e24b0(void*, int, int, unsigned char, unsigned char, uns
 extern "C" void func_ov023_021e257c(void*);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToSubBG0CharacterData(int, int, unsigned int);
-void* GetWord0x0_0200fb8c(int*);
 struct GameResources;
 void SetSubBrightness(GameResources*, int, int);
 
@@ -247,7 +246,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
         ((BackgroundLoader*)loader)->RemoveTask(self->task54);
         self->task54 = -1;
         self->f10 = self->idx;
-        void* axis = GetWord0x0_0200fb8c((int*)gs);
+        void* axis = (void*)((GameState*)gs)->GetResources();
         if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
             self->flags &= ~2;
             self->state++;
@@ -256,7 +255,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
             self->state = 0;
         }
     } else if (self->state == 2) {
-        SetSubBrightness((GameResources*)(GetWord0x0_0200fb8c((int*)GameState::GetInstance())), 0, 1);
+        SetSubBrightness((GameResources*)((void*)GameState::GetInstance()->GetResources()), 0, 1);
         self->state = 0;
         self->flags &= ~1;
     }
@@ -389,7 +388,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
         ((BackgroundLoader*)loader)->RemoveTask(self->task54);
         self->task54 = -1;
         self->f10 = self->idx;
-        void* axis = GetWord0x0_0200fb8c((int*)gs);
+        void* axis = (void*)((GameState*)gs)->GetResources();
         if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
             self->flags &= ~2;
             self->state++;
@@ -398,7 +397,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
             self->state = 0;
         }
     } else if (self->state == 2) {
-        SetSubBrightness((GameResources*)(GetWord0x0_0200fb8c((int*)GameState::GetInstance())), 0, 1);
+        SetSubBrightness((GameResources*)((void*)GameState::GetInstance()->GetResources()), 0, 1);
         self->state = 0;
         self->flags &= ~1;
     }

@@ -2,7 +2,6 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 extern "C" int func_ov000_0215eb1c(struct Random* rand, short* buf, int count, int flag);
 int GetSubstructByte0x1c_020493a4(unsigned char* obj);
 void SetSubstructByte0x1c_02049390(unsigned char* obj, unsigned char value);
@@ -20,7 +19,7 @@ extern struct Words3_02167cd4 data_ov000_021830cc;
 // USA: func_ov000_02167cd4  (semantic: AssignFormationPositions_02167cd4)
 extern "C" ARM void func_ov000_02167cd4(unsigned char* obj) {
     GameState* battle = GameState::GetInstance();
-    GetWord0x0_0200fb8c((int*)battle);
+    battle->GetResources();
 #if defined(jpn)
     struct Random* rand = *(struct Random**)(obj + 0x218);
 #else

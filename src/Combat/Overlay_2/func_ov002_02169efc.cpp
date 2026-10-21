@@ -13,7 +13,6 @@ struct FlagWord020466f4;
 struct Actor0209c678;
 
 char *GetGlobalField0x1c020421a0();
-int GetWord0x0_0200fb8c(int *p);
 void *GetDataPtr02114e04_020d6c00();
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
 extern "C" void *func_0202ae18();
@@ -50,7 +49,7 @@ extern "C" ARM void func_ov002_02169efc(char *self) {
     int recSize;
     void *name;
     char *g                  = GetGlobalField0x1c020421a0();
-    GameResources *res       = (GameResources *) GetWord0x0_0200fb8c((int *) GameState::GetInstance());
+    GameResources *res       = GameState::GetInstance()->GetResources();
     void *flags              = GetDataPtr02114e04_020d6c00();
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
     int state                = *(int *) (self + 0x1bc0);

@@ -131,7 +131,6 @@ extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
 extern Obj0205eaa0 data_02108760;
 
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 MessageSystem* GetGlobalField0x1c020421a0();
 void SetBrightness(GameResources* resources, int screen, int brightness);
 int IsBrightnessTransitionActive(GameResources* resources);
@@ -144,7 +143,7 @@ extern "C" void _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(void* list,
 int GetField0x3acValue_020100a8(GameState* gameState);
 const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
 void AppendString02042058(char* text, const char* append);
-int ComputeScaledSum0205bb84(Struct_0205bb84* cursor);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* cursor);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int value);
 
 extern "C" {
@@ -163,7 +162,7 @@ extern "C" void _Z28SubmitScriptFromFile020727f8PvPKciS_h(void*, const char*, in
 extern "C" ARM void func_ov008_02185dc0(BattleRecords* self, unsigned int ticks)
 {
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     MessageSystem* messages = GetGlobalField0x1c020421a0();
     if (messages->active != NULL)
         messages->b19ae = 0;
@@ -300,7 +299,7 @@ extern "C" ARM void func_ov008_02185dc0(BattleRecords* self, unsigned int ticks)
     if (step == 3)
     {
         int result = func_ov008_02186a30(self, ticks);
-        int selected = ComputeScaledSum0205bb84((Struct_0205bb84*)&self->cursor_);
+        int selected = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->cursor_);
 #if defined(jpn)
         int limit = 5;
         int first = self->top_;

@@ -10,7 +10,6 @@
 struct Obj020397cc;
 struct Obj021b2c88;
 
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 void CancelPendingAction020397cc(Obj020397cc* obj, int arg1);
 int GetFieldIfFlag4_020100f8(char* obj);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
@@ -44,7 +43,7 @@ extern "C" ARM void func_ov017_021b2ce8(Task_021b2ce8* self) {
  enum { regionalSize = 0x1050 };
 #endif
     GameState* gs = GameState::GetInstance();
-    GameResources* res = GetWord0x0_0200fb8c((int*)gs);
+    GameResources* res = gs->GetResources();
     SetFlags04(res, 0xc0);
     GameObject* leader = gs->GetUnknownGameObject();
     CancelPendingAction020397cc((Obj020397cc*)leader, 1);

@@ -16,7 +16,6 @@ enum { kSceneHeapCount = 4 };
 enum { kSceneHeapCount = 5 };
 #endif
 
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void* work, int mask);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* work, int mask);
@@ -84,7 +83,7 @@ struct BattleScene0216873c {
 // USA: func_ov000_0216873c
 extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
     GameState* gs = GameState::GetInstance();
-    GameResources* res = GetWord0x0_0200fb8c((int*)gs);
+    GameResources* res = gs->GetResources();
     if (scene->step == 0) {
         SetBrightness(res, -16, 15);
         scene->step++;

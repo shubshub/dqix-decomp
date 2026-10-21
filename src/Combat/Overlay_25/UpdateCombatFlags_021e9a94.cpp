@@ -2,7 +2,6 @@
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 void* GetActiveCombatWork_ov000_02160130(void);
 extern "C" void func_ov000_0216d370(int a, int b, int c, int d);
 
@@ -18,7 +17,7 @@ struct In021e9a94 {
 ARM void UpdateCombatFlags_021e9a94(struct In021e9a94* obj) {
     GameState* bs = GameState::GetInstance();
     void* val = GetField0x3b0Value_020100bc(bs);
-    GetWord0x0_0200fb8c((int*)bs);
+    bs->GetResources();
     GetActiveCombatWork_ov000_02160130();
     if (data_ov025_021ef9a4 & 1) {
         data_ov025_021ef9a4 = (data_ov025_021ef9a4 | 8) & ~1;

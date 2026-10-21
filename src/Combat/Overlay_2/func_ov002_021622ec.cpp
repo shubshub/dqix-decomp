@@ -21,7 +21,6 @@ int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag0215bf34(char *base);
-int GetWord0x0_0200fb8c(int *p);
 int GetField0x3acValue_020100a8(GameState *gs);
 int TestBitInByteArray_0206dfb0(int unused, unsigned char *arr, int index);
 extern "C" char *func_0205ec34(void);
@@ -58,7 +57,7 @@ extern "C" ARM void func_ov002_021622ec(char *base) {
         if (old != *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe0, 0xa8))) return;
         if (AnyConfirm021622ec(base) || *(unsigned char *) (base + 0x1000 + RG(0xc2f, 0xaf7)) == 1) {
             GameState *gs                              = GameState::GetInstance();
-            int w                                      = GetWord0x0_0200fb8c((int *) gs);
+            int w                                      = (int)gs->GetResources();
             *(unsigned char *) (base + 0x1000 + RG(0xc2f, 0xaf7)) = 0;
             switch (*(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe0, 0xa8))) {
                 case 0:

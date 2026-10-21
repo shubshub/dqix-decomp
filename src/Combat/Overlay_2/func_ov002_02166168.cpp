@@ -9,7 +9,6 @@ struct Struct_0205def8;
 struct Obj0205eaa0;
 struct Obj020d7aa0;
 
-int GetWord0x0_0200fb8c(int *p);
 extern "C" void func_02012fe4(void);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
@@ -45,7 +44,7 @@ extern "C" char data_02108760;
 #define OBJ (self + 0xe20)
 extern "C" ARM void func_ov002_02166168(char *self) {
     GameState *gs      = GameState::GetInstance();
-    GameResources *res = (GameResources *) GetWord0x0_0200fb8c((int *) gs);
+    GameResources *res = gs->GetResources();
     func_02012fe4();
     int state = *(int *) (self + 0x1a88);
     if (state == 0) {
@@ -148,7 +147,7 @@ extern "C" ARM void func_ov002_02166168(char *self) {
 #else
 extern "C" ARM void func_ov002_02166168(char *self) {
     GameState *gs      = GameState::GetInstance();
-    GameResources *res = (GameResources *) GetWord0x0_0200fb8c((int *) gs);
+    GameResources *res = gs->GetResources();
     func_02012fe4();
     int state = *(int *) (self + 0x1bc0);
     if (state == 0) {

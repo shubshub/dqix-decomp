@@ -162,7 +162,6 @@ extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
 extern Obj0205eaa0 data_02108760;
 
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 MessageSystem* GetGlobalField0x1c020421a0();
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsBrightnessTransitionActive(GameResources* resources);
@@ -208,7 +207,7 @@ extern "C" ARM void func_ov008_02186388(BattleRecords* self)
     SavedRecords* saved;
 #endif
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     BackgroundLoader::GetInstance();
     MessageSystem* messages = GetGlobalField0x1c020421a0();
 #if defined(jpn)

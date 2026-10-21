@@ -36,7 +36,6 @@ extern char data_ov006_0216032e[];
 extern char data_ov006_02160340[];
 extern char data_ov006_02160359[];
 
-int GetWord0x0_0200fb8c(int* obj);
 struct Actor0209c3b4;
 int SetStateAndDispatch0209c3b4(Actor0209c3b4*, int);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
@@ -195,7 +194,7 @@ struct Frame {
 // USA: func_ov006_0215a5fc
 extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
     Frame f;
-    GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    GameState::GetInstance()->GetResources();
     void* loader = BackgroundLoader::GetInstance();
     unsigned char st = obj->f390;
 

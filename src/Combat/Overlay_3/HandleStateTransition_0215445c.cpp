@@ -1,7 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 int IsSubBrightnessTransitionActive(GameResources*);
 struct GameResources;
 void SetSubBrightness(GameResources*, int, int);
@@ -23,7 +22,7 @@ struct SelfState0215445c {
 
 // USA: func_ov003_0215445c
 ARM void HandleStateTransition_0215445c(struct SelfState0215445c* self) {
-    int w = GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    int w = (int)GameState::GetInstance()->GetResources();
 
     if (self->f58 == 0) {
         self->f5a = 3;

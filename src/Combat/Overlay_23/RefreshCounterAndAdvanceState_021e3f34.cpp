@@ -6,7 +6,6 @@ enum {regionalOffset0=0x138, regionalOffset1=0x4e4, regionalOffset2=0x4e7, regio
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-int GetWord0x0_0200fb8c(int* obj);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
@@ -19,7 +18,7 @@ struct Obj021e3f34 { char pad[regionalOffset0]; int field138; char pad2[regional
 // USA: func_ov023_021e3f34  (semantic: RefreshCounterAndAdvanceState_021e3f34)
 extern "C" ARM void func_ov023_021e3f34(struct Obj021e3f34* obj) {
     GameState* bs = GameState::GetInstance();
-    int val = GetWord0x0_0200fb8c((int*)bs);
+    int val = (int)bs->GetResources();
     if (obj->field4e4 == 0) {
         SetBrightness((GameResources*)val, -16, 15);
         obj->field4e4++;

@@ -26,7 +26,6 @@ enum {
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 
-void* GetWord0x0_0200fb8c(int*);
 void* GetGlobal02109400_02094a00();
 
 struct Struct0205de24;
@@ -51,7 +50,7 @@ extern "C" void func_ov012_0218943c(void* self);
 
 // USA: func_ov012_02186a7c  (semantic: UpdateBattleTagStateA_02186a7c)
 extern "C" ARM void func_ov012_02186a7c(char* self) {
-	GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+	GameState::GetInstance()->GetResources();
 	BackgroundLoader::GetInstance();
 	GetGlobal02109400_02094a00();
 

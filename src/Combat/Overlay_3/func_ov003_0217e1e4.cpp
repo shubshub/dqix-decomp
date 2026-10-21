@@ -21,7 +21,7 @@ struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key
 struct Struct_0205c4a8;
 void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta);
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(struct Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
 extern "C" void func_0205bb04(void* s, int value);
@@ -65,7 +65,7 @@ extern "C" ARM int func_ov003_0217e1e4(struct Obj0217e1e4* self) {
         if (right - 16 <= x && x < right) {
             AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8*)list->scrollState, 1);
         }
-        int index = ComputeScaledSum0205bb84((struct Struct_0205bb84*)list->scrollState);
+        int index = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)list->scrollState);
         SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)list->indexState, index);
         func_0205bb04(list->scrollState, index);
     }

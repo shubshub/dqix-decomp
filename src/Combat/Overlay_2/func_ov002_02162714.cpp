@@ -19,7 +19,6 @@ int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-int GetWord0x0_0200fb8c(int *p);
 void *GetFieldAt0x150_02053c6c(unsigned char *p);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
 int GetCountByType02157108(void *self, int type);
@@ -57,7 +56,7 @@ extern "C" ARM void func_ov002_02162714(char *self) {
             if (flags & 2) return;
             if (!(flags & 0x10)) return;
             GameState *gs = GameState::GetInstance();
-            GetWord0x0_0200fb8c((int *) gs);
+            gs->GetResources();
             GameObject *prot = gs->GetProtagonist();
             if (prot != 0) {
                 *(short *) ((char *) GetFieldAt0x150_02053c6c((unsigned char *) prot) + RG(0x95a, 0x8c2)) = *(short *) (self + RG(0x1be4, 0x1aac));

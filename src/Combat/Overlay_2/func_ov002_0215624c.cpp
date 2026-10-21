@@ -35,7 +35,6 @@ void SetFieldAt0x30_0205bc24(void *obj, int value);
 extern "C" int func_0205d0e0(void *obj, int val);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 void PushInputLogB_020a1ef0(int id);
-int GetWord0x0_0200fb8c(int *obj);
 int GetGlobalField0x1c020421a0(void);
 void SetWord0x18ClearByte0x1f_0204b11c(unsigned char *obj, int value);
 extern "C" void func_0204b5b4(void *obj, int val);
@@ -161,7 +160,7 @@ extern "C" ARM void func_ov002_0215624c(char *self) {
 
     if (S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) == 0) {
         PushInputLogB_020a1ef0(1);
-        char *w     = (char *) GetWord0x0_0200fb8c((int *) GameState::GetInstance());
+        char *w     = (char *) GameState::GetInstance()->GetResources();
         S32(REGIONAL_OFFSET(0x1a98, 0x1bd0)) = *(int *) ((char *) GetGlobalField0x1c020421a0() + REGIONAL_OFFSET(0x28, 0x5c));
         ((SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)))->Reset();
 

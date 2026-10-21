@@ -16,7 +16,7 @@ struct Struct_0205bcdc;
 struct Elem_0205d81c *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 int SelectField0x8Or0x58ByFlags_0205c6e4(unsigned char *p);
 void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8 *s, int delta);
-int ComputeScaledSum0205bb84(struct Struct_0205bb84 *s);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84 *s);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
 extern "C" void func_0205bb04(void *p, int v);
 
@@ -63,7 +63,7 @@ extern "C" ARM int func_ov002_02161b98(char *base) {
             AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8 *) (list + 0x54), 1);
             *(int *) (base + 0x1000 + RG(0xbc8, 0xa90)) = 1;
         }
-        int total = ComputeScaledSum0205bb84((struct Struct_0205bb84 *) (list + 0x54));
+        int total = GridCursor_GetSelectedIndex((struct Struct_0205bb84 *) (list + 0x54));
         SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), total);
         func_0205bb04(list + 0x54, total);
     }

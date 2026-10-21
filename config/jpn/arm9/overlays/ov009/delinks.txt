@@ -130,7 +130,7 @@ src/Combat/Overlay_9/CharacterCreationUI_ApplyChoice_02188944.cpp:
     .text start:0x02189704 end:0x021898cc
 
 
-src/Combat/Overlay_9/func_ov009_02188e70.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_MoveCursorToSlot_02188e70.cpp:
     complete
     .text start:0x02189d30 end:0x02189e04
 
@@ -142,7 +142,7 @@ src/Combat/Overlay_9/func_ov009_02186e00.cpp:
     complete
     .text start:0x02187f2c end:0x021881fc
 
-src/Combat/Overlay_9/func_ov009_02188ee8.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleInput_02188ee8.cpp:
     complete
     .text start:0x02189e04 end:0x0218a8b4
 

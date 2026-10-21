@@ -17,7 +17,6 @@ void InitAndInsertNode_021acd30(char* self, unsigned char a, unsigned char b, un
 void EnqueueEventTag57WithAB_021cf4b0(int a, int b);
 void EnqueueEventTag173_021d1810(int, int, signed char);
 int GetField0x3acValue_020100a8(GameState* gs);
-int GetWord0x0_0200fb8c(int* obj);
 int* GetGlobal02109030_020936f8(void);
 char* GetGlobalField0x1c020421a0(void);
 int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
@@ -130,7 +129,7 @@ extern "C" ARM void func_02093428(struct BattlePhaseState02093428* s) {
                 }
             }
         }
-        InitAndInsertNode_021acd30((char*)GetWord0x0_0200fb8c((int*)bs), 1, flag, 0);
+        InitAndInsertNode_021acd30((char*)bs->GetResources(), 1, flag, 0);
         ClearFieldKeepBit0x10_02011af0(bs);
         if (((struct GameStateFlags02093428*)bs)->field7f75 != 0) {
             ResetAndEnableFieldFlag_02011b24((struct FieldFlagBlock*)bs);

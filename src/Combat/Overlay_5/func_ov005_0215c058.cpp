@@ -90,7 +90,7 @@ extern "C" void func_ov005_02154d50(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_02154d7c(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_021537bc(CursorFrame0215c058* frame, int mode, unsigned short value);
 struct Struct_0205bb84;
-int ComputeScaledSum0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
 int CheckFlag30Or401_02157190(void* self);
 unsigned char* GetPtrField0x2a04_02010828(GameState*);
@@ -199,7 +199,7 @@ extern "C" ARM void func_ov005_0215c058(Menu0215c058* self)
             func_ov005_021537bc(&frame, 0, 0x7fff);
         }
 
-        int sel = ComputeScaledSum0205bb84((Struct_0205bb84*)self->scroll) + 8;
+        int sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)self->scroll) + 8;
         if (sel != self->selected)
         {
             self->selected = sel;

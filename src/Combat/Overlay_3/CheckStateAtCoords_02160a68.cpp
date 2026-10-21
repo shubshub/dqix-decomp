@@ -16,7 +16,6 @@ enum { kRegionValue488_2B0 = 0x488 };
 enum { kRegionValue394_27C = 0x394 };
 #endif
 
-int GetWord0x0_0200fb8c(int* obj);
 int IsFieldNotPositive_021a4e70(unsigned char* base);
 
 struct Outer020e28dc;
@@ -38,7 +37,7 @@ struct Ctx02160a68 {
 // USA: func_ov003_02160a68  (semantic: CheckStateAtCoords_02160a68)
 extern "C" ARM int func_ov003_02160a68(struct Ctx02160a68* self) {
     int flag = 0;
-    unsigned char* battleWord = (unsigned char*)GetWord0x0_0200fb8c((int*)GameState::GetInstance());
+    unsigned char* battleWord = (unsigned char*)(int)GameState::GetInstance()->GetResources();
     if (g_keyManager.TestKeysPressed(2)) {
         if (IsFieldNotPositive_021a4e70(battleWord)) {
             flag = 1;
