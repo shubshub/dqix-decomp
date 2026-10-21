@@ -5,11 +5,11 @@
 #include <std_library_functions.h>
 #include "Resource/CharacterCreationUI.h"
 
-struct Struct_02108760;
-struct Struct_ov005_0215840c_2 { char unknown_0_[0x3c]; char unknown_3c_[1]; };
-extern "C" void func_ov009_02188c2c(Struct_ov009_021842a0*);
-extern "C" void func_ov009_02188d9c(void*);
-extern "C" void func_ov009_02188e70(Struct_ov009_021842a0*, int);
+struct Obj0205eaa0;
+struct PartyMemberData { char unknown[0x3c]; char name[1]; };
+extern "C" void setupChoiceNavigation(CharacterCreationUI*);
+extern "C" void loadChoiceLayout(void*);
+extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
 extern "C" int func_ov009_02188ee8(Struct_ov009_021842a0*);
 extern "C" void func_ov009_0218ad0c(void*);
@@ -21,19 +21,19 @@ extern Struct_02108760 data_02108760;
 
 extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0* arg0)
 {
-    if (arg0->unknown_c59_ == 0) {
-        arg0->unknown1_d8c_ = 0;
-        func_ov009_02188c2c(arg0);
-        func_ov009_02188d9c(arg0);
-        func_ov009_02188e70(arg0, arg0->unknown1_d8c_);
-        arg0->unknown_d9c_ |= 1;
-        arg0->unknown_d8d_ = arg0->unknown_d8e_ = 0;
-        arg0->unknown_d9c_ &= ~0x800;
-        if (arg0->unknown_d8a_[arg0->unknown_da3_] != 0 && arg0->unknown_d74_[arg0->unknown_da3_][8] == 0) {
-            for (int var0 = 1; var0 < 5; var0++) {
-                if (arg0->unknown_d74_[arg0->unknown_da3_][var0 * 2] == 0) {
-                    for (int var1 = var0; var1 < 5; var1++)
-                        memcpy(&arg0->unknown_d74_[arg0->unknown_da3_][var1 * 2], data_ov009_0218bc59, 2);
+    if (self->step == 0) {
+        self->keyboardChoice = 0;
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
+        func_ov009_02188e70(self, self->keyboardChoice);
+        self->flags |= 1;
+        self->keyboardPage = self->previousKeyboardPage = 0;
+        self->flags &= ~0x800;
+        if (self->nameFlags[self->sex] != 0 && self->names[self->sex][8] == 0) {
+            for (int character = 1; character < 5; character++) {
+                if (self->names[self->sex][character * 2] == 0) {
+                    for (int fill = character; fill < 5; fill++)
+                        memcpy(&self->names[self->sex][fill * 2], data_ov009_0218bc59, 2);
                 }
             }
             arg0->unknown_d9c_ |= 0x8000;

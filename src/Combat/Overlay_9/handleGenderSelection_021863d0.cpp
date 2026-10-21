@@ -9,8 +9,8 @@ struct Struct_ov009_021863d0 {
 };
 
 int GetWord0x0_0200fb8c(int* gameState);
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -25,9 +25,9 @@ extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
 // Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
 extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
 {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = (GameResources*)func_0200fb8c((int*)var0);
-    if (arg0->unknown_c59_ == 0)
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
+    if (self->step == 0) //First time setup, Runs one time when we switch into the Gender Tab
     {
         if (GetBrightness((GameResources*)var1, false) == -16 &&
             GetBrightness((GameResources*)var1, true) == -16)
@@ -36,12 +36,14 @@ extern "C" ARM void handleGenderSelection(CharacterCreationUI* self)
                 return;
             SetBrightness(var1, 0, 15);
         }
-        func_ov009_02188c2c(arg0);
-        func_ov009_02188d9c(arg0);
-        func_ov009_02188e70(arg0, arg0->unknown_da3_);
-        arg0->unknown_c59_++;
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
+        func_ov009_02188e70(self, self->sex);
+        self->step++;
     }
-    if (arg0->unknown_c59_ == 1)
+
+    //Looks like Step 1 and Step 2 Trigger when we enter the Gender Tab
+    if (self->step == 1)
     {
         if (IsBrightnessTransitionActive(var1))
             return;

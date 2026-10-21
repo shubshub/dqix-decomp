@@ -2,17 +2,17 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" ARM void func_ov009_02188e70(Struct_ov009_021842a0* arg0, int arg1) {
-    Struct_ov009_02188e70* var0 = &arg0->unknown_c2c_;
-    int var1;
-    int var2;
-    int var3;
-    int var4;
-    int var5 = var0->unknown_18_;
-    var1 = var0->unknown_4_;
-    var2 = var0->unknown_8_;
-    var3 = var0->unknown_c_;
-    var4 = var0->unknown_14_;
+extern "C" ARM void func_ov009_02188e70(CharacterCreationUI* editor, int choice) {
+    ChoiceGrid* grid = &editor->grid;
+    int y;
+    int width;
+    int height;
+    int stepY;
+    int columns = grid->columns;
+    y = grid->y;
+    width = grid->width;
+    height = grid->height;
+    stepY = grid->stepY;
 #if defined(jpn)
     int var6 = arg1 % var5;
     int var7 = arg1 / var5;

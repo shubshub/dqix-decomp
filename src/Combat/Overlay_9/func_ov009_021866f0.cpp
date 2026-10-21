@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int val);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -33,15 +33,15 @@ extern Vector3fix data_ov009_0218a9e0;
 #endif
 extern Vector3fix data_ov009_0218a9ec;
 
-// USA: func_ov009_021866f0
-extern "C" ARM void func_ov009_021866f0(Struct_ov009_021842a0* arg0) {
-    unsigned char var0 = arg0->unknown_c59_;
-    if (var0 == 0) {
-        func_ov009_02188c2c(arg0);
-        func_ov009_02188d9c(arg0);
-        int var1 = arg0->unknown_da3_;
-        unsigned char var2 = arg0->unknown_da6_[var1];
-        func_ov009_02188e70(arg0, var2);
+// USA: func_ov009_021866f0  (semantic: AdvanceStatStep_021866f0)
+extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
+    unsigned char step = self->step;
+    if (step == 0) {
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
+        int idx = self->sex;
+        unsigned char val = self->faceStyle[idx];
+        func_ov009_02188e70(self, val);
 
         Vector3fix var3 = data_ov009_0218a9c8;
         Vector3fix var4 = data_ov009_0218a9d4;

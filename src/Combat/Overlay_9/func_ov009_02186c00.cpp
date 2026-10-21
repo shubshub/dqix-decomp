@@ -5,8 +5,8 @@
 #define func_ov009_021855dc func_ov009_021867bc
 #endif
 
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int choice);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -41,16 +41,16 @@ extern "C" ARM void func_ov009_02186c00(Struct_ov009_021842a0* arg0)
 {
     if (arg0->unknown_c59_ == 0)
     {
-        func_ov009_02188c2c(arg0);
-        func_ov009_02188d9c(arg0);
-        func_ov009_02188e70(arg0, arg0->unknown_da8_[arg0->unknown_da3_]);
-        Vector3fix var0 = data_ov009_0218a9f8;
-        Vector3fix var1 = data_ov009_0218aa04;
-        func_0202ee38((char*)arg0->unknown_924_, (int)&var0, 0x1e000);
-        func_0202ee58((char*)arg0->unknown_924_, (int)&var1, 0x1e000);
-        arg0->unknown_804_ = 0x1eb;
-        arg0->unknown_d9c_ = (arg0->unknown_d9c_ | 8) & ~1;
-        arg0->unknown_c59_++;
+        setupChoiceNavigation(self);
+        loadChoiceLayout(self);
+        func_ov009_02188e70(self, self->skinColor[self->sex]);
+        Vector3fix position = data_ov009_0218a9f8;
+        Vector3fix target = data_ov009_0218aa04;
+        CallFunc020a0db8AtField0x16c_0202ee38((char*)self->camera, (int)&position, 0x1e000);
+        CallFunc020a0db8AtField0x194AndClearFlag2_0202ee58((char*)self->camera, (int)&target, 0x1e000);
+        self->targetAngle = 0x1eb;
+        self->flags = (self->flags | 8) & ~1;
+        self->step++;
     }
     else if (arg0->unknown_c59_ == 1)
     {

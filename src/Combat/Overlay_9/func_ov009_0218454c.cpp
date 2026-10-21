@@ -3,6 +3,7 @@
 #include "Memory/SafeAllocator.h"
 #include "Combat/MapDisplay.h"
 #include "World/Object3D.h"
+#include "Resource/ChoiceGrid.h"
 
 struct Struct_0201099c_14 {
     char unknown_0_[0x18];
@@ -20,31 +21,20 @@ struct Struct_0205bef8 {
     int unknown_0_[0x10];
 };
 
-struct Struct_ov009_021847c4 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
-};
-
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
+unsigned int* GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void ZeroInit020de848(void* table);
+void ResetStruct020dfc40(Struct020dfc40* table);
 #if defined(jpn)
 #define func_ov009_021847ec func_ov009_02185850
 #endif
-extern "C" void func_ov009_021847ec(void* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0205cfd4(Struct_0205cfd4* arg0);
-extern "C" void func_0204c684(Struct_ov006_02158478* arg0);
-extern "C" void func_0205bef8(Struct_0205bef8* arg0);
-extern "C" void func_ov009_021847c4(Struct_ov009_021847c4* arg0);
-extern "C" int func_020424e4(int arg0, int arg1);
+extern "C" void func_ov009_021847ec(void* checker);
+void ResetList0204af64(List0204af64* background);
+void InitStruct0205cfd4(InitTarget0205cfd4* window);
+extern "C" void func_0204c684(Canvas* canvas);
+void Init0205bef8(Struct_0205bef8* cursor);
+void ResetFields021847c4(ChoiceGrid* grid);
+int FindEntryIndexByKey020424e4(int text, int mode);
 
 extern char data_ov009_0218aca4[];
 
@@ -69,61 +59,61 @@ struct Struct_ov009_021842a0_2 {
 #else
     char unknown_fc_[0x3c];
 #endif
-    Struct_02020cb8 unknown_138_[6];
-    Struct_0205cfd4 unknown_1f8_[2];
-    Struct_ov006_02158478 unknown_370_[1];
-    Struct_ov006_02158478 unknown_450_[4];
-    void* unknown_7d0_;
-    void* unknown_7d4_;
-    void* unknown_7d8_;
-    void* unknown_7dc_;
-    void* unknown_7e0_;
-    void* unknown_7e4_;
-    void* unknown_7e8_;
-    void* unknown_7ec_;
-    void* unknown_7f0_[2];
-    void* unknown_7f8_;
-    void* unknown_7fc_;
-    int unknown_800_;
-    int unknown_804_;
-    char unknown_808_[0x70];
-    Object3D unknown_878_;
-    char unknown_924_[0x2c8];
-    Struct_0205bef8 unknown_bec_;
-    Struct_ov009_021847c4 unknown_c2c_;
-    short unknown_c4c_;
-    short unknown_c4e_;
-    short unknown_c50_;
-    short unknown_c52_;
-    short unknown_c54_;
-    short unknown_c56_;
-    signed char unknown_c58_;
-    unsigned char unknown_c59_;
-    char unknown_c5a_[2];
-    int unknown_c5c_[3];
-    char unknown_c68_[0x70];
-    Object3D unknown_cd8_;
-    unsigned char unknown_d84_;
-    unsigned char unknown_d85_;
-    char unknown_d86_[2];
-    void* unknown_d88_;
-    int unknown_d8c_;
-    int unknown_d90_;
-    unsigned char unknown_d94_;
-    unsigned char unknown_d95_;
-    short unknown_d96_;
-    short unknown_d98_;
-    char unknown_d9a_[2];
-    unsigned int unknown_d9c_;
-    signed char unknown_da0_[2];
-    unsigned char unknown_da2_;
-    unsigned char unknown_da3_;
-    unsigned char unknown_da4_[2];
-    unsigned char unknown_da6_[2];
-    unsigned char unknown_da8_[2];
-    unsigned char unknown_daa_[2];
-    unsigned char unknown_dac_[2];
-    unsigned char unknown_dae_[2];
+    List0204af64 backgrounds_[6];
+    InitTarget0205cfd4 windows_[2];
+    Canvas canvases_[1];
+    Canvas canvases2_[4];
+    void* pixels_;
+    void* pixels2_;
+    void* renderer_;
+    void* sprites_;
+    void* unk_7e0;
+    void* renderer2_;
+    void* sprites2_;
+    void* unk_7ec;
+    void* characters_[2];
+    void* character_;
+    void* nextCharacter_;
+    int unk_800;
+    int targetAngle_;
+    char unk_808[0x70];
+    Object3D object_;
+    char camera_[0x2c8];
+    Struct_0205bef8 cursor_;
+    ChoiceGrid grid_;
+    short cursorX_;
+    short cursorY_;
+    short cursorWidth_;
+    short cursorHeight_;
+    short lastX_;
+    short lastY_;
+    signed char state_;
+    unsigned char step_;
+    char unk_c5a[2];
+    int modelTasks_[3];
+    char unk_c68[0x70];
+    Object3D object2_;
+    unsigned char selection_;
+    unsigned char unk_d85;
+    char unk_d86[2];
+    void* member_;
+    int touchedChoice_;
+    int task_;
+    unsigned char loadStep_;
+    unsigned char mode_;
+    short timer_;
+    short unk_d98;
+    char unk_d9a[2];
+    unsigned int flags_;
+    signed char lastStates_[2];
+    unsigned char vocation_;
+    unsigned char sex_;
+    unsigned char bodyType_[2];
+    unsigned char hairStyle_[2];
+    unsigned char skinColor_[2];
+    unsigned char eyeColor_[2];
+    unsigned char face_[2];
+    unsigned char hairColor_[2];
 #if defined(jpn)
     char unknown_d74_[2][11];
     unsigned char unknown_d8a_[2];

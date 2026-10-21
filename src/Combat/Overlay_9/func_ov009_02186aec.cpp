@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" void func_ov009_02188c2c(CharacterCreationUI* self);
-extern "C" void func_ov009_02188d9c(CharacterCreationUI* self);
+extern "C" void setupChoiceNavigation(CharacterCreationUI* self);
+extern "C" void loadChoiceLayout(CharacterCreationUI* self);
 extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
 extern "C" void applyCreationChoice(CharacterCreationUI* self, int val);
 extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
@@ -13,17 +13,17 @@ extern "C" ARM void func_ov009_021867bc(unsigned char *arg0, int arg1);
 extern "C" ARM void func_ov009_021855dc(unsigned char *arg0, int arg1);
 #endif
 
-// USA: func_ov009_02186aec
-extern "C" ARM void func_ov009_02186aec(Struct_ov009_021842a0* arg0) {
-	unsigned char var0 = arg0->unknown_c59_;
-	if (var0 == 0) {
-		func_ov009_02188c2c(arg0);
-		func_ov009_02188d9c(arg0);
-		int var1 = arg0->unknown_da3_;
-		unsigned char var2 = arg0->unknown_daa_[var1];
-		func_ov009_02188e70(arg0, var2);
-		arg0->unknown_d9c_ |= 1;
-		arg0->unknown_c59_ = arg0->unknown_c59_ + 1;
+// USA: func_ov009_02186aec  (semantic: AdvanceStatStep_02186aec)
+extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
+	unsigned char step = self->step;
+	if (step == 0) {
+		setupChoiceNavigation(self);
+		loadChoiceLayout(self);
+		int idx = self->sex;
+		unsigned char val = self->eyeColor[idx];
+		func_ov009_02188e70(self, val);
+		self->flags |= 1;
+		self->step = self->step + 1;
 		return;
 	}
 	if (var0 == 1) {

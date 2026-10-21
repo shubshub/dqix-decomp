@@ -2,6 +2,7 @@
 
 #include "World/Object3D.h"
 #include "Memory/SafeAllocator.h"
+#include "Resource/ChoiceGrid.h"
 
 struct Struct_0205ac40;
 struct Struct_0205ac40_2;
@@ -68,14 +69,7 @@ struct Struct_ov009_02188c2c {
     unsigned char unknown_3e_[2];
 };
 
-struct Struct_ov009_02188e70 {
-    int unknown_0_, unknown_4_;
-    int unknown_8_, unknown_c_;
-    int unknown_10_, unknown_14_;
-    int unknown_18_, unknown_1c_;
-};
-
-struct Struct_ov009_021842a0 {
+struct CharacterCreationUI {
 #if defined(jpn)
     SafeAllocator unknown_0_[8];
 #else
@@ -96,51 +90,51 @@ struct Struct_ov009_021842a0 {
 #else
     unsigned char unknown_fc_[0x158 - 0xfc];
 #endif
-    Struct_02000c9c_7 unknown_158_[4];
-    unsigned char unknown_1d8_[0x20];
-    Struct_ov023_021d9c7c unknown_1f8_[2];
-    unsigned char unknown_370_[0x7d8 - 0x370];
-    Struct_0205ac40* unknown_7d8_;
-    Struct_0205ac40_2* unknown_7dc_;
-    Struct_0205a254* unknown_7e0_;
-    Struct_0205ac40* unknown_7e4_;
-    Struct_0205ac40_2* unknown_7e8_;
-    Struct_0205a254* unknown_7ec_;
-    unsigned char unknown_7f0_[0x7f8 - 0x7f0];
-    void* unknown_7f8_;
-    void* unknown_7fc_;
-    unsigned int unknown_800_;
-    int unknown_804_;
-    unsigned char unknown_808_[0x70];
-    Object3D unknown_878_;
-    unsigned char unknown_924_[0x2c8];
-    Struct_ov009_02188c2c unknown_bec_;
-    Struct_ov009_02188e70 unknown_c2c_;
-    short unknown_c4c_, unknown_c4e_;
-    short unknown_c50_, unknown_c52_;
-    short unknown_c54_, unknown_c56_;
-    signed char unknown_c58_;
-    unsigned char unknown_c59_;
-    unsigned char unknown_c5a_[0x7e];
-    Object3D unknown_cd8_;
-    unsigned char unknown_d84_;
-    unsigned char unknown_d85_[3];
-    void* unknown_d88_;
-    int unknown_d8c_;
-    int unknown_d90_;
-    unsigned char unknown_d94_;
-    unsigned char unknown_d95_;
-    unsigned char unknown_d96_[6];
-    unsigned int unknown_d9c_;
-    signed char unknown_da0_[2];
-    unsigned char unknown_da2_;
-    unsigned char unknown_da3_;
-    unsigned char unknown_da4_[2];
-    unsigned char unknown_da6_[2];
-    unsigned char unknown_da8_[2];
-    unsigned char unknown_daa_[2];
-    unsigned char unknown_dac_[2];
-    unsigned char unknown_dae_[2];
+    CreationTileMap tileMaps[4];
+    unsigned char unknownBeforeWindows[0x20];
+    CreationWindow windows[2];
+    unsigned char unknownBeforeSprites[0x7d8 - 0x370];
+    SpriteContext0205ac40* firstSpriteContext;
+    B174Outer* firstSprites;
+    Container0205a3d0* firstSpriteEntries;
+    SpriteContext0205ac40* spriteContext;
+    B174Outer* sprites;
+    Container0205a3d0* spriteEntries;
+    unsigned char unknownBeforeCharacter[0x7f8 - 0x7f0];
+    void* character;
+    void* nextCharacter;
+    unsigned int unknown800;
+    int targetAngle;
+    unsigned char unknownBeforeModel[0x70];
+    Object3D model;
+    unsigned char camera[0x2c8];
+    CreationNavigation navigation;
+    ChoiceGrid grid;
+    short cursorX, cursorY;
+    short cursorWidth, cursorHeight;
+    short lastCursorX, lastCursorY;
+    signed char state;
+    unsigned char step;
+    unsigned char unknownBeforeSecondModel[0x7e];
+    Object3D secondModel;
+    unsigned char selection;
+    unsigned char unknownAfterSelection[3];
+    void* characterData;
+    int touchedChoice;
+    int resourceTask;
+    unsigned char resourceStep;
+    unsigned char mode;
+    unsigned char unknownBeforeFlags[6];
+    unsigned int flags;
+    signed char furthestState[2];
+    unsigned char vocation;
+    unsigned char sex;
+    unsigned char bodyType[2];
+    unsigned char faceStyle[2];
+    unsigned char skinColor[2];
+    unsigned char eyeColor[2];
+    unsigned char hairStyle[2];
+    unsigned char hairColor[2];
 #if defined(jpn)
     char unknown_d74_[2][11];
     unsigned char unknown_d8a_[2];
