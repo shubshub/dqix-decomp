@@ -8,9 +8,12 @@ struct Struct_0205ac40;
 struct Struct_0205ac40_2;
 struct Struct_0205a254;
 
-struct Struct_02000c9c_6 {
-    int unknown_0_;
-    const char* unknown_4_;
+// {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
+extern const short CharacterCreationUI_slotLayouts[];
+
+struct CreationTextEntry {
+    int key;
+    const char* text;
 };
 
 struct Struct_0201099c_3 {

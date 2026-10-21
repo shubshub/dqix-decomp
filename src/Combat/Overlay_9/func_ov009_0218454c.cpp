@@ -33,7 +33,7 @@ void ResetList0204af64(List0204af64* background);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
 extern "C" void func_0204c684(Canvas* canvas);
 void Init0205bef8(Struct_0205bef8* cursor);
-void ResetFields021847c4(CreationSlotLayout* grid);
+void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout* grid);
 int FindEntryIndexByKey020424e4(int text, int mode);
 
 extern char data_ov009_0218aca4[];
@@ -153,62 +153,62 @@ extern "C" ARM void func_ov009_0218454c(Struct_ov009_021842a0_2* arg0, int arg1,
     arg0->unknown_c0_ = NULL;
     arg0->unknown_c4_ = NULL;
 #endif
-    func_020de848(&arg0->unknown_c8_);
-    func_020dfc40(&arg0->unknown_e0_);
-    arg0->unknown_f8_ = NULL;
-    func_ov009_021847ec(&arg0->unknown_fc_);
-    func_0204af64(&arg0->unknown_138_[0]);
-    func_0204af64(&arg0->unknown_138_[1]);
-    func_0204af64(&arg0->unknown_138_[2]);
-    func_0204af64(&arg0->unknown_138_[3]);
-    func_0204af64(&arg0->unknown_138_[4]);
-    func_0204af64(&arg0->unknown_138_[5]);
-    func_0205cfd4(&arg0->unknown_1f8_[0]);
-    func_0205cfd4(&arg0->unknown_1f8_[1]);
-    for (int var0 = 0; var0 < 1; var0++)
-        func_0204c684(&arg0->unknown_370_[var0]);
-    for (int var1 = 0; var1 < 4; var1++)
-        func_0204c684(&arg0->unknown_450_[var1]);
-    arg0->unknown_7d0_ = NULL;
-    arg0->unknown_7d4_ = NULL;
-    arg0->unknown_7d8_ = NULL;
-    arg0->unknown_7dc_ = NULL;
-    arg0->unknown_7e0_ = NULL;
-    arg0->unknown_7e4_ = NULL;
-    arg0->unknown_7e8_ = NULL;
-    arg0->unknown_7ec_ = NULL;
-    arg0->unknown_7f0_[0] = NULL;
-    arg0->unknown_7f0_[1] = NULL;
-    arg0->unknown_7f8_ = NULL;
-    arg0->unknown_7fc_ = NULL;
-    arg0->unknown_800_ = 0;
-    arg0->unknown_804_ = 0;
-    arg0->unknown_878_.Initialize();
-    arg0->unknown_cd8_.Initialize();
-    func_0205bef8(&arg0->unknown_bec_);
-    func_ov009_021847c4(&arg0->unknown_c2c_);
-    arg0->unknown_c4c_ = -1;
-    arg0->unknown_c4e_ = -1;
-    arg0->unknown_c50_ = -1;
-    arg0->unknown_c52_ = -1;
-    arg0->unknown_c54_ = -1;
-    arg0->unknown_c56_ = -1;
-    arg0->unknown_c58_ = 0;
-    arg0->unknown_c59_ = 0;
-    arg0->unknown_d84_ = 0;
-    arg0->unknown_d85_ = 0;
-    arg0->unknown_d88_ = NULL;
-    arg0->unknown_d8c_ = -1;
-    arg0->unknown_d90_ = 0;
-    arg0->unknown_d94_ = 0;
-    arg0->unknown_d96_ = 0;
-    arg0->unknown_d98_ = 0;
-    memset(&arg0->unknown_d9c_, 0, sizeof(arg0->unknown_d9c_));
-    for (int var2 = 0; var2 < 2; var2++)
-        arg0->unknown_da0_[var2] = 1;
-    arg0->unknown_da2_ = arg1;
-    arg0->unknown_da3_ = 0;
-    for (int var3 = 0; var3 < 2; var3++)
+    ZeroInit020de848(&self->partNames_);
+    ResetStruct020dfc40(&self->texts_);
+    self->unk_f8 = NULL;
+    func_ov009_021847ec(&self->checker_);
+    ResetList0204af64(&self->backgrounds_[0]);
+    ResetList0204af64(&self->backgrounds_[1]);
+    ResetList0204af64(&self->backgrounds_[2]);
+    ResetList0204af64(&self->backgrounds_[3]);
+    ResetList0204af64(&self->backgrounds_[4]);
+    ResetList0204af64(&self->backgrounds_[5]);
+    InitStruct0205cfd4(&self->windows_[0]);
+    InitStruct0205cfd4(&self->windows_[1]);
+    for (int i = 0; i < 1; i++)
+        func_0204c684(&self->canvases_[i]);
+    for (int i = 0; i < 4; i++)
+        func_0204c684(&self->canvases2_[i]);
+    self->pixels_ = NULL;
+    self->pixels2_ = NULL;
+    self->renderer_ = NULL;
+    self->sprites_ = NULL;
+    self->unk_7e0 = NULL;
+    self->renderer2_ = NULL;
+    self->sprites2_ = NULL;
+    self->unk_7ec = NULL;
+    self->characters_[0] = NULL;
+    self->characters_[1] = NULL;
+    self->character_ = NULL;
+    self->nextCharacter_ = NULL;
+    self->unk_800 = 0;
+    self->targetAngle_ = 0;
+    self->object_.Initialize();
+    self->object2_.Initialize();
+    Init0205bef8(&self->cursor_);
+    CharacterCreationUI_ResetTargetLayout(&self->grid_);
+    self->cursorX_ = -1;
+    self->cursorY_ = -1;
+    self->cursorWidth_ = -1;
+    self->cursorHeight_ = -1;
+    self->lastX_ = -1;
+    self->lastY_ = -1;
+    self->state_ = 0;
+    self->step_ = 0;
+    self->selection_ = 0;
+    self->unk_d85 = 0;
+    self->member_ = NULL;
+    self->touchedChoice_ = -1;
+    self->task_ = 0;
+    self->loadStep_ = 0;
+    self->timer_ = 0;
+    self->unk_d98 = 0;
+    memset(&self->flags_, 0, sizeof(self->flags_));
+    for (int i = 0; i < 2; i++)
+        self->lastStates_[i] = 1;
+    self->vocation_ = vocation;
+    self->sex_ = 0;
+    for (int i = 0; i < 2; i++)
     {
         arg0->unknown_da4_[var3] = 0;
         arg0->unknown_da6_[var3] = 0;

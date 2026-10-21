@@ -1,20 +1,19 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-void ResetFields021847c4(CreationSlotLayout *s);
+void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout *s);
 
-#if defined(jpn) || defined(eur)
-extern const short CharacterCreationUI_slotLayoutTable[];
-#else
-extern const short CharacterCreationUI_slotLayoutTable[] = {
-	1, 64, 48, 128, 32, 0, 48, 1, 2,
-	2, 32, 40, 32, 72, 40, 0, 5, 1,
-	3, 32, 40, 32, 32, 40, 40, 5, 2,
-	4, 32, 40, 32, 32, 40, 40, 5, 2,
-	5, 32, 40, 32, 32, 40, 40, 5, 2,
-	7, 40, 40, 32, 32, 48, 40, 4, 2,
-	6, 40, 40, 32, 32, 48, 40, 4, 2,
-	8, 24, 56, 16, 16, 16, 16, 11, 6,
+#if !defined(jpn) && !defined(eur)
+// {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1
+extern const short CharacterCreationUI_slotLayouts[] = {
+	1, 64, 48, 128, 32, 0, 48, 1, 2, // gender
+	2, 32, 40, 32, 72, 40, 0, 5, 1, // body type
+	3, 32, 40, 32, 32, 40, 40, 5, 2, // hairstyle
+	4, 32, 40, 32, 32, 40, 40, 5, 2, // hair colour
+	5, 32, 40, 32, 32, 40, 40, 5, 2, // face
+	7, 40, 40, 32, 32, 48, 40, 4, 2, // skin colour
+	6, 40, 40, 32, 32, 48, 40, 4, 2, // eye colour
+	8, 24, 56, 16, 16, 16, 16, 11, 6, // name keyboard
 	-1,
 };
 #endif
@@ -24,29 +23,19 @@ extern "C" ARM void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI *self
 	CreationSlotLayout *currentLayout = &self->grid;
 	int i;
 
-	ResetFields021847c4(currentLayout);
+	CharacterCreationUI_ResetTargetLayout(currentLayout);
 
-	i = 0;
-	while (CharacterCreationUI_slotLayoutTable[i] >= 0) {
-		if (self->state == CharacterCreationUI_slotLayoutTable[i]) {
-			int i1 = i + 1;
-			int i2 = i + 2;
-			int i3 = i + 3;
-			int i4 = i + 4;
-			int i5 = i + 5;
-			int i6 = i + 6;
-			int i7 = i + 7;
-			int i8 = i + 8;
-			currentLayout->x = CharacterCreationUI_slotLayoutTable[i1];
-			currentLayout->y = CharacterCreationUI_slotLayoutTable[i2];
-			currentLayout->width = CharacterCreationUI_slotLayoutTable[i3];
-			currentLayout->height = CharacterCreationUI_slotLayoutTable[i4];
-			currentLayout->stepX = CharacterCreationUI_slotLayoutTable[i5];
-			currentLayout->stepY = CharacterCreationUI_slotLayoutTable[i6];
-			currentLayout->columns = CharacterCreationUI_slotLayoutTable[i7];
-			currentLayout->rows = CharacterCreationUI_slotLayoutTable[i8];
+	for (i = 0; CharacterCreationUI_slotLayouts[i] >= 0; i += 9) {
+		if (self->state == CharacterCreationUI_slotLayouts[i]) {
+			currentLayout->x = CharacterCreationUI_slotLayouts[i + 1];
+			currentLayout->y = CharacterCreationUI_slotLayouts[i + 2];
+			currentLayout->width = CharacterCreationUI_slotLayouts[i + 3];
+			currentLayout->height = CharacterCreationUI_slotLayouts[i + 4];
+			currentLayout->stepX = CharacterCreationUI_slotLayouts[i + 5];
+			currentLayout->stepY = CharacterCreationUI_slotLayouts[i + 6];
+			currentLayout->columns = CharacterCreationUI_slotLayouts[i + 7];
+			currentLayout->rows = CharacterCreationUI_slotLayouts[i + 8];
 			return;
 		}
-		i += 9;
 	}
 }

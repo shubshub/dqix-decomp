@@ -17,7 +17,7 @@ Decided table, and the local pre-commit hook runs it.
   the `_` becomes `::`, giving `CharacterCreationUI::LoadSlotLayout()`.
 - **Types:** use the prefix of the header they live in. Character creation types are `Creation...`, like
   `CreationNavigation` and `CreationSlotLayout`.
-- **Data:** `Owner_camelCaseName`, for example `CharacterCreationUI_slotLayoutTable`.
+- **Data:** `Owner_camelCaseName`, for example `CharacterCreationUI_slotLayouts`.
 - **Origin comment:** every renamed function gets this directly above it:
   `// Overlay N, originally func_... (USA/EUR addr, JPN addr)`. Use `Main` for arm9 main functions.
 - **Vocabulary for character creation:** a *tab* is one page (gender, body type, ...). A *slot* is a
@@ -29,12 +29,13 @@ Decided table, and the local pre-commit hook runs it.
 
 | Name | Original | Overlay | USA/EUR | JPN | What it does |
 |---|---|---|---|---|---|
+| `CharacterCreationUI_ResetTargetLayout` | `ResetFields021847c4` | 9 | `0x021847c4` | `0x02185828` | Sets every field of the target `CreationSlotLayout` to -1 before a tab's layout is loaded into it |
 | `CharacterCreationUI_HandleGenderSelection` | `func_ov009_021863d0` | 9 | `0x021863d0` | `0x02187500` | Gender tab handler (tab 1), run every frame by the tab table |
 | `CharacterCreationUI_ApplyChoice` | `func_ov009_02188944` | 9 | `0x02188944` | `0x02189704` | Applies the current tab's choice to the preview models |
 | `CharacterCreationUI_SlotToStyleIndex` | `func_ov009_02188b14` | 9 | `0x02188b14` | `0x021898cc` | Converts a face or hairstyle slot into the style number; the order depends on gender |
 | `CharacterCreationUI_GetBodyDimensions` | `GetEntryPair02188bf8` | 9 | `0x02188bf8` | `0x021899b0` | Looks up a body type's width and height for the current gender |
 | `CharacterCreationUI_SetupSlotNavigation` | `func_ov009_02188c2c` | 9 | `0x02188c2c` | `0x02189af0` | Sets up cursor movement over the current tab's slots (grid size, count, starting slot) |
-| `CharacterCreationUI_LoadSlotLayout` | `func_ov009_02188d9c` | 9 | `0x02188d9c` | `0x02189c60` | Copies the current tab's entry from `CharacterCreationUI_slotLayoutTable` into `editor->grid` |
+| `CharacterCreationUI_LoadSlotLayout` | `func_ov009_02188d9c` | 9 | `0x02188d9c` | `0x02189c60` | Copies the current tab's entry from `CharacterCreationUI_slotLayouts` into `editor->grid` |
 | `applyModelColors` | `func_ov023_021e540c` | 23 | `0x021e540c` | `0x021e55f0` | Writes a character model's hair, skin and eye palettes into VRAM |
 | `setCharacterScale` | `func_ov023_021e5e68` | 23 | `0x021e5e68` | `0x021e604c` | Scales a character model's parts by body width and height, keeping the head and hair at normal size |
 | `clearModelPart` | `func_ov023_021e6158` | 23 | `0x021e6158` | `0x021e633c` | Marks one part of a character model as having no model loaded |
@@ -53,7 +54,7 @@ named, they're expected to become `CharacterModel_ApplyColors`, `CharacterModel_
 
 | Name | Original | Overlay | USA/EUR | JPN | What it is |
 |---|---|---|---|---|---|
-| `CharacterCreationUI_slotLayoutTable` | `data_ov009_0218ac04` (jpn `data_ov009_0218bb6c`) | 9 | `0x0218ac04` | `0x0218bb6c` | One `{tab, x, y, w, h, stepX, stepY, cols, rows}` entry per tab, ending in -1. Defined in C for usa; jpn and eur still take it from the ROM |
+| `CharacterCreationUI_slotLayouts` | `data_ov009_0218ac04` (jpn `data_ov009_0218bb6c`) | 9 | `0x0218ac04` | `0x0218bb6c` | One `{tab, x, y, w, h, stepX, stepY, cols, rows}` entry per tab, ending in -1. Defined in C for usa; jpn and eur still take it from the ROM |
 
 ### Locals
 
@@ -70,7 +71,6 @@ named, they're expected to become `CharacterModel_ApplyColors`, `CharacterModel_
 |---|---|---|---|---|
 | `func_ov009_0218454c` | 9 | `0x0218454c` | Character creation constructor: clears its fields | `CharacterCreationUI_Init` |
 | `func_ov009_02184a18` | 9 | `0x02184a18` | Per-frame update: model updates, then calls the current tab's handler | `CharacterCreationUI_Update` |
-| `ResetFields021847c4` | 9 | `0x021847c4` | Sets every field of a `CreationSlotLayout` to -1 | `CreationSlotLayout_Reset` |
 | `SetStatValue021855dc` | 9 | `0x021855dc` | Goes to tab N: sets `state`, resets `step`, records the furthest tab reached | `CharacterCreationUI_GoToTab` |
 | `func_ov009_02185634` | 9 | `0x02185634` | Tab 0: loading and setup, creates both preview models | `CharacterCreationUI_HandleSetup` |
 | `AdvanceStatStep_021865dc` | 9 | `0x021865dc` | Body type tab handler (tab 2) | `CharacterCreationUI_HandleBodyTypeSelection` |
