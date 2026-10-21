@@ -8,6 +8,9 @@ struct SpriteContext0205ac40;
 struct B174Outer;
 struct Container0205a3d0;
 
+// {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
+extern const short CharacterCreationUI_slotLayouts[];
+
 struct CreationTextEntry {
     int key;
     const char* text;

@@ -1,6 +1,6 @@
 func_ov009_021842a0 kind:function(arm,size=0x2ac) addr:0x021842a0
 func_ov009_0218454c kind:function(arm,size=0x278) addr:0x0218454c
-_Z19ResetFields021847c4P18CreationSlotLayout kind:function(arm,size=0x28) addr:0x021847c4
+_Z37CharacterCreationUI_ResetTargetLayoutP18CreationSlotLayout kind:function(arm,size=0x28) addr:0x021847c4
 func_ov009_021847ec kind:function(arm,size=0x5c) addr:0x021847ec
 func_ov009_02184848 kind:function(arm,size=0x1d0) addr:0x02184848
 func_ov009_02184a18 kind:function(arm,size=0x1a4) addr:0x02184a18
@@ -73,7 +73,7 @@ data_ov009_0218aac8 kind:data(any) addr:0x0218aac8
 data_ov009_0218aafc kind:data(any) addr:0x0218aafc
 data_ov009_0218ab48 kind:data(any) addr:0x0218ab48
 data_ov009_0218ab9c kind:data(any) addr:0x0218ab9c
-CharacterCreationUI_slotLayoutTable kind:data(any) addr:0x0218ac04
+CharacterCreationUI_slotLayouts kind:data(any) addr:0x0218ac04
 data_ov009_0218aca0 kind:data(any) addr:0x0218aca0
 data_ov009_0218aca4 kind:data(any) addr:0x0218aca4
 data_ov009_0218aca6 kind:data(any) addr:0x0218aca6

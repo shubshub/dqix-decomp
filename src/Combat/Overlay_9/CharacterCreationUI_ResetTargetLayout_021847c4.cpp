@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/CreationSlotLayout.h"
 
-// USA: func_ov009_021847c4
-ARM void ResetFields021847c4(CreationSlotLayout *s) {
+// Overlay 9, originally func_ov009_021847c4 (USA/EUR 0x021847c4, JPN 0x02185828)
+ARM void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout *s) {
 	s->y = -1;
 	s->x = -1;
 	s->height = -1;
