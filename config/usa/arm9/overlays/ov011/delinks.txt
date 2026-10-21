@@ -588,7 +588,7 @@ src/Combat/Overlay_11/func_ov011_02184cc0.cpp:
     complete
     .text start:0x02184cc0 end:0x02184de4
 
-src/Combat/Overlay_11/func_ov011_021882d4.cpp:
+src/Combat/Overlay_14/UpdateCounterState_021882d4.cpp:
     complete
     .text start:0x021882d4 end:0x02188384
 

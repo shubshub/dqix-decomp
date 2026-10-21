@@ -12,10 +12,9 @@ struct Struct_ov002_02169efc;
 struct Struct_ov002_02168d54_9;
 struct Struct_ov002_02169efc_2;
 
-extern "C" char *func_020421a0();
-extern "C" int func_0200fb8c(int *arg0);
-extern "C" void *func_020d6c00();
-extern "C" void func_0205deb4(struct Struct_ov002_02155960_2 *arg0, int arg1, int arg2);
+char *GetGlobalField0x1c020421a0();
+void *GetDataPtr02114e04_020d6c00();
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
 extern "C" void *func_0202ae18();
 extern "C" int func_0202b7d8(int *arg0);
 extern "C" void func_0205def8(struct Struct_ov002_02155960_3 *arg0, int arg1, int arg2);
@@ -52,28 +51,28 @@ extern "C" char data_ov002_0216db03[];
 #endif
 
 // USA: func_ov002_02169efc
-extern "C" ARM void func_ov002_02169efc(char *arg0) {
-    void *var0;
-    unsigned int var1;
-    int var2;
-    void *var3;
-    char *var4                  = func_020421a0();
-    GameResources *var5       = (GameResources *) func_0200fb8c((int *) GameState::GetInstance());
-    void *var6              = func_020d6c00();
-    BackgroundLoader *var7 = BackgroundLoader::GetInstance();
-    int var8                = *(int *) (arg0 + RG(0x1bc0, 0x1a88));
-    if (var8 == 0) {
-        *(short *) (arg0 + RG(0x1c28, 0x1af0))         = 0x125c;
-        *(short *) (arg0 + RG(0x1c2a, 0x1af2))         = -1;
-        *(int *) (arg0 + RG(0x1bb8, 0x1a80))           = RG(0x26, 0x29);
-        *(int *) (arg0 + RG(0x1bbc, 0x1a84))           = RG(0x24, 0x27);
-        *(unsigned char *) (arg0 + RG(0x1c2e, 0x1af6)) = 1;
-        func_0205deb4((struct Struct_ov002_02155960_2 *) OBJ, RG(0x15, 0x16), 1);
-        func_0205deb4((struct Struct_ov002_02155960_2 *) OBJ, RG(0x16, 0x17), 1);
-        if (func_0202b7d8((int *) func_0202ae18())) {
-            *(short *) (arg0 + RG(0x1c28, 0x1af0))         = 0x125f;
-            *(int *) (arg0 + RG(0x1bbc, 0x1a84))           = RG(0x15, 0x16);
-            *(unsigned char *) (arg0 + RG(0x1c2e, 0x1af6)) = 0;
+extern "C" ARM void func_ov002_02169efc(char *self) {
+    void *file;
+    unsigned int size;
+    int recSize;
+    void *name;
+    char *g                  = GetGlobalField0x1c020421a0();
+    GameResources *res       = GameState::GetInstance()->GetResources();
+    void *flags              = GetDataPtr02114e04_020d6c00();
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
+    int state                = *(int *) (self + 0x1bc0);
+    if (state == 0) {
+        *(short *) (self + 0x1c28)         = 0x125c;
+        *(short *) (self + 0x1c2a)         = -1;
+        *(int *) (self + 0x1bb8)           = 0x26;
+        *(int *) (self + 0x1bbc)           = 0x24;
+        *(unsigned char *) (self + 0x1c2e) = 1;
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x15, 1);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x16, 1);
+        if (CheckField0NonZero_0202b7d8((int *) func_0202ae18())) {
+            *(short *) (self + 0x1c28)         = 0x125f;
+            *(int *) (self + 0x1bbc)           = 0x15;
+            *(unsigned char *) (self + 0x1c2e) = 0;
         }
         *(int *) (arg0 + RG(0x1bc0, 0x1a88)) = 0;
     } else if (var8 == 1) {

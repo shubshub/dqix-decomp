@@ -30,10 +30,9 @@ struct Struct_ov003_0215af9c {
     unsigned char unknown_19ae_;
 };
 
-extern "C" Struct_ov003_0215af9c* func_020421a0(void);
-extern "C" GameResources* func_0200fb8c(int*);
-struct Struct_02109bf4_4;
-extern "C" void func_0209c678(Struct_02109bf4_4*, int);
+BattleGlobals* GetGlobalField0x1c020421a0(void);
+struct Actor0209c678;
+void DispatchContextByState0209c678(Actor0209c678*, int);
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 int IsMainBrightnessTransitionActive(GameResources*);
@@ -51,9 +50,9 @@ extern "C" void func_ov017_021c37a4(void);
 extern unsigned char data_02109bf4;
 
 // USA: func_ov003_0215b1dc
-extern "C" ARM void func_ov003_0215b1dc(Struct_ov003_021594c4_2* arg0) {
-    Struct_ov003_0215af9c* var0 = func_020421a0();
-    GameResources* var1 = func_0200fb8c((int*)GameState::GetInstance());
+extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
+    BattleGlobals* g = GetGlobalField0x1c020421a0();
+    GameResources* res = GameState::GetInstance()->GetResources();
 
     if (var0->unknown_9a0_ == 3) {
         var0->unknown_19ae_ = 0;

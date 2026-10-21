@@ -20,7 +20,6 @@ struct Struct_0204b8d0;
 struct Struct_02043368_2;
 struct Struct_02043368;
 
-extern "C" int func_0200fb8c(int* arg0);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsBrightnessTransitionActive(GameResources* resources);
@@ -126,16 +125,16 @@ struct Struct_ov023_021eb578_4 {
 #define SET_LAYER_PRIORITIES(m0, m1, m2, m3, mPlanes, s0, s1, s2, s3, sPlanes)     do {         REG16(0x4000008) = (REG16(0x4000008) & ~3) | (m0);         REG16(0x400000a) = (REG16(0x400000a) & ~3) | (m1);         REG16(0x400000c) = (REG16(0x400000c) & ~3) | (m2);         REG16(0x400000e) = (REG16(0x400000e) & ~3) | (m3);         REG32(0x4000000) = (REG32(0x4000000) & ~0x1f00) | ((mPlanes) << 8);         REG16(0x4001008) = (REG16(0x4001008) & ~3) | (s0);         REG16(0x400100a) = (REG16(0x400100a) & ~3) | (s1);         REG16(0x400100c) = (REG16(0x400100c) & ~3) | (s2);         REG16(0x400100e) = (REG16(0x400100e) & ~3) | (s3);         REG32(0x4001000) = (REG32(0x4001000) & ~0x1f00) | ((sPlanes) << 8);     } while (0)
 
 // USA: func_ov023_021eb578
-extern "C" ARM void func_ov023_021eb578(Struct_ov023_021eb578_4* arg0) {
-    SafeAllocator* var0;
-    Struct_0208cb08* var1;
-    GameResources* var2;
-    BackgroundLoader* var3;
-    unsigned char var4;
-    var2 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-    var1 = func_02094a00();
-    var3 = BackgroundLoader::GetInstance();
-    var4 = arg0->unknown_432_;
+extern "C" ARM void func_ov023_021eb578(Scene021eb578* self) {
+    SafeAllocator* allocs;
+    FontBankLoader* g;
+    GameResources* res;
+    BackgroundLoader* loader;
+    unsigned char state;
+    res = GameState::GetInstance()->GetResources();
+    g = GetGlobal02109400_02094a00();
+    loader = BackgroundLoader::GetInstance();
+    state = self->state;
 
     if (var4 == 0) {
         if (IS_SUB_SCREEN_MODE(arg0)) {

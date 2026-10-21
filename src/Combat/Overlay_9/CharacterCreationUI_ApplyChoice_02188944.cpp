@@ -18,11 +18,11 @@ struct Struct_ov005_0215840c_2 {
     Struct_ov009_02187b34 unknown_488_;
 };
 
-extern "C" void clearModelPart(void* character, int part);
+extern "C" void CharacterModel_InvalidatePart(void* character, int part);
 void CharacterCreationUI_GetBodyDimensions(unsigned char* self, int bodyType, short* width, short* height);
-extern "C" void setCharacterScale(void* character, int width, int height);
+extern "C" void CharacterModel_SetScale(void* character, int width, int height);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int state, int choice);
-extern "C" void applyModelColors(void* character);
+extern "C" void CharacterModel_ApplyColors(void* character);
 
 // Overlay 9, originally func_ov009_02188944 (USA/EUR 0x02188944, JPN 0x02189704)
 #if defined(jpn)
@@ -33,46 +33,46 @@ extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, i
     if (characterCreationStep == 1)
     {
         appearance->female_ = choice;
-        clearModelPart(self->nextCharacter, 0);
-        clearModelPart(self->nextCharacter, 2);
-        clearModelPart(self->nextCharacter, 3);
-        clearModelPart(self->nextCharacter, 4);
+        CharacterModel_InvalidatePart(self->nextCharacter, 0);
+        CharacterModel_InvalidatePart(self->nextCharacter, 2);
+        CharacterModel_InvalidatePart(self->nextCharacter, 3);
+        CharacterModel_InvalidatePart(self->nextCharacter, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 2)
     {
         CharacterCreationUI_GetBodyDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
-        setCharacterScale(self->character, appearance->width_, appearance->height_);
-        setCharacterScale(self->nextCharacter, appearance->width_, appearance->height_);
+        CharacterModel_SetScale(self->character, appearance->width_, appearance->height_);
+        CharacterModel_SetScale(self->nextCharacter, appearance->width_, appearance->height_);
     }
     else if (characterCreationStep == 5)
     {
         appearance->models_[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, choice) + 0x233c;
-        clearModelPart(self->nextCharacter, 2);
+        CharacterModel_InvalidatePart(self->nextCharacter, 2);
         self->flags |= 2;
     }
     else if (characterCreationStep == 3)
     {
         appearance->models_[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, choice) + 0x2328;
-        clearModelPart(self->nextCharacter, 3);
-        clearModelPart(self->nextCharacter, 4);
+        CharacterModel_InvalidatePart(self->nextCharacter, 3);
+        CharacterModel_InvalidatePart(self->nextCharacter, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 4)
     {
         appearance->hairColor_ = choice;
-        clearModelPart(self->nextCharacter, 4);
+        CharacterModel_InvalidatePart(self->nextCharacter, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 6)
     {
         appearance->eyeColor_ = choice;
-        applyModelColors(self->character);
+        CharacterModel_ApplyColors(self->character);
     }
     else if (characterCreationStep == 7)
     {
         appearance->skinColor_ = choice;
-        applyModelColors(self->character);
+        CharacterModel_ApplyColors(self->character);
     }
 }
 #else
@@ -88,46 +88,46 @@ extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, i
         appearance->female_ = choice; //0 = Male, 1 = Female
 
         //Clear out specific Model Parts so they can be replaced with new ones
-        clearModelPart(next, 0);
-        clearModelPart(next, 2);
-        clearModelPart(next, 3);
-        clearModelPart(next, 4);
+        CharacterModel_InvalidatePart(next, 0);
+        CharacterModel_InvalidatePart(next, 2);
+        CharacterModel_InvalidatePart(next, 3);
+        CharacterModel_InvalidatePart(next, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 2) //Select Body Type
     {
         CharacterCreationUI_GetBodyDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
-        setCharacterScale(current, appearance->width_, appearance->height_);
-        setCharacterScale(next, appearance->width_, appearance->height_);
+        CharacterModel_SetScale(current, appearance->width_, appearance->height_);
+        CharacterModel_SetScale(next, appearance->width_, appearance->height_);
     }
     else if (characterCreationStep == 5) //Select Face Type
     {
         appearance->models_[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, choice) + 0x233c;
-        clearModelPart(next, 2);
+        CharacterModel_InvalidatePart(next, 2);
         self->flags |= 2;
     }
     else if (characterCreationStep == 3) //Select Hair Style
     {
         appearance->models_[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, choice) + 0x2328;
-        clearModelPart(next, 3);
-        clearModelPart(next, 4);
+        CharacterModel_InvalidatePart(next, 3);
+        CharacterModel_InvalidatePart(next, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 4)
     {
         appearance->hairColor_ = choice;
-        clearModelPart(next, 4);
+        CharacterModel_InvalidatePart(next, 4);
         self->flags |= 2;
     }
     else if (characterCreationStep == 6)
     {
         appearance->eyeColor_ = choice;
-        applyModelColors(current);
+        CharacterModel_ApplyColors(current);
     }
     else if (characterCreationStep == 7)
     {
         appearance->skinColor_ = choice;
-        applyModelColors(current);
+        CharacterModel_ApplyColors(current);
     }
 }
 #endif

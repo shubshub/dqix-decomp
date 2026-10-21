@@ -90,13 +90,13 @@ extern "C" void func_ov005_02154d50(Struct_ov005_0215c058_3* arg0, int arg1, int
 extern "C" void func_ov005_02154d7c(Struct_ov005_0215c058_3* arg0, int arg1, int arg2);
 extern "C" void func_ov005_021537bc(Struct_ov005_0215c058_3* arg0, int arg1, unsigned short arg2);
 struct Struct_0205bb84;
-extern "C" int func_0205bb84(Struct_0205bb84*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_ov005_02157190(void* arg0);
-extern "C" unsigned char* func_02010828(GameState*);
-extern "C" short* func_0207c5f8(unsigned char*, unsigned int);
-extern "C" signed char* func_0207c60c(void*, unsigned int);
-extern "C" void func_ov005_0215792c(Struct_ov005_0215c058_4* arg0, int arg1);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+int CheckFlag30Or401_02157190(void* self);
+unsigned char* GetPtrField0x2a04_02010828(GameState*);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
+signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
+extern "C" void func_ov005_0215792c(Menu0215c058* self, int mode);
 
 extern char data_02108760[];
 extern unsigned char data_ov005_0215cd10[];
@@ -199,8 +199,8 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
             func_ov005_021537bc(&var12, 0, 0x7fff);
         }
 
-        int var17 = func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_) + 8;
-        if (var17 != arg0->unknown_3dbb_)
+        int sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)self->scroll) + 8;
+        if (sel != self->selected)
         {
             arg0->unknown_3dbb_ = var17;
             func_0205eaa0((Struct_02108760*)data_02108760, 2, 0);

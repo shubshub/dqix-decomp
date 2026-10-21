@@ -8,13 +8,12 @@ struct Struct_ov009_021863d0 {
     unsigned char unknown_c12_;
 };
 
-int GetWord0x0_0200fb8c(int* gameState);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
-extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int choice);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
-extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
-extern "C" void clearModelPart(CharacterModel* character, int part);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
+extern "C" void CharacterModel_InvalidatePart(CharacterModel* character, int part);
 #if defined(jpn)
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 #define func_ov009_021855dc func_ov009_021867bc
@@ -26,19 +25,19 @@ extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
 extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationUI* self)
 {
     GameState* gameState = GameState::GetInstance();
-    GameResources* resources = (GameResources*)GetWord0x0_0200fb8c((int*)gameState);
+    GameResources* resources = gameState->GetResources();
     if (self->step == 0) //First time setup, Runs one time when we switch into the Gender Tab
     {
-        if (GetBrightness((GameResources*)var1, false) == -16 &&
-            GetBrightness((GameResources*)var1, true) == -16)
+        if (GetBrightness(resources, false) == -16 &&
+            GetBrightness(resources, true) == -16)
         {
-            if (arg0->unknown_d9c_ & 0x80)
+            if (self->flags & CreationFlag_TabLoading)
                 return;
             SetBrightness(var1, 0, 15);
         }
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
-        func_ov009_02188e70(self, self->sex);
+        CharacterCreationUI_MoveCursorToSlot(self, self->sex);
         self->step++;
     }
 
@@ -47,34 +46,34 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
     {
         if (IsBrightnessTransitionActive(var1))
             return;
-        arg0->unknown_d9c_ |= 1;
-        arg0->unknown_c59_++;
+        self->flags |= CreationFlag_StylusRotation;
+        self->step++;
     }
     else if (arg0->unknown_c59_ == 2)
     {
-        if (arg0->unknown_d9c_ & 0x80)
+        if (self->flags & CreationFlag_TabLoading)
             return;
         CharacterCreationUI_ApplyChoice(self, self->sex);
         self->step++;
     }
     else if (self->step == 3) //Appears to be Idle Waiting for Input
     {
-        int var2 = func_ov009_02188ee8(arg0);
-        if (var2 != arg0->unknown_c58_)
+        int result = CharacterCreationUI_HandleInput(self);
+        if (result != self->state)
         {
             Struct_ov009_021863d0* var3 = (Struct_ov009_021863d0*)arg0->unknown_7fc_;
             if (var3->unknown_c12_ == 0)
             {
 #if defined(jpn)
-                clearModelPart((CharacterModel*)self->nextCharacter, 0);
-                clearModelPart((CharacterModel*)self->nextCharacter, 2);
-                clearModelPart((CharacterModel*)self->nextCharacter, 3);
-                clearModelPart((CharacterModel*)self->nextCharacter, 4);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 0);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 2);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 3);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 4);
 #else
-                clearModelPart(next, 0);
-                clearModelPart(next, 2);
-                clearModelPart(next, 3);
-                clearModelPart(next, 4);
+                CharacterModel_InvalidatePart(next, 0);
+                CharacterModel_InvalidatePart(next, 2);
+                CharacterModel_InvalidatePart(next, 3);
+                CharacterModel_InvalidatePart(next, 4);
 #endif
             }
         }

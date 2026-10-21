@@ -8,7 +8,6 @@ enum { Enum_ov006_0215b0fc_16 = 0x10, Enum_ov006_0215b0fc_2786 = 0xae2 };
 
 #include "GameState/GameState.h"
 
-extern "C" int func_0200fb8c(int* arg0);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
@@ -26,13 +25,13 @@ struct Struct_ov006_0215b0fc {
 };
 
 // USA: func_ov006_0215b0fc
-extern "C" ARM void func_ov006_0215b0fc(struct Struct_ov006_0215b0fc* arg0) {
-    int var0 = func_0200fb8c((int*)GameState::GetInstance());
-    unsigned char var1 = arg0->unknown_390_;
-    if (var1 == 0) {
-        unsigned short var2 = *(unsigned short*)((char*)arg0->unknown_10_ + Enum_ov006_0215b0fc_2786);
-        if (var2 & 0x1008) {
-            arg0->unknown_390_ = var1 + 1;
+extern "C" ARM void func_ov006_0215b0fc(struct Struct0215b0fc* obj) {
+    int ctx = (int)GameState::GetInstance()->GetResources();
+    unsigned char state = obj->f390;
+    if (state == 0) {
+        unsigned short flags = *(unsigned short*)((char*)obj->f10 + kChildFlags);
+        if (flags & 0x1008) {
+            obj->f390 = state + 1;
         }
         return;
     }

@@ -10,14 +10,13 @@ struct Struct_ov004_02164928 {
     DetailedTreasureMapData unknown_ad4_[8];
     unsigned char unknown_18f4_;
 };
-struct Struct_ov004_02164928_2 { int unknown_0_, unknown_4_, unknown_8_; };
-struct Struct_0201165c { Struct_ov004_02164928_2 unknown_0_; unsigned int unknown_c_, unknown_10_; };
-struct Struct_ov004_021549e4_2;
-struct Struct_020d8080;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern Struct_ov004_02164928* data_ov004_02171010;
-extern "C" GameResources* func_0200fb8c(int*);
+struct MapCoordinates02164928 { int x, y, z; };
+struct Payload0201165c { MapCoordinates02164928 coordinates; unsigned int environment, monsterRank; };
+struct Obj021f9bb0;
+struct Obj020d8080;
+struct TailList020469b4;
+struct TailNode020469b4;
+extern MapList02164928* data_ov004_02171010;
 extern "C" Zone3D* func_02012fe4();
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" int func_ov004_021634dc(void*);
@@ -41,24 +40,24 @@ extern "C" void func_020d8080(Struct_020d8080*);
 extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
 
 // JPN: 0x02164fe8; USA/EUR: 0x02164928.
-extern "C" ARM int func_ov004_02164928(void* arg0) {
-    if (data_ov004_02171010->unknown_18f4_ == 0) return 0;
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c(((int*)(var0)));
-    Zone3D* var2 = func_02012fe4();
-    ActiveGrottoClass* var3 = var2->inline_02024518_2();
-    GrottoStruct* var4 = var0->GetGrottoStruct();
-    if (IsBrightnessTransitionActive(var1)) return 0;
-    for (int var5 = 0; var5 < data_ov004_02171010->unknown_18f4_; ++var5)
-        data_ov004_02171010->unknown_0_[var5].ClearInitialByteUnknownBit();
-    int var6 = func_ov004_021634dc(arg0);
-    for (int var7 = 0; var7 < 99; ++var7)
-        data_ov004_02171010->unknown_0_[var7].ClearInitialByteUnknownBit();
-    data_ov004_02171010->unknown_0_[var6].SetInitialByteUnknownBit();
-    Struct_ov004_021549e4_2* var8 = func_ov023_021f6880(func_ov011_021849c8(arg0), 10);
-    if (!var8) return 0;
-    if (func_ov023_021f6f10(var8) != 7) return 0;
-    unsigned int var9 = func_ov023_021f9bb0(var8);
+extern "C" ARM int func_ov004_02164928(void* self) {
+    if (data_ov004_02171010->count == 0) return 0;
+    GameState* state = GameState::GetInstance();
+    GameResources* resources = ((GameState*)((state)))->GetResources();
+    Zone3D* zone = func_02012fe4();
+    ActiveGrottoClass* area = zone->GetActiveGrotto();
+    GrottoStruct* grotto = state->GetGrottoStruct();
+    if (IsBrightnessTransitionActive(resources)) return 0;
+    for (int i = 0; i < data_ov004_02171010->count; ++i)
+        data_ov004_02171010->maps[i].ClearInitialByteUnknownBit();
+    int mapIndex = GetScaledStat_021634dc_021634dc(self);
+    for (int i = 0; i < 99; ++i)
+        data_ov004_02171010->maps[i].ClearInitialByteUnknownBit();
+    data_ov004_02171010->maps[mapIndex].SetInitialByteUnknownBit();
+    Obj021f9bb0* node = func_ov023_021f6880(func_ov011_021849c8(self), 10);
+    if (!node) return 0;
+    if (func_ov023_021f6f10(node) != 7) return 0;
+    unsigned int detailIndex = GetShort28_021f9bb0(node);
 #if defined(jpn)
     if (data_ov004_02171010->unknown_ad4_[var9].mapType_ == 1) {
         ((Type_ov004_02164928)(func_0201165c))(((char*)(var0)), &data_ov004_02171010->unknown_0_[var6], data_ov004_02171010->unknown_ad4_[var9].entranceZoneID_, *((Struct_ov004_02164928_2*)(&data_ov004_02171010->unknown_ad4_[var9].entranceX_)), data_ov004_02171010->unknown_ad4_[var9].regular_.environ_, data_ov004_02171010->unknown_ad4_[var9].regular_.startingMonsterRank_);

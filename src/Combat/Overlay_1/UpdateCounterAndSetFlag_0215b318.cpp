@@ -1,0 +1,32 @@
+#include <globaldefs.h>
+#include "GameState/GameState.h"
+#include "Resource/GameResources.h"
+
+extern "C" int func_ov017_021d60f4(void*);
+struct GameResources;
+void SetBrightness(GameResources*, int, int);
+
+// USA: func_ov001_0215b318  (semantic: UpdateCounterAndSetFlag_0215b318)
+extern "C" ARM int func_ov001_0215b318(void* self, int mode) {
+#if defined(jpn)
+    enum { queueOffset = 0x524, flagOffset = 0xfe };
+#else
+    enum { queueOffset = 0x734, flagOffset = 0x102 };
+#endif
+    int value;
+    int frames = func_ov017_021d60f4(self);
+    value = -16;
+    if (mode >= 2) {
+        value = func_ov017_021d60f4((char*)self + 0x8);
+    }
+    void* battle = GameState::GetInstance();
+    void* obj = (void*)((GameState*)battle)->GetResources();
+    if (obj != NULL) {
+        SetBrightness((GameResources*)obj, value, frames);
+        char* q = *(char**)(((char*)GetGameResources()) + 0x3000 + queueOffset);
+        if (*(unsigned short*)(q + 0xa) <= 3) {
+            *(unsigned char*)(q + flagOffset) = 1;
+        }
+    }
+    return 1;
+}

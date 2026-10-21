@@ -108,7 +108,6 @@ extern "C" void func_ov023_021e24b0(void*, int, int, unsigned char, unsigned cha
 extern "C" void func_ov023_021e257c(void*);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToSubBG0CharacterData(int, int, unsigned int);
-extern "C" void* func_0200fb8c(int*);
 struct GameResources;
 void SetSubBrightness(GameResources*, int, int);
 
@@ -244,21 +243,21 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
             CleanInvalidateCacheRange(var12, 0x6000);
             LoadToSubBG0CharacterData((int)var12, 0, 0x6000);
         }
-        ((BackgroundLoader*)var0)->RemoveTask(arg0->unknown_54_);
-        arg0->unknown_54_ = -1;
-        arg0->unknown_10_ = arg0->unknown_14_;
-        void* var28 = func_0200fb8c((int*)var9);
-        if ((arg0->unknown_5d_ & 2) || !IsBrightnessWithinValidRange((GameResources*)var28, true)) {
-            arg0->unknown_5d_ &= ~2;
-            arg0->unknown_5c_++;
+        ((BackgroundLoader*)loader)->RemoveTask(self->task54);
+        self->task54 = -1;
+        self->f10 = self->idx;
+        void* axis = (void*)((GameState*)gs)->GetResources();
+        if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
+            self->flags &= ~2;
+            self->state++;
         } else {
             arg0->unknown_5d_ &= ~1;
             arg0->unknown_5c_ = 0;
         }
-    } else if (arg0->unknown_5c_ == 2) {
-        SetSubBrightness((GameResources*)(func_0200fb8c((int*)GameState::GetInstance())), 0, 1);
-        arg0->unknown_5c_ = 0;
-        arg0->unknown_5d_ &= ~1;
+    } else if (self->state == 2) {
+        SetSubBrightness((GameResources*)((void*)GameState::GetInstance()->GetResources()), 0, 1);
+        self->state = 0;
+        self->flags &= ~1;
     }
 }
 #else
@@ -386,21 +385,21 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
             CleanInvalidateCacheRange(var43, 0x6000);
             LoadToSubBG0CharacterData((int)var43, 0, 0x6000);
         }
-        ((BackgroundLoader*)var29)->RemoveTask(arg0->unknown_54_);
-        arg0->unknown_54_ = -1;
-        arg0->unknown_10_ = arg0->unknown_14_;
-        void* var62 = func_0200fb8c((int*)var40);
-        if ((arg0->unknown_5d_ & 2) || !IsBrightnessWithinValidRange((GameResources*)var62, true)) {
-            arg0->unknown_5d_ &= ~2;
-            arg0->unknown_5c_++;
+        ((BackgroundLoader*)loader)->RemoveTask(self->task54);
+        self->task54 = -1;
+        self->f10 = self->idx;
+        void* axis = (void*)((GameState*)gs)->GetResources();
+        if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
+            self->flags &= ~2;
+            self->state++;
         } else {
             arg0->unknown_5d_ &= ~1;
             arg0->unknown_5c_ = 0;
         }
-    } else if (arg0->unknown_5c_ == 2) {
-        SetSubBrightness((GameResources*)(func_0200fb8c((int*)GameState::GetInstance())), 0, 1);
-        arg0->unknown_5c_ = 0;
-        arg0->unknown_5d_ &= ~1;
+    } else if (self->state == 2) {
+        SetSubBrightness((GameResources*)((void*)GameState::GetInstance()->GetResources()), 0, 1);
+        self->state = 0;
+        self->flags &= ~1;
     }
 }
 #endif

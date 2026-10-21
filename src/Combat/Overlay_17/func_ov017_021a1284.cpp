@@ -71,9 +71,8 @@ extern "C" Struct_0203dce4_2* func_0203cf4c();
 extern "C" Zone3D* func_02012fe4();
 extern "C" Struct_02058564_2* func_02057924();
 extern "C" int* func_0202ae18();
-extern "C" GameResources* func_0200fb8c(int*);
-extern "C" void* func_020421a0();
-extern "C" void func_020397cc(Struct_02018300_3*, int);
+void* GetGlobalField0x1c020421a0();
+void CancelPendingAction020397cc(Obj020397cc*, int);
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" int func_02039850(void*);
@@ -127,33 +126,33 @@ extern "C" void func_020397c0(void*);
 extern AllocatorUnion data_02114e20;
 
 // USA: func_ov017_021a1284
-extern "C" ARM void func_ov017_021a1284(Struct_ov017_021a1284* arg0, void* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    Zone3D* var2 = func_02012fe4();
-    Struct_0203dce4_2* var3 = func_0203cf4c();
-    Struct_02058564_2* var4 = func_02057924();
-    int* var5 = func_0202ae18();
-    GameObject* var6 = var0->GetUnknownGameObject();
-    GameResources* var7 = func_0200fb8c((int*)var0);
-    void* var8 = func_020421a0();
-    func_020397cc((Struct_02018300_3*)var6, 1);
-    ((Struct_ov017_021a1284_5*)var6)->unknown_b2_ = 0;
-    if (arg0->unknown_22_ == 0) {
-        SetBrightness(var7, -16, 15);
-        arg0->unknown_22_ = 1;
-    } else if (arg0->unknown_22_ == 1) {
-        if (!IsBrightnessTransitionActive(var7)) arg0->unknown_22_ = 2;
-    } else if (arg0->unknown_22_ == 2) {
-        if (var1->GetNumQueuedTasks() > 0) return;
-        if (func_02039850(var6)) {
-            var6->obj3D_.unknown_2_ = -1;
-            ((Struct_ov017_021a1284_5*)var6)->unknown_b0_ = 0x324;
-            ((Struct_ov017_021a1284_5*)var6)->unknown_b4_ = 0x189;
-            var6->obj3D_.SetHeight(0x1800);
-            var6->obj3D_.SetRadius(0x1000);
-            func_ov017_021a1178(var7, func_020100a8(var0));
-            func_0203983c((unsigned char*)var6, 0);
+extern "C" ARM void func_ov017_021a1284(TransferEvent021a1284* self, void* unused) {
+    GameState* game = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    Zone3D* zone = func_02012fe4();
+    EntryList_203dce4* entries = GetGlobalPtr021075f4_0203cf4c();
+    NodeList02058564* nodes = func_02057924();
+    int* search = func_0202ae18();
+    GameObject* player = game->GetUnknownGameObject();
+    GameResources* resources = game->GetResources();
+    void* global = GetGlobalField0x1c020421a0();
+    CancelPendingAction020397cc((Obj020397cc*)player, 1);
+    ((PlayerTransfer021a1284*)player)->field_b2 = 0;
+    if (self->stage == 0) {
+        SetBrightness(resources, -16, 15);
+        self->stage = 1;
+    } else if (self->stage == 1) {
+        if (!IsBrightnessTransitionActive(resources)) self->stage = 2;
+    } else if (self->stage == 2) {
+        if (loader->GetNumQueuedTasks() > 0) return;
+        if (GetByteField0x254_02039850(player)) {
+            player->obj3D_.unknown_2_ = -1;
+            ((PlayerTransfer021a1284*)player)->field_b0 = 0x324;
+            ((PlayerTransfer021a1284*)player)->field_b4 = 0x189;
+            player->obj3D_.SetHeight(0x1800);
+            player->obj3D_.SetRadius(0x1000);
+            ComputeAndCall_021a1178(resources, GetField0x3acValue_020100a8(game));
+            SetBoolFlag0x254_0203983c((unsigned char*)player, 0);
         }
         unsigned char var9 = 0;
 #if defined(jpn)

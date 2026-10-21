@@ -8,20 +8,19 @@ struct Struct_ov009_0218aa28 {
     fix32_t unknown_0_[3];
 };
 
-extern "C" void* func_ov000_02160130();
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02049f28(unsigned char* arg0);
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void func_02049b54(struct Struct_ov009_0218aa28* arg0, struct Struct_02049b54_2* arg1);
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
-extern "C" void func_02049bac(unsigned char* arg0, int* arg1);
-extern "C" void func_ov000_02161c0c(void* arg0, int arg1);
-extern "C" void func_ov000_02167fb0(void* arg0, GameObject* arg1);
-extern "C" void func_ov000_021677fc(void* arg0);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" int func_ov000_0215eb1c(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" void __clear(void* arg0, int arg1);
+void* GetActiveCombatWork_ov000_02160130();
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+void SetSubstructByte0x56_02049f28(unsigned char* obj);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" void _Z20GetSubTriple02049b54P11Obj02049b54(struct Vec3* out, struct Obj02049b54* obj);
+void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+void SetSubstructField0x8ClearFlag0x2_02049bac(unsigned char* obj, int* src);
+extern "C" void func_ov000_02161c0c(void* work, int id);
+extern "C" void func_ov000_02167fb0(void* work, GameObject* obj);
+extern "C" void func_ov000_021677fc(void* work);
+extern "C" void* func_ov000_02160f14(void* work);
+extern "C" int func_ov000_0215eb1c(void* obj, short* ids, int count, int flag);
+extern "C" void __clear(void* dst, int size);
 
 extern char data_ov025_021ef802[];
 
@@ -59,29 +58,29 @@ extern "C" ARM int func_ov025_021e604c(void* arg0, int arg1, int arg2, void* arg
             var16->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef802, 1);
         }
     }
-    func_ov000_021677fc(var13);
-    struct Struct_ov025_021e604c* var17 = (struct Struct_ov025_021e604c*)func_ov000_02160f14(var13);
-    var11 = GameState::GetInstance();
-    func_0200fb8c((int*)var11);
-    var10 = func_ov000_0215eb1c(arg3, var7, 8, 0);
-    var6 = var17->unknown_240_;
-    var9 = var6.unknown_0_[2];
-    for (var8 = 0; var8 < var10; var8++) {
-        GameObject* var18 = func_0200fea4(var11, var7[var8]);
-        if (var18 != NULL) {
-            __clear(&var5, 0xc);
-            var5.z = var9;
-            func_02049b54(&var1, (struct Struct_02049b54_2*)var18);
-            var4 = var1;
-            var4.unknown_0_[1] = 0;
-            Vector3fix_Subtract(&var5, (Vector3fix*)&var4, &var3);
-            var3.y = 0;
-            Vector3fix_Normalize(&var3, &var3);
-            int var19 = fix32_Atan2(var3.x, var3.z);
-            func_02033874((struct Struct_02033834*)var18, var19);
-            __clear(&var2, 0xc);
-            var2.y = var19;
-            func_02049bac((unsigned char*)var18, (int*)&var2);
+    func_ov000_021677fc(work);
+    struct Formation021e604c* formation = (struct Formation021e604c*)func_ov000_02160f14(work);
+    battle = GameState::GetInstance();
+    battle->GetResources();
+    enemyCount = func_ov000_0215eb1c(c, enemyIds, 8, 0);
+    center = formation->center;
+    centerZ = center.v[2];
+    for (j = 0; j < enemyCount; j++) {
+        GameObject* enemy = GetCombatantWithFlag0x400_0200fea4(battle, enemyIds[j]);
+        if (enemy != NULL) {
+            __clear(&target, 0xc);
+            target.z = centerZ;
+            _Z20GetSubTriple02049b54P11Obj02049b54(&pos, (struct Obj02049b54*)enemy);
+            from = pos;
+            from.v[1] = 0;
+            Vector3fix_Subtract(&target, (Vector3fix*)&from, &dir);
+            dir.y = 0;
+            Vector3fix_Normalize(&dir, &dir);
+            int angle = fix32_Atan2(dir.x, dir.z);
+            SetVecYFromValue02033874((struct Obj02033874*)enemy, angle);
+            __clear(&rot, 0xc);
+            rot.y = angle;
+            SetSubstructField0x8ClearFlag0x2_02049bac((unsigned char*)enemy, (int*)&rot);
         }
     }
     return 1;

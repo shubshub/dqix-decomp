@@ -13,12 +13,12 @@ struct Struct_0205c4a8;
 struct Struct_0205bb84;
 struct Struct_0205bcdc;
 
-extern "C" struct Struct_0205d0e0 *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
-extern "C" int func_0205c6e4(unsigned char *arg0);
-extern "C" void func_0205c4a8(struct Struct_0205c4a8 *arg0, int arg1);
-extern "C" int func_0205bb84(struct Struct_0205bb84 *arg0);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc *arg0, int arg1);
-extern "C" void func_0205bb04(void *arg0, int arg1);
+struct Elem_0205d81c *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+int SelectField0x8Or0x58ByFlags_0205c6e4(unsigned char *p);
+void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8 *s, int delta);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84 *s);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
+extern "C" void func_0205bb04(void *p, int v);
 
 // USA: func_ov002_02161b98
 extern "C" ARM int func_ov002_02161b98(char *arg0) {
@@ -63,9 +63,9 @@ extern "C" ARM int func_ov002_02161b98(char *arg0) {
             func_0205c4a8((struct Struct_0205c4a8 *) (var4 + 0x54), 1);
             *(int *) (arg0 + 0x1000 + RG(0xbc8, 0xa90)) = 1;
         }
-        int var15 = func_0205bb84((struct Struct_0205bb84 *) (var4 + 0x54));
-        func_0205bcdc((struct Struct_0205bcdc *) (var4 + 4), var15);
-        func_0205bb04(var4 + 0x54, var15);
+        int total = GridCursor_GetSelectedIndex((struct Struct_0205bb84 *) (list + 0x54));
+        SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), total);
+        func_0205bb04(list + 0x54, total);
     }
     return 1;
 ret0:

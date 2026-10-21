@@ -260,7 +260,7 @@ src/Combat/Overlay_23/func_ov023_021e1318.cpp:
     complete
     .text start:0x021e182c end:0x021e1844
 
-src/Combat/Overlay_23/clearModelPart_021e6158.cpp:
+src/Combat/Overlay_23/CharacterModel_InvalidatePart_021e6158.cpp:
     complete
     .text start:0x021e633c end:0x021e6350
 
@@ -1608,7 +1608,7 @@ src/Combat/Overlay_23/func_ov023_021e5020.cpp:
     complete
     .text start:0x021e5204 end:0x021e55f0
 
-src/Combat/Overlay_23/setCharacterScale_021e5e68.cpp:
+src/Combat/Overlay_23/CharacterModel_SetScale_021e5e68.cpp:
     complete
     .text start:0x021e604c end:0x021e61c0
 
@@ -2477,7 +2477,7 @@ src/Combat/Overlay_23/func_ov023_021f9da8.cpp:
     complete
     .text start:0x021f9234 end:0x021f9340
 
-src/Combat/Overlay_23/applyModelColors_021e540c.cpp:
+src/Combat/Overlay_23/CharacterModel_ApplyColors_021e540c.cpp:
     complete
     .text start:0x021e55f0 end:0x021e580c
 

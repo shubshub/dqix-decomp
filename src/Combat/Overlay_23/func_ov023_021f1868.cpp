@@ -44,7 +44,8 @@ struct Struct_ov023_021f1868_14 {
 
 struct GameState {
     static GameState* GetInstance();
-    Struct_ov023_021f1868_14* GetProtagonist();
+    GameResources* GetResources();
+    GameObject_021f1868* GetProtagonist();
 };
 
 struct Struct_ov023_021f1868 {
@@ -187,33 +188,32 @@ extern "C" Struct_ov023_021f1868_3* func_020421a0();
 extern "C" Struct_02048150* func_02010828(GameState* arg0);
 extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
-extern "C" void func_0209a338(Struct_0200f3a4_8* arg0);
-extern "C" void func_0209a470(Struct_0209a470* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
-extern "C" char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void func_020e526c(void* arg0);
-extern "C" void func_0209fe9c(char* arg0);
-extern "C" void func_0209fee4(Struct_0209fee4* arg0, SafeAllocator* arg1, int arg2, int arg3);
-extern "C" void func_0209ff64(Struct_0209ff64* arg0, int arg1);
-extern "C" void func_0209ff6c(Struct_0209ff6c* arg0);
-extern "C" int func_ov023_021f21f4(Struct_ov023_021f1868_10* arg0);
-extern "C" Struct_ov023_021f1868* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02046574(Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void** func_020e5294(void* arg0, int arg1);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_020a13c4(Struct_020a13c4* arg0);
-extern "C" void func_020a13e4(void* arg0, void* arg1, int arg2, unsigned short arg3, unsigned char arg4);
-extern "C" void* func_020dfc2c(void* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void* func_020a15bc(Struct_020a15bc* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_ov023_021f222c(Struct_ov023_021f1868_11* arg0);
-extern "C" void func_ov023_021f2304(void* arg0, char* arg1);
-extern "C" void func_ov023_021f2348(void* arg0, int arg1);
-extern "C" GameResources* func_0200fb8c(int* arg0);
+void ClearFirstTwoWords0209a338(Pair0209a338* p);
+void SetupAndRunBufferedScript0209a470(Ctx0209a470* ctx, SafeAllocator* allocator, StreamHeader* file, int size);
+char* FindEntryByKey_02072a68(TableA68* table, int key);
+void ResetListHeader020727d8(List020727d8* list);
+void Zero4Bytes_020e526c(void* p);
+void Reset0209fe9c(char* titles);
+void InitManagerAndAllocateBuffers0209fee4(Obj0209fee4* titles, SafeAllocator* allocator, int file, int size);
+void SetIntAt0x60(IntField0x60_0209ff64* titles, int value);
+void PollOv017Task0209ff6c(TaskState0209ff6c* titles);
+int AreFields60And64AllOnes_021f21f4(Fields60_021f21f4* titles);
+Member_021f1868* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int id);
+int AppendString02042058(char* dst, const char* src);
+void SetIndexedName02046574(Obj02046574* obj, int index, char* str);
+void InitObjFromCombatantId020e4bf4(void* obj, int id);
+void** CallFunc020e52a0_020e5294(void* p, int key);
+void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
+void ReinitController02043204(char* messages);
+void ClearStruct020a13c4(S020a13c4* table);
+void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int ids, unsigned short count, unsigned char mode);
+void* ResetAndReturnSelf020dfc2c(void* texts);
+void ResetStruct020dfc40(Struct020dfc40* texts);
+void* FindElementByField020a15bc(Array020a15bc* table, int id);
+const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+void InitObj_021f222c(Obj_021f222c* page);
+void FormatLabelIntoBufC_021f2304(void* page, char* title);
+void SetOrClearBit10At400_38_021f2348(void* guide, int value);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsBrightnessTransitionActive(GameResources* resources);
 extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2* arg0);
@@ -600,18 +600,18 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
     }
     else if (var20->unknown_0_ == 7)
     {
-        func_ov023_021eb26c(arg0->unknown_55cc_);
-        arg0->unknown_30_.Reset();
-        arg0->unknown_55cc_ = NULL;
-        arg0->unknown_55d0_ = NULL;
-        arg0->unknown_55d4_ = 0;
-        arg0->unknown_55d5_ = 0;
-        arg0->unknown_77d1_ = 0;
-        SetMainBrightness(func_0200fb8c((int*)var19), 0, 0xf);
-        Struct_0208cb08* var53 = func_02094a00();
-        func_02094b40(var53);
-        func_02094b34(var53, 0x65, 500, 0, 0);
-        var20->unknown_0_++;
+        func_ov023_021eb26c(self->guide_);
+        self->allocator_.Reset();
+        self->guide_ = NULL;
+        self->pages_ = NULL;
+        self->pageCount_ = 0;
+        self->firstGuide_ = 0;
+        self->busy_ = 0;
+        SetMainBrightness(gameState->GetResources(), 0, 0xf);
+        FontBankLoader* music = GetGlobal02109400_02094a00();
+        BlankFunction02094b40(music);
+        BlankFunction02094b34(music, 0x65, 500, 0, 0);
+        end->step_++;
     }
     else if (var20->unknown_0_ == 8)
     {
@@ -620,7 +620,7 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
     }
     else if (var20->unknown_0_ == 9)
     {
-        if (!IsBrightnessTransitionActive(func_0200fb8c((int*)var19)))
+        if (!IsBrightnessTransitionActive(gameState->GetResources()))
         {
             func_ov023_021eefac((Struct_ov023_021eeaac_2*)var20);
             return 7;

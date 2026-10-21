@@ -6,7 +6,6 @@ enum {Enum_ov023_021e3db0_296=0x128, Enum_ov023_021e3db0_304=0x130, Enum_ov023_0
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_0200fb8c(int* arg0);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
@@ -29,8 +28,8 @@ struct Struct_ov023_021e3db0 {
 };
 
 // USA: func_ov023_021e3db0
-extern "C" ARM void func_ov023_021e3db0(struct Struct_ov023_021e3db0* arg0) {
-    int var0 = func_0200fb8c((int*)GameState::GetInstance());
+extern "C" ARM void func_ov023_021e3db0(struct Obj021e3db0* obj) {
+    int val = (int)GameState::GetInstance()->GetResources();
 
     if (arg0->unknown_128_ != 0) {
         func_ov023_021e5020(arg0->unknown_128_);

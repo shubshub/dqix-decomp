@@ -26,9 +26,8 @@ struct Struct_ov002_02168d54_8;
 struct Struct_ov002_02168d54_9;
 struct Struct_ov002_0215624c_11;
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_ov002_021682c0(char* arg0);
+extern "C" void func_020a1940(unsigned int id);
+extern "C" void func_ov002_021682c0(char* self);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
 extern "C" void* func_020d6c00(void);
 extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
@@ -82,9 +81,9 @@ extern "C" ARM void func_ov002_021695d8(char* arg0) {
 #else
 extern "C" ARM void func_ov002_02168d54(char* arg0) {
 #endif
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = (GameResources*)func_0200fb8c((int*)var0);
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = gs->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 0) {
         arg0[REGION_VALUE(0x228a, 0x2456)] = 1;

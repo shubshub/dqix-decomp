@@ -178,7 +178,6 @@ struct Struct_0201099c_3;
 struct Struct_0203d028;
 
 struct GameResources;
-GameResources* GetWord0x0_0200fb8c(int* gameState);
 char* GetGlobalField0x1c020421a0();
 void ZeroInit020de848(void* obj);
 extern "C" void func_020de9a4(void* list, SafeAllocator* alloc, void* data, unsigned int size, const void* entries, int count);
@@ -202,7 +201,7 @@ void SetField0x3b0Value_020100c4(GameState* gs, int camera);
 void CharacterCreationUI_GetBodyDimensions(unsigned char* base, int idx, short* out0, short* out1);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int type, int idx);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
-extern "C" void setCharacterScale(void* model, short a, short b);
+extern "C" void CharacterModel_SetScale(void* model, short a, short b);
 void SetByteC11_021e6150(void* model, unsigned char value);
 void ResetList0204af64(List0204af64* background);
 void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* background, int value);
@@ -293,12 +292,12 @@ enum Enum_ov009_02185634_B { Enum_ov009_02185634_B_48 = 0x30 };
 // USA: func_ov009_02185634
 extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
 {
-    unsigned int var0;
-    GameState* var1 = GameState::GetInstance();
-    func_0200fb8c((int*)var1);
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    unsigned char var3 = arg0->unknown_c59_;
-    if (var3 == 0)
+    unsigned int offset;
+    GameState* gs = GameState::GetInstance();
+    gs->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    unsigned char step = self->step_;
+    if (step == 0)
     {
 #if defined(jpn)
         arg0->unknown_0_[1].Reset();
@@ -476,8 +475,8 @@ extern "C" ARM void func_ov009_02185634(Struct_ov009_021842a0_2* arg0)
         defaults.unk[3] = bottom;
         memcpy(look, &defaults, 0x14);
         look->unk_16 = -1;
-        setCharacterScale(MODEL0, look->unk_18, look->unk_1a);
-        setCharacterScale(MODEL1, look->unk_18, look->unk_1a);
+        CharacterModel_SetScale(MODEL0, look->unk_18, look->unk_1a);
+        CharacterModel_SetScale(MODEL1, look->unk_18, look->unk_1a);
 
         if (arg0->unknown_da2_ != 0)
         {

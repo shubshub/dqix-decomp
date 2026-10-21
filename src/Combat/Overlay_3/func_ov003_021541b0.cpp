@@ -4,29 +4,28 @@
 #include "NitroSDK/Graphics.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020dc2bc(void);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
-struct Struct_0204af38;
-extern "C" void func_0204af38(struct Struct_0204af38* arg0, int arg1, SafeAllocator* arg2);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(struct Struct_0204b12c* arg0, SafeAllocator* arg1);
-struct Struct_0204b010;
-extern "C" void func_0204b010(struct Struct_0204b010* arg0, void* arg1);
-struct Struct_0204b988;
-extern "C" void func_0204b988(struct Struct_0204b988* arg0, unsigned int arg1, int arg2, int arg3, unsigned short arg4);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(struct Struct_02020cb8_2* arg0, void* arg1);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, int arg3);
+void* GetDataPtr02114e04_020d6c00(void);
+void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void OrGlobalFlag0x40_020dc2bc(void);
+void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* obj, int value);
+extern "C" void func_0204b5b4(void* obj, int value);
+struct Obj0204b5e8;
+void DispatchViaTable0204b5e8(struct Obj0204b5e8* obj, int a, int b);
+struct Foo0204af38;
+void AllocateArray0204af38(struct Foo0204af38* obj, int count, SafeAllocator* alloc);
+struct AllocTarget0204b12c;
+void AllocateAndClearBuffer0204b12c(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
+struct Obj0204b010;
+void ClearBuffer0204b010(struct Obj0204b010* obj, void* p);
+struct Obj0204b988;
+void DispatchIndexedEntry0204b988(struct Obj0204b988* obj, unsigned int a, int b, int c, unsigned short d);
+struct List0204b0e8;
+void FlushAndDispatchList0204b0e8(struct List0204b0e8* list, void* p);
+struct ActiveEntry02046900;
+int CountActiveEntries(struct ActiveEntry02046900* entries);
+struct Rec020467f0;
+void* FindRecordByIndex(struct Rec020467f0* table, int index, void** outPtr, int* outCount);
+extern "C" void func_0204b174(void* obj, void* rec, SafeAllocator* alloc, int count);
 
 extern char data_ov003_0217fcb5[];
 extern char data_ov003_0217fcc7[];
@@ -51,9 +50,9 @@ struct Struct_ov003_021541b0 {
 };
 
 // USA: func_ov003_021541b0
-extern "C" ARM void func_ov003_021541b0(struct Struct_ov003_021541b0* arg0) {
-    GameResources* var0 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
+    GameResources* resources = GameState::GetInstance()->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (arg0->unknown_5b_ == 0) {
         if (arg0->inline_ov003_021541b0()) {

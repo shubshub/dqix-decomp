@@ -10,7 +10,7 @@ import glob, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = re.compile(r"^// (?:Overlay \d+|Main), originally ")
-DEF = re.compile(r"\bARM\b[^(]*?\b(\w+)\s*\(")
+DEF = re.compile(r"\bARM\b[^(]*?([\w:]*\w)\s*\(")
 
 named, bad = {}, []
 for path in glob.glob(os.path.join(ROOT, "src/**/*.c*"), recursive=True):
@@ -25,7 +25,7 @@ for path in glob.glob(os.path.join(ROOT, "src/**/*.c*"), recursive=True):
             bad.append(f"{os.path.relpath(path, ROOT)}:{i + 1}: origin comment not followed by a definition")
 
 decided = open(os.path.join(ROOT, "NAMING.md"), encoding="utf-8").read().split("## Placeholders")[0]
-rows = set(re.findall(r"^\| `(\w+)` \|", decided, re.M))
+rows = set(re.findall(r"^\| `([\w:]+)` \|", decided, re.M))
 missing = [f"not in NAMING.md: {n} ({p})" for n, p in sorted(named.items()) if n not in rows]
 for line in bad + missing:
     print(line)

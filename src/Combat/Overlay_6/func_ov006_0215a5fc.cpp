@@ -36,13 +36,12 @@ extern char data_ov006_0216032e[];
 extern char data_ov006_02160340[];
 extern char data_ov006_02160359[];
 
-extern "C" int func_0200fb8c(int* arg0);
-struct Struct_0209c3b4_2;
-extern "C" int func_0209c3b4(Struct_0209c3b4_2*, int);
-extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" void func_020c5588(int, int, int, int, int);
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(Struct_0201099c_14*);
+struct Actor0209c3b4;
+int SetStateAndDispatch0209c3b4(Actor0209c3b4*, int);
+void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
+void Set3DClearColor_020c5588(int, int, int, int, int);
+struct Struct020dfc40;
+void ResetStruct020dfc40(Struct020dfc40*);
 extern "C" void func_020dfec0(void*, void*, void*, unsigned int);
 struct Struct_02071be8;
 extern "C" void func_02071be8(Struct_02071be8*);
@@ -193,11 +192,11 @@ struct Struct_ov006_0215a5fc_2 {
 };
 
 // USA: func_ov006_0215a5fc
-extern "C" ARM void func_ov006_0215a5fc(Struct_ov003_02154af4_3* arg0) {
-    Struct_ov006_0215a5fc_2 var0;
-    func_0200fb8c((int*)GameState::GetInstance());
-    void* var1 = BackgroundLoader::GetInstance();
-    unsigned char var2 = arg0->unknown_390_;
+extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
+    Frame f;
+    GameState::GetInstance()->GetResources();
+    void* loader = BackgroundLoader::GetInstance();
+    unsigned char st = obj->f390;
 
     if (var2 == 0) {
         if ((arg0->unknown_394_ & 2) == 0) {

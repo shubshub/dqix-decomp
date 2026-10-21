@@ -12,23 +12,22 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205def8;
-struct Struct_ov002_021650d4;
-extern "C" int func_0200fb8c(int *arg0);
-extern "C" void *func_020d6c00();
-extern "C" void func_020466e4(unsigned int *arg0, unsigned int arg1);
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" void func_0205def8(struct Struct_0205def8 *arg0, int arg1, int arg2);
-extern "C" void func_ov023_021e71b4(void *arg0, SafeAllocator *arg1);
-extern "C" void func_020dc2bc();
-extern "C" void func_020dc2d0(int arg0);
-extern "C" void func_ov023_021e7bc4(struct Struct_ov002_021650d4 *arg0, unsigned int arg1, int arg2);
-extern "C" int func_020100a8(GameState *arg0);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_020dc7e8(int arg0, int arg1);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_0215e44c(void *arg0);
-extern "C" void func_ov002_02156e90(void *arg0);
+struct PMFObj021e7bc4;
+void *GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int mask);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int a, int b);
+void CreateThreeAllocators_021e71b4(void *p, SafeAllocator *alloc);
+void OrGlobalFlag0x40_020dc2bc();
+void SetCombatModeFromCase020dc2d0(int c);
+void DispatchEntryByIndex_021e7bc4(struct PMFObj021e7bc4 *o, unsigned int idx, int v);
+int GetField0x3acValue_020100a8(GameState *gs);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+extern "C" void func_020dc7e8(int a, int b);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_0215e44c(void *base);
+extern "C" void func_ov002_02156e90(void *base);
 extern "C" short func_020dc428();
 extern "C" void func_ov023_021e7220(void *arg0, int arg1);
 extern "C" int func_ov023_021e76c4(void *arg0);
@@ -37,13 +36,13 @@ extern "C" void func_ov023_021e7340(void *arg0);
 extern "C" unsigned char data_ov002_0216cc88[];
 
 // USA: func_ov002_021650d4
-extern "C" ARM void func_ov002_021650d4(char *arg0) {
-    GameState *var0      = GameState::GetInstance();
-    GameResources *var1 = (GameResources *) func_0200fb8c((int *) var0);
-    if (*(unsigned char *) (arg0 + 0x1000 + RG(0xcc3, 0xb87)) == 0) {
-        int var2 = *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88));
-        if (var2 == 0) {
-            func_020466e4((unsigned int *) func_020d6c00(), 1);
+extern "C" ARM void func_ov002_021650d4(char *base) {
+    GameState *gs      = GameState::GetInstance();
+    GameResources *res = gs->GetResources();
+    if (*(unsigned char *) (base + 0x1000 + RG(0xcc3, 0xb87)) == 0) {
+        int state = *(int *) (base + 0x1000 + RG(0xbc0, 0xa88));
+        if (state == 0) {
+            OrBitsIntoField0_020466e4((unsigned int *) GetDataPtr02114e04_020d6c00(), 1);
             func_020dc7e8(1, -1);
             func_0205de24((struct Struct_0205de24_2 *) (arg0 + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0, 3);
             func_ov002_02161cf0(arg0);

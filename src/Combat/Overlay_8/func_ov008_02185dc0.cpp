@@ -131,21 +131,20 @@ extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
 extern Struct_02108760 data_02108760;
 
-extern "C" GameResources* func_0200fb8c(int* arg0);
-extern "C" Struct_02021b84* func_020421a0();
+MessageSystem* GetGlobalField0x1c020421a0();
 void SetBrightness(GameResources* resources, int screen, int brightness);
 int IsBrightnessTransitionActive(GameResources* resources);
 extern "C" void func_020ac4c0(void* arg0);
 extern "C" void func_020a05d8(Struct_020a05d8* arg0, unsigned int arg1);
 extern "C" void func_020ac494(void* arg0);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void func_02072928(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3, void* arg4, int arg5);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+void ResetListHeader020727d8(List020727d8* list);
+extern "C" void _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(void* list, StreamHeader* file, int size, int id, void* output, int female);
+int GetField0x3acValue_020100a8(GameState* gameState);
+const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+void AppendString02042058(char* text, const char* append);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* cursor);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int value);
 
 extern "C" {
 void* ExtractFileFromGP2(char* arg0, char* arg1, unsigned int* arg2);
@@ -162,13 +161,13 @@ extern "C" void func_020727f8(void*, const char*, int, void*, int);
 // USA: func_ov008_02185dc0
 extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned int arg1)
 {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c((int*)var0);
-    Struct_02021b84* var2 = func_020421a0();
-    if (var2->unknown_998_ != NULL)
-        var2->unknown_19ae_ = 0;
-    signed char var3 = arg0->unknown_b11_;
-    if (var3 == 0)
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = gameState->GetResources();
+    MessageSystem* messages = GetGlobalField0x1c020421a0();
+    if (messages->active != NULL)
+        messages->b19ae = 0;
+    signed char step = self->step_;
+    if (step == 0)
     {
         func_ov008_02186964(arg0);
         arg0->unknown_b11_++;
@@ -299,8 +298,8 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
     }
     if (var3 == 3)
     {
-        int var18 = func_ov008_02186a30(arg0, arg1);
-        int var19 = func_0205bb84((Struct_0205bb84*)&arg0->unknown_750_);
+        int result = func_ov008_02186a30(self, ticks);
+        int selected = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->cursor_);
 #if defined(jpn)
         int var20 = 5;
         int var21 = arg0->unknown_b29_;

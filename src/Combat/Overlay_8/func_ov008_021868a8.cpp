@@ -1,7 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int* func_0200fb8c(int*);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 void SetSubBrightness(GameResources*, int, int);
@@ -29,15 +28,15 @@ struct Struct_ov008_021868a8 {
 };
 
 // USA: func_ov008_021868a8
-extern "C" ARM void func_ov008_021868a8(struct Struct_ov008_021868a8* arg0) {
-    int* var0 = func_0200fb8c((int*)GameState::GetInstance());
-    unsigned char var1 = arg0->unknown_b11_;
-    if (var1 == 0) {
-        if (arg0->unknown_b24_ == 0) {
-            SetBrightness((GameResources*)var0, -16, 15);
-            if (arg0->unknown_b13_ == 0) {
-                if (func_0209cae8((struct Struct_0209cae8*)&data_02109bf4) != 0x29) {
-                    func_0209c678((struct Struct_02109bf4_4*)&data_02109bf4, 15);
+extern "C" ARM void func_ov008_021868a8(struct Obj021868a8* obj) {
+    int* word = (int*)GameState::GetInstance()->GetResources();
+    unsigned char flag = obj->b11;
+    if (flag == 0) {
+        if (obj->b24 == 0) {
+            SetBrightness((GameResources*)word, -16, 15);
+            if (obj->b13 == 0) {
+                if (GetShortAt0xb8((struct ShortField0xb8_0209cae8*)&data_02109bf4) != 0x29) {
+                    DispatchContextByState0209c678((struct Actor0209c678*)&data_02109bf4, 15);
                 }
             }
         } else {

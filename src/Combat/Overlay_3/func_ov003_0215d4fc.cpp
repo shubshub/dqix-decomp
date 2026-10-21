@@ -55,10 +55,9 @@ extern int data_02109bf4;
 extern int data_02108760;
 
 extern "C" int *func_0202ae18();
-extern "C" void * func_0200fb8c(int*);
-extern "C" Struct_ov003_0215d150_2 *func_020421a0();
-extern "C" void *func_0203cf4c();
-extern "C" unsigned char *func_020e2ff8();
+Ctl *GetGlobalField0x1c020421a0();
+void *GetGlobalPtr021075f4_0203cf4c();
+unsigned char *GetData02153637_020e2ff8();
 extern "C" int func_0202c508(int *);
 extern "C" void func_02043204(char*);
 struct Struct_0201099c_3;
@@ -96,21 +95,21 @@ struct Struct_02046574_2;
 extern "C" void func_02046574(Struct_02046574_2*, int, char*);
 
 // USA: func_ov003_0215d4fc
-extern "C" ARM void func_ov003_0215d4fc(Struct_ov003_02154af4_3 *arg0) {
-    GameState *var0    = GameState::GetInstance();
-    void *var1        = func_0200fb8c((int*)var0);
-    Struct_ov003_0215d150_2 *var2         = func_020421a0();
-    int *var3           = func_0202ae18();
-    void *var4          = func_0203cf4c();
-    GameObject *var5    = var0->GetUnknownGameObject();
-    unsigned char *var6 = func_020e2ff8();
-    unsigned char var7;
-    int var8;
-    int var9;
-    var9 = 0;
-    if (func_0202c508(var3) != 0) {
-        if (*(short *) ((char *) var0->GetUnknownGameObject() + 4) == 0) {
-            var9 = 1;
+extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
+    GameState *gs    = GameState::GetInstance();
+    void *res        = (void*)gs->GetResources();
+    Ctl *ctl         = GetGlobalField0x1c020421a0();
+    int *a           = func_0202ae18();
+    void *b          = GetGlobalPtr021075f4_0203cf4c();
+    GameObject *c    = gs->GetUnknownGameObject();
+    unsigned char *d = GetData02153637_020e2ff8();
+    unsigned char state;
+    int i;
+    int sb;
+    sb = 0;
+    if (func_0202c508(a) != 0) {
+        if (*(short *) ((char *) gs->GetUnknownGameObject() + 4) == 0) {
+            sb = 1;
         }
     }
     var7 = arg0->unknown_3b8_;

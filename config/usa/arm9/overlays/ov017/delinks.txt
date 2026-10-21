@@ -2330,7 +2330,7 @@ src/Combat/Overlay_17/func_ov017_021b6c78.cpp:
     complete
     .text start:0x021b6c78 end:0x021b6d60
 
-src/Combat/Overlay_17/func_ov017_021b6d60.cpp:
+src/Combat/Overlay_17/ProcessCombatantFieldChain_021b6d60.cpp:
     complete
     .text start:0x021b6d60 end:0x021b6e70
 

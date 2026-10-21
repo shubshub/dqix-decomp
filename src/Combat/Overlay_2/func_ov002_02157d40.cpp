@@ -105,7 +105,6 @@ extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
 extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
 
-extern "C" int func_0200fb8c(int* arg0);
 
 extern "C" int func_02026780(void* arg0, void* arg1, unsigned int arg2);
 extern "C" int func_0202c540(void* arg0);
@@ -286,15 +285,15 @@ static inline char* inline_ov002_02157d40_5(struct Struct_ov002_02157d40_17* arg
 enum Enum_ov002_02157d40 { Enum_ov002_02157d40_m1 = -1, Enum_ov002_02157d40_9004 = 0x232c, Enum_ov002_02157d40_9018 = 0x233a };
 
 // USA: func_ov002_02157d40
-extern "C" ARM void func_ov002_02157d40(struct Struct_ov002_02157634_2* arg0) {
-    struct Struct_ov002_02157d40_21 var0;
-    char* var1;
-    struct Struct_ov002_02157d40_19* var2 = (Struct_ov002_02157d40_19*)GameState::GetInstance();
-    int var3 = func_0200fb8c((int*)var2);
-    unsigned short* var4 = (unsigned short*)func_02012fe4();
-    Struct_02108e10* var5 = func_020797dc();
-    var1 = (char*)var5;
-    struct Struct_ov002_02157634_8* var6 = (struct Struct_ov002_02157634_8*)func_02079e2c(var1, arg0->unknown_1c26_);
+extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
+    struct Frame f;
+    char* tbl;
+    struct BattleStruct* gs = (BattleStruct*)GameState::GetInstance();
+    int word = (int)((GameState*)gs)->GetResources();
+    unsigned short* obj = (unsigned short*)func_02012fe4();
+    ActionDataTables* actionTables = GetData02108e10_020797dc();
+    tbl = (char*)actionTables;
+    struct TableEntry* entryA = (struct TableEntry*)SearchBothTables02079e2c(tbl, p->command);
     #if defined(jpn)
     struct Struct_ov002_02157d40_17* var7 = (struct Struct_ov002_02157d40_17*)(Struct_ov002_02157d40*)func_0200ff94((GameState*)var2, arg0->unknown_1c20_);
 #else

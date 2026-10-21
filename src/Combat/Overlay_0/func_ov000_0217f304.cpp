@@ -3,12 +3,12 @@
 struct Struct_0205c570;
 struct Struct_0205bb84;
 
-extern "C" int func_0205bf58(void* arg0, int arg1);
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" int func_0205bb84(struct Struct_0205bb84* arg0);
-extern "C" int func_ov000_021753d8(void* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" void func_0205d7a0(unsigned char* arg0, int arg1);
+extern "C" int func_0205bf58(void* obj, int v);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
+extern "C" int func_ov000_021753d8(void* obj, int targetIndex);
+extern "C" void func_0205bb04(void* obj, int value);
+extern "C" void func_0205d7a0(unsigned char* obj, int val);
 
 struct Struct_ov000_0217f304 {
     char unknown_0_[0x10];
@@ -34,19 +34,19 @@ struct Struct_ov000_0217f304_2 {
 };
 
 // USA: func_ov000_0217f304
-extern "C" ARM void func_ov000_0217f304(struct Struct_ov000_0217f304_2* arg0, int arg1, int arg2, struct Struct_ov000_0217f304* arg3) {
-    int var0;
-    if (arg3 == NULL) return;
-    int var1 = arg3->unknown_10_[arg3->unknown_18_];
-    if (var1 != 0xe && var1 != 0x19) return;
-    func_0205bf58(arg0->unknown_244_, 1);
-    var0 = func_0205d794((struct Struct_0205c570*)arg0->unknown_188_);
-    int var2 = func_0205bb84((struct Struct_0205bb84*)arg0->unknown_244_);
-    int var3 = arg3->unknown_1d_;
-    int var4 = func_ov000_021753d8(arg0, var0);
-    if (var1 == 0x19) var3 = arg0->unknown_1c_;
-    if (var0 != var3) {
-        func_0205bb04(arg0->unknown_244_, var4);
+extern "C" ARM void func_ov000_0217f304(struct Menu_0217f304* menu, int unused, int count, struct Command_0217f304* cmd) {
+    int position;
+    if (cmd == NULL) return;
+    int type = cmd->types[cmd->typeIndex];
+    if (type != 0xe && type != 0x19) return;
+    func_0205bf58(menu->groupCursor, 1);
+    position = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->cursor);
+    int group = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)menu->groupCursor);
+    int target = cmd->targetPosition;
+    int currentGroup = func_ov000_021753d8(menu, position);
+    if (type == 0x19) target = menu->defaultPosition;
+    if (position != target) {
+        func_0205bb04(menu->groupCursor, currentGroup);
         return;
     }
     if (var2 == var4) return;

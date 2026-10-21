@@ -50,25 +50,25 @@ struct Struct_ov005_02153954 {
 
 extern int data_02108760;
 
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov005_02157190(void* arg0);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" int func_ov005_02158560(Struct_ov005_02153954* arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov005_021555c0(Struct_ov005_02153954* arg0);
-extern "C" int func_ov005_02157ae8(Struct_ov005_02153954* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+MemberScreen* GetField1c_021a193c(int* p);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+int CheckFlag30Or401_02157190(void* self);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
+extern "C" void func_ov005_021555c0(EquipmentMenu* self);
+extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
+extern "C" void func_0205bb04(void* cursor, int index);
 
 // USA: func_ov005_0215751c
 extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
     int var0 = 0;
     if (g_keyManager.TestKeysPressed(0x40))
-        var0 = 1;
-    if (var0) {
-        func_ov005_0215792c(arg0, 2);
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_));
+        up = 1;
+    if (up) {
+        func_ov005_0215792c(self, 2);
+        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_));
         return;
     }
     int var1 = 0;
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
         func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
         return;
     }
-    if (!func_ov005_02158560(arg0, func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_), 0))
+    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))
         return;
     arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
     arg0->unknown_3dcc_ |= 0x100;

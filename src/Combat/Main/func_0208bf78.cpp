@@ -101,39 +101,38 @@ struct Struct_0208bf78_4 {
     unsigned char unknown_df_;
 };
 
-extern "C" void func_0208d854(Struct_0208b9a0*);
-extern "C" Struct_02065990_3* func_02094d6c();
-extern "C" unsigned char func_020965ac(Struct_02065990_3*, unsigned char);
-extern "C" int func_02095870(void*, Struct_02013fb4*, int, int, unsigned char*);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" int func_0208d9e8(Struct_0208bf78_5*, int);
-extern "C" int func_02096088(void*, int);
-extern "C" int func_02096100(int, unsigned char*, int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_0206e120(Struct_0205faf4_3*, int);
-extern "C" unsigned char func_0209618c(Struct_0205faf4_7*, int);
-extern "C" int func_0208da18(Struct_0208bf78_5*, int, int);
-extern "C" int func_0208dac4(Struct_0208bf78_5*, int);
-extern "C" int func_0208da00(Struct_0208bf78_5*, int);
-extern "C" int func_0200fb8c(int*);
-extern "C" int func_02046b24(Struct_02015438**);
-extern "C" int func_0208dadc(Struct_0208bf78_5*, int);
-extern "C" int func_0206e260(Struct_0205faf4_4*, int);
-extern "C" Struct_020465c0* func_020421a0();
-extern "C" Struct_0208bf78_7* func_02096134(Struct_0205faf4_7*, int);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
-extern "C" void func_0208c9cc(int, int, int, int, int);
-extern "C" void func_0204b2e0(void*, char*);
-extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
-extern "C" void func_0204c684(Struct_0208bf78_2*);
-extern "C" Struct_0205faf4_3* func_0205ec34();
-extern "C" void func_0204f41c(Struct_0208bf78_2*, short, short, const char*, int, unsigned char, short*, short*, int);
-extern "C" void func_02046380(Struct_020465c0*);
-extern "C" void func_02046608(Struct_020465c0*, int, const char*, char*, int, int, int);
+void ForwardInitStreamHeader0208d854(StreamHeader0208d82c*);
+GetTableByteOrFFData* GetGlobal02109418_02094d6c();
+unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
+int RunBufferedScript02095870(void*, StreamHeader*, int, int, unsigned char*);
+int CountActiveEntries(ActiveEntry02046900*);
+void* FindRecordByIndex(Rec020467f0*, int, void**, int*);
+int GetElementField4ByKey0208d9e8(List0208d994*, int);
+int TestBitInByteArrayAt0x84_02096088(void*, int);
+int TestBitInByteArray02096100(int, unsigned char*, int);
+int GetFieldByKey020e0434(Container020e0310*, int);
+int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
+unsigned char GetEntryField0209618c(FindEntryById02096134Table*, int);
+int LookupArrayFieldByCase0208da18(List0208d994*, int, int);
+int GetElementField0x10ByKey_0208dac4(List0208d994*, int);
+int GetElementField8ByKey0208da00(List0208d994*, int);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int GetElementField0x14ByKey_0208dadc(List0208d994*, int);
+int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
+StoreStruct* GetGlobalField0x1c020421a0();
+StatEntry0208bf78* FindEntryById02096134(FindEntryById02096134Table*, int);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+void ResetList0204af64(List0204af64*);
+void SetWord0x18ClearByte0x1f_0204b11c(unsigned char*, int);
+void DispatchViaTable0204b5e8(Obj0204b5e8*, int, int);
+void SetSubBg0Control0208c9cc(int, int, int, int, int);
+void DispatchByTag0204b2e0(void*, char*);
+void DispatchByTagLookup0204b3a0(SelfTag0204b3a0*, char*);
+extern "C" void func_0204c684(TextWindow0208bf78*);
+extern "C" PackedNibbleArray0206e120* func_0205ec34();
+extern "C" void func_0204f41c(TextWindow0208bf78*, short, short, const char*, int, unsigned char, short*, short*, int);
+extern "C" void func_02046380(StoreStruct*);
+extern "C" void func_02046608(StoreStruct*, int, const char*, char*, int, int, int);
 extern "C" int func_020420e8(char*, int);
 extern "C" void func_0208d42c(void*, Struct_0208bf78_2*, short, short, int, unsigned char, unsigned char, unsigned char, unsigned char);
 extern "C" void func_0204b5b4(void*, int);
@@ -254,19 +253,19 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                 var22 = func_0208dac4((Struct_0208bf78_5*)&arg0->unknown_1c_, var20);
                 var24 = 2;
             } else {
-                unsigned char var25 = inline_0208bf78_2(var19, var20);
-                Struct_0205faf4_3* var26 = func_0205ec34();
-                bool var27 = inline_0208bf78_5(var26, var25, 0) || inline_0208bf78_5(var26, var25, 1);
-                if (var27) {
-                    var22 = func_0208da00((Struct_0208bf78_5*)&arg0->unknown_1c_, var20);
-                    if (arg0->unknown_da_ & 0x40) var24 = 1;
-                    if (arg0->unknown_dd_) {
-                        if (inline_0208bf78_4(inline_0208bf78_2(var19, var20), 0)) {
-                            var22 = func_020e0434(&arg0->unknown_4_, 4);
-                        } else if (inline_0208bf78_4(inline_0208bf78_2(var19, var20), 1)) {
-                            GameResources* var28 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-                            if (func_02046b24((Struct_02015438**)var28->unknown_ptr_array_36fc[0]) == 0x2d) {
-                                var22 = func_0208dadc((Struct_0208bf78_5*)&arg0->unknown_1c_, var20);
+                unsigned char id = GetMonsterIndex0208bf78(table, target);
+                PackedNibbleArray0206e120* status = func_0205ec34();
+                bool seen = IsStatus0208bf78(status, id, 0) || IsStatus0208bf78(status, id, 1);
+                if (seen) {
+                    text = GetElementField8ByKey0208da00((List0208d994*)&view->elements, target);
+                    if (view->flags & 0x40) kind = 1;
+                    if (view->revealed) {
+                        if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 0)) {
+                            text = GetFieldByKey020e0434(&view->strings, 4);
+                        } else if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 1)) {
+                            GameResources* resources = GameState::GetInstance()->GetResources();
+                            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->unknown_ptr_array_36fc[0]) == 0x2d) {
+                                text = GetElementField0x14ByKey_0208dadc((List0208d994*)&view->elements, target);
                             }
                         }
                     }

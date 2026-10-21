@@ -34,8 +34,7 @@ struct Struct_020a212c_2 {
     short unknown_2c6_;
 };
 
-extern "C" GameResources* func_0200fb8c(int* arg0);
-extern "C" int func_0202e7f0(void* arg0);
+int GetField0x70_0202e7f0(void* obj);
 int IsBrightnessTransitionActive(GameResources* resources);
 int fix32SignedAngleDistance(int a, int b);
 int fix32abs(int x);
@@ -60,16 +59,16 @@ static inline int inline_02061c04_5(int arg0, int arg1) {
 }
 
 // USA: func_020a212c
-extern "C" ARM void func_020a212c(Struct_020a212c_2* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetGameObjectByIndex(arg0->unknown_21c_);
-    GameResources* var2 = func_0200fb8c((int*)var0);
-    int var3 = func_0202e7f0(arg0);
-    int var4 = 0;
-    int var5 = 0;
-    if (arg1) {
-        var4 = g_keyManager.TestKeysHeld(0x200);
-        var5 = g_keyManager.TestKeysHeld(0x100);
+extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
+    GameState* gs = GameState::GetInstance();
+    GameObject* target = gs->GetGameObjectByIndex(self->followIndex);
+    GameResources* res = gs->GetResources();
+    int angle = GetField0x70_0202e7f0(self);
+    int left = 0;
+    int right = 0;
+    if (checkInput) {
+        left = g_keyManager.TestKeysHeld(0x200);
+        right = g_keyManager.TestKeysHeld(0x100);
     }
     if (IsBrightnessTransitionActive(var2) || IsBrightnessOutsideValidRange((GameResources*)var2, false)) {
         var4 = 0;

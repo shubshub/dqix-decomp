@@ -28,7 +28,7 @@ src/NitroSDK/Overlay_27/func_ov027_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a68
 
-src/NitroSDK/Overlay_27/func_ov027_021d8c20.cpp:
+src/Combat/Overlay_28/ResetStateAndCounters_021d8c20.cpp:
     complete
     .text start:0x021d8c20 end:0x021d8c6c
 

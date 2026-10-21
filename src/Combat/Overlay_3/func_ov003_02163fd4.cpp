@@ -46,20 +46,19 @@ struct Struct_ov003_02154af4_3 {
 
 extern int data_02108760;
 extern "C" void func_020813ec(void *, int);
-struct Struct_02081f20_2;
-extern "C" void func_0208203c(Struct_02081f20_2*);
-extern "C" int func_02080468(void *, int);
-extern "C" char * func_0200fb8c(int*);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-struct Struct_0207fe44;
-extern "C" void func_0207fe44(Struct_0207fe44*);
-extern "C" int func_ov003_02160b84(void *);
-extern "C" int func_ov003_02160b50(void *);
-extern "C" int func_ov003_02160a68(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02160854(Struct_ov003_02154af4_3 *);
-extern "C" void func_02080c68(void *, int, int);
-extern "C" void func_ov003_02166f80(void*, int, int);
+struct Obj0208203c;
+void ResetWithSub0208203c(Obj0208203c*);
+int FindMappedMemberId02080468(void *, int);
+struct Obj0205eaa0;
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+struct Cont0207fe44;
+void CallFunc0204c804OverAllElems(Cont0207fe44*);
+int CountValidCombatantsMinusField_02160b84(void *);
+int CheckField0AndBattleState_02160b50(void *);
+extern "C" int func_ov003_02160a68(Scene *);
+extern "C" int func_ov003_02160854(Scene *);
+void SetEntryLowNibbleAndElement02080c68(void *, int, int);
+void SetOrClearFlag40_02166f80(void*, int, int);
 
 // USA: func_ov003_02163fd4
 extern "C" ARM void func_ov003_02163fd4(Struct_ov003_02154af4_3 *arg0) {
@@ -81,24 +80,24 @@ extern "C" ARM void func_ov003_02163fd4(Struct_ov003_02154af4_3 *arg0) {
                 var2        = 1;
                 break;
         }
-        func_020813ec(var1, var2);
-        arg0->unknown_48a_   = func_02080468(var1, arg0->unknown_488_);
-        arg0->unknown_474_   = arg0->unknown_48a_;
-        var1->unknown_36_ = arg0->unknown_48a_;
-        func_020813ec(var1, arg0->unknown_488_);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-        arg0->unknown_464_ &= ~0x300;
-        *(unsigned char *) (func_0200fb8c((int*)GameState::GetInstance()) + 0x4000 + REGION_OFF_354) = 0xa;
-    } else if (var0 == 1) {
-        arg0->unknown_470_ = &arg0->unknown_48a_;
-        func_02080c68(var1, arg0->unknown_488_, 0);
-        short *var3 = &arg0->unknown_484_;
-        if (func_ov003_02160854(arg0) != 0) {
-            func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-            arg0->unknown_470_ = 0;
-            switch (arg0->unknown_48a_) {
+        func_020813ec(entries, idx);
+        self->h48a   = FindMappedMemberId02080468(entries, self->h488);
+        self->h474   = self->h48a;
+        entries->sel = self->h48a;
+        func_020813ec(entries, self->h488);
+        ResetWithSub0208203c((Obj0208203c*)self->sub308);
+        self->state = self->state + 1;
+        self->flags &= ~0x300;
+        *(unsigned char *) ((char*)GameState::GetInstance()->GetResources() + 0x4000 + REGION_OFF_354) = 0xa;
+    } else if (state == 1) {
+        self->p470 = &self->h48a;
+        SetEntryLowNibbleAndElement02080c68(entries, self->h488, 0);
+        short *p = &self->h484;
+        if (func_ov003_02160854(self) != 0) {
+            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->sub308);
+            self->p470 = 0;
+            switch (self->h48a) {
                 case 0xa6:
                     if ((int) *((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) > 1) {
                         var3[0]        = 3;

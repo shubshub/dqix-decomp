@@ -13,22 +13,21 @@ struct Struct_0205c570;
 struct Struct_02108760;
 struct Struct_020d7aa0_2;
 
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_0200fb8c(int *arg0);
-extern "C" void *func_02053c6c(unsigned char *arg0);
-extern "C" void func_0205eaa0(Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02157108(void *arg0, int arg1);
-extern "C" Struct_020d7aa0_2 *func_020d7a50();
-extern "C" void func_020d7aa0(Struct_020d7aa0_2 *arg0);
-extern "C" void func_020d7978(char *arg0);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215c474(char *arg0);
-extern "C" void func_ov002_02156e90(char *arg0);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int CheckFlagOrThreshold_02161b48(char *self, int flag);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void *GetFieldAt0x150_02053c6c(unsigned char *p);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
+int GetCountByType02157108(void *self, int type);
+Obj020d7aa0 *GetGlobalResetObj020d7a50();
+void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
+extern "C" void func_020d7978(char *self);
+extern "C" void func_ov002_02161cf0(char *self);
+extern "C" void func_ov002_0215c474(char *self);
+extern "C" void func_ov002_02156e90(char *self);
 
 extern Struct_02108760 data_02108760;
 
@@ -49,18 +48,18 @@ extern "C" ARM void func_ov002_02162714(char *arg0) {
         if (var1 != *(short *) (arg0 + RG(0x1be4, 0x1aac))) {
             return;
         }
-        int var2  = g_keyManager.TestKeysPressed(0x601);
-        int var3  = func_0205da38((struct Struct_0205da38*)(arg0 + RG(0xec8, 0xe20)), 0x14);
-        int var4 = (var2 | var3) ? 1 : 0;
-        if (var4) {
-            int var5 = *(int *) (arg0 + RG(0x247c, 0x22ac));
-            if (var5 & 2) return;
-            if (!(var5 & 0x10)) return;
-            GameState *var6 = GameState::GetInstance();
-            func_0200fb8c((int *) var6);
-            GameObject *var7 = var6->GetProtagonist();
-            if (var7 != 0) {
-                *(short *) ((char *) func_02053c6c((unsigned char *) var7) + RG(0x95a, 0x8c2)) = *(short *) (arg0 + RG(0x1be4, 0x1aac));
+        int a  = g_keyManager.TestKeysPressed(0x601);
+        int b  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + RG(0xec8, 0xe20)), 0x14);
+        int ok = (a | b) ? 1 : 0;
+        if (ok) {
+            int flags = *(int *) (self + RG(0x247c, 0x22ac));
+            if (flags & 2) return;
+            if (!(flags & 0x10)) return;
+            GameState *gs = GameState::GetInstance();
+            gs->GetResources();
+            GameObject *prot = gs->GetProtagonist();
+            if (prot != 0) {
+                *(short *) ((char *) GetFieldAt0x150_02053c6c((unsigned char *) prot) + RG(0x95a, 0x8c2)) = *(short *) (self + RG(0x1be4, 0x1aac));
             }
             switch (*(short *) (arg0 + RG(0x1be4, 0x1aac))) {
                 case 0:

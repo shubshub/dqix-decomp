@@ -2,7 +2,6 @@
 #include "GameState/GameState.h"
 #include "Filesystem/BackgroundLoader.h"
 
-extern "C" int* func_0200fb8c(int*);
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" void func_020dc2bc();
@@ -14,8 +13,8 @@ extern "C" void func_020dc2bc();
 #define REG_BG3CNT_SUB (*(volatile unsigned short*)0x0400100e)
 
 // USA: func_ov008_0218599c
-extern "C" ARM void func_ov008_0218599c(void* arg0) {
-    int* var0 = func_0200fb8c((int*)GameState::GetInstance());
+extern "C" ARM void func_ov008_0218599c(void* obj) {
+    int* word = (int*)GameState::GetInstance()->GetResources();
     BackgroundLoader::GetInstance();
     unsigned char var1 = *((unsigned char*)arg0 + 0xb11);
     if (var1 == 0) {

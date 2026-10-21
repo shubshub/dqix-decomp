@@ -31,11 +31,10 @@ struct Struct_ov003_02160854_2 {
     short unknown_488_;
 };
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" int func_ov017_021a4e70(unsigned char* arg0);
-extern "C" int func_020e28dc(Struct_020e28dc* arg0);
-extern "C" int func_020e2918(signed char* arg0);
-extern "C" int func_02080dd4(void* arg0, int arg1, int arg2, int arg3, unsigned char* arg4, unsigned char arg5);
+int IsFieldNotPositive_021a4e70(unsigned char* base);
+int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
+int GetField0x15UnlessInactive_020e2918(signed char* obj);
+int RunAndCheckFlagBit02080dd4(void* obj, int p1, int p2, int p3, unsigned char* outFlag, unsigned char extra);
 
 extern "C" {
 extern short data_ov003_0217f484[];
@@ -46,9 +45,9 @@ void func_ov003_02160794(void* arg0);
 }
 
 // USA: func_ov003_02160854
-extern "C" ARM unsigned char func_ov003_02160854(Struct_ov003_02160854_2* arg0) {
-    unsigned char var0 = 0;
-    unsigned char* var1 = (unsigned char*)func_0200fb8c((int*)GameState::GetInstance());
+extern "C" ARM unsigned char func_ov003_02160854(Ctx02160854* self) {
+    unsigned char confirmed = 0;
+    unsigned char* battleWord = (unsigned char*)(int)GameState::GetInstance()->GetResources();
     if (g_keyManager.TestKeysPressed(0x401)) {
         if (func_ov017_021a4e70(var1)) {
             var0 = 1;

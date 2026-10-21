@@ -46,7 +46,7 @@ struct Words021e60c4;
 void SetFourWordBlocks_021e6088(void*, Words021e60c4*);
 extern "C" Object3D* func_ov023_021e6194(CharacterModel* character);
 void CharacterCreationUI_GetBodyDimensions(unsigned char*, int, short*, short*);
-extern "C" void setCharacterScale(CharacterModel* character, int width, int height);
+extern "C" void CharacterModel_SetScale(CharacterModel* character, int width, int height);
 int StringLength_020d2ff0(const char* s);
 
 // USA: func_ov009_02188454
@@ -87,8 +87,8 @@ extern "C" ARM void func_ov009_02188454(CharacterCreation* editor) {
             PartyMemberAppearance* appearance = &editor->member->appearance;
             unsigned char bodyType = editor->bodyTypes[sex];
             CharacterCreationUI_GetBodyDimensions((unsigned char*)editor, bodyType, &appearance->width, &appearance->height);
-            setCharacterScale(editor->character, appearance->width, appearance->height);
-            setCharacterScale(editor->nextCharacter, appearance->width, appearance->height);
+            CharacterModel_SetScale(editor->character, appearance->width, appearance->height);
+            CharacterModel_SetScale(editor->nextCharacter, appearance->width, appearance->height);
             editor->flags &= ~0x20000;
         }
         editor->flags &= ~4;

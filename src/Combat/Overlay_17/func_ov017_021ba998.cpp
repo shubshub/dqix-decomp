@@ -12,11 +12,10 @@ struct Struct_ov017_021ba998_2 {
     Struct_ov017_021ba998* unknown_1c_;
     unsigned char unknown_20_; signed char unknown_21_; unsigned char unknown_22_;
 };
-extern "C" unsigned int* func_0200fb8c(int*);
-extern "C" unsigned char* func_020100f8(char*);
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" void func_020a28a0(unsigned char*, unsigned char);
-extern "C" void func_020a28b0(unsigned char*, int);
+unsigned char* GetFieldIfFlag4_020100f8(char*);
+void CancelPendingAction020397cc(Obj020397cc*, int);
+void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
+void ClearFlagBits_020a28b0(unsigned char*, int);
 extern "C" void func_020a0cc4(unsigned int);
 extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
 extern "C" void func_020a0c0c();
@@ -38,17 +37,17 @@ extern AllocatorUnion data_02114e20;
 #define REG_DISPCNT (*(volatile unsigned int*)0x04000000)
 
 // USA: func_ov017_021ba998
-extern "C" ARM void func_ov017_021ba998(Struct_ov017_021ba998_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned int* var1 = func_0200fb8c((int*)var0);
-    GameObject* var2 = var0->GetUnknownGameObject();
-    unsigned char* var3 = func_020100f8((char*)var0);
-    SetFlags04((GameResources*)var1, 0xc0);
-    func_020397cc((Struct_02018300_3*)var2, 1);
-    func_020a28a0(var3, 3);
-    int var4 = var0->GetTickCount();
-    if (var4 < 0) var4 = 1;
-    if (arg0->unknown_22_ == 0) {
+extern "C" ARM void func_ov017_021ba998(DialogTask* self) {
+    GameState* state = GameState::GetInstance();
+    unsigned int* flags = (unsigned int*)state->GetResources();
+    GameObject* actor = state->GetUnknownGameObject();
+    unsigned char* field = GetFieldIfFlag4_020100f8((char*)state);
+    SetFlags04((GameResources*)flags, 0xc0);
+    CancelPendingAction020397cc((Obj020397cc*)actor, 1);
+    SetFlagsAt0x244_020a28a0(field, 3);
+    int ticks = state->GetTickCount();
+    if (ticks < 0) ticks = 1;
+    if (self->phase_ == 0) {
         func_020a0cc4(0x16e00);
         void* var5 = func_02012d88(&data_02114e20, 0x16e00);
         if (!var5) {

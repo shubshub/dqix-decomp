@@ -156,8 +156,7 @@ extern "C" void func_02073864(void*, void*, const char*, int, int, int);
 extern "C" void func_0204500c(void*, const char*, int);
 #endif
 
-extern "C" Struct_ov023_021f4c04* func_020421a0();
-extern "C" int func_0200fb8c(int* arg0);
+MessageWork* GetGlobalField0x1c020421a0();
 extern "C" void* func_02012fe4(void);
 extern "C" void* func_020d6c00();
 extern "C" void* func_02010828(GameState* arg0);
@@ -205,9 +204,9 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
     unsigned char var2[4];
 #endif
 
-    GameState* var3 = GameState::GetInstance();
-    Struct_ov023_021f4c04* var4 = func_020421a0();
-    int var5 = func_0200fb8c((int*)var3);
+    GameState* gs = GameState::GetInstance();
+    MessageWork* ctrl = GetGlobalField0x1c020421a0();
+    int res = (int)gs->GetResources();
     func_02012fe4();
     BackgroundLoader* var6 = BackgroundLoader::GetInstance();
     Struct_02038598_4* var7 = (Struct_02038598_4*)func_020d6c00();

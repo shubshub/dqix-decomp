@@ -5,7 +5,6 @@
 struct Struct_ov004_021549e4_2;
 struct Struct_02011930;
 
-extern "C" int func_0200fb8c(int* arg0);
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" void* func_ov011_021849c8(void* arg0);
@@ -45,9 +44,9 @@ extern "C" ARM int func_ov004_02165630(void* arg0) {
     Struct_ov004_02165630* var0 = (Struct_ov004_02165630*)func_ov023_021f6880(func_ov011_021849c8(arg0), 0xa);
     if (!var0 || func_ov023_021f6f10(var0) != 7) return 0;
 
-    GameState* var1 = GameState::GetInstance();
-    if (IsBrightnessTransitionActive((GameResources*)((int*)func_0200fb8c((int*)var1))) != 0) {
-        var0->unknown_61_ = 0;
+    GameState* state = GameState::GetInstance();
+    if (IsBrightnessTransitionActive((GameResources*)((int*)state->GetResources())) != 0) {
+        node->active = 0;
         return 0;
     }
     var0->unknown_61_ = 1;

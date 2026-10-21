@@ -16,12 +16,11 @@ enum { Enum_ov000_0216873c_5 = 4 };
 enum { Enum_ov000_0216873c_5 = 5 };
 #endif
 
-extern "C" GameResources* func_0200fb8c(int* arg0);
-extern "C" void func_ov000_02160fbc(void* arg0, int arg1);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
-extern "C" int func_ov000_02160fd4(void* arg0, int arg1);
-extern "C" void func_02013750(void* arg0, int arg1);
-extern "C" void func_ov000_02172720(void* arg0);
+void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void* work, int mask);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
+int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* work, int mask);
+void ResetBigStruct02013750(void* obj, int flag);
+extern "C" void func_ov000_02172720(void* obj);
 
 extern "C" void func_02079f9c(char* arg0);
 struct Struct_020d6f0c;
@@ -82,12 +81,12 @@ struct Struct_ov000_0216873c {
 };
 
 // USA: func_ov000_0216873c
-extern "C" ARM void func_ov000_0216873c(struct Struct_ov000_0216873c* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c((int*)var0);
-    if (arg0->unknown_eac_ == 0) {
-        SetBrightness(var1, -16, 15);
-        arg0->unknown_eac_++;
+extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = gs->GetResources();
+    if (scene->step == 0) {
+        SetBrightness(res, -16, 15);
+        scene->step++;
         return;
     }
     if (IsBrightnessTransitionActive(var1)) {

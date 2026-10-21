@@ -20,7 +20,6 @@ enum { Enum_ov017_021ab860_1804 = 0x70c, Enum_ov017_021ab860_1788 = 0x6fc,
        Enum_ov017_021ab860_17582 = 0x44ae, Enum_ov017_021ab860_17584 = 0x44b0 };
 #endif
 
-extern "C" int func_0200fb8c(int* arg0);
 extern "C" void* func_02012fe4(void);
 extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" unsigned char* func_0205ec34(void);
@@ -90,12 +89,12 @@ struct Struct_ov017_021ab860_4 {
 
 // USA: func_ov017_021ab860
 extern "C" ARM int func_ov017_021ab860(int arg0, unsigned char arg1) {
-    GameState* var0 = GameState::GetInstance();
-    func_0200fb8c((int*)var0);
-    data_ov017_021d83b0.unknown_0_ = ((Struct_ov017_021ab860_2*)func_02012fe4())->unknown_8_;
-    data_ov017_021d83b0.unknown_4_ = 0;
-    data_ov017_021d83b0.unknown_6_ = 0;
-    data_ov017_021d83b0.unknown_8_ = 0;
+    GameState* gs = GameState::GetInstance();
+    gs->GetResources();
+    data_ov017_021d83b0.header = ((Active021ab860*)func_02012fe4())->header;
+    data_ov017_021d83b0.key = 0;
+    data_ov017_021d83b0.group = 0;
+    data_ov017_021d83b0.entryId = 0;
     memset(&data_ov017_021d83bc, 0, sizeof(Vector3i));
     data_ov017_021d83b0.unknown_18_ = 0;
     unsigned char* var1 = func_0205ec34();

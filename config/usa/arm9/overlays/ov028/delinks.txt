@@ -73,7 +73,7 @@ src/Combat/Overlay_28/func_ov028_021d98b8.cpp:
     complete
     .text start:0x021d98b8 end:0x021d98d4
 
-src/Combat/Overlay_28/func_ov028_021d8dd0.cpp:
+src/Combat/Overlay_28/AdvanceStateMachine_021d8dd0.cpp:
     complete
     .text start:0x021d8dd0 end:0x021d9188
 
@@ -81,7 +81,7 @@ src/Combat/Overlay_28/func_ov028_021d9208.cpp:
     complete
     .text start:0x021d9208 end:0x021d942c
 
-src/Combat/Overlay_28/func_ov028_021d8c20.cpp:
+src/Combat/Overlay_28/ResetStateAndCounters_021d8c20.cpp:
     complete
     .text start:0x021d8c20 end:0x021d8d40
 

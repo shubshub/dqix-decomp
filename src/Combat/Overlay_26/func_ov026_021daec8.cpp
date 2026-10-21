@@ -20,12 +20,11 @@ struct Struct_02049b54_3 {
     Vector3fix unknown_0_;
 };
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" Struct_02049b54_3 func_02049b54(Struct_02049b54_2* arg0);
-extern "C" void func_02033874(Struct_02033834* arg0, int arg1);
-extern "C" void func_02049bac(unsigned char* arg0, int* arg1);
-extern "C" int func_02010088(Struct_02010088* arg0);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
+Triple02049b54 GetSubTriple02049b54(Obj02049b54* obj);
+void SetVecYFromValue02033874(Obj02033874* obj, int angle);
+void SetSubstructField0x8ClearFlag0x2_02049bac(unsigned char* obj, int* rot);
+int IsFlag10088Set_02010088(S_10088* obj);
 
 extern "C" {
 void __clear(void* arg0, int arg1);
@@ -34,10 +33,10 @@ void func_0203232c(int*, int);
 }
 
 // USA: func_ov026_021daec8
-extern "C" ARM void func_ov026_021daec8(Struct_ov000_02161e30* arg0, Struct_ov026_021daec8* arg1, int arg2) {
-    short var0[8];
-    GameState* var1 = GameState::GetInstance();
-    func_0200fb8c((int*)var1);
+extern "C" ARM void func_ov026_021daec8(BattleState* battle, BattleView* view, int animate) {
+    short ids[8];
+    GameState* gs = GameState::GetInstance();
+    gs->GetResources();
 
     int var2 = func_ov000_0215eb1c(arg0, var0, 8, 0);
     int var3 = 0;

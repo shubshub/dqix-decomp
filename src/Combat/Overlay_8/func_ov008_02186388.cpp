@@ -162,8 +162,7 @@ extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
 extern Struct_02108760 data_02108760;
 
-extern "C" GameResources* func_0200fb8c(int* arg0);
-extern "C" Struct_02021b84* func_020421a0();
+MessageSystem* GetGlobalField0x1c020421a0();
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsBrightnessTransitionActive(GameResources* resources);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
@@ -207,8 +206,8 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
 #if defined(jpn)
     Struct_ov008_021843f8* var0;
 #endif
-    GameState* var1 = GameState::GetInstance();
-    GameResources* var2 = func_0200fb8c((int*)var1);
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = gameState->GetResources();
     BackgroundLoader::GetInstance();
     Struct_02021b84* var3 = func_020421a0();
 #if defined(jpn)

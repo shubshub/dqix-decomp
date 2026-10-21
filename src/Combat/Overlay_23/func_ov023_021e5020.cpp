@@ -78,8 +78,8 @@ struct Struct_ov023_021e5020_3
     char unknown_c1f_;
 };
 
-extern "C" void applyModelColors(CharacterModel_021e5020* self);
-extern "C" void setCharacterScale(CharacterModel_021e5020* self, int width, int height);
+extern "C" void CharacterModel_ApplyColors(CharacterModel_021e5020* self);
+extern "C" void CharacterModel_SetScale(CharacterModel_021e5020* self, int width, int height);
 
 extern "C" const char data_ov023_021fdce0[];
 extern "C" const char data_ov023_021fdce9[];
@@ -166,7 +166,7 @@ extern "C" ARM void func_ov023_021e5020(Struct_ov023_021e5020_3* arg0)
 
         if (!arg0->unknown_c12_ && !arg0->unknown_c1e_)
         {
-            applyModelColors(self);
+            CharacterModel_ApplyColors(self);
             self->colored_ = 1;
             self->loading_ = 1;
         }
@@ -195,7 +195,7 @@ extern "C" ARM void func_ov023_021e5020(Struct_ov023_021e5020_3* arg0)
                 SetWords_021e60c4_021e60c4(&self->parts_[6], (Words021e60c4*)&rotation);
                 SetWords_021e60c4_021e60c4(&self->parts_[1], (Words021e60c4*)&rotation);
                 SetWords_021e60c4_021e60c4(&self->parts_[5], (Words021e60c4*)&rotation);
-                setCharacterScale(self, appearance->width_, appearance->height_);
+                CharacterModel_SetScale(self, appearance->width_, appearance->height_);
             }
 
             short var7[10];

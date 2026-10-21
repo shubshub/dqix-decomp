@@ -38,11 +38,11 @@ struct Struct_ov000_0217c158_3 {
     Struct_ov000_0217c158_2* unknown_3f0_[0x10];
 };
 
-extern "C" int func_0205dd08(Struct_ov000_0217c158* arg0);
-extern "C" void func_0205c4a8(struct Struct_0205c4a8* arg0, int arg1);
-extern "C" int func_0205bb84(struct Struct_0205bb84* arg0);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+extern "C" int func_0205dd08(Cursor0217c158* cursor);
+void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+extern "C" void func_0205bb04(void* s, int index);
 extern "C" int abs(int);
 
 // USA: func_ov000_0217c158
@@ -58,11 +58,11 @@ extern "C" ARM int func_ov000_0217c158(Struct_ov000_0217c158_3* arg0) {
     if (var0 == 0) {
         return 0;
     }
-    var5 = arg0->unknown_38_;
-    func_0205c4a8((struct Struct_0205c4a8*)&var5->unknown_54_, var0);
-    var1 = func_0205bb84((struct Struct_0205bb84*)&var5->unknown_54_);
-    func_0205bcdc((struct Struct_0205bcdc*)var5->unknown_4_, var1);
-    switch (arg0->unknown_10_[arg0->unknown_18_]) {
+    cursor = menu->cursor;
+    AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8*)&cursor->unk_54, delta);
+    index = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)&cursor->unk_54);
+    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor->selection, index);
+    switch (menu->modes[menu->depth]) {
     case 0xf:
         arg0->unknown_20_ = var1;
         break;

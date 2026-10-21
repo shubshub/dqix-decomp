@@ -50,25 +50,25 @@ struct Struct_ov005_02153954 {
 
 extern int data_02108760;
 
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov005_02157190(void* arg0);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" void func_ov005_021555c0(Struct_ov005_02153954* arg0);
-extern "C" int func_ov005_02157ae8(Struct_ov005_02153954* arg0, int arg1);
-extern "C" int func_ov005_021585fc(Struct_ov005_02153954* arg0, int arg1);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+MemberScreen* GetField1c_021a193c(int* p);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+int CheckFlag30Or401_02157190(void* self);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+extern "C" void func_ov005_021555c0(EquipmentMenu* self);
+extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
+extern "C" int func_ov005_021585fc(EquipmentMenu* self, int direction);
 
 // USA: func_ov005_0215771c
-extern "C" ARM void func_ov005_0215771c(Struct_ov005_02153954* arg0) {
-    signed char var0;
-    int var1 = arg0->unknown_3dbb_ - 8;
-    int var2;
-    if (var1 < 4 && g_keyManager.TestKeysPressed(0x40)) {
-        func_ov005_0215792c(arg0, 3);
-        arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_));
+extern "C" ARM void func_ov005_0215771c(EquipmentMenu* self) {
+    signed char slot;
+    int index = self->slot_ - 8;
+    int cursor;
+    if (index < 4 && g_keyManager.TestKeysPressed(0x40)) {
+        func_ov005_0215792c(self, 3);
+        self->slot_ = self->kind_;
+        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_));
         return;
     }
     int var3 = var1 % 4;
@@ -88,12 +88,12 @@ extern "C" ARM void func_ov005_0215771c(Struct_ov005_02153954* arg0) {
         arg0->unknown_3dcc_ &= ~0x20000;
         arg0->unknown_3dcc_ &= ~0x40000;
     }
-    var2 = func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_) + 8;
-    var0 = arg0->unknown_3dbb_;
-    if (var2 != var0) {
-        arg0->unknown_3dbb_ = var2;
-        func_0205eaa0((Struct_02108760*)&data_02108760, 2, 0);
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
+    cursor = GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_) + 8;
+    slot = self->slot_;
+    if (cursor != slot) {
+        self->slot_ = cursor;
+        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 2, 0);
+        func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
     if (var2 != var0)

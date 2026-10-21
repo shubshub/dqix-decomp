@@ -7,9 +7,9 @@
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
-extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int choice);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int choice);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
-extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 #define func_ov009_021855dc func_ov009_021867bc
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov009_02186c00(Struct_ov009_021842a0* arg0)
     {
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
-        func_ov009_02188e70(self, self->skinColor[self->sex]);
+        CharacterCreationUI_MoveCursorToSlot(self, self->skinColor[self->sex]);
         Vector3fix position = data_ov009_0218a9f8;
         Vector3fix target = data_ov009_0218aa04;
         CallFunc020a0db8AtField0x16c_0202ee38((char*)self->camera, (int)&position, 0x1e000);
@@ -61,11 +61,11 @@ extern "C" ARM void func_ov009_02186c00(Struct_ov009_021842a0* arg0)
     }
     else if (arg0->unknown_c59_ == 2)
     {
-        if (!(arg0->unknown_d9c_ & 1) && !(arg0->unknown_d9c_ & 8))
-            arg0->unknown_d9c_ |= 1;
-        int var2 = func_ov009_02188ee8(arg0);
-        int var3 = 0;
-        if (var2 == -2)
+        if (!(self->flags & 1) && !(self->flags & 8))
+            self->flags |= 1;
+        int result = CharacterCreationUI_HandleInput(self);
+        int changed = 0;
+        if (result == -2)
         {
             func_ov009_021855dc((unsigned char*)arg0, 8);
             var3 = 1;

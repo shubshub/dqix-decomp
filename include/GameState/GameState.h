@@ -83,6 +83,7 @@ public:
 public:
     // --- GameStateInstance.cpp ---
     static GameState* GetInstance();
+    GameResources* GetResources();
 
     // -- GameStateObjects.cpp ---
 

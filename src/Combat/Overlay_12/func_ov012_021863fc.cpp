@@ -117,19 +117,18 @@ struct Struct_ov012_021863fc_2
 
 struct Struct_02072a68_2;
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" int func_02046b08(void** arg0);
-extern "C" void* func_020d6c00();
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" Struct_ov012_021863fc_3* func_020421a0();
-extern "C" void func_020dc2bc();
-extern "C" void func_ov012_02185e18(Struct_ov012_021863fc_2* arg0);
-extern "C" void func_ov012_02185ea8(char* arg0);
-extern "C" void func_ov012_02185f04(char* arg0);
-extern "C" void func_ov012_02185f74(Struct_ov012_021863fc_2* arg0);
-extern "C" void func_ov012_021861e0(Struct_ov012_021863fc_2* arg0);
-extern "C" void func_ov012_021862fc(Struct_ov012_021863fc_2* arg0);
-extern "C" void func_ov012_02184654(Struct_ov012_021863fc_2* arg0);
+int IsField0Null_02046b08(void** p);
+void* GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int* word, unsigned int bits);
+Messages021863fc* GetGlobalField0x1c020421a0();
+void OrGlobalFlag0x40_020dc2bc();
+extern "C" void func_ov012_02185e18(ProfileEditor021863fc* self);
+void ClearAndCopyEntry_02185ea8(char* self);
+void ResetAndRebuildEntry_02185f04(char* self);
+extern "C" void func_ov012_02185f74(ProfileEditor021863fc* self);
+extern "C" void func_ov012_021861e0(ProfileEditor021863fc* self);
+extern "C" void func_ov012_021862fc(ProfileEditor021863fc* self);
+extern "C" void func_ov012_02184654(ProfileEditor021863fc* self);
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsSubBrightnessTransitionActive(GameResources* resources);
 extern "C" void func_ov023_021e7220(void* arg0, int arg1);
@@ -250,11 +249,11 @@ extern "C" const char data_ov012_0218bfad[];
 // USA: func_ov012_021863fc
 extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
 {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = (GameResources*)func_0200fb8c((int*)var0);
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    func_02094a00();
-    if (arg0->unknown_1340_ == 0)
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = gameState->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GetGlobal02109400_02094a00();
+    if (self->step_ == 0)
     {
         if (func_02046b08(*(void***)((char*)var1 + 0x34f0)))
         {
@@ -403,11 +402,11 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
 // USA: func_ov012_021863fc
 extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
 {
-    GameState* var15 = GameState::GetInstance();
-    GameResources* var16 = (GameResources*)func_0200fb8c((int*)var15);
-    BackgroundLoader* var17 = BackgroundLoader::GetInstance();
-    func_02094a00();
-    if (arg0->unknown_1370_ == 0)
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = gameState->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GetGlobal02109400_02094a00();
+    if (self->step_ == 0)
     {
         if (func_02046b08(*(void***)((char*)var16 + 0x3700)))
         {

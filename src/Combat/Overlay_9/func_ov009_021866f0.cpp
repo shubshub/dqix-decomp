@@ -3,9 +3,9 @@
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
-extern "C" void func_ov009_02188e70(CharacterCreationUI* self, int val);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int val);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
-extern "C" int func_ov009_02188ee8(CharacterCreationUI* self);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
 extern "C" ARM void func_ov009_021867bc(unsigned char* arg0, int arg1);
 #define func_ov009_021855dc func_ov009_021867bc
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
         CharacterCreationUI_LoadSlotLayout(self);
         int idx = self->sex;
         unsigned char val = self->faceStyle[idx];
-        func_ov009_02188e70(self, val);
+        CharacterCreationUI_MoveCursorToSlot(self, val);
 
         Vector3fix var3 = data_ov009_0218a9c8;
         Vector3fix var4 = data_ov009_0218a9d4;
@@ -66,23 +66,23 @@ extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
         return;
     }
 
-    int var7 = func_ov009_02188ee8(arg0);
-    int var8 = 0;
-    if (var7 == -2) {
-        func_ov009_021855dc((unsigned char*)arg0, 6);
-        var8 = 1;
-    } else if (var7 == -3) {
-        func_ov009_021855dc((unsigned char*)arg0, 4);
-        var8 = 1;
-    } else if (var7 >= 0x65 && var7 <= 0x6c) {
-        int var9 = arg0->unknown_da3_;
-        int var10 = var7 - 0x64;
-        signed char var11 = arg0->unknown_da0_[var9];
-        if (var10 <= var11) {
-            signed char var12 = arg0->unknown_c58_;
-            if (var10 != var12) {
-                func_ov009_021855dc((unsigned char*)arg0, var10 & 0xff);
-                var8 = 1;
+    int result = CharacterCreationUI_HandleInput(self);
+    int flag = 0;
+    if (result == -2) {
+        SetStatValue021855dc((unsigned char*)self, 6);
+        flag = 1;
+    } else if (result == -3) {
+        SetStatValue021855dc((unsigned char*)self, 4);
+        flag = 1;
+    } else if (result >= 0x65 && result <= 0x6c) {
+        int idx = self->sex;
+        int v = result - 0x64;
+        signed char arrv = self->furthestState[idx];
+        if (v <= arrv) {
+            signed char cur = self->state;
+            if (v != cur) {
+                SetStatValue021855dc((unsigned char*)self, v & 0xff);
+                flag = 1;
             }
         }
     }

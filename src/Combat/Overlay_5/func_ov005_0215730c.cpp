@@ -34,14 +34,14 @@ struct Struct_ov005_02153954 {
 
 extern int data_02108760;
 
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_0205bf58(void* arg0, int arg1);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" void func_ov005_0215742c(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215751c(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215771c(Struct_ov005_02153954* arg0);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+MemberScreen* GetField1c_021a193c(int* p);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+extern "C" int func_0205bf58(void* cursor, int ticks);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+extern "C" void func_ov005_0215742c(EquipmentMenu* self);
+extern "C" void func_ov005_0215751c(EquipmentMenu* self);
+extern "C" void func_ov005_0215771c(EquipmentMenu* self);
 
 // USA: func_ov005_0215730c
 extern "C" ARM void func_ov005_0215730c(Struct_ov005_02153954* arg0) {
@@ -59,12 +59,12 @@ extern "C" ARM void func_ov005_0215730c(Struct_ov005_02153954* arg0) {
             return;
         }
     }
-    int var1 = GameState::GetInstance()->GetTickCount();
-    if (var1 == 0)
-        var1 = 1;
-    func_0205bf58(arg0->unknown_19f4_, var1);
-    func_0205bb84((Struct_0205bb84*)arg0->unknown_19f4_);
-    switch (arg0->unknown_3db8_) {
+    int ticks = GameState::GetInstance()->GetTickCount();
+    if (ticks == 0)
+        ticks = 1;
+    func_0205bf58(self->cursor_, ticks);
+    GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_);
+    switch (self->state_) {
     case 2:
         func_ov005_0215742c(arg0);
         return;

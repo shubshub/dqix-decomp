@@ -12,11 +12,10 @@ struct Struct_020e25e8;
 struct Struct_02012de8;
 struct Struct_02038598_4;
 
-extern "C" int func_0200fb8c(int *);
-extern "C" char *func_020421a0();
-extern "C" void func_02043204(char *);
-extern "C" int func_020e28dc(struct Struct_020e28dc *);
-extern "C" void func_020e25e8(struct Struct_020e25e8 *);
+char *GetGlobalField0x1c020421a0();
+void ReinitController02043204(char *);
+int GetInnerFlagBit0020e28dc(struct Outer020e28dc *);
+void ResetSelectionState020e25e8(struct Obj020e25e8 *);
 void SetSubBrightness(GameResources *, int, int);
 int IsSubBrightnessTransitionActive(GameResources *);
 extern "C" void func_ov023_021dca88(char *);
@@ -42,13 +41,13 @@ enum { Enum_ov002_0216c654_0 = 0, Enum_ov002_0216c654_0_2 = 0, Enum_ov002_0216c6
 #endif
 
 // USA: func_ov002_0216c654
-extern "C" ARM void func_ov002_0216c654(char *arg0) {
-    GameResources *var0 = (GameResources *) func_0200fb8c((int *) GameState::GetInstance());
-    int var1          = S32(0x1bc0 + Enum_ov002_0216c654_0);
-    if (var1 == 0) {
-        func_02043204(func_020421a0());
-        if (S32(4) != 0 && func_020e28dc((struct Struct_020e28dc *) S32(4))) {
-            func_020e25e8((struct Struct_020e25e8 *) S32(4));
+extern "C" ARM void func_ov002_0216c654(char *self) {
+    GameResources *res = GameState::GetInstance()->GetResources();
+    int state          = S32(0x1bc0 + regionalState);
+    if (state == 0) {
+        ReinitController02043204(GetGlobalField0x1c020421a0());
+        if (S32(4) != 0 && GetInnerFlagBit0020e28dc((struct Outer020e28dc *) S32(4))) {
+            ResetSelectionState020e25e8((struct Obj020e25e8 *) S32(4));
         }
         *(short *) (arg0 + 0x1c14 + Enum_ov002_0216c654_0) = 0;
         if ((S32(0x247c + Enum_ov002_0216c654_0_3) & 1) || *(unsigned char *) (arg0 + 0x1cc3 + Enum_ov002_0216c654_0_2) != 0 || *(unsigned char *) (arg0 + 0x2472 + Enum_ov002_0216c654_0_3) != 0) {

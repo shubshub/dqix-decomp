@@ -16,7 +16,7 @@ src/Combat/Overlay_8/func_ov008_02187664.cpp:
     complete
     .text start:0x02187664 end:0x02187708
 
-src/Combat/Overlay_8/func_ov008_02186280.cpp:
+src/Combat/Overlay_8/ResetCounterIfIdle_02186280.cpp:
     complete
     .text start:0x02186280 end:0x021862c4
 
@@ -112,7 +112,7 @@ src/Combat/Overlay_8/func_ov008_02189404.cpp:
     complete
     .text start:0x02189404 end:0x0218946c
 
-src/Combat/Overlay_8/func_ov008_02188870.cpp:
+src/Combat/Overlay_8/UpdateBattleScaleEntry_02188870.cpp:
     complete
     .text start:0x02188870 end:0x02188934
 

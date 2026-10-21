@@ -360,7 +360,7 @@ src/Combat/Overlay_23/func_ov023_021fba80.cpp:
     complete
     .text start:0x021fba80 end:0x021fbaac
 
-src/Combat/Overlay_23/func_ov023_021ddbf8.cpp:
+src/Combat/Overlay_23/Check_021ddbf8.cpp:
     complete
     .text start:0x021ddbf8 end:0x021ddc34
 
@@ -368,7 +368,7 @@ src/Combat/Overlay_23/func_ov023_021e31b0.cpp:
     complete
     .text start:0x021e31b0 end:0x021e31e4
 
-src/Combat/Overlay_23/func_ov023_021ddbb8.cpp:
+src/Combat/Overlay_23/DispatchByMode77c_021ddbb8.cpp:
     complete
     .text start:0x021ddbb8 end:0x021ddbf8
 
@@ -1380,7 +1380,7 @@ src/Combat/Overlay_23/func_ov023_021db564.cpp:
     complete
     .text start:0x021db564 end:0x021db634
 
-src/Combat/Overlay_23/func_ov023_021dd974.cpp:
+src/Combat/Overlay_23/RefreshAndDispatch32_021dd974.cpp:
     complete
     .text start:0x021dd974 end:0x021dda04
 
@@ -1852,7 +1852,7 @@ src/Combat/Overlay_23/func_ov023_021f7984.cpp:
     complete
     .text start:0x021f7984 end:0x021f79e4
 
-src/Combat/Overlay_23/clearModelPart_021e6158.cpp:
+src/Combat/Overlay_23/CharacterModel_InvalidatePart_021e6158.cpp:
     complete
     .text start:0x021e6158 end:0x021e616c
 
@@ -1896,7 +1896,7 @@ src/Combat/Overlay_23/func_ov023_021ea5a4.cpp:
     complete
     .text start:0x021ea5a4 end:0x021ea630
 
-src/Combat/Overlay_23/func_ov023_021dc9e8.cpp:
+src/Combat/Overlay_23/DispatchAndResetSlots_021dc9e8.cpp:
     complete
     .text start:0x021dc9e8 end:0x021dca88
 
@@ -2044,7 +2044,7 @@ src/Combat/Overlay_23/func_ov023_021e2418.cpp:
     complete
     .text start:0x021e2418 end:0x021e2450
 
-src/Combat/Overlay_23/func_ov023_021e3f34.cpp:
+src/Combat/Overlay_23/RefreshCounterAndAdvanceState_021e3f34.cpp:
     complete
     .text start:0x021e3f34 end:0x021e3fc0
 
@@ -2864,7 +2864,7 @@ src/Combat/Overlay_23/func_ov023_021faed0.cpp:
     complete
     .text start:0x021faed0 end:0x021fb1c8
 
-src/Combat/Overlay_23/func_ov023_021dd59c.cpp:
+src/Combat/Overlay_23/UpdateCombatOverlayState_021dd59c.cpp:
     complete
     .text start:0x021dd59c end:0x021dd974
 
@@ -3126,7 +3126,7 @@ src/Combat/Overlay_23/func_ov023_021e5020.cpp:
     complete
     .text start:0x021e5020 end:0x021e540c
 
-src/Combat/Overlay_23/setCharacterScale_021e5e68.cpp:
+src/Combat/Overlay_23/CharacterModel_SetScale_021e5e68.cpp:
     complete
     .text start:0x021e5e68 end:0x021e5fdc
 
@@ -3302,7 +3302,7 @@ src/Combat/Overlay_23/func_ov023_021df218.cpp:
     complete
     .text start:0x021df218 end:0x021df558
 
-src/Combat/Overlay_23/applyModelColors_021e540c.cpp:
+src/Combat/Overlay_23/CharacterModel_ApplyColors_021e540c.cpp:
     complete
     .text start:0x021e540c end:0x021e5628
 

@@ -757,7 +757,7 @@ src/Combat/Main/func_0200fb84.cpp:
     complete
     .text start:0x0200fb84 end:0x0200fb8c
 
-src/Combat/Main/func_0200fb8c.cpp:
+src/Combat/Main/GameState_GetResources_0200fb8c.cpp:
     complete
     .text start:0x0200fb8c end:0x0200fb94
 
@@ -7493,7 +7493,7 @@ src/Combat/Main/func_0205bb04.cpp:
     complete
     .text start:0x0205bb04 end:0x0205bb84
 
-src/Combat/Main/func_0205bb84.cpp:
+src/Combat/Main/GridCursor_GetSelectedIndex_0205bb84.cpp:
     complete
     .text start:0x0205bb84 end:0x0205bbcc
 
@@ -12408,7 +12408,7 @@ src/Combat/Main/func_02092d18.cpp:
     complete
     .text start:0x02092d18 end:0x02092d60
 
-src/Combat/Main/func_02092d60.cpp:
+src/Combat/Main/QueueVec3Event_02092d60.cpp:
     complete
     .text start:0x02092d60 end:0x02092e0c
 

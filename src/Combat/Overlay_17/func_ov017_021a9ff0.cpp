@@ -11,12 +11,11 @@ struct SafeAllocator;
 struct GameResources;
 struct Struct_020213fc;
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" void func_ov017_021b2174(unsigned char* arg0);
-extern "C" void func_ov017_021b2ba0(Struct_0206f81c_2* arg0, char* arg1);
-extern "C" void func_ov017_021b2bd0(void* arg0, int arg1, int arg2);
-extern "C" void func_020469f8(Struct_020469f8* arg0, Struct_020469f8_2* arg1);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
+void InitObjState_021b2174(unsigned char* obj);
+void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
+void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
+void PrependNodeToHead(HeadList020469f8* list, HeadNode020469f8* node);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void SetBrightness(GameResources* resources, int brightness, int frames);
 extern "C" void func_020213fc(Struct_020213fc* arg0, int arg1);
 extern "C" void func_ov004_02165df4(SafeAllocator* arg0, void* arg1);
@@ -29,11 +28,11 @@ extern "C" ARM void func_ov017_021a9ff0(int arg0) {
 #else
  enum {Enum_ov017_021a9ff0_15180=0x3b4c, Enum_ov017_021a9ff0_14076=0x36fc};
 #endif
-    GameResources* var0 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-    Struct_020213fc* var1;
-    void* var2;
-    unsigned char* var3;
-    var3 = *(unsigned char**)((char*)var0 + Enum_ov017_021a9ff0_15180);
+    GameResources* res = GameState::GetInstance()->GetResources();
+    SetFlagStruct* flags;
+    void* list;
+    unsigned char* obj;
+    obj = *(unsigned char**)((char*)res + regionalOffset0);
 #if defined(jpn)
     var1 = *(Struct_020213fc**)((char*)var0 + 0x34c0);
 #else

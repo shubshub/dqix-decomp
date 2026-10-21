@@ -57,25 +57,24 @@ struct Struct_0201099c_3;
 struct Struct_0203d028;
 struct Struct_02038598_4;
 
-extern "C" Object3D* func_ov023_021e6194(void* arg0);
-extern "C" GameResources* func_0200fb8c(int* arg0);
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_ov023_021dac40(void* arg0, unsigned int arg1);
-extern "C" int func_ov009_0218a930(void* arg0, unsigned int arg1);
-extern "C" void func_0202ee38(char* arg0, int arg1, int arg2);
-extern "C" void func_0202ee58(char* arg0, int arg1, int arg2);
-extern "C" void func_0209c678(Struct_02109bf4_4* arg0, int arg1);
-extern "C" int func_0202eeb4(char* arg0);
-extern "C" void func_0205ebc0(void* arg0, int arg1, int arg2);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_0205ebfc(void* arg0, int arg1, int arg2);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_020c39a0(short* arg0, int arg1);
-extern "C" void func_0205ebec(void* arg0);
+extern "C" Object3D* func_ov023_021e6194(void* character);
+unsigned int* GetDataPtr02114e04_020d6c00();
+extern "C" void func_ov023_021dac40(void* self, unsigned int ticks);
+extern "C" int func_ov009_0218a930(void* self, unsigned int ticks);
+void CallFunc020a0db8AtField0x16c_0202ee38(char* camera, int position, int duration);
+void CallFunc020a0db8AtField0x194AndClearFlag2_0202ee58(char* camera, int target, int duration);
+void DispatchContextByState0209c678(Actor0209c678* actor, int state);
+int AnySubObjectField0NonZero_0202eeb4(char* camera);
+void SetForwardAndStore0205ebc0(void* sound, int a, int b);
+const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+void CopyInternalFields0207df50(Foo0207df50* a);
+void RestorePairTables0207df90(char* a);
+void BackupPairTables0207dfac(char* a);
+void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
+void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
+extern "C" void func_020c39a0(short* reg, int brightness);
+void ForwardField0xc0_0205ebec(void* sound);
 #if defined(jpn)
 #define func_ov009_021855dc func_ov009_021867bc
 extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
@@ -135,12 +134,12 @@ struct Struct_ov009_021842a0_2 {
 // USA: func_ov009_02187b34
 extern "C" ARM void func_ov009_02187b34(Struct_ov009_021842a0_2* arg0)
 {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c((int*)var0);
-    Object3D* var2 = func_ov023_021e6194(arg0->unknown_7f8_);
-    unsigned int* var3 = func_020d6c00();
-    BackgroundLoader* var4 = BackgroundLoader::GetInstance();
-    if (var4 == NULL)
+    GameState* gameState = GameState::GetInstance();
+    GameResources* resources = gameState->GetResources();
+    Object3D* preview = func_ov023_021e6194(self->character_);
+    unsigned int* unknown = GetDataPtr02114e04_020d6c00();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (loader == NULL)
         return;
     unsigned int var5 = var0->GetTickCount();
     if (var5 == 0)

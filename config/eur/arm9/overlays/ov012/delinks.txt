@@ -184,7 +184,7 @@ src/Combat/Overlay_12/func_ov012_02184884.cpp:
     complete
     .text start:0x02184884 end:0x02184acc
 
-src/Combat/Overlay_12/func_ov012_02186a7c.cpp:
+src/Combat/Overlay_12/UpdateBattleTagStateA_02186a7c.cpp:
     complete
     .text start:0x02186a7c end:0x02186c1c
 

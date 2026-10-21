@@ -16,13 +16,12 @@ struct Struct_ov000_021676a8_2 {
     Struct_ov000_021676a8* unknown_29c_;
 };
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" int func_ov000_0215e9fc(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215fc60(char* arg0);
-extern "C" int func_020493a4(unsigned char* arg0);
-extern "C" void func_02049390(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_02049bd4(unsigned char* arg0, int* arg1);
-extern "C" void func_02049c60(unsigned char* arg0, int* arg1);
+extern "C" int func_ov000_0215e9fc(void* obj, short* buf, int max, int start);
+int ClassifyField0x81fe_ov000_0215fc60(char* self);
+int GetSubstructByte0x1c_020493a4(unsigned char* obj);
+void SetSubstructByte0x1c_02049390(unsigned char* obj, unsigned char value);
+void SetSubstructFields0x10And0x18ClearFlag0x1_02049bd4(unsigned char* obj, int* src);
+void SetSubstructField0x14ClearFlag0x1_02049c60(unsigned char* obj, int* src);
 
 struct Struct_ov000_021830c0 { unsigned int unknown_0_[3]; };
 extern unsigned char data_ov000_02183108[][4];
@@ -34,14 +33,14 @@ static inline Struct_02048cf0 inline_02048e2c_2(const int& arg0) {
 }
 
 // USA: func_ov000_021676a8
-extern "C" ARM void func_ov000_021676a8(Struct_ov000_021676a8_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    func_0200fb8c((int*)var0);
-    Struct_ov000_021676a8* var1 = arg0->unknown_29c_;
-    short var2[4];
-    int var3 = func_ov000_0215e9fc(var1, var2, 4, 0);
-    if (func_ov000_0215fc60((char*)var1) != 0) {
-        var3 = 1;
+extern "C" ARM void func_ov000_021676a8(Owner_021676a8* obj) {
+    GameState* battle = GameState::GetInstance();
+    battle->GetResources();
+    BattleCore_021676a8* core = obj->core;
+    short ids[4];
+    int count = func_ov000_0215e9fc(core, ids, 4, 0);
+    if (ClassifyField0x81fe_ov000_0215fc60((char*)core) != 0) {
+        count = 1;
     }
     int var4;
     for (var4 = 0; var4 < var3; var4++) {

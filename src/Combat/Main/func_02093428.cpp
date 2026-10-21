@@ -5,22 +5,21 @@ struct Struct_02011b24;
 struct Struct_02093428_5;
 
 extern "C" void func_02012fe4();
-extern "C" int func_020457e0(char* arg0);
-extern "C" void func_020531f0(GameObject* arg0);
-extern "C" void func_02043124(char* arg0);
-extern "C" void func_020945ac(struct Struct_02093428_5* arg0);
-extern "C" void func_0200fb40(void* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02011b24(struct Struct_02011b24* arg0);
-extern "C" void func_02011af0(void* arg0);
-extern "C" void func_ov017_021acd30(char* arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3);
-extern "C" void func_ov017_021cf4b0(int arg0, int arg1);
-extern "C" void func_ov017_021d1810(int, int, signed char);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" int* func_020936f8(void);
-extern "C" char* func_020421a0(void);
-extern "C" int func_020535c8(signed char* arg0);
+extern "C" int func_020457e0(char* g);
+extern "C" void func_020531f0(GameObject* c);
+extern "C" void func_02043124(char* g);
+extern "C" void func_020945ac(struct Ctx0209459c* ctx);
+void ClearSubstructBytes_0200fb40(void* obj);
+void ReinitController02043204(char* obj);
+void ResetAndEnableFieldFlag_02011b24(struct FieldFlagBlock* obj);
+void ClearFieldKeepBit0x10_02011af0(void* obj);
+void InitAndInsertNode_021acd30(char* self, unsigned char a, unsigned char b, unsigned char c);
+void EnqueueEventTag57WithAB_021cf4b0(int a, int b);
+void EnqueueEventTag173_021d1810(int, int, signed char);
+int GetField0x3acValue_020100a8(GameState* gs);
+int* GetGlobal02109030_020936f8(void);
+char* GetGlobalField0x1c020421a0(void);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
 
 struct Struct_02093428_6 {
     char unknown_0_[0x30];
@@ -130,10 +129,10 @@ extern "C" ARM void func_02093428(struct Struct_02093428_6* arg0) {
                 }
             }
         }
-        func_ov017_021acd30((char*)func_0200fb8c((int*)var0), 1, var9, 0);
-        func_02011af0(var0);
-        if (((struct Struct_02093428_3*)var0)->unknown_7f75_ != 0) {
-            func_02011b24((struct Struct_02011b24*)var0);
+        InitAndInsertNode_021acd30((char*)bs->GetResources(), 1, flag, 0);
+        ClearFieldKeepBit0x10_02011af0(bs);
+        if (((struct GameStateFlags02093428*)bs)->field7f75 != 0) {
+            ResetAndEnableFieldFlag_02011b24((struct FieldFlagBlock*)bs);
         }
         func_020945ac((struct Struct_02093428_5*)func_020936f8());
         arg0->unknown_34_ = 4;

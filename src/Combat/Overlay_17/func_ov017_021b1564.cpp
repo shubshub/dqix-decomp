@@ -41,18 +41,17 @@ struct Struct_ov017_021b1564_8 {
 #endif
     int unknown_998_;
 };
-struct Struct_ov017_021b1564 { char unknown_0_[0x394]; unsigned short unknown_394_; char unknown_396_[0x9e]; unsigned char unknown_434_; };
-struct Struct_ov017_021b1564_2 { char unknown_0_[0x1000]; char unknown_1000_[1]; };
-struct Struct_ov017_021b1564_3 { char unknown_0_[0x820]; Struct_ov017_021b1564_2 unknown_820_; };
-struct Struct_ov017_021b1564_4 { char unknown_0_[0xae]; short unknown_ae_; };
-struct Struct_ov017_021b1564_5 { char unknown_0_[0x5b0]; char unknown_5b0_[1]; };
-struct Struct_ov017_021b1564_6 { char unknown_0_[0x114]; void* unknown_114_; char unknown_118_[0xc]; int unknown_124_; char unknown_128_[0x11]; unsigned char unknown_139_; };
-extern "C" GameResources* func_0200fb8c(int*);
-extern "C" unsigned int* func_020d6c00();
-extern "C" Struct_ov017_021b1564_8* func_020421a0();
-extern "C" unsigned char* func_020100f8(char*);
-extern "C" void func_020a27b8(unsigned char*);
-extern "C" void func_020397cc(Struct_02018300_3*, int);
+struct Overlay006021b1564 { char pad_0[0x394]; unsigned short flags; char pad_396[0x9e]; unsigned char result; };
+struct BufferTail021b1564 { char pad_0[0x1000]; char work[1]; };
+struct Buffer021b1564 { char pad_0[0x820]; BufferTail021b1564 tail; };
+struct PlayerView021b1564 { char pad_0[0xae]; short angle; };
+struct ResourceBlock021b1564 { char initial[0x5b0]; char restored[1]; };
+struct EntryNode021b1564 { char pad_0[0x114]; void* entry; char pad_118[0xc]; int id; char pad_128[0x11]; unsigned char active; };
+unsigned int* GetDataPtr02114e04_020d6c00();
+Controller021b1564* GetGlobalField0x1c020421a0();
+unsigned char* GetFieldIfFlag4_020100f8(char*);
+void ClearIntAt0x23c_020a27b8(unsigned char*);
+void CancelPendingAction020397cc(Obj020397cc*, int);
 #if defined(jpn)
 extern "C" void func_0204500c(void*, signed char*, int);
 enum { Enum_ov017_021b1564_248832 = 0x3b000, Enum_ov017_021b1564_255008 = 0x3c820 };
@@ -126,23 +125,23 @@ extern Struct_ov017_021b1564* data_ov017_021d83ec;
 static inline int inline_ov017_021b1564(Zone3D* arg0) { SDK_NULL_ASSERT(arg0); return arg0->currentZoneID_; }
 
 // USA: func_ov017_021b1564
-extern "C" ARM void func_ov017_021b1564(Struct_ov017_021b1564_7* arg0, Struct_0201bdac_2* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c((int*)var0);
-    unsigned int* var2 = func_020d6c00();
-    Struct_ov017_021b1564_8* var3 = func_020421a0();
-    unsigned char* var4 = func_020100f8((char*)var0);
-    GameObject* var5 = var0->GetUnknownGameObject();
-    if (var4) func_020a27b8(var4);
-    if (arg0->unknown_48_ == 0) {
-        arg0->unknown_3c_ = GetFlags00(var1);
-        arg0->unknown_40_ = GetFlags04(var1);
-        arg0->unknown_44_ = GetFlags08(var1);
-        SetFlags04(var1, 0x40);
-        if (!arg0->unknown_49_) {
-            GameObject* var6 = var0->GetUnknownGameObject();
-            if (var6) func_020397cc((Struct_02018300_3*)var6, 1);
-            if (*var3->unknown_5c_) {
+extern "C" ARM void func_ov017_021b1564(Transition021b1564* self, TailList020469b4* list) {
+    GameState* game = GameState::GetInstance();
+    GameResources* resources = game->GetResources();
+    unsigned int* global = GetDataPtr02114e04_020d6c00();
+    Controller021b1564* controller = GetGlobalField0x1c020421a0();
+    unsigned char* field = GetFieldIfFlag4_020100f8((char*)game);
+    GameObject* player = game->GetUnknownGameObject();
+    if (field) ClearIntAt0x23c_020a27b8(field);
+    if (self->stage == 0) {
+        self->savedFlags = GetFlags00(resources);
+        self->savedFlags4 = GetFlags04(resources);
+        self->savedFlags8 = GetFlags08(resources);
+        SetFlags04(resources, 0x40);
+        if (!self->alternate) {
+            GameObject* current = game->GetUnknownGameObject();
+            if (current) CancelPendingAction020397cc((Obj020397cc*)current, 1);
+            if (*controller->action) {
 #if defined(jpn)
                 func_0204500c(var3, var3->unknown_5c_, 0);
 #else

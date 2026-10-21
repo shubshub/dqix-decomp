@@ -96,21 +96,20 @@ static inline struct Struct_ov003_0217d53c_4* inline_ov003_0216e714_2(void* arg0
     return (struct Struct_ov003_0217d53c_4*)((char*)arg0 + R(0x1860,0x1840));
 }
 
-extern "C" char* func_0200fb8c(int* arg0);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-struct Struct_02040774_2;
-extern "C" void func_020407b4(struct Struct_02040774_2* arg0, int arg1, int arg2, int arg3);
-struct Struct_02059cfc_2;
-struct Struct_02059cfc_3;
-extern "C" void func_02059f38(struct Struct_02059cfc_2* arg0, struct Struct_02059cfc_3* arg1);
-extern "C" void func_ov006_021542f4(void* arg0);
-struct Struct_ov006_0215426c;
-extern "C" void func_ov006_0215426c(struct Struct_ov006_0215426c* arg0);
+int GetFieldIfFlag4_020100f8(char* gs);
+void SetField0x3b0Value_020100c4(GameState* gs, int value);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void RestorePairTables0207df90(char* obj);
+void BackupPairTables0207dfac(char* obj);
+struct Fields020407b4;
+void SetFields0x44(struct Fields020407b4* dst, int a, int b, int c);
+struct Target02059f38;
+struct Vec3_02059f38;
+void CopyVec3ToField0x44(struct Target02059f38* dst, struct Vec3_02059f38* src);
+void InitCombatEntry021542f4(void* entry);
+struct Obj0215426c;
+void ProcessPendingCommands0215426c(struct Obj0215426c* obj);
 void SetModelRenderContextRenderCommandHook(ModelRenderContext* context, void (*hook)(RenderCommandHandler*), int a, int b, int c);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* reg, int planeA, int planeB, int evA, int evB);
 struct Struct_020dbf18 {
@@ -342,82 +341,82 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (var36 > 6) {
             var36 = 6;
         }
-        struct Struct_ov006_0215ff64 var38 = data_ov006_0215ff64;
-        sprintf(var37, data_ov006_0216010b, var38.unknown_0_[var36]);
-        arg0->unknown_ad4_ = var0->QueueLoadFile(var37, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 9) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var39;
-        unsigned int var40;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var39, &var40);
-        if (var39 != NULL) {
-            GameResources* var41 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-            SafeAllocator* var42 = inline_ov000_02166804(var41, 0);
-            var42->Reset();
-            func_0207df50((struct Struct_0203d028*)var41->unknown_2cc_);
-            func_0207df90(var41->unknown_2cc_);
-            ObjectArchiveLoadInfo var43;
-            var43.fileData = var39;
-            var43.unk_8 = var40;
-            var43.allocator = var42;
-            var43.unk_10 = 1;
-            arg0->unknown_238_[0].LoadFromCHRArchive(&var43);
-            arg0->unknown_238_[0].MaybeSetBCFGAnimation(0, 0);
-            func_0207dfac(var41->unknown_2cc_);
-            func_020407b4((struct Struct_02040774_2*)&arg0->unknown_238_[0], -0x3800, -0xb3b, 0x60a3);
+        struct Bytes8_0215ff64 stages = data_ov006_0215ff64;
+        sprintf(path, data_ov006_0216010b, stages.v[chapter]);
+        self->taskId = loader->QueueLoadFile(path, NULL);
+        self->state++;
+    } else if (state == 9) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        if (data != NULL) {
+            GameResources* res = GameState::GetInstance()->GetResources();
+            SafeAllocator* alloc = GetAllocator(res, 0);
+            alloc->Reset();
+            CopyInternalFields0207df50((struct Foo0207df50*)res->unknown_2cc);
+            RestorePairTables0207df90(res->unknown_2cc);
+            ObjectArchiveLoadInfo info;
+            info.fileData = data;
+            info.unk_8 = size;
+            info.allocator = alloc;
+            info.unk_10 = 1;
+            self->objs[0].LoadFromCHRArchive(&info);
+            self->objs[0].MaybeSetBCFGAnimation(0, 0);
+            BackupPairTables0207dfac(res->unknown_2cc);
+            SetFields0x44((struct Fields020407b4*)&self->objs[0], -0x3800, -0xb3b, 0x60a3);
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 10) {
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_02160125, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 11) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var44;
-        unsigned int var45;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var44, &var45);
-        if (var44 != NULL) {
-            GameResources* var46 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-            SafeAllocator* var47 = inline_ov000_02166804(var46, 0);
-            func_0207df90(var46->unknown_2cc_);
-            ObjectArchiveLoadInfo var48;
-            var48.fileData = var44;
-            var48.unk_8 = var45;
-            var48.allocator = var47;
-            var48.unk_10 = 1;
-            arg0->unknown_238_[1].LoadFromCCHROrCMOTArchive(&var48, NULL);
-            arg0->unknown_238_[1].MaybeSetBCFGAnimation(0, 0);
-            func_0207dfac(var46->unknown_2cc_);
-            arg0->unknown_238_[1].SetScale(0x10a, 0x10a, 0x10a);
-            func_020407b4((struct Struct_02040774_2*)&arg0->unknown_238_[1], -0x41, -0xaac, 0x61f3);
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 10) {
+        self->taskId = loader->QueueLoadFile(data_ov006_02160125, NULL);
+        self->state++;
+    } else if (state == 11) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        if (data != NULL) {
+            GameResources* res = GameState::GetInstance()->GetResources();
+            SafeAllocator* alloc = GetAllocator(res, 0);
+            RestorePairTables0207df90(res->unknown_2cc);
+            ObjectArchiveLoadInfo info;
+            info.fileData = data;
+            info.unk_8 = size;
+            info.allocator = alloc;
+            info.unk_10 = 1;
+            self->objs[1].LoadFromCCHROrCMOTArchive(&info, NULL);
+            self->objs[1].MaybeSetBCFGAnimation(0, 0);
+            BackupPairTables0207dfac(res->unknown_2cc);
+            self->objs[1].SetScale(0x10a, 0x10a, 0x10a);
+            SetFields0x44((struct Fields020407b4*)&self->objs[1], -0x41, -0xaac, 0x61f3);
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 12) {
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_0216013d, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 13) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var49;
-        unsigned int var50;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var49, &var50);
-        if (var49 != NULL) {
-            GameResources* var51 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-            SafeAllocator* var52 = inline_ov000_02166804(var51, 0);
-            func_0207df90(var51->unknown_2cc_);
-            ObjectArchiveLoadInfo var53;
-            var53.fileData = var49;
-            var53.unk_8 = var50;
-            var53.allocator = var52;
-            var53.unk_10 = 1;
-            arg0->unknown_238_[2].LoadFromCCHROrCMOTArchive(&var53, NULL);
-            arg0->unknown_238_[2].MaybeSetBCFGAnimation(0, 0);
-            func_0207dfac(var51->unknown_2cc_);
-            arg0->unknown_238_[2].SetScale(0x10a, 0x10a, 0x10a);
-            func_02059f38((struct Struct_02059cfc_2*)&arg0->unknown_238_[2], (struct Struct_02059cfc_3*)&arg0->unknown_238_[1].position_);
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 12) {
+        self->taskId = loader->QueueLoadFile(data_ov006_0216013d, NULL);
+        self->state++;
+    } else if (state == 13) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        if (data != NULL) {
+            GameResources* res = GameState::GetInstance()->GetResources();
+            SafeAllocator* alloc = GetAllocator(res, 0);
+            RestorePairTables0207df90(res->unknown_2cc);
+            ObjectArchiveLoadInfo info;
+            info.fileData = data;
+            info.unk_8 = size;
+            info.allocator = alloc;
+            info.unk_10 = 1;
+            self->objs[2].LoadFromCCHROrCMOTArchive(&info, NULL);
+            self->objs[2].MaybeSetBCFGAnimation(0, 0);
+            BackupPairTables0207dfac(res->unknown_2cc);
+            self->objs[2].SetScale(0x10a, 0x10a, 0x10a);
+            CopyVec3ToField0x44((struct Target02059f38*)&self->objs[2], (struct Vec3_02059f38*)&self->objs[1].position_);
         }
         var0->RemoveTask(arg0->unknown_ad4_);
         arg0->unknown_ad4_ = -1;
@@ -446,38 +445,38 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             func_02059f38((struct Struct_02059cfc_2*)&arg0->unknown_238_[3], (struct Struct_02059cfc_3*)&arg0->unknown_238_[1].position_);
             arg0->unknown_238_[3].StopCurrentAnimation();
         }
-        func_0207dfac(var54->unknown_2cc_);
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 16) {
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_02160172, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 17) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var58;
-        unsigned int var59;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var58, &var59);
-        if (var58 != NULL) {
-            GameResources* var60 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-            SafeAllocator* var61 = inline_ov000_02166804(var60, 0);
-            func_0207df90(var60->unknown_2cc_);
-            ObjectArchiveLoadInfo var62;
-            var62.fileData = var58;
-            var62.unk_8 = var59;
-            var62.allocator = var61;
-            var62.unk_10 = 1;
-            Object3D* var63 = &arg0->unknown_238_[4];
-            var63->LoadFromCCHROrCMOTArchive(&var62, NULL);
-            var63->MaybeSetBCFGAnimation(0, 0);
-            func_0207dfac(var60->unknown_2cc_);
-            var63->SetScale(0x10a, 0x10a, 0x10a);
-            func_02059f38((struct Struct_02059cfc_2*)var63, (struct Struct_02059cfc_3*)&arg0->unknown_238_[1].position_);
-            var63->StopCurrentAnimation();
-            var63->MaybeSetRegularAnimation(data_ov006_02160080, 9);
-            var63->DisableFlag(0x1000);
-            for (int var64 = 0; var64 < 3; var64++) {
-                data_ov006_02160380[var64] = -1;
+        BackupPairTables0207dfac(res->unknown_2cc);
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 16) {
+        self->taskId = loader->QueueLoadFile(data_ov006_02160172, NULL);
+        self->state++;
+    } else if (state == 17) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        if (data != NULL) {
+            GameResources* res = GameState::GetInstance()->GetResources();
+            SafeAllocator* alloc = GetAllocator(res, 0);
+            RestorePairTables0207df90(res->unknown_2cc);
+            ObjectArchiveLoadInfo info;
+            info.fileData = data;
+            info.unk_8 = size;
+            info.allocator = alloc;
+            info.unk_10 = 1;
+            Object3D* obj = &self->objs[4];
+            obj->LoadFromCCHROrCMOTArchive(&info, NULL);
+            obj->MaybeSetBCFGAnimation(0, 0);
+            BackupPairTables0207dfac(res->unknown_2cc);
+            obj->SetScale(0x10a, 0x10a, 0x10a);
+            CopyVec3ToField0x44((struct Target02059f38*)obj, (struct Vec3_02059f38*)&self->objs[1].position_);
+            obj->StopCurrentAnimation();
+            obj->MaybeSetRegularAnimation(data_ov006_02160080, 9);
+            obj->DisableFlag(0x1000);
+            for (int i = 0; i < 3; i++) {
+                data_ov006_02160380[i] = -1;
             }
             Model3D* var65 = arg0->unknown_238_[4].pModel_;
             if (var65 != NULL) {
@@ -515,16 +514,16 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         volatile unsigned int* var69 = (volatile unsigned int*)0x4000000;
         *var69 = (*var69 & ~0x1f00) | 0x1f00;
         ColorEffect_ConfigureAlphaBlend((unsigned int*)0x4000050, 4, 1, 10, 6);
-        arg0->unknown_ae2_ = arg0->unknown_ae2_ | 0x1000;
-        arg0->unknown_ae2_ = arg0->unknown_ae2_ & ~0x40;
-        GameResources* var70 = (GameResources*)func_0200fb8c((int*)var67);
-        func_020dbf18(&arg0->unknown_12a0_, (int)data_ov006_0216019a, (int)&arg0->unknown_180_[5],
-                          (int)var70->unknown_2cc_, 0x18);
-        arg0->unknown_add_++;
-    } else if (var1 == 19) {
-        if (arg0->unknown_12a0_.unknown_10_ == 2) {
-            arg0->unknown_adc_ = 1;
-            arg0->unknown_add_ = 0;
+        self->flags = self->flags | 0x1000;
+        self->flags = self->flags & ~0x40;
+        GameResources* res = gs->GetResources();
+        BeginTask020dbf18(&self->task, (int)data_ov006_0216019a, (int)&self->allocs[5],
+                          (int)res->unknown_2cc, 0x18);
+        self->state++;
+    } else if (state == 19) {
+        if (self->task.status == 2) {
+            self->result = 1;
+            self->state = 0;
         }
     }
 }

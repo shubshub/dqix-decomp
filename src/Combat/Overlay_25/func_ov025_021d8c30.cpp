@@ -198,30 +198,29 @@ extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
 extern "C" int func_ov025_021ed444(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
 extern "C" int func_ov025_021ed380(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
 extern "C" void* func_02057924(void);
-extern "C" void func_02078484(struct Struct_02078398_2* arg0);
-extern "C" void func_02057fb4(void* arg0, int arg1, void* arg2);
-extern "C" int func_02085078(unsigned char* arg0);
-extern "C" int func_020850a4(unsigned char* arg0);
-extern "C" int func_ov000_0215fd90(void* arg0, int arg1);
-extern "C" void func_02032fd0(Struct_02032fd0* arg0, short arg1, unsigned short arg2);
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f08(void* arg0);
-extern "C" void* func_ov025_021dafd0(char* arg0, int arg1);
-extern "C" void func_ov000_0217616c(void* arg0);
-extern "C" void func_0204a00c(unsigned char* arg0, int arg1);
-extern "C" void func_0203a48c(Struct_0203a48c_3*, int, Struct_0203a48c_2*, int, int, int);
-extern "C" void func_02049f28(unsigned char* arg0);
-extern "C" void func_02048588(unsigned char* arg0, unsigned char* arg1);
-extern "C" void func_ov000_02166784(struct Struct_ov000_02161c0c_3* arg0, unsigned char* arg1, unsigned char* arg2);
-extern "C" void func_ov000_021677fc(void* arg0);
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" int func_02049ee8(unsigned char* arg0);
-extern "C" void func_020d7334(unsigned char* arg0, int arg1);
-extern "C" void func_02049f3c(unsigned char* arg0);
-extern "C" void func_ov000_02167434(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_02191aac(char* arg0, int arg1, int arg2, unsigned char arg3);
-extern "C" void func_02054028(void* arg0, int arg1);
-extern "C" int func_0200fb8c(int* arg0);
+void InitStruct02078484(struct InitStruct02078484Struct* p);
+void FindNodeAndProcess02057fb4(void* list, int id, void* config);
+int TestBit0At0x2f4_02085078(unsigned char* obj);
+int TestBit1At0x2f4_020850a4(unsigned char* obj);
+extern "C" int func_ov000_0215fd90(void* entry, int effect);
+void SetFields0xbaAnd0xbc_02032fd0(ShortPair0xba0xbc* obj, short a, unsigned short b);
+void* GetActiveCombatWork_ov000_02160130(void);
+void* GetOffsetPtr02160f08(void* obj);
+void* FindEntryById_021dafd0(char* obj, int id);
+extern "C" void func_ov000_0217616c(void* p);
+void SetSubstructWord0x68_0204a00c(unsigned char* obj, int value);
+void QueuePopupEntry0203a48c(Obj0203a48c*, int, Vec3Int0203a48c*, int, int, int);
+void SetSubstructByte0x56_02049f28(unsigned char* obj);
+void CopyObjectFields02048588(unsigned char* self, unsigned char* dst);
+void AllocateSlotAndConfigureField02166784(struct Struct5e00* obj1, unsigned char* obj2, unsigned char* obj3);
+extern "C" void func_ov000_021677fc(void* p);
+int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+int GetSubstructByte0x56_02049ee8(unsigned char* obj);
+void ResetCombatantSlot020d7334(unsigned char* base, int index);
+void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
+void ClearBitIfValueFound02167434(unsigned char* obj, int value);
+extern "C" void func_ov017_02191aac(char* obj, int mode, int idx, unsigned char mask);
+extern "C" void func_02054028(void* obj, int n);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 extern "C" void func_0205ebfc(void* arg0, int arg1, int arg2);
 extern "C" void func_ov000_021823dc(unsigned char* arg0, int arg1);
@@ -894,14 +893,14 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                 var32 = var100->unknown_27_4_;
                 var33 = var100->unknown_13_7_;
             }
-            if (var32) {
-                if (var20) {
-                    var31 = 0x25;
-                    GameResources* var101 = (GameResources*)func_0200fb8c((int*)var1);
-                    if (var101) {
-                        SetMainBrightness(var101, 0x10, 0);
-                        SetMainBrightness(var101, 0, 0x1e);
-                        func_ov000_02163440(arg0, 0x199, 0x3e8, 0x96);
+            if (deadly) {
+                if (cleared) {
+                    sfx = 0x25;
+                    GameResources* res = battle->GetResources();
+                    if (res) {
+                        SetMainBrightness(res, 0x10, 0);
+                        SetMainBrightness(res, 0, 0x1e);
+                        SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x3e8, 0x96);
                     }
                 } else if (var31 >= 0) {
                     var31 = 0x24;

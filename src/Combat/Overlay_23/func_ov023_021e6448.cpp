@@ -49,12 +49,12 @@ struct Struct_ov023_021e6448_4 {
     int unknown_1398_;
 };
 
-extern "C" int func_0205c6e4(unsigned char* arg0);
-extern "C" Struct_ov023_021e6448* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0205c4a8(Struct_0205c4a8* arg0, int arg1);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" void func_0205bcdc(Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+int SelectField0x8Or0x58ByFlags_0205c6e4(unsigned char* obj);
+Element_021e6448* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8* s, int delta);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc* s, int index);
+extern "C" void func_0205bb04(void* s, int index);
 
 // USA: func_ov023_021e6448
 extern "C" ARM int func_ov023_021e6448(Struct_ov023_021e6448_4* arg0) {
@@ -83,9 +83,9 @@ extern "C" ARM int func_ov023_021e6448(Struct_ov023_021e6448_4* arg0) {
                     func_0205c4a8((Struct_0205c4a8*)var6, 1);
                     arg0->unknown_1398_ = 1;
                 }
-                int var8 = func_0205bb84((Struct_0205bb84*)var6);
-                func_0205bcdc((Struct_0205bcdc*)&arg0->unknown_ac_.unknown_4_[0], var8);
-                func_0205bb04(&arg0->unknown_ac_.unknown_4_[1], var8);
+                int index = GridCursor_GetSelectedIndex((Struct_0205bb84*)scroll);
+                SetIndexIfValid0205bcdc((Struct_0205bcdc*)&self->list_.states[0], index);
+                func_0205bb04(&self->list_.states[1], index);
             }
             return 1;
         }

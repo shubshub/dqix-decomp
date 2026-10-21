@@ -101,19 +101,18 @@ struct Struct_0201099c_14;
 struct Struct_0207f7f0;
 struct Struct_0207f7f0_2;
 
-extern "C" int* func_0200fb8c(int*);
-extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" void func_020c5588(int, int, int, int, int);
-extern "C" int func_02097420(Struct_02097420*);
-extern "C" Struct_ov014_02184f78* func_02097418(Struct_02097418*);
-extern "C" void func_0206819c(const char*, char*, int);
-extern "C" void func_0207f914(Struct_0207f914*, int, int, int);
-extern "C" void func_02080798(void*, int, int);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_020dfc40(Struct_0201099c_14*);
-extern "C" void func_020abf38(void*);
-extern "C" void func_0207f7f0(Struct_0207f7f0*, Struct_0207f7f0_2*, int);
+void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
+void Set3DClearColor_020c5588(int, int, int, int, int);
+int GetField4Low12(Field4Low12_02097420*);
+MonsterListEntry* GetBufferField8(BufferField8_02097418*);
+void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
+void SetFieldsFromFormattedValue0207f914(Obj0207f914*, int, int, int);
+void SetSublistEntryField14LowBits_02080798(void*, int, int);
+int CountActiveEntries(ActiveEntry02046900*);
+void* FindRecordByIndex(Rec020467f0*, int, void**, int*);
+void ResetStruct020dfc40(Struct020dfc40*);
+void CopyOutBattleRegion0x75f0_020abf38(void*);
+void InitNodeChain0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
 
 extern "C" {
 void func_020972e0(Struct_020974b0* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
@@ -136,9 +135,9 @@ extern const char data_ov014_02189784[];
 // USA: func_ov014_02187568
 extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
 {
-    int* var0 = func_0200fb8c((int*)GameState::GetInstance());
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_17b_ == 0)
+    int* resources = (int*)GameState::GetInstance()->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->listStep_ == 0)
     {
         SetFlags04(GetGameResources(), 0x609fe);
         func_020c54a4(0, 0, 0, 0);

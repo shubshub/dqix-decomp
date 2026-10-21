@@ -60,8 +60,7 @@ struct Struct_ov003_02166a90_4 {
 };
 extern Vector3i data_ov003_0217f4b8[3];
 
-extern "C" Struct_ov003_02166a90_6* func_ov003_02160bf8(Struct_ov003_02166a90_5*, int);
-extern "C" int func_0200fb8c(int*);
+extern "C" SelectedEntry02166a90* func_ov003_02160bf8(SelectionPage02166a90*, int);
 extern "C" void* func_02012fe4(void);
 extern "C" void* func_020108f0(void*, int);
 extern "C" void* func_02010954(char*);
@@ -111,14 +110,14 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
     if (var0->unknown_13f_0_ == 2 || var0->unknown_13f_0_ == 3 || var0->unknown_13f_0_ == 4) {
         var1 = 1;
     }
-    GameState* var2 = GameState::GetInstance();
-    GameResources* var3 = (GameResources*)func_0200fb8c((int*)var2);
-    unsigned short* var4 = (unsigned short*)func_02012fe4();
-    if (arg0->unknown_4bc_ == 0) {
-        int var5 = -1;
-        for (int var6 = 3; var6 >= 0; var6--) {
-            if (var2->GetGameObjectByIndex(var6) == 0) {
-                var5 = var6;
+    GameState* state = GameState::GetInstance();
+    GameResources* resources = state->GetResources();
+    unsigned short* field06 = (unsigned short*)func_02012fe4();
+    if (self->step == 0) {
+        int freeSlot = -1;
+        for (int slot = 3; slot >= 0; slot--) {
+            if (state->GetGameObjectByIndex(slot) == 0) {
+                freeSlot = slot;
                 break;
             }
         }

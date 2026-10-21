@@ -925,11 +925,11 @@ src/Combat/Overlay_1/func_ov001_0215cdf8.cpp:
     complete
     .text start:0x0215cdf8 end:0x0215ce4c
 
-src/Combat/Overlay_1/func_ov001_0215b4c0.cpp:
+src/Combat/Overlay_1/UpdateCounterFromBattleWordAlt_0215b4c0.cpp:
     complete
     .text start:0x0215b4c0 end:0x0215b50c
 
-src/Combat/Overlay_1/func_ov001_0215b408.cpp:
+src/Combat/Overlay_1/UpdateCounterFromBattleWord_0215b408.cpp:
     complete
     .text start:0x0215b408 end:0x0215b454
 
@@ -1129,7 +1129,7 @@ src/Combat/Overlay_1/func_ov001_0215d7a8.cpp:
     complete
     .text start:0x0215d7a8 end:0x0215d8b4
 
-src/Combat/Overlay_1/func_ov001_0215eab0.cpp:
+src/Combat/Overlay_1/RestoreCombatantPairTables_0215eab0.cpp:
     complete
     .text start:0x0215eab0 end:0x0215eb3c
 
@@ -1613,11 +1613,11 @@ src/Combat/Overlay_1/func_ov001_021564b0.cpp:
     complete
     .text start:0x021564b0 end:0x02156534
 
-src/Combat/Overlay_1/func_ov001_0215b2cc.cpp:
+src/Combat/Overlay_1/UpdateCounterAndNotify_0215b2cc.cpp:
     complete
     .text start:0x0215b2cc end:0x0215b318
 
-src/Combat/Overlay_1/func_ov001_0215b50c.cpp:
+src/Combat/Overlay_1/UpdateCounterAndNotify_0215b50c.cpp:
     complete
     .text start:0x0215b50c end:0x0215b560
 
@@ -1641,11 +1641,11 @@ src/Combat/Overlay_1/func_ov001_02159d9c.cpp:
     complete
     .text start:0x02159d9c end:0x02159ea8
 
-src/Combat/Overlay_1/func_ov001_0215b454.cpp:
+src/Combat/Overlay_1/UpdateCounterAndSetFlagB_0215b454.cpp:
     complete
     .text start:0x0215b454 end:0x0215b4c0
 
-src/Combat/Overlay_1/func_ov001_0215b318.cpp:
+src/Combat/Overlay_1/UpdateCounterAndSetFlag_0215b318.cpp:
     complete
     .text start:0x0215b318 end:0x0215b384
 

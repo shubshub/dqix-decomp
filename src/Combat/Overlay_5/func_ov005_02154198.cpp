@@ -14,16 +14,15 @@ struct Struct_02074bd0;
 struct Struct_0204b010;
 struct Struct_02020cb8_3;
 
-extern "C" void func_ov023_021dc354(void* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" unsigned int* func_0200fb8c(int* arg0);
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_0205d048(void* arg0);
-extern "C" void func_02074bd0(Struct_02074bd0* arg0);
-extern "C" void func_0204b010(Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204b04c(void* arg0, int arg1);
-extern "C" void func_0204b088(void* arg0, int arg1);
-extern "C" void func_0204afb4(Struct_02020cb8_3* arg0);
+extern "C" void func_ov023_021dc354(void* window);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
+extern "C" void func_0205d048(void* window);
+void ClearFlag0x10IfSet(Struct02074bd0* state);
+void ClearBuffer0204b010(Obj0204b010* bg, void* p);
+extern "C" void func_0204b04c(void* bg, int a);
+extern "C" void func_0204b088(void* bg, int a);
+void ResetRecordList0204afb4(List0204afb4* bg);
 
 struct Struct_ov005_02153954 {
     SafeAllocator unknown_0_;
@@ -71,22 +70,22 @@ extern "C" ARM void func_ov005_02154198(Struct_ov005_02153954* arg0) {
         var0->RemoveTask(arg0->unknown_3dc8_);
         arg0->unknown_3dc8_ = -1;
     }
-    func_ov023_021dc354(arg0->unknown_1244_);
-    func_020c5588(arg0->unknown_3dc2_, 0x10, 0x7fff, 0, 0);
-    GameState* var1 = GameState::GetInstance();
-    ClearFlags04((GameResources*)(func_0200fb8c((int*)var1)), 0x800);
-    REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | (arg0->unknown_e80_ << 8);
-    func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ee4_, 1);
-    func_0205d048(arg0->unknown_ee4_);
-    func_02074bd0((Struct_02074bd0*)arg0->unknown_e6c_);
-    func_0204b010((Struct_0204b010*)arg0->unknown_e84_, 0);
-    func_0204b04c(arg0->unknown_e84_, 0);
-    func_0204b088(arg0->unknown_e84_, 0);
-    func_0204afb4((Struct_02020cb8_3*)arg0->unknown_e84_);
-    if (arg0->unknown_3d88_ != NULL) {
-        memset(arg0->unknown_3d88_, 0, 0x20);
-        CleanInvalidateCacheRange(arg0->unknown_3d88_, 0x20);
-        LoadToMainBG1CharacterData(arg0->unknown_3d88_, 0, 0x20);
+    func_ov023_021dc354(self->infoWindow_);
+    Set3DClearColor_020c5588(self->unk_3dc2, 0x10, 0x7fff, 0, 0);
+    GameState* gameState = GameState::GetInstance();
+    ClearFlags04(gameState->GetResources(), 0x800);
+    REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | (self->layers_ << 8);
+    ResetEntryList0205d6a0((Entry_0205d6a0*)self->window_, 1);
+    func_0205d048(self->window_);
+    ClearFlag0x10IfSet((Struct02074bd0*)self->screenState_);
+    ClearBuffer0204b010((Obj0204b010*)self->backgrounds_, 0);
+    func_0204b04c(self->backgrounds_, 0);
+    func_0204b088(self->backgrounds_, 0);
+    ResetRecordList0204afb4((List0204afb4*)self->backgrounds_);
+    if (self->pageFiles_ != NULL) {
+        memset(self->pageFiles_, 0, 0x20);
+        CleanInvalidateCacheRange(self->pageFiles_, 0x20);
+        LoadToMainBG1CharacterData(self->pageFiles_, 0, 0x20);
     }
     arg0->unknown_14_.Destroy();
     for (int var2 = 0; var2 < 8; var2++)

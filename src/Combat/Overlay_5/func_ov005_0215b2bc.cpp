@@ -21,7 +21,7 @@ struct Struct_ov005_02156ecc;
 extern "C" void func_ov005_02157174(Struct_ov005_02156ecc*, Struct_ov005_02156ecc_2*);
 
 struct Struct_0205bb84;
-extern "C" int func_0205bb84(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 extern "C" int func_0205bf58(void*, int);
 extern "C" int func_ov005_02157190(void*);
 extern "C" char* func_ov017_021a193c(int*);
@@ -110,12 +110,12 @@ extern "C" ARM void func_ov005_0215b2bc(Struct_ov000_0217ab8c* arg0) {
                 }
             }
         }
-        if (var3 == 0) {
-            var0 = 1;
-            unsigned int var9 = GameState::GetInstance()->GetTickCount();
-            func_0205bf58(arg0->unknown_19f4_, var9 ? var9 : var0);
-            var2 = func_0205bb84((Struct_0205bb84*)&arg0->unknown_19f4_[0]);
-            if (func_ov005_02157190(arg0)) var1 = 1;
+        if (hasCoords == 0) {
+            found = 1;
+            unsigned int tick = GameState::GetInstance()->GetTickCount();
+            func_0205bf58(self->scale_, tick ? tick : found);
+            sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->scale_[0]);
+            if (CheckFlag30Or401_02157190(self)) flag2 = 1;
         }
         if (var0 != 0 && arg0->unknown_3dbc_ != var2) {
             arg0->unknown_3dbe_ = arg0->unknown_3dbc_;

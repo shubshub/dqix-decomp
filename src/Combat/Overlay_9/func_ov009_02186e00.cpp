@@ -9,9 +9,9 @@ struct Obj0205eaa0;
 struct PartyMemberData { char unknown[0x3c]; char name[1]; };
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_LoadSlotLayout(void*);
-extern "C" void func_ov009_02188e70(CharacterCreationUI*, int);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
-extern "C" int func_ov009_02188ee8(Struct_ov009_021842a0*);
+extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI*);
 extern "C" void func_ov009_0218ad0c(void*);
 extern "C" void func_ov009_021867bc(unsigned char*, int);
 extern "C" void func_0205eaa0(Struct_02108760*, int, int);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0* arg0)
         self->keyboardChoice = 0;
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
-        func_ov009_02188e70(self, self->keyboardChoice);
+        CharacterCreationUI_MoveCursorToSlot(self, self->keyboardChoice);
         self->flags |= 1;
         self->keyboardPage = self->previousKeyboardPage = 0;
         self->flags &= ~0x800;
@@ -44,15 +44,15 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0* arg0)
             return;
         if (!func_ov009_02185c58(arg0->unknown_dc_))
             return;
-        int var2 = func_ov009_02188ee8(arg0);
-        if (var2 == -2) {
-            func_ov009_0218ad0c(arg0);
-        } else if (var2 == -3) {
-            func_ov009_021867bc((unsigned char*)arg0, 7);
-        } else if (var2 >= 101 && var2 <= 108) {
-            var2 -= 100;
-            if (var2 <= arg0->unknown_da0_[arg0->unknown_da3_] && var2 != arg0->unknown_c58_)
-                func_ov009_021867bc((unsigned char*)arg0, (unsigned char)var2);
+        int result = CharacterCreationUI_HandleInput(self);
+        if (result == -2) {
+            func_ov009_0218ad0c(self);
+        } else if (result == -3) {
+            func_ov009_021867bc((unsigned char*)self, 7);
+        } else if (result >= 101 && result <= 108) {
+            result -= 100;
+            if (result <= self->furthestState[self->sex] && result != self->state)
+                func_ov009_021867bc((unsigned char*)self, (unsigned char)result);
         }
         if (arg0->unknown_d9c_ & 0x400000) {
             arg0->unknown_d9c_ |= 0x2000;
@@ -140,22 +140,22 @@ struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bacc;
 
-extern "C" void func_ov003_0215f41c(Struct_ov003_0215f4e4* arg0, const char* arg1);
-extern "C" Struct_ov009_02186e00* func_0204254c(int arg0, int arg1);
-extern "C" int func_ov003_0215f000(Struct_ov003_0215f4e4* arg0, int arg1);
-extern "C" int func_ov009_02188ee8(void* arg0);
-extern "C" void func_ov009_02189a4c(void* arg0);
-extern "C" void func_ov009_021855dc(unsigned char* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021d9e60(char* arg0);
-extern "C" Struct_ov003_0215f4e4_2* func_ov003_0215f4a4(Struct_ov003_0215f4e4* arg0, int arg1);
-extern "C" void func_ov009_0218a8b8(void* arg0);
-extern "C" void func_0205bef8(Struct_0205bef8* arg0);
-extern "C" void func_0205ba68(Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bb04(Struct_ov009_02186e00_2* arg0, int arg1);
-extern "C" void func_ov003_0215f4e4(Struct_ov003_0215f4e4* arg0, int arg1);
-extern "C" void func_ov003_0215ec68(int arg0, short* arg1, short* arg2);
+extern "C" void func_ov003_0215f41c(Keyboard* keyboard, const char* text);
+CharacterInfo* FindEntryByKey0204254c(int character, int mode);
+extern "C" int func_ov003_0215f000(Keyboard* keyboard, int ticks);
+extern "C" int CharacterCreationUI_HandleInput(void* self);
+extern "C" void func_ov009_02189a4c(void* self);
+void SetStatValue021855dc(unsigned char* self, int state);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
+void BuildFieldTag_021d9e60(char* self);
+extern "C" KeyboardKey* func_ov003_0215f4a4(Keyboard* keyboard, int a);
+void ResetEntrySkill0218a8b8(void* self);
+void Init0205bef8(Struct_0205bef8* cursor);
+void SetupPointerTable0205ba68(Struct_0205ba68* cursor, int columns, int rows, int a);
+void SetField0AndPropagate0205bacc(Node0205bacc* cursor, int count);
+extern "C" void func_0205bb04(WindowCursor* cursor, int a);
+void StoreResultIfNonZero_0215f4e4(Keyboard* keyboard, int id);
+extern "C" void func_ov003_0215ec68(int size, short* width, short* height);
 
 extern char data_ov009_0218ad26[];
 extern char data_ov009_0218ad2a[];
@@ -223,12 +223,12 @@ extern "C" ARM void func_ov009_02186e00(Struct_ov009_021842a0_2* arg0)
     {
         if (arg0->unknown_d9c_ & 0x80)
             return;
-        arg0->unknown_db5_ = func_ov003_0215f000(arg0->unknown_c0_, GameState::GetInstance()->GetTickCount());
-        int var5 = func_ov009_02188ee8(arg0);
-        if (arg0->unknown_db5_ != 0)
-            var5 = -1;
-        int var6 = 0;
-        if (var5 == -2)
+        self->keyboardResult_ = func_ov003_0215f000(self->keyboard_, GameState::GetInstance()->GetTickCount());
+        int result = CharacterCreationUI_HandleInput(self);
+        if (self->keyboardResult_ != 0)
+            result = -1;
+        int checked = 0;
+        if (result == -2)
         {
             var6 = 1;
             func_ov009_02189a4c(arg0);

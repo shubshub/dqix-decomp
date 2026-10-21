@@ -58,8 +58,7 @@ struct Struct_ov001_0215f3fc_2
 #endif
     Struct_ov001_0215f3fc unknown_2cc_[33];
 };
-extern "C" void* func_0203cf4c();
-extern "C" int func_0200fb8c(int*);
+void* GetGlobalPtr021075f4_0203cf4c();
 extern "C" const char* func_ov017_021d612c(void*);
 extern "C" int func_0203e03c(Struct_0203e03c*);
 extern "C" void func_ov017_021d6134(void*, int);
@@ -84,11 +83,11 @@ extern const char data_ov001_021657d1[];
 // USA: func_ov001_0215f3fc
 extern "C" ARM int func_ov001_0215f3fc(Struct_ov001_0215f3fc_3* arg0, int arg1)
 {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0203cf4c();
-    Struct_ov001_0215f3fc_2* var2 = (Struct_ov001_0215f3fc_2*)func_0200fb8c((int*)var0);
-    BackgroundLoader* var3 = BackgroundLoader::GetInstance();
-    if (!var2)
+    GameState* game = GameState::GetInstance();
+    void* list = GetGlobalPtr021075f4_0203cf4c();
+    StreamResources0215f3fc* resources = (StreamResources0215f3fc*)game->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (!resources)
     {
         return 0;
     }

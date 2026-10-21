@@ -15,7 +15,7 @@ extern "C" int func_0205dd08(struct Struct_0205dd08* arg0);
 struct Struct_0205c4a8;
 extern "C" void func_0205c4a8(struct Struct_0205c4a8* arg0, int arg1);
 struct Struct_0205bb84;
-extern "C" int func_0205bb84(struct Struct_0205bb84* arg0);
+int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 struct Struct_0205bcdc;
 extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
 
@@ -52,12 +52,12 @@ extern "C" ARM int func_ov000_0217f3e4(struct Struct_ov000_0217f3e4_3* arg0) {
     if (var0 == 0) {
         return 0;
     }
-    Struct_ov000_0217f3e4_2* var1 = ((Struct_ov000_0217f3e4*)arg0)->inline_ov000_0217f3e4(2);
-    Struct_ov000_0217f3e4_2* var2 = ((Struct_ov000_0217f3e4*)arg0)->inline_ov000_0217f3e4(1);
-    func_0205c4a8((struct Struct_0205c4a8*)var1, var0);
-    int var3 = func_0205bb84((struct Struct_0205bb84*)var1);
-    func_0205bcdc((struct Struct_0205bcdc*)var2, var3);
-    switch (arg0->unknown_1d60_[arg0->unknown_1d68_]) {
+    Channel0217f3e4* accumulator = ((MenuChannels0217f3e4*)menu)->GetChannel(2);
+    Channel0217f3e4* cursor = ((MenuChannels0217f3e4*)menu)->GetChannel(1);
+    AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8*)accumulator, delta);
+    int value = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)accumulator);
+    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor, value);
+    switch (menu->kinds[menu->kindIndex]) {
     case 6:
         arg0->unknown_1d6e_ = var3;
         break;

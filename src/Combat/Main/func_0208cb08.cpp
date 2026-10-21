@@ -50,12 +50,11 @@ struct Struct_0208cb08_5 {
     unsigned char unknown_d7_[3];
     unsigned short unknown_da_;
 };
-extern "C" int func_0200fb8c(int*);
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" int func_02046b24(Struct_02015438**);
-extern "C" void func_02074b64(Struct_02074b64*);
-extern "C" void func_020dc2bc();
+unsigned int* GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+void BackupSubBgControlRegisters(SubBgControlBackup02074b64*);
+void OrGlobalFlag0x40_020dc2bc();
 void SetSubBrightness(GameResources*, int, int);
 int IsSubBrightnessTransitionActive(GameResources*);
 extern "C" void func_0204b11c(unsigned char*, int);
@@ -77,17 +76,17 @@ extern char data_020f129e[], data_020f12b2[];
 #endif
 
 // USA: func_0208cb08
-extern "C" ARM void func_0208cb08(Struct_0208cb08_5* arg0) {
-    if (arg0->unknown_d2_ < 0) return;
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    GameResources* var1 = (GameResources*)func_0200fb8c((int*)GameState::GetInstance());
-    if (arg0->unknown_d5_ == 0) {
-        SetFlags00(var1, 0x6000);
-        func_020466e4(func_020d6c00(), 1);
-        Struct_0208cb08* var2 = func_02094a00();
-        int var3 = 0x67;
-        if (func_02046b24((Struct_02015438**)var1->unknown_ptr_array_36fc[0]) != 0x2d) {
-            if (arg0->unknown_d2_ < 0) var3 = 0x32;
+extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
+    if (object->target < 0) return;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GameResources* resources = GameState::GetInstance()->GetResources();
+    if (object->state == 0) {
+        SetFlags00(resources, 0x6000);
+        OrBitsIntoField0_020466e4(GetDataPtr02114e04_020d6c00(), 1);
+        FontBankLoader* global = GetGlobal02109400_02094a00();
+        int notification = 0x67;
+        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->unknown_ptr_array_36fc[0]) != 0x2d) {
+            if (object->target < 0) notification = 0x32;
             else {
                 int var4 = arg0->unknown_d2_ / 20;
                 if (var4 > 9) var4 = 9;

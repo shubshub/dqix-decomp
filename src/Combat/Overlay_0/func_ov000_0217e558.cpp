@@ -53,15 +53,14 @@ struct Struct_ov000_0217e558 {
     unsigned char unknown_1d74_[5];
     unsigned char unknown_1d79_;
 };
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_0205def8(Struct_0205def8*, int, int);
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-extern "C" GameResources* func_0200fb8c(int*);
-extern "C" Struct_ov000_0217e558_2* func_ov017_021b8468(void*);
-extern "C" int func_ov000_0217c594(Struct_ov000_0217e558*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" Struct_ov000_0217e558_5* func_ov000_02161318(Struct_ov000_0217e558*, int);
-extern "C" void func_ov000_02170db0(Struct_ov000_0217e558_5*);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+extern "C" ResourceE558* func_ov017_021b8468(void*);
+extern "C" int func_ov000_0217c594(BattleE558*, int);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+extern "C" ActorE558* func_ov000_02161318(BattleE558*, int);
+extern "C" void func_ov000_02170db0(ActorE558*);
 
 extern "C" Struct_ov000_0217e558_4* func_02079e2c(char*, int);
 extern "C" void func_ov000_02175b54(Struct_ov000_0217e558*);
@@ -80,29 +79,29 @@ extern int data_ov000_02184294[3];
 #endif
 
 // USA: func_ov000_0217e558
-extern "C" ARM void func_ov000_0217e558(Struct_ov000_0217e558* arg0, int arg1, int arg2) {
-    arg0->unknown_1d72_ |= 0x100;
-    arg0->unknown_1d6d_ = func_0205d794(&arg0->unknown_188_.unknown_0_);
-    func_0205def8(&arg0->unknown_188_.unknown1_0_, 1, 0x18);
-    func_0205deb4(&arg0->unknown_188_.unknown2_0_, 0x18, 0);
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = func_0200fb8c((int*)var0);
-    if (func_ov017_021b8468(PTR3718(var1))->unknown_7712_ != -1 || !func_ov000_0217c594(arg0, 5)) return;
-    arg0->unknown_956_ = 0;
-    func_0205eaa0(&data_02108760, 1, 0);
-    if ((unsigned short)arg0->unknown_10_[arg0->unknown_1d6d_] == 0) {
-        arg0->unknown_1d68_++;
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 100;
-        Struct_ov000_0217e558_3* var2 = (Struct_ov000_0217e558_3*)func_02010828(var0);
-        unsigned char var3 = var2->unknown_f7c_;
-        for (unsigned char var4 = 0; var4 < var3; var4++) {
-            Struct_ov000_0217e558_5* var5 = func_ov000_02161318(arg0, var2->unknown_f78_[var4]);
-            if (var5) {
-                var5->inline_ov000_0217e558_3(var5->inline_ov000_0217e558());
-                var5->unknown_26_ = 0;
-                var5->inline_ov000_0217e558_4(var5->inline_ov000_0217e558_2());
-                var5->unknown_10_[var5->unknown_18_] = 100;
-                func_ov000_02170db0(var5);
+extern "C" ARM void func_ov000_0217e558(BattleE558* battle, int arg1, int arg2) {
+    battle->flags |= 0x100;
+    battle->selected = GetActiveScaledSum0205d794(&battle->list.sums);
+    SetElementFlag0x20ByKey0205def8(&battle->list.flags, 1, 0x18);
+    SetElementFieldC2_0205deb4(&battle->list.fields, 0x18, 0);
+    GameState* game = GameState::GetInstance();
+    GameResources* data = game->GetResources();
+    if (func_ov017_021b8468(PTR3718(data))->selected != -1 || !func_ov000_0217c594(battle, 5)) return;
+    battle->field956 = 0;
+    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    if ((unsigned short)battle->keys[battle->selected] == 0) {
+        battle->actionIndex++;
+        battle->actions[battle->actionIndex] = 100;
+        PartyEffectsE558* party = (PartyEffectsE558*)GetPtrField0x2a04_02010828(game);
+        unsigned char count = party->count;
+        for (unsigned char i = 0; i < count; i++) {
+            ActorE558* actor = func_ov000_02161318(battle, party->members[i]);
+            if (actor) {
+                actor->SetTarget(actor->GetTarget());
+                actor->value = 0;
+                actor->SetAlternateTarget(actor->GetAlternateTarget());
+                actor->actions[actor->actionIndex] = 100;
+                func_ov000_02170db0(actor);
             }
         }
     } else {

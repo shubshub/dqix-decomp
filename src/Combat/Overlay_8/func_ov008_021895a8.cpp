@@ -126,23 +126,22 @@ extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, 
 extern "C" void func_ov008_0218b240(void* arg0);
 extern "C" void func_ov008_0218aa24(void* arg0);
 
-extern "C" char* func_0200fb8c(int* arg0);
-extern "C" int func_02046b08(void** arg0);
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" Struct_ov005_0215840c_2* func_02053c6c(unsigned char* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int);
-extern "C" void func_0204b12c(Struct_0204b12c* arg0, SafeAllocator* arg1);
-extern "C" void func_0204b5e8(Struct_02020cb8_5* arg0, int, int);
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void*);
-extern "C" void func_0204c7a8(Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
-extern "C" void func_0205cf78(Struct_0205cf78* arg0, Struct_0205cf78_2* arg1, unsigned char arg2);
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" void func_0205a234(Struct_02043368* arg0);
-extern "C" void func_0205a444(char* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+int IsField0Null_02046b08(void** field);
+unsigned int* GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+MessageSystem* GetGlobalField0x1c020421a0();
+PartyMemberData* GetFieldAt0x150_02053c6c(unsigned char* member);
+void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* background, int);
+void AllocateAndClearBuffer0204b12c(AllocTarget0204b12c* background, SafeAllocator* allocator);
+void DispatchViaTable0204b5e8(Obj0204b5e8* background, int, int);
+void FlushAndDispatchList0204b0e8(List0204b0e8* background, void*);
+void AllocateBuffer0204c7a8(Obj0204c7a8* canvas, SafeAllocator* allocator, int pixels, unsigned int size);
+void LinkArrayPrevPointers0205cf78(Struct_0205cf78* window, Elem_0205cf78* canvases, unsigned char count);
+void Init0205a198(Struct0205a198* sprite);
+void ClearField0And40205a234(ClearTarget0205a234* list);
+void InitStruct0205a444(char* renderer);
+int CountActiveEntries(ActiveEntry02046900* archive);
+void* FindRecordByIndex(Rec020467f0* archive, int index, void** name, int* size);
 
 extern char data_ov008_0218b4c8[];
 extern char data_ov008_0218b4df[];
@@ -216,12 +215,12 @@ struct Struct_ov008_02188f5c_3
 // USA: func_ov008_021895a8
 extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
 {
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = func_0200fb8c((int*)var0);
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    func_02094a00();
-    signed char var3 = arg0->unknown_e9a_;
-    if (var3 == 0)
+    GameState* gameState = GameState::GetInstance();
+    char* resources = (char*)gameState->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GetGlobal02109400_02094a00();
+    signed char step = self->step_;
+    if (step == 0)
     {
         if (!func_02046b08(*(void***)(var1
 #if defined(jpn)

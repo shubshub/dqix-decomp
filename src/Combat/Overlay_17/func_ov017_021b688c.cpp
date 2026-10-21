@@ -41,11 +41,10 @@ struct Struct_ov017_021b688c_2 {
     char unknown_21_[3];
     Struct_ov017_021b688c* unknown_24_;
 };
-struct Struct_ov000_02175808_4 { char unknown_0_[0xf78]; signed char unknown_f78_[4]; unsigned char unknown_f7c_; };
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" int func_0200fb8c(int*);
-extern "C" int func_020100f8(char*);
-extern "C" void func_020a28a0(unsigned char*, unsigned char);
+struct PartySlots { char pad_0[0xf78]; signed char slots[4]; unsigned char count; };
+void CancelPendingAction020397cc(Obj020397cc*, int);
+int GetFieldIfFlag4_020100f8(char*);
+void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
 extern "C" void func_020a0cc4(int);
 extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
 extern AllocatorUnion data_02114e20;
@@ -67,14 +66,14 @@ extern "C" void* func_02010828(GameState*);
 extern "C" void func_0206e424(void*, int);
 
 // USA: func_ov017_021b688c
-extern "C" ARM void func_ov017_021b688c(Struct_ov017_021b688c_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_02018300_3* var1 = (Struct_02018300_3*)var0->GetUnknownGameObject();
-    func_020397cc(var1, 1);
-    GameResources* var2 = (GameResources*)func_0200fb8c((int*)var0);
-    SetFlags04(var2, 0xc0);
-    func_020a28a0((unsigned char*)func_020100f8((char*)var0), 1);
-    if (arg0->unknown_1d_ == 0) {
+extern "C" ARM void func_ov017_021b688c(MenuWork* work) {
+    GameState* game = GameState::GetInstance();
+    Obj020397cc* object = (Obj020397cc*)game->GetUnknownGameObject();
+    CancelPendingAction020397cc(object, 1);
+    GameResources* resources = game->GetResources();
+    SetFlags04(resources, 0xc0);
+    SetFlagsAt0x244_020a28a0((unsigned char*)GetFieldIfFlag4_020100f8((char*)game), 1);
+    if (work->state == 0) {
         func_020a0cc4(0x1b800);
         void* var3 = func_02012d88(&data_02114e20, 0x1b800);
         if (!var3) {

@@ -42,15 +42,14 @@ extern Type_02000c9c_11 data_020f079c[2];
 #else
 extern Type_02000c9c_11 data_020f08b8[2];
 #endif
-extern "C" void func_0205c904(unsigned char*, int);
-extern "C" int func_0205cde8(unsigned char*);
-extern "C" void func_0205cd94(unsigned char*);
-extern "C" int func_020100f8(char*);
-extern "C" int func_0200fb8c(int*);
-extern "C" int func_020a27c4(Struct_020676e0*);
-extern "C" int func_ov017_021a4e70(unsigned char*);
-extern "C" int func_0205cecc(void*);
-extern "C" int func_0205cb64(void*);
+void SetupAndDispatch0205c904(unsigned char*, int);
+int CheckGlobalObjState2AndInit0205cde8(unsigned char*);
+void InitGlobalObjAndSelfPointer0205cd94(unsigned char*);
+int GetFieldIfFlag4_020100f8(char*);
+int GetIntAt0x23c(IntField0x23c_020a27c4*);
+int IsFieldNotPositive_021a4e70(unsigned char*);
+int GetScaledSumIfActive0205cecc(void*);
+int CallFunc0205c570AtField0x1c_0205cb64(void*);
 
 // USA: func_020676e0
 extern "C" ARM void func_020676e0(Struct_020676e0_4* arg0, int arg1) {
@@ -61,19 +60,19 @@ extern "C" ARM void func_020676e0(Struct_020676e0_4* arg0, int arg1) {
         func_0205cd94(arg0->unknown_90_);
         return;
     }
-    int var0 = 1;
-    bool var1 = g_keyManager.TestKeysPressed(0x401) != 0;
-    bool var2 = g_keyManager.TestKeysPressed(2) != 0;
-    GameState* var3;
-    unsigned char* var4;
-    int var5 = arg0->unknown_98c_;
-    var3 = GameState::GetInstance();
-    Struct_020676e0* var6 = (Struct_020676e0*)func_020100f8((char*)var3);
-    var4 = (unsigned char*)func_0200fb8c((int*)var3);
-    if (var5 != 1 && arg0->unknown_19d2_) {
-        if (var6) {
-            if ((var6->unknown_244_ & 2) || !func_020a27c4(var6))
-                var1 |= g_keyManager.TestKeysPressed(0x200);
+    int enabled = 1;
+    bool pressed = g_keyManager.TestKeysPressed(0x401) != 0;
+    bool cancelled = g_keyManager.TestKeysPressed(2) != 0;
+    GameState* game;
+    unsigned char* resource;
+    int mode = state->mode;
+    game = GameState::GetInstance();
+    IntField0x23c_020a27c4* field = (IntField0x23c_020a27c4*)GetFieldIfFlag4_020100f8((char*)game);
+    resource = (unsigned char*)(int)game->GetResources();
+    if (mode != 1 && state->alternateInput) {
+        if (field) {
+            if ((field->flags & 2) || !GetIntAt0x23c(field))
+                pressed |= g_keyManager.TestKeysPressed(0x200);
         } else {
             var1 |= g_keyManager.TestKeysPressed(0x200);
         }

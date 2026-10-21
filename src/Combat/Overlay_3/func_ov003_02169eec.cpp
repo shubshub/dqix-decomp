@@ -31,31 +31,31 @@ extern "C" int func_ov003_02169674(void* arg0, int arg1, int arg2, void* arg3);
 extern "C" void func_0205bb04(void* arg0, int arg1);
 extern "C" int func_0205bf58(void* arg0, int arg1);
 
-extern "C" void func_0205cef8(void* arg0);
-extern "C" void func_0205cf04(void* arg0);
-extern "C" void func_0205bbcc(Struct_0205bbcc* arg0);
-extern "C" void func_0205ba68(Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bcdc(Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0205bd58(Struct_0205bd58* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_ov003_0216a85c(Struct_ov003_02169eec_2* arg0);
-extern "C" unsigned char* func_0205d8c4(Struct_0205d81c* arg0);
-extern "C" void func_0204f138(unsigned char* arg0, unsigned char** arg1, unsigned char** arg2, unsigned char** arg3,
-                              unsigned char** arg4);
-extern "C" void func_0205bc24(void* arg0, int arg1);
-extern "C" int func_0205bc2c(Struct_0205bc2c*, int);
-extern "C" int func_0205bd04(Struct_0205bd04* arg0);
-extern "C" int func_0205bafc(void* arg0);
-extern "C" void func_ov003_02169658(void* arg0);
-extern "C" void func_0205bc10(Struct_0205bc10* arg0);
-extern "C" int func_0205d794(Struct_0205c570* arg0);
-extern "C" void func_ov003_021694b8(void* arg0, int arg1);
-extern "C" void func_0205bf3c(Struct_0205bf3c* arg0);
-extern "C" int func_0205bb84(Struct_0205bb84* arg0);
-extern "C" int func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205cf10(void* arg0);
-extern "C" void func_0205cf1c(Struct_0205cf1c* arg0);
+void SetChannelAFlag0205cef8(void* chan);
+void SetChannelBFlag0205cf04(void* chan);
+void Init0205bbcc(Struct_0205bbcc* obj);
+void SetupPointerTable0205ba68(Struct_0205ba68* obj, int a, int b, int c);
+void SetField0AndPropagate0205bacc(Node0205bacc* obj, int v);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc* obj, int v);
+void SetFields0205bd58(Struct_0205bd58* obj, int a, int b, int c, int d, int e);
+void ClearFields_0216a85c(S0216a85c* obj);
+unsigned char* FindElementForFieldB0_0205d8c4(Struct_0205d81c* chan);
+void GetFourSubstructPointers_0204f138(unsigned char* elem, unsigned char** a, unsigned char** b, unsigned char** c,
+                              unsigned char** d);
+void SetFieldAt0x30_0205bc24(void* obj, int v);
+int UpdateActiveState0205bc2c(Struct_0205bc2c*, int);
+int GetScaledSumIfActive0205bd04(Struct_0205bd04* obj);
+int GetField0_0205bafc(void* obj);
+void ClearFlagFields_02169658(void* self);
+void ClearBytes0x4cTo0x4e(Struct_0205bc10* obj);
+int GetActiveScaledSum0205d794(Struct_0205c570* chan);
+void UpdateEntryAndField4ea_021694b8(void* self, int v);
+void ResetState0205bf3c(Struct_0205bf3c* obj);
+int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
+int NormalizeField5_0200fb08(Struct0200fb08* gs);
+void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void ClearChannelAFlag0205cf10(void* chan);
+void ClearFlagByte0205cf1c(Struct0205cf1c* chan);
 
 extern unsigned char data_ov003_0217f544[];
 extern unsigned char data_ov003_0217f545[];
@@ -284,14 +284,14 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 g_keyManager.TestKeysReleased(0x40) || g_keyManager.TestKeysHeld(0x80) ||
                 g_keyManager.TestKeysPressed(0x80) ||
                 g_keyManager.TestKeysReleased(0x80)) {
-                func_0205bf3c((Struct_0205bf3c*)((char*)arg0 + Enum_ov003_02169eec_312));
-                int var24 = var8[var7];
-                int var25 = func_0205bafc(arg0->unknown_4fc_);
-                func_0205bb04(arg0->unknown_4fc_, var25 - 1 - var8[var7]);
-                if (func_0205bf58(arg0->unknown_4fc_, arg1) != 0) {
-                    var8[var7] = var25 - 1 - func_0205bb84((Struct_0205bb84*)arg0->unknown_4fc_);
-                    if (var24 != var8[var7]) {
-                        arg0->unknown_4ea_ = 1;
+                ResetState0205bf3c((Struct_0205bf3c*)((char*)self + kResetOffset));
+                int old = cells[cur];
+                int n = GetField0_0205bafc(self->list);
+                func_0205bb04(self->list, n - 1 - cells[cur]);
+                if (func_0205bf58(self->list, sb) != 0) {
+                    cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
+                    if (old != cells[cur]) {
+                        self->code = 1;
                     }
                 }
             } else {

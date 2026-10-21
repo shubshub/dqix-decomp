@@ -17,6 +17,8 @@ Decided table, and the local pre-commit hook runs it.
   the `_` becomes `::`, giving `CharacterCreationUI::LoadSlotLayout()`.
 - **Types:** use the prefix of the header they live in. Character creation types are `Creation...`, like
   `CreationNavigation` and `CreationSlotLayout`.
+- **Classes that already exist** (like `GameState` in `include/GameState/GameState.h`): make the function a real
+  member now, for example `GameState::GetResources()`, instead of `GameState_GetResources`.
 - **Data:** `Owner_camelCaseName`, for example `CharacterCreationUI_slotLayouts`.
 - **Origin comment:** every renamed function gets this directly above it:
   `// Overlay N, originally func_... (USA/EUR addr, JPN addr)`. Use `Main` for arm9 main functions.
@@ -29,26 +31,50 @@ Decided table, and the local pre-commit hook runs it.
 
 | Name | Original | Overlay | USA/EUR | JPN | What it does |
 |---|---|---|---|---|---|
+| `GameState::GetResources` | `GetWord0x0_0200fb8c` | Main | `0x0200fb8c` (EUR `0x0200fb9c`) | `0x0200f9e8` | Returns the game state's `pResources_` (its first field). A real member of `GameState`; its 104 callers use `->GetResources()` |
+| `CharacterCreationUI_HandleInput` | `func_ov009_02188ee8` | 9 | `0x02188ee8` | `0x02189e04` | Each tab's per-frame input: stylus and D-pad, stores the tab's choice, applies a change; returns -1 (nothing), -2 (confirm), -3 (back) or 101–108 (go to tab 1–8) |
+| `GridCursor_GetSelectedIndex` | `ComputeScaledSum0205bb84` | Main | `0x0205bb84` (EUR `0x0205bb94`) | `0x0205cee4` | Returns the selected item's index: `row × columns + column` plus the page offset. Used by menus across the game (26 files) |
 | `CharacterCreationUI_ResetTargetLayout` | `ResetFields021847c4` | 9 | `0x021847c4` | `0x02185828` | Sets every field of the target `CreationSlotLayout` to -1 before a tab's layout is loaded into it |
 | `CharacterCreationUI_HandleGenderSelection` | `func_ov009_021863d0` | 9 | `0x021863d0` | `0x02187500` | Gender tab handler (tab 1), run every frame by the tab table |
 | `CharacterCreationUI_ApplyChoice` | `func_ov009_02188944` | 9 | `0x02188944` | `0x02189704` | Applies the current tab's choice to the preview models |
 | `CharacterCreationUI_SlotToStyleIndex` | `func_ov009_02188b14` | 9 | `0x02188b14` | `0x021898cc` | Converts a face or hairstyle slot into the style number; the order depends on gender |
 | `CharacterCreationUI_GetBodyDimensions` | `GetEntryPair02188bf8` | 9 | `0x02188bf8` | `0x021899b0` | Looks up a body type's width and height for the current gender |
 | `CharacterCreationUI_SetupSlotNavigation` | `func_ov009_02188c2c` | 9 | `0x02188c2c` | `0x02189af0` | Sets up cursor movement over the current tab's slots (grid size, count, starting slot) |
+| `CharacterCreationUI_MoveCursorToSlot` | `func_ov009_02188e70` | 9 | `0x02188e70` | `0x02189d30` | Places and sizes the highlight box on a slot (column = slot % columns, row = slot / columns), with no slide from the old position |
 | `CharacterCreationUI_LoadSlotLayout` | `func_ov009_02188d9c` | 9 | `0x02188d9c` | `0x02189c60` | Copies the current tab's entry from `CharacterCreationUI_slotLayouts` into `editor->grid` |
-| `applyModelColors` | `func_ov023_021e540c` | 23 | `0x021e540c` | `0x021e55f0` | Writes a character model's hair, skin and eye palettes into VRAM |
-| `setCharacterScale` | `func_ov023_021e5e68` | 23 | `0x021e5e68` | `0x021e604c` | Scales a character model's parts by body width and height, keeping the head and hair at normal size |
-| `clearModelPart` | `func_ov023_021e6158` | 23 | `0x021e6158` | `0x021e633c` | Marks one part of a character model as having no model loaded |
+| `CharacterModel_ApplyColors` | `func_ov023_021e540c` | 23 | `0x021e540c` | `0x021e55f0` | Writes a character model's hair, skin and eye palettes into VRAM |
+| `CharacterModel_SetScale` | `func_ov023_021e5e68` | 23 | `0x021e5e68` | `0x021e604c` | Scales a character model's parts by body width and height, keeping the head and hair at normal size |
+| `CharacterModel_InvalidatePart` | `func_ov023_021e6158` | 23 | `0x021e6158` | `0x021e633c` | Sets one part's loaded model ID to -1, so it reads as having nothing loaded until the next rebuild |
 
-The three overlay 23 names predate the `Owner_MethodName` convention. Once the character model type is
-named, they're expected to become `CharacterModel_ApplyColors`, `CharacterModel_SetScale` and
-`CharacterModel_ClearPart`.
+The `CharacterModel_` functions belong to the character model in overlay 23 (10 `Object3D` parts,
+`0xc20` bytes), which has no shared type yet; its per-file copies are named like `CharacterModel_021e5974`.
+
+`GridCursor` is the generic menu grid cursor in main, used by menus across the game (character creation's copy is
+`navigation`). Its other functions are still placeholders: `Init0205bef8`, `SetupPointerTable0205ba68`,
+`SetField0AndPropagate0205bacc`, `GetField0_0205bafc`, `func_0205bb04`, `func_0205bf58`.
 
 ### Types
 
 | Name | Original | Where | What it is |
 |---|---|---|---|
 | `CreationSlotLayout` | `CreationChoiceGrid`, `Struct021847c4` | `include/Resource/CreationSlotLayout.h` | Where a tab's slots sit on the touchscreen: `x, y, width, height, stepX, stepY, columns, rows` |
+
+### Constants
+
+| Name | Original | Where | What it is |
+|---|---|---|---|
+| `CreationFlag` | (none) | `include/Resource/CharacterCreationUI.h` | Enum of `CharacterCreationUI::flags` bits whose meaning is known |
+| `CreationFlag_StylusRotation` | `0x1` | same | The preview model can be spun with the stylus; set once a tab's fade-in finishes |
+| `CreationFlag_ChoiceChanged` | `0x10` | same | The input handler stored a different choice this frame |
+| `CreationFlag_ConfirmTouched` | `0x20` | same | The confirm button was touched this frame (cleared at the start of each input call) |
+| `CreationFlag_BackTouched` | `0x40` | same | The back button was touched this frame (cleared at the start of each input call) |
+| `CreationFlag_TabLoading` | `0x80` | same | Set on going to a tab (`SetStatValue021855dc`), cleared by `func_ov009_02184e58` once the tab's graphics have loaded |
+
+### Macros
+
+| Name | Original | In | What it does |
+|---|---|---|---|
+| `MOVE_CURSOR_TO_TAB_ICON` | `TAB_CURSOR` | `CharacterCreationUI_HandleInput` (both halves) | Puts the 16×16 highlight on tab icon N in the top row (`x = 0x78 + N × 16`, `y = 8`) |
 
 ### Data
 
@@ -83,8 +109,6 @@ named, they're expected to become `CharacterModel_ApplyColors`, `CharacterModel_
 | `SyncEntryPairAndRefreshFlags_02188454` | 9 | `0x02188454` | Swaps the two preview models once the hidden one has loaded | `CharacterCreationUI_SwapPreviewModels` |
 | `UpdateFlag021885b8` | 9 | `0x021885b8` | Starts rebuilding the hidden preview model when flag 2 is set | `CharacterCreationUI_RebuildNextModel` |
 | `func_ov009_02188604` | 9 | `0x02188604` | Preview model rotation, including dragging with the stylus | `CharacterCreationUI_UpdatePreviewRotation` |
-| `func_ov009_02188e70` | 9 | `0x02188e70` | Moves the highlight box onto a slot | `CharacterCreationUI_MoveCursorToSlot` |
-| `func_ov009_02188ee8` | 9 | `0x02188ee8` | Reads input on the current tab; returns -1, -2 (confirm), -3 (back) or 101–108 (tab tapped) | `CharacterCreationUI_HandleInput` |
 | `func_ov009_02189854` | 9 | `0x02189854` | Turns a touch point into a slot, button or tab | `CharacterCreationUI_SlotFromTouch` |
 | `func_ov023_021e5020` | 23 | `0x021e5020` | Per-frame character model update: polls loads, applies colours once loaded | `CharacterModel_Update` |
 | `func_ov023_021e5974` | 23 | `0x021e5974` | Loads a character model's part files from `data/pack_lv5/chara_pd.gp2` | `CharacterModel_Load` |

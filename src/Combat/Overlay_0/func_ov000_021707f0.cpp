@@ -59,11 +59,10 @@ struct Struct_ov000_021707f0 {
     float unknown_434_;
 };
 
-extern "C" int func_0200fb8c(int*);
-extern "C" void* func_ov000_02160f08(void*);
-extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c*, int);
-extern "C" int func_0204c7cc(unsigned char*);
-extern "C" void func_0204c610(Struct_0204c610*, int, short*, short*, short*, short*);
+void* GetOffsetPtr02160f08(void*);
+Elem_0205d81c* FindElementByC40205d81c(Struct_0205d81c*, int);
+int IsField0x9cEqual3_0204c7cc(unsigned char*);
+void GetFourShortsAtIndex(ShortArrays0204c610*, int, short*, short*, short*, short*);
 extern "C" void* func_ov017_021b8468(void*);
 extern "C" double func_02009424(double);
 extern "C" void func_0205ac40(void*, void*);
@@ -87,8 +86,8 @@ extern "C" ARM void func_ov000_021707f0(Struct_ov000_021707f0* arg0) {
     if (!var1) {
         return;
     }
-    GameResources* var2 = (GameResources*)func_0200fb8c((int*)var1);
-    if (!var2 || !var2->unknown_ptr_3718) {
+    GameResources* resources = state->GetResources();
+    if (!resources || !resources->unknown_ptr_3718) {
         return;
     }
     void* var3 = func_ov017_021b8468(var2->unknown_ptr_3718);

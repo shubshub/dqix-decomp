@@ -569,7 +569,7 @@ src/Combat/Overlay_3/func_ov003_02158184.cpp:
     complete
     .text start:0x02158184 end:0x02158214
 
-src/Combat/Overlay_3/func_ov003_0215445c.cpp:
+src/Combat/Overlay_3/HandleStateTransition_0215445c.cpp:
     complete
     .text start:0x0215445c end:0x021544ec
 
@@ -685,7 +685,7 @@ src/Combat/Overlay_3/func_ov003_02155208.cpp:
     complete
     .text start:0x02155208 end:0x021552b8
 
-src/Combat/Overlay_3/func_ov003_02160a68.cpp:
+src/Combat/Overlay_3/CheckStateAtCoords_02160a68.cpp:
     complete
     .text start:0x02160a68 end:0x02160b2c
 
@@ -1321,7 +1321,7 @@ src/Combat/Overlay_3/func_ov003_02175f20.cpp:
     complete
     .text start:0x02175f20 end:0x02175f90
 
-src/Combat/Overlay_3/func_ov003_02158214.cpp:
+src/Combat/Overlay_3/HandleStateTransition3_02158214.cpp:
     complete
     .text start:0x02158214 end:0x02158334
 

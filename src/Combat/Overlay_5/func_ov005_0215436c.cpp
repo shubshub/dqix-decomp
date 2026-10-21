@@ -10,27 +10,26 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_0200fb8c(int*);
-extern "C" void func_ov005_02155424(void* arg0);
-extern "C" void func_ov005_02155544(void* arg0);
-extern "C" void func_ov005_021555c0(void* arg0);
-extern "C" void func_ov005_021571d0(void* arg0);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-extern "C" char* func_020421a0();
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int* func_0203b628();
-extern "C" void func_0203b678(int* arg0, int arg1, int arg2);
-extern "C" void func_0203b66c(char*);
-extern "C" void func_0203b634(char*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-struct Struct_0204af38;
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
+extern "C" void func_ov005_02155424(void* self);
+extern "C" void func_ov005_02155544(void* self);
+extern "C" void func_ov005_021555c0(void* self);
+extern "C" void func_ov005_021571d0(void* self);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" void func_020dfec0(void* dest, void* allocator, void* fileData, unsigned int size);
+char* GetGlobalField0x1c020421a0();
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fog);
+int* GetData02105254_0203b628();
+void SetupBankModeAndTransfer_0203b678(int* obj, int a, int b);
+void TailForward0203b66c(char*);
+void ClearThreeRegions0203b634(char*);
+void SetWord0x18ClearByte0x1f_0204b11c(unsigned char*, int);
+extern "C" void func_0204b5b4(void* obj, int value);
+struct Obj0204b5e8;
+void DispatchViaTable0204b5e8(Obj0204b5e8*, int, int);
+struct AllocTarget0204b12c;
+void AllocateAndClearBuffer0204b12c(AllocTarget0204b12c*, SafeAllocator*);
+struct Foo0204af38;
+void AllocateArray0204af38(Foo0204af38*, int, SafeAllocator*);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 struct Struct_0201099c_3;
 extern "C" const char* func_020e0434(Struct_0201099c_3*, int);
@@ -167,9 +166,9 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         return 1;
     }
 
-    GameState* var11 = GameState::GetInstance();
-    int var12 = func_0200fb8c((int*)var11);
-    BackgroundLoader* var13 = BackgroundLoader::GetInstance();
+    GameState* gs = GameState::GetInstance();
+    int word = (int)gs->GetResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (arg0->unknown_3dc4_ == 0) {
         func_ov005_02155424(arg0);

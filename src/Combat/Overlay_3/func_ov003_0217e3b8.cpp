@@ -22,13 +22,12 @@ struct Struct_ov003_0217e3b8
     void* unknown_20_;
 };
 
-extern "C" unsigned int* func_0200fb8c(int* arg0);
-extern "C" char* func_020100f8(char* arg0);
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" void func_020a0cc4(unsigned int arg0);
+char* GetFieldIfFlag4_020100f8(char* gameState);
+void CancelPendingAction020397cc(Obj020397cc* obj, int arg1);
+void SetByteField0x253_020397c0(void* obj);
+void SetFlagsAt0x244_020a28a0(unsigned char* camera, unsigned char flags);
+void ClearFlagBits_020a28b0(unsigned char* camera, int flags);
+extern "C" void func_020a0cc4(unsigned int size);
 extern "C" void func_020a0c0c(void);
 extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
 extern "C" void func_020a1df8(int arg0);
@@ -46,16 +45,16 @@ extern AllocatorUnion data_02114e20;
 // USA: func_ov003_0217e3b8
 extern "C" ARM void func_ov003_0217e3b8(Struct_ov003_0217e3b8* arg0)
 {
-    GameState* var0 = GameState::GetInstance();
-    unsigned int* var1 = func_0200fb8c((int*)var0);
-    GameObject* var2 = var0->GetUnknownGameObject();
-    char* var3 = func_020100f8((char*)var0);
-    SetFlags04((GameResources*)var1, 0xc0);
-    func_020397cc((Struct_02018300_3*)var2, 1);
-    func_020a28a0((unsigned char*)var3, 3);
-    int var4 = var0->GetTickCount();
-    if (var4 < 0)
-        var4 = 1;
+    GameState* gameState = GameState::GetInstance();
+    unsigned int* resources = (unsigned int*)gameState->GetResources();
+    GameObject* object = gameState->GetUnknownGameObject();
+    char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
+    SetFlags04((GameResources*)resources, 0xc0);
+    CancelPendingAction020397cc((Obj020397cc*)object, 1);
+    SetFlagsAt0x244_020a28a0((unsigned char*)camera, 3);
+    int ticks = gameState->GetTickCount();
+    if (ticks < 0)
+        ticks = 1;
 
     if (arg0->unknown_8_ == 0)
     {

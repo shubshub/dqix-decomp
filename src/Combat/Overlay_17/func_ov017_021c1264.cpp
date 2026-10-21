@@ -12,13 +12,12 @@ enum { Enum_ov017_021c1404_147456 = 0x24000, Enum_ov017_021c1404_828 = 0x33c, En
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_0200fb8c(int* arg0);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_020a1df8(int arg0);
-extern "C" void func_020a1ef0(int arg0);
+int GetFieldIfFlag4_020100f8(char* obj);
+void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
+void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
+void SetByteField0x253_020397c0(void* obj);
+void PushInputLogA_020a1df8(int id);
+void PushInputLogB_020a1ef0(int id);
 
 struct Struct_02018300_3;
 extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
@@ -48,15 +47,15 @@ struct Struct_ov017_021c1404 {
 	unsigned char unknown_1e_;
 };
 
-// USA: func_ov017_021c1404
-extern "C" ARM void func_ov017_021c1404(struct Struct_ov017_021c1404* arg0) {
-	GameState* var0 = GameState::GetInstance();
-	int* var1 = (int*)func_0200fb8c((int*)var0);
-	GameObject* var2 = var0->GetUnknownGameObject();
-	int var3 = func_020100f8((char*)var0);
-	SetFlags04((GameResources*)var1, 0xc0);
-	if (var2) {
-		func_020397cc((struct Struct_02018300_3*)var2, 1);
+// USA: func_ov017_021c1404  (semantic: AdvanceEncounterSequenceStep_021c1404)
+extern "C" ARM void func_ov017_021c1404(struct Obj021c1404* obj) {
+	GameState* battle = GameState::GetInstance();
+	int* word0 = (int*)battle->GetResources();
+	GameObject* combatant = battle->GetUnknownGameObject();
+	int fieldVal = GetFieldIfFlag4_020100f8((char*)battle);
+	SetFlags04((GameResources*)word0, 0xc0);
+	if (combatant) {
+		CancelPendingAction020397cc((struct Obj020397cc*)combatant, 1);
 	}
 	func_020a28a0((unsigned char*)var3, 3);
 	unsigned char var4 = arg0->unknown_1c_;
