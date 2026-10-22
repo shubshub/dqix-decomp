@@ -713,7 +713,7 @@ src/Combat/Overlay_3/func_ov003_0216d77c.cpp:
     complete
     .text start:0x0216d77c end:0x0216d7ec
 
-src/Combat/Overlay_3/func_ov003_021714a0.cpp:
+src/Combat/Overlay_3/DispatchOrIssueCommand_021714a0.cpp:
     complete
     .text start:0x021714a0 end:0x02171550
 
@@ -1365,7 +1365,7 @@ src/Combat/Overlay_3/func_ov003_02167370.cpp:
     complete
     .text start:0x02167370 end:0x02167494
 
-src/Combat/Overlay_3/func_ov003_021537d4.cpp:
+src/Combat/Overlay_3/DispatchIndexedMemberFn_021537d4.cpp:
     complete
     .text start:0x021537d4 end:0x0215385c
 

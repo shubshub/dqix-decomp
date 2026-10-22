@@ -20,16 +20,16 @@ public:
 typedef int (Struct_ov023_021fa2f4::*Type_ov023_021fa2f4)(void* script);
 
 extern unsigned int data_ov023_021fff28;
-extern Type_ov023_021fa2f4 data_020e6d5c;
-extern Type_ov023_021fa2f4 data_ov023_021fea0c[4];
-extern Type_ov023_021fa2f4 data_ov023_021fea0c_dup[4];
+extern TextsState_021fa2f4 __ptmf_null;
+extern TextsState_021fa2f4 data_ov023_021fea0c[4];
+extern TextsState_021fa2f4 data_ov023_021fea0c_dup[4];
 
 // USA: func_ov023_021fa2f4
 extern "C" ARM void func_ov023_021fa2f4(Struct_ov023_021fa2f4* arg0, void* arg1)
 {
     if (!(data_ov023_021fff28 & 1))
     {
-        data_ov023_021fea0c_dup[3] = data_020e6d5c;
+        data_ov023_021fea0c_dup[3] = __ptmf_null;
         data_ov023_021fff28 |= 1;
     }
     arg0->unknown_1c_ = (arg0->*data_ov023_021fea0c[arg0->unknown_1c_])(arg1);

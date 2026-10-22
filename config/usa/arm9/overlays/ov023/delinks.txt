@@ -944,7 +944,7 @@ src/Combat/Overlay_23/func_ov023_021f6504.cpp:
     complete
     .text start:0x021f6504 end:0x021f650c
 
-src/Combat/Overlay_23/func_ov023_021f6f90.cpp:
+src/Combat/Overlay_23/DispatchByTableEntry_021f6f90.cpp:
     complete
     .text start:0x021f6f90 end:0x021f7010
 
@@ -1288,7 +1288,7 @@ src/Combat/Overlay_23/func_ov023_021faa5c.cpp:
     complete
     .text start:0x021faa5c end:0x021faa60
 
-src/Combat/Overlay_23/func_ov023_021fa87c.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fa87c.cpp:
     complete
     .text start:0x021fa87c end:0x021fa8fc
 
@@ -1928,31 +1928,31 @@ src/Combat/Overlay_23/func_ov023_021f63f8.cpp:
     complete
     .text start:0x021f63f8 end:0x021f6444
 
-src/Combat/Overlay_23/func_ov023_021f7550.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021f7550.cpp:
     complete
     .text start:0x021f7550 end:0x021f75d0
 
-src/Combat/Overlay_23/func_ov023_021fb680.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fb680.cpp:
     complete
     .text start:0x021fb680 end:0x021fb700
 
-src/Combat/Overlay_23/func_ov023_021fbab0.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fbab0.cpp:
     complete
     .text start:0x021fbab0 end:0x021fbb30
 
-src/Combat/Overlay_23/func_ov023_021fbe70.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fbe70.cpp:
     complete
     .text start:0x021fbe70 end:0x021fbef0
 
-src/Combat/Overlay_23/func_ov023_021fc238.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fc238.cpp:
     complete
     .text start:0x021fc238 end:0x021fc2b8
 
-src/Combat/Overlay_23/func_ov023_021fce38.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fce38.cpp:
     complete
     .text start:0x021fce38 end:0x021fceb8
 
-src/Combat/Overlay_23/func_ov023_021fd238.cpp:
+src/Combat/Overlay_23/DispatchWithLocalTable_021fd238.cpp:
     complete
     .text start:0x021fd238 end:0x021fd2b8
 
@@ -2264,7 +2264,7 @@ src/Combat/Overlay_23/func_ov023_021e6594.cpp:
     complete
     .text start:0x021e6594 end:0x021e66ac
 
-src/Combat/Overlay_23/func_ov023_021dc488.cpp:
+src/Combat/Overlay_23/DispatchByField776_021dc488.cpp:
     complete
     .text start:0x021dc488 end:0x021dc520
 

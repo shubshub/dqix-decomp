@@ -29,9 +29,9 @@ struct Struct_ov002_0216cb18 {
 
 extern Type_ov002_0215bba8 data_ov002_0216d10c[PAGES];
 extern unsigned int data_ov002_0216d3b0[2];
-extern Type_ov002_0215bba8 data_020e6d5c;
-extern Struct_ov002_0216cb18 data_ov002_0216cb18[];
-extern Struct_ov002_0216cb18 data_ov002_0216cb1c[];
+extern PageFn0215bba8 __ptmf_null;
+extern ModePage0215bba8 data_ov002_0216cb18[];
+extern ModePage0215bba8 data_ov002_0216cb1c[];
 
 extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
 extern "C" unsigned char *func_0205d81c(char *arg0, unsigned char arg1);
@@ -68,27 +68,15 @@ extern "C" ARM void func_ov002_0215bba8(Struct_ov002_0215bba8_2 *arg0) {
     }
     memset(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), 0, RG(0x960, 0x800));
     if (!(data_ov002_0216d3b0[0] & 1)) {
-        Type_ov002_0215bba8 var4      = data_020e6d5c;
-        data_ov002_0216d10c[0]  = var4;
-#if defined(jpn)
-        data_ov002_0216d10c[24] = var4;
-        data_ov002_0216d10c[31] = var4;
-        data_ov002_0216d10c[34] = var4;
-        data_ov002_0216d10c[35] = var4;
-        data_ov002_0216d10c[39] = var4;
-        data_ov002_0216d10c[43] = var4;
-        data_ov002_0216d10c[44] = var4;
-        data_ov002_0216d10c[45] = var4;
-        data_ov002_0216d10c[46] = var4;
-#else
-        data_ov002_0216d10c[23] = var4;
-        data_ov002_0216d10c[30] = var4;
-        data_ov002_0216d10c[36] = var4;
-        data_ov002_0216d10c[40] = var4;
-        data_ov002_0216d10c[41] = var4;
-        data_ov002_0216d10c[42] = var4;
-        data_ov002_0216d10c[43] = var4;
-#endif
+        PageFn0215bba8 nul      = __ptmf_null;
+        data_ov002_0216d10c[0]  = nul;
+        data_ov002_0216d10c[23] = nul;
+        data_ov002_0216d10c[30] = nul;
+        data_ov002_0216d10c[36] = nul;
+        data_ov002_0216d10c[40] = nul;
+        data_ov002_0216d10c[41] = nul;
+        data_ov002_0216d10c[42] = nul;
+        data_ov002_0216d10c[43] = nul;
         data_ov002_0216d3b0[0] |= 1;
     }
     int var5 = *(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80));

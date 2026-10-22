@@ -19,8 +19,8 @@ struct Struct_ov024_021f8f20 {
 extern "C" void func_ov024_021f8628(Struct_ov024_021f8f20* arg0, unsigned short arg1, GameObject* arg2, unsigned short* arg3);
 extern "C" void func_ov024_021f7478(Struct_ov024_021f8f20* arg0);
 
-extern Struct_ov024_021ff054 data_ov024_021ff054;
-extern Type_ov024_021f8f20 data_020e6d5c;
+extern PlanTable_021f8f20 data_ov024_021ff054;
+extern PlanFn_021f8f20 __ptmf_null;
 
 // USA: func_ov024_021f8f20
 extern "C" ARM void func_ov024_021f8f20(Struct_ov024_021f8f20* arg0, int arg1, int arg2, unsigned short* arg3) {
@@ -43,13 +43,13 @@ extern "C" ARM void func_ov024_021f8f20(Struct_ov024_021f8f20* arg0, int arg1, i
         func_ov024_021f8628(arg0, arg2, var0, arg3);
         return;
     }
-    arg0->unknown_124_ = 0.5f;
-    arg0->unknown_6_ = var2;
-    func_ov024_021f7478(arg0);
-    Struct_ov024_021ff054 var3 = data_ov024_021ff054;
-    var3.unknown_0_[5] = data_020e6d5c;
-    Type_ov024_021f8f20 var4 = var3.unknown_0_[var2];
-    if (var4 != 0) {
-        (arg0->*var4)(arg2, var0, arg3);
+    obj->weight = 0.5f;
+    obj->mode = mode;
+    func_ov024_021f7478(obj);
+    PlanTable_021f8f20 table = data_ov024_021ff054;
+    table.e[5] = __ptmf_null;
+    PlanFn_021f8f20 fn = table.e[mode];
+    if (fn != 0) {
+        (obj->*fn)(id, combatant, state);
     }
 }

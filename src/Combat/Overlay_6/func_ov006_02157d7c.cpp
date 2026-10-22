@@ -55,10 +55,10 @@ struct Struct_ov006_02157d7c {
     unsigned char unknown_433_;
 };
 
-typedef void (Struct_ov006_02157d7c::*Type_02015554)();
-struct Struct_ov006_021601fc { Type_02015554 unknown_0_[14]; };
-extern struct Struct_ov006_021601fc data_ov006_021601fc;
-extern Type_02015554 data_020e6d5c;
+typedef void (Obj02157d7c::*PMF02157d7c)();
+struct HandlerTable02157d7c { PMF02157d7c e[14]; };
+extern struct HandlerTable02157d7c data_ov006_021601fc;
+extern PMF02157d7c __ptmf_null;
 extern int data_ov006_02160398;
 
 // USA: func_ov006_02157d7c
@@ -147,7 +147,7 @@ extern "C" ARM int func_ov006_02157d7c(struct Struct_ov006_02157d7c* arg0, int a
 
     if ((data_ov006_02160398 & 1) == 0)
     {
-        data_ov006_021601fc.unknown_0_[13] = data_020e6d5c;
+        data_ov006_021601fc.e[13] = __ptmf_null;
         data_ov006_02160398 |= 1;
     }
 

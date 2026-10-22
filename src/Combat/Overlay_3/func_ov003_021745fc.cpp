@@ -69,8 +69,8 @@ extern "C" int func_020e28dc(Struct_020e28dc* arg0);
 extern "C" void func_020e263c(Struct_020e263c_2* arg0, int arg1);
 
 extern unsigned int data_ov003_02180cc8[2];
-extern Type_020200c0 data_020e6d5c;
-extern Type_020200c0 data_ov003_02180aa4[10];
+extern StateFn021745fc __ptmf_null;
+extern StateFn021745fc data_ov003_02180aa4[10];
 
 // USA: func_ov003_021745fc
 extern "C" ARM bool func_ov003_021745fc(Struct_ov003_021745fc_2* arg0, int arg1) {
@@ -110,7 +110,7 @@ extern "C" ARM bool func_ov003_021745fc(Struct_ov003_021745fc_2* arg0, int arg1)
         func_020e263c((Struct_020e263c_2*)arg0->unknown_0_, arg0->unknown_fe0_);
 
     if (!(data_ov003_02180cc8[0] & 1)) {
-        data_ov003_02180aa4[9] = data_020e6d5c;
+        data_ov003_02180aa4[9] = __ptmf_null;
         data_ov003_02180cc8[0] |= 1;
     }
     if (data_ov003_02180aa4[arg0->unknown_103e_] == NULL) {

@@ -38,8 +38,8 @@ struct Struct_ov012_0218b108
     Type_ov012_02185cf8 unknown_0_[16];
 };
 
-extern "C" const Struct_ov012_0218b108 data_ov012_0218b108;
-extern "C" Type_ov012_02185cf8 data_020e6d5c;
+extern "C" const TextTable02185cf8 data_ov012_0218b108;
+extern "C" TextFn02185cf8 __ptmf_null;
 
 static inline Struct_ov012_02185cf8_2* inline_ov012_02185cf8(char* arg0)
 {
@@ -65,13 +65,13 @@ extern "C" ARM void func_ov012_02185cf8(Struct_ov012_02185cf8* arg0)
             return;
         var0 = 1;
     }
-    memset(arg0->unknown_1374_, 0, LOW_REGION(0x800, 0x960));
-    Struct_ov012_0218b108 var1 = data_ov012_0218b108;
-    Type_ov012_02185cf8 var2 = data_020e6d5c;
-    var1.unknown_0_[0] = var2;
-    var1.unknown_0_[15] = var2;
-    if (var1.unknown_0_[arg0->unknown_1371_] != 0)
-        (arg0->*var1.unknown_0_[arg0->unknown_1371_])(arg0->unknown_1374_, var0);
+    memset(self->text_, 0, LOW_REGION(0x800, 0x960));
+    TextTable02185cf8 functions = data_ov012_0218b108;
+    TextFn02185cf8 none = __ptmf_null;
+    functions.functions[0] = none;
+    functions.functions[15] = none;
+    if (functions.functions[self->state_] != 0)
+        (self->*functions.functions[self->state_])(self->text_, hidden);
 #if defined(jpn)
     func_0205d5d0((Struct_0205d5d0*)arg0->unknown_ac_, arg0->unknown_1371_, (int)arg0->unknown_1374_, 0);
 #else

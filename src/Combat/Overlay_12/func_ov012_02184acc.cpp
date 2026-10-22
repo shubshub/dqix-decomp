@@ -125,8 +125,8 @@ extern "C" void func_0205def8(Struct_0205def8* arg0, int arg1, int arg2);
 extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
 extern "C" void func_02043204(char* arg0);
 
-extern "C" const Struct_ov012_0218b188 data_ov012_0218b188;
-extern "C" Type_01ff91ac_5 data_020e6d5c;
+extern "C" const StateTable02184acc data_ov012_0218b188;
+extern "C" StateFn02184acc __ptmf_null;
 
 static inline Struct_ov012_02184acc_3* inline_ov012_02184acc(GameState* arg0)
 {
@@ -136,14 +136,14 @@ static inline Struct_ov012_02184acc_3* inline_ov012_02184acc(GameState* arg0)
 // USA: func_ov012_02184acc
 extern "C" ARM int func_ov012_02184acc(Struct_ov012_02184acc* arg0, int arg1)
 {
-    arg0->unknown_13a4_ = arg1;
-    func_ov023_021e7404(arg0->unknown_d28_, arg1);
-    arg0->unknown_1398_ = func_0205d0e0(arg0->unknown_ac_, arg1);
-    Struct_ov012_0218b188 var0 = data_ov012_0218b188;
-    var0.unknown_0_[16] = data_020e6d5c;
-    if (var0.unknown_0_[arg0->unknown_1371_] != 0)
-        (arg0->*var0.unknown_0_[arg0->unknown_1371_])();
-    func_ov012_02185cf8(arg0);
+    self->unk_13a4 = input;
+    func_ov023_021e7404(self->card_, input);
+    self->unk_1398 = func_0205d0e0(self->window_, input);
+    StateTable02184acc states = data_ov012_0218b188;
+    states.states[16] = __ptmf_null;
+    if (states.states[self->state_] != 0)
+        (self->*states.states[self->state_])();
+    func_ov012_02185cf8(self);
 
     Struct_ov012_02184acc_2* var1 = func_020421a0();
 #if !defined(jpn)

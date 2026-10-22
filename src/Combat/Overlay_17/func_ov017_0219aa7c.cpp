@@ -15,21 +15,21 @@ struct Struct_ov017_0219aa7c { unsigned char unknown_0_, unknown_1_; unsigned sh
 #if defined(jpn)
 #define data_ov017_021d64f4 data_ov017_021d6944
 #endif
-typedef void (GameResources::*Type_02000c9c_15)();
-struct Struct_ov017_021d64f4 { Type_02000c9c_15 unknown_0_[15]; };
-extern const Struct_ov017_021d64f4 data_ov017_021d64f4;
-extern const Type_02000c9c_15 data_020e6d5c;
-extern "C" void* func_020100bc(GameState*);
-extern "C" int func_020535c8(signed char*);
-extern "C" Struct_0203dce4_2* func_0203cf4c();
-extern "C" Struct_0203de84_2* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" void func_020406f8(Struct_0203de84*, Struct_0203de84_2*);
-extern "C" void* func_02040538(Struct_0203e0a0*);
-extern "C" void func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" void func_0203a46c(Struct_0203a46c*, int, int, int);
-extern "C" int func_02046b08(void**);
-extern "C" int func_020479fc(Struct_020479fc*);
-extern "C" unsigned char func_020479b8(Struct_020479b8_3*);
+typedef void (GameResources::*FocusAction0219aa7c)();
+struct FocusActions0219aa7c { FocusAction0219aa7c entries[15]; };
+extern const FocusActions0219aa7c data_ov017_021d64f4;
+extern const FocusAction0219aa7c __ptmf_null;
+void* GetField0x3b0Value_020100bc(GameState*);
+int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
+Node020406f8* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
+void* GetField0xc02040538(S02040538*);
+void ComputeTwoFromVec3_0202ec84(void*, Vec3copy0202ec84*, int*, int*);
+void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
+int IsField0Null_02046b08(void**);
+int GetChainedTableByte_020479fc(ChainRoot*);
+unsigned char GetLinkedFlagByte_020479b8(LookupBase*);
 extern "C" void __clear(void*, unsigned int);
 
 // USA: func_ov017_0219aa7c
@@ -88,13 +88,13 @@ extern "C" ARM void func_ov017_0219aa7c(GameResources* arg0) {
         int var17 = g_touchInput.prevY_;
         if (var5 < var16 && var6 < var17 && var16 < var5 + var14 && var17 < var6 + var15) var13 = 1;
     }
-    if (g_keyManager.TestKeysPressed(1)) var13 = 1;
-    if (var13) {
-        Struct_ov017_021d64f4 var18 = data_ov017_021d64f4;
-        var18.unknown_0_[3] = data_020e6d5c;
-        if (var18.unknown_0_[((Struct_ov017_0219aa7c*)arg0->unknown_36b4_)->unknown_0_] != 0) {
-            (arg0->*var18.unknown_0_[((Struct_ov017_0219aa7c*)arg0->unknown_36b4_)->unknown_0_])();
-            arg0->unknown_42e3_[1] = 0;
+    if (g_keyManager.TestKeysPressed(1)) dispatch = 1;
+    if (dispatch) {
+        FocusActions0219aa7c actions = data_ov017_021d64f4;
+        actions.entries[3] = __ptmf_null;
+        if (actions.entries[((InteractionSelection*)self->interactionSelection)->kind] != 0) {
+            (self->*actions.entries[((InteractionSelection*)self->interactionSelection)->kind])();
+            self->unknown_42e3[1] = 0;
         }
     }
 }

@@ -5,11 +5,11 @@
 extern "C" int func_0205d0e0(void* arg0, int arg1);
 extern "C" int func_ov023_021e2868(void* arg0);
 
-struct Struct_ov003_0217f5c0 { unsigned int unknown_0_[16]; };
-extern struct Struct_ov003_0217f5c0 data_ov003_0217f5c0;
-struct Struct_020e6d5c_17 { unsigned int unknown_0_; unsigned int unknown_4_; };
-extern struct Struct_020e6d5c_17 data_020e6d5c;
-struct Struct_ov003_0216e124 { unsigned int unknown_0_; unsigned int unknown_4_; };
+struct Block16Words0216e124 { unsigned int w[16]; };
+extern struct Block16Words0216e124 data_ov003_0217f5c0;
+struct Pair0216e124 { unsigned int a; unsigned int b; };
+extern struct Pair0216e124 __ptmf_null;
+struct DispatchEntry0216e124 { unsigned int fn; unsigned int locator; };
 
 struct Struct_ov003_0216e124_2 {
     char unknown_0_[1];
@@ -38,13 +38,13 @@ extern "C" ARM int func_ov003_0216e124(struct Struct_ov003_0216e124_2* arg0) {
         }
     }
 
-    struct Struct_ov003_0217f5c0 var1;
-    var1 = data_ov003_0217f5c0;
-    struct Struct_020e6d5c_17* var2 = &data_020e6d5c;
-    unsigned int var3 = var2->unknown_4_;
-    unsigned int var4 = var2->unknown_0_;
-    ((struct Struct_ov003_0216e124*)&var1)[7].unknown_4_ = var3;
-    ((struct Struct_ov003_0216e124*)&var1)[7].unknown_0_ = var4;
+    struct Block16Words0216e124 buf;
+    buf = data_ov003_0217f5c0;
+    struct Pair0216e124* pr = &__ptmf_null;
+    unsigned int tmp1 = pr->b;
+    unsigned int tmp0 = pr->a;
+    ((struct DispatchEntry0216e124*)&buf)[7].locator = tmp1;
+    ((struct DispatchEntry0216e124*)&buf)[7].fn = tmp0;
 
     signed char var5 = arg0->unknown_1_;
     struct Struct_ov003_0216e124* var6 = (struct Struct_ov003_0216e124*)&var1;

@@ -7,8 +7,8 @@ extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
 struct Struct_ov017_021b228c;
 typedef int (Struct_ov017_021b228c::*Type_02000c9c_3)();
 
-extern const Type_02000c9c_3 data_020e6d5c;
-extern Type_02000c9c_3 data_ov017_021d79e0[];
+extern const Handler021b228c __ptmf_null;
+extern Handler021b228c data_ov017_021d79e0[];
 
 extern int data_ov017_021d83f0;
 
@@ -19,7 +19,7 @@ extern "C" ARM void func_ov017_021b228c(unsigned char* arg0) {
         func_020397cc((struct Struct_02018300_3*)var0, 1);
     }
     if (!(data_ov017_021d83f0 & 1)) {
-        data_ov017_021d79e0[8] = data_020e6d5c;
+        data_ov017_021d79e0[8] = __ptmf_null;
         data_ov017_021d83f0 |= 1;
     }
     int var1 = *(int*)(arg0 + 8);

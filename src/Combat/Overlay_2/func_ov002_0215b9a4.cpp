@@ -32,9 +32,9 @@ struct Struct_ov002_0216cae8 {
 
 extern Type_ov002_0215b9a4 data_ov002_0216cfac[Enum_ov002_0215b9a4_44];
 extern unsigned int data_ov002_0216d3b0[2];
-extern Type_ov002_0215b9a4 data_020e6d5c;
-extern Struct_ov002_0216cae8 data_ov002_0216cae8[];
-extern Struct_ov002_0216cae8 data_ov002_0216caec[];
+extern PageFn0215b9a4 __ptmf_null;
+extern ModePage0215b9a4 data_ov002_0216cae8[];
+extern ModePage0215b9a4 data_ov002_0216caec[];
 
 extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
 struct Struct_0205d81c;
@@ -64,8 +64,8 @@ extern "C" ARM void func_ov002_0215b9a4(Struct_ov002_0215b9a4 *arg0, unsigned ch
     }
     memset(arg0->unknown_1bd0_, 0, Enum_ov002_0215b9a4_2400);
     if (!(data_ov002_0216d3b0[1] & 1)) {
-        Type_ov002_0215b9a4 var2      = data_020e6d5c;
-        data_ov002_0216cfac[0]  = var2;
+        PageFn0215b9a4 nul      = __ptmf_null;
+        data_ov002_0216cfac[0]  = nul;
 #if defined(jpn)
         data_ov002_0216cfac[24] = var2;
         data_ov002_0216cfac[31] = var2;

@@ -12396,7 +12396,7 @@ src/Combat/Main/func_02092b34.cpp:
     complete
     .text start:0x02092b34 end:0x02092bcc
 
-src/Combat/Main/func_02092bcc.cpp:
+src/Combat/Main/AdvanceBattlePhaseTimerAndDispatch_02092bcc.cpp:
     complete
     .text start:0x02092bcc end:0x02092cd0
 

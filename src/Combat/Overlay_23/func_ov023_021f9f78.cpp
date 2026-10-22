@@ -38,17 +38,17 @@ struct Struct_ov023_021fd92c
     Type_ov023_021f9f78 unknown_0_[3];
 };
 
-extern Struct_ov023_021fd92c data_ov023_021fd92c;
-extern Type_ov023_021f9f78 data_020e6d5c;
+extern MoveSteps_021f9f78 data_ov023_021fd92c;
+extern MoveStep_021f9f78 __ptmf_null;
 
 // USA: func_ov023_021f9f78
 extern "C" ARM void func_ov023_021f9f78(Struct_ov023_021f9f78* arg0, void* arg1)
 {
-    Struct_ov023_021fd92c var0 = data_ov023_021fd92c;
-    Type_ov023_021f9f78 var1 = data_020e6d5c;
-    var0.unknown_0_[0] = var1;
-    var0.unknown_0_[2] = var1;
-    for (int var2 = 0; var2 < arg0->unknown_20_; var2++)
+    MoveSteps_021f9f78 steps = data_ov023_021fd92c;
+    MoveStep_021f9f78 none = __ptmf_null;
+    steps.steps[0] = none;
+    steps.steps[2] = none;
+    for (int i = 0; i < self->count_; i++)
     {
         if (arg0->unknown_24_[var2].unknown_2_ != 0)
             (arg0->*var0.unknown_0_[arg0->unknown_24_[var2].unknown_2_])(arg1, &arg0->unknown_24_[var2]);

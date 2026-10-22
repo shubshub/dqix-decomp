@@ -26,10 +26,10 @@ struct Struct_020d9e44_2 {
     int unknown_c_[1];
 };
 
-typedef void (Struct_020d9e44_2::*Type_02000c9c_13)();
-struct Struct_020ee678 { Type_02000c9c_13 unknown_0_[2]; };
-extern Struct_020ee678 data_020ee678;
-extern Type_02000c9c_13 data_020e6d5c;
+typedef void (Self020d9e44::*Handler020d9e44)();
+struct HandlerTable020d9e44 { Handler020d9e44 e[2]; };
+extern HandlerTable020d9e44 data_020ee678;
+extern Handler020d9e44 __ptmf_null;
 
 // USA: func_020d9e44
 extern "C" ARM void func_020d9e44(Struct_020d9e44_2* arg0) {
@@ -55,11 +55,11 @@ extern "C" ARM void func_020d9e44(Struct_020d9e44_2* arg0) {
             var0->RemoveTask(arg0->unknown_c_[var1]);
             arg0->unknown_c_[var1] = -1;
         }
-        if (var2 == 1) { arg0->unknown_a_ = 0; return; }
-        if (var1 == 1) return;
-        Struct_020ee678 var3;
-        var3 = data_020ee678;
-        var3.unknown_0_[1] = data_020e6d5c;
-        (arg0->*var3.unknown_0_[var1])();
+        if (done == 1) { self->state = 0; return; }
+        if (i == 1) return;
+        HandlerTable020d9e44 table;
+        table = data_020ee678;
+        table.e[1] = __ptmf_null;
+        (self->*table.e[i])();
     }
 }

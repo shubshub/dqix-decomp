@@ -71,18 +71,18 @@ struct Struct_ov008_0218b340 {
     Type_02000c9c_2 unknown_0_[13];
 };
 
-extern const Struct_ov008_0218b340 data_ov009_0218ab9c;
-extern const Type_02000c9c_2 data_020e6d5c;
+extern const StateTable data_ov009_0218ab9c;
+extern const StateFunc __ptmf_null;
 
 // USA: func_ov009_02184a18
 extern "C" ARM int func_ov009_02184a18(Struct_ov009_021842a0_2* arg0)
 {
-    unsigned int var0 = GameState::GetInstance()->GetTickCount();
-    if (var0 == 0)
-        var0 = 1;
-    if (arg0->unknown_c58_ != 0)
-        func_020a20d8(arg0->unknown_924_);
-    if (arg0->unknown_c58_ == 9 && arg0->unknown_c59_ == 2)
+    unsigned int ticks = GameState::GetInstance()->GetTickCount();
+    if (ticks == 0)
+        ticks = 1;
+    if (self->state_ != 0)
+        AdvanceActor020a20d8(self->camera_);
+    if (self->state_ == 9 && self->step_ == 2) //Does not run at startup
     {
         Struct_ov006_02158478* var1 = func_0205d8c4((Struct_0205d81c*)&arg0->unknown_1f8_[1]);
         if (var1 != NULL && func_0204c7cc((unsigned char*)var1) != 0 && !(var1->unknown_c5_ & 2))
@@ -103,9 +103,9 @@ extern "C" ARM int func_ov009_02184a18(Struct_ov009_021842a0_2* arg0)
     func_ov009_02188454(arg0);
     func_ov009_021885b8((Struct_ov009_02184a18*)arg0);
 
-    Struct_ov008_0218b340 var2 = data_ov009_0218ab9c;
-    var2.unknown_0_[12] = data_020e6d5c;
-    if (var2.unknown_0_[arg0->unknown_c58_] == 0)
+    StateTable table = data_ov009_0218ab9c;
+    table.states[12] = __ptmf_null;
+    if (table.states[self->state_] == 0)
         return 0;
     (arg0->*var2.unknown_0_[arg0->unknown_c58_])();
     func_ov009_02184d70(arg0);

@@ -14,9 +14,9 @@ struct Struct_ov023_021fd510 {
     unsigned int unknown_0_[8];
 };
 
-extern "C" void func_0205d0e0(void* arg0, int arg1);
-extern Struct_ov023_021fd510 data_ov023_021fd510;
-extern Type_ov023_021d8bb4 data_020e6d5c;
+extern "C" void func_0205d0e0(void* obj, int scaleCount);
+extern TableBlock021d8bb4 data_ov023_021fd510;
+extern MemFn021d8bb4 __ptmf_null;
 
 // USA: func_ov023_021d8bb4
 extern "C" ARM int func_ov023_021d8bb4(Struct_ov023_021d8bb4* arg0) {
@@ -25,10 +25,10 @@ extern "C" ARM int func_ov023_021d8bb4(Struct_ov023_021d8bb4* arg0) {
     if (arg0->unknown_11b_ == 0xff) {
         func_0205d0e0((char*)arg0 + 0x20, var0);
     }
-    Struct_ov023_021fd510 var1 = data_ov023_021fd510;
-    *(Type_ov023_021d8bb4*)&var1.unknown_0_[6] = data_020e6d5c;
-    Type_ov023_021d8bb4* var2 = (Type_ov023_021d8bb4*)&var1;
-    if (var2[arg0->unknown_11a_] == 0) return 0;
-    (arg0->*var2[arg0->unknown_11a_])();
+    TableBlock021d8bb4 localBlock = data_ov023_021fd510;
+    *(MemFn021d8bb4*)&localBlock.v[6] = __ptmf_null;
+    MemFn021d8bb4* table = (MemFn021d8bb4*)&localBlock;
+    if (table[obj->f11a] == 0) return 0;
+    (obj->*table[obj->f11a])();
     return 0;
 }

@@ -21,8 +21,8 @@ extern "C" void func_ov023_021d8b6c(void* arg0);
 extern "C" void func_ov023_021d8af8(void* arg0);
 extern "C" void func_ov023_021d8bb4(void* arg0);
 
-struct Struct_020e6d5c_2 { unsigned int unknown_0_; unsigned int unknown_4_; };
-extern struct Struct_020e6d5c_2 data_020e6d5c;
+struct Pair021ed9f8 { unsigned int a; unsigned int b; };
+extern struct Pair021ed9f8 __ptmf_null;
 
 struct Struct_ov023_021fe148 { unsigned int unknown_0_; unsigned int unknown_4_; };
 extern struct Struct_ov023_021fe148 data_ov023_021fe148[];
@@ -68,13 +68,13 @@ extern "C" ARM void func_ov023_021ed9f8(char* arg0) {
         }
     }
 
-    unsigned int var5 = _ZZ21inline_ov023_021f4c04vE1s.unknown_8_;
-    if (!(var5 & 1)) {
-        unsigned int var6 = *(volatile unsigned int*)&data_020e6d5c.unknown_0_;
-        unsigned int var7 = *(volatile unsigned int*)&data_020e6d5c.unknown_4_;
-        *(unsigned int*)((char*)data_ov023_021fe148 + 0x88) = var6;
-        *(unsigned int*)((char*)data_ov023_021fe148 + 0x8c) = var7;
-        _ZZ21inline_ov023_021f4c04vE1s.unknown_8_ = var5 | 1;
+    unsigned int flags = _ZZ17GetGlobal021ffefcvE1s.flags;
+    if (!(flags & 1)) {
+        unsigned int va = *(volatile unsigned int*)&__ptmf_null.a;
+        unsigned int vb = *(volatile unsigned int*)&__ptmf_null.b;
+        *(unsigned int*)((char*)data_ov023_021fe148 + 0x88) = va;
+        *(unsigned int*)((char*)data_ov023_021fe148 + 0x8c) = vb;
+        _ZZ17GetGlobal021ffefcvE1s.flags = flags | 1;
     }
 
     int var8 = *(int*)(arg0 + Enum_ov023_021ed9f8_3756);

@@ -31,8 +31,8 @@ struct Struct_ov000_02182a74 { char unknown_0_[0xf78]; unsigned char unknown_f78
 struct Struct_020e6d5c_13 { unsigned int unknown_0_, unknown_4_; };
 struct Struct_ov003_0217f340 { Struct_020e6d5c_13 unknown_0_[8]; };
 extern short data_ov003_0217f2a8[3];
-extern Struct_ov003_0217f340 data_ov003_0217f340;
-extern Struct_020e6d5c_13 data_020e6d5c;
+extern Table data_ov003_0217f340;
+extern Dispatch __ptmf_null;
 extern "C" int func_ov017_021959b4();
 extern "C" char* func_020421a0();
 extern "C" void func_02043204(char*);
@@ -100,13 +100,13 @@ extern "C" ARM int func_ov003_02154af4(Struct_ov003_02154af4_3* arg0,unsigned in
   if(arg0->unknown_1d8_) func_020804fc(var0, arg0->unknown_1e6_);
   if(arg0->unknown_1e8_!=*arg0->unknown_8_) func_020813ec(var0,arg0->unknown_1e6_);
  }
- if(arg0->unknown_1c_ && func_020e28dc((Struct_020e28dc*)arg0->unknown_1c_)) func_020e263c((Struct_020e263c_2*)arg0->unknown_1c_, arg0->unknown_1dc_);
- Struct_ov003_0217f340 var16; var16=data_ov003_0217f340;
- unsigned int var17=data_020e6d5c.unknown_4_;
- unsigned int var18=data_020e6d5c.unknown_0_;
- var16.unknown_0_[7].unknown_4_=var17; var16.unknown_0_[7].unknown_0_=var18;
- if(!var16.unknown_0_[arg0->unknown_1f8_].unknown_0_) {
-  BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_1d0_);arg0->unknown_1d0_=-1;return 1;
+ if(self->inner && GetInnerFlagBit0020e28dc((Outer020e28dc*)self->inner)) UpdateEntryStateAndPosition((Ctx020e263c*)self->inner, self->scale);
+ Table buf; buf=data_ov003_0217f340;
+ unsigned int locator=__ptmf_null.locator;
+ unsigned int fn=__ptmf_null.fn;
+ buf.entries[7].locator=locator; buf.entries[7].fn=fn;
+ if(!buf.entries[self->state].fn) {
+  BackgroundLoader::GetInstance()->RemoveTask(self->task);self->task=-1;return 1;
  }
  Struct_020e6d5c_13* var19=&var16.unknown_0_[arg0->unknown_1f8_];
  void* var20=(char*)arg0+((int)var19->unknown_4_>>1);

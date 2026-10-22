@@ -252,8 +252,8 @@ struct Struct_ov024_021eb5d0_16 {
 
 #define IN_RANGE_021eb5d0(x) (((x) >= 0 && (x) <= 3) ? 1 : 0)
 
-extern "C" Type_02000c9c_6 data_ov024_021ff508[0x51];
-extern "C" Type_02000c9c_6 data_020e6d5c;
+extern "C" Handler_021eb5d0 data_ov024_021ff508[0x51];
+extern "C" Handler_021eb5d0 __ptmf_null;
 extern "C" int data_ov024_02200144;
 struct Struct_ov024_021fe718 {
     short unknown_0_[8];
@@ -385,26 +385,26 @@ struct GameState;
 extern "C" void* func_02010828(GameState*);
 
 // USA: func_ov024_021eb5d0
-extern "C" ARM void func_ov024_021eb5d0(struct Struct_ov024_021ea4d0* arg0, struct Struct_ov024_021eb5d0_10* arg1, struct Struct_ov024_021eb5d0_9* arg2, struct Struct_ov024_021eaa50* arg3, unsigned char arg4) {
-    struct Struct_ov024_021eb5d0_13 var0;
-    unsigned long long var1;
-    unsigned long long var2;
-    short var3;
-    short var4;
-    short var5;
-    unsigned char var6;
-    struct Struct_ov024_021fe8f0 var7;
-    struct Struct_ov024_021fe718 var8;
-    struct Struct_ov024_021fe718 var9;
-    unsigned char var10[0xb0];
-    unsigned char var11[0xb0];
-    int var12 = data_ov024_02200144;
-    if ((var12 & 1) == 0) {
-        data_ov024_021ff508[0x1e] = data_020e6d5c;
-        data_ov024_021ff508[0x22] = data_020e6d5c;
-        data_ov024_021ff508[0x3b] = data_020e6d5c;
-        data_ov024_021ff508[0x3c] = data_020e6d5c;
-        data_ov024_02200144 = var12 | 1;
+extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_021eb5d0* world, struct List_021eb5d0* list, struct Src_021eb5d0* src, unsigned char noCost) {
+    struct Res_021eb5d0 res;
+    unsigned long long pairA;
+    unsigned long long pairB;
+    short s6;
+    short s4;
+    short s2;
+    unsigned char c0;
+    struct Targets_021eb5d0 tgt32;
+    struct Ids8_021eb5d0 ids1;
+    struct Ids8_021eb5d0 ids2;
+    unsigned char blkA[0xb0];
+    unsigned char blkB[0xb0];
+    int guard = data_ov024_02200144;
+    if ((guard & 1) == 0) {
+        data_ov024_021ff508[0x1e] = __ptmf_null;
+        data_ov024_021ff508[0x22] = __ptmf_null;
+        data_ov024_021ff508[0x3b] = __ptmf_null;
+        data_ov024_021ff508[0x3c] = __ptmf_null;
+        data_ov024_02200144 = guard | 1;
     }
     arg0->unknown_10_ = arg1;
     arg0->unknown_4_ = arg2;

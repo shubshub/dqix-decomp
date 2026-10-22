@@ -42,10 +42,10 @@ typedef void (Struct_ov024_021f9660_3::*Type_ov024_021f9660)();
 struct Struct_ov024_021ffeac { Type_ov024_021f9660 unknown_0_[79]; };
 extern Struct_ov024_021ffeac data_ov024_021ffeac;
 extern unsigned int data_ov024_02200150;
-extern Type_ov024_021f9660 data_020e6d5c;
-extern "C" void* func_02053c6c(unsigned char*);
-extern "C" Struct_ov024_021f9660* func_02079e2c(char*, int);
-extern "C" int func_ov024_021f8874(Struct_ov024_021f9660_3*, Struct_ov024_021f9660*, GameObject*, int*);
+extern SkillHandler021f9660 __ptmf_null;
+void* GetFieldAt0x150_02053c6c(unsigned char*);
+Skill021f9660* SearchBothTables02079e2c(char*, int);
+extern "C" int func_ov024_021f8874(Planner021f9660*, Skill021f9660*, GameObject*, int*);
 
 // USA: func_ov024_021f9660
 extern "C" ARM void func_ov024_021f9660(Struct_ov024_021f9660_3* arg0) {
@@ -53,43 +53,43 @@ extern "C" ARM void func_ov024_021f9660(Struct_ov024_021f9660_3* arg0) {
     func_02053c6c((unsigned char*)var0);
     Struct_02108e10* var1 = func_020797dc();
     if (!(data_ov024_02200150 & 1)) {
-        Type_ov024_021f9660 var2 = data_020e6d5c;
-        data_ov024_021ffeac.unknown_0_[0] = var2;
-        data_ov024_021ffeac.unknown_0_[11] = var2;
-        data_ov024_021ffeac.unknown_0_[12] = var2;
-        data_ov024_021ffeac.unknown_0_[29] = var2;
-        data_ov024_021ffeac.unknown_0_[30] = var2;
-        data_ov024_021ffeac.unknown_0_[31] = var2;
-        data_ov024_021ffeac.unknown_0_[34] = var2;
-        data_ov024_021ffeac.unknown_0_[35] = var2;
-        data_ov024_021ffeac.unknown_0_[44] = var2;
-        data_ov024_021ffeac.unknown_0_[45] = var2;
-        data_ov024_021ffeac.unknown_0_[52] = var2;
-        data_ov024_021ffeac.unknown_0_[57] = var2;
-        data_ov024_021ffeac.unknown_0_[58] = var2;
-        data_ov024_021ffeac.unknown_0_[59] = var2;
-        data_ov024_021ffeac.unknown_0_[60] = var2;
-        data_ov024_021ffeac.unknown_0_[65] = var2;
-        data_ov024_021ffeac.unknown_0_[66] = var2;
+        SkillHandler021f9660 empty = __ptmf_null;
+        data_ov024_021ffeac.handlers[0] = empty;
+        data_ov024_021ffeac.handlers[11] = empty;
+        data_ov024_021ffeac.handlers[12] = empty;
+        data_ov024_021ffeac.handlers[29] = empty;
+        data_ov024_021ffeac.handlers[30] = empty;
+        data_ov024_021ffeac.handlers[31] = empty;
+        data_ov024_021ffeac.handlers[34] = empty;
+        data_ov024_021ffeac.handlers[35] = empty;
+        data_ov024_021ffeac.handlers[44] = empty;
+        data_ov024_021ffeac.handlers[45] = empty;
+        data_ov024_021ffeac.handlers[52] = empty;
+        data_ov024_021ffeac.handlers[57] = empty;
+        data_ov024_021ffeac.handlers[58] = empty;
+        data_ov024_021ffeac.handlers[59] = empty;
+        data_ov024_021ffeac.handlers[60] = empty;
+        data_ov024_021ffeac.handlers[65] = empty;
+        data_ov024_021ffeac.handlers[66] = empty;
         data_ov024_02200150 |= 1;
     }
-    for (int var3 = 0; var3 < arg0->unknown_174_; ++var3) {
-        Struct_ov024_021f9660* var4 = func_02079e2c((char*)var1, arg0->unknown_178_[var3].unknown_0_);
-        if (var4->unknown_b_4_) continue;
-        if (var4->unknown_2d_6_) continue;
-        int var5;
-        if (!func_ov024_021f8874(arg0, var4, var0, &var5)) continue;
-        if (arg0->unknown_6_ == 4 && var5 != 0) continue;
-        arg0->unknown_648_ = &arg0->unknown_178_[var3];
-        arg0->unknown_64c_ = var4;
-        arg0->unknown_650_ = var5;
-        arg0->unknown_34_ = 0;
-        arg0->unknown_2c_ = 0;
-        arg0->unknown_655_ = 1;
-        arg0->unknown_38_ = 0;
-        arg0->unknown_3c_ = 0;
-        Type_ov024_021f9660 var6 = data_020e6d5c;
-        if (var4->unknown_18_5_ <= 78) var6 = data_ov024_021ffeac.unknown_0_[var4->unknown_18_5_];
-        if (var6 != 0) (arg0->*var6)();
+    for (int index = 0; index < planner->count; ++index) {
+        Skill021f9660* skill = SearchBothTables02079e2c((char*)database, planner->skills[index].id);
+        if (skill->excluded) continue;
+        if (skill->restriction) continue;
+        int cost;
+        if (!func_ov024_021f8874(planner, skill, combatant, &cost)) continue;
+        if (planner->mode == 4 && cost != 0) continue;
+        planner->selected = &planner->skills[index];
+        planner->selectedSkill = skill;
+        planner->cost = cost;
+        planner->field_34 = 0;
+        planner->field_2c = 0;
+        planner->active = 1;
+        planner->field_38 = 0;
+        planner->field_3c = 0;
+        SkillHandler021f9660 handler = __ptmf_null;
+        if (skill->handler <= 78) handler = data_ov024_021ffeac.handlers[skill->handler];
+        if (handler != 0) (planner->*handler)();
     }
 }

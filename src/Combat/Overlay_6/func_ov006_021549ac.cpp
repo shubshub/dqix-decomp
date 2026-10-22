@@ -95,10 +95,10 @@ struct Struct_ov006_02154614 {
 
 struct Struct_0207fc6c;
 
-typedef void (Struct_ov006_02154614::*Type_02000c9c_7)();
-struct Struct_ov006_0215ff94 { Type_02000c9c_7 unknown_0_[3]; };
-extern struct Struct_ov006_0215ff94 data_ov006_0215ff94;
-extern Type_02000c9c_7 data_020e6d5c;
+typedef void (AlchemyPot::*PMF021549ac)();
+struct RawTable021549ac { PMF021549ac e[3]; };
+extern struct RawTable021549ac data_ov006_0215ff94;
+extern PMF021549ac __ptmf_null;
 
 extern "C" void func_ov006_02156bd8(Struct_ov006_02154614* arg0);
 extern "C" void func_0207fc6c(Struct_0207fc6c* arg0, int arg1);
@@ -107,18 +107,18 @@ extern "C" void func_ov006_02156d70(Struct_ov006_02154614* arg0);
 extern "C" void func_ov006_02155068(Struct_ov006_02154614* arg0);
 
 // USA: func_ov006_021549ac
-extern "C" ARM void func_ov006_021549ac(Struct_ov006_02154614* arg0, int arg1) {
-    func_ov006_02156bd8(arg0);
-    Struct_0207fc6c* var0 = (Struct_0207fc6c*)arg0->unknown_1d4_;
-    if (var0 != 0)
-        func_0207fc6c(var0, arg1);
-    func_ov006_02156fdc(arg0);
-    func_ov006_02156d70(arg0);
-    struct Struct_ov006_0215ff94 var1;
-    var1 = data_ov006_0215ff94;
-    var1.unknown_0_[2] = data_020e6d5c;
-    if (var1.unknown_0_[arg0->unknown_adc_] != 0) {
-        (arg0->*var1.unknown_0_[arg0->unknown_adc_])();
-        func_ov006_02155068(arg0);
+extern "C" ARM void func_ov006_021549ac(AlchemyPot* self, int ticks) {
+    func_ov006_02156bd8(self);
+    Obj0207fc6c* menu = (Obj0207fc6c*)self->menu_;
+    if (menu != 0)
+        CallFunc0204c87cOverEntries0207fc6c(menu, ticks);
+    func_ov006_02156fdc(self);
+    func_ov006_02156d70(self);
+    struct RawTable021549ac updates;
+    updates = data_ov006_0215ff94;
+    updates.e[2] = __ptmf_null;
+    if (updates.e[self->state_] != 0) {
+        (self->*updates.e[self->state_])();
+        func_ov006_02155068(self);
     }
 }

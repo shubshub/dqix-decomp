@@ -4,7 +4,7 @@ struct Struct_020e6d5c_10 {
     unsigned int unknown_0_;
     unsigned int unknown_4_;
 };
-extern struct Struct_020e6d5c_10 data_020e6d5c;
+extern struct Pair_021da55c __ptmf_null;
 
 extern unsigned int data_ov024_02200140;
 
@@ -24,19 +24,19 @@ struct Struct_ov024_021da55c {
 typedef int (*Type_ov024_021da55c)(void* self, int a2, int a3, unsigned short a4, struct Struct_ov024_021da55c* action, int fallback);
 
 // USA: func_ov024_021da55c
-extern "C" ARM int func_ov024_021da55c(int* arg0, int arg1, int arg2, int arg3, unsigned short arg4, struct Struct_ov024_021da55c* arg5, int arg6) {
-    unsigned int var0 = data_ov024_02200140;
-    if (!(var0 & 1)) {
-        struct Struct_020e6d5c_10 var1 = data_020e6d5c;
-        data_ov024_021ff1e0[0].unknown_0_ = var1.unknown_0_;
-        data_ov024_021ff1e0[0].unknown_4_ = var1.unknown_4_;
-        data_ov024_021ff1e0[46].unknown_0_ = var1.unknown_0_;
-        data_ov024_021ff1e0[46].unknown_4_ = var1.unknown_4_;
-        data_ov024_021ff1e0[51].unknown_0_ = var1.unknown_0_;
-        data_ov024_021ff1e0[51].unknown_4_ = var1.unknown_4_;
-        data_ov024_021ff1e0[53].unknown_0_ = var1.unknown_0_;
-        data_ov024_021ff1e0[53].unknown_4_ = var1.unknown_4_;
-        data_ov024_02200140 = var0 | 1;
+extern "C" ARM int func_ov024_021da55c(int* obj, int a1, int a2, int a3, unsigned short a4, struct Action_021da55c* action, int fallback) {
+    unsigned int flags = data_ov024_02200140;
+    if (!(flags & 1)) {
+        struct Pair_021da55c nullEntry = __ptmf_null;
+        data_ov024_021ff1e0[0].fn = nullEntry.a;
+        data_ov024_021ff1e0[0].locator = nullEntry.b;
+        data_ov024_021ff1e0[46].fn = nullEntry.a;
+        data_ov024_021ff1e0[46].locator = nullEntry.b;
+        data_ov024_021ff1e0[51].fn = nullEntry.a;
+        data_ov024_021ff1e0[51].locator = nullEntry.b;
+        data_ov024_021ff1e0[53].fn = nullEntry.a;
+        data_ov024_021ff1e0[53].locator = nullEntry.b;
+        data_ov024_02200140 = flags | 1;
     }
     *arg0 = arg1;
     if (arg5 == NULL) {

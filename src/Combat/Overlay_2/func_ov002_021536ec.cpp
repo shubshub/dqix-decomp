@@ -28,11 +28,11 @@ struct Struct_ov002_0216ccc4 {
 extern "C" void *func_02079e2c(char *arg0, int arg1);
 
 extern "C" unsigned int data_ov002_0216d3a0[2];
-extern "C" Type_ov002_021536ec data_020e6d5c;
-extern "C" struct Struct_ov002_0216ccc0 data_ov002_0216cce4[12];
-extern "C" struct Struct_ov002_0216ccc4 data_ov002_0216cce8[12];
-extern "C" struct Struct_ov002_0216ccc0 data_ov002_0216ccc0[3];
-extern "C" struct Struct_ov002_0216ccc4 data_ov002_0216ccc4[3];
+extern "C" MemFn021536ec __ptmf_null;
+extern "C" struct Entry021536ec data_ov002_0216cce4[12];
+extern "C" struct Slot021536ec data_ov002_0216cce8[12];
+extern "C" struct Entry021536ec data_ov002_0216ccc0[3];
+extern "C" struct Slot021536ec data_ov002_0216ccc4[3];
 
 // USA: func_ov002_021536ec
 extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *arg0, short *arg1) {
@@ -44,9 +44,9 @@ extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *arg0, short *arg1)
 
     int var2 = 0;
     if (!(data_ov002_0216d3a0[1] & 1)) {
-        Type_ov002_021536ec var3            = data_020e6d5c;
-        data_ov002_0216cce4[0].unknown_4_  = var3;
-        data_ov002_0216cce4[11].unknown_4_ = var3;
+        MemFn021536ec t            = __ptmf_null;
+        data_ov002_0216cce4[0].fn  = t;
+        data_ov002_0216cce4[11].fn = t;
         data_ov002_0216d3a0[1] |= 1;
     }
     unsigned int var4 = var0->unknown_18_5_;
@@ -61,9 +61,9 @@ extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *arg0, short *arg1)
 
     int var6 = 0;
     if (!(data_ov002_0216d3a0[0] & 1)) {
-        Type_ov002_021536ec var7           = data_020e6d5c;
-        data_ov002_0216ccc0[0].unknown_4_ = var7;
-        data_ov002_0216ccc0[2].unknown_4_ = var7;
+        MemFn021536ec t           = __ptmf_null;
+        data_ov002_0216ccc0[0].fn = t;
+        data_ov002_0216ccc0[2].fn = t;
         data_ov002_0216d3a0[0] |= 1;
     }
     unsigned int var8 = var0->unknown_18_0_;

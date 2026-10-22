@@ -85,8 +85,8 @@ struct Struct_ov008_0218b340 {
     Type_02000c9c_12 unknown_0_[15];
 };
 
-extern Struct_ov008_0218b340 data_ov008_0218b340;
-extern Type_02000c9c_12 data_020e6d5c;
+extern StateTable data_ov008_0218b340;
+extern StateFunction __ptmf_null;
 
 struct Struct_ov008_02184754;
 struct Struct_0209ff6c;
@@ -105,19 +105,19 @@ void func_ov023_021eb43c(void* arg0);
 // USA: func_ov008_02184754
 extern "C" ARM int func_ov008_02184754(Struct_ov008_021842a0_2* arg0)
 {
-    func_ov008_02188ef0(arg0);
-    unsigned int var0 = GameState::GetInstance()->GetTickCount();
-    if (var0 == 0)
-        var0 = 1;
-    func_0205d0e0(&arg0->unknown_130_, var0);
-    func_ov008_02186e4c(arg0, var0);
-    arg0->unknown_790_.AdvanceEffects();
-    func_ov008_021870e4((Struct_ov008_02184754*)arg0, var0);
-    func_ov008_0218747c(arg0, 0);
-    func_ov008_0218747c(arg0, 1);
-    Struct_ov008_0218b340 var1 = data_ov008_0218b340;
-    var1.unknown_0_[14] = data_020e6d5c;
-    if (var1.unknown_0_[arg0->unknown_b10_] == NULL)
+    func_ov008_02188ef0(self);
+    unsigned int ticks = GameState::GetInstance()->GetTickCount();
+    if (ticks == 0)
+        ticks = 1;
+    func_0205d0e0(&self->window_, ticks);
+    func_ov008_02186e4c(self, ticks);
+    self->model_.AdvanceEffects();
+    ClearFlagIfDone_021870e4_021870e4((Obj021870e4*)self, ticks);
+    func_ov008_0218747c(self, 0);
+    func_ov008_0218747c(self, 1);
+    StateTable table = data_ov008_0218b340;
+    table.states[14] = __ptmf_null;
+    if (table.states[self->state_] == NULL)
         return 0;
     (arg0->*var1.unknown_0_[arg0->unknown_b10_])(var0);
     if (arg0->unknown_b04_ != NULL)

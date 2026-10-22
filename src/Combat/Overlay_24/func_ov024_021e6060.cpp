@@ -14,14 +14,14 @@ struct Struct_ov024_021e6060 {
 typedef void (Struct_ov024_021e6060::*Type_ov024_021e6060)(int id, Struct_ov024_021e6060_2* rec, int amount);
 
 extern unsigned int data_ov024_02200144[];
-extern Type_ov024_021e6060 data_020e6d5c;
-extern Type_ov024_021e6060 data_ov024_021ff3f8[0xb];
+extern Handler_021e6060 __ptmf_null;
+extern Handler_021e6060 data_ov024_021ff3f8[0xb];
 
 // USA: func_ov024_021e6060
 extern "C" ARM void func_ov024_021e6060(Struct_ov024_021e6060* arg0, int arg1, Struct_ov024_021e6060_2* arg2, int arg3) {
     if (!(data_ov024_02200144[1] & 1)) {
-        data_ov024_021ff3f8[0] = data_020e6d5c;
-        data_ov024_021ff3f8[7] = data_020e6d5c;
+        data_ov024_021ff3f8[0] = __ptmf_null;
+        data_ov024_021ff3f8[7] = __ptmf_null;
         data_ov024_02200144[1] |= 1;
     }
     if (arg2->unknown_2d_2_ >= 0xb) return;

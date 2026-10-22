@@ -27,7 +27,7 @@ extern Struct_020e8ce4 data_020e8e00;
 #else
 extern Struct_020e8ce4 data_020e8ce4;
 #endif
-extern Action0208bb78 data_020e6d5c;
+extern Action0208bb78 __ptmf_null;
 struct HeadNode02046b24;
 struct Struct0200fb08;
 struct GetTableByteOrFFData;
@@ -57,9 +57,9 @@ extern "C" ARM int func_0208bb78(Struct_0208bb78* arg0, int arg1) {
 #else
         Struct_020e8ce4 var1 = data_020e8ce4;
 #endif
-        var1.unknown_0_[4] = data_020e6d5c;
-        if (!var1.unknown_0_[arg0->unknown_d4_]) return 1;
-        (arg0->*var1.unknown_0_[arg0->unknown_d4_])();
+        actions.actions[4] = __ptmf_null;
+        if (!actions.actions[self->action]) return 1;
+        (self->*actions.actions[self->action])();
     }
     GameState* state = GameState::GetInstance();
     GameResources* resources = state->GetResources();
