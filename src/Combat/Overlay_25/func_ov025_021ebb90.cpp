@@ -153,8 +153,8 @@ extern "C" void func_ov000_0216df00(void* arg0, int arg1, int arg2, int arg3, fl
 extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
 extern "C" void func_ov025_021ecb90(struct Struct_ov025_021ebb90_6* arg0, struct Struct_ov025_021ebb90_6* arg1);
 
-extern int data_02108760;
-extern "C" void __clear(void* arg0, unsigned int arg1);
+extern int g_sePlayer;
+extern "C" void __clear(void* dst, unsigned int n);
 
 static inline int inline_ov025_021ebb90(unsigned int arg0) { return arg0 <= 3; }
 
@@ -475,9 +475,9 @@ extern "C" ARM void func_ov025_021ebb90(struct Struct_ov025_021e9778_4* arg0) {
             }
         }
 
-        if (!(arg0->unknown_0_[var17].unknown_6_ & 4) && var24 <= arg0->unknown_0_[var17].unknown_24_ && arg0->unknown_0_[var17].unknown_24_ < var25) {
-            func_0205ebfc(&data_02108760, arg0->unknown_0_[var17].unknown_22_, 0);
-            arg0->unknown_0_[var17].unknown_6_ |= 4;
+        if (!(obj->entries[i].d & 4) && sp14 <= obj->entries[i].m && obj->entries[i].m < sp4c) {
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, obj->entries[i].l, 0);
+            obj->entries[i].d |= 4;
         }
 
         unsigned int var60 = arg0->unknown_0_[var17].unknown_3c_;

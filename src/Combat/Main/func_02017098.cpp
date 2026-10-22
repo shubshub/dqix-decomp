@@ -2,10 +2,10 @@
 #include "Graphics/Vector.h"
 #include "World/LootableContainer.h"
 
-struct Struct_02017098;
-struct Struct_02017098_2;
-struct Struct_02017098_3;
-struct Struct_02108760;
+struct ActorListManager;
+struct SelfObj792c;
+struct Struct020478bc;
+struct SePlayer;
 
 extern "C" struct Struct_02017098_4* func_0201777c(struct Struct_02017098* arg0, int arg1);
 extern "C" void func_0204792c(struct Struct_02017098_2* arg0, char* arg1);
@@ -13,10 +13,10 @@ extern "C" void func_020478bc(struct Struct_02017098_3* arg0, int arg1);
 extern "C" float _fflt(int value);
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float value);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 extern char data_020ef222[];
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Struct_02017098_5 {
     char unknown_0_[0x1c];
@@ -55,13 +55,13 @@ extern "C" ARM void func_02017098(struct Struct_02017098* arg0, int arg1) {
         var1 = fix32ReduceAngle0To2Pi(var1 + 0x1922);
     }
 
-    LootableContainerManager::Container* var7 =
-        LootableContainerManager::GetMainInstance()->GetContainerByID(var0->unknown_0_, NULL);
-    if (var7 != NULL) {
-        if (var7->containerType == 1) {
-            func_0205eaa0((struct Struct_02108760*)&data_02108760, 0x10, 0);
-        } else if (var7->containerType == 2) {
-            func_0205eaa0((struct Struct_02108760*)&data_02108760, 0x11, 0);
+    LootableContainerManager::Container* container =
+        LootableContainerManager::GetMainInstance()->GetContainerByID(e->id, NULL);
+    if (container != NULL) {
+        if (container->containerType == 1) {
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x10, 0);
+        } else if (container->containerType == 2) {
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x11, 0);
         }
     }
 

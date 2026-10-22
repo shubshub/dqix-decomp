@@ -12,9 +12,9 @@ void _Z31ResetIfFlagAndCategory_021538f4Pvi(void *, int);
 int _Z29GetArrayEntryByIndex_02156034Pv(void *);
 int _Z31IsSubBrightnessTransitionActiveP13GameResources(void *);
 int func_ov003_021550dc(void *);
-void func_0205eaa0(void *, int, int);
-void func_0207fe44(void *);
-int func_ov003_02155f40(void *, int);
+void _Z13SePlayer_PlayP8SePlayerii(void *, int, int);
+void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void *);
+int _Z26MatchesArrayEntry_02155f40Pvi(void *, int);
 int func_ov003_02155208(void *);
 void func_ov003_02153874(void *);
 void func_ov003_02155580(void *, int);
@@ -50,7 +50,7 @@ int func_ov003_02158754(void *);
 #define JPN_OFS(j, u) (u)
 #endif
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 extern const char *data_020f2a38;
 extern const char *data_020f2a30;
@@ -158,18 +158,18 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
         if (_Z31IsSubBrightnessTransitionActiveP13GameResources(var5) != 0) {
             var4 = 0;
         }
-        if (func_ov003_021550dc(arg0) != 0 && var4 != 0) {
-            func_0205eaa0(data_02108760, 1, 0);
-            func_0208203c(arg0->unknown_80_);
-            arg0->unknown_8_   = 0;
-            arg0->unknown_1ec_   = 0xa;
-            arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
-            func_0207fe44(var2);
-            if (func_ov003_02155f40(arg0, arg0->unknown_1f7_)) {
-                arg0->unknown_1fc_ = arg0->unknown_1fc_ | 2;
-                arg0->unknown_1ec_   = 0x30;
-                arg0->unknown_1ee_  = 9;
-                arg0->unknown_1f9_ = 0;
+        if (func_ov003_021550dc(self) != 0 && ok != 0) {
+            _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 1, 0);
+            _Z20ResetWithSub0208203cP11Obj0208203c(self->sub80);
+            self->f08   = 0;
+            self->cmd   = 0xa;
+            self->state = self->state + 1;
+            _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(p);
+            if (_Z26MatchesArrayEntry_02155f40Pvi(self, self->f1f7)) {
+                self->flags = self->flags | 2;
+                self->cmd   = 0x30;
+                self->cmd2  = 9;
+                self->state = 0;
                 return;
             }
         } else if (func_ov003_02155208(arg0) != 0 && var4 != 0) {

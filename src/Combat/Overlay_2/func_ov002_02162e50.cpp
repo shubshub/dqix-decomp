@@ -5,33 +5,33 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
+struct Obj_0205da38;
+struct SePlayer;
 struct Struct_0205d81c;
-struct Struct_0205dee8;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" void func_0205dee8(struct Struct_0205dee8 *arg0, int arg1);
-extern "C" void *func_020d6c00();
-extern "C" void func_020466e4(unsigned int *arg0, unsigned int arg1);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-extern "C" int GetInventoryItemByID(char *arg0, int arg1, int arg2);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_02161b98(char *arg0);
-extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov002_0215b458(char *arg0, int arg1);
-extern "C" int func_0205df38(void *arg0, int arg1);
-extern "C" void func_ov023_021dc9e8(char *arg0, SafeAllocator *arg1, int arg2, char *arg3, int arg4);
-extern "C" void func_ov023_021dc134(char *arg0, int arg1, int arg2);
-extern "C" void func_ov023_021dbfd0(char *arg0, SafeAllocator *arg1);
-extern "C" void func_ov023_021dcae0(char *arg0, int arg1);
-extern "C" void func_ov023_021dca88(char *arg0);
-extern "C" char data_02108760[];
+struct Obj0205dee8;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
+void *GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int mask);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
+extern "C" int GetInventoryItemByID(char *self, int idx, int member);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_02161b98(char *self);
+extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
+extern "C" void func_ov002_0215b458(char *self, int a);
+extern "C" int func_0205df38(void *list, int key);
+extern "C" void func_ov023_021dc9e8(char *obj, SafeAllocator *alloc, int item, char *list, int n);
+extern "C" void func_ov023_021dc134(char *obj, int item, int flag);
+extern "C" void func_ov023_021dbfd0(char *obj, SafeAllocator *alloc);
+extern "C" void func_ov023_021dcae0(char *obj, int item);
+extern "C" void func_ov023_021dca88(char *obj);
+extern "C" char g_sePlayer[];
 
 static inline int inline_02000c9c_6(int arg0) {
     return (arg0 >= 0 && arg0 <= 3) ? 1 : 0;
@@ -85,18 +85,18 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
                 return;
             }
         }
-        *(short *) (arg0 + 0x1aea) =
-            GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1ab0), *(signed char *) (arg0 + 0x1ae8));
-        func_ov023_021dcae0(var1, *(short *) (arg0 + 0x1aea));
-        if (var3 != *(short *) (arg0 + 0x1ab0)) return;
-        int var4 = g_keyManager.TestKeysPressed(0x601);
-        int var5 = func_0205da38((struct Struct_0205da38*)(arg0 + 0xe20), 0x14);
-        if ((var4 | var5) ? 1 : 0) {
-            *(unsigned char *) (arg0 + 0xed8) = *(int *) (arg0 + 0x1a80);
-            *(unsigned int *) (arg0 + 0x22ac) &= ~4;
-            func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-            if (*(unsigned char *) (arg0 + 0x22b5))
-                *(int *) (arg0 + 0x1a80) = 0x2a;
+        *(short *) (base + 0x1aea) =
+            GetInventoryItemByID(base, *(short *) (base + 0x1ab0), *(signed char *) (base + 0x1ae8));
+        func_ov023_021dcae0(sub, *(short *) (base + 0x1aea));
+        if (prev != *(short *) (base + 0x1ab0)) return;
+        int a = g_keyManager.TestKeysPressed(0x601);
+        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xe20), 0x14);
+        if ((a | b) ? 1 : 0) {
+            *(unsigned char *) (base + 0xed8) = *(int *) (base + 0x1a80);
+            *(unsigned int *) (base + 0x22ac) &= ~4;
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            if (*(unsigned char *) (base + 0x22b5))
+                *(int *) (base + 0x1a80) = 0x2a;
             else
                 *(int *) (arg0 + 0x1a80) = 7;
             int var6                           = 0;
@@ -163,18 +163,18 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
                 return;
             }
         }
-        *(short *) (arg0 + 0x1c00 + 0x22) =
-            GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1b00 + 0xe8), *(signed char *) (arg0 + 0x1c00 + 0x20));
-        func_ov023_021dcae0(arg0 + 0x50, *(short *) (arg0 + 0x1c00 + 0x22));
-        if (var11 != *(short *) (arg0 + 0x1b00 + 0xe8)) return;
-        int var12 = g_keyManager.TestKeysPressed(0x601);
-        int var13 = func_0205da38((struct Struct_0205da38*)(arg0 + 0x2c8 + 0xc00), 0x14);
-        if ((var12 | var13) ? 1 : 0) {
-            *(unsigned char *) (arg0 + 0xf80) = *(int *) (arg0 + 0x1000 + 0xbb8);
-            *(unsigned int *) (arg0 + 0x2000 + 0x47c) &= ~4;
-            func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-            if (*(unsigned char *) (arg0 + 0x2000 + 0x485))
-                *(int *) (arg0 + 0x1000 + 0xbb8) = 0x27;
+        *(short *) (base + 0x1c00 + 0x22) =
+            GetInventoryItemByID(base, *(short *) (base + 0x1b00 + 0xe8), *(signed char *) (base + 0x1c00 + 0x20));
+        func_ov023_021dcae0(base + 0x50, *(short *) (base + 0x1c00 + 0x22));
+        if (prev != *(short *) (base + 0x1b00 + 0xe8)) return;
+        int a = g_keyManager.TestKeysPressed(0x601);
+        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14);
+        if ((a | b) ? 1 : 0) {
+            *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
+            *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            if (*(unsigned char *) (base + 0x2000 + 0x485))
+                *(int *) (base + 0x1000 + 0xbb8) = 0x27;
             else
                 *(int *) (arg0 + 0x1000 + 0xbb8) = 6;
             int var14                           = 0;

@@ -10,29 +10,29 @@
 struct Struct_0205de24_2;
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Struct_0205da38;
-struct Struct_02108760;
-struct Struct_0205faf4_11;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" void func_0205def8(struct Struct_0205def8 *arg0, int arg1, int arg2);
-extern "C" void func_020dc4d0(signed char *arg0, signed char *arg1);
-extern "C" GameObject *func_0200ff1c(GameState *arg0, int arg1);
-extern "C" int func_02061bd8(struct Struct_0205faf4_11 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int *arg0, unsigned int arg1);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_0215b814(char *arg0);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215e1d0(char *arg0);
-extern "C" void func_ov002_02156e90(char *arg0);
-extern "C" void func_020d79e0(char *arg0, int arg1);
+struct Obj_0205da38;
+struct SePlayer;
+struct Obj02061bd8;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int a, int b);
+void FilterSlotsWithFlag0x800020dc4d0(signed char *out, signed char *outCount);
+GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
+int CheckField0x56bLowNibble(struct Obj02061bd8 *obj);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int GetDataPtr02114e04_020d6c00(void);
+void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int bits);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+extern "C" void func_ov002_0215b814(char *base);
+extern "C" void func_ov002_02161cf0(char *base);
+extern "C" void func_ov002_0215e1d0(char *base);
+extern "C" void func_ov002_02156e90(char *base);
+extern "C" void func_020d79e0(char *base, int id);
 extern "C" void func_02012fe4(void);
 extern "C" void func_02017c58(void);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 extern "C" unsigned short data_ov002_0216cca4[];
 extern "C" unsigned short data_ov002_0216cc86[];
 
@@ -104,18 +104,18 @@ extern "C" ARM void func_ov002_02164d14(char *arg0) {
             *(int *) (arg0 + OFF_STATE_02164d14) = 0;
             return;
         }
-        if (var2 != *(short *) (arg0 + OFF_SEL_02164d14)) return;
-        int var10 = g_keyManager.TestKeysPressed(0x601);
-        int var11 = func_0205da38((struct Struct_0205da38*)(arg0 + OFF_LIST_02164d14), 0x14);
-        if ((var10 | var11) ? 1 : 0) {
-            if (*(unsigned int *) (arg0 + OFF_FLAGS_02164d14) & 2) return;
-            if (*(short *) (arg0 + OFF_SEL_02164d14) == var4) {
-                *(unsigned int *) (arg0 + OFF_FLAGS_02164d14) &= ~4;
-                func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                *(int *) (arg0 + OFF_NEXT_02164d14) = K_0F_02164d14;
-                *(int *) (arg0 + OFF_STATE_02164d14) = 0;
-                for (int var12 = 0; var12 < 4; var12++) {
-                    unsigned short var13 = data_ov002_0216cca4[var12] * 0x20;
+        if (old != *(short *) (base + OFF_SEL_02164d14)) return;
+        int a = g_keyManager.TestKeysPressed(0x601);
+        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + OFF_LIST_02164d14), 0x14);
+        if ((a | b) ? 1 : 0) {
+            if (*(unsigned int *) (base + OFF_FLAGS_02164d14) & 2) return;
+            if (*(short *) (base + OFF_SEL_02164d14) == count) {
+                *(unsigned int *) (base + OFF_FLAGS_02164d14) &= ~4;
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                *(int *) (base + OFF_NEXT_02164d14) = K_0F_02164d14;
+                *(int *) (base + OFF_STATE_02164d14) = 0;
+                for (int i = 0; i < 4; i++) {
+                    unsigned short off = data_ov002_0216cca4[i] * 0x20;
                     CleanInvalidateCacheRange(data_ov002_0216cc86, 2);
                     LoadToMainBGStandardPalette(data_ov002_0216cc86, (unsigned short) (var13 + 2), 2);
                     CleanCacheRange(data_ov002_0216cc86, 2);

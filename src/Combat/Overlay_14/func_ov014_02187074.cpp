@@ -83,13 +83,13 @@ struct Struct_ov014_02186bc8 {
     short unknown_182_[8];
 };
 
-struct Struct_0207fdcc_2;
-struct Struct_02108760;
+struct Obj2081;
+struct SePlayer;
 
-extern "C" Struct_ov006_02158478* func_02081da8(Struct_0207fdcc_2*, int);
-extern "C" bool func_0204c7e0(unsigned char*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_020804fc(void*, int);
+Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
+bool CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char*);
+void SePlayer_Play(SePlayer*, int, int);
+void ClearSublistEntriesFlag4_020804fc(void*, int);
 
 extern "C" {
 Struct_ov014_02184f78* func_ov014_021873a0(Struct_ov014_02186bc8* arg0);
@@ -99,7 +99,7 @@ void func_ov014_0218854c(Struct_ov014_02186bc8* arg0);
 void func_ov014_021885bc(Struct_ov014_02186bc8* arg0);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 inline short inline_ov014_02187074(short arg0)
 {
@@ -146,14 +146,14 @@ extern "C" ARM bool func_ov014_02187074(Struct_ov014_02186bc8* arg0)
         if (arg0->unknown_17e_ & 8)
             arg0->unknown_17e_ &= ~8;
         else
-            arg0->unknown_17e_ |= 8;
-        short var11 = 0;
-        arg0->unknown_b8_ = func_020974b0(&arg0->unknown_a4_, arg0->unknown_17d_, -1, (arg0->unknown_17e_ & 8) != 0, 0x10, &var11);
-        func_ov014_02187228(arg0, var10);
-        func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-        func_020804fc(arg0->unknown_c0_, 5);
-        func_ov014_0218854c(arg0);
-        func_ov014_021885bc(arg0);
+            self->listFlags_ |= 8;
+        short count = 0;
+        self->entries_ = func_020974b0(&self->list_, self->family_, -1, (self->listFlags_ & 8) != 0, 0x10, &count);
+        func_ov014_02187228(self, entry);
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+        ClearSublistEntriesFlag4_020804fc(self->menu_, 5);
+        func_ov014_0218854c(self);
+        func_ov014_021885bc(self);
     }
     return var0;
 }

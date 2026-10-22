@@ -7,12 +7,12 @@ enum { Enum_ov006_0215b7e8_54 = 0x2a, Enum_ov006_0215b7e8_76 = 0x48, Enum_ov006_
 enum { Enum_ov006_0215b7e8_54 = 0x36, Enum_ov006_0215b7e8_76 = 0x4c, Enum_ov006_0215b7e8_4696 = 0x1258 };
 #endif
 
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_0207fdcc_2;
-struct Struct_ov006_0215b7e8_2;
-struct Struct_0207fe44;
-struct Struct_ov006_02154614;
+struct Obj0208203c;
+struct SePlayer;
+struct Obj2081;
+struct Obj0215f348;
+struct Cont0207fe44;
+struct AlchemyPot;
 
 struct Struct_ov006_0215b7e8 {
     char unknown_0_[0x16];
@@ -119,23 +119,23 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-extern "C" void func_ov006_021570fc(Struct_ov006_02154614* arg0, int arg1);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" void func_ov006_0215f348(Struct_ov006_0215b7e8_2* arg0);
-extern "C" void func_02081ea4(Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_0208203c(Struct_02081f20_2* arg0);
-extern "C" void func_02080c04(Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_02080c20(Struct_0207fdcc_2* arg0, int arg1);
-extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int, int);
-extern "C" void func_0207fe44(Struct_0207fe44* arg0);
-extern "C" Struct_ov006_0215b7e8* func_ov006_02157368(void* arg0, short arg1);
-extern "C" void func_ov006_02158de0(Struct_ov006_02157a60* arg0);
-extern "C" void func_0207fdcc(Struct_0207fdcc_2* arg0, int arg1);
+extern "C" void func_ov006_021570fc(AlchemyPot* pot, int shown);
+short FindMappedMemberId02080468(void* menu, int group);
+extern "C" void func_020813ec(void* menu, int group);
+void SyncEntries0215f348(Obj0215f348* self);
+void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int value);
+void ResetWithSub0208203c(Obj0208203c* repeat);
+void SetElementFlag0x20_02080c04(Obj2081* menu, int id);
+void ClearElementFlag0x20_02080c20(Obj2081* menu, int id);
+extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
+extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
+void SePlayer_Play(SePlayer* sound, int, int);
+void CallFunc0204c804OverAllElems(Cont0207fe44* menu);
+extern "C" LayoutElement* func_ov006_02157368(void* layout, short id);
+extern "C" void func_ov006_02158de0(AlchemyMenu* self);
+void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215b7e8
 extern "C" ARM void func_ov006_0215b7e8(Struct_ov006_02157a60* arg0) {
@@ -173,10 +173,10 @@ extern "C" ARM void func_ov006_0215b7e8(Struct_ov006_02157a60* arg0) {
         arg0->unknown_42c_ = 0;
         if (func_ov006_02158a28(arg0))
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            switch (arg0->unknown_360_)
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            self->cursor_ = 0;
+            switch (self->mainCursor_)
             {
             case 2:
                 arg0->unknown_366_ = -1;

@@ -8,7 +8,7 @@
 #include "Input/Input.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02108760;
+struct SePlayer;
 struct Struct_0205bb84;
 
 struct Struct_ov005_02153ba4_2 {
@@ -48,18 +48,18 @@ struct Struct_ov005_02153954 {
     unsigned int unknown_3dcc_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 MemberScreen* GetField1c_021a193c(int* p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
-extern "C" void func_0205bb04(void* cursor, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 
 // USA: func_ov005_0215751c
 extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
@@ -83,22 +83,22 @@ extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
             if (arg0->unknown_2d90_[arg0->unknown_3dbc_].unknown_0_ < 0) {
                 var1 = 1;
             } else {
-                func_ov005_0215792c(arg0, 5);
-                func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-                var2->unknown_634_ &= ~1;
-                var2->unknown_634_ &= ~0x80;
+                func_ov005_0215792c(self, 5);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+                screen->flags_ &= ~1;
+                screen->flags_ &= ~0x80;
             }
         }
     }
-    if (var1) {
-        func_ov005_0215792c(arg0, 4);
-        arg0->unknown_3dbb_ = 8;
-        func_0205bb04(arg0->unknown_19f4_, arg0->unknown_3dbb_ - 8);
+    if (down) {
+        func_ov005_0215792c(self, 4);
+        self->slot_ = 8;
+        GridCursor_SetSelectedIndex(self->cursor_, self->slot_ - 8);
         if (g_keyManager.TestKeysPressed(0x80))
-            func_0205eaa0((Struct_02108760*)&data_02108760, 2, 0);
-        else if (func_ov005_02157190(arg0))
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
+        else if (CheckFlag30Or401_02157190(self))
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+        func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
     if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))

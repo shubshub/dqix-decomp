@@ -7,13 +7,13 @@ enum { Enum_ov003_0217a764_0 = 0x84, Enum_ov003_0217a764_54 = 0x2a };
 enum { Enum_ov003_0217a764_0 = 0, Enum_ov003_0217a764_54 = 0x36 };
 #endif
 
-struct Struct_0207fdcc_2;
-struct Struct_0207fdf0_2;
-struct Struct_02108760;
-struct Struct_02081f20_2;
-struct Struct_0201099c_10;
-struct Struct_ov003_02178910;
-struct Struct_0201099c_9;
+struct Obj2081;
+struct Cont0207fdf0;
+struct SePlayer;
+struct Obj0208203c;
+struct Container020dedd0;
+struct Obj021dcae0;
+struct Element020de650;
 
 struct Struct_ov003_0217a764 {
     char unknown_0_[8];
@@ -25,13 +25,13 @@ struct GameState;
 extern "C" void* func_02010828(GameState*);
 extern "C" void func_ov003_0217a220(unsigned char* arg0);
 
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_0207fdf0(struct Struct_0207fdf0_2* arg0, int arg1);
-extern "C" ARM int func_ov003_02175d78(char* arg0);
+short FindMappedMemberId02080468(void* obj, int id);
+void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+struct Element020de650* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
+ARM int RefillAndResetEntry_02175d78(char* obj);
 
 extern "C" void func_ov003_02177820(char* arg0);
 extern "C" void func_ov003_02177938(void* arg0);
@@ -44,7 +44,7 @@ extern "C" int func_ov003_02175df4(void* arg0);
 extern "C" int func_ov003_02179da8(void* arg0, int arg1);
 extern "C" void func_ov023_021dcae0(struct Struct_ov003_02178910* arg0, int arg1);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217a764
 extern "C" ARM void func_ov003_0217a764(unsigned char* arg0) {
@@ -78,24 +78,24 @@ extern "C" ARM void func_ov003_0217a764(unsigned char* arg0) {
         return;
     }
 
-    if (var2 == 1) {
-        *(void**)(arg0 + (0xff8 - Enum_ov003_0217a764_0)) = arg0 + (0x1000 + 0xe - Enum_ov003_0217a764_0);
-        func_ov003_0217a220(arg0);
-        func_ov023_021dcae0((struct Struct_ov003_02178910*)(arg0 + 0x3c), *(short*)(arg0 + (0x1000 + 0x3a - Enum_ov003_0217a764_0)));
-        if (func_ov003_021765b4(arg0) != 0) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2*)(arg0 + (0x88c - Enum_ov003_0217a764_0)));
-            *(void**)(arg0 + (0xff8 - Enum_ov003_0217a764_0)) = 0;
-            void* var4 = (void*)func_020dedd0((struct Struct_0201099c_10*)(arg0 + (0x874 - Enum_ov003_0217a764_0)), *(short*)(arg0 + (0x1000 + 0x3a - Enum_ov003_0217a764_0)));
-            *(void**)(arg0 + 8) = var4;
-            if (var4 == 0) return;
-            int var5 = func_ov003_02179da8(var4, 0);
-            if (var5 == 2) {
-                func_0207fdf0((struct Struct_0207fdf0_2*)var1, 0);
-                *(short*)(arg0 + (0x1000 + 0x36 - Enum_ov003_0217a764_0)) = 0x1c;
-                *(unsigned char*)(arg0 + (0x1000 + 0x3e - Enum_ov003_0217a764_0)) = 1;
-                *(unsigned char*)(arg0 + (0x1000 + 0x3f - Enum_ov003_0217a764_0)) = 0;
-                *(unsigned short*)(arg0 + (0x1000 + 0x46 - Enum_ov003_0217a764_0)) |= 0x2000;
+    if (state == 1) {
+        *(void**)(self + (0xff8 - kRegionSelfShift)) = self + (0x1000 + 0xe - kRegionSelfShift);
+        ComputeMappedOffset_0217a220(self);
+        func_ov023_021dcae0((struct Obj021dcae0*)(self + 0x3c), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));
+        if (func_ov003_021765b4(self) != 0) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c*)(self + (0x88c - kRegionSelfShift)));
+            *(void**)(self + (0xff8 - kRegionSelfShift)) = 0;
+            void* elem = (void*)FindElementByKey020dedd0((struct Container020dedd0*)(self + (0x874 - kRegionSelfShift)), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));
+            *(void**)(self + 8) = elem;
+            if (elem == 0) return;
+            int tier = func_ov003_02179da8(elem, 0);
+            if (tier == 2) {
+                CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)elemObj, 0);
+                *(short*)(self + (0x1000 + 0x36 - kRegionSelfShift)) = 0x1c;
+                *(unsigned char*)(self + (0x1000 + 0x3e - kRegionSelfShift)) = 1;
+                *(unsigned char*)(self + (0x1000 + 0x3f - kRegionSelfShift)) = 0;
+                *(unsigned short*)(self + (0x1000 + 0x46 - kRegionSelfShift)) |= 0x2000;
                 return;
             }
             func_0207fdf0((struct Struct_0207fdf0_2*)var1, 0);

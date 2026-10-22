@@ -4,7 +4,7 @@
 
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Struct_02108760;
+struct SePlayer;
 
 struct Struct_ov000_0217b518 {
     unsigned char unknown_0_[0x188];
@@ -61,20 +61,20 @@ struct Struct_ov000_0217b518_3 {
 #endif
 };
 
-extern Struct_ov000_02184294_4 data_ov000_02184294;
-extern Struct_02108760 data_02108760;
+extern BattleWindowContext data_ov000_02184294;
+extern SePlayer g_sePlayer;
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_0205def8(struct Struct_0205def8* arg0, int arg1, int arg2);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" int func_ov000_0217ab48(void* arg0);
-extern "C" void func_ov000_02171458(Struct_ov000_0217b518_3* arg0);
-extern "C" void func_ov000_0217629c(Struct_ov000_0217b518_3* arg0);
-extern "C" void func_ov000_0217ab8c(Struct_ov000_0217b518_3* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02176e3c(Struct_ov000_0217b518* arg0, Struct_ov000_0217b518_3* arg1, int arg2, int arg3, int arg4, int arg5);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int set, int key);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char* member);
+int CheckFlagsOrField_0217ab48_0217ab48(void* menu);
+extern "C" void func_ov000_02171458(BattleSubMenu* menu);
+extern "C" void func_ov000_0217629c(BattleSubMenu* menu);
+extern "C" void func_ov000_0217ab8c(BattleSubMenu* menu, int a, int b);
+extern "C" void func_ov000_02176e3c(BattleWindow* window, BattleSubMenu* menu, int c, int d, int e, int f);
 
 #if defined(jpn)
 // USA: func_ov000_0217b518
@@ -93,17 +93,17 @@ extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, 
     if (var2 != var1) {
         return -1;
     }
-    int var3 = g_keyManager.TestKeysPressed(0x601);
-    bool var4 = (var3 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) ? 1 : 0;
-    if (var4 || arg0->unknown_444_) {
-        func_0205def8((struct Struct_0205def8*)var0->unknown_188_, 0, 0x22);
-        func_0205eaa0(&data_02108760, 1, 0);
-        func_ov000_02171458(arg0);
-        GameObject* var5 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_4c_);
-        if (var5 != NULL) {
-            unsigned char* var6 = func_02053c6c((unsigned char*)var5);
-            if (var6 != NULL) {
-                *(unsigned short*)(var6 + 0x8c8) = arg0->unknown_26_;
+    int pressed = g_keyManager.TestKeysPressed(0x601);
+    bool cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
+    if (cancel || menu->forceClose) {
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        func_ov000_02171458(menu);
+        GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(menu->partyIndex);
+        if (member != NULL) {
+            unsigned char* data = GetFieldAt0x150_02053c6c((unsigned char*)member);
+            if (data != NULL) {
+                *(unsigned short*)(data + 0x8c8) = menu->itemId;
             }
         }
         if (arg0->unknown_10_[arg0->unknown_18_] != 100) {
@@ -140,17 +140,17 @@ extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, 
     if (var9 != var7) {
         return -1;
     }
-    int var10 = g_keyManager.TestKeysPressed(0x601);
-    int var11 = (var10 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) ? 1 : 0;
-    if (var11 || arg0->unknown_444_) {
-        func_0205def8((struct Struct_0205def8*)var8->unknown1_188_, 0, 0x22);
-        func_0205eaa0(&data_02108760, 1, 0);
-        func_ov000_02171458(arg0);
-        GameObject* var12 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_4c_);
-        if (var12 != NULL) {
-            unsigned char* var13 = func_02053c6c((unsigned char*)var12);
-            if (var13 != NULL) {
-                *(unsigned short*)(var13 + 0x960) = arg0->unknown_26_;
+    int pressed = g_keyManager.TestKeysPressed(0x601);
+    int cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
+    if (cancel || menu->forceClose) {
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        func_ov000_02171458(menu);
+        GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(menu->partyIndex);
+        if (member != NULL) {
+            unsigned char* data = GetFieldAt0x150_02053c6c((unsigned char*)member);
+            if (data != NULL) {
+                *(unsigned short*)(data + 0x960) = menu->itemId;
             }
         }
         if (arg0->unknown_10_[arg0->unknown_18_] != 100) {

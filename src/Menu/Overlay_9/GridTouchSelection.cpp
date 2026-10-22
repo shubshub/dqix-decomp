@@ -17,7 +17,7 @@ struct Overlay9TouchView {
 extern "C" {
     int _Z18GetField0_0205bafcPv(void*);
     int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
-    void func_0205bb04(void*, int);
+    void GridCursor_SetSelectedIndex(void*, int);
     void CharacterCreationUI_SetupSlotNavigation(Overlay9TouchView*);
     void CharacterCreationUI_MoveCursorToSlot(Overlay9TouchView*, int);
 
@@ -72,7 +72,7 @@ extern "C" {
         int count = _Z18GetField0_0205bafcPv(menu->cursor);
         if (cursorMode == 1 && count == 8 && selected >= 0 && selected != 0x65 && selected != 0x6c) {
             CharacterCreationUI_SetupSlotNavigation(menu);
-            func_0205bb04(menu->cursor, selected);
+            GridCursor_SetSelectedIndex(menu->cursor, selected);
             menu->flags |= 0x2000;
             int index = _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor);
             CharacterCreationUI_MoveCursorToSlot(menu, index);

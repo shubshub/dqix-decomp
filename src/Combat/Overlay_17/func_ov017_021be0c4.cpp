@@ -42,12 +42,12 @@ struct Struct_ov017_021be0c4_2 {
 struct Struct_02018300_3;
 extern "C" Struct_ov017_021be0c4_2* func_02012fe4();
 extern "C" int* func_0202ae18();
-extern "C" Struct_02046574_2* func_020421a0();
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" void func_0205ebc0(void*, int, int);
-extern "C" void func_0205ebfc(void*, int, int);
-extern "C" void func_0205ebec(void*);
-extern char data_02108760[];
+Obj02046574* GetGlobalField0x1c020421a0();
+void CancelPendingAction020397cc(Obj020397cc*, int);
+void SetForwardAndStore0205ebc0(void*, int, int);
+void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
+void ForwardField0xc0_0205ebec(void*);
+extern char g_sePlayer[];
 extern "C" int func_0208f748(void*, int*);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_020426bc(BaseCombatStats*, char*, int);
@@ -76,22 +76,22 @@ extern "C" ARM void func_ov017_021be0c4(Struct_ov017_021be0c4* arg0) {
     GameResources* var1 = GetGameResources();
     Struct_02046574_2* var2 = func_020421a0();
     func_02012fe4();
-    GrottoStruct* var3 = var0->GetGrottoStruct();
-    if (arg0->unknown_8_ == 0) {
-        func_020397cc((Struct_02018300_3*)var0->GetUnknownGameObject(), 1);
-        Struct_0208cb08* var4 = func_02094a00();
-        func_02094b30(var4, 0x203, 0);
-        if (func_02094b4c(var4)) arg0->unknown_8_ = 1;
-    } else if (arg0->unknown_8_ == 1) {
-        SetMainBrightness(var1, 0x10, 0xf);
-        func_0205ebc0(data_02108760, 0x83, 0x83);
-        func_0205ebfc(data_02108760, 0, 0);
-        arg0->unknown_8_ = 2;
-    } else if (arg0->unknown_8_ == 2) {
-        if (!IsMainBrightnessTransitionActive(var1)) {
-            if (func_0208f748(func_02012fe4()->unknown_2664_, &var3->entranceX)) {
-                var3->activeMapData.SetDiscoveryState(DiscoveryState_Discovered);
-                if (var3->activeMapData.DiscoveredBy[0] == 0) {
+    GrottoStruct* grotto = game->GetGrottoStruct();
+    if (state->step == 0) {
+        CancelPendingAction020397cc((Obj020397cc*)game->GetUnknownGameObject(), 1);
+        FontBankLoader* global = GetGlobal02109400_02094a00();
+        BlankFunction02094b30(global, 0x203, 0);
+        if (AlwaysTrue02094b4c(global)) state->step = 1;
+    } else if (state->step == 1) {
+        SetMainBrightness(resources, 0x10, 0xf);
+        SetForwardAndStore0205ebc0(g_sePlayer, 0x83, 0x83);
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
+        state->step = 2;
+    } else if (state->step == 2) {
+        if (!IsMainBrightnessTransitionActive(resources)) {
+            if (func_0208f748(func_02012fe4()->map, &grotto->entranceX)) {
+                grotto->activeMapData.SetDiscoveryState(DiscoveryState_Discovered);
+                if (grotto->activeMapData.DiscoveredBy[0] == 0) {
 #if defined(jpn)
                     VectorizedInvertedMemcpy(var0->GetProtagonist()->baseStats_, var3->activeMapData.DiscoveredBy, 10);
 #else
@@ -132,16 +132,16 @@ extern "C" ARM void func_ov017_021be0c4(Struct_ov017_021be0c4* arg0) {
             func_ov017_021d3ec8();
             arg0->unknown_8_ = 5;
         }
-    } else if (arg0->unknown_8_ == 5) {
-        var2->unknown_19ae_ = 0;
-        if (!var2->unknown_9a0_) {
-            func_02043204((char*)var2);
-            func_020397c0(var0->GetUnknownGameObject());
-            Struct_0208cb08* var8 = func_02094a00();
-            func_02094b38(var8, 0x203);
-            func_02094ab0(var8);
-            func_0205ebec(data_02108760);
-            arg0->unknown_1_ = 1;
+    } else if (state->step == 5) {
+        controller->field_19ae = 0;
+        if (!controller->busy) {
+            ReinitController02043204((char*)controller);
+            SetByteField0x253_020397c0(game->GetUnknownGameObject());
+            FontBankLoader* global = GetGlobal02109400_02094a00();
+            BlankFunction02094b38(global, 0x203);
+            func_02094ab0(global);
+            ForwardField0xc0_0205ebec(g_sePlayer);
+            state->done = 1;
         }
     }
 }

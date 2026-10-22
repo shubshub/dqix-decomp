@@ -15,19 +15,19 @@ struct Struct_ov004_02163c40 {
     char unknown_18fb_[3];
     unsigned char unknown_18fe_;
 };
-struct Struct_ov004_02163c40_2 { char unknown_0_[0xc]; unsigned char unknown_c_; char unknown_d_[0x38 - 0xd]; unsigned short unknown_38_; };
-struct Struct_02108760;
-extern Struct_ov004_02163c40* data_ov004_02171010;
-extern Struct_02108760 data_02108760;
+struct Node3C40 { char field_0[0xc]; unsigned char flags; char field_d[0x38 - 0xd]; unsigned short selected; };
+struct SePlayer;
+extern MapList3C40* data_ov004_02171010;
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 extern unsigned short data_ov004_02170660[3];
 #else
 extern unsigned short data_ov004_0216fef8[3];
 #endif
 extern "C" void func_ov023_021f809c(void*, void*);
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" int func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov004_02163478(Struct_ov004_02163c40*);
+MessageSystem* GetGlobalField0x1c020421a0();
+int SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov004_02163478(MapList3C40*);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" Struct_ov004_02163c40_2* func_ov023_021f6880(void*, int);
 extern "C" short func_ov023_021f6f10(void*);
@@ -37,24 +37,24 @@ extern "C" void func_ov004_02164084(void*);
 
 // USA: func_ov004_02163c40
 // JPN: 0x02164150.
-extern "C" ARM int func_ov004_02163c40(void* arg0) {
-    TreasureMapMetadata var0[99];
-    unsigned short var1[99];
-    unsigned short var2[99];
-    DetailedTreasureMapData var3;
-    unsigned short var4[3];
-    int var5;
-    int var6;
-    int var7;
-    int var8;
-    int var9;
-    unsigned short var10;
-    int var11 = IsBrightnessTransitionActive(GetGameResources());
-    if (var11 && !data_ov004_02171010->unknown_18fe_) return 0;
-    if (!data_ov004_02171010->unknown_18f4_) return 0;
-    if (func_020421a0()->unknown_998_) return 0;
-    if (!data_ov004_02171010->unknown_18fe_) {
-        func_0205eaa0(&data_02108760, 1, 0);
+extern "C" ARM int func_ov004_02163c40(void* self) {
+    TreasureMapMetadata maps[99];
+    unsigned short indices[99];
+    unsigned short scores[99];
+    DetailedTreasureMapData detail;
+    unsigned short modes[3];
+    int forward;
+    int backward;
+    int changed;
+    int last;
+    int first;
+    unsigned short selected;
+    int brightness = IsBrightnessTransitionActive(GetGameResources());
+    if (brightness && !data_ov004_02171010->field_18fe) return 0;
+    if (!data_ov004_02171010->count) return 0;
+    if (GetGlobalField0x1c020421a0()->active) return 0;
+    if (!data_ov004_02171010->field_18fe) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
     }
 #if defined(jpn)
     COPY_ARRAY(var4, data_ov004_02170660);

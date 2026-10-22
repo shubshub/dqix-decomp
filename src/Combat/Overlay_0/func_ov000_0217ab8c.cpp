@@ -72,24 +72,24 @@ struct Struct_0205ba68;
 
 extern Struct_ov000_02184294_2 data_ov000_02184294;
 
-struct Struct_ov000_02171640;
-extern "C" int func_ov000_02171698(Struct_ov000_02171640*);
-struct Struct_ov000_02171968;
-extern "C" int func_ov000_021719c0(Struct_ov000_02171968*);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
-extern "C" int func_02053c6c(unsigned char*);
-extern "C" int func_02083960(Struct_0207d300*);
-extern "C" void func_0205cf10(void*);
-struct Struct_0205cf1c;
-extern "C" void func_0205cf1c(Struct_0205cf1c*);
-extern "C" void func_0205cef8(void*);
-extern "C" void func_0205cf04(void*);
-extern "C" void func_0205ba68(Struct_0205ba68*, int, int, int);
-struct Struct_0205bacc;
-extern "C" void func_0205bacc(Struct_0205bacc*, int);
+struct S02171698;
+int CountNonZero02171698(S02171698*);
+struct S021719c0;
+int CountNonZero021719c0(S021719c0*);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+int CountPositiveSlots02083960(Slots02083960*);
+void ClearChannelAFlag0205cf10(void*);
+struct Struct0205cf1c;
+void ClearFlagByte0205cf1c(Struct0205cf1c*);
+void SetChannelAFlag0205cef8(void*);
+void SetChannelBFlag0205cf04(void*);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+struct Node0205bacc;
+void GridCursor_SetCount(Node0205bacc*, int);
 struct Struct_0205bcdc;
-extern "C" void func_0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(Struct_02061c04_21*, int);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(Sub*, int);
 
 // USA: func_ov000_0217ab8c
 extern "C" ARM void func_ov000_0217ab8c(Struct_ov000_0217ab8c* arg0, int arg1, int arg2) {
@@ -195,15 +195,15 @@ extern "C" ARM void func_ov000_0217ab8c(Struct_ov000_0217ab8c* arg0, int arg1, i
         func_0205cf1c((Struct_0205cf1c*)arg0->unknown_38_);
         return;
     }
-    func_0205cef8(arg0->unknown_38_);
-    func_0205cf04(arg0->unknown_38_);
-    func_0205ba68((Struct_0205ba68*)&var5->unknown_4_, var0, var1, 0);
-    func_0205ba68((Struct_0205ba68*)&var5->unknown_54_, var0, var1, 0);
-    func_0205bacc((Struct_0205bacc*)&var5->unknown_4_, var3);
-    func_0205bacc((Struct_0205bacc*)&var5->unknown_54_, var3);
-    var5->unknown_4_.unknown_4_ = var2;
-    var5->unknown_54_.unknown_4_ = var2;
-    func_0205bcdc((Struct_0205bcdc*)&var5->unknown_4_, var4);
-    func_0205bb04(&var5->unknown_54_, var4);
-    data_ov000_02184294.unknown1_8_->unknown_1d72_ &= ~0x100;
+    SetChannelAFlag0205cef8(self->window);
+    SetChannelBFlag0205cf04(self->window);
+    GridCursor_SetDimensions((Struct_0205ba68*)&w->a, step, visible, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&w->b, step, visible, 0);
+    GridCursor_SetCount((Node0205bacc*)&w->a, total);
+    GridCursor_SetCount((Node0205bacc*)&w->b, total);
+    w->a.field4 = pages;
+    w->b.field4 = pages;
+    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&w->a, selected);
+    GridCursor_SetSelectedIndex(&w->b, selected);
+    data_ov000_02184294.root->flags &= ~0x100;
 }

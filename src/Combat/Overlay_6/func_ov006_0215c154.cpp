@@ -7,13 +7,13 @@ enum { Enum_ov006_0215c154_54 = 0x2a, Enum_ov006_0215c154_76 = 0x48, Enum_ov006_
 enum { Enum_ov006_0215c154_54 = 0x36, Enum_ov006_0215c154_76 = 0x4c, Enum_ov006_0215c154_4696 = 0x1258 };
 #endif
 
-struct Struct_02081f20_2 { int unknown_0_[3]; };
-struct Struct_02108760;
-struct Struct_0207fdcc_2;
-struct Struct_02071ffc_4;
-struct Struct_ov006_02158c28;
-struct Struct_ov006_02154614;
-struct Struct_ov006_021537d0;
+struct Obj0208203c { int fields_[3]; };
+struct SePlayer;
+struct Obj2081;
+struct Container02071ffc;
+struct StructC28;
+struct AlchemyPot;
+struct Recipe;
 
 struct Struct_0207fdcc_2 {
     char unknown_0_[Enum_ov006_0215c154_54];
@@ -135,20 +135,20 @@ extern "C" void func_ov006_021573c8(void*);
 extern "C" void func_ov006_021553bc(void*, short*, unsigned char*);
 extern "C" void func_0208203c(Struct_02081f20_2*);
 extern "C" void func_ov006_02155710(void*, int, int);
-extern "C" int func_ov006_021595b4(Struct_ov006_02157a60*);
-extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60*);
-extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_ov006_02159218(Struct_ov006_02157a60*);
-extern "C" void func_ov006_02159094(Struct_ov006_02159094*);
-extern "C" void func_ov006_02158c28(Struct_ov006_02158c28*);
-extern "C" void func_ov006_0215943c(Struct_ov006_02157a60*);
-extern "C" int func_ov006_02159564(void*);
-extern "C" void func_ov006_02159274(Struct_ov006_02157a60*, unsigned char*, short*, unsigned char*);
-extern "C" void func_ov006_021596f0(Struct_ov006_021596f0*);
-extern "C" int func_ov006_02159834(Struct_ov006_02157a60*);
-extern "C" void func_ov006_02159108(Struct_ov006_02157a60*, int, int, int);
-extern "C" Struct_02108760 data_02108760;
+extern "C" int func_ov006_021595b4(AlchemyMenu*);
+extern "C" unsigned char func_ov006_02158a28(AlchemyMenu*);
+extern "C" unsigned char func_ov006_02158b78(AlchemyMenu*);
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" int func_ov006_02159218(AlchemyMenu*);
+void ExpireStatusSlot02159094(Obj02159094*);
+void ClearField44IfSet_02158c28(StructC28*);
+extern "C" void func_ov006_0215943c(AlchemyMenu*);
+int Check02159564(void*);
+extern "C" void func_ov006_02159274(AlchemyMenu*, unsigned char*, short*, unsigned char*);
+void UpdateEntryFlags021596f0(Struct021596f0*);
+extern "C" int func_ov006_02159834(AlchemyMenu*);
+extern "C" void func_ov006_02159108(AlchemyMenu*, int, int, int);
+extern "C" SePlayer g_sePlayer;
 
 static inline unsigned char inline_ov006_0215bb7c(Struct_ov006_02157a60* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_38a_; }
 
@@ -189,15 +189,15 @@ extern "C" ARM void func_ov006_0215c154(Struct_ov006_02157a60* arg0) {
             func_ov006_0215951c((Struct_ov006_0215951c*)arg0);
             func_ov006_0215f4dc(arg0);
         }
-        if (func_ov006_02158a28(arg0)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c(&arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            if (func_ov006_02159218(arg0)) {
-                func_02080c68(var0, arg0->unknown_36e_, 1);
-                func_02081ea4(var0, arg0->unknown_36e_, 1);
-                func_02080c68(var0, 0x11, 0);
-                arg0->unknown_390_++;
+        if (func_ov006_02158a28(self)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c(&self->repeat_);
+            self->cursor_ = 0;
+            if (func_ov006_02159218(self)) {
+                SetEntryLowNibbleAndElement02080c68(menu, self->group_, 1);
+                SetElementFlag0x40_02081ea4(menu, self->group_, 1);
+                SetEntryLowNibbleAndElement02080c68(menu, 0x11, 0);
+                self->step_++;
             } else {
                 return;
             }
@@ -218,26 +218,26 @@ extern "C" ARM void func_ov006_0215c154(Struct_ov006_02157a60* arg0) {
     } else if (arg0->unknown_390_ == 3) {
         if (func_ov006_02159564(arg0))
             return;
-        if (func_ov006_02158a28(arg0) && arg0->unknown_35e_ == *arg0->unknown_44_) {
-            unsigned char var2;
-            unsigned char var3;
-            var3 = 0;
-            var2 = 0;
-            short var4 = 0;
-            func_ov006_02159274(arg0, &var2, &var4, &var3);
-            if (var3) {
-                func_0205eaa0(&data_02108760, 1, 0);
-                func_0208203c(&arg0->unknown_9c_);
-                arg0->unknown_44_ = 0;
-                func_02081ea4(arg0->unknown_14_, 0x11, 1);
-                arg0->unknown_38a_ = var2;
-                arg0->unknown_370_ = var4;
-                arg0->unknown_38b_ = 1;
-                arg0->unknown_390_++;
-                arg0->unknown_394_ &= ~0x10;
-                arg0->unknown_394_ |= 0x20;
-                arg0->unknown_37e_ = 9;
-                arg0->unknown_392_ = 0;
+        if (func_ov006_02158a28(self) && self->previousCursor_ == *self->cursor_) {
+            unsigned char category;
+            unsigned char count;
+            count = 0;
+            category = 0;
+            short item = 0;
+            func_ov006_02159274(self, &category, &item, &count);
+            if (count) {
+                SePlayer_Play(&g_sePlayer, 1, 0);
+                ResetWithSub0208203c(&self->repeat_);
+                self->cursor_ = 0;
+                SetElementFlag0x40_02081ea4(self->menu_, 0x11, 1);
+                self->category_ = category;
+                self->item_ = item;
+                self->count_ = 1;
+                self->step_++;
+                self->flags_ &= ~0x10;
+                self->flags_ |= 0x20;
+                self->message_ = 9;
+                self->messageStep_ = 0;
                 return;
             }
         } else if (func_ov006_02158b78(arg0)) {
@@ -256,19 +256,19 @@ extern "C" ARM void func_ov006_0215c154(Struct_ov006_02157a60* arg0) {
         int var5 = func_ov006_02159834(arg0);
         if (var5 == 1)
             return;
-        if (g_keyManager.TestKeysPressed(1) || var5 == 2) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c(&arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_394_ &= ~8;
-            func_0207fdcc(var0, 6);
-            int var6 = arg0->unknown_370_;
-            int var7 = inline_ov006_0215bb7c(arg0);
-            int var8 = inline_ov003_0216e714(arg0);
-            func_ov006_02159108(arg0, var7, var6, var8);
-            func_ov006_021553bc(arg0->unknown_10_, arg0->unknown_378_, arg0->unknown_38c_);
-            arg0->unknown_38f_ = 7;
-            arg0->unknown_390_ = 0;
+        if (g_keyManager.TestKeysPressed(1) || result == 2) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c(&self->repeat_);
+            self->cursor_ = 0;
+            self->flags_ &= ~8;
+            CallFunc0204c804OnMatchingKey_0207fdcc(menu, 6);
+            int item = self->item_;
+            int category = GetCategory(self);
+            int count = GetCount(self);
+            func_ov006_02159108(self, category, item, count);
+            func_ov006_021553bc(self->pot_, self->chosenItems_, self->chosenCounts_);
+            self->state_ = 7;
+            self->step_ = 0;
 #if !defined(jpn)
             arg0->unknown_387_ = arg0->unknown_38b_;
 #endif

@@ -12,52 +12,52 @@ enum { Enum_ov002_02163bd0_13 = 0xd, Enum_ov002_02163bd0_38 = 0x26 };
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
+struct Obj_0205da38;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Struct_0205dee8;
 struct Struct_0205def8;
-struct Struct_02048150;
-struct Struct_0207cf30_3;
-struct Struct_02061c04_23;
-struct Struct_0207cf30_4;
-struct Struct_02083994;
-struct Struct_0201099c_10;
-extern "C" int func_ov002_02154f4c(unsigned char *arg0);
-extern "C" void *func_02053c6c(unsigned char *arg0);
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_020dcc20(int arg0, int arg1);
-extern "C" void *func_02010828(GameState *arg0);
-extern "C" int func_02086ef0(struct Struct_02048150 *arg0, int arg1);
-extern "C" void func_0205def8(struct Struct_0205def8 *arg0, int arg1, int arg2);
-extern "C" int func_0205df38(void *arg0, int arg1);
-extern "C" int func_020dcbbc(unsigned char *arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_020a0b3c(struct Struct_0207cf30_3 *arg0, int arg1);
-extern "C" int func_020a0a08(Struct_02061c04_23*, int, int);
-extern "C" int func_020a095c(struct Struct_0207cf30_4 *arg0, int arg1, signed char arg2);
-extern "C" int func_02083994(struct Struct_02083994 *arg0, int arg1);
-extern "C" int func_020dc920(int arg0, int arg1, int arg2, int arg3);
+struct ArrayContainsByteStruct;
+struct KeyMap020a0b3c;
+struct KeyMap020a0a08;
+struct KeyMap020a095c;
+struct Slots02083994;
+struct Container020dedd0;
+int BuildFlaggedCombatantSlotList_02154f4c(unsigned char *obj);
+void *GetFieldAt0x150_02053c6c(unsigned char *obj);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int CountFlag0x800MatchesEqualsTarget020dcc20(int targetCount, int flag);
+void *GetPtrField0x2a04_02010828(GameState *gs);
+int ArrayContainsByte_02086ef0(struct ArrayContainsByteStruct *s, int val);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
+extern "C" int func_0205df38(void *list, int key);
+int CheckAnyByteMatches020dcbbc(unsigned char *arr, int count, int b, int c, int d);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int LookupValueByKey020a0b3c(struct KeyMap020a0b3c *map, int key);
+int DecrementKeyValue020a0a08(KeyMap020a0a08*, int, int);
+extern "C" int _Z26AddKeyValueClamped020a095cP14KeyMap020a095cii(struct KeyMap020a095c *map, int key, signed char amount);
+int CountMatchingUntilNegative02083994(struct Slots02083994 *s, int value);
+extern "C" int func_020dc920(int a, int b, int c, int d);
 extern "C" int *func_0202ae18(void);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" char *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" int func_020100a8(GameState *arg0);
-extern "C" void func_0205dee8(struct Struct_0205dee8 *arg0, int arg1);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_0215b814(char *arg0);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215d654(char *arg0);
-extern "C" void func_ov002_02156e90(void *arg0);
-extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov002_0215a7b4(char *arg0, int arg1, short arg2, int arg3, int arg4);
-extern "C" void func_ov002_0215b2c8(char *arg0);
-extern "C" void func_ov002_0216bfd4(char *arg0, int arg1);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" char data_02108760[];
+int CheckField0NonZero_0202b7d8(int *p);
+char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+int GetField0x3acValue_020100a8(GameState *gs);
+void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+extern "C" void func_ov002_0215b814(char *base);
+extern "C" void func_ov002_02161cf0(char *base);
+extern "C" void func_ov002_0215d654(char *base);
+extern "C" void func_ov002_02156e90(void *base);
+extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
+extern "C" void func_ov002_0215a7b4(char *base, int a, short b, int c, int d);
+extern "C" void func_ov002_0215b2c8(char *self);
+extern "C" void func_ov002_0216bfd4(char *self, int a);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" char g_sePlayer[];
 
 #define L(base) ((base) + REGIONAL_OFFSET(0xe20, 0x2c8 + 0xc00))
 
@@ -141,17 +141,17 @@ extern "C" ARM void func_ov002_02163bd0(char *arg0) {
                 int var12 = *(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21));
                 *(short *) ((char *) func_02053c6c((unsigned char *) var11) + REGIONAL_OFFSET(0x800 + 0xc6, 0x900 + 0x5e)) = var12;
             }
-            if (*(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == 4) {
-                func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                *(unsigned int *) (arg0 + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
-                if (*(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe8, 0x1c00 + 0x20)) == 4) {
-                    void *var13 = func_02010828(GameState::GetInstance());
-                    int var14     = func_020a0b3c((struct Struct_0207cf30_3 *) var13,
-                                                                               *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)));
-                    func_020a0a08((struct Struct_02061c04_23 *) var13, *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)), (signed char)var14);
-                    func_020a095c((struct Struct_0207cf30_4 *) var13,
-                                                                      *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)), var14);
-                    *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xf0, 0x1c00 + 0x28)) = 0x236e;
+            if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == 4) {
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
+                if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe8, 0x1c00 + 0x20)) == 4) {
+                    void *map = GetPtrField0x2a04_02010828(GameState::GetInstance());
+                    int v     = LookupValueByKey020a0b3c((struct KeyMap020a0b3c *) map,
+                                                                               *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)));
+                    DecrementKeyValue020a0a08((struct KeyMap020a0a08 *) map, *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)), (signed char)v);
+                    _Z26AddKeyValueClamped020a095cP14KeyMap020a095cii((struct KeyMap020a095c *) map,
+                                                                      *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xea, 0x1c00 + 0x22)), v);
+                    *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xf0, 0x1c00 + 0x28)) = 0x236e;
                 } else {
                     GameState *var15 = GameState::GetInstance();
                     void *var16     = func_02010828(var15);
@@ -180,22 +180,22 @@ extern "C" ARM void func_ov002_02163bd0(char *arg0) {
                         *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xf0, 0x1c00 + 0x28)) = 0x2361;
                     }
                 }
-                func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
-                func_ov002_0215b9a4(arg0, Enum_ov002_02163bd0_13, 0);
-                *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xf2, 0x1c00 + 0x2a))          = -1;
-                *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8))           = Enum_ov002_02163bd0_38;
-                *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa84, 0xbbc))           = 5;
-                *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa88, 0xbc0))           = 0;
-                *(unsigned char *) (arg0 + 0x2000 + REGIONAL_OFFSET(0x2a8, 0x478)) = 1;
-            } else if (func_020dc920(*(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) & 0xff, 0, 0, 0)) {
-                func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                *(unsigned int *) (arg0 + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
-                func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
-                if (func_0202b7d8(func_0202ae18())) {
-                    int var18 = 1;
-                    int var19  = 0;
-                    for (; var19 < *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xafc, 0xc38)); var19++) {
-                        if (*(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == *(int *) (arg0 + var19 * 4 + 0x1000 + REGIONAL_OFFSET(0xb00, 0xc3c))) var18 = 0;
+                func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
+                func_ov002_0215b9a4(base, regionalState0d, 0);
+                *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xf2, 0x1c00 + 0x2a))          = -1;
+                *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8))           = regionalState26;
+                *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa84, 0xbbc))           = 5;
+                *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa88, 0xbc0))           = 0;
+                *(unsigned char *) (base + 0x2000 + REGIONAL_OFFSET(0x2a8, 0x478)) = 1;
+            } else if (func_020dc920(*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) & 0xff, 0, 0, 0)) {
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
+                func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
+                if (CheckField0NonZero_0202b7d8(func_0202ae18())) {
+                    int ok = 1;
+                    int i  = 0;
+                    for (; i < *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xafc, 0xc38)); i++) {
+                        if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == *(int *) (base + i * 4 + 0x1000 + REGIONAL_OFFSET(0xb00, 0xc3c))) ok = 0;
                     }
                     if (var18) {
                         int var20 = 0;

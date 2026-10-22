@@ -76,18 +76,18 @@ void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
 struct Struct_ov009_0218742c_8 { char unknown_0_[0x63d4]; unsigned char unknown_63d4_; };
 #endif
-struct Struct_ov009_0218aac8 { unsigned char unknown_0_; unsigned char unknown_1_; unsigned char unknown_2_[5]; };
-struct Struct_0205d81c; struct Struct_02108760; struct Struct_0205c570; struct Struct_0205da38;
-struct Struct_0205d6a0; struct Struct_0204b010; struct Struct_0205d1e0; struct Struct_0205d228;
-struct Struct_0205d274; struct Struct_0205d2bc; struct Struct_0201099c_10; struct Struct_0201099c_18;
-extern "C" void* func_020d6c00();
-extern "C" void func_ov023_021d9f88(Struct_ov009_0218742c_6*);
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" int func_0205da38(Struct_0205da38*, int);
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" void func_0204b010(Struct_0204b010*, void*);
+struct EquipmentMapping0218742c { unsigned char keyIndex; unsigned char destination; unsigned char field_2[5]; };
+struct Struct_0205d81c; struct SePlayer; struct Struct_0205c570; struct Obj_0205da38;
+struct Entry_0205d6a0; struct Obj0204b010; struct Cont0205d1e0; struct Cont0205d228;
+struct Cont0205d274; struct Obj0205d2bc; struct Container020dedd0; struct Ctx0209a810;
+void* GetDataPtr02114e04_020d6c00();
+extern "C" void func_ov023_021d9f88(Menu0218742c*);
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+int IsActiveElementFlag2Set0205da38(Obj_0205da38*, int);
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void ClearBuffer0204b010(Obj0204b010*, void*);
 extern "C" void func_0204bc74(void*, int, int, int, int, int, int);
 extern "C" void func_0204b04c(void*, int);
 extern "C" void func_0204b088(void*, int);
@@ -112,41 +112,41 @@ extern "C" void func_02083b60(unsigned char*, int);
 extern "C" void func_020830cc(void*, Struct_ov009_0218742c*);
 extern "C" void func_02086778(void*, Struct_ov009_0218742c*, unsigned char, unsigned char);
 extern "C" void* func_ov003_0215f4fc(void*, const char*);
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 extern unsigned char data_ov009_0218a9b4[];
 extern char data_ov009_0218ad2c[];
 extern char data_0211e33c[] __attribute__((aligned(4)));
-extern Struct_ov009_0218aac8 data_ov009_0218aac8[];
-extern char data_ov009_0218ad26[];
+extern EquipmentMapping0218742c data_ov009_0218aac8[];
+extern char CharacterCreationUI_firstKeyText[];
 
 inline Struct_ov009_0218742c_7* inline_ov009_0218742c_4(Struct_ov009_0218742c* arg0) { return arg0->unknown_14c_; }
 
-// USA: func_ov009_0218742c
-extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    func_020d6c00();
-    unsigned int var1 = arg0->unknown_c59_;
-    if (var1 == 0) {
-        func_ov023_021d9f88(arg0);
-        func_0205deb4((Struct_0205d81c*)arg0->unknown_2b4_, 3, 2);
-        func_0205eaa0(&data_02108760, 5, 0);
-        ++arg0->unknown_c59_;
-    } else if (var1 == 1) {
-        arg0->unknown_d9c_ |= 0x2000;
+// Overlay 9, originally func_ov009_0218742c (USA/EUR 0x0218742c, JPN 0x021881fc)
+extern "C" ARM void CharacterCreationUI_HandleConfirm(Menu0218742c* menu) {
+    GameState* game = GameState::GetInstance();
+    GetDataPtr02114e04_020d6c00();
+    unsigned int step = menu->step;
+    if (step == 0) {
+        func_ov023_021d9f88(menu);
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)menu->entryList, 3, 2);
+        SePlayer_Play(&g_sePlayer, 5, 0);
+        ++menu->step;
+    } else if (step == 1) {
+        menu->flags |= 0x2000;
         ColorEffect_ConfigureBrightnessAdjust(0x04001050, 1, -8);
-        arg0->unknown_d9c_ &= ~0x1000000;
-        ++arg0->unknown_c59_;
-    } else if (var1 == 2) {
-        arg0->unknown_d84_ = func_0205d794((Struct_0205c570*)arg0->unknown_2b4_);
-        int var2 = 0;
-        int var3 = func_0205da38((Struct_0205da38*)arg0->unknown_2b4_, 0x14);
-        int var4 = g_keyManager.TestKeysPressed(1);
-        int var5 = g_keyManager.TestKeysPressed(0x400);
-        if (var3 | (var4 | var5)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            switch (arg0->unknown_d84_) {
-            case 0: ++arg0->unknown_c59_; break;
-            case 1: var2 = 1; break;
+        menu->flags &= ~0x1000000;
+        ++menu->step;
+    } else if (step == 2) {
+        menu->selection = GetActiveScaledSum0205d794((Struct_0205c570*)menu->entryList);
+        int cancel = 0;
+        int active = IsActiveElementFlag2Set0205da38((Obj_0205da38*)menu->entryList, 0x14);
+        int confirm = g_keyManager.TestKeysPressed(1);
+        int alternate = g_keyManager.TestKeysPressed(0x400);
+        if (active | (confirm | alternate)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            switch (menu->selection) {
+            case 0: ++menu->step; break;
+            case 1: cancel = 1; break;
             }
         } else if (g_keyManager.TestKeysPressed(2)) var2 = 1;
         if (arg0->unknown_c59_ == 3) {
@@ -314,7 +314,7 @@ extern "C" ARM void func_ov009_0218742c(Struct_ov009_0218742c_6* arg0) {
 #if defined(jpn)
         CharacterCreationUI_SwitchTab((unsigned char*)menu, 8);
 #else
-        void* script = func_ov003_0215f4fc(menu->script, data_ov009_0218ad26);
+        void* script = func_ov003_0215f4fc(menu->script, CharacterCreationUI_firstKeyText);
         if (script) menu->script->script = script;
         menu->script->SetActive(1);
         menu->script->SetWaiting(0);

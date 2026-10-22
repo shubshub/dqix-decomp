@@ -39,12 +39,12 @@ struct Struct_02067b28 {
     char unknown_19c5_[0x17];
     unsigned char unknown_19dc_;
 };
-extern "C" int func_02044494(void*, void*);
-extern "C" int func_02044420(void*, void*);
-extern "C" Struct_0204254c* func_0204254c(int, int);
-extern "C" int func_020424e4(int, int);
-extern "C" int func_02045c00(Struct_02045c00_2*, int);
-extern "C" int func_020459b8(Struct_02067b28*, unsigned char, Struct_0204254c*, unsigned char);
+int IsHighByteFF02044494(void*, void*);
+int Dispatch02044420(void*, void*);
+Entry0204254c* Font_FindCharacter(int, int);
+int FindEntryIndexByKey020424e4(int, int);
+int FindMatchingEntryIndex(Container02045c00*, int);
+extern "C" int func_020459b8(TextContext02067b28*, unsigned char, Entry0204254c*, unsigned char);
 extern "C" int func_02001aec(const void*, const void*, int);
 extern char data_020f08dc[3];
 
@@ -80,17 +80,17 @@ extern "C" ARM void func_02067b28(Struct_02067b28* arg0) {
                 arg0->unknown_19c3_ = 1;
             }
         }
-        Struct_0204254c* var4 = func_0204254c((int)var0, arg0->unknown_19dc_);
-        int var5 = func_020424e4((int)var0, arg0->unknown_19dc_);
-        if (var4 && var5 >= 0) {
-            int var6 = func_02045c00((Struct_02045c00_2*)arg0, (int)var4);
-            arg0->unknown_7c_ += var4->unknown_5_0_;
-            if (var6 < 0) {
-                unsigned short var7 = func_020459b8(arg0, (unsigned char)var5, var4, arg0->unknown_19dc_);
-                if (!arg0->unknown_19c2_) arg0->unknown_1882_[arg0->unknown_1942_] = var7;
-                *var1 = var7;
-                ++arg0->unknown_6c_;
-                arg0->unknown_9b4_ = (arg0->unknown_9b4_ + 1) & 0x7f;
+        Entry0204254c* entry = Font_FindCharacter((int)source, state->table);
+        int tableIndex = FindEntryIndexByKey020424e4((int)source, state->table);
+        if (entry && tableIndex >= 0) {
+            int index = FindMatchingEntryIndex((Container02045c00*)state, (int)entry);
+            state->inputCursor += entry->length;
+            if (index < 0) {
+                unsigned short inserted = func_020459b8(state, (unsigned char)tableIndex, entry, state->table);
+                if (!state->wrapped) state->ring[state->ringIndex] = inserted;
+                *destination = inserted;
+                ++state->outputCursor;
+                state->entryCursor = (state->entryCursor + 1) & 0x7f;
                 break;
             }
             unsigned short var8 = var6;

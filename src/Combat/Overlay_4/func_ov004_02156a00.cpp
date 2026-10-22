@@ -10,28 +10,28 @@ enum { Enum_ov004_02156a00_12 = 16, Enum_ov004_02156a00_0 = -0xc };
 struct Struct_ov004_021707c8 { void* unknown_0_; void* unknown_4_; void* unknown_8_; void* unknown_c_; };
 enum { Enum_ov004_02156a00_12 = 12, Enum_ov004_02156a00_0 = 0 };
 #endif
-extern Struct_ov004_021707c8 data_ov004_021707c8;
-extern int data_02108760;
+extern Data021707c8 data_ov004_021707c8;
+extern int g_sePlayer;
 
-struct Struct_020a1698;
-extern "C" void func_020a1698(struct Struct_020a1698*, void*);
-extern "C" void func_020a1614(void* arg0, int arg1);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" short func_ov023_021f9bc8(void* arg0);
-extern "C" void* func_ov023_021fa598(void* arg0);
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
-extern "C" void func_ov004_021561b0(void* arg0);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" ARM int func_020ac460(void* arg0);
-struct Struct_ov004_021549e4_5;
-extern "C" void func_ov023_021f9bdc(struct Struct_ov004_021549e4_5*, int);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760*, int, int);
-struct Struct_02072a68_2;
-extern "C" void* func_02072a68(struct Struct_02072a68_2*, int);
+struct FooA1698;
+void InitAndBuildList020a1698(struct FooA1698*, void*);
+extern "C" void func_020a1614(void* a, int b);
+extern "C" void* func_ov011_021845f8(void* a, int b);
+extern "C" void* func_ov011_021849c8(void* obj);
+extern "C" void* func_ov023_021f6880(void* obj, int a);
+extern "C" int func_ov023_021f6f10(void* self);
+extern "C" short func_ov023_021f9bc8(void* node);
+extern "C" void* func_ov023_021fa598(void* obj);
+extern "C" void func_ov023_021f809c(void* obj, void* a);
+extern "C" void func_ov004_021561b0(void* a);
+extern "C" void __clear(void* dst, int len);
+ARM int LoadBattleBlock020ac460(void* dst);
+struct Obj021f9bdc;
+void DivModField26_021f9bdc(struct Obj021f9bdc*, int);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer*, int, int);
+struct TableA68;
+void* FindEntryByKey_02072a68(struct TableA68*, int);
 
 struct Struct_ov004_02156a00 { unsigned int unknown_0_0_ : 9; char unknown_2_[4]; struct Struct_ov004_02156a00* unknown_8_; };
 struct Struct_ov004_02156a00_2 { char unknown_0_[8]; struct Struct_ov004_02156a00* unknown_8_; char unknown_c_[4]; unsigned char unknown_10_; };
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov004_02156a00(void* arg0) {
     var3->unknown_5e_ = var2;
     func_ov023_021f9bdc((struct Struct_ov004_021549e4_5*)var3, (unsigned short)(var11 % Enum_ov004_02156a00_12));
 
-    func_0205eaa0((struct Struct_02108760*)&data_02108760, 1, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
 
     void* var13 = func_ov023_021f6880(var1, 0xa);
     if (var13 == 0) {

@@ -21,10 +21,10 @@ struct Struct_ov012_02188640 {
     int unknown_7_6_ : 1;
     unsigned int unknown_7_7_ : 1;
 };
-struct Struct_02072a68_2;
-struct Struct_02108760;
-struct Struct_ov012_02186a7c;
-struct Struct_0205de24_2;
+struct TableA68;
+struct SePlayer;
+struct Obj021e6e20;
+struct Struct0205de24;
 struct Struct_0205c570;
 extern "C" void func_0205de24(Struct_0205de24_2*, unsigned char, unsigned char);
 extern "C" void func_ov023_021e6e60(void*);
@@ -32,14 +32,14 @@ extern "C" void func_ov012_0218a574(char*);
 extern "C" int func_0205d794(Struct_0205c570*);
 extern "C" int func_ov023_021e6448(void*);
 extern "C" int func_ov023_021e7148(void*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_0202ae18();
 extern "C" int func_0201079c(char*);
 extern "C" const char* func_02072a68(Struct_02072a68_2*, int);
 extern "C" void func_ov012_0218bba0(void*, int, int);
 extern "C" void func_ov012_02189be8(void*, int);
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c*);
-extern "C" char data_02108760[];
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
+extern "C" char g_sePlayer[];
 
 static inline Struct_ov012_02188640* inline_ov012_02188640(GameState* arg0) {
     return (Struct_ov012_02188640*)((char*)arg0 + 0x543c);
@@ -61,15 +61,15 @@ extern "C" ARM void func_ov012_02188640(char* arg0) {
         func_ov012_0218a574(arg0);
         ++*(unsigned char*)(arg0 + 0x1340);
         return;
-    } else if (*(unsigned char*)(arg0 + 0x1340) == 1) {
-        *(unsigned char*)(arg0 + 0x1368) = 1;
-        *(int*)(arg0 + 0x1444) = func_0205d794((Struct_0205c570*)(arg0 + 0x90));
-        if (func_ov023_021e6448(arg0))
-            *(int*)(arg0 + 0x1444) = func_0205d794((Struct_0205c570*)(arg0 + 0x90));
-        if (func_ov023_021e7148(arg0)) {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            Struct_ov012_02188640* var3 = inline_ov012_02188640(GameState::GetInstance());
-            GameState* var4 = GameState::GetInstance();
+    } else if (*(unsigned char*)(editor + 0x1340) == 1) {
+        *(unsigned char*)(editor + 0x1368) = 1;
+        *(int*)(editor + 0x1444) = GetActiveScaledSum0205d794((Struct_0205c570*)(editor + 0x90));
+        if (func_ov023_021e6448(editor))
+            *(int*)(editor + 0x1444) = GetActiveScaledSum0205d794((Struct_0205c570*)(editor + 0x90));
+        if (func_ov023_021e7148(editor)) {
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ProfileAccolade* profile = GetProfileAccolade(GameState::GetInstance());
+            GameState* state = GameState::GetInstance();
             func_0202ae18();
             if (*(int*)(arg0 + 0x1444) == 0) {
                 char* var5 = *(char**)((char*)var4->GetProtagonist() + 0x144);
@@ -159,19 +159,19 @@ struct Struct_ov012_02188640_6
     char unknown_1400_[0x40];
 };
 
-struct Struct_02072a68_2;
-struct Struct_02108760;
-struct Struct_ov012_02186a7c;
-struct Struct_0205de24_2;
+struct TableA68;
+struct SePlayer;
+struct Obj021e6e20;
+struct Struct0205de24;
 struct Struct_0205c570;
 
-extern "C" void func_0205de24(Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_ov023_021e6e60(Struct_ov012_02188640_6* arg0);
-extern "C" void func_ov012_0218a574(char* arg0);
-extern "C" int func_0205d794(Struct_0205c570* arg0);
-extern "C" int func_ov023_021e6448(Struct_ov012_02188640_6* arg0);
-extern "C" int func_ov023_021e6de4(Struct_ov012_02188640_6* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
+extern "C" void func_ov023_021e6e60(ProfileEditor02188640* self);
+void SetupBattleTag0218a574(char* self);
+int GetActiveScaledSum0205d794(Struct_0205c570* window);
+extern "C" int func_ov023_021e6448(ProfileEditor02188640* self);
+extern "C" int func_ov023_021e6de4(ProfileEditor02188640* self);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
 extern "C" void func_0202ae18();
 extern "C" int func_0201079c(char* arg0);
 extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
@@ -179,7 +179,7 @@ extern "C" void func_ov012_0218adac(Struct_ov012_02188640_6* arg0, int arg1, int
 extern "C" void func_ov012_0218930c(Struct_ov012_02188640_6* arg0, int arg1);
 extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c* arg0);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Struct_ov012_02188640_2* inline_ov012_02188640_2(GameState* arg0)
 {
@@ -225,9 +225,9 @@ extern "C" ARM void func_ov012_02188640(Struct_ov012_02188640_6* arg0)
             arg0->unknown_13d8_[5] = func_0205d794((Struct_0205c570*)arg0->unknown_ac_);
         if (func_ov023_021e6de4(arg0))
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            Struct_ov012_02188640_2* var11 = inline_ov012_02188640_2(GameState::GetInstance());
-            GameState* var12 = GameState::GetInstance();
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            Profile02188640* profile = GetProfile02188640(GameState::GetInstance());
+            GameState* gameState = GameState::GetInstance();
             func_0202ae18();
             Struct_ov012_02188640_5* var13 = (Struct_ov012_02188640_5*)var12->GetProtagonist();
             if (arg0->unknown_13d8_[5] == 0)

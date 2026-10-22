@@ -11,8 +11,8 @@ struct Entry0204254c {
     char pad6[2];
 };
 
-// USA: func_0204254c
-ARM struct Entry0204254c* FindEntryByKey0204254c(int key, int tableIdx) {
+// Main, originally FindEntryByKey0204254c (USA 0x0204254c, EUR 0x0204255c; JPN not identified)
+ARM struct Entry0204254c* Font_FindCharacter(int key, int tableIdx) {
     char* header;
     unsigned int i;
     if (key == 0) {

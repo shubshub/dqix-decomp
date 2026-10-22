@@ -15,8 +15,8 @@ struct Struct_0205ba68 {
     int* field2C;
 };
 
-// USA: func_0205ba68
-ARM void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode) {
+// Main, originally SetupPointerTable0205ba68 (USA 0x0205ba68, EUR 0x0205ba78, JPN 0x0205cdc8)
+ARM void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode) {
     s->field8 = a;
     s->fieldC = b;
     s->field10 = mode;

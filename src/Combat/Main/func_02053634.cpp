@@ -21,8 +21,8 @@ extern "C" void func_0205308c(void* arg0, int arg1);
 extern "C" void* func_0205ec34(void);
 extern "C" void func_0206f81c(void* arg0);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 extern "C" void func_0205eabc(void* arg0, void* arg1, int arg2);
 extern "C" int func_02064a9c(void* arg0, void* arg1);
@@ -47,7 +47,7 @@ extern struct Struct_020e7c94 data_020e7c94[];
 
 extern char data_020f0477;
 extern char data_020f047e;
-extern int data_02108760;
+extern int g_sePlayer;
 extern char data_020f0481;
 extern char data_020f0486;
 
@@ -145,9 +145,9 @@ extern "C" ARM void func_02053634(void* arg0) {
                 if (var15->unknown_2_ == 0x4e) {
                     var16 = var0 + OBJECT_OFFSET(0x198);
                 }
-                unsigned short var17 = *(unsigned short*)func_02012fe4();
-                if (var17 == ((Object3D*)var0)->GetField06()) {
-                    func_0205eaa0((struct Struct_02108760*)&data_02108760, var15->unknown_2_, (int)var16);
+                unsigned short val = *(unsigned short*)func_02012fe4();
+                if (val == ((Object3D*)ctx)->GetField06()) {
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, e->kind, (int)arg2);
                 }
                 break;
             }
@@ -204,12 +204,12 @@ extern "C" ARM void func_02053634(void* arg0) {
                 }
                 func_020531f0(var0);
                 return;
-            } else if (var0[OBJECT_OFFSET(0x17f)] == 1) {
-                int var25 = 0;
-                if (var0[OBJECT_OFFSET(0x17c)] > 1) {
-                    var25 = 1;
-                    if (func_02053604((signed char*)var0) == 0x19) {
-                        func_0205eabc((void*)&data_02108760, var0 + OBJECT_OFFSET(0x198), 0);
+            } else if (ctx[OBJECT_OFFSET(0x17f)] == 1) {
+                int mode = 0;
+                if (ctx[OBJECT_OFFSET(0x17c)] > 1) {
+                    mode = 1;
+                    if (GetIndexedEntryField0x178_02053604((signed char*)ctx) == 0x19) {
+                        ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, ctx + OBJECT_OFFSET(0x198), 0);
                     }
                 }
                 if (((Object3D*)var0)->MaybeSetRegularAnimation(&data_020f0481, var25) != 0) {
@@ -270,8 +270,8 @@ extern "C" ARM void func_02053634(void* arg0) {
             if (((Object3D*)var0)->HasAnimationStopped() == 0) {
                 return;
             }
-            if (func_02053604((signed char*)var0) == 0x19) {
-                func_0205eabc((void*)&data_02108760, var0 + OBJECT_OFFSET(0x198), 0);
+            if (GetIndexedEntryField0x178_02053604((signed char*)ctx) == 0x19) {
+                ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, ctx + OBJECT_OFFSET(0x198), 0);
             }
             var0[OBJECT_OFFSET(0x17d)] = var0[OBJECT_OFFSET(0x17d)] + 1;
             if (var0[OBJECT_OFFSET(0x17d)] < var0[OBJECT_OFFSET(0x17c)]) {

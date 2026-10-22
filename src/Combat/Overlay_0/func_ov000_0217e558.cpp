@@ -2,11 +2,11 @@
 #include "Resource/ActionDataTables.h"
 #include "GameState/GameState.h"
 
-struct Struct_0205c570 { unsigned char unknown_0_[0x7cc]; };
-struct Struct_0205def8 { unsigned char unknown_0_[0x7cc]; };
-struct Struct_0205d81c { unsigned char unknown_0_[0x7cc]; };
-struct Struct_ov000_021735d0_3;
-struct Struct_02108760 { unsigned char unknown_0_[0xd0]; };
+struct Struct_0205c570 { unsigned char data[0x7cc]; };
+struct Struct_0205def8 { unsigned char data[0x7cc]; };
+struct Struct_0205d81c { unsigned char data[0x7cc]; };
+struct Struct0217f8c0;
+struct SePlayer { unsigned char data[0xd0]; };
 #if defined(jpn)
 struct Struct_ov000_0217e558_2 { unsigned char unknown_0_[0x7902]; signed char unknown_7712_; };
 #else
@@ -58,17 +58,17 @@ void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
 extern "C" ResourceE558* func_ov017_021b8468(void*);
 extern "C" int func_ov000_0217c594(BattleE558*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" ActorE558* func_ov000_02161318(BattleE558*, int);
 extern "C" void func_ov000_02170db0(ActorE558*);
 
-extern "C" Struct_ov000_0217e558_4* func_02079e2c(char*, int);
-extern "C" void func_ov000_02175b54(Struct_ov000_0217e558*);
-extern "C" int func_020100a8(GameState*);
-extern "C" void func_ov000_02176e3c(Struct_ov000_0217e558*, int, int, int, int, int);
-extern "C" int func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern "C" void func_ov000_02176634(Struct_ov000_0217e558*, int, int, int, int);
-extern Struct_02108760 data_02108760;
+ActionRecordE558* SearchBothTables02079e2c(char*, int);
+extern "C" void func_ov000_02175b54(BattleE558*);
+int GetField0x3acValue_020100a8(GameState*);
+extern "C" void func_ov000_02176e3c(BattleE558*, int, int, int, int, int);
+int FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+extern "C" void func_ov000_02176634(BattleE558*, int, int, int, int);
+extern SePlayer g_sePlayer;
 extern int data_ov000_02184294[3];
 #if defined(jpn)
 #define G02184294(i) data_ov000_02184294[(i) + 1]
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov000_0217e558(BattleE558* battle, int arg1, int arg2) 
     GameResources* data = game->GetResources();
     if (func_ov017_021b8468(PTR3718(data))->selected != -1 || !func_ov000_0217c594(battle, 5)) return;
     battle->field956 = 0;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     if ((unsigned short)battle->keys[battle->selected] == 0) {
         battle->actionIndex++;
         battle->actions[battle->actionIndex] = 100;

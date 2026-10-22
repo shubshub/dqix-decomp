@@ -28,20 +28,20 @@ struct Struct_ov000_02178d28_2 {
     unsigned short unknown_1d72_;
 };
 
-struct Struct_02108760;
-struct Struct_ov000_021735d0_2;
+struct SePlayer;
+struct TableEntry0217f8c0;
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Struct_0205c570;
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-struct Struct_ov000_021735d0_3;
-extern "C" struct Struct_ov000_021735d0_2* func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern "C" int func_ov000_0217c5f4(void*);
-extern "C" int func_ov000_0218155c(void*);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+struct Entry_0205d6a0;
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+struct Struct0217f8c0;
+struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
+int CountSetBitsLow12_0x68_ov000_0218155c(void*);
 struct Struct_0205d81c;
 extern "C" void func_ov000_0217a9d0(int, int, int, Struct_0205d81c*);
 struct Struct_0205def8;
@@ -55,19 +55,19 @@ extern "C" void func_ov000_02176634(Struct_ov000_02178d28_2* arg0, void* arg1, i
 extern "C" void func_ov000_0217c638(Struct_ov000_02178d28_2* arg0, int arg1, int arg2);
 
 // USA: func_ov000_0217d674
-extern "C" ARM void func_ov000_0217d674(Struct_ov000_02178d28_2* arg0, int arg1, int arg2) {
-    arg0->unknown_1d72_ |= 0x100;
-    arg0->unknown_1d6b_ = func_0205d794((Struct_0205c570*)arg0->unknown_188_);
-    if (func_ov000_0217c594(arg0, 0) != 0) {
-        func_0205eaa0(&data_02108760, 1, 0);
-        int var0 = arg0->unknown_70_[arg0->unknown_1d6b_];
-        arg0->unknown_1d6e_ = 0;
-        arg0->unknown_68_ = func_020dd3cc(var0);
-        arg0->unknown_68_ = func_ov000_0217c514(var0, arg0->unknown_68_);
-        if (arg0->unknown_68_ == 0) {
-            arg0->unknown_1d68_ = arg0->unknown_1d68_ + 1;
-            arg0->unknown_1d60_[arg0->unknown_1d68_] = 0x2b;
-            func_ov000_02176634(arg0, func_ov000_02161318(arg0, arg0->unknown_17c_), 0x2b, arg1, arg2);
+extern "C" ARM void func_ov000_0217d674(MenuState* menu, int arg1, int arg2) {
+    menu->flags |= 0x100;
+    menu->activeSum = GetActiveScaledSum0205d794((Struct_0205c570*)menu->elements);
+    if (func_ov000_0217c594(menu, 0) != 0) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        int id = menu->slotIds[menu->activeSum];
+        menu->field_0x1d6e = 0;
+        menu->field_0x68 = func_020dd3cc(id);
+        menu->field_0x68 = func_ov000_0217c514(id, menu->field_0x68);
+        if (menu->field_0x68 == 0) {
+            menu->depth = menu->depth + 1;
+            menu->modeStack[menu->depth] = 0x2b;
+            func_ov000_02176634(menu, func_ov000_02161318(menu, menu->currentId), 0x2b, arg1, arg2);
             return;
         }
         arg0->unknown_17c_ = var0;

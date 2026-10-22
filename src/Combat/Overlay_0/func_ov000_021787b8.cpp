@@ -37,14 +37,14 @@ struct Struct_ov000_021787b8_4 {
     Struct_ov000_021787b8_3 unknown_244_;
 };
 
-extern "C" Struct_ov000_02178074_4* func_020421a0();
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" int func_ov000_0217538c(void* arg0);
-extern "C" int func_ov000_021753d8(void* arg0, int arg1);
-extern "C" void func_ov000_0217ab8c(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02178938(void* arg0, void* arg1, int arg2, void* arg3);
+TextWorkspace* GetGlobalField0x1c020421a0();
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
+extern "C" int func_ov000_0217538c(void* objRaw);
+extern "C" int func_ov000_021753d8(void* objRaw, int targetIndex);
+extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
+extern "C" void func_ov000_02178938(void* obj, void* in, int b, void* buf);
 #if defined(jpn)
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -82,16 +82,16 @@ extern "C" ARM void func_ov000_021787b8(Struct_ov000_021787b8_4* arg0, struct St
 #else
     var4->unknown_a6_ = var1 >> 3;
 #endif
-    var4->unknown_a8_ = 0xc;
-    var4->unknown_aa_ = 6;
-    var4->unknown_ac_ = 0xa;
-    var4->unknown_ae_ = 0x10;
-    var4->unknown_b1_ = 0xe;
-    func_0205ba68((struct Struct_0205ba68*)&arg0->unknown_244_, 1, var2, 0);
-    arg0->unknown_244_.unknown_4_ = 1;
-    func_0205bacc((struct Struct_0205bacc*)&arg0->unknown_244_, var2);
-    func_0205bb04(&arg0->unknown_244_, var3);
-    char* var5 = func_020421a0()->unknown_5c_;
+    panel->fieldA8 = 0xc;
+    panel->fieldAA = 6;
+    panel->fieldAC = 0xa;
+    panel->fieldAE = 0x10;
+    panel->elementId = 0xe;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)&menu->groups, 1, groupCount, 0);
+    menu->groups.pages = 1;
+    GridCursor_SetCount((struct Node0205bacc*)&menu->groups, groupCount);
+    GridCursor_SetSelectedIndex(&menu->groups, group);
+    char* text = GetGlobalField0x1c020421a0()->textBuffer;
 #if defined(jpn)
     memset(var5, 0, 0x800);
 #else

@@ -48,13 +48,13 @@ struct Struct_ov023_021e6e60 {
     int unknown_13d4_; int unknown_13d8_; int unknown_13dc_; int unknown_13e0_; int unknown_13e4_;
     int unknown_13e8_; int unknown_13ec_; int unknown_13f0_; int unknown_13f4_; int unknown_13f8_;
 };
-extern "C" void func_0205cf10(void*);
-extern "C" void func_0205cf1c(Struct_0205cf1c*);
-extern "C" void func_0205c53c(Struct_0205c53c*);
-extern "C" void func_0205ba68(Struct_0205ba68*, int, int, int);
-extern "C" void func_0205bacc(Struct_0205bacc*, int);
-extern "C" void func_0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(Struct_0205bcdc*, int);
+void ClearChannelAFlag0205cf10(void*);
+void ClearFlagByte0205cf1c(Struct0205cf1c*);
+void InitChannelPair0205c53c(Struct_0205c53c*);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(Struct_0205bcdc*, int);
 
 // USA: func_ov023_021e6e60
 extern "C" ARM void func_ov023_021e6e60(Struct_ov023_021e6e60* arg0) {
@@ -95,16 +95,16 @@ extern "C" ARM void func_ov023_021e6e60(Struct_ov023_021e6e60* arg0) {
         func_0205cf1c((Struct_0205cf1c*)&arg0->unknown_ac_);
         return;
     }
-    func_0205c53c(&arg0->unknown_ac_);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_ac_.unknown_4_, var0, var1, var3);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_ac_.unknown_54_, var0, var1, var3);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_ac_.unknown_4_, var4);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_ac_.unknown_54_, var4);
-    arg0->unknown_ac_.unknown_4_.unknown_4_ = var2;
-    arg0->unknown_ac_.unknown_54_.unknown_4_ = var2;
-    func_0205bcdc(&arg0->unknown_ac_.unknown_4_, var5);
-    func_0205bb04(&arg0->unknown_ac_.unknown_54_, var5);
-    arg0->unknown_ac_.unknown_54_.unknown_40_ = 1;
-    arg0->unknown_ac_.unknown_54_.unknown_41_ = 1;
-    arg0->unknown_13a0_ = 0;
+    InitChannelPair0205c53c(&self->channels_);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.selection_, columns, rows, wrap);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.scrolling_, columns, rows, wrap);
+    GridCursor_SetCount((Node0205bacc*)&self->channels_.selection_, count);
+    GridCursor_SetCount((Node0205bacc*)&self->channels_.scrolling_, count);
+    self->channels_.selection_.pages_ = pages;
+    self->channels_.scrolling_.pages_ = pages;
+    SetIndexIfValid0205bcdc(&self->channels_.selection_, selected);
+    GridCursor_SetSelectedIndex(&self->channels_.scrolling_, selected);
+    self->channels_.scrolling_.firstFlag_ = 1;
+    self->channels_.scrolling_.secondFlag_ = 1;
+    self->dirty_ = 0;
 }

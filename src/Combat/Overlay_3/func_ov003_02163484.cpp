@@ -53,28 +53,28 @@ struct Struct_ov003_0216253c {
 #define REGION_OFF_464 0x64 + 0x400
 #endif
 
-extern int data_02108760;
-struct Struct_02081198;
-extern "C" void func_02081198(Struct_02081198*, int, int);
-struct Struct_02081164;
-extern "C" void func_02081164(Struct_02081164*, int, int);
+extern int g_sePlayer;
+struct StatusOwner02081198;
+void SetEntryNibbleByShortId(StatusOwner02081198*, int, int);
+struct StatusOwner02081164;
+void SetEntryFlag0x2ByShortId(StatusOwner02081164*, int, int);
 extern "C" void func_020813ec(void *, int);
-struct Struct_02081f20_2;
-extern "C" void func_0208203c(Struct_02081f20_2*);
-extern "C" int func_02080468(void *, int);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-struct Struct_0207fe44;
-extern "C" void func_0207fe44(Struct_0207fe44*);
-extern "C" Struct_ov003_0216253c * func_ov003_02160bd0(void*, int);
-extern "C" int func_ov003_02160a68(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02160854(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_021612c0(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02161344(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_02166f80(void*, int, int);
-extern "C" void func_ov003_02166220(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_02166184(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_021668fc(Struct_ov003_02154af4_3 *);
+struct Obj0208203c;
+void ResetWithSub0208203c(Obj0208203c*);
+int FindMappedMemberId02080468(void *, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
+struct Cont0207fe44;
+void CallFunc0204c804OverAllElems(Cont0207fe44*);
+Elem * GetElementAtIndex_02160bd0_02160bd0(void*, int);
+extern "C" int func_ov003_02160a68(Scene *);
+extern "C" int func_ov003_02160854(Scene *);
+extern "C" void func_ov003_021612c0(Scene *);
+extern "C" int func_ov003_02161344(Scene *);
+void SetOrClearFlag40_02166f80(void*, int, int);
+extern "C" void func_ov003_02166220(Scene *);
+extern "C" void func_ov003_02166184(Scene *);
+extern "C" void func_ov003_021668fc(Scene *);
 
 // USA: func_ov003_02163484
 extern "C" ARM void func_ov003_02163484(Struct_ov003_02154af4_3 *arg0) {
@@ -121,18 +121,18 @@ extern "C" ARM void func_ov003_02163484(Struct_ov003_02154af4_3 *arg0) {
             if (var3->unknown_0_0_ < 0) {
                 return;
             }
-            func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-            arg0->unknown_470_ = 0;
-            int var4      = var3->unknown_13f_0_;
-            if (var4 == 3) {
-                func_ov003_02166f80(arg0, arg0->unknown_488_, 1);
-                arg0->unknown_484_  = 0x58;
-                arg0->unknown_4a4_ = 0;
-            } else if (var4 == 2 || var4 == 1 || var4 == 4) {
-                func_ov003_02166f80(arg0, arg0->unknown_488_, 1);
-                arg0->unknown_484_  = 0x57;
-                arg0->unknown_4a4_ = 0;
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->sub308);
+            self->p470 = 0;
+            int m      = elem->m;
+            if (m == 3) {
+                SetOrClearFlag40_02166f80(self, self->h488, 1);
+                self->h484  = 0x58;
+                self->state = 0;
+            } else if (m == 2 || m == 1 || m == 4) {
+                SetOrClearFlag40_02166f80(self, self->h488, 1);
+                self->h484  = 0x57;
+                self->state = 0;
             } else {
                 arg0->unknown_480_ = var3->unknown_0_0_;
                 func_ov003_02166f80(arg0, arg0->unknown_488_, 1);

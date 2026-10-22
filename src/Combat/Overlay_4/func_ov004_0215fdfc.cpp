@@ -2,15 +2,15 @@
 #include "GameState/GameState.h"
 #include "Combat/Main/BattleList.h"
 
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" int func_02061bd8(struct Struct_0205faf4_11* arg0);
-extern "C" unsigned short func_ov004_0215eb20(void* arg0, int arg1);
-struct Struct_02108760;
-extern struct Struct_02108760 data_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void* func_ov004_0215e4c0(void* arg0, int arg1);
-struct Struct_ov004_0215fdfc;
-extern "C" void func_ov023_021f809c(struct Struct_ov004_0215fdfc*, void*);
+unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
+unsigned short GetFlagBitFromField150_0215eb20(void* obj, int bit);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void* CheckNodeState6_0215e4c0(void* a, int key);
+struct Obj021f809c;
+extern "C" void func_ov023_021f809c(struct Obj021f809c*, void*);
 extern "C" void func_ov023_021fc71c(void*, int, int);
 extern "C" void func_020dc7e8(int, int);
 extern "C" void func_ov004_0215ee90(void*);
@@ -246,13 +246,13 @@ extern "C" ARM int func_ov004_0215fdfc(void* arg0) {
 #else
     func_ov004_0215ef14();
 #endif
-    data_ov004_021707e8.unknown_1_ = 1;
-    func_0205eaa0(&data_02108760, 1, 0);
-    Struct_ov004_0215fdfc_4* var17 = func_ov004_0215e47c(arg0, 0x82);
-    func_ov023_021fc71c(var17, data_ov004_021707e8.unknown_1c_, 1);
-    data_ov004_021707e8.unknown_b_ = 0;
-    data_ov004_021707e8.unknown_6_ = 0;
-    switch (data_ov004_021707e8.unknown_7_ - 0x64) {
+    data_ov004_021707e8.f1 = 1;
+    SePlayer_Play(&g_sePlayer, 1, 0);
+    Node0215e47c* nd = func_ov004_0215e47c(a, 0x82);
+    func_ov023_021fc71c(nd, data_ov004_021707e8.combatant, 1);
+    data_ov004_021707e8.fb = 0;
+    data_ov004_021707e8.f6 = 0;
+    switch (data_ov004_021707e8.type - 0x64) {
     case 0:
         data_ov004_021707e8.unknown_6_ = data_ov004_021707e8.unknown_9_;
         func_ov004_0216033c(arg0);

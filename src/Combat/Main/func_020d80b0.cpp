@@ -25,9 +25,9 @@ struct Struct_020d80b0_3 {
     SafeAllocator unknown_14_;
     int unknown_28_;
 };
-struct Struct_02018300_3;
-struct Struct_02108760;
-extern Struct_02108760 data_02108760;
+struct Obj020397cc;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 extern AllocatorUnion data_02114e20;
 extern char data_020f235c[];
 extern char data_020f2371[];
@@ -53,10 +53,10 @@ extern char data_020f24b8[];
 extern "C" void func_0204500c(void*, char*, int, int);
 #define SHOW_TEXT_020d80b0(d, t) func_0204500c(d, t, 0, 0xe3)
 #endif
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_020397c0(void*);
-extern "C" void func_020dc2d0(int);
-struct Struct_020d80b0 {
+void SePlayer_Play(SePlayer*, int, int);
+void SetByteField0x253_020397c0(void*);
+void SetCombatModeFromCase020dc2d0(int);
+struct Dialog020d80b0 {
 #if defined(jpn)
     unsigned char unknown_0_[0x28];
     char* unknown_5c_;
@@ -122,29 +122,29 @@ extern "C" ARM void func_020d80b0(Struct_020d80b0_3* arg0) {
                 func_0206df6c(var4, var4->unknown_8c_, 0x119e, 1);
             }
         }
-    } else if (arg0->unknown_8_ == 3) {
-        char* var10 = var2->unknown_5c_;
-        strcpy(var10, (char*)func_02072a68(&arg0->unknown_c_, 2));
-        SHOW_TEXT_020d80b0(var2, var10);
-        var2->unknown_19b2_ = 0;
-        var2->unknown_998_ = 1;
-        arg0->unknown_8_ = 4;
-    } else if (arg0->unknown_8_ == 4) {
-        if (!var2->unknown_998_) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            arg0->unknown_8_ = 5;
+    } else if (self->state == 3) {
+        char* text = dialog->text;
+        strcpy(text, (char*)FindEntryByKey_02072a68(&self->table, 2));
+        SHOW_TEXT_020d80b0(dialog, text);
+        dialog->flag = 0;
+        dialog->busy = 1;
+        self->state = 4;
+    } else if (self->state == 4) {
+        if (!dialog->busy) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            self->state = 5;
         }
-    } else if (arg0->unknown_8_ == 5) {
-        char* var11 = var2->unknown_5c_;
-        strcpy(var11, (char*)func_02072a68(&arg0->unknown_c_, 1));
-        SHOW_TEXT_020d80b0(var2, var11);
-        var2->unknown_19b2_ = 0;
-        var2->unknown_998_ = 1;
-        arg0->unknown_8_ = 6;
-    } else if (arg0->unknown_8_ == 6) {
-        if (!var2->unknown_998_) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            arg0->unknown_8_ = 7;
+    } else if (self->state == 5) {
+        char* text = dialog->text;
+        strcpy(text, (char*)FindEntryByKey_02072a68(&self->table, 1));
+        SHOW_TEXT_020d80b0(dialog, text);
+        dialog->flag = 0;
+        dialog->busy = 1;
+        self->state = 6;
+    } else if (self->state == 6) {
+        if (!dialog->busy) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            self->state = 7;
         }
     } else if (arg0->unknown_8_ == 7) {
         func_020397c0(var3);

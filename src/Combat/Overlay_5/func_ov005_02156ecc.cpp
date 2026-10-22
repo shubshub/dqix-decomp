@@ -68,16 +68,16 @@ struct Struct_ov005_02153954 {
 
 extern unsigned char data_ov005_0215cd48[8];
 
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_ov005_02157174(Struct_ov005_02156ecc* arg0, Struct_ov005_02156ecc_2* arg1);
-extern "C" void func_ov005_02157b74(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" int func_ov005_02155670(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" signed char* func_0207c60c(void* arg0, unsigned int arg1);
-extern "C" void func_ov005_021555c0(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+MemberScreen* GetField1c_021a193c(int* p);
+void CopyThreeFields02157174(Dst02157174* dst, Src02157174* src);
+extern "C" void func_ov005_02157b74(EquipmentMenu* self, int item, int keep);
+extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
+void* GetPtrField0x2a04_02010828(GameState* gs);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
+signed char* GetPointerAt0xbf0_0207c60c(void* obj, unsigned int index);
+extern "C" void func_ov005_021555c0(EquipmentMenu* self);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 
 // USA: func_ov005_02156ecc
 extern "C" ARM void func_ov005_02156ecc(Struct_ov005_02153954* arg0, int arg1, int arg2) {
@@ -122,8 +122,8 @@ extern "C" ARM void func_ov005_02156ecc(Struct_ov005_02153954* arg0, int arg1, i
             arg0->unknown_3dbb_ = var3;
         }
     }
-    func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
-    func_0205bb04(arg0->unknown_19f4_, arg0->unknown_3dbb_ - 8);
-    var0->unknown_634_ |= 0x1 | 0x80;
-    arg0->unknown_3dcc_ |= 0x4 | 0x8;
+    func_ov005_021579ec(self, self->state_, self->slot_);
+    GridCursor_SetSelectedIndex(self->cursor_, self->slot_ - 8);
+    screen->flags_ |= 0x1 | 0x80;
+    self->flags_ |= 0x4 | 0x8;
 }

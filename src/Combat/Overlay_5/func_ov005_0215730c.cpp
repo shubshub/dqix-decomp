@@ -8,7 +8,7 @@
 #include "Input/Input.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02108760;
+struct SePlayer;
 struct Struct_0205bb84;
 
 struct Struct_ov005_02153ba4_2 {
@@ -32,11 +32,11 @@ struct Struct_ov005_02153954 {
     unsigned int unknown_3dcc_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 MemberScreen* GetField1c_021a193c(int* p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" int func_0205bf58(void* cursor, int ticks);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 extern "C" void func_ov005_0215742c(EquipmentMenu* self);
@@ -46,10 +46,10 @@ extern "C" void func_ov005_0215771c(EquipmentMenu* self);
 // USA: func_ov005_0215730c
 extern "C" ARM void func_ov005_0215730c(Struct_ov005_02153954* arg0) {
     if (g_keyManager.TestKeysPressed(2)) {
-        func_ov005_0215792c(arg0, 1);
-        Struct_ov005_02153ba4_2* var0 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-        var0->unknown_634_ |= 0x800;
-        func_0205eaa0((Struct_02108760*)&data_02108760, 0x1b, 0);
+        func_ov005_0215792c(self, 1);
+        MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
+        screen->flags_ |= 0x800;
+        SePlayer_Play((SePlayer*)&g_sePlayer, 0x1b, 0);
         return;
     }
     if (g_keyManager.TestKeysPressed(4)) {

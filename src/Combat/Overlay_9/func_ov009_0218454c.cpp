@@ -33,7 +33,7 @@ extern "C" void func_ov009_021847ec(void* checker);
 void ResetList0204af64(List0204af64* background);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
 extern "C" void func_0204c684(Canvas* canvas);
-void Init0205bef8(Struct_0205bef8* cursor);
+void GridCursor_Init(Struct_0205bef8* cursor);
 void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout* grid);
 int FindEntryIndexByKey020424e4(int text, int mode);
 
@@ -186,7 +186,7 @@ extern "C" ARM void func_ov009_0218454c(Struct_ov009_021842a0_2* arg0, int arg1,
     self->targetAngle_ = 0;
     self->object_.Initialize();
     self->object2_.Initialize();
-    Init0205bef8(&self->cursor_);
+    GridCursor_Init(&self->cursor_);
     CharacterCreationUI_ResetTargetLayout(&self->grid_);
     self->cursorX_ = -1;
     self->cursorY_ = -1;

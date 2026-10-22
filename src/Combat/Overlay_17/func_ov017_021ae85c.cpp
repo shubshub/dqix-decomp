@@ -8,16 +8,16 @@
 #include "World/ZoneLootableRecord.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02010604;
-struct Struct_02018300_3;
-struct Struct_02033b68;
-struct Struct_02108760;
-struct Struct_02015ef4;
-struct Struct_0203a46c;
-struct Struct_02015ef4_2;
-struct Struct_0201099c_10 { unsigned int unknown_0_[4]; };
-struct Struct_02015ef4_4 {
-    int unknown_0_[4]; unsigned int unknown_10_0_:10, unknown_11_2_:10, unknown_12_4_:8, unknown_13_4_:4;
+struct Bytes02033b88;
+struct Obj020397cc;
+struct Obj02033b68;
+struct SePlayer;
+struct Vec3copy0202ec84;
+struct Vec3Target0203a46c;
+struct StructAt020473c8;
+struct Container020dedd0 { unsigned int fields[4]; };
+struct StructDE234_020de234 {
+    int fields[4]; unsigned int low:10, mid:10, kind:8, unused:4;
 };
 struct Struct_02015ef4_5 { unsigned int unknown_0_[28]; };
 struct Struct_ov017_021ae85c_4 { char unknown_0_[0x230]; Struct_02015ef4_5 unknown_230_; };
@@ -55,31 +55,31 @@ struct Struct_ov017_021ae85c_3 {
 extern "C" Struct_ov017_021ae85c_5* func_02012fe4();
 extern "C" void* func_0202ae18();
 extern "C" int func_0202c540(void*);
-extern "C" void func_ov017_021aeea8(Struct_ov017_021ae85c_2*);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" void func_02033b68(Struct_02033b68*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" Struct_02015ef4_4* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" int func_020100a8(GameState*);
-extern "C" unsigned short func_020de234(Struct_02015ef4_4*, int);
-extern "C" void func_020397c0(void*);
-extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_0207dfc8(Struct_02015ef4_5*, Struct_02015ef4_5*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_02047b30(void*, int, int, int);
-extern "C" void func_0207dfac(char*);
-extern "C" Struct_ov017_021ae85c* func_020421a0();
+extern "C" void func_ov017_021aeea8(Event021ae85c*);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void CancelPendingAction020397cc(Obj020397cc*, int);
+void SetByteIfChanged02033b68(Obj02033b68*, int);
+void SePlayer_Play(SePlayer*, int, int);
+StructDE234_020de234* FindElementByKey020dedd0(Container020dedd0*, int);
+int GetField0x3acValue_020100a8(GameState*);
+unsigned short GetPreferredPackedField020de234(StructDE234_020de234*, int);
+void SetByteField0x253_020397c0(void*);
+void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
+void CopyState0207dfc8(State0207dfc8*, State0207dfc8*);
+void RestorePairTables0207df90(char*);
+void Forward02047b30(void*, int, int, int);
+void BackupPairTables0207dfac(char*);
+Controller021ae85c* GetGlobalField0x1c020421a0();
 extern "C" void __clear(void*, int);
 extern "C" void* func_020de824(void*);
 extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
-extern "C" void* func_020d7a50();
-extern "C" void* func_020100bc(GameState*);
-extern "C" void func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" void func_0203a46c(Struct_0203a46c*, int, int, int);
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
-extern Struct_02108760 data_02108760;
+void* GetGlobalResetObj020d7a50();
+void* GetField0x3b0Value_020100bc(GameState*);
+void ComputeTwoFromVec3_0202ec84(void*, Vec3copy0202ec84*, int*, int*);
+void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 #define data_ov017_021d79a8 data_ov017_021d80dc
 #endif
@@ -105,30 +105,30 @@ extern "C" ARM void func_ov017_021ae85c(Struct_ov017_021ae85c_2* arg0) {
             if (arg0->unknown_9_ == 2) { arg0->unknown_1_ = 1; return; }
         }
     }
-    if (arg0->unknown_8_ == 0) {
-        GameObject* var4 = var0->GetUnknownGameObject();
-        if (!var4) { func_ov017_021aeea8(arg0); arg0->unknown_1_ = 1; return; }
-        func_02033b88((Struct_02010604*)var4, 0);
-        func_020397cc((Struct_02018300_3*)var4, 1);
-        arg0->unknown_a_ = 5; arg0->unknown_8_ = 1;
-    } else if (arg0->unknown_8_ == 1) {
-        arg0->unknown_a_--;
-        if (arg0->unknown_a_) return;
-        GameObject* var5 = var0->GetUnknownGameObject();
-        if (var5) func_02033b68((Struct_02033b68*)var5, 8);
-        func_0205eaa0(&data_02108760, 0x5b, 0);
-        arg0->unknown_8_ = 2; arg0->unknown_a_ = 30;
-    } else if (arg0->unknown_8_ == 2) {
-        arg0->unknown_a_--;
-        if (arg0->unknown_a_) return;
-        Struct_ov017_021ae85c_5* var6 = func_02012fe4();
-        Struct_02015ef4_4* var7 = func_020dedd0(&var6->unknown_2754_, arg0->unknown_c_);
-        if (var7) {
-            arg0->unknown_28_ = &var6->unknown_600_[func_020100a8(var0)];
-            func_02047230(arg0->unknown_28_);
-            char var8[0x80];
-            sprintf(var8, data_ov017_021d79a8, (signed char)var7->unknown_12_4_, func_020de234(var7, 0));
-            arg0->unknown_10_ = var1->QueueLoadFile(var8, 0);
+    if (self->stage == 0) {
+        GameObject* actor = game->GetUnknownGameObject();
+        if (!actor) { func_ov017_021aeea8(self); self->done = 1; return; }
+        SetByte0xbeShiftPrev((Bytes02033b88*)actor, 0);
+        CancelPendingAction020397cc((Obj020397cc*)actor, 1);
+        self->timer = 5; self->stage = 1;
+    } else if (self->stage == 1) {
+        self->timer--;
+        if (self->timer) return;
+        GameObject* actor = game->GetUnknownGameObject();
+        if (actor) SetByteIfChanged02033b68((Obj02033b68*)actor, 8);
+        SePlayer_Play(&g_sePlayer, 0x5b, 0);
+        self->stage = 2; self->timer = 30;
+    } else if (self->stage == 2) {
+        self->timer--;
+        if (self->timer) return;
+        Zone021ae85c* zone = func_02012fe4();
+        StructDE234_020de234* entry = FindElementByKey020dedd0(&zone->container, self->key);
+        if (entry) {
+            self->sprite = &zone->sprites[GetField0x3acValue_020100a8(game)];
+            MaybeInvoke0204719c_02047230(self->sprite);
+            char filename[0x80];
+            sprintf(filename, data_ov017_021d79a8, (signed char)entry->kind, GetPreferredPackedField020de234(entry, 0));
+            self->task = loader->QueueLoadFile(filename, 0);
         } else {
             func_ov017_021aeea8(arg0); arg0->unknown_1_ = 1;
             func_020397c0(var0->GetUnknownGameObject()); return;
@@ -176,18 +176,18 @@ extern "C" ARM void func_ov017_021ae85c(Struct_ov017_021ae85c_2* arg0) {
 #else
             func_020d7e10(func_020d7a50(), var14, 0, 0, 1, 1);
 #endif
-        func_0205eaa0(&data_02108760, 14, 0);
-        arg0->unknown_8_ = 5; arg0->unknown_a_ = 20; arg0->unknown_24_ = 61;
-    } else if (arg0->unknown_8_ == 5) {
-        arg0->unknown_a_--;
-        int var17 = var0->GetTickCount();
-        void* var18 = func_020100bc(var0);
-        Vector3fix var19 = arg0->unknown_14_;
-        if (arg0->unknown_20_ < 0x191e) arg0->unknown_20_ += var17 * 0x199;
-        var19.y += fix32sin(arg0->unknown_20_);
-        int var20, var21;
-        if (var18) {
-            func_0202ec84(var18, (Struct_02015ef4*)&var19, &var20, &var21);
+        SePlayer_Play(&g_sePlayer, 14, 0);
+        self->stage = 5; self->timer = 20; self->fade = 61;
+    } else if (self->stage == 5) {
+        self->timer--;
+        int tick = game->GetTickCount();
+        void* camera = GetField0x3b0Value_020100bc(game);
+        Vector3fix position = self->position;
+        if (self->angle < 0x191e) self->angle += tick * 0x199;
+        position.y += fix32sin(self->angle);
+        int x, y;
+        if (camera) {
+            ComputeTwoFromVec3_0202ec84(camera, (Vec3copy0202ec84*)&position, &x, &y);
         }
         func_0203a46c((Struct_0203a46c*)arg0->unknown_28_, (var20 - 12) << 12, (var21 - 40) << 12, 0);
         func_020473c8((Struct_02015ef4_2*)arg0->unknown_28_, 1);

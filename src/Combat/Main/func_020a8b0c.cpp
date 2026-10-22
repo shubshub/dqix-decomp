@@ -24,7 +24,7 @@ extern "C" void func_0205eb90(void*, int, int);
 extern "C" void func_02033874(Struct_02033834*, int);
 extern "C" void func_020874bc(Struct_020874bc*, int);
 int fix32abs(int);
-extern char data_02108760;
+extern char g_sePlayer;
 // USA: func_020a8b0c
 extern "C" ARM void func_020a8b0c(Struct_020a8b0c* arg0, int arg1) {
     if (!(arg0->unknown_4_ & (1<<arg1))) return;
@@ -42,11 +42,11 @@ extern "C" ARM void func_020a8b0c(Struct_020a8b0c* arg0, int arg1) {
     int var6;
     if (func_02046b24(var4) == 3) { var6 = -3686; var1->unknown_0_.DisableFlag(0x8000100); }
     else {
-        var6 = var5-arg0->unknown_8_;
-        if (fix32abs(var6) < 40) {
-            func_0205eb80(&data_02108760);
-            func_0205eb54(&data_02108760, 114, 114);
-            func_0205eb90(&data_02108760, 3, 0);
+        difference = height-self->progress;
+        if (fix32abs(difference) < 40) {
+            ForwardField0xc0_0205eb80(&g_sePlayer);
+            SetForwardAndStore0205eb54(&g_sePlayer, 114, 114);
+            DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 3, 0);
         }
     }
     var1->unknown_ac_ = var6;

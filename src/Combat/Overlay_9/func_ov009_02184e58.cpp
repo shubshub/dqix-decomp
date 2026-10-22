@@ -30,29 +30,29 @@ struct Struct_02020cb8_6;
 struct Struct_0204af14;
 struct Struct_02000c9c_8;
 
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(Struct_ov003_021594c4* arg0, int arg1);
-extern "C" void func_0204b5e8(Struct_02020cb8_5* arg0, int arg1, int arg2);
-extern "C" void func_0204b12c(Struct_0204b12c* arg0, SafeAllocator* arg1);
-extern "C" void func_0204af38(Struct_0204af38* arg0, int arg1, SafeAllocator* arg2);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b174(Struct_ov003_021594c4* arg0, void* arg1, SafeAllocator* arg2, unsigned int arg3);
-extern "C" void func_0204b8d0(Struct_0204b8d0* arg0, unsigned int arg1, int arg2, int arg3, short arg4, short arg5, short arg6, short arg7,
-                           unsigned short arg8);
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void* arg1);
-extern "C" void func_0204bc74(Struct_ov003_021594c4* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
-extern "C" void func_0204b3a0(Struct_02020cb8_6* arg0, char* arg1);
-extern "C" void* func_0204af14(Struct_0204af14* arg0, unsigned int arg1);
-extern "C" void func_0204b620(Struct_ov003_021594c4* arg0, void* arg1, void* arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8,
-                              int arg9);
-extern "C" int func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" void func_ov023_021da274(void* arg0);
-extern "C" void func_ov023_021d9d34(char* arg0);
-extern "C" void func_ov023_021d9e60(char* arg0);
+void ResetList0204af64(List0204af64* background);
+void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* background, int value);
+extern "C" void func_0204b5b4(BackgroundGraphics* background, int screen);
+void DispatchViaTable0204b5e8(Obj0204b5e8* background, int a, int b);
+void AllocateAndClearBuffer0204b12c(AllocTarget0204b12c* background, SafeAllocator* allocator);
+void AllocateArray0204af38(Foo0204af38* background, int count, SafeAllocator* allocator);
+int CountActiveEntries(ActiveEntry02046900* archive);
+void* FindRecordByIndex(Rec020467f0* archive, int index, void** name, int* size);
+extern "C" void func_0204b174(BackgroundGraphics* background, void* file, SafeAllocator* allocator, unsigned int size);
+void DispatchEntry0204b8d0(Obj0204b8d0* background, unsigned int a, int b, int c, short d, short e, short f, short g,
+                           unsigned short h);
+void FlushAndDispatchList0204b0e8(List0204b0e8* background, void* a);
+extern "C" void func_0204bc74(BackgroundGraphics* background, int a, int b, int c, int d, int e, int f);
+extern "C" int func_02001aec(const void* a, const void* b, unsigned int length);
+void DispatchByTag0204b2e0(void* background, char* file);
+void DispatchByTagLookup0204b3a0(SelfTag0204b3a0* background, char* file);
+void* GetEntryByIndexStride0x10(EntryList0204af14* background, unsigned int index);
+extern "C" void func_0204b620(BackgroundGraphics* graphics, void* a, void* b, int c, int d, int e, int f, int g, int h,
+                              int i);
+int NormalizeField5_0200fb08(Struct0200fb08* state);
+extern "C" void func_ov023_021da274(void* self);
+void RefreshFieldIfFlag4000_021d9d34(char* self);
+void CharacterCreationUI_RefreshNameText(char* self);
 
 extern const unsigned char data_ov009_0218a95d[];
 extern const unsigned char data_ov009_0218a95f[];
@@ -280,7 +280,7 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_02184e58_2* arg0)
     RefreshFieldIfFlag4000_021d9d34((char*)self);
     self->flags_ &= ~0x4000;
     self->flags_ |= 0x8000;
-    BuildFieldTag_021d9e60((char*)self);
+    CharacterCreationUI_RefreshNameText((char*)self);
     self->flags_ &= ~0x8000;
     self->flags_ &= ~0x80;
     self->loadStep_ = 0;
@@ -473,21 +473,21 @@ extern "C" ARM void func_ov009_02184e58(Struct_ov009_021842a0_2* arg0)
         if (var65 != 0)
             func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_138_[3], var65, 0, 0, 1, 1, 0xd, 3, 0xffff);
     }
-    func_0204bc74(&arg0->unknown_138_[4], 0, 0, 0, 0x20, 0x19, 0);
-    arg0->unknown_d9c_ |= 0x2000;
-    if (arg0->unknown_138_[4].unknown_1d_ != 0)
-        func_ov023_021da274(arg0);
-    arg0->unknown_d9c_ &= ~0x2000;
-    func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[3], 0);
-    func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_138_[4], 0);
-    arg0->unknown_d9c_ |= 0x4000;
-    func_ov023_021d9d34((char*)arg0);
-    arg0->unknown_d9c_ &= ~0x4000;
-    arg0->unknown_d9c_ |= 0x8000;
-    func_ov023_021d9e60((char*)arg0);
-    arg0->unknown_d9c_ &= ~0x8000;
-    arg0->unknown_d9c_ &= ~0x80;
-    arg0->unknown_d94_ = 0;
+    func_0204bc74(&self->backgrounds_[4], 0, 0, 0, 0x20, 0x19, 0);
+    self->flags_ |= 0x2000;
+    if (self->backgrounds_[4].unk_1d != 0)
+        func_ov023_021da274(self);
+    self->flags_ &= ~0x2000;
+    FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[3], 0);
+    FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[4], 0);
+    self->flags_ |= 0x4000;
+    RefreshFieldIfFlag4000_021d9d34((char*)self);
+    self->flags_ &= ~0x4000;
+    self->flags_ |= 0x8000;
+    CharacterCreationUI_RefreshNameText((char*)self);
+    self->flags_ &= ~0x8000;
+    self->flags_ &= ~0x80;
+    self->loadStep_ = 0;
     DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | 0x1700;
 }
 #endif

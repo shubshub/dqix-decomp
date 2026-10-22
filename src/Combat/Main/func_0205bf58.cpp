@@ -34,10 +34,10 @@ struct NavigationRepeatDirections { unsigned char values[4]; };
 void ResetState0205bf3c(Struct_0205bf3c*);
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8*, int);
-extern "C" void func_0205bb04(Struct_0205bf3c*, int);
-extern const Struct_020e7db8 data_020e7db8;
-extern const Struct_020e7dc4 data_020e7dc4;
-extern const Struct_020e7db0 data_020e7db0, data_020e7db4;
+extern "C" void GridCursor_SetSelectedIndex(Struct_0205bf3c*, int);
+extern const NavigationKeys data_020e7db8;
+extern const NavigationSteps data_020e7dc4;
+extern const NavigationRepeatDirections data_020e7db0, data_020e7db4;
 
 // USA: func_0205bf58
 extern "C" ARM int func_0205bf58(Struct_0205bf3c* arg0, unsigned int arg1) {
@@ -72,7 +72,7 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* arg0, unsigned int arg1) {
                     if (navigation->key == 0x40) {
                         int total = navigation->count;
                         if (total <= GridCursor_GetSelectedIndex(navigation))
-                            func_0205bb04(navigation, total - 1);
+                            GridCursor_SetSelectedIndex(navigation, total - 1);
                     } else if (navigation->key == 0x80) {
                         if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
                             navigation->row = 0;
@@ -134,11 +134,11 @@ extern "C" ARM int func_0205bf58(Struct_0205bf3c* arg0, unsigned int arg1) {
                 else if (navigation->row < 0) navigation->row = 0;
                 int total = navigation->count;
                 if (total <= GridCursor_GetSelectedIndex(navigation))
-                    func_0205bb04(navigation, total - 1);
+                    GridCursor_SetSelectedIndex(navigation, total - 1);
                 if (navigation->key == 0x40 || navigation->key == 0x20) {
                     int total = navigation->count;
                     if (total <= GridCursor_GetSelectedIndex(navigation))
-                        func_0205bb04(navigation, total - 1);
+                        GridCursor_SetSelectedIndex(navigation, total - 1);
                 } else if (navigation->key == 0x80 || navigation->key == 0x10) {
                     if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
                         navigation->row = 0;

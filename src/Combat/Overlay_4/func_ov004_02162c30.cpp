@@ -4,11 +4,11 @@
 extern "C" int func_ov004_0215f74c(int arg0, int arg1);
 extern "C" void func_ov004_0215fdfc(void*);
 extern "C" void func_ov004_0215eb40(void*);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" void func_ov023_021f66bc(void* arg0, int arg1, void* arg2);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+extern "C" void func_ov011_021848a0(void* obj, int val);
+void CallVTableFnAt240_021f66bc(void* a, int key, void* arg3);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern unsigned char data_ov004_021707e8;
 extern unsigned char data_ov004_02170b90;
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
     *(unsigned char*)(D021707e8 + 0) = 0;
 #endif
-    func_ov023_021f66bc(arg0, 0x84, (void*)1);
-    func_0205eaa0(&data_02108760, 1, 0);
+    CallVTableFnAt240_021f66bc(a, 0x84, (void*)1);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

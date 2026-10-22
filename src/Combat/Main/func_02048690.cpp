@@ -7,9 +7,9 @@ extern "C" void func_02033b88(Struct_02010604*, int);
 extern "C" void* func_02057924(void);
 extern "C" void func_02057fb4(void*, int, void*);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern unsigned char data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern unsigned char g_sePlayer;
 
 struct Struct_02048690 {
     unsigned char unknown_0_;
@@ -105,8 +105,8 @@ extern "C" ARM void func_02048690(void* arg0) {
     var4.unknown_48_ = var3;
     var4.unknown_4c_ = var3;
 
-    func_02057fb4(var1, 2, &var4);
-    func_0205eaa0((struct Struct_02108760*)&data_02108760, 0x32, 0);
+    FindNodeAndProcess02057fb4(list, 2, &s);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x32, 0);
 
     var0->unknown_e0_3_ = 0;
 }

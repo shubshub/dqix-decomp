@@ -29,12 +29,12 @@ struct Struct_0205a180 {
     Struct_020da31c_2* unknown_4_;
 };
 extern "C" void* func_02057924();
-extern "C" void func_02078484(Struct_02078398_2*);
-extern "C" void func_02057fb4(void*, int, void*);
-extern "C" void* func_02058658(void*, int);
-extern "C" void func_0205a180(Struct_0205a180*);
-extern "C" void func_0205ebfc(void*, int, int);
-extern char data_020f2884[], data_020f2887[], data_02108760[];
+void InitStruct02078484(InitStruct02078484Struct*);
+void FindNodeAndProcess02057fb4(void*, int, void*);
+void* GetInlineRecordByBattleId_02058658(void*, int);
+void StoreZeroAndField0xb6ToOut(State0205a180*);
+void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
+extern char data_020f2884[], data_020f2887[], g_sePlayer[];
 
 // USA: func_020da31c
 extern "C" ARM void func_020da31c(Struct_020da31c_3* arg0) {
@@ -134,26 +134,26 @@ extern "C" ARM void func_020da31c(Struct_020da31c_3* arg0) {
             arg0->unknown_10_ = 0;
             return;
         }
-        ++arg0->unknown_f_;
-        if (arg0->unknown_10_ < 1 && (arg0->unknown_d_ & 0x10)) {
-            if (!arg0->unknown_11_) {
-                func_02078484(&var13);
-                var13.unknown_2c_ = var12->obj3D_.position_;
-                var13.unknown_38_ = var12->obj3D_.rotation_;
-                var13.unknown_18_ = 90;
-                var13.unknown_44_.x = 0x199;
-                var13.unknown_44_.y = 0x199;
-                var13.unknown_44_.z = 0x199;
-                sprintf(var13.unknown_0_, data_020f2884, data_020f2887);
-                var13.unknown_11_ |= 0xb8;
-                func_02057fb4(var0, 0x16, &var13);
-                arg0->unknown_11_ = 1;
-                func_0205ebfc(data_02108760, 1, 0);
+        ++event->ticks;
+        if (event->activations < 1 && (event->flags & 0x10)) {
+            if (!event->started) {
+                InitStruct02078484(&effect);
+                effect.position = actor->obj3D_.position_;
+                effect.rotation = actor->obj3D_.rotation_;
+                effect.lifetime = 90;
+                effect.scale.x = 0x199;
+                effect.scale.y = 0x199;
+                effect.scale.z = 0x199;
+                sprintf(effect.filename, data_020f2884, data_020f2887);
+                effect.flags |= 0xb8;
+                FindNodeAndProcess02057fb4(manager, 0x16, &effect);
+                event->started = 1;
+                DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
             } else {
-                Struct_0205a180* var20 = (Struct_0205a180*)func_02058658(var0, 0xd0);
-                if (var20) {
-                    func_0205a180(var20);
-                    func_0205ebfc(data_02108760, 1, 0);
+                State0205a180* active = (State0205a180*)GetInlineRecordByBattleId_02058658(manager, 0xd0);
+                if (active) {
+                    StoreZeroAndField0xb6ToOut(active);
+                    DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
                 }
             }
             ++arg0->unknown_10_;

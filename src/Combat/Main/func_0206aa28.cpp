@@ -34,10 +34,10 @@ struct Struct_0204254c {
     signed char unknown_5_6_ : 2;
     char unknown_6_[2];
 };
-extern "C" int func_0206ac6c(void*, void*);
-extern "C" int func_0206abf8(void*, void*);
-extern "C" bool func_02067a9c(void*, void*);
-extern "C" Struct_0204254c* func_0204254c(int, int);
+int IsHighByteFF0206ac6c(void*, void*);
+int Func0206abf8(void*, void*);
+bool IsCommandInRange02067a9c(void*, void*);
+Entry0204254c* Font_FindCharacter(int, int);
 extern "C" char* func_0206ac94(void*, unsigned short, char*);
 extern "C" void func_0206ad74(void*);
 #endif
@@ -135,14 +135,14 @@ extern "C" ARM void func_0206aa28(char* arg0) {
                 }
             }
         } else {
-            var2 = 1;
-            int var10 = 1;
-            Struct_0204254c* var11 = func_0204254c((int)(var0), (unsigned char)(arg0[0x19dc]));
-            if (var11) var10 = var11->unknown_5_0_;
-            memcpy(var1, var0, var10);
-            var1 += var10;
-            (*(int*)(arg0 + Enum_0206aa28_112))++;
-            var0 += var10;
+            seenGlyph = 1;
+            int size = 1;
+            Entry0204254c* entry = Font_FindCharacter((int)(cursor), (unsigned char)(context[0x19dc]));
+            if (entry) size = entry->size;
+            memcpy(output, cursor, size);
+            output += size;
+            (*(int*)(context + LengthField))++;
+            cursor += size;
         }
     }
     func_0206ad74(arg0);

@@ -21,17 +21,17 @@ extern const unsigned short data_020e884a[];
 extern "C" int func_02001aec(const void*, const void*, unsigned int);
 #endif
 
-struct Struct_0203dce4_2;
-struct Struct_0203de84_2;
-struct Struct_02108760;
-struct Struct_0203de84 { int unknown_0_[3]; };
-extern "C" Struct_0203dce4_2* func_0203cf4c();
-extern "C" Struct_0203dce4* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" void func_020406f8(Struct_0203de84*, Struct_0203de84_2*);
-extern "C" int func_020d857c(signed char*, signed char*);
-extern "C" int func_020d85dc(const char*, const char*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern Struct_02108760 data_02108760;
+struct EntryList_203dce4;
+struct Node020406f8;
+struct SePlayer;
+struct Vec3_020406f8 { int v[3]; };
+EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
+Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
+int IsPrefixMatch020d857c(signed char*, signed char*);
+int StringStartsWithCI020d85dc(const char*, const char*);
+void SePlayer_Play(SePlayer*, int, int);
+extern SePlayer g_sePlayer;
 extern "C" int func_02005a94(const char*);
 extern "C" void func_02042b98(void*, int, int, int, int);
 extern const char data_020f0934[], data_020f093d[], data_020f0943[], data_020f0949[];
@@ -122,19 +122,19 @@ extern "C" ARM const char* func_0206a3c0(Struct_0206a3c0_2* arg0, const char* ar
         }
         else if (func_020d857c((signed char*)arg1, (signed char*)data_020f093d))
         {
-            arg0->unknown_1000_.unknown_959_ = 60;
-            arg0->unknown_1000_.unknown_9b7_ = 1;
-            arg0->unknown_1000_.unknown_95c_ = 0;
-            arg1 += 5;
-            func_0205eaa0(&data_02108760, 6, 0);
+            self->state.wait = 60;
+            self->state.animation = 1;
+            self->state.variant = 0;
+            text += 5;
+            SePlayer_Play(&g_sePlayer, 6, 0);
         }
         else if (func_020d857c((signed char*)arg1, (signed char*)data_020f0943))
         {
-            arg0->unknown_1000_.unknown_959_ = 60;
-            arg0->unknown_1000_.unknown_9b7_ = 1;
-            arg0->unknown_1000_.unknown_95c_ = 1;
-            arg1 += 5;
-            func_0205eaa0(&data_02108760, 28, 0);
+            self->state.wait = 60;
+            self->state.animation = 1;
+            self->state.variant = 1;
+            text += 5;
+            SePlayer_Play(&g_sePlayer, 28, 0);
         }
         else if (func_020d85dc(arg1, data_020f0949))
         {

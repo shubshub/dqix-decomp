@@ -32,8 +32,8 @@ extern Vector3fix data_ov009_0218a9e0;
 #endif
 extern Vector3fix data_ov009_0218a9ec;
 
-// USA: func_ov009_021866f0  (semantic: AdvanceStatStep_021866f0)
-extern "C" ARM void func_ov009_021866f0(CharacterCreationUI* self) {
+// Overlay 9, originally func_ov009_021866f0 (USA/EUR 0x021866f0, JPN 0x0218781c)
+extern "C" ARM void CharacterCreationUI_HandleFace(CharacterCreationUI* self) {
     unsigned char step = self->step;
     if (step == 0) {
         CharacterCreationUI_SetupSlotNavigation(self);

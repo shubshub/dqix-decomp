@@ -51,10 +51,10 @@ struct Struct_ov012_02187320_3
     unsigned int unknown_13f8_;
 };
 
-struct Struct_02072a68_2;
-struct Struct_0205d6a0;
-struct Struct_0205de24_2;
-struct Struct_02108760;
+struct TableA68;
+struct Entry_0205d6a0;
+struct Struct0205de24;
+struct SePlayer;
 struct Struct_0205c570;
 struct Struct_ov012_02186a7c;
 
@@ -65,15 +65,15 @@ extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int
 #else
 extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int arg2, int arg3);
 #endif
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_0205de24(Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_ov023_021e6e60(Struct_ov012_02187320_3* arg0);
-extern "C" void func_ov012_02189f38(char* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_0205d794(Struct_0205c570* arg0);
-extern "C" int func_ov023_021e6de4(Struct_ov012_02187320_3* arg0);
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c* arg0);
-extern "C" void func_ov012_02185bf0(Struct_ov012_02187320_3* arg0, unsigned char arg1, int arg2);
+void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
+extern "C" void func_ov023_021e6e60(ProfileEditor02187320* self);
+void BuildMessageD_02189f38(char* self);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
+int GetActiveScaledSum0205d794(Struct_0205c570* window);
+extern "C" int func_ov023_021e6de4(ProfileEditor02187320* self);
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
+extern "C" void func_ov012_02185bf0(ProfileEditor02187320* self, unsigned char item, int selected);
 #if defined(jpn)
 extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* arg0, int arg1, int arg2);
 #else
@@ -83,7 +83,7 @@ extern "C" void func_02043204(char* arg0);
 extern "C" void func_ov012_0218943c(Struct_ov012_02187320_3* arg0);
 extern "C" int func_020457e0(Struct_ov012_02187320* arg0);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Struct_ov012_02187320_2* inline_ov012_02187320(GameState* arg0)
 {
@@ -117,13 +117,13 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
     }
     else if (arg0->unknown_1370_ == 2)
     {
-        arg0->unknown_13a0_ = 0;
-        arg0->unknown_13f8_ = 0;
-        func_0205de24((Struct_0205de24_2*)arg0->unknown_ac_, 0, 2);
-        func_ov023_021e6e60(arg0);
-        func_ov012_02189f38((char*)arg0);
-        func_0205eaa0((Struct_02108760*)data_02108760, 5, 0);
-        arg0->unknown_1370_++;
+        self->unk_13a0 = 0;
+        self->unk_13f8 = 0;
+        FindAndLinkMatchingEntry0205de24((Struct0205de24*)self->window_, 0, 2);
+        func_ov023_021e6e60(self);
+        BuildMessageD_02189f38((char*)self);
+        SePlayer_Play((SePlayer*)g_sePlayer, 5, 0);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 3)
@@ -133,10 +133,10 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
         int var2 = 0;
         if (func_ov023_021e6de4(arg0) || func_ov023_021e6e20((Struct_ov012_02186a7c*)arg0))
         {
-            func_ov012_02185bf0(arg0, arg0->unknown_1371_, 1);
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            Struct_ov012_02187320_2* var3 = inline_ov012_02187320(GameState::GetInstance());
-            switch (arg0->unknown_13f8_)
+            func_ov012_02185bf0(self, self->state_, 1);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            Profile02187320* profile = GetProfile02187320(GameState::GetInstance());
+            switch (self->unk_13f8)
             {
                 case 1:
                     var3->unknown_3_7_ = 1;

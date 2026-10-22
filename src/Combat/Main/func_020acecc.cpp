@@ -83,8 +83,8 @@ extern "C" void func_020ad1f8(Struct_020acecc_2* arg0, int arg1, int arg2);
 extern "C" Struct_020acecc_3* func_0201b78c(Struct_020acecc_2* arg0, Vector3i* arg1);
 extern "C" void func_020adfa8(Struct_020acecc_5* arg0);
 
-extern Struct_ov017_021d82fc_4 data_ov017_021d82fc;
-extern int data_02108760;
+extern Dispatcher020acecc data_ov017_021d82fc;
+extern int g_sePlayer;
 
 // USA: func_020acecc
 extern "C" ARM void func_020acecc(unsigned int* arg0, int arg1, int arg2)
@@ -109,26 +109,26 @@ extern "C" ARM void func_020acecc(unsigned int* arg0, int arg1, int arg2)
         }
     }
 
-    if (arg1 == 0x2774) {
-        Struct_020acecc_6 var8;
-        var8.unknown_0_ = -1;
-        var8.unknown_4_ = 0;
-        var8.unknown_0_ = var3->unknown_0_.unknown_4_;
-        func_020da77c(&data_ov017_021d82fc, 3, &var8);
-        func_0205ebc0(&data_02108760, 0xa0, 0xa0);
-        func_020a2770(var2, 0xca);
-        var3->unknown_19c_ = 1;
-        var3->unknown_13c_ = 0;
-        func_ov017_021d1c2c(0, 1);
-        if (func_0201b868(var1, arg2) != 0) {
-            Vector3i var9;
-            func_020ad1f0((struct Struct_020acecc_7*)&var9, 0, 0, 0);
-            var9.x = var1->unknown_27b4_.unknown_14_;
-            var9.z = var1->unknown_27b4_.unknown_18_;
-            if (arg2 >= 0x4e20 && arg2 <= 0x752f) {
-                var9.x = fix32_Divide(var9.x, 0x6000);
-                var9.y = fix32_Divide(var9.y, 0x6000);
-                var9.z = fix32_Divide(var9.z, 0x6000);
+    if (eventCode == 0x2774) {
+        LocalMsg020acecc local;
+        local.id = -1;
+        local.flag = 0;
+        local.id = prop->obj3D.unknown_4_;
+        func_020da77c(&data_ov017_021d82fc, 3, &local);
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0xa0, 0xa0);
+        SetField0x21c_020a2770(controller, 0xca);
+        prop->f19c = 1;
+        prop->f13c = 0;
+        SetHalfFieldsAndEnqueueIfActive_021d1c2c(0, 1);
+        if (IsIdInSpecialSet0201b868(zone, previousCode) != 0) {
+            Vector3i position;
+            SetVec3At0x0020ad1f0((struct Vec3Target020ad1f0*)&position, 0, 0, 0);
+            position.x = zone->saved.x;
+            position.z = zone->saved.z;
+            if (previousCode >= 0x4e20 && previousCode <= 0x752f) {
+                position.x = fix32_Divide(position.x, 0x6000);
+                position.y = fix32_Divide(position.y, 0x6000);
+                position.z = fix32_Divide(position.z, 0x6000);
             }
             var3->unknown_0_.position_ = var9;
             func_02033874((struct Struct_02033834*)var3, 0x3244);
@@ -150,10 +150,10 @@ extern "C" ARM void func_020acecc(unsigned int* arg0, int arg1, int arg2)
         if (data_ov017_021d82fc.unknown_e_ == 3) {
             func_020da244(&data_ov017_021d82fc);
         }
-        func_0205ebec(&data_02108760);
-        func_ov017_021d1c2c(var1->unknown_27b4_.unknown_0_, (unsigned char)var1->unknown_27b4_.unknown_2_);
-        func_020a2770(var2, func_020100a8(var0));
-        ClearFlags04((GameResources*)arg0, 0x10044);
-        SetFlags04((GameResources*)arg0, 0x40000);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        SetHalfFieldsAndEnqueueIfActive_021d1c2c(zone->saved.state, (unsigned char)zone->saved.sub);
+        SetField0x21c_020a2770(controller, GetField0x3acValue_020100a8(state));
+        ClearFlags04((GameResources*)obj, 0x10044);
+        SetFlags04((GameResources*)obj, 0x40000);
     }
 }

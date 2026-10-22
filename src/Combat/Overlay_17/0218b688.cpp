@@ -324,8 +324,8 @@ struct Struct_ov017_021d82e0_2 {
     int unknown_4_;
 };
 
-extern Struct_02109bf4_9 data_02109bf4;
-extern char data_02108760;
+extern Flags02109bf4 data_02109bf4;
+extern char g_sePlayer;
 extern char data_ov017_021d615c;
 extern char data_02114e20;
 extern char data_ov017_021d736c;
@@ -492,11 +492,11 @@ extern "C" ARM void func_ov017_0218b688(Struct_ov017_0218b688_5* arg0) {
     *(int*)(var18 + 0x47c) = 0;
     func_02070508((Struct_02108d5c*)func_020704fc());
     func_0209c2e0(&data_02109bf4, 0x7f, 0);
-    func_0205e944(&data_02108760, 0x7f);
-    data_02109bf4.unknown_c8_ &= ~4;
-    func_020d7a5c((Struct_0214e34c*)func_020d7a50());
-    if (func_0201201c(var5) == 5 && func_0200fb9c((char*)var5) != 9) {
-        func_0200fb94((char*)var5, 6);
+    func_0205e944(&g_sePlayer, 0x7f);
+    data_02109bf4.flagsC8 &= ~4;
+    ResetAndClearFlags020d7a5c((ResetObj020d7a5c*)GetGlobalResetObj020d7a50());
+    if (GetWord0x7f6c_0201201c(gs) == 5 && GetByte0x4_0200fb9c((char*)gs) != 9) {
+        SetByte0x4_0200fb94((char*)gs, 6);
     }
 
     LockStagedTextureVRAMCopying();
@@ -900,7 +900,7 @@ extern "C" ARM void func_ov017_0218b688(Struct_ov017_0218b688_5* arg0) {
             func_020d9834(1);
         }
         func_0209c840(&data_02109bf4);
-        func_0203aa08(&data_02108760);
+        ResetXYField0203aa08(&g_sePlayer);
         func_020bbd9c();
         func_0203bd88(var13);
         func_0204359c(var51, Enum_ov017_0218b688_24);
@@ -957,12 +957,12 @@ extern "C" ARM void func_ov017_0218b688(Struct_ov017_0218b688_5* arg0) {
         SetMainBrightness((GameResources*)arg0, -16, 0);
         SetSubBrightness((GameResources*)arg0, -16, 0);
     }
-    if (func_0200fb9c((char*)var5) != 2) {
-        if (func_0205eac8((Struct_0205eac8*)&data_02108760) != 100) {
-            func_0205ea20(&data_02108760, 100);
+    if (GetByte0x4_0200fb9c((char*)gs) != 2) {
+        if (GetShortAt0xb4((ShortField0xb4_0205eac8*)&g_sePlayer) != 100) {
+            SetupContextForMode0205ea20(&g_sePlayer, 100);
         }
-        func_0209c20c((Struct_02109bf4_3*)&data_02109bf4);
-        func_0205e8ec((Struct_0205e8ec*)&data_02108760);
+        InitActorContext0209c20c((Actor0209c20c*)&data_02109bf4);
+        RefreshDisplayState0205e8ec((Obj_0205e8ec*)&g_sePlayer);
         func_020bbd9c();
     }
     data_02109bf4.unknown_c8_ &= ~4;

@@ -5,9 +5,9 @@ extern "C" void* memcpy(void*, const void*, unsigned int);
 
 int GetGlobalField0x1c020421a0();
 int GetFieldByKey020e0434(Container020e0310*, int);
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+extern SePlayer g_sePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" int func_02001aec(const void*, const void*, unsigned int);
 extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void func_ov009_0218b2e8(CharacterCreationUI*);
@@ -31,7 +31,7 @@ extern "C" ARM int func_ov009_0218aab0(CharacterCreationUI* self, unsigned char 
     int inserted = 0;
     const char* page = (const char*)GetFieldByKey020e0434(&self->texts, (short)(self->keyboardPage + 0x4268));
     memcpy(character, page + choice * 2, 2);
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     if (func_02001aec(character, data_ov009_0218bc73, 2) == 0) {
         self->flags |= 0x200000;
     } else if (func_02001aec(character, data_ov009_0218bc76, 2) == 0) {

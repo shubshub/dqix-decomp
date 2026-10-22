@@ -17,7 +17,7 @@ extern char data_ov000_02183a47[];
 extern char data_ov000_02183a4e[];
 extern char data_ov000_02183a54[];
 extern char data_ov000_021839e2[];
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 struct Struct_02013fb4;
 struct Struct_02070b6c_3 { unsigned char unknown_0_[0xc]; };
@@ -121,25 +121,25 @@ extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPa
         if (arg4) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_020484d0(var17);
-    var17->unknown_2_ = arg3;
-    func_0207df90(arg0->unknown_1bc_);
-    func_0203dafc(&var5);
-    var5.unknown_4_ = (int)var15;
-    var5.unknown_8_ = var10;
-    var5.unknown_c_ = var2;
-    var17->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&var5, 0);
-    func_0207dfac(arg0->unknown_1bc_);
-    func_0203dafc(&var5);
-    var5.unknown_4_ = (int)var16;
-    var5.unknown_8_ = var11;
-    var5.unknown_c_ = var2;
-    var17->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&var5, 0);
-    var6.unknown_4_ = func_02070fd0(var3, arg3);
-    var6.unknown_0_ = func_0206f4f0(var1, arg3 << 16 >> 16);
-    sprintf(var6.unknown_4_->unknown_2c_, data_020ef078, var6.unknown_0_->unknown_0_);
-    if (var12 == 0) {
-        var6.unknown_8_ = 0;
+    SetFlag0x400Reset020484d0(obj);
+    obj->unknown_2_ = id;
+    RestorePairTables0207df90(self->tables1bc);
+    ClearEightWords_0203dafc(&params);
+    params.fieldTable = (int)model;
+    params.fieldLength = modelLength;
+    params.allocator = alloc;
+    obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
+    BackupPairTables0207dfac(self->tables1bc);
+    ClearEightWords_0203dafc(&params);
+    params.fieldTable = (int)anim;
+    params.fieldLength = animLength;
+    params.allocator = alloc;
+    obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
+    input.names = SearchWithLow15Comparator02070fd0(names, id);
+    input.entry = SearchWithComparator0206f4f0(search, id << 16 >> 16);
+    sprintf(input.names->name, g_stringFormat, input.entry->id);
+    if (scriptPtr == 0) {
+        input.script = 0;
     } else {
         func_ov000_0216d1c4((int)var2, (Struct_02013fb4*)var12, var13, &var6.unknown_8_);
     }

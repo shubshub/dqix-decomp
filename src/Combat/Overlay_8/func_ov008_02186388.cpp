@@ -156,38 +156,38 @@ struct Struct_020727d8;
 struct Struct_02013fb4;
 struct Struct_0201099c_3;
 struct Struct_0205d81c;
-struct Struct_02108760;
+struct SePlayer;
 
 extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 
 MessageSystem* GetGlobalField0x1c020421a0();
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsBrightnessTransitionActive(GameResources* resources);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void func_02072928(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3, void* arg4, unsigned char arg5);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" Struct_ov006_02158478* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-struct Struct_ov008_02184a4c_13;
-extern "C" void func_ov008_02187664(Struct_ov008_02184a4c_13*, int);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+void ResetListHeader020727d8(List020727d8* list);
+void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
+int GetField0x3acValue_020100a8(GameState* gameState);
+const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+void AppendString02042058(char* text, const char* append);
+Canvas* FindElementByC40205d81c(Struct_0205d81c* window, int canvas);
+struct Manager02187664;
+void InitConfig02187664(Manager02187664*, int);
+void SePlayer_Play(SePlayer* sound, int effect, int value);
 #if defined(jpn)
 extern "C" void func_020727f8(void* arg0, const char* arg1, int arg2, void* arg3, unsigned char arg4);
 #endif
 
 extern "C" {
-void* ExtractFileFromGP2(char* arg0, char* arg1, unsigned int* arg2);
-void func_0205bb04(Struct_ov009_02186e00_2* arg0, int arg1);
-int func_ov008_02188a54(Struct_ov008_021842a0_2* arg0, int arg1);
-void func_ov008_0218712c(Struct_ov008_021842a0_2* arg0, Struct_ov008_021843f8_2* arg1);
-void func_ov008_02187a70(Struct_ov008_021842a0_2* arg0, Struct_ov008_021843f8_2* arg1);
-void func_ov008_02187f6c(Struct_ov008_021842a0_2* arg0, Struct_ov008_021843f8_2* arg1);
-void func_ov008_02186964(Struct_ov008_021842a0_2* arg0);
-int func_ov008_02186b18(Struct_ov008_021842a0_2* arg0, int arg1, int arg2);
+void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
+void GridCursor_SetSelectedIndex(WindowCursor* cursor, int index);
+int func_ov008_02188a54(BattleRecords* self, int lastClear);
+void func_ov008_0218712c(BattleRecords* self, ClearRecords* records);
+void func_ov008_02187a70(BattleRecords* self, ClearRecords* records);
+void func_ov008_02187f6c(BattleRecords* self, ClearRecords* records);
+void func_ov008_02186964(BattleRecords* self);
+int func_ov008_02186b18(BattleRecords* self, int x, int y);
 }
 
 static inline Struct_ov008_021843f8* inline_ov008_021843f8(GameState* arg0)
@@ -332,8 +332,8 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
         }
         if (var22)
         {
-            func_0205eaa0(&data_02108760, 1, 0);
-            arg0->unknown_b11_++;
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            self->step_++;
         }
     }
     if (var5 == 5)
@@ -379,7 +379,7 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
         {
             if (arg0->unknown_744_[var26] == 7)
             {
-                func_0205bb04(&arg0->unknown_750_, var26);
+                GridCursor_SetSelectedIndex(&self->cursor_, i);
 #if defined(jpn)
                 int var27 = 5;
                 int var28 = arg0->unknown_b29_;

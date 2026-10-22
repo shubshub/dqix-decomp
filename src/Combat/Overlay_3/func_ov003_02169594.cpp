@@ -18,10 +18,10 @@ struct Struct_0205ba68;
 struct Struct_0205bacc;
 struct Struct_0205bcdc;
 
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Struct_ov003_02169594 {
     int unknown_0_;
@@ -68,14 +68,14 @@ extern "C" ARM void func_ov003_02169594(struct Struct_ov003_02169594_2* arg0) {
         break;
     }
 
-    func_0205ba68((struct Struct_0205ba68*)inline_ov003_02169594(arg0, 0), var0, var1, 0);
-    func_0205ba68((struct Struct_0205ba68*)inline_ov003_02169594(arg0, 1), var0, var1, 0);
-    func_0205bacc((struct Struct_0205bacc*)inline_ov003_02169594(arg0, 0), var2);
-    func_0205bacc((struct Struct_0205bacc*)inline_ov003_02169594(arg0, 1), var2);
-    inline_ov003_02169594(arg0, 0)->unknown_4_ = var3;
-    inline_ov003_02169594(arg0, 1)->unknown_4_ = var3;
-    func_0205bcdc((struct Struct_0205bcdc*)inline_ov003_02169594(arg0, 0), var4);
-    func_0205bb04(inline_ov003_02169594(arg0, 1), var4);
-    struct Struct_ov003_02169594* var5 = inline_ov003_02169594(arg0, 1);
-    var5->unknown_3c_ = 0;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 0), cols, rows, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 1), cols, rows, 0);
+    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 0), count);
+    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 1), count);
+    GetGrid(self, 0)->field4 = field4;
+    GetGrid(self, 1)->field4 = field4;
+    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)GetGrid(self, 0), index);
+    GridCursor_SetSelectedIndex(GetGrid(self, 1), index);
+    struct Grid02169594* grid = GetGrid(self, 1);
+    grid->field3c = 0;
 }

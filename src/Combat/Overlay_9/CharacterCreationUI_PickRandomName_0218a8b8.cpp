@@ -6,8 +6,8 @@ extern int data_ov009_0218a9ac[];
 struct Container020e0310;
 int GetFieldByKey020e0434(struct Container020e0310* c, int key);
 
-// USA: func_ov009_0218a8b8
-ARM void ResetEntrySkill0218a8b8(void* objRaw) {
+// Overlay 9, originally ResetEntrySkill0218a8b8 (USA/EUR 0x0218a8b8; JPN not identified)
+ARM void CharacterCreationUI_PickRandomName(void* objRaw) {
     char* obj = (char*)objRaw;
     void** arr = *(void***)(obj + 0xdb0);
     void* entry = arr[*(unsigned char*)(obj + 0xda3)];

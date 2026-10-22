@@ -157,7 +157,7 @@ extern "C" void func_0209ca70(void* arg0, int arg1);
 extern "C" void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1);
 
 extern unsigned char data_02109bf4[];
-extern unsigned char data_02108760[];
+extern unsigned char g_sePlayer[];
 
 // USA: func_020a95a4
 #if defined(jpn)
@@ -224,35 +224,35 @@ extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg
         func_0207c6a8(var1->unknown_1d4_, var10, arg0->unknown_2b00_[var10]);
     }
 
-    memcpy(var1->unknown_e04_, arg0->unknown_2b08_, sizeof(arg0->unknown_2b08_));
-    func_020a093c((struct Struct_0208660c*)var1->unknown_e04_, (int)var1->unknown_e10_, (int)var1->unknown_ecc_, 0x5e);
-    var1->unknown_f6c_ = arg0->unknown_2c30_;
-    var1->unknown_f68_ = arg0->unknown_2c34_;
-    var1->unknown_f70_ = arg0->unknown_2c38_;
-    var1->unknown_f74_ = arg0->unknown_2c3c_;
-    memcpy(var1->unknown_2c8d_, arg0->unknown_2c44_, sizeof(arg0->unknown_2c44_));
-    Struct_020a95a4_4* var14 = (Struct_020a95a4_4*)var0;
-    var1->unknown_2c94_ = arg0->unknown_2c4c_;
-    var14->unknown_7e74_ = arg0->unknown_2c4c_;
-    memcpy(func_020120a0((char*)var0, 0), arg0->unknown_2c50_, sizeof(arg0->unknown_2c50_));
-    func_0209ca70(data_02109bf4, arg0->unknown_2c58_);
-    func_0205e9f4((struct Struct_02108760_2*)data_02108760, arg0->unknown_2c59_);
-    var1->unknown_f7d_ = arg0->unknown_2c5a_;
-    var14->unknown_63dc_ = arg0->unknown_2c5b_;
-    var2->unknown_2786_ = arg0->unknown_2c5c_;
-    var2->unknown_2784_ = arg0->unknown_2c5e_;
-    var2->unknown_2774_ = arg0->unknown_2c60_;
-    var2->unknown_2780_ = arg0->unknown_2c6c_;
-    var2->unknown_2794_ = arg0->unknown_2c70_;
-    var2->unknown_2788_ = arg0->unknown_2c74_;
-    var2->unknown_27b4_ = arg0->unknown_2c75_;
-    var2->unknown_27b6_ = arg0->unknown_2c76_;
-    var2->unknown_27d0_ = arg0->unknown_2c77_;
-    var14->unknown_74fe_ = arg0->unknown_2c78_;
-    Struct_020a95a4* var15 = &var2->unknown_840_;
-    var15->unknown_1b48_ = arg0->unknown_2c80_;
-    var15->unknown_1b4c_ = arg0->unknown_2c84_;
-    memcpy(var3->unknown_4a8_, arg0->unknown_2c88_, sizeof(arg0->unknown_2c88_));
+    memcpy(battle->tactics, save->tactics, sizeof(save->tactics));
+    SetFields020a093c((struct Fields020a093c*)battle->tactics, (int)battle->tacticsKeys, (int)battle->tacticsValues, 0x5e);
+    battle->valueF6c = save->valueF6c;
+    battle->valueF68 = save->valueF68;
+    battle->valueF70 = save->valueF70;
+    battle->valueF74 = save->valueF74;
+    memcpy(battle->extraIds, save->extraIds, sizeof(save->extraIds));
+    GameStateLoadView* view = (GameStateLoadView*)gs;
+    battle->areaId = save->areaId;
+    view->value7e74 = save->areaId;
+    memcpy(GetField0x74deForValidIndex_020120a0((char*)gs, 0), save->words, sizeof(save->words));
+    SetModeClamped0209ca70(data_02109bf4, save->globalByte);
+    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)g_sePlayer, save->globalByte2);
+    battle->byteF7d = save->byteF7d;
+    view->byte63dc = save->byte63dc;
+    field->savedDir = save->dir;
+    field->savedAngle = save->angle;
+    field->savedPos = save->pos;
+    field->savedValue = save->value;
+    field->savedExtra = save->extra;
+    field->savedFlag = save->flag;
+    field->savedCountA = save->countA;
+    field->savedCountB = save->countB;
+    field->savedCountC = save->countC;
+    view->name74fe = save->name;
+    FieldSubState* sub = &field->sub;
+    sub->savedPosA = save->posA;
+    sub->savedPosB = save->posB;
+    memcpy(global->block4a8, save->block4a8, sizeof(save->block4a8));
 #if !defined(jpn)
     *arg2 = arg0->unknown_2ca2_;
 #endif

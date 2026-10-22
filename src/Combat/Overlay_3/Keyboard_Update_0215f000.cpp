@@ -19,36 +19,36 @@ struct Struct_ov003_0215f000 {
     short unknown_6_;
 };
 
-struct Struct_ov003_0215e8f4 {
-    struct Struct_ov003_0215f000_2* unknown_0_;
-    struct Struct_ov003_0215f000* unknown_4_;
-    char unknown_8_[0x18 - 8];
-    int unknown_18_;
-    unsigned short unknown_1c_;
-    unsigned char unknown_1e_;
-    char unknown_1f_[0x22 - 0x1f];
-    unsigned char unknown_22_;
-    unsigned char unknown_23_;
-    unsigned char unknown_24_;
+struct Self0215e8f4 {
+    struct MenuCell0215f000* cell;
+    struct CellList0215f000* list;
+    char pad8[0x18 - 8];
+    int repeatTimer;
+    unsigned short repeatDir;
+    unsigned char mask;
+    char pad1f[0x22 - 0x1f];
+    unsigned char allowAlt;
+    unsigned char allowCancel;
+    unsigned char autoRepeat;
 };
 
 struct Struct_ov003_0215e930;
 
-extern "C" struct Struct_ov003_0215e930* func_ov003_0215e8f4(struct Struct_ov003_0215e8f4* arg0);
-extern "C" int func_ov003_0215e930(struct Struct_ov003_0215e930* arg0, short arg1, signed char* arg2, signed char* arg3);
-extern "C" void func_ov003_0215e9ec(struct Struct_ov003_0215e8f4* arg0, int arg1, int arg2);
-extern "C" int func_ov003_0215ef54(struct Struct_ov003_0215e8f4* arg0);
-extern "C" int func_ov003_0215eeb8(struct Struct_ov003_0215e8f4* arg0);
-extern "C" void func_ov003_0215ec68(int arg0, short* arg1, short* arg2);
+struct LookupTable0215e930* FindEntryByMask_0215e8f4(struct Self0215e8f4* self);
+extern "C" int func_ov003_0215e930(struct LookupTable0215e930* table, short id, signed char* col, signed char* row);
+extern "C" void func_ov003_0215e9ec(struct Self0215e8f4* self, int dx, int dy);
+extern "C" int Keyboard_HandleKey(struct Self0215e8f4* self);
+extern "C" int func_ov003_0215eeb8(struct Self0215e8f4* self);
+extern "C" void Keyboard_GetKeySize(int shape, short* w, short* h);
 
-// USA: func_ov003_0215f000
-extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int arg1) {
-    struct Struct_ov003_0215f000_2* var0 = arg0->unknown_0_;
-    int var1;
-    short var2;
-    struct Struct_ov003_0215f000_2* var3;
-    unsigned char var4;
-    int var5;
+// Overlay 3, originally func_ov003_0215f000 (USA/EUR 0x0215f000; JPN not identified)
+extern "C" ARM int Keyboard_Update(struct Self0215e8f4* self, int elapsed) {
+    struct MenuCell0215f000* prev = self->cell;
+    int i;
+    short count;
+    struct MenuCell0215f000* hit;
+    unsigned char mask;
+    int result;
 
     if (arg0->unknown_0_ == 0) {
         var5 = 0;
@@ -73,13 +73,13 @@ extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int a
             arg0->unknown_1c_ = 0x10;
         }
 
-        if (arg0->unknown_24_) {
-            unsigned short var6 = arg0->unknown_1c_;
-            if (var6 != 0 && g_keyManager.TestKeysHeld(0xf0)) {
-                int var7 = arg0->unknown_18_ - arg1;
-                if (var7 <= 0) {
-                    var7 = 10;
-                    switch (var6) {
+        if (self->autoRepeat) {
+            unsigned short dir = self->repeatDir;
+            if (dir != 0 && g_keyManager.TestKeysHeld(0xf0)) {
+                int timer = self->repeatTimer - elapsed;
+                if (timer <= 0) {
+                    timer = 10;
+                    switch (dir) {
                     case 0x40:
                         func_ov003_0215e9ec(arg0, 0, -1);
                         break;
@@ -93,16 +93,16 @@ extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int a
                         func_ov003_0215e9ec(arg0, 1, 0);
                         break;
                     }
-                    if (arg0->unknown_24_) {
-                        signed char var8;
-                        signed char var9;
-                        signed char var10;
-                        signed char var11;
-                        struct Struct_ov003_0215e930* var12 = func_ov003_0215e8f4(arg0);
-                        struct Struct_ov003_0215f000_2* var13 = arg0->unknown_0_;
-                        if (func_ov003_0215e930(var12, var0->unknown_10_, &var11, &var10) == 0
-                            && func_ov003_0215e930(var12, var13->unknown_10_, &var9, &var8) == 0) {
-                            switch (var6) {
+                    if (self->autoRepeat) {
+                        signed char curRow;
+                        signed char curCol;
+                        signed char prevRow;
+                        signed char prevCol;
+                        struct LookupTable0215e930* table = FindEntryByMask_0215e8f4(self);
+                        struct MenuCell0215f000* cur = self->cell;
+                        if (func_ov003_0215e930(table, prev->id, &prevCol, &prevRow) == 0
+                            && func_ov003_0215e930(table, cur->id, &curCol, &curRow) == 0) {
+                            switch (dir) {
                             case 0x40:
                                 if (var10 < var8) arg0->unknown_0_ = var0;
                                 break;
@@ -136,10 +136,10 @@ extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int a
         unsigned char var14 = arg0->unknown_22_;
         unsigned char var15 = arg0->unknown_23_;
         if (g_keyManager.TestKeysPressed(1)
-            || (var14 && g_keyManager.TestKeysPressed(0x200))) {
-            var5 = func_ov003_0215ef54(arg0);
-        } else if (var15 && g_keyManager.TestKeysPressed(2)) {
-            var5 = func_ov003_0215eeb8(arg0);
+            || (allowAlt && g_keyManager.TestKeysPressed(0x200))) {
+            result = Keyboard_HandleKey(self);
+        } else if (allowCancel && g_keyManager.TestKeysPressed(2)) {
+            result = func_ov003_0215eeb8(self);
         } else {
             var5 = 0;
         }
@@ -147,18 +147,18 @@ extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int a
         if (var5 == 0) {
             var4 = arg0->unknown_1e_;
             if (g_touchInput.pressed_) {
-                int var16;
-                int var17;
-                g_touchInput.GetTouchPoint(&var17, &var16);
-                struct Struct_ov003_0215f000* var18 = arg0->unknown_4_;
-                var3 = var18->unknown_0_;
-                var2 = var18->unknown_6_;
-                for (var1 = 0; var1 < var2; var1++, var3++) {
-                    if (var3->unknown_c_ & var4) {
-                        short var19;
-                        short var20;
-                        func_ov003_0215ec68(var3->unknown_e_, &var20, &var19);
-                        if (var3->unknown_2_ <= var16 && var16 < var3->unknown_2_ + var19 && var3->unknown_0_ <= var17 && var17 < var3->unknown_0_ + var20) {
+                int ty;
+                int tx;
+                g_touchInput.GetTouchPoint(&tx, &ty);
+                struct CellList0215f000* list = self->list;
+                hit = list->cells;
+                count = list->count;
+                for (i = 0; i < count; i++, hit++) {
+                    if (hit->mask & mask) {
+                        short h;
+                        short w;
+                        Keyboard_GetKeySize(hit->shape, &w, &h);
+                        if (hit->y <= ty && ty < hit->y + h && hit->x <= tx && tx < hit->x + w) {
                             goto found;
                         }
                     }
@@ -166,9 +166,9 @@ extern "C" ARM int func_ov003_0215f000(struct Struct_ov003_0215e8f4* arg0, int a
             }
             var3 = 0;
         found:
-            if (var3 != 0) {
-                arg0->unknown_0_ = var3;
-                var5 = func_ov003_0215ef54(arg0);
+            if (hit != 0) {
+                self->cell = hit;
+                result = Keyboard_HandleKey(self);
             }
         }
     }

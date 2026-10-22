@@ -68,15 +68,15 @@ struct Struct_ov014_02186bc8 {
     short unknown_182_[8];
 };
 
-struct Struct_0207fdcc_2;
-struct Struct_02108760;
-struct Struct_02081f20_2;
+struct Obj2081;
+struct SePlayer;
+struct Obj0208203c;
 
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_0208203c(Struct_02081f20_2*);
-extern "C" void func_0207fdcc(Struct_0207fdcc_2*, int);
-extern "C" int func_ov014_02186ff0(char*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+short FindMappedMemberId02080468(void* obj, int id);
+void ResetWithSub0208203c(Obj0208203c*);
+void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081*, int);
+int CheckFlagAndPointInElement_02186ff0(char*);
+void SePlayer_Play(SePlayer*, int, int);
 
 extern "C" {
 Struct_ov014_02184f78* func_020974b0(Struct_020974b0* arg0, int arg1, int, bool arg3, int, short* arg5);
@@ -85,7 +85,7 @@ void func_020813ec(Struct_ov000_0217ab8c* arg0, short arg1);
 bool func_ov014_02186f10(Struct_ov014_02186bc8* arg0);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov014_02187c04
 extern "C" ARM void func_ov014_02187c04(Struct_ov014_02186bc8* arg0)
@@ -113,9 +113,9 @@ extern "C" ARM void func_ov014_02187c04(Struct_ov014_02186bc8* arg0)
         arg0->unknown_d0_ = &arg0->unknown_172_;
         if (func_ov014_02186f10(arg0))
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_14c_);
-            switch (*arg0->unknown_d0_)
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            switch (*self->cursor_)
             {
             case 8:
                 arg0->unknown_17e_ |= 0x10;

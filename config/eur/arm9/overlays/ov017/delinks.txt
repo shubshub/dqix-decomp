@@ -401,7 +401,7 @@ src/Combat/Overlay_17/func_ov017_021b8b34.cpp:
     complete
     .text start:0x021b8b34 end:0x021b8b54
 
-src/Combat/Overlay_17/func_ov017_021be3ec.cpp:
+src/Combat/Overlay_17/ForwardGlobalAndSetFlag_021be3ec.cpp:
     complete
     .text start:0x021be3ec end:0x021be40c
 
@@ -1169,7 +1169,7 @@ src/Combat/Overlay_17/func_ov017_021cc148.cpp:
     complete
     .text start:0x021cc148 end:0x021cc198
 
-src/Combat/Overlay_17/func_ov017_021c4618.cpp:
+src/Combat/Overlay_17/CopyNameToSlot_021c4618.cpp:
     complete
     .text start:0x021c4618 end:0x021c4664
 
@@ -1961,7 +1961,7 @@ src/Combat/Overlay_17/func_ov017_02191764.cpp:
     complete
     .text start:0x02191764 end:0x021917f0
 
-src/Combat/Overlay_17/func_ov017_021adb50.cpp:
+src/Combat/Overlay_17/InitCombatPairAndResetGlobal_021adb50.cpp:
     complete
     .text start:0x021adb50 end:0x021adc30
 
@@ -2541,7 +2541,7 @@ src/Combat/Overlay_17/func_ov017_021a20c0.cpp:
     complete
     .text start:0x021a20c0 end:0x021a2128
 
-src/Combat/Overlay_17/func_ov017_021a7280.cpp:
+src/Combat/Overlay_17/ForwardAndDestroyAllocatorAt48_021a7280.cpp:
     complete
     .text start:0x021a7280 end:0x021a72dc
 
@@ -2641,11 +2641,11 @@ src/Combat/Overlay_17/func_ov017_021c45b4.cpp:
     complete
     .text start:0x021c45b4 end:0x021c4618
 
-src/Combat/Overlay_17/func_ov017_021c310c.cpp:
+src/Combat/Overlay_17/ForwardAndDestroyAllocator_021c310c.cpp:
     complete
     .text start:0x021c310c end:0x021c316c
 
-src/Combat/Overlay_17/func_ov017_021c2e50.cpp:
+src/Combat/Overlay_17/ForwardResetAndCaptureTimestamp_021c2e50.cpp:
     complete
     .text start:0x021c2e50 end:0x021c2ea4
 
@@ -2869,7 +2869,7 @@ src/Combat/Overlay_17/func_ov017_021b2698.cpp:
     complete
     .text start:0x021b2698 end:0x021b2758
 
-src/Combat/Overlay_17/func_ov017_021b5f00.cpp:
+src/Combat/Overlay_17/CheckStateAndDispatchResetOrAdvance_021b5f00.cpp:
     complete
     .text start:0x021b5f00 end:0x021b5fc0
 
@@ -3105,7 +3105,7 @@ src/Combat/Overlay_17/func_ov017_021a0fa4.cpp:
     complete
     .text start:0x021a0fa4 end:0x021a1114
 
-src/Combat/Overlay_17/func_ov017_021afb8c.cpp:
+src/Combat/Overlay_17/InitObjAndDispatchName_021afb8c.cpp:
     complete
     .text start:0x021afb8c end:0x021afcec
 
@@ -3121,7 +3121,7 @@ src/Combat/Overlay_17/ProcessCombatantFieldChain_021b6d60.cpp:
     complete
     .text start:0x021b6d60 end:0x021b6e70
 
-src/Combat/Overlay_17/func_ov017_021c05f4.cpp:
+src/Combat/Overlay_17/ProcessEncounterTickOrReinit_021c05f4.cpp:
     complete
     .text start:0x021c05f4 end:0x021c0760
 

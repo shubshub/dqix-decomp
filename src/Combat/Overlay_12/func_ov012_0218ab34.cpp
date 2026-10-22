@@ -54,18 +54,18 @@ struct Struct_ov012_0218ab34_3 {
     char unknown_133c_[4];
 };
 
-extern "C" Struct_ov012_0218ab34_2* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" const char* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" void func_0204f160(unsigned char* arg0, int arg1, int arg2);
-extern "C" void func_0204ecb4(Struct_ov012_0218ab34_2* arg0, int arg1, int arg2, int arg3, int arg4, signed char* arg5);
-extern "C" void func_0204f41c(Struct_ov012_0218ab34_2* arg0, short arg1, short arg2, const char* arg3, int arg4,
-                              unsigned char arg5, short* arg6, short* arg7, int arg8);
-extern "C" void func_0204f3bc(Struct_ov012_0218ab34_2* arg0, int arg1);
-extern "C" void func_ov003_0215ec68(int arg0, short* arg1, short* arg2);
-extern "C" void func_0204f914(Struct_ov012_0218ab34_2* arg0, int arg1, short arg2, short arg3, short arg4, short arg5);
-struct Struct_0204fbf8_2;
-extern "C" void func_0204fbf8(struct Struct_0204fbf8_2* arg0);
+KeyboardCanvas* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+const char* FindEntryByKey_02072a68(struct TableA68* table, int key);
+extern "C" int func_020420e8(const char* text, int large);
+void SetField0xa0AndByte0xc4IfFlag0x1Clear_0204f160(unsigned char* obj, int value, int key);
+extern "C" void func_0204ecb4(KeyboardCanvas* wnd, int a, int b, int w, int h, signed char* margins);
+extern "C" void func_0204f41c(KeyboardCanvas* ctx, short x, short y, const char* str, int size,
+                              unsigned char palette, short* outA, short* outB, int flag);
+extern "C" void func_0204f3bc(KeyboardCanvas* ctx, int value);
+extern "C" void Keyboard_GetKeySize(int size, short* width, short* height);
+extern "C" void func_0204f914(KeyboardCanvas* obj, int mode, short x0, short y0, short x1, short y1);
+struct Obj0204fbf8;
+void InvokeHandlerAfterCacheFlush0204fbf8(struct Obj0204fbf8* obj);
 
 // USA: func_ov012_0218ab34
 extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
@@ -119,13 +119,13 @@ extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
         if (var10->unknown_d_ != 0)
             var18 = var17;
 
-        int var19 = func_020420e8(var18, 1);
-        func_ov003_0215ec68(var10->unknown_e_, &var15, &var16);
-        short var20 = var10->unknown_0_ - var1;
-        short var21 = var10->unknown_2_ - var2;
-        func_0204f914(var0, 4, var20 + 1, var21 + 1, var15 + var20 - 1, var16 + var21 - 1);
-        var15 = (var15 - var19) >> 1;
-        func_0204f41c(var0, var15 + var20, var21 + 2, var18, 0xc, 0xf, &var13, &var14, var12);
+        int textWidth = func_020420e8(text, 1);
+        Keyboard_GetKeySize(key->size_, &width, &height);
+        short x = key->x_ - originX;
+        short y = key->y_ - originY;
+        func_0204f914(canvas, 4, x + 1, y + 1, width + x - 1, height + y - 1);
+        width = (width - textWidth) >> 1;
+        func_0204f41c(canvas, width + x, y + 2, text, 0xc, 0xf, &outA, &outB, palette);
     }
 
     func_0204fbf8((struct Struct_0204fbf8_2*)var0);

@@ -20,10 +20,10 @@ extern "C" void func_020e1b2c(void*, int);
 extern "C" int func_020e1f1c(void*);
 extern "C" void func_020e2110(void*);
 extern "C" void func_020e23f4(void*);
-extern "C" void func_020e2478(int*);
-extern "C" void func_020e2cc4(Struct_020439b0*, int);
-extern "C" void func_0207df50(Struct_0203d028*);
-extern int data_02108760;
+void InvokeSubHandlerIfPresent_020e2478(int*);
+void SetEntryEnabled020e2cc4(Entry020e2cc4*, int);
+void CopyInternalFields0207df50(Foo0207df50*);
+extern int g_sePlayer;
 
 #else
 
@@ -58,7 +58,7 @@ extern "C" void func_020e2478(int*);
 extern "C" void func_020e2cc4(struct Struct_020439b0*, int);
 extern "C" void func_0207df50(struct Struct_0203d028*);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 #endif
 
@@ -86,27 +86,27 @@ extern "C" ARM void func_0204500c(Struct_02021b84* arg0, const char* arg1, int a
         for (unsigned short var3 = 0; var3 < var1; var3++) {
             func_0206cb14(arg0, 10, var2[var3]);
         }
-        memset(arg0->unknown_1752_, 0xff01, sizeof(arg0->unknown_1752_));
-        arg0->unknown_19c4_ = 0;
-        arg0->unknown_19c3_ = 0;
-        arg0->unknown_1772_ = 0;
-        arg0->unknown_1774_ = 0;
-        arg0->unknown_17f3_ = 1;
-        arg0->unknown_17ff_.unknown_0_5_ = 0;
-        arg0->unknown_17e0_ = 0;
-        arg0->unknown_19bf_ = 1;
-        arg0->unknown_17ff_.unknown_0_1_ = 1;
-        arg0->unknown_1778_[0] = arg0->unknown_1778_[1] = arg0->unknown_1778_[2] = arg0->unknown_1778_[3] = 0x7f;
-        func_0205e944(&data_02108760, 0x7f);
-        memset(arg0->unknown_2cc_, 0, sizeof(arg0->unknown_2cc_));
-        memset(arg0->unknown_14_, 0, 0x800);
-        memset(arg0->unknown_4c_, 0, 0x140);
-        memset(arg0->unknown_1c_, 0, 0x140);
-        arg0->unknown_19bd_ = 1;
-        arg0->unknown_9b4_ = 14;
-        for (int var4 = 14; var4 < 0x80; ++var4) {
-            func_02041bbc(&arg0->unknown_9b8_[var4]);
-            arg0->unknown_17b8_[var4] = 0;
+        memset(window->lineGlyphSlots, 0xff01, sizeof(window->lineGlyphSlots));
+        window->b19c4 = 0;
+        window->b19c3 = 0;
+        window->lineGlyphCount = 0;
+        window->h1944 = 0;
+        window->b19c2 = 1;
+        window->flags17ff.flag5 = 0;
+        window->b19b0 = 0;
+        window->b19bf = 1;
+        window->flags17ff.flag1 = 1;
+        window->levels[0] = window->levels[1] = window->levels[2] = window->levels[3] = 0x7f;
+        func_0205e944(&g_sePlayer, 0x7f);
+        memset(window->bitmapAllocationBits, 0, sizeof(window->bitmapAllocationBits));
+        memset(window->textBuffer, 0, 0x800);
+        memset(window->firstLineBuffer, 0, 0x140);
+        memset(window->secondLineBuffer, 0, 0x140);
+        window->b19bd = 1;
+        window->allocatedGlyphCount = 14;
+        for (int slot = 14; slot < 0x80; ++slot) {
+            func_02041bbc(&window->glyphs[slot]);
+            window->glyphReferences[slot] = 0;
         }
         arg0->unknown_17eb_ = 1;
         arg0->unknown_1730_ = 0xc;
@@ -250,29 +250,29 @@ extern "C" ARM void func_0204500c(struct Struct_02021b84* arg0, const char* arg1
         for (unsigned short var19 = 0; var19 < var18; var19++) {
             func_0206b198((struct Struct_0204500c_4*)arg0, arg0->unknown_1882_[var19]);
         }
-        memset(arg0->unknown_1882_, 0xff01, sizeof(arg0->unknown_1882_));
-        memset(arg0->unknown_1902_, 0, sizeof(arg0->unknown_1902_));
-        arg0->unknown_19c4_ = 0;
-        arg0->unknown_19c3_ = 0;
-        arg0->unknown_1942_ = 0;
-        arg0->unknown_1944_ = 0;
-        arg0->unknown_1946_ = 0;
-        arg0->unknown_19c2_ = 1;
-        arg0->unknown_19d3_ = 0;
-        arg0->unknown_19b0_ = 0;
-        arg0->unknown_19bf_ = 1;
-        arg0->unknown_19cf_ = 1;
-        arg0->unknown_194a_[0] = arg0->unknown_194a_[1] = arg0->unknown_194a_[2] = arg0->unknown_194a_[3] = 0x7f;
-        func_0205e944(&data_02108760, 0x7f);
-        memset(arg0->unknown_2cc_, 0, sizeof(arg0->unknown_2cc_));
-        memset(arg0->unknown_48_, 0, 0x960);
-        memset(arg0->unknown_4c_, 0, 0x280);
-        memset(arg0->unknown_50_, 0, 0x280);
-        arg0->unknown_19bd_ = 1;
-        arg0->unknown_9b4_ = 0;
-        for (int var20 = 0; var20 < 0x80; ++var20) {
-            func_020416c0(&arg0->unknown_9b8_[var20]);
-            arg0->unknown_17b8_[var20] = 0;
+        memset(window->lineGlyphSlots, 0xff01, sizeof(window->lineGlyphSlots));
+        memset(window->slotData, 0, sizeof(window->slotData));
+        window->b19c4 = 0;
+        window->b19c3 = 0;
+        window->lineGlyphCount = 0;
+        window->h1944 = 0;
+        window->h1946 = 0;
+        window->b19c2 = 1;
+        window->b19d3 = 0;
+        window->b19b0 = 0;
+        window->b19bf = 1;
+        window->b19cf = 1;
+        window->levels[0] = window->levels[1] = window->levels[2] = window->levels[3] = 0x7f;
+        func_0205e944(&g_sePlayer, 0x7f);
+        memset(window->bitmapAllocationBits, 0, sizeof(window->bitmapAllocationBits));
+        memset(window->textBuffer, 0, 0x960);
+        memset(window->firstLineBuffer, 0, 0x280);
+        memset(window->secondLineBuffer, 0, 0x280);
+        window->b19bd = 1;
+        window->allocatedGlyphCount = 0;
+        for (int slot = 0; slot < 0x80; ++slot) {
+            Forward020416c0(&window->glyphs[slot]);
+            window->glyphReferences[slot] = 0;
         }
         arg0->unknown_19bb_ = 1;
         arg0->unknown_1860_ = 0xc;

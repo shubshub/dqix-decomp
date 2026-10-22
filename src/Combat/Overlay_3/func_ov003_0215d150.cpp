@@ -3,8 +3,8 @@
 #include <globaldefs.h>
 
 struct Struct_0205c570;
-struct Struct_0205cf1c;
-struct Struct_02108760;
+struct Struct0205cf1c;
+struct SePlayer;
 
 #if defined(jpn)
 enum { Enum_ov003_0215d150_0 = 0x18, Enum_ov003_0215d150_0_2 = -0x34, Enum_ov003_0215d150_0_3 = -0x130, Enum_ov003_0215d150_0_4 = -0x1d0, Enum_ov003_0215d150_0_5 = 0x20 };
@@ -78,19 +78,19 @@ extern "C" void func_ov003_0215ddc0(char *arg0);
 extern "C" void func_ov003_0215df1c(void *arg0);
 extern "C" void func_ov003_0215dd3c(char *arg0);
 struct Struct_0205d81c;
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-extern "C" void func_0205cef8(void *arg0);
-extern "C" void func_0205cf04(void *arg0);
-extern "C" int func_0205d794(Struct_0205c570 *);
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-extern "C" void func_0205cf10(void *arg0);
-extern "C" void func_0205cf1c(Struct_0205cf1c *);
-extern "C" int func_ov003_0215dcb8(char *arg0);
-extern "C" ARM int func_ov003_0215dd00(char *arg0);
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+void SetChannelAFlag0205cef8(void *obj);
+void SetChannelBFlag0205cf04(void *obj);
+int GetActiveScaledSum0205d794(Struct_0205c570 *);
+struct Entry_0205d6a0;
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void SePlayer_Play(SePlayer *, int, int);
+void ClearChannelAFlag0205cf10(void *p);
+void ClearFlagByte0205cf1c(Struct0205cf1c *);
+extern "C" int func_ov003_0215dcb8(char *obj);
+ARM int IsFlagStateOrField98Eq2_0215dd00(char *self);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_0215d150
 extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
@@ -186,19 +186,19 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
         func_0205cf04(arg0->unknown_98_);
         arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
     }
-    if (var4 == 4) {
-        arg0->unknown_3c2_ = 1;
-        arg0->unknown_3c1_ = func_0205d794((Struct_0205c570 *) arg0->unknown_98_);
-        if (func_ov003_0215dcb8((char *) arg0) != 0) {
-            arg0->unknown_3c2_ = 0;
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_98_, 0);
-            func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-            func_0205cf10(arg0->unknown_98_);
-            func_0205cf1c((Struct_0205cf1c *) arg0->unknown_98_);
-            switch (arg0->unknown_3bd_[arg0->unknown_3c1_]) {
-            case 0: arg0->unknown_3bc_ = 2; break;
-            case 1: arg0->unknown_3bc_ = 3; break;
-            case 2: arg0->unknown_3bc_ = 4; break;
+    if (state == 4) {
+        self->b3c2 = 1;
+        self->b3c1 = GetActiveScaledSum0205d794((Struct_0205c570 *) self->list98);
+        if (func_ov003_0215dcb8((char *) self) != 0) {
+            self->b3c2 = 0;
+            ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+            ClearChannelAFlag0205cf10(self->list98);
+            ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
+            switch (self->tab3bd[self->b3c1]) {
+            case 0: self->b3bc = 2; break;
+            case 1: self->b3bc = 3; break;
+            case 2: self->b3bc = 4; break;
             }
             arg0->unknown_3b8_ = 0;
         } else {

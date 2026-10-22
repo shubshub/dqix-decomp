@@ -83,7 +83,7 @@ extern "C" void func_02082fc4(void*, void*);
 extern "C" void func_02082fa8(struct Struct_02082fa8*, struct Struct_02082fa8*);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_02042764(void*, void*, int);
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 // USA: func_02082d6c
 extern "C" ARM void func_02082d6c(struct Struct_02082d6c* arg0, struct Struct_02082d6c_2* arg1) {
@@ -120,12 +120,12 @@ extern "C" ARM void func_02082d6c(struct Struct_02082d6c* arg0, struct Struct_02
         arg0->unknown_18_ |= 4;
     }
 #if defined(jpn)
-    sprintf(arg0->unknown_3c_, data_020ef078, arg1->unknown_140_);
+    sprintf(dst->name3c, g_stringFormat, src->b140);
 #else
-    char var4[0x30];
-    __clear(var4, 0x30);
-    func_02042764(arg1->unknown_140_, var4, 1);
-    sprintf(arg0->unknown_3c_, data_020ef078, var4);
+    char local[0x30];
+    __clear(local, 0x30);
+    func_02042764(src->b140, local, 1);
+    sprintf(dst->name3c, g_stringFormat, local);
 #endif
     arg0->unknown_7b_6_ = arg1->unknown_1_4_;
     arg0->unknown_1c_ = arg1->unknown_154_.unknown_1_2_;

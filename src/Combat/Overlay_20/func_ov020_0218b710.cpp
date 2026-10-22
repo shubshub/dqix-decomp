@@ -131,9 +131,9 @@ extern "C" void func_0205cc50(void* arg0, int arg1, int arg2);
 #if defined(jpn)
 extern "C" void func_0205dfa8(void* arg0);
 #endif
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" void func_02043368(char* arg0);
-extern "C" void func_020439b0(char* arg0, int arg1);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int a);
+extern "C" void func_02043368(char* g);
+extern "C" void func_020439b0(char* g, int a);
 extern "C" char* func_0203bd08(void);
 extern "C" void func_020c5414(void);
 extern "C" void func_020bbd9c(void);
@@ -143,7 +143,7 @@ extern "C" void MapVRAMBanksToTextureImage(int);
 extern "C" void MapVRAMBanksToTexturePalette(int);
 
 extern AllocatorUnion data_02114e20;
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 extern char data_ov020_0218dbdc[];
 extern char data_ov020_0218dbef[];
@@ -647,8 +647,8 @@ extern "C" ARM void func_ov020_0218b710(Struct_ov020_0218b710_5* arg0) {
         arg0->unknown_c2_ = var25;
         func_0205cc50(arg0->unknown_c_, 0, -4);
 #endif
-        func_0205bcdc((Struct_0205bcdc*)arg0->unknown_2c_, 0);
-        func_0205bb04(arg0->unknown_7c_, 0);
+        SetIndexIfValid0205bcdc((Struct_0205bcdc*)self->sub2c, 0);
+        GridCursor_SetSelectedIndex(self->sub7c, 0);
         MapVRAMBanksToMainObj(2);
 
         BackgroundLoader* var26 = BackgroundLoader::GetInstance();
@@ -663,14 +663,14 @@ extern "C" ARM void func_ov020_0218b710(Struct_ov020_0218b710_5* arg0) {
             var26->RemoveAllLocks();
         }
 
-        char* var28 = func_0203bd08();
-        func_0203bd24(var28);
-        func_0205e8ec((Struct_0205e8ec*)data_02108760);
-        func_0209c3b4((Struct_0209c3b4_2*)data_02109bf4, 2);
-        while (arg0->unknown_0_ != -1) {
-            func_02012efc();
-            if (++arg0->unknown_4_ >= 0xffffff) {
-                arg0->unknown_4_ = 1;
+        char* ctx = func_0203bd08();
+        InitBattleContext0203bd24(ctx);
+        RefreshDisplayState0205e8ec((Obj_0205e8ec*)g_sePlayer);
+        SetStateAndDispatch0209c3b4((Actor0209c3b4*)data_02109bf4, 2);
+        while (self->state != -1) {
+            InitCombatSubsystems02012efc();
+            if (++self->frame >= 0xffffff) {
+                self->frame = 1;
             }
             func_020c52e8();
             func_020c5414();

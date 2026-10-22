@@ -15,16 +15,16 @@ struct Struct_0203c0cc { char unknown_0_[0x18]; };
 enum { Enum_ov000_021723a8_1096 = 0x448, Enum_ov000_021723a8_9 = 9 };
 #endif
 
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
-extern "C" void func_0205bef8(struct Struct_0205bef8* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_02092aa4(Struct_02092aa4* arg0, int arg1);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void* func_0202ae18(GameState* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_0203c0cc(struct Struct_0203c0cc* arg0);
+void ZeroInit020de848(void* obj);
+void ResetList0204af64(struct List0204af64* obj);
+void InitStruct0205cfd4(struct InitTarget0205cfd4* obj);
+void GridCursor_Init(struct Struct_0205bef8* obj);
+extern "C" void func_0204c684(void* obj);
+void InitObj02092aa4(Obj02092aa4* obj, int mode);
+void InitStruct0205a444(char* obj);
+extern "C" void* func_0202ae18(GameState* gs);
+int GetField0x3acValue_020100a8(GameState* gs);
+void InitFields0x0_0203c0cc(struct State0xc0cc* obj);
 
 struct Struct_ov000_021723a8;
 extern "C" void func_ov000_0217228c(struct Struct_ov000_021723a8* arg0);
@@ -176,13 +176,13 @@ extern "C" ARM void func_ov000_021723a8(struct Struct_ov000_021723a8* arg0, int 
             var2;
         }
     }
-    func_0204af64(&arg0->unknown_8a4_[0]);
-    func_0204af64(&arg0->unknown_8a4_[1]);
-    func_0204af64(&arg0->unknown_8a4_[2]);
-    func_0205cfd4(&arg0->unknown_188_);
-    func_0205bef8(&arg0->unknown1_244_);
-    for (int var5 = 0; var5 < 7; var5++) {
-        func_0204c684(arg0->unknown1_284_[var5]);
+    ResetList0204af64(&self->lists[0]);
+    ResetList0204af64(&self->lists[1]);
+    ResetList0204af64(&self->lists[2]);
+    InitStruct0205cfd4(&self->obj188);
+    GridCursor_Init(&self->obj244);
+    for (int i = 0; i < 7; i++) {
+        func_0204c684(self->slots284[i]);
     }
     arg0->unknown_1af0_ = arg1;
     func_02092aa4(&arg0->unknown_7c_, 0);

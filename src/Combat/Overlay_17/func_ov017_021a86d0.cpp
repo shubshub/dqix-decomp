@@ -69,35 +69,35 @@ extern "C" int fix32_Atan2(int arg0, int arg1);
 #define func_0205ec34 func_0205ff20
 #endif
 struct AllocatorUnion;
-extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov017_021a933c(void* arg0, int arg1);
-extern "C" void func_0205c790(char*);
+void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
+extern "C" void func_020dfec0(void* cont, void* alloc, void* data, unsigned int length);
+struct Obj02046574;
+void SetIndexedName02046574(Obj02046574*, int, char*);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov017_021a933c(void* obj, int key);
+void InitBigStruct0205c790(char*);
 struct Struct_0205ba68;
-extern "C" void func_0205ba68(Struct_0205ba68*, int, int, int);
-struct Struct_0205bacc;
-extern "C" void func_0205bacc(Struct_0205bacc*, int);
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_0205cb74(char*, int);
-extern "C" void func_0205cc50(void* arg0, int arg1, int arg2);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+struct Node0205bacc;
+void GridCursor_SetCount(Node0205bacc*, int);
+struct Container020e0310;
+void* GetFieldByKey020e0434(Container020e0310*, int);
+void ProcessCombatEntry0205cb74(char*, int);
+extern "C" void func_0205cc50(void* obj, int a, int b);
 struct Struct_0205bcdc;
-extern "C" void func_0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-struct Struct_0205c77c;
-extern "C" void func_0205c77c(Struct_0205c77c*, int);
-extern "C" void func_0205cd28(unsigned char* arg0);
-struct Struct_0205a330;
-extern "C" void func_0205a330(Struct_0205a330*, int);
-extern "C" int func_0205cecc(void* arg0);
-extern "C" int func_0205cb64(void* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_0205ce50(unsigned char* arg0);
-extern "C" int func_020457e0(char* arg0);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int value);
+struct ResetBytesAndSetByte0x16Data;
+void ResetBytesAndSetByte0x16_0205c77c(ResetBytesAndSetByte0x16Data*, int);
+void SetupGlobalObjType1AndInitSelfPointer_0205cd28(unsigned char* obj);
+struct Container0205a330;
+void IterateEntries0205a330(Container0205a330*, int);
+int GetScaledSumIfActive0205cecc(void* obj);
+int CallFunc0205c570AtField0x1c_0205cb64(void* obj);
+void ReinitController02043204(char* obj);
+void SetupGlobalObjType3AndInitSelfPointer_0205ce50(unsigned char* obj);
+extern "C" int func_020457e0(char* obj);
 extern "C" unsigned char* func_0205ec34(void);
 extern "C" unsigned char* func_0200fd0c(GameState*);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int size);
@@ -122,7 +122,7 @@ extern "C" void func_ov017_021a92a0(Struct_ov017_021a86d0* arg0);
 extern char data_ov017_021d77f0[];
 extern char data_ov017_021d780a[];
 extern char data_02114e20[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 static inline unsigned int inline_ov017_021a86d0(void) {
     return (*(volatile unsigned int*)0x4000000 & 0x1f00) >> 8;
@@ -177,21 +177,21 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
             ((SafeAllocator*)arg0->unknown_264_)->CreateTypeA(func_02012d88((AllocatorUnion*)data_02114e20, Enum_ov017_021a86d0_5120), Enum_ov017_021a86d0_5120);
             arg0->unknown_8_ = 1;
         }
-    } else if (arg0->unknown_8_ == 1) {
-        void* var11 = BackgroundLoader::GetInstance();
-        if (((BackgroundLoader*)var11)->GetTaskStatus(arg0->unknown_28_)) {
-            void* var12;
-            unsigned int var13;
-            ((BackgroundLoader*)var11)->GetLoadedFileByID(arg0->unknown_28_, &var12, &var13);
-            ((SafeAllocator*)arg0->unknown_264_)->Reset();
-            func_020dfec0(arg0->unknown_278_, arg0->unknown_264_, var12, var13);
-            ((BackgroundLoader*)var11)->RemoveTask(arg0->unknown_28_);
-            arg0->unknown_28_ = -1;
-            func_02046574((Struct_02046574_2*)var1, 0, *(char**)((char*)var0->GetProtagonist() + 0x134));
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_ov017_021a933c(arg0, 0x64);
-            *(int*)(var1 + Enum_ov017_021a86d0_2456) = 1;
-            arg0->unknown_8_ = 2;
+    } else if (self->state == 1) {
+        void* loader = BackgroundLoader::GetInstance();
+        if (((BackgroundLoader*)loader)->GetTaskStatus(self->task)) {
+            void* data;
+            unsigned int length;
+            ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task, &data, &length);
+            ((SafeAllocator*)self->allocator)->Reset();
+            func_020dfec0(self->container, self->allocator, data, length);
+            ((BackgroundLoader*)loader)->RemoveTask(self->task);
+            self->task = -1;
+            SetIndexedName02046574((Obj02046574*)g, 0, *(char**)((char*)gs->GetProtagonist() + 0x134));
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            func_ov017_021a933c(self, 0x64);
+            *(int*)(g + MessageState) = 1;
+            self->state = 2;
         }
     } else if (arg0->unknown_8_ == 2) {
         if (*(int*)(var1 + Enum_ov017_021a86d0_2464) == 3) {
@@ -201,18 +201,18 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
                     arg0->unknown_20_++;
                 }
             }
-            func_0205c790((char*)arg0->unknown_2c_);
-            var3->unknown_b1_ = 1;
-            var3->unknown_b0_ = 1;
-            int var15 = arg0->unknown_20_;
-            func_0205ba68((Struct_0205ba68*)var3->unknown_20_, 1, var15 + 1, 0);
-            func_0205ba68((Struct_0205ba68*)var3->unknown_70_, 1, var15 + 1, 0);
-            func_0205bacc((Struct_0205bacc*)var3->unknown_20_, var15 + 1);
-            func_0205bacc((Struct_0205bacc*)var3->unknown_70_, var15 + 1);
-            int var16 = 0;
-            for (int var17 = 0; var17 < arg0->unknown_20_; var17++) {
-                if (arg0->unknown_18_[var17] == 4) {
-                    var16 = 0xc;
+            InitBigStruct0205c790((char*)self->sub);
+            sub->dd = 1;
+            sub->dc = 1;
+            int count = self->count;
+            GridCursor_SetDimensions((Struct_0205ba68*)sub->table4c, 1, count + 1, 0);
+            GridCursor_SetDimensions((Struct_0205ba68*)sub->table9c, 1, count + 1, 0);
+            GridCursor_SetCount((Node0205bacc*)sub->table4c, count + 1);
+            GridCursor_SetCount((Node0205bacc*)sub->table9c, count + 1);
+            int offset = 0;
+            for (int j = 0; j < self->count; j++) {
+                if (self->members[j] == 4) {
+                    offset = 0xc;
                 }
                 func_0205cb74((char*)arg0->unknown_2c_, (int)(func_020e0434((Struct_0201099c_3*)arg0->unknown_278_, arg0->unknown_18_[var17])));
             }
@@ -244,15 +244,15 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
 #else
             func_0205cc50(arg0->unknown_2c_, 0, -4);
 #endif
-            func_0205bcdc((Struct_0205bcdc*)var3->unknown_20_, 0);
-            func_0205bb04(var3->unknown_70_, 0);
-            var3->unknown_234_ = 1;
-            func_0205c77c((Struct_0205c77c*)var3->unknown_4_, 1);
-            var3->unknown_233_ = 1;
-            var3->unknown_234_ = 1;
-            func_0205c77c((Struct_0205c77c*)var3->unknown_4_, 1);
-            func_0205cd28(arg0->unknown_2c_);
-            arg0->unknown_8_ = 3;
+            SetIndexIfValid0205bcdc((Struct_0205bcdc*)sub->table4c, 0);
+            GridCursor_SetSelectedIndex(sub->table9c, 0);
+            sub->b260 = 1;
+            ResetBytesAndSetByte0x16_0205c77c((ResetBytesAndSetByte0x16Data*)sub->resetData, 1);
+            sub->b25f = 1;
+            sub->b260 = 1;
+            ResetBytesAndSetByte0x16_0205c77c((ResetBytesAndSetByte0x16Data*)sub->resetData, 1);
+            SetupGlobalObjType1AndInitSelfPointer_0205cd28(self->sub);
+            self->state = 3;
         }
     } else if (arg0->unknown_8_ == 3) {
         void* var25 = *(void**)(var1 + Enum_ov017_021a86d0_736);
@@ -260,8 +260,8 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
         var1[Enum_ov017_021a86d0_6574] = 0;
         int var26 = func_0205cecc(arg0->unknown_2c_);
         if (g_keyManager.TestKeysPressed(1)) {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            var26 = func_0205cb64(arg0->unknown_2c_);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            sel = CallFunc0205c570AtField0x1c_0205cb64(self->sub);
         } else if (g_keyManager.TestKeysPressed(2)) {
             var26 = -2;
         }

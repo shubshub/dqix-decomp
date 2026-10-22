@@ -25,20 +25,20 @@ struct Struct_ov000_02184294_3 {
 extern struct Struct_ov000_02184294_3 data_ov000_02184294;
 
 struct Struct_0205c570;
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_ov000_021761c8(char* arg0, int arg1);
-extern "C" int func_ov000_02175348(void* arg0, int arg1);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0217ab48(void* arg0);
-extern "C" void func_ov000_02170db0(void* arg0);
-extern "C" void func_ov000_0217629c(void* arg0);
-extern "C" void func_ov000_0217ab8c(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02176e3c(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int GetClampedArrayField0xd1c_ov000_021761c8(char* base, int index);
+int CountMatchingValues02175348(void* obj, int value);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
+extern "C" void func_ov000_02170db0(void* obj);
+extern "C" void func_ov000_0217629c(void* obj);
+extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
+extern "C" void func_ov000_02176e3c(void* menu, void* obj, int state, int arg1, int arg2, int flag);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Struct_ov000_0217b380 {
     char unknown_0_[0x10];
@@ -63,18 +63,18 @@ extern "C" ARM int func_ov000_0217b380(struct Struct_ov000_0217b380* arg0, int a
             int var4 = func_ov000_02175348(data_ov000_02184294.unknown_8_, var3);
             arg0->unknown_1d_ = NextRandomMax(GetBTRandom(), var4 * 100) / 100 + (signed char)var0;
         }
-        func_0205eaa0(&data_02108760, 1, 0);
-        arg0->unknown_18_++;
-        arg0->unknown_10_[arg0->unknown_18_] = 100;
-        func_ov000_02170db0(arg0);
-    } else if (func_ov000_0217ab48(arg0)) {
-        func_ov000_0217629c(arg0);
-        arg0->unknown_10_[arg0->unknown_18_] = 0;
-        arg0->unknown_18_--;
-        arg0->unknown_1d_ = -1;
-        func_ov000_0217ab8c(arg0, arg1, arg2);
-        func_ov000_02176e3c(data_ov000_02184294.unknown_8_, arg0, arg0->unknown_10_[arg0->unknown_18_],
-                            data_ov000_02184294.unknown_4_, data_ov000_02184294.unknown_0_, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        self->stackTop++;
+        self->stack[self->stackTop] = 100;
+        func_ov000_02170db0(self);
+    } else if (CheckFlagsOrField_0217ab48_0217ab48(self)) {
+        func_ov000_0217629c(self);
+        self->stack[self->stackTop] = 0;
+        self->stackTop--;
+        self->selection = -1;
+        func_ov000_0217ab8c(self, arg1, arg2);
+        func_ov000_02176e3c(data_ov000_02184294.menu, self, self->stack[self->stackTop],
+                            data_ov000_02184294.field4, data_ov000_02184294.field0, 0);
     }
     return -1;
 }

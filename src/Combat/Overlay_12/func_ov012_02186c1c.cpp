@@ -15,16 +15,16 @@ struct Struct_ov012_02186c1c_2 {
 };
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_02072a68_2;
-struct Struct_02108760;
-struct Struct_ov012_02186a7c;
-extern "C" void func_0205de24(Struct_0205de24_2*, unsigned char, unsigned char);
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_ov012_021898bc(char*);
-extern "C" void* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c*);
-extern Struct_02108760 data_02108760;
+struct TableA68;
+struct SePlayer;
+struct Obj021e6e20;
+void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void BuildMessageB_021898bc(char*);
+void* FindEntryByKey_02072a68(TableA68*, int);
+void SePlayer_Play(SePlayer*, int, int);
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
+extern SePlayer g_sePlayer;
 extern "C" void func_ov023_021e6e60(void*);
 extern "C" int func_ov023_021e7148(void*);
 extern "C" void func_ov012_0218bba0(void*, int, int);
@@ -83,8 +83,8 @@ extern "C" ARM void func_ov012_02186c1c(char* arg0) {
             break;
         }
         }
-        if (!var2) return;
-        func_0205eaa0(&data_02108760, 1, 0);
+        if (!rebuild) return;
+        SePlayer_Play(&g_sePlayer, 1, 0);
     } else {
         if (!func_ov023_021e6e20((Struct_ov012_02186a7c*)arg0)) return;
         func_ov012_02189be8(arg0, 1);
@@ -105,15 +105,15 @@ struct Struct_0205de24_2 {
     unsigned char unknown_b4_;
 };
 struct Struct_0205c570;
-struct Struct_02072a68 { short unknown_0_; void* unknown_4_; };
-struct Struct_02072a68_2 { Struct_02072a68* unknown_0_; short unknown_4_; };
-struct Struct_02108760;
-struct Struct_ov012_02186a7c;
-struct Struct_ov012_02186c1c_3 {
-    char unknown_0_[4];
-    unsigned int unknown_4_0_ : 9;
-    int unknown_5_1_ : 10;
-    unsigned int unknown_6_3_ : 13;
+struct EntryA68 { short key; void* value; };
+struct TableA68 { EntryA68* entries; short count; };
+struct SePlayer;
+struct Obj021e6e20;
+struct ProfileTitle {
+    char padding0[4];
+    unsigned int unknown4 : 9;
+    int title : 10;
+    unsigned int unknownUpper : 13;
 };
 struct Struct_01ff8b48_9 {
     char unknown_0_[0x569c];
@@ -142,17 +142,17 @@ static inline Struct_ov012_02186c1c_3* inline_ov012_02186c1c_2(GameState* arg0) 
     Struct_01ff8b48_9* var0 = (Struct_01ff8b48_9*)arg0;
     return &var0->unknown_569c_;
 }
-extern "C" void func_0205de24(Struct_0205de24_2*, unsigned char, unsigned char);
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_ov012_021898bc(char*);
-extern "C" void* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c*);
-extern Struct_02108760 data_02108760;
-extern "C" void func_ov023_021e6e60(Struct_ov012_02185ab8*);
-extern "C" int func_ov023_021e6de4(Struct_ov012_02185ab8*);
-extern "C" void func_ov012_0218adac(Struct_ov012_02185ab8*, int, int, int);
-extern "C" void func_ov012_0218930c(Struct_ov012_02185ab8*, int);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void BuildMessageB_021898bc(char*);
+void* FindEntryByKey_02072a68(TableA68*, int);
+void SePlayer_Play(SePlayer*, int, int);
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
+extern SePlayer g_sePlayer;
+extern "C" void func_ov023_021e6e60(ProfileEditor*);
+extern "C" int func_ov023_021e6de4(ProfileEditor*);
+extern "C" void func_ov012_0218adac(ProfileEditor*, int, int, int);
+extern "C" void func_ov012_0218930c(ProfileEditor*, int);
 
 // USA: func_ov012_02186c1c
 extern "C" ARM void func_ov012_02186c1c(Struct_ov012_02185ab8* arg0) {
@@ -211,8 +211,8 @@ extern "C" ARM void func_ov012_02186c1c(Struct_ov012_02185ab8* arg0) {
             break;
         }
         }
-        if (!var7) return;
-        func_0205eaa0(&data_02108760, 1, 0);
+        if (!rebuild) return;
+        SePlayer_Play(&g_sePlayer, 1, 0);
     } else {
         if (!func_ov023_021e6e20((Struct_ov012_02186a7c*)arg0)) return;
         func_ov012_0218930c(arg0, 1);

@@ -17,9 +17,9 @@ extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
 struct Struct_02081f20_2;
 extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern "C" int func_ov003_021765b4(void* arg0);
 extern "C" int func_ov003_021766e8(void* arg0);
@@ -69,18 +69,18 @@ extern "C" ARM void func_ov003_0217a280(struct Struct_ov003_0217a280* arg0) {
         if (arg0->unknown_100c_ < 0) {
             arg0->unknown_100c_ = func_02080468(var0, arg0->unknown_ffe_);
         }
-        var0->unknown_36_ = arg0->unknown_100c_;
-        func_020813ec(var0, arg0->unknown_ffe_);
-        func_0208203c((struct Struct_02081f20_2*)arg0->unknown_88c_);
-        arg0->unknown_ff8_ = 0;
-        arg0->unknown_103f_++;
-    } else if (arg0->unknown_103f_ == 1) {
-        arg0->unknown_ff8_ = &arg0->unknown_100c_;
-        if (func_ov003_021765b4(arg0)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2*)arg0->unknown_88c_);
-            arg0->unknown_ff8_ = 0;
-            switch (arg0->unknown_100c_) {
+        menu->selected = self->member100c;
+        func_020813ec(menu, self->key);
+        ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
+        self->cursor = 0;
+        self->step++;
+    } else if (self->step == 1) {
+        self->cursor = &self->member100c;
+        if (func_ov003_021765b4(self)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
+            self->cursor = 0;
+            switch (self->member100c) {
             case 0x76:
                 arg0->unknown_ffc_ = arg0->unknown_ffe_;
                 arg0->unknown_1036_ = 0xb;

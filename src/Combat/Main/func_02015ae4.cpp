@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include <NitroSDK/Matrix.h>
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 int fix32sin(int);
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Struct_02015ae4 {
     char unknown_0_[0xe];
@@ -13,17 +13,17 @@ struct Struct_02015ae4 {
 };
 
 // USA: func_02015ae4
-extern "C" ARM int func_02015ae4(Struct_02015ae4* arg0) {
-    unsigned short var0 = arg0->unknown_10_;
-    int var1 = 0xbff4;
-    if ((float)var0 <= (float)var1 / 4096.0f) {
-        if (var0 == 0) func_0205eaa0((Struct_02108760*)&data_02108760, 13, 0);
-        else if (var0 == 16) func_0205eaa0((Struct_02108760*)&data_02108760, 14, 0);
-        unsigned int var2 = arg0->unknown_10_;
-        int var3 = (arg0->unknown_10_ * var2) << 12;
-        int var4 = fix32_Divide(-7290, 0x8fee0);
-        arg0->unknown_e_ = FIX32_MULTIPLY(var4, var3) + 0x647a;
-        arg0->unknown_10_ = arg0->unknown_10_ + 1;
+extern "C" ARM int func_02015ae4(Obj02015ae4* self) {
+    unsigned short counter = self->counter;
+    int firstDuration = 0xbff4;
+    if ((float)counter <= (float)firstDuration / 4096.0f) {
+        if (counter == 0) SePlayer_Play((SePlayer*)&g_sePlayer, 13, 0);
+        else if (counter == 16) SePlayer_Play((SePlayer*)&g_sePlayer, 14, 0);
+        unsigned int currentCounter = self->counter;
+        int square = (self->counter * currentCounter) << 12;
+        int coefficient = fix32_Divide(-7290, 0x8fee0);
+        self->angle = FIX32_MULTIPLY(coefficient, square) + 0x647a;
+        self->counter = self->counter + 1;
     } else {
         unsigned int var5 = arg0->unknown_10_;
         int var6 = 0xbff4;

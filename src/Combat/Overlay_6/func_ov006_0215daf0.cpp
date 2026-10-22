@@ -6,15 +6,15 @@ enum { Enum_ov006_0215daf0_54 = 0x2a, Enum_ov006_0215daf0_76 = 0x48, Enum_ov006_
 enum { Enum_ov006_0215daf0_54 = 0x36, Enum_ov006_0215daf0_76 = 0x4c, Enum_ov006_0215daf0_4696 = 0x1258 };
 #endif
 
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_0207fdcc_2;
-struct Struct_0207fe44;
-struct Struct_02071ffc_4;
-struct Struct_ov006_02157184;
-struct Struct_ov006_02158c28;
-struct Struct_ov006_02154614;
-struct Struct_ov006_021537d0;
+struct Obj0208203c;
+struct SePlayer;
+struct Obj2081;
+struct Cont0207fe44;
+struct Container02071ffc;
+struct ClearFlag40_02157184Struct;
+struct StructC28;
+struct AlchemyPot;
+struct Recipe;
 
 struct Struct_ov000_0217ab8c {
     char unknown_0_[Enum_ov006_0215daf0_54];
@@ -121,21 +121,21 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-extern "C" void func_ov006_0215fa1c(Struct_ov006_02157a60* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" void func_0208203c(Struct_02081f20_2* arg0);
-extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int, int);
-extern "C" void func_02071ffc(Struct_02071ffc_4* arg0, int arg1, int arg2, int arg3, short arg4, short* arg5);
-extern "C" void func_ov006_02158cac(void* arg0);
-extern "C" void func_0207fdcc(Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_0207fe44(Struct_0207fe44* arg0);
-extern "C" void func_ov006_02157184(Struct_ov006_02157184* arg0);
-extern "C" void func_ov006_0215745c(short arg0, signed char* arg1, signed char* arg2);
-extern "C" void func_ov006_02158c28(Struct_ov006_02158c28* arg0);
+extern "C" void func_ov006_0215fa1c(AlchemyMenu* self, int total);
+extern "C" void func_020813ec(void* menu, int group);
+void ResetWithSub0208203c(Obj0208203c* repeat);
+extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
+extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
+void SePlayer_Play(SePlayer* sound, int, int);
+void FilterAndSortEntries02071ffc(Container02071ffc* table, int category, int kind, int sort, short max, short* count);
+void ComputeField_02158cac_02158cac(void* self);
+void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
+void CallFunc0204c804OverAllElems(Cont0207fe44* menu);
+void ClearFlag40_02157184(ClearFlag40_02157184Struct* pot);
+extern "C" void func_ov006_0215745c(short filter, signed char* category, signed char* kind);
+void ClearField44IfSet_02158c28(StructC28* self);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215daf0
 extern "C" ARM void func_ov006_0215daf0(Struct_ov006_02157a60* arg0) {
@@ -157,15 +157,15 @@ extern "C" ARM void func_ov006_0215daf0(Struct_ov006_02157a60* arg0) {
         arg0->unknown_44_ = &arg0->unknown_366_;
         if (func_ov006_02158a28(arg0))
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            int var0 = 0;
-            arg0->unknown_44_ = 0;
-            arg0->unknown_368_ = -1;
-            arg0->unknown_36a_ = -1;
-            arg0->unknown_384_ = -1;
-            arg0->unknown_385_ = -1;
-            switch (arg0->unknown_366_)
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            int open = 0;
+            self->cursor_ = 0;
+            self->filterCursor_ = -1;
+            self->recipeCursor_ = -1;
+            self->filterCategory_ = -1;
+            self->filterKind_ = -1;
+            switch (self->bookCursor_)
             {
             case 0x24:
                 var0 = 1;
@@ -244,21 +244,21 @@ extern "C" ARM void func_ov006_0215daf0(Struct_ov006_02157a60* arg0) {
         arg0->unknown_44_ = &arg0->unknown_368_;
         if (func_ov006_02158a28(arg0))
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_36a_ = -1;
-            func_ov006_0215745c(arg0->unknown_368_, &arg0->unknown_384_, &arg0->unknown_385_);
-            short var4 = 0;
-            func_02071ffc((Struct_02071ffc_4*)&arg0->unknown_14c_, arg0->unknown_384_, arg0->unknown_385_, arg0->unknown_386_, 0x10, &var4);
-            Struct_ov006_021537d0* var5 = arg0->unknown_14c_.unknown_0_;
-            arg0->unknown_2c_ = var5;
-            arg0->unknown_30_ = var5;
-            func_ov006_02158cac(arg0);
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_14_, arg0->unknown_36e_);
-            arg0->unknown_38f_ = 0xa;
-            arg0->unknown_390_ = 0;
-            arg0->unknown_394_ |= 0x80;
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            self->cursor_ = 0;
+            self->recipeCursor_ = -1;
+            func_ov006_0215745c(self->filterCursor_, &self->filterCategory_, &self->filterKind_);
+            short count = 0;
+            FilterAndSortEntries02071ffc((Container02071ffc*)&self->table_, self->filterCategory_, self->filterKind_, self->sort_, 0x10, &count);
+            Recipe* recipes = self->table_.unk_0;
+            self->recipes_ = recipes;
+            self->pageStart_ = recipes;
+            ComputeField_02158cac_02158cac(self);
+            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, self->group_);
+            self->state_ = 0xa;
+            self->step_ = 0;
+            self->flags_ |= 0x80;
             return;
         }
         if (func_ov006_02158b78(arg0))

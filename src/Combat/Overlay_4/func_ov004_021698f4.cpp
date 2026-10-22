@@ -30,17 +30,17 @@ extern "C" void func_ov023_021fb274(void* arg0, int arg1);
 extern "C" void func_ov004_02169658(void* arg0);
 extern "C" void func_ov011_021848a0(void* arg0, int arg1);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-struct Struct_ov004_0216986c {
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+struct Data02171030 {
 #if defined(jpn)
  char unknown_0_[0x20];
 #else
  char unknown1_0_[0x1a0];
 #endif
- unsigned char unknown_1a0_; };
-extern Struct_ov004_0216986c* data_ov004_02171030;
-extern struct Struct_02108760 data_02108760;
+ unsigned char field1a0; };
+extern Data02171030* data_ov004_02171030;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov004_021698f4
 extern "C" ARM int func_ov004_021698f4(void* arg0) {
@@ -80,8 +80,8 @@ extern "C" ARM int func_ov004_021698f4(void* arg0) {
         func_ov011_021849e0((struct Struct_ov004_02158dcc*)arg0, 0x64);
     }
 
-    if (data_ov004_02171030->unknown_1a0_ != 0) {
-        func_0205eaa0(&data_02108760, 1, 0);
+    if (data_ov004_02171030->field1a0 != 0) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
     }
     data_ov004_02171030->unknown_1a0_ = 0;
     return 0;

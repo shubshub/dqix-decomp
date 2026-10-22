@@ -1,8 +1,8 @@
 #include "Resource/ActionDataTables.h"
 #include <globaldefs.h>
 
-struct Struct_02108760;
-struct Struct_ov000_0215440c_2;
+struct SePlayer;
+struct List02160094;
 
 struct Struct_ov025_021eb6fc {
     char unknown_0_[8];
@@ -21,13 +21,13 @@ struct Struct_ov025_021e9778_9 {
     unsigned int unknown_1c4_;
 };
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" Struct_ov025_021eb6fc* func_02079e2c(char* arg0, int arg1);
-extern "C" int func_ov000_02163690(int arg0);
-extern "C" unsigned char* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+void* GetActiveCombatWork_ov000_02160130(void);
+void* GetSlotPtr02160f20(void* obj);
+Entry021eb6fc* SearchBothTables02079e2c(char* p, int key);
+int IsMatchingID02163690(int id);
+unsigned char* GetNodeAtIndex02160094(List02160094*, int);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov025_021eb6fc
 extern "C" ARM void func_ov025_021eb6fc(Struct_ov025_021e9778_9* arg0, int arg1) {
@@ -51,10 +51,10 @@ extern "C" ARM void func_ov025_021eb6fc(Struct_ov025_021e9778_9* arg0, int arg1)
             } else {
                 var4 = 0;
             }
-            if (var4) {
-                func_0205eaa0(&data_02108760, 7, 0);
+            if (inRange) {
+                SePlayer_Play(&g_sePlayer, 7, 0);
             } else {
-                func_0205eaa0(&data_02108760, 8, 0);
+                SePlayer_Play(&g_sePlayer, 8, 0);
             }
         }
     }

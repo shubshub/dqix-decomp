@@ -98,7 +98,7 @@ void SetForwardAndStore0205ebc0(void* sound, int a, int b);
 void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
 void ForwardField0xc0_0205ebec(void* sound);
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_ov006_02160080[];
 extern char data_ov006_02160087[];
 extern char data_ov006_02160089[];
@@ -120,20 +120,20 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
         self->steam_.EnableFlag(0x1000);
         return;
     }
-    if (var1 & 0x80) {
-        if (arg0->unknown_ae1_ == 0) {
-            func_0205ebc0(data_02108760, 0x7a, 0x7a);
-            func_0205ebfc(data_02108760, 0, 0);
-            arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_02160080, 1);
-            arg0->unknown_43c_.MaybeSetRegularAnimation(data_ov006_02160087, 1);
-            arg0->unknown_4e8_.MaybeSetRegularAnimation(data_ov006_02160080, 9);
-            arg0->unknown_4e8_.DisableFlag(0x1000);
-        } else if (arg0->unknown_ae1_ >= 1 && arg0->unknown_2e4_.HasAnimationStopped()) {
-            arg0->unknown_ae1_ = 0;
-            arg0->unknown_ae2_ &= ~0x80;
-            arg0->unknown_43c_.MaybeSetRegularAnimation(data_ov006_02160089, 1);
-            arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_0216008b, 0);
-            arg0->unknown_4e8_.StopCurrentAnimation();
+    if (flags & 0x80) {
+        if (self->animationStep_ == 0) {
+            SetForwardAndStore0205ebc0(g_sePlayer, 0x7a, 0x7a);
+            DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
+            self->pot_.MaybeSetRegularAnimation(data_ov006_02160080, 1);
+            self->effect_.MaybeSetRegularAnimation(data_ov006_02160087, 1);
+            self->steam_.MaybeSetRegularAnimation(data_ov006_02160080, 9);
+            self->steam_.DisableFlag(0x1000);
+        } else if (self->animationStep_ >= 1 && self->pot_.HasAnimationStopped()) {
+            self->animationStep_ = 0;
+            self->flags_ &= ~0x80;
+            self->effect_.MaybeSetRegularAnimation(data_ov006_02160089, 1);
+            self->pot_.MaybeSetRegularAnimation(data_ov006_0216008b, 0);
+            self->steam_.StopCurrentAnimation();
             return;
         }
         arg0->unknown_ae1_++;
@@ -164,12 +164,12 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
             arg0->unknown_ae1_++;
             return;
         }
-        ClearFlags04((GameResources*)var0, 0x2000);
-        func_0205ebec(data_02108760);
-        arg0->unknown_ae1_ = 0;
-        arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_021600a0, 1);
-        arg0->unknown_43c_.StopCurrentAnimation();
-        arg0->unknown_ae2_ &= ~0x200;
+        ClearFlags04((GameResources*)resources, 0x2000);
+        ForwardField0xc0_0205ebec(g_sePlayer);
+        self->animationStep_ = 0;
+        self->pot_.MaybeSetRegularAnimation(data_ov006_021600a0, 1);
+        self->effect_.StopCurrentAnimation();
+        self->flags_ &= ~0x200;
         return;
     }
     if (var1 & 0x400) {

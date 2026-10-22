@@ -104,12 +104,12 @@ struct Struct_0204b8d0;
 struct Struct_02000c9c_8;
 struct Struct_0204b9b8;
 
-extern "C" void func_0204b010(struct Struct_0204b010*, void*);
-extern "C" unsigned char func_0200fb08(struct Struct_02000c9c_8*);
-extern "C" void func_0204b8d0(struct Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_0204b04c(void* arg0, void* arg1);
-extern "C" void func_0204b9b8(Struct_0204b9b8* arg0, int arg1, int arg2, int arg3, int arg4, unsigned arg5);
-extern "C" void func_ov003_0215ec68(int arg0, short* arg1, short* arg2);
+void ClearBuffer0204b010(struct Obj0204b010*, void*);
+unsigned char NormalizeField5_0200fb08(struct Struct0200fb08*);
+void DispatchEntry0204b8d0(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void func_0204b04c(void* obj, void* p);
+extern "C" void func_0204b9b8(PaletteWindow* obj, int x, int y, int width, int height, unsigned palette);
+extern "C" void Keyboard_GetKeySize(int id, short* w, short* h);
 
 extern const unsigned char data_ov023_021fd530[];
 extern unsigned char data_ov023_021fd532[];
@@ -219,15 +219,15 @@ extern "C" ARM void func_ov023_021da274(Struct_ov023_021da274_3* arg0) {
                     }
                     var30++;
                 }
-                func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_198_, 2, 7, 0x1c, 0xc, 1);
-                Struct_ov023_021da274* var34 = arg0->unknown_c0_->unknown_0_;
-                if (var34 != NULL) {
-                    short var35 = var34->unknown_0_;
-                    short var36 = var34->unknown_2_;
-                    short var37;
-                    short var38;
-                    func_ov003_0215ec68(var34->unknown_e_, &var38, &var37);
-                    func_0204b9b8((Struct_0204b9b8*)&arg0->unknown_198_, var35 >> 3, var36 >> 3, var38 >> 3, var37 >> 3, 0);
+                func_0204b9b8((PaletteWindow*)&self->win198, 2, 7, 0x1c, 0xc, 1);
+                Marker021da274* marker = self->info->marker;
+                if (marker != NULL) {
+                    short x = marker->x;
+                    short y = marker->y;
+                    short h;
+                    short w;
+                    Keyboard_GetKeySize(marker->kind, &w, &h);
+                    func_0204b9b8((PaletteWindow*)&self->win198, x >> 3, y >> 3, w >> 3, h >> 3, 0);
                 }
             }
             func_0204b04c(&arg0->unknown_198_, NULL);

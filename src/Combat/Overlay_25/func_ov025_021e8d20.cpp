@@ -41,7 +41,7 @@ extern "C" void func_ov025_021ded50(void* arg0, void* arg1);
 extern int data_ov025_021ef990;
 extern int data_ov025_021ef9a4;
 extern int data_ov025_021ef9c0;
-extern int data_02108760;
+extern int g_sePlayer;
 extern int data_ov025_021ef9a8[6];
 extern int data_ov025_021ef8b4;
 extern int data_ov025_021ef8ca;
@@ -121,27 +121,27 @@ extern "C" ARM void func_ov025_021e8d20(char* arg0, char* arg1) {
     data_ov025_021ef9a4 = 0;
     data_ov025_021ef990 = 0;
     data_ov025_021ef9c0 = 0;
-    *(int*)(arg0 + 0x1c4) = 0;
-    *(int*)(arg0 + 0x1d8) = 0;
-    *(short*)(arg0 + 0x21c) = 1;
-    *(short*)(arg0 + 0x21e) = 0;
-    *(short*)(arg0 + 0x220) = 0x1e;
-    *(short*)(arg0 + 0x222) = -1;
-    arg0[0x5ca] = 0;
-    arg0[0x5cb] = 0;
-    arg0[0x5cc] = 0;
-    arg0[0x5d0] = 0;
-    arg0[0x5d1] = 0;
-    *(int*)(arg0 + 0x5e4) = 0;
-    Struct_ov000_0215b278* var8 = (Struct_ov000_0215b278*)func_ov000_02160094((Struct_ov000_0215440c_2*)var6, 0);
-    if (var8 != 0) {
-        if (inline_ov000_0215f57c(var8->unknown_20_)) {
-            var7 = 1;
-            void* var9 = ((GameState*)var3)->GetGameObjectByIndex(var8->unknown_20_);
-            if (var9 != 0) {
-                int var10 = ((Object3D*)var9)->GetField78();
-                int var11 = ((Object3D*)var9)->GetField7a();
-                func_0205ebc0(&data_02108760, var10, var11);
+    *(int*)(self + 0x1c4) = 0;
+    *(int*)(self + 0x1d8) = 0;
+    *(short*)(self + 0x21c) = 1;
+    *(short*)(self + 0x21e) = 0;
+    *(short*)(self + 0x220) = 0x1e;
+    *(short*)(self + 0x222) = -1;
+    self[0x5ca] = 0;
+    self[0x5cb] = 0;
+    self[0x5cc] = 0;
+    self[0x5d0] = 0;
+    self[0x5d1] = 0;
+    *(int*)(self + 0x5e4) = 0;
+    Node* first = (Node*)GetNodeAtIndex02160094((List02160094*)slot, 0);
+    if (first != 0) {
+        if (InRange(first->id)) {
+            flag = 1;
+            void* obj = ((GameState*)gs)->GetGameObjectByIndex(first->id);
+            if (obj != 0) {
+                int a = ((Object3D*)obj)->GetField78();
+                int b = ((Object3D*)obj)->GetField7a();
+                SetForwardAndStore0205ebc0(&g_sePlayer, a, b);
             }
         }
     }
@@ -211,14 +211,14 @@ extern "C" ARM void func_ov025_021e8d20(char* arg0, char* arg1) {
                     if (func_ov000_0215fd90(var28, 0xd)) {
                         func_ov025_021eb42c(arg0, 0x1b, 0x3c);
                     }
-                    if (func_ov000_0215fd90(var28, 0xc)) {
-                        func_ov025_021eb148(arg0, 0x19, 0x38e, 2);
-                    } else if (func_ov000_0215fd90(var28, 6) == 0) {
-                        func_0205eabc(&data_02108760, 0, 0);
-                        if (((unsigned char*)var28)[0x1c] != 0 && var7 != 0) {
-                            unsigned int var29 = var6->unknown_0_;
-                            if (var29 == 0xf4 || var29 == 0xf5 || var29 == 0x48 || var29 == 0x70) {
-                                func_ov025_021eb42c(arg0, 0x24, 0xb);
+                    if (func_ov000_0215fd90(f, 0xc)) {
+                        SetSlotEntry_021eb148(self, 0x19, 0x38e, 2);
+                    } else if (func_ov000_0215fd90(f, 6) == 0) {
+                        ForwardToTargetOrDefault0205eabc(&g_sePlayer, 0, 0);
+                        if (((unsigned char*)f)[0x1c] != 0 && flag != 0) {
+                            unsigned int t = slot->type;
+                            if (t == 0xf4 || t == 0xf5 || t == 0x48 || t == 0x70) {
+                                SetSlotEntryNoFlag_021eb42c(self, 0x24, 0xb);
                             }
                         }
                     }

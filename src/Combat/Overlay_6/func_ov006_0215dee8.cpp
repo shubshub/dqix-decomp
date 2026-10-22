@@ -8,11 +8,11 @@ enum { Enum_ov006_0215dee8_54 = 0x2a, Enum_ov006_0215dee8_76 = 0x48, Enum_ov006_
 enum { Enum_ov006_0215dee8_54 = 0x36, Enum_ov006_0215dee8_76 = 0x4c, Enum_ov006_0215dee8_4696 = 0x1258 };
 #endif
 
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_0207fdcc_2;
-struct Struct_ov006_02157184;
-struct Struct_ov006_02158c28;
+struct Obj0208203c;
+struct SePlayer;
+struct Obj2081;
+struct ClearFlag40_02157184Struct;
+struct StructC28;
 
 struct Struct_ov006_021537d0 {
     short unknown_0_;
@@ -133,43 +133,43 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-extern "C" void func_0207fdcc(Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_ov006_0215fa1c(Struct_ov006_02157a60* arg0, int arg1);
-extern "C" void func_ov006_0215fb7c(Struct_ov006_02157a60* arg0);
-extern "C" void func_ov006_0215fcf0(Struct_ov006_02157a60* arg0);
-extern "C" void func_ov006_0215f7e8(Struct_ov006_02157a60* arg0);
-extern "C" void func_0208203c(Struct_02081f20_2* arg0);
-extern "C" Struct_ov006_021537d0* func_ov006_02158d8c(void* arg0, short arg1);
-extern "C" Struct_ov006_021555b0* func_ov006_02153c6c(void* arg0, short arg1);
-extern "C" void func_ov006_02153b9c(void* arg0, short arg1, unsigned char* arg2);
-extern "C" void func_ov006_021555b0(Struct_ov006_02154614* arg0, Struct_ov006_021537d0* arg1, Struct_ov006_021555b0* arg2, unsigned char* arg3);
-extern "C" unsigned char func_ov006_02159bb0(Struct_ov006_02157a60* arg0);
-extern "C" void func_ov006_02159c64(Struct_ov006_02157a60* arg0);
-extern "C" void func_ov006_021570fc(Struct_ov006_02154614* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int, int);
-extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* arg0);
-extern "C" int func_ov006_021537d0(void* arg0, short arg1);
-extern "C" void func_02081ea4(Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_ov006_02157184(Struct_ov006_02157184* arg0);
-extern "C" void func_ov006_02158c28(Struct_ov006_02158c28* arg0);
-extern "C" void func_ov006_02159db0(Struct_ov006_02157a60* arg0);
-extern "C" signed char func_ov006_02159e50(Struct_ov006_02157a60* arg0);
-struct Struct_ov006_0215a33c;
-extern "C" void func_ov006_0215a33c(Struct_ov006_0215a33c*, int);
-extern "C" unsigned char func_ov006_0215a384(Struct_ov006_02157a60* arg0, int arg1);
-extern "C" void func_ov006_0215fe34(Struct_ov006_02157a60* arg0, void* arg1);
-extern "C" unsigned char func_ov006_0215fecc(Struct_ov006_02157a60* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020dd4c4(signed char arg0, void* arg1);
-extern "C" int func_ov006_02153a78(void* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_ov006_0215f9e8(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_ov006_021599c0(Struct_ov006_02157a60* arg0);
-extern "C" void func_ov006_0215a5dc(Struct_ov006_02157a60* arg0);
-extern "C" int func_ov006_02158c70();
+void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
+extern "C" void func_ov006_0215fa1c(AlchemyMenu* self, int total);
+extern "C" void func_ov006_0215fb7c(AlchemyMenu* self);
+extern "C" void func_ov006_0215fcf0(AlchemyMenu* self);
+extern "C" void func_ov006_0215f7e8(AlchemyMenu* self);
+void ResetWithSub0208203c(Obj0208203c* repeat);
+Recipe* FindNodeOrMark_02158d8c(void* self, short index);
+extern "C" RecipeRecord* func_ov006_02153c6c(void* ingredients, short id);
+extern "C" void func_ov006_02153b9c(void* ingredients, short id, unsigned char* amounts);
+extern "C" void func_ov006_021555b0(AlchemyPot* pot, Recipe* recipe, RecipeRecord* record, unsigned char* amounts);
+extern "C" unsigned char func_ov006_02159bb0(AlchemyMenu* self);
+extern "C" void func_ov006_02159c64(AlchemyMenu* self);
+extern "C" void func_ov006_021570fc(AlchemyPot* pot, int shown);
+void SePlayer_Play(SePlayer* sound, int, int);
+extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
+extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
+extern "C" int func_ov006_021537d0(void* ingredients, short id);
+void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int value);
+void ClearFlag40_02157184(ClearFlag40_02157184Struct* pot);
+void ClearField44IfSet_02158c28(StructC28* self);
+extern "C" void func_ov006_02159db0(AlchemyMenu* self);
+extern "C" signed char func_ov006_02159e50(AlchemyMenu* self);
+struct Obj0215a33c;
+void Func_0215a33c(Obj0215a33c*, int);
+extern "C" unsigned char func_ov006_0215a384(AlchemyMenu* self, int great);
+extern "C" void func_ov006_0215fe34(AlchemyMenu* self, void* result);
+extern "C" unsigned char func_ov006_0215fecc(AlchemyMenu* self);
+int GetField0x3acValue_020100a8(GameState* gameState);
+extern "C" int func_020dd4c4(signed char member, void* results);
+extern "C" int func_ov006_02153a78(void* ingredients, int times);
+void SetEntryLowNibbleAndElement02080c68(void* menu, int id, int value);
+extern "C" void func_ov006_0215f9e8(AlchemyMenu* self);
+extern "C" unsigned char func_ov006_021599c0(AlchemyMenu* self);
+extern "C" void func_ov006_0215a5dc(AlchemyMenu* self);
+int CheckFlagOrByte55_02158c70();
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215dee8
 extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
@@ -232,10 +232,10 @@ extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
         {
             if (var2 != 0 && var3 != 0)
             {
-                Struct_ov006_02154614* var5 = arg0->unknown_10_;
-                int var6 = (var5->unknown_1258_ & 0x800) ? 1 : 0;
-                func_ov006_021570fc(var5, var6 == 0 ? 1 : 0);
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
+                AlchemyPot* pot = self->pot_;
+                int shown = (pot->windowFlags_ & 0x800) ? 1 : 0;
+                func_ov006_021570fc(pot, shown == 0 ? 1 : 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 return;
             }
             return;
@@ -246,12 +246,12 @@ extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
             {
                 if (!var3->unknown_2_1_)
                     return;
-                arg0->unknown_34_ = var2;
-                arg0->unknown_14_->unknown_36_ = *arg0->unknown_44_;
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-                func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-                arg0->unknown_44_ = 0;
-                if (func_ov006_021537d0(arg0->unknown_74_, var2->unknown_0_))
+                self->recipe_ = recipe;
+                self->menu_->cursor_ = *self->cursor_;
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+                ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+                self->cursor_ = 0;
+                if (func_ov006_021537d0(self->ingredients_, recipe->id_))
                 {
                     func_02081ea4((Struct_0207fdcc_2*)arg0->unknown_14_, 9, 1);
                     arg0->unknown_37e_ = 3;
@@ -272,20 +272,20 @@ extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
         }
         else if (func_ov006_02158b78(arg0) || var4 == 3)
         {
-            if (var4 == 3)
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_14_, arg0->unknown_36e_);
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_14_, 0xe);
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_14_, 0xf);
-            arg0->unknown_38f_ = 9;
-            arg0->unknown_390_ = 0;
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            func_ov006_02157184((Struct_ov006_02157184*)arg0->unknown_10_);
-            arg0->unknown_397_ = 2;
-            if (arg0->unknown_366_ == 0x25 || arg0->unknown_366_ == 0x26)
-                arg0->unknown_390_ = 2;
-            arg0->unknown_394_ &= ~0x80;
+            if (button == 3)
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, self->group_);
+            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, 0xe);
+            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, 0xf);
+            self->state_ = 9;
+            self->step_ = 0;
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            self->cursor_ = 0;
+            ClearFlag40_02157184((ClearFlag40_02157184Struct*)self->pot_);
+            self->background_ = 2;
+            if (self->bookCursor_ == 0x25 || self->bookCursor_ == 0x26)
+                self->step_ = 2;
+            self->flags_ &= ~0x80;
         }
         func_ov006_02158c28((Struct_ov006_02158c28*)arg0);
     }
@@ -381,17 +381,17 @@ extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
             return;
         if (g_keyManager.TestKeysPressed(1) || var11 == 2)
         {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_387_ = arg0->unknown_38b_;
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_14_, 0xa);
-            arg0->unknown_38f_ = 0xb;
-            func_ov006_02157184((Struct_ov006_02157184*)arg0->unknown_10_);
-            arg0->unknown_390_ = 0;
-            arg0->unknown_37e_ = 7;
-            arg0->unknown_392_ = 0;
-            arg0->unknown_394_ &= ~8;
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            self->cursor_ = 0;
+            self->times_ = self->count_;
+            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, 0xa);
+            self->state_ = 0xb;
+            ClearFlag40_02157184((ClearFlag40_02157184Struct*)self->pot_);
+            self->step_ = 0;
+            self->message_ = 7;
+            self->messageStep_ = 0;
+            self->flags_ &= ~8;
             return;
         }
         unsigned char var12 = func_ov006_02158b78(arg0);

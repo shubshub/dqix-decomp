@@ -1993,7 +1993,7 @@ src/Combat/Overlay_0/func_ov000_0217c514.cpp:
     complete
     .text start:0x0217c514 end:0x0217c594
 
-src/Combat/Overlay_0/func_ov000_021823dc.cpp:
+src/Combat/Overlay_0/SetModeAndDispatch_021823dc.cpp:
     complete
     .text start:0x021823dc end:0x02182498
 
@@ -2273,7 +2273,7 @@ src/Combat/Overlay_0/func_ov000_021750e4.cpp:
     complete
     .text start:0x021750e4 end:0x021751ac
 
-src/Combat/Overlay_0/func_ov000_02174428.cpp:
+src/Combat/Overlay_0/ApplyReplacementModeToEntry_02174428.cpp:
     complete
     .text start:0x02174428 end:0x021744f4
 

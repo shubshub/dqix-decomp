@@ -221,11 +221,11 @@ src/Combat/Overlay_1/func_ov001_0215e0c0.cpp:
     complete
     .text start:0x0215e0c0 end:0x0215e0dc
 
-src/Combat/Overlay_1/func_ov001_02163994.cpp:
+src/Combat/Overlay_1/ForwardAndCopyB8ToC0Wrapper_02163994.cpp:
     complete
     .text start:0x02163994 end:0x021639ac
 
-src/Combat/Overlay_1/func_ov001_02163848.cpp:
+src/Combat/Overlay_1/ForwardFieldC0Wrapper_02163848.cpp:
     complete
     .text start:0x02163848 end:0x02163860
 
@@ -233,7 +233,7 @@ src/Combat/Overlay_1/func_ov001_021637d4.cpp:
     complete
     .text start:0x021637d4 end:0x021637ec
 
-src/Combat/Overlay_1/func_ov001_021599b8.cpp:
+src/Combat/Overlay_1/CallForwardToTargetOrDefault_021599b8.cpp:
     complete
     .text start:0x021599b8 end:0x021599dc
 
@@ -765,7 +765,7 @@ src/Combat/Overlay_1/func_ov001_02163128.cpp:
     complete
     .text start:0x02163128 end:0x02163164
 
-src/Combat/Overlay_1/func_ov001_02163a18.cpp:
+src/Combat/Overlay_1/TryForwardByIndex_02163a18.cpp:
     complete
     .text start:0x02163a18 end:0x02163a5c
 
@@ -1005,11 +1005,11 @@ src/Combat/Overlay_1/func_ov001_021636d0.cpp:
     complete
     .text start:0x021636d0 end:0x02163724
 
-src/Combat/Overlay_1/func_ov001_02163564.cpp:
+src/Combat/Overlay_1/DispatchSlotOrShort_02163564.cpp:
     complete
     .text start:0x02163564 end:0x021635d0
 
-src/Combat/Overlay_1/func_ov001_021635d0.cpp:
+src/Combat/Overlay_1/ForwardSlotOrClear_021635d0.cpp:
     complete
     .text start:0x021635d0 end:0x02163640
 
@@ -1245,7 +1245,7 @@ src/Combat/Overlay_1/func_ov001_0215e1cc.cpp:
     complete
     .text start:0x0215e1cc end:0x0215e27c
 
-src/Combat/Overlay_1/func_ov001_021637ec.cpp:
+src/Combat/Overlay_1/DispatchByMode_021637ec.cpp:
     complete
     .text start:0x021637ec end:0x02163848
 
@@ -1321,7 +1321,7 @@ src/Combat/Overlay_1/func_ov001_02160a7c.cpp:
     complete
     .text start:0x02160a7c end:0x02160b08
 
-src/Combat/Overlay_1/func_ov001_021638cc.cpp:
+src/Combat/Overlay_1/ForwardIndexedSlotAndClear_021638cc.cpp:
     complete
     .text start:0x021638cc end:0x0216393c
 
@@ -1337,11 +1337,11 @@ src/Combat/Overlay_1/func_ov001_0215af8c.cpp:
     complete
     .text start:0x0215af8c end:0x0215afec
 
-src/Combat/Overlay_1/func_ov001_02163860.cpp:
+src/Combat/Overlay_1/Func_02163860.cpp:
     complete
     .text start:0x02163860 end:0x021638cc
 
-src/Combat/Overlay_1/func_ov001_021639ac.cpp:
+src/Combat/Overlay_1/Func_021639ac.cpp:
     complete
     .text start:0x021639ac end:0x02163a18
 
@@ -1449,7 +1449,7 @@ src/Combat/Overlay_1/func_ov001_02163968.cpp:
     complete
     .text start:0x02163968 end:0x02163970
 
-src/Combat/Overlay_1/func_ov001_02163a5c.cpp:
+src/Combat/Overlay_1/SelectModeAndDispatch_02163a5c.cpp:
     complete
     .text start:0x02163a5c end:0x02163ab4
 
@@ -1597,7 +1597,7 @@ src/Combat/Overlay_1/func_ov001_0216227c.cpp:
     complete
     .text start:0x0216227c end:0x021622a0
 
-src/Combat/Overlay_1/func_ov001_02163970.cpp:
+src/Combat/Overlay_1/Something_02163970.cpp:
     complete
     .text start:0x02163970 end:0x02163994
 

@@ -11,7 +11,7 @@ enum { Enum_ov005_021567ac_1588 = 0x634, Enum_ov005_021567ac_6644 = 0x19f4 };
 #include <GameState/GameState.h>
 #include "Resource/GameResources.h"
 
-struct Struct_02108760;
+struct SePlayer;
 
 struct Struct_ov005_02153ba4_2 {
     char unknown_0_[Enum_ov005_021567ac_1276];
@@ -54,15 +54,15 @@ struct Struct_ov005_02153954 {
     short unknown_3de0_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" int func_ov005_02157ae8(Struct_ov005_02153954* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" int func_ov005_02155670(Struct_ov005_02153954* arg0, int arg1, int arg2);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+MemberScreen* GetField1c_021a193c(int* p);
+void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
+extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
 
 // USA: func_ov005_021567ac
 extern "C" ARM void func_ov005_021567ac(Struct_ov005_02153954* arg0, int arg1, int arg2) {
@@ -77,18 +77,18 @@ extern "C" ARM void func_ov005_021567ac(Struct_ov005_02153954* arg0, int arg1, i
             arg0->unknown_3dc0_ = -1;
             return;
         }
-        func_ov005_0215792c(arg0, 4);
-        arg0->unknown_3dbb_ = arg0->unknown_3d78_;
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
-        func_0205bb04(arg0->unknown_19f4_, arg0->unknown_3dbb_ - 8);
-        arg0->unknown_3de0_ = (arg0->unknown_3dbb_ - 8) + arg0->unknown_3dbd_ * 16;
-        arg0->unknown_3dc0_ = 0;
-        arg0->unknown_3dcc_ |= 0x80;
-        func_0205eaa0((Struct_02108760*)&data_02108760, 2, 0);
-        var0->unknown_634_ &= ~1;
-        var0->unknown_634_ &= ~0x80;
-        arg0->unknown_3dcc_ &= ~4;
-        arg0->unknown_3dcc_ &= ~8;
+        func_ov005_0215792c(self, 4);
+        self->slot_ = self->dragged_;
+        func_ov005_021579ec(self, self->state_, self->slot_);
+        GridCursor_SetSelectedIndex(self->cursor_, self->slot_ - 8);
+        self->swapped_ = (self->slot_ - 8) + self->page_ * 16;
+        self->unk_3dc0 = 0;
+        self->flags_ |= 0x80;
+        SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
+        screen->flags_ &= ~1;
+        screen->flags_ &= ~0x80;
+        self->flags_ &= ~4;
+        self->flags_ &= ~8;
         return;
     }
     arg0->unknown_3d78_ = -1;

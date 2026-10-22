@@ -55,7 +55,7 @@ extern AllocatorUnion data_02114e20;
 extern unsigned char data_ov017_021d6aa8[9];
 extern Vector3i data_ov017_021d6ab4;
 extern char data_ov017_021d7778[], data_ov017_021d777a[];
-extern char data_02108760;
+extern char g_sePlayer;
 extern unsigned char data_ov017_021d6aa9[9], data_ov017_021d6aaa[9];
 
 // USA: func_ov017_021a6648
@@ -73,78 +73,78 @@ extern "C" ARM void func_ov017_021a6648(Struct_ov017_021a6648_2* arg0, Struct_02
         SetFlags00(var2, 0x10);
         func_020466e4(var5, 1);
         func_020a0cc4(0x7000);
-        arg0->unknown_e_ = var3->QueueLoadFile(data_ov017_021d771c[arg0->unknown_c_], 0);
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 1) {
-        if (!var3->GetTaskStatus(arg0->unknown_e_)) return;
-        void* var6;
-        unsigned int var7;
-        var3->GetLoadedFileByID(arg0->unknown_e_, &var6, &var7);
-        arg0->unknown_10_.CreateTypeA(func_02012d88(&data_02114e20, 0x7000), 0x7000);
-        arg0->unknown_10_.Reset();
-        Struct_ov017_021a6648* var8 = (Struct_ov017_021a6648*)var2->unknown_2cc_;
-        Struct_0203d028* var9 = &var8->unknown_c40_;
-        func_0207df50(var9);
-        func_020bb700(arg0->unknown_24_);
-        func_020bb910(arg0->unknown_4c_);
-        void* var10 = arg0->unknown_10_.Allocate(var7);
-        memcpy(var10, var6, var7);
-        CleanInvalidateCacheRange(var10, var7);
-        func_02057e6c(var4, 0xc, &arg0->unknown_10_, var10, var7, var9);
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 2) {
-        SetMainBrightness(var2, 0, 0x1e);
-        arg0->unknown_9_ = 0;
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 3) {
-        arg0->unknown_9_ += var0->GetTickCount();
-        if (arg0->unknown_9_ <= data_ov017_021d6aa8[arg0->unknown_c_ * 3]) return;
-        var3->RemoveTask(arg0->unknown_e_);
-        arg0->unknown_e_ = -1;
-        Vector3i var11 = data_ov017_021d6ab4;
-        Struct_ov017_021a6648_3 var12;
-        var12.unknown_0_[0] = 0;
-        var12.unknown_10_ = 1;
-        var12.unknown_12_ = 0;
-        var12.unknown_14_ = -1; var12.unknown_16_ = -1; var12.unknown_18_ = -1; var12.unknown_1a_ = -1;
-        var12.unknown_1c_ = -0x1000;
-        var12.unknown_20_ = 0; var12.unknown_24_ = 0; var12.unknown_28_ = 0;
-        var12.unknown_2c_.x = 0; var12.unknown_2c_.y = 0; var12.unknown_2c_.z = 0;
-        var12.unknown_38_ = 0; var12.unknown_3c_ = 0; var12.unknown_40_ = 0;
-        var12.unknown_44_.x = 0x1000; var12.unknown_44_.y = 0x1000; var12.unknown_44_.z = 0x1000;
-        var12.unknown_11_0_ = 0; var12.unknown_11_1_ = 0; var12.unknown_11_2_ = 1; var12.unknown_11_3_ = 0;
-        var12.unknown_11_4_ = 0; var12.unknown_11_5_ = 0; var12.unknown_11_6_ = 0; var12.unknown_11_7_ = 0;
-        if (arg0->unknown_c_ == 2) sprintf(var12.unknown_0_, data_ov017_021d7778);
-        else sprintf(var12.unknown_0_, data_ov017_021d777a);
-        var12.unknown_2c_ = var1->obj3D_.position_;
-        var12.unknown_44_ = var11;
-        var12.unknown_10_ = 1;
-        func_02057fb4(var4, 0xc, &var12);
-        if (arg0->unknown_c_ == 2) {
-            func_0205ebc0(&data_02108760, 0xa3, 0xa3);
-            func_0205ebfc(&data_02108760, 5, 0);
+        self->task = loader->QueueLoadFile(data_ov017_021d771c[self->kind], 0);
+        self->state++;
+    } else if (self->state == 1) {
+        if (!loader->GetTaskStatus(self->task)) return;
+        void* data;
+        unsigned int length;
+        loader->GetLoadedFileByID(self->task, &data, &length);
+        self->allocator.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x7000), 0x7000);
+        self->allocator.Reset();
+        BattleStateTable021a6648* table = (BattleStateTable021a6648*)resources->unknown_2cc;
+        Foo0207df50* fields = &table->transition;
+        CopyInternalFields0207df50(fields);
+        BackupPairTableToBuffer_020bb700(self->backup);
+        ReadGlobalPair020bb910(self->pair);
+        void* copy = self->allocator.Allocate(length);
+        memcpy(copy, data, length);
+        CleanInvalidateCacheRange(copy, length);
+        func_02057e6c(manager, 0xc, &self->allocator, copy, length, fields);
+        self->state++;
+    } else if (self->state == 2) {
+        SetMainBrightness(resources, 0, 0x1e);
+        self->timer = 0;
+        self->state++;
+    } else if (self->state == 3) {
+        self->timer += game->GetTickCount();
+        if (self->timer <= data_ov017_021d6aa8[self->kind * 3]) return;
+        loader->RemoveTask(self->task);
+        self->task = -1;
+        Vector3i scale = data_ov017_021d6ab4;
+        EventParams021a6648 params;
+        params.name[0] = 0;
+        params.enabled = 1;
+        params.field_12 = 0;
+        params.field_14 = -1; params.field_16 = -1; params.field_18 = -1; params.field_1a = -1;
+        params.field_1c = -0x1000;
+        params.field_20 = 0; params.field_24 = 0; params.field_28 = 0;
+        params.position.x = 0; params.position.y = 0; params.position.z = 0;
+        params.field_38 = 0; params.field_3c = 0; params.field_40 = 0;
+        params.scale.x = 0x1000; params.scale.y = 0x1000; params.scale.z = 0x1000;
+        params.bit0 = 0; params.bit1 = 0; params.bit2 = 1; params.bit3 = 0;
+        params.bit4 = 0; params.bit5 = 0; params.bit6 = 0; params.bit7 = 0;
+        if (self->kind == 2) sprintf(params.name, data_ov017_021d7778);
+        else sprintf(params.name, data_ov017_021d777a);
+        params.position = leader->obj3D_.position_;
+        params.scale = scale;
+        params.enabled = 1;
+        FindNodeAndProcess02057fb4(manager, 0xc, &params);
+        if (self->kind == 2) {
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xa3, 0xa3);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 5, 0);
         } else {
-            func_0205ebc0(&data_02108760, 0xb2, 0xb2);
-            func_0205ebfc(&data_02108760, 2, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb2, 0xb2);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 2, 0);
         }
-        arg0->unknown_9_ = 0;
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 4) {
-        arg0->unknown_9_ += var0->GetTickCount();
-        if (arg0->unknown_9_ < data_ov017_021d6aa9[arg0->unknown_c_ * 3]) return;
-        var1->obj3D_.MakeVisible();
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 5) {
-        arg0->unknown_9_ += var0->GetTickCount();
-        if (arg0->unknown_9_ < data_ov017_021d6aaa[arg0->unknown_c_ * 3]) return;
-        func_020397c0(var1);
-        func_0205ebec(&data_02108760);
-        ClearFlags00(var2, 0x10);
-        func_020466f4((Struct_02038598_4*)var5, 1);
-        func_020dc2d0(0);
-        if (arg0->unknown_a_) {
-            func_ov017_0219593c();
-            func_020d7aa0(func_020d7a50());
+        self->timer = 0;
+        self->state++;
+    } else if (self->state == 4) {
+        self->timer += game->GetTickCount();
+        if (self->timer < data_ov017_021d6aa9[self->kind * 3]) return;
+        leader->obj3D_.MakeVisible();
+        self->state++;
+    } else if (self->state == 5) {
+        self->timer += game->GetTickCount();
+        if (self->timer < data_ov017_021d6aaa[self->kind * 3]) return;
+        SetByteField0x253_020397c0(leader);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        ClearFlags00(resources, 0x10);
+        ClearFlags020466f4((FlagWord020466f4*)flags, 1);
+        SetCombatModeFromCase020dc2d0(0);
+        if (self->reset) {
+            RegisterNodeAndNotify_0219593c();
+            TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
         }
         if (!arg0->unknown_b_ && func_02046b60(arg1, 0xa)) {
             func_02046a8c(arg1, var2->unknown_ptr_3718);

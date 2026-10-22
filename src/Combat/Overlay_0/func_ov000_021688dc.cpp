@@ -208,7 +208,7 @@ void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength
 extern const char data_ov000_02183b20[];
 extern const char data_ov000_02183b3b[];
 extern const char data_ov000_02183b55[];
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" void func_020114c0(char* arg0, int arg1, void* arg2);
 struct Struct_ov000_02164fac_2 { char unknown_0_[0x70]; };
@@ -571,9 +571,9 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     func_02094b40(var58);
     func_02094ab0(var58);
 
-    var9->SetGameSpeed(0x1000);
-    func_ov000_02160fa8(arg0, 0x400);
-    func_0205ea20(&data_02108760, 0x64);
+    battle->SetGameSpeed(0x1000);
+    SetCombatWorkFlags0x55f4_ov000_02160fa8(work, 0x400);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x64);
 
     unsigned char var59;
     *(int*)((char*)var9 + Enum_ov000_021688dc_29172) = 0;

@@ -48,7 +48,7 @@ struct Struct_0204254c {
     char unknown_6_[2];
 };
 
-extern "C" struct Struct_0204254c* func_0204254c(int arg0, int arg1);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 // USA: func_0206b528
 extern "C" ARM int func_0206b528(unsigned char* arg0, int* arg1, int* arg2) {
@@ -78,10 +78,10 @@ extern "C" ARM int func_0206b528(unsigned char* arg0, int* arg1, int* arg2) {
                 goto again;
             }
         } else {
-            int var7 = 1;
-            struct Struct_0204254c* var8 = func_0204254c((int)var4, (arg0 + 0x1000)[0x9dc]);
-            if (var8) var7 = var8->unknown_5_0_;
-            var4 += var7;
+            int adv = 1;
+            struct Entry0204254c* e = Font_FindCharacter((int)p, (obj + 0x1000)[0x9dc]);
+            if (e) adv = e->field5;
+            p += adv;
         }
     again: ;
     }

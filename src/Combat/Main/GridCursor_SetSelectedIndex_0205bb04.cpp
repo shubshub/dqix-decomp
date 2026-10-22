@@ -13,8 +13,8 @@ struct SelfBB04 {
     int* f2c;
 };
 
-// USA: func_0205bb04  (semantic: ComputeDivisions0205bb04)
-extern "C" ARM void func_0205bb04(struct SelfBB04* self, int value) {
+// Main, originally func_0205bb04 (USA 0x0205bb04, EUR 0x0205bb14, JPN 0x0205ce64)
+extern "C" ARM void GridCursor_SetSelectedIndex(struct SelfBB04* self, int value) {
     if (value < 0) return;
     if (value >= self->f0) return;
     int product = self->fc * self->f8;

@@ -5227,7 +5227,7 @@ src/Combat/Main/func_020426a4.cpp:
     complete
     .text start:0x020426a4 end:0x020426bc
 
-src/Combat/Main/func_020426bc.cpp:
+src/Combat/Main/TokenizeAndEncode_020426bc.cpp:
     complete
     .text start:0x020426bc end:0x02042764
 
@@ -7481,7 +7481,7 @@ src/Combat/Main/GridCursor_SetDimensions_0205ba68.cpp:
     complete
     .text start:0x0205ba68 end:0x0205bacc
 
-src/Combat/Main/func_0205bacc.cpp:
+src/Combat/Main/GridCursor_SetCount_0205bacc.cpp:
     complete
     .text start:0x0205bacc end:0x0205bafc
 
@@ -8254,11 +8254,11 @@ src/Combat/Main/func_020676e0.cpp:
     complete
     .text start:0x020676e0 end:0x020678bc
 
-src/Combat/Main/func_020678bc.cpp:
+src/Combat/Main/DispatchStateChange_020678bc.cpp:
     complete
     .text start:0x020678bc end:0x020679d4
 
-src/Combat/Main/func_020679d4.cpp:
+src/Combat/Main/HandleActorStateTransition_020679d4.cpp:
     complete
     .text start:0x020679d4 end:0x02067a9c
 
@@ -8314,7 +8314,7 @@ src/Combat/Main/func_0206831c.cpp:
     complete
     .text start:0x0206831c end:0x02068418
 
-src/Combat/Main/func_02068418.cpp:
+src/Combat/Main/EncodeStringWithEscapes_02068418.cpp:
     complete
     .text start:0x02068418 end:0x0206852c
 

@@ -49,20 +49,20 @@ struct Struct_ov003_02154af4_3 {
     unsigned char unknown_4ad_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern "C" void func_020813ec(void *, int);
-struct Struct_02081f20_2;
-extern "C" void func_0208203c(Struct_02081f20_2*);
-extern "C" int func_02080468(void *, int);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-struct Struct_0207fe44;
-extern "C" void func_0207fe44(Struct_0207fe44*);
-extern "C" int func_ov003_02160b84(void *);
-extern "C" int func_ov003_02160a68(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02160854(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_02160c58(Struct_ov003_02154af4_3 *, short *, short *);
-extern "C" void func_02080c68(void *, int, int);
+struct Obj0208203c;
+void ResetWithSub0208203c(Obj0208203c*);
+int FindMappedMemberId02080468(void *, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
+struct Cont0207fe44;
+void CallFunc0204c804OverAllElems(Cont0207fe44*);
+int CountValidCombatantsMinusField_02160b84(void *);
+extern "C" int func_ov003_02160a68(Scene *);
+extern "C" int func_ov003_02160854(Scene *);
+extern "C" void func_ov003_02160c58(Scene *, short *, short *);
+void SetEntryLowNibbleAndElement02080c68(void *, int, int);
 extern "C" void *func_0205ec34();
 extern "C" unsigned char *func_02053c6c(unsigned char *);
 extern "C" int func_02011494(char*, void*);
@@ -88,22 +88,22 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
         if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) == 1) {
             arg0->unknown_488_ = 0x1d;
         }
-        arg0->unknown_48a_   = func_02080468(var5, arg0->unknown_488_);
-        arg0->unknown_474_   = arg0->unknown_48a_;
-        var5->unknown_36_ = arg0->unknown_48a_;
-        func_020813ec(var5, arg0->unknown_488_);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-        arg0->unknown_470_  = 0;
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-        arg0->unknown_464_ &= ~0x300;
-    } else if (var4 == 1) {
-        arg0->unknown_470_ = &arg0->unknown_48a_;
-        func_02080c68(var5, arg0->unknown_488_, 0);
-        if (func_ov003_02160854(arg0) != 0) {
-            func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-            arg0->unknown_470_ = 0;
-            switch (arg0->unknown_48a_) {
+        self->h48a   = FindMappedMemberId02080468(entries, self->h488);
+        self->h474   = self->h48a;
+        entries->sel = self->h48a;
+        func_020813ec(entries, self->h488);
+        ResetWithSub0208203c((Obj0208203c*)self->sub308);
+        self->p470  = 0;
+        self->state = self->state + 1;
+        self->flags &= ~0x300;
+    } else if (state == 1) {
+        self->p470 = &self->h48a;
+        SetEntryLowNibbleAndElement02080c68(entries, self->h488, 0);
+        if (func_ov003_02160854(self) != 0) {
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)self->sub308);
+            self->p470 = 0;
+            switch (self->h48a) {
                 case 0xb4:
                 case 0xb7:
                     int var6 = func_ov003_02160b84(arg0);

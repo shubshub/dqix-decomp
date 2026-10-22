@@ -17,8 +17,8 @@ extern "C" void func_0204af64(Struct_02020cb8* arg0);
 extern "C" void func_0204c684(void* arg0);
 #if defined(jpn)
 #define func_ov012_021845f8 func_ov012_02185690
-extern "C" void func_0205bef8(void* arg0);
-extern "C" void func_ov023_021e20c0(void* arg0);
+extern "C" void _Z15GridCursor_InitP15Struct_0205bef8(void* cursor);
+void ClearFields_021e20c0(void* profile);
 #endif
 extern "C" void func_ov012_021845f8(void* arg0);
 
@@ -172,11 +172,11 @@ extern "C" ARM void func_ov012_021843d4(Struct_ov012_021843d4* arg0)
     arg0->unknown_13aa_ = 0;
     arg0->unknown_13ab_ = 0;
 #if defined(jpn)
-    arg0->unknown1_1374_ = 0;
-    arg0->unknown_1375_ = 0;
-    func_0205bef8(arg0->unknown1_1378_);
-    arg0->unknown_13b8_ = 0;
-    func_ov023_021e20c0(arg0->unknown_13bc_);
+    self->nameFlag_ = 0;
+    self->nameStep_ = 0;
+    _Z15GridCursor_InitP15Struct_0205bef8(self->nameCursor_);
+    self->profileIndex_ = 0;
+    ClearFields_021e20c0(self->profile_);
 #endif
     arg0->unknown_13ac_ = 0;
     arg0->unknown_13b0_ = 0;

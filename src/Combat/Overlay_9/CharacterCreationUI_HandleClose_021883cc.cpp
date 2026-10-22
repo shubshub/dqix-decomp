@@ -1,4 +1,3 @@
-// USA: func_ov009_021883cc
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
@@ -13,7 +12,8 @@ void CharacterCreationUI_SwitchTab(unsigned char*, int);
 void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #endif
 
-extern "C" ARM void func_ov009_021883cc(unsigned char* storage) {
+// Overlay 9, originally func_ov009_021883cc (USA/EUR 0x021883cc, JPN 0x0218918c)
+extern "C" ARM void CharacterCreationUI_HandleClose(unsigned char* storage) {
     CharacterCreationUI* editor = (CharacterCreationUI*)storage;
     GameResources* resources = GameState::GetInstance()->GetResources();
     unsigned char step = editor->step;

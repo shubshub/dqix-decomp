@@ -222,10 +222,10 @@ void func_ov000_02163928( Struct_ov000_02160da0*);
 
 extern char data_ov026_021dedbc[];
 extern char data_ov026_021dedd4[];
-extern char data_02108760;
-extern Struct_ov026_021de6dc data_ov026_021de6dc;
-extern Struct_020e6e88 data_ov026_021de6f8;
-extern Struct_020e6e88 data_ov026_021de778;
+extern char g_sePlayer;
+extern Vec3i data_ov026_021de6dc;
+extern NameBuf data_ov026_021de6f8;
+extern NameBuf data_ov026_021de778;
 extern char data_ov026_021dedec[];
 
 #define POWCNT (*(volatile unsigned short*)0x04000304)
@@ -520,11 +520,11 @@ state1:
         inline_ov026_021d8ba0_2().unknown_18_ = -1;
         arg0->unknown_eac_ = 3;
     }
-    if (arg0->unknown_eac_ == 3) {
-        int var56;
-        if (arg0->unknown_7711_ != 0) {
-            func_0205eb80(&data_02108760);
-            arg0->unknown_7711_ = 0;
+    if (self->state == 3) {
+        int i;
+        if (self->fadeActive != 0) {
+            ForwardField0xc0_0205eb80(&g_sePlayer);
+            self->fadeActive = 0;
         }
         arg0->unknown_7734_ = arg0->unknown_55f4_;
         arg0->unknown_7710_ = 0;
@@ -1022,18 +1022,18 @@ state1:
                 func_ov026_021dbba8(arg0);
                 func_ov000_0216118c(arg0, 0);
             }
-            arg0->unknown_54e0_ = var107 ? 1 : 0;
-            if (var107) {
-                func_ov000_021813d4(arg0->unknown_3760_);
-                func_ov000_0217fcc4(arg0->unknown_3760_, -1);
-                func_ov000_0217457c(arg0->unknown_3760_, -1);
-                if (arg0->unknown_7712_ == -1) {
-                    arg0->unknown_7710_ = 60;
-                    func_0205eb80(&data_02108760);
-                    arg0->unknown_7711_ = 0;
-                    func_0205eb54(&data_02108760, 0x1b3, 0x1b3);
-                    func_0205eb90(&data_02108760, 0, 0);
-                    arg0->unknown_7711_ = 1;
+            self->ready = redo ? 1 : 0;
+            if (redo) {
+                ClearSlotBitndSetByte_021813d4(self->list);
+                func_ov000_0217fcc4(self->list, -1);
+                func_ov000_0217457c(self->list, -1);
+                if (self->phase == -1) {
+                    self->fadeTimer = 60;
+                    ForwardField0xc0_0205eb80(&g_sePlayer);
+                    self->fadeActive = 0;
+                    SetForwardAndStore0205eb54(&g_sePlayer, 0x1b3, 0x1b3);
+                    DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
+                    self->fadeActive = 1;
                 }
                 {
                     Object3D* var116;

@@ -38,26 +38,26 @@ struct Struct_ov025_021e2980_4 {
 
     unsigned char unknown_6fd4_;
 };
-struct Struct_0204a438;
-struct Struct_0202df68;
-struct Struct_02048c90;
-struct Struct_02010604;
-struct Struct_02108760;
-extern Struct_ov025_021ef988_4 data_ov025_021ef988;
+struct S0204a438;
+struct AngleTrig0202e9a4;
+struct Obj02048c90;
+struct Bytes02033b88;
+struct SePlayer;
+extern AnimationGlobals data_ov025_021ef988;
 extern char data_ov025_021ef7d9[];
 extern char data_ov025_021ef7df[];
 extern char data_ov025_021ef7e6[];
-extern Struct_02108760 data_02108760;
-extern "C" int func_0202e09c(int);
-extern "C" Object3D* func_0204a438(Struct_0204a438*);
-extern "C" void func_0202e9a4(Struct_0202df68*, int);
+extern SePlayer g_sePlayer;
+int GetFlags_0202e09c(int);
+Object3D* GetField0x21c(S0204a438*);
+void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4*, int);
 extern "C" void func_0204a170(int);
-extern "C" int func_ov000_021820bc(void*, int, int, int);
-extern "C" void func_02048c90(Struct_02048c90*);
-extern "C" void func_02049ae4(unsigned char*);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" Struct_ov025_021e2980_4* func_ov000_02160130();
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+int DispatchByIndex021820bc(void*, int, int, int);
+void ResetInnerState02048c90(Obj02048c90*);
+void ClearSubstructFlag0x4_02049ae4(unsigned char*);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+AnimationWork* GetActiveCombatWork_ov000_02160130();
+void SePlayer_Play(SePlayer*, int, int);
 
 // USA: func_ov025_021e2980
 extern "C" ARM int func_ov025_021e2980(Struct_ov025_021e2980* arg0, Struct_ov025_021e2980_2* arg1, int arg2, void* arg3) {
@@ -103,13 +103,13 @@ extern "C" ARM int func_ov025_021e2980(Struct_ov025_021e2980* arg0, Struct_ov025
                 var9->unknown_6fd4_ = 1;
             }
         }
-        const char* var10 = arg0->unknown_8_;
-        if (strcmp(var10, data_ov025_021ef7e6) == 0 ||
-            strcmp(var10, data_ov025_021ef7d9) == 0 ||
-            strcmp(var10, data_ov025_021ef7df) == 0) {
-            if (!(arg0->unknown_f_ & 1)) {
-                if (arg1->unknown_a_ & 1) func_0205eaa0(&data_02108760, 0x66, 0);
-                else func_0205eaa0(&data_02108760, 0x64, 0);
+        const char* animation = command->animation;
+        if (strcmp(animation, data_ov025_021ef7e6) == 0 ||
+            strcmp(animation, data_ov025_021ef7d9) == 0 ||
+            strcmp(animation, data_ov025_021ef7df) == 0) {
+            if (!(command->flags & 1)) {
+                if (targets->flags & 1) SePlayer_Play(&g_sePlayer, 0x66, 0);
+                else SePlayer_Play(&g_sePlayer, 0x64, 0);
             }
             var8->BeginFade(0x4cc, 1000);
             data_ov025_021ef988.unknown_1c_ |= 0x200;

@@ -13,9 +13,9 @@ extern "C" unsigned int func_ov023_021f9b6c(struct Struct_ov004_021549e4_3* arg0
 extern "C" void* func_ov023_021f9cb8(void* arg0, void* arg1, void* arg2);
 extern "C" void func_ov023_021f88b8(void* arg0, void* arg1, int arg2);
 extern "C" void func_ov004_0215534c(void*);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 struct Struct_ov004_02155bbc_3 { char unknown_0_[0x10]; unsigned char unknown_10_; };
 extern struct Struct_ov004_02155bbc_3* data_ov004_021707c4;
@@ -102,7 +102,7 @@ extern "C" ARM int func_ov004_02155bbc(void* arg0) {
         }
     }
 
-    func_ov004_0215534c(arg0);
-    func_0205eaa0(&data_02108760, 1, 0);
+    func_ov004_0215534c(a1);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

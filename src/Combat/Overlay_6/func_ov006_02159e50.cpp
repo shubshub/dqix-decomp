@@ -7,10 +7,10 @@ enum { Enum_ov006_02159e50_20 = 0xc, Enum_ov006_02159e50_720 = 0x2d8 };
 enum { Enum_ov006_02159e50_20 = 0x14, Enum_ov006_02159e50_720 = 0x2d0 };
 #endif
 
-struct Struct_0207fdcc_2;
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_020e25e8;
+struct Obj2081;
+struct Obj0208203c;
+struct SePlayer;
+struct Obj020e25e8;
 
 struct Struct_ov006_02157a60 {
     char unknown_0_[Enum_ov006_02159e50_20];
@@ -26,27 +26,27 @@ struct Struct_ov006_02157a60 {
     signed char unknown_42c_;
 };
 
-extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* arg0);
-extern "C" unsigned char func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0207fdcc(Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_0208203c(Struct_02081f20_2* arg0);
-extern "C" void func_020e25e8(Struct_020e25e8* arg0);
+extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
+extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
+unsigned char SePlayer_Play(SePlayer* sound, int effect, int unk);
+void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
+void ResetWithSub0208203c(Obj0208203c* repeat);
+void ResetSelectionState020e25e8(Obj020e25e8* choice);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_02159e50
-extern "C" ARM signed char func_ov006_02159e50(Struct_ov006_02157a60* arg0) {
-    signed char var0 = 0;
-    arg0->unknown_42c_ = 0;
-    arg0->unknown_44_ = &arg0->unknown_36c_;
-    if (func_ov006_02158a28(arg0) || g_keyManager.TestKeysPressed(0x200)) {
-        func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-        var0 = -1;
-        if (arg0->unknown_36c_ == 0x22)
-            var0 = 1;
-    } else if (func_ov006_02158b78(arg0)) {
-        var0 = -1;
+extern "C" ARM signed char func_ov006_02159e50(AlchemyMenu* self) {
+    signed char result = 0;
+    self->arrowTimer_ = 0;
+    self->cursor_ = &self->choiceCursor_;
+    if (func_ov006_02158a28(self) || g_keyManager.TestKeysPressed(0x200)) {
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+        result = -1;
+        if (self->choiceCursor_ == 0x22)
+            result = 1;
+    } else if (func_ov006_02158b78(self)) {
+        result = -1;
     }
     if (var0 != 0) {
         func_0207fdcc(arg0->unknown_14_, arg0->unknown_36e_);

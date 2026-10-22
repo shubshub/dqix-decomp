@@ -29,14 +29,14 @@ struct Struct_02045c00_2 {
 };
 typedef Struct_02045c00_2 Struct_02045c00_2;
 extern "C" void __clear(void*, unsigned int);
-extern "C" void func_0204483c(Struct_02045c00_2*, const char*, char*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" int func_02044420(void*, void*);
-extern "C" Struct_02045d14_3* func_0204254c(int, int);
-extern "C" int func_020424e4(int, int);
-extern "C" int func_02045c00(Struct_02045c00_2*, int);
-extern "C" unsigned short func_020459b8(Struct_02045c00_2*, int, Struct_02045d14_3*, int);
+extern "C" void func_0204483c(TextEncoder*, const char*, char*);
+void RestorePairTables0207df90(char*);
+void BackupPairTables0207dfac(char*);
+int Dispatch02044420(void*, void*);
+CharacterEntry* Font_FindCharacter(int, int);
+int FindEntryIndexByKey020424e4(int, int);
+int FindMatchingEntryIndex(Container02045c00*, int);
+extern "C" unsigned short func_020459b8(TextEncoder*, int, CharacterEntry*, int);
 
 // USA: func_02045d14
 extern "C" ARM unsigned short func_02045d14(Struct_02045c00_2* arg0, const char* arg1, unsigned short* arg2, int arg3) {
@@ -70,15 +70,15 @@ extern "C" ARM unsigned short func_02045d14(Struct_02045c00_2* arg0, const char*
             var1 += var3 * 2;
             var2 += var3;
         } else {
-            var4 = func_0204254c((int)(var6.unknown_4_ + var1), arg3);
-            int var8 = func_020424e4((int)(var6.unknown_4_ + var1), arg3);
-            if (var4 != 0 && var8 >= 0) {
-                int var9 = func_02045c00(arg0, (int)var4);
-                if (var9 == -1) {
-                    arg2[var2] = func_020459b8(arg0, var8 & 0xff, var4, arg3);
-                    var5 = arg0->inline_02045d14();
-                    ++var5->unknown_800_;
-                    var5->unknown_800_ &= 0x7f;
+            entry = Font_FindCharacter((int)(work.buffer + offset), table);
+            int index = FindEntryIndexByKey020424e4((int)(work.buffer + offset), table);
+            if (entry != 0 && index >= 0) {
+                int match = FindMatchingEntryIndex(self, (int)entry);
+                if (match == -1) {
+                    output[outIndex] = func_020459b8(self, index & 0xff, entry, table);
+                    cache = self->GetCache();
+                    ++cache->nextEntry;
+                    cache->nextEntry &= 0x7f;
                 } else {
                     unsigned short var10 = var9;
                     arg2[var2] = var10;

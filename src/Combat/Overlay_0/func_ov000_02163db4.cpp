@@ -40,14 +40,14 @@ extern "C" void func_ov000_02166880(unsigned char*);
 extern "C" void func_ov000_02166978(void*);
 extern "C" void func_0205ea20(void*, int);
 extern "C" void func_ov017_021c812c(int, int);
-extern "C" void func_ov017_021c8398(int, int);
-extern "C" void func_ov017_021c839c(int, int);
-extern "C" void func_ov000_02160d80(void*, int);
-extern unsigned char data_02108760;
-struct Struct_ov000_02163db4 {
-    char unknown_0_[8]; unsigned short unknown_8_; char unknown_a_[2]; int unknown_c_;
-    char unknown_10_[0x2a - 0x10]; signed char unknown_2a_; char unknown_2b_; int unknown_2c_;
-    char unknown_30_[0x40 - 0x30];
+void EmptyStub_ov017_021c8398(int, int);
+void NoOp_021c839c(int, int);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
+extern unsigned char g_sePlayer;
+struct BattleConfig02163db4 {
+    char pad_0[8]; unsigned short eventTag; char pad_a[2]; int mode;
+    char pad_10[0x2a - 0x10]; signed char partyId; char pad_2b; int field_2c;
+    char pad_30[0x40 - 0x30];
 };
 struct Struct_ov000_02163db4_2 {
 #if defined(jpn)
@@ -124,7 +124,7 @@ extern "C" ARM void func_ov000_02163db4(Struct_ov000_02163db4_2* arg0) {
     func_02012de8();
     func_ov000_02166978(arg0);
     func_02012de8();
-    func_0205ea20(&data_02108760, 0x65);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x65);
     REG_DISPLAY_CONTROL = (REG_DISPLAY_CONTROL & ~0x1f00) | 0x1100;
     REG_BLEND_CONTROL = 0;
     if (arg0->unknown_2a0_->unknown_2c_) {

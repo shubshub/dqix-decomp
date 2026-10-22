@@ -25,9 +25,9 @@ extern "C" int func_0202c508(void);
 extern "C" int func_02011b50(void* arg0, int arg1);
 extern "C" void func_02011b3c(void* arg0, unsigned char arg1);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+struct SePlayer;
+extern void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov004_021688d4
 extern "C" ARM int func_ov004_021688d4(void) {
@@ -66,9 +66,9 @@ extern "C" ARM int func_ov004_021688d4(void) {
 
     func_0202ae18();
     if (func_0202c508()) {
-        GameState* var13 = GameState::GetInstance();
-        if (func_02011b50(var13, 0x10)) {
-            func_0205eaa0(&data_02108760, 1, 0);
+        GameState* bs = GameState::GetInstance();
+        if (CheckBitsInField0x63dc_02011b50(bs, 0x10)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
         func_02011b3c(var13, 0x10);
     }

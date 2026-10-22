@@ -8,9 +8,9 @@
 #define func_0200b454 func_0200b318
 #endif
 
-struct Struct_02108760;
-struct Struct_02015ef4;
-struct Struct_02052df8;
+struct SePlayer;
+struct Vec3copy0202ec84;
+struct Field150Holder02052df8;
 
 struct Struct_ov005_0215690c_2 {
     char unknown_0_[0x50];
@@ -86,7 +86,7 @@ extern const Vector3fix data_ov005_0215cc84[8];
 extern const signed char data_ov005_0215cc14[8];
 extern unsigned char data_ov005_0215cd58[8];
 extern unsigned char data_ov005_0215cd50[8];
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
 extern "C" int func_ov005_02157ae8(Struct_ov005_02153954* arg0, int arg1);
@@ -96,15 +96,15 @@ extern "C" int func_ov005_02155670(Struct_ov005_02153954* arg0, int arg1, int ar
 extern "C" int func_0202ec84(void* arg0, Struct_02015ef4* arg1, int* arg2, int* arg3);
 extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
 extern "C" double func_0200b454(double x);
-extern "C" short func_02052df8(Struct_02052df8* arg0, int arg1);
-extern "C" int func_ov005_02158560(Struct_ov005_02153954* arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" void func_ov005_021555c0(Struct_ov005_02153954* arg0);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+short GetHalfwordEntryFromField150(Field150Holder02052df8* obj, int index);
+extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+extern "C" void func_ov005_021555c0(EquipmentMenu* self);
+void* GetPtrField0x2a04_02010828(GameState* gs);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_0215690c
 extern "C" ARM void func_ov005_0215690c(Struct_ov005_02153954* arg0, int arg1, int arg2) {
@@ -229,15 +229,15 @@ extern "C" ARM void func_ov005_0215690c(Struct_ov005_02153954* arg0, int arg1, i
         arg0->unknown_3dcc_ |= 0x40;
         arg0->unknown_3daa_ = 0;
     }
-    func_ov005_0215792c(arg0, 3);
-    arg0->unknown_3d78_ = arg0->unknown_3dbc_;
-    arg0->unknown_3dbb_ = arg0->unknown_3d78_;
-    func_0205bb04(arg0->unknown_19f4_, arg0->unknown_3d78_);
-    arg0->unknown_3dc0_ = 1;
-    arg0->unknown_3dcc_ |= 0x80;
-    func_0205eaa0((Struct_02108760*)&data_02108760, 2, 0);
-    var3->unknown_634_ &= ~1;
-    var3->unknown_634_ &= ~0x80;
-    arg0->unknown_3dcc_ &= ~4;
-    arg0->unknown_3dcc_ &= ~8;
+    func_ov005_0215792c(self, 3);
+    self->dragged_ = self->kind_;
+    self->slot_ = self->dragged_;
+    GridCursor_SetSelectedIndex(self->cursor_, self->dragged_);
+    self->unk_3dc0 = 1;
+    self->flags_ |= 0x80;
+    SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
+    screen->flags_ &= ~1;
+    screen->flags_ &= ~0x80;
+    self->flags_ &= ~4;
+    self->flags_ &= ~8;
 }

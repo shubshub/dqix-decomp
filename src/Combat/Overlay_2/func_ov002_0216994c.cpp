@@ -12,43 +12,37 @@
 #define APPLY(s, k, t) func_0205d5d0(s, k, t, 1, 0)
 #endif
 
-struct Struct_ov002_0215624c_11;
-struct Struct_ov002_0215624c_15;
-struct Struct_ov002_02155960_2;
-struct Struct_ov002_02157d40_7;
-struct Struct_ov002_0215bba8_3;
+struct Struct0205de24;
+struct Struct_0205c570;
+struct Struct_0205d81c;
+struct SePlayer;
+struct StructA0205d5d0;
 
 extern "C" int func_ov002_0215a9f0(void *arg0);
 extern "C" char *func_0205ec34();
-extern "C" short func_0206e3e8(int arg0, int arg1);
-extern "C" void func_0205de24(struct Struct_ov002_0215624c_11 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_021609d4(char *arg0);
-extern "C" void func_ov002_02161b98(char *arg0);
-extern "C" int func_0205d794(struct Struct_ov002_0215624c_15 *arg0);
-extern "C" void func_ov002_0215bba8(char *arg0);
-struct Struct_ov002_02164748;
-extern "C" int func_0205da38(struct Struct_ov002_02164748* arg0, int arg1);
-extern "C" int func_ov002_0215a9b4(void *arg0, short arg1);
-extern "C" int func_0206e3d4(int arg0, int arg1);
-extern "C" char *func_0205d81c(struct Struct_ov002_02155960_2 *arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_ov002_02157d40_7 *arg0, int arg1, int arg2);
-extern "C" void func_ov002_0215a9cc(void *arg0, int arg1);
-extern "C" char *func_020421a0();
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" void func_ov002_021607cc(void *arg0, void *arg1, int arg2);
-#if defined(jpn)
-struct Struct_ov002_02155960_3;
-extern "C" void func_0205def8(struct Struct_ov002_02155960_3 *arg0, int arg1, int arg2);
-extern "C" int func_0205d5d0(struct Struct_ov002_0215bba8_3 *, int, int, int);
-#else
-extern "C" int func_0205d5d0(struct Struct_ov002_0215bba8_3 *, int, int, int, unsigned char);
-#endif
-extern "C" void func_ov002_02156e90(void *arg0);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
+short FindShortIndex0206e3e8(int unused, int key);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+extern "C" void func_ov002_02161cf0(char *self);
+void InitBattleTag021609d4(char *self);
+extern "C" void func_ov002_02161b98(char *self);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+extern "C" void func_ov002_0215bba8(char *self);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int NextIndexOrZero_0215a9b4(void *self, short idx);
+int GetShortFromTable0206e3d4(int a, int b);
+char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
+void SetFieldByIndexedOffsetC7c_0215a9cc(void *self, int idx);
+char *GetGlobalField0x1c020421a0();
+extern "C" void *memset(void *dst, int value, unsigned int length);
+extern "C" void func_ov002_021607cc(void *obj, void *ptr, int flag);
+int TryApplyElemFields0205d5d0(struct StructA0205d5d0 *, int, int, int, unsigned char);
+extern "C" void func_ov002_02156e90(void *obj);
+int CheckFlagOrThreshold_02161b48(char *self, int v);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 struct Struct_ov002_0216994c {
     char unknown_0_[0x68];
@@ -111,13 +105,14 @@ extern "C" ARM void func_ov002_0216994c(char *arg0) {
         if (var11 == 0) {
             return;
         }
-        func_0205eaa0((struct Struct_ov002_02157d40_7 *) &data_02108760, 1, 0);
-        func_ov002_0215a9cc(arg0, var8);
-        void *var12 = *(void **) (func_020421a0() + RG(0x5c, 0x28));
-        memset(var12, 0, RG(0x960, 0x800));
-        func_ov002_021607cc(arg0, var12, (var11[0xc5] & 2) ? 1 : 0);
-        APPLY((struct Struct_ov002_0215bba8_3 *) OBJ, RG(0x21, 0x24), (int) var12);
-        func_ov002_02156e90(arg0);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
+        SetFieldByIndexedOffsetC7c_0215a9cc(self, idx);
+        void *buf = *(void **) (GetGlobalField0x1c020421a0() + 0x5c);
+        memset(buf, 0, 0x960);
+        func_ov002_021607cc(self, buf, (elem[0xc5] & 2) ? 1 : 0);
+        TryApplyElemFields0205d5d0((struct StructA0205d5d0 *) (self + 0x2c8 + 0xc00), 0x21,
+                                                             (int) buf, 1, 0);
+        func_ov002_02156e90(self);
         return;
     }
     if (func_ov002_02161b48(arg0, 1)) {

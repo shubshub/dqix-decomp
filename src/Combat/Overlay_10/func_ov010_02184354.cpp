@@ -12,7 +12,7 @@
 #endif
 
 extern AllocatorUnion data_02114e20;
-extern int data_02108760;
+extern int g_sePlayer;
 extern const char data_ov010_02184a80[];
 extern const char data_ov010_02184a95[];
 extern const char data_ov010_02184aa6[];
@@ -35,11 +35,11 @@ extern "C" void func_020728ac(void* arg0, void* arg1, void* arg2, int arg3, int 
 struct Struct_02072a68_2;
 extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205ebc0(void* arg0, int arg1, int arg2);
-extern "C" void func_0205ebfc(void* arg0, int arg1, int arg2);
-extern "C" void func_0205ebec(void* arg0);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void SetForwardAndStore0205ebc0(void* obj, int a, int b);
+void DispatchIfField0xc4NonNeg_0205ebfc(void* obj, int a, int b);
+void ForwardField0xc0_0205ebec(void* obj);
 
 struct Struct_0204bd7c;
 extern "C" unsigned short func_0204bd7c(struct Struct_0204bd7c* arg0);
@@ -249,9 +249,9 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             arg0->unknown_0_ = 2;
             var21 = 1;
         } else {
-            var21 = 0;
-            arg0->unknown_0_ = 4;
-            func_0205eaa0((struct Struct_02108760*)&data_02108760, 0x64, var21);
+            key = 0;
+            obj->state = 4;
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, key);
         }
 
         void* var22 = func_02072a68((struct Struct_02072a68_2*)&arg0->unknown_c_, (short)var21);
@@ -287,10 +287,10 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             func_0204500c(var1, (const char*)var24, 0, 0xe3);
             var1->unknown_998_ = 1;
 #endif
-            func_0205eaa0((struct Struct_02108760*)&data_02108760, 0x64, 0);
-            unsigned short* var26 = (unsigned short*)func_020120a0((char*)var2, func_020100a8(var2));
-            if (var26 != NULL) *var26 = 0;
-            arg0->unknown_0_ = 4;
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
+            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GetField0x3acValue_020100a8(bs));
+            if (slot != NULL) *slot = 0;
+            obj->state = 4;
         } else {
             func_ov010_021842d8((struct Struct_ov010_021842d8*)arg0);
             return 1;
@@ -309,8 +309,8 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             arg0->unknown_2_ = arg0->unknown_2_ + 1;
             return 0;
         }
-        func_0205ebc0(&data_02108760, 0x74, 0x74);
-        func_0205ebfc(&data_02108760, 0, 0);
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0x74, 0x74);
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
 
         void* var27;
         unsigned int var28;
@@ -412,9 +412,9 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             if (var1->unknown_998_ == 0) var39 = 1;
 #endif
         }
-        if (var39 != 0) {
-            func_ov010_021842d8((struct Struct_ov010_021842d8*)arg0);
-            func_0205ebec(&data_02108760);
+        if (finished != 0) {
+            ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
+            ForwardField0xc0_0205ebec(&g_sePlayer);
             return 1;
         }
     }

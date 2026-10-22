@@ -6,17 +6,22 @@ struct Struct_ov002_0215624c_15;
 struct Struct_ov002_02164748;
 struct Struct_ov002_02157d40_7;
 
-extern "C" void func_0205de24(struct Struct_ov002_0215624c_11 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_ov002_0215624c_15 *arg0);
-extern "C" int func_0205da38(struct Struct_ov002_02164748* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_ov002_02157d40_7 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_021574d4(void *arg0, int arg1);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_02160274(void *arg0);
-extern "C" void func_ov002_02156e90(void *arg0);
-extern char data_02108760[];
+struct Struct0205de24;
+struct Struct_0205c570;
+struct Obj_0205da38;
+struct SePlayer;
+
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int GetField110ArrayValue021574d4(void *self, int idx);
+int CheckFlagOrThreshold_02161b48(char *self, int flag);
+extern "C" void func_ov002_02161cf0(void *self);
+extern "C" void func_ov002_02160274(void *self);
+extern "C" void func_ov002_02156e90(void *self);
+extern char g_sePlayer[];
 #if defined(jpn)
 extern "C" void func_ov002_0215bba8(char *arg0);
 #endif
@@ -47,20 +52,20 @@ extern "C" ARM void func_ov002_02169520(char *arg0) {
 #if defined(jpn)
     func_ov002_0215bba8(arg0);
 #endif
-    int var2                      = g_keyManager.TestKeysPressed(0x601);
-    int var3 = (var2 | func_0205da38((struct Struct_ov002_02164748*)(arg0 + 0xec8 + Enum_ov002_02169520_0_2), 0x14)) ? 1 : 0;
-    if (var3) {
-        *(unsigned char *) (arg0 + 0xf80 + Enum_ov002_02169520_0_2) = *(int *) (arg0 + 0x1bb8 + Enum_ov002_02169520_0);
-        *(int *) (arg0 + 0x247c + Enum_ov002_02169520_0_3) &= ~4;
-        func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
-        int var4                     = 0;
-        *(short *) (arg0 + 0x1c12 + Enum_ov002_02169520_0) = var4;
-        int var5                    = *(signed char *) (arg0 + 0x1c20 + Enum_ov002_02169520_0);
-        if (var5 >= 0 && var5 <= 3) var4 = 1;
-        if (!var4) return;
-        *(short *) (arg0 + 0x1c28 + Enum_ov002_02169520_0) = var5;
-        *(int *) (arg0 + 0x1bb8 + Enum_ov002_02169520_0)   = Enum_ov002_02169520_30;
-        *(int *) (arg0 + 0x1bc0 + Enum_ov002_02169520_0)   = 0;
+    int pressed                      = g_keyManager.TestKeysPressed(0x601);
+    int cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xec8 + regionalList), 0x14)) ? 1 : 0;
+    if (cancel) {
+        *(unsigned char *) (base + 0xf80 + regionalList) = *(int *) (base + 0x1bb8 + regionalState);
+        *(int *) (base + 0x247c + regionalFlags) &= ~4;
+        SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+        int ok                     = 0;
+        *(short *) (base + 0x1c12 + regionalState) = ok;
+        int sel                    = *(signed char *) (base + 0x1c20 + regionalState);
+        if (sel >= 0 && sel <= 3) ok = 1;
+        if (!ok) return;
+        *(short *) (base + 0x1c28 + regionalState) = sel;
+        *(int *) (base + 0x1bb8 + regionalState)   = regionalNextPhase;
+        *(int *) (base + 0x1bc0 + regionalState)   = 0;
         return;
     }
     if (func_ov002_02161b48(arg0, 1)) {

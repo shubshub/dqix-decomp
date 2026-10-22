@@ -8,32 +8,32 @@
 #define REGIONAL_OFFSET(jp, us) us
 #endif
 
-struct Struct_0207fdcc_2;
-struct Struct_0207fdf0_2;
-struct Struct_02108760;
-struct Struct_02081f20_2;
-struct Struct_0201099c_10;
-struct Struct_ov003_02179e18;
-struct Struct_ov003_02178910;
+struct Obj2081;
+struct Cont0207fdf0;
+struct SePlayer;
+struct Obj0208203c;
+struct Container020dedd0;
+struct Obj02179e18;
+struct Obj021dcae0;
 
 extern "C" void *func_02010828(GameState *arg0);
 
-extern "C" int func_ov003_02179f34(char *arg0);
-extern "C" short func_02080468(void *arg0, int arg1);
-extern "C" int func_ov003_02175f20(void *arg0);
-extern "C" void func_ov003_02177dd4(void *arg0);
-extern "C" void func_ov003_021769ec(void *arg0);
-extern "C" void func_02081ea4(struct Struct_0207fdcc_2 *arg0, int arg1, int arg2);
-extern "C" void func_02080c68(void *arg0, int arg1, int arg2);
-extern "C" void func_0208203c(struct Struct_02081f20_2 *arg0);
-extern "C" void func_ov003_021748c4(unsigned char *arg0);
-extern "C" void func_ov003_0217a14c(void *arg0);
-extern "C" void func_ov023_021dcae0(struct Struct_ov003_02178910 *arg0, int arg1);
-extern "C" int func_ov003_021765b4(void *arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-struct Struct_0201099c_9 {
-    char unknown_0_[8];
-    unsigned int unknown_8_;
+extern "C" int func_ov003_02179f34(char *obj);
+short FindMappedMemberId02080468(void *obj, int id);
+extern "C" int func_ov003_02175f20(void *obj);
+extern "C" void func_ov003_02177dd4(void *obj);
+extern "C" void func_ov003_021769ec(void *obj);
+void SetElementFlag0x40_02081ea4(struct Obj2081 *obj, int id, int value);
+void SetEntryLowNibbleAndElement02080c68(void *obj, int id, int value);
+void ResetWithSub0208203c(struct Obj0208203c *obj);
+extern "C" void func_ov003_021748c4(unsigned char *self);
+extern "C" void func_ov003_0217a14c(void *p);
+extern "C" void func_ov023_021dcae0(struct Obj021dcae0 *obj, int val);
+extern "C" int func_ov003_021765b4(void *self);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
+struct Element020de650 {
+    char pad[8];
+    unsigned int word;
 };
 extern "C" struct Struct_0201099c_9 *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
 extern "C" void func_0207fdf0(struct Struct_0207fdf0_2 *arg0, int arg1);
@@ -53,7 +53,7 @@ extern "C" int func_ov003_021764f4(unsigned char *arg0);
 extern "C" void func_ov003_02175d78(char *arg0);
 extern "C" void func_ov003_02175df4(void *arg0);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 static inline int inline_ov003_0217b430(struct Struct_0201099c_9 *arg0) {
     unsigned int var0 = arg0->unknown_8_;
@@ -91,30 +91,30 @@ extern "C" ARM void func_ov003_0217b430(unsigned char *arg0) {
         return;
     }
 
-    if (var3 == 1) {
-        short var6               = *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a);
-        *(void **) (arg0 + REGIONAL_OFFSET(0xf74, 0xff8)) = arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0xe;
-        func_ov003_0217a14c(arg0);
-        func_ov023_021dcae0((struct Struct_ov003_02178910 *) (arg0 + 0x3c), *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
-        if (func_ov003_021765b4(arg0) != 0 && var6 == *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2 *) (arg0 + REGIONAL_OFFSET(0x808, 0x88c)));
-            *(void **) (arg0 + REGIONAL_OFFSET(0xf74, 0xff8)) = 0;
-            *(void **) (arg0 + 8) =
-                func_020dedd0((struct Struct_0201099c_10 *) (arg0 + REGIONAL_OFFSET(0x7f0, 0x874)), *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
-            if (*(void **) (arg0 + 8) == 0) return;
-            *(short *) (arg0 + 0xf00 + REGIONAL_OFFSET(0x78, 0xfc)) = *(short *) (arg0 + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe));
-            func_02080c68(var2, *(short *) (arg0 + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe)), 1);
-            func_02080c68(var2, 4, 1);
-            func_02080c68(var2, 5, 1);
-            func_02080c68(var2, 6, 1);
-            func_02080c68(var2, 7, 1);
-            *(unsigned char *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f) = 2;
-            if (inline_ov003_0217b430(*(struct Struct_0201099c_9 **) (arg0 + 8)) == 0) {
-                func_0207fdf0((struct Struct_0207fdf0_2 *) var2, 0);
-                *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36)          = 0x12;
-                *(unsigned char *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f)  = 0;
-                unsigned short var7                           = *(unsigned short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x46);
+    if (state == 1) {
+        short saved               = *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a);
+        *(void **) (self + REGIONAL_OFFSET(0xf74, 0xff8)) = self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0xe;
+        func_ov003_0217a14c(self);
+        func_ov023_021dcae0((struct Obj021dcae0 *) (self + 0x3c), *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
+        if (func_ov003_021765b4(self) != 0 && saved == *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c *) (self + REGIONAL_OFFSET(0x808, 0x88c)));
+            *(void **) (self + REGIONAL_OFFSET(0xf74, 0xff8)) = 0;
+            *(void **) (self + 8) =
+                FindElementByKey020dedd0((struct Container020dedd0 *) (self + REGIONAL_OFFSET(0x7f0, 0x874)), *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
+            if (*(void **) (self + 8) == 0) return;
+            *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x78, 0xfc)) = *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe));
+            SetEntryLowNibbleAndElement02080c68(elemObj, *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe)), 1);
+            SetEntryLowNibbleAndElement02080c68(elemObj, 4, 1);
+            SetEntryLowNibbleAndElement02080c68(elemObj, 5, 1);
+            SetEntryLowNibbleAndElement02080c68(elemObj, 6, 1);
+            SetEntryLowNibbleAndElement02080c68(elemObj, 7, 1);
+            *(unsigned char *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f) = 2;
+            if (ElemKind(*(struct Element020de650 **) (self + 8)) == 0) {
+                CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0 *) elemObj, 0);
+                *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36)          = 0x12;
+                *(unsigned char *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f)  = 0;
+                unsigned short f                           = *(unsigned short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x46);
 #if defined(jpn)
                 var7 = (unsigned short) (var7 | 0x20);
 #else
@@ -203,13 +203,13 @@ extern "C" ARM void func_ov003_0217b430(unsigned char *arg0) {
             func_ov003_02177208((char *) arg0);
             func_ov003_0217726c((char *) arg0);
         }
-        int var18 = func_ov003_021782a0((struct Struct_0207fdcc_2 *) arg0);
-        if (g_keyManager.TestKeysPressed(0x401) != 0 || var18 == 1) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0207fdf0((struct Struct_0207fdf0_2 *) var2, 0);
-            *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36) = 0xd;
-            if (*(unsigned char *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3c) > 1) {
-                *(short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36) = 0x20;
+        int hit = func_ov003_021782a0((struct Obj2081 *) self);
+        if (g_keyManager.TestKeysPressed(0x401) != 0 || hit == 1) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0 *) elemObj, 0);
+            *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36) = 0xd;
+            if (*(unsigned char *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3c) > 1) {
+                *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36) = 0x20;
             }
             *(unsigned char *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f) = 6;
             *(unsigned short *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x46) =

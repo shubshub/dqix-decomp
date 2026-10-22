@@ -84,7 +84,7 @@ struct Struct_02078398_2 {
     Vector3fix unknown_44_;
 };
 
-struct Struct_02108760;
+struct SePlayer;
 
 extern "C" void* __clear(void* arg0, int arg1);
 extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
@@ -95,38 +95,38 @@ extern "C" void* func_ov000_02160f20(void* arg0);
 extern "C" void func_0202e694(void*, int*);
 extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
 struct Vector3i;
-extern "C" void func_ov000_02167f10(void* arg0);
-struct Struct_02033834;
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_ov025_021de110(void* arg0);
-struct Struct_ov025_021dcf14_7;
-struct Struct_ov025_021dcf14_8;
-extern "C" void func_ov025_021eee48(Struct_ov025_021dcf14_7*, Struct_ov025_021dcf14_8*);
-struct Struct_02033fcc;
-extern "C" void func_02033fcc(Struct_02033fcc*);
-struct Struct_02033fdc;
-extern "C" void func_02033fdc(Struct_02033fdc*);
-struct Struct_02010604;
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" struct Struct_ov025_021dcf14_4* func_02079e2c(char*, int);
-struct Struct_ov000_0215440c;
-extern "C" struct Struct_ov025_021dcf14_3* func_ov000_021600f8(Struct_ov000_0215440c*, int);
-struct Struct_ov000_0215440c_2;
-extern "C" struct Struct_ov025_021dcf14_2* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
-struct Struct_ov025_021d8bfc;
-extern "C" void func_ov025_021d8bfc(void*, Struct_ov025_021d8bfc*);
-extern "C" int func_ov025_021ed444(void* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
-extern "C" void func_0202ea10(unsigned char*, int, int);
-extern "C" void func_ov000_02163440(void* arg0, short arg1, unsigned short arg2, unsigned short arg3);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void* func_ov000_0215fff4(void*, int, int);
-extern "C" int func_ov000_0215fd90(void* arg0, int arg1);
-extern "C" int func_02048c68(unsigned char*);
-extern "C" int func_02049ee8(unsigned char*);
-extern "C" void func_0204a0c8(unsigned char*);
-extern "C" int func_ov000_0215ffa0(void* arg0);
-struct Struct_ov025_021dce7c;
-extern "C" int func_ov025_021dce7c(unsigned char*, Struct_ov025_021dce7c*, int);
+extern "C" void func_ov000_02167f10(void* obj);
+struct Obj02033874;
+void SetVecYFromValue02033874(Obj02033874*, int);
+void ResetFields_021de110(void* obj);
+struct Obj021eee48;
+struct Rec021eee48;
+void PushNodeFromFreeList_021eee48(Obj021eee48*, Rec021eee48*);
+struct Flags02033fcc;
+void SetFlag0x4At0xe0(Flags02033fcc*);
+struct Flags02033fdc;
+void ClearFlag0x4At0xe0(Flags02033fdc*);
+struct Bytes02033b88;
+int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+struct TableEntry021dcf14* SearchBothTables02079e2c(char*, int);
+struct List021600f8;
+struct Node021dcf14* GetNodeAtIndex021600f8(List021600f8*, int);
+struct List02160094;
+struct First021dcf14* GetNodeAtIndex02160094(List02160094*, int);
+struct PackedFields_021d8bfc;
+void ForwardPackedFields_021d8bfc(void*, PackedFields_021d8bfc*);
+extern "C" int func_ov025_021ed444(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
+void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char*, int, int);
+void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void* FindNodeAtDepth0215fff4(void*, int, int);
+extern "C" int func_ov000_0215fd90(void* entry, int effect);
+int CheckSubstructFlag0x100_02048c68(unsigned char*);
+int GetSubstructByte0x56_02049ee8(unsigned char*);
+void SetSubstructFlag0x400_0204a0c8(unsigned char*);
+extern "C" int func_ov000_0215ffa0(void* node);
+struct In021dce7c;
+int TryDispatch_021dce7c(unsigned char*, In021dce7c*, int);
 extern "C" void* func_02057924(void);
 extern "C" void func_02078484(struct Struct_02078398_2* arg0);
 extern "C" void func_02057fb4(void*, int, void*);
@@ -148,7 +148,7 @@ inline struct Struct_ov025_021dbe10& inline_ov025_021dcf14() {
     static struct Struct_ov025_021dbe10 s;
     return s;
 }
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern Vector3fix data_ov025_021eeee0;
 extern int data_ov025_021eeeec[];
 extern int data_ov025_021eeef8[];
@@ -423,11 +423,11 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                 arg0[Enum_ov025_021dcf14_30533] = var48->unknown_e_[1];
                 arg0[Enum_ov025_021dcf14_30534] = var48->unknown_e_[0];
             }
-            if (var49 || var50) {
-                func_0202ea10((unsigned char*)(arg0 + Enum_ov025_021dcf14_3096), 0xcc, 0x1f4);
-                func_ov000_02163440(arg0, 0x199, 0x1f4, 0x64);
-                if (var50) {
-                    func_0205eaa0(&data_02108760, 0x43, 0);
+            if (miss || crit) {
+                StoreFields0x1e4And0x1e8IfNonZero_0202ea10((unsigned char*)(sl + CameraBase), 0xcc, 0x1f4);
+                SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x1f4, 0x64);
+                if (crit) {
+                    SePlayer_Play(&g_sePlayer, 0x43, 0);
                 }
             }
             var1->unknown_4_ = 1;
@@ -591,8 +591,8 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                     if (var82.unknown_28_ & 1) {
                         var84.unknown_2c_.y += var79->obj3D_.GetHeight() / 2;
                     }
-                    func_02057fb4(var83, var82.unknown_20_, &var84);
-                    func_0205ebfc(&data_02108760, *(short*)(arg0 + Enum_ov025_021dcf14_28570), 0);
+                    FindNodeAndProcess02057fb4(list, pending.id, &req);
+                    DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
                 }
                 if (!var63) {
                     if (var62) {
@@ -684,32 +684,32 @@ struct Struct_ov025_021de124_3 {
     unsigned char unknown_38_;
 };
 
-extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_0216df00(void* arg0, int arg1, int arg2, int arg3, float arg4);
-extern "C" void func_ov000_0216dbf0(void* arg0, int* arg1, int arg2, int arg3);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02167f10(void* arg0);
-extern "C" int func_ov025_021ed444(void* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
-extern "C" int func_ov025_021ed564(void* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
-extern "C" void func_ov000_02163440(void* arg0, short arg1, unsigned short arg2, unsigned short arg3);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0215ff80(char*, int);
-extern "C" void* func_ov000_02160130(void);
-extern "C" int func_ov000_0215ffa0(void* arg0);
-extern "C" void func_ov025_021eabd0(void* arg0, bool arg1);
-extern "C" void func_ov025_021ead5c(void* arg0, bool arg1);
-extern "C" void func_ov025_021ed344(void* arg0, int arg1);
-extern "C" int func_ov025_021ed2f4(void* arg0);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043124(int arg0);
+extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
+extern "C" void func_ov000_0216df00(void* obj, int id, int b, int c, float scale);
+extern "C" void func_ov000_0216dbf0(void* obj, int* id, int a, int b);
+void* GetSlotPtr02160f20(void* obj);
+extern "C" void func_ov000_021626a0(void* obj, int a, int b);
+extern "C" void func_ov000_02167f10(void* obj);
+extern "C" int func_ov025_021ed444(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
+extern "C" int func_ov025_021ed564(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
+void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+int GetShortAtField0xEBound3_ov000_0215ff80(char*, int);
+void* GetActiveCombatWork_ov000_02160130(void);
+extern "C" int func_ov000_0215ffa0(void* node);
+extern "C" void func_ov025_021eabd0(void* obj, bool party);
+extern "C" void func_ov025_021ead5c(void* obj, bool party);
+extern "C" void func_ov025_021ed344(void* obj, int val);
+int Check021ed2f4(void* obj);
+int GetGlobalField0x1c020421a0(void);
+extern "C" void func_02043124(int obj);
 extern "C" void* func_02057924(void);
 extern "C" void func_02078484(struct Struct_02078398_2* arg0);
 extern "C" short func_ov000_0216352c(int arg0, float arg1, float arg2);
 extern "C" int func_ov000_021635e4(int arg0, int arg1);
 
 extern Vector3fix data_ov025_021eef04;
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 #undef TIMER
 #define TIMER (inline_ov025_021dcf14().unknown_6_)
@@ -802,9 +802,9 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
             if (*(unsigned int*)(arg0 + Enum_ov025_021dcf14_28576) & 1) {
                 var16.unknown_2c_.y += var14->obj3D_.GetHeight() / 2;
             }
-            func_0205ebfc(&data_02108760, *(short*)(arg0 + Enum_ov025_021dcf14_28570), 0);
-            func_02057fb4(var15, *(short*)(arg0 + Enum_ov025_021dcf14_28568), &var16);
-            TIMER = *(unsigned int*)(arg0 + Enum_ov025_021dcf14_28616);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
+            FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
+            TIMER = *(unsigned int*)(sl + Field6fc8);
         }
         arg0[Enum_ov025_021dcf14_28414] = 3;
     } else if (arg0[Enum_ov025_021dcf14_28414] == 3) {
@@ -853,8 +853,8 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
                 if (arg0[Enum_ov025_021dcf14_3640] != 2) {
                     func_ov000_02163440(arg0, 0xcc, 0xc8, 0x64);
                 }
-                func_0205eaa0(&data_02108760, 0x43, 0);
-                TIMER = *(unsigned int*)(arg0 + Enum_ov025_021dcf14_28612) + 0x1f4;
+                SePlayer_Play(&g_sePlayer, 0x43, 0);
+                TIMER = *(unsigned int*)(sl + Field6fc4) + 0x1f4;
             }
             if (var18->unknown_9_ <= arg0[Enum_ov025_021dcf14_28415]) {
                 arg0[Enum_ov025_021dcf14_28417] = 1;
@@ -973,11 +973,11 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
                     var42.unknown_44_ = var47;
                 }
             }
-            func_02057fb4(var41, *(short*)(arg0 + Enum_ov025_021dcf14_28568), &var42);
-            if (*(short*)(arg0 + Enum_ov025_021dcf14_28570) != -1) {
-                func_0205ebfc(&data_02108760, *(short*)(arg0 + Enum_ov025_021dcf14_28570), 0);
-            } else if (*(unsigned short*)(arg0 + Enum_ov025_021dcf14_28420) != -1) {
-                func_0205ebfc(&data_02108760, *(unsigned short*)(arg0 + Enum_ov025_021dcf14_28420), 0);
+            FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
+            if (*(short*)(sl + Field6f9a) != -1) {
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
+            } else if (*(unsigned short*)(sl + Field6f04) != -1) {
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
             }
             TIMER = *(unsigned int*)(arg0 + Enum_ov025_021dcf14_28616);
         } else if (arg0[Enum_ov025_021dcf14_3640] == 3 || var38 == 0 || var40 != 0) {
@@ -997,10 +997,10 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
                 var49->obj3D_.position_ = var50;
                 var49->obj3D_.MakeVisible();
             }
-            func_0205ebfc(&data_02108760, *(unsigned short*)(arg0 + Enum_ov025_021dcf14_28420), 0);
-            var42.unknown_14_ = var48;
-            func_02057fb4(var41, *(unsigned short*)(arg0 + Enum_ov025_021dcf14_28418), &var42);
-            TIMER = *(unsigned int*)(arg0 + Enum_ov025_021dcf14_28624);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
+            req.objectId = savedId;
+            FindNodeAndProcess02057fb4(fx, *(unsigned short*)(sl + Field6f02), &req);
+            TIMER = *(unsigned int*)(sl + Field6fd0);
             if (TIMER == 0) {
                 TIMER = 0x1f4;
             }

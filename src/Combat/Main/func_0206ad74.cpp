@@ -86,11 +86,11 @@ extern "C" ARM void func_0206c794(void* arg0) {
 }
 #else
 
-struct Struct_0204254c { int unknown_0_; signed char unknown_4_; signed char unknown_5_0_ : 6; signed char unknown_5_6_ : 2; unsigned char unknown_6_[2]; };
-extern "C" Struct_0204254c* func_0204254c(int, int);
-extern "C" int func_02042648(int);
-struct Struct_0204500c_4;
-extern "C" void func_0206b198(Struct_0204500c_4*, unsigned short);
+struct Entry0204254c { int value; signed char width; signed char advance : 6; signed char field5 : 2; unsigned char field6[2]; };
+Entry0204254c* Font_FindCharacter(int, int);
+int GetWordFromTable02042648(int);
+struct CombatSlots0206b198;
+void DecrementSlotRef0206b198(CombatSlots0206b198*, unsigned short);
 extern char data_020f08dc[];
 extern char data_020f0979[];
 extern char data_020f097c[];
@@ -161,15 +161,15 @@ extern "C" ARM void func_0206ad74(Struct_0206ad74* arg0) {
             arg0->unknown_19c2_ = var3;
             var7 = var5;
             for (;;) {
-                var0 = var6 + 1;
-                if (!*var7) break;
-                Struct_0204254c* var15 = func_0204254c((int)var7, arg0->unknown_19dc_);
-                if (var15) {
-                    arg0->unknown_1942_++;
-                    int var16 = var15->unknown_4_;
-                    int var17 = var15->unknown_5_0_;
-                    arg0->unknown_1944_ += var16 + 1;
-                    var7 += var17;
+                defaultWidth = fontWidth + 1;
+                if (!*cursor) break;
+                Entry0204254c* entry = Font_FindCharacter((int)cursor, self->font);
+                if (entry) {
+                    self->count++;
+                    int width = entry->width;
+                    int advance = entry->advance;
+                    self->width += width + 1;
+                    cursor += advance;
                 } else {
                     arg0->unknown_1942_++;
                     var7++;

@@ -18,7 +18,7 @@ int SelectField0x8Or0x58ByFlags_0205c6e4(unsigned char *p);
 void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8 *s, int delta);
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84 *s);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
-extern "C" void func_0205bb04(void *p, int v);
+extern "C" void GridCursor_SetSelectedIndex(void *p, int v);
 
 // USA: func_ov002_02161b98
 extern "C" ARM int func_ov002_02161b98(char *arg0) {
@@ -65,7 +65,7 @@ extern "C" ARM int func_ov002_02161b98(char *arg0) {
         }
         int total = GridCursor_GetSelectedIndex((struct Struct_0205bb84 *) (list + 0x54));
         SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), total);
-        func_0205bb04(list + 0x54, total);
+        GridCursor_SetSelectedIndex(list + 0x54, total);
     }
     return 1;
 ret0:

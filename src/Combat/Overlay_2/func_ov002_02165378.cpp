@@ -5,33 +5,33 @@
 struct Struct_0205de24_2;
 struct Struct_0205c570;
 struct Struct_0205d81c;
-struct Struct_0205d5d0;
-struct Struct_02108760;
-struct Struct_020d7aa0_2;
+struct StructA0205d5d0;
+struct SePlayer;
+struct Obj020d7aa0;
 
-extern "C" int func_ov002_0215edc8(unsigned char *arg0);
-extern "C" void func_ov002_02157174(char *arg0, int arg1);
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215e900(char *arg0);
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" void func_ov002_0215ece4(void *arg0, char *arg1, int arg2, int arg3, int arg4);
-extern "C" char *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
-extern "C" void func_ov002_0216574c(void *arg0, int arg1);
-extern "C" int func_0205d5d0(struct Struct_0205d5d0 *, int, int, int, unsigned char);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_0205df38(void *arg0, int arg1);
-extern "C" Struct_020d7aa0_2 *func_020d7a50();
-extern "C" void func_020d7aa0(Struct_020d7aa0_2 *arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_0216364c(void *arg0);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_02156e90(void *arg0);
+int HasPositiveContainerAndField_0215edc8(unsigned char *self);
+extern "C" void func_ov002_02157174(char *self, int combatantId);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+extern "C" void func_ov002_02161cf0(char *self);
+extern "C" void func_ov002_0215e900(char *self);
+extern "C" void *memset(void *dst, int value, unsigned int length);
+extern "C" void func_ov002_0215ece4(void *base, char *dst, int c, int productB, int clampedSum);
+char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+void SetOrClearByteC5Bit8_0216574c(void *elem, int on);
+int TryApplyElemFields0205d5d0(struct StructA0205d5d0 *, int, int, int, unsigned char);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+extern "C" int func_0205df38(void *list, int key);
+Obj020d7aa0 *GetGlobalResetObj020d7a50();
+void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
+int IsFlagAt130Bit0Set_0216364c(void *member);
+int CheckFlagOrThreshold_02161b48(char *self, int v);
+extern "C" void func_ov002_02156e90(void *obj);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 // USA: func_ov002_02165378
 #if defined(jpn)
@@ -98,14 +98,14 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (*(unsigned int *) (arg0 + 0x22ac) & 2) {
             return;
         }
-        func_020d7aa0(func_020d7a50());
-        *(unsigned char *) (arg0 + 0xed8) = *(int *) (arg0 + 0x1a80);
-        *(unsigned int *) (arg0 + 0x22ac) &= ~4;
-        func_0205eaa0((struct Struct_02108760 *) &data_02108760, 1, 0);
-        *(int *) (arg0 + 0x1a80) = 0x12;
-        *(int *) (arg0 + 0x1a88) = 0;
-        if (func_ov002_0216364c(
-                GameState::GetInstance()->GetPartyMemberByIndex(*(signed char *) (arg0 + 0x1ae8))))
+        TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
+        *(unsigned char *) (self + 0xed8) = *(int *) (self + 0x1a80);
+        *(unsigned int *) (self + 0x22ac) &= ~4;
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
+        *(int *) (self + 0x1a80) = 0x12;
+        *(int *) (self + 0x1a88) = 0;
+        if (IsFlagAt130Bit0Set_0216364c(
+                GameState::GetInstance()->GetPartyMemberByIndex(*(signed char *) (self + 0x1ae8))))
         {
             *(short *) (arg0 + 0x1af0) = 0x2332;
             *(short *) (arg0 + 0x1af2) = -1;
@@ -191,14 +191,14 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (*(unsigned int *) (arg0 + 0x247c) & 2) {
             return;
         }
-        func_020d7aa0(func_020d7a50());
-        *(unsigned char *) (arg0 + 0xf80) = *(int *) (arg0 + 0x1bb8);
-        *(unsigned int *) (arg0 + 0x247c) &= ~4;
-        func_0205eaa0((struct Struct_02108760 *) &data_02108760, 1, 0);
-        *(int *) (arg0 + 0x1bb8) = 0x11;
-        *(int *) (arg0 + 0x1bc0) = 0;
-        if (func_ov002_0216364c(
-                GameState::GetInstance()->GetPartyMemberByIndex(*(signed char *) (arg0 + 0x1c20))))
+        TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
+        *(unsigned char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
+        *(unsigned int *) (self + 0x247c) &= ~4;
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
+        *(int *) (self + 0x1bb8) = 0x11;
+        *(int *) (self + 0x1bc0) = 0;
+        if (IsFlagAt130Bit0Set_0216364c(
+                GameState::GetInstance()->GetPartyMemberByIndex(*(signed char *) (self + 0x1c20))))
         {
             *(short *) (arg0 + 0x1c28) = 0x2332;
             *(short *) (arg0 + 0x1c2a) = -1;

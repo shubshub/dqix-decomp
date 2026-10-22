@@ -10,19 +10,19 @@ enum { Enum_ov000_0217dcf0_7520 = 0x1d60, Enum_ov000_0217dcf0_7528 = 0x1d68,
 #endif
 
 struct Struct_0205c570;
-struct Struct_0205d6a0;
-struct Struct_02108760;
+struct Entry_0205d6a0;
+struct SePlayer;
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
-extern "C" int func_ov000_0217c5f4(void* arg0);
-extern "C" int func_ov000_0217c594(void* arg0, int arg1);
-extern "C" void func_ov000_02176e3c(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+int CheckFlagsOrField_0217c5f4_0217c5f4(void* obj);
+extern "C" int func_ov000_0217c594(void* obj, int limit);
+extern "C" void func_ov000_02176e3c(void* obj, int zero, int val, int arg1, int arg2, int one);
+extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
 extern "C" void func_ov017_021c847c(void);
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 struct Struct_ov000_0217dcf0 {
     char unknown_0_[0x3c];
@@ -42,24 +42,24 @@ struct Struct_ov000_0217dcf0_2 {
 };
 
 // USA: func_ov000_0217dcf0
-extern "C" ARM void func_ov000_0217dcf0(char* arg0, int arg1, int arg2) {
-    *(unsigned short*)(arg0 + Enum_ov000_0217dcf0_7538) |= 0x100;
-    *(unsigned char*)(arg0 + Enum_ov000_0217dcf0_7531) = func_0205d794((struct Struct_0205c570*)(arg0 + 0x188));
-    if (func_ov000_0217c594(arg0, 0)) {
-        func_0205eaa0((struct Struct_02108760*)data_02108760, 1, 0);
-        GameState* var0 = GameState::GetInstance();
-        unsigned char* var1 = (unsigned char*)func_02010828(var0);
-        signed char var2 = *(signed char*)(arg0 + Enum_ov000_0217dcf0_7531);
-        if (var2 < var1[0xf7c]) {
-            struct Struct_ov000_0217dcf0_2* var3 = &((struct Struct_ov000_0217dcf0_2*)(arg0 + 0x958))[*(signed char*)(arg0 + var2 + 0x70)];
-            GameObject* var4 = var0->GetPartyMemberByIndex((signed char)var3->unknown_4c_);
-            if (var4 != NULL) {
-                struct Struct_ov000_0217dcf0* var5 = (struct Struct_ov000_0217dcf0*)var4->baseStats_;
-                unsigned short var6 = var5->unknown_3f_6_;
-                var6++;
-                var6 %= 2;
-                var5->unknown_3f_6_ = var6;
-                func_ov000_02176e3c(arg0, 0, *(signed char*)(arg0 + *(signed char*)(arg0 + Enum_ov000_0217dcf0_7528) + Enum_ov000_0217dcf0_7520), arg1, arg2, 0);
+extern "C" ARM void func_ov000_0217dcf0(char* obj, int arg1, int arg2) {
+    *(unsigned short*)(obj + MenuFlagsOffset0217dcf0) |= 0x100;
+    *(unsigned char*)(obj + ActiveSelectionOffset0217dcf0) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(obj + 0x188));
+    if (func_ov000_0217c594(obj, 0)) {
+        SePlayer_Play((struct SePlayer*)g_sePlayer, 1, 0);
+        GameState* gs = GameState::GetInstance();
+        unsigned char* field2a04 = (unsigned char*)GetPtrField0x2a04_02010828(gs);
+        signed char cursor = *(signed char*)(obj + ActiveSelectionOffset0217dcf0);
+        if (cursor < field2a04[0xf7c]) {
+            struct Entry0217dcf0* entry = &((struct Entry0217dcf0*)(obj + 0x958))[*(signed char*)(obj + cursor + 0x70)];
+            GameObject* member = gs->GetPartyMemberByIndex((signed char)entry->field4c);
+            if (member != NULL) {
+                struct MemberInfo0217dcf0* info = (struct MemberInfo0217dcf0*)member->baseStats_;
+                unsigned short v = info->flag30;
+                v++;
+                v %= 2;
+                info->flag30 = v;
+                func_ov000_02176e3c(obj, 0, *(signed char*)(obj + *(signed char*)(obj + CommandDepthOffset0217dcf0) + CommandStackOffset0217dcf0), arg1, arg2, 0);
                 func_ov017_021c847c();
             }
         }

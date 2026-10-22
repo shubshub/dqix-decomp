@@ -3034,7 +3034,7 @@ src/Combat/Overlay_23/func_ov023_021d9da4.cpp:
     complete
     .text start:0x021da63c end:0x021da6f0
 
-src/Combat/Overlay_23/func_ov023_021d9e60.cpp:
+src/Combat/Overlay_23/CharacterCreationUI_RefreshNameText_021d9e60.cpp:
     complete
     .text start:0x021da6f0 end:0x021da7ac
 

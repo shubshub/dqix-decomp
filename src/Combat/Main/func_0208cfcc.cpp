@@ -35,7 +35,7 @@ extern char data_020f12cc[];
 #endif
 extern char data_020f11eb[];
 extern char data_020f11fe[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 void SetSubBrightness(GameResources*, int, int);
 extern "C" void func_0208bf28(Struct_02065990_2*, int, unsigned char);
 extern "C" int func_02046900(Struct_02020cb8_4*);
@@ -116,11 +116,11 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
         arg0->unknown_da_ |= 8;
         if (arg0->unknown_cc_ < 1.0f) arg0->unknown_cc_ += 0.2f;
         else {
-            arg0->unknown_cc_ = 1.0f;
-            func_0205eb54(data_02108760, 110, 110);
-            func_0205eb90(data_02108760, 0, 0);
-            arg0->unknown_d5_++;
-            arg0->unknown_d9_ = 30;
+            obj->blend = 1.0f;
+            SetForwardAndStore0205eb54(g_sePlayer, 110, 110);
+            DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 0, 0);
+            obj->state++;
+            obj->delay = 30;
         }
     } else if (arg0->unknown_d5_ == 4) {
         arg0->unknown_da_ |= 128;
@@ -133,9 +133,9 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
                 arg0->unknown_d5_++;
             }
         }
-    } else if (arg0->unknown_d5_ == 6 && arg0->unknown_d9_ == 0) {
-        func_0205eb80(data_02108760);
-        arg0->unknown_d4_ = 1;
-        arg0->unknown_d5_ = 0;
+    } else if (obj->state == 6 && obj->delay == 0) {
+        ForwardField0xc0_0205eb80(g_sePlayer);
+        obj->complete = 1;
+        obj->state = 0;
     }
 }

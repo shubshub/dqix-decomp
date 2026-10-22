@@ -15,34 +15,34 @@
 #endif
 
 struct AllocatorUnion;
-struct Struct_0201bdac_4;
-struct Struct_02046c78;
-struct Struct_02109bf4_4;
-struct Struct_02109bf4_3;
-struct Struct_02081ee4;
-struct Struct_02081ee4_2;
-struct Struct_02020cb8;
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_0204c7a8;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0207f914;
-struct Struct_0207f7f0;
-struct Struct_0207f7f0_2;
-struct Struct_0207fcb8;
-struct Struct_0207fd44_2;
-struct Struct_0207fd88;
-struct Struct_02081f20_2;
-struct Struct_ov017_021aa59c_4;
-struct Struct_0207fdcc_2;
-struct Struct_0207fc6c;
-struct Struct_ov017_021aa59c_5;
-struct Struct_ov017_021aa59c_6;
-struct Struct_02108760;
-struct Struct_0207fe44;
-struct Struct_02038598_4;
-struct Struct_02038598_5;
+struct Obj02086b98;
+struct CountHead;
+struct Actor0209c678;
+struct Actor0209c20c;
+struct Obj02081ee4;
+struct Sub02081ee4;
+struct List0204af64;
+struct AllocTarget0204b12c;
+struct Obj0204b5e8;
+struct Obj0204c7a8;
+struct ActiveEntry02046900;
+struct Rec020467f0;
+struct Obj0207f914;
+struct Manager0207f7f0;
+struct Node0207f7f0;
+struct Obj0207fcb8;
+struct Cont0207fd44;
+struct Cont0207fd88;
+struct Obj0208203c;
+struct Obj021ab060;
+struct Obj2081;
+struct Obj0207fc6c;
+struct Ctx021ab0c0;
+struct Ctx021ab1a4;
+struct SePlayer;
+struct Cont0207fe44;
+struct FlagWord020466f4;
+struct ListHead02046b60;
 
 extern "C" void* func_0202ae18(void);
 extern "C" void* func_02012fe4(void);
@@ -74,35 +74,35 @@ extern "C" void func_02080654(struct Struct_0207f914* arg0, int arg1, int arg2);
 #else
 extern "C" void func_0207f914(struct Struct_0207f914* arg0, int arg1, int arg2, int arg3);
 #endif
-extern "C" int func_0207f9f4(void* arg0);
-extern "C" void func_0207f7f0(struct Struct_0207f7f0* arg0, struct Struct_0207f7f0_2* arg1, int arg2);
-extern "C" void func_0207fcb8(struct Struct_0207fcb8* arg0);
-extern "C" void func_0207fd44(struct Struct_0207fd44_2* arg0);
-extern "C" void func_0207fd88(struct Struct_0207fd88* arg0);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" void func_ov017_021ab060(struct Struct_ov017_021aa59c_4* arg0);
-extern "C" void* func_02081da8(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_0207fc6c(struct Struct_0207fc6c* arg0, int arg1);
-extern "C" void func_02081f20(void* arg0, int arg1);
-extern "C" int func_020800fc(void* arg0, short* arg1, short arg2, unsigned short arg3, unsigned char arg4, bool arg5);
-extern "C" void func_020804fc(void* arg0, int arg1);
-extern "C" int func_ov017_021ab0c0(struct Struct_ov017_021aa59c_5* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0207fe44(struct Struct_0207fe44* arg0);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" int func_ov017_021ab1a4(struct Struct_ov017_021aa59c_6* arg0);
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" unsigned char func_02010750(char* arg0);
-extern "C" void func_ov017_021d1a18(int arg0, int arg1, int arg2, int arg3);
-extern "C" int func_02046b60(struct Struct_02038598_5* arg0, int arg1);
-extern "C" void func_02046a8c(struct Struct_02038598_5* arg0, void* arg1);
-extern "C" void func_02010604(GameState* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0201075c(char* arg0, unsigned char arg1);
-extern "C" void func_0209c20c(struct Struct_02109bf4_3* arg0);
+extern "C" int func_0207f9f4(void* obj);
+void InitNodeChain0207f7f0(struct Manager0207f7f0* mgr, struct Node0207f7f0* node, int count);
+void ClearAllBuffers0207fcb8(struct Obj0207fcb8* obj);
+void CallFunc0204b04cOverList0x2c(struct Cont0207fd44* obj);
+void CallFunc0204b088OverList0x2c(struct Cont0207fd88* obj);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+extern "C" void func_020813ec(void* obj, int key);
+void SetThreeEntryFlags_021ab060(struct Obj021ab060* obj);
+void* FindElementByByte0xc4_02081da8(struct Obj2081* obj, int key);
+void CallFunc0204c87cOverEntries0207fc6c(struct Obj0207fc6c* obj, int arg);
+extern "C" void func_02081f20(void* repeat, int ticks);
+extern "C" int func_020800fc(void* menu, short* cursor, short prevCursor, unsigned short buttons, unsigned char columns, bool wrap);
+void ClearSublistEntriesFlag4_020804fc(void* obj, int key);
+int UpdateElementCoordFlag_021ab0c0(struct Ctx021ab0c0* ctx);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
+void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+int CheckCoordsInsideElement_021ab1a4(struct Ctx021ab1a4* ctx);
+void ClearFlags020466f4(struct FlagWord020466f4* word, unsigned int mask);
+unsigned char GetField0x5729Value_02010750(char* gs);
+extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
+int ListContainsId(struct ListHead02046b60* list, int id);
+extern "C" void func_02046a8c(struct ListHead02046b60* list, void* node);
+void ResetMpForFlaggedCombatants02010604(GameState* gs, int a, int b, int c);
+void SetField0x5729Value_0201075c(char* gs, unsigned char value);
+void InitActorContext0209c20c(struct Actor0209c20c* actor);
 
 extern AllocatorUnion data_02114e20;
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 #if defined(jpn)
 extern char data_ov017_021d7ddc[];
 extern char data_ov017_021d7def[];
@@ -324,14 +324,14 @@ extern "C" ARM void func_ov017_021aa59c(Struct_ov017_021aa59c_3* arg0, Struct_02
                     if (arg0->unknown_4e_ != *arg0->unknown_44_) {
                         return;
                     }
-                    func_0205eaa0(&data_02108760, 1, 0);
-                    func_0208203c((Struct_02081f20_2*)arg0->unknown_3c_);
-                    arg0->unknown_44_ = NULL;
-                    if (arg0->unknown_4c_ == 0) {
-                        func_0207fe44((Struct_0207fe44*)arg0->unknown_18_);
-                        func_020466e4(var4, 0x200);
-                    } else if (arg0->unknown_4c_ == 1) {
-                        var22 = true;
+                    SePlayer_Play(&g_sePlayer, 1, 0);
+                    ResetWithSub0208203c((Obj0208203c*)self->repeat);
+                    self->cursorPtr = NULL;
+                    if (self->cursor == 0) {
+                        CallFunc0204c804OverAllElems((Cont0207fe44*)self->menu);
+                        OrBitsIntoField0_020466e4(flags, 0x200);
+                    } else if (self->cursor == 1) {
+                        cancelled = true;
                     }
                 } else if (func_ov017_021ab1a4((Struct_ov017_021aa59c_6*)arg0) != 0) {
                     var23 = true;

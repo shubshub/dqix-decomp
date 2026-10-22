@@ -160,43 +160,43 @@ struct Struct_02078398_2 {
     Vector3fix unknown_44_;
 };
 
-struct Struct_02108760;
-struct Struct_0203a48c_3;
-struct Struct_0203a48c_2;
-struct Struct_0203a588_2;
-struct Struct_02032fd0;
-struct Struct_ov000_02161c0c_3;
-struct Struct_02010604;
-struct Struct_ov000_02176134;
-struct Struct_ov000_021537b8_6;
+struct SePlayer;
+struct Obj0203a48c;
+struct Vec3Int0203a48c;
+struct Obj0203a588;
+struct ShortPair0xba0xbc;
+struct Struct5e00;
+struct Bytes02033b88;
+struct Obj02176134;
+struct Obj02176150;
 
 extern "C" void* func_0202ae18(void);
-extern "C" struct Struct_0203a588_2* func_02039e70(void);
-extern "C" int func_ov000_02163524(void* arg0);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
-extern "C" unsigned char func_ov025_021dcc64(void* arg0);
-extern "C" Struct_ov000_021600f8* func_ov000_021600f8(Struct_ov000_0215440c* arg0, int arg1);
-extern "C" void func_ov025_021dcc70(char* arg0, char* arg1);
-extern "C" void func_ov025_021dcde8(unsigned char* arg0, struct Struct_ov025_021d8c30_11* arg1);
-extern "C" Struct_ov000_02160094* func_ov000_02160094(Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" struct Struct_ov000_0215feb4* func_ov000_0215feb4(char* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0215ffa0(void* arg0);
-extern "C" void* func_ov000_0215fff4(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02182498(void* arg0, int arg1);
-extern "C" int strcmp(const char* arg0, const char* arg1);
-extern "C" void func_ov025_021eaf48(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov025_021ea604(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_02162dc4(unsigned char* arg0, GameObject* arg1, GameObject* arg2, unsigned int arg3,
-                                    int arg4, int arg5, unsigned long long arg6, int arg7);
-extern "C" void func_02049ae4(unsigned char* arg0);
-extern "C" void func_ov000_0216f1e4(void* arg0, int* arg1, int arg2, int arg3);
-extern "C" void func_0202ea10(unsigned char* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02163440(void* arg0, short arg1, unsigned short arg2, unsigned short arg3);
-extern "C" void func_0205ec20(void* arg0, void* arg1, int arg2);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_ov025_021ed444(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
-extern "C" int func_ov025_021ed380(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
+struct Obj0203a588* GetData02104b6c_02039e70(void);
+int GetField02163524(void* obj);
+void* SearchBothTables02079e2c(char* p, int key);
+unsigned char GetByte_021dcc64_021dcc64(void* obj);
+ListNode021600f8* GetNodeAtIndex021600f8(List021600f8* list, int index);
+void AppendRow_021dcc70(char* obj, char* src);
+void AppendSlotEntry_021dcde8(unsigned char* obj, struct FiveWordsAndByte_021dcd28* src);
+ListNode02160094* GetNodeAtIndex02160094(List02160094* list, int index);
+struct ListNode0215feb4* GetNodeAtIndex0215feb4(char* base, int threshold, int slot);
+extern "C" int func_ov000_0215ffa0(void* node);
+void* FindNodeAtDepth0215fff4(void* obj, int limit, int idx);
+void SetOrInitField_02182498(void* objRaw, int flag);
+extern "C" int strcmp(const char* a, const char* b);
+extern "C" void func_ov025_021eaf48(unsigned char* obj, int idx, int category, int entry);
+extern "C" void func_ov025_021ea604(unsigned char* obj, int idx, int category, int entry);
+extern "C" void func_ov000_02162dc4(unsigned char* sl, GameObject* lead, GameObject* actor, unsigned int flags,
+                                    int b1d, int b1e, unsigned long long mask, int zero);
+void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
+void SetPosAndFields0216f1e4(void* obj, int* srcVec3, int a, int b);
+void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char* obj, int a, int b);
+void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
+void Forward0205ec20(void* obj, void* target, int arg);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" int func_ov025_021ed444(char* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
+extern "C" int func_ov025_021ed380(char* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
 extern "C" void* func_02057924(void);
 void InitStruct02078484(struct InitStruct02078484Struct* p);
 void FindNodeAndProcess02057fb4(void* list, int id, void* config);
@@ -232,7 +232,7 @@ extern "C" void func_ov000_0216ff20(char* arg0, unsigned char arg1);
 extern "C" int func_020100a8(GameState* arg0);
 extern "C" void func_ov017_021c9d2c(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern char data_ov025_021ef3d0[];
 extern char data_ov025_021ef3d5[];
 extern char data_ov025_021ef3e0[];
@@ -491,14 +491,14 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                 if (arg2 != 2) {
                     func_ov000_02163440(arg0, 0x199, 0x258, 0x32);
                 }
-                if (arg0[Enum_ov025_021d8c30_28632]) {
-                    func_0205ec20(&data_02108760, 0, 0);
+                if (sl[Field6fd8]) {
+                    Forward0205ec20(&g_sePlayer, 0, 0);
                 }
-                func_0205eaa0(&data_02108760, 0x44, 0);
-                var24 = 1;
-                var31 = -1;
-                if (!var25->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3d5, 9)) {
-                    var25->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3e0, 9);
+                SePlayer_Play(&g_sePlayer, 0x44, 0);
+                skipSe = 1;
+                sfx = -1;
+                if (!slotObj->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3d5, 9)) {
+                    slotObj->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3e0, 9);
                 }
                 var10 = 0;
                 if (!inline_ov000_02169850(var60)) {
@@ -559,31 +559,31 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                     if (var6 == 0) continue;
                     if (var6->unknown_17_4_ != 3 && var6->unknown_17_4_ != 4) continue;
                 }
-                if (arg0[Enum_ov025_021d8c30_30533] == var50->unknown_e_[var44] && arg0[Enum_ov025_021d8c30_30534] == var50->unknown_e_[var43]) continue;
-                int var70 = 0x7f;
-                int var71 = 0;
-                if (var50->unknown_e_[var43] >= 0 && var50->unknown_e_[var43] <= 3) var71 = 1;
-                if (var71) var70 = 0x7e;
-                arg4 = var44 - 1;
-                func_ov025_021ed444((char*)(arg0 + Enum_ov025_021d8c30_2192), var70, var50->unknown_e_[var43], 0, 0, var50->unknown_e_[var44], 0);
-                arg0[Enum_ov025_021d8c30_30533] = var50->unknown_e_[var44];
-                arg0[Enum_ov025_021d8c30_30534] = var50->unknown_e_[arg4];
-            } else if (var50->unknown_14_[var44] == 0xa) {
-                if (arg0[Enum_ov025_021d8c30_30532] == var60) continue;
-                func_ov025_021ed444((char*)(arg0 + Enum_ov025_021d8c30_2192), 0x143, var60, 0, 0, -1, 0);
-                arg0[Enum_ov025_021d8c30_30532] = var60;
-            } else if (var50->unknown_14_[var44] == 4 || var50->unknown_14_[var44] == 5) {
-                if (arg0[Enum_ov025_021d8c30_30532] == var60) continue;
-                if (arg0[Enum_ov025_021d8c30_28632]) {
-                    func_0205ec20(&data_02108760, 0, 0);
+                if (sl[Field7745] == row->ids[i] && sl[Field7746] == row->ids[slot]) continue;
+                int msgId = 0x7f;
+                int slotParty = 0;
+                if (row->ids[slot] >= 0 && row->ids[slot] <= 3) slotParty = 1;
+                if (slotParty) msgId = 0x7e;
+                idx = i - 1;
+                func_ov025_021ed444((char*)(sl + MessageQueue), msgId, row->ids[slot], 0, 0, row->ids[i], 0);
+                sl[Field7745] = row->ids[i];
+                sl[Field7746] = row->ids[idx];
+            } else if (row->codes[i] == 0xa) {
+                if (sl[Field7744] == slotId) continue;
+                func_ov025_021ed444((char*)(sl + MessageQueue), 0x143, slotId, 0, 0, -1, 0);
+                sl[Field7744] = slotId;
+            } else if (row->codes[i] == 4 || row->codes[i] == 5) {
+                if (sl[Field7744] == slotId) continue;
+                if (sl[Field6fd8]) {
+                    Forward0205ec20(&g_sePlayer, 0, 0);
                 }
-                func_0205eaa0(&data_02108760, 0x44, 0);
-                func_ov025_021ed444((char*)(arg0 + Enum_ov025_021d8c30_2192), 0x142, var60, 0, 0, -1, 0);
-                arg0[Enum_ov025_021d8c30_30532] = var60;
-                if (inline_ov000_02169850(var60)) {
-                    var17 = var25;
-                    var15 = 1;
-                    var16 = 0x23;
+                SePlayer_Play(&g_sePlayer, 0x44, 0);
+                func_ov025_021ed444((char*)(sl + MessageQueue), 0x142, slotId, 0, 0, -1, 0);
+                sl[Field7744] = slotId;
+                if (IsPartyMember(slotId)) {
+                    animObj = slotObj;
+                    didAnim = 1;
+                    soundId = 0x23;
                 } else {
                     GameObject* var72 = func_0200fea4(var1, var60);
                     if (var72 && (var72->obj3D_.unknown_2_ == 0x3c || var72->obj3D_.unknown_2_ == 0x3d)) {
@@ -674,12 +674,12 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         var23 = 1;
     }
 
-    if (func_ov000_0215fd90(var49, 0xc)) {
-        if (arg1->unknown_0_ != 0x150) {
-            var15 = 1;
-            var16 = 0x19;
-            var46 |= 3;
-            func_0205eaa0(&data_02108760, 0x3b, 0);
+    if (func_ov000_0215fd90(target, 0xc)) {
+        if (sb->type != 0x150) {
+            didAnim = 1;
+            soundId = 0x19;
+            flags |= 3;
+            SePlayer_Play(&g_sePlayer, 0x3b, 0);
         }
     } else if (func_ov000_0215fd90(var49, 9) || func_ov000_0215fd90(var49, 0xa)) {
         if (func_ov000_0215fd90(var49, 9)) {
@@ -703,22 +703,22 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                 func_02032fd0((struct Struct_02032fd0*)var59, 0x800, 0x1f4);
             }
         }
-        func_0205eaa0(&data_02108760, 0x3a, 0);
-    } else if (func_ov000_0215fd90(var49, 6)) {
-        if (arg1->unknown_0_ != 0x1df) {
-            var15 = 1;
-            var16 = 0x1c;
+        SePlayer_Play(&g_sePlayer, 0x3a, 0);
+    } else if (func_ov000_0215fd90(target, 6)) {
+        if (sb->type != 0x1df) {
+            didAnim = 1;
+            soundId = 0x1c;
         }
-        func_0205eaa0(&data_02108760, 0x39, 0);
-        var59->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3ef, 0x10);
-        var10 = 0;
-        var23 = 1;
-    } else if (func_ov000_0215fd90(var49, 4) || func_ov000_0215fd90(var49, 5) || func_ov000_0215fd90(var49, 0x26)) {
-        if (!func_ov000_0215fd90(var49, 0xd)) {
-            if (inline_ov000_02169850(var48)) {
-                func_0205eaa0(&data_02108760, 0x36, 0);
+        SePlayer_Play(&g_sePlayer, 0x39, 0);
+        actor->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3ef, 0x10);
+        animSaved = 0;
+        hadTarget = 1;
+    } else if (func_ov000_0215fd90(target, 4) || func_ov000_0215fd90(target, 5) || func_ov000_0215fd90(target, 0x26)) {
+        if (!func_ov000_0215fd90(target, 0xd)) {
+            if (IsPartyMember(id)) {
+                SePlayer_Play(&g_sePlayer, 0x36, 0);
             } else {
-                func_0205eaa0(&data_02108760, 0x37, 0);
+                SePlayer_Play(&g_sePlayer, 0x37, 0);
             }
             if (func_ov000_0215fd90(var49, 5)) {
                 if (!var10) {
@@ -801,18 +801,18 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         func_ov017_02191aac(var2, 0, var48, 4);
         if (!var7 && arg2 != 0) {
             LightingManager::GetInstance()->BeginFade(0x800, 0x12c);
-            func_ov000_02163440(arg0, 0x199, 0x258, 0x96);
-            var15 = 1;
-            var16 = 0x1b;
-            var46 |= 1;
-            func_0205eaa0(&data_02108760, 0x42, 0);
+            SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x258, 0x96);
+            didAnim = 1;
+            soundId = 0x1b;
+            flags |= 1;
+            SePlayer_Play(&g_sePlayer, 0x42, 0);
         }
-        var20 = 1;
-    } else if (func_ov000_0215fd90(var49, 0x24)) {
-        var59->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3fc, 0);
-        var59->obj3D_.TransitionInheritedAlpha(0, 0x1f4);
-        func_ov000_02167434(arg0, var59->obj3D_.GetTexturePaletteOffset());
-        func_0205eaa0(&data_02108760, 9, 0);
+        cleared = 1;
+    } else if (func_ov000_0215fd90(target, 0x24)) {
+        actor->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3fc, 0);
+        actor->obj3D_.TransitionInheritedAlpha(0, 0x1f4);
+        ClearBitIfValueFound02167434(sl, actor->obj3D_.GetTexturePaletteOffset());
+        SePlayer_Play(&g_sePlayer, 9, 0);
     }
 
     if (var23) {
@@ -933,19 +933,19 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                     }
                 }
             }
-            if (!var24) {
-                if (!var52) {
-                    func_0205eaa0(&data_02108760, var31, 0);
+            if (!skipSe) {
+                if (!quiet) {
+                    SePlayer_Play(&g_sePlayer, sfx, 0);
                 }
                 var30 = 1;
             }
         }
-        if (!var30 && (var18 == 1 || var18 == 2)) {
-            int var103 = 0x26;
-            if (var18 == 2) var103 = 0x27;
-            func_0205eaa0(&data_02108760, var103, 0);
-        } else if (*(short*)(arg0 + Enum_ov025_021d8c30_1226) >= 0 && !var19) {
-            func_0205ebfc(&data_02108760, *(short*)(arg0 + Enum_ov025_021d8c30_1226), 0);
+        if (!played && (textKind == 1 || textKind == 2)) {
+            int se = 0x26;
+            if (textKind == 2) se = 0x27;
+            SePlayer_Play(&g_sePlayer, se, 0);
+        } else if (*(short*)(sl + Field4ca) >= 0 && !keepDefault) {
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field4ca), 0);
         }
         if (var42->unknown_0_) {
             if (!var52) {
@@ -966,13 +966,13 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         var15 = 1;
     }
 
-    if (func_ov000_0215fd90(var49, 0x25) || func_ov000_0215fd90(var49, 0x22)) {
-        int var106 = 2;
-        if (func_ov000_0215fd90(var49, 0x22)) var106 = 3;
-        var35 = -var49->unknown_c_;
-        Vector3fix var107 = var59->obj3D_.position_;
-        if (arg2 == 0) {
-            func_0205eaa0(&data_02108760, 0x65, 0);
+    if (func_ov000_0215fd90(target, 0x25) || func_ov000_0215fd90(target, 0x22)) {
+        int style = 2;
+        if (func_ov000_0215fd90(target, 0x22)) style = 3;
+        negAmount = -target->amount;
+        Vector3fix pos = actor->obj3D_.position_;
+        if (kind == 0) {
+            SePlayer_Play(&g_sePlayer, 0x65, 0);
         }
         var107.y += var59->obj3D_.GetHeight();
         func_0203a48c(var4, var35, (Struct_0203a48c_2*)&var107, var106, 0, 0);

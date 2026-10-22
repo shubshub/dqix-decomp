@@ -21,21 +21,21 @@ struct Struct_0205bc10;
 struct Struct_0205c570;
 struct Struct_0205bf3c;
 struct Struct_0205bb84;
-struct Struct_02000c9c_8;
-struct Struct_02108760;
-struct Struct_0205cf1c;
+struct Struct0200fb08;
+struct SePlayer;
+struct Struct0205cf1c;
 
-extern "C" void func_ov003_02169594(void* arg0);
-extern "C" void func_ov003_021696f4(void* arg0, int arg1);
-extern "C" int func_ov003_02169674(void* arg0, int arg1, int arg2, void* arg3);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" int func_0205bf58(void* arg0, int arg1);
+extern "C" void func_ov003_02169594(void* self);
+extern "C" void func_ov003_021696f4(void* self, int v);
+extern "C" int func_ov003_02169674(void* self, int x, int y, void* rects);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
+extern "C" int func_0205bf58(void* obj, int v);
 
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
 void Init0205bbcc(Struct_0205bbcc* obj);
-void SetupPointerTable0205ba68(Struct_0205ba68* obj, int a, int b, int c);
-void SetField0AndPropagate0205bacc(Node0205bacc* obj, int v);
+void GridCursor_SetDimensions(Struct_0205ba68* obj, int a, int b, int c);
+void GridCursor_SetCount(Node0205bacc* obj, int v);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc* obj, int v);
 void SetFields0205bd58(Struct_0205bd58* obj, int a, int b, int c, int d, int e);
 void ClearFields_0216a85c(S0216a85c* obj);
@@ -53,7 +53,7 @@ void UpdateEntryAndField4ea_021694b8(void* self, int v);
 void ResetState0205bf3c(Struct_0205bf3c* obj);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
 int NormalizeField5_0200fb08(Struct0200fb08* gs);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 void ClearChannelAFlag0205cf10(void* chan);
 void ClearFlagByte0205cf1c(Struct0205cf1c* chan);
 
@@ -62,7 +62,7 @@ extern unsigned char data_ov003_0217f545[];
 extern unsigned char data_ov003_0217f546[];
 extern unsigned char data_ov003_0217f547[];
 extern unsigned char data_ov003_0217f548[];
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 
 struct Struct_ov003_02169674 {
     short unknown_0_;
@@ -134,46 +134,46 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
     int var2;
     int var3;
 
-    if (arg0->unknown_4e9_ == 0) {
-        func_ov003_02169594(arg0);
-        func_0205cef8(arg0->unknown_e4_);
-        func_0205cf04(arg0->unknown_e4_);
-        func_ov003_021696f4(arg0, arg0->unknown_4ee_);
-        func_0205bbcc((Struct_0205bbcc*)arg0->unknown_53c_);
-        func_0205ba68((Struct_0205ba68*)arg0->unknown_53c_, 1, 2, 0);
-        arg0->unknown_540_ = 1;
-        func_0205bacc((Struct_0205bacc*)arg0->unknown_53c_, 2);
-        func_0205bcdc((Struct_0205bcdc*)arg0->unknown_53c_, 0);
-        arg0->unknown_58c_[0] = 0;
-        arg0->unknown_58c_[1] = 0;
-        arg0->unknown_58c_[2] = 0;
-        arg0->unknown_58c_[3] = 0x10;
-        arg0->unknown_58c_[4] = Enum_ov003_02169eec_8;
-        arg0->unknown_58c_[5] = Enum_ov003_02169eec_8;
-        arg0->unknown_58c_[6] = 0x10;
-        arg0->unknown_58c_[7] = 0x10;
-        func_0205bd58((Struct_0205bd58*)arg0->unknown_53c_, 2, (int)&arg0->unknown_58c_[0], (int)&arg0->unknown_58c_[2],
-                          (int)&arg0->unknown_58c_[4], (int)&arg0->unknown_58c_[6]);
-        func_ov003_0216a85c((Struct_ov003_02169eec_2*)&arg0->unknown_5a8_);
-        arg0->unknown_5a8_.unknown_4_ = 2;
-        arg0->unknown_5a8_.unknown_8_ = &arg0->unknown_58c_[Enum_ov003_02169eec_0];
-        arg0->unknown_5a8_.unknown_c_ = &arg0->unknown_58c_[2];
-        arg0->unknown_5a8_.unknown_10_ = &arg0->unknown_58c_[4];
-        arg0->unknown_5a8_.unknown_14_ = &arg0->unknown_58c_[6];
-        func_ov003_0216a85c((Struct_ov003_02169eec_2*)&arg0->unknown_5c0_);
-        unsigned char* var4 = func_0205d8c4((Struct_0205d81c*)arg0->unknown_e4_);
-        short var5 = inline_ov003_02169eec_3(var4);
-        short var6 = inline_ov003_02169eec_4(var4);
-        arg0->unknown_5c0_.unknown_0_ = var5 << 3;
-        arg0->unknown_5c0_.unknown_2_ = var6 << 3;
-        arg0->unknown_5c0_.unknown_4_ = 4;
-        func_0204f138(var4, (unsigned char**)&arg0->unknown_5c0_.unknown_8_, (unsigned char**)&arg0->unknown_5c0_.unknown_c_,
-                                 (unsigned char**)&arg0->unknown_5c0_.unknown_10_, (unsigned char**)&arg0->unknown_5c0_.unknown_14_);
-        arg0->unknown_4e9_++;
-    } else if (arg0->unknown_4e9_ == 1) {
-        signed char var7;
-        signed char* var8 = arg0->unknown_4ef_;
-        var7 = arg0->unknown_4ee_;
+    if (self->state == 0) {
+        func_ov003_02169594(self);
+        SetChannelAFlag0205cef8(self->chan);
+        SetChannelBFlag0205cf04(self->chan);
+        func_ov003_021696f4(self, self->cursor);
+        Init0205bbcc((Struct_0205bbcc*)self->node);
+        GridCursor_SetDimensions((Struct_0205ba68*)self->node, 1, 2, 0);
+        self->w540 = 1;
+        GridCursor_SetCount((Node0205bacc*)self->node, 2);
+        SetIndexIfValid0205bcdc((Struct_0205bcdc*)self->node, 0);
+        self->h58c[0] = 0;
+        self->h58c[1] = 0;
+        self->h58c[2] = 0;
+        self->h58c[3] = 0x10;
+        self->h58c[4] = kCellWidth;
+        self->h58c[5] = kCellWidth;
+        self->h58c[6] = 0x10;
+        self->h58c[7] = 0x10;
+        SetFields0205bd58((Struct_0205bd58*)self->node, 2, (int)&self->h58c[0], (int)&self->h58c[2],
+                          (int)&self->h58c[4], (int)&self->h58c[6]);
+        ClearFields_0216a85c((S0216a85c*)&self->rectA);
+        self->rectA.count = 2;
+        self->rectA.xMinArr = &self->h58c[kRectXIndex];
+        self->rectA.yMinArr = &self->h58c[2];
+        self->rectA.xWidthArr = &self->h58c[4];
+        self->rectA.yWidthArr = &self->h58c[6];
+        ClearFields_0216a85c((S0216a85c*)&self->rectB);
+        unsigned char* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)self->chan);
+        short ex = ElemX(elem);
+        short ey = ElemY(elem);
+        self->rectB.originX = ex << 3;
+        self->rectB.originY = ey << 3;
+        self->rectB.count = 4;
+        GetFourSubstructPointers_0204f138(elem, (unsigned char**)&self->rectB.xMinArr, (unsigned char**)&self->rectB.yMinArr,
+                                 (unsigned char**)&self->rectB.xWidthArr, (unsigned char**)&self->rectB.yWidthArr);
+        self->state++;
+    } else if (self->state == 1) {
+        signed char cur;
+        signed char* cells = self->cells;
+        cur = self->cursor;
         if (g_touchInput.pressed_ != 0 || (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) ||
             g_touchInput.released_ != 0) {
             g_touchInput.GetTouchPoint(&var0, &var1);
@@ -287,7 +287,7 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 ResetState0205bf3c((Struct_0205bf3c*)((char*)self + kResetOffset));
                 int old = cells[cur];
                 int n = GetField0_0205bafc(self->list);
-                func_0205bb04(self->list, n - 1 - cells[cur]);
+                GridCursor_SetSelectedIndex(self->list, n - 1 - cells[cur]);
                 if (func_0205bf58(self->list, sb) != 0) {
                     cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
                     if (old != cells[cur]) {
@@ -354,11 +354,11 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                     }
                 }
 #endif
-                if (var2 >= var37 && var2 < var38) {
-                    var34 = 1;
-                } else if (var2 >= var39 && var2 < var40) {
-                    var35 = 1;
-                    func_0205eaa0(&data_02108760, var35, 0);
+                if (px >= lox && px < hix) {
+                    hit1 = 1;
+                } else if (px >= loy && px < hiy) {
+                    hit2 = 1;
+                    SePlayer_Play(&g_sePlayer, hit2, 0);
                 }
             }
         }
@@ -369,12 +369,12 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
         } else if (g_keyManager.TestKeysPressed(2) != 0) {
             var35 = 1;
         }
-        if (var34 != 0) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            unsigned int var44 = 1000;
-            for (int var45 = 3; var45 >= 0; var45--) {
-                arg0->unknown_5a0_ += var44 * arg0->unknown_4ef_[var45];
-                var44 *= 10;
+        if (hit1 != 0) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            unsigned int m = 1000;
+            for (int i = 3; i >= 0; i--) {
+                self->w5a0 += m * self->cells[i];
+                m *= 10;
             }
             func_0205cf10(arg0->unknown_e4_);
             func_0205cf1c((Struct_0205cf1c*)arg0->unknown_e4_);

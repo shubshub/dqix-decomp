@@ -27,8 +27,8 @@ struct Struct_02050100_2 {
     unsigned char unknown_d9_;
     unsigned char unknown_da_;
 };
-struct Struct_02050100_3 { int unknown_0_; signed char unknown_4_; };
-extern "C" Struct_02050100_3* func_0204254c(int, int);
+struct Glyph02050100 { int field_0; signed char width; };
+Glyph02050100* Font_FindCharacter(int, int);
 extern char data_020e7bda[];
 extern "C" char* func_02050064(Struct_02050100_2*);
 extern "C" void func_0204f41c(Struct_02050100_2*, short, short, char*, int, int, short*, short*, int);
@@ -78,32 +78,32 @@ extern "C" ARM void func_02050100(Struct_02050100_2* arg0, int arg1) {
     func_0204f7e8(arg0, var8, var4, arg0->unknown_da_, 8, 15, &var6, &var7, 0, var12, 0, 0);
     func_02050678(arg0, var5 - 4, var4, data_020f0336, 8, 15, &var6, &var7);
 #else
-    short var13 = (short)((short)(arg0->unknown_aa_ << 3) - 13);
-    short var14 = (short)((short)(arg0->unknown_a8_ << 3) / 2);
-    if (arg0->unknown_c5_ & 0x10) var13 -= 3;
-    short var15 = 0, var16 = 0;
-    short var17;
-    int var18;
-    int var19;
-    signed char var20 = (signed char)arg0->unknown_da_;
-    int var21 = 2;
-    while (var20 != 0) { var20 = (signed char)(var20 + 1) / 10; }
-    if (var20 > 2) var21 = var20;
-    var18 = 1;
-    if (arg0->unknown_c5_ & 4) var18 = 0;
-    var19 = 0;
-    Struct_02050100_3* var22 = func_0204254c((int)data_020e7bda, var19);
-    if (var22) var19 = var22->unknown_4_;
-    short var23 = var14 - (var19 >> 1);
-    func_0204f41c(arg0, var23, var13, data_020e7bda, 8, 15, &var15, &var16, 0);
-    var17 = var14 - var19;
-    int var24 = var13 + 9;
-    func_0204f914(arg0, var18, var17 - 14, var13, var17, var24);
-    unsigned char var25 = var21;
-    func_0204f7e8(arg0, var17, var13, arg0->unknown_d9_ + 1, 8, 15, &var15, &var16, 1, var25, 0, 0);
-    short var26 = var14 + var19;
-    func_0204f914(arg0, var18, var26, var13, var26 + 14, var24);
-    func_0204f7e8(arg0, var26 + 1, var13, arg0->unknown_da_, 8, 15, &var15, &var16, 0, var25, 0, 0);
+    short y = (short)((short)(self->height << 3) - 13);
+    short center = (short)((short)(self->width << 3) / 2);
+    if (self->options & 0x10) y -= 3;
+    short outWidth = 0, outHeight = 0;
+    short left;
+    int style;
+    int glyphWidth;
+    signed char counter = (signed char)self->lastValue;
+    int digits = 2;
+    while (counter != 0) { counter = (signed char)(counter + 1) / 10; }
+    if (counter > 2) digits = counter;
+    style = 1;
+    if (self->options & 4) style = 0;
+    glyphWidth = 0;
+    Glyph02050100* glyph = Font_FindCharacter((int)data_020e7bda, glyphWidth);
+    if (glyph) glyphWidth = glyph->width;
+    short labelX = center - (glyphWidth >> 1);
+    func_0204f41c(self, labelX, y, data_020e7bda, 8, 15, &outWidth, &outHeight, 0);
+    left = center - glyphWidth;
+    int bottom = y + 9;
+    func_0204f914(self, style, left - 14, y, left, bottom);
+    unsigned char displayDigits = digits;
+    func_0204f7e8(self, left, y, self->currentValue + 1, 8, 15, &outWidth, &outHeight, 1, displayDigits, 0, 0);
+    short right = center + glyphWidth;
+    func_0204f914(self, style, right, y, right + 14, bottom);
+    func_0204f7e8(self, right + 1, y, self->lastValue, 8, 15, &outWidth, &outHeight, 0, displayDigits, 0, 0);
 #endif
     if (arg1) {
         Type_02050100 var27 = func_0204a5e4(var1, var2);

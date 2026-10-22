@@ -16,8 +16,8 @@ extern "C" int func_020a27c4(struct Struct_020676e0* arg0);
 extern "C" int func_ov003_021550dc(void* arg0);
 extern "C" int func_ov003_02155208(void* arg0);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Struct_0207fdcc_2;
 extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
@@ -28,7 +28,7 @@ extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
 struct Struct_020e25e8;
 extern "C" void func_020e25e8(struct Struct_020e25e8* arg0);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_02155618
 extern "C" ARM int func_ov003_02155618(char* arg0) {
@@ -42,11 +42,11 @@ extern "C" ARM int func_ov003_02155618(char* arg0) {
         var1 = (g_keyManager.TestKeysPressed(0x200) != 0) ? 1 : 0;
     }
 
-    if (func_ov003_021550dc(arg0) != 0 || var1 != 0) {
-        func_0205eaa0(&data_02108760, 1, 0);
-        var0 = -1;
-        if (*(short*)(arg0 + Enum_ov003_02155618_490) == 6) {
-            var0 = 1;
+    if (func_ov003_021550dc(obj) != 0 || flagB != 0) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        result = -1;
+        if (*(short*)(obj + kRegionValue1EA_1E6) == 6) {
+            result = 1;
         }
     } else {
         if (func_ov003_02155208(arg0) != 0) {

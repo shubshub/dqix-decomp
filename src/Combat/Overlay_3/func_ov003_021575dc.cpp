@@ -23,36 +23,36 @@ struct Struct_0203d028_3 {
 };
 extern "C" void* func_02010828(GameState*);
 
-extern "C" int func_02080468(void* arg0, int arg1);
-struct Struct_02081f20_2;
-extern "C" void func_0208203c(Struct_02081f20_2*);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-struct Struct_0207fe44;
-extern "C" void func_0207fe44(Struct_0207fe44*);
-extern "C" int func_ov003_02155ffc(void* arg0, int arg1);
-extern "C" int func_ov003_02155f88(void* arg0, int arg1);
-extern "C" void func_ov003_0215873c(void* arg0);
-extern "C" void func_ov003_02158a50(unsigned char*);
-struct Struct_02109bf4_2;
-extern "C" void func_0209c830(Struct_02109bf4_2*, int);
-extern "C" int func_0209ca2c(void* arg0);
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
-extern "C" void* func_020de824(void* arg0);
-extern "C" void func_0207cbe8(char* arg0);
-extern "C" void func_0207cc0c(char* arg0);
-extern "C" int func_ov023_021ed6cc(int arg0);
-struct Struct_020a13c4;
-extern "C" void func_020a13c4(Struct_020a13c4*);
-extern "C" void func_020a13e4(void* arg0, void* arg1, int arg2, unsigned short arg3, unsigned char arg4);
-struct Struct_020a1180;
-extern "C" void func_020a1380(Struct_020a1180*);
-struct Struct_ov003_021575dc;
-extern "C" void func_ov003_021580a0(Struct_ov003_021575dc*);
-struct Struct_020a15bc;
-extern "C" void* func_020a15bc(Struct_020a15bc*, int);
-struct Struct_ov003_021575dc_2;
-extern "C" void func_ov003_02158140(Struct_ov003_021575dc_2*, int);
+int FindMappedMemberId02080468(void* obj, int id);
+struct Obj0208203c;
+void ResetWithSub0208203c(Obj0208203c*);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+struct Cont0207fe44;
+void CallFunc0204c804OverAllElems(Cont0207fe44*);
+int IsTableValueNot99_02155ffc(void* obj, int id);
+int IsCombatantFlagit2Set_02155f88_02155f88(void* obj, int id);
+void ResetFields_0215873c(void* obj);
+void SetFlag_02158a50_02158a50(unsigned char*);
+struct Struct0209c830;
+void SetValueAndActivate0209c830(Struct0209c830*, int);
+int IsAnimationActive0209ca2c(void* obj);
+extern "C" void func_0206df6c(void* a, unsigned char* b, int c, int d);
+void* ZeroInitReturn020de824(void* obj);
+void InitStruct0207cbe8(char* obj);
+void InitStruct0207cc0c(char* obj);
+int TestBattleBlockBit_021ed6cc(int tag);
+struct S020a13c4;
+void ClearStruct020a13c4(S020a13c4*);
+void SetupGlobalAndRunScript020a13e4(void* p0, void* p1, int p2, unsigned short p3, unsigned char p4);
+struct BitfieldRecord020a1380;
+void ResetBitfieldRecord(BitfieldRecord020a1380*);
+struct Struct021580a0;
+void InitBuffers_021580a0(Struct021580a0*);
+struct Array020a15bc;
+void* FindElementByField020a15bc(Array020a15bc*, int);
+struct Obj02158140;
+void AppendFormattedNumber_02158140(Obj02158140*, int);
 
 extern "C" int func_020100a8(GameState*);
 extern "C" int func_0206dfb0(int, unsigned char*, int);
@@ -88,7 +88,7 @@ extern "C" void func_ov023_021eb564(void* arg0, void* arg1, int arg2);
 extern "C" void func_ov023_021eb43c(void* arg0);
 extern "C" void func_ov023_021eb26c(void* arg0);
 
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov003_0217fdbb;
 extern const char* data_020f2a38;
 extern const char* data_020f2a30;
@@ -122,28 +122,28 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
             *(short*)(var0 + 0x1e2) = var8;
             *(short*)(var0 + 0x1e8) = *(short*)(var0 + 0x1e2);
         }
-        *(short*)((char*)var6 + 0x36) = *(short*)(var0 + 0x1e2);
-        func_ov003_02158334(arg0);
-        func_0208203c((Struct_02081f20_2*)(var0 + 0x80));
-        *(int*)(var0 + 8) = 0;
-        *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-    } else if (var3 == 1) {
-        *(void**)(var0 + 8) = (void*)(var0 + 0x1e2);
-        if (func_ov003_021550dc(arg0) != 0) {
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2*)(var0 + 0x80));
-            *(void**)(var0 + 8) = 0;
-            int var9 = func_02080468(var6, *(short*)(var0 + 0x1e6));
-            short var10 = *(short*)(var0 + 0x1e2) - var9;
-            unsigned char var11 = *(unsigned char*)(var0 + 0x1f2 + var10);
-            *(unsigned char*)(var0 + 0x1f7) = var11;
-            *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-            func_0207fe44((Struct_0207fe44*)var6);
-        } else if (func_ov003_02155208(arg0) != 0) {
-            *(void**)(var0 + 8) = 0;
-            var5[0] = 7;
-            *(unsigned char*)(var0 + 0x1f8) = 7;
-            func_0207fe44((Struct_0207fe44*)var6);
+        *(short*)((char*)obj18 + 0x36) = *(short*)(s + 0x1e2);
+        func_ov003_02158334(self);
+        ResetWithSub0208203c((Obj0208203c*)(s + 0x80));
+        *(int*)(s + 8) = 0;
+        *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+    } else if (state == 1) {
+        *(void**)(s + 8) = (void*)(s + 0x1e2);
+        if (func_ov003_021550dc(self) != 0) {
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c*)(s + 0x80));
+            *(void**)(s + 8) = 0;
+            int mm = FindMappedMemberId02080468(obj18, *(short*)(s + 0x1e6));
+            short diff = *(short*)(s + 0x1e2) - mm;
+            unsigned char v = *(unsigned char*)(s + 0x1f2 + diff);
+            *(unsigned char*)(s + 0x1f7) = v;
+            *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+            CallFunc0204c804OverAllElems((Cont0207fe44*)obj18);
+        } else if (func_ov003_02155208(self) != 0) {
+            *(void**)(s + 8) = 0;
+            evt[0] = 7;
+            *(unsigned char*)(s + 0x1f8) = 7;
+            CallFunc0204c804OverAllElems((Cont0207fe44*)obj18);
         }
     } else if (var3 == 2) {
         signed char var12 = *(signed char*)(var0 + 0x1f7);

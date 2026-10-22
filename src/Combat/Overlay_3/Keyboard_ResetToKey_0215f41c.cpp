@@ -14,8 +14,8 @@ struct FindResult0215f41c {
     unsigned char field_20;
 };
 
-// USA: func_ov003_0215f41c  (semantic: FindEntryByName_0215f41c)
-extern "C" ARM void func_ov003_0215f41c(struct FindResult0215f41c* self, char* name) {
+// Overlay 3, originally func_ov003_0215f41c (USA/EUR 0x0215f41c; JPN not identified)
+extern "C" ARM void Keyboard_ResetToKey(struct FindResult0215f41c* self, char* name) {
     int len;
     char* item;
     short count;

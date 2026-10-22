@@ -34,16 +34,16 @@ struct Struct_ov006_02158cfc_2 {
     char unknown_387_;
     unsigned char unknown_388_;
 };
-extern "C" Struct_ov006_02158cfc* func_ov006_02158d8c(void*, short);
-extern "C" void func_02071ffc(Struct_02071ffc_4*, int, int, int, short, short*);
-extern "C" void func_ov006_02158cac(void*);
-struct Struct_02108760;
-extern Struct_02108760 data_02108760 __attribute__((aligned(4)));
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov006_02158cfc(Struct_ov006_02158cfc_2*, Struct_ov006_02158cfc*);
-extern "C" void func_020804fc(void*, int);
-extern "C" void func_ov006_0215f7e8(Struct_ov006_02158cfc_2*);
-extern "C" void func_ov006_0215fcf0(Struct_ov006_02158cfc_2*);
+Node02158cfc* FindNodeOrMark_02158d8c(void*, short);
+void FilterAndSortEntries02071ffc(Container02071ffc*, int, int, int, short, short*);
+void ComputeField_02158cac_02158cac(void*);
+struct SePlayer;
+extern SePlayer g_sePlayer __attribute__((aligned(4)));
+void SePlayer_Play(SePlayer*, int, int);
+void Checkpoint02158cfc(Cont02158cfc*, Node02158cfc*);
+void ClearSublistEntriesFlag4_020804fc(void*, int);
+extern "C" void func_ov006_0215f7e8(Cont02158cfc*);
+extern "C" void func_ov006_0215fcf0(Cont02158cfc*);
 
 // USA: func_ov006_02159c64
 extern "C" ARM void func_ov006_02159c64(Struct_ov006_02158cfc_2* arg0) {
@@ -54,17 +54,17 @@ extern "C" ARM void func_ov006_02159c64(Struct_ov006_02158cfc_2* arg0) {
         arg0->unknown_35e_ = -1;
         var0 = 0;
     }
-    arg0->unknown_386_ = !arg0->unknown_386_;
-    short var1 = 0;
-    func_02071ffc(&arg0->unknown_14c_, arg0->unknown_384_, arg0->unknown_385_, arg0->unknown_386_, 16, &var1);
-    arg0->unknown_30_ = arg0->unknown_2c_ = arg0->unknown_14c_.unknown_0_;
-    if (!var0) var0 = arg0->unknown_30_;
-    func_ov006_02158cac(arg0);
-    func_0205eaa0(&data_02108760, 1, 0);
-    short var2 = 0;
-    for (Struct_ov006_02158cfc* var3 = arg0->unknown_30_; var3; var3 = var3->unknown_1c_) {
-        if (var3 == var0) break;
-        ++var2;
+    self->reverse = !self->reverse;
+    short count = 0;
+    FilterAndSortEntries02071ffc(&self->filtered, self->filter, self->category, self->reverse, 16, &count);
+    self->checkpoint = self->head = self->filtered.head;
+    if (!selected) selected = self->checkpoint;
+    ComputeField_02158cac_02158cac(self);
+    SePlayer_Play(&g_sePlayer, 1, 0);
+    short index = 0;
+    for (Node02158cfc* node = self->checkpoint; node; node = node->next) {
+        if (node == selected) break;
+        ++index;
     }
     short var4 = var2 % 16;
     arg0->unknown_388_ = var2 / 16;

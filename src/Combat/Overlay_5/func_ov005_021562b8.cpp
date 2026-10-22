@@ -10,8 +10,8 @@
 #include "Resource/GameResources.h"
 #include "Input/Input.h"
 
-struct Struct_02108760;
-struct Struct_02012fa4;
+struct SePlayer;
+struct Foo02048004;
 
 struct Struct_ov005_02153ba4_2 {
     char unknown_0_[LOW_REGION(0x4f8, 0x4fc)];
@@ -58,18 +58,18 @@ struct Struct_ov005_02153954 {
     short unknown_3e0a_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1);
-extern "C" void func_ov005_02156658(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" void func_ov005_021567ac(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" void func_ov005_0215690c(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" void func_02047230(Struct_02012fa4* arg0);
-extern "C" void func_ov005_02156e1c(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02156ecc(Struct_ov005_02153954* arg0, int arg1, int arg2);
+MemberScreen* GetField1c_021a193c(int* p);
+void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
+extern "C" void func_ov005_02156658(EquipmentMenu* self, int x, int y);
+extern "C" void func_ov005_021567ac(EquipmentMenu* self, int x, int y);
+extern "C" void func_ov005_0215690c(EquipmentMenu* self, int x, int y);
+extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
+void MaybeInvoke0204719c_02047230(Foo02048004* model);
+extern "C" void func_ov005_02156e1c(EquipmentMenu* self, int x, int y);
+extern "C" void func_ov005_02156ecc(EquipmentMenu* self, int x, int y);
 
 // USA: func_ov005_021562b8
 extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
@@ -82,10 +82,10 @@ extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
     if (g_touchInput.pressed_) {
         if (var0 == 0 || var1 == 0)
             return;
-        Struct_ov005_02153ba4_2* var3 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-        if (!(arg0->unknown_3dcc_ & 0x400) && (var3->unknown_634_ & 0x800)) {
-            func_0205eaa0((Struct_02108760*)&data_02108760, 0x1b, 0);
-            func_ov005_0215792c(arg0, 1);
+        MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
+        if (!(self->flags_ & 0x400) && (screen->flags_ & 0x800)) {
+            SePlayer_Play((SePlayer*)&g_sePlayer, 0x1b, 0);
+            func_ov005_0215792c(self, 1);
             return;
         }
         func_ov005_02156658(arg0, var0, var1);
@@ -105,13 +105,13 @@ extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
         }
         if (arg0->unknown_3d78_ < 0)
             return;
-        if (arg0->unknown_3e07_ == arg0->unknown_3d78_) {
-            if (arg0->unknown_3e06_ > 0) {
-                if (arg0->unknown_2d90_[arg0->unknown_3dbb_].unknown_0_ >= 0) {
-                    func_ov005_0215792c(arg0, 5);
-                    func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-                    var3->unknown_634_ &= ~1;
-                    var3->unknown_634_ &= ~0x80;
+        if (self->tappedSlot_ == self->dragged_) {
+            if (self->tapTimer_ > 0) {
+                if (self->slots_[self->slot_].item_ >= 0) {
+                    func_ov005_0215792c(self, 5);
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+                    screen->flags_ &= ~1;
+                    screen->flags_ &= ~0x80;
                 }
                 func_02047230((Struct_02012fa4*)arg0->unknown_3cf0_);
                 arg0->unknown_3d78_ = -1;

@@ -55,7 +55,7 @@ extern "C" void func_02083ca0(unsigned char* arg0, int arg1);
 extern "C" void func_02083c18(char* arg0);
 extern "C" void func_02083b60(unsigned char* arg0, int arg1);
 
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 // USA: func_ov017_02191508
 extern "C" ARM void func_ov017_02191508(int arg0, Struct_ov017_02191508_2* arg1) {
@@ -70,13 +70,13 @@ extern "C" ARM void func_ov017_02191508(int arg0, Struct_ov017_02191508_2* arg1)
         var2 = var0->unknown_130_->unknown_4_;
     }
 #if defined(jpn)
-    sprintf(var1->unknown_3c_, data_020ef078, arg1->unknown_0_);
+    sprintf(member->name, g_stringFormat, tmpl->name);
 
 #else
-    if (arg1 != NULL) {
-        sprintf(var1->unknown_3c_, data_020ef078, arg1->unknown_0_);
+    if (tmpl != NULL) {
+        sprintf(member->name, g_stringFormat, tmpl->name);
     } else {
-        sprintf(var1->unknown_3c_, data_020ef078, var1->unknown_3c_);
+        sprintf(member->name, g_stringFormat, member->name);
     }
 
 #endif

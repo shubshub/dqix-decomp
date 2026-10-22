@@ -54,8 +54,8 @@ extern "C" void func_0205b20c(Struct_020200c0_4*);
 extern "C" void func_0205b220(void*, int);
 extern "C" void func_0205b228(void*, int, unsigned char);
 extern "C" {
-void func_ov003_0215ec68(int, short*, short*);
-void func_0205b890(Struct_ov023_021e6b8c*, int, Struct_ov023_021e6b8c_4*);
+void Keyboard_GetKeySize(int, short*, short*);
+void func_0205b890(WeightedEntry021e6b8c*, int, SpriteEntry021e6b8c*);
 void* memcpy(void*, const void*, unsigned int);
 int func_020420e8(const char*, int);
 void func_0205b734(void*, short, short, short, short, short);
@@ -64,21 +64,21 @@ void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 }
 
 // USA: func_ov023_021e6b8c
-extern "C" ARM void func_ov023_021e6b8c(Struct_ov023_021e6b8c_7* arg0, unsigned short arg1, Struct_ov023_021e6b8c_5* arg2, int arg3) {
-    if (arg0->unknown_1371_ != 14 || arg0->unknown_1370_ <= 1 || arg0->unknown_1370_ >= 10) return;
-    arg2 = arg0->unknown_0_->unknown_0_;
-    if (arg2 == 0 || arg2->unknown_e_ == 3) return;
-    Struct_ov023_021e6b8c_4* var0 = &arg0->unknown_1364_[arg2->unknown_e_ + 15];
-    short var1;
-    short var2;
-    func_ov003_0215ec68(arg2->unknown_e_, &var1, &var2);
-    Struct_ov023_021e6b8c var3[3];
-    for (int var4 = 0; var4 < 3; var4++) {
-        var3[var4].unknown_0_ = 0;
-        var3[var4].unknown_4_ = 0;
-        var3[var4].unknown_6_ = 0;
-        var3[var4].unknown_8_ = 0;
-        var3[var4].unknown_a_ = 0;
+extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short address, Label021e6b8c* label, int size) {
+    if (self->mode != 14 || self->index <= 1 || self->index >= 10) return;
+    label = self->owner->selected;
+    if (label == 0 || label->index == 3) return;
+    SpriteEntry021e6b8c* sprite = &self->sprites[label->index + 15];
+    short x;
+    short y;
+    Keyboard_GetKeySize(label->index, &x, &y);
+    WeightedEntry021e6b8c entries[3];
+    for (int i = 0; i < 3; i++) {
+        entries[i].field_0 = 0;
+        entries[i].offset = 0;
+        entries[i].field_6 = 0;
+        entries[i].width = 0;
+        entries[i].height = 0;
     }
     func_0205b890(var3, 3, var0);
     int var5 = 0;

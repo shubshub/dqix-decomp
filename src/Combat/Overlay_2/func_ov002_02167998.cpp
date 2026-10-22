@@ -12,15 +12,15 @@
 #endif
 
 class GameState;
-struct Struct_ov002_0215624c_11;
-struct Struct_ov002_0215624c_15;
-struct Struct_ov002_02155960_2;
-struct Struct_ov002_02155960_3;
-struct Struct_ov002_02155960_4;
-struct Struct_ov002_02167998;
-struct Struct_ov002_02167998_2;
-struct Struct_ov002_02157d40_7;
-struct Struct_ov002_02164748;
+struct Struct0205de24;
+struct Struct_0205c570;
+struct Struct_0205d81c;
+struct Struct_0205def8;
+struct Elem_0205d81c;
+struct ShortArrays0204c610;
+struct ShortArrays0204c654;
+struct SePlayer;
+struct Obj_0205da38;
 
 struct Struct_ov002_02167998_3 {
     int unknown_0_;
@@ -33,28 +33,28 @@ struct Struct_ov002_02167998_4 {
     unsigned int unknown_3_7_ : 1;
 };
 
-extern "C" int func_020100a8(GameState *arg0);
-extern "C" void func_0205def8(struct Struct_ov002_02155960_3 *arg0, int arg1, int arg2);
-extern "C" void func_0205de24(struct Struct_ov002_0215624c_11 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" struct Struct_ov002_02155960_4 *func_0205d81c(struct Struct_ov002_02155960_2 *arg0, int arg1);
-extern "C" void func_0204c610(struct Struct_ov002_02167998 *arg0, int arg1, short *arg2, short *arg3, short *arg4, short *arg5);
-extern "C" void func_0204c654(Struct_ov002_02167998_2*, int, short, short, short, short);
-extern "C" int func_0205d794(struct Struct_ov002_0215624c_15 *arg0);
-extern "C" void func_0205d7a0(unsigned char *arg0, int arg1);
-extern "C" int func_0205da38(struct Struct_ov002_02164748 *arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_ov002_02157d40_7 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_0215f6a4(void *arg0);
+int GetField0x3acValue_020100a8(GameState *gs);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+struct Elem_0205d81c *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+void GetFourShortsAtIndex(struct ShortArrays0204c610 *base, int index, short *out0, short *out1, short *out2, short *out3);
+void SetFourShortsAtIndex(ShortArrays0204c654*, int, short, short, short, short);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+extern "C" void func_0205d7a0(unsigned char *obj, int val);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38 *obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *self, int flag);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *c);
+extern "C" void func_ov002_02161cf0(void *self);
+extern "C" void func_ov002_0215f6a4(void *self);
 extern "C" void func_ov002_02161a8c(void);
 extern "C" void func_ov002_021619b4(int arg0, int arg1, int arg2);
 extern "C" void func_ov002_0215b9a4(void *arg0, int arg1, int arg2);
 extern "C" void func_ov002_02156e90(void *arg0);
 
 extern unsigned char data_ov002_0216cc98[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov002_02167998
 extern "C" ARM void func_ov002_02167998(char *arg0) {
@@ -122,18 +122,18 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
         arg0[0x1c34] = 1;
 #endif
     }
-    var3  = var15 == *(signed char *) (arg0 + RG(0x1c73, 0x1b37));
-    var4 = !var3;
-    func_0205def8((struct Struct_ov002_02155960_3 *) var0, var4, RG(0x1a, 0x1b));
-    func_0205def8((struct Struct_ov002_02155960_3 *) var0, var4, RG(0x1b, 0x1c));
-    if (var16 != *(short *) (arg0 + RG(0x1c02, 0x1aca))) return;
-    int var18 = g_keyManager.TestKeysPressed(0x601);
-    int var19 = (var18 | func_0205da38((struct Struct_ov002_02164748 *) OBJ, 0x14)) ? 1 : 0;
-    if (var19) {
-        if (var15 == *(signed char *) (arg0 + RG(0x1c73, 0x1b37))) {
-            func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
-            for (int var20 = 0; var20 < 5; var20++) {
-                func_0205def8((struct Struct_ov002_02155960_3 *) var0, 1, data_ov002_0216cc98[var20]);
+    last  = sel == *(signed char *) (base + 0x1c73);
+    shown = !last;
+    SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) obj, shown, 0x1a);
+    SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) obj, shown, 0x1b);
+    if (old != *(short *) (base + 0x1c02)) return;
+    int pressed = g_keyManager.TestKeysPressed(0x601);
+    int confirm = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38 *) (base + 0x2c8 + 0xc00), 0x14)) ? 1 : 0;
+    if (confirm) {
+        if (sel == *(signed char *) (base + 0x1c73)) {
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            for (int i = 0; i < 5; i++) {
+                SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) obj, 1, data_ov002_0216cc98[i]);
             }
             *(short *) (arg0 + RG(0x1c02, 0x1aca)) = -1;
             func_ov002_02156e90(arg0);
@@ -146,31 +146,31 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
         if (var22 == 0) return;
         switch (var14) {
         case 0:
-            if (var21 == func_020100a8(var5)) return;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + RG(0x1bb8, 0x1a80)) & 0xff, 1);
-            func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
-            *(int *) (arg0 + RG(0x1bb8, 0x1a80))   = RG(0x19, 0x1a);
-            *(int *) (arg0 + RG(0x1bc0, 0x1a88))   = 0;
-            *(short *) (arg0 + RG(0x1c04, 0x1acc)) = (signed char) *(int *) (func_02053c6c(var22) + RG(0x94c, 0x8b4));
+            if (member == GetField0x3acValue_020100a8(gs)) return;
+            func_ov002_0215b9a4(base, *(int *) (base + 0x1bb8) & 0xff, 1);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            *(int *) (base + 0x1bb8)   = 0x19;
+            *(int *) (base + 0x1bc0)   = 0;
+            *(short *) (base + 0x1c04) = (signed char) *(int *) (GetFieldAt0x150_02053c6c(m) + 0x94c);
             break;
         case 1: {
-            struct Struct_ov002_02167998_4 *var23 = (struct Struct_ov002_02167998_4 *) (*(unsigned char **) (var22 + 0x134) + 0x3c);
-            unsigned short var24 = var23->unknown_3_6_;
-            var24++;
-            var24 %= 2;
-            var23->unknown_3_6_ = var24;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + RG(0x1bb8, 0x1a80)) & 0xff, 0);
-            func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
+            struct Flags3c *f = (struct Flags3c *) (*(unsigned char **) (m + 0x134) + 0x3c);
+            unsigned short t = f->toggle;
+            t++;
+            t %= 2;
+            f->toggle = t;
+            func_ov002_0215b9a4(base, *(int *) (base + 0x1bb8) & 0xff, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             break;
         }
         case 2: {
-            unsigned char *var25 = func_02053c6c(var22);
-            var0[0xb8]        = *(int *) (arg0 + RG(0x1bb8, 0x1a80));
-            *(int *) (arg0 + RG(0x247c, 0x22ac)) &= ~4;
-            func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
-            *(int *) (arg0 + RG(0x1bb8, 0x1a80))   = RG(0x1c, 0x1d);
-            *(int *) (arg0 + RG(0x1bc0, 0x1a88))   = 0;
-            *(short *) (arg0 + RG(0x1c06, 0x1ace)) = var25[0x56a];
+            unsigned char *f = GetFieldAt0x150_02053c6c(m);
+            obj[0xb8]        = *(int *) (base + 0x1bb8);
+            *(int *) (base + 0x247c) &= ~4;
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            *(int *) (base + 0x1bb8)   = 0x1c;
+            *(int *) (base + 0x1bc0)   = 0;
+            *(short *) (base + 0x1c06) = f[0x56a];
             break;
         }
         }

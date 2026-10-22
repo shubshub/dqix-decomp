@@ -637,7 +637,7 @@ src/Combat/Overlay_4/func_ov004_02167370.cpp:
     complete
     .text start:0x02167370 end:0x02167424
 
-src/Combat/Overlay_4/func_ov004_021635d0.cpp:
+src/Combat/Overlay_1/ForwardSlotOrClear_021635d0.cpp:
     complete
     .text start:0x021635d0 end:0x021636b0
 
@@ -661,7 +661,7 @@ src/Combat/Overlay_4/func_ov004_021651c8.cpp:
     complete
     .text start:0x021651c8 end:0x021652bc
 
-src/Combat/Overlay_4/func_ov004_02166fe4.cpp:
+src/Combat/Overlay_4/ToggleStateAndDispatchAll_02166fe4.cpp:
     complete
     .text start:0x02166fe4 end:0x02167068
 
@@ -677,7 +677,7 @@ src/Combat/Overlay_4/func_ov004_02165e70.cpp:
     complete
     .text start:0x02165e70 end:0x02165ea4
 
-src/Combat/Overlay_4/func_ov004_021652e8.cpp:
+src/Combat/Overlay_4/UpdateAxisFlagAndDispatch_021652e8.cpp:
     complete
     .text start:0x021652e8 end:0x021653e4
 
@@ -857,7 +857,7 @@ src/Combat/Overlay_4/func_ov004_02167310.cpp:
     complete
     .text start:0x02167310 end:0x02167370
 
-src/Combat/Overlay_4/func_ov004_0216986c.cpp:
+src/Combat/Overlay_4/NotifyNodeAndDispatch_0216986c.cpp:
     complete
     .text start:0x0216986c end:0x021698f4
 
@@ -1193,7 +1193,7 @@ src/Combat/Overlay_4/func_ov004_02166730.cpp:
     complete
     .text start:0x02166730 end:0x02166844
 
-src/Combat/Overlay_4/func_ov004_0216d504.cpp:
+src/Combat/Overlay_4/SetupFieldsAndDispatch_0216d504.cpp:
     complete
     .text start:0x0216d504 end:0x0216d5b0
 
@@ -1397,7 +1397,7 @@ src/Combat/Overlay_4/func_ov004_0215e9dc.cpp:
     complete
     .text start:0x0215e9dc end:0x0215eb20
 
-src/Combat/Overlay_4/func_ov004_0216e638.cpp:
+src/Combat/Overlay_4/DispatchFixedSequenceAndSetVec_0216e638.cpp:
     complete
     .text start:0x0216e638 end:0x0216e828
 

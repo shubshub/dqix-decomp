@@ -10,21 +10,21 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
-struct Struct_0201099c_10;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" char *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_02161798(char *arg0);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_02156e90(void *arg0);
-extern "C" void func_ov002_0215a7b4(char *arg0, int arg1, short arg2, int arg3, int arg4);
-extern "C" char data_02108760[];
+struct Obj_0205da38;
+struct SePlayer;
+struct Container020dedd0;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+void InitBattleTag02161798(char *base);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_02156e90(void *base);
+extern "C" void func_ov002_0215a7b4(char *base, int actor, short key, int sel, int x);
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_0216bd34
 extern "C" ARM void func_ov002_0216bd34(char *arg0) {
@@ -54,10 +54,10 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
             *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
             switch (*(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc))) {
                 case 0:
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                    *(unsigned char *) (arg0 + 0x2000 + RG(0x487, 0x2b7)) = 1;
-                    if (func_020dedd0((struct Struct_0201099c_10 *) (arg0 + RG(0x3ec + 0x400, 0x750)),
-                                                                          (short) var3) == NULL)
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                    *(unsigned char *) (base + 0x2000 + RG(0x487, 0x2b7)) = 1;
+                    if (FindElementByKey020dedd0((struct Container020dedd0 *) (base + RG(0x3ec + 0x400, 0x750)),
+                                                                          (short) key) == NULL)
                         break;
 #if defined(jpn)
                     *(unsigned short *) (var0 + 0x6f00 + 0x9c) = var3;
@@ -80,10 +80,10 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
                     var4 = 1;
                     break;
                 case 1:
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                    *(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = -1;
-                    func_ov002_02156e90(arg0);
-                    var4 = 1;
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                    *(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = -1;
+                    func_ov002_02156e90(base);
+                    done = 1;
                     break;
             }
         } else if (func_ov002_02161b48(arg0, 1)) {

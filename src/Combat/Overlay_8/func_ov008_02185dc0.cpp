@@ -125,11 +125,11 @@ struct Struct_020727d8;
 struct Struct_02013fb4;
 struct Struct_0201099c_3;
 struct Struct_0205bb84;
-struct Struct_02108760;
+struct SePlayer;
 
 extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 
 MessageSystem* GetGlobalField0x1c020421a0();
 void SetBrightness(GameResources* resources, int screen, int brightness);
@@ -144,7 +144,7 @@ int GetField0x3acValue_020100a8(GameState* gameState);
 const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
 void AppendString02042058(char* text, const char* append);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* cursor);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int value);
+void SePlayer_Play(SePlayer* sound, int effect, int value);
 
 extern "C" {
 void* ExtractFileFromGP2(char* arg0, char* arg1, unsigned int* arg2);
@@ -319,11 +319,11 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
         {
             if (!func_0202c540(func_0202ae18()) || var22 != 5)
             {
-                func_0205eaa0(&data_02108760, 1, 0);
-                arg0->unknown_b10_ = var22 + 5;
-                arg0->unknown_b11_ = 0;
-                arg0->unknown_b18_ &= ~8;
-                arg0->unknown_b18_ &= ~0x20;
+                SePlayer_Play(&g_sePlayer, 1, 0);
+                self->state_ = kind + 5;
+                self->step_ = 0;
+                self->flags_ &= ~8;
+                self->flags_ &= ~0x20;
                 return;
             }
         }

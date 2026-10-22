@@ -54,7 +54,7 @@ Element_021e6448* FindElementByC40205d81c(Struct_0205d81c* s, int key);
 void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8* s, int delta);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 
 // USA: func_ov023_021e6448
 extern "C" ARM int func_ov023_021e6448(Struct_ov023_021e6448_4* arg0) {
@@ -85,7 +85,7 @@ extern "C" ARM int func_ov023_021e6448(Struct_ov023_021e6448_4* arg0) {
                 }
                 int index = GridCursor_GetSelectedIndex((Struct_0205bb84*)scroll);
                 SetIndexIfValid0205bcdc((Struct_0205bcdc*)&self->list_.states[0], index);
-                func_0205bb04(&self->list_.states[1], index);
+                GridCursor_SetSelectedIndex(&self->list_.states[1], index);
             }
             return 1;
         }

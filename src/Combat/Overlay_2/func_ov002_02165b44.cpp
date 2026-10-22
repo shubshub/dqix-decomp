@@ -11,8 +11,8 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
+struct Obj_0205da38;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Struct_0205dee8;
 struct Struct_020a83b0;
@@ -25,24 +25,24 @@ struct Struct_ov002_02165b44 {
     unsigned int unknown_9_2_ : 2;
     unsigned int unknown_9_4_ : 20;
 };
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1, unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" void func_0205dee8(struct Struct_0205dee8 *arg0, int arg1);
-extern "C" void func_ov002_02156ff0(unsigned char *arg0, int arg1);
-extern "C" int func_020100b0(GameState *arg0);
-extern "C" GameObject *func_0200ff94(GameState *arg0, int arg1);
-extern "C" int func_0206dfb0(int arg0, unsigned char *arg1, int arg2);
-extern "C" char *func_020a83b0(struct Struct_020a83b0 *arg0, int arg1);
-extern "C" char *func_02079e2c(char *arg0, int arg1);
-extern "C" void func_02048350(struct Struct_02048350_2 *arg0, int arg1);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void *func_0200fd0c(GameState *arg0);
+struct TailList020469b4;
+struct TailNode020469b4;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow, unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
+void ClearMatchingEntry_02156ff0(unsigned char *self, int v);
+int GetField0x397cValue_020100b0(GameState *gs);
+GameObject *GetCombatantChecked_0200ff94(GameState *gs, int id);
+int TestBitInByteArray_0206dfb0(int unused, unsigned char *arr, int index);
+char *FindEntryByByteId020a83b0(struct List020a83b0 *l, int id);
+char *SearchBothTables02079e2c(char *t, int id);
+void ConsumeCounter02048350(struct Obj02048350 *o, int n);
+int CheckField0NonZero_0202b7d8(int *p);
+void *GetField0x3f8Address_0200fd0c(GameState *state);
 extern "C" void VectorizedMemset(void *dst, int value, unsigned int length);
 extern "C" void *func_0200fcfc(void *arg0, const void *arg1);
 extern "C" void func_ov017_021acd30(char *arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3);
@@ -56,11 +56,11 @@ extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
 extern "C" char *func_0205ec34(void);
 extern "C" char *func_02012fe4(void);
 extern "C" int *func_0202ae18(void);
-extern "C" int func_0202c508(int *arg0);
-extern "C" void func_ov023_021dca88(char *arg0);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_021d1a18(int arg0, int arg1, int arg2, int arg3);
-extern "C" char data_02108760[];
+extern "C" int func_0202c508(int *p);
+extern "C" void func_ov023_021dca88(char *obj);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02165b44
 extern "C" ARM void func_ov002_02165b44(char *arg0) {
@@ -92,14 +92,14 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                 *(int *) (arg0 + 0x1a80)  = 0x12;
                 return;
             }
-            *(int *) (arg0 + 0x1a88) = 0;
-            func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-            int var6    = (int) func_0205ec34();
-            char *var7 = func_02012fe4();
-            int var8    = 0;
-            if (!func_0206dfb0(var6, (unsigned char *) ((char *) var6 + 0x8c), 0x113a)) {
-                char *var9 = *(char **) (var7 + 8);
-                if (var9 != NULL) var8 = (unsigned int) (*(unsigned char *) (var9 + 0xe) << 30) >> 30;
+            *(int *) (base + 0x1a88) = 0;
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            int save    = (int) func_0205ec34();
+            char *world = func_02012fe4();
+            int kind    = 0;
+            if (!TestBitInByteArray_0206dfb0(save, (unsigned char *) ((char *) save + 0x8c), 0x113a)) {
+                char *p = *(char **) (world + 8);
+                if (p != NULL) kind = (unsigned int) (*(unsigned char *) (p + 0xe) << 30) >> 30;
             }
             *(short *) (arg0 + 0x1af0) = 0x232d;
             if (var8 == 2) {
@@ -119,12 +119,12 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + 0x1ae8), *(short *) (arg0 + 0x1aea),
                                             *(short *) (arg0 + 0x1ab0), 0);
                     } else {
-                        func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
-                        char *var12 = func_02079e2c((char*)func_020797dc(), 0xca);
-                        func_02048350(
-                            (struct Struct_02048350_2 *) func_0200ff94(var3, *(signed char *) (arg0 + 0x1ae8)),
-                            ((struct Struct_ov002_02165b44 *) var12)->unknown_8_0_);
-                        if (func_0202b7d8(var11)) func_ov017_021c9e00(*(signed char *) (arg0 + 0x1ae8), 0, 0, 1);
+                        SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
+                        char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
+                        ConsumeCounter02048350(
+                            (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1ae8)),
+                            ((struct TE5b44 *) t)->lo8);
+                        if (CheckField0NonZero_0202b7d8(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1ae8), 0, 0, 1);
                     }
                     unsigned char *var13 = (unsigned char *) func_0200fd0c(var3);
                     VectorizedMemset(var13, 0, 0x70);
@@ -179,7 +179,7 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(unsigned char *) (arg0 + 0x22ba) = 0;
                     if (*(unsigned int *) (arg0 + 0x22ac) & 1) func_ov023_021dca88(arg0 + 0x38);
                 } else {
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 func_ov017_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
@@ -194,11 +194,11 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(int *) (arg0 + 0x1a80)           = 0x29;
                     *(int *) (arg0 + 0x1a84)           = 5;
                 } else {
-                    *(short *) (arg0 + 0x22b8)          = 0x2338;
-                    *(unsigned char *) (arg0 + 0x22ba) = 1;
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
-                    *(int *) (arg0 + 0x1a80) = 0x29;
-                    *(int *) (arg0 + 0x1a84) = 0x12;
+                    *(short *) (base + 0x22b8)          = 0x2338;
+                    *(unsigned char *) (base + 0x22ba) = 1;
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
+                    *(int *) (base + 0x1a80) = 0x29;
+                    *(int *) (base + 0x1a84) = 0x12;
                 }
             }
         } else if (func_ov002_02161b48(arg0, 1)) {
@@ -246,14 +246,14 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                 *(int *) (arg0 + 0x1000 + 0xbb8)  = 0x11;
                 return;
             }
-            *(int *) (arg0 + 0x1000 + 0xbc0) = 0;
-            func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-            int var25    = (int) func_0205ec34();
-            char *var26 = func_02012fe4();
-            int var27    = 0;
-            if (!func_0206dfb0(var25, (unsigned char *) ((char *) var25 + 0x8c), 0x113a)) {
-                char *var28 = *(char **) (var26 + 8);
-                if (var28 != NULL) var27 = (unsigned int) (*(unsigned char *) (var28 + 0xe) << 30) >> 30;
+            *(int *) (base + 0x1000 + 0xbc0) = 0;
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            int save    = (int) func_0205ec34();
+            char *world = func_02012fe4();
+            int kind    = 0;
+            if (!TestBitInByteArray_0206dfb0(save, (unsigned char *) ((char *) save + 0x8c), 0x113a)) {
+                char *p = *(char **) (world + 8);
+                if (p != NULL) kind = (unsigned int) (*(unsigned char *) (p + 0xe) << 30) >> 30;
             }
             *(short *) (arg0 + 0x1c00 + 0x28) = 0x232d;
             if (var27 == 2) {
@@ -273,12 +273,12 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + 0x1c00 + 0x20), *(short *) (arg0 + 0x1c00 + 0x22),
                                             *(short *) (arg0 + 0x1b00 + 0xe8), 0);
                     } else {
-                        func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
-                        char *var31 = func_02079e2c((char*)func_020797dc(), 0xca);
-                        func_02048350(
-                            (struct Struct_02048350_2 *) func_0200ff94(var22, *(signed char *) (arg0 + 0x1c00 + 0x20)),
-                            ((struct Struct_ov002_02165b44 *) var31)->unknown_8_0_);
-                        if (func_0202b7d8(var30)) func_ov017_021c9e00(*(signed char *) (arg0 + 0x1c00 + 0x20), 0, 0, 1);
+                        SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
+                        char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
+                        ConsumeCounter02048350(
+                            (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1c00 + 0x20)),
+                            ((struct TE5b44 *) t)->lo8);
+                        if (CheckField0NonZero_0202b7d8(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1c00 + 0x20), 0, 0, 1);
                     }
                     unsigned char *var32 = (unsigned char *) func_0200fd0c(var22);
                     VectorizedMemset(var32, 0, 0x70);
@@ -333,7 +333,7 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 0;
                     if (*(unsigned int *) (arg0 + 0x2000 + 0x47c) & 1) func_ov023_021dca88(arg0 + 0x50);
                 } else {
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 func_ov017_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
@@ -348,11 +348,11 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(int *) (arg0 + 0x1000 + 0xbb8)           = 0x26;
                     *(int *) (arg0 + 0x1000 + 0xbbc)           = 5;
                 } else {
-                    *(short *) (arg0 + 0x2400 + 0x88)          = 0x2338;
-                    *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 1;
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 0x64, 0);
-                    *(int *) (arg0 + 0x1000 + 0xbb8) = 0x26;
-                    *(int *) (arg0 + 0x1000 + 0xbbc) = 0x11;
+                    *(short *) (base + 0x2400 + 0x88)          = 0x2338;
+                    *(unsigned char *) (base + 0x2000 + 0x48a) = 1;
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
+                    *(int *) (base + 0x1000 + 0xbb8) = 0x26;
+                    *(int *) (base + 0x1000 + 0xbbc) = 0x11;
                 }
             }
         } else if (func_ov002_02161b48(arg0, 1)) {

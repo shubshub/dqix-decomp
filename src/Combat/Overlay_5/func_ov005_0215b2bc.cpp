@@ -13,8 +13,8 @@ struct Struct_ov005_0215b2bc_2 {
     int unknown_4fc_;
 };
 
-struct Struct_02108760;
-extern Struct_02108760 data_02108760;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 
 struct Struct_ov005_02156ecc_2;
 struct Struct_ov005_02156ecc;
@@ -23,10 +23,10 @@ extern "C" void func_ov005_02157174(Struct_ov005_02156ecc*, Struct_ov005_02156ec
 struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
 extern "C" int func_0205bf58(void*, int);
-extern "C" int func_ov005_02157190(void*);
-extern "C" char* func_ov017_021a193c(int*);
-extern "C" void func_ov005_021551fc(char*, int, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+int CheckFlag30Or401_02157190(void*);
+char* GetField1c_021a193c(int*);
+void DispatchByIdxAndCond021551fc(char*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov005_021555c0(void*);
 extern "C" void func_ov005_0215792c(void*, unsigned char);
 extern "C" unsigned char func_ov005_021586c4(void*, int, int);
@@ -124,26 +124,26 @@ extern "C" ARM void func_ov005_0215b2bc(Struct_ov000_0217ab8c* arg0) {
             arg0->unknown_3dbc_ = var2;
             arg0->unknown_3dbd_ = arg0->unknown_3dfc_[var2 & 0xff];
         }
-        arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
-        Struct_ov005_0215b2bc_2* var10 = (Struct_ov005_0215b2bc_2*)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-        func_ov005_021551fc((char*)arg0, var10->unknown_4fc_, 0);
-        if (var1 == 0) return;
-        func_0205eaa0(&data_02108760, 1, 0);
-        func_ov005_021555c0(arg0);
-        arg0->unknown_3dcc_ |= 0x40;
-        arg0->unknown_3daa_ = 0;
-        func_ov005_0215792c(arg0, 1);
-        Struct_ov005_02153ba4* var11;
-        int var12 = 0;
-        for (; var12 < 8; var12++) {
-            var11 = arg0->unknown_2d90_;
-            Struct_ov005_02153ba4* var13 = &var11[var12];
-            if (var12 == arg0->unknown_3d78_) continue;
-            if (var13->unknown_0_ < 0) continue;
-            Struct_ov005_02156ecc_2* var14 = (Struct_ov005_02156ecc_2*)var13->unknown_8_;
-            Struct_ov005_0215b2bc var15 = *(Struct_ov005_0215b2bc*)((char*)var14 + 0x1c);
-            var15.unknown_4_ = 0x17000;
-            func_ov005_02157174((Struct_ov005_02156ecc*)var14, (Struct_ov005_02156ecc_2*)&var15);
+        self->f3dbb_ = self->kind_;
+        MenuTail* hold = (MenuTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
+        DispatchByIdxAndCond021551fc((char*)self, hold->index, 0);
+        if (flag2 == 0) return;
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        func_ov005_021555c0(self);
+        self->flags_ |= 0x40;
+        self->f3daa_ = 0;
+        func_ov005_0215792c(self, 1);
+        EquipmentSlot* slots;
+        int j = 0;
+        for (; j < 8; j++) {
+            slots = self->slots_;
+            EquipmentSlot* s = &slots[j];
+            if (j == self->count_) continue;
+            if (s->item_ < 0) continue;
+            Src02157174* m = (Src02157174*)s->model_;
+            Triplet t = *(Triplet*)((char*)m + 0x1c);
+            t.b = 0x17000;
+            CopyThreeFields02157174((Dst02157174*)m, (Src02157174*)&t);
         }
     }
 }

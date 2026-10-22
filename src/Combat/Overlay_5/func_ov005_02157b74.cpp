@@ -85,46 +85,46 @@ struct Struct_ov005_02157b74_2 {
 };
 
 extern "C" GameState* _ZN9GameState11GetInstanceEv();
-extern "C" Struct_ov005_02157b74_9* func_ov017_021a193c(int*);
-extern "C" Struct_ov005_02157b74_8* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" char* func_02010828(GameState* arg0);
-struct Struct_02052df8;
-extern "C" short func_02052df8(Struct_02052df8*, int);
-struct Struct_0201099c_10;
-extern "C" Struct_ov005_02157b74_5* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" void func_02052d7c(Struct_ov005_02157b74_8* arg0, int arg1, short arg2);
-extern "C" void* func_02053c6c(unsigned char*);
-extern "C" void func_0208358c(void* arg0, Struct_ov005_02157b74_5* arg1, int arg2);
-extern "C" void func_02083738(void* arg0, int arg1);
-struct Struct_ov005_02157b74_3;
-extern "C" void func_ov005_021583fc(Struct_ov005_02157b74_3*, char);
-struct Struct_02052e2c;
-extern "C" Struct_ov005_02157b74_7* func_02052e2c(Struct_02052e2c*);
-extern "C" int func_ov005_0215840c(Struct_ov005_02157b74_2* arg0, int arg1);
-extern "C" void func_02083e28(void* arg0, int arg1);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0207c378(char* arg0, short arg1, int arg2, int arg3);
-extern "C" void func_ov005_021551fc(char*, int, int);
-extern "C" void func_ov005_02155544(Struct_ov005_02157b74_2* arg0);
-extern "C" void func_ov005_021555c0(Struct_ov005_02157b74_2* arg0);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_020dd4c4(signed char arg0, Struct_ov005_02157b74_5* arg1);
-struct Struct_020deda4;
-extern "C" Struct_ov005_02157b74_6* func_020deda4(int, int, Struct_020deda4*);
-extern "C" void func_020483f0(unsigned char*, unsigned short);
-extern "C" int func_0207c7a0(char* arg0, short arg1, int arg2);
-extern "C" int func_0207caa4(char* arg0, short arg1, int arg2);
-extern "C" void func_0207c484(char* arg0, short arg1, int arg2, int arg3);
-struct Struct_0207cb38;
-extern "C" void func_0207cb38(Struct_0207cb38*, int, int, int, char);
-extern "C" void func_ov023_021e4e1c(void* arg0, int arg1, short arg2, int arg3);
-extern "C" void func_ov005_02154d18(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d50(void* arg0, int arg1, int arg2);
+Context02157b74* GetField1c_021a193c(int*);
+Combatant02157b74* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int idx);
+char* GetPtrField0x2a04_02010828(GameState* gs);
+struct Field150Holder02052df8;
+short GetHalfwordEntryFromField150(Field150Holder02052df8*, int);
+struct Container020dedd0;
+Item02157b74* FindElementByKey020dedd0(Container020dedd0*, int);
+extern "C" void func_02052d7c(Combatant02157b74* c, int slot, short id);
+void* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void func_0208358c(void* model, Item02157b74* item, int arg);
+extern "C" void func_02083738(void* model, int type);
+struct Holder021583fc;
+void SetPtrFieldByte021583fc(Holder021583fc*, char);
+struct Field150Holder02052e2c;
+Equip02157b74* GetField150Ptr0x488_02052e2c(Field150Holder02052e2c*);
+extern "C" int func_ov005_0215840c(Menu02157b74* self, int id);
+extern "C" void func_02083e28(void* model, int arg);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" void func_0207c378(char* list, short key, int amount, int category);
+void DispatchByIdxAndCond021551fc(char*, int, int);
+extern "C" void func_ov005_02155544(Menu02157b74* self);
+extern "C" void func_ov005_021555c0(Menu02157b74* self);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" int func_020dd4c4(signed char id, Item02157b74* item);
+struct Fields020deda4;
+Linked02157b74* Forward10BitFields020deda4(int, int, Fields020deda4*);
+void TrySetFlags0x130_020483f0(unsigned char*, unsigned short);
+extern "C" int func_0207c7a0(char* list, short key, int category);
+extern "C" int _Z33FindEntryIndexInKeyedList0207caa4P17KeyedList0207caa4ii(char* list, short key, int category);
+extern "C" void _Z33DecrementKeyedStackAmount0207c484P17KeyedList0207c484iii(char* list, short key, int amount, int category);
+struct KeyedList0207cb38;
+void SetEntryInKeyedList0207cb38(KeyedList0207cb38*, int, int, int, char);
+void NoOp_021e4e1c(void* ctx, int actor, short key, int category);
+extern "C" void func_ov005_02154d18(void* obj, int a, int b);
+extern "C" void func_ov005_02154d50(void* obj, int a, int b);
 
 extern signed char data_ov005_0215cd40[];
 extern unsigned char data_ov005_0215cd38[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern unsigned char data_ov005_0215cd30[];
 
 // USA: func_ov005_02157b74
@@ -202,9 +202,9 @@ extern "C" ARM void func_ov005_02157b74(Struct_ov005_02157b74_2* arg0, int arg1,
                 }
             }
         }
-        func_0205eaa0((Struct_02108760*)data_02108760, 0x5c, 0);
-        arg0->unknown_3dcc_ |= 0x200;
-        arg0->unknown_3dcc_ |= 1;
+        SePlayer_Play((SePlayer*)g_sePlayer, 0x5c, 0);
+        self->dirty |= 0x200;
+        self->dirty |= 1;
         return;
     }
 
@@ -300,10 +300,10 @@ extern "C" ARM void func_ov005_02157b74(Struct_ov005_02157b74_2* arg0, int arg1,
         func_ov017_021c9e00(var4, 0, 0, 1);
     }
 
-    if (var13->unknown_0_->unknown_3_3_ == 1) {
-        func_0205eaa0((Struct_02108760*)data_02108760, 3, 0);
-    } else if (var13->unknown_0_->unknown_3_3_ == 2) {
-        func_0205eaa0((Struct_02108760*)data_02108760, 4, 0);
+    if (item->def->sound == 1) {
+        SePlayer_Play((SePlayer*)g_sePlayer, 3, 0);
+    } else if (item->def->sound == 2) {
+        SePlayer_Play((SePlayer*)g_sePlayer, 4, 0);
     }
 
     var2->unknown_634_ |= 4;

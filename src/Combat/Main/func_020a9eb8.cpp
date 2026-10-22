@@ -369,8 +369,8 @@ extern "C" Struct_02087574_2* func_02087574(Struct_02087574* arg0, int arg1);
 
 extern char data_020f1bf0[];
 extern AllocatorUnion data_02114e20;
-extern Struct_02109bf4_7 data_02109bf4;
-extern unsigned char data_02108760[];
+extern Global02109bf4 data_02109bf4;
+extern unsigned char g_sePlayer[];
 
 static inline int inline_020a9eb8(void* arg0, unsigned int arg1) {
     return func_01ff85b8((unsigned char*)arg0 + 4, arg1 - 4);
@@ -529,19 +529,19 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             } else {
                 var22->unknown_2c4c_ = var34->unknown_7e74_;
             }
-            var22->unknown_2c4e_ = 0;
-            unsigned short* var35 = func_020120a0((char*)var24, func_020100a8(var24));
-            var22->unknown_2c50_[0] = var35[0];
-            var22->unknown_2c50_[1] = var35[1];
-            var22->unknown_2c50_[2] = var35[2];
-            var22->unknown_2c50_[3] = var35[3];
-            var22->unknown_2c58_ = func_0209ca98((char*)&data_02109bf4);
-            var22->unknown_2c59_ = func_0205ea18(data_02108760);
-            var22->unknown_2c5a_ = var25->unknown_f7d_;
-            var22->unknown_2c5b_ = var34->unknown_63dc_;
-            Struct_020a9eb8_2::Struct_020a9eb8_3* var36 = &var26;
-            *var36 = var34->unknown_74fe_;
-            var22->unknown_2c78_ = *var36;
+            save->zero2 = 0;
+            unsigned short* words = GetField0x74deForValidIndex_020120a0((char*)gs2, GetField0x3acValue_020100a8(gs2));
+            save->words[0] = words[0];
+            save->words[1] = words[1];
+            save->words[2] = words[2];
+            save->words[3] = words[3];
+            save->globalByte = GetField0xcc0209ca98((char*)&data_02109bf4);
+            save->globalByte2 = GetByteFieldAt0xcc_0205ea18(g_sePlayer);
+            save->byteF7d = battle2->byteF7d;
+            save->byte63dc = view2->byte63dc;
+            GameStateSaveView::Bytes6* namePtr = &name;
+            *namePtr = view2->name74fe;
+            save->name = *namePtr;
 #if defined(jpn)
             Struct_020a95a4* var37 = &var23->unknown_840_;
 #endif

@@ -20,22 +20,22 @@ extern unsigned char data_ov017_021d6ec0[];
 enum { Enum_ov017_021adcb0_10020 = 0x2724, Enum_ov017_021adcb0_10068 = 0x2754, Enum_ov017_021adcb0_96 = 0x60, Enum_ov017_021adcb0_2400 = 0x960 };
 #endif
 
-struct Struct_02018300_3;
-struct Struct_02033834_2;
-struct Struct_02033b68;
-struct Struct_02053f7c;
-struct Struct_020d7aa0_2;
-struct Struct_020d805c;
-struct Struct_ov017_0218d618_2;
-struct Struct_02108760;
-struct Struct_02046574_2;
-struct Struct_ov017_021adcb0;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-struct Struct_02046a3c_2;
-struct Struct_02046a3c;
-struct Struct_02015ef4_3;
-struct Struct_0201099c_10;
+struct Obj020397cc;
+struct Obj02033834;
+struct Obj02033b68;
+struct Obj02086aec;
+struct Obj020d7aa0;
+struct BitFlags020d805c;
+struct Struct0218d618;
+struct SePlayer;
+struct Obj02046574;
+struct Obj021c2744;
+struct TailList020469b4;
+struct TailNode020469b4;
+struct List02046a3c;
+struct Node02046a3c;
+struct GetElement02094d5cList;
+struct Container020dedd0;
 
 typedef LootableContainerManager::Container Container;
 
@@ -121,11 +121,11 @@ extern "C" void* func_020de824(void*);
 extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
 extern "C" void func_ov017_0218d644(GameResources*, Vector3fix*, int);
-extern "C" void func_0205eb80(void* arg0);
-extern "C" void func_0205eb54(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eb90(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
+void ForwardField0xc0_0205eb80(void* obj);
+void SetForwardAndStore0205eb54(void* obj, int arg1, int arg2);
+void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void func_0206df6c(void* unused, unsigned char* array, int bit, int value);
 extern "C" void func_ov017_021cdb00(int, int, int, int);
 extern "C" int func_ov017_0218d75c(void* arg0);
 extern "C" void func_02046574(Struct_02046574_2* arg0, int arg1, char* arg2);
@@ -135,7 +135,7 @@ extern "C" void func_02046a3c(Struct_02046a3c_2* arg0, Struct_02046a3c* arg1);
 extern char data_ov017_021d799c[];
 extern char data_ov017_021d79a2[];
 extern AllocatorUnion data_02114e20;
-extern char data_02108760;
+extern char g_sePlayer;
 extern short data_ov017_021d6ac4[];
 extern unsigned char data_ov017_021d6ac0[];
 
@@ -393,12 +393,12 @@ extern "C" ARM void func_ov017_021adcb0(Struct_ov017_021adcb0_4* arg0) {
 #else
                     func_020d7e10(var5, *(char**)((char*)var1 + Enum_ov017_021adcb0_96), var47 == 2, var45->lootType == 2, 0, 0);
 #endif
-                    if (arg0->unknown_21_) {
-                        func_0205eb80(&data_02108760);
-                        func_0205eb54(&data_02108760, 0x15e, 0x15e);
-                        func_0205eb90(&data_02108760, 0, 0);
-                    } else if (var45->lootType != 0 && var45->itemIDOrRank != 0x5617) {
-                        func_0205eaa0((Struct_02108760*)&data_02108760, 0xe, 0);
+                    if (self->ambush) {
+                        ForwardField0xc0_0205eb80(&g_sePlayer);
+                        SetForwardAndStore0205eb54(&g_sePlayer, 0x15e, 0x15e);
+                        DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
+                    } else if (chest->lootType != 0 && chest->itemIDOrRank != 0x5617) {
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                     }
                 }
                 int var48 = var45->uniqueID;

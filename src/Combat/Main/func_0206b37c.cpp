@@ -14,13 +14,13 @@ struct Struct_0204254c {
     char unknown_6_[2];
 };
 
-extern "C" int func_02042648(int);
-extern "C" bool func_02044494(void*, void*);
-extern "C" int func_02044420(void*, void*);
-extern "C" int func_020425e4(int, int, int);
-extern "C" Struct_0204254c* func_0204254c(int, int);
-extern "C" int func_020424e4(int, int);
-extern "C" int func_02067ad8(int, void*);
+int GetWordFromTable02042648(int);
+bool IsHighByteFF02044494(void*, void*);
+int Dispatch02044420(void*, void*);
+int LookupKeyValue020425e4(int, int, int);
+Entry0204254c* Font_FindCharacter(int, int);
+int FindEntryIndexByKey020424e4(int, int);
+int IsHalfwordInRange02067ad8(int, void*);
 
 // USA: func_0206b37c
 extern "C" ARM int func_0206b37c(Struct_0206b37c* arg0, char* arg1) {
@@ -55,16 +55,16 @@ extern "C" ARM int func_0206b37c(Struct_0206b37c* arg0, char* arg1) {
             }
             arg1 = arg1 + 2 + var3 * 2;
         } else {
-            var4 = 1;
-            int var8 = var0;
-            Struct_0204254c* var9 = func_0204254c((int)arg1, arg0->unknown_19dc_);
-            if (var9) {
-                var1 = (unsigned char)func_020424e4((int)arg1, arg0->unknown_19dc_);
-                var5 += func_020425e4(var2, var1, arg0->unknown_19dc_);
-                var2 = var1;
-                var1 = 0xff;
-                var4 = var9->unknown_5_0_;
-                var8 = var9->unknown_4_;
+            step = 1;
+            int glyphWidth = defaultWidth;
+            Entry0204254c* entry = Font_FindCharacter((int)text, context->fontTable);
+            if (entry) {
+                current = (unsigned char)FindEntryIndexByKey020424e4((int)text, context->fontTable);
+                width += LookupKeyValue020425e4(previous, current, context->fontTable);
+                previous = current;
+                current = 0xff;
+                step = entry->size;
+                glyphWidth = entry->width;
             }
             var5 += var8 + 1;
             arg1 += var4;

@@ -6,36 +6,36 @@ struct Struct_0205de24_2;
 struct Struct_0205c570;
 struct Struct_0205d81c;
 struct Struct_0205def8;
-struct Struct_02108760;
-struct Struct_0205dee8;
-struct Struct_ov002_02165764 {
-    int unknown_0_;
-    unsigned int unknown_4_0_ : 12;
-    unsigned int unknown_5_4_ : 20;
+struct SePlayer;
+struct Obj0205dee8;
+struct Entry_02165764 {
+    int f0;
+    unsigned int id : 12;
+    unsigned int rest : 20;
 };
 
-extern "C" void func_0205def8(struct Struct_0205def8 *arg0, int arg1, int arg2);
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215eadc(void *arg0, int arg1);
-extern "C" void func_0205dee8(struct Struct_0205dee8 *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" void func_ov002_0215b9a4(void *arg0, int arg1, int arg2);
-extern "C" void func_ov002_02161b98(char *arg0);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_ov002_0216197c(int arg0, struct Struct_0205d81c *arg1);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" char *func_0200ff94(GameState *arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_0215b720(char *arg0, int arg1);
-extern "C" void func_ov002_02157d40(char *arg0);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_02156ff0(unsigned char *arg0, int arg1);
-extern "C" int func_ov002_0215b7d0(char* arg0);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+extern "C" void func_ov002_02161cf0(char *self);
+extern "C" void func_ov002_0215eadc(void *obj, int val);
+void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *obj, int val);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
+extern "C" void func_ov002_0215b9a4(void *self, int mode, int flag);
+extern "C" void func_ov002_02161b98(char *self);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsElementFlagBit40Set_0216197c(int key, struct Struct_0205d81c *s);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+char *GetCombatantChecked_0200ff94(GameState *gs, int id);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
+extern "C" int func_ov002_0215b720(char *self, int id);
+extern "C" void func_ov002_02157d40(char *self);
+int CheckFlagOrThreshold_02161b48(char *self, int v);
+void ClearMatchingEntry_02156ff0(unsigned char *self, int v);
+int CheckAndClearEntryStatus_0215b7d0(char* base);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 #define OBJ (arg0 + 0x2c8 + 0xc00)
 
@@ -82,11 +82,11 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
                 *(int *) (arg0 + 0x1a80)   = 0x12;
                 return;
             }
-            func_0205eaa0((struct Struct_02108760 *) &data_02108760, 1, 0);
-            *(short *) (arg0 + 0x1aee) = -1;
-            short var6                    = *(short *) (arg0 + 0x1ac2);
-            if (var6 >= 0 && var6 < 0x20) {
-                *(short *) (arg0 + 0x1aee) = (*(Struct_ov002_02165764 **) (arg0 + var6 * 4 + 0x22d0))->unknown_4_0_;
+            SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
+            *(short *) (self + 0x1aee) = -1;
+            short v                    = *(short *) (self + 0x1ac2);
+            if (v >= 0 && v < 0x20) {
+                *(short *) (self + 0x1aee) = (*(Entry_02165764 **) (self + v * 4 + 0x22d0))->id;
             }
             if (func_ov002_0215b720(arg0, *(short *) (arg0 + 0x1aee))) {
                 *(int *) (arg0 + 0x1a88) = 2;
@@ -179,11 +179,11 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
                 *(int *) (arg0 + 0x1bb8)   = 0x11;
                 return;
             }
-            func_0205eaa0((struct Struct_02108760 *) &data_02108760, 1, 0);
-            *(short *) (arg0 + 0x1c26) = -1;
-            short var14                    = *(short *) (arg0 + 0x1bfa);
-            if (var14 >= 0 && var14 < 0x20) {
-                *(short *) (arg0 + 0x1c26) = (*(Struct_ov002_02165764 **) (arg0 + var14 * 4 + 0x24a0))->unknown_4_0_;
+            SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
+            *(short *) (self + 0x1c26) = -1;
+            short v                    = *(short *) (self + 0x1bfa);
+            if (v >= 0 && v < 0x20) {
+                *(short *) (self + 0x1c26) = (*(Entry_02165764 **) (self + v * 4 + 0x24a0))->id;
             }
             if (func_ov002_0215b720(arg0, *(short *) (arg0 + 0x1c26))) {
                 *(int *) (arg0 + 0x1bc0) = 2;

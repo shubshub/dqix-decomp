@@ -41,7 +41,7 @@ extern "C" int func_ov017_021a26e8(GameResources* arg0, int arg1);
 extern "C" void func_ov017_021d09cc(int arg0, int arg1, int arg2, int arg3);
 extern "C" GameObject* func_0200ffe0(GameState* arg0, int arg1);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Struct_ov017_021c2784 {
     unsigned char unknown_0_[0x1];
@@ -96,9 +96,9 @@ extern "C" ARM void func_ov017_021c2784(Struct_ov017_021c2784* arg0) {
             func_02046608(var8, 0xc, var11, var10, 0xe3, 0, 1);
             func_020d7e10(var3, var10, 0, 0, 1, 1);
 #endif
-            func_0205ebc0(&data_02108760, 0x79, 0x79);
-            func_0205ebfc(&data_02108760, 0, 0);
-            arg0->unknown_8_ = 0x3e8;
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0x79, 0x79);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+            obj->field8 = 0x3e8;
         }
         arg0->unknown_10_ = 1;
         return;
@@ -164,9 +164,9 @@ extern "C" ARM void func_ov017_021c2784(Struct_ov017_021c2784* arg0) {
                 }
             }
         }
-        func_0205ebec(&data_02108760);
-        func_020397c0(var6);
-        arg0->unknown_1_ = 1;
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        SetByteField0x253_020397c0(c);
+        obj->field1 = 1;
         return;
     } else if (arg0->unknown_10_ == 4) {
         unsigned int var22 = (unsigned int)var0->GetEffectiveDeltaTime();

@@ -135,7 +135,7 @@ extern AllocatorUnion data_02114e20;
 extern const char* data_020f2a38;
 extern const char* data_020f2a30;
 extern int data_ov015_02193cdc[];
-extern char data_02108760;
+extern char g_sePlayer;
 extern int data_ov015_02194528[];
 
 #define POWCNT1 (*(volatile unsigned short*)0x04000304)
@@ -233,16 +233,16 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     func_020709d8(arg0->unknown_70_);
     func_020709ec(arg0->unknown_70_, &arg0->unknown_b0_);
 
-    Struct_ov015_021934f8 var6;
-    func_0202df68(&var6);
-    func_020a2cf0((struct Struct_0204a120_2*)&var6);
-    func_020a2010(&var6);
-    func_020a27a0(&var6);
-    func_020100c4(var0, (int)&var6);
-    func_ov015_02192544(arg0);
-    func_0205ea20(&data_02108760, 0x65);
-    func_020c9820();
-    func_020c38d4();
+    CombatController021934f8 combat;
+    func_0202df68(&combat);
+    ResetState020a2cf0((struct Struct020A2CF0*)&combat);
+    InitCombatController020a2010(&combat);
+    SetField0x238False_020a27a0(&combat);
+    SetField0x3b0Value_020100c4(gs, (int)&combat);
+    func_ov015_02192544(self);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x65);
+    DelayThenSyncBit0_020c9820();
+    RestoreDisplayMode_020c38d4();
     DISPCNTSUB = DISPCNTSUB | 0x10000;
     func_02010124((Struct_0200f3a4_9*)var0);
     func_020c3a0c(0);
@@ -296,10 +296,10 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
             func_ov015_02191668(arg0);
             break;
         }
-        func_ov015_02190d7c(arg0);
-        func_ov015_021901c8(arg0);
-        func_0203bd88(var3);
-        func_0203aa08(&data_02108760);
+        func_ov015_02190d7c(self);
+        func_ov015_021901c8(self);
+        CleanInvalidateOamBuffers0203bd88(context);
+        ResetXYField0203aa08(&g_sePlayer);
         func_020bbd9c();
 
         unsigned long long var11 = arg0->unknown_240_;
@@ -329,10 +329,10 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
         var9 = GetCurrentTimestamp();
     }
 
-    func_02094b38(var2, 0x69);
-    func_02094ab0(var2);
-    func_0205ea20(&data_02108760, 0x64);
-    func_020a2010(&var6);
-    func_020a2cf0((struct Struct_0204a120_2*)&var6);
-    func_0202df68(&var6);
+    BlankFunction02094b38(global, 0x69);
+    func_02094ab0(global);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x64);
+    InitCombatController020a2010(&combat);
+    ResetState020a2cf0((struct Struct020A2CF0*)&combat);
+    func_0202df68(&combat);
 }

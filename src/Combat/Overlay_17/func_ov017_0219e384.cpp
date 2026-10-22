@@ -257,30 +257,30 @@ extern "C" struct Struct_0202b2f0* func_0202ae18(void);
 extern "C" void* func_020d6c00(void);
 extern "C" int func_02039d7c(char* arg0);
 struct Vector3i;
-extern "C" void func_02097cac(void* arg0);
-struct Struct_0208f944;
-extern "C" void func_0208f944(Struct_0208f944*);
-extern "C" void func_020a696c(void* arg0, int arg1, int arg2);
-struct Struct_02095924_2;
-extern "C" void* func_02099950(Struct_02095924_2*, int);
-extern "C" int func_0209cd50(int arg0);
-struct Struct_0209cae8;
-extern "C" int func_0209cae8(Struct_0209cae8*);
-struct Struct_02109bf4_4;
-extern "C" void func_0209c678(Struct_02109bf4_4*, int);
-extern "C" int func_0203adfc(void* arg0, void* arg1);
-extern "C" void func_0203ad88(void* arg0, void* arg1, int arg2);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-struct Struct_02018300_3;
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" void func_ov017_021c4664(int arg0, struct Struct_ov009_0218aa28 arg1, int arg2);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_020100b0(GameState*);
-extern "C" void func_ov017_021d035c(unsigned char arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_ov017_021d257c(unsigned char arg0, int arg1);
-extern "C" int func_020649b0(void* arg0, int arg1, void* arg2);
-extern "C" void func_0206f81c(void* arg0);
+extern "C" void func_02097cac(void* obj);
+struct Obj0208f944;
+void HandleGrottoTurnTransition0208f944(Obj0208f944*);
+void ConfigureFieldVec3ForDateWindow_020a696c(void* obj, int a, int b);
+struct SearchTable;
+void* FindEntryByHalfwordKey_02099950(SearchTable*, int);
+extern "C" int func_0209cd50(int id);
+struct ShortField0xb8_0209cae8;
+int GetShortAt0xb8(ShortField0xb8_0209cae8*);
+struct Actor0209c678;
+void DispatchContextByState0209c678(Actor0209c678*, int);
+int IsScaledFieldPositive0203adfc(void* a, void* b);
+void ScaleAndNotify0203ad88(void* a, void* b, int c);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+struct Obj020397cc;
+void CancelPendingAction020397cc(Obj020397cc*, int);
+extern "C" void func_ov017_021c4664(int mapId, struct Vec3 v, int w);
+extern "C" int func_0202c540(void* search);
+int GetField0x397cValue_020100b0(GameState*);
+void EnqueueEventTag150_021d035c(unsigned char a, unsigned char b, unsigned char c);
+void EnqueueEventTag31_021d257c(unsigned char id, int a);
+int LookupAndForEachNode020649b0(void* obj, int kind, void* out);
+extern "C" void func_0206f81c(void* node);
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" int func_020535c8(signed char* arg0);
 extern "C" void func_020531f0(void* arg0);
@@ -394,7 +394,7 @@ extern "C" void* func_020936f8(void);
 extern "C" void func_02094030(void* arg0, int arg1, int arg2, int arg3);
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 extern const char data_ov017_021d75fc[];
 extern const char data_ov017_021d7619[];
 extern const char data_ov017_021d761e[];
@@ -459,9 +459,9 @@ extern "C" ARM void func_ov017_0219e384(struct Struct_ov017_0219e384_2* arg0, vo
 			if (arg0->unknown_a_ != 0) {
 				func_0209c678((Struct_02109bf4_4*)&data_02109bf4, 0);
 			}
-			if (func_0203adfc(&data_02108760, 0) != 0) {
-				func_0203ad88(&data_02109bf4, 0, 0);
-				arg0->unknown_a_ = 1;
+			if (IsScaledFieldPositive0203adfc(&g_sePlayer, 0) != 0) {
+				ScaleAndNotify0203ad88(&data_02109bf4, 0, 0);
+				self->active = 1;
 			}
 			var25 = *(unsigned short*)((char*)var3->unknown_130_ + 4);
 			var22 = 15;
@@ -486,8 +486,8 @@ extern "C" ARM void func_ov017_0219e384(struct Struct_ov017_0219e384_2* arg0, vo
 					SetBrightness((GameResources*)var1, var20, var22);
 				}
 			}
-			if (var4->unknown_c_ == 1) {
-				func_0205eaa0((Struct_02108760*)&data_02108760, 15, 0);
+			if (fld->mode == 1) {
+				SePlayer_Play((SePlayer*)&g_sePlayer, 15, 0);
 			}
 			func_020397cc((Struct_02018300_3*)var3, 1);
 			var3->unknown_c2_ &= ~0x40;

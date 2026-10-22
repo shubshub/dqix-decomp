@@ -12,9 +12,9 @@ extern "C" ARM void* func_ov023_021fa854(char* arg0, unsigned int arg1);
 
 extern "C" void func_0205ac40(void* arg0, void* arg1);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern "C" void func_ov011_02184a40(void* arg0, int arg1);
 
@@ -218,10 +218,10 @@ DONE:
         int var39 = 0;
         if (var34 <= var32 && var32 < var36 && var35 <= var38 && var38 < var37) var39 = 1;
 
-        if (var39 != 0) {
-            if (var29 == 0) return;
-            if (arg0->unknown_c_ & 0x40) {
-                func_0205eaa0(&data_02108760, 1, 0);
+        if (overlap != 0) {
+            if (result == 0) return;
+            if (obj->flags0xc & 0x40) {
+                SePlayer_Play(&g_sePlayer, 1, 0);
             }
             func_ov011_02184a40(arg1, var29);
         } else {

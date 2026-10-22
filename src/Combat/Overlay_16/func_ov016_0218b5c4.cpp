@@ -129,7 +129,7 @@ extern "C" void func_ov016_0218caa8(char* arg0, Struct_ov016_0218b5c4* arg1, Str
 
 extern AllocatorUnion data_02114e20;
 extern char data_02109bf4;
-extern char data_02108760;
+extern char g_sePlayer;
 extern const char data_ov016_0219cfc0[];
 extern const char data_ov016_0219cfc6[];
 extern const char data_ov016_0219cfcc[];
@@ -284,11 +284,11 @@ extern "C" ARM void func_ov016_0218b5c4(Struct_ov016_0218b5c4* arg0) {
                 func_0209c678((Struct_02109bf4_4*)&data_02109bf4, 0);
                 func_0203ad88(&data_02109bf4, 0, 0);
                 func_020bbd9c();
-                func_0205e8d4(&data_02108760);
-                func_0203a950(&data_02109bf4);
-                func_0205e88c((Struct_02000c9c_17*)&data_02108760);
-                func_0209c174((Struct_02000c9c_16*)&data_02109bf4);
-                func_0209c2b8(&data_02109bf4);
+                ResetObjectState0205e8d4(&g_sePlayer);
+                FreeAndReinit0203a950(&data_02109bf4);
+                InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
+                ResetActor0209c174((Actor0209c174*)&data_02109bf4);
+                Dispatch0203a974With0xA2000_0209c2b8(&data_02109bf4);
             }
 #endif
             if (var19->unknown_8_ != 0 && var19->unknown_c_ != 0) {
@@ -306,13 +306,13 @@ extern "C" ARM void func_ov016_0218b5c4(Struct_ov016_0218b5c4* arg0) {
                 func_ov016_0218caa8(var6, arg0, var19, var18 SCRIPT_ARG_0218b5c4);
             }
 #if !defined(jpn)
-            if (var19->unknown_11_ != 0) {
-                func_0205e8d4(&data_02108760);
-                func_0203a950(&data_02109bf4);
-                func_0205e88c((Struct_02000c9c_17*)&data_02108760);
-                func_0209c174((Struct_02000c9c_16*)&data_02109bf4);
-                func_0205ea20(&data_02108760, 100);
-                func_0209c290(&data_02109bf4);
+            if (node->fade != 0) {
+                ResetObjectState0205e8d4(&g_sePlayer);
+                FreeAndReinit0203a950(&data_02109bf4);
+                InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
+                ResetActor0209c174((Actor0209c174*)&data_02109bf4);
+                SetupContextForMode0205ea20(&g_sePlayer, 100);
+                Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
             }
 #endif
         }

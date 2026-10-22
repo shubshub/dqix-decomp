@@ -2,13 +2,13 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-struct Struct_0207fdcc_2;
-struct Struct_0207fdf0_2;
-struct Struct_02108760;
-struct Struct_02081f20_2;
-struct Struct_0201099c_10;
-struct Struct_ov003_02178910;
-struct Struct_ov003_02179e18;
+struct Obj2081;
+struct Cont0207fdf0;
+struct SePlayer;
+struct Obj0208203c;
+struct Container020dedd0;
+struct Obj021dcae0;
+struct Obj02179e18;
 
 struct Struct_ov003_02179e18 {
     char unknown_0_[8];
@@ -57,19 +57,19 @@ struct Struct_ov003_0217ab34_2 {
     unsigned char unknown_104c_;
 };
 
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_02081ea4(struct Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" struct Struct_ov003_02179e18* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_0207fdf0(struct Struct_0207fdf0_2* arg0, int arg1);
-extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" unsigned short func_ov003_0217b200(void** arg0);
-extern "C" int func_02086bf4(char* arg0, int arg1);
-extern "C" int func_ov003_02179e18(struct Struct_ov003_02179e18* arg0);
-extern "C" void func_ov003_02175d78(char* arg0);
+void* GetPtrField0x2a04_02010828(GameState* gs);
+short FindMappedMemberId02080468(void* obj, int id);
+void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
+void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+struct Obj02179e18* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
+void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
+unsigned short GetInnerShort_0217b200(void** obj);
+int SumKeyedLookups02086bf4(char* table, int key);
+int ComputeTimeRemaining_02179e18(struct Obj02179e18* elem);
+void RefillAndResetEntry_02175d78(char* obj);
 
 extern "C" int func_ov003_02179f34(void* arg0);
 extern "C" void func_ov003_02177dd4(void* arg0);
@@ -88,7 +88,7 @@ extern "C" void func_ov003_02176468(void* arg0);
 extern "C" int func_ov003_021764f4(void* arg0);
 extern "C" void func_ov003_02175df4(void* arg0);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217ab34
 extern "C" ARM void func_ov003_0217ab34(struct Struct_ov003_0217ab34_2* arg0) {
@@ -120,17 +120,17 @@ extern "C" ARM void func_ov003_0217ab34(struct Struct_ov003_0217ab34_2* arg0) {
         return;
     }
 
-    if (arg0->unknown_103f_ == 1) {
-        short var6 = arg0->unknown_103a_;
-        arg0->unknown_ff8_ = &arg0->unknown_100e_;
-        func_ov003_0217a14c(arg0);
-        func_ov023_021dcae0((struct Struct_ov003_02178910*)arg0->unknown_3c_, arg0->unknown_103a_);
-        if (func_ov003_021765b4(arg0) && var6 == arg0->unknown_103a_) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2*)arg0->unknown_88c_);
-            arg0->unknown_ff8_ = 0;
-            arg0->unknown_8_ = func_020dedd0((struct Struct_0201099c_10*)arg0->unknown_874_, arg0->unknown_103a_);
-            if (arg0->unknown_8_ == 0) {
+    if (self->step == 1) {
+        short prevSel = self->sel;
+        self->cursor = &self->member100e;
+        func_ov003_0217a14c(self);
+        func_ov023_021dcae0((struct Obj021dcae0*)self->sub3c, self->sel);
+        if (func_ov003_021765b4(self) && prevSel == self->sel) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
+            self->cursor = 0;
+            self->elem = FindElementByKey020dedd0((struct Container020dedd0*)self->container, self->sel);
+            if (self->elem == 0) {
                 return;
             }
             arg0->unknown_ffc_ = arg0->unknown_ffe_;
@@ -230,13 +230,13 @@ extern "C" ARM void func_ov003_0217ab34(struct Struct_ov003_0217ab34_2* arg0) {
             func_ov003_02177208(arg0);
             func_ov003_0217726c(arg0);
         }
-        int var13 = func_ov003_021782a0(arg0);
-        if (g_keyManager.TestKeysPressed(0x401) != 0 || var13 == 1) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0207fdf0((struct Struct_0207fdf0_2*)var1, 0);
-            arg0->unknown_1036_ = 0xd;
-            if (arg0->unknown_103c_ > 1) {
-                arg0->unknown_1036_ = 0x20;
+        int pressed = func_ov003_021782a0(self);
+        if (g_keyManager.TestKeysPressed(0x401) != 0 || pressed == 1) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)menu, 0);
+            self->nextState = 0xd;
+            if (self->count > 1) {
+                self->nextState = 0x20;
             }
             arg0->unknown_103f_ = 6;
             arg0->unknown_1046_ |= 0x2000;

@@ -20,18 +20,18 @@ enum { Enum_ov017_021ac3b0_2400 = 0x800 };
 enum { Enum_ov017_021ac3b0_2400 = 0x960 };
 #endif
 
-struct Struct_02018300_3;
-struct Struct_02033834_2;
-struct Struct_02108760;
-struct Struct_020d805c;
-struct Struct_020d7aa0_2;
-struct Struct_02013fb4;
-struct Struct_ov017_021ac3b0_6 { unsigned short unknown_0_; char unknown_2_[0x1e]; short unknown_20_; };
-struct Struct_ov017_021ac3b0_7 { char unknown_0_[5]; signed char unknown_5_; };
-struct Struct_ov017_021ac3b0_8 { unsigned short unknown_0_; char unknown_2_[6]; Struct_ov017_021ac3b0_7* unknown_8_; };
-struct Struct_ov017_021ac3b0_9 {
-    const char* unknown_0_; const char* unknown_4_; const char* unknown_8_;
-    void* unknown_c_; unsigned short unknown_10_; short unknown_12_; unsigned char unknown_14_, unknown_15_, unknown_16_, unknown_17_;
+struct Obj020397cc;
+struct Obj02033834;
+struct SePlayer;
+struct BitFlags020d805c;
+struct Obj020d7aa0;
+struct StreamHeader;
+struct Source021ac3b0 { unsigned short id; char pad2[0x1e]; short angle; };
+struct Descriptor021ac3b0 { char pad0[5]; signed char kind; };
+struct Zone021ac3b0 { unsigned short id; char pad2[6]; Descriptor021ac3b0* descriptor; };
+struct ScriptInfo021ac3b0 {
+    const char* text; const char* alternateText; const char* completedText;
+    void* data; unsigned short zone; short key; unsigned char kind, index, count, enabled;
 };
 struct Struct_ov017_021ac3b0 {
     short unknown_0_; unsigned short unknown_2_0_:1, unknown_2_1_:1, unknown_2_2_:14;
@@ -58,14 +58,14 @@ extern "C" Struct_ov017_021ac3b0_8* func_02012fe4();
 extern "C" Struct_ov017_021ac3b0_3* func_020421a0();
 extern "C" void func_020397cc(Struct_02018300_3*, int);
 extern "C" int func_ov017_021959b4();
-extern "C" void func_02043204(char*);
-extern "C" void func_ov017_021ac32c(Struct_ov017_021ac3b0_2*);
-extern "C" int func_020100f8(char*);
-extern "C" void func_020a28a0(unsigned char*, unsigned char);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void* func_020d7a50();
-extern "C" int func_020d805c(Struct_020d805c*);
-extern "C" void func_020d7aa0(Struct_020d7aa0_2*);
+void ReinitController02043204(char*);
+extern "C" void func_ov017_021ac32c(Event021ac3b0*);
+int GetFieldIfFlag4_020100f8(char*);
+void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
+void SePlayer_Play(SePlayer*, int, int);
+void* GetGlobalResetObj020d7a50();
+int GetByte0x150Bit6(BitFlags020d805c*);
+void TeardownAndResetState020d7aa0(Obj020d7aa0*);
 #if defined(jpn)
 extern "C" void func_0204500c(void*, const char*, int);
 #else
@@ -86,10 +86,10 @@ extern "C" void func_0206f550(char*, char*, char*);
 extern "C" int func_020ac2d4(int, void*, Struct_ov017_021ac3b0*, int);
 extern "C" void func_020ac104(int, Struct_ov017_021ac3b0*, int);
 extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" void func_020397c0(void*);
-extern "C" int func_020649b0(void*, int, void*);
-extern "C" void func_0206f81c(Struct_ov017_021ac3b0_5*);
-extern Struct_02108760 data_02108760;
+void SetByteField0x253_020397c0(void*);
+int LookupAndForEachNode020649b0(void*, int, void*);
+extern "C" void func_0206f81c(Lookup021ac3b0*);
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 extern const char data_ov017_021d7e88[], data_ov017_021d7e96[];
 extern const char data_ov017_021d7eb0[], data_ov017_021d7ed2[];
@@ -112,12 +112,12 @@ extern "C" ARM void func_ov017_021ac3b0(Struct_ov017_021ac3b0_2* arg0) {
         arg0->unknown_29_ = 1; func_02043204((char*)var3);
         func_ov017_021ac32c(arg0); arg0->unknown_1_ = 1; return;
     }
-    if (arg0->unknown_28_ == 0) {
-        int var6 = func_020100f8((char*)var0);
-        if (var6) func_020a28a0((unsigned char*)var6, 3);
-        func_0205eaa0(&data_02108760, 1, 0);
-        void* var7 = func_020d7a50();
-        if (func_020d805c((Struct_020d805c*)var7)) func_020d7aa0((Struct_020d7aa0_2*)var7);
+    if (self->stage == 0) {
+        int actor = GetFieldIfFlag4_020100f8((char*)game);
+        if (actor) SetFlagsAt0x244_020a28a0((unsigned char*)actor, 3);
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        void* reset = GetGlobalResetObj020d7a50();
+        if (GetByte0x150Bit6((BitFlags020d805c*)reset)) TeardownAndResetState020d7aa0((Obj020d7aa0*)reset);
 #if defined(jpn)
         func_0204500c(var3, data_ov017_021d7e88, 0);
 #else

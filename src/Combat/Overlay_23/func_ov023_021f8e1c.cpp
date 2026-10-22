@@ -84,26 +84,26 @@ struct Struct_ov023_021f8e1c_2 {
     unsigned char unknown_62_;
 };
 
-struct Struct_ov011_02184a00;
-struct Struct_ov011_02184bd8;
-struct Struct_ov011_02184bcc;
-struct Struct_ov004_02153978;
-struct Struct_02047a5c;
-struct Struct_02047a3c;
-struct Struct_02108760;
+struct Obj_02184a00;
+struct Obj_02184bd8;
+struct Obj_02184bcc;
+struct Obj021f6f08;
+struct Owner02047a5c;
+struct Owner02047a3c;
+struct SePlayer;
 
-extern "C" unsigned short func_ov011_02184a00(struct Struct_ov011_02184a00* arg0);
-extern "C" int func_020c39c8(volatile unsigned short* arg0);
-extern "C" void* func_ov023_021f7318(void* arg0);
-extern "C" unsigned char func_02047a5c(struct Struct_02047a5c* arg0, int arg1);
-extern "C" int func_02047a3c(struct Struct_02047a3c* arg0, int arg1);
-extern "C" unsigned short func_ov023_021f8c50(unsigned char* arg0);
-extern "C" unsigned short func_ov023_021f8c60(unsigned char* arg0);
-extern "C" unsigned int func_ov023_021f6f08(struct Struct_ov004_02153978* arg0);
-extern "C" int func_ov011_02184bd8(struct Struct_ov011_02184bd8* arg0);
-extern "C" void func_ov011_02184bcc(struct Struct_ov011_02184bcc* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void* func_ov023_021f9cb8(void* arg0, void* arg1, void* arg2);
+unsigned short GetShortField1b0_02184a00(struct Obj_02184a00* obj);
+extern "C" int func_020c39c8(volatile unsigned short* p);
+void* AddOffset20_021f7318(void* p);
+unsigned char GetEntryByteIfFlag0x84(struct Owner02047a5c* owner, int index);
+int GetElementByte1IfEnabled(struct Owner02047a3c* obj, int index);
+unsigned short GetShortAt_021f8c50_021f8c50(unsigned char* obj);
+unsigned short GetShortAt_021f8c60_021f8c60(unsigned char* obj);
+unsigned int GetShort6_021f6f08(struct Obj021f6f08* obj);
+int GetField1c8_02184bd8(struct Obj_02184bd8* obj);
+void SetField1c8False_02184bcc(struct Obj_02184bcc* obj);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void* GetLinkedNodeIfKind6_021f9cb8(void* unused, void* other, void* node);
 
 extern "C" void __clear(void* arg0, int arg1);
 extern "C" void* func_ov011_021849c8(void* arg0);
@@ -117,7 +117,7 @@ extern "C" Struct_ov023_021f8e1c func_ov023_021f8b78(void* arg0, void* arg1);
 extern "C" void func_ov023_021f98e0(void* arg0, void* arg1);
 extern "C" int func_ov023_021f9da8(void* arg0, void* arg1, int arg2, int arg3);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern unsigned int data_ov023_021fff24;
 extern const unsigned short data_ov023_021fd922[];
 
@@ -434,8 +434,8 @@ extern "C" ARM void func_ov023_021f8e1c(Struct_ov023_021f8e1c_2* arg0, void* arg
         if (arg0->unknown_40_ != 0) {
             func_ov011_02184a40(arg1, arg0->unknown_40_);
         }
-        if (var38 && arg0->unknown_61_ != 0) {
-            func_0205eaa0(&data_02108760, 1, 0);
+        if (played && self->confirmSe != 0) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
     }
 
@@ -464,8 +464,8 @@ extern "C" ARM void func_ov023_021f8e1c(Struct_ov023_021f8e1c_2* arg0, void* arg
                     var41 = 1;
                 }
             }
-            if (var41 && arg0->unknown_61_ != 0) {
-                func_0205eaa0(&data_02108760, 1, 0);
+            if (played && self->confirmSe != 0) {
+                SePlayer_Play(&g_sePlayer, 1, 0);
             }
         }
     }

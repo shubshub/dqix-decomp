@@ -89,7 +89,7 @@ struct Struct_ov023_021ec480_2 {
 };
 
 extern unsigned char data_ov023_021fd844[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 
 extern "C" Struct_ov023_021ec480_4* func_020421a0();
@@ -154,21 +154,21 @@ extern "C" ARM void func_ov023_021ec480(Struct_ov023_021ec480* arg0)
             else
                 ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, 0x17, -8);
         }
-        int var3 = 0x8c;
-        if (arg0->unknown_430_ == 2 || (arg0->unknown_430_ == 7 && (arg0->unknown_438_ & GUIDE_WINDOW_MAIN_SCREEN)))
-            var3 = 0x1b4;
-        func_0205ebc0(data_02108760, var3, var3);
-        func_ov023_021ecbbc(arg0);
-        arg0->unknown_432_++;
+        int volume = 0x8c;
+        if (self->type_ == 2 || (self->type_ == 7 && (self->flags_ & GUIDE_WINDOW_MAIN_SCREEN)))
+            volume = 0x1b4;
+        SetForwardAndStore0205ebc0(g_sePlayer, volume, volume);
+        func_ov023_021ecbbc(self);
+        self->step_++;
     }
     if (var2 == 1)
     {
         if (arg0->unknown_438_ & GUIDE_WINDOW_OPENING)
             return;
-        func_ov023_021ed194(arg0);
-        arg0->unknown_438_ |= GUIDE_WINDOW_TITLE_SCROLLING;
-        func_0205ebfc(data_02108760, 0, 0);
-        arg0->unknown_432_++;
+        func_ov023_021ed194(self);
+        self->flags_ |= GUIDE_WINDOW_TITLE_SCROLLING;
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
+        self->step_++;
     }
     if (var2 == 2)
     {
@@ -218,9 +218,9 @@ extern "C" ARM void func_ov023_021ec480(Struct_ov023_021ec480* arg0)
     }
     if (var2 == 6)
     {
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_c4_, 0);
-        func_0205ebec(data_02108760);
-        if (!(arg0->unknown_438_ & GUIDE_WINDOW_NO_DIMMING))
+        ResetEntryList0205d6a0((Entry_0205d6a0*)self->window_, 0);
+        ForwardField0xc0_0205ebec(g_sePlayer);
+        if (!(self->flags_ & GUIDE_WINDOW_NO_DIMMING))
         {
             if (arg0->unknown_84_[1].unknown_1c_0_ == 0)
                 ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, 0x17, 0);

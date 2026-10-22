@@ -24,19 +24,19 @@ enum {
 };
 #endif
 
-struct Struct_02018300_3;
-struct Struct_02108760;
-struct Struct_020d7aa0_2;
-struct Struct_0203de84;
-struct Struct_0203de84_2;
-struct Struct_02033834_2;
-struct Struct_02040a90;
-struct Struct_0203ca24;
-struct Struct_0203d028_12;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-struct Struct_02038598_5;
-struct Struct_0208b8c4;
+struct Obj020397cc;
+struct SePlayer;
+struct Obj020d7aa0;
+struct Vec3_020406f8;
+struct Node020406f8;
+struct Obj02033834;
+struct Owner02040a90;
+struct Struct0203cedc;
+struct Entry0209854c;
+struct TailList020469b4;
+struct TailNode020469b4;
+struct ListHead02046b60;
+struct Obj0208b8c4;
 
 struct Struct_ov017_021b8e8c {
     int unknown_0_;
@@ -92,44 +92,44 @@ extern "C" unsigned short* func_02012fe4(void);
 extern "C" char* func_020421a0(void);
 extern "C" void* func_0203cf4c(void);
 extern "C" void* func_0205ec34(void);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(char* arg0);
-extern "C" void func_020a27ac(void* arg0);
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void* func_0203df78(void* arg0, int arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" Struct_020d7aa0_2* func_020d7a50(void);
-extern "C" void func_020d7aa0(struct Struct_020d7aa0_2* arg0);
-extern "C" int func_020981e4(int arg0, int arg1);
-extern "C" int func_02098268(int arg0, int arg1);
-extern "C" Struct_ov017_021b8e8c func_020406f8(struct Struct_0203de84_2* arg0);
-extern "C" void func_02033834(struct Struct_02033834_2* arg0, int arg1);
-extern "C" int func_0203dfdc(void* arg0, int arg1);
-extern "C" int func_02040a90(struct Struct_02040a90* arg0);
-extern "C" int func_02040528(int* arg0);
-extern "C" void func_0203cedc(struct Struct_0203ca24* arg0, int arg1, int arg2);
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" Struct_0203d028_12* func_0209854c(struct Struct_0203d028_12* arg0, int arg1);
-extern "C" void func_ov017_021a967c(Struct_0201bdac* arg0, int arg1);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
-extern "C" int func_ov017_0218d2c4(int arg0);
-extern "C" void func_020a27b8(unsigned char* arg0);
-extern "C" void func_ov008_02184754(void* arg0);
-extern "C" int func_0206ec1c(int arg0, int arg1, unsigned char* arg2, unsigned int arg3);
-extern "C" void func_0206ec64(int arg0, int arg1, unsigned char* arg2, unsigned int arg3);
-extern "C" int func_ov017_021ba810(const void* arg0, unsigned int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" unsigned char* func_0206f504(void);
-extern "C" void func_0206f510(char* arg0);
-extern "C" int func_0206f550(unsigned char* arg0, char* arg1, char* arg2);
-extern "C" int func_0206f6cc(unsigned char* arg0, int arg1);
-extern "C" int func_02046b60(Struct_02038598_5* arg0, int arg1);
-extern "C" void func_020a0cc4(unsigned int arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_0208b8c4(struct Struct_0208b8c4* arg0, SafeAllocator* arg1);
+int GetFieldIfFlag4_020100f8(char* obj);
+void ReinitController02043204(char* obj);
+extern "C" void func_02043124(char* obj);
+void SetField0x23cTrue_020a27ac(void* obj);
+void CancelPendingAction020397cc(Obj020397cc* obj, int arg1);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void* FindEntryPointerByKey0203df78(void* base, int key);
+void SetByteField0x253_020397c0(void* obj);
+Obj020d7aa0* GetGlobalResetObj020d7a50(void);
+void TeardownAndResetState020d7aa0(struct Obj020d7aa0* obj);
+int IsIdInRange020981e4(int a, int id);
+int IsInRange1To63_02098268(int a, int x);
+extern "C" Vec3_021b8e8c _Z29SelectVec3FromSources020406f8P13Vec3_020406f8P12Node020406f8(struct Node020406f8* n);
+void SetVecYByMode02033834(struct Obj02033834* obj, int arg);
+int FindEntryByKey0203dfdc(void* base, int key);
+int GetFieldFromActiveChild(struct Owner02040a90* obj);
+int GetField0x8_02040528(int* obj);
+void SetCombatFlags0x5c(struct Struct0203cedc* obj, int b, int c);
+int GetField5cb0Value_0201079c(char* obj);
+int GetField5cb4Value_020107d0(char* obj);
+Entry0209854c* FindEntryByFieldC0209854c(struct Entry0209854c* list, int target);
+extern "C" void func_ov017_021a967c(TailNode020469b4* node, int id);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+int GetTableEntryOrZero_0218d2c4(int id);
+void ClearIntAt0x23c_020a27b8(unsigned char* obj);
+extern "C" void func_ov008_02184754(void* obj);
+int GetNibble0206ec1c(int a, int b, unsigned char* c, unsigned int d);
+void IncrementNibble0206ec64(int a, int b, unsigned char* c, unsigned int d);
+extern "C" int func_ov017_021ba810(const void* code, unsigned int length, int id, int a3, int a4, int a5, int a6);
+int AppendString02042058(char* dst, const char* src);
+unsigned char* GetData02108d18_0206f504(void);
+void Init0206f510(char* obj);
+extern "C" int func_0206f550(unsigned char* s, char* in, char* out);
+int CommandDispatch0206f6cc(unsigned char* obj, int arg);
+int ListContainsId(ListHead02046b60* list, int id);
+extern "C" void func_020a0cc4(unsigned int size);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void InitAllocatorsAndBuffers0208b8c4(struct Obj0208b8c4* obj, SafeAllocator* allocator);
 #if defined(jpn)
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2);
 #else
@@ -144,7 +144,7 @@ extern "C" void func_ov017_021bd38c(void* arg0, int arg1, int arg2);
 
 extern "C" void __clear(void* arg0, int arg1);
 
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d7c90;
 extern char data_ov017_021d7c95;
 extern char data_ov017_021d7cad;
@@ -184,8 +184,8 @@ extern "C" ARM void func_ov017_021b8e8c(Struct_ov017_021b8e8c_5* arg0, Struct_02
 
     switch (arg0->unknown_11c_) {
     case 0: {
-        if (arg0->unknown_139_ == 0) {
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
+        if (self->quiet == 0) {
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
         }
         *(short*)((char*)var6 + 0xb2) = 0;
         Struct_ov017_021b8e8c var11 = *(Struct_ov017_021b8e8c*)((char*)var6 + 0x44);

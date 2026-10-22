@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-struct Struct_0207fdf0_2;
-struct Struct_02108760;
-struct Struct_02081f20_2;
+struct Cont0207fdf0;
+struct SePlayer;
+struct Obj0208203c;
 
-extern "C" void func_0207fdf0(struct Struct_0207fdf0_2* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov003_02175f90(void* arg0);
-extern "C" void func_ov003_02177938(void* arg0);
-extern "C" void func_ov003_021749c0(char* arg0);
-extern "C" int func_ov003_021765b4(void* arg0);
-extern "C" int func_ov003_021766e8(void* arg0);
+void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
+extern "C" void func_020813ec(void* obj, int key);
+short FindMappedMemberId02080468(void* obj, int id);
+void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+int ComputePositiveCount_02175f90(void* self);
+extern "C" void func_ov003_02177938(void* self);
+extern "C" void func_ov003_021749c0(char* base);
+extern "C" int func_ov003_021765b4(void* self);
+extern "C" int func_ov003_021766e8(void* self);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217b214
 #if defined(jpn)
@@ -49,19 +49,19 @@ extern "C" ARM void func_ov003_0217b214(char* arg0) {
         return;
     }
 
-    if (var1 == 2) {
-        *(void**)(arg0 + 0xf74) = arg0 + 0xf00 + 0x8e;
-        func_ov003_02177938(arg0);
-        func_02080c68(var0, 0x15, 1);
-        if (func_ov003_021765b4(arg0)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2*)(arg0 + 0x808));
-            *(void**)(arg0 + 0xf74) = 0;
-            if (func_ov003_02175f90(arg0) == 0) {
-                *(short*)(arg0 + 0xf00 + 0xb2) = 0x24;
-                func_0207fdf0((struct Struct_0207fdf0_2*)var0, 0);
-                *(unsigned char*)(arg0 + 0xf00 + 0xbb) = 0;
-                *(unsigned short*)(arg0 + 0xf00 + 0xc2) |= 0x20;
+    if (state == 2) {
+        *(void**)(self + 0xf74) = self + 0xf00 + 0x8e;
+        func_ov003_02177938(self);
+        SetEntryLowNibbleAndElement02080c68(elemObj, 0x15, 1);
+        if (func_ov003_021765b4(self)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c*)(self + 0x808));
+            *(void**)(self + 0xf74) = 0;
+            if (ComputePositiveCount_02175f90(self) == 0) {
+                *(short*)(self + 0xf00 + 0xb2) = 0x24;
+                CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)elemObj, 0);
+                *(unsigned char*)(self + 0xf00 + 0xbb) = 0;
+                *(unsigned short*)(self + 0xf00 + 0xc2) |= 0x20;
                 return;
             }
             func_0207fdf0((struct Struct_0207fdf0_2*)var0, 0);
@@ -110,19 +110,19 @@ extern "C" ARM void func_ov003_0217b214(char* arg0) {
         return;
     }
 
-    if (var3 == 2) {
-        *(void**)(arg0 + 0xff8) = arg0 + 0x1000 + 0x12;
-        func_ov003_02177938(arg0);
-        func_02080c68(var2, 0x15, 1);
-        if (func_ov003_021765b4(arg0)) {
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0208203c((struct Struct_02081f20_2*)(arg0 + 0x88c));
-            *(void**)(arg0 + 0xff8) = 0;
-            if (func_ov003_02175f90(arg0) == 0) {
-                *(short*)(arg0 + 0x1000 + 0x36) = 0x24;
-                func_0207fdf0((struct Struct_0207fdf0_2*)var2, 0);
-                *(unsigned char*)(arg0 + 0x1000 + 0x3f) = 0;
-                *(unsigned short*)(arg0 + 0x1000 + 0x46) |= 0x20;
+    if (state == 2) {
+        *(void**)(self + 0xff8) = self + 0x1000 + 0x12;
+        func_ov003_02177938(self);
+        SetEntryLowNibbleAndElement02080c68(elemObj, 0x15, 1);
+        if (func_ov003_021765b4(self)) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetWithSub0208203c((struct Obj0208203c*)(self + 0x88c));
+            *(void**)(self + 0xff8) = 0;
+            if (ComputePositiveCount_02175f90(self) == 0) {
+                *(short*)(self + 0x1000 + 0x36) = 0x24;
+                CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)elemObj, 0);
+                *(unsigned char*)(self + 0x1000 + 0x3f) = 0;
+                *(unsigned short*)(self + 0x1000 + 0x46) |= 0x20;
                 return;
             }
             func_0207fdf0((struct Struct_0207fdf0_2*)var2, 0);

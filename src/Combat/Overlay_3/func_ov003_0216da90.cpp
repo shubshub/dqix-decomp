@@ -84,9 +84,9 @@ extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int ar
 #else
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
-extern "C" Struct_ov003_0216da90_4* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0205ba68(Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(Struct_0205bacc* arg0, int arg1);
+Window0216da90* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(Node0205bacc* s, int val);
 
 extern short data_ov003_0217f560[];
 
@@ -129,13 +129,13 @@ extern "C" ARM void func_ov003_0216da90(Struct_ov003_0216da90* arg0)
         var3->unknown_a8_.inline_ov003_0216da90_2(0x1f - var3->unknown_a8_.unknown_0_, var3->unknown_a8_.unknown_6_);
 #endif
 
-    Struct_ov003_0216da90_4* var4 = arg0->unknown_12c0_;
-    var4->unknown_4_.unknown_4_ = 1;
-    var4->unknown_54_.unknown_4_ = 1;
-    func_0205ba68((Struct_0205ba68*)&var4->unknown_4_, 1, 4, 0);
-    func_0205ba68((Struct_0205ba68*)&var4->unknown_54_, 1, 4, 0);
-    func_0205bacc((Struct_0205bacc*)&var4->unknown_4_, 4);
-    func_0205bacc((Struct_0205bacc*)&var4->unknown_54_, 4);
-    var4->unknown_94_ = 1;
-    var4->unknown_95_ = 1;
+    Window0216da90* window = self->window;
+    window->tableA.field4 = 1;
+    window->tableB.field4 = 1;
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableA, 1, 4, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableB, 1, 4, 0);
+    GridCursor_SetCount((Node0205bacc*)&window->tableA, 4);
+    GridCursor_SetCount((Node0205bacc*)&window->tableB, 4);
+    window->activeA = 1;
+    window->activeB = 1;
 }

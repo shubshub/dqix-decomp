@@ -8,14 +8,14 @@
 #endif
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Struct_02108760;
+struct SePlayer;
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_0205def8(struct Struct_0205def8* arg0, int arg1, int arg2);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void* func_02053c6c(unsigned char* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void* GetFieldAt0x150_02053c6c(unsigned char* obj);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 extern "C" void* func_02079e2c(char* arg0, int arg1);
 extern "C" int func_ov000_0217ab48(void* arg0);
@@ -82,8 +82,8 @@ struct Struct_ov000_0217bdf4_3 {
     unsigned char unknown_444_;
 };
 
-extern Struct_ov000_02184294_8 data_ov000_02184294;
-extern char data_02108760;
+extern MenuGlobals_0217bdf4 data_ov000_02184294;
+extern char g_sePlayer;
 extern short data_ov000_02183658[];
 
 // USA: func_ov000_0217bdf4
@@ -99,11 +99,11 @@ extern "C" ARM int func_ov000_0217bdf4(Struct_ov000_0217bdf4_3* arg0, int arg1, 
         if (var3 == NULL) {
             return -1;
         }
-        int var4 = ((Struct_ov000_0217bdf4_2*)func_02053c6c((unsigned char*)var3))->unknown_950_;
-        func_0205eaa0((struct Struct_02108760*)&data_02108760, 1, 0);
-        arg0->unknown_1d_ = 0;
-        Struct_02108e10* var5 = func_020797dc();
-        if (var5 == NULL) {
+        int kind = ((MemberInfo_0217bdf4*)GetFieldAt0x150_02053c6c((unsigned char*)member))->spellKind;
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
+        obj->field1d = 0;
+        ActionDataTables* data = GetData02108e10_020797dc();
+        if (data == NULL) {
             return -1;
         }
         Struct_ov000_0217bdf4* var6 = (Struct_ov000_0217bdf4*)func_02079e2c((char*)var5, data_ov000_02183658[var4]);

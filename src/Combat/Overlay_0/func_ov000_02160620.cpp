@@ -84,7 +84,7 @@ extern "C" void func_020a1edc();
 extern "C" void func_020a1ef0(int);
 extern "C" void func_0205eb80(void*);
 extern int data_ov000_02184220;
-extern unsigned char data_02108760[0xd0];
+extern unsigned char g_sePlayer[0xd0];
 
 // USA: func_ov000_02160620
 extern "C" ARM void func_ov000_02160620(Struct_ov000_02160620_2* arg0) {
@@ -186,10 +186,10 @@ extern "C" ARM void func_ov000_02160620(Struct_ov000_02160620_2* arg0) {
     }
     if (arg0->unknown_7710_ == 0)
         return;
-    arg0->unknown_7710_ -= (signed char)var0->GetTickCount();
-    if (arg0->unknown_7710_ < 0) {
-        arg0->unknown_7710_ = 0;
-        func_0205eb80(data_02108760);
-        arg0->unknown_7711_ = 0;
+    frame->countdown -= (signed char)game->GetTickCount();
+    if (frame->countdown < 0) {
+        frame->countdown = 0;
+        ForwardField0xc0_0205eb80(g_sePlayer);
+        frame->countdownFlag = 0;
     }
 }

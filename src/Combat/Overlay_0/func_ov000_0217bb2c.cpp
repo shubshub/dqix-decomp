@@ -3,16 +3,16 @@
 #include "Input/Input.h"
 
 struct Struct_0205c570;
-struct Struct_02108760;
-struct Struct_02010088;
+struct SePlayer;
+struct S_10088;
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0217ab48(void* arg0);
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
+int IsFlag10088Set_02010088(struct S_10088* obj);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
 
 struct Struct_ov000_0217bb2c_3 {
     char unknown_0_[4];
@@ -81,8 +81,8 @@ struct Struct_ov000_0217bb2c_2 {
     unsigned char unknown_444_;
 };
 
-extern Struct_ov000_02184294_7 data_ov000_02184294;
-extern char data_02108760;
+extern MenuGlobals_0217bb2c data_ov000_02184294;
+extern char g_sePlayer;
 
 // USA: func_ov000_0217bb2c
 extern "C" ARM int func_ov000_0217bb2c(Struct_ov000_0217bb2c_2* arg0, int arg1, int arg2) {
@@ -132,12 +132,12 @@ extern "C" ARM int func_ov000_0217bb2c(Struct_ov000_0217bb2c_2* arg0, int arg1, 
         } else {
             var4 = 1;
         }
-        if (var4) {
-            arg0->unknown_43d_ = arg0->unknown_10_[arg0->unknown_18_];
-            arg0->unknown_2e_ = arg0->unknown_30_[arg0->unknown_21_];
-            func_0205eaa0((struct Struct_02108760*)&data_02108760, 1, 0);
-            arg0->unknown_18_++;
-            arg0->unknown_10_[arg0->unknown_18_] = 100;
+        if (ok) {
+            obj->field43d = obj->selections[obj->depth];
+            obj->field2e = obj->order[obj->cursor];
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
+            obj->depth++;
+            obj->selections[obj->depth] = 100;
         }
     } else if (func_ov000_0217ab48(arg0)) {
         func_ov000_0217629c(arg0);

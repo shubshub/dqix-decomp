@@ -73,9 +73,9 @@ extern "C" void* func_0200fd0c(GameState*);
 extern "C" void func_ov017_021a7280(Struct_ov017_021a6c2c_2*);
 extern char data_ov017_021d777c[];
 extern AllocatorUnion data_02114e20;
-extern Struct_02108760_5 data_02108760;
-static inline Struct_ov017_021a6c2c_3* inline_ov017_021a6c2c(GameResources* arg0) {
-    return (Struct_ov017_021a6c2c_3*)arg0->unknown_2cc_;
+extern Dispatcher021a6c2c g_sePlayer;
+static inline ResourceState021a6c2c* ResourceStateBuffer021a6c2c(GameResources* resources) {
+    return (ResourceState021a6c2c*)resources->unknown_2cc;
 }
 
 // USA: func_ov017_021a6c2c
@@ -101,65 +101,65 @@ extern "C" ARM void func_ov017_021a6c2c(Struct_ov017_021a6c2c_2* arg0) {
             }
         }
         func_020a0cc4(0x7000);
-        if (var5->unknown_0_ != 0x4e27) {
-            if (var5->unknown_0_ == 0x4e42) var5->unknown_27b4_ = 4;
-        } else var5->unknown_27b4_ = 2;
-        func_ov017_021d1cb8();
-        func_020397cc((Struct_02018300_3*)var1, 1);
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 1) {
-        arg0->unknown_44_ = var3->QueueLoadFile(data_ov017_021d777c, 0);
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 2) {
-        if (!var3->GetTaskStatus(arg0->unknown_44_)) return;
-        void* var8; unsigned int var9;
-        var3->GetLoadedFileByID(arg0->unknown_44_, &var8, &var9);
-        arg0->unknown_30_.CreateTypeA(func_02012d88(&data_02114e20, 0x7000), 0x7000);
-        arg0->unknown_30_.Reset();
-        Struct_0203d028* var10 = &inline_ov017_021a6c2c(var2)->unknown_c40_;
-        func_0207df50(var10);
-        void* var11 = arg0->unknown_30_.Allocate(var9);
-        memcpy(var11, var8, var9);
-        CleanInvalidateCacheRange(var11, var9);
-        func_02057e6c(var4, 13, &arg0->unknown_30_, var11, var9, var10);
-        var3->RemoveTask(arg0->unknown_44_);
-        arg0->unknown_44_ = -1; arg0->unknown_c_ = 0; arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 3) {
-        arg0->unknown_c_ += var0->GetTickCount();
-        if (arg0->unknown_c_ <= 50) return;
-        func_0205ebec(&data_02108760);
-        int var12[4], var13;
-        func_02010834((Struct_02010834*)var0, var1->obj3D_.unknown_4_, var12, &var13);
-        Struct_ov017_021a6c2c var14[4];
-        for (int var15 = 0; var15 < var13; var15++) {
-            GameObject* var16 = var0->GetGameObjectByIndex(var12[var15]);
-            if (!var16) continue;
-            var14[var15].unknown_0_ = 0; var14[var15].unknown_10_ = 1; var14[var15].unknown_12_ = 0;
-            var14[var15].unknown_14_ = -1; var14[var15].unknown_16_ = -1; var14[var15].unknown_18_ = -1; var14[var15].unknown_1a_ = -1;
-            var14[var15].unknown_1c_ = -0x1000;
-            var14[var15].unknown_20_[0] = 0; var14[var15].unknown_20_[1] = 0; var14[var15].unknown_20_[2] = 0;
-            var14[var15].unknown_2c_.x = 0; var14[var15].unknown_2c_.y = 0; var14[var15].unknown_2c_.z = 0;
-            var14[var15].unknown_38_[0] = 0; var14[var15].unknown_38_[1] = 0; var14[var15].unknown_38_[2] = 0;
-            var14[var15].unknown_44_.x = 0x1000; var14[var15].unknown_44_.y = 0x1000; var14[var15].unknown_44_.z = 0x1000;
-            Struct_ov017_021a6c2c* var17 = &var14[var15];
-            Vector3fix* var18 = &var16->obj3D_.position_;
-            var17->unknown_11_0_ = 0; var17->unknown_11_1_ = 0; var17->unknown_11_2_ = 1; var17->unknown_11_3_ = 0;
-            var17->unknown_11_4_ = 0; var17->unknown_11_5_ = 0; var17->unknown_11_6_ = 0; var17->unknown_11_7_ = 0;
-            var17->unknown_2c_ = *var18;
-            var17->unknown_44_ = var16->obj3D_.GetScale();
-            func_02057fb4(var4, 13, var17);
+        if (zone->id != 0x4e27) {
+            if (zone->id == 0x4e42) zone->field27b4 = 4;
+        } else zone->field27b4 = 2;
+        CheckAndEnqueueTag_021d1cb8_021d1cb8();
+        CancelPendingAction020397cc((Obj020397cc*)leader, 1);
+        self->stage++;
+    } else if (self->stage == 1) {
+        self->task = loader->QueueLoadFile(data_ov017_021d777c, 0);
+        self->stage++;
+    } else if (self->stage == 2) {
+        if (!loader->GetTaskStatus(self->task)) return;
+        void* file; unsigned int length;
+        loader->GetLoadedFileByID(self->task, &file, &length);
+        self->allocator.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x7000), 0x7000);
+        self->allocator.Reset();
+        Foo0207df50* fields = &ResourceStateBuffer021a6c2c(resources)->effectFields;
+        CopyInternalFields0207df50(fields);
+        void* data = self->allocator.Allocate(length);
+        memcpy(data, file, length);
+        CleanInvalidateCacheRange(data, length);
+        func_02057e6c(manager, 13, &self->allocator, data, length, fields);
+        loader->RemoveTask(self->task);
+        self->task = -1; self->timer = 0; self->stage++;
+    } else if (self->stage == 3) {
+        self->timer += game->GetTickCount();
+        if (self->timer <= 50) return;
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        int ids[4], count;
+        CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.unknown_4_, ids, &count);
+        Entry021a6c2c entries[4];
+        for (int i = 0; i < count; i++) {
+            GameObject* actor = game->GetGameObjectByIndex(ids[i]);
+            if (!actor) continue;
+            entries[i].kind = 0; entries[i].enabled = 1; entries[i].field12 = 0;
+            entries[i].field14 = -1; entries[i].field16 = -1; entries[i].field18 = -1; entries[i].field1a = -1;
+            entries[i].field1c = -0x1000;
+            entries[i].fields20[0] = 0; entries[i].fields20[1] = 0; entries[i].fields20[2] = 0;
+            entries[i].position.x = 0; entries[i].position.y = 0; entries[i].position.z = 0;
+            entries[i].fields38[0] = 0; entries[i].fields38[1] = 0; entries[i].fields38[2] = 0;
+            entries[i].scale.x = 0x1000; entries[i].scale.y = 0x1000; entries[i].scale.z = 0x1000;
+            Entry021a6c2c* entry = &entries[i];
+            Vector3fix* position = &actor->obj3D_.position_;
+            entry->bit0 = 0; entry->bit1 = 0; entry->bit2 = 1; entry->bit3 = 0;
+            entry->bit4 = 0; entry->bit5 = 0; entry->bit6 = 0; entry->bit7 = 0;
+            entry->position = *position;
+            entry->scale = actor->obj3D_.GetScale();
+            FindNodeAndProcess02057fb4(manager, 13, entry);
         }
-        func_0205ebc0(&data_02108760, 0xa2, 0xa2);
-        func_0205ebfc(&data_02108760, 2, 0);
-        arg0->unknown_c_ = 0; arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 4) {
-        arg0->unknown_c_ += var0->GetTickCount();
-        if (arg0->unknown_c_ < 38) return;
-        int var19[4], var20;
-        func_02010834((Struct_02010834*)var0, var1->obj3D_.unknown_4_, var19, &var20);
-        for (int var21 = 0; var21 < var20; var21++) {
-            GameObject* var22 = var0->GetGameObjectByIndex(var19[var21]);
-            if (var22) var22->obj3D_.MakeHidden();
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0xa2, 0xa2);
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 2, 0);
+        self->timer = 0; self->stage++;
+    } else if (self->stage == 4) {
+        self->timer += game->GetTickCount();
+        if (self->timer < 38) return;
+        int ids[4], count;
+        CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.unknown_4_, ids, &count);
+        for (int i = 0; i < count; i++) {
+            GameObject* actor = game->GetGameObjectByIndex(ids[i]);
+            if (actor) actor->obj3D_.MakeHidden();
         }
         arg0->unknown_8_++;
     } else if (arg0->unknown_8_ == 5) {

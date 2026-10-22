@@ -56,7 +56,7 @@ extern char data_ov003_02180d08[];
 extern char data_ov003_02180c07[];
 extern Vector3i data_ov003_02180ce0;
 extern int data_ov003_02180cec[3];
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_0217bf78
 extern "C" ARM void func_ov003_0217bf78(Struct_ov003_0217bf78_2 *arg0) {
@@ -119,8 +119,8 @@ extern "C" ARM void func_ov003_0217bf78(Struct_ov003_0217bf78_2 *arg0) {
         for (int var7 = 0; var7 < 0x800; var7++)
             *var6++ = 0;
         *(volatile unsigned int *) 0x4001000 &= ~0x1f00;
-        arg0->unknown_140_  = 2;
-        arg0->unknown_141_ = 0;
-        func_0205ebc0(&data_02108760, 0x8b, 0x8b);
+        self->mode  = 2;
+        self->state = 0;
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0x8b, 0x8b);
     }
 }

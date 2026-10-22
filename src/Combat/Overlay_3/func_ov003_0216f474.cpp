@@ -20,21 +20,21 @@ extern "C" void func_ov003_02170688(void *arg0);
 extern "C" void func_02098630(void *arg0, void *arg1, int arg2, int arg3);
 extern "C" int func_020457e0(void *arg0);
 
-struct Struct_ov003_0216efdc_2;
-struct Struct_ov003_0216f474;
-struct Struct_02108760;
-struct Struct_02098970;
-struct Struct_02098970_2;
-struct Struct_02098e70;
-struct Struct_02098eac;
-extern "C" Struct_ov003_0216f474 *func_ov003_0216f414(Struct_ov003_0216efdc_2 *arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_02098970(Struct_02098970 *arg0, Struct_02098970_2 *arg1);
-extern "C" void func_ov003_0216fb6c(char *arg0);
-extern "C" int func_02098e70(Struct_02098e70 *arg0);
-extern "C" int func_02098eac(Struct_02098eac *arg0);
+struct Obj_0216f414;
+struct Entry0216f474;
+struct SePlayer;
+struct Pool02098970;
+struct Entry02098970;
+struct NibbleElem02098e70;
+struct NibbleElem02098eac;
+Entry0216f474 *FindEntryByShortId_0216f414(Obj_0216f414 *list, int id);
+void SePlayer_Play(SePlayer *obj, int a, int b);
+int ReleaseEntryIfInPool(Pool02098970 *pool, Entry02098970 *entry);
+void ResetFieldsB68AndB74_0216fb6c(char *pool);
+int CountNibble0xcEquals9(NibbleElem02098e70 *p);
+int CountNibble0xcEqualsA(NibbleElem02098eac *p);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Struct_ov003_0216f474 {
     unsigned char unknown_0_[0x16];
@@ -109,10 +109,10 @@ extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *arg0) {
                 var3->unknown_16_ |= 2;
             }
         }
-        func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-        Struct_ov003_0216f474_3 *var4 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
-        if (var4->unknown_c_4_ == 9 || var4->unknown_c_4_ == 0xa) {
-            func_ov003_0216fc58(arg0, 1, 0);
+        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+        Item0216f474 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
+        if (item->kind_ == 9 || item->kind_ == 0xa) {
+            func_ov003_0216fc58(self, 1, 0);
         } else {
             func_ov003_0216fc58(arg0, 0, 0);
         }
@@ -147,21 +147,21 @@ extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *arg0) {
             if (g_keyManager.TestKeysPressed(0x401) != 0 || var6 == arg0->unknown_9_) {
                 switch (arg0->unknown_8_) {
                     case 0:
-                        func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-                        func_ov003_0216ff90(arg0);
-                        arg0->unknown_2_ = 2;
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+                        func_ov003_0216ff90(self);
+                        self->state_ = 2;
                         break;
                     case 1:
-                        func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-                        func_ov003_0216ff90(arg0);
-                        arg0->unknown_2_ = 3;
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+                        func_ov003_0216ff90(self);
+                        self->state_ = 3;
                         break;
                     case 2:
-                        func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-                        func_ov003_0216ff90(arg0);
-                        arg0->unknown_7_  = -1;
-                        arg0->unknown_1_  = 2;
-                        arg0->unknown_2_ = 0;
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+                        func_ov003_0216ff90(self);
+                        self->unk_7  = -1;
+                        self->unk_1  = 2;
+                        self->state_ = 0;
                         break;
                 }
             }

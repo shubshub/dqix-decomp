@@ -130,8 +130,8 @@ struct Struct_ov023_021f1234_3 {
     char unknown_5904_[4];
 };
 
-extern "C" Struct_ov023_021f1234_2* _ZZ21inline_ov023_021f4c04vE1s;
-extern char data_02108760[];
+extern "C" BattleEnd_021f1234* _ZZ17GetGlobal021ffefcvE1s;
+extern char g_sePlayer[];
 
 extern "C" Struct_ov023_021f1234_4* func_020421a0();
 extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
@@ -288,8 +288,8 @@ extern "C" ARM int func_ov023_021f1234(Struct_ov023_021f1234_3* arg0)
         {
             if (!IsMainBrightnessTransitionActive(var2))
             {
-                func_0205ea20(data_02108760, 100);
-                var1->unknown_0_++;
+                SetupContextForMode0205ea20(g_sePlayer, 100);
+                end->step_++;
             }
         }
         else if (var1->unknown_0_ == 5)
@@ -331,10 +331,10 @@ extern "C" ARM int func_ov023_021f1234(Struct_ov023_021f1234_3* arg0)
         {
             if (!IsMainBrightnessTransitionActive(var2))
             {
-                func_0205ea20(data_02108760, 0x65);
-                func_0200ff1c(var0, var6);
-                GameObject* var13 = func_0200ff1c(var0, var6);
-                if (var13 != NULL)
+                SetupContextForMode0205ea20(g_sePlayer, 0x65);
+                GetCombatantWithFlag0x100_0200ff1c(gameState, id);
+                GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, id);
+                if (member != NULL)
                 {
                     func_ov013_02184c8c(arg0->unknown_5574_, var13);
                     var1->unknown_e2_ = func_0209a678(var1->unknown_e8_, var13, var1->unknown_74_);

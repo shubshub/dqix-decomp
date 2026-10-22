@@ -12,17 +12,17 @@
 struct Struct_0205ba68;
 struct Struct_0205bacc;
 struct Struct_0205bcdc;
-struct Struct_0205cf1c;
-extern "C" void func_0205cef8(void *arg0);
-extern "C" void func_0205cf04(void *arg0);
-extern "C" void func_0205cf10(void *arg0);
-extern "C" void func_0205cf1c(struct Struct_0205cf1c *arg0);
-extern "C" unsigned char func_02011804(GameState* arg0);
-extern "C" int func_ov002_02157108(void *arg0, int arg1);
-extern "C" void func_0205ba68(struct Struct_0205ba68 *arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc *arg0, int arg1);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc *arg0, int arg1);
-extern "C" void func_0205bb04(void *arg0, int arg1);
+struct Struct0205cf1c;
+void SetChannelAFlag0205cef8(void *p);
+void SetChannelBFlag0205cf04(void *p);
+void ClearChannelAFlag0205cf10(void *p);
+void ClearFlagByte0205cf1c(struct Struct0205cf1c *p);
+unsigned char ReadBattleField0x64f4Byte_02011804(GameState* gameState);
+int GetCountByType02157108(void *base, int id);
+void GridCursor_SetDimensions(struct Struct_0205ba68 *p, int a, int b, int c);
+void GridCursor_SetCount(struct Node0205bacc *p, int v);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
+extern "C" void GridCursor_SetSelectedIndex(void *p, int v);
 extern "C" int func_020dc428();
 extern "C" void func_ov002_02156080(void *arg0, short *arg1, short *arg2);
 
@@ -271,13 +271,13 @@ extern "C" ARM void func_ov002_02161cf0(char *arg0) {
             func_0205cf1c((struct Struct_0205cf1c *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)));
             return;
     }
-    func_0205ba68((struct Struct_0205ba68 *) (var5 + 4), var0, var1, var6);
-    func_0205ba68((struct Struct_0205ba68 *) (var5 + 0x54), var0, var1, var6);
-    func_0205bacc((struct Struct_0205bacc *) (var5 + 4), var2);
-    func_0205bacc((struct Struct_0205bacc *) (var5 + 0x54), var2);
-    *(int *) (var5 + 8)    = var3;
-    *(int *) (var5 + 0x58) = var3;
-    func_0205bcdc((struct Struct_0205bcdc *) (var5 + 4), var4);
-    func_0205bb04(var5 + 0x54, var4);
-    *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
+    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 4), cols, rows, flag);
+    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 0x54), cols, rows, flag);
+    GridCursor_SetCount((struct Node0205bacc *) (list + 4), total);
+    GridCursor_SetCount((struct Node0205bacc *) (list + 0x54), total);
+    *(int *) (list + 8)    = pages;
+    *(int *) (list + 0x58) = pages;
+    SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), cursor);
+    GridCursor_SetSelectedIndex(list + 0x54, cursor);
+    *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
 }

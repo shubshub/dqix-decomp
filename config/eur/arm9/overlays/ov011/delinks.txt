@@ -552,7 +552,7 @@ src/Combat/Overlay_11/func_ov011_021858f4.cpp:
     complete
     .text start:0x021858f4 end:0x02185948
 
-src/Combat/Overlay_11/func_ov011_021884d0.cpp:
+src/Combat/Overlay_11/TriggerDispatchIfFlagOrByte55_021884d0.cpp:
     complete
     .text start:0x021884d0 end:0x02188534
 

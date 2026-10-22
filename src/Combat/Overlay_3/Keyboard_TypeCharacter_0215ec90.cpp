@@ -1,11 +1,12 @@
 #include <globaldefs.h>
+#include "Resource/Keyboard.h"
 
-struct Struct_ov003_0215ec90_2 {
-    char unknown_0_[4];
-    int unknown_4_;
-    int unknown_8_;
-    char unknown_c_[3];
-    unsigned char unknown_f_;
+struct KeyboardKey {
+    char pad0[4];
+    int text;
+    int shiftedText;
+    char padC[3];
+    unsigned char disabled;
 };
 
 struct Struct_0204254c {
@@ -13,54 +14,54 @@ struct Struct_0204254c {
     signed char unknown_4_;
 };
 
-struct Struct_ov003_0215ec90 {
-    struct Struct_ov003_0215ec90_2* unknown_0_;
-    char unknown_4_[4];
-    char* unknown_8_;
-    int unknown_c_;
-    char unknown_10_[4];
-    int unknown_14_;
-    char unknown_18_[0x1e - 0x18];
-    unsigned char unknown_1e_;
-    unsigned char unknown_1f_;
-    unsigned char unknown_20_;
+struct Keyboard {
+    struct KeyboardKey* key;
+    char pad4[4];
+    char* text;
+    int widthLimit;
+    char pad10[4];
+    int maxLen;
+    char pad18[0x1e - 0x18];
+    unsigned char page;
+    unsigned char font;
+    unsigned char shift;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_020424e4(int arg0, int arg1);
-extern "C" int func_020426bc(void* arg0, void* arg1, int arg2);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
-extern "C" int func_020420e8(void* arg0, int arg1);
-extern "C" struct Struct_0204254c* func_0204254c(int arg0, int arg1);
+extern "C" void __clear(void* buf, int size);
+int FindEntryIndexByKey020424e4(int key, int tableIdx);
+extern "C" int func_020426bc(void* src, void* dst, int flag);
+extern "C" void func_02042764(void* src, void* dst, int flag);
+extern "C" int func_020420e8(void* str, int flag);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 extern unsigned char data_ov003_0217f3b0[];
 
-// USA: func_ov003_0215ec90
-extern "C" ARM int func_ov003_0215ec90(struct Struct_ov003_0215ec90* arg0) {
-    unsigned char var0[0x100];
-    unsigned char var1[0x100];
-    unsigned char* var2;
-    int var3;
-    int var4;
-    struct Struct_0204254c* var5;
-    int var6;
-    int var7;
-    int var8;
-    char* var9;
-    int var10;
-    int var11;
-    int var12;
-    struct Struct_ov003_0215ec90_2* var13 = arg0->unknown_0_;
-    if (var13 != 0) {
-        if (var13->unknown_f_ != 0) {
-            return 0xd;
+// Overlay 3, originally func_ov003_0215ec90 (USA/EUR 0x0215ec90; no JPN match, its keyboard differs)
+extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* input) {
+    unsigned char buf[0x100];
+    unsigned char work[0x100];
+    unsigned char* p;
+    int code;
+    int ch;
+    struct Entry0204254c* entry;
+    int width;
+    int i;
+    int len;
+    char* text;
+    int widthLimit;
+    int font;
+    int maxLen;
+    struct KeyboardKey* key = input->key;
+    if (key != 0) {
+        if (key->disabled != 0) {
+            return KeyboardResult_KeyDisabled;
         }
 
-        var11 = arg0->unknown_1f_;
-        var9 = arg0->unknown_8_;
-        var3 = var13->unknown_4_;
-        if (data_ov003_0217f3b0[arg0->unknown_20_] == arg0->unknown_1e_) {
-            var3 = var13->unknown_8_;
+        font = input->font;
+        text = input->text;
+        code = key->text;
+        if (data_ov003_0217f3b0[input->shift] == input->page) {
+            code = key->shiftedText;
         }
         var10 = arg0->unknown_c_;
         var12 = arg0->unknown_14_;
@@ -81,27 +82,27 @@ extern "C" ARM int func_ov003_0215ec90(struct Struct_ov003_0215ec90* arg0) {
                         break;
                     }
                 }
-                func_02042764(var0, var9, var11);
-                arg0->unknown_20_ = 0;
-                return (var12 <= var8 + 1) ? 3 : 2;
+                func_02042764(buf, text, font);
+                input->shift = 0;
+                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
-            if (*var2 == 0) {
-                if (var10 != 0) {
-                    var6 = func_020420e8(var9, 0);
-                    var5 = func_0204254c(var3, 0);
-                    if (var5 != 0) {
-                        var6 += var5->unknown_4_ + 1;
+            if (*p == 0) {
+                if (widthLimit != 0) {
+                    width = func_020420e8(text, 0);
+                    entry = Font_FindCharacter(code, 0);
+                    if (entry != 0) {
+                        width += entry->width + 1;
                     }
                     if (var10 < var6) {
                         break;
                     }
                 }
-                *var2 = var4;
-                func_02042764(var0, var9, var11);
-                arg0->unknown_20_ = 0;
-                return (var12 <= var8 + 1) ? 3 : 2;
+                *p = ch;
+                func_02042764(buf, text, font);
+                input->shift = 0;
+                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
         }
     }
-    return 0;
+    return KeyboardResult_None;
 }

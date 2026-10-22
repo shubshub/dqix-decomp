@@ -1524,7 +1524,7 @@ src/Combat/Overlay_23/func_ov023_021dbb20.cpp:
     complete
     .text start:0x021dbb20 end:0x021dbb34
 
-src/Combat/Overlay_23/func_ov023_021ed014.cpp:
+src/Combat/Overlay_23/DispatchIfFlagsOrByteSet_021ed014.cpp:
     complete
     .text start:0x021ed014 end:0x021ed064
 
@@ -2292,7 +2292,7 @@ src/Combat/Overlay_23/func_ov023_021f6844.cpp:
     complete
     .text start:0x021f6844 end:0x021f6880
 
-src/Combat/Overlay_23/func_ov023_021e709c.cpp:
+src/Combat/Overlay_23/RenderGridCellEntry_021e709c.cpp:
     complete
     .text start:0x021e709c end:0x021e71a0
 
@@ -2520,7 +2520,7 @@ src/Combat/Overlay_23/func_ov023_021fd120.cpp:
     complete
     .text start:0x021fd120 end:0x021fd1e0
 
-src/Combat/Overlay_23/func_ov023_021f4fc8.cpp:
+src/Combat/Overlay_23/CheckStateFlagsAndDispatch_021f4fc8.cpp:
     complete
     .text start:0x021f4fc8 end:0x021f50fc
 
@@ -2772,7 +2772,7 @@ src/Combat/Overlay_23/func_ov023_021f2638.cpp:
     complete
     .text start:0x021f2638 end:0x021f288c
 
-src/Combat/Overlay_23/func_ov023_021e4c18.cpp:
+src/Combat/Overlay_23/AdvanceTargetCombatant_021e4c18.cpp:
     complete
     .text start:0x021e4c18 end:0x021e4e1c
 

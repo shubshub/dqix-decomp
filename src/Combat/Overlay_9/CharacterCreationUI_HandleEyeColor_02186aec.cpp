@@ -12,8 +12,8 @@ void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 #endif
 
-// USA: func_ov009_02186aec  (semantic: AdvanceStatStep_02186aec)
-extern "C" ARM void func_ov009_02186aec(CharacterCreationUI* self) {
+// Overlay 9, originally func_ov009_02186aec (USA/EUR 0x02186aec, JPN 0x02187c18)
+extern "C" ARM void CharacterCreationUI_HandleEyeColor(CharacterCreationUI* self) {
 	unsigned char step = self->step;
 	if (step == 0) {
 		CharacterCreationUI_SetupSlotNavigation(self);

@@ -161,7 +161,7 @@ extern "C" void func_ov017_021adb1c(Struct_ov017_021acdf4* arg0);
 extern AllocatorUnion data_02114e20;
 extern char data_ov017_021d795c;
 extern char data_ov017_021d7978;
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d798f;
 
 struct Struct_01ff91ac_21 {
@@ -311,12 +311,12 @@ extern "C" ARM void func_ov017_021acdf4(Struct_ov017_021acdf4* arg0, Struct_0204
             var20 = *(short*)((char*)var2 + 4);
             func_ov017_021ce014(var20, 3, (int)((Object3D*)var2)->GetField06(), var21);
         }
-        if (arg0->unknown_280_) {
-            func_0205ebc0(&data_02108760, 0xa3, 0xa3);
-            func_0205ebfc(&data_02108760, 5, 0);
+        if (self->special) {
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xa3, 0xa3);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 5, 0);
         } else {
-            func_0205ebc0(&data_02108760, 0xb2, 0xb2);
-            func_0205ebfc(&data_02108760, 0, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb2, 0xb2);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
         }
         arg0->unknown1_1c_++;
     } else if (arg0->unknown1_1c_ == 2) {
@@ -424,14 +424,14 @@ extern "C" ARM void func_ov017_021acdf4(Struct_ov017_021acdf4* arg0, Struct_0204
         if (IsBrightnessTransitionActive(var1)) {
             return;
         }
-        func_02057f00(var3, 8);
-        func_0205ebec(&data_02108760);
-        func_ov017_02197528();
-        arg0->unknown_1_ = 1;
-        func_020397c0(var2);
-        ((Object3D*)var2)->SetInheritedAlpha(0x1f);
-        func_02039d58((unsigned char*)var2);
-        func_ov017_021adb1c(arg0);
+        func_02057f00(mgr, 8);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        CallListIfFlagsSet_02197528();
+        self->done = 1;
+        SetByteField0x253_020397c0(leader);
+        ((Object3D*)leader)->SetInheritedAlpha(0x1f);
+        ClearFlag0x1ceBit0x4_02039d58((unsigned char*)leader);
+        func_ov017_021adb1c(self);
         func_020a0c0c();
         if (arg0->unknown_280_) {
             func_ov017_021c37a4();
@@ -470,17 +470,17 @@ extern "C" ARM void func_ov017_021acdf4(Struct_ov017_021acdf4* arg0, Struct_0204
             *(char**)var37 = var38;
             func_0204500c(var37, func_020e51cc(0x39), 0, 0xe3);
 #endif
-            var37[Enum_ov017_021acdf4_6578] = 0;
-            *(int*)(var37 + Enum_ov017_021acdf4_2456) = 1;
-            unsigned char* var39 = (unsigned char*)func_020100f8((char*)var0);
-            func_0202ea10(var39, 0xcc, 0x3e8);
-            arg0->unknown_20_ = *(Vector3i*)(var39 + 0x10);
-            arg0->unknown_1f_ = func_020a277c(var39);
-            func_020a2770(var39, -1);
-            *(Vector3i*)(var39 + 0x10) = arg0->unknown_20_;
-            func_0205ec20(&data_02108760, 0, 0);
-            func_0205ebfc(&data_02108760, 1, 0);
-            arg0->unknown1_1c_++;
+            g[MessageDone] = 0;
+            *(int*)(g + MessageActive) = 1;
+            unsigned char* obj = (unsigned char*)GetFieldIfFlag4_020100f8((char*)gs);
+            StoreFields0x1e4And0x1e8IfNonZero_0202ea10(obj, 0xcc, 0x3e8);
+            self->savedPos = *(Vector3i*)(obj + 0x10);
+            self->savedField = GetField0x21c020a277c(obj);
+            SetField0x21c_020a2770(obj, -1);
+            *(Vector3i*)(obj + 0x10) = self->savedPos;
+            Forward0205ec20(&g_sePlayer, 0, 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 1, 0);
+            self->state++;
         }
     } else if (arg0->unknown1_1c_ == 0xb) {
         *(Vector3i*)((char*)func_020100f8((char*)var0) + 0x10) = arg0->unknown_20_;
@@ -503,16 +503,16 @@ extern "C" ARM void func_ov017_021acdf4(Struct_ov017_021acdf4* arg0, Struct_0204
         if (arg0->unknown_1d_ > 10) {
             arg0->unknown1_1c_++;
         }
-    } else if (arg0->unknown1_1c_ == 0xd) {
-        char* var43 = (char*)func_020421a0();
-        func_020a2770((void*)func_020100f8((char*)var0), arg0->unknown_1f_);
-        func_02057f00(var3, 8);
-        func_0205ebec(&data_02108760);
-        for (int var44 = 0; var44 < 5; var44++) {
-            if (arg0->unknown_1e_ & (1 << var44)) {
-                GameObject* var45 = var0->GetGameObjectByIndex(var44 != 4 ? var44 : 0xce);
-                if (var45) {
-                    ((Object3D*)var45)->DisableFlag(1);
+    } else if (self->state == 0xd) {
+        char* g = (char*)GetGlobalField0x1c020421a0();
+        SetField0x21c_020a2770((void*)GetFieldIfFlag4_020100f8((char*)gs), self->savedField);
+        func_02057f00(mgr, 8);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        for (int i = 0; i < 5; i++) {
+            if (self->members & (1 << i)) {
+                GameObject* member = gs->GetGameObjectByIndex(i != 4 ? i : 0xce);
+                if (member) {
+                    ((Object3D*)member)->DisableFlag(1);
                 }
             }
         }

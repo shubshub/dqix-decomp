@@ -52,7 +52,7 @@ struct Struct_ov003_0215d4fc {
 };
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" int *func_0202ae18();
 Ctl *GetGlobalField0x1c020421a0();
@@ -150,12 +150,12 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         if (var2->unknown_998_ != 0) {
             return;
         }
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_98_, 0);
-        func_0209c678((Struct_02109bf4_4*)&data_02109bf4, 0x10);
-        SetBrightness((GameResources*)var1, -16, 0x3c);
-        func_0205e944(&data_02108760, 0);
-        arg0->unknown_3f5_  = 1;
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
+        DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0x10);
+        SetBrightness((GameResources*)res, -16, 0x3c);
+        func_0205e944(&g_sePlayer, 0);
+        self->b3f5  = 1;
+        self->state = self->state + 1;
     }
     if (var7 == 2) {
         if (IsBrightnessTransitionActive((GameResources*)var1) != 0) {
@@ -209,14 +209,14 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         if (func_0209ca2c(&data_02109bf4) != 0) {
             return;
         }
-        func_0209c7fc(&data_02109bf4);
-        SetBrightness((GameResources*)var1, 0, 0x3c);
-        func_0205e944(&data_02108760, 0x7f);
-        arg0->unknown_3ec_ = 1;
-        arg0->unknown_3ed_ = 0;
-        void *var15 = func_0203df78(var4, (*(Struct_ov003_0215d4fc **) ((char *) GetGameResources() + 0x3000 + Enum_ov003_0215d4fc_1808))->unknown_12c_);
-        if (var15 != 0) {
-            func_02040b2c((Struct_0203e2c4_2*)var15, arg0->unknown_3f8_);
+        StopAndReset0209c7fc(&data_02109bf4);
+        SetBrightness((GameResources*)res, 0, 0x3c);
+        func_0205e944(&g_sePlayer, 0x7f);
+        self->b3ec = 1;
+        self->b3ed = 0;
+        void *e = FindEntryPointerByKey0203df78(b, (*(Ent **) ((char *) GetGameResources() + 0x3000 + regionalRes))->key);
+        if (e != 0) {
+            PropagateValueToActiveSlot02040b2c((Obj02040b2c*)e, self->w3f8);
         }
         arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
     } else if (arg0->unknown_3b8_ == 7) {

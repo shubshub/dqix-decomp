@@ -5,11 +5,11 @@
 #include "Graphics/Vector.h"
 #include "World/ZoneResourceTree.h"
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-extern "C" int func_0209ca2c(void *);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
+int IsAnimationActive0209ca2c(void *);
 
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 extern char data_02109bf4[];
 extern char data_020ef1f3[];
 extern char data_020ef1f8[];
@@ -72,29 +72,29 @@ extern "C" ARM void func_02015554(void *arg0, void *arg1) {
             }
         }
     }
-    if ((var0->unknown_2_ & 0x100) && var0->unknown_54_) {
-        if (var0->unknown1_34_ == 0) {
-            var0->unknown_54_->SetAnimationPlaybackSpeed(0x1800, 0);
-            if (var0->unknown_54_->MaybeSetRegularAnimation(data_020ef1f3, 1))
-                func_0205eaa0(&data_02108760, 0x12, 0);
-            else if (var0->unknown_54_->MaybeSetRegularAnimation(data_020ef1f8, 1))
-                func_0205eaa0(&data_02108760, 0x62, 0);
-            var0->unknown1_34_ = 1;
-        } else if (var0->unknown1_34_ == 1) {
-            if (var0->unknown_54_->HasAnimationStopped()) {
-                var0->unknown1_36_          = 500;
-                var0->unknown1_34_ = 2;
+    if ((entry->flags & 0x100) && entry->object) {
+        if (entry->animationState == 0) {
+            entry->object->SetAnimationPlaybackSpeed(0x1800, 0);
+            if (entry->object->MaybeSetRegularAnimation(data_020ef1f3, 1))
+                SePlayer_Play(&g_sePlayer, 0x12, 0);
+            else if (entry->object->MaybeSetRegularAnimation(data_020ef1f8, 1))
+                SePlayer_Play(&g_sePlayer, 0x62, 0);
+            entry->animationState = 1;
+        } else if (entry->animationState == 1) {
+            if (entry->object->HasAnimationStopped()) {
+                entry->delay          = 500;
+                entry->animationState = 2;
             }
-        } else if (var0->unknown1_34_ == 2) {
-            unsigned int var9 = var1->GetEffectiveDeltaTime();
-            if (var9 < var0->unknown1_36_) {
-                var0->unknown1_36_ -= var9;
-            } else if (!func_0209ca2c(data_02109bf4)) {
-                if (var0->unknown_54_->MaybeSetRegularAnimation(data_020ef1fe, 5))
-                    func_0205eaa0(&data_02108760, 0x13, 0);
-                else if (var0->unknown_54_->MaybeSetRegularAnimation(data_020ef204, 5))
-                    func_0205eaa0(&data_02108760, 0x62, 0);
-                var0->unknown_2_ &= ~0x100;
+        } else if (entry->animationState == 2) {
+            unsigned int deltaTime = state->GetEffectiveDeltaTime();
+            if (deltaTime < entry->delay) {
+                entry->delay -= deltaTime;
+            } else if (!IsAnimationActive0209ca2c(data_02109bf4)) {
+                if (entry->object->MaybeSetRegularAnimation(data_020ef1fe, 5))
+                    SePlayer_Play(&g_sePlayer, 0x13, 0);
+                else if (entry->object->MaybeSetRegularAnimation(data_020ef204, 5))
+                    SePlayer_Play(&g_sePlayer, 0x62, 0);
+                entry->flags &= ~0x100;
             }
         }
     }

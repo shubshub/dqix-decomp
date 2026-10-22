@@ -8,22 +8,22 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_02108760;
-struct Struct_02048350_2;
-extern "C" void *func_02079e2c(char *arg0, int arg1);
-extern "C" GameObject *func_0200ff94(GameState *arg0, int arg1);
+struct SePlayer;
+struct Obj02048350;
+void *SearchBothTables02079e2c(char *p, int key);
+GameObject *GetCombatantChecked_0200ff94(GameState *gs, int id);
 extern "C" int *func_0202ae18(void);
-extern "C" void *__clear(void *arg0, int arg1);
-extern "C" int func_020114ec(char *arg0, void *arg1);
-extern "C" void func_02048350(struct Struct_02048350_2 *arg0, int arg1);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" void func_ov002_02157ce0(char *arg0);
-extern "C" void func_ov002_021536e0(void *arg0);
-extern "C" int func_ov002_021536ec(void *arg0, void *arg1, int arg2);
-extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
-extern "C" void func_ov017_021c9e00(signed char arg0, int arg1, int arg2, int arg3);
-extern "C" int data_02108760;
+extern "C" void *__clear(void *dst, int count);
+int CopyOutRegion0x571d_020114ec(char *dst, void *src);
+void ConsumeCounter02048350(struct Obj02048350 *p, int a);
+int CheckField0NonZero_0202b7d8(int *p);
+void SePlayer_Play(struct SePlayer *p, int a, int b);
+void InitStateArray02157ce0(char *p);
+extern "C" void func_ov002_021536e0(void *p);
+extern "C" int func_ov002_021536ec(void *a, void *b, int c);
+extern "C" void func_ov016_0218b5c0(int a, int b);
+extern "C" void func_ov017_021c9e00(signed char a, int b, int c, int d);
+extern "C" int g_sePlayer;
 
 struct Struct_ov002_021594e8_3 {
     char *unknown_0_;
@@ -129,9 +129,9 @@ extern "C" ARM void func_ov002_021594e8(struct Struct_ov002_021594e8_2 *arg0, sh
                 var10     = 1;
             }
         }
-        func_0205eaa0((struct Struct_02108760 *) &data_02108760, 0x64, 0);
-        arg0->unknown_1bb8_     = RG(0x26, 0x29);
-        arg0->unknown_1bbc_ = RG(0x17, 0x18);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 0x64, 0);
+        p->state     = RG(0x26, 0x29);
+        p->nextState = RG(0x17, 0x18);
     }
     if (var10 != 0) {
         func_02048350((struct Struct_02048350_2 *) var8, var7->unknown_8_0_);

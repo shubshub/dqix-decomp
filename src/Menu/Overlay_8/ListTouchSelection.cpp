@@ -33,13 +33,13 @@ struct Overlay8ListTouchView {
     unsigned char page;
 };
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_ov008_0218b490[];
 extern "C" {
     int _Z18GetField0_0205bafcPv(void*);
     int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
-    void func_0205bb04(void*, int);
-    void _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(void*, int, int);
+    void GridCursor_SetSelectedIndex(void*, int);
+    void _Z13SePlayer_PlayP8SePlayerii(void*, int, int);
 
     int func_ov008_02186b18(Overlay8ListTouchView* menu, int touchX, int touchY) {
         if (!touchX || !touchY)
@@ -60,7 +60,7 @@ extern "C" {
                 menu->page = page - 1;
                 int index = menu->page + 5;
                 if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) > index)
-                    func_0205bb04(menu->cursor, index);
+                    GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
             if ((unsigned int)page < 2 && touchY >= 104 && touchY < 112) {
@@ -68,7 +68,7 @@ extern "C" {
                     ++menu->page;
                 int index = menu->page;
                 if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) < index)
-                    func_0205bb04(menu->cursor, index);
+                    GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
         }
@@ -77,7 +77,7 @@ extern "C" {
             return -2;
 
         if (!(menu->flags & 0x80) && touchY > 16 && touchY < 96 && touchX > 176 && touchX < 208 && !(menu->flags & 0x4000)) {
-            _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(data_02108760, 0x5e, 0);
+            _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 0x5e, 0);
             menu->object.MaybeSetRegularAnimation(data_ov008_0218b490, 0);
             menu->flags |= 0x4000;
         }

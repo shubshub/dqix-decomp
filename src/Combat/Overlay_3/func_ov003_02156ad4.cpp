@@ -6,17 +6,17 @@ int func_02080468(void*, int);
 void func_020813ec(void*, int);
 void func_0208203c(void*);
 int func_ov003_021550dc(void*);
-void func_0205eaa0(void*, int, int);
-int func_020100a8(void*);
-int func_ov003_02155f88(void*, int);
-void func_0207fe44(void*);
-void* func_02010828(void*);
+void _Z13SePlayer_PlayP8SePlayerii(void*, int, int);
+int _Z27GetField0x3acValue_020100a8P9GameState(void*);
+int _Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(void*, int);
+void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void*);
+void* _Z26GetPtrField0x2a04_02010828P9GameState(void*);
 void* _ZN9GameState21GetPartyMemberByIndexEi(void*, int);
 int func_0202053c(void*);
 int func_ov003_02155208(void*);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 struct Struct_ov003_02156ad4_3 {
     short unknown_0_;
@@ -86,13 +86,13 @@ extern "C" ARM void func_ov003_02156ad4(struct Struct_ov003_02156ad4_4* arg0) {
     if (arg0->unknown_1f9_ != 1) {
         return;
     }
-    arg0->unknown_8_ = &arg0->unknown_1e0_;
-    if (func_ov003_021550dc(arg0) != 0) {
-        func_0205eaa0(data_02108760, 1, 0);
-        func_0208203c(arg0->unknown_80_);
-        arg0->unknown_8_ = 0;
-        void* var3 = _ZN9GameState11GetInstanceEv();
-        switch (arg0->unknown_1e0_) {
+    self->f08 = &self->f1e0;
+    if (func_ov003_021550dc(self) != 0) {
+        _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 1, 0);
+        _Z20ResetWithSub0208203cP11Obj0208203c(self->sub80);
+        self->f08 = 0;
+        void* gs = _ZN9GameState11GetInstanceEv();
+        switch (self->f1e0) {
         case 8:
             if (arg0->unknown_1fb_ == 0) {
                 arg0->unknown_1f7_ = func_020100a8(var3);

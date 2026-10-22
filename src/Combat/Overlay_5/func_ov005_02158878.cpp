@@ -14,9 +14,9 @@
 
 struct Struct_0205d5d0;
 struct Struct_0205d81c;
-struct Struct_0205d6a0;
-struct Struct_ov005_02158e04;
-struct Struct_02108760;
+struct Entry_0205d6a0;
+struct MenuElement;
+struct SePlayer;
 
 struct Struct_ov005_02158ed0 {
     int unknown_0_;
@@ -38,16 +38,16 @@ struct Struct_ov005_02153954 {
     char unknown_3dd3_[LOW_REGION(0x3d54, 0x3ddc) - LOW_REGION(0x3d4b, 0x3dd3)];
 };
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
-extern "C" void func_0205d0e0(void* arg0);
-extern "C" void func_ov005_021589f4(Struct_ov005_02153954* arg0);
-extern "C" int func_ov005_02158b3c(void* arg0, void* arg1);
-extern "C" Struct_ov005_02158e04* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" int func_0204c7cc(unsigned char*);
-extern "C" int func_ov005_02157190(void* arg0);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
+extern "C" void func_0205d0e0(void* window);
+extern "C" void func_ov005_021589f4(EquipmentMenu* self);
+extern "C" int func_ov005_02158b3c(void* object, void* buffer);
+MenuElement* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+int IsField0x9cEqual3_0204c7cc(unsigned char*);
+int CheckFlag30Or401_02157190(void* self);
+void SePlayer_Play(SePlayer* sound, int effect, int unk);
+void ResetEntryList0205d6a0(Entry_0205d6a0* window, int unk);
 // USA: func_ov005_02158878
 extern "C" ARM void func_ov005_02158878(Struct_ov005_02153954* arg0) {
     func_0205d0e0(&arg0->unknown_ee4_);
@@ -66,18 +66,18 @@ extern "C" ARM void func_ov005_02158878(Struct_ov005_02153954* arg0) {
     }
     if (arg0->unknown_3dd0_ != 2)
         return;
-    int var0;
-    unsigned char var1;
-    var1 = g_touchInput.pressed_;
-    var0 = 0;
-    int var2 = func_ov005_02157190(arg0);
-    if (var2 | var1) {
-        func_0205eaa0((Struct_02108760*)data_02108760, 1, var0);
-        if (arg0->unknown_3dd2_ != 0) {
-            arg0->unknown_3dd1_ = arg0->unknown_3dd2_;
-            arg0->unknown_3dd2_ = 0;
-            memset(arg0->unknown_e10_, var0, LOW_REGION(0x800, 0x960));
-            func_ov005_02158b3c(arg0, arg0->unknown_e10_);
+    int clear;
+    unsigned char touch;
+    touch = g_touchInput.pressed_;
+    clear = 0;
+    int flag = CheckFlag30Or401_02157190(self);
+    if (flag | touch) {
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, clear);
+        if (self->pending_ != 0) {
+            self->kind_ = self->pending_;
+            self->pending_ = 0;
+            memset(self->text_, clear, LOW_REGION(0x800, 0x960));
+            func_ov005_02158b3c(self, self->text_);
 #if defined(jpn)
             func_0205d5d0((Struct_0205d5d0*)&arg0->unknown_ee4_, var0, (int)arg0->unknown_e10_, 1);
 #else

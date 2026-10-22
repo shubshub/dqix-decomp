@@ -10,7 +10,7 @@ struct Struct_ov003_0215e6d8;
 struct Struct_ov003_0215efb8;
 struct Struct_0205de24_2;
 struct Struct_0205def8;
-struct Struct_02108760;
+struct SePlayer;
 
 struct Struct_ov012_02188cd0_2
 {
@@ -84,33 +84,33 @@ struct Struct_ov012_02188cd0
     unsigned char unknown_1480_[0x14bc - 0x1480];
 };
 
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_02042764(const void* arg0, char* arg1, int arg2);
-extern "C" void func_ov003_0215e6d8(Struct_ov003_0215e6d8* arg0);
-extern "C" void func_ov003_0215e6f8(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_ov003_0215efb8(Struct_ov003_0215efb8* arg0);
-extern "C" int func_ov012_0218ae74(Struct_ov012_02188cd0* arg0, Struct_ov012_02188cd0_3* arg1);
-extern "C" void func_0205de24(Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_ov023_021e6e60(Struct_ov012_02188cd0* arg0);
-extern "C" void func_ov012_0218aabc(char* arg0);
-extern "C" void func_ov003_0215f41c(void* arg0, const char* arg1);
-extern "C" void func_ov012_0218ab34(Struct_ov012_02188cd0* arg0, char* arg1, int arg2);
-extern "C" int func_0205d97c(void* arg0);
-extern "C" int func_ov003_0215f000(void* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021e8270(void* arg0);
-extern "C" void func_ov012_021845f8(void* arg0);
-extern "C" int func_ov012_02184d80(void* arg0, char* arg1);
-extern "C" void func_0205def8(Struct_0205def8* arg0, int arg1, int arg2);
-extern "C" void func_020426bc(const char* arg0, char* arg1, int arg2);
-extern "C" void func_ov012_0218943c(Struct_ov012_02188cd0* arg0);
-extern "C" Struct_ov012_02188cd0_4* func_020421a0();
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_0204500c(Struct_ov012_02188cd0_4* arg0, const char* arg1, int arg2, int arg3);
+void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
+extern "C" void func_02042764(const void* codes, char* text, int a);
+void ResetStruct_0215e6d8(ResetLayout_0215e6d8* layout);
+extern "C" void func_ov003_0215e6f8(void* layout, SafeAllocator* allocator, void* file, unsigned int size);
+void InitStruct0215efb8(Struct0215efb8* keyboard);
+extern "C" int func_ov012_0218ae74(ProfileEditor02188cd0* self, Profile02188cd0* profile);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
+extern "C" void func_ov023_021e6e60(ProfileEditor02188cd0* self);
+void SetupBattleTag0218aabc(char* self);
+extern "C" void Keyboard_ResetToKey(void* keyboard, const char* text);
+extern "C" void func_ov012_0218ab34(ProfileEditor02188cd0* self, char* text, int hidden);
+extern "C" int func_0205d97c(void* window);
+extern "C" int Keyboard_Update(void* keyboard, int input);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
+extern "C" void func_ov023_021e8270(void* card);
+extern "C" void func_ov012_021845f8(void* checker);
+extern "C" int func_ov012_02184d80(void* checker, char* text);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8* window, int a, int b);
+extern "C" void func_020426bc(const char* text, char* codes, int a);
+extern "C" void func_ov012_0218943c(ProfileEditor02188cd0* self);
+Messages02188cd0* GetGlobalField0x1c020421a0();
+const char* FindEntryByKey_02072a68(TableA68* texts, int id);
+extern "C" void func_0204500c(Messages02188cd0* messages, const char* text, int a, int b);
 
 extern "C" const char data_ov012_0218b2ea[];
 extern "C" const char data_ov012_0218b303[];
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Struct_ov012_02188cd0_3* inline_ov012_02188cd0(GameState* arg0)
 {
@@ -168,23 +168,23 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
     }
     else if (arg0->unknown_1370_ == 3)
     {
-        arg0->unknown_13a0_ = 0;
-        func_0205de24((Struct_0205de24_2*)arg0->unknown_ac_, 0, 2);
-        func_ov023_021e6e60(arg0);
-        func_ov012_0218aabc((char*)arg0);
-        memcpy(arg0->unknown_13ac_, inline_ov012_02188cd0(GameState::GetInstance())->unknown_8_, 0x72);
-        Struct_ov012_02188cd0_2* var4 = (Struct_ov012_02188cd0_2*)arg0->unknown_0_;
-        var4->unknown_8_ = arg0->unknown_13d0_;
-        var4->unknown_10_ = 0x400;
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_14_ = 0x39;
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_1f_ = 1;
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_21_ = 1;
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_24_ = 1;
-        func_ov003_0215f41c(arg0->unknown_0_, data_ov012_0218b303);
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_22_ = 1;
-        ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_23_ = 0;
-        func_ov012_0218ab34(arg0, 0, 0);
-        arg0->unknown_1370_++;
+        self->unk_13a0 = 0;
+        FindAndLinkMatchingEntry0205de24((Struct0205de24*)self->window_, 0, 2);
+        func_ov023_021e6e60(self);
+        SetupBattleTag0218aabc((char*)self);
+        memcpy(self->unk_13ac, GetProfile02188cd0(GameState::GetInstance())->unk_8, 0x72);
+        Keyboard02188cd0* keyboard = (Keyboard02188cd0*)self->unk_0;
+        keyboard->text_ = self->message_;
+        keyboard->size_ = 0x400;
+        ((Keyboard02188cd0*)self->unk_0)->unk_14 = 0x39;
+        ((Keyboard02188cd0*)self->unk_0)->unk_1f = 1;
+        ((Keyboard02188cd0*)self->unk_0)->unk_21 = 1;
+        ((Keyboard02188cd0*)self->unk_0)->unk_24 = 1;
+        Keyboard_ResetToKey(self->unk_0, data_ov012_0218b303);
+        ((Keyboard02188cd0*)self->unk_0)->unk_22 = 1;
+        ((Keyboard02188cd0*)self->unk_0)->unk_23 = 0;
+        func_ov012_0218ab34(self, 0, 0);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 4)
@@ -194,21 +194,21 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
             func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
             arg0->unknown_1370_++;
         }
-        Struct_ov012_02188cd0_2* var5 = (Struct_ov012_02188cd0_2*)arg0->unknown_0_;
-        unsigned char var6 = var5->unknown_20_;
-        switch (func_ov003_0215f000(var5, arg0->unknown_13a4_))
+        Keyboard02188cd0* keyboard = (Keyboard02188cd0*)self->unk_0;
+        unsigned char page = keyboard->unk_20;
+        switch (Keyboard_Update(keyboard, self->unk_13a4))
         {
             case 1:
-                func_0205eaa0((Struct_02108760*)data_02108760, 2, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 2, 0);
                 return;
 
             case 2:
             case 3:
             case 8:
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-                if (var6 != ((Struct_ov012_02188cd0_2*)arg0->unknown_0_)->unknown_20_)
-                    func_ov012_0218ab34(arg0, 0, 0);
-                func_ov023_021e8270(arg0->unknown_d28_);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+                if (page != ((Keyboard02188cd0*)self->unk_0)->unk_20)
+                    func_ov012_0218ab34(self, 0, 0);
+                func_ov023_021e8270(self->card_);
                 return;
 
             case 4:
@@ -216,17 +216,17 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
             case 6:
             case 7:
             case 11:
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-                func_ov012_0218ab34(arg0, 0, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+                func_ov012_0218ab34(self, 0, 0);
                 return;
 
             case 9:
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 return;
 
             case 10:
-                func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-                if (*arg0->unknown_13d0_ != 0)
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+                if (*self->message_ != 0)
                 {
                     GameState::GetInstance();
                     BackgroundLoader::AddLockGlobal();

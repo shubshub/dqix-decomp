@@ -2,8 +2,8 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205c570;
-struct Struct_02108760;
-struct Struct_0205d6a0;
+struct SePlayer;
+struct Entry_0205d6a0;
 
 struct Struct_ov000_0217d438 {
 #if defined(jpn)
@@ -45,44 +45,44 @@ struct Struct_ov000_0217d438_3 {
     signed char unknown_1d74_[4];
 };
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
-extern "C" int func_ov000_0217c5f4(void* arg0);
-extern "C" int func_ov000_0217c594(void* arg0, int arg1);
-extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
-extern "C" struct Struct_ov000_0217d438* func_02053c6c(unsigned char* arg0);
-extern "C" void func_ov000_02170ffc(void* arg0);
-extern "C" int func_ov000_02177798(void* arg0);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+int CheckFlagsOrField_0217c5f4_0217c5f4(void* objRaw);
+extern "C" int func_ov000_0217c594(void* objRaw, int limit);
+extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
+extern "C" void* func_ov000_02161318(void* obj, int index);
+struct PartyData0217d438* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void func_ov000_02170ffc(void* obj);
+int ApplyElemFieldsSlot3_ov000_02177798(void* obj);
 extern "C" void func_ov017_021c847c();
-extern "C" void func_ov000_0217fa60(void* arg0);
-extern "C" void func_ov000_02174c14(void* arg0);
-extern struct Struct_02108760 data_02108760;
+extern "C" void func_ov000_0217fa60(void* obj);
+extern "C" void func_ov000_02174c14(void* obj);
+extern struct SePlayer g_sePlayer;
 
 static inline int inline_ov000_02156cc4_2(signed char arg0) {
     return arg0 >= 0 && arg0 <= 3;
 }
 
 // USA: func_ov000_0217d438
-extern "C" ARM void func_ov000_0217d438(struct Struct_ov000_0217d438_3* arg0, int arg1, int arg2) {
-    arg0->unknown_1d72_ |= 0x100;
-    arg0->unknown_1d6c_ = func_0205d794((struct Struct_0205c570*)arg0->unknown_188_);
-    if (func_ov000_0217c594(arg0, 0) != 0) {
-        func_0205eaa0(&data_02108760, 1, 0);
-        GameState* var0 = GameState::GetInstance();
-        arg0->unknown_1d72_ |= 0x100;
-        signed char var1 = arg0->unknown_1d74_[arg0->unknown_1d6b_];
-        if (inline_ov000_02156cc4_2(var1)) {
-            void* var2 = func_ov000_02161318(arg0, var1);
-            if (var2 != NULL) {
-                GameObject* var3 = var0->GetPartyMemberByIndex(var1);
-                if (var3 != NULL) {
-                    struct Struct_ov000_0217d438* var4 = func_02053c6c((unsigned char*)var3);
-                    if ((signed char)var4->unknown_94c_ != arg0->unknown_1d6c_) {
-                        var4->unknown_94c_ = arg0->unknown_1d6c_;
-                        func_ov000_02170ffc(var2);
-                        func_ov000_02177798(arg0);
+extern "C" ARM void func_ov000_0217d438(struct Menu0217d438* menu, int arg1, int arg2) {
+    menu->flags |= 0x100;
+    menu->field1D6C = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->elements);
+    if (func_ov000_0217c594(menu, 0) != 0) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        GameState* gs = GameState::GetInstance();
+        menu->flags |= 0x100;
+        signed char member = menu->members[menu->selection];
+        if (IsPartyIndex(member)) {
+            void* entry = func_ov000_02161318(menu, member);
+            if (entry != NULL) {
+                GameObject* obj = gs->GetPartyMemberByIndex(member);
+                if (obj != NULL) {
+                    struct PartyData0217d438* data = GetFieldAt0x150_02053c6c((unsigned char*)obj);
+                    if ((signed char)data->field94c != menu->field1D6C) {
+                        data->field94c = menu->field1D6C;
+                        func_ov000_02170ffc(entry);
+                        ApplyElemFieldsSlot3_ov000_02177798(menu);
                     }
                 }
             }

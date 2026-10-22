@@ -27,7 +27,7 @@ struct Struct_020469f8_2;
 struct Struct_0202bad4_2;
 struct Struct_0202bad4;
 struct Random;
-struct Struct_02108760;
+struct SePlayer;
 
 extern "C" void* func_020d6c00(void);
 extern "C" int* func_020936f8(void);
@@ -47,28 +47,28 @@ extern "C" void func_ov017_021c36a0(void);
 extern "C" void func_ov017_021aeedc(struct Struct_ov003_02164400* arg0);
 extern "C" void func_020469f8(struct Struct_020469f8* arg0, struct Struct_020469f8_2* arg1);
 
-extern "C" void func_0207fe44(struct Struct_0207fe44* arg0);
-extern "C" void func_020939fc(unsigned char* arg0);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020a9ea4(struct Struct_020a9ea4* arg0);
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" int func_020811e8(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_02080cec(void* arg0, int arg1, int arg2);
-extern "C" void func_0208108c(void* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" void func_020939dc(void* arg0);
-extern "C" void func_0202b0f4(int* arg0);
-extern "C" void* func_020421a0(void);
-extern "C" int func_020aad1c(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_02081198(struct Struct_02081198* arg0, int arg1, int arg2);
-extern "C" void func_02081164(struct Struct_02081164* arg0, int arg1, int arg2);
-extern "C" int func_0202bae4(void* arg0);
-extern "C" struct Struct_0202bad4* func_0202bad4(struct Struct_0202bad4_2* arg0, int arg1);
-extern "C" int func_02001aec(int arg0, int arg1, int arg2);
+void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
+void ClearFlag0x3c9Bit0AndCleanup_020939fc(unsigned char* obj);
+void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void ClearStruct020a9ea4(struct Struct020a9ea4* p);
+void ClearFlags020466f4(struct FlagWord020466f4* word, unsigned int mask);
+int IsElementFieldActive020811e8(struct Obj2081* obj, int key);
+void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
+void UpdateEntryFlagsNibble02080cec(void* obj, int a, int b);
+void DispatchEntryOp0x8_0208108c(void* obj, int id);
+extern "C" void func_020813ec(void* obj, int key);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
+extern "C" void func_0202b0f4(int* obj);
+void* GetGlobalField0x1c020421a0(void);
+extern "C" int func_020aad1c(int a, int b, int c, int d);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+short FindMappedMemberId02080468(void* obj, int id);
+void SetEntryNibbleByShortId(struct StatusOwner02081198* owner, int id, int enable);
+void SetEntryFlag0x2ByShortId(struct StatusOwner02081164* obj, int id, int value);
+int GetField0xc_0202bae4(void* obj);
+struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
+extern "C" int func_02001aec(int val, int key, int field5);
 struct Random* GetBTRandom(void);
 int NextRandomMax(struct Random* random, int maximum);
 extern "C" void func_02080b54(void* arg0, int arg1);
@@ -77,7 +77,7 @@ extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2*, int)
 extern "C" int func_0204c7cc(unsigned char* arg0);
 
 extern int data_0211e33c;
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Struct_ov003_02164400_3 { char unknown_0_[REGIONAL_OFFSET(0x7fb, 0x9ca)]; unsigned char unknown_9ca_; };
 
@@ -341,22 +341,22 @@ extern "C" ARM void func_ov003_02164400(unsigned char* arg0) {
         if (var7 == 0 && inline_ov003_02164400(arg0, 0x1000000)) {
             func_ov003_021666c4(arg0);
         }
-        if (func_ov003_02160854(arg0) != 0) {
-            int var24 = func_02080468(var4, *(short*)(arg0 + HI(0x488)));
-            *(short*)(arg0 + HI(0x498)) = *(short*)(arg0 + HI(0x496)) - var24;
-            *(short*)(arg0 + HI(0x498)) = *(short*)(arg0 + HI(0x498)) + (((signed char)arg0[HI(0x4a0)]) << 2);
-            if (*(short*)(arg0 + HI(0x498)) < *(short*)(arg0 + LO(0x226))) {
-                func_0205eaa0(&data_02108760, 1, 0);
-                func_0208203c((struct Struct_02081f20_2*)(arg0 + LO(0x308)));
-                *(void**)(arg0 + HI(0x470)) = 0;
-                struct Struct_ov003_02164400_4* var25 = (struct Struct_ov003_02164400_4*)(arg0 + (*(short*)(arg0 + HI(0x498))) * Enum_ov003_02164400_55);
-                int var26 = 4 - var25->unknown_0_1_;
-                if (var25->unknown_0_0_ == 0) {
-                    var5[0] = 0x37;
-                    arg0[HI(0x4a4)] = 5;
-                } else if (var26 == 0) {
-                    var5[0] = 0x33;
-                    arg0[HI(0x4a4)] = 5;
+        if (func_ov003_02160854(self) != 0) {
+            int idx = FindMappedMemberId02080468(elementObj, *(short*)(self + HI(0x488)));
+            *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x496)) - idx;
+            *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x498)) + (((signed char)self[HI(0x4a0)]) << 2);
+            if (*(short*)(self + HI(0x498)) < *(short*)(self + LO(0x226))) {
+                SePlayer_Play(&g_sePlayer, 1, 0);
+                ResetWithSub0208203c((struct Obj0208203c*)(self + LO(0x308)));
+                *(void**)(self + HI(0x470)) = 0;
+                struct RecordByte0* rb = (struct RecordByte0*)(self + (*(short*)(self + HI(0x498))) * kRec37);
+                int inv = 4 - rb->rank;
+                if (rb->used == 0) {
+                    msg484[0] = 0x37;
+                    self[HI(0x4a4)] = 5;
+                } else if (inv == 0) {
+                    msg484[0] = 0x33;
+                    self[HI(0x4a4)] = 5;
                 } else {
                     ((struct Struct_ov003_02164400_3*)((char*)func_020421a0() + 0x1000))->unknown_9ca_ = 0;
                     var5[0] = 0xb;

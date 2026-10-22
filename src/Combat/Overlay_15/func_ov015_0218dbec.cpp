@@ -62,8 +62,8 @@ extern char data_ov015_021940fe;
 extern char data_ov015_02194105;
 extern char data_ov015_0219411d;
 extern char data_ov015_02194123;
-extern struct Struct_ov015_02193cf0 data_ov015_02193cf0;
-extern int data_02108760;
+extern struct Vec3Words02193cf0 data_ov015_02193cf0;
+extern int g_sePlayer;
 
 // USA: func_ov015_0218dbec
 extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov015_0218dbec* arg1) {
@@ -148,11 +148,11 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
         ZeroDestroyGPCPointer(&var3.pGPCFile);
         return var15;
     } else {
-        Struct_ov015_0218dbec_4* var16 = (Struct_ov015_0218dbec_4*)func_02070fd0((Struct_02070b6c_3*)(arg0->unknown_0_->unknown_70_), (unsigned short)arg1->unknown_8_);
-        if (var16 != 0) {
-            arg0->unknown_24_->SetField78(var16->unknown_14_ & 0xffff);
-            _ZN8Object3D10SetField7aEt(arg0->unknown_24_, var16->unknown_14_ >> 16);
-            func_0205ebc0(&data_02108760, var16->unknown_14_ & 0xffff, var16->unknown_14_ >> 16);
+        Record0218dbec* rec = (Record0218dbec*)SearchWithLow15Comparator02070fd0((Container02070e60*)(self->tables->search70), (unsigned short)entry->key);
+        if (rec != 0) {
+            self->object->SetField78(rec->packed & 0xffff);
+            _ZN8Object3D10SetField7aEt(self->object, rec->packed >> 16);
+            SetForwardAndStore0205ebc0(&g_sePlayer, rec->packed & 0xffff, rec->packed >> 16);
         }
         arg0->unknown_c_ = arg0->unknown_10_->unknown_0_;
         var15 = 1;

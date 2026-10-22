@@ -90,7 +90,7 @@ extern "C" void func_02082d38(Struct_02082828*, Struct_02082828*);
 extern "C" void func_02083508(Struct_02082828_2*);
 extern "C" void func_020c99ac(void*);
 extern char data_020f1010[];
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 #if defined(jpn)
 extern char data_020f1130[];
@@ -191,14 +191,14 @@ extern "C" ARM void func_02082828(Struct_02082828_4* arg0) {
     int var10 = (var3[1] + var3[3] + var3[5]) % 26;
     sprintf(var8, data_020f1010, (signed char)(var9 + 65), (signed char)(var10 + 65));
 #endif
-    sprintf(arg0->unknown_3c_, data_020ef078, var8);
-    arg0->unknown_956_ = 0;
-    arg0->unknown_958_ = -1;
-    arg0->unknown_95a_ = 0;
-    arg0->unknown_95c_ = 0;
-    arg0->unknown_95e_ = -1;
-    arg0->unknown_960_ = 0;
-    arg0->unknown_962_ = 0;
-    arg0->unknown_56b_ &= ~15;
-    arg0->unknown_56b_ &= ~240;
+    sprintf(object->name, g_stringFormat, suffix);
+    object->field956 = 0;
+    object->field958 = -1;
+    object->field95a = 0;
+    object->field95c = 0;
+    object->field95e = -1;
+    object->field960 = 0;
+    object->field962 = 0;
+    object->nibbles &= ~15;
+    object->nibbles &= ~240;
 }

@@ -8,7 +8,7 @@ enum { Enum_ov005_02159b74_3684 = 0xe64 };
 
 #include <GameState/GameState.h>
 
-struct Struct_02108760;
+struct SePlayer;
 
 struct Struct_ov005_02159b74 {
     char unknown_0_[0x38];
@@ -29,20 +29,20 @@ struct Struct_ov005_02153954 {
     Struct_ov005_02159b74_2* unknown_e64_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
-struct Struct_020e280c;
-extern "C" void func_020e280c(Struct_020e280c*, void*);
-extern "C" void func_020e16dc(unsigned char* arg0, int arg1, short arg2);
-struct Struct_020e1674_2;
-extern "C" void func_020e1674(Struct_020e1674_2*, int, int);
-struct Struct_020e1e24;
-extern "C" void func_020e1e24(Struct_020e1e24*, unsigned short*, unsigned short*, int);
-struct Struct_020e28f0;
-extern "C" void func_020e28f0(Struct_020e28f0*, short, short);
-struct Struct_020e263c_2;
-extern "C" void func_020e263c(Struct_020e263c_2*, int);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+struct Obj020e280c;
+void ResetAndReposition020e280c(Obj020e280c*, void*);
+void SetHalfwordAtIndex020e16dc(unsigned char* panel, int idx, short val);
+struct Obj020e1674;
+void TransferObjPaletteEntry020e1674(Obj020e1674*, int, int);
+struct Wf11Outer;
+void ComputeElementPositions_020e1e24(Wf11Outer*, unsigned short*, unsigned short*, int);
+struct WinObj020e28f0;
+void SetEntryPositionFromObject(WinObj020e28f0*, short, short);
+struct Ctx020e263c;
+void UpdateEntryStateAndPosition(Ctx020e263c*, int);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_02159b74
 extern "C" ARM void func_ov005_02159b74(Struct_ov005_02153954* arg0) {
@@ -56,14 +56,14 @@ extern "C" ARM void func_ov005_02159b74(Struct_ov005_02153954* arg0) {
 #else
     arg0->unknown_e64_->inline_ov005_02159b74()->unknown_39_ = 0x4c;
 #endif
-    unsigned char* var3 = arg0->unknown_e64_->unknown_10_;
-    func_020e16dc(var3, 0, 0x18c6);
-    func_020e1674((Struct_020e1674_2*)var3, 1, 0);
-    func_020e1e24((Struct_020e1e24*)var3, (unsigned short*)&var0, (unsigned short*)&var1, 0);
-    func_020e28f0((Struct_020e28f0*)arg0->unknown_e64_, var0, var1 + 4);
-    int var4 = GameState::GetInstance()->GetTickCount();
-    if (var4 == 0)
-        var4 = 1;
-    func_020e263c((Struct_020e263c_2*)arg0->unknown_e64_, var4);
-    func_0205eaa0((Struct_02108760*)&data_02108760, 5, 0);
+    unsigned char* panel = self->yesNo_->panel_;
+    SetHalfwordAtIndex020e16dc(panel, 0, 0x18c6);
+    TransferObjPaletteEntry020e1674((Obj020e1674*)panel, 1, 0);
+    ComputeElementPositions_020e1e24((Wf11Outer*)panel, (unsigned short*)&x, (unsigned short*)&y, 0);
+    SetEntryPositionFromObject((WinObj020e28f0*)self->yesNo_, x, y + 4);
+    int tick = GameState::GetInstance()->GetTickCount();
+    if (tick == 0)
+        tick = 1;
+    UpdateEntryStateAndPosition((Ctx020e263c*)self->yesNo_, tick);
+    SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
 }

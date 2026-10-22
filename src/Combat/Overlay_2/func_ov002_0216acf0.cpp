@@ -16,47 +16,47 @@ struct GameObject;
 struct Struct_ov002_0216acf0_4;
 
 extern "C" GameState* _ZN9GameState11GetInstanceEv(void);
-extern "C" unsigned int _ZNK9GameState21GetEffectiveDeltaTimeEv(GameState* arg0);
-extern "C" int _ZNK9GameState12GetTickCountEv(GameState* arg0);
-extern "C" char* func_020421a0(void);
-extern "C" Struct_ov002_0216acf0_4* func_0202ae18(void);
-extern "C" char* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void _ZN8Vector3iaSERKS_(int* arg0, const void* arg1);
-extern "C" int func_0202c578(Struct_ov002_0216acf0_4* arg0, int arg1);
-extern "C" int func_ov002_0216c628(unsigned char*, int);
-extern "C" void func_ov002_0215b6c0(char* arg0);
-extern "C" void func_ov002_0215a7b4(char* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov002_02159900(char* arg0, char* arg1, int arg2);
-extern "C" void func_ov002_0215a0a4(char* arg0, char* arg1, int arg2);
-struct Struct_ov002_02157d40_7;
-extern "C" void func_0205eaa0(Struct_ov002_02157d40_7*, int, int);
-extern "C" void func_ov002_02157ce0(char* arg0);
-struct Struct_ov002_0215624c_11;
-extern "C" void func_0205de24(Struct_ov002_0215624c_11*, unsigned char, unsigned char);
-extern "C" void func_ov002_02161174(char* arg0);
-extern "C" void func_ov002_0216bfd4(char* arg0, int arg1);
-extern "C" int func_ov002_02161b48(char* arg0, int arg1);
-extern "C" void func_ov017_021d0198(int arg0, int arg1, int arg2, int arg3);
-struct Struct_ov002_02164748;
-extern "C" int func_0205da38(struct Struct_ov002_02164748* arg0, int arg1);
-extern "C" void func_ov002_0216c28c(char* arg0, int arg1);
-struct Struct_ov002_0216acf0;
-extern "C" void func_020444bc(Struct_ov002_0216acf0*);
-extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
-extern "C" void func_ov017_0218b5f8(int arg0);
-struct Struct_ov002_0216acf0_2;
-extern "C" char* func_0205d888(Struct_ov002_0216acf0_2*);
-extern "C" void func_ov002_02156ff0(unsigned char*, int);
-extern "C" int func_ov002_02157108(void*, int);
-struct Struct_ov002_02164748_2;
-extern "C" void func_0205dee8(Struct_ov002_02164748_2*, int);
-struct Struct_ov002_02155960_2;
-extern "C" void func_0205deb4(Struct_ov002_02155960_2*, int, int);
-extern "C" void func_ov002_02161cf0(char* arg0);
-extern "C" void func_ov023_021dca88(char* arg0);
-extern "C" void func_0205d7a0(char* arg0, int arg1);
-extern "C" void func_ov002_0215c988(char* arg0, void* arg1, int arg2);
-struct Struct_ov002_0215bba8_3;
+extern "C" unsigned int _ZNK9GameState21GetEffectiveDeltaTimeEv(GameState* gs);
+extern "C" int _ZNK9GameState12GetTickCountEv(GameState* gs);
+char* GetGlobalField0x1c020421a0(void);
+extern "C" SearchStruct* func_0202ae18(void);
+char* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int id);
+extern "C" void _ZN8Vector3iaSERKS_(int* dst, const void* src);
+int TestFlagBitAt0xe_0202c578(SearchStruct* s, int bit);
+int DecrementOrClearCounterC74_0216c628(unsigned char*, int);
+extern "C" void func_ov002_0215b6c0(char* self);
+extern "C" void func_ov002_0215a7b4(char* self, int a, int b, int c, int d);
+extern "C" void func_ov002_02159900(char* self, char* arr, int flag);
+extern "C" void func_ov002_0215a0a4(char* self, char* arr, int flag);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+void InitStateArray02157ce0(char* arr);
+struct Struct0205de24;
+void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
+void InitBattleTag02161174(char* self);
+extern "C" void func_ov002_0216bfd4(char* self, int v);
+int CheckFlagOrThreshold_02161b48(char* self, int v);
+void EnqueueEventTag170_021d0198(int a, int b, int c, int d);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+extern "C" void func_ov002_0216c28c(char* self, int v);
+struct Struct020444bc;
+void SetField9a0AndIncrementField78(Struct020444bc*);
+extern "C" void func_ov016_0218b5c0(int a, int b);
+extern "C" void func_ov017_0218b5f8(int a);
+struct Struct0205d888;
+char* GetLastEntry0205d888(Struct0205d888*);
+void ClearMatchingEntry_02156ff0(unsigned char*, int);
+int GetCountByType02157108(void*, int);
+struct Obj0205dee8;
+void SetFieldB0AndUpdate0205dee8(Obj0205dee8*, int);
+struct Struct_0205d81c;
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+extern "C" void func_ov002_02161cf0(char* self);
+extern "C" void func_ov023_021dca88(char* obj);
+extern "C" void func_0205d7a0(char* obj, int v);
+extern "C" void func_ov002_0215c988(char* self, void* buf, int v);
+struct StructA0205d5d0;
 #if defined(jpn)
 extern "C" void func_0205d5d0(Struct_ov002_0215bba8_3*, int, int, int);
 #define TAE_LAST(x)
@@ -90,8 +90,8 @@ struct Struct_ov002_0216acf0_5 {
     unsigned char unknown_5_;
 };
 
-extern Struct_020fdcb0_2 data_020fdcb0[];
-extern char data_02108760;
+extern Totals020fdcb0 data_020fdcb0[];
+extern char g_sePlayer;
 
 #define U8(o) (*(unsigned char*)(arg0 + (o)))
 #define S8(o) (*(signed char*)(arg0 + (o)))
@@ -205,8 +205,8 @@ extern "C" ARM void func_ov002_0216acf0(char* arg0) {
                 }
             }
             if (U8(RG(0x1cc7, 0x1b8b)) != 0) {
-                func_ov002_0215a0a4(arg0, arg0 + RG(0xc8 + 0x1c00, 0x1b8c), var19);
-                func_0205eaa0((Struct_ov002_02157d40_7*)&data_02108760, 100, 0);
+                func_ov002_0215a0a4(self, self + RG(0xc8 + 0x1c00, 0x1b8c), any);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 100, 0);
                 if (S32(RG(0x1d00, 0x1bc4)) != 0) {
                     S32(RG(0x1bb8, 0x1a80)) = K(0x26, 0x29);
                     S32(RG(0x1bbc, 0x1a84)) = K(0x2b, 0x2e);
@@ -325,9 +325,9 @@ extern "C" ARM void func_ov002_0216acf0(char* arg0) {
                 if (var26[0] != S32(RG(0x2524, 0x2354)) || var26[1] != S32(RG(0x2528, 0x2358)) || var26[2] != S32(RG(0x252c, 0x235c)) || U8(RG(0x2523, 0x2353)) != 0) {
                     *(unsigned int*)(var25 + RG(0x18c, 0x180)) &= ~1;
                     U8(RG(0x2523, 0x2353)) = 1;
-                    if (*(int*)(var1 + RG(0x9a0, 0x870)) == 2 && S32(RG(0x2530, 0x2360)) >= 1000) {
-                        func_020444bc((Struct_ov002_0216acf0*)var1);
-                        func_0205eaa0((Struct_ov002_02157d40_7*)&data_02108760, 1, 0);
+                    if (*(int*)(g + RG(0x9a0, 0x870)) == 2 && S32(RG(0x2530, 0x2360)) >= 1000) {
+                        SetField9a0AndIncrementField78((Struct020444bc*)g);
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
                         U8(RG(0x2522, 0x2352)) = 0;
                         U8(RG(0x2523, 0x2353)) = 0;
                         memset(arg0 + RG(0x124 + 0x2400, 0x2354), 0, 0xc);
@@ -402,8 +402,8 @@ extern "C" ARM void func_ov002_0216acf0(char* arg0) {
             U8(RG(0x248a, 0x22ba)) = 0;
             S32(RG(0x1bc0, 0x1a88)) = 0;
             if (S16(RG(0x1c28, 0x1af0)) == 0x7532 || S16(RG(0x1c28, 0x1af0)) == 0x7531) {
-                func_0205ebc0(&data_02108760, 0x75, 0x75);
-                func_0205ebfc(&data_02108760, 0, 0);
+                SetForwardAndStore0205ebc0(&g_sePlayer, 0x75, 0x75);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             }
             return;
         }
@@ -423,8 +423,8 @@ extern "C" ARM void func_ov002_0216acf0(char* arg0) {
                 U8(RG(0x1caf, 0x1b73)) = 0;
             }
             if (S16(RG(0x1c28, 0x1af0)) == 0x7530) {
-                func_0205ebc0(&data_02108760, 0x75, 0x75);
-                func_0205ebfc(&data_02108760, 0, 0);
+                SetForwardAndStore0205ebc0(&g_sePlayer, 0x75, 0x75);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             }
             char* var30 = func_0205d888((Struct_ov002_0216acf0_2*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)));
             if (U8(RG(0x2521, 0x2351)) != 0) {

@@ -69,39 +69,39 @@ struct Struct_02021b84 { char unknown_0_[0x868]; int unknown_998_; };
 struct Struct_02021b84 { char unknown_0_[0x998]; int unknown_998_; };
 #endif
 
-struct Struct_02108760;
-struct Struct_ov000_0216fe48;
-struct Struct_ov000_0216fdf8;
-struct Struct_ov000_0216fd0c;
-struct Struct_ov000_0216fd38;
-struct Struct_ov000_0216fd80;
-extern "C" void* func_ov000_02160f20(void*);
+struct SePlayer;
+struct Struct0216fe48;
+struct ShortSetStruct0216fdf8;
+struct Struct0216fd0c;
+struct Struct0216fd38;
+struct EntryTask0216fd80;
+void* GetSlotPtr02160f20(void*);
 extern "C" void* func_02057924();
-extern "C" unsigned char* func_ov000_02163524(void*);
-extern "C" unsigned char _ZZ21inline_ov025_021dcf14vE1s __attribute__((aligned(4)));
-extern Struct_02108760 data_02108760;
-extern "C" void func_ov025_021db6dc(Struct_ov000_021537b8*);
-extern "C" int func_ov000_0215fc60(char*);
-extern "C" Struct_ov000_02160094* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
-extern "C" Struct_ov000_021600f8* func_ov000_021600f8(Struct_ov000_0215440c*, int);
+unsigned char* GetField02163524(void*);
+extern "C" unsigned char _ZZ16GetTimer021ef974vE1s __attribute__((aligned(4)));
+extern SePlayer g_sePlayer;
+extern "C" void func_ov025_021db6dc(Work*);
+int ClassifyField0x81fe_ov000_0215fc60(char*);
+ListNode02160094* GetNodeAtIndex02160094(List02160094*, int);
+ListNode021600f8* GetNodeAtIndex021600f8(List021600f8*, int);
 extern "C" void func_ov025_021e88d8(char*);
 extern "C" void func_ov025_021e8a40(char*, int, int);
 extern "C" void func_ov025_021e8a4c(char*, int);
 extern "C" void func_ov000_0216df00(void*, int, int, int, float);
 extern "C" void func_ov000_021626a0(void*, int, int);
-extern "C" void func_ov000_02160fa8(void*, int);
-extern "C" int func_ov000_02160fd4(void*, int);
-extern "C" void func_ov000_02160fbc(void*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov025_021dbe10(Struct_ov000_021537b8*);
-extern "C" void func_ov000_0216fe48(Struct_ov000_0216fe48*);
-extern "C" void func_ov000_0216fdf8(Struct_ov000_0216fdf8*, int);
-extern "C" void func_ov000_0216fd0c(Struct_ov000_0216fd0c*);
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_ov000_0216fd38(Struct_ov000_0216fd38*);
-extern "C" int func_ov025_021e8a54(char*);
-extern "C" void func_ov000_0216fd80(Struct_ov000_0216fd80*, int);
-extern "C" char* func_ov000_0216fcfc(void*, int);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
+int GetCombatWorkFlags0x55f4_ov000_02160fd4(void*, int);
+void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void*, int);
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov025_021dbe10(Work*);
+void ResetStruct0216fe48(Struct0216fe48*);
+void AppendUniqueShort0216fdf8(ShortSetStruct0216fdf8*, int);
+void SetField0FromCallFunc0202fa38(Struct0216fd0c*);
+MessageSystem* GetGlobalField0x1c020421a0();
+void CheckOrSetFlagA0_0216fd38(Struct0216fd38*);
+int GetArrayEntry_021e8a54_021e8a54(char*);
+void BeginListEntryTask_0216fd80(EntryTask0216fd80*, int);
+char* GetFieldByKeyFromWork0x88_ov000_0216fcfc(void*, int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_02021b84*, char*, int, int);
 #endif
@@ -157,9 +157,9 @@ extern "C" ARM void func_ov025_021db038(Struct_ov000_021537b8* arg0) {
                     if (func_ov000_0215fc60((char*)var1) == 1) var8 = 0x1ee;
                     else if (func_ov000_0215fc60((char*)var1) == 2) var8 = 0x211;
                 }
-                if (var7->unknown_20_ == 0) {
-                    func_0205eaa0(&data_02108760, 7, 0);
-                    if (var6) { var6->unknown_0_ = 0; var6->unknown_18_ = 0; var6->unknown_c_ = 0; var6->unknown_1b_ = 0; }
+                if (actor->id == 0) {
+                    SePlayer_Play(&g_sePlayer, 7, 0);
+                    if (target) { target->flags = 0; target->flag18 = 0; target->value = 0; target->flag1b = 0; }
                 }
             }
         }

@@ -12,7 +12,7 @@ enum { Enum_ov026_021db090_668 = 0x29c, Enum_ov026_021db090_10416 = 0x28b0, Enum
 
 struct Struct_ov000_02161e30;
 struct GameResources;
-struct Struct_02108760;
+struct SePlayer;
 
 struct Struct_ov000_0217e870_2 {
     char unknown_0_[0x8];
@@ -93,16 +93,16 @@ struct Struct_ov023_021f2a48_4 {
     char* unknown_5c_;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" Struct_ov000_0217964c_3* func_020421a0();
-extern "C" int func_02010088(struct Struct_02010088*);
-extern "C" void func_020e4c74(void*, GameObject*);
-extern "C" void func_02053ec8(void*, int);
-extern "C" void func_ov017_021c9ad4(unsigned short);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_02043204(char*);
-extern "C" void func_ov000_02160d80(void*, int);
-extern "C" Struct_ov026_021db090_4* func_ov026_021dae60(Struct_ov026_021d8ba0_4*, int);
+extern "C" void __clear(void* p, int size);
+MessageWindow* GetGlobalField0x1c020421a0();
+int IsFlag10088Set_02010088(struct S_10088*);
+void InitObjFromCombatant020e4c74(void*, GameObject*);
+void SetField0x158_02053ec8(void*, int);
+void EnqueueEventTag86_021c9ad4(unsigned short);
+void SePlayer_Play(SePlayer*, int, int);
+void ReinitController02043204(char*);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
+CommandSlot* FindSlotById_021dae60(Container_021dae60*, int);
 
 extern "C" {
 int func_ov000_0215e9fc(Struct_ov000_02161e30*, short*, int, int);
@@ -127,8 +127,8 @@ extern char data_ov026_021df465[];
 #endif
 
 extern char data_ov026_021dedee[];
-extern Struct_ov000_02182c74 data_ov026_021de6bc;
-extern Struct_02108760 data_02108760;
+extern IdList data_ov026_021de6bc;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov026_021db090
 extern "C" ARM void func_ov026_021db090(Struct_ov000_02160da0* arg0) {
@@ -255,20 +255,20 @@ extern "C" ARM void func_ov026_021db090(Struct_ov000_02160da0* arg0) {
         var1->unknown_0_ = &var4;
         func_0204500c(var1, var3, 0, 0xe3);
 #endif
-        var1->unknown_19b1_ = 0;
-        var1->unknown_19b2_ = 0;
-        var1->unknown_19be_ = 1;
-        var1->unknown_195b_ |= 2;
-        var1->unknown_998_ = 1;
-        func_0205eaa0(&data_02108760, 9, 0);
-        arg0->unknown_eac_++;
-    } else if (var1->unknown_9a0_ == 0) {
-        arg0->unknown_eac_++;
-        if (arg0->unknown_eac_ >= 0x1e) {
-            func_02043204((char*)var1);
-            func_02043124(var1);
-            if (arg0->unknown_5950_ == 2) {
-                func_ov000_02160d80(arg0, 4);
+        win->b19b1 = 0;
+        win->b19b2 = 0;
+        win->b19be = 1;
+        win->flags |= 2;
+        win->active = 1;
+        SePlayer_Play(&g_sePlayer, 9, 0);
+        self->state++;
+    } else if (win->busy == 0) {
+        self->state++;
+        if (self->state >= 0x1e) {
+            ReinitController02043204((char*)win);
+            func_02043124(win);
+            if (self->mode == 2) {
+                SetFieldsAndSignalData02184220_ov000_02160d80(self, 4);
             } else {
                 for (int var22 = 0; var22 < 4; var22++) {
                     Struct_ov026_021db090_4* var23 = func_ov026_021dae60(&arg0->unknown_3760_, var22);

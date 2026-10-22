@@ -8,11 +8,11 @@ enum { Enum_ov017_021aa080_2464 = 0x9a0 };
 #include "Input/Input.h"
 
 extern int data_02107800;
-struct Struct_02108760;
-extern struct Struct_02108760 data_02108760;
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
 
-extern "C" int func_020421a0();
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+int GetGlobalField0x1c020421a0();
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 // USA: func_ov017_021aa080
 extern "C" ARM int func_ov017_021aa080() {
@@ -36,6 +36,6 @@ extern "C" ARM int func_ov017_021aa080() {
     if (var2 == 0) {
         return 0;
     }
-    func_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 1;
 }

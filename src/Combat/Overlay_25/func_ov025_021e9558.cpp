@@ -49,7 +49,7 @@ extern "C" void func_ov025_021e8bc4(struct Struct_ov025_021e9558_4* arg0, int ar
 
 extern unsigned int data_ov025_021ef990;
 extern const char data_ov025_021ef8dc[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov025_021e9558
 extern "C" ARM void func_ov025_021e9558(struct Struct_ov025_021e9558_4* arg0) {
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov025_021e9558(struct Struct_ov025_021e9558_4* arg0) {
 #else
     var1->unknown_5954_[1].MaybeSetRegularAnimation(data_ov025_021ef8dc, 1);
 #endif
-    func_0205ebec(data_02108760);
+    ForwardField0xc0_0205ebec(g_sePlayer);
     LightingManager::GetInstance()->BeginFade(0x1000, 1000);
     arg0->unknown_1c4_ = 0;
 }

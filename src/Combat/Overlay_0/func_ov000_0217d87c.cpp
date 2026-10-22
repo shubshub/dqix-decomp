@@ -7,8 +7,8 @@ extern "C" void* func_020e08f0(int arg0, unsigned int* arg1);
 #endif
 
 struct Struct_0205c570;
-struct Struct_02108760;
-struct Struct_0205d6a0;
+struct SePlayer;
+struct Entry_0205d6a0;
 struct Struct_0205d81c;
 struct Struct_0205def8;
 struct Struct_ov000_021735d0_2;
@@ -56,28 +56,28 @@ struct Struct_ov000_02178d28_2 {
     unsigned short unknown_1d72_;
 };
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern const char* data_020f2a34;
 extern const char* data_020f2a2c;
 
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" struct Struct_ov000_021735d0_2* func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern "C" int func_ov000_0217c5f4(void*);
-extern "C" void func_ov000_0217a9d0(int, int, int, Struct_0205d81c*);
-extern "C" void func_0205def8(Struct_0205def8*, int, int);
-extern "C" int func_ov000_021719f8(int*);
-extern "C" int func_ov000_0218158c(void* arg0, int arg1);
-extern "C" void func_020de848(void* arg0);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" int func_020de9a4(void* arg0, void* arg1, void* arg2, unsigned int arg3, void* arg4, unsigned short arg5);
-extern "C" int func_0207c984(void* arg0, int arg1, int arg2, void* arg3, void* arg4);
-extern "C" int func_ov000_0217c594(Struct_ov000_02178d28_2* arg0, int arg1);
-extern "C" Struct_ov000_0217d674* func_ov000_02161318(Struct_ov000_02178d28_2* arg0, int arg1);
-extern "C" void func_ov000_02175258(Struct_ov000_02178d28_2* arg0);
-extern "C" void func_ov000_02176634(Struct_ov000_02178d28_2* arg0, void* arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov000_0217c638(Struct_ov000_02178d28_2* arg0, int arg1, int arg2);
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
+void SetElementStateIfLess0217a9d0(int, int, int, Struct_0205d81c*);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
+int HasAnyFlags_021719f8_021719f8(int*);
+int GetNthSetBit0218158c(void* menu, int index);
+void ZeroInit020de848(void* obj);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" int func_020de9a4(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
+extern "C" int func_0207c984(void* party, int id, int bits, void* a, void* b);
+extern "C" int func_ov000_0217c594(MenuState* menu, int limit);
+extern "C" ElemNode* func_ov000_02161318(MenuState* menu, int id);
+extern "C" void func_ov000_02175258(MenuState* menu);
+extern "C" void func_ov000_02176634(MenuState* menu, void* entry, int mode, int arg1, int arg2);
+extern "C" void func_ov000_0217c638(MenuState* menu, int arg1, int arg2);
 
 // USA: func_ov000_0217d87c
 extern "C" ARM void func_ov000_0217d87c(Struct_ov000_02178d28_2* arg0, int arg1, int arg2) {
@@ -97,8 +97,8 @@ extern "C" ARM void func_ov000_0217d87c(Struct_ov000_02178d28_2* arg0, int arg1,
         if (func_0207c984(var4 + 0x1d4, var2, var5 & 0xff, arg0->unknown_26_, &arg0->unknown_66_) != 0) {
             return;
         }
-        arg0->unknown_240_ = 6;
-        func_0205eaa0(&data_02108760, 1, 0);
+        menu->mode = 6;
+        SePlayer_Play(&g_sePlayer, 1, 0);
         BackgroundLoader::AddLockGlobal();
 #if defined(jpn)
         ((SafeAllocator*)((char*)arg0 + 0x1bf8))->Reset();

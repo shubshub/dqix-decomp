@@ -15,17 +15,17 @@
 #define func_0206df6c func_0206f0c0
 #endif
 
-struct Struct_02015ef4_5 { unsigned int unknown_0_[28]; };
-struct Struct_020465c0;
-struct Struct_ov017_0218d618_2;
-struct Struct_02108760;
-struct Struct_0201099c_10;
-struct Struct_ov017_021bf9a0 { char unknown_0_[0x30]; unsigned short unknown_30_; };
-struct Struct_ov017_021bf9a0_2 {
-    char unknown_0_[8]; unsigned short unknown_8_; short unknown_a_;
-    Struct_ov017_021bf9a0* unknown_c_; Struct_02012fa4* unknown_10_; short unknown_14_;
-    char unknown_16_[0x28 - 0x16]; Vector3fix unknown_28_; SafeAllocator unknown_34_;
-    unsigned char unknown_48_;
+struct State0207dfc8 { unsigned int words[28]; };
+struct StoreStruct;
+struct Struct0218d618;
+struct SePlayer;
+struct Container020dedd0;
+struct LootEventInfo { char pad0[0x30]; unsigned short containerId; };
+struct LootEvent {
+    char pad0[8]; unsigned short timer; short fieldA;
+    LootEventInfo* info; Foo02048004* display; short taskId;
+    char pad16[0x28 - 0x16]; Vector3fix position; SafeAllocator allocator;
+    unsigned char special;
 };
 #if defined(jpn)
 struct Struct_ov017_021bf9a0_3 { char unknown_0_[0x2794]; char unknown_2754_[4]; };
@@ -55,9 +55,9 @@ extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
 extern "C" void* func_020d7a50();
 extern "C" void func_ov017_0218d644(GameResources*, Vector3fix*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern AllocatorUnion data_02114e20;
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 
 static inline char& inline_ov017_021bf9a0(GameResources* arg0, int arg1) {
     return arg0->unknown_2cc_[arg1];
@@ -120,9 +120,9 @@ extern "C" ARM int func_ov017_021bf9a0(Struct_ov017_021bf9a0_2* arg0) {
 #else
                 func_020d7e10(func_020d7a50(), var13, 0, 0, 1, 0);
 #endif
-                GameResources* var16 = GetGameResources();
-                if (arg0->unknown_48_) func_ov017_0218d644(var16, &arg0->unknown_28_, 0);
-                else func_0205eaa0(&data_02108760, 14, 0);
+                GameResources* resources = GetGameResources();
+                if (self->special) func_ov017_0218d644(resources, &self->position, 0);
+                else SePlayer_Play(&g_sePlayer, 14, 0);
                 return 4;
             }
         }

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02108760;
-struct Struct_0203a48c_3;
-struct Struct_0203a588_2;
-struct Struct_ov000_021537b8_6;
+struct SePlayer;
+struct Obj0203a48c;
+struct Obj0203a588;
+struct Obj02176150;
 
 struct Struct_02078398_2 {
     unsigned char unknown_0_;
@@ -74,12 +74,12 @@ extern "C" struct Struct_0203a588_2* func_02039e70(void);
 struct Struct_0203a48c_2;
 extern "C" void func_0203a48c(Struct_0203a48c_3*, int, Struct_0203a48c_2*, int, int, int);
 extern "C" void* func_02057924(void);
-extern "C" void func_02078484(struct Struct_02078398_2* arg0);
-extern "C" void func_02057fb4(void* arg0, int arg1, void* arg2);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02176150(struct Struct_ov000_021537b8_6* arg0, unsigned short arg1);
+void InitStruct02078484(struct InitStruct02078484Struct* p);
+void FindNodeAndProcess02057fb4(void* list, int id, void* config);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void _Z24SetShortField0xE02176150P11Obj02176150s(struct Obj02176150* obj, unsigned short val);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov025_021e9d14
 extern "C" ARM void func_ov025_021e9d14(void) {
@@ -102,20 +102,20 @@ extern "C" ARM void func_ov025_021e9d14(void) {
         if (var8 == NULL) {
             continue;
         }
-        if (var4->unknown_14_ != NULL) {
-            int var9 = -var4->unknown_14_->unknown_c_;
-            if (var9 > 0) {
-                struct Struct_0203a48c_3* var10 = (struct Struct_0203a48c_3*)func_02039e70();
-                Vector3fix var11 = var8->obj3D_.position_;
-                var11.y += var8->obj3D_.GetHeight();
-                func_0203a48c(var10, var9, (Struct_0203a48c_2*)&var11, 3, 0, 0);
-                void* var12 = func_02057924();
-                struct Struct_02078398_2 var13;
-                func_02078484(&var13);
-                var13.unknown_2c_.y += var8->obj3D_.GetHeight() / 2;
-                var13.unknown_14_ = var5;
-                func_02057fb4(var12, 0x10, &var13);
-                func_0205eaa0(&data_02108760, 0x65, 0);
+        if (node->damage != NULL) {
+            int amount = -node->damage->amount;
+            if (amount > 0) {
+                struct Obj0203a48c* popups = (struct Obj0203a48c*)GetData02104b6c_02039e70();
+                Vector3fix pos = actor->obj3D_.position_;
+                pos.y += actor->obj3D_.GetHeight();
+                QueuePopupEntry0203a48c(popups, amount, (Vec3Int0203a48c*)&pos, 3, 0, 0);
+                void* list = func_02057924();
+                struct InitStruct02078484Struct req;
+                InitStruct02078484(&req);
+                req.offset.y += actor->obj3D_.GetHeight() / 2;
+                req.objectId = id;
+                FindNodeAndProcess02057fb4(list, 0x10, &req);
+                SePlayer_Play(&g_sePlayer, 0x65, 0);
             }
         }
         int var14 = (var5 >= 0 && var5 <= 3) ? 1 : 0;

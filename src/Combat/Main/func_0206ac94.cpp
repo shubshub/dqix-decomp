@@ -28,11 +28,11 @@ struct Struct_0204254c {
     char unknown_6_[2];
 };
 
-extern "C" bool func_02044494(void* arg0, void* arg1);
-extern "C" bool func_0206ac6c(void* arg0, void* arg1);
-extern "C" int func_02001aec(unsigned char* arg0, unsigned char* arg1, int arg2);
-extern "C" int func_0206abf8(void* arg0, void* arg1);
-extern "C" struct Struct_0204254c* func_0204254c(int arg0, int arg1);
+extern bool IsHighByteFF02044494(void* obj, void* src);
+extern bool IsHighByteFF0206ac6c(void* base, void* src);
+extern "C" int func_02001aec(unsigned char* a, unsigned char* b, int n);
+extern int Func0206abf8(void* obj, void* src);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 // USA: func_0206ac94
 extern "C" ARM int func_0206ac94(void* arg0, unsigned short arg1, unsigned char* arg2) {
@@ -58,11 +58,11 @@ extern "C" ARM int func_0206ac94(void* arg0, unsigned short arg1, unsigned char*
             var1 += var2;
             var0 += var2;
         } else {
-            struct Struct_0204254c* var3;
-            int var4 = 1;
-            var3 = func_0204254c((int)var1, *(unsigned char*)((char*)arg0 + 0x19dc));
-            if (var3) {
-                var4 = var3->unknown_5_0_;
+            struct Entry0204254c* e;
+            int val = 1;
+            e = Font_FindCharacter((int)q, *(unsigned char*)((char*)obj + 0x19dc));
+            if (e) {
+                val = e->field5;
             }
             var1 += var4;
             var0 += var4;

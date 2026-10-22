@@ -46,17 +46,17 @@ struct Struct_ov002_02157634_6 {
     char unknown_0_[0xc];
     unsigned short unknown_c_;
 };
-struct Struct_ov002_02157d40_4;
-struct Struct_ov002_02157d40_5;
-struct Struct_ov002_02157d40_6;
-struct Struct_ov002_02157d40_7;
-struct Struct_ov002_02157d40_8;
-struct Struct_ov002_02157d40_9;
-struct Struct_ov002_02157d40_10;
-struct Struct_ov002_02157d40_11;
-struct Struct_ov002_02157d40_12;
-struct Struct_ov002_02157d40_13;
-struct Struct_02001a40;
+struct Struct0201bc94;
+struct Obj020541a4;
+struct Obj02046574;
+struct SePlayer;
+struct Obj02048350;
+struct List02046a3c;
+struct Node02046a3c;
+struct List02026a28;
+struct List02026abc;
+struct Obj021c2744;
+struct Obj021c2b28;
 
 extern "C" void* __clear(void* arg0, int arg1);
 extern "C" void* func_02012fe4(void);
@@ -73,29 +73,29 @@ extern "C" void func_020541a4(struct Struct_ov002_02157d40_5* arg0, unsigned cha
 extern "C" void func_020465c0(struct Struct_ov002_02157d40_2* arg0, int arg1, int arg2);
 extern "C" int func_0202b7d8(int* arg0);
 void* LoadFileIntoMemory(const char* path, void* buf, unsigned int* outSize);
-extern "C" void func_02048418(unsigned char* arg0, unsigned short arg1);
-extern "C" void func_020a8170(struct Struct_ov002_02157634_6* arg0);
-extern "C" int func_020114ec(char* arg0, void* arg1);
-extern "C" int func_0202663c(unsigned char* arg0);
-extern "C" void func_02046a3c(struct Struct_ov002_02157d40_9* arg0, struct Struct_ov002_02157d40_10* arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02026644(char* arg0);
-extern "C" void func_ov017_021c2744(struct Struct_ov002_02157d40_13* arg0);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0208247c(void* arg0);
-extern "C" void func_02048350(struct Struct_ov002_02157d40_8* arg0, int arg1);
-extern "C" void func_ov002_02157ce0(char* arg0);
-extern "C" void func_02046574(struct Struct_ov002_02157d40_6* arg0, int arg1, char* arg2);
-extern "C" int func_02026a28(struct Struct_ov002_02157d40_11* arg0);
-extern "C" int func_02026abc(struct Struct_ov002_02157d40_12* arg0);
-extern "C" void func_ov017_021c2688(unsigned char* arg0);
-extern "C" void func_02026678(char* arg0);
-extern "C" int func_0201bc94(struct Struct_ov002_02157d40_4* arg0);
-extern "C" void func_ov017_021d27a0(int, int, int);
-extern "C" int func_020421a0(void);
-extern "C" void func_ov017_021acd30(char* arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3);
-extern "C" int func_02026a78(char* arg0);
-extern "C" void func_0205eaa0(struct Struct_ov002_02157d40_7* arg0, int arg1, int arg2);
+void TryClearFlags0x130_02048418(unsigned char* p, unsigned short mask);
+void ClearStruct020a8170(struct Struct020a8170* p);
+int CopyOutRegion0x571d_020114ec(char* dst, void* src);
+int GetByteFieldAt0x9ba_0202663c(unsigned char* p);
+void InsertNodeAfterHead(struct List02046a3c* list, struct Node02046a3c* node);
+void AppendString02042058(char* dst, const char* src);
+void ClearRecords02026644(char* p);
+void InitState69_021c2744(struct Obj021c2744* p);
+int GetFieldByKey020e0434(struct Container020e0310* c, int key);
+void Clear0x54Bytes0208247c(void* p);
+void ConsumeCounter02048350(struct Obj02048350* p, int a);
+void InitStateArray02157ce0(char* p);
+void SetIndexedName02046574(struct Obj02046574* p, int a, char* s);
+int CountEntriesByField0x8c(struct List02026a28* p);
+int CountEntriesByField0x8e(struct List02026abc* p);
+void InitByteHeader_021c2688(unsigned char* p);
+void SetFlagsAndReset02026678(char* p);
+int IsEntryEligibleAndFlagged(struct Struct0201bc94* p);
+void EnqueueEventTag34_021d27a0(int, int, int);
+int GetGlobalField0x1c020421a0(void);
+void InitAndInsertNode_021acd30(char* p, unsigned char a, unsigned char b, unsigned char c);
+int CountMatchingEntries02026a78(char* p);
+void SePlayer_Play(struct SePlayer* p, int a, int b);
 struct GameObject;
 extern "C" void func_020e4c74(void*, GameObject*);
 extern "C" void func_020e4bf4(void* arg0, int arg1);
@@ -131,7 +131,7 @@ extern "C" void func_ov017_021c3fb4(signed char arg0, int arg1);
 extern "C" void func_ov017_021c4418(signed char arg0, int arg1);
 extern "C" void func_ov017_021c9e00(signed char arg0, int arg1, int arg2, int arg3);
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern unsigned char data_ov002_0216c992;
 extern int data_ov002_0216cf51;
 extern int data_0211e33c;
@@ -728,18 +728,18 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
             arg0->unknown_248a_ = 1;
             arg0->unknown_2488_ = 0x232b;
         }
-        arg0->unknown_1bc0_ = 0;
-        if (var10 != 0) {
-            func_0205eaa0((struct Struct_ov002_02157d40_7*)&data_02108760, 0x64, 0);
-            arg0->unknown_1bb8_ = ST(0x26);
-            arg0->unknown_1bbc_ = ST(0x2b);
-            if (arg0->unknown_1c26_ == 0xd7) {
-                arg0->unknown_1bb8_ = ST(0x2b);
+        p->timer = 0;
+        if (flagB != 0) {
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
+            p->state = ST(0x26);
+            p->nextState = ST(0x2b);
+            if (p->command == 0xd7) {
+                p->state = ST(0x2b);
             }
-        } else if (var11 == 0) {
-            func_0205eaa0((struct Struct_ov002_02157d40_7*)&data_02108760, 0x64, 0);
-            arg0->unknown_1bb8_ = ST(0x26);
-            arg0->unknown_1bbc_ = ST(0x11);
+        } else if (flag1c == 0) {
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
+            p->state = ST(0x26);
+            p->nextState = ST(0x11);
         }
     } else if (arg0->unknown_1bb8_ == ST(7)) {
         arg0->unknown_2522_ = 0;
@@ -804,18 +804,18 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 }
                 if (var65) {
                     func_ov016_0218b5c0(0, -1);
-                    func_ov017_021d27a0(1, arg0->unknown_1c20_, arg0->unknown_1c21_);
-                    func_0205eaa0((struct Struct_ov002_02157d40_7*)&data_02108760, 0x64, 0);
-                    arg0->unknown_1c28_ = 0x7536;
-                    arg0->unknown_1c2a_ = -1;
-                    arg0->unknown_1bb8_ = ST(0x26);
-                    arg0->unknown_1bbc_ = ST(0x26);
-                    arg0->unknown_2488_ = -1;
-                    arg0->unknown_248a_ = 0;
-                    arg0->unknown_1c7a_ = 1;
-                    arg0->unknown_1c7b_ = 0xa;
-                    arg0->unknown_1c74_ = 0x12c;
-                    arg0->unknown_1bc0_ = 0;
+                    EnqueueEventTag34_021d27a0(1, p->actor, p->target);
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
+                    p->msgId = 0x7536;
+                    p->msgId2 = -1;
+                    p->state = ST(0x26);
+                    p->nextState = ST(0x26);
+                    p->prompt = -1;
+                    p->showPrompt = 0;
+                    p->waitMode = 1;
+                    p->waitKind = 0xa;
+                    p->wait = 0x12c;
+                    p->timer = 0;
                     return;
                 }
             }
@@ -897,10 +897,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 }
             }
         }
-        func_0205eaa0((struct Struct_ov002_02157d40_7*)&data_02108760, 0x64, 0);
-        arg0->unknown_1bb8_ = ST(0x26);
-        arg0->unknown_1bbc_ = ST(0x11);
-        arg0->unknown_1bc0_ = 0;
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
+        p->state = ST(0x26);
+        p->nextState = ST(0x11);
+        p->timer = 0;
     }
     if (var9 != 0) {
         func_02048350((struct Struct_ov002_02157d40_8*)var7, var6->unknown_8_0_);

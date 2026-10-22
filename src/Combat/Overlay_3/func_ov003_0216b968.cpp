@@ -12,9 +12,9 @@
 
 struct Struct_0205a330;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
-struct Struct_0205d6a0;
+struct Obj_0205da38;
+struct SePlayer;
+struct Entry_0205d6a0;
 
 struct Struct_ov003_0216b968 {
     char unknown_0_[REGION_LAYOUT(0x230, 0x2e0)];
@@ -41,18 +41,18 @@ struct Struct_ov003_0216b968_2 {
     unsigned char unknown_13ee_;
 };
 
-extern "C" Struct_ov003_0216b968* func_020421a0(void);
-extern "C" void func_0205d7a0(void* arg0, int arg1);
-extern "C" void func_ov003_0216da90(Struct_ov003_0216b968_2* arg0);
-extern "C" void func_0205a330(struct Struct_0205a330* arg0, int arg1);
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_ov003_0216dc58(Struct_ov003_0216b968_2* arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_0205d97c(void* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
+Global0216b968* GetGlobalField0x1c020421a0(void);
+extern "C" void func_0205d7a0(void* list, int index);
+extern "C" void func_ov003_0216da90(Self0216b968* self);
+void IterateEntries0205a330(struct Container0205a330* c, int arg);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* list);
+extern "C" void func_ov003_0216dc58(Self0216b968* self);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+extern "C" int func_0205d97c(void* list);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int value);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0216b968
 extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
@@ -94,28 +94,28 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
 #if defined(jpn)
         switch (var3) {
         case 0:
-            arg0->unknown_4_ = 3;
-            arg0->unknown_6_ = 0;
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+            self->result_ = 3;
+            self->step_ = 0;
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 1:
-            arg0->unknown_4_ = 5;
-            arg0->unknown_6_ = 0;
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+            self->result_ = 5;
+            self->step_ = 0;
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 2:
-            arg0->unknown_4_ = 4;
-            arg0->unknown_6_ = 0;
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+            self->result_ = 4;
+            self->step_ = 0;
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 3:
-            arg0->unknown_4_ = 6;
-            arg0->unknown_6_ = 0;
-            func_0205eaa0(&data_02108760, 1, 0);
-            func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+            self->result_ = 6;
+            self->step_ = 0;
+            SePlayer_Play(&g_sePlayer, 1, 0);
+            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case -2:
             arg0->unknown_4_ = 6;
@@ -149,10 +149,10 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
             return;
         }
 
-        arg0->unknown_4_ = var4;
-        arg0->unknown_6_ = 0;
-        if (var5) {
-            func_0205eaa0(&data_02108760, 1, 0);
+        self->result_ = result;
+        self->step_ = 0;
+        if (dispatch) {
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
         func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
 #endif

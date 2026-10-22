@@ -13,8 +13,8 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-struct Struct_0207fdcc_2;
-struct Struct_02108760;
+struct Obj2081;
+struct SePlayer;
 
 struct Struct_ov006_02154614 {
     char unknown_0_[R(0x1054, 0x1258)];
@@ -40,13 +40,13 @@ struct Struct_ov006_02157a60 {
     unsigned short unknown_394_;
 };
 
-extern "C" short func_ov023_021e29d0(void* arg0);
-extern "C" void func_ov006_0215f4dc(Struct_ov006_02157a60* arg0);
-extern "C" void func_02081ea4(Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_ov006_021570fc(Struct_ov006_02154614* arg0, int arg1);
-extern "C" unsigned char func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+extern "C" short func_ov023_021e29d0(void* layout);
+extern "C" void func_ov006_0215f4dc(AlchemyMenu* self);
+void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int flag);
+extern "C" void func_ov006_021570fc(AlchemyPot* pot, int show);
+unsigned char SePlayer_Play(SePlayer* sound, int effect, int unk);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_021595b4
 extern "C" ARM int func_ov006_021595b4(Struct_ov006_02157a60* arg0) {
@@ -70,11 +70,11 @@ extern "C" ARM int func_ov006_021595b4(Struct_ov006_02157a60* arg0) {
     }
     if (var1)
         return 1;
-    if (arg0->unknown_394_ & 0x10) {
-        if (g_keyManager.TestKeysPressed(0x300) || var2) {
-            Struct_ov006_02154614* var3 = arg0->unknown_10_;
-            func_ov006_021570fc(var3, (var3->unknown_1258_ & 0x800) ? 0 : 1);
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
+    if (self->flags_ & 0x10) {
+        if (g_keyManager.TestKeysPressed(0x300) || window) {
+            AlchemyPot* pot = self->pot_;
+            func_ov006_021570fc(pot, (pot->windowFlags_ & 0x800) ? 0 : 1);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             return 1;
         }
     }

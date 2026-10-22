@@ -9,10 +9,10 @@ struct Struct_ov023_021ed7e0 {
     unsigned int unknown_0_0_ : 11; unsigned int unknown_1_3_ : 7; unsigned int unknown_2_2_ : 7;
     unsigned int unknown_3_1_ : 7;
 };
-struct Struct_02108760;
-struct Struct_ov023_021f2a48_5 {
-    unsigned short unknown_0_; unsigned short unknown_2_0_ : 15; unsigned short unknown_3_7_ : 1;
-    unsigned char unknown_4_; signed char unknown_5_;
+struct SePlayer;
+struct RewardEntry {
+    unsigned short text_; unsigned short key_ : 15; unsigned short plural_ : 1;
+    unsigned char counter_; signed char combatant_;
 };
 struct Struct_020a95a4_8 {
     char unknown_0_[0x678]; Struct_0206f01c_2 unknown_678_;
@@ -29,29 +29,29 @@ struct Struct_02081870 {
     char unknown_1c_[4]; void* unknown_20_; char unknown_24_[0x998 - 0x24]; int unknown_998_;
     char unknown_99c_[0x19b2 - 0x99c]; unsigned char unknown_19b2_;
 };
-struct Struct_ov023_021f2a48 { unsigned int unknown_0_; };
-struct Struct_ov023_021f2a48_2 { char unknown_0_[0x130]; Struct_ov023_021f2a48* unknown_130_; };
-struct Struct_ov023_021f2a48_3 { char unknown_0_[0x10]; unsigned short unknown_10_; };
-struct Struct_ov023_021f2a48_4 { char* unknown_0_; char* unknown_4_; int unknown_8_; };
-extern "C" Struct_ov023_021f2a48_8 _ZZ21inline_ov023_021f4c04vE1s;
-extern Struct_02108760 data_02108760;
-extern "C" Struct_02081870* func_020421a0();
-extern "C" void func_02046380(Struct_02081870*);
-extern "C" void func_020114ec(char*, void*);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" Struct_ov023_021f2a48_3* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" void func_020e46c4(void*);
-extern "C" Struct_ov023_021edc08_5 func_ov023_021ed804(Struct_ov023_021edc08_5, Struct_ov023_021f2a48_3*);
-extern "C" void func_ov023_021edf38(void*, Struct_ov023_021edc08_5*);
-extern "C" void func_020dcf7c(int, void*);
-extern "C" const char* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void func_020e4bf4(void*, int);
-extern "C" void func_020e4c74(void*, GameObject*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_0204500c(Struct_02081870*, const char*, int, int);
-extern "C" void func_ov023_021ed7e0(Struct_ov023_021ed7e0*);
-extern "C" int func_020ac020(void*, short*, int*, int);
-extern "C" void func_020abe84(void*, short*, Struct_ov023_021ed7e0*, int);
+struct CombatStatus { unsigned int flags_; };
+struct ActorView { char pad0[0x130]; CombatStatus* status_; };
+struct FoundReward { char pad0[0x10]; unsigned short id_; };
+struct TextBuffers { char* first_; char* second_; int field8_; };
+extern "C" RewardGlobal _ZZ17GetGlobal021ffefcvE1s;
+extern SePlayer g_sePlayer;
+TextRenderer* GetGlobalField0x1c020421a0();
+extern "C" void func_02046380(TextRenderer*);
+void CopyOutRegion0x571d_020114ec(char*, void*);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+FoundReward* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+void Clear12Bytes020e46c4(void*);
+extern "C" Words021edf38 func_ov023_021ed804(Words021edf38, FoundReward*);
+void SetWords_021edf38_021edf38(void*, Words021edf38*);
+void DispatchIfCountPositive020dcf7c(int, void*);
+const char* FindEntryByKey_02072a68(TableA68*, int);
+void InitObjFromCombatantId020e4bf4(void*, int);
+void InitObjFromCombatant020e4c74(void*, GameObject*);
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_0204500c(TextRenderer*, const char*, int, int);
+void ClearFlagBits10to24_021ed7e0(Flags_021ed7e0*);
+int CopyIndexedRegion0x75f0_020ac020(void*, short*, int*, int);
+extern "C" void func_020abe84(void*, short*, Flags_021ed7e0*, int);
 extern "C" int func_ov023_021f4fc8();
 
 // USA: func_ov023_021f2a48
@@ -112,18 +112,18 @@ extern "C" ARM int func_ov023_021f2a48(Struct_ov023_021f2a48_6* arg0) {
             strcat(var19, var20);
             if (var1->unknown_e4_ < arg0->unknown_5900_ - 1) strcat(var19, func_02072a68(&arg0->unknown_5904_, 0x22));
         }
-        func_0205eaa0(&data_02108760, 0x15, 0);
-        func_0204500c(var2, var19, 1, 0xe3);
-        var2->unknown_19b2_ = 0;
-        var2->unknown_998_ = 1;
-        if (arg0->unknown_58d0_[var1->unknown_e4_].unknown_4_) {
-            Struct_ov023_021ed7e0 var21;
-            func_ov023_021ed7e0(&var21);
-            short var22 = var12->unknown_10_;
-            if (func_020ac020(0, &var22, (int*)&var21, 1)) {
-                switch (arg0->unknown_58d0_[var1->unknown_e4_].unknown_4_) {
-                case 1: { unsigned int var23 = var21.unknown_1_3_ + 1; if (var23 > 99) var23 = 99; var21.unknown_1_3_ = var23; break; }
-                case 2: { unsigned int var24 = var21.unknown_2_2_ + 1; if (var24 > 99) var24 = 99; var21.unknown_2_2_ = var24; break; }
+        SePlayer_Play(&g_sePlayer, 0x15, 0);
+        func_0204500c(renderer, message, 1, 0xe3);
+        renderer->field19B2_ = 0;
+        renderer->active_ = 1;
+        if (self->entries_[work->index_].counter_) {
+            Flags_021ed7e0 flags;
+            ClearFlagBits10to24_021ed7e0(&flags);
+            short id = found->id_;
+            if (CopyIndexedRegion0x75f0_020ac020(0, &id, (int*)&flags, 1)) {
+                switch (self->entries_[work->index_].counter_) {
+                case 1: { unsigned int count = flags.first_ + 1; if (count > 99) count = 99; flags.first_ = count; break; }
+                case 2: { unsigned int count = flags.second_ + 1; if (count > 99) count = 99; flags.second_ = count; break; }
                 }
                 func_020abe84(0, &var22, &var21, 1);
             }

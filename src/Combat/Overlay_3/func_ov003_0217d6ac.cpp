@@ -11,23 +11,23 @@ extern "C" char *func_020421a0(void);
 struct Struct_0205a330;
 extern "C" void func_0205a330(struct Struct_0205a330 *arg0, int arg1);
 struct Struct_0205c570;
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_0205d97c(void *arg0);
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(struct Struct_0205d6a0 *arg0, int arg1);
-extern "C" void func_02043204(char *arg0);
-struct Struct_02108760;
-extern struct Struct_02108760 data_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" void func_ov017_021baedc(void *arg0, int arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2 *arg0, struct Struct_0201bdac *arg1);
-extern "C" void func_ov017_0219e310(unsigned char *arg0, int arg1);
-extern "C" void *func_0200fd0c(GameState *arg0);
-extern "C" void func_02070378(char *arg0);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+extern "C" int func_0205d97c(void *p);
+struct Entry_0205d6a0;
+void ResetEntryList0205d6a0(struct Entry_0205d6a0 *a, int flag);
+void ReinitController02043204(char *obj);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
+extern "C" void func_ov017_021baedc(void *self, int flag);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4 *list, struct TailNode020469b4 *node);
+void InitAndResetHeader_0219e310(unsigned char *obj, int arg);
+void *GetField0x3f8Address_0200fd0c(GameState *state);
+void InitStruct02070378(char *obj);
 
 struct Struct_ov003_0217d6ac_2;
 extern "C" void func_ov003_0217dd60(Struct_ov003_0217d6ac_2 *arg0);
@@ -144,14 +144,14 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     }
     if (var4 == -1) return;
 
-    arg0->unknown_4_ = 4;
-    arg0->unknown_5_  = 0;
-    func_0205eaa0(&data_02108760, 1, 0);
-    func_0205d6a0((struct Struct_0205d6a0 *) arg0->unknown_90_, 0);
-    func_02043204(var2);
-    Struct_ov003_0217d6ac_3 *var9 = *(Struct_ov003_0217d6ac_3 **) (var1 + RG(0x3734, 0x3524));
-    func_ov017_021baedc(var9, 1);
-    var9->unknown_10b_ = 1;
+    self->state = 4;
+    self->busy  = 0;
+    SePlayer_Play(&g_sePlayer, 1, 0);
+    ResetEntryList0205d6a0((struct Entry_0205d6a0 *) self->list, 0);
+    ReinitController02043204(global);
+    BattleEvent_0217d6ac *event = *(BattleEvent_0217d6ac **) (res + RG(0x3734, 0x3524));
+    func_ov017_021baedc(event, 1);
+    event->active = 1;
 #if defined(jpn)
     switch (inline_ov003_0217d6ac(var6)) {
 #else

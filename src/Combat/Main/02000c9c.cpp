@@ -105,7 +105,7 @@ extern "C" void func_02012bd8();
 extern AllocatorUnion data_02114e20;
 extern char data_0211e33c[];
 extern char data_02109bf4[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02114ec4[];
 
 #if defined(jpn)
@@ -244,19 +244,19 @@ extern "C" ARM void main() {
     func_020dc034();
     Struct_02000c9c_18* var2 = func_020daf90();
     func_020dafd4();
-    func_020db0f0(var2);
-    func_020db228(var2);
-    func_0209c174((Struct_02000c9c_16*)data_02109bf4);
-    func_0209c290(data_02109bf4);
-    func_0205e88c((Struct_02000c9c_17*)data_02108760);
-    func_0205ea20(data_02108760, 100);
-    SafeAllocator var3;
-    var3.ResetAllocatorPointer();
-    var3.CreateTypeA(data_02114ec4, STARTUP_ALLOCATOR_SIZE);
-    var3.Reset();
-    func_020421c4(&var3);
-    func_02071688();
-    char* var4 = func_02099cac();
+    LoadObjLoadingGraphicsResources(ctx);
+    InitSubstructAndRegisterHandler0x14_020db228(ctx);
+    ResetActor0209c174((Actor0209c174*)data_02109bf4);
+    Dispatch0203a974With0x57000_0209c290(data_02109bf4);
+    InitDisplayState0205e88c((Obj_0205e88c*)g_sePlayer);
+    SetupContextForMode0205ea20(g_sePlayer, 100);
+    SafeAllocator allocator;
+    allocator.ResetAllocatorPointer();
+    allocator.CreateTypeA(data_02114ec4, STARTUP_ALLOCATOR_SIZE);
+    allocator.Reset();
+    func_020421c4(&allocator);
+    InitHalfwords02071688();
+    char* table = GetVariantShortTable02109928_02099cac();
     if (*(int*)0x027ffc20 != 0) {
         func_0200fb94((char*)var0, 6);
         func_02012010(var0, 0);
@@ -356,8 +356,8 @@ extern "C" ARM void main() {
                 }
                 break;
             case 8:
-                func_0205e8d4(data_02108760);
-                func_0203a950(data_02109bf4);
+                ResetObjectState0205e8d4(g_sePlayer);
+                FreeAndReinit0203a950(data_02109bf4);
                 g_touchInput.Pause();
                 func_020a1940(&OVERLAY_27_ID);
                 func_020a1940(&OVERLAY_31_ID);

@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_020421a0(void);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern struct Struct_02108760 data_02108760;
-extern "C" void func_02012028(void* arg0, unsigned char arg1);
-struct Struct_020a9ea4;
-extern "C" void func_020a9ea4(struct Struct_020a9ea4* arg0);
-extern "C" void func_ov004_0216afb0(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8);
-extern "C" int func_ov004_0216b2c8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_ov004_0216b7bc(void* arg0, int arg1, int arg2, int arg3);
+int GetGlobalField0x1c020421a0(void);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
+void SetByte0x7f70_02012028(void* obj, unsigned char value);
+struct Struct020a9ea4;
+void ClearStruct020a9ea4(struct Struct020a9ea4* p);
+extern "C" void func_ov004_0216afb0(void* obj, int a, int b, int c, int d, int e, int f, int g, int h);
+extern "C" int func_ov004_0216b2c8(void* obj, int id, int a, int b);
+extern "C" int func_ov004_0216b7bc(void* obj, int a, int b, int c);
 
 struct Struct_ov004_02171034_3 {
 #if defined(jpn)
@@ -40,7 +40,7 @@ extern "C" ARM int func_ov004_0216d004(void* arg0) {
 #else
     var0[0x1000 + 0x9ca] = 0;
 #endif
-    func_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
 
     func_02012028((void*)GameState::GetInstance(), 0);
     func_020a9ea4(data_ov004_02171034.unknown_10_);

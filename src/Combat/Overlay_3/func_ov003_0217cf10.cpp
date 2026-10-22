@@ -105,22 +105,22 @@ struct Struct_ov003_0217cf10_5 {
     char unknown_cc_[8];
 };
 
-struct Struct_02018300_3;
-struct Struct_02108760;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_2;
-struct Struct_0204c7a8;
+struct Obj020397cc;
+struct SePlayer;
+struct ActiveEntry02046900;
+struct Rec020467f0;
+struct AllocTarget0204b12c;
+struct Obj0204b5e8;
+struct List0204b0e8;
+struct Obj0204c7a8;
 struct Struct_0205cf78;
 struct Struct_0205cf78_2;
 
-extern "C" Struct_ov003_0217cf10_6 *func_020421a0();
-extern "C" Struct_ov003_0217cf10_9 *func_02012fe4(void);
-extern "C" void func_020397cc(Struct_02018300_3 *arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" const char *func_020e51cc(int arg0);
+Messages0217cf10 *GetGlobalField0x1c020421a0();
+extern "C" Zone0217cf10 *func_02012fe4(void);
+void CancelPendingAction020397cc(Obj020397cc *obj, int flag);
+void SePlayer_Play(SePlayer *obj, int a, int b);
+const char *CallFunc020e0434With02153694_020e51cc(int key);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_ov003_0217cf10_6 *arg0, const char *arg1, int arg2);
 #else
@@ -142,7 +142,7 @@ extern "C" void func_020dfec0(void *arg0, SafeAllocator *arg1, void *arg2, unsig
 extern "C" const char *func_020e0434(Struct_0201099c_3 *arg0, int arg1);
 extern "C" int func_020420e8(const char *arg0, int arg1);
 
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 extern char data_ov003_02180c2c[];
 extern char data_ov003_02180c43[];
 extern char data_ov003_02180c56[];
@@ -165,14 +165,14 @@ extern "C" ARM void func_ov003_0217cf10(Struct_ov003_0217cf10_5 *arg0) {
     Struct_ov003_0217cf10_8 *var4 = &var3->unknown_840_;
     int var5 = arg0->unknown_5_;
 
-    if (var5 == 0) {
-        func_020397cc((Struct_02018300_3 *)var1->GetUnknownGameObject(), 1);
-        var0->unknown_868_ = 1;
-        func_0205eaa0(&data_02108760, 1, 0);
-        if (inline_ov003_0217cf10_2(&var4->unknown_1000_, 0xffffffff)) {
-            func_0204500c(var0, data_ov003_0217ee58, 0);
-            var0->unknown_17e2_ = 0;
-            var0->unknown_868_ = 1;
+    if (step == 0) {
+        CancelPendingAction020397cc((Obj020397cc *)gs->GetUnknownGameObject(), 1);
+        msg->busy_ = 1;
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        if (IsSeen(&save->progress_, 0xffffffff)) {
+            func_0204500c(msg, data_ov003_0217ee58, 0);
+            msg->flag19b2_ = 0;
+            msg->busy_ = 1;
         } else {
             func_0204500c(var0, data_ov003_0217ee8c, 0);
             var0->unknown_17e2_ = 0;
@@ -286,15 +286,15 @@ extern "C" ARM void func_ov003_0217cf10(Struct_ov003_0217cf10_5 *arg0) {
     Struct_ov003_0217cf10_9 *var29 = func_02012fe4();
     int var30 = arg0->unknown_5_;
 
-    if (var30 == 0) {
-        Struct_ov003_0217cf10_8 *var31 = &var29->unknown_840_;
-        func_020397cc((Struct_02018300_3 *)var27->GetUnknownGameObject(), 1);
-        var26->unknown_998_ = 1;
-        func_0205eaa0(&data_02108760, 1, 0);
-        if (inline_ov003_0217cf10_2(&var31->unknown_1000_, 0xffffffff)) {
-            func_0204500c(var26, func_020e51cc(0x42), 0, 0xe3);
-            var26->unknown_19b2_ = 0;
-            var26->unknown_998_ = 1;
+    if (step == 0) {
+        Save0217cf10 *save = &zone->save_;
+        CancelPendingAction020397cc((Obj020397cc *)gs->GetUnknownGameObject(), 1);
+        msg->busy_ = 1;
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        if (IsSeen(&save->progress_, 0xffffffff)) {
+            func_0204500c(msg, CallFunc020e0434With02153694_020e51cc(0x42), 0, 0xe3);
+            msg->flag19b2_ = 0;
+            msg->busy_ = 1;
         } else {
             func_0204500c(var26, func_020e51cc(0x43), 0, 0xe3);
             var26->unknown_19b2_ = 0;

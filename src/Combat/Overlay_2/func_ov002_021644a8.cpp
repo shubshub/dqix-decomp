@@ -12,18 +12,18 @@ struct Struct_0205d81c;
 extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
 extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
 struct Struct_0205def8;
-extern "C" void func_0205def8(Struct_0205def8*, int, int);
-extern "C" void * func_0205d81c(Struct_0205d81c*, int);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_ov002_02156e90(char *arg0);
-struct Struct_0205dee8;
-extern "C" void func_0205dee8(Struct_0205dee8*, int);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
+void * FindElementByC40205d81c(Struct_0205d81c*, int);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+int CheckFlagOrThreshold_02161b48(char *self, int flag);
+extern "C" void func_ov002_02156e90(char *base);
+struct Obj0205dee8;
+void SetFieldB0AndUpdate0205dee8(Obj0205dee8*, int);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov002_021644a8
 #if defined(jpn)
@@ -60,22 +60,22 @@ extern "C" ARM void func_ov002_021644a8(char *arg0) {
         if (var1 != *(short *) (arg0 + 0x1ab8)) {
             return;
         }
-        int var7 = g_keyManager.TestKeysPressed(0x601);
-        int var8 = func_0205da38((struct Struct_0205da38*)(arg0 + 0xe20), 0x14);
-        int var9 = (var7 | var8) != 0;
-        if (var9 != 0) {
-            *(char *) (arg0 + 0x1afa) = 0;
-            *(char *) (arg0 + 0xed8) = *(int *) (arg0 + 0x1a80);
-            *(int *) (arg0 + 0x22ac) &= ~4;
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0xc, 1);
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-            *(short *) (arg0 + 0x1ada) = 0;
-            *(short *) (arg0 + 0x1af0) = 0x238d;
-            *(short *) (arg0 + 0x1af2) = -1;
-            *(int *) (arg0 + 0x1a80) = 0x29;
-            *(int *) (arg0 + 0x1a84) = 0xc;
-            *(int *) (arg0 + 0x1a88) = 0;
-            *(char *) (arg0 + 0x1af6) = 1;
+        int t = g_keyManager.TestKeysPressed(0x601);
+        int u = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xe20), 0x14);
+        int hit = (t | u) != 0;
+        if (hit != 0) {
+            *(char *) (self + 0x1afa) = 0;
+            *(char *) (self + 0xed8) = *(int *) (self + 0x1a80);
+            *(int *) (self + 0x22ac) &= ~4;
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xe20), 0xc, 1);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+            *(short *) (self + 0x1ada) = 0;
+            *(short *) (self + 0x1af0) = 0x238d;
+            *(short *) (self + 0x1af2) = -1;
+            *(int *) (self + 0x1a80) = 0x29;
+            *(int *) (self + 0x1a84) = 0xc;
+            *(int *) (self + 0x1a88) = 0;
+            *(char *) (self + 0x1af6) = 1;
         } else {
             if (func_ov002_02161b48(arg0, 1) == 0) {
                 return;
@@ -124,22 +124,22 @@ extern "C" ARM void func_ov002_021644a8(char *arg0) {
         if (var11 != *(short *) (arg0 + 0x1bf0)) {
             return;
         }
-        int var17 = g_keyManager.TestKeysPressed(0x601);
-        int var18 = func_0205da38((struct Struct_0205da38*)(arg0 + 0xec8), 0x14);
-        int var19 = (var17 | var18) != 0;
-        if (var19 != 0) {
-            *(char *) (arg0 + 0x1c32) = 0;
-            *(char *) (arg0 + 0xf80) = *(int *) (arg0 + 0x1bb8);
-            *(int *) (arg0 + 0x247c) &= ~4;
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0xb, 1);
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-            *(short *) (arg0 + 0x1c12) = 0;
-            *(short *) (arg0 + 0x1c28) = 0x238d;
-            *(short *) (arg0 + 0x1c2a) = -1;
-            *(int *) (arg0 + 0x1bb8) = 0x26;
-            *(int *) (arg0 + 0x1bbc) = 0xb;
-            *(int *) (arg0 + 0x1bc0) = 0;
-            *(char *) (arg0 + 0x1c2e) = 1;
+        int t = g_keyManager.TestKeysPressed(0x601);
+        int u = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xec8), 0x14);
+        int hit = (t | u) != 0;
+        if (hit != 0) {
+            *(char *) (self + 0x1c32) = 0;
+            *(char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
+            *(int *) (self + 0x247c) &= ~4;
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xec8), 0xb, 1);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+            *(short *) (self + 0x1c12) = 0;
+            *(short *) (self + 0x1c28) = 0x238d;
+            *(short *) (self + 0x1c2a) = -1;
+            *(int *) (self + 0x1bb8) = 0x26;
+            *(int *) (self + 0x1bbc) = 0xb;
+            *(int *) (self + 0x1bc0) = 0;
+            *(char *) (self + 0x1c2e) = 1;
         } else {
             if (func_ov002_02161b48(arg0, 1) == 0) {
                 return;

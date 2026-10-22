@@ -5,15 +5,15 @@
 struct Struct_0205c570;
 struct Struct_0205bcdc;
 struct Struct_0205def8;
-struct Struct_0205da38;
-struct Struct_02108760;
-extern "C" int func_0205d794(Struct_0205c570*);
+struct Obj_0205da38;
+struct SePlayer;
+int GetActiveScaledSum0205d794(Struct_0205c570*);
 extern "C" int abs(int);
-extern "C" void func_0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void*, int);
-extern "C" void func_0205def8(Struct_0205def8*, int, int);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(SePlayer*, int, int);
 #if defined(jpn)
 extern "C" void func_ov000_02171e60(void*);
 #else
@@ -70,8 +70,8 @@ struct Struct_ov000_0217b8a4_3 {
     Struct_ov000_0217b8a4_2* unknown_3f0_[21];
     unsigned char unknown_444_;
 };
-extern Struct_ov000_02184294_6 data_ov000_02184294;
-extern Struct_02108760 data_02108760;
+extern MenuGlobals0217b8a4 data_ov000_02184294;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov000_0217b8a4
 extern "C" ARM int func_ov000_0217b8a4(Struct_ov000_0217b8a4_3* arg0, int arg1, int arg2) {
@@ -92,25 +92,25 @@ extern "C" ARM int func_ov000_0217b8a4(Struct_ov000_0217b8a4_3* arg0, int arg1, 
         if (arg0->unknown_3f0_[var3]->unknown_18_ > 0) break;
         var3--;
     }
-    if (var4 != var3) {
-        func_0205bcdc((Struct_0205bcdc*)var1->unknown_4_, var3);
-        func_0205bb04(var1->unknown_54_, var3);
+    if (originalCursor != cursor) {
+        SetIndexIfValid0205bcdc((Struct_0205bcdc*)window->selection, cursor);
+        GridCursor_SetSelectedIndex(window->controls, cursor);
     }
-    arg0->unknown_22_ = var3;
-    arg0->unknown_2c_ = -1;
-    Struct_ov000_0217b8a4_4* var7 = data_ov000_02184294.unknown_8_;
-    func_0205def8((Struct_0205def8*)var7->unknown_188_, 1, 0x24);
-    if (var2 != var3) return -1;
-    int var8 = g_keyManager.TestKeysPressed(0x601);
-    int var9 = (var8 | func_0205da38((Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var9 || arg0->unknown_444_) {
-        Struct_ov000_0217b8a4_2* var10 = arg0->unknown_3f0_[var3];
-        if (!var10) return -1;
-        short var11 = var10->unknown_18_;
-        if (var11 <= 0) return -1;
-        arg0->unknown_2c_ = var11;
-        func_0205def8((Struct_0205def8*)var7->unknown_188_, 0, 0x24);
-        func_0205eaa0(&data_02108760, 1, 0);
+    obj->cursor = cursor;
+    obj->selectedCount = -1;
+    MenuContext0217b8a4* context = data_ov000_02184294.context;
+    SetElementFlag0x20ByKey0205def8((Struct_0205def8*)context->list, 1, 0x24);
+    if (previous != cursor) return -1;
+    int flag = g_keyManager.TestKeysPressed(0x601);
+    int active = (flag | IsActiveElementFlag2Set0205da38((Obj_0205da38*)obj->window, 0x14)) != 0;
+    if (active || obj->field_444) {
+        MenuItem0217b8a4* item = obj->items[cursor];
+        if (!item) return -1;
+        short count = item->count;
+        if (count <= 0) return -1;
+        obj->selectedCount = count;
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)context->list, 0, 0x24);
+        SePlayer_Play(&g_sePlayer, 1, 0);
 #if defined(jpn)
         func_ov000_02171e60(arg0);
 #else

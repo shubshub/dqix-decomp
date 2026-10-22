@@ -51,43 +51,43 @@ union Struct_02065990_7 {
     } unknown1_0_;
 };
 
-struct Struct_0205a254;
-extern "C" void func_0205a42c(Struct_0205a254*, int, int);
-struct Struct_0205a330;
-extern "C" void func_0205a330(Struct_0205a330*, int);
-extern "C" void func_0206b104(void* arg0);
-extern "C" void func_02043204(char*);
-struct Struct_02065758;
-extern "C" int func_02065758(Struct_02065758*, int);
-extern "C" void func_0202f380(void* arg0, int arg1);
-struct Struct_0205ce28_2;
-extern "C" int func_0205ce28(Struct_0205ce28_2*);
-struct Struct_0202f6a4;
-extern "C" void func_0202f6a4(Struct_0202f6a4*);
-struct Struct_02065990;
-extern "C" void func_0206b61c(Struct_02065990*);
-extern "C" int func_020657c8(void* arg0, int arg1);
-extern "C" void func_020658ac(unsigned char*, unsigned int);
-extern "C" int func_0209ca2c(void* arg0);
-struct Struct_020456d0;
-extern "C" void func_020456d0(Struct_020456d0*);
-extern "C" void func_02065920(unsigned char*, unsigned int);
-extern "C" void func_020676e0(void* arg0, int arg1);
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_ov017_0218d7b0(unsigned char* arg0, char* arg1);
-struct Struct_02108760;
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov016_0218b5c0(int arg0, signed char arg1);
-extern "C" void func_ov017_0218b5f8(signed char arg0);
-struct Struct_02038598_5;
-extern "C" int func_02046b60(Struct_02038598_5*, int);
-extern "C" void func_ov017_021a5ab0(void* arg0);
-extern "C" void* func_0203cf4c();
-struct Struct_0203dce4_2;
-extern "C" void* func_0203dce4(Struct_0203dce4_2*, int);
-struct Struct_0203de84_2;
-extern "C" void func_020406f8(Struct_0203de84*, Struct_0203de84_2*);
-extern "C" int fix32_Atan2(int arg0, int arg1);
+struct Container0205a3d0;
+void SetEntryByte14ByKey0205a42c(Container0205a3d0*, int, int);
+struct Container0205a330;
+void IterateEntries0205a330(Container0205a330*, int);
+extern "C" void func_0206b104(void* obj);
+void ReinitController02043204(char*);
+struct Struct02065758;
+int UpdateCounterAndFlag02065758(Struct02065758*, int);
+void UpdateTimedState0202f380(void* obj, int step);
+struct CE28Obj;
+int IsField440Empty_0205ce28(CE28Obj*);
+struct Field440Obj0202f6a4;
+void SetupField440Type1(Field440Obj0202f6a4*);
+struct Ctx0206b61c;
+void ProcessTextTokens0206b61c(Ctx0206b61c*);
+extern "C" int func_020657c8(void* obj, int step);
+void UpdateStatusTimer_020658ac(unsigned char*, unsigned int);
+int IsAnimationActive0209ca2c(void* p);
+struct Battle020456d0;
+void StepCounter020456d0(Battle020456d0*);
+void ResetOrConsumeCounter02065920(unsigned char*, unsigned int);
+extern "C" void func_020676e0(void* obj, int step);
+extern "C" void func_02043124(void* obj);
+void SetName56AndFlag_0218d7b0(unsigned char* owner, char* name);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov016_0218b5c0(int a, signed char b);
+extern "C" void func_ov017_0218b5f8(signed char a);
+struct ListHead02046b60;
+int ListContainsId(ListHead02046b60*, int);
+void CallHelperIfFlag_021a5ab0(void* p);
+void* GetGlobalPtr021075f4_0203cf4c();
+struct EntryList_203dce4;
+void* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+struct Node020406f8;
+void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
+extern "C" int fix32_Atan2(int x, int z);
 int fix32ReduceAngle0To2Pi(int angle);
 extern "C" void func_02065418(int a);
 int CallFunc020e0434With02153694_020e51cc(int a);
@@ -106,7 +106,7 @@ void SetFlag0x2IfByte0xd4Not3_0208beb4(unsigned char*);
 extern "C" void func_0205e944(void* p, int v);
 
 extern unsigned char data_02109bf4;
-extern unsigned char data_02108760;
+extern unsigned char g_sePlayer;
 
 // USA: func_02065990
 extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
@@ -304,18 +304,18 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 func_ov017_0218d7b0(((unsigned char*)GetGameResources()), (char*)&var2);
                 *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
                 return;
-            } else if (var1 == REGION_VALUE(0xff1e, 0xff1c)) {
-                int var16 = *(signed char*)(var0 + REGION_VALUE(0x1785, 0x1957));
-                if (var16 >= 0 && var16 < *(signed char*)(var0 + REGION_VALUE(0x1784, 0x1956))) {
-                    int var17;
-                    int var18 = *(signed char*)(arg0->unknown_1952_ + var16);
-                    var17 = *(signed char*)(var0 + REGION_VALUE(0x177c, 0x194e) + var16);
-                    if (var18 > 0) {
-                        func_0205eaa0((Struct_02108760*)&data_02108760, 0x65, 0);
-                        if (var18 == 2) {
-                            var17 = -1;
-                            func_ov016_0218b5c0(1, var17);
-                            func_ov017_0218b5f8(var17);
+            } else if (tok == REGION_VALUE(0xff1e, 0xff1c)) {
+                int slot = *(signed char*)(self + REGION_VALUE(0x1785, 0x1957));
+                if (slot >= 0 && slot < *(signed char*)(self + REGION_VALUE(0x1784, 0x1956))) {
+                    int val;
+                    int kind = *(signed char*)(message->b1952 + slot);
+                    val = *(signed char*)(self + REGION_VALUE(0x177c, 0x194e) + slot);
+                    if (kind > 0) {
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 0x65, 0);
+                        if (kind == 2) {
+                            val = -1;
+                            func_ov016_0218b5c0(1, val);
+                            func_ov017_0218b5f8(val);
                         }
                     }
                     if (var17 >= 0xa && var17 <= 0x32) {
@@ -412,23 +412,23 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 }
                 *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
                 return;
-            } else if (var1 == REGION_VALUE(0xff30, 0xff2e)) {
-                arg0->func_02045688();
-                (var0 + 0x1000)[REGION_VALUE(0x787, 0x959)] = 0x3c;
-                (var0 + 0x1000)[REGION_VALUE(0x7e7, 0x9b7)] = 1;
-                (var0 + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 0;
-                *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
-                *(signed char*)(var0 + REGION_VALUE(0x7e2, 0x912)) = 0;
-                func_0205eaa0((Struct_02108760*)&data_02108760, 6, 0);
+            } else if (tok == REGION_VALUE(0xff30, 0xff2e)) {
+                message->ProcessPendingFlag02045688();
+                (self + 0x1000)[REGION_VALUE(0x787, 0x959)] = 0x3c;
+                (self + 0x1000)[REGION_VALUE(0x7e7, 0x9b7)] = 1;
+                (self + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 0;
+                *(int*)(self + REGION_VALUE(0x44, 0x78)) = *(int*)(self + REGION_VALUE(0x44, 0x78)) + 1;
+                *(signed char*)(self + REGION_VALUE(0x7e2, 0x912)) = 0;
+                SePlayer_Play((SePlayer*)&g_sePlayer, 6, 0);
                 return;
-            } else if (var1 == REGION_VALUE(0xff31, 0xff2f)) {
-                arg0->func_02045688();
-                (var0 + 0x1000)[REGION_VALUE(0x787, 0x959)] = 0x3c;
-                (var0 + 0x1000)[REGION_VALUE(0x7e7, 0x9b7)] = 1;
-                (var0 + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 1;
-                *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
-                *(signed char*)(var0 + REGION_VALUE(0x7e2, 0x912)) = 0;
-                func_0205eaa0((Struct_02108760*)&data_02108760, 0x1c, 0);
+            } else if (tok == REGION_VALUE(0xff31, 0xff2f)) {
+                message->ProcessPendingFlag02045688();
+                (self + 0x1000)[REGION_VALUE(0x787, 0x959)] = 0x3c;
+                (self + 0x1000)[REGION_VALUE(0x7e7, 0x9b7)] = 1;
+                (self + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 1;
+                *(int*)(self + REGION_VALUE(0x44, 0x78)) = *(int*)(self + REGION_VALUE(0x44, 0x78)) + 1;
+                *(signed char*)(self + REGION_VALUE(0x7e2, 0x912)) = 0;
+                SePlayer_Play((SePlayer*)&g_sePlayer, 0x1c, 0);
                 return;
             } else if (var1 == 0xff04 || var1 == 0xff05 || var1 == 0xff06 || var1 == 0xff07) {
                 func_02065418(arg0->unknown_19cc_);
@@ -447,7 +447,7 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 *(int*)(self + REGION_VALUE(0x85c, 0x98c)) = 0;
                 message->mode = 6;
                 message->ProcessPendingFlag02045688();
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
                 int alive = 1;
                 unsigned char* bs = (unsigned char*)GameState::GetInstance();
                 unsigned char* w = (unsigned char*)((GameState*)bs)->GetResources();
@@ -472,7 +472,7 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 *(int*)(self + REGION_VALUE(0x85c, 0x98c)) = 1;
                 message->mode = 6;
                 message->ProcessPendingFlag02045688();
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
                 unsigned char* w = (unsigned char*)GameState::GetInstance()->GetResources();
                 if (w != 0) (w + 0x4000)[REGION_VALUE(0x134, 0x354)] = 0xa;
                 return;
@@ -503,11 +503,11 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 func_0209c830((Struct_02109bf4_2*)&data_02109bf4, var1 - REGION_VALUE(0xff08, 0xff03));
                 arg0->unknown_19c9_ = 1;
                 return;
-            } else if (var1 >= REGION_VALUE(0xff4f, 0xff4a) && var1 <= REGION_VALUE(0xff51, 0xff4c)) {
-                int var40 = -1;
-                if (var1 == REGION_VALUE(0xff50, 0xff4b)) var40 = 0xe;
-                if (var40 >= 0) {
-                    func_0205eaa0((Struct_02108760*)&data_02108760, 0xe, 0);
+            } else if (tok >= REGION_VALUE(0xff4f, 0xff4a) && tok <= REGION_VALUE(0xff51, 0xff4c)) {
+                int arg = -1;
+                if (tok == REGION_VALUE(0xff50, 0xff4b)) arg = 0xe;
+                if (arg >= 0) {
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                 }
             } else if (var1 == 0xff10) {
                 unsigned char* var41 = arg0->unknown_8c_;
@@ -538,12 +538,12 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
             } else if (var1 == 0xff38) {
                 var12 = false;
 #endif
-            } else if (var1 >= REGION_VALUE(0xff52, 0xff4d) && var1 <= REGION_VALUE(0xff55, 0xff50)) {
-                int var44 = *(signed char*)(var0 + REGION_VALUE(0x1778, 0x194a) + (var1 - REGION_VALUE(0xff52, 0xff4d)));
-                func_0205e944(&data_02108760, ((var44 * 0x21dd) >> 10) & 0x7f);
-            } else if (var1 == 0xff0e) {
-                arg0->unknown_19c0_ = 1;
-                arg0->unknown_195d_ = 0x1e;
+            } else if (tok >= REGION_VALUE(0xff52, 0xff4d) && tok <= REGION_VALUE(0xff55, 0xff50)) {
+                int v = *(signed char*)(self + REGION_VALUE(0x1778, 0x194a) + (tok - REGION_VALUE(0xff52, 0xff4d)));
+                func_0205e944(&g_sePlayer, ((v * 0x21dd) >> 10) & 0x7f);
+            } else if (tok == 0xff0e) {
+                message->b19c0 = 1;
+                message->b195d = 0x1e;
 #if defined(jpn)
             } else if ((unsigned short)(var1 + 0xe6) <= 1) {
                 var14++;

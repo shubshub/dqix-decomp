@@ -2,14 +2,14 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0207fe44;
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_ov003_02162f40_3;
-struct Struct_02018300_3;
-struct Struct_02081198;
-struct Struct_02081164;
-struct Struct_02086a04;
+struct Cont0207fe44;
+struct Obj0208203c;
+struct SePlayer;
+struct Obj0217e5dc;
+struct Obj020397cc;
+struct StatusOwner02081198;
+struct StatusOwner02081164;
+struct FindEntryContainer02086a04;
 
 struct Struct_ov003_0216201c {
 #if defined(jpn)
@@ -82,57 +82,57 @@ struct Struct_ov003_02162f40_2 {
     Struct_ov003_02162f40_4 unknown_64_;
 };
 
-extern "C" void func_0207fe44(Struct_0207fe44 *);
-extern "C" void func_020813ec(Struct_ov003_0216201c *, int);
-extern "C" int func_02080468(void *, int);
-extern "C" void func_0208203c(Struct_02081f20_2 *);
-extern "C" void func_02080c68(void *, int, int);
-extern "C" int func_ov003_02160854(Struct_ov003_02154af4_3 *);
-extern "C" void func_0205eaa0(Struct_02108760 *, int, int);
-extern "C" void func_ov003_0217e5dc(Struct_ov003_02162f40_3 *, unsigned char);
-extern "C" int func_ov003_02160a68(Struct_ov003_02154af4_3 *);
-extern "C" Struct_ov003_0216253c *func_ov003_02160bd0(void *, int);
-extern "C" void func_02081198(Struct_02081198 *, int, int);
-extern "C" void func_02081164(Struct_02081164 *, int, int);
-extern "C" void func_ov003_02165c9c(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_02166f80(void *, int, int);
-extern "C" int func_ov003_02160b84(void *);
-extern "C" void func_ov003_021612c0(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02161344(Struct_ov003_02154af4_3 *);
-extern "C" void func_02086a04(Struct_02086a04 *, int);
-extern "C" int func_ov003_02166a90(Struct_ov003_02154af4_3 *, int);
-extern "C" void func_020397cc(Struct_02018300_3 *, int);
+void CallFunc0204c804OverAllElems(Cont0207fe44 *);
+extern "C" void func_020813ec(Entries *, int);
+int FindMappedMemberId02080468(void *, int);
+void ResetWithSub0208203c(Obj0208203c *);
+void SetEntryLowNibbleAndElement02080c68(void *, int, int);
+extern "C" int func_ov003_02160854(Scene *);
+void SePlayer_Play(SePlayer *, int, int);
+extern "C" void _Z16InitObj_0217e5dcP11Obj0217e5dca(Obj0217e5dc *, unsigned char);
+extern "C" int func_ov003_02160a68(Scene *);
+Elem *GetElementAtIndex_02160bd0_02160bd0(void *, int);
+void SetEntryNibbleByShortId(StatusOwner02081198 *, int, int);
+void SetEntryFlag0x2ByShortId(StatusOwner02081164 *, int, int);
+extern "C" void func_ov003_02165c9c(Scene *);
+void SetOrClearFlag40_02166f80(void *, int, int);
+int CountValidCombatantsMinusField_02160b84(void *);
+extern "C" void func_ov003_021612c0(Scene *);
+extern "C" int func_ov003_02161344(Scene *);
+void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04 *, int);
+extern "C" int func_ov003_02166a90(Scene *, int);
+void CancelPendingAction020397cc(Obj020397cc *, int);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_02162f40
 extern "C" ARM void func_ov003_02162f40(Struct_ov003_02154af4_3 *arg0) {
     unsigned char var0 = arg0->unknown_4a4_;
     Struct_ov003_0216201c *var1    = arg0->unknown_324_;
 
-    if (var0 == 0) {
-        func_0207fe44((Struct_0207fe44 *) var1);
-        func_020813ec(var1, 8);
-        arg0->unknown_488_   = 8;
-        arg0->unknown_490_   = func_02080468(var1, arg0->unknown_488_);
-        arg0->unknown_474_   = arg0->unknown_490_;
-        var1->unknown_36_ = arg0->unknown_490_;
-        func_020813ec(var1, arg0->unknown_488_);
-        func_0208203c((Struct_02081f20_2 *) arg0->unknown_308_);
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-    } else if (var0 == 1) {
-        arg0->unknown_470_ = &arg0->unknown_490_;
-        func_02080c68(var1, arg0->unknown_488_, 0);
-        if (func_ov003_02160854(arg0) != 0) {
-            func_0205eaa0((Struct_02108760 *) &data_02108760, 1, 0);
-            func_0208203c((Struct_02081f20_2 *) arg0->unknown_308_);
-            arg0->unknown_470_        = 0;
-            unsigned char var2 = arg0->unknown_490_ - 0x25;
-            Struct_ov003_02162f40_3 *var3  = (Struct_ov003_02162f40_3 *) GetGameResources();
-            func_ov003_0217e5dc(var3, var2);
-            func_0207fe44((Struct_0207fe44 *) var1);
-            arg0->unknown_4a3_  = 0x10;
-            arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+    if (state == 0) {
+        CallFunc0204c804OverAllElems((Cont0207fe44 *) entries);
+        func_020813ec(entries, 8);
+        self->h488   = 8;
+        self->h490   = FindMappedMemberId02080468(entries, self->h488);
+        self->h474   = self->h490;
+        entries->sel = self->h490;
+        func_020813ec(entries, self->h488);
+        ResetWithSub0208203c((Obj0208203c *) self->sub308);
+        self->state = self->state + 1;
+    } else if (state == 1) {
+        self->p470 = &self->h490;
+        SetEntryLowNibbleAndElement02080c68(entries, self->h488, 0);
+        if (func_ov003_02160854(self) != 0) {
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
+            ResetWithSub0208203c((Obj0208203c *) self->sub308);
+            self->p470        = 0;
+            unsigned char idx = self->h490 - 0x25;
+            Obj0217e5dc *obj  = (Obj0217e5dc *) GetGameResources();
+            _Z16InitObj_0217e5dcP11Obj0217e5dca(obj, idx);
+            CallFunc0204c804OverAllElems((Cont0207fe44 *) entries);
+            self->c4a3  = 0x10;
+            self->state = self->state + 1;
         } else {
             if (func_ov003_02160a68(arg0) == 0) {
                 return;

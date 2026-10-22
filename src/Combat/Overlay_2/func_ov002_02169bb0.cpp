@@ -9,27 +9,27 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
+struct Obj_0205da38;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Struct_0205bcdc;
-struct Struct_0204c610;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" char *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
-extern "C" void func_0204c610(struct Struct_0204c610 *arg0, int arg1, short *arg2, short *arg3, short *arg4, short *arg5);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc *arg0, int arg1);
-extern "C" void func_ov002_0215b268(char *arg0);
-extern "C" void func_0205bb04(void *arg0, int arg1);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_02160c68(void *arg0);
-extern "C" void func_ov002_02156e90(void *arg0);
-extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
-extern "C" char data_02108760[];
+struct ShortArrays0204c610;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+void GetFourShortsAtIndex(struct ShortArrays0204c610 *p, int idx, short *a, short *b, short *c, short *d);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *s, int idx);
+void SyncModeIfChanged0215b268(char *base);
+extern "C" void GridCursor_SetSelectedIndex(void *p, int idx);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_02160c68(void *base);
+extern "C" void func_ov002_02156e90(void *base);
+extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02169bb0
 extern "C" ARM void func_ov002_02169bb0(char *arg0) {
@@ -49,28 +49,28 @@ extern "C" ARM void func_ov002_02169bb0(char *arg0) {
         var1[0] = (unsigned char *) (arg0 + RG(0x2c + 0x1c00, 0x2f4 + 0x1800));
         var1[1] = (unsigned char *) (arg0 + RG(0x2d + 0x1c00, 0xf5 + 0x1a00));
         if (g_touchInput.pressed_ != 0) {
-            int var2, var3;
-            short var4, var5, var6, var7;
-            g_touchInput.GetTouchPoint(&var2, &var3);
-            char *var8 = func_0205d81c((struct Struct_0205d81c *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), RG(0x23, 0x26));
-            if (var8 != NULL) {
-                short var9 = 3;
-                for (unsigned char var10 = 0; var10 < 2; var10++) {
-                    for (unsigned char var11 = 1; var11 <= 5; var11++) {
-                        short var12 = *(short *) (var8 + 0xac);
-                        short var13 = *(short *) (var8 + 0xae);
-                        func_0204c610((struct Struct_0204c610 *) var8, var9++, &var4, &var5, &var6, &var7);
-                        var4 += (short) (var12 * 8);
-                        var5 += (short) (var13 * 8);
-                        if (var2 >= var4 && var4 + var6 > var2 && var3 >= var5 && var5 + var7 > var3) {
-                            *(short *) (arg0 + RG(0x1c00 + 0xe, 0x1a00 + 0xd6)) = var10;
-                            *var1[var10]                         = var11;
-                            int var14                          = *(short *) (arg0 + RG(0x1c00 + 0xe, 0x1a00 + 0xd6));
-                            char *var15                       = arg0 + RG(0x2c8 + 0xc00, 0xe20);
-                            func_0205bcdc((struct Struct_0205bcdc *) (var15 + 4), var14);
-                            func_0205bb04(var15 + 0x54, var14);
-                            func_ov002_0215b9a4(arg0, RG(0x23, 0x26), 0);
-                            func_ov002_0215b268(arg0);
+            int tx, ty;
+            short x0, y0, w, h;
+            g_touchInput.GetTouchPoint(&tx, &ty);
+            char *e = FindElementByC40205d81c((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(0x23, 0x26));
+            if (e != NULL) {
+                short key = 3;
+                for (unsigned char i = 0; i < 2; i++) {
+                    for (unsigned char v = 1; v <= 5; v++) {
+                        short ex = *(short *) (e + 0xac);
+                        short ey = *(short *) (e + 0xae);
+                        GetFourShortsAtIndex((struct ShortArrays0204c610 *) e, key++, &x0, &y0, &w, &h);
+                        x0 += (short) (ex * 8);
+                        y0 += (short) (ey * 8);
+                        if (tx >= x0 && x0 + w > tx && ty >= y0 && y0 + h > ty) {
+                            *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6)) = i;
+                            *vals[i]                         = v;
+                            int sel                          = *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6));
+                            char *list                       = base + RG(0x2c8 + 0xc00, 0xe20);
+                            SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), sel);
+                            GridCursor_SetSelectedIndex(list + 0x54, sel);
+                            func_ov002_0215b9a4(base, RG(0x23, 0x26), 0);
+                            SyncModeIfChanged0215b268(base);
                             return;
                         }
                     }
@@ -96,15 +96,15 @@ extern "C" ARM void func_ov002_02169bb0(char *arg0) {
                 }
             }
         }
-        int var19 = g_keyManager.TestKeysPressed(0x601);
-        int var20 = func_0205da38((struct Struct_0205da38*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
-        if (((var19 | var20) ? 1 : 0) && *(short *) (arg0 + RG(0x1c00 + 0xe, 0x1a00 + 0xd6)) == 2) {
-            func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-            *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
-            func_ov002_02156e90(arg0);
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
-            func_ov002_02156e90(arg0);
+        int a = g_keyManager.TestKeysPressed(0x601);
+        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
+        if (((a | b) ? 1 : 0) && *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6)) == 2) {
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
+            func_ov002_02156e90(base);
+        } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
+            *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
+            func_ov002_02156e90(base);
         }
     }
 }

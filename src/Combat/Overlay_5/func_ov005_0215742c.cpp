@@ -16,7 +16,7 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-struct Struct_02108760;
+struct SePlayer;
 struct Struct_0205bb84;
 
 struct Struct_ov005_02153954 {
@@ -35,10 +35,10 @@ struct Struct_ov005_02153954 {
     unsigned int unknown_3dcc_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
@@ -51,10 +51,10 @@ extern "C" ARM void func_ov005_0215742c(Struct_ov005_02153954* arg0) {
         func_ov005_0215792c(arg0, 3);
         arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
         if (g_keyManager.TestKeysPressed(0x80))
-            func_0205eaa0((Struct_02108760*)&data_02108760, 2, 0);
-        else if (func_ov005_02157190(arg0))
-            func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-        func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbb_);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
+        else if (CheckFlag30Or401_02157190(self))
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+        func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
     if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))

@@ -56,7 +56,7 @@ extern "C" void func_0200fd48(GameState* arg0, int arg1);
 extern "C" void func_020100c4(GameState* arg0, int arg1);
 
 extern char data_ov001_02164c4a[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 
 #define REG_DISPSTAT_304 (*(volatile unsigned short*)0x04000304)
@@ -142,11 +142,11 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
         }
     }
 
-    func_02043204(var2);
-    func_02043124(var2);
-    ClearFlags04(var6, 8);
-    if (func_0203adfc(data_02108760, 0) != 0) {
-        func_0203ad88(data_02109bf4, 0, 0);
+    ReinitController02043204(globalA);
+    func_02043124(globalA);
+    ClearFlags04(res2, 8);
+    if (IsScaledFieldPositive0203adfc(g_sePlayer, 0) != 0) {
+        ScaleAndNotify0203ad88(data_02109bf4, 0, 0);
     }
     ClearFlags04(var6, 0x2000);
     func_0202e874((unsigned char*)var10, 0);
@@ -157,9 +157,9 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
     REG_DISPSTAT_304 &= ~0x8000;
     if (TestFlags00(var6, 0x1000) != 0) {
 #if !defined(jpn)
-        func_0209c278(data_02109bf4);
-        func_0209c290(data_02109bf4);
-        func_0205ea20(data_02108760, 0x64);
+        ResetAndReinit0209c278(data_02109bf4);
+        Dispatch0203a974With0x57000_0209c290(data_02109bf4);
+        SetupContextForMode0205ea20(g_sePlayer, 0x64);
 #endif
         ClearFlags00((GameResources*)var6, 0x1000);
         func_ov028_021d9714();

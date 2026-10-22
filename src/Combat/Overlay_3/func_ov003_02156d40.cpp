@@ -5,11 +5,11 @@ void *_ZN9GameState11GetInstanceEv(void);
 int func_02080468(void *, int);
 void func_0208203c(void *);
 int func_ov003_021550dc(void *);
-void func_0205eaa0(void *, int, int);
-int func_020100a8(void *);
-int func_ov003_02155f88(void *, int);
-void func_0207fe44(void *);
-void *func_02010828(void *);
+void _Z13SePlayer_PlayP8SePlayerii(void *, int, int);
+int _Z27GetField0x3acValue_020100a8P9GameState(void *);
+int _Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(void *, int);
+void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void *);
+void *_Z26GetPtrField0x2a04_02010828P9GameState(void *);
 int func_ov003_02155208(void *);
 void func_ov003_02155580(void *, int);
 int func_ov003_02155618(void *);
@@ -17,7 +17,7 @@ int func_ov003_02155fc0(void *, int);
 void func_ov003_02158334(void *);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 struct Struct_ov003_02156d40 {
 #if defined(jpn)
@@ -121,17 +121,17 @@ extern "C" ARM void func_ov003_02156d40(struct Struct_ov003_02156d40_3 *arg0) {
     if (arg0->unknown_1f9_ != 3) {
         return;
     }
-    arg0->unknown_8_ = &arg0->unknown_1e2_;
-    if (func_ov003_021550dc(arg0) != 0) {
-        func_0205eaa0(data_02108760, 1, 0);
-        func_0208203c(arg0->unknown_80_);
-        arg0->unknown_8_  = 0;
-        short var4    = (short) (arg0->unknown_1e2_ - func_02080468(var2, arg0->unknown_1e6_));
-        arg0->unknown_1f7_ = arg0->unknown_1f2_[var4];
-        if (func_ov003_02155fc0(arg0, arg0->unknown_1f7_) != 0) {
-            arg0->unknown_1ec_  = 0x31;
-            arg0->unknown_1f8_ = 7;
-            func_0207fe44(var2);
+    self->f08 = &self->f1e2;
+    if (func_ov003_021550dc(self) != 0) {
+        _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 1, 0);
+        _Z20ResetWithSub0208203cP11Obj0208203c(self->sub80);
+        self->f08  = 0;
+        short d    = (short) (self->f1e2 - _Z26FindMappedMemberId02080468Pvi(p, self->f1e6));
+        self->f1f7 = self->f1f2[d];
+        if (func_ov003_02155fc0(self, self->f1f7) != 0) {
+            self->cmd  = 0x31;
+            self->mode = 7;
+            _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(p);
             return;
         }
         if (func_ov003_02155f88(arg0, arg0->unknown_1f7_)) {

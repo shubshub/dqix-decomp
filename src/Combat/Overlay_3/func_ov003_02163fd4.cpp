@@ -44,13 +44,13 @@ struct Struct_ov003_02154af4_3 {
 #define REGION_OFF_354 0x354
 #endif
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern "C" void func_020813ec(void *, int);
 struct Obj0208203c;
 void ResetWithSub0208203c(Obj0208203c*);
 int FindMappedMemberId02080468(void *, int);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
 struct Cont0207fe44;
 void CallFunc0204c804OverAllElems(Cont0207fe44*);
 int CountValidCombatantsMinusField_02160b84(void *);
@@ -94,7 +94,7 @@ extern "C" ARM void func_ov003_02163fd4(Struct_ov003_02154af4_3 *arg0) {
         SetEntryLowNibbleAndElement02080c68(entries, self->h488, 0);
         short *p = &self->h484;
         if (func_ov003_02160854(self) != 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->sub308);
             self->p470 = 0;
             switch (self->h48a) {

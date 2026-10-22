@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_0204c87c;
-struct Struct_0205d6a0;
-extern "C" int func_0204c7e0(unsigned char* arg0);
-extern "C" void func_0204c964(struct Struct_0204c87c* arg0);
-extern "C" void* func_ov000_02174da4(int arg0, void* arg1);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_0205cf04(void* arg0);
-extern "C" void func_0205cef8(void* arg0);
-extern "C" void func_0205cf28(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bb04(void* arg0, int arg1);
-extern "C" void func_0205d7a0(unsigned char* arg0, int arg1);
-extern "C" int func_020421a0(void);
-extern "C" void func_ov000_0217737c(void* arg0, void* arg1);
+struct Canvas0204e998;
+struct Entry_0205d6a0;
+int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char* obj);
+void InitAndFillIndexBuffer0204c964(struct Canvas0204e998* canvas);
+void* CopyStaticData02174da4(int unused, void* dest);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void SetChannelBFlag0205cf04(void* obj);
+void SetChannelAFlag0205cef8(void* obj);
+void SetupDualPointerTables0205cf28(unsigned char* obj, int a, int count, int b);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
+extern "C" void func_0205d7a0(unsigned char* obj, int val);
+int GetGlobalField0x1c020421a0(void);
+extern "C" void func_ov000_0217737c(void* obj, void* buf);
 #if defined(jpn)
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -72,16 +72,16 @@ extern "C" ARM void func_ov000_02177184(struct Struct_ov000_02177184_2* arg0, in
             var3++;
         }
     }
-    arg0->unknown_1d69_ = 0;
-    func_0205d6a0((struct Struct_0205d6a0*)var0, 1);
-    func_0205cf04(var0);
-    func_0205cef8(var0);
-    func_0205cf28((unsigned char*)var0, 1, var3, 0);
-    var0->unknown_58_ = 1;
-    func_0205bb04(var0->unknown_54_, 0);
-    if (var3 == 3) {
-        var0->unknown_a0_ = 8;
-        var0->unknown_a2_ = 6;
+    menu->selection = 0;
+    ResetEntryList0205d6a0((struct Entry_0205d6a0*)window, 1);
+    SetChannelBFlag0205cf04(window);
+    SetChannelAFlag0205cef8(window);
+    SetupDualPointerTables0205cf28((unsigned char*)window, 1, count, 0);
+    window->field_0x58 = 1;
+    GridCursor_SetSelectedIndex(window->cursor, 0);
+    if (count == 3) {
+        window->left = 8;
+        window->top = 6;
     }
     if (var3 == 4) {
         var0->unknown_a0_ = 8;

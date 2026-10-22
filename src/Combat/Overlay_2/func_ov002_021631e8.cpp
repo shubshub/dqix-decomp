@@ -4,30 +4,30 @@
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
-struct Struct_0205da38;
-struct Struct_02108760;
+struct Obj_0205da38;
+struct SePlayer;
 struct Struct_0205d81c;
-struct Struct_0201099c_10;
-extern "C" void func_0205de24(struct Struct_0205de24_2 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_0205c570 *arg0);
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-extern "C" void func_ov002_0215ccc4(char *arg0);
-extern "C" int func_ov002_0216364c(void *arg0);
-extern "C" char *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" void func_ov002_021575d4(char *arg0);
-extern "C" int func_ov002_02157500(char *arg0, int, int);
-extern "C" int func_ov002_0215b7d0(char* arg0);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215b814(char *arg0);
-extern "C" int func_ov002_0215b720(char *arg0, int arg1);
-extern "C" void func_ov002_02157634(char *arg0);
-extern "C" void func_ov002_02156e90(char *arg0);
-extern "C" char data_02108760[];
+struct Container020dedd0;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
+void InitBattleTag0215ccc4(char *base);
+int IsFlagAt130Bit0Set_0216364c(void *member);
+char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+void SetupTargetAndApplyState021575d4(char *base);
+int GetInventoryItemFlagField_02157500(char *base, int, int);
+int CheckAndClearEntryStatus_0215b7d0(char* base);
+extern "C" void func_ov002_02161cf0(char *base);
+extern "C" void func_ov002_0215b814(char *base);
+extern "C" int func_ov002_0215b720(char *self, int id);
+extern "C" void func_ov002_02157634(char *base);
+extern "C" void func_ov002_02156e90(char *base);
+extern "C" char g_sePlayer[];
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -73,12 +73,12 @@ extern "C" ARM void func_ov002_021631e8(char *arg0) {
             }
             switch (*(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2))) {
                 case 0:
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                    int var7 = 0;
-                    int var8 = *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8));
-                    if (var8 >= 0 && var8 <= 3) var7 = 1;
-                    if (var7 && func_ov002_0216364c(
-                                  GameState::GetInstance()->GetPartyMemberByIndex(*(char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)))))
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                    int ok = 0;
+                    int id = *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8));
+                    if (id >= 0 && id <= 3) ok = 1;
+                    if (ok && IsFlagAt130Bit0Set_0216364c(
+                                  GameState::GetInstance()->GetPartyMemberByIndex(*(char *) (base + RG(0x1c00 + 0x20, 0x1ae8)))))
                     {
                         *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x7aa8;
                         *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1af2)) = -1;
@@ -105,23 +105,23 @@ extern "C" ARM void func_ov002_021631e8(char *arg0) {
                     func_ov002_02157634(arg0);
                     return;
                 case 1:
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                    *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80)) = RG(9, 0xa);
-                    *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88)) = 0;
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                    *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80)) = RG(9, 0xa);
+                    *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88)) = 0;
                     return;
                 case 2: {
-                    func_0205eaa0((struct Struct_02108760 *) data_02108760, 1, 0);
-                    int var10 = func_ov002_02157500(
-                        arg0, *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1ab0)), *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)));
-                    if (var10 != 0) {
-                        *(unsigned char *) (arg0 + RG(0x1000 + 0xc32, 0x1afa)) = 0;
-                        if (var10 == 2) *(unsigned char *) (arg0 + RG(0x1000 + 0xc32, 0x1afa)) = 1;
-                        *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80))           = RG(0x26, 0x29);
-                        *(int *) (arg0 + RG(0x1000 + 0xbbc, 0x1a84))           = 5;
-                        *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0))          = 0x2365;
-                        *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1af2))          = -1;
-                        *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88))           = 0;
-                        *(unsigned char *) (arg0 + RG(0x1000 + 0xc2e, 0x1af6)) = 1;
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+                    int r = GetInventoryItemFlagField_02157500(
+                        base, *(short *) (base + RG(0x1b00 + 0xe8, 0x1ab0)), *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)));
+                    if (r != 0) {
+                        *(unsigned char *) (base + RG(0x1000 + 0xc32, 0x1afa)) = 0;
+                        if (r == 2) *(unsigned char *) (base + RG(0x1000 + 0xc32, 0x1afa)) = 1;
+                        *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80))           = RG(0x26, 0x29);
+                        *(int *) (base + RG(0x1000 + 0xbbc, 0x1a84))           = 5;
+                        *(short *) (base + RG(0x1c00 + 0x28, 0x1af0))          = 0x2365;
+                        *(short *) (base + RG(0x1c00 + 0x2a, 0x1af2))          = -1;
+                        *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88))           = 0;
+                        *(unsigned char *) (base + RG(0x1000 + 0xc2e, 0x1af6)) = 1;
                     } else {
                         *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80))  = RG(0x26, 0x29);
                         *(int *) (arg0 + RG(0x1000 + 0xbbc, 0x1a84))  = 5;

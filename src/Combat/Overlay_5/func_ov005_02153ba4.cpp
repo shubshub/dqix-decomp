@@ -152,26 +152,26 @@ struct Struct_ov005_02153954 {
 extern "C" void __clear(void* arg0, unsigned long arg1);
 extern "C" void func_02074af4(void* arg0);
 extern "C" char* func_02012fe4();
-extern "C" short func_0201e830(Struct_0201e830* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0205cfd4(Struct_0205cfd4* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_ov023_021dc134(void* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021e1318(Struct_ov002_0215505c_2* arg0);
-extern "C" void func_ov023_021dad78(void* arg0);
-extern "C" void func_ov005_021536e0(void* arg0);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" unsigned char func_ov005_0215a948(void* arg0, int arg1);
-extern "C" unsigned char func_ov005_0215a918(void* arg0, int arg1);
-extern "C" short func_0207c620(unsigned char* arg0, unsigned int arg1);
-extern "C" void func_0205bef8(Struct_0205bef8* arg0);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" int func_0207c638(void* arg0, unsigned int arg1);
-extern "C" short func_02052df8(Struct_02052df8* arg0, int arg1);
-extern "C" int func_0207c7a0(void* arg0, int arg1, int arg2);
-extern "C" short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
+short GetFieldAt0x7e_0201e830(S_e830* p);
+void ResetStruct020dfc40(Struct020dfc40* texts);
+void ClearFields_021e20c0(void* layout);
+void ResetList0204af64(List0204af64* bg);
+void InitStruct0205cfd4(InitTarget0205cfd4* window);
+extern "C" void func_0204c684(void* canvas);
+extern "C" void func_ov023_021dc134(void* window, int a, int b);
+void ClearObj_021e1318(Obj021e1318* list);
+extern "C" void func_ov023_021dad78(void* table);
+extern "C" void func_ov005_021536e0(void* frame);
+void* GetPtrField0x2a04_02010828(GameState* gameState);
+unsigned char GetTableByte0215a948(void* unused, int index);
+unsigned char GetTableByte0215a918(void* unused, int index);
+short GetShortFromArray0xc10_0207c620(unsigned char* p, unsigned int list);
+void GridCursor_Init(Struct_0205bef8* cursor);
+MemberScreen* GetField1c_021a193c(int* p);
+int CountPositiveEntries0207c638(void* p, unsigned int list);
+short GetHalfwordEntryFromField150(Field150Holder02052df8* member, int part);
+extern "C" int func_0207c7a0(void* p, int item, int a);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* p, unsigned int list);
 
 // USA: func_ov005_02153ba4
 extern "C" ARM void func_ov005_02153ba4(Struct_ov005_02153954* arg0) {
@@ -234,45 +234,45 @@ extern "C" ARM void func_ov005_02153ba4(Struct_ov005_02153954* arg0) {
         arg0->unknown_2d90_[var5].unknown_14_ = -1;
         arg0->unknown_2d90_[var5].unknown_18_ = -1;
     }
-    GameState* var6 = GameState::GetInstance();
-    char* var7 = (char*)func_02010828(var6);
-    for (int var8 = 0; var8 < 8; var8++)
-        arg0->unknown_3d98_[var8] = func_0207c620((unsigned char*)(var7 + 0x1d4), func_ov005_0215a948(arg0, var8));
-    arg0->unknown_3da8_ = 0;
-    arg0->unknown_3da9_ = 0;
-    arg0->unknown_3daa_ = 0;
-    arg0->unknown_3dab_ = 0;
-    arg0->unknown_3dac_ = 0;
-    arg0->unknown_3dae_ = 0;
-    arg0->unknown_3db0_ = 0;
-    arg0->unknown_3db2_ = 0;
-    arg0->unknown_3db4_ = 0;
-    arg0->unknown_3db7_ = 0;
-    arg0->unknown_3db8_ = 2;
-    arg0->unknown_3db9_ = 2;
-    arg0->unknown_3dba_ = 0;
-    arg0->unknown_3dbb_ = 0;
-    arg0->unknown_3dbc_ = 0;
-    arg0->unknown_3dbe_ = 0;
-    arg0->unknown_3dbd_ = 0;
-    arg0->unknown_3dbf_ = 0;
-    arg0->unknown_3dc4_ = 0;
-    arg0->unknown_3dc8_ = 0;
-    memset(&arg0->unknown_3dcc_, 0, sizeof(arg0->unknown_3dcc_));
-    arg0->unknown_3dc0_ = -1;
-    func_0205bef8((Struct_0205bef8*)arg0->unknown_19f4_);
-    arg0->unknown_19f4_[0x3d] = 0;
-    arg0->unknown_3dd0_ = 0;
-    arg0->unknown_3dd1_ = 0;
-    arg0->unknown_3dd2_ = 0;
-    arg0->unknown_3dd3_ = 0;
-    for (int var9 = 0; var9 < 8; var9++)
-        arg0->unknown_3dd4_[var9] = 0;
-    arg0->unknown_3ddc_ = 0;
-    arg0->unknown_3ddd_ = 0;
-    arg0->unknown_3dde_ = 0;
-    arg0->unknown_3ddf_ = 0;
-    for (int var10 = 0; var10 < 8; var10++) {
+    GameState* gameState = GameState::GetInstance();
+    char* party = (char*)GetPtrField0x2a04_02010828(gameState);
+    for (int i = 0; i < 8; i++)
+        self->itemCounts_[i] = GetShortFromArray0xc10_0207c620((unsigned char*)(party + 0x1d4), GetTableByte0215a948(self, i));
+    self->unk_3da8 = 0;
+    self->equippedStep_ = 0;
+    self->pageStep_ = 0;
+    self->dragStep_ = 0;
+    self->unk_3dac = 0;
+    self->equippedStart_ = 0;
+    self->equippedEnd_ = 0;
+    self->pageStart_ = 0;
+    self->pageEnd_ = 0;
+    self->loading_ = 0;
+    self->state_ = 2;
+    self->lastState_ = 2;
+    self->step_ = 0;
+    self->slot_ = 0;
+    self->kind_ = 0;
+    self->unk_3dbe = 0;
+    self->page_ = 0;
+    self->lastPage_ = 0;
+    self->loadStep_ = 0;
+    self->task_ = 0;
+    memset(&self->flags_, 0, sizeof(self->flags_));
+    self->unk_3dc0 = -1;
+    GridCursor_Init((Struct_0205bef8*)self->cursor_);
+    self->cursor_[0x3d] = 0;
+    self->unk_3dd0 = 0;
+    self->unk_3dd1 = 0;
+    self->unk_3dd2 = 0;
+    self->unk_3dd3 = 0;
+    for (int i = 0; i < 8; i++)
+        self->sortOrders_[i] = 0;
+    self->menuStep_ = 0;
+    self->menuResult_ = 0;
+    self->menuChoice_ = 0;
+    self->menuState_ = 0;
+    for (int i = 0; i < 8; i++) {
 #if defined(jpn)
         memset(arg0->unknown_3e84_[var10], 0, sizeof(arg0->unknown_3e84_[var10]));
 #else

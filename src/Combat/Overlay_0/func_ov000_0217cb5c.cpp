@@ -8,10 +8,10 @@ enum { Enum_ov000_0217cb5c_7520 = 0x1d60 };
 #endif
 
 struct Struct_0205c570;
-struct Struct_02108760;
-struct Struct_0205d6a0;
-struct Struct_ov000_021735d0_3;
-struct Struct_ov000_021735d0_2;
+struct SePlayer;
+struct Entry_0205d6a0;
+struct Struct0217f8c0;
+struct TableEntry0217f8c0;
 
 struct Struct_ov000_0215767c_2 {
     char unknown_0_[0x70];
@@ -41,12 +41,12 @@ struct Struct_ov000_0215ab88 {
     signed char unknown_18_;
 };
 
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void* func_02010828(GameState*);
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" Struct_ov000_021735d0_2* func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern Struct_02108760 data_02108760;
+int GetActiveScaledSum0205d794(Struct_0205c570*);
+void SePlayer_Play(SePlayer*, int, int);
+void* GetPtrField0x2a04_02010828(GameState*);
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+extern SePlayer g_sePlayer;
 extern "C" {
 void func_02012fe4();
 int func_ov000_0217c594(void*, int);
@@ -63,15 +63,15 @@ void func_ov000_02180394(void*);
 extern "C" ARM void func_ov000_0217cb5c(Struct_ov000_0215767c_2* arg0, int arg1, int arg2)
 {
     func_02012fe4();
-    arg0->unknown_1d72_ |= 0x100;
-    int var0 = func_0205d794((Struct_0205c570*)arg0->unknown_188_);
-    if (var0 < 0) var0 = 0;
-    arg0->unknown_1d69_ = var0;
-    if (func_ov000_0217c594(arg0, 0)) {
-        func_0205eaa0(&data_02108760, 1, 0);
-        int var1[4];
-        func_ov000_02174da4(arg0, var1);
-        switch (var1[arg0->unknown_1d69_]) {
+    self->flags |= 0x100;
+    int mode = GetActiveScaledSum0205d794((Struct_0205c570*)self->entryList);
+    if (mode < 0) mode = 0;
+    self->mode = mode;
+    if (func_ov000_0217c594(self, 0)) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        int table[4];
+        _Z22CopyStaticData02174da4iPv(self, table);
+        switch (table[self->mode]) {
         case 0:
             func_ov000_02177038(arg0, 0, arg0->unknown_1d60_[arg0->unknown_1d68_], arg1, arg2);
             arg0->unknown_1d68_++;

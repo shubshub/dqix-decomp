@@ -2,36 +2,36 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-struct Struct_ov002_0215624c_11;
-struct Struct_ov002_0215624c_15;
-struct Struct_ov002_02164748;
-struct Struct_ov002_02157d40_7;
-struct Struct_ov002_02155960_2;
-struct Struct_ov002_02164748_2;
-struct Struct_ov002_02164748_3;
-struct Struct_ov002_02164748_4;
-struct Struct_ov002_02164748_5;
-extern "C" void func_0205de24(struct Struct_ov002_0215624c_11 *arg0, unsigned char arg1,
-                                                                        unsigned char arg2);
-extern "C" int func_0205d794(struct Struct_ov002_0215624c_15 *arg0);
-extern "C" int func_0205da38(struct Struct_ov002_02164748* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_ov002_02157d40_7 *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02161b48(char *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_ov002_02155960_2 *arg0, int arg1, int arg2);
-extern "C" void func_0205dee8(struct Struct_ov002_02164748_2 *arg0, int arg1);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-extern "C" int func_ov002_02157108(void *arg0, int arg1);
-extern "C" GameObject *func_0200ff1c(GameState *arg0, int arg1);
-extern "C" void *func_02010828(GameState *arg0);
-extern "C" void func_02083834(struct Struct_ov002_02164748_3 *arg0, int arg1);
-extern "C" int func_02083994(struct Struct_ov002_02164748_4 *arg0, int arg1);
-extern "C" void func_020a095c(struct Struct_ov002_02164748_5 *arg0, int arg1, int arg2);
-extern "C" void func_ov002_02161cf0(char *arg0);
-extern "C" void func_ov002_0215bba8(char *arg0);
-extern "C" void func_ov002_0215a7b4(char *arg0, int arg1, short arg2, int arg3, int arg4);
-extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" char data_02108760[];
+struct Struct0205de24;
+struct Struct_0205c570;
+struct Obj_0205da38;
+struct SePlayer;
+struct Struct_0205d81c;
+struct Obj0205dee8;
+struct Slots02083834;
+struct Slots02083994;
+struct KeyMap020a095c;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
+int CheckFlagOrThreshold_02161b48(char *base, int a);
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
+int GetCountByType02157108(void *base, int id);
+GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
+void *GetPtrField0x2a04_02010828(GameState *gameState);
+void InsertIntoEmptySlot02083834(struct Slots02083834 *s, int v);
+int CountMatchingUntilNegative02083994(struct Slots02083994 *s, int v);
+void AddKeyValueClamped020a095c(struct KeyMap020a095c *m, int key, int val);
+extern "C" void func_ov002_02161cf0(char *base);
+extern "C" void func_ov002_0215bba8(char *base);
+extern "C" void func_ov002_0215a7b4(char *base, int a, short b, int c, int d);
+extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" char g_sePlayer[];
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -43,45 +43,45 @@ extern "C" char data_02108760[];
 #define SLOT(f, i) (*(short *) ((f) + (i) * 2 + 0x400 + 0x54))
 
 // USA: func_ov002_02164748
-extern "C" ARM void func_ov002_02164748(char *arg0) {
-    int var0 = *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88));
-    if (var0 == 0) {
-        *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc)) = func_ov002_02157108(arg0, *(signed char *) (arg0 + RG(0x1c00 + 0x21, 0x1ae9))) & 7;
-        func_0205de24((struct Struct_ov002_0215624c_11 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0, 3);
-        func_0205deb4((struct Struct_ov002_02155960_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 1);
-        func_0205deb4((struct Struct_ov002_02155960_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), RG(0xd, 0xe), 0);
-        func_ov002_02161cf0(arg0);
-        *(int *) (arg0 + RG(0x1000 + 0xbc8, 0x1a90)) = 1;
-        func_ov002_0215bba8(arg0);
-        *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88)) += 1;
-    } else if (var0 == 1) {
-        *(unsigned int *) (arg0 + RG(0x2000 + 0x47c, 0x22ac)) |= 4;
-        short var1 = *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc));
-        *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc)) =
-            func_0205d794((struct Struct_ov002_0215624c_15 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)));
-        if (var1 != *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc))) return;
-        int var2 = g_keyManager.TestKeysPressed(0x601);
-        int var3 = func_0205da38((struct Struct_ov002_02164748*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
-        if ((var2 | var3) ? 1 : 0) {
-            func_0205eaa0((struct Struct_ov002_02157d40_7 *) data_02108760, 1, 0);
-            GameState *var4 = GameState::GetInstance();
-            GameObject *var5 = func_0200ff1c(var4, *(signed char *) (arg0 + RG(0x1c00 + 0x21, 0x1ae9)));
-            if (var5 == NULL) return;
-            unsigned char *var6 = func_02053c6c((unsigned char *) var5);
-            GameObject *var7     = func_0200ff1c(var4, *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)));
-            if (var7 == NULL && *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)) != 4) return;
-            int var8                          = 0;
-            short var9                           = SLOT(var6, *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc)));
-            *(short *) (arg0 + RG(0x1c00 + 0x24, 0x1aec)) = var9;
-            if (var9 <= 0) {
-                func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)), *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)),
-                                    *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1ab0)), 0);
-                func_02083834((struct Struct_ov002_02164748_3 *) var6,
-                                                                 *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)));
-                int var10 = *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8));
-                if (var10 == 4) {
-                    if (FLAG(var5))
-                        *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x236b;
+extern "C" ARM void func_ov002_02164748(char *base) {
+    int state = *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88));
+    if (state == 0) {
+        *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)) = GetCountByType02157108(base, *(signed char *) (base + RG(0x1c00 + 0x21, 0x1ae9))) & 7;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + RG(0x2c8 + 0xc00, 0xe20)), 0, 3);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 1);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(0xd, 0xe), 0);
+        func_ov002_02161cf0(base);
+        *(int *) (base + RG(0x1000 + 0xbc8, 0x1a90)) = 1;
+        func_ov002_0215bba8(base);
+        *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88)) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + RG(0x2000 + 0x47c, 0x22ac)) |= 4;
+        short old = *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc));
+        *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)) =
+            GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + RG(0x2c8 + 0xc00, 0xe20)));
+        if (old != *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc))) return;
+        int ta = g_keyManager.TestKeysPressed(0x601);
+        int tb = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
+        if ((ta | tb) ? 1 : 0) {
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
+            GameState *gs = GameState::GetInstance();
+            GameObject *a = GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (base + RG(0x1c00 + 0x21, 0x1ae9)));
+            if (a == NULL) return;
+            unsigned char *fa = GetFieldAt0x150_02053c6c((unsigned char *) a);
+            GameObject *b     = GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)));
+            if (b == NULL && *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)) != 4) return;
+            int done                          = 0;
+            short v                           = SLOT(fa, *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)));
+            *(short *) (base + RG(0x1c00 + 0x24, 0x1aec)) = v;
+            if (v <= 0) {
+                func_ov002_0215a7b4(base, *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)), *(short *) (base + RG(0x1c00 + 0x22, 0x1aea)),
+                                    *(short *) (base + RG(0x1b00 + 0xe8, 0x1ab0)), 0);
+                InsertIntoEmptySlot02083834((struct Slots02083834 *) fa,
+                                                                 *(short *) (base + RG(0x1c00 + 0x22, 0x1aea)));
+                int t = *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8));
+                if (t == 4) {
+                    if (FLAG(a))
+                        *(short *) (base + RG(0x1c00 + 0x28, 0x1af0)) = 0x236b;
                     else
                         *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x236a;
                 } else if (var10 == *(signed char *) (arg0 + RG(0x1c00 + 0x21, 0x1ae9))) {

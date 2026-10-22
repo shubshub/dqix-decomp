@@ -27,10 +27,10 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3dbc_;
 };
 
-extern "C" void func_0205bef8(Struct_0205bef8* arg0);
-extern "C" void func_0205ba68(Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+void GridCursor_Init(Struct_0205bef8* s);
+void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int count, int mode);
+void GridCursor_SetCount(Node0205bacc* s, int val);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 
 // USA: func_ov005_021571d0
 extern "C" ARM void func_ov005_021571d0(Struct_ov005_02153954* arg0) {
@@ -85,11 +85,11 @@ extern "C" ARM void func_ov005_021571d0(Struct_ov005_02153954* arg0) {
         var7 = 0;
         break;
     }
-    func_0205bef8((Struct_0205bef8*)&arg0->unknown_19f4_);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_19f4_, var0, var1, var2);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_19f4_, var3);
-    arg0->unknown_19f4_.unknown_4_ = var4;
-    func_0205bb04(&arg0->unknown_19f4_, var5);
-    arg0->unknown_19f4_.unknown_3c_ = var6;
-    arg0->unknown_19f4_.unknown_3d_ = var7;
+    GridCursor_Init((Struct_0205bef8*)&self->cursor_);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->cursor_, cols, rows, mode);
+    GridCursor_SetCount((Node0205bacc*)&self->cursor_, count);
+    self->cursor_.active_ = active;
+    GridCursor_SetSelectedIndex(&self->cursor_, index);
+    self->cursor_.unk_3c = flagA;
+    self->cursor_.unk_3d = flagB;
 }

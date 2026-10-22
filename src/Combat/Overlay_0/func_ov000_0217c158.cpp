@@ -42,7 +42,7 @@ extern "C" int func_0205dd08(Cursor0217c158* cursor);
 void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta);
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 extern "C" int abs(int);
 
 // USA: func_ov000_0217c158
@@ -88,9 +88,9 @@ extern "C" ARM int func_ov000_0217c158(Struct_ov000_0217c158_3* arg0) {
             }
             var1--;
         }
-        if (var3 != var1) {
-            func_0205bcdc((struct Struct_0205bcdc*)var5->unknown_4_, var1);
-            func_0205bb04(&var5->unknown_54_, var1);
+        if (prev != index) {
+            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor->selection, index);
+            GridCursor_SetSelectedIndex(&cursor->unk_54, index);
         }
         arg0->unknown_22_ = var1;
         arg0->unknown_2c_ = -1;

@@ -4,20 +4,20 @@
 
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Struct_02108760;
+struct SePlayer;
 
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" void func_0205def8(struct Struct_0205def8* arg0, int arg1, int arg2);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_ov000_0217c4e8(void* arg0, int arg1);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov000_021716d0(void* arg0);
-extern "C" void* func_02053c6c(unsigned char* arg0);
-extern "C" int func_ov000_0217ab48(void* arg0);
-extern "C" void func_ov000_0217629c(void* arg0);
-extern "C" void func_ov000_0217ab8c(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02176e3c(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
+struct Obj_0205da38;
+int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int IsBitFlagSet0217c4e8(void* obj, int bit);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void func_ov000_021716d0(void* obj);
+void* GetFieldAt0x150_02053c6c(unsigned char* obj);
+int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
+extern "C" void func_ov000_0217629c(void* obj);
+extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
+extern "C" void func_ov000_02176e3c(void* ctx, void* obj, int sel, int a, int b, int c);
 
 struct Struct_ov000_0217b6d0_4 {
     char unknown_0_[0x188];
@@ -84,8 +84,8 @@ struct Struct_ov000_0217b6d0_3 {
 #endif
 };
 
-extern Struct_ov000_02184294_5 data_ov000_02184294;
-extern char data_02108760;
+extern MenuGlobals_0217b6d0 data_ov000_02184294;
+extern char g_sePlayer;
 
 #if defined(jpn)
 // USA: func_ov000_0217b6d0
@@ -109,14 +109,14 @@ extern "C" ARM int func_ov000_0217b6d0(Struct_ov000_0217b6d0_3* arg0, int arg1, 
         if (!func_ov000_0217c4e8(arg0, var1)) {
             return arg0->unknown_10_[arg0->unknown_18_];
         }
-        func_0205def8((struct Struct_0205def8*)var0->unknown_188_, 0, 0x23);
-        func_0205eaa0((struct Struct_02108760*)&data_02108760, 1, 0);
-        func_ov000_021716d0(arg0);
-        GameObject* var5 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_4c_);
-        if (var5 != NULL) {
-            Struct_ov000_0217b6d0* var6 = (Struct_ov000_0217b6d0*)func_02053c6c((unsigned char*)var5);
-            if (var6 != NULL) {
-                var6->unknown_962_ = arg0->unknown_26_;
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
+        func_ov000_021716d0(obj);
+        GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(obj->memberIndex);
+        if (member != NULL) {
+            MemberInfo_0217b6d0* info = (MemberInfo_0217b6d0*)GetFieldAt0x150_02053c6c((unsigned char*)member);
+            if (info != NULL) {
+                info->lastSpell = obj->actionId;
             }
         }
         if (arg0->unknown_10_[arg0->unknown_18_] != 0x64) {
@@ -156,14 +156,14 @@ extern "C" ARM int func_ov000_0217b6d0(Struct_ov000_0217b6d0_3* arg0, int arg1, 
         if (!func_ov000_0217c4e8(arg0, var8)) {
             return arg0->unknown_10_[arg0->unknown_18_];
         }
-        func_0205def8((struct Struct_0205def8*)var7->unknown1_188_, 0, 0x23);
-        func_0205eaa0((struct Struct_02108760*)&data_02108760, 1, 0);
-        func_ov000_021716d0(arg0);
-        GameObject* var12 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_4c_);
-        if (var12 != NULL) {
-            Struct_ov000_0217b6d0* var13 = (Struct_ov000_0217b6d0*)func_02053c6c((unsigned char*)var12);
-            if (var13 != NULL) {
-                var13->unknown_962_ = arg0->unknown_26_;
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
+        func_ov000_021716d0(obj);
+        GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(obj->memberIndex);
+        if (member != NULL) {
+            MemberInfo_0217b6d0* info = (MemberInfo_0217b6d0*)GetFieldAt0x150_02053c6c((unsigned char*)member);
+            if (info != NULL) {
+                info->lastSpell = obj->actionId;
             }
         }
         if (arg0->unknown_10_[arg0->unknown_18_] != 0x64) {

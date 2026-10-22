@@ -20,28 +20,28 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3df4_[8];
 };
 
-struct Struct_02108760;
+struct SePlayer;
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
+void SePlayer_Play(SePlayer* sound, int effect, int unk);
 
 // USA: func_ov005_021585fc
-extern "C" ARM int func_ov005_021585fc(Struct_ov005_02153954* arg0, int arg1) {
-    unsigned char var0 = arg0->unknown_3df4_[arg0->unknown_3dbc_] - 1;
-    signed char var1 = arg0->unknown_3dbd_;
-    signed char var2 = var1 + arg1;
-    if (var2 < 0)
-        var2 = var0;
-    if (var2 > var0)
-        var2 = 0;
-    int var3 = 1;
-    if (var2 == var1)
-        var3 = 0;
-    if (var3) {
-        func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-        if (arg1 < 0)
-            arg0->unknown_3dcc_ |= 0x20000;
+extern "C" ARM int func_ov005_021585fc(EquipmentMenu* self, int direction) {
+    unsigned char last = self->pageCounts_[self->kind_] - 1;
+    signed char page = self->page_;
+    signed char next = page + direction;
+    if (next < 0)
+        next = last;
+    if (next > last)
+        next = 0;
+    int changed = 1;
+    if (next == page)
+        changed = 0;
+    if (changed) {
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+        if (direction < 0)
+            self->flags_ |= 0x20000;
         else
             arg0->unknown_3dcc_ |= 0x40000;
         arg0->unknown_3dbe_ = arg0->unknown_3dbc_;

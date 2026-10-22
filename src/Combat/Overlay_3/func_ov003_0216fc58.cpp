@@ -30,12 +30,12 @@ extern char data_ov003_0217ea6f[];
 #else
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
-extern "C" struct Struct_ov003_0216fc58* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0204c610(struct Struct_0204c610* arg0, int arg1, short* arg2, short* arg3, short* arg4, short* arg5);
-extern "C" void* func_ov023_021e2ca8(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" void* func_ov023_021e2cc8(void* arg0, void* arg1, int arg2, int arg3);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
+struct Elem0216fc58* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+void GetFourShortsAtIndex(struct ShortArrays0204c610* base, int index, short* out0, short* out1, short* out2, short* out3);
+void* CreateAndSetFields46_021e2ca8(void* a, void* b, int c, int d);
+void* CreateAndSetFields8A_021e2cc8(void* a, void* b, int c, int d);
 
 #if defined(jpn)
 // USA: func_ov003_0216fc58
@@ -87,13 +87,13 @@ extern "C" ARM void func_ov003_0216fc58(char* arg0, int arg1, int arg2) {
 
     func_0205d304(*(char**)(arg0 + 0x3c), var1, 0, 0, 0, 1, 0);
 
-    var0 = *(char**)(arg0 + 0x3c);
-    *(int*)(var0 + 0x8) = 1;
-    *(int*)(var0 + 0x58) = 1;
-    func_0205ba68((struct Struct_0205ba68*)(var0 + 0x4), 1, 3, 0);
-    func_0205ba68((struct Struct_0205ba68*)(var0 + 0x54), 1, 3, 0);
-    func_0205bacc((struct Struct_0205bacc*)(var0 + 0x4), 3);
-    func_0205bacc((struct Struct_0205bacc*)(var0 + 0x54), 3);
+    window = *(char**)(self + 0x3c);
+    *(int*)(window + 0x8) = 1;
+    *(int*)(window + 0x58) = 1;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x4), 3);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x54), 3);
 }
 #else
 // USA: func_ov003_0216fc58
@@ -142,13 +142,13 @@ extern "C" ARM void func_ov003_0216fc58(char* arg0, int arg1, int arg2) {
 
     func_0205d304(*(char**)(arg0 + 0x3c), var4, 0, 0, 0, 1, 0, 0);
 
-    var3 = *(char**)(arg0 + 0x3c);
-    *(int*)(var3 + 0x8) = 1;
-    *(int*)(var3 + 0x58) = 1;
-    func_0205ba68((struct Struct_0205ba68*)(var3 + 0x4), 1, 3, 0);
-    func_0205ba68((struct Struct_0205ba68*)(var3 + 0x54), 1, 3, 0);
-    func_0205bacc((struct Struct_0205bacc*)(var3 + 0x4), 3);
-    func_0205bacc((struct Struct_0205bacc*)(var3 + 0x54), 3);
+    window = *(char**)(self + 0x3c);
+    *(int*)(window + 0x8) = 1;
+    *(int*)(window + 0x58) = 1;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x4), 3);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x54), 3);
 
     struct Struct_ov003_0216fc58* var6 = func_0205d81c(*(struct Struct_0205d81c**)(arg0 + 0x3c), 0);
     if (var6 == 0) {

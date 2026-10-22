@@ -7,20 +7,20 @@
 #endif
 #define J(o) RG(o, (o) - 0x84)
 
-struct Struct_0207fdcc_2;
-struct Struct_0207fe44;
-struct Struct_02081f20_2;
-struct Struct_02108760;
+struct Obj2081;
+struct Cont0207fe44;
+struct Obj0208203c;
+struct SePlayer;
 
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1, int arg2);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_02081ea4(struct Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" int func_ov003_021765b4(void* arg0);
-extern "C" int func_ov003_021766e8(void* arg0);
-extern struct Struct_02108760 data_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+short FindMappedMemberId02080468(void* obj, int id);
+extern "C" void func_020813ec(void* obj, int id, int value);
+void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
+void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+extern "C" int func_ov003_021765b4(void* self);
+extern "C" int func_ov003_021766e8(void* self);
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" int _s32_div_f(int a, int b);
 extern "C" void func_0207fe44(struct Struct_0207fe44* arg0);
 
@@ -49,11 +49,11 @@ extern "C" ARM void func_ov003_021786bc(unsigned char* arg0) {
 
     if (var0 != 1) return;
 
-    *(void**)(arg0 + J(0xff8)) = arg0 + J(0x1000 + 4);
-    if (func_ov003_021765b4(arg0) != 0) {
-        func_0205eaa0(&data_02108760, 1, 0);
-        func_0208203c((struct Struct_02081f20_2*)(arg0 + J(0x88c)));
-        *(void**)(arg0 + J(0xff8)) = 0;
+    *(void**)(self + J(0xff8)) = self + J(0x1000 + 4);
+    if (func_ov003_021765b4(self) != 0) {
+        SePlayer_Play(&g_sePlayer, 1, 0);
+        ResetWithSub0208203c((struct Obj0208203c*)(self + J(0x88c)));
+        *(void**)(self + J(0xff8)) = 0;
 
         unsigned char var4 = 0;
         short var5 = -1;

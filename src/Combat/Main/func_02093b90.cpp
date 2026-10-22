@@ -14,12 +14,12 @@
 
 struct Struct_02012de8;
 struct AllocatorUnion;
-struct Struct_02108760;
-struct Struct_02093b90 {
-    char unknown_0_[ENTRY_TEXT_02093b90];
-    short unknown_30_;
-    signed char unknown_32_;
-    unsigned char unknown_33_;
+struct SePlayer;
+struct TextEntry02093b90 {
+    char text[ENTRY_TEXT_02093b90];
+    short code;
+    signed char index;
+    unsigned char started;
 };
 struct Struct_02093b90_2 {
     Struct_02093b90 unknown_0_[16];
@@ -38,7 +38,7 @@ struct Struct_02093b90_3 {
 };
 struct Struct_020200c0_4 { void* unknown_0_; Struct_02093b90_3* unknown_4_; unsigned char unknown_8_; };
 extern AllocatorUnion data_02114e20;
-extern Struct_02108760 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" char* func_0203bd08();
 extern "C" unsigned char func_020938cc();
 extern "C" void func_0203be58(char*, int, int);
@@ -57,9 +57,9 @@ extern "C" void func_0205b234(void*, int, int, void*, int, int);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 extern "C" void LoadToSubObjVRAM(const void*, unsigned int, unsigned int);
-extern "C" void func_02012da4(AllocatorUnion*, void*);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_020945ac(Struct_02093b90_2*);
+void TailForward02012da4(AllocatorUnion*, void*);
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_020945ac(Obj020941b0*);
 
 static inline unsigned char* inline_02093b90(Struct_02093b90_2* arg0) { return arg0->unknown_348_; }
 
@@ -135,12 +135,12 @@ extern "C" ARM void func_02093b90(Struct_02093b90_2* arg0, int arg1) {
             }
           }
         }
-        func_02012da4(&data_02114e20,var3);
-        memset(arg0->unknown_348_,0,TEXT_LEN_02093b90);
-        arg0->unknown_3cd_ |=4;
-        if (!arg0->unknown_0_[0].unknown_33_) {
-            func_0205eaa0(&data_02108760,29,0);
-            arg0->unknown_0_[0].unknown_33_=1;
+        TailForward02012da4(&data_02114e20,pixels);
+        memset(self->text,0,TEXT_LEN_02093b90);
+        self->flags |=4;
+        if (!self->entries[0].started) {
+            SePlayer_Play(&g_sePlayer,29,0);
+            self->entries[0].started=1;
         }
         return;
     }

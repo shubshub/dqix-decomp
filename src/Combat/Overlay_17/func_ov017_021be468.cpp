@@ -41,7 +41,7 @@ struct Struct_ov017_021be468_4 {
 #if defined(jpn)
 #define data_ov017_021d7e80 data_ov017_021d8693
 #endif
-extern AllocatorUnion data_02114e20; extern char data_ov017_021d7e80[]; extern char data_02108760[];
+extern AllocatorUnion data_02114e20; extern char data_ov017_021d7e80[]; extern char g_sePlayer[];
 extern "C" void func_0202ae18(); extern "C" void* func_02057924(); extern "C" unsigned char* func_02012fe4();
 extern "C" void func_020397cc(Struct_02018300_3*,int); extern "C" void func_0201bf98(unsigned char*,int,int);
 extern "C" int func_02046b60(Struct_02038598_5*,int); extern "C" void func_02046b8c(void*,int); extern "C" void func_02046a8c(void*,void*);
@@ -104,12 +104,12 @@ extern "C" ARM void func_ov017_021be468(Struct_ov017_021be468_5* arg0,Struct_020
             }
             arg0->unknown_8_++;
         }
-    } else if(arg0->unknown_8_==3) {
-        arg0->unknown_c_++;
-        if(arg0->unknown_c_==5) { func_0205ebc0(data_02108760,0xb1,0xb1); func_0205ebfc(data_02108760,0,0); }
-        if(arg0->unknown_c_>25) {
-            for(int var17=0;var17<5;var17++) if(arg0->unknown_38_&(1<<var17)) { GameObject* var18=var0->GetGameObjectByIndex(var17); if(var18!=NULL) var18->obj3D_.EnableFlag(1); }
-            arg0->unknown_8_++;
+    } else if(self->state==3) {
+        self->timer++;
+        if(self->timer==5) { SetForwardAndStore0205ebc0(g_sePlayer,0xb1,0xb1); DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer,0,0); }
+        if(self->timer>25) {
+            for(int i=0;i<5;i++) if(self->actors&(1<<i)) { GameObject* member=game->GetGameObjectByIndex(i); if(member!=NULL) member->obj3D_.EnableFlag(1); }
+            self->state++;
         }
     } else if(arg0->unknown_8_==4) {
         arg0->unknown_c_++; if(arg0->unknown_c_>55) { SetBrightness(var1,-16,30); arg0->unknown_8_++; }
@@ -132,8 +132,8 @@ extern "C" ARM void func_ov017_021be468(Struct_ov017_021be468_5* arg0,Struct_020
                 var24->unknown_83_=arg0->unknown_3e_; var24->unknown_84_=arg0->unknown_3f_; var24->unknown_86_=arg0->unknown_40_;
                 var24->unknown_6_=arg0->unknown_49_0_; var24->unknown_5_=arg0->unknown_49_4_; var24->unknown_8_=arg0->unknown_48_; var24->unknown_1_=0; arg0->unknown_39_=0;
             }
-            arg0->unknown_1_=1; func_020397c0(var2); func_ov017_021beb48(arg0);
-            func_0205ebec(data_02108760);
+            self->done=1; SetByteField0x253_020397c0(actor); func_ov017_021beb48(self);
+            ForwardField0xc0_0205ebec(g_sePlayer);
         }
     }
 }

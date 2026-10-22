@@ -13,15 +13,15 @@ extern "C" int func_0202b7d8(int*);
 extern "C" int func_020100a8(GameState*);
 extern "C" int func_ov000_0218155c(void*);
 extern "C" void* func_ov000_02161318(void*, int);
-extern "C" void* func_02053c6c(unsigned char*);
-extern "C" void func_0205cf10(void*);
-extern "C" void func_0205cf1c(Struct_0205cf1c*);
-extern "C" void func_0205cef8(void*);
-extern "C" void func_0205cf04(void*);
-extern "C" void func_0205ba68(Struct_0205ba68*, int, int, int);
-extern "C" void func_0205bacc(Struct_0205bacc*, int);
-extern "C" void func_0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void*, int);
+void* GetFieldAt0x150_02053c6c(unsigned char*);
+void ClearChannelAFlag0205cf10(void*);
+void ClearFlagByte0205cf1c(Struct0205cf1c*);
+void SetChannelAFlag0205cef8(void*);
+void SetChannelBFlag0205cf04(void*);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
 
 #if defined(jpn)
 extern int data_ov000_02184294[3];
@@ -177,14 +177,14 @@ extern "C" ARM void func_ov000_0217c638(Struct_ov000_0217c638_3* arg0, int arg1,
         func_0205cf1c((Struct_0205cf1c*)arg0->unknown_188_);
         return;
     }
-    func_0205cef8(arg0->unknown_188_);
-    func_0205cf04(arg0->unknown_188_);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_18c_, var0, var2, 0);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_1dc_, var0, var2, 0);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_18c_, var1);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_1dc_, var1);
-    arg0->unknown_18c_.unknown_4_ = var3;
-    arg0->unknown_1dc_.unknown_4_ = var3;
-    func_0205bcdc((Struct_0205bcdc*)&arg0->unknown_18c_, var4);
-    func_0205bb04(&arg0->unknown_1dc_, var4);
+    SetChannelAFlag0205cef8(battle->flags);
+    SetChannelBFlag0205cf04(battle->flags);
+    GridCursor_SetDimensions((Struct_0205ba68*)&battle->first, columns, rows, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&battle->second, columns, rows, 0);
+    GridCursor_SetCount((Node0205bacc*)&battle->first, total);
+    GridCursor_SetCount((Node0205bacc*)&battle->second, total);
+    battle->first.level = pages;
+    battle->second.level = pages;
+    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&battle->first, selected);
+    GridCursor_SetSelectedIndex(&battle->second, selected);
 }

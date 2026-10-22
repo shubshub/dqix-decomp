@@ -11,12 +11,12 @@ enum { Enum_ov005_02159274_3684 = 0xe64, Enum_ov005_02159274_2400 = 0x960, Enum_
 #include <std_library_functions.h>
 #include <GameState/GameState.h>
 
-struct Struct_020e28dc;
-struct Struct_020e263c_2;
-struct Struct_02108760;
-struct Struct_0205d5d0;
-struct Struct_0201099c_10;
-struct Struct_020dd768;
+struct Outer020e28dc;
+struct Ctx020e263c;
+struct SePlayer;
+struct StructA0205d5d0;
+struct Container020dedd0;
+struct Struct020dd768;
 
 struct Struct_ov005_02159274 {
     unsigned int unknown_0_0_ : 4;
@@ -65,24 +65,24 @@ struct Struct_ov005_02159274_3 {
     unsigned char unknown_3ddf_;
 };
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
-extern "C" int func_020e28dc(Struct_020e28dc* arg0);
-extern "C" void func_020e263c(Struct_020e263c_2* arg0, int arg1);
-extern "C" void func_ov005_021589f4(void* arg0);
-extern "C" void func_ov005_02159b74(void* arg0);
-extern "C" int func_ov005_02158b3c(void* arg0, void* arg1);
-extern "C" int func_020e2918(signed char*);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-struct Struct_020e25e8;
-extern "C" void func_020e25e8(Struct_020e25e8*);
-extern "C" int func_020e2984(struct Struct_020e28dc* arg0);
-extern "C" void* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" int func_020dd768(Struct_020dd768* arg0);
-extern "C" void func_ov005_02157b74(void* arg0, int arg1, int arg2);
-struct Struct_0207c484;
-extern "C" void func_0207c484(Struct_0207c484*, int, int, int);
-extern "C" void func_ov005_021555c0(void* arg0);
+int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
+void UpdateEntryStateAndPosition(Ctx020e263c* w, int value);
+extern "C" void func_ov005_021589f4(void* self);
+extern "C" void func_ov005_02159b74(void* self);
+extern "C" int func_ov005_02158b3c(void* object, void* buffer);
+int GetField0x15UnlessInactive_020e2918(signed char*);
+void SePlayer_Play(SePlayer* obj, int a, int b);
+struct Obj020e25e8;
+void ResetSelectionState020e25e8(Obj020e25e8*);
+int IsFlag0x2Active020e2984(struct Outer020e28dc* window);
+void* FindElementByKey020dedd0(Container020dedd0* c, int key);
+int GetFlagFromField0x8Bits(Struct020dd768* s);
+extern "C" void func_ov005_02157b74(void* self, int key, int keep);
+struct KeyedList0207c484;
+void DecrementKeyedStackAmount0207c484(KeyedList0207c484*, int, int, int);
+extern "C" void func_ov005_021555c0(void* self);
 
 // USA: func_ov005_02159274
 extern "C" ARM void func_ov005_02159274(Struct_ov005_02159274_3* arg0) {
@@ -100,14 +100,14 @@ extern "C" ARM void func_ov005_02159274(Struct_ov005_02159274_3* arg0) {
         arg0->unknown_3ddc_++;
         return;
     }
-    if (arg0->unknown_3ddc_ == 1) {
-        var0 = func_020e2918((signed char*)arg0->unknown_e64_);
-        if (var0 >= 0) {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_020e25e8((Struct_020e25e8*)arg0->unknown_e64_);
-        } else if (func_020e2984((struct Struct_020e28dc*)arg0->unknown_e64_)) {
-            func_020e25e8((Struct_020e25e8*)arg0->unknown_e64_);
-            var0 = -2;
+    if (self->step_ == 1) {
+        sel = GetField0x15UnlessInactive_020e2918((signed char*)self->yesNo_);
+        if (sel >= 0) {
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
+        } else if (IsFlag0x2Active020e2984((struct Outer020e28dc*)self->yesNo_)) {
+            ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
+            sel = -2;
         }
         if (var0 == 0) {
             void* var1;
@@ -201,14 +201,14 @@ extern "C" ARM void func_ov005_02159274(Struct_ov005_02159274_3* arg0) {
         arg0->unknown_3ddc_++;
         return;
     }
-    if (arg0->unknown_3ddc_ == 3) {
-        var0 = func_020e2918((signed char*)arg0->unknown_e64_);
-        if (var0 >= 0) {
-            func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
-            func_020e25e8((Struct_020e25e8*)arg0->unknown_e64_);
-        } else if (func_020e2984((struct Struct_020e28dc*)arg0->unknown_e64_)) {
-            func_020e25e8((Struct_020e25e8*)arg0->unknown_e64_);
-            var0 = -2;
+    if (self->step_ == 3) {
+        sel = GetField0x15UnlessInactive_020e2918((signed char*)self->yesNo_);
+        if (sel >= 0) {
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
+            ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
+        } else if (IsFlag0x2Active020e2984((struct Outer020e28dc*)self->yesNo_)) {
+            ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
+            sel = -2;
         }
         if (var0 == 0) {
             void* var7;

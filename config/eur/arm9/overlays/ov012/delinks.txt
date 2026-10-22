@@ -72,19 +72,19 @@ src/Combat/Overlay_12/func_ov012_02185ab8.cpp:
     complete
     .text start:0x02185ab8 end:0x02185af0
 
-src/Combat/Overlay_12/func_ov012_02188924.cpp:
+src/Combat/Overlay_12/AdvanceTagStateB_02188924.cpp:
     complete
     .text start:0x02188924 end:0x02188aec
 
-src/Combat/Overlay_12/func_ov012_02186fd8.cpp:
+src/Combat/Overlay_12/AdvanceTagStateWithMessage_02186fd8.cpp:
     complete
     .text start:0x02186fd8 end:0x02187158
 
-src/Combat/Overlay_12/func_ov012_02187158.cpp:
+src/Combat/Overlay_12/AdvanceTagState_02187158.cpp:
     complete
     .text start:0x02187158 end:0x02187320
 
-src/Combat/Overlay_12/func_ov012_021884f4.cpp:
+src/Combat/Overlay_12/AdvanceTagState_021884f4.cpp:
     complete
     .text start:0x021884f4 end:0x02188640
 
@@ -188,7 +188,7 @@ src/Combat/Overlay_12/UpdateBattleTagStateA_02186a7c.cpp:
     complete
     .text start:0x02186a7c end:0x02186c1c
 
-src/Combat/Overlay_12/func_ov012_02186e38.cpp:
+src/Combat/Overlay_12/UpdateBattleTagStateB_02186e38.cpp:
     complete
     .text start:0x02186e38 end:0x02186fd8
 

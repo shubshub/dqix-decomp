@@ -11,15 +11,15 @@ enum { Enum_ov003_021696f4_1271 = 0x4f7 };
 #endif
 
 struct Struct_0205bef8;
-extern "C" void func_0205bef8(struct Struct_0205bef8* arg0);
+void GridCursor_Init(struct Struct_0205bef8* s);
 
 struct Struct_0205ba68;
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 
-struct Struct_0205bacc;
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
+struct Node0205bacc;
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
-extern "C" void func_0205bb04(void* arg0, int arg1);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Struct_ov003_021696f4 {
     int unknown_0_;
@@ -53,17 +53,17 @@ extern "C" ARM void func_ov003_021696f4(struct Struct_ov003_021696f4_2* arg0, in
     }
     if (arg1 <= var3) var1 = 0;
 
-    func_0205bef8((struct Struct_0205bef8*)&arg0->unknown_4fc_);
-    if (var1) {
-        int var5 = arg0->unknown_4f3_[arg1];
-        func_0205ba68((struct Struct_0205ba68*)&arg0->unknown_4fc_, 1, var5 + 1, 0);
-        arg0->unknown_4fc_.unknown_4_ = 1;
-        func_0205bacc((struct Struct_0205bacc*)&arg0->unknown_4fc_, var5 + 1);
-        func_0205bb04(&arg0->unknown_4fc_, var5 - var0);
+    GridCursor_Init((struct Struct_0205bef8*)&self->table);
+    if (isLast) {
+        int limit = self->limits[index];
+        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, limit + 1, 0);
+        self->table.field4 = 1;
+        GridCursor_SetCount((struct Node0205bacc*)&self->table, limit + 1);
+        GridCursor_SetSelectedIndex(&self->table, limit - base);
     } else {
-        func_0205ba68((struct Struct_0205ba68*)&arg0->unknown_4fc_, 1, 10, 0);
-        arg0->unknown_4fc_.unknown_4_ = 1;
-        func_0205bacc((struct Struct_0205bacc*)&arg0->unknown_4fc_, 10);
-        func_0205bb04(&arg0->unknown_4fc_, 9 - var0);
+        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, 10, 0);
+        self->table.field4 = 1;
+        GridCursor_SetCount((struct Node0205bacc*)&self->table, 10);
+        GridCursor_SetSelectedIndex(&self->table, 9 - base);
     }
 }

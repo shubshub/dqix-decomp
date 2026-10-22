@@ -9,13 +9,13 @@ struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bb84;
 struct Node0205bacc;
-struct Obj0205eaa0;
-void Init0205bef8(Struct_0205bef8*);
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+struct SePlayer;
+void GridCursor_Init(Struct_0205bef8*);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 int GetField0_0205bafc(void*);
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 int GetFieldByKey020e0434(Container020e0310*, int);
 extern "C" int func_02001aec(const void*, const void*, unsigned int);
 extern "C" int func_ov009_0218a8b4(Struct_ov009_021842a0*, int, int);
@@ -23,7 +23,7 @@ extern "C" int func_ov009_0218aab0(Struct_ov009_021842a0*, unsigned char);
 extern "C" void func_ov009_0218ad0c(void*);
 extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void func_ov009_0218b850(CharacterCreationUI*);
-extern "C" void func_0205bb04(CreationNavigation*, int);
+extern "C" void GridCursor_SetSelectedIndex(CreationNavigation*, int);
 extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
@@ -39,17 +39,17 @@ struct Struct_ov009_02187b34 {
     unsigned char unknown_15_4_ : 4;
     short unknown_16_, unknown_18_, unknown_1a_;
 };
-struct Struct_ov005_0215840c_2 { char unknown_0_[0x488]; Struct_ov009_02187b34 unknown_488_; };
-extern Struct_02108760 data_02108760;
+struct PartyMemberData { char unknown0[0x488]; PartyMemberAppearance appearance; };
+extern SePlayer g_sePlayer;
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
-    Struct_ov009_02188c2c* navigation = &arg0->unknown_bec_; \
-    func_0205bef8((Struct_0205bef8*)navigation); \
-    func_0205ba68((Struct_0205ba68*)navigation, columns, rows, 1); \
-    func_0205bacc((Struct_0205bacc*)navigation, total); \
-    navigation->unknown_4_ = 1; \
-    func_0205bb04(navigation, selected); \
-    navigation->unknown_3d_ = 0
+    CreationNavigation* navigation = &self->navigation; \
+    GridCursor_Init((Struct_0205bef8*)navigation); \
+    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, 1); \
+    GridCursor_SetCount((Node0205bacc*)navigation, total); \
+    navigation->field4 = 1; \
+    GridCursor_SetSelectedIndex(navigation, selected); \
+    navigation->flags3d = 0
 
 #define MOVE_CURSOR_TO_TAB_ICON(selected) \
     self->cursorX = ((selected) << 4) + 0x78; \
@@ -79,13 +79,13 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
             if (choice == CreationInput_Confirm) self->flags |= CreationFlag_ConfirmTouched;
             else if (choice == CreationInput_Back) self->flags |= CreationFlag_BackTouched;
             result = choice;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         } else if (choice >= CreationInput_FirstTabIcon && choice <= CreationInput_LastTabIcon) {
             result = choice;
             if (choice - CreationInput_TabIcon <= self->furthestState[self->sex] && choice - CreationInput_TabIcon != self->state)
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
         } else if (choice >= 0) {
-            func_0205bb04(&self->navigation, choice);
+            GridCursor_SetSelectedIndex(&self->navigation, choice);
             if (self->state == CreationTab_NameEntry) {
                 func_ov009_0218aab0(self, (unsigned char)choice);
                 if (self->flags & 0x200000) {
@@ -110,12 +110,12 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
             int count = GetField0_0205bafc(&self->navigation);
             if (rows == 1 && count == 8) {
                 if (choice >= self->furthestState[self->sex]) {
-                    func_0205bb04(&self->navigation, self->furthestState[self->sex] - 1);
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - 1);
                     choice = self->furthestState[self->sex] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
                     RESET_NAVIGATION(11, 6, 66, self->keyboardChoice);
-                    func_0205bb04(&self->navigation, self->navigation.column);
+                    GridCursor_SetSelectedIndex(&self->navigation, self->navigation.column);
                     self->keyboardChoice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
                     self->flags |= 0x2000;
                     CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
@@ -125,7 +125,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(1)) {
                     result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (result - CreationInput_TabIcon <= self->furthestState[self->sex] && result - CreationInput_TabIcon != self->state)
-                        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                        SePlayer_Play(&g_sePlayer, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) {
                     if (func_02001aec(self->names[self->sex], (const void*)GetFieldByKey020e0434(&self->texts, 0x4272), 10) == 0)
                         result = CreationInput_Back;
@@ -149,9 +149,9 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                     func_ov009_0218b850(arg0);
                     arg0->unknown_d9c_ |= 0x8100;
                 } else if (g_keyManager.TestKeysPressed(1)) {
-                    if (func_ov009_0218aab0(arg0, arg0->unknown1_d8c_) && arg0->unknown_d8a_[arg0->unknown_da3_] == 5) {
-                        var1 = 65;
-                        func_0205bb04(&arg0->unknown_bec_, var1);
+                    if (func_ov009_0218aab0(self, self->keyboardChoice) && self->nameFlags[self->sex] == 5) {
+                        choice = 65;
+                        GridCursor_SetSelectedIndex(&self->navigation, choice);
                     }
                     if (!(arg0->unknown_d9c_ & 0x200000)) arg0->unknown_d9c_ |= 0xa100;
                     else {
@@ -172,7 +172,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
             int count = GetField0_0205bafc(&self->navigation);
             if (rows == 1 && count == 8) {
                 if (choice >= self->furthestState[self->sex]) {
-                    func_0205bb04(&self->navigation, self->furthestState[self->sex] - 1);
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - 1);
                     choice = self->furthestState[self->sex] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
@@ -185,7 +185,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(1)) {
                     result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (result - CreationInput_TabIcon <= self->furthestState[self->sex] && result - CreationInput_TabIcon != self->state)
-                        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                        SePlayer_Play(&g_sePlayer, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
                 return result;
             }
@@ -198,7 +198,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
             }
             if (g_keyManager.TestKeysPressed(1)) {
                 result = CreationInput_Confirm;
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
             } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
         }
     }
@@ -216,7 +216,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
         }
     }
     if (self->flags & CreationFlag_ChoiceChanged) {
-        if (self->state != CreationTab_NameEntry || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
+        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, 2, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
             PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
@@ -247,13 +247,13 @@ struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bb84;
 struct Node0205bacc;
-struct Obj0205eaa0;
-void Init0205bef8(Struct_0205bef8*);
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+struct SePlayer;
+void GridCursor_Init(Struct_0205bef8*);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 int GetField0_0205bafc(void*);
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 
 struct Struct_02000c9c_93 {
     char unknown_0_[0x24];
@@ -304,9 +304,9 @@ struct Struct_ov009_021842a0_2 {
     char unknown_db0_[5];
     unsigned char unknown_db5_;
 };
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
-extern "C" void func_0205bb04(Navigation*, int);
+extern "C" void GridCursor_SetSelectedIndex(Navigation*, int);
 extern "C" int func_0205bf58(Navigation*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreation*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreation*, int);
@@ -314,13 +314,13 @@ extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreation*, int);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreation*, int, int);
 
 #define RESET_NAVIGATION(columns, rows, total, selected) \
-    Struct_ov009_02188ee8_3* controls = &arg0->unknown_3ec_; \
-    func_0205bef8((Struct_0205bef8*)&controls->unknown_800_); \
-    func_0205ba68((Struct_0205ba68*)&controls->unknown_800_, columns, rows, 1); \
-    func_0205bacc((Struct_0205bacc*)&controls->unknown_800_, total); \
-    controls->unknown_800_.unknown_4_ = 1; \
-    func_0205bb04(&controls->unknown_800_, selected); \
-    controls->unknown_800_.unknown_3d_ = 0
+    CharacterControls* controls = &self->controls; \
+    GridCursor_Init((Struct_0205bef8*)&controls->navigation); \
+    GridCursor_SetDimensions((Struct_0205ba68*)&controls->navigation, columns, rows, 1); \
+    GridCursor_SetCount((Node0205bacc*)&controls->navigation, total); \
+    controls->navigation.field4 = 1; \
+    GridCursor_SetSelectedIndex(&controls->navigation, selected); \
+    controls->navigation.field3d = 0
 
 #define MOVE_CURSOR_TO_TAB_ICON(selected) \
     self->cursorX = ((selected) << 4) + 0x78; \
@@ -348,13 +348,13 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
             if (choice == CreationInput_Confirm) self->flags |= CreationFlag_ConfirmTouched;
             else if (choice == CreationInput_Back) self->flags |= CreationFlag_BackTouched;
             result = choice;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         } else if (choice >= CreationInput_FirstTabIcon && choice <= CreationInput_LastTabIcon) {
             result = choice;
             if (choice - CreationInput_TabIcon <= self->maxSteps[self->gender] && choice - CreationInput_TabIcon != self->state)
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
         } else if (choice >= 0) {
-            func_0205bb04(&self->controls.navigation, choice);
+            GridCursor_SetSelectedIndex(&self->controls.navigation, choice);
             if (self->state == CreationTab_NameEntry) {
                 if (self->flags & 0x200000) {
                     self->flags &= ~0x200000;
@@ -377,7 +377,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
             int count = GetField0_0205bafc(&self->controls.navigation);
             if (rows == 1 && count == 8) {
                 if (choice >= self->maxSteps[self->gender]) {
-                    func_0205bb04(&self->controls.navigation, self->maxSteps[self->gender] - 1);
+                    GridCursor_SetSelectedIndex(&self->controls.navigation, self->maxSteps[self->gender] - 1);
                     choice = self->maxSteps[self->gender] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
@@ -392,7 +392,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
                 if (g_keyManager.TestKeysPressed(1)) {
                     result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + CreationInput_FirstTabIcon;
                     if (result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-                        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                        SePlayer_Play(&g_sePlayer, 1, 0);
                 }
                 return var15;
             }
@@ -408,7 +408,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
             int count = GetField0_0205bafc(&self->controls.navigation);
             if (rows == 1 && count == 8) {
                 if (choice >= self->maxSteps[self->gender]) {
-                    func_0205bb04(&self->controls.navigation, self->maxSteps[self->gender] - 1);
+                    GridCursor_SetSelectedIndex(&self->controls.navigation, self->maxSteps[self->gender] - 1);
                     choice = self->maxSteps[self->gender] - 1;
                 }
                 if (g_keyManager.TestKeysPressed(0x80)) {
@@ -421,9 +421,9 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
                 if (g_keyManager.TestKeysPressed(1)) {
                     result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + CreationInput_FirstTabIcon;
                     if (result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-                        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                        SePlayer_Play(&g_sePlayer, 1, 0);
                 } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
-                if (result == CreationInput_TabIcon + CreationTab_NameEntry) SetupPointerTable0205ba68((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
+                if (result == CreationInput_TabIcon + CreationTab_NameEntry) GridCursor_SetDimensions((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
                 return result;
             }
             if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
@@ -435,7 +435,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
             }
             if (g_keyManager.TestKeysPressed(1)) {
                 result = CreationInput_Confirm;
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
             } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
         }
     }
@@ -454,7 +454,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
         }
     }
     if (self->flags & CreationFlag_ChoiceChanged) {
-        if (self->state != CreationTab_NameEntry || !touched) DispatchWithShortB4_0205eaa0(&data_02108760, 2, 0);
+        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, 2, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
             PartyMemberAppearance* appearance = &self->member->appearance;
@@ -472,7 +472,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
         self->flags |= 0x6100;
     }
     if (result == CreationInput_TabIcon + CreationTab_NameEntry && result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-        SetupPointerTable0205ba68((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
+        GridCursor_SetDimensions((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
     return result;
 }
 

@@ -115,8 +115,8 @@ extern const char data_ov026_021dee0c[];
 extern const char data_ov026_021dee23[];
 extern const char data_ov026_021dee3a[];
 extern const char data_ov026_021dedec[];
-extern const Struct_ov026_021de6a0 data_ov026_021de6a0;
-extern char data_02108760[];
+extern const Rodata021de6a0 data_ov026_021de6a0;
+extern char g_sePlayer[];
 
 // USA: func_ov026_021db5a4
 extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
@@ -160,38 +160,38 @@ extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
             func_ov000_02167e6c((unsigned char*)arg0);
             arg0->unknown_7712_ = 2;
         }
-    } else if (arg0->unknown_7712_ == 2) {
-        Struct_02078398_2 var9;
-        func_0205eb54(data_02108760, 0x1b3, 0x1b3);
-        func_0205eb90(data_02108760, 1, 0);
-        arg0->unknown_7711_ = 1;
-        func_ov000_021626a0(arg0, 0x26, 0);
-        func_ov000_021626a0(arg0, 0x27, 0);
-        SetFlags04((GameResources*)var0, 0x100000);
-        func_02078484(&var9);
-        var9.unknown_11_0_ = 1;
-        var9.unknown_10_ = 1;
-        var9.unknown_44_.x = 0x800;
-        var9.unknown_44_.y = 0x800;
-        var9.unknown_44_.z = 0x800;
-        var9.unknown_2c_.x = 0;
-        var9.unknown_2c_.z = 0;
-        var9.unknown_2c_.y = -0xa000;
-        arg0->unknown_7722_ = func_02057fb4(func_02057924(), 0x1d, &var9);
-        arg0->unknown_7724_ = func_02057fb4(func_02057924(), 0x1e, &var9);
-        arg0->unknown_7726_ = 0;
-        SetMainBrightness(var0, 0, 0xf);
-        arg0->unknown_7712_ = 3;
-    } else if (arg0->unknown_7712_ == 3) {
-        int var10 = 0;
-        GameObject* var11 = GameState::GetInstance()->GetGameObjectByIndex(arg0->unknown_7722_);
-        if (var11 != NULL) {
-            int var12 = var11->obj3D_.normalizedAnimationTime_ - var11->obj3D_.prevFrameNormalizedAnimationTime_;
-            if (var12 > 0) {
-                int var13 = fix32_Divide(var11->obj3D_.animationTime_ - var11->obj3D_.prevFrameAnimationTime_, var12);
-                int var14 = (int)(((long long)var13 * (0x1000 - var11->obj3D_.normalizedAnimationTime_) + 0x800) >> 12);
-                if (var14 <= 0x1e000) {
-                    var10 = 1;
+    } else if (self->phase == 2) {
+        InitStruct02078484Struct req;
+        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 1, 0);
+        self->fadeActive = 1;
+        func_ov000_021626a0(self, 0x26, 0);
+        func_ov000_021626a0(self, 0x27, 0);
+        SetFlags04((GameResources*)res, 0x100000);
+        InitStruct02078484(&req);
+        req.b0 = 1;
+        req.f10 = 1;
+        req.scale.x = 0x800;
+        req.scale.y = 0x800;
+        req.scale.z = 0x800;
+        req.offset.x = 0;
+        req.offset.z = 0;
+        req.offset.y = -0xa000;
+        self->objId7722 = FindNodeAndProcess02057fb4(func_02057924(), 0x1d, &req);
+        self->objId7724 = FindNodeAndProcess02057fb4(func_02057924(), 0x1e, &req);
+        self->objId7726 = 0;
+        SetMainBrightness(res, 0, 0xf);
+        self->phase = 3;
+    } else if (self->phase == 3) {
+        int done = 0;
+        GameObject* obj = GameState::GetInstance()->GetGameObjectByIndex(self->objId7722);
+        if (obj != NULL) {
+            int span = obj->obj3D_.normalizedAnimationTime_ - obj->obj3D_.prevFrameNormalizedAnimationTime_;
+            if (span > 0) {
+                int rate = fix32_Divide(obj->obj3D_.animationTime_ - obj->obj3D_.prevFrameAnimationTime_, span);
+                int left = (int)(((long long)rate * (0x1000 - obj->obj3D_.normalizedAnimationTime_) + 0x800) >> 12);
+                if (left <= 0x1e000) {
+                    done = 1;
                 }
             }
         }
@@ -210,37 +210,37 @@ extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
             ClearFlags04((GameResources*)var0, 0x100000);
             arg0->unknown_7712_ = 5;
         }
-    } else if (arg0->unknown_7712_ == 5) {
-        Struct_02078398_2 var15;
-        func_0205eb80(data_02108760);
-        arg0->unknown_7711_ = 0;
-        SetMainBrightness(var0, -0x10, 0);
-        GameState* var16 = GameState::GetInstance();
-        func_02078484(&var15);
-        for (int var17 = 0; var17 < 4; var17++) {
-            GameObject* var18 = var16->GetCombatantByIndex(var17);
-            if (var18 != NULL) {
-                func_02049f50((Struct_02049f50*)var18, 0x1f, 0);
+    } else if (self->phase == 5) {
+        InitStruct02078484Struct req;
+        ForwardField0xc0_0205eb80(g_sePlayer);
+        self->fadeActive = 0;
+        SetMainBrightness(res, -0x10, 0);
+        GameState* gs = GameState::GetInstance();
+        InitStruct02078484(&req);
+        for (int i = 0; i < 4; i++) {
+            GameObject* c = gs->GetCombatantByIndex(i);
+            if (c != NULL) {
+                SetField41AndScaleSub02049f50((Obj02049f50*)c, 0x1f, 0);
             }
             var15.unknown_14_ = var17;
             var15.unknown_10_ = 0;
             arg0->unknown_7716_[var17] = func_02057fb4(func_02057924(), 0x12, &var15);
         }
-        func_ov000_02175808(arg0->unknown_3760_);
-        arg0->unknown_54d2_ |= 0x200;
-        func_ov000_021637c8(arg0);
-        func_ov026_021dc440(&arg0->unknown_774c_, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, data_ov026_021dedec);
-        func_ov000_02163894(arg0);
-        func_ov000_021636ac(arg0);
-        arg0->unknown_7712_ = 6;
-        func_0205eb54(data_02108760, 0x1b3, 0x1b3);
-        func_0205eb90(data_02108760, 2, 0);
-        arg0->unknown_7711_ = 1;
-    } else if (arg0->unknown_7712_ == 6) {
-        func_ov000_02163928(arg0);
-        if (func_ov026_021dc040(&arg0->unknown_30_, arg0, arg0->unknown_29c_, arg0->unknown_2a0_)) {
-            func_ov000_02163710(arg0, 0);
-            arg0->unknown_7712_ = -1;
+        func_ov000_02175808(self->list);
+        self->uiFlags |= 0x200;
+        ResetTwoFields021637c8(self);
+        func_ov026_021dc440(&self->cmdAlloc, self, self->battle, self->party, data_ov026_021dedec);
+        func_ov000_02163894(self);
+        UpdateFlag8AndBit4_021636ac(self);
+        self->phase = 6;
+        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 2, 0);
+        self->fadeActive = 1;
+    } else if (self->phase == 6) {
+        func_ov000_02163928(self);
+        if (func_ov026_021dc040(&self->alloc, self, self->battle, self->party)) {
+            ClearFlagIfParityMismatch02163710_02163710(self, 0);
+            self->phase = -1;
         }
     } else if (arg0->unknown_7712_ == -1) {
         func_ov000_02163928(arg0);

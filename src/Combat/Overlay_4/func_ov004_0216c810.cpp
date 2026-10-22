@@ -79,9 +79,9 @@ extern "C" void func_ov023_021f7eb8(void* arg0, void* arg1, int arg2, int arg3, 
 extern "C" void func_ov004_0216ba70(void* arg0);
 
 extern char data_02109bf4[];
-extern struct Struct_02108760_2 data_02108760;
-extern Struct_ov004_02171034_2 data_ov004_02171034;
-extern Struct_ov004_02170174 data_ov004_02170174;
+extern struct Obj0205e9f4 g_sePlayer;
+extern MenuState02171034 data_ov004_02171034;
+extern Bytes6 data_ov004_02170174;
 
 // USA: func_ov004_0216c810
 extern "C" ARM int func_ov004_0216c810(void* arg0) {
@@ -92,13 +92,13 @@ extern "C" ARM int func_ov004_0216c810(void* arg0) {
     int var4;
     Struct_ov004_0216c810_3* var5;
 
-    func_0209ca70(data_02109bf4, 3);
-    func_0205e9f4(&data_02108760, 3);
-    data_ov004_02171034.unknown_4_ = 3;
-    data_ov004_02171034.unknown_1_ = 3;
-    data_ov004_02171034.unknown_a_ = 0;
-    if (data_ov004_02171034.unknown_3_ != 4) {
-        func_0209c3b4((struct Struct_0209c3b4_2*)data_02109bf4, 2);
+    SetModeClamped0209ca70(data_02109bf4, 3);
+    SetStateAndDispatch0205e9f4(&g_sePlayer, 3);
+    data_ov004_02171034.byte4 = 3;
+    data_ov004_02171034.byte1 = 3;
+    data_ov004_02171034.messageId = 0;
+    if (data_ov004_02171034.state3 != 4) {
+        SetStateAndDispatch0209c3b4((struct Actor0209c3b4*)data_02109bf4, 2);
     }
     var0 = GameState::GetInstance();
     func_02010828(var0);

@@ -135,8 +135,8 @@ struct Struct_ov005_0215c530_5
     int unknown_4fc_;
 };
 
-struct Struct_02083508_2;
-struct Struct_02108760;
+struct StructDE1D4;
+struct SePlayer;
 
 extern "C" short* func_0207c5f8(unsigned char*, unsigned int);
 extern "C" signed char* func_0207c60c(void*, unsigned int);
@@ -148,14 +148,14 @@ extern "C" Struct_ov005_0215c530_5* func_ov017_021a193c(int*);
 extern "C" void func_020de1d4(Struct_02083508_2*);
 extern "C" void* memset(void*, int, unsigned int);
 extern "C" void* memcpy(void*, const void*, unsigned int);
-extern "C" Struct_ov005_0215c530_7* func_ov023_021db08c(void*, int);
-extern "C" int func_020dd4c4(int, Struct_ov005_0215c530_6*);
-extern "C" void func_ov005_021579ec(Struct_ov005_0215c530_3*, unsigned int, unsigned char);
-extern "C" void func_0205bb04(void*, int);
-extern "C" void func_0205eaa0(Struct_02108760*, int, int);
-extern "C" void func_ov005_021555c0(Struct_ov005_0215c530_3*);
-extern "C" void func_ov023_021dcae0(Struct_ov003_02178910*, int);
-extern "C" void func_ov005_0215792c(Struct_ov005_0215c530_3*, unsigned char);
+Entry0215c530* FindEntryById_021db08c(void*, int);
+extern "C" int func_020dd4c4(int, Item0215c530*);
+extern "C" void func_ov005_021579ec(Menu0215c530*, unsigned int, unsigned char);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
+void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov005_021555c0(Menu0215c530*);
+extern "C" void func_ov023_021dcae0(Obj021dcae0*, int);
+extern "C" void func_ov005_0215792c(Menu0215c530*, unsigned char);
 
 #if defined(jpn)
 #define data_ov005_0215cd08 data_ov005_0215e0e8
@@ -163,7 +163,7 @@ extern "C" void func_ov005_0215792c(Struct_ov005_0215c530_3*, unsigned char);
 #endif
 extern unsigned char data_ov005_0215cd08[];
 extern unsigned char data_ov005_0215cd00[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov005_0215c530
 extern "C" ARM void func_ov005_0215c530(Struct_ov005_0215c530_3* arg0)
@@ -299,12 +299,12 @@ extern "C" ARM void func_ov005_0215c530(Struct_ov005_0215c530_3* arg0)
                 arg0->unknown_3dbb_ = var22 % 16 + 8;
                 if (var24 != arg0->unknown_3dbb_)
                 {
-                    func_ov005_021579ec(arg0, 4, (unsigned char)arg0->unknown_3dbb_);
-                    func_0205bb04(arg0->unknown_19f4_, arg0->unknown_3dbb_ - 8);
+                    func_ov005_021579ec(self, 4, (unsigned char)self->selected);
+                    GridCursor_SetSelectedIndex(self->cursor, self->selected - 8);
                 }
             }
         }
-        func_0205eaa0((Struct_02108760*)data_02108760, 1, 0);
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
     }
 
     if (arg0->unknown_3dd4_[arg0->unknown_3dbc_] == 0 || arg0->unknown_3dd4_[arg0->unknown_3dbc_] == 1)

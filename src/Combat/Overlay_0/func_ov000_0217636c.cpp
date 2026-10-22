@@ -5,13 +5,13 @@ struct Struct_0205d6a0;
 struct Struct_0205bacc;
 struct Struct_0205bcdc;
 
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_0205cef8(void* arg0);
-extern "C" void func_0205cf04(void* arg0);
-extern "C" void func_0205cf28(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int mode);
+void SetChannelAFlag0205cef8(void* chan);
+void SetChannelBFlag0205cf04(void* chan);
+void SetupDualPointerTables0205cf28(unsigned char* p, int a, int b, int c);
+void GridCursor_SetCount(struct Node0205bacc* node, int val);
+void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* obj, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 
 struct Struct_ov000_0217636c_2 {
 #if defined(jpn)
@@ -63,31 +63,31 @@ struct Struct_ov000_0215ab88 {
 extern "C" void func_ov000_02176500(struct Struct_ov000_0215ab88* arg0, void* arg1, int arg2);
 
 // USA: func_ov000_0217636c
-extern "C" ARM void func_ov000_0217636c(struct Struct_ov000_0215ab88* arg0, int arg1) {
-    struct Struct_ov000_0217636c* var0 = arg0->unknown_38_;
-    if (var0 != 0) {
-        int var1 = arg0->unknown_44_;
-        int var2 = arg0->unknown_48_;
-        func_0205d6a0((struct Struct_0205d6a0*)var0, 1);
-        func_0205cef8(var0);
-        func_0205cf04(var0);
-        func_0205cf28((unsigned char*)var0, 2, 3, 0);
-        func_0205bacc((struct Struct_0205bacc*)&var0->unknown_4_, 6);
-        func_0205bacc((struct Struct_0205bacc*)&var0->unknown_54_, 6);
-        func_0205bcdc((struct Struct_0205bcdc*)&var0->unknown_4_, 0);
-        func_0205bb04(&var0->unknown_54_, 0);
-        var0->unknown_4_.unknown_4_ = 1;
-        var0->unknown_54_.unknown_4_ = 1;
-        var0->unknown_a0_ = 2;
-        var0->unknown_a2_ = 1;
-        var0->unknown_a4_ = (var1 >> 3) + 9;
-        var0->unknown_a6_ = (var2 >> 3) + 1;
-        var0->unknown_a8_ = 0xc;
-        var0->unknown_aa_ = 0xe;
-        var0->unknown_ac_ = 0xa;
-        var0->unknown_ae_ = 0xe;
-        var0->unknown_b1_ = 0xd;
-        void* var3 = func_020421a0()->unknown_5c_;
+extern "C" ARM void func_ov000_0217636c(struct Combatant* obj, int arg) {
+    struct Window* window = obj->window;
+    if (window != 0) {
+        int x = obj->posX;
+        int y = obj->posY;
+        ResetEntryList0205d6a0((struct Entry_0205d6a0*)window, 1);
+        SetChannelAFlag0205cef8(window);
+        SetChannelBFlag0205cf04(window);
+        SetupDualPointerTables0205cf28((unsigned char*)window, 2, 3, 0);
+        GridCursor_SetCount((struct Node0205bacc*)&window->nodeA, 6);
+        GridCursor_SetCount((struct Node0205bacc*)&window->nodeB, 6);
+        SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)&window->nodeA, 0);
+        GridCursor_SetSelectedIndex(&window->nodeB, 0);
+        window->nodeA.unk4 = 1;
+        window->nodeB.unk4 = 1;
+        window->unkA0 = 2;
+        window->unkA2 = 1;
+        window->tileX = (x >> 3) + 9;
+        window->tileY = (y >> 3) + 1;
+        window->unkA8 = 0xc;
+        window->unkAA = 0xe;
+        window->unkAC = 0xa;
+        window->unkAE = 0xe;
+        window->unkB1 = 0xd;
+        void* buf = GetGlobalField0x1c020421a0()->tileBuffer;
 #if defined(jpn)
         memset(var3, 0, 0x800);
 #else

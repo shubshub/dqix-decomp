@@ -16,10 +16,10 @@ struct Struct_0204254c {
     signed char unknown_5_6_ : 2;
     char unknown_6_[2];
 };
-extern "C" struct Struct_0204254c* func_0204254c(int arg0, int arg1);
-extern "C" int func_02041a28(char* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02041a5c(char* arg0, int arg1);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
+int AppendXTag_02041a28(char* dst, int x);
+void AppendString02042058(char* dst, const char* src);
+int AppendYTag_02041a5c(char* dst, int y);
 
 #if defined(jpn)
 extern "C" void func_020420e8(char*, int);
@@ -80,13 +80,13 @@ extern "C" ARM void func_ov023_021e8cdc(char* arg0) {
     int var12 = 8;
     int var13 = 0;
     for (;;) {
-        if (*var9 == 0) return;
-        int var14 = 1;
-        struct Struct_0204254c* var15 = func_0204254c((int)var9, var14);
-        if (var15 != 0) {
-            func_02041a28(var1, var10);
-            func_02042058(var1, (const char*)var15->unknown_0_);
-            var14 = var15->unknown_5_0_;
+        if (*p == 0) return;
+        int step = 1;
+        struct Entry0204254c* e = Font_FindCharacter((int)p, step);
+        if (e != 0) {
+            AppendXTag_02041a28(dst, x);
+            AppendString02042058(dst, (const char*)e->val);
+            step = e->field5;
         }
         var13++;
         var9 += var14;

@@ -14,48 +14,48 @@ enum { Enum_ov017_021a51a4_14032 = 0x34c0, Enum_ov017_021a51a4_14036 = 0x34c4, E
 enum { Enum_ov017_021a51a4_14032 = 0x36d0, Enum_ov017_021a51a4_14036 = 0x36d4, Enum_ov017_021a51a4_14076 = 0x36fc, Enum_ov017_021a51a4_14080 = 0x3700, Enum_ov017_021a51a4_14108 = 0x371c, Enum_ov017_021a51a4_14112 = 0x3720, Enum_ov017_021a51a4_15180 = 0x3b4c, Enum_ov017_021a51a4_15184 = 0x3b50, Enum_ov017_021a51a4_15216 = 0x3b70, Enum_ov017_021a51a4_15220 = 0x3b74, Enum_ov017_021a51a4_16832 = 0x41c0, Enum_ov017_021a51a4_16836 = 0x41c4, Enum_ov017_021a51a4_17124 = 0x42e4, Enum_ov017_021a51a4_396 = 0x18c };
 #endif
 
-struct Struct_0202b2f0;
-struct Struct_02012de8;
-struct Struct_0203402c;
-struct Struct_02000c9c_8;
-struct Struct_ov017_021befe4;
-struct Struct_02108760;
-struct Struct_02018300_3;
-struct Struct_0206f81c_2;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-struct Struct_020213fc;
-struct Struct_02027bac;
+struct SearchStruct;
+struct FlagWord02046708;
+struct BitField0203402c;
+struct Struct0200fb08;
+struct Obj021befe4;
+struct SePlayer;
+struct Obj020397cc;
+struct S021b2ba0;
+struct TailList020469b4;
+struct TailNode020469b4;
+struct SetFlagStruct;
+struct FlagBlob02027bac;
 struct SafeAllocator;
 
 extern "C" int func_020421a0();
 extern "C" Struct_0202b2f0* func_0202ae18(void);
 extern "C" void* func_02012fe4(void);
-extern "C" Struct_02012de8* func_020d6c00();
-extern "C" unsigned char* func_0200fd0c(GameState* arg0);
-extern "C" int func_02046b08(void** arg0);
-extern "C" int func_02039820(void* arg0);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" int func_02046708(Struct_02012de8* arg0, unsigned int arg1);
-extern "C" int func_0203402c(Struct_0203402c* arg0);
-extern "C" int func_020c39c8(volatile unsigned short* arg0);
-extern "C" int func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" int func_0202c508(Struct_0202b2f0* arg0);
-extern "C" int func_0202c540(Struct_0202b2f0* arg0);
-extern "C" void func_ov017_021befe4(Struct_ov017_021befe4* arg0);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_0205eaa0(Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021a5568(void* arg0);
-extern "C" int func_02039d7c(char* arg0);
-extern "C" void func_ov017_021b2174(unsigned char* arg0);
-extern "C" void func_ov017_021b2ba0(Struct_0206f81c_2* arg0, char* arg1);
-extern "C" void func_ov017_021b2bd0(void* arg0, int arg1, int arg2);
-extern "C" void func_020dc2d0(int arg0);
-extern "C" void func_020213fc(Struct_020213fc* arg0, int arg1);
-extern "C" void func_02027bac(Struct_02027bac* arg0, unsigned char arg1);
-extern "C" void func_ov004_0216ae2c(SafeAllocator* arg0, void* arg1);
-extern char data_02108760;
+FlagWord02046708* GetDataPtr02114e04_020d6c00();
+unsigned char* GetField0x3f8Address_0200fd0c(GameState* gs);
+int IsField0Null_02046b08(void** list);
+int GetByteField0x252_02039820(void* obj);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int TestFlags02046708(FlagWord02046708* flags, unsigned int mask);
+int CheckField0xc4Low15BitsNonZero(BitField0203402c* obj);
+extern "C" int func_020c39c8(volatile unsigned short* reg);
+int NormalizeField5_0200fb08(Struct0200fb08* obj);
+extern "C" int func_0202c508(SearchStruct* search);
+extern "C" int func_0202c540(SearchStruct* search);
+void InitState53_021befe4(Obj021befe4* obj);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+void CancelPendingAction020397cc(Obj020397cc* obj, int flag);
+void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void func_ov017_021a5568(void* node);
+int GetByte0x26c_02039d7c(char* obj);
+void InitObjState_021b2174(unsigned char* obj);
+void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
+void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
+void SetCombatModeFromCase020dc2d0(int mode);
+void SetFlag0x9c6_020213fc(SetFlagStruct* obj, int value);
+void SetFlagsAt0xa97(FlagBlob02027bac* obj, unsigned char value);
+void AllocateAndCopyBuf28_0216ae2c(SafeAllocator* allocator, void* arg);
+extern char g_sePlayer;
 extern char data_ov017_021d76dc;
 
 struct Struct_ov017_021d6a80 {
@@ -180,17 +180,17 @@ extern "C" ARM void func_ov017_021a51a4(Struct_ov017_021a51a4_4* arg0) {
         func_020469b4(arg0->unknown_36fc_, (Struct_0201bdac*)arg0->unknown_3b70_);
         return;
     }
-    if (var6) {
-        func_020397cc((Struct_02018300_3*)var1, 1);
-        var1->unknown_b2_ = 0;
-        arg0->unknown_42e4_ = 0;
-        func_0205eaa0((Struct_02108760*)&data_02108760, 1, 0);
-        func_ov017_021a5568(arg0->unknown_371c_);
-        Struct_ov017_021a51a4_2* var14 = arg0->unknown_371c_;
-        var14->unknown_24_ = 0;
-        var14->unknown_28_ = 0;
-        var14->unknown_2c_ = -1;
-        func_020469b4(arg0->unknown_36fc_, (Struct_0201bdac*)arg0->unknown_371c_);
+    if (start) {
+        CancelPendingAction020397cc((Obj020397cc*)unknown, 1);
+        unknown->fb2 = 0;
+        res->pending = 0;
+        SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
+        func_ov017_021a5568(res->node);
+        Node021a51a4* node = res->node;
+        node->f24 = 0;
+        node->f28 = 0;
+        node->f2c = -1;
+        AppendNodeToTail(res->list, (TailNode020469b4*)res->node);
         return;
     }
     if (var9[0] != 0 && func_0202c540(var3) == 0 && var11->unknown_c_0_ == 0) {

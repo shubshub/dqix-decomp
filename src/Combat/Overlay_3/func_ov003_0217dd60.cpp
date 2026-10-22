@@ -83,8 +83,8 @@ extern "C" void func_02042428(char* arg0, int arg1);
 #else
 extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
+void GridCursor_SetDimensions(struct Struct_0205ba68* t, int a, int b, int c);
+void GridCursor_SetCount(struct Node0205bacc* n, int value);
 
 extern const char data_ov003_02180c7f[];
 
@@ -150,17 +150,17 @@ extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
     } else {
         func_0205d304(arg0->unknown_8c_, var0, 0, 0, 0, 1, 0);
     }
-    int var10 = arg0->unknown_2e_;
-    struct Struct_ov003_0217dd60* var11 = arg0->unknown_8c_;
-    var11->unknown_8_ = var10;
-    var11->unknown_58_ = var10;
-    func_0205ba68((struct Struct_0205ba68*)((char*)var11 + 4), 1, 6, 0);
-    func_0205ba68((struct Struct_0205ba68*)((char*)var11 + 0x54), 1, 6, 0);
-    unsigned char var12 = arg0->unknown_2c_;
-    func_0205bacc((struct Struct_0205bacc*)((char*)var11 + 4), var12);
-    func_0205bacc((struct Struct_0205bacc*)((char*)var11 + 0x54), var12);
-    var11->unknown_94_ = 1;
-    var11->unknown_95_ = 1;
+    int field32 = menu->field32;
+    struct ListWindow0217dd60* window = menu->window;
+    window->field8 = field32;
+    window->field58 = field32;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    unsigned char itemCount = menu->itemCount;
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    window->field94 = 1;
+    window->field95 = 1;
 }
 #else
 extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
@@ -227,16 +227,16 @@ extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
     } else {
         func_0205d304(arg0->unknown_90_, var13, 0, 0, 0, 1, 0, 0);
     }
-    int var26 = arg0->unknown_32_;
-    struct Struct_ov003_0217dd60* var27 = arg0->unknown_90_;
-    var27->unknown_8_ = var26;
-    var27->unknown_58_ = var26;
-    func_0205ba68((struct Struct_0205ba68*)((char*)var27 + 4), 1, 6, 0);
-    func_0205ba68((struct Struct_0205ba68*)((char*)var27 + 0x54), 1, 6, 0);
-    unsigned char var28 = arg0->unknown_30_;
-    func_0205bacc((struct Struct_0205bacc*)((char*)var27 + 4), var28);
-    func_0205bacc((struct Struct_0205bacc*)((char*)var27 + 0x54), var28);
-    var27->unknown_94_ = 1;
-    var27->unknown_95_ = 1;
+    int field32 = menu->field32;
+    struct ListWindow0217dd60* window = menu->window;
+    window->field8 = field32;
+    window->field58 = field32;
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    unsigned char itemCount = menu->itemCount;
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    window->field94 = 1;
+    window->field95 = 1;
 }
 #endif

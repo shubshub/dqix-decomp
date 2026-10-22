@@ -17,19 +17,19 @@ struct Struct_0207fdcc_2 {
     short unknown_36_;
 };
 
-struct Struct_02081f20_2;
-struct Struct_02108760;
-struct Struct_020e29a8;
-struct Struct_020e280c;
+struct Obj0208203c;
+struct SePlayer;
+struct Clamp020e29a8;
+struct Obj020e280c;
 
-extern "C" void func_020813ec(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
-extern "C" void func_02080c04(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_020e29a8(struct Struct_020e29a8* arg0, int arg1);
-extern "C" void func_020e280c(struct Struct_020e280c* arg0, void* arg1);
+extern "C" void func_020813ec(struct Obj2081* obj, int key);
+void ResetWithSub0208203c(struct Obj0208203c* obj);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+void SetElementFlag0x20_02080c04(struct Obj2081* obj, int key);
+void ClampFieldTo2At0x16(struct Clamp020e29a8* p, int v);
+void ResetAndReposition020e280c(struct Obj020e280c* self, void* b);
 
-extern struct Struct_02108760 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Struct_ov003_02155580 {
     char unknown_0_[0x8];
@@ -45,17 +45,17 @@ struct Struct_ov003_02155580 {
 };
 
 // USA: func_ov003_02155580
-extern "C" ARM void func_ov003_02155580(struct Struct_ov003_02155580* arg0, int arg1) {
-    arg0->unknown_1e6_ = 1;
-    arg0->unknown_1e8_ = arg0->unknown_1ea_ = 6;
-    arg0->unknown_18_->unknown_36_ = arg0->unknown_1ea_;
-    func_020813ec(arg0->unknown_18_, arg0->unknown_1e6_);
-    func_0208203c((struct Struct_02081f20_2*)arg0->unknown_80_);
-    arg0->unknown_8_ = 0;
-    func_0205eaa0(&data_02108760, 5, 0);
-    if (arg0->unknown_1c_ != 0) {
-        func_02080c04(arg0->unknown_18_, arg0->unknown_1e6_);
-        func_020e29a8((struct Struct_020e29a8*)arg0->unknown_1c_, (signed char)arg1);
-        func_020e280c((struct Struct_020e280c*)arg0->unknown_1c_, (void*)-1);
+extern "C" ARM void func_ov003_02155580(struct Ctx02155580* self, int arg) {
+    self->key1e6 = 1;
+    self->field1e8 = self->field1ea = 6;
+    self->menu->selected = self->field1ea;
+    func_020813ec(self->menu, self->key1e6);
+    ResetWithSub0208203c((struct Obj0208203c*)self->field80);
+    self->field8 = 0;
+    SePlayer_Play(&g_sePlayer, 5, 0);
+    if (self->cursor != 0) {
+        SetElementFlag0x20_02080c04(self->menu, self->key1e6);
+        ClampFieldTo2At0x16((struct Clamp020e29a8*)self->cursor, (signed char)arg);
+        ResetAndReposition020e280c((struct Obj020e280c*)self->cursor, (void*)-1);
     }
 }

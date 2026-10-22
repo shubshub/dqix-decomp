@@ -77,12 +77,12 @@ extern "C" void func_020dfc40(Struct_0201099c_14*);
 extern "C" int func_020e038c(void*, void*, int);
 extern "C" int func_ov009_0218a420(Struct_ov009_02189a4c_2*, Struct_ov009_02189a4c_3*);
 extern "C" void __clear(void*, unsigned int);
-extern "C" Struct_ov009_02186e00* func_0204254c(int, int);
-extern "C" void func_ov009_0218a484(int, char*, char*);
-extern "C" unsigned int func_020e0424(Struct_020e0424*);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_020424e4(int, int);
-extern "C" Struct_ov009_02186e00* func_020425b4(int, int);
+CharacterInfo* Font_FindCharacter(int, int);
+void ToUpperCopy0218a484(int, char*, char*);
+unsigned int GetLow12Bits020e0424(Header020e0424*);
+int GetFieldByKey020e0434(Container020e0310*, int);
+int FindEntryIndexByKey020424e4(int, int);
+CharacterInfo* GetBoundedEntry020425b4(int, int);
 extern "C" int func_020426bc(const char*, unsigned char*, int);
 extern "C" int func_ov009_0218a4c8(int, int, int, int, int);
 extern "C" int func_ov009_0218a518(Struct_ov009_02189a4c_5*, const unsigned char*, const unsigned char*, int, int);
@@ -96,21 +96,21 @@ static inline unsigned int inline_ov009_02189a4c_3(unsigned int arg0, unsigned i
     return arg0 + var1;
 }
 
-// USA: func_ov009_02189a4c
-extern "C" ARM void func_ov009_02189a4c(Struct_ov009_021842a0_2* arg0) {
-    int var0;
-    Struct_ov009_02189a4c_3* var1;
-    int var2;
-    Struct_ov009_02189a4c var3[30];
-    char var4[512];
-    unsigned char var5[128];
-    unsigned char var6[5][64];
-    char var7[64];
-    char var8[12];
-    char var9[12];
-    unsigned int var10[2];
-    char* var11 = arg0->unknown_db0_[arg0->unknown_da3_];
-    if (!*var11) return;
+// Overlay 9, originally func_ov009_02189a4c (USA/EUR 0x02189a4c; JPN not identified)
+extern "C" ARM void CharacterCreationUI_CheckName(CharacterCreation* self) {
+    int i;
+    ForbiddenWordPattern* headerPattern;
+    int headerCount;
+    NameSpan work_spans_[30];
+    char work_normalized_[512];
+    unsigned char work_tokens_[128];
+    unsigned char work_patterns_[5][64];
+    char work_exactName_[64];
+    char work_exactCharacter_[12];
+    char work_character_[12];
+    unsigned int work_fileSize_[2];
+    char* name = self->names_[self->sex_];
+    if (!*name) return;
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
         func_ov009_021847ec((&arg0->unknown_fc_));
@@ -158,14 +158,14 @@ __clear(var7, 64);
     char* var22 = var7;
     char* var23 = var11;
     for (;;) {
-        if (!*var23) break;
-        Struct_ov009_02186e00* var24 = func_0204254c((int)var23, 1);
-        __clear(var8, 12);
-        int var25 = var24->unknown_5_0_;
-        char* var26 = var24->unknown_0_;
-        if (var24->unknown_5_7_) {
-            func_ov009_0218a484((int)(&arg0->unknown_fc_), var26, var8);
-            var26 = var8;
+        if (!*in) break;
+        CharacterInfo* entry = Font_FindCharacter((int)in, 1);
+        __clear(work_exactCharacter_, 12);
+        int length = entry->length_;
+        char* text = entry->text_;
+        if (entry->uppercase_) {
+            ToUpperCopy0218a484((int)(&self->syntax_), text, work_exactCharacter_);
+            text = work_exactCharacter_;
         }
         memcpy(var22, var26, var25);
         var23 += var25;

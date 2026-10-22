@@ -113,7 +113,7 @@ extern "C" void func_ov004_021689d8(SafeAllocator* arg0, void* arg1);
 
 extern char data_ov017_021d78da;
 extern char data_ov017_021d78f1;
-extern char data_02108760;
+extern char g_sePlayer;
 extern AllocatorUnion data_02114e20;
 
 // USA: func_ov017_021abba8
@@ -222,13 +222,13 @@ extern "C" ARM void func_ov017_021abba8(Struct_ov017_021abba8* arg0, Struct_0203
                 func_02057fb4(var4, 5, &var13[var16]);
             }
         }
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 3) {
-        arg0->unknown_a_ += var6;
-        if (arg0->unknown_a_ > 8) {
-            func_0205ebc0(&data_02108760, 0xb1, 0xb1);
-            func_0205ebfc(&data_02108760, 0, 0);
-            arg0->unknown_8_++;
+        self->state++;
+    } else if (self->state == 3) {
+        self->timer += delta;
+        if (self->timer > 8) {
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb1, 0xb1);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+            self->state++;
         }
     } else if (arg0->unknown_8_ == 4) {
         arg0->unknown_a_ += var6;
@@ -260,15 +260,15 @@ extern "C" ARM void func_ov017_021abba8(Struct_ov017_021abba8* arg0, Struct_0203
                     }
                 }
             }
-            ClearFlags00(var2, 0x10);
-            func_ov017_02197528();
-            arg0->unknown_1_ = 1;
-            func_020397c0(var3);
-            func_ov017_021ac2a8(arg0);
-            func_0205ebec(&data_02108760);
-            if (func_0202c508(var1)) {
-                unsigned char* var22 = (unsigned char*)func_0205ec34();
-                func_0206df6c(var22, var22 + 0x8c, 0x113d, 1);
+            ClearFlags00(res, 0x10);
+            CallListIfFlagsSet_02197528();
+            self->done = 1;
+            SetByteField0x253_020397c0(leader);
+            func_ov017_021ac2a8(self);
+            ForwardField0xc0_0205ebec(&g_sePlayer);
+            if (func_0202c508(search)) {
+                unsigned char* flags = (unsigned char*)func_0205ec34();
+                func_0206df6c(flags, flags + 0x8c, 0x113d, 1);
             }
             if (func_02011b50(var0, 1) && arg0->unknown_c_ != 0) {
                 Struct_0201bdac_2* var23;

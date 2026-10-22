@@ -4,10 +4,10 @@ struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bacc;
 
-extern "C" void func_0205bef8(Struct_0205bef8* arg0);
-extern "C" void func_0205ba68(Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205bacc(Struct_0205bacc* arg0, int arg1);
-extern "C" void func_0205bb04(void* arg0, int arg1);
+void GridCursor_Init(Struct_0205bef8* cursor);
+void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(Node0205bacc* s, int val);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 
 struct Struct_ov008_02186964 {
     int unknown_0_;
@@ -58,9 +58,9 @@ extern "C" ARM void func_ov008_02186964(Struct_ov008_02186964_2* arg0) {
             }
         }
     }
-    func_0205bef8((Struct_0205bef8*)&arg0->unknown_750_);
-    func_0205ba68((Struct_0205ba68*)&arg0->unknown_750_, var1, var3, 0);
-    func_0205bacc((Struct_0205bacc*)&arg0->unknown_750_, var0);
-    arg0->unknown_750_.unknown_4_ = var1;
-    func_0205bb04(&arg0->unknown_750_, var2);
+    GridCursor_Init((Struct_0205bef8*)&self->cursor);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->cursor, columns, count, 0);
+    GridCursor_SetCount((Node0205bacc*)&self->cursor, visible);
+    self->cursor.field4 = columns;
+    GridCursor_SetSelectedIndex(&self->cursor, index);
 }

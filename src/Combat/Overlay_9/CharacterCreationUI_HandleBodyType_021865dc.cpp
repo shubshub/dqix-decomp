@@ -12,8 +12,8 @@ void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
 #endif
 
-// USA: func_ov009_021865dc  (semantic: AdvanceStatStep_021865dc)
-extern "C" ARM void func_ov009_021865dc(CharacterCreationUI* self) {
+// Overlay 9, originally func_ov009_021865dc (USA/EUR 0x021865dc, JPN 0x02187708)
+extern "C" ARM void CharacterCreationUI_HandleBodyType(CharacterCreationUI* self) {
 	unsigned char step = self->step;
 	if (step == 0) {
 		CharacterCreationUI_SetupSlotNavigation(self);
@@ -26,7 +26,7 @@ extern "C" ARM void func_ov009_021865dc(CharacterCreationUI* self) {
 		return;
 	}
 	if (step == 1) {
-		if (self->flags & 0x80) {
+		if (self->flags & CreationFlag_TabLoading) {
 			return;
 		}
 		int idx = self->sex;

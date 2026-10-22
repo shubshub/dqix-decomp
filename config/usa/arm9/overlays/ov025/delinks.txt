@@ -566,7 +566,7 @@ src/Combat/Overlay_25/func_ov025_021e5f40.cpp:
     complete
     .text start:0x021e5f40 end:0x021e5f54
 
-src/Combat/Overlay_25/func_ov025_021e6340.cpp:
+src/Combat/Overlay_25/Trans_021e6340.cpp:
     complete
     .text start:0x021e6340 end:0x021e6374
 

@@ -7,14 +7,14 @@
 
 struct Struct_ov017_021b1e24;
 
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_ov031_02243518(void* arg0, int arg1);
-extern "C" void func_ov031_02243690(Struct_ov017_021b1e24* arg0);
-extern "C" void func_0205e92c(void* arg0);
-extern "C" void func_0209c278(void* arg0);
-extern "C" void func_0209c290(void* arg0);
-extern "C" void func_0205ea20(void* arg0, int arg1);
-extern char data_02108760;
+extern "C" void func_020a1940(unsigned int id);
+extern "C" void func_ov031_02243518(void* state, int mode);
+void RunStateTableEntry_02243690(Obj_02243690* obj);
+void ShutdownAndReinit0205e92c(void* obj);
+void ResetAndReinit0209c278(void* obj);
+void Dispatch0203a974With0x57000_0209c290(void* obj);
+void SetupContextForMode0205ea20(void* obj, int mode);
+extern char g_sePlayer;
 extern char data_02109bf4;
 
 struct Struct_ov017_021b1e24_2 {
@@ -63,11 +63,11 @@ extern "C" ARM void func_ov017_021b1e24(Struct_ov017_021b1e24_3* arg0) {
             arg0->unknown_1_ = 1;
             return;
         }
-        unsigned int var0 = arg0->unknown_8_->GetMaxPossibleAllocation();
-        arg0->unknown_c_.CreateTypeA(arg0->unknown_8_->Allocate(var0), var0);
-        arg0->unknown_c_.Reset();
-        func_0205e92c(&data_02108760);
-        func_0209c278(&data_02109bf4);
+        unsigned int size = task->heap->GetMaxPossibleAllocation();
+        task->allocator.CreateTypeA(task->heap->Allocate(size), size);
+        task->allocator.Reset();
+        ShutdownAndReinit0205e92c(&g_sePlayer);
+        ResetAndReinit0209c278(&data_02109bf4);
         func_020a1940(OVERLAY_ID(31));
         func_ov031_02243518(arg0->unknown_24_, arg0->unknown_21_);
         arg0->unknown_24_->unknown_28_ = &arg0->unknown_c_;
@@ -84,14 +84,14 @@ extern "C" ARM void func_ov017_021b1e24(Struct_ov017_021b1e24_3* arg0) {
         return;
     }
     func_020a1940(OVERLAY_ID(32));
-    func_0209c278(&data_02109bf4);
-    func_0209c290(&data_02109bf4);
-    func_0205e92c(&data_02108760);
-    func_0205ea20(&data_02108760, 100);
-    SignedAllocatorHeader* var1 = arg0->unknown_c_.GetSignedAllocator();
-    if (var1 != NULL) {
-        arg0->unknown_c_.Destroy();
-        arg0->unknown_8_->Free(var1);
+    ResetAndReinit0209c278(&data_02109bf4);
+    Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
+    ShutdownAndReinit0205e92c(&g_sePlayer);
+    SetupContextForMode0205ea20(&g_sePlayer, 100);
+    SignedAllocatorHeader* block = task->allocator.GetSignedAllocator();
+    if (block != NULL) {
+        task->allocator.Destroy();
+        task->heap->Free(block);
     }
     arg0->unknown_1_ = 1;
 }
