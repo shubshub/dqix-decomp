@@ -69,7 +69,7 @@ int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
 void UpdateEntryStateAndPosition(Ctx020e263c* ctx, int ticks);
 
 extern unsigned int data_ov003_02180cc8[2];
-extern StateFn021745fc data_020e6d5c;
+extern StateFn021745fc __ptmf_null;
 extern StateFn021745fc data_ov003_02180aa4[10];
 
 // USA: func_ov003_021745fc
@@ -110,7 +110,7 @@ extern "C" ARM bool func_ov003_021745fc(BattleMenu021745fc* self, int ticks) {
         UpdateEntryStateAndPosition((Ctx020e263c*)self->ctrl_, self->ticks_);
 
     if (!(data_ov003_02180cc8[0] & 1)) {
-        data_ov003_02180aa4[9] = data_020e6d5c;
+        data_ov003_02180aa4[9] = __ptmf_null;
         data_ov003_02180cc8[0] |= 1;
     }
     if (data_ov003_02180aa4[self->state_] == NULL) {

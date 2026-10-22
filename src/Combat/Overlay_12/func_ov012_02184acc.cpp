@@ -126,7 +126,7 @@ void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
 void ReinitController02043204(char* messages);
 
 extern "C" const StateTable02184acc data_ov012_0218b188;
-extern "C" StateFn02184acc data_020e6d5c;
+extern "C" StateFn02184acc __ptmf_null;
 
 static inline Profile02184acc* GetProfile02184acc(GameState* gameState)
 {
@@ -140,7 +140,7 @@ extern "C" ARM int func_ov012_02184acc(ProfileEditor02184acc* self, int input)
     func_ov023_021e7404(self->card_, input);
     self->unk_1398 = func_0205d0e0(self->window_, input);
     StateTable02184acc states = data_ov012_0218b188;
-    states.states[16] = data_020e6d5c;
+    states.states[16] = __ptmf_null;
     if (states.states[self->state_] != 0)
         (self->*states.states[self->state_])();
     func_ov012_02185cf8(self);

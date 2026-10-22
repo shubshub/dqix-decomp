@@ -6039,7 +6039,7 @@ data_020e6c84 kind:data(any) addr:0x020e752c
 atanlo kind:data(any) addr:0x020e756c local
 atanhi kind:data(any) addr:0x020e758c local
 data_020e6d04 kind:data(any) addr:0x020e75ac
-data_020e6d5c kind:data(any) addr:0x020e7604
+__ptmf_null kind:data(any) addr:0x020e7604
 data_020e7610 kind:data(any) addr:0x020e7610
 data_020e7618 kind:data(any) addr:0x020e7618
 data_020e763c kind:data(any) addr:0x020e763c

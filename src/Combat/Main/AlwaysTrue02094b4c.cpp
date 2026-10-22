@@ -9,7 +9,7 @@ extern "C" void _ZN16BackgroundLoader10RemoveTaskEi(void*, int);
 
 typedef void (FontBankLoader::*FontBankHandler)(void);
 extern unsigned int data_02109400;
-extern FontBankHandler data_020e6d5c;
+extern FontBankHandler __ptmf_null;
 extern FontBankHandler data_020f148c[2];
 extern FontBankHandler data_020f148c_dup[2];
 #endif
@@ -31,7 +31,7 @@ ARM int AlwaysTrue02094b4c(FontBankLoader* loader) {
         return 0;
     }
     if (!(data_02109400 & 1)) {
-        data_020f148c[1] = data_020e6d5c;
+        data_020f148c[1] = __ptmf_null;
         data_02109400 |= 1;
     }
     if (!data_020f148c_dup[loader->dispatchStage]) return 1;

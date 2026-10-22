@@ -18,14 +18,14 @@ struct SlotArrayStruct_021eb4e4;
 void SetFirstEmptySlot48_021eb4e4(SlotArrayStruct_021eb4e4*, int);
 
 extern unsigned int data_ov024_02200144[];
-extern Handler_021e4b14 data_020e6d5c;
+extern Handler_021e4b14 __ptmf_null;
 extern Handler_021e4b14 data_ov024_021ff450[0x17];
 
 // USA: func_ov024_021e4b14
 extern "C" ARM unsigned long long func_ov024_021e4b14(Act_021e4b14* self, int a, int b, Rec_021e4b14* rec, int d) {
     if (!(data_ov024_02200144[2] & 1)) {
-        data_ov024_021ff450[0] = data_020e6d5c;
-        data_ov024_021ff450[3] = data_020e6d5c;
+        data_ov024_021ff450[0] = __ptmf_null;
+        data_ov024_021ff450[3] = __ptmf_null;
         data_ov024_02200144[2] |= 1;
     }
     if (rec->effectType >= 0x17) return 0;

@@ -30,7 +30,7 @@ struct Scene_0216af14 {
 };
 
 struct Pair0216af14 { unsigned int a; unsigned int b; };
-extern struct Pair0216af14 data_020e6d5c;
+extern struct Pair0216af14 __ptmf_null;
 
 struct DispatchEntry0216af14 { unsigned int fn; unsigned int locator; };
 struct Table0216af14 { struct DispatchEntry0216af14 entries[8]; };
@@ -72,8 +72,8 @@ extern "C" ARM int func_ov003_0216af14(Scene_0216af14* scene) {
 
     struct Table0216af14 buf;
     buf = data_ov003_0217f578;
-    unsigned int locator = data_020e6d5c.b;
-    unsigned int fn = data_020e6d5c.a;
+    unsigned int locator = __ptmf_null.b;
+    unsigned int fn = __ptmf_null.a;
     buf.entries[7].locator = locator;
     buf.entries[7].fn = fn;
 

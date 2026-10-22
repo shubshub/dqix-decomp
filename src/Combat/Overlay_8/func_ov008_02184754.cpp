@@ -86,7 +86,7 @@ struct StateTable {
 };
 
 extern StateTable data_ov008_0218b340;
-extern StateFunction data_020e6d5c;
+extern StateFunction __ptmf_null;
 
 struct Obj021870e4;
 struct TaskState0209ff6c;
@@ -116,7 +116,7 @@ extern "C" ARM int func_ov008_02184754(BattleRecords* self)
     func_ov008_0218747c(self, 0);
     func_ov008_0218747c(self, 1);
     StateTable table = data_ov008_0218b340;
-    table.states[14] = data_020e6d5c;
+    table.states[14] = __ptmf_null;
     if (table.states[self->state_] == NULL)
         return 0;
     (self->*table.states[self->state_])(ticks);

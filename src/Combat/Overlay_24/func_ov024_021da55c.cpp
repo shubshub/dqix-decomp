@@ -4,7 +4,7 @@ struct Pair_021da55c {
     unsigned int a;
     unsigned int b;
 };
-extern struct Pair_021da55c data_020e6d5c;
+extern struct Pair_021da55c __ptmf_null;
 
 extern unsigned int data_ov024_02200140;
 
@@ -27,7 +27,7 @@ typedef int (*Handler_021da55c)(void* self, int a2, int a3, unsigned short a4, s
 extern "C" ARM int func_ov024_021da55c(int* obj, int a1, int a2, int a3, unsigned short a4, struct Action_021da55c* action, int fallback) {
     unsigned int flags = data_ov024_02200140;
     if (!(flags & 1)) {
-        struct Pair_021da55c nullEntry = data_020e6d5c;
+        struct Pair_021da55c nullEntry = __ptmf_null;
         data_ov024_021ff1e0[0].fn = nullEntry.a;
         data_ov024_021ff1e0[0].locator = nullEntry.b;
         data_ov024_021ff1e0[46].fn = nullEntry.a;

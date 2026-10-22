@@ -22,7 +22,7 @@ extern "C" void func_ov023_021d8af8(void* obj);
 extern "C" void func_ov023_021d8bb4(void* obj);
 
 struct Pair021ed9f8 { unsigned int a; unsigned int b; };
-extern struct Pair021ed9f8 data_020e6d5c;
+extern struct Pair021ed9f8 __ptmf_null;
 
 struct DispatchEntry021ed9f8 { unsigned int fn; unsigned int locator; };
 extern struct DispatchEntry021ed9f8 data_ov023_021fe148[];
@@ -70,8 +70,8 @@ extern "C" ARM void func_ov023_021ed9f8(char* obj) {
 
     unsigned int flags = _ZZ17GetGlobal021ffefcvE1s.flags;
     if (!(flags & 1)) {
-        unsigned int va = *(volatile unsigned int*)&data_020e6d5c.a;
-        unsigned int vb = *(volatile unsigned int*)&data_020e6d5c.b;
+        unsigned int va = *(volatile unsigned int*)&__ptmf_null.a;
+        unsigned int vb = *(volatile unsigned int*)&__ptmf_null.b;
         *(unsigned int*)((char*)data_ov023_021fe148 + 0x88) = va;
         *(unsigned int*)((char*)data_ov023_021fe148 + 0x8c) = vb;
         _ZZ17GetGlobal021ffefcvE1s.flags = flags | 1;

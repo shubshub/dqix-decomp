@@ -23,7 +23,7 @@ typedef unsigned short (StateMachine021bb1a4::*StateFn021bb1a4)(int);
 
 extern StateFn021bb1a4 data_ov017_021d7ccc[20];
 extern unsigned int data_ov017_021d845c;
-extern StateFn021bb1a4 data_020e6d5c;
+extern StateFn021bb1a4 __ptmf_null;
 
 extern "C" void func_0208bb78(void* timer, unsigned int ticks);
 int PopStack0AndTrigger_020a1e54(int flag);
@@ -32,7 +32,7 @@ extern "C" void func_020a0c0c(void);
 // USA: func_ov017_021bb1a4
 extern "C" ARM void func_ov017_021bb1a4(StateMachine021bb1a4* self, int arg) {
     if (!(data_ov017_021d845c & 1)) {
-        data_ov017_021d7ccc[19] = data_020e6d5c;
+        data_ov017_021d7ccc[19] = __ptmf_null;
         data_ov017_021d845c |= 1;
     }
 

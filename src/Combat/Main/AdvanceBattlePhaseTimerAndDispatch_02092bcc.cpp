@@ -20,7 +20,7 @@ union Table02092bcc {
 };
 
 extern struct FullTable02092bcc data_020e8d84;
-extern struct HandlerEntry02092bcc data_020e6d5c;
+extern struct HandlerEntry02092bcc __ptmf_null;
 
 // USA: func_02092bcc  (semantic: AdvanceBattlePhaseTimerAndDispatch_02092bcc)
 extern "C" ARM int func_02092bcc(unsigned char* obj, int delta) {
@@ -53,8 +53,8 @@ extern "C" ARM int func_02092bcc(unsigned char* obj, int delta) {
 
     table.raw = data_020e8d84;
     {
-        int flagsVal = data_020e6d5c.flags;
-        void* fnVal = data_020e6d5c.fn;
+        int flagsVal = __ptmf_null.flags;
+        void* fnVal = __ptmf_null.fn;
         ((struct HandlerEntry02092bcc*)&table)[4].flags = flagsVal;
         ((struct HandlerEntry02092bcc*)&table)[4].fn = fnVal;
     }

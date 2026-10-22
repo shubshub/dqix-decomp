@@ -72,7 +72,7 @@ struct StateTable {
 };
 
 extern const StateTable data_ov009_0218ab9c;
-extern const StateFunc data_020e6d5c;
+extern const StateFunc __ptmf_null;
 
 // USA: func_ov009_02184a18
 extern "C" ARM int func_ov009_02184a18(CharacterCreation* self)
@@ -82,7 +82,7 @@ extern "C" ARM int func_ov009_02184a18(CharacterCreation* self)
         ticks = 1;
     if (self->state_ != 0)
         AdvanceActor020a20d8(self->camera_);
-    if (self->state_ == 9 && self->step_ == 2)
+    if (self->state_ == 9 && self->step_ == 2) //Does not run at startup
     {
         Canvas* canvas = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)&self->windows_[1]);
         if (canvas != NULL && IsField0x9cEqual3_0204c7cc((unsigned char*)canvas) != 0 && !(canvas->flags_ & 2))
@@ -104,7 +104,7 @@ extern "C" ARM int func_ov009_02184a18(CharacterCreation* self)
     UpdateFlag021885b8((Struct021885b8*)self);
 
     StateTable table = data_ov009_0218ab9c;
-    table.states[12] = data_020e6d5c;
+    table.states[12] = __ptmf_null;
     if (table.states[self->state_] == 0)
         return 0;
     (self->*table.states[self->state_])();

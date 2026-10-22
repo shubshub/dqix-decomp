@@ -99,7 +99,7 @@ void func_ov014_021886f8(MonsterListScreen* self);
 }
 
 extern unsigned int data_ov014_0218981c;
-extern ListStateFunc data_020e6d5c;
+extern ListStateFunc __ptmf_null;
 extern ListStateFunc data_ov014_021896d4[7];
 extern ListStateFunc data_ov014_021896d4_dup[7];
 
@@ -134,7 +134,7 @@ extern "C" ARM bool func_ov014_02186bc8(MonsterListScreen* self, int ticks)
 
     if (!(data_ov014_0218981c & 1))
     {
-        data_ov014_021896d4_dup[6] = data_020e6d5c;
+        data_ov014_021896d4_dup[6] = __ptmf_null;
         data_ov014_0218981c |= 1;
     }
     if (data_ov014_021896d4[self->listState_] == NULL)

@@ -98,7 +98,7 @@ struct Obj0207fc6c;
 typedef void (AlchemyPot::*PMF021549ac)();
 struct RawTable021549ac { PMF021549ac e[3]; };
 extern struct RawTable021549ac data_ov006_0215ff94;
-extern PMF021549ac data_020e6d5c;
+extern PMF021549ac __ptmf_null;
 
 extern "C" void func_ov006_02156bd8(AlchemyPot* self);
 void CallFunc0204c87cOverEntries0207fc6c(Obj0207fc6c* menu, int ticks);
@@ -116,7 +116,7 @@ extern "C" ARM void func_ov006_021549ac(AlchemyPot* self, int ticks) {
     func_ov006_02156d70(self);
     struct RawTable021549ac updates;
     updates = data_ov006_0215ff94;
-    updates.e[2] = data_020e6d5c;
+    updates.e[2] = __ptmf_null;
     if (updates.e[self->state_] != 0) {
         (self->*updates.e[self->state_])();
         func_ov006_02155068(self);

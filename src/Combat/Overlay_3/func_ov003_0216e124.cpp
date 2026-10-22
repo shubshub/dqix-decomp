@@ -8,7 +8,7 @@ extern "C" int func_ov023_021e2868(void* obj);
 struct Block16Words0216e124 { unsigned int w[16]; };
 extern struct Block16Words0216e124 data_ov003_0217f5c0;
 struct Pair0216e124 { unsigned int a; unsigned int b; };
-extern struct Pair0216e124 data_020e6d5c;
+extern struct Pair0216e124 __ptmf_null;
 struct DispatchEntry0216e124 { unsigned int fn; unsigned int locator; };
 
 struct Obj0216e124 {
@@ -40,7 +40,7 @@ extern "C" ARM int func_ov003_0216e124(struct Obj0216e124* obj) {
 
     struct Block16Words0216e124 buf;
     buf = data_ov003_0217f5c0;
-    struct Pair0216e124* pr = &data_020e6d5c;
+    struct Pair0216e124* pr = &__ptmf_null;
     unsigned int tmp1 = pr->b;
     unsigned int tmp0 = pr->a;
     ((struct DispatchEntry0216e124*)&buf)[7].locator = tmp1;

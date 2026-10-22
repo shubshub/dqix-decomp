@@ -7,7 +7,7 @@ public:
 typedef void (Base021714a0::*Method021714a0)();
 
 extern Method021714a0 data_ov003_0218070c[12];
-extern Method021714a0 data_020e6d5c;
+extern Method021714a0 __ptmf_null;
 extern int data_ov003_02180cc4;
 
 extern "C" void* func_0202ae18(void);
@@ -29,7 +29,7 @@ extern "C" ARM int func_ov003_021714a0(Base021714a0* obj) {
     }
 
     if (!(data_ov003_02180cc4 & 1)) {
-        data_ov003_0218070c[11] = data_020e6d5c;
+        data_ov003_0218070c[11] = __ptmf_null;
         data_ov003_02180cc4 |= 1;
     }
 

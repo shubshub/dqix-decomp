@@ -16,7 +16,7 @@ extern struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, 
 struct StructA0205d5d0;
 struct Obj02185bf0;
 typedef void (Obj02185bf0::*Handler02185bf0)(void* dest, int alt);
-extern Handler02185bf0 data_020e6d5c;
+extern Handler02185bf0 __ptmf_null;
 
 struct Table02185bf0 { Handler02185bf0 e[16]; };
 extern struct Table02185bf0 data_ov012_0218b088;
@@ -36,7 +36,7 @@ extern "C" ARM void func_ov012_02185bf0(char* obj, int id, int flag) {
     memset(dest, 0, kDestSize);
 
     struct Table02185bf0 table = data_ov012_0218b088;
-    Handler02185bf0 none = data_020e6d5c;
+    Handler02185bf0 none = __ptmf_null;
     table.e[0] = none;
     table.e[15] = none;
 

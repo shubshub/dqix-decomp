@@ -16,7 +16,7 @@ struct TableBlock021d8bb4 {
 
 extern "C" void func_0205d0e0(void* obj, int scaleCount);
 extern TableBlock021d8bb4 data_ov023_021fd510;
-extern MemFn021d8bb4 data_020e6d5c;
+extern MemFn021d8bb4 __ptmf_null;
 
 // USA: func_ov023_021d8bb4  (semantic: DispatchLocalHandlerTable_021d8bb4)
 extern "C" ARM int func_ov023_021d8bb4(Obj021d8bb4* obj) {
@@ -26,7 +26,7 @@ extern "C" ARM int func_ov023_021d8bb4(Obj021d8bb4* obj) {
         func_0205d0e0((char*)obj + 0x20, scaleCount);
     }
     TableBlock021d8bb4 localBlock = data_ov023_021fd510;
-    *(MemFn021d8bb4*)&localBlock.v[6] = data_020e6d5c;
+    *(MemFn021d8bb4*)&localBlock.v[6] = __ptmf_null;
     MemFn021d8bb4* table = (MemFn021d8bb4*)&localBlock;
     if (table[obj->f11a] == 0) return 0;
     (obj->*table[obj->f11a])();

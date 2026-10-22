@@ -29,7 +29,7 @@ struct Self020d9e44 {
 typedef void (Self020d9e44::*Handler020d9e44)();
 struct HandlerTable020d9e44 { Handler020d9e44 e[2]; };
 extern HandlerTable020d9e44 data_020ee678;
-extern Handler020d9e44 data_020e6d5c;
+extern Handler020d9e44 __ptmf_null;
 
 // USA: func_020d9e44
 extern "C" ARM void func_020d9e44(Self020d9e44* self) {
@@ -59,7 +59,7 @@ extern "C" ARM void func_020d9e44(Self020d9e44* self) {
         if (i == 1) return;
         HandlerTable020d9e44 table;
         table = data_020ee678;
-        table.e[1] = data_020e6d5c;
+        table.e[1] = __ptmf_null;
         (self->*table.e[i])();
     }
 }

@@ -42,7 +42,7 @@ typedef void (Planner021f9660::*SkillHandler021f9660)();
 struct HandlerTable021f9660 { SkillHandler021f9660 handlers[79]; };
 extern HandlerTable021f9660 data_ov024_021ffeac;
 extern unsigned int data_ov024_02200150;
-extern SkillHandler021f9660 data_020e6d5c;
+extern SkillHandler021f9660 __ptmf_null;
 void* GetFieldAt0x150_02053c6c(unsigned char*);
 Skill021f9660* SearchBothTables02079e2c(char*, int);
 extern "C" int func_ov024_021f8874(Planner021f9660*, Skill021f9660*, GameObject*, int*);
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov024_021f9660(Planner021f9660* planner) {
     GetFieldAt0x150_02053c6c((unsigned char*)combatant);
     ActionDataTables* database = GetData02108e10_020797dc();
     if (!(data_ov024_02200150 & 1)) {
-        SkillHandler021f9660 empty = data_020e6d5c;
+        SkillHandler021f9660 empty = __ptmf_null;
         data_ov024_021ffeac.handlers[0] = empty;
         data_ov024_021ffeac.handlers[11] = empty;
         data_ov024_021ffeac.handlers[12] = empty;
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov024_021f9660(Planner021f9660* planner) {
         planner->active = 1;
         planner->field_38 = 0;
         planner->field_3c = 0;
-        SkillHandler021f9660 handler = data_020e6d5c;
+        SkillHandler021f9660 handler = __ptmf_null;
         if (skill->handler <= 78) handler = data_ov024_021ffeac.handlers[skill->handler];
         if (handler != 0) (planner->*handler)();
     }

@@ -94,6 +94,7 @@ The `CharacterModel_` functions belong to the character model in overlay 23 (10 
 | Name | Original | Overlay | USA/EUR | JPN | What it is |
 |---|---|---|---|---|---|
 | `CharacterCreationUI_slotLayouts` | `data_ov009_0218ac04` (jpn `data_ov009_0218bb6c`) | 9 | `0x0218ac04` | `0x0218bb6c` | One `{tab, x, y, w, h, stepX, stepY, cols, rows}` entry per tab, ending in -1. Defined in C for usa; jpn and eur still take it from the ROM |
+| `__ptmf_null` | `data_020e6d5c` | Main | `0x020e6d5c` (EUR `0x020e6d6c`) | `0x020e7604` | The CodeWarrior runtime's null member-function pointer. The compiler copies it into the last entry of a local member-function-pointer array that ends in `0`, which is the slot every handler-table copy fills from it |
 
 ### Fields
 

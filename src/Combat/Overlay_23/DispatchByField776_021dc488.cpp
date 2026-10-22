@@ -4,7 +4,7 @@ extern "C" void func_ov023_021db110(void* obj);
 
 struct Obj021dc488;
 typedef void (Obj021dc488::*Handler021dc488)();
-extern Handler021dc488 data_020e6d5c;
+extern Handler021dc488 __ptmf_null;
 
 struct FlagStruct021dc488 {
 #if defined(jpn)
@@ -32,7 +32,7 @@ extern struct DispatchEntry021dc488 data_ov023_021fda88[];
 extern "C" ARM int func_ov023_021dc488(void* obj) {
     func_ov023_021db110(&data_ov023_021ffa0c);
     if (!(data_ov023_021ff9e0.flags & 1)) {
-        data_ov023_021fda60.handler = data_020e6d5c;
+        data_ov023_021fda60.handler = __ptmf_null;
         data_ov023_021ff9e0.flags |= 1;
     }
     unsigned char idx = *((unsigned char*)obj

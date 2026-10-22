@@ -39,7 +39,7 @@ struct TextTable02185cf8
 };
 
 extern "C" const TextTable02185cf8 data_ov012_0218b108;
-extern "C" TextFn02185cf8 data_020e6d5c;
+extern "C" TextFn02185cf8 __ptmf_null;
 
 static inline Frame02185cf8* GetFrame02185cf8(char* window)
 {
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov012_02185cf8(ProfileEditor02185cf8* self)
     }
     memset(self->text_, 0, LOW_REGION(0x800, 0x960));
     TextTable02185cf8 functions = data_ov012_0218b108;
-    TextFn02185cf8 none = data_020e6d5c;
+    TextFn02185cf8 none = __ptmf_null;
     functions.functions[0] = none;
     functions.functions[15] = none;
     if (functions.functions[self->state_] != 0)

@@ -18,7 +18,7 @@ struct InteractionSelection { unsigned char kind, index; unsigned short id; };
 typedef void (GameResources::*FocusAction0219aa7c)();
 struct FocusActions0219aa7c { FocusAction0219aa7c entries[15]; };
 extern const FocusActions0219aa7c data_ov017_021d64f4;
-extern const FocusAction0219aa7c data_020e6d5c;
+extern const FocusAction0219aa7c __ptmf_null;
 void* GetField0x3b0Value_020100bc(GameState*);
 int CheckSubstructByte0x7cPositive_020535c8(signed char*);
 EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov017_0219aa7c(GameResources* self) {
     if (g_keyManager.TestKeysPressed(1)) dispatch = 1;
     if (dispatch) {
         FocusActions0219aa7c actions = data_ov017_021d64f4;
-        actions.entries[3] = data_020e6d5c;
+        actions.entries[3] = __ptmf_null;
         if (actions.entries[((InteractionSelection*)self->interactionSelection)->kind] != 0) {
             (self->*actions.entries[((InteractionSelection*)self->interactionSelection)->kind])();
             self->unknown_42e3[1] = 0;

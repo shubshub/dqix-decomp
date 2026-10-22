@@ -20,7 +20,7 @@ public:
 typedef int (MenuTexts_021fa2f4::*TextsState_021fa2f4)(void* script);
 
 extern unsigned int data_ov023_021fff28;
-extern TextsState_021fa2f4 data_020e6d5c;
+extern TextsState_021fa2f4 __ptmf_null;
 extern TextsState_021fa2f4 data_ov023_021fea0c[4];
 extern TextsState_021fa2f4 data_ov023_021fea0c_dup[4];
 
@@ -29,7 +29,7 @@ extern "C" ARM void func_ov023_021fa2f4(MenuTexts_021fa2f4* self, void* script)
 {
     if (!(data_ov023_021fff28 & 1))
     {
-        data_ov023_021fea0c_dup[3] = data_020e6d5c;
+        data_ov023_021fea0c_dup[3] = __ptmf_null;
         data_ov023_021fff28 |= 1;
     }
     self->state_ = (self->*data_ov023_021fea0c[self->state_])(script);

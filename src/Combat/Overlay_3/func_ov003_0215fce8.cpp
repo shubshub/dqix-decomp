@@ -22,7 +22,7 @@ union PMFCast0215fce8 {
 };
 
 extern int data_ov003_02180cc0;
-extern struct Entry0215fce8 data_020e6d5c;
+extern struct Entry0215fce8 __ptmf_null;
 extern struct Entry0215fce8 data_ov003_0217ff68[];
 
 extern "C" int func_ov017_021959b4();
@@ -165,7 +165,7 @@ extern "C" ARM int func_ov003_0215fce8(unsigned char *self, int arg) {
     }
     *(unsigned int *) (self + SO(0x464)) &= ~1u;
     if (!(data_ov003_02180cc0 & 1)) {
-        *(unsigned long long *) ((char *) data_ov003_0217ff68 + 0x80) = *(const unsigned long long *) &data_020e6d5c;
+        *(unsigned long long *) ((char *) data_ov003_0217ff68 + 0x80) = *(const unsigned long long *) &__ptmf_null;
         data_ov003_02180cc0 |= 1;
     }
     unsigned char idx         = self[SO(0x4a3)];

@@ -32,7 +32,7 @@ struct ModePage0215b9a4 {
 
 extern PageFn0215b9a4 data_ov002_0216cfac[PageCount];
 extern unsigned int data_ov002_0216d3b0[2];
-extern PageFn0215b9a4 data_020e6d5c;
+extern PageFn0215b9a4 __ptmf_null;
 extern ModePage0215b9a4 data_ov002_0216cae8[];
 extern ModePage0215b9a4 data_ov002_0216caec[];
 
@@ -64,7 +64,7 @@ extern "C" ARM void func_ov002_0215b9a4(Battle0215b9a4 *self, unsigned char key,
     }
     memset(self->text, 0, TextCapacity);
     if (!(data_ov002_0216d3b0[1] & 1)) {
-        PageFn0215b9a4 nul      = data_020e6d5c;
+        PageFn0215b9a4 nul      = __ptmf_null;
         data_ov002_0216cfac[0]  = nul;
 #if defined(jpn)
         data_ov002_0216cfac[24] = nul;

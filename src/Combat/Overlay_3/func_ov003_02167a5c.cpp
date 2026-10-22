@@ -11,7 +11,7 @@ struct Cont0207fe44;
 void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
 
 struct Pair02167a5c { unsigned int a; unsigned int b; };
-extern struct Pair02167a5c data_020e6d5c;
+extern struct Pair02167a5c __ptmf_null;
 struct Inner02167a5c { unsigned int v[2]; };
 
 struct DispatchEntry02167a5c { unsigned int fn; unsigned int locator; };
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov003_02167a5c(struct Obj02167a5c* obj, int p1, int p2)
 
     struct Table02167a5c buf;
     buf = data_ov003_0217f4f0;
-    *(struct Inner02167a5c*)&buf.entries[0] = *(struct Inner02167a5c*)&data_020e6d5c;
+    *(struct Inner02167a5c*)&buf.entries[0] = *(struct Inner02167a5c*)&__ptmf_null;
 
     if (buf.entries[p1].fn == 0) return;
     struct DispatchEntry02167a5c* d = &buf.entries[p1];

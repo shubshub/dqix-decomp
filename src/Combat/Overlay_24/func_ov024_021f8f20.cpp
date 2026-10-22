@@ -20,7 +20,7 @@ extern "C" void func_ov024_021f8628(AiPlanner_021f8f20* obj, unsigned short id, 
 extern "C" void func_ov024_021f7478(AiPlanner_021f8f20* obj);
 
 extern PlanTable_021f8f20 data_ov024_021ff054;
-extern PlanFn_021f8f20 data_020e6d5c;
+extern PlanFn_021f8f20 __ptmf_null;
 
 // USA: func_ov024_021f8f20
 extern "C" ARM void func_ov024_021f8f20(AiPlanner_021f8f20* obj, int owner, int id, unsigned short* state) {
@@ -47,7 +47,7 @@ extern "C" ARM void func_ov024_021f8f20(AiPlanner_021f8f20* obj, int owner, int 
     obj->mode = mode;
     func_ov024_021f7478(obj);
     PlanTable_021f8f20 table = data_ov024_021ff054;
-    table.e[5] = data_020e6d5c;
+    table.e[5] = __ptmf_null;
     PlanFn_021f8f20 fn = table.e[mode];
     if (fn != 0) {
         (obj->*fn)(id, combatant, state);

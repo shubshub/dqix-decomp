@@ -27,7 +27,7 @@ extern Actions0208bb78 data_020e8e00;
 #else
 extern Actions0208bb78 data_020e8ce4;
 #endif
-extern Action0208bb78 data_020e6d5c;
+extern Action0208bb78 __ptmf_null;
 struct HeadNode02046b24;
 struct Struct0200fb08;
 struct GetTableByteOrFFData;
@@ -57,7 +57,7 @@ extern "C" ARM int func_0208bb78(ShakeState0208ca00* self, int delta) {
 #else
         Actions0208bb78 actions = data_020e8ce4;
 #endif
-        actions.actions[4] = data_020e6d5c;
+        actions.actions[4] = __ptmf_null;
         if (!actions.actions[self->action]) return 1;
         (self->*actions.actions[self->action])();
     }

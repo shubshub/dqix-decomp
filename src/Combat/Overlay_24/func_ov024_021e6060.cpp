@@ -14,14 +14,14 @@ struct Act_021e6060 {
 typedef void (Act_021e6060::*Handler_021e6060)(int id, Rec_021e6060* rec, int amount);
 
 extern unsigned int data_ov024_02200144[];
-extern Handler_021e6060 data_020e6d5c;
+extern Handler_021e6060 __ptmf_null;
 extern Handler_021e6060 data_ov024_021ff3f8[0xb];
 
 // USA: func_ov024_021e6060
 extern "C" ARM void func_ov024_021e6060(Act_021e6060* self, int id, Rec_021e6060* rec, int amount) {
     if (!(data_ov024_02200144[1] & 1)) {
-        data_ov024_021ff3f8[0] = data_020e6d5c;
-        data_ov024_021ff3f8[7] = data_020e6d5c;
+        data_ov024_021ff3f8[0] = __ptmf_null;
+        data_ov024_021ff3f8[7] = __ptmf_null;
         data_ov024_02200144[1] |= 1;
     }
     if (rec->kind >= 0xb) return;

@@ -102,7 +102,7 @@ void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
 extern "C" void func_ov002_0215bba8(BattleActor*);
 extern unsigned int data_ov002_0216d3a8;
-extern BattleHandler data_020e6d5c;
+extern BattleHandler __ptmf_null;
 extern BattleHandler data_ov002_0216cd74[RG(44, 47)];
 
 static inline BattleElementRegion* GetElements(BattleActor* actor) { SDK_NULL_ASSERT(actor); return &actor->elements; }
@@ -157,7 +157,7 @@ extern "C" ARM int func_ov002_02155960(BattleActor* actor, int delta) {
     if (actor->state == RG(0x26, 0x29) && manager->blocked != 0 && manager->state == 5)
         return 0;
     if ((data_ov002_0216d3a8 & 1) == 0) {
-        BattleHandler empty = data_020e6d5c;
+        BattleHandler empty = __ptmf_null;
 #if defined(jpn)
         data_ov002_0216cd74[6] = empty;
         data_ov002_0216cd74[9] = empty;

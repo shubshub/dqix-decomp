@@ -39,13 +39,13 @@ struct MoveSteps_021f9f78
 };
 
 extern MoveSteps_021f9f78 data_ov023_021fd92c;
-extern MoveStep_021f9f78 data_020e6d5c;
+extern MoveStep_021f9f78 __ptmf_null;
 
 // USA: func_ov023_021f9f78
 extern "C" ARM void func_ov023_021f9f78(MenuMover_021f9f78* self, void* script)
 {
     MoveSteps_021f9f78 steps = data_ov023_021fd92c;
-    MoveStep_021f9f78 none = data_020e6d5c;
+    MoveStep_021f9f78 none = __ptmf_null;
     steps.steps[0] = none;
     steps.steps[2] = none;
     for (int i = 0; i < self->count_; i++)

@@ -28,7 +28,7 @@ struct Slot021536ec {
 void *SearchBothTables02079e2c(char *p, int key);
 
 extern "C" unsigned int data_ov002_0216d3a0[2];
-extern "C" MemFn021536ec data_020e6d5c;
+extern "C" MemFn021536ec __ptmf_null;
 extern "C" struct Entry021536ec data_ov002_0216cce4[12];
 extern "C" struct Slot021536ec data_ov002_0216cce8[12];
 extern "C" struct Entry021536ec data_ov002_0216ccc0[3];
@@ -44,7 +44,7 @@ extern "C" ARM int func_ov002_021536ec(PMFObj021536ec *obj, short *arg) {
 
     int resultA = 0;
     if (!(data_ov002_0216d3a0[1] & 1)) {
-        MemFn021536ec t            = data_020e6d5c;
+        MemFn021536ec t            = __ptmf_null;
         data_ov002_0216cce4[0].fn  = t;
         data_ov002_0216cce4[11].fn = t;
         data_ov002_0216d3a0[1] |= 1;
@@ -61,7 +61,7 @@ extern "C" ARM int func_ov002_021536ec(PMFObj021536ec *obj, short *arg) {
 
     int resultB = 0;
     if (!(data_ov002_0216d3a0[0] & 1)) {
-        MemFn021536ec t           = data_020e6d5c;
+        MemFn021536ec t           = __ptmf_null;
         data_ov002_0216ccc0[0].fn = t;
         data_ov002_0216ccc0[2].fn = t;
         data_ov002_0216d3a0[0] |= 1;

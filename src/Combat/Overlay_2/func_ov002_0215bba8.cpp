@@ -15,7 +15,7 @@ struct ModePage0215bba8 {
 
 extern PageFn0215bba8 data_ov002_0216d10c[44];
 extern unsigned int data_ov002_0216d3b0[2];
-extern PageFn0215bba8 data_020e6d5c;
+extern PageFn0215bba8 __ptmf_null;
 extern ModePage0215bba8 data_ov002_0216cb18[];
 extern ModePage0215bba8 data_ov002_0216cb1c[];
 
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov002_0215bba8(Battle0215bba8 *self) {
     }
     memset(*(void **) (base + 0x1000 + 0xbd0), 0, 0x960);
     if (!(data_ov002_0216d3b0[0] & 1)) {
-        PageFn0215bba8 nul      = data_020e6d5c;
+        PageFn0215bba8 nul      = __ptmf_null;
         data_ov002_0216d10c[0]  = nul;
         data_ov002_0216d10c[23] = nul;
         data_ov002_0216d10c[30] = nul;

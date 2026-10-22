@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Pair021fbab0 { unsigned int a; unsigned int b; };
-extern struct Pair021fbab0 data_020e6d5c;
+extern struct Pair021fbab0 __ptmf_null;
 
 struct Block8Words_021fbab0 { unsigned int w[8]; };
 extern struct Block8Words_021fbab0 data_ov023_021fd984;
@@ -12,8 +12,8 @@ struct DispatchEntry021fbab0 { unsigned int fn; unsigned int locator; };
 extern "C" ARM int func_ov023_021fbab0(void* obj, void* param2) {
     struct Block8Words_021fbab0 buf;
     buf = data_ov023_021fd984;
-    unsigned int tmp1 = data_020e6d5c.b;
-    unsigned int tmp0 = data_020e6d5c.a;
+    unsigned int tmp1 = __ptmf_null.b;
+    unsigned int tmp0 = __ptmf_null.a;
     buf.w[7] = tmp1;
     buf.w[6] = tmp0;
     struct DispatchEntry021fbab0* entries = (struct DispatchEntry021fbab0*)&buf;

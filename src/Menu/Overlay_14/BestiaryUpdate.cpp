@@ -28,7 +28,7 @@ extern "C" {
 void func_ov014_02185c48(void*);
 void* _Z29BinarySearchByField4_02097224P29BinarySearch020971a8Containeri(void*, short);
 extern void* data_ov014_02189800[4];
-extern BestiaryUpdateHandler data_020e6d5c;
+extern BestiaryUpdateHandler __ptmf_null;
 extern BestiaryUpdateHandler data_ov014_021895a0[];
 extern BestiaryUpdateHandler data_ov014_021895b0[];
 extern const char data_ov014_021895c8[];
@@ -105,7 +105,7 @@ extern "C" ARM void func_ov014_02184700(BestiaryUpdateState* state) {
     state->unknown92 = 0;
     unsigned int initialized = (unsigned int)data_ov014_02189800[1];
     if (!(initialized & 1)) {
-        data_ov014_021895a0[4] = data_020e6d5c;
+        data_ov014_021895a0[4] = __ptmf_null;
         data_ov014_02189800[1] = (void*)(initialized | 1);
     }
     if (data_ov014_021895b0[state->phase]) (state->*data_ov014_021895b0[state->phase])();

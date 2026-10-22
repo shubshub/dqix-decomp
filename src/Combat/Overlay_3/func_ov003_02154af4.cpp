@@ -32,7 +32,7 @@ struct Dispatch { unsigned int fn, locator; };
 struct Table { Dispatch entries[8]; };
 extern short data_ov003_0217f2a8[3];
 extern Table data_ov003_0217f340;
-extern Dispatch data_020e6d5c;
+extern Dispatch __ptmf_null;
 extern "C" int func_ov017_021959b4();
 char* GetGlobalField0x1c020421a0();
 void ReinitController02043204(char*);
@@ -102,8 +102,8 @@ extern "C" ARM int func_ov003_02154af4(Scene* self,unsigned int scale) {
  }
  if(self->inner && GetInnerFlagBit0020e28dc((Outer020e28dc*)self->inner)) UpdateEntryStateAndPosition((Ctx020e263c*)self->inner, self->scale);
  Table buf; buf=data_ov003_0217f340;
- unsigned int locator=data_020e6d5c.locator;
- unsigned int fn=data_020e6d5c.fn;
+ unsigned int locator=__ptmf_null.locator;
+ unsigned int fn=__ptmf_null.fn;
  buf.entries[7].locator=locator; buf.entries[7].fn=fn;
  if(!buf.entries[self->state].fn) {
   BackgroundLoader::GetInstance()->RemoveTask(self->task);self->task=-1;return 1;

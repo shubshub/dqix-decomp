@@ -253,7 +253,7 @@ struct Slot_021eb5d0 {
 #define IN_RANGE_021eb5d0(x) (((x) >= 0 && (x) <= 3) ? 1 : 0)
 
 extern "C" Handler_021eb5d0 data_ov024_021ff508[0x51];
-extern "C" Handler_021eb5d0 data_020e6d5c;
+extern "C" Handler_021eb5d0 __ptmf_null;
 extern "C" int data_ov024_02200144;
 struct Ids8_021eb5d0 {
     short v[8];
@@ -400,10 +400,10 @@ extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_
     unsigned char blkB[0xb0];
     int guard = data_ov024_02200144;
     if ((guard & 1) == 0) {
-        data_ov024_021ff508[0x1e] = data_020e6d5c;
-        data_ov024_021ff508[0x22] = data_020e6d5c;
-        data_ov024_021ff508[0x3b] = data_020e6d5c;
-        data_ov024_021ff508[0x3c] = data_020e6d5c;
+        data_ov024_021ff508[0x1e] = __ptmf_null;
+        data_ov024_021ff508[0x22] = __ptmf_null;
+        data_ov024_021ff508[0x3b] = __ptmf_null;
+        data_ov024_021ff508[0x3c] = __ptmf_null;
         data_ov024_02200144 = guard | 1;
     }
     self->f10 = world;

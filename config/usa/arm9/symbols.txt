@@ -6257,7 +6257,7 @@ data_020e6c84 kind:data(any) addr:0x020e6c84
 atanlo kind:data(any) addr:0x020e6cc4 local
 atanhi kind:data(any) addr:0x020e6ce4 local
 data_020e6d04 kind:data(any) addr:0x020e6d04
-data_020e6d5c kind:data(any) addr:0x020e6d5c
+__ptmf_null kind:data(any) addr:0x020e6d5c
 data_020e6d64 kind:data(any) addr:0x020e6d64
 data_020e6d6c kind:data(any) addr:0x020e6d6c
 data_020e6d74 kind:data(any) addr:0x020e6d74
