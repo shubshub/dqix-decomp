@@ -5199,7 +5199,7 @@ src/Combat/Main/func_020424e4.cpp:
     complete
     .text start:0x020424e4 end:0x0204254c
 
-src/Combat/Main/func_0204254c.cpp:
+src/Combat/Main/Font_FindCharacter_0204254c.cpp:
     complete
     .text start:0x0204254c end:0x020425b4
 
@@ -7477,7 +7477,7 @@ src/Combat/Main/func_0205ba2c.cpp:
     complete
     .text start:0x0205ba2c end:0x0205ba68
 
-src/Combat/Main/func_0205ba68.cpp:
+src/Combat/Main/GridCursor_SetDimensions_0205ba68.cpp:
     complete
     .text start:0x0205ba68 end:0x0205bacc
 
@@ -7489,7 +7489,7 @@ src/Combat/Main/func_0205bafc.cpp:
     complete
     .text start:0x0205bafc end:0x0205bb04
 
-src/Combat/Main/func_0205bb04.cpp:
+src/Combat/Main/GridCursor_SetSelectedIndex_0205bb04.cpp:
     complete
     .text start:0x0205bb04 end:0x0205bb84
 
@@ -7537,7 +7537,7 @@ src/Combat/Main/func_0205bea0.cpp:
     complete
     .text start:0x0205bea0 end:0x0205bef8
 
-src/Combat/Main/func_0205bef8.cpp:
+src/Combat/Main/GridCursor_Init_0205bef8.cpp:
     complete
     .text start:0x0205bef8 end:0x0205bf3c
 
@@ -7958,7 +7958,7 @@ src/Combat/Main/func_0205ea20.cpp:
     complete
     .text start:0x0205ea20 end:0x0205eaa0
 
-src/Combat/Main/func_0205eaa0.cpp:
+src/Combat/Main/SePlayer_Play_0205eaa0.cpp:
     complete
     .text start:0x0205eaa0 end:0x0205eabc
 

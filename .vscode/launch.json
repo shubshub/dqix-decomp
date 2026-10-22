@@ -14,7 +14,9 @@
             "setupCommands": [
                 { "text": "set architecture armv5te" },
                 { "text": "set breakpoint pending on" },
-                { "text": "source ${workspaceFolder}/../dqix-debug/gdb_overlays.py" }
+                { "text": "source ${workspaceFolder}/../dqix-debug/gdb_overlays.py" },
+                { "text": "-enable-pretty-printing", "ignoreFailures": true },
+                { "text": "source ${workspaceFolder}/../dqix-debug/gdb_enums.py" }
             ]
         }
     ]

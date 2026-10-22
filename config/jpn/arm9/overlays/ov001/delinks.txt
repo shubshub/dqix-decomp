@@ -545,7 +545,7 @@ src/Combat/Overlay_1/func_ov001_0215b630.cpp:
     complete
     .text start:0x0215ccb4 end:0x0215ccd0
 
-src/Combat/Overlay_1/func_ov001_0215d8d0.cpp:
+src/Combat/Overlay_3/Keyboard_HandleKey_0215ef54.cpp:
     complete
     .text start:0x0215ef54 end:0x0215ef78
 
