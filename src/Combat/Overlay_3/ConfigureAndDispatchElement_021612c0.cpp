@@ -33,15 +33,15 @@ struct Obj2081 {
 
 struct Obj0208203c;
 struct Obj020e280c;
-struct Obj0205eaa0;
+struct SePlayer;
 
 extern "C" int func_020813ec(void *obj, int id);
 void ResetWithSub0208203c(struct Obj0208203c *obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void SetElementFlag0x20_02080c04(struct Obj2081* obj, int key);
 void ResetAndReposition020e280c(struct Obj020e280c* self, void* b);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Ctx021612c0 {
     char pad0[kRegionValue308_1F0];
@@ -66,7 +66,7 @@ extern "C" ARM void func_ov003_021612c0(struct Ctx021612c0* self) {
     func_020813ec(self->field324, self->field488);
     ResetWithSub0208203c((struct Obj0208203c*)self->sub308);
     self->field470 = 0;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
     if (self->field390 == NULL) {
         return;
     }

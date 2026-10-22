@@ -8,7 +8,7 @@
 #define func_0200b454 func_0200b318
 #endif
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Vec3copy0202ec84;
 struct Field150Holder02052df8;
 
@@ -86,7 +86,7 @@ extern const Vector3fix data_ov005_0215cc84[8];
 extern const signed char data_ov005_0215cc14[8];
 extern unsigned char data_ov005_0215cd58[8];
 extern unsigned char data_ov005_0215cd50[8];
-extern int data_02108760;
+extern int g_sePlayer;
 
 MemberScreen* GetField1c_021a193c(int* p);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
@@ -103,8 +103,8 @@ extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, uns
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 void* GetPtrField0x2a04_02010828(GameState* gs);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
-extern "C" void func_0205bb04(void* cursor, int index);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_0215690c
 extern "C" ARM void func_ov005_0215690c(EquipmentMenu* self, int x, int y) {
@@ -232,10 +232,10 @@ extern "C" ARM void func_ov005_0215690c(EquipmentMenu* self, int x, int y) {
     func_ov005_0215792c(self, 3);
     self->dragged_ = self->kind_;
     self->slot_ = self->dragged_;
-    func_0205bb04(self->cursor_, self->dragged_);
+    GridCursor_SetSelectedIndex(self->cursor_, self->dragged_);
     self->unk_3dc0 = 1;
     self->flags_ |= 0x80;
-    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 2, 0);
+    SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
     screen->flags_ &= ~1;
     screen->flags_ &= ~0x80;
     self->flags_ &= ~4;

@@ -37,7 +37,7 @@ struct Entry0204254c {
 int IsHighByteFF0206ac6c(void*, void*);
 int Func0206abf8(void*, void*);
 bool IsCommandInRange02067a9c(void*, void*);
-Entry0204254c* FindEntryByKey0204254c(int, int);
+Entry0204254c* Font_FindCharacter(int, int);
 extern "C" char* func_0206ac94(void*, unsigned short, char*);
 extern "C" void func_0206ad74(void*);
 #endif
@@ -137,7 +137,7 @@ extern "C" ARM void func_0206aa28(char* context) {
         } else {
             seenGlyph = 1;
             int size = 1;
-            Entry0204254c* entry = FindEntryByKey0204254c((int)(cursor), (unsigned char)(context[0x19dc]));
+            Entry0204254c* entry = Font_FindCharacter((int)(cursor), (unsigned char)(context[0x19dc]));
             if (entry) size = entry->size;
             memcpy(output, cursor, size);
             output += size;

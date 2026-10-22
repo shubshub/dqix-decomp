@@ -48,7 +48,7 @@ void ProcessCombatantsIfFlagged_0218f79c(void*);
 void ProcessSlotField58_021a2840(GameResources*);
 extern char data_ov017_021d7c10[];
 extern Actor0209c678 data_02109bf4;
-extern char data_02108760[];
+extern char g_sePlayer[];
 // USA: func_ov017_021b6290
 extern "C" ARM void func_ov017_021b6290(BattleLoad021b6290* self) {
     GameState* game = GameState::GetInstance();
@@ -92,7 +92,7 @@ extern "C" ARM void func_ov017_021b6290(BattleLoad021b6290* self) {
             }
             func_0209c480(&data_02109bf4, id);
             func_0209c2e0(&data_02109bf4, 127, 0);
-            func_0205e944(data_02108760, 127);
+            func_0205e944(g_sePlayer, 127);
             SetFlags04(resources, 0x40);
             func_02043124(GetGlobalField0x1c020421a0());
             SetOrClearBit0x10OnEntries_0203e5d8(GetGlobalPtr021075f4_0203cf4c(), 0);

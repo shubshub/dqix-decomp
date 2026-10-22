@@ -5,14 +5,14 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Container020dedd0;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
@@ -27,7 +27,7 @@ extern "C" void func_ov002_0215b814(char *base);
 extern "C" int func_ov002_0215b720(char *self, int id);
 extern "C" void func_ov002_02157634(char *base);
 extern "C" void func_ov002_02156e90(char *base);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -73,7 +73,7 @@ extern "C" ARM void func_ov002_021631e8(char *base) {
             }
             switch (*(short *) (base + RG(0x1b00 + 0xea, 0x1ab2))) {
                 case 0:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     int ok = 0;
                     int id = *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8));
                     if (id >= 0 && id <= 3) ok = 1;
@@ -105,12 +105,12 @@ extern "C" ARM void func_ov002_021631e8(char *base) {
                     func_ov002_02157634(base);
                     return;
                 case 1:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80)) = RG(9, 0xa);
                     *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88)) = 0;
                     return;
                 case 2: {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     int r = GetInventoryItemFlagField_02157500(
                         base, *(short *) (base + RG(0x1b00 + 0xe8, 0x1ab0)), *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)));
                     if (r != 0) {

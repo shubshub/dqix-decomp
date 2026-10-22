@@ -84,12 +84,12 @@ struct Struct0205cf1c;
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void SetChannelAFlag0205cef8(void*);
 void SetChannelBFlag0205cf04(void*);
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(Sub*, int);
+extern "C" void GridCursor_SetSelectedIndex(Sub*, int);
 
 // USA: func_ov000_0217ab8c
 extern "C" ARM void func_ov000_0217ab8c(Menu* self, int arg1, int arg2) {
@@ -197,13 +197,13 @@ extern "C" ARM void func_ov000_0217ab8c(Menu* self, int arg1, int arg2) {
     }
     SetChannelAFlag0205cef8(self->window);
     SetChannelBFlag0205cf04(self->window);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&w->a, step, visible, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&w->b, step, visible, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&w->a, total);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&w->b, total);
+    GridCursor_SetDimensions((Struct_0205ba68*)&w->a, step, visible, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&w->b, step, visible, 0);
+    GridCursor_SetCount((Node0205bacc*)&w->a, total);
+    GridCursor_SetCount((Node0205bacc*)&w->b, total);
     w->a.field4 = pages;
     w->b.field4 = pages;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)&w->a, selected);
-    func_0205bb04(&w->b, selected);
+    GridCursor_SetSelectedIndex(&w->b, selected);
     data_ov000_02184294.root->flags &= ~0x100;
 }

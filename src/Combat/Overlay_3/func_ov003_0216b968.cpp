@@ -13,7 +13,7 @@
 struct Container0205a330;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Entry_0205d6a0;
 
 struct Global0216b968 {
@@ -49,10 +49,10 @@ int GetActiveScaledSum0205d794(struct Struct_0205c570* list);
 extern "C" void func_ov003_0216dc58(Self0216b968* self);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void* list);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int value);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0216b968
 extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
@@ -96,25 +96,25 @@ extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
         case 0:
             self->result_ = 3;
             self->step_ = 0;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 1:
             self->result_ = 5;
             self->step_ = 0;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 2:
             self->result_ = 4;
             self->step_ = 0;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 3:
             self->result_ = 6;
             self->step_ = 0;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case -2:
@@ -152,7 +152,7 @@ extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
         self->result_ = result;
         self->step_ = 0;
         if (dispatch) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
         ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
 #endif

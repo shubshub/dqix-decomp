@@ -19,7 +19,7 @@ struct FlagWord02046708;
 struct BitField0203402c;
 struct Struct0200fb08;
 struct Obj021befe4;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020397cc;
 struct S021b2ba0;
 struct TailList020469b4;
@@ -45,7 +45,7 @@ extern "C" int func_0202c540(SearchStruct* search);
 void InitState53_021befe4(Obj021befe4* obj);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void CancelPendingAction020397cc(Obj020397cc* obj, int flag);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void func_ov017_021a5568(void* node);
 int GetByte0x26c_02039d7c(char* obj);
 void InitObjState_021b2174(unsigned char* obj);
@@ -55,7 +55,7 @@ void SetCombatModeFromCase020dc2d0(int mode);
 void SetFlag0x9c6_020213fc(SetFlagStruct* obj, int value);
 void SetFlagsAt0xa97(FlagBlob02027bac* obj, unsigned char value);
 void AllocateAndCopyBuf28_0216ae2c(SafeAllocator* allocator, void* arg);
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d76dc;
 
 struct Thresholds021d6a80 {
@@ -184,7 +184,7 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
         CancelPendingAction020397cc((Obj020397cc*)unknown, 1);
         unknown->fb2 = 0;
         res->pending = 0;
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
         func_ov017_021a5568(res->node);
         Node021a51a4* node = res->node;
         node->f24 = 0;

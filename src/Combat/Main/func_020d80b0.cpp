@@ -26,8 +26,8 @@ struct Obj020d8484 {
     int task;
 };
 struct Obj020397cc;
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 extern AllocatorUnion data_02114e20;
 extern char data_020f235c[];
 extern char data_020f2371[];
@@ -53,7 +53,7 @@ extern char data_020f24b8[];
 extern "C" void func_0204500c(void*, char*, int, int);
 #define SHOW_TEXT_020d80b0(d, t) func_0204500c(d, t, 0, 0xe3)
 #endif
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void SetByteField0x253_020397c0(void*);
 void SetCombatModeFromCase020dc2d0(int);
 struct Dialog020d80b0 {
@@ -131,7 +131,7 @@ extern "C" ARM void func_020d80b0(Obj020d8484* self) {
         self->state = 4;
     } else if (self->state == 4) {
         if (!dialog->busy) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             self->state = 5;
         }
     } else if (self->state == 5) {
@@ -143,7 +143,7 @@ extern "C" ARM void func_020d80b0(Obj020d8484* self) {
         self->state = 6;
     } else if (self->state == 6) {
         if (!dialog->busy) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             self->state = 7;
         }
     } else if (self->state == 7) {

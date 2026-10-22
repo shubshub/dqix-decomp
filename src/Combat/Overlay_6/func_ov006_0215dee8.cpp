@@ -9,7 +9,7 @@ enum { kMenuCursor = 0x36, kLayoutToTable = 0x4c, kWindowFlags = 0x1258 };
 #endif
 
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj2081;
 struct ClearFlag40_02157184Struct;
 struct StructC28;
@@ -146,7 +146,7 @@ extern "C" void func_ov006_021555b0(AlchemyPot* pot, Recipe* recipe, RecipeRecor
 extern "C" unsigned char func_ov006_02159bb0(AlchemyMenu* self);
 extern "C" void func_ov006_02159c64(AlchemyMenu* self);
 extern "C" void func_ov006_021570fc(AlchemyPot* pot, int shown);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int, int);
+void SePlayer_Play(SePlayer* sound, int, int);
 extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
 extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
 extern "C" int func_ov006_021537d0(void* ingredients, short id);
@@ -169,7 +169,7 @@ extern "C" unsigned char func_ov006_021599c0(AlchemyMenu* self);
 extern "C" void func_ov006_0215a5dc(AlchemyMenu* self);
 int CheckFlagOrByte55_02158c70();
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215dee8
 extern "C" ARM void func_ov006_0215dee8(AlchemyMenu* self) {
@@ -235,7 +235,7 @@ extern "C" ARM void func_ov006_0215dee8(AlchemyMenu* self) {
                 AlchemyPot* pot = self->pot_;
                 int shown = (pot->windowFlags_ & 0x800) ? 1 : 0;
                 func_ov006_021570fc(pot, shown == 0 ? 1 : 0);
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 return;
             }
             return;
@@ -248,7 +248,7 @@ extern "C" ARM void func_ov006_0215dee8(AlchemyMenu* self) {
                     return;
                 self->recipe_ = recipe;
                 self->menu_->cursor_ = *self->cursor_;
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 ResetWithSub0208203c((Obj0208203c*)self->repeat_);
                 self->cursor_ = 0;
                 if (func_ov006_021537d0(self->ingredients_, recipe->id_))
@@ -273,7 +273,7 @@ extern "C" ARM void func_ov006_0215dee8(AlchemyMenu* self) {
         else if (func_ov006_02158b78(self) || button == 3)
         {
             if (button == 3)
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, self->group_);
             CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, 0xe);
             CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)self->menu_, 0xf);
@@ -381,7 +381,7 @@ extern "C" ARM void func_ov006_0215dee8(AlchemyMenu* self) {
             return;
         if (g_keyManager.TestKeysPressed(1) || result == 2)
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->repeat_);
             self->cursor_ = 0;
             self->times_ = self->count_;

@@ -27,7 +27,7 @@ struct HeadNode020469f8;
 struct ElementArray0202bad4;
 struct Element0202bad4;
 struct Random;
-struct Obj0205eaa0;
+struct SePlayer;
 
 void* GetDataPtr02114e04_020d6c00(void);
 int* GetGlobal02109030_020936f8(void);
@@ -62,7 +62,7 @@ void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
 extern "C" void func_0202b0f4(int* obj);
 void* GetGlobalField0x1c020421a0(void);
 extern "C" int func_020aad1c(int a, int b, int c, int d);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 short FindMappedMemberId02080468(void* obj, int id);
 void SetEntryNibbleByShortId(struct StatusOwner02081198* owner, int id, int enable);
 void SetEntryFlag0x2ByShortId(struct StatusOwner02081164* obj, int id, int value);
@@ -77,7 +77,7 @@ extern struct Elem2081* FindElementByByte0xc4_02081da8(struct Obj2081*, int);
 int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
 
 extern int data_0211e33c;
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct GlobalBig1000 { char pad[REGIONAL_OFFSET(0x7fb, 0x9ca)]; unsigned char flag9ca; };
 
@@ -346,7 +346,7 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
             *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x496)) - idx;
             *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x498)) + (((signed char)self[HI(0x4a0)]) << 2);
             if (*(short*)(self + HI(0x498)) < *(short*)(self + LO(0x226))) {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
                 ResetWithSub0208203c((struct Obj0208203c*)(self + LO(0x308)));
                 *(void**)(self + HI(0x470)) = 0;
                 struct RecordByte0* rb = (struct RecordByte0*)(self + (*(short*)(self + HI(0x498))) * kRec37);

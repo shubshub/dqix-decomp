@@ -12,7 +12,7 @@ enum { kBattleOffset = 0x29c, kStateToListPadding = 0x28b0, kListToModePadding =
 
 struct BattleState;
 struct GameResources;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct PartyState {
     char pad0[0x8];
@@ -99,7 +99,7 @@ int IsFlag10088Set_02010088(struct S_10088*);
 void InitObjFromCombatant020e4c74(void*, GameObject*);
 void SetField0x158_02053ec8(void*, int);
 void EnqueueEventTag86_021c9ad4(unsigned short);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void ReinitController02043204(char*);
 void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
 CommandSlot* FindSlotById_021dae60(Container_021dae60*, int);
@@ -128,7 +128,7 @@ extern char data_ov026_021df465[];
 
 extern char data_ov026_021dedee[];
 extern IdList data_ov026_021de6bc;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov026_021db090
 extern "C" ARM void func_ov026_021db090(BattleWork* self) {
@@ -260,7 +260,7 @@ extern "C" ARM void func_ov026_021db090(BattleWork* self) {
         win->b19be = 1;
         win->flags |= 2;
         win->active = 1;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 9, 0);
+        SePlayer_Play(&g_sePlayer, 9, 0);
         self->state++;
     } else if (win->busy == 0) {
         self->state++;

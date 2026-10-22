@@ -43,7 +43,7 @@ extern "C" void func_ov017_021c812c(int, int);
 void EmptyStub_ov017_021c8398(int, int);
 void NoOp_021c839c(int, int);
 void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
-extern unsigned char data_02108760;
+extern unsigned char g_sePlayer;
 struct BattleConfig02163db4 {
     char pad_0[8]; unsigned short eventTag; char pad_a[2]; int mode;
     char pad_10[0x2a - 0x10]; signed char partyId; char pad_2b; int field_2c;
@@ -124,7 +124,7 @@ extern "C" ARM void func_ov000_02163db4(BattleScene02163db4* scene) {
     func_02012de8();
     func_ov000_02166978(scene);
     func_02012de8();
-    SetupContextForMode0205ea20(&data_02108760, 0x65);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x65);
     REG_DISPLAY_CONTROL = (REG_DISPLAY_CONTROL & ~0x1f00) | 0x1100;
     REG_BLEND_CONTROL = 0;
     if (scene->config->field_2c) {

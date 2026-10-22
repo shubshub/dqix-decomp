@@ -22,10 +22,10 @@ struct Root {
 struct Party {char p[0xf78];signed char members[4];unsigned char count;};
 struct UnitState {char p[0x56b];unsigned char low:4,high:4;};
 struct UnitView {char p[unitStateOffset];UnitState* state;};
-struct Struct_0205c570;struct Obj0205eaa0;struct Struct0217f8c0;struct TableEntry0217f8c0;
+struct Struct_0205c570;struct SePlayer;struct Struct0217f8c0;struct TableEntry0217f8c0;
 struct Struct_0205d81c;struct Entry_0205d6a0;struct Obj02092aa4;
 int GetActiveScaledSum0205d794(Struct_0205c570*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*,int,int);
+void SePlayer_Play(SePlayer*,int,int);
 void* GetPtrField0x2a04_02010828(GameState*);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*,int);
 TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
@@ -36,7 +36,7 @@ void InitObj02092aa4(Obj02092aa4*, int);
 void CreateTypeAFromAllocator_02092a74(SafeAllocator*,SafeAllocator*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
 void ResetEntryList0205d6a0(Entry_0205d6a0*,int);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" {
 void func_02012fe4();int func_ov000_0217c594(void*,int);
 void* func_ov000_02161318(void*,int);int func_ov000_0217f5dc(void*);
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov000_0217ce24(Root* self,int a,int b)
     self->mode=mode;
     if(func_ov000_0217c594(self,5)){
         self->flag956=0;
-        DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+        SePlayer_Play(&g_sePlayer,1,0);
         GameState* game=GameState::GetInstance();
         Party* party=(Party*)GetPtrField0x2a04_02010828(game);
         signed char count=0;bool active=false;

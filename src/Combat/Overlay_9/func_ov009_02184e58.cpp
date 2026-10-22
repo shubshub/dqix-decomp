@@ -52,7 +52,7 @@ extern "C" void func_0204b620(BackgroundGraphics* graphics, void* a, void* b, in
 int NormalizeField5_0200fb08(Struct0200fb08* state);
 extern "C" void func_ov023_021da274(void* self);
 void RefreshFieldIfFlag4000_021d9d34(char* self);
-void BuildFieldTag_021d9e60(char* self);
+void CharacterCreationUI_RefreshNameText(char* self);
 
 extern const unsigned char data_ov009_0218a95d[];
 extern const unsigned char data_ov009_0218a95f[];
@@ -280,7 +280,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreationJ* self)
     RefreshFieldIfFlag4000_021d9d34((char*)self);
     self->flags_ &= ~0x4000;
     self->flags_ |= 0x8000;
-    BuildFieldTag_021d9e60((char*)self);
+    CharacterCreationUI_RefreshNameText((char*)self);
     self->flags_ &= ~0x8000;
     self->flags_ &= ~0x80;
     self->loadStep_ = 0;
@@ -484,7 +484,7 @@ extern "C" ARM void func_ov009_02184e58(CharacterCreation* self)
     RefreshFieldIfFlag4000_021d9d34((char*)self);
     self->flags_ &= ~0x4000;
     self->flags_ |= 0x8000;
-    BuildFieldTag_021d9e60((char*)self);
+    CharacterCreationUI_RefreshNameText((char*)self);
     self->flags_ &= ~0x8000;
     self->flags_ &= ~0x80;
     self->loadStep_ = 0;

@@ -14,7 +14,7 @@
 #include "Input/Input.h"
 
 struct Obj2081;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct AlchemyPot {
     char unk_0[R(0x1054, 0x1258)];
@@ -44,9 +44,9 @@ extern "C" short func_ov023_021e29d0(void* layout);
 extern "C" void func_ov006_0215f4dc(AlchemyMenu* self);
 void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int flag);
 extern "C" void func_ov006_021570fc(AlchemyPot* pot, int show);
-unsigned char DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int unk);
+unsigned char SePlayer_Play(SePlayer* sound, int effect, int unk);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_021595b4
 extern "C" ARM int func_ov006_021595b4(AlchemyMenu* self) {
@@ -74,7 +74,7 @@ extern "C" ARM int func_ov006_021595b4(AlchemyMenu* self) {
         if (g_keyManager.TestKeysPressed(0x300) || window) {
             AlchemyPot* pot = self->pot_;
             func_ov006_021570fc(pot, (pot->windowFlags_ & 0x800) ? 0 : 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             return 1;
         }
     }

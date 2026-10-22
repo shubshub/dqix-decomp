@@ -77,7 +77,7 @@ void ResetStruct020dfc40(Struct020dfc40*);
 int ApplyNodeUpdater020e038c(void*, void*, int);
 extern "C" int func_ov009_0218a420(ForbiddenWordFile*, ForbiddenWordPattern*);
 extern "C" void __clear(void*, unsigned int);
-CharacterInfo* FindEntryByKey0204254c(int, int);
+CharacterInfo* Font_FindCharacter(int, int);
 void ToUpperCopy0218a484(int, char*, char*);
 unsigned int GetLow12Bits020e0424(Header020e0424*);
 int GetFieldByKey020e0434(Container020e0310*, int);
@@ -96,8 +96,8 @@ static inline unsigned int PatternOffset(unsigned int base, unsigned int count, 
     return base + amount;
 }
 
-// USA: func_ov009_02189a4c
-extern "C" ARM void func_ov009_02189a4c(CharacterCreation* self) {
+// Overlay 9, originally func_ov009_02189a4c (USA/EUR 0x02189a4c; JPN not identified)
+extern "C" ARM void CharacterCreationUI_CheckName(CharacterCreation* self) {
     int i;
     ForbiddenWordPattern* headerPattern;
     int headerCount;
@@ -159,7 +159,7 @@ __clear(work_exactName_, 64);
     char* in = name;
     for (;;) {
         if (!*in) break;
-        CharacterInfo* entry = FindEntryByKey0204254c((int)in, 1);
+        CharacterInfo* entry = Font_FindCharacter((int)in, 1);
         __clear(work_exactCharacter_, 12);
         int length = entry->length_;
         char* text = entry->text_;

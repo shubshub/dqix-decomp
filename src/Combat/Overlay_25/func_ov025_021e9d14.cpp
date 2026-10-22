@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0203a48c;
 struct Obj0203a588;
 struct Obj02176150;
@@ -76,10 +76,10 @@ void QueuePopupEntry0203a48c(Obj0203a48c*, int, Vec3Int0203a48c*, int, int, int)
 extern "C" void* func_02057924(void);
 void InitStruct02078484(struct InitStruct02078484Struct* p);
 void FindNodeAndProcess02057fb4(void* list, int id, void* config);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" void _Z24SetShortField0xE02176150P11Obj02176150s(struct Obj02176150* obj, unsigned short val);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov025_021e9d14
 extern "C" ARM void func_ov025_021e9d14(void) {
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov025_021e9d14(void) {
                 req.offset.y += actor->obj3D_.GetHeight() / 2;
                 req.objectId = id;
                 FindNodeAndProcess02057fb4(list, 0x10, &req);
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x65, 0);
+                SePlayer_Play(&g_sePlayer, 0x65, 0);
             }
         }
         int isPartyMember = (id >= 0 && id <= 3) ? 1 : 0;

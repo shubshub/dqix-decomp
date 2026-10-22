@@ -135,7 +135,7 @@ extern AllocatorUnion data_02114e20;
 extern const char* data_020f2a38;
 extern const char* data_020f2a30;
 extern int data_ov015_02193cdc[];
-extern char data_02108760;
+extern char g_sePlayer;
 extern int data_ov015_02194528[];
 
 #define POWCNT1 (*(volatile unsigned short*)0x04000304)
@@ -240,7 +240,7 @@ extern "C" ARM void func_ov015_021934f8(Battle021934f8* self)
     SetField0x238False_020a27a0(&combat);
     SetField0x3b0Value_020100c4(gs, (int)&combat);
     func_ov015_02192544(self);
-    SetupContextForMode0205ea20(&data_02108760, 0x65);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x65);
     DelayThenSyncBit0_020c9820();
     RestoreDisplayMode_020c38d4();
     DISPCNTSUB = DISPCNTSUB | 0x10000;
@@ -299,7 +299,7 @@ extern "C" ARM void func_ov015_021934f8(Battle021934f8* self)
         func_ov015_02190d7c(self);
         func_ov015_021901c8(self);
         CleanInvalidateOamBuffers0203bd88(context);
-        ResetXYField0203aa08(&data_02108760);
+        ResetXYField0203aa08(&g_sePlayer);
         func_020bbd9c();
 
         unsigned long long oldTime = self->curTime;
@@ -331,7 +331,7 @@ extern "C" ARM void func_ov015_021934f8(Battle021934f8* self)
 
     BlankFunction02094b38(global, 0x69);
     func_02094ab0(global);
-    SetupContextForMode0205ea20(&data_02108760, 0x64);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x64);
     InitCombatController020a2010(&combat);
     ResetState020a2cf0((struct Struct020A2CF0*)&combat);
     func_0202df68(&combat);

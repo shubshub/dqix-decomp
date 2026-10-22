@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Cont0207fdf0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
@@ -9,14 +9,14 @@ extern "C" void func_020813ec(void* obj, int key);
 short FindMappedMemberId02080468(void* obj, int id);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 int ComputePositiveCount_02175f90(void* self);
 extern "C" void func_ov003_02177938(void* self);
 extern "C" void func_ov003_021749c0(char* base);
 extern "C" int func_ov003_021765b4(void* self);
 extern "C" int func_ov003_021766e8(void* self);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217b214
 #if defined(jpn)
@@ -54,7 +54,7 @@ extern "C" ARM void func_ov003_0217b214(char* self) {
         func_ov003_02177938(self);
         SetEntryLowNibbleAndElement02080c68(elemObj, 0x15, 1);
         if (func_ov003_021765b4(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)(self + 0x808));
             *(void**)(self + 0xf74) = 0;
             if (ComputePositiveCount_02175f90(self) == 0) {
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov003_0217b214(char* self) {
         func_ov003_02177938(self);
         SetEntryLowNibbleAndElement02080c68(elemObj, 0x15, 1);
         if (func_ov003_021765b4(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)(self + 0x88c));
             *(void**)(self + 0xff8) = 0;
             if (ComputePositiveCount_02175f90(self) == 0) {

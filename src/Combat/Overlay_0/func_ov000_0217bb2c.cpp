@@ -3,13 +3,13 @@
 #include "Input/Input.h"
 
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct S_10088;
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
 int IsFlag10088Set_02010088(struct S_10088* obj);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
@@ -82,7 +82,7 @@ struct MenuObj_0217bb2c {
 };
 
 extern MenuGlobals_0217bb2c data_ov000_02184294;
-extern char data_02108760;
+extern char g_sePlayer;
 
 // USA: func_ov000_0217bb2c
 extern "C" ARM int func_ov000_0217bb2c(MenuObj_0217bb2c* obj, int arg1, int arg2) {
@@ -135,7 +135,7 @@ extern "C" ARM int func_ov000_0217bb2c(MenuObj_0217bb2c* obj, int arg1, int arg2
         if (ok) {
             obj->field43d = obj->selections[obj->depth];
             obj->field2e = obj->order[obj->cursor];
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
             obj->depth++;
             obj->selections[obj->depth] = 100;
         }

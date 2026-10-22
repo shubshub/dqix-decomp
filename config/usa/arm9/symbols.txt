@@ -1662,7 +1662,7 @@ _Z21GetTableEntry020421b0i kind:function(arm,size=0x14) addr:0x020421b0
 func_020421c4 kind:function(arm,size=0x2e8) addr:0x020421c4
 _Z34FindUnescapedAngleBracket_020424acPc kind:function(arm,size=0x38) addr:0x020424ac
 _Z27FindEntryIndexByKey020424e4ii kind:function(arm,size=0x68) addr:0x020424e4
-_Z22FindEntryByKey0204254cii kind:function(arm,size=0x68) addr:0x0204254c
+_Z18Font_FindCharacterii kind:function(arm,size=0x68) addr:0x0204254c
 _Z23GetBoundedEntry020425b4ii kind:function(arm,size=0x30) addr:0x020425b4
 _Z22LookupKeyValue020425e4iii kind:function(arm,size=0x54) addr:0x020425e4
 _Z24GetWordFromTable02042638i kind:function(arm,size=0x10) addr:0x02042638
@@ -2253,10 +2253,10 @@ _Z35PositionAndFormatValueLabel0205b674P11Obj0205b674siihhhh kind:function(arm,s
 func_0205b734 kind:function(arm,size=0x15c) addr:0x0205b734
 func_0205b890 kind:function(arm,size=0x19c) addr:0x0205b890
 _Z19InitStruct_0205ba2cP15Struct_0205ba2c kind:function(arm,size=0x3c) addr:0x0205ba2c
-_Z25SetupPointerTable0205ba68P15Struct_0205ba68iii kind:function(arm,size=0x64) addr:0x0205ba68
-_Z29SetField0AndPropagate0205baccP12Node0205bacci kind:function(arm,size=0x30) addr:0x0205bacc
+_Z24GridCursor_SetDimensionsP15Struct_0205ba68iii kind:function(arm,size=0x64) addr:0x0205ba68
+_Z19GridCursor_SetCountP12Node0205bacci kind:function(arm,size=0x30) addr:0x0205bacc
 _Z18GetField0_0205bafcPv kind:function(arm,size=0x8) addr:0x0205bafc
-func_0205bb04 kind:function(arm,size=0x80) addr:0x0205bb04
+GridCursor_SetSelectedIndex kind:function(arm,size=0x80) addr:0x0205bb04
 _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84 kind:function(arm,size=0x48) addr:0x0205bb84
 _Z12Init0205bbccP15Struct_0205bbcc kind:function(arm,size=0x44) addr:0x0205bbcc
 _Z20ClearBytes0x4cTo0x4eP15Struct_0205bc10 kind:function(arm,size=0x14) addr:0x0205bc10
@@ -2268,7 +2268,7 @@ _Z19CheckActive0205bd20P15Struct_0205bd20i kind:function(arm,size=0x38) addr:0x0
 _Z17SetFields0205bd58P15Struct_0205bd58iiiii kind:function(arm,size=0x20) addr:0x0205bd58
 func_0205bd78 kind:function(arm,size=0x128) addr:0x0205bd78
 _Z30CheckByteFlagAndInvoke0205bea0Pv kind:function(arm,size=0x58) addr:0x0205bea0
-_Z12Init0205bef8P15Struct_0205bef8 kind:function(arm,size=0x44) addr:0x0205bef8
+_Z15GridCursor_InitP15Struct_0205bef8 kind:function(arm,size=0x44) addr:0x0205bef8
 _Z18ResetState0205bf3cP15Struct_0205bf3c kind:function(arm,size=0x1c) addr:0x0205bf3c
 func_0205bf58 kind:function(arm,size=0x550) addr:0x0205bf58
 _Z33AdvanceWrappedAccumulator0205c4a8P15Struct_0205c4a8i kind:function(arm,size=0x60) addr:0x0205c4a8
@@ -2373,7 +2373,7 @@ func_0205e944 kind:function(arm,size=0xb0) addr:0x0205e944
 _Z27SetStateAndDispatch0205e9f4P11Obj0205e9f4i kind:function(arm,size=0x24) addr:0x0205e9f4
 _Z27GetByteFieldAt0xcc_0205ea18Ph kind:function(arm,size=0x8) addr:0x0205ea18
 _Z27SetupContextForMode0205ea20Pvi kind:function(arm,size=0x80) addr:0x0205ea20
-_Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii kind:function(arm,size=0x1c) addr:0x0205eaa0
+_Z13SePlayer_PlayP8SePlayerii kind:function(arm,size=0x1c) addr:0x0205eaa0
 _Z32ForwardToTargetOrDefault0205eabcPvS_i kind:function(arm,size=0xc) addr:0x0205eabc
 _Z14GetShortAt0xb4P23ShortField0xb4_0205eac8 kind:function(arm,size=0x8) addr:0x0205eac8
 _Z30UpdateDisplayTransform0205ead0P12Obj_0205ead0ii kind:function(arm,size=0x38) addr:0x0205ead0
@@ -6674,7 +6674,7 @@ data_020ef040 kind:data(any) addr:0x020ef040
 data_020ef044 kind:data(any) addr:0x020ef044
 data_020ef048 kind:data(any) addr:0x020ef048
 data_020ef070 kind:data(any) addr:0x020ef070
-data_020ef078 kind:data(any) addr:0x020ef078
+g_stringFormat kind:data(any) addr:0x020ef078
 data_020ef07c kind:data(any) addr:0x020ef07c
 data_020ef08c kind:data(any) addr:0x020ef08c
 data_020ef0a5 kind:data(any) addr:0x020ef0a5
@@ -7729,7 +7729,7 @@ sSeq$22 kind:bss addr:0x02108748 local
 sPendingBytes kind:bss addr:0x0210874c local
 sActiveBytes kind:bss addr:0x02108750 local
 data_02108754 kind:bss addr:0x02108754
-data_02108760 kind:bss addr:0x02108760
+g_sePlayer kind:bss addr:0x02108760
 data_02108830 kind:bss addr:0x02108830
 data_02108844 kind:bss addr:0x02108844
 data_02108ce0 kind:bss addr:0x02108ce0

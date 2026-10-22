@@ -13,8 +13,8 @@ struct MenuTail {
     int index;
 };
 
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 
 struct Src02157174;
 struct Dst02157174;
@@ -26,7 +26,7 @@ extern "C" int func_0205bf58(void*, int);
 int CheckFlag30Or401_02157190(void*);
 char* GetField1c_021a193c(int*);
 void DispatchByIdxAndCond021551fc(char*, int, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov005_021555c0(void*);
 extern "C" void func_ov005_0215792c(void*, unsigned char);
 extern "C" unsigned char func_ov005_021586c4(void*, int, int);
@@ -128,7 +128,7 @@ extern "C" ARM void func_ov005_0215b2bc(Menu* self) {
         MenuTail* hold = (MenuTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
         DispatchByIdxAndCond021551fc((char*)self, hold->index, 0);
         if (flag2 == 0) return;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         func_ov005_021555c0(self);
         self->flags_ |= 0x40;
         self->f3daa_ = 0;

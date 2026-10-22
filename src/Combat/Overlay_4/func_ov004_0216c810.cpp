@@ -79,7 +79,7 @@ extern "C" void func_ov023_021f7eb8(void* node, void* a, int buf, int mode, int 
 extern "C" void func_ov004_0216ba70(void* a);
 
 extern char data_02109bf4[];
-extern struct Obj0205e9f4 data_02108760;
+extern struct Obj0205e9f4 g_sePlayer;
 extern MenuState02171034 data_ov004_02171034;
 extern Bytes6 data_ov004_02170174;
 
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov004_0216c810(void* a) {
     UiNode0216c810* node;
 
     SetModeClamped0209ca70(data_02109bf4, 3);
-    SetStateAndDispatch0205e9f4(&data_02108760, 3);
+    SetStateAndDispatch0205e9f4(&g_sePlayer, 3);
     data_ov004_02171034.byte4 = 3;
     data_ov004_02171034.byte1 = 3;
     data_ov004_02171034.messageId = 0;

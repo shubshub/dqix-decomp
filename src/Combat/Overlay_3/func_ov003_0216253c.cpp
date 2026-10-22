@@ -52,7 +52,7 @@ struct Elem {
     unsigned char m : 3;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 unsigned int *GetDataPtr02114e04_020d6c00();
 struct StatusOwner02081198;
 void SetEntryNibbleByShortId(StatusOwner02081198*, int, int);
@@ -68,8 +68,8 @@ extern "C" void func_ov003_02165bd8(Scene *);
 void ApplyElementEffect02161438(void*);
 extern "C" int func_ov003_02160854(Scene *);
 int CompareThreshold_021614e8(int);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
 struct Cont0207fe44;
 void CallFunc0204c804OverAllElems(Cont0207fe44*);
 Elem * GetElementAtIndex_02160bd0_02160bd0(void*, int);
@@ -149,7 +149,7 @@ extern "C" ARM void func_ov003_0216253c(Scene *self) {
                 if (CompareThreshold_021614e8((int) self) != 0) {
                     return;
                 }
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+                SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                 ResetWithSub0208203c((Obj0208203c*)self->sub308);
                 self->p470 = 0;
                 CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
@@ -167,7 +167,7 @@ extern "C" ARM void func_ov003_0216253c(Scene *self) {
                 return;
             }
             self->h480 = v;
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->sub308);
             self->p470 = 0;
             CallFunc0204c804OverAllElems((Cont0207fe44*)entries);

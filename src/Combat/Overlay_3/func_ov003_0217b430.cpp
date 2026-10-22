@@ -10,7 +10,7 @@
 
 struct Obj2081;
 struct Cont0207fdf0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 struct Container020dedd0;
 struct Obj02179e18;
@@ -30,7 +30,7 @@ extern "C" void func_ov003_021748c4(unsigned char *self);
 extern "C" void func_ov003_0217a14c(void *p);
 extern "C" void func_ov023_021dcae0(struct Obj021dcae0 *obj, int val);
 extern "C" int func_ov003_021765b4(void *self);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 struct Element020de650 {
     char pad[8];
     unsigned int word;
@@ -53,7 +53,7 @@ extern "C" int func_ov003_021764f4(unsigned char *self);
 void RefillAndResetEntry_02175d78(char *obj);
 extern "C" void func_ov003_02175df4(void *self);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 static inline int ElemKind(struct Element020de650 *e) {
     unsigned int w = e->word;
@@ -97,7 +97,7 @@ extern "C" ARM void func_ov003_0217b430(unsigned char *self) {
         func_ov003_0217a14c(self);
         func_ov023_021dcae0((struct Obj021dcae0 *) (self + 0x3c), *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
         if (func_ov003_021765b4(self) != 0 && saved == *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c *) (self + REGIONAL_OFFSET(0x808, 0x88c)));
             *(void **) (self + REGIONAL_OFFSET(0xf74, 0xff8)) = 0;
             *(void **) (self + 8) =
@@ -205,7 +205,7 @@ extern "C" ARM void func_ov003_0217b430(unsigned char *self) {
         }
         int hit = func_ov003_021782a0((struct Obj2081 *) self);
         if (g_keyManager.TestKeysPressed(0x401) != 0 || hit == 1) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0 *) elemObj, 0);
             *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x36) = 0xd;
             if (*(unsigned char *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3c) > 1) {

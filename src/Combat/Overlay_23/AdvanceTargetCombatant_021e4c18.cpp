@@ -7,9 +7,9 @@ extern "C" void func_ov023_021e2ce8(int combatantId, void* p1);
 struct EntryList0204af14;
 void* GetEntryByIndexStride0x10(struct EntryList0204af14* list, unsigned int index);
 extern "C" void func_020dc7e8(int a, int b);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 extern "C" void func_ov005_021551d4(void* p);
 void DispatchByIdxAndCond021551fc(char* base, int byteVal, int cond);
 typedef void (*DispatchFn021551fc)(char*, int, int);
@@ -111,7 +111,7 @@ extern "C" ARM void func_ov023_021e4c18(struct Obj021e4c18* obj) {
         obj->f4fc = obj->arr4ec[index];
         obj->f634 = obj->f634 | 0x54;
 
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
 
         if (obj->f4e5 != 3) return;
         if (obj->f0 == 0) return;

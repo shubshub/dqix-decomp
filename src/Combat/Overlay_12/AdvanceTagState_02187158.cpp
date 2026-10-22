@@ -41,9 +41,9 @@ struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern int data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern int g_sePlayer;
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov012_02187158(char* base) {
         *(int*)(base + R(0x143c,0x13e4)) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + R(0x90,0xac)));
     }
     if (func_ov023_021e6de4(base)) {
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         GameState* bs = GameState::GetInstance();
         int val = (*(signed char**)(base + 0x1000 + R(0x418,0x3c0)))[*(int*)(base + 0x1000 + R(0x43c,0x3e4))];
         short key = (short)(val + 0x2710);

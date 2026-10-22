@@ -11,10 +11,10 @@ enum { RegionOffset4498 = 0x4498 };
 void StoreThreeWords_0218cbcc(int* p, int a, int b, int c);
 struct Obj020dbfa4;
 void ProcessPendingNode020dbfa4(struct Obj020dbfa4* o, int arg1);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern char data_ov017_021d739f;
 
 struct LocalEvt0218d644 {
@@ -73,5 +73,5 @@ extern "C" ARM void func_ov017_0218d644(GameResources* ov, void* a, int b) {
     int* src = (int*)a;
     StoreThreeWords_0218cbcc(buf.words2c, src[0], src[1], src[2]);
     ProcessPendingNode020dbfa4(p, (int)&buf);
-    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x5f, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x5f, 0);
 }

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-struct Obj0205eaa0;
-extern void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+extern void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov019_0218c240
 ARM int TriggerDispatchIfFlagOrByte_0218c240(void* scene) {
@@ -12,6 +12,6 @@ ARM int TriggerDispatchIfFlagOrByte_0218c240(void* scene) {
         unsigned char v = g_touchInput.pressed_;
         if (v == 0) return 0;
     }
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 1;
 }

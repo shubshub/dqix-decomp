@@ -3,7 +3,7 @@
 
 struct Struct_0205c570;
 struct Entry_0205d6a0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct BattleCommand {
     char padding0[0x10];
     signed char commands[8];
@@ -36,7 +36,7 @@ struct PartyState {
     signed char ids[4];
     unsigned char count;
 };
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 extern int data_ov000_02184294[3];
 #define G02184294(i) data_ov000_02184294[(i) + 1]
@@ -48,7 +48,7 @@ int GetField0x3acValue_020100a8(GameState*);
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 extern "C" BattleCommand* func_ov000_02161318(BattleMenuState*, int);
 extern "C" int func_ov000_0217c594(BattleMenuState*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov000_02176e3c(BattleMenuState*, BattleCommand*, int, int, int, int);
 extern "C" void func_ov000_02170db0(BattleCommand*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
@@ -64,7 +64,7 @@ extern "C" ARM void func_ov000_0217e870(BattleMenuState* state, int first, int s
     PartyState* party = (PartyState*)GetPtrField0x2a04_02010828(game);
     BattleCommand* command = func_ov000_02161318(state, GetField0x3acValue_020100a8(game));
     if (func_ov000_0217c594(state, 0)) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         if (!command) return;
         func_ov000_02176e3c(state, command, state->commands[state->selected], G02184294(1), G02184294(0), 1);
         state->flags &= ~0x100;

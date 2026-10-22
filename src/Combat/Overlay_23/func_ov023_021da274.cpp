@@ -109,7 +109,7 @@ unsigned char NormalizeField5_0200fb08(struct Struct0200fb08*);
 void DispatchEntry0204b8d0(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
 extern "C" void func_0204b04c(void* obj, void* p);
 extern "C" void func_0204b9b8(PaletteWindow* obj, int x, int y, int width, int height, unsigned palette);
-extern "C" void func_ov003_0215ec68(int id, short* w, short* h);
+extern "C" void Keyboard_GetKeySize(int id, short* w, short* h);
 
 extern const unsigned char data_ov023_021fd530[];
 extern unsigned char data_ov023_021fd532[];
@@ -226,7 +226,7 @@ extern "C" ARM void func_ov023_021da274(Self021da274* self) {
                     short y = marker->y;
                     short h;
                     short w;
-                    func_ov003_0215ec68(marker->kind, &w, &h);
+                    Keyboard_GetKeySize(marker->kind, &w, &h);
                     func_0204b9b8((PaletteWindow*)&self->win198, x >> 3, y >> 3, w >> 3, h >> 3, 0);
                 }
             }

@@ -41,7 +41,7 @@ extern "C" void func_ov025_021ded50(void* work, void* rec);
 extern int data_ov025_021ef990;
 extern int data_ov025_021ef9a4;
 extern int data_ov025_021ef9c0;
-extern int data_02108760;
+extern int g_sePlayer;
 extern int data_ov025_021ef9a8[6];
 extern int data_ov025_021ef8b4;
 extern int data_ov025_021ef8ca;
@@ -141,7 +141,7 @@ extern "C" ARM void func_ov025_021e8d20(char* self, char* arg) {
             if (obj != 0) {
                 int a = ((Object3D*)obj)->GetField78();
                 int b = ((Object3D*)obj)->GetField7a();
-                SetForwardAndStore0205ebc0(&data_02108760, a, b);
+                SetForwardAndStore0205ebc0(&g_sePlayer, a, b);
             }
         }
     }
@@ -214,7 +214,7 @@ extern "C" ARM void func_ov025_021e8d20(char* self, char* arg) {
                     if (func_ov000_0215fd90(f, 0xc)) {
                         SetSlotEntry_021eb148(self, 0x19, 0x38e, 2);
                     } else if (func_ov000_0215fd90(f, 6) == 0) {
-                        ForwardToTargetOrDefault0205eabc(&data_02108760, 0, 0);
+                        ForwardToTargetOrDefault0205eabc(&g_sePlayer, 0, 0);
                         if (((unsigned char*)f)[0x1c] != 0 && flag != 0) {
                             unsigned int t = slot->type;
                             if (t == 0xf4 || t == 0xf5 || t == 0x48 || t == 0x70) {

@@ -51,10 +51,10 @@ struct SelectionScreen {
 void ClearChannelAFlag0205cf10(void*);
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void InitChannelPair0205c53c(Struct_0205c53c*);
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SetSelectedIndex(Struct_0205bcdc*, int);
 
 // USA: func_ov023_021e6e60
 extern "C" ARM void func_ov023_021e6e60(SelectionScreen* self) {
@@ -96,14 +96,14 @@ extern "C" ARM void func_ov023_021e6e60(SelectionScreen* self) {
         return;
     }
     InitChannelPair0205c53c(&self->channels_);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&self->channels_.selection_, columns, rows, wrap);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&self->channels_.scrolling_, columns, rows, wrap);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&self->channels_.selection_, count);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&self->channels_.scrolling_, count);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.selection_, columns, rows, wrap);
+    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.scrolling_, columns, rows, wrap);
+    GridCursor_SetCount((Node0205bacc*)&self->channels_.selection_, count);
+    GridCursor_SetCount((Node0205bacc*)&self->channels_.scrolling_, count);
     self->channels_.selection_.pages_ = pages;
     self->channels_.scrolling_.pages_ = pages;
     SetIndexIfValid0205bcdc(&self->channels_.selection_, selected);
-    func_0205bb04(&self->channels_.scrolling_, selected);
+    GridCursor_SetSelectedIndex(&self->channels_.scrolling_, selected);
     self->channels_.scrolling_.firstFlag_ = 1;
     self->channels_.scrolling_.secondFlag_ = 1;
     self->dirty_ = 0;

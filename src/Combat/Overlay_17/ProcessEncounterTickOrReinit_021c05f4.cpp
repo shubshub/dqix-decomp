@@ -29,8 +29,8 @@ struct FlagWord02046708;
 int TestFlags02046708(FlagWord02046708* w, unsigned int mask);
 int GetByte0x26c_02039d7c(char* p);
 extern "C" int func_020c39c8(volatile unsigned short* p);
-struct Obj0205eaa0;
-int DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+int SePlayer_Play(SePlayer* obj, int a, int b);
 void ReinitController02043204(char* p);
 void* GetGlobalResetObj020d7a50(void);
 struct Obj020d7aa0;
@@ -42,7 +42,7 @@ struct List02046a3c;
 struct Node02046a3c;
 void InsertNodeAfterHead(List02046a3c*, Node02046a3c*);
 
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov017_021c05f4  (semantic: ProcessEncounterTickOrReinit_021c05f4)
 extern "C" ARM void func_ov017_021c05f4(void* p9, unsigned char p8, unsigned char p7, int p6) {
@@ -64,7 +64,7 @@ extern "C" ARM void func_ov017_021c05f4(void* p9, unsigned char p8, unsigned cha
         if (func_020c39c8((volatile unsigned short*)0x400006c) != 0) return;
         if (g_keyManager.TestKeysPressed(4) == 0) return;
         *(unsigned short*)((char*)combatant + 0xb2) = 0;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     } else {
         if (*(int*)((char*)g + RegionOffset998) != 0) ReinitController02043204((char*)g);
     }

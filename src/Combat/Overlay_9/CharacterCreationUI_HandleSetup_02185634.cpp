@@ -227,7 +227,7 @@ struct ClearTarget0205a234;
 void ClearField0And40205a234(ClearTarget0205a234* tail);
 extern "C" void func_0205a528(Table0205a444* table, void* file, int size, SafeAllocator* alloc);
 extern "C" void func_ov003_0215e6f8(void* obj, SafeAllocator* alloc, void* data, unsigned int size);
-extern "C" void func_ov003_0215f41c(Ov3Obj* obj, const char* name);
+extern "C" void Keyboard_ResetToKey(Ov3Obj* obj, const char* name);
 extern "C" unsigned char* func_ov003_0215f4fc(Ov3Obj* obj, const char* name);
 void InitWordsQuad_021e60e0(void* model, unsigned int angle);
 extern "C" void func_ov023_021e5974(void* model, Hero* hero, short a, int b, int c);
@@ -266,7 +266,7 @@ extern const signed char data_ov009_0218a99c[];
 extern const unsigned short data_ov009_0218a9a4[];
 extern const char data_ov009_0218acf4[];
 extern const char data_ov009_0218ad0d[];
-extern const char data_ov009_0218ad26[];
+extern const char CharacterCreationUI_firstKeyText[];
 extern const char data_ov009_0218ad28[];
 
 #if defined(jpn)
@@ -289,8 +289,8 @@ void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
 enum PairTableSize { kPairTableSize = 0xc00 };
 enum PairTableAlign { kPairTableAlign = 0x30 };
 
-// USA: func_ov009_02185634
-extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
+// Overlay 9, originally func_ov009_02185634 (USA/EUR 0x02185634, JPN 0x02186814)
+extern "C" ARM void CharacterCreationUI_HandleSetup(CharacterCreation* self)
 {
     unsigned int offset;
     GameState* gs = GameState::GetInstance();
@@ -726,7 +726,7 @@ extern "C" ARM void func_ov009_02185634(CharacterCreation* self)
                 self->allocators_[8].Reset();
                 func_ov003_0215e6f8(self->unk_c4, &self->allocators_[8], data, size);
                 self->unk_c0->unk_4 = self->unk_c4;
-                func_ov003_0215f41c(self->unk_c0, data_ov009_0218ad26);
+                Keyboard_ResetToKey(self->unk_c0, CharacterCreationUI_firstKeyText);
                 unsigned char* node = func_ov003_0215f4fc(self->unk_c0, data_ov009_0218ad28);
                 if (node != NULL)
                     node[0xf] = 1;

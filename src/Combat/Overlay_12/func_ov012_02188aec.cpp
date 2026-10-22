@@ -37,11 +37,11 @@ struct Profile02188aec {
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj021e6e20;
-struct Obj0205eaa0;
+struct SePlayer;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void BuildMessageF_0218a974(char*);
 extern "C" void func_ov023_021e6e60(char*);
 extern "C" int func_ov023_021e6de4(char*);
@@ -51,7 +51,7 @@ extern "C" void func_ov012_0218adac(char*, int, int);
 extern "C" void func_ov012_0218adac(char*, int, int, int);
 #endif
 extern "C" void func_ov012_0218930c(char*, int);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 static inline Profile02188aec* GetProfileDesign(GameState* state) {
     return (Profile02188aec*)((char*)state + kProfileOffset);
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov012_02188aec(char* self) {
         }
         int finished = 0;
         if (func_ov023_021e6de4(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             Profile02188aec* current = GetProfileDesign(GameState::GetInstance());
             current->design = ((*(unsigned int*)(self + kDesignOffset)) << 1) + current->female;
             current->designChosen = 1;

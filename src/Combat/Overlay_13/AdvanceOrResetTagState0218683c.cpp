@@ -16,9 +16,9 @@ struct Obj0205dee8;
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8* obj, int val);
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
 
     if (o[LOW_REGION(0x5c9, 0x63d)] == o[LOW_REGION(0x5c8, 0x63c)]) {
         if (g_keyManager.TestKeysPressed(0x601) != 0) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             if (o[LOW_REGION(0x5c8, 0x63c)] == 4) {
                 int one = 1;
                 if (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 0) {
@@ -102,7 +102,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
             if (g_keyManager.TestKeysPressed(2) != 0 ||
                 (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 1 && IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0)) {
                 if (g_keyManager.TestKeysPressed(2) == 0) {
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                    SePlayer_Play(&g_sePlayer, 1, 0);
                 }
                 SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 3);
                 ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
@@ -118,7 +118,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
             } else {
                 if (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 0 &&
                     IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0) {
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                    SePlayer_Play(&g_sePlayer, 1, 0);
                     int one = 1;
                     if (o[LOW_REGION(0x5c8, 0x63c)] == 4) {
                         o[LOW_REGION(0x5c8, 0x63c)] = 5;

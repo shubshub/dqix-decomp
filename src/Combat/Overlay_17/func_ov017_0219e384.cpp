@@ -270,8 +270,8 @@ struct Actor0209c678;
 void DispatchContextByState0209c678(Actor0209c678*, int);
 int IsScaledFieldPositive0203adfc(void* a, void* b);
 void ScaleAndNotify0203ad88(void* a, void* b, int c);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 struct Obj020397cc;
 void CancelPendingAction020397cc(Obj020397cc*, int);
 extern "C" void func_ov017_021c4664(int mapId, struct Vec3 v, int w);
@@ -394,7 +394,7 @@ void* GetGlobal02109030_020936f8(void);
 extern "C" void func_02094030(void* obj, int a, int b, int c);
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 extern const char data_ov017_021d75fc[];
 extern const char data_ov017_021d7619[];
 extern const char data_ov017_021d761e[];
@@ -459,7 +459,7 @@ extern "C" ARM void func_ov017_0219e384(struct Seq0219e384* self, void* list) {
 			if (self->active != 0) {
 				DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0);
 			}
-			if (IsScaledFieldPositive0203adfc(&data_02108760, 0) != 0) {
+			if (IsScaledFieldPositive0203adfc(&g_sePlayer, 0) != 0) {
 				ScaleAndNotify0203ad88(&data_02109bf4, 0, 0);
 				self->active = 1;
 			}
@@ -487,7 +487,7 @@ extern "C" ARM void func_ov017_0219e384(struct Seq0219e384* self, void* list) {
 				}
 			}
 			if (fld->mode == 1) {
-				DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 15, 0);
+				SePlayer_Play((SePlayer*)&g_sePlayer, 15, 0);
 			}
 			CancelPendingAction020397cc((Obj020397cc*)actor, 1);
 			actor->c2 &= ~0x40;

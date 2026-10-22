@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include <NitroSDK/Matrix.h>
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 int fix32sin(int);
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Obj02015ae4 {
     char pad0[0xe];
@@ -17,8 +17,8 @@ extern "C" ARM int func_02015ae4(Obj02015ae4* self) {
     unsigned short counter = self->counter;
     int firstDuration = 0xbff4;
     if ((float)counter <= (float)firstDuration / 4096.0f) {
-        if (counter == 0) DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 13, 0);
-        else if (counter == 16) DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 14, 0);
+        if (counter == 0) SePlayer_Play((SePlayer*)&g_sePlayer, 13, 0);
+        else if (counter == 16) SePlayer_Play((SePlayer*)&g_sePlayer, 14, 0);
         unsigned int currentCounter = self->counter;
         int square = (self->counter * currentCounter) << 12;
         int coefficient = fix32_Divide(-7290, 0x8fee0);

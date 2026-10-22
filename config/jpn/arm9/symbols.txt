@@ -2196,10 +2196,10 @@ func_0205c9ac kind:function(arm,size=0xec) addr:0x0205c9ac
 func_0205b734 kind:function(arm,size=0x15c) addr:0x0205ca98
 func_0205cbf4 kind:function(arm,size=0x198) addr:0x0205cbf4
 _Z19InitStruct_0205ba2cP15Struct_0205ba2c kind:function(arm,size=0x3c) addr:0x0205cd8c
-_Z25SetupPointerTable0205ba68P15Struct_0205ba68iii kind:function(arm,size=0x64) addr:0x0205cdc8
-_Z29SetField0AndPropagate0205baccP12Node0205bacci kind:function(arm,size=0x30) addr:0x0205ce2c
+_Z24GridCursor_SetDimensionsP15Struct_0205ba68iii kind:function(arm,size=0x64) addr:0x0205cdc8
+_Z19GridCursor_SetCountP12Node0205bacci kind:function(arm,size=0x30) addr:0x0205ce2c
 _Z18GetField0_0205bafcPv kind:function(arm,size=0x8) addr:0x0205ce5c
-func_0205bb04 kind:function(arm,size=0x80) addr:0x0205ce64
+GridCursor_SetSelectedIndex kind:function(arm,size=0x80) addr:0x0205ce64
 _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84 kind:function(arm,size=0x48) addr:0x0205cee4
 _Z12Init0205bbccP15Struct_0205bbcc kind:function(arm,size=0x44) addr:0x0205cf2c
 _Z20ClearBytes0x4cTo0x4eP15Struct_0205bc10 kind:function(arm,size=0x14) addr:0x0205cf70
@@ -2211,7 +2211,7 @@ _Z19CheckActive0205bd20P15Struct_0205bd20i kind:function(arm,size=0x38) addr:0x0
 _Z17SetFields0205bd58P15Struct_0205bd58iiiii kind:function(arm,size=0x20) addr:0x0205d0b8
 func_0205bd78 kind:function(arm,size=0x128) addr:0x0205d0d8
 _Z30CheckByteFlagAndInvoke0205bea0Pv kind:function(arm,size=0x58) addr:0x0205d200
-_Z12Init0205bef8P15Struct_0205bef8 kind:function(arm,size=0x44) addr:0x0205d258
+_Z15GridCursor_InitP15Struct_0205bef8 kind:function(arm,size=0x44) addr:0x0205d258
 _Z18ResetState0205bf3cP15Struct_0205bf3c kind:function(arm,size=0x1c) addr:0x0205d29c
 func_0205bf58 kind:function(arm,size=0x550) addr:0x0205d2b8
 _Z33AdvanceWrappedAccumulator0205c4a8P15Struct_0205c4a8i kind:function(arm,size=0x60) addr:0x0205d808
@@ -2315,7 +2315,7 @@ func_0205e944 kind:function(arm,size=0xb0) addr:0x0205fc30
 _Z27SetStateAndDispatch0205e9f4P11Obj0205e9f4i kind:function(arm,size=0x24) addr:0x0205fce0
 _Z27GetByteFieldAt0xcc_0205ea18Ph kind:function(arm,size=0x8) addr:0x0205fd04
 _Z27SetupContextForMode0205ea20Pvi kind:function(arm,size=0x80) addr:0x0205fd0c
-_Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii kind:function(arm,size=0x1c) addr:0x0205fd8c
+_Z13SePlayer_PlayP8SePlayerii kind:function(arm,size=0x1c) addr:0x0205fd8c
 _Z32ForwardToTargetOrDefault0205eabcPvS_i kind:function(arm,size=0xc) addr:0x0205fda8
 _Z14GetShortAt0xb4P23ShortField0xb4_0205eac8 kind:function(arm,size=0x8) addr:0x0205fdb4
 _Z30UpdateDisplayTransform0205ead0P12Obj_0205ead0ii kind:function(arm,size=0x38) addr:0x0205fdbc
@@ -6447,7 +6447,7 @@ data_020ef040 kind:data(any) addr:0x020eefa0
 data_020ef044 kind:data(any) addr:0x020eefa4
 data_020ef048 kind:data(any) addr:0x020eefa8
 data_020ef070 kind:data(any) addr:0x020eefd0
-data_020ef078 kind:data(any) addr:0x020eefd8
+g_stringFormat kind:data(any) addr:0x020eefd8
 data_020ef07c kind:data(any) addr:0x020eefdc
 data_020eeff3 kind:data(any) addr:0x020eeff3
 data_020ef0ca kind:data(any) addr:0x020ef008
@@ -7531,7 +7531,7 @@ sSeq$22 kind:bss addr:0x0210868c local
 sPendingBytes kind:bss addr:0x02108690 local
 sActiveBytes kind:bss addr:0x02108694 local
 data_02108754 kind:bss addr:0x02108698
-data_02108760 kind:bss addr:0x021086a4
+g_sePlayer kind:bss addr:0x021086a4
 data_02108830 kind:bss addr:0x02108774
 data_02108844 kind:bss addr:0x02108788
 data_02108ce0 kind:bss addr:0x02108c24

@@ -42,7 +42,7 @@ extern "C" int func_0205dd08(Cursor0217c158* cursor);
 void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta);
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 extern "C" int abs(int);
 
 // USA: func_ov000_0217c158
@@ -90,7 +90,7 @@ extern "C" ARM int func_ov000_0217c158(Menu0217c158* menu) {
         }
         if (prev != index) {
             SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor->selection, index);
-            func_0205bb04(&cursor->unk_54, index);
+            GridCursor_SetSelectedIndex(&cursor->unk_54, index);
         }
         menu->field_22 = index;
         menu->field_2c = -1;

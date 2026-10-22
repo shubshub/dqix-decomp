@@ -9,7 +9,7 @@ struct Flags_021ed7e0 {
     unsigned int unused0_ : 11; unsigned int first_ : 7; unsigned int second_ : 7;
     unsigned int unused19_ : 7;
 };
-struct Obj0205eaa0;
+struct SePlayer;
 struct RewardEntry {
     unsigned short text_; unsigned short key_ : 15; unsigned short plural_ : 1;
     unsigned char counter_; signed char combatant_;
@@ -34,7 +34,7 @@ struct ActorView { char pad0[0x130]; CombatStatus* status_; };
 struct FoundReward { char pad0[0x10]; unsigned short id_; };
 struct TextBuffers { char* first_; char* second_; int field8_; };
 extern "C" RewardGlobal _ZZ17GetGlobal021ffefcvE1s;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 TextRenderer* GetGlobalField0x1c020421a0();
 extern "C" void func_02046380(TextRenderer*);
 void CopyOutRegion0x571d_020114ec(char*, void*);
@@ -47,7 +47,7 @@ void DispatchIfCountPositive020dcf7c(int, void*);
 const char* FindEntryByKey_02072a68(TableA68*, int);
 void InitObjFromCombatantId020e4bf4(void*, int);
 void InitObjFromCombatant020e4c74(void*, GameObject*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_0204500c(TextRenderer*, const char*, int, int);
 void ClearFlagBits10to24_021ed7e0(Flags_021ed7e0*);
 int CopyIndexedRegion0x75f0_020ac020(void*, short*, int*, int);
@@ -112,7 +112,7 @@ extern "C" ARM int func_ov023_021f2a48(RewardScreen* self) {
             strcat(message, suffix);
             if (work->index_ < self->count_ - 1) strcat(message, FindEntryByKey_02072a68(&self->texts_, 0x22));
         }
-        DispatchWithShortB4_0205eaa0(&data_02108760, 0x15, 0);
+        SePlayer_Play(&g_sePlayer, 0x15, 0);
         func_0204500c(renderer, message, 1, 0xe3);
         renderer->field19B2_ = 0;
         renderer->active_ = 1;

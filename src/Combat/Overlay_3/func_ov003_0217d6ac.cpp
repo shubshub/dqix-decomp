@@ -18,9 +18,9 @@ extern "C" int func_0205d97c(void *p);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(struct Entry_0205d6a0 *a, int flag);
 void ReinitController02043204(char *obj);
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 extern "C" void func_ov017_021baedc(void *self, int flag);
 struct TailList020469b4;
 struct TailNode020469b4;
@@ -146,7 +146,7 @@ extern "C" ARM void func_ov003_0217d6ac(State_0217d6ac *self) {
 
     self->state = 4;
     self->busy  = 0;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     ResetEntryList0205d6a0((struct Entry_0205d6a0 *) self->list, 0);
     ReinitController02043204(global);
     BattleEvent_0217d6ac *event = *(BattleEvent_0217d6ac **) (res + RG(0x3734, 0x3524));

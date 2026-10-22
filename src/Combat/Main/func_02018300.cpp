@@ -9,7 +9,7 @@
 
 struct Entry_02028bd0;
 struct Obj02028c64;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020397cc;
 struct ProtagonistSpeed {
     char pad_00[0xb2];
@@ -36,14 +36,14 @@ int fix32cos(int);
 int fix32sin(int);
 void Vector3fixMultiplyScalar(const Vector3i*, int, Vector3i*);
 void* GetPointerFromArray0x3c_0201e838(unsigned char*, unsigned int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void CancelPendingAction020397cc(Obj020397cc*, int);
 void EnqueueEventTag175_021d196c(unsigned short, unsigned short, int);
 Entry_02028bd0* GetEntryTableBase_02027ca4();
 Obj02028c64* FindInlineEntryById(Entry_02028bd0*, int);
 void SetFlagBit02028c64(Obj02028c64*, int);
 extern const SoundTable data_020e6e74;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 // USA: func_02018300
 extern "C" ARM void func_02018300(Zone3D* self, ZoneFeatures::Opcode6aEntry* param, int sound, int forced, int notify) {
@@ -122,7 +122,7 @@ extern "C" ARM void func_02018300(Zone3D* self, ZoneFeatures::Opcode6aEntry* par
     }
     if (sound) {
         SoundTable sounds = data_020e6e74;
-        DispatchWithShortB4_0205eaa0(&data_02108760, sounds.values[param->unk_2c.type2.unk_2_low], 0);
+        SePlayer_Play(&g_sePlayer, sounds.values[param->unk_2c.type2.unk_2_low], 0);
     }
     if (forced && (param->unk_2c.type2.unk_2_high & 8)) {
         GameObject* protagonist = GameState::GetInstance()->GetProtagonist();

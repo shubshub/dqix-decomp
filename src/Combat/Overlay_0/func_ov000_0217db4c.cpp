@@ -7,13 +7,13 @@ extern unsigned int data_ov000_02184704[4];
 struct Struct_0205d81c;
 struct Struct_0205c570;
 struct Entry_0205d6a0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct TableEntry0217f8c0;
 struct Struct0217f8c0;
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 extern "C" int func_ov000_0217c594(void* obj, int limit);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* FindElementByComputedKey021815e4(char* obj);
 int GetAdjustedByteField0x1d6b_ov000_021815c8(void* obj);
 extern "C" int func_020dd4c4(int id, void* node);
@@ -24,7 +24,7 @@ void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
 extern "C" void func_ov000_02176e3c(void* obj, struct TableEntry0217f8c0* entry, int val, int arg1, int arg2, int one);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Menu0217db4c {
     char pad_0[0x188];
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov000_0217db4c(struct Menu0217db4c* menu, int arg1, int
     }
     if (func_ov000_0217c594(menu, 5)) {
         menu->field_0x956 = 0;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         menu->mode = 7;
         void* element = FindElementByComputedKey021815e4((char*)menu);
 #if defined(jpn)

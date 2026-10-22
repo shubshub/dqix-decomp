@@ -5,7 +5,7 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Obj0205dee8;
 struct Slots02083834;
@@ -15,7 +15,7 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
@@ -31,7 +31,7 @@ extern "C" void func_ov002_0215bba8(char *base);
 extern "C" void func_ov002_0215a7b4(char *base, int a, short b, int c, int d);
 extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -65,7 +65,7 @@ extern "C" ARM void func_ov002_02164748(char *base) {
         int ta = g_keyManager.TestKeysPressed(0x601);
         int tb = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
         if ((ta | tb) ? 1 : 0) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             GameState *gs = GameState::GetInstance();
             GameObject *a = GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (base + RG(0x1c00 + 0x21, 0x1ae9)));
             if (a == NULL) return;

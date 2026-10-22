@@ -73,21 +73,21 @@ void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
 extern "C" void func_020dfec0(void* cont, void* alloc, void* data, unsigned int length);
 struct Obj02046574;
 void SetIndexedName02046574(Obj02046574*, int, char*);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov017_021a933c(void* obj, int key);
 void InitBigStruct0205c790(char*);
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 struct Container020e0310;
 void* GetFieldByKey020e0434(Container020e0310*, int);
 void ProcessCombatEntry0205cb74(char*, int);
 extern "C" void func_0205cc50(void* obj, int a, int b);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void* obj, int value);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int value);
 struct ResetBytesAndSetByte0x16Data;
 void ResetBytesAndSetByte0x16_0205c77c(ResetBytesAndSetByte0x16Data*, int);
 void SetupGlobalObjType1AndInitSelfPointer_0205cd28(unsigned char* obj);
@@ -122,7 +122,7 @@ extern "C" void func_ov017_021a92a0(Self021a86d0* self);
 extern char data_ov017_021d77f0[];
 extern char data_ov017_021d780a[];
 extern char data_02114e20[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 static inline unsigned int GX_GetVisiblePlane(void) {
     return (*(volatile unsigned int*)0x4000000 & 0x1f00) >> 8;
@@ -188,7 +188,7 @@ extern "C" ARM void func_ov017_021a86d0(Self021a86d0* self, void* list) {
             ((BackgroundLoader*)loader)->RemoveTask(self->task);
             self->task = -1;
             SetIndexedName02046574((Obj02046574*)g, 0, *(char**)((char*)gs->GetProtagonist() + 0x134));
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             func_ov017_021a933c(self, 0x64);
             *(int*)(g + MessageState) = 1;
             self->state = 2;
@@ -205,10 +205,10 @@ extern "C" ARM void func_ov017_021a86d0(Self021a86d0* self, void* list) {
             sub->dd = 1;
             sub->dc = 1;
             int count = self->count;
-            SetupPointerTable0205ba68((Struct_0205ba68*)sub->table4c, 1, count + 1, 0);
-            SetupPointerTable0205ba68((Struct_0205ba68*)sub->table9c, 1, count + 1, 0);
-            SetField0AndPropagate0205bacc((Node0205bacc*)sub->table4c, count + 1);
-            SetField0AndPropagate0205bacc((Node0205bacc*)sub->table9c, count + 1);
+            GridCursor_SetDimensions((Struct_0205ba68*)sub->table4c, 1, count + 1, 0);
+            GridCursor_SetDimensions((Struct_0205ba68*)sub->table9c, 1, count + 1, 0);
+            GridCursor_SetCount((Node0205bacc*)sub->table4c, count + 1);
+            GridCursor_SetCount((Node0205bacc*)sub->table9c, count + 1);
             int offset = 0;
             for (int j = 0; j < self->count; j++) {
                 if (self->members[j] == 4) {
@@ -245,7 +245,7 @@ extern "C" ARM void func_ov017_021a86d0(Self021a86d0* self, void* list) {
             func_0205cc50(self->sub, 0, -4);
 #endif
             SetIndexIfValid0205bcdc((Struct_0205bcdc*)sub->table4c, 0);
-            func_0205bb04(sub->table9c, 0);
+            GridCursor_SetSelectedIndex(sub->table9c, 0);
             sub->b260 = 1;
             ResetBytesAndSetByte0x16_0205c77c((ResetBytesAndSetByte0x16Data*)sub->resetData, 1);
             sub->b25f = 1;
@@ -260,7 +260,7 @@ extern "C" ARM void func_ov017_021a86d0(Self021a86d0* self, void* list) {
         g[MessageDone] = 0;
         int sel = GetScaledSumIfActive0205cecc(self->sub);
         if (g_keyManager.TestKeysPressed(1)) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             sel = CallFunc0205c570AtField0x1c_0205cb64(self->sub);
         } else if (g_keyManager.TestKeysPressed(2)) {
             sel = -2;

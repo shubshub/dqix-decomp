@@ -30,8 +30,8 @@ extern char data_ov003_0217ea6f[];
 #else
 extern "C" void func_0205d304(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 struct Elem0216fc58* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 void GetFourShortsAtIndex(struct ShortArrays0204c610* base, int index, short* out0, short* out1, short* out2, short* out3);
 void* CreateAndSetFields46_021e2ca8(void* a, void* b, int c, int d);
@@ -90,10 +90,10 @@ extern "C" ARM void func_ov003_0216fc58(char* self, int flag, int tag) {
     window = *(char**)(self + 0x3c);
     *(int*)(window + 0x8) = 1;
     *(int*)(window + 0x58) = 1;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(window + 0x4), 3);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(window + 0x54), 3);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x4), 3);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x54), 3);
 }
 #else
 // USA: func_ov003_0216fc58
@@ -145,10 +145,10 @@ extern "C" ARM void func_ov003_0216fc58(char* self, int flag, int tag) {
     window = *(char**)(self + 0x3c);
     *(int*)(window + 0x8) = 1;
     *(int*)(window + 0x58) = 1;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(window + 0x4), 3);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(window + 0x54), 3);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x4), 1, 3, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(window + 0x54), 1, 3, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x4), 3);
+    GridCursor_SetCount((struct Node0205bacc*)(window + 0x54), 3);
 
     struct Elem0216fc58* elem = FindElementByC40205d81c(*(struct Struct_0205d81c**)(self + 0x3c), 0);
     if (elem == 0) {

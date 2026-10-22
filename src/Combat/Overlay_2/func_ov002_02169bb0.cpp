@@ -10,7 +10,7 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Struct_0205bcdc;
 struct ShortArrays0204c610;
@@ -18,18 +18,18 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 void GetFourShortsAtIndex(struct ShortArrays0204c610 *p, int idx, short *a, short *b, short *c, short *d);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *s, int idx);
 void SyncModeIfChanged0215b268(char *base);
-extern "C" void func_0205bb04(void *p, int idx);
+extern "C" void GridCursor_SetSelectedIndex(void *p, int idx);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_02160c68(void *base);
 extern "C" void func_ov002_02156e90(void *base);
 extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02169bb0
 extern "C" ARM void func_ov002_02169bb0(char *base) {
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov002_02169bb0(char *base) {
                             int sel                          = *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6));
                             char *list                       = base + RG(0x2c8 + 0xc00, 0xe20);
                             SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), sel);
-                            func_0205bb04(list + 0x54, sel);
+                            GridCursor_SetSelectedIndex(list + 0x54, sel);
                             func_ov002_0215b9a4(base, RG(0x23, 0x26), 0);
                             SyncModeIfChanged0215b268(base);
                             return;
@@ -99,7 +99,7 @@ extern "C" ARM void func_ov002_02169bb0(char *base) {
         int a = g_keyManager.TestKeysPressed(0x601);
         int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
         if (((a | b) ? 1 : 0) && *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6)) == 2) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
             func_ov002_02156e90(base);
         } else if (CheckFlagOrThreshold_02161b48(base, 1)) {

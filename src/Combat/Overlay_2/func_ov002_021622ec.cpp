@@ -13,12 +13,12 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag0215bf34(char *base);
 int GetField0x3acValue_020100a8(GameState *gs);
@@ -31,7 +31,7 @@ extern "C" void func_ov017_021c05f4(int a, int b, int c, int d);
 extern "C" void func_ov023_021dca88(void *p);
 extern "C" void func_02012fe4(void);
 extern "C" void func_02017c58(void);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline int AnyConfirm021622ec(char *base) {
     return (g_keyManager.TestKeysPressed(0x601) |
@@ -100,7 +100,7 @@ extern "C" ARM void func_ov002_021622ec(char *base) {
                     *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
                     break;
             }
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
         } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
             *(unsigned char *) (base + 0x1000 + RG(0xc2f, 0xaf7)) = 0;
             if (*(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) & 1) {

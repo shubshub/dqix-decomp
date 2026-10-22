@@ -23,7 +23,7 @@ void RefreshDisplayState0205e8ec(struct Obj_0205e8ec* a);
 
 extern AllocatorUnion data_02114e20;
 extern char data_02109bf4;
-extern char data_02108760;
+extern char g_sePlayer;
 
 struct AllocGroup0218d8d8 {
     char pad[kAllocatorOffset];
@@ -41,5 +41,5 @@ ARM void ResetAllocatorAndDispatchState_0218d8d8(struct AllocGroup0218d8d8* obj)
     }
     DispatchContextByState0209c678((struct Actor0209c678*)&data_02109bf4, 0);
     InitActorContext0209c20c((struct Actor0209c20c*)&data_02109bf4);
-    RefreshDisplayState0205e8ec((struct Obj_0205e8ec*)&data_02108760);
+    RefreshDisplayState0205e8ec((struct Obj_0205e8ec*)&g_sePlayer);
 }

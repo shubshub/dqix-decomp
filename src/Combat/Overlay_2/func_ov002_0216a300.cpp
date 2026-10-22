@@ -12,7 +12,7 @@
 
 struct Struct0205de24;
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205def8;
 struct Struct_0205d81c;
 struct Obj0205dee8;
@@ -27,7 +27,7 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
                                                                         unsigned char keyHigh);
 extern "C" void func_ov002_02161cf0(char *base);
 extern "C" void func_ov002_02160fb4(char *base);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 char *GetField4Ptr020e1b24(void *p);
 void ResetAndReposition020e280c(struct Obj020e280c *self, void *b);
@@ -50,9 +50,9 @@ void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 void ReinitController02043204(char *obj);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *s, int index);
-extern "C" void func_0205bb04(void *s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void *s, int n);
 int IsFlag0x2Active020e2984(struct Outer020e28dc* window);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 extern "C" unsigned char data_ov002_0216d3ac;
 
 struct Bits0216a300 {
@@ -100,7 +100,7 @@ struct Bits0216a300 {
             int n_   = (*(short *) (base + RG(0x1c00 + 0xa, 0x1a00 + 0xd2)) = 7); \
             char *l_ = LST(base); \
             SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (l_ + 4), n_); \
-            func_0205bb04(l_ + 0x54, n_); \
+            GridCursor_SetSelectedIndex(l_ + 0x54, n_); \
             func_ov002_0215b9a4(base, K(0x21, 0x24), 0); \
         } \
         if (*(int *) (base + 0x1000 + RG(0xbbc, 0xa84)) == K(0xb, 0xc)) { \
@@ -123,7 +123,7 @@ extern "C" ARM void func_ov002_0216a300(char *base) {
         FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) LST(base), 0, 3);
         func_ov002_02161cf0(base);
         func_ov002_02160fb4(base);
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 5, 0);
+        SePlayer_Play((struct SePlayer *) g_sePlayer, 5, 0);
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) LST(base), 0, K(0x25, 0x28));
         char *p = GetField4Ptr020e1b24(*(void **) (*(char **) base + 0x10));
         if (((struct Bits0216a300 *) p)->b0) {
@@ -150,7 +150,7 @@ extern "C" ARM void func_ov002_0216a300(char *base) {
         if (*(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda)) >= 0 || ok) {
             *(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda)) = GetSignedByteAt0x14_020e2910(*(signed char **) (base + 4));
             ResetSelectionState020e25e8(*(struct Obj020e25e8 **) (base + 4));
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             data_ov002_0216d3ac = 0;
             switch (*(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda))) {
                 case 0: {

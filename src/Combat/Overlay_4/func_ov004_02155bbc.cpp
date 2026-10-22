@@ -13,9 +13,9 @@ unsigned int GetTableEntry_021f9b6c(struct Obj9b6c* obj, unsigned int a, unsigne
 void* GetLinkedNodeIfKind6_021f9cb8(void* unused, void* other, void* node);
 extern "C" void func_ov023_021f88b8(void* obj, void* param1, int id);
 extern "C" void func_ov004_0215534c(void*);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 struct S10021707c4 { char pad[0x10]; unsigned char toggle; };
 extern struct S10021707c4* data_ov004_021707c4;
@@ -103,6 +103,6 @@ extern "C" ARM int func_ov004_02155bbc(void* a1) {
     }
 
     func_ov004_0215534c(a1);
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

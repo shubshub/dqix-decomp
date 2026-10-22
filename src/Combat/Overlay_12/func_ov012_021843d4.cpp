@@ -17,7 +17,7 @@ void ResetList0204af64(List0204af64* background);
 extern "C" void func_0204c684(void* canvas);
 #if defined(jpn)
 #define func_ov012_021845f8 func_ov012_02185690
-extern "C" void _Z12Init0205bef8P15Struct_0205bef8(void* cursor);
+extern "C" void _Z15GridCursor_InitP15Struct_0205bef8(void* cursor);
 void ClearFields_021e20c0(void* profile);
 #endif
 extern "C" void func_ov012_021845f8(void* checker);
@@ -174,7 +174,7 @@ extern "C" ARM void func_ov012_021843d4(ProfileEditor021843d4* self)
 #if defined(jpn)
     self->nameFlag_ = 0;
     self->nameStep_ = 0;
-    _Z12Init0205bef8P15Struct_0205bef8(self->nameCursor_);
+    _Z15GridCursor_InitP15Struct_0205bef8(self->nameCursor_);
     self->profileIndex_ = 0;
     ClearFields_021e20c0(self->profile_);
 #endif

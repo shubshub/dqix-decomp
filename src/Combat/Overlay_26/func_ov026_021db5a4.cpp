@@ -116,7 +116,7 @@ extern const char data_ov026_021dee23[];
 extern const char data_ov026_021dee3a[];
 extern const char data_ov026_021dedec[];
 extern const Rodata021de6a0 data_ov026_021de6a0;
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov026_021db5a4
 extern "C" ARM void func_ov026_021db5a4(BattleWork* self) {
@@ -162,8 +162,8 @@ extern "C" ARM void func_ov026_021db5a4(BattleWork* self) {
         }
     } else if (self->phase == 2) {
         InitStruct02078484Struct req;
-        SetForwardAndStore0205eb54(data_02108760, 0x1b3, 0x1b3);
-        DispatchIfField0xc4NonNeg_0205eb90(data_02108760, 1, 0);
+        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 1, 0);
         self->fadeActive = 1;
         func_ov000_021626a0(self, 0x26, 0);
         func_ov000_021626a0(self, 0x27, 0);
@@ -212,7 +212,7 @@ extern "C" ARM void func_ov026_021db5a4(BattleWork* self) {
         }
     } else if (self->phase == 5) {
         InitStruct02078484Struct req;
-        ForwardField0xc0_0205eb80(data_02108760);
+        ForwardField0xc0_0205eb80(g_sePlayer);
         self->fadeActive = 0;
         SetMainBrightness(res, -0x10, 0);
         GameState* gs = GameState::GetInstance();
@@ -233,8 +233,8 @@ extern "C" ARM void func_ov026_021db5a4(BattleWork* self) {
         func_ov000_02163894(self);
         UpdateFlag8AndBit4_021636ac(self);
         self->phase = 6;
-        SetForwardAndStore0205eb54(data_02108760, 0x1b3, 0x1b3);
-        DispatchIfField0xc4NonNeg_0205eb90(data_02108760, 2, 0);
+        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 2, 0);
         self->fadeActive = 1;
     } else if (self->phase == 6) {
         func_ov000_02163928(self);

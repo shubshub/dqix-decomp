@@ -8,8 +8,8 @@ struct DispatchTable_0215ef54 {
 
 extern struct DispatchTable_0215ef54 data_ov003_0217f3c8;
 
-// USA: func_ov003_0215ef54  (semantic: Dispatch_0215ef54)
-extern "C" ARM void* func_ov003_0215ef54(void* obj) {
+// Overlay 3, originally func_ov003_0215ef54 (USA/EUR 0x0215ef54; JPN not identified)
+extern "C" ARM void* Keyboard_HandleKey(void* obj) {
     unsigned char* o = (unsigned char*)obj;
     unsigned char* field0 = *(unsigned char**)o;
     struct DispatchTable_0215ef54 table;

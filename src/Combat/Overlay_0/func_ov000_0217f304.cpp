@@ -7,7 +7,7 @@ extern "C" int func_0205bf58(void* obj, int v);
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 extern "C" int func_ov000_021753d8(void* obj, int targetIndex);
-extern "C" void func_0205bb04(void* obj, int value);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int value);
 extern "C" void func_0205d7a0(unsigned char* obj, int val);
 
 struct Command_0217f304 {
@@ -46,7 +46,7 @@ extern "C" ARM void func_ov000_0217f304(struct Menu_0217f304* menu, int unused, 
     int currentGroup = func_ov000_021753d8(menu, position);
     if (type == 0x19) target = menu->defaultPosition;
     if (position != target) {
-        func_0205bb04(menu->groupCursor, currentGroup);
+        GridCursor_SetSelectedIndex(menu->groupCursor, currentGroup);
         return;
     }
     if (group == currentGroup) return;

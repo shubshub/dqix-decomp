@@ -35,11 +35,11 @@ struct Obj020e280c {
     ChoicePanel* panel;
     ChoiceWindow* window;
 };
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 extern "C" int func_020813ec(void*, int);
 void ResetWithSub0208203c(Obj0208203c*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void SetElementFlag0x20_02080c04(Obj2081*, int);
 void ResetAndReposition020e280c(Obj020e280c*, void*);
 void SetFieldsAt0x4And0x8_020e2d24(int*, int, int);
@@ -71,7 +71,7 @@ struct Ctx02159db0 {
 };
 
 extern "C" ARM void func_ov006_02159db0(Ctx02159db0* owner) {
-    DispatchWithShortB4_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
     owner->group = 7;
     owner->previousCursor = owner->choiceCursor = 0x22;
     owner->menu->cursor = owner->choiceCursor;

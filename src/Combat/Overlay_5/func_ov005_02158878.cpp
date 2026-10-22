@@ -16,7 +16,7 @@ struct StructA0205d5d0;
 struct Struct_0205d81c;
 struct Entry_0205d6a0;
 struct MenuElement;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct MenuWindow {
     int unk_0;
@@ -38,7 +38,7 @@ struct EquipmentMenu {
     char unk_3dd3[LOW_REGION(0x3d54, 0x3ddc) - LOW_REGION(0x3d4b, 0x3dd3)];
 };
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 extern "C" void func_0205d0e0(void* window);
 extern "C" void func_ov005_021589f4(EquipmentMenu* self);
@@ -46,7 +46,7 @@ extern "C" int func_ov005_02158b3c(void* object, void* buffer);
 MenuElement* FindElementByC40205d81c(Struct_0205d81c* s, int key);
 int IsField0x9cEqual3_0204c7cc(unsigned char*);
 int CheckFlag30Or401_02157190(void* self);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int unk);
+void SePlayer_Play(SePlayer* sound, int effect, int unk);
 void ResetEntryList0205d6a0(Entry_0205d6a0* window, int unk);
 // USA: func_ov005_02158878
 extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
@@ -72,7 +72,7 @@ extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
     clear = 0;
     int flag = CheckFlag30Or401_02157190(self);
     if (flag | touch) {
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, clear);
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, clear);
         if (self->pending_ != 0) {
             self->kind_ = self->pending_;
             self->pending_ = 0;

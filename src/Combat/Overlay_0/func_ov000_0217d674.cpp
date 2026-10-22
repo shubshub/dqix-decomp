@@ -28,14 +28,14 @@ struct MenuState {
     unsigned short flags;
 };
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct TableEntry0217f8c0;
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(Struct_0205c570*);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 struct Struct0217f8c0;
@@ -59,7 +59,7 @@ extern "C" ARM void func_ov000_0217d674(MenuState* menu, int arg1, int arg2) {
     menu->flags |= 0x100;
     menu->activeSum = GetActiveScaledSum0205d794((Struct_0205c570*)menu->elements);
     if (func_ov000_0217c594(menu, 0) != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         int id = menu->slotIds[menu->activeSum];
         menu->field_0x1d6e = 0;
         menu->field_0x68 = func_020dd3cc(id);

@@ -21,8 +21,8 @@ extern "C" void func_0205308c(void* obj, int val);
 extern "C" void* func_0205ec34(void);
 extern "C" void func_0206f81c(void* p);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 void ForwardToTargetOrDefault0205eabc(void* obj, void* target, int arg);
 int SetTargetFieldAndForEach02064a9c(void* param0, void* param1);
@@ -47,7 +47,7 @@ extern struct Entry02053634 data_020e7c94[];
 
 extern char data_020f0477;
 extern char data_020f047e;
-extern int data_02108760;
+extern int g_sePlayer;
 extern char data_020f0481;
 extern char data_020f0486;
 
@@ -147,7 +147,7 @@ extern "C" ARM void func_02053634(void* obj) {
                 }
                 unsigned short val = *(unsigned short*)func_02012fe4();
                 if (val == ((Object3D*)ctx)->GetField06()) {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, e->kind, (int)arg2);
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, e->kind, (int)arg2);
                 }
                 break;
             }
@@ -209,7 +209,7 @@ extern "C" ARM void func_02053634(void* obj) {
                 if (ctx[OBJECT_OFFSET(0x17c)] > 1) {
                     mode = 1;
                     if (GetIndexedEntryField0x178_02053604((signed char*)ctx) == 0x19) {
-                        ForwardToTargetOrDefault0205eabc((void*)&data_02108760, ctx + OBJECT_OFFSET(0x198), 0);
+                        ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, ctx + OBJECT_OFFSET(0x198), 0);
                     }
                 }
                 if (((Object3D*)ctx)->MaybeSetRegularAnimation(&data_020f0481, mode) != 0) {
@@ -271,7 +271,7 @@ extern "C" ARM void func_02053634(void* obj) {
                 return;
             }
             if (GetIndexedEntryField0x178_02053604((signed char*)ctx) == 0x19) {
-                ForwardToTargetOrDefault0205eabc((void*)&data_02108760, ctx + OBJECT_OFFSET(0x198), 0);
+                ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, ctx + OBJECT_OFFSET(0x198), 0);
             }
             ctx[OBJECT_OFFSET(0x17d)] = ctx[OBJECT_OFFSET(0x17d)] + 1;
             if (ctx[OBJECT_OFFSET(0x17d)] < ctx[OBJECT_OFFSET(0x17c)]) {

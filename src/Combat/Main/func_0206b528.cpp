@@ -48,7 +48,7 @@ struct Entry0204254c {
     char pad6[2];
 };
 
-struct Entry0204254c* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 // USA: func_0206b528
 extern "C" ARM int func_0206b528(unsigned char* obj, int* outA, int* outB) {
@@ -79,7 +79,7 @@ extern "C" ARM int func_0206b528(unsigned char* obj, int* outA, int* outB) {
             }
         } else {
             int adv = 1;
-            struct Entry0204254c* e = FindEntryByKey0204254c((int)p, (obj + 0x1000)[0x9dc]);
+            struct Entry0204254c* e = Font_FindCharacter((int)p, (obj + 0x1000)[0x9dc]);
             if (e) adv = e->field5;
             p += adv;
         }

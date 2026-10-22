@@ -14,7 +14,7 @@ src/Combat/Overlay_9/func_ov009_02184a18.cpp:
 src/Combat/Overlay_9/ResetAndReinitCombatState_02184848.cpp:
     .text start:0x021858e4 end:0x02185aac
 
-src/Combat/Overlay_9/func_ov009_02187b34.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleNewGameFinish_02187b34.cpp:
     complete
     .text start:0x021888f0 end:0x0218918c
 
@@ -50,7 +50,7 @@ src/Combat/Overlay_9/func_ov009_02188604.cpp:
     .text start:0x021893c4 end:0x02189704
 
 
-src/Combat/Overlay_9/AdvanceListStep_021883cc.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleClose_021883cc.cpp:
     complete
     .text start:0x0218918c end:0x02189214
 
@@ -80,12 +80,12 @@ src/Combat/Overlay_9/func_ov009_02184ca4.cpp:
     .text start:0x02185fd0 end:0x02186098
 
 
-src/Combat/Overlay_9/AdvanceStatStep_021865dc.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleBodyType_021865dc.cpp:
     complete
     .text start:0x02187708 end:0x0218781c
 
 
-src/Combat/Overlay_9/AdvanceStatStep_021868c4.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleHairStyle_021868c4.cpp:
     complete
     .text start:0x021879f0 end:0x02187b04
 
@@ -105,22 +105,22 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleGenderSelection_021863d0.cpp:
     .text start:0x02187500 end:0x02187708
 
 
-src/Combat/Overlay_9/func_ov009_021866f0.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleFace_021866f0.cpp:
     complete
     .text start:0x0218781c end:0x021879f0
 
 
-src/Combat/Overlay_9/func_ov009_021869d8.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleHairColor_021869d8.cpp:
     complete
     .text start:0x02187b04 end:0x02187c18
 
 
-src/Combat/Overlay_9/func_ov009_02186aec.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleEyeColor_02186aec.cpp:
     complete
     .text start:0x02187c18 end:0x02187d2c
 
 
-src/Combat/Overlay_9/func_ov009_02186c00.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleSkinColor_02186c00.cpp:
     complete
     .text start:0x02187d2c end:0x02187f2c
 
@@ -138,7 +138,7 @@ src/Combat/Overlay_9/func_ov009_021842a0.cpp:
     complete
     .text start:0x021853a0 end:0x021855a8
 
-src/Combat/Overlay_9/func_ov009_02186e00.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleNameEntry_02186e00.cpp:
     complete
     .text start:0x02187f2c end:0x021881fc
 
@@ -154,11 +154,11 @@ src/Combat/Overlay_9/SelectRandomName_0218b850.cpp:
     complete
     .text start:0x0218b850 end:0x0218b908
 
-src/Combat/Overlay_9/func_ov009_0218742c.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleConfirm_0218742c.cpp:
     complete
     .text start:0x021881fc end:0x021888f0
 
-src/Combat/Overlay_9/func_ov009_02185634.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleSetup_02185634.cpp:
     complete
     .text start:0x02186814 end:0x02187500
 

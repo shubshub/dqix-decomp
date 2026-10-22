@@ -55,7 +55,7 @@ void SetBit0x954StoreIndex0x950_02083ca0(unsigned char* obj, int bit);
 void ClearTwoRegions02083c18(char* obj);
 void SetBitInArray0x910_02083b60(unsigned char* obj, int index);
 
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 // USA: func_ov017_02191508
 extern "C" ARM void func_ov017_02191508(int id, Template02191508* tmpl) {
@@ -70,13 +70,13 @@ extern "C" ARM void func_ov017_02191508(int id, Template02191508* tmpl) {
         hp = combatant->status->hp;
     }
 #if defined(jpn)
-    sprintf(member->name, data_020ef078, tmpl->name);
+    sprintf(member->name, g_stringFormat, tmpl->name);
 
 #else
     if (tmpl != NULL) {
-        sprintf(member->name, data_020ef078, tmpl->name);
+        sprintf(member->name, g_stringFormat, tmpl->name);
     } else {
-        sprintf(member->name, data_020ef078, member->name);
+        sprintf(member->name, g_stringFormat, member->name);
     }
 
 #endif

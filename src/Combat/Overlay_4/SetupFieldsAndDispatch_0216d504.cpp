@@ -32,15 +32,15 @@ struct FieldGroup02171034_0216d504 {
 #endif
 extern FieldGroup02171034_0216d504 data_ov004_02171034;
 extern char data_02109bf4;
-extern unsigned char data_02108760;
+extern unsigned char g_sePlayer;
 
 // USA: func_ov004_0216d504  (semantic: SetupFieldsAndDispatch_0216d504)
 extern "C" ARM int func_ov004_0216d504(void* self) {
     func_020aaf84(data_ov004_02171034.ptr10, 0, 0, 0);
     data_ov004_02171034.field4 = GetField0xcc0209ca98(&data_02109bf4);
-    data_ov004_02171034.field1 = GetByteFieldAt0xcc_0205ea18(&data_02108760);
+    data_ov004_02171034.field1 = GetByteFieldAt0xcc_0205ea18(&g_sePlayer);
     SetModeClamped0209ca70(&data_02109bf4, 3);
-    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&data_02108760, 3);
+    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, 3);
 
     GameState* battle = GameState::GetInstance();
     SetByte0x7f70_02012028(battle, 0);

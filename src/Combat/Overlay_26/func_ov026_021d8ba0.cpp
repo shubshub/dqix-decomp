@@ -222,7 +222,7 @@ void func_ov000_02163928( BattleWork*);
 
 extern char data_ov026_021dedbc[];
 extern char data_ov026_021dedd4[];
-extern char data_02108760;
+extern char g_sePlayer;
 extern Vec3i data_ov026_021de6dc;
 extern NameBuf data_ov026_021de6f8;
 extern NameBuf data_ov026_021de778;
@@ -523,7 +523,7 @@ state1:
     if (self->state == 3) {
         int i;
         if (self->fadeActive != 0) {
-            ForwardField0xc0_0205eb80(&data_02108760);
+            ForwardField0xc0_0205eb80(&g_sePlayer);
             self->fadeActive = 0;
         }
         self->savedWorkFlags = self->workFlags;
@@ -1029,10 +1029,10 @@ state1:
                 func_ov000_0217457c(self->list, -1);
                 if (self->phase == -1) {
                     self->fadeTimer = 60;
-                    ForwardField0xc0_0205eb80(&data_02108760);
+                    ForwardField0xc0_0205eb80(&g_sePlayer);
                     self->fadeActive = 0;
-                    SetForwardAndStore0205eb54(&data_02108760, 0x1b3, 0x1b3);
-                    DispatchIfField0xc4NonNeg_0205eb90(&data_02108760, 0, 0);
+                    SetForwardAndStore0205eb54(&g_sePlayer, 0x1b3, 0x1b3);
+                    DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
                     self->fadeActive = 1;
                 }
                 {

@@ -31,7 +31,7 @@ struct Entry0206b6b8 {
     char pad6[2];
 };
 
-struct Entry0206b6b8* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry0206b6b8* Font_FindCharacter(int key, int tableIdx);
 extern "C" void func_02042b98(unsigned char* obj, int a, int b, int c, int d);
 
 // USA: func_0206b6b8
@@ -52,7 +52,7 @@ ARM void MeasureTextWidth0206b6b8(unsigned char* obj) {
         } else {
             int tableIdx = (obj + 0x1000)[0x9dc];
             int advance = 1;
-            struct Entry0206b6b8* e = FindEntryByKey0204254c((int)p, tableIdx);
+            struct Entry0206b6b8* e = Font_FindCharacter((int)p, tableIdx);
             if (e) advance = e->field5;
             p += advance;
         }

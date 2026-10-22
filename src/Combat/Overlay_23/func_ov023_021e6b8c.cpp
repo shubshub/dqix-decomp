@@ -54,7 +54,7 @@ void ClearTwoWordsAndByte_0205b20c(S_b20c*);
 void SetField0_0205b220(void*, int);
 void SetFieldsAt0x4And0x8_0205b228(void*, int, unsigned char);
 extern "C" {
-void func_ov003_0215ec68(int, short*, short*);
+void Keyboard_GetKeySize(int, short*, short*);
 void func_0205b890(WeightedEntry021e6b8c*, int, SpriteEntry021e6b8c*);
 void* memcpy(void*, const void*, unsigned int);
 int func_020420e8(const char*, int);
@@ -71,7 +71,7 @@ extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short
     SpriteEntry021e6b8c* sprite = &self->sprites[label->index + 15];
     short x;
     short y;
-    func_ov003_0215ec68(label->index, &x, &y);
+    Keyboard_GetKeySize(label->index, &x, &y);
     WeightedEntry021e6b8c entries[3];
     for (int i = 0; i < 3; i++) {
         entries[i].field_0 = 0;

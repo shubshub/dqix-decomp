@@ -11,7 +11,7 @@ struct Struct0205de24;
 struct Struct_0205c570;
 struct Struct_0205def8;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj02061bd8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
@@ -21,7 +21,7 @@ void FilterSlotsWithFlag0x800020dc4d0(signed char *out, signed char *outCount);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
 int CheckField0x56bLowNibble(struct Obj02061bd8 *obj);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int GetDataPtr02114e04_020d6c00(void);
 void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int bits);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
@@ -32,7 +32,7 @@ extern "C" void func_ov002_02156e90(char *base);
 extern "C" void func_020d79e0(char *base, int id);
 extern "C" void func_02012fe4(void);
 extern "C" void func_02017c58(void);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 extern "C" unsigned short data_ov002_0216cca4[];
 extern "C" unsigned short data_ov002_0216cc86[];
 
@@ -111,7 +111,7 @@ extern "C" ARM void func_ov002_02164d14(char *base) {
             if (*(unsigned int *) (base + OFF_FLAGS_02164d14) & 2) return;
             if (*(short *) (base + OFF_SEL_02164d14) == count) {
                 *(unsigned int *) (base + OFF_FLAGS_02164d14) &= ~4;
-                DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                 *(int *) (base + OFF_NEXT_02164d14) = K_0F_02164d14;
                 *(int *) (base + OFF_STATE_02164d14) = 0;
                 for (int i = 0; i < 4; i++) {

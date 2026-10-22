@@ -9,7 +9,7 @@ struct Entry02068418 {
     char pad6[2];
 };
 
-struct Entry02068418* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry02068418* Font_FindCharacter(int key, int tableIdx);
 char* FindUnescapedAngleBracket_020424ac(char* str);
 void ToUpperBounded_02067f5c(signed char* s, int count);
 extern char data_020f08f4[];
@@ -30,7 +30,7 @@ extern "C" ARM void func_02068418(void* unused, char* src, char* dst, int id) {
             dst += 2;
             continue;
         }
-        struct Entry02068418* e = FindEntryByKey0204254c((int)src, id);
+        struct Entry02068418* e = Font_FindCharacter((int)src, id);
         if (e != 0) {
             int step = e->field5;
             memcpy(dst, src, step);

@@ -69,14 +69,14 @@ struct MonsterListScreen {
 };
 
 struct Obj2081;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 
 short FindMappedMemberId02080468(void* obj, int id);
 void ResetWithSub0208203c(Obj0208203c*);
 void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081*, int);
 int CheckFlagAndPointInElement_02186ff0(char*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 
 extern "C" {
 MonsterListEntry* func_020974b0(MonsterList* list, int family, int, bool sort, int, short* outCount);
@@ -85,7 +85,7 @@ void func_020813ec(Menu* menu, short group);
 bool func_ov014_02186f10(MonsterListScreen* self);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov014_02187c04
 extern "C" ARM void func_ov014_02187c04(MonsterListScreen* self)
@@ -113,7 +113,7 @@ extern "C" ARM void func_ov014_02187c04(MonsterListScreen* self)
         self->cursor_ = &self->modeCursor_;
         if (func_ov014_02186f10(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->repeat_);
             switch (*self->cursor_)
             {

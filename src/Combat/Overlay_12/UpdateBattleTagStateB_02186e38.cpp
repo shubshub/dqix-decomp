@@ -56,9 +56,9 @@ void SetupBattleTag02189a78(char* base);
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
-int DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+int SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Obj021e6e20;
 int TestFlagsAndActiveElement2_021e6e20(struct Obj021e6e20* obj);
@@ -98,7 +98,7 @@ extern "C" ARM void func_ov012_02186e38(char* self) {
 	}
 
 	if (func_ov023_021e6de4(self) != 0) {
-		DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+		SePlayer_Play(&g_sePlayer, 1, 0);
 		void* battleStruct = GameState::GetInstance();
 		int val = *(int*)(self + kChoiceBOffset);
 		void* name = FindEntryByKey_02072a68((struct TableA68*)(self + kStringsOffset), (short)(val + kNameKeyBase));

@@ -160,7 +160,7 @@ struct InitStruct02078484Struct {
     Vector3fix scale;
 };
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0203a48c;
 struct Vec3Int0203a48c;
 struct Obj0203a588;
@@ -193,7 +193,7 @@ void SetPosAndFields0216f1e4(void* obj, int* srcVec3, int a, int b);
 void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char* obj, int a, int b);
 void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
 void Forward0205ec20(void* obj, void* target, int arg);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
 extern "C" int func_ov025_021ed444(char* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
 extern "C" int func_ov025_021ed380(char* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
@@ -232,7 +232,7 @@ void SetByteField37_0216ff20(char* obj, unsigned char val);
 int GetField0x3acValue_020100a8(GameState* battleStruct);
 extern "C" void func_ov017_021c9d2c(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern char data_ov025_021ef3d0[];
 extern char data_ov025_021ef3d5[];
 extern char data_ov025_021ef3e0[];
@@ -492,9 +492,9 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
                     SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x258, 0x32);
                 }
                 if (sl[Field6fd8]) {
-                    Forward0205ec20(&data_02108760, 0, 0);
+                    Forward0205ec20(&g_sePlayer, 0, 0);
                 }
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x44, 0);
+                SePlayer_Play(&g_sePlayer, 0x44, 0);
                 skipSe = 1;
                 sfx = -1;
                 if (!slotObj->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3d5, 9)) {
@@ -575,9 +575,9 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
             } else if (row->codes[i] == 4 || row->codes[i] == 5) {
                 if (sl[Field7744] == slotId) continue;
                 if (sl[Field6fd8]) {
-                    Forward0205ec20(&data_02108760, 0, 0);
+                    Forward0205ec20(&g_sePlayer, 0, 0);
                 }
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x44, 0);
+                SePlayer_Play(&g_sePlayer, 0x44, 0);
                 func_ov025_021ed444((char*)(sl + MessageQueue), 0x142, slotId, 0, 0, -1, 0);
                 sl[Field7744] = slotId;
                 if (IsPartyMember(slotId)) {
@@ -679,7 +679,7 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
             didAnim = 1;
             soundId = 0x19;
             flags |= 3;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 0x3b, 0);
+            SePlayer_Play(&g_sePlayer, 0x3b, 0);
         }
     } else if (func_ov000_0215fd90(target, 9) || func_ov000_0215fd90(target, 0xa)) {
         if (func_ov000_0215fd90(target, 9)) {
@@ -703,22 +703,22 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
                 SetFields0xbaAnd0xbc_02032fd0((struct ShortPair0xba0xbc*)actor, 0x800, 0x1f4);
             }
         }
-        DispatchWithShortB4_0205eaa0(&data_02108760, 0x3a, 0);
+        SePlayer_Play(&g_sePlayer, 0x3a, 0);
     } else if (func_ov000_0215fd90(target, 6)) {
         if (sb->type != 0x1df) {
             didAnim = 1;
             soundId = 0x1c;
         }
-        DispatchWithShortB4_0205eaa0(&data_02108760, 0x39, 0);
+        SePlayer_Play(&g_sePlayer, 0x39, 0);
         actor->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3ef, 0x10);
         animSaved = 0;
         hadTarget = 1;
     } else if (func_ov000_0215fd90(target, 4) || func_ov000_0215fd90(target, 5) || func_ov000_0215fd90(target, 0x26)) {
         if (!func_ov000_0215fd90(target, 0xd)) {
             if (IsPartyMember(id)) {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x36, 0);
+                SePlayer_Play(&g_sePlayer, 0x36, 0);
             } else {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x37, 0);
+                SePlayer_Play(&g_sePlayer, 0x37, 0);
             }
             if (func_ov000_0215fd90(target, 5)) {
                 if (!animSaved) {
@@ -805,14 +805,14 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
             didAnim = 1;
             soundId = 0x1b;
             flags |= 1;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 0x42, 0);
+            SePlayer_Play(&g_sePlayer, 0x42, 0);
         }
         cleared = 1;
     } else if (func_ov000_0215fd90(target, 0x24)) {
         actor->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef3fc, 0);
         actor->obj3D_.TransitionInheritedAlpha(0, 0x1f4);
         ClearBitIfValueFound02167434(sl, actor->obj3D_.GetTexturePaletteOffset());
-        DispatchWithShortB4_0205eaa0(&data_02108760, 9, 0);
+        SePlayer_Play(&g_sePlayer, 9, 0);
     }
 
     if (hadTarget) {
@@ -935,7 +935,7 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
             }
             if (!skipSe) {
                 if (!quiet) {
-                    DispatchWithShortB4_0205eaa0(&data_02108760, sfx, 0);
+                    SePlayer_Play(&g_sePlayer, sfx, 0);
                 }
                 played = 1;
             }
@@ -943,9 +943,9 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
         if (!played && (textKind == 1 || textKind == 2)) {
             int se = 0x26;
             if (textKind == 2) se = 0x27;
-            DispatchWithShortB4_0205eaa0(&data_02108760, se, 0);
+            SePlayer_Play(&g_sePlayer, se, 0);
         } else if (*(short*)(sl + Field4ca) >= 0 && !keepDefault) {
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(short*)(sl + Field4ca), 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field4ca), 0);
         }
         if (msg->duration) {
             if (!quiet) {
@@ -972,7 +972,7 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* sl, struct EventRow_021d8c
         negAmount = -target->amount;
         Vector3fix pos = actor->obj3D_.position_;
         if (kind == 0) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 0x65, 0);
+            SePlayer_Play(&g_sePlayer, 0x65, 0);
         }
         pos.y += actor->obj3D_.GetHeight();
         QueuePopupEntry0203a48c(popups, negAmount, (Vec3Int0203a48c*)&pos, style, 0, 0);

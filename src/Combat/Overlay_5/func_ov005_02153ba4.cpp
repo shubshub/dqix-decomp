@@ -166,7 +166,7 @@ void* GetPtrField0x2a04_02010828(GameState* gameState);
 unsigned char GetTableByte0215a948(void* unused, int index);
 unsigned char GetTableByte0215a918(void* unused, int index);
 short GetShortFromArray0xc10_0207c620(unsigned char* p, unsigned int list);
-void Init0205bef8(Struct_0205bef8* cursor);
+void GridCursor_Init(Struct_0205bef8* cursor);
 MemberScreen* GetField1c_021a193c(int* p);
 int CountPositiveEntries0207c638(void* p, unsigned int list);
 short GetHalfwordEntryFromField150(Field150Holder02052df8* member, int part);
@@ -260,7 +260,7 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
     self->task_ = 0;
     memset(&self->flags_, 0, sizeof(self->flags_));
     self->unk_3dc0 = -1;
-    Init0205bef8((Struct_0205bef8*)self->cursor_);
+    GridCursor_Init((Struct_0205bef8*)self->cursor_);
     self->cursor_[0x3d] = 0;
     self->unk_3dd0 = 0;
     self->unk_3dd1 = 0;

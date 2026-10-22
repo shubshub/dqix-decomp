@@ -370,7 +370,7 @@ Entry02087574* FindEntryBySignedId02087574(EntryTable02087574* table, int id);
 extern char data_020f1bf0[];
 extern AllocatorUnion data_02114e20;
 extern Global02109bf4 data_02109bf4;
-extern unsigned char data_02108760[];
+extern unsigned char g_sePlayer[];
 
 static inline int CalcSaveChecksum(void* data, unsigned int size) {
     return func_01ff85b8((unsigned char*)data + 4, size - 4);
@@ -536,7 +536,7 @@ extern "C" ARM int func_020a9eb8(SaveTask* task, SaveBody* body, unsigned int fl
             save->words[2] = words[2];
             save->words[3] = words[3];
             save->globalByte = GetField0xcc0209ca98((char*)&data_02109bf4);
-            save->globalByte2 = GetByteFieldAt0xcc_0205ea18(data_02108760);
+            save->globalByte2 = GetByteFieldAt0xcc_0205ea18(g_sePlayer);
             save->byteF7d = battle2->byteF7d;
             save->byte63dc = view2->byte63dc;
             GameStateSaveView::Bytes6* namePtr = &name;

@@ -9,9 +9,9 @@ int CallFunc020e0434With02153694_020e51cc(int value);
 extern "C" void func_02046608(void* a, int b, int c, void* d, int e, int f, int g);
 void InitBigStruct0205c790(char* obj);
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 void ProcessCombatEntry0205cb74(char* obj, int value);
 extern "C" void func_0205cc50(void* obj, int a, int b);
 #if defined(jpn)
@@ -51,10 +51,10 @@ extern "C" ARM void func_ov017_021afb8c(char* self, char* name) {
 
 #endif
         InitBigStruct0205c790(self + 0x48);
-        SetupPointerTable0205ba68((struct Struct_0205ba68*)(self + 0x68), 1, 1, 0);
-        SetupPointerTable0205ba68((struct Struct_0205ba68*)(self + 0xb8), 1, 1, 0);
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)(self + 0x68), 1);
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)(self + 0xb8), 1);
+        GridCursor_SetDimensions((struct Struct_0205ba68*)(self + 0x68), 1, 1, 0);
+        GridCursor_SetDimensions((struct Struct_0205ba68*)(self + 0xb8), 1, 1, 0);
+        GridCursor_SetCount((struct Node0205bacc*)(self + 0x68), 1);
+        GridCursor_SetCount((struct Node0205bacc*)(self + 0xb8), 1);
 
         ProcessCombatEntry0205cb74(self + 0x48, (int)buf2);
 

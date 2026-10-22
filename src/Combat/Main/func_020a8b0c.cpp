@@ -24,7 +24,7 @@ void DispatchIfField0xc4NonNeg_0205eb90(void*, int, int);
 void SetVecYFromValue02033874(Obj02033874*, int);
 void ApplyToListedCombatants020874bc(Party020874bc*, int);
 int fix32abs(int);
-extern char data_02108760;
+extern char g_sePlayer;
 // USA: func_020a8b0c
 extern "C" ARM void func_020a8b0c(Obj020a8b0c* self, int index) {
     if (!(self->mask & (1<<index))) return;
@@ -44,9 +44,9 @@ extern "C" ARM void func_020a8b0c(Obj020a8b0c* self, int index) {
     else {
         difference = height-self->progress;
         if (fix32abs(difference) < 40) {
-            ForwardField0xc0_0205eb80(&data_02108760);
-            SetForwardAndStore0205eb54(&data_02108760, 114, 114);
-            DispatchIfField0xc4NonNeg_0205eb90(&data_02108760, 3, 0);
+            ForwardField0xc0_0205eb80(&g_sePlayer);
+            SetForwardAndStore0205eb54(&g_sePlayer, 114, 114);
+            DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 3, 0);
         }
     }
     actor->height = difference;

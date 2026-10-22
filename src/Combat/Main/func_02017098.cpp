@@ -5,7 +5,7 @@
 struct ActorListManager;
 struct SelfObj792c;
 struct Struct020478bc;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct Entry02017098* GetActorEntryByIndex_0201777c(struct ActorListManager* manager, int index);
 extern "C" void func_0204792c(struct SelfObj792c* self, char* name);
@@ -13,10 +13,10 @@ void RecomputeField0x7c(struct Struct020478bc* o, int newIndex);
 extern "C" float _fflt(int value);
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float value);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 extern char data_020ef222[];
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Segment02017098 {
     char pad0[0x1c];
@@ -59,9 +59,9 @@ extern "C" ARM void func_02017098(struct ActorListManager* manager, int index) {
         LootableContainerManager::GetMainInstance()->GetContainerByID(e->id, NULL);
     if (container != NULL) {
         if (container->containerType == 1) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x10, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x10, 0);
         } else if (container->containerType == 2) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x11, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x11, 0);
         }
     }
 

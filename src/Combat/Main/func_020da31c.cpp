@@ -34,7 +34,7 @@ void FindNodeAndProcess02057fb4(void*, int, void*);
 void* GetInlineRecordByBattleId_02058658(void*, int);
 void StoreZeroAndField0xb6ToOut(State0205a180*);
 void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
-extern char data_020f2884[], data_020f2887[], data_02108760[];
+extern char data_020f2884[], data_020f2887[], g_sePlayer[];
 
 // USA: func_020da31c
 extern "C" ARM void func_020da31c(Event_020da31c* event) {
@@ -148,12 +148,12 @@ extern "C" ARM void func_020da31c(Event_020da31c* event) {
                 effect.flags |= 0xb8;
                 FindNodeAndProcess02057fb4(manager, 0x16, &effect);
                 event->started = 1;
-                DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 1, 0);
+                DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
             } else {
                 State0205a180* active = (State0205a180*)GetInlineRecordByBattleId_02058658(manager, 0xd0);
                 if (active) {
                     StoreZeroAndField0xb6ToOut(active);
-                    DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 1, 0);
+                    DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
                 }
             }
             ++event->activations;

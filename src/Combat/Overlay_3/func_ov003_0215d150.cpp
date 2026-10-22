@@ -4,7 +4,7 @@
 
 struct Struct_0205c570;
 struct Struct0205cf1c;
-struct Obj0205eaa0;
+struct SePlayer;
 
 #if defined(jpn)
 enum { regionalScene = 0x18, regionalCtlStrings = -0x34, regionalCtl = -0x130, regionalCtlByte = -0x1d0, regionalZone = 0x20 };
@@ -84,13 +84,13 @@ void SetChannelBFlag0205cf04(void *obj);
 int GetActiveScaledSum0205d794(Struct_0205c570 *);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+void SePlayer_Play(SePlayer *, int, int);
 void ClearChannelAFlag0205cf10(void *p);
 void ClearFlagByte0205cf1c(Struct0205cf1c *);
 extern "C" int func_ov003_0215dcb8(char *obj);
 ARM int IsFlagStateOrField98Eq2_0215dd00(char *self);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_0215d150
 extern "C" ARM void func_ov003_0215d150(Scene *self) {
@@ -192,7 +192,7 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
         if (func_ov003_0215dcb8((char *) self) != 0) {
             self->b3c2 = 0;
             ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ClearChannelAFlag0205cf10(self->list98);
             ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
             switch (self->tab3bd[self->b3c1]) {

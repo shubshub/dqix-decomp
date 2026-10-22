@@ -34,9 +34,9 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char 
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
-int DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+int SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
@@ -73,7 +73,7 @@ extern "C" ARM void func_ov012_02186a7c(char* self) {
 	if (func_ov023_021e6de4(self) != 0) {
 		*(unsigned char*)(self + kPreviousStateOffset) = *(unsigned char*)(self + kStateOffset);
 		*(unsigned char*)(self + kActiveOffset) = 0;
-		DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+		SePlayer_Play(&g_sePlayer, 1, 0);
 
 		int v = *(int*)(self + kMainChoiceOffset);
 		switch (v) {

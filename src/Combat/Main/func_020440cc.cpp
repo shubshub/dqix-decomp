@@ -6,12 +6,12 @@
 #include "Input/Input.h"
 
 struct EntryList_203dce4;
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern SePlayer g_sePlayer;
 void* GetGlobalPtr021075f4_0203cf4c();
 Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
 extern "C" void func_0206b104(MessageSystem*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void SetFlag0x2IfByte0xd4Not3_0208beb4(unsigned char*);
 extern "C" void func_02043124(MessageSystem*);
 
@@ -67,11 +67,11 @@ ARM int MessageSystem::func_020440cc() {
 #if defined(jpn)
         func_0206cba0(this);
         mode = 5;
-        if (!flags17ff.flag5) DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        if (!flags17ff.flag5) SePlayer_Play(&g_sePlayer, 1, 0);
 #else
         mode = 5;
         func_0206b224(this);
-        if (!b19d3) DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        if (!b19d3) SePlayer_Play(&g_sePlayer, 1, 0);
 #endif
         break;
     case 3:
@@ -124,9 +124,9 @@ ARM int MessageSystem::func_020440cc() {
             ResetControllerState020430b0(this);
         } else {
 #if defined(jpn)
-            if (!flags17ff.flag5) DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            if (!flags17ff.flag5) SePlayer_Play(&g_sePlayer, 1, 0);
 #else
-            if (!b19d3) DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            if (!b19d3) SePlayer_Play(&g_sePlayer, 1, 0);
 #endif
             mode = 5;
             ++tokenIndex;

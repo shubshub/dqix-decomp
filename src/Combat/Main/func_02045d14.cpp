@@ -33,7 +33,7 @@ extern "C" void func_0204483c(TextEncoder*, const char*, char*);
 void RestorePairTables0207df90(char*);
 void BackupPairTables0207dfac(char*);
 int Dispatch02044420(void*, void*);
-CharacterEntry* FindEntryByKey0204254c(int, int);
+CharacterEntry* Font_FindCharacter(int, int);
 int FindEntryIndexByKey020424e4(int, int);
 int FindMatchingEntryIndex(Container02045c00*, int);
 extern "C" unsigned short func_020459b8(TextEncoder*, int, CharacterEntry*, int);
@@ -70,7 +70,7 @@ extern "C" ARM unsigned short func_02045d14(TextEncoder* self, const char* text,
             offset += length * 2;
             outIndex += length;
         } else {
-            entry = FindEntryByKey0204254c((int)(work.buffer + offset), table);
+            entry = Font_FindCharacter((int)(work.buffer + offset), table);
             int index = FindEntryIndexByKey020424e4((int)(work.buffer + offset), table);
             if (entry != 0 && index >= 0) {
                 int match = FindMatchingEntryIndex(self, (int)entry);

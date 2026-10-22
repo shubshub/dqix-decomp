@@ -24,9 +24,9 @@ extern "C" void func_020813ec(void* obj, int key);
 struct Obj0208203c;
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 struct Obj020e280c;
 void ResetAndReposition020e280c(struct Obj020e280c* self, void* b);
@@ -39,7 +39,7 @@ extern "C" ARM void func_ov003_02176468(unsigned char* self) {
     func_020813ec(*(struct Obj2081**)(self + kRegion89c), *(short*)(self + kRegionffe));
     ResetWithSub0208203c((struct Obj0208203c*)(self + kRegion88c));
     *(void**)(self + kRegionff8) = 0;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
     if (*(void**)self == 0) {
         return;
     }

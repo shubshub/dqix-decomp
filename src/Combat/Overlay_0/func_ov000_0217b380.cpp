@@ -30,15 +30,15 @@ struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 int GetClampedArrayField0xd1c_ov000_021761c8(char* base, int index);
 int CountMatchingValues02175348(void* obj, int value);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
 extern "C" void func_ov000_02170db0(void* obj);
 extern "C" void func_ov000_0217629c(void* obj);
 extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
 extern "C" void func_ov000_02176e3c(void* menu, void* obj, int state, int arg1, int arg2, int flag);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct MenuState0217b380 {
     char pad0[0x10];
@@ -63,7 +63,7 @@ extern "C" ARM int func_ov000_0217b380(struct MenuState0217b380* self, int arg1,
             int matches = CountMatchingValues02175348(data_ov000_02184294.menu, value);
             self->selection = NextRandomMax(GetBTRandom(), matches * 100) / 100 + (signed char)base;
         }
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         self->stackTop++;
         self->stack[self->stackTop] = 100;
         func_ov000_02170db0(self);

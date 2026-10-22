@@ -25,7 +25,7 @@ enum {
 #endif
 
 struct Obj020397cc;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020d7aa0;
 struct Vec3_020406f8;
 struct Node020406f8;
@@ -97,7 +97,7 @@ void ReinitController02043204(char* obj);
 extern "C" void func_02043124(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 void CancelPendingAction020397cc(Obj020397cc* obj, int arg1);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* FindEntryPointerByKey0203df78(void* base, int key);
 void SetByteField0x253_020397c0(void* obj);
 Obj020d7aa0* GetGlobalResetObj020d7a50(void);
@@ -144,7 +144,7 @@ void SetFields120_138_021bd38c(void* obj, int a, int b);
 
 extern "C" void __clear(void* buf, int n);
 
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d7c90;
 extern char data_ov017_021d7c95;
 extern char data_ov017_021d7cad;
@@ -185,7 +185,7 @@ extern "C" ARM void func_ov017_021b8e8c(Self021b8e8c* self, ListHead02046b60* li
     switch (self->state) {
     case 0: {
         if (self->quiet == 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
         }
         *(short*)((char*)leader + 0xb2) = 0;
         Vec3_021b8e8c from = *(Vec3_021b8e8c*)((char*)leader + 0x44);

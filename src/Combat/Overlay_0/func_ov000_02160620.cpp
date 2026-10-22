@@ -84,7 +84,7 @@ void ResetInputLogB_020a1edc();
 void PushInputLogB_020a1ef0(int);
 void ForwardField0xc0_0205eb80(void*);
 extern int data_ov000_02184220;
-extern unsigned char data_02108760[0xd0];
+extern unsigned char g_sePlayer[0xd0];
 
 // USA: func_ov000_02160620
 extern "C" ARM void func_ov000_02160620(BattleFrame* frame) {
@@ -189,7 +189,7 @@ extern "C" ARM void func_ov000_02160620(BattleFrame* frame) {
     frame->countdown -= (signed char)game->GetTickCount();
     if (frame->countdown < 0) {
         frame->countdown = 0;
-        ForwardField0xc0_0205eb80(data_02108760);
+        ForwardField0xc0_0205eb80(g_sePlayer);
         frame->countdownFlag = 0;
     }
 }

@@ -41,7 +41,7 @@ int GetBitflagForCombatantColor_021a26e8(GameResources* unused0, int combatantId
 void EnqueueEventTag139_021d09cc(int a, int b, int c, int d);
 GameObject* FindCombatantByField0x16a_0200ffe0(GameState* battleStruct, int id);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Obj_021c2784 {
     unsigned char pad0[0x1];
@@ -96,8 +96,8 @@ extern "C" ARM void func_ov017_021c2784(Obj_021c2784* obj) {
             func_02046608(g, 0xc, ret, buf2, 0xe3, 0, 1);
             func_020d7e10(reset, buf2, 0, 0, 1, 1);
 #endif
-            SetForwardAndStore0205ebc0(&data_02108760, 0x79, 0x79);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0x79, 0x79);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             obj->field8 = 0x3e8;
         }
         obj->state = 1;
@@ -164,7 +164,7 @@ extern "C" ARM void func_ov017_021c2784(Obj_021c2784* obj) {
                 }
             }
         }
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         SetByteField0x253_020397c0(c);
         obj->field1 = 1;
         return;

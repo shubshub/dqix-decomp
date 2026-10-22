@@ -56,7 +56,7 @@ void ClearCombatantSlot_0200fd48(GameState* gs, int id);
 void SetField0x3b0Value_020100c4(GameState* gs, int val);
 
 extern char data_ov001_02164c4a[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 
 #define REG_DISPSTAT_304 (*(volatile unsigned short*)0x04000304)
@@ -145,7 +145,7 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Scene02155dd0* self) {
     ReinitController02043204(globalA);
     func_02043124(globalA);
     ClearFlags04(res2, 8);
-    if (IsScaledFieldPositive0203adfc(data_02108760, 0) != 0) {
+    if (IsScaledFieldPositive0203adfc(g_sePlayer, 0) != 0) {
         ScaleAndNotify0203ad88(data_02109bf4, 0, 0);
     }
     ClearFlags04(res2, 0x2000);
@@ -159,7 +159,7 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Scene02155dd0* self) {
 #if !defined(jpn)
         ResetAndReinit0209c278(data_02109bf4);
         Dispatch0203a974With0x57000_0209c290(data_02109bf4);
-        SetupContextForMode0205ea20(data_02108760, 0x64);
+        SetupContextForMode0205ea20(g_sePlayer, 0x64);
 #endif
         ClearFlags00((GameResources*)res2, 0x1000);
         func_ov028_021d9714();

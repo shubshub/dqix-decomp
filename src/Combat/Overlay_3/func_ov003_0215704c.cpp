@@ -12,7 +12,7 @@ void _Z31ResetIfFlagAndCategory_021538f4Pvi(void *, int);
 int _Z29GetArrayEntryByIndex_02156034Pv(void *);
 int _Z31IsSubBrightnessTransitionActiveP13GameResources(void *);
 int func_ov003_021550dc(void *);
-void _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(void *, int, int);
+void _Z13SePlayer_PlayP8SePlayerii(void *, int, int);
 void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void *);
 int _Z26MatchesArrayEntry_02155f40Pvi(void *, int);
 int func_ov003_02155208(void *);
@@ -51,7 +51,7 @@ int func_ov003_02158754(void *);
 #define JPN_OFS(j, u) (u)
 #endif
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 extern const char *data_020f2a38;
 extern const char *data_020f2a30;
@@ -160,7 +160,7 @@ extern "C" ARM void func_ov003_0215704c(struct Ctrl0215704c *self) {
             ok = 0;
         }
         if (func_ov003_021550dc(self) != 0 && ok != 0) {
-            _Z28DispatchWithShortB4_0205eaa0P11Obj0205eaa0ii(data_02108760, 1, 0);
+            _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 1, 0);
             _Z20ResetWithSub0208203cP11Obj0208203c(self->sub80);
             self->f08   = 0;
             self->cmd   = 0xa;

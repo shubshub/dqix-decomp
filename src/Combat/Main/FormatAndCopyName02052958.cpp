@@ -4,7 +4,7 @@
 extern "C" void __clear(void* buf, int size);
 extern "C" void func_02042764(char* name, void* buf, int flag);
 extern "C" int func_020426bc(void* a, void* b, int flag);
-extern char data_020ef078;
+extern char g_stringFormat;
 
 // USA: func_02052958
 ARM void FormatAndCopyName02052958(char* obj, char* name, int shouldFormatSecond) {
@@ -22,6 +22,6 @@ ARM void FormatAndCopyName02052958(char* obj, char* name, int shouldFormatSecond
         char buf3[0x30];
         __clear(buf3, 0x30);
         func_02042764(name, buf3, 1);
-        sprintf(*(char**)(obj + 0x134), &data_020ef078, buf3);
+        sprintf(*(char**)(obj + 0x134), &g_stringFormat, buf3);
     }
 }

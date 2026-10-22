@@ -7,7 +7,7 @@ void ForwardField0xc0_0205ebec(void* obj);
 extern "C" void func_02057f00(void* self, int code);
 void TailForward02012da4(AllocatorUnion* alloc, void* data);
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern int data_02114e20;
 
 struct Obj021c310c {
@@ -21,7 +21,7 @@ struct Obj021c310c {
 extern "C" ARM void func_ov017_021c310c(struct Obj021c310c* self) {
 	if (self->f90 != NULL) {
 		void* obj = func_02057924(self->f90);
-		ForwardField0xc0_0205ebec((void*)&data_02108760);
+		ForwardField0xc0_0205ebec((void*)&g_sePlayer);
 		func_02057f00(obj, 0x11);
 	}
 

@@ -35,7 +35,7 @@ struct Obj2081;
 struct Obj0207fc6c;
 struct Ctx021ab0c0;
 struct Ctx021ab1a4;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Cont0207fe44;
 struct FlagWord020466f4;
 struct ListHead02046b60;
@@ -84,7 +84,7 @@ extern "C" void func_02081f20(void* repeat, int ticks);
 extern "C" int func_020800fc(void* menu, short* cursor, short prevCursor, unsigned short buttons, unsigned char columns, bool wrap);
 void ClearSublistEntriesFlag4_020804fc(void* obj, int key);
 int UpdateElementCoordFlag_021ab0c0(struct Ctx021ab0c0* ctx);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
 void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
 int CheckCoordsInsideElement_021ab1a4(struct Ctx021ab1a4* ctx);
@@ -98,7 +98,7 @@ void SetField0x5729Value_0201075c(char* gs, unsigned char value);
 void InitActorContext0209c20c(struct Actor0209c20c* actor);
 
 extern AllocatorUnion data_02114e20;
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 #if defined(jpn)
 extern char data_ov017_021d7ddc[];
 extern char data_ov017_021d7def[];
@@ -320,7 +320,7 @@ extern "C" ARM void func_ov017_021aa59c(Self021aa59c* self, ListHead02046b60* li
                     if (self->prevCursor != *self->cursorPtr) {
                         return;
                     }
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                    SePlayer_Play(&g_sePlayer, 1, 0);
                     ResetWithSub0208203c((Obj0208203c*)self->repeat);
                     self->cursorPtr = NULL;
                     if (self->cursor == 0) {

@@ -49,8 +49,8 @@ void BuildMessageC_02189c44(char* self);
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 extern "C" int func_ov023_021e6de4(char* obj);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 #if defined(jpn)
@@ -61,7 +61,7 @@ extern "C" void func_ov012_0218adac(void* obj, int a, int b, int c);
 extern "C" void func_ov012_0218930c(void* obj, int a);
 struct Obj021e6e20;
 int TestFlagsAndActiveElement2_021e6e20(struct Obj021e6e20* obj);
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov012_02186fd8  (semantic: AdvanceTagStateWithMessage_02186fd8)
 extern "C" ARM void func_ov012_02186fd8(char* base) {
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov012_02186fd8(char* base) {
     *(int*)(base + kChoiceCOffset) = sum;
 
     if (func_ov023_021e6de4(base) != 0) {
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
 
         GameState* bs = GameState::GetInstance();
         int key = (short)(*(int*)(base + kChoiceCOffset) + 0x27d8);

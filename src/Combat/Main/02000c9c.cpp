@@ -105,7 +105,7 @@ void InitOverlay17ObjAndBumpBattleCounter02012bd8();
 extern AllocatorUnion data_02114e20;
 extern char data_0211e33c[];
 extern char data_02109bf4[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02114ec4[];
 
 #if defined(jpn)
@@ -248,8 +248,8 @@ extern "C" ARM void main() {
     InitSubstructAndRegisterHandler0x14_020db228(ctx);
     ResetActor0209c174((Actor0209c174*)data_02109bf4);
     Dispatch0203a974With0x57000_0209c290(data_02109bf4);
-    InitDisplayState0205e88c((Obj_0205e88c*)data_02108760);
-    SetupContextForMode0205ea20(data_02108760, 100);
+    InitDisplayState0205e88c((Obj_0205e88c*)g_sePlayer);
+    SetupContextForMode0205ea20(g_sePlayer, 100);
     SafeAllocator allocator;
     allocator.ResetAllocatorPointer();
     allocator.CreateTypeA(data_02114ec4, STARTUP_ALLOCATOR_SIZE);
@@ -356,7 +356,7 @@ extern "C" ARM void main() {
                 }
                 break;
             case 8:
-                ResetObjectState0205e8d4(data_02108760);
+                ResetObjectState0205e8d4(g_sePlayer);
                 FreeAndReinit0203a950(data_02109bf4);
                 g_touchInput.Pause();
                 func_020a1940(&OVERLAY_27_ID);

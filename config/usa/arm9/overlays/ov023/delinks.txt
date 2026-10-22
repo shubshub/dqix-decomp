@@ -748,7 +748,7 @@ src/Combat/Overlay_23/GetFieldPtrAt_021f79e4_021f79e4.cpp:
     complete
     .text start:0x021f79e4 end:0x021f79ec
 
-src/Combat/Overlay_23/BuildFieldTag_021d9e60.cpp:
+src/Combat/Overlay_23/CharacterCreationUI_RefreshNameText_021d9e60.cpp:
     complete
     .text start:0x021d9e60 end:0x021d9f88
 

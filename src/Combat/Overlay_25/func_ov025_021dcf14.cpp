@@ -84,7 +84,7 @@ struct InitStruct02078484Struct {
     Vector3fix scale;
 };
 
-struct Obj0205eaa0;
+struct SePlayer;
 
 extern "C" void* __clear(void* dst, int count);
 extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
@@ -118,7 +118,7 @@ void ForwardPackedFields_021d8bfc(void*, PackedFields_021d8bfc*);
 extern "C" int func_ov025_021ed444(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
 void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char*, int, int);
 void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* FindNodeAtDepth0215fff4(void*, int, int);
 extern "C" int func_ov000_0215fd90(void* entry, int effect);
 int CheckSubstructFlag0x100_02048c68(unsigned char*);
@@ -148,7 +148,7 @@ inline struct Timer021ef974& GetTimer021ef974() {
     static struct Timer021ef974 s;
     return s;
 }
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern Vector3fix data_ov025_021eeee0;
 extern int data_ov025_021eeeec[];
 extern int data_ov025_021eeef8[];
@@ -427,7 +427,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* sl) {
                 StoreFields0x1e4And0x1e8IfNonZero_0202ea10((unsigned char*)(sl + CameraBase), 0xcc, 0x1f4);
                 SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x1f4, 0x64);
                 if (crit) {
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 0x43, 0);
+                    SePlayer_Play(&g_sePlayer, 0x43, 0);
                 }
             }
             cur->mode = 1;
@@ -592,7 +592,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* sl) {
                         req.offset.y += target->obj3D_.GetHeight() / 2;
                     }
                     FindNodeAndProcess02057fb4(list, pending.id, &req);
-                    DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(short*)(sl + Field6f9a), 0);
+                    DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
                 }
                 if (!crit) {
                     if (miss) {
@@ -693,7 +693,7 @@ extern "C" void func_ov000_02167f10(void* obj);
 extern "C" int func_ov025_021ed444(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
 extern "C" int func_ov025_021ed564(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
 void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 int GetShortAtField0xEBound3_ov000_0215ff80(char*, int);
 void* GetActiveCombatWork_ov000_02160130(void);
 extern "C" int func_ov000_0215ffa0(void* node);
@@ -709,7 +709,7 @@ short ClampScaledStat_0216352c(int id, float a, float b);
 extern "C" int func_ov000_021635e4(int id, int mode);
 
 extern Vector3fix data_ov025_021eef04;
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 #undef TIMER
 #define TIMER (GetTimer021ef974().timer2)
@@ -802,7 +802,7 @@ extern "C" ARM int func_ov025_021de124(unsigned char* sl) {
             if (*(unsigned int*)(sl + Field6fa0) & 1) {
                 req.offset.y += obj->obj3D_.GetHeight() / 2;
             }
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(short*)(sl + Field6f9a), 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
             FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
             TIMER = *(unsigned int*)(sl + Field6fc8);
         }
@@ -853,7 +853,7 @@ extern "C" ARM int func_ov025_021de124(unsigned char* sl) {
                 if (sl[ModeByte] != 2) {
                     SetShortTriple0x6e44_ov000_02163440(sl, 0xcc, 0xc8, 0x64);
                 }
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x43, 0);
+                SePlayer_Play(&g_sePlayer, 0x43, 0);
                 TIMER = *(unsigned int*)(sl + Field6fc4) + 0x1f4;
             }
             if (list->count <= sl[Field6eff]) {
@@ -975,9 +975,9 @@ extern "C" ARM int func_ov025_021de124(unsigned char* sl) {
             }
             FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
             if (*(short*)(sl + Field6f9a) != -1) {
-                DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(short*)(sl + Field6f9a), 0);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
             } else if (*(unsigned short*)(sl + Field6f04) != -1) {
-                DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(unsigned short*)(sl + Field6f04), 0);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
             }
             TIMER = *(unsigned int*)(sl + Field6fc8);
         } else if (sl[ModeByte] == 3 || kind2 == 0 || suppressKindCameraDispatch != 0) {
@@ -997,7 +997,7 @@ extern "C" ARM int func_ov025_021de124(unsigned char* sl) {
                 obj->obj3D_.position_ = v;
                 obj->obj3D_.MakeVisible();
             }
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, *(unsigned short*)(sl + Field6f04), 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
             req.objectId = savedId;
             FindNodeAndProcess02057fb4(fx, *(unsigned short*)(sl + Field6f02), &req);
             TIMER = *(unsigned int*)(sl + Field6fd0);

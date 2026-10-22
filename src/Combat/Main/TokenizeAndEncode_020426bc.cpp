@@ -8,7 +8,7 @@ struct Entry020426bc {
     char pad6[2];
 };
 
-struct Entry020426bc* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry020426bc* Font_FindCharacter(int key, int tableIdx);
 int FindEntryIndexByKey020424e4(int key, int tableIdx);
 
 // USA: func_020426bc  (semantic: TokenizeAndEncode_020426bc)
@@ -27,7 +27,7 @@ extern "C" ARM int func_020426bc(char* str, unsigned char* out, int id) {
         }
         int step = 1;
         int code = 0;
-        struct Entry020426bc* e = FindEntryByKey0204254c((int)str, id);
+        struct Entry020426bc* e = Font_FindCharacter((int)str, id);
         if (e != 0) {
             step = e->field5;
         }

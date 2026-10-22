@@ -8,19 +8,19 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int GetField110ArrayValue021574d4(void *self, int idx);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 extern "C" void func_ov002_02161cf0(void *self);
 extern "C" void func_ov002_02160274(void *self);
 extern "C" void func_ov002_02156e90(void *self);
-extern char data_02108760[];
+extern char g_sePlayer[];
 #if defined(jpn)
 extern "C" void func_ov002_0215cd18(char *base);
 #endif
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov002_02169520(char *base) {
     if (cancel) {
         *(unsigned char *) (base + 0xf80 + regionalList) = *(int *) (base + 0x1bb8 + regionalState);
         *(int *) (base + 0x247c + regionalFlags) &= ~4;
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
         int ok                     = 0;
         *(short *) (base + 0x1c12 + regionalState) = ok;
         int sel                    = *(signed char *) (base + 0x1c20 + regionalState);

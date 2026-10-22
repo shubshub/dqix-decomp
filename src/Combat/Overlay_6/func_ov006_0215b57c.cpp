@@ -8,7 +8,7 @@ enum { kWindowFlags = 0x1258, kMenuCursor = 0x36 };
 
 struct Obj0208203c;
 struct ClearFlag40_02157184Struct;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj2081;
 struct StructC28;
 
@@ -144,13 +144,13 @@ extern "C" void func_ov006_021555b0(AlchemyPot* pot, Recipe* recipe, RecipeRecor
 extern "C" unsigned char func_ov006_02159bb0(AlchemyMenu* self);
 extern "C" void func_ov006_02159c64(AlchemyMenu* self);
 extern "C" void func_ov006_021570fc(AlchemyPot* pot, int shown);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int, int);
+void SePlayer_Play(SePlayer* sound, int, int);
 extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
 extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
 void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
 void ClearField44IfSet_02158c28(StructC28* self);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215b57c
 extern "C" ARM void func_ov006_0215b57c(AlchemyMenu* self) {
@@ -217,7 +217,7 @@ extern "C" ARM void func_ov006_0215b57c(AlchemyMenu* self) {
             if (recipe != 0 && record != 0)
             {
                 func_ov006_021570fc(pot, (pot->windowFlags_ & 0x800) ? 0 : 1);
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             }
             return;
         }

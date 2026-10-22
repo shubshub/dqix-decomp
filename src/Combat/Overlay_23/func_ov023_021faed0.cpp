@@ -12,9 +12,9 @@ ARM void* GetEntryPtr_021fa854(char* obj, unsigned int idx);
 
 extern "C" void func_0205ac40(void* obj, void* entry);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern "C" void func_ov011_02184a40(void* a, int b);
 
@@ -221,7 +221,7 @@ DONE:
         if (overlap != 0) {
             if (result == 0) return;
             if (obj->flags0xc & 0x40) {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
             }
             func_ov011_02184a40(arg1, result);
         } else {

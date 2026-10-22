@@ -104,7 +104,7 @@ struct Struct_02104b18
     Matrix4x3 boneMatrixWithView;
 } boneTracking;
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 void Object3D::Initialize()
 {
@@ -299,15 +299,15 @@ void Object3D::AdvanceAnimations_v0()
         if (loopEntry->triggerTime == 0)
         {
             if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (loopEntry->triggerTime == 1.0)
         {
             if (animationEnded_)
-                func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-            func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+            func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
     }
 }
 
@@ -411,15 +411,15 @@ void Object3D::AdvanceAnimations_v1()
             if (loopEntry->triggerTime == 0)
             {
                 if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                    func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (loopEntry->triggerTime == 1.0)
             {
                 if (animationEnded_)
-                    func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-                func_0203ac40(data_02108760, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
     }
 }

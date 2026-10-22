@@ -8,7 +8,7 @@ enum { kMenuCursor = 0x36, kLayoutToTable = 0x4c, kWindowFlags = 0x1258 };
 #endif
 
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj2081;
 struct Obj0215f348;
 struct Cont0207fe44;
@@ -129,13 +129,13 @@ void SetElementFlag0x20_02080c04(Obj2081* menu, int id);
 void ClearElementFlag0x20_02080c20(Obj2081* menu, int id);
 extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
 extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int, int);
+void SePlayer_Play(SePlayer* sound, int, int);
 void CallFunc0204c804OverAllElems(Cont0207fe44* menu);
 extern "C" LayoutElement* func_ov006_02157368(void* layout, short id);
 extern "C" void func_ov006_02158de0(AlchemyMenu* self);
 void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215b7e8
 extern "C" ARM void func_ov006_0215b7e8(AlchemyMenu* self) {
@@ -173,7 +173,7 @@ extern "C" ARM void func_ov006_0215b7e8(AlchemyMenu* self) {
         self->arrowTimer_ = 0;
         if (func_ov006_02158a28(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->repeat_);
             self->cursor_ = 0;
             switch (self->mainCursor_)

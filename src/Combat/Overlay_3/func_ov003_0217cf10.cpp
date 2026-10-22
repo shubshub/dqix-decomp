@@ -106,7 +106,7 @@ struct Self0217cf10 {
 };
 
 struct Obj020397cc;
-struct Obj0205eaa0;
+struct SePlayer;
 struct ActiveEntry02046900;
 struct Rec020467f0;
 struct AllocTarget0204b12c;
@@ -119,7 +119,7 @@ struct Elem_0205cf78;
 Messages0217cf10 *GetGlobalField0x1c020421a0();
 extern "C" Zone0217cf10 *func_02012fe4(void);
 void CancelPendingAction020397cc(Obj020397cc *obj, int flag);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(SePlayer *obj, int a, int b);
 const char *CallFunc020e0434With02153694_020e51cc(int key);
 #if defined(jpn)
 extern "C" void func_0204500c(Messages0217cf10 *window, const char *text, int mode);
@@ -142,7 +142,7 @@ extern "C" void func_020dfec0(void *texts, SafeAllocator *allocator, void *file,
 const char *GetFieldByKey020e0434(Container020e0310 *texts, int key);
 extern "C" int func_020420e8(const char *text, int large);
 
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern char data_ov003_02180c2c[];
 extern char data_ov003_02180c43[];
 extern char data_ov003_02180c56[];
@@ -168,7 +168,7 @@ extern "C" ARM void func_ov003_0217cf10(Self0217cf10 *self) {
     if (step == 0) {
         CancelPendingAction020397cc((Obj020397cc *)gs->GetUnknownGameObject(), 1);
         msg->busy_ = 1;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         if (IsSeen(&save->progress_, 0xffffffff)) {
             func_0204500c(msg, data_ov003_0217ee58, 0);
             msg->flag19b2_ = 0;
@@ -290,7 +290,7 @@ extern "C" ARM void func_ov003_0217cf10(Self0217cf10 *self) {
         Save0217cf10 *save = &zone->save_;
         CancelPendingAction020397cc((Obj020397cc *)gs->GetUnknownGameObject(), 1);
         msg->busy_ = 1;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         if (IsSeen(&save->progress_, 0xffffffff)) {
             func_0204500c(msg, CallFunc020e0434With02153694_020e51cc(0x42), 0, 0xe3);
             msg->flag19b2_ = 0;

@@ -5,9 +5,9 @@
 unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
 int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
 unsigned short GetFlagBitFromField150_0215eb20(void* obj, int bit);
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* CheckNodeState6_0215e4c0(void* a, int key);
 struct Obj021f809c;
 extern "C" void func_ov023_021f809c(struct Obj021f809c*, void*);
@@ -247,7 +247,7 @@ extern "C" ARM int func_ov004_0215fdfc(void* a) {
     func_ov004_0215ef14();
 #endif
     data_ov004_021707e8.f1 = 1;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     Node0215e47c* nd = func_ov004_0215e47c(a, 0x82);
     func_ov023_021fc71c(nd, data_ov004_021707e8.combatant, 1);
     data_ov004_021707e8.fb = 0;

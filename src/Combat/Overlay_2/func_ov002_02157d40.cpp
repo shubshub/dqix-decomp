@@ -50,7 +50,7 @@ struct Struct020a8170 {
 struct Struct0201bc94;
 struct Obj020541a4;
 struct Obj02046574;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj02048350;
 struct List02046a3c;
 struct Node02046a3c;
@@ -96,7 +96,7 @@ void EnqueueEventTag34_021d27a0(int, int, int);
 int GetGlobalField0x1c020421a0(void);
 void InitAndInsertNode_021acd30(char* p, unsigned char a, unsigned char b, unsigned char c);
 int CountMatchingEntries02026a78(char* p);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* p, int a, int b);
+void SePlayer_Play(struct SePlayer* p, int a, int b);
 struct GameObject;
 void InitObjFromCombatant020e4c74(void*, GameObject*);
 void InitObjFromCombatantId020e4bf4(void* p, int a);
@@ -132,7 +132,7 @@ extern "C" void func_ov017_021c3fb4(signed char a, int b);
 extern "C" void func_ov017_021c4418(signed char a, int b);
 extern "C" void func_ov017_021c9e00(signed char a, int b, int c, int d);
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern unsigned char data_ov002_0216c992;
 extern int data_ov002_0216cf51;
 extern int data_0211e33c;
@@ -731,14 +731,14 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
         }
         p->timer = 0;
         if (flagB != 0) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
             p->state = ST(0x26);
             p->nextState = ST(0x2b);
             if (p->command == 0xd7) {
                 p->state = ST(0x2b);
             }
         } else if (flag1c == 0) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
             p->state = ST(0x26);
             p->nextState = ST(0x11);
         }
@@ -806,7 +806,7 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 if (ok) {
                     func_ov016_0218b5c0(0, -1);
                     EnqueueEventTag34_021d27a0(1, p->actor, p->target);
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
                     p->msgId = 0x7536;
                     p->msgId2 = -1;
                     p->state = ST(0x26);
@@ -898,7 +898,7 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 }
             }
         }
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
         p->state = ST(0x26);
         p->nextState = ST(0x11);
         p->timer = 0;

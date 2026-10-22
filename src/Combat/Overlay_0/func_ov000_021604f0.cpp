@@ -34,7 +34,7 @@ extern "C" void* func_02057924(void);
 extern "C" void func_02057f00(void* obj, int index);
 extern "C" void func_ov023_021eb26c(void* obj);
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern int data_ov000_02182fe0[];
 
 struct CombatWork_021604f0 {
@@ -53,7 +53,7 @@ struct CombatWork_021604f0 {
 // USA: func_ov000_021604f0
 extern "C" ARM void func_ov000_021604f0(struct CombatWork_021604f0* work) {
     if (work->displayActive) {
-        ForwardField0xc0_0205eb80(data_02108760);
+        ForwardField0xc0_0205eb80(g_sePlayer);
         work->displayActive = 0;
     }
     ResetBigStruct02013750(work->zone, 1);

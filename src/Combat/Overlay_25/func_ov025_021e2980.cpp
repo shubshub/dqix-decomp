@@ -42,12 +42,12 @@ struct S0204a438;
 struct AngleTrig0202e9a4;
 struct Obj02048c90;
 struct Bytes02033b88;
-struct Obj0205eaa0;
+struct SePlayer;
 extern AnimationGlobals data_ov025_021ef988;
 extern char data_ov025_021ef7d9[];
 extern char data_ov025_021ef7df[];
 extern char data_ov025_021ef7e6[];
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 int GetFlags_0202e09c(int);
 Object3D* GetField0x21c(S0204a438*);
 void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4*, int);
@@ -57,7 +57,7 @@ void ResetInnerState02048c90(Obj02048c90*);
 void ClearSubstructFlag0x4_02049ae4(unsigned char*);
 void SetByte0xbeShiftPrev(Bytes02033b88*, int);
 AnimationWork* GetActiveCombatWork_ov000_02160130();
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 
 // USA: func_ov025_021e2980
 extern "C" ARM int func_ov025_021e2980(AnimationCommand* command, AnimationTargets* targets, int unused, void* context) {
@@ -108,8 +108,8 @@ extern "C" ARM int func_ov025_021e2980(AnimationCommand* command, AnimationTarge
             strcmp(animation, data_ov025_021ef7d9) == 0 ||
             strcmp(animation, data_ov025_021ef7df) == 0) {
             if (!(command->flags & 1)) {
-                if (targets->flags & 1) DispatchWithShortB4_0205eaa0(&data_02108760, 0x66, 0);
-                else DispatchWithShortB4_0205eaa0(&data_02108760, 0x64, 0);
+                if (targets->flags & 1) SePlayer_Play(&g_sePlayer, 0x66, 0);
+                else SePlayer_Play(&g_sePlayer, 0x64, 0);
             }
             lighting->BeginFade(0x4cc, 1000);
             data_ov025_021ef988.flags |= 0x200;

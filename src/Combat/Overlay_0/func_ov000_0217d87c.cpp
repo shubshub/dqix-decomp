@@ -7,7 +7,7 @@ extern "C" void* func_020e08f0(int index, unsigned int* size);
 #endif
 
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Entry_0205d6a0;
 struct Struct_0205d81c;
 struct Struct_0205def8;
@@ -56,12 +56,12 @@ struct MenuState {
     unsigned short flags;
 };
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 extern const char* data_020f2a34;
 extern const char* data_020f2a2c;
 
 int GetActiveScaledSum0205d794(Struct_0205c570*);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
@@ -98,7 +98,7 @@ extern "C" ARM void func_ov000_0217d87c(MenuState* menu, int arg1, int arg2) {
             return;
         }
         menu->mode = 6;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         BackgroundLoader::AddLockGlobal();
 #if defined(jpn)
         ((SafeAllocator*)((char*)menu + 0x1bf8))->Reset();

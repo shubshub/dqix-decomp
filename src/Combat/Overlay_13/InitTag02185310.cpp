@@ -12,15 +12,15 @@ struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
 
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 extern "C" void func_ov013_02185424(void* obj, void* buf);
 #if defined(jpn)
 extern "C" void func_0205d304(void* a, void* b, int p2, int p3, int p4, int p5, int p6);
@@ -58,10 +58,10 @@ ARM void InitTag02185310(unsigned char* obj) {
     obj[R(0xe5, 0xe9)] = 0;
     *(int*)(obj + R(0x3c, 0x40)) = 1;
     *(int*)(obj + R(0x8c, 0x90)) = 1;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(obj + R(0x38, 0x3c)), 1, 6, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(obj + R(0x88, 0x8c)), 1, 6, 0);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(obj + R(0x38, 0x3c)), 6);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(obj + R(0x88, 0x8c)), 6);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + R(0x38, 0x3c)), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + R(0x88, 0x8c)), 1, 6, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(obj + R(0x38, 0x3c)), 6);
+    GridCursor_SetCount((struct Node0205bacc*)(obj + R(0x88, 0x8c)), 6);
     SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(obj + R(0x38, 0x3c)), 1);
-    func_0205bb04(obj + R(0x88, 0x8c), 1);
+    GridCursor_SetSelectedIndex(obj + R(0x88, 0x8c), 1);
 }

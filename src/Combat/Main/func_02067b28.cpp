@@ -41,7 +41,7 @@ struct TextContext02067b28 {
 };
 int IsHighByteFF02044494(void*, void*);
 int Dispatch02044420(void*, void*);
-Entry0204254c* FindEntryByKey0204254c(int, int);
+Entry0204254c* Font_FindCharacter(int, int);
 int FindEntryIndexByKey020424e4(int, int);
 int FindMatchingEntryIndex(Container02045c00*, int);
 extern "C" int func_020459b8(TextContext02067b28*, unsigned char, Entry0204254c*, unsigned char);
@@ -80,7 +80,7 @@ extern "C" ARM void func_02067b28(TextContext02067b28* state) {
                 state->wrapPending = 1;
             }
         }
-        Entry0204254c* entry = FindEntryByKey0204254c((int)source, state->table);
+        Entry0204254c* entry = Font_FindCharacter((int)source, state->table);
         int tableIndex = FindEntryIndexByKey020424e4((int)source, state->table);
         if (entry && tableIndex >= 0) {
             int index = FindMatchingEntryIndex((Container02045c00*)state, (int)entry);

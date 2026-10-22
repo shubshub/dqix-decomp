@@ -5,11 +5,11 @@
 #include "Graphics/Vector.h"
 #include "World/ZoneResourceTree.h"
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer *, int, int);
 int IsAnimationActive0209ca2c(void *);
 
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern char data_02109bf4[];
 extern char data_020ef1f3[];
 extern char data_020ef1f8[];
@@ -76,9 +76,9 @@ extern "C" ARM void func_02015554(void *receiver, void *element) {
         if (entry->animationState == 0) {
             entry->object->SetAnimationPlaybackSpeed(0x1800, 0);
             if (entry->object->MaybeSetRegularAnimation(data_020ef1f3, 1))
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x12, 0);
+                SePlayer_Play(&g_sePlayer, 0x12, 0);
             else if (entry->object->MaybeSetRegularAnimation(data_020ef1f8, 1))
-                DispatchWithShortB4_0205eaa0(&data_02108760, 0x62, 0);
+                SePlayer_Play(&g_sePlayer, 0x62, 0);
             entry->animationState = 1;
         } else if (entry->animationState == 1) {
             if (entry->object->HasAnimationStopped()) {
@@ -91,9 +91,9 @@ extern "C" ARM void func_02015554(void *receiver, void *element) {
                 entry->delay -= deltaTime;
             } else if (!IsAnimationActive0209ca2c(data_02109bf4)) {
                 if (entry->object->MaybeSetRegularAnimation(data_020ef1fe, 5))
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 0x13, 0);
+                    SePlayer_Play(&g_sePlayer, 0x13, 0);
                 else if (entry->object->MaybeSetRegularAnimation(data_020ef204, 5))
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 0x62, 0);
+                    SePlayer_Play(&g_sePlayer, 0x62, 0);
                 entry->flags &= ~0x100;
             }
         }

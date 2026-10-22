@@ -9,9 +9,9 @@ void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int mode);
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
 void SetupDualPointerTables0205cf28(unsigned char* p, int a, int b, int c);
-void SetField0AndPropagate0205bacc(struct Node0205bacc* node, int val);
+void GridCursor_SetCount(struct Node0205bacc* node, int val);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* obj, int index);
-extern "C" void func_0205bb04(void* obj, int v);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 
 struct GlobalField0x1c {
 #if defined(jpn)
@@ -72,10 +72,10 @@ extern "C" ARM void func_ov000_0217636c(struct Combatant* obj, int arg) {
         SetChannelAFlag0205cef8(window);
         SetChannelBFlag0205cf04(window);
         SetupDualPointerTables0205cf28((unsigned char*)window, 2, 3, 0);
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)&window->nodeA, 6);
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)&window->nodeB, 6);
+        GridCursor_SetCount((struct Node0205bacc*)&window->nodeA, 6);
+        GridCursor_SetCount((struct Node0205bacc*)&window->nodeB, 6);
         SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)&window->nodeA, 0);
-        func_0205bb04(&window->nodeB, 0);
+        GridCursor_SetSelectedIndex(&window->nodeB, 0);
         window->nodeA.unk4 = 1;
         window->nodeB.unk4 = 1;
         window->unkA0 = 2;

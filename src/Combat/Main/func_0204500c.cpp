@@ -23,7 +23,7 @@ extern "C" void func_020e23f4(void*);
 void InvokeSubHandlerIfPresent_020e2478(int*);
 void SetEntryEnabled020e2cc4(Entry020e2cc4*, int);
 void CopyInternalFields0207df50(Foo0207df50*);
-extern int data_02108760;
+extern int g_sePlayer;
 
 #else
 
@@ -58,7 +58,7 @@ void InvokeSubHandlerIfPresent_020e2478(int*);
 void SetEntryEnabled020e2cc4(struct Entry020e2cc4*, int);
 void CopyInternalFields0207df50(struct Foo0207df50*);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 #endif
 
@@ -97,7 +97,7 @@ extern "C" ARM void func_0204500c(MessageSystem* window, const char* text, int m
         window->b19bf = 1;
         window->flags17ff.flag1 = 1;
         window->levels[0] = window->levels[1] = window->levels[2] = window->levels[3] = 0x7f;
-        func_0205e944(&data_02108760, 0x7f);
+        func_0205e944(&g_sePlayer, 0x7f);
         memset(window->bitmapAllocationBits, 0, sizeof(window->bitmapAllocationBits));
         memset(window->textBuffer, 0, 0x800);
         memset(window->firstLineBuffer, 0, 0x140);
@@ -263,7 +263,7 @@ extern "C" ARM void func_0204500c(struct MessageSystem* window, const char* text
         window->b19bf = 1;
         window->b19cf = 1;
         window->levels[0] = window->levels[1] = window->levels[2] = window->levels[3] = 0x7f;
-        func_0205e944(&data_02108760, 0x7f);
+        func_0205e944(&g_sePlayer, 0x7f);
         memset(window->bitmapAllocationBits, 0, sizeof(window->bitmapAllocationBits));
         memset(window->textBuffer, 0, 0x960);
         memset(window->firstLineBuffer, 0, 0x280);

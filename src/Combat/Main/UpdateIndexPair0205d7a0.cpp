@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 int GetField0_0205bafc(void* obj);
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 struct Struct_0205bcdc {
     int field0;
     char pad[0x2c];
@@ -21,7 +21,7 @@ extern "C" ARM void func_0205d7a0(unsigned char* obj, int val) {
         if (cur <= val) return;
     }
     if (obj[0x95]) {
-        func_0205bb04(obj + 0x54, val);
+        GridCursor_SetSelectedIndex(obj + 0x54, val);
     }
     if (obj[0x94] == 0) return;
     SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(obj + 0x4), val);

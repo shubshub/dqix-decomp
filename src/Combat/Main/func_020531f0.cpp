@@ -17,7 +17,7 @@ void SetByte0xbeShiftPrev(struct Bytes02033b88* obj, int value);
 
 extern "C" void func_ov017_021cc1f8(int id, const char* src, int len, int extra);
 
-extern char data_02108760;
+extern char g_sePlayer;
 
 struct EntryFlags020531f0 {
     unsigned char mode : 2;
@@ -69,7 +69,7 @@ extern "C" ARM void func_020531f0(struct Obj020531f0* obj) {
     }
 
     if (GetIndexedEntryField0x178_02053604((signed char*)obj) == 0x19) {
-        ForwardToTargetOrDefault0205eabc((void*)&data_02108760, (char*)obj + targetOffset, 0);
+        ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, (char*)obj + targetOffset, 0);
     }
 
     memset(obj->animEntries, 0, 4);

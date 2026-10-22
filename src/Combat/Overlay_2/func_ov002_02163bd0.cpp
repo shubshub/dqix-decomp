@@ -13,7 +13,7 @@ enum { regionalState0d = 0xd, regionalState26 = 0x26 };
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Obj0205dee8;
 struct Struct_0205def8;
@@ -36,7 +36,7 @@ extern "C" int func_0205df38(void *list, int key);
 int CheckAnyByteMatches020dcbbc(unsigned char *arr, int count, int b, int c, int d);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int LookupValueByKey020a0b3c(struct KeyMap020a0b3c *map, int key);
 int DecrementKeyValue020a0a08(KeyMap020a0a08*, int, int);
 extern "C" int _Z26AddKeyValueClamped020a095cP14KeyMap020a095cii(struct KeyMap020a095c *map, int key, signed char amount);
@@ -57,7 +57,7 @@ extern "C" void func_ov002_0215a7b4(char *base, int a, short b, int c, int d);
 extern "C" void func_ov002_0215b2c8(char *self);
 extern "C" void func_ov002_0216bfd4(char *self, int a);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 #define L(base) ((base) + REGIONAL_OFFSET(0xe20, 0x2c8 + 0xc00))
 
@@ -142,7 +142,7 @@ extern "C" ARM void func_ov002_02163bd0(char *base) {
                 *(short *) ((char *) GetFieldAt0x150_02053c6c((unsigned char *) pr) + REGIONAL_OFFSET(0x800 + 0xc6, 0x900 + 0x5e)) = v;
             }
             if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == 4) {
-                DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                 *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
                 if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe8, 0x1c00 + 0x20)) == 4) {
                     void *map = GetPtrField0x2a04_02010828(GameState::GetInstance());
@@ -188,7 +188,7 @@ extern "C" ARM void func_ov002_02163bd0(char *base) {
                 *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa88, 0xbc0))           = 0;
                 *(unsigned char *) (base + 0x2000 + REGIONAL_OFFSET(0x2a8, 0x478)) = 1;
             } else if (func_020dc920(*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) & 0xff, 0, 0, 0)) {
-                DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                 *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
                 func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
                 if (CheckField0NonZero_0202b7d8(func_0202ae18())) {

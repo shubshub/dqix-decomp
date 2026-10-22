@@ -22,19 +22,19 @@ extern "C" int func_020457e0(void *global);
 
 struct Obj_0216f414;
 struct Entry0216f474;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Pool02098970;
 struct Entry02098970;
 struct NibbleElem02098e70;
 struct NibbleElem02098eac;
 Entry0216f474 *FindEntryByShortId_0216f414(Obj_0216f414 *list, int id);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(SePlayer *obj, int a, int b);
 int ReleaseEntryIfInPool(Pool02098970 *pool, Entry02098970 *entry);
 void ResetFieldsB68AndB74_0216fb6c(char *pool);
 int CountNibble0xcEquals9(NibbleElem02098e70 *p);
 int CountNibble0xcEqualsA(NibbleElem02098eac *p);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Entry0216f474 {
     unsigned char pad0[0x16];
@@ -109,7 +109,7 @@ extern "C" ARM void func_ov003_0216f474(Menu0216f474 *self) {
                 e->flags |= 2;
             }
         }
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
         Item0216f474 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
         if (item->kind_ == 9 || item->kind_ == 0xa) {
             func_ov003_0216fc58(self, 1, 0);
@@ -147,17 +147,17 @@ extern "C" ARM void func_ov003_0216f474(Menu0216f474 *self) {
             if (g_keyManager.TestKeysPressed(0x401) != 0 || sel == self->unk_9) {
                 switch (self->unk_8) {
                     case 0:
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                         func_ov003_0216ff90(self);
                         self->state_ = 2;
                         break;
                     case 1:
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                         func_ov003_0216ff90(self);
                         self->state_ = 3;
                         break;
                     case 2:
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+                        SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                         func_ov003_0216ff90(self);
                         self->unk_7  = -1;
                         self->unk_1  = 2;

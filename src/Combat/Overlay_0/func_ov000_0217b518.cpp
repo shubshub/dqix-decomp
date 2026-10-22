@@ -4,7 +4,7 @@
 
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct BattleWindow {
     unsigned char unk0000[0x188];
@@ -62,13 +62,13 @@ struct BattleSubMenu {
 };
 
 extern BattleWindowContext data_ov000_02184294;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int set, int key);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char* member);
 int CheckFlagsOrField_0217ab48_0217ab48(void* menu);
 extern "C" void func_ov000_02171458(BattleSubMenu* menu);
@@ -97,7 +97,7 @@ extern "C" ARM int func_ov000_0217b518(BattleSubMenu* menu, int arg1, int arg2)
     bool cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
     if (cancel || menu->forceClose) {
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         func_ov000_02171458(menu);
         GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(menu->partyIndex);
         if (member != NULL) {
@@ -144,7 +144,7 @@ extern "C" ARM int func_ov000_0217b518(BattleSubMenu* menu, int arg1, int arg2)
     int cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
     if (cancel || menu->forceClose) {
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         func_ov000_02171458(menu);
         GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(menu->partyIndex);
         if (member != NULL) {

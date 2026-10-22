@@ -35,7 +35,7 @@ extern char data_020f12cc[];
 #endif
 extern char data_020f11eb[];
 extern char data_020f11fe[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 void SetSubBrightness(GameResources*, int, int);
 void SetFieldD20208bf28(Obj0208bf28*, int, unsigned char);
 int CountActiveEntries(ActiveEntry02046900*);
@@ -117,8 +117,8 @@ extern "C" ARM void func_0208cfcc(Obj0208bf28* obj) {
         if (obj->blend < 1.0f) obj->blend += 0.2f;
         else {
             obj->blend = 1.0f;
-            SetForwardAndStore0205eb54(data_02108760, 110, 110);
-            DispatchIfField0xc4NonNeg_0205eb90(data_02108760, 0, 0);
+            SetForwardAndStore0205eb54(g_sePlayer, 110, 110);
+            DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 0, 0);
             obj->state++;
             obj->delay = 30;
         }
@@ -134,7 +134,7 @@ extern "C" ARM void func_0208cfcc(Obj0208bf28* obj) {
             }
         }
     } else if (obj->state == 6 && obj->delay == 0) {
-        ForwardField0xc0_0205eb80(data_02108760);
+        ForwardField0xc0_0205eb80(g_sePlayer);
         obj->complete = 1;
         obj->state = 0;
     }

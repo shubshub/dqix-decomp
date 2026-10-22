@@ -38,9 +38,9 @@ struct BattleTargetMenu {
 };
 
 TextWorkspace* GetGlobalField0x1c020421a0();
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
-extern "C" void func_0205bb04(void* s, int n);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 extern "C" int func_ov000_0217538c(void* objRaw);
 extern "C" int func_ov000_021753d8(void* objRaw, int targetIndex);
 extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
@@ -87,10 +87,10 @@ extern "C" ARM void func_ov000_021787b8(BattleTargetMenu* menu, struct InStruct_
     panel->fieldAC = 0xa;
     panel->fieldAE = 0x10;
     panel->elementId = 0xe;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)&menu->groups, 1, groupCount, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)&menu->groups, 1, groupCount, 0);
     menu->groups.pages = 1;
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)&menu->groups, groupCount);
-    func_0205bb04(&menu->groups, group);
+    GridCursor_SetCount((struct Node0205bacc*)&menu->groups, groupCount);
+    GridCursor_SetSelectedIndex(&menu->groups, group);
     char* text = GetGlobalField0x1c020421a0()->textBuffer;
 #if defined(jpn)
     memset(text, 0, 0x800);

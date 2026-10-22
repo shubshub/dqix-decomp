@@ -7,7 +7,7 @@
 #endif
 
 struct GameState;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct GameResources0215c058
 {
@@ -76,7 +76,7 @@ void DispatchByIdxAndCond021551fc(char*, int, int);
 extern "C" GameState* _ZN9GameState11GetInstanceEv();
 extern "C" void func_ov005_02156658(Menu0215c058* self, int x, int y);
 extern "C" int func_ov005_02155670(Menu0215c058* self, int x, int y);
-extern "C" void func_0205bb04(void* obj, int v);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 extern "C" void func_ov005_021579ec(Menu0215c058* self, unsigned int state, unsigned char slot);
 extern "C" unsigned int _ZNK9GameState12GetTickCountEv(GameState* gs);
 extern "C" int func_0205bf58(void* obj, int v);
@@ -91,14 +91,14 @@ extern "C" void func_ov005_02154d7c(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_021537bc(CursorFrame0215c058* frame, int mode, unsigned short value);
 struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 int CheckFlag30Or401_02157190(void* self);
 unsigned char* GetPtrField0x2a04_02010828(GameState*);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
 signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
 extern "C" void func_ov005_0215792c(Menu0215c058* self, int mode);
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern unsigned char data_ov005_0215cd10[];
 
 // USA: func_ov005_0215c058
@@ -135,7 +135,7 @@ extern "C" ARM void func_ov005_0215c058(Menu0215c058* self)
             {
                 self->selected = slot;
                 moved = 1;
-                func_0205bb04(self->scroll, self->selected - 8);
+                GridCursor_SetSelectedIndex(self->scroll, self->selected - 8);
                 func_ov005_021579ec(self, self->cursorMode, self->selected);
             }
         }
@@ -203,7 +203,7 @@ extern "C" ARM void func_ov005_0215c058(Menu0215c058* self)
         if (sel != self->selected)
         {
             self->selected = sel;
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 2, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 2, 0);
             func_ov005_021579ec(self, self->cursorMode, self->selected);
         }
         else if (sel == self->selected)
@@ -225,7 +225,7 @@ extern "C" ARM void func_ov005_0215c058(Menu0215c058* self)
             self->f3daa = 0;
             self->held = -1;
             func_ov005_0215792c(self, 4);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             screen->flags |= 0x81;
 #if defined(jpn)
             self->cursorTarget = (char*)self + 0x19e8;

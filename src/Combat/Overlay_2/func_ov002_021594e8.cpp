@@ -8,7 +8,7 @@
 #define RG(u, j) (u)
 #endif
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj02048350;
 void *SearchBothTables02079e2c(char *p, int key);
 GameObject *GetCombatantChecked_0200ff94(GameState *gs, int id);
@@ -17,13 +17,13 @@ extern "C" void *__clear(void *dst, int count);
 int CopyOutRegion0x571d_020114ec(char *dst, void *src);
 void ConsumeCounter02048350(struct Obj02048350 *p, int a);
 int CheckField0NonZero_0202b7d8(int *p);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *p, int a, int b);
+void SePlayer_Play(struct SePlayer *p, int a, int b);
 void InitStateArray02157ce0(char *p);
 extern "C" void func_ov002_021536e0(void *p);
 extern "C" int func_ov002_021536ec(void *a, void *b, int c);
 extern "C" void func_ov016_0218b5c0(int a, int b);
 extern "C" void func_ov017_021c9e00(signed char a, int b, int c, int d);
-extern "C" int data_02108760;
+extern "C" int g_sePlayer;
 
 struct TableEntry021594e8 {
     char *name;
@@ -129,7 +129,7 @@ extern "C" ARM void func_ov002_021594e8(struct Menu021594e8 *p, short cmd, signe
                 flagA     = 1;
             }
         }
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 0x64, 0);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 0x64, 0);
         p->state     = RG(0x26, 0x29);
         p->nextState = RG(0x17, 0x18);
     }

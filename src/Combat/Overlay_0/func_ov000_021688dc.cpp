@@ -208,7 +208,7 @@ void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength
 extern const char data_ov000_02183b20[];
 extern const char data_ov000_02183b3b[];
 extern const char data_ov000_02183b55[];
-extern int data_02108760;
+extern int g_sePlayer;
 
 void CopyInRegion0x571d_020114c0(char* obj, int len, void* src);
 struct Slot70 { char data[0x70]; };
@@ -573,7 +573,7 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* work) {
 
     battle->SetGameSpeed(0x1000);
     SetCombatWorkFlags0x55f4_ov000_02160fa8(work, 0x400);
-    SetupContextForMode0205ea20(&data_02108760, 0x64);
+    SetupContextForMode0205ea20(&g_sePlayer, 0x64);
 
     unsigned char done;
     *(int*)((char*)battle + kBattleSelection) = 0;

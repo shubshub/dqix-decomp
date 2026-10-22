@@ -10,7 +10,7 @@
 struct Obj2081;
 struct Cont0207fe44;
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 
 short FindMappedMemberId02080468(void* obj, int id);
 extern "C" void func_020813ec(void* obj, int id, int value);
@@ -19,8 +19,8 @@ void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 extern "C" int func_ov003_021765b4(void* self);
 extern "C" int func_ov003_021766e8(void* self);
-extern struct Obj0205eaa0 data_02108760;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" int _s32_div_f(int a, int b);
 void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
 
@@ -51,7 +51,7 @@ extern "C" ARM void func_ov003_021786bc(unsigned char* self) {
 
     *(void**)(self + J(0xff8)) = self + J(0x1000 + 4);
     if (func_ov003_021765b4(self) != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         ResetWithSub0208203c((struct Obj0208203c*)(self + J(0x88c)));
         *(void**)(self + J(0xff8)) = 0;
 

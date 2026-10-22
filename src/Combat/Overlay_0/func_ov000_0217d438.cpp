@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Entry_0205d6a0;
 
 struct PartyData0217d438 {
@@ -46,7 +46,7 @@ struct Menu0217d438 {
 };
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* objRaw);
 extern "C" int func_ov000_0217c594(void* objRaw, int limit);
@@ -58,7 +58,7 @@ int ApplyElemFieldsSlot3_ov000_02177798(void* obj);
 extern "C" void func_ov017_021c847c();
 extern "C" void func_ov000_0217fa60(void* obj);
 extern "C" void func_ov000_02174c14(void* obj);
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 static inline int IsPartyIndex(signed char index) {
     return index >= 0 && index <= 3;
@@ -69,7 +69,7 @@ extern "C" ARM void func_ov000_0217d438(struct Menu0217d438* menu, int arg1, int
     menu->flags |= 0x100;
     menu->field1D6C = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->elements);
     if (func_ov000_0217c594(menu, 0) != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         GameState* gs = GameState::GetInstance();
         menu->flags |= 0x100;
         signed char member = menu->members[menu->selection];

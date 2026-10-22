@@ -38,12 +38,12 @@ void BuildMessageE_0218a438(char* self);
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 extern "C" int func_ov023_021e6de4(char* obj);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Obj021e6e20;
 int TestFlagsAndActiveElement2_021e6e20(struct Obj021e6e20* obj);
 extern "C" void func_ov012_0218930c(void* obj, int a);
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov012_021884f4  (semantic: AdvanceTagState_021884f4)
 extern "C" ARM void func_ov012_021884f4(char* base) {
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov012_021884f4(char* base) {
         }
 
         if (cont != 0) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         }
     } else {
         if (TestFlagsAndActiveElement2_021e6e20((struct Obj021e6e20*)base) != 0) {

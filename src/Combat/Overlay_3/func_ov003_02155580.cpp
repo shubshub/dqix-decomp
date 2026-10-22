@@ -18,18 +18,18 @@ struct Obj2081 {
 };
 
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Clamp020e29a8;
 struct Obj020e280c;
 
 extern "C" void func_020813ec(struct Obj2081* obj, int key);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void SetElementFlag0x20_02080c04(struct Obj2081* obj, int key);
 void ClampFieldTo2At0x16(struct Clamp020e29a8* p, int v);
 void ResetAndReposition020e280c(struct Obj020e280c* self, void* b);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Ctx02155580 {
     char pad0[0x8];
@@ -52,7 +52,7 @@ extern "C" ARM void func_ov003_02155580(struct Ctx02155580* self, int arg) {
     func_020813ec(self->menu, self->key1e6);
     ResetWithSub0208203c((struct Obj0208203c*)self->field80);
     self->field8 = 0;
-    DispatchWithShortB4_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
     if (self->cursor != 0) {
         SetElementFlag0x20_02080c04(self->menu, self->key1e6);
         ClampFieldTo2At0x16((struct Clamp020e29a8*)self->cursor, (signed char)arg);

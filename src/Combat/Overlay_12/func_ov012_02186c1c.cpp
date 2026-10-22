@@ -16,15 +16,15 @@ struct AvailableTitles02186c1c {
 struct Struct0205de24;
 struct Struct_0205c570;
 struct TableA68;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj021e6e20;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 void BuildMessageB_021898bc(char*);
 void* FindEntryByKey_02072a68(TableA68*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" void func_ov023_021e6e60(void*);
 extern "C" int func_ov023_021e7148(void*);
 extern "C" void func_ov012_0218bba0(void*, int, int);
@@ -84,7 +84,7 @@ extern "C" ARM void func_ov012_02186c1c(char* editor) {
         }
         }
         if (!rebuild) return;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     } else {
         if (!TestFlagsAndActiveElement2_021e6e20((Obj021e6e20*)editor)) return;
         func_ov012_02189be8(editor, 1);
@@ -107,7 +107,7 @@ struct Struct0205de24 {
 struct Struct_0205c570;
 struct EntryA68 { short key; void* value; };
 struct TableA68 { EntryA68* entries; short count; };
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj021e6e20;
 struct ProfileTitle {
     char padding0[4];
@@ -146,9 +146,9 @@ void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned c
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 void BuildMessageB_021898bc(char*);
 void* FindEntryByKey_02072a68(TableA68*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" void func_ov023_021e6e60(ProfileEditor*);
 extern "C" int func_ov023_021e6de4(ProfileEditor*);
 extern "C" void func_ov012_0218adac(ProfileEditor*, int, int, int);
@@ -212,7 +212,7 @@ extern "C" ARM void func_ov012_02186c1c(ProfileEditor* self) {
         }
         }
         if (!rebuild) return;
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     } else {
         if (!TestFlagsAndActiveElement2_021e6e20((Obj021e6e20*)self)) return;
         func_ov012_0218930c(self, 1);

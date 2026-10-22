@@ -55,7 +55,7 @@ extern AllocatorUnion data_02114e20;
 extern unsigned char data_ov017_021d6aa8[9];
 extern Vector3i data_ov017_021d6ab4;
 extern char data_ov017_021d7778[], data_ov017_021d777a[];
-extern char data_02108760;
+extern char g_sePlayer;
 extern unsigned char data_ov017_021d6aa9[9], data_ov017_021d6aaa[9];
 
 // USA: func_ov017_021a6648
@@ -121,11 +121,11 @@ extern "C" ARM void func_ov017_021a6648(Transition021a6648* self, ListHead02046b
         params.enabled = 1;
         FindNodeAndProcess02057fb4(manager, 0xc, &params);
         if (self->kind == 2) {
-            SetForwardAndStore0205ebc0(&data_02108760, 0xa3, 0xa3);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 5, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xa3, 0xa3);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 5, 0);
         } else {
-            SetForwardAndStore0205ebc0(&data_02108760, 0xb2, 0xb2);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 2, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb2, 0xb2);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 2, 0);
         }
         self->timer = 0;
         self->state++;
@@ -138,7 +138,7 @@ extern "C" ARM void func_ov017_021a6648(Transition021a6648* self, ListHead02046b
         self->timer += game->GetTickCount();
         if (self->timer < data_ov017_021d6aaa[self->kind * 3]) return;
         SetByteField0x253_020397c0(leader);
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         ClearFlags00(resources, 0x10);
         ClearFlags020466f4((FlagWord020466f4*)flags, 1);
         SetCombatModeFromCase020dc2d0(0);

@@ -26,8 +26,8 @@ void* GetPtrField0x2a04_02010828(GameState*);
 int FindMappedMemberId02080468(void* obj, int id);
 struct Obj0208203c;
 void ResetWithSub0208203c(Obj0208203c*);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 struct Cont0207fe44;
 void CallFunc0204c804OverAllElems(Cont0207fe44*);
 int IsTableValueNot99_02155ffc(void* obj, int id);
@@ -88,7 +88,7 @@ extern "C" void func_ov023_021eb564(void* a, void* b, int c);
 extern "C" void func_ov023_021eb43c(void* a);
 extern "C" void func_ov023_021eb26c(void* a);
 
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov003_0217fdbb;
 extern const char* data_020f2a38;
 extern const char* data_020f2a30;
@@ -130,7 +130,7 @@ extern "C" ARM void func_ov003_021575dc(void* self) {
     } else if (state == 1) {
         *(void**)(s + 8) = (void*)(s + 0x1e2);
         if (func_ov003_021550dc(self) != 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)(s + 0x80));
             *(void**)(s + 8) = 0;
             int mm = FindMappedMemberId02080468(obj18, *(short*)(s + 0x1e6));

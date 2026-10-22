@@ -8,11 +8,11 @@ enum { RegionOffset9a0 = 0x9a0 };
 #include "Input/Input.h"
 
 extern int data_02107800;
-struct Obj0205eaa0;
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern struct SePlayer g_sePlayer;
 
 int GetGlobalField0x1c020421a0();
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 // USA: func_ov017_021aa080  (semantic: CheckFlagsOrByteAndDispatch_021aa080)
 extern "C" ARM int func_ov017_021aa080() {
@@ -36,6 +36,6 @@ extern "C" ARM int func_ov017_021aa080() {
     if (flag == 0) {
         return 0;
     }
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 1;
 }

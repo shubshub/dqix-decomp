@@ -13,7 +13,7 @@ struct Obj2081 {
 };
 
 struct Cont0207fdf0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 
 void* GetPtrField0x2a04_02010828(GameState* gs);
@@ -26,10 +26,10 @@ void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 extern "C" int func_ov003_021765b4(void* self);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" int func_ov003_02179f34(void* self);
 extern "C" int func_ov003_021766e8(void* self);
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 struct Menu_0217a4ac {
     char unk_0[RG(0x88c, 0x808)];
@@ -108,7 +108,7 @@ extern "C" ARM void func_ov003_0217a4ac(struct Menu_0217a4ac* self) {
         func_ov003_02177938(self);
         SetEntryLowNibbleAndElement02080c68(self->menu, 0x15, 1);
         if (func_ov003_021765b4(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
             self->cursor = 0;
             if (func_ov003_02179f34(self) == 0) {

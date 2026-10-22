@@ -12,7 +12,7 @@
 #endif
 
 extern AllocatorUnion data_02114e20;
-extern int data_02108760;
+extern int g_sePlayer;
 extern const char data_ov010_02184a80[];
 extern const char data_ov010_02184a95[];
 extern const char data_ov010_02184aa6[];
@@ -35,8 +35,8 @@ extern "C" void func_020728ac(void* list, void* alloc, void* buffer, int length,
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void SetForwardAndStore0205ebc0(void* obj, int a, int b);
 void DispatchIfField0xc4NonNeg_0205ebfc(void* obj, int a, int b);
 void ForwardField0xc0_0205ebec(void* obj);
@@ -251,7 +251,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
         } else {
             key = 0;
             obj->state = 4;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, key);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, key);
         }
 
         void* entry = FindEntryByKey_02072a68((struct TableA68*)&obj->list, (short)key);
@@ -287,7 +287,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
             func_0204500c(presenter, (const char*)entry, 0, 0xe3);
             presenter->active = 1;
 #endif
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x64, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
             unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GetField0x3acValue_020100a8(bs));
             if (slot != NULL) *slot = 0;
             obj->state = 4;
@@ -309,8 +309,8 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
             obj->waitFrames = obj->waitFrames + 1;
             return 0;
         }
-        SetForwardAndStore0205ebc0(&data_02108760, 0x74, 0x74);
-        DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0x74, 0x74);
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
 
         void* filePtr;
         unsigned int fileLen;
@@ -414,7 +414,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
         }
         if (finished != 0) {
             ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
-            ForwardField0xc0_0205ebec(&data_02108760);
+            ForwardField0xc0_0205ebec(&g_sePlayer);
             return 1;
         }
     }

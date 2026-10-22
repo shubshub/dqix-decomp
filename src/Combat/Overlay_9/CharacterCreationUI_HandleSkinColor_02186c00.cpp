@@ -34,8 +34,8 @@ extern const Vector3fix data_ov009_0218aa10;
 #endif
 extern const Vector3fix data_ov009_0218aa1c;
 
-// USA: func_ov009_02186c00
-extern "C" ARM void func_ov009_02186c00(CharacterCreationUI* self)
+// Overlay 9, originally func_ov009_02186c00 (USA/EUR 0x02186c00, JPN 0x02187d2c)
+extern "C" ARM void CharacterCreationUI_HandleSkinColor(CharacterCreationUI* self)
 {
     if (self->step == 0)
     {

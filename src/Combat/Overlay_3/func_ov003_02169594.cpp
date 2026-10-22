@@ -18,10 +18,10 @@ struct Struct_0205ba68;
 struct Node0205bacc;
 struct Struct_0205bcdc;
 
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Grid02169594 {
     int field0;
@@ -68,14 +68,14 @@ extern "C" ARM void func_ov003_02169594(struct Ctx02169594* self) {
         break;
     }
 
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)GetGrid(self, 0), cols, rows, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)GetGrid(self, 1), cols, rows, 0);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)GetGrid(self, 0), count);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)GetGrid(self, 1), count);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 0), cols, rows, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 1), cols, rows, 0);
+    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 0), count);
+    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 1), count);
     GetGrid(self, 0)->field4 = field4;
     GetGrid(self, 1)->field4 = field4;
     SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)GetGrid(self, 0), index);
-    func_0205bb04(GetGrid(self, 1), index);
+    GridCursor_SetSelectedIndex(GetGrid(self, 1), index);
     struct Grid02169594* grid = GetGrid(self, 1);
     grid->field3c = 0;
 }

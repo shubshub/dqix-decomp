@@ -23,15 +23,15 @@ extern "C" int func_02001aec(const void*, const void*, unsigned int);
 
 struct EntryList_203dce4;
 struct Node020406f8;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Vec3_020406f8 { int v[3]; };
 EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
 Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
 void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
 int IsPrefixMatch020d857c(signed char*, signed char*);
 int StringStartsWithCI020d85dc(const char*, const char*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
-extern Obj0205eaa0 data_02108760;
+void SePlayer_Play(SePlayer*, int, int);
+extern SePlayer g_sePlayer;
 extern "C" int func_02005a94(const char*);
 extern "C" void func_02042b98(void*, int, int, int, int);
 extern const char data_020f0934[], data_020f093d[], data_020f0943[], data_020f0949[];
@@ -126,7 +126,7 @@ extern "C" ARM const char* func_0206a3c0(TextOwner0206a3c0* self, const char* te
             self->state.animation = 1;
             self->state.variant = 0;
             text += 5;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 6, 0);
+            SePlayer_Play(&g_sePlayer, 6, 0);
         }
         else if (IsPrefixMatch020d857c((signed char*)text, (signed char*)data_020f0943))
         {
@@ -134,7 +134,7 @@ extern "C" ARM const char* func_0206a3c0(TextOwner0206a3c0* self, const char* te
             self->state.animation = 1;
             self->state.variant = 1;
             text += 5;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 28, 0);
+            SePlayer_Play(&g_sePlayer, 28, 0);
         }
         else if (StringStartsWithCI020d85dc(text, data_020f0949))
         {

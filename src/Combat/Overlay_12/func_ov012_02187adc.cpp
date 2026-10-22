@@ -78,7 +78,7 @@ struct MonthDays02187adc
 };
 
 struct Entry_0205d6a0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj021e6e20;
 
 extern "C" int func_ov023_021e63bc(ProfileEditor02187adc* self);
@@ -86,7 +86,7 @@ extern "C" void func_ov023_021e61f4(ProfileEditor02187adc* self);
 extern "C" void func_ov012_02185bf0(ProfileEditor02187adc* self, unsigned char item, int selected);
 extern "C" int func_0205df38(void* window, int item);
 void SetThreeElementFields_021e6378(void* self, int state, int year, int month, unsigned char day);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
 extern "C" int func_ov023_021e6de4(ProfileEditor02187adc* self);
 int CalculateAge_02098f20(int year, int month, int day);
 extern "C" void func_ov012_0218adac(ProfileEditor02187adc* self, int animate, int design, int keepPage);
@@ -108,7 +108,7 @@ extern "C" void func_ov012_02189d18(ProfileEditor02187adc* self);
 #define func_ov012_0218943c func_ov012_02189d18
 #endif
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 extern "C" const MonthDays02187adc data_ov012_0218af9e;
 
 static inline Profile02187adc* GetProfile02187adc(GameState* gameState)
@@ -223,7 +223,7 @@ extern "C" ARM void func_ov012_02187adc(ProfileEditor02187adc* self)
         if (changed)
         {
             func_ov012_02185bf0(self, self->state_, 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 2, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 2, 0);
         }
 
         int close = 0;
@@ -232,7 +232,7 @@ extern "C" ARM void func_ov012_02187adc(ProfileEditor02187adc* self)
             GameState* gameState = GameState::GetInstance();
             Profile02187adc* profile = GetProfile02187adc(gameState);
             func_ov012_02185bf0(self, self->state_, 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             profile->year_ = self->year_;
             profile->month_ = self->month_;
             profile->day_ = self->day_;

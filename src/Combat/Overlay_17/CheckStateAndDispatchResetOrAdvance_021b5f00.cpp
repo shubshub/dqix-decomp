@@ -2,9 +2,9 @@
 #include "Resource/GameResources.h"
 #include "Resource/TextQueue.h"
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern int data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern int g_sePlayer;
 extern "C" void func_ov017_0218d644(GameResources* ov, void* a, int b);
 void* GetGlobalResetObj020d7a50(void);
 extern "C" void func_ov017_021b6090(void* self);
@@ -44,7 +44,7 @@ extern "C" ARM int func_ov017_021b5f00(SelfState_021b5f00* self) {
 #else
         func_020d7e10(reset, self->field3c, 0, 0, 1, 0);
 #endif
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0xe, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0xe, 0);
         return 5;
     }
     func_ov017_021b5a30(self);

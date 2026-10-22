@@ -4,7 +4,7 @@
 
 struct Obj2081;
 struct Cont0207fdf0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 struct Container020dedd0;
 struct Obj021dcae0;
@@ -62,7 +62,7 @@ short FindMappedMemberId02080468(void* obj, int id);
 void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Obj02179e18* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
 void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
@@ -88,7 +88,7 @@ extern "C" void func_ov003_02176468(void* self);
 extern "C" int func_ov003_021764f4(void* self);
 extern "C" void func_ov003_02175df4(void* self);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217ab34
 extern "C" ARM void func_ov003_0217ab34(struct Menu_0217ab34* self) {
@@ -126,7 +126,7 @@ extern "C" ARM void func_ov003_0217ab34(struct Menu_0217ab34* self) {
         func_ov003_0217a14c(self);
         func_ov023_021dcae0((struct Obj021dcae0*)self->sub3c, self->sel);
         if (func_ov003_021765b4(self) && prevSel == self->sel) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
             self->cursor = 0;
             self->elem = FindElementByKey020dedd0((struct Container020dedd0*)self->container, self->sel);
@@ -232,7 +232,7 @@ extern "C" ARM void func_ov003_0217ab34(struct Menu_0217ab34* self) {
         }
         int pressed = func_ov003_021782a0(self);
         if (g_keyManager.TestKeysPressed(0x401) != 0 || pressed == 1) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)menu, 0);
             self->nextState = 0xd;
             if (self->count > 1) {

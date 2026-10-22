@@ -5,7 +5,7 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Obj0205dee8;
 struct Container020dedd0;
@@ -13,7 +13,7 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
@@ -33,7 +33,7 @@ extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 extern "C" int func_ov002_0215b720(char *self, int id);
 extern "C" void func_ov002_02157d40(char *base);
 extern "C" void func_ov002_02157634(char *base);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02163664
 #if defined(jpn)
@@ -89,7 +89,7 @@ extern "C" ARM void func_ov002_02163664(char *base) {
             func_ov002_0215b814(base);
             *(unsigned char *) (base + 0xed8)          = *(int *) (base + 0x1a80);
             *(unsigned char *) (base + 0x1ae9) = lst[*(short *) (base + 0x1ab4)];
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(unsigned int *) (base + 0x22ac) &= ~4;
             func_ov002_0215b9a4(base, 0x11, 1);
             SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + 0xe20), 0x11, 1);
@@ -223,7 +223,7 @@ extern "C" ARM void func_ov002_02163664(char *base) {
             func_ov002_0215b814(base);
             *(unsigned char *) (base + 0xf80)          = *(int *) (base + 0x1000 + 0xbb8);
             *(unsigned char *) (base + 0x1000 + 0xc21) = lst[*(short *) (base + 0x1b00 + 0xec)];
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
             func_ov002_0215b9a4(base, 0x10, 1);
             SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + 0x2c8 + 0xc00), 0x10, 1);

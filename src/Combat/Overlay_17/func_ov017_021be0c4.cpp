@@ -47,7 +47,7 @@ void CancelPendingAction020397cc(Obj020397cc*, int);
 void SetForwardAndStore0205ebc0(void*, int, int);
 void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
 void ForwardField0xc0_0205ebec(void*);
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern "C" int func_0208f748(void*, int*);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_020426bc(BaseCombatStats*, char*, int);
@@ -84,8 +84,8 @@ extern "C" ARM void func_ov017_021be0c4(State021be0c4* state) {
         if (AlwaysTrue02094b4c(global)) state->step = 1;
     } else if (state->step == 1) {
         SetMainBrightness(resources, 0x10, 0xf);
-        SetForwardAndStore0205ebc0(data_02108760, 0x83, 0x83);
-        DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 0, 0);
+        SetForwardAndStore0205ebc0(g_sePlayer, 0x83, 0x83);
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
         state->step = 2;
     } else if (state->step == 2) {
         if (!IsMainBrightnessTransitionActive(resources)) {
@@ -140,7 +140,7 @@ extern "C" ARM void func_ov017_021be0c4(State021be0c4* state) {
             FontBankLoader* global = GetGlobal02109400_02094a00();
             BlankFunction02094b38(global, 0x203);
             func_02094ab0(global);
-            ForwardField0xc0_0205ebec(data_02108760);
+            ForwardField0xc0_0205ebec(g_sePlayer);
             state->done = 1;
         }
     }

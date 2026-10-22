@@ -5,7 +5,7 @@
 struct StatusOwner02081198;
 struct StatusOwner02081164;
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Cont0207fe44;
 
 struct Sub64 {
@@ -38,7 +38,7 @@ void ResetWithSub0208203c(Obj0208203c *);
 extern "C" void func_ov003_02165888(unsigned char *, int);
 extern "C" void func_ov003_02160794(unsigned char *);
 extern "C" int func_ov003_02160854(unsigned char *);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+void SePlayer_Play(SePlayer *, int, int);
 int CountFlaggedCombatants_02161544(void *);
 void CallFunc0204c804OverAllElems(Cont0207fe44 *);
 extern "C" int func_ov003_02160a68(unsigned char *);
@@ -46,7 +46,7 @@ unsigned char *GetFieldAt0x150_02053c6c(unsigned char *);
 extern "C" void func_ov003_02161480(unsigned char *);
 extern "C" void func_ov003_02166f40(unsigned char *);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 #if defined(jpn)
 #define RO(o) ((o) >= 0x464 ? (o) - 0x1d8 : (o) - 0x118)
@@ -94,7 +94,7 @@ extern "C" ARM void func_ov003_02162ba8(unsigned char *self) {
             short idx = *(short *) (self + RO(0x48e)) - FindMappedMemberId02080468(r4, *(short *) (self + RO(0x488)));
             if (self[RO(0x4ad)] <= idx) return;
             *(short *) (self + RO(0x482)) = (self + idx)[RO(0x4a9)];
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c *) (self + RO(0x308)));
             *(int *) (self + RO(0x470)) = 0;
             if (CountFlaggedCombatants_02161544(self) == 0) {

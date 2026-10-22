@@ -22,7 +22,7 @@ enum { kTextBufferCapacity = 0x960 };
 
 struct Obj020397cc;
 struct Obj02033834;
-struct Obj0205eaa0;
+struct SePlayer;
 struct BitFlags020d805c;
 struct Obj020d7aa0;
 struct StreamHeader;
@@ -62,7 +62,7 @@ void ReinitController02043204(char*);
 extern "C" void func_ov017_021ac32c(Event021ac3b0*);
 int GetFieldIfFlag4_020100f8(char*);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void* GetGlobalResetObj020d7a50();
 int GetByte0x150Bit6(BitFlags020d805c*);
 void TeardownAndResetState020d7aa0(Obj020d7aa0*);
@@ -89,7 +89,7 @@ extern "C" void func_0206df6c(void*, unsigned char*, int, int);
 void SetByteField0x253_020397c0(void*);
 int LookupAndForEachNode020649b0(void*, int, void*);
 extern "C" void func_0206f81c(Lookup021ac3b0*);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 extern const char data_ov017_021d7e88[], data_ov017_021d7e96[];
 extern const char data_ov017_021d7eb0[], data_ov017_021d7ed2[];
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov017_021ac3b0(Event021ac3b0* self) {
     if (self->stage == 0) {
         int actor = GetFieldIfFlag4_020100f8((char*)game);
         if (actor) SetFlagsAt0x244_020a28a0((unsigned char*)actor, 3);
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         void* reset = GetGlobalResetObj020d7a50();
         if (GetByte0x150Bit6((BitFlags020d805c*)reset)) TeardownAndResetState020d7aa0((Obj020d7aa0*)reset);
 #if defined(jpn)

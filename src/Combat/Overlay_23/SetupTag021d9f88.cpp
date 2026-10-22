@@ -4,12 +4,12 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void*, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
 struct Struct0200fb08;
 unsigned char NormalizeField5_0200fb08(Struct0200fb08*);
 extern "C" void func_ov023_021da100(char*, char*, int);
@@ -24,15 +24,15 @@ extern "C" ARM void func_ov023_021d9f88(void* objRaw) {
     CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
     CreationWindow* win = &self->windows[1];
     self->selection = 0;
-    SetupPointerTable0205ba68((Struct_0205ba68*)win->frame, 1, 2, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)win->cursor, 1, 2, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)win->frame, 2);
-    SetField0AndPropagate0205bacc((Node0205bacc*)win->cursor, 2);
+    GridCursor_SetDimensions((Struct_0205ba68*)win->frame, 1, 2, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)win->cursor, 1, 2, 0);
+    GridCursor_SetCount((Node0205bacc*)win->frame, 2);
+    GridCursor_SetCount((Node0205bacc*)win->cursor, 2);
     self->windows[1].frame[1] = 1;
     self->windows[1].cursor[1] = 1;
     signed char cursor = self->selection;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)win->frame, cursor);
-    func_0205bb04(self->windows[1].cursor, cursor);
+    GridCursor_SetSelectedIndex(self->windows[1].cursor, cursor);
     self->windows[1].unknown94[0] = 1;
     self->windows[1].unknown94[1] = 1;
 

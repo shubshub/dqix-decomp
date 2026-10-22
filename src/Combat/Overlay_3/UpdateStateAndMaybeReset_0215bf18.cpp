@@ -2,7 +2,7 @@
 
 #include "GameState/GameState.h"
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Outer020e28dc;
 int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
@@ -10,8 +10,8 @@ int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
 struct Ctx020e263c;
 void UpdateEntryStateAndPosition(struct Ctx020e263c* obj, int value);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Clamp020e29a8;
 void ClampFieldTo2At0x16(struct Clamp020e29a8* p, int v);
@@ -36,7 +36,7 @@ extern "C" ARM int func_ov003_0215bf18(void* p, int arg1) {
     }
     unsigned char state = *(unsigned char*)(obj + 0x581);
     if (state == 0) {
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 5, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 5, 0);
         ClampFieldTo2At0x16((struct Clamp020e29a8*)*(void**)(obj + 0x570), (signed char)arg1);
         ResetAndReposition020e280c((struct Obj020e280c*)*(void**)(obj + 0x570), (void*)-1);
         *(unsigned char*)(obj + 0x581) = *(unsigned char*)(obj + 0x581) + 1;

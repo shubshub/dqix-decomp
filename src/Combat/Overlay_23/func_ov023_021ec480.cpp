@@ -89,7 +89,7 @@ struct Bytes2_021ec480 {
 };
 
 extern unsigned char data_ov023_021fd844[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 
 MessageSystem_021ec480* GetGlobalField0x1c020421a0();
@@ -157,7 +157,7 @@ extern "C" ARM void func_ov023_021ec480(GuideWindow_021ec480* self)
         int volume = 0x8c;
         if (self->type_ == 2 || (self->type_ == 7 && (self->flags_ & GUIDE_WINDOW_MAIN_SCREEN)))
             volume = 0x1b4;
-        SetForwardAndStore0205ebc0(data_02108760, volume, volume);
+        SetForwardAndStore0205ebc0(g_sePlayer, volume, volume);
         func_ov023_021ecbbc(self);
         self->step_++;
     }
@@ -167,7 +167,7 @@ extern "C" ARM void func_ov023_021ec480(GuideWindow_021ec480* self)
             return;
         func_ov023_021ed194(self);
         self->flags_ |= GUIDE_WINDOW_TITLE_SCROLLING;
-        DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 0, 0);
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
         self->step_++;
     }
     if (step == 2)
@@ -219,7 +219,7 @@ extern "C" ARM void func_ov023_021ec480(GuideWindow_021ec480* self)
     if (step == 6)
     {
         ResetEntryList0205d6a0((Entry_0205d6a0*)self->window_, 0);
-        ForwardField0xc0_0205ebec(data_02108760);
+        ForwardField0xc0_0205ebec(g_sePlayer);
         if (!(self->flags_ & GUIDE_WINDOW_NO_DIMMING))
         {
             if (self->subBackgrounds_[1].unk_1c_0_ == 0)

@@ -30,8 +30,8 @@ void SetByte38_021fb274(void* obj, int val);
 extern "C" void func_ov004_02169658(void* a);
 extern "C" void func_ov011_021848a0(void* obj, int val);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Data02171030 {
 #if defined(jpn)
  char pad[0x20];
@@ -40,7 +40,7 @@ struct Data02171030 {
 #endif
  unsigned char field1a0; };
 extern Data02171030* data_ov004_02171030;
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov004_021698f4  (semantic: CheckAndDispatchFlags1f_021698f4)
 extern "C" ARM int func_ov004_021698f4(void* a) {
@@ -81,7 +81,7 @@ extern "C" ARM int func_ov004_021698f4(void* a) {
     }
 
     if (data_ov004_02171030->field1a0 != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     }
     data_ov004_02171030->field1a0 = 0;
     return 0;

@@ -11,7 +11,7 @@ struct Data021707c8 { void* f0; void* f4; void* f8; void* fc; };
 enum { regionalRows = 12, regionalProt = 0 };
 #endif
 extern Data021707c8 data_ov004_021707c8;
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct FooA1698;
 void InitAndBuildList020a1698(struct FooA1698*, void*);
@@ -28,8 +28,8 @@ extern "C" void __clear(void* dst, int len);
 ARM int LoadBattleBlock020ac460(void* dst);
 struct Obj021f9bdc;
 void DivModField26_021f9bdc(struct Obj021f9bdc*, int);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer*, int, int);
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68*, int);
 
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov004_02156a00(void* a1) {
     node->f5e = f5e;
     DivModField26_021f9bdc((struct Obj021f9bdc*)node, (unsigned short)(sb % regionalRows));
 
-    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
 
     void* node_a = func_ov023_021f6880(obj, 0xa);
     if (node_a == 0) {

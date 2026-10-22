@@ -29,7 +29,7 @@ struct Self0215e8f4 {
     char pad1f[0x22 - 0x1f];
     unsigned char allowAlt;
     unsigned char allowCancel;
-    unsigned char wrap;
+    unsigned char autoRepeat;
 };
 
 struct LookupTable0215e930;
@@ -37,12 +37,12 @@ struct LookupTable0215e930;
 struct LookupTable0215e930* FindEntryByMask_0215e8f4(struct Self0215e8f4* self);
 extern "C" int func_ov003_0215e930(struct LookupTable0215e930* table, short id, signed char* col, signed char* row);
 extern "C" void func_ov003_0215e9ec(struct Self0215e8f4* self, int dx, int dy);
-extern "C" int func_ov003_0215ef54(struct Self0215e8f4* self);
+extern "C" int Keyboard_HandleKey(struct Self0215e8f4* self);
 extern "C" int func_ov003_0215eeb8(struct Self0215e8f4* self);
-extern "C" void func_ov003_0215ec68(int shape, short* w, short* h);
+extern "C" void Keyboard_GetKeySize(int shape, short* w, short* h);
 
-// USA: func_ov003_0215f000
-extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
+// Overlay 3, originally func_ov003_0215f000 (USA/EUR 0x0215f000; JPN not identified)
+extern "C" ARM int Keyboard_Update(struct Self0215e8f4* self, int elapsed) {
     struct MenuCell0215f000* prev = self->cell;
     int i;
     short count;
@@ -73,7 +73,7 @@ extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
             self->repeatDir = 0x10;
         }
 
-        if (self->wrap) {
+        if (self->autoRepeat) {
             unsigned short dir = self->repeatDir;
             if (dir != 0 && g_keyManager.TestKeysHeld(0xf0)) {
                 int timer = self->repeatTimer - elapsed;
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
                         func_ov003_0215e9ec(self, 1, 0);
                         break;
                     }
-                    if (self->wrap) {
+                    if (self->autoRepeat) {
                         signed char curRow;
                         signed char curCol;
                         signed char prevRow;
@@ -137,7 +137,7 @@ extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
         unsigned char allowCancel = self->allowCancel;
         if (g_keyManager.TestKeysPressed(1)
             || (allowAlt && g_keyManager.TestKeysPressed(0x200))) {
-            result = func_ov003_0215ef54(self);
+            result = Keyboard_HandleKey(self);
         } else if (allowCancel && g_keyManager.TestKeysPressed(2)) {
             result = func_ov003_0215eeb8(self);
         } else {
@@ -157,7 +157,7 @@ extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
                     if (hit->mask & mask) {
                         short h;
                         short w;
-                        func_ov003_0215ec68(hit->shape, &w, &h);
+                        Keyboard_GetKeySize(hit->shape, &w, &h);
                         if (hit->y <= ty && ty < hit->y + h && hit->x <= tx && tx < hit->x + w) {
                             goto found;
                         }
@@ -168,7 +168,7 @@ extern "C" ARM int func_ov003_0215f000(struct Self0215e8f4* self, int elapsed) {
         found:
             if (hit != 0) {
                 self->cell = hit;
-                result = func_ov003_0215ef54(self);
+                result = Keyboard_HandleKey(self);
             }
         }
     }

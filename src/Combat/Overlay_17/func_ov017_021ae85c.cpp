@@ -11,7 +11,7 @@
 struct Bytes02033b88;
 struct Obj020397cc;
 struct Obj02033b68;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Vec3copy0202ec84;
 struct Vec3Target0203a46c;
 struct StructAt020473c8;
@@ -59,7 +59,7 @@ extern "C" void func_ov017_021aeea8(Event021ae85c*);
 void SetByte0xbeShiftPrev(Bytes02033b88*, int);
 void CancelPendingAction020397cc(Obj020397cc*, int);
 void SetByteIfChanged02033b68(Obj02033b68*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 StructDE234_020de234* FindElementByKey020dedd0(Container020dedd0*, int);
 int GetField0x3acValue_020100a8(GameState*);
 unsigned short GetPreferredPackedField020de234(StructDE234_020de234*, int);
@@ -79,7 +79,7 @@ void* GetField0x3b0Value_020100bc(GameState*);
 void ComputeTwoFromVec3_0202ec84(void*, Vec3copy0202ec84*, int*, int*);
 void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
 void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 #define data_ov017_021d79a8 data_ov017_021d80dc
 #endif
@@ -116,7 +116,7 @@ extern "C" ARM void func_ov017_021ae85c(Event021ae85c* self) {
         if (self->timer) return;
         GameObject* actor = game->GetUnknownGameObject();
         if (actor) SetByteIfChanged02033b68((Obj02033b68*)actor, 8);
-        DispatchWithShortB4_0205eaa0(&data_02108760, 0x5b, 0);
+        SePlayer_Play(&g_sePlayer, 0x5b, 0);
         self->stage = 2; self->timer = 30;
     } else if (self->stage == 2) {
         self->timer--;
@@ -176,7 +176,7 @@ extern "C" ARM void func_ov017_021ae85c(Event021ae85c* self) {
 #else
             func_020d7e10(GetGlobalResetObj020d7a50(), text, 0, 0, 1, 1);
 #endif
-        DispatchWithShortB4_0205eaa0(&data_02108760, 14, 0);
+        SePlayer_Play(&g_sePlayer, 14, 0);
         self->stage = 5; self->timer = 20; self->fade = 61;
     } else if (self->stage == 5) {
         self->timer--;

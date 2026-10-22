@@ -49,9 +49,9 @@ public:
 };
 
 extern "C" int func_ov004_0216b7bc(void* obj, int a, int b, int c);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern unsigned char data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern unsigned char g_sePlayer;
 
 // USA: func_ov004_0216e638  (semantic: DispatchFixedSequenceAndSetVec_0216e638)
 extern "C" ARM int func_ov004_0216e638(void* a) {
@@ -98,6 +98,6 @@ extern "C" ARM int func_ov004_0216e638(void* a) {
     }
 
     func_ov004_0216b7bc(self, 0x3e8, 0x60, 0);
-    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 5, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 5, 0);
     return 0;
 }

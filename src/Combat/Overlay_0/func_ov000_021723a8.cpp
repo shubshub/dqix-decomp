@@ -18,7 +18,7 @@ enum { regionalEntrySize = 0x448, regionalStates1b84 = 9 };
 void ZeroInit020de848(void* obj);
 void ResetList0204af64(struct List0204af64* obj);
 void InitStruct0205cfd4(struct InitTarget0205cfd4* obj);
-void Init0205bef8(struct Struct_0205bef8* obj);
+void GridCursor_Init(struct Struct_0205bef8* obj);
 extern "C" void func_0204c684(void* obj);
 void InitObj02092aa4(Obj02092aa4* obj, int mode);
 void InitStruct0205a444(char* obj);
@@ -180,7 +180,7 @@ extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
     ResetList0204af64(&self->lists[1]);
     ResetList0204af64(&self->lists[2]);
     InitStruct0205cfd4(&self->obj188);
-    Init0205bef8(&self->obj244);
+    GridCursor_Init(&self->obj244);
     for (int i = 0; i < 7; i++) {
         func_0204c684(self->slots284[i]);
     }

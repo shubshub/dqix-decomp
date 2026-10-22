@@ -16,7 +16,7 @@ struct Entry0204254c {
     signed char unused2 : 2;
     char pad6[2];
 };
-struct Entry0204254c* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 int AppendXTag_02041a28(char* dst, int x);
 void AppendString02042058(char* dst, const char* src);
 int AppendYTag_02041a5c(char* dst, int y);
@@ -82,7 +82,7 @@ extern "C" ARM void func_ov023_021e8cdc(char* obj) {
     for (;;) {
         if (*p == 0) return;
         int step = 1;
-        struct Entry0204254c* e = FindEntryByKey0204254c((int)p, step);
+        struct Entry0204254c* e = Font_FindCharacter((int)p, step);
         if (e != 0) {
             AppendXTag_02041a28(dst, x);
             AppendString02042058(dst, (const char*)e->val);

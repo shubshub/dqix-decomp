@@ -21,7 +21,7 @@ void SetByte0x4_0200fb94(char* obj, unsigned char value);
 
 extern unsigned char data_ov004_02171034[];
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov004_0216e490
 extern "C" ARM int func_ov004_0216e490(void* obj) {
@@ -47,14 +47,14 @@ extern "C" ARM int func_ov004_0216e490(void* obj) {
 #else
         data_ov004_02171034[4] = v1;
 #endif
-        unsigned char v2 = GetByteFieldAt0xcc_0205ea18((unsigned char*)&data_02108760);
+        unsigned char v2 = GetByteFieldAt0xcc_0205ea18((unsigned char*)&g_sePlayer);
 #if defined(jpn)
         data_ov004_02171034[6] = v2;
 #else
         data_ov004_02171034[1] = v2;
 #endif
         SetModeClamped0209ca70(&data_02109bf4, 3);
-        SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&data_02108760, 3);
+        SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, 3);
         if (VerifyAndApplySaveBuffer_020ac864(1) == 0) {
 #if defined(jpn)
             data_ov004_02171034[3] = 1;

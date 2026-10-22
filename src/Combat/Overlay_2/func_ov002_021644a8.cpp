@@ -16,14 +16,14 @@ void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void * FindElementByC40205d81c(Struct_0205d81c*, int);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 extern "C" void func_ov002_02156e90(char *base);
 struct Obj0205dee8;
 void SetFieldB0AndUpdate0205dee8(Obj0205dee8*, int);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov002_021644a8
 #if defined(jpn)
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
             *(char *) (self + 0xed8) = *(int *) (self + 0x1a80);
             *(int *) (self + 0x22ac) &= ~4;
             SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xe20), 0xc, 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
             *(short *) (self + 0x1ada) = 0;
             *(short *) (self + 0x1af0) = 0x238d;
             *(short *) (self + 0x1af2) = -1;
@@ -132,7 +132,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
             *(char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
             *(int *) (self + 0x247c) &= ~4;
             SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xec8), 0xb, 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
             *(short *) (self + 0x1c12) = 0;
             *(short *) (self + 0x1c28) = 0x238d;
             *(short *) (self + 0x1c2a) = -1;

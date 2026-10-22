@@ -72,7 +72,7 @@ struct MonsterListScreen {
 };
 
 struct Obj2081;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 struct ListHeadStruct021874f8;
 
@@ -80,7 +80,7 @@ short FindMappedMemberId02080468(void* obj, int id);
 void ResetWithSub0208203c(Obj0208203c*);
 void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081*, int);
 int CheckFlagAndPointInElement_02186ff0(char*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 short CountLinkedListNodes_021874f8(ListHeadStruct021874f8*);
 
 extern "C" {
@@ -90,7 +90,7 @@ void func_020813ec(Menu* menu, short group);
 bool func_ov014_02186f10(MonsterListScreen* self);
 }
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov014_02187db8
 extern "C" ARM void func_ov014_02187db8(MonsterListScreen* self)
@@ -124,7 +124,7 @@ extern "C" ARM void func_ov014_02187db8(MonsterListScreen* self)
         }
         if (func_ov014_02186f10(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->repeat_);
             if (CountLinkedListNodes_021874f8((ListHeadStruct021874f8*)self) != 0)
             {

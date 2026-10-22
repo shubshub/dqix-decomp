@@ -8,14 +8,14 @@
 #endif
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 void* GetFieldAt0x150_02053c6c(unsigned char* obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 void* SearchBothTables02079e2c(char* p, int key);
 int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
@@ -83,7 +83,7 @@ struct MenuObj_0217bdf4 {
 };
 
 extern MenuGlobals_0217bdf4 data_ov000_02184294;
-extern char data_02108760;
+extern char g_sePlayer;
 extern short data_ov000_02183658[];
 
 // USA: func_ov000_0217bdf4
@@ -100,7 +100,7 @@ extern "C" ARM int func_ov000_0217bdf4(MenuObj_0217bdf4* obj, int arg1, int arg2
             return -1;
         }
         int kind = ((MemberInfo_0217bdf4*)GetFieldAt0x150_02053c6c((unsigned char*)member))->spellKind;
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         obj->field1d = 0;
         ActionDataTables* data = GetData02108e10_020797dc();
         if (data == NULL) {

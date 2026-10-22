@@ -9,9 +9,9 @@ extern "C" int func_ov004_0216b2c8(void* obj, int id, int a, int b);
 int SetFieldsIfType7_0216b338(void* a, int id, int val);
 extern "C" void func_ov004_0216b20c(void* a0, int key, int b, int c);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 extern unsigned char data_ov004_02171034[];
 
 // USA: func_ov004_0216d1c4
@@ -39,6 +39,6 @@ extern "C" ARM int func_ov004_0216d1c4(void* a) {
     func_ov004_0216b20c(a, 0x39, 0x64, 0);
     func_ov004_0216b7bc(a, 0xd3, v0c, 0);
 
-    DispatchWithShortB4_0205eaa0(&data_02108760, 5, 0);
+    SePlayer_Play(&g_sePlayer, 5, 0);
     return 0;
 }

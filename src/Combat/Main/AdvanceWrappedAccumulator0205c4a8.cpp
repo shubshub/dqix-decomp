@@ -2,7 +2,7 @@
 
 struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84*);
-extern "C" void func_0205bb04(void*, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
 
 struct Struct_0205c4a8 {
     int field0;
@@ -22,6 +22,6 @@ ARM void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta)
     }
     base = s->field0;
     if (base <= GridCursor_GetSelectedIndex((struct Struct_0205bb84*)s)) {
-        func_0205bb04((void*)s, base - 1);
+        GridCursor_SetSelectedIndex((void*)s, base - 1);
     }
 }

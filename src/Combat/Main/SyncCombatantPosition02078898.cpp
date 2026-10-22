@@ -6,8 +6,8 @@ struct Vec3 { int x; int y; int z; };
 
 struct U16Field0x6_020375f8 { char unk[0x6]; unsigned short field; };
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Obj02033834;
 void SetVecYByMode02033834(struct Obj02033834* obj, int arg);
@@ -20,7 +20,7 @@ struct S02037418;
 extern "C" struct Vec3 func_02034104(void* combatant);
 extern "C" int fix32_Atan2(int x, int z);
 
-extern char data_02108760;
+extern char g_sePlayer;
 
 struct Entity02078898 {
     char pad0[0x6];
@@ -56,7 +56,7 @@ ARM int SyncCombatantPosition02078898(struct Entity02078898* p) {
     unsigned short a = ((Object3D*)((struct U16Field0x6_020375f8*)other))->GetField06();
     unsigned short b = ((Object3D*)((struct U16Field0x6_020375f8*)p))->GetField06();
     if (a == b && *((unsigned char*)g734 + 3) == 0) {
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 6, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 6, 0);
     }
 
     struct Vec3 pos = func_02034104(combatant);

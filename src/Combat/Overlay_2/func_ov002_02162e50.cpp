@@ -6,14 +6,14 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Obj0205dee8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
@@ -31,7 +31,7 @@ extern "C" void func_ov023_021dc134(char *obj, int item, int flag);
 extern "C" void func_ov023_021dbfd0(char *obj, SafeAllocator *alloc);
 extern "C" void func_ov023_021dcae0(char *obj, int item);
 extern "C" void func_ov023_021dca88(char *obj);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline int InRange02162e50(int v) {
     return (v >= 0 && v <= 3) ? 1 : 0;
@@ -94,7 +94,7 @@ extern "C" ARM void func_ov002_02162e50(char *base) {
         if ((a | b) ? 1 : 0) {
             *(unsigned char *) (base + 0xed8) = *(int *) (base + 0x1a80);
             *(unsigned int *) (base + 0x22ac) &= ~4;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             if (*(unsigned char *) (base + 0x22b5))
                 *(int *) (base + 0x1a80) = 0x2a;
             else
@@ -172,7 +172,7 @@ extern "C" ARM void func_ov002_02162e50(char *base) {
         if ((a | b) ? 1 : 0) {
             *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             if (*(unsigned char *) (base + 0x2000 + 0x485))
                 *(int *) (base + 0x1000 + 0xbb8) = 0x27;
             else

@@ -25,9 +25,9 @@ extern "C" int func_0202c508(void);
 int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
 void SetBitsInField0x63dc_02011b3c(void* obj, unsigned char mask);
 
-struct Obj0205eaa0;
-extern void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+extern void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov004_021688d4
 extern "C" ARM int func_ov004_021688d4(void) {
@@ -68,7 +68,7 @@ extern "C" ARM int func_ov004_021688d4(void) {
     if (func_0202c508()) {
         GameState* bs = GameState::GetInstance();
         if (CheckBitsInField0x63dc_02011b50(bs, 0x10)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
         SetBitsInField0x63dc_02011b3c(bs, 0x10);
     }

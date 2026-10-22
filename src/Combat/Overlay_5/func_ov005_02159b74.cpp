@@ -8,7 +8,7 @@ enum { kYesNo = 0xe64 };
 
 #include <GameState/GameState.h>
 
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct YesNoLabel {
     char unk_0[0x38];
@@ -29,7 +29,7 @@ struct EquipmentMenu {
     YesNoWindow* yesNo_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Obj020e280c;
 void ResetAndReposition020e280c(Obj020e280c*, void*);
@@ -42,7 +42,7 @@ struct WinObj020e28f0;
 void SetEntryPositionFromObject(WinObj020e28f0*, short, short);
 struct Ctx020e263c;
 void UpdateEntryStateAndPosition(Ctx020e263c*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_02159b74
 extern "C" ARM void func_ov005_02159b74(EquipmentMenu* self) {
@@ -65,5 +65,5 @@ extern "C" ARM void func_ov005_02159b74(EquipmentMenu* self) {
     if (tick == 0)
         tick = 1;
     UpdateEntryStateAndPosition((Ctx020e263c*)self->yesNo_, tick);
-    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+    SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
 }

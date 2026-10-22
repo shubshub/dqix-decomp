@@ -325,7 +325,7 @@ struct Pause021d82e0 {
 };
 
 extern Flags02109bf4 data_02109bf4;
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d615c;
 extern char data_02114e20;
 extern char data_ov017_021d736c;
@@ -492,7 +492,7 @@ extern "C" ARM void func_ov017_0218b688(Battle0218b688* self) {
     *(int*)(bits + 0x47c) = 0;
     ClearState02070508((State02070508*)func_020704fc());
     func_0209c2e0(&data_02109bf4, 0x7f, 0);
-    func_0205e944(&data_02108760, 0x7f);
+    func_0205e944(&g_sePlayer, 0x7f);
     data_02109bf4.flagsC8 &= ~4;
     ResetAndClearFlags020d7a5c((ResetObj020d7a5c*)GetGlobalResetObj020d7a50());
     if (GetWord0x7f6c_0201201c(gs) == 5 && GetByte0x4_0200fb9c((char*)gs) != 9) {
@@ -900,7 +900,7 @@ extern "C" ARM void func_ov017_0218b688(Battle0218b688* self) {
             DispatchByFlag020d9834(1);
         }
         func_0209c840(&data_02109bf4);
-        ResetXYField0203aa08(&data_02108760);
+        ResetXYField0203aa08(&g_sePlayer);
         func_020bbd9c();
         CleanInvalidateOamBuffers0203bd88(oam);
         Forward0204359c(controller, RegionControllerMode);
@@ -958,11 +958,11 @@ extern "C" ARM void func_ov017_0218b688(Battle0218b688* self) {
         SetSubBrightness((GameResources*)self, -16, 0);
     }
     if (GetByte0x4_0200fb9c((char*)gs) != 2) {
-        if (GetShortAt0xb4((ShortField0xb4_0205eac8*)&data_02108760) != 100) {
-            SetupContextForMode0205ea20(&data_02108760, 100);
+        if (GetShortAt0xb4((ShortField0xb4_0205eac8*)&g_sePlayer) != 100) {
+            SetupContextForMode0205ea20(&g_sePlayer, 100);
         }
         InitActorContext0209c20c((Actor0209c20c*)&data_02109bf4);
-        RefreshDisplayState0205e8ec((Obj_0205e8ec*)&data_02108760);
+        RefreshDisplayState0205e8ec((Obj_0205e8ec*)&g_sePlayer);
         func_020bbd9c();
     }
     data_02109bf4.flagsC8 &= ~4;

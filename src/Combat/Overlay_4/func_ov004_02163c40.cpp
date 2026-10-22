@@ -16,9 +16,9 @@ struct MapList3C40 {
     unsigned char field_18fe;
 };
 struct Node3C40 { char field_0[0xc]; unsigned char flags; char field_d[0x38 - 0xd]; unsigned short selected; };
-struct Obj0205eaa0;
+struct SePlayer;
 extern MapList3C40* data_ov004_02171010;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 #if defined(jpn)
 extern unsigned short data_ov004_02170660[3];
 #else
@@ -26,7 +26,7 @@ extern unsigned short data_ov004_0216fef8[3];
 #endif
 extern "C" void func_ov023_021f809c(void*, void*);
 MessageSystem* GetGlobalField0x1c020421a0();
-int DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+int SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov004_02163478(MapList3C40*);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" Node3C40* func_ov023_021f6880(void*, int);
@@ -54,7 +54,7 @@ extern "C" ARM int func_ov004_02163c40(void* self) {
     if (!data_ov004_02171010->count) return 0;
     if (GetGlobalField0x1c020421a0()->active) return 0;
     if (!data_ov004_02171010->field_18fe) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     }
 #if defined(jpn)
     COPY_ARRAY(modes, data_ov004_02170660);

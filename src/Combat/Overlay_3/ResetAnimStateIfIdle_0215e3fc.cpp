@@ -14,7 +14,7 @@ extern "C" void func_0205e944(void* data, int flag);
 extern "C" void func_ov003_0215c800(void* self);
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct Self0215e3fc {
     char pad0[kRegionValue3B4_3CC];
@@ -35,7 +35,7 @@ ARM void ResetAnimStateIfIdle_0215e3fc(struct Self0215e3fc* self) {
         return;
     }
 
-    func_0205e944(&data_02108760, 0x7f);
+    func_0205e944(&g_sePlayer, 0x7f);
     GetData02153637_020e2ff8();
 
     if (self->f3b4 != NULL) {

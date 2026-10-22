@@ -84,7 +84,7 @@ extern "C" Node020acecc* func_0201b78c(Zone020acecc* zone, Vector3i* pos);
 extern "C" void func_020adfa8(Prop020acecc* prop);
 
 extern Dispatcher020acecc data_ov017_021d82fc;
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_020acecc
 extern "C" ARM void func_020acecc(unsigned int* obj, int eventCode, int previousCode)
@@ -115,7 +115,7 @@ extern "C" ARM void func_020acecc(unsigned int* obj, int eventCode, int previous
         local.flag = 0;
         local.id = prop->obj3D.unknown_4_;
         func_020da77c(&data_ov017_021d82fc, 3, &local);
-        SetForwardAndStore0205ebc0(&data_02108760, 0xa0, 0xa0);
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0xa0, 0xa0);
         SetField0x21c_020a2770(controller, 0xca);
         prop->f19c = 1;
         prop->f13c = 0;
@@ -150,7 +150,7 @@ extern "C" ARM void func_020acecc(unsigned int* obj, int eventCode, int previous
         if (data_ov017_021d82fc.status == 3) {
             func_020da244(&data_ov017_021d82fc);
         }
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         SetHalfFieldsAndEnqueueIfActive_021d1c2c(zone->saved.state, (unsigned char)zone->saved.sub);
         SetField0x21c_020a2770(controller, GetField0x3acValue_020100a8(state));
         ClearFlags04((GameResources*)obj, 0x10044);

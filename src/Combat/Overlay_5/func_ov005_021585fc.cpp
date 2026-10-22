@@ -20,11 +20,11 @@ struct EquipmentMenu {
     unsigned char pageCounts_[8];
 };
 
-struct Obj0205eaa0;
+struct SePlayer;
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int unk);
+void SePlayer_Play(SePlayer* sound, int effect, int unk);
 
 // USA: func_ov005_021585fc
 extern "C" ARM int func_ov005_021585fc(EquipmentMenu* self, int direction) {
@@ -39,7 +39,7 @@ extern "C" ARM int func_ov005_021585fc(EquipmentMenu* self, int direction) {
     if (next == page)
         changed = 0;
     if (changed) {
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
         if (direction < 0)
             self->flags_ |= 0x20000;
         else

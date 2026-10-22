@@ -75,8 +75,8 @@ void ResetOrConsumeCounter02065920(unsigned char*, unsigned int);
 extern "C" void func_020676e0(void* obj, int step);
 extern "C" void func_02043124(void* obj);
 void SetName56AndFlag_0218d7b0(unsigned char* owner, char* name);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov016_0218b5c0(int a, signed char b);
 extern "C" void func_ov017_0218b5f8(signed char a);
 struct ListHead02046b60;
@@ -106,7 +106,7 @@ void SetFlag0x2IfByte0xd4Not3_0208beb4(unsigned char*);
 extern "C" void func_0205e944(void* p, int v);
 
 extern unsigned char data_02109bf4;
-extern unsigned char data_02108760;
+extern unsigned char g_sePlayer;
 
 // USA: func_02065990
 extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
@@ -311,7 +311,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                     int kind = *(signed char*)(message->b1952 + slot);
                     val = *(signed char*)(self + REGION_VALUE(0x177c, 0x194e) + slot);
                     if (kind > 0) {
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0x65, 0);
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 0x65, 0);
                         if (kind == 2) {
                             val = -1;
                             func_ov016_0218b5c0(1, val);
@@ -419,7 +419,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 (self + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 0;
                 *(int*)(self + REGION_VALUE(0x44, 0x78)) = *(int*)(self + REGION_VALUE(0x44, 0x78)) + 1;
                 *(signed char*)(self + REGION_VALUE(0x7e2, 0x912)) = 0;
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 6, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 6, 0);
                 return;
             } else if (tok == REGION_VALUE(0xff31, 0xff2f)) {
                 message->ProcessPendingFlag02045688();
@@ -428,7 +428,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 (self + 0x1000)[REGION_VALUE(0x78a, 0x95c)] = 1;
                 *(int*)(self + REGION_VALUE(0x44, 0x78)) = *(int*)(self + REGION_VALUE(0x44, 0x78)) + 1;
                 *(signed char*)(self + REGION_VALUE(0x7e2, 0x912)) = 0;
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0x1c, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 0x1c, 0);
                 return;
             } else if (tok == 0xff04 || tok == 0xff05 || tok == 0xff06 || tok == 0xff07) {
                 func_02065418(message->b19cc);
@@ -447,7 +447,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 *(int*)(self + REGION_VALUE(0x85c, 0x98c)) = 0;
                 message->mode = 6;
                 message->ProcessPendingFlag02045688();
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
                 int alive = 1;
                 unsigned char* bs = (unsigned char*)GameState::GetInstance();
                 unsigned char* w = (unsigned char*)((GameState*)bs)->GetResources();
@@ -472,7 +472,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 *(int*)(self + REGION_VALUE(0x85c, 0x98c)) = 1;
                 message->mode = 6;
                 message->ProcessPendingFlag02045688();
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
                 unsigned char* w = (unsigned char*)GameState::GetInstance()->GetResources();
                 if (w != 0) (w + 0x4000)[REGION_VALUE(0x134, 0x354)] = 0xa;
                 return;
@@ -507,7 +507,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
                 int arg = -1;
                 if (tok == REGION_VALUE(0xff50, 0xff4b)) arg = 0xe;
                 if (arg >= 0) {
-                    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0xe, 0);
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                 }
             } else if (tok == 0xff10) {
                 unsigned char* ent = message->child;
@@ -540,7 +540,7 @@ extern "C" ARM void func_02065990(MessageSystem* message, int amount) {
 #endif
             } else if (tok >= REGION_VALUE(0xff52, 0xff4d) && tok <= REGION_VALUE(0xff55, 0xff50)) {
                 int v = *(signed char*)(self + REGION_VALUE(0x1778, 0x194a) + (tok - REGION_VALUE(0xff52, 0xff4d)));
-                func_0205e944(&data_02108760, ((v * 0x21dd) >> 10) & 0x7f);
+                func_0205e944(&g_sePlayer, ((v * 0x21dd) >> 10) & 0x7f);
             } else if (tok == 0xff0e) {
                 message->b19c0 = 1;
                 message->b195d = 0x1e;

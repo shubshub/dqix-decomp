@@ -18,10 +18,10 @@ void ClearChannelAFlag0205cf10(void*);
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void SetChannelAFlag0205cef8(void*);
 void SetChannelBFlag0205cf04(void*);
-void SetupPointerTable0205ba68(Struct_0205ba68*, int, int, int);
-void SetField0AndPropagate0205bacc(Node0205bacc*, int);
+void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
+void GridCursor_SetCount(Node0205bacc*, int);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
-extern "C" void func_0205bb04(void*, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
 
 #if defined(jpn)
 extern int data_ov000_02184294[3];
@@ -179,12 +179,12 @@ extern "C" ARM void func_ov000_0217c638(Battle0217c638* battle, int a, int b) {
     }
     SetChannelAFlag0205cef8(battle->flags);
     SetChannelBFlag0205cf04(battle->flags);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&battle->first, columns, rows, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&battle->second, columns, rows, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&battle->first, total);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&battle->second, total);
+    GridCursor_SetDimensions((Struct_0205ba68*)&battle->first, columns, rows, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&battle->second, columns, rows, 0);
+    GridCursor_SetCount((Node0205bacc*)&battle->first, total);
+    GridCursor_SetCount((Node0205bacc*)&battle->second, total);
     battle->first.level = pages;
     battle->second.level = pages;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)&battle->first, selected);
-    func_0205bb04(&battle->second, selected);
+    GridCursor_SetSelectedIndex(&battle->second, selected);
 }

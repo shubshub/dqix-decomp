@@ -18,7 +18,7 @@ int GetWordFromTable02042648(int);
 bool IsHighByteFF02044494(void*, void*);
 int Dispatch02044420(void*, void*);
 int LookupKeyValue020425e4(int, int, int);
-Entry0204254c* FindEntryByKey0204254c(int, int);
+Entry0204254c* Font_FindCharacter(int, int);
 int FindEntryIndexByKey020424e4(int, int);
 int IsHalfwordInRange02067ad8(int, void*);
 
@@ -57,7 +57,7 @@ extern "C" ARM int func_0206b37c(TextContext* context, char* text) {
         } else {
             step = 1;
             int glyphWidth = defaultWidth;
-            Entry0204254c* entry = FindEntryByKey0204254c((int)text, context->fontTable);
+            Entry0204254c* entry = Font_FindCharacter((int)text, context->fontTable);
             if (entry) {
                 current = (unsigned char)FindEntryIndexByKey020424e4((int)text, context->fontTable);
                 width += LookupKeyValue020425e4(previous, current, context->fontTable);

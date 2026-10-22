@@ -12,7 +12,7 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205d81c;
 struct Obj0205dee8;
 struct List020a83b0;
@@ -30,7 +30,7 @@ struct TailNode020469b4;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow, unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
@@ -60,7 +60,7 @@ extern "C" int func_0202c508(int *p);
 extern "C" void func_ov023_021dca88(char *obj);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02165b44
 extern "C" ARM void func_ov002_02165b44(char *base) {
@@ -93,7 +93,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                 return;
             }
             *(int *) (base + 0x1a88) = 0;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             int save    = (int) func_0205ec34();
             char *world = func_02012fe4();
             int kind    = 0;
@@ -119,7 +119,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                         func_ov002_0215a7b4(base, *(signed char *) (base + 0x1ae8), *(short *) (base + 0x1aea),
                                             *(short *) (base + 0x1ab0), 0);
                     } else {
-                        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                        SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                         char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
                         ConsumeCounter02048350(
                             (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1ae8)),
@@ -179,7 +179,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                     *(unsigned char *) (base + 0x22ba) = 0;
                     if (*(unsigned int *) (base + 0x22ac) & 1) func_ov023_021dca88(base + 0x38);
                 } else {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 InitAndInsertNode_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
@@ -196,7 +196,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                 } else {
                     *(short *) (base + 0x22b8)          = 0x2338;
                     *(unsigned char *) (base + 0x22ba) = 1;
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                     *(int *) (base + 0x1a80) = 0x29;
                     *(int *) (base + 0x1a84) = 0x12;
                 }
@@ -247,7 +247,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                 return;
             }
             *(int *) (base + 0x1000 + 0xbc0) = 0;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             int save    = (int) func_0205ec34();
             char *world = func_02012fe4();
             int kind    = 0;
@@ -273,7 +273,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                         func_ov002_0215a7b4(base, *(signed char *) (base + 0x1c00 + 0x20), *(short *) (base + 0x1c00 + 0x22),
                                             *(short *) (base + 0x1b00 + 0xe8), 0);
                     } else {
-                        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                        SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                         char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
                         ConsumeCounter02048350(
                             (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1c00 + 0x20)),
@@ -333,7 +333,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                     *(unsigned char *) (base + 0x2000 + 0x48a) = 0;
                     if (*(unsigned int *) (base + 0x2000 + 0x47c) & 1) func_ov023_021dca88(base + 0x50);
                 } else {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 InitAndInsertNode_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
@@ -350,7 +350,7 @@ extern "C" ARM void func_ov002_02165b44(char *base) {
                 } else {
                     *(short *) (base + 0x2400 + 0x88)          = 0x2338;
                     *(unsigned char *) (base + 0x2000 + 0x48a) = 1;
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 0x64, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                     *(int *) (base + 0x1000 + 0xbb8) = 0x26;
                     *(int *) (base + 0x1000 + 0xbbc) = 0x11;
                 }

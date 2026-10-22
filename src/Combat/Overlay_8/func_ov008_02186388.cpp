@@ -156,11 +156,11 @@ struct List020727d8;
 struct StreamHeader;
 struct Container020e0310;
 struct Struct_0205d81c;
-struct Obj0205eaa0;
+struct SePlayer;
 
 extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char data_0211e33c[];
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 MessageSystem* GetGlobalField0x1c020421a0();
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
@@ -174,14 +174,14 @@ void AppendString02042058(char* text, const char* append);
 Canvas* FindElementByC40205d81c(Struct_0205d81c* window, int canvas);
 struct Manager02187664;
 void InitConfig02187664(Manager02187664*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int value);
+void SePlayer_Play(SePlayer* sound, int effect, int value);
 #if defined(jpn)
 void SubmitScriptFromFile020727f8(void* list, const char* path, int id, void* out, unsigned char mode);
 #endif
 
 extern "C" {
 void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
-void func_0205bb04(WindowCursor* cursor, int index);
+void GridCursor_SetSelectedIndex(WindowCursor* cursor, int index);
 int func_ov008_02188a54(BattleRecords* self, int lastClear);
 void func_ov008_0218712c(BattleRecords* self, ClearRecords* records);
 void func_ov008_02187a70(BattleRecords* self, ClearRecords* records);
@@ -332,7 +332,7 @@ extern "C" ARM void func_ov008_02186388(BattleRecords* self)
         }
         if (ok)
         {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             self->step_++;
         }
     }
@@ -379,7 +379,7 @@ extern "C" ARM void func_ov008_02186388(BattleRecords* self)
         {
             if (self->items_[i] == 7)
             {
-                func_0205bb04(&self->cursor_, i);
+                GridCursor_SetSelectedIndex(&self->cursor_, i);
 #if defined(jpn)
                 int limit = 5;
                 int first = self->top_;

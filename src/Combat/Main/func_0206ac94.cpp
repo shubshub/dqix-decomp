@@ -32,7 +32,7 @@ extern bool IsHighByteFF02044494(void* obj, void* src);
 extern bool IsHighByteFF0206ac6c(void* base, void* src);
 extern "C" int func_02001aec(unsigned char* a, unsigned char* b, int n);
 extern int Func0206abf8(void* obj, void* src);
-struct Entry0204254c* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 // USA: func_0206ac94
 extern "C" ARM int func_0206ac94(void* obj, unsigned short buf, unsigned char* p) {
@@ -60,7 +60,7 @@ extern "C" ARM int func_0206ac94(void* obj, unsigned short buf, unsigned char* p
         } else {
             struct Entry0204254c* e;
             int val = 1;
-            e = FindEntryByKey0204254c((int)q, *(unsigned char*)((char*)obj + 0x19dc));
+            e = Font_FindCharacter((int)q, *(unsigned char*)((char*)obj + 0x19dc));
             if (e) {
                 val = e->field5;
             }

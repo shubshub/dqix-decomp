@@ -10,7 +10,7 @@ struct ResetLayout_0215e6d8;
 struct Struct0215efb8;
 struct Struct0205de24;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct Keyboard02188cd0
 {
@@ -93,11 +93,11 @@ extern "C" int func_ov012_0218ae74(ProfileEditor02188cd0* self, Profile02188cd0*
 void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
 extern "C" void func_ov023_021e6e60(ProfileEditor02188cd0* self);
 void SetupBattleTag0218aabc(char* self);
-extern "C" void func_ov003_0215f41c(void* keyboard, const char* text);
+extern "C" void Keyboard_ResetToKey(void* keyboard, const char* text);
 extern "C" void func_ov012_0218ab34(ProfileEditor02188cd0* self, char* text, int hidden);
 extern "C" int func_0205d97c(void* window);
-extern "C" int func_ov003_0215f000(void* keyboard, int input);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
+extern "C" int Keyboard_Update(void* keyboard, int input);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
 extern "C" void func_ov023_021e8270(void* card);
 extern "C" void func_ov012_021845f8(void* checker);
 extern "C" int func_ov012_02184d80(void* checker, char* text);
@@ -110,7 +110,7 @@ extern "C" void func_0204500c(Messages02188cd0* messages, const char* text, int 
 
 extern "C" const char data_ov012_0218b2ea[];
 extern "C" const char data_ov012_0218b303[];
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Profile02188cd0* GetProfile02188cd0(GameState* gameState)
 {
@@ -180,7 +180,7 @@ extern "C" ARM void func_ov012_02188cd0(ProfileEditor02188cd0* self)
         ((Keyboard02188cd0*)self->unk_0)->unk_1f = 1;
         ((Keyboard02188cd0*)self->unk_0)->unk_21 = 1;
         ((Keyboard02188cd0*)self->unk_0)->unk_24 = 1;
-        func_ov003_0215f41c(self->unk_0, data_ov012_0218b303);
+        Keyboard_ResetToKey(self->unk_0, data_ov012_0218b303);
         ((Keyboard02188cd0*)self->unk_0)->unk_22 = 1;
         ((Keyboard02188cd0*)self->unk_0)->unk_23 = 0;
         func_ov012_0218ab34(self, 0, 0);
@@ -196,16 +196,16 @@ extern "C" ARM void func_ov012_02188cd0(ProfileEditor02188cd0* self)
         }
         Keyboard02188cd0* keyboard = (Keyboard02188cd0*)self->unk_0;
         unsigned char page = keyboard->unk_20;
-        switch (func_ov003_0215f000(keyboard, self->unk_13a4))
+        switch (Keyboard_Update(keyboard, self->unk_13a4))
         {
             case 1:
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 2, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 2, 0);
                 return;
 
             case 2:
             case 3:
             case 8:
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 if (page != ((Keyboard02188cd0*)self->unk_0)->unk_20)
                     func_ov012_0218ab34(self, 0, 0);
                 func_ov023_021e8270(self->card_);
@@ -216,16 +216,16 @@ extern "C" ARM void func_ov012_02188cd0(ProfileEditor02188cd0* self)
             case 6:
             case 7:
             case 11:
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 func_ov012_0218ab34(self, 0, 0);
                 return;
 
             case 9:
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 return;
 
             case 10:
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+                SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
                 if (*self->message_ != 0)
                 {
                     GameState::GetInstance();

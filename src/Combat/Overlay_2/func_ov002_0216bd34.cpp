@@ -11,20 +11,20 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Container020dedd0;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag02161798(char *base);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_02156e90(void *base);
 extern "C" void func_ov002_0215a7b4(char *base, int actor, short key, int sel, int x);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov002_0216bd34
 extern "C" ARM void func_ov002_0216bd34(char *base) {
@@ -54,7 +54,7 @@ extern "C" ARM void func_ov002_0216bd34(char *base) {
             *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
             switch (*(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc))) {
                 case 0:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     *(unsigned char *) (base + 0x2000 + RG(0x487, 0x2b7)) = 1;
                     if (FindElementByKey020dedd0((struct Container020dedd0 *) (base + RG(0x3ec + 0x400, 0x750)),
                                                                           (short) key) == NULL)
@@ -80,7 +80,7 @@ extern "C" ARM void func_ov002_0216bd34(char *base) {
                     done = 1;
                     break;
                 case 1:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     *(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = -1;
                     func_ov002_02156e90(base);
                     done = 1;

@@ -4,7 +4,7 @@
 extern "C" int func_ov008_02186b18(void* obj, int a, int b);
 
 struct SelfBB04;
-extern "C" void func_0205bb04(struct SelfBB04*, int);
+extern "C" void GridCursor_SetSelectedIndex(struct SelfBB04*, int);
 extern "C" int func_0205bf58(void*, void*);
 
 // USA: func_ov008_02186a30
@@ -18,7 +18,7 @@ extern "C" ARM int func_ov008_02186a30(void* self, void* param1) {
         state = 1;
         idx = func_ov008_02186b18(self, a, b);
         if (idx != -1) {
-            func_0205bb04((struct SelfBB04*)((char*)self + 0x750), idx);
+            GridCursor_SetSelectedIndex((struct SelfBB04*)((char*)self + 0x750), idx);
         }
     } else {
         if (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) {

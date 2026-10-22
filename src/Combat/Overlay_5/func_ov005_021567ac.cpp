@@ -11,7 +11,7 @@ enum { kScreenFlags = 0x634, kCursor = 0x19f4 };
 #include <GameState/GameState.h>
 #include "Resource/GameResources.h"
 
-struct Obj0205eaa0;
+struct SePlayer;
 
 struct MemberScreen {
     char unk_0[kMember];
@@ -54,14 +54,14 @@ struct EquipmentMenu {
     short swapped_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 MemberScreen* GetField1c_021a193c(int* p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
-extern "C" void func_0205bb04(void* cursor, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
 
 // USA: func_ov005_021567ac
@@ -80,11 +80,11 @@ extern "C" ARM void func_ov005_021567ac(EquipmentMenu* self, int x, int y) {
         func_ov005_0215792c(self, 4);
         self->slot_ = self->dragged_;
         func_ov005_021579ec(self, self->state_, self->slot_);
-        func_0205bb04(self->cursor_, self->slot_ - 8);
+        GridCursor_SetSelectedIndex(self->cursor_, self->slot_ - 8);
         self->swapped_ = (self->slot_ - 8) + self->page_ * 16;
         self->unk_3dc0 = 0;
         self->flags_ |= 0x80;
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 2, 0);
+        SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
         screen->flags_ &= ~1;
         screen->flags_ &= ~0x80;
         self->flags_ &= ~4;

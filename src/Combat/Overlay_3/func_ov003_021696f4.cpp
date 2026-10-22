@@ -11,15 +11,15 @@ enum { kRegionValue4F7_4F3 = 0x4f7 };
 #endif
 
 struct Struct_0205bef8;
-void Init0205bef8(struct Struct_0205bef8* s);
+void GridCursor_Init(struct Struct_0205bef8* s);
 
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct PointerTable021696f4 {
     int field0;
@@ -53,17 +53,17 @@ extern "C" ARM void func_ov003_021696f4(struct Ctx021696f4* self, int index) {
     }
     if (index <= first) isLast = 0;
 
-    Init0205bef8((struct Struct_0205bef8*)&self->table);
+    GridCursor_Init((struct Struct_0205bef8*)&self->table);
     if (isLast) {
         int limit = self->limits[index];
-        SetupPointerTable0205ba68((struct Struct_0205ba68*)&self->table, 1, limit + 1, 0);
+        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, limit + 1, 0);
         self->table.field4 = 1;
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)&self->table, limit + 1);
-        func_0205bb04(&self->table, limit - base);
+        GridCursor_SetCount((struct Node0205bacc*)&self->table, limit + 1);
+        GridCursor_SetSelectedIndex(&self->table, limit - base);
     } else {
-        SetupPointerTable0205ba68((struct Struct_0205ba68*)&self->table, 1, 10, 0);
+        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, 10, 0);
         self->table.field4 = 1;
-        SetField0AndPropagate0205bacc((struct Node0205bacc*)&self->table, 10);
-        func_0205bb04(&self->table, 9 - base);
+        GridCursor_SetCount((struct Node0205bacc*)&self->table, 10);
+        GridCursor_SetSelectedIndex(&self->table, 9 - base);
     }
 }

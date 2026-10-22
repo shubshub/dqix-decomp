@@ -17,8 +17,8 @@ struct Struct_0205bef8 {
     unsigned char field3d;
 };
 
-// USA: func_0205bef8
-ARM void Init0205bef8(struct Struct_0205bef8* s) {
+// Main, originally Init0205bef8 (USA 0x0205bef8, EUR 0x0205bf08, JPN 0x0205d258)
+ARM void GridCursor_Init(struct Struct_0205bef8* s) {
     InitStruct_0205ba2c((struct Struct_0205ba2c*)s);
     s->field30 = 0;
     s->field34 = 0;

@@ -17,9 +17,9 @@ void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
 struct Obj0208203c;
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern "C" int func_ov003_021765b4(void* self);
 extern "C" int func_ov003_021766e8(void* self);
@@ -77,7 +77,7 @@ extern "C" ARM void func_ov003_0217a280(struct Menu_0217a280* self) {
     } else if (self->step == 1) {
         self->cursor = &self->member100c;
         if (func_ov003_021765b4(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
             self->cursor = 0;
             switch (self->member100c) {

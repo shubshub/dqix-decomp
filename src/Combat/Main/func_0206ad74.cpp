@@ -87,7 +87,7 @@ extern "C" ARM void func_0206c794(void* context) {
 #else
 
 struct Entry0204254c { int value; signed char width; signed char advance : 6; signed char field5 : 2; unsigned char field6[2]; };
-Entry0204254c* FindEntryByKey0204254c(int, int);
+Entry0204254c* Font_FindCharacter(int, int);
 int GetWordFromTable02042648(int);
 struct CombatSlots0206b198;
 void DecrementSlotRef0206b198(CombatSlots0206b198*, unsigned short);
@@ -163,7 +163,7 @@ extern "C" ARM void func_0206ad74(Caption0206ad74* self) {
             for (;;) {
                 defaultWidth = fontWidth + 1;
                 if (!*cursor) break;
-                Entry0204254c* entry = FindEntryByKey0204254c((int)cursor, self->font);
+                Entry0204254c* entry = Font_FindCharacter((int)cursor, self->font);
                 if (entry) {
                     self->count++;
                     int width = entry->width;

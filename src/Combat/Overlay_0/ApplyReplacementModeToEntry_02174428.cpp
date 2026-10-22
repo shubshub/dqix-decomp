@@ -3,9 +3,9 @@
 
 extern "C" void* func_ov000_02161318(void* obj, int id);
 int GetField0x3acValue_020100a8(GameState* battleStruct);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern int data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern int g_sePlayer;
 struct Obj02171d90;
 extern "C" void func_ov000_02171d90(struct Obj02171d90* obj, int key);
 extern "C" void func_ov000_02170db0(void* obj);
@@ -21,7 +21,7 @@ extern "C" ARM void func_ov000_02174428(void* obj, int id, int val100, int param
         signed char off = *(signed char*)((char*)r4 + 0x18);
         signed char pval = *(signed char*)((char*)r4 + off + 0x10);
         if (val100 != pval) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x19, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x19, 0);
         }
     }
 #if defined(jpn)

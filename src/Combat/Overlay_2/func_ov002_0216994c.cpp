@@ -8,7 +8,7 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Struct_0205d81c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct StructA0205d5d0;
 
 int GetIndexedOffsetByte7c_0215a9f0(void *self);
@@ -26,7 +26,7 @@ int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 int NextIndexOrZero_0215a9b4(void *self, short idx);
 int GetShortFromTable0206e3d4(int a, int b);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 void SetFieldByIndexedOffsetC7c_0215a9cc(void *self, int idx);
 char *GetGlobalField0x1c020421a0();
 extern "C" void *memset(void *dst, int value, unsigned int length);
@@ -35,7 +35,7 @@ int TryApplyElemFields0205d5d0(struct StructA0205d5d0 *, int, int, int, unsigned
 extern "C" void func_ov002_02156e90(void *obj);
 int CheckFlagOrThreshold_02161b48(char *self, int v);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 struct Fld0216994c {
     char pad[0x68];
@@ -94,7 +94,7 @@ extern "C" ARM void func_ov002_0216994c(char *self) {
         if (elem == 0) {
             return;
         }
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
         SetFieldByIndexedOffsetC7c_0215a9cc(self, idx);
         void *buf = *(void **) (GetGlobalField0x1c020421a0() + 0x5c);
         memset(buf, 0, 0x960);

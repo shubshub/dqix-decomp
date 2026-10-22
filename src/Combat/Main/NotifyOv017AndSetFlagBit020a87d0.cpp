@@ -2,7 +2,7 @@
 #include "Resource/Brightness.h"
 
 struct AxisFloats0203b5a0;
-extern char data_02108760;
+extern char g_sePlayer;
 void ForwardField0xc0_0205eb80(void* obj);
 void SetForwardAndStore0205eb54(void* obj, int arg1, int arg2);
 void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
@@ -27,9 +27,9 @@ extern "C" ARM void func_020a87d0(struct Obj020a87d0* obj) {
 
     struct AxisFloats0203b5a0* s = (struct AxisFloats0203b5a0*)GetGameResources();
     if (IsBrightnessWithinValidRange((GameResources*)s, false) != 0) {
-        ForwardField0xc0_0205eb80(&data_02108760);
-        SetForwardAndStore0205eb54(&data_02108760, 0x72, 0x72);
-        DispatchIfField0xc4NonNeg_0205eb90(&data_02108760, 0, 0);
+        ForwardField0xc0_0205eb80(&g_sePlayer);
+        SetForwardAndStore0205eb54(&g_sePlayer, 0x72, 0x72);
+        DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
     }
 
     signed char idx = GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)func_0202ae18());

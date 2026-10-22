@@ -4159,7 +4159,7 @@ src/Combat/Main/FindEntryIndexByKey020424e4.cpp:
     complete
     .text start:0x020424f4 end:0x0204255c
 
-src/Combat/Main/FindEntryByKey0204254c.cpp:
+src/Combat/Main/Font_FindCharacter_0204254c.cpp:
     complete
     .text start:0x0204255c end:0x020425c4
 
@@ -5984,11 +5984,11 @@ src/Combat/Main/InitStruct_0205ba2c.cpp:
     complete
     .text start:0x0205ba3c end:0x0205ba78
 
-src/Combat/Main/SetupPointerTable0205ba68.cpp:
+src/Combat/Main/GridCursor_SetDimensions_0205ba68.cpp:
     complete
     .text start:0x0205ba78 end:0x0205badc
 
-src/Combat/Main/SetField0AndPropagate0205bacc.cpp:
+src/Combat/Main/GridCursor_SetCount_0205bacc.cpp:
     complete
     .text start:0x0205badc end:0x0205bb0c
 
@@ -5996,7 +5996,7 @@ src/Combat/Main/GetField0_0205bafc.cpp:
     complete
     .text start:0x0205bb0c end:0x0205bb14
 
-src/Combat/Main/ComputeDivisions0205bb04.cpp:
+src/Combat/Main/GridCursor_SetSelectedIndex_0205bb04.cpp:
     complete
     .text start:0x0205bb14 end:0x0205bb94
 
@@ -6044,7 +6044,7 @@ src/Combat/Main/CheckByteFlagAndInvoke0205bea0.cpp:
     complete
     .text start:0x0205beb0 end:0x0205bf08
 
-src/Combat/Main/Init0205bef8.cpp:
+src/Combat/Main/GridCursor_Init_0205bef8.cpp:
     complete
     .text start:0x0205bf08 end:0x0205bf4c
 
@@ -6420,7 +6420,7 @@ src/Combat/Main/SetupContextForMode0205ea20.cpp:
     complete
     .text start:0x0205ea30 end:0x0205eab0
 
-src/Combat/Main/DispatchWithShortB4_0205eaa0.cpp:
+src/Combat/Main/SePlayer_Play_0205eaa0.cpp:
     complete
     .text start:0x0205eab0 end:0x0205eacc
 

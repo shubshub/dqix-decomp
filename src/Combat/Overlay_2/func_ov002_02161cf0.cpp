@@ -19,10 +19,10 @@ void ClearChannelAFlag0205cf10(void *p);
 void ClearFlagByte0205cf1c(struct Struct0205cf1c *p);
 unsigned char ReadBattleField0x64f4Byte_02011804(GameState* gameState);
 int GetCountByType02157108(void *base, int id);
-void SetupPointerTable0205ba68(struct Struct_0205ba68 *p, int a, int b, int c);
-void SetField0AndPropagate0205bacc(struct Node0205bacc *p, int v);
+void GridCursor_SetDimensions(struct Struct_0205ba68 *p, int a, int b, int c);
+void GridCursor_SetCount(struct Node0205bacc *p, int v);
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
-extern "C" void func_0205bb04(void *p, int v);
+extern "C" void GridCursor_SetSelectedIndex(void *p, int v);
 extern "C" int func_020dc428();
 extern "C" void func_ov002_02156080(void *self, short *out, short *outCount);
 
@@ -271,13 +271,13 @@ extern "C" ARM void func_ov002_02161cf0(char *base) {
             ClearFlagByte0205cf1c((struct Struct0205cf1c *) (base + RG(0x2c8 + 0xc00, 0xe20)));
             return;
     }
-    SetupPointerTable0205ba68((struct Struct_0205ba68 *) (list + 4), cols, rows, flag);
-    SetupPointerTable0205ba68((struct Struct_0205ba68 *) (list + 0x54), cols, rows, flag);
-    SetField0AndPropagate0205bacc((struct Node0205bacc *) (list + 4), total);
-    SetField0AndPropagate0205bacc((struct Node0205bacc *) (list + 0x54), total);
+    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 4), cols, rows, flag);
+    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 0x54), cols, rows, flag);
+    GridCursor_SetCount((struct Node0205bacc *) (list + 4), total);
+    GridCursor_SetCount((struct Node0205bacc *) (list + 0x54), total);
     *(int *) (list + 8)    = pages;
     *(int *) (list + 0x58) = pages;
     SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), cursor);
-    func_0205bb04(list + 0x54, cursor);
+    GridCursor_SetSelectedIndex(list + 0x54, cursor);
     *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
 }

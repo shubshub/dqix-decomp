@@ -17,7 +17,7 @@ extern char data_ov000_02183a47[];
 extern char data_ov000_02183a4e[];
 extern char data_ov000_02183a54[];
 extern char data_ov000_021839e2[];
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 struct StreamHeader;
 struct Container02070e60 { unsigned char data[0xc]; };
@@ -137,7 +137,7 @@ extern "C" ARM void func_ov000_02166070(Scene02166070* self, GPCReadPair* pair, 
     obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
     input.names = SearchWithLow15Comparator02070fd0(names, id);
     input.entry = SearchWithComparator0206f4f0(search, id << 16 >> 16);
-    sprintf(input.names->name, data_020ef078, input.entry->id);
+    sprintf(input.names->name, g_stringFormat, input.entry->id);
     if (scriptPtr == 0) {
         input.script = 0;
     } else {

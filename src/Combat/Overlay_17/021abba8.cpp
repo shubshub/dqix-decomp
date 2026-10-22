@@ -113,7 +113,7 @@ void AllocateAndCopyBuf20_021689d8(SafeAllocator* a, void* target);
 
 extern char data_ov017_021d78da;
 extern char data_ov017_021d78f1;
-extern char data_02108760;
+extern char g_sePlayer;
 extern AllocatorUnion data_02114e20;
 
 // USA: func_ov017_021abba8
@@ -226,8 +226,8 @@ extern "C" ARM void func_ov017_021abba8(Loader021abba8* self, ListHead02046b60* 
     } else if (self->state == 3) {
         self->timer += delta;
         if (self->timer > 8) {
-            SetForwardAndStore0205ebc0(&data_02108760, 0xb1, 0xb1);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb1, 0xb1);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             self->state++;
         }
     } else if (self->state == 4) {
@@ -265,7 +265,7 @@ extern "C" ARM void func_ov017_021abba8(Loader021abba8* self, ListHead02046b60* 
             self->done = 1;
             SetByteField0x253_020397c0(leader);
             func_ov017_021ac2a8(self);
-            ForwardField0xc0_0205ebec(&data_02108760);
+            ForwardField0xc0_0205ebec(&g_sePlayer);
             if (func_0202c508(search)) {
                 unsigned char* flags = (unsigned char*)func_0205ec34();
                 func_0206df6c(flags, flags + 0x8c, 0x113d, 1);

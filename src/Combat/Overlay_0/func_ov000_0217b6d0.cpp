@@ -4,14 +4,14 @@
 
 struct Struct_0205c570;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 int IsBitFlagSet0217c4e8(void* obj, int bit);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" void func_ov000_021716d0(void* obj);
 void* GetFieldAt0x150_02053c6c(unsigned char* obj);
 int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
@@ -85,7 +85,7 @@ struct MenuObj_0217b6d0 {
 };
 
 extern MenuGlobals_0217b6d0 data_ov000_02184294;
-extern char data_02108760;
+extern char g_sePlayer;
 
 #if defined(jpn)
 // USA: func_ov000_0217b6d0
@@ -110,7 +110,7 @@ extern "C" ARM int func_ov000_0217b6d0(MenuObj_0217b6d0* obj, int arg1, int arg2
             return obj->selections[obj->depth];
         }
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         func_ov000_021716d0(obj);
         GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(obj->memberIndex);
         if (member != NULL) {
@@ -157,7 +157,7 @@ extern "C" ARM int func_ov000_0217b6d0(MenuObj_0217b6d0* obj, int arg1, int arg2
             return obj->selections[obj->depth];
         }
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         func_ov000_021716d0(obj);
         GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(obj->memberIndex);
         if (member != NULL) {

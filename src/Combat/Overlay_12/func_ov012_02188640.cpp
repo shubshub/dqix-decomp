@@ -22,7 +22,7 @@ struct ProfileAccolade {
     unsigned int unknownHigh : 1;
 };
 struct TableA68;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj021e6e20;
 struct Struct0205de24;
 struct Struct_0205c570;
@@ -32,14 +32,14 @@ void SetupBattleTag0218a574(char*);
 int GetActiveScaledSum0205d794(Struct_0205c570*);
 extern "C" int func_ov023_021e6448(void*);
 extern "C" int func_ov023_021e7148(void*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_0202ae18();
 int GetField5cb0Value_0201079c(char*);
 const char* FindEntryByKey_02072a68(TableA68*, int);
 extern "C" void func_ov012_0218bba0(void*, int, int);
 extern "C" void func_ov012_02189be8(void*, int);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline ProfileAccolade* GetProfileAccolade(GameState* state) {
     return (ProfileAccolade*)((char*)state + 0x543c);
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov012_02188640(char* editor) {
         if (func_ov023_021e6448(editor))
             *(int*)(editor + 0x1444) = GetActiveScaledSum0205d794((Struct_0205c570*)(editor + 0x90));
         if (func_ov023_021e7148(editor)) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ProfileAccolade* profile = GetProfileAccolade(GameState::GetInstance());
             GameState* state = GameState::GetInstance();
             func_0202ae18();
@@ -160,7 +160,7 @@ struct ProfileEditor02188640
 };
 
 struct TableA68;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj021e6e20;
 struct Struct0205de24;
 struct Struct_0205c570;
@@ -171,7 +171,7 @@ void SetupBattleTag0218a574(char* self);
 int GetActiveScaledSum0205d794(Struct_0205c570* window);
 extern "C" int func_ov023_021e6448(ProfileEditor02188640* self);
 extern "C" int func_ov023_021e6de4(ProfileEditor02188640* self);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
 extern "C" void func_0202ae18();
 int GetField5cb0Value_0201079c(char* gameState);
 const char* FindEntryByKey_02072a68(TableA68* table, int key);
@@ -179,7 +179,7 @@ extern "C" void func_ov012_0218adac(ProfileEditor02188640* self, int animate, in
 extern "C" void func_ov012_0218930c(ProfileEditor02188640* self, int cancel);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Profile02188640* GetProfile02188640(GameState* gameState)
 {
@@ -225,7 +225,7 @@ extern "C" ARM void func_ov012_02188640(ProfileEditor02188640* self)
             self->selections_[5] = GetActiveScaledSum0205d794((Struct_0205c570*)self->window_);
         if (func_ov023_021e6de4(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             Profile02188640* profile = GetProfile02188640(GameState::GetInstance());
             GameState* gameState = GameState::GetInstance();
             func_0202ae18();

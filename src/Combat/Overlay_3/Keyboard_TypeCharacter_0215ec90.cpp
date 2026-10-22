@@ -1,11 +1,12 @@
 #include <globaldefs.h>
+#include "Resource/Keyboard.h"
 
-struct Key0215ec90 {
+struct KeyboardKey {
     char pad0[4];
-    int code;
-    int shiftedCode;
+    int text;
+    int shiftedText;
     char padC[3];
-    unsigned char isCommand;
+    unsigned char disabled;
 };
 
 struct Entry0204254c {
@@ -13,17 +14,17 @@ struct Entry0204254c {
     signed char width;
 };
 
-struct NameInput0215ec90 {
-    struct Key0215ec90* key;
+struct Keyboard {
+    struct KeyboardKey* key;
     char pad4[4];
     char* text;
     int widthLimit;
     char pad10[4];
     int maxLen;
     char pad18[0x1e - 0x18];
-    unsigned char state;
+    unsigned char page;
     unsigned char font;
-    unsigned char shiftMode;
+    unsigned char shift;
 };
 
 extern "C" void __clear(void* buf, int size);
@@ -31,12 +32,12 @@ int FindEntryIndexByKey020424e4(int key, int tableIdx);
 extern "C" int func_020426bc(void* src, void* dst, int flag);
 extern "C" void func_02042764(void* src, void* dst, int flag);
 extern "C" int func_020420e8(void* str, int flag);
-struct Entry0204254c* FindEntryByKey0204254c(int key, int tableIdx);
+struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 extern unsigned char data_ov003_0217f3b0[];
 
-// USA: func_ov003_0215ec90
-extern "C" ARM int func_ov003_0215ec90(struct NameInput0215ec90* input) {
+// Overlay 3, originally func_ov003_0215ec90 (USA/EUR 0x0215ec90; no JPN match, its keyboard differs)
+extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* input) {
     unsigned char buf[0x100];
     unsigned char work[0x100];
     unsigned char* p;
@@ -50,17 +51,17 @@ extern "C" ARM int func_ov003_0215ec90(struct NameInput0215ec90* input) {
     int widthLimit;
     int font;
     int maxLen;
-    struct Key0215ec90* key = input->key;
+    struct KeyboardKey* key = input->key;
     if (key != 0) {
-        if (key->isCommand != 0) {
-            return 0xd;
+        if (key->disabled != 0) {
+            return KeyboardResult_KeyDisabled;
         }
 
         font = input->font;
         text = input->text;
-        code = key->code;
-        if (data_ov003_0217f3b0[input->shiftMode] == input->state) {
-            code = key->shiftedCode;
+        code = key->text;
+        if (data_ov003_0217f3b0[input->shift] == input->page) {
+            code = key->shiftedText;
         }
         widthLimit = input->widthLimit;
         maxLen = input->maxLen;
@@ -82,13 +83,13 @@ extern "C" ARM int func_ov003_0215ec90(struct NameInput0215ec90* input) {
                     }
                 }
                 func_02042764(buf, text, font);
-                input->shiftMode = 0;
-                return (maxLen <= len + 1) ? 3 : 2;
+                input->shift = 0;
+                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
             if (*p == 0) {
                 if (widthLimit != 0) {
                     width = func_020420e8(text, 0);
-                    entry = FindEntryByKey0204254c(code, 0);
+                    entry = Font_FindCharacter(code, 0);
                     if (entry != 0) {
                         width += entry->width + 1;
                     }
@@ -98,10 +99,10 @@ extern "C" ARM int func_ov003_0215ec90(struct NameInput0215ec90* input) {
                 }
                 *p = ch;
                 func_02042764(buf, text, font);
-                input->shiftMode = 0;
-                return (maxLen <= len + 1) ? 3 : 2;
+                input->shift = 0;
+                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
         }
     }
-    return 0;
+    return KeyboardResult_None;
 }

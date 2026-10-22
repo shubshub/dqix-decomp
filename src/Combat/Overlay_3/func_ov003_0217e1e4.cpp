@@ -24,7 +24,7 @@ struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int value);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int value);
 
 struct ScrollList {
     char pad0[0x4];
@@ -67,7 +67,7 @@ extern "C" ARM int func_ov003_0217e1e4(struct Obj0217e1e4* self) {
         }
         int index = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)list->scrollState);
         SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)list->indexState, index);
-        func_0205bb04(list->scrollState, index);
+        GridCursor_SetSelectedIndex(list->scrollState, index);
     }
     return 1;
 fail:

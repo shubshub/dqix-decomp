@@ -10,7 +10,7 @@
 
 struct Struct0205de24;
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020d7aa0;
 
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
@@ -20,7 +20,7 @@ int CheckFlagOrThreshold_02161b48(char *self, int flag);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 void *GetFieldAt0x150_02053c6c(unsigned char *p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(SePlayer *obj, int a, int b);
 int GetCountByType02157108(void *self, int type);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
@@ -29,7 +29,7 @@ extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215c474(char *self);
 extern "C" void func_ov002_02156e90(char *self);
 
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov002_02162714
 extern "C" ARM void func_ov002_02162714(char *self) {
@@ -63,14 +63,14 @@ extern "C" ARM void func_ov002_02162714(char *self) {
             }
             switch (*(short *) (self + RG(0x1be4, 0x1aac))) {
                 case 0:
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                    SePlayer_Play(&g_sePlayer, 1, 0);
                     *(int *) (self + RG(0x1bb8, 0x1a80)) = 4;
                     *(int *) (self + RG(0x1bc0, 0x1a88)) = 0;
                     break;
                 case 1:
                     *(unsigned char *) (self + RG(0xf80, 0xed8)) = *(int *) (self + RG(0x1bb8, 0x1a80));
                     *(int *) (self + RG(0x247c, 0x22ac)) &= ~4;
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                    SePlayer_Play(&g_sePlayer, 1, 0);
                     *(signed char *) (self + RG(0x1c20, 0x1ae8)) = 5;
                     *(int *) (self + RG(0x1bb8, 0x1a80))         = RG(10, 0xb);
                     *(int *) (self + RG(0x1bc0, 0x1a88))         = 0;

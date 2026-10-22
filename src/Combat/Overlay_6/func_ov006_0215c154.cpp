@@ -8,7 +8,7 @@ enum { kMenuCursor = 0x36, kLayoutToTable = 0x4c, kWindowFlags = 0x1258 };
 #endif
 
 struct Obj0208203c { int fields_[3]; };
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj2081;
 struct Container02071ffc;
 struct StructC28;
@@ -138,7 +138,7 @@ extern "C" void func_ov006_02155710(void*, int, int);
 extern "C" int func_ov006_021595b4(AlchemyMenu*);
 extern "C" unsigned char func_ov006_02158a28(AlchemyMenu*);
 extern "C" unsigned char func_ov006_02158b78(AlchemyMenu*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" int func_ov006_02159218(AlchemyMenu*);
 void ExpireStatusSlot02159094(Obj02159094*);
 void ClearField44IfSet_02158c28(StructC28*);
@@ -148,7 +148,7 @@ extern "C" void func_ov006_02159274(AlchemyMenu*, unsigned char*, short*, unsign
 void UpdateEntryFlags021596f0(Struct021596f0*);
 extern "C" int func_ov006_02159834(AlchemyMenu*);
 extern "C" void func_ov006_02159108(AlchemyMenu*, int, int, int);
-extern "C" Obj0205eaa0 data_02108760;
+extern "C" SePlayer g_sePlayer;
 
 static inline unsigned char GetCategory(AlchemyMenu* self) { SDK_NULL_ASSERT(self); return self->category_; }
 
@@ -190,7 +190,7 @@ extern "C" ARM void func_ov006_0215c154(AlchemyMenu* self) {
             func_ov006_0215f4dc(self);
         }
         if (func_ov006_02158a28(self)) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c(&self->repeat_);
             self->cursor_ = 0;
             if (func_ov006_02159218(self)) {
@@ -226,7 +226,7 @@ extern "C" ARM void func_ov006_0215c154(AlchemyMenu* self) {
             short item = 0;
             func_ov006_02159274(self, &category, &item, &count);
             if (count) {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+                SePlayer_Play(&g_sePlayer, 1, 0);
                 ResetWithSub0208203c(&self->repeat_);
                 self->cursor_ = 0;
                 SetElementFlag0x40_02081ea4(self->menu_, 0x11, 1);
@@ -257,7 +257,7 @@ extern "C" ARM void func_ov006_0215c154(AlchemyMenu* self) {
         if (result == 1)
             return;
         if (g_keyManager.TestKeysPressed(1) || result == 2) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c(&self->repeat_);
             self->cursor_ = 0;
             self->flags_ &= ~8;

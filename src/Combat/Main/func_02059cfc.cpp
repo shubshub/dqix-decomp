@@ -21,15 +21,15 @@ int CheckListStableAndField8LtField402057854(struct ListNode02057854* node);
 
 int ForwardField4To02057334_02055774(int* obj);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct PointerField32c_ffc0;
 unsigned char* GetPointerAt0x32c_0200ffc0(PointerField32c_ffc0*);
 struct PointerField330_ffd0;
 unsigned char* GetPointerAt0x330_0200ffd0(PointerField330_ffd0*);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 struct CombatantFlags02059cfc {
     unsigned char bit0:1;
@@ -84,7 +84,7 @@ extern "C" ARM void func_02059cfc(unsigned char* p, int dt, int id) {
             if (f28 <= fbc) {
                 int f24 = c->field24;
                 if (fbc < f24) {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, c->field_b8, 0);
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, c->field_b8, 0);
                 }
             }
         }

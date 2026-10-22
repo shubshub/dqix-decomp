@@ -77,7 +77,7 @@ short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index)
 signed char* GetPointerAt0xbf0_0207c60c(void* obj, unsigned int index);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-extern "C" void func_0205bb04(void* cursor, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 
 // USA: func_ov005_02156ecc
 extern "C" ARM void func_ov005_02156ecc(EquipmentMenu* self, int x, int y) {
@@ -123,7 +123,7 @@ extern "C" ARM void func_ov005_02156ecc(EquipmentMenu* self, int x, int y) {
         }
     }
     func_ov005_021579ec(self, self->state_, self->slot_);
-    func_0205bb04(self->cursor_, self->slot_ - 8);
+    GridCursor_SetSelectedIndex(self->cursor_, self->slot_ - 8);
     screen->flags_ |= 0x1 | 0x80;
     self->flags_ |= 0x4 | 0x8;
 }

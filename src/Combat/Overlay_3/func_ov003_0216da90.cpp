@@ -85,8 +85,8 @@ extern "C" void func_0205d304(void* a, void* b, int c, int d, int e, int f, int 
 extern "C" void func_0205d304(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 Window0216da90* FindElementByC40205d81c(Struct_0205d81c* s, int key);
-void SetupPointerTable0205ba68(Struct_0205ba68* s, int a, int b, int mode);
-void SetField0AndPropagate0205bacc(Node0205bacc* s, int val);
+void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetCount(Node0205bacc* s, int val);
 
 extern short data_ov003_0217f560[];
 
@@ -132,10 +132,10 @@ extern "C" ARM void func_ov003_0216da90(Menu0216da90* self)
     Window0216da90* window = self->window;
     window->tableA.field4 = 1;
     window->tableB.field4 = 1;
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->tableA, 1, 4, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->tableB, 1, 4, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->tableA, 4);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->tableB, 4);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableA, 1, 4, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableB, 1, 4, 0);
+    GridCursor_SetCount((Node0205bacc*)&window->tableA, 4);
+    GridCursor_SetCount((Node0205bacc*)&window->tableB, 4);
     window->activeA = 1;
     window->activeB = 1;
 }

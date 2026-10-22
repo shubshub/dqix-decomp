@@ -1,7 +1,7 @@
 #include "Resource/ActionDataTables.h"
 #include <globaldefs.h>
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct List02160094;
 
 struct Entry021eb6fc {
@@ -26,8 +26,8 @@ void* GetSlotPtr02160f20(void* obj);
 Entry021eb6fc* SearchBothTables02079e2c(char* p, int key);
 int IsMatchingID02163690(int id);
 unsigned char* GetNodeAtIndex02160094(List02160094*, int);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov025_021eb6fc
 extern "C" ARM void func_ov025_021eb6fc(Obj021eb6fc* obj, int force) {
@@ -52,9 +52,9 @@ extern "C" ARM void func_ov025_021eb6fc(Obj021eb6fc* obj, int force) {
                 inRange = 0;
             }
             if (inRange) {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 7, 0);
+                SePlayer_Play(&g_sePlayer, 7, 0);
             } else {
-                DispatchWithShortB4_0205eaa0(&data_02108760, 8, 0);
+                SePlayer_Play(&g_sePlayer, 8, 0);
             }
         }
     }

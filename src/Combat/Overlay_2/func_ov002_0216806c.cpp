@@ -4,14 +4,14 @@
 #include "Resource/GameResources.h"
 
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 struct Obj_0205da38;
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 void *GetFieldAt0x150_02053c6c(unsigned char *p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(SePlayer *obj, int a, int b);
 void CopyPaletteEntry0215af64(char *self);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_02160068(char *self);
@@ -26,7 +26,7 @@ extern "C" void func_ov002_02156e90(char *self);
 struct Struct_0205d81c;
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
 
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 // USA: func_ov002_0216806c
 #if defined(jpn)
@@ -49,7 +49,7 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
         int b  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xe20), 0x14);
         int ok = (a | b) ? 1 : 0;
         if (ok) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             int id             = *(signed char *) (self + 0x1ae8);
             GameObject *member = GameState::GetInstance()->GetPartyMemberByIndex(id);
             if (member == 0) return;
@@ -102,7 +102,7 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
         int b  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xec8), 0x14);
         int ok = (a | b) ? 1 : 0;
         if (ok) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             int id             = *(signed char *) (self + 0x1c20);
             GameObject *member = GameState::GetInstance()->GetPartyMemberByIndex(id);
             if (member == 0) return;

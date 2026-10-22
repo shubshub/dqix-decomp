@@ -60,9 +60,9 @@ extern "C" void func_0205d7a0(unsigned char* obj, int val);
 struct Struct_0205d81c;
 extern "C" int func_0205d97c(Struct_0205d81c* window);
 extern "C" int func_ov013_021842a0(void* obj, int index);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern int data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern int g_sePlayer;
 void SetupBattleMessage02185774(void* obj);
 void InitTag02185828(unsigned char* obj);
 struct Entry_0205d6a0;
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
                 if (menu->allocatedPoints[menu->selectedSkill] < 0)
                     menu->allocatedPoints[menu->selectedSkill] = 0;
                 else
-                    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0x5d, 0);
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 0x5d, 0);
             }
         } else if (menu->remainingPoints > 0 && menu->skillPoints[menu->selectedSkill] != 0x64) {
             if (menu->skillPoints[menu->selectedSkill] > menu->pointCap) {
@@ -157,7 +157,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
                     }
                 }
                 if (pointsAdded)
-                    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0x5d, 0);
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 0x5d, 0);
             }
         }
     }
@@ -197,10 +197,10 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
         transitioned = true;
         redraw = true;
         if (menu->subScreen == 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, transitioned, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, transitioned, 0);
             menu->ResetPromptWindow();
         } else {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 5, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
         }
         if (menu->subScreen) InitTag02185828((unsigned char*)menu);
                         else SetupBattleMessage02185774(menu);
@@ -271,7 +271,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
                     menu->allocatedPoints[menu->selectedSkill]--;
                     redraw = 1;
                     if (menu->allocatedPoints[menu->selectedSkill] >= 0) {
-                        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x5d, 0);
+                        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x5d, 0);
                     } else {
                         menu->allocatedPoints[menu->selectedSkill] = 0;
                     }
@@ -292,7 +292,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
                             }
                         }
                         if (pointsAdded != 0) {
-                            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x5d, 0);
+                            SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x5d, 0);
                         }
                     }
                 }
@@ -314,11 +314,11 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
         transitioned = 1;
         redraw = 1;
         if (menu->subScreen == 0) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, transitioned, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, transitioned, 0);
             SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)menu->window, 4);
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)menu->window, 0);
         } else {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 5, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 5, 0);
         }
         if (menu->subScreen != 0) {
             InitTag02185828((unsigned char*)menu);

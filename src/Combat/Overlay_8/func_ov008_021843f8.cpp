@@ -64,7 +64,7 @@ void ResetStruct020dfc40(Struct020dfc40* texts);
 void ClearStruct020a13c4(S020a13c4* guides);
 void ResetList0204af64(List0204af64* background);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
-void Init0205bef8(Struct_0205bef8* cursor);
+void GridCursor_Init(Struct_0205bef8* cursor);
 void InitCombatController020a2010(void* camera);
 extern "C" void func_0204c684(void* canvas);
 
@@ -150,7 +150,7 @@ extern "C" ARM void func_ov008_021843f8(BattleRecords* self)
     self->animations_ = NULL;
     self->iconRenderer_ = NULL;
     self->sprites_ = NULL;
-    Init0205bef8((Struct_0205bef8*)self->cursor_);
+    GridCursor_Init((Struct_0205bef8*)self->cursor_);
     self->model_.Initialize();
     InitCombatController020a2010(self->camera_);
     self->titles_ = NULL;

@@ -14,7 +14,7 @@ void ShutdownAndReinit0205e92c(void* obj);
 void ResetAndReinit0209c278(void* obj);
 void Dispatch0203a974With0x57000_0209c290(void* obj);
 void SetupContextForMode0205ea20(void* obj, int mode);
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_02109bf4;
 
 struct State021b1e24 {
@@ -66,7 +66,7 @@ extern "C" ARM void func_ov017_021b1e24(Task021b1e24* task) {
         unsigned int size = task->heap->GetMaxPossibleAllocation();
         task->allocator.CreateTypeA(task->heap->Allocate(size), size);
         task->allocator.Reset();
-        ShutdownAndReinit0205e92c(&data_02108760);
+        ShutdownAndReinit0205e92c(&g_sePlayer);
         ResetAndReinit0209c278(&data_02109bf4);
         func_020a1940(OVERLAY_ID(31));
         func_ov031_02243518(task->state, task->mode);
@@ -86,8 +86,8 @@ extern "C" ARM void func_ov017_021b1e24(Task021b1e24* task) {
     func_020a1940(OVERLAY_ID(32));
     ResetAndReinit0209c278(&data_02109bf4);
     Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
-    ShutdownAndReinit0205e92c(&data_02108760);
-    SetupContextForMode0205ea20(&data_02108760, 100);
+    ShutdownAndReinit0205e92c(&g_sePlayer);
+    SetupContextForMode0205ea20(&g_sePlayer, 100);
     SignedAllocatorHeader* block = task->allocator.GetSignedAllocator();
     if (block != NULL) {
         task->allocator.Destroy();

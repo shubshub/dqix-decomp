@@ -62,10 +62,10 @@ struct EquipmentMenu {
 };
 
 void InitChannelPair0205c53c(Struct_0205c53c* s);
-void SetupPointerTable0205ba68(Struct_0205ba68* s, int a, int count, int mode);
-void SetField0AndPropagate0205bacc(Node0205bacc* s, int val);
+void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int count, int mode);
+void GridCursor_SetCount(Node0205bacc* s, int val);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 extern "C" void* memset(void* dst, int c, unsigned int n);
 extern "C" void func_ov005_02159a30(EquipmentMenu* self, char* buffer, int arg);
 #if defined(jpn)
@@ -80,39 +80,39 @@ extern "C" ARM void func_ov005_02159904(EquipmentMenu* self) {
     InitChannelPair0205c53c((Struct_0205c53c*)window);
 #if defined(jpn)
     if (self->slot_ >= 0 && self->slot_ < 8) {
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listA_, 1, 3, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listB_, 1, 3, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listA_, 3);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listB_, 3);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, 3, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, 3, 0);
+    GridCursor_SetCount((Node0205bacc*)&window->listA_, 3);
+    GridCursor_SetCount((Node0205bacc*)&window->listB_, 3);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
-    func_0205bb04(&window->listB_, choice);
+    GridCursor_SetSelectedIndex(&window->listB_, choice);
     } else {
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listA_, 1, 4, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listB_, 1, 4, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listA_, 4);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listB_, 4);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, 4, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, 4, 0);
+    GridCursor_SetCount((Node0205bacc*)&window->listA_, 4);
+    GridCursor_SetCount((Node0205bacc*)&window->listB_, 4);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
-    func_0205bb04(&window->listB_, choice);
+    GridCursor_SetSelectedIndex(&window->listB_, choice);
     }
 #else
     int count = 4;
     if (self->slot_ >= 0 && self->slot_ < 8)
         count = 3;
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listA_, 1, count, 0);
-    SetupPointerTable0205ba68((Struct_0205ba68*)&window->listB_, 1, count, 0);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listA_, count);
-    SetField0AndPropagate0205bacc((Node0205bacc*)&window->listB_, count);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, count, 0);
+    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, count, 0);
+    GridCursor_SetCount((Node0205bacc*)&window->listA_, count);
+    GridCursor_SetCount((Node0205bacc*)&window->listB_, count);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
     SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
-    func_0205bb04(&window->listB_, choice);
+    GridCursor_SetSelectedIndex(&window->listB_, choice);
 #endif
 #if defined(jpn)
     self->window_.widthTiles = 8;

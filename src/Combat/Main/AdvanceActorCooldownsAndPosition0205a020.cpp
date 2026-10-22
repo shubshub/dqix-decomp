@@ -20,10 +20,10 @@ int CheckListStableAndField8LtField402057854(struct ListNode02057854* node);
 
 int ForwardField4To02057334_02055774(int* obj);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_0205a020
 ARM void AdvanceActorCooldownsAndPosition0205a020(unsigned char* p, int dt) {
@@ -42,7 +42,7 @@ ARM void AdvanceActorCooldownsAndPosition0205a020(unsigned char* p, int dt) {
             if (f28 <= fbc) {
                 int f24 = *(int*)(p + 0x24);
                 if (fbc < f24) {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, *(int*)(p + 0xb8), 0);
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, *(int*)(p + 0xb8), 0);
                 }
             }
         }

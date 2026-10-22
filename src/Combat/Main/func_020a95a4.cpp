@@ -157,7 +157,7 @@ void SetModeClamped0209ca70(void* obj, int val);
 void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
 
 extern unsigned char data_02109bf4[];
-extern unsigned char data_02108760[];
+extern unsigned char g_sePlayer[];
 
 // USA: func_020a95a4
 #if defined(jpn)
@@ -236,7 +236,7 @@ extern "C" ARM int func_020a95a4(BattleSave* save, MonsterRecord* records, unsig
     view->value7e74 = save->areaId;
     memcpy(GetField0x74deForValidIndex_020120a0((char*)gs, 0), save->words, sizeof(save->words));
     SetModeClamped0209ca70(data_02109bf4, save->globalByte);
-    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)data_02108760, save->globalByte2);
+    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)g_sePlayer, save->globalByte2);
     battle->byteF7d = save->byteF7d;
     view->byte63dc = save->byte63dc;
     field->savedDir = save->dir;

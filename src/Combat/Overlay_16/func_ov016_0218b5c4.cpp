@@ -129,7 +129,7 @@ extern "C" void func_ov016_0218caa8(char* name, Self0218b5c4* self, ScriptNode02
 
 extern AllocatorUnion data_02114e20;
 extern char data_02109bf4;
-extern char data_02108760;
+extern char g_sePlayer;
 extern const char data_ov016_0219cfc0[];
 extern const char data_ov016_0219cfc6[];
 extern const char data_ov016_0219cfcc[];
@@ -284,9 +284,9 @@ extern "C" ARM void func_ov016_0218b5c4(Self0218b5c4* self) {
                 DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0);
                 ScaleAndNotify0203ad88(&data_02109bf4, 0, 0);
                 func_020bbd9c();
-                ResetObjectState0205e8d4(&data_02108760);
+                ResetObjectState0205e8d4(&g_sePlayer);
                 FreeAndReinit0203a950(&data_02109bf4);
-                InitDisplayState0205e88c((Obj_0205e88c*)&data_02108760);
+                InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
                 ResetActor0209c174((Actor0209c174*)&data_02109bf4);
                 Dispatch0203a974With0xA2000_0209c2b8(&data_02109bf4);
             }
@@ -307,11 +307,11 @@ extern "C" ARM void func_ov016_0218b5c4(Self0218b5c4* self) {
             }
 #if !defined(jpn)
             if (node->fade != 0) {
-                ResetObjectState0205e8d4(&data_02108760);
+                ResetObjectState0205e8d4(&g_sePlayer);
                 FreeAndReinit0203a950(&data_02109bf4);
-                InitDisplayState0205e88c((Obj_0205e88c*)&data_02108760);
+                InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
                 ResetActor0209c174((Actor0209c174*)&data_02109bf4);
-                SetupContextForMode0205ea20(&data_02108760, 100);
+                SetupContextForMode0205ea20(&g_sePlayer, 100);
                 Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
             }
 #endif

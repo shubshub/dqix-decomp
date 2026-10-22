@@ -10,7 +10,7 @@
 #include "Resource/GameResources.h"
 #include "Input/Input.h"
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Foo02048004;
 
 struct MemberScreen {
@@ -58,10 +58,10 @@ struct EquipmentMenu {
     short touchY_;
 };
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 MemberScreen* GetField1c_021a193c(int* p);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 extern "C" void func_ov005_02156658(EquipmentMenu* self, int x, int y);
 extern "C" void func_ov005_021567ac(EquipmentMenu* self, int x, int y);
@@ -84,7 +84,7 @@ extern "C" ARM void func_ov005_021562b8(EquipmentMenu* self) {
             return;
         MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
         if (!(self->flags_ & 0x400) && (screen->flags_ & 0x800)) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0x1b, 0);
+            SePlayer_Play((SePlayer*)&g_sePlayer, 0x1b, 0);
             func_ov005_0215792c(self, 1);
             return;
         }
@@ -109,7 +109,7 @@ extern "C" ARM void func_ov005_021562b8(EquipmentMenu* self) {
             if (self->tapTimer_ > 0) {
                 if (self->slots_[self->slot_].item_ >= 0) {
                     func_ov005_0215792c(self, 5);
-                    DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+                    SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
                     screen->flags_ &= ~1;
                     screen->flags_ &= ~0x80;
                 }

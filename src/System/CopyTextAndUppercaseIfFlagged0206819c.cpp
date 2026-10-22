@@ -11,7 +11,7 @@ struct Entry0204254c {
     char pad6[2];
 };
 
-Entry0204254c *FindEntryByKey0204254c(int key, int tableIdx);
+Entry0204254c *Font_FindCharacter(int key, int tableIdx);
 void ToUpperBounded_02067f5c(signed char *text, int count);
 
 // USA: func_0206819c
@@ -19,7 +19,7 @@ ARM void CopyTextAndUppercaseIfFlagged0206819c(const char *source, char *destina
     if (source == NULL) return;
     sprintf(destination, source);
     if (*source == 0) return;
-    Entry0204254c *entry = FindEntryByKey0204254c(reinterpret_cast<int>(source), tableIndex);
+    Entry0204254c *entry = Font_FindCharacter(reinterpret_cast<int>(source), tableIndex);
     if (entry == NULL || !entry->uppercase) return;
     ToUpperBounded_02067f5c(reinterpret_cast<signed char *>(destination), entry->field5);
 }

@@ -6,7 +6,7 @@ struct Struct0205de24;
 struct Struct_0205c570;
 struct Struct_0205d81c;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020d7aa0;
 struct S_a0af4;
 
@@ -26,7 +26,7 @@ int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 int GetField0x3acValue_020100a8(GameState *gs);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 int GetFieldC54ArrayValue021573f8(void *self, int v);
 int GetCountByType02157108(void *self, int type);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *obj);
@@ -36,7 +36,7 @@ int CheckFlagOrThreshold_02161b48(char *self, int v);
 void ResetAllocatorsAndClearFields0215b428(unsigned char *obj);
 extern "C" void func_ov002_02156e90(void *obj);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -118,7 +118,7 @@ extern "C" ARM void func_ov002_02162964(char *self) {
             TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
             *(unsigned char *) (self + RG(0xf80, 0xed8)) = *(int *) (self + RG(0x1bb8, 0x1a80));
             *(unsigned int *) (self + RG(0x247c, 0x22ac)) &= ~4;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
             if (CUR == LAST + 1) {
                 if (LAST != 1) {
                     *(int *) (self + RG(0x1bb8, 0x1a80)) = RG(0xb, 0xc);

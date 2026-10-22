@@ -9,10 +9,10 @@ enum { kEnabled = 0x234, kActive = 0x233 };
 void InitBigStruct0205c790(char* obj);
 
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
 void ProcessCombatEntry0205cb74(char* obj, int value);
 
@@ -29,7 +29,7 @@ void StoreClampedDeltas_0206b7b0(char* base);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
 
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct ResetBytesAndSetByte0x16Data;
 void ResetBytesAndSetByte0x16_0205c77c(struct ResetBytesAndSetByte0x16Data* p, int val);
@@ -47,11 +47,11 @@ ARM void InitCombatPairState020652d0(char* obj, int a, int b, int c) {
 
     obj[0xb1] = 1;
     obj[0xb0] = 1;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(obj + 0x20), 1, 2, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(obj + 0x70), 1, 2, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + 0x20), 1, 2, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + 0x70), 1, 2, 0);
 
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(obj + 0x20), 2);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(obj + 0x70), 2);
+    GridCursor_SetCount((struct Node0205bacc*)(obj + 0x20), 2);
+    GridCursor_SetCount((struct Node0205bacc*)(obj + 0x70), 2);
 
 #if defined(jpn)
     ProcessCombatEntry0205cb74(obj, (int)b);
@@ -75,7 +75,7 @@ ARM void InitCombatPairState020652d0(char* obj, int a, int b, int c) {
 #endif
 
     SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(obj + 0x20), a);
-    func_0205bb04(obj + 0x70, a);
+    GridCursor_SetSelectedIndex(obj + 0x70, a);
 
     obj[kEnabled] = 1;
     ResetBytesAndSetByte0x16_0205c77c((struct ResetBytesAndSetByte0x16Data*)(obj + 0x4), 1);

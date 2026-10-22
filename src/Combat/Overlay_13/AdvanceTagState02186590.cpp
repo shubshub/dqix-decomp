@@ -10,7 +10,7 @@
 
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
-extern "C" void func_0205bb04(void* s, int n);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 int GetGlobalField0x1c020421a0();
 int GetScaledSumIfActive0205cecc(void* s);
@@ -18,8 +18,8 @@ int CallFunc0205c570AtField0x1c_0205cb64(void* obj);
 void ReinitController02043204(char* obj);
 void ResetGlobalObjAndInitSelfPointer0205ce94(unsigned char* p);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
@@ -28,7 +28,7 @@ extern "C" void func_ov013_02185990(void* obj);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
 extern "C" void func_ov013_02185cc0(void* obj);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov013_02186590  (semantic: AdvanceTagState02186590)
 extern "C" ARM void func_ov013_02186590(void* obj) {
@@ -48,10 +48,10 @@ extern "C" ARM void func_ov013_02186590(void* obj) {
         unsigned char* local = o + R(0x3ec,0x3f0);
         if (tag == 4) {
             SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(local + 4), oneFlag);
-            func_0205bb04(local + 0x54, oneFlag);
+            GridCursor_SetSelectedIndex(local + 0x54, oneFlag);
         } else {
             SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(local + 4), 0);
-            func_0205bb04(local + 0x54, 0);
+            GridCursor_SetSelectedIndex(local + 0x54, 0);
         }
         o[R(0x5ca,0x63e)] = o[R(0x5ca,0x63e)] + 1;
         return;
@@ -80,14 +80,14 @@ caseReset:
             ReinitController02043204((char*)gp);
             ResetGlobalObjAndInitSelfPointer0205ce94(o + R(0x3d0,0x3d4));
             o[R(0x5ec,0x664)] = 0;
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         } else {
             o[R(0x5c8,0x63c)] = 5;
             o[R(0x5ec,0x664)] = 1;
             ReinitController02043204((char*)gp);
             ResetGlobalObjAndInitSelfPointer0205ce94(o + R(0x3d0,0x3d4));
             ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + R(0x34,0x38)), 1);
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
         }
         o[R(0x5ca,0x63e)] = 0;
         return;
@@ -98,7 +98,7 @@ caseInvalidate:
     o[R(0x5ca,0x63e)] = 0;
     g_keyManager.CancelCurrentKeyRepeat();
     if (oneFlag != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
     }
     o[R(0x5ec,0x664)] = 0;
     ReinitController02043204((char*)gp);

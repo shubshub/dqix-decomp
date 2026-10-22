@@ -37,9 +37,9 @@ struct Cont02158cfc {
 Node02158cfc* FindNodeOrMark_02158d8c(void*, short);
 void FilterAndSortEntries02071ffc(Container02071ffc*, int, int, int, short, short*);
 void ComputeField_02158cac_02158cac(void*);
-struct Obj0205eaa0;
-extern Obj0205eaa0 data_02108760 __attribute__((aligned(4)));
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+extern SePlayer g_sePlayer __attribute__((aligned(4)));
+void SePlayer_Play(SePlayer*, int, int);
 void Checkpoint02158cfc(Cont02158cfc*, Node02158cfc*);
 void ClearSublistEntriesFlag4_020804fc(void*, int);
 extern "C" void func_ov006_0215f7e8(Cont02158cfc*);
@@ -60,7 +60,7 @@ extern "C" ARM void func_ov006_02159c64(Cont02158cfc* self) {
     self->checkpoint = self->head = self->filtered.head;
     if (!selected) selected = self->checkpoint;
     ComputeField_02158cac_02158cac(self);
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     short index = 0;
     for (Node02158cfc* node = self->checkpoint; node; node = node->next) {
         if (node == selected) break;

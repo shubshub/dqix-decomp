@@ -4,14 +4,14 @@
 struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205def8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int a, int b);
 int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
 int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *o, int a, int b);
+void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void CopyByteField0215aa5c(char *base);
 void CopyByteField0215aa14(char *base);
@@ -19,7 +19,7 @@ void ResetAndRebuildEntries02160734(unsigned char *base);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_02156e90(void *base);
 extern "C" void func_ov002_0215f3a0(void *base);
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline int AnyConfirm021696c0(char *base) {
     return (g_keyManager.TestKeysPressed(0x601) |
@@ -49,7 +49,7 @@ extern "C" ARM void func_ov002_021696c0(char *base) {
             GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
         if (AnyConfirm021696c0(base) && *(short *) (base + 0x1c00 + 0xa) == 7) {
             CopyByteField0215aa14(base);
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
             func_ov002_02156e90(base);
             *(int *) (base + 0x1000 + 0xbb8) = 0x21;
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov002_021696c0(char *base) {
         } else if (AnyConfirm021696c0(base)) {
             *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(int *) (base + 0x1000 + 0xbb8) = 0x22;
             *(int *) (base + 0x1000 + 0xbc0) = 0;
         } else if (CheckFlagOrThreshold_02161b48(base, 1)) {

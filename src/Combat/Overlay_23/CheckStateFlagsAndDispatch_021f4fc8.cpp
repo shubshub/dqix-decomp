@@ -3,9 +3,9 @@
 
 int GetGlobalField0x1c020421a0(void);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov023_021f4fc8  (semantic: CheckStateFlagsAndDispatch_021f4fc8)
 extern "C" ARM int func_ov023_021f4fc8(void) {
@@ -32,7 +32,7 @@ extern "C" ARM int func_ov023_021f4fc8(void) {
         if (g_touchInput.released_) flag = 1;
     }
     if (flag) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         return 1;
     }
     int result = *(int*)((char*)obj + regionalOffset1) == 0;

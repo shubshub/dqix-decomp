@@ -64,7 +64,7 @@ void* CallFunc020e52a0_020e5294(void*, int);
 void StoreInArray0x8b0_020465c0(struct StoreStruct*, int, int);
 void InitObjFromCombatantId020e4bf4(void*, int);
 extern "C" void func_02046608(struct StoreStruct*, int, const char*, char*, int, int, int);
-char* FindEntryByKey0204254c(int, int);
+char* Font_FindCharacter(int, int);
 extern "C" void __clear(void*, int);
 void SetEntryFirstField02080f8c(Container02080f8c*, int, int);
 void UpdateField3a8Timer_02159fb0(struct Obj3a8Timer_02159fb0*);
@@ -152,7 +152,7 @@ extern "C" ARM void func_ov006_0215a00c(struct Obj0215a00c* self) {
                 p += 2;
                 pos += 2;
             } else {
-                ParseEntry* e = (ParseEntry*)FindEntryByKey0204254c((int)p, 1);
+                ParseEntry* e = (ParseEntry*)Font_FindCharacter((int)p, 1);
                 if (e != 0) {
                     step = e->adv;
                 }

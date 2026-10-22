@@ -6,7 +6,7 @@ struct Struct0205de24;
 struct Struct_0205c570;
 struct Struct_0205d81c;
 struct StructA0205d5d0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020d7aa0;
 
 int HasPositiveContainerAndField_0215edc8(unsigned char *self);
@@ -26,12 +26,12 @@ int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205df38(void *list, int key);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 int IsFlagAt130Bit0Set_0216364c(void *member);
 int CheckFlagOrThreshold_02161b48(char *self, int v);
 extern "C" void func_ov002_02156e90(void *obj);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 // USA: func_ov002_02165378
 #if defined(jpn)
@@ -102,7 +102,7 @@ extern "C" ARM void func_ov002_02165378(char *self) {
         TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
         *(unsigned char *) (self + 0xed8) = *(int *) (self + 0x1a80);
         *(unsigned int *) (self + 0x22ac) &= ~4;
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
         *(int *) (self + 0x1a80) = 0x12;
         *(int *) (self + 0x1a88) = 0;
         if (IsFlagAt130Bit0Set_0216364c(
@@ -195,7 +195,7 @@ extern "C" ARM void func_ov002_02165378(char *self) {
         TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
         *(unsigned char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
         *(unsigned int *) (self + 0x247c) &= ~4;
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+        SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
         *(int *) (self + 0x1bb8) = 0x11;
         *(int *) (self + 0x1bc0) = 0;
         if (IsFlagAt130Bit0Set_0216364c(

@@ -29,8 +29,8 @@ extern "C" void func_ov002_0215b6c0(char* self);
 extern "C" void func_ov002_0215a7b4(char* self, int a, int b, int c, int d);
 extern "C" void func_ov002_02159900(char* self, char* arr, int flag);
 extern "C" void func_ov002_0215a0a4(char* self, char* arr, int flag);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+struct SePlayer;
+void SePlayer_Play(SePlayer*, int, int);
 void InitStateArray02157ce0(char* arr);
 struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
@@ -92,7 +92,7 @@ struct Slot0216acf0 {
 };
 
 extern Totals020fdcb0 data_020fdcb0[];
-extern char data_02108760;
+extern char g_sePlayer;
 
 #define U8(o) (*(unsigned char*)(self + (o)))
 #define S8(o) (*(signed char*)(self + (o)))
@@ -207,7 +207,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             }
             if (U8(RG(0x1cc7, 0x1b8b)) != 0) {
                 func_ov002_0215a0a4(self, self + RG(0xc8 + 0x1c00, 0x1b8c), any);
-                DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 100, 0);
+                SePlayer_Play((SePlayer*)&g_sePlayer, 100, 0);
                 if (S32(RG(0x1d00, 0x1bc4)) != 0) {
                     S32(RG(0x1bb8, 0x1a80)) = K(0x26, 0x29);
                     S32(RG(0x1bbc, 0x1a84)) = K(0x2b, 0x2e);
@@ -328,7 +328,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                     U8(RG(0x2523, 0x2353)) = 1;
                     if (*(int*)(g + RG(0x9a0, 0x870)) == 2 && S32(RG(0x2530, 0x2360)) >= 1000) {
                         SetField9a0AndIncrementField78((Struct020444bc*)g);
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 1, 0);
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
                         U8(RG(0x2522, 0x2352)) = 0;
                         U8(RG(0x2523, 0x2353)) = 0;
                         memset(self + RG(0x124 + 0x2400, 0x2354), 0, 0xc);
@@ -403,8 +403,8 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             U8(RG(0x248a, 0x22ba)) = 0;
             S32(RG(0x1bc0, 0x1a88)) = 0;
             if (S16(RG(0x1c28, 0x1af0)) == 0x7532 || S16(RG(0x1c28, 0x1af0)) == 0x7531) {
-                SetForwardAndStore0205ebc0(&data_02108760, 0x75, 0x75);
-                DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+                SetForwardAndStore0205ebc0(&g_sePlayer, 0x75, 0x75);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             }
             return;
         }
@@ -424,8 +424,8 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                 U8(RG(0x1caf, 0x1b73)) = 0;
             }
             if (S16(RG(0x1c28, 0x1af0)) == 0x7530) {
-                SetForwardAndStore0205ebc0(&data_02108760, 0x75, 0x75);
-                DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+                SetForwardAndStore0205ebc0(&g_sePlayer, 0x75, 0x75);
+                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
             }
             char* e = GetLastEntry0205d888((Struct0205d888*)(self + RG(0x2c8 + 0xc00, 0xe20)));
             if (U8(RG(0x2521, 0x2351)) != 0) {

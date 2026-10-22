@@ -18,7 +18,7 @@
 struct State0207dfc8 { unsigned int words[28]; };
 struct StoreStruct;
 struct Struct0218d618;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Container020dedd0;
 struct LootEventInfo { char pad0[0x30]; unsigned short containerId; };
 struct LootEvent {
@@ -55,9 +55,9 @@ void InitStruct0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
 void* GetGlobalResetObj020d7a50();
 extern "C" void func_ov017_0218d644(GameResources*, Vector3fix*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern AllocatorUnion data_02114e20;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 static inline char& GetResourceStateBuffer(GameResources* resources, int offset) {
     return resources->unknown_2cc[offset];
@@ -122,7 +122,7 @@ extern "C" ARM int func_ov017_021bf9a0(LootEvent* self) {
 #endif
                 GameResources* resources = GetGameResources();
                 if (self->special) func_ov017_0218d644(resources, &self->position, 0);
-                else DispatchWithShortB4_0205eaa0(&data_02108760, 14, 0);
+                else SePlayer_Play(&g_sePlayer, 14, 0);
                 return 4;
             }
         }

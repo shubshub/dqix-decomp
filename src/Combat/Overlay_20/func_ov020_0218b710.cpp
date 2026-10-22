@@ -131,7 +131,7 @@ extern "C" void func_0205cc50(void* obj, int a, int b);
 #if defined(jpn)
 extern "C" void func_0205dfa8(void* obj);
 #endif
-extern "C" void func_0205bb04(void* obj, int a);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int a);
 extern "C" void func_02043368(char* g);
 extern "C" void func_020439b0(char* g, int a);
 extern "C" char* func_0203bd08(void);
@@ -143,7 +143,7 @@ extern "C" void MapVRAMBanksToTextureImage(int);
 extern "C" void MapVRAMBanksToTexturePalette(int);
 
 extern AllocatorUnion data_02114e20;
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_02109bf4[];
 extern char data_ov020_0218dbdc[];
 extern char data_ov020_0218dbef[];
@@ -648,7 +648,7 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
         func_0205cc50(self->big, 0, -4);
 #endif
         SetIndexIfValid0205bcdc((Struct_0205bcdc*)self->sub2c, 0);
-        func_0205bb04(self->sub7c, 0);
+        GridCursor_SetSelectedIndex(self->sub7c, 0);
         MapVRAMBanksToMainObj(2);
 
         BackgroundLoader* loader = BackgroundLoader::GetInstance();
@@ -665,7 +665,7 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
 
         char* ctx = func_0203bd08();
         InitBattleContext0203bd24(ctx);
-        RefreshDisplayState0205e8ec((Obj_0205e8ec*)data_02108760);
+        RefreshDisplayState0205e8ec((Obj_0205e8ec*)g_sePlayer);
         SetStateAndDispatch0209c3b4((Actor0209c3b4*)data_02109bf4, 2);
         while (self->state != -1) {
             InitCombatSubsystems02012efc();

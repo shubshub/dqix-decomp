@@ -22,20 +22,20 @@ struct Struct_0205c570;
 struct Struct_0205bf3c;
 struct Struct_0205bb84;
 struct Struct0200fb08;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct0205cf1c;
 
 extern "C" void func_ov003_02169594(void* self);
 extern "C" void func_ov003_021696f4(void* self, int v);
 extern "C" int func_ov003_02169674(void* self, int x, int y, void* rects);
-extern "C" void func_0205bb04(void* obj, int v);
+extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 extern "C" int func_0205bf58(void* obj, int v);
 
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
 void Init0205bbcc(Struct_0205bbcc* obj);
-void SetupPointerTable0205ba68(Struct_0205ba68* obj, int a, int b, int c);
-void SetField0AndPropagate0205bacc(Node0205bacc* obj, int v);
+void GridCursor_SetDimensions(Struct_0205ba68* obj, int a, int b, int c);
+void GridCursor_SetCount(Node0205bacc* obj, int v);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc* obj, int v);
 void SetFields0205bd58(Struct_0205bd58* obj, int a, int b, int c, int d, int e);
 void ClearFields_0216a85c(S0216a85c* obj);
@@ -53,7 +53,7 @@ void UpdateEntryAndField4ea_021694b8(void* self, int v);
 void ResetState0205bf3c(Struct_0205bf3c* obj);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
 int NormalizeField5_0200fb08(Struct0200fb08* gs);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 void ClearChannelAFlag0205cf10(void* chan);
 void ClearFlagByte0205cf1c(Struct0205cf1c* chan);
 
@@ -62,7 +62,7 @@ extern unsigned char data_ov003_0217f545[];
 extern unsigned char data_ov003_0217f546[];
 extern unsigned char data_ov003_0217f547[];
 extern unsigned char data_ov003_0217f548[];
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 
 struct Rects02169674 {
     short originX;
@@ -140,9 +140,9 @@ extern "C" ARM int func_ov003_02169eec(Menu02169eec* self, unsigned int sb) {
         SetChannelBFlag0205cf04(self->chan);
         func_ov003_021696f4(self, self->cursor);
         Init0205bbcc((Struct_0205bbcc*)self->node);
-        SetupPointerTable0205ba68((Struct_0205ba68*)self->node, 1, 2, 0);
+        GridCursor_SetDimensions((Struct_0205ba68*)self->node, 1, 2, 0);
         self->w540 = 1;
-        SetField0AndPropagate0205bacc((Node0205bacc*)self->node, 2);
+        GridCursor_SetCount((Node0205bacc*)self->node, 2);
         SetIndexIfValid0205bcdc((Struct_0205bcdc*)self->node, 0);
         self->h58c[0] = 0;
         self->h58c[1] = 0;
@@ -287,7 +287,7 @@ extern "C" ARM int func_ov003_02169eec(Menu02169eec* self, unsigned int sb) {
                 ResetState0205bf3c((Struct_0205bf3c*)((char*)self + kResetOffset));
                 int old = cells[cur];
                 int n = GetField0_0205bafc(self->list);
-                func_0205bb04(self->list, n - 1 - cells[cur]);
+                GridCursor_SetSelectedIndex(self->list, n - 1 - cells[cur]);
                 if (func_0205bf58(self->list, sb) != 0) {
                     cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
                     if (old != cells[cur]) {
@@ -358,7 +358,7 @@ extern "C" ARM int func_ov003_02169eec(Menu02169eec* self, unsigned int sb) {
                     hit1 = 1;
                 } else if (px >= loy && px < hiy) {
                     hit2 = 1;
-                    DispatchWithShortB4_0205eaa0(&data_02108760, hit2, 0);
+                    SePlayer_Play(&g_sePlayer, hit2, 0);
                 }
             }
         }
@@ -370,7 +370,7 @@ extern "C" ARM int func_ov003_02169eec(Menu02169eec* self, unsigned int sb) {
             hit2 = 1;
         }
         if (hit1 != 0) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             unsigned int m = 1000;
             for (int i = 3; i >= 0; i--) {
                 self->w5a0 += m * self->cells[i];

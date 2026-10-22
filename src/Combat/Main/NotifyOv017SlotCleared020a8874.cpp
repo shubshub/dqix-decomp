@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern char data_02108760;
+extern char g_sePlayer;
 void ForwardField0xc0_0205eb80(void* obj);
 
 struct SearchStruct0202c1a4 {
@@ -24,7 +24,7 @@ struct Obj020a8874 {
 ARM void NotifyOv017SlotCleared020a8874(struct Obj020a8874* obj) {
     if (obj->flag_0x4 != 0) {
         obj->flag_0x4 = 0;
-        ForwardField0xc0_0205eb80(&data_02108760);
+        ForwardField0xc0_0205eb80(&g_sePlayer);
         signed char idx = GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)func_0202ae18());
         obj->mask_0x5 &= ~(1 << idx);
         func_ov017_021d1874(obj->byte0, obj->byte1, obj->byte2, 0, (unsigned char)idx, 0, 0);

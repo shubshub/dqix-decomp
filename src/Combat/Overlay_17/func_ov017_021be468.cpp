@@ -41,7 +41,7 @@ struct GrottoViewE468 {
 #if defined(jpn)
 #define data_ov017_021d7e80 data_ov017_021d8693
 #endif
-extern AllocatorUnion data_02114e20; extern char data_ov017_021d7e80[]; extern char data_02108760[];
+extern AllocatorUnion data_02114e20; extern char data_ov017_021d7e80[]; extern char g_sePlayer[];
 extern "C" void func_0202ae18(); extern "C" void* func_02057924(); extern "C" unsigned char* func_02012fe4();
 void CancelPendingAction020397cc(Obj020397cc*,int); void SetOrClearBit_0201bf98(unsigned char*,int,int);
 int ListContainsId(ListHead02046b60*,int); extern "C" void func_02046b8c(void*,int); extern "C" void func_02046a8c(void*,void*);
@@ -106,7 +106,7 @@ extern "C" ARM void func_ov017_021be468(StateE468* self,ListHead02046b60* list) 
         }
     } else if(self->state==3) {
         self->timer++;
-        if(self->timer==5) { SetForwardAndStore0205ebc0(data_02108760,0xb1,0xb1); DispatchIfField0xc4NonNeg_0205ebfc(data_02108760,0,0); }
+        if(self->timer==5) { SetForwardAndStore0205ebc0(g_sePlayer,0xb1,0xb1); DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer,0,0); }
         if(self->timer>25) {
             for(int i=0;i<5;i++) if(self->actors&(1<<i)) { GameObject* member=game->GetGameObjectByIndex(i); if(member!=NULL) member->obj3D_.EnableFlag(1); }
             self->state++;
@@ -133,7 +133,7 @@ extern "C" ARM void func_ov017_021be468(StateE468* self,ListHead02046b60* list) 
                 grotto->rank=self->low; grotto->environment=self->high; grotto->field8=self->field48; grotto->pending=0; self->pending=0;
             }
             self->done=1; SetByteField0x253_020397c0(actor); func_ov017_021beb48(self);
-            ForwardField0xc0_0205ebec(data_02108760);
+            ForwardField0xc0_0205ebec(g_sePlayer);
         }
     }
 }

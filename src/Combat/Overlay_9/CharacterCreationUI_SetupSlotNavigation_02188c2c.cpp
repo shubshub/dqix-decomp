@@ -2,13 +2,13 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct Struct_0205bef8;
-void Init0205bef8(struct Struct_0205bef8* s);
+void GridCursor_Init(struct Struct_0205bef8* s);
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int columns, int rows, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int columns, int rows, int mode);
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 struct SelfBB04;
-extern "C" void func_0205bb04(struct SelfBB04* self, int value);
+extern "C" void GridCursor_SetSelectedIndex(struct SelfBB04* self, int value);
 
 // Overlay 9, originally func_ov009_02188c2c (USA/EUR 0x02188c2c, JPN 0x02189af0)
 extern "C" ARM void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* editor) {
@@ -93,10 +93,10 @@ extern "C" ARM void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*
     }
 
     CreationNavigation* navigation = &editor->navigation;
-    Init0205bef8((struct Struct_0205bef8*)navigation);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)navigation, columns, rows, 1);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)navigation, count);
+    GridCursor_Init((struct Struct_0205bef8*)navigation);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)navigation, columns, rows, 1);
+    GridCursor_SetCount((struct Node0205bacc*)navigation, count);
     navigation->field4 = pageCount;
-    func_0205bb04((struct SelfBB04*)navigation, selected);
+    GridCursor_SetSelectedIndex((struct SelfBB04*)navigation, selected);
     navigation->flags3d = 0;
 }

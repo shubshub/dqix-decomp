@@ -9,7 +9,7 @@ enum { kRegionSelfShift = 0, kRegionElementCursor = 0x36 };
 
 struct Obj2081;
 struct Cont0207fdf0;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0208203c;
 struct Container020dedd0;
 struct Obj021dcae0;
@@ -27,7 +27,7 @@ void ComputeMappedOffset_0217a220(unsigned char* obj);
 
 short FindMappedMemberId02080468(void* obj, int id);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 struct Element020de650* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
@@ -44,7 +44,7 @@ extern "C" int func_ov003_02175df4(void* self);
 extern "C" int func_ov003_02179da8(void* obj, int flag);
 extern "C" void func_ov023_021dcae0(struct Obj021dcae0* obj, int val);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217a764
 extern "C" ARM void func_ov003_0217a764(unsigned char* self) {
@@ -83,7 +83,7 @@ extern "C" ARM void func_ov003_0217a764(unsigned char* self) {
         ComputeMappedOffset_0217a220(self);
         func_ov023_021dcae0((struct Obj021dcae0*)(self + 0x3c), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));
         if (func_ov003_021765b4(self) != 0) {
-            DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+            SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)(self + (0x88c - kRegionSelfShift)));
             *(void**)(self + (0xff8 - kRegionSelfShift)) = 0;
             void* elem = (void*)FindElementByKey020dedd0((struct Container020dedd0*)(self + (0x874 - kRegionSelfShift)), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));

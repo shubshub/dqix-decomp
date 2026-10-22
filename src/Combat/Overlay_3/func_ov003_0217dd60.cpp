@@ -83,8 +83,8 @@ extern "C" void func_02042428(char* dst, int size);
 #else
 extern "C" void func_0205d304(void* window, char* buf, int a, int b, int c, int d, int e, int f);
 #endif
-void SetupPointerTable0205ba68(struct Struct_0205ba68* t, int a, int b, int c);
-void SetField0AndPropagate0205bacc(struct Node0205bacc* n, int value);
+void GridCursor_SetDimensions(struct Struct_0205ba68* t, int a, int b, int c);
+void GridCursor_SetCount(struct Node0205bacc* n, int value);
 
 extern const char data_ov003_02180c7f[];
 
@@ -154,11 +154,11 @@ extern "C" ARM void func_ov003_0217dd60(struct ListMenu0217dd60* menu) {
     struct ListWindow0217dd60* window = menu->window;
     window->field8 = field32;
     window->field58 = field32;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
     unsigned char itemCount = menu->itemCount;
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)((char*)window + 4), itemCount);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
     window->field94 = 1;
     window->field95 = 1;
 }
@@ -231,11 +231,11 @@ extern "C" ARM void func_ov003_0217dd60(struct ListMenu0217dd60* menu) {
     struct ListWindow0217dd60* window = menu->window;
     window->field8 = field32;
     window->field58 = field32;
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
     unsigned char itemCount = menu->itemCount;
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)((char*)window + 4), itemCount);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
     window->field94 = 1;
     window->field95 = 1;
 }

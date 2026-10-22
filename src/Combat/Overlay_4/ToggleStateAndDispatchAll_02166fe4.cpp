@@ -14,9 +14,9 @@ extern "C" void func_ov004_021660f4(void);
 extern "C" void func_ov004_02165f2c(void);
 extern "C" void func_ov004_02166730(void* a1, int a2);
 extern "C" void func_ov004_02166bd8(void* a1);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 struct BitField02166fe4 {
     char pad[0x50];
@@ -37,6 +37,6 @@ ARM int ToggleStateAndDispatchAll_02166fe4(void* a1) {
     func_ov004_02165f2c();
     func_ov004_02166730(a1, r4);
     func_ov004_02166bd8(a1);
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

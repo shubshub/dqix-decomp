@@ -63,7 +63,7 @@ extern char data_ov015_02194105;
 extern char data_ov015_0219411d;
 extern char data_ov015_02194123;
 extern struct Vec3Words02193cf0 data_ov015_02193cf0;
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov015_0218dbec
 extern "C" ARM int func_ov015_0218dbec(Obj0218dbec* self, Entry0218dbec* entry) {
@@ -152,7 +152,7 @@ extern "C" ARM int func_ov015_0218dbec(Obj0218dbec* self, Entry0218dbec* entry) 
         if (rec != 0) {
             self->object->SetField78(rec->packed & 0xffff);
             _ZN8Object3D10SetField7aEt(self->object, rec->packed >> 16);
-            SetForwardAndStore0205ebc0(&data_02108760, rec->packed & 0xffff, rec->packed >> 16);
+            SetForwardAndStore0205ebc0(&g_sePlayer, rec->packed & 0xffff, rec->packed >> 16);
         }
         self->selected = self->record->value;
         result = 1;

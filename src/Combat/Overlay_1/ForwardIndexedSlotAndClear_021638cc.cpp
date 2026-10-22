@@ -8,7 +8,7 @@ void ForwardToTargetOrDefault0205ebb4(void* obj, void* target, int arg);
 void ClearField0x0_020bc078(int* field);
 
 extern int data_ov001_02165958[16];
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov001_021638cc  (semantic: ForwardIndexedSlotAndClear_021638cc)
 extern "C" ARM int func_ov001_021638cc(TaggedValue_021638cc* obj, int mode) {
@@ -24,7 +24,7 @@ extern "C" ARM int func_ov001_021638cc(TaggedValue_021638cc* obj, int mode) {
     if (mode >= 2) {
         arg = func_ov017_021d60f4((TaggedValue_021638cc*)((char*)obj + 8));
     }
-    ForwardToTargetOrDefault0205ebb4(&data_02108760, slot, arg);
+    ForwardToTargetOrDefault0205ebb4(&g_sePlayer, slot, arg);
     ClearField0x0_020bc078(slot);
     return 1;
 }

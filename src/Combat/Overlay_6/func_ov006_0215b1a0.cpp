@@ -8,7 +8,7 @@ enum { kMenuCursor = 0x36, kLayoutToTable = 0x4c, kWindowFlags = 0x1258 };
 #endif
 
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj2081;
 struct Container02071ffc;
 struct StructC28;
@@ -125,7 +125,7 @@ extern "C" void func_020813ec(void* menu, int group);
 void ResetWithSub0208203c(Obj0208203c* repeat);
 extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
 extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int, int);
+void SePlayer_Play(SePlayer* sound, int, int);
 void SetFlagsSequence_0215729c(void* layout);
 void FilterAndSortEntries02071ffc(Container02071ffc* table, int category, int kind, int sort, short max, short* count);
 void ComputeField_02158cac_02158cac(void* self);
@@ -133,7 +133,7 @@ void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
 extern "C" void func_ov006_0215745c(short filter, signed char* category, signed char* kind);
 void ClearField44IfSet_02158c28(StructC28* self);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215b1a0
 extern "C" ARM void func_ov006_0215b1a0(AlchemyMenu* self) {
@@ -155,7 +155,7 @@ extern "C" ARM void func_ov006_0215b1a0(AlchemyMenu* self) {
         self->cursor_ = &self->bookCursor_;
         if (func_ov006_02158a28(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c*)self->repeat_);
             int open = 0;
             self->cursor_ = 0;
@@ -236,7 +236,7 @@ extern "C" ARM void func_ov006_0215b1a0(AlchemyMenu* self) {
         self->cursor_ = &self->filterCursor_;
         if (func_ov006_02158a28(self))
         {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             self->state_ = 3;
             self->step_ = 0;
             self->cursor_ = 0;

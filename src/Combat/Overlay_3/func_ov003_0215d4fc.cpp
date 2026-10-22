@@ -52,7 +52,7 @@ struct Ent {
 };
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 
 extern "C" int *func_0202ae18();
 Ctl *GetGlobalField0x1c020421a0();
@@ -153,7 +153,7 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
         DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0x10);
         SetBrightness((GameResources*)res, -16, 0x3c);
-        func_0205e944(&data_02108760, 0);
+        func_0205e944(&g_sePlayer, 0);
         self->b3f5  = 1;
         self->state = self->state + 1;
     }
@@ -211,7 +211,7 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         }
         StopAndReset0209c7fc(&data_02109bf4);
         SetBrightness((GameResources*)res, 0, 0x3c);
-        func_0205e944(&data_02108760, 0x7f);
+        func_0205e944(&g_sePlayer, 0x7f);
         self->b3ec = 1;
         self->b3ed = 0;
         void *e = FindEntryPointerByKey0203df78(b, (*(Ent **) ((char *) GetGameResources() + 0x3000 + regionalRes))->key);

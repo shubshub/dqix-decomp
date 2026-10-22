@@ -7,9 +7,9 @@ void SetByte0xbeShiftPrev(Bytes02033b88*, int);
 extern "C" void* func_02057924(void);
 void FindNodeAndProcess02057fb4(void*, int, void*);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern unsigned char data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern unsigned char g_sePlayer;
 
 struct InitStruct02048690 {
     unsigned char f00;
@@ -106,7 +106,7 @@ extern "C" ARM void func_02048690(void* selfp) {
     s.f4c = f;
 
     FindNodeAndProcess02057fb4(list, 2, &s);
-    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0x32, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x32, 0);
 
     self->flagE0 = 0;
 }

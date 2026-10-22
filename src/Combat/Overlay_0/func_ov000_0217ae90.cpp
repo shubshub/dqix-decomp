@@ -14,7 +14,7 @@ struct CommandState {
     char p3[6];signed char value26;char p4[9];
 };
 struct Container020e0310;struct Struct_0205c570;struct Obj_0205da38;struct Entry_0205d6a0;
-struct Obj0203c108;struct Obj0205eaa0;
+struct Obj0203c108;struct SePlayer;
 struct Root {
     int p0;Container020e0310* container;CommandState command;
     Struct_0205c570* active;char p1[0x4c-0x3c];int member;
@@ -31,11 +31,11 @@ struct GlobalData {void* work;int other;GlobalRoot* root;};
 struct Ability {char p[0x3b];unsigned char low:3,flag:1,high:4;};
 struct Unit {char p[0x138];Ability* ability;};
 extern GlobalData data_ov000_02184294;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*,int);
 int GetFieldAt0x150_02053c6c(unsigned char*);
 int GetActiveScaledSum0205d794(Struct_0205c570*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*,int,int);
+void SePlayer_Play(SePlayer*,int,int);
 int GetFieldByKey020e0434(Container020e0310*,int);
 void SwapGlobalEntry0203c108(Obj0203c108*,char*);
 int CheckFlagsOrField_0217ab48_0217ab48(void*);
@@ -67,7 +67,7 @@ extern "C" ARM int func_ov000_0217ae90(Root* self)
         switch(command->mode){
         case 0:
             self->saved=self->command.commands[self->command.index];
-            DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+            SePlayer_Play(&g_sePlayer,1,0);
             command->index++;command->commands[command->index]=14;
             command->count=0;command->value19=-1;command->value26=-1;command->kind=1;
             if(func_ov000_0217c2a0(self)){
@@ -77,7 +77,7 @@ extern "C" ARM int func_ov000_0217ae90(Root* self)
             return command->commands[command->index];
         case 1:
             self->saved=self->command.commands[self->command.index];
-            DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+            SePlayer_Play(&g_sePlayer,1,0);
             if(self->selectionA){
                 command->index++;command->commands[command->index]=15;command->value18=0;
                 if(state)command->value18=func_ov000_0217aa78(self,self->selectionA,0);
@@ -89,13 +89,13 @@ extern "C" ARM int func_ov000_0217ae90(Root* self)
             }
         case 2:
             self->saved=self->command.commands[self->command.index];command->kind=3;
-            DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+            SePlayer_Play(&g_sePlayer,1,0);
             SwapGlobalEntry0203c108((Obj0203c108*)self->entry,(char*)GetFieldByKey020e0434(self->container,0x7536));
             command->index++;command->commands[command->index]=100;
             return command->commands[command->index];
         case 3:
             self->saved=self->command.commands[self->command.index];
-            DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+            SePlayer_Play(&g_sePlayer,1,0);
             if(self->selectionB){
                 command->index++;command->commands[command->index]=16;command->value16=0;
                 if(state)command->value16=func_ov000_0217aa78(self,self->selectionB,1);
@@ -108,7 +108,7 @@ extern "C" ARM int func_ov000_0217ae90(Root* self)
             }
         case 4:
             self->saved=self->command.commands[self->command.index];
-            DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+            SePlayer_Play(&g_sePlayer,1,0);
             func_ov000_02171c04(self);
             if(self->selectionC){
                 command->index++;command->commands[command->index]=17;command->value1a=0;
@@ -121,7 +121,7 @@ extern "C" ARM int func_ov000_0217ae90(Root* self)
         case 5:
             if(unit->ability->flag){
                 self->saved=self->command.commands[self->command.index];
-                DispatchWithShortB4_0205eaa0(&data_02108760,1,0);
+                SePlayer_Play(&g_sePlayer,1,0);
                 command->index++;command->commands[command->index]=21;command->value1b=0;
                 return command->commands[command->index];
             }

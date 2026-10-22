@@ -23,7 +23,7 @@ struct StateBits5ccc_11544;
 void SetFlag0x5cccBit0_02011544(struct StateBits5ccc_11544* state);
 
 extern int data_02109bf4;
-extern int data_02108760;
+extern int g_sePlayer;
 extern unsigned char data_ov004_02171034[];
 
 #if defined(jpn)
@@ -39,10 +39,10 @@ extern "C" ARM int func_ov004_0216d920() {
     if (GetByte0x4_0200fb9c((char*)bs) != 2) {
         DispatchContextByState0209c678((struct Actor0209c678*)&data_02109bf4, 0);
         InitActorContext0209c20c((struct Actor0209c20c*)&data_02109bf4);
-        RefreshDisplayState0205e8ec((struct Obj_0205e8ec*)&data_02108760);
+        RefreshDisplayState0205e8ec((struct Obj_0205e8ec*)&g_sePlayer);
     }
     SetModeClamped0209ca70((void*)&data_02109bf4, data_ov004_02171034[kContextIndex]);
-    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&data_02108760, data_ov004_02171034[kStateIndex]);
+    SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, data_ov004_02171034[kStateIndex]);
     ClearFlags00(obj, -1);
     ClearFlags04(obj, -1);
     ClearFlags08(obj, -1);

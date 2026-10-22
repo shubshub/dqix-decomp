@@ -73,7 +73,7 @@ void* GetField0x3f8Address_0200fd0c(GameState*);
 extern "C" void func_ov017_021a7280(Event021a6c2c*);
 extern char data_ov017_021d777c[];
 extern AllocatorUnion data_02114e20;
-extern Dispatcher021a6c2c data_02108760;
+extern Dispatcher021a6c2c g_sePlayer;
 static inline ResourceState021a6c2c* ResourceStateBuffer021a6c2c(GameResources* resources) {
     return (ResourceState021a6c2c*)resources->unknown_2cc;
 }
@@ -127,7 +127,7 @@ extern "C" ARM void func_ov017_021a6c2c(Event021a6c2c* self) {
     } else if (self->stage == 3) {
         self->timer += game->GetTickCount();
         if (self->timer <= 50) return;
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         int ids[4], count;
         CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.unknown_4_, ids, &count);
         Entry021a6c2c entries[4];
@@ -149,8 +149,8 @@ extern "C" ARM void func_ov017_021a6c2c(Event021a6c2c* self) {
             entry->scale = actor->obj3D_.GetScale();
             FindNodeAndProcess02057fb4(manager, 13, entry);
         }
-        SetForwardAndStore0205ebc0(&data_02108760, 0xa2, 0xa2);
-        DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 2, 0);
+        SetForwardAndStore0205ebc0(&g_sePlayer, 0xa2, 0xa2);
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 2, 0);
         self->timer = 0; self->stage++;
     } else if (self->stage == 4) {
         self->timer += game->GetTickCount();

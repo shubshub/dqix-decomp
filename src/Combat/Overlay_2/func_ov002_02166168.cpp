@@ -6,7 +6,7 @@ struct Struct0205de24;
 struct Struct_0205c570;
 struct Struct_0205d81c;
 struct Struct_0205def8;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj020d7aa0;
 
 extern "C" void func_02012fe4(void);
@@ -26,7 +26,7 @@ Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
 extern "C" void func_ov002_02156080(void *self, short *out, short *outCount);
 extern "C" int func_ov002_02161920(void *self);
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0 *obj, int a, int b);
+void SePlayer_Play(struct SePlayer *obj, int a, int b);
 void InitNodeAndInsertAt_021c1798_021c1798(GameResources *res, unsigned char v);
 void SetPendingFlagAndSync_0215a878(char *self);
 int GetField0x3acValue_020100a8(GameState *gs);
@@ -34,7 +34,7 @@ extern "C" void func_ov017_021bff8c(int a, int b);
 int CheckFlagOrThreshold_02161b48(char *self, int v);
 extern "C" void func_ov002_02156e90(void *obj);
 
-extern "C" char data_02108760;
+extern "C" char g_sePlayer;
 
 #define OBJ (self + 0x2c8 + 0xc00)
 
@@ -82,48 +82,48 @@ extern "C" ARM void func_ov002_02166168(char *self) {
             func_ov002_02161920(self);
             switch (list[*(short *) (self + 0x1ac6)]) {
                 case 0:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(unsigned char *) (self + 0xed8) = *(int *) (self + 0x1a80);
                     *(unsigned int *) (self + 0x22ac) &= ~4;
                     *(int *) (self + 0x1a80) = 0x18;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 1:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1a80) = 0x19;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 2:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(unsigned char *) (self + 0xed8) = *(int *) (self + 0x1a80);
                     *(unsigned int *) (self + 0x22ac) &= ~4;
                     *(int *) (self + 0x1a80) = 0x20;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 3:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1a80) = 0x24;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 4:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     InitNodeAndInsertAt_021c1798_021c1798(res, 1);
                     SetPendingFlagAndSync_0215a878(self);
                     *(int *) (self + 0x1a80) = 0x2e;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 5:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1a80) = 0x26;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 7:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1a80) = 0x27;
                     *(int *) (self + 0x1a88) = 0;
                     break;
                 case 8: {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     int id = (signed char) GetField0x3acValue_020100a8(gs);
                     for (int i = 0; i < *(int *) (self + 0x1b14); i++) {
                         char *c = (char *) GetCombatantWithFlag0x100_0200ff1c(gs, *(int *) (self + i * 4 + 0x1b18));
@@ -193,48 +193,48 @@ extern "C" ARM void func_ov002_02166168(char *self) {
             func_ov002_02161920(self);
             switch (list[*(short *) (self + 0x1bfe)]) {
                 case 0:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(unsigned char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
                     *(unsigned int *) (self + 0x247c) &= ~4;
                     *(int *) (self + 0x1bb8) = 0x17;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 1:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1bb8) = 0x18;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 2:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(unsigned char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
                     *(unsigned int *) (self + 0x247c) &= ~4;
                     *(int *) (self + 0x1bb8) = 0x1f;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 3:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1bb8) = 0x21;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 4:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     InitNodeAndInsertAt_021c1798_021c1798(res, 1);
                     SetPendingFlagAndSync_0215a878(self);
                     *(int *) (self + 0x1bb8) = 0x2b;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 5:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1bb8) = 0x23;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 7:
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     *(int *) (self + 0x1bb8) = 0x24;
                     *(int *) (self + 0x1bc0) = 0;
                     break;
                 case 8: {
-                    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0 *) &data_02108760, 1, 0);
+                    SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
                     int id = (signed char) GetField0x3acValue_020100a8(gs);
                     for (int i = 0; i < *(int *) (self + 0x1c50); i++) {
                         char *c = (char *) GetCombatantWithFlag0x100_0200ff1c(gs, *(int *) (self + i * 4 + 0x1c54));

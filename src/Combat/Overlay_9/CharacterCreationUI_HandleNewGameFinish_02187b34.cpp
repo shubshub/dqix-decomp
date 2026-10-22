@@ -92,7 +92,7 @@ extern const ModelFiles data_ov009_0218aa98;
 extern char data_ov009_0218acd9[];
 extern char data_ov009_0218ad41[];
 extern char data_02109bf4[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 struct CharacterCreation {
     char unk_0[R(0xa0,0xb4)];
@@ -129,8 +129,8 @@ struct CharacterCreation {
     unsigned char sex_;
 };
 
-// USA: func_ov009_02187b34
-extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
+// Overlay 9, originally func_ov009_02187b34 (USA/EUR 0x02187b34, JPN 0x021888f0)
+extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* self)
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
@@ -177,7 +177,7 @@ extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
         self->flags_ |= 0x800000;
         if (func_ov023_021e6194(self->character_)->normalizedAnimationTime_ >= 0xccc)
         {
-            SetForwardAndStore0205ebc0(data_02108760, 0x6f, 0x6f);
+            SetForwardAndStore0205ebc0(g_sePlayer, 0x6f, 0x6f);
             self->step_ = 2;
         }
         break;
@@ -307,14 +307,14 @@ extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
         break;
     }
     case 6:
-        DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 0, 0);
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
         self->timer_ = 150;
         self->step_ = 7;
         break;
     case 7:
         OrBitsIntoField0_020466e4(unknown, 0x100);
         SetBrightness(resources, 16, 40);
-        DispatchIfField0xc4NonNeg_0205ebfc(data_02108760, 1, 0);
+        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
         self->step_ = 8;
         break;
     case 8:
@@ -345,7 +345,7 @@ extern "C" ARM void func_ov009_02187b34(CharacterCreation* self)
         ClearFlags020466f4((FlagWord020466f4*)unknown, 0x100);
         ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, 0x1f, 0);
         ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, 0x1f, 0);
-        ForwardField0xc0_0205ebec(data_02108760);
+        ForwardField0xc0_0205ebec(g_sePlayer);
         self->step_ = 11;
         break;
     case 11:

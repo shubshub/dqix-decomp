@@ -8,7 +8,7 @@ enum { kindsOffset = 0x1d60 };
 #endif
 
 struct Struct_0205c570;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Entry_0205d6a0;
 struct Struct0217f8c0;
 struct TableEntry0217f8c0;
@@ -42,11 +42,11 @@ struct Combatant {
 };
 
 int GetActiveScaledSum0205d794(Struct_0205c570*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 void* GetPtrField0x2a04_02010828(GameState*);
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" {
 void func_02012fe4();
 int func_ov000_0217c594(void*, int);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov000_0217cb5c(Battle* self, int a, int b)
     if (mode < 0) mode = 0;
     self->mode = mode;
     if (func_ov000_0217c594(self, 0)) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         int table[4];
         _Z22CopyStaticData02174da4iPv(self, table);
         switch (table[self->mode]) {

@@ -136,7 +136,7 @@ struct Member0215c530
 };
 
 struct StructDE1D4;
-struct Obj0205eaa0;
+struct SePlayer;
 
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
 signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
@@ -151,8 +151,8 @@ extern "C" void* memcpy(void*, const void*, unsigned int);
 Entry0215c530* FindEntryById_021db08c(void*, int);
 extern "C" int func_020dd4c4(int, Item0215c530*);
 extern "C" void func_ov005_021579ec(Menu0215c530*, unsigned int, unsigned char);
-extern "C" void func_0205bb04(void*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+extern "C" void GridCursor_SetSelectedIndex(void*, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov005_021555c0(Menu0215c530*);
 extern "C" void func_ov023_021dcae0(Obj021dcae0*, int);
 extern "C" void func_ov005_0215792c(Menu0215c530*, unsigned char);
@@ -163,7 +163,7 @@ extern "C" void func_ov005_0215792c(Menu0215c530*, unsigned char);
 #endif
 extern unsigned char data_ov005_0215cd08[];
 extern unsigned char data_ov005_0215cd00[];
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 // USA: func_ov005_0215c530
 extern "C" ARM void func_ov005_0215c530(Menu0215c530* self)
@@ -300,11 +300,11 @@ extern "C" ARM void func_ov005_0215c530(Menu0215c530* self)
                 if (old != self->selected)
                 {
                     func_ov005_021579ec(self, 4, (unsigned char)self->selected);
-                    func_0205bb04(self->cursor, self->selected - 8);
+                    GridCursor_SetSelectedIndex(self->cursor, self->selected - 8);
                 }
             }
         }
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+        SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
     }
 
     if (self->modes[self->tab] == 0 || self->modes[self->tab] == 1)

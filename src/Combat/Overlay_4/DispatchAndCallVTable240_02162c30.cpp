@@ -6,9 +6,9 @@ extern "C" void func_ov004_0215fdfc(void*);
 extern "C" void func_ov004_0215eb40(void*);
 extern "C" void func_ov011_021848a0(void* obj, int val);
 void CallVTableFnAt240_021f66bc(void* a, int key, void* arg3);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 
 extern unsigned char data_ov004_021707e8;
 extern unsigned char data_ov004_02170b90;
@@ -94,6 +94,6 @@ extern "C" ARM int func_ov004_02162c30(void* a) {
     *(unsigned char*)(D021707e8 + 0) = 0;
 #endif
     CallVTableFnAt240_021f66bc(a, 0x84, (void*)1);
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

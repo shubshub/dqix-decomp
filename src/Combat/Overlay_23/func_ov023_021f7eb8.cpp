@@ -54,7 +54,7 @@ void SetField0xa0AndByte0xc4IfFlag0x1Clear_0204f160(unsigned char*, int, int);
 extern "C" void func_0204f174(Canvas_021f7eb8* canvas, short x, short y, short width, short height,
                               unsigned char frame, unsigned char a, unsigned char b, int);
 extern "C" void func_0204fae8(Canvas_021f7eb8* canvas);
-Glyph_021f7eb8* FindEntryByKey0204254c(int, int);
+Glyph_021f7eb8* Font_FindCharacter(int, int);
 extern "C" void func_0204f7e8(Canvas_021f7eb8* canvas, short x, short y, int value, unsigned char font,
                               unsigned char color, unsigned short* width, unsigned short* height, int, int, int, int);
 extern "C" void func_0204f41c(Canvas_021f7eb8* canvas, short x, short y, const char* text, unsigned char font,
@@ -94,7 +94,7 @@ extern "C" ARM void func_ov023_021f7eb8(MenuCanvas_021f7eb8* self, void* script,
         unsigned char color;
         int separatorWidth = 0;
         color = self->color_;
-        Glyph_021f7eb8* glyph = FindEntryByKey0204254c((int)data_ov023_021fd91c, 0);
+        Glyph_021f7eb8* glyph = Font_FindCharacter((int)data_ov023_021fd91c, 0);
         if (glyph != NULL)
             separatorWidth = glyph->width;
         unsigned short textWidth;

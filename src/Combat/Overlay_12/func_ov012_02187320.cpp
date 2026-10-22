@@ -54,7 +54,7 @@ struct ProfileEditor02187320
 struct TableA68;
 struct Entry_0205d6a0;
 struct Struct0205de24;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct_0205c570;
 struct Obj021e6e20;
 
@@ -69,7 +69,7 @@ void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
 void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
 extern "C" void func_ov023_021e6e60(ProfileEditor02187320* self);
 void BuildMessageD_02189f38(char* self);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* sound, int effect, int a);
+void SePlayer_Play(SePlayer* sound, int effect, int a);
 int GetActiveScaledSum0205d794(Struct_0205c570* window);
 extern "C" int func_ov023_021e6de4(ProfileEditor02187320* self);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
@@ -83,7 +83,7 @@ void ReinitController02043204(char* messages);
 extern "C" void func_ov012_0218943c(ProfileEditor02187320* self);
 extern "C" int func_020457e0(Messages02187320* messages);
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 static inline Profile02187320* GetProfile02187320(GameState* gameState)
 {
@@ -122,7 +122,7 @@ extern "C" ARM void func_ov012_02187320(ProfileEditor02187320* self)
         FindAndLinkMatchingEntry0205de24((Struct0205de24*)self->window_, 0, 2);
         func_ov023_021e6e60(self);
         BuildMessageD_02189f38((char*)self);
-        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 5, 0);
+        SePlayer_Play((SePlayer*)g_sePlayer, 5, 0);
         self->step_++;
         return;
     }
@@ -134,7 +134,7 @@ extern "C" ARM void func_ov012_02187320(ProfileEditor02187320* self)
         if (func_ov023_021e6de4(self) || TestFlagsAndActiveElement2_021e6e20((Obj021e6e20*)self))
         {
             func_ov012_02185bf0(self, self->state_, 1);
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             Profile02187320* profile = GetProfile02187320(GameState::GetInstance());
             switch (self->unk_13f8)
             {

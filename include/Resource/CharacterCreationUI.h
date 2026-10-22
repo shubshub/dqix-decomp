@@ -26,11 +26,17 @@ enum CreationFlag
     CreationFlag_ConfirmTouched = 0x20, // the confirm button was touched this frame
     CreationFlag_BackTouched = 0x40,    // the back button was touched this frame
     CreationFlag_TabLoading = 0x80,    // set on going to a tab, cleared once its graphics have loaded
+    CreationFlag_RefreshSummary = 0x100, // rebuild the info window's list of choices (Gender: Male, ...)
     CreationFlag_MemberCreated = 0x400, // mode 1: a party member was created (tab 9); backing out clears it
+    CreationFlag_NameAccepted = 0x800, // CharacterCreationUI_CheckName passed the name
+    CreationFlag_RedrawPanel = 0x2000, // redraw the bottom screen's panel (the keyboard's page, a message)
+    CreationFlag_RefreshName = 0x8000, // redraw the Name line of the info window
+    CreationFlag_NameRejected = 0x400000, // CharacterCreationUI_CheckName refused the name: its message shows
+    CreationFlag_HideButtons = 0x1000000, // leave the Confirm and Back button sprites off
 };
 
 // CharacterCreationUI::state: the current tab. Each tab's confirm goes to the next tab and back to the
-// previous one; 9-11 aren't identified yet (name entry's confirm goes to 9, the gender tab's back to 11).
+// previous one; name entry's confirm goes to Confirm, and the gender tab's back to Close.
 enum CreationTab
 {
     CreationTab_Setup = 0,
@@ -42,7 +48,17 @@ enum CreationTab
     CreationTab_EyeColor = 6,
     CreationTab_SkinColor = 7,
     CreationTab_NameEntry = 8,
+    CreationTab_Confirm = 9,       // yes/no on the finished character
+    CreationTab_NewGameFinish = 10, // new game only: the hero turns to the front, fade out
+    CreationTab_Close = 11,        // leave character creation
     CreationTab_Done = 12,
+};
+
+// A name: the buffer each sex's name is typed into, and how many characters it holds.
+enum CreationName
+{
+    CreationName_BufferSize = 0x48,
+    CreationName_MaxLength = 8,
 };
 
 // What CharacterCreationUI_HandleInput returns. A tab icon comes back as CreationInput_TabIcon + its tab.

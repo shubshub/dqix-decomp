@@ -4,7 +4,7 @@
 
 struct Cont0207fe44;
 struct Obj0208203c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj0217e5dc;
 struct Obj020397cc;
 struct StatusOwner02081198;
@@ -88,7 +88,7 @@ int FindMappedMemberId02080468(void *, int);
 void ResetWithSub0208203c(Obj0208203c *);
 void SetEntryLowNibbleAndElement02080c68(void *, int, int);
 extern "C" int func_ov003_02160854(Scene *);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0 *, int, int);
+void SePlayer_Play(SePlayer *, int, int);
 extern "C" void _Z16InitObj_0217e5dcP11Obj0217e5dca(Obj0217e5dc *, unsigned char);
 extern "C" int func_ov003_02160a68(Scene *);
 Elem *GetElementAtIndex_02160bd0_02160bd0(void *, int);
@@ -103,7 +103,7 @@ void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04 *, int);
 extern "C" int func_ov003_02166a90(Scene *, int);
 void CancelPendingAction020397cc(Obj020397cc *, int);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_02162f40
 extern "C" ARM void func_ov003_02162f40(Scene *self) {
@@ -124,7 +124,7 @@ extern "C" ARM void func_ov003_02162f40(Scene *self) {
         self->p470 = &self->h490;
         SetEntryLowNibbleAndElement02080c68(entries, self->h488, 0);
         if (func_ov003_02160854(self) != 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0 *) &data_02108760, 1, 0);
+            SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ResetWithSub0208203c((Obj0208203c *) self->sub308);
             self->p470        = 0;
             unsigned char idx = self->h490 - 0x25;

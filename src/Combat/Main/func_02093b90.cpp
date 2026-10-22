@@ -14,7 +14,7 @@
 
 struct FlagWord02046708;
 struct AllocatorUnion;
-struct Obj0205eaa0;
+struct SePlayer;
 struct TextEntry02093b90 {
     char text[ENTRY_TEXT_02093b90];
     short code;
@@ -38,7 +38,7 @@ struct Tile02093b90 {
 };
 struct S_b20c { void* buffer; Tile02093b90* tiles; unsigned char count; };
 extern AllocatorUnion data_02114e20;
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" char* func_0203bd08();
 unsigned char IsPowCnt1Bit15Clear020938cc();
 void SetByteAt0xc0203be58(char*, int, int);
@@ -58,7 +58,7 @@ void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 extern "C" void LoadToSubObjVRAM(const void*, unsigned int, unsigned int);
 void TailForward02012da4(AllocatorUnion*, void*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_020945ac(Obj020941b0*);
 
 static inline unsigned char* GetText02093b90(Obj020941b0* obj) { return obj->text; }
@@ -139,7 +139,7 @@ extern "C" ARM void func_02093b90(Obj020941b0* self, int ticks) {
         memset(self->text,0,TEXT_LEN_02093b90);
         self->flags |=4;
         if (!self->entries[0].started) {
-            DispatchWithShortB4_0205eaa0(&data_02108760,29,0);
+            SePlayer_Play(&g_sePlayer,29,0);
             self->entries[0].started=1;
         }
         return;

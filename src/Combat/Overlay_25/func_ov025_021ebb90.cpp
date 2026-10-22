@@ -153,7 +153,7 @@ extern "C" void func_ov000_0216df00(void* handle, int a, int b, int c, float sca
 extern "C" void func_ov000_021626a0(void* combatWork, int a, int b);
 void CopyStructFields_021ecb90(struct Struct021ecb90* dst, struct Struct021ecb90* src);
 
-extern int data_02108760;
+extern int g_sePlayer;
 extern "C" void __clear(void* dst, unsigned int n);
 
 static inline int IsPartyId021ebb90(unsigned int id) { return id <= 3; }
@@ -476,7 +476,7 @@ extern "C" ARM void func_ov025_021ebb90(struct Container021ebb90* obj) {
         }
 
         if (!(obj->entries[i].d & 4) && sp14 <= obj->entries[i].m && obj->entries[i].m < sp4c) {
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, obj->entries[i].l, 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, obj->entries[i].l, 0);
             obj->entries[i].d |= 4;
         }
 

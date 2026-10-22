@@ -161,7 +161,7 @@ extern "C" void func_ov017_021adb1c(Battle021acdf4* self);
 extern AllocatorUnion data_02114e20;
 extern char data_ov017_021d795c;
 extern char data_ov017_021d7978;
-extern char data_02108760;
+extern char g_sePlayer;
 extern char data_ov017_021d798f;
 
 struct BattleHud021acdf4 {
@@ -312,11 +312,11 @@ extern "C" ARM void func_ov017_021acdf4(Battle021acdf4* self, HeadList020469f8* 
             EnqueueEventTag17_021ce014(id, 3, (int)((Object3D*)leader)->GetField06(), members);
         }
         if (self->special) {
-            SetForwardAndStore0205ebc0(&data_02108760, 0xa3, 0xa3);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 5, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xa3, 0xa3);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 5, 0);
         } else {
-            SetForwardAndStore0205ebc0(&data_02108760, 0xb2, 0xb2);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 0, 0);
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0xb2, 0xb2);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
         }
         self->state++;
     } else if (self->state == 2) {
@@ -425,7 +425,7 @@ extern "C" ARM void func_ov017_021acdf4(Battle021acdf4* self, HeadList020469f8* 
             return;
         }
         func_02057f00(mgr, 8);
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         CallListIfFlagsSet_02197528();
         self->done = 1;
         SetByteField0x253_020397c0(leader);
@@ -478,8 +478,8 @@ extern "C" ARM void func_ov017_021acdf4(Battle021acdf4* self, HeadList020469f8* 
             self->savedField = GetField0x21c020a277c(obj);
             SetField0x21c_020a2770(obj, -1);
             *(Vector3i*)(obj + 0x10) = self->savedPos;
-            Forward0205ec20(&data_02108760, 0, 0);
-            DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, 1, 0);
+            Forward0205ec20(&g_sePlayer, 0, 0);
+            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 1, 0);
             self->state++;
         }
     } else if (self->state == 0xb) {
@@ -507,7 +507,7 @@ extern "C" ARM void func_ov017_021acdf4(Battle021acdf4* self, HeadList020469f8* 
         char* g = (char*)GetGlobalField0x1c020421a0();
         SetField0x21c_020a2770((void*)GetFieldIfFlag4_020100f8((char*)gs), self->savedField);
         func_02057f00(mgr, 8);
-        ForwardField0xc0_0205ebec(&data_02108760);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
         for (int i = 0; i < 5; i++) {
             if (self->members & (1 << i)) {
                 GameObject* member = gs->GetGameObjectByIndex(i != 4 ? i : 0xce);

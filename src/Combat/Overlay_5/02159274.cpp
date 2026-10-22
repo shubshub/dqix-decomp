@@ -13,7 +13,7 @@ enum { kYesNo = 0xe64, kTextBytes = 0x960, kPanel = 0xee4 };
 
 struct Outer020e28dc;
 struct Ctx020e263c;
-struct Obj0205eaa0;
+struct SePlayer;
 struct StructA0205d5d0;
 struct Container020dedd0;
 struct Struct020dd768;
@@ -65,7 +65,7 @@ struct Menu02159274 {
     unsigned char menuState_;
 };
 
-extern "C" char data_02108760[];
+extern "C" char g_sePlayer[];
 
 int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
 void UpdateEntryStateAndPosition(Ctx020e263c* w, int value);
@@ -73,7 +73,7 @@ extern "C" void func_ov005_021589f4(void* self);
 extern "C" void func_ov005_02159b74(void* self);
 extern "C" int func_ov005_02158b3c(void* object, void* buffer);
 int GetField0x15UnlessInactive_020e2918(signed char*);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 struct Obj020e25e8;
 void ResetSelectionState020e25e8(Obj020e25e8*);
 int IsFlag0x2Active020e2984(struct Outer020e28dc* window);
@@ -103,7 +103,7 @@ extern "C" ARM void func_ov005_02159274(Menu02159274* self) {
     if (self->step_ == 1) {
         sel = GetField0x15UnlessInactive_020e2918((signed char*)self->yesNo_);
         if (sel >= 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
         } else if (IsFlag0x2Active020e2984((struct Outer020e28dc*)self->yesNo_)) {
             ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
@@ -204,7 +204,7 @@ extern "C" ARM void func_ov005_02159274(Menu02159274* self) {
     if (self->step_ == 3) {
         sel = GetField0x15UnlessInactive_020e2918((signed char*)self->yesNo_);
         if (sel >= 0) {
-            DispatchWithShortB4_0205eaa0((Obj0205eaa0*)data_02108760, 1, 0);
+            SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);
         } else if (IsFlag0x2Active020e2984((struct Outer020e28dc*)self->yesNo_)) {
             ResetSelectionState020e25e8((Obj020e25e8*)self->yesNo_);

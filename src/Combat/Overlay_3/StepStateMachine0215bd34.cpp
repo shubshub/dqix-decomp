@@ -13,12 +13,12 @@ void ClearFlagByte0205cf1c(struct Struct0205cf1c* s);
 struct Struct_0205c570;
 int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 int CheckStateFlag0215b370(void* obj, int flag);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov003_0215bd34
 ARM int StepStateMachine0215bd34(void* p) {
@@ -38,7 +38,7 @@ ARM int StepStateMachine0215bd34(void* p) {
             unsigned char v = *(unsigned char*)(obj + 0x59f);
             int masked = v & ~1;
             *(unsigned char*)(obj + 0x59f) = masked;
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
             ClearChannelAFlag0205cf10(obj + 0xf4);
             ClearFlagByte0205cf1c((struct Struct0205cf1c*)(obj + 0xf4));
             *(unsigned char*)(obj + 0x581) = 0;

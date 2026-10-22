@@ -131,7 +131,7 @@ struct BattleScene_021f1234 {
 };
 
 extern "C" BattleEnd_021f1234* _ZZ17GetGlobal021ffefcvE1s;
-extern char data_02108760[];
+extern char g_sePlayer[];
 
 MessageSystem_021f1234* GetGlobalField0x1c020421a0();
 int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* array, int id);
@@ -288,7 +288,7 @@ extern "C" ARM int func_ov023_021f1234(BattleScene_021f1234* self)
         {
             if (!IsMainBrightnessTransitionActive(resources))
             {
-                SetupContextForMode0205ea20(data_02108760, 100);
+                SetupContextForMode0205ea20(g_sePlayer, 100);
                 end->step_++;
             }
         }
@@ -331,7 +331,7 @@ extern "C" ARM int func_ov023_021f1234(BattleScene_021f1234* self)
         {
             if (!IsMainBrightnessTransitionActive(resources))
             {
-                SetupContextForMode0205ea20(data_02108760, 0x65);
+                SetupContextForMode0205ea20(g_sePlayer, 0x65);
                 GetCombatantWithFlag0x100_0200ff1c(gameState, id);
                 GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, id);
                 if (member != NULL)

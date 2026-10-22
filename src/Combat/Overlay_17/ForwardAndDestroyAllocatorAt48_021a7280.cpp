@@ -14,7 +14,7 @@ void TailForward02012da4(AllocatorUnion* alloc, void* data);
 void SetByteField0x253_020397c0(void* obj);
 void ForwardField0xc0_0205ebec(void* obj);
 
-extern char data_02108760;
+extern char g_sePlayer;
 extern int data_02114e20;
 
 struct Obj021a7280 {
@@ -28,7 +28,7 @@ extern "C" ARM void func_ov017_021a7280(struct Obj021a7280* self) {
 
 	SetByteField0x253_020397c0(GameState::GetInstance()->GetUnknownGameObject());
 
-	ForwardField0xc0_0205ebec(&data_02108760);
+	ForwardField0xc0_0205ebec(&g_sePlayer);
 
 	void* p = self->allocator.GetSignedAllocator();
 	if (p != NULL) {

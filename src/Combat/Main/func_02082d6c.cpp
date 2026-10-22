@@ -83,7 +83,7 @@ void LoadAndApplyResourceEntry02082fc4(void*, void*);
 void Copy3Words02082fa8(struct Words02082fa8*, struct Words02082fa8*);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_02042764(void*, void*, int);
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 // USA: func_02082d6c
 extern "C" ARM void func_02082d6c(struct SlotState02082d6c* dst, struct SlotRecord02082d6c* src) {
@@ -120,12 +120,12 @@ extern "C" ARM void func_02082d6c(struct SlotState02082d6c* dst, struct SlotReco
         dst->w18 |= 4;
     }
 #if defined(jpn)
-    sprintf(dst->name3c, data_020ef078, src->b140);
+    sprintf(dst->name3c, g_stringFormat, src->b140);
 #else
     char local[0x30];
     __clear(local, 0x30);
     func_02042764(src->b140, local, 1);
-    sprintf(dst->name3c, data_020ef078, local);
+    sprintf(dst->name3c, g_stringFormat, local);
 #endif
     dst->bit30 = src->bit01_4;
     dst->h1c = src->w154.b;

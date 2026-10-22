@@ -69,7 +69,7 @@ struct MessageSystem { char pad0[0x868]; int active; };
 struct MessageSystem { char pad0[0x998]; int active; };
 #endif
 
-struct Obj0205eaa0;
+struct SePlayer;
 struct Struct0216fe48;
 struct ShortSetStruct0216fdf8;
 struct Struct0216fd0c;
@@ -79,7 +79,7 @@ void* GetSlotPtr02160f20(void*);
 extern "C" void* func_02057924();
 unsigned char* GetField02163524(void*);
 extern "C" unsigned char _ZZ16GetTimer021ef974vE1s __attribute__((aligned(4)));
-extern Obj0205eaa0 data_02108760;
+extern SePlayer g_sePlayer;
 extern "C" void func_ov025_021db6dc(Work*);
 int ClassifyField0x81fe_ov000_0215fc60(char*);
 ListNode02160094* GetNodeAtIndex02160094(List02160094*, int);
@@ -92,7 +92,7 @@ extern "C" void func_ov000_021626a0(void*, int, int);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void*, int);
 void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void*, int);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0*, int, int);
+void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_ov025_021dbe10(Work*);
 void ResetStruct0216fe48(Struct0216fe48*);
 void AppendUniqueShort0216fdf8(ShortSetStruct0216fdf8*, int);
@@ -158,7 +158,7 @@ extern "C" ARM void func_ov025_021db038(Work* work) {
                     else if (ClassifyField0x81fe_ov000_0215fc60((char*)battle) == 2) messageId = 0x211;
                 }
                 if (actor->id == 0) {
-                    DispatchWithShortB4_0205eaa0(&data_02108760, 7, 0);
+                    SePlayer_Play(&g_sePlayer, 7, 0);
                     if (target) { target->flags = 0; target->flag18 = 0; target->value = 0; target->flag1b = 0; }
                 }
             }

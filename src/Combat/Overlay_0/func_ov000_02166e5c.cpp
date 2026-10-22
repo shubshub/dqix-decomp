@@ -139,7 +139,7 @@ void CopyCombatantStats0208936c(char*, char*, char*);
 void CopyInRegion0x571d_020114c0(char*, int, void*);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
 extern const char data_ov000_02183aa5[], data_ov000_021839e2[], data_ov000_02183abe[];
-extern const char data_020ef078[];
+extern const char g_stringFormat[];
 extern const RegionCode02166e5c data_ov000_02183014;
 
 // USA: func_ov000_02166e5c
@@ -215,7 +215,7 @@ extern "C" ARM void func_ov000_02166e5c(BattleWork02166e5c* self) {
     ResetStruct020d3c08((char*)&table);
     InitAndMaybeStartStream020d3c28((Obj020d3c28*)&table);
     ClassEntry02166e5c* entry = FindEntryByKind((FindEntryByKindContainer020d3d90*)&table, 1);
-    sprintf(data->name, data_020ef078, entry);
+    sprintf(data->name, g_stringFormat, entry);
     Growth02166e5c growth;
     growth.experience = 0;
     growth.rank = 0;

@@ -62,7 +62,7 @@ extern "C" void func_0204ecb4(KeyboardCanvas* wnd, int a, int b, int w, int h, s
 extern "C" void func_0204f41c(KeyboardCanvas* ctx, short x, short y, const char* str, int size,
                               unsigned char palette, short* outA, short* outB, int flag);
 extern "C" void func_0204f3bc(KeyboardCanvas* ctx, int value);
-extern "C" void func_ov003_0215ec68(int size, short* width, short* height);
+extern "C" void Keyboard_GetKeySize(int size, short* width, short* height);
 extern "C" void func_0204f914(KeyboardCanvas* obj, int mode, short x0, short y0, short x1, short y1);
 struct Obj0204fbf8;
 void InvokeHandlerAfterCacheFlush0204fbf8(struct Obj0204fbf8* obj);
@@ -120,7 +120,7 @@ extern "C" ARM void func_ov012_0218ab34(KeyboardScreen* self, int skip)
             text = normal;
 
         int textWidth = func_020420e8(text, 1);
-        func_ov003_0215ec68(key->size_, &width, &height);
+        Keyboard_GetKeySize(key->size_, &width, &height);
         short x = key->x_ - originX;
         short y = key->y_ - originY;
         func_0204f914(canvas, 4, x + 1, y + 1, width + x - 1, height + y - 1);

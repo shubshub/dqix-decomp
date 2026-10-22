@@ -7,7 +7,7 @@
 enum { kIndex = 0x78, kBuffer = 0x4c, kCursor = 0x58, kControls = 0x90, kFlag = 0x19cd, kStreamState = 0x40, kValue = 0x954 };
 #endif
 
-struct Obj0205eaa0;
+struct SePlayer;
 
 extern "C" void func_0206b104(void* obj);
 #if defined(jpn)
@@ -22,8 +22,8 @@ void InitBigStructVariant0205c840(char* obj);
 #else
 void InitBigStructVariant0205c840(char* obj);
 #endif
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern char data_02108760;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern char g_sePlayer;
 
 // JPN: func_0206917c
 // USA: func_020678bc  (semantic: DispatchStateChange_020678bc)
@@ -44,7 +44,7 @@ extern "C" ARM void func_020678bc(char* self, int state) {
     case 0:
         func_0206b104(self);
         if (!isFF06) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         }
 #if defined(jpn)
         func_0206cbe8(self, 0xff14, self->tokenCursor);
@@ -63,7 +63,7 @@ extern "C" ARM void func_020678bc(char* self, int state) {
         return;
     case 1:
         if (!isFF06 && !isFF07) {
-            DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 1, 0);
+            SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         }
     case -2:
 #if defined(jpn)

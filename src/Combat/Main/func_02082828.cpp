@@ -90,7 +90,7 @@ void CopyStruct02082d38(Struct02082d38*, Struct02082d38*);
 void InitIndexedElements02083508(Obj02083508*);
 extern "C" void CopyFrom027ffcf4_020c99ac(void*);
 extern char data_020f1010[];
-extern char data_020ef078[];
+extern char g_stringFormat[];
 
 #if defined(jpn)
 extern char data_020f1130[];
@@ -191,7 +191,7 @@ extern "C" ARM void func_02082828(Combatant02082828* object) {
     int second = (hardwareAddress[1] + hardwareAddress[3] + hardwareAddress[5]) % 26;
     sprintf(suffix, data_020f1010, (signed char)(first + 65), (signed char)(second + 65));
 #endif
-    sprintf(object->name, data_020ef078, suffix);
+    sprintf(object->name, g_stringFormat, suffix);
     object->field956 = 0;
     object->field958 = -1;
     object->field95a = 0;

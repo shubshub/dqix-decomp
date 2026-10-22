@@ -27,7 +27,7 @@ struct Obj02086aec;
 struct Obj020d7aa0;
 struct BitFlags020d805c;
 struct Struct0218d618;
-struct Obj0205eaa0;
+struct SePlayer;
 struct Obj02046574;
 struct Obj021c2744;
 struct TailList020469b4;
@@ -124,7 +124,7 @@ extern "C" void func_ov017_0218d644(GameResources*, Vector3fix*, int);
 void ForwardField0xc0_0205eb80(void* obj);
 void SetForwardAndStore0205eb54(void* obj, int arg1, int arg2);
 void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
-void DispatchWithShortB4_0205eaa0(Obj0205eaa0* obj, int a, int b);
+void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void func_0206df6c(void* unused, unsigned char* array, int bit, int value);
 extern "C" void func_ov017_021cdb00(int, int, int, int);
 int HasNonZeroByteAtOfField498_0218d75c_0218d75c(void* obj);
@@ -135,7 +135,7 @@ void InsertNodeAfterHead(List02046a3c* list, Node02046a3c* node);
 extern char data_ov017_021d799c[];
 extern char data_ov017_021d79a2[];
 extern AllocatorUnion data_02114e20;
-extern char data_02108760;
+extern char g_sePlayer;
 extern short data_ov017_021d6ac4[];
 extern unsigned char data_ov017_021d6ac0[];
 
@@ -394,11 +394,11 @@ extern "C" ARM void func_ov017_021adcb0(Chest021adcb0* self) {
                     func_020d7e10(reset, *(char**)((char*)g + MessageBufferOffset), type == 2, chest->lootType == 2, 0, 0);
 #endif
                     if (self->ambush) {
-                        ForwardField0xc0_0205eb80(&data_02108760);
-                        SetForwardAndStore0205eb54(&data_02108760, 0x15e, 0x15e);
-                        DispatchIfField0xc4NonNeg_0205eb90(&data_02108760, 0, 0);
+                        ForwardField0xc0_0205eb80(&g_sePlayer);
+                        SetForwardAndStore0205eb54(&g_sePlayer, 0x15e, 0x15e);
+                        DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
                     } else if (chest->lootType != 0 && chest->itemIDOrRank != 0x5617) {
-                        DispatchWithShortB4_0205eaa0((Obj0205eaa0*)&data_02108760, 0xe, 0);
+                        SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                     }
                 }
                 int id = chest->uniqueID;

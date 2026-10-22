@@ -11,10 +11,10 @@
 #endif
 
 struct Struct_0205ba68;
-void SetupPointerTable0205ba68(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
 
 struct Node0205bacc;
-void SetField0AndPropagate0205bacc(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
 struct Container020e0310;
 int GetFieldByKey020e0434(struct Container020e0310* c, int key);
@@ -33,12 +33,12 @@ void ResetBytesAndSetByte0x16_0205c77c(struct ResetBytesAndSetByte0x16Data* p, i
 void SetupGlobalObjType1AndInitSelfPointer_0205cd28(unsigned char* obj);
 void InitGlobalObjAndSelfPointer0205cd94(unsigned char* p);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 void InitBigStruct0205c790(char* obj);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_ov013_02185990  (semantic: InitCombatEntry02185990)
 extern "C" ARM void func_ov013_02185990(unsigned char* obj) {
@@ -49,10 +49,10 @@ extern "C" ARM void func_ov013_02185990(unsigned char* obj) {
     *(unsigned char*)(tag + LOW_REGION(0x481, 0xb1)) = 1;
     *(unsigned char*)(tag + LOW_REGION(0x480, 0xb0)) = 1;
 
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(tag + LOW_REGION(0x3f0, 0x20)), 1, 2, 0);
-    SetupPointerTable0205ba68((struct Struct_0205ba68*)(tag + LOW_REGION(0x440, 0x70)), 1, 2, 0);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(tag + LOW_REGION(0x3f0, 0x20)), 2);
-    SetField0AndPropagate0205bacc((struct Node0205bacc*)(tag + LOW_REGION(0x440, 0x70)), 2);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(tag + LOW_REGION(0x3f0, 0x20)), 1, 2, 0);
+    GridCursor_SetDimensions((struct Struct_0205ba68*)(tag + LOW_REGION(0x440, 0x70)), 1, 2, 0);
+    GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x3f0, 0x20)), 2);
+    GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x440, 0x70)), 2);
 
     int v0 = GetFieldByKey020e0434((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xa);
     ProcessCombatEntry0205cb74((char*)(tag + LOW_REGION(0x3d0, 0)), v0);
@@ -79,7 +79,7 @@ extern "C" ARM void func_ov013_02185990(unsigned char* obj) {
     SetupGlobalObjType1AndInitSelfPointer_0205cd28(tag + LOW_REGION(0x3d0, 0));
     InitGlobalObjAndSelfPointer0205cd94(tag + LOW_REGION(0x3d0, 0));
 
-    DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 5, 0);
+    SePlayer_Play((struct SePlayer*)&g_sePlayer, 5, 0);
 
 #if !defined(jpn)
     short b6 = *(short*)(tag + 0xb6);

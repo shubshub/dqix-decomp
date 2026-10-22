@@ -16,8 +16,8 @@ int GetIntAt0x23c(struct IntField0x23c_020a27c4* obj);
 extern "C" int func_ov003_021550dc(void* obj);
 extern "C" int func_ov003_02155208(void* self);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Obj2081;
 void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
@@ -28,7 +28,7 @@ void ResetWithSub0208203c(struct Obj0208203c* obj);
 struct Obj020e25e8;
 void ResetSelectionState020e25e8(struct Obj020e25e8* obj);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_02155618
 extern "C" ARM int func_ov003_02155618(char* obj) {
@@ -43,7 +43,7 @@ extern "C" ARM int func_ov003_02155618(char* obj) {
     }
 
     if (func_ov003_021550dc(obj) != 0 || flagB != 0) {
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         result = -1;
         if (*(short*)(obj + kRegionValue1EA_1E6) == 6) {
             result = 1;

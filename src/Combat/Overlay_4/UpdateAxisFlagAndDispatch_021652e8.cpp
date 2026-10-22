@@ -18,9 +18,9 @@ struct SelectionState {
     unsigned char mode;
 };
 void SetByteFieldAt0x765_02026420(unsigned char* obj, unsigned char value);
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern struct Obj0205eaa0 data_02108760;
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern struct SePlayer g_sePlayer;
 int ToggleFlag8OnTwoObjs_021651c8(void* a1);
 
 #if defined(jpn)
@@ -58,7 +58,7 @@ ARM int UpdateAxisFlagAndDispatch_021652e8(void* a1) {
         }
 
         ToggleFlag8OnTwoObjs_021651c8(a1);
-        DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+        SePlayer_Play(&g_sePlayer, 1, 0);
         return 0;
     }
 }

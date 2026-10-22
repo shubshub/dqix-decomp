@@ -12,7 +12,7 @@ struct CombatDispatchWork {
 #endif
     unsigned short dispatchedArgument;
 };
-extern int data_02108760;
+extern int g_sePlayer;
 CombatDispatchWork* GetActiveCombatWork_ov000_02160130();
 void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
 
@@ -20,6 +20,6 @@ void DispatchIfField0xc4NonNeg_0205ebfc(void*, int, int);
 extern "C" ARM int func_ov025_021e6340(CombatCommand* command) {
     CombatDispatchWork* work = GetActiveCombatWork_ov000_02160130();
     work->dispatchedArgument = command->argument;
-    DispatchIfField0xc4NonNeg_0205ebfc(&data_02108760, command->argument, 0);
+    DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, command->argument, 0);
     return 1;
 }

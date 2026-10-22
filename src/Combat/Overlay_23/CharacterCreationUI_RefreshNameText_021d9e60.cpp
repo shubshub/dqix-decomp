@@ -18,8 +18,8 @@ int GetFieldByKey020e0434(Container020e0310*, int);
 int AppendString02042058(char*, const char*);
 extern "C" int func_02042428(char*, int);
 
-// USA: 021d9e60; JPN: 021da6f0.
-ARM void BuildFieldTag_021d9e60(char* obj) {
+// Overlay 23, originally BuildFieldTag_021d9e60 (USA/EUR 0x021d9e60, JPN 0x021da6f0)
+ARM void CharacterCreationUI_RefreshNameText(char* obj) {
     CharacterCreationUI* self = (CharacterCreationUI*)obj;
     if (!(self->flags & 0x8000)) return;
     memset(self->textBuffer, 0, 0x800);
@@ -58,8 +58,8 @@ extern "C" int func_020426bc(void*, void*, int);
 extern "C" void func_02042764(void*, void*, int);
 extern "C" int func_020420e8(void*, int);
 
-// USA: func_ov023_021d9e60
-ARM void BuildFieldTag_021d9e60(char* obj) {
+// Overlay 23, originally BuildFieldTag_021d9e60 (USA/EUR 0x021d9e60, JPN 0x021da6f0)
+ARM void CharacterCreationUI_RefreshNameText(char* obj) {
 	if (!(*(int*)(obj + 0xd9c) & 0x8000)) return;
 	char* buf = *(char**)(obj + 0xf8);
 	memset(buf, 0, 0x960);

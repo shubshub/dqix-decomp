@@ -10,7 +10,7 @@ void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 void SetChannelBFlag0205cf04(void* obj);
 void SetChannelAFlag0205cef8(void* obj);
 void SetupDualPointerTables0205cf28(unsigned char* obj, int a, int count, int b);
-extern "C" void func_0205bb04(void* cursor, int index);
+extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 extern "C" void func_0205d7a0(unsigned char* obj, int val);
 int GetGlobalField0x1c020421a0(void);
 extern "C" void func_ov000_0217737c(void* obj, void* buf);
@@ -78,7 +78,7 @@ extern "C" ARM void func_ov000_02177184(struct Menu02177184* menu, int active) {
     SetChannelAFlag0205cef8(window);
     SetupDualPointerTables0205cf28((unsigned char*)window, 1, count, 0);
     window->field_0x58 = 1;
-    func_0205bb04(window->cursor, 0);
+    GridCursor_SetSelectedIndex(window->cursor, 0);
     if (count == 3) {
         window->left = 8;
         window->top = 6;

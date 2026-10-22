@@ -18,8 +18,8 @@ enum { kRegionValueFF8_F74 = 0xff8 };
 extern "C" int func_ov003_021765b4(void* self);
 extern "C" int func_ov003_021766e8(void* self);
 
-struct Obj0205eaa0;
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
+struct SePlayer;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Obj2081;
 void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
@@ -30,7 +30,7 @@ void ResetWithSub0208203c(struct Obj0208203c* obj);
 struct Obj020e25e8;
 void ResetSelectionState020e25e8(struct Obj020e25e8* obj);
 
-extern struct Obj0205eaa0 data_02108760;
+extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_021764f4  (semantic: RunTurnCheck_021764f4)
 extern "C" ARM int func_ov003_021764f4(unsigned char* self) {
@@ -47,7 +47,7 @@ extern "C" ARM int func_ov003_021764f4(unsigned char* self) {
         goto alt;
     }
 dispatch:
-    DispatchWithShortB4_0205eaa0(&data_02108760, 1, 0);
+    SePlayer_Play(&g_sePlayer, 1, 0);
     result = -1;
     if (*(short*)(self + kRegionValue1002_F7E) == 2) {
         result = 1;

@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Obj0205eaa0;
+struct SePlayer;
 
-void DispatchWithShortB4_0205eaa0(struct Obj0205eaa0* obj, int a, int b);
-extern int data_02108760;
+void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern int g_sePlayer;
 
 // USA: func_ov006_02159f0c  (semantic: DispatchStateOnceIfPending_02159f0c)
 extern "C" ARM int func_ov006_02159f0c(char* self) {
@@ -17,13 +17,13 @@ extern "C" ARM int func_ov006_02159f0c(char* self) {
     }
     switch (*(int*)(self + 0x39c)) {
     case 0:
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0xa, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0xa, 0);
         break;
     case 1:
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0xc, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0xc, 0);
         break;
     case 2:
-        DispatchWithShortB4_0205eaa0((struct Obj0205eaa0*)&data_02108760, 0xb, 0);
+        SePlayer_Play((struct SePlayer*)&g_sePlayer, 0xb, 0);
         break;
     default:
         break;
