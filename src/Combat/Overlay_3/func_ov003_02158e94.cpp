@@ -25,10 +25,10 @@ struct Struct_0205d0e0 {
     unsigned char unknown_0_[0xc5];
     unsigned char unknown_c5_;
 };
-extern "C" struct Struct_0205d0e0* func_0205d8c4(struct Struct_0205d81c* arg0);
-extern "C" int func_0204c7cc(unsigned char* arg0);
-extern "C" void func_0205bc24(void* arg0, int arg1);
-extern "C" int func_0205d0e0(void* arg0, int arg1);
+struct Elem_0205d81c* FindElementForFieldB0_0205d8c4(struct Struct_0205d81c* s);
+int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
+void SetFieldAt0x30_0205bc24(void* obj, int value);
+extern "C" int Window_Update(void* p, int val);
 
 extern "C" void func_ov003_021594c4(void* arg0);
 extern "C" void func_ov003_02159b20(void* arg0);
@@ -81,7 +81,7 @@ extern "C" ARM int func_ov003_02158e94(struct Struct_ov003_02158e94* arg0, int a
         if (var0 != 0 && func_0204c7cc((unsigned char*)var0) != 0 && (var0->unknown_c5_ & 2) == 0) {
             func_0205bc24(arg0->unknown_f8_, -1);
         }
-        arg0->unknown_582_ = func_0205d0e0(arg0->unknown_f4_, arg1);
+        self->field_0x582 = Window_Update(self->elements, amount);
     }
 
     switch (arg0->unknown_588_) {

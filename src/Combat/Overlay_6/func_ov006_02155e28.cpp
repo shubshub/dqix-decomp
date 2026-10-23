@@ -30,12 +30,12 @@
 extern "C" void __clear(void* arg0, int arg1);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
 
-extern "C" void func_0205a444(char* arg0);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0205a528(void* arg0, void* arg1, int arg2, void* arg3);
+void SpriteContext_Init(char* obj);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* data);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* data, int index, void** outRec, int* outSize);
+extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 
 struct Struct_02020cb8 {
     unsigned char unknown_0_[0x1c];
@@ -43,24 +43,24 @@ struct Struct_02020cb8 {
     unsigned char unknown_1c_4_ : 4;
     unsigned char unknown_1d_[3];
 };
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(struct Struct_0204b12c* arg0, SafeAllocator* arg1);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
-struct Struct_0204b010;
-extern "C" void func_0204b010(struct Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204b174(void* arg0, void* arg1, void* arg2, int arg3);
+void Background_Init(struct List0204af64* list);
+void Background_SetMapSize(unsigned char* list, int value);
+extern "C" void Background_SetPriority(void* list, int priority);
+struct AllocTarget0204b12c;
+void Background_AllocateMap(struct AllocTarget0204b12c* list, SafeAllocator* alloc);
+struct Obj0204b5e8;
+void Background_SetScroll(struct Obj0204b5e8* list, int a, int b);
+struct Obj0204b010;
+void Background_ClearMap(struct Obj0204b010* list, void* buffer);
+extern "C" void Background_LoadFile(void* list, void* data, void* alloc, int size);
 
 struct Struct_0204c7a8 {
     int unknown_0_;
     struct Struct_02020cb8* unknown_4_;
     unsigned char unknown_8_[0xe0 - 8];
 };
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_0204c7a8(struct Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
+extern "C" void func_0204c684(void* node);
+void WindowPane_AllocateBuffer(struct Obj0204c7a8* node, SafeAllocator* alloc, int a, unsigned int size);
 
 struct Struct_0207f7f0_2;
 struct Struct_0207f914;
@@ -100,8 +100,8 @@ int GetFieldIfFlag4_020100f8(char* gs);
 void SetField0x3b0Value_020100c4(GameState* gs, int value);
 struct Foo0207df50;
 void CopyInternalFields0207df50(struct Foo0207df50* p);
-void RestorePairTables0207df90(char* obj);
-void BackupPairTables0207dfac(char* obj);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 struct Fields020407b4;
 void SetFields0x44(struct Fields020407b4* dst, int a, int b, int c);
 struct Target02059f38;
@@ -190,75 +190,75 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
     BackgroundLoader* var0 = BackgroundLoader::GetInstance();
     unsigned char var1 = arg0->unknown_add_;
 
-    if (var1 == 0) {
-        func_0205a444((char*)&arg0->unknown_1e4_);
-        arg0->unknown_1e4_.unknown_50_ = 0;
-        arg0->unknown_1e4_.unknown_40_ = arg0->unknown_1e0_;
-        arg0->unknown_1e4_.unknown_4c_ = 0x11;
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_021600af, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 1) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var2;
-        void* var3;
-        unsigned int var4;
-        int var5;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var3, &var4);
-        int var6 = func_02046900((struct Struct_02020cb8_4*)var3);
-        SafeAllocator* var7 = arg0->unknown_180_;
-        var7->Reset();
-        for (int var8 = 0; var8 < var6; var8++) {
-            void* var9 = func_020467f0((struct Struct_02020aec*)var3, var8, &var2, &var5);
-            if (var9 != NULL) {
-                func_0205a528(&arg0->unknown_1e4_, var9, var5, var7);
+    if (state == 0) {
+        SpriteContext_Init((char*)&self->records);
+        self->records.count = 0;
+        self->records.owner = self->field1e0;
+        self->records.capacity = 0x11;
+        self->taskId = loader->QueueLoadFile(data_ov006_021600af, NULL);
+        self->state++;
+    } else if (state == 1) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* rec;
+        void* data;
+        unsigned int size;
+        int recSize;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        int count = Pac_CountFiles((struct ActiveEntry02046900*)data);
+        SafeAllocator* alloc = self->allocs;
+        alloc->Reset();
+        for (int i = 0; i < count; i++) {
+            void* found = Pac_GetFile((struct Rec020467f0*)data, i, &rec, &recSize);
+            if (found != NULL) {
+                SpriteContext_LoadFile(&self->records, found, recSize, alloc);
             }
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 2) {
-        volatile unsigned short* var10 = (volatile unsigned short*)0x400000a;
-        var10[0] = (var10[0] & 0x43) | 0x1d00;
-        var10[1] = (var10[1] & 0x43) | 0x1e00;
-        var10[2] = (var10[2] & 0x43) | 0x1f08;
-        SafeAllocator* var11 = &arg0->unknown_180_[2];
-        var11->Reset();
-        struct Struct_ov006_0215ff54 var12 = data_ov006_0215ff54;
-        for (unsigned char var13 = 0; var13 < 2; var13++) {
-            struct Struct_02020cb8* var14 = &arg0->unknown_1cc_[var13];
-            func_0204af64(var14);
-            var14->unknown_1c_0_ = 0;
-            var14->unknown_1c_4_ = var13 + 1;
-            func_0204b11c((unsigned char*)var14, 0);
-            func_0204b5b4(var14, var12.unknown_0_[var13]);
-            func_0204b12c((struct Struct_0204b12c*)var14, var11);
-            func_0204b5e8((struct Struct_02020cb8_5*)var14, 0, 0);
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 2) {
+        volatile unsigned short* bg = (volatile unsigned short*)0x400000a;
+        bg[0] = (bg[0] & 0x43) | 0x1d00;
+        bg[1] = (bg[1] & 0x43) | 0x1e00;
+        bg[2] = (bg[2] & 0x43) | 0x1f08;
+        SafeAllocator* alloc = &self->allocs[2];
+        alloc->Reset();
+        struct Bytes3_0215ff54 priority = data_ov006_0215ff54;
+        for (unsigned char i = 0; i < 2; i++) {
+            struct List0204af64* list = &self->lists[i];
+            Background_Init(list);
+            list->kind = 0;
+            list->slot = i + 1;
+            Background_SetMapSize((unsigned char*)list, 0);
+            Background_SetPriority(list, priority.v[i]);
+            Background_AllocateMap((struct AllocTarget0204b12c*)list, alloc);
+            Background_SetScroll((struct Obj0204b5e8*)list, 0, 0);
         }
-        func_0204b010((struct Struct_0204b010*)&arg0->unknown_1cc_[0], NULL);
-        func_0204b010((struct Struct_0204b010*)&arg0->unknown_1cc_[1], NULL);
-        SafeAllocator* var15 = arg0->unknown_180_;
-        var15[3].Reset();
-        for (unsigned char var16 = 0; var16 < 1; var16++) {
-            struct Struct_0204c7a8* var17 = &arg0->unknown_1d0_[var16];
-            func_0204c684(var17);
-            func_0204c7a8(var17, &var15[3], arg0->unknown_1a4_, 0x1c0);
-            var17->unknown_4_ = arg0->unknown_1cc_;
+        Background_ClearMap((struct Obj0204b010*)&self->lists[0], NULL);
+        Background_ClearMap((struct Obj0204b010*)&self->lists[1], NULL);
+        SafeAllocator* nodeAlloc = self->allocs;
+        nodeAlloc[3].Reset();
+        for (unsigned char j = 0; j < 1; j++) {
+            struct Obj0204c7a8* node = &self->nodes[j];
+            func_0204c684(node);
+            WindowPane_AllocateBuffer(node, &nodeAlloc[3], self->field1a4, 0x1c0);
+            node->lists = self->lists;
         }
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_021600c4, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 3) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        void* var18;
-        void* var19;
-        unsigned int var20;
-        int var21;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var19, &var20);
-        int var22 = func_02046900((struct Struct_02020cb8_4*)var19);
-        SafeAllocator* var23 = arg0->unknown_180_;
-        for (int var24 = 0; var24 < var22; var24++) {
-            void* var25 = func_020467f0((struct Struct_02020aec*)var19, var24, &var18, &var21);
-            if (var25 != NULL) {
-                func_0204b174(arg0->unknown_1cc_, var25, &var23[2], var21);
+        self->taskId = loader->QueueLoadFile(data_ov006_021600c4, NULL);
+        self->state++;
+    } else if (state == 3) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        void* rec;
+        void* data;
+        unsigned int size;
+        int recSize;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        int count = Pac_CountFiles((struct ActiveEntry02046900*)data);
+        SafeAllocator* alloc = self->allocs;
+        for (int i = 0; i < count; i++) {
+            void* found = Pac_GetFile((struct Rec020467f0*)data, i, &rec, &recSize);
+            if (found != NULL) {
+                Background_LoadFile(self->lists, found, &alloc[2], recSize);
             }
         }
         var0->RemoveTask(arg0->unknown_ad4_);
@@ -355,7 +355,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             SafeAllocator* alloc = GetAllocator(res, 0);
             alloc->Reset();
             CopyInternalFields0207df50((struct Foo0207df50*)res->unknown_2cc);
-            RestorePairTables0207df90(res->unknown_2cc);
+            VramState_Restore(res->unknown_2cc);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
             info.unk_8 = size;
@@ -363,7 +363,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             info.unk_10 = 1;
             self->objs[0].LoadFromCHRArchive(&info);
             self->objs[0].MaybeSetBCFGAnimation(0, 0);
-            BackupPairTables0207dfac(res->unknown_2cc);
+            VramState_Save(res->unknown_2cc);
             SetFields0x44((struct Fields020407b4*)&self->objs[0], -0x3800, -0xb3b, 0x60a3);
         }
         loader->RemoveTask(self->taskId);
@@ -380,7 +380,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            RestorePairTables0207df90(res->unknown_2cc);
+            VramState_Restore(res->unknown_2cc);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
             info.unk_8 = size;
@@ -388,7 +388,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             info.unk_10 = 1;
             self->objs[1].LoadFromCCHROrCMOTArchive(&info, NULL);
             self->objs[1].MaybeSetBCFGAnimation(0, 0);
-            BackupPairTables0207dfac(res->unknown_2cc);
+            VramState_Save(res->unknown_2cc);
             self->objs[1].SetScale(0x10a, 0x10a, 0x10a);
             SetFields0x44((struct Fields020407b4*)&self->objs[1], -0x41, -0xaac, 0x61f3);
         }
@@ -406,7 +406,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            RestorePairTables0207df90(res->unknown_2cc);
+            VramState_Restore(res->unknown_2cc);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
             info.unk_8 = size;
@@ -414,38 +414,38 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             info.unk_10 = 1;
             self->objs[2].LoadFromCCHROrCMOTArchive(&info, NULL);
             self->objs[2].MaybeSetBCFGAnimation(0, 0);
-            BackupPairTables0207dfac(res->unknown_2cc);
+            VramState_Save(res->unknown_2cc);
             self->objs[2].SetScale(0x10a, 0x10a, 0x10a);
             CopyVec3ToField0x44((struct Target02059f38*)&self->objs[2], (struct Vec3_02059f38*)&self->objs[1].position_);
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 14) {
-        arg0->unknown_ad4_ = var0->QueueLoadFile(data_ov006_02160156, NULL);
-        arg0->unknown_add_++;
-    } else if (var1 == 15) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0) return;
-        GameResources* var54 = GetGameResources();
-        arg0->unknown_18c_.CreateTypeA(var54->allocator_array_38[0].Allocate(0x8000), 0x8000);
-        arg0->unknown_18c_.Reset();
-        func_0207df90(var54->unknown_2cc_);
-        void* var55;
-        unsigned int var56;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var55, &var56);
-        if (var55 != NULL && arg0->unknown_18c_.GetSignedAllocator() != NULL) {
-            arg0->unknown_238_[3].Initialize();
-            ObjectArchiveLoadInfo var57;
-            var57.fileData = var55;
-            var57.unk_8 = var56;
-            var57.allocator = &arg0->unknown_18c_;
-            var57.unk_10 = 1;
-            arg0->unknown_238_[3].LoadFromCHRArchive(&var57);
-            arg0->unknown_238_[3].SetScale(&arg0->unknown_238_[1].GetScale());
-            func_02059f38((struct Struct_02059cfc_2*)&arg0->unknown_238_[3], (struct Struct_02059cfc_3*)&arg0->unknown_238_[1].position_);
-            arg0->unknown_238_[3].StopCurrentAnimation();
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 14) {
+        self->taskId = loader->QueueLoadFile(data_ov006_02160156, NULL);
+        self->state++;
+    } else if (state == 15) {
+        if (loader->GetTaskStatus(self->taskId) == 0) return;
+        GameResources* res = GetGameResources();
+        self->modelAlloc.CreateTypeA(res->allocator_array_38[0].Allocate(0x8000), 0x8000);
+        self->modelAlloc.Reset();
+        VramState_Restore(res->unknown_2cc);
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->taskId, &data, &size);
+        if (data != NULL && self->modelAlloc.GetSignedAllocator() != NULL) {
+            self->objs[3].Initialize();
+            ObjectArchiveLoadInfo info;
+            info.fileData = data;
+            info.unk_8 = size;
+            info.allocator = &self->modelAlloc;
+            info.unk_10 = 1;
+            self->objs[3].LoadFromCHRArchive(&info);
+            self->objs[3].SetScale(&self->objs[1].GetScale());
+            CopyVec3ToField0x44((struct Target02059f38*)&self->objs[3], (struct Vec3_02059f38*)&self->objs[1].position_);
+            self->objs[3].StopCurrentAnimation();
         }
-        BackupPairTables0207dfac(res->unknown_2cc);
+        VramState_Save(res->unknown_2cc);
         loader->RemoveTask(self->taskId);
         self->taskId = -1;
         self->state++;
@@ -460,7 +460,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            RestorePairTables0207df90(res->unknown_2cc);
+            VramState_Restore(res->unknown_2cc);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
             info.unk_8 = size;
@@ -469,7 +469,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             Object3D* obj = &self->objs[4];
             obj->LoadFromCCHROrCMOTArchive(&info, NULL);
             obj->MaybeSetBCFGAnimation(0, 0);
-            BackupPairTables0207dfac(res->unknown_2cc);
+            VramState_Save(res->unknown_2cc);
             obj->SetScale(0x10a, 0x10a, 0x10a);
             CopyVec3ToField0x44((struct Target02059f38*)obj, (struct Vec3_02059f38*)&self->objs[1].position_);
             obj->StopCurrentAnimation();

@@ -37,10 +37,10 @@ extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
 struct Struct_0205de24_2;
 extern "C" ARM void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" void func_ov003_02169a84(char* arg0, char* arg1, int arg2);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_020420e8(char* str, int id);
+extern "C" void func_ov003_02169a84(char* base, char* dst, int flag);
 #if !defined(jpn)
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
@@ -53,12 +53,12 @@ extern "C" ARM void func_ov003_0216997c(void* arg0) {
 #if defined(jpn)
     int var6 = 8;
 #else
-    struct Struct_0201099c_3* var1 = (struct Struct_0201099c_3*)(var0 + 0x64);
-    short var2 = 0;
-    for (int var3 = 0; var3 < 3; var3++) {
-        int var4 = func_020e0434(var1, (short)var3);
-        short var5 = (short)func_020420e8((char*)var4, 0);
-        if (var2 < var5) var2 = var5;
+    struct Container020e0310* c = (struct Container020e0310*)(obj + 0x64);
+    short maxLen = 0;
+    for (int i = 0; i < 3; i++) {
+        int name = KeyTable_Get(c, (short)i);
+        short len = (short)func_020420e8((char*)name, 0);
+        if (maxLen < len) maxLen = len;
     }
 
     int var6 = ((var2 + 0x18) << 13) >> 16;

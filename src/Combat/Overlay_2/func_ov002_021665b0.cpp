@@ -120,26 +120,26 @@ struct Struct_ov002_021665b0_6 {
     unsigned short unknown_2_;
 };
 
-extern "C" void func_ov002_02157ce0(char*);
-extern "C" void func_ov002_0215b814(Struct_ov002_021665b0_2* arg0);
-extern "C" Struct_ov002_021665b0_8* func_0200ff94(GameState* arg0, int arg1);
-extern "C" Struct_ov002_021665b0_9* func_02053c6c(unsigned char*);
-extern "C" int func_02083bc0(unsigned char*, int);
-extern "C" int func_0209ac28(char* arg0, Struct_ov002_021665b0_8* arg1, int arg2);
-extern "C" Struct_ov002_021665b0_10* func_02079e2c(char*, int);
-struct Struct_02048448_2;
-extern "C" int func_02048448(Struct_02048448_2*, int);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_ov002_021536e0(char** arg0);
-extern "C" void* func_02079ee0(void*, int);
-extern "C" short func_ov002_021538e4(char** arg0, Struct_ov002_021665b0_10* arg1, void* arg2, int arg3);
-extern "C" void func_ov002_021594e8(Struct_ov002_021665b0_2* arg0, int arg1, int arg2, int arg3);
-extern "C" char* func_020421a0(void);
-struct Struct_0205da38;
-extern "C" int func_0205da38(struct Struct_0205da38* arg0, int arg1);
-extern "C" int func_0205d97c(char* arg0);
-extern "C" int func_ov002_02161b48(char*, int);
-extern "C" void func_02043204(char* arg0);
+void InitStateArray02157ce0(char*);
+extern "C" void func_ov002_0215b814(Menu_021665b0* self);
+Unit_021665b0* GetCombatantChecked_0200ff94(GameState* gs, int id);
+Field_021665b0* GetFieldAt0x150_02053c6c(unsigned char*);
+int GetBitInArray0x910_02083bc0(unsigned char*, int);
+extern "C" int func_0209ac28(char* obj, Unit_021665b0* unit, int index);
+Elem_021665b0* SearchBothTables02079e2c(char*, int);
+struct Struct02048448;
+int ClampAndCompareThreshold02048448(Struct02048448*, int);
+extern "C" void __clear(void* dst, int size);
+extern "C" void func_ov002_021536e0(char** obj);
+void* LookupElementByKey02079ee0(void*, int);
+extern "C" short func_ov002_021538e4(char** obj, Elem_021665b0* elem, void* sub, int target);
+extern "C" void func_ov002_021594e8(Menu_021665b0* self, int key, int target, int actor);
+char* GetGlobalField0x1c020421a0(void);
+struct Obj_0205da38;
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" int func_0205d97c(char* obj);
+int CheckFlagOrThreshold_02161b48(char*, int);
+void ReinitController02043204(char* ctl);
 struct Struct_0205def8;
 extern "C" void func_0205def8(Struct_0205def8*, int, int);
 extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
@@ -708,25 +708,25 @@ extern "C" ARM void func_ov002_021665b0(Struct_ov002_021665b0_2* arg0) {
         if (arg0->unknown_1cb1_ == 0 && arg0->unknown_1caf_ == 1) {
             arg0->unknown_1caf_ = 2;
         }
-        signed char var95 = arg0->unknown_1caf_;
-        if (!(var95 != 0 && var95 != 1)) {
-            var94[CTL_FLAG_021665b0] = 0;
-            int var96 = g_keyManager.TestKeysPressed(0x601);
-            int var97 = (var96 | func_0205da38((struct Struct_0205da38*)((char*)arg0 + LIST_021665b0), 0x14)) ? 1 : 0;
-            int var98 = func_0205d97c((char*)arg0 + LIST_021665b0) == 1 ? 1 : 0;
-            int var99 = func_ov002_02161b48((char*)arg0, 1);
-            int var100 = g_keyManager.TestKeysPressed(0xf0);
-            if (var98 | (var99 | (var97 | (var100 | g_keyManager.TestKeysPressed(0x100))))) {
-                func_02043204(var94);
-                arg0->unknown_1bb8_ = NEXT_BACK_021665b0;
-                arg0->unknown_1bbc_ = NEXT_MENU_021665b0;
-                func_0205def8((Struct_0205def8*)((char*)arg0 + LIST_021665b0), 1, FLAG_KEY_021665b0);
-                arg0->unknown_1caf_ = 0;
-                arg0->unknown_1c28_ = -1;
-                arg0->unknown_1c2a_ = -1;
-                arg0->unknown_1cae_ = 0;
-                arg0->unknown_1cb1_ = 0;
-                var93 = 1;
+        signed char result = self->result;
+        if (!(result != 0 && result != 1)) {
+            ctl[CTL_FLAG_021665b0] = 0;
+            int pressed = g_keyManager.TestKeysPressed(0x601);
+            int cancel = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)((char*)self + LIST_021665b0), 0x14)) ? 1 : 0;
+            int single = func_0205d97c((char*)self + LIST_021665b0) == 1 ? 1 : 0;
+            int flagged = CheckFlagOrThreshold_02161b48((char*)self, 1);
+            int left = g_keyManager.TestKeysPressed(0xf0);
+            if (single | (flagged | (cancel | (left | g_keyManager.TestKeysPressed(0x100))))) {
+                ReinitController02043204(ctl);
+                self->nextA = NEXT_BACK_021665b0;
+                self->nextB = NEXT_MENU_021665b0;
+                SetElementFlag0x20ByKey0205def8((Struct_0205def8*)((char*)self + LIST_021665b0), 1, FLAG_KEY_021665b0);
+                self->result = 0;
+                self->sel28 = -1;
+                self->sel2a = -1;
+                self->state = 0;
+                self->acted = 0;
+                changed = 1;
             } else if (g_keyManager.TestKeysPressed(0x800)) {
                 func_02043204(var94);
                 arg0->unknown_1bb8_ = NEXT_MENU_021665b0;

@@ -59,15 +59,15 @@ Ctl *GetGlobalField0x1c020421a0();
 void *GetGlobalPtr021075f4_0203cf4c();
 unsigned char *GetData02153637_020e2ff8();
 extern "C" int func_0202c508(int *);
-extern "C" void func_02043204(char*);
-struct Struct_0201099c_3;
-extern "C" void * func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_ov003_0215cab0(Struct_ov003_02154af4_3 *, void *);
-extern "C" void *func_0203df78(void *, int);
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-struct Struct_02109bf4_4;
-extern "C" void func_0209c678(Struct_02109bf4_4*, int);
+void ReinitController02043204(char*);
+struct Container020e0310;
+void * KeyTable_Get(Container020e0310*, int);
+extern "C" void func_ov003_0215cab0(Scene *, void *);
+void *FindEntryPointerByKey0203df78(void *, int);
+struct Entry_0205d6a0;
+void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+struct Actor0209c678;
+void DispatchContextByState0209c678(Actor0209c678*, int);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 extern "C" void func_0205e944(void *, int);
@@ -131,18 +131,18 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
                     var10 = 0x72;
                 }
             }
-            func_ov003_0215cab0(arg0, func_020e0434((Struct_0201099c_3*)arg0->unknown_64_, var10));
-            arg0->unknown_3b8_ = 8;
+            func_ov003_0215cab0(self, KeyTable_Get((Container020e0310*)self->cont64, key));
+            self->state = 8;
             return;
         }
         if (arg0->unknown_3f0_ != 0) {
             var10 = 0x6a;
         }
-        func_ov003_0215cab0(arg0, func_020e0434((Struct_0201099c_3*)arg0->unknown_64_, var10));
-        arg0->unknown_3bb_ = 2;
-        void *var11 = func_0203df78(var4, (*(Struct_ov003_0215d4fc **) ((char *) GetGameResources() + 0x3000 + Enum_ov003_0215d4fc_1808))->unknown_12c_);
-        if (var11 != 0) {
-            arg0->unknown_3f8_ = func_02040a20((Struct_0203dce4*)var11);
+        func_ov003_0215cab0(self, KeyTable_Get((Container020e0310*)self->cont64, key));
+        self->b3bb = 2;
+        void *e = FindEntryPointerByKey0203df78(b, (*(Ent **) ((char *) GetGameResources() + 0x3000 + regionalRes))->key);
+        if (e != 0) {
+            self->w3f8 = GetOffset0x54FromFallbackChain_02040a20((Entry_203dce4*)e);
         }
         arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
     }
@@ -246,8 +246,8 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
                 var16 = 0x6d;
             }
         }
-        func_ov003_0215cab0(arg0, func_020e0434((Struct_0201099c_3*)arg0->unknown_64_, var16));
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        func_ov003_0215cab0(self, KeyTable_Get((Container020e0310*)self->cont64, key));
+        self->state = self->state + 1;
     }
     if (arg0->unknown_3b8_ == 8 && var2->unknown_998_ == 0) {
         arg0->unknown_3bc_  = 5;

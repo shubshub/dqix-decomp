@@ -38,15 +38,15 @@ struct Struct_ov012_0218a844_2
     Struct_0201099c_22* inline_ov012_0218a844_2() { return &unknown_ac_; }
 };
 
-extern "C" void func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_020421a0();
-extern "C" void func_0205c508(Struct_0205c508* arg0, int* arg1, int* arg2);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02041a28(char* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
+void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
+void AppendCursorTag_02041ea4(char* text, int a);
+void* GetGlobalField0x1c020421a0();
+void ComputeProductSums0205c508(UnkStruct0205c508* cursor, int* first, int* last);
+void AppendString02042058(char* text, const char* append);
+void AppendXTag_02041a28(char* text, int x);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void AppendNameTag_02041b70(char* text, int item, const char* itemText);
+void AppendXYTag_02041a90(char* text, int x, int y);
 #if !defined(jpn)
 extern "C" void func_ov012_021842a0(Struct_ov012_0218a844_2* arg0, int arg1, int arg2, int arg3);
 
@@ -97,7 +97,7 @@ extern "C" ARM void func_ov012_0218a844(Struct_ov012_0218a844_2* arg0, char* arg
         {
             func_02041a28(arg1, LOW_REGION(0x7c, 0x88));
         }
-        func_02041b70(arg1, var2 & 0xf, func_020e0434((Struct_0201099c_3*)arg0->unknown_1344_, arg0->unknown_13c8_[var2]));
+        AppendNameTag_02041b70(text, i & 0xf, KeyTable_Get((Container020e0310*)self->texts_, self->unk_13c8[i]));
     }
     if (var5 > 1)
     {

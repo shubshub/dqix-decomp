@@ -13,18 +13,18 @@ struct Struct_02020cb8_5;
 struct Struct_02020cb8_6;
 struct Struct_ov003_02172a14;
 
-extern "C" int func_02046900(Struct_02020cb8_4 *arg0);
-extern "C" void *func_020467f0(Struct_02020aec *arg0, int arg1, void **arg2, int *arg3);
-extern "C" void func_0205a528(void *arg0, void *arg1, unsigned int arg2, void *arg3);
-extern "C" void func_0204c684(void *arg0);
-extern "C" Struct_ov003_02172a14 *func_02012fe4(void);
-extern "C" void __clear(void *arg0, int arg1);
-extern "C" void func_0204f41c(void *arg0, int arg1, int arg2, char *arg3, int arg4, int arg5, short *arg6, short *arg7, int arg8);
-extern "C" void func_0204af64(Struct_02020cb8 *arg0);
-extern "C" void func_0204b11c(unsigned char *arg0, int arg1);
-extern "C" void func_0204b5e8(Struct_02020cb8_5 *arg0, int arg1, int arg2);
-extern "C" void func_0204b2e0(void *arg0, char *arg1);
-extern "C" void func_0204b3a0(Struct_02020cb8_6 *arg0, char *arg1);
+int Pac_CountFiles(ActiveEntry02046900 *archive);
+void *Pac_GetFile(Rec020467f0 *archive, int index, void **name, int *size);
+extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, void *allocator);
+extern "C" void func_0204c684(void *canvas);
+extern "C" Zone02172a14 *func_02012fe4(void);
+extern "C" void __clear(void *dst, int count);
+extern "C" void func_0204f41c(void *canvas, int a, int b, char *text, int c, int d, short *outA, short *outB, int e);
+void Background_Init(List0204af64 *obj);
+void Background_SetMapSize(unsigned char *obj, int a);
+void Background_SetScroll(Obj0204b5e8 *obj, int a, int b);
+void Background_FlushFile(void *obj, char *str);
+void Background_UploadFile(SelfTag0204b3a0 *self, char *str);
 extern "C" void ColorEffect_ConfigureAlphaBlend(int control, int a, int b, int c, int d);
 void SetMainBrightness(GameResources *resources, int a, int b);
 extern "C" void func_020728ac(void *arg0, void *arg1, void *arg2, unsigned int arg3, int arg4, int arg5, int arg6);
@@ -105,60 +105,60 @@ extern "C" ARM void func_ov003_02172a14(Struct_ov003_02172a14_4 *arg0) {
         arg0->unknown_f0_ = var1->QueueLoadFileInGP2(data_ov003_021809b0, data_ov003_021809c4, 0);
         arg0->unknown_ee_ = 1;
     }
-    if (arg0->unknown_ee_ == 1) {
-        if (var1->GetTaskStatus(arg0->unknown_f0_) == 0) return;
-        void *var3;
-        void *var4;
-        unsigned int var5;
-        int var6;
-        var1->GetLoadedFileByID(arg0->unknown_f0_, &var4, &var5);
-        int var7 = func_02046900((Struct_02020cb8_4 *) var4);
-        for (int var8 = 0; var8 < var7; var8++) {
-            void *var9 = func_020467f0((Struct_02020aec *) var4, var8, &var3, &var6);
-            func_0205a528((char *) arg0 + 0x130, var9, var6, (char *) arg0 + 0x1ac);
+    if (self->step_ == 1) {
+        if (loader->GetTaskStatus(self->task_) == 0) return;
+        void *name;
+        void *file;
+        unsigned int size;
+        int fileSize;
+        loader->GetLoadedFileByID(self->task_, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+        for (int i = 0; i < count; i++) {
+            void *data = Pac_GetFile((Rec020467f0 *) file, i, &name, &fileSize);
+            SpriteContext_LoadFile((char *) self + 0x130, data, fileSize, (char *) self + 0x1ac);
         }
         var1->RemoveTask(arg0->unknown_f0_);
         arg0->unknown_f0_ = -1;
         arg0->unknown_f0_ = var1->QueueLoadFileInGP2(data_ov003_021809d4, data_ov003_021809e6, 0);
         arg0->unknown_ee_ = 2;
     }
-    if (arg0->unknown_ee_ == 2) {
-        if (var1->GetTaskStatus(arg0->unknown_f0_) == 0) return;
-        void *var10;
-        void *var11;
-        unsigned int var12;
-        void *var13[3];
-        int var14[3];
-        Struct_ov003_02172a14_3 var15;
-        char var16[0x40];
-        Struct_ov003_02172a14_2 var17;
-        short var18;
-        short var19;
-        var1->GetLoadedFileByID(arg0->unknown_f0_, &var11, &var12);
-        int var20 = func_02046900((Struct_02020cb8_4 *) var11);
-        for (int var21 = 0; var21 < var20; var21++) {
-            var13[var21] = func_020467f0((Struct_02020aec *) var11, var21, &var10, &var14[var21]);
+    if (self->step_ == 2) {
+        if (loader->GetTaskStatus(self->task_) == 0) return;
+        void *name;
+        void *file;
+        unsigned int size;
+        void *datas[3];
+        int sizes[3];
+        Canvas02172a14 canvas;
+        char text[0x40];
+        List02172a14 list;
+        short outA;
+        short outB;
+        loader->GetLoadedFileByID(self->task_, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+        for (int i = 0; i < count; i++) {
+            datas[i] = Pac_GetFile((Rec020467f0 *) file, i, &name, &sizes[i]);
         }
-        func_0204c684(&var15);
-        var15.unknown_8_ = (char *) var13[0] + 0x10;
-        var15.unknown_a8_  = 0x20;
-        var15.unknown_aa_ = 0x18;
-        var15.unknown_b4_  = 8;
-        var15.unknown_b6_  = 8;
-        Struct_ov003_02172a14 *var22 = func_02012fe4();
-        __clear(var16, 0x40);
-        int var23 = inline_ov003_02172a14(inline_ov003_0216e714_2(var22));
-        if (var23 > 9999) var23 = 9999;
-        sprintf(var16, data_ov003_021809f4, var23);
-        func_0204f41c(&var15, 0xb0, 0x48, var16, 8, 1, &var18, &var19, 0);
-        func_0204af64((Struct_02020cb8 *) &var17);
-        var17.unknown_1c_0_ = 0;
-        var17.unknown_1c_4_ = 1;
-        func_0204b11c((unsigned char *) &var17, 0);
-        func_0204b5e8((Struct_02020cb8_5 *) &var17, 0, 0);
-        for (int var24 = 0; var24 < var20; var24++) {
-            func_0204b2e0(&var17, (char *) var13[var24]);
-            func_0204b3a0((Struct_02020cb8_6 *) &var17, (char *) var13[var24]);
+        func_0204c684(&canvas);
+        canvas.pixels_ = (char *) datas[0] + 0x10;
+        canvas.width_  = 0x20;
+        canvas.height_ = 0x18;
+        canvas.unk_b4  = 8;
+        canvas.unk_b6  = 8;
+        Zone02172a14 *zone = func_02012fe4();
+        __clear(text, 0x40);
+        int v = GetValue(GetProgress(zone));
+        if (v > 9999) v = 9999;
+        sprintf(text, data_ov003_021809f4, v);
+        func_0204f41c(&canvas, 0xb0, 0x48, text, 8, 1, &outA, &outB, 0);
+        Background_Init((List0204af64 *) &list);
+        list.lo_ = 0;
+        list.hi_ = 1;
+        Background_SetMapSize((unsigned char *) &list, 0);
+        Background_SetScroll((Obj0204b5e8 *) &list, 0, 0);
+        for (int i = 0; i < count; i++) {
+            Background_FlushFile(&list, (char *) datas[i]);
+            Background_UploadFile((SelfTag0204b3a0 *) &list, (char *) datas[i]);
         }
         ColorEffect_ConfigureAlphaBlend(0x04000050, 1, 0x12, 0x1f, 0x1f);
         SetMainBrightness(var0, 0, 0x18);

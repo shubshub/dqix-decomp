@@ -14,7 +14,7 @@ struct Foo0207df50 {
     struct Pair0207df50 p2;
 };
 void CopyInternalFields0207df50(struct Foo0207df50* p);
-void RestorePairTables0207df90(char* obj);
+void VramState_Restore(char* obj);
 
 // USA: func_ov001_0215eab0
 ARM int RestoreCombatantPairTables_0215eab0(void* self, int mode) {
@@ -49,6 +49,6 @@ ARM int RestoreCombatantPairTables_0215eab0(void* self, int mode) {
     if (flag != 0) {
         CopyInternalFields0207df50((struct Foo0207df50*)addr);
     }
-    RestorePairTables0207df90((char*)addr);
+    VramState_Restore((char*)addr);
     return 1;
 }

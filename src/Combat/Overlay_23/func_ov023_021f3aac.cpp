@@ -118,23 +118,23 @@ extern const char data_ov023_021fe316[];
 extern const char data_ov023_021fe2a0[];
 extern const char data_ov023_021fe2b7[];
 
-extern "C" char* func_020421a0();
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_ov023_021d8b6c(void* arg0);
-extern "C" void func_0209fe9c(char* arg0);
-extern "C" void func_0209fee4(Struct_0209fee4* arg0, SafeAllocator* arg1, int arg2, int arg3);
-extern "C" void func_0209ff64(Struct_0209ff64* arg0, int arg1);
-extern "C" void func_0209ff6c(Struct_0209ff6c* arg0);
-extern "C" int func_ov023_021f21f4(Struct_ov023_021f1868_10* arg0);
-extern "C" void func_020a13c4(Struct_020a13c4* arg0);
-extern "C" void func_020a13e4(void* arg0, void* arg1, int arg2, unsigned short arg3, unsigned char arg4);
-extern "C" void* func_020dfc2c(void* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void* func_020a15bc(Struct_020a15bc* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_ov023_021f222c(Struct_ov023_021f1868_11* arg0);
-extern "C" void func_ov023_021f2304(void* arg0, char* arg1);
-extern "C" void func_ov023_021f2348(void* arg0, int arg1);
+char* GetGlobalField0x1c020421a0();
+void ReinitController02043204(char* messages);
+void InitCombatEntry_021d8b6c(void* window);
+void Reset0209fe9c(char* titles);
+void InitManagerAndAllocateBuffers0209fee4(Obj0209fee4* titles, SafeAllocator* allocator, int file, int size);
+void SetIntAt0x60(IntField0x60_0209ff64* titles, int value);
+void PollOv017Task0209ff6c(TaskState0209ff6c* titles);
+int AreFields60And64AllOnes_021f21f4(Fields60_021f21f4* titles);
+void ClearStruct020a13c4(S020a13c4* table);
+void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int a, unsigned short b, unsigned char c);
+void* ResetAndReturnSelf020dfc2c(void* texts);
+void KeyTable_Reset(Struct020dfc40* texts);
+void* FindElementByField020a15bc(Array020a15bc* table, int id);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void InitObj_021f222c(Obj_021f222c* page);
+void FormatLabelIntoBufC_021f2304(void* page, char* title);
+void SetOrClearBit10At400_38_021f2348(void* guide, int value);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -207,22 +207,22 @@ extern "C" ARM int func_ov023_021f3aac(Struct_ov023_021f3aac_4* arg0)
         int var10 = arg0->unknown_55c4_->unknown_68_;
         if (var10 > 0)
         {
-            SafeAllocator* var11 = &arg0->unknown_5258_;
-            var11->Reset();
-            var10 = arg0->unknown_55c4_->unknown_68_;
-            var7 = (short*)var11->Allocate(var10 * 2);
-            for (int var12 = 0; var12 < var10; var12++)
-                var7[var12] = arg0->unknown_55c4_->unknown_6a_[var12];
-            arg0->unknown_30_.Reset();
-            arg0->unknown_55c4_ = NULL;
-            arg0->unknown_55c8_ = arg0->unknown_30_.Allocate(0x14);
-            func_020a13c4((Struct_020a13c4*)arg0->unknown_55c8_);
-            func_020a13e4(arg0->unknown_55c8_, &arg0->unknown_30_, 0, 0, 2);
-            arg0->unknown_55d5_ = func_ov023_021ed724(arg0->unknown_55c8_, var7, var10) & 1 ? 1 : 0;
-            Struct_ov023_021f3aac_7* var13 = GameState::GetInstance()->GetProtagonist();
-            Struct_ov023_021f3aac_2 var14;
-            func_020dfc2c(&var14);
-            func_020dfc40((Struct_0201099c_14*)&var14);
+            SafeAllocator* idAllocator = &self->menuAllocator_;
+            idAllocator->Reset();
+            count = self->titles_->count_;
+            ids = (short*)idAllocator->Allocate(count * 2);
+            for (int k = 0; k < count; k++)
+                ids[k] = self->titles_->ids_[k];
+            self->allocator_.Reset();
+            self->titles_ = NULL;
+            self->titleTable_ = self->allocator_.Allocate(0x14);
+            ClearStruct020a13c4((S020a13c4*)self->titleTable_);
+            SetupGlobalAndRunScript020a13e4(self->titleTable_, &self->allocator_, 0, 0, 2);
+            self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
+            GameObject_021f3aac* hero = GameState::GetInstance()->GetProtagonist();
+            TextTable_021f3aac names;
+            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Reset((Struct020dfc40*)&names);
 #if defined(jpn)
             func_020e1fc4(&var14, &arg0->unknown_30_, data_ov023_021fd533, var7, (unsigned short)var10, var13->unknown_150_->unknown_49c_.unknown_0_0_, 1);
             var8 = (Struct_ov023_021f3aac_9*)var11->Allocate(var10 * sizeof(void*));
@@ -231,8 +231,8 @@ extern "C" ARM int func_ov023_021f3aac(Struct_ov023_021f3aac_4* arg0)
                 void* var15 = func_020a15bc((Struct_020a15bc*)arg0->unknown_55c8_, var7[var9]);
                 if (var15 == NULL)
                     continue;
-                const char* var16 = func_020e0434((Struct_0201099c_3*)&var14, var7[var9]);
-                if (var16 == NULL)
+                const char* title = KeyTable_Get((Container020e0310*)&names, ids[i]);
+                if (title == NULL)
                     continue;
                 func_ov023_021f222c((Struct_ov023_021f1868_11*)&var8[var9]);
                 func_ov023_021f229c(&var8[var9], var15);
@@ -267,8 +267,8 @@ extern "C" ARM int func_ov023_021f3aac(Struct_ov023_021f3aac_4* arg0)
                 void* var21 = func_020a15bc((Struct_020a15bc*)arg0->unknown_55c8_, var7[var9]);
                 if (var21 == NULL)
                     continue;
-                const char* var22 = func_020e0434((Struct_0201099c_3*)&var14, var7[var9]);
-                if (var22 == NULL)
+                const char* title = KeyTable_Get((Container020e0310*)&names, ids[i]);
+                if (title == NULL)
                     continue;
                 func_ov023_021f222c((Struct_ov023_021f1868_11*)&arg0->unknown_55d0_[var9]);
                 func_ov023_021f229c(&arg0->unknown_55d0_[var9], var21);

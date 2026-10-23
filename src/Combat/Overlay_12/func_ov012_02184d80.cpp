@@ -59,14 +59,14 @@ struct Struct_ov012_02184d80_2 {
     char unknown_44_[12];
     char unknown_50_[12];
 };
-extern const char* data_020f285c;
+extern const char* NameFilter_patternsFilePath;
 extern char data_ov012_0218b220[];
 extern "C" void __clear(void*, unsigned int);
-extern "C" void func_ov012_021855f0(void*, char*, char*);
-extern "C" int func_020424e4(int, int);
-extern "C" Struct_ov009_02186e00* func_020425b4(int, int);
-extern "C" int func_020426bc(const char*, unsigned char*, int);
-extern "C" int func_ov012_02185634(void*, void*, int, int, int);
+void ToUpperCopy_021855f0(void*, char*, char*);
+int Font_FindCharacterIndex(int, int);
+CharacterInfo* Font_GetCharacter(int, int);
+extern "C" int Font_EncodeText(const char*, unsigned char*, int);
+int AnyMatchInRange_02185634(void*, void*, int, int, int);
 extern "C" int func_ov012_02185684(void*, unsigned char*, unsigned char*, int, int);
 
 static inline Struct_ov009_02189a4c_3* inline_ov009_02189a4c(const Struct_ov009_02189a4c_2* arg0) { return arg0->unknown_4_; }
@@ -79,47 +79,47 @@ static inline unsigned int inline_ov009_02189a4c_3(unsigned int arg0, unsigned i
 }
 
 // USA: func_ov012_02184d80
-extern "C" ARM int func_ov012_02184d80(Struct_ov012_02184d80* arg0, char* arg1, char* arg2) {
-    int var0;
-    int var1;
-    unsigned char var2;
-    unsigned char var3;
-    unsigned char var4;
-    unsigned char var5;
-    int var6;
-    int var7;
-    int var8;
-    Struct_ov009_02189a4c* var9;
-    int var10;
-    int var11;
-    Struct_ov009_02189a4c_3* var12;
-    int var13;
-    unsigned char var14[5][64];
-    unsigned char var15[128];
-    char var16[512];
-    Struct_ov009_02189a4c var17[30];
-    Struct_ov012_02184d80_2 var18;
-    unsigned short var19 = 0;
-    var18.unknown_0_ = 0;
-    LoadFileIntoMemory(data_020f285c, data_0211e33c, &var18.unknown_0_);
-    memset(&arg0->unknown_18_, 0, 12);
-    unsigned char* var20 = data_0211e33c;
-    if (var20) {
-        memcpy(&arg0->unknown_18_, data_0211e33c, 4);
-        unsigned int var21 = inline_ov009_02189a4c_4(sizeof(Struct_ov009_02189a4c_4), 4);
-        unsigned char* var22 = data_0211e33c;
-        arg0->unknown_18_.unknown_4_ = (Struct_ov009_02189a4c_3*)(var22 + var21);
-        unsigned int var23 = inline_ov009_02189a4c_3(0, arg0->unknown_18_.unknown_0_.unknown_0_0_, sizeof(Struct_ov009_02189a4c_3), 4);
-        arg0->unknown_18_.unknown_8_ = (char*)(var22 + (var21 + var23));
-        unsigned int var24 = arg0->unknown_18_.unknown_0_.unknown_3_7_;
-        if (!var24) {
-            const Struct_ov009_02189a4c_2* var25 = &arg0->unknown_18_;
-            var12 = inline_ov009_02189a4c(var25);
-            if (var12) {
-                var13 = inline_ov009_02189a4c_2(var25);
-                int (*var26)(Struct_ov009_02189a4c_2*, Struct_ov009_02189a4c_3*);
-                if (var13 && (var26 = func_ov012_0218558c) != 0) {
-                    for (var11 = 0; var11 < var13; ++var11, ++var12) func_ov012_0218558c(arg0->inline_ov012_02184d80(), var12);
+extern "C" ARM int func_ov012_02184d80(MessageSyntax* self, char* name, char* out) {
+    int last;
+    int count;
+    unsigned char dollarId;
+    unsigned char slashId;
+    unsigned char atId;
+    unsigned char ampersandId;
+    int apostropheId;
+    int controlCId;
+    int positions;
+    NameSpan* first;
+    int patternCount;
+    int i;
+    ForbiddenWordPattern* headerPattern;
+    int headerCount;
+    unsigned char work_patterns_[5][64];
+    unsigned char work_tokens_[128];
+    char work_normalized_[512];
+    NameSpan work_spans_[30];
+    MessageCheckWork work;
+    unsigned short secondFileSize = 0;
+    work.fileSize_ = 0;
+    LoadFileIntoMemory(NameFilter_patternsFilePath, data_0211e33c, &work.fileSize_);
+    memset(&self->file_, 0, 12);
+    unsigned char* buffer = data_0211e33c;
+    if (buffer) {
+        memcpy(&self->file_, data_0211e33c, 4);
+        unsigned int firstOffset = AlignUp(sizeof(ForbiddenWordHeader), 4);
+        unsigned char* base = data_0211e33c;
+        self->file_.patterns_ = (ForbiddenWordPattern*)(base + firstOffset);
+        unsigned int bytes = PatternOffset(0, self->file_.header_.count_, sizeof(ForbiddenWordPattern), 4);
+        self->file_.texts_ = (char*)(base + (firstOffset + bytes));
+        unsigned int relocated = self->file_.header_.relocated_;
+        if (!relocated) {
+            const ForbiddenWordFile* file_v = &self->file_;
+            headerPattern = GetFilePatterns(file_v);
+            if (headerPattern) {
+                headerCount = GetFileCount(file_v);
+                int (*callback)(ForbiddenWordFile*, ForbiddenWordPattern*);
+                if (headerCount && (callback = func_ov012_0218558c) != 0) {
+                    for (i = 0; i < headerCount; ++i, ++headerPattern) func_ov012_0218558c(self->GetFile(), headerPattern);
                 }
             }
             arg0->unknown_18_.unknown_0_.unknown_3_7_ = 1;
@@ -144,22 +144,22 @@ extern "C" ARM int func_ov012_02184d80(Struct_ov012_02184d80* arg0, char* arg1, 
     var7 = arg0->unknown_37_;
     arg2 = var16;
     for (;;) {
-        if (!*arg1) break;
-        Struct_ov009_02186e00* var27;
-        int var28 = func_020424e4((int)arg1, 1);
-        var27 = func_020425b4(var28, 1);
-        if (!var27) goto fallback_character;
-        if (((var28 >= 8 && var28 <= 69) || var28 == 77 || var28 == 83 ||
-                      (var28 >= 120 && var28 <= 169) || var28 == var2 || var28 == var4 ||
-                      var28 == var5 || var28 == 107 || var28 == var6)) {
-            int var29 = var27->unknown_5_0_;
-            if (var28 == 107) var27 = func_020425b4(var3, 1);
-            __clear(var18.unknown_50_, 12);
-            int var30 = var27->unknown_5_0_;
-            char* var31 = var27->unknown_0_;
-            if (var27->unknown_5_7_) {
-                func_ov012_021855f0(arg0, var31, var18.unknown_50_);
-                var31 = var18.unknown_50_;
+        if (!*name) break;
+        CharacterInfo* entry;
+        int index = Font_FindCharacterIndex((int)name, 1);
+        entry = Font_GetCharacter(index, 1);
+        if (!entry) goto fallback_character;
+        if (((index >= 8 && index <= 69) || index == 77 || index == 83 ||
+                      (index >= 120 && index <= 169) || index == dollarId || index == atId ||
+                      index == ampersandId || index == 107 || index == apostropheId)) {
+            int advance = entry->length_;
+            if (index == 107) entry = Font_GetCharacter(slashId, 1);
+            __clear(work.character_, 12);
+            int length = entry->length_;
+            char* text = entry->text_;
+            if (entry->uppercase_) {
+                ToUpperCopy_021855f0(self, text, work.character_);
+                text = work.character_;
             }
             if (var28 >= 120 && var28 <= 169) {
                 int var32 = var31[1];
@@ -194,33 +194,33 @@ extern "C" ARM int func_ov012_02184d80(Struct_ov012_02184d80* arg0, char* arg1, 
         }
     }
     }
-    int var35;
-    int var36;
-    int var37;
-    int var38;
-    unsigned char* var39;
-    int var40;
-    int var41;
-    int var42;
-    Struct_ov009_02189a4c* var43;
-    int var44;
-    int var45;
-    int var46;
-    unsigned char* var47;
-    Struct_ov009_02189a4c* var48;
-    int var49;
-    Struct_ov009_02189a4c* var50;
-    Struct_ov009_02189a4c_3* var51;
-    short var52;
-    int var53;
-    unsigned int var54;
-    func_020426bc(var16, var15, 1);
-    var49 = 0;
-    var48 = var17;
-    var45 = arg0->unknown_36_;
-    var47 = var15;
-    var46 = var49;
-    var53 = var49;
+    int gapPosition;
+    int spanIndex;
+    int wordIndex;
+    int tokenIndex;
+    unsigned char* p;
+    int gapEnd;
+    int gapIndex;
+    int signedCommaId;
+    NameSpan* gapSpan;
+    int gapCommaId;
+    int commaId;
+    int position;
+    unsigned char* token;
+    NameSpan* span;
+    int matchIndex;
+    NameSpan* matchSpan;
+    ForbiddenWordPattern* pattern;
+    short patternIndex;
+    int spanCount;
+    unsigned int c;
+    Font_EncodeText(work_normalized_, work_tokens_, 1);
+    matchIndex = 0;
+    span = work_spans_;
+    commaId = self->commaId_;
+    token = work_tokens_;
+    position = matchIndex;
+    spanCount = matchIndex;
     for (;;) {
         var54 = *var47;
         if (var48->unknown_5_) {
@@ -267,14 +267,14 @@ extern "C" ARM int func_ov012_02184d80(Struct_ov012_02184d80* arg0, char* arg1, 
     for (var38 = 0; var38 < 128; ++var38) {
         if (var42 == (signed char)var15[var38]) ((char*)var15)[var38] = -1;
     }
-    var10 = (short)arg0->unknown_18_.unknown_0_.unknown_0_0_;
-    for (var52 = 0; var52 < var10; ++var52) {
-        var51 = arg0->unknown_18_.unknown_4_ + var52;
-        var9 = var17;
-        __clear(var14, 320);
-        for (var37 = 0; var37 < var51->unknown_1e_; ++var37) {
-            func_020426bc(var51->unknown_0_[var37], var14[var37], 1);
-            var51->unknown_0_[var37] = (char*)var14[var37];
+    patternCount = (short)self->file_.header_.count_;
+    for (patternIndex = 0; patternIndex < patternCount; ++patternIndex) {
+        pattern = self->file_.patterns_ + patternIndex;
+        first = work_spans_;
+        __clear(work_patterns_, 320);
+        for (wordIndex = 0; wordIndex < pattern->count_; ++wordIndex) {
+            Font_EncodeText(pattern->words_[wordIndex], work_patterns_[wordIndex], 1);
+            pattern->words_[wordIndex] = (char*)work_patterns_[wordIndex];
         }
         var8 = var53 - var51->unknown_1e_ + 1;
         for (var36 = 0; var36 < var8; ++var36, ++var9) {

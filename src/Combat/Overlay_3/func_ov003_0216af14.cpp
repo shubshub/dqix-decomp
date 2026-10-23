@@ -38,12 +38,12 @@ extern struct Struct_ov003_0217f578 data_ov003_0217f578;
 
 extern AllocatorUnion data_02114e20;
 
-extern "C" int func_ov003_0215c924(void* arg0, int arg1);
-extern "C" void func_ov003_0215c800(void* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_ov003_0216d818(char* arg0);
-extern "C" void func_ov003_0216d84c(void* arg0);
-extern "C" int func_0205d0e0(void* arg0, unsigned int arg1);
+extern "C" int func_ov003_0215c924(void* p, int scale);
+extern "C" void func_ov003_0215c800(void* p);
+void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void ResetGlobalsAndReinit_0216d818(char* obj);
+extern "C" void func_ov003_0216d84c(void* p);
+extern "C" int Window_Update(void* p, unsigned int tick);
 
 // USA: func_ov003_0216af14
 extern "C" ARM int func_ov003_0216af14(Struct_ov003_0216af14_2* arg0) {
@@ -65,9 +65,9 @@ extern "C" ARM int func_ov003_0216af14(Struct_ov003_0216af14_2* arg0) {
         func_ov003_0216d84c(arg0);
         if (arg0->unknown_13ec_ & 1) return 1;
     }
-    unsigned int var2 = var0->GetTickCount();
-    if (arg0->unknown_12c0_ != 0 && arg0->unknown_4_ == 2) {
-        arg0->unknown_10_ = func_0205d0e0(arg0->unknown_12c0_, var2);
+    unsigned int tick = gs->GetTickCount();
+    if (scene->field_0x12c0 != 0 && scene->state == 2) {
+        scene->field_0x10 = Window_Update(scene->field_0x12c0, tick);
     }
 
     struct Table0216af14 buf;

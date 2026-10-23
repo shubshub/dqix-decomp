@@ -68,10 +68,10 @@ extern "C" void func_020e4bf4(void* arg0, int arg1);
 extern "C" void func_02046380(void* arg0);
 extern "C" int func_020457e0(void* arg0);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 struct Struct_02057de0_2;
 extern "C" void* func_02057924(void);
@@ -321,13 +321,13 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
 #else
         char* var29 = (char*)var8 + 0x2cc;
 #endif
-        struct Struct_ov010_02184354_6 var30 = *(struct Struct_ov010_02184354_6*)((char*)var3 + 0x44);
-        func_0207df50((struct Struct_0203d028*)(var29 + 0xc40));
-        func_0207df90(var29 + 0xc40);
-        void* var31 = func_02057924();
-        func_02057de0((struct Struct_02057de0_2*)var31, 0x11, &arg0->unknown_14_,
-                                      (int)var27, (int)var28);
-        func_0207dfac(var29 + 0xc40);
+        struct Vec3i02184354 pos = *(struct Vec3i02184354*)((char*)caster + 0x44);
+        CopyInternalFields0207df50((struct Foo0207df50*)(stage + 0xc40));
+        VramState_Restore(stage + 0xc40);
+        void* nodes = func_02057924();
+        CreateAndRegisterNode02057de0((struct NodeList02057de0*)nodes, 0x11, &obj->alloc,
+                                      (int)filePtr, (int)fileLen);
+        VramState_Save(stage + 0xc40);
 
         struct Struct_ov010_02184354_6 var32;
         var32.unknown_0_ = 0x10a;

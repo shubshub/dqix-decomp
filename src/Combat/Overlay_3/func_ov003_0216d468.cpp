@@ -9,14 +9,14 @@ enum { Enum_ov003_0216d468_1040 = 0x410 };
 #endif
 
 
-struct Struct_0205d1e0;
-struct Struct_0205d228;
-struct Struct_0205d274;
-extern "C" void func_0205d1e0(Struct_0205d1e0*);
-extern "C" void func_0205d228(Struct_0205d228*);
+struct Cont0205d1e0;
+struct Cont0205d228;
+struct Cont0205d274;
+void Window_ClearLayers(Cont0205d1e0*);
+void Window_DrawPanes(Cont0205d228*);
 extern "C" void func_0205da88(void*, int, int, int);
-extern "C" void func_0205d274(Struct_0205d274*);
-extern "C" void func_ov003_0216d990(void* arg0);
+void Window_FlushLayers(Cont0205d274*);
+extern "C" void func_ov003_0216d990(void* obj);
 #if defined(jpn)
 extern "C" void func_ov003_0216dcf0(void* arg0);
 #else
@@ -28,15 +28,15 @@ extern "C" void func_ov003_0215ca1c(void* arg0);
 extern "C" void func_ov003_02173ea8(unsigned char* arg0);
 
 // USA: func_ov003_0216d468
-extern "C" ARM void func_ov003_0216d468(void* arg0) {
-    char* var0 = (char*)arg0;
-    if (*(void**)(var0 + 0x1000 + Enum_ov003_0216d468_704) != 0) {
-        short var1 = *(short*)(var0 + 6);
-        if (var1 == 0 || var1 == 1 || *(short*)(var0 + 4) == 2) {
-            func_0205d1e0((Struct_0205d1e0*)*(void**)(var0 + 0x1000 + Enum_ov003_0216d468_704));
-            func_0205d228((Struct_0205d228*)*(void**)(var0 + 0x1000 + Enum_ov003_0216d468_704));
-            func_0205da88(*(void**)(var0 + 0x1000 + Enum_ov003_0216d468_704), 2, 1, 1);
-            func_0205d274((Struct_0205d274*)*(void**)(var0 + 0x1000 + Enum_ov003_0216d468_704));
+extern "C" ARM void func_ov003_0216d468(void* p) {
+    char* obj = (char*)p;
+    if (*(void**)(obj + 0x1000 + kRegionValue2C0_150) != 0) {
+        short f6 = *(short*)(obj + 6);
+        if (f6 == 0 || f6 == 1 || *(short*)(obj + 4) == 2) {
+            Window_ClearLayers((Cont0205d1e0*)*(void**)(obj + 0x1000 + kRegionValue2C0_150));
+            Window_DrawPanes((Cont0205d228*)*(void**)(obj + 0x1000 + kRegionValue2C0_150));
+            func_0205da88(*(void**)(obj + 0x1000 + kRegionValue2C0_150), 2, 1, 1);
+            Window_FlushLayers((Cont0205d274*)*(void**)(obj + 0x1000 + kRegionValue2C0_150));
         }
     }
     func_ov003_0216d990(var0);

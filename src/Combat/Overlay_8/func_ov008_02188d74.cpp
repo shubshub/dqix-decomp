@@ -41,12 +41,12 @@ struct Struct_ov008_02188d74
     }
 };
 
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0205a528(Struct_ov008_02188d74* arg0, void* arg1, unsigned int arg2, SafeAllocator* arg3);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void SpriteContext_Init(char* renderer);
+void Sprite_Init(Struct0205a198* sprite);
+int Pac_CountFiles(ActiveEntry02046900* archive);
+void* Pac_GetFile(Rec020467f0* archive, int index, void** name, int* size);
+extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
 
 struct Struct_ov008_021842a0_2
 {
@@ -70,33 +70,33 @@ extern "C" ARM int func_ov008_02188d74(Struct_ov008_021842a0_2* arg0)
     unsigned char var1 = arg0->unknown_b12_;
     if (var1 == 0)
     {
-        arg0->unknown_73c_ = NULL;
-        arg0->unknown_740_ = NULL;
-        arg0->unknown_50_.Reset();
-        arg0->unknown_73c_ = (Struct_ov008_02188d74*)arg0->unknown_50_.Allocate(sizeof(Struct_ov008_02188d74));
-        arg0->unknown_740_ = (Struct_ov006_021580b8*)arg0->unknown_50_.Allocate(sizeof(Struct_ov006_021580b8));
-        func_0205a444((char*)arg0->unknown_73c_);
-        arg0->unknown_73c_->unknown_50_ = 1;
-        Struct_ov008_02188d74* var2 = arg0->unknown_73c_;
-        var2->inline_ov008_02188d74(arg0->unknown_740_, 1);
-        for (int var3 = 0; var3 < 1; var3++)
-            func_0205a198((Struct_02043368_2*)&arg0->unknown_740_[var3]);
-        arg0->unknown_b20_ = var0->QueueLoadFile(func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, LOW_REGION(4, 7)), NULL);
-        arg0->unknown_b12_++;
+        self->iconRenderer_ = NULL;
+        self->iconSprite_ = NULL;
+        self->iconAllocator_.Reset();
+        self->iconRenderer_ = (SpriteRenderer*)self->iconAllocator_.Allocate(sizeof(SpriteRenderer));
+        self->iconSprite_ = (Sprite*)self->iconAllocator_.Allocate(sizeof(Sprite));
+        SpriteContext_Init((char*)self->iconRenderer_);
+        self->iconRenderer_->unk_50 = 1;
+        SpriteRenderer* renderer = self->iconRenderer_;
+        renderer->SetSprites(self->iconSprite_, 1);
+        for (int i = 0; i < 1; i++)
+            Sprite_Init((Struct0205a198*)&self->iconSprite_[i]);
+        self->task_ = loader->QueueLoadFile(KeyTable_Get((Container020e0310*)&self->texts_, LOW_REGION(4, 7)), NULL);
+        self->loadStep_++;
     }
     if (var1 == 1 && var0->GetTaskStatus(arg0->unknown_b20_))
     {
-        char var4[4];
-        void* var5;
-        unsigned int var6;
-        var0->GetLoadedFileByID(arg0->unknown_b20_, &var5, &var6);
-        int var7 = func_02046900((Struct_02020cb8_4*)var5);
-        for (int var8 = 0; var8 < var7; var8++)
+        char name[4];
+        void* archive;
+        unsigned int archiveSize;
+        loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+        int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+        for (int i = 0; i < count; i++)
         {
-            unsigned int var9;
-            void* var10 = func_020467f0((Struct_02020aec*)var5, var8, (void**)var4, (int*)&var9);
-            if (var10 != NULL)
-                func_0205a528(arg0->unknown_73c_, var10, var9, &arg0->unknown_50_);
+            unsigned int size;
+            void* file = Pac_GetFile((Rec020467f0*)archive, i, (void**)name, (int*)&size);
+            if (file != NULL)
+                SpriteContext_LoadFile(self->iconRenderer_, file, size, &self->iconAllocator_);
         }
         var0->RemoveTask(arg0->unknown_b20_);
         arg0->unknown_b20_ = -1;

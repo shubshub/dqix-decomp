@@ -25,14 +25,14 @@ extern "C" void func_02021428(void* arg0, int arg1);
 
 extern "C" int func_020420e8(void* arg0, int arg1);
 
-extern "C" void func_0203b66c(char* arg0);
-extern "C" void func_0203bd78(char* arg0);
-extern "C" void func_0203bd24(char* arg0);
-extern "C" void func_0203b718(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0203ba74(void* arg0);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_0205a444(char* arg0);
+void TailForward0203b66c(char* obj);
+void InitSubObject0203bd78(char* obj);
+void InitBattleContext0203bd24(char* obj);
+void SetArraySlotFlag0203b718(void* objPtr, int mode, int idx, int fillByte);
+extern "C" void func_0203ba74(void* obj);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198* p);
+void SpriteContext_Init(char* obj);
 
 extern "C" int func_02020b98(void* arg0);
 extern "C" void func_02026644(char* arg0);
@@ -135,30 +135,30 @@ extern "C" ARM void func_02021578(Struct_02020554* arg0) {
         arg0->unknown_9f8_ = -1;
         arg0->unknown_9c2_ = arg0->unknown_9c2_ + 1;
 #endif
-    } else if (var13 == REGION_VALUE(1, 2)) {
-        func_02021428(arg0, 0x19);
-        if (IsBrightnessWithinValidRange((GameResources*)var5, true) != 0) return;
-        func_02020720(arg0);
-        func_02020838(arg0);
-        func_0203b66c(var11);
-        var12->Reset();
-        func_0203bd78(var10);
-        func_0203bd24(var10);
-        func_0203b718(var11, 1, 0, 0);
-        func_0203b718(var11, 1, 1, 0);
-        func_0203ba74(var11);
-        for (var6 = 0; var6 < 0x1c; var6++) {
-            func_0205a198(&arg0->unknown_e8_[var6]);
+    } else if (state == REGION_VALUE(1, 2)) {
+        func_02021428(self, 0x19);
+        if (IsBrightnessWithinValidRange((GameResources*)axis, true) != 0) return;
+        func_02020720(self);
+        func_02020838(self);
+        TailForward0203b66c(table);
+        alloc->Reset();
+        InitSubObject0203bd78(battleCtx);
+        InitBattleContext0203bd24(battleCtx);
+        SetArraySlotFlag0203b718(table, 1, 0, 0);
+        SetArraySlotFlag0203b718(table, 1, 1, 0);
+        func_0203ba74(table);
+        for (i0 = 0; i0 < 0x1c; i0++) {
+            Sprite_Init(&self->records[i0]);
         }
-        func_0205a444((char*)&arg0->unknown_94_);
-        arg0->unknown_94_.unknown_50_ = 1;
-        arg0->unknown_94_.unknown_40_ = arg0->unknown_e8_;
-        arg0->unknown_94_.unknown_4c_ = 0x1c;
-        int var15 = var9->unknown_c_low_;
-        if (var15 == 0) {
-            arg0->unknown_14_ = 3;
-        } else if (var15 == 7) {
-            arg0->unknown_14_ = 1;
+        SpriteContext_Init((char*)&self->entryList);
+        self->entryList.active = 1;
+        self->entryList.records = self->records;
+        self->entryList.count = 0x1c;
+        int mode = modes->unknown_c_low_;
+        if (mode == 0) {
+            self->displayMode = 3;
+        } else if (mode == 7) {
+            self->displayMode = 1;
         } else {
             arg0->unknown_14_ = 0;
         }

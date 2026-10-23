@@ -169,7 +169,7 @@ void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
 void ResetListHeader020727d8(List020727d8* list);
 void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
 int GetField0x3acValue_020100a8(GameState* gameState);
-const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+const char* KeyTable_Get(Container020e0310* texts, int id);
 void AppendString02042058(char* text, const char* append);
 Canvas* FindElementByC40205d81c(Struct_0205d81c* window, int canvas);
 struct Manager02187664;
@@ -289,7 +289,7 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
             }
             BackgroundLoader::RemoveLockGlobal();
 #endif
-            func_02042058(var14, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 1000));
+            AppendString02042058(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
 #if defined(jpn)
             func_0204500c(var3, var14, 0);
 #else

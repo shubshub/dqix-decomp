@@ -7,12 +7,12 @@ struct Struct_0205bcdc;
 struct Struct_0205def8;
 struct Obj_0205da38;
 struct SePlayer;
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 extern "C" int abs(int);
 void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(void*, int);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(SePlayer*, int, int);
 #if defined(jpn)
 extern "C" void func_ov000_02171e60(void*);
@@ -74,18 +74,18 @@ extern MenuGlobals0217b8a4 data_ov000_02184294;
 extern SePlayer g_sePlayer;
 
 // USA: func_ov000_0217b8a4
-extern "C" ARM int func_ov000_0217b8a4(Struct_ov000_0217b8a4_3* arg0, int arg1, int arg2) {
-    signed char var0;
-    data_ov000_02184294.unknown_8_->unknown_1d72_ |= 0x100;
-    Struct_ov000_0217b8a4* var1 = arg0->unknown_38_;
-    signed char var2 = arg0->unknown_22_;
-    signed char var3 = func_0205d794((Struct_0205c570*)arg0->unknown_38_);
-    var0 = var1->unknown_68_;
-    signed char var4 = var3;
-    signed char var5 = arg0->unknown_22_ & 3;
-    signed char var6 = var3 & 3;
-    if ((signed char)abs(var6 - var5) == 1 && var5 < var6) {
-        if (!arg0->unknown_3f0_[var3]) var3 = var0 * 4;
+extern "C" ARM int func_ov000_0217b8a4(Menu0217b8a4* obj, int arg1, int arg2) {
+    signed char row;
+    data_ov000_02184294.context->flags |= 0x100;
+    MenuWindow0217b8a4* window = obj->window;
+    signed char previous = obj->cursor;
+    signed char cursor = Window_GetSelectedIndex((Struct_0205c570*)obj->window);
+    row = window->row;
+    signed char originalCursor = cursor;
+    signed char oldColumn = obj->cursor & 3;
+    signed char newColumn = cursor & 3;
+    if ((signed char)abs(newColumn - oldColumn) == 1 && oldColumn < newColumn) {
+        if (!obj->items[cursor]) cursor = row * 4;
     }
     while (!arg0->unknown_3f0_[var3]) var3--;
     while (arg0->unknown_3f0_[var3]) {
@@ -102,7 +102,7 @@ extern "C" ARM int func_ov000_0217b8a4(Struct_ov000_0217b8a4_3* arg0, int arg1, 
     SetElementFlag0x20ByKey0205def8((Struct_0205def8*)context->list, 1, 0x24);
     if (previous != cursor) return -1;
     int flag = g_keyManager.TestKeysPressed(0x601);
-    int active = (flag | IsActiveElementFlag2Set0205da38((Obj_0205da38*)obj->window, 0x14)) != 0;
+    int active = (flag | Window_IsSelectionTouched((Obj_0205da38*)obj->window, 0x14)) != 0;
     if (active || obj->field_444) {
         MenuItem0217b8a4* item = obj->items[cursor];
         if (!item) return -1;

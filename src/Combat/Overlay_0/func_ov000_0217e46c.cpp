@@ -21,14 +21,14 @@ extern "C" void func_ov000_02180404(void* arg0);
 extern "C" void func_ov000_02174b14(void* arg0);
 extern "C" void func_ov000_0217a8f4(void* arg0);
 
-struct Struct_0205d1e0;
-struct Struct_0205d274;
-struct Struct_0205d2bc;
-struct Struct_0205d6a0;
-extern "C" void func_0205d1e0(struct Struct_0205d1e0*);
-extern "C" void func_0205d274(struct Struct_0205d274*);
-extern "C" void func_0205d2bc(struct Struct_0205d2bc*);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0*, int);
+struct Cont0205d1e0;
+struct Cont0205d274;
+struct Obj0205d2bc;
+struct Entry_0205d6a0;
+void Window_ClearLayers(struct Cont0205d1e0*);
+void Window_FlushLayers(struct Cont0205d274*);
+void Window_TransferLayers(struct Obj0205d2bc*);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0*, int);
 
 // USA: func_ov000_0217e46c
 extern "C" ARM void func_ov000_0217e46c(char* arg0) {
@@ -55,10 +55,10 @@ extern "C" ARM void func_ov000_0217e46c(char* arg0) {
     signed char var0 = *(signed char*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_4);
     *(unsigned char*)(arg0 + var0 + 0x1000 + REGION_OFFSET_2) = 1;
 
-    func_0205d1e0((struct Struct_0205d1e0*)(arg0 + 0x188));
-    func_0205d274((struct Struct_0205d274*)(arg0 + 0x188));
-    func_0205d2bc((struct Struct_0205d2bc*)(arg0 + 0x188));
-    func_0205d6a0((struct Struct_0205d6a0*)(arg0 + 0x188), 1);
+    Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
+    Window_FlushLayers((struct Cont0205d274*)(obj + 0x188));
+    Window_TransferLayers((struct Obj0205d2bc*)(obj + 0x188));
+    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(obj + 0x188), 1);
 
     *(unsigned short*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_1) |= 0x2;
 }

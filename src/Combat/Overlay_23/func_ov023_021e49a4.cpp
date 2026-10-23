@@ -42,11 +42,11 @@ struct Struct_ov023_021e49a4 {
     unsigned char unknown_138_[0x18];
     Struct_ov023_021e49a4_5* unknown_150_;
 };
-extern "C" Struct_02045cac* func_020421a0();
-extern "C" void func_02045cac(Struct_02045cac*);
-extern "C" char* func_020e51cc(int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_ov023_021e4250(char*);
+CombatSlots02045cac* GetGlobalField0x1c020421a0();
+void InitCombatSlots02045cac(CombatSlots02045cac*);
+char* CallFunc020e0434With02153694_020e51cc(int);
+int KeyTable_Get(Container020e0310*, int);
+int GetByteViaFieldIndirectOffset_021e4250_021e4250(char*);
 extern const char data_ov023_021fdcd8[];
 extern "C" {
 void func_02045d14(Struct_02045cac*, const char*, unsigned short*, int);
@@ -89,7 +89,7 @@ extern "C" ARM void func_ov023_021e49a4(Struct_ov023_021e49a4_4* arg0) {
             if (inline_ov023_021e49a4(var12->unknown_130_) <= 0) {
                 func_02045d14(var5, arg0->unknown_640_[var12->unknown_150_->unknown_49c_0_], var3[var11], 0);
             } else {
-                func_02045d14(var5, (const char*)func_020e0434(&var0->unknown_c00_, var14), var3[var11], 0);
+                func_02045d14(messages, (const char*)KeyTable_Get(&texts->dictionary, label), labels[i], 0);
             }
             unsigned char var15 = func_ov023_021e4250((char*)var12);
             char var16[16];

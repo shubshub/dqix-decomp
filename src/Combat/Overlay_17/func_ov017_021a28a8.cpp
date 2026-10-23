@@ -31,14 +31,14 @@ struct Struct_ov017_021a28a8_4 {
     char unknown_1150_[0x20];
 };
 
-extern "C" void func_ov017_021a27e8(void*);
-extern "C" Struct_ov017_021a28a8* func_02027cb0();
-extern "C" int func_0209c0ec(char*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" int func_0209c0a8(void*, int);
-extern "C" Struct_ov017_021a28a8_2* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" void* func_0206ef18(void*, int);
+void ClearSlotsAndProcess_021a27e8(void*);
+ResourceEntry021a28a8* FindEntryByCurrentId02027cb0();
+int GetCount0209c0ec(char*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+int GetCheckedHalfword_0209c0a8(void*, int);
+ResourceInfo021a28a8* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+void* FindNodeBySignedId_0206ef18(void*, int);
 bool FindFilesInNarcBySubstring(const void*, const char*, const void**, unsigned int*, unsigned int);
 void* DecompressLZ77FileIntoAllocatedSpace(SafeAllocator&, const void*, unsigned int&);
 extern "C" void func_0209953c(unsigned short);
@@ -52,16 +52,16 @@ extern char data_ov017_021d7689[];
 
 // USA: func_ov017_021a28a8
 // JPN: func_ov017_021a3338
-extern "C" ARM void func_ov017_021a28a8(Struct_ov017_021a28a8_4* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    SafeAllocator* var1 = &arg0->unknown_113c_;
-    char* var2 = arg0->unknown_1150_;
-    func_ov017_021a27e8(arg0);
-    Struct_ov017_021a28a8* var3 = func_02027cb0();
-    if (!var3) return;
-    Struct_ov017_021a28a8_3* var4 = (Struct_ov017_021a28a8_3*)var1->Allocate(func_0209c0ec(var3->unknown_44_) * 0xb0);
-    if (!var4) return;
-    func_0207df90(var2);
+extern "C" ARM void func_ov017_021a28a8(ResourceArena021a28a8* arena) {
+    GameState* state = GameState::GetInstance();
+    SafeAllocator* allocator = &arena->allocator;
+    char* tables = arena->pairTables;
+    ClearSlotsAndProcess_021a27e8(arena);
+    ResourceEntry021a28a8* area = FindEntryByCurrentId02027cb0();
+    if (!area) return;
+    ResourceObject021a28a8* objects = (ResourceObject021a28a8*)allocator->Allocate(GetCount0209c0ec(area->ids) * 0xb0);
+    if (!objects) return;
+    VramState_Restore(tables);
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
     GPCReadPair var5;
@@ -111,10 +111,10 @@ extern "C" ARM void func_ov017_021a28a8(Struct_ov017_021a28a8_4* arg0) {
         var5.Reset();
     }
     BackgroundLoader::RemoveLockGlobal();
-    func_0207dfac(var2);
-    func_ov017_021a2b1c(arg0);
-    var5.Reset();
-    ZeroDestroyGPCPointer(&var5.pGPCFile);
+    VramState_Save(tables);
+    func_ov017_021a2b1c(arena);
+    archive.Reset();
+    ZeroDestroyGPCPointer(&archive.pGPCFile);
 }
 
 #if defined(jpn)

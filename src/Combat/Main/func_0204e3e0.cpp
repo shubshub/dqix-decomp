@@ -20,13 +20,13 @@ struct Struct_0204e3e0 {
     signed char unknown_5_6_ : 2;
 };
 
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" int func_020424e4(int arg0, int arg1);
-extern "C" char* func_020424ac(char* arg0);
-extern "C" Struct_0204e3e0* func_020425b4(int arg0, int arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" int func_0204fc40(void* arg0, char** arg1, char* arg2, short* arg3, int arg4);
+extern "C" void* __clear(void* dst, int count);
+extern "C" int func_020420e8(char* str, int id);
+int Font_FindCharacterIndex(int key, int tableIdx);
+char* FindUnescapedAngleBracket_020424ac(char* str);
+Glyph0204e3e0* Font_GetCharacter(int idx, int tableIdx);
+int LookupKeyValue020425e4(int a, int b, int tableIdx);
+extern "C" int func_0204fc40(void* unused0, char** cursor, char* tag, short* out, int max);
 extern const unsigned char data_020e7bd6[];
 extern char data_020f0248[];
 extern char data_020f024e[];
@@ -92,46 +92,46 @@ extern "C" ARM short func_0204e3e0(Struct_0204e3e0_2* arg0, char* arg1, int arg2
             var5 = 0xff;
             continue;
         }
-        int var20 = func_020424e4((int)var12, arg5);
-        if (*var12 == '<' && var20 < 0) {
-            var13 = var12 + 1;
-            var11 = func_020424ac(var12);
-            if (func_0204fc40(arg0, &var13, data_020f0248, var14, 1)) {
-            } else if (func_0204fc40(arg0, &var13, data_020f024e, var14, 1)) {
-                if (var3 < var1) var3 = var1;
-                var1 = var14[0];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f0251, var14, 1)) {
-                if (var4 < var2) var4 = var2;
-                var2 = var14[0];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f0254, var14, 2)) {
-                if (var3 < var1) var3 = var1;
-                if (var4 < var2) var4 = var2;
-                var1 = var14[0];
-                var2 = var14[1];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f0258, var14, 1)) {
-                var1 += var14[0];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f025b, var14, 1)) {
-                var2 += var14[0];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f025e, var14, 2)) {
-                var1 += var14[0];
-                var2 += var14[1];
-                var5 = 0xff;
-            } else if (func_0204fc40(arg0, &var13, data_020f0298, var14, 1)) {
-                var8 = var14[0];
-            } else if (func_0204fc40(arg0, &var13, data_020f02d4, var14, 1)) {
-                var7 = 1;
-                var0 = var14[0];
-            } else if (func_0204fc40(arg0, &var13, data_020f02db, var14, 0)) {
-                if (var7) {
-                    if (var3 < var1) var3 = var1;
-                    if (var4 < var2) var4 = var2;
-                    var1 = arg0->unknown_b0_;
-                    var2 = var0 + arg0->unknown_b2_;
+        int idx = Font_FindCharacterIndex((int)cursor, font);
+        if (*cursor == '<' && idx < 0) {
+            p = cursor + 1;
+            end = FindUnescapedAngleBracket_020424ac(cursor);
+            if (func_0204fc40(wnd, &p, data_020f0248, out, 1)) {
+            } else if (func_0204fc40(wnd, &p, data_020f024e, out, 1)) {
+                if (maxX < x) maxX = x;
+                x = out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0251, out, 1)) {
+                if (maxY < y) maxY = y;
+                y = out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0254, out, 2)) {
+                if (maxX < x) maxX = x;
+                if (maxY < y) maxY = y;
+                x = out[0];
+                y = out[1];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0258, out, 1)) {
+                x += out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f025b, out, 1)) {
+                y += out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f025e, out, 2)) {
+                x += out[0];
+                y += out[1];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0298, out, 1)) {
+                ret = out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02d4, out, 1)) {
+                boxOn = 1;
+                boxY = out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02db, out, 0)) {
+                if (boxOn) {
+                    if (maxX < x) maxX = x;
+                    if (maxY < y) maxY = y;
+                    x = wnd->fB0;
+                    y = boxY + wnd->fB2;
                 }
             } else if (func_0204fc40(arg0, &var13, data_020f02e7, var14, 1)) {
                 if (var3 < var1) var3 = var1;
@@ -156,14 +156,14 @@ extern "C" ARM short func_0204e3e0(Struct_0204e3e0_2* arg0, char* arg1, int arg2
             var12 = var11 + 1;
             continue;
         }
-        var16 = data_020e7bd6[arg5] + 1;
-        if (var20 >= 0) {
-            var6 = var20 & 0xff;
-            var17 = func_020425b4(var20, arg5);
-            int var24 = func_020425e4(var5, var6, arg5);
-            var5 = var6;
-            var16 = var17->unknown_4_ + 1 + var24;
-            var12 += var17->unknown_5_0_;
+        adv = data_020e7bd6[font] + 1;
+        if (idx >= 0) {
+            code = idx & 0xff;
+            glyph = Font_GetCharacter(idx, font);
+            int kern = LookupKeyValue020425e4(prev, code, font);
+            prev = code;
+            adv = glyph->width + 1 + kern;
+            cursor += glyph->skip;
         } else {
             var12++;
         }

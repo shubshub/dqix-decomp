@@ -81,22 +81,22 @@ extern Struct_ov014_02189800 data_ov014_02189800;
 extern char data_ov014_02189692[];
 extern char data_ov014_021896a7[];
 
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" int func_ov023_021e20f0(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" Struct_ov006_0215b7e8* func_ov014_021842a0(void* arg0, short arg1);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0205a528(Struct_ov008_02188d74* arg0, void* arg1, unsigned int arg2, SafeAllocator* arg3);
-extern "C" void func_ov023_021e2bdc(void* arg0, int arg1, short* arg2, short* arg3);
-extern "C" void* func_020100f8(char* arg0);
-extern "C" void func_020a2010(void* arg0);
-extern "C" void func_0202e5c8(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e5d8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e0a4(void* arg0);
-extern "C" void func_020a27a0(void* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" void func_020c5588(int, int, int, int, int);
+void ClearFields_021e20c0(void* layout);
+extern "C" int func_ov023_021e20f0(void* layout, SafeAllocator* allocator, void* file, unsigned int size);
+extern "C" LayoutElement* func_ov014_021842a0(void* layout, short id);
+int Pac_CountFiles(ActiveEntry02046900* pac);
+void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
+extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
+void ComputeShortPair_021e2bdc(void* layout, int id, short* x, short* y);
+void* GetFieldIfFlag4_020100f8(char* gameState);
+void InitCombatController020a2010(void* camera);
+void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+extern "C" void func_0202e5d8(void* camera, int x, int y, int z);
+extern "C" void func_0202e0a4(void* camera);
+void SetField0x238False_020a27a0(void* camera);
+void SetField0x3b0Value_020100c4(GameState* gameState, int camera);
+void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
+void Set3DClearColor_020c5588(int, int, int, int, int);
 
 #define HIDE_ELEMENT(layout, id)                                        \
     {                                                                   \
@@ -136,18 +136,18 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         arg0->unknown_7d_++;
     }
 
-    if (arg0->unknown_7d_ == 3 && var0->GetTaskStatus(arg0->unknown_6c_)) {
-        void* var4;
-        void* var5;
-        unsigned int var6;
-        int var7;
-        var0->GetLoadedFileByID(arg0->unknown_6c_, &var5, &var6);
-        int var8 = func_02046900((Struct_02020cb8_4*)var5);
-        arg0->unknown_3c_[5].Reset();
-        for (int var9 = 0; var9 < var8; var9++) {
-            void* var10 = func_020467f0((Struct_02020aec*)var5, var9, &var4, &var7);
-            if (var10 != NULL)
-                func_0205a528(arg0->unknown_4_, var10, var7, &arg0->unknown_3c_[5]);
+    if (self->initStep_ == 3 && loader->GetTaskStatus(self->taskID_)) {
+        void* name;
+        void* file;
+        unsigned int size;
+        int cellsSize;
+        loader->GetLoadedFileByID(self->taskID_, &file, &size);
+        int numFiles = Pac_CountFiles((ActiveEntry02046900*)file);
+        self->allocators_[5].Reset();
+        for (int i = 0; i < numFiles; i++) {
+            void* cells = Pac_GetFile((Rec020467f0*)file, i, &name, &cellsSize);
+            if (cells != NULL)
+                SpriteContext_LoadFile(self->spriteRenderer_, cells, cellsSize, &self->allocators_[5]);
         }
 
         short var11 = 0;
@@ -184,19 +184,19 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         BG2CNT = (BG2CNT & ~BGCNT_MASK_PRIORITY) | 2;
         BG3CNT = (BG3CNT & ~BGCNT_MASK_PRIORITY) | 3;
         DISPCNT = (DISPCNT & ~0x1f00) | (0x13 << 8);
-        GameState* var14 = GameState::GetInstance();
-        data_ov014_02189800.unknown_c_ = func_020100f8((char*)var14);
-        func_020a2010(arg0->unknown_44_);
-        func_0202e5c8((unsigned char*)arg0->unknown_44_, 0, 0, 0);
-        func_0202e5d8(arg0->unknown_44_, 0, 0, 0xa000);
-        func_0202e0a4(arg0->unknown_44_);
-        func_020a27a0(arg0->unknown_44_);
-        func_020100c4(var14, (int)arg0->unknown_44_);
-        GameResources* var15 = GetGameResources();
-        SetFlags04(var15, 0x6093e);
-        ClearFlags04(var15, 0x20);
-        func_020c54a4(0, 0, 0, 0);
-        func_020c5588(0, 0, 0x7fff, 0, 0);
+        GameState* gameState = GameState::GetInstance();
+        data_ov014_02189800.previousCamera = GetFieldIfFlag4_020100f8((char*)gameState);
+        InitCombatController020a2010(self->camera_);
+        Camera_SetTarget((unsigned char*)self->camera_, 0, 0, 0);
+        func_0202e5d8(self->camera_, 0, 0, 0xa000);
+        func_0202e0a4(self->camera_);
+        SetField0x238False_020a27a0(self->camera_);
+        SetField0x3b0Value_020100c4(gameState, (int)self->camera_);
+        GameResources* resources = GetGameResources();
+        SetFlags04(resources, 0x6093e);
+        ClearFlags04(resources, 0x20);
+        SetFogState_020c54a4(0, 0, 0, 0);
+        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
         LightingManager::GetInstance()->fogEnabled_ = false;
         arg0->unknown_7c_ = 1;
         arg0->unknown_7d_ = 0;

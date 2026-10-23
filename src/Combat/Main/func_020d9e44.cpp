@@ -3,7 +3,7 @@
 #include "GameState/GameState.h"
 
 #if defined(jpn)
-#define data_020f2838 data_020f2a30
+#define data_020f2838 g_itemDataFile
 #define data_020ee678 data_020ee784
 #endif
 

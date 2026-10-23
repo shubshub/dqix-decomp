@@ -24,7 +24,7 @@ struct UnitState {char p[0x56b];unsigned char low:4,high:4;};
 struct UnitView {char p[unitStateOffset];UnitState* state;};
 struct Struct_0205c570;struct SePlayer;struct Struct0217f8c0;struct TableEntry0217f8c0;
 struct Struct_0205d81c;struct Entry_0205d6a0;struct Obj02092aa4;
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(SePlayer*,int,int);
 void* GetPtrField0x2a04_02010828(GameState*);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*,int);
@@ -52,7 +52,7 @@ extern "C" ARM void func_ov000_0217ce24(Struct_ov000_021682ec_5* arg0,int arg1,i
 {
     func_02012fe4();
     self->flags|=0x100;
-    int mode=GetActiveScaledSum0205d794((Struct_0205c570*)self->updateState);
+    int mode=Window_GetSelectedIndex((Struct_0205c570*)self->updateState);
     if(mode<0)mode=0;
     self->mode=mode;
     if(func_ov000_0217c594(self,5)){

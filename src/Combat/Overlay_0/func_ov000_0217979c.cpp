@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_0205c508;
-extern "C" void func_0205c508(struct Struct_0205c508* arg0, int* arg1, int* arg2);
-struct Struct_0201099c_3;
-extern "C" char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_ov000_02171b9c(void* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+struct UnkStruct0205c508;
+void ComputeProductSums0205c508(struct UnkStruct0205c508* s, int* out1, int* out2);
+struct Container020e0310;
+char* KeyTable_Get(struct Container020e0310* c, int key);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+void* GetPointerField_02171b9c_02171b9c(void* obj, int idx);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+extern "C" void __clear(void* buf, int n);
+int AppendString02042058(char* dst, const char* src);
 #if defined(jpn)
 extern "C" int func_02042158(char* arg0, int arg1);
 #define func_02041acc func_02042158
@@ -47,8 +47,8 @@ extern "C" ARM void func_ov000_0217979c(char* arg0, struct Struct_ov000_0217979c
     signed char var3 = var1;
     signed char var4 = arg1->unknown_22_;
 #if !defined(jpn)
-    char* var5 = func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0x13);
-    char* var6 = func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0);
+    char* prefix = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x13);
+    char* separator = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0);
 #endif
     if (func_ov000_0217542c(arg0)) {
         func_02041c08(arg2, var4 - var2, 8, 5, 5, 5);
@@ -65,7 +65,7 @@ extern "C" ARM void func_ov000_0217979c(char* arg0, struct Struct_ov000_0217979c
         int var10 = var8->unknown_8_0_ <= 7;
         if (var10) {
 #if defined(jpn)
-            func_02042058(var9, func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0x13));
+            AppendString02042058(text, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x13));
 #else
             func_02042058(var9, var5);
             func_02041acc(var9, 3);
@@ -84,7 +84,7 @@ extern "C" ARM void func_ov000_0217979c(char* arg0, struct Struct_ov000_0217979c
         func_02041b70(arg2, var7 - var2, var9);
         if (var7 != var3 - 1) {
 #if defined(jpn)
-            func_02042058(arg2, func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0));
+            AppendString02042058(dst, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
 #else
             func_02042058(arg2, var6);
 #endif

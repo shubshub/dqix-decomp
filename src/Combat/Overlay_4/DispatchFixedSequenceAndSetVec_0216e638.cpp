@@ -26,7 +26,7 @@ int ScaleStatsIfType12_021f6f10(void* self);
 #endif
 void* GetFieldPtrAt_021f79e4_021f79e4(void* obj);
 struct Obj0204b5e8;
-int DispatchViaTable0204b5e8(struct Obj0204b5e8* obj, int a, int b);
+int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
 
 struct Vec3_0216e638 { int x, y, z; };
 class VObj0216e638 {
@@ -78,7 +78,7 @@ extern "C" ARM int func_ov004_0216e638(void* a) {
 #else
         if (ScaleStatsIfType12_021f6f10(n1) != 2) continue;
 #endif
-        DispatchViaTable0204b5e8((struct Obj0204b5e8*)GetFieldPtrAt_021f79e4_021f79e4(n1), 2, 4);
+        Background_SetScroll((struct Obj0204b5e8*)GetFieldPtrAt_021f79e4_021f79e4(n1), 2, 4);
 
         void* n2 = func_ov023_021f6880(node, j + 0x4b0);
         if (!n2) continue;

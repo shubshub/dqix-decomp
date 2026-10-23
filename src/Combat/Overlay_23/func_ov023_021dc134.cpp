@@ -2,15 +2,15 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void* func_020df828(void* arg0);
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" void func_0205a444(char* arg0);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_ov023_021db0d4(void* arg0, int arg1);
-extern "C" void func_ov023_021dce88(void* arg0);
+struct Struct020dfc40;
+void KeyTable_Reset(struct Struct020dfc40* p);
+void* Zero16Bytes020df828(void* dst);
+void ClearFields_021e20c0(void* p);
+void SpriteContext_Init(char* obj);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198* p);
+void InitFields_021db0d4(void* obj, int flag);
+void ClearField784Array3_021dce88(void* obj);
 
 struct Struct_ov023_021ff9e0_3 {
 #if defined(jpn)
@@ -65,30 +65,30 @@ extern "C" ARM void func_ov023_021dc134(void* arg0, short arg1, int arg2) {
     ((SafeAllocator*)(var0 + 0x14))->ResetAllocatorPointer();
     ((SafeAllocator*)(var0 + 0x28))->ResetAllocatorPointer();
 
-    *(int*)(var0 + 0x3c) = 0;
-    *(int*)(var0 + 0x40) = 0;
-    *(int*)(var0 + 0x44) = 0;
-    *(int*)(var0 + 0x48) = 0;
-    *(int*)(var0 + 0x4c) = 0;
-    *(int*)(var0 + 0x50) = 0;
-    func_020dfc40((struct Struct_0201099c_14*)(var0 + 0x54));
+    *(int*)(obj + 0x3c) = 0;
+    *(int*)(obj + 0x40) = 0;
+    *(int*)(obj + 0x44) = 0;
+    *(int*)(obj + 0x48) = 0;
+    *(int*)(obj + 0x4c) = 0;
+    *(int*)(obj + 0x50) = 0;
+    KeyTable_Reset((struct Struct020dfc40*)(obj + 0x54));
 
     func_020df828(var0 + 0x6c);
     func_020df828(var0 + 0x7c);
 
-    func_020dfc40((struct Struct_0201099c_14*)(var0 + 0x8c));
-    func_020dfc40((struct Struct_0201099c_14*)(var0 + 0xa4));
+    KeyTable_Reset((struct Struct020dfc40*)(obj + 0x8c));
+    KeyTable_Reset((struct Struct020dfc40*)(obj + 0xa4));
 
     *(int*)(var0 + 0xc4) = 0;
     *(int*)(var0 + 0xc8) = 0;
     func_ov023_021e20c0(var0 + 0xcc);
 
-    *(unsigned char*)(var0 + Enum_ov023_021dc134_296) = 0;
-    *(unsigned char*)(var0 + Enum_ov023_021dc134_297) = 0;
-    func_0205a444(var0 + Enum_ov023_021dc134_300);
+    *(unsigned char*)(obj + regionalOffset0) = 0;
+    *(unsigned char*)(obj + regionalOffset1) = 0;
+    SpriteContext_Init(obj + regionalOffset2);
 
-    for (unsigned char var1 = 0; var1 < 30; var1++) {
-        func_0205a198((struct Struct_02043368_2*)(var0 + Enum_ov023_021dc134_384 + var1 * 0x28));
+    for (unsigned char i = 0; i < 30; i++) {
+        Sprite_Init((struct Struct0205a198*)(obj + regionalOffset3 + i * 0x28));
     }
 
     memset(var0 + Enum_ov023_021dc134_1584, 0, Enum_ov023_021dc134_256);

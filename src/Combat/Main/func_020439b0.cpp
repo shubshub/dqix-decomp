@@ -33,11 +33,11 @@ extern "C" void func_0204394c(struct Struct_0204394c* arg0);
 struct Struct_020439b0;
 extern "C" void func_020e2cc4(struct Struct_020439b0* arg0, int arg1);
 
-extern "C" void func_0207df90(char* arg0);
-struct Struct_0200f3a4_13;
-extern "C" void func_02041754(Struct_0204166c* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_02042af4(int arg0, unsigned char* arg1, int arg2);
+void VramState_Restore(char* obj);
+struct Obj02041754;
+void DisableField16Bit002041754(MessageGlyphSlot* obj);
+void VramState_Save(char* obj);
+void ClearBitInArray_02042af4(int unused, unsigned char* arr, int index);
 
 struct Struct_020439b0_3;
 extern "C" void func_020e2d2c(struct Struct_020439b0_3* arg0, int arg1, int arg2, int arg3, int arg4);
@@ -264,9 +264,9 @@ extern "C" ARM void func_020439b0(char* arg0, int arg1) {
         ) != 0) {
                             var31->unknown_16_0_ = 0;
                         } else {
-                            func_0207df90((char*)var0->unknown_1e28_);
-                            func_02041754(var31);
-                            func_0207dfac((char*)var0->unknown_1e28_);
+                            VramState_Restore((char*)controller->encoder);
+                            DisableField16Bit002041754(entry);
+                            VramState_Save((char*)controller->encoder);
                         }
                         func_02042af4((int)arg0, var0->unknown_2cc_, var31->unknown_8_);
                     }

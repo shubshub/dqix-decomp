@@ -13,9 +13,9 @@ struct Struct_ov000_02170db0_2 {
     int unknown_94c_;
 };
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" struct Struct_ov000_02170db0_2* func_02053c6c(unsigned char* arg0);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+struct CombatantExt02170db0* GetFieldAt0x150_02053c6c(unsigned char* obj);
 
 struct Struct_0203c108_3 {
     #if defined(jpn)
@@ -83,9 +83,9 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
     arg0->unknown_50_.unknown_10_ = 1;
     if (func_ov000_021719f8((int*)arg0)) {
 #if defined(jpn)
-        char* var4 = (char*)func_020e0434(arg0->unknown_4_, func_ov000_02171a74(arg0));
-        if (var4 != NULL) {
-            func_0203c108(&arg0->unknown_50_, var4);
+        char* text = (char*)KeyTable_Get(obj->container, func_ov000_02171a74(obj));
+        if (text != NULL) {
+            SwapGlobalEntry0203c108(&obj->label, text);
         }
 #else
         char var5[0x80];
@@ -94,10 +94,10 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
             func_0203c108(&arg0->unknown_50_, var5);
         }
 #endif
-    } else if (var3 != NULL && (signed char)var3->unknown_94c_ != 5 && arg0->unknown_1c_ != 6) {
-        char* var6 = (char*)func_020e0434(arg0->unknown_4_, (short)((signed char)var3->unknown_94c_ + 0x753e));
-        if (var6 != NULL) {
-            func_0203c108(&arg0->unknown_50_, var6);
+    } else if (ext != NULL && (signed char)ext->field94c != 5 && obj->kind != 6) {
+        char* text = (char*)KeyTable_Get(obj->container, (short)((signed char)ext->field94c + 0x753e));
+        if (text != NULL) {
+            SwapGlobalEntry0203c108(&obj->label, text);
         } else {
             func_0203c108(&arg0->unknown_50_, data_ov000_02183ff4);
         }
@@ -128,8 +128,8 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
             func_0203c108(&arg0->unknown_50_, var9);
 #endif
         }
-    } else if (arg0->unknown_1c_ == 6) {
-        func_0203c108(&arg0->unknown_50_, (char*)func_020e0434(arg0->unknown_4_, 0x7531));
+    } else if (obj->kind == 6) {
+        SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(obj->container, 0x7531));
     } else {
         func_0203c108(&arg0->unknown_50_, data_ov000_02183ff4);
     }

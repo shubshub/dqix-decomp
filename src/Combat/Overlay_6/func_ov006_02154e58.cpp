@@ -110,12 +110,12 @@ struct Struct_0210a010_3 {
 };
 extern Struct_0210a010_3 data_0210a010;
 
-extern "C" void func_020a2010(void* arg0);
-extern "C" void func_0202e5c8(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e5d8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e0a4(void* arg0);
-extern "C" void func_020a27a0(void* arg0);
-extern "C" void func_ov006_021542f4(void* arg0);
+void InitCombatController020a2010(void* camera);
+void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+extern "C" void func_0202e5d8(void* camera, int x, int y, int z);
+extern "C" void func_0202e0a4(void* camera);
+void SetField0x238False_020a27a0(void* camera);
+void InitCombatEntry021542f4(void* camera);
 
 // USA: func_ov006_02154e58
 extern "C" ARM void func_ov006_02154e58(Struct_ov006_02154614* arg0) {
@@ -134,12 +134,12 @@ extern "C" ARM void func_ov006_02154e58(Struct_ov006_02154614* arg0) {
         BG0CNT = BG0CNT & ~3;
         BG1CNT = (BG1CNT & ~3) | 1;
         BG2CNT = (BG2CNT & ~3) | 2;
-        if (var0 != 0) {
-            func_020a2010(var0);
-            func_0202e5c8((unsigned char*)arg0->unknown_5cc_, 0, -0x1e8f, 0);
-            func_0202e5d8(arg0->unknown_5cc_, 0, 0x2bae, 0x9199);
-            func_0202e0a4(arg0->unknown_5cc_);
-            func_020a27a0(arg0->unknown_5cc_);
+        if (camera != 0) {
+            InitCombatController020a2010(camera);
+            Camera_SetTarget((unsigned char*)self->camera_, 0, -0x1e8f, 0);
+            func_0202e5d8(self->camera_, 0, 0x2bae, 0x9199);
+            func_0202e0a4(self->camera_);
+            SetField0x238False_020a27a0(self->camera_);
         }
         arg0->unknown_12bd_ = 0;
     } else {

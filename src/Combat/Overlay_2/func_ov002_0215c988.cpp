@@ -30,16 +30,16 @@ extern "C" char *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
 
 extern "C" char data_ov002_0216d270[];
 #if defined(jpn)
-struct Struct_02046574_2;
-struct Struct_0201099c_3;
-extern "C" int func_020d2ff0(const char *arg0);
-extern "C" void func_02046574(struct Struct_02046574_2 *arg0, int arg1, char *arg2);
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" void func_020465f0(unsigned char *arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465d8(unsigned char *arg0, int arg1, unsigned char arg2);
-extern "C" void func_020474a8(void *arg0, int arg1, const char *arg2, char *arg3);
-extern "C" void func_02042428(char *arg0, int arg1);
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
+struct Obj02046574;
+struct Container020e0310;
+int StringLength_020d2ff0(const char *s);
+void SetIndexedName02046574(struct Obj02046574 *obj, int index, char *str);
+int KeyTable_Get(struct Container020e0310 *c, int key);
+void SetByteInRange_020465f0(unsigned char *messages, int index, unsigned char digits);
+void SetByteAtIndex_020465d8(unsigned char *messages, int index, unsigned char value);
+extern "C" void func_020474a8(void *messages, int a, const char *format, char *output);
+extern "C" void func_02042428(char *dst, int a);
+extern "C" void *memset(void *dst, int value, unsigned int length);
 #endif
 
 // USA: func_ov002_0215c988
@@ -53,32 +53,32 @@ extern "C" ARM void func_ov002_0215c988(char *arg0, char *arg1, int arg2) {
     if (arg2) {
         func_02041c08(arg1, var3, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var3);
-    GameState *var4 = GameState::GetInstance();
-    char *var5    = func_020421a0();
-    char *var6     = arg0 + 0xe20;
-    int var7      = *(int *) (var6 + 0x68);
-    int var8     = *(int *) (var6 + 0x58);
-    func_0205c508((struct Struct_0205c508 *) (var6 + 0x54), &var1, &var2);
-    int var9 = *(signed char *) (arg0 + 0x1a00 + 0xe8);
-    int var10 = (var9 >= 0 && var9 <= 3) ? 1 : 0;
-    if (var10) {
-        var7              = 0;
-        var8             = 1;
-        unsigned char *var11 = (unsigned char *) func_02053c6c((unsigned char *) func_0200ff1c(var4, var9));
-        int var12             = func_ov002_02157108(arg0, var9);
-        int var13             = 0;
-        for (int var14 = 0; var14 < var12; var14++) {
-            func_02046380(var5);
-            func_020465c0((Struct_020465c0 *) var5, 0, var13);
-            char *var15 = func_020dedd0((struct Struct_0201099c_10 *) (arg0 + 0x750), *(short *) (var11 + var14 * 2 + 0x454));
-            if (var15 != 0) {
-                int var16 = func_020d2ff0(arg1);
-                func_02046574((struct Struct_02046574_2 *) var5, 0, *(char **) (var15 + 4));
-                func_020474a8(var5, 0xa, (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x480),
-                              arg1 + var16);
-                if (var14 != var12 - 1) {
-                    func_02042058(arg1, *(char **) (arg0 + 0x1000 + 0xaa4));
+    AppendCursorTag_02041ea4(dst, cursor);
+    GameState *gs = GameState::GetInstance();
+    char *msgs    = GetGlobalField0x1c020421a0();
+    char *obj     = self + 0xe20;
+    int page      = *(int *) (obj + 0x68);
+    int pages     = *(int *) (obj + 0x58);
+    ComputeProductSums0205c508((struct UnkStruct0205c508 *) (obj + 0x54), &first, &last);
+    int id = *(signed char *) (self + 0x1a00 + 0xe8);
+    int ok = (id >= 0 && id <= 3) ? 1 : 0;
+    if (ok) {
+        page              = 0;
+        pages             = 1;
+        unsigned char *pm = (unsigned char *) GetFieldAt0x150_02053c6c((unsigned char *) GetCombatantWithFlag0x100_0200ff1c(gs, id));
+        int n             = GetCountByType02157108(self, id);
+        int k             = 0;
+        for (int i = 0; i < n; i++) {
+            func_02046380(msgs);
+            StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, k);
+            char *e = FindElementByKey020dedd0((struct Container020dedd0 *) (self + 0x750), *(short *) (pm + i * 2 + 0x454));
+            if (e != 0) {
+                int len = StringLength_020d2ff0(dst);
+                SetIndexedName02046574((struct Obj02046574 *) msgs, 0, *(char **) (e + 4));
+                func_020474a8(msgs, 0xa, (const char *) KeyTable_Get((struct Container020e0310 *) (self + 8), 0x480),
+                              dst + len);
+                if (i != n - 1) {
+                    AppendString02042058(dst, *(char **) (self + 0x1000 + 0xaa4));
                 }
             }
             var13++;
@@ -98,38 +98,38 @@ extern "C" ARM void func_ov002_0215c988(char *arg0, char *arg1, int arg2) {
         if (var8 == 0) {
             var8 = 1;
         }
-        int var19 = 0;
-        for (int var20 = var1; var20 < var2; var20++) {
-            func_02046380(var5);
-            func_020465c0((Struct_020465c0 *) var5, 0, var19);
-            char *var21 = func_020dedd0((struct Struct_0201099c_10 *) (arg0 + 0x750), *(short *) (var17 + var20 * 2 + 0xc));
-            if (var21 != 0) {
-                int var22 = func_020d2ff0(arg1);
-                func_02046574((struct Struct_02046574_2 *) var5, 0, *(char **) (var21 + 4));
-                func_020474a8(var5, 0xa, (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x480),
-                              arg1 + var22);
-                memset(var0, 0, 0x40);
-                sprintf(var0, (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x481),
-                        func_020a0b3c((Struct_0207cf30_3 *) var17, *(short *) (var21 + 0x18)));
-                func_02042058(arg1, var0);
-                if (var20 != var2 - 1) {
-                    func_02042058(arg1, *(char **) (arg0 + 0x1000 + 0xaa4));
+        int k = 0;
+        for (int i = first; i < last; i++) {
+            func_02046380(msgs);
+            StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, k);
+            char *e = FindElementByKey020dedd0((struct Container020dedd0 *) (self + 0x750), *(short *) (party + i * 2 + 0xc));
+            if (e != 0) {
+                int len = StringLength_020d2ff0(dst);
+                SetIndexedName02046574((struct Obj02046574 *) msgs, 0, *(char **) (e + 4));
+                func_020474a8(msgs, 0xa, (const char *) KeyTable_Get((struct Container020e0310 *) (self + 8), 0x480),
+                              dst + len);
+                memset(numBuf, 0, 0x40);
+                sprintf(numBuf, (const char *) KeyTable_Get((struct Container020e0310 *) (self + 8), 0x481),
+                        LookupValueByKey020a0b3c((KeyMap020a0b3c *) party, *(short *) (e + 0x18)));
+                AppendString02042058(dst, numBuf);
+                if (i != last - 1) {
+                    AppendString02042058(dst, *(char **) (self + 0x1000 + 0xaa4));
                 }
             }
             var19++;
         }
     }
-    int var23 = 0;
-    if (var8 > 1) {
-        func_020465c0((Struct_020465c0 *) var5, 0, var7 + 1);
-        func_020465c0((Struct_020465c0 *) var5, 1, var8);
-        func_020465f0((unsigned char *) var5, 0, 2);
-        func_020465f0((unsigned char *) var5, 1, 2);
-        func_020465d8((unsigned char *) var5, 0, 1);
-        func_020465d8((unsigned char *) var5, 1, 0);
-        func_02042428(arg1, 8);
-        func_02042058(arg1, (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x47f));
-        var23 = 1;
+    int on = 0;
+    if (pages > 1) {
+        StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, page + 1);
+        StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 1, pages);
+        SetByteInRange_020465f0((unsigned char *) msgs, 0, 2);
+        SetByteInRange_020465f0((unsigned char *) msgs, 1, 2);
+        SetByteAtIndex_020465d8((unsigned char *) msgs, 0, 1);
+        SetByteAtIndex_020465d8((unsigned char *) msgs, 1, 0);
+        func_02042428(dst, 8);
+        AppendString02042058(dst, (const char *) KeyTable_Get((struct Container020e0310 *) (self + 8), 0x47f));
+        on = 1;
     }
     unsigned char *var24 = (unsigned char *) func_0205d81c((struct Struct_0205d81c *) (arg0 + 0xe20), 5);
     if (var24 != 0) {

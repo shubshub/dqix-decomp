@@ -10,22 +10,22 @@
 #define LOW_REGION(j, u) (u)
 #endif
 
-extern "C" void func_02080bac(void* arg0, int arg1);
-extern "C" void func_0208065c(void* arg0, int arg1);
-struct Struct_02080f8c;
-extern "C" void func_02080f8c(struct Struct_02080f8c* arg0, int arg1, int arg2);
-struct Struct_02080fa8;
-extern "C" void func_02080fa8(struct Struct_02080fa8* arg0, int arg1, int arg2);
-extern "C" void func_020806b0(void* arg0, int arg1);
-extern "C" void func_02080b2c(void* arg0, int arg1);
-extern "C" void func_02081130(void* arg0, int arg1, int arg2);
-extern "C" int func_020813ec(void* arg0, int arg1);
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-struct Struct_ov014_02186bc8_3;
-extern "C" short func_ov014_021874f8(struct Struct_ov014_02186bc8_3* arg0);
-struct Struct_ov014_021872dc;
-extern "C" short func_ov014_02187520(struct Struct_ov014_021872dc* arg0);
+void ClearSublistEntriesFlag1_02080bac(void* obj, int id);
+void ClearSublistEntriesFlag2_0208065c(void* obj, int id);
+struct Container02080f8c;
+void SetEntryFirstField02080f8c(struct Container02080f8c* obj, int id, int value);
+struct Container02080fa8;
+void SetEntryFirstField02080fa8(struct Container02080fa8* obj, int id, int value);
+void AddSublistEntryFlag2_020806b0(void* obj, int id);
+void SetEntryFlagById02080b2c(void* obj, int id);
+void SetOrClearEntryFlag0x102081130(void* obj, int id, int flag);
+extern "C" int func_020813ec(void* obj, int id);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+struct ListHeadStruct021874f8;
+short CountLinkedListNodes_021874f8(struct ListHeadStruct021874f8* obj);
+struct S02187520;
+short FindIndexDiv16_02187520(struct S02187520* s);
 
 struct Struct_ov014_021885bc {
     struct Struct_ov014_021885bc* unknown_0_;
@@ -44,15 +44,15 @@ extern "C" ARM void func_ov014_021885bc(void* arg0) {
     func_02080bac(var0, 5);
     func_0208065c(var0, 5);
 
-    struct Struct_ov014_021885bc* var2 = *(struct Struct_ov014_021885bc**)((char*)arg0 + 0xbc);
-    short var3 = 0x1b;
-    short var4 = 0;
-    for (; var4 < 0x10; var3++, var4++) {
-        if (var2 != NULL) {
-            int var5 = func_020e0434((struct Struct_0201099c_3*)((char*)arg0 + 0xe0), 0x15);
-            func_02080f8c((struct Struct_02080f8c*)var0, var3, var5);
-            if (var2->unknown_13_1_) {
-                func_02080f8c((struct Struct_02080f8c*)*(void**)((char*)arg0 + 0xc0), var3, var2->unknown_8_);
+    struct SubEntry021885bc* node = *(struct SubEntry021885bc**)((char*)self + 0xbc);
+    short id = 0x1b;
+    short count = 0;
+    for (; count < 0x10; id++, count++) {
+        if (node != NULL) {
+            int v = KeyTable_Get((struct Container020e0310*)((char*)self + 0xe0), 0x15);
+            SetEntryFirstField02080f8c((struct Container02080f8c*)list, id, v);
+            if (node->flagBit1) {
+                SetEntryFirstField02080f8c((struct Container02080f8c*)*(void**)((char*)self + 0xc0), id, node->field8);
             }
             var2 = var2->unknown_0_;
         } else {

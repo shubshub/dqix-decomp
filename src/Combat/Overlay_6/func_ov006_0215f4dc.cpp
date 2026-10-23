@@ -43,8 +43,8 @@ extern "C" void func_020806c4(void*, int);
 extern "C" void func_02080b40(void*, int);
 extern "C" void* func_020e5294(void*, int);
 #if defined(jpn)
-struct Struct_0201099c_3;
-extern "C" const char* func_020e0434(Struct_0201099c_3*, int);
+struct Container020e0310;
+const char* KeyTable_Get(Container020e0310*, int);
 #endif
 extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
 extern "C" void func_02080fa8(Struct_02080fa8*, int, int);
@@ -86,7 +86,7 @@ extern "C" ARM void func_ov006_0215f4dc(Struct_ov006_02157a60* arg0) {
             func_02080b40(var4, var3);
             func_02080b40(var4, var7);
 #if defined(jpn)
-            func_02080f8c((Struct_02080f8c*)var4, var6, (int)func_020e0434((Struct_0201099c_3*)arg0->unknown_170_, var5[var8]));
+            SetEntryFirstField02080f8c((Container02080f8c*)menu, nameEntry, (int)KeyTable_Get((Container020e0310*)self->itemNames_, items[position]));
 #else
             const char** var10 = (const char**)func_020e5294(arg0->unknown_170_, var5[var8]);
             if (var10 != NULL) {

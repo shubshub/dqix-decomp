@@ -32,8 +32,8 @@ enum { Enum_ov003_0216982c_409 = 0x199 };
 #if defined(jpn)
 extern "C" void func_02042428(void*, int);
 extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
+struct Container020e0310;
+int KeyTable_Get(Container020e0310*, int);
 #endif
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
@@ -77,9 +77,9 @@ extern "C" ARM void func_ov003_0216982c(unsigned char* arg0) {
     memset(*(void**)(arg0 + 0x7c), 0, Enum_ov003_0216982c_2400);
 
 #if defined(jpn)
-    func_02042428(*(void**)(arg0 + 0x7c), 8);
-    int var3 = func_020e0434((Struct_0201099c_3*)(arg0 + 0x64), 0x65);
-    func_02042058((char*)*(void**)(arg0 + 0x7c), (const char*)var3);
+    func_02042428(*(void**)(self + 0x7c), 8);
+    int msg = KeyTable_Get((Container020e0310*)(self + 0x64), 0x65);
+    AppendString02042058((char*)*(void**)(self + 0x7c), (const char*)msg);
 #else
     int var4 = func_020e51cc(0x3f1);
     func_02042058((char*)*(void**)(arg0 + 0x7c), (const char*)var4);

@@ -43,20 +43,20 @@ struct Struct_0204cd60_2 {
     char unknown_6_[2];
 };
 
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" int func_020424e4(int arg0, int arg1);
-extern "C" Struct_0204cd60_2* func_020425b4(int arg0, int arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" void func_0204cc68(Struct_0204cd60* arg0, int arg1, short arg2, short arg3, short arg4, short arg5);
-extern "C" void func_0204f914(Struct_0204cd60* arg0, int arg1, short arg2, short arg3, short arg4, short arg5);
-extern "C" void func_0204ea5c(Struct_0204cd60* arg0);
-extern "C" void func_0204ecb4(Struct_0204cd60* arg0, int arg1, int arg2, int arg3, int arg4, signed char* arg5);
-extern "C" int func_0204fc40(void* arg0, char** arg1, char* arg2, short* arg3, int arg4);
-extern "C" void func_0204f3bc(Struct_0204cd60* arg0, int arg1);
-extern "C" void func_0204df9c(Struct_0204cd60* arg0, Struct_0204cd60_2* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0204fae8(Struct_0204cd60* arg0);
-extern "C" void func_0204fa0c(Struct_0204cd60* arg0, short arg1, short arg2);
+extern "C" void* __clear(void* dst, int count);
+extern "C" int func_020420e8(char* str, int id);
+int Font_FindCharacterIndex(int key, int tableIdx);
+Glyph0204cd60* Font_GetCharacter(int idx, int tableIdx);
+int LookupKeyValue020425e4(int a, int b, int tableIdx);
+extern "C" void func_0204cc68(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
+extern "C" void func_0204f914(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
+extern "C" void func_0204ea5c(Wnd0204cd60* wnd);
+extern "C" void func_0204ecb4(Wnd0204cd60* wnd, int a, int b, int w, int h, signed char* margins);
+extern "C" int func_0204fc40(void* unused0, char** cursor, char* tag, short* out, int max);
+extern "C" void func_0204f3bc(Wnd0204cd60* wnd, int idx);
+extern "C" void func_0204df9c(Wnd0204cd60* wnd, Glyph0204cd60* glyph, int x, int y, int color, int font);
+extern "C" void func_0204fae8(Wnd0204cd60* wnd);
+extern "C" void func_0204fa0c(Wnd0204cd60* wnd, short x, short y);
 
 extern const unsigned char data_020e7bdc[];
 extern char data_020f0248[];
@@ -408,19 +408,19 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
                 continue;
             }
         }
-        var50 = data_020e7bdc[arg3] + 1;
-        int var63 = func_020424e4((int)var52, arg3);
-        if (var63 >= 0) {
-            var12 = var63 & 0xff;
-            var10 = func_020425b4(var63, arg3);
-            var4 += func_020425e4(var11, var12, arg3);
-            func_0204df9c(arg0, var10, var4, var5, var38, arg3);
-            var11 = var12;
-            var50 = (unsigned char)(var10->unknown_4_ + 1);
-            var52 += var10->unknown_5_0_;
+        adv = data_020e7bdc[font] + 1;
+        int idx = Font_FindCharacterIndex((int)cursor, font);
+        if (idx >= 0) {
+            code = idx & 0xff;
+            glyph = Font_GetCharacter(idx, font);
+            x += LookupKeyValue020425e4(prev, code, font);
+            func_0204df9c(wnd, glyph, x, y, colorIdx, font);
+            prev = code;
+            adv = (unsigned char)(glyph->width + 1);
+            cursor += glyph->skip;
         } else {
-            if (var51 != ' ') {
-                func_0204df9c(arg0, func_020425b4(0, arg3), var4, var5, var38, arg3);
+            if (ch != ' ') {
+                func_0204df9c(wnd, Font_GetCharacter(0, font), x, y, colorIdx, font);
             }
             var52++;
         }

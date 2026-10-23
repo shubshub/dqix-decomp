@@ -112,8 +112,8 @@ struct Struct_02038598_4;
 extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
 extern "C" void** func_020e5294(void* arg0, int arg1);
 #if defined(jpn)
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
+struct Container020e0310;
+int KeyTable_Get(Container020e0310*, int);
 #endif
 extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" void func_020e4864(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
@@ -314,8 +314,8 @@ extern "C" ARM void func_ov006_0215e69c(Struct_ov006_0215e69c_3* arg0) {
         int var8;
         arg0->unknown_3b4_ = 1;
 #if defined(jpn)
-        func_02080f8c((Struct_02080f8c*)arg0->unknown_14_, 0x7f,
-            func_020e0434((Struct_0201099c_3*)arg0->unknown_164_, arg0->unknown_1ec_));
+        SetEntryFirstField02080f8c((Container02080f8c*)self->elements, 0x7f,
+            KeyTable_Get((Container020e0310*)self->lookup, self->lookupId));
 #else
         var7 = func_020e5294(arg0->unknown_170_, arg0->unknown_1ec_);
         if (var7 != 0) {
@@ -391,8 +391,8 @@ extern "C" ARM void func_ov006_0215e69c(Struct_ov006_0215e69c_3* arg0) {
         arg0->unknown_389_ = var13;
         arg0->unknown_3b4_ = 1;
 #if defined(jpn)
-        func_02080f8c((Struct_02080f8c*)arg0->unknown_14_, 0x7f,
-            func_020e0434((Struct_0201099c_3*)arg0->unknown_164_, arg0->unknown_1ec_));
+        SetEntryFirstField02080f8c((Container02080f8c*)self->elements, 0x7f,
+            KeyTable_Get((Container020e0310*)self->lookup, self->lookupId));
 #else
         var11 = func_020e5294(arg0->unknown_170_, arg0->unknown_1ec_);
         if (var11 != 0) {

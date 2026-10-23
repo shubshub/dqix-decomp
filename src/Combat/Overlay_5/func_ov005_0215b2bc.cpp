@@ -22,7 +22,7 @@ extern "C" void func_ov005_02157174(Struct_ov005_02156ecc*, Struct_ov005_02156ec
 
 struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-extern "C" int func_0205bf58(void*, int);
+extern "C" int GridCursor_Update(void*, int);
 int CheckFlag30Or401_02157190(void*);
 char* GetField1c_021a193c(int*);
 void DispatchByIdxAndCond021551fc(char*, int, int);
@@ -113,7 +113,7 @@ extern "C" ARM void func_ov005_0215b2bc(Struct_ov000_0217ab8c* arg0) {
         if (hasCoords == 0) {
             found = 1;
             unsigned int tick = GameState::GetInstance()->GetTickCount();
-            func_0205bf58(self->scale_, tick ? tick : found);
+            GridCursor_Update(self->scale_, tick ? tick : found);
             sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->scale_[0]);
             if (CheckFlag30Or401_02157190(self)) flag2 = 1;
         }

@@ -35,16 +35,16 @@ extern "C" void func_02020e58(void* arg0, int arg1);
 extern "C" void func_02020cb8(void* arg0, int* arg1);
 extern "C" void func_02020e58(void* arg0, int* arg1);
 #endif
-extern "C" void func_02026428(void* arg0, const char* arg1);
-extern "C" void func_02026470(void* arg0, int arg1);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_0205a444(char* arg0);
-struct Struct_02020aec;
-extern "C" int func_0205a498(void* arg0, struct Struct_02020aec* arg1, int arg2, void* arg3);
-extern "C" void func_0205af38(int arg0, char* arg1, int arg2, int arg3);
-extern "C" void* func_0203bd14();
-extern "C" int func_020233b8(void* arg0, int arg1);
+void CopyStringOrDefault02026428(void* obj, const char* name);
+void SetEventStringAndAccumulateLength02026470(void* obj, int flag);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198* p);
+void SpriteContext_Init(char* obj);
+struct Rec020467f0;
+int ProcessRecords0205a498(void* a, struct Rec020467f0* b, int flag, void* d);
+void SetBitfieldStoreBytes0205af38(int a, char* obj, int c, int d);
+void* GetGlobalPtr02105244_0203bd14();
+int InitAndCopyBuffer020233b8(void* arg0, int flag1);
 extern "C" void* func_0203be4c(void);
 extern "C" void func_02020aa0(void* arg0);
 #if defined(jpn)
@@ -178,24 +178,24 @@ extern "C" ARM void func_02021b84(Struct_02020554* arg0) {
         arg0->unknown_bec_ = 0;
         arg0->unknown_bee_ = 0;
 #endif
-        func_02026428(arg0, var9->activeMapNameNoLevel);
-        func_02026470(arg0, var9->activeMapLevel);
-        strcpy((char*)arg0->unknown_a55_, var9->activeMapNameNoLevel);
-        arg0->unknown_a95_ = var9->activeMapLevel;
-        var1 = 0;
-        var2 = 0;
-        var4->GetLoadedFileByID(arg0->unknown_a04_, &var1, &var2);
-        for (int var12 = 0; var12 < 0x1c; var12++) {
-            func_0205a198(&arg0->unknown_e8_[var12]);
+        CopyStringOrDefault02026428(self, grotto->activeMapNameNoLevel);
+        SetEventStringAndAccumulateLength02026470(self, grotto->activeMapLevel);
+        strcpy((char*)self->bytesa55, grotto->activeMapNameNoLevel);
+        self->fielda95 = grotto->activeMapLevel;
+        fileData = 0;
+        fileLength = 0;
+        loader->GetLoadedFileByID(self->taska04, &fileData, &fileLength);
+        for (int i = 0; i < 0x1c; i++) {
+            Sprite_Init(&self->records[i]);
         }
-        func_0205a444((char*)&arg0->unknown_94_);
-        arg0->unknown_94_.unknown_50_ = 1;
-        arg0->unknown_94_.unknown_40_ = arg0->unknown_e8_;
-        arg0->unknown_94_.unknown_4c_ = 0x18;
-        func_0205a498((char*)&arg0->unknown_94_, (struct Struct_02020aec*)var1, var2, var8);
-        func_0205af38((int)((char*)&arg0->unknown_94_), (char*)&arg0->unknown_e8_[9], 1, 1);
-        func_0205af38((int)((char*)&arg0->unknown_94_), (char*)&arg0->unknown_e8_[11], 1, 1);
-        *(int*)((char*)func_0203bd14() +
+        SpriteContext_Init((char*)&self->entryList);
+        self->entryList.active = 1;
+        self->entryList.records = self->records;
+        self->entryList.count = 0x18;
+        ProcessRecords0205a498((char*)&self->entryList, (struct Rec020467f0*)fileData, fileLength, alloc);
+        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
+        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
+        *(int*)((char*)GetGlobalPtr02105244_0203bd14() +
 #if defined(jpn)
                 0x608
 #else

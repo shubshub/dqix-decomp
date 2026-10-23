@@ -32,17 +32,17 @@ extern "C" void func_0201206c(void*, int);
 extern "C" void func_02053f7c(Struct_02053f7c_3*, unsigned short, int);
 extern "C" void* func_0205ec34(void);
 extern "C" void func_0206dfe8(void*, int, int);
-extern "C" void func_0206e70c(char*);
-extern "C" void func_0206df14(unsigned char*);
-extern "C" float func_020103e8(GameState*);
-extern "C" void func_ov017_0219bcac(unsigned char);
-extern "C" unsigned char* func_0200fd0c(GameState*);
-extern "C" void* func_02094d6c();
-extern "C" void* func_020965f8();
-extern "C" void* func_020de824(void*);
-extern "C" void func_020de848(void*);
-extern "C" void func_020de1d4(Struct_02083508_2*);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
+void CopyRegionsAndClearField0206e70c(char*);
+void ApplySlotBytesToBattleStruct_0206df14(unsigned char*);
+float GetActiveBitIndex_020103e8(GameState*);
+void InitFieldsFromCombatant_0219bcac(unsigned char);
+unsigned char* GetField0x3f8Address_0200fd0c(GameState*);
+void* GetGlobal02109418_02094d6c();
+void* CallFunc0205ec34_020965f8();
+void* ZeroInitReturn020de824(void*);
+void ItemTable_Init(void*);
+void InitStruct020de1d4(StructDE1D4*);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
 #if defined(jpn)
 extern "C" void* func_020e08f0(int arg0, unsigned int* arg1);
 #endif
@@ -252,9 +252,9 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
         func_02094d6c();
         func_020965f8();
 
-        func_020de824(var0);
-        func_020de848(var0);
-        func_020de1d4(&var1);
+        ZeroInitReturn020de824(list);
+        ItemTable_Init(list);
+        InitStruct020de1d4(&entry);
         BackgroundLoader::AddLockGlobal();
 #if defined(jpn)
         void* var23 = func_020e08f0(8, &var4);

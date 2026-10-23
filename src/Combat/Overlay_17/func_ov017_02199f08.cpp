@@ -22,10 +22,10 @@ struct Struct_ov017_02199684 { unsigned char unknown_0_[0x14]; int unknown_14_; 
 extern "C" void func_ov017_02199684(Struct_ov017_02199684* arg0, int arg1, int arg2);
 extern "C" void func_ov017_021996bc(Struct_ov017_02199684* arg0, int arg1);
 
-struct Struct_0204bc74;
-extern "C" void func_0204bc74(Struct_0204bc74* arg0, unsigned short arg1, int arg2, int arg3, int arg4, int arg5, unsigned short arg6);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void* arg1);
+struct TileMap0204bc74;
+extern "C" void Background_FillRect(TileMap0204bc74* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8* obj, void* buf);
 
 struct Struct_ov017_02199780 {
     unsigned short unknown_0_0_ : 2;
@@ -116,14 +116,14 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
 
     func_ov017_021999fc(arg0);
 
-    Struct_ov017_02199684* var12;
-    int var13;
-    if (g_keyManager.TestKeysHeld(2) != 0 && var3 != -1) {
-        func_ov017_02199684((Struct_ov017_02199684*)(arg0 + Enum_ov017_02199f08_180 + Enum_ov017_02199f08_15360), 2, 0x800);
-        for (var13 = 0; var13 < 2; var13++) {
-            var12 = (Struct_ov017_02199684*)(arg0 + Enum_ov017_02199f08_180 + Enum_ov017_02199f08_15360) + var13;
-            func_0204bc74((Struct_0204bc74*)var12, 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)var12, 0);
+    Entry_02199684* e;
+    int i;
+    if (g_keyManager.TestKeysHeld(2) != 0 && mode != -1) {
+        FillEntriesEncoded_02199684((Entry_02199684*)(self + regionalOffset3 + regionalOffset4), 2, 0x800);
+        for (i = 0; i < 2; i++) {
+            e = (Entry_02199684*)(self + regionalOffset3 + regionalOffset4) + i;
+            Background_FillRect((TileMap0204bc74*)e, 0, 0, 0, 0x20, 0x19, 0);
+            Background_UploadMap((List0204b0e8*)e, 0);
         }
         func_ov017_021996bc((Struct_ov017_02199684*)(arg0 + Enum_ov017_02199f08_180 + Enum_ov017_02199f08_15360), 2);
     }

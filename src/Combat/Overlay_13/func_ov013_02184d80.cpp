@@ -10,31 +10,31 @@ extern char data_ov013_02188d20[];
 #include "NitroSDK/ColorEffects.h"
 #include "NitroSDK/Graphics.h"
 
-extern "C" void func_020dfec0(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void* func_020421a0(void);
-extern "C" void func_0205cef8(void* arg0);
-extern "C" void func_0205cf04(void* arg0);
-extern "C" void func_ov013_02185310(unsigned char* arg0);
-extern "C" void func_ov013_02185cc0(void* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(Struct_0204b12c* arg0, SafeAllocator* arg1);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5* arg0, int arg1, int arg2);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, unsigned int arg3);
-extern "C" void func_0204bc74(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void* arg1);
-struct Struct_0204c7a8;
-extern "C" void func_0204c7a8(Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
+extern "C" void KeyTable_Load(void* texts, SafeAllocator* allocator, void* file, unsigned int size);
+void* GetGlobalField0x1c020421a0(void);
+void SetChannelAFlag0205cef8(void* window);
+void SetChannelBFlag0205cf04(void* window);
+void InitTag02185310(unsigned char* self);
+extern "C" void func_ov013_02185cc0(void* self);
+void Background_SetMapSize(unsigned char* graphics, int value);
+extern "C" void Background_SetPriority(void* graphics, int priority);
+struct AllocTarget0204b12c;
+void Background_AllocateMap(AllocTarget0204b12c* graphics, SafeAllocator* allocator);
+struct Obj0204b5e8;
+void Background_SetScroll(Obj0204b5e8* graphics, int a, int b);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900* pac);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
+extern "C" void Background_LoadFile(void* graphics, void* file, SafeAllocator* allocator, unsigned int size);
+extern "C" void Background_FillRect(void* graphics, int a, int b, int c, int d, int e, int f);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8* graphics, void* characters);
+struct Obj0204c7a8;
+void WindowPane_AllocateBuffer(Obj0204c7a8* canvas, SafeAllocator* allocator, int pixels, unsigned int size);
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
-extern "C" void func_0205cf78(Struct_0205cf78* arg0, Struct_0205cf78_2* arg1, unsigned char arg2);
+struct Elem_0205cf78;
+void Window_SetPanes(Struct_0205cf78* window, Elem_0205cf78* canvases, unsigned char count);
 
 extern char data_ov013_02187e00[];
 extern char data_ov013_02187e19[];
@@ -117,14 +117,14 @@ extern "C" ARM void func_ov013_02184d80(Struct_ov013_02184d80_4* arg0) {
         {
             if (var0->GetTaskStatus(arg0->unknown_650_))
             {
-                void* var1;
-                unsigned int var2;
-                var0->GetLoadedFileByID(arg0->unknown_650_, &var1, &var2);
-                arg0->unknown_60c_.Reset();
-                func_020dfec0(arg0->unknown_620_, &arg0->unknown_60c_, var1, var2);
-                var0->RemoveTask(arg0->unknown_650_);
-                arg0->unknown_650_ = -1;
-                arg0->unknown_63e_++;
+                void* file;
+                unsigned int size;
+                loader->GetLoadedFileByID(self->task_, &file, &size);
+                self->textAllocator_.Reset();
+                KeyTable_Load(self->texts_, &self->textAllocator_, file, size);
+                loader->RemoveTask(self->task_);
+                self->task_ = -1;
+                self->step_++;
             }
         }
         else if (arg0->unknown_63e_ == 2)
@@ -167,30 +167,30 @@ extern "C" ARM void func_ov013_02184d80(Struct_ov013_02184d80_4* arg0) {
                 + 0x5c);
 #endif
 #if defined(jpn)
-                func_0204b11c((unsigned char*)&arg0->unknown_f4_[0], 0);
-                arg0->unknown_f4_[0].unknown_1c_0_ = 0;
-                arg0->unknown_f4_[0].unknown_1c_4_ = 1;
-                func_0204b5b4(&arg0->unknown_f4_[0], 1);
-                func_0204b12c((Struct_0204b12c*)&arg0->unknown_f4_[0], &arg0->unknown_0_);
-                func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_f4_[0], 0, 0);
+                Background_SetMapSize((unsigned char*)&self->backgrounds_[0], 0);
+                self->backgrounds_[0].unk_1c_0_ = 0;
+                self->backgrounds_[0].unk_1c_4_ = 1;
+                Background_SetPriority(&self->backgrounds_[0], 1);
+                Background_AllocateMap((AllocTarget0204b12c*)&self->backgrounds_[0], &self->allocator_);
+                Background_SetScroll((Obj0204b5e8*)&self->backgrounds_[0], 0, 0);
                 BG1CNT = (BG1CNT & (3 | 0x40)) | (0x1d << 8);
-                func_0204b11c((unsigned char*)&arg0->unknown_f4_[1], 0);
-                arg0->unknown_f4_[1].unknown_1c_0_ = 0;
-                arg0->unknown_f4_[1].unknown_1c_4_ = 2;
-                func_0204b5b4(&arg0->unknown_f4_[1], 0);
-                func_0204b12c((Struct_0204b12c*)&arg0->unknown_f4_[1], &arg0->unknown_0_);
-                func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_f4_[1], 0, 0);
+                Background_SetMapSize((unsigned char*)&self->backgrounds_[1], 0);
+                self->backgrounds_[1].unk_1c_0_ = 0;
+                self->backgrounds_[1].unk_1c_4_ = 2;
+                Background_SetPriority(&self->backgrounds_[1], 0);
+                Background_AllocateMap((AllocTarget0204b12c*)&self->backgrounds_[1], &self->allocator_);
+                Background_SetScroll((Obj0204b5e8*)&self->backgrounds_[1], 0, 0);
                 BG2CNT = (BG2CNT & (3 | 0x40)) | (0x1e << 8);
 #else
                 Struct_ov013_02184d80* var4 = arg0->unknown_f4_;
                 for (int var5 = 0; var5 < 2; var4++, var5++)
                 {
-                    func_0204b11c((unsigned char*)var4, 0);
-                    var4->unknown_1c_0_ = 0;
-                    var4->unknown_1c_4_ = data_ov013_02187d8a[var5];
-                    func_0204b5b4(var4, data_ov013_02187d88[var5]);
-                    func_0204b12c((Struct_0204b12c*)var4, &arg0->unknown_0_);
-                    func_0204b5e8((Struct_02020cb8_5*)var4, 0, 0);
+                    Background_SetMapSize((unsigned char*)background, 0);
+                    background->unk_1c_0_ = 0;
+                    background->unk_1c_4_ = data_ov013_02187d8a[i];
+                    Background_SetPriority(background, data_ov013_02187d88[i]);
+                    Background_AllocateMap((AllocTarget0204b12c*)background, &self->allocator_);
+                    Background_SetScroll((Obj0204b5e8*)background, 0, 0);
                 }
                 BG1CNT = (BG1CNT & (3 | 0x40)) | (0x1d << 8);
                 BG2CNT = (BG2CNT & (3 | 0x40)) | (0x1e << 8);
@@ -204,37 +204,37 @@ extern "C" ARM void func_ov013_02184d80(Struct_ov013_02184d80_4* arg0) {
         {
             if (var0->GetTaskStatus(arg0->unknown_650_))
             {
-                void* var6 = NULL;
-                void* var7;
-                unsigned int var8;
-                void* var9[2];
-                unsigned int var10[2];
-                var0->GetLoadedFileByID(arg0->unknown_650_, &var7, &var8);
-                int var11 = func_02046900((Struct_02020cb8_4*)var7);
-                for (int var12 = 0; var12 < var11; var12++)
+                void* name = NULL;
+                void* file;
+                unsigned int size;
+                void* files[2];
+                unsigned int sizes[2];
+                loader->GetLoadedFileByID(self->task_, &file, &size);
+                int numFiles = Pac_CountFiles((ActiveEntry02046900*)file);
+                for (int i = 0; i < numFiles; i++)
                 {
-                    var9[var12] = func_020467f0((Struct_02020aec*)var7, var12, &var6, (int*)&var10[var12]);
+                    files[i] = Pac_GetFile((Rec020467f0*)file, i, &name, (int*)&sizes[i]);
                 }
                 for (int var13 = 0; var13 < var11; var13++)
                 {
-                    if (var9[var13] != NULL)
-                        func_0204b174(&arg0->unknown_f4_[1], var9[var13], &arg0->unknown_0_, var10[var13]);
+                    if (files[i] != NULL)
+                        Background_LoadFile(&self->backgrounds_[1], files[i], &self->allocator_, sizes[i]);
                 }
-                var0->RemoveTask(arg0->unknown_650_);
-                arg0->unknown_650_ = -1;
-                func_0204bc74(&arg0->unknown_f4_[0], 0, 0, 0, 0x20, 0x19, 0);
-                func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_f4_[0], NULL);
-                func_0204bc74(&arg0->unknown_f4_[1], 0, 0, 0, 0x20, 0x19, 0);
-                func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_f4_[1], NULL);
-                arg0->unknown_654_ = arg0->unknown_0_.Allocate(0x3c00);
-                for (int var14 = 0; var14 < 3; var14++)
+                loader->RemoveTask(self->task_);
+                self->task_ = -1;
+                Background_FillRect(&self->backgrounds_[0], 0, 0, 0, 0x20, 0x19, 0);
+                Background_UploadMap((List0204b0e8*)&self->backgrounds_[0], NULL);
+                Background_FillRect(&self->backgrounds_[1], 0, 0, 0, 0x20, 0x19, 0);
+                Background_UploadMap((List0204b0e8*)&self->backgrounds_[1], NULL);
+                self->canvasPixels_ = self->allocator_.Allocate(0x3c00);
+                for (int i = 0; i < 3; i++)
                 {
-                    func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_134_[var14], &arg0->unknown_0_, (int)arg0->unknown_654_, 0x380);
-                    arg0->unknown_134_[var14].unknown_4_ = &arg0->unknown_f4_[1];
+                    WindowPane_AllocateBuffer((Obj0204c7a8*)&self->canvases_[i], &self->allocator_, (int)self->canvasPixels_, 0x380);
+                    self->canvases_[i].background_ = &self->backgrounds_[1];
                 }
-                arg0->unknown_38_.unknown_98_ = &arg0->unknown_f4_[0];
-                arg0->unknown_38_.unknown_b2_ = 2;
-                func_0205cf78((Struct_0205cf78*)&arg0->unknown_38_, (Struct_0205cf78_2*)arg0->unknown_134_, 3);
+                self->window_.background_ = &self->backgrounds_[0];
+                self->window_.unk_b2 = 2;
+                Window_SetPanes((Struct_0205cf78*)&self->window_, (Elem_0205cf78*)self->canvases_, 3);
     #if defined(jpn)
             arg0->unknown_650_ = var0->QueueLoadFile(data_ov013_02188d20, NULL);
 #else
@@ -247,14 +247,14 @@ extern "C" ARM void func_ov013_02184d80(Struct_ov013_02184d80_4* arg0) {
         {
             if (var0->GetTaskStatus(arg0->unknown_650_))
             {
-                void* var15;
-                unsigned int var16;
-                var0->GetLoadedFileByID(arg0->unknown_650_, &var15, &var16);
-                arg0->unknown_60c_.Reset();
-                func_020dfec0(arg0->unknown_620_, &arg0->unknown_60c_, var15, var16);
-                var0->RemoveTask(arg0->unknown_650_);
-                arg0->unknown_650_ = -1;
-                arg0->unknown_63e_++;
+                void* file;
+                unsigned int size;
+                loader->GetLoadedFileByID(self->task_, &file, &size);
+                self->textAllocator_.Reset();
+                KeyTable_Load(self->texts_, &self->textAllocator_, file, size);
+                loader->RemoveTask(self->task_);
+                self->task_ = -1;
+                self->step_++;
             }
         }
         else if (arg0->unknown_63e_ == 4)

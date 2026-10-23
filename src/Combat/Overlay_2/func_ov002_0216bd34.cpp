@@ -15,8 +15,8 @@ struct SePlayer;
 struct Container020dedd0;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
@@ -39,20 +39,20 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
         if (*(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1a00 + 0xe8)) < 0) {
             *(signed char *) (arg0 + 0x1000 + RG(0xc20, 0xae8)) = 4;
         }
-        *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) += 1;
-    } else if (var1 == 1) {
-        *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
-        *(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) =
-            func_0205d794((struct Struct_0205c570 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)));
-        int var2 = *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1a00 + 0xe8));
-        int var3   = *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1a00 + 0xea));
-        int var4  = 0;
-        int var5     = g_keyManager.TestKeysPressed(0x601);
-        int var6     = func_0205da38((struct Struct_0205da38*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
-        if ((var5 | var6) ? 1 : 0) {
-            *(unsigned char *) (arg0 + RG(0xf80, 0xed8)) = *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80));
-            *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
-            switch (*(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc))) {
+        *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
+        *(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + RG(0x2c8 + 0xc00, 0xe20)));
+        int actor = *(signed char *) (base + RG(0x1c00 + 0x20, 0x1a00 + 0xe8));
+        int key   = *(short *) (base + RG(0x1c00 + 0x22, 0x1a00 + 0xea));
+        int done  = 0;
+        int a     = g_keyManager.TestKeysPressed(0x601);
+        int b     = Window_IsSelectionTouched((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
+        if ((a | b) ? 1 : 0) {
+            *(unsigned char *) (base + RG(0xf80, 0xed8)) = *(int *) (base + 0x1000 + RG(0xbb8, 0xa80));
+            *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
+            switch (*(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc))) {
                 case 0:
                     SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     *(unsigned char *) (base + 0x2000 + RG(0x487, 0x2b7)) = 1;

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void* func_020425b4(int arg0, int arg1);
+void* Font_GetCharacter(int idx, int tableIdx);
 extern unsigned char data_020e7a50;
 
 // USA: func_02042764
@@ -21,15 +21,15 @@ extern "C" ARM void func_02042764(unsigned char* arg0, char* arg1, int arg2) {
             *arg1 = 0;
             return;
         }
-        var2[0] = var1;
-        var2[1] = var0;
-        void* var4 = var2;
-        int var5 = 1;
-        void* var6 = func_020425b4(var3, arg2);
-        if (var6 != NULL) {
-            var4 = *(void**)var6;
-            signed char var7 = *((signed char*)var6 + 5);
-            var5 = (var7 << 26) >> 26;
+        local[0] = b8;
+        local[1] = b9;
+        void* copySrc = local;
+        int size = 1;
+        void* entry = Font_GetCharacter(ch, n);
+        if (entry != NULL) {
+            copySrc = *(void**)entry;
+            signed char raw = *((signed char*)entry + 5);
+            size = (raw << 26) >> 26;
         }
         memcpy(arg1, var4, var5);
         arg0++;

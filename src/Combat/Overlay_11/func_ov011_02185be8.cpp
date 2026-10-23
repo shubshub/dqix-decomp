@@ -22,8 +22,8 @@ extern "C" ARM void* func_ov011_021849c8(void* arg0);
 extern "C" ARM void* func_ov011_02185ce0(void* arg0);
 extern "C" ARM void func_0205a494(void* arg0);
 #if defined(jpn)
-// JPN: func_ov011_02185ce0 is inlined, the object is 0x84 bytes and func_ov023_021fa760 takes 6 arguments.
-extern "C" void func_0205a444(char* arg0);
+// JPN: InitObjWithVTable_02185ce0 is inlined, the object is 0x84 bytes and func_ov023_021fa760 takes 6 arguments.
+void SpriteContext_Init(char* obj);
 extern int data_ov023_021fddfc;
 extern "C" ARM int func_ov023_021fa760(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
 #else
@@ -70,8 +70,8 @@ extern "C" ARM int func_ov011_02185be8(struct Struct_ov011_02185be8_2* arg0) {
 
     struct Struct_ov011_02185be8 var7;
 #if defined(jpn)
-    var7.unknown_0_ = &data_ov023_021fddfc;
-    func_0205a444(var7.unknown_24_);
+    local.vtable = &data_ov023_021fddfc;
+    SpriteContext_Init(local.sub);
 #else
     func_ov011_02185ce0(&var7);
 #endif

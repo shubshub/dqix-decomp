@@ -3,30 +3,30 @@
 #include "Memory/SafeAllocator.h"
 
 
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198* p);
 
-extern "C" void func_0205a444(char* arg0);
+void SpriteContext_Init(char* obj);
 
 struct Struct_020534ac;
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
-extern "C" void func_0205a528(void* arg0, void* arg1, int arg2, void* arg3);
+extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 
 // USA: func_ov012_021862fc
 extern "C" ARM void func_ov012_021862fc(char* arg0) {
     int var0 = (int)BackgroundLoader::GetInstance();
 
-    for (int var1 = 0; var1 < 3; var1++) {
-        func_0205a198((struct Struct_02043368_2*)(*(char**)(arg0 + 0x1000 + 0x36c) + var1 * 0x28));
+    for (int i = 0; i < 3; i++) {
+        Sprite_Init((struct Struct0205a198*)(*(char**)(self + 0x1000 + 0x36c) + i * 0x28));
     }
 
-    func_0205a444(*(char**)(arg0 + 0x1000 + 0x368));
+    SpriteContext_Init(*(char**)(self + 0x1000 + 0x368));
 
     *(unsigned char*)(*(char**)(arg0 + 0x1000 + 0x368) + 0x50) = 1;
 
@@ -40,12 +40,12 @@ extern "C" ARM void func_ov012_021862fc(char* arg0) {
     int var6;
     ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(arg0 + 0x1000 + 0x394)), (void**)(&var4), (unsigned int*)(&var5));
 
-    int var7 = func_02046900((struct Struct_02020cb8_4*)var4);
-    ((SafeAllocator*)(arg0 + 0x98))->Reset();
+    int count = Pac_CountFiles((struct ActiveEntry02046900*)out1);
+    ((SafeAllocator*)(self + 0x98))->Reset();
 
-    for (int var8 = 0; var8 < var7; var8++) {
-        void* var9 = func_020467f0((struct Struct_02020aec*)var4, var8, &var3, &var6);
-        func_0205a528(*(char**)(arg0 + 0x1000 + 0x368), var9, var6, arg0 + 0x98);
+    for (int i = 0; i < count; i++) {
+        void* result = Pac_GetFile((struct Rec020467f0*)out1, i, &recOut, &fieldOut);
+        SpriteContext_LoadFile(*(char**)(self + 0x1000 + 0x368), result, fieldOut, self + 0x98);
     }
 
     ((BackgroundLoader*)(var0))->RemoveTask((int)(*(int*)(arg0 + 0x1000 + 0x394)));

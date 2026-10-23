@@ -9,11 +9,11 @@ struct Struct_02072e34 {
 };
 extern "C" void func_02072e34(int arg0, struct Struct_02072e34* arg1);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_020730e0(int arg0, int arg1);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
+void ApplyCombatantEffectByIndex020730e0(int id, int index);
 extern "C" int NSBXX_Model_GetMaterialPolygonID(NSBXXInternalModel* model, unsigned int materialIndex);
 extern "C" int func_ov017_021b8470(void* arg0);
 extern "C" unsigned char* func_ov017_021b8478(void* arg0);
@@ -157,22 +157,22 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
             arg0->unknown_10_[var7] = -1;
             continue;
         }
-        void* var12;
-        unsigned int var13;
-        var9->GetLoadedFileByID(arg0->unknown_10_[var7], &var12, &var13);
-        SafeAllocator* var14 = &var5->allocator_array_4[var7];
-        char* var15 = var5->unknown_cc_ + var7 * 0x70;
-        func_0207df50((struct Struct_0203d028*)var15);
-        func_0207df90(var15);
-        var2->obj3D_.SetModelFromFile(var14, var12, var13, (Model3D::TextureStagingMode)arg0->unknown_c_);
-        func_0207dfac(var15);
-        var6 = var2->obj3D_.pModel_;
-        if (var7 == 0) {
-            var6->CreateBoneMatrixAndMaterialArrays(var14, 7);
-            var6->StoreBoneMatrixAndMaterialArrayPointers();
-        } else if (!(var7 == 1 || var7 == 6 || var7 == 5 || var7 == 4)) {
-            var6->CreateBoneMatrixAndMaterialArrays(var14, 5);
-            var6->StoreBoneMatrixAndMaterialArrayPointers();
+        void* file;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->tasks[i], &file, &size);
+        SafeAllocator* alloc = &models->allocator_array_4[i];
+        char* pairs = models->unknown_cc + i * 0x70;
+        CopyInternalFields0207df50((struct Foo0207df50*)pairs);
+        VramState_Restore(pairs);
+        obj->obj3D_.SetModelFromFile(alloc, file, size, (Model3D::TextureStagingMode)self->stagingMode);
+        VramState_Save(pairs);
+        model = obj->obj3D_.pModel_;
+        if (i == 0) {
+            model->CreateBoneMatrixAndMaterialArrays(alloc, 7);
+            model->StoreBoneMatrixAndMaterialArrayPointers();
+        } else if (!(i == 1 || i == 6 || i == 5 || i == 4)) {
+            model->CreateBoneMatrixAndMaterialArrays(alloc, 5);
+            model->StoreBoneMatrixAndMaterialArrayPointers();
         }
         if (var7 == 9) {
             var2->obj3D_.position_.x = 0x1000;

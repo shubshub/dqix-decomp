@@ -58,17 +58,17 @@ extern "C" void func_0209c678(struct Struct_02109bf4_4* arg0, int arg1);
 extern "C" void func_020a0cc4(unsigned int arg0);
 extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
 extern "C" void func_020a0c0c(void);
-extern "C" void func_02081ee4(struct Struct_02081ee4* arg0, struct Struct_02081ee4_2* arg1);
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-extern "C" void func_0204b12c(struct Struct_0204b12c* arg0, SafeAllocator* arg1);
-extern "C" int func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_0204c7a8(struct Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, unsigned int arg3);
+void InitWithSub02081ee4(struct Obj02081ee4* obj, struct Sub02081ee4* sub);
+void Background_Init(struct List0204af64* obj);
+void Background_SetMapSize(unsigned char* obj, int value);
+extern "C" void Background_SetPriority(void* obj, int value);
+void Background_AllocateMap(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
+int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+extern "C" void func_0204c684(void* obj);
+void WindowPane_AllocateBuffer(struct Obj0204c7a8* obj, SafeAllocator* alloc, int buffer, unsigned int len);
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* outSize);
+extern "C" void Background_LoadFile(void* graphics, void* file, SafeAllocator* allocator, unsigned int size);
 #if defined(jpn)
 extern "C" void func_02080654(struct Struct_0207f914* arg0, int arg1, int arg2);
 #else
@@ -212,24 +212,24 @@ extern "C" ARM void func_ov017_021aa59c(Struct_ov017_021aa59c_3* arg0, Struct_02
         arg0->unknown_40_ = (Struct_ov017_021aa59c*)arg0->unknown_24_.Allocate(4);
         func_02081ee4((Struct_02081ee4*)arg0->unknown_3c_, (Struct_02081ee4_2*)arg0->unknown_40_);
 
-        Struct_02020cb8* var8 = arg0->unknown_1c_;
-        for (int var9 = 0; var9 < 2; var9++) {
-            func_0204af64((Struct_02020cb8*)var8);
-            func_0204b11c((unsigned char*)var8, 0);
-            var8->unknown_1c_0_ = 0;
-            var8->unknown_1c_4_ = var9 + 1;
-            func_0204b5b4(var8, var9);
-            func_0204b12c((Struct_0204b12c*)var8, &arg0->unknown_24_);
-            func_0204b5e8((Struct_02020cb8_5*)var8, 0, 0);
-            var8++;
+        List0204af64* layer = self->layers;
+        for (int i = 0; i < 2; i++) {
+            Background_Init((List0204af64*)layer);
+            Background_SetMapSize((unsigned char*)layer, 0);
+            layer->b1c_lo = 0;
+            layer->b1c_hi = i + 1;
+            Background_SetPriority(layer, i);
+            Background_AllocateMap((AllocTarget0204b12c*)layer, &self->alloc);
+            Background_SetScroll((Obj0204b5e8*)layer, 0, 0);
+            layer++;
         }
 
-        Struct_0207f7f0_2* var10 = arg0->unknown_20_;
-        for (unsigned char var11 = 0; var11 < 2; var11++) {
-            func_0204c684(var10);
-            func_0204c7a8((Struct_0204c7a8*)var10, &arg0->unknown_24_, (int)arg0->unknown_8_, 0x800);
-            var10->unknown_4_ = arg0->unknown_1c_;
-            var10++;
+        Node0207f7f0* panel = self->panels;
+        for (unsigned char j = 0; j < 2; j++) {
+            func_0204c684(panel);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)panel, &self->alloc, (int)self->tileBuffer, 0x800);
+            panel->lists = self->layers;
+            panel++;
         }
 
         BG1CNT = (BG1CNT & 0x43) | 0x1e00;
@@ -240,19 +240,19 @@ extern "C" ARM void func_ov017_021aa59c(Struct_ov017_021aa59c_3* arg0, Struct_02
 #else
         arg0->unknown_50_ = var5->QueueLoadFile(data_ov017_021d7870, NULL);
 #endif
-        arg0->unknown_14_ = 1;
-    } else if (var6 == 1) {
-        if (var5->GetTaskStatus(arg0->unknown_50_) != 0) {
-            void* var12;
-            void* var13;
-            unsigned int var14;
-            var5->GetLoadedFileByID(arg0->unknown_50_, &var13, &var14);
-            int var15 = func_02046900((Struct_02020cb8_4*)var13);
-            Struct_02020cb8* var16 = arg0->unknown_1c_;
-            for (int var17 = 0; var17 < var15; var17++) {
-                int var18;
-                void* var19 = func_020467f0((Struct_02020aec*)var13, var17, &var12, &var18);
-                func_0204b174(var16, var19, NULL, var18);
+        self->state = 1;
+    } else if (state == 1) {
+        if (loader->GetTaskStatus(self->loadTask) != 0) {
+            void* record;
+            void* file;
+            unsigned int fileSize;
+            loader->GetLoadedFileByID(self->loadTask, &file, &fileSize);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file);
+            List0204af64* layers = self->layers;
+            for (int i = 0; i < count; i++) {
+                int recordSize;
+                void* data = Pac_GetFile((Rec020467f0*)file, i, &record, &recordSize);
+                Background_LoadFile(layers, data, NULL, recordSize);
             }
             var5->RemoveTask(arg0->unknown_50_);
             arg0->unknown_50_ = -1;

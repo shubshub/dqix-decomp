@@ -85,7 +85,7 @@ struct Struct_020830cc {
 
 extern "C" void func_02082fa8(struct Struct_02082fa8*, struct Struct_02082fa8*);
 extern "C" void __clear(void*, unsigned int);
-extern "C" void func_020426bc(void*, char*, int);
+extern "C" void Font_EncodeText(void*, char*, int);
 
 // USA: func_020830cc
 extern "C" ARM void func_020830cc(struct Struct_020830cc* arg0, struct Struct_020830cc_2* arg1) {
@@ -122,10 +122,10 @@ extern "C" ARM void func_020830cc(struct Struct_020830cc* arg0, struct Struct_02
 #if defined(jpn)
     memcpy(arg1->unknown_140_, arg0->unknown_3c_, 0xc);
 #else
-    char var6[0xc];
-    __clear(var6, 0xc);
-    func_020426bc(arg0->unknown_3c_, var6, 1);
-    memcpy(arg1->unknown_140_, var6, 0xc);
+    char local[0xc];
+    __clear(local, 0xc);
+    Font_EncodeText(src->name3c, local, 1);
+    memcpy(dst->b140, local, 0xc);
 #endif
     arg1->unknown_1_4_ = (unsigned short)arg0->unknown_7b_6_;
     struct Struct_02082cdc_2* var7 = arg1->unknown_14c_;

@@ -50,27 +50,27 @@ struct Struct_ov000_021716d0_4 {
     Struct_ov000_021716d0* unknown_1a4_[1];
 };
 
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
-extern "C" int func_ov000_02153a8c(GameObject* arg0);
-extern "C" int func_020dd290(void* arg0, unsigned int arg1);
-extern "C" int func_ov000_02171210(void* arg0, void* arg1);
-extern "C" int* func_ov000_02170cf8(void* arg0, int arg1);
-extern "C" void __clear(void* arg0, int arg1);
+int KeyTable_Get(struct Container020e0310* c, int key);
+void SwapGlobalEntry0203c108(struct Obj0203c108* obj, char* text);
+int IsFlag0x18Bit0x200Set_ov000_02153a8c(GameObject* obj);
+int AdjustValueByFieldFlag_020dd290(void* obj, unsigned int value);
+extern "C" int func_ov000_02171210(void* a, void* b);
+extern "C" int* func_ov000_02170cf8(void* obj, int id);
+extern "C" void __clear(void* dst, int size);
 #if !defined(jpn)
 extern "C" void func_020e4864(int arg0, char* arg1, int arg2, int arg3, int arg4, int arg5);
 #endif
 extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
 
 // USA: func_ov000_021716d0
-extern "C" ARM void func_ov000_021716d0(Struct_ov000_021716d0_4* arg0) {
-    Struct_ov000_021716d0_2* var0 = &arg0->unknown_8_;
-    int var1 = var0->unknown_16_;
-    if (arg0->unknown_1a4_[var1] == NULL) {
-        var0->unknown_10_++;
-        var0->unknown_8_[arg0->unknown_8_.unknown_10_] = 0xe;
-        var0->unknown_15_ = 0;
-        func_0203c108((struct Struct_0203c108_3*)arg0->unknown_50_, (char*)func_020e0434(arg0->unknown_4_, 5));
+extern "C" ARM void func_ov000_021716d0(MenuEntry_021716d0* self) {
+    MenuState_021716d0* state = &self->state;
+    int sel = state->selected;
+    if (self->spells[sel] == NULL) {
+        state->depth++;
+        state->stack[self->state.depth] = 0xe;
+        state->field15 = 0;
+        SwapGlobalEntry0203c108((struct Obj0203c108*)self->message, (char*)KeyTable_Get(self->strings, 5));
         return;
     }
 

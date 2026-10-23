@@ -2,10 +2,10 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e5c8(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e694(void* arg0, int* arg1);
-extern "C" void func_ov000_0216d530(void* arg0, int arg1);
+extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
+void Camera_SetTarget(unsigned char* obj, int x, int y, int z);
+void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void SetFlagOrState0216d530(void* obj, int val);
 
 extern int data_ov000_021832a4[8];
 
@@ -28,18 +28,18 @@ extern "C" ARM void func_ov000_0216d90c(unsigned char* arg0, int arg1) {
     } else {
         var5 = 0;
     }
-    func_ov000_0216d370(arg0, 1, 1, 1);
-    func_0202e5c8(arg0, 0, 0x1000, 0x1000);
-    int var6 = NextRandomMax(*(struct Random**)(arg0 + 0x21c), 8);
-    if (var5) {
-        if (var6 == 2) {
-            var6 = 7;
-        } else if (var6 == 3) {
-            var6 = 6;
-        } else if (var6 == 4) {
-            var6 = 1;
-        } else if (var6 == 5) {
-            var6 = 0;
+    func_ov000_0216d370(obj, 1, 1, 1);
+    Camera_SetTarget(obj, 0, 0x1000, 0x1000);
+    int r = NextRandomMax(*(struct Random**)(obj + 0x21c), 8);
+    if (tall) {
+        if (r == 2) {
+            r = 7;
+        } else if (r == 3) {
+            r = 6;
+        } else if (r == 4) {
+            r = 1;
+        } else if (r == 5) {
+            r = 0;
         }
     }
     int var7[3];

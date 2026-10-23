@@ -15,56 +15,56 @@ extern "C" void func_ov005_02155544(void* self);
 extern "C" void func_ov005_021555c0(void* self);
 extern "C" void func_ov005_021571d0(void* self);
 extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
-extern "C" void func_020dfec0(void* dest, void* allocator, void* fileData, unsigned int size);
+extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
 char* GetGlobalField0x1c020421a0();
 void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fog);
 int* GetData02105254_0203b628();
 void SetupBankModeAndTransfer_0203b678(int* obj, int a, int b);
 void TailForward0203b66c(char*);
 void ClearThreeRegions0203b634(char*);
-void SetWord0x18ClearByte0x1f_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void* obj, int value);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(void* obj, int value);
 struct Obj0204b5e8;
-void DispatchViaTable0204b5e8(Obj0204b5e8*, int, int);
+void Background_SetScroll(Obj0204b5e8*, int, int);
 struct AllocTarget0204b12c;
-void AllocateAndClearBuffer0204b12c(AllocTarget0204b12c*, SafeAllocator*);
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
 struct Foo0204af38;
-void AllocateArray0204af38(Foo0204af38*, int, SafeAllocator*);
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
-struct Struct_0201099c_3;
-extern "C" const char* func_020e0434(Struct_0201099c_3*, int);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, int arg3);
-extern "C" void func_0204bc74(void* arg0, unsigned short arg1, int arg2, int arg3, int arg4, int arg5, unsigned short arg6);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-struct Struct_0204b8d0;
-extern "C" void func_0204b8d0(Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct Struct_0204c7a8;
-extern "C" void func_0204c7a8(Struct_0204c7a8*, SafeAllocator*, int, unsigned int);
-struct Struct_0205cf78_2;
+struct Container020e0310;
+const char* KeyTable_Get(Container020e0310*, int);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int field44);
+extern "C" void Background_FillRect(void* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8*, void*);
+struct Obj0204b8d0;
+void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+struct Obj0204c7a8;
+void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
+struct Elem_0205cf78;
 struct Struct_0205cf78;
-extern "C" void func_0205cf78(Struct_0205cf78*, Struct_0205cf78_2*, unsigned char);
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" int func_0204684c(Struct_02020aec*, char const*, void**, int, int*, void**);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_02047b30(void* arg0, int arg1, int arg2, int arg3);
-struct Struct_ov002_0215505c_2;
-extern "C" void func_ov023_021e1318(Struct_ov002_0215505c_2*);
-extern "C" void func_ov023_021e133c(void* arg0, void* arg1, int arg2, int arg3, int arg4, short arg5);
-extern "C" void func_ov005_02154d18(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d34(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d50(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d7c(void* arg0, int arg1, int arg2);
-extern "C" char* func_ov017_021a193c(int*);
-extern "C" void func_020dc7e8(int arg0, int arg1);
-extern "C" void func_ov023_021dc134(void* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021dbfd0(void* arg0, void* arg1);
+void Window_SetPanes(Struct_0205cf78*, Elem_0205cf78*, unsigned char);
+struct Struct0200fb08;
+int NormalizeField5_0200fb08(Struct0200fb08*);
+int FindMatchingRecords0204684c(Rec020467f0*, char const*, void**, int, int*, void**);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void Forward02047b30(void* a, int b, int c, int d);
+struct Obj021e1318;
+void ClearObj_021e1318(Obj021e1318*);
+void InitScriptAndRun_021e133c(void* a, void* b, int c, int d, int e, short f);
+extern "C" void func_ov005_02154d18(void* obj, int a, int b);
+extern "C" void func_ov005_02154d34(void* obj, int a, int b);
+extern "C" void func_ov005_02154d50(void* obj, int a, int b);
+extern "C" void func_ov005_02154d7c(void* obj, int a, int b);
+char* GetField1c_021a193c(int*);
+extern "C" void func_020dc7e8(int a, int b);
+extern "C" void func_ov023_021dc134(void* obj, int key, int flag);
+extern "C" void func_ov023_021dbfd0(void* obj, void* alloc);
 
 extern char data_ov005_0215cdb4[];
 extern char data_ov005_0215cdcd[];
@@ -185,19 +185,19 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         }
     } else if (arg0->unknown_3dc4_ == 2) {
 #if defined(jpn)
-        arg0->unknown_0_.Reset();
-        void* var14 = arg0->unknown_0_.Allocate(0x2000);
-        LoadFileIntoMemory(data_ov005_0215e194, var14, &var0);
-        arg0->unknown_21c_.Reset();
-        func_020dfec0(arg0->unknown_df8_, &arg0->unknown_21c_, var14, var0);
-        arg0->unknown_0_.Reset();
-        arg0->unknown_e10_ = *(int*)(func_020421a0() + 0x28);
+        self->alloc.Reset();
+        void* data = self->alloc.Allocate(0x2000);
+        LoadFileIntoMemory(data_ov005_0215e194, data, &size);
+        self->fileAlloc.Reset();
+        KeyTable_Load(self->container, &self->fileAlloc, data, size);
+        self->alloc.Reset();
+        self->fe10 = *(int*)(GetGlobalField0x1c020421a0() + 0x28);
 #else
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        void* var15 = ExtractFileFromGP2(data_ov005_0215cdb4, data_ov005_0215cdcd, &var0);
-        arg0->unknown_21c_.Reset();
-        func_020dfec0(arg0->unknown_df8_, &arg0->unknown_21c_, var15, var0);
+        void* data = ExtractFileFromGP2(data_ov005_0215cdb4, data_ov005_0215cdcd, &size);
+        self->fileAlloc.Reset();
+        KeyTable_Load(self->container, &self->fileAlloc, data, size);
         BackgroundLoader::RemoveLockGlobal();
         arg0->unknown_e10_ = *(int*)(func_020421a0() + 0x5c);
 #endif
@@ -208,28 +208,28 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         func_0203b66c((char*)var16);
         func_0203b634((char*)var16);
 
-        func_0204b11c((unsigned char*)&arg0->unknown_e84_[0], 0);
-        arg0->unknown_e84_[0].unknown_1c_0_ = 0;
-        arg0->unknown_e84_[0].unknown_1c_4_ = 1;
-        func_0204b5b4(&arg0->unknown_e84_[0], 3);
-        func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_e84_[0], 0, 0);
-        func_0204b12c((Struct_0204b12c*)&arg0->unknown_e84_[0], &arg0->unknown_0_);
-        func_0204af38((Struct_0204af38*)&arg0->unknown_e84_[0], 6, &arg0->unknown_0_);
+        Background_SetMapSize((unsigned char*)&self->lists[0], 0);
+        self->lists[0].lo = 0;
+        self->lists[0].hi = 1;
+        Background_SetPriority(&self->lists[0], 3);
+        Background_SetScroll((Obj0204b5e8*)&self->lists[0], 0, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)&self->lists[0], &self->alloc);
+        Background_AllocateScreens((Foo0204af38*)&self->lists[0], 6, &self->alloc);
 
-        func_0204b11c((unsigned char*)&arg0->unknown_e84_[1], 0);
-        arg0->unknown_e84_[1].unknown_1c_0_ = 0;
-        arg0->unknown_e84_[1].unknown_1c_4_ = 2;
-        func_0204b5b4(&arg0->unknown_e84_[1], 2);
-        func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_e84_[1], 0, 0);
-        func_0204b12c((Struct_0204b12c*)&arg0->unknown_e84_[1], &arg0->unknown_0_);
-        func_0204af38((Struct_0204af38*)&arg0->unknown_e84_[1], 9, &arg0->unknown_0_);
+        Background_SetMapSize((unsigned char*)&self->lists[1], 0);
+        self->lists[1].lo = 0;
+        self->lists[1].hi = 2;
+        Background_SetPriority(&self->lists[1], 2);
+        Background_SetScroll((Obj0204b5e8*)&self->lists[1], 0, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)&self->lists[1], &self->alloc);
+        Background_AllocateScreens((Foo0204af38*)&self->lists[1], 9, &self->alloc);
 
-        func_0204b11c((unsigned char*)&arg0->unknown_e84_[2], 0);
-        arg0->unknown_e84_[2].unknown_1c_0_ = 0;
-        arg0->unknown_e84_[2].unknown_1c_4_ = 3;
-        func_0204b5b4(&arg0->unknown_e84_[2], 0);
-        func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_e84_[2], 0, 0);
-        func_0204b12c((Struct_0204b12c*)&arg0->unknown_e84_[2], &arg0->unknown_0_);
+        Background_SetMapSize((unsigned char*)&self->lists[2], 0);
+        self->lists[2].lo = 0;
+        self->lists[2].hi = 3;
+        Background_SetPriority(&self->lists[2], 0);
+        Background_SetScroll((Obj0204b5e8*)&self->lists[2], 0, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)&self->lists[2], &self->alloc);
 
         volatile unsigned short* var17 = (volatile unsigned short*)0x400000a;
         var17[0] = (var17[0] & 0x43) | 0x1d00;
@@ -238,81 +238,81 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         ColorEffect_ConfigureAlphaBlend((unsigned int*)0x4000050, 1, 2, 0xa, 6);
 
 #if defined(jpn)
-        arg0->unknown_3dc8_ = var13->QueueLoadFile(func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x3e8), 0);
+        self->handle = loader->QueueLoadFile(KeyTable_Get((Container020e0310*)self->container, 0x3e8), 0);
 #else
-        const char* var18 = func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x3e9);
-        const char* var19 = func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x3e8);
-        arg0->unknown_3dc8_ = var13->QueueLoadFileInGP2(var19, var18, 0);
+        const char* inner = KeyTable_Get((Container020e0310*)self->container, 0x3e9);
+        const char* gp2 = KeyTable_Get((Container020e0310*)self->container, 0x3e8);
+        self->handle = loader->QueueLoadFileInGP2(gp2, inner, 0);
 #endif
-        arg0->unknown_3dc4_++;
-    } else if (arg0->unknown_3dc4_ == 3) {
-        if (var13->GetTaskStatus(arg0->unknown_3dc8_) != 0) {
-            var13->GetLoadedFileByID(arg0->unknown_3dc8_, &var2, &var3);
-            int var20 = func_02046900((Struct_02020cb8_4*)var2);
-            for (int var21 = 0; var21 < var20; var21++) {
-                void* var22 = func_020467f0((Struct_02020aec*)var2, var21, &var1, &var4);
-                if (var22 != 0) {
-                    if (var21 == 0) {
-                        func_0204b174(&arg0->unknown_e84_[2], var22, &arg0->unknown_0_, var4);
-                    } else if (var21 <= 8) {
-                        func_0204b174(&arg0->unknown_e84_[0], var22, &arg0->unknown_0_, var4);
+        self->state++;
+    } else if (self->state == 3) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file3, &len3);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file3);
+            for (int i = 0; i < count; i++) {
+                void* rec = Pac_GetFile((Rec020467f0*)file3, i, &recData, &recSize);
+                if (rec != 0) {
+                    if (i == 0) {
+                        Background_LoadFile(&self->lists[2], rec, &self->alloc, recSize);
+                    } else if (i <= 8) {
+                        Background_LoadFile(&self->lists[0], rec, &self->alloc, recSize);
                     } else {
-                        func_0204b174(&arg0->unknown_e84_[1], var22, &arg0->unknown_0_, var4);
+                        Background_LoadFile(&self->lists[1], rec, &self->alloc, recSize);
                     }
                 }
             }
             var13->RemoveTask(arg0->unknown_3dc8_);
             arg0->unknown_3dc8_ = -1;
 
-            func_0204bc74(&arg0->unknown_e84_[1], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_e84_[1], 0);
-            func_0204bc74(&arg0->unknown_e84_[2], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_e84_[2], 0);
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_e84_[0], 0, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_e84_[0], 0);
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_e84_[0], 1, 0, 0, 0, 0x14, 0x10, 2, 0xffff);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_e84_[0], 0);
+            Background_FillRect(&self->lists[1], 0, 0, 0, 0x20, 0x19, 0);
+            Background_UploadMap((List0204b0e8*)&self->lists[1], 0);
+            Background_FillRect(&self->lists[2], 0, 0, 0, 0x20, 0x19, 0);
+            Background_UploadMap((List0204b0e8*)&self->lists[2], 0);
+            Background_DrawScreen((Obj0204b8d0*)&self->lists[0], 0, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
+            Background_UploadMap((List0204b0e8*)&self->lists[0], 0);
+            Background_DrawScreen((Obj0204b8d0*)&self->lists[0], 1, 0, 0, 0, 0x14, 0x10, 2, 0xffff);
+            Background_UploadMap((List0204b0e8*)&self->lists[0], 0);
 
-            arg0->unknown_1240_ = arg0->unknown_0_.Allocate(0x2400);
-            char* var23;
-            for (int var24 = 0; var24 < 3; var24++) {
-                var23 = arg0->unknown_fa0_[var24];
-                func_0204c7a8((Struct_0204c7a8*)var23, &arg0->unknown_0_, (int)arg0->unknown_1240_, data_ov005_0215cd68[var24]);
-                *(Struct_ov005_0215436c**)(var23 + 4) = &arg0->unknown_e84_[2];
+            self->buffer = self->alloc.Allocate(0x2400);
+            char* elem;
+            for (int j = 0; j < 3; j++) {
+                elem = self->elems[j];
+                WindowPane_AllocateBuffer((Obj0204c7a8*)elem, &self->alloc, (int)self->buffer, data_ov005_0215cd68[j]);
+                *(List0215436c**)(elem + 4) = &self->lists[2];
             }
-            arg0->unknown_f7c_ = &arg0->unknown_e84_[2];
-            arg0->unknown_f96_ = 1;
-            func_0205cf78((Struct_0205cf78*)arg0->unknown_ee4_, (Struct_0205cf78_2*)arg0->unknown_fa0_, 3);
+            self->linkList = &self->lists[2];
+            self->linkFlag = 1;
+            Window_SetPanes((Struct_0205cf78*)self->linkHead, (Elem_0205cf78*)self->elems, 3);
 
-            const char* var25 = func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, REGION_LAYOUT(0x3e9, 0x3ea));
-            arg0->unknown_3dc8_ = var13->QueueLoadFile(var25, 0);
-            arg0->unknown_3dc4_++;
+            const char* name = KeyTable_Get((Container020e0310*)self->container, REGION_LAYOUT(0x3e9, 0x3ea));
+            self->handle = loader->QueueLoadFile(name, 0);
+            self->state++;
         }
-    } else if (arg0->unknown_3dc4_ == 4) {
-        if (var13->GetTaskStatus(arg0->unknown_3dc8_) != 0) {
-            var13->GetLoadedFileByID(arg0->unknown_3dc8_, &var5, &var6);
-            int var26 = func_02046900((Struct_02020cb8_4*)var5);
+    } else if (self->state == 4) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file4, &len4);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file4);
 #if defined(jpn)
-            const char* var27 = func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d0);
-            if (func_0204684c((Struct_02020aec*)var5, var27, var9, var26, var10, 0) != 0) {
-                func_0207df90((char*)arg0->unknown_294_);
-                for (int var28 = 0; var28 < var26; var28++) {
-                    func_02047b30(arg0->unknown_1a70_ + var28 * 0x88, (int)var9[var28], var10[var28], (int)((char*)arg0 + 0x14));
+            const char* name = KeyTable_Get((Container020e0310*)self->container, 0x7d0);
+            if (FindMatchingRecords0204684c((Rec020467f0*)file4, name, datas, count, sizes, 0) != 0) {
+                VramState_Restore((char*)self->pairTables);
+                for (int i = 0; i < count; i++) {
+                    Forward02047b30(self->records + i * 0x88, (int)datas[i], sizes[i], (int)((char*)self + 0x14));
                 }
-                func_0207dfac((char*)arg0->unknown_294_);
+                VramState_Save((char*)self->pairTables);
             }
             var13->RemoveTask(arg0->unknown_3dc8_);
             arg0->unknown_3dc8_ = -1;
             arg0->unknown_3dc8_ = var13->QueueLoadFile(data_ov005_0215e1ad, 0);
 #else
-            int var29 = func_0200fb08((Struct_02000c9c_8*)var11);
-            int var30 = 0;
-            const char* var31 = func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d0);
-            if (func_0204684c((Struct_02020aec*)var5, var31, var9, var26, var10, 0) != 0) {
-                func_0207df90((char*)arg0->unknown_294_);
-                for (int var32 = 0; var32 < var26; var32++) {
-                    if (var32 == 0x23) {
-                        if (var29 == 2 || var29 == 3) {
+            int mode = NormalizeField5_0200fb08((Struct0200fb08*)gs);
+            int n = 0;
+            const char* name = KeyTable_Get((Container020e0310*)self->container, 0x7d0);
+            if (FindMatchingRecords0204684c((Rec020467f0*)file4, name, datas, count, sizes, 0) != 0) {
+                VramState_Restore((char*)self->pairTables);
+                for (int i = 0; i < count; i++) {
+                    if (i == 0x23) {
+                        if (mode == 2 || mode == 3) {
                             continue;
                         }
                     } else if (var32 == 0x24) {
@@ -327,7 +327,7 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
                     func_02047b30(arg0->unknown_1a70_ + var30 * 0x88, (int)var9[var32], var10[var32], (int)((char*)arg0 + 0x14));
                     var30++;
                 }
-                func_0207dfac((char*)arg0->unknown_294_);
+                VramState_Save((char*)self->pairTables);
             }
             var13->RemoveTask(arg0->unknown_3dc8_);
             arg0->unknown_3dc8_ = -1;

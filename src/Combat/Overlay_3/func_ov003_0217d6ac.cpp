@@ -11,9 +11,9 @@ extern "C" char *func_020421a0(void);
 struct Struct_0205a330;
 extern "C" void func_0205a330(struct Struct_0205a330 *arg0, int arg1);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void *p);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(struct Entry_0205d6a0 *a, int flag);
@@ -112,21 +112,21 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     }
     if (arg0->unknown_5_ != 1) return;
 
-    var0                                = GameState::GetInstance();
-    var2                            = func_020421a0();
-    struct Struct_0205a330 *var8 = *(struct Struct_0205a330 **) (var2 + RG(0x2e0, 0x230));
-    func_0205a330(var8, var0->GetTickCount());
-    var2[RG(0x19ae, 0x17de)] = 0;
-    func_0205d794((struct Struct_0205c570 *) arg0->unknown_90_);
-    var3 = 0;
-    if (arg0->unknown_32_ > 1) {
-        var3 = func_ov003_0217e1e4(arg0);
+    gs                                = GameState::GetInstance();
+    global                            = GetGlobalField0x1c020421a0();
+    struct Container0205a330 *entries = *(struct Container0205a330 **) (global + RG(0x2e0, 0x230));
+    IterateEntries0205a330(entries, gs->GetTickCount());
+    global[RG(0x19ae, 0x17de)] = 0;
+    Window_GetSelectedIndex((struct Struct_0205c570 *) self->list);
+    extra = 0;
+    if (self->count > 1) {
+        extra = func_ov003_0217e1e4(self);
     }
-    var4 = -1;
-    if (func_0205da38((struct Struct_0205da38*)arg0->unknown_90_, 0x14) == 1) {
-        var4 = func_0205d794((struct Struct_0205c570 *) arg0->unknown_90_);
+    sel = -1;
+    if (Window_IsSelectionTouched((struct Obj_0205da38*)self->list, 0x14) == 1) {
+        sel = Window_GetSelectedIndex((struct Struct_0205c570 *) self->list);
     } else if (g_keyManager.TestKeysPressed(0x601) != 0) {
-        var4 = func_0205d794((struct Struct_0205c570 *) arg0->unknown_90_);
+        sel = Window_GetSelectedIndex((struct Struct_0205c570 *) self->list);
     } else if (g_keyManager.TestKeysPressed(2) != 0) {
         var4 = -2;
     } else if (func_0205d97c(arg0->unknown_90_) == 2) {

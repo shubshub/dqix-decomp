@@ -22,7 +22,7 @@ extern "C"
     void func_020a1df8(unsigned int);
     void func_020a1e54(unsigned int);
 
-    void func_020426bc(void*, char* buffer, int);
+    void Font_EncodeText(void*, char* buffer, int);
 
     const char* func_020e51cc(int);
 
@@ -241,7 +241,7 @@ bool DetailedTreasureMapData::UpdateFollowingCompletion(bool levelledUp, unsigne
 #ifndef jpn
     void* playerRelatedPtr = *(void**)((intptr_t)GameState::GetInstance()->GetProtagonist() + 0x134);
     char asciiName[10] = { 0 };
-    func_020426bc(playerRelatedPtr, asciiName, 1);
+    Font_EncodeText(playerRelatedPtr, asciiName, 1);
 #else
     char* asciiName = *(char**)((intptr_t)GameState::GetInstance()->GetProtagonist() + 0x134);
 #endif

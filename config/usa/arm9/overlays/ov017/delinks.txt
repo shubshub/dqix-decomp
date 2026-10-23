@@ -651,11 +651,11 @@ src/Combat/Overlay_17/func_ov017_021996bc.cpp:
     complete
     .text start:0x021996bc end:0x021996fc
 
-src/Combat/Overlay_17/func_ov017_021996fc.cpp:
+src/Combat/Overlay_17/InitFieldArenaListsAndCounters_021996fc.cpp:
     complete
     .text start:0x021996fc end:0x02199780
 
-src/Combat/Overlay_17/func_ov017_02199780.cpp:
+src/Combat/Overlay_17/ApplyBgConfigAndResetBuffers_02199780.cpp:
     complete
     .text start:0x02199780 end:0x02199964
 
@@ -703,7 +703,7 @@ src/Combat/Overlay_17/func_ov017_0219a388.cpp:
     complete
     .text start:0x0219a388 end:0x0219a544
 
-src/Combat/Overlay_17/func_ov017_0219a544.cpp:
+src/Combat/Overlay_17/AppendFieldTagWithLookup_0219a544.cpp:
     complete
     .text start:0x0219a544 end:0x0219a644
 
@@ -931,7 +931,7 @@ src/Combat/Overlay_17/func_ov017_021a0790.cpp:
     complete
     .text start:0x021a0790 end:0x021a07f4
 
-src/Combat/Overlay_17/func_ov017_021a07f4.cpp:
+src/Combat/Overlay_17/InitAllocatorsAndPairTables_021a07f4.cpp:
     complete
     .text start:0x021a07f4 end:0x021a0964
 
@@ -939,7 +939,7 @@ src/Combat/Overlay_17/func_ov017_021a0964.cpp:
     complete
     .text start:0x021a0964 end:0x021a09c8
 
-src/Combat/Overlay_17/func_ov017_021a09c8.cpp:
+src/Combat/Overlay_17/InitAllocatorsAndTables_021a09c8.cpp:
     complete
     .text start:0x021a09c8 end:0x021a0ba8
 
@@ -947,7 +947,7 @@ src/Combat/Overlay_17/func_ov017_021a0ba8.cpp:
     complete
     .text start:0x021a0ba8 end:0x021a0c0c
 
-src/Combat/Overlay_17/func_ov017_021a0c0c.cpp:
+src/Combat/Overlay_17/InitAllocatorsAndPairTables_021a0c0c.cpp:
     complete
     .text start:0x021a0c0c end:0x021a0d6c
 
@@ -955,7 +955,7 @@ src/Combat/Overlay_17/func_ov017_021a0d6c.cpp:
     complete
     .text start:0x021a0d6c end:0x021a0dd0
 
-src/Combat/Overlay_17/func_ov017_021a0dd0.cpp:
+src/Combat/Overlay_17/InitAllocatorsAndPairTables_021a0dd0.cpp:
     complete
     .text start:0x021a0dd0 end:0x021a0f40
 
@@ -963,7 +963,7 @@ src/Combat/Overlay_17/func_ov017_021a0f40.cpp:
     complete
     .text start:0x021a0f40 end:0x021a0fa4
 
-src/Combat/Overlay_17/func_ov017_021a0fa4.cpp:
+src/Combat/Overlay_17/InitAllocatorsAndPairTables_021a0fa4.cpp:
     complete
     .text start:0x021a0fa4 end:0x021a1114
 
@@ -1247,11 +1247,11 @@ src/Combat/Overlay_17/func_ov017_021a5b08.cpp:
     complete
     .text start:0x021a5b08 end:0x021a5b48
 
-src/Combat/Overlay_17/func_ov017_021a5b48.cpp:
+src/Combat/Overlay_17/InitFieldArenaLists_021a5b48.cpp:
     complete
     .text start:0x021a5b48 end:0x021a5bac
 
-src/Combat/Overlay_17/func_ov017_021a5bac.cpp:
+src/Combat/Overlay_17/FlushPendingArenaState_021a5bac.cpp:
     complete
     .text start:0x021a5bac end:0x021a5cbc
 
@@ -1269,7 +1269,7 @@ src/Combat/Overlay_17/func_ov017_021a63cc.cpp:
     complete
     .text start:0x021a63cc end:0x021a63d0
 
-src/Combat/Overlay_17/func_ov017_021a63d0.cpp:
+src/Combat/Overlay_17/ResetEncounterState_021a63d0.cpp:
     complete
     .text start:0x021a63d0 end:0x021a65c4
 
@@ -1317,7 +1317,7 @@ src/Combat/Overlay_17/func_ov017_021a72f4.cpp:
     complete
     .text start:0x021a72f4 end:0x021a7328
 
-src/Combat/Overlay_17/func_ov017_021a7328.cpp:
+src/Combat/Overlay_17/InitObj_021a7328.cpp:
     complete
     .text start:0x021a7328 end:0x021a7378
 
@@ -1397,7 +1397,7 @@ src/Combat/Overlay_17/func_ov017_021a8614.cpp:
     complete
     .text start:0x021a8614 end:0x021a8670
 
-src/Combat/Overlay_17/func_ov017_021a8670.cpp:
+src/Combat/Overlay_17/InitObj_021a8670.cpp:
     complete
     .text start:0x021a8670 end:0x021a86d0
 
@@ -1425,7 +1425,7 @@ src/Combat/Overlay_17/func_ov017_021a932c.cpp:
     complete
     .text start:0x021a932c end:0x021a933c
 
-src/Combat/Overlay_17/func_ov017_021a933c.cpp:
+src/Combat/Overlay_17/AppendMessageAndUpdateStatus_021a933c.cpp:
     complete
     .text start:0x021a933c end:0x021a93f0
 
@@ -2122,7 +2122,7 @@ src/Combat/Overlay_17/func_ov017_021b33d8.cpp:
     complete
     .text start:0x021b33d8 end:0x021b3444
 
-src/Combat/Overlay_17/func_ov017_021b3444.cpp:
+src/Combat/Overlay_17/CallFunc0202fa38IfMismatch_021b3444.cpp:
     complete
     .text start:0x021b3444 end:0x021b354c
 
@@ -3862,7 +3862,7 @@ src/Combat/Overlay_17/func_ov017_021ccea4.cpp:
     complete
     .text start:0x021ccea4 end:0x021ccf70
 
-src/Combat/Overlay_17/func_ov017_021ccf70.cpp:
+src/Combat/Overlay_17/SetBitsFromByteList_021ccf70.cpp:
     complete
     .text start:0x021ccf70 end:0x021ccfd0
 

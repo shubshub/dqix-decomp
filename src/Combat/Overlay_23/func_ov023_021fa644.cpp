@@ -4,15 +4,15 @@
 extern "C" void* func_ov011_021845f8(void*, int);
 extern "C" void* func_ov011_0218466c(void* arg0, unsigned short arg1);
 
-struct Struct_020e03b8;
-extern "C" int func_020e03b8(int arg0, struct Struct_020e03b8* arg1, int arg2);
-extern "C" void* func_020dfc2c(void* arg0);
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void func_020dfec0(void*, void*, void*, unsigned int);
-struct Struct_020e03f0;
-struct Struct_02072aa8;
-extern "C" int func_020e03f0(struct Struct_020e03f0* arg0, struct Struct_02072aa8* arg1);
+struct EncodedSize020e03b8;
+int IsEncodedSizeEqual(int unused, struct EncodedSize020e03b8* obj, int val);
+void* ResetAndReturnSelf020dfc2c(void* p);
+struct Struct020dfc40;
+void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" void KeyTable_Load(void*, void*, void*, unsigned int);
+struct Source020e03f0;
+struct StructAA8;
+int ApplyPtrAndShorts(struct Source020e03f0* self, struct StructAA8* obj);
 
 struct Struct_ov023_021fa644 {
     char unknown_0_[0x49c];
@@ -56,12 +56,12 @@ extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* arg0, void* arg
         return;
     }
 
-    char var2[0x18];
-    func_020dfc2c(var2);
-    if (func_020e03b8((int)var2, arg2, arg3)) {
-        func_020dfc40((Struct_0201099c_14*)var2);
-        func_020dfec0(var2, (char*)var0 + 4, arg2, (unsigned int)arg3);
-        func_020e03f0((Struct_020e03f0*)var2, (Struct_02072aa8*)((char*)arg0 + 0x20));
+    char local[0x18];
+    ResetAndReturnSelf020dfc2c(local);
+    if (IsEncodedSizeEqual((int)local, p2, p3)) {
+        KeyTable_Reset((Struct020dfc40*)local);
+        KeyTable_Load(local, (char*)allocBase + 4, p2, (unsigned int)p3);
+        ApplyPtrAndShorts((Source020e03f0*)local, (StructAA8*)((char*)obj + 0x20));
         return;
     }
 

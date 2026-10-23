@@ -3,8 +3,8 @@
 #if defined(jpn)
 #define data_ov003_02180cc8 data_ov003_0217ef40
 #endif
-extern "C" void func_020e2490(Struct_020e2490*, int, int, void*, SafeAllocator*, int, unsigned char);
-extern "C" void func_0205a198(Struct_02043368_2*);
+void InitEntryManager020e2490(EntryManager020e2490*, int, int, void*, SafeAllocator*, int, unsigned char);
+void Sprite_Init(Struct0205a198*);
 extern unsigned int data_ov003_02180cc8[2];
 
 #if defined(jpn)
@@ -43,17 +43,17 @@ extern "C" ARM void func_ov003_02173f70(Struct_ov003_02173f70* arg0, SafeAllocat
             var2->CreateTypeA(arg1->Allocate(var1), var1);
             var2->Reset();
         }
-        func_0207f84c(arg0->unknown_89c_);
-        Struct_0207f7f0* var3 = arg0->unknown_89c_;
-        var3->unknown_2c_ = arg0->unknown_8a0_;
-        var3->unknown_38_ = 2;
-        func_0207f7f0(arg0->unknown_89c_, arg0->unknown_8e0_, 8);
-        arg0->unknown_89c_->unknown_3a_ = 2;
-        for (unsigned char var4 = 0; var4 < 0x21; ++var4)
-            func_0205a198(&arg0->unknown_830_[var4]);
-        arg0->unknown_828_ = 0;
-        arg0->unknown_818_ = arg0->unknown_830_;
-        arg0->unknown_824_ = 0x21;
-        arg0->unknown_814_ = arg0->unknown_82c_;
+        func_0207f84c(self->menu);
+        Manager0207f7f0* menu = self->menu;
+        menu->lists = self->entries;
+        menu->mode = 2;
+        InitNodeChain0207f7f0(self->menu, self->nodes, 8);
+        self->menu->active = 2;
+        for (unsigned char i = 0; i < 0x21; ++i)
+            Sprite_Init(&self->allocatedRecords[i]);
+        self->active = 0;
+        self->records = self->allocatedRecords;
+        self->count = 0x21;
+        self->list = self->allocatedList;
     }
 }

@@ -79,7 +79,7 @@ extern "C" int func_ov005_02155670(Menu0215c058* self, int x, int y);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 extern "C" void func_ov005_021579ec(Menu0215c058* self, unsigned int state, unsigned char slot);
 extern "C" unsigned int _ZNK9GameState12GetTickCountEv(GameState* gs);
-extern "C" int func_0205bf58(void* obj, int v);
+extern "C" int GridCursor_Update(void* obj, int v);
 extern "C" int func_ov005_021585fc(Menu0215c058* self, int direction);
 extern "C" void func_ov005_021555c0(Menu0215c058* self);
 extern "C" void func_ov005_021536e0(CursorFrame0215c058* frame);
@@ -150,13 +150,13 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
 
         if (!var2)
         {
-            int var7 = _ZNK9GameState12GetTickCountEv(var1);
-            if (var7 == 0)
-                var7 = 1;
-            func_0205bf58(arg0->unknown_19f4_, var7);
-            int var8 = 0;
-            int var9 = (arg0->unknown_3dbb_ - 8) % 4;
-            if (var9 == 0)
+            int tick = _ZNK9GameState12GetTickCountEv(gs);
+            if (tick == 0)
+                tick = 1;
+            GridCursor_Update(self->scroll, tick);
+            int changed = 0;
+            int col = (self->selected - 8) % 4;
+            if (col == 0)
             {
                 if (g_keyManager.TestKeysPressed(0x20))
                     var8 = func_ov005_021585fc(arg0, -1);

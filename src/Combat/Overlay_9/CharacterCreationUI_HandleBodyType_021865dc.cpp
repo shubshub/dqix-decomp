@@ -3,39 +3,39 @@
 
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
-extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int val);
-extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int val);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int slot);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
+void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
 #else
-ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int val);
+ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
 #endif
 
 // Overlay 9, originally func_ov009_021865dc (USA/EUR 0x021865dc, JPN 0x02187708)
 extern "C" ARM void CharacterCreationUI_HandleBodyType(CharacterCreationUI* self) {
 	unsigned char step = self->step;
-	if (step == 0) {
+	if (step == ChoiceTabStep_Setup) {
 		CharacterCreationUI_SetupSlotNavigation(self);
 		CharacterCreationUI_LoadSlotLayout(self);
-		int idx = self->sex;
-		unsigned char val = self->bodyType[idx];
-		CharacterCreationUI_MoveCursorToSlot(self, val);
-		self->flags |= 1;
+		int sex = self->sex;
+		unsigned char choice = self->bodyType[sex];
+		CharacterCreationUI_MoveCursorToSlot(self, choice);
+		self->flags |= CreationFlag_StylusRotation;
 		self->step = self->step + 1;
 		return;
 	}
-	if (step == 1) {
+	if (step == ChoiceTabStep_ShowChoice) {
 		if (self->flags & CreationFlag_TabLoading) {
 			return;
 		}
-		int idx = self->sex;
-		unsigned char val = self->bodyType[idx];
-		CharacterCreationUI_ApplyChoice(self, val);
+		int sex = self->sex;
+		unsigned char choice = self->bodyType[sex];
+		CharacterCreationUI_ApplyChoice(self, choice);
 		self->step = self->step + 1;
 		return;
 	}
-	if (step != 2) {
+	if (step != ChoiceTabStep_Input) {
 		return;
 	}
 	int result = CharacterCreationUI_HandleInput(self);
@@ -50,14 +50,14 @@ extern "C" ARM void CharacterCreationUI_HandleBodyType(CharacterCreationUI* self
 	if (result < CreationInput_FirstTabIcon || result > CreationInput_LastTabIcon) {
 		return;
 	}
-	int idx2 = self->sex;
-	int v = result - CreationInput_TabIcon;
-	signed char *arr = self->furthestState;
-	if (v > arr[idx2]) {
+	int sex = self->sex;
+	int tab = result - CreationInput_TabIcon;
+	signed char *furthestState = self->furthestState;
+	if (tab > furthestState[sex]) {
 		return;
 	}
-	if (v == self->state) {
+	if (tab == self->state) {
 		return;
 	}
-	CharacterCreationUI_SwitchTab((unsigned char*)self, v & 0xff);
+	CharacterCreationUI_SwitchTab((unsigned char*)self, tab & 0xff);
 }

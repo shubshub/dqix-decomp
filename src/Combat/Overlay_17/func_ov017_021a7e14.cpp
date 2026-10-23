@@ -106,34 +106,34 @@ extern "C" void func_020a0c0c();
 #if defined(jpn)
 #define func_ov017_021a7dd8 func_ov017_021a8754
 #endif
-extern "C" void func_ov017_021a7dd8(Struct_ov017_021a7e14_5* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_020dfec0(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_020de980(void* arg0, void* arg1, void* arg2, int arg3, int arg4);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void func_020dcf7c(int arg0, void* arg1);
-extern "C" Struct_ov017_021a7e14_3* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_ov017_021d0198(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" char* func_020e51cc(int arg0);
-extern "C" void func_020e4b34(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11);
-extern "C" void func_02046380(Struct_020465c0* arg0);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02086bf4(char* arg0, int arg1);
-extern "C" int func_020457e0(Struct_020465c0* arg0);
-extern "C" int func_0202c578(Struct_0202b2f0* arg0, int arg1);
-extern "C" int func_ov017_021a85e8(unsigned char* arg0, int arg1);
-extern "C" void* func_020de824(void* arg0);
-extern "C" void func_0207cbe8(char* arg0);
-extern "C" void func_0207cf30(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_020397c0(void* arg0);
+extern "C" void func_ov017_021a7dd8(Obj021a7e14* self);
+void KeyTable_Reset(Struct020dfc40* p);
+extern "C" void KeyTable_Load(void* dest, SafeAllocator* alloc, void* data, unsigned int size);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+void ItemTable_Init(void* p);
+void BuildDescriptorFlag1_020de980(void* dest, void* alloc, void* data, int size, int key);
+void Clear12Bytes020e46c4(void* p);
+extern "C" void* memset(void* dst, int c, unsigned int n);
+void DispatchIfCountPositive020dcf7c(int key, void* p);
+Element021a7e14* FindElementByKey020dedd0(Container020dedd0* c, int key);
+void EnqueueEventTag170_021d0198(int a, int b, int c, int d);
+void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
+char* CallFunc020e0434With02153694_020e51cc(int value);
+extern "C" void func_020e4b34(void* obj, char* name, int a, int b, int c, int d, int e, int f, int g, int h, int i, int j);
+extern "C" void func_02046380(StoreStruct* g);
+void StoreInArray0x8b0_020465c0(StoreStruct* g, int a, int b);
+void SetByteInRange_020465f0(unsigned char* p, int a, unsigned char b);
+char* KeyTable_Get(Container020e0310* c, int key);
+void AppendString02042058(char* dst, const char* src);
+int SumKeyedLookups02086bf4(char* p, int key);
+extern "C" int func_020457e0(StoreStruct* g);
+int TestFlagBitAt0xe_0202c578(SearchStruct* s, int id);
+int DecrementField38Clamped_021a85e8(unsigned char* obj, int amount);
+void* ZeroInitReturn020de824(void* p);
+void InitStruct0207cbe8(char* p);
+extern "C" void func_0207cf30(void* ctx, int key, int amount, int arg);
+void ReinitController02043204(char* g);
+void SetByteField0x253_020397c0(void* obj);
 
 extern AllocatorUnion data_02114e20;
 #if defined(jpn)
@@ -187,18 +187,18 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
 #else
         arg0->unknown_28_ = var1->QueueLoadFileInGP2(data_ov017_021d77c4, data_ov017_021d77de, NULL);
 #endif
-        arg0->unknown_24_ = 1;
-    } else if (arg0->unknown_24_ == 1) {
-        if (var1->GetTaskStatus(arg0->unknown_28_) != 0) {
-            void* var9;
-            unsigned int var10;
-            var1->GetLoadedFileByID(arg0->unknown_28_, &var9, &var10);
-            arg0->unknown_1c_ = (Struct_0201099c_3*)arg0->unknown_8_.Allocate(0x18);
-            func_020dfc40((Struct_0201099c_14*)arg0->unknown_1c_);
-            func_020dfec0(arg0->unknown_1c_, &arg0->unknown_8_, var9, var10);
-            var1->RemoveTask(arg0->unknown_28_);
-            arg0->unknown_28_ = -1;
-            arg0->unknown_20_ = var2->unknown_5c_;
+        self->state = 1;
+    } else if (self->state == 1) {
+        if (loader->GetTaskStatus(self->taskId) != 0) {
+            void* data;
+            unsigned int length;
+            loader->GetLoadedFileByID(self->taskId, &data, &length);
+            self->strings = (Container020e0310*)self->alloc.Allocate(0x18);
+            KeyTable_Reset((Struct020dfc40*)self->strings);
+            KeyTable_Load(self->strings, &self->alloc, data, length);
+            loader->RemoveTask(self->taskId);
+            self->taskId = -1;
+            self->message = g->message;
 #if defined(jpn)
             func_02094b40(var3);
             func_02094b30(var3, 0x208, 0);
@@ -217,10 +217,10 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
 #else
         void* var13 = ExtractFileFromGP2(data_020f2a18, data_020f2a0c, &var12);
 #endif
-        arg0->unknown_2c_ = (Struct_0201099c_10*)arg0->unknown_8_.Allocate(0x18);
-        func_020de848(arg0->unknown_2c_);
-        if (var13 != NULL) {
-            func_020de980(arg0->unknown_2c_, &arg0->unknown_8_, var13, var12, arg0->unknown_30_);
+        self->container = (Container020dedd0*)self->alloc.Allocate(0x18);
+        ItemTable_Init(self->container);
+        if (file != NULL) {
+            BuildDescriptorFlag1_020de980(self->container, &self->alloc, file, size, self->key);
         }
 #if defined(jpn)
         __clear(var11, sizeof(var11));
@@ -277,13 +277,13 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
 #else
         memset(var16, 0, 0x960);
 #endif
-        func_02042058(var16, (char*)func_020e0434(arg0->unknown_1c_, 0x64));
-        func_02042058(var16, (char*)func_020e0434(arg0->unknown_1c_, 0x78));
-        if (func_02086bf4((char*)func_02010828(var0), arg0->unknown_30_) == 0x63) {
-            func_02042058(var16, (char*)func_020e0434(arg0->unknown_1c_, 0x70));
-            arg0->unknown_3a_ |= 1;
+        AppendString02042058(message, (char*)KeyTable_Get(self->strings, 0x64));
+        AppendString02042058(message, (char*)KeyTable_Get(self->strings, 0x78));
+        if (SumKeyedLookups02086bf4((char*)GetPtrField0x2a04_02010828(gs), self->key) == 0x63) {
+            AppendString02042058(message, (char*)KeyTable_Get(self->strings, 0x70));
+            self->flags |= 1;
         } else {
-            func_02042058(var16, (char*)func_020e0434(arg0->unknown_1c_, 0x6e));
+            AppendString02042058(message, (char*)KeyTable_Get(self->strings, 0x6e));
         }
         var2->unknown_998_ = 1;
 #if defined(jpn)
@@ -325,9 +325,9 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
         }
         if (var7) {
 #if defined(jpn)
-            func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x71), 0);
+            func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x71), 0);
 #else
-            func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x71), 0, 0xe3);
+            func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x71), 0, 0xe3);
 #endif
             arg0->unknown_24_ = 7;
         }
@@ -340,9 +340,9 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
         if (func_ov017_021a85e8((unsigned char*)arg0, var19) == 0 && var2->unknown_9a0_ == 3) {
             if (func_0202c578(var4, 0) || func_0202c578(var4, arg0->unknown_34_)) {
 #if defined(jpn)
-                func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x71), 0);
+                func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x71), 0);
 #else
-                func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x71), 0, 0xe3);
+                func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x71), 0, 0xe3);
 #endif
                 arg0->unknown_24_ = 7;
             } else {
@@ -365,9 +365,9 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
                 var2->unknown_28_ = arg0->unknown_44_;
 #endif
 #if defined(jpn)
-                func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x6f), 0);
+                func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x6f), 0);
 #else
-                func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x6f), 0, 0xe3);
+                func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x6f), 0, 0xe3);
 #endif
                 arg0->unknown_24_ = 7;
             }
@@ -376,9 +376,9 @@ extern "C" ARM void func_ov017_021a7e14(Struct_ov017_021a7e14_5* arg0) {
         func_02043204((char*)var2);
         var2->unknown_998_ = 1;
 #if defined(jpn)
-        func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x65), var7);
+        func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x65), done);
 #else
-        func_0204500c((Struct_02021b84*)var2, (char*)func_020e0434(arg0->unknown_1c_, 0x65), var7, 0xe3);
+        func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x65), done, 0xe3);
 #endif
         arg0->unknown_24_ = 7;
     } else if (arg0->unknown_24_ == 7) {

@@ -9,15 +9,15 @@ extern "C" int func_02042638(char *arg0, int arg1, int arg2);
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" int func_02041fac(char *arg0, int arg1, int arg2);
-extern "C" int func_02041e70(char *arg0, int arg1);
-extern "C" int func_02041b70(char *arg0, int arg1, const char *arg2);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" int func_ov002_02159774(void *arg0, int arg1, int arg2, int arg3, int arg4);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+int AppendFormatted02041fac(char *buf, int a, int b);
+int AppendPaletteTag_02041e70(char *dst, int palette);
+int AppendNameTag_02041b70(char *dst, int n, const char *name);
+int AppendString02042058(char *dst, const char *src);
+extern "C" int func_ov002_02159774(void *base, int id, int a2, int a3, int a4);
 
 // USA: func_ov002_0215e9c4
 extern "C" ARM void func_ov002_0215e9c4(unsigned char *arg0, char *arg1, int arg2) {
@@ -31,8 +31,8 @@ extern "C" ARM void func_ov002_0215e9c4(unsigned char *arg0, char *arg1, int arg
     }
     func_02041ea4(arg1, var1);
 
-    int var2 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + RG(0x20, 0x8)), 3);
-    func_02041fac(arg1, var2, 0x16);
+    int field = KeyTable_Get((struct Container020e0310 *) (base + RG(0x20, 0x8)), 3);
+    AppendFormatted02041fac(dst, field, 0x16);
 
     for (int var3 = 0; var3 < *(signed char *) (arg0 + RG(0x1c73, 0x1b37)); var3++) {
         GameObject *var4 = var0->GetPartyMemberByIndex(((signed char *) (arg0 + RG(0x1c6e, 0x1b32)))[var3]);

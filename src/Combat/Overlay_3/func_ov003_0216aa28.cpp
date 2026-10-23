@@ -48,8 +48,8 @@ struct Struct_ov003_0216aa28_3 {
 
 struct Struct_020465c0;
 
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
 #if defined(jpn)
 #define APPLY_MENU(a,b,c,d,e) func_0205d5d0(a,b,c,d)
 #else
@@ -113,11 +113,11 @@ extern "C" ARM void func_ov003_0216aa28(struct Struct_ov003_0216aa28_2* arg0) {
 #if defined(jpn)
     func_02042428(arg0->unknown_7c_, 8);
 #endif
-    func_02042058(arg0->unknown_7c_, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, 0x65));
-    func_02046380(var4);
-    func_020465c0(var4, 0, var5->unknown_f6c_);
-    func_020465f0((unsigned char*)var4, 0, 7);
-    func_020465d8((unsigned char*)var4, 0, 1);
-    APPLY_MENU((struct Struct_0205d5d0*)&arg0->unknown_e4_, 0, (int)arg0->unknown_7c_, 1, 0);
-    arg0->unknown_4eb_ = 0;
+    AppendString02042058(menu->textBuf, KeyTable_Get((struct Container020e0310*)menu->names, 0x65));
+    func_02046380(g);
+    StoreInArray0x8b0_020465c0(g, 0, p->value);
+    SetByteInRange_020465f0((unsigned char*)g, 0, 7);
+    SetByteAtIndex_020465d8((unsigned char*)g, 0, 1);
+    APPLY_MENU((struct StructA0205d5d0*)&menu->list, 0, (int)menu->textBuf, 1, 0);
+    menu->pendingReset = 0;
 }

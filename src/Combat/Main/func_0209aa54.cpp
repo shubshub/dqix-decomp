@@ -23,28 +23,28 @@ struct Struct_0209aa54_4 {
     int unknown_950_;
 };
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_02083b60(unsigned char* arg0, int arg1);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+void PartyMember_LearnSpell(unsigned char* obj, int index);
 
 // USA: func_0209aa54
-extern "C" ARM int func_0209aa54(struct Struct_0209aa54_3* arg0, unsigned char* arg1, unsigned char* arg2,
-                                int arg3) {
-    if (&arg0->unknown_0_->unknown_100_[0].unknown_c_[0] == NULL) return 0;
-    if (&arg0->unknown_0_->unknown_51c_[0] == NULL) return 0;
-    struct Struct_0209aa54_4* var0 = (struct Struct_0209aa54_4*)func_02053c6c(arg1);
-    if (var0 == 0) return 0;
-    int var1 = var0->unknown_950_;
-    int var2;
-    unsigned short var3;
-    int var4 = 0;
-    for (var2 = 0; var2 < arg0->unknown_0_->unknown_51c_[var1]; var2++) {
-        int var5 = arg0->unknown_0_->unknown_100_[var1].unknown_c_[var2].unknown_2_;
-        int var6 = *(unsigned short*)((unsigned char*)var0 + var0->unknown_950_ * 2 + 0x100 + 0x6c);
-        var3 = arg0->unknown_0_->unknown_100_[var1].unknown_c_[var2].unknown_0_;
-        if (var6 >= var5 && var5 > arg3) {
-            func_02083b60((unsigned char*)var0, var3);
-            arg2[var4] = (unsigned char)var3;
-            var4++;
+extern "C" ARM int func_0209aa54(struct Holder0209aa54* h, unsigned char* path, unsigned char* out,
+                                int threshold) {
+    if (&h->base->slots[0].pairs[0] == NULL) return 0;
+    if (&h->base->counts[0] == NULL) return 0;
+    struct Field150_0209aa54* f = (struct Field150_0209aa54*)GetFieldAt0x150_02053c6c(path);
+    if (f == 0) return 0;
+    int slot = f->slot;
+    int idx;
+    unsigned short a;
+    int count = 0;
+    for (idx = 0; idx < h->base->counts[slot]; idx++) {
+        int b = h->base->slots[slot].pairs[idx].b;
+        int lim = *(unsigned short*)((unsigned char*)f + f->slot * 2 + 0x100 + 0x6c);
+        a = h->base->slots[slot].pairs[idx].a;
+        if (lim >= b && b > threshold) {
+            PartyMember_LearnSpell((unsigned char*)f, a);
+            out[count] = (unsigned char)a;
+            count++;
         }
     }
     return var4;

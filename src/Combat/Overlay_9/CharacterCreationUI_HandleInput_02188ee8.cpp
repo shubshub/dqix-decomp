@@ -4,95 +4,111 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 #include "Resource/CharacterCreationUI.h"
+#include "Resource/GridCursor.h"
+#include "Resource/Keyboard.h"
+#include "Sound/SePlayer.h"
+#include "Graphics/CharacterModel.h"
 
 struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bb84;
 struct Node0205bacc;
-struct SePlayer;
 void GridCursor_Init(Struct_0205bef8*);
 void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 void GridCursor_SetCount(Node0205bacc*, int);
-int GetField0_0205bafc(void*);
+int GridCursor_GetCount(void*);
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void SePlayer_Play(SePlayer*, int, int);
-int GetFieldByKey020e0434(Container020e0310*, int);
+int KeyTable_Get(Container020e0310*, int);
 extern "C" int func_02001aec(const void*, const void*, unsigned int);
-extern "C" int func_ov009_0218a8b4(Struct_ov009_021842a0*, int, int);
-extern "C" int func_ov009_0218aab0(Struct_ov009_021842a0*, unsigned char);
+extern "C" int CharacterCreationUI_GetTouchedInput(CharacterCreationUI*, int, int);
+extern "C" int CharacterCreationUI_PressNameKey(CharacterCreationUI*, unsigned char);
 extern "C" void func_ov009_0218ad0c(void*);
 extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
-extern "C" void func_ov009_0218b850(CharacterCreationUI*);
+extern "C" void CharacterCreationUI_PickRandomName(CharacterCreationUI*);
 extern "C" void GridCursor_SetSelectedIndex(CreationNavigation*, int);
-extern "C" int func_0205bf58(CreationNavigation*, unsigned int);
+extern "C" int GridCursor_Update(CreationNavigation*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, int);
 
-struct Struct_ov009_02187b34 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
-    unsigned char unknown_15_4_ : 4;
-    short unknown_16_, unknown_18_, unknown_1a_;
+struct PartyMemberAppearance {
+    short unknown0[2];
+    short face;
+    short hairStyle;
+    short unknown8[6];
+    unsigned char female : 1;
+    unsigned char skinColor : 3;
+    unsigned char eyeColor : 4;
+    unsigned char hairColor : 4;
+    unsigned char unknown15 : 4;
+    short unknown16, width, height;
 };
 struct PartyMemberData { char unknown0[0x488]; PartyMemberAppearance appearance; };
-extern SePlayer g_sePlayer;
 
-#define RESET_NAVIGATION(columns, rows, total, selected) \
+// The row of tab icons at the top of the touchscreen, one per tab from Gender to NameEntry: icon N is the
+// 16 x 16 square at x = 0x78 + N * 16, y = 8 (where CharacterCreationUI_PlaceSprites puts their sprites).
+
+// A jpn name: up to 5 two-byte characters (CharacterCreationUI_PressNameKey stops adding at 5, and names[sex] holds 10 bytes
+// and a NUL). An empty name is text 0x4272, which CharacterCreationUI_PickRandomName copies in before a random name.
+enum JpnName
+{
+    JpnName_MaxLength = 5,
+    JpnName_Size = JpnName_MaxLength * 2,
+    JpnName_EmptyText = 0x4272,
+};
+
+#define RESET_NAVIGATION(columns, rows, count, index) \
     CreationNavigation* navigation = &self->navigation; \
     GridCursor_Init((Struct_0205bef8*)navigation); \
-    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, 1); \
-    GridCursor_SetCount((Node0205bacc*)navigation, total); \
-    navigation->field4 = 1; \
-    GridCursor_SetSelectedIndex(navigation, selected); \
-    navigation->flags3d = 0
+    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, GridCursorOrder_RowMajor); \
+    GridCursor_SetCount((Node0205bacc*)navigation, count); \
+    navigation->pageCount = 1; \
+    GridCursor_SetSelectedIndex(navigation, index); \
+    navigation->wrapRows = 0
 
-#define MOVE_CURSOR_TO_TAB_ICON(selected) \
-    self->cursorX = ((selected) << 4) + 0x78; \
-    self->cursorY = 8; \
-    self->cursorWidth = 16; \
-    self->cursorHeight = 16
+#define MOVE_CURSOR_TO_TAB_ICON(icon) \
+    self->cursorX = (icon) * CreationTabIcon_Size + CreationTabIcon_FirstX; \
+    self->cursorY = CreationTabIcon_Y; \
+    self->cursorWidth = CreationTabIcon_Size; \
+    self->cursorHeight = CreationTabIcon_Size
 
-static inline unsigned char inline_ov009_02188ee8(Struct_ov009_021842a0* arg0) { return arg0->unknown_daa_[arg0->unknown_da3_]; }
-static inline unsigned char inline_ov009_02188ee8_2(Struct_ov009_021842a0* arg0) { return arg0->unknown_da8_[arg0->unknown_da3_]; }
-static inline unsigned char inline_ov009_02188ee8_3(Struct_ov009_021842a0* arg0) { return arg0->unknown_dae_[arg0->unknown_da3_]; }
+static inline unsigned char GetSkinColor(CharacterCreationUI* self) { return self->skinColor[self->sex]; }
+static inline unsigned char GetEyeColor(CharacterCreationUI* self) { return self->eyeColor[self->sex]; }
+static inline unsigned char GetHairColor(CharacterCreationUI* self) { return self->hairColor[self->sex]; }
 
 // Overlay 9, originally func_ov009_02188ee8 (USA/EUR 0x02188ee8, JPN 0x02189e04)
 extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
 {
     self->flags &= ~CreationFlag_ConfirmTouched;
     self->flags &= ~CreationFlag_BackTouched;
-    int result = CreationInput_None;
-    int choice = -1;
-    int x, y;
-    g_touchInput.GetTouchPoint(&x, &y);
+    int input = CreationInput_None;
+    int choice = CreationInput_None;
+    int touchX, touchY;
+    g_touchInput.GetTouchPoint(&touchX, &touchY);
     int touched = 0;
     if (g_touchInput.pressed_) {
         touched = 1;
-        choice = func_ov009_0218a8b4(self, x, y);
+        choice = CharacterCreationUI_GetTouchedInput(self, touchX, touchY);
         self->touchedChoice = choice;
-        if ((unsigned int)(choice + 3) <= 1) {
+        if ((unsigned int)(choice - CreationInput_Back) <= CreationInput_Confirm - CreationInput_Back) {
             if (choice == CreationInput_Confirm) self->flags |= CreationFlag_ConfirmTouched;
             else if (choice == CreationInput_Back) self->flags |= CreationFlag_BackTouched;
-            result = choice;
-            SePlayer_Play(&g_sePlayer, 1, 0);
+            input = choice;
+            SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
         } else if (choice >= CreationInput_FirstTabIcon && choice <= CreationInput_LastTabIcon) {
-            result = choice;
+            input = choice;
             if (choice - CreationInput_TabIcon <= self->furthestState[self->sex] && choice - CreationInput_TabIcon != self->state)
-                SePlayer_Play(&g_sePlayer, 1, 0);
+                SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
         } else if (choice >= 0) {
             GridCursor_SetSelectedIndex(&self->navigation, choice);
             if (self->state == CreationTab_NameEntry) {
-                func_ov009_0218aab0(self, (unsigned char)choice);
-                if (self->flags & 0x200000) {
-                    self->flags &= ~0x200000;
-                    result = CreationInput_Confirm;
+                CharacterCreationUI_PressNameKey(self, (unsigned char)choice);
+                if (self->flags & CreationFlag_KeyboardOk) {
+                    self->flags &= ~CreationFlag_KeyboardOk;
+                    input = CreationInput_Confirm;
                 }
-                arg0->unknown_d9c_ |= 0x100;
+                self->flags |= CreationFlag_RefreshSummary;
             }
             arg0->unknown_c54_ = arg0->unknown_c4c_;
             arg0->unknown_c56_ = arg0->unknown_c4e_;
@@ -102,104 +118,104 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
     if (!touched) {
         unsigned int ticks = GameState::GetInstance()->GetTickCount();
         if (!ticks) ticks = 1;
-        int previous = self->navigation.row;
-        if (func_0205bf58(&self->navigation, ticks))
+        int previousRow = self->navigation.row;
+        if (GridCursor_Update(&self->navigation, ticks))
             choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
         if (self->state == CreationTab_NameEntry) {
             int rows = self->navigation.rows;
-            int count = GetField0_0205bafc(&self->navigation);
-            if (rows == 1 && count == 8) {
+            int cellCount = GridCursor_GetCount(&self->navigation);
+            if (rows == 1 && cellCount == CreationTabIcon_Count) {
                 if (choice >= self->furthestState[self->sex]) {
-                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - 1);
-                    choice = self->furthestState[self->sex] - 1;
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - CreationTab_Gender);
+                    choice = self->furthestState[self->sex] - CreationTab_Gender;
                 }
-                if (g_keyManager.TestKeysPressed(0x80)) {
-                    RESET_NAVIGATION(11, 6, 66, self->keyboardChoice);
+                if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
+                    RESET_NAVIGATION(KeyboardGrid_Columns, KeyboardGrid_Rows, KeyboardGrid_Cells, self->keyboardChoice);
                     GridCursor_SetSelectedIndex(&self->navigation, self->navigation.column);
                     self->keyboardChoice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
-                    self->flags |= 0x2000;
+                    self->flags |= CreationFlag_RedrawPanel;
                     CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
-                if (g_keyManager.TestKeysPressed(1)) {
-                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
-                    if (result - CreationInput_TabIcon <= self->furthestState[self->sex] && result - CreationInput_TabIcon != self->state)
-                        SePlayer_Play(&g_sePlayer, 1, 0);
-                } else if (g_keyManager.TestKeysPressed(2)) {
-                    if (func_02001aec(self->names[self->sex], (const void*)GetFieldByKey020e0434(&self->texts, 0x4272), 10) == 0)
-                        result = CreationInput_Back;
+                if (g_keyManager.TestKeysPressed(KEY_A)) {
+                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
+                        SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
+                } else if (g_keyManager.TestKeysPressed(KEY_B)) {
+                    if (func_02001aec(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, JpnName_EmptyText), JpnName_Size) == 0)
+                        input = CreationInput_Back;
                     else {
-                        func_ov009_0218b200(arg0, 0);
-                        arg0->unknown_d9c_ |= 0x8100;
+                        func_ov009_0218b200(self, 0);
+                        self->flags |= (CreationFlag_RefreshName | CreationFlag_RefreshSummary);
                     }
                 }
-                return result;
-            } else if (rows == 6) {
-                if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
-                    RESET_NAVIGATION(8, 1, 8, self->state - 1);
-                    navigation->flags3c = 0;
-                    MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
-                    self->flags |= 0x2000;
+                return input;
+            } else if (rows == KeyboardGrid_Rows) {
+                if (g_keyManager.TestKeysPressed(KEY_UP) && previousRow == 0) {
+                    RESET_NAVIGATION(CreationTabIcon_Count, 1, CreationTabIcon_Count, self->state - CreationTab_Gender);
+                    navigation->wrapColumns = 0;
+                    MOVE_CURSOR_TO_TAB_ICON(self->state - CreationTab_Gender);
+                    self->flags |= CreationFlag_RedrawPanel;
                     return CreationInput_None;
                 }
-                if (g_keyManager.TestKeysPressed(8)) {
-                    func_ov009_0218ad0c(arg0);
-                } else if (g_keyManager.TestKeysPressed(4)) {
-                    func_ov009_0218b850(arg0);
-                    arg0->unknown_d9c_ |= 0x8100;
-                } else if (g_keyManager.TestKeysPressed(1)) {
-                    if (func_ov009_0218aab0(self, self->keyboardChoice) && self->nameFlags[self->sex] == 5) {
-                        choice = 65;
+                if (g_keyManager.TestKeysPressed(KEY_START)) {
+                    func_ov009_0218ad0c(self);
+                } else if (g_keyManager.TestKeysPressed(KEY_SELECT)) {
+                    CharacterCreationUI_PickRandomName(self);
+                    self->flags |= (CreationFlag_RefreshName | CreationFlag_RefreshSummary);
+                } else if (g_keyManager.TestKeysPressed(KEY_A)) {
+                    if (CharacterCreationUI_PressNameKey(self, self->keyboardChoice) && self->nameLengths[self->sex] == JpnName_MaxLength) {
+                        choice = KeyboardGrid_Cells - 1;
                         GridCursor_SetSelectedIndex(&self->navigation, choice);
                     }
-                    if (!(arg0->unknown_d9c_ & 0x200000)) arg0->unknown_d9c_ |= 0xa100;
+                    if (!(self->flags & CreationFlag_KeyboardOk)) self->flags |= (CreationFlag_RefreshName | CreationFlag_RedrawPanel | CreationFlag_RefreshSummary);
                     else {
-                        func_ov009_0218ad0c(arg0);
-                        arg0->unknown_d9c_ &= ~0x200000;
+                        func_ov009_0218ad0c(self);
+                        self->flags &= ~CreationFlag_KeyboardOk;
                     }
-                } else if (g_keyManager.TestKeysPressed(2)) {
-                    if (func_02001aec(self->names[self->sex], (const void*)GetFieldByKey020e0434(&self->texts, 0x4272), 10) == 0)
-                        result = CreationInput_Back;
+                } else if (g_keyManager.TestKeysPressed(KEY_B)) {
+                    if (func_02001aec(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, JpnName_EmptyText), JpnName_Size) == 0)
+                        input = CreationInput_Back;
                     else {
-                        func_ov009_0218b200(arg0, 0);
-                        arg0->unknown_d9c_ |= 0x8100;
+                        func_ov009_0218b200(self, 0);
+                        self->flags |= (CreationFlag_RefreshName | CreationFlag_RefreshSummary);
                     }
                 }
             }
         } else if (self->state != CreationTab_NameEntry) {
             int rows = self->navigation.rows;
-            int count = GetField0_0205bafc(&self->navigation);
-            if (rows == 1 && count == 8) {
+            int cellCount = GridCursor_GetCount(&self->navigation);
+            if (rows == 1 && cellCount == CreationTabIcon_Count) {
                 if (choice >= self->furthestState[self->sex]) {
-                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - 1);
-                    choice = self->furthestState[self->sex] - 1;
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - CreationTab_Gender);
+                    choice = self->furthestState[self->sex] - CreationTab_Gender;
                 }
-                if (g_keyManager.TestKeysPressed(0x80)) {
+                if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
-                    self->flags |= 0x2000;
+                    self->flags |= CreationFlag_RedrawPanel;
                     CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
-                if (g_keyManager.TestKeysPressed(1)) {
-                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
-                    if (result - CreationInput_TabIcon <= self->furthestState[self->sex] && result - CreationInput_TabIcon != self->state)
-                        SePlayer_Play(&g_sePlayer, 1, 0);
-                } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
-                return result;
+                if (g_keyManager.TestKeysPressed(KEY_A)) {
+                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
+                        SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
+                } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
+                return input;
             }
-            if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
-                RESET_NAVIGATION(8, 1, 8, self->state - 1);
-                navigation->flags3c = 0;
-                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
-                self->flags |= 0x2000;
+            if (g_keyManager.TestKeysPressed(KEY_UP) && previousRow == 0) {
+                RESET_NAVIGATION(CreationTabIcon_Count, 1, CreationTabIcon_Count, self->state - CreationTab_Gender);
+                navigation->wrapColumns = 0;
+                MOVE_CURSOR_TO_TAB_ICON(self->state - CreationTab_Gender);
+                self->flags |= CreationFlag_RedrawPanel;
                 return CreationInput_None;
             }
-            if (g_keyManager.TestKeysPressed(1)) {
-                result = CreationInput_Confirm;
-                SePlayer_Play(&g_sePlayer, 1, 0);
-            } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
+            if (g_keyManager.TestKeysPressed(KEY_A)) {
+                input = CreationInput_Confirm;
+                SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
+            } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
         }
     }
     self->flags &= ~CreationFlag_ChoiceChanged;
@@ -210,30 +226,30 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
         case CreationTab_HairStyle: if (self->hairStyle[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->hairStyle[self->sex] = choice; break;
         case CreationTab_HairColor: if (self->hairColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->hairColor[self->sex] = choice; break;
         case CreationTab_Face: if (self->faceStyle[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->faceStyle[self->sex] = choice; break;
-        case CreationTab_EyeColor: if (self->eyeColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->eyeColor[self->sex] = choice; break;
         case CreationTab_SkinColor: if (self->skinColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->skinColor[self->sex] = choice; break;
+        case CreationTab_EyeColor: if (self->eyeColor[self->sex] != choice) self->flags |= CreationFlag_ChoiceChanged; self->eyeColor[self->sex] = choice; break;
         case CreationTab_NameEntry: if (self->keyboardChoice != choice) self->flags |= CreationFlag_ChoiceChanged; self->keyboardChoice = choice; break;
         }
     }
     if (self->flags & CreationFlag_ChoiceChanged) {
-        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, 2, 0);
+        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, SoundEffect_Cursor, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
             PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
-            self->flags |= 0x60000;
-            unsigned char eyeColor = GetEyeColor(self);
-            appearance->eyeColor = eyeColor;
+            self->flags |= (CreationFlag_ResetAngleOnSwap | CreationFlag_RescaleOnSwap);
             unsigned char skinColor = GetSkinColor(self);
             appearance->skinColor = skinColor;
+            unsigned char eyeColor = GetEyeColor(self);
+            appearance->eyeColor = eyeColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->faceStyle[self->sex]) + 0x233c;
-            appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hairStyle[self->sex]) + 0x2328;
+            appearance->face = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
+            appearance->hairStyle = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
         }
         if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
-        self->flags |= 0x6100;
+        self->flags |= (0x4000 | CreationFlag_RedrawPanel | CreationFlag_RefreshSummary);
     }
-    return var0;
+    return input;
 }
 #undef RESET_NAVIGATION
 #undef MOVE_CURSOR_TO_TAB_ICON
@@ -242,238 +258,213 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
 #include <globaldefs.h>
 #include <GameState/GameState.h>
 #include "Resource/CharacterCreationUI.h"
+#include "Resource/GridCursor.h"
+#include "Resource/Keyboard.h"
+#include "Sound/SePlayer.h"
+#include "Graphics/CharacterModel.h"
 
 struct Struct_0205bef8;
 struct Struct_0205ba68;
 struct Struct_0205bb84;
 struct Node0205bacc;
-struct SePlayer;
 void GridCursor_Init(Struct_0205bef8*);
 void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 void GridCursor_SetCount(Node0205bacc*, int);
-int GetField0_0205bafc(void*);
+int GridCursor_GetCount(void*);
 int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void SePlayer_Play(SePlayer*, int, int);
 
-struct Struct_02000c9c_93 {
-    char unknown_0_[0x24];
-    unsigned short unknown_24_;
-    char unknown_26_[0x2e];
-    unsigned char unknown_54_;
-    unsigned char unknown_55_;
-    char unknown_56_[9];
-    unsigned char unknown_5f_;
+// The keyboard's fields this file touches, as CharacterCreationUI_HandleNameEntry names them.
+struct Keyboard {
+    KeyboardKey* key_;
+    char unknown4[0x14];
+    int repeatTimer_;
+    short repeatDir_;
 };
-struct Struct_ov009_02188ee8 {
-    int unknown_0_, unknown_4_, unknown_8_, unknown_c_, unknown_10_, unknown_14_, unknown_18_, unknown_1c_;
-    char unknown_20_[0x18];
-    unsigned short unknown_38_;
-    char unknown_3a_[2];
-    unsigned char unknown_3c_, unknown_3d_;
-    char unknown_3e_[2];
+struct PartyMemberAppearance {
+    short unknown0[2];
+    short face;
+    short hairStyle;
+    short unknown8[6];
+    unsigned char female : 1;
+    unsigned char skinColor : 3;
+    unsigned char eyeColor : 4;
+    unsigned char hairColor : 4;
+    unsigned char unknown15 : 4;
+    short unknown16, width, height;
 };
-struct Struct_ov009_02188ee8_2 { void* unknown_0_; char unknown_4_[0x14]; int unknown_18_; unsigned short unknown_1c_; };
-struct Struct_ov009_02187b34 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
-    unsigned char unknown_15_4_ : 4;
-    short unknown_16_, unknown_18_, unknown_1a_;
-};
-struct Struct_ov005_0215840c_2 { char unknown_0_[0x488]; Struct_ov009_02187b34 unknown_488_; };
-struct Struct_ov009_02188ee8_3 { char unknown_0_[0x800]; Struct_ov009_02188ee8 unknown_800_; };
-struct Struct_ov009_021842a0_2 {
-    char unknown_0_[0xbc];
-    void* unknown_bc_;
-    Struct_ov009_02188ee8_2* unknown_c0_;
-    char unknown_c4_[0x3ec - 0xc4];
-    Struct_ov009_02188ee8_3 unknown_3ec_;
-    char unknown_c2c_[0x20];
-    short unknown_c4c_, unknown_c4e_, unknown_c50_, unknown_c52_, unknown_c54_, unknown_c56_;
-    signed char unknown_c58_;
-    char unknown_c59_[0xd88 - 0xc59];
-    Struct_ov005_0215840c_2* unknown_d88_;
-    int unknown_d8c_;
-    char unknown_d90_[0xc];
-    unsigned int unknown_d9c_;
-    signed char unknown_da0_[3];
-    unsigned char unknown_da3_;
-    unsigned char unknown_da4_[2], unknown_da6_[2], unknown_da8_[2], unknown_daa_[2], unknown_dac_[2], unknown_dae_[2];
-    char unknown_db0_[5];
-    unsigned char unknown_db5_;
-};
-extern SePlayer g_sePlayer;
-extern "C" int func_ov009_02189854(CharacterCreation*, int, int);
-extern "C" void GridCursor_SetSelectedIndex(Navigation*, int);
-extern "C" int func_0205bf58(Navigation*, unsigned int);
-extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreation*);
-extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreation*, int);
-extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreation*, int);
-extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreation*, int, int);
+struct PartyMemberData { char unknown0[0x488]; PartyMemberAppearance appearance; };
+extern "C" int CharacterCreationUI_GetTouchedInput(CharacterCreationUI*, int, int);
+extern "C" void GridCursor_SetSelectedIndex(CreationNavigation*, int);
+extern "C" int GridCursor_Update(CreationNavigation*, unsigned int);
+extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
+extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
+extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
+extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, int);
 
-#define RESET_NAVIGATION(columns, rows, total, selected) \
-    CharacterControls* controls = &self->controls; \
-    GridCursor_Init((Struct_0205bef8*)&controls->navigation); \
-    GridCursor_SetDimensions((Struct_0205ba68*)&controls->navigation, columns, rows, 1); \
-    GridCursor_SetCount((Node0205bacc*)&controls->navigation, total); \
-    controls->navigation.field4 = 1; \
-    GridCursor_SetSelectedIndex(&controls->navigation, selected); \
-    controls->navigation.field3d = 0
+// The row of tab icons at the top of the touchscreen, one per tab from Gender to NameEntry: icon N is the
+// 16 x 16 square at x = 0x78 + N * 16, y = 8 (where CharacterCreationUI_PlaceSprites puts their sprites).
 
-#define MOVE_CURSOR_TO_TAB_ICON(selected) \
-    self->cursorX = ((selected) << 4) + 0x78; \
-    self->cursorY = 8; \
-    self->cursorWidth = 16; \
-    self->cursorHeight = 16
+#define RESET_NAVIGATION(columns, rows, count, index) \
+    CreationNavigation* navigation = &self->navigation; \
+    GridCursor_Init((Struct_0205bef8*)navigation); \
+    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, GridCursorOrder_RowMajor); \
+    GridCursor_SetCount((Node0205bacc*)navigation, count); \
+    navigation->pageCount = 1; \
+    GridCursor_SetSelectedIndex(navigation, index); \
+    navigation->wrapRows = 0
 
-static inline unsigned char inline_ov009_02188ee8(Struct_ov009_021842a0_2* arg0) { return arg0->unknown_daa_[arg0->unknown_da3_]; }
-static inline unsigned char inline_ov009_02188ee8_2(Struct_ov009_021842a0_2* arg0) { return arg0->unknown_da8_[arg0->unknown_da3_]; }
-static inline unsigned char inline_ov009_02188ee8_3(Struct_ov009_021842a0_2* arg0) { return arg0->unknown_dae_[arg0->unknown_da3_]; }
+#define MOVE_CURSOR_TO_TAB_ICON(icon) \
+    self->cursorX = (icon) * CreationTabIcon_Size + CreationTabIcon_FirstX; \
+    self->cursorY = CreationTabIcon_Y; \
+    self->cursorWidth = CreationTabIcon_Size; \
+    self->cursorHeight = CreationTabIcon_Size
+
+static inline unsigned char GetSkinColor(CharacterCreationUI* self) { return self->skinColor[self->sex]; }
+static inline unsigned char GetEyeColor(CharacterCreationUI* self) { return self->eyeColor[self->sex]; }
+static inline unsigned char GetHairColor(CharacterCreationUI* self) { return self->hairColor[self->sex]; }
 
 // Overlay 9, originally func_ov009_02188ee8 (USA/EUR 0x02188ee8, JPN 0x02189e04)
-extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreation* self) {
+extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self) {
     self->flags &= ~(CreationFlag_ConfirmTouched | CreationFlag_BackTouched);
-    int result = CreationInput_None;
-    int choice = -1;
-    int x, y;
-    g_touchInput.GetTouchPoint(&x, &y);
+    int input = CreationInput_None;
+    int choice = CreationInput_None;
+    int touchX, touchY;
+    g_touchInput.GetTouchPoint(&touchX, &touchY);
     int touched = 0;
     if (g_touchInput.pressed_) {
         touched = 1;
-        choice = func_ov009_02189854(self, x, y);
+        choice = CharacterCreationUI_GetTouchedInput(self, touchX, touchY);
         self->touchedChoice = choice;
-        if ((unsigned int)(choice + 3) <= 1) {
+        if ((unsigned int)(choice - CreationInput_Back) <= CreationInput_Confirm - CreationInput_Back) {
             if (choice == CreationInput_Confirm) self->flags |= CreationFlag_ConfirmTouched;
             else if (choice == CreationInput_Back) self->flags |= CreationFlag_BackTouched;
-            result = choice;
-            SePlayer_Play(&g_sePlayer, 1, 0);
+            input = choice;
+            SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
         } else if (choice >= CreationInput_FirstTabIcon && choice <= CreationInput_LastTabIcon) {
-            result = choice;
-            if (choice - CreationInput_TabIcon <= self->maxSteps[self->gender] && choice - CreationInput_TabIcon != self->state)
-                SePlayer_Play(&g_sePlayer, 1, 0);
+            input = choice;
+            if (choice - CreationInput_TabIcon <= self->furthestState[self->sex] && choice - CreationInput_TabIcon != self->state)
+                SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
         } else if (choice >= 0) {
-            GridCursor_SetSelectedIndex(&self->controls.navigation, choice);
+            GridCursor_SetSelectedIndex(&self->navigation, choice);
             if (self->state == CreationTab_NameEntry) {
-                if (self->flags & 0x200000) {
-                    self->flags &= ~0x200000;
-                    result = CreationInput_Confirm;
+                if (self->flags & CreationFlag_KeyboardOk) {
+                    self->flags &= ~CreationFlag_KeyboardOk;
+                    input = CreationInput_Confirm;
                 }
-                arg0->unknown_d9c_ |= 0x100;
+                self->flags |= CreationFlag_RefreshSummary;
             }
-            arg0->unknown_c54_ = arg0->unknown_c4c_;
-            arg0->unknown_c56_ = arg0->unknown_c4e_;
+            self->lastCursorX = self->cursorX;
+            self->lastCursorY = self->cursorY;
         }
     } else if (g_touchInput.isRepeatValid_ && g_touchInput.currentReading_.isHeld) touched = 1;
     else if (g_touchInput.released_) touched = 1;
     if (!touched) {
         unsigned int ticks = GameState::GetInstance()->GetTickCount();
         if (!ticks) ticks = 1;
-        int previous = self->controls.navigation.selection;
-        if (func_0205bf58(&self->controls.navigation, ticks)) choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation);
+        int previousRow = self->navigation.row;
+        if (GridCursor_Update(&self->navigation, ticks)) choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
         if (self->state == CreationTab_NameEntry) {
-            int rows = self->controls.navigation.rows;
-            int count = GetField0_0205bafc(&self->controls.navigation);
-            if (rows == 1 && count == 8) {
-                if (choice >= self->maxSteps[self->gender]) {
-                    GridCursor_SetSelectedIndex(&self->controls.navigation, self->maxSteps[self->gender] - 1);
-                    choice = self->maxSteps[self->gender] - 1;
+            int rows = self->navigation.rows;
+            int cellCount = GridCursor_GetCount(&self->navigation);
+            if (rows == 1 && cellCount == CreationTabIcon_Count) {
+                if (choice >= self->furthestState[self->sex]) {
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - CreationTab_Gender);
+                    choice = self->furthestState[self->sex] - CreationTab_Gender;
                 }
-                if (g_keyManager.TestKeysPressed(0x80)) {
-                    RESET_NAVIGATION(11, 6, 66, 0);
-                    self->flags |= 0x2000;
-                    if (self->savedEntries) self->list->entries = self->savedEntries;
-                    self->list->selection = 0;
-                    self->list->counter = 0;
+                if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
+                    RESET_NAVIGATION(KeyboardGrid_Columns, KeyboardGrid_Rows, KeyboardGrid_Cells, 0);
+                    self->flags |= CreationFlag_RedrawPanel;
+                    if (self->savedKey) self->keyboard->key_ = self->savedKey;
+                    self->keyboard->repeatTimer_ = 0;
+                    self->keyboard->repeatDir_ = 0;
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
-                if (g_keyManager.TestKeysPressed(1)) {
-                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + CreationInput_FirstTabIcon;
-                    if (result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-                        SePlayer_Play(&g_sePlayer, 1, 0);
+                if (g_keyManager.TestKeysPressed(KEY_A)) {
+                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
+                        SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
                 }
-                return var15;
+                return input;
             }
-            if (!self->blocked && g_keyManager.TestKeysPressed(0x40)) {
-                self->savedEntries = self->list->entries;
-                self->list->entries = 0;
-                RESET_NAVIGATION(8, 1, 8, self->state - 1);
-                controls->navigation.field3c = 0;
-                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
+            if (self->keyboardResult == KeyboardResult_None && g_keyManager.TestKeysPressed(KEY_UP)) {
+                self->savedKey = self->keyboard->key_;
+                self->keyboard->key_ = 0;
+                RESET_NAVIGATION(CreationTabIcon_Count, 1, CreationTabIcon_Count, self->state - CreationTab_Gender);
+                navigation->wrapColumns = 0;
+                MOVE_CURSOR_TO_TAB_ICON(self->state - CreationTab_Gender);
             }
         } else if (self->state != CreationTab_NameEntry) {
-            int rows = self->controls.navigation.rows;
-            int count = GetField0_0205bafc(&self->controls.navigation);
-            if (rows == 1 && count == 8) {
-                if (choice >= self->maxSteps[self->gender]) {
-                    GridCursor_SetSelectedIndex(&self->controls.navigation, self->maxSteps[self->gender] - 1);
-                    choice = self->maxSteps[self->gender] - 1;
+            int rows = self->navigation.rows;
+            int cellCount = GridCursor_GetCount(&self->navigation);
+            if (rows == 1 && cellCount == CreationTabIcon_Count) {
+                if (choice >= self->furthestState[self->sex]) {
+                    GridCursor_SetSelectedIndex(&self->navigation, self->furthestState[self->sex] - CreationTab_Gender);
+                    choice = self->furthestState[self->sex] - CreationTab_Gender;
                 }
-                if (g_keyManager.TestKeysPressed(0x80)) {
+                if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
-                    self->flags |= 0x2000;
-                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation));
+                    self->flags |= CreationFlag_RedrawPanel;
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
-                if (g_keyManager.TestKeysPressed(1)) {
-                    result = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->controls.navigation) + CreationInput_FirstTabIcon;
-                    if (result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-                        SePlayer_Play(&g_sePlayer, 1, 0);
-                } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
-                if (result == CreationInput_TabIcon + CreationTab_NameEntry) GridCursor_SetDimensions((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
-                return result;
+                if (g_keyManager.TestKeysPressed(KEY_A)) {
+                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
+                        SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
+                } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
+                if (input == CreationInput_TabIcon + CreationTab_NameEntry) GridCursor_SetDimensions((Struct_0205ba68*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
+                return input;
             }
-            if (g_keyManager.TestKeysPressed(0x40) && previous == 0) {
-                RESET_NAVIGATION(8, 1, 8, self->state - 1);
-                controls->navigation.field3c = 0;
-                MOVE_CURSOR_TO_TAB_ICON(self->state - 1);
-                self->flags |= 0x2000;
+            if (g_keyManager.TestKeysPressed(KEY_UP) && previousRow == 0) {
+                RESET_NAVIGATION(CreationTabIcon_Count, 1, CreationTabIcon_Count, self->state - CreationTab_Gender);
+                navigation->wrapColumns = 0;
+                MOVE_CURSOR_TO_TAB_ICON(self->state - CreationTab_Gender);
+                self->flags |= CreationFlag_RedrawPanel;
                 return CreationInput_None;
             }
-            if (g_keyManager.TestKeysPressed(1)) {
-                result = CreationInput_Confirm;
-                SePlayer_Play(&g_sePlayer, 1, 0);
-            } else if (g_keyManager.TestKeysPressed(2)) result = CreationInput_Back;
+            if (g_keyManager.TestKeysPressed(KEY_A)) {
+                input = CreationInput_Confirm;
+                SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
+            } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
         }
     }
     self->flags &= ~CreationFlag_ChoiceChanged;
     if (choice >= 0 && !(choice >= CreationInput_FirstTabIcon && choice <= CreationInput_LastTabIcon)) {
-        unsigned char* genderValue = &self->gender;
+        unsigned char* sexChoice = &self->sex;
         switch (self->state) {
         case CreationTab_NameEntry: break;
-        case CreationTab_Gender: { if (*genderValue != choice) self->flags |= CreationFlag_ChoiceChanged; *genderValue = choice; break; }
-        case CreationTab_BodyType: { unsigned char* values = self->body; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
-        case CreationTab_HairStyle: { unsigned char* values = self->hair; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
-        case CreationTab_HairColor: { unsigned char* values = self->hairColor; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
-        case CreationTab_Face: { unsigned char* values = self->face; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
-        case CreationTab_EyeColor: { unsigned char* values = self->eyes; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
-        case CreationTab_SkinColor: { unsigned char* values = self->skin; int gender = self->gender; unsigned char prior = values[gender]; if (prior != choice) self->flags |= CreationFlag_ChoiceChanged; values[gender] = choice; break; }
+        case CreationTab_Gender: { if (*sexChoice != choice) self->flags |= CreationFlag_ChoiceChanged; *sexChoice = choice; break; }
+        case CreationTab_BodyType: { unsigned char* choices = self->bodyType; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
+        case CreationTab_HairStyle: { unsigned char* choices = self->hairStyle; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
+        case CreationTab_HairColor: { unsigned char* choices = self->hairColor; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
+        case CreationTab_Face: { unsigned char* choices = self->faceStyle; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
+        case CreationTab_SkinColor: { unsigned char* choices = self->skinColor; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
+        case CreationTab_EyeColor: { unsigned char* choices = self->eyeColor; int sex = self->sex; unsigned char previousChoice = choices[sex]; if (previousChoice != choice) self->flags |= CreationFlag_ChoiceChanged; choices[sex] = choice; break; }
         }
     }
     if (self->flags & CreationFlag_ChoiceChanged) {
-        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, 2, 0);
+        if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, SoundEffect_Cursor, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
-            PartyMemberAppearance* appearance = &self->member->appearance;
-            self->flags |= 0x60000;
-            unsigned char eyeColor = GetEyeColor(self);
-            appearance->eyeColor = eyeColor;
+            PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
+            self->flags |= (CreationFlag_ResetAngleOnSwap | CreationFlag_RescaleOnSwap);
             unsigned char skinColor = GetSkinColor(self);
             appearance->skinColor = skinColor;
+            unsigned char eyeColor = GetEyeColor(self);
+            appearance->eyeColor = eyeColor;
             unsigned char hairColor = GetHairColor(self);
             appearance->hairColor = hairColor;
-            appearance->models[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, self->face[self->gender]) + 0x233c;
-            appearance->models[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, self->hair[self->gender]) + 0x2328;
+            appearance->face = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
+            appearance->hairStyle = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
         }
         if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
-        self->flags |= 0x6100;
+        self->flags |= (0x4000 | CreationFlag_RedrawPanel | CreationFlag_RefreshSummary);
     }
-    if (result == CreationInput_TabIcon + CreationTab_NameEntry && result - CreationInput_TabIcon <= self->maxSteps[self->gender] && result - CreationInput_TabIcon != self->state)
-        GridCursor_SetDimensions((Struct_0205ba68*)&self->controls.navigation, 11, 6, 0);
-    return result;
+    if (input == CreationInput_TabIcon + CreationTab_NameEntry && input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
+        GridCursor_SetDimensions((Struct_0205ba68*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
+    return input;
 }
 
 #endif

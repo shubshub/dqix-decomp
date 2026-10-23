@@ -13,17 +13,17 @@ struct Struct_02086f24_6;
 struct Struct_02013fb4;
 struct Struct_ov023_021eeaac_2;
 
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void func_020728ac(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_ov000_0215fa84(void* arg0, short* arg1, short* arg2, short* arg3);
-extern "C" int func_ov023_021ed92c();
-extern "C" void func_020de848(void* arg0);
-extern "C" int func_020de9a4(void* arg0, void* arg1, void* arg2, unsigned int arg3, void* arg4, unsigned short arg5);
-extern "C" void* func_020de824(void* arg0);
-extern "C" void func_0207cbe8(char* arg0);
-extern "C" int func_0207d300(void* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_0207ccf0(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void func_020a1940(unsigned int id);
+void ResetListHeader020727d8(List020727d8* list);
+extern "C" void func_020728ac(void* a, void* b, int c, int d, int e, int f, int g);
+void CopyShortTriple0x8e4a_ov000_0215fa84(void* obj, short* a, short* b, short* c);
+int AreAllListedCombatantsFlagged_021ed92c();
+void ItemTable_Init(void* obj);
+extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
+void* ZeroInitReturn020de824(void* obj);
+void InitStruct0207cbe8(char* obj);
+extern "C" int func_0207d300(void* buf, int a, int b, int c);
+extern "C" int func_0207ccf0(void* buf, int a, int b, int c, int d, int e, int f);
 
 extern "C" int func_020100a8(GameState* arg0);
 extern "C" Struct_0202b2f0* func_0202ae18(void);
@@ -34,9 +34,9 @@ extern "C" void func_0209a804(int* arg0);
 extern "C" void func_0209a8b4(Struct_02086f24_6* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
 extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2* arg0);
 
-extern "C" int* _ZZ21inline_ov023_021f4c04vE1s;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern "C" int* _ZZ17GetGlobal021ffefcvE1s;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern char data_ov023_021fe1d8;
 extern char data_ov023_021fe1ee;
 extern char data_ov023_021fe200;
@@ -87,9 +87,9 @@ extern "C" ARM int func_ov023_021eeaac(char* arg0) {
         func_020728ac(arg0 + Enum_ov023_021eeaac_22788, var3, (int)var5, var4, 0, 0, 0);
         var1->RemoveTask(var2[1]);
 #if defined(jpn)
-        var2[1] = var1->QueueLoadGP1(data_020f2a38, NULL);
+        g[1] = loader->QueueLoadGP1(g_itemDataArchive, NULL);
 #else
-        var2[1] = var1->QueueLoadFileInGP2(data_020f2a38, data_020f2a30, NULL);
+        g[1] = loader->QueueLoadFileInGP2(g_itemDataArchive, g_itemDataFile, NULL);
 #endif
 
         var2[0]++;
@@ -140,18 +140,18 @@ extern "C" ARM int func_ov023_021eeaac(char* arg0) {
                 *(unsigned char*)(*(char**)(arg0 + Enum_ov023_021eeaac_668) + 0x8e97) = 1;
             }
         }
-        *(void**)(arg0 + Enum_ov023_021eeaac_22796) = var3->Allocate(0x18);
-        func_020de848(*(void**)(arg0 + Enum_ov023_021eeaac_22796));
-        func_020de9a4(*(void**)(arg0 + Enum_ov023_021eeaac_22796), var3, var8, var7, var10, var9);
-        var1->RemoveTask(var2[1]);
-        if (*(short*)(*(char**)(arg0 + Enum_ov023_021eeaac_668) + 0x8e4a) > 0) {
-            var9--;
-            ((SafeAllocator*)var18)->ResetAllocatorPointer();
-            func_020de824(var18 + 0x14);
-            func_0207cbe8(var18);
-            func_0207cbe8(var18);
-            *(void**)(var18 + 0x2c) = *(void**)(arg0 + Enum_ov023_021eeaac_22796);
-            func_0207d300(var18, var10[var9], 1, 0);
+        *(void**)(self + regionalOffset5) = alloc->Allocate(0x18);
+        ItemTable_Init(*(void**)(self + regionalOffset5));
+        ItemTable_LoadIds(*(void**)(self + regionalOffset5), alloc, data, length, ids, count);
+        loader->RemoveTask(g[1]);
+        if (*(short*)(*(char**)(self + regionalOffset4) + 0x8e4a) > 0) {
+            count--;
+            ((SafeAllocator*)buf)->ResetAllocatorPointer();
+            ZeroInitReturn020de824(buf + 0x14);
+            InitStruct0207cbe8(buf);
+            InitStruct0207cbe8(buf);
+            *(void**)(buf + 0x2c) = *(void**)(self + regionalOffset5);
+            func_0207d300(buf, ids[count], 1, 0);
         }
         var19 = *(void**)(arg0 + Enum_ov023_021eeaac_22796);
         var20 = (Struct_ov023_021eeaac*)(arg0 + Enum_ov023_021eeaac_22736);

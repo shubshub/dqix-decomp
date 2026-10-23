@@ -39,14 +39,14 @@ struct Struct_0201afd0_7;
 extern "C" void* func_0202ae18();
 extern "C" void func_020105a8(Struct_020105a8*, int*);
 int GenerateGrottoObjectPositionOrientation(void*, int, int, int*, int*, const TileFeaturePlacementData*, bool);
-extern "C" Struct_0201e690* func_0201e690(Struct_0201afd0_4*, int);
-extern "C" void func_02094d00(Struct_020134e0_2*);
-extern "C" void func_02094cdc(Struct_0201afd0_5*, int, SafeAllocator*);
-extern "C" int func_02011430(Struct_02011430*, int, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" void func_02094d14(Struct_0201afd0_6*, Struct_0201afd0_7*, int);
-extern "C" void func_020de848(void*);
-extern "C" int func_020de9a4(void*, SafeAllocator*, void*, unsigned int, unsigned short*, unsigned short);
+Entry_1e690* FindEntryById_0201e690(EntryList_1e690*, int);
+void ClearThreeWords02094d00(ClearThreeWords02094d00Struct*);
+void AllocateArray02094cdc(AllocDest02094cdc*, int, SafeAllocator*);
+int GetBit5cd0(S_02011430*, int, int);
+int CheckField0NonZero_0202b7d8(int*);
+void CopyElemToIndex(Container02094d14*, Elem02094d14*, int);
+void ItemTable_Init(void*);
+extern "C" int ItemTable_LoadIds(void*, SafeAllocator*, void*, unsigned int, unsigned short*, unsigned short);
 extern "C" void __clear(void*, int);
 
 #if defined(jpn)
@@ -55,9 +55,9 @@ extern "C" int func_020e0484(void*, SafeAllocator*, const char*, unsigned short*
 #endif
 
 extern const unsigned char data_020e6e44[15];
-extern const Struct_020e6df0 data_020e6df0;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const NarcName0201afd0 data_020e6df0;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 
 static inline GrottoTilePoint inline_0201afd0(const FloorMap* arg0, unsigned char arg1) {
     return arg0->chests[arg1];
@@ -241,17 +241,17 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
             }
         }
 
-        func_020de848(arg0->unknown_struct_2754_);
-        if (var27 > 0) {
+        ItemTable_Init(zone->unknown_struct_2754_);
+        if (itemCount > 0) {
 #if defined(jpn)
-            func_020e0484(arg0->unknown_struct_2754_, arg0->pAllocator_68_, data_020f2a38, var25, var27, true);
+            func_020e0484(zone->unknown_struct_2754_, zone->pAllocator_68_, g_itemDataArchive, itemIDs, itemCount, true);
 #else
             BackgroundLoader::AddLockGlobal();
-            unsigned int var34 = 0;
-            void* var35 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var34);
+            unsigned int size = 0;
+            void* data = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
 
-            if (var35 != NULL) {
-                func_020de9a4(arg0->unknown_struct_2754_, arg0->pAllocator_68_, var35, var34, var25, var27);
+            if (data != NULL) {
+                ItemTable_LoadIds(zone->unknown_struct_2754_, zone->pAllocator_68_, data, size, itemIDs, itemCount);
             }
             BackgroundLoader::RemoveLockGlobal();
 #endif

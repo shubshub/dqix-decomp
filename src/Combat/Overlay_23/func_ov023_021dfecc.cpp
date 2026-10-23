@@ -10,24 +10,24 @@ extern "C" unsigned char func_ov023_021dcb70(struct Struct_ov023_021dcb70* arg0)
 
 struct Struct_020534ac;
 
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+void Background_Init(struct List0204af64* obj);
 
-extern "C" void func_0204b5b4(void*, int);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
+extern "C" void Background_SetPriority(void*, int);
+void Background_SetMapSize(unsigned char* obj, int value);
 
-struct Struct_02020cb8_5;
-extern "C" int func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
+struct Obj0204b5e8;
+int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(struct Struct_02020cb8_6* arg0, char* arg1);
+struct SelfTag0204b3a0;
+void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
 
 extern "C" int func_ov023_021e20f0(void*, void*, void*, void*);
 
@@ -69,7 +69,7 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
         if (var2 != 0 && var4 != 0) {
 #endif
 
-            func_0204af64(&var1);
+            Background_Init(&listObj);
 
             signed char var11 = *(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124);
             if (var11 == 1) {
@@ -80,9 +80,9 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
                 var1.unknown_1c_4_ = 3;
             }
 
-            func_0204b5b4(&var1, 3);
-            func_0204b11c((unsigned char*)&var1, 0);
-            func_0204b5e8((struct Struct_02020cb8_5*)&var1, 0, 0);
+            Background_SetPriority(&listObj, 3);
+            Background_SetMapSize((unsigned char*)&listObj, 0);
+            Background_SetScroll((struct Obj0204b5e8*)&listObj, 0, 0);
 
             if (*(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124) == 1) {
                 volatile unsigned int* var12 = (volatile unsigned int*)0x4001000;
@@ -91,25 +91,25 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
                 *var12 = (*var12 & ~0x1f00) | (var13 << 8);
             }
 
-            if (var10 == 0 && *(unsigned char*)(var0 + Enum_ov023_021dfecc_1912) != 0) {
-                int var14 = func_02046900((struct Struct_02020cb8_4*)var2);
-                for (unsigned char var15 = 0; var15 < var14; var15++) {
-                    var3 = func_020467f0((struct Struct_02020aec*)var2, var15, &var6, &var5);
-                    if (var3) {
-                        func_0204b2e0(&var1, (char*)var3);
-                        func_0204b3a0((struct Struct_02020cb8_6*)&var1, (char*)var3);
-                        func_ov023_021e20f0(var0 + 0xcc, var0, var3, (void*)var5);
+            if (lookupResult == 0 && *(unsigned char*)(obj + regionalOffset3) != 0) {
+                int count = Pac_CountFiles((struct ActiveEntry02046900*)listVal1);
+                for (unsigned char i = 0; i < count; i++) {
+                    recPtr = Pac_GetFile((struct Rec020467f0*)listVal1, i, &dummyOut, &sizeOut);
+                    if (recPtr) {
+                        Background_FlushFile(&listObj, (char*)recPtr);
+                        Background_UploadFile((struct SelfTag0204b3a0*)&listObj, (char*)recPtr);
+                        func_ov023_021e20f0(obj + 0xcc, obj, recPtr, (void*)sizeOut);
                     }
                 }
             } else {
-                func_ov023_021e20c0(var0 + 0xcc);
-                ((SafeAllocator*)var0)->Reset();
-                for (unsigned char var16 = 0; var16 < 4; var16++) {
-                    if (FindFilesInNarcBySubstring((const void*)var2, data_ov023_021fda78[var16],
-                            (const void**)&var3, (unsigned int*)&var5, 1) != 0) {
-                        if (var16 != 3) {
-                            func_0204b2e0(&var1, (char*)var3);
-                            func_0204b3a0((struct Struct_02020cb8_6*)&var1, (char*)var3);
+                ClearFields_021e20c0(obj + 0xcc);
+                ((SafeAllocator*)obj)->Reset();
+                for (unsigned char i = 0; i < 4; i++) {
+                    if (FindFilesInNarcBySubstring((const void*)listVal1, data_ov023_021fda78[i],
+                            (const void**)&recPtr, (unsigned int*)&sizeOut, 1) != 0) {
+                        if (i != 3) {
+                            Background_FlushFile(&listObj, (char*)recPtr);
+                            Background_UploadFile((struct SelfTag0204b3a0*)&listObj, (char*)recPtr);
                         } else {
                             func_ov023_021e20f0(var0 + 0xcc, var0, var3, (void*)var5);
                         }

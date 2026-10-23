@@ -32,11 +32,11 @@ extern "C" void func_02046380(void* arg0);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, void* arg1, int arg2, int arg3);
 #endif
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-struct Struct_02046574_2;
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
+extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
+struct Obj02046574;
+void SetIndexedName02046574(struct Obj02046574* obj, int index, char* name);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
 
 struct Struct_020d9b34 {
     char unknown_0_[REGION_VALUE(0x24, 0x58)];
@@ -90,7 +90,7 @@ extern "C" ARM void func_020d9b34(struct Struct_020d9b34_2* arg0) {
 #if defined(jpn)
             func_020728ac((int)&arg0->unknown_40_, (int)&arg0->unknown_58_, var1, var2, 0, 0, 0);
 #else
-            func_020dfec0(&arg0->unknown_40_, &arg0->unknown_58_, var1, var2);
+            KeyTable_Load(&self->container, &self->allocator, fileData, size);
 #endif
             var0->RemoveTask(arg0->unknown_c_);
             arg0->unknown_c_ = -1;
@@ -110,7 +110,7 @@ extern "C" ARM void func_020d9b34(struct Struct_020d9b34_2* arg0) {
 #if defined(jpn)
         func_0204500c(var4, func_02072a68((Struct_02072a68_2*)&arg0->unknown_40_, arg0->unknown_8_), 0);
 #else
-        func_0204500c(var4, (void*)func_020e0434((struct Struct_0201099c_3*)&arg0->unknown_40_, arg0->unknown_8_), 0, 0xe3);
+        func_0204500c(g, (void*)KeyTable_Get((struct Container020e0310*)&self->container, self->field8), 0, 0xe3);
 #endif
         *(int*)((char*)var4 + REGION_VALUE(0x868, 0x998)) = 1;
         arg0->unknown_9_++;

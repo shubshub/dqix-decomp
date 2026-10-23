@@ -57,7 +57,7 @@ struct Struct_ov006_0215a00c_5 {
 
 extern "C" void func_02080c20(struct Struct_0207fdcc_2*, int);
 extern "C" void func_020813ec(void*, int);
-int GetFieldByKey020e0434(struct Container020e0310*, int);
+int KeyTable_Get(struct Container020e0310*, int);
 struct StoreStruct* GetGlobalField0x1c020421a0();
 extern "C" void func_02046380(struct StoreStruct*);
 void* CallFunc020e52a0_020e5294(void*, int);
@@ -83,10 +83,10 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
             func_02080c20((struct Struct_0207fdcc_2*)arg0->unknown_14_, 0);
             func_020813ec(arg0->unknown_14_, 0);
         }
-        arg0->unknown_300_.unknown_94_ &= ~0x20;
-        arg0->unknown_300_.unknown_80_ = 0;
-        if (func_020e0434(&arg0->unknown_158_, arg0->unknown_300_.unknown_7e_) == 0) {
-            arg0->unknown_300_.unknown_7e_ = -1;
+        self->sub.field94 &= ~0x20;
+        self->sub.field80 = 0;
+        if (KeyTable_Get(&self->field158, self->sub.field7e) == 0) {
+            self->sub.field7e = -1;
         }
         arg0->unknown_3b0_ = -1;
         arg0->unknown_300_.unknown_92_ = arg0->unknown_300_.unknown_92_ + 1;
@@ -129,8 +129,8 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
             var9++;
         }
 
-        const char* var12 = (const char*)func_020e0434(&arg0->unknown_158_, arg0->unknown_300_.unknown_7e_);
-        func_02046608(var4, 0xc, var12, var5, 0xe3, 0, 1);
+        const char* msg = (const char*)KeyTable_Get(&self->field158, self->sub.field7e);
+        func_02046608(fmt, 0xc, msg, base, 0xe3, 0, 1);
 
         char* var13 = var5 + arg0->unknown_300_.unknown_80_;
         unsigned short var14 = arg0->unknown_300_.unknown_80_;

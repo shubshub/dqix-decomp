@@ -13,14 +13,14 @@ extern "C" void* func_0203bd08(void);
 extern "C" void* func_0203b628(void);
 extern "C" void func_02021428(void* arg0, int arg1);
 
-extern "C" void func_0203b66c(char* arg0);
-extern "C" void func_0203bd78(char* arg0);
-extern "C" void func_0203bd24(char* arg0);
-extern "C" void func_0203b718(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0203ba74(void* arg0);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_0205a444(char* arg0);
+void TailForward0203b66c(char* obj);
+void InitSubObject0203bd78(char* obj);
+void InitBattleContext0203bd24(char* obj);
+void SetArraySlotFlag0203b718(void* objPtr, int mode, int idx, int fillByte);
+extern "C" void func_0203ba74(void* obj);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198* p);
+void SpriteContext_Init(char* obj);
 
 extern "C" void* func_0203bd14();
 extern "C" void* func_0203be4c(void);
@@ -40,19 +40,19 @@ extern "C" void func_02020fc4(void* arg0, int arg1, SafeAllocator* arg2);
 #else
 extern "C" void func_02020fc4(void* arg0, int* arg1, SafeAllocator* arg2);
 #endif
-extern "C" void func_020210f8(char* arg0, int* arg1, SafeAllocator* arg2);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, int arg3);
-extern "C" void func_0202445c(void* arg0);
-extern "C" void func_ov017_02191234(void* arg0);
-extern "C" void func_0202343c(void* arg0);
-extern "C" void func_02026b7c(unsigned char* arg0);
-extern "C" void func_02026bdc(void* arg0, int arg1);
-extern "C" int func_02020b98(void* arg0);
-extern "C" int func_0201b5d8(int arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_02023b0c(char* arg0, char* arg1);
+extern "C" void func_020210f8(char* obj, int* handle, SafeAllocator* alloc);
+struct List0204af64;
+void Background_Init(struct List0204af64* obj);
+extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int size);
+extern "C" void func_0202445c(void* obj);
+extern "C" void func_ov017_02191234(void* obj);
+extern "C" void func_0202343c(void* obj);
+void MarkActiveCombatantSlots02026b7c(unsigned char* obj);
+extern "C" void func_02026bdc(void* obj, int flag);
+int FormatAndCopyNames02020b98(void* obj);
+int IsValueInRange0201b5d8(int x);
+int IsInRange0201b5b0(int id);
+void UpdateStringField02023b0c(char* a, char* b);
 
 extern "C" void __clear(void* arg0, unsigned int arg1);
 extern int data_020ef460;
@@ -165,31 +165,31 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
             sprintf(var1, data_020ef642, *var12);
             func_02023b0c((char*)arg0, var1);
         }
-        arg0->unknown_9c2_ = arg0->unknown_9c2_ + 1;
-    } else if (var16 == 1) {
-        if (var11->GetTaskStatus(arg0->unknown_a10_) == 0) return;
-        if (var11->GetTaskStatus(arg0->unknown_a14_) == 0) return;
-        func_02021428(arg0, 0x19);
-        if (IsBrightnessWithinValidRange((GameResources*)var13, true) != 0) return;
-        func_02020720(arg0);
-        arg0->unknown_14_ = 0;
-        func_02020838(arg0);
-        func_0203b66c(var15);
-        var17->Reset();
-        func_0203bd78(var14);
-        func_0203bd24(var14);
-        func_0203b718(var15, 1, 0, 0);
-        func_0203b718(var15, 1, 1, 0);
-        func_0203ba74(var15);
-        for (int var19 = 0; var19 < 0x1c; var19++) {
-            func_0205a198(&arg0->unknown_e8_[var19]);
+        self->loadStage = self->loadStage + 1;
+    } else if (state == 1) {
+        if (loader->GetTaskStatus(self->taska10) == 0) return;
+        if (loader->GetTaskStatus(self->taska14) == 0) return;
+        func_02021428(self, 0x19);
+        if (IsBrightnessWithinValidRange((GameResources*)axis, true) != 0) return;
+        func_02020720(self);
+        self->displayMode = 0;
+        func_02020838(self);
+        TailForward0203b66c(table);
+        alloc->Reset();
+        InitSubObject0203bd78(battleCtx);
+        InitBattleContext0203bd24(battleCtx);
+        SetArraySlotFlag0203b718(table, 1, 0, 0);
+        SetArraySlotFlag0203b718(table, 1, 1, 0);
+        func_0203ba74(table);
+        for (int i = 0; i < 0x1c; i++) {
+            Sprite_Init(&self->records[i]);
         }
-        func_0205a444((char*)&arg0->unknown_94_);
-        arg0->unknown_94_.unknown_50_ = 1;
-        arg0->unknown_94_.unknown_40_ = arg0->unknown_e8_;
-        arg0->unknown_94_.unknown_4c_ = 0x1b;
-        char* var20 = (char*)func_0203bd14();
-        *(int*)(var20 + Enum_02021f88_1288) = 0x2000;
+        SpriteContext_Init((char*)&self->entryList);
+        self->entryList.active = 1;
+        self->entryList.records = self->records;
+        self->entryList.count = 0x1b;
+        char* g = (char*)GetGlobalPtr02105244_0203bd14();
+        *(int*)(g + GlobalBufferOffset) = 0x2000;
         func_0203bd08();
         char* var21 = (char*)func_0203be4c() + 0x2c0;
         var20 = (char*)func_0203bd14();
@@ -271,17 +271,17 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
 #else
         func_02020fc4(arg0, &arg0->unknown_9d4_, var17);
 #endif
-        if (func_0201b5b0(*var12)) {
-            arg0->unknown_70_ = arg0->unknown_74_ + 1;
-            char* var29 = inline_02021f88_2(var12);
-            func_0204af64(&arg0->unknown_4c_);
-            arg0->unknown_4c_.unknown_1c_0_ = 1;
-            arg0->unknown_4c_.unknown_1c_4_ = 0;
-            arg0->unknown_4c_.unknown_0_ = arg0->unknown_70_ << 5;
-            var11->AddFence();
-            ActiveGrottoClass* var30 = (ActiveGrottoClass*)(var29 + Enum_02021f88_8192);
-            if (var30->GetActiveGrottoEnviron() == 0) {
-                sprintf(var3, data_020ef654);
+        if (IsInRange0201b5b0(*p6)) {
+            self->mapPalette = self->forwardingFill + 1;
+            char* zone = Zone02021f88(p6);
+            Background_Init(&self->list4c);
+            self->list4c.b1c_lo = 1;
+            self->list4c.b1c_hi = 0;
+            self->list4c.byteCount = self->mapPalette << 5;
+            loader->AddFence();
+            ActiveGrottoClass* grotto = (ActiveGrottoClass*)(zone + ZoneLargeOffset);
+            if (grotto->GetActiveGrottoEnviron() == 0) {
+                sprintf(buf1, data_020ef654);
             } else {
                 sprintf(var3, data_020ef65d, var30->GetActiveGrottoEnviron());
             }
@@ -297,25 +297,25 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
         } else {
             func_020210f8((char*)arg0, arg0->unknown_9d8_, var17);
         }
-        arg0->unknown_9c2_ = arg0->unknown_9c2_ + 1;
-    } else if (var16 == 3) {
-        if (func_0201b5b0(*var12)) {
-            if (var11->GetTaskStatus(arg0->unknown_a18_) == 0) return;
-            if (var11->GetTaskStatus(arg0->unknown_a1c_) == 0) return;
-            var7 = 0;
-            var8 = 0;
-            var9 = 0;
-            var10 = 0;
-            var11->GetLoadedFileByID(arg0->unknown_a18_, &var7, &var9);
-            var9 = (var9 + 3) & ~3;
-            var11->GetLoadedFileByID(arg0->unknown_a1c_, &var8, &var10);
-            var10 = (var10 + 3) & ~3;
-            func_0204b174(&arg0->unknown_4c_, var7, var17, var9);
-            func_0204b174(&arg0->unknown_4c_, var8, var17, var10);
-            BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a18_);
-            arg0->unknown_a18_ = -1;
-            BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a1c_);
-            arg0->unknown_a1c_ = -1;
+        self->loadStage = self->loadStage + 1;
+    } else if (state == 3) {
+        if (IsInRange0201b5b0(*p6)) {
+            if (loader->GetTaskStatus(self->taska18) == 0) return;
+            if (loader->GetTaskStatus(self->taska1c) == 0) return;
+            fileDataA = 0;
+            fileDataB = 0;
+            fileLengthA = 0;
+            fileLengthB = 0;
+            loader->GetLoadedFileByID(self->taska18, &fileDataA, &fileLengthA);
+            fileLengthA = (fileLengthA + 3) & ~3;
+            loader->GetLoadedFileByID(self->taska1c, &fileDataB, &fileLengthB);
+            fileLengthB = (fileLengthB + 3) & ~3;
+            Background_LoadFile(&self->list4c, fileDataA, alloc, fileLengthA);
+            Background_LoadFile(&self->list4c, fileDataB, alloc, fileLengthB);
+            BackgroundLoader::GetInstance()->RemoveTask(self->taska18);
+            self->taska18 = -1;
+            BackgroundLoader::GetInstance()->RemoveTask(self->taska1c);
+            self->taska1c = -1;
         }
         func_0202445c(arg0);
         func_ov017_02191234(var13);

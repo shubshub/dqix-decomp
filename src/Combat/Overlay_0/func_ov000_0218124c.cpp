@@ -5,25 +5,25 @@
 struct Struct_02000c9c_8;
 struct Struct_0204af14;
 
-extern "C" unsigned char func_0200fb08(struct Struct_02000c9c_8* arg0);
-extern "C" void* func_0204af14(struct Struct_0204af14* arg0, unsigned int arg1);
-extern "C" void func_0204b938(void* arg0, void* arg1, int arg2, int arg3, unsigned short arg4);
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+unsigned char NormalizeField5_0200fb08(struct Struct0200fb08* obj);
+void* Background_GetScreen(struct EntryList0204af14* list, unsigned int index);
+void CallFunc0204b620IfField0x14_0204b938(void* a, void* b, int x, int y, unsigned short id);
+extern "C" void func_0205ac40(void* dst, void* src);
 
 // USA: func_ov000_0218124c
 #if defined(jpn)
 extern "C" int func_ov017_021bdbcc(void*);
-extern "C" ARM void func_ov000_0218124c(unsigned char* arg0, int arg1, void* arg2, int arg3, short arg4, short arg5) {
-    GameObject* var0 = GameState::GetInstance()->GetPartyMemberByIndex(arg1);
-    if (var0 != 0 && *(int*)((char*)var0 + 0x1b8) != 0) {
-        void* var1 = func_0204af14((Struct_0204af14*)(arg0 + 0x8c4), 28);
-        func_0204b938(arg2, var1, arg4, arg5, (unsigned short)(arg1 + 2));
+extern "C" ARM void func_ov000_0218124c(unsigned char* obj, int idx, void* target, int icon, short x, short y) {
+    GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(idx);
+    if (member != 0 && *(int*)((char*)member + 0x1b8) != 0) {
+        void* entry = Background_GetScreen((EntryList0204af14*)(obj + 0x8c4), 28);
+        CallFunc0204b620IfField0x14_0204b938(target, entry, x, y, (unsigned short)(idx + 2));
         return;
     }
-    unsigned char var2 = arg3 + 15;
-    if (func_ov017_021bdbcc(GetGameResources()) != 0) var2 = 15;
-    void* var3 = func_0204af14((Struct_0204af14*)(arg0 + 0x8c4), var2);
-    func_0204b938(arg2, var3, arg4, arg5, (unsigned short)(arg1 + 2));
+    unsigned char entryIdx = icon + 15;
+    if (func_ov017_021bdbcc(GetGameResources()) != 0) entryIdx = 15;
+    void* entry = Background_GetScreen((EntryList0204af14*)(obj + 0x8c4), entryIdx);
+    CallFunc0204b620IfField0x14_0204b938(target, entry, x, y, (unsigned short)(idx + 2));
 }
 #else
 extern "C" ARM void func_ov000_0218124c(unsigned char* arg0, int arg1, void* arg2, int arg3, short arg4, short arg5, short arg6, short arg7) {
@@ -43,16 +43,16 @@ extern "C" ARM void func_ov000_0218124c(unsigned char* arg0, int arg1, void* arg
         var5 = 9;
         break;
     }
-    void* var6 = func_0204af14((struct Struct_0204af14*)(arg0 + 0x8c4), var5);
-    func_0204b938(arg2, var6, (short)(arg4 + 2), (short)(arg5 + 1), arg1 + 2);
-    GameObject* var7 = var4->GetPartyMemberByIndex(arg1);
-    if (var7 != 0 && *(int*)((char*)var7 + 0x1c4) == 0) {
-        unsigned char* var8 = *(unsigned char**)(arg0 + 0x170) + (arg1 + 0x20) * 0x28;
-        *(int*)(var8 + 0x14) = arg6 << 12;
-        *(int*)(var8 + 0x18) = arg7 << 12;
-        var8[0x22] = arg1 + 0x5c;
-        var8[0x26] = 1;
-        func_0205ac40(arg0 + 0x11c, var8);
+    void* entry = Background_GetScreen((struct EntryList0204af14*)(obj + 0x8c4), entryIdx);
+    CallFunc0204b620IfField0x14_0204b938(target, entry, (short)(x + 2), (short)(y + 1), idx + 2);
+    GameObject* member = gs->GetPartyMemberByIndex(idx);
+    if (member != 0 && *(int*)((char*)member + 0x1c4) == 0) {
+        unsigned char* p = *(unsigned char**)(obj + 0x170) + (idx + 0x20) * 0x28;
+        *(int*)(p + 0x14) = posX << 12;
+        *(int*)(p + 0x18) = posY << 12;
+        p[0x22] = idx + 0x5c;
+        p[0x26] = 1;
+        func_0205ac40(obj + 0x11c, p);
     }
 }
 #endif

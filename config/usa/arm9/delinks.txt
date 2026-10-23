@@ -2301,7 +2301,7 @@ src/Combat/Main/func_02020554.cpp:
     complete
     .text start:0x02020554 end:0x02020720
 
-src/Combat/Main/func_02020720.cpp:
+src/Combat/Main/InitCombatObject_02020720.cpp:
     complete
     .text start:0x02020720 end:0x02020838
 
@@ -3491,11 +3491,11 @@ src/Combat/Main/func_0202e0a4.cpp:
     complete
     .text start:0x0202e0a4 end:0x0202e5c0
 
-src/Combat/Main/func_0202e5c0.cpp:
+src/Combat/Main/Camera_SetPosition_0202e5c0.cpp:
     complete
     .text start:0x0202e5c0 end:0x0202e5c8
 
-src/Combat/Main/func_0202e5c8.cpp:
+src/Combat/Main/Camera_SetTarget_0202e5c8.cpp:
     complete
     .text start:0x0202e5c8 end:0x0202e5d8
 
@@ -3655,11 +3655,11 @@ src/Combat/Main/func_0202edf8.cpp:
     complete
     .text start:0x0202edf8 end:0x0202ee38
 
-src/Combat/Main/func_0202ee38.cpp:
+src/Combat/Main/Camera_EasePositionTo_0202ee38.cpp:
     complete
     .text start:0x0202ee38 end:0x0202ee58
 
-src/Combat/Main/func_0202ee58.cpp:
+src/Combat/Main/Camera_EaseTargetTo_0202ee58.cpp:
     complete
     .text start:0x0202ee58 end:0x0202ee84
 
@@ -3675,7 +3675,7 @@ src/Combat/Main/func_0202eea4.cpp:
     complete
     .text start:0x0202eea4 end:0x0202eeb4
 
-src/Combat/Main/func_0202eeb4.cpp:
+src/Combat/Main/Camera_IsEasing_0202eeb4.cpp:
     complete
     .text start:0x0202eeb4 end:0x0202ef04
 
@@ -5171,7 +5171,7 @@ src/Combat/Main/func_02042084.cpp:
     complete
     .text start:0x02042084 end:0x020420e8
 
-src/Combat/Main/func_020420e8.cpp:
+src/Combat/Main/ProcessStringAndAccumulate_020420e8.cpp:
     complete
     .text start:0x020420e8 end:0x02042190
 
@@ -5195,7 +5195,7 @@ src/Combat/Main/func_020424ac.cpp:
     complete
     .text start:0x020424ac end:0x020424e4
 
-src/Combat/Main/func_020424e4.cpp:
+src/Combat/Main/Font_FindCharacterIndex_020424e4.cpp:
     complete
     .text start:0x020424e4 end:0x0204254c
 
@@ -5203,7 +5203,7 @@ src/Combat/Main/Font_FindCharacter_0204254c.cpp:
     complete
     .text start:0x0204254c end:0x020425b4
 
-src/Combat/Main/func_020425b4.cpp:
+src/Combat/Main/Font_GetCharacter_020425b4.cpp:
     complete
     .text start:0x020425b4 end:0x020425e4
 
@@ -5227,7 +5227,7 @@ src/Combat/Main/func_020426a4.cpp:
     complete
     .text start:0x020426a4 end:0x020426bc
 
-src/Combat/Main/TokenizeAndEncode_020426bc.cpp:
+src/Combat/Main/Font_EncodeText_020426bc.cpp:
     complete
     .text start:0x020426bc end:0x02042764
 
@@ -5607,7 +5607,7 @@ src/Combat/Main/func_020467c0.cpp:
     complete
     .text start:0x020467c0 end:0x020467f0
 
-src/Combat/Main/func_020467f0.cpp:
+src/Combat/Main/Pac_GetFile_020467f0.cpp:
     complete
     .text start:0x020467f0 end:0x0204684c
 
@@ -5615,7 +5615,7 @@ src/Combat/Main/func_0204684c.cpp:
     complete
     .text start:0x0204684c end:0x02046900
 
-src/Combat/Main/func_02046900.cpp:
+src/Combat/Main/Pac_CountFiles_02046900.cpp:
     complete
     .text start:0x02046900 end:0x0204693c
 
@@ -6363,15 +6363,15 @@ src/Combat/Main/func_0204ae7c.cpp:
     complete
     .text start:0x0204ae7c end:0x0204af14
 
-src/Combat/Main/func_0204af14.cpp:
+src/Combat/Main/Background_GetScreen_0204af14.cpp:
     complete
     .text start:0x0204af14 end:0x0204af38
 
-src/Combat/Main/func_0204af38.cpp:
+src/Combat/Main/Background_AllocateScreens_0204af38.cpp:
     complete
     .text start:0x0204af38 end:0x0204af64
 
-src/Combat/Main/func_0204af64.cpp:
+src/Combat/Main/Background_Init_0204af64.cpp:
     complete
     .text start:0x0204af64 end:0x0204afb4
 
@@ -6379,39 +6379,39 @@ src/Combat/Main/func_0204afb4.cpp:
     complete
     .text start:0x0204afb4 end:0x0204b010
 
-src/Combat/Main/func_0204b010.cpp:
+src/Combat/Main/Background_ClearMap_0204b010.cpp:
     complete
     .text start:0x0204b010 end:0x0204b04c
 
-src/Combat/Main/func_0204b04c.cpp:
+src/Combat/Main/Background_FlushMap_0204b04c.cpp:
     complete
     .text start:0x0204b04c end:0x0204b088
 
-src/Combat/Main/func_0204b088.cpp:
+src/Combat/Main/Background_TransferMap_0204b088.cpp:
     complete
     .text start:0x0204b088 end:0x0204b0e8
 
-src/Combat/Main/func_0204b0e8.cpp:
+src/Combat/Main/Background_UploadMap_0204b0e8.cpp:
     complete
     .text start:0x0204b0e8 end:0x0204b11c
 
-src/Combat/Main/func_0204b11c.cpp:
+src/Combat/Main/Background_SetMapSize_0204b11c.cpp:
     complete
     .text start:0x0204b11c end:0x0204b12c
 
-src/Combat/Main/func_0204b12c.cpp:
+src/Combat/Main/Background_AllocateMap_0204b12c.cpp:
     complete
     .text start:0x0204b12c end:0x0204b174
 
-src/Combat/Main/func_0204b174.cpp:
+src/Combat/Main/Background_LoadFile_0204b174.cpp:
     complete
     .text start:0x0204b174 end:0x0204b2e0
 
-src/Combat/Main/func_0204b2e0.cpp:
+src/Combat/Main/Background_FlushFile_0204b2e0.cpp:
     complete
     .text start:0x0204b2e0 end:0x0204b3a0
 
-src/Combat/Main/func_0204b3a0.cpp:
+src/Combat/Main/Background_UploadFile_0204b3a0.cpp:
     complete
     .text start:0x0204b3a0 end:0x0204b4c0
 
@@ -6419,27 +6419,27 @@ src/Combat/Main/func_0204b4c0.cpp:
     complete
     .text start:0x0204b4c0 end:0x0204b5b4
 
-src/Combat/Main/func_0204b5b4.cpp:
+src/Combat/Main/Background_SetPriority_0204b5b4.cpp:
     complete
     .text start:0x0204b5b4 end:0x0204b5e8
 
-src/Combat/Main/func_0204b5e8.cpp:
+src/Combat/Main/Background_SetScroll_0204b5e8.cpp:
     complete
     .text start:0x0204b5e8 end:0x0204b620
 
-src/Combat/Main/func_0204b620.cpp:
+src/Combat/Main/Background_CopyScreenRect_0204b620.cpp:
     complete
     .text start:0x0204b620 end:0x0204b878
 
-src/Combat/Main/func_0204b878.cpp:
+src/Combat/Main/CallFunc0204b620IfField0x14_0204b878.cpp:
     complete
     .text start:0x0204b878 end:0x0204b8d0
 
-src/Combat/Main/func_0204b8d0.cpp:
+src/Combat/Main/Background_DrawScreen_0204b8d0.cpp:
     complete
     .text start:0x0204b8d0 end:0x0204b938
 
-src/Combat/Main/func_0204b938.cpp:
+src/Combat/Main/CallFunc0204b620IfField0x14_0204b938.cpp:
     complete
     .text start:0x0204b938 end:0x0204b988
 
@@ -6463,7 +6463,7 @@ src/Combat/Main/func_0204bc08.cpp:
     complete
     .text start:0x0204bc08 end:0x0204bc74
 
-src/Combat/Main/func_0204bc74.cpp:
+src/Combat/Main/Background_FillRect_0204bc74.cpp:
     complete
     .text start:0x0204bc74 end:0x0204bd7c
 
@@ -6553,7 +6553,7 @@ src/Combat/Main/func_0204c770.cpp:
     complete
     .text start:0x0204c770 end:0x0204c7a8
 
-src/Combat/Main/func_0204c7a8.cpp:
+src/Combat/Main/WindowPane_AllocateBuffer_0204c7a8.cpp:
     complete
     .text start:0x0204c7a8 end:0x0204c7cc
 
@@ -7309,7 +7309,7 @@ src/Combat/Main/func_0205a180.cpp:
     complete
     .text start:0x0205a180 end:0x0205a198
 
-src/Combat/Main/func_0205a198.cpp:
+src/Combat/Main/Sprite_Init_0205a198.cpp:
     complete
     .text start:0x0205a198 end:0x0205a1f0
 
@@ -7349,7 +7349,7 @@ src/Combat/Main/func_0205a42c.cpp:
     complete
     .text start:0x0205a42c end:0x0205a444
 
-src/Combat/Main/func_0205a444.cpp:
+src/Combat/Main/SpriteContext_Init_0205a444.cpp:
     complete
     .text start:0x0205a444 end:0x0205a494
 
@@ -7361,7 +7361,7 @@ src/Combat/Main/func_0205a498.cpp:
     complete
     .text start:0x0205a498 end:0x0205a528
 
-src/Combat/Main/func_0205a528.cpp:
+src/Combat/Main/SpriteContext_LoadFile_0205a528.cpp:
     complete
     .text start:0x0205a528 end:0x0205a658
 
@@ -7485,7 +7485,7 @@ src/Combat/Main/GridCursor_SetCount_0205bacc.cpp:
     complete
     .text start:0x0205bacc end:0x0205bafc
 
-src/Combat/Main/func_0205bafc.cpp:
+src/Combat/Main/GridCursor_GetCount_0205bafc.cpp:
     complete
     .text start:0x0205bafc end:0x0205bb04
 
@@ -7545,7 +7545,7 @@ src/Combat/Main/func_0205bf3c.cpp:
     complete
     .text start:0x0205bf3c end:0x0205bf58
 
-src/Combat/Main/func_0205bf58.cpp:
+src/Combat/Main/GridCursor_Update_0205bf58.cpp:
     complete
     .text start:0x0205bf58 end:0x0205c4a8
 
@@ -7677,7 +7677,7 @@ src/Combat/Main/func_0205cf28.cpp:
     complete
     .text start:0x0205cf28 end:0x0205cf78
 
-src/Combat/Main/func_0205cf78.cpp:
+src/Combat/Main/Window_SetPanes_0205cf78.cpp:
     complete
     .text start:0x0205cf78 end:0x0205cfd4
 
@@ -7689,23 +7689,23 @@ src/Combat/Main/func_0205d048.cpp:
     complete
     .text start:0x0205d048 end:0x0205d0e0
 
-src/Combat/Main/func_0205d0e0_0205d0e0.cpp:
+src/Combat/Main/Window_Update_0205d0e0.cpp:
     complete
     .text start:0x0205d0e0 end:0x0205d1e0
 
-src/Combat/Main/func_0205d1e0.cpp:
+src/Combat/Main/Window_ClearLayers_0205d1e0.cpp:
     complete
     .text start:0x0205d1e0 end:0x0205d228
 
-src/Combat/Main/func_0205d228.cpp:
+src/Combat/Main/Window_DrawPanes_0205d228.cpp:
     complete
     .text start:0x0205d228 end:0x0205d274
 
-src/Combat/Main/func_0205d274.cpp:
+src/Combat/Main/Window_FlushLayers_0205d274.cpp:
     complete
     .text start:0x0205d274 end:0x0205d2bc
 
-src/Combat/Main/func_0205d2bc.cpp:
+src/Combat/Main/Window_TransferLayers_0205d2bc.cpp:
     complete
     .text start:0x0205d2bc end:0x0205d304
 
@@ -7737,7 +7737,7 @@ src/Combat/Main/func_0205d6e4.cpp:
     complete
     .text start:0x0205d6e4 end:0x0205d794
 
-src/Combat/Main/func_0205d794.cpp:
+src/Combat/Main/Window_GetSelectedIndex_0205d794.cpp:
     complete
     .text start:0x0205d794 end:0x0205d7a0
 
@@ -7765,7 +7765,7 @@ src/Combat/Main/func_0205d97c.cpp:
     complete
     .text start:0x0205d97c end:0x0205da38
 
-src/Combat/Main/func_0205da38.cpp:
+src/Combat/Main/Window_IsSelectionTouched_0205da38.cpp:
     complete
     .text start:0x0205da38 end:0x0205da88
 
@@ -7978,7 +7978,7 @@ src/Combat/Main/func_0205eb08.cpp:
     complete
     .text start:0x0205eb08 end:0x0205eb24
 
-src/Combat/Main/func_0205eb24.cpp:
+src/Combat/Main/DispatchIfField0xbcNonNeg_0205eb24.cpp:
     complete
     .text start:0x0205eb24 end:0x0205eb48
 
@@ -7994,7 +7994,7 @@ src/Combat/Main/func_0205eb80.cpp:
     complete
     .text start:0x0205eb80 end:0x0205eb90
 
-src/Combat/Main/func_0205eb90.cpp:
+src/Combat/Main/DispatchIfField0xc4NonNeg_0205eb90.cpp:
     complete
     .text start:0x0205eb90 end:0x0205ebb4
 
@@ -8010,7 +8010,7 @@ src/Combat/Main/func_0205ebec.cpp:
     complete
     .text start:0x0205ebec end:0x0205ebfc
 
-src/Combat/Main/func_0205ebfc.cpp:
+src/Combat/Main/DispatchIfField0xc4NonNeg_0205ebfc.cpp:
     complete
     .text start:0x0205ebfc end:0x0205ec20
 
@@ -10239,7 +10239,7 @@ src/Combat/Main/func_0207de1c.cpp:
     complete
     .text start:0x0207de1c end:0x0207de48
 
-src/Combat/Main/func_0207de48.cpp:
+src/Combat/Main/VramState_Reserve_0207de48.cpp:
     complete
     .text start:0x0207de48 end:0x0207df50
 
@@ -10247,11 +10247,11 @@ src/Combat/Main/func_0207df50.cpp:
     complete
     .text start:0x0207df50 end:0x0207df90
 
-src/Combat/Main/func_0207df90.cpp:
+src/Combat/Main/VramState_Restore_0207df90.cpp:
     complete
     .text start:0x0207df90 end:0x0207dfac
 
-src/Combat/Main/func_0207dfac.cpp:
+src/Combat/Main/VramState_Save_0207dfac.cpp:
     complete
     .text start:0x0207dfac end:0x0207dfc8
 
@@ -10800,7 +10800,7 @@ src/Combat/Main/func_02083b28.cpp:
     complete
     .text start:0x02083b28 end:0x02083b60
 
-src/Combat/Main/func_02083b60.cpp:
+src/Combat/Main/PartyMember_LearnSpell_02083b60.cpp:
     complete
     .text start:0x02083b60 end:0x02083b8c
 
@@ -10824,11 +10824,11 @@ src/Combat/Main/func_02083c48.cpp:
     complete
     .text start:0x02083c48 end:0x02083ca0
 
-src/Combat/Main/func_02083ca0.cpp:
+src/Combat/Main/PartyMember_SetVocation_02083ca0.cpp:
     complete
     .text start:0x02083ca0 end:0x02083cbc
 
-src/Combat/Main/func_02083cbc.cpp:
+src/Combat/Main/PartyMember_ApplyLevelStats_02083cbc.cpp:
     complete
     .text start:0x02083cbc end:0x02083e28
 
@@ -12020,7 +12020,7 @@ src/Combat/Main/func_0208b8c4.cpp:
     complete
     .text start:0x0208b8c4 end:0x0208b9a0
 
-src/Combat/Main/func_0208b9a0.cpp:
+src/Combat/Main/InitCombatRuntimeState_0208b9a0.cpp:
     complete
     .text start:0x0208b9a0 end:0x0208ba54
 
@@ -13325,7 +13325,7 @@ src/Combat/Main/func_0209a804.cpp:
     complete
     .text start:0x0209a804 end:0x0209a810
 
-src/Combat/Main/func_0209a810.cpp:
+src/Combat/Main/SpellTable_Load_0209a810.cpp:
     complete
     .text start:0x0209a810 end:0x0209a8b4
 
@@ -19280,7 +19280,7 @@ src/Combat/Main/func_020de824.cpp:
     complete
     .text start:0x020de824 end:0x020de848
 
-src/Combat/Main/func_020de848.cpp:
+src/Combat/Main/ItemTable_Init_020de848.cpp:
     complete
     .text start:0x020de848 end:0x020de868
 
@@ -19292,11 +19292,11 @@ src/Combat/Main/func_020de888.cpp:
     complete
     .text start:0x020de888 end:0x020de980
 
-src/Combat/Main/func_020de980.cpp:
+src/Combat/Main/BuildDescriptorFlag1_020de980.cpp:
     complete
     .text start:0x020de980 end:0x020de9a4
 
-src/Combat/Main/func_020de9a4.cpp:
+src/Combat/Main/ItemTable_LoadIds_020de9a4.cpp:
     complete
     .text start:0x020de9a4 end:0x020dea40
 
@@ -19424,7 +19424,7 @@ src/Combat/Main/func_020dfc2c.cpp:
     complete
     .text start:0x020dfc2c end:0x020dfc40
 
-src/Combat/Main/func_020dfc40.cpp:
+src/Combat/Main/KeyTable_Reset_020dfc40.cpp:
     complete
     .text start:0x020dfc40 end:0x020dfc6c
 
@@ -19444,7 +19444,7 @@ src/Combat/Main/func_020dfe88.cpp:
     complete
     .text start:0x020dfe88 end:0x020dfec0
 
-src/Combat/Main/func_020dfec0.cpp:
+src/Combat/Main/KeyTable_Load_020dfec0.cpp:
     complete
     .text start:0x020dfec0 end:0x020dffb8
 
@@ -19468,7 +19468,7 @@ src/Combat/Main/func_020e0310.cpp:
     complete
     .text start:0x020e0310 end:0x020e038c
 
-src/Combat/Main/func_020e038c.cpp:
+src/Combat/Main/KeyTable_LoadInPlace_020e038c.cpp:
     complete
     .text start:0x020e038c end:0x020e03b8
 
@@ -19480,11 +19480,11 @@ src/Combat/Main/func_020e03f0.cpp:
     complete
     .text start:0x020e03f0 end:0x020e0424
 
-src/Combat/Main/func_020e0424.cpp:
+src/Combat/Main/KeyTable_GetCount_020e0424.cpp:
     complete
     .text start:0x020e0424 end:0x020e0434
 
-src/Combat/Main/func_020e0434.cpp:
+src/Combat/Main/KeyTable_Get_020e0434.cpp:
     complete
     .text start:0x020e0434 end:0x020e0440
 

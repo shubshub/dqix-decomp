@@ -53,7 +53,7 @@ struct Struct_ov000_0217e558 {
     unsigned char unknown_1d74_[5];
     unsigned char unknown_1d79_;
 };
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
 extern "C" ResourceE558* func_ov017_021b8468(void*);
@@ -81,7 +81,7 @@ extern int data_ov000_02184294[3];
 // USA: func_ov000_0217e558
 extern "C" ARM void func_ov000_0217e558(BattleE558* battle, int arg1, int arg2) {
     battle->flags |= 0x100;
-    battle->selected = GetActiveScaledSum0205d794(&battle->list.sums);
+    battle->selected = Window_GetSelectedIndex(&battle->list.sums);
     SetElementFlag0x20ByKey0205def8(&battle->list.flags, 1, 0x18);
     SetElementFieldC2_0205deb4(&battle->list.fields, 0x18, 0);
     GameState* game = GameState::GetInstance();

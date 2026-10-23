@@ -8,14 +8,14 @@
 
 #include "std_library_functions.h"
 
-struct Struct_0205d5d0;
-extern "C" void func_ov008_02187278(void* arg0, char* arg1, int arg2, void* arg3);
-extern "C" void func_0204b088(void* arg0, int arg1);
-extern "C" void func_ov023_021eb4f4(char* arg0);
-struct Struct_0205d2bc;
-extern "C" void func_0205d2bc(struct Struct_0205d2bc*);
-struct Struct_ov008_02184968;
-extern "C" void func_ov008_021873ac(struct Struct_ov008_02184968* arg0, int arg1);
+struct StructA0205d5d0;
+extern "C" void func_ov008_02187278(void* obj, char* dst, int mode, void* extra);
+extern "C" void Background_TransferMap(void* p, int flag);
+void CallDispatchIfFlagSet_021eb4f4(char* obj);
+struct Obj0205d2bc;
+void Window_TransferLayers(struct Obj0205d2bc*);
+struct Obj021873ac;
+void UpdateElementBuffer_021873ac(struct Obj021873ac* obj, int modeArg);
 
 struct Struct_ov008_02184968_2 {
     char unknown_0_[0xb8];
@@ -34,8 +34,8 @@ struct Struct_ov008_02184968_2 {
 extern "C" ARM void func_ov008_02184968(struct Struct_ov008_02184968_2* arg0) {
     if (arg0->unknown_b10_ == 0 || arg0->unknown_b10_ == 1 || arg0->unknown_b10_ == 0xe) return;
 
-    if (arg0->unknown_b24_ == 0) {
-        func_0204b088((char*)arg0 + 0xd0, 0);
+    if (obj->b24 == 0) {
+        Background_TransferMap((char*)obj + 0xd0, 0);
     }
     if (arg0->unknown_b08_ != 0) {
         func_ov023_021eb4f4(arg0->unknown_b08_);
@@ -53,6 +53,6 @@ extern "C" ARM void func_ov008_02184968(struct Struct_ov008_02184968_2* arg0) {
         arg0->unknown_b18_ &= ~0x800;
     }
 
-    func_ov008_021873ac((struct Struct_ov008_02184968*)arg0, 1);
-    func_0205d2bc((struct Struct_0205d2bc*)((char*)arg0 + 0x130));
+    UpdateElementBuffer_021873ac((struct Obj021873ac*)obj, 1);
+    Window_TransferLayers((struct Obj0205d2bc*)((char*)obj + 0x130));
 }

@@ -49,10 +49,10 @@ struct Struct_ov003_021737e4_2 {
     int unknown_f8_;
 };
 
-extern "C" void func_020a620c(void* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204c684(void* arg0);
+extern "C" void func_020a620c(void* obj);
+int Pac_CountFiles(ActiveEntry02046900* pac);
+void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
+extern "C" void func_0204c684(void* canvas);
 extern "C" void* func_02012fe4(void);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_02041f50(char*, char*);
@@ -79,15 +79,15 @@ extern "C" ARM void func_ov003_021737e4(Struct_ov003_021737e4_2* arg0) {
         if (var0->GetTaskStatus(arg0->unknown_f8_) == 0) {
             return;
         }
-        void* var1;
-        void* var2;
-        unsigned int var3;
-        void* var4[3];
-        int var5[3];
-        var0->GetLoadedFileByID(arg0->unknown_f8_, &var2, &var3);
-        int var6 = func_02046900((Struct_02020cb8_4*)var2);
-        for (int var7 = 0; var7 < var6; var7++) {
-            var4[var7] = func_020467f0((Struct_02020aec*)var2, var7, &var1, &var5[var7]);
+        void* name;
+        void* file;
+        unsigned int size;
+        void* records[3];
+        int sizes[3];
+        loader->GetLoadedFileByID(self->task_, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        for (int i = 0; i < count; i++) {
+            records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &sizes[i]);
         }
         void* var8 = arg0->unknown_1_ ? var4[1] : var4[0];
         Struct_ov003_021737e4 var9;
@@ -196,10 +196,10 @@ struct Struct_ov003_021737e4_2 {
     Struct_02072a68_2 unknown_1d8_;
 };
 
-extern "C" void func_020a620c(void* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204c684(void* arg0);
+extern "C" void func_020a620c(void* obj);
+int Pac_CountFiles(ActiveEntry02046900* pac);
+void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
+extern "C" void func_0204c684(void* canvas);
 extern "C" void* func_02012fe4(void);
 extern "C" char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
 extern "C" void func_ov003_02172618(void* arg0, int arg1, char** arg2);
@@ -218,15 +218,15 @@ extern "C" ARM void func_ov003_021737e4(Struct_ov003_021737e4_2* arg0) {
         if (var21->GetTaskStatus(arg0->unknown_f4_) == 0) {
             return;
         }
-        void* var22;
-        void* var23;
-        unsigned int var24;
-        void* var25[3];
-        int var26[3];
-        var21->GetLoadedFileByID(arg0->unknown_f4_, &var23, &var24);
-        int var27 = func_02046900((Struct_02020cb8_4*)var23);
-        for (int var28 = 0; var28 < var27; var28++) {
-            var25[var28] = func_020467f0((Struct_02020aec*)var23, var28, &var22, &var26[var28]);
+        void* name;
+        void* file;
+        unsigned int size;
+        void* records[3];
+        int sizes[3];
+        loader->GetLoadedFileByID(self->task_, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        for (int i = 0; i < count; i++) {
+            records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &sizes[i]);
         }
         void* var29 = arg0->unknown_1_ ? var25[1] : var25[0];
         Struct_ov003_021737e4 var30;

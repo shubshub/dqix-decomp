@@ -36,17 +36,17 @@ struct Struct_ov003_0217dfb4_2 {
 };
 
 extern "C" void* func_02012fe4(void);
-extern "C" int func_020421a0();
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_0205d794(struct Struct_0205c570* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" unsigned char* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_02050400(unsigned char* arg0, int arg1);
-extern "C" void func_0205042c(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_02050440(unsigned char* arg0, int arg1);
+int GetGlobalField0x1c020421a0();
+extern "C" void __clear(void* buf, int n);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int AppendString02042058(char* dst, const char* src);
+unsigned char* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+void SetField0xd8State_02050400(unsigned char* elem, int state);
+void SetByte0xd9AndFlag0x2_0205042c(unsigned char* elem, unsigned char value);
+void SetByte0xdaAndFlag0x2_02050440(unsigned char* elem, int value);
 extern const char data_ov003_02180c7f[];
 
 // USA: func_ov003_0217dfb4
@@ -66,27 +66,27 @@ extern "C" ARM void func_ov003_0217dfb4(struct Struct_ov003_0217dfb4_2* arg0) {
     if (var2 > arg0->unknown_30_) {
         var2 = arg0->unknown_30_;
     }
-    if (arg0->unknown_14_ == 2) {
-        func_02041c08(var0, func_0205d794((struct Struct_0205c570*)arg0->unknown_90_) % 6, 8, 5, 5, 5);
+    if (menu->mode == 2) {
+        AppendFrameTag02041c08(buf, Window_GetSelectedIndex((struct Struct_0205c570*)menu->window) % 6, 8, 5, 5, 5);
     }
-    for (var3 = var4 * 6; var3 < var2; var3++) {
-        const char* var5 = (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_cc_, (short)(arg0->unknown_18_[var3] + 100));
-        func_02041b70(var0, var3 % 6, var5);
-        if (var3 != var2 - 1) {
-            func_02042058(var0, data_ov003_02180c7f);
+    for (i = page * 6; i < end; i++) {
+        const char* name = (const char*)KeyTable_Get((struct Container020e0310*)menu->names, (short)(menu->items[i] + 100));
+        AppendNameTag_02041b70(buf, i % 6, name);
+        if (i != end - 1) {
+            AppendString02042058(buf, data_ov003_02180c7f);
         }
     }
     if (arg0->unknown_32_ > 1) {
 #if defined(jpn)
-        func_02046380((void*)var1);
-        func_020465c0((Struct_020465c0*)var1, 0, var4 + 1);
-        func_020465c0((Struct_020465c0*)var1, 1, arg0->unknown_32_);
-        func_020465f0((unsigned char*)var1, 0, 2);
-        func_020465f0((unsigned char*)var1, 1, 2);
-        func_020465d8((unsigned char*)var1, 0, 1);
-        func_020465d8((unsigned char*)var1, 1, 0);
-        func_02042428(var0, 8);
-        func_02042058(var0, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_cc_, 0xc8));
+        func_02046380((void*)global);
+        StoreInArray0x8b0_020465c0((StoreStruct*)global, 0, page + 1);
+        StoreInArray0x8b0_020465c0((StoreStruct*)global, 1, menu->field32);
+        SetByteInRange_020465f0((unsigned char*)global, 0, 2);
+        SetByteInRange_020465f0((unsigned char*)global, 1, 2);
+        SetByteAtIndex_020465d8((unsigned char*)global, 0, 1);
+        SetByteAtIndex_020465d8((unsigned char*)global, 1, 0);
+        func_02042428(buf, 8);
+        AppendString02042058(buf, (const char*)KeyTable_Get((Container020e0310*)menu->names, 0xc8));
 #else
         unsigned char* var6 = func_0205d81c((struct Struct_0205d81c*)arg0->unknown_90_, 0);
         if (var6 != NULL) {

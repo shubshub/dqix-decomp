@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0203d028;
-extern "C" ARM void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" ARM void func_0207df90(char* arg0);
-extern "C" ARM void func_0207dfac(char* arg0);
-extern "C" void func_0207de48(void* arg0, int arg1, int arg2);
+struct Foo0207df50;
+ARM void CopyInternalFields0207df50(struct Foo0207df50* p);
+ARM void VramState_Restore(char* obj);
+ARM void VramState_Save(char* obj);
+extern "C" void VramState_Reserve(void* p, int a, int b);
 
 struct Struct_020e7d30 { int unknown_0_; int unknown_4_; };
 extern unsigned int data_020e7c18[];
@@ -18,23 +18,23 @@ extern "C" ARM int func_02054464(char* arg0, SafeAllocator* arg1, char* arg2) {
     unsigned int var1;
     void* var2;
 
-    arg1->Reset();
-    func_0207df50((struct Struct_0203d028*)arg2);
-    func_0207df90(arg2);
+    alloc->Reset();
+    CopyInternalFields0207df50((struct Foo0207df50*)p);
+    VramState_Restore(p);
 
-    for (var0 = 0; var0 < 10; var0++) {
-        var1 = data_020e7c18[var0];
-        if (var1 != 0) {
-            var2 = arg1->Allocate(var1);
-            ((SafeAllocator*)(arg0 + 4 + var0 * 0x14))->CreateTypeA(var2, var1);
-            func_0207de48(arg0 + 0xcc + var0 * 0x70, data_020e7d30[var0].unknown_0_, data_020e7d34[var0].unknown_0_);
+    for (i = 0; i < 10; i++) {
+        size = data_020e7c18[i];
+        if (size != 0) {
+            buf = alloc->Allocate(size);
+            ((SafeAllocator*)(obj + 4 + i * 0x14))->CreateTypeA(buf, size);
+            VramState_Reserve(obj + 0xcc + i * 0x70, data_020e7d30[i].a, data_020e7d34[i].a);
         } else {
             ((SafeAllocator*)(arg0 + 4 + var0 * 0x14))->ResetAllocatorPointer();
         }
     }
 
-    func_0207de48(arg0 + 0x168 + 0x400, 0x240, 0x20);
-    func_0207dfac(arg2);
+    VramState_Reserve(obj + 0x168 + 0x400, 0x240, 0x20);
+    VramState_Save(p);
 
     var2 = arg1->Allocate(0x2000);
     ((SafeAllocator*)(arg0 + 0x12c + 0x400))->CreateTypeA(var2, 0x2000);

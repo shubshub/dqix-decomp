@@ -54,29 +54,29 @@ struct Struct_02020cb8_2;
 struct Struct_02000c9c_8;
 
 extern "C" void func_020c39a0(short*, int);
-extern "C" void func_020bc078(int*);
-extern "C" void func_0203aa44(void*);
-extern "C" int func_0203aaf8(void*, void*, int*);
-extern "C" void func_ov016_0218be1c();
-extern "C" void func_02012bd8();
-extern "C" int func_020c3864(int);
-extern "C" int func_0201201c(void*);
-extern "C" void func_020c3984(unsigned int);
-extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_02012da4(AllocatorUnion*, void*);
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" void func_0204b8d0(Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-extern "C" void func_020c9820();
+void ClearField0x0_020bc078(int*);
+void CallField0xa00203aa44(void*);
+int TryAllocateOrAppend0203aaf8(void*, void*, int*);
+void EnsureInitAndSetFlag_0218be1c();
+void InitOverlay17ObjAndBumpBattleCounter02012bd8();
+int SetVBlankIrqEnable_020c3864(int);
+int GetWord0x7f6c_0201201c(void*);
+void SetSubBgMode_020c3984(unsigned int);
+void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
+void TailForward02012da4(AllocatorUnion*, void*);
+void Background_Init(List0204af64*);
+void Background_SetMapSize(unsigned char*, int);
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+int Pac_CountFiles(ActiveEntry02046900*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+int NormalizeField5_0200fb08(Struct0200fb08*);
+void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_UploadMap(List0204b0e8*, void*);
+void DelayThenSyncBit0_020c9820();
 extern "C" void func_020ca458(unsigned int, void*, unsigned int);
-extern "C" void func_0204b5b4(Struct_ov003_021594c4*, int);
-extern "C" void func_0204b174(Struct_ov003_021594c4*, void*, SafeAllocator*, unsigned int);
+extern "C" void Background_SetPriority(BackgroundGraphics*, int);
+extern "C" void Background_LoadFile(BackgroundGraphics*, void*, SafeAllocator*, unsigned int);
 extern "C" void func_ov016_0218c04c(char*, void*);
 
 #if !defined(jpn)
@@ -107,9 +107,9 @@ struct Struct_ov016_0219d0c0_8 {
     int unknown_4c_[2];
 };
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b2e0(void*, char*);
-extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
+struct SelfTag0204b3a0;
+void Background_FlushFile(void*, char*);
+void Background_UploadFile(SelfTag0204b3a0*, char*);
 extern "C" void func_ov016_0218ca98(char*);
 extern const char data_ov016_0219cf00[];
 extern Struct_ov016_0219d0c0_8 data_ov016_0219d0c0;
@@ -160,22 +160,22 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
         {
             if (var4->GetTaskStatus(var3) != 0)
             {
-                var4->GetLoadedFileByID(var3, &var6, &var7);
-                int var8 = func_02046900((Struct_02020cb8_4*)var6);
-                Struct_ov003_021594c4 var9;
-                func_0204af64((Struct_02020cb8*)&var9);
-                var9.unknown_1c_0_ = 1;
-                var9.unknown_1c_4_ = 0;
-                func_0204b5b4(&var9, 0);
-                func_0204b11c((unsigned char*)&var9, 0);
-                for (int var10 = 0; var10 < var8; var10++)
+                loader->GetLoadedFileByID(task, &archive, &archiveLength);
+                int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+                BackgroundGraphics background;
+                Background_Init((List0204af64*)&background);
+                background.screen = 1;
+                background.layer = 0;
+                Background_SetPriority(&background, 0);
+                Background_SetMapSize((unsigned char*)&background, 0);
+                for (int index = 0; index < count; index++)
                 {
-                    int var11;
-                    char* var12 = (char*)func_020467f0((Struct_02020aec*)var6, var10, &var5, &var11);
-                    if (var12 != NULL)
+                    int recordLength;
+                    char* record = (char*)Pac_GetFile((Rec020467f0*)archive, index, &recordName, &recordLength);
+                    if (record != NULL)
                     {
-                        func_0204b2e0(&var9, var12);
-                        func_0204b3a0((Struct_02020cb8_6*)&var9, var12);
+                        Background_FlushFile(&background, record);
+                        Background_UploadFile((SelfTag0204b3a0*)&background, record);
                     }
                 }
                 var4->RemoveTask(var3);
@@ -244,39 +244,39 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
         BG0CNTSUB = var15;
         SUB_BG0_SCROLL = 0;
 
-        void* var16 = func_02012d88(&data_02114e20, 0x2000);
-        SafeAllocator var17;
-        var17.ResetAllocatorPointer();
-        var17.ResetAllocatorPointer();
-        var17.CreateTypeA(var16, 0x2000);
-        Struct_ov003_021594c4 var18;
-        func_0204af64((Struct_02020cb8*)&var18);
-        var18.unknown_1c_0_ = 1;
-        var18.unknown_1c_4_ = 0;
-        func_0204b5b4(&var18, 0);
-        func_0204b11c((unsigned char*)&var18, 0);
-        func_0204b12c((Struct_0204b12c*)&var18, &var17);
-        func_0204af38((Struct_0204af38*)&var18, 5, &var17);
-        int var19;
-        BackgroundLoader* var20 = BackgroundLoader::GetInstance();
-        var20->MaybeReset();
-        var19 = var20->QueueLoadFile(data_ov016_0219d030, NULL);
-        void* var21;
-        void* var22;
-        unsigned int var23;
+        void* buffer = AllocateAligned4_02012d88(&data_02114e20, 0x2000);
+        SafeAllocator allocator;
+        allocator.ResetAllocatorPointer();
+        allocator.ResetAllocatorPointer();
+        allocator.CreateTypeA(buffer, 0x2000);
+        BackgroundGraphics background;
+        Background_Init((List0204af64*)&background);
+        background.screen = 1;
+        background.layer = 0;
+        Background_SetPriority(&background, 0);
+        Background_SetMapSize((unsigned char*)&background, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)&background, &allocator);
+        Background_AllocateScreens((Foo0204af38*)&background, 5, &allocator);
+        int task;
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        loader->MaybeReset();
+        task = loader->QueueLoadFile(data_ov016_0219d030, NULL);
+        void* recordName;
+        void* archive;
+        unsigned int archiveLength;
         for (;;)
         {
             if (var20->GetTaskStatus(var19) != 0)
             {
-                var20->GetLoadedFileByID(var19, &var22, &var23);
-                int var24 = func_02046900((Struct_02020cb8_4*)var22);
-                for (int var25 = 0; var25 < var24; var25++)
+                loader->GetLoadedFileByID(task, &archive, &archiveLength);
+                int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+                for (int index = 0; index < count; index++)
                 {
-                    int var26;
-                    void* var27 = func_020467f0((Struct_02020aec*)var22, var25, &var21, &var26);
-                    if (var27 != NULL)
+                    int recordLength;
+                    void* record = Pac_GetFile((Rec020467f0*)archive, index, &recordName, &recordLength);
+                    if (record != NULL)
                     {
-                        func_0204b174(&var18, var27, &var17, var26);
+                        Background_LoadFile(&background, record, &allocator, recordLength);
                     }
                 }
                 var20->RemoveTask(var19);
@@ -296,12 +296,12 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
                     var28 = 4;
                     break;
                 }
-                func_0204b8d0((Struct_0204b8d0*)&var18, 0, 0, 0, 0, 0, 32, 25, 0xffff);
-                if (var28 > 0)
+                Background_DrawScreen((Obj0204b8d0*)&background, 0, 0, 0, 0, 0, 32, 25, 0xffff);
+                if (selection > 0)
                 {
-                    func_0204b8d0((Struct_0204b8d0*)&var18, (unsigned char)var28, 0, 0, 0, 17, 32, 25, 0xffff);
+                    Background_DrawScreen((Obj0204b8d0*)&background, (unsigned char)selection, 0, 0, 0, 17, 32, 25, 0xffff);
                 }
-                func_0204b0e8((Struct_02020cb8_2*)&var18, NULL);
+                Background_UploadMap((List0204b0e8*)&background, NULL);
                 break;
             }
             var20->RemoveAllLocks();

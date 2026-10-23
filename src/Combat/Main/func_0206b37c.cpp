@@ -19,7 +19,7 @@ bool IsHighByteFF02044494(void*, void*);
 int Dispatch02044420(void*, void*);
 int LookupKeyValue020425e4(int, int, int);
 Entry0204254c* Font_FindCharacter(int, int);
-int FindEntryIndexByKey020424e4(int, int);
+int Font_FindCharacterIndex(int, int);
 int IsHalfwordInRange02067ad8(int, void*);
 
 // USA: func_0206b37c
@@ -59,7 +59,7 @@ extern "C" ARM int func_0206b37c(Struct_0206b37c* arg0, char* arg1) {
             int glyphWidth = defaultWidth;
             Entry0204254c* entry = Font_FindCharacter((int)text, context->fontTable);
             if (entry) {
-                current = (unsigned char)FindEntryIndexByKey020424e4((int)text, context->fontTable);
+                current = (unsigned char)Font_FindCharacterIndex((int)text, context->fontTable);
                 width += LookupKeyValue020425e4(previous, current, context->fontTable);
                 previous = current;
                 current = 0xff;

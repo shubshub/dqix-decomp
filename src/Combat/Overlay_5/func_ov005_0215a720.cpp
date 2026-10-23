@@ -21,16 +21,16 @@ struct Struct_ov005_02153954 {
 struct Struct_0204b010;
 struct Struct_0204b8d0;
 
-extern "C" void func_0204b010(Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204b8d0(Struct_0204b8d0* arg0, unsigned int arg1, int arg2, int arg3, short arg4, short arg5, short arg6, short arg7, unsigned short arg8);
-extern "C" void func_0204b04c(void* arg0, int arg1);
+void Background_ClearMap(Obj0204b010* background, void* unk);
+void Background_DrawScreen(Obj0204b8d0* background, unsigned int a, int b, int c, short d, short e, short f, short g, unsigned short h);
+extern "C" void Background_FlushMap(void* background, int unk);
 
 // USA: func_ov005_0215a720
 extern "C" ARM void func_ov005_0215a720(Struct_ov005_02153954* arg0) {
     if (!(arg0->unknown_3dcc_ & 0x100))
         return;
-    func_0204b010((Struct_0204b010*)arg0->unknown_ea4_, 0);
-    func_0204b8d0((Struct_0204b8d0*)arg0->unknown_ea4_, 0, 0, 0, 0x10, 0, 0x10, 0x16, 0xffff);
-    func_0204b8d0((Struct_0204b8d0*)arg0->unknown_ea4_, (unsigned char)(arg0->unknown_3dbc_ + 1), 0, 0, (short)(arg0->unknown_3dbc_ * 2 + 0xf), 0, 4, 3, 0xffff);
-    func_0204b04c(arg0->unknown_ea4_, 0);
+    Background_ClearMap((Obj0204b010*)self->background1_, 0);
+    Background_DrawScreen((Obj0204b8d0*)self->background1_, 0, 0, 0, 0x10, 0, 0x10, 0x16, 0xffff);
+    Background_DrawScreen((Obj0204b8d0*)self->background1_, (unsigned char)(self->kind_ + 1), 0, 0, (short)(self->kind_ * 2 + 0xf), 0, 4, 3, 0xffff);
+    Background_FlushMap(self->background1_, 0);
 }

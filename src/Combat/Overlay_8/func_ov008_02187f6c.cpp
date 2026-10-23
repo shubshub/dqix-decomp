@@ -34,11 +34,11 @@ extern char data_ov008_0218c0d5[];
 extern "C" void func_0205d304(Struct_02081870_2* arg0, char* arg1, int, int, int, int, int, int);
 #endif
 
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
+MessageSystem* GetGlobalField0x1c020421a0();
+void AppendXYTag_02041a90(char* text, int x, int y);
+void AppendString02042058(char* text, const char* append);
+int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+const char* KeyTable_Get(Container020e0310* texts, int id);
 
 extern char data_ov008_0218b465[];
 extern char data_ov008_0218b47c[];
@@ -174,8 +174,8 @@ extern "C" ARM void func_ov008_02187f6c(Struct_ov008_021842a0_2* arg0, Struct_ov
                     var15 = 4;
                 for (var14 = 0; var14 < var15; var14++)
                 {
-                    func_02041a90(var0, 4, var14 * 15 + 4);
-                    func_02042058(var0, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var14 + 0x82)));
+                    AppendXYTag_02041a90(text, 4, i * 15 + 4);
+                    AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x82)));
                 }
             }
         }
@@ -251,8 +251,8 @@ extern "C" ARM void func_ov008_02187f6c(Struct_ov008_021842a0_2* arg0, Struct_ov
                 var32 = 4;
             for (var31 = 0; var31 < var32; var31++)
             {
-                func_02041a90(var17, 4, var31 * 15 + 4);
-                func_02042058(var17, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var31 + 0x82)));
+                AppendXYTag_02041a90(labels, 4, i * 15 + 4);
+                AppendString02042058(labels, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x82)));
             }
         }
     }

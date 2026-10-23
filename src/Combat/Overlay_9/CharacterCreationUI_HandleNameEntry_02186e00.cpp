@@ -29,7 +29,7 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* sel
         self->flags |= CreationFlag_StylusRotation;
         self->keyboardPage = self->previousKeyboardPage = 0;
         self->flags &= ~CreationFlag_NameAccepted;
-        if (self->nameFlags[self->sex] != 0 && self->names[self->sex][8] == 0) {
+        if (self->nameLengths[self->sex] != 0 && self->names[self->sex][8] == 0) {
             for (int character = 1; character < 5; character++) {
                 if (self->names[self->sex][character * 2] == 0) {
                     for (int fill = character; fill < 5; fill++)
@@ -42,13 +42,13 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* sel
     } else if (self->step == NameEntryStep_Input) {
         if (self->flags & CreationFlag_TabLoading)
             return;
-        if (!func_ov009_02185c58(arg0->unknown_dc_))
+        if (!func_ov009_02185c58(self->nameFilter))
             return;
         int result = CharacterCreationUI_HandleInput(self);
         if (result == CreationInput_Confirm) {
             func_ov009_0218ad0c(self);
         } else if (result == CreationInput_Back) {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
         } else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon) {
             result -= CreationInput_TabIcon;
             if (result <= self->furthestState[self->sex] && result != self->state)
@@ -131,7 +131,7 @@ struct FontCharacter {
 
 struct GridCursor {
     int count_;
-    int unk_4;
+    int pageCount;
     char unk_8[0x38];
 };
 
@@ -204,7 +204,7 @@ const unsigned int CreationFlag_RefreshInfoWindow = CreationFlag_RefreshName | C
         GridCursor_SetDimensions((Struct_0205ba68*)navigation, KeyboardGrid_Columns, KeyboardGrid_Rows,    \
                                  GridCursorOrder_RowMajor);                                                \
         GridCursor_SetCount((Node0205bacc*)navigation, KeyboardGrid_Cells);                                \
-        navigation->unk_4 = 1;                                                                             \
+        navigation->pageCount = 1;                                                                             \
         GridCursor_SetSelectedIndex(navigation, 0);                                                        \
     }
 
@@ -253,7 +253,7 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
         }
         else if (result == CreationInput_Back)
         {
-            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
             return;
         }
         else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
@@ -274,7 +274,7 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
             break;
         case KeyboardResult_NothingToDelete:
             if (!g_keyManager.TestKeysPressed(KEY_A) && g_touchInput.pressed_ == 0)
-                CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_SkinColor);
+                CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
             else
                 SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
             self->flags_ |= CreationFlag_RefreshInfoWindow;

@@ -43,30 +43,30 @@ struct Struct_ov017_021b2fac_4 {
     unsigned char* unknown_1c4_;
 };
 
-extern "C" void func_ov017_021b33d8(void* arg0);
-extern "C" int func_ov017_021b3444(struct Struct_ov017_021b2fac* arg0);
-extern "C" int func_ov017_021b38c8(struct Struct_ov017_021b2fac* arg0);
-extern "C" void func_02083e28(void* arg0, int arg1);
-extern "C" int func_ov017_021b3560(struct Struct_ov017_021b2fac* arg0);
-extern "C" void func_ov017_021b3678(struct Struct_ov017_021b2fac* arg0);
-extern "C" int func_ov017_021b3780(struct Struct_ov017_021b2fac* arg0);
-extern "C" int func_ov017_021b3e14(struct Struct_ov017_021b2fac* arg0);
-extern "C" void func_ov017_0218fcf8(int, int, int);
-extern "C" void func_020d3c08(char* arg0);
-struct Struct_020d3c28;
-struct Struct_02013fb4;
-extern "C" void func_020d3c84(Struct_020d3c28*, Struct_02013fb4*, int);
-struct Struct_020d3d90;
-extern "C" void* func_020d3d90(Struct_020d3d90*, int);
-extern "C" void func_ov017_02191508(int arg0, void* arg1);
-struct Struct_0203d028_11;
-extern "C" void func_0203dafc(Struct_0203d028_11*);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_02039d48(unsigned char*);
-extern "C" void func_ov017_02191fec(void* arg0, int arg1);
+void ResetEntriesAndNotify_021b33d8(void* p);
+extern "C" int func_ov017_021b3444(struct Task021b2fac* t);
+extern "C" int func_ov017_021b38c8(struct Task021b2fac* t);
+extern "C" void func_02083e28(void* p, int v);
+extern "C" int func_ov017_021b3560(struct Task021b2fac* t);
+extern "C" void func_ov017_021b3678(struct Task021b2fac* t);
+extern "C" int func_ov017_021b3780(struct Task021b2fac* t);
+extern "C" int func_ov017_021b3e14(struct Task021b2fac* t);
+void CallHelperIfCheckPasses_0218fcf8(int, int, int);
+void ResetStruct020d3c08(char* p);
+struct HandlerSlotArray020d3c84;
+struct StreamHeader;
+void InitHandlerArrayAndRunScript020d3c84(HandlerSlotArray020d3c84*, StreamHeader*, int);
+struct FindEntryByKindContainer020d3d90;
+void* FindEntryByKind(FindEntryByKindContainer020d3d90*, int);
+extern "C" void func_ov017_02191508(int id, void* e);
+struct Struct_203dafc;
+void ClearEightWords_0203dafc(Struct_203dafc*);
+void VramState_Restore(char* p);
+void VramState_Save(char* p);
+struct Bytes02033b88;
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
+extern "C" void func_ov017_02191fec(void* p, int v);
 
 #if defined(jpn)
 #define data_ov017_021d7a78 data_ov017_021d81c8
@@ -202,20 +202,20 @@ extern "C" ARM void func_ov017_021b2fac(struct Struct_ov017_021b2fac* arg0) {
         }
         return;
     }
-    if (arg0->unknown_a_ == 5) {
-        if (var3->GetTaskStatus(arg0->unknown_10_) != 0) {
-            var0 = var9->unknown_154_;
-            var10 = (SafeAllocator*)((char*)var0 + 4);
-            if (var3->GetDetailedTaskStatus(arg0->unknown_10_) == 2) {
-                var3->GetLoadedFileByID(arg0->unknown_10_, &var18, &var19);
-                if (var18 != 0) {
-                    func_0203dafc((Struct_0203d028_11*)&var20);
-                    var20.fileData = var18;
-                    var20.unk_8 = var19;
-                    var20.allocator = var10;
-                    func_0207df90(var0->unknown_cc_);
-                    ((Object3D*)var9)->LoadFromCCHROrCMOTArchive(&var20, 0);
-                    func_0207dfac(var0->unknown_cc_);
+    if (task->state == 5) {
+        if (loader->GetTaskStatus(task->taskId) != 0) {
+            a5 = c->alloc;
+            alloc4 = (SafeAllocator*)((char*)a5 + 4);
+            if (loader->GetDetailedTaskStatus(task->taskId) == 2) {
+                loader->GetLoadedFileByID(task->taskId, &file5, &size5);
+                if (file5 != 0) {
+                    ClearEightWords_0203dafc((Struct_203dafc*)&info);
+                    info.fileData = file5;
+                    info.unk_8 = size5;
+                    info.allocator = alloc4;
+                    VramState_Restore(a5->tables);
+                    ((Object3D*)c)->LoadFromCCHROrCMOTArchive(&info, 0);
+                    VramState_Save(a5->tables);
                 }
             }
             ((Object3D*)var9)->SetScale(0x10a, 0x10a, 0x10a);

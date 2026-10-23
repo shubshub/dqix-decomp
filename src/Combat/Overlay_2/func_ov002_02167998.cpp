@@ -40,9 +40,9 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
 struct Elem_0205d81c *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 void GetFourShortsAtIndex(struct ShortArrays0204c610 *base, int index, short *out0, short *out1, short *out2, short *out3);
 void SetFourShortsAtIndex(ShortArrays0204c654*, int, short, short, short, short);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 extern "C" void func_0205d7a0(unsigned char *obj, int val);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38 *obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38 *obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *c);
@@ -96,20 +96,20 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
         var9 += *(signed char *) (arg0 + RG(0x1c73, 0x1b37)) + 1;
         func_0204c654((struct Struct_ov002_02167998_2 *) var8, var9, var10, var11, var12, var13);
     }
-    int var14;
-    int var15;
-    short var16 = *(short *) (arg0 + RG(0x1c02, 0x1aca));
-    var1         = var16 % (*(signed char *) (arg0 + RG(0x1c73, 0x1b37)) + 1);
-    Struct_ov002_02167998_3 *var17 = (Struct_ov002_02167998_3 *) (var0 + 0x6c);
-    var14        = var17->unknown_0_;
-    var15         = var17->unknown_4_;
-    *(short *) (arg0 + RG(0x1c02, 0x1aca)) = func_0205d794((struct Struct_ov002_0215624c_15 *) var0);
-    if (var16 != *(short *) (arg0 + RG(0x1c02, 0x1aca))) {
-        if (var1 == var15 && var15 == *(signed char *) (arg0 + RG(0x1c73, 0x1b37)) && g_touchInput.pressed_ == 0) {
-            var15--;
-            var2 = var14 * (*(signed char *) (arg0 + RG(0x1c73, 0x1b37)) + 1) + var15;
-            func_0205d7a0(var0, var2);
-            *(short *) (arg0 + RG(0x1c02, 0x1aca)) = var2;
+    int mode;
+    int sel;
+    short old = *(short *) (base + 0x1c02);
+    col         = old % (*(signed char *) (base + 0x1c73) + 1);
+    Cursor *cur = (Cursor *) (obj + 0x6c);
+    mode        = cur->col;
+    sel         = cur->row;
+    *(short *) (base + 0x1c02) = Window_GetSelectedIndex((struct Struct_0205c570 *) obj);
+    if (old != *(short *) (base + 0x1c02)) {
+        if (col == sel && sel == *(signed char *) (base + 0x1c73) && g_touchInput.pressed_ == 0) {
+            sel--;
+            v = mode * (*(signed char *) (base + 0x1c73) + 1) + sel;
+            func_0205d7a0(obj, v);
+            *(short *) (base + 0x1c02) = v;
         }
         arg0[RG(0x1c20, 0x1ae8)] = -1;
         if (var15 < *(signed char *) (arg0 + RG(0x1c73, 0x1b37))) {
@@ -128,7 +128,7 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
     SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) obj, shown, 0x1b);
     if (old != *(short *) (base + 0x1c02)) return;
     int pressed = g_keyManager.TestKeysPressed(0x601);
-    int confirm = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38 *) (base + 0x2c8 + 0xc00), 0x14)) ? 1 : 0;
+    int confirm = (pressed | Window_IsSelectionTouched((struct Obj_0205da38 *) (base + 0x2c8 + 0xc00), 0x14)) ? 1 : 0;
     if (confirm) {
         if (sel == *(signed char *) (base + 0x1c73)) {
             SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);

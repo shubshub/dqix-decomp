@@ -216,7 +216,7 @@ src/Combat/Overlay_2/func_ov002_0216885c.cpp:
     complete
     .text start:0x0216885c end:0x021688f8
 
-src/Combat/Overlay_2/func_ov002_0215f224.cpp:
+src/Combat/Overlay_2/AppendEntryList_0215f224.cpp:
     complete
     .text start:0x0215f224 end:0x0215f3a0
 
@@ -260,15 +260,15 @@ src/Combat/Overlay_2/func_ov002_021548c4.cpp:
     complete
     .text start:0x021548c4 end:0x02154944
 
-src/Combat/Overlay_2/func_ov002_0215dd0c.cpp:
+src/Combat/Overlay_2/AppendCursorAndFieldNames_0215dd0c.cpp:
     complete
     .text start:0x0215dd0c end:0x0215ddbc
 
-src/Combat/Overlay_2/func_ov002_021610c4.cpp:
+src/Combat/Overlay_2/AppendCursorAndFieldNames_021610c4.cpp:
     complete
     .text start:0x021610c4 end:0x02161174
 
-src/Combat/Overlay_2/func_ov002_0216186c.cpp:
+src/Combat/Overlay_2/AppendCursorAndNameTags_0216186c.cpp:
     complete
     .text start:0x0216186c end:0x02161920
 
@@ -396,7 +396,7 @@ src/Combat/Overlay_2/func_ov002_0215ece4.cpp:
     complete
     .text start:0x0215ece4 end:0x0215edc8
 
-src/Combat/Overlay_2/func_ov002_0215f084.cpp:
+src/Combat/Overlay_2/ApplyCombatantAdjustment_0215f084.cpp:
     complete
     .text start:0x0215f084 end:0x0215f170
 

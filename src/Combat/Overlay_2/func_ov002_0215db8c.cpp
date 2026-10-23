@@ -11,43 +11,43 @@ extern "C" void func_02042638(char *arg0, int arg1, int arg2);
 
 struct Struct_0201099c_3;
 
-extern "C" void func_ov002_02157424(void *arg0, int *arg1);
-extern "C" int func_ov002_02159774(void *arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_02041ea4(char *arg0, int arg1);
-extern "C" const char *func_020e0434(Struct_0201099c_3 *arg0, int arg1);
-extern "C" void func_02041fac(char *arg0, int arg1, int arg2);
-extern "C" void func_02041e70(char *arg0, int arg1);
-extern "C" void func_02041b70(char *arg0, int arg1, const char *arg2);
-extern "C" void func_02042058(char *arg0, const char *arg1);
+extern "C" void func_ov002_02157424(void *self, int *slots);
+extern "C" int func_ov002_02159774(void *self, int idx, int a, int b, int c);
+void AppendFrameTag02041c08(char *buf, int x, int a, int b, int c, int d);
+void AppendCursorTag_02041ea4(char *buf, int x);
+const char *KeyTable_Get(Container020e0310 *tbl, int key);
+void AppendFormatted02041fac(char *buf, int str, int n);
+void AppendPaletteTag_02041e70(char *buf, int pal);
+void AppendNameTag_02041b70(char *buf, int i, const char *str);
+void AppendString02042058(char *buf, const char *str);
 
 // USA: func_ov002_0215db8c
-extern "C" ARM void func_ov002_0215db8c(char *arg0, char *arg1, int arg2) {
-    int var0[7];
-    if (arg1 == 0) return;
-    void *var1  = GameState::GetInstance();
-    short var2   = *(short *) (arg0 + RG(0x1bf0, 0x1ab8));
-    short var3 = 0x76d;
-    func_ov002_02157424(arg0, var0);
-    if (arg2) func_02041c08(arg1, var2, 8, 5, 5, 5);
-    func_02041ea4(arg1, var2);
-    func_02041fac(
-        arg1, (int) func_020e0434((Struct_0201099c_3 *) (arg0 + RG(0x20, 0x8)), 0x76c), 0x10);
-    int var4;
-    int var5 = *(int *) (arg0 + RG(0x1c38, 0x1afc)) + 1;
-    int var6;
-    for (var6 = 0; var6 < var5; var6++) {
-        var4   = var0[var6];
-        int var7 = (var4 >= 0 && var4 <= 3);
-        if (var7) {
-            unsigned char *var8 = (unsigned char *)((GameState*)var1)->GetPartyMemberByIndex(var4);
-            if (var8 != 0) {
-                func_02041e70(arg1, func_ov002_02159774(arg0, var4, 0, 1, 1));
-                func_02041b70(arg1, var6, *(const char **) (var8 + 0x134));
-                func_02041e70(arg1, 0xf);
+extern "C" ARM void func_ov002_0215db8c(char *self, char *buf, int frame) {
+    int slots[7];
+    if (buf == 0) return;
+    void *gs  = GameState::GetInstance();
+    short x   = *(short *) (self + RG(0x1bf0, 0x1ab8));
+    short key = 0x76d;
+    func_ov002_02157424(self, slots);
+    if (frame) AppendFrameTag02041c08(buf, x, 8, 5, 5, 5);
+    AppendCursorTag_02041ea4(buf, x);
+    AppendFormatted02041fac(
+        buf, (int) KeyTable_Get((Container020e0310 *) (self + RG(0x20, 0x8)), 0x76c), 0x10);
+    int slot;
+    int n = *(int *) (self + RG(0x1c38, 0x1afc)) + 1;
+    int i;
+    for (i = 0; i < n; i++) {
+        slot   = slots[i];
+        int ok = (slot >= 0 && slot <= 3);
+        if (ok) {
+            unsigned char *m = (unsigned char *)((GameState*)gs)->GetPartyMemberByIndex(slot);
+            if (m != 0) {
+                AppendPaletteTag_02041e70(buf, func_ov002_02159774(self, slot, 0, 1, 1));
+                AppendNameTag_02041b70(buf, i, *(const char **) (m + 0x134));
+                AppendPaletteTag_02041e70(buf, 0xf);
             }
         } else {
-            func_02041b70(arg1, var6, func_020e0434((Struct_0201099c_3 *) (arg0 + RG(0x20, 0x8)), var3++));
+            AppendNameTag_02041b70(buf, i, KeyTable_Get((Container020e0310 *) (self + RG(0x20, 0x8)), key++));
         }
         if (var6 != var5 - 1) func_02042058(arg1, *(const char **) (arg0 + RG(0x1bdc, 0x1aa4)));
     }

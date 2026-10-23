@@ -28,8 +28,8 @@ struct Keyboard {
 };
 
 extern "C" void __clear(void* buf, int size);
-int FindEntryIndexByKey020424e4(int key, int tableIdx);
-extern "C" int func_020426bc(void* src, void* dst, int flag);
+int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" int Font_EncodeText(void* src, void* dst, int flag);
 extern "C" void func_02042764(void* src, void* dst, int flag);
 extern "C" int func_020420e8(void* str, int flag);
 struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
@@ -66,19 +66,19 @@ extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* input) {
         var10 = arg0->unknown_c_;
         var12 = arg0->unknown_14_;
 
-        __clear(var0, 0x100);
-        var4 = func_020424e4(var3, var11);
-        var8 = func_020426bc(var9, var0, var11);
-        var2 = var0;
-        for (var7 = 0; var7 < var12; var7++, var2++) {
-            if (var7 == var12 - 1) {
-                unsigned char var14 = *var2;
-                *var2 = var4;
-                if (var10 != 0) {
-                    __clear(var1, 0x100);
-                    func_02042764(var0, var1, var11);
-                    if (var10 < func_020420e8(var1, 0)) {
-                        *var2 = var14;
+        __clear(buf, 0x100);
+        ch = Font_FindCharacterIndex(code, font);
+        len = Font_EncodeText(text, buf, font);
+        p = buf;
+        for (i = 0; i < maxLen; i++, p++) {
+            if (i == maxLen - 1) {
+                unsigned char prev = *p;
+                *p = ch;
+                if (widthLimit != 0) {
+                    __clear(work, 0x100);
+                    func_02042764(buf, work, font);
+                    if (widthLimit < func_020420e8(work, 0)) {
+                        *p = prev;
                         break;
                     }
                 }

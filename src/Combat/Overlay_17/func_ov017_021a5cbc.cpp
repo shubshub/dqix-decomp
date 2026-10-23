@@ -51,29 +51,29 @@ extern const char data_ov017_021d7b3b[];
 #else
 enum { Enum_ov017_021a5cbc_1280 = 0x500 };
 #endif
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(Struct_ov017_021a5ad0*, unsigned char);
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(Node0x20_021a5ad0*, unsigned char);
+void Background_SetScroll(Obj0204b5e8*, int, int);
 extern "C" void ColorEffect_ConfigureAlphaBlend(void*, int, int, int, int);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0204b174(Struct_ov017_021a5ad0*, void*, SafeAllocator*, int);
-extern "C" void func_0205a198(Struct_02043368_2*);
-extern "C" void func_0205a444(char*);
-extern "C" int func_0205a528(Struct_02021578*, void*, int, SafeAllocator*);
-extern "C" void func_ov017_021a5ad0(Struct_ov017_021a5ad0*, int, int);
-extern "C" void func_0204bc74(Struct_ov017_021a5ad0*, int, int, int, int, int, int);
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-extern "C" void func_ov017_021a5b08(Struct_ov017_021a5ad0*, int);
-extern "C" void func_0204c7a8(Struct_0204c7a8*, SafeAllocator*, int, unsigned int);
-extern "C" void func_0205cf78(Struct_0205cf78*, Struct_0205cf78_2*, unsigned char);
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" void func_0205d304(Struct_ov017_021a5cbc_3*, const char*, int, unsigned char, unsigned char, unsigned char, void*
+int Pac_CountFiles(ActiveEntry02046900*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void Background_LoadFile(Node0x20_021a5ad0*, void*, SafeAllocator*, int);
+void Sprite_Init(Struct0205a198*);
+void SpriteContext_Init(char*);
+extern "C" int SpriteContext_LoadFile(MapEntryList*, void*, int, SafeAllocator*);
+void FillFieldWithEncoded_021a5ad0(Node0x20_021a5ad0*, int, int);
+extern "C" void Background_FillRect(Node0x20_021a5ad0*, int, int, int, int, int, int);
+void Background_UploadMap(List0204b0e8*, void*);
+void ClearAndEncodeField14_021a5b08(Node0x20_021a5ad0*, int);
+void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
+void Window_SetPanes(Struct_0205cf78*, Elem_0205cf78*, unsigned char);
+int NormalizeField5_0200fb08(Struct0200fb08*);
+extern "C" void func_0205d304(Config021a5cbc*, const char*, int, unsigned char, unsigned char, unsigned char, void*
 #if !defined(jpn)
     , unsigned char
 #endif
 );
-extern "C" void func_0205d0e0(Struct_ov017_021a5cbc_3*, unsigned int);
+extern "C" void Window_Update(Config021a5cbc*, unsigned int);
 extern const unsigned char data_ov017_021d6a8c[];
 extern const char data_ov017_021d76e8[];
 extern const char data_ov017_021d76fb[];
@@ -87,83 +87,83 @@ extern const char data_ov017_021d7719[];
 #define REG_BACKGROUND_3 (*(volatile unsigned short*)0x0400000e)
 
 // USA: func_ov017_021a5cbc
-extern "C" ARM void func_ov017_021a5cbc(GameResources* arg0) {
-    if ((*reinterpret_cast<void**>(arg0->unknown_4094 + 0x120)) || !(*reinterpret_cast<int*>(arg0->unknown_4094 + 0x12c))) return;
-    if ((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124)) == 0) {
-        arg0->allocator_array_38[16].Reset();
-        Struct_ov017_021a5cbc var0 = *(const Struct_ov017_021a5cbc*)(data_ov017_021d6a8c + 2);
-        Struct_ov017_021a5cbc var1 = *(const Struct_ov017_021a5cbc*)data_ov017_021d6a8c;
-        for (int var2 = 0; var2 < 2; ++var2) {
-            Struct_ov017_021a5ad0* var3 = &reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094)[var2];
-            func_0204b11c((unsigned char*)var3, 0);
-            var3->unknown_1c_0_ = 0;
-            var3->unknown_1c_4_ = var0.unknown_0_[var2];
-            func_0204b5b4(var3, var1.unknown_0_[var2]);
-            func_0204b5e8((Struct_02020cb8_5*)var3, 0, 0);
+extern "C" ARM void func_ov017_021a5cbc(GameResources* self) {
+    if ((*reinterpret_cast<void**>(self->unknown_4094 + 0x120)) || !(*reinterpret_cast<int*>(self->unknown_4094 + 0x12c))) return;
+    if ((*reinterpret_cast<int*>(self->unknown_4094 + 0x124)) == 0) {
+        self->allocator_array_38[16].Reset();
+        Pair021a5cbc priorities = *(const Pair021a5cbc*)(data_ov017_021d6a8c + 2);
+        Pair021a5cbc styles = *(const Pair021a5cbc*)data_ov017_021d6a8c;
+        for (int i = 0; i < 2; ++i) {
+            Node0x20_021a5ad0* node = &reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094)[i];
+            Background_SetMapSize((unsigned char*)node, 0);
+            node->low = 0;
+            node->high = priorities.values[i];
+            Background_SetPriority(node, styles.values[i]);
+            Background_SetScroll((Obj0204b5e8*)node, 0, 0);
         }
         REG_DISPLAY_CONTROL = (REG_DISPLAY_CONTROL & ~0x1f00) | 0x100;
         REG_BACKGROUND_1 = (REG_BACKGROUND_1 & 0x43) | 0x1d00;
         REG_BACKGROUND_2 = (REG_BACKGROUND_2 & 0x43) | 0x1e00;
         ColorEffect_ConfigureAlphaBlend((void*)0x04000050, 2, 1, 9, 7);
-        (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov017_021d76e8, 0);
-        ++(*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124));
-    } else if ((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124)) == 1) {
-        BackgroundLoader* var4 = BackgroundLoader::GetInstance();
-        if (!var4->GetTaskStatus((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)))) return;
-        void* var5;
-        void* var6;
-        unsigned int var7;
-        var4->GetLoadedFileByID((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)), &var6, &var7);
-        int var8 = func_02046900((Struct_02020cb8_4*)var6);
-        void* var9[4];
-        int var10[4];
-        for (int var11 = 0; var11 < var8; ++var11) var9[var11] = func_020467f0((Struct_02020aec*)var6, var11, &var5, &var10[var11]);
-        for (int var12 = 0; var12 < var8; ++var12) {
-            if (var9[var12]) func_0204b174(reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094 + sizeof(Struct_ov017_021a5ad0)), var9[var12], &arg0->allocator_array_38[16], var10[var12]);
+        (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov017_021d76e8, 0);
+        ++(*reinterpret_cast<int*>(self->unknown_4094 + 0x124));
+    } else if ((*reinterpret_cast<int*>(self->unknown_4094 + 0x124)) == 1) {
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        if (!loader->GetTaskStatus((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)))) return;
+        void* record;
+        void* file;
+        unsigned int length;
+        loader->GetLoadedFileByID((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)), &file, &length);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        void* entries[4];
+        int sizes[4];
+        for (int i = 0; i < count; ++i) entries[i] = Pac_GetFile((Rec020467f0*)file, i, &record, &sizes[i]);
+        for (int i = 0; i < count; ++i) {
+            if (entries[i]) Background_LoadFile(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094 + sizeof(Node0x20_021a5ad0)), entries[i], &self->allocator_array_38[16], sizes[i]);
         }
-        var4->RemoveTask((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)));
-        (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = -1;
-        for (int var13 = 0; var13 < 7; ++var13) func_0205a198(&reinterpret_cast<Struct_02043368_2*>(arg0->unknown_41c8)[var13]);
-        func_0205a444((char*)static_cast<Struct_02021578*>(arg0->unknown_ptr_41c4));
-        static_cast<Struct_02021578*>(arg0->unknown_ptr_41c4)->unknown_50_ = 0;
-        Struct_02021578* var14 = static_cast<Struct_02021578*>(arg0->unknown_ptr_41c4);
-        var14->unknown_40_ = reinterpret_cast<Struct_02043368_2*>(arg0->unknown_41c8);
-        var14->unknown_4c_ = 7;
+        loader->RemoveTask((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)));
+        (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = -1;
+        for (int i = 0; i < 7; ++i) Sprite_Init(&reinterpret_cast<Struct0205a198*>(self->unknown_41c8)[i]);
+        SpriteContext_Init((char*)static_cast<MapEntryList*>(self->unknown_ptr_41c4));
+        static_cast<MapEntryList*>(self->unknown_ptr_41c4)->active = 0;
+        MapEntryList* script = static_cast<MapEntryList*>(self->unknown_ptr_41c4);
+        script->records = reinterpret_cast<Struct0205a198*>(self->unknown_41c8);
+        script->count = 7;
         #if defined(jpn)
         (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov017_021d7b3b, 0);
 #else
         (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFileInGP2(data_ov017_021d76fb, data_ov017_021d770c, 0);
 #endif
-        ++(*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124));
-    } else if ((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124)) == 2) {
-        BackgroundLoader* var15 = BackgroundLoader::GetInstance();
-        if (!var15->GetTaskStatus((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)))) return;
-        void* var16;
-        void* var17;
-        unsigned int var18;
-        var15->GetLoadedFileByID((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)), &var17, &var18);
-        int var19 = func_02046900((Struct_02020cb8_4*)var17);
-        int var20;
-        for (int var21 = 0; var21 < var19; ++var21) {
-            void* var22 = func_020467f0((Struct_02020aec*)var17, var21, &var16, &var20);
-            func_0205a528(static_cast<Struct_02021578*>(arg0->unknown_ptr_41c4), var22, var20, &arg0->allocator_array_38[16]);
+        ++(*reinterpret_cast<int*>(self->unknown_4094 + 0x124));
+    } else if ((*reinterpret_cast<int*>(self->unknown_4094 + 0x124)) == 2) {
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        if (!loader->GetTaskStatus((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)))) return;
+        void* record;
+        void* file;
+        unsigned int length;
+        loader->GetLoadedFileByID((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)), &file, &length);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int size;
+        for (int i = 0; i < count; ++i) {
+            void* entry = Pac_GetFile((Rec020467f0*)file, i, &record, &size);
+            SpriteContext_LoadFile(static_cast<MapEntryList*>(self->unknown_ptr_41c4), entry, size, &self->allocator_array_38[16]);
         }
-        var15->RemoveTask((*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)));
-        (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = -1;
-        func_ov017_021a5ad0(reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094), 2, 0x800);
-        for (int var23 = 0; var23 < 2; ++var23) {
-            Struct_ov017_021a5ad0* var24 = &reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094)[var23];
-            func_0204bc74(var24, 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)var24, 0);
+        loader->RemoveTask((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)));
+        (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = -1;
+        FillFieldWithEncoded_021a5ad0(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2, 0x800);
+        for (int i = 0; i < 2; ++i) {
+            Node0x20_021a5ad0* node = &reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094)[i];
+            Background_FillRect(node, 0, 0, 0, 0x20, 0x19, 0);
+            Background_UploadMap((List0204b0e8*)node, 0);
         }
-        func_ov017_021a5b08(reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094), 2);
-        (*reinterpret_cast<void**>(arg0->unknown_4094 + 0x120)) = arg0->allocator_array_38[16].Allocate(Enum_ov017_021a5cbc_1280);
-        func_0204c7a8(&(*reinterpret_cast<Struct_0204c7a8*>(arg0->unknown_4094 + 0x40)), &arg0->allocator_array_38[16], (int)(*reinterpret_cast<void**>(arg0->unknown_4094 + 0x120)), 0x40);
-        (*reinterpret_cast<Struct_0204c7a8*>(arg0->unknown_4094 + 0x40)).unknown_4_ = reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094 + sizeof(Struct_ov017_021a5ad0));
-        Struct_ov017_021a5cbc_3* var25 = static_cast<Struct_ov017_021a5cbc_3*>(arg0->unknown_ptr_array_4088[2]);
-        var25->unknown_98_ = reinterpret_cast<Struct_ov017_021a5ad0*>(arg0->unknown_4094);
-        var25->unknown_b2_ = 2;
-        func_0205cf78((Struct_0205cf78*)static_cast<Struct_ov017_021a5cbc_3*>(arg0->unknown_ptr_array_4088[2]), (Struct_0205cf78_2*)&(*reinterpret_cast<Struct_0204c7a8*>(arg0->unknown_4094 + 0x40)), 1);
+        ClearAndEncodeField14_021a5b08(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2);
+        (*reinterpret_cast<void**>(self->unknown_4094 + 0x120)) = self->allocator_array_38[16].Allocate(WindowAllocationSize);
+        WindowPane_AllocateBuffer(&(*reinterpret_cast<Obj0204c7a8*>(self->unknown_4094 + 0x40)), &self->allocator_array_38[16], (int)(*reinterpret_cast<void**>(self->unknown_4094 + 0x120)), 0x40);
+        (*reinterpret_cast<Obj0204c7a8*>(self->unknown_4094 + 0x40)).head = reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094 + sizeof(Node0x20_021a5ad0));
+        Config021a5cbc* nodeConfig = static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]);
+        nodeConfig->nodes = reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094);
+        nodeConfig->count = 2;
+        Window_SetPanes((Struct_0205cf78*)static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]), (Elem_0205cf78*)&(*reinterpret_cast<Obj0204c7a8*>(self->unknown_4094 + 0x40)), 1);
         REG_BACKGROUND_0 = (REG_BACKGROUND_0 & ~3) | 2;
         REG_BACKGROUND_1 = (REG_BACKGROUND_1 & ~3) | 1;
         REG_BACKGROUND_2 = REG_BACKGROUND_2 & ~3;
@@ -192,8 +192,8 @@ extern "C" ARM void func_ov017_021a5cbc(GameResources* arg0) {
             , 0
 #endif
         );
-        func_0205d0e0(var26, GameState::GetInstance()->GetTickCount());
-        (*reinterpret_cast<Struct_0204c7a8*>(arg0->unknown_4094 + 0x40)).unknown_c2_ = 0;
-        ++(*reinterpret_cast<int*>(arg0->unknown_4094 + 0x124));
+        Window_Update(config, GameState::GetInstance()->GetTickCount());
+        (*reinterpret_cast<Obj0204c7a8*>(self->unknown_4094 + 0x40)).field_c2 = 0;
+        ++(*reinterpret_cast<int*>(self->unknown_4094 + 0x124));
     }
 }

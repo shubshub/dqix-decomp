@@ -6,11 +6,11 @@
 #include "Resource/GameResources.h"
 #if defined(jpn)
 #define REGION_VALUE(jpnValue, usaValue) jpnValue
-extern "C" int func_020e0484(void* arg0, void* arg1, const char* arg2, void* arg3, unsigned short arg4, bool arg5);
-extern "C" int func_ov017_021b2718(void* arg0);
-extern const char* data_020f2a38;
-static inline char* inline_0205faf4(void* arg0) {
-    return (char*)arg0 + 0x5c0c;
+extern "C" int func_020e0484(void* list, void* alloc, const char* path, void* entries, unsigned short count, bool lock);
+extern "C" int func_ov017_021b2718(void* obj);
+extern const char* g_itemDataArchive;
+static inline char* DateConditionBase(void* state) {
+    return (char*)state + 0x5c0c;
 }
 #else
 #define REGION_VALUE(jpnValue, usaValue) usaValue
@@ -76,29 +76,29 @@ struct Struct_0205faf4_5 {
     unsigned int unknown_10_0_:10, unknown_11_2_:10, unknown_12_4_:10;
     unsigned int unknown_14_0_:10;
 };
-extern "C" void* func_02053c6c(unsigned char* arg0);
-extern "C" unsigned char func_020100b0(GameState*);
-struct Struct_0205faf4_6 { char unknown_0_[8]; unsigned int unknown_8_0_:18, unknown_a_2_:1; };
-struct Struct_0205faf4_7;
-struct Struct_0205faf4_8 { unsigned int unknown_0_0_:9, unknown_1_1_:1, unknown_1_2_:5, unknown_1_7_:1, unknown_2_0_:2, unknown_2_2_:1; };
-extern "C" struct Struct_0205faf4_8* func_02096134(struct Struct_0205faf4_7* arg0, int arg1);
-extern "C" int func_0206474c(struct Struct_0203d028_2* arg0, int arg1, int arg2);
-extern "C" int func_0206483c(struct Struct_0203d028_2* arg0, char* arg1);
-extern "C" void* func_02064904(void* arg0, int arg1, unsigned int arg2);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" short func_0207c638(void* arg0, unsigned int arg1);
-struct Struct_0205faf4_9 { int unknown_0_[6]; };
-struct Struct_0205faf4_10 { int unknown_0_; int unknown_4_; unsigned int unknown_8_0_:9, unknown_9_1_:3; };
-extern "C" void* func_020de824(void* arg0);
-extern "C" void func_020de848(void* arg0);
-extern "C" struct Struct_0205faf4_10* func_020deb24(struct Struct_0205faf4_9* arg0, int arg1);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" int func_020de9a4(void* arg0, void* arg1, void* arg2, unsigned int arg3, void* arg4, unsigned short arg5);
-struct Struct_0205faf4_11;
-extern "C" int func_02061bd8(struct Struct_0205faf4_11* arg0);
-extern "C" int func_020cf0fc(int arg0);
+void* GetFieldAt0x150_02053c6c(unsigned char* obj);
+unsigned char GetField0x397cValue_020100b0(GameState*);
+struct Entry0x194_0205faf4 { char pad[8]; unsigned int _pad18:18, flag:1; };
+struct FindEntryById02096134Table;
+struct FindEntryById02096134Elem { unsigned int _pad0:9, b9:1, _pad10:5, b15:1, _pad16:2, b18:1; };
+struct FindEntryById02096134Elem* FindEntryById02096134(struct FindEntryById02096134Table* t, int id);
+extern "C" int func_0206474c(struct BattleStruct* obj, int a1, int a2);
+extern "C" int func_0206483c(struct BattleStruct* obj, char* name);
+void* GetStatFieldPointer02064904(void* obj, int id, unsigned int statIndex);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
+short CountPositiveEntries0207c638(void* base, unsigned int index);
+struct EntryList020deb24 { int w[6]; };
+struct Entry020deb24 { int f0; int f4; unsigned int _pad9:9, level:3; };
+void* ZeroInitReturn020de824(void* obj);
+void ItemTable_Init(void* obj);
+struct Entry020deb24* GetEntryByIndex020deb24(struct EntryList020deb24* list, int index);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
+struct Obj02061bd8;
+int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
+int RegisterSlotA020cf0fc(int out);
 extern "C" void* func_02012fe4(void);
 struct Struct_0205faf4_12;
 extern "C" unsigned char func_02098ee8(struct Struct_0205faf4_12* arg0);
@@ -108,8 +108,8 @@ extern "C" int func_0206e2dc(struct Struct_0205faf4_13* arg0, int arg1);
 extern "C" void* func_0200fd0c(GameState*);
 
 extern AllocatorUnion data_02114e20;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 
 struct Struct_0205faf4_14 {
     int unknown_0_[16];
@@ -720,27 +720,27 @@ extern "C" ARM int func_0205faf4(struct Struct_0203d028_2* arg0, void* arg1, str
         return var109 == 0;
     }
     case 83: {
-        void* var110 = func_02012d88(&data_02114e20, 0xc000);
-        if (var110 == NULL) return 0;
-        SafeAllocator var111;
-        struct Struct_0205faf4_9 var112;
-        unsigned int var113;
-        var111.ResetAllocatorPointer();
-        var111.ResetAllocatorPointer();
-        var111.CreateTypeA(var110, 0xc000);
-        unsigned char* var114 = (unsigned char*)func_02010828((GameState*)(void*)GameState::GetInstance());
-        void* var115 = func_0207c5f8(var114 + 0x1d4, CU16(2));
-        short var116 = func_0207c638(var114 + 0x1d4, CU16(2));
-        func_020de824(&var112);
-        func_020de848(&var112);
+        void* buf = AllocateAligned4_02012d88(&data_02114e20, 0xc000);
+        if (buf == NULL) return 0;
+        SafeAllocator alloc;
+        struct EntryList020deb24 list;
+        unsigned int size;
+        alloc.ResetAllocatorPointer();
+        alloc.ResetAllocatorPointer();
+        alloc.CreateTypeA(buf, 0xc000);
+        unsigned char* party = (unsigned char*)GetPtrField0x2a04_02010828((GameState*)(void*)GameState::GetInstance());
+        void* entries = GetPointerFromArray0xbd0_0207c5f8(party + 0x1d4, CU16(2));
+        short n = CountPositiveEntries0207c638(party + 0x1d4, CU16(2));
+        ZeroInitReturn020de824(&list);
+        ItemTable_Init(&list);
 #if defined(jpn)
-        func_020e0484(&var112, &var111, data_020f2a38, var115, var116, true);
+        func_020e0484(&list, &alloc, g_itemDataArchive, entries, n, true);
 #else
         BackgroundLoader::AddLockGlobal();
-        var113 = 0;
-        void* var117 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var113);
-        if (var117 != NULL) {
-            func_020de9a4(&var112, &var111, var117, var113, var115, var116);
+        size = 0;
+        void* data = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
+        if (data != NULL) {
+            ItemTable_LoadIds(&list, &alloc, data, size, entries, n);
         }
         BackgroundLoader::RemoveLockGlobal();
 #endif

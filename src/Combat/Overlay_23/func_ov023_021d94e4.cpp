@@ -66,30 +66,30 @@ struct Struct_ov023_021d94e4_5
 struct Struct_02046574_2;
 struct Struct_020465c0;
 
-extern "C" void* func_020421a0();
-extern "C" Struct_ov023_021d94e4_3* func_ov023_021d994c(void* arg0, int arg1);
-extern "C" int func_02085fb4(unsigned char* arg0);
-extern "C" int func_02086020(unsigned char* arg0);
-extern "C" int func_0208608c(unsigned char* arg0);
-extern "C" int func_020860f8(unsigned char* arg0);
-extern "C" int func_02086164(unsigned char* arg0);
-extern "C" int func_020861d0(unsigned char* arg0);
-extern "C" int func_0208623c(unsigned char* arg0);
-extern "C" int func_020862a8(unsigned char* arg0);
-extern "C" int func_02086314(unsigned char* arg0);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" void func_02041fac(char* arg0, int arg1, int arg2);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void func_02046608(void* arg0, int, const char* arg2, char* arg3, int, int, int);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+void* GetGlobalField0x1c020421a0();
+BattleResultMember_021d94e4* Find_021d994c(void* self, int id);
+int AccumulateFlaggedSlotBits02085fb4(unsigned char* data);
+int AccumulateFlaggedSlotBits02086020(unsigned char* data);
+int AccumulateFlaggedSlotBits0208608c(unsigned char* data);
+int AccumulateFlaggedSlotBits020860f8(unsigned char* data);
+int AccumulateFlaggedSlotBits02086164(unsigned char* data);
+int AccumulateFlaggedSlotBits020861d0(unsigned char* data);
+int AccumulateFlaggedSlotBits0208623c(unsigned char* data);
+int AccumulateSlotBitsFromTable020862a8(unsigned char* data);
+int AccumulateSlotBitsFromTable02086314(unsigned char* data);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_020420e8(const char* text, int large);
+void AppendXYTag_02041a90(char* text, int x, int y);
+void AppendFormatted02041fac(char* text, int line, int value);
+extern "C" void __clear(void* buffer, unsigned long size);
+extern "C" void func_02046380(void* messages);
+void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+extern "C" int sprintf(char* buffer, const char* format, ...);
+extern "C" void func_02046608(void* messages, int, const char* input, char* output, int, int, int);
+void AppendString02042058(char* text, const char* append);
 
 #if defined(jpn)
 extern "C" void func_020474a8(void*,int,const char*,char*);
@@ -149,62 +149,62 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
             var4[var5][1] = 999;
     }
 #if defined(jpn)
-    const char* var6 = func_020e0434(arg0->unknown_0_, 0x7602);
-    func_02042058(arg1, var6);
-    for (int var7 = 0; var7 < 9; var7++) {
-        if (arg2 != 0) {
-            func_02041a90(arg1, 10, var7 * 15 + 0x15);
-            char var8[0x100] = {0};
-    func_02046380(var0);
-    func_02046574((Struct_02046574_2*)var0, 0, (char*)func_020e0434(arg0->unknown_0_, (short)(var7 + 0x760c)));
-    short var9 = var4[var7][0];
-    func_020465c0((Struct_020465c0*)var0, 0, var9);
-    func_020465d8((unsigned char*)var0, 0, 1);
-    func_020465f0((unsigned char*)var0, 0, 3);
-    short var10 = var4[var7][1];
-    func_020465c0((Struct_020465c0*)var0, 1, var10);
-    func_020465d8((unsigned char*)var0, 1, 1);
-    func_020465f0((unsigned char*)var0, 1, 3);
-    int var11 = 15;
-    if (var10 > var9)
-        var11 = 5;
-            func_020465c0((Struct_020465c0*)var0, 2, var11);
-            func_020465d8((unsigned char*)var0, 2, 1);
-            func_020465f0((unsigned char*)var0, 2, 0);
-            func_020474a8(var0,12,func_020e0434(arg0->unknown_0_,0x7603),var8);
-            func_02042058(arg1, var8);
-            arg2--;
+    const char* title = KeyTable_Get(self->texts_, 0x7602);
+    AppendString02042058(text, title);
+    for (int line = 0; line < 9; line++) {
+        if (lines != 0) {
+            AppendXYTag_02041a90(text, 10, line * 15 + 0x15);
+            char input[0x100] = {0};
+    func_02046380(messages);
+    SetIndexedName02046574((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
+    short before = stats[line][0];
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, before);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
+    SetByteInRange_020465f0((unsigned char*)messages, 0, 3);
+    short after = stats[line][1];
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, after);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 1, 1);
+    SetByteInRange_020465f0((unsigned char*)messages, 1, 3);
+    int color = 15;
+    if (after > before)
+        color = 5;
+            StoreInArray0x8b0_020465c0((StoreStruct*)messages, 2, color);
+            SetByteAtIndex_020465d8((unsigned char*)messages, 2, 1);
+            SetByteInRange_020465f0((unsigned char*)messages, 2, 0);
+            func_020474a8(messages,12,KeyTable_Get(self->texts_,0x7603),input);
+            AppendString02042058(text, input);
+            lines--;
         }
     }
 
 #else
-    const char* var12 = func_020e0434(arg0->unknown_0_, 0x7602);
-    func_02041a90(arg1, (0xd0 - func_020420e8(var12, 0)) >> 1, 1);
-    func_02041fac(arg1, (int)var12, 0x10);
-    int var13;
-    const char* var14 = func_020e0434(arg0->unknown_0_, 0x7603);
-    var13 = arg2 - 1;
-    if (var13 < 0)
+    const char* title = KeyTable_Get(self->texts_, 0x7602);
+    AppendXYTag_02041a90(text, (0xd0 - func_020420e8(title, 0)) >> 1, 1);
+    AppendFormatted02041fac(text, (int)title, 0x10);
+    int line;
+    const char* format = KeyTable_Get(self->texts_, 0x7603);
+    line = lines - 1;
+    if (line < 0)
         return;
-    func_02041a90(arg1, 10, var13 * 15 + 0x15);
-    char var15[0x100] = {0};
-    char var16[0x100] = {0};
-    func_02046380(var0);
-    func_02046574((Struct_02046574_2*)var0, 0, (char*)func_020e0434(arg0->unknown_0_, (short)(var13 + 0x760c)));
-    short var17 = var4[var13][0];
-    func_020465c0((Struct_020465c0*)var0, 0, var17);
-    func_020465d8((unsigned char*)var0, 0, 1);
-    func_020465f0((unsigned char*)var0, 0, 3);
-    short var18 = var4[var13][1];
-    func_020465c0((Struct_020465c0*)var0, 1, var18);
-    func_020465d8((unsigned char*)var0, 1, 1);
-    func_020465f0((unsigned char*)var0, 1, 3);
-    int var19 = 15;
-    if (var18 > var17)
-        var19 = 5;
-    sprintf(var16, var14, var19);
-    func_02046608(var0, 12, var16, var15, 0xe3, 0, 1);
-    func_02042058(arg1, var15);
+    AppendXYTag_02041a90(text, 10, line * 15 + 0x15);
+    char output[0x100] = {0};
+    char input[0x100] = {0};
+    func_02046380(messages);
+    SetIndexedName02046574((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
+    short before = stats[line][0];
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, before);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
+    SetByteInRange_020465f0((unsigned char*)messages, 0, 3);
+    short after = stats[line][1];
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, after);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 1, 1);
+    SetByteInRange_020465f0((unsigned char*)messages, 1, 3);
+    int color = 15;
+    if (after > before)
+        color = 5;
+    sprintf(input, format, color);
+    func_02046608(messages, 12, input, output, 0xe3, 0, 1);
+    AppendString02042058(text, output);
 
 #endif
 }

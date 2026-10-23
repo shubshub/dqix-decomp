@@ -73,18 +73,18 @@ struct Struct_ov002_0215a0a4_4 {
     unsigned int* unknown_130_;
 };
 
-extern "C" void* func_020e2ff8();
-extern "C" void func_020e3428(void*, int);
-extern "C" Struct_ov002_02157d40_6* func_020421a0();
-extern "C" Struct_ov002_0215a0a4_5* func_02079e2c(char*, int);
-extern "C" void* func_020e46c4(void*);
-extern "C" void func_02046574(Struct_ov002_02157d40_6*, int, char*);
-extern "C" void func_020e4bf4(void*, int);
-extern "C" int func_02048350(Struct_ov002_02157d40_8*, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_02042058(char*, const char*);
-extern "C" void func_020465c0(Struct_ov002_02157d40_2*, int, int);
+void* GetData02153637_020e2ff8();
+void Dispatch020e3428(void*, int);
+Obj02046574* GetGlobalField0x1c020421a0();
+CommandEntry0215a0a4* SearchBothTables02079e2c(char*, int);
+void* Clear12Bytes020e46c4(void*);
+void SetIndexedName02046574(Obj02046574*, int, char*);
+void InitObjFromCombatantId020e4bf4(void*, int);
+int ConsumeCounter02048350(Obj02048350*, int);
+int CheckField0NonZero_0202b7d8(int*);
+int KeyTable_Get(Container020e0310*, int);
+int AppendString02042058(char*, const char*);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
 extern "C" int* func_0202ae18();
 extern "C" void func_02046380(void*);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
@@ -176,33 +176,27 @@ extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov00
         }
         return;
     }
-    if (arg0->unknown_1c26_ != 0x22 && arg0->unknown_1c26_ != 0x310) return;
-    if (arg2) {
-        FORMAT(var8, 0xc, func_020e0434(&arg0->unknown_20_, 0x232d), var5 + Enum_ov002_0215a0a4_2144);
-        func_02042058(arg0->unknown_1000_.unknown_bd0_, var5 + Enum_ov002_0215a0a4_2144);
-        var4 = arg1->unknown_8_;
-        var1 = 0x232c;
-        var10 = 0;
-        var6 = arg1->unknown_4_;
-        while (var10 < arg1->unknown_3_) {
-            int var13 = var4[var10].unknown_0_ == 3 ? var1 : 0x233a;
-            if (var13 >= 0) {
-#if defined(jpn)
-                var0 = func_0200ff1c(var7, arg1->unknown_4_[var10]);
-#else
-                var0 = func_0200ff1c(var7, var6[var10]);
-#endif
-                if (var0) {
-                    func_02046380(var8);
-                    func_02046574(var8, 2, inline_ov002_0215a0a4(var0));
-#if !defined(jpn)
-                    func_020e4bf4(arg0->unknown_14_, var6[var10]);
-                    var8->unknown_10_ = arg0->unknown_14_;
-#endif
-                    func_020465c0((Struct_ov002_02157d40_2*)var8, 9, var0->obj3D_.unknown_4_);
-                    FORMAT(var8, 0xc, func_020e0434(&arg0->unknown_20_, var13), var5 + Enum_ov002_0215a0a4_2144);
-                    func_02042058(arg0->unknown_1000_.unknown_bd0_, (const char*)func_020e0434(&arg0->unknown_20_, 8));
-                    func_02042058(arg0->unknown_1000_.unknown_bd0_, var5 + Enum_ov002_0215a0a4_2144);
+    if (self->command != 0x22 && self->command != 0x310) return;
+    if (any) {
+        func_02046608(message, 0xc, KeyTable_Get(&self->texts, 0x232d), buffer + 0x860, 0xe3, 0, 1);
+        AppendString02042058(self->textState.text, buffer + 0x860);
+        results = event->results;
+        rejectedKey = 0x232c;
+        index = 0;
+        targetIds = event->targets;
+        while (index < event->count) {
+            int key = results[index].kind == 3 ? rejectedKey : 0x233a;
+            if (key >= 0) {
+                target = GetCombatantWithFlag0x100_0200ff1c(gs, targetIds[index]);
+                if (target) {
+                    func_02046380(message);
+                    SetIndexedName02046574(message, 2, CombatantName0215a0a4(target));
+                    InitObjFromCombatantId020e4bf4(self->targetName, targetIds[index]);
+                    message->target = self->targetName;
+                    StoreInArray0x8b0_020465c0((StoreStruct*)message, 9, target->obj3D_.unknown_4_);
+                    func_02046608(message, 0xc, KeyTable_Get(&self->texts, key), buffer + 0x860, 0xe3, 0, 1);
+                    AppendString02042058(self->textState.text, (const char*)KeyTable_Get(&self->texts, 8));
+                    AppendString02042058(self->textState.text, buffer + 0x860);
                 }
             }
             var10++;
@@ -218,13 +212,13 @@ extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov00
             var8->unknown_10_ = arg0->unknown_14_;
 #endif
         }
-        func_02042058(var5 + Enum_ov002_0215a0a4_2144, (const char*)func_020e0434(&arg0->unknown_20_, 0x2333));
-        func_02042058(var5 + Enum_ov002_0215a0a4_2144, (const char*)func_020e0434(&arg0->unknown_20_, 8));
-        if (func_02011538(var7) == 1)
-            func_02042058(var5 + Enum_ov002_0215a0a4_2144, (const char*)func_020e0434(&arg0->unknown_20_, 0x2334));
+        AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2333));
+        AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 8));
+        if (GetByteField0x5721_02011538(gs) == 1)
+            AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2334));
         else
-            func_02042058(var5 + Enum_ov002_0215a0a4_2144, (const char*)func_020e0434(&arg0->unknown_20_, 0x2335));
-        FORMAT(var8, 0xc, (int)(var5 + Enum_ov002_0215a0a4_2144), arg0->unknown_1000_.unknown_bd0_);
+            AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2335));
+        func_02046608(message, 0xc, (int)(buffer + 0x860), self->textState.text, 0xe3, 0, 1);
     }
     arg0->unknown_1c31_ = 1;
     memcpy(arg0->unknown_1000_.unknown_bd4_, arg0->unknown_1000_.unknown_bd0_, Enum_ov002_0215a0a4_2400);

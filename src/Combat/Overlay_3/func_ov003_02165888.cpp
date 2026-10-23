@@ -9,25 +9,25 @@ struct Struct_02080fa8;
 struct Struct_02081198;
 struct Struct_02081164;
 
-extern "C" int func_02080b54(void* arg0, int arg1);
-extern "C" int func_02080b2c(void* arg0, int arg1);
-extern "C" int func_02080b40(void* arg0, int arg1);
-extern "C" void func_02080cc0(struct Struct_02080cc0* arg0, int arg1, int arg2);
-extern "C" int func_020dcc98(int arg0);
-extern "C" int* func_02053c6c(unsigned char* arg0);
-extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
-extern "C" void func_02080fe0(void*, int, int);
-extern "C" void func_02080fa8(struct Struct_02080fa8*, int, int);
-extern "C" void func_0208103c(void*, int, int);
-extern "C" void func_02080828(void*, int, short*, short*);
-extern "C" void func_020808c8(void*, short, short*, short*);
-extern "C" void func_02080854(void*, int, int, int);
-extern "C" int func_020e0434(struct Struct_0201099c_3*, int);
-extern "C" void func_02081198(struct Struct_02081198* arg0, int arg1, int arg2);
-extern "C" void func_02081164(struct Struct_02081164* arg0, int arg1, int arg2);
-extern "C" int func_020813ec(void* arg0, int arg1);
-extern "C" void func_ov003_02160678(void* arg0);
-extern "C" void func_ov003_02160794(void* arg0);
+int SetSublistEntriesFlag1_02080b54(void* obj, int id);
+int SetEntryFlagById02080b2c(void* obj, int id);
+int SetEntryFlagById02080b40(void* obj, int id);
+void SetEntryHighNibble0x13(struct Container02080cc0* obj, int id, int value);
+extern "C" int func_020dcc98(int combatantId);
+int* GetFieldAt0x150_02053c6c(unsigned char* p);
+void SetEntryFirstField02080f8c(Container02080f8c*, int, int);
+void ResolveEntryValueByKey02080fe0(void*, int, int);
+void SetEntryFirstField02080fa8(struct Container02080fa8*, int, int);
+void SetEntryHalfword0xe_0208103c(void*, int, int);
+void GetEntryFieldsAt0x602080828(void*, int, short*, short*);
+extern "C" void _Z23GetEntryOutputs020808c8PviPsS0_(void*, short, short*, short*);
+void SetEntryFieldsAt0x602080854(void*, int, int, int);
+int KeyTable_Get(struct Container020e0310*, int);
+void SetEntryNibbleByShortId(struct StatusOwner02081198* owner, int id, int enable);
+void SetEntryFlag0x2ByShortId(struct StatusOwner02081164* obj, int id, int value);
+extern "C" int func_020813ec(void* obj, int id);
+extern "C" void func_ov003_02160678(void* self);
+extern "C" void func_ov003_02160794(void* self);
 
 #if defined(jpn)
 struct Struct_ov003_02165888_2 {
@@ -143,10 +143,10 @@ extern "C" ARM void func_ov003_02165888(Struct_ov003_02165888* arg0) {
             if (var1 == ((struct Struct_ov003_02165888_3*)var0)->unknown_2a_) {
                 var2 = 0xa;
             }
-            func_02080b40(var0, var1);
-            var8 = (char*)func_020e0434(&arg0->unknown_1c4_, 0x7530);
-            func_02080f8c((struct Struct_02080f8c*)var0, var1, (int)var8);
-            func_02080cc0(var0, var1, var2);
+            SetEntryFlagById02080b40(elementObj, idA);
+            nm = (char*)KeyTable_Get(&self->cont1c4, 0x7530);
+            SetEntryFirstField02080f8c((struct Container02080f8c*)elementObj, idA, (int)nm);
+            SetEntryHighNibble0x13(elementObj, idA, color);
         }
 
         var1 = (short)(var1 + 1);
@@ -278,10 +278,10 @@ extern "C" ARM void func_ov003_02165888(Struct_ov003_02165888* arg0) {
             if (var22 == ((struct Struct_ov003_02158334_2*)var21)->unknown_36_) {
                 var23 = 0xa;
             }
-            func_02080b40(var21, var22);
-            var29 = (char*)func_020e0434(&arg0->unknown_2dc_, 0x7530);
-            func_02080f8c((struct Struct_02080f8c*)var21, var22, (int)var29);
-            func_02080cc0(var21, var22, var23);
+            SetEntryFlagById02080b40(elementObj, idA);
+            nm = (char*)KeyTable_Get(&self->cont2dc, 0x7530);
+            SetEntryFirstField02080f8c((struct Container02080f8c*)elementObj, idA, (int)nm);
+            SetEntryHighNibble0x13(elementObj, idA, color);
         }
 
         var22 = (short)(var22 + 1);

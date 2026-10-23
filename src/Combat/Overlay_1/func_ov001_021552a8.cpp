@@ -82,23 +82,23 @@ struct Struct_ov001_021552a8_2 {
     unsigned char unknown_45b_[0x20];
 };
 
-extern "C" char* func_020100f8(char* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_0209c2e0(void* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021bb27c(void* arg0);
-extern "C" void func_0208b9a0(void* arg0, unsigned char arg1);
-extern "C" char* func_020421a0(void);
-extern "C" void func_0208b8c4(Struct_0208b8c4* arg0, SafeAllocator* arg1);
-extern "C" void* func_0203cf4c(void);
-extern "C" void* func_0203d004(void* arg0);
-extern "C" void func_020401fc(Struct_0203d028_6* arg0, unsigned int arg1, SafeAllocator* arg2);
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" void func_0205a234(Struct_02043368* arg0);
-extern "C" void func_0205a444(char* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" int func_0205a528(void* arg0, void* arg1, int arg2, void* arg3);
-extern "C" void func_ov001_0215a850(SafeAllocator* arg0);
+char* GetFieldIfFlag4_020100f8(char* obj);
+void TailForward02012da4(AllocatorUnion* alloc, void* data);
+extern "C" void func_0209c2e0(void* obj, int a, int b);
+extern "C" void func_ov017_021bb27c(void* obj);
+extern "C" void func_0208b9a0(void* obj, unsigned char flag);
+char* GetGlobalField0x1c020421a0(void);
+void InitAllocatorsAndBuffers0208b8c4(Obj0208b8c4* obj, SafeAllocator* alloc);
+void* GetGlobalPtr021075f4_0203cf4c(void);
+void* EmptyStub0203d004(void* p);
+void InitPool020401fc(Pool020401fc* pool, unsigned int count, SafeAllocator* alloc);
+void Sprite_Init(Struct0205a198* p);
+void ClearField0And40205a234(ClearTarget0205a234* p);
+void SpriteContext_Init(char* p);
+int Pac_CountFiles(ActiveEntry02046900* entry);
+void* Pac_GetFile(Rec020467f0* rec, int index, void** out, int* out44);
+extern "C" int SpriteContext_LoadFile(void* obj, void* data, int arg2, void* arg3);
+extern "C" void func_ov001_0215a850(SafeAllocator* alloc);
 extern "C" void func_ov001_0215a8dc(void);
 extern "C" void func_ov001_021538d4(int arg0, void* arg1, SafeAllocator* arg2);
 extern "C" void func_ov001_0215aa14(SafeAllocator* arg0);
@@ -201,29 +201,29 @@ extern "C" ARM int func_ov001_021552a8(Struct_ov001_021552a8* arg0) {
     if ((arg0->unknown_c_.unknown_44_ & 1) || (arg0->unknown_c_.unknown_44_ & 4)) {
         func_020401fc((Struct_0203d028_6*)func_0203d004(func_0203cf4c()), 0xc, &arg0->unknown_7c_);
     }
-    if (arg0->unknown_c_.unknown_44_ & 0x200) {
-        arg0->unknown_7c_.GetMaxPossibleAllocation();
-        arg0->unknown_170_ = (Struct_02043368_2*)arg0->unknown_7c_.Allocate(0x230);
-        arg0->unknown_168_ = (Struct_ov001_021552a8_3*)arg0->unknown_7c_.Allocate(0x54);
-        arg0->unknown_16c_ = arg0->unknown_7c_.Allocate(8);
-        for (int var12 = 0; var12 < 0xe; var12++) {
-            func_0205a198((Struct_02043368_2*)((char*)arg0->unknown_170_ + var12 * 0x28));
+    if (self->params.flags & 0x200) {
+        self->allocator.GetMaxPossibleAllocation();
+        self->entries = (Struct0205a198*)self->allocator.Allocate(0x230);
+        self->list = (List021552a8*)self->allocator.Allocate(0x54);
+        self->slots = self->allocator.Allocate(8);
+        for (int i = 0; i < 0xe; i++) {
+            Sprite_Init((Struct0205a198*)((char*)self->entries + i * 0x28));
         }
-        func_0205a234((Struct_02043368*)arg0->unknown_16c_);
-        func_0205a444((char*)arg0->unknown_168_);
-        arg0->unknown_168_->unknown_50_ = 0;
-        inline_ov001_021552a8(arg0->unknown_168_, arg0->unknown_170_, 0xe);
-        arg0->unknown_168_->unknown_3c_ = arg0->unknown_16c_;
+        ClearField0And40205a234((ClearTarget0205a234*)self->slots);
+        SpriteContext_Init((char*)self->list);
+        self->list->active = 0;
+        SetListEntries(self->list, self->entries, 0xe);
+        self->list->slots = self->slots;
 
-        void* var13;
-        void* var14;
-        unsigned int var15;
-        int var16;
-        var3->GetLoadedFileByID(arg0->unknown_110_, &var14, &var15);
-        int var17 = func_02046900((Struct_02020cb8_4*)var14);
-        for (int var18 = 0; var18 < var17; var18++) {
-            void* var19 = func_020467f0((Struct_02020aec*)var14, var18, &var13, &var16);
-            func_0205a528(arg0->unknown_168_, var19, var16, &arg0->unknown_7c_);
+        void* out;
+        void* dataC;
+        unsigned int lengthC;
+        int size;
+        loader->GetLoadedFileByID(self->taskC, &dataC, &lengthC);
+        int count = Pac_CountFiles((ActiveEntry02046900*)dataC);
+        for (int j = 0; j < count; j++) {
+            void* rec = Pac_GetFile((Rec020467f0*)dataC, j, &out, &size);
+            SpriteContext_LoadFile(self->list, rec, size, &self->allocator);
         }
         var3->RemoveTask(arg0->unknown_110_);
         arg0->unknown_110_ = -1;

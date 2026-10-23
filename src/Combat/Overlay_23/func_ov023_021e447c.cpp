@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Words021e60c4 { unsigned int a, b, c; };
-void InitWordsQuad_021e60e0(void* obj, unsigned int val);
-void SetFourWordBlocks_021e6088(void* obj, Words021e60c4* src);
-extern "C" void func_ov023_021e613c(Words021e60c4* dst, char* src);
+void CharacterModel_SetAngle(void* obj, unsigned int val);
+void CharacterModel_SetRotation(void* obj, Words021e60c4* src);
+extern "C" void CharacterModel_GetRotation(Words021e60c4* dst, char* src);
 extern "C" void CharacterModel_InvalidatePart(void* obj, int index);
 
 struct Struct_ov023_021e447c {
@@ -23,16 +23,16 @@ struct Struct_ov023_021e447c {
 };
 
 // USA: func_ov023_021e447c
-extern "C" ARM void func_ov023_021e447c(Struct_ov023_021e447c* arg0) {
-    if (!(arg0->unknown_634_ & 0x8)) return;
-    if (*(unsigned char*)((char*)arg0->unknown_12c_ + 0xc12) != 0) return;
-    if (arg0->unknown_634_ & 0x40) {
-        func_ov023_021e60e0(arg0->unknown_128_, 0x1eb);
-        func_ov023_021e60e0(arg0->unknown_12c_, 0x1eb);
+extern "C" ARM void func_ov023_021e447c(Obj021e447c* obj) {
+    if (!(obj->f634 & 0x8)) return;
+    if (*(unsigned char*)((char*)obj->f12c + 0xc12) != 0) return;
+    if (obj->f634 & 0x40) {
+        CharacterModel_SetAngle(obj->f128, 0x1eb);
+        CharacterModel_SetAngle(obj->f12c, 0x1eb);
     } else {
-        Struct_ov009_02188454 var0;
-        func_ov023_021e613c(&var0, (char*)arg0->unknown_128_);
-        func_ov023_021e6088(arg0->unknown_12c_, &var0);
+        Words021e60c4 tmp;
+        CharacterModel_GetRotation(&tmp, (char*)obj->f128);
+        CharacterModel_SetRotation(obj->f12c, &tmp);
     }
     void* t = obj->f128;
     obj->f128 = obj->f12c;

@@ -55,22 +55,22 @@ struct Struct_ov006_02156e54_2 {
     char unknown_50_[0x70 - 0x50];
 };
 
-extern "C" int func_ov006_02158080(Struct_0207fdcc_2*, int);
-extern "C" void func_ov006_02158054(void*, Struct_ov006_02158054*, int, int, unsigned char, unsigned char);
-extern "C" void func_ov006_02154a60(Struct_ov006_02154614*);
-extern "C" void func_0204b010(Struct_0204b010*, void*);
-extern "C" void* func_0204af14(Struct_0204af14*, unsigned int);
-extern "C" void func_0204b938(void*, void*, int, int, unsigned short);
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" void func_0204b8d0(Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_0207fcb8(Struct_0207fcb8*);
-extern "C" void func_0207fd00(Struct_0207fd00*);
+int CheckElementFlag_02158080_02158080(Obj2081*, int);
+void SetFieldsAndCall02158054(void*, SetFieldsAndCall02158054Struct*, int, int, unsigned char, unsigned char);
+extern "C" void func_ov006_02154a60(AlchemyPot*);
+void Background_ClearMap(Obj0204b010*, void*);
+void* Background_GetScreen(EntryList0204af14*, unsigned int);
+void CallFunc0204b620IfField0x14_0204b938(void*, void*, int, int, unsigned short);
+int NormalizeField5_0200fb08(Struct0200fb08*);
+void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+void ClearAllBuffers0207fcb8(Obj0207fcb8*);
+void CallFunc0204c8f0OverEntries0207fd00(Obj0207fd00*);
 extern "C" void func_0207fe80(void*, int, int, int);
-extern "C" void func_0204b04c(void*, int);
-extern "C" void func_0207fd44(Struct_0207fd44_2*);
-extern "C" void func_0205a370(Struct_0205a254*, int);
-extern "C" Struct_ov006_021580b8_2* func_0205a3d0(Struct_0205a254*, int);
-extern "C" void func_0205a330(Struct_0205a330*, int);
+extern "C" void Background_FlushMap(void*, int);
+void CallFunc0204b04cOverList0x2c(Cont0207fd44*);
+void SetEntryFlag2ByKey0205a370(Container0205a3d0*, int);
+SpriteAnimation* FindEntryByHalfword0205a3d0(Container0205a3d0*, int);
+void IterateEntries0205a330(Container0205a330*, int);
 extern "C" void func_0205ae8c(void*);
 extern "C" int func_020e28dc(Struct_020e28dc*);
 extern "C" void func_020e2794(Struct_020e2794_2*, void*);
@@ -194,11 +194,11 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
         {
             arg0->unknown_42c_ = 0;
         }
-        func_ov006_02154a60(arg0->unknown_10_);
-        func_0204b010((Struct_0204b010*)arg0->unknown_54_, 0);
-        void* var0 = func_0204af14((Struct_0204af14*)arg0->unknown_54_, arg0->unknown_397_);
-        if (var0 != 0)
-            func_0204b938(arg0->unknown_54_, var0, 0, 0, 0xffff);
+        func_ov006_02154a60(self->pot_);
+        Background_ClearMap((Obj0204b010*)self->subBackground_, 0);
+        void* layer = Background_GetScreen((EntryList0204af14*)self->subBackground_, self->background_);
+        if (layer != 0)
+            CallFunc0204b620IfField0x14_0204b938(self->subBackground_, layer, 0, 0, 0xffff);
 #if !defined(jpn)
         if (arg0->unknown_397_ == 1)
         {
@@ -219,17 +219,17 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
                 var2 = 6;
                 break;
             }
-            if (var2 > 1)
-                func_0204b8d0((Struct_0204b8d0*)arg0->unknown_54_, var2, 0, 0, 0x16, 2, 9, 2, 0xffff);
+            if (tiles > 1)
+                Background_DrawScreen((Obj0204b8d0*)self->subBackground_, tiles, 0, 0, 0x16, 2, 9, 2, 0xffff);
         }
 #endif
-        void* var3 = arg0->unknown_14_;
-        func_0207fcb8((Struct_0207fcb8*)var3);
-        func_0207fd00((Struct_0207fd00*)var3);
-        func_0207fe80(var3, 2, 1, 1);
-        func_0204b04c(arg0->unknown_54_, 0);
-        func_0207fd44((Struct_0207fd44_2*)var3);
-        if (arg0->unknown_394_ & 0x200)
+        void* menu = self->menu_;
+        ClearAllBuffers0207fcb8((Obj0207fcb8*)menu);
+        CallFunc0204c8f0OverEntries0207fd00((Obj0207fd00*)menu);
+        func_0207fe80(menu, 2, 1, 1);
+        Background_FlushMap(self->subBackground_, 0);
+        CallFunc0204b04cOverList0x2c((Cont0207fd44*)menu);
+        if (self->flags_ & 0x200)
         {
             arg0->unknown_42c_ = 0;
             func_0205a370((Struct_0205a254*)arg0->unknown_28_, 1);

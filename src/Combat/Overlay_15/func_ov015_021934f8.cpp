@@ -85,7 +85,7 @@ extern "C" void func_020c5588(int, int, int, int, int);
 extern "C" void func_ov015_0218b810(struct Struct_ov015_0218b810*);
 extern "C" void func_ov015_0218ba44(void*, int);
 extern "C" void* memset(void*, int, unsigned int);
-extern "C" void func_020de848(void*);
+void ItemTable_Init(void*);
 extern "C" void* ExtractFileFromGP2(const char*, const char*, unsigned int*);
 extern "C" void func_020dea64(void*, SafeAllocator*, void*, unsigned int, const void*, int);
 extern "C" void func_0206efc4(void*);
@@ -104,12 +104,12 @@ extern "C" void func_020c38d4();
 extern "C" void func_02010124(Struct_0200f3a4_9*);
 extern "C" void func_020c3a0c(int);
 unsigned long long GetCurrentTimestamp();
-extern "C" void* func_020421a0();
-extern "C" void func_02042b30(void*, void*);
-extern "C" void func_0207df50(struct Struct_0203d028*);
-extern "C" void func_0207df90(char*);
+void* GetGlobalField0x1c020421a0();
+void SetField0x1e28_02042b30(void*, void*);
+void CopyInternalFields0207df50(struct Foo0207df50*);
+void VramState_Restore(char*);
 extern "C" void func_020432c4(void*);
-extern "C" void func_0207dfac(char*);
+void VramState_Save(char*);
 extern "C" void func_0204500c(void*, const void*, int, int);
 extern "C" void func_0204359c(void*, int);
 extern "C" void func_020439b0(void*, int);
@@ -132,8 +132,8 @@ extern "C" void func_0203bdb0(Struct_0203bdb0*);
 extern "C" void func_020290ac(int);
 
 extern AllocatorUnion data_02114e20;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern int data_ov015_02193cdc[];
 extern char g_sePlayer;
 extern int data_ov015_02194528[];
@@ -208,17 +208,17 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     func_ov015_0218ba44(&arg0->unknown_3c_, 0);
     memset(arg0->unknown_26c_, 0, 0x52);
 
-    arg0->unknown_88_.ResetAllocatorPointer();
-    arg0->unknown_88_.CreateTypeA(func_02012d88(&data_02114e20, 0x17600), 0x17600);
-    arg0->unknown_88_.Reset();
-    func_020de848(arg0->unknown_4c_);
+    self->partsAllocator.ResetAllocatorPointer();
+    self->partsAllocator.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x17600), 0x17600);
+    self->partsAllocator.Reset();
+    ItemTable_Init(self->list);
     BackgroundLoader::AddLockGlobal();
-    unsigned int var4;
-    void* var5;
-    var4 = 0;
-    var5 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var4);
-    if (var5 != NULL)
-        func_020dea64(arg0->unknown_4c_, &arg0->unknown_88_, var5, var4, data_ov015_02193cdc, 9);
+    unsigned int size;
+    void* data;
+    size = 0;
+    data = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
+    if (data != NULL)
+        func_020dea64(self->list, &self->partsAllocator, data, size, data_ov015_02193cdc, 9);
     BackgroundLoader::RemoveLockGlobal();
 
     arg0->unknown_9c_.ResetAllocatorPointer();
@@ -247,15 +247,15 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     func_02010124((Struct_0200f3a4_9*)var0);
     func_020c3a0c(0);
     GetCurrentTimestamp();
-    Struct_ov015_021934f8_2* var7 = (Struct_ov015_021934f8_2*)func_020421a0();
-    func_02042b30(var7, arg0->unknown_124_);
-    func_0207df50((struct Struct_0203d028*)arg0->unknown_124_);
-    func_0207df90(arg0->unknown_124_);
-    func_020432c4(var7);
-    func_0207dfac(arg0->unknown_124_);
-    func_0204500c(var7, data_ov015_02194528, 0, 0xe3);
-    var7->unknown_195a_ = 8;
-    for (unsigned int var8 = 0; var8 < 0x10; var8++)
+    Controller021934f8* controller = (Controller021934f8*)GetGlobalField0x1c020421a0();
+    SetField0x1e28_02042b30(controller, self->tables);
+    CopyInternalFields0207df50((struct Foo0207df50*)self->tables);
+    VramState_Restore(self->tables);
+    func_020432c4(controller);
+    VramState_Save(self->tables);
+    func_0204500c(controller, data_ov015_02194528, 0, 0xe3);
+    controller->mode = 8;
+    for (unsigned int i = 0; i < 0x10; i++)
     {
         func_0204359c(var7, 0x10);
         func_020439b0(var7, 0);

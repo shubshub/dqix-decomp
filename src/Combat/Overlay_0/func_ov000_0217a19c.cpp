@@ -25,12 +25,12 @@ struct Struct_ov000_02170cf8 {
     unsigned int unknown_5_4_ : 20;
 };
 
-extern "C" int func_020421a0();
-extern "C" struct Struct_ov000_02170cf8* func_ov000_02170cf8(char* arg0, int arg1);
-extern "C" void func_020dd040(int arg0, char* arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02046608(int arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
+int GetGlobalField0x1c020421a0();
+extern "C" struct Entry02170cf8* func_ov000_02170cf8(char* obj, int val);
+void NotifyLocalizedResourceLoad020dd040(int len, char* buf);
+int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" void func_02046608(int g, int b, char* src, char* dst, int size, int f, int h);
+void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 #if defined(jpn)
 extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
 #define APPLY_TEXT(s,k,t) func_0205d5d0(s,k,(int)t,1)
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov000_0217a19c(char* arg0, char* arg1) {
     if (var4 != 0) {
         func_020dd040(var4->unknown_4_0_, var2);
     } else {
-        var2 = (char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0x20);
+        str = (char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x20);
     }
 #if !defined(jpn)
     func_02046608(func_020421a0(), 0xa, var2, var1, 0x98, 0, 0);

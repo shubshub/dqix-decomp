@@ -13,10 +13,10 @@ enum { Enum_ov003_0217c974_716 = 0x2cc };
 
 struct Struct_020534ac;
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 struct Vector3i;
 
 extern char data_ov003_02180c1d;
@@ -31,9 +31,9 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
     int var1, var2;
     ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(arg0 + 0x130)), (void**)(&var1), (unsigned int*)(&var2));
 
-    void* var3 = GetGameResources();
-    func_0207df50((struct Struct_0203d028*)((char*)var3 + Enum_ov003_0217c974_716));
-    func_0207df90((char*)var3 + Enum_ov003_0217c974_716);
+    void* mgr = GetGameResources();
+    CopyInternalFields0207df50((struct Foo0207df50*)((char*)mgr + kRegionValue2CC_27C));
+    VramState_Restore((char*)mgr + kRegionValue2CC_27C);
 
     unsigned int var4;
     const void* var5;
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
     var8.unk_10 = 1;
     ((Object3D*)(arg0 + 0x80))->LoadFromCCHROrCMOTArchive(&var8, 0);
 
-    func_0207dfac((char*)var3 + Enum_ov003_0217c974_716);
+    VramState_Save((char*)mgr + kRegionValue2CC_27C);
 
     struct Struct_ov003_0217fb8c var9 = data_ov003_0217fb8c;
     *(int*)(arg0 + 0xc4) = 0;

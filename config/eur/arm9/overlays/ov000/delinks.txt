@@ -1353,7 +1353,7 @@ src/Combat/Overlay_0/func_ov000_021636ac.cpp:
     complete
     .text start:0x021636ac end:0x02163710
 
-src/Combat/Overlay_0/func_ov000_0217f480.cpp:
+src/Combat/Overlay_0/InitArrEntriesAndClearFlag4_0217f480.cpp:
     complete
     .text start:0x0217f480 end:0x0217f518
 
@@ -1813,7 +1813,7 @@ src/Combat/Overlay_0/func_ov000_02181990.cpp:
     complete
     .text start:0x02181990 end:0x021819c8
 
-src/Combat/Overlay_0/func_ov000_0218048c.cpp:
+src/Combat/Overlay_0/ResetCombatState_0218048c.cpp:
     complete
     .text start:0x0218048c end:0x02180528
 
@@ -1833,7 +1833,7 @@ src/Combat/Overlay_0/func_ov000_0216d560.cpp:
     complete
     .text start:0x0216d560 end:0x0216d600
 
-src/Combat/Overlay_0/func_ov000_021814bc.cpp:
+src/Combat/Overlay_0/SwapReadyCombatEntries_021814bc.cpp:
     complete
     .text start:0x021814bc end:0x0218155c
 
@@ -1841,11 +1841,11 @@ src/Combat/Overlay_0/func_ov000_021757ac.cpp:
     complete
     .text start:0x021757ac end:0x02175808
 
-src/Combat/Overlay_0/func_ov000_02179ed8.cpp:
+src/Combat/Overlay_0/AppendCombatantNameTag_02179ed8.cpp:
     complete
     .text start:0x02179ed8 end:0x02179f94
 
-src/Combat/Overlay_0/func_ov000_021775a4.cpp:
+src/Combat/Overlay_0/AppendNameList_021775a4.cpp:
     complete
     .text start:0x021775a4 end:0x0217768c
 
@@ -1857,7 +1857,7 @@ src/Combat/Overlay_0/func_ov000_0217c2a0.cpp:
     complete
     .text start:0x0217c2a0 end:0x0217c32c
 
-src/Combat/Overlay_0/func_ov000_0217c594.cpp:
+src/Combat/Overlay_0/CheckFlagOrActiveField0188_0217c594.cpp:
     complete
     .text start:0x0217c594 end:0x0217c5f4
 
@@ -1945,7 +1945,7 @@ src/Combat/Overlay_0/func_ov000_0215e958.cpp:
     complete
     .text start:0x0215e958 end:0x0215e9b8
 
-src/Combat/Overlay_0/func_ov000_0217f518.cpp:
+src/Combat/Overlay_0/InitEntry_0217f518.cpp:
     complete
     .text start:0x0217f518 end:0x0217f5d0
 
@@ -2205,7 +2205,7 @@ src/Combat/Overlay_0/func_ov000_0215fab0.cpp:
     complete
     .text start:0x0215fab0 end:0x0215fad4
 
-src/Combat/Overlay_0/func_ov000_0216733c.cpp:
+src/Combat/Overlay_0/SyncPairTablesAndFill_0216733c.cpp:
     complete
     .text start:0x0216733c end:0x021673e0
 
@@ -3083,7 +3083,7 @@ src/Combat/Overlay_0/func_ov000_0216f3d4.cpp:
     complete
     .text start:0x0216f3d4 end:0x0216f700
 
-src/Combat/Overlay_0/func_ov000_021700dc.cpp:
+src/Combat/Overlay_3/ResetGraphicsAndEntries_021700dc.cpp:
     complete
     .text start:0x021700dc end:0x02170460
 

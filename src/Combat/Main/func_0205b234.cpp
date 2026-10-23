@@ -4,50 +4,32 @@
 struct Struct_020424e4;
 struct Struct_0205b234_2 { unsigned char* unknown_0_; Struct_020424e4* unknown_4_; unsigned char unknown_8_; };
 
-#if defined(jpn)
-extern "C" Struct_020420e8* func_02042a50(unsigned char arg0, const char* arg1);
-extern "C" void func_0205b36c(Struct_0205b234_2* arg0, Struct_020420e8* arg1, short arg2, short arg3, int arg4, int arg5);
-
-// JPN: func_0205b234 (fixed-width Shift-JIS text)
-extern "C" ARM void func_0205b234(Struct_0205b234_2* arg0, short arg1, short arg2, const char* arg3, unsigned char arg4, int arg5) {
-    if (arg0->unknown_0_ == 0 || arg0->unknown_4_ == 0 || arg0->unknown_8_ == 0 || arg3 == 0) return;
-    unsigned char var0 = arg4;
-    while (*arg3 != 0) {
-        Struct_020420e8* var1 = func_02042a50(var0, arg3);
-        if (var1 != 0) func_0205b36c(arg0, var1, arg1, arg2, var0 & 0xff, arg5);
-        unsigned char var2 = *arg3;
-        if ((var2 >= 0x81 && var2 <= 0x9f) || (var2 >= 0xe0 && var2 <= 0xea)) arg3++;
-        arg3++;
-        arg1 += var0;
-    }
-}
-#else
-extern "C" int func_02042648(int);
-extern "C" int func_020424e4(int, int);
-extern "C" int func_020425e4(int, int, int);
-extern "C" Struct_020420e8* func_020425b4(int arg0, int arg1);
-extern "C" void func_0205b36c(Struct_0205b234_2* arg0, Struct_020420e8* arg1, short arg2, short arg3, unsigned char arg4, unsigned char arg5);
+int GetWordFromTable02042648(int);
+int Font_FindCharacterIndex(int, int);
+int LookupKeyValue020425e4(int, int, int);
+FontCharacter* Font_GetCharacter(int index, int fontIndex);
+extern "C" void func_0205b36c(GlyphDestination0205b234* destination, FontCharacter* glyph, short x, short y, unsigned char color, unsigned char font);
 
 // USA: func_0205b234
-extern "C" ARM int func_0205b234(Struct_0205b234_2* arg0, short arg1, short arg2, const char* arg3, unsigned char arg4, unsigned char arg5) {
-    if (arg0->unknown_0_ == 0) return 0;
-    if (arg0->unknown_4_ == 0) return 0;
-    if (arg0->unknown_8_ == 0) return 0;
-    if (arg3 == 0) return 0;
-    unsigned char var3 = func_02042648(arg5);
-    int var4 = 0xff;
-    short var5 = arg1;
-    while (*arg3 != 0) {
-        int var6;
-        signed char var7 = var3 + 1;
-        var6 = func_020424e4((int)arg3, arg5) & 0xff;
-        var5 += func_020425e4(var4, var6, arg5);
-        int var8 = 1;
-        if (var6 != 0xff) {
-            Struct_020420e8* var9 = func_020425b4(var6, arg5);
-            func_0205b36c(arg0, var9, var5, arg2, arg4, arg5);
-            var7 = var9->unknown_4_ + 1;
-            var8 = var9->unknown_5_0_;
+extern "C" ARM int func_0205b234(GlyphDestination0205b234* destination, short x, short y, const char* text, unsigned char color, unsigned char font) {
+    if (destination->pixels == 0) return 0;
+    if (destination->rectangles == 0) return 0;
+    if (destination->rectangleCount == 0) return 0;
+    if (text == 0) return 0;
+    unsigned char fallbackWidth = GetWordFromTable02042648(font);
+    int previousCharacter = 0xff;
+    short cursorX = x;
+    while (*text != 0) {
+        int index;
+        signed char advance = fallbackWidth + 1;
+        index = Font_FindCharacterIndex((int)text, font) & 0xff;
+        cursorX += LookupKeyValue020425e4(previousCharacter, index, font);
+        int length = 1;
+        if (index != 0xff) {
+            FontCharacter* character = Font_GetCharacter(index, font);
+            func_0205b36c(destination, character, cursorX, y, color, font);
+            advance = character->width + 1;
+            length = character->byteLength;
         }
         var4 = var6;
         arg3 += var8;

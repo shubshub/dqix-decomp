@@ -108,20 +108,20 @@ MonsterListEntry* GetBufferField8(BufferField8_02097418*);
 void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
 void SetFieldsFromFormattedValue0207f914(Obj0207f914*, int, int, int);
 void SetSublistEntryField14LowBits_02080798(void*, int, int);
-int CountActiveEntries(ActiveEntry02046900*);
-void* FindRecordByIndex(Rec020467f0*, int, void**, int*);
-void ResetStruct020dfc40(Struct020dfc40*);
+int Pac_CountFiles(ActiveEntry02046900*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void KeyTable_Reset(Struct020dfc40*);
 void CopyOutBattleRegion0x75f0_020abf38(void*);
 void InitNodeChain0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
 
 extern "C" {
-void func_020972e0(Struct_020974b0* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-int func_0207f9f4(Struct_0207f7f0* arg0);
-void func_0205a528(Struct_ov008_02188d74* arg0, void* arg1, unsigned int arg2, SafeAllocator* arg3);
-void func_020dfec0(Struct_01ff8b48_13* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-void func_020abf60(Struct_020974b0* arg0);
-void func_ov014_02187488(Struct_ov014_02186bc8* arg0);
-Struct_ov014_02184f78* func_020974b0(Struct_020974b0* arg0, int arg1, int, bool arg3, int, short* arg5);
+void func_020972e0(MonsterList* list, SafeAllocator* allocator, void* file, unsigned int size);
+int func_0207f9f4(Manager0207f7f0* menu);
+void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
+void KeyTable_Load(TextTable* texts, SafeAllocator* allocator, void* file, unsigned int size);
+void func_020abf60(MonsterList* list);
+void func_ov014_02187488(MonsterListScreen* self);
+MonsterListEntry* func_020974b0(MonsterList* list, int family, int, bool sort, int, short* outCount);
 }
 
 extern const char data_ov014_0218970c[];
@@ -222,21 +222,21 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
     {
         if (var1->GetTaskStatus(arg0->unknown_168_))
         {
-            void* var11;
-            void* var12;
-            unsigned int var13;
-            unsigned int var14;
-            SafeAllocator* var15;
-            int var16;
-            var1->GetLoadedFileByID(arg0->unknown_168_, &var12, &var13);
-            var16 = func_02046900((Struct_02020cb8_4*)var12);
-            var15 = arg0->unknown_b4_;
-            var15[3].Reset();
-            for (int var17 = 0; var17 < var16; var17++)
+            void* name;
+            void* file;
+            unsigned int size;
+            unsigned int cellsSize;
+            SafeAllocator* allocators;
+            int numFiles;
+            loader->GetLoadedFileByID(self->listTaskID_, &file, &size);
+            numFiles = Pac_CountFiles((ActiveEntry02046900*)file);
+            allocators = self->listAllocators_;
+            allocators[3].Reset();
+            for (int i = 0; i < numFiles; i++)
             {
-                void* var18 = func_020467f0((Struct_02020aec*)var12, var17, &var11, (int*)&var14);
-                if (var18 != NULL)
-                    func_0205a528(&arg0->unknown_f8_, var18, var14, &var15[3]);
+                void* cells = Pac_GetFile((Rec020467f0*)file, i, &name, (int*)&cellsSize);
+                if (cells != NULL)
+                    SpriteContext_LoadFile(&self->spriteRenderer_, cells, cellsSize, &allocators[3]);
             }
             var1->RemoveTask(arg0->unknown_168_);
             arg0->unknown_168_ = -1;
@@ -245,9 +245,9 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
     }
     else if (arg0->unknown_17b_ == 9)
     {
-        func_020dfc40((Struct_0201099c_14*)&arg0->unknown_e0_);
-        arg0->unknown_168_ = var1->QueueLoadFileInGP2(data_ov014_0218976a, data_ov014_02189784, NULL);
-        arg0->unknown_17b_++;
+        KeyTable_Reset((Struct020dfc40*)&self->textTable_);
+        self->listTaskID_ = loader->QueueLoadFileInGP2(data_ov014_0218976a, data_ov014_02189784, NULL);
+        self->listStep_++;
     }
     else if (arg0->unknown_17b_ == 10)
     {
@@ -258,9 +258,9 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
             var1->GetLoadedFileByID(arg0->unknown_168_, &var19, &var20);
             if (var19 != NULL)
             {
-                SafeAllocator* var21 = arg0->unknown_b4_;
-                var21[4].Reset();
-                func_020dfec0(&arg0->unknown_e0_, &var21[4], var19, var20);
+                SafeAllocator* allocators = self->listAllocators_;
+                allocators[4].Reset();
+                KeyTable_Load(&self->textTable_, &allocators[4], file, size);
             }
             var1->RemoveTask(arg0->unknown_168_);
             arg0->unknown_168_ = -1;

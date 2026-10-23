@@ -168,41 +168,41 @@ struct Struct_0201099c_18 {
     int unknown_0_;
 };
 
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_020dfc2c(void* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_020dfc6c(Struct_0201099c_14* arg0);
-extern "C" void func_020dfec0(Struct_0201099c_14* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_02089db4(Struct_0201099c_6* arg0);
-extern "C" void func_02089ddc(Struct_0201099c_6* arg0);
-extern "C" void func_02089de8(void* arg0, void* arg1, const char* arg2);
-extern "C" void* func_0208a018(unsigned char* arg0, int arg1);
-extern "C" void func_02086404(Struct_0201099c_20* arg0);
-extern "C" void func_02086598(Struct_0201099c_15* arg0, int arg1);
-extern "C" char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" int func_020426bc(void* arg0, void* arg1, int arg2);
-extern "C" void func_0209a804(int* arg0);
-extern "C" void func_0209a810(Struct_0201099c_18* arg0, void* arg1);
-extern "C" int func_020865b0(Struct_0201099c_16* arg0);
-extern "C" void func_020865b8(Struct_0201099c_17* arg0, int arg1);
-extern "C" void func_020de824(void* arg0);
-extern "C" void func_020de848(void* arg0);
-extern "C" int func_020dea64(void* arg0, void* arg1, void* arg2, unsigned int arg3, const void* arg4, short arg5);
-extern "C" void* func_0208247c(void* arg0);
-extern "C" void func_02082828(Struct_0201099c_13* arg0);
-extern "C" void func_02083cbc(void* arg0, void* arg1, void* arg2);
-extern "C" Struct_0201099c_9* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_02083e28(void* arg0, int arg1);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void ResetAndReturnSelf020dfc2c(void* p);
+void KeyTable_Reset(Struct020dfc40* p);
+void ResetAndDetach020dfc6c(Struct020dfc40* p);
+extern "C" void KeyTable_Load(Struct020dfc40* table, SafeAllocator* alloc, void* data, unsigned int size);
+void ResetStructFields_02089db4(ResetFieldsStruct* s);
+void ForwardResetStructFields02089ddc(ResetFieldsStruct* s);
+void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
+void* GetElementStride0x40_0208a018(unsigned char* obj, int index);
+extern "C" void func_02086404(CombatSelection* selection);
+void SetFlagBitAndIndex_02086598(SetFlagBitStruct* s, int n);
+char* KeyTable_Get(Container020e0310* c, int key);
+extern "C" void __clear(void* dst, unsigned int size);
+extern "C" int Font_EncodeText(void* a, void* b, int flag);
+void ClearField00209a804(int* p);
+void SpellTable_Load(Ctx0209a810* ctx, void* value);
+int GetFieldAt0x50(Struct020865b0* p);
+void SetBitInArray020865b8(SetBitArrayStruct020865b8* s, int n);
+void ZeroInitReturn020de824(void* p);
+void ItemTable_Init(void* p);
+extern "C" int func_020dea64(void* a, void* b, void* c, unsigned int d, const void* e, short f);
+void* Clear0x54Bytes0208247c(void* obj);
+extern "C" void func_02082828(CharacterRecord0201099c* record);
+extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
+Element020de650* FindElementByKey020dedd0(Container020dedd0* c, int key);
+extern "C" void func_02083e28(void* a, int arg2);
 
 extern AllocatorUnion data_02114e20;
 extern char data_020ef08c[];
 extern char data_020ef0a5[];
-extern const Struct_020e6d64 data_020e6d64;
-extern const Struct_020e6d98 data_020e6d98[];
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const IdPair0201099c data_020e6d64;
+extern const ShortPair0201099c data_020e6d98[];
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern const char data_020e6d6c[];
 extern const char data_020ef0b5[];
 extern unsigned char data_0211e33c[];
@@ -262,18 +262,18 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
     }
 
 #if !defined(jpn)
-    SafeAllocator var9;
-    var9.ResetAllocatorPointer();
-    var9.ResetAllocatorPointer();
-    var9.CreateTypeA(func_02012d88(&data_02114e20, 0x5000), 0x5000);
-    Struct_0201099c_14 var10;
-    func_020dfc2c(&var10);
-    func_020dfc40(&var10);
+    SafeAllocator nameAlloc;
+    nameAlloc.ResetAllocatorPointer();
+    nameAlloc.ResetAllocatorPointer();
+    nameAlloc.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x5000), 0x5000);
+    Struct020dfc40 names;
+    ResetAndReturnSelf020dfc2c(&names);
+    KeyTable_Reset(&names);
     BackgroundLoader::AddLockGlobal();
-    unsigned int var11 = 0;
-    void* var12 = ExtractFileFromGP2(data_020ef08c, data_020ef0a5, &var11);
-    if (var12 != NULL) {
-        func_020dfec0(&var10, &var9, var12, var11);
+    unsigned int nameSize = 0;
+    void* nameData = ExtractFileFromGP2(data_020ef08c, data_020ef0a5, &nameSize);
+    if (nameData != NULL) {
+        KeyTable_Load(&names, &nameAlloc, nameData, nameSize);
     }
     BackgroundLoader::RemoveLockGlobal();
 
@@ -359,13 +359,13 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
                     var24 = 1;
                 }
             }
-        } while (var24);
-        var13.unknown_0_[var5] = var23;
-        char* var26 = func_020e0434((Struct_0201099c_3*)&var10, var23);
-        unsigned char var27[12];
-        __clear(var27, sizeof(var27));
-        func_020426bc(var26, var27, 1);
-        memcpy(var4->unknown_140_, var27, sizeof(var27));
+        } while (found);
+        used.ids[i] = nameId;
+        char* nameStr = KeyTable_Get((Container020e0310*)&names, nameId);
+        unsigned char nameBuf[12];
+        __clear(nameBuf, sizeof(nameBuf));
+        Font_EncodeText(nameStr, nameBuf, 1);
+        memcpy(m->name, nameBuf, sizeof(nameBuf));
 #endif
         short* var28 = var4->unknown_160_.unknown_0_;
         for (int var29 = 0; var29 < 10; var29++) {
@@ -394,19 +394,19 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
 
 #endif
 
-    if (var16 > 0) {
-        Struct_0201099c_13 var32;
-        Struct_0201099c_18 var33;
-        func_0209a804(&var33.unknown_0_);
-        func_0209a810(&var33, &var0);
-        for (int var34 = 0; var34 < arg0->unknown_5690_; var34++) {
-            var4 = &arg0->unknown_3984_[var34];
-            unsigned char var35 = func_020865b0((Struct_0201099c_16*)var4);
-            unsigned char var36 = var4->unknown_2_[var35];
-            Struct_0201099c_7* var37 = var0.unknown_10c_[var35];
-            for (int var38 = 0; var38 < 20; var38++) {
-                if (var36 >= var37[var38].unknown_2_ && var37[var38].unknown_2_ != 0) {
-                    func_020865b8((Struct_0201099c_17*)var4, var37[var38].unknown_0_);
+    if (templateCount > 0) {
+        CharacterRecord0201099c record;
+        Ctx0209a810 ctx;
+        ClearField00209a804(&ctx.handle);
+        SpellTable_Load(&ctx, &skills);
+        for (int j = 0; j < gs->memberCount; j++) {
+            m = &gs->members[j];
+            unsigned char vocation = GetFieldAt0x50((Struct020865b0*)m);
+            unsigned char level = m->levels[vocation];
+            SkillUnlock0201099c* row = skills.rows[vocation];
+            for (int k = 0; k < 20; k++) {
+                if (level >= row[k].level && row[k].level != 0) {
+                    SetBitInArray020865b8((SetBitArrayStruct020865b8*)m, row[k].skill);
                 }
             }
         }
@@ -419,18 +419,18 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
 #else
         var39.CreateTypeA(func_02012d88(&data_02114e20, 0x13800), 0x13800);
 #endif
-        var39.Reset();
-        Struct_0201099c_10 var40;
-        func_020de824(&var40);
-        func_020de848(&var40);
+        itemAlloc.Reset();
+        Container020dedd0 items;
+        ZeroInitReturn020de824(&items);
+        ItemTable_Init(&items);
 #if defined(jpn)
-        func_020e052c(&var40, &var39, data_020f2a38, data_020e7610, 8, 1);
+        func_020e052c(&items, &itemAlloc, g_itemDataArchive, data_020e7610, 8, 1);
 #else
         BackgroundLoader::AddLockGlobal();
-        unsigned int var41 = 0;
-        void* var42 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var41);
-        if (var42 != NULL) {
-            func_020dea64(&var40, &var39, var42, var41, data_020e6d6c, 8);
+        unsigned int itemSize = 0;
+        void* itemData = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &itemSize);
+        if (itemData != NULL) {
+            func_020dea64(&items, &itemAlloc, itemData, itemSize, data_020e6d6c, 8);
         }
         BackgroundLoader::RemoveLockGlobal();
 #endif
@@ -444,24 +444,24 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
 #else
             sprintf(var45, data_020ef0b5, var44);
 #endif
-            if (LoadFileIntoMemory(var45, data_0211e33c, &var46) != NULL) {
-                Struct_0201099c_2* var47 = &var1;
-                for (int var48 = 0; var48 < arg0->unknown_5690_; var48++) {
-                    var4 = &arg0->unknown_3984_[var48];
-                    func_0208247c(var47);
-                    func_02082490(var47, data_0211e33c, var46, var4->unknown_2_[var44], 0);
-                    var4->unknown_1c_[var44] = var47->unknown_0_.unknown_0_0_;
-                    var4->unknown_f4_ += var47->unknown_0_.unknown_4_7_;
-                    if (var44 == func_020865b0((Struct_0201099c_16*)var4)) {
-                        var43 = &var32;
-                        Struct_0201099c_11* var49 = &var43->unknown_3c_;
-                        func_02082828(var43);
-                        func_02083cbc(var43, &var1, var1.unknown_3c_);
-                        short* var50 = var4->unknown_160_.unknown_0_;
-                        for (int var51 = 0; var51 < 8; var51++) {
-                            Struct_0201099c_9* var52 = func_020dedd0(&var40, var50[inline_0201099c_2(var51)->unknown_0_]);
-                            if (var52 != NULL) {
-                                memcpy(&var32.unknown_194_[inline_0201099c_2(var51)->unknown_1_], var52, sizeof(Struct_0201099c_9));
+            if (LoadFileIntoMemory(path, data_0211e33c, &size) != NULL) {
+                ResourceScriptEntry* res = &entry;
+                for (int j = 0; j < gs->memberCount; j++) {
+                    m = &gs->members[j];
+                    Clear0x54Bytes0208247c(res);
+                    func_02082490(res, data_0211e33c, size, m->levels[v], 0);
+                    m->experience[v] = res->initial.value0;
+                    m->skillPoints += res->initial.value4High;
+                    if (v == GetFieldAt0x50((Struct020865b0*)m)) {
+                        rec = &record;
+                        CharacterProfile0201099c* profile = &rec->profile;
+                        func_02082828(rec);
+                        PartyMember_ApplyLevelStats(rec, &entry, entry.variants);
+                        short* equipment = m->appearance.equipment;
+                        for (int k = 0; k < 8; k++) {
+                            Element020de650* item = FindElementByKey020dedd0(&items, equipment[GetSlotMap0201099c(k)->appearanceIndex]);
+                            if (item != NULL) {
+                                memcpy(&record.equipment[GetSlotMap0201099c(k)->recordIndex], item, sizeof(Element020de650));
                             }
                         }
                         func_02083e28(&var32, 0);

@@ -42,7 +42,7 @@ struct Struct_02067b28 {
 int IsHighByteFF02044494(void*, void*);
 int Dispatch02044420(void*, void*);
 Entry0204254c* Font_FindCharacter(int, int);
-int FindEntryIndexByKey020424e4(int, int);
+int Font_FindCharacterIndex(int, int);
 int FindMatchingEntryIndex(Container02045c00*, int);
 extern "C" int func_020459b8(TextContext02067b28*, unsigned char, Entry0204254c*, unsigned char);
 extern "C" int func_02001aec(const void*, const void*, int);
@@ -81,7 +81,7 @@ extern "C" ARM void func_02067b28(Struct_02067b28* arg0) {
             }
         }
         Entry0204254c* entry = Font_FindCharacter((int)source, state->table);
-        int tableIndex = FindEntryIndexByKey020424e4((int)source, state->table);
+        int tableIndex = Font_FindCharacterIndex((int)source, state->table);
         if (entry && tableIndex >= 0) {
             int index = FindMatchingEntryIndex((Container02045c00*)state, (int)entry);
             state->inputCursor += entry->length;

@@ -7,8 +7,8 @@
 #include "Resource/ActionDataTables.h"
 #include "GameState/GameState.h"
 
-struct Struct_0201099c_3;
-extern "C" char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
+struct Container020e0310;
+char* KeyTable_Get(struct Container020e0310* c, int key);
 
 struct Struct_0203c108_3 {
     char unknown_0_[0x14];
@@ -61,21 +61,21 @@ struct Struct_ov000_02171e60 {
 };
 
 // USA: func_ov000_02171e60
-extern "C" ARM void func_ov000_02171e60(struct Struct_ov000_02171e60* arg0) {
-    struct Struct_ov000_0215767c_8* var0 = arg0->unknown_3f0_[arg0->unknown_22_];
-    if (var0->unknown_18_ <= 0) {
-        arg0->unknown_18_++;
-        arg0->unknown_10_[arg0->unknown_18_] = 0xe;
-        arg0->unknown_1d_ = 0;
-        func_0203c108(&arg0->unknown_50_, func_020e0434(arg0->unknown_4_, 5));
+extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
+    struct ActionEntry* entry = self->entries[self->curIndex];
+    if (entry->count <= 0) {
+        self->stackTop++;
+        self->stack[self->stackTop] = 0xe;
+        self->result = 0;
+        SwapGlobalEntry0203c108(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
-    void* var1 = func_02079e2c((char*)func_020797dc(), var0->unknown_16_);
-    if (var1 == NULL) {
-        arg0->unknown_18_++;
-        arg0->unknown_10_[arg0->unknown_18_] = 0xe;
-        arg0->unknown_1d_ = 0;
-        func_0203c108(&arg0->unknown_50_, func_020e0434(arg0->unknown_4_, 5));
+    void* rec = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), entry->recordId);
+    if (rec == NULL) {
+        self->stackTop++;
+        self->stack[self->stackTop] = 0xe;
+        self->result = 0;
+        SwapGlobalEntry0203c108(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
     arg0->unknown_18_++;

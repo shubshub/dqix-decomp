@@ -11,11 +11,11 @@ extern "C" void func_02074b64(struct Struct_02074b64* arg0);
 struct Struct_0205cfd4;
 extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
 
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
+struct Struct020dfc40;
+extern void KeyTable_Reset(Struct020dfc40* p);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct List0204af64;
+void Background_Init(struct List0204af64* obj);
 
 extern "C" void func_0204c684(void*);
 
@@ -31,21 +31,21 @@ extern "C" ARM void func_ov023_021e7220(void* arg0, int arg1) {
 #else
  enum {Enum_ov023_021e7220_1550=0x60e};
 #endif
-    ((SafeAllocator*)((char*)arg0 + 0x0))->ResetAllocatorPointer();
-    ((SafeAllocator*)((char*)arg0 + 0x14))->ResetAllocatorPointer();
-    ((SafeAllocator*)((char*)arg0 + 0x28))->ResetAllocatorPointer();
-    GameState* var0 = GameState::GetInstance();
-    *(int*)((char*)arg0 + 0x3c) = arg1;
-    *(int*)((char*)arg0 + 0x40) = GetSubBGVRAMBanks();
-    *(int*)((char*)arg0 + 0x44) = GetSubObjVRAMBanks();
-    *(int*)((char*)arg0 + 0x48) = (*(unsigned int*)0x4001000 & 0x1f00) >> 8;
-    *(unsigned char*)((char*)arg0 + 0x74) = 0;
-    *(unsigned char*)((char*)arg0 + 0x75) = 0;
-    func_02074b64((struct Struct_02074b64*)((char*)arg0 + 0x64));
-    func_0205cfd4((struct Struct_0205cfd4*)((char*)arg0 + 0x78));
-    func_020dfc40((Struct_0201099c_14*)((char*)arg0 + 0x4c));
-    for (int var1 = 0; var1 < 2; var1++) {
-        func_0204af64((struct Struct_02020cb8*)((char*)arg0 + 0x134 + var1 * 0x20));
+    ((SafeAllocator*)((char*)obj + 0x0))->ResetAllocatorPointer();
+    ((SafeAllocator*)((char*)obj + 0x14))->ResetAllocatorPointer();
+    ((SafeAllocator*)((char*)obj + 0x28))->ResetAllocatorPointer();
+    GameState* battleStruct = GameState::GetInstance();
+    *(int*)((char*)obj + 0x3c) = val;
+    *(int*)((char*)obj + 0x40) = GetSubBGVRAMBanks();
+    *(int*)((char*)obj + 0x44) = GetSubObjVRAMBanks();
+    *(int*)((char*)obj + 0x48) = (*(unsigned int*)0x4001000 & 0x1f00) >> 8;
+    *(unsigned char*)((char*)obj + 0x74) = 0;
+    *(unsigned char*)((char*)obj + 0x75) = 0;
+    BackupSubBgControlRegisters((struct SubBgControlBackup02074b64*)((char*)obj + 0x64));
+    InitStruct0205cfd4((struct InitTarget0205cfd4*)((char*)obj + 0x78));
+    KeyTable_Reset((Struct020dfc40*)((char*)obj + 0x4c));
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct List0204af64*)((char*)obj + 0x134 + i * 0x20));
     }
     for (int var2 = 0; var2 < 5; var2++) {
         func_0204c684((char*)arg0 + 0x174 + var2 * 0xe0);

@@ -10,16 +10,16 @@
 #include <Resource/GameResources.h>
 #include <Resource/CharacterCreationUI.h>
 
-extern "C" void* func_020421a0();
-extern "C" void func_02046380(void* arg0);
-extern "C" int* func_ov017_021a193c(int* arg0);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" short func_ov005_0215a930(void* arg0, int arg1);
-extern "C" void func_020dcf7c(int arg0, void* arg1);
-extern "C" char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02046608(void* arg0, unsigned char arg1, const char* arg2, char* arg3, int arg4, int arg5, unsigned char arg6);
+void* GetGlobalField0x1c020421a0();
+extern "C" void func_02046380(void* global);
+int* GetField1c_021a193c(int* p);
+void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
+extern "C" void* __clear(void* dst, int count);
+void Clear12Bytes020e46c4(void* p);
+short GetTableByte0215a930(void* obj, int index);
+void DispatchIfCountPositive020dcf7c(int count, void* buf);
+char* KeyTable_Get(Container020e0310* c, int key);
+extern "C" void func_02046608(void* a, unsigned char b, const char* c, char* d, int e, int f, unsigned char g);
 
 struct Struct_ov005_02158b3c_6 {
     char unknown_0_[LOW_REGION(0x4f8, 0x4fc)];
@@ -169,8 +169,8 @@ extern "C" ARM int func_ov005_02158b3c(void* arg0, void* arg1) {
     case 14: var17 = 0x2afe; break;
     }
 
-    if (var17 >= 0) {
-        sprintf((char*)arg1, func_020e0434(&var8->unknown_df8_, var17));
+    if (v >= 0) {
+        sprintf((char*)buffer, KeyTable_Get(&menu->messages, v));
     }
 #if !defined(jpn)
     char var18[0x800];

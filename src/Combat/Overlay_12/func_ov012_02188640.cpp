@@ -28,8 +28,8 @@ struct Struct0205de24;
 struct Struct_0205c570;
 extern "C" void func_0205de24(Struct_0205de24_2*, unsigned char, unsigned char);
 extern "C" void func_ov023_021e6e60(void*);
-extern "C" void func_ov012_0218a574(char*);
-extern "C" int func_0205d794(Struct_0205c570*);
+void SetupBattleTag0218a574(char*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 extern "C" int func_ov023_021e6448(void*);
 extern "C" int func_ov023_021e7148(void*);
 void SePlayer_Play(SePlayer*, int, int);
@@ -63,9 +63,9 @@ extern "C" ARM void func_ov012_02188640(char* arg0) {
         return;
     } else if (*(unsigned char*)(editor + 0x1340) == 1) {
         *(unsigned char*)(editor + 0x1368) = 1;
-        *(int*)(editor + 0x1444) = GetActiveScaledSum0205d794((Struct_0205c570*)(editor + 0x90));
+        *(int*)(editor + 0x1444) = Window_GetSelectedIndex((Struct_0205c570*)(editor + 0x90));
         if (func_ov023_021e6448(editor))
-            *(int*)(editor + 0x1444) = GetActiveScaledSum0205d794((Struct_0205c570*)(editor + 0x90));
+            *(int*)(editor + 0x1444) = Window_GetSelectedIndex((Struct_0205c570*)(editor + 0x90));
         if (func_ov023_021e7148(editor)) {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ProfileAccolade* profile = GetProfileAccolade(GameState::GetInstance());
@@ -123,11 +123,11 @@ struct Struct_ov012_02188640_2
 
 struct Struct_ov012_02188640_3
 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    char unknown_15_[0x1c - 0x15];
+    short models_[10];
+    unsigned char female_ : 1;
+    unsigned char skinColor_ : 3;
+    unsigned char eyeColor_ : 4;
+    char unk_15[0x1c - 0x15];
 };
 
 struct Struct_ov012_02188640_4
@@ -168,7 +168,7 @@ struct Struct_0205c570;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
 extern "C" void func_ov023_021e6e60(ProfileEditor02188640* self);
 void SetupBattleTag0218a574(char* self);
-int GetActiveScaledSum0205d794(Struct_0205c570* window);
+int Window_GetSelectedIndex(Struct_0205c570* window);
 extern "C" int func_ov023_021e6448(ProfileEditor02188640* self);
 extern "C" int func_ov023_021e6de4(ProfileEditor02188640* self);
 void SePlayer_Play(SePlayer* sound, int effect, int a);
@@ -219,11 +219,11 @@ extern "C" ARM void func_ov012_02188640(Struct_ov012_02188640_6* arg0)
     }
     else if (arg0->unknown_1370_ == 1)
     {
-        arg0->unknown_13a0_ = 1;
-        arg0->unknown_13d8_[5] = func_0205d794((Struct_0205c570*)arg0->unknown_ac_);
-        if (func_ov023_021e6448(arg0))
-            arg0->unknown_13d8_[5] = func_0205d794((Struct_0205c570*)arg0->unknown_ac_);
-        if (func_ov023_021e6de4(arg0))
+        self->unk_13a0 = 1;
+        self->selections_[5] = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
+        if (func_ov023_021e6448(self))
+            self->selections_[5] = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
+        if (func_ov023_021e6de4(self))
         {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             Profile02188640* profile = GetProfile02188640(GameState::GetInstance());

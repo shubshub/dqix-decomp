@@ -45,14 +45,14 @@ extern char data_ov025_021ef791[];
 extern "C" void func_ov025_021e3158(Struct_ov025_021ef9a8*);
 extern "C" void* func_02054000(Struct_02054000*);
 extern "C" void func_02072e94(char*, int, int, void*, int);
-extern "C" int func_ov025_021e2628(int, int);
-extern "C" SafeAllocator* func_ov025_021e8a54(char*);
-extern "C" char* func_ov025_021e8a64(char*);
-extern "C" void func_ov025_021e8bac(Struct_ov025_021e267c_2*, Struct_ov025_021e267c_3*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_0200fd38(GameState*, int, GameObject*);
-extern "C" Struct_ov025_021e63b0_4* func_ov000_02160130();
+int SetFlagAndDispatch_021e2628(int, int);
+SafeAllocator* GetArrayEntry_021e8a54_021e8a54(char*);
+char* GetArrayEntry_021e8a64_021e8a64(char*);
+void PushLogNode021e8bac(Obj021e8bac*, Node021e8bac*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+CloneWork* GetActiveCombatWork_ov000_02160130();
 extern "C" void func_ov017_02191aac(GameResources*, int, int, int);
 
 // USA: func_ov025_021e63b0
@@ -107,28 +107,28 @@ extern "C" ARM int func_ov025_021e63b0(void* arg0, Struct_ov025_021e63b0_3* arg1
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
-        var13->unknown_0_ = 4;
-        var13->unknown_2_ = 0xc8;
-        func_ov025_021e8bac((Struct_ov025_021e267c_2*)data_ov025_021ef988.unknown_c_, var13);
-        var12->Initialize();
-        func_0207df90(var11);
-        var12->SetModelFromFileCopy(var10, var9, var8, Model3D::TextureStagingMode_Normal);
-        func_0207dfac(var11);
-        func_0200fd38(var0, 0xc8, (GameObject*)var12);
-        var12->MakeHidden();
-        int var14 = arg1->unknown_10_->unknown_20_;
-        Struct_ov025_021e63b0_4* var15 = func_ov000_02160130();
-        if (var15) var15->unknown_6fd6_ = var14;
-        GameObject* var16 = func_0200ff1c(var0, var14);
-        if (var16) {
-            var12->position_ = var16->obj3D_.position_;
-            var12->rotation_ = var16->obj3D_.rotation_;
-            var12->SetScale(&var16->obj3D_.GetScale());
-            var12->unknown_2_ = var14;
-            if (((Struct_ov025_021e63b0*)var16->currentStats_)->unknown_14_ & 0x8000000) {
-                GameResources* var17 = GetGameResources();
-                var12->SetAlphaScaleFactor(0);
-                func_ov017_02191aac(var17, 1, var14, 2);
+        node->kind = 4;
+        node->id = 0xc8;
+        PushLogNode021e8bac((Obj021e8bac*)data_ov025_021ef988.context, node);
+        clone->Initialize();
+        VramState_Restore(tables);
+        clone->SetModelFromFileCopy(allocator, file, size, Model3D::TextureStagingMode_Normal);
+        VramState_Save(tables);
+        RegisterCombatantSlot_0200fd38(game, 0xc8, (GameObject*)clone);
+        clone->MakeHidden();
+        int sourceId = targets->head->id;
+        CloneWork* work = GetActiveCombatWork_ov000_02160130();
+        if (work) work->source = sourceId;
+        GameObject* source = GetCombatantWithFlag0x100_0200ff1c(game, sourceId);
+        if (source) {
+            clone->position_ = source->obj3D_.position_;
+            clone->rotation_ = source->obj3D_.rotation_;
+            clone->SetScale(&source->obj3D_.GetScale());
+            clone->unknown_2_ = sourceId;
+            if (((CloneStats*)source->currentStats_)->flags & 0x8000000) {
+                GameResources* resources = GetGameResources();
+                clone->SetAlphaScaleFactor(0);
+                func_ov017_02191aac(resources, 1, sourceId, 2);
             }
         }
         var1->RemoveTask(var7);

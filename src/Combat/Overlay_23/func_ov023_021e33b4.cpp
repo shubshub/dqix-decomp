@@ -99,8 +99,8 @@ struct Struct_ov023_021e33b4 {
     void* unknown_640_[2];
 };
 
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern const char* data_020f2a40;
 extern const char data_ov023_021fd66c[];
 extern const char data_ov023_021fdca4[];
@@ -134,61 +134,61 @@ extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
 
 int IsMainBrightnessTransitionActive(GameResources* resources);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_020dea40(void* arg0, void* arg1, void* arg2, int arg3, int arg4);
-extern "C" int func_020deb08(Struct_020deb08* arg0);
-extern "C" void func_020deb24(Struct_0205faf4_9* arg0, int arg1);
-extern "C" void func_ov023_021e4e8c(void* arg0);
-extern "C" void func_ov023_021e4f64(void* arg0, SafeAllocator* arg1);
-extern "C" void func_ov023_021e4fd8(void* arg0);
-extern "C" void func_ov023_021e6198(void* arg0, int arg1);
-extern "C" void func_ov023_021e6150(void* arg0, unsigned char arg1);
-extern "C" void func_ov023_021e60e0(void* arg0, unsigned int arg1);
-extern "C" void* func_020421a0();
-extern "C" void func_02042b30(void* arg0, void* arg1);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_020a2010(void* arg0);
-extern "C" void func_0202e5c0(Struct_0202e5c0* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e5c8(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_020a27a0(void* arg0);
-extern "C" void func_020c54a4(int arg0, unsigned int arg1, unsigned int arg2, unsigned short arg3);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" void* func_02053c6c(unsigned char* arg0);
-extern "C" void func_020c555c(int arg0);
-extern "C" void func_ov023_021e33a0(char* arg0, signed char arg1);
-extern "C" void func_ov005_02159c24(Struct_ov005_02159c24*, void*, void*);
+void VramState_Restore(char* tables);
+void VramState_Save(char* tables);
+void CopyInternalFields0207df50(Foo0207df50* tables);
+void ItemTable_Init(void* descriptor);
+void BuildDescriptorFlag1_020dea40(void* descriptor, void* allocator, void* data, int size, int flag);
+int GetMaxOfHalfwords0And4(Pair020deb08* descriptor);
+void GetEntryByIndex020deb24(EntryList020deb24* descriptor, int index);
+void CharacterModel_Init(void* model);
+void CharacterModel_CreateAllocators(void* model, SafeAllocator* allocator);
+void CharacterModel_ReserveVram(void* model);
+void CharacterModel_SetItemTable(void* model, int value);
+void SetByteC11_021e6150(void* model, unsigned char value);
+void CharacterModel_SetAngle(void* model, unsigned int value);
+void* GetGlobalField0x1c020421a0();
+void SetField0x1e28_02042b30(void* messages, void* tables);
+void SetField0x3b0Value_020100c4(GameState* gameState, int camera);
+int GetField0x3acValue_020100a8(GameState* gameState);
+void InitCombatController020a2010(void* camera);
+void Camera_SetPosition(Vec3Target0202e5c0* camera, int x, int y, int z);
+void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+void SetField0x238False_020a27a0(void* camera);
+void SetFogState_020c54a4(int a, unsigned int b, unsigned int c, unsigned short d);
+void SpriteContext_Init(char* list);
+void Sprite_Init(Struct0205a198* entry);
+int Pac_CountFiles(ActiveEntry02046900* file);
+void* Pac_GetFile(Rec020467f0* file, int index, void** record, int* size);
+void Clear12Bytes020e46c4(void* arg);
+void InitObjFromCombatantId020e4bf4(void* arg, int combatant);
+void* KeyTable_Get(Container020e0310* container, int key);
+void ClearFields_021e20c0(void* table);
+void* GetFieldAt0x150_02053c6c(unsigned char* combatant);
+void CallWithAddr4000330_020c555c(int addr);
+void CopyByteFieldToNextAndSet_021e33a0_021e33a0(char* self, signed char mode);
+void InitEntryManagerAndAllocator02159c24(Obj02159c24*, void*, void*);
 
 extern "C" {
-void func_ov017_0219ba0c(GameResources* arg0, int arg1);
-void func_ov005_02153ba4(void* arg0);
-void func_ov005_02153954(void* arg0, SafeAllocator* arg1, void* arg2);
-void func_ov004_02154da8(void* arg0, void* arg1, unsigned int arg2);
-void func_ov005_02153b20(void* arg0);
-int func_ov005_0215436c(void* arg0);
-void func_ov005_0215a960(void* arg0);
-void func_ov005_0215ae7c(void* arg0);
-void func_020dea64(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3, const void* arg4, int arg5);
-void func_0207de48(void* arg0, int arg1, int arg2);
-void func_020432c4(void* arg0);
-void func_0205a528(void* arg0, void* arg1, int arg2, SafeAllocator* arg3);
-void func_02046380(void* arg0);
-void func_02046608(void* arg0, int arg1, void* arg2, void* arg3, int arg4, int arg5, int arg6);
-void func_ov023_021e20f0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-void func_ov023_021e3d3c(void* arg0, int arg1, int arg2);
-int func_ov023_021e5974(void* arg0, void* arg1, int arg2, int arg3, int arg4);
-void func_ov023_021e49a4(Struct_ov023_021e33b4* arg0);
-void func_ov023_021e2ce8(int arg0, void* arg1);
+void func_ov017_0219ba0c(GameResources* resources, int value);
+void func_ov005_02153ba4(void* battle);
+void func_ov005_02153954(void* battle, SafeAllocator* allocator, void* unk);
+void func_ov004_02154da8(void* battle, void* data, unsigned int size);
+void func_ov005_02153b20(void* battle);
+int func_ov005_0215436c(void* battle);
+void func_ov005_0215a960(void* battle);
+void func_ov005_0215ae7c(void* battle);
+void func_020dea64(void* descriptor, SafeAllocator* allocator, void* data, unsigned int size, const void* entries, int count);
+void VramState_Reserve(void* tables, int a, int b);
+void func_020432c4(void* messages);
+void SpriteContext_LoadFile(void* sprites, void* record, int size, SafeAllocator* allocator);
+void func_02046380(void* messages);
+void func_02046608(void* messages, int a, void* format, void* output, int size, int b, int c);
+void func_ov023_021e20f0(void* table, void* allocator, void* data, unsigned int size);
+void func_ov023_021e3d3c(void* table, int id, int value);
+int CharacterModel_Load(void* model, void* a, int combatant, int b, int c);
+void func_ov023_021e49a4(BattleSetup021e33b4* self);
+void func_ov023_021e2ce8(int combatant, void* sprites);
 }
 
 // USA: func_ov023_021e33b4
@@ -217,9 +217,9 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
         {
             func_ov017_0219ba0c(var1, 1);
 #if defined(jpn)
-            arg0->unknown_630_ = var2->QueueLoadGP1(data_020f2a38, NULL);
+            self->task_630 = loader->QueueLoadGP1(g_itemDataArchive, NULL);
 #else
-            arg0->unknown_630_ = var2->QueueLoadFileInGP2(data_020f2a38, data_020f2a30, NULL);
+            self->task_630 = loader->QueueLoadFileInGP2(g_itemDataArchive, g_itemDataFile, NULL);
 #endif
             arg0->unknown_4e4_++;
         }
@@ -228,19 +228,19 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
     {
         if (var2->GetTaskStatus(arg0->unknown_630_))
         {
-            void* var4;
-            unsigned int var5;
-            var2->GetLoadedFileByID(arg0->unknown_630_, &var4, &var5);
-            SetFlags04(var1, 0x601fe);
-            func_0207df90(arg0->unknown_8_);
-            arg0->unknown_14_->Reset();
-            func_020de848(arg0->unknown_a4_);
-            func_020dea40(arg0->unknown_a4_, arg0->unknown_14_, var4, var5, 0xb);
-            arg0->unknown_be_ = func_020deb08((Struct_020deb08*)arg0->unknown_a4_);
-            arg0->unknown_bc_ = arg0->unknown_be_ + 0x31;
-            for (int var6 = 0; var6 < arg0->unknown_bc_; var6++)
-                func_020deb24((Struct_0205faf4_9*)arg0->unknown_a4_, (short)var6);
-            arg0->unknown_14_->Reset();
+            void* data;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task_630, &data, &size);
+            SetFlags04(resources, 0x601fe);
+            VramState_Restore(self->pairTables_8);
+            self->allocator_14->Reset();
+            ItemTable_Init(self->descriptor_a4);
+            BuildDescriptorFlag1_020dea40(self->descriptor_a4, self->allocator_14, data, size, 0xb);
+            self->maxEntry_be = GetMaxOfHalfwords0And4((Pair020deb08*)self->descriptor_a4);
+            self->entryCount_bc = self->maxEntry_be + 0x31;
+            for (int i = 0; i < self->entryCount_bc; i++)
+                GetEntryByIndex020deb24((EntryList020deb24*)self->descriptor_a4, (short)i);
+            self->allocator_14->Reset();
 
             if (arg0->unknown_4e5_ == 3)
             {
@@ -276,23 +276,23 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             arg0->unknown_7c_.CreateTypeA(arg0->unknown_4_->Allocate(0x300), 0x300);
             arg0->unknown_90_.CreateTypeA(arg0->unknown_4_->Allocate(0x200), 0x200);
 
-            arg0->unknown_120_[0] = (Struct_ov023_021e33b4_2*)arg0->unknown_4_->Allocate(0xc20);
-            func_ov023_021e4e8c(arg0->unknown_120_[0]);
-            func_ov023_021e4f64(arg0->unknown_120_[0], arg0->unknown_4_);
-            func_ov023_021e4fd8(arg0->unknown_120_[0]);
-            func_ov023_021e6198(arg0->unknown_120_[0], (int)arg0->unknown_a4_);
-            func_ov023_021e6150(arg0->unknown_120_[0], 1);
+            self->models_120[0] = (Model021e33b4*)self->allocator_4->Allocate(0xc20);
+            CharacterModel_Init(self->models_120[0]);
+            CharacterModel_CreateAllocators(self->models_120[0], self->allocator_4);
+            CharacterModel_ReserveVram(self->models_120[0]);
+            CharacterModel_SetItemTable(self->models_120[0], (int)self->descriptor_a4);
+            SetByteC11_021e6150(self->models_120[0], 1);
 
-            arg0->unknown_120_[1] = (Struct_ov023_021e33b4_2*)arg0->unknown_4_->Allocate(0xc20);
-            func_ov023_021e4e8c(arg0->unknown_120_[1]);
-            func_ov023_021e4f64(arg0->unknown_120_[1], arg0->unknown_4_);
-            func_ov023_021e4fd8(arg0->unknown_120_[1]);
-            func_ov023_021e6198(arg0->unknown_120_[1], (int)arg0->unknown_a4_);
-            func_ov023_021e6150(arg0->unknown_120_[1], 1);
+            self->models_120[1] = (Model021e33b4*)self->allocator_4->Allocate(0xc20);
+            CharacterModel_Init(self->models_120[1]);
+            CharacterModel_CreateAllocators(self->models_120[1], self->allocator_4);
+            CharacterModel_ReserveVram(self->models_120[1]);
+            CharacterModel_SetItemTable(self->models_120[1], (int)self->descriptor_a4);
+            SetByteC11_021e6150(self->models_120[1], 1);
 
-            arg0->unknown_14_->Reset();
-            func_020de848(arg0->unknown_a4_);
-            func_020dea64(arg0->unknown_a4_, arg0->unknown_14_, var4, var5, data_ov023_021fd66c, 9);
+            self->allocator_14->Reset();
+            ItemTable_Init(self->descriptor_a4);
+            func_020dea64(self->descriptor_a4, self->allocator_14, data, size, data_ov023_021fd66c, 9);
 
             arg0->unknown_638_ = arg0->unknown_2c_.Allocate(0x2a0);
             memset(arg0->unknown_638_, 0, 0x2a0);
@@ -302,27 +302,27 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             if (arg0->unknown_0_ != NULL)
                 *(void**)((char*)arg0->unknown_0_ + 0xdf4) = arg0->unknown_a4_;
 
-            func_0207de48(arg0->unknown_474_, 0x4000, 0x40);
-            func_0207df50((Struct_0203d028*)arg0->unknown_474_);
-            if (arg0->unknown_4e5_ == 3 && arg0->unknown_0_ != NULL)
-                func_ov005_02153b20(arg0->unknown_0_);
+            VramState_Reserve(self->pairTables_474, 0x4000, 0x40);
+            CopyInternalFields0207df50((Foo0207df50*)self->pairTables_474);
+            if (self->mode_4e5 == 3 && self->battle_0 != NULL)
+                func_ov005_02153b20(self->battle_0);
 
-            func_0207de48(arg0->unknown_404_, 0, 0);
-            func_0207df50((Struct_0203d028*)arg0->unknown_404_);
+            VramState_Reserve(self->pairTables_404, 0, 0);
+            CopyInternalFields0207df50((Foo0207df50*)self->pairTables_404);
 
-            void* var8 = func_020421a0();
-            func_02042b30(var8, arg0->unknown_474_);
-            func_0207df90(arg0->unknown_474_);
-            func_020432c4(var8);
-            func_0207dfac(arg0->unknown_474_);
+            void* messages = GetGlobalField0x1c020421a0();
+            SetField0x1e28_02042b30(messages, self->pairTables_474);
+            VramState_Restore(self->pairTables_474);
+            func_020432c4(messages);
+            VramState_Save(self->pairTables_474);
 
-            arg0->unknown_138_ = func_020100bc(var0);
-            func_020a2010(arg0->unknown_13c_);
-            func_0202e5c0((Struct_0202e5c0*)arg0->unknown_13c_, 0xb666, 0xa800, 0x42ccc);
-            func_0202e5c8((unsigned char*)arg0->unknown_13c_, 0xb666, 0xa800, 0);
-            func_020a27a0(arg0->unknown_13c_);
-            func_020100c4(var0, (int)arg0->unknown_13c_);
-            func_020c54a4(0, 0, 0, 0);
+            self->camera_138 = GetField0x3b0Value_020100bc(gameState);
+            InitCombatController020a2010(self->camera_13c);
+            Camera_SetPosition((Vec3Target0202e5c0*)self->camera_13c, 0xb666, 0xa800, 0x42ccc);
+            Camera_SetTarget((unsigned char*)self->camera_13c, 0xb666, 0xa800, 0);
+            SetField0x238False_020a27a0(self->camera_13c);
+            SetField0x3b0Value_020100c4(gameState, (int)self->camera_13c);
+            SetFogState_020c54a4(0, 0, 0, 0);
 
             var2->RemoveTask(arg0->unknown_630_);
             arg0->unknown_630_ = -1;
@@ -343,12 +343,12 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             var2->RemoveTask(arg0->unknown_630_);
             arg0->unknown_630_ = -1;
 
-            func_0205a444((char*)arg0->unknown_c8_);
-            arg0->unknown_c8_->unknown_50_ = 0;
-            arg0->unknown_c8_->inline_ov023_021e33b4(arg0->unknown_cc_, SPRITE_COUNT_021e33b4);
-            arg0->unknown_c8_->unknown_3c_ = arg0->unknown_d0_;
-            for (int var11 = 0; var11 < SPRITE_COUNT_021e33b4; var11++)
-                func_0205a198((Struct_02043368_2*)(arg0->unknown_cc_ + var11 * 0x28));
+            SpriteContext_Init((char*)self->sprites_c8);
+            self->sprites_c8->flag_50 = 0;
+            self->sprites_c8->SetEntries(self->spriteEntries_cc, SPRITE_COUNT_021e33b4);
+            self->sprites_c8->ptr_3c = self->spriteExtra_d0;
+            for (int i = 0; i < SPRITE_COUNT_021e33b4; i++)
+                Sprite_Init((Struct0205a198*)(self->spriteEntries_cc + i * 0x28));
 
 #if defined(jpn)
             arg0->unknown_630_ = var2->QueueLoadFile(data_ov023_021fdca4, NULL);
@@ -362,18 +362,18 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
     {
         if (var2->GetTaskStatus(arg0->unknown_630_))
         {
-            arg0->unknown_68_.Reset();
-            void* var12;
-            void* var13;
-            unsigned int var14;
-            var2->GetLoadedFileByID(arg0->unknown_630_, &var13, &var14);
-            int var15 = func_02046900((Struct_02020cb8_4*)var13);
-            for (int var16 = 0; var16 < var15; var16++)
+            self->spriteAllocator_68.Reset();
+            void* record;
+            void* data;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task_630, &data, &size);
+            int count = Pac_CountFiles((ActiveEntry02046900*)data);
+            for (int i = 0; i < count; i++)
             {
-                int var17;
-                void* var18 = func_020467f0((Struct_02020aec*)var13, var16, &var12, &var17);
-                if (var18 != NULL)
-                    func_0205a528(arg0->unknown_c8_, var18, var17, &arg0->unknown_68_);
+                int recordSize;
+                void* found = Pac_GetFile((Rec020467f0*)data, i, &record, &recordSize);
+                if (found != NULL)
+                    SpriteContext_LoadFile(self->sprites_c8, found, recordSize, &self->spriteAllocator_68);
             }
             var2->RemoveTask(arg0->unknown_630_);
             arg0->unknown_630_ = -1;
@@ -398,10 +398,10 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
         Struct_0201099c_3* var21 = (Struct_0201099c_3*)((char*)arg0->unknown_0_ + 0xdf8);
         for (int var22 = 0; var22 < 2; var22++)
         {
-            var19.unknown_b_0_ = var22;
-            func_02046380(var20);
-            *(Struct_ov023_021e33b4_4**)var20 = &var19;
-            func_02046608(var20, 8, func_020e0434(var21, 0x226), arg0->unknown_640_[var22], 0x100, 0, 0);
+            arg.index_8 = i;
+            func_02046380(messages);
+            *(TextArg021e33b4**)messages = &arg;
+            func_02046608(messages, 8, KeyTable_Get(texts, 0x226), self->buffers_640[i], 0x100, 0, 0);
         }
 #endif
         arg0->unknown_630_ = var2->QueueLoadFile(data_ov023_021fdcc4, NULL);
@@ -431,8 +431,8 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
         void* var25 = func_0200ff1c(GameState::GetInstance(), arg0->unknown_4fc_);
         if (var25 != NULL)
         {
-            func_ov023_021e60e0(arg0->unknown_120_[0], 0x1eb);
-            func_ov023_021e5974(arg0->unknown_120_[0], func_02053c6c((unsigned char*)var25), arg0->unknown_4fc_, 0, 0);
+            CharacterModel_SetAngle(self->models_120[0], 0x1eb);
+            CharacterModel_Load(self->models_120[0], GetFieldAt0x150_02053c6c((unsigned char*)combatant), self->combatant_4fc, 0, 0);
         }
         arg0->unknown_128_[0] = arg0->unknown_120_[0];
         arg0->unknown_128_[1] = arg0->unknown_120_[1];

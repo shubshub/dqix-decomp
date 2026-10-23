@@ -110,21 +110,21 @@ struct Struct_0204b010;
 struct Struct_02020cb8_3;
 struct Struct_02038598_4;
 
-extern "C" void func_0205a494(void* arg0);
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_02045cac(Struct_02045cac* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_0204b010(Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204afb4(Struct_02020cb8_3* arg0);
-extern "C" void func_02017d68(void* arg0);
-extern "C" void* func_020d6c00();
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
+void EmptyDestructor0205a494(void* renderer);
+MessageSystem* GetGlobalField0x1c020421a0();
+void InitCombatSlots02045cac(CombatSlots02045cac* messages);
+void ReinitController02043204(char* messages);
+void Background_ClearMap(Obj0204b010* background, void* value);
+void ResetRecordList0204afb4(List0204afb4* background);
+void SetFlagBytes02017d68(void* unused);
+void* GetDataPtr02114e04_020d6c00();
+void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
 
 extern "C" {
-void func_ov023_021eb26c(void* arg0);
-void func_02043124(Struct_02021b84* arg0);
-void func_0204b04c(Struct_ov003_021594c4* arg0, int arg1);
-void func_0204b088(Struct_ov003_021594c4* arg0, int arg1);
+void func_ov023_021eb26c(void* guide);
+void func_02043124(MessageSystem* messages);
+void Background_FlushMap(BackgroundGraphics* background, int value);
+void Background_TransferMap(BackgroundGraphics* background, int value);
 unsigned int GetMainBGAssignedVRAMSize();
 void func_020ca458(int value, void* destination, unsigned int size);
 void func_0205d048(Struct_02081870_2* arg0);
@@ -156,11 +156,11 @@ extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* arg0)
     Struct_ov003_021594c4* var2[3] = {&arg0->unknown_d0_[0], &arg0->unknown_d0_[1], &arg0->unknown_d0_[2]};
     for (int var3 = 0; var3 < 3; var3++)
     {
-        Struct_ov003_021594c4* var4 = var2[var3];
-        func_0204b010((Struct_0204b010*)var4, 0);
-        func_0204b04c(var4, 0);
-        func_0204b088(var4, 0);
-        func_0204afb4((Struct_02020cb8_3*)var4);
+        BackgroundGraphics* background = backgrounds[i];
+        Background_ClearMap((Obj0204b010*)background, 0);
+        Background_FlushMap(background, 0);
+        Background_TransferMap(background, 0);
+        ResetRecordList0204afb4((List0204afb4*)background);
     }
     func_020ca458(0, (void*)0x06000000, GetMainBGAssignedVRAMSize());
     func_0205d048(&arg0->unknown_130_);

@@ -1,7 +1,7 @@
 #if defined(jpn)
 #define R(j,u) (j)
-#define func_ov024_021f6f10 func_ov024_021f5c80
-#define func_ov023_021e4e8c func_ov023_021e5080
+#define _Z27ScaleStatsIfType12_021f6f10Pv _Z27CheckAnyBuffBelow2_021f5c80P16Wrapper_021f5c80iiPiPs
+#define _Z19CharacterModel_InitPv func_ov023_021e5080
 #define data_ov023_021ff5b4 data_ov023_021fe83c
 #define func_ov023_021fc518 func_ov023_021fb810
 #else

@@ -23,12 +23,12 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3ddf_;
 };
 
-extern "C" void func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_02041ea4(char* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" void func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
+void AppendCursorTag_02041ea4(char* text, int a);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" int func_020420e8(const char* text, int large);
+void AppendNameTag_02041b70(char* text, int item, const char* itemText);
+void AppendString02042058(char* text, const char* append);
 
 // USA: func_ov005_02159a30
 extern "C" ARM void func_ov005_02159a30(Struct_ov005_02153954* arg0, char* arg1, int arg2) {
@@ -45,36 +45,36 @@ extern "C" ARM void func_ov005_02159a30(Struct_ov005_02153954* arg0, char* arg1,
         var2 = 1;
     }
 #if defined(jpn)
-    for (int var3 = 0; var3 < var1; var3++) {
-        if (var2) {
-            if (var3 == 0)
-                func_02041b70(arg1, var3, func_020e0434(&arg0->unknown_df8_, 4));
+    for (int i = 0; i < count; i++) {
+        if (shifted) {
+            if (i == 0)
+                AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, 4));
             else
-                func_02041b70(arg1, var3, func_020e0434(&arg0->unknown_df8_, (short)(var3 + 1)));
+                AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, (short)(i + 1)));
         } else {
-            func_02041b70(arg1, var3, func_020e0434(&arg0->unknown_df8_, (short)var3));
+            AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, (short)i));
         }
-        if (var3 != var1 - 1)
-            func_02042058(arg1, func_020e0434(&arg0->unknown_df8_, 0x64));
+        if (i != count - 1)
+            AppendString02042058(text, KeyTable_Get(&self->messages, 0x64));
     }
 #else
-    Struct_0201099c_3* var4 = &arg0->unknown_df8_;
-    const char* var5 = func_020e0434(var4, 0x64);
-    int var6 = 0;
-    for (int var7 = 0; var7 < var1; var7++) {
-        short var8 = var7;
-        if (var2) {
-            var8++;
-            if (var7 == 0)
-                var8 = 4;
+    Container020e0310* strings = &self->messages;
+    const char* separator = KeyTable_Get(strings, 0x64);
+    int maxWidth = 0;
+    for (int i = 0; i < count; i++) {
+        short key = i;
+        if (shifted) {
+            key++;
+            if (i == 0)
+                key = 4;
         }
-        const char* var9 = func_020e0434(var4, var8);
-        int var10 = func_020420e8(var9, 0);
-        if (var6 < var10)
-            var6 = var10;
-        func_02041b70(arg1, var7, var9);
-        if (var7 != var1 - 1)
-            func_02042058(arg1, var5);
+        const char* name = KeyTable_Get(strings, key);
+        int width = func_020420e8(name, 0);
+        if (maxWidth < width)
+            maxWidth = width;
+        AppendNameTag_02041b70(text, i, name);
+        if (i != count - 1)
+            AppendString02042058(text, separator);
     }
     int var11 = ((var6 + 0x1b) & ~7) >> 3;
     var11 += var11 & 1;

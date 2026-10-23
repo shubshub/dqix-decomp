@@ -36,9 +36,9 @@ struct Struct_0207fe80_3 {
     unsigned char unknown_39_;
 };
 
-extern "C" int func_0204c7e0(unsigned char*);
-extern "C" void func_0204bc74(struct Struct_0207fe80_2* arg0, int arg1, short arg2, short arg3, short arg4, short arg5, int arg6);
-extern "C" int func_0204fd00(struct Struct_0207fe80* arg0, int arg1);
+int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char*);
+extern "C" void Background_FillRect(struct Sub0207fe80* s, int mode, short ac, short ae, short a8, short c0, int flag);
+extern "C" int func_0204fd00(struct Elem0207fe80* e, int mask);
 
 // USA: func_0207fe80
 extern "C" ARM void func_0207fe80(struct Struct_0207fe80_3* arg0, int arg1, int arg2, unsigned short arg3) {
@@ -72,28 +72,28 @@ extern "C" ARM void func_0207fe80(struct Struct_0207fe80_3* arg0, int arg1, int 
     if ((var0 == NULL) | (var1 == NULL)) {
         return;
     }
-    arg3 &= 0x3ff;
-    for (var5 = 0; var5 < arg0->unknown_39_; var5++) {
-        var4 = &arg0->unknown_30_[var5];
-        if (func_0204c7e0((unsigned char*)var4) && var4->unknown_c4_ != 0xff) {
-            if (!(var4->unknown_c5_ & 0x20) && !(var4->unknown_c5_ & 0x80) && var1 == var4->unknown_4_) {
-                var7 = var4->unknown_ae_;
-                var6 = var4->unknown_ac_;
-                var8 = var4->unknown_a8_;
-                var9 = var4->unknown_c0_;
-                func_0204bc74(var0, arg3, var6, var7, var8, var9, 0);
-                if (var9 && arg3) {
-                    if (!func_0204fd00(var4, 1)) {
-                        func_0204bc74(var0, 2, var6, var7, 1, 1, 0);
+    c &= 0x3ff;
+    for (j = 0; j < obj->count39; j++) {
+        e = &obj->elems[j];
+        if (CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)e) && e->key != 0xff) {
+            if (!(e->flags & 0x20) && !(e->flags & 0x80) && sb == e->f4) {
+                ae = e->fae;
+                ac = e->fac;
+                a8 = e->fa8;
+                c0 = e->fc0;
+                Background_FillRect(sa, c, ac, ae, a8, c0, 0);
+                if (c0 && c) {
+                    if (!func_0204fd00(e, 1)) {
+                        Background_FillRect(sa, 2, ac, ae, 1, 1, 0);
                     }
-                    if (!func_0204fd00(var4, 2)) {
-                        func_0204bc74(var0, 0x402, (short)(var6 + var8 - 1), var7, 1, 1, 0);
+                    if (!func_0204fd00(e, 2)) {
+                        Background_FillRect(sa, 0x402, (short)(ac + a8 - 1), ae, 1, 1, 0);
                     }
-                    if (!func_0204fd00(var4, 4)) {
-                        func_0204bc74(var0, 0x802, var6, (short)(var7 + var9 - 1), 1, 1, 0);
+                    if (!func_0204fd00(e, 4)) {
+                        Background_FillRect(sa, 0x802, ac, (short)(ae + c0 - 1), 1, 1, 0);
                     }
-                    if (!func_0204fd00(var4, 8)) {
-                        func_0204bc74(var0, 0xc02, (short)(var6 + var8 - 1), (short)(var7 + var9 - 1), 1, 1, 0);
+                    if (!func_0204fd00(e, 8)) {
+                        Background_FillRect(sa, 0xc02, (short)(ac + a8 - 1), (short)(ae + c0 - 1), 1, 1, 0);
                     }
                 }
             }

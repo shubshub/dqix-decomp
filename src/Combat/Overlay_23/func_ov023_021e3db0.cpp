@@ -10,13 +10,13 @@ struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 
-extern "C" void func_ov023_021e5020(void* arg0);
-extern "C" void func_ov023_021e4c18(void* arg0);
-extern "C" void func_ov023_021e463c(void* arg0, int arg1);
-extern "C" void func_ov023_021e447c(void* arg0);
-extern "C" void func_ov023_021e456c(void* arg0);
-extern "C" void func_ov023_021e3e98(void* arg0);
-extern "C" void func_ov005_02154de8(void* arg0);
+extern "C" void CharacterModel_Update(void* p);
+extern "C" void func_ov023_021e4c18(void* obj);
+extern "C" void func_ov023_021e463c(void* obj, int scaleCount);
+extern "C" void func_ov023_021e447c(void* obj);
+extern "C" void func_ov023_021e456c(void* obj);
+extern "C" void func_ov023_021e3e98(void* obj);
+extern "C" void func_ov005_02154de8(void* arg);
 
 struct Struct_ov023_021e3db0 {
     void* unknown_0_;
@@ -31,11 +31,11 @@ struct Struct_ov023_021e3db0 {
 extern "C" ARM void func_ov023_021e3db0(struct Obj021e3db0* obj) {
     int val = (int)GameState::GetInstance()->GetResources();
 
-    if (arg0->unknown_128_ != 0) {
-        func_ov023_021e5020(arg0->unknown_128_);
+    if (obj->field128 != 0) {
+        CharacterModel_Update(obj->field128);
     }
-    if (arg0->unknown_12c_ != 0) {
-        func_ov023_021e5020(arg0->unknown_12c_);
+    if (obj->field12c != 0) {
+        CharacterModel_Update(obj->field12c);
     }
 
     if (arg0->unknown_4e4_ == 0) {

@@ -8,22 +8,22 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0200f3a4_8;
-struct Struct_0209a470;
-struct Struct_02086f24_6;
-struct Struct_02013fb4;
-extern "C" void func_020de848(void *arg0);
-extern "C" void func_0209a804(int *arg0);
-extern "C" void func_0209a338(struct Struct_0200f3a4_8 *arg0);
-extern "C" void func_0209a470(struct Struct_0209a470 *arg0,
-                                                                                                    SafeAllocator *arg1,
-                                                                                                    struct Struct_02013fb4 *arg2,
-                                                                                                    int arg3);
-extern "C" void func_0209a8b4(struct Struct_02086f24_6 *arg0,
-                                                                                                    SafeAllocator *arg1,
-                                                                                                    struct Struct_02013fb4 *arg2,
-                                                                                                    int arg3);
-extern "C" void func_020dea64(void *arg0, void *arg1, void *arg2, unsigned int arg3, const void *arg4, int arg5);
+struct Pair0209a338;
+struct Ctx0209a470;
+struct Ctx0209a8b4;
+struct StreamHeader;
+void ItemTable_Init(void *p);
+void ClearField00209a804(int *p);
+void ClearFirstTwoWords0209a338(struct Pair0209a338 *p);
+void SetupAndRunBufferedScript0209a470(struct Ctx0209a470 *ctx,
+                                                                                                    SafeAllocator *alloc,
+                                                                                                    struct StreamHeader *hdr,
+                                                                                                    int len);
+void SetupAndRunBufferedScript0209a8b4(struct Ctx0209a8b4 *ctx,
+                                                                                                    SafeAllocator *alloc,
+                                                                                                    struct StreamHeader *hdr,
+                                                                                                    int len);
+extern "C" void func_020dea64(void *list, void *alloc, void *data, unsigned int size, const void *entries, int count);
 extern "C" char data_ov002_0216c96e[];
 
 // USA: func_ov002_02156c7c
@@ -46,14 +46,14 @@ extern "C" ARM void func_ov002_02156c7c(char *arg0) {
     }
     if (var7 != 3) return;
 
-    int *var9 = (int *) (arg0 + RG(0x3a4, 0x26c) + 0x1800);
-    if (var6->GetTaskStatus(*(int *) (arg0 + 0x1000 + RG(0xba4, 0xa6c)))) {
-        var6->GetLoadedFileByID(*var9, &var0, &var1);
-        ((SafeAllocator *) (arg0 + RG(0, 0x374) + RG(0x810, 0x400)))->Reset();
-        func_020de848(arg0 + RG(0x3ec, 0) + RG(0x400, 0x750));
-        func_020dea64(arg0 + RG(0x3ec, 0) + RG(0x400, 0x750), arg0 + RG(0, 0x374) + RG(0x810, 0x400), var0, var1, data_ov002_0216c96e, 2);
-        var6->RemoveTask(*var9);
-        *var9 = -1;
+    int *h = (int *) (base + RG(0x3a4, 0x26c) + 0x1800);
+    if (loader->GetTaskStatus(*(int *) (base + 0x1000 + RG(0xba4, 0xa6c)))) {
+        loader->GetLoadedFileByID(*h, &file0, &len0);
+        ((SafeAllocator *) (base + RG(0, 0x374) + RG(0x810, 0x400)))->Reset();
+        ItemTable_Init(base + RG(0x3ec, 0) + RG(0x400, 0x750));
+        func_020dea64(base + RG(0x3ec, 0) + RG(0x400, 0x750), base + RG(0, 0x374) + RG(0x810, 0x400), file0, len0, data_ov002_0216c96e, 2);
+        loader->RemoveTask(*h);
+        *h = -1;
     }
     var9 = (int *) (arg0 + RG(0x3a8, 0xa70) + RG(0x1800, 0x1000));
     if (var6->GetTaskStatus(*(int *) (arg0 + 0x1000 + RG(0xba8, 0xa70)))) {

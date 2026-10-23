@@ -2,15 +2,15 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_0205d0e0(void* arg0, int arg1);
-struct Struct_020103f0;
-extern "C" void func_020103f0(struct Struct_020103f0* arg0, unsigned short* arg1, unsigned char* arg2, unsigned char* arg3);
-extern "C" void func_020ac614(struct Struct_020ac4f8* arg0, int arg1);
-extern "C" void func_020ac644(struct Struct_020ac4f8* arg0, int arg1);
-struct Struct_ov023_021e71a0;
-extern "C" void func_ov023_021e71a0(struct Struct_ov023_021e71a0* arg0);
-class Struct_ov012_0218adac;
-extern "C" void func_ov023_021e7c58(Struct_ov012_0218adac* arg0, unsigned int arg1, int arg2);
+extern "C" void Window_Update(void* obj, int val);
+struct TimeStamp020103f0;
+void ComputeElapsedPlayTimeHMS020103f0(struct TimeStamp020103f0* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds);
+void AddPlayClockHours020ac614(struct BattleRecordPlayClock* clock, int amount);
+void AddPlayClockMinutes020ac644(struct BattleRecordPlayClock* clock, int amount);
+struct ShortBytePair021e71a0;
+void ClearShortAndTwoBytes_021e71a0(struct ShortBytePair021e71a0* p);
+class PMFObj021e7c58;
+void DispatchEntryByIndex_021e7c58(PMFObj021e7c58* obj, unsigned int selector, int idx);
 
 // USA: func_ov023_021e7404
 extern "C" ARM void func_ov023_021e7404(char* arg0, int arg1) {
@@ -26,7 +26,7 @@ extern "C" ARM void func_ov023_021e7404(char* arg0, int arg1) {
         return;
     }
 
-    func_0205d0e0(arg0 + 0x78, var0);
+    Window_Update(obj + 0x78, useAmount);
     *(int*)0x4001010 = 0;
 
     if (*(int*)(arg0 + 0x3c) == 0) {

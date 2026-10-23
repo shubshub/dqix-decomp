@@ -5,7 +5,7 @@ extern "C" int func_ov008_02186b18(void* arg0, int arg1, int arg2);
 
 struct SelfBB04;
 extern "C" void GridCursor_SetSelectedIndex(struct SelfBB04*, int);
-extern "C" int func_0205bf58(void*, void*);
+extern "C" int GridCursor_Update(void*, void*);
 
 // USA: func_ov008_02186a30
 extern "C" ARM int func_ov008_02186a30(void* arg0, void* arg1) {
@@ -28,8 +28,8 @@ extern "C" ARM int func_ov008_02186a30(void* arg0, void* arg1) {
         }
     }
 
-    if (var0 == 0) {
-        func_0205bf58((char*)arg0 + 0x750, arg1);
+    if (state == 0) {
+        GridCursor_Update((char*)self + 0x750, param1);
     }
     if (var0 != 0) {
         if (var1 == -1) return 0;

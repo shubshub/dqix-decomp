@@ -11,19 +11,19 @@ struct Struct_02020aec {
     int unknown_44_;
     int unknown_48_;
 };
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
 struct Struct_02020cb8_4 {
     signed char unknown_0_;
     char unknown_1_[0x47];
     int unknown_48_;
 };
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_0204af38;
-extern "C" void func_0204af38(struct Struct_0204af38* arg0, int arg1, SafeAllocator* arg2);
+struct Foo0204af38;
+void Background_AllocateScreens(struct Foo0204af38* obj, int count, SafeAllocator* alloc);
 
-extern "C" void func_0204b174(struct Struct_0204af38* arg0, void* arg1, SafeAllocator* arg2, int arg3);
+extern "C" void Background_LoadFile(struct Foo0204af38* obj, void* data, SafeAllocator* alloc, int field44);
 
 extern char data_ov023_021fe5f4[];
 
@@ -44,27 +44,27 @@ extern "C" ARM void func_ov023_021f7aac(struct Struct_ov023_021f7688* arg0, void
     void* var0 = func_ov011_021845f8(arg1, arg0->unknown_8_);
     if (var0 == 0) return;
 
-    int var1 = func_02046900((struct Struct_02020cb8_4*)arg2);
-    int var2 = 0;
-    int var3;
-    for (var3 = 0; var3 < var1; var3++) {
-        int var4;
-        void* var5;
-        func_020467f0(arg2, var3, &var5, &var4);
-        if (strstr((char*)var5, data_ov023_021fe5f4) != NULL) var2++;
+    int count = Pac_CountFiles((struct ActiveEntry02046900*)entry);
+    int matchCount = 0;
+    int i;
+    for (i = 0; i < count; i++) {
+        int field44;
+        void* rec;
+        Pac_GetFile(entry, i, &rec, &field44);
+        if (strstr((char*)rec, data_ov023_021fe5f4) != NULL) matchCount++;
     }
 
-    if (var2 > 0) {
-        func_0204af38((struct Struct_0204af38*)((char*)arg0 + Enum_ov023_021f7aac_40), (unsigned char)var2, (SafeAllocator*)((char*)var0 + 4));
+    if (matchCount > 0) {
+        Background_AllocateScreens((struct Foo0204af38*)((char*)obj + regionalOffset), (unsigned char)matchCount, (SafeAllocator*)((char*)base + 4));
     }
 
-    int var6;
-    for (var6 = 0; var6 < var1; var6++) {
-        int var7;
-        void* var8;
-        void* var9 = func_020467f0(arg2, var6, &var8, &var7);
-        if (var9 != 0) {
-            func_0204b174((struct Struct_0204af38*)((char*)arg0 + Enum_ov023_021f7aac_40), var9, (SafeAllocator*)((char*)var0 + 4), var7);
+    int j;
+    for (j = 0; j < count; j++) {
+        int field44;
+        void* rec;
+        void* data = Pac_GetFile(entry, j, &rec, &field44);
+        if (data != 0) {
+            Background_LoadFile((struct Foo0204af38*)((char*)obj + regionalOffset), data, (SafeAllocator*)((char*)base + 4), field44);
         }
     }
 }

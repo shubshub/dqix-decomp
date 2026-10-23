@@ -108,7 +108,7 @@ src/Combat/Overlay_6/func_ov006_02159564.cpp:
     complete
     .text start:0x02159564 end:0x021595b4
 
-src/Combat/Overlay_6/func_ov006_0215a33c.cpp:
+src/Combat/Overlay_6/Func_0215a33c.cpp:
     complete
     .text start:0x0215a33c end:0x0215a384
 

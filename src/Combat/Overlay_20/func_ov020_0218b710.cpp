@@ -47,87 +47,87 @@ struct Struct_0209c3b4_2;
 struct Struct_0203bdb0;
 struct Struct_ov020_0218b710_3;
 
-extern "C" void func_020c9820();
-extern "C" void func_020c39a0(short* arg0, int arg1);
-extern "C" int func_0201201c(void* arg0);
-extern "C" void func_02012010(void* arg0, int arg1);
-extern "C" unsigned char func_0200fb9c(char* arg0);
-extern "C" void func_0200fb94(char* arg0, unsigned char arg1);
-extern "C" void func_02012028(void* arg0, unsigned char arg1);
-extern "C" void func_020c38d4();
-extern "C" void func_ov020_0218d7ac(Struct_ov020_0218b710* arg0, int arg1, int arg2);
-extern "C" void func_ov020_0218d800(Struct_ov020_0218b710_2* arg0, int arg1, int arg2);
-extern "C" void func_020d86d0(int arg0, int arg1);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_0205cfd4(Struct_0205cfd4* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b12c(Struct_0204b12c* arg0, SafeAllocator* arg1);
-extern "C" void func_0204b5e8(Struct_02020cb8_5* arg0, int arg1, int arg2);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void* arg1);
-extern "C" void func_0204c7a8(Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
-extern "C" void func_0205cf78(Struct_0205cf78* arg0, Struct_0205cf78_2* arg1, unsigned char arg2);
-extern "C" char* func_020421a0();
-extern "C" int func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02042084(char* arg0, char* arg1, int arg2, int arg3);
-extern "C" void func_0205d228(Struct_0205d228* arg0);
-extern "C" void func_0205d274(Struct_0205d274* arg0);
-extern "C" void func_0205d2bc(Struct_0205d2bc* arg0);
-extern "C" void func_020bbcb4();
-extern "C" void func_02012efc();
+void DelayThenSyncBit0_020c9820();
+extern "C" void func_020c39a0(short* out, int value);
+int GetWord0x7f6c_0201201c(void* obj);
+void SetWord0x7f6c_02012010(void* obj, int value);
+unsigned char GetByte0x4_0200fb9c(char* obj);
+void SetByte0x4_0200fb94(char* obj, unsigned char value);
+void SetByte0x7f70_02012028(void* obj, unsigned char value);
+void RestoreDisplayMode_020c38d4();
+void UpdateFieldGroup4e8_0218d7ac(FieldGroup4e8_0218d7ac* obj, int target, int frames);
+void UpdateFieldGroup4f4_0218d800(FieldGroup4f4_0218d800* obj, int target, int frames);
+void WriteControlAndToggle020d86d0(int a, int b);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void InitStruct0205cfd4(InitTarget0205cfd4* obj);
+void Background_Init(List0204af64* list);
+void Background_SetMapSize(unsigned char* obj, int value);
+void Background_AllocateMap(AllocTarget0204b12c* obj, SafeAllocator* alloc);
+void Background_SetScroll(Obj0204b5e8* obj, int a, int b);
+int Pac_CountFiles(ActiveEntry02046900* entries);
+void* Pac_GetFile(Rec020467f0* recs, int index, void** outField, int* outSize);
+void Background_UploadMap(List0204b0e8* list, void* arg);
+void WindowPane_AllocateBuffer(Obj0204c7a8* obj, SafeAllocator* alloc, int buf, unsigned int size);
+void Window_SetPanes(Struct_0205cf78* obj, Elem_0205cf78* elems, unsigned char flag);
+char* GetGlobalField0x1c020421a0();
+int AppendXYTag_02041a90(char* text, int x, int y);
+int AppendString02042058(char* text, const char* str);
+int AppendDotLeaderLabel02042084(char* text, char* label, int width, int flags);
+void Window_DrawPanes(Cont0205d228* obj);
+void Window_FlushLayers(Cont0205d274* obj);
+void Window_TransferLayers(Obj0205d2bc* obj);
+void ProcessRingJobs020bbcb4();
+void InitCombatSubsystems02012efc();
 void LockStagedTextureVRAMCopying();
 extern "C" void func_020bb48c(unsigned int arg0, int arg1);
 extern "C" void func_020bb780(void* arg0, int arg1);
 void UpdateVRAMStagingVRAMBanks();
 void UnlockStagedTextureVRAMCopying();
-extern "C" void func_020440a4(void* arg0);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02045cac(Struct_02045cac* arg0);
-extern "C" void func_0205c790(char* arg0);
-extern "C" int func_020ab9c0(int arg0);
-extern "C" void func_0205cb74(char* arg0, int arg1);
-extern "C" void func_0204359c(void* arg0, int arg1);
-extern "C" void func_0205bcdc(Struct_0205bcdc* arg0, int arg1);
-extern "C" void func_0203bd24(char* arg0);
-extern "C" void func_0205e8ec(Struct_0205e8ec* arg0);
-extern "C" void func_0209c3b4(Struct_0209c3b4_2* arg0, int arg1);
-extern "C" void func_020c52e8();
-extern "C" void func_0203bd88(void* arg0);
-extern "C" void func_0203bdb0(Struct_0203bdb0* arg0);
-extern "C" void func_ov020_0218d8d8(Struct_ov020_0218b710_3* arg0);
+void TailForward020440a4(void* obj);
+void CopyInternalFields0207df50(Foo0207df50* obj);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void InitCombatSlots02045cac(CombatSlots02045cac* slots);
+void InitBigStruct0205c790(char* obj);
+int CheckSaveBufferStatus_020ab9c0(int flag);
+void ProcessCombatEntry0205cb74(char* obj, int entry);
+void Forward0204359c(void* obj, int value);
+void SetIndexIfValid0205bcdc(Struct_0205bcdc* obj, int index);
+void InitBattleContext0203bd24(char* ctx);
+void RefreshDisplayState0205e8ec(Obj_0205e8ec* obj);
+void SetStateAndDispatch0209c3b4(Actor0209c3b4* actor, int state);
+void ResetGxEngineState020c52e8();
+void CleanInvalidateOamBuffers0203bd88(void* oam);
+void SyncMainSubOam0203bdb0(Obj0203bdb0* obj);
+void ResetAllocatorAndDispatchState_0218d8d8(AllocGroup0218d8d8* obj);
 
 extern "C" int func_ov020_0218d898(void* arg0);
 extern "C" void func_ov020_0218d644(void* arg0);
 extern "C" void func_ov020_0218d854(void* arg0);
 extern "C" void func_ov020_0218c7bc(int, int, int, int, int);
-extern "C" void func_ov020_0218cd98(void* arg0);
-extern "C" void func_ov020_0218cf8c(void* arg0);
-extern "C" void func_ov020_0218d32c(void* arg0, int arg1);
-extern "C" void func_ov020_0218c98c(void* arg0);
-extern "C" void func_ov020_0218c7f0(char* arg0, int arg1, int arg2);
-extern "C" void func_ov020_0218c840(void* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, int arg3);
-extern "C" void func_0204bc74(void* arg0, unsigned short arg1, int arg2, int arg3, int arg4, int arg5, unsigned short arg6);
+extern "C" void func_ov020_0218cd98(void* obj);
+extern "C" void func_ov020_0218cf8c(void* obj);
+extern "C" void func_ov020_0218d32c(void* obj, int mode);
+extern "C" void func_ov020_0218c98c(void* obj);
+extern "C" void func_ov020_0218c7f0(char* obj, int a, int count);
+extern "C" void func_ov020_0218c840(void* obj);
+extern "C" void func_0204c684(void* obj);
+extern "C" void Background_SetPriority(void* obj, int a);
+extern "C" void Background_LoadFile(void* list, void* rec, SafeAllocator* alloc, int size);
+extern "C" void Background_FillRect(void* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
 #if defined(jpn)
 extern "C" void func_0205d304(void* arg0, char* arg1, int, int, int, int, int);
 #else
 extern "C" void func_0205d304(void* arg0, char* arg1, int, int, int, int, int, int);
 #endif
-extern "C" void func_0205d0e0(void* arg0, int arg1);
-extern "C" void func_0207de48(void* arg0, int arg1, int arg2);
-extern "C" void func_02042c68(char* arg0);
-extern "C" void func_02043124(char* arg0);
-extern "C" void func_020432c4(char* arg0);
-extern "C" void func_0205cc50(void* arg0, int arg1, int arg2);
+extern "C" void Window_Update(void* obj, int a);
+extern "C" void VramState_Reserve(void* obj, int a, int b);
+extern "C" void func_02042c68(char* g);
+extern "C" void func_02043124(char* g);
+extern "C" void func_020432c4(char* g);
+extern "C" void func_0205cc50(void* obj, int a, int b);
 #if defined(jpn)
 extern "C" void func_0205dfa8(void* arg0);
 #endif
@@ -288,48 +288,48 @@ extern "C" ARM void func_ov020_0218b710(Struct_ov020_0218b710_5* arg0) {
     func_020c39a0((short*)0x400006c, -16);
     func_020c39a0((short*)0x400106c, -16);
 
-    if (func_0200fb9c((char*)var0) != 6) {
-        arg0->unknown_470_.CreateTypeA(func_02012d88(&data_02114e20, 0x10000), 0x10000);
-        arg0->unknown_470_.Reset();
-        func_0205cfd4((Struct_0205cfd4*)arg0->unknown_2b4_);
-        func_0204af64((Struct_02020cb8*)arg0->unknown_370_);
-        func_0204c684(arg0->unknown_390_);
+    if (GetByte0x4_0200fb9c((char*)gs) != 6) {
+        self->alloc.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x10000), 0x10000);
+        self->alloc.Reset();
+        InitStruct0205cfd4((InitTarget0205cfd4*)self->textCont);
+        Background_Init((List0204af64*)self->list);
+        func_0204c684(self->tiles);
         MapVRAMBanksToMainBG(4);
         func_ov020_0218c7bc(0, 0, 1, 1, 0);
-        func_0204b11c((unsigned char*)arg0->unknown_370_, 0);
-        arg0->unknown_38c_.unknown_0_0_ = 0;
-        arg0->unknown_38c_.unknown_0_4_ = 1;
-        func_0204b5b4(arg0->unknown_370_, 0);
-        func_0204b12c((Struct_0204b12c*)arg0->unknown_370_, &arg0->unknown_470_);
-        func_0204b5e8((Struct_02020cb8_5*)arg0->unknown_370_, 0, 0);
+        Background_SetMapSize((unsigned char*)self->list, 0);
+        self->listFlags.low = 0;
+        self->listFlags.high = 1;
+        Background_SetPriority(self->list, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)self->list, &self->alloc);
+        Background_SetScroll((Obj0204b5e8*)self->list, 0, 0);
 
         int var2;
         BackgroundLoader* var3 = BackgroundLoader::GetInstance();
         var3->MaybeReset();
         var2 = var3->QueueLoadFile(data_ov020_0218dbdc, 0);
         for (;;) {
-            if (var3->GetTaskStatus(var2) != 0) {
-                void* var4;
-                void* var5;
-                unsigned int var6;
-                var3->GetLoadedFileByID(var2, &var5, &var6);
-                int var7 = func_02046900((Struct_02020cb8_4*)var5);
-                for (int var8 = 0; var8 < var7; var8++) {
-                    int var9;
-                    void* var10 = func_020467f0((Struct_02020aec*)var5, var8, &var4, &var9);
-                    if (var10 != 0) {
-                        func_0204b174(arg0->unknown_370_, var10, &arg0->unknown_470_, var9);
+            if (loader->GetTaskStatus(task) != 0) {
+                void* recField;
+                void* file;
+                unsigned int fileLen;
+                loader->GetLoadedFileByID(task, &file, &fileLen);
+                int count = Pac_CountFiles((ActiveEntry02046900*)file);
+                for (int i = 0; i < count; i++) {
+                    int recSize;
+                    void* rec = Pac_GetFile((Rec020467f0*)file, i, &recField, &recSize);
+                    if (rec != 0) {
+                        Background_LoadFile(self->list, rec, &self->alloc, recSize);
                     }
                 }
-                var3->RemoveTask(var2);
-                func_0204bc74(arg0->unknown_370_, 0, 0, 0, 0x20, 0x19, 0);
-                func_0204b0e8((Struct_02020cb8_2*)arg0->unknown_370_, 0);
-                arg0->unknown_498_ = arg0->unknown_470_.Allocate(0x8000);
-                func_0204c7a8((Struct_0204c7a8*)arg0->unknown_390_, &arg0->unknown_470_, (int)arg0->unknown_498_, 0x800);
-                arg0->unknown_394_ = arg0->unknown_370_;
-                arg0->unknown_34c_ = arg0->unknown_370_;
-                arg0->unknown_366_ = 1;
-                func_0205cf78((Struct_0205cf78*)arg0->unknown_2b4_, (Struct_0205cf78_2*)arg0->unknown_390_, 1);
+                loader->RemoveTask(task);
+                Background_FillRect(self->list, 0, 0, 0, 0x20, 0x19, 0);
+                Background_UploadMap((List0204b0e8*)self->list, 0);
+                self->buf498 = self->alloc.Allocate(0x8000);
+                WindowPane_AllocateBuffer((Obj0204c7a8*)self->tiles, &self->alloc, (int)self->buf498, 0x800);
+                self->list394 = self->list;
+                self->list34c = self->list;
+                self->b366 = 1;
+                Window_SetPanes((Struct_0205cf78*)self->textCont, (Elem_0205cf78*)self->tiles, 1);
                 break;
             }
             var3->RemoveAllLocks();
@@ -397,18 +397,18 @@ extern "C" ARM void func_ov020_0218b710(Struct_ov020_0218b710_5* arg0) {
 #else
         func_0205d304(arg0->unknown_2b4_, var11, 0, 0, 0, 1, 0, 0);
 #endif
-        func_0205d0e0(arg0->unknown_2b4_, 1);
-        func_0205d0e0(arg0->unknown_2b4_, 1);
-        func_0205d228((Struct_0205d228*)arg0->unknown_2b4_);
-        func_0205d274((Struct_0205d274*)arg0->unknown_2b4_);
-        func_0205d2bc((Struct_0205d2bc*)arg0->unknown_2b4_);
-        func_020d86d0(0, 1);
-        func_020c9820();
-        func_020c38d4();
-        volatile unsigned int* var13 = (volatile unsigned int*)0x4000000;
-        *var13 = (*var13 & ~0x1f00) | 0x200;
-        func_020bbcb4();
-        func_020d86d0(0, 1);
+        Window_Update(self->textCont, 1);
+        Window_Update(self->textCont, 1);
+        Window_DrawPanes((Cont0205d228*)self->textCont);
+        Window_FlushLayers((Cont0205d274*)self->textCont);
+        Window_TransferLayers((Obj0205d2bc*)self->textCont);
+        WriteControlAndToggle020d86d0(0, 1);
+        DelayThenSyncBit0_020c9820();
+        RestoreDisplayMode_020c38d4();
+        volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+        *dispcnt = (*dispcnt & ~0x1f00) | 0x200;
+        ProcessRingJobs020bbcb4();
+        WriteControlAndToggle020d86d0(0, 1);
 
         while (arg0->unknown_0_ != -1) {
             func_02012efc();
@@ -449,23 +449,23 @@ extern "C" ARM void func_ov020_0218b710(Struct_ov020_0218b710_5* arg0) {
     UpdateVRAMStagingVRAMBanks();
     UnlockStagedTextureVRAMCopying();
 
-    arg0->unknown_470_.CreateTypeA(func_02012d88(&data_02114e20, 0x10000), 0x10000);
-    func_0207de48(arg0->unknown_244_, 0x4000, 0x400);
-    char* var17 = func_020421a0();
-    func_02042c68(var17);
-    func_02043124(var17);
-    func_020440a4(var17);
+    self->alloc.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x10000), 0x10000);
+    VramState_Reserve(self->pairTables, 0x4000, 0x400);
+    char* g = GetGlobalField0x1c020421a0();
+    func_02042c68(g);
+    func_02043124(g);
+    TailForward020440a4(g);
 #if defined(jpn)
     *(char**)(var17 + 0x1c4c) = arg0->unknown_244_;
 #else
     *(char**)(var17 + 0x1e28) = arg0->unknown_244_;
 #endif
-    func_0207df50((Struct_0203d028*)arg0->unknown_244_);
-    func_0207df90(arg0->unknown_244_);
-    func_020432c4(var17);
-    func_0207dfac(arg0->unknown_244_);
-    arg0->unknown_0_ = 100;
-    arg0->unknown_4_ = -1;
+    CopyInternalFields0207df50((Foo0207df50*)self->pairTables);
+    VramState_Restore(self->pairTables);
+    func_020432c4(g);
+    VramState_Save(self->pairTables);
+    self->state = 100;
+    self->frame = -1;
 
     if (func_0200fb9c((char*)var0) == 6) {
         if (func_0201201c(var0) == 0) {

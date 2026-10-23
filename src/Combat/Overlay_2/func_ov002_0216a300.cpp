@@ -31,7 +31,7 @@ void SePlayer_Play(struct SePlayer *o, int a, int b);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 char *GetField4Ptr020e1b24(void *p);
 void ResetAndReposition020e280c(struct Obj020e280c *self, void *b);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 char *GetFieldIfFlag4_020100f8(char *obj);
 int GetIntAt0x23c(struct IntField0x23c_020a27c4 *obj);
 int GetField0x15UnlessInactive_020e2918(signed char *param);
@@ -131,15 +131,15 @@ extern "C" ARM void func_ov002_0216a300(char *base) {
         } else {
             func_020e280c(*(struct Struct_020e280c **) (arg0 + 4), (void *) -1);
         }
-        *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) += 1;
-    } else if (var1 == 1) {
-        func_0205def8((struct Struct_0205def8 *) LST(arg0), 0, K(0x25, 0x28));
-        *(unsigned int *) (arg0 + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
-        *(short *) (arg0 + RG(0x1c00 + 0x12, 0x1a00 + 0xda)) =
-            func_0205d794((struct Struct_0205c570 *) LST(arg0));
-        int var3  = 0;
-        char *var4 = func_020100f8((char *) GameState::GetInstance());
-        if (var4 != NULL && ((*(unsigned char *) (var4 + 0x244) & 2) || func_020a27c4((struct Struct_020676e0 *) var4) == 0)) {
+        *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) += 1;
+    } else if (state == 1) {
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) LST(base), 0, K(0x25, 0x28));
+        *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
+        *(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda)) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) LST(base));
+        int ok  = 0;
+        char *f = GetFieldIfFlag4_020100f8((char *) GameState::GetInstance());
+        if (f != NULL && ((*(unsigned char *) (f + 0x244) & 2) || GetIntAt0x23c((struct IntField0x23c_020a27c4 *) f) == 0)) {
             if (g_keyManager.TestKeysPressed(0x200)) {
                 var3 = 1;
             } else {

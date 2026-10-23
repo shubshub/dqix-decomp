@@ -8,29 +8,77 @@ src/Combat/Overlay_9/CharacterCreationUI_ResetTargetLayout_021847c4.cpp:
     complete
     .text start:0x02185828 end:0x02185850
 
-src/Combat/Overlay_9/func_ov009_02184a18.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Update_02184a18.cpp:
     .text start:0x02185aac end:0x02185c58
 
-src/Combat/Overlay_9/func_ov009_02184848.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Destroy_02184848.cpp:
     .text start:0x021858e4 end:0x02185aac
 
 src/Combat/Overlay_9/CharacterCreationUI_HandleNewGameFinish_02187b34.cpp:
     complete
     .text start:0x021888f0 end:0x0218918c
 
+src/Combat/Overlay_9/CharacterCreationUI_bareBodyColors_0218a9b4.c:
+    complete
+    .rodata start:0x0218b988 end:0x0218b990
+
+src/Combat/Overlay_9/CharacterCreationUI_styleOrder_0218a9bc.c:
+    complete
+    .rodata start:0x0218b998 end:0x0218b9a4
+
+src/Combat/Overlay_9/CharacterCreationUI_faceTabCamera_0218a9c8.c:
+    complete
+    .rodata start:0x0218b9a4 end:0x0218b9bc
+
+src/Combat/Overlay_9/CharacterCreationUI_faceTabExitCamera_0218a9e0.c:
+    complete
+    .rodata start:0x0218b9bc end:0x0218b9d4
+
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabCamera_0218a9f8.c:
+    complete
+    .rodata start:0x0218b9d4 end:0x0218b9ec
+
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabExitCamera_0218aa10.c:
+    complete
+    .rodata start:0x0218b9ec end:0x0218ba04
+
+src/Combat/Overlay_9/CharacterCreationUI_finishCamera_0218aa28.c:
+    complete
+    .rodata start:0x0218ba04 end:0x0218ba1c
+
+src/Combat/Overlay_9/CharacterCreationUI_defaultAppearance_0218aa40.c:
+    complete
+    .rodata start:0x0218ba1c end:0x0218ba30
+
+src/Combat/Overlay_9/CharacterCreationUI_finishModelFiles_0218aa98.c:
+    complete
+    .rodata start:0x0218ba4c end:0x0218ba7c
+
+src/Combat/Overlay_9/CharacterCreationUI_equipmentFromAppearance_0218aac8.c:
+    complete
+    .rodata start:0x0218ba7c end:0x0218bab0
+
+src/Combat/Overlay_9/CharacterCreationUI_itemIds_0218ab48.c:
+    complete
+    .rodata start:0x0218bab0 end:0x0218bb04
+
+src/Combat/Overlay_9/CharacterCreationUI_tabHandlers_0218ab9c.c:
+    complete
+    .rodata start:0x0218bb04 end:0x0218bb6c
+
 src/Combat/Overlay_9/CharacterCreationUI_LoadSlotLayout_02188d9c.cpp:
     .text start:0x02189c60 end:0x02189d30
     .rodata start:0x0218bb6c end:0x0218bc00
 
-src/Combat/Overlay_9/func_ov009_0218454c.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Init_0218454c.cpp:
     complete
     .text start:0x021855a8 end:0x02185828
 
-src/Combat/Overlay_9/func_ov009_0218a930.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateWaitTimer_0218a930.cpp:
     complete
     .text start:0x0218b908 end:0x0218b934
 
-src/Combat/Overlay_9/func_ov009_02184bbc.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Draw2D_02184bbc.cpp:
     complete
     .text start:0x02185ee8 end:0x02185f5c
 
@@ -38,15 +86,15 @@ src/Combat/Overlay_9/CharacterCreationUI_SwitchTab_021855dc.cpp:
     complete
     .text start:0x021867bc end:0x02186814
 
-src/Combat/Overlay_9/func_ov009_021847ec.cpp:
+src/Combat/Overlay_9/NameFilter_Reset_021847ec.cpp:
     complete
     .text start:0x02185850 end:0x02185888
 
-src/Combat/Overlay_9/func_ov009_02188454.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_SwapCharacters_02188454.cpp:
     complete
     .text start:0x02189214 end:0x02189378
 
-src/Combat/Overlay_9/func_ov009_02188604.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateRotation_02188604.cpp:
     complete
     .text start:0x021893c4 end:0x02189704
 
@@ -61,22 +109,22 @@ src/Combat/Overlay_9/CharacterCreationUI_SlotToStyleIndex_02188b14.cpp:
     .text start:0x021898cc end:0x021899b0
 
 
-src/Combat/Overlay_9/func_ov009_02184c30.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Draw3D_02184c30.cpp:
     complete
     .text start:0x02185f5c end:0x02185fd0
 
 
-src/Combat/Overlay_9/func_ov009_02184d70.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_LoadTabGraphics_02184d70.cpp:
     complete
     .text start:0x02186098 end:0x02186158
 
 
-src/Combat/Overlay_9/func_ov009_021885b8.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_LoadNextCharacter_021885b8.cpp:
     complete
     .text start:0x02189378 end:0x021893c4
 
 
-src/Combat/Overlay_9/func_ov009_02184ca4.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateVBlank_02184ca4.cpp:
     complete
     .text start:0x02185fd0 end:0x02186098
 
@@ -116,12 +164,12 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleHairColor_021869d8.cpp:
     .text start:0x02187b04 end:0x02187c18
 
 
-src/Combat/Overlay_9/CharacterCreationUI_HandleEyeColor_02186aec.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleSkinColor_02186aec.cpp:
     complete
     .text start:0x02187c18 end:0x02187d2c
 
 
-src/Combat/Overlay_9/CharacterCreationUI_HandleSkinColor_02186c00.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleEyeColor_02186c00.cpp:
     complete
     .text start:0x02187d2c end:0x02187f2c
 
@@ -135,7 +183,7 @@ src/Combat/Overlay_9/CharacterCreationUI_MoveCursorToSlot_02188e70.cpp:
     complete
     .text start:0x02189d30 end:0x02189e04
 
-src/Combat/Overlay_9/func_ov009_021842a0.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Allocate_021842a0.cpp:
     complete
     .text start:0x021853a0 end:0x021855a8
 
@@ -147,11 +195,11 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleInput_02188ee8.cpp:
     complete
     .text start:0x02189e04 end:0x0218a8b4
 
-src/Combat/Overlay_9/ApplyNameKeyboardChoice_0218aab0.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_PressNameKey_0218aab0.cpp:
     complete
     .text start:0x0218aab0 end:0x0218ad0c
 
-src/Combat/Overlay_9/func_ov009_0218b850.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_PickRandomName_0218b850.cpp:
     complete
     .text start:0x0218b850 end:0x0218b908
 
@@ -163,7 +211,7 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleSetup_02185634.cpp:
     complete
     .text start:0x02186814 end:0x02187500
 
-src/Combat/Overlay_9/func_ov009_02184e58.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_ApplyTabGraphics_02184e58.cpp:
     complete
     .text start:0x02186158 end:0x021867bc
 

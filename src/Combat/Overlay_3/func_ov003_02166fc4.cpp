@@ -11,41 +11,41 @@ struct Struct_ov003_02166fc4_2 {
  char unknown_32c_[Enum_ov003_02166fc4_1124-Enum_ov003_02166fc4_804-8]; unsigned int unknown_464_;
  char unknown_468_[Enum_ov003_02166fc4_1213-Enum_ov003_02166fc4_1124-4]; unsigned char unknown_4bd_;
 };
-struct Struct_0204b010;
-extern "C" void func_0204b010(Struct_0204b010*, void*);
-extern "C" void func_0204bc74(void*,int,int,int,int,int,int);
-struct Struct_0204b8d0;
-extern "C" void func_0204b8d0(Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_0204b04c(void*,int);
+struct Obj0204b010;
+void Background_ClearMap(Obj0204b010*, void*);
+extern "C" void Background_FillRect(void*,int,int,int,int,int,int);
+struct Obj0204b8d0;
+void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_FlushMap(void*,int);
 // USA: func_ov003_02166fc4
-extern "C" ARM void func_ov003_02166fc4(Struct_ov003_02166fc4_2* arg0) {
- Struct_ov003_02166fc4* var0=arg0->unknown_328_;
- if((arg0->unknown_464_&0x80000) || (arg0->unknown_464_&0x100000) || (arg0->unknown_464_&0x200000) || (arg0->unknown_464_&0x800000)) {
-  func_0204b010((Struct_0204b010*)var0->unknown_40_, 0);
-  if(arg0->unknown_464_&0x80000) {
-   func_0204bc74(var0->unknown_40_,0,0,0,32,25,0);
-   arg0->unknown_464_|=0x40000;arg0->unknown_464_&=~0x80000;
+extern "C" ARM void func_ov003_02166fc4(Menu02166fc4* self) {
+ MenuBackground02166fc4* bg=self->background;
+ if((self->flags&0x80000) || (self->flags&0x100000) || (self->flags&0x200000) || (self->flags&0x800000)) {
+  Background_ClearMap((Obj0204b010*)bg->buffer, 0);
+  if(self->flags&0x80000) {
+   Background_FillRect(bg->buffer,0,0,0,32,25,0);
+   self->flags|=0x40000;self->flags&=~0x80000;
   }
-  if(arg0->unknown_464_&0x100000) {
-   func_0204b8d0((Struct_0204b8d0*)var0->unknown_40_, 0, 0, 0, 0, 0, 32, 12, 0xffff);
-   arg0->unknown_464_|=0x40000;arg0->unknown_464_&=~0x100000;
+  if(self->flags&0x100000) {
+   Background_DrawScreen((Obj0204b8d0*)bg->buffer, 0, 0, 0, 0, 0, 32, 12, 0xffff);
+   self->flags|=0x40000;self->flags&=~0x100000;
   }
-  if(arg0->unknown_464_&0x200000) {
-   func_0204b8d0((Struct_0204b8d0*)var0->unknown_40_, 1, 0, 0, 11, 0, Enum_ov003_02166fc4_21, 2, 0xffff);
-   arg0->unknown_464_|=0x40000;arg0->unknown_464_&=~0x200000;
+  if(self->flags&0x200000) {
+   Background_DrawScreen((Obj0204b8d0*)bg->buffer, 1, 0, 0, 11, 0, kWidth, 2, 0xffff);
+   self->flags|=0x40000;self->flags&=~0x200000;
   }
-  if(arg0->unknown_464_&0x400000) {
-   short var1=arg0->unknown_324_->inline_ov003_02166fc4();
-   short var2=var1-arg0->unknown_4bd_;
-   short var3=(var2%4)*2+2;
-   func_0204b8d0((Struct_0204b8d0*)var0->unknown_40_, 2, 0, 0, 2, var3, 28, 2, 0xffff);
-   arg0->unknown_464_|=0x40000;arg0->unknown_464_&=~0x400000;
+  if(self->flags&0x400000) {
+   short selected=self->model->GetSelected();
+   short delta=selected-self->first;
+   short y=(delta%4)*2+2;
+   Background_DrawScreen((Obj0204b8d0*)bg->buffer, 2, 0, 0, 2, y, 28, 2, 0xffff);
+   self->flags|=0x40000;self->flags&=~0x400000;
   }
-  if(arg0->unknown_464_&0x800000) {
-   func_0204b8d0((Struct_0204b8d0*)var0->unknown_40_, 3, 0, 0, 3, 10, 1, 2, 0xffff);
-   func_0204b8d0((Struct_0204b8d0*)var0->unknown_40_, 4, 0, 0, 28, 10, 1, 2, 0xffff);
-   arg0->unknown_464_|=0x40000;arg0->unknown_464_&=~0x800000;
+  if(self->flags&0x800000) {
+   Background_DrawScreen((Obj0204b8d0*)bg->buffer, 3, 0, 0, 3, 10, 1, 2, 0xffff);
+   Background_DrawScreen((Obj0204b8d0*)bg->buffer, 4, 0, 0, 28, 10, 1, 2, 0xffff);
+   self->flags|=0x40000;self->flags&=~0x800000;
   }
-  if(arg0->unknown_464_&0x40000) func_0204b04c(var0->unknown_40_,0);
+  if(self->flags&0x40000) Background_FlushMap(bg->buffer,0);
  }
 }

@@ -7,13 +7,13 @@
 #define data_ov023_021fd68a data_ov023_021fc952
 #endif
 
-struct Struct_ov023_021e540c_2 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
-    unsigned char unknown_15_4_ : 4;
+struct Appearance021e540c {
+    short models[10];
+    unsigned char female : 1;
+    unsigned char skinColor : 3;
+    unsigned char eyeColor : 4;
+    unsigned char hairColor : 4;
+    unsigned char unused : 4;
 };
 
 struct Struct_ov023_021e540c_3 {
@@ -45,12 +45,12 @@ struct Struct_ov023_021e540c_5 {
     Struct_ov023_021e540c_3* unknown_c18_;
 };
 
-struct Struct_ov023_021e540c {
-    unsigned short unknown_0_[10][2];
-    unsigned short unknown_28_[8][2];
-    unsigned short unknown_48_[8][4];
-    unsigned short unknown_88_[8][8];
-    unsigned short unknown_108_[16][2];
+struct PaletteTable021e540c {
+    unsigned short hair[10][2];
+    unsigned short skin2[8][2];
+    unsigned short skin4[8][4];
+    unsigned short skin8[8][8];
+    unsigned short eyes[16][2];
 };
 
 extern "C" unsigned short (*func_02099cac())[2];
@@ -63,47 +63,47 @@ extern short data_ov023_021fd68a[];
 extern "C" ARM void CharacterModel_ApplyColors(Character021e540c* self) {
     Appearance021e540c* appearance = &self->member->appearance;
     PaletteTable021e540c* colors = (PaletteTable021e540c*)GetVariantShortTable02109928_02099cac();
-    unsigned int eye = appearance->eyeColor;
     unsigned int skin = appearance->skinColor;
+    unsigned int eye = appearance->eyeColor;
     unsigned int paletteOffset = self->vramStates[2].palette << 3;
     StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->hair[appearance->hairColor], paletteOffset + 0x24, 4, false, true);
-    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->skin[skin], paletteOffset + 0x28, 4, false, true);
-    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->eyes8[eye], paletteOffset + 0x30, 0x10, false, true);
+    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->eyes[eye], paletteOffset + 0x28, 4, false, true);
+    StageMemoryToVRAM(VRAMSubregion_TexturePalette, colors->skin8[skin], paletteOffset + 0x30, 0x10, false, true);
 
-    short var5[10];
-    func_ov023_021e5fdc((void*)arg0->unknown_c15_, var5, var0->unknown_0_);
-    int var6 = 0;
-    int var7;
-    for (; (var7 = data_ov023_021fd68a[var6]) >= 0; var6++) {
-        Struct_0201099c_10* var8 = arg0->unknown_c0c_;
-        int var9 = var5[var7];
-        int var10 = var0->unknown_14_0_;
-        if (var8 != NULL) {
-          Struct_ov023_021e540c_4* var11 = &arg0->unknown_794_[var7];
-          if (var11 != NULL) {
-            Struct_0201099c_9* var12 = func_020dedd0(var8, (short)var9);
-            if (var12 != NULL && var12->unknown_0_ != NULL) {
-                int var13 = func_020de2a4((Struct_020730e0_2*)var12, 0, var10);
-                if (var13 != 0) {
-                    var13 *= 2;
-                    Model3D* var14 = arg0->unknown_0_[var7].pModel_;
-                    if (var14 != NULL) {
-                        NSBXXTex* var15 = var14->GetTEX0();
-                        if (var15 != NULL) {
-                            int var16 = 0x30;
-                            unsigned short var17 = var15->block4NumEightBytes_ << 3;
-                            var17 = (var17 + 0x1f) & ~0x1f;
-                            int var18 = 0x20;
-                            if (var7 == 0) var18 = 0x200;
-                            var16 -= var17 - var18;
-                            Struct_ov023_021e540c* var19 = (Struct_ov023_021e540c*)func_02099cac();
-                            if (var19 != NULL) {
-                                const void* var20 = NULL;
-                                unsigned int var21 = var13 * 2;
-                                switch (var13) {
-                                case 2: var20 = var19->unknown_28_[var2]; break;
-                                case 4: var20 = var19->unknown_48_[var2]; break;
-                                case 8: var20 = var19->unknown_88_[var2]; break;
+    short models[10];
+    CopyAndClampShorts_021e5fdc((void*)self->vocation, models, appearance->models);
+    int i = 0;
+    int part;
+    for (; (part = data_ov023_021fd68a[i]) >= 0; i++) {
+        Container020dedd0* names = self->names;
+        int modelID = models[part];
+        int female = appearance->female;
+        if (names != NULL) {
+          VRAMState021e540c* state = &self->vramStates[part];
+          if (state != NULL) {
+            Element020de650* entry = FindElementByKey020dedd0(names, (short)modelID);
+            if (entry != NULL && entry->model != NULL) {
+                int count = GetNibbleField020de2a4((Obj020de2a4*)entry, 0, female);
+                if (count != 0) {
+                    count *= 2;
+                    Model3D* model = self->parts[part].pModel_;
+                    if (model != NULL) {
+                        NSBXXTex* texture = model->GetTEX0();
+                        if (texture != NULL) {
+                            int offset = 0x30;
+                            unsigned short size = texture->block4NumEightBytes_ << 3;
+                            size = (size + 0x1f) & ~0x1f;
+                            int reserved = 0x20;
+                            if (part == 0) reserved = 0x200;
+                            offset -= size - reserved;
+                            PaletteTable021e540c* table = (PaletteTable021e540c*)GetVariantShortTable02109928_02099cac();
+                            if (table != NULL) {
+                                const void* data = NULL;
+                                unsigned int bytes = count * 2;
+                                switch (count) {
+                                case 2: data = table->skin2[skin]; break;
+                                case 4: data = table->skin4[skin]; break;
+                                case 8: data = table->skin8[skin]; break;
                                 }
                                 if (var20 != NULL) {
                                     unsigned int var22 = arg0->unknown_794_[var7].unknown_68_0_ << 3;

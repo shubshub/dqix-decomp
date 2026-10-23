@@ -3,14 +3,14 @@
 struct Struct_0205c508;
 extern "C" void func_0205c508(struct Struct_0205c508* arg0, int* arg1, int* arg2);
 
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_ov000_02171674(void* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+int GetBoundedField156_02171674(void* obj, int index);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
 
 struct Struct_ov000_02178f28 {
     char unknown_0_[0x20];
@@ -28,13 +28,13 @@ extern "C" ARM void func_ov000_02178f28(char* arg0, struct Struct_ov000_02178f28
         if (func_ov000_0217542c(arg0)) {
             func_02041c08(arg2, var4 - var2, 8, 5, 5, 5);
         }
-        func_02041ea4(arg2, var4 - var2);
-        for (signed char var5 = var2; var5 < var3; var5++) {
-            const char** var6 = (const char**)func_ov000_02171674(arg1, var5);
-            if (var6 == NULL) continue;
-            func_02041b70(arg2, var5 - var2, *var6);
-            if (var5 == var3 - 1) continue;
-            func_02042058(arg2, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0));
+        AppendCursorTag_02041ea4(dst, cursor - first);
+        for (signed char i = first; i < last; i++) {
+            const char** name = (const char**)GetBoundedField156_02171674(entry, i);
+            if (name == NULL) continue;
+            AppendNameTag_02041b70(dst, i - first, *name);
+            if (i == last - 1) continue;
+            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
         }
     }
 }

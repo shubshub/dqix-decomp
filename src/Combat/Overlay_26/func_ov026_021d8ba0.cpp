@@ -134,29 +134,29 @@ extern "C" int func_020e3ad0(Struct_020e385c*, int, int);
 extern "C" unsigned char* func_020e385c(Struct_020e385c*, int, int);
 extern "C" void func_020e3994(Struct_020e385c*, int, int);
 void SetBrightness(GameResources*, int, int);
-extern "C" int func_02046b08(void**);
-extern "C" void func_ov000_02174514(void*);
-extern "C" void func_02088e64(unsigned char*);
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" int func_02046708(Struct_02012de8*, unsigned int);
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
-extern "C" int func_020e37e8(unsigned char*);
-extern "C" void func_020e3798(unsigned char*);
-extern "C" void func_020e36f0(unsigned char*);
-extern "C" int func_ov000_0217fb98(void*);
-extern "C" void func_ov000_02162c90(char*, int, int);
-extern "C" int func_0202c1c0(Struct_0202b2f0*, int);
-extern "C" int func_ov000_02168720(char*);
-extern "C" void func_ov000_021813d4(void*);
-extern "C" void func_0205eb54(void*, int, int);
-extern "C" void func_0205eb90(void*, int, int);
-extern "C" void func_ov017_021cefe0(unsigned short, unsigned char, unsigned char);
-extern "C" void func_ov017_021cf650(unsigned short, int, int);
-extern "C" int func_0205e488(void*);
-extern "C" void func_02053dd0(Struct_02053dd0*);
-extern "C" void func_ov000_021637c8(void*);
+int IsField0Null_02046b08(void**);
+void UpdateFieldIfDiffers_02174514_02174514(void*);
+void ClearFlag0x1000AndBytes7eA1_02088e64(unsigned char*);
+void* KeyTable_Get(Container020e0310*, int);
+void SetIndexedName02046574(Obj02046574*, int, char*);
+int TestFlags02046708(FlagWord02046708*, unsigned int);
+void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
+void ClearFlags020466f4(FlagWord020466f4*, unsigned int);
+int GetByte2IfGlobalFlagSet_020e37e8(unsigned char*);
+void ClearBitOrNotifyOverlay020e3798(unsigned char*);
+void SetBitOrNotifyOverlay020e36f0(unsigned char*);
+int CountUnder100Flags0217fb98(void*);
+void SetBoundedArrayField0x4f4_ov000_02162c90(char*, int, int);
+int TestBitBySignedByteIndex_0202c1c0(SearchStruct*, int);
+int GetByteField_02168720_02168720(char*);
+void ClearSlotBitndSetByte_021813d4(void*);
+void SetForwardAndStore0205eb54(void*, int, int);
+void DispatchIfField0xc4NonNeg_0205eb90(void*, int, int);
+void EnqueueEventTag108_021cefe0(unsigned short, unsigned char, unsigned char);
+void EnqueueEventTag109_021cf650(unsigned short, int, int);
+int CheckSlotsAllFree0205e488(void*);
+void IncrementCounterUnlessFlagged_02053dd0(IncObj*);
+void ResetTwoFields021637c8(void*);
 
 extern "C" {
 int* func_0202ae18();
@@ -883,19 +883,19 @@ state1:
             var91 = 0;
         }
     checked:
-        if (var91) {
-            Struct_ov023_021f4c04* var99 = func_020421a0();
-            Struct_0201099c_3* var100 = arg0->inline_ov026_021d8ba0();
-            GameObject* var101 = func_0200fea4(var17, var28);
-            void* var102 = func_020e0434(var100, 0x28);
-            if (var102 != 0 && var101 != 0) {
-                func_02046380(var99);
-                func_02046574((Struct_02046574_2*)var99, 0, (char*)var101 + 0x14c);
-                func_020e4ce8(var4, (char*)var101, 1);
-                var99->unknown_20_ = var4;
-                func_0204500c(var99, var102, 0, 0xe3);
-                var99->unknown_998_ = 1;
-                arg0->unknown_eac_ = 0xf;
+        if (revived) {
+            MessageWork* msg = GetGlobalField0x1c020421a0();
+            Container020e0310* box = self->GetMsgBox();
+            GameObject* c = GetCombatantWithFlag0x400_0200fea4(gs, target);
+            void* text = KeyTable_Get(box, 0x28);
+            if (text != 0 && c != 0) {
+                func_02046380(msg);
+                SetIndexedName02046574((Obj02046574*)msg, 0, (char*)c + 0x14c);
+                func_020e4ce8(name, (char*)c, 1);
+                msg->namePtr = name;
+                func_0204500c(msg, text, 0, 0xe3);
+                msg->busy = 1;
+                self->state = 0xf;
                 return;
             }
         }

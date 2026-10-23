@@ -6,8 +6,8 @@
 
 extern char data_02107800;
 
-extern "C" void func_0204af64(struct Struct_02020cb8*);
-extern "C" void func_0204b174(void* arg0, void* arg1, void* arg2, int arg3);
+void Background_Init(struct List0204af64*);
+extern "C" void Background_LoadFile(void* list, void* rec, void* alloc, int size);
 extern "C" unsigned int GetMainBG1ScreenBase(void);
 extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, int d);
 
@@ -38,11 +38,11 @@ extern "C" ARM void func_02044d0c(void) {
 #endif
     char* var3 = *(char**)((char*)GetGameResources() + 0x2c);
 
-    struct Struct_02020cb8 var4;
-    func_0204af64(&var4);
-    var4.unknown_1c_0_ = 0;
-    var4.unknown_1c_4_ = 3;
-    func_0204b174(&var4, var3, 0, 0);
+    struct List0204af64 local;
+    Background_Init(&local);
+    local.b1c_lo = 0;
+    local.b1c_hi = 3;
+    Background_LoadFile(&local, rec, 0, 0);
 
     if (var2 != 0) {
         unsigned char var5;

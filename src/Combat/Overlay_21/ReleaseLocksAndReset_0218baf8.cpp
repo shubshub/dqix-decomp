@@ -6,7 +6,7 @@
 #include <globaldefs.h>
 #include "Filesystem/BackgroundLoader.h"
 
-extern "C" int func_ov009_02184a18(int handle);
+extern "C" int CharacterCreationUI_Update(int handle);
 void ResetXYField0203aa08(void* p);
 extern "C" void func_020bbd9c(void);
 extern int g_sePlayer;
@@ -21,7 +21,7 @@ struct Obj0218baf8 {
 // USA: func_ov021_0218baf8
 ARM void ReleaseLocksAndReset_0218baf8(struct Obj0218baf8* obj) {
     BackgroundLoader::GetInstance()->RemoveAllLocks();
-    if (func_ov009_02184a18(obj->field40) != 0) {
+    if (CharacterCreationUI_Update(obj->field40) != 0) {
         obj->fieldb8 = 1;
     }
     ResetXYField0203aa08(&g_sePlayer);

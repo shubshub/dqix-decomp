@@ -40,7 +40,7 @@ struct Struct_0205d81c;
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
 
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
-extern "C" int func_0205d0e0(void* p, int val);
+extern "C" int Window_Update(void* p, int val);
 extern "C" void func_ov013_02186bd4(void* obj);
 extern "C" void func_ov013_02184d80(void* obj);
 extern "C" void func_ov013_02186160(void* obj);
@@ -70,7 +70,7 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
         }
     }
 
-    *(int*)(o + R(0x5d4,0x648)) = func_0205d0e0(o + R(0x34,0x38), *(int*)(o + R(0x5d0,0x644)));
+    *(int*)(o + R(0x5d4,0x648)) = Window_Update(o + R(0x34,0x38), *(int*)(o + R(0x5d0,0x644)));
     SetupAndDispatch0205c904(o + R(0x3d0,0x3d4), *(int*)(o + R(0x5d0,0x644)));
 
     {

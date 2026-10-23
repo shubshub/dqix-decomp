@@ -3,16 +3,16 @@
 
 struct Struct_0201099c_3;
 
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_02041dd0(char* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02041e70(char* arg0, int arg1);
-extern "C" int func_02041a28(char* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_ov000_02170c7c(void* arg0);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+int FormatCombatLogSuffix02041dd0(char* dst, int kind);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int AppendPaletteTag_02041e70(char* dst, int palette);
+int AppendXTag_02041a28(char* dst, int x);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+extern "C" int func_ov000_02170c7c(void* entry);
 
 struct Struct_ov000_02178648 {
     char unknown_0_[0x3c];
@@ -50,19 +50,19 @@ extern "C" ARM void func_ov000_02178648(char* arg0, char* arg1) {
     }
     func_02041ea4(arg1, var0);
 
-    var2 = *(unsigned char*)(arg0 + 0x79);
-    for (unsigned char var4 = 0; var4 < var2; var4++) {
-        struct Struct_ov000_02178648_2* var5 = &((struct Struct_ov000_02178648_2*)(arg0 + 0x958))[*(signed char*)(arg0 + var4 + 0x70)];
-        GameObject* var6 = var3->GetPartyMemberByIndex((signed char)var5->unknown_4c_);
-        if (var6 != NULL) {
-            func_02041dd0(arg1, func_ov000_02170c7c(var5));
-            func_02041b70(arg1, var1, (const char*)var6->baseStats_);
-            func_02041e70(arg1, 0xf);
-            func_02041a28(arg1, 0x46);
-            struct Struct_ov000_02178648* var7 = (struct Struct_ov000_02178648*)var6->baseStats_;
-            func_02042058(arg1, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), (short)((unsigned short)var7->unknown_3f_6_ + 0x7551)));
-            if (var4 != var2 - 1) {
-                func_02042058(arg1, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0));
+    count = *(unsigned char*)(obj + 0x79);
+    for (unsigned char i = 0; i < count; i++) {
+        struct Entry02178648* entry = &((struct Entry02178648*)(obj + 0x958))[*(signed char*)(obj + i + 0x70)];
+        GameObject* member = gs->GetPartyMemberByIndex((signed char)entry->field4c);
+        if (member != NULL) {
+            FormatCombatLogSuffix02041dd0(dst, func_ov000_02170c7c(entry));
+            AppendNameTag_02041b70(dst, n, (const char*)member->baseStats_);
+            AppendPaletteTag_02041e70(dst, 0xf);
+            AppendXTag_02041a28(dst, 0x46);
+            struct MemberInfo02178648* info = (struct MemberInfo02178648*)member->baseStats_;
+            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)((unsigned short)info->flag30 + 0x7551)));
+            if (i != count - 1) {
+                AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
             }
         }
         var1++;

@@ -71,14 +71,14 @@ struct Struct_ov003_0216da90
     char unknown_1324_[4];
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_0205de24(Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_0205cef8(void* arg0);
-extern "C" unsigned char func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" int func_0205d794(Struct_0205c570* arg0);
-extern "C" void func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+extern "C" void __clear(void* buf, int size);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+void SetChannelAFlag0205cef8(void* obj);
+unsigned char NormalizeField5_0200fb08(Struct0200fb08* obj);
+int Window_GetSelectedIndex(Struct_0205c570* s);
+void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
+const char* KeyTable_Get(Container020e0310* c, int key);
+void AppendString02042058(char* text, const char* append);
 #if defined(jpn)
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -110,13 +110,13 @@ extern "C" ARM void func_ov003_0216da90(Struct_ov003_0216da90* arg0)
     arg0->unknown_12c0_->unknown_a0_.inline_ov003_0216da90_2(0x1f - var0, 1);
 #endif
 
-    char var1[0x100];
-    char var2[0x40];
-    __clear(var1, 0x100);
-    __clear(var2, 0x40);
-    if (arg0->unknown_10_ == 2)
-        func_02041c08(var1, func_0205d794((Struct_0205c570*)arg0->unknown_12c0_), 8, 5, 5, 5);
-    func_02042058(var1, func_020e0434((Struct_0201099c_3*)arg0->unknown_1324_, 0x5c));
+    char text[0x100];
+    char sub[0x40];
+    __clear(text, 0x100);
+    __clear(sub, 0x40);
+    if (self->mode == 2)
+        AppendFrameTag02041c08(text, Window_GetSelectedIndex((Struct_0205c570*)self->window), 8, 5, 5, 5);
+    AppendString02042058(text, KeyTable_Get((Container020e0310*)self->texts_, 0x5c));
 #if defined(jpn)
     func_0205d304(arg0->unknown_12c0_, var1, 0, 0, 0, 1, 0);
 #else

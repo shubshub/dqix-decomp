@@ -585,8 +585,8 @@ extern char data_02109bf4[];
 extern "C" void* func_ov011_021845f8(unsigned char*, unsigned int);
 extern "C" void func_020a9ea4(struct Struct_020a9ea4*);
 #if defined(jpn)
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(struct Struct_0201099c_14*);
+struct Struct020dfc40;
+void KeyTable_Reset(struct Struct020dfc40*);
 #else
 extern "C" void func_020e526c(void*);
 #endif
@@ -664,10 +664,10 @@ extern "C" ARM int func_ov004_02157db8(void* arg0) {
     var7->unknown_78_ = 0;
     func_020a9ea4((struct Struct_020a9ea4*)var7->unknown_84_);
 #if defined(jpn)
-    func_020dfc40((struct Struct_0201099c_14*)var7->unknown_8c_);
-    var7->unknown_98_ = 0;
-    var7->unknown_9c_ = 0;
-    var7->unknown_9d_ = 0;
+    KeyTable_Reset((struct Struct020dfc40*)blk->pad8c);
+    blk->word98 = 0;
+    blk->b9c = 0;
+    blk->b9d = 0;
 #else
     func_020e526c(var7->unknown1_8c_);
     var7->unknown_98_ = 0;
@@ -3569,7 +3569,7 @@ extern "C" ARM int func_ov004_0215be9c(int arg0) {
 }
 
 #if defined(jpn)
-extern "C" int func_020e038c(void*, void*, int);
+int KeyTable_LoadInPlace(void*, void*, int);
 #endif
 
 #if defined(jpn)
@@ -3638,9 +3638,9 @@ extern "C" ARM int func_ov004_0215bf94() {
     func_0209ca70(data_02109bf4, ((Struct_ov004_0215bf94*)data_ov004_021707e0)->unknown_2d_);
     func_020dc2bc();
 #if defined(jpn)
-    unsigned int var4;
-    LoadFileIntoMemory("data/prm/itemname.nat", ((Struct_ov004_0215bf94*)data_ov004_021707e0)->unknown_98_, &var4);
-    func_020e038c(&((Struct_ov004_0215bf94*)data_ov004_021707e0)->unknown_8c_, ((Struct_ov004_0215bf94*)data_ov004_021707e0)->unknown_98_, (int)var4);
+    unsigned int size;
+    LoadFileIntoMemory("data/prm/itemname.nat", ((ItemNameLoader0215bf94*)data_ov004_021707e0)->fileBuffer, &size);
+    KeyTable_LoadInPlace(&((ItemNameLoader0215bf94*)data_ov004_021707e0)->names, ((ItemNameLoader0215bf94*)data_ov004_021707e0)->fileBuffer, (int)size);
 #else
     BackgroundLoader::AddLockGlobal();
     unsigned int var5;
@@ -3811,12 +3811,12 @@ extern "C" ARM int func_ov023_021f6f20(void* arg0, int arg1, int arg2, int arg3,
 extern "C" ARM void* func_ov023_021f7318(void* arg0);
 extern "C" ARM void func_ov023_021f7320(void* arg0);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_0204719c(void* arg0);
-extern "C" void func_02047b30(void* arg0, int arg1, int arg2, int arg3);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
+extern "C" void func_0204719c(void* obj);
+void Forward02047b30(void* a, int b, int c, int d);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
@@ -3848,17 +3848,17 @@ extern "C" ARM int func_ov004_0215c30c(void* arg0) {
     }
 
     BackgroundLoader::AddLockGlobal();
-    unsigned int var4;
-    void* var5 = LoadFileIntoMemory("data/menu/dqa_rox.spr", data_0211e33c, &var4);
-    char* var6 = inline_ov004_0215c30c(GetGameResources(), 0);
-    void* var7 = func_ov023_021f7318(var1);
-    func_0207df50((struct Struct_0203d028*)var6);
-    func_0207df90(var6);
-    func_0204719c(var7);
-    if (var5 != 0) {
-        func_02047b30(var7, (int)var5, var4, (int)((char*)var0 + 4));
+    unsigned int size;
+    void* file = LoadFileIntoMemory("data/menu/dqa_rox.spr", data_0211e33c, &size);
+    char* pairs = GetPairTable(GetGameResources(), 0);
+    void* model = AddOffset20_021f7318(block);
+    CopyInternalFields0207df50((struct Foo0207df50*)pairs);
+    VramState_Restore(pairs);
+    func_0204719c(model);
+    if (file != 0) {
+        Forward02047b30(model, (int)file, size, (int)((char*)node + 4));
     }
-    func_0207dfac(var6);
+    VramState_Save(pairs);
     BackgroundLoader::RemoveLockGlobal();
     func_ov023_021f7320(var1);
     func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(arg0), (struct Struct_ov004_0215c30c_2*)var1);
@@ -4032,14 +4032,14 @@ extern "C" void* func_ov004_0215c448(void*);
 extern "C" void* func_ov004_0215c474(void*);
 extern "C" int func_ov023_021f6f20(void*, int, int, int, int, unsigned int);
 extern "C" void* ExtractFileFromGP2(const char*, const char*, unsigned int*);
-extern "C" void* func_ov023_021f7318(void*);
-extern "C" Struct_ov004_0215c774_3* func_ov011_0218466c(void*, unsigned short);
-extern "C" void func_0207df90(char*);
+void* AddOffset20_021f7318(void*);
+PairTableNode0215c774* FindNodeById0218466c(void*, unsigned short);
+void VramState_Restore(char*);
 extern "C" void func_0204719c(void*);
-extern "C" void func_02047b30(void*, int, int, int);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_ov023_021f7320(void*);
-extern "C" void func_ov023_021f67ac(Struct_ov004_0215c30c*, Struct_ov004_0215c30c_2*);
+void Forward02047b30(void*, int, int, int);
+void VramState_Save(char*);
+void SetField1cTo2_021f7320(void*);
+void AppendNodeToList_021f67ac(ListHead_021f67ac*, ListNode_021f67ac*);
 
 // USA: func_ov004_0215c774
 extern "C" ARM int func_ov004_0215c774(void* arg0) {
@@ -4079,15 +4079,15 @@ extern "C" ARM int func_ov004_0215c774(void* arg0) {
     unsigned int var7;
     void* var8 = ExtractFileFromGP2(var5, var6, &var7);
 #endif
-    void* var9 = func_ov023_021f7318(var1);
-    Struct_ov004_0215c774_3* var10 = func_ov011_0218466c(arg0, 0);
-    char* var11 = var10->unknown_4_;
-    func_0207df90(var11);
-    func_0204719c(var9);
-    if (var8 != 0) {
-        func_02047b30(var9, (int)var8, var7, (int)&var0->unknown_4_);
+    void* model = AddOffset20_021f7318(node);
+    PairTableNode0215c774* pairs = FindNodeById0218466c(context, 0);
+    char* tables = pairs->tables;
+    VramState_Restore(tables);
+    func_0204719c(model);
+    if (file != 0) {
+        Forward02047b30(model, (int)file, size, (int)&owner->allocator);
     }
-    func_0207dfac(var11);
+    VramState_Save(tables);
     BackgroundLoader::RemoveLockGlobal();
     func_ov023_021f7320(var1);
     func_ov023_021f67ac(((Struct_ov004_0215c30c*)func_ov011_021849c8(arg0)), &var1->unknown_0_);

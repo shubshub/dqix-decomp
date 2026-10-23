@@ -19,18 +19,18 @@ struct Struct_02020cb8 {
     void inline_ov023_021f7b98_3(unsigned char arg0) { unknown_1c_0_ = arg0; }
     void inline_ov023_021f7b98_4(unsigned char arg0) { unknown_1c_4_ = arg0; }
 };
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+void Background_Init(struct List0204af64* obj);
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(struct Struct_02020cb8_6* arg0, char* arg1);
+struct SelfTag0204b3a0;
+void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
 
 struct Struct_ov023_021f7b98 {
 #if defined(jpn)
@@ -50,17 +50,17 @@ extern "C" ARM void func_ov023_021f7b98(struct Struct_ov023_021f7b98* arg0, void
     if (arg3 == 0 || arg4 == 0) {
         return;
     }
-    int var3 = func_02046900((struct Struct_02020cb8_4*)arg3);
-    for (int var4 = 0; var4 < var3; var4++) {
-        char* var5 = (char*)func_020467f0(arg3, var4, &var1, &var0);
-        if (var5) {
-            func_0204af64(&var2);
-            var2.inline_ov023_021f7b98_3(arg0->unknown_28_.inline_ov023_021f7b98());
-            var2.inline_ov023_021f7b98_4(arg0->unknown_28_.inline_ov023_021f7b98_2());
-            if (arg2) {
-                func_0204b2e0(&var2, var5);
+    int count = Pac_CountFiles((struct ActiveEntry02046900*)entry);
+    for (int i = 0; i < count; i++) {
+        char* rec = (char*)Pac_GetFile(entry, i, &rp, &size);
+        if (rec) {
+            Background_Init(&list);
+            list.SetLo(self->list.GetLo());
+            list.SetHi(self->list.GetHi());
+            if (useTag) {
+                Background_FlushFile(&list, rec);
             } else {
-                func_0204b3a0((struct Struct_02020cb8_6*)&var2, var5);
+                Background_UploadFile((struct SelfTag0204b3a0*)&list, rec);
             }
         }
     }

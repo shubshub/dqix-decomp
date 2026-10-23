@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 #include "Combat/MapDisplay.h"
 
-extern "C" void func_0205a198(struct Struct_02043368_2*);
-struct Struct_02043368;
-extern "C" void func_0205a234(struct Struct_02043368*);
+void Sprite_Init(struct Struct0205a198*);
+struct ClearTarget0205a234;
+void ClearField0And40205a234(struct ClearTarget0205a234*);
 
 struct Struct_ov000_02172128 {
     char unknown_0_[0x170];
@@ -43,9 +43,9 @@ extern "C" ARM void func_ov000_02172128(Struct_ov000_02172128* arg0, SafeAllocat
 #else
     enum { Enum_ov000_02172128_40 = 0x28 };
 #endif
-    arg0->unknown_170_ = (Struct_02043368_2*)arg1->Allocate(Enum_ov000_02172128_40 * sizeof(Struct_02043368_2));
-    for (unsigned char var0 = 0; var0 < Enum_ov000_02172128_40; var0++) {
-        func_0205a198(&arg0->unknown_170_[var0]);
+    self->entries = (Struct0205a198*)allocator->Allocate(kEntryCount * sizeof(Struct0205a198));
+    for (unsigned char i = 0; i < kEntryCount; i++) {
+        Sprite_Init(&self->entries[i]);
     }
     arg0->unknown_174_ = (Struct_02043368*)arg1->Allocate(8);
     func_0205a234(arg0->unknown_174_);

@@ -68,7 +68,7 @@ extern "C" void func_0202ae18();
 extern "C" Struct_ov017_021bec00_3* func_02012fe4();
 extern "C" void VectorizedMemset(void*, int, unsigned int);
 extern "C" int sprintf(char*, const char*, ...);
-extern "C" void func_020dfec0(void*, SafeAllocator*, void*, unsigned int);
+extern "C" void KeyTable_Load(void*, SafeAllocator*, void*, unsigned int);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_ov017_021bec00_5*, char*, int);
 #else
@@ -119,16 +119,16 @@ extern "C" ARM void func_ov017_021bec00(Struct_ov017_021bec00_2* arg0) {
             arg0->unknown_40_ = var3->QueueLoadFile(data_ov017_021d7e98, 0);
 #endif
         }
-    } else if (arg0->unknown_38_ == 1) {
-        if (var3->GetTaskStatus(arg0->unknown_40_)) {
-            void* var7;
-            unsigned int var8;
-            var3->GetLoadedFileByID(arg0->unknown_40_, &var7, &var8);
-            arg0->unknown_44_.Reset();
-            func_020dfec0(&arg0->unknown_58_, &arg0->unknown_44_, var7, var8);
-            var3->RemoveTask(arg0->unknown_40_);
-            arg0->unknown_40_ = -1;
-            arg0->unknown_38_ = 2;
+    } else if (self->state == 1) {
+        if (loader->GetTaskStatus(self->task)) {
+            void* data;
+            unsigned int length;
+            loader->GetLoadedFileByID(self->task, &data, &length);
+            self->allocator.Reset();
+            KeyTable_Load(&self->script, &self->allocator, data, length);
+            loader->RemoveTask(self->task);
+            self->task = -1;
+            self->state = 2;
         }
     } else if (arg0->unknown_38_ == 2) {
         if (!IsBrightnessTransitionActive(var1)) {

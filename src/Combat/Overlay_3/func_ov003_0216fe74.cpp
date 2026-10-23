@@ -12,9 +12,9 @@ extern "C" short func_ov003_0216df38(char* arg0, struct Struct_0201099c_3* arg1,
 
 struct Struct_0205d5d0;
 #if defined(jpn)
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
+int AppendString02042058(char* dst, const char* src);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
 extern char data_ov003_0217ea90[];
 extern char data_ov003_0217eaac[];
 extern char data_ov003_0217eabf[];
@@ -66,16 +66,16 @@ extern "C" ARM void func_ov003_0216fe74(char* arg0, int arg1, int arg2, int arg3
         func_02041c08(var1, arg3, 8, 5, 5, 5);
     }
 
-    if (arg1) {
-        sprintf(var2, data_ov003_0217ea90, func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xdc), 6));
+    if (p1) {
+        sprintf(line, data_ov003_0217ea90, KeyTable_Get((struct Container020e0310*)(self + 0xdc), 6));
     } else {
-        sprintf(var2, data_ov003_0217ea90, func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xdc), 5));
+        sprintf(line, data_ov003_0217ea90, KeyTable_Get((struct Container020e0310*)(self + 0xdc), 5));
     }
-    func_02042058(var1, var2);
-    sprintf(var2, data_ov003_0217eaac, func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xdc), 7));
-    func_02042058(var1, var2);
-    sprintf(var2, data_ov003_0217eabf, data_ov003_0217ea6f);
-    func_02042058(var1, var2);
+    AppendString02042058(buf, line);
+    sprintf(line, data_ov003_0217eaac, KeyTable_Get((struct Container020e0310*)(self + 0xdc), 7));
+    AppendString02042058(buf, line);
+    sprintf(line, data_ov003_0217eabf, data_ov003_0217ea6f);
+    AppendString02042058(buf, line);
 
     func_0205d5d0((struct Struct_0205d5d0*)*(char**)(arg0 + 0x3c), 0, (int)var1, 1);
 #else

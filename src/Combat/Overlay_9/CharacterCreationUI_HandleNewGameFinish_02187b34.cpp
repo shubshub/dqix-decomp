@@ -1,23 +1,17 @@
+#include "Resource/CreationEnums.h"
 #if defined(jpn)
 #define R(j,u) (j)
-#define data_ov009_0218aa28 data_ov009_0218ba04
-#define data_ov009_0218aa34 data_ov009_0218ba10
-#define data_ov009_0218aa98 data_ov009_0218ba4c
-#define data_ov009_0218acd9 data_ov009_0218bc3e
-#define data_ov009_0218ad41 data_ov009_0218bc71
-#define func_ov023_021dac40 func_ov023_021db4b4
 #else
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
-#if defined(jpn)
-#define func_ov009_0218a930 func_ov009_0218b908
-#endif
 #include <std_library_functions.h>
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 #include "NitroSDK/ColorEffects.h"
+#include "NitroSDK/Graphics.h"
+#include "Sound/SePlayer.h"
 
 #if defined(jpn)
 #define func_020c39a0 func_020c546c
@@ -25,8 +19,7 @@
 
 #define REG_BLDCNT 0x04000050
 #define REG_BLDCNT_SUB 0x04001050
-#define REG_MASTER_BRIGHT ((short*)0x0400006c)
-#define REG_MASTER_BRIGHT_SUB ((short*)0x0400106c)
+#define BLEND_TARGET_BG_AND_OBJ (BLEND_TARGET_BG0 | BLEND_TARGET_BG1 | BLEND_TARGET_BG2 | BLEND_TARGET_BG3 | BLEND_TARGET_OBJ)
 #define FX32_FROM_FLOAT(x) ((int)((x) > 0.0f ? 0.5f + 4096.0f * (x) : 4096.0f * (x) - 0.5f))
 
 struct Struct_ov009_02187b34 {
@@ -41,14 +34,68 @@ struct Struct_ov005_0215840c_2 {
     Struct_ov009_02187b34 unknown_488_;
 };
 
-struct Struct_ov009_02187b34_2 {
-    SafeAllocator* unknown_0_;
-    const char* unknown_4_;
-    unsigned char unknown_8_;
+struct FinishModelFile {
+    SafeAllocator* allocator_;
+    const char* name_;
+    unsigned char taskSlot_;
 };
 
-struct Struct_ov009_0218aa98 {
-    Struct_ov009_02187b34_2 unknown_0_[4];
+struct FinishModelFiles {
+    FinishModelFile files[4];
+};
+
+// CharacterCreation::step_ on the new-game finish tab.
+enum FinishStep
+{
+    FinishStep_Start = 0,        // turn the hero to the front, ease the camera, start dimming the background
+    FinishStep_WaitTurn = 1,     // once turned and the camera has stopped: dim with the quad, wait for the body's animation
+    FinishStep_QueueLoads = 2,
+    FinishStep_WaitLoads = 3,
+    FinishStep_ApplyLoads = 4,   // load the files into the body, the wings and the effect, then show them
+    FinishStep_ModelsLoaded = 5, // written by ApplyLoads, which goes on to PlaySound in the same frame; no case
+    FinishStep_PlaySound = 6,
+    FinishStep_FadeToWhite = 7,
+    FinishStep_WaitWhite = 8,    // then darken every layer behind the white
+    FinishStep_FadeToBlack = 9,
+    FinishStep_WaitBlack = 10,   // then set the black directly and undo the layer darkening
+    FinishStep_Leave = 11,
+    FinishStep_Done = 0xff,
+};
+
+// The finish's files: each one's modelTasks_ slot (CharacterCreationUI_finishModelFiles' taskSlot).
+enum FinishFile
+{
+    FinishFile_BodyPackage = 0, // loaded into the hero's body as animation package FinishBodyPackageId
+    FinishFile_Wings = 1,
+    FinishFile_Effect = 2,      // a loose file; the others come from CharacterCreationUI_characterArchive
+    FinishFile_Count = 3,
+};
+
+// Keys in character creation's text table: the finish's file names (the first two have a female version at
+// + CreationText_FemaleOffset) and the animation the body and the wings play.
+enum FinishText
+{
+    FinishText_Wings = 2001,
+    FinishText_BodyPackage = 2002,
+    FinishText_Effect = 2200,
+    FinishText_Animation = 2500,
+};
+
+// How long each part of the finish takes, in ticks.
+enum FinishTicks
+{
+    FinishTicks_Dim = 90,          // dimTimer_: CharacterCreationUI_UpdateDim darkens the background over it
+    FinishTicks_ShowModels = 30,   // waitTimer_ once the wings and the effect appear
+    FinishTicks_BeforeWhite = 150, // waitTimer_ after the first sound
+    FinishTicks_FadeToWhite = 40,
+    FinishTicks_HoldWhite = 120,   // waitTimer_ once white
+    FinishTicks_FadeToBlack = 120,
+};
+
+enum
+{
+    FinishBodyPackageId = 1,
+    FinishStartAnimationTime = 0xccc, // 0.8 (fx32) of the body's animation
 };
 
 struct Struct_02109bf4_4;
@@ -56,29 +103,25 @@ struct Struct_0201099c_3;
 struct Struct_0203d028;
 struct Struct_02038598_4;
 
-extern "C" Object3D* func_ov023_021e6194(void* character);
+extern "C" Object3D* CharacterModel_GetBody(void* character);
 unsigned int* GetDataPtr02114e04_020d6c00();
-extern "C" void func_ov023_021dac40(void* self, unsigned int ticks);
-extern "C" int func_ov009_0218a930(void* self, unsigned int ticks);
-void CallFunc020a0db8AtField0x16c_0202ee38(char* camera, int position, int duration);
-void CallFunc020a0db8AtField0x194AndClearFlag2_0202ee58(char* camera, int target, int duration);
+extern "C" void CharacterCreationUI_UpdateDim(void* self, unsigned int ticks);
+extern "C" int CharacterCreationUI_UpdateWaitTimer(void* self, unsigned int ticks);
+void Camera_EasePositionTo(char* camera, int position, int duration);
+void Camera_EaseTargetTo(char* camera, int target, int duration);
 void DispatchContextByState0209c678(Actor0209c678* actor, int state);
-int AnySubObjectField0NonZero_0202eeb4(char* camera);
+int Camera_IsEasing(char* camera);
 void SetForwardAndStore0205ebc0(void* sound, int a, int b);
-const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+const char* KeyTable_Get(Container020e0310* texts, int id);
 void CopyInternalFields0207df50(Foo0207df50* a);
-void RestorePairTables0207df90(char* a);
-void BackupPairTables0207dfac(char* a);
+void VramState_Restore(char* a);
+void VramState_Save(char* a);
 void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
 void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
-extern "C" void func_020c39a0(short* reg, int brightness);
+extern "C" void func_020c39a0(volatile unsigned short* reg, int brightness);
 void ForwardField0xc0_0205ebec(void* sound);
-#if defined(jpn)
 void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
-#else
-void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
-#endif
 
 struct Struct_ov009_0218aa28 {
     int unknown_0_;
@@ -86,47 +129,46 @@ struct Struct_ov009_0218aa28 {
     int unknown_8_;
 };
 
-extern const Struct_ov009_0218aa28 data_ov009_0218aa28;
-extern const Struct_ov009_0218aa28 data_ov009_0218aa34;
-extern const Struct_ov009_0218aa98 data_ov009_0218aa98;
-extern char data_ov009_0218acd9[];
-extern char data_ov009_0218ad41[];
+extern const Vec3 CharacterCreationUI_finishCameraPosition;
+extern const Vec3 CharacterCreationUI_finishCameraTarget;
+extern const FinishModelFiles CharacterCreationUI_finishModelFiles;
+extern char CharacterCreationUI_characterArchive[];
+extern char CharacterCreationUI_finishEffectAnimation[];
 extern char data_02109bf4[];
-extern char g_sePlayer[];
 
-struct Struct_ov009_021842a0_2 {
-    char unknown_0_[R(0xa0,0xb4)];
-    SafeAllocator* unknown_b4_;
-    SafeAllocator* unknown_b8_;
-    char unknown_bc_[R(0xc0-0xa8,0xe0-0xbc)];
-    char unknown_e0_[0x18];
-    char unknown_f8_[R(0x7bc-0xd8,0x7f8-0xf8)];
-    void* unknown_7f8_;
-    void* unknown_7fc_;
-    int unknown_800_;
-    int unknown_804_;
-    char unknown_808_[0x70];
-    Object3D unknown_878_;
-    char unknown_924_[0x2c8];
-    char unknown_bec_[0xc58 - 0xbec];
-    signed char unknown_c58_;
-    unsigned char unknown_c59_;
-    char unknown_c5a_[2];
-    int unknown_c5c_[3];
-    char unknown_c68_[0x70];
-    Object3D unknown_cd8_;
-    unsigned char unknown_d84_;
-    unsigned char unknown_d85_;
-    char unknown_d86_[2];
-    Struct_ov005_0215840c_2* unknown_d88_;
-    char unknown_d8c_[0xd96 - 0xd8c];
-    short unknown_d96_;
-    short unknown_d98_;
-    char unknown_d9a_[2];
-    unsigned int unknown_d9c_;
-    signed char unknown_da0_[2];
-    unsigned char unknown_da2_;
-    unsigned char unknown_da3_;
+struct CharacterCreation {
+    char unk_0[R(0xa0,0xb4)];
+    SafeAllocator* modelAllocator_;
+    SafeAllocator* previewAllocators_;
+    char unk_bc[R(0xc0-0xa8,0xe0-0xbc)];
+    char texts_[0x18];
+    char unk_f8[R(0x7bc-0xd8,0x7f8-0xf8)];
+    void* character_;
+    void* nextCharacter_;
+    int unk_800;
+    int targetAngle_;
+    char wingsVramState_[0x70];
+    Object3D wings_;
+    char camera_[0x2c8];
+    char unk_bec[0xc58 - 0xbec];
+    signed char state_;
+    unsigned char step_;
+    char unk_c5a[2];
+    int modelTasks_[FinishFile_Count];
+    char finishEffectVramState_[0x70];
+    Object3D finishEffect_;
+    unsigned char selection_;
+    unsigned char windowInput_;
+    char unk_d86[2];
+    PartyMemberData* characterData_;
+    char unk_d8c[0xd96 - 0xd8c];
+    short waitTimer_;
+    short dimTimer_;
+    char unk_d9a[2];
+    unsigned int flags_;
+    signed char furthestState_[2];
+    unsigned char vocation_;
+    unsigned char sex_;
 };
 
 // Overlay 9, originally func_ov009_02187b34 (USA/EUR 0x02187b34, JPN 0x021888f0)
@@ -134,95 +176,95 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
-    Object3D* preview = func_ov023_021e6194(self->character_);
-    unsigned int* unknown = GetDataPtr02114e04_020d6c00();
+    Object3D* body = CharacterModel_GetBody(self->character_);
+    unsigned int* globalFlags = GetDataPtr02114e04_020d6c00();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     if (loader == NULL)
         return;
-    unsigned int var5 = var0->GetTickCount();
-    if (var5 == 0)
-        var5 = 1;
-    func_ov023_021dac40(arg0, var5);
-    if (func_ov009_0218a930(arg0, var5) > 0)
+    unsigned int ticks = gameState->GetTickCount();
+    if (ticks == 0)
+        ticks = 1;
+    CharacterCreationUI_UpdateDim(self, ticks);
+    if (CharacterCreationUI_UpdateWaitTimer(self, ticks) > 0)
         return;
 
     switch (arg0->unknown_c59_)
     {
-    case 0:
+    case FinishStep_Start:
     {
-        arg0->unknown_d9c_ &= ~1;
-        arg0->unknown_804_ = 0x7a;
-        arg0->unknown_d9c_ |= 8;
-        Struct_ov009_0218aa28 var6 = data_ov009_0218aa28;
-        Struct_ov009_0218aa28 var7 = data_ov009_0218aa34;
-        func_0202ee38(arg0->unknown_924_, (int)&var6, 0x1e000);
-        func_0202ee58(arg0->unknown_924_, (int)&var7, 0x1e000);
-        arg0->unknown_d98_ = 90;
-        arg0->unknown_d9c_ |= 0x10000;
-        func_0209c678((Struct_02109bf4_4*)data_02109bf4, 120);
-        arg0->unknown_c59_ = 1;
-        int* var8 = arg0->unknown_c5c_;
-        for (unsigned char var9 = 0; var9 < 3; var9++)
-            *var8++ = -1;
-        SafeAllocator* var10 = arg0->unknown_b8_;
-        for (unsigned char var11 = 0; var11 < 2; var11++, var10++)
-            var10->Reset();
+        self->flags_ &= ~CreationFlag_StylusRotation;
+        self->targetAngle_ = CreationAngle_Finish;
+        self->flags_ |= CreationFlag_TurnToTarget;
+        Vec3 position = CharacterCreationUI_finishCameraPosition;
+        Vec3 target = CharacterCreationUI_finishCameraTarget;
+        Camera_EasePositionTo(self->camera_, (int)&position, CreationCamera_EaseSteps);
+        Camera_EaseTargetTo(self->camera_, (int)&target, CreationCamera_EaseSteps);
+        self->dimTimer_ = FinishTicks_Dim;
+        self->flags_ |= CreationFlag_DimBackground;
+        DispatchContextByState0209c678((Actor0209c678*)data_02109bf4, 120);
+        self->step_ = FinishStep_WaitTurn;
+        int* task = self->modelTasks_;
+        for (unsigned char i = 0; i < FinishFile_Count; i++)
+            *task++ = -1;
+        SafeAllocator* allocator = self->previewAllocators_;
+        for (unsigned char i = 0; i < 2; i++, allocator++)
+            allocator->Reset();
         break;
     }
-    case 1:
-        if (arg0->unknown_d9c_ & 8)
+    case FinishStep_WaitTurn:
+        if (self->flags_ & CreationFlag_TurnToTarget)
             break;
-        if (func_0202eeb4(arg0->unknown_924_) != 0)
+        if (Camera_IsEasing(self->camera_) != 0)
             break;
-        arg0->unknown_d9c_ |= 0x800000;
-        if (func_ov023_021e6194(arg0->unknown_7f8_)->normalizedAnimationTime_ >= 0xccc)
+        self->flags_ |= CreationFlag_DimWithQuad;
+        if (CharacterModel_GetBody(self->character_)->normalizedAnimationTime_ >= FinishStartAnimationTime)
         {
-            SetForwardAndStore0205ebc0(g_sePlayer, 0x6f, 0x6f);
-            self->step_ = 2;
+            SetForwardAndStore0205ebc0(&g_sePlayer, 0x6f, 0x6f);
+            self->step_ = FinishStep_QueueLoads;
         }
         break;
-    case 2:
+    case FinishStep_QueueLoads:
     {
-        short var12 = arg0->unknown_da3_ * 100 + 2001;
-        short var13 = arg0->unknown_da3_ * 100 + 2002;
-        Struct_ov009_0218aa98 var14 = data_ov009_0218aa98;
-        var14.unknown_0_[0].unknown_0_ = arg0->unknown_b8_;
-        var14.unknown_0_[0].unknown_4_ = func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, var13);
-        var14.unknown_0_[1].unknown_0_ = &arg0->unknown_b8_[1];
-        var14.unknown_0_[1].unknown_4_ = func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, var12);
-        var14.unknown_0_[2].unknown_0_ = arg0->unknown_b4_;
-        var14.unknown_0_[2].unknown_4_ = func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 0x898);
-        Struct_ov009_02187b34_2* var15 = var14.unknown_0_;
-        const char* var16 = data_ov009_0218acd9;
-        for (; var15->unknown_0_ != NULL; var15++)
+        short wingsKey = self->sex_ * CreationText_FemaleOffset + FinishText_Wings;
+        short bodyPackageKey = self->sex_ * CreationText_FemaleOffset + FinishText_BodyPackage;
+        FinishModelFiles files = CharacterCreationUI_finishModelFiles;
+        files.files[FinishFile_BodyPackage].allocator_ = self->previewAllocators_;
+        files.files[FinishFile_BodyPackage].name_ = KeyTable_Get((Container020e0310*)self->texts_, bodyPackageKey);
+        files.files[FinishFile_Wings].allocator_ = &self->previewAllocators_[1];
+        files.files[FinishFile_Wings].name_ = KeyTable_Get((Container020e0310*)self->texts_, wingsKey);
+        files.files[FinishFile_Effect].allocator_ = self->modelAllocator_;
+        files.files[FinishFile_Effect].name_ = KeyTable_Get((Container020e0310*)self->texts_, FinishText_Effect);
+        FinishModelFile* file = files.files;
+        const char* archive = CharacterCreationUI_characterArchive;
+        for (; file->allocator_ != NULL; file++)
         {
-            int var17;
-            if (var15->unknown_8_ == 2)
-                var17 = var4->QueueLoadFile(var15->unknown_4_, var15->unknown_0_);
+            int task;
+            if (file->taskSlot_ == FinishFile_Effect)
+                task = loader->QueueLoadFile(file->name_, file->allocator_);
             else
-                var17 = var4->QueueLoadFileInGP2(var16, var15->unknown_4_, var15->unknown_0_);
-            arg0->unknown_c5c_[var15->unknown_8_] = var17;
+                task = loader->QueueLoadFileInGP2(archive, file->name_, file->allocator_);
+            self->modelTasks_[file->taskSlot_] = task;
         }
-        arg0->unknown_c59_ = 3;
+        self->step_ = FinishStep_WaitLoads;
         break;
     }
-    case 3:
+    case FinishStep_WaitLoads:
     {
-        int var18 = 1;
-        int* var19 = arg0->unknown_c5c_;
-        for (unsigned char var20 = 0; var20 < 3; var20++, var19++)
+        int allLoaded = 1;
+        int* task = self->modelTasks_;
+        for (unsigned char i = 0; i < FinishFile_Count; i++, task++)
         {
-            if (*var19 != -1 && var4->GetTaskStatus(*var19) == 0)
-                var18 = 0;
+            if (*task != -1 && loader->GetTaskStatus(*task) == 0)
+                allLoaded = 0;
         }
-        if (var18)
-            arg0->unknown_c59_ = 4;
+        if (allLoaded)
+            self->step_ = FinishStep_ApplyLoads;
         break;
     }
-    case 4:
+    case FinishStep_ApplyLoads:
     {
-        int* var21 = arg0->unknown_c5c_;
-        for (unsigned char var22 = 0; var22 < 3; var22++, var21++)
+        int* task = self->modelTasks_;
+        for (unsigned char i = 0; i < FinishFile_Count; i++, task++)
         {
             if (*var21 == -1)
                 continue;
@@ -242,115 +284,115 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
                 var25.unk_8 = var23;
                 switch (var22)
                 {
-                case 0:
-                    var25.allocator = arg0->unknown_b8_;
-                    var25.packageID = 1;
-                    var2->LoadFromCHRArchive(&var25);
+                case FinishFile_BodyPackage:
+                    info.allocator = self->previewAllocators_;
+                    info.packageID = FinishBodyPackageId;
+                    body->LoadFromCHRArchive(&info);
                     break;
-                case 1:
-                    var25.allocator = &arg0->unknown_b8_[1];
-                    arg0->unknown_878_.LoadFromCHRArchive(&var25);
+                case FinishFile_Wings:
+                    info.allocator = &self->previewAllocators_[1];
+                    self->wings_.LoadFromCHRArchive(&info);
                     break;
-                case 2:
-                    var25.allocator = arg0->unknown_b4_;
-                    func_0207df50((Struct_0203d028*)arg0->unknown_c68_);
-                    func_0207df90(arg0->unknown_c68_);
-                    arg0->unknown_cd8_.LoadFromCHRArchive(&var25);
-                    func_0207dfac(arg0->unknown_c68_);
+                case FinishFile_Effect:
+                    info.allocator = self->modelAllocator_;
+                    CopyInternalFields0207df50((Foo0207df50*)self->finishEffectVramState_);
+                    VramState_Restore(self->finishEffectVramState_);
+                    self->finishEffect_.LoadFromCHRArchive(&info);
+                    VramState_Save(self->finishEffectVramState_);
                     break;
                 }
             }
             var4->RemoveTask(*var21);
             *var21 = -1;
         }
-        arg0->unknown_c59_ = 5;
-        var2->StopCurrentAnimation();
-        var2->MaybeSetRegularAnimation(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 2500), 0);
-        Vector3fix var26;
-        memset(&var26, 0, sizeof(var26));
-        var26 = var2->rotation_;
-        Struct_ov009_02187b34* var27 = &arg0->unknown_d88_->unknown_488_;
-        int var28;
-        int var29;
-        short var30 = var27->unknown_18_;
-        var28 = FX32_FROM_FLOAT(var30 / 4096.0f);
-        var29 = FX32_FROM_FLOAT(var27->unknown_1a_ / 4096.0f);
-        int var31 = FX32_FROM_FLOAT(var30 / 4096.0f);
+        self->step_ = FinishStep_ModelsLoaded;
+        body->StopCurrentAnimation();
+        body->MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        Vector3fix rotation;
+        memset(&rotation, 0, sizeof(rotation));
+        rotation = body->rotation_;
+        PartyMemberAppearance* appearance = &self->characterData_->appearance_;
+        int scaleX;
+        int scaleY;
+        short width = appearance->width_;
+        scaleX = FX32_FROM_FLOAT(width / 4096.0f);
+        scaleY = FX32_FROM_FLOAT(appearance->height_ / 4096.0f);
+        int scaleZ = FX32_FROM_FLOAT(width / 4096.0f);
 #if defined(jpn)
-        arg0->unknown_878_.SetScale(var28, var29, var31);
-        arg0->unknown_878_.rotation_ = var26;
-        arg0->unknown_878_.StopCurrentAnimation();
-        arg0->unknown_878_.MaybeSetRegularAnimation(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 2500), 0);
-        Vector3fix var32;
-        var32 = ((Object3D*)((char*)var2 + 0x408))->position_;
-        arg0->unknown_cd8_.rotation_ = var26;
-        arg0->unknown_cd8_.position_ = var32;
-        arg0->unknown_cd8_.StopCurrentAnimation();
-        arg0->unknown_cd8_.MaybeSetRegularAnimation(data_ov009_0218ad41, 0);
+        self->wings_.SetScale(scaleX, scaleY, scaleZ);
+        self->wings_.rotation_ = rotation;
+        self->wings_.StopCurrentAnimation();
+        self->wings_.MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        Vector3fix position;
+        position = ((Object3D*)((char*)body + 0x408))->position_;
+        self->finishEffect_.rotation_ = rotation;
+        self->finishEffect_.position_ = position;
+        self->finishEffect_.StopCurrentAnimation();
+        self->finishEffect_.MaybeSetRegularAnimation(CharacterCreationUI_finishEffectAnimation, 0);
 #else
-        Object3D* var33 = &arg0->unknown_878_;
-        var33->SetScale(var28, var29, var31);
-        var33->rotation_ = var26;
-        var33->StopCurrentAnimation();
-        var33->MaybeSetRegularAnimation(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 2500), 0);
-        Vector3fix var34;
-        var34 = ((Object3D*)((char*)var2 + 0x408))->position_;
-        Object3D* var35 = &arg0->unknown_cd8_;
-        var35->rotation_ = var26;
-        var35->position_ = var34;
-        var35->StopCurrentAnimation();
-        var35->MaybeSetRegularAnimation(data_ov009_0218ad41, 0);
+        Object3D* wings = &self->wings_;
+        wings->SetScale(scaleX, scaleY, scaleZ);
+        wings->rotation_ = rotation;
+        wings->StopCurrentAnimation();
+        wings->MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        Vector3fix position;
+        position = ((Object3D*)((char*)body + 0x408))->position_;
+        Object3D* finishEffect = &self->finishEffect_;
+        finishEffect->rotation_ = rotation;
+        finishEffect->position_ = position;
+        finishEffect->StopCurrentAnimation();
+        finishEffect->MaybeSetRegularAnimation(CharacterCreationUI_finishEffectAnimation, 0);
 #endif
-        arg0->unknown_d9c_ |= 0x200;
-        arg0->unknown_d96_ = 30;
-        arg0->unknown_c59_ = 6;
+        self->flags_ |= CreationFlag_ShowFinishModels;
+        self->waitTimer_ = FinishTicks_ShowModels;
+        self->step_ = FinishStep_PlaySound;
         break;
     }
-    case 6:
-        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
-        self->timer_ = 150;
-        self->step_ = 7;
+    case FinishStep_PlaySound:
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+        self->waitTimer_ = FinishTicks_BeforeWhite;
+        self->step_ = FinishStep_FadeToWhite;
         break;
-    case 7:
-        OrBitsIntoField0_020466e4(unknown, 0x100);
-        SetBrightness(resources, 16, 40);
-        DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 1, 0);
-        self->step_ = 8;
+    case FinishStep_FadeToWhite:
+        OrBitsIntoField0_020466e4(globalFlags, 0x100);
+        SetBrightness(resources, Brightness_White, FinishTicks_FadeToWhite);
+        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 1, 0);
+        self->step_ = FinishStep_WaitWhite;
         break;
-    case 8:
-        if (IsBrightnessTransitionActive(var1))
+    case FinishStep_WaitWhite:
+        if (IsBrightnessTransitionActive(resources))
             break;
-        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, 0x1f, -16);
-        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, 0x1f, -16);
-        arg0->unknown_d96_ = 120;
-        arg0->unknown_c59_ = 9;
+        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, BLEND_TARGET_BG_AND_OBJ, Brightness_Black);
+        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, BLEND_TARGET_BG_AND_OBJ, Brightness_Black);
+        self->waitTimer_ = FinishTicks_HoldWhite;
+        self->step_ = FinishStep_FadeToBlack;
         break;
-    case 9:
-        if (arg0->unknown_d96_ > 0)
+    case FinishStep_FadeToBlack:
+        if (self->waitTimer_ > 0)
         {
-            unsigned int var36 = var0->GetTickCount();
-            if (var36 == 0)
-                var36 = 1;
-            arg0->unknown_d96_ -= var36;
+            unsigned int elapsed = gameState->GetTickCount();
+            if (elapsed == 0)
+                elapsed = 1;
+            self->waitTimer_ -= elapsed;
             break;
         }
-        SetBrightness(var1, -16, 120);
-        arg0->unknown_c59_ = 10;
+        SetBrightness(resources, Brightness_Black, FinishTicks_FadeToBlack);
+        self->step_ = FinishStep_WaitBlack;
         break;
-    case 10:
-        if (IsBrightnessTransitionActive(var1))
+    case FinishStep_WaitBlack:
+        if (IsBrightnessTransitionActive(resources))
             break;
-        func_020c39a0(REG_MASTER_BRIGHT, -16);
-        func_020c39a0(REG_MASTER_BRIGHT_SUB, -16);
-        func_020466f4((Struct_02038598_4*)var3, 0x100);
-        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, 0x1f, 0);
-        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, 0x1f, 0);
-        ForwardField0xc0_0205ebec(g_sePlayer);
-        self->step_ = 11;
+        func_020c39a0(&REG_MASTER_BRIGHT, Brightness_Black);
+        func_020c39a0(&REG_MASTER_BRIGHT_SUB, Brightness_Black);
+        ClearFlags020466f4((FlagWord020466f4*)globalFlags, 0x100);
+        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, BLEND_TARGET_BG_AND_OBJ, Brightness_Normal);
+        ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, BLEND_TARGET_BG_AND_OBJ, Brightness_Normal);
+        ForwardField0xc0_0205ebec(&g_sePlayer);
+        self->step_ = FinishStep_Leave;
         break;
-    case 11:
-        self->step_ = 0xff;
-        CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
+    case FinishStep_Leave:
+        self->step_ = FinishStep_Done;
+        CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Close);
         break;
     }
 }

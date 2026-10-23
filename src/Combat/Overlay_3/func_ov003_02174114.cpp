@@ -92,13 +92,13 @@ extern "C" void func_0204500c(Struct_ov003_02174114 *, int, int);
 #else
 extern "C" void func_0204500c(Struct_ov003_02174114 *, int, int, int);
 #endif
-extern "C" void func_020dfc40(Struct_0201099c_14 *);
+void KeyTable_Reset(Struct020dfc40 *);
 extern "C" void func_02074af4(void *);
 extern "C" void func_ov023_021dc134(void *, int, int);
-extern "C" void func_0205a444(char *);
-extern "C" void func_ov003_02174408(Struct_ov003_02174114_4 *);
-extern "C" void func_02081ee4(Struct_02081ee4 *, Struct_02081ee4_2 *);
-extern "C" void func_0204af64(Struct_02020cb8 *);
+void SpriteContext_Init(char *);
+void InitObj02174408(InitStruct02174408 *);
+void InitWithSub02081ee4(Obj02081ee4 *, Sub02081ee4 *);
+void Background_Init(List0204af64 *);
 extern "C" void func_0204c684(void *);
 extern "C" unsigned char func_02011494(char *, void *);
 extern "C" GameObject *func_0200ff1c(GameState *, int);
@@ -122,27 +122,27 @@ extern "C" ARM void func_ov003_02174114(Struct_ov003_02174114_3 *arg0) {
     var0->unknown_998_ = 1;
     var0->unknown_99c_ = arg0->unknown_ff0_;
 
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = 0;
-    func_020dfc40((Struct_0201099c_14 *) (arg0->unknown_c_));
-    arg0->unknown_34_ = 0;
-    arg0->unknown_35_ = 0;
-    func_02074af4(arg0->unknown_24_);
-    volatile unsigned int *var2 = (volatile unsigned int *) 0x4000000;
-    unsigned int var3             = *var2;
-    arg0->unknown_38_             = (var3 & 0x1f00u) >> 8;
-    var3                          = *var2;
-    *var2                       = (var3 & ~0x1f00u) | 0x100u;
-    func_ov023_021dc134((char *) arg0 + 0x3c, -1, 0);
-    func_0205a444(arg0->unknown_7d8_);
-    arg0->unknown_830_ = 0;
-    func_ov003_02174408((Struct_ov003_02174114_4 *) arg0->unknown_834_);
-    func_02081ee4((Struct_02081ee4 *) arg0->unknown_88c_, (Struct_02081ee4_2 *) arg0->unknown_898_);
-    arg0->unknown_89c_ = 0;
-    for (int var4 = 0; var4 < 2; var4++)
-        func_0204af64((Struct_02020cb8 *) (arg0->unknown_8a0_ + var4 * 32));
-    for (int var5 = 0; var5 < 8; var5++)
-        func_0204c684(arg0->unknown_8e0_ + var5 * 0xe0);
+    self->f4_ = 0;
+    self->f8_ = 0;
+    KeyTable_Reset((Struct020dfc40 *) (self->s0c_));
+    self->b34_ = 0;
+    self->b35_ = 0;
+    func_02074af4(self->s24_);
+    volatile unsigned int *reg = (volatile unsigned int *) 0x4000000;
+    unsigned int v             = *reg;
+    self->dispcnt_             = (v & 0x1f00u) >> 8;
+    v                          = *reg;
+    *reg                       = (v & ~0x1f00u) | 0x100u;
+    func_ov023_021dc134((char *) self + 0x3c, -1, 0);
+    SpriteContext_Init(self->s7d8_);
+    self->f830_ = 0;
+    InitObj02174408((InitStruct02174408 *) self->s834_);
+    InitWithSub02081ee4((Obj02081ee4 *) self->s88c_, (Sub02081ee4 *) self->s898_);
+    self->f89c_ = 0;
+    for (int i = 0; i < 2; i++)
+        Background_Init((List0204af64 *) (self->lists_ + i * 32));
+    for (int j = 0; j < 8; j++)
+        func_0204c684(self->slots_ + j * 0xe0);
 
     arg0->unknown_fe0_     = 0;
     arg0->unknown_fe4_     = 0;

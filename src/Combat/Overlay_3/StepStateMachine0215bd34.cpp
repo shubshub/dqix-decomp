@@ -11,7 +11,7 @@ struct Struct0205cf1c;
 void ClearFlagByte0205cf1c(struct Struct0205cf1c* s);
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -32,7 +32,7 @@ ARM int StepStateMachine0215bd34(void* p) {
     }
     if (state == 1) {
         *(unsigned char*)(obj + 0x59f) |= 1;
-        int e = GetActiveScaledSum0205d794((struct Struct_0205c570*)(obj + 0xf4));
+        int e = Window_GetSelectedIndex((struct Struct_0205c570*)(obj + 0xf4));
         *(unsigned char*)(obj + 0x585) = (unsigned char)e;
         if (func_ov003_0215b328(obj) != 0) {
             unsigned char v = *(unsigned char*)(obj + 0x59f);

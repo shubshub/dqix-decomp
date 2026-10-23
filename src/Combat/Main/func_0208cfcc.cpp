@@ -37,13 +37,13 @@ extern char data_020f11eb[];
 extern char data_020f11fe[];
 extern char g_sePlayer[];
 void SetSubBrightness(GameResources*, int, int);
-extern "C" void func_0208bf28(Struct_02065990_2*, int, unsigned char);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void func_0205a444(char*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0205a528(Struct_0208cfcc_2*, void*, int, SafeAllocator*);
-extern "C" void func_0205aed0(void*, char*, unsigned int, int);
-extern "C" void func_0205af38(int, char*, int, int);
+void SetFieldD20208bf28(Obj0208bf28*, int, unsigned char);
+int Pac_CountFiles(ActiveEntry02046900*);
+void SpriteContext_Init(char*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void SpriteContext_LoadFile(TransitionList0208cfcc*, void*, int, SafeAllocator*);
+void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
+void SetBitfieldStoreBytes0205af38(int, char*, int, int);
 int IsSubBrightnessTransitionActive(GameResources*);
 extern "C" void func_0205eb54(void*, int, int);
 extern "C" void func_0205eb90(void*, int, int);
@@ -77,23 +77,23 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
             arg0->unknown_d7_ = 0;
             arg0->unknown_d5_ = 2;
         }
-    } else if (arg0->unknown_d5_ == 1) {
-        if (var1->GetTaskStatus(arg0->unknown_c0_)) {
-            var0 = arg0->unknown_0_;
-            var0->unknown_3c_.Reset();
-            void* var5;
-            void* var6;
-            unsigned int var7;
-            var1->GetLoadedFileByID(arg0->unknown_c0_, &var6, &var7);
-            int var8 = func_02046900((Struct_02020cb8_4*)var6);
-            func_0205a444((char*)&arg0->unknown_60_);
-            arg0->unknown_60_.unknown_50_ = 1;
-            arg0->unknown_60_.unknown_40_ = arg0->unknown_b4_;
-            arg0->unknown_60_.unknown_4c_ = 3;
-            for (int var9 = 0; var9 < var8; var9++) {
-                int var10;
-                void* var11 = func_020467f0((Struct_02020aec*)var6, var9, &var5, &var10);
-                func_0205a528(&arg0->unknown_60_, var11, var10, &var0->unknown_3c_);
+    } else if (obj->state == 1) {
+        if (loader->GetTaskStatus(obj->task)) {
+            owner = obj->owner;
+            owner->allocator.Reset();
+            void* record;
+            void* file;
+            unsigned int length;
+            loader->GetLoadedFileByID(obj->task, &file, &length);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file);
+            SpriteContext_Init((char*)&obj->list);
+            obj->list.active = 1;
+            obj->list.entries = obj->entries;
+            obj->list.type = 3;
+            for (int i = 0; i < count; i++) {
+                int size;
+                void* entry = Pac_GetFile((Rec020467f0*)file, i, &record, &size);
+                SpriteContext_LoadFile(&obj->list, entry, size, &owner->allocator);
             }
             func_0205aed0(&arg0->unknown_60_, (char*)arg0->unknown_b4_, 3, 64);
             var1->RemoveTask(arg0->unknown_c0_);

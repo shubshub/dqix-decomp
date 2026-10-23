@@ -18,19 +18,19 @@ struct Struct_ov000_021682ec_5 {
     char unknown_1d69_[7]; bool unknown_1d70_; char unknown_1d71_; unsigned short unknown_1d72_;
     char unknown_1d74_[13]; unsigned char unknown_1d81_;
 };
-struct Struct_ov000_021735d0 {char unknown_0_[Enum_ov000_021735d0_23756]; signed int unknown_5ccc_0_:1,unknown_5ccc_1_:1,unknown_5ccc_2_:30;};
-struct Struct_ov000_021735d0_2 {char unknown_0_[0x10];signed char unknown_10_[8];signed char unknown_18_;char unknown_19_[0x24-0x19];unsigned char unknown_24_;};
-struct Struct_ov000_021735d0_3;struct Struct_02020cb8_5;struct Struct_ov000_021735d0_4;struct Struct_ov000_021735d0_5;
-extern "C" int func_0204b5e8(Struct_02020cb8_5*,int,int);
-extern "C" Struct_ov000_021735d0_2* func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern "C" void func_ov000_02175440(void*);
-extern "C" void func_ov000_02174fc0(void*);
-extern "C" void func_ov000_021754fc(Struct_ov000_021735d0_4*,int);
-extern "C" void func_ov000_02180b50(Struct_ov000_021735d0_5*);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_0202b7d8(int*);
+struct GameFlags {char pad[gameFlagsOffset]; signed int bit0:1,bit1:1,rest:30;};
+struct TableEntry0217f8c0 {char p[0x10];signed char commands[8];signed char index;char q[0x24-0x19];unsigned char flags;};
+struct Struct0217f8c0;struct Obj0204b5e8;struct Struct021754fc;struct S02180b50;
+int Background_SetScroll(Obj0204b5e8*,int,int);
+TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+void UpdateLastEntryField02175440(void*);
+void UpdateFieldromTable_02174fc0_02174fc0(void*);
+void NotifyEachViaLookup021754fc(Struct021754fc*,int);
+void TickCounter02180b50(S02180b50*);
+int GetField0x3acValue_020100a8(GameState*);
+int CheckField0NonZero_0202b7d8(int*);
 extern "C" {
-int* func_0202ae18(); void func_020dc7e8(int,int); int func_0205d0e0(void*,int);
+int* func_0202ae18(); void func_020dc7e8(int,int); int Window_Update(void*,int);
 void func_ov000_02175fc8(void*);void func_ov000_02174d08(void*);void func_ov000_02175024(void*,int);
 void* func_ov000_02161318(void*,int);
 void func_ov000_0217f304(void*,int,int,void*);void func_ov000_0217c908(void*,int,int);
@@ -44,24 +44,24 @@ extern int data_ov000_02183ff0;extern int data_ov000_02184288[];
 // USA: func_ov000_021735d0
 extern "C" ARM void func_ov000_021735d0(Struct_ov000_021682ec_5* arg0,int arg1)
 {
-    arg0->unknown_94c_=arg1;
-    func_0204b5e8((Struct_02020cb8_5*)arg0->unknown_8a4_,-arg0->unknown_940_,-arg0->unknown_944_);
-    func_0204b5e8((Struct_02020cb8_5*)arg0->unknown_8c4_,0,0);
-    func_0204b5e8((Struct_02020cb8_5*)arg0->unknown_8e4_,0,0);
-    GameState* var0=GameState::GetInstance();func_0202ae18();
-    if(((Struct_ov000_021735d0*)var0)->unknown_5ccc_1_)func_020dc7e8(0,-1);
-    if(!arg1)arg1=1;
-    int var1=1;
-    Struct_ov000_021735d0_2* var2=func_ov000_0217f8c0((Struct_ov000_021735d0_3*)arg0);
-    if(var2&&var2->unknown_10_[var2->unknown_18_]==100)var1=0;
-    if(var1){
-        func_ov000_02175440(arg0);
-        var2=func_ov000_0217f8c0((Struct_ov000_021735d0_3*)arg0);
-        int var3;bool var4=arg0->unknown_21c_,var5=arg0->unknown_21d_;var3=0;
-        if(var2&&!(arg0->unknown_1d72_&0x200)&&arg0->unknown_1d60_[arg0->unknown_1d68_]!=6&&arg0->unknown_1d60_[arg0->unknown_1d68_]!=7&&!(var2->unknown_24_&1))var3=1;
-        if(var3){arg0->unknown_21c_=false;arg0->unknown_21d_=false;}
-        arg0->unknown_118_=func_0205d0e0(arg0->unknown_188_,arg1);
-        if(var3){if(var4)arg0->unknown_21c_=true;if(var5)arg0->unknown_21d_=true;}
+    self->delta=delta;
+    Background_SetScroll((Obj0204b5e8*)self->dispatchA,-self->x,-self->y);
+    Background_SetScroll((Obj0204b5e8*)self->dispatchB,0,0);
+    Background_SetScroll((Obj0204b5e8*)self->dispatchC,0,0);
+    GameState* gs=GameState::GetInstance();func_0202ae18();
+    if(((GameFlags*)gs)->bit1)func_020dc7e8(0,-1);
+    if(!delta)delta=1;
+    int update=1;
+    TableEntry0217f8c0* entry=FindMatchingTableEntry0217f8c0((Struct0217f8c0*)self);
+    if(entry&&entry->commands[entry->index]==100)update=0;
+    if(update){
+        UpdateLastEntryField02175440(self);
+        entry=FindMatchingTableEntry0217f8c0((Struct0217f8c0*)self);
+        int clear;bool a=self->flagA,b=self->flagB;clear=0;
+        if(entry&&!(self->flags&0x200)&&self->commands[self->commandIndex]!=6&&self->commands[self->commandIndex]!=7&&!(entry->flags&1))clear=1;
+        if(clear){self->flagA=false;self->flagB=false;}
+        self->result=Window_Update(self->updateState,delta);
+        if(clear){if(a)self->flagA=true;if(b)self->flagB=true;}
     }
     func_ov000_02175fc8(arg0);func_ov000_02174d08(arg0);func_ov000_02174fc0(arg0);
     func_ov000_02175024(arg0,arg1);func_ov000_021754fc((Struct_ov000_021735d0_4*)arg0,arg1);

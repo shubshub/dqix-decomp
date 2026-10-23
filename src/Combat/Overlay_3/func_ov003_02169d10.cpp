@@ -23,17 +23,17 @@ struct Struct_ov003_02169d10
     unsigned char unknown_5a7_;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" void func_02041e70(char* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_02041ed8(char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02041f24(char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02041d9c(char* arg0, int arg1);
-extern "C" void func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void func_02041a28(char* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
+extern "C" void __clear(void* buf, int size);
+void AppendXYTag_02041a90(char* text, int x, int y);
+void AppendPaletteTag_02041e70(char* text, int palette);
+void AppendString02042058(char* text, const char* append);
+void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
+void AppendUaTag_02041ed8(char* text, int a, int b, int c);
+void AppendDbTag_02041f24(char* text, int a, int b, int c);
+void AppendSizeTag_02041d9c(char* text, int size);
+void AppendNameTag_02041b70(char* text, int item, const char* itemText);
+void AppendXTag_02041a28(char* text, int x);
+const char* KeyTable_Get(Container020e0310* c, int key);
 
 extern "C" const char data_ov003_02180137[];
 extern "C" const char data_ov003_02180145[];
@@ -84,5 +84,5 @@ extern "C" ARM void func_ov003_02169d10(Struct_ov003_02169d10* arg0, char* arg1,
 #if !defined(jpn)
     func_02041a28(arg1, 0x5c);
 #endif
-    func_02042058(arg1, func_020e0434((Struct_0201099c_3*)arg0->unknown_64_, 0x66));
+    AppendString02042058(text, KeyTable_Get((Container020e0310*)self->texts_, 0x66));
 }

@@ -40,7 +40,7 @@ struct Struct_ov005_02153954 {
 
 extern "C" char g_sePlayer[];
 
-extern "C" void func_0205d0e0(void* window);
+extern "C" void Window_Update(void* window);
 extern "C" void func_ov005_021589f4(EquipmentMenu* self);
 extern "C" int func_ov005_02158b3c(void* object, void* buffer);
 MenuElement* FindElementByC40205d81c(Struct_0205d81c* s, int key);
@@ -49,11 +49,11 @@ int CheckFlag30Or401_02157190(void* self);
 void SePlayer_Play(SePlayer* sound, int effect, int unk);
 void ResetEntryList0205d6a0(Entry_0205d6a0* window, int unk);
 // USA: func_ov005_02158878
-extern "C" ARM void func_ov005_02158878(Struct_ov005_02153954* arg0) {
-    func_0205d0e0(&arg0->unknown_ee4_);
-    if (arg0->unknown_3dd0_ == 0) {
-        func_ov005_021589f4(arg0);
-        arg0->unknown_3dd0_++;
+extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
+    Window_Update(&self->window_);
+    if (self->step_ == 0) {
+        func_ov005_021589f4(self);
+        self->step_++;
         return;
     }
     if (arg0->unknown_3dd0_ == 1) {

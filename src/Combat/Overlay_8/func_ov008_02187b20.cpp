@@ -170,16 +170,16 @@ struct Struct_0201099c_3;
 extern char data_ov008_0218b4c3[];
 #endif
 
-extern "C" unsigned char* func_020421a0();
-extern "C" void func_020ac0b4(void* arg0);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_02041e70(char* arg0, int arg1);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+unsigned char* GetGlobalField0x1c020421a0();
+void CopyOutBattleField0x7ac0_020ac0b4(void* count);
+void StoreInArray0x8b0_020465c0(StoreStruct* messages, int index, int value);
+void SetByteInRange_020465f0(unsigned char* messages, int index, unsigned char digits);
+void SetByteAtIndex_020465d8(unsigned char* messages, int index, unsigned char value);
+void AppendPaletteTag_02041e70(char* text, int color);
+int TestBitInByteArray_0206dfb0(int store, unsigned char* bits, int flag);
+void AppendXYTag_02041a90(char* text, int x, int y);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void AppendString02042058(char* text, const char* append);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -293,21 +293,21 @@ extern "C" ARM void func_ov008_02187b20(Struct_ov008_021842a0_2* arg0, char* arg
         if (var5 & (1 << var14))
         {
 #if defined(jpn)
-            func_02041a90(arg1, 2, var13 * 15 + 1);
-            func_02042058(arg1, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var14 + 0x78)));
+            AppendXYTag_02041a90(text, 2, line * 15 + 1);
+            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x78)));
 #else
-            char var15[0x40];
-            var1 = var13 * 14;
-            func_02041a90(arg1, 2, var1 + 7);
-            __clear(var15, sizeof(var15));
-            const char* var16 = func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var14 + 0x78));
-            memcpy(var15, var16, strlen(var16));
-            char* var17 = strstr(var15, data_ov008_0218b4c3);
-            if (var17 != NULL)
-                *var17 = 0;
-            func_02042058(arg1, var15);
-            func_02041a90(arg1, 0x62, var1 + 7);
-            func_02042058(arg1, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var14 + 500)));
+            char label[0x40];
+            y = line * 14;
+            AppendXYTag_02041a90(text, 2, y + 7);
+            __clear(label, sizeof(label));
+            const char* name = KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x78));
+            memcpy(label, name, strlen(name));
+            char* value = strstr(label, data_ov008_0218b4c3);
+            if (value != NULL)
+                *value = 0;
+            AppendString02042058(text, label);
+            AppendXYTag_02041a90(text, 0x62, y + 7);
+            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 500)));
 #endif
             var13++;
         }

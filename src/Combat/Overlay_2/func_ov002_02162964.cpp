@@ -15,14 +15,14 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
                                                                         unsigned char keyHigh);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215c614(char *self);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 extern "C" void func_ov002_0215b9a4(void *self, int mode, int flag);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
 extern "C" int func_0205df38(void *obj, int key);
 extern "C" void func_ov002_0215b458(char *self, int v);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 int GetField0x3acValue_020100a8(GameState *gs);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
@@ -69,19 +69,19 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
         func_ov002_0215b2c8(arg0);
 #endif
         CUR = 0;
-        SEL = *(int *) (arg0 + CUR * 4 + RG(0x1c3c, 0x1b00));
-        func_0205de24((struct Struct_0205de24_2 *) OBJ, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215c614(arg0);
-        *(int *) (arg0 + RG(0x1bc0, 0x1a88)) += 1;
-    } else if (var0 == 1) {
-        *(short *) (arg0 + RG(0x1bf0, 0x1ab8)) = -1;
-        *(unsigned int *) (arg0 + RG(0x247c, 0x22ac)) |= 4;
-        short var2 = CUR;
-        CUR       = func_0205d794((struct Struct_0205c570 *) OBJ);
-        func_ov002_0215b9a4(arg0, *(int *) (arg0 + RG(0x1bb8, 0x1a80)) & 0xff, 0);
-        signed char var3 = SEL;
-        SEL              = *(signed char *) (arg0 + CUR + RG(0x1c6e, 0x1b32));
+        SEL = *(int *) (self + CUR * 4 + RG(0x1c3c, 0x1b00));
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) OBJ, 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215c614(self);
+        *(int *) (self + RG(0x1bc0, 0x1a88)) += 1;
+    } else if (state == 1) {
+        *(short *) (self + RG(0x1bf0, 0x1ab8)) = -1;
+        *(unsigned int *) (self + RG(0x247c, 0x22ac)) |= 4;
+        short old = CUR;
+        CUR       = Window_GetSelectedIndex((struct Struct_0205c570 *) OBJ);
+        func_ov002_0215b9a4(self, *(int *) (self + RG(0x1bb8, 0x1a80)) & 0xff, 0);
+        signed char prev = SEL;
+        SEL              = *(signed char *) (self + CUR + RG(0x1c6e, 0x1b32));
         if (CUR == LAST) {
             SEL = 4;
         }
@@ -111,7 +111,7 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
             return;
         }
         int t  = g_keyManager.TestKeysPressed(0x601);
-        int u  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)OBJ, 0x14);
+        int u  = Window_IsSelectionTouched((struct Obj_0205da38*)OBJ, 0x14);
         int ok = (t | u) ? 1 : 0;
         if (ok || pick) {
             *(unsigned char *) (self + RG(0x1c21, 0x1ae9)) = GetField0x3acValue_020100a8(GameState::GetInstance());

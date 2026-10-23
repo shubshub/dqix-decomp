@@ -18,18 +18,18 @@ extern "C" int func_020420e8(const char* arg0, int arg1);
 extern "C" char* func_0205ec34();
 extern "C" void func_02046380(Struct_02021b84* arg0);
 
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" void func_02041a5c(char* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" void func_0204201c(char* arg0, int arg1, int);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020a0870(Struct_02061c04* arg0);
-extern "C" int func_020a08d8(Struct_02061c04* arg0);
-extern "C" int func_020a08a4(Struct_02061c04* arg0);
-extern "C" int func_020a090c(Struct_02061c04* arg0);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
+MessageSystem* GetGlobalField0x1c020421a0();
+void AppendXYTag_02041a90(char* text, int x, int y);
+void AppendYTag_02041a5c(char* text, int y);
+void AppendString02042058(char* text, const char* append);
+void AppendFormatted0204201c(char* text, int append, int);
+int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+int GetFieldPercentOver307_020a0870(BattleRecordSnapshot* records);
+int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot* records);
+int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot* records);
+int GetFieldPercentOver448_020a090c(BattleRecordSnapshot* records);
+void StoreInArray0x8b0_020465c0(StoreStruct* messages, int index, int value);
 
 #if defined(jpn)
 extern char data_ov008_0218c0d5[];
@@ -160,8 +160,8 @@ extern "C" ARM void func_ov008_02188408(Struct_ov008_021842a0_2* arg0, char* arg
     {
         for (int var15 = 0; var15 < var13; var15++)
         {
-            func_02041a90(arg1, 4, var15 * 15 + 4);
-            func_02042058(arg1, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var15 + 0x82)));
+            AppendXYTag_02041a90(text, 4, i * 15 + 4);
+            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x82)));
         }
     }
     else if (arg2 == 1)
@@ -223,10 +223,10 @@ extern "C" ARM void func_ov008_02188408(Struct_ov008_021842a0_2* arg0, char* arg
         for (int var26 = 0; var26 < var13; var26++)
         {
 #if defined(jpn)
-            func_02042058(arg1, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var26 + 0x8c)));
+            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x8c)));
 #else
-            func_02041a5c(arg1, var26 * 15 + 4);
-            func_0204201c(arg1, (int)func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, (short)(var26 + 0x8c)), 0x18);
+            AppendYTag_02041a5c(text, i * 15 + 4);
+            AppendFormatted0204201c(text, (int)KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x8c)), 0x18);
 #endif
         }
     }

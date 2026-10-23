@@ -60,7 +60,7 @@ extern struct SePlayer g_sePlayer;
 extern const char* data_020f2a34;
 extern const char* data_020f2a2c;
 
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
@@ -69,9 +69,9 @@ void SetElementStateIfLess0217a9d0(int, int, int, Struct_0205d81c*);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 int HasAnyFlags_021719f8_021719f8(int*);
 int GetNthSetBit0218158c(void* menu, int index);
-void ZeroInit020de848(void* obj);
+void ItemTable_Init(void* obj);
 extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
-extern "C" int func_020de9a4(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
+extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
 extern "C" int func_0207c984(void* party, int id, int bits, void* a, void* b);
 extern "C" int func_ov000_0217c594(MenuState* menu, int limit);
 extern "C" ElemNode* func_ov000_02161318(MenuState* menu, int id);
@@ -80,13 +80,13 @@ extern "C" void func_ov000_02176634(MenuState* menu, void* entry, int mode, int 
 extern "C" void func_ov000_0217c638(MenuState* menu, int arg1, int arg2);
 
 // USA: func_ov000_0217d87c
-extern "C" ARM void func_ov000_0217d87c(Struct_ov000_02178d28_2* arg0, int arg1, int arg2) {
-    arg0->unknown_1d72_ |= 0x100;
-    signed char var0 = arg0->unknown_1d6e_;
-    int var1 = func_0205d794((Struct_0205c570*)arg0->unknown_188_);
-    arg0->unknown_1d6e_ = var1;
-    int var2 = arg0->unknown_70_[arg0->unknown_1d6b_];
-    if (var0 != var1) {
+extern "C" ARM void func_ov000_0217d87c(MenuState* menu, int arg1, int arg2) {
+    menu->flags |= 0x100;
+    signed char prev = menu->activeSum;
+    int sum = Window_GetSelectedIndex((Struct_0205c570*)menu->elements);
+    menu->activeSum = sum;
+    int id = menu->members[menu->selection];
+    if (prev != sum) {
         return;
     }
     if (func_ov000_0217c594(arg0, 5) != 0) {
@@ -105,8 +105,8 @@ extern "C" ARM void func_ov000_0217d87c(Struct_ov000_02178d28_2* arg0, int arg1,
 #else
         ((SafeAllocator*)((char*)arg0 + 0x1af8))->Reset();
 #endif
-        func_020de848((char*)arg0 + 0x100);
-        unsigned int var6;
+        ItemTable_Init((char*)menu + 0x100);
+        unsigned int size;
 #if defined(jpn)
         void* var7 = func_020e08f0(0, &var6);
 #else
@@ -114,9 +114,9 @@ extern "C" ARM void func_ov000_0217d87c(Struct_ov000_02178d28_2* arg0, int arg1,
 #endif
         if (var7 != NULL) {
 #if defined(jpn)
-            func_020de9a4((char*)arg0 + 0x100, arg0->unknown_26_ + 0x1bd2, var7, var6, arg0->unknown_26_, arg0->unknown_66_);
+            ItemTable_LoadIds((char*)menu + 0x100, menu->field26 + 0x1bd2, data, size, menu->field26, menu->field66);
 #else
-            func_020de9a4((char*)arg0 + 0x100, arg0->unknown_26_ + 0x1ad2, var7, var6, arg0->unknown_26_, arg0->unknown_66_);
+            ItemTable_LoadIds((char*)menu + 0x100, menu->field26 + 0x1ad2, data, size, menu->field26, menu->field66);
 #endif
         }
         BackgroundLoader::RemoveLockGlobal();

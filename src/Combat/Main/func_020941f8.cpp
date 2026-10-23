@@ -31,13 +31,13 @@ struct Struct_020941f8 {
 struct Struct_02020cb8_4;
 struct Struct_02020aec;
 
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" unsigned char func_020938cc();
-extern "C" ARM void func_0205a444(char* arg0);
-extern "C" ARM void func_0205a494(void* arg0);
-extern "C" ARM int func_0205a528(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" int func_020937f0(int arg0);
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
+extern void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+unsigned char IsPowCnt1Bit15Clear020938cc();
+ARM void SpriteContext_Init(char* obj);
+ARM void EmptyDestructor0205a494(void* obj);
+extern "C" ARM int SpriteContext_LoadFile(void* obj, void* data, int arg2, int arg3);
+extern "C" int func_020937f0(int a);
 extern const char data_020f1394[];
 
 // USA: func_020941f8
@@ -57,27 +57,27 @@ extern "C" ARM int func_020941f8(struct Struct_020941f8_2* arg0) {
         arg0->unknown_3cd_ |= 2;
         arg0->unknown_3c8_0_ = arg0->unknown_3c8_0_ + 1;
     } else {
-        void* var2;
-        void* var3;
-        unsigned int var4;
-        int var5;
-        if (var1 == 1 && var0->GetTaskStatus(arg0->unknown_340_) != 0) {
-            var0->GetLoadedFileByID(arg0->unknown_340_, &var3, &var4);
-            int var6 = func_02046900((struct Struct_02020cb8_4*)var3);
-            arg0->unknown_3c8_7_ = func_020938cc();
-            int var7 = func_020937f0(arg0->unknown_3c8_7_);
-            if (var7 != 0) {
-                struct Struct_020941f8 var8;
-                int var9;
-                func_0205a444((char*)&var8);
-                func_0205a444((char*)&var8);
-                var8.unknown_50_ = (unsigned char)arg0->unknown_3c8_7_;
-                var8.unknown_44_ = var7 - 0xa00;
-                for (var9 = 0; var9 < var6; var9++) {
-                    void* var10;
-                    var5 = 0;
-                    var10 = func_020467f0((struct Struct_02020aec*)var3, var9, &var2, &var5);
-                    func_0205a528(&var8, var10, var5, 0);
+        void* out1;
+        void* file;
+        unsigned int length;
+        int size;
+        if (n == 1 && bgl->GetTaskStatus(p->handle340) != 0) {
+            bgl->GetLoadedFileByID(p->handle340, &file, &length);
+            int count = Pac_CountFiles((struct ActiveEntry02046900*)file);
+            p->flag3c8 = IsPowCnt1Bit15Clear020938cc();
+            int value = func_020937f0(p->flag3c8);
+            if (value != 0) {
+                struct Ctx020941f8 ctx;
+                int i;
+                SpriteContext_Init((char*)&ctx);
+                SpriteContext_Init((char*)&ctx);
+                ctx.field50 = (unsigned char)p->flag3c8;
+                ctx.field44 = value - 0xa00;
+                for (i = 0; i < count; i++) {
+                    void* rec;
+                    size = 0;
+                    rec = Pac_GetFile((struct Rec020467f0*)file, i, &out1, &size);
+                    SpriteContext_LoadFile(&ctx, rec, size, 0);
                 }
                 func_0205a494(&var8);
             }

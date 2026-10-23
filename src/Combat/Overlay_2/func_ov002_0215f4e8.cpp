@@ -7,12 +7,12 @@ enum { Enum_ov002_0215f4e8_7166 = 0x1ac6, Enum_ov002_0215f4e8_3036 = 0xaa4, Enum
 enum { Enum_ov002_0215f4e8_7166 = 0x1bfe, Enum_ov002_0215f4e8_3036 = 0xbdc, Enum_ov002_0215f4e8_32 = 0x20 };
 #endif
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" const char *func_020e51cc(int arg0);
-extern "C" int func_02042058(char *arg0, const char *arg1);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+const char *CallFunc020e0434With02153694_020e51cc(int key);
+int AppendString02042058(char *dst, const char *src);
 #if defined(jpn)
 extern "C" int func_0204234c(char *arg0, int arg1);
 #else
@@ -34,7 +34,7 @@ extern "C" ARM void func_ov002_0215f4e8(unsigned char *arg0, char *arg1, int arg
     }
     func_02041ea4(arg1, var0);
 #if defined(jpn)
-    func_02042058(arg1, (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + Enum_ov002_0215f4e8_32), 0xfa0));
+    AppendString02042058(dst, (const char *) KeyTable_Get((struct Container020e0310 *) (base + NamesOffset), 0xfa0));
 #else
     func_02042058(arg1, func_020e51cc(0x16));
 #endif
@@ -51,10 +51,10 @@ extern "C" ARM void func_ov002_0215f4e8(unsigned char *arg0, char *arg1, int arg
         if (var3 == 1 && var5 == 6) {
             func_02041e70(arg1, 3);
         }
-        func_02041b70(arg1, var4,
-                      (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + Enum_ov002_0215f4e8_32), (short) (var5 + 0xfa1)));
-        if (var4 != var1 - 1) {
-            func_02042058(arg1, *(const char **) (arg0 + 0x1000 + Enum_ov002_0215f4e8_3036));
+        AppendNameTag_02041b70(dst, i,
+                      (const char *) KeyTable_Get((struct Container020e0310 *) (base + NamesOffset), (short) (v + 0xfa1)));
+        if (i != count - 1) {
+            AppendString02042058(dst, *(const char **) (base + 0x1000 + SeparatorOffset));
         }
         if (var3 == 1 && var5 == 6) {
             func_02041e70(arg1, 0xf);

@@ -33,19 +33,19 @@ struct Struct_ov002_0215d214_3 {
     unsigned int unknown_b_2_ : 6;
 };
 
-extern "C" void *func_02053c6c(unsigned char *arg0);
-extern "C" char *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" char *func_020421a0();
-extern "C" void func_02046380(void *arg0);
-extern "C" void func_020e4bf4(void *arg0, int arg1);
-extern "C" int func_ov002_02159774(void *arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_0200fb08(Struct_02000c9c_8 *arg0);
-extern "C" char *func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int sprintf(char *arg0, const char *arg1, ...);
-extern "C" char *strstr(const char *arg0, const char *arg1);
-extern "C" void *memcpy(void *arg0, const void *arg1, unsigned int arg2);
-extern "C" void func_020465c0(Struct_020465c0 *arg0, int arg1, int arg2);
-extern "C" void func_02046608(void *arg0, int arg1, const char *arg2, char *arg3, int arg4, int arg5, int arg6);
+void *GetFieldAt0x150_02053c6c(unsigned char *member);
+char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+char *GetGlobalField0x1c020421a0();
+extern "C" void func_02046380(void *messages);
+void InitObjFromCombatantId020e4bf4(void *obj, int combatantId);
+extern "C" int func_ov002_02159774(void *self, int idx, int a, int b, int c);
+int NormalizeField5_0200fb08(Struct0200fb08 *s);
+char *KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int sprintf(char *dst, const char *fmt, ...);
+extern "C" char *strstr(const char *str, const char *substr);
+extern "C" void *memcpy(void *dst, const void *src, unsigned int n);
+void StoreInArray0x8b0_020465c0(StoreStruct *messages, int index, int value);
+extern "C" void func_02046608(void *messages, int a, const char *format, char *output, int size, int b, int c);
 
 extern "C" unsigned char data_ov002_0216cac4[];
 extern "C" unsigned char data_ov002_0216cac5[];
@@ -172,12 +172,12 @@ extern "C" ARM void func_ov002_0215d214(char *arg0, char *arg1, int arg2) {
     if (var17 == 3) {
         var18 = 3;
     }
-    sprintf(var2, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var11), var18, var17);
-    if (var19 != 0) {
-        char *var24 = strstr(var2, data_ov002_0216d280);
-        if (var24 != 0) {
-            sprintf(var0, data_ov002_0216d285, var19);
-            memcpy(var24 + 4, var0, 2);
+    sprintf(buf, KeyTable_Get((struct Container020e0310 *) (self + 0x20), key), arg, n);
+    if (mark != 0) {
+        char *p = strstr(buf, data_ov002_0216d280);
+        if (p != 0) {
+            sprintf(tmp, data_ov002_0216d285, mark);
+            memcpy(p + 4, tmp, 2);
         }
     }
     func_020465c0((Struct_020465c0 *) var10, 0, var14);

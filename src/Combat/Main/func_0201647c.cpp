@@ -26,15 +26,15 @@ struct Struct_020130b0;
 extern "C" void* func_0205ec34();
 extern "C" int* func_0202ae18();
 extern "C" void* func_0208e0a8();
-extern "C" int func_0208e824(void*, char*);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" Struct_020130b0* func_0201e844(void*, int, int);
-extern "C" void func_020de848(void*);
-extern "C" int func_020de9a4(void*, SafeAllocator*, void*, unsigned int, short*, unsigned short);
+int IsMatchingName0208e824(void*, char*);
+int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+int CheckField0NonZero_0202b7d8(int*);
+ListNode* FindNodeById_0201e844(void*, int, int);
+void ItemTable_Init(void*);
+extern "C" int ItemTable_LoadIds(void*, SafeAllocator*, void*, unsigned int, short*, unsigned short);
 extern "C" void func_02013b70(Zone3D*, SafeAllocator*);
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 
 #if defined(jpn)
 extern "C" int func_020e0484(void*, SafeAllocator*, const char*, short*, unsigned short, bool);
@@ -117,16 +117,16 @@ extern "C" ARM void func_0201647c(Zone3D* arg0) {
             }
         }
     }
-    func_020de848(arg0->unknown_struct_2754_);
-    if (var11 > 0) {
+    ItemTable_Init(zone->unknown_struct_2754_);
+    if (count > 0) {
 #if defined(jpn)
-        func_020e0484(arg0->unknown_struct_2754_, var0, data_020f2a38, var10,
-            (unsigned short)var11, true);
+        func_020e0484(zone->unknown_struct_2754_, allocator, g_itemDataArchive, ids,
+            (unsigned short)count, true);
 #else
         BackgroundLoader::AddLockGlobal();
-        unsigned int var18 = 0;
-        void* var19 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var18);
-        if (var19) func_020de9a4(arg0->unknown_struct_2754_, var0, var19, var18, var10, (unsigned short)var11);
+        unsigned int size = 0;
+        void* file = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
+        if (file) ItemTable_LoadIds(zone->unknown_struct_2754_, allocator, file, size, ids, (unsigned short)count);
         BackgroundLoader::RemoveLockGlobal();
 #endif
     }

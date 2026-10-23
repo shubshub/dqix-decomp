@@ -8,12 +8,12 @@
 #include "World/Object3D.h"
 #include "std_library_functions.h"
 
-extern "C" char* func_020421a0(void);
-struct Struct_0203d028;
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_020440b8(char* arg0, void* arg1, void* arg2);
+char* GetGlobalField0x1c020421a0(void);
+struct Foo0207df50;
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
+void CallFunc0202f310AtField0x19e0_020440b8(char* base, void* alloc, void* data);
 
 extern char data_ov017_021d7504[];
 extern char data_ov017_021d7510[];
@@ -24,19 +24,19 @@ extern char data_ov017_021d758d[];
 extern char data_ov017_021d75a2[];
 
 // USA: func_ov017_0219ba0c
-extern "C" ARM void func_ov017_0219ba0c(GameResources* arg0, int arg1) {
-    const void* var0;
-    unsigned int var1;
-    unsigned int var2;
-    unsigned int var3;
-    char* var4 = func_020421a0();
-    BackgroundLoader* var5 = BackgroundLoader::GetInstance();
-    SafeAllocator* var6 = &arg0->allocator_array_38[6];
-    char* var7 = arg0->unknown_2cc_ + 0x2a0;
-    var5->AddLockGlobal();
-    var6->Reset();
-    func_0207df50((Struct_0203d028*)var7);
-    func_0207df90(var7);
+extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int skipModels) {
+    const void* file;
+    unsigned int fileSize;
+    unsigned int length;
+    unsigned int size;
+    char* controller = GetGlobalField0x1c020421a0();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    SafeAllocator* alloc = &res->allocator_array_38[6];
+    char* tables = res->unknown_2cc + 0x2a0;
+    loader->AddLockGlobal();
+    alloc->Reset();
+    CopyInternalFields0207df50((Foo0207df50*)tables);
+    VramState_Restore(tables);
 
     char var8[0x50];
     sprintf(var8, data_ov017_021d7504, data_ov017_021d7510);
@@ -50,10 +50,10 @@ extern "C" ARM void func_ov017_0219ba0c(GameResources* arg0, int arg1) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_020440b8(var4, var6, data_0211e33c);
-    if (arg1) {
-        var9.Destroy();
-        func_0207dfac(var7);
+    CallFunc0202f310AtField0x19e0_020440b8(controller, alloc, data_0211e33c);
+    if (skipModels) {
+        narc.Destroy();
+        VramState_Save(tables);
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -72,7 +72,7 @@ extern "C" ARM void func_ov017_0219ba0c(GameResources* arg0, int arg1) {
         var10.unk_10 = 1;
         ((Object3D*)arg0->unknown_ptr_36cc)->LoadFromCHRArchive(&var10);
     }
-    func_0207dfac(var7);
+    VramState_Save(tables);
 
     if (!LoadFileIntoMemory(data_ov017_021d758d, data_0211e33c, &var3)) {
         BackgroundLoader::RemoveLockGlobal();

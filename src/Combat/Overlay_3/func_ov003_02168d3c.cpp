@@ -3,12 +3,12 @@ extern "C" void* memset(void*, int, unsigned int);
 #include "GameState/GameState.h"
 
 struct Struct_0205d81c;
-struct Struct_0201099c_3;
-struct Struct_020465c0;
-extern "C" void* func_020421a0();
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_02042058(char*, const char*);
+struct Container020e0310;
+struct StoreStruct;
+void* GetGlobalField0x1c020421a0();
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+int KeyTable_Get(Container020e0310*, int);
+int AppendString02042058(char*, const char*);
 extern "C" void func_ov003_0216abd8(void*, char*);
 extern "C" void func_ov003_02169c3c(void*);
 extern "C" int func_ov003_02169eec(void*, void*);
@@ -69,24 +69,24 @@ static inline void inline_ov003_02168d3c_2(Struct_ov003_02168d3c_2* arg0,int arg
 #endif
 }
 // USA: func_ov003_02168d3c
-extern "C" ARM void func_ov003_02168d3c(Struct_ov003_02168d3c* arg0, void* arg1, int arg2) {
-    GameState* var0=GameState::GetInstance();
-    Struct_ov003_02168d3c_2* var1=(Struct_ov003_02168d3c_2*)func_020421a0();
-    Struct_ov003_02168d3c_3* var2=(Struct_ov003_02168d3c_3*)func_02010828(var0);
-    if(var1->unknown_9a0_==3) var1->unknown_19ae_=0;
-    if(arg0->unknown_4e8_==0) {
-        func_0205deb4((Struct_0205d81c*)arg0->unknown_e4_,1,1);
-        if(arg2==0x3f2) {
-            int var3=-1;
-            if(var2->unknown_f68_>=0x3b9ac618) var3=(short)(arg2+5);
-            else if(var2->unknown_f6c_<1000) var3=(short)(arg2+3);
-            if(var3>=0) {
-                memset(arg0->unknown_7c_,0,Enum_ov003_02168d3c_2400);
-                int var4=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,var3);
-                func_02042058(arg0->unknown_7c_,(const char*)var4);
-                func_ov003_0216abd8(arg0,arg0->unknown_7c_);
-                inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-                arg0->unknown_4e8_=3;
+extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
+    GameState* gs=GameState::GetInstance();
+    Global68d3c* global=(Global68d3c*)GetGlobalField0x1c020421a0();
+    Party68d3c* party=(Party68d3c*)GetPtrField0x2a04_02010828(gs);
+    if(global->stage==3) global->flag=0;
+    if(self->state==0) {
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,1,1);
+        if(key==0x3f2) {
+            int error=-1;
+            if(party->bank>=0x3b9ac618) error=(short)(key+5);
+            else if(party->money<1000) error=(short)(key+3);
+            if(error>=0) {
+                memset(self->text,0,kTextSize68d3c);
+                int text=KeyTable_Get((Container020e0310*)self->messages,error);
+                AppendString02042058(self->text,(const char*)text);
+                func_ov003_0216abd8(self,self->text);
+                Show68d3c(global,(int)self->text);
+                self->state=3;
                 return;
             }
             unsigned int var5=var2->unknown_f6c_/1000;
@@ -97,18 +97,18 @@ extern "C" ARM void func_ov003_02168d3c(Struct_ov003_02168d3c* arg0, void* arg1,
                 arg0->unknown_4f3_[var7]=var8-var9*10;
                 var6*=10;
             }
-            arg0->unknown_4f8_=var5*1000;
-        } else if(arg2==0x3fc) {
-            int var10=-1;
-            if(var2->unknown_f68_==0) var10=(short)(arg2+3);
-            else if(var2->unknown_f6c_>=0x989298) var10=(short)(arg2+4);
-            if(var10>=0) {
-                memset(arg0->unknown_7c_,0,Enum_ov003_02168d3c_2400);
-                int var11=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,var10);
-                func_02042058(arg0->unknown_7c_,(const char*)var11);
-                func_ov003_0216abd8(arg0,arg0->unknown_7c_);
-                inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-                arg0->unknown_4e8_=3;
+            self->maximum=value*1000;
+        } else if(key==0x3fc) {
+            int error=-1;
+            if(party->bank==0) error=(short)(key+3);
+            else if(party->money>=0x989298) error=(short)(key+4);
+            if(error>=0) {
+                memset(self->text,0,kTextSize68d3c);
+                int text=KeyTable_Get((Container020e0310*)self->messages,error);
+                AppendString02042058(self->text,(const char*)text);
+                func_ov003_0216abd8(self,self->text);
+                Show68d3c(global,(int)self->text);
+                self->state=3;
                 return;
             }
             func_02046380(var1);
@@ -126,28 +126,28 @@ extern "C" ARM void func_ov003_02168d3c(Struct_ov003_02168d3c* arg0, void* arg1,
             }
             arg0->unknown_4f8_=var12*1000;
         }
-        int var18=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,(short)arg2);
-        inline_ov003_02168d3c(var1,var18);
-        arg0->unknown_4e8_++;
-    } else if(arg0->unknown_4e8_==1) {
-        if(var1->unknown_9a0_==3) {
-            func_ov003_02169c3c(arg0);
-            func_0205deb4((Struct_0205d81c*)arg0->unknown_e4_,0,0);
-            func_0205deb4((Struct_0205d81c*)arg0->unknown_e4_,2,0);
-            arg0->unknown_4e8_++;
+        int text=KeyTable_Get((Container020e0310*)self->messages,(short)key);
+        Show68d3c(global,text);
+        self->state++;
+    } else if(self->state==1) {
+        if(global->stage==3) {
+            func_ov003_02169c3c(self);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,0,0);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,2,0);
+            self->state++;
         }
-    } else if(arg0->unknown_4e8_==2) {
-        int var19=func_ov003_02169eec(arg0,arg1);
-        if(var19==-1) return;
-        if(var19==-2) {
-            func_0205d6e4((Struct_0205d81c*)arg0->unknown_e4_,1);
-            func_0205deb4((Struct_0205d81c*)arg0->unknown_e4_,1,1);
-            memset(arg0->unknown_7c_,0,Enum_ov003_02168d3c_2400);
-            int var20=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,0x406);
-            func_02042058(arg0->unknown_7c_,(const char*)var20);
-            func_ov003_0216abd8(arg0,arg0->unknown_7c_);
-            inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-            arg0->unknown_4e8_++;
+    } else if(self->state==2) {
+        int result=func_ov003_02169eec(self,arg);
+        if(result==-1) return;
+        if(result==-2) {
+            func_0205d6e4((Struct_0205d81c*)self->menu,1);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,1,1);
+            memset(self->text,0,kTextSize68d3c);
+            int text=KeyTable_Get((Container020e0310*)self->messages,0x406);
+            AppendString02042058(self->text,(const char*)text);
+            func_ov003_0216abd8(self,self->text);
+            Show68d3c(global,(int)self->text);
+            self->state++;
             return;
         }
         if(var19!=0) return;
@@ -177,36 +177,36 @@ extern "C" ARM void func_ov003_02168d3c(Struct_ov003_02168d3c* arg0, void* arg1,
                 }
             }
         }
-        if(var22) {
-            arg0->unknown_4eb_=1;
-            memset(arg0->unknown_7c_,0,Enum_ov003_02168d3c_2400);
-            func_02046380(var1);
-            func_020465c0((Struct_020465c0*)var1,0,arg0->unknown_5a0_);
-            func_020465f0((unsigned char*)var1,0,0);
-            int var25=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,(short)(var24+1));
-            inline_ov003_02168d3c_2(var1,var25,arg0->unknown_7c_);
-            func_ov003_0216abd8(arg0,arg0->unknown_7c_);
-            inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-            arg0->unknown_4e8_++;
-        } else if(var23) {
-            func_02046380(var1);
-            func_020465c0((Struct_020465c0*)var1,0,0x3b9ac618-var2->unknown_f68_);
-            func_020465f0((unsigned char*)var1,0,0);
-            int var26=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,var24);
-            inline_ov003_02168d3c_2(var1,var26,arg0->unknown_7c_);
-            func_ov003_0216abd8(arg0,arg0->unknown_7c_);
-            inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-            arg0->unknown_4e8_++;
+        if(success) {
+            self->changed=1;
+            memset(self->text,0,kTextSize68d3c);
+            func_02046380(global);
+            StoreInArray0x8b0_020465c0((StoreStruct*)global,0,self->selected);
+            SetByteInRange_020465f0((unsigned char*)global,0,0);
+            int text=KeyTable_Get((Container020e0310*)self->messages,(short)(message+1));
+            Format68d3c(global,text,self->text);
+            func_ov003_0216abd8(self,self->text);
+            Show68d3c(global,(int)self->text);
+            self->state++;
+        } else if(error) {
+            func_02046380(global);
+            StoreInArray0x8b0_020465c0((StoreStruct*)global,0,0x3b9ac618-party->bank);
+            SetByteInRange_020465f0((unsigned char*)global,0,0);
+            int text=KeyTable_Get((Container020e0310*)self->messages,message);
+            Format68d3c(global,text,self->text);
+            func_ov003_0216abd8(self,self->text);
+            Show68d3c(global,(int)self->text);
+            self->state++;
         } else {
-            memset(arg0->unknown_7c_,0,Enum_ov003_02168d3c_2400);
-            int var27=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,(short)(var24+2));
-            func_02042058(arg0->unknown_7c_,(const char*)var27);
-            var27=func_020e0434((Struct_0201099c_3*)arg0->unknown_64_,var24);
-            func_02042058(arg0->unknown_7c_,(const char*)var27);
-            inline_ov003_02168d3c(var1,(int)arg0->unknown_7c_);
-            for(int var28=0;var28<4;++var28) arg0->unknown_4ef_[var28]=0;
-            arg0->unknown_5a0_=0;
-            arg0->unknown_4e8_=1;
+            memset(self->text,0,kTextSize68d3c);
+            int text=KeyTable_Get((Container020e0310*)self->messages,(short)(message+2));
+            AppendString02042058(self->text,(const char*)text);
+            text=KeyTable_Get((Container020e0310*)self->messages,message);
+            AppendString02042058(self->text,(const char*)text);
+            Show68d3c(global,(int)self->text);
+            for(int i=0;i<4;++i) self->digits[i]=0;
+            self->selected=0;
+            self->state=1;
         }
     } else if(arg0->unknown_4e8_==3) {
         if(var1->unknown_998_==0) { arg0->unknown_4ec_=6; arg0->unknown_4e8_=0; }

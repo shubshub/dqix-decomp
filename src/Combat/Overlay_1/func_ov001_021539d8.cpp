@@ -140,26 +140,26 @@ extern "C" {
 struct Struct_ov001_021539d8_5* func_0203cf4c(void);
 
 void* func_0202ae18(void);
-int func_0202c508(void* arg0);
-unsigned char func_020100b0(GameState* arg0);
-int func_020100a8(GameState* arg0);
-void func_0207df50(struct Struct_ov001_021539d8_7* arg0);
-void func_0207df90(struct Struct_ov001_021539d8_7* arg0);
-void func_0207dfac(struct Struct_ov001_021539d8_7* arg0);
-void func_ov001_0215ab54(int arg0, int arg1, int arg2);
-struct Struct_ov001_021539d8* func_0203df78(void* arg0, int arg1);
-int func_0203dfdc(void* arg0, int arg1);
-void func_0200fd38(GameState* arg0, int arg1, struct Struct_ov001_021539d8_11* arg2);
-SafeAllocator* func_ov001_0215aab8(void);
-void _ZN8Object3D10InitializeEv(struct Struct_ov001_021539d8_11* arg0);
-void _ZN8Object3D11MakeVisibleEv(struct Struct_ov001_021539d8_11* arg0);
-void _ZN8Object3D10MakeHiddenEv(struct Struct_ov001_021539d8_11* arg0);
-void _ZN8Object3D10EnableFlagEi(struct Struct_ov001_021539d8_11* arg0, int arg1);
-void _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(struct Struct_ov001_021539d8_11* arg0, struct Struct_ov001_021539d8_8* arg1);
-void _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(struct Struct_ov001_021539d8_11* arg0, struct Struct_ov001_021539d8_8* arg1, void* arg2);
-void _ZN8Object3D8SetScaleEiii(struct Struct_ov001_021539d8_11* arg0, int arg1, int arg2, int arg3);
-void _ZN8Object3D21MaybeSetBCFGAnimationEii(struct Struct_ov001_021539d8_11* arg0, int arg1, int arg2);
-void _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(struct Struct_ov001_021539d8_11* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3, int arg4);
+int func_0202c508(void* obj);
+unsigned char _Z28GetField0x397cValue_020100b0P9GameState(GameState* gs);
+int _Z27GetField0x3acValue_020100a8P9GameState(GameState* gs);
+void _Z26CopyInternalFields0207df50P11Foo0207df50(struct PairTables021539d8* p);
+void _Z17VramState_RestorePc(struct PairTables021539d8* p);
+void _Z14VramState_SavePc(struct PairTables021539d8* p);
+void func_ov001_0215ab54(int kind, int id, int index);
+struct Emitter021539d8* _Z29FindEntryPointerByKey0203df78Pvi(void* list, int key);
+int _Z22FindEntryByKey0203dfdcPvi(void* list, int key);
+void _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(GameState* gs, int id, struct Obj021539d8* obj);
+SafeAllocator* _Z22GetGlobalValue0215aab8v(void);
+void _ZN8Object3D10InitializeEv(struct Obj021539d8* obj);
+void _ZN8Object3D11MakeVisibleEv(struct Obj021539d8* obj);
+void _ZN8Object3D10MakeHiddenEv(struct Obj021539d8* obj);
+void _ZN8Object3D10EnableFlagEi(struct Obj021539d8* obj, int mask);
+void _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(struct Obj021539d8* obj, struct ArchiveInfo021539d8* info);
+void _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(struct Obj021539d8* obj, struct ArchiveInfo021539d8* info, void* callback);
+void _ZN8Object3D8SetScaleEiii(struct Obj021539d8* obj, int x, int y, int z);
+void _ZN8Object3D21MaybeSetBCFGAnimationEii(struct Obj021539d8* obj, int a, int b);
+void _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(struct Obj021539d8* obj, SafeAllocator* allocator, void* data, unsigned int size, int mode);
 void func_02012fe4(void);
 void func_020404c0(struct Struct_ov001_021539d8* arg0);
 void func_0206bf2c(void* arg0);
@@ -335,22 +335,22 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
                 var1->RemoveTask(var5->unknown_2c_);
                 break;
             }
-            func_0207df90(var21);
-            _ZN8Object3D10InitializeEv(var34);
-            var29.unknown_c_ = var33;
-            var29.unknown_4_ = var30;
-            var29.unknown_8_ = var31;
-            var29.unknown_10_ = 1;
-            if (var32 == 0) {
-                _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(var34, &var29);
-            } else if (var32 == 1) {
-                _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(var34, &var29, 0);
+            _Z17VramState_RestorePc(pair);
+            _ZN8Object3D10InitializeEv(obj);
+            info.allocator = allocator;
+            info.data = data;
+            info.size = size;
+            info.flag = 1;
+            if (format == 0) {
+                _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(obj, &info);
+            } else if (format == 1) {
+                _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(obj, &info, 0);
             }
-            func_0207dfac(var21);
-            _ZN8Object3D8SetScaleEiii(var34, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(var34, 0, 0);
-            func_0200fd38(var0, var5->unknown_2_, var34);
-            if (var5->unknown_4_ & 1) {
+            _Z14VramState_SavePc(pair);
+            _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
+            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
+            if (node->flags & 1) {
                 func_02012fe4();
                 var8 = LightingManager::GetInstance();
                 var18 = var34->unknown_8_->unknown_54_;
@@ -512,24 +512,24 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             if (var56 == 0) {
                 break;
             }
-            func_0207df90(var21);
-            _ZN8Object3D10InitializeEv(var55);
-            var48.unknown_4_ = var56;
-            var48.unknown_c_ = var54;
-            var48.unknown_8_ = var53;
-            var48.unknown_10_ = 1;
-            if (var57 == 0) {
-                _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(var55, &var48);
-            } else if (var57 == 1) {
-                _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(var55, &var48, 0);
+            _Z17VramState_RestorePc(pair);
+            _ZN8Object3D10InitializeEv(obj);
+            info.data = unpacked;
+            info.allocator = allocator;
+            info.size = unpackedSize;
+            info.flag = 1;
+            if (format == 0) {
+                _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(obj, &info);
+            } else if (format == 1) {
+                _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(obj, &info, 0);
             }
-            func_0207dfac(var21);
-            _ZN8Object3D8SetScaleEiii(var55, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(var55, 0, 0);
-            func_0200fd38(var0, var5->unknown_2_, var55);
-            func_ov001_0215ab54(1, var5->unknown_2_, var5->unknown_1_);
-            var1->RemoveTask(var5->unknown_2c_);
-            var5->unknown_31_ = 1;
+            _Z14VramState_SavePc(pair);
+            _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
+            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
+            func_ov001_0215ab54(1, node->slot, node->index);
+            loader->RemoveTask(node->task);
+            node->done = 1;
             break;
         }
         case 7: {
@@ -549,18 +549,18 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
                 var1->RemoveTask(var5->unknown_2c_);
                 break;
             }
-            var61 = var60->Allocate(var59);
-            memcpy(var61, var58, var59);
-            func_0207df90(var21);
-            _ZN8Object3D10InitializeEv(var62);
-            _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(var62, var60, var61, var59, 0);
-            func_0207dfac(var21);
-            _ZN8Object3D8SetScaleEiii(var62, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(var62, 0, 0);
-            func_0200fd38(var0, var5->unknown_2_, var62);
-            func_ov001_0215ab54(1, var5->unknown_2_, var5->unknown_1_);
-            var1->RemoveTask(var5->unknown_2c_);
-            var5->unknown_31_ = 1;
+            copy = allocator->Allocate(size);
+            memcpy(copy, data, size);
+            _Z17VramState_RestorePc(pair);
+            _ZN8Object3D10InitializeEv(obj);
+            _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(obj, allocator, copy, size, 0);
+            _Z14VramState_SavePc(pair);
+            _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
+            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
+            func_ov001_0215ab54(1, node->slot, node->index);
+            loader->RemoveTask(node->task);
+            node->done = 1;
             break;
         }
         case 8: {
@@ -580,24 +580,24 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
                 var1->RemoveTask(var5->unknown_2c_);
                 break;
             }
-            func_0207df90(var21);
-            _ZN8Object3D10InitializeEv(var67);
-            var63.unknown_4_ = var64;
-            var63.unknown_8_ = var65;
-            var63.unknown_10_ = 1;
-            var63.unknown_c_ = var66;
-            _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(var67, &var63);
-            func_0207dfac(var21);
-            NSBXX_Model_SetPolygonID(var67->unknown_8_->unknown_54_, 0x3d);
-            var67->unknown_44_ = 0;
-            var67->unknown_48_ = -0xa000;
-            var67->unknown_4c_ = 0x1000;
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(var67, 0, 0);
-            func_0200fd38(var0, var5->unknown_2_, var67);
-            _ZN8Object3D10MakeHiddenEv(var67);
-            func_ov001_0215ab54(1, var5->unknown_2_, var5->unknown_1_);
-            var1->RemoveTask(var5->unknown_2c_);
-            var5->unknown_31_ = 1;
+            _Z17VramState_RestorePc(pair);
+            _ZN8Object3D10InitializeEv(obj);
+            info.data = data;
+            info.size = size;
+            info.flag = 1;
+            info.allocator = allocator;
+            _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(obj, &info);
+            _Z14VramState_SavePc(pair);
+            NSBXX_Model_SetPolygonID(obj->holder->model, 0x3d);
+            obj->posX = 0;
+            obj->posY = -0xa000;
+            obj->posZ = 0x1000;
+            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
+            _ZN8Object3D10MakeHiddenEv(obj);
+            func_ov001_0215ab54(1, node->slot, node->index);
+            loader->RemoveTask(node->task);
+            node->done = 1;
             break;
         }
         }

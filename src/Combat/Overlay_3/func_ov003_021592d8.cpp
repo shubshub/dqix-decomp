@@ -49,17 +49,17 @@ struct Struct_ov003_021592d8_6 {
     char unknown_64_[0x18];
 };
 
-extern "C" struct Struct_ov003_021592d8_3* func_020421a0();
-extern "C" struct Struct_ov003_021592d8* func_02053c6c(unsigned char* arg0);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" void* func_0208247c(void* arg0);
-extern "C" int func_02082490(void* arg0, void* arg1, unsigned int arg2, int arg3, int arg4);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_02046608(void* arg0, int arg1, const char* arg2, char* arg3, int arg4, int arg5, int arg6);
+struct MessageWork021592d8* GetGlobalField0x1c020421a0();
+struct VocationData021592d8* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void func_02046380(void* obj);
+void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
+int KeyTable_Get(struct Container020e0310* c, int key);
+void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
+void* Clear0x54Bytes0208247c(void* obj);
+extern "C" int func_02082490(void* output, void* resource, unsigned int size, int selection, int extra);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+extern "C" void func_02046608(void* messages, int a, const char* input, char* output, int b, int c, int d);
 
 extern char data_ov003_0217fe18[];
 extern unsigned char data_0211e33c[0x30000];
@@ -81,12 +81,12 @@ extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, st
     func_020e4bf4(&var3, arg1->unknown_4_);
     var0->unknown_10_ = &var3;
 #endif
-    int var4;
-    if (var1->unknown_16c_[var2] == 99) {
-        func_02046574((struct Struct_02046574_2*)var0, 1,
-                               (char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_,
-                                                            (short)(var1->unknown_950_ + 0x1e)));
-        var4 = 0x3fe;
+    int key;
+    if (data->levels[vocation] == 99) {
+        SetIndexedName02046574((struct Obj02046574*)work, 1,
+                               (char*)KeyTable_Get((struct Container020e0310*)self->messages,
+                                                            (short)(data->vocation + 0x1e)));
+        key = 0x3fe;
     } else {
         char var5[0x28];
         unsigned int var6;
@@ -113,9 +113,9 @@ extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, st
         BackgroundLoader::RemoveLockGlobal();
     }
 #if defined(jpn)
-    func_020474a8(var0, 0xc, (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, var4), arg2);
+    func_020474a8(work, 0xc, (const char*)KeyTable_Get((struct Container020e0310*)self->messages, key), out);
 #else
-    func_02046608(var0, 0xc, (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, var4), arg2,
+    func_02046608(work, 0xc, (const char*)KeyTable_Get((struct Container020e0310*)self->messages, key), out,
                   0xe3, 0, 1);
 #endif
 }

@@ -108,36 +108,36 @@ extern "C" struct Struct_020e3f1c_3* func_020421a0();
 extern "C" struct Struct_020e3f1c_5* func_02012fe4();
 extern "C" int func_020100f8(char* arg0);
 extern "C" int func_ov017_021959b4();
-extern "C" void func_020e4524(char* arg0);
-extern "C" void func_ov004_0216fa48(void* arg0);
-extern "C" void func_02076b58(struct Struct_02076a8c_2* arg0);
-extern "C" void* func_020d6c00();
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" void func_02037d88(GameObject* arg0);
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
-extern "C" void func_020531f0(GameObject* arg0);
-extern "C" void func_020a27b8(unsigned char* arg0);
-extern "C" int func_02039874(void* arg0);
-extern "C" void func_020338d4(struct Struct_020338d4* arg0, struct Struct_ov009_0218aa28* arg1);
-extern "C" void func_02039d24(unsigned char* arg0);
-extern "C" void func_020338b0(unsigned char* arg0, int arg1);
-extern "C" void func_0202e6a8(struct Struct_0202e6a8* arg0, int arg1);
-extern "C" int func_0202e800(void* arg0);
-extern "C" void func_0202e5c0(struct Struct_0202e5c0* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202ea4c(struct Struct_0202ea4c* arg0);
-extern "C" void func_0202e0a4(struct Struct_020e3f1c_2* arg0);
-extern "C" struct Struct_020d7aa0_2* func_020d7a50();
-extern "C" void func_020d7aa0(struct Struct_020d7aa0_2* arg0);
-extern "C" void func_ov017_021c3e18(int arg0);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void* func_020dfc2c(void* arg0);
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
+void StartBattleTimerSequence020e4524(char* obj);
+extern "C" void func_ov004_0216fa48(void* obj);
+void TickActorAndDispatchPhase02076b58(struct Obj02076b58* actor);
+void* GetDataPtr02114e04_020d6c00();
+void OrBitsIntoField0_020466e4(unsigned int* word, unsigned int mask);
+void SetByte0xbeShiftPrev(struct Bytes02033b88* obj, int value);
+extern "C" void func_02037d88(GameObject* obj);
+void CancelPendingAction020397cc(struct Obj020397cc* obj, int arg);
+extern "C" void func_020531f0(GameObject* obj);
+void ClearIntAt0x23c_020a27b8(unsigned char* obj);
+int GetSignedByte0x1c9_02039874(void* obj);
+void AimAndSetVecY020338d4(struct Struct020338d4* self, struct Vec3* target);
+void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
+void ComputeAndDispatch020338b0(unsigned char* obj, int target);
+void ApplyField0x70Tail(struct GlobalObj0202e6a8* obj, int value);
+int GetField0x78_0202e800(void* obj);
+void Camera_SetPosition(struct Vec3Target0202e5c0* obj, int x, int y, int z);
+void ComputeAngleHeightDistance0202ea4c(struct Obj0202ea4c* obj);
+extern "C" void func_0202e0a4(struct Camera020e3f1c* camera);
+struct Obj020d7aa0* GetGlobalResetObj020d7a50();
+void TeardownAndResetState020d7aa0(struct Obj020d7aa0* obj);
+extern "C" void func_ov017_021c3e18(int arg);
+extern "C" int sprintf(char* buf, const char* fmt, ...);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void* ResetAndReturnSelf020dfc2c(void* p);
+void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
+int KeyTable_Get(struct Container020e0310* c, int key);
+void TailForward02012da4(AllocatorUnion* alloc, void* ptr);
+void SetIndexedName02046574(struct Obj02046574* obj, int index, char* name);
 #if defined(jpn)
 extern "C" void func_0204500c(void* arg0, void* arg1, int arg2);
 #else
@@ -263,18 +263,18 @@ extern "C" ARM void func_020e3f1c(struct Struct_020e3f1c_4* arg0) {
                 func_02039d24((unsigned char*)var18);
             }
         }
-        func_020338b0((unsigned char*)var10, (int)&var6->unknown_44_);
-        func_0202e6a8((struct Struct_0202e6a8*)var5, 0);
-        int var19 = func_0202e800(var5);
-        struct Struct_ov009_0218aa28 var20 = var5->unknown_10_;
-        if (arg0->unknown_e_ == 1) {
-            int var21 = inline_02061c04_5(var19, 0xddb);
-            int var22 = inline_02061c04_5(var19, 0x599);
-            func_0202e5c0((struct Struct_0202e5c0*)var5, var20.unknown_0_, var20.unknown_4_ + var22, var20.unknown_8_ + var21);
-            func_0202ea4c((struct Struct_0202ea4c*)var5);
-        } else if (arg0->unknown_e_ == 2) {
-            func_0202e5c0((struct Struct_0202e5c0*)var5, var20.unknown_0_, var20.unknown_4_ + 0x2000, var20.unknown_8_ + 0xd800);
-            func_0202ea4c((struct Struct_0202ea4c*)var5);
+        ComputeAndDispatch020338b0((unsigned char*)monster, (int)&leader->position);
+        ApplyField0x70Tail((struct GlobalObj0202e6a8*)camera, 0);
+        int dist = GetField0x78_0202e800(camera);
+        struct Vec3 target = camera->target;
+        if (intro->cameraMode == 1) {
+            int dz = FxMul(dist, 0xddb);
+            int dy = FxMul(dist, 0x599);
+            Camera_SetPosition((struct Vec3Target0202e5c0*)camera, target.x, target.y + dy, target.z + dz);
+            ComputeAngleHeightDistance0202ea4c((struct Obj0202ea4c*)camera);
+        } else if (intro->cameraMode == 2) {
+            Camera_SetPosition((struct Vec3Target0202e5c0*)camera, target.x, target.y + 0x2000, target.z + 0xd800);
+            ComputeAngleHeightDistance0202ea4c((struct Obj0202ea4c*)camera);
         }
         func_0202e0a4(var5);
         func_020d7aa0(func_020d7a50());
@@ -342,16 +342,16 @@ extern "C" ARM void func_020e3f1c(struct Struct_020e3f1c_4* arg0) {
             func_ov004_0216fa48(arg0);
             return;
         }
-        SafeAllocator var31;
-        var31.ResetAllocatorPointer();
-        var31.CreateTypeA(var30, 0x500);
-        struct Struct_0201099c_14 var32;
-        func_020dfc2c(&var32);
-        func_020dfc40(&var32);
-        func_020dfec0(&var32, &var31, var24, var25);
-        var0->RemoveTask(arg0->unknown_c_);
-        arg0->unknown_c_ = -1;
-        void* var33 = (void*)func_020e0434((struct Struct_0201099c_3*)&var32, var8);
+        SafeAllocator alloc;
+        alloc.ResetAllocatorPointer();
+        alloc.CreateTypeA(buf, 0x500);
+        struct Struct020dfc40 table;
+        ResetAndReturnSelf020dfc2c(&table);
+        KeyTable_Reset(&table);
+        KeyTable_Load(&table, &alloc, fileData, size);
+        loader->RemoveTask(intro->taskId);
+        intro->taskId = -1;
+        void* entry = (void*)KeyTable_Get((struct Container020e0310*)&table, bossId);
 #endif
         if (var33 == NULL) {
             var31.Destroy();

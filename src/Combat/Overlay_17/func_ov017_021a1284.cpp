@@ -102,15 +102,15 @@ extern "C" void func_ov023_021e338c(char*);
 extern "C" void func_ov023_021e3030(Struct_ov017_021a1284_8*);
 extern "C" void func_ov017_021a18c8(Struct_ov017_021a1284*);
 extern "C" void func_ov017_0219b624(GameResources*);
-extern "C" void func_0203d018(unsigned char*);
-extern "C" void func_0203de2c(Struct_0203de2c_3*);
-extern "C" void func_ov017_0218f79c(void*);
-extern "C" void func_ov017_021a2840(GameResources*);
-extern "C" void func_02058564(Struct_02058564_2*);
-extern "C" void func_02042b30(void*, void*);
-extern "C" void func_0207df90(char*);
+void ClearField0x98Bit0_0203d018(unsigned char*);
+void ReleaseRosterEntries0203de2c(Roster0203de2c*);
+void ProcessCombatantsIfFlagged_0218f79c(void*);
+void ProcessSlotField58_021a2840(GameResources*);
+void CleanupNodeList02058564(NodeList02058564*);
+void SetField0x1e28_02042b30(void*, void*);
+void VramState_Restore(char*);
 extern "C" void func_020432c4(void*);
-extern "C" void func_0207dfac(char*);
+void VramState_Save(char*);
 extern "C" int func_ov017_0218f5a4(GameResources*, int, int, int, int);
 extern "C" int func_0202b7d8(int*);
 extern "C" int func_02086ef0(Struct_02048150*, int);
@@ -218,31 +218,31 @@ extern "C" ARM void func_ov017_021a1284(TransferEvent021a1284* self, void* unuse
             }
             func_ov023_021e31b0((Struct_ov017_021a1284_7*)arg0->unknown_1c_, var16, var17);
         }
-        arg0->unknown_22_ = 3;
-    } else if (arg0->unknown_22_ == 3) {
-        if (func_ov017_021959b4()) func_ov023_021e338c((char*)arg0->unknown_1c_);
-        func_ov023_021e3030(arg0->unknown_1c_);
-        if (arg0->unknown_1c_->unknown_4e6_ < 0) arg0->unknown_22_ = 4;
-    } else if (arg0->unknown_22_ == 4) {
-        func_ov017_021a18c8(arg0);
-        func_ov017_021a316c(var7);
-        var7->allocator_array_38[7].Reset();
-        func_ov017_0219b624(var7);
-        func_0203d018((unsigned char*)var3);
-        func_0203de2c((Struct_0203de2c_3*)var3);
-        func_ov017_0218f79c(var7);
-        func_ov017_021a2840(var7);
-        func_02058564(var4);
-        func_02042b30(var8, ((Struct_ov017_021a1284_3*)var7)->unknown_87c_);
-        func_0207df50((Struct_0203d028*)((Struct_ov017_021a1284_3*)var7)->unknown_87c_);
-        func_0207df90(((Struct_ov017_021a1284_3*)var7)->unknown_87c_);
-        func_020432c4(var8);
-        func_0207dfac(((Struct_ov017_021a1284_3*)var7)->unknown_87c_);
-        Struct_02048150* var24 = (Struct_02048150*)func_02010828(var0);
-        for (int var25 = 0; var25 < 4; ++var25) {
-            if (func_ov017_0218f5a4(var7, var25, 0, 0, 0) && func_0202b7d8(var5) && func_02086ef0(var24, var25)) {
-                func_ov017_021c3fb4(var25, 1);
-                func_ov017_021c4418(var25, -1);
+        self->stage = 3;
+    } else if (self->stage == 3) {
+        if (func_ov017_021959b4()) SetFlagt_021e338c_021e338c((char*)self->plugin);
+        func_ov023_021e3030(self->plugin);
+        if (self->plugin->result < 0) self->stage = 4;
+    } else if (self->stage == 4) {
+        func_ov017_021a18c8(self);
+        func_ov017_021a316c(resources);
+        resources->allocator_array_38[7].Reset();
+        func_ov017_0219b624(resources);
+        ClearField0x98Bit0_0203d018((unsigned char*)entries);
+        ReleaseRosterEntries0203de2c((Roster0203de2c*)entries);
+        ProcessCombatantsIfFlagged_0218f79c(resources);
+        ProcessSlotField58_021a2840(resources);
+        CleanupNodeList02058564(nodes);
+        SetField0x1e28_02042b30(global, ((ResourceTransfer021a1284*)resources)->restored);
+        CopyInternalFields0207df50((Foo0207df50*)((ResourceTransfer021a1284*)resources)->restored);
+        VramState_Restore(((ResourceTransfer021a1284*)resources)->restored);
+        func_020432c4(global);
+        VramState_Save(((ResourceTransfer021a1284*)resources)->restored);
+        ArrayContainsByteStruct* party = (ArrayContainsByteStruct*)GetPtrField0x2a04_02010828(game);
+        for (int i = 0; i < 4; ++i) {
+            if (func_ov017_0218f5a4(resources, i, 0, 0, 0) && CheckField0NonZero_0202b7d8(search) && ArrayContainsByte_02086ef0(party, i)) {
+                func_ov017_021c3fb4(i, 1);
+                func_ov017_021c4418(i, -1);
             }
         }
         ClearFlags00(var7, 0x10);

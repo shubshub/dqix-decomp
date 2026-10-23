@@ -6,8 +6,8 @@ extern "C" void func_0205de24(Struct_0205de24_2*, unsigned char, unsigned char);
 extern "C" void func_ov002_02161cf0(char *arg0);
 extern "C" void func_ov002_0215dae0(unsigned char *arg0);
 struct Struct_0205c570;
-extern "C" int func_0205d794(Struct_0205c570*);
-extern "C" int func_ov002_021573f8(void *arg0, int arg1);
+int Window_GetSelectedIndex(Struct_0205c570*);
+int GetFieldC54ArrayValue021573f8(void *self, int v);
 struct Struct_0205d81c;
 extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
 extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
@@ -15,7 +15,7 @@ struct Struct_0205def8;
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void * FindElementByC40205d81c(Struct_0205d81c*, int);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 struct SePlayer;
 void SePlayer_Play(SePlayer*, int, int);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
@@ -27,32 +27,32 @@ extern int g_sePlayer;
 
 // USA: func_ov002_021644a8
 #if defined(jpn)
-extern "C" ARM void func_ov002_021644a8(char *arg0) {
-    int var0 = *(int *) (arg0 + 0x1a88);
-    if (var0 == 0) {
-        *(short *) (arg0 + 0x1ab8) = 0;
-        func_0205de24((Struct_0205de24_2*)(arg0 + 0xe20), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215dae0((unsigned char *) arg0);
-        (*(int *) (arg0 + 0x1a88))++;
-    } else if (var0 == 1) {
-        *(int *) (arg0 + 0x22ac) |= 4;
-        short var1 = *(short *) (arg0 + 0x1ab8);
-        *(short *) (arg0 + 0x1ab8) = func_0205d794((Struct_0205c570*)(arg0 + 0xe20));
-        *(char *) (arg0 + 0x1ae8) = func_ov002_021573f8(arg0, *(short *) (arg0 + 0x1ab8));
-        signed char var2 = *(signed char *) (arg0 + 0x1ae8);
-        *(char *) (arg0 + 0x1ae9) = var2;
-        func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0xe, 1);
-        if (*(short *) (arg0 + 0x1ab8) != 0) {
-            func_ov002_0215b9a4(arg0, 0xe, 0);
-            func_0205def8((Struct_0205def8*)(arg0 + 0xe20), 1, 0xe);
-            unsigned char *var3 = (unsigned char *) func_0205d81c((Struct_0205d81c*)(arg0 + 0xe20), 0xc);
-            unsigned char *var4 = (unsigned char *) func_0205d81c((Struct_0205d81c*)(arg0 + 0xe20), 0xe);
-            if (var3 != 0 && var4 != 0) {
-                short var5 = *(short *) (var3 + 0xac);
-                short var6 = *(short *) (var3 + 0xa8);
-                *(short *) (var4 + 0xac) = var5 + var6;
-                *(short *) (var4 + 0xae) = 1;
+extern "C" ARM void func_ov002_021644a8(char *self) {
+    int phase = *(int *) (self + 0x1a88);
+    if (phase == 0) {
+        *(short *) (self + 0x1ab8) = 0;
+        FindAndLinkMatchingEntry0205de24((Struct0205de24*)(self + 0xe20), 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215dae0((unsigned char *) self);
+        (*(int *) (self + 0x1a88))++;
+    } else if (phase == 1) {
+        *(int *) (self + 0x22ac) |= 4;
+        short saved = *(short *) (self + 0x1ab8);
+        *(short *) (self + 0x1ab8) = Window_GetSelectedIndex((Struct_0205c570*)(self + 0xe20));
+        *(char *) (self + 0x1ae8) = GetFieldC54ArrayValue021573f8(self, *(short *) (self + 0x1ab8));
+        signed char cur = *(signed char *) (self + 0x1ae8);
+        *(char *) (self + 0x1ae9) = cur;
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xe20), 0xe, 1);
+        if (*(short *) (self + 0x1ab8) != 0) {
+            func_ov002_0215b9a4(self, 0xe, 0);
+            SetElementFlag0x20ByKey0205def8((Struct_0205def8*)(self + 0xe20), 1, 0xe);
+            unsigned char *ea = (unsigned char *) FindElementByC40205d81c((Struct_0205d81c*)(self + 0xe20), 0xc);
+            unsigned char *eb = (unsigned char *) FindElementByC40205d81c((Struct_0205d81c*)(self + 0xe20), 0xe);
+            if (ea != 0 && eb != 0) {
+                short ac = *(short *) (ea + 0xac);
+                short a8 = *(short *) (ea + 0xa8);
+                *(short *) (eb + 0xac) = ac + a8;
+                *(short *) (eb + 0xae) = 1;
             }
         } else {
             func_0205def8((Struct_0205def8*)(arg0 + 0xe20), 0, 0xe);
@@ -61,7 +61,7 @@ extern "C" ARM void func_ov002_021644a8(char *arg0) {
             return;
         }
         int t = g_keyManager.TestKeysPressed(0x601);
-        int u = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xe20), 0x14);
+        int u = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0xe20), 0x14);
         int hit = (t | u) != 0;
         if (hit != 0) {
             *(char *) (self + 0x1afa) = 0;
@@ -91,32 +91,32 @@ extern "C" ARM void func_ov002_021644a8(char *arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov002_021644a8(char *arg0) {
-    int var10 = *(int *) (arg0 + 0x1bc0);
-    if (var10 == 0) {
-        *(short *) (arg0 + 0x1bf0) = 0;
-        func_0205de24((Struct_0205de24_2*)(arg0 + 0xec8), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215dae0((unsigned char *) arg0);
-        (*(int *) (arg0 + 0x1bc0))++;
-    } else if (var10 == 1) {
-        *(int *) (arg0 + 0x247c) |= 4;
-        short var11 = *(short *) (arg0 + 0x1bf0);
-        *(short *) (arg0 + 0x1bf0) = func_0205d794((Struct_0205c570*)(arg0 + 0xec8));
-        *(char *) (arg0 + 0x1c20) = func_ov002_021573f8(arg0, *(short *) (arg0 + 0x1bf0));
-        signed char var12 = *(signed char *) (arg0 + 0x1c20);
-        *(char *) (arg0 + 0x1c21) = var12;
-        func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0xd, 1);
-        if (*(short *) (arg0 + 0x1bf0) != 0) {
-            func_ov002_0215b9a4(arg0, 0xd, 0);
-            func_0205def8((Struct_0205def8*)(arg0 + 0xec8), 1, 0xd);
-            unsigned char *var13 = (unsigned char *) func_0205d81c((Struct_0205d81c*)(arg0 + 0xec8), 0xb);
-            unsigned char *var14 = (unsigned char *) func_0205d81c((Struct_0205d81c*)(arg0 + 0xec8), 0xd);
-            if (var13 != 0 && var14 != 0) {
-                short var15 = *(short *) (var13 + 0xac);
-                short var16 = *(short *) (var13 + 0xa8);
-                *(short *) (var14 + 0xac) = var15 + var16;
-                *(short *) (var14 + 0xae) = 1;
+extern "C" ARM void func_ov002_021644a8(char *self) {
+    int phase = *(int *) (self + 0x1bc0);
+    if (phase == 0) {
+        *(short *) (self + 0x1bf0) = 0;
+        FindAndLinkMatchingEntry0205de24((Struct0205de24*)(self + 0xec8), 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215dae0((unsigned char *) self);
+        (*(int *) (self + 0x1bc0))++;
+    } else if (phase == 1) {
+        *(int *) (self + 0x247c) |= 4;
+        short saved = *(short *) (self + 0x1bf0);
+        *(short *) (self + 0x1bf0) = Window_GetSelectedIndex((Struct_0205c570*)(self + 0xec8));
+        *(char *) (self + 0x1c20) = GetFieldC54ArrayValue021573f8(self, *(short *) (self + 0x1bf0));
+        signed char cur = *(signed char *) (self + 0x1c20);
+        *(char *) (self + 0x1c21) = cur;
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xec8), 0xd, 1);
+        if (*(short *) (self + 0x1bf0) != 0) {
+            func_ov002_0215b9a4(self, 0xd, 0);
+            SetElementFlag0x20ByKey0205def8((Struct_0205def8*)(self + 0xec8), 1, 0xd);
+            unsigned char *ea = (unsigned char *) FindElementByC40205d81c((Struct_0205d81c*)(self + 0xec8), 0xb);
+            unsigned char *eb = (unsigned char *) FindElementByC40205d81c((Struct_0205d81c*)(self + 0xec8), 0xd);
+            if (ea != 0 && eb != 0) {
+                short ac = *(short *) (ea + 0xac);
+                short a8 = *(short *) (ea + 0xa8);
+                *(short *) (eb + 0xac) = ac + a8;
+                *(short *) (eb + 0xae) = 1;
             }
         } else {
             func_0205def8((Struct_0205def8*)(arg0 + 0xec8), 0, 0xd);
@@ -125,7 +125,7 @@ extern "C" ARM void func_ov002_021644a8(char *arg0) {
             return;
         }
         int t = g_keyManager.TestKeysPressed(0x601);
-        int u = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xec8), 0x14);
+        int u = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0xec8), 0x14);
         int hit = (t | u) != 0;
         if (hit != 0) {
             *(char *) (self + 0x1c32) = 0;

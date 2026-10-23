@@ -28,13 +28,13 @@ void SetFieldGroupFromFlags02097bc4(struct FieldSet02097bc4*, int);
 extern "C" void func_02097c18(void*, int, int, int, int, int, int, int);
 
 struct List0204af64;
-void ResetList0204af64(List0204af64*);
-void SetWord0x18ClearByte0x1f_0204b11c(unsigned char*, int);
+void Background_Init(List0204af64*);
+void Background_SetMapSize(unsigned char*, int);
 struct Obj0204b5e8;
-void DispatchViaTable0204b5e8(Obj0204b5e8*, int, int);
-void DispatchByTag0204b2e0(void*, char*);
+void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_FlushFile(void*, char*);
 struct SelfTag0204b3a0;
-void DispatchByTagLookup0204b3a0(SelfTag0204b3a0*, char*);
+void Background_UploadFile(SelfTag0204b3a0*, char*);
 
 extern "C" void LoadToSubBGStandardPalette(int, int, unsigned int);
 extern "C" void LoadToSubBG1ScreenData(int, int, unsigned int);
@@ -76,17 +76,17 @@ extern "C" ARM void func_ov028_021d8dd0(unsigned char* self) {
         *reg400100a = (*reg400100a & 0x43) | 0x1000;
 
         unsigned char list[0x20];
-        ResetList0204af64((List0204af64*)list);
+        Background_Init((List0204af64*)list);
         unsigned char v = list[0x1c];
         v = (v & ~0xf) | 1;
         v = v & 0xff;
         v = (v & ~0xf0) | 0x10;
         list[0x1c] = v;
-        SetWord0x18ClearByte0x1f_0204b11c((unsigned char*)list, 0);
-        DispatchViaTable0204b5e8((Obj0204b5e8*)list, 0, 0);
+        Background_SetMapSize((unsigned char*)list, 0);
+        Background_SetScroll((Obj0204b5e8*)list, 0, 0);
         int tag = *(int*)((char*)word + 0x2c);
-        DispatchByTag0204b2e0(list, (char*)tag);
-        DispatchByTagLookup0204b3a0((SelfTag0204b3a0*)list, (char*)tag);
+        Background_FlushFile(list, (char*)tag);
+        Background_UploadFile((SelfTag0204b3a0*)list, (char*)tag);
 
         unsigned short tmpVal = 0x67f5;
         memcpy(buf40, &tmpVal, 2);

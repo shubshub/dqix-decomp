@@ -23,12 +23,12 @@ struct Struct_ov005_021556e4 {
     unsigned int unknown_13_4_ : 4;
 };
 
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" Struct_ov005_021556e4* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" int func_020de234(Struct_02015ef4_4* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0203a46c(Struct_0203a46c* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov005_02155d38(Struct_ov005_021556e4_2* arg0);
+extern "C" void __clear(void* buffer, unsigned long size);
+PartEntry* FindElementByKey020dedd0(Container020dedd0* items, int id);
+int GetPreferredPackedField020de234(StructDE234_020de234* item, int a);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void SetVec3At0x1c(Vec3Target0203a46c* model, int x, int y, int z);
+void RunTwoCallbacksAndReset02155d38(Obj02155d38* slot);
 
 struct Struct_ov005_02153ba4 {
     short unknown_0_;
@@ -74,44 +74,44 @@ struct Struct_ov005_02153954 {
 extern "C" void func_ov005_021553b4(Struct_ov005_02153954* arg0, int arg1, int* arg2, int* arg3);
 
 // USA: func_ov005_021556e4
-extern "C" ARM void func_ov005_021556e4(Struct_ov005_02153954* arg0) {
-    if (arg0->unknown_3dcc_ & 0x80) {
-        if (arg0->unknown_3dab_ == 0) {
-            memset(arg0->unknown_3d8c_, 0, 0x200);
-            Struct_ov005_02153ba4* var0 = &arg0->unknown_2d90_[arg0->unknown_3d78_];
-            var0->unknown_14_ = -1;
-            Struct_ov005_021556e4* var1 = func_020dedd0(arg0->unknown_df4_, var0->unknown_0_);
-            if (var1 != NULL) {
-                char var2[0x80];
-                __clear(var2, sizeof(var2));
-                int var3 = func_020de234((Struct_02015ef4_4*)var1, 0);
-                sprintf(var2, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d1), (char)var1->unknown_12_4_, var3);
-                if (LoadFileIntoMemory(var2, arg0->unknown_3d8c_, NULL))
-                    var0->unknown_14_ = 0;
-                int var4;
-                int var5;
-                func_ov005_021553b4(arg0, arg0->unknown_3d78_, &var4, &var5);
-                func_0203a46c((Struct_0203a46c*)arg0->unknown_3cf0_, var4 << 12, var5 << 12, 0x2000);
-                arg0->unknown_3dab_++;
-                arg0->unknown_3db7_++;
+extern "C" ARM void func_ov005_021556e4(EquipmentMenu* self) {
+    if (self->flags_ & 0x80) {
+        if (self->dragStep_ == 0) {
+            memset(self->dragFile_, 0, 0x200);
+            EquipmentSlot* slot = &self->slots_[self->dragged_];
+            slot->offset_ = -1;
+            PartEntry* item = FindElementByKey020dedd0(self->items_, slot->item_);
+            if (item != NULL) {
+                char path[0x80];
+                __clear(path, sizeof(path));
+                int number = GetPreferredPackedField020de234((StructDE234_020de234*)item, 0);
+                sprintf(path, KeyTable_Get((Container020e0310*)self->texts_, 0x7d1), (char)item->letter_, number);
+                if (LoadFileIntoMemory(path, self->dragFile_, NULL))
+                    slot->offset_ = 0;
+                int x;
+                int y;
+                func_ov005_021553b4(self, self->dragged_, &x, &y);
+                SetVec3At0x1c((Vec3Target0203a46c*)self->dragModel_, x << 12, y << 12, 0x2000);
+                self->dragStep_++;
+                self->loading_++;
             }
             arg0->unknown_3dcc_ &= ~0x80;
         }
-    } else if (arg0->unknown_3dcc_ & 0x10) {
-        if (arg0->unknown_3da8_ == 0) {
-            memset(arg0->unknown_3d94_, 0, 0x200);
-            Struct_ov005_02153ba4* var6 = &arg0->unknown_2d90_[arg0->unknown_3dac_];
-            var6->unknown_14_ = -1;
-            Struct_ov005_021556e4* var7 = func_020dedd0(arg0->unknown_df4_, var6->unknown_0_);
-            if (var7 != NULL) {
-                char var8[0x80];
-                __clear(var8, sizeof(var8));
-                int var9 = func_020de234((Struct_02015ef4_4*)var7, 0);
-                sprintf(var8, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d1), (char)var7->unknown_12_4_, var9);
-                if (LoadFileIntoMemory(var8, arg0->unknown_3d94_, NULL))
-                    var6->unknown_14_ = 0;
-                arg0->unknown_3da8_++;
-                arg0->unknown_3db7_++;
+    } else if (self->flags_ & 0x10) {
+        if (self->unk_3da8 == 0) {
+            memset(self->itemFile_, 0, 0x200);
+            EquipmentSlot* slot = &self->slots_[self->unk_3dac];
+            slot->offset_ = -1;
+            PartEntry* item = FindElementByKey020dedd0(self->items_, slot->item_);
+            if (item != NULL) {
+                char path[0x80];
+                __clear(path, sizeof(path));
+                int number = GetPreferredPackedField020de234((StructDE234_020de234*)item, 0);
+                sprintf(path, KeyTable_Get((Container020e0310*)self->texts_, 0x7d1), (char)item->letter_, number);
+                if (LoadFileIntoMemory(path, self->itemFile_, NULL))
+                    slot->offset_ = 0;
+                self->unk_3da8++;
+                self->loading_++;
             }
             arg0->unknown_3dcc_ &= ~0x10;
         }
@@ -121,28 +121,28 @@ extern "C" ARM void func_ov005_021556e4(Struct_ov005_02153954* arg0) {
                 func_ov005_02155d38((Struct_ov005_021556e4_2*)&arg0->unknown_2d90_[var10]);
                 arg0->unknown_2d90_[var10].unknown_14_ = -1;
             }
-            arg0->unknown_3dae_ = 0;
-            arg0->unknown_3db0_ = 8;
-            arg0->unknown_3da9_++;
-            arg0->unknown_3db7_++;
-        } else if (arg0->unknown_3da9_ == 2) {
-            memset(arg0->unknown_3d90_, 0, 0x800);
-            int var11 = 0;
-            signed char var12 = 0;
-            for (int var13 = arg0->unknown_3dae_; var13 < arg0->unknown_3db0_; var13++) {
-                Struct_ov005_02153ba4* var14 = &arg0->unknown_2d90_[var13];
-                var14->unknown_14_ = -1;
-                Struct_ov005_021556e4* var15 = func_020dedd0(arg0->unknown_df4_, var14->unknown_0_);
-                if (var15 != NULL) {
-                    unsigned int var16 = 0;
-                    char var17[0x80];
-                    __clear(var17, sizeof(var17));
-                    int var18 = func_020de234((Struct_02015ef4_4*)var15, 0);
-                    sprintf(var17, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d1), (char)var15->unknown_12_4_, var18);
-                    if (LoadFileIntoMemory(var17, arg0->unknown_3d90_ + var11, &var16)) {
-                        var14->unknown_14_ = var11;
-                        var16 = (var16 + 3) & ~3;
-                        var11 += var16;
+            self->equippedStart_ = 0;
+            self->equippedEnd_ = 8;
+            self->equippedStep_++;
+            self->loading_++;
+        } else if (self->equippedStep_ == 2) {
+            memset(self->equippedFiles_, 0, 0x800);
+            int offset = 0;
+            signed char count = 0;
+            for (int i = self->equippedStart_; i < self->equippedEnd_; i++) {
+                EquipmentSlot* slot = &self->slots_[i];
+                slot->offset_ = -1;
+                PartEntry* item = FindElementByKey020dedd0(self->items_, slot->item_);
+                if (item != NULL) {
+                    unsigned int size = 0;
+                    char path[0x80];
+                    __clear(path, sizeof(path));
+                    int number = GetPreferredPackedField020de234((StructDE234_020de234*)item, 0);
+                    sprintf(path, KeyTable_Get((Container020e0310*)self->texts_, 0x7d1), (char)item->letter_, number);
+                    if (LoadFileIntoMemory(path, self->equippedFiles_ + offset, &size)) {
+                        slot->offset_ = offset;
+                        size = (size + 3) & ~3;
+                        offset += size;
                     }
                 }
                 if (++var12 == 4)
@@ -175,17 +175,17 @@ extern "C" ARM void func_ov005_021556e4(Struct_ov005_02153954* arg0) {
                 var24->unknown_14_ = -1;
                 if (var24->unknown_3_ != 0)
                     continue;
-                Struct_ov005_021556e4* var25 = func_020dedd0(arg0->unknown_df4_, var24->unknown_0_);
-                if (var25 != NULL) {
-                    unsigned int var26 = 0;
-                    char var27[0x80];
-                    __clear(var27, sizeof(var27));
-                    int var28 = func_020de234((Struct_02015ef4_4*)var25, 0);
-                    sprintf(var27, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x7d1), (char)var25->unknown_12_4_, var28);
-                    if (LoadFileIntoMemory(var27, arg0->unknown_3d88_ + var21, &var26)) {
-                        var24->unknown_14_ = var21;
-                        var26 = (var26 + 3) & ~3;
-                        var21 += var26;
+                PartEntry* item = FindElementByKey020dedd0(self->items_, slot->item_);
+                if (item != NULL) {
+                    unsigned int size = 0;
+                    char path[0x80];
+                    __clear(path, sizeof(path));
+                    int number = GetPreferredPackedField020de234((StructDE234_020de234*)item, 0);
+                    sprintf(path, KeyTable_Get((Container020e0310*)self->texts_, 0x7d1), (char)item->letter_, number);
+                    if (LoadFileIntoMemory(path, self->pageFiles_ + offset, &size)) {
+                        slot->offset_ = offset;
+                        size = (size + 3) & ~3;
+                        offset += size;
                     }
                 }
                 if (++var22 == 4)

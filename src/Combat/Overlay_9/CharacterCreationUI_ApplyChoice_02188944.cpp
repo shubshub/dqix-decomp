@@ -1,16 +1,20 @@
 #include <globaldefs.h>
+#include "Graphics/CharacterModel.h"
 #include "Resource/CharacterCreationUI.h"
 
-struct Struct_ov009_02187b34 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
-    unsigned char unknown_15_4_ : 4;
-    short unknown_16_;
-    short unknown_18_;
-    short unknown_1a_;
+struct PartyMemberAppearance {
+    short unk_0[2];
+    short face_;
+    short hairStyle_;
+    short unk_8[6];
+    unsigned char female_ : 1;
+    unsigned char skinColor_ : 3;
+    unsigned char eyeColor_ : 4;
+    unsigned char hairColor_ : 4;
+    unsigned char unk_15_4 : 4;
+    short unk_16;
+    short width_;
+    short height_;
 };
 
 struct Struct_ov005_0215840c_2 {
@@ -29,49 +33,49 @@ extern "C" void CharacterModel_ApplyColors(void* character);
 extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice)
 {
     PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance_;
-    int characterCreationStep = self->state;
-    if (characterCreationStep == 1)
+    int tab = self->state;
+    if (tab == CreationTab_Gender)
     {
         appearance->female_ = choice;
-        CharacterModel_InvalidatePart(self->nextCharacter, 0);
-        CharacterModel_InvalidatePart(self->nextCharacter, 2);
-        CharacterModel_InvalidatePart(self->nextCharacter, 3);
-        CharacterModel_InvalidatePart(self->nextCharacter, 4);
-        self->flags |= 2;
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Body);
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Face);
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Hair);
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 2)
+    else if (tab == CreationTab_BodyType)
     {
         CharacterCreationUI_GetBodyDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
         CharacterModel_SetScale(self->character, appearance->width_, appearance->height_);
         CharacterModel_SetScale(self->nextCharacter, appearance->width_, appearance->height_);
     }
-    else if (characterCreationStep == 5)
+    else if (tab == CreationTab_Face)
     {
-        appearance->models_[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, choice) + 0x233c;
-        CharacterModel_InvalidatePart(self->nextCharacter, 2);
-        self->flags |= 2;
+        appearance->face_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, choice) + AppearanceModel_FirstFace;
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Face);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 3)
+    else if (tab == CreationTab_HairStyle)
     {
-        appearance->models_[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, choice) + 0x2328;
-        CharacterModel_InvalidatePart(self->nextCharacter, 3);
-        CharacterModel_InvalidatePart(self->nextCharacter, 4);
-        self->flags |= 2;
+        appearance->hairStyle_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, choice) + AppearanceModel_FirstHairStyle;
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Hair);
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 4)
+    else if (tab == CreationTab_HairColor)
     {
         appearance->hairColor_ = choice;
-        CharacterModel_InvalidatePart(self->nextCharacter, 4);
-        self->flags |= 2;
+        CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 6)
-    {
-        appearance->eyeColor_ = choice;
-        CharacterModel_ApplyColors(self->character);
-    }
-    else if (characterCreationStep == 7)
+    else if (tab == CreationTab_SkinColor)
     {
         appearance->skinColor_ = choice;
+        CharacterModel_ApplyColors(self->character);
+    }
+    else if (tab == CreationTab_EyeColor)
+    {
+        appearance->eyeColor_ = choice;
         CharacterModel_ApplyColors(self->character);
     }
 }
@@ -79,54 +83,51 @@ extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, i
 extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice)
 {
     PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance_;
-    int characterCreationStep = self->state; //Step of the Character Creation Menu
+    int tab = self->state;
     void* next = self->nextCharacter;
     void* current = self->character;
-    if (characterCreationStep == 1) //Gender Select
+    if (tab == CreationTab_Gender)
     {
-        //This section of the code determines what Gender the Character is
-        appearance->female_ = choice; //0 = Male, 1 = Female
-
-        //Clear out specific Model Parts so they can be replaced with new ones
-        CharacterModel_InvalidatePart(next, 0);
-        CharacterModel_InvalidatePart(next, 2);
-        CharacterModel_InvalidatePart(next, 3);
-        CharacterModel_InvalidatePart(next, 4);
-        self->flags |= 2;
+        appearance->female_ = choice;
+        CharacterModel_InvalidatePart(next, CharacterModelPart_Body);
+        CharacterModel_InvalidatePart(next, CharacterModelPart_Face);
+        CharacterModel_InvalidatePart(next, CharacterModelPart_Hair);
+        CharacterModel_InvalidatePart(next, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 2) //Select Body Type
+    else if (tab == CreationTab_BodyType)
     {
         CharacterCreationUI_GetBodyDimensions((unsigned char*)self, choice, &appearance->width_, &appearance->height_);
         CharacterModel_SetScale(current, appearance->width_, appearance->height_);
         CharacterModel_SetScale(next, appearance->width_, appearance->height_);
     }
-    else if (characterCreationStep == 5) //Select Face Type
+    else if (tab == CreationTab_Face)
     {
-        appearance->models_[2] = CharacterCreationUI_SlotToStyleIndex(self, 5, choice) + 0x233c;
-        CharacterModel_InvalidatePart(next, 2);
-        self->flags |= 2;
+        appearance->face_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, choice) + AppearanceModel_FirstFace;
+        CharacterModel_InvalidatePart(next, CharacterModelPart_Face);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 3) //Select Hair Style
+    else if (tab == CreationTab_HairStyle)
     {
-        appearance->models_[3] = CharacterCreationUI_SlotToStyleIndex(self, 3, choice) + 0x2328;
-        CharacterModel_InvalidatePart(next, 3);
-        CharacterModel_InvalidatePart(next, 4);
-        self->flags |= 2;
+        appearance->hairStyle_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, choice) + AppearanceModel_FirstHairStyle;
+        CharacterModel_InvalidatePart(next, CharacterModelPart_Hair);
+        CharacterModel_InvalidatePart(next, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 4)
+    else if (tab == CreationTab_HairColor)
     {
         appearance->hairColor_ = choice;
-        CharacterModel_InvalidatePart(next, 4);
-        self->flags |= 2;
+        CharacterModel_InvalidatePart(next, CharacterModelPart_HairTexture);
+        self->flags |= CreationFlag_LoadNextCharacter;
     }
-    else if (characterCreationStep == 6)
-    {
-        appearance->eyeColor_ = choice;
-        CharacterModel_ApplyColors(current);
-    }
-    else if (characterCreationStep == 7)
+    else if (tab == CreationTab_SkinColor)
     {
         appearance->skinColor_ = choice;
+        CharacterModel_ApplyColors(current);
+    }
+    else if (tab == CreationTab_EyeColor)
+    {
+        appearance->eyeColor_ = choice;
         CharacterModel_ApplyColors(current);
     }
 }

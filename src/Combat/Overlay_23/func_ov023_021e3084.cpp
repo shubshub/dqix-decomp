@@ -7,9 +7,9 @@
 #include "Resource/GameResources.h"
 #include "NitroSDK/Graphics.h"
 
-extern "C" int func_ov017_021bdbe4(unsigned char* arg0);
-extern "C" int func_ov017_021bdbd8(unsigned char* arg0);
-extern "C" void func_ov023_021e5628(void* arg0, void* arg1);
+int GetField4340_021bdbe4(unsigned char* base);
+int GetField433c_021bdbd8(unsigned char* base);
+extern "C" void CharacterModel_Draw(void* addr, void* pair);
 
 struct Struct_ov023_021e3084 { void* unknown_0_; void* unknown_4_; };
 
@@ -55,7 +55,7 @@ extern "C" ARM void func_ov023_021e3084(void* arg0) {
 
     if (var0->unknown_128_ != NULL) {
         GXFIFO_MATRIX_PUSH = 0;
-        func_ov023_021e5628(var0->unknown_128_, &var2);
+        CharacterModel_Draw(state->drawObject, &attachments);
         GXFIFO_MATRIX_POP = 1;
     }
 }

@@ -28,8 +28,8 @@ struct Struct_ov002_02165b44 {
 struct TailList020469b4;
 struct TailNode020469b4;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow, unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
@@ -65,31 +65,31 @@ extern "C" char g_sePlayer[];
 // USA: func_ov002_02165b44
 extern "C" ARM void func_ov002_02165b44(char *arg0) {
 #if defined(jpn)
-    int var0 = *(int *) (arg0 + 0x1a88);
-    if (var0 == 0) {
-        *(short *) (arg0 + 0x1ac4) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) (arg0 + 0xe20), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215f170(arg0);
-        *(int *) (arg0 + 0x1a88) += 1;
-    } else if (var0 == 1) {
-        *(unsigned int *) (arg0 + 0x22ac) |= 4;
-        func_ov002_02161b98(arg0);
-        *(short *) (arg0 + 0x1ac4) = func_0205d794((struct Struct_0205c570 *) (arg0 + 0xe20));
-        int var1                            = g_keyManager.TestKeysPressed(0x601);
-        int var2 = func_0205da38((struct Struct_0205da38*)(arg0 + 0xe20), 0x14);
-        if ((var1 | var2) ? 1 : 0) {
-            GameState *var3 = GameState::GetInstance();
-            int var4        = *(signed char *) (arg0 + 0x1ae8);
-            if (var4 == 4) var4 = func_020100b0(var3);
-            GameObject *var5 = func_0200ff94(var3, var4);
-            if (var5 == NULL) return;
-            *(unsigned char *) (arg0 + 0xed8) = *(int *) (arg0 + 0x1a80);
-            *(unsigned int *) (arg0 + 0x22ac) &= ~4;
-            if (**(int **) ((char *) var5 + 0x130) & 1) {
-                *(short *) (arg0 + 0x1af0) = -1;
-                *(short *) (arg0 + 0x1af2) = -1;
-                *(int *) (arg0 + 0x1a80)  = 0x12;
+    int state = *(int *) (base + 0x1a88);
+    if (state == 0) {
+        *(short *) (base + 0x1ac4) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0xe20), 0, 2);
+        func_ov002_02161cf0(base);
+        func_ov002_0215f170(base);
+        *(int *) (base + 0x1a88) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x22ac) |= 4;
+        func_ov002_02161b98(base);
+        *(short *) (base + 0x1ac4) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xe20));
+        int ta                            = g_keyManager.TestKeysPressed(0x601);
+        int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xe20), 0x14);
+        if ((ta | tb) ? 1 : 0) {
+            GameState *gs = GameState::GetInstance();
+            int id        = *(signed char *) (base + 0x1ae8);
+            if (id == 4) id = GetField0x397cValue_020100b0(gs);
+            GameObject *m = GetCombatantChecked_0200ff94(gs, id);
+            if (m == NULL) return;
+            *(unsigned char *) (base + 0xed8) = *(int *) (base + 0x1a80);
+            *(unsigned int *) (base + 0x22ac) &= ~4;
+            if (**(int **) ((char *) m + 0x130) & 1) {
+                *(short *) (base + 0x1af0) = -1;
+                *(short *) (base + 0x1af2) = -1;
+                *(int *) (base + 0x1a80)  = 0x12;
                 return;
             }
             *(int *) (base + 0x1a88) = 0;
@@ -219,31 +219,31 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
         }
     }
 #else
-    int var19 = *(int *) (arg0 + 0x1000 + 0xbc0);
-    if (var19 == 0) {
-        *(short *) (arg0 + 0x1b00 + 0xfc) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) (arg0 + 0x2c8 + 0xc00), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215f170(arg0);
-        *(int *) (arg0 + 0x1000 + 0xbc0) += 1;
-    } else if (var19 == 1) {
-        *(unsigned int *) (arg0 + 0x2000 + 0x47c) |= 4;
-        func_ov002_02161b98(arg0);
-        *(short *) (arg0 + 0x1b00 + 0xfc) = func_0205d794((struct Struct_0205c570 *) (arg0 + 0x2c8 + 0xc00));
-        int var20                            = g_keyManager.TestKeysPressed(0x601);
-        int var21 = func_0205da38((struct Struct_0205da38*)(arg0 + 0x2c8 + 0xc00), 0x14);
-        if ((var20 | var21) ? 1 : 0) {
-            GameState *var22 = GameState::GetInstance();
-            int var23        = *(signed char *) (arg0 + 0x1c00 + 0x20);
-            if (var23 == 4) var23 = func_020100b0(var22);
-            GameObject *var24 = func_0200ff94(var22, var23);
-            if (var24 == NULL) return;
-            *(unsigned char *) (arg0 + 0xf80) = *(int *) (arg0 + 0x1000 + 0xbb8);
-            *(unsigned int *) (arg0 + 0x2000 + 0x47c) &= ~4;
-            if (**(int **) ((char *) var24 + 0x130) & 1) {
-                *(short *) (arg0 + 0x1c00 + 0x28) = -1;
-                *(short *) (arg0 + 0x1c00 + 0x2a) = -1;
-                *(int *) (arg0 + 0x1000 + 0xbb8)  = 0x11;
+    int state = *(int *) (base + 0x1000 + 0xbc0);
+    if (state == 0) {
+        *(short *) (base + 0x1b00 + 0xfc) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0x2c8 + 0xc00), 0, 2);
+        func_ov002_02161cf0(base);
+        func_ov002_0215f170(base);
+        *(int *) (base + 0x1000 + 0xbc0) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x2000 + 0x47c) |= 4;
+        func_ov002_02161b98(base);
+        *(short *) (base + 0x1b00 + 0xfc) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
+        int ta                            = g_keyManager.TestKeysPressed(0x601);
+        int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14);
+        if ((ta | tb) ? 1 : 0) {
+            GameState *gs = GameState::GetInstance();
+            int id        = *(signed char *) (base + 0x1c00 + 0x20);
+            if (id == 4) id = GetField0x397cValue_020100b0(gs);
+            GameObject *m = GetCombatantChecked_0200ff94(gs, id);
+            if (m == NULL) return;
+            *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
+            *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
+            if (**(int **) ((char *) m + 0x130) & 1) {
+                *(short *) (base + 0x1c00 + 0x28) = -1;
+                *(short *) (base + 0x1c00 + 0x2a) = -1;
+                *(int *) (base + 0x1000 + 0xbb8)  = 0x11;
                 return;
             }
             *(int *) (base + 0x1000 + 0xbc0) = 0;

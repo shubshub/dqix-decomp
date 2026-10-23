@@ -131,23 +131,23 @@ struct Struct_ov006_021557c0 {
 struct Struct_0201099c_3;
 struct Struct_0201099c_10;
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_020e0434(Struct_0201099c_3* arg0, int arg1);
+extern "C" void __clear(void* dst, int size);
+int KeyTable_Get(Container020e0310* texts, int id);
 #if defined(jpn)
 extern "C" int func_020e12ec(char* arg0, const char* arg1);
 #define data_ov006_0215ff5c data_ov006_021612c0
 #endif
-extern "C" void func_020de848(void* arg0);
-extern "C" int func_020de980(void* arg0, void* arg1, void* arg2, int arg3, int arg4);
-extern "C" void* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_ov023_021dcd90(Struct_ov006_02154614_2* arg0, unsigned char arg1);
-extern "C" void func_ov023_021dcae0(Struct_ov006_02154614_2* arg0, int arg1);
-extern "C" void func_ov023_021dced4(Struct_ov006_02154614_2* arg0, unsigned char arg1);
-extern "C" const char** func_020e5294(void* arg0, int arg1);
-extern "C" void func_020e4864(const char* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" void func_ov023_021dceac(char* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4, unsigned char arg5);
+void ItemTable_Init(void* obj);
+int BuildDescriptorFlag1_020de980(void* obj, void* alloc, void* data, int size, int id);
+void* FindElementByKey020dedd0(Container020dedd0* c, int key);
+extern "C" void func_ov023_021dcd90(ItemInfoWindow* window, unsigned char inMenu);
+extern "C" void func_ov023_021dcae0(ItemInfoWindow* window, int item);
+extern "C" void func_ov023_021dced4(ItemInfoWindow* window, unsigned char multiplier);
+const char** CallFunc020e52a0_020e5294(void* names, int item);
+extern "C" void func_020e4864(const char* src, char* dst, int a, int b, int c, int d);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
+void* GetPtrField0x2a04_02010828(GameState* gameState);
+void SetFields_021dceac(char* window, int index, int name, unsigned char count, unsigned char maximum, unsigned char unk);
 
 extern unsigned char data_ov006_0215ff5c[8];
 
@@ -161,36 +161,36 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
         if (arg0->unknown_ade_ == 0) {
             short var2 = arg0->unknown_12ba_ + 0x26;
 #if defined(jpn)
-            const char* var3 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var2);
-            char var4[0x40];
-            func_020e12ec(var4, var3);
-            arg0->unknown_ad4_ = var0->QueueLoadGP1(var4, 0);
+            const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
+            char path[0x40];
+            func_020e12ec(path, inner);
+            self->task_ = loader->QueueLoadGP1(path, 0);
 #else
-            short var5 = arg0->unknown_12ba_ + 0x64;
-            const char* var6 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var2);
-            const char* var7 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var5);
-            arg0->unknown_ad4_ = var0->QueueLoadFileInGP2(var7, var6, 0);
+            short gp2Key = self->itemSprites_ + 0x64;
+            const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
+            const char* gp2 = (const char*)KeyTable_Get((Container020e0310*)self->texts_, gp2Key);
+            self->task_ = loader->QueueLoadFileInGP2(gp2, inner, 0);
 #endif
             arg0->unknown_ade_++;
         }
         if (arg0->unknown_ade_ == 1) {
             if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0)
                 return;
-            void* var8;
-            unsigned int var9;
-            var0->GetLoadedFileByID(arg0->unknown_ad4_, &var8, &var9);
-            arg0->unknown_188_->Reset();
-            short var10 = arg0->unknown_12b8_;
-            func_020de848(arg0->unknown_1288_);
-            func_020de980(arg0->unknown_1288_, arg0->unknown_188_, var8, var9, var10);
-            arg0->unknown_ae4_.unknown_774_ &= ~0x1000;
-            arg0->unknown_ae4_.unknown_48_ = arg0->unknown_1288_;
-            func_ov023_021dcd90(&arg0->unknown_ae4_, 1);
-            var0->RemoveTask(arg0->unknown_ad4_);
-            arg0->unknown_1dc_ = func_020dedd0((Struct_0201099c_10*)arg0->unknown_1288_, var10);
-            arg0->unknown_ae2_ &= ~2;
-            arg0->unknown_ae2_ |= 0x40;
-            func_ov023_021dcae0(&arg0->unknown_ae4_, arg0->unknown_12b8_);
+            void* data;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task_, &data, &size);
+            self->nextItemAllocator_->Reset();
+            short id = self->itemId_;
+            ItemTable_Init(self->partNames_);
+            BuildDescriptorFlag1_020de980(self->partNames_, self->nextItemAllocator_, data, size, id);
+            self->window_.flags_ &= ~0x1000;
+            self->window_.partNames_ = self->partNames_;
+            func_ov023_021dcd90(&self->window_, 1);
+            loader->RemoveTask(self->task_);
+            self->nextItem_ = FindElementByKey020dedd0((Container020dedd0*)self->partNames_, id);
+            self->flags_ &= ~2;
+            self->flags_ |= 0x40;
+            func_ov023_021dcae0(&self->window_, self->itemId_);
             return;
         }
     } else if (var1 == -1) {
@@ -204,33 +204,33 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
 
     if (arg0->unknown_ade_ == 0) {
 #if defined(jpn)
-        short var11 = 0x26;
-        var11 += arg0->unknown_1b8_->unknown_e_4_;
-        const char* var12 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var11);
-        char var13[0x40];
-        func_020e12ec(var13, var12);
-        arg0->unknown_ad4_ = var0->QueueLoadGP1(var13, 0);
+        short innerKey = 0x26;
+        innerKey += self->nextRecipe_->letter_;
+        const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
+        char path[0x40];
+        func_020e12ec(path, inner);
+        self->task_ = loader->QueueLoadGP1(path, 0);
 #else
-        short var14 = 0x64;
-        short var15 = 0x26;
-        var14 += arg0->unknown_1b8_->unknown_e_4_;
-        var15 += arg0->unknown_1b8_->unknown_e_4_;
-        const char* var16 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var15);
-        const char* var17 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1b0_, var14);
-        arg0->unknown_ad4_ = var0->QueueLoadFileInGP2(var17, var16, 0);
+        short gp2Key = 0x64;
+        short innerKey = 0x26;
+        gp2Key += self->nextRecipe_->letter_;
+        innerKey += self->nextRecipe_->letter_;
+        const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
+        const char* gp2 = (const char*)KeyTable_Get((Container020e0310*)self->texts_, gp2Key);
+        self->task_ = loader->QueueLoadFileInGP2(gp2, inner, 0);
 #endif
         arg0->unknown_ade_++;
     } else if (arg0->unknown_ade_ == 1) {
         if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0)
             return;
-        void* var18;
-        unsigned int var19;
-        var0->GetLoadedFileByID(arg0->unknown_ad4_, &var18, &var19);
-        if (var18 != 0) {
-            arg0->unknown_188_->Reset();
-            func_020de848(arg0->unknown_1288_);
-            func_020de980(arg0->unknown_1288_, arg0->unknown_188_, var18, var19, arg0->unknown_1b8_->unknown_2_);
-            arg0->unknown_1dc_ = func_020dedd0((Struct_0201099c_10*)arg0->unknown_1288_, arg0->unknown_1b8_->unknown_2_);
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->task_, &data, &size);
+        if (data != 0) {
+            self->nextItemAllocator_->Reset();
+            ItemTable_Init(self->partNames_);
+            BuildDescriptorFlag1_020de980(self->partNames_, self->nextItemAllocator_, data, size, self->nextRecipe_->item_);
+            self->nextItem_ = FindElementByKey020dedd0((Container020dedd0*)self->partNames_, self->nextRecipe_->item_);
         }
         var0->RemoveTask(arg0->unknown_ad4_);
         arg0->unknown_ad4_ = -1;
@@ -245,9 +245,9 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
         const char* var21[3] = {0};
         if (arg0->unknown_1ac_ != 0) {
 #if defined(jpn)
-            var21[0] = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[0]);
-            var21[1] = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[1]);
-            var21[2] = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[2]);
+            names[0] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[0]);
+            names[1] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[1]);
+            names[2] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[2]);
 #else
             memset(arg0->unknown_0_, 0, sizeof(arg0->unknown_0_));
             const char** var22 = func_020e5294(arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[0]);

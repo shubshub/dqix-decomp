@@ -18,10 +18,10 @@ enum { Enum_ov003_0215da0c_2456 = 0x998 };
 struct Struct_0201099c_3;
 struct Struct_0205d6a0;
 
-extern "C" char* func_020421a0();
-extern "C" void func_02043204(char* arg0);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
+char* GetGlobalField0x1c020421a0();
+void ReinitController02043204(char* ctrl);
+int KeyTable_Get(struct Container020e0310* c, int key);
+void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int flag);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202c508(void* arg0);
 extern "C" void func_ov003_0215cab0(void* arg0, int arg1);
@@ -80,8 +80,8 @@ extern "C" ARM void func_ov003_0215da0c(struct Struct_ov003_0215da0c* arg0) {
                 var6 = 0x73;
             }
         }
-        func_ov003_0215cab0(arg0, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, var6));
-        arg0->unknown_3b8_++;
+        func_ov003_0215cab0(self, KeyTable_Get((struct Container020e0310*)self->messages, key));
+        self->step++;
     }
     if (var3 == 1 && *(int*)(var0 + Enum_ov003_0215da0c_2456) == 0) {
         func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_98_, 1);

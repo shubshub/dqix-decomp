@@ -22,10 +22,10 @@ struct Struct_ov012_02184654 {
     unsigned int unknown_7_7_ : 1;
     signed char unknown_8_[116];
 };
-struct Struct_ov012_02184654_8 {
-    unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 3;
-    unsigned char unknown_0_4_ : 4;
+struct AppearanceFlags02184654 {
+    unsigned char female : 1;
+    unsigned char skinColor : 3;
+    unsigned char eyeColor : 4;
 };
 struct Struct_ov012_02184654_9 {
     short unknown_0_[10];
@@ -34,10 +34,10 @@ struct Struct_ov012_02184654_9 {
 struct Struct_02072a68_2;
 struct Struct_0201099c_3;
 extern "C" void* func_0202ae18();
-extern "C" unsigned char* func_02053c6c(unsigned char*);
-extern "C" int func_02098f20(int, int, int);
-extern "C" void* func_02072a68(Struct_02072a68_2*, int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char*);
+int CalculateAge_02098f20(int, int, int);
+void* FindEntryByKey_02072a68(TableA68*, int);
+int KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov023_021e66ac(void*);
 
 static inline Struct_ov012_02184654* inline_ov012_02184654(GameState* arg0) {
@@ -83,10 +83,10 @@ extern "C" ARM void func_ov012_02184654(char* arg0) {
         *(unsigned char*)(arg0 + 0x1375) += 2;
         var9 += 2;
     }
-    const char* var10 = (const char*)func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), (short)(var1->unknown_5_1_ + 10000));
-    memcpy(arg0 + 0x1498, var10, strlen(var10));
-    if (var1->unknown_6_3_ < 700)
-        var10 = (const char*)func_020e0434((Struct_0201099c_3*)(arg0 + 0x131c), (short)var1->unknown_6_3_);
+    const char* label = (const char*)FindEntryByKey_02072a68((TableA68*)(editor + 0x1314), (short)(profile->title + 10000));
+    memcpy(editor + 0x1498, label, strlen(label));
+    if (profile->accolade < 700)
+        label = (const char*)KeyTable_Get((Container020e0310*)(editor + 0x131c), (short)profile->accolade);
     else
         var10 = (const char*)func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), (short)(var1->unknown_6_3_ + 20000));
     memcpy(arg0 + 0x1458, var10, strlen(var10));
@@ -131,11 +131,11 @@ struct Struct_01ff8b48_5
 
 struct Struct_ov012_02184654_3
 {
-    char unknown_0_[0x14];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    char unknown_15_[0x488 - 0x15];
+    char pad0[0x14];
+    unsigned char female_ : 1;
+    unsigned char skinColor_ : 3;
+    unsigned char eyeColor_ : 4;
+    char pad1[0x488 - 0x15];
 };
 
 struct Struct_ov012_02184654_4
@@ -172,11 +172,11 @@ struct Struct_ov012_02184654_7
 };
 
 extern "C" void* func_0202ae18();
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" int func_02098f20(int arg0, int arg1, int arg2);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_ov023_021e66ac(Struct_ov012_02184654_7* arg0);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
+int CalculateAge_02098f20(int year, int month, int day);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+int KeyTable_Get(struct Container020e0310* texts, int key);
+extern "C" void func_ov023_021e66ac(ProfileEditor02184654* self);
 
 static inline Struct_ov012_02184654_2* inline_ov012_02184654(GameState* arg0)
 {
@@ -228,8 +228,8 @@ extern "C" ARM void func_ov012_02184654(Struct_ov012_02184654_7* arg0)
     var15 = func_02072a68((struct Struct_02072a68_2*)arg0->unknown_133c_, (short)(var12->unknown_5_1_ + 10000));
     memcpy(arg0->unknown_1440_, var15, strlen((char*)var15));
 
-    if (var12->unknown_6_3_ < 700)
-        var15 = (void*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1344_, (short)var12->unknown_6_3_);
+    if (profile->accolade_ < 700)
+        name2 = (void*)KeyTable_Get((struct Container020e0310*)self->texts_, (short)profile->accolade_);
     else
         var15 = func_02072a68((struct Struct_02072a68_2*)arg0->unknown_133c_, (short)(var12->unknown_6_3_ + 20000));
     memcpy(arg0->unknown_1400_, var15, strlen((char*)var15));

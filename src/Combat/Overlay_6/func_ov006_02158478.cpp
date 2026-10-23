@@ -58,19 +58,19 @@ struct Struct_ov006_02158478 {
 
 extern "C" void* GetSubBG0ScreenBase();
 extern "C" void* memset(void*, int, unsigned int);
-extern "C" int func_ov006_02158080(Struct_0207fdcc_2*, int);
-extern "C" Struct_ov006_02158478* func_02081da8(Struct_0207fdcc_2*, int);
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" int func_0204b5e8(Struct_02020cb8_5*, int, int);
-extern "C" void func_0204b938(void*, void*, int, int, unsigned short);
-extern "C" void func_ov006_02154fe4(Struct_ov006_02154614*);
-extern "C" void func_ov006_02155480(Struct_ov006_02155480_2*);
-extern "C" int func_ov006_021570fc(Struct_ov006_02154614*, int);
-extern "C" void func_0204b088(void*, int);
-extern "C" int func_020e28dc(Struct_020e28dc*);
-extern "C" void func_020e2cc4(Struct_020439b0*, int);
-extern "C" void func_020e2834(Struct_020e2834*);
-extern "C" void func_0207fd88(Struct_0207fd88*);
+int CheckElementFlag_02158080_02158080(Obj2081*, int);
+Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
+void Background_Init(List0204af64*);
+int Background_SetScroll(Obj0204b5e8*, int, int);
+void CallFunc0204b620IfField0x14_0204b938(void*, void*, int, int, unsigned short);
+extern "C" void func_ov006_02154fe4(AlchemyPot*);
+void ResetDisplayState02155480(Obj02155480*);
+extern "C" int func_ov006_021570fc(AlchemyPot*, int);
+extern "C" void Background_TransferMap(void*, int);
+int GetInnerFlagBit0020e28dc(Outer020e28dc*);
+void SetEntryEnabled020e2cc4(Entry020e2cc4*, int);
+void SetYesNoButtonPalette020e2834(SelfState020e2834*);
+void CallFunc0204b088OverList0x2c(Cont0207fd88*);
 
 struct Struct_ov006_02157a60 {
     int unknown_0_;
@@ -179,15 +179,15 @@ extern "C" ARM void func_ov006_02158478(Struct_ov006_02157a60* arg0)
         void* var4 = (char*)var1 + 0xc8;
         if (var4 == 0)
             return;
-        var2 = var1->unknown_ac_;
-        var3 = var1->unknown_ae_;
-        Struct_ov003_021594c4 var5;
-        func_0204af64((Struct_02020cb8*)&var5);
-        var5.unknown_1c_0_ = 1;
-        var5.unknown_1c_4_ = 0;
-        *(unsigned short**)&var5.unknown_0_[0x14] = var0;
-        func_0204b5e8((Struct_02020cb8_5*)&var5, 0, 0);
-        func_0204b938(&var5, var4, var2, var3, 0xffff);
+        x = canvas->x_;
+        y = canvas->y_;
+        BackgroundGraphics background;
+        Background_Init((List0204af64*)&background);
+        background.unk_1c_0_ = 1;
+        background.unk_1c_4_ = 0;
+        *(unsigned short**)&background.unk_0[0x14] = screen;
+        Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+        CallFunc0204b620IfField0x14_0204b938(&background, layer, x, y, 0xffff);
     }
     func_ov006_02154fe4(R(*(Struct_ov006_02154614**)((char*)arg0+8),arg0->unknown_10_));
     if (arg0->unknown_432_ != 0)
@@ -196,8 +196,8 @@ extern "C" ARM void func_ov006_02158478(Struct_ov006_02157a60* arg0)
         func_ov006_021570fc(R(*(Struct_ov006_02154614**)((char*)arg0+8),arg0->unknown_10_), 1);
         arg0->unknown_432_ = 0;
     }
-    func_0204b088(R((int*)((char*)arg0+0x4c),arg0->unknown_54_), 0);
-    if (R(*(void**)((char*)arg0+0x10),arg0->unknown_18_) != 0)
+    Background_TransferMap(R((int*)((char*)self+0x4c),self->subBackground_), 0);
+    if (R(*(void**)((char*)self+0x10),self->choice_) != 0)
     {
         void* var6 = *(void**)((char*)R(*(void**)((char*)arg0+0x10),arg0->unknown_18_) + 0x10);
         func_020e2cc4((Struct_020439b0*)((char*)var6 + 0x28), func_020e28dc((Struct_020e28dc*)R(*(void**)((char*)arg0+0x10),arg0->unknown_18_)));

@@ -7,9 +7,9 @@ extern "C" int func_02041ea4(char* arg0, int arg1);
 extern "C" int func_02042058(char* arg0, const char* arg1);
 extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020e51cc(int arg0);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+int CallFunc020e0434With02153694_020e51cc(int value);
 
 extern short data_ov000_021834c4[4];
 
@@ -46,9 +46,9 @@ extern "C" ARM void func_ov000_0217737c(void* arg0, char* arg1) {
         if (var7 < 0) {
             continue;
         }
-        if (var4 != 0) {
-            int var8 = func_020e0434((struct Struct_0201099c_3*)(var0 + 0xb8), var5);
-            func_02042058(arg1, (const char*)var8);
+        if (nameIdx != 0) {
+            int f = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), keyArg);
+            AppendString02042058(dst, (const char*)f);
         }
 #if defined(jpn)
         char* var9 = var2.unknown_0_[var7];

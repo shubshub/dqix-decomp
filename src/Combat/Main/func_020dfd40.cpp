@@ -10,11 +10,11 @@ struct Struct_0201099c_14 {
 };
 
 struct SafeAllocator;
-struct Struct_020dfc40;
-extern "C" int func_020dfe88(Struct_020dfc40*);
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_020e0028(void* arg0, void* arg1, void* arg2, unsigned int arg3, short* arg4, int arg5);
-extern "C" int func_020dfd40(void* arg0, void* arg1, void* arg2);
+struct Obj020dfe88;
+int ResetHandleState020dfe88(Obj020dfe88*);
+extern "C" void KeyTable_Load(void* p, void* a, void* b, unsigned int c);
+extern "C" void func_020e0028(void* p, void* a, void* b, unsigned int c, short* e, int f);
+extern "C" int func_020dfd40(void* self, void* a, void* b);
 
 // USA: func_020dfd40
 extern "C" ARM int func_020dfd40(void* arg0, void* arg1, void* arg2) {
@@ -41,12 +41,12 @@ extern "C" ARM int func_020dfd40(void* arg0, void* arg1, void* arg2) {
         var0->unknown_e_ = 3;
         return func_020dfd40(var0, 0, 0);
     case 3: {
-        void* var2 = 0;
-        unsigned int var3 = 0;
-        short var4;
-        ((BackgroundLoader*)var1)->GetLoadedFileByID(var0->unknown_10_, &var2, &var3);
-        if (var0->unknown_c_ < 0) {
-            func_020dfec0(var0, var0->unknown_14_, var2, var3);
+        void* data = 0;
+        unsigned int size = 0;
+        short idx;
+        ((BackgroundLoader*)loader)->GetLoadedFileByID(p->field_10, &data, &size);
+        if (p->field_c < 0) {
+            KeyTable_Load(p, p->field_14, data, size);
         } else {
             var4 = var0->unknown_c_;
             func_020e0028(var0, var0->unknown_14_, var2, var3, &var4, 1);

@@ -56,15 +56,15 @@ struct Struct_ov003_02168b50_4 {
     unsigned char unknown_5a4_;
 };
 
-extern "C" struct Struct_ov003_02168b50* func_020421a0();
-extern "C" struct Struct_ov003_02168b50_2* func_0206f504();
-extern "C" int func_02041fe8(char* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
+struct MessageWork02168b50* GetGlobalField0x1c020421a0();
+struct DataEntry02108d18* GetData02108d18_0206f504();
+int AppendFormatted02041fe8(char* buf, int a);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+extern "C" void func_02046380(void* obj);
+void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
 
 #if defined(jpn)
 extern "C" void func_0204500c(void*, char*, int);
@@ -86,17 +86,17 @@ extern "C" ARM void func_ov003_02168b50(struct Struct_ov003_02168b50_4* arg0) {
         if (var2->unknown_10_[0] != 0) {
             func_02041fe8(arg0->unknown_7c_, (int)var2->unknown_10_);
         }
-        func_02042058(arg0->unknown_7c_, (const char*)func_020e0434(var1, 0x3e8));
-        GameState* var3 = GameState::GetInstance();
-        struct Struct_ov003_02168b50_3* var4 = (struct Struct_ov003_02168b50_3*)func_02010828(var3);
-        func_02046380(var0);
-        func_02046574((struct Struct_02046574_2*)var0, 0, (char*)var3->GetProtagonist()->baseStats_);
-        if (var4->unknown_f68_ != 0) {
-            func_020465c0((struct Struct_020465c0*)var0, 0, var4->unknown_f68_);
-            func_020465f0((unsigned char*)var0, 0, 0);
-            func_02042058(arg0->unknown_7c_, (const char*)func_020e0434(var1, 0x3ea));
+        AppendString02042058(self->text, (const char*)KeyTable_Get(messages, 0x3e8));
+        GameState* game = GameState::GetInstance();
+        struct BattleData02168b50* battle = (struct BattleData02168b50*)GetPtrField0x2a04_02010828(game);
+        func_02046380(work);
+        SetIndexedName02046574((struct Obj02046574*)work, 0, (char*)game->GetProtagonist()->baseStats_);
+        if (battle->field_0xf68 != 0) {
+            StoreInArray0x8b0_020465c0((struct StoreStruct*)work, 0, battle->field_0xf68);
+            SetByteInRange_020465f0((unsigned char*)work, 0, 0);
+            AppendString02042058(self->text, (const char*)KeyTable_Get(messages, 0x3ea));
         } else {
-            func_02042058(arg0->unknown_7c_, (const char*)func_020e0434(var1, 0x3e9));
+            AppendString02042058(self->text, (const char*)KeyTable_Get(messages, 0x3e9));
         }
         var0->unknown_998_ = 1;
 #if defined(jpn)

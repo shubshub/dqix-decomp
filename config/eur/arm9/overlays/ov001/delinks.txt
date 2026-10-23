@@ -1213,7 +1213,7 @@ src/Combat/Overlay_1/func_ov001_0215aac8.cpp:
     complete
     .text start:0x0215aac8 end:0x0215ab20
 
-src/Combat/Overlay_1/func_ov001_02159290.cpp:
+src/Combat/Overlay_3/AppendFieldTwice_02159290.cpp:
     complete
     .text start:0x02159290 end:0x0215929c
 
@@ -1713,7 +1713,7 @@ src/Combat/Overlay_1/func_ov001_0215f740.cpp:
     complete
     .text start:0x0215f740 end:0x0215f854
 
-src/Combat/Overlay_1/func_ov001_0215e7c0.cpp:
+src/Combat/Overlay_1/RegisterTableEntryAndInvokeHandler_0215e7c0.cpp:
     complete
     .text start:0x0215e7c0 end:0x0215e900
 

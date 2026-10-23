@@ -25,12 +25,12 @@ bool GetFileInNarc(const void*, const char*, const void**, unsigned int*, unsign
 extern const char data_ov017_021d7504[], data_ov017_021d7510[], data_ov017_021d751b[];
 extern const char data_ov017_021d751f[], data_ov017_021d7526[], data_ov017_021d7530[], data_ov017_021d753a[];
 extern const char data_ov017_021d7544[], data_ov017_021d7555[], data_ov017_021d7567[];
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" void* func_0208e9e8();
-extern "C" void func_02096604(char*, int);
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+int NormalizeField5_0200fb08(Struct0200fb08*);
+void* GetData02109020_0208e9e8();
+void InitFourNamedSubStructs_02096604(char*, int);
 extern "C" {
 Zone3D* func_02012fe4();
 void func_02018d28(Zone3D*, SafeAllocator*, void*, unsigned int);
@@ -64,9 +64,9 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_0207df90((char*)var4);
-    NarcHandle var7;
-    if (!var7.Initialize(data_ov017_021d751b, (const unsigned char*)&data_0211e33c)) {
+    VramState_Restore((char*)pairs);
+    NarcHandle archive;
+    if (!archive.Initialize(data_ov017_021d751b, (const unsigned char*)&data_0211e33c)) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -121,13 +121,13 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
         }
     }
     BackgroundLoader::RemoveLockGlobal();
-    func_02096604(static_cast<char*>(arg0->unknown_ptr_4328), (int)var2);
-    func_0207dfac((char*)var4);
-    var1->unknown_480_[0] = &arg0->substruct_array_2b90[5];
-    var1->unknown_480_[1] = &arg0->substruct_array_2b90[6];
-    var1->unknown_480_[2] = &arg0->substruct_array_2b90[7];
-    var1->unknown_480_[3] = &arg0->substruct_array_2b90[8];
-    var1->unknown_480_[4] = &arg0->substruct_array_2b90[9];
-    var1->unknown_480_[5] = &arg0->substruct_array_2b90[10];
-    func_02013d24(var1);
+    InitFourNamedSubStructs_02096604(static_cast<char*>(self->unknown_ptr_4328), (int)allocator);
+    VramState_Save((char*)pairs);
+    globals->lootableTemplates_[0] = &self->substruct_array_2b90[5];
+    globals->lootableTemplates_[1] = &self->substruct_array_2b90[6];
+    globals->lootableTemplates_[2] = &self->substruct_array_2b90[7];
+    globals->lootableTemplates_[3] = &self->substruct_array_2b90[8];
+    globals->lootableTemplates_[4] = &self->substruct_array_2b90[9];
+    globals->lootableTemplates_[5] = &self->substruct_array_2b90[10];
+    func_02013d24(globals);
 }

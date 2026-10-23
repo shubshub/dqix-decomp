@@ -37,13 +37,13 @@ struct Struct_ov003_021666c4_2 {
 
 extern "C" void func_02080b54(void*, int);
 extern "C" void func_0202ae18();
-extern "C" void func_02080cc0(Struct_02080cc0*, int, int);
-extern "C" void func_02080b40(void*, int);
-extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
-extern "C" void func_02080fa8(Struct_02080fa8*, int, int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_02081198(Struct_02081198*, int, int);
-extern "C" void func_02081164(Struct_02081164*, int, int);
+void SetEntryHighNibble0x13(Container02080cc0*, int, int);
+void SetEntryFlagById02080b40(void*, int);
+void SetEntryFirstField02080f8c(Container02080f8c*, int, int);
+void SetEntryFirstField02080fa8(Container02080fa8*, int, int);
+int KeyTable_Get(Container020e0310*, int);
+void SetEntryNibbleByShortId(StatusOwner02081198*, int, int);
+void SetEntryFlag0x2ByShortId(StatusOwner02081164*, int, int);
 extern "C" void func_020813ec(void*, int);
 extern "C" void func_ov003_02160794(Struct_ov003_021666c4_2*);
 
@@ -81,8 +81,8 @@ extern "C" ARM void func_ov003_021666c4(Struct_ov003_021666c4_2* arg0) {
             func_02080f8c((Struct_02080f8c*)var0, var1, (int)var6);
             func_02080fa8((Struct_02080fa8*)var0, (Type_ov003_021666c4)(var1 + 4), var7);
         } else {
-            int var10 = func_020e0434(&arg0->unknown_2dc_, 30000);
-            func_02080f8c((Struct_02080f8c*)var0, (Type_ov003_021666c4)var1, var10);
+            int text = KeyTable_Get(&self->messages, 30000);
+            SetEntryFirstField02080f8c((Container02080f8c*)menu, (s16)id, text);
         }
         func_02080b40(var0, var1);
     }

@@ -40,12 +40,12 @@ struct Struct_ov000_02179018_2 {
     int unknown_48_;
 };
 
-extern "C" int func_020421a0();
-extern "C" int func_0205bafc(void* arg0);
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_ov000_02179194(struct Struct_ov000_02179018* arg0, struct Struct_ov000_02179018_2* arg1);
-extern "C" void func_ov000_0217ab8c(struct Struct_ov000_02179018_2* arg0, int arg1, int arg2);
-extern "C" void func_ov000_0217936c(struct Struct_ov000_02179018* arg0, struct Struct_ov000_02179018_2* arg1, void* arg2);
+int GetGlobalField0x1c020421a0();
+int GridCursor_GetCount(void* obj);
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern "C" void func_ov000_02179194(struct Owner_02179018* obj, struct Entry_02179018* entry);
+extern "C" void func_ov000_0217ab8c(struct Entry_02179018* entry, int a, int b);
+extern "C" void func_ov000_0217936c(struct Owner_02179018* obj, struct Entry_02179018* entry, void* buf);
 #if defined(jpn)
 extern "C" void func_0205d304(struct Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -71,15 +71,15 @@ extern "C" ARM void func_ov000_02179018(struct Struct_ov000_02179018* arg0, stru
 #else
     var2->unknown_a4_ = (var0 >> 3) + 0x10;
 #endif
-    var2->unknown_a6_ = var1 >> 3;
-    var2->unknown_a8_ = 0xc;
-    var2->unknown_aa_ = 8;
-    var2->unknown_ac_ = 0xa;
-    var2->unknown_ae_ = 0xc;
-    var2->unknown_b1_ = 0x10;
-    int var3 = 0;
-    if (func_0205bafc(var2->unknown_54_) > 4) {
-        var3 = 1;
+    s->fieldA6 = y >> 3;
+    s->fieldA8 = 0xc;
+    s->fieldAA = 8;
+    s->fieldAC = 0xa;
+    s->fieldAE = 0xc;
+    s->fieldB1 = 0x10;
+    int many = 0;
+    if (GridCursor_GetCount(s->field54) > 4) {
+        many = 1;
     }
 #if defined(jpn)
     void* var4 = *(void**)(func_020421a0() + 0x28);

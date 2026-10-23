@@ -26,13 +26,13 @@ struct Struct_ov003_02158bb8_2 {
     char unknown_12_[2];
 };
 
-extern "C" void func_02074af4(Struct_ov003_02158bb8_2* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205cfd4(Struct_0205cfd4* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_020a9ea4(Struct_020a9ea4* arg0);
+extern "C" void func_02074af4(ScreenState02158bb8* state);
+extern "C" void func_0204c684(void* canvas);
+void SpriteContext_Init(char* obj);
+void InitStruct0205cfd4(InitTarget0205cfd4* window);
+void Background_Init(List0204af64* background);
+void KeyTable_Reset(Struct020dfc40* texts);
+void ClearStruct020a9ea4(Struct020a9ea4* p);
 
 struct Struct_ov003_02158bb8 {
     SafeAllocator unknown_0_;
@@ -93,28 +93,28 @@ extern "C" ARM void func_ov003_02158bb8(Struct_ov003_02158bb8* arg0)
     func_02074af4(&arg0->unknown_80_);
     arg0->unknown_94_ = (DISPCNT & 0x1f00) >> 8;
     DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
-    func_0205a444(arg0->unknown_98_);
-    arg0->unknown_ec_ = NULL;
-    arg0->unknown_f0_ = NULL;
-    arg0->unknown_3c_.ResetAllocatorPointer();
-    arg0->unknown_28_.ResetAllocatorPointer();
-    arg0->unknown_14_.ResetAllocatorPointer();
-    arg0->unknown_0_.ResetAllocatorPointer();
-    func_0205cfd4((Struct_0205cfd4*)arg0->unknown_f4_);
-    for (int var0 = 0; var0 < 2; var0++) {
-        func_0204af64((Struct_02020cb8*)arg0->unknown_1b0_[var0]);
+    SpriteContext_Init(self->field_0x98);
+    self->entries = NULL;
+    self->clearTarget = NULL;
+    self->alloc3c.ResetAllocatorPointer();
+    self->alloc28.ResetAllocatorPointer();
+    self->alloc14.ResetAllocatorPointer();
+    self->alloc0.ResetAllocatorPointer();
+    InitStruct0205cfd4((InitTarget0205cfd4*)self->window);
+    for (int i = 0; i < 2; i++) {
+        Background_Init((List0204af64*)self->backgrounds[i]);
     }
     for (int var1 = 0; var1 < 4; var1++) {
         func_0204c684(arg0->unknown_1f0_[var1]);
     }
-    func_020dfc40((Struct_0201099c_14*)arg0->unknown_64_);
-    arg0->unknown_587_ = 0;
-    arg0->unknown_588_ = 0;
-    arg0->unknown_580_ = 0;
-    arg0->unknown_581_ = 0;
-    arg0->unknown_589_ = 0;
-    for (int var2 = 0; var2 < 6; var2++) {
-        arg0->unknown_58a_[var2] = -1;
+    KeyTable_Reset((Struct020dfc40*)self->texts);
+    self->field_0x587 = 0;
+    self->field_0x588 = 0;
+    self->field_0x580 = 0;
+    self->field_0x581 = 0;
+    self->field_0x589 = 0;
+    for (int i = 0; i < 6; i++) {
+        self->field_0x58a[i] = -1;
     }
     arg0->unknown_590_ = 0;
     for (int var3 = 0; var3 < 4; var3++) {

@@ -13,10 +13,10 @@ struct Struct_02057de0_2 {
     int unknown_4_;
 };
 
-extern "C" int func_02057de0(Struct_02057de0_2* arg0, int arg1, SafeAllocator* arg2, int arg3, int arg4);
-extern "C" int func_02058680(char* arg0, int arg1, void** arg2, int arg3);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+int CreateAndRegisterNode02057de0(NodeList02057de0* list, int a1, SafeAllocator* alloc, int a2, int a3);
+int CollectEntriesMatchingField0xd802058680(char* base, int value, void** out, int limit);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 struct Struct_020dbdc0;
 extern "C" void func_020dbf70(struct Struct_020dbdc0* arg0);
@@ -46,12 +46,12 @@ extern "C" ARM void func_020dbdc0(Struct_020dbd9c* arg0) {
                 func_020dbf70((struct Struct_020dbdc0*)arg0);
                 return;
             }
-            memcpy(var4, var2, var3);
-            func_0207df90(arg0->unknown_4_);
-            func_02057de0(var1, arg0->unknown_8_, arg0->unknown_0_, (int)var4, (int)var3);
-            func_0207dfac(arg0->unknown_4_);
-            func_020dbf70((struct Struct_020dbdc0*)arg0);
-            arg0->unknown_10_ = 2;
+            memcpy(buf, fileData, fileLen);
+            VramState_Restore(self->f4);
+            CreateAndRegisterNode02057de0(list, self->f8, self->f0, (int)buf, (int)fileLen);
+            VramState_Save(self->f4);
+            ReleaseHandle020dbf70((struct Obj020dbf70*)self);
+            self->f10 = 2;
         }
     }
     if (arg0->unknown_14_ != 0) {

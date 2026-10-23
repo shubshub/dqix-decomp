@@ -2,12 +2,12 @@
 
 struct Struct_0201099c_3;
 
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02041dd0(char* arg0, int arg1);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+int FormatCombatLogSuffix02041dd0(char* buf, int index);
 #if defined(jpn)
 extern "C" void func_0203bdf4(char* arg0, int arg1);
 #define func_0203c248 func_0203bdf4
@@ -57,12 +57,12 @@ extern "C" ARM void func_ov000_02179a70(struct Struct_ov000_02179a70* arg0, stru
     }
     func_02041ea4(arg3, var0);
 
-    struct Struct_ov000_02179a70_3* var2;
-    for (int var3 = 0; var3 < arg0->unknown_78_; var3++) {
-        var2 = &arg0->unknown_958_[arg0->unknown_74_[var3]];
-        if (var2->unknown_4c_ >= 0) {
-            if (var1 != 0) {
-                func_02042058(arg3, (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_b8_, 0));
+    struct Member02179a70* m;
+    for (int i = 0; i < party->count; i++) {
+        m = &party->members[party->order[i]];
+        if (m->field_0x4c >= 0) {
+            if (n != 0) {
+                AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)party->strings, 0));
             }
             func_02041dd0(arg3, func_ov000_02170c7c(var2));
 #if defined(jpn)

@@ -45,7 +45,7 @@ struct Struct_ov000_0217d438_3 {
     signed char unknown_1d74_[4];
 };
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* objRaw);
@@ -67,7 +67,7 @@ static inline int inline_ov000_02156cc4_2(signed char arg0) {
 // USA: func_ov000_0217d438
 extern "C" ARM void func_ov000_0217d438(struct Menu0217d438* menu, int arg1, int arg2) {
     menu->flags |= 0x100;
-    menu->field1D6C = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->elements);
+    menu->field1D6C = Window_GetSelectedIndex((struct Struct_0205c570*)menu->elements);
     if (func_ov000_0217c594(menu, 0) != 0) {
         SePlayer_Play(&g_sePlayer, 1, 0);
         GameState* gs = GameState::GetInstance();

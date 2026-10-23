@@ -14,7 +14,7 @@ struct Struct_0205bc2c;
 int UpdateActiveState0205bc2c(Struct_0205bc2c*, int);
 struct Struct_0205bb84;
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84*);
-extern "C" int func_0205bf58(void*, void*);
+extern "C" int GridCursor_Update(void*, void*);
 struct Struct_0205bcdc;
 void SetIndexIfValid0205bcdc(struct Struct_0205bcdc*, int);
 
@@ -57,7 +57,7 @@ extern "C" ARM int func_0205c5b0(void* selfPtr, void* p1) {
 
     if (self->field95 != 0) {
         int before = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)self + 0x54));
-        if (func_0205bf58((char*)self + 0x54, param1) != 0) {
+        if (GridCursor_Update((char*)self + 0x54, param1) != 0) {
             int after = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)((char*)self + 0x54));
             if (before != after) {
                 result = 1;

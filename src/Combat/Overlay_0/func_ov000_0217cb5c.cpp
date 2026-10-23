@@ -41,7 +41,7 @@ struct Struct_ov000_0215ab88 {
     signed char unknown_18_;
 };
 
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(SePlayer*, int, int);
 void* GetPtrField0x2a04_02010828(GameState*);
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
@@ -64,7 +64,7 @@ extern "C" ARM void func_ov000_0217cb5c(Struct_ov000_0215767c_2* arg0, int arg1,
 {
     func_02012fe4();
     self->flags |= 0x100;
-    int mode = GetActiveScaledSum0205d794((Struct_0205c570*)self->entryList);
+    int mode = Window_GetSelectedIndex((Struct_0205c570*)self->entryList);
     if (mode < 0) mode = 0;
     self->mode = mode;
     if (func_ov000_0217c594(self, 0)) {

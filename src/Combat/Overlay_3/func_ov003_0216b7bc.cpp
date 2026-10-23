@@ -40,9 +40,9 @@ struct Struct_ov003_0216b7bc_3 {
 
 extern "C" struct Struct_ov003_0216b7bc* func_020421a0();
 extern "C" void* func_02012fe4(void);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02046380(struct Struct_ov003_0216b7bc* arg0);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+extern "C" void func_02046380(struct MsgCtl0216b7bc* ctl);
 #if !defined(jpn)
 extern "C" void func_0204500c(struct Struct_ov003_0216b7bc* arg0, char* arg1, int arg2, int arg3);
 #endif
@@ -73,29 +73,29 @@ extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* arg0) {
         struct Struct_ov003_0216b7bc_2* var1 = (struct Struct_ov003_0216b7bc_2*)((char*)func_02012fe4() + REGION_LAYOUT(0x860, 0x840));
         char* var2 = var0->unknown_5c_;
 #endif
-        memset(var2, 0, REGION_LAYOUT(0x800, 0x960));
-        func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 0));
-        if (var1->unknown_1b42_ == 0) {
-            func_02042058(var2, data_ov003_021801b2);
+        memset(buf, 0, REGION_LAYOUT(0x800, 0x960));
+        AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 0));
+        if (progress->rewardFlags == 0) {
+            AppendString02042058(buf, data_ov003_021801b2);
         } else {
             func_02042058(var2, data_ov003_021801c2);
         }
         unsigned char var3 = var1->unknown_1b42_;
 #if defined(jpn)
-        if (var3 & 0x1) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 1));
+        if (flags & 0x1) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 1));
         }
-        else if (var3 & 0x2) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 2));
+        else if (flags & 0x2) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 2));
         }
-        else if (var3 & 0x4) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 3));
+        else if (flags & 0x4) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 3));
         }
-        else if (var3 & 0x8) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 4));
+        else if (flags & 0x8) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 4));
         }
-        else if (var3 & 0x10) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, 5));
+        else if (flags & 0x10) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 5));
         }
 #else
         int var4 = -1;
@@ -110,8 +110,8 @@ extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* arg0) {
         } else if (var3 & 0x10) {
             var4 = 5;
         }
-        if (var4 >= 0) {
-            func_02042058(var2, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_1324_, var4));
+        if (idx >= 0) {
+            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, idx));
         }
 #endif
         var1->unknown_1b42_ &= ~0xff;

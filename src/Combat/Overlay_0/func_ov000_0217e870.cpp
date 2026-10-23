@@ -45,7 +45,7 @@ extern int data_ov000_02184294[2];
 #define G02184294(i) data_ov000_02184294[i]
 #endif
 int GetField0x3acValue_020100a8(GameState*);
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 extern "C" BattleCommand* func_ov000_02161318(BattleMenuState*, int);
 extern "C" int func_ov000_0217c594(BattleMenuState*, int);
 void SePlayer_Play(SePlayer*, int, int);
@@ -59,7 +59,7 @@ extern "C" void func_ov000_02177038(BattleMenuState*, BattleCommand*, int, int, 
 // USA: func_ov000_0217e870
 extern "C" ARM void func_ov000_0217e870(BattleMenuState* state, int first, int second) {
     state->flags |= 0x100;
-    state->current = GetActiveScaledSum0205d794((Struct_0205c570*)state->entries);
+    state->current = Window_GetSelectedIndex((Struct_0205c570*)state->entries);
     GameState* game = GameState::GetInstance();
     PartyState* party = (PartyState*)GetPtrField0x2a04_02010828(game);
     BattleCommand* command = func_ov000_02161318(state, GetField0x3acValue_020100a8(game));

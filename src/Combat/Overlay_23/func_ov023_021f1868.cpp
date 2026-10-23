@@ -208,9 +208,9 @@ void ReinitController02043204(char* messages);
 void ClearStruct020a13c4(S020a13c4* table);
 void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int ids, unsigned short count, unsigned char mode);
 void* ResetAndReturnSelf020dfc2c(void* texts);
-void ResetStruct020dfc40(Struct020dfc40* texts);
+void KeyTable_Reset(Struct020dfc40* texts);
 void* FindElementByField020a15bc(Array020a15bc* table, int id);
-const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+const char* KeyTable_Get(Container020e0310* texts, int id);
 void InitObj_021f222c(Obj_021f222c* page);
 void FormatLabelIntoBufC_021f2304(void* page, char* title);
 void SetOrClearBit10At400_38_021f2348(void* guide, int value);
@@ -337,33 +337,33 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         int var11 = arg0->unknown_57b4_->unknown_68_;
         if (var11 > 0)
         {
-            func_02043204((char*)var0);
-            SafeAllocator* var12 = &arg0->unknown_5314_;
-            var12->Reset();
-            var11 = arg0->unknown_57b4_->unknown_68_;
-            var9 = (short*)var12->Allocate(var11 * 2);
-            for (int var13 = 0; var13 < var11; var13++)
-                var9[var13] = arg0->unknown_57b4_->unknown_6a_[var13];
-            arg0->unknown_30_.Reset();
-            arg0->unknown_5770_ = NULL;
-            arg0->unknown_57b4_ = NULL;
-            arg0->unknown_57b8_ = arg0->unknown_30_.Allocate(0x14);
-            func_020a13c4((Struct_020a13c4*)arg0->unknown_57b8_);
-            func_020a13e4(arg0->unknown_57b8_, &arg0->unknown_30_, (int)var9, (unsigned short)var11, 4);
-            arg0->unknown_55d5_ = func_ov023_021ed724(arg0->unknown_57b8_, var9, var11) & 1 ? 1 : 0;
-            Struct_ov023_021f1868_14* var14 = var19->GetProtagonist();
-            Struct_ov023_021f1868_7 var15;
-            func_020dfc2c(&var15);
-            func_020dfc40((Struct_0201099c_14*)&var15);
-            func_020e1fc4(&var15, &arg0->unknown_30_, data_ov023_021fd533, var9, (unsigned short)var11, var14->unknown_150_->unknown_49c_.unknown_0_0_, 1);
-            arg0->unknown_55d0_ = (Struct_ov023_021f1868_5*)arg0->unknown_30_.Allocate(var11 * sizeof(Struct_ov023_021f1868_5));
-            for (var10 = 0; var10 < var11; var10++)
+            ReinitController02043204((char*)messages);
+            SafeAllocator* idAllocator = &self->menuAllocator_;
+            idAllocator->Reset();
+            count = self->titles_->count_;
+            ids = (short*)idAllocator->Allocate(count * 2);
+            for (int k = 0; k < count; k++)
+                ids[k] = self->titles_->ids_[k];
+            self->allocator_.Reset();
+            self->skillTable_ = NULL;
+            self->titles_ = NULL;
+            self->titleTable_ = self->allocator_.Allocate(0x14);
+            ClearStruct020a13c4((S020a13c4*)self->titleTable_);
+            SetupGlobalAndRunScript020a13e4(self->titleTable_, &self->allocator_, (int)ids, (unsigned short)count, 4);
+            self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
+            GameObject_021f1868* hero = gameState->GetProtagonist();
+            TextTable_021f1868 names;
+            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Reset((Struct020dfc40*)&names);
+            func_020e1fc4(&names, &self->allocator_, data_ov023_021fd533, ids, (unsigned short)count, hero->partyData_->appearance_.female_, 1);
+            self->pages_ = (GuidePage_021f1868*)self->allocator_.Allocate(count * sizeof(GuidePage_021f1868));
+            for (i = 0; i < count; i++)
             {
                 void* var16 = func_020a15bc((Struct_020a15bc*)arg0->unknown_57b8_, var9[var10]);
                 if (var16 == NULL)
                     continue;
-                const char* var17 = func_020e0434((Struct_0201099c_3*)&var15, var9[var10]);
-                if (var17 == NULL)
+                const char* title = KeyTable_Get((Container020e0310*)&names, ids[i]);
+                if (title == NULL)
                     continue;
                 func_ov023_021f222c((Struct_ov023_021f1868_11*)&arg0->unknown_55d0_[var10]);
                 func_ov023_021f229c(&arg0->unknown_55d0_[var10], var16);
@@ -514,25 +514,25 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         int var37 = arg0->unknown_55c4_->unknown_68_;
         if (var37 > 0)
         {
-            func_02043204((char*)var21);
-            char* var38 = arg0->unknown_3760_; SafeAllocator* var39 = (SafeAllocator*)(var38 + 0x1af8);
-            var39->Reset();
-            var37 = arg0->unknown_55c4_->unknown_68_;
-            short* var40 = (short*)var39->Allocate(var37 * 2);
-            for (int var41 = 0; var41 < var37; var41++)
-                var40[var41] = arg0->unknown_55c4_->unknown_6a_[var41];
-            arg0->unknown_30_.Reset();
-            arg0->unknown_557c_ = NULL;
-            arg0->unknown_5580_ = NULL;
-            arg0->unknown_55c4_ = NULL;
-            arg0->unknown_55c8_ = arg0->unknown_30_.Allocate(0x14);
-            func_020a13c4((Struct_020a13c4*)arg0->unknown_55c8_);
-            func_020a13e4(arg0->unknown_55c8_, &arg0->unknown_30_, (int)var40, (unsigned short)var37, 4);
-            arg0->unknown_55d5_ = func_ov023_021ed724(arg0->unknown_55c8_, var40, var37) & 1 ? 1 : 0;
-            Struct_ov023_021f1868_14* var42 = var19->GetProtagonist();
-            Struct_ov023_021f1868_7 var43;
-            func_020dfc2c(&var43);
-            func_020dfc40((Struct_0201099c_14*)&var43);
+            ReinitController02043204((char*)messages);
+            char* menu = self->menu_; SafeAllocator* idAllocator = (SafeAllocator*)(menu + 0x1af8);
+            idAllocator->Reset();
+            count = self->titles_->count_;
+            short* ids = (short*)idAllocator->Allocate(count * 2);
+            for (int k = 0; k < count; k++)
+                ids[k] = self->titles_->ids_[k];
+            self->allocator_.Reset();
+            self->skillTable_ = NULL;
+            self->items_ = NULL;
+            self->titles_ = NULL;
+            self->titleTable_ = self->allocator_.Allocate(0x14);
+            ClearStruct020a13c4((S020a13c4*)self->titleTable_);
+            SetupGlobalAndRunScript020a13e4(self->titleTable_, &self->allocator_, (int)ids, (unsigned short)count, 4);
+            self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
+            GameObject_021f1868* hero = gameState->GetProtagonist();
+            TextTable_021f1868 names;
+            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Reset((Struct020dfc40*)&names);
             BackgroundLoader::AddLockGlobal();
             unsigned int var44 = 0;
             char var45[0x40];
@@ -552,8 +552,8 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
                 void* var50 = func_020a15bc((Struct_020a15bc*)arg0->unknown_55c8_, var40[var49]);
                 if (var50 == NULL)
                     continue;
-                const char* var51 = func_020e0434((Struct_0201099c_3*)&var43, var40[var49]);
-                if (var51 == NULL)
+                const char* title = KeyTable_Get((Container020e0310*)&names, ids[i]);
+                if (title == NULL)
                     continue;
                 func_ov023_021f222c((Struct_ov023_021f1868_11*)&arg0->unknown_55d0_[var49]);
                 func_ov023_021f229c(&arg0->unknown_55d0_[var49], var50);

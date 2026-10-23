@@ -174,8 +174,8 @@ void* func_0202ae18();
 int func_0202c508(void* arg0);
 int func_0202c540(void* arg0);
 int func_ov023_021f4fc8();
-Struct_ov023_021eefd0_2* func_02012fe4();
-void func_020426bc(void* arg0, char* arg1, int arg2);
+ZoneData_021eefd0* func_02012fe4();
+void Font_EncodeText(void* name, char* buffer, int a);
 void VectorizedMemset(void* dst, int value, unsigned int size);
 void VectorizedInvertedMemcpy(const void* src, void* dst, unsigned int size);
 void func_02011744(GameState* arg0);
@@ -443,9 +443,9 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
 #if defined(jpn)
 
 #else
-                char var30[0xa];
-                __clear(var30, sizeof(var30));
-                func_020426bc(var29, var30, 1);
+                char buffer[0xa];
+                __clear(buffer, sizeof(buffer));
+                Font_EncodeText(name, buffer, 1);
 #endif
 
                 var27->discoveryState_ = 3;

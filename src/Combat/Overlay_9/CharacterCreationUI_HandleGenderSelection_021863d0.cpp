@@ -1,5 +1,6 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
+#include "Graphics/CharacterModel.h"
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
@@ -20,20 +21,29 @@ void CharacterCreationUI_SwitchTab(unsigned char*, int);
 void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
+// CharacterCreationUI::step on the gender tab. Setup falls through into FadeIn in the same frame.
+enum GenderStep
+{
+    GenderStep_Setup = 0,      // first entry (both screens black): wait for the tab's graphics, fade in
+    GenderStep_FadeIn = 1,     // wait for the fade, then stylus rotation on
+    GenderStep_ShowChoice = 2, // apply the stored sex to the preview
+    GenderStep_Input = 3,
+};
+
 // Overlay 9, originally func_ov009_021863d0 (USA/EUR 0x021863d0, JPN 0x02187500)
 extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationUI* self)
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
 
-    if (self->step == 0) //First time setup, Runs one time when we switch into the Gender Tab
+    if (self->step == GenderStep_Setup)
     {
         if (GetBrightness(resources, false) == Brightness_Black &&
             GetBrightness(resources, true) == Brightness_Black)
         {
             if (self->flags & CreationFlag_TabLoading)
                 return;
-            SetBrightness(resources, Brightness_Normal, 15);
+            SetBrightness(resources, Brightness_Normal, CreationFade_Frames);
         }
         CharacterCreationUI_SetupSlotNavigation(self);
         CharacterCreationUI_LoadSlotLayout(self);
@@ -41,22 +51,21 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
         self->step++;
     }
 
-    //Looks like Step 1 and Step 2 Trigger when we enter the Gender Tab
-    if (self->step == 1)
+    if (self->step == GenderStep_FadeIn)
     {
         if (IsBrightnessTransitionActive(var1))
             return;
         self->flags |= CreationFlag_StylusRotation;
         self->step++;
     }
-    else if (arg0->unknown_c59_ == 2)
+    else if (self->step == GenderStep_ShowChoice)
     {
         if (self->flags & CreationFlag_TabLoading)
             return;
         CharacterCreationUI_ApplyChoice(self, self->sex);
         self->step++;
     }
-    else if (self->step == 3) //Appears to be Idle Waiting for Input
+    else if (self->step == GenderStep_Input)
     {
         int result = CharacterCreationUI_HandleInput(self);
         if (result != self->state)
@@ -65,15 +74,15 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
             if (var3->unknown_c12_ == 0)
             {
 #if defined(jpn)
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 0);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 2);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 3);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, 4);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Body);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Face);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Hair);
+                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_HairTexture);
 #else
-                CharacterModel_InvalidatePart(next, 0);
-                CharacterModel_InvalidatePart(next, 2);
-                CharacterModel_InvalidatePart(next, 3);
-                CharacterModel_InvalidatePart(next, 4);
+                CharacterModel_InvalidatePart(next, CharacterModelPart_Body);
+                CharacterModel_InvalidatePart(next, CharacterModelPart_Face);
+                CharacterModel_InvalidatePart(next, CharacterModelPart_Hair);
+                CharacterModel_InvalidatePart(next, CharacterModelPart_HairTexture);
 #endif
             }
         }
@@ -88,11 +97,10 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
                 self->flags &= ~CreationFlag_MemberCreated;
             else if (self->mode == CreationMode_NewGame)
                 gameState->characterCreated_ = 0;
-            CharacterCreationUI_SwitchTab((unsigned char*)self, 11);
+            CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Close);
             return;
         }
 
-        //This is when you click to a tab further away than 1 next to it
         if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
             int tab = result - CreationInput_TabIcon;

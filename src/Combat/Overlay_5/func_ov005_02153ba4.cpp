@@ -153,9 +153,9 @@ extern "C" void __clear(void* arg0, unsigned long arg1);
 extern "C" void func_02074af4(void* arg0);
 extern "C" char* func_02012fe4();
 short GetFieldAt0x7e_0201e830(S_e830* p);
-void ResetStruct020dfc40(Struct020dfc40* texts);
+void KeyTable_Reset(Struct020dfc40* texts);
 void ClearFields_021e20c0(void* layout);
-void ResetList0204af64(List0204af64* bg);
+void Background_Init(List0204af64* bg);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
 extern "C" void func_0204c684(void* canvas);
 extern "C" void func_ov023_021dc134(void* window, int a, int b);
@@ -174,65 +174,65 @@ extern "C" int func_0207c7a0(void* p, int item, int a);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* p, unsigned int list);
 
 // USA: func_ov005_02153ba4
-extern "C" ARM void func_ov005_02153ba4(Struct_ov005_02153954* arg0) {
-    arg0->unknown_e7c_ = 0;
-    arg0->unknown_e7d_ = 0;
-    func_02074af4(arg0->unknown_e6c_);
-    arg0->unknown_e80_ = (REG_DISPCNT & 0x1f00) >> 8;
-    arg0->unknown_3dc2_ = func_0201e830((Struct_0201e830*)(func_02012fe4() + REGION(0x8c,0x6c)));
-    arg0->unknown_0_.ResetAllocatorPointer();
-    arg0->unknown_14_.ResetAllocatorPointer();
-    for (int var0 = 0; var0 < 8; var0++)
-        arg0->unknown_28_[var0].ResetAllocatorPointer();
-    for (int var1 = 0; var1 < 16; var1++)
-        arg0->unknown_c8_[var1].ResetAllocatorPointer();
-    arg0->unknown_208_.ResetAllocatorPointer();
-    arg0->unknown_21c_.ResetAllocatorPointer();
-    arg0->unknown_230_.ResetAllocatorPointer();
-    arg0->unknown_244_.ResetAllocatorPointer();
-    arg0->unknown_258_.ResetAllocatorPointer();
-    arg0->unknown_26c_.ResetAllocatorPointer();
-    arg0->unknown_280_.ResetAllocatorPointer();
-    arg0->unknown_df4_ = NULL;
-    func_020dfc40((Struct_0201099c_14*)arg0->unknown_df8_);
-    arg0->unknown_e10_ = NULL;
-    func_ov023_021e20c0(arg0->unknown_e18_);
-    arg0->unknown_e64_ = NULL;
-    arg0->unknown_e68_ = 0;
-    func_0204af64((Struct_02020cb8*)arg0->unknown_e84_[0]);
-    func_0204af64((Struct_02020cb8*)arg0->unknown_e84_[1]);
-    func_0204af64((Struct_02020cb8*)arg0->unknown_e84_[2]);
-    func_0205cfd4((Struct_0205cfd4*)arg0->unknown_ee4_);
-    for (int var2 = 0; var2 < 3; var2++)
-        func_0204c684(arg0->unknown_fa0_[var2]);
-    arg0->unknown_1240_ = NULL;
-    func_ov023_021dc134(arg0->unknown_1244_, -1, 0);
-    func_ov023_021e1318((Struct_ov002_0215505c_2*)arg0->unknown_19e0_);
-    func_ov023_021dad78(arg0->unknown_19ec_);
-    func_ov005_021536e0(arg0->unknown_1a34_);
-    for (int var3 = 0; var3 < 36; var3++)
-        func_0204719c(&arg0->unknown_1a70_[var3]);
-    for (int var4 = 0; var4 < 24; var4++)
-        func_0204719c(&arg0->unknown_3030_[var4]);
-    func_0204719c(&arg0->unknown_3cf0_);
-    arg0->unknown_3d78_ = -1;
-    arg0->unknown_3d7c_ = 0;
-    arg0->unknown_3d80_ = 0;
-    arg0->unknown_3d84_ = 0;
-    arg0->unknown_3d88_ = NULL;
-    arg0->unknown_3d8c_ = NULL;
-    arg0->unknown_3d90_ = NULL;
-    arg0->unknown_3d94_ = NULL;
-    for (int var5 = 0; var5 < 24; var5++) {
-        arg0->unknown_2d90_[var5].unknown_0_ = -1;
-        arg0->unknown_2d90_[var5].unknown_2_ = 0;
-        arg0->unknown_2d90_[var5].unknown_3_ = 0;
-        arg0->unknown_2d90_[var5].unknown_4_ = NULL;
-        arg0->unknown_2d90_[var5].unknown_8_ = NULL;
-        arg0->unknown_2d90_[var5].unknown_c_ = 0;
-        arg0->unknown_2d90_[var5].unknown_10_ = 0;
-        arg0->unknown_2d90_[var5].unknown_14_ = -1;
-        arg0->unknown_2d90_[var5].unknown_18_ = -1;
+extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
+    self->unk_e7c = 0;
+    self->unk_e7d = 0;
+    func_02074af4(self->screenState_);
+    self->layers_ = (REG_DISPCNT & 0x1f00) >> 8;
+    self->unk_3dc2 = GetFieldAt0x7e_0201e830((S_e830*)(func_02012fe4() + REGION(0x8c,0x6c)));
+    self->allocator_.ResetAllocatorPointer();
+    self->modelAllocator_.ResetAllocatorPointer();
+    for (int i = 0; i < 8; i++)
+        self->equippedAllocators_[i].ResetAllocatorPointer();
+    for (int i = 0; i < 16; i++)
+        self->itemAllocators_[i].ResetAllocatorPointer();
+    self->dragAllocator_.ResetAllocatorPointer();
+    self->textAllocator_.ResetAllocatorPointer();
+    self->unk_230.ResetAllocatorPointer();
+    self->infoAllocator_.ResetAllocatorPointer();
+    self->sortAllocator_.ResetAllocatorPointer();
+    self->modelTableAllocator_.ResetAllocatorPointer();
+    self->unk_280.ResetAllocatorPointer();
+    self->items_ = NULL;
+    KeyTable_Reset((Struct020dfc40*)self->texts_);
+    self->text_ = NULL;
+    ClearFields_021e20c0(self->layout_);
+    self->unk_e64 = NULL;
+    self->unk_e68 = 0;
+    Background_Init((List0204af64*)self->backgrounds_[0]);
+    Background_Init((List0204af64*)self->backgrounds_[1]);
+    Background_Init((List0204af64*)self->backgrounds_[2]);
+    InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
+    for (int i = 0; i < 3; i++)
+        func_0204c684(self->canvases_[i]);
+    self->pixels_ = NULL;
+    func_ov023_021dc134(self->infoWindow_, -1, 0);
+    ClearObj_021e1318((Obj021e1318*)self->sortList_);
+    func_ov023_021dad78(self->modelTable_);
+    func_ov005_021536e0(self->frame_);
+    for (int i = 0; i < 36; i++)
+        func_0204719c(&self->models_[i]);
+    for (int i = 0; i < 24; i++)
+        func_0204719c(&self->slotModels_[i]);
+    func_0204719c(&self->dragModel_);
+    self->dragged_ = -1;
+    self->unk_3d7c = 0;
+    self->unk_3d80 = 0;
+    self->unk_3d84 = 0;
+    self->pageFiles_ = NULL;
+    self->dragFile_ = NULL;
+    self->equippedFiles_ = NULL;
+    self->itemFile_ = NULL;
+    for (int i = 0; i < 24; i++) {
+        self->slots_[i].item_ = -1;
+        self->slots_[i].count_ = 0;
+        self->slots_[i].equipped_ = 0;
+        self->slots_[i].vramState_ = NULL;
+        self->slots_[i].model_ = NULL;
+        self->slots_[i].x_ = 0;
+        self->slots_[i].y_ = 0;
+        self->slots_[i].offset_ = -1;
+        self->slots_[i].loadedItem_ = -1;
     }
     GameState* gameState = GameState::GetInstance();
     char* party = (char*)GetPtrField0x2a04_02010828(gameState);

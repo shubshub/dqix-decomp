@@ -21,8 +21,8 @@ extern "C" int func_0203b784(int* arg0, int arg1, int arg2, int arg3, unsigned i
 extern "C" void func_0203b718(void* arg0, int arg1, int arg2, int arg3);
 extern "C" void func_0203ba74(void* arg0);
 
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_0205a444(char* arg0);
+void Sprite_Init(struct Struct0205a198* p);
+void SpriteContext_Init(char* obj);
 
 extern "C" void func_02020aa0(void* arg0);
 
@@ -128,15 +128,15 @@ extern "C" ARM void func_020227dc(Struct_02020554* arg0) {
     func_0203b718(var4, 1, 1, 0);
     func_0203ba74(var4);
 
-    for (var5 = 0; var5 < 0x1c; var5++) {
-        func_0205a198(&arg0->unknown_e8_[var5]);
+    for (i = 0; i < 0x1c; i++) {
+        Sprite_Init(&ctx->records[i]);
     }
 
-    func_0205a444((char*)&arg0->unknown_94_);
-    arg0->unknown_94_.unknown_50_ = 1;
-    arg0->unknown_94_.unknown_40_ = arg0->unknown_e8_;
-    arg0->unknown_94_.unknown_4c_ = 0x1c;
-    arg0->unknown_14_ = 1;
+    SpriteContext_Init((char*)&ctx->entryList);
+    ctx->entryList.active = 1;
+    ctx->entryList.records = ctx->records;
+    ctx->entryList.count = 0x1c;
+    ctx->displayMode = 1;
 #if defined(jpn)
     func_02020aec(arg0, arg0->unknown_a24_, var6);
 #else

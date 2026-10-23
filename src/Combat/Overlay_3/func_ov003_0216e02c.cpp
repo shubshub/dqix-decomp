@@ -4,8 +4,8 @@
 struct Struct_02043368;
 extern "C" void func_0205a234(struct Struct_02043368* arg0);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct List0204af64;
+extern void Background_Init(struct List0204af64* obj);
 
 extern "C" void func_0204c684(char* arg0);
 
@@ -15,8 +15,8 @@ extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
 extern "C" void func_ov023_021e20c0(void* arg0);
 
 #if defined(jpn)
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
+struct Struct0205a198;
+extern void Sprite_Init(struct Struct0205a198* s);
 #define BLOCK60_SIZE 0x190
 #define BLOCKD4_SIZE 0x48
 #else
@@ -39,10 +39,10 @@ extern "C" ARM void func_ov003_0216e02c(char* arg0, SafeAllocator* arg1) {
     *(void**)(arg0 + 0xd4) = (*(SafeAllocator**)(arg0 + 0xd0))->Allocate(BLOCKD4_SIZE);
 
 #if defined(jpn)
-    for (int var0 = 0; var0 < 10; var0++) {
-        int var1 = var0 * 0x28;
-        func_0205a198((struct Struct_02043368_2*)(*(char**)(arg0 + 0x60) + var1));
-        *(*(char**)(arg0 + 0x60) + var1 + 0x26) = 1;
+    for (int i = 0; i < 10; i++) {
+        int off = i * 0x28;
+        Sprite_Init((struct Struct0205a198*)(*(char**)(self + 0x60) + off));
+        *(*(char**)(self + 0x60) + off + 0x26) = 1;
     }
 #endif
 
@@ -54,8 +54,8 @@ extern "C" ARM void func_ov003_0216e02c(char* arg0, SafeAllocator* arg1) {
 
     func_0205cfd4((struct Struct_0205cfd4*)*(void**)(arg0 + 0x3c));
 
-    for (int var3 = 0; var3 < 2; var3++) {
-        func_0204af64((struct Struct_02020cb8*)(*(char**)(arg0 + 0x40) + (var3 << 5)));
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct List0204af64*)(*(char**)(self + 0x40) + (i << 5)));
     }
 
     for (int var4 = 0; var4 < 2; var4++) {

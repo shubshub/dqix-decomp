@@ -20,13 +20,13 @@ struct Struct_0203bebc_4 {
     signed char unknown_4_;
 };
 
-extern "C" void func_0205b20c(struct Struct_020200c0_4* arg0);
-extern "C" void func_0205b220(void* arg0, int arg1);
-extern "C" void func_0205b228(void* arg0, int arg1, unsigned char arg2);
-extern "C" void* func_020421a0(void);
-extern "C" void* func_020425b4(int arg0, int arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" int func_02042648(int arg0);
+void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
+void SetField0_0205b220(void* obj, int value);
+void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
+void* GetGlobalField0x1c020421a0(void);
+void* Font_GetCharacter(int idx, int tableIdx);
+int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int GetWordFromTable02042648(int idx);
 void CleanInvalidateCacheRange(const void* p, unsigned int len);
 extern "C" void LoadToSubObjVRAM(const void* data, unsigned int offset, unsigned int length);
 extern "C" int func_0205b36c(void* arg0, void* arg1, short arg2, int arg3, unsigned char arg4, unsigned char arg5);
@@ -173,21 +173,21 @@ extern "C" ARM void func_0203bebc(void* arg0, void* arg1, void* arg2)
     memset(arg0, 0, 0x20);
     memcpy(arg0, arg1, ((unsigned char*)arg0)[0x20]);
 
-    int var25 = 0;
-    var16 = ((unsigned char*)arg0)[0x20];
-    int var26 = 0xff;
-    int var27 = func_02042648(0);
-    unsigned char var28;
-    int var29 = 0;
-    unsigned char* var30 = (unsigned char*)arg1;
-    for (; var29 < var16; var29++) {
-        var28 = *var30;
-        if (var28 == 0) break;
-        int var31 = var27;
-        struct Struct_0203bebc_4* var32 = (struct Struct_0203bebc_4*)func_020425b4(var28, 0);
-        if (var32 != 0) {
-            var31 = var32->unknown_4_;
-            func_0205b36c(&var24, var32, (short)var25, 0, 0xf, 0);
+    int total = 0;
+    limit = ((unsigned char*)entry)[0x20];
+    int prev = 0xff;
+    int font = GetWordFromTable02042648(0);
+    unsigned char ch;
+    int cnt = 0;
+    unsigned char* p = (unsigned char*)buf;
+    for (; cnt < limit; cnt++) {
+        ch = *p;
+        if (ch == 0) break;
+        int c = font;
+        struct Glyph020425b4* gl = (struct Glyph020425b4*)Font_GetCharacter(ch, 0);
+        if (gl != 0) {
+            c = gl->width;
+            func_0205b36c(&localObj, gl, (short)total, 0, 0xf, 0);
         }
         int var33 = var25 + func_020425e4(var26, var28, 0);
         var25 = var33 + (var31 + 1);

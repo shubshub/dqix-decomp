@@ -59,11 +59,11 @@ extern "C" void func_0203bdf4(char* arg0, char* arg1);
 #else
 extern "C" void func_0203c248(char* arg0, char* arg1);
 #endif
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02041a28(char* arg0, int arg1);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" const char* func_020e51cc(int arg0);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int AppendXTag_02041a28(char* dst, int x);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+const char* CallFunc020e0434With02153694_020e51cc(int key);
 #if defined(jpn)
 extern char data_ov000_02185160[];
 #endif
@@ -114,15 +114,15 @@ extern "C" ARM void func_ov000_021777e4(Struct_ov000_021777e4_3* arg0, char* arg
         __clear(var9, sizeof(var9));
         var8 = var7->unknown_94c_;
 
-        func_02041dd0(arg1, func_ov000_02170c7c(var0));
-        func_0203c248(var0->unknown_68_, var9);
-        func_02041b70(arg1, var3, var9);
-        func_02041a28(arg1, 0x4e);
-        func_02041dd0(arg1, 0);
-        func_02042058(arg1, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_b8_, (short)(var8 + 0x753e)));
-        func_02042058(arg1, func_020e0434((struct Struct_0201099c_3*)arg0->unknown_b8_, 0));
-        arg0->unknown_1d74_[var3] = var10;
-        var3++;
+        FormatCombatLogSuffix02041dd0(dst, func_ov000_02170c7c(entry));
+        _Z25InvokeGlobalEntry0203c248Pci(entry->nameSlot, name);
+        AppendNameTag_02041b70(dst, n, name);
+        AppendXTag_02041a28(dst, 0x4e);
+        FormatCombatLogSuffix02041dd0(dst, 0);
+        AppendString02042058(dst, KeyTable_Get((struct Container020e0310*)menu->strings, (short)(vocation + 0x753e)));
+        AppendString02042058(dst, KeyTable_Get((struct Container020e0310*)menu->strings, 0));
+        menu->choices[n] = member;
+        n++;
     }
     arg0->unknown_1d74_[var3] = 4;
 #if defined(jpn)

@@ -113,15 +113,15 @@ struct Struct_ov003_021594c4 {
     char unknown_1e_[2];
 };
 
-extern "C" void func_ov023_021dcd90(Struct_ov006_02154614_2* arg0, unsigned char arg1);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-extern "C" void func_0204b5e8(Struct_02020cb8_5* arg0, int arg1, int arg2);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
-extern "C" void func_0204b3a0(Struct_02020cb8_6* arg0, char* arg1);
+extern "C" void func_ov023_021dcd90(ItemInfoWindow* window, unsigned char inMenu);
+int Pac_CountFiles(ActiveEntry02046900* pac);
+void Background_Init(List0204af64* background);
+void Background_SetMapSize(unsigned char* background, int a);
+extern "C" void Background_SetPriority(void* background, int a);
+void Background_SetScroll(Obj0204b5e8* background, int a, int b);
+void* Pac_GetFile(Rec020467f0* pac, int index, void** name, int* size);
+void Background_FlushFile(void* background, char* file);
+void Background_UploadFile(SelfTag0204b3a0* background, char* file);
 
 extern char data_ov006_021601b6[];
 extern char data_ov006_021601cc[];
@@ -135,29 +135,29 @@ extern "C" ARM void func_ov006_02156bd8(Struct_ov006_02154614* arg0) {
         if (arg0->unknown_ae2_ & 8)
             arg0->unknown_ad8_ = var0->QueueLoadFile(data_ov006_021601b6, 0);
         else
-            arg0->unknown_ad8_ = var0->QueueLoadFile(data_ov006_021601cc, 0);
-        func_ov023_021dcd90(&arg0->unknown_ae4_, 0);
-        arg0->unknown_adf_++;
-    } else if (arg0->unknown_adf_ == 1) {
-        if (var0->GetTaskStatus(arg0->unknown_ad8_)) {
-            void* var1;
-            void* var2;
-            unsigned int var3;
-            var0->GetLoadedFileByID(arg0->unknown_ad8_, &var2, &var3);
-            int var4 = func_02046900((Struct_02020cb8_4*)var2);
-            Struct_ov003_021594c4 var5;
-            func_0204af64((Struct_02020cb8*)&var5);
-            func_0204b11c((unsigned char*)&var5, 0);
-            var5.unknown_1c_0_ = 0;
-            var5.unknown_1c_4_ = 3;
-            func_0204b5b4(&var5, 3);
-            func_0204b5e8((Struct_02020cb8_5*)&var5, 0, 0);
-            for (int var6 = 0; var6 < var4; var6++) {
-                int var7;
-                void* var8 = func_020467f0((Struct_02020aec*)var2, var6, &var1, &var7);
-                if (var8 != 0) {
-                    func_0204b2e0(&var5, (char*)var8);
-                    func_0204b3a0((Struct_02020cb8_6*)&var5, (char*)var8);
+            self->backgroundTask_ = loader->QueueLoadFile(data_ov006_021601cc, 0);
+        func_ov023_021dcd90(&self->window_, 0);
+        self->backgroundStep_++;
+    } else if (self->backgroundStep_ == 1) {
+        if (loader->GetTaskStatus(self->backgroundTask_)) {
+            void* name;
+            void* pac;
+            unsigned int pacSize;
+            loader->GetLoadedFileByID(self->backgroundTask_, &pac, &pacSize);
+            int count = Pac_CountFiles((ActiveEntry02046900*)pac);
+            BackgroundGraphics background;
+            Background_Init((List0204af64*)&background);
+            Background_SetMapSize((unsigned char*)&background, 0);
+            background.unk_1c_0_ = 0;
+            background.unk_1c_4_ = 3;
+            Background_SetPriority(&background, 3);
+            Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+            for (int i = 0; i < count; i++) {
+                int size;
+                void* file = Pac_GetFile((Rec020467f0*)pac, i, &name, &size);
+                if (file != 0) {
+                    Background_FlushFile(&background, (char*)file);
+                    Background_UploadFile((SelfTag0204b3a0*)&background, (char*)file);
                 }
             }
             var0->RemoveTask(arg0->unknown_ad8_);

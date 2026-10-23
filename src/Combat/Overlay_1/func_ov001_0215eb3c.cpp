@@ -9,7 +9,7 @@ enum { Enum_ov001_0215eb3c_716 = 0x2cc };
 #endif
 
 extern "C" int func_ov017_021d60f4(void*);
-void BackupPairTables0207dfac(char* tables);
+void VramState_Save(char* tables);
 
 struct Struct_ov001_0215eb3c {
     int unknown_0_[10];
@@ -49,13 +49,13 @@ extern "C" ARM int func_ov001_0215eb3c(void* arg0, int arg1) {
     if (var2 == 0) {
         return 0;
     }
-    func_0207dfac((char*)var2);
-    if (arg1 >= 2 && func_ov017_021d60f4((char*)arg0 + 0x8) != 0) {
-        var2 = var1 + Enum_ov001_0215eb3c_716;
-        var3 = (Struct_ov001_0215eb3c*)(var2 + 0xbd0);
-        var4 = 0;
-        for (var5 = 0; var5 < 10; var5++) {
-            var4 += abs(var3->unknown_0_[var5] - var3->unknown_28_[var5]);
+    VramState_Save((char*)addr);
+    if (mode >= 2 && func_ov017_021d60f4((char*)self + 0x8) != 0) {
+        addr = base + tableOffset;
+        tables = (PairTables_0215eb3c*)(addr + 0xbd0);
+        diff = 0;
+        for (i = 0; i < 10; i++) {
+            diff += abs(tables->a[i] - tables->b[i]);
         }
         var4 = 0;
         for (var5 = 0; var5 < 2; var5++) {

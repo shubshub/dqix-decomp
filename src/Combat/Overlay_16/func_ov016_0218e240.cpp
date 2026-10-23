@@ -12,14 +12,14 @@ struct Struct_ov016_0218e240 {
 extern "C" char data_ov016_0219d06d[];
 extern "C" char data_ov016_0219d06f[];
 
-extern "C" int func_02042648(int arg0);
-extern "C" int func_020424e4(int arg0, int arg1);
-extern "C" struct Struct_ov016_0218e240* func_020425b4(int arg0, int arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" int func_02001aec(unsigned char* arg0, unsigned char* arg1, int arg2);
-extern "C" void func_ov016_0218e17c(unsigned short* arg0, int arg1, int arg2, void* arg3, int arg4, int arg5);
+int GetWordFromTable02042648(int idx);
+int Font_FindCharacterIndex(int key, int tableIdx);
+struct Glyph0218e240* Font_GetCharacter(int idx, int tableIdx);
+int LookupKeyValue020425e4(int a, int b, int tableIdx);
+extern "C" void* __clear(void* dst, int count);
+extern "C" int func_020420e8(char* str, int id);
+extern "C" int func_02001aec(unsigned char* a, unsigned char* b, int n);
+extern "C" void func_ov016_0218e17c(unsigned short* dst, int x, int y, void* glyph, int color, int fontId);
 
 // USA: func_ov016_0218e240
 extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsigned short arg2, int arg3, int arg4, unsigned char arg5, unsigned short arg6, int arg7) {
@@ -79,16 +79,16 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsign
             continue;
         }
 
-                int var15 = var6 + 1;
-        var7 = 1;
-        unsigned char var16 = func_020424e4((int)arg1, 1);
-        if (var16 != 0xff) {
-                        var2 = func_020425b4(var16, 1);
-            if (arg6 != 0) {
-                func_ov016_0218e17c(arg0, var1 - 1, var4, var2, 0, 1);
-                func_ov016_0218e17c(arg0, var1 + 1, var4, var2, 0, 1);
-                func_ov016_0218e17c(arg0, var1, var4 - 1, var2, 0, 1);
-                func_ov016_0218e17c(arg0, var1, var4 + 1, var2, 0, 1);
+                int wide = font + 1;
+        adv = 1;
+        unsigned char code = Font_FindCharacterIndex((int)text, 1);
+        if (code != 0xff) {
+                        glyph = Font_GetCharacter(code, 1);
+            if (outline != 0) {
+                func_ov016_0218e17c(dst, x - 1, y, glyph, 0, 1);
+                func_ov016_0218e17c(dst, x + 1, y, glyph, 0, 1);
+                func_ov016_0218e17c(dst, x, y - 1, glyph, 0, 1);
+                func_ov016_0218e17c(dst, x, y + 1, glyph, 0, 1);
             }
             var1 += func_020425e4(var5, var16, 1);
             func_ov016_0218e17c(arg0, var1, var4, var2, arg2, 1);

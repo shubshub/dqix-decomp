@@ -11,7 +11,7 @@ struct SePlayer;
 struct TableEntry0217f8c0;
 struct Struct0217f8c0;
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 extern "C" int func_ov000_0217c594(void* obj, int limit);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* FindElementByComputedKey021815e4(char* obj);
@@ -46,13 +46,13 @@ struct Struct_ov000_0217db4c {
 };
 
 // USA: func_ov000_0217db4c
-extern "C" ARM void func_ov000_0217db4c(struct Struct_ov000_0217db4c* arg0, int arg1, int arg2) {
-    arg0->unknown_1d72_ |= 0x100;
-    func_0205deb4((struct Struct_0205d81c*)arg0->unknown_188_, 0x21, 0);
-    signed char var0 = arg0->unknown_1d6f_;
-    int var1 = func_0205d794((struct Struct_0205c570*)arg0->unknown_188_);
-    arg0->unknown_1d6f_ = var1;
-    if (var0 != var1) {
+extern "C" ARM void func_ov000_0217db4c(struct Menu0217db4c* menu, int arg1, int arg2) {
+    menu->flags |= 0x100;
+    SetElementFieldC2_0205deb4((struct Struct_0205d81c*)menu->list, 0x21, 0);
+    signed char prev = menu->activeSum;
+    int sum = Window_GetSelectedIndex((struct Struct_0205c570*)menu->list);
+    menu->activeSum = sum;
+    if (prev != sum) {
         return;
     }
     if (func_ov000_0217c594(menu, 5)) {

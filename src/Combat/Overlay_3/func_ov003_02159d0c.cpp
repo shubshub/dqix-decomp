@@ -29,8 +29,8 @@ struct Struct_0205d81c;
 extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
 extern "C" int func_0202b7d8(int*);
 extern "C" int func_0202c540(void*);
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
+struct Container020e0310;
+void* KeyTable_Get(Container020e0310*, int);
 extern "C" int func_ov003_0215bf18(void*, int);
 extern "C" int func_020457e0(void*);
 extern "C" void* func_0205ec34(void);
@@ -90,8 +90,8 @@ extern "C" ARM void func_ov003_02159d0c(void* arg0) {
         if (func_0202b7d8((int*)var3) && func_0202c540(var3)) {
             var6 += 8;
         }
-        func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), var6));
-        *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
+        func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), key));
+        *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
     }
 
     if (var5 == 1) {
@@ -132,8 +132,8 @@ extern "C" ARM void func_ov003_02159d0c(void* arg0) {
         if (func_020649b0(func_0205ec34(), 0xc, var4)) {
             func_0206f81c(var4);
         }
-        if (*(unsigned char*)(var0 + 0x5b4) == 0) {
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x64));
+        if (*(unsigned char*)(s + 0x5b4) == 0) {
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x64));
         }
         func_020466e4((unsigned int*)var2, 0x80);
         *(int*)(var0 + 0x598) = 0xf;
@@ -189,13 +189,13 @@ extern "C" ARM void func_ov003_02159d0c(void* arg0) {
         }
         func_0209c7fc(&data_02109bf4);
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) return;
-        *(unsigned char*)(var0 + 0x59f) = *(unsigned char*)(var0 + 0x59f) & ~2;
-        memset(*(void**)(var0 + 0x7c), 0, Enum_ov003_02159d0c_2400);
-        if (*(unsigned char*)(var0 + 0x5b4) != 0) {
-            unsigned char* var15 = (unsigned char*)GameState::GetInstance()->GetUnknownGameObject();
-            func_02046380(var1);
-            func_02046574((Struct_02046574_2*)var1, 0, (char*)(*(void**)(var15 + 0x134)));
-            func_02042058((char*)(*(void**)(var0 + 0x7c)), (char const*)func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f3));
+        *(unsigned char*)(s + 0x59f) = *(unsigned char*)(s + 0x59f) & ~2;
+        memset(*(void**)(s + 0x7c), 0, kRegionValue960_800);
+        if (*(unsigned char*)(s + 0x5b4) != 0) {
+            unsigned char* obj = (unsigned char*)GameState::GetInstance()->GetUnknownGameObject();
+            func_02046380(g);
+            SetIndexedName02046574((Obj02046574*)g, 0, (char*)(*(void**)(obj + 0x134)));
+            AppendString02042058((char*)(*(void**)(s + 0x7c)), (char const*)KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f3));
         } else {
             func_ov003_02159290(arg0, 0x3f3, 0x3f5);
         }
@@ -209,84 +209,84 @@ extern "C" ARM void func_ov003_02159d0c(void* arg0) {
         *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
     }
 
-    if (var5 == 4) {
-        if (*(int*)(var1 + Enum_ov003_02159d0c_2464) != 3) return;
-        int var16 = func_ov003_0215bf18(arg0, 0);
-        if (var16 == -1) return;
-        if (var16 == -2 || var16 == 1) {
-            if (*(unsigned char*)(var0 + 0x59c) == 0) {
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 1, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 2, 1);
-                func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f7));
-                *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
+    if (state == 4) {
+        if (*(int*)(g + kRegionValue9A0_870) != 3) return;
+        int r = func_ov003_0215bf18(self, 0);
+        if (r == -1) return;
+        if (r == -2 || r == 1) {
+            if (*(unsigned char*)(s + 0x59c) == 0) {
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 0, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 1, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 2, 1);
+                func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f7));
+                *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
                 return;
             }
-            if (func_0202b7d8((int*)var3)) {
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 1, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 2, 1);
-                func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f9));
-                *(unsigned char*)(var0 + 0x580) = 6;
+            if (CheckField0NonZero_0202b7d8((int*)f)) {
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 0, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 1, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 2, 1);
+                func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f9));
+                *(unsigned char*)(s + 0x580) = 6;
                 return;
             }
-            func_0205d6a0((Struct_0205d6a0*)(var0 + 0xf4), 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f6));
-            *(unsigned char*)(var0 + 0x59f) = *(unsigned char*)(var0 + 0x59f) | 0x10;
-            *(unsigned char*)(var0 + 0x588) = 9;
-            *(unsigned char*)(var0 + 0x580) = 0;
+            ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f6));
+            *(unsigned char*)(s + 0x59f) = *(unsigned char*)(s + 0x59f) | 0x10;
+            *(unsigned char*)(s + 0x588) = 9;
+            *(unsigned char*)(s + 0x580) = 0;
             return;
-        } else if (var16 == 0) {
-            func_0205d6a0((Struct_0205d6a0*)(var0 + 0xf4), 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x442));
-            *(unsigned char*)(var0 + 0x580) = 7;
+        } else if (r == 0) {
+            ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x442));
+            *(unsigned char*)(s + 0x580) = 7;
         }
     }
 
-    if (var5 == 5) {
-        if (*(int*)(var1 + Enum_ov003_02159d0c_2464) != 3) return;
-        int var17 = func_ov003_0215bf18(arg0, 1);
-        if (var17 == -1) return;
-        if (var17 == -2 || var17 == 1) {
-            func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 1);
-            func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 1, 1);
-            func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 2, 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f8));
-            *(unsigned char*)(var0 + 0x580) = 1;
+    if (state == 5) {
+        if (*(int*)(g + kRegionValue9A0_870) != 3) return;
+        int r = func_ov003_0215bf18(self, 1);
+        if (r == -1) return;
+        if (r == -2 || r == 1) {
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 0, 1);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 1, 1);
+            SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 2, 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f8));
+            *(unsigned char*)(s + 0x580) = 1;
             return;
-        } else if (var17 == 0) {
-            if (func_0202b7d8((int*)var3)) {
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 1, 1);
-                func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 2, 1);
-                func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f9));
-                *(unsigned char*)(var0 + 0x580) = 6;
+        } else if (r == 0) {
+            if (CheckField0NonZero_0202b7d8((int*)f)) {
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 0, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 1, 1);
+                SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 2, 1);
+                func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f9));
+                *(unsigned char*)(s + 0x580) = 6;
                 return;
             }
-            func_0205d6a0((Struct_0205d6a0*)(var0 + 0xf4), 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f6));
-            *(unsigned char*)(var0 + 0x59f) = *(unsigned char*)(var0 + 0x59f) | 0x10;
-            *(unsigned char*)(var0 + 0x588) = 9;
-            *(unsigned char*)(var0 + 0x580) = 0;
+            ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f6));
+            *(unsigned char*)(s + 0x59f) = *(unsigned char*)(s + 0x59f) | 0x10;
+            *(unsigned char*)(s + 0x588) = 9;
+            *(unsigned char*)(s + 0x580) = 0;
             return;
         }
     }
 
-    if (var5 == 6) {
-        if (*(int*)(var1 + Enum_ov003_02159d0c_2464) != 3) return;
-        int var18 = func_ov003_0215bf18(arg0, 1);
-        if (var18 == -1) return;
-        if (var18 == -2 || var18 == 1) {
-            func_0205d6a0((Struct_0205d6a0*)(var0 + 0xf4), 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x442));
-            *(unsigned char*)(var0 + 0x580) = 7;
+    if (state == 6) {
+        if (*(int*)(g + kRegionValue9A0_870) != 3) return;
+        int r = func_ov003_0215bf18(self, 1);
+        if (r == -1) return;
+        if (r == -2 || r == 1) {
+            ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x442));
+            *(unsigned char*)(s + 0x580) = 7;
             return;
-        } else if (var18 == 0) {
-            func_0205d6a0((Struct_0205d6a0*)(var0 + 0xf4), 1);
-            func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x3f6));
-            *(unsigned char*)(var0 + 0x59f) = *(unsigned char*)(var0 + 0x59f) | 0x10;
-            *(unsigned char*)(var0 + 0x588) = 9;
-            *(unsigned char*)(var0 + 0x580) = 0;
+        } else if (r == 0) {
+            ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+            func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f6));
+            *(unsigned char*)(s + 0x59f) = *(unsigned char*)(s + 0x59f) | 0x10;
+            *(unsigned char*)(s + 0x588) = 9;
+            *(unsigned char*)(s + 0x580) = 0;
             return;
         }
     }

@@ -3,13 +3,13 @@
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
 
-struct Struct_020e2490;
-extern "C" void func_020e2490(struct Struct_020e2490* arg0, int arg1, int arg2, void* arg3, SafeAllocator* arg4, int arg5, unsigned char arg6);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct EntryManager020e2490;
+void InitEntryManager020e2490(struct EntryManager020e2490* obj, int arg1, int arg2, void* arg3, SafeAllocator* alloc, int count, unsigned char flag);
+struct List0204af64;
+void Background_Init(struct List0204af64* obj);
 extern "C" void func_0204c684(void*);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2*);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198*);
 
 struct Struct_ov003_021544ec {
     char unknown_0_[4];
@@ -74,8 +74,8 @@ extern "C" ARM void func_ov003_021544ec(struct Struct_ov003_021544ec_2* arg0, Sa
             var2[var1].CreateTypeA(arg1->Allocate(var3), var3);
             var2[var1].Reset();
         }
-        for (unsigned char var4 = 0; var4 < 2; var4++) {
-            func_0204af64((struct Struct_02020cb8*)((char*)arg0->unknown_10_ + var4 * 0x20));
+        for (unsigned char i = 0; i < 2; i++) {
+            Background_Init((struct List0204af64*)((char*)obj->lists + i * 0x20));
         }
         for (unsigned char var5 = 0; var5 < 3; var5++) {
             func_0204c684(arg0->unknown_14_ + var5 * 0xe0);
@@ -84,8 +84,8 @@ extern "C" ARM void func_ov003_021544ec(struct Struct_ov003_021544ec_2* arg0, Sa
         for (unsigned char var6 = 0; var6 < 12; var6++) {
             arg0->unknown_20_[var6] = 0;
         }
-        for (unsigned char var7 = 0; var7 < 10; var7++) {
-            func_0205a198((struct Struct_02043368_2*)((char*)arg0->unknown_24_ + var7 * 0x28));
+        for (unsigned char i = 0; i < 10; i++) {
+            Sprite_Init((struct Struct0205a198*)((char*)obj->buf24 + i * 0x28));
         }
         GameState::GetInstance();
         struct Struct_ov003_021544ec* var8 = arg0->unknown_4_;

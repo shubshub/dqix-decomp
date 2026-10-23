@@ -94,18 +94,18 @@ extern char data_02109bf4[];
 
 extern "C" Struct_ov023_021ec480_4* func_020421a0();
 int IsBrightnessTransitionActive(GameResources* resources);
-extern "C" void func_0205ebc0(void* arg0, int arg1, int arg2);
-extern "C" void func_0205ebfc(void* arg0, int arg1, int arg2);
-extern "C" void func_0205deb4(Struct_0205d81c* arg0, int arg1, int arg2);
-extern "C" void func_0209c830(Struct_02109bf4_2* arg0, int arg1);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" int func_0209ca2c(void* arg0);
-extern "C" int func_ov023_021ed014(struct Struct_ov023_021ec480* arg0);
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_0205ebec(void* arg0);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" void func_02043204(char* arg0);
+void SetForwardAndStore0205ebc0(void* sound, int a, int b);
+void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
+void SetElementFieldC2_0205deb4(Struct_0205d81c* window, int item, int value);
+void SetValueAndActivate0209c830(Struct0209c830* obj, int value);
+int TestBitInByteArray_0206dfb0(int a, unsigned char* b, int flag);
+int IsAnimationActive0209ca2c(void* obj);
+int DispatchIfFlagsOrByteSet_021ed014(struct GuideWindow_021ec480* window);
+void ResetEntryList0205d6a0(Entry_0205d6a0* window, int value);
+void ForwardField0xc0_0205ebec(void* sound);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void AppendString02042058(char* text, const char* append);
+void ReinitController02043204(char* messages);
 
 extern "C" {
 int func_ov023_021ed064(Struct_ov023_021ec480* arg0);
@@ -250,10 +250,10 @@ extern "C" ARM void func_ov023_021ec480(Struct_ov023_021ec480* arg0)
     {
         if (arg0->unknown_84_[1].unknown_1c_0_ == 0)
         {
-            memset(arg0->unknown_1c_, 0, Enum_ov023_021ec480_2400);
-            func_02042058(arg0->unknown_1c_, func_020e0434((Struct_0201099c_3*)arg0->unknown_4_, 1000));
-            func_02042058(arg0->unknown_1c_, func_020e0434((Struct_0201099c_3*)arg0->unknown_4_, 1002));
-            var1->unknown_998_ = 1;
+            memset(self->text_, 0, regionalOffset0);
+            AppendString02042058(self->text_, KeyTable_Get((Container020e0310*)self->texts_, 1000));
+            AppendString02042058(self->text_, KeyTable_Get((Container020e0310*)self->texts_, 1002));
+            messages->busy_ = 1;
 #if defined(jpn)
             func_0204500c(var1, arg0->unknown_1c_, 0);
 #else
@@ -300,10 +300,10 @@ extern "C" ARM void func_ov023_021ec480(Struct_ov023_021ec480* arg0)
     }
     if (var2 == 10)
     {
-        memset(arg0->unknown_1c_, 0, Enum_ov023_021ec480_2400);
-        func_02042058(arg0->unknown_1c_, func_020e0434((Struct_0201099c_3*)arg0->unknown_4_, 1001));
-        func_02042058(arg0->unknown_1c_, func_020e0434((Struct_0201099c_3*)arg0->unknown_4_, 1002));
-        var1->unknown_998_ = 1;
+        memset(self->text_, 0, regionalOffset0);
+        AppendString02042058(self->text_, KeyTable_Get((Container020e0310*)self->texts_, 1001));
+        AppendString02042058(self->text_, KeyTable_Get((Container020e0310*)self->texts_, 1002));
+        messages->busy_ = 1;
 #if defined(jpn)
         func_0204500c(var1, arg0->unknown_1c_, 0);
 #else

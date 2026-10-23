@@ -1,7 +1,7 @@
 #if defined(jpn)
 #define R(j,u) (j)
-#define func_ov024_021f6f10 func_ov024_021f5c80
-#define func_ov023_021e4e8c func_ov023_021e5080
+#define _Z27ScaleStatsIfType12_021f6f10Pv _Z27CheckAnyBuffBelow2_021f5c80P16Wrapper_021f5c80iiPiPs
+#define _Z19CharacterModel_InitPv func_ov023_021e5080
 #define data_ov023_021ff5b4 data_ov023_021fe83c
 #define func_ov023_021fc518 func_ov023_021fb810
 #else
@@ -19,10 +19,10 @@ struct Struct_ov011_02184c30 {
 
 extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
 extern "C" ARM void* func_ov017_021b2164(void);
-extern "C" ARM void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" ARM void* func_ov011_021849c8(void* arg0);
-extern "C" ARM int func_ov023_021fc518(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_ov023_021e4e8c(void* arg0);
+extern "C" ARM void* func_ov011_021845f8(void* ctx, int v);
+extern "C" ARM void* func_ov011_021849c8(void* ctx);
+extern "C" ARM int func_ov023_021fc518(void* obj, void* script, int id, int heapId, int unk2, int unk);
+void CharacterModel_Init(void* model);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
@@ -82,15 +82,15 @@ extern "C" ARM int func_ov011_02187720(struct Struct_ov011_02184c30* arg0, int a
     do {
         var2 = var3->unknown_6b8_;
         do {
-            var2->ResetAllocatorPointer();
-            var2++;
-        } while (var2 < var3->unknown_6b8_ + 10);
-        var3->unknown_780_.ResetAllocatorPointer();
-        func_ov023_021e4e8c(var3);
-        var3++;
-    } while (var3 < var0.unknown_20_ + 2);
-    memcpy(var1, &var0, sizeof(Struct_ov011_02187720_3));
-    if (!func_ov023_021fc518(var1, var6, var9, var7, var8, var4))
+            allocator->ResetAllocatorPointer();
+            allocator++;
+        } while (allocator < model->allocators + 10);
+        model->animationAllocator.ResetAllocatorPointer();
+        CharacterModel_Init(model);
+        model++;
+    } while (model < prototype.models + 2);
+    memcpy(object, &prototype, sizeof(MenuObject02187720));
+    if (!func_ov023_021fc518(object, script, id, heapId, unk2, unk))
         return 0;
 
     func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(var6), (struct Struct_ov004_0215c30c_2*)var1);

@@ -48,22 +48,22 @@ extern "C" ARM int func_02014d80(Zone3D* arg0, void* arg1, Struct_02012ff0* arg2
     for (Struct_02014d80_3* var10 = var2->unknown_8_; var10; var10 = var10->unknown_8_) {
         if (var10->unknown_0_ == var7) { var2 = var10; break; }
     }
-    char var11[80];
-    unsigned int var12;
-    func_02014d18(var2->unknown_4_, data_020ef1e8, var11);
-    const void* var13 = GetFileFromNARCInMemory(var11);
-    if (var13) {
-        var1->unknown_4_ = static_cast<Model3D*>(var5->Allocate(sizeof(Model3D)));
-        void* var14 = DecompressLZ77FileIntoAllocatedSpace(*var5, var13, var12);
-        if (var14 && var1->unknown_4_) {
-            var1->unknown_4_->Clear();
-            func_0207df90(var4);
-            var1->unknown_4_->SetAndProcessRawFile(var14, var12, Model3D::TextureStagingMode_Normal);
-            func_0207dfac(var4);
-            NSBXXTex* var15 = var1->unknown_4_->GetTEX0();
-            if (var15) {
-                arg0->textureImageMemory_ += NSBXX_Tex_GetBlock1Length(var15);
-                arg0->texturePaletteMemory_ += NSBXX_Tex_GetBlock4Length(var15);
+    char filename[80];
+    unsigned int fileLength;
+    FormatFilenameAndSetExtension02014d18(record->id, data_020ef1e8, filename);
+    const void* file = GetFileFromNARCInMemory(filename);
+    if (file) {
+        tracker->model = static_cast<Model3D*>(allocator->Allocate(sizeof(Model3D)));
+        void* raw = DecompressLZ77FileIntoAllocatedSpace(*allocator, file, fileLength);
+        if (raw && tracker->model) {
+            tracker->model->Clear();
+            VramState_Restore(tables);
+            tracker->model->SetAndProcessRawFile(raw, fileLength, Model3D::TextureStagingMode_Normal);
+            VramState_Save(tables);
+            NSBXXTex* texture = tracker->model->GetTEX0();
+            if (texture) {
+                zone->textureImageMemory_ += NSBXX_Tex_GetBlock1Length(texture);
+                zone->texturePaletteMemory_ += NSBXX_Tex_GetBlock4Length(texture);
             }
             ModelRenderContext* var16 = var1->unknown_4_->unknown_flags_a8_0_ ? &var1->unknown_4_->renderContext_ : 0;
             if (var16) SetModelRenderContextRenderCommandHook(var16, func_020e2fc0, 0, 8, 1);

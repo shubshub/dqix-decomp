@@ -39,7 +39,7 @@ struct Struct_0205c570;
 struct Obj021e6e20;
 struct SePlayer;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
 void SePlayer_Play(SePlayer*, int, int);
 void BuildMessageF_0218a974(char*);
@@ -75,11 +75,11 @@ extern "C" ARM void func_ov012_02188aec(char* arg0) {
         func_ov012_0218a974((char*)arg0);
         (*(unsigned char*)(arg0 + Enum_ov012_02188aec_4976))++;
         return;
-    } else if ((*(unsigned char*)(arg0 + Enum_ov012_02188aec_4976)) == 3) {
-        (*(unsigned char*)(arg0 + Enum_ov012_02188aec_5024)) = 1;
-        int var1 = func_0205d794((Struct_0205c570*)(Struct_0205de24_2*)(arg0 + Enum_ov012_02188aec_172));
-        if ((*(unsigned int*)(arg0 + Enum_ov012_02188aec_5108)) != var1) {
-            (*(unsigned int*)(arg0 + Enum_ov012_02188aec_5108)) = var1;
+    } else if ((*(unsigned char*)(self + kStepOffset)) == 3) {
+        (*(unsigned char*)(self + kActiveOffset)) = 1;
+        int selection = Window_GetSelectedIndex((Struct_0205c570*)(Struct0205de24*)(self + kWindowOffset));
+        if ((*(unsigned int*)(self + kDesignOffset)) != selection) {
+            (*(unsigned int*)(self + kDesignOffset)) = selection;
 #if defined(jpn)
             func_ov012_0218adac(arg0, 0, ((*(unsigned int*)(arg0 + Enum_ov012_02188aec_5108)) << 1) + var0->unknown_3_1_);
 #else

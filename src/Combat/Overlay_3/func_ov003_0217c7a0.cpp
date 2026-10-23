@@ -41,16 +41,16 @@ struct Struct_ov003_0217c7a0_2
     int unknown_150_[3];
 };
 
-extern "C" void func_0204b010(Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204b04c(void* arg0, int arg1);
-extern "C" void func_0204b088(void* arg0, int arg1);
-extern "C" void func_0204afb4(Struct_02020cb8_3* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_0202e694(void* arg0, int* arg1);
-extern "C" void func_020a2794(void* arg0);
-extern "C" void func_020a2744(char* arg0);
-extern "C" int func_ov003_0217c2a0(int arg0);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
+void Background_ClearMap(Obj0204b010* obj, void* buf);
+extern "C" void Background_FlushMap(void* obj, int flag);
+extern "C" void Background_TransferMap(void* obj, int flag);
+void ResetRecordList0204afb4(List0204afb4* list);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void SetField0x238True_020a2794(void* obj);
+void ApplyVecFromField0x21e_020a2744(char* obj);
+int SetPowCnt1Bit15_0217c2a0(int enable);
+void ClearCombatantSlot_0200fd48(GameState* gs, int id);
 
 // USA: func_ov003_0217c7a0
 extern "C" ARM void func_ov003_0217c7a0(Struct_ov003_0217c7a0_2* arg0)
@@ -96,14 +96,14 @@ extern "C" ARM void func_ov003_0217c7a0(Struct_ov003_0217c7a0_2* arg0)
         var3->RemoveTask(arg0->unknown_138_);
         arg0->unknown_138_ = -1;
 
-        func_0204b010((Struct_0204b010*)&arg0->unknown_40_, 0);
-        func_0204b04c(&arg0->unknown_40_, 0);
-        func_0204b088(&arg0->unknown_40_, 0);
-        func_0204afb4((Struct_02020cb8_3*)&arg0->unknown_40_);
-        func_0204b010((Struct_0204b010*)&arg0->unknown_60_, 0);
-        func_0204b04c(&arg0->unknown_60_, 0);
-        func_0204b088(&arg0->unknown_60_, 0);
-        func_0204afb4((Struct_02020cb8_3*)&arg0->unknown_60_);
+        Background_ClearMap((Obj0204b010*)&self->listA, 0);
+        Background_FlushMap(&self->listA, 0);
+        Background_TransferMap(&self->listA, 0);
+        ResetRecordList0204afb4((List0204afb4*)&self->listA);
+        Background_ClearMap((Obj0204b010*)&self->listB, 0);
+        Background_FlushMap(&self->listB, 0);
+        Background_TransferMap(&self->listB, 0);
+        ResetRecordList0204afb4((List0204afb4*)&self->listB);
 
         func_020c5588(0, 0, 0x7fff, 0, 0);
         Struct_ov003_0217c7a0* var4 = (Struct_ov003_0217c7a0*)func_020100bc(var1);

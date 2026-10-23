@@ -10,14 +10,14 @@ enum { Enum_ov003_021681c8_76 = 0x4c };
 struct Struct_0205cfd4;
 struct Struct_0201099c_14;
 
-extern "C" void func_02074af4(void* arg0);
-extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" void func_ov003_02169658(void* arg0);
+extern "C" void func_02074af4(void* obj);
+void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+void Background_Init(struct List0204af64* obj);
+extern "C" void func_0204c684(void* obj);
+void SpriteContext_Init(char* obj);
+void KeyTable_Reset(struct Struct020dfc40* p);
+void ClearFields_021e20c0(void* p);
+void ClearFlagFields_02169658(void* obj);
 
 struct Struct_02000c9c_85 {
     unsigned char unknown_0_[0xe0];
@@ -74,18 +74,18 @@ extern "C" ARM void func_ov003_021681c8(Struct_ov003_021681c8* arg0) {
     arg0->unknown_0_[1].ResetAllocatorPointer();
     arg0->unknown_0_[0].ResetAllocatorPointer();
 
-    func_0205cfd4((struct Struct_0205cfd4*)arg0->unknown_e4_);
-    for (int var1 = 0; var1 < 2; var1++) {
-        func_0204af64(&arg0->unknown_1a0_[var1]);
+    InitStruct0205cfd4((struct InitTarget0205cfd4*)view->field_0xe4);
+    for (int i = 0; i < 2; i++) {
+        Background_Init(&view->lists[i]);
     }
     for (int var2 = 0; var2 < 3; var2++) {
         func_0204c684(&arg0->unknown_1e0_[var2]);
     }
-    func_0205a444(arg0->unknown_480_);
-    arg0->unknown_4d4_ = 0;
-    arg0->unknown_4d8_ = 0;
-    func_020dfc40((struct Struct_0201099c_14*)arg0->unknown_64_);
-    func_ov023_021e20c0(arg0->unknown_80_);
+    SpriteContext_Init(view->field_0x480);
+    view->field_0x4d4 = 0;
+    view->field_0x4d8 = 0;
+    KeyTable_Reset((struct Struct020dfc40*)view->field_0x64);
+    ClearFields_021e20c0(view->field_0x80);
 
     arg0->unknown_4dc_ = 0;
     arg0->unknown_4ec_ = 0;

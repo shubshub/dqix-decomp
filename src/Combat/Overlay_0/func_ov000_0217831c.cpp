@@ -31,15 +31,15 @@ struct Struct_ov000_0217831c_3 {
     signed char unknown_1d6f_;
 };
 
-extern "C" void func_0205c508(struct Struct_0205c508* arg0, int* arg1, int* arg2);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" struct Struct_ov000_0217831c_2* func_02054000(struct Struct_02054000* arg0);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" struct Struct_ov000_0217831c* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+void ComputeProductSums0205c508(struct UnkStruct0205c508* s, int* first, int* last);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+struct ActiveSub02054000* GetActiveSub_02054000(struct Outer_02054000* p);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+struct ItemNameEntry* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+int AppendString02042058(char* dst, const char* src);
 #if defined(jpn)
 extern "C" int func_02042158(char* arg0, int arg1);
 #define func_02041acc func_02042158
@@ -52,23 +52,23 @@ extern "C" void __clear(void* arg0, unsigned int arg1);
 // USA: func_ov000_0217831c
 extern "C" ARM void func_ov000_0217831c(Struct_ov000_0217831c_3* arg0, char* arg1)
 {
-    int var0;
-    int var1;
-    func_0205c508((struct Struct_0205c508*)arg0->unknown_1dc_, &var0, &var1);
-    signed char var2 = var0;
-    signed char var3 = var1;
-    struct Struct_0201099c_3* var4 = (struct Struct_0201099c_3*)arg0->unknown_b8_;
-    const char* var5 = func_020e0434(var4, 0);
-    signed char var6 = arg0->unknown_1d6f_;
-    const char* var7 = func_020e0434(var4, 5);
-    int var8 = 0;
-    signed char var9 = arg0->unknown_70_[arg0->unknown_1d6b_];
-    int var10 = -1;
-    GameState* var11 = GameState::GetInstance();
-    GameObject* var12 = func_0200ff1c(var11, var9);
-    struct Struct_ov000_0217831c_2* var13 = func_02054000((struct Struct_02054000*)var12);
-    if (var13 != NULL) {
-        var10 = var13->unknown_18_;
+    int first;
+    int last;
+    ComputeProductSums0205c508((struct UnkStruct0205c508*)menu->range, &first, &last);
+    signed char start = first;
+    signed char end = last;
+    struct Container020e0310* texts = (struct Container020e0310*)menu->textTable;
+    const char* separator = KeyTable_Get(texts, 0);
+    signed char cursor = menu->cursor;
+    const char* unknownName = KeyTable_Get(texts, 5);
+    int n = 0;
+    signed char combatantId = menu->combatantIds[menu->currentCombatant];
+    int selectedKey = -1;
+    GameState* state = GameState::GetInstance();
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(state, combatantId);
+    struct ActiveSub02054000* sub = GetActiveSub_02054000((struct Outer_02054000*)combatant);
+    if (sub != NULL) {
+        selectedKey = sub->itemKey;
     }
     if (func_ov000_0217542c(arg0)) {
         func_02041c08(arg1, var6 - var2, 8, 5, 5, 5);
@@ -90,8 +90,8 @@ extern "C" ARM void func_ov000_0217831c(Struct_ov000_0217831c_3* arg0, char* arg
             var18 = var19;
 #endif
         }
-        if (var10 == var16) {
-            func_02042058(var15, func_020e0434(var4, 0x13));
+        if (selectedKey == key) {
+            AppendString02042058(line, KeyTable_Get(texts, 0x13));
 #if !defined(jpn)
             func_02041acc(var15, 3);
 #endif

@@ -8,19 +8,19 @@ src/Combat/Overlay_9/CharacterCreationUI_GetBodyDimensions_02188bf8.cpp:
     complete
     .text start:0x02188bf8 end:0x02188c2c
 
-src/Combat/Overlay_9/func_ov009_02184d70.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_LoadTabGraphics_02184d70.cpp:
     complete
     .text start:0x02184d70 end:0x02184e58
 
-src/Combat/Overlay_9/func_ov009_021885b8.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_LoadNextCharacter_021885b8.cpp:
     complete
     .text start:0x021885b8 end:0x02188604
 
-src/Combat/Overlay_9/func_ov009_0218a888.cpp:
+src/Combat/Overlay_9/NameFilter_GroupContains_0218a888.cpp:
     complete
     .text start:0x0218a888 end:0x0218a8b8
 
-src/Combat/Overlay_9/func_ov009_0218a4c8.cpp:
+src/Combat/Overlay_9/NameFilter_FindWord_0218a4c8.cpp:
     complete
     .text start:0x0218a4c8 end:0x0218a518
 
@@ -28,7 +28,7 @@ src/Combat/Overlay_9/CharacterCreationUI_PickRandomName_0218a8b8.cpp:
     complete
     .text start:0x0218a8b8 end:0x0218a930
 
-src/Combat/Overlay_9/func_ov009_0218a484.cpp:
+src/Combat/Overlay_9/NameFilter_CopyUppercase_0218a484.cpp:
     complete
     .text start:0x0218a484 end:0x0218a4c8
 
@@ -48,11 +48,11 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleHairStyle_021868c4.cpp:
     complete
     .text start:0x021868c4 end:0x021869d8
 
-src/Combat/Overlay_9/func_ov009_02184c30.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Draw3D_02184c30.cpp:
     complete
     .text start:0x02184c30 end:0x02184ca4
 
-src/Combat/Overlay_9/func_ov009_021847ec.cpp:
+src/Combat/Overlay_9/NameFilter_Reset_021847ec.cpp:
     complete
     .text start:0x021847ec end:0x02184848
 
@@ -60,7 +60,7 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleClose_021883cc.cpp:
     complete
     .text start:0x021883cc end:0x02188454
 
-src/Combat/Overlay_9/func_ov009_02184ca4.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateVBlank_02184ca4.cpp:
     complete
     .text start:0x02184ca4 end:0x02184d70
 
@@ -68,7 +68,7 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleHairColor_021869d8.cpp:
     complete
     .text start:0x021869d8 end:0x02186aec
 
-src/Combat/Overlay_9/CharacterCreationUI_HandleEyeColor_02186aec.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleSkinColor_02186aec.cpp:
     complete
     .text start:0x02186aec end:0x02186c00
 
@@ -80,11 +80,11 @@ src/Combat/Overlay_9/CharacterCreationUI_SlotToStyleIndex_02188b14.cpp:
     complete
     .text start:0x02188b14 end:0x02188bf8
 
-src/Combat/Overlay_9/SyncEntryPairAndRefreshFlags_02188454.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_SwapCharacters_02188454.cpp:
     complete
     .text start:0x02188454 end:0x021885b8
 
-src/Combat/Overlay_9/func_ov009_02184848.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Destroy_02184848.cpp:
     complete
     .text start:0x02184848 end:0x02184a18
 
@@ -92,42 +92,134 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleFace_021866f0.cpp:
     complete
     .text start:0x021866f0 end:0x021868c4
 
-src/Combat/Overlay_9/func_ov009_0218a930.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateWaitTimer_0218a930.cpp:
     complete
     .text start:0x0218a930 end:0x0218a95c
 
+
+src/Combat/Overlay_9/CharacterCreationUI_bgTables_0218a95c.c:
+    complete
+    .rodata start:0x0218a95c end:0x0218a96c
+
+src/Combat/Overlay_9/CharacterCreationUI_setupBgSubScreen_0218a96c.c:
+    complete
+    .rodata start:0x0218a96c end:0x0218a970
+
+src/Combat/Overlay_9/CharacterCreationUI_setupBgNumbers_0218a994.c:
+    complete
+    .rodata start:0x0218a994 end:0x0218a998
+
+src/Combat/Overlay_9/CharacterCreationUI_setupBgPriorities_0218a998.c:
+    complete
+    .rodata start:0x0218a998 end:0x0218a99c
+
+src/Combat/Overlay_9/CharacterCreationUI_setupBgScreenCounts_0218a99c.c:
+    complete
+    .rodata start:0x0218a99c end:0x0218a9a0
+
+src/Combat/Overlay_9/CharacterCreationUI_window1PaneSizes_0218a9a4.c:
+    complete
+    .rodata start:0x0218a9a4 end:0x0218a9ac
+
+src/Combat/Overlay_9/CharacterCreationUI_randomNameCounts_0218a9ac.c:
+    complete
+    .rodata start:0x0218a9ac end:0x0218a9b4
+
+src/Combat/Overlay_9/CharacterCreationUI_bareBodyColors_0218a9b4.c:
+    complete
+    .rodata start:0x0218a9b4 end:0x0218a9bc
+
+src/Combat/Overlay_9/CharacterCreationUI_styleOrder_0218a9bc.c:
+    complete
+    .rodata start:0x0218a9bc end:0x0218a9c8
+
+src/Combat/Overlay_9/CharacterCreationUI_faceTabCamera_0218a9c8.c:
+    complete
+    .rodata start:0x0218a9c8 end:0x0218a9e0
+
+src/Combat/Overlay_9/CharacterCreationUI_faceTabExitCamera_0218a9e0.c:
+    complete
+    .rodata start:0x0218a9e0 end:0x0218a9f8
+
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabCamera_0218a9f8.c:
+    complete
+    .rodata start:0x0218a9f8 end:0x0218aa10
+
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabExitCamera_0218aa10.c:
+    complete
+    .rodata start:0x0218aa10 end:0x0218aa28
+
+src/Combat/Overlay_9/CharacterCreationUI_finishCamera_0218aa28.c:
+    complete
+    .rodata start:0x0218aa28 end:0x0218aa40
+
+src/Combat/Overlay_9/CharacterCreationUI_defaultAppearance_0218aa40.c:
+    complete
+    .rodata start:0x0218aa40 end:0x0218aa54
+
+src/Combat/Overlay_9/CharacterCreationUI_tabScreenCounts_0218aa54.c:
+    complete
+    .rodata start:0x0218aa54 end:0x0218aa70
+
+src/Combat/Overlay_9/CharacterCreationUI_bodyDimensions_0218aa70.c:
+    complete
+    .rodata start:0x0218aa70 end:0x0218aa98
+
+src/Combat/Overlay_9/CharacterCreationUI_finishModelFiles_0218aa98.c:
+    complete
+    .rodata start:0x0218aa98 end:0x0218aac8
+
+src/Combat/Overlay_9/CharacterCreationUI_equipmentFromAppearance_0218aac8.c:
+    complete
+    .rodata start:0x0218aac8 end:0x0218aafc
+
+src/Combat/Overlay_9/NameFilter_syntaxCharacters_0218aafc.c:
+    complete
+    .rodata start:0x0218aafc end:0x0218ab48
+
+src/Combat/Overlay_9/CharacterCreationUI_itemIds_0218ab48.c:
+    complete
+    .rodata start:0x0218ab48 end:0x0218ab9c
+
+src/Combat/Overlay_9/CharacterCreationUI_tabHandlers_0218ab9c.c:
+    complete
+    .rodata start:0x0218ab9c end:0x0218ac04
 
 src/Combat/Overlay_9/CharacterCreationUI_LoadSlotLayout_02188d9c.cpp:
     complete
     .text start:0x02188d9c end:0x02188e70
     .rodata start:0x0218ac04 end:0x0218ac98
 
+src/Combat/Overlay_9/NameFilter_cSlashText_0218aca0.c:
+    complete
+    .data start:0x0218aca0 end:0x0218aca4
 
-src/Combat/Overlay_9/func_ov009_02184bbc.cpp:
+
+src/Combat/Overlay_9/CharacterCreationUI_Draw2D_02184bbc.cpp:
     complete
     .text start:0x02184bbc end:0x02184c30
 
-src/Menu/Overlay_9/func_ov009_02189854.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_GetTouchedInput_02189854.cpp:
     complete
     .text start:0x02189854 end:0x02189a4c
 
 
-src/Combat/Overlay_9/func_ov009_021842a0.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Allocate_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x0218454c
 
 
-src/Combat/Overlay_9/func_ov009_0218454c.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Init_0218454c.cpp:
     complete
     .text start:0x0218454c end:0x021847c4
 
 
-src/Combat/Overlay_9/func_ov009_02184a18.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_Update_02184a18.cpp:
     complete
     .text start:0x02184a18 end:0x02184bbc
 
 
-src/Combat/Overlay_9/func_ov009_02184e58.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_ApplyTabGraphics_02184e58.cpp:
     complete
     .text start:0x02184e58 end:0x021855dc
 
@@ -137,7 +229,7 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleGenderSelection_021863d0.cpp:
     .text start:0x021863d0 end:0x021865dc
 
 
-src/Combat/Overlay_9/CharacterCreationUI_HandleSkinColor_02186c00.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_HandleEyeColor_02186c00.cpp:
     complete
     .text start:0x02186c00 end:0x02186e00
 
@@ -152,7 +244,7 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleNewGameFinish_02187b34.cpp:
     .text start:0x02187b34 end:0x021883cc
 
 
-src/Combat/Overlay_9/func_ov009_02188604.cpp:
+src/Combat/Overlay_9/CharacterCreationUI_UpdateRotation_02188604.cpp:
     complete
     .text start:0x02188604 end:0x02188944
 
@@ -167,12 +259,12 @@ src/Combat/Overlay_9/CharacterCreationUI_MoveCursorToSlot_02188e70.cpp:
     .text start:0x02188e70 end:0x02188ee8
 
 
-src/Combat/Overlay_9/func_ov009_0218a420.cpp:
+src/Combat/Overlay_9/ForbiddenWordFile_RelocatePattern_0218a420.cpp:
     complete
     .text start:0x0218a420 end:0x0218a484
 
 
-src/Combat/Overlay_9/func_ov009_0218a518.cpp:
+src/Combat/Overlay_9/NameFilter_MatchPattern_0218a518.cpp:
     complete
     .text start:0x0218a518 end:0x0218a888
 

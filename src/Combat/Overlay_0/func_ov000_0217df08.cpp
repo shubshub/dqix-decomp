@@ -56,22 +56,22 @@ struct Struct_ov000_0217df08_9 {
     unsigned short unknown_1d72_;
 };
 
-extern "C" Struct_ov000_0217df08_8* func_020421a0();
-extern "C" Struct_ov000_0217df08_7* func_ov000_02161318(void* arg0, int arg1);
-extern "C" int func_ov000_02171a60(void*);
-extern "C" void func_020e46c4(void*);
-struct Struct_0201099c_3;
-extern "C" const char* func_020e0434(Struct_0201099c_3*, int);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" Struct_ov000_0217df08_6* func_0200fea4(GameState*, int);
-extern "C" void func_020e4ce8(Struct_ov000_0217df08*, Struct_ov000_0217df08_6*, int);
-extern "C" int func_ov000_0217ff34(void* arg0, int arg1, int* arg2);
-extern "C" void func_02046380(Struct_ov000_0217df08_8*);
-extern "C" void func_020e4bf4(void*, int);
-extern "C" void func_02042058(char*, const char*);
-extern "C" char* func_020e046c(char* arg0, void* arg1, unsigned int arg2, int arg3);
-extern "C" void func_02046608(Struct_ov000_0217df08_8*, int, char*, char*, int, int, int);
+Messages0217df08* GetGlobalField0x1c020421a0();
+extern "C" Node0217df08* func_ov000_02161318(void* obj, int id);
+int IsFlag0x28Bit0Set_ov000_02171a60(void*);
+void Clear12Bytes020e46c4(void*);
+struct Container020e0310;
+const char* KeyTable_Get(Container020e0310*, int);
+extern "C" void* memset(void* dst, int value, unsigned int length);
+extern "C" int sprintf(char* buffer, const char* format, ...);
+Combatant0217df08* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+extern "C" void func_020e4ce8(NameParts0217df08*, Combatant0217df08*, int);
+extern "C" int func_ov000_0217ff34(void* self, int id, int* amount);
+extern "C" void func_02046380(Messages0217df08*);
+void InitObjFromCombatantId020e4bf4(void*, int);
+void AppendString02042058(char*, const char*);
+extern "C" char* func_020e046c(char* buf, void* data, unsigned int size, int idx);
+extern "C" void func_02046608(Messages0217df08*, int, char*, char*, int, int, int);
 extern "C" void __clear(void*, int);
 extern "C" void func_ov000_0217aa08(char*, char*);
 extern "C" void func_020e4f18(Struct_ov000_0217df08*, Struct_ov000_0217df08*, int);
@@ -144,32 +144,32 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_5* arg0, int arg1,
             var2->RemoveTask(arg0->unknown_90c_);
             arg0->unknown_90c_ = -1;
         }
-        arg0->unknown_90c_ = var2->QueueLoadFile(data_ov000_021851cc, 0);
-        arg0->unknown_1fa8_++;
-    } else if (arg0->unknown_1fa8_ == 1) {
-        if (var2->GetTaskStatus(arg0->unknown_90c_) != 0) {
-            void* var3;
-            unsigned int var4;
-            var2->GetLoadedFileByID(arg0->unknown_90c_, &var3, &var4);
-            if (var3 != 0) {
-                const char* var5 = func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 6);
-                char* var6 = var1->unknown_28_;
-                char* var7 = var1->unknown_2c_;
-                memset(var6, 0, 0x800);
-                memset(var7, 0, 0x800);
-                int var8 = -1;
-                char* var9 = 0;
-                int var10;
-                int var11;
-                int var12;
-                Struct_ov000_0217df08_3* var13;
-                int var14;
-                Struct_ov000_0217df08_2* var15;
-                for (var11 = 0; var11 < arg2; var11++) {
-                    Struct_ov000_0217df08_3* var16 = (Struct_ov000_0217df08_3*)func_0200fea4(var0, arg0->unknown_1f74_[var11]);
-                    if (var16 != 0) {
-                        var15 = var16->unknown_144_;
-                        if (var15 == 0) {
+        self->taskId = loader->QueueLoadFile(data_ov000_021851cc, 0);
+        self->state++;
+    } else if (self->state == 1) {
+        if (loader->GetTaskStatus(self->taskId) != 0) {
+            void* data;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->taskId, &data, &size);
+            if (data != 0) {
+                const char* separator = KeyTable_Get((Container020e0310*)self->messages, 6);
+                char* work = g->work;
+                char* text = g->text;
+                memset(work, 0, 0x800);
+                memset(text, 0, 0x800);
+                int best = -1;
+                char* bestName = 0;
+                int appended;
+                int i;
+                int j;
+                CombatantJ0217df08* c;
+                int msg;
+                Rank0217df08* rank;
+                for (i = 0; i < arg2; i++) {
+                    CombatantJ0217df08* c = (CombatantJ0217df08*)GetCombatantWithFlag0x400_0200fea4(gs, self->combatantIds[i]);
+                    if (c != 0) {
+                        rank = c->rank;
+                        if (rank == 0) {
                             return;
                         }
                         if (var8 < var15->unknown_a_0_) {
@@ -279,27 +279,27 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_9* arg0, int arg1,
                         }
                     }
                 }
-                Struct_ov000_0217df08 var31;
-                Struct_ov000_0217df08 var32;
-                Struct_ov000_0217df08 var33;
-                func_020e46c4(&var31);
-                func_020e46c4(&var32);
-                const char* var34 = func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 6);
-                char* var35 = var23->unknown_5c_;
-                char* var36 = var23->unknown_60_;
-                memset(var35, 0, 0x960);
-                memset(var36, 0, 0x960);
-                int var37 = -1;
-                int var38;
-                int var39;
-                int var40;
-                int var41;
-                Struct_ov000_0217df08_2* var42;
-                for (var38 = 0; var38 < arg2; var38++) {
-                    Struct_ov000_0217df08_6* var43 = func_0200fea4(var22, arg0->unknown_1d3c_[var38]);
-                    if (var43 != 0) {
-                        var42 = var43->unknown_144_;
-                        if (var42 == 0) {
+                NameParts0217df08 names;
+                NameParts0217df08 parts;
+                NameParts0217df08 original;
+                Clear12Bytes020e46c4(&names);
+                Clear12Bytes020e46c4(&parts);
+                const char* separator = KeyTable_Get((Container020e0310*)self->messages, 6);
+                char* work = g->work;
+                char* text = g->text;
+                memset(work, 0, 0x960);
+                memset(text, 0, 0x960);
+                int best = -1;
+                int i;
+                int j;
+                int appended;
+                int msg;
+                Rank0217df08* rank;
+                for (i = 0; i < arg2; i++) {
+                    Combatant0217df08* c = GetCombatantWithFlag0x400_0200fea4(gs, self->combatantIds[i]);
+                    if (c != 0) {
+                        rank = c->rank;
+                        if (rank == 0) {
                             return;
                         }
                         if (var37 < var42->unknown_a_0_) {

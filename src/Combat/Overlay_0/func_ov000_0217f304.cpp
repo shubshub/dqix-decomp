@@ -3,8 +3,8 @@
 struct Struct_0205c570;
 struct Struct_0205bb84;
 
-extern "C" int func_0205bf58(void* obj, int v);
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+extern "C" int GridCursor_Update(void* obj, int v);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
 extern "C" int func_ov000_021753d8(void* obj, int targetIndex);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int value);
@@ -39,8 +39,8 @@ extern "C" ARM void func_ov000_0217f304(struct Menu_0217f304* menu, int unused, 
     if (cmd == NULL) return;
     int type = cmd->types[cmd->typeIndex];
     if (type != 0xe && type != 0x19) return;
-    func_0205bf58(menu->groupCursor, 1);
-    position = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->cursor);
+    GridCursor_Update(menu->groupCursor, 1);
+    position = Window_GetSelectedIndex((struct Struct_0205c570*)menu->cursor);
     int group = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)menu->groupCursor);
     int target = cmd->targetPosition;
     int currentGroup = func_ov000_021753d8(menu, position);

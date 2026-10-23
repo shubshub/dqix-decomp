@@ -21,9 +21,9 @@ struct Struct_02014d80 {
     int unknown_20_;
 };
 
-extern "C" void *func_0200fd0c(GameState *arg0);
-extern "C" void func_02014d18(int arg0, char *arg1, char *arg2);
-extern "C" void func_0207df90(char *arg0);
-extern "C" void func_0207dfac(char *arg0);
+void *GetField0x3f8Address_0200fd0c(GameState *state);
+void FormatFilenameAndSetExtension02014d18(int id, char *extension, char *buffer);
+void VramState_Restore(char *tables);
+void VramState_Save(char *tables);
 extern char data_020ef1e8[];
 extern const Struct_020e6f48 data_020e6f48;

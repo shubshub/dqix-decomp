@@ -7,14 +7,14 @@ struct Struct_020e2834;
 struct Struct_020e28dc;
 struct Struct_020439b0;
 
-extern "C" void func_ov023_021e76a8(Struct_ov002_02155f4c *arg0);
-extern "C" void func_ov023_021eb4f4(char *arg0);
-extern "C" void func_ov013_02184aec(void *arg0);
-extern "C" void func_0205d2bc(Struct_0205d2bc *arg0);
-extern "C" void func_020e2d24(int *arg0, int arg1, int arg2);
-extern "C" int func_020e28dc(Struct_020e28dc *arg0);
-extern "C" void func_020e2cc4(Struct_020439b0 *arg0, int arg1);
-extern "C" void func_020e2834(Struct_020e2834 *arg0);
+void CallInitEntriesIfSet_021e76a8(Container021e76a8 *c);
+void CallDispatchIfFlagSet_021eb4f4(char *p);
+extern "C" void func_ov013_02184aec(void *p);
+void Window_TransferLayers(Obj0205d2bc *o);
+void SetFieldsAt0x4And0x8_020e2d24(int *p, int a, int b);
+int GetInnerFlagBit0020e28dc(Outer020e28dc *o);
+void SetEntryEnabled020e2cc4(Entry020e2cc4 *e, int enabled);
+void SetYesNoButtonPalette020e2834(SelfState020e2834 *s);
 
 struct Struct_ov002_02155f4c_3 {
     char unknown_0_[0x10];
@@ -44,8 +44,8 @@ extern "C" ARM void func_ov002_02155f4c(Struct_ov002_02155f4c_2 *arg0) {
     if (var1 != 0 && var1 == REGIONAL_OFFSET(0x1f, 0x1e) && *(int *) (var0 + REGIONAL_OFFSET(0x1a88, 0x1bc0)) > 4) {
         func_ov013_02184aec(var0 + REGIONAL_OFFSET(0x1c20, 0x1d70));
     }
-    if (*(int *) (var0 + REGIONAL_OFFSET(0x1a80, 0x1bb8)) != REGIONAL_OFFSET(0x1f, 0x1e)) {
-        func_0205d2bc((Struct_0205d2bc *) (var0 + REGIONAL_OFFSET(0xe20, 0xec8)));
+    if (*(int *) (base + REGIONAL_OFFSET(0x1a80, 0x1bb8)) != REGIONAL_OFFSET(0x1f, 0x1e)) {
+        Window_TransferLayers((Obj0205d2bc *) (base + REGIONAL_OFFSET(0xe20, 0xec8)));
     }
     if (arg0->unknown_0_[0] != 0) {
         if (*(char **) (var0 + REGIONAL_OFFSET(0x2298, 0x2468)) == 0) {

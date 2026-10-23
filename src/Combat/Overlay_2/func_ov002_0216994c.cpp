@@ -26,10 +26,10 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
 extern "C" void func_ov002_02161cf0(char *self);
 void InitBattleTag021609d4(char *self);
 extern "C" void func_ov002_02161b98(char *self);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 extern "C" void func_ov002_0215bba8(char *self);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 int NextIndexOrZero_0215a9b4(void *self, short idx);
 int GetShortFromTable0206e3d4(int a, int b);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
@@ -68,32 +68,28 @@ extern "C" ARM void func_ov002_0216994c(char *arg0) {
     if (var0 != 1) {
         return;
     }
-#if defined(jpn)
-    func_0205def8((struct Struct_ov002_02155960_3 *) OBJ, 0, 0x22);
-    func_0205def8((struct Struct_ov002_02155960_3 *) OBJ, 0, 0x23);
-#endif
-    *(unsigned int *) (arg0 + RG(0x247c, 0x22ac)) |= 4;
-    func_ov002_02161b98(arg0);
-    *(short *) (arg0 + RG(0x1c0c, 0x1ad4)) =
-        func_0205d794((struct Struct_ov002_0215624c_15 *) OBJ);
-    struct Struct_ov002_0216994c *var2 = (struct Struct_ov002_0216994c *) OBJ + 1;
-    var2--;
-    int var3 = var2->unknown_68_;
-    if (*(unsigned char *) (arg0 + RG(0x2484, 0x22b4)) != var3) {
-        func_ov002_0215bba8(arg0);
+    *(unsigned int *) (self + 0x247c) |= 4;
+    func_ov002_02161b98(self);
+    *(short *) (self + 0x1c0c) =
+        Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0x2c8 + 0xc00));
+    struct Fld0216994c *l = (struct Fld0216994c *) (self + 0x2c8 + 0xc00) + 1;
+    l--;
+    int f = l->f68;
+    if (*(unsigned char *) (self + 0x2484) != f) {
+        func_ov002_0215bba8(self);
     }
-    int var4  = g_keyManager.TestKeysPressed(0x601);
-    int var5  = func_0205da38((struct Struct_ov002_02164748*)OBJ, 0x14);
-    int var6 = (var4 | var5) ? 1 : 0;
-    if (var6) {
-        int var7 = func_ov002_0215a9b4(arg0, *(short *) (arg0 + RG(0x1c0c, 0x1ad4)));
-        int var8  = func_0206e3d4((int) func_0205ec34(), var7);
-        int var9  = 1;
-        int var10   = var9;
-        if (var8 >= 0 && *(short *) (arg0 + RG(0x1c0c, 0x1ad4)) != 0x1f) {
-            var10 = 0;
-            if (*(unsigned int *) (arg0 + RG(0x2480, 0x22b0)) & (var9 << (var8 - 1))) {
-                var10 = var9;
+    int a  = g_keyManager.TestKeysPressed(0x601);
+    int b  = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0x2c8 + 0xc00), 0x14);
+    int ok = (a | b) ? 1 : 0;
+    if (ok) {
+        int next = NextIndexOrZero_0215a9b4(self, *(short *) (self + 0x1c0c));
+        int idx  = GetShortFromTable0206e3d4((int) func_0205ec34(), next);
+        int one  = 1;
+        int en   = one;
+        if (idx >= 0 && *(short *) (self + 0x1c0c) != 0x1f) {
+            en = 0;
+            if (*(unsigned int *) (self + 0x2480) & (one << (idx - 1))) {
+                en = one;
             }
         }
         if (!var10) {

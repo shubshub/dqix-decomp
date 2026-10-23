@@ -43,22 +43,22 @@ struct Struct_ov005_02153954 {
     signed char unknown_3e04_;
 };
 
-extern "C" void func_ov005_021537bc(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_0215a37c(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215a720(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215a2c8(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215a3bc(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215aa44(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215acc0(Struct_ov005_02153954* arg0);
-extern "C" void func_0205d1e0(Struct_0205d1e0* arg0);
-extern "C" void func_0205d228(Struct_0205d228* arg0);
-extern "C" void func_0205d274(Struct_0205d274* arg0);
-extern "C" void func_ov005_02159c88(Struct_ov005_02153954* arg0);
-extern "C" int func_020e28dc(Struct_020e28dc* arg0);
-extern "C" void func_020e2794(Struct_020e2794_2* arg0, void* arg1);
-extern "C" void func_ov005_0215a7ec(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215a418(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215b0a0(Struct_ov005_02153954* arg0);
+extern "C" void func_ov005_021537bc(void* frame, int a, int color);
+extern "C" void func_ov005_0215a37c(EquipmentMenu* self);
+extern "C" void func_ov005_0215a720(EquipmentMenu* self);
+extern "C" void func_ov005_0215a2c8(EquipmentMenu* self);
+extern "C" void func_ov005_0215a3bc(EquipmentMenu* self);
+extern "C" void func_ov005_0215aa44(EquipmentMenu* self);
+extern "C" void func_ov005_0215acc0(EquipmentMenu* self);
+void Window_ClearLayers(Cont0205d1e0* window);
+void Window_DrawPanes(Cont0205d228* window);
+void Window_FlushLayers(Cont0205d274* window);
+extern "C" void func_ov005_02159c88(EquipmentMenu* self);
+int GetInnerFlagBit0020e28dc(Outer020e28dc* p);
+void UpdateEntryIfActive020e2794(Struct020e2794* p, void* a);
+extern "C" void func_ov005_0215a7ec(EquipmentMenu* self);
+extern "C" void func_ov005_0215a418(EquipmentMenu* self);
+extern "C" void func_ov005_0215b0a0(EquipmentMenu* self);
 
 // USA: func_ov005_02154ef0
 extern "C" ARM void func_ov005_02154ef0(Struct_ov005_02153954* arg0) {
@@ -93,18 +93,18 @@ extern "C" ARM void func_ov005_02154ef0(Struct_ov005_02153954* arg0) {
                 }
             }
         }
-        if (!(arg0->unknown_3dcc_ & 0x1000))
-            func_ov005_021537bc(arg0->unknown_1a34_, 0, 0x7fff);
-        if (!(arg0->unknown_3dcc_ & 0x2000))
-            func_ov005_0215a37c(arg0);
-        func_ov005_0215a720(arg0);
-        func_ov005_0215a2c8(arg0);
-        func_ov005_0215a3bc(arg0);
-        func_ov005_0215aa44(arg0);
-        func_ov005_0215acc0(arg0);
-        func_0205d1e0((Struct_0205d1e0*)arg0->unknown_ee4_);
-        func_0205d228((Struct_0205d228*)arg0->unknown_ee4_);
-        func_0205d274((Struct_0205d274*)arg0->unknown_ee4_);
+        if (!(self->flags_ & 0x1000))
+            func_ov005_021537bc(self->frame_, 0, 0x7fff);
+        if (!(self->flags_ & 0x2000))
+            func_ov005_0215a37c(self);
+        func_ov005_0215a720(self);
+        func_ov005_0215a2c8(self);
+        func_ov005_0215a3bc(self);
+        func_ov005_0215aa44(self);
+        func_ov005_0215acc0(self);
+        Window_ClearLayers((Cont0205d1e0*)self->window_);
+        Window_DrawPanes((Cont0205d228*)self->window_);
+        Window_FlushLayers((Cont0205d274*)self->window_);
     }
     func_ov005_02159c88(arg0);
     if (arg0->unknown_e64_ != NULL && func_020e28dc((Struct_020e28dc*)arg0->unknown_e64_))

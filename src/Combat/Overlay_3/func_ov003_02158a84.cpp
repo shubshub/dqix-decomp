@@ -5,9 +5,9 @@
 struct Struct_02043368;
 struct Struct_020e2490;
 
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" void func_0205a234(Struct_02043368* arg0);
-extern "C" void func_020e2490(Struct_020e2490* arg0, int arg1, int arg2, void* arg3, SafeAllocator* arg4, int arg5, unsigned char arg6);
+void Sprite_Init(Struct0205a198* s);
+void ClearField0And40205a234(ClearTarget0205a234* t);
+void InitEntryManager020e2490(EntryManager020e2490* mgr, int arg1, int arg2, void* arg3, SafeAllocator* alloc, int count, unsigned char flag);
 
 struct Struct_ov003_02158a84 {
     SafeAllocator unknown_0_;
@@ -27,14 +27,14 @@ extern "C" ARM void func_ov003_02158a84(Struct_ov003_02158a84* arg0, SafeAllocat
     if (arg1 == NULL) {
         return;
     }
-    arg0->unknown_0_.CreateTypeA(arg1->Allocate(0x4000), 0x4000);
-    arg0->unknown_14_.CreateTypeA(arg1->Allocate(0x7000), 0x7000);
-    arg0->unknown_28_.CreateTypeA(arg1->Allocate(0x8000), 0x8000);
-    arg0->unknown_3c_.CreateTypeA(arg1->Allocate(0x800), 0x800);
-    arg0->unknown_50_.CreateTypeA(arg1->Allocate(0x200), 0x200);
-    arg0->unknown_ec_ = (Struct_02043368_2*)arg1->Allocate(0x230);
-    for (int var0 = 0; var0 < 14; var0++) {
-        func_0205a198(&arg0->unknown_ec_[var0]);
+    self->alloc0.CreateTypeA(alloc->Allocate(0x4000), 0x4000);
+    self->alloc14.CreateTypeA(alloc->Allocate(0x7000), 0x7000);
+    self->alloc28.CreateTypeA(alloc->Allocate(0x8000), 0x8000);
+    self->alloc3c.CreateTypeA(alloc->Allocate(0x800), 0x800);
+    self->alloc50.CreateTypeA(alloc->Allocate(0x200), 0x200);
+    self->entries = (Struct0205a198*)alloc->Allocate(0x230);
+    for (int i = 0; i < 14; i++) {
+        Sprite_Init(&self->entries[i]);
     }
     arg0->unknown_f0_ = (Struct_02043368*)arg1->Allocate(8);
     func_0205a234(arg0->unknown_f0_);

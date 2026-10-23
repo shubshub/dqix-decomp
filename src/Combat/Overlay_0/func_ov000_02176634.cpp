@@ -132,19 +132,19 @@ extern "C" void func_02046380(Struct_ov000_02176634_9*);
 extern "C" void __clear(void*, int);
 extern "C" void func_020e46c4(void*);
 extern "C" void* memset(void*, int, unsigned int);
-extern "C" void func_020e4bf4(void*, int);
-extern "C" char* func_020e0434(Struct_0201099c_3*, int);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" Struct_ov000_02176634_4* func_ov000_02161318(Struct_ov000_02176634_11*, int);
-extern "C" Struct_ov000_02176634_2* func_ov000_0217199c(void*, int);
-extern "C" int func_ov000_021815c8(void*);
-extern "C" Struct_ov000_02176634_3* func_ov000_021815e4(char*);
-extern "C" Struct_ov000_02176634_8* func_02053c6c(unsigned char*);
-struct Struct_02054000;
-extern "C" Struct_ov000_02176634_3* func_02054000(Struct_02054000*);
-extern "C" void func_020dcf7c(int, void*);
-extern "C" void func_0209c6d8(void*, int);
+void InitObjFromCombatantId020e4bf4(void*, int);
+char* KeyTable_Get(Container020e0310*, int);
+struct Obj02046574;
+void SetIndexedName02046574(Obj02046574*, int, char*);
+extern "C" Node02176634* func_ov000_02161318(Menu02176634*, int);
+Skill02176634* GetBoundedField420_0217199c(void*, int);
+int GetAdjustedByteField0x1d6b_ov000_021815c8(void*);
+Item02176634* FindElementByComputedKey021815e4(char*);
+PartyData02176634* GetFieldAt0x150_02053c6c(unsigned char*);
+struct Outer_02054000;
+Item02176634* GetActiveSub_02054000(Outer_02054000*);
+void DispatchIfCountPositive020dcf7c(int, void*);
+void ResetAndDispatchActorContext0209c6d8(void*, int);
 extern "C" void func_0207c378(char*, short, int, int);
 extern "C" void func_02052d7c(Struct_ov000_02176634_7*, int, short);
 struct Struct_0207c484;
@@ -267,18 +267,18 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     var4 = (short)(var2 >> 3) + 1;
     switch (arg2) {
     case 0xc:
-        var32 = 0xc;
-        func_02042058(var0, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7554));
+        kind = 0xc;
+        AppendString02042058(buf, KeyTable_Get((Container020e0310*)menu->messages, 0x7554));
         break;
     case 0x29:
-        var32 = 0x29;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7558));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x29;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x2a:
-        var32 = 0x2a;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7557));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x2a;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x2b: {
         Struct_ov000_02176634_4* var15 = func_ov000_02161318(arg0, arg0->unknown_70_[arg0->unknown_1d6b_]);
@@ -286,35 +286,35 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
             memset(var14, 0, 0x20);
             func_0203bdf4((char*)var15 + 0x88, var14);
         }
-        var32 = 0x2b;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x23), var0);
+        kind = 0x2b;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x23), buf);
         break;
     }
     case 0x1a: {
-        short var16 = 0x7544;
-        Struct_ov000_02176634_2* var17 = func_ov000_0217199c(arg1, arg1->unknown_1e_);
-        if (var17 != NULL && var17->unknown_2d_2_ == 6) var16 = 0x22;
-        var32 = 0x1a;
-        func_02042058(var0, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var16));
+        short msgId = 0x7544;
+        Skill02176634* skill = GetBoundedField420_0217199c(entry, entry->cursor);
+        if (skill != NULL && skill->kind == 6) msgId = 0x22;
+        kind = 0x1a;
+        AppendString02042058(buf, KeyTable_Get((Container020e0310*)menu->messages, msgId));
         break;
     }
     case 0x1b:
-        var32 = 0x1b;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7545));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7547), var0);
+        kind = 0x1b;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7547), buf);
         break;
     case 0x1c:
-        var32 = 0x1c;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7546));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7547), var0);
+        kind = 0x1c;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7547), buf);
         break;
     case 0x1d:
-        var32 = 0x1d;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7548), var0);
+        kind = 0x1d;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7548), buf);
         break;
     case 0x1e: {
         short var18 = 0x18;
@@ -327,8 +327,8 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
                 }
             }
         }
-        var32 = 0x1e;
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var18), var0);
+        kind = 0x1e;
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf);
         break;
     }
     case 0x1f: {
@@ -341,8 +341,8 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
                 break;
             }
         }
-        var32 = 0x1f;
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var23), var0);
+        kind = 0x1f;
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf);
         break;
     }
     case 0x20: {
@@ -388,31 +388,31 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
                 arg0->unknown_1d7a_ = 1;
             }
         }
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var25), var0);
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf);
         break;
     }
     case 0x25:
-        var32 = 0x25;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7545));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x25;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x26:
-        var32 = 0x26;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7546));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x26;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x27:
-        var32 = 0x27;
-        func_02046574((Struct_02046574_2*)var13, 0, var14);
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7556));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x27;
+        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x28:
-        var32 = 0x28;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7559));
-        func_020474a8(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7555), var0);
+        kind = 0x28;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
+        func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     default:
         return;
@@ -444,14 +444,14 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         var32 = 0xc;
         break;
     case 0x29:
-        var32 = 0x29;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7558));
-        var33 = 0x7555;
+        kind = 0x29;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
+        msgId = 0x7555;
         break;
     case 0x2a:
-        var32 = 0x2a;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7557));
-        var33 = 0x7555;
+        kind = 0x2a;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
+        msgId = 0x7555;
         break;
     case 0x2b: {
         Struct_ov000_02176634_4* var34 = func_ov000_02161318(arg0, arg0->unknown_70_[arg0->unknown_1d6b_]);
@@ -472,14 +472,14 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         break;
     }
     case 0x1b:
-        var32 = 0x1b;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7545));
-        var33 = 0x7547;
+        kind = 0x1b;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        msgId = 0x7547;
         break;
     case 0x1c:
-        var32 = 0x1c;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7546));
-        var33 = 0x7547;
+        kind = 0x1c;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        msgId = 0x7547;
         break;
     case 0x1d:
         var32 = 0x1d;
@@ -552,30 +552,30 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         break;
     }
     case 0x25:
-        var32 = 0x25;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7545));
-        var33 = 0x7555;
+        kind = 0x25;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        msgId = 0x7555;
         break;
     case 0x26:
-        var32 = 0x26;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7546));
-        var33 = 0x7555;
+        kind = 0x26;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        msgId = 0x7555;
         break;
     case 0x27:
-        var32 = 0x27;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7556));
-        var33 = 0x7555;
+        kind = 0x27;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
+        msgId = 0x7555;
         break;
     case 0x28:
-        var32 = 0x28;
-        func_02046574((Struct_02046574_2*)var13, 1, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7559));
-        var33 = 0x7555;
+        kind = 0x28;
+        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
+        msgId = 0x7555;
         break;
     default:
         return;
     }
 
-    func_02046608(var13, 10, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var33), var11, 0xa4, 0, 0);
+    func_02046608(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf, 0xa4, 0, 0);
 #endif
     func_ov000_0217ab8c(arg1, arg3, arg4);
     Struct_ov000_02176634_10* var40 = &arg0->unknown_188_;

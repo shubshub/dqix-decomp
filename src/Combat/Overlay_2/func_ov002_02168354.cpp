@@ -14,17 +14,17 @@ extern "C" void func_ov013_02184c8c(void *arg0, void *arg1);
 extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
 extern "C" unsigned char func_0209a678(char *arg0, void *arg1, unsigned short *arg2);
 extern "C" void *func_0202ae18();
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_021ccc34(int arg0);
-extern "C" void func_ov017_021cd0d8(int arg0, unsigned short *arg1, int arg2);
-extern "C" const char *func_020e0434(Struct_0201099c_3 *arg0, int arg1);
-extern "C" void func_020727d8(Struct_020727d8 *arg0);
-extern "C" void func_020728ac(void *arg0, void *arg1, void *arg2, unsigned int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_020e526c(void *arg0);
-extern "C" void func_020e5604(void *arg0, void *arg1, void *arg2, unsigned int arg3);
-extern "C" void *func_02053c6c(unsigned char *arg0);
-extern "C" void func_02083e28(void *arg0, int arg1);
+int CheckField0NonZero_0202b7d8(int *p);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" void func_ov017_021ccc34(int id);
+extern "C" void func_ov017_021cd0d8(int id, unsigned short *skills, int count);
+const char *KeyTable_Get(Container020e0310 *texts, int id);
+void ResetListHeader020727d8(List020727d8 *list);
+extern "C" void func_020728ac(void *list, void *alloc, void *buffer, unsigned int length, int a4, int a5, int a6);
+void Zero4Bytes_020e526c(void *reader);
+extern "C" void func_020e5604(void *reader, void *alloc, void *buffer, unsigned int length);
+void *GetFieldAt0x150_02053c6c(unsigned char *member);
+extern "C" void func_02083e28(void *model, int arg);
 
 extern "C" const char data_ov002_0216d300[];
 extern "C" const char data_ov002_0216d315[];
@@ -63,13 +63,13 @@ extern "C" ARM void func_ov002_02168354(char *arg0) {
             }
             BackgroundLoader::AddLockGlobal();
             BackgroundLoader::FreeAllocationsGlobal();
-            const char *var4 = func_020e0434((Struct_0201099c_3 *) (arg0 + 0x20), 0x65);
-            void *var5        = ExtractFileFromGP2(
-                func_020e0434((Struct_0201099c_3 *) (arg0 + 0x20), 0x64), var4, &var0);
-            *(void **) (arg0 + 0x2448) = ((SafeAllocator *) (arg0 + 0x64 + 0x800))->Allocate(8);
-            func_020727d8(*(Struct_020727d8 **) (arg0 + 0x2448));
-            if (var5 != 0) {
-                func_020728ac(*(void **) (arg0 + 0x2448), arg0 + 0x64 + 0x800, var5, var0, 0, 0, 0);
+            const char *inner = KeyTable_Get((Container020e0310 *) (self + 0x20), 0x65);
+            void *file        = ExtractFileFromGP2(
+                KeyTable_Get((Container020e0310 *) (self + 0x20), 0x64), inner, &size);
+            *(void **) (self + 0x2448) = ((SafeAllocator *) (self + 0x64 + 0x800))->Allocate(8);
+            ResetListHeader020727d8(*(List020727d8 **) (self + 0x2448));
+            if (file != 0) {
+                func_020728ac(*(void **) (self + 0x2448), self + 0x64 + 0x800, file, size, 0, 0, 0);
             }
             var5                       = ExtractFileFromGP2(data_ov002_0216d300, data_ov002_0216d315, &var0);
             *(void **) (arg0 + 0x244c) = ((SafeAllocator *) (arg0 + 0x64 + 0x800))->Allocate(0xc);

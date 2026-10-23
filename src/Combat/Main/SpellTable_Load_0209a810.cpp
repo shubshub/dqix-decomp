@@ -1,0 +1,41 @@
+#include <globaldefs.h>
+#include "Filesystem/BackgroundLoader.h"
+
+#include "std_library_functions.h"
+#include "Resource/Script.h"
+
+struct ResetStruct;
+
+struct StreamState;
+struct StreamHeader;
+
+struct Struct02030774;
+
+void* LoadFileIntoMemory(const char*, void*, unsigned int*);
+
+extern char data_020f1668[];
+extern char data_0211e33c[];
+extern char data_020f1640[];
+
+struct Ctx0209a810 { void* field0; };
+extern struct Ctx0209a810* data_02109ba8;
+
+// Main, originally SetupAndRunBufferedScript0209a810 (USA 0x0209a810, EUR 0x0209a820, JPN 0x0209c588)
+ARM void SpellTable_Load(struct Ctx0209a810* ctx, void* value) {
+    unsigned int count;
+    char buf[0x430];
+
+    BackgroundLoader::AddLockGlobal();
+
+    if (LoadFileIntoMemory(data_020f1668, data_0211e33c, &count) != NULL) {
+        ctx->field0 = value;
+        memset(value, 0, 0x550);
+        data_02109ba8 = ctx;
+        ((Script*)((struct ResetStruct*)buf))->Initialize();
+        ((Script*)buf)->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f1640);
+        ((Script*)((struct StreamState*)buf))->Load((struct StreamHeader*)data_0211e33c, count);
+        ((Script*)((struct Struct02030774*)buf))->Execute();
+        data_02109ba8 = NULL;
+    }
+    BackgroundLoader::RemoveLockGlobal();
+}

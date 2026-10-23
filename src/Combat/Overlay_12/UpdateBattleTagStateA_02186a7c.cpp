@@ -32,7 +32,7 @@ struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 
 struct SePlayer;
 extern struct SePlayer g_sePlayer;
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov012_02186a7c(char* self) {
 	if (state != 1) return;
 
 	*(unsigned char*)(self + kActiveOffset) = 1;
-	*(int*)(self + kMainChoiceOffset) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(self + kWindowOffset));
+	*(int*)(self + kMainChoiceOffset) = Window_GetSelectedIndex((struct Struct_0205c570*)(self + kWindowOffset));
 
 	int flag = 0;
 	if (func_ov023_021e6de4(self) != 0) {

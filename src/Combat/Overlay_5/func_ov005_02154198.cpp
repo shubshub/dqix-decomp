@@ -19,9 +19,9 @@ void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
 void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
 extern "C" void func_0205d048(void* window);
 void ClearFlag0x10IfSet(Struct02074bd0* state);
-void ClearBuffer0204b010(Obj0204b010* bg, void* p);
-extern "C" void func_0204b04c(void* bg, int a);
-extern "C" void func_0204b088(void* bg, int a);
+void Background_ClearMap(Obj0204b010* bg, void* p);
+extern "C" void Background_FlushMap(void* bg, int a);
+extern "C" void Background_TransferMap(void* bg, int a);
 void ResetRecordList0204afb4(List0204afb4* bg);
 
 struct Struct_ov005_02153954 {
@@ -78,9 +78,9 @@ extern "C" ARM void func_ov005_02154198(Struct_ov005_02153954* arg0) {
     ResetEntryList0205d6a0((Entry_0205d6a0*)self->window_, 1);
     func_0205d048(self->window_);
     ClearFlag0x10IfSet((Struct02074bd0*)self->screenState_);
-    ClearBuffer0204b010((Obj0204b010*)self->backgrounds_, 0);
-    func_0204b04c(self->backgrounds_, 0);
-    func_0204b088(self->backgrounds_, 0);
+    Background_ClearMap((Obj0204b010*)self->backgrounds_, 0);
+    Background_FlushMap(self->backgrounds_, 0);
+    Background_TransferMap(self->backgrounds_, 0);
     ResetRecordList0204afb4((List0204afb4*)self->backgrounds_);
     if (self->pageFiles_ != NULL) {
         memset(self->pageFiles_, 0, 0x20);

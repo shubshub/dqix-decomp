@@ -26,14 +26,14 @@ struct Struct_ov003_0215af9c {
 extern "C" Struct_ov003_0215af9c* func_020421a0(void);
 int IsBrightnessTransitionActive(GameResources*);
 void SetMainBrightness(GameResources*, int, int);
-extern "C" int func_020100b0(GameState*);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
-extern "C" void func_02046380(Struct_ov003_0215af9c*);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_ov003_02159250(Struct_ov003_021594c4_2*, void*);
+int GetField0x397cValue_020100b0(GameState*);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
+extern "C" void func_02046380(BattleGlobals*);
+struct Obj02046574;
+void SetIndexedName02046574(Obj02046574*, int, char*);
+struct Container020e0310;
+void* KeyTable_Get(Container020e0310*, int);
+extern "C" void func_ov003_02159250(BattleMessageScene*, void*);
 
 // USA: func_ov003_0215af9c
 extern "C" ARM void func_ov003_0215af9c(Struct_ov003_021594c4_2* arg0) {
@@ -61,9 +61,9 @@ extern "C" ARM void func_ov003_0215af9c(Struct_ov003_021594c4_2* arg0) {
             func_02046380(var1);
             func_02046574((Struct_02046574_2*)var1, 0, (char*)var4->baseStats_);
         }
-        var1->unknown_998_ = 1;
-        func_ov003_02159250(arg0, func_020e0434((Struct_0201099c_3*)arg0->unknown_64_, (short)(arg0->unknown_587_ + 0x438)));
-        arg0->unknown_580_++;
+        g->messageActive = 1;
+        func_ov003_02159250(self, KeyTable_Get((Container020e0310*)self->messages, (short)(self->actorSlot + 0x438)));
+        self->step++;
     }
 
     if (var2 == 2 && var1->unknown_998_ == 0) {

@@ -17,22 +17,22 @@ struct Struct_02015ef4_5;
 extern "C" void* func_0202ae18(void);
 extern "C" void func_02012de8(void);
 
-extern "C" void func_ov000_0216d1c4(int, Struct_02013fb4*, int, int*);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void func_020d84f4(void);
-extern "C" void* func_02079a3c(void* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_02061bd8(Struct_0205faf4_11* arg0);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_02072c9c(int arg0, char* arg1);
-extern "C" void func_0203dafc(Struct_0203d028_11* arg0);
-extern "C" void func_02049c88(void* arg0, void* arg1);
-extern "C" void func_ov000_02165480(void*, int);
-struct Struct_ov000_02164fac;
-extern "C" Struct_ov000_02164fac* func_02053c6c(unsigned char* arg0);
-extern "C" void func_ov000_02166a94(void* arg0);
+void RunOverlayScript0216d1c4(int, StreamHeader*, int, int*);
+int CheckField0NonZero_0202b7d8(int* obj);
+void BlankFunction020d84f4(void);
+void* ResetObjectState02079a3c(void* obj);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+int CheckField0x56bLowNibble(Obj02061bd8* obj);
+void CopyInternalFields0207df50(Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
+void FormatEffectStats02072c9c(int combatantId, char* buf);
+void ClearEightWords_0203dafc(Struct_203dafc* obj);
+extern "C" void func_02049c88(void* obj, void* state);
+void SetPtrFieldIfNonNull0x13c_ov000_02165480(void*, int);
+struct CombatantData02164fac;
+CombatantData02164fac* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void func_ov000_02166a94(void* work);
 #if defined(jpn)
 extern "C" void func_0207ab68(Struct_02108e10* arg0, SafeAllocator* arg1);
 #endif
@@ -187,12 +187,12 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 if (var21->unknown_1c4_ != NULL) {
                     sprintf(var1, data_ov000_0218399e, var21->unknown_1c4_[INFO_NAME_ID]);
                 }
-                var23 = (SafeAllocator*)(var22 + 4);
-                var23->Reset();
-                func_0207df50((Struct_0203d028*)(var22 + 0xcc));
-                func_0207df90((char*)(var22 + 0xcc));
-                LoadFileIntoMemory(var1, data_0211e33c, &var4);
-                var17 = data_0211e33c;
+                alloc = (SafeAllocator*)(model + 4);
+                alloc->Reset();
+                CopyInternalFields0207df50((Foo0207df50*)(model + 0xcc));
+                VramState_Restore((char*)(model + 0xcc));
+                LoadFileIntoMemory(name, data_0211e33c, &size);
+                buf = data_0211e33c;
             } else {
                 func_02072c9c(var20, var7);
                 if (var21->unknown_150_->unknown_49c_.unknown_0_0_ == 1) {
@@ -217,10 +217,10 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
 
             func_02049c88(var21, &arg0->unknown_5c3c_[var20]);
             func_02012de8();
-            if (func_02061bd8((Struct_0205faf4_11*)var21)) {
-                func_0207dfac((char*)(var22 + 0xcc));
-                if (var21->unknown_1c4_ != NULL) {
-                    sprintf(var1, data_ov000_021839c0, var21->unknown_1c4_[INFO_NAME_ID]);
+            if (CheckField0x56bLowNibble((Obj02061bd8*)c)) {
+                VramState_Save((char*)(model + 0xcc));
+                if (c->info != NULL) {
+                    sprintf(name, data_ov000_021839c0, c->info[INFO_NAME_ID]);
                 }
                 LoadFileIntoMemory(var1, data_0211e33c, &var4);
                 var17 = data_0211e33c;

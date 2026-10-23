@@ -10,8 +10,8 @@ struct Struct_0205d81c;
 struct Container020dedd0;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
@@ -50,26 +50,26 @@ extern "C" ARM void func_ov002_021631e8(char *arg0) {
         } else {
             *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2)) = *(short *) (func_02053c6c((unsigned char *) var1) + RG(0x900 + 0x5c, 0x8c4));
         }
-        func_0205de24((struct Struct_0205de24_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215ccc4(arg0);
-        *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88)) += 1;
-    } else if (var0 == 1) {
-        *(unsigned int *) (arg0 + RG(0x2000 + 0x47c, 0x22ac)) |= 4;
-        short var2 = *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2));
-        *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2)) =
-            func_0205d794((struct Struct_0205c570 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)));
-        if (var2 != *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2))) return;
-        int var3 = g_keyManager.TestKeysPressed(0x601);
-        int var4 = func_0205da38((struct Struct_0205da38*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
-        if ((var3 | var4) ? 1 : 0) {
-            func_ov002_0215b814(arg0);
-            *(unsigned char *) (arg0 + RG(0xf80, 0xed8)) = *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80));
-            *(unsigned int *) (arg0 + RG(0x2000 + 0x47c, 0x22ac)) &= ~4;
-            GameObject *var5 = GameState::GetInstance()->GetProtagonist();
-            if (var5 != NULL) {
-                short var6                                                        = *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2));
-                *(short *) (func_02053c6c((unsigned char *) var5) + RG(0x900 + 0x5c, 0x8c4)) = var6;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + RG(0x2c8 + 0xc00, 0xe20)), 0, 2);
+        func_ov002_02161cf0(base);
+        InitBattleTag0215ccc4(base);
+        *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88)) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + RG(0x2000 + 0x47c, 0x22ac)) |= 4;
+        short old = *(short *) (base + RG(0x1b00 + 0xea, 0x1ab2));
+        *(short *) (base + RG(0x1b00 + 0xea, 0x1ab2)) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + RG(0x2c8 + 0xc00, 0xe20)));
+        if (old != *(short *) (base + RG(0x1b00 + 0xea, 0x1ab2))) return;
+        int a = g_keyManager.TestKeysPressed(0x601);
+        int b = Window_IsSelectionTouched((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
+        if ((a | b) ? 1 : 0) {
+            func_ov002_0215b814(base);
+            *(unsigned char *) (base + RG(0xf80, 0xed8)) = *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80));
+            *(unsigned int *) (base + RG(0x2000 + 0x47c, 0x22ac)) &= ~4;
+            GameObject *p = GameState::GetInstance()->GetProtagonist();
+            if (p != NULL) {
+                short cur                                                        = *(short *) (base + RG(0x1b00 + 0xea, 0x1ab2));
+                *(short *) (GetFieldAt0x150_02053c6c((unsigned char *) p) + RG(0x900 + 0x5c, 0x8c4)) = cur;
             }
             switch (*(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2))) {
                 case 0:

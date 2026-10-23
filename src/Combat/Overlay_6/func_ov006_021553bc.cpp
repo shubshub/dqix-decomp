@@ -5,7 +5,7 @@ struct Struct_ov006_021553bc;
 struct Struct_0201099c_3;
 
 #if defined(jpn)
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
+int KeyTable_Get(Container020e0310*, int);
 #else
 extern "C" const char** func_020e5294(void* arg0, int arg1);
 extern "C" void func_020e4864(const char*, char*, int, int, int, int);
@@ -20,7 +20,7 @@ extern "C" ARM void func_ov006_021553bc(Struct_ov006_02154614* arg0, short* arg1
     for (unsigned char var1 = 0; var1 < 3; var1++) {
         if (arg0->unknown_1ac_ != 0) {
 #if defined(jpn)
-            var0[var1] = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_1ac_, arg1[var1]);
+            names[i] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, items[i]);
 #else
             const char** var2 = func_020e5294(arg0->unknown_1ac_, arg1[var1]);
             if (var2 != 0) {

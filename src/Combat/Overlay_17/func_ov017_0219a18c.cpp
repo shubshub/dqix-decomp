@@ -13,15 +13,15 @@ struct Struct_ov017_02199684 { unsigned char unknown_0_[0x14]; int unknown_14_; 
 extern "C" void func_ov017_02199684(Struct_ov017_02199684* arg0, int arg1, int arg2);
 extern "C" void func_ov017_021996bc(Struct_ov017_02199684* arg0, int arg1);
 
-struct Struct_0205d1e0;
-struct Struct_0205d228;
-struct Struct_0205d274;
-extern "C" void func_0205d1e0(Struct_0205d1e0*);
-extern "C" void func_0205d228(Struct_0205d228*);
-extern "C" void func_0205d274(Struct_0205d274*);
+struct Cont0205d1e0;
+struct Cont0205d228;
+struct Cont0205d274;
+void Window_ClearLayers(Cont0205d1e0*);
+void Window_DrawPanes(Cont0205d228*);
+void Window_FlushLayers(Cont0205d274*);
 extern "C" void func_0205da88(void*, int, int, int);
-struct Struct_0205d2bc;
-extern "C" void func_0205d2bc(Struct_0205d2bc*);
+struct Obj0205d2bc;
+void Window_TransferLayers(Obj0205d2bc*);
 
 struct Struct_0205d0e0 {
     char unknown_0_[0xA8];
@@ -33,8 +33,8 @@ struct Struct_0205d0e0 {
 struct Struct_0205d81c;
 extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c* arg0, int arg1);
 
-struct Struct_0204bc74;
-extern "C" void func_0204bc74(Struct_0204bc74* arg0, unsigned short arg1, int arg2, int arg3, int arg4, int arg5, unsigned short arg6);
+struct TileMap0204bc74;
+extern "C" void Background_FillRect(TileMap0204bc74* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
 
 // USA: func_ov017_0219a18c
 extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
@@ -62,10 +62,10 @@ extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
         return;
     }
 
-    func_ov017_02199684((Struct_ov017_02199684*)(arg0 + Enum_ov017_0219a18c_180 + Enum_ov017_0219a18c_15360), 2, 0x800);
-    func_0205d1e0(*(Struct_0205d1e0**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248));
-    func_0205d228(*(Struct_0205d228**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248));
-    func_0205da88(*(void**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248), 1, 2, 1);
+    FillEntriesEncoded_02199684((Entry_02199684*)(self + regionalOffset3 + regionalOffset4), 2, 0x800);
+    Window_ClearLayers(*(Cont0205d1e0**)(self + 0x3000 + regionalOffset5));
+    Window_DrawPanes(*(Cont0205d228**)(self + 0x3000 + regionalOffset5));
+    func_0205da88(*(void**)(self + 0x3000 + regionalOffset5), 1, 2, 1);
 
     GameObject* var3 = var2->GetProtagonist();
     GameObject* var4 = func_0200ff1c(var2, func_020100a8(var2));
@@ -94,16 +94,16 @@ extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
         break;
     }
 
-    if (var5 && var8 >= 0) {
-        Struct_0205d0e0* var9 = func_0205d81c(*(Struct_0205d81c**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248), var6);
-        if (var9 != 0) {
-            func_0204bc74((Struct_0204bc74*)(arg0 + Enum_ov017_0219a18c_180 + Enum_ov017_0219a18c_15360), 1, var9->unknown_ac_, var9->unknown_ae_, var9->unknown_a8_, var9->unknown_aa_, 0xf);
+    if (found && entry >= 0) {
+        Elem_0205d81c* elem = FindElementByC40205d81c(*(Struct_0205d81c**)(self + 0x3000 + regionalOffset5), key);
+        if (elem != 0) {
+            Background_FillRect((TileMap0204bc74*)(self + regionalOffset3 + regionalOffset4), 1, elem->x, elem->y, elem->w, elem->h, 0xf);
         }
     }
 
-    func_0205d274(*(Struct_0205d274**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248));
-    if (TestFlags04((GameResources*)arg0, 0x10000) == 0) {
-        func_0205d2bc(*(Struct_0205d2bc**)(arg0 + 0x3000 + Enum_ov017_0219a18c_3248));
+    Window_FlushLayers(*(Cont0205d274**)(self + 0x3000 + regionalOffset5));
+    if (TestFlags04((GameResources*)self, 0x10000) == 0) {
+        Window_TransferLayers(*(Obj0205d2bc**)(self + 0x3000 + regionalOffset5));
     }
     func_ov017_021996bc((Struct_ov017_02199684*)(arg0 + Enum_ov017_0219a18c_180 + Enum_ov017_0219a18c_15360), 2);
 }

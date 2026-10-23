@@ -13,11 +13,9 @@ enum { Enum_ov003_0216a974_2400 = 0x960 };
 struct Struct_0205d81c;
 extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
 
-struct Struct_0205d5d0;
-#if defined(jpn)
-#endif
-extern "C" void func_ov003_02169a84(char* arg0, char* arg1, int arg2);
-extern "C" void func_ov003_02169d10(void* arg0, void* arg1, int arg2);
+struct StructA0205d5d0;
+extern "C" void func_ov003_02169a84(char* base, char* dst, int flag);
+extern "C" void func_ov003_02169d10(void* base, void* dst, int flag);
 
 // USA: func_ov003_0216a974
 extern "C" ARM void func_ov003_0216a974(unsigned char* arg0, int arg1, int arg2) {

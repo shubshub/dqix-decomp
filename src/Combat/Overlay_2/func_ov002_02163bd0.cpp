@@ -27,7 +27,7 @@ int BuildFlaggedCombatantSlotList_02154f4c(unsigned char *obj);
 void *GetFieldAt0x150_02053c6c(unsigned char *obj);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 int CountFlag0x800MatchesEqualsTarget020dcc20(int targetCount, int flag);
 void *GetPtrField0x2a04_02010828(GameState *gs);
 int ArrayContainsByte_02086ef0(struct ArrayContainsByteStruct *s, int val);
@@ -35,7 +35,7 @@ void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int k
 extern "C" int func_0205df38(void *list, int key);
 int CheckAnyByteMatches020dcbbc(unsigned char *arr, int count, int b, int c, int d);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int LookupValueByKey020a0b3c(struct KeyMap020a0b3c *map, int key);
 int DecrementKeyValue020a0a08(KeyMap020a0a08*, int, int);
@@ -89,22 +89,22 @@ extern "C" ARM void func_ov002_02163bd0(char *arg0) {
                 }
             }
         }
-        func_ov002_0215b814(arg0);
-        *(unsigned char *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xae9, 0xc21)) =
-            *(unsigned char *) (arg0 + *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) + 0x1000 + REGIONAL_OFFSET(0xb2c, 0xc68));
-        func_0205de24((struct Struct_0205de24_2 *) L(arg0), 0, 3);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215d654(arg0);
-        *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa88, 0xbc0)) += 1;
-    } else if (var1 == 1) {
-        *(unsigned int *) (arg0 + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) |= 4;
-        int var7 = *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee));
-        *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) =
-            func_0205d794((struct Struct_0205c570 *) L(arg0));
-        if (var7 != *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee))) *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa94, 0xbcc)) = 1;
-        if (*(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) < *(unsigned char *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xb31, 0xc6d))) {
-            *(unsigned char *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xae9, 0xc21)) =
-                *(unsigned char *) (arg0 + *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) + 0x1000 + REGIONAL_OFFSET(0xb2c, 0xc68));
+        func_ov002_0215b814(base);
+        *(unsigned char *) (base + 0x1000 + REGIONAL_OFFSET(0xae9, 0xc21)) =
+            *(unsigned char *) (base + *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) + 0x1000 + REGIONAL_OFFSET(0xb2c, 0xc68));
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) L(base), 0, 3);
+        func_ov002_02161cf0(base);
+        func_ov002_0215d654(base);
+        *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa88, 0xbc0)) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) |= 4;
+        int old = *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee));
+        *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) L(base));
+        if (old != *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee))) *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa94, 0xbcc)) = 1;
+        if (*(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) < *(unsigned char *) (base + 0x1000 + REGIONAL_OFFSET(0xb31, 0xc6d))) {
+            *(unsigned char *) (base + 0x1000 + REGIONAL_OFFSET(0xae9, 0xc21)) =
+                *(unsigned char *) (base + *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee)) + 0x1000 + REGIONAL_OFFSET(0xb2c, 0xc68));
         } else {
             *(unsigned char *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xae9, 0xc21)) = 4;
         }
@@ -131,15 +131,15 @@ extern "C" ARM void func_ov002_02163bd0(char *arg0) {
             *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa94, 0xbcc)) = 1;
             func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 0);
         }
-        func_0205deb4((struct Struct_0205d81c *) L(arg0), Enum_ov002_02163bd0_13, 1);
-        if (var7 != *(short *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee))) return;
-        int var9 = g_keyManager.TestKeysPressed(0x601);
-        int var10 = func_0205da38((struct Struct_0205da38*)(L(arg0)), 0x14);
-        if (((var9 | var10) ? 1 : 0) || var8) {
-            GameObject *var11 = var0->GetProtagonist();
-            if (var11 != NULL) {
-                int var12 = *(signed char *) (arg0 + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21));
-                *(short *) ((char *) func_02053c6c((unsigned char *) var11) + REGIONAL_OFFSET(0x800 + 0xc6, 0x900 + 0x5e)) = var12;
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) L(base), regionalState0d, 1);
+        if (old != *(short *) (base + REGIONAL_OFFSET(0x1a00 + 0xb6, 0x1b00 + 0xee))) return;
+        int ta = g_keyManager.TestKeysPressed(0x601);
+        int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(L(base)), 0x14);
+        if (((ta | tb) ? 1 : 0) || flag) {
+            GameObject *pr = gs->GetProtagonist();
+            if (pr != NULL) {
+                int v = *(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21));
+                *(short *) ((char *) GetFieldAt0x150_02053c6c((unsigned char *) pr) + REGIONAL_OFFSET(0x800 + 0xc6, 0x900 + 0x5e)) = v;
             }
             if (*(signed char *) (base + REGIONAL_OFFSET(0x1a00 + 0xe9, 0x1c00 + 0x21)) == 4) {
                 SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);

@@ -22,24 +22,24 @@ struct Struct_ov002_02161234_2 {
     int unknown_8_;
 };
 
-extern "C" char *func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" char *func_020421a0();
-extern "C" void func_02046380(void *arg0);
-extern "C" void func_02046574(struct Struct_02046574_2 *arg0, int arg1, char *arg2);
-extern "C" void *func_020e46c4(void *arg0);
-extern "C" void *__clear(void *arg0, int arg1);
-extern "C" void func_020e4bf4(void *arg0, int arg1);
-extern "C" void func_020465c0(Struct_020465c0 *arg0, int arg1, int arg2);
-extern "C" void *func_02079e2c(char *arg0, int arg1);
-extern "C" void func_020e4e38(void *arg0, struct Struct_020e4e38 *arg1);
-extern "C" unsigned char func_020100b0(GameState *arg0);
-extern "C" void func_020e526c(void *arg0);
-extern "C" void func_020e56fc(void *arg0, int arg1, int arg2);
-extern "C" void *func_020e5294(void *arg0, int arg1);
-extern "C" void func_020e4f18(void *arg0, void *arg1, int arg2);
-extern "C" void func_02046608(void *arg0, int arg1, const char *arg2, char *arg3, int arg4, int arg5, int arg6);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" int func_020d2ff0(const char *arg0);
+char *KeyTable_Get(struct Container020e0310 *c, int key);
+char *GetGlobalField0x1c020421a0();
+extern "C" void func_02046380(void *messages);
+void SetIndexedName02046574(struct Obj02046574 *obj, int index, char *str);
+void *Clear12Bytes020e46c4(void *p);
+extern "C" void *__clear(void *dst, int count);
+void InitObjFromCombatantId020e4bf4(void *obj, int combatantId);
+void StoreInArray0x8b0_020465c0(StoreStruct *messages, int index, int value);
+void *SearchBothTables02079e2c(char *p, int key);
+void InitObjFromPackedFields020e4e38(void *obj, struct Src020e4e38 *src);
+unsigned char GetField0x397cValue_020100b0(GameState *battleStruct);
+void Zero4Bytes_020e526c(void *reader);
+void TryInvoke020e53bc_020e56fc(void *reader, int file, int size);
+void *CallFunc020e52a0_020e5294(void *p, int key);
+extern "C" void func_020e4f18(void *src, void *dst, int n);
+extern "C" void func_02046608(void *messages, int a, const char *format, char *output, int size, int b, int c);
+int AppendString02042058(char *dst, const char *src);
+int StringLength_020d2ff0(const char *s);
 
 extern "C" char data_ov002_0216d2bc[];
 extern "C" char data_ov002_0216d2d2[];
@@ -66,9 +66,9 @@ extern "C" ARM void func_ov002_02161234(char *arg0, char *arg1) {
     if (arg1 == 0) {
         return;
     }
-    func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x270e);
-    GameState *var11 = GameState::GetInstance();
-    char *var12    = func_020421a0();
+    KeyTable_Get((struct Container020e0310 *) (self + 0x20), 0x270e);
+    GameState *gs = GameState::GetInstance();
+    char *msgs    = GetGlobalField0x1c020421a0();
     GetGameResources();
     func_02046380(var12);
     char *var13;
@@ -156,13 +156,13 @@ extern "C" ARM void func_ov002_02161234(char *arg0, char *arg1) {
         }
         BackgroundLoader::RemoveLockGlobal();
     }
-    func_02046608(var12, 0xc, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), *(short *) (arg0 + 0x1c28)),
-                  arg1, 0xe3, 0, 1);
-    func_02042058(arg1, *(char **) (arg0 + 0x1bdc));
-    int var26   = func_020d2ff0(arg1);
-    char *var27 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), *(short *) (arg0 + 0x1c2a));
-    if (var27 != 0) {
-        func_02046608(var12, 0xc, var27, arg1 + var26, 0xe3, 0, 1);
+    func_02046608(msgs, 0xc, KeyTable_Get((struct Container020e0310 *) (self + 0x20), *(short *) (self + 0x1c28)),
+                  dst, 0xe3, 0, 1);
+    AppendString02042058(dst, *(char **) (self + 0x1bdc));
+    int len   = StringLength_020d2ff0(dst);
+    char *fmt = KeyTable_Get((struct Container020e0310 *) (self + 0x20), *(short *) (self + 0x1c2a));
+    if (fmt != 0) {
+        func_02046608(msgs, 0xc, fmt, dst + len, 0xe3, 0, 1);
     }
     *(short *) (arg0 + 0x1c18) = func_020d2ff0(arg1);
     int var28                   = 1;

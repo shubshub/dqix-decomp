@@ -41,41 +41,41 @@ int SetStateAndDispatch0209c3b4(Actor0209c3b4*, int);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 void Set3DClearColor_020c5588(int, int, int, int, int);
 struct Struct020dfc40;
-void ResetStruct020dfc40(Struct020dfc40*);
-extern "C" void func_020dfec0(void*, void*, void*, unsigned int);
-struct Struct_02071be8;
-extern "C" void func_02071be8(Struct_02071be8*);
-struct Struct_02013fb4;
-extern "C" void func_02071c00(int, int, Struct_02013fb4*, int);
+void KeyTable_Reset(Struct020dfc40*);
+extern "C" void KeyTable_Load(void*, void*, void*, unsigned int);
+struct Struct02071be8;
+void ClearListHeader(Struct02071be8*);
+struct StreamHeader;
+void RunBufferedStream02071c00(int, int, StreamHeader*, int);
 extern "C" void* GetSubBG0ScreenBase();
 extern "C" void* memset(void*, int, unsigned int);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void*, int);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-struct Struct_0204af38;
+struct List0204af64;
+void Background_Init(List0204af64*);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(void*, int);
+struct Obj0204b5e8;
+void Background_SetScroll(Obj0204b5e8*, int, int);
+struct AllocTarget0204b12c;
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
+struct Foo0204af38;
 struct SafeAllocator;
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0204b174(void*, void*, void*, unsigned int);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void Background_LoadFile(void*, void*, void*, unsigned int);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8*, void*);
 extern "C" void func_0204c684(void*);
-struct Struct_0204c7a8;
-extern "C" void func_0204c7a8(Struct_0204c7a8*, SafeAllocator*, int, unsigned int);
-extern "C" void func_ov023_021e20c0(void*);
+struct Obj0204c7a8;
+void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
+void ClearFields_021e20c0(void*);
 extern "C" void func_ov023_021e20f0(void*, void*, void*, unsigned int);
 extern "C" void* func_ov006_02157368(void*, int);
-extern "C" void func_0205a528(void*, void*, void*, void*);
-extern "C" void func_0205a444(char*);
-extern "C" void func_020e526c(void*);
+extern "C" void SpriteContext_LoadFile(void*, void*, void*, void*);
+void SpriteContext_Init(char*);
+void Zero4Bytes_020e526c(void*);
 extern "C" void func_020e5604(void*, void*, void*, unsigned int);
 struct Struct_0207f914;
 extern "C" void func_0207f914(Struct_0207f914*, int, int, int);
@@ -99,9 +99,9 @@ extern "C" void func_020813ec(void*, int);
 struct Struct_0207fdcc_2;
 extern "C" void* func_02081da8(Struct_0207fdcc_2*, int);
 extern "C" void __clear(void*, int);
-extern "C" void* func_020421a0();
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
+void* GetGlobalField0x1c020421a0();
+struct Container020e0310;
+void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_02046608(void*, int, void*, void*, int, int, int);
 struct Struct_02080f8c;
 extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
@@ -218,14 +218,14 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
         arg0->unknown_354_ = ((BackgroundLoader*)var1)->REGION_LOAD(data_ov006_0216026c, data_ov006_02160286, data_ov006_021615ce);
         arg0->unknown_390_ = arg0->unknown_390_ + 1;
     }
-    else if (var2 == 3) {
-        if (((BackgroundLoader*)var1)->GetTaskStatus(arg0->unknown_354_) != 0) {
-            ((BackgroundLoader*)var1)->GetLoadedFileByID(arg0->unknown_354_, &var0.unknown_40_, &var0.unknown_3c_);
-            if (var0.unknown_40_ != 0) {
-                void* var4 = arg0->unknown_c_;
-                ((SafeAllocator*)((char*)var4 + 0x14))->Reset();
-                func_020dfc40((Struct_0201099c_14*)((char*)arg0 + REGIONAL_OFFSET(0x14c, 0x158)));
-                func_020dfec0((char*)arg0 + REGIONAL_OFFSET(0x14c, 0x158), (char*)var4 + 0x14, var0.unknown_40_, var0.unknown_3c_);
+    else if (st == 3) {
+        if (((BackgroundLoader*)loader)->GetTaskStatus(obj->f354) != 0) {
+            ((BackgroundLoader*)loader)->GetLoadedFileByID(obj->f354, &f.c3d, &f.c3s);
+            if (f.c3d != 0) {
+                void* alloc = obj->alloc;
+                ((SafeAllocator*)((char*)alloc + 0x14))->Reset();
+                KeyTable_Reset((Struct020dfc40*)((char*)obj + REGIONAL_OFFSET(0x14c, 0x158)));
+                KeyTable_Load((char*)obj + REGIONAL_OFFSET(0x14c, 0x158), (char*)alloc + 0x14, f.c3d, f.c3s);
             }
             ((BackgroundLoader*)var1)->RemoveTask(arg0->unknown_354_);
             arg0->unknown_354_ = -1;
@@ -258,62 +258,62 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
         *(volatile unsigned short*)0x0400100e = (*(volatile unsigned short*)0x0400100e & 0x43) | 0x1300;
         memset(GetSubBG0ScreenBase(), 0, 0x800);
         *(volatile unsigned int*)0x04001010 = 0;
-        ((SafeAllocator*)((char*)arg0->unknown_c_ + 0x3c))->Reset();
-        func_0204af64((Struct_02020cb8*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)));
-        func_0204b11c((unsigned char*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)), 0);
-        arg0->unknown_70_ = (unsigned char)((arg0->unknown_70_ & ~0xf) | 1);
-        arg0->unknown_70_ = (unsigned char)((arg0->unknown_70_ & ~0xf0) | 0x30);
-        func_0204b5b4((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54), 3);
-        func_0204b5e8((Struct_02020cb8_5*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)), 0, 0);
-        func_0204b12c((Struct_0204b12c*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)), (SafeAllocator*)((char*)arg0->unknown_c_ + 0x3c));
-        func_0204af38((Struct_0204af38*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)), REGIONAL_OFFSET(3, 7), (SafeAllocator*)((char*)arg0->unknown_c_ + 0x3c));
-        arg0->unknown_354_ = ((BackgroundLoader*)var1)->QueueLoadFile(data_ov006_021602bb, (SafeAllocator*)0);
-        arg0->unknown_390_ = arg0->unknown_390_ + 1;
+        ((SafeAllocator*)((char*)obj->alloc + 0x3c))->Reset();
+        Background_Init((List0204af64*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)));
+        Background_SetMapSize((unsigned char*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)), 0);
+        obj->f70 = (unsigned char)((obj->f70 & ~0xf) | 1);
+        obj->f70 = (unsigned char)((obj->f70 & ~0xf0) | 0x30);
+        Background_SetPriority((char*)obj + REGIONAL_OFFSET(0x4c, 0x54), 3);
+        Background_SetScroll((Obj0204b5e8*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)), 0, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)), (SafeAllocator*)((char*)obj->alloc + 0x3c));
+        Background_AllocateScreens((Foo0204af38*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)), REGIONAL_OFFSET(3, 7), (SafeAllocator*)((char*)obj->alloc + 0x3c));
+        obj->f354 = ((BackgroundLoader*)loader)->QueueLoadFile(data_ov006_021602bb, (SafeAllocator*)0);
+        obj->f390 = obj->f390 + 1;
     }
-    else if (var2 == 7) {
-        if (((BackgroundLoader*)var1)->GetTaskStatus(arg0->unknown_354_) != 0) {
-            ((BackgroundLoader*)var1)->GetLoadedFileByID(arg0->unknown_354_, &var0.unknown_2c_, &var0.unknown_28_);
-            void* var7;
-            int var8 = func_02046900((Struct_02020cb8_4*)var0.unknown_2c_);
-            int var9;
-            for (var9 = 0; var9 < var8; var9++) {
-                var7 = func_020467f0((Struct_02020aec*)var0.unknown_2c_, var9, &var0.unknown_30_, &var0.unknown_24_);
-                if (var7 != 0) {
-                if (var9 == 0) {
-                    int var10;
-                    for (var10 = 0; var10 < 2; var10++) {
-                        unsigned char* var11 = (unsigned char*)arg0->unknown_1c_ + (var10 << 5);
-                        func_0204af64((Struct_02020cb8*)var11);
-                        func_0204b11c((unsigned char*)var11, 0);
-                        Struct_ov006_0215a5fc* var12 = (Struct_ov006_0215a5fc*)(var11 + 0x1c);
-                        var12->unknown_0_0_ = 1;
-                        var12->unknown_0_4_ = (unsigned char)(var10 + 1);
-                        func_0204b5e8((Struct_02020cb8_5*)var11, 0, 0);
-                        func_0204b5b4(var11, var10 + 1);
-                        func_0204b12c((Struct_0204b12c*)var11, (SafeAllocator*)((char*)arg0->unknown_c_ + 0x3c));
-                        func_0204b174(var11, var7, (char*)arg0->unknown_c_ + 0x3c, var0.unknown_24_);
+    else if (st == 7) {
+        if (((BackgroundLoader*)loader)->GetTaskStatus(obj->f354) != 0) {
+            ((BackgroundLoader*)loader)->GetLoadedFileByID(obj->f354, &f.c7d, &f.c7s);
+            void* rec;
+            int n = Pac_CountFiles((ActiveEntry02046900*)f.c7d);
+            int i;
+            for (i = 0; i < n; i++) {
+                rec = Pac_GetFile((Rec020467f0*)f.c7d, i, &f.r7d, &f.r7s);
+                if (rec != 0) {
+                if (i == 0) {
+                    int j;
+                    for (j = 0; j < 2; j++) {
+                        unsigned char* o = (unsigned char*)obj->f1c + (j << 5);
+                        Background_Init((List0204af64*)o);
+                        Background_SetMapSize((unsigned char*)o, 0);
+                        Nib* nib = (Nib*)(o + 0x1c);
+                        nib->lo = 1;
+                        nib->hi = (unsigned char)(j + 1);
+                        Background_SetScroll((Obj0204b5e8*)o, 0, 0);
+                        Background_SetPriority(o, j + 1);
+                        Background_AllocateMap((AllocTarget0204b12c*)o, (SafeAllocator*)((char*)obj->alloc + 0x3c));
+                        Background_LoadFile(o, rec, (char*)obj->alloc + 0x3c, f.r7s);
                     }
                 }
                 else {
-                    func_0204b174((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54), var7, (char*)arg0->unknown_c_ + 0x3c, var0.unknown_24_);
+                    Background_LoadFile((char*)obj + REGIONAL_OFFSET(0x4c, 0x54), rec, (char*)obj->alloc + 0x3c, f.r7s);
                 }
                 }
             }
-            func_0204b0e8((Struct_02020cb8_2*)((char*)arg0 + REGIONAL_OFFSET(0x4c, 0x54)), 0);
-            ((BackgroundLoader*)var1)->RemoveTask(arg0->unknown_354_);
-            arg0->unknown_354_ = -1;
-            arg0->unknown_390_ = arg0->unknown_390_ + 1;
+            Background_UploadMap((List0204b0e8*)((char*)obj + REGIONAL_OFFSET(0x4c, 0x54)), 0);
+            ((BackgroundLoader*)loader)->RemoveTask(obj->f354);
+            obj->f354 = -1;
+            obj->f390 = obj->f390 + 1;
         }
     }
-    else if (var2 == 8) {
-        void* var13 = arg0->unknown_c_;
-        ((SafeAllocator*)((char*)var13 + 0x50))->Reset();
-        unsigned int var14;
-        for (var14 = 0; var14 < 7; var14 = (var14 + 1) & 0xff) {
-            void* var15 = (char*)arg0->unknown_20_ + var14 * 0xe0;
-            func_0204c684(var15);
-            func_0204c7a8((Struct_0204c7a8*)var15, (SafeAllocator*)((char*)var13 + 0x50), (int)arg0->unknown_8_, 0x600);
-            *(unsigned int*)((char*)var15 + 4) = (unsigned int)arg0->unknown_1c_;
+    else if (st == 8) {
+        void* alloc = obj->alloc;
+        ((SafeAllocator*)((char*)alloc + 0x50))->Reset();
+        unsigned int i;
+        for (i = 0; i < 7; i = (i + 1) & 0xff) {
+            void* o = (char*)obj->f20 + i * 0xe0;
+            func_0204c684(o);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)o, (SafeAllocator*)((char*)alloc + 0x50), (int)obj->f08, 0x600);
+            *(unsigned int*)((char*)o + 4) = (unsigned int)obj->f1c;
         }
         arg0->unknown_354_ = ((BackgroundLoader*)var1)->REGION_LOAD(data_ov006_021602d2, data_ov006_021602e7, data_ov006_02161617);
         arg0->unknown_390_ = arg0->unknown_390_ + 1;
@@ -344,27 +344,27 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
             arg0->unknown_390_ = arg0->unknown_390_ + 1;
         }
     }
-    else if (var2 == 0xa) {
-        func_0205a444((char*)((char*)arg0 + REGIONAL_OFFSET(0xa4, 0xac)));
-        arg0->unknown_fc_ = 1;
-        arg0->unknown_ec_ = (int)arg0->unknown_24_;
-        arg0->unknown_f8_ = 0x1d;
-        arg0->unknown_e8_ = *(int*)((char*)arg0->unknown_18_ + 0x20);
-        arg0->unknown_354_ = ((BackgroundLoader*)var1)->REGION_LOAD(data_ov006_021602f8, data_ov006_0216030a, data_ov006_0216162c);
-        arg0->unknown_390_ = arg0->unknown_390_ + 1;
+    else if (st == 0xa) {
+        SpriteContext_Init((char*)((char*)obj + REGIONAL_OFFSET(0xa4, 0xac)));
+        obj->ffc = 1;
+        obj->fec = (int)obj->f24;
+        obj->ff8 = 0x1d;
+        obj->fe8 = *(int*)((char*)obj->f18 + 0x20);
+        obj->f354 = ((BackgroundLoader*)loader)->REGION_LOAD(data_ov006_021602f8, data_ov006_0216030a, data_ov006_0216162c);
+        obj->f390 = obj->f390 + 1;
     }
-    else if (var2 == 0xb) {
-        if (((BackgroundLoader*)var1)->GetTaskStatus(arg0->unknown_354_) != 0) {
-            ((BackgroundLoader*)var1)->GetLoadedFileByID(arg0->unknown_354_, &var0.unknown_14_, &var0.unknown_10_);
-            void* var18;
-            int var19 = func_02046900((Struct_02020cb8_4*)var0.unknown_14_);
-            var18 = arg0->unknown_c_;
-            ((SafeAllocator*)((char*)var18 + 0x8c))->Reset();
-            int var20;
-            for (var20 = 0; var20 < var19; var20++) {
-                void* var21 = func_020467f0((Struct_02020aec*)var0.unknown_14_, var20, &var0.unknown_18_, &var0.unknown_c_);
-                if (var21 != 0) {
-                func_0205a528((char*)arg0 + REGIONAL_OFFSET(0xa4, 0xac), var21, (void*)var0.unknown_c_, (char*)var18 + 0x8c);
+    else if (st == 0xb) {
+        if (((BackgroundLoader*)loader)->GetTaskStatus(obj->f354) != 0) {
+            ((BackgroundLoader*)loader)->GetLoadedFileByID(obj->f354, &f.cbd, &f.cbs);
+            void* alloc;
+            int n = Pac_CountFiles((ActiveEntry02046900*)f.cbd);
+            alloc = obj->alloc;
+            ((SafeAllocator*)((char*)alloc + 0x8c))->Reset();
+            int i;
+            for (i = 0; i < n; i++) {
+                void* rec = Pac_GetFile((Rec020467f0*)f.cbd, i, &f.rbd, &f.rbs);
+                if (rec != 0) {
+                SpriteContext_LoadFile((char*)obj + REGIONAL_OFFSET(0xa4, 0xac), rec, (void*)f.rbs, (char*)alloc + 0x8c);
                 }
             }
             ((BackgroundLoader*)var1)->RemoveTask(arg0->unknown_354_);
@@ -387,8 +387,8 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
                 void* var23 = arg0->unknown_c_;
                 ((SafeAllocator*)((char*)var23 + 0x28))->Reset();
 #if defined(jpn)
-                func_020dfc40((Struct_0201099c_14*)((char*)arg0 + REGIONAL_OFFSET(0x164, 0x170)));
-                func_020dfec0((char*)arg0 + REGIONAL_OFFSET(0x164, 0x170), (char*)var23 + 0x28, var0.unknown_8_, var0.unknown_4_);
+                KeyTable_Reset((Struct020dfc40*)((char*)obj + REGIONAL_OFFSET(0x164, 0x170)));
+                KeyTable_Load((char*)obj + REGIONAL_OFFSET(0x164, 0x170), (char*)alloc + 0x28, f.cd, f.cs);
 #else
                 func_020e526c((char*)arg0 + REGIONAL_OFFSET(0x164, 0x170));
                 func_020e5604((char*)arg0 + REGIONAL_OFFSET(0x164, 0x170), (char*)var23 + 0x28, var0.unknown_8_, var0.unknown_4_);
@@ -463,14 +463,14 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
                 var29->unknown_ba_ = 0x10;
             }
 #if defined(jpn)
-            void* var30 = func_020e0434((Struct_0201099c_3*)((char*)arg0 + REGIONAL_OFFSET(0x14c, 0x158)), 0);
-            func_02080f8c((Struct_02080f8c*)arg0->unknown_14_, 1, (int)var30);
+            void* r = KeyTable_Get((Container020e0310*)((char*)obj + REGIONAL_OFFSET(0x14c, 0x158)), 0);
+            SetEntryFirstField02080f8c((Container02080f8c*)obj->f14, 1, (int)r);
 #else
-            __clear(var0.unknown_44_, 0x400);
-            void* var31 = func_020421a0();
-            void* var32 = func_020e0434((Struct_0201099c_3*)((char*)arg0 + REGIONAL_OFFSET(0x14c, 0x158)), 0);
-            func_02046608(var31, 0xc, var32, var0.unknown_44_, 0xe3, 0, 1);
-            func_02080f8c((Struct_02080f8c*)arg0->unknown_14_, 1, (int)var0.unknown_44_);
+            __clear(f.buf, 0x400);
+            void* g = GetGlobalField0x1c020421a0();
+            void* r = KeyTable_Get((Container020e0310*)((char*)obj + REGIONAL_OFFSET(0x14c, 0x158)), 0);
+            func_02046608(g, 0xc, r, f.buf, 0xe3, 0, 1);
+            SetEntryFirstField02080f8c((Container02080f8c*)obj->f14, 1, (int)f.buf);
 #endif
             func_020813ec(arg0->unknown_14_, 1);
         }

@@ -38,7 +38,7 @@ extern "C" void func_ov002_0216bfd4(char* self, int v);
 int CheckFlagOrThreshold_02161b48(char* self, int v);
 void EnqueueEventTag170_021d0198(int a, int b, int c, int d);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" void func_ov002_0216c28c(char* self, int v);
 struct Struct020444bc;
 void SetField9a0AndIncrementField78(Struct020444bc*);
@@ -278,12 +278,12 @@ extern "C" ARM void func_ov002_0216acf0(char* arg0) {
             return;
         }
         if (U8(RG(0x1c7a, 0x1b3e)) != 0) {
-            int var22 = _ZNK9GameState12GetTickCountEv(_ZN9GameState11GetInstanceEv());
-            if (var22 == 0) var22 = 1;
-            int var23 = 0;
-            int var24 = g_keyManager.TestKeysPressed(0x601);
-            if (inline_ov002_0216acf0(var24, func_0205da38((struct Struct_ov002_02164748*)(arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0x14)) ||
-                func_ov002_02161b48(arg0, 1) != 0 ||
+            int ticks = _ZNK9GameState12GetTickCountEv(_ZN9GameState11GetInstanceEv());
+            if (ticks == 0) ticks = 1;
+            int ok = 0;
+            int flag = g_keyManager.TestKeysPressed(0x601);
+            if (AnySet(flag, Window_IsSelectionTouched((struct Obj_0205da38*)(self + RG(0x2c8 + 0xc00, 0xe20)), 0x14)) ||
+                CheckFlagOrThreshold_02161b48(self, 1) != 0 ||
                 g_keyManager.TestKeysPressed(0xf0) != 0 || g_touchInput.pressed_ != 0) {
                 var23 = 1;
             }

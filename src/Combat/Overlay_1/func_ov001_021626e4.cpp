@@ -10,30 +10,30 @@ struct Struct_ov001_021626e4 {
     char unknown_1d_[3];
 };
 
-extern "C" int func_ov017_021d612c(void* arg0);
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" unsigned int func_ov001_0215a750(const char* arg0, void** arg1);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_ov001_02162678(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_020c3984(unsigned int arg0);
-extern "C" void func_ov001_021628d4(int arg0, int arg1, int arg2, int arg3);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b5b4(Struct_ov001_021626e4* arg0, int arg1);
-extern "C" void func_0204b11c(unsigned char*, int);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
-extern "C" void func_020c9820();
-extern "C" void func_0204b2e0(void*, char*);
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(Struct_02020cb8_3*);
+extern "C" int func_ov017_021d612c(void* args);
+extern "C" int func_ov017_021d60f4(void* args);
+unsigned int LoadResourceIntoGlobalBuffer_0215a750(const char* path, void** outPtr);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void SetBg3ControlFields_02162678(int a, int b, int c, int d);
+void SetSubBgMode_020c3984(unsigned int mode);
+void SetSubBg3ControlFields_021628d4(int a, int b, int c, int d);
+struct List0204af64;
+void Background_Init(List0204af64*);
+extern "C" void Background_SetPriority(Background021626e4* background, int a);
+void Background_SetMapSize(unsigned char*, int);
+struct Obj0204b5e8;
+void Background_SetScroll(Obj0204b5e8*, int, int);
+void DelayThenSyncBit0_020c9820();
+void Background_FlushFile(void*, char*);
+struct SelfTag0204b3a0;
+void Background_UploadFile(SelfTag0204b3a0*, char*);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8*, void*);
+struct List0204afb4;
+void ResetRecordList0204afb4(List0204afb4*);
 
 extern char data_ov001_02165745[];
 
@@ -70,9 +70,9 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
         }
     }
 
-    var10 = func_02046900((Struct_02020cb8_4*)var4);
-    for (int var12 = 0; var12 < var10; var12++) {
-        var1[var12] = func_020467f0((Struct_02020aec*)var4, var12, &var6, &var2[var12]);
+    count = Pac_CountFiles((ActiveEntry02046900*)file);
+    for (int i = 0; i < count; i++) {
+        records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &recordSizes[i]);
     }
 
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
@@ -85,19 +85,19 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
         func_ov001_021628d4(0, 0, 0xe, 0);
     }
 
-    func_0204af64((Struct_02020cb8*)&var3);
-    var3.unknown_1c_0_ = var11;
-    var3.unknown_1c_4_ = 3;
-    func_0204b5b4(&var3, 0);
-    func_0204b11c((unsigned char*)&var3, 0);
-    func_0204b5e8((Struct_02020cb8_5*)&var3, 0, 0);
-    func_020c9820();
-    for (int var13 = 0; var13 < var10; var13++) {
-        func_0204b2e0(&var3, (char*)var1[var13]);
-        func_0204b3a0((Struct_02020cb8_6*)&var3, (char*)var1[var13]);
+    Background_Init((List0204af64*)&background);
+    background.screen = subScreen;
+    background.layer = 3;
+    Background_SetPriority(&background, 0);
+    Background_SetMapSize((unsigned char*)&background, 0);
+    Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+    DelayThenSyncBit0_020c9820();
+    for (int i = 0; i < count; i++) {
+        Background_FlushFile(&background, (char*)records[i]);
+        Background_UploadFile((SelfTag0204b3a0*)&background, (char*)records[i]);
     }
-    func_0204b0e8((Struct_02020cb8_2*)&var3, NULL);
-    func_0204afb4((Struct_02020cb8_3*)&var3);
+    Background_UploadMap((List0204b0e8*)&background, NULL);
+    ResetRecordList0204afb4((List0204afb4*)&background);
 
     if (var9) {
         BackgroundLoader::RemoveLockGlobal();

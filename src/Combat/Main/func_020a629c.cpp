@@ -9,40 +9,40 @@ struct Struct_020a629c_3 { char unknown_0_[0xc]; char unknown_c_[0x200]; };
 struct Struct_02020cb8_4;
 struct Struct_02020aec;
 extern char data_020f1b28;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
+int Pac_CountFiles(ActiveEntry02046900*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
 // USA: func_020a629c
 extern "C" ARM void func_020a629c(Struct_020a629c* arg0) {
     GetGameResources();
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_b_ == 0) {
-        arg0->unknown_c_ = var0->QueueLoadFile(&data_020f1b28, 0);
-        arg0->unknown_b_ = 1;
-    } else if (arg0->unknown_b_ == 1 && var0->GetTaskStatus(arg0->unknown_c_)) {
-        void* var1;
-        void* var2;
-        unsigned int var3;
-        void* var4[3];
-        int var5[3];
-        var0->GetLoadedFileByID(arg0->unknown_c_, &var2, &var3);
-        int var6 = func_02046900((Struct_02020cb8_4*)var2);
-        for (int var7 = 0;var7 < var6;var7++) var4[var7] = func_020467f0((Struct_02020aec*)var2, var7, &var1, &var5[var7]);
-        Struct_020a629c_2* var8 = (Struct_020a629c_2*)var4[0];
-        unsigned int var9 = var8->unknown_c_;
-        CleanInvalidateCacheRange(var8->unknown_10_, var9);
-        LoadToSubBG1CharacterData(((Struct_020a629c_2*)var4[0])->unknown_10_, 0, var9);
-        Struct_020a629c_3* var10 = (Struct_020a629c_3*)var4[1];
-        CleanInvalidateCacheRange(var10->unknown_c_, 0x200);
-        LoadToSubBGStandardPalette(var10->unknown_c_, 0, 0x40);
-        LoadToSubBGStandardPalette(var10->unknown_c_+0x180, 0x180, 0x80);
-        unsigned int var11;
-        Struct_020a629c_2* var12 = (Struct_020a629c_2*)var4[2];
-        var11 = var12->unknown_c_;
-        CleanInvalidateCacheRange(var12->unknown_10_, var11);
-        LoadToSubBG1ScreenData(var12->unknown_10_, 0, var11);
-        var0->RemoveTask(arg0->unknown_c_);
-        arg0->unknown_c_ = -1;
-        arg0->unknown_a_ = 1;
-        arg0->unknown_b_ = 0;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->state == 0) {
+        self->task = loader->QueueLoadFile(&data_020f1b28, 0);
+        self->state = 1;
+    } else if (self->state == 1 && loader->GetTaskStatus(self->task)) {
+        void* record;
+        void* file;
+        unsigned int size;
+        void* resources[3];
+        int fields[3];
+        loader->GetLoadedFileByID(self->task, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        for (int i = 0;i < count;i++) resources[i] = Pac_GetFile((Rec020467f0*)file, i, &record, &fields[i]);
+        Resource020a629c* chars = (Resource020a629c*)resources[0];
+        unsigned int charsSize = chars->size;
+        CleanInvalidateCacheRange(chars->data, charsSize);
+        LoadToSubBG1CharacterData(((Resource020a629c*)resources[0])->data, 0, charsSize);
+        Palette020a629c* palette = (Palette020a629c*)resources[1];
+        CleanInvalidateCacheRange(palette->data, 0x200);
+        LoadToSubBGStandardPalette(palette->data, 0, 0x40);
+        LoadToSubBGStandardPalette(palette->data+0x180, 0x180, 0x80);
+        unsigned int screenSize;
+        Resource020a629c* screen = (Resource020a629c*)resources[2];
+        screenSize = screen->size;
+        CleanInvalidateCacheRange(screen->data, screenSize);
+        LoadToSubBG1ScreenData(screen->data, 0, screenSize);
+        loader->RemoveTask(self->task);
+        self->task = -1;
+        self->ready = 1;
+        self->state = 0;
     }
 }

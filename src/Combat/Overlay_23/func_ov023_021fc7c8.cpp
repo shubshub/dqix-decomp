@@ -37,15 +37,15 @@ public:
 
 struct Struct_ov009_02188454;
 
-extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" void func_ov023_021e5020(Struct_ov023_021fc7c8* arg0);
-extern "C" Vector3i func_ov023_021e613c(Struct_ov023_021fc7c8* arg0);
-extern "C" char* func_020100f8(char* arg0);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" void func_0202ee38(char*, int, int);
-extern "C" void func_0202ee58(char*, int, int);
-extern "C" void func_ov023_021e6088(void* arg0, Struct_ov009_02188454* arg1);
+void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
+extern "C" void CharacterModel_Update(CharacterModel_021fc7c8* model);
+extern "C" Vector3i CharacterModel_GetRotation(CharacterModel_021fc7c8* model);
+char* GetFieldIfFlag4_020100f8(char* gameState);
+void SetFlagsAt0x244_020a28a0(unsigned char* camera, unsigned char flags);
+void ClearFlagBits_020a28b0(unsigned char* camera, int flags);
+void Camera_EasePositionTo(char*, int, int);
+void Camera_EaseTargetTo(char*, int, int);
+void CharacterModel_SetRotation(void* model, Words021e60c4* rotation);
 
 extern const Vector3i data_ov023_021fda08;
 extern const Vector3i data_ov023_021fd9fc;
@@ -55,14 +55,14 @@ extern const Vector3i data_ov023_021fd9e4;
 // USA: func_ov023_021fc7c8
 extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg1)
 {
-    func_020c54a4(0, 0, 0, 0);
-    GameState* var0 = GameState::GetInstance();
-    unsigned int var1 = var0->GetTickCount();
-    if (var1 == 0)
-        var1 = 1;
-    func_ov023_021e5020(&arg0->unknown_20_[0]);
-    func_ov023_021e5020(&arg0->unknown_20_[1]);
-    if (arg0->unknown_1864_3_)
+    SetFogState_020c54a4(0, 0, 0, 0);
+    GameState* gameState = GameState::GetInstance();
+    unsigned int ticks = gameState->GetTickCount();
+    if (ticks == 0)
+        ticks = 1;
+    CharacterModel_Update(&self->models_[0]);
+    CharacterModel_Update(&self->models_[1]);
+    if (self->swap_)
     {
         int var2 = (arg0->unknown_1864_0_ + 1) % 2;
         if (!arg0->unknown_20_[var2].unknown_c12_)
@@ -71,10 +71,10 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
             arg0->unknown_1864_3_ = 0;
         }
     }
-    Struct_ov023_021fc7c8* var3 = &arg0->unknown_20_[arg0->unknown_1864_0_];
-    Vector3i var4 = func_ov023_021e613c(var3);
-    int var5 = fix32ReduceAngle0To2Pi(0x1eb - var4.y);
-    int var6 = 0;
+    CharacterModel_021fc7c8* model = &self->models_[self->current_];
+    Vector3i rotation = CharacterModel_GetRotation(model);
+    int difference = fix32ReduceAngle0To2Pi(0x1eb - rotation.y);
+    int angle = 0;
     if (g_keyManager.TestKeysHeld(0x200) && g_keyManager.TestKeysHeld(0x100))
     {
         if (!arg0->unknown_1864_1_)
@@ -82,21 +82,21 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
     }
     if (g_keyManager.TestKeysHeld(0x40))
     {
-        const Vector3i var7 = data_ov023_021fda08;
-        const Vector3i var8 = data_ov023_021fd9fc;
-        char* var9 = func_020100f8((char*)var0);
-        func_020a28a0((unsigned char*)var9, 2);
-        func_0202ee38(var9, (int)&var7, 0xa000);
-        func_0202ee58(var9, (int)&var8, 0xa000);
+        const Vector3i position = data_ov023_021fda08;
+        const Vector3i target = data_ov023_021fd9fc;
+        char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
+        SetFlagsAt0x244_020a28a0((unsigned char*)camera, 2);
+        Camera_EasePositionTo(camera, (int)&position, 0xa000);
+        Camera_EaseTargetTo(camera, (int)&target, 0xa000);
     }
     else if (g_keyManager.TestKeysHeld(0x80))
     {
-        const Vector3i var10 = data_ov023_021fd9f0;
-        const Vector3i var11 = data_ov023_021fd9e4;
-        char* var12 = func_020100f8((char*)var0);
-        func_020a28b0((unsigned char*)var12, 2);
-        func_0202ee38(var12, (int)&var10, 0xa000);
-        func_0202ee58(var12, (int)&var11, 0xa000);
+        const Vector3i position = data_ov023_021fd9f0;
+        const Vector3i target = data_ov023_021fd9e4;
+        char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
+        ClearFlagBits_020a28b0((unsigned char*)camera, 2);
+        Camera_EasePositionTo(camera, (int)&position, 0xa000);
+        Camera_EaseTargetTo(camera, (int)&target, 0xa000);
     }
     if (arg0->unknown_1864_1_)
     {
@@ -134,8 +134,8 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
     {
         if (arg0->unknown_1868_ != NULL)
         {
-            (*arg0->unknown_1868_)(arg1);
-            var4 = func_ov023_021e613c(var3);
+            (*self->leftCallback_)(script);
+            rotation = CharacterModel_GetRotation(model);
         }
         else
         {
@@ -147,8 +147,8 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
     {
         if (arg0->unknown_186c_ != NULL)
         {
-            (*arg0->unknown_186c_)(arg1);
-            var4 = func_ov023_021e613c(var3);
+            (*self->rightCallback_)(script);
+            rotation = CharacterModel_GetRotation(model);
         }
         else
         {
@@ -156,5 +156,5 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
             var4.y = fix32ReduceAngle0To2Pi(var4.y);
         }
     }
-    func_ov023_021e6088(var3, (Struct_ov009_02188454*)&var4);
+    CharacterModel_SetRotation(model, (Words021e60c4*)&rotation);
 }

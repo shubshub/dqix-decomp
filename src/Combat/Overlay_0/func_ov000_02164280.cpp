@@ -51,13 +51,13 @@ extern "C" void MapVRAMBanksToTextureImage(int handle);
 extern "C" void func_020bb48c(unsigned int arg0, int arg1);
 extern "C" void MapVRAMBanksToSubObj(int value);
 extern "C" void MapVRAMBanksToSubBG(int value);
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0203bd24(char* arg0);
-extern "C" void func_0203c35c(int* arg0);
-extern "C" void func_ov017_02195540(unsigned char* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207de48(void* arg0, int arg1, int arg2);
-extern "C" void func_0207dfac(char* arg0);
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void InitBattleContext0203bd24(char* context);
+extern "C" void func_0203c35c(int* ptr);
+void ClearFlag320_02195540(unsigned char* obj);
+void VramState_Restore(char* obj);
+extern "C" void VramState_Reserve(void* p, int a, int b);
+void VramState_Save(char* obj);
 
 // USA: func_ov000_02164280
 extern "C" ARM void func_ov000_02164280(Struct_ov000_02164280* arg0) {
@@ -81,13 +81,13 @@ extern "C" ARM void func_ov000_02164280(Struct_ov000_02164280* arg0) {
     arg0->unknown_14c_.unknown_6c_ = var0->unknown_2cc_[27].unknown_6c_;
     func_0207df50(&arg0->unknown_14c_);
 
-    func_0203bd24(var1);
-    func_0203c35c(var2);
-    func_ov017_02195540((unsigned char*)var0);
-    func_0207df50(var0->unknown_2cc_);
-    func_0207df90((char*)var0->unknown_2cc_);
-    func_0207de48(arg0->unknown_36f0_, 0x18000, 0x800);
-    func_0207dfac((char*)var0->unknown_2cc_);
+    InitBattleContext0203bd24(context);
+    func_0203c35c(global);
+    ClearFlag320_02195540((unsigned char*)res);
+    CopyInternalFields0207df50(res->pairTables);
+    VramState_Restore((char*)res->pairTables);
+    VramState_Reserve(screen->workBuf, 0x18000, 0x800);
+    VramState_Save((char*)res->pairTables);
     UpdateVRAMStagingVRAMBanks();
     UnlockStagedTextureVRAMCopying();
 }

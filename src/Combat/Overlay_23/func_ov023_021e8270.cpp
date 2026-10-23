@@ -3,13 +3,13 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205d81c;
-extern "C" void* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" int func_02050064(void* arg0);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020426bc(void* arg0, void* arg1, int arg2);
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" void func_ov023_021e709c(void* arg0, void* arg1, int arg2);
-extern "C" void* func_0204a5e4(int arg0, int arg1);
+void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern "C" int func_02050064(void* obj);
+extern "C" void* __clear(void* dst, int count);
+extern "C" int Font_EncodeText(void* src, void* dst, int flag);
+int StringLength_020d2ff0(const char* s);
+extern "C" void func_ov023_021e709c(void* ctx, void* arr, int index);
+void* GetTableEntry0204a5e4(int a, int b);
 void CleanInvalidateCacheRange(void const*, unsigned int);
 void CleanCacheRange(void const*, unsigned int);
 
@@ -43,9 +43,9 @@ extern "C" ARM void func_ov023_021e8270(char* arg0) {
     __clear(var8, 0x3a);
     __clear(var8 + 0x3a, 0x400);
 
-    int var9;
-    if (var0 != 0) {
-        var9 = func_020426bc(var0, var8, 1);
+    int len;
+    if (src != 0) {
+        len = Font_EncodeText(src, buf, 1);
     } else {
         var9 = func_020d2ff0(var7 + 8);
         memcpy(var8, var7 + 8, var9);

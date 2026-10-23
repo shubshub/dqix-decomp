@@ -21,12 +21,12 @@ extern "C" void func_02094ab0(struct Struct_02094ab0* arg0);
 struct Struct_02074bd0;
 extern "C" void func_02074bd0(struct Struct_02074bd0* arg0);
 
-struct Struct_0205d1e0;
-extern "C" void func_0205d1e0(struct Struct_0205d1e0*);
-struct Struct_0205d274;
-extern "C" void func_0205d274(struct Struct_0205d274*);
-struct Struct_0205d2bc;
-extern "C" void func_0205d2bc(struct Struct_0205d2bc*);
+struct Cont0205d1e0;
+void Window_ClearLayers(struct Cont0205d1e0*);
+struct Cont0205d274;
+void Window_FlushLayers(struct Cont0205d274*);
+struct Obj0205d2bc;
+void Window_TransferLayers(struct Obj0205d2bc*);
 extern "C" void func_0205d048(void*);
 
 void CleanInvalidateCacheRange(const void*, unsigned int);
@@ -42,10 +42,10 @@ extern "C" ARM void func_ov012_02185af0(unsigned char* arg0) {
 
     func_02074bd0((struct Struct_02074bd0*)(arg0 + R(0,8)));
 
-    func_0205d1e0((struct Struct_0205d1e0*)(arg0 + R(0x90,0xac)));
-    func_0205d274((struct Struct_0205d274*)(arg0 + R(0x90,0xac)));
-    func_0205d2bc((struct Struct_0205d2bc*)(arg0 + R(0x90,0xac)));
-    func_0205d048((void*)(arg0 + R(0x90,0xac)));
+    Window_ClearLayers((struct Cont0205d1e0*)(self + R(0x90,0xac)));
+    Window_FlushLayers((struct Cont0205d274*)(self + R(0x90,0xac)));
+    Window_TransferLayers((struct Obj0205d2bc*)(self + R(0x90,0xac)));
+    func_0205d048((void*)(self + R(0x90,0xac)));
 
     memset(*(void**)(arg0 + R(0x134c,0x137c)), 0, 0x20);
     CleanInvalidateCacheRange(*(void**)(arg0 + R(0x134c,0x137c)), 0x20);

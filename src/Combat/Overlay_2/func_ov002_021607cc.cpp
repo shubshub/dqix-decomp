@@ -10,18 +10,18 @@ struct Struct_ov002_0216ca88 {
     int unknown_0_[7];
 };
 
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" int func_02041c64(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" char *func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_020420e8(const char *arg0, int arg1);
-extern "C" int func_02041a28(char *arg0, int arg1);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" int func_02041cc0(char *arg0, int arg1);
-extern "C" void *__clear(void *arg0, int arg1);
-extern "C" void func_02041a90(char *arg0, int arg1, int arg2);
-extern "C" int func_02042084(char *arg0, char *arg1, int arg2, int arg3);
-extern "C" int func_02041b70(char *arg0, int arg1, const char *arg2);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+int AppendWireTag02041c64(char *dst, int a1, int a2, int a3, int a4, int a5);
+char *KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int func_020420e8(const char *text, int large);
+int AppendXTag_02041a28(char *dst, int x);
+int AppendString02042058(char *dst, const char *src);
+int AppendLineTag02041cc0(char *dst, int a1);
+extern "C" void *__clear(void *destination, int count);
+void AppendXYTag_02041a90(char *text, int x, int y);
+int AppendDotLeaderLabel02042084(char *buffer, char *label, int width, int extra);
+int AppendNameTag_02041b70(char *dst, int n, const char *name);
 
 extern Struct_ov002_0216caa4 data_ov002_0216caa4;
 extern Struct_ov002_0216ca88 data_ov002_0216ca88;
@@ -42,39 +42,39 @@ extern "C" ARM void func_ov002_021607cc(unsigned char *arg0, char *arg1, int arg
     if (arg2) {
         func_02041c08(arg1, var0, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
-    func_02041c64(arg1, 0x64, 2, 2, 2, 2);
-    char *var2 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x1194);
-    func_02042058(arg1, var2);
-    func_02041cc0(arg1, 0x11);
-    Struct_ov002_0216ca88 var3 = data_ov002_0216ca88;
-    char var4[0x40];
-    int var5;
-    for (var5 = 0; var5 < 7; var5++) {
-        signed char var6 = *(signed char *) (arg0 + var3.unknown_0_[var5] + 0x1b40);
-        int var7;
-        if (var6 < 0) {
-            var7 = 0x119d;
+    AppendCursorTag_02041ea4(dst, cursor);
+    AppendWireTag02041c64(dst, 0x64, 2, 2, 2, 2);
+    char *title = KeyTable_Get((struct Container020e0310 *) (self + 8), 0x1194);
+    AppendString02042058(dst, title);
+    AppendLineTag02041cc0(dst, 0x11);
+    Ints7_0216ca88 offs = data_ov002_0216ca88;
+    char buf[0x40];
+    int i;
+    for (i = 0; i < 7; i++) {
+        signed char v = *(signed char *) (self + offs.v[i] + 0x1b40);
+        int key;
+        if (v < 0) {
+            key = 0x119d;
         } else {
             var7 = var6;
             var7 += 0x119d;
         }
-        __clear(var4, 0x40);
-        func_02041a90(arg1, 0x2b, var1.unknown_0_[var5]);
-        if (var7 != 0x119d) {
-            func_02042058(
-                var4, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), (short) var7));
+        __clear(buf, 0x40);
+        AppendXYTag_02041a90(dst, 0x2b, ys.v[i]);
+        if (key != 0x119d) {
+            AppendString02042058(
+                buf, KeyTable_Get((struct Container020e0310 *) (self + 8), (short) key));
         } else {
-            func_02042084(
-                var4, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), (short) var7),
+            AppendDotLeaderLabel02042084(
+                buf, KeyTable_Get((struct Container020e0310 *) (self + 8), (short) key),
                 0x64, 0xa);
         }
         func_02041b70(arg1, var5, var4);
     }
-    func_02041c64(arg1, 0, 2, 2, 2, 2);
-    func_02041cc0(arg1, 0xa2);
-    func_02041a90(arg1, 0x2b, var1.unknown_0_[var5]);
-    func_02041b70(arg1, var5, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 8), 0x11fa));
+    AppendWireTag02041c64(dst, 0, 2, 2, 2, 2);
+    AppendLineTag02041cc0(dst, 0xa2);
+    AppendXYTag_02041a90(dst, 0x2b, ys.v[i]);
+    AppendNameTag_02041b70(dst, i, KeyTable_Get((struct Container020e0310 *) (self + 8), 0x11fa));
 }
 #else
 extern "C" ARM void func_ov002_021607cc(unsigned char *arg0, char *arg1, int arg2) {
@@ -85,39 +85,39 @@ extern "C" ARM void func_ov002_021607cc(unsigned char *arg0, char *arg1, int arg
     if (arg2) {
         func_02041c08(arg1, var8, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var8);
-    func_02041c64(arg1, 0x64, 2, 2, 2, 2);
-    char *var10 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x1194);
-    func_02041a28(arg1, (0x98 - func_020420e8(var10, 0)) >> 1);
-    func_02042058(arg1, var10);
-    func_02041cc0(arg1, 0x11);
-    Struct_ov002_0216ca88 var11 = data_ov002_0216ca88;
-    char var12[0x40];
-    int var13;
-    for (var13 = 0; var13 < 7; var13++) {
-        signed char var14 = *(signed char *) (arg0 + var11.unknown_0_[var13] + 0x1c7c);
-        int var15;
-        if (var14 < 0) {
-            var15 = 0x119d;
+    AppendCursorTag_02041ea4(dst, cursor);
+    AppendWireTag02041c64(dst, 0x64, 2, 2, 2, 2);
+    char *title = KeyTable_Get((struct Container020e0310 *) (self + 0x20), 0x1194);
+    AppendXTag_02041a28(dst, (0x98 - func_020420e8(title, 0)) >> 1);
+    AppendString02042058(dst, title);
+    AppendLineTag02041cc0(dst, 0x11);
+    Ints7_0216ca88 offs = data_ov002_0216ca88;
+    char buf[0x40];
+    int i;
+    for (i = 0; i < 7; i++) {
+        signed char v = *(signed char *) (self + offs.v[i] + 0x1c7c);
+        int key;
+        if (v < 0) {
+            key = 0x119d;
         } else {
             var15 = var14;
             var15 += 0x119d;
         }
-        __clear(var12, 0x40);
-        func_02041a90(arg1, 0x2b, var9.unknown_0_[var13]);
-        if (var15 != 0x119d) {
-            func_02042058(
-                var12, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), (short) var15));
+        __clear(buf, 0x40);
+        AppendXYTag_02041a90(dst, 0x2b, ys.v[i]);
+        if (key != 0x119d) {
+            AppendString02042058(
+                buf, KeyTable_Get((struct Container020e0310 *) (self + 0x20), (short) key));
         } else {
-            func_02042084(
-                var12, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), (short) var15),
+            AppendDotLeaderLabel02042084(
+                buf, KeyTable_Get((struct Container020e0310 *) (self + 0x20), (short) key),
                 0x64, 0);
         }
         func_02041b70(arg1, var13, var12);
     }
-    func_02041c64(arg1, 0, 2, 2, 2, 2);
-    func_02041cc0(arg1, 0xa2);
-    func_02041a90(arg1, 0x2b, var9.unknown_0_[var13]);
-    func_02041b70(arg1, var13, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x11fa));
+    AppendWireTag02041c64(dst, 0, 2, 2, 2, 2);
+    AppendLineTag02041cc0(dst, 0xa2);
+    AppendXYTag_02041a90(dst, 0x2b, ys.v[i]);
+    AppendNameTag_02041b70(dst, i, KeyTable_Get((struct Container020e0310 *) (self + 0x20), 0x11fa));
 }
 #endif

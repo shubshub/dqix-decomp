@@ -64,10 +64,10 @@ struct Struct_ov000_0217b518_3 {
 extern BattleWindowContext data_ov000_02184294;
 extern SePlayer g_sePlayer;
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int set, int key);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char* member);
 int CheckFlagsOrField_0217ab48_0217ab48(void* menu);
@@ -80,13 +80,13 @@ extern "C" void func_ov000_02176e3c(BattleWindow* window, BattleSubMenu* menu, i
 // USA: func_ov000_0217b518
 extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, int arg2)
 {
-    Struct_ov000_0217b518* var0;
-    enum Enum_ov000_0217b518 { Enum_ov000_0217b518_m128 = -128, Enum_ov000_0217b518_127 = 127 };
-    Enum_ov000_0217b518 var1;
-    data_ov000_02184294.unknown_0_->unknown_1d72_ |= 0x100;
-    const signed char var2 = arg0->inline_ov000_0217b518();
-    var1 = (Enum_ov000_0217b518)(signed char)func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    arg0->unknown_20_ = var1;
+    BattleWindow* window;
+    enum Selection { kSelectionMin = -128, kSelectionMax = 127 };
+    Selection current;
+    data_ov000_02184294.window->flags |= 0x100;
+    const signed char previous = menu->GetSelection();
+    current = (Selection)(signed char)Window_GetSelectedIndex((struct Struct_0205c570*)menu->list);
+    menu->selection = current;
     {
     var0 = data_ov000_02184294.inline_ov000_0217b518_2();
     func_0205def8((struct Struct_0205def8*)var0->unknown_188_, 1, 0x22);
@@ -94,7 +94,7 @@ extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, 
         return -1;
     }
     int pressed = g_keyManager.TestKeysPressed(0x601);
-    bool cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
+    bool cancel = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
     if (cancel || menu->forceClose) {
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
         SePlayer_Play(&g_sePlayer, 1, 0);
@@ -128,20 +128,20 @@ extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, 
 // USA: func_ov000_0217b518
 extern "C" ARM int func_ov000_0217b518(Struct_ov000_0217b518_3* arg0, int arg1, int arg2)
 {
-    signed char var7;
-    Struct_ov000_0217b518* var8;
-    signed char var9;
-    data_ov000_02184294.unknown_8_->unknown_1d72_ |= 0x100;
-    var9 = arg0->unknown_20_;
-    var7 = func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    arg0->unknown_20_ = var7;
-    var8 = data_ov000_02184294.unknown_8_;
-    func_0205def8((struct Struct_0205def8*)var8->unknown1_188_, 1, 0x22);
-    if (var9 != var7) {
+    signed char current;
+    BattleWindow* window;
+    signed char previous;
+    data_ov000_02184294.window->flags |= 0x100;
+    previous = menu->selection;
+    current = Window_GetSelectedIndex((struct Struct_0205c570*)menu->list);
+    menu->selection = current;
+    window = data_ov000_02184294.window;
+    SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 1, 0x22);
+    if (previous != current) {
         return -1;
     }
     int pressed = g_keyManager.TestKeysPressed(0x601);
-    int cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
+    int cancel = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)menu->list, 0x14)) ? 1 : 0;
     if (cancel || menu->forceClose) {
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)window->elements, 0, 0x22);
         SePlayer_Play(&g_sePlayer, 1, 0);

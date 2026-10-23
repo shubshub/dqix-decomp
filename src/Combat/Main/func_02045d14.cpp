@@ -30,30 +30,30 @@ struct Struct_02045c00_2 {
 typedef Struct_02045c00_2 Struct_02045c00_2;
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_0204483c(TextEncoder*, const char*, char*);
-void RestorePairTables0207df90(char*);
-void BackupPairTables0207dfac(char*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
 int Dispatch02044420(void*, void*);
 CharacterEntry* Font_FindCharacter(int, int);
-int FindEntryIndexByKey020424e4(int, int);
+int Font_FindCharacterIndex(int, int);
 int FindMatchingEntryIndex(Container02045c00*, int);
 extern "C" unsigned short func_020459b8(TextEncoder*, int, CharacterEntry*, int);
 
 // USA: func_02045d14
-extern "C" ARM unsigned short func_02045d14(Struct_02045c00_2* arg0, const char* arg1, unsigned short* arg2, int arg3) {
-    unsigned short var0;
-    int var1;
-    int var2;
-    int var3;
-    Struct_02045d14_3* var4;
-    Struct_02045d14_2* var5;
-    Struct_02045d14 var6;
-    if (arg1 == 0 || arg2 == 0) return 0;
-    __clear(var6.unknown_4_, sizeof(var6.unknown_4_));
-    func_0204483c(arg0, arg1, var6.unknown_4_);
-    var0 = 0;
-    var1 = 0;
-    var2 = 0;
-    if (arg0->unknown_1e28_) func_0207df90(arg0->unknown_1e28_);
+extern "C" ARM unsigned short func_02045d14(TextEncoder* self, const char* text, unsigned short* output, int table) {
+    unsigned short count;
+    int offset;
+    int outIndex;
+    int length;
+    CharacterEntry* entry;
+    EncoderCache* cache;
+    EncodeWorkspace work;
+    if (text == 0 || output == 0) return 0;
+    __clear(work.buffer, sizeof(work.buffer));
+    func_0204483c(self, text, work.buffer);
+    count = 0;
+    offset = 0;
+    outIndex = 0;
+    if (self->pairTables) VramState_Restore(self->pairTables);
     while (1) {
         if (var2 > 0 && arg2[var2 - 1] == 0xff01) break;
         memcpy(&var6.unknown_0_, var6.unknown_4_ + var1, 2);
@@ -71,7 +71,7 @@ extern "C" ARM unsigned short func_02045d14(Struct_02045c00_2* arg0, const char*
             var2 += var3;
         } else {
             entry = Font_FindCharacter((int)(work.buffer + offset), table);
-            int index = FindEntryIndexByKey020424e4((int)(work.buffer + offset), table);
+            int index = Font_FindCharacterIndex((int)(work.buffer + offset), table);
             if (entry != 0 && index >= 0) {
                 int match = FindMatchingEntryIndex(self, (int)entry);
                 if (match == -1) {
@@ -93,6 +93,6 @@ extern "C" ARM unsigned short func_02045d14(Struct_02045c00_2* arg0, const char*
             ++var0;
         }
     }
-    if (arg0->unknown_1e28_) func_0207dfac(arg0->unknown_1e28_);
-    return var0;
+    if (self->pairTables) VramState_Save(self->pairTables);
+    return count;
 }

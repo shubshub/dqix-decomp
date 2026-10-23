@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void func_0204b620(void*, void*, int, int, int, int, int, int, int, int);
+extern "C" void Background_CopyScreenRect(void*, void*, int, int, int, int, int, int, int, int);
 
 struct Struct_0204bab4 {
     char unknown_0_[0x14];
@@ -30,11 +30,11 @@ extern "C" ARM void func_0204bab4(struct Struct_0204bab4* arg0, struct Struct_02
     if (var2 < arg2) arg2 = var2;
     if (var3 < arg3) arg3 = var3;
 
-    for (unsigned short var4 = 0; var4 < arg7; var4++) {
-        var0 = arg4;
-        for (unsigned short var5 = 0; var5 < arg6; var5++) {
-            if (arg0->unknown_14_ != NULL) {
-                func_0204b620(arg0, arg0->unknown_14_, (int)arg1, 0, 0, var0, var1, arg2, arg3, arg8);
+    for (unsigned short j = 0; j < countY; j++) {
+        curX = x0;
+        for (unsigned short i = 0; i < countX; i++) {
+            if (obj->field14 != NULL) {
+                Background_CopyScreenRect(obj, obj->field14, (int)pt, 0, 0, curX, curY, width, height, a9);
             }
             var0 = (short)(var0 + arg2);
         }

@@ -19,12 +19,12 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_0205d1e0;
-extern "C" void func_0205d1e0(struct Struct_0205d1e0*);
-struct Struct_0205d228;
-extern "C" void func_0205d228(struct Struct_0205d228*);
-struct Struct_0205d274;
-extern "C" void func_0205d274(struct Struct_0205d274*);
+struct Cont0205d1e0;
+void Window_ClearLayers(struct Cont0205d1e0*);
+struct Cont0205d228;
+void Window_DrawPanes(struct Cont0205d228*);
+struct Cont0205d274;
+void Window_FlushLayers(struct Cont0205d274*);
 extern "C" void func_0205da88(void*, int, int, int);
 extern "C" void func_ov008_0218aee4(void* arg0);
 extern "C" void func_ov008_02184878(void* arg0);
@@ -32,13 +32,13 @@ extern "C" void func_ov008_02184878(void* arg0);
 struct Struct_ov008_02189404 { char unknown_0_[R(0xeb8, 0xec0)]; unsigned char unknown_ec0_0_ : 1; };
 
 // USA: func_ov008_02189404
-extern "C" ARM void func_ov008_02189404(char* arg0) {
-    func_0205d1e0((struct Struct_0205d1e0*)(arg0 + 0x18));
-    func_0205d228((struct Struct_0205d228*)(arg0 + 0x18));
-    func_0205da88(arg0 + 0x18, 1, 2, 1);
-    func_0205d274((struct Struct_0205d274*)(arg0 + 0x18));
-    func_ov008_0218aee4(arg0);
-    if (*(signed char*)(arg0 + R(0xe97, 0xe9b)) == 0) return;
-    if (!((struct Struct_ov008_02189404*)arg0)->unknown_ec0_0_) return;
-    func_ov008_02184878(arg0 + 0x2a8);
+extern "C" ARM void func_ov008_02189404(char* obj) {
+    Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x18));
+    Window_DrawPanes((struct Cont0205d228*)(obj + 0x18));
+    func_0205da88(obj + 0x18, 1, 2, 1);
+    Window_FlushLayers((struct Cont0205d274*)(obj + 0x18));
+    func_ov008_0218aee4(obj);
+    if (*(signed char*)(obj + R(0xe97, 0xe9b)) == 0) return;
+    if (!((struct Flags02189404*)obj)->flagEc0) return;
+    func_ov008_02184878(obj + 0x2a8);
 }

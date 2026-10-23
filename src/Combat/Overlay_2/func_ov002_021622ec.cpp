@@ -16,8 +16,8 @@ struct Obj_0205da38;
 struct SePlayer;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag0215bf34(char *base);
@@ -35,7 +35,7 @@ extern "C" char g_sePlayer[];
 
 static inline int inline_ov002_021622ec(char *arg0) {
     return (g_keyManager.TestKeysPressed(0x601) |
-            func_0205da38((struct Struct_0205da38*)(arg0 + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0x14)) ? 1 : 0;
+            Window_IsSelectionTouched((struct Obj_0205da38*)(base + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0x14)) ? 1 : 0;
 }
 
 // USA: func_ov002_021622ec
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov002_021622ec(char *base) {
         *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
         short old = *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe0, 0xa8));
         *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe0, 0xa8)) =
-            GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)));
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)));
         if (old != *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe0, 0xa8))) return;
         if (AnyConfirm021622ec(base) || *(unsigned char *) (base + 0x1000 + RG(0xc2f, 0xaf7)) == 1) {
             GameState *gs                              = GameState::GetInstance();

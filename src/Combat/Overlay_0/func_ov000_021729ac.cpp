@@ -7,64 +7,64 @@
 extern "C" void* func_0203bd08(void);
 extern "C" unsigned short GetSubBGVRAMBanks(void);
 extern "C" void MapVRAMBanksToSubBG(int banks);
-extern "C" char* func_0203bd14();
-struct Struct_0201099c_14;
-extern "C" void func_020dfc40(Struct_0201099c_14*);
-extern "C" void func_020dfec0(void* arg0, void* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_020dea64(void* arg0, void* arg1, void* arg2, unsigned int arg3, const void* arg4, int arg5);
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" char* func_ov017_021b8478(void* arg0);
-struct Struct_02070f98_2;
-extern "C" struct Struct_ov000_021729ac* func_02070f98(Struct_02070f98_2*, int);
-struct Struct_02070fe4;
-extern "C" int func_02070fe4(Struct_02070fe4*);
-extern "C" int func_020de9a4(void* arg0, void* arg1, void* arg2, unsigned int arg3, void* arg4, unsigned short arg5);
-struct Struct_0201099c_3;
-extern "C" char* func_020e0434(Struct_0201099c_3*, int);
-struct Struct_0203c108_3;
-extern "C" void func_0203c108(Struct_0203c108_3*, char*);
-extern "C" void* func_020421a0();
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046608(void* arg0, int arg1, char* arg2, void* arg3, int arg4, int arg5, int arg6);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0205a528(void* arg0, void* arg1, int arg2, void* arg3);
-extern "C" void func_0205aed0(void*, char*, unsigned int, int);
-extern "C" void func_0205af38(int, char*, int, int);
-extern "C" int* func_0203b628();
-extern "C" void func_0203b678(int* arg0, int arg1, int arg2);
-extern "C" void func_0203b66c(char*);
-extern "C" void func_0203b634(char*);
-extern "C" void func_ov000_02172944(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov000_02172978(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void* arg0, int arg1);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-struct Struct_0204af38;
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
-extern "C" void func_0204c684(void* arg0);
-extern "C" char* func_020e51cc(int arg0);
-extern "C" void func_0204f914(void* arg0, int arg1, short arg2, short arg3, short arg4, short arg5);
-extern "C" void func_0204f41c(void* arg0, short arg1, short arg2, void* arg3, int arg4, int arg5, short* arg6, short* arg7, int arg8);
-extern "C" void func_0204b174(void* arg0, void* arg1, SafeAllocator* arg2, int arg3);
-struct Struct_0204b8d0;
-extern "C" void func_0204b8d0(Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-extern "C" void func_0204bc74(void* arg0, unsigned short arg1, int arg2, int arg3, int arg4, int arg5, unsigned short arg6);
-struct Struct_0204c7a8;
-extern "C" void func_0204c7a8(Struct_0204c7a8*, SafeAllocator*, int, unsigned int);
-struct Struct_0205cf78_2;
+char* GetGlobalPtr02105244_0203bd14();
+struct Struct020dfc40;
+void KeyTable_Reset(Struct020dfc40*);
+extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
+void ItemTable_Init(void* obj);
+extern "C" void func_020dea64(void* list, void* alloc, void* data, unsigned int size, const void* entries, int count);
+extern "C" void __clear(void* dst, unsigned int size);
+extern "C" char* func_ov017_021b8478(void* obj);
+struct List02070f98;
+struct Elem021729ac* GetElementIfInBounds(List02070f98*, int);
+struct Struct02070fe4;
+int GetElementCount02070fe4(Struct02070fe4*);
+extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
+struct Container020e0310;
+char* KeyTable_Get(Container020e0310*, int);
+struct Obj0203c108;
+void SwapGlobalEntry0203c108(Obj0203c108*, char*);
+void* GetGlobalField0x1c020421a0();
+void Clear12Bytes020e46c4(void* buf);
+extern "C" void func_02046380(void* g);
+extern "C" void func_02046608(void* a, int b, char* c, void* d, int e, int f, int g);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
+void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
+void SetBitfieldStoreBytes0205af38(int, char*, int, int);
+int* GetData02105254_0203b628();
+void SetupBankModeAndTransfer_0203b678(int* obj, int a, int b);
+void TailForward0203b66c(char*);
+void ClearThreeRegions0203b634(char*);
+void ConfigureSubBg0Control_02172944(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
+void ConfigureSubBg1Control_02172978(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(void* obj, int value);
+struct AllocTarget0204b12c;
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
+struct Foo0204af38;
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+extern "C" void func_0204c684(void* obj);
+char* CallFunc020e0434With02153694_020e51cc(int key);
+extern "C" void func_0204f914(void* obj, int a, short x0, short y0, short x1, short y1);
+extern "C" void func_0204f41c(void* obj, short x, short y, void* str, int d, int e, short* outA, short* outB, int zero);
+extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int size);
+struct Obj0204b8d0;
+void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8*, void*);
+extern "C" void Background_FillRect(void* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
+struct Obj0204c7a8;
+void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
+struct Elem_0205cf78;
 struct Struct_0205cf78;
-extern "C" void func_0205cf78(Struct_0205cf78*, Struct_0205cf78_2*, unsigned char);
-extern "C" void func_020dc7e8(int arg0, int arg1);
-struct Struct_0204c87c;
-extern "C" void func_0204c964(Struct_0204c87c*);
+void Window_SetPanes(Struct_0205cf78*, Elem_0205cf78*, unsigned char);
+extern "C" void func_020dc7e8(int a, int b);
+struct Canvas0204e998;
+void InitAndFillIndexBuffer0204c964(Canvas0204e998*);
 
 struct Struct_ov000_021833ba {
     short unknown_0_;
@@ -73,8 +73,8 @@ struct Struct_ov000_021833ba {
 
 extern char data_ov000_02183ff5[];
 extern char data_ov000_0218400f[];
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern char data_ov000_02183302[];
 extern const short data_ov000_02183418[];
 extern char data_ov000_02184035[];
@@ -244,37 +244,37 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
         arg0->unknown_90c_ = var18->QueueLoadFileInGP2(data_ov000_02183ff5, data_ov000_0218400f, 0);
 #endif
 
-        arg0->unknown_908_++;
-    } else if (arg0->unknown_908_ == 1) {
-        if (var18->GetTaskStatus(arg0->unknown_90c_) != 0) {
-            var18->GetLoadedFileByID(arg0->unknown_90c_, &var4, &var5);
-            if (var4 != 0) {
-                arg0->unknown_1a78_[1].Reset();
-                func_020dfc40((Struct_0201099c_14*)arg0->unknown_b8_);
-                func_020dfec0(arg0->unknown_b8_, &arg0->unknown_1a78_[1], var4, var5);
+        self->state++;
+    } else if (self->state == 1) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file1, &len1);
+            if (file1 != 0) {
+                self->allocs[1].Reset();
+                KeyTable_Reset((Struct020dfc40*)self->container);
+                KeyTable_Load(self->container, &self->allocs[1], file1, len1);
             }
             var18->RemoveTask(arg0->unknown_90c_);
             arg0->unknown_90c_ = -1;
 
 #if defined(jpn)
-            arg0->unknown_90c_ = var18->QueueLoadGP1(data_020f2a38, 0);
+            self->handle = loader->QueueLoadGP1(g_itemDataArchive, 0);
 #else
-            arg0->unknown_90c_ = var18->QueueLoadFileInGP2(data_020f2a38, data_020f2a30, 0);
+            self->handle = loader->QueueLoadFileInGP2(g_itemDataArchive, g_itemDataFile, 0);
 #endif
 
             arg0->unknown_908_++;
         }
-    } else if (arg0->unknown_908_ == 2) {
-        if (var18->GetTaskStatus(arg0->unknown_90c_) != 0) {
-            var18->GetLoadedFileByID(arg0->unknown_90c_, &var6, &var7);
-            if (var6 != 0) {
-                arg0->unknown_1a78_[4].Reset();
-                func_020de848(arg0->unknown_d0_[0]);
-                func_020dea64(arg0->unknown_d0_[0], &arg0->unknown_1a78_[4], var6, var7, data_ov000_02183302, 3);
-                arg0->unknown_1a78_[5].Reset();
-                func_020de848(arg0->unknown_d0_[1]);
-                __clear(var0, sizeof(var0));
-                unsigned short var19 = 0;
+    } else if (self->state == 2) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file2, &len2);
+            if (file2 != 0) {
+                self->allocs[4].Reset();
+                ItemTable_Init(self->desc[0]);
+                func_020dea64(self->desc[0], &self->allocs[4], file2, len2, data_ov000_02183302, 3);
+                self->allocs[5].Reset();
+                ItemTable_Init(self->desc[1]);
+                __clear(codes, sizeof(codes));
+                unsigned short n = 0;
 
 #if defined(jpn)
                 Struct_ov000_021729ac_2* var20 = (Struct_ov000_021729ac_2*)func_ov017_021b8478(*(void**)((char*)GetGameResources() + 0x3000 + 0x508));
@@ -295,16 +295,16 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                         }
                     }
                 }
-                func_020de9a4(arg0->unknown_d0_[1], &arg0->unknown_1a78_[5], var6, var7, var0, var19);
+                ItemTable_LoadIds(self->desc[1], &self->allocs[5], file2, len2, codes, n);
             }
-            var18->RemoveTask(arg0->unknown_90c_);
-            arg0->unknown_90c_ = -1;
-            func_0203c108((Struct_0203c108_3*)arg0->unknown_1b54_[0], func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x754e));
-            func_0203c108((Struct_0203c108_3*)arg0->unknown_1b54_[1], func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x7550));
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
+            SwapGlobalEntry0203c108((Obj0203c108*)self->entries[0], KeyTable_Get((Container020e0310*)self->container, 0x754e));
+            SwapGlobalEntry0203c108((Obj0203c108*)self->entries[1], KeyTable_Get((Container020e0310*)self->container, 0x7550));
 
 #if defined(jpn)
-            for (int var24 = 0; var24 < 5; var24++) {
-                func_0203c108((Struct_0203c108_3*)arg0->unknown_1c7c_[var24], func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, data_ov000_02183418[var24]));
+            for (int i = 0; i < 5; i++) {
+                SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], KeyTable_Get((Container020e0310*)self->container, data_ov000_02183418[i]));
             }
 #else
             void* var25 = func_020421a0();
@@ -314,11 +314,11 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                 if (var26 >= 5) {
                     var3.unknown_b_0_ = 1;
                 }
-                func_02046380(var25);
-                int var27 = data_ov000_02183418[var26];
-                *(void**)var25 = &var3;
-                func_02046608(var25, 0xa, func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, var27), var1, 0x100, 0, 0);
-                func_0203c108((Struct_0203c108_3*)arg0->unknown_1b84_[var26], var1);
+                func_02046380(g);
+                int key = data_ov000_02183418[i];
+                *(void**)g = &param;
+                func_02046608(g, 0xa, KeyTable_Get((Container020e0310*)self->container, key), text, 0x100, 0, 0);
+                SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], text);
             }
 
 #endif
@@ -351,16 +351,16 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
         arg0->unknown_90c_ = var18->QueueLoadFileInGP2(data_ov000_02184020, data_ov000_02184035, 0);
 #endif
 
-        arg0->unknown_908_++;
-    } else if (arg0->unknown_908_ == 4) {
-        if (var18->GetTaskStatus(arg0->unknown_90c_) != 0) {
-            var18->GetLoadedFileByID(arg0->unknown_90c_, &var9, &var10);
-            int var28 = func_02046900((Struct_02020cb8_4*)var9);
-            arg0->unknown_1a78_[0].Reset();
-            for (int var29 = 0; var29 < var28; var29++) {
-                void* var30 = func_020467f0((Struct_02020aec*)var9, var29, &var8, &var11);
-                if (var30 != 0) {
-                    func_0205a528(arg0->unknown_11c_, var30, var11, &arg0->unknown_1a78_[0]);
+        self->state++;
+    } else if (self->state == 4) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file4, &len4);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file4);
+            self->allocs[0].Reset();
+            for (int i = 0; i < count; i++) {
+                void* rec = Pac_GetFile((Rec020467f0*)file4, i, &recData4, &recSize4);
+                if (rec != 0) {
+                    SpriteContext_LoadFile(self->records, rec, recSize4, &self->allocs[0]);
                 }
             }
 
@@ -387,42 +387,42 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
         *(volatile unsigned short*)0x400100c = (*(volatile unsigned short*)0x400100c & 0x43) | 0x704;
         arg0->unknown_1a78_[3].Reset();
 
-        Struct_ov000_021729ac_5* var32 = &arg0->unknown_8a4_[0];
-        func_0204b11c((unsigned char*)var32, 0);
-        var32->unknown_1c_0_ = 1;
-        var32->unknown_1c_4_ = 0;
-        func_0204b5b4(var32, 2);
-        func_0204b12c((Struct_0204b12c*)var32, &arg0->unknown_1a78_[3]);
+        List021729ac* list = &self->lists[0];
+        Background_SetMapSize((unsigned char*)list, 0);
+        list->lo = 1;
+        list->hi = 0;
+        Background_SetPriority(list, 2);
+        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
 
-        var32 = &arg0->unknown_8a4_[1];
-        func_0204b11c((unsigned char*)var32, 0);
-        var32->unknown_1c_0_ = 1;
-        var32->unknown_1c_4_ = 1;
-        func_0204b5b4(var32, 3);
-        func_0204b12c((Struct_0204b12c*)var32, &arg0->unknown_1a78_[3]);
+        list = &self->lists[1];
+        Background_SetMapSize((unsigned char*)list, 0);
+        list->lo = 1;
+        list->hi = 1;
+        Background_SetPriority(list, 3);
+        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
 
 #if defined(jpn)
-        func_0204af38((Struct_0204af38*)var32, 29, &arg0->unknown_1a78_[3]);
+        Background_AllocateScreens((Foo0204af38*)list, 29, &self->allocs[3]);
 #else
-        func_0204af38((Struct_0204af38*)var32, 10, &arg0->unknown_1a78_[3]);
+        Background_AllocateScreens((Foo0204af38*)list, 10, &self->allocs[3]);
 #endif
 
-        var32 = &arg0->unknown_8a4_[2];
-        func_0204b11c((unsigned char*)var32, 0);
-        var32->unknown_1c_0_ = 1;
-        var32->unknown_1c_4_ = 2;
-        func_0204b5b4(var32, 0);
-        func_0204b12c((Struct_0204b12c*)var32, &arg0->unknown_1a78_[3]);
+        list = &self->lists[2];
+        Background_SetMapSize((unsigned char*)list, 0);
+        list->lo = 1;
+        list->hi = 2;
+        Background_SetPriority(list, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
 
-        arg0->unknown_90c_ = var18->QueueLoadFile(data_ov000_02184046, 0);
-        arg0->unknown_908_++;
-    } else if (arg0->unknown_908_ == 6) {
-        if (var18->GetTaskStatus(arg0->unknown_90c_) != 0) {
-            var18->GetLoadedFileByID(arg0->unknown_90c_, &var13, &var14);
-            int var33 = func_02046900((Struct_02020cb8_4*)var13);
-            for (int var34 = 0; var34 < var33; var34++) {
-                void* var35 = func_020467f0((Struct_02020aec*)var13, var34, &var12, &var15);
-                if (var35 != 0) {
+        self->handle = loader->QueueLoadFile(data_ov000_02184046, 0);
+        self->state++;
+    } else if (self->state == 6) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &file6, &len6);
+            int count = Pac_CountFiles((ActiveEntry02046900*)file6);
+            for (int i = 0; i < count; i++) {
+                void* rec = Pac_GetFile((Rec020467f0*)file6, i, &recData6, &recSize6);
+                if (rec != 0) {
 #if !defined(jpn)
                     if (var34 == 0) {
                         func_0204c684(&var2);
@@ -452,35 +452,35 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                     if (var34 == var33 - 1) {
                         var42 = &arg0->unknown_8a4_[2];
                     }
-                    func_0204b174(var42, var35, &arg0->unknown_1a78_[3], var15);
+                    Background_LoadFile(target, rec, &self->allocs[3], recSize6);
                 }
             }
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_8a4_[1], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_8a4_[1], 0);
-            func_0204bc74(&arg0->unknown_8a4_[0], 0, 0, 0, 0x20, 0x19, 0);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_8a4_[0], 0);
-            func_0204b8d0((Struct_0204b8d0*)&arg0->unknown_8a4_[2], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-            func_0204b0e8((Struct_02020cb8_2*)&arg0->unknown_8a4_[2], 0);
+            Background_DrawScreen((Obj0204b8d0*)&self->lists[1], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+            Background_UploadMap((List0204b0e8*)&self->lists[1], 0);
+            Background_FillRect(&self->lists[0], 0, 0, 0, 0x20, 0x19, 0);
+            Background_UploadMap((List0204b0e8*)&self->lists[0], 0);
+            Background_DrawScreen((Obj0204b8d0*)&self->lists[2], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+            Background_UploadMap((List0204b0e8*)&self->lists[2], 0);
 
-            arg0->unknown_1a78_[2].Reset();
-            arg0->unknown_178_ = arg0->unknown_1a78_[2].Allocate(0x5c00);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[0], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x30c);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[1], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x240);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[2], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x240);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[3], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x200);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[4], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x200);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[5], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x200);
-            func_0204c7a8((Struct_0204c7a8*)&arg0->unknown_284_[6], &arg0->unknown_1a78_[2], (int)arg0->unknown_178_, 0x200);
-            for (int var43 = 0; var43 < 7; var43++) {
-                arg0->unknown_284_[var43].unknown_4_ = &arg0->unknown_8a4_[2];
+            self->allocs[2].Reset();
+            self->buffer = self->allocs[2].Allocate(0x5c00);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[0], &self->allocs[2], (int)self->buffer, 0x30c);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[1], &self->allocs[2], (int)self->buffer, 0x240);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[2], &self->allocs[2], (int)self->buffer, 0x240);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[3], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[4], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[5], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[6], &self->allocs[2], (int)self->buffer, 0x200);
+            for (int j = 0; j < 7; j++) {
+                self->elems[j].list = &self->lists[2];
             }
-            var18->RemoveTask(arg0->unknown_90c_);
-            arg0->unknown_90c_ = -1;
-            arg0->unknown_220_ = &arg0->unknown_8a4_[2];
-            arg0->unknown_23a_ = 1;
-            func_0205cf78((Struct_0205cf78*)arg0->unknown_188_, (Struct_0205cf78_2*)arg0->unknown_284_, 7);
-            arg0->unknown_908_++;
-            arg0->unknown_1d72_ |= 0x40;
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
+            self->linkList = &self->lists[2];
+            self->linkFlag = 1;
+            Window_SetPanes((Struct_0205cf78*)self->linkHead, (Elem_0205cf78*)self->elems, 7);
+            self->state++;
+            self->f1d72 |= 0x40;
         }
     } else if (arg0->unknown_908_ == 7) {
         func_020dc7e8(0, -1);

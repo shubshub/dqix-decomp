@@ -19,9 +19,7 @@ enum { Enum_ov003_0215db2c_152 = 0x98 };
 #include "std_library_functions.h"
 #include "Input/Input.h"
 
-struct Struct_0205d5d0;
-#if defined(jpn)
-#endif
+struct StructA0205d5d0;
 #if !defined(jpn)
 #endif
 extern "C" void func_ov003_0215e13c(char* arg0, char* arg1, int arg2);

@@ -68,57 +68,57 @@ extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2*);
 struct Struct_020d784c;
 extern "C" void func_020d784c(Struct_020d784c*);
 extern "C" int func_ov023_021f4fc8(void);
-struct Struct_02013fb4;
-extern "C" void func_020d7870(void*, void*, Struct_02013fb4*, int, unsigned char);
-struct Struct_020deb08;
-extern "C" short func_020deb08(Struct_020deb08*);
-extern "C" void func_020de868(void* arg0);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" int func_020dea64(void* arg0, void* arg1, void* arg2, int arg3, void* arg4, int arg5);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void func_0209e3dc(char*, int);
-extern "C" void func_0209fd64(Struct_ov023_021f2e6c_6* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_0209e46c(char*);
-struct Struct_0209fe10;
-extern "C" void func_0209fe10(Struct_0209fe10*, int);
-struct Struct_0209fe18;
-extern "C" void func_0209fe18(Struct_0209fe18*);
-struct Struct_020d794c;
-extern "C" char* func_020d794c(Struct_020d794c*, int);
-struct Struct_ov023_021f2e6c_2;
-extern "C" int func_ov023_021f3a8c(Struct_ov023_021f2e6c_2*);
-struct Struct_020465c0;
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" unsigned char* func_ov000_02162d88(void* arg0, unsigned short arg1);
-extern "C" void func_02048614(unsigned char* arg0);
-extern "C" void func_02049c88(unsigned char* arg0, int arg1);
-struct Struct_02048850;
-struct Struct_02048850_2;
-extern "C" void func_02048850(Struct_02048850*, Struct_02048850_2*);
-extern "C" void func_02048588(unsigned char* arg0, unsigned char* arg1);
-struct Struct_02010604;
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" void func_02049f28(unsigned char* arg0);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_0216d530(void* arg0, int arg1);
-extern "C" void func_0202e5c8(unsigned char*, int, int, int);
-extern "C" void func_0202e5d8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_02163b90(void* arg0, int arg1);
-extern "C" void func_02049f3c(unsigned char* arg0);
-extern "C" Struct_ov023_021f2e6c_9* func_0202ed64(void* arg0);
-extern "C" void func_ov000_0216d2d0(void* arg0);
-struct Struct_0202ed0c_2;
-struct Struct_0202ed0c;
-extern "C" void func_0202ed0c(Struct_0202ed0c_2*, Struct_0202ed0c*);
+struct StreamHeader;
+void RegisterCallbackObjectAndRunScript_020d7870(void*, void*, StreamHeader*, int, unsigned char);
+struct Pair020deb08;
+short GetMaxOfHalfwords0And4(Pair020deb08*);
+void ZeroInit020de868(void* p);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" int func_020dea64(void* a, void* b, void* c, int d, void* e, int flag);
+extern "C" int sprintf(char* buf, const char* fmt, ...);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
+void InitStateManager0209e3dc(char*, int);
+extern "C" void func_0209fd64(Mgr021f2e6c* mgr, SafeAllocator* alloc, void* data, unsigned int len);
+void ResetFields0209e46c(char*);
+struct IntField0x64_0209fe10;
+void SetIntAt0x64_0209fe10(IntField0x64_0209fe10*, int);
+struct TaskState0209fe18;
+void PollOv017Task0209fe18(TaskState0209fe18*);
+struct List794c;
+char* FindValueByHalfwordKey_020d794c(List794c*, int);
+struct Fields64_021f3a8c;
+int AreFields64And68AllOnes_021f3a8c(Fields64_021f3a8c*);
+struct StoreStruct;
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+extern "C" unsigned char* _Z26FindNodeByShortKey02162d88Pvs(void* self, unsigned short key);
+void ResetNameState02048614(unsigned char* obj);
+extern "C" void func_02049c88(unsigned char* obj, int v);
+struct Obj02048850;
+struct Param02048850;
+void SetupFieldsFromParam02048850(Obj02048850*, Param02048850*);
+void CopyObjectFields02048588(unsigned char* src, unsigned char* dst);
+struct Bytes02033b88;
+int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void SetSubstructByte0x56_02049f28(unsigned char* obj);
+extern "C" void* func_ov000_02160f14(void* self);
+extern "C" void func_ov000_0216d370(void* cam, int a, int b, int c);
+void SetFlagOrState0216d530(void* cam, int v);
+void Camera_SetTarget(unsigned char*, int, int, int);
+extern "C" void func_0202e5d8(void* cam, int a, int b, int c);
+extern "C" void func_ov000_02163b90(void* self, int v);
+void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
+Blk021f2e6c* GetPtrField0x4_0202ed64(void* cam);
+extern "C" void func_ov000_0216d2d0(void* cam);
+struct Dst0202ed0c;
+struct Src0202ed0c;
+void CopyGroupedBlocks0202ed0c(Dst0202ed0c*, Src0202ed0c*);
 
 extern "C" int* _ZZ21inline_ov023_021f4c04vE1s;
 extern char data_02109bf4;
 extern char data_ov023_021fe2ca;
 extern char data_ov023_021fe2e5;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern char data_ov023_021fd862;
 extern char data_ov023_021fe2f7;
 
@@ -309,13 +309,13 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                 var35 = arg0 + Enum_ov023_021f2e6c_552;
                 ((SafeAllocator*)(var35 + 0x5000))->Reset();
 #if defined(jpn)
-                func_020e052c(var36 + 0x3400, var35 + 0x5000, data_020f2a38, &data_ov023_021fd862, 3, 1);
+                func_020e052c(sub + 0x3400, heap + 0x5000, g_itemDataArchive, &data_ov023_021fd862, 3, 1);
 #else
                 BackgroundLoader::AddLockGlobal();
-                unsigned int var38;
-                void* var39 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var38);
-                if (var39 != 0) {
-                    func_020dea64(var37 + 0x3000, var35 + 0x5000, var39, var38, &data_ov023_021fd862, 3);
+                unsigned int size;
+                void* file = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
+                if (file != 0) {
+                    func_020dea64(sub + 0x3000, heap + 0x5000, file, size, &data_ov023_021fd862, 3);
 
                 }
                 BackgroundLoader::RemoveLockGlobal();
@@ -444,11 +444,11 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                             if (var63 < 0) {
                                 var63 = 0;
                             }
-                            func_0202e5c8((unsigned char*)var61, 0, var63, 0);
-                            int var64 = (int)(((long long)var62 * 0x2333 + 0x800) >> 12);
-                            int var65 = var63 + 0x800;
-                            if (var65 < 0) {
-                                var65 = 0;
+                            Camera_SetTarget((unsigned char*)cam, 0, y, 0);
+                            int z = (int)(((long long)height * 0x2333 + 0x800) >> 12);
+                            int y2 = y + 0x800;
+                            if (y2 < 0) {
+                                y2 = 0;
                             }
                             func_0202e5d8(var61, 0, var65, var64 + 0x4000);
                             func_ov000_02163b90(arg0, 0);

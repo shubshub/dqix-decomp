@@ -36,20 +36,20 @@ struct Struct_ov015_0218cc24_2 {
 };
 
 struct Vector3i;
-extern "C" void func_020c9820();
-extern "C" void func_02079a3c(void*);
-struct Struct_0203d028;
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-struct Struct_0201099c_10;
-extern "C" void* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" int func_ov015_0218c03c(void* arg0, char* arg1, int arg2, int arg3);
-extern "C" void func_ov015_0218c538(void* arg0, int arg1);
-extern "C" void func_ov015_0218c3a4(void* arg0, int arg1);
-extern "C" void func_02099e18(void* arg0, int arg1, int arg2, int arg3);
-struct Struct_02040774_2;
-extern "C" void func_020407b4(Struct_02040774_2*, int, int, int);
+void DelayThenSyncBit0_020c9820();
+void ResetObjectState02079a3c(void*);
+struct Foo0207df50;
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+struct Container020dedd0;
+void* FindElementByKey020dedd0(Container020dedd0*, int);
+extern "C" int func_ov015_0218c03c(void* self, char* buf, int i, int one);
+extern "C" void func_ov015_0218c538(void* self, int zero);
+extern "C" void func_ov015_0218c3a4(void* self, int v);
+extern "C" void func_02099e18(void* a, int b, int c, int d);
+struct Fields020407b4;
+void SetFields0x44(Fields020407b4*, int, int, int);
 extern "C" int fix32_Divide(int, int);
 
 extern int data_0211e33c __attribute__((aligned(4)));
@@ -179,14 +179,14 @@ extern "C" ARM int func_ov015_0218cc24(Struct_ov015_0218cc24_2* arg0) {
                     func_020407b4((Struct_02040774_2*)&arg0->unknown_24_[var11], (int)(((long long)var27 * 0x2000LL + 0x800) >> 12), 0, 0);
                 }
             }
-            func_0207df90(var1 + var0);
-            DecompressFileFromGPCByName(var9.pGPCFile, var9.machine, var7, var6, var8, var10);
-            arg0->unknown_24_[var11].SetModelFromFileCopy((SafeAllocator*)((char*)var4 + var3), var7, var6, Model3D::TextureStagingMode_Normal);
-            var7 += var6;
-            var8 -= var6;
-            func_0207dfac(var1 + var0);
-            if (var11 == 4 && arg0->inline_ov015_0218cc24(3)->pModel_ != 0) {
-                ((Model3D*)arg0->inline_ov015_0218cc24(3)->pModel_)->ApplyTexturesFromModel((Model3D*)arg0->unknown_24_[var11].pModel_);
+            VramState_Restore(pairs + off70);
+            DecompressFileFromGPCByName(pair.pGPCFile, pair.machine, buf, size, room, name);
+            self->ents[i].SetModelFromFileCopy((SafeAllocator*)((char*)alloc + off14), buf, size, Model3D::TextureStagingMode_Normal);
+            buf += size;
+            room -= size;
+            VramState_Save(pairs + off70);
+            if (i == 4 && self->GetEnt(3)->pModel_ != 0) {
+                ((Model3D*)self->GetEnt(3)->pModel_)->ApplyTexturesFromModel((Model3D*)self->ents[i].pModel_);
             }
             void* var28 = arg0->unknown_24_[var11].pModel_;
             if (var28 == 0) {

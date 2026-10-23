@@ -31,15 +31,15 @@ struct Struct_02038598_4;
 struct Struct_020444e0;
 struct Struct_0203bdb0;
 
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020daf9c(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205a198(Struct_02043368_2* arg0);
-extern "C" void func_0205a234(Struct_02043368* arg0);
-extern "C" void func_020c39a0(short* arg0, int arg1);
-extern "C" void func_0200fb84(int* arg0, int arg1);
-extern "C" char* func_0203b628();
-extern "C" void func_0203b634(char* arg0);
+unsigned int* GetDataPtr02114e04_020d6c00();
+void DispatchWithGlobalContext020daf9c(int a, int b, int c, int d);
+void SpriteContext_Init(char* obj);
+void Sprite_Init(Struct0205a198* obj);
+void ClearField0And40205a234(ClearTarget0205a234* obj);
+extern "C" void func_020c39a0(short* reg, int value);
+void SetWord0x0_0200fb84(int* obj, int value);
+char* GetData02105254_0203b628();
+void ClearThreeRegions0203b634(char* obj);
 extern "C" void* func_0203bd08(void);
 extern "C" void func_0203bd24(char* arg0);
 void LockStagedTextureVRAMCopying();
@@ -59,48 +59,48 @@ void UpdateVRAMStagingVRAMBanks();
 void UnlockStagedTextureVRAMCopying();
 void Finish3DRendering();
 extern "C" void func_020c51dc();
-extern "C" void func_020c537c();
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_020c5770(int, int, int, int, int, int, int, int, void*);
-extern "C" void func_020bb780(void* arg0, int arg1);
-extern "C" void func_0207de48(void* arg0, int arg1, int arg2);
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_02042c68(Struct_02021b84* arg0);
-extern "C" void func_02043124(Struct_02021b84* arg0);
-extern "C" void func_02042b30(void* arg0, void* arg1);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_020432c4(Struct_02021b84* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_020440b8(char* arg0, void* arg1, void* arg2);
-extern "C" void func_0202ad30();
-extern "C" void func_0202adf0();
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_020dfec0(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_020d86d0(int arg0, int arg1);
-extern "C" void func_020c9820();
-extern "C" void func_020bbcb4();
+void ResetMatrixStacks020c537c();
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void ComputeAndLoadMatrix020c5770(int, int, int, int, int, int, int, int, void*);
+void InitGlobalStateAndInstallHandlers020bb780(void* arg, int flag);
+extern "C" void VramState_Reserve(void* obj, int a, int b);
+MessageSystem* GetGlobalField0x1c020421a0();
+extern "C" void func_02042c68(MessageSystem* g);
+extern "C" void func_02043124(MessageSystem* g);
+void SetField0x1e28_02042b30(void* g, void* tables);
+void CopyInternalFields0207df50(Foo0207df50* obj);
+void VramState_Restore(char* obj);
+extern "C" void func_020432c4(MessageSystem* g);
+void VramState_Save(char* obj);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void CallFunc0202f310AtField0x19e0_020440b8(char* g, void* alloc, void* data);
+void ClearBuffer0202ad30();
+void FlushAndClearBuffer0202adf0();
+void KeyTable_Reset(Struct020dfc40* obj);
+extern "C" void KeyTable_Load(void* dest, SafeAllocator* allocator, void* fileData, unsigned int size);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void WriteControlAndToggle020d86d0(int a, int b);
+void DelayThenSyncBit0_020c9820();
+void ProcessRingJobs020bbcb4();
 void UnlockAndSetMainBrightness(GameResources* res, int target, int frames);
 void UnlockAndSetSubBrightness(GameResources* res, int target, int frames);
 void UpdateAndApplyBrightness(GameResources* res);
 extern "C" void func_020c38d4();
 extern "C" void __clear(void* arg0, int arg1);
 unsigned long long GetCurrentTimestamp();
-extern "C" void func_02012efc();
-extern "C" int func_020457e0(Struct_02021b84* arg0);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020a9ea4(Struct_020a9ea4* arg0);
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0205a528(void* arg0, void* arg1, int arg2, SafeAllocator* arg3);
-extern "C" int func_020ab7a8(void* arg0, int arg1);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_0209c6d8(void* arg0, int arg1);
-extern "C" int func_ov019_0218c240(void* arg0);
-extern "C" int func_020aba5c(int arg0);
-extern "C" void func_02043368(Struct_02021b84* arg0);
+void InitCombatSubsystems02012efc();
+extern "C" int func_020457e0(MessageSystem* g);
+void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void ClearStruct020a9ea4(Struct020a9ea4* obj);
+int Pac_CountFiles(ActiveEntry02046900* entries);
+void* Pac_GetFile(Rec020467f0* recs, int index, void** outField, int* outSize);
+extern "C" void SpriteContext_LoadFile(void* obj, void* rec, int size, SafeAllocator* alloc);
+extern "C" int func_020ab7a8(void* obj, int flag);
+void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
+void ResetAndDispatchActorContext0209c6d8(void* actor, int id);
+int TriggerDispatchIfFlagOrByte_0218c240(void* scene);
+int SendShortBufferOrReturnZero020aba5c(int flag);
+extern "C" void func_02043368(MessageSystem* g);
 extern "C" void func_020bbd9c();
 extern "C" void func_020c52e8();
 extern "C" void func_020c5414();
@@ -173,7 +173,7 @@ static inline void inline_ov019_0218b5a8(Struct_02021b84* arg0, Struct_ov019_021
 #if defined(jpn)
     func_0204500c(arg0, (const char*)func_02072a68((struct Struct_02072a68_2*)arg1->unknown_34_, arg2), 0);
 #else
-    func_0204500c(arg0, func_020e0434((Struct_0201099c_3*)arg1->unknown_34_, arg2), 0, 0xe3);
+    func_0204500c(g, KeyTable_Get((Container020e0310*)self->texts, id), 0, 0xe3);
 #endif
 }
 
@@ -230,16 +230,16 @@ static inline void inline_ov019_0218b5a8_9(Vector3fix* arg0, Vector3fix* arg1, V
 }
 
 // USA: func_ov019_0218b5a8
-extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    unsigned int* var2 = func_020d6c00();
-    func_020daf9c(0, 0, 1, 0);
-    arg0->unknown_4c_ = 0;
-    arg0->unknown_50_ = 0;
-    func_0205a444(arg0->unknown_54_);
-    for (int var3 = 0; var3 < 14; var3++) {
-        func_0205a198(&arg0->unknown_a8_[var3]);
+extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
+    GameState* gs = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    unsigned int* inputFlags = GetDataPtr02114e04_020d6c00();
+    DispatchWithGlobalContext020daf9c(0, 0, 1, 0);
+    self->flags = 0;
+    self->loadCount = 0;
+    SpriteContext_Init(self->icons);
+    for (int i = 0; i < 14; i++) {
+        Sprite_Init(&self->entries[i]);
     }
     func_0205a234(&arg0->unknown_2d8_);
     func_020c39a0((short*)0x400006c, -16);
@@ -281,18 +281,18 @@ extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* arg0) {
     func_020bb48c(4, 1);
     func_020bb780((void*)0x4000, 1);
 
-    char var5[0x70];
-    char var6[0x70];
-    func_0207de48(var5, 0x4000, 0x20);
-    func_0207de48(var6, 0x4000, 0x20);
-    Struct_02021b84* var7 = func_020421a0();
-    func_02042c68(var7);
-    func_02043124(var7);
-    func_02042b30(var7, var5);
-    func_0207df50((Struct_0203d028*)var5);
-    func_0207df90(var5);
-    func_020432c4(var7);
-    func_0207dfac(var5);
+    char tables[0x70];
+    char savedTables[0x70];
+    VramState_Reserve(tables, 0x4000, 0x20);
+    VramState_Reserve(savedTables, 0x4000, 0x20);
+    MessageSystem* g = GetGlobalField0x1c020421a0();
+    func_02042c68(g);
+    func_02043124(g);
+    SetField0x1e28_02042b30(g, tables);
+    CopyInternalFields0207df50((Foo0207df50*)tables);
+    VramState_Restore(tables);
+    func_020432c4(g);
+    VramState_Save(tables);
 
     unsigned int var8;
     BackgroundLoader::AddLockGlobal();
@@ -300,16 +300,16 @@ extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* var9 = func_02012d88(&data_02114e20, 0x19000);
-    SafeAllocator var10;
-    var10.ResetAllocatorPointer();
-    var10.CreateTypeA(var9, 0x19000);
-    NarcHandle var11;
-    if (var11.Initialize(data_ov019_0218c2d4, data_0211e33c)) {
-        func_0207df90(var6);
-        func_020440b8((char*)var7, &var10, data_0211e33c);
-        func_0207dfac(var6);
-        var11.Destroy();
+    void* buffer = AllocateAligned4_02012d88(&data_02114e20, 0x19000);
+    SafeAllocator alloc;
+    alloc.ResetAllocatorPointer();
+    alloc.CreateTypeA(buffer, 0x19000);
+    NarcHandle narc;
+    if (narc.Initialize(data_ov019_0218c2d4, data_0211e33c)) {
+        VramState_Restore(savedTables);
+        CallFunc0202f310AtField0x19e0_020440b8((char*)g, &alloc, data_0211e33c);
+        VramState_Save(savedTables);
+        narc.Destroy();
     }
     func_0202ad30();
     func_0202adf0();
@@ -327,8 +327,8 @@ extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_020dfc40((Struct_0201099c_14*)arg0->unknown_34_);
-    func_020dfec0(arg0->unknown_34_, &var10, var12, var8);
+    KeyTable_Reset((Struct020dfc40*)self->texts);
+    KeyTable_Load(self->texts, &alloc, strings, size);
 #endif
     BackgroundLoader::RemoveLockGlobal();
 
@@ -402,22 +402,22 @@ extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* arg0) {
                         BackgroundLoader::RemoveLockGlobal();
                         return;
                     }
-                    func_0205a444(arg0->unknown_54_);
-                    for (int var20 = 0; var20 < 14; var20++) {
-                        func_0205a198(&arg0->unknown_a8_[var20]);
+                    SpriteContext_Init(self->icons);
+                    for (int i = 0; i < 14; i++) {
+                        Sprite_Init(&self->entries[i]);
                     }
-                    func_0205a234(&arg0->unknown_2d8_);
-                    arg0->unknown_a4_ = 0;
-                    arg0->unknown_94_ = arg0->unknown_a8_;
-                    arg0->unknown_a0_ = 14;
-                    arg0->unknown_90_ = &arg0->unknown_2d8_;
-                    void* var21 = data_0211e33c;
-                    int var22 = func_02046900((Struct_02020cb8_4*)var21);
-                    for (int var23 = 0; var23 < var22; var23++) {
-                        void* var24;
-                        int var25;
-                        void* var26 = func_020467f0((Struct_02020aec*)var21, var23, &var24, &var25);
-                        func_0205a528(arg0->unknown_54_, var26, var25, &var10);
+                    ClearField0And40205a234(&self->tail);
+                    self->iconByte = 0;
+                    self->iconEntries = self->entries;
+                    self->iconCount = 14;
+                    self->iconTail = &self->tail;
+                    void* data = data_0211e33c;
+                    int count = Pac_CountFiles((ActiveEntry02046900*)data);
+                    for (int i = 0; i < count; i++) {
+                        void* field;
+                        int recSize;
+                        void* rec = Pac_GetFile((Rec020467f0*)data, i, &field, &recSize);
+                        SpriteContext_LoadFile(self->icons, rec, recSize, &alloc);
                     }
                     arg0->unknown_4c_ |= 1;
                     arg0->unknown_50_++;

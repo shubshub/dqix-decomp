@@ -49,7 +49,7 @@ struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 
 void SetupBattleTag02189a78(char* base);
 
@@ -92,9 +92,9 @@ extern "C" ARM void func_ov012_02186e38(char* self) {
 	if (state != 1) return;
 
 	*(unsigned char*)(self + kActiveOffset) = 1;
-	*(int*)(self + kChoiceBOffset) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(self + kWindowOffset));
+	*(int*)(self + kChoiceBOffset) = Window_GetSelectedIndex((struct Struct_0205c570*)(self + kWindowOffset));
 	if (func_ov023_021e6448(self) != 0) {
-		*(int*)(self + kChoiceBOffset) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(self + kWindowOffset));
+		*(int*)(self + kChoiceBOffset) = Window_GetSelectedIndex((struct Struct_0205c570*)(self + kWindowOffset));
 	}
 
 	if (func_ov023_021e6de4(self) != 0) {

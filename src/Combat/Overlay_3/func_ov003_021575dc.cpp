@@ -54,13 +54,13 @@ void* FindElementByField020a15bc(Array020a15bc*, int);
 struct Obj02158140;
 void AppendFormattedNumber_02158140(Obj02158140*, int);
 
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" void func_020de848(void* arg0);
-extern "C" ARM int func_020de980(void* arg0, void* arg1, void* arg2, int arg3, int arg4);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_020dc2d0(int);
+int GetField0x3acValue_020100a8(GameState*);
+int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+void ItemTable_Init(void* obj);
+ARM int BuildDescriptorFlag1_020de980(void* a, void* b, void* c, int d, int e);
+int GetGlobalField0x1c020421a0(void);
+void ReinitController02043204(char* obj);
+void SetCombatModeFromCase020dc2d0(int);
 struct GameResources;
 ARM int IsBrightnessTransitionActive(GameResources*);
 extern "C" ARM void* func_0208247c(void* arg0);
@@ -90,8 +90,8 @@ extern "C" void func_ov023_021eb26c(void* arg0);
 
 extern char g_sePlayer;
 extern char data_ov003_0217fdbb;
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern short data_ov003_0217f2e8[];
 extern char data_02109bf4;
 extern short data_ov003_0217f2ce[];
@@ -213,32 +213,32 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
             *(int*)(var0 + 0x1d0) = -1;
             *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
         }
-    } else if (var3 == 7) {
-        BackgroundLoader* var23 = BackgroundLoader::GetInstance();
-        *(int*)(var0 + 0x1d0) = var23->QueueLoadFileInGP2(data_020f2a38, data_020f2a30, (SafeAllocator*)0);
-        *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-    } else if (var3 == 8) {
-        BackgroundLoader* var24 = BackgroundLoader::GetInstance();
-        if (var24->GetTaskStatus(*(int*)(var0 + 0x1d0)) != 0) {
-            void* var25; unsigned int var26;
-            var24->GetLoadedFileByID(*(int*)(var0 + 0x1d0), &var25, &var26);
-            ((SafeAllocator*)(*(char**)var0 + 0x78))->Reset();
-            *(short*)(var0 + 0x1f0) = -1;
-            signed char var27 = *(signed char*)(var0 + 0x1f7);
-            GameObject* var28 = var1->GetPartyMemberByIndex(var27);
-            if (var28 != 0) {
-                void* var29 = *(void**)((char*)var28 + 0x150);
-                int var30 = *(int*)((char*)var29 + 0x950);
-                *(short*)(var0 + 0x1f0) = data_ov003_0217f2e8[var30];
+    } else if (state == 7) {
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        *(int*)(s + 0x1d0) = loader->QueueLoadFileInGP2(g_itemDataArchive, g_itemDataFile, (SafeAllocator*)0);
+        *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+    } else if (state == 8) {
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        if (loader->GetTaskStatus(*(int*)(s + 0x1d0)) != 0) {
+            void* outPtr; unsigned int outLen;
+            loader->GetLoadedFileByID(*(int*)(s + 0x1d0), &outPtr, &outLen);
+            ((SafeAllocator*)(*(char**)s + 0x78))->Reset();
+            *(short*)(s + 0x1f0) = -1;
+            signed char idx = *(signed char*)(s + 0x1f7);
+            GameObject* comb = bs->GetPartyMemberByIndex(idx);
+            if (comb != 0) {
+                void* p150 = *(void**)((char*)comb + 0x150);
+                int field950 = *(int*)((char*)p150 + 0x950);
+                *(short*)(s + 0x1f0) = data_ov003_0217f2e8[field950];
             }
-            var24->RemoveTask(*(int*)(var0 + 0x1d0));
-            *(int*)(var0 + 0x1d0) = -1;
-            short var31 = *(short*)(var0 + 0x1f0);
-            func_020de848(var0 + 0x178);
-            func_020de980(var0 + 0x178, *(char**)var0 + 0x78, var25, var26, var31);
-            *(unsigned char*)(var0 + 0x338) = 1;
-            func_ov003_0215873c(arg0);
-            *(unsigned char*)(var0 + 0x1f9) = 0x32;
+            loader->RemoveTask(*(int*)(s + 0x1d0));
+            *(int*)(s + 0x1d0) = -1;
+            short f0val = *(short*)(s + 0x1f0);
+            ItemTable_Init(s + 0x178);
+            BuildDescriptorFlag1_020de980(s + 0x178, *(char**)s + 0x78, outPtr, outLen, f0val);
+            *(unsigned char*)(s + 0x338) = 1;
+            ResetFields_0215873c(self);
+            *(unsigned char*)(s + 0x1f9) = 0x32;
         }
     } else if (var3 == 9) {
         func_02043204((char*)func_020421a0());

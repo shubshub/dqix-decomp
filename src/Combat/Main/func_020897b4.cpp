@@ -21,16 +21,16 @@ extern char data_020f1019[];
 extern char data_020f102e[];
 extern unsigned char data_0211e33c[0x30000];
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void* func_0208247c(void* arg0);
-extern "C" int func_0208274c(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3);
-extern "C" void func_02083cbc(void* arg0, void* arg1, void* arg2);
-extern "C" void func_02083e28(void* arg0, int arg1);
-extern "C" void func_02083b8c(unsigned char* arg0, unsigned char* arg1, unsigned int arg2);
-extern "C" void func_0209a804(int* arg0);
-extern "C" void func_0209a8b4(Struct_02086f24_6* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
-extern "C" int func_0209aa54(void* arg0, unsigned char* arg1, unsigned char* arg2, int arg3);
-extern "C" void func_ov017_021ce614(unsigned char arg0, unsigned char arg1, unsigned char arg2);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+void* Clear0x54Bytes0208247c(void* obj);
+int InitAndRunScript0208274c(void* spellTable, StreamHeader* script, int size, int arg3);
+extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
+extern "C" void func_02083e28(void* model, int arg);
+void SetBitsFromIndexList02083b8c(unsigned char* obj, unsigned char* learnedSpells, unsigned int count);
+void ClearField00209a804(int* field);
+void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* spellTable, SafeAllocator* spellAllocator, StreamHeader* buffer, int length);
+extern "C" int func_0209aa54(void* holder, unsigned char* path, unsigned char* out, int threshold);
+void EnqueueEventTag176_021ce614(unsigned char combatantId, unsigned char level, unsigned char vocation);
 
 struct Struct_020897b4 {
     unsigned char unknown_0_[0x138];
@@ -84,14 +84,14 @@ extern "C" ARM void func_020897b4(unsigned char arg0, unsigned char arg1, int ar
     func_0208247c(&var1);
     func_0208274c(&var1, (Struct_02013fb4*)arg5, arg6, arg1);
 
-    Struct_0201099c_2* const var8 = &var1;
-    Struct_020897b4* var9 = reinterpret_cast<Struct_020897b4*>(func_02053c6c((unsigned char*)var7));
-    var9->unknown_954_ |= 1 << arg2;
-    var9->unknown_950_ = arg2;
-    var9->unknown_16c_[arg2] = arg1;
-    var9->unknown_138_[arg2] = var8->unknown_0_.unknown_0_0_;
-    var9->unknown_564_ = var8->unknown_0_.unknown_4_7_;
-    func_02083cbc(var9, var8, var1.unknown_3c_);
+    ResourceScriptEntry* const levelData = &entry;
+    VocationRecord* record = reinterpret_cast<VocationRecord*>(GetFieldAt0x150_02053c6c((unsigned char*)combatant));
+    record->unlockedVocations |= 1 << vocation;
+    record->currentVocation = vocation;
+    record->levels[vocation] = level;
+    record->experience[vocation] = levelData->initial.value0;
+    record->unknown564 = levelData->initial.value4High;
+    PartyMember_ApplyLevelStats(record, levelData, entry.variants);
 
     if (arg4 != 0) {
         func_02083e28(var9, 0);

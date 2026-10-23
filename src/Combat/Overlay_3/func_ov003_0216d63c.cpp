@@ -33,12 +33,12 @@ struct Struct_020a9ea4 {
 	char unknown_0_[8];
 };
 
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void func_020a9ea4(struct Struct_020a9ea4* arg0);
-extern "C" void func_ov003_0215c650(void* arg0);
-extern "C" void func_ov003_0216ffbc(void* arg0);
-extern "C" void func_ov003_02170b74(void* arg0);
+void SpriteContext_Init(char* obj);
+void KeyTable_Reset(struct Struct020dfc40* p);
+void ClearStruct020a9ea4(struct Struct020a9ea4* p);
+extern "C" void func_ov003_0215c650(void* obj);
+extern "C" void func_ov003_0216ffbc(void* obj);
+extern "C" void func_ov003_02170b74(void* obj);
 
 struct Struct_ov003_0216d63c {
 	unsigned int unknown_0_;
@@ -82,43 +82,43 @@ struct Struct_ov003_0216d63c {
 };
 
 // USA: func_ov003_0216d63c
-extern "C" ARM void func_ov003_0216d63c(struct Struct_ov003_0216d63c* arg0) {
-	arg0->unknown_0_ = (DISPCNT & 0x1f00) >> 8;
-	arg0->unknown_4_ = 0;
-	arg0->unknown_6_ = 0;
-	arg0->unknown_8_ = 0;
-	arg0->unknown_13ec_ = 0;
-	arg0->unknown_a_ = 0;
-	arg0->unknown_c_ = 0;
-	arg0->unknown_10_ = 0;
-	func_ov003_0215c650(arg0->unknown_14_);
-	func_ov003_0216ffbc(arg0->unknown_410_);
-	func_ov003_02170b74(arg0->unknown_7e0_);
-	arg0->unknown_f08_ = arg0->unknown_410_;
-	arg0->unknown_1264_ = 0;
-	arg0->unknown_1268_ = 0;
-	func_0205a444(arg0->unknown_126c_);
-	arg0->unknown_12c0_ = 0;
-	arg0->unknown_12c4_ = 0;
-	arg0->unknown_12c8_ = 0;
-	arg0->unknown_12cc_ = 0;
-	arg0->unknown_12d0_ = 0;
-	arg0->unknown_12d4_[0].ResetAllocatorPointer();
-	arg0->unknown_12d4_[1].ResetAllocatorPointer();
-	arg0->unknown_12d4_[2].ResetAllocatorPointer();
-	arg0->unknown_12d4_[3].ResetAllocatorPointer();
-	func_020dfc40(&arg0->unknown_1324_);
-	arg0->unknown_133c_.Initialize();
-	arg0->unknown_13e8_ = 0;
-	arg0->unknown_13e9_ = 0;
-	arg0->unknown_13ea_ = 0;
-	arg0->unknown_13eb_ = 1;
-	arg0->unknown_13ef_ = 0;
-	arg0->unknown_13f0_ = 0;
-	arg0->unknown_13ee_ = 0;
-	arg0->unknown_13f4_ = -1;
-	memset(arg0->unknown_13fc_, -1, 3);
-	arg0->unknown_1408_ = 0;
-	arg0->unknown_13ed_ = 0;
-	func_020a9ea4(&arg0->unknown_140c_);
+extern "C" ARM void func_ov003_0216d63c(struct Scene0216d63c* self) {
+	self->savedPlanes = (DISPCNT & 0x1f00) >> 8;
+	self->field4 = 0;
+	self->field6 = 0;
+	self->field8 = 0;
+	self->field13ec = 0;
+	self->fieldA = 0;
+	self->fieldC = 0;
+	self->field10 = 0;
+	func_ov003_0215c650(self->sub14);
+	func_ov003_0216ffbc(self->sub410);
+	func_ov003_02170b74(self->sub7e0);
+	self->activeSub = self->sub410;
+	self->field1264 = 0;
+	self->field1268 = 0;
+	SpriteContext_Init(self->sub126c);
+	self->field12c0 = 0;
+	self->field12c4 = 0;
+	self->field12c8 = 0;
+	self->field12cc = 0;
+	self->field12d0 = 0;
+	self->allocs[0].ResetAllocatorPointer();
+	self->allocs[1].ResetAllocatorPointer();
+	self->allocs[2].ResetAllocatorPointer();
+	self->allocs[3].ResetAllocatorPointer();
+	KeyTable_Reset(&self->texts);
+	self->object.Initialize();
+	self->field13e8 = 0;
+	self->field13e9 = 0;
+	self->field13ea = 0;
+	self->field13eb = 1;
+	self->field13ef = 0;
+	self->field13f0 = 0;
+	self->field13ee = 0;
+	self->field13f4 = -1;
+	memset(self->field13fc, -1, 3);
+	self->field1408 = 0;
+	self->field13ed = 0;
+	ClearStruct020a9ea4(&self->field140c);
 }

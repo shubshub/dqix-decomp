@@ -26,15 +26,15 @@ enum { Enum_ov003_0215c800_852 = 0x354 };
 
 extern "C" int func_02094a00(void);
 extern "C" void func_02094ab0(void);
-struct Struct_02074bd0;
-extern "C" void func_02074bd0(struct Struct_02074bd0* arg0);
-struct Struct_0205d1e0;
-extern "C" void func_0205d1e0(Struct_0205d1e0*);
-struct Struct_0205d274;
-extern "C" void func_0205d274(Struct_0205d274*);
-struct Struct_0205d2bc;
-extern "C" void func_0205d2bc(Struct_0205d2bc*);
-extern "C" void func_0205d048(void* arg0);
+struct Struct02074bd0;
+void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
+struct Cont0205d1e0;
+void Window_ClearLayers(Cont0205d1e0*);
+struct Cont0205d274;
+void Window_FlushLayers(Cont0205d274*);
+struct Obj0205d2bc;
+void Window_TransferLayers(Obj0205d2bc*);
+extern "C" void func_0205d048(void* obj);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" int LoadToMainBG1CharacterData(int arg0, int arg1, unsigned int arg2);
 extern "C" int func_020421a0(void);
@@ -52,10 +52,10 @@ extern "C" ARM void func_ov003_0215c800(char* arg0) {
     *(short*)((char*)var0 + 0x50) = 0;
     func_02074bd0((struct Struct_02074bd0*)(arg0 + Enum_ov003_0215c800_128));
 
-    func_0205d1e0((Struct_0205d1e0*)(arg0 + Enum_ov003_0215c800_152));
-    func_0205d274((Struct_0205d274*)(arg0 + Enum_ov003_0215c800_152));
-    func_0205d2bc((Struct_0205d2bc*)(arg0 + Enum_ov003_0215c800_152));
-    func_0205d048(arg0 + Enum_ov003_0215c800_152);
+    Window_ClearLayers((Cont0205d1e0*)(obj + kRegionValue98_B0));
+    Window_FlushLayers((Cont0205d274*)(obj + kRegionValue98_B0));
+    Window_TransferLayers((Obj0205d2bc*)(obj + kRegionValue98_B0));
+    func_0205d048(obj + kRegionValue98_B0);
 
     memset(*(void**)(arg0 + Enum_ov003_0215c800_124), 0, 0x20);
     CleanInvalidateCacheRange(*(void**)(arg0 + Enum_ov003_0215c800_124), 0x20);

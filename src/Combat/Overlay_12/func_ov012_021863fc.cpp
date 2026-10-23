@@ -23,10 +23,10 @@ struct Struct_ov012_021863fc_3
 
 struct Struct_ov012_021863fc_9
 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
+    short models_[10];
+    unsigned char female_ : 1;
+    unsigned char skinColor_ : 3;
+    unsigned char eyeColor_ : 4;
 };
 
 struct Struct_ov012_021863fc_11

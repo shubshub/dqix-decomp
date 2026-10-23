@@ -19,13 +19,13 @@ struct Struct_ov000_02178938 {
     int unknown_1d3c_[8];
 };
 
-extern "C" int func_ov000_02175348(void*, int);
-extern "C" Struct_020465c0* func_020421a0();
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_ov000_0217542c(void*);
-extern "C" int func_02041c08(char*, int, int, int, int, int);
-extern "C" int func_02041ea4(char*, int);
-extern "C" int func_02042058(char*, const char*);
+int CountMatchingValues02175348(void*, int);
+StoreStruct* GetGlobalField0x1c020421a0();
+int KeyTable_Get(Container020e0310*, int);
+int IsField0x118Equal2_ov000_0217542c(void*);
+int AppendFrameTag02041c08(char*, int, int, int, int, int);
+int AppendCursorTag_02041ea4(char*, int);
+int AppendString02042058(char*, const char*);
 extern "C" void* __clear(void*, int);
 extern "C" void func_02046380(Struct_020465c0*);
 extern "C" void* func_020e46c4(void*);
@@ -70,9 +70,9 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
     }
     Struct_020465c0* var7 = func_020421a0();
 #if !defined(jpn)
-    GameState* var8 = GameState::GetInstance();
-    const char* var9 = (const char*)func_020e0434(&arg0->unknown_b8_, 0);
-    const char* var10 = (const char*)func_020e0434(&arg0->unknown_b8_, 0x754f);
+    GameState* game = GameState::GetInstance();
+    const char* separator = (const char*)KeyTable_Get(&self->strings_, 0);
+    const char* format = (const char*)KeyTable_Get(&self->strings_, 0x754f);
 #endif
     var1 = -1;
 #if defined(jpn)
@@ -90,7 +90,7 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
         int var14 = func_ov000_02175348(arg0, var13);
         if (!var14) continue;
 #if defined(jpn)
-        if (var2) func_02042058(arg3, (const char*)func_020e0434(&arg0->unknown_b8_, 0));
+        if (separated) AppendString02042058(output, (const char*)KeyTable_Get(&self->strings_, 0));
 #else
         if (var2) func_02042058(arg3, var9);
 #endif
@@ -114,10 +114,10 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
             memset(var15, 0, sizeof(var15));
             func_ov000_0217aa08(var18, var15);
         }
-        func_02046380(var7);
-        func_02046574(var7, 0, var15);
-        func_020465c0(var7, 0, var14);
-        func_020474a8(var7, 10, (const char*)func_020e0434(&arg0->unknown_b8_, 0x754f), var16);
+        func_02046380(store);
+        _Z22SetIndexedName02046574P11Obj02046574iPc(store, 0, nameText);
+        StoreInArray0x8b0_020465c0(store, 0, members);
+        func_020474a8(store, 10, (const char*)KeyTable_Get(&self->strings_, 0x754f), text);
 #else
         func_02046380(var7);
         Struct_020200c0_5 var19;

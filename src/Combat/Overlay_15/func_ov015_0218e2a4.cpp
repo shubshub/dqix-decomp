@@ -25,17 +25,17 @@
 #include "NitroSDK/NSBXX/Animation.h"
 
 extern "C" void __clear(void*, unsigned long);
-struct Struct_0203d028;
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-struct Struct_0203d028_11;
-extern "C" void func_0203dafc(Struct_0203d028_11*);
-struct Struct_0204a120_2;
-struct Struct_020a3568;
-extern "C" Struct_0204a120_2* func_020100cc(char*);
-extern "C" void func_020a2cf0(Struct_0204a120_2*);
-extern "C" void func_020a3568(Struct_020a3568*, int);
+struct Foo0207df50;
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+struct Struct_203dafc;
+void ClearEightWords_0203dafc(Struct_203dafc*);
+struct Struct020A2CF0;
+struct S020a3568;
+Struct020A2CF0* GetFieldIfFlag2_020100cc(char*);
+void ResetState020a2cf0(Struct020A2CF0*);
+void SetField0x218(S020a3568*, int);
 ModelRenderContext* GetModel3DContext(Model3D*);
 extern "C" void func_ov015_0218bb3c(RenderCommandHandler*);
 extern char data_ov015_02194078[];
@@ -66,17 +66,17 @@ struct Struct_ov015_0218e2a4_2 {
 struct Struct_ov015_0218e2a4_3 { int unknown_0_; int unknown_4_; };
 
 // USA: func_ov015_0218e2a4
-extern "C" ARM int func_ov015_0218e2a4(Struct_ov015_0218e2a4_2* arg0, Struct_ov015_0218e2a4_3* arg1) {
-    if (!arg1->unknown_4_) return 0;
-    char var0[0x20];
-    __clear(var0, 0x20);
-    arg0->unknown_8_->Reset();
-    int var1 = 1;
-    Struct_0203d028* var2 = arg0->unknown_4_->unknown_0_;
-    func_0207df50(var2);
-    func_0207df90((char*)var2);
-    if (arg0->unknown_1c_ == 5) sprintf(var0, data_ov015_02194078, arg1->unknown_4_);
-    else sprintf(var0, data_ov015_02194052, arg1->unknown_4_);
+extern "C" ARM int func_ov015_0218e2a4(BattleModelLoader* self, ModelDescription* description) {
+    if (!description->archive) return 0;
+    char path[0x20];
+    __clear(path, 0x20);
+    self->allocator->Reset();
+    int loaded = 1;
+    Foo0207df50* palette = self->manager->palette;
+    CopyInternalFields0207df50(palette);
+    VramState_Restore((char*)palette);
+    if (self->mode == 5) sprintf(path, data_ov015_02194078, description->archive);
+    else sprintf(path, data_ov015_02194052, description->archive);
     BackgroundLoader::AddLockGlobal();
     unsigned int var3 = 0;
     if (!LoadFileIntoMemory(var0, data_0211e33c, &var3)) var1 = 0;
@@ -104,14 +104,14 @@ extern "C" ARM int func_ov015_0218e2a4(Struct_ov015_0218e2a4_2* arg0, Struct_ov0
         arg0->unknown_24_->MaybeSetBCFGAnimation(0, arg0->unknown_44_);
     }
     BackgroundLoader::RemoveLockGlobal();
-    func_0207dfac((char*)var2);
-    if (!var1) return 0;
-    GameState* var12 = GameState::GetInstance();
-    if (!var12) return 0;
-    Struct_0204a120_2* var13 = func_020100cc((char*)var12);
-    if (!var13) return 0;
-    func_020a2cf0(var13);
-    func_020a3568((Struct_020a3568*)var13, 0);
-    arg0->unknown_c_ = arg1->unknown_0_;
+    VramState_Save((char*)palette);
+    if (!loaded) return 0;
+    GameState* game = GameState::GetInstance();
+    if (!game) return 0;
+    Struct020A2CF0* camera = GetFieldIfFlag2_020100cc((char*)game);
+    if (!camera) return 0;
+    ResetState020a2cf0(camera);
+    SetField0x218((S020a3568*)camera, 0);
+    self->id = description->id;
     return 1;
 }

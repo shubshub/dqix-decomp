@@ -13,8 +13,8 @@ struct Slots02083994;
 struct KeyMap020a095c;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
@@ -58,10 +58,10 @@ extern "C" ARM void func_ov002_02164748(char *base) {
         *(unsigned int *) (base + RG(0x2000 + 0x47c, 0x22ac)) |= 4;
         short old = *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc));
         *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)) =
-            GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + RG(0x2c8 + 0xc00, 0xe20)));
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + RG(0x2c8 + 0xc00, 0xe20)));
         if (old != *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc))) return;
         int ta = g_keyManager.TestKeysPressed(0x601);
-        int tb = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
+        int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(base + RG(0x2c8 + 0xc00, 0xe20)), 0x14);
         if ((ta | tb) ? 1 : 0) {
             SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             GameState *gs = GameState::GetInstance();

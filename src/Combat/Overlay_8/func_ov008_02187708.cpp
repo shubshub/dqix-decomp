@@ -161,17 +161,17 @@ extern char data_ov008_0218b49b[];
 extern char data_ov008_0218b4b0[];
 extern char data_ov008_0218b4c1[];
 
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void func_020e4c74(void* arg0, GameObject* arg1);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_02072928(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3, void* arg4, unsigned char arg5);
-extern "C" void func_02046574(Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" char* func_020d2f88(char* arg0, char* arg1);
-extern "C" void func_02041a5c(char* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+MessageSystem* GetGlobalField0x1c020421a0();
+void Clear12Bytes020e46c4(void* name);
+void InitObjFromCombatant020e4c74(void* name, GameObject* object);
+void ResetListHeader020727d8(List020727d8* list);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+const char* FindEntryByKey_02072a68(TableA68* texts, int id);
+void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
+void SetIndexedName02046574(Obj02046574* messages, int index, char* text);
+char* FindSubstring_020d2f88(char* text, char* search);
+void AppendYTag_02041a5c(char* text, int y);
+void AppendString02042058(char* text, const char* append);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -246,7 +246,7 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
         {
             if (arg0->unknown_b3c_ != NULL)
             {
-                var15 = func_020e0434((Struct_0201099c_3*)arg0->unknown_b3c_, var3);
+                titleText = KeyTable_Get((Container020e0310*)self->guestTitles_, title);
             }
             else
             {
@@ -292,11 +292,11 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
         var23 = 101;
         var24 = 0xdf;
     }
-    func_02046608(var1, 10, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, var23), var22 + 0x760, var24, 1, 0);
-    int var25 = 7;
-    if (func_020d2f88(var22 + 0x760, data_ov008_0218b4c1) != NULL)
-        var25 = 2;
-    if (arg2 != NULL)
+    func_02046608(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, format), output + 0x760, width, 1, 0);
+    int color = 7;
+    if (FindSubstring_020d2f88(output + 0x760, data_ov008_0218b4c1) != NULL)
+        color = 2;
+    if (records != NULL)
     {
         arg0->unknown_b2c_ = (func_020420e8(var22 + 0x760, 0) + 0x10) << 12;
         if (var25 == 2)

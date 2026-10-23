@@ -16,11 +16,11 @@ extern "C" void* func_0206f4f0(Struct_0206f01c_2*, int);
 extern "C" void* func_02070fd0(Struct_02070b6c_3*, int);
 extern "C" void func_0203dafc(struct Struct_0203d028_11*);
 
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_02079a3c(void*);
+extern "C" void* __clear(void* dst, int count);
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void ResetObjectState02079a3c(void*);
 extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
 extern "C" void func_0205ebc0(void*, int, int);
 
@@ -76,10 +76,10 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
     __clear(var0, 0x10);
     arg0->unknown_8_->Reset();
 
-    int var1 = 1;
-    char* var2 = *arg0->unknown_4_;
-    func_0207df50((Struct_0203d028*)var2);
-    func_0207df90(var2);
+    int ok = 1;
+    char* mgr = *self->pairsRoot;
+    CopyInternalFields0207df50((Foo0207df50*)mgr);
+    VramState_Restore(mgr);
 
     if (arg0->unknown_0_->unknown_1a1_ != 0) {
         sprintf(var0, &data_ov015_021940f5, arg0->unknown_10_->unknown_4_);
@@ -139,7 +139,7 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
     }
 
     BackgroundLoader::RemoveLockGlobal();
-    func_0207dfac(var2);
+    VramState_Save(mgr);
 
     int var15;
     if (var1 == 0) {

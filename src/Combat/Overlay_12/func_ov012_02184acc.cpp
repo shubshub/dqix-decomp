@@ -108,11 +108,11 @@ struct Struct_ov012_0218b188
 struct Struct_0205def8;
 struct Struct_0205d6a0;
 
-extern "C" void func_ov023_021e7404(void* arg0, int arg1);
-extern "C" int func_0205d0e0(void* arg0, int arg1);
-extern "C" void func_ov012_02185cf8(Struct_ov012_02184acc* arg0);
-extern "C" Struct_ov012_02184acc_2* func_020421a0();
-extern "C" void func_ov012_0218adac(Struct_ov012_02184acc* arg0, int arg1, int arg2, int arg3);
+extern "C" void func_ov023_021e7404(void* card, int input);
+extern "C" int Window_Update(void* window, int input);
+extern "C" void func_ov012_02185cf8(ProfileEditor02184acc* self);
+Messages02184acc* GetGlobalField0x1c020421a0();
+extern "C" void func_ov012_0218adac(ProfileEditor02184acc* self, int animate, int design, int keepPage);
 extern "C" int func_ov017_021959b4();
 extern "C" void func_ov012_021845f8(void* arg0);
 extern "C" int func_ov012_02184d80(void* arg0, char* arg1);
@@ -138,7 +138,7 @@ extern "C" ARM int func_ov012_02184acc(Struct_ov012_02184acc* arg0, int arg1)
 {
     self->unk_13a4 = input;
     func_ov023_021e7404(self->card_, input);
-    self->unk_1398 = func_0205d0e0(self->window_, input);
+    self->unk_1398 = Window_Update(self->window_, input);
     StateTable02184acc states = data_ov012_0218b188;
     states.states[16] = __ptmf_null;
     if (states.states[self->state_] != 0)

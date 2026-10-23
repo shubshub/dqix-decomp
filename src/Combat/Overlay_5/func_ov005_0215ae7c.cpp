@@ -37,18 +37,18 @@ struct Struct_ov005_02153954
     unsigned char unknown_4284_[8];
 };
 
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" short* func_02052e14(Struct_02052e14* arg0);
-extern "C" void func_020462d0(Struct_02021b84* arg0, unsigned short* arg1, int arg2);
-extern "C" Struct_0201099c_9* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" void func_02046608(Struct_02021b84* arg0, int, const char* arg2, char* arg3, int arg4, int, int);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020d2f88(char* arg0, char* arg1);
-extern "C" void func_02045d14(Struct_02021b84* arg0, const char* arg1, unsigned short* arg2, int);
-extern "C" void func_020439b0(Struct_02021b84* arg0, int);
+MessageSystem* GetGlobalField0x1c020421a0();
+MemberScreen* GetField1c_021a193c(int* obj);
+short* GetField150Ptr0x488(Field150Holder02052e14* member);
+extern "C" void func_020462d0(MessageSystem* messages, unsigned short* codes, int count);
+Element020de650* FindElementByKey020dedd0(Container020dedd0* c, int key);
+extern "C" void __clear(void* buffer, unsigned long size);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* name, char* output, int flag);
+extern "C" void func_02046608(MessageSystem* messages, int, const char* format, char* output, int size, int, int);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+int FindSubstring_020d2f88(char* text, char* search);
+extern "C" void func_02045d14(MessageSystem* messages, const char* text, unsigned short* codes, int);
+extern "C" void func_020439b0(MessageSystem* messages, int);
 #if defined(jpn)
 extern "C" void func_020471d0(Struct_02021b84* arg0, int, unsigned short* arg2, int);
 extern "C" void func_020469b0(Struct_02021b84* arg0, const char* arg1, unsigned short* arg2, int);
@@ -91,11 +91,11 @@ extern "C" ARM void func_ov005_0215ae7c(Struct_ov005_02153954* arg0)
         }
         else if (var7 <= 0)
         {
-            func_020469b0(var0, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x2ee0), arg0->unknown_3e84_[var6], 0xa);
+            func_020469b0(messages, KeyTable_Get((Container020e0310*)self->texts_, 0x2ee0), self->names_[i], 0xa);
         }
         else
         {
-            func_020469b0(var0, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x32c7), arg0->unknown_3e84_[var6], 0xa);
+            func_020469b0(messages, KeyTable_Get((Container020e0310*)self->texts_, 0x32c7), self->names_[i], 0xa);
         }
 #else
         char var9[0x80];
@@ -109,11 +109,11 @@ extern "C" ARM void func_ov005_0215ae7c(Struct_ov005_02153954* arg0)
         }
         else if (var7 <= 0)
         {
-            func_02046608(var0, 0, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x2ee0), var9, 0x58, 0, 0);
+            func_02046608(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x2ee0), text, 0x58, 0, 0);
         }
         else
         {
-            func_02046608(var0, 0, func_020e0434((Struct_0201099c_3*)arg0->unknown_df8_, 0x32c7), var9, 0x58, 0, 0);
+            func_02046608(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x32c7), text, 0x58, 0, 0);
         }
         if (func_020d2f88(var9, data_ov005_0215ce08))
             arg0->unknown_4284_[var6] = 1;

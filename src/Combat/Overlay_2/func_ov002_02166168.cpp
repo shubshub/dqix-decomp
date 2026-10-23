@@ -16,12 +16,12 @@ extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215f3a0(void *base);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 int IsElementFlagBit40Set_0216197c(int key, struct Struct_0205d81c *s);
 extern "C" void func_ov002_0215b9a4(void *self, int mode, int flag);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
 extern "C" void func_ov002_02156080(void *self, short *out, short *outCount);
@@ -46,33 +46,33 @@ extern "C" ARM void func_ov002_02166168(char *self) {
     GameState *gs      = GameState::GetInstance();
     GameResources *res = gs->GetResources();
     func_02012fe4();
-    int var2 = *(int *) (arg0 + 0x1a88);
-    if (var2 == 0) {
-        *(short *) (arg0 + 0x1ac6) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) OBJ, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215f3a0(arg0);
-        *(int *) (arg0 + 0x1a88) += 1;
-    } else if (var2 == 1) {
-        *(unsigned int *) (arg0 + 0x22ac) |= 4;
-        func_0205def8((struct Struct_0205def8 *) OBJ, 1, 0x2c);
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x16, 0);
-        short var3                  = *(short *) (arg0 + 0x1ac6);
-        *(short *) (arg0 + 0x1ac6) = func_0205d794((struct Struct_0205c570 *) OBJ);
-        char *var4                    = func_0205d81c((struct Struct_0205d81c *) OBJ, 0x17);
-        if (var4 != 0) {
-            *(short *) (var4 + 0xc2) = 0;
+    int state = *(int *) (self + 0x1a88);
+    if (state == 0) {
+        *(short *) (self + 0x1ac6) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) OBJ, 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215f3a0(self);
+        *(int *) (self + 0x1a88) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (self + 0x22ac) |= 4;
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) OBJ, 1, 0x2c);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x16, 0);
+        short old                  = *(short *) (self + 0x1ac6);
+        *(short *) (self + 0x1ac6) = Window_GetSelectedIndex((struct Struct_0205c570 *) OBJ);
+        char *e                    = FindElementByC40205d81c((struct Struct_0205d81c *) OBJ, 0x17);
+        if (e != 0) {
+            *(short *) (e + 0xc2) = 0;
         }
         func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1a80) & 0xff, 0);
         if (var3 != *(short *) (arg0 + 0x1ac6)) {
             func_ov002_0215b9a4(arg0, 0x17, 0);
         }
-        int var5  = g_keyManager.TestKeysPressed(0x601);
-        int var6  = func_0205da38((struct Struct_0205da38*)OBJ, 0x14);
-        int var7 = (var5 | var6) ? 1 : 0;
-        if (var7) {
-            unsigned int var8 = *(unsigned int *) (arg0 + 0x22ac);
-            if (var8 & 2) {
+        int t  = g_keyManager.TestKeysPressed(0x601);
+        int u  = Window_IsSelectionTouched((struct Obj_0205da38*)OBJ, 0x14);
+        int ok = (t | u) ? 1 : 0;
+        if (ok) {
+            unsigned int f = *(unsigned int *) (self + 0x22ac);
+            if (f & 2) {
                 return;
             }
             func_020d7aa0(func_020d7a50());
@@ -149,23 +149,23 @@ extern "C" ARM void func_ov002_02166168(char *self) {
     GameState *gs      = GameState::GetInstance();
     GameResources *res = gs->GetResources();
     func_02012fe4();
-    int var16 = *(int *) (arg0 + 0x1bc0);
-    if (var16 == 0) {
-        *(short *) (arg0 + 0x1bfe) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) OBJ, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215f3a0(arg0);
-        *(int *) (arg0 + 0x1bc0) += 1;
-    } else if (var16 == 1) {
-        *(unsigned int *) (arg0 + 0x247c) |= 4;
-        func_0205def8((struct Struct_0205def8 *) OBJ, 1, 0x29);
-        func_0205def8((struct Struct_0205def8 *) OBJ, 1, 1);
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x15, 0);
-        short var17                  = *(short *) (arg0 + 0x1bfe);
-        *(short *) (arg0 + 0x1bfe) = func_0205d794((struct Struct_0205c570 *) OBJ);
-        char *var18                    = func_0205d81c((struct Struct_0205d81c *) OBJ, 0x16);
-        if (var18 != 0) {
-            *(short *) (var18 + 0xc2) = 0;
+    int state = *(int *) (self + 0x1bc0);
+    if (state == 0) {
+        *(short *) (self + 0x1bfe) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) OBJ, 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215f3a0(self);
+        *(int *) (self + 0x1bc0) += 1;
+    } else if (state == 1) {
+        *(unsigned int *) (self + 0x247c) |= 4;
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) OBJ, 1, 0x29);
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) OBJ, 1, 1);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x15, 0);
+        short old                  = *(short *) (self + 0x1bfe);
+        *(short *) (self + 0x1bfe) = Window_GetSelectedIndex((struct Struct_0205c570 *) OBJ);
+        char *e                    = FindElementByC40205d81c((struct Struct_0205d81c *) OBJ, 0x16);
+        if (e != 0) {
+            *(short *) (e + 0xc2) = 0;
         }
         if (func_ov002_0216197c(*(int *) (arg0 + 0x1bb8) & 0xff,
                                                                   (struct Struct_0205d81c *) OBJ))
@@ -175,12 +175,12 @@ extern "C" ARM void func_ov002_02166168(char *self) {
         if (var17 != *(short *) (arg0 + 0x1bfe)) {
             func_ov002_0215b9a4(arg0, 0x16, 0);
         }
-        int var19  = g_keyManager.TestKeysPressed(0x601);
-        int var20  = func_0205da38((struct Struct_0205da38*)OBJ, 0x14);
-        int var21 = (var19 | var20) ? 1 : 0;
-        if (var21) {
-            unsigned int var22 = *(unsigned int *) (arg0 + 0x247c);
-            if (var22 & 2) {
+        int t  = g_keyManager.TestKeysPressed(0x601);
+        int u  = Window_IsSelectionTouched((struct Obj_0205da38*)OBJ, 0x14);
+        int ok = (t | u) ? 1 : 0;
+        if (ok) {
+            unsigned int f = *(unsigned int *) (self + 0x247c);
+            if (f & 2) {
                 return;
             }
             if (!(var22 & 0x20)) {

@@ -84,12 +84,12 @@ struct Struct_ov003_0215c650 {
     int unknown_3f8_;
 };
 
-extern "C" void func_02074af4(struct Struct_02074af4* arg0);
-extern "C" void func_020dfc40(struct Struct_0201099c_14* arg0);
-extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204c684(struct Struct_02000c9c_83* arg0);
-extern "C" void func_0205a444(char* arg0);
+extern "C" void func_02074af4(struct MainBgControlBackup02074af4* obj);
+void KeyTable_Reset(struct Struct020dfc40* p);
+void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+void Background_Init(struct List0204af64* obj);
+extern "C" void func_0204c684(struct Elem0204c684* obj);
+void SpriteContext_Init(char* obj);
 
 // USA: func_ov003_0215c650
 extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* arg0) {
@@ -99,36 +99,36 @@ extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* arg0) {
     arg0->unknown_94_ = (DISPCNT & 0x1f00) >> 8;
     DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
 
-    arg0->unknown_0_.ResetAllocatorPointer();
-    arg0->unknown_28_.ResetAllocatorPointer();
-    arg0->unknown_3c_.ResetAllocatorPointer();
-    arg0->unknown_50_.ResetAllocatorPointer();
-    func_020dfc40(&arg0->unknown_64_);
+    self->alloc0.ResetAllocatorPointer();
+    self->alloc28.ResetAllocatorPointer();
+    self->alloc3c.ResetAllocatorPointer();
+    self->alloc50.ResetAllocatorPointer();
+    KeyTable_Reset(&self->sub64);
 #if defined(jpn)
-    func_020dfc40(&arg0->unknown_7c_);
+    KeyTable_Reset(&self->sub7c);
 #endif
     arg0->unknown1_7c_ = 0;
     func_0205cfd4(&arg0->unknown_98_);
 
-    for (int var0 = 0; var0 < 2; var0++) {
-        func_0204af64(&arg0->unknown_154_[var0]);
+    for (int i = 0; i < 2; i++) {
+        Background_Init(&self->lists[i]);
     }
     for (int var1 = 0; var1 < 2; var1++) {
         func_0204c684(&arg0->unknown_194_[var1]);
     }
 
-    arg0->unknown_354_ = 0;
-    func_0205a444(arg0->unknown_358_);
-    arg0->unknown_3ac_ = 0;
-    arg0->unknown_3b0_ = 0;
-    arg0->unknown_3b4_ = 0;
-    arg0->unknown_3b8_ = 0;
-    arg0->unknown_3b9_ = 0;
-    arg0->unknown_3bc_ = 0;
-    arg0->unknown_3ba_ = 0;
-    arg0->unknown_3bb_ = 0;
-    for (int var2 = 0; var2 < 3; var2++) {
-        arg0->unknown_3bd_[var2] = 0xff;
+    self->field354 = 0;
+    SpriteContext_Init(self->sub358);
+    self->field3ac = 0;
+    self->field3b0 = 0;
+    self->field3b4 = 0;
+    self->field3b8 = 0;
+    self->field3b9 = 0;
+    self->field3bc = 0;
+    self->field3ba = 0;
+    self->field3bb = 0;
+    for (int k = 0; k < 3; k++) {
+        self->field3bd[k] = 0xff;
     }
     arg0->unknown_3c0_ = 0;
     arg0->unknown_3c1_ = -1;

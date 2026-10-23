@@ -14,19 +14,19 @@ struct Struct_ov000_0217936c {
     char unknown_1dc_[4];
 };
 
-extern "C" void func_0205c508(struct Struct_0205c508* arg0, int* arg1, int* arg2);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int* func_ov000_0217199c(void* arg0, int arg1);
-extern "C" int func_ov000_0217c4e8(void* arg0, int arg1);
-extern "C" int func_02041e70(char* arg0, int arg1);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_020e4864(int arg0, char* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+void ComputeProductSums0205c508(struct UnkStruct0205c508* s, int* out1, int* out2);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+int* GetBoundedField420_0217199c(void* obj, int index);
+int IsBitFlagSet0217c4e8(void* obj, int index);
+int AppendPaletteTag_02041e70(char* dst, int palette);
+extern "C" void __clear(void* buf, int size);
+extern "C" void func_020e4864(int id, char* dst, int a, int b, int c, int d);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
 
 // USA: func_ov000_0217936c
 extern "C" ARM void func_ov000_0217936c(struct Struct_ov000_0217936c* arg0, struct Struct_ov000_0217936c_2* arg1, char* arg2) {
@@ -71,8 +71,8 @@ extern "C" ARM void func_ov000_0217936c(struct Struct_ov000_0217936c* arg0, stru
         func_0206819c(var0, var1, 0);
         func_02041b70(arg2, var7 - var4, var0);
 #endif
-        if (var7 != var5 - 1) {
-            func_02042058(arg2, (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_b8_, 0));
+        if (i != end - 1) {
+            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)window->texts, 0));
         }
     }
 }

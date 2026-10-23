@@ -129,8 +129,8 @@ struct Struct_0203d028_11 {
 };
 extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
 
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 struct Struct_0203d028_12;
 extern "C" struct Struct_0203d028_12* func_0209854c(struct Struct_0203d028_12* arg0, int arg1);
@@ -384,22 +384,22 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
         void* var22;
         void* var23;
 
-        if (var2->unknown_2_ == 2) {
-            var10->unknown_18_ = (struct Struct_0203d028_10*)arg2->Allocate(0xd8);
-            if (var10->unknown_18_ == 0) goto abort_unlock;
-            func_02041244(var10->unknown_18_);
-            char var24[40];
-            sprintf(var24, &data_020efdc4, var2->unknown1_4_);
-            void* var25 = LoadFileIntoNewAllocation(var24, *arg2, &var13);
-            if (var25 == 0) goto abort_unlock;
-            struct Struct_0203d028_11 var26;
-            func_0203dafc(&var26);
-            func_0207df90(arg3);
-            var26.unknown_c_ = (int)arg2;
-            var26.unknown_4_ = (int)var25;
-            var26.unknown_8_ = (int)var13;
-            ((Object3D*)var10->unknown_18_)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&var26, 0);
-            func_0207dfac(arg3);
+        if (entry->type == 2) {
+            node->state = (struct State02041244*)sb->Allocate(0xd8);
+            if (node->state == 0) goto abort_unlock;
+            ResetState02041244(node->state);
+            char pathBuf[40];
+            sprintf(pathBuf, &data_020efdc4, entry->name);
+            void* loadedPtr = LoadFileIntoNewAllocation(pathBuf, *sb, &outLen);
+            if (loadedPtr == 0) goto abort_unlock;
+            struct Struct_203dafc params;
+            ClearEightWords_0203dafc(&params);
+            VramState_Restore(fp);
+            params.fieldc = (int)sb;
+            params.field4 = (int)loadedPtr;
+            params.field8 = (int)outLen;
+            ((Object3D*)node->state)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
+            VramState_Save(fp);
         }
         else if (var2->unknown_2_ == 4) {
 #if defined(jpn)
@@ -528,14 +528,14 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
 
             var23 = DecompressLZ77FileIntoAllocatedSpace(*arg2, var17, var18);
 
-            struct Struct_0203d028_11 var43;
-            func_0203dafc(&var43);
-            func_0207df90(arg3);
-            var43.unknown_c_ = (int)arg2;
-            var43.unknown_4_ = (int)var23;
-            var43.unknown_8_ = (int)var18;
-            ((Object3D*)var10->unknown_18_)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&var43, 0);
-            func_0207dfac(arg3);
+            struct Struct_203dafc params;
+            ClearEightWords_0203dafc(&params);
+            VramState_Restore(fp);
+            params.fieldc = (int)sb;
+            params.field4 = (int)decompressed;
+            params.field8 = (int)decompSize;
+            ((Object3D*)node->state)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
+            VramState_Save(fp);
 
             var10->unknown_18_->unknown_d4_ |= 2;
             var39.Reset();
@@ -610,21 +610,21 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
                 }
             }
 
-            if (var11->unknown_c_ & 0x2000) {
-                if (var7 == 0) {
-                    var7 = arg2->Allocate(0xac);
-                    if (var7 == 0) goto abort_unlock;
-                    ((Object3D*)var7)->Initialize();
-                    var22 = LoadFileIntoNewAllocation(&data_020efe38, *arg2, &var20);
-                    if (var22 != 0) {
-                        struct Struct_0203d028_11 var52;
-                        func_0203dafc(&var52);
-                        func_0207df90(arg3);
-                        var52.unknown_4_ = (int)var22;
-                        var52.unknown_8_ = (int)var20;
-                        var52.unknown_c_ = (int)arg2;
-                        ((Object3D*)((int)var7))->LoadFromCHRArchive((ObjectArchiveLoadInfo*)((int)&var52));
-                        func_0207dfac(arg3);
+            if (info->fieldC & 0x2000) {
+                if (childModelPtr == 0) {
+                    childModelPtr = sb->Allocate(0xac);
+                    if (childModelPtr == 0) goto abort_unlock;
+                    ((Object3D*)childModelPtr)->Initialize();
+                    mdlPtr = LoadFileIntoNewAllocation(&data_020efe38, *sb, &mdlOutLen);
+                    if (mdlPtr != 0) {
+                        struct Struct_203dafc mdlParams;
+                        ClearEightWords_0203dafc(&mdlParams);
+                        VramState_Restore(fp);
+                        mdlParams.field4 = (int)mdlPtr;
+                        mdlParams.field8 = (int)mdlOutLen;
+                        mdlParams.fieldc = (int)sb;
+                        ((Object3D*)((int)childModelPtr))->LoadFromCHRArchive((ObjectArchiveLoadInfo*)((int)&mdlParams));
+                        VramState_Save(fp);
                     }
                     ((Object3D*)((struct Struct_0203d028_18*)var7))->SetScale(0x10a, 0x10a, 0x10a);
                     ((Object3D*)((unsigned char*)var7))->SetFlag16();

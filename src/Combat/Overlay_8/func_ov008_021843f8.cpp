@@ -60,9 +60,9 @@ struct Struct_0205bef8;
 
 void* GetDataPtr02114e04_020d6c00();
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
-void ResetStruct020dfc40(Struct020dfc40* texts);
+void KeyTable_Reset(Struct020dfc40* texts);
 void ClearStruct020a13c4(S020a13c4* guides);
-void ResetList0204af64(List0204af64* background);
+void Background_Init(List0204af64* background);
 void InitStruct0205cfd4(InitTarget0205cfd4* window);
 void GridCursor_Init(Struct_0205bef8* cursor);
 void InitCombatController020a2010(void* camera);
@@ -135,12 +135,12 @@ extern "C" ARM void func_ov008_021843f8(Struct_ov008_021842a0_2* arg0)
     self->modelAllocator_.ResetAllocatorPointer();
     self->titleAllocator_.ResetAllocatorPointer();
     self->guideAllocator_.ResetAllocatorPointer();
-    ResetStruct020dfc40((Struct020dfc40*)self->texts_);
+    KeyTable_Reset((Struct020dfc40*)self->texts_);
     self->text_ = NULL;
     ClearStruct020a13c4((S020a13c4*)self->titleTable_);
-    ResetList0204af64((List0204af64*)self->backgrounds_[0]);
-    ResetList0204af64((List0204af64*)self->backgrounds_[1]);
-    ResetList0204af64((List0204af64*)self->backgrounds_[2]);
+    Background_Init((List0204af64*)self->backgrounds_[0]);
+    Background_Init((List0204af64*)self->backgrounds_[1]);
+    Background_Init((List0204af64*)self->backgrounds_[2]);
     InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
     for (int i = 0; i < 6; i++)
         func_0204c684(self->canvases_[i]);

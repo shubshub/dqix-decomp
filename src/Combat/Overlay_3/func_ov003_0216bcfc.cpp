@@ -58,17 +58,17 @@ struct Struct_ov003_0216bcfc;
 struct Struct_02020cb8_4;
 struct Struct_02020aec;
 
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" int func_02046900(Struct_02020cb8_4 *arg0);
-extern "C" void *func_020467f0(Struct_02020aec *arg0, int arg1, void **arg2, int *arg3);
-extern "C" void *func_02012d88(AllocatorUnion *arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion *arg0, void *arg1);
-extern "C" void func_0205a494(void *arg0);
-extern "C" void func_ov003_021700bc(Struct_ov003_0216bcfc *arg0);
+int CheckField0NonZero_0202b7d8(int *p);
+int Pac_CountFiles(ActiveEntry02046900 *archive);
+void *Pac_GetFile(Rec020467f0 *archive, int index, void **name, int *size);
+void *AllocateAligned4_02012d88(AllocatorUnion *alloc, unsigned int size);
+void TailForward02012da4(AllocatorUnion *alloc, void *p);
+void EmptyDestructor0205a494(void *p);
+void InitField170_021700bc(S021700bc *p);
 extern "C" void *func_0202ae18();
 extern "C" void func_0202c288();
-extern "C" void func_02043124(void *arg0);
-extern "C" void func_0205a528(void *arg0, void *arg1, unsigned int arg2, SafeAllocator *arg3);
+extern "C" void func_02043124(void *p);
+extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 #if defined(jpn)
 extern "C" void func_ov003_0216d8d4(void *arg0, int arg1);
 extern "C" void func_ov003_0216e02c(void *arg0, SafeAllocator *arg1);
@@ -145,20 +145,20 @@ extern "C" ARM void func_ov003_0216bcfc(Struct_ov003_0216bcfc_3 *arg0) {
         arg0->unknown_c_ = var1->QueueLoadFile(data_ov003_021801c9, 0);
         arg0->unknown_6_ = 3;
     }
-    if (arg0->unknown_6_ == 3 && var1->GetTaskStatus(arg0->unknown_c_) != 0) {
-        void *var7;
-        void *var8;
-        unsigned int var9;
-        int var10;
-        var1->GetLoadedFileByID(arg0->unknown_c_, &var8, &var9);
-        int var11            = func_02046900((Struct_02020cb8_4 *) var8);
-        SafeAllocator *var12 = &arg0->unknown_1310_[0];
-        for (int var13 = 0; var13 < var11; var13++) {
-            void *var14 = func_020467f0((Struct_02020aec *) var8, var13, &var7, &var10);
+    if (self->step_ == 3 && loader->GetTaskStatus(self->task_) != 0) {
+        void *name;
+        void *file;
+        unsigned int size;
+        int fileSize;
+        loader->GetLoadedFileByID(self->task_, &file, &size);
+        int count            = Pac_CountFiles((ActiveEntry02046900 *) file);
+        SafeAllocator *alloc = &self->allocators_[0];
+        for (int i = 0; i < count; i++) {
+            void *data = Pac_GetFile((Rec020467f0 *) file, i, &name, &fileSize);
 #if defined(jpn)
-            func_0205a528((char *) arg0 + 0x10fc, var14, var10, var12);
+            SpriteContext_LoadFile((char *) self + 0x10fc, data, fileSize, alloc);
 #else
-            func_0205a528((char *) arg0 + 0x126c, var14, var10, var12);
+            SpriteContext_LoadFile((char *) self + 0x126c, data, fileSize, alloc);
 #endif
         }
         var1->RemoveTask(arg0->unknown_c_);

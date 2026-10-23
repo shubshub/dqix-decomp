@@ -42,9 +42,9 @@ struct Struct_ov003_0215b964_5 {
     unsigned char unknown_590_;
     unsigned char unknown_591_[1];
 };
-extern "C" int func_020421a0();
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_02053c6c(unsigned char*);
+int GetGlobalField0x1c020421a0();
+int KeyTable_Get(Container020e0310*, int);
+int GetFieldAt0x150_02053c6c(unsigned char*);
 #if defined(jpn)
 extern "C" int func_02042638(char*, int, int);
 #else
@@ -85,15 +85,15 @@ extern "C" ARM void func_ov003_0215b964(Struct_ov003_0215b964_5* arg0, char* arg
 #endif
     if (var2 == -1) {
 #if defined(jpn)
-        func_02042638(arg1, func_020e0434(&arg0->unknown_64_, 10), 14);
+        func_02042638(output, KeyTable_Get(&menu->texts, 10), 14);
 #else
-        func_02041fac(arg1, func_020e0434(&arg0->unknown_64_, 10), 14);
+        AppendFormatted02041fac(output, KeyTable_Get(&menu->texts, 10), 14);
 #endif
     } else {
 #if defined(jpn)
-        func_02042638(arg1, func_020e0434(&arg0->unknown_64_, 11), 14);
+        func_02042638(output, KeyTable_Get(&menu->texts, 11), 14);
 #else
-        func_02041fac(arg1, func_020e0434(&arg0->unknown_64_, 11), 14);
+        AppendFormatted02041fac(output, KeyTable_Get(&menu->texts, 11), 14);
 #endif
         if (arg2) func_02041c08(arg1, var2, 8, 5, 5, 5);
         func_02041ea4(arg1, var2);
@@ -130,51 +130,51 @@ extern "C" ARM void func_ov003_0215b964(Struct_ov003_0215b964_5* arg0, char* arg
             func_02041b70(arg1, var4, var12);
         }
 #if defined(jpn)
-        if (var5->unknown_130_->unknown_0_ & 1)
-            func_02042058(arg1, ((const char*)(func_020e0434(&arg0->unknown_64_, 13))));
-        else if (var10 & 2)
-            func_02042058(arg1, ((const char*)(func_020e0434(&arg0->unknown_64_, 14))));
-        else if (var10 & 4)
-            func_02042058(arg1, ((const char*)(func_020e0434(&arg0->unknown_64_, 15))));
-        if (!(var5->unknown_130_->unknown_0_ & 1) && !(var10 & 6)) {
-            func_02046380(var1);
-            func_020465c0(var1, 0, var6->unknown_16c_[var6->unknown_950_]);
-            func_020465f0(((unsigned char*)(var1)), 0, 2);
-            func_020465d8(((unsigned char*)(var1)), 0, 1);
-            char var13[0x40];
-            __clear(var13, sizeof(var13));
-            func_020474a8(var1, 10, ((char*)(func_020e0434(&arg0->unknown_64_, 12))), var13);
-            func_02042058(arg1, var13);
+        if (combatant->status->flags & 1)
+            AppendString02042058(output, ((const char*)(KeyTable_Get(&menu->texts, 13))));
+        else if (flags & 2)
+            AppendString02042058(output, ((const char*)(KeyTable_Get(&menu->texts, 14))));
+        else if (flags & 4)
+            AppendString02042058(output, ((const char*)(KeyTable_Get(&menu->texts, 15))));
+        if (!(combatant->status->flags & 1) && !(flags & 6)) {
+            func_02046380(formatter);
+            StoreInArray0x8b0_020465c0(formatter, 0, detail->values[detail->selected]);
+            SetByteInRange_020465f0(((unsigned char*)(formatter)), 0, 2);
+            SetByteAtIndex_020465d8(((unsigned char*)(formatter)), 0, 1);
+            char formatted[0x40];
+            __clear(formatted, sizeof(formatted));
+            func_020474a8(formatter, 10, ((char*)(KeyTable_Get(&menu->texts, 12))), formatted);
+            AppendString02042058(output, formatted);
         }
         if (var4 != arg0->unknown_590_ - 1) func_02042058(arg1, data_ov003_0217fe7f);
 #else
-        memset(var0->unknown_8e0_, 0, 0x40);
-        memset(var0->unknown_920_, 0, 0x40);
-        func_02041a28(var0->unknown_920_, 0x40);
-        if (var5->unknown_130_->unknown_0_ & 1)
-            func_02042058(var0->unknown_920_, (const char*)func_020e0434(&arg0->unknown_64_, 13));
-        else if (var10 & 2)
-            func_02042058(var0->unknown_920_, (const char*)func_020e0434(&arg0->unknown_64_, 14));
-        else if (var10 & 4)
-            func_02042058(var0->unknown_920_, (const char*)func_020e0434(&arg0->unknown_64_, 15));
-        unsigned int var14[3];
-        func_020e4bf4(var14, var5->unknown_4_);
-        func_02046380(var1);
-        var1->unknown_0_ = var14;
-        func_02046608(var1, 10, var0->unknown_920_, var0->unknown_8e0_, 0x100, 0, 0);
-        func_02042058(arg1, var0->unknown_8e0_);
-        if (!(var5->unknown_130_->unknown_0_ & 1) && !(var10 & 6)) {
-            func_02046380(var1);
-            func_020465c0(var1, 0, var6->unknown_16c_[var6->unknown_950_]);
-            func_020465f0((unsigned char*)var1, 0, 2);
-            func_020465d8((unsigned char*)var1, 0, 1);
-            memset(var0->unknown_8e0_, 0, 0x40);
-            memset(var0->unknown_920_, 0, 0x40);
-            func_02041a28(var0->unknown_920_, 0x40);
-            func_02042058(var0->unknown_920_, (const char*)func_020e51cc(0x3f3));
-            func_02042058(var0->unknown_920_, (const char*)func_020e0434(&arg0->unknown_64_, 12));
-            func_02046608(var1, 10, var0->unknown_920_, var0->unknown_8e0_, 0x100, 0, 0);
-            func_02042058(arg1, var0->unknown_8e0_);
+        memset(buffers->formatted, 0, 0x40);
+        memset(buffers->input, 0, 0x40);
+        AppendXTag_02041a28(buffers->input, 0x40);
+        if (combatant->status->flags & 1)
+            AppendString02042058(buffers->input, (const char*)KeyTable_Get(&menu->texts, 13));
+        else if (flags & 2)
+            AppendString02042058(buffers->input, (const char*)KeyTable_Get(&menu->texts, 14));
+        else if (flags & 4)
+            AppendString02042058(buffers->input, (const char*)KeyTable_Get(&menu->texts, 15));
+        unsigned int descriptor[3];
+        InitObjFromCombatantId020e4bf4(descriptor, combatant->id);
+        func_02046380(formatter);
+        formatter->object = descriptor;
+        func_02046608(formatter, 10, buffers->input, buffers->formatted, 0x100, 0, 0);
+        AppendString02042058(output, buffers->formatted);
+        if (!(combatant->status->flags & 1) && !(flags & 6)) {
+            func_02046380(formatter);
+            StoreInArray0x8b0_020465c0(formatter, 0, detail->values[detail->selected]);
+            SetByteInRange_020465f0((unsigned char*)formatter, 0, 2);
+            SetByteAtIndex_020465d8((unsigned char*)formatter, 0, 1);
+            memset(buffers->formatted, 0, 0x40);
+            memset(buffers->input, 0, 0x40);
+            AppendXTag_02041a28(buffers->input, 0x40);
+            AppendString02042058(buffers->input, (const char*)CallFunc020e0434With02153694_020e51cc(0x3f3));
+            AppendString02042058(buffers->input, (const char*)KeyTable_Get(&menu->texts, 12));
+            func_02046608(formatter, 10, buffers->input, buffers->formatted, 0x100, 0, 0);
+            AppendString02042058(output, buffers->formatted);
         }
 #endif
     }

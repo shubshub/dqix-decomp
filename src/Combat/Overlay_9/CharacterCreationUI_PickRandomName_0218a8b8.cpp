@@ -1,33 +1,28 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
+#include "Resource/CharacterCreationUI.h"
 
-extern int data_ov009_0218a9ac[];
+extern int CharacterCreationUI_randomNameCounts[];
 
-struct Container020e0310;
-int GetFieldByKey020e0434(struct Container020e0310* c, int key);
+int KeyTable_Get(Container020e0310* c, int key);
 
-// Overlay 9, originally ResetEntrySkill0218a8b8 (USA/EUR 0x0218a8b8; JPN not identified)
+// Overlay 9, originally ResetEntrySkill0218a8b8 (USA/EUR 0x0218a8b8; JPN 0x0218b850, a body of its own)
 ARM void CharacterCreationUI_PickRandomName(void* objRaw) {
-    char* obj = (char*)objRaw;
-    void** arr = *(void***)(obj + 0xdb0);
-    void* entry = arr[*(unsigned char*)(obj + 0xda3)];
-    int rem;
-    int val;
-    int result;
-    unsigned char idx;
-
-    memset(entry, 0, 0x48);
-
-    idx = *(unsigned char*)(obj + 0xda3);
-    int range = data_ov009_0218a9ac[idx];
-    rem = rand() % range;
-
-    idx = *(unsigned char*)(obj + 0xda3);
-    int t = idx * 1000;
-    t += 0xe20;
-    t += 0x4000;
-    val = (short)(rem + t);
-    result = GetFieldByKey020e0434((struct Container020e0310*)(obj + 0xe0), val);
-
-    sprintf((char*)entry, (const char*)(long)result);
+    CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
+    char** names = self->names;
+    char* name = names[self->sex];
+    int pick;
+    int textId;
+    int text;
+    unsigned char sex;
+    memset(name, 0, CreationName_BufferSize);
+    sex = self->sex;
+    int count = CharacterCreationUI_randomNameCounts[sex];
+    pick = rand() % count;
+    sex = self->sex;
+    int firstText = sex * CreationText_RandomNameStride;
+    firstText += CreationText_FirstRandomName;
+    textId = (short)(pick + firstText);
+    text = KeyTable_Get(&self->texts, textId);
+    sprintf(name, (const char*)(long)text);
 }

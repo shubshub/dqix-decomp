@@ -57,18 +57,18 @@ void BackupSubBgControlRegisters(SubBgControlBackup02074b64*);
 void OrGlobalFlag0x40_020dc2bc();
 void SetSubBrightness(GameResources*, int, int);
 int IsSubBrightnessTransitionActive(GameResources*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
-extern "C" void func_0208c9cc(int, int, int, int, int);
-extern "C" int func_02046900(Struct_02020cb8_4*);
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0205aed0(void*, char*, unsigned int, int);
-extern "C" void func_0204b5b4(void*, int);
-extern "C" int func_0205a528(void*, void*, int, int);
-extern "C" void func_020dfec0(void*, SafeAllocator*, void*, unsigned int);
-extern "C" void func_0208bf78(Struct_0208cb08_5*);
+void Background_SetMapSize(unsigned char*, int);
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+void Background_SetScroll(Obj0204b5e8*, int, int);
+void SetSubBg0Control0208c9cc(int, int, int, int, int);
+int Pac_CountFiles(ActiveEntry02046900*);
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
+extern "C" void Background_SetPriority(void*, int);
+extern "C" int SpriteContext_LoadFile(void*, void*, int, int);
+extern "C" void KeyTable_Load(void*, SafeAllocator*, void*, unsigned int);
+extern "C" void func_0208bf78(Object_0208cb08*);
 extern char data_020f11a2[], data_020f11b3[], data_020f11c0[], data_020f11da[];
 
 #if defined(jpn)
@@ -93,50 +93,50 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
                 var3 = var4 + 0x32;
             }
         }
-        func_02094b30(var2, var3, 0);
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 1) {
-        if (func_02094b4c(func_02094a00())) ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 2) {
-        func_02074b64(&arg0->unknown_2c_);
-        func_020dc2bc();
-        if (!(arg0->unknown_da_ & 0x10)) SetSubBrightness(var1, -16, 8);
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 3) {
-        if (IsSubBrightnessTransitionActive(var1)) return;
-        Struct_0208cb08_4* var5 = arg0->unknown_0_;
-        var5->unknown_14_.Reset();
-        func_0204b11c((unsigned char*)&arg0->unknown_40_, 0);
-        arg0->unknown_40_.unknown_1c_ = (arg0->unknown_40_.unknown_1c_ & ~0xf) | 1;
-        arg0->unknown_40_.unknown_1c_ &= ~0xf0;
-        func_0204b5b4(&arg0->unknown_40_, 0);
-        func_0204b12c((Struct_0204b12c*)&arg0->unknown_40_, &var5->unknown_14_);
-        func_0204af38((Struct_0204af38*)&arg0->unknown_40_, 1, &var5->unknown_14_);
-        func_0204b5e8((Struct_02020cb8_5*)&arg0->unknown_40_, 0, 0);
-        func_0208c9cc(0, 0, 15, 0, 0);
-        arg0->unknown_b0_ = 1;
-        arg0->unknown_a0_ = arg0->unknown_b4_;
-        arg0->unknown_ac_ = 3;
+        BlankFunction02094b30(global, notification, 0);
+        ++object->state;
+    } else if (object->state == 1) {
+        if (AlwaysTrue02094b4c(GetGlobal02109400_02094a00())) ++object->state;
+    } else if (object->state == 2) {
+        BackupSubBgControlRegisters(&object->backup);
+        OrGlobalFlag0x40_020dc2bc();
+        if (!(object->flags & 0x10)) SetSubBrightness(resources, -16, 8);
+        ++object->state;
+    } else if (object->state == 3) {
+        if (IsSubBrightnessTransitionActive(resources)) return;
+        Arena_0208cb08* arena = object->arena;
+        arena->inputAllocator.Reset();
+        Background_SetMapSize((unsigned char*)&object->input, 0);
+        object->input.flags = (object->input.flags & ~0xf) | 1;
+        object->input.flags &= ~0xf0;
+        Background_SetPriority(&object->input, 0);
+        Background_AllocateMap((AllocTarget0204b12c*)&object->input, &arena->inputAllocator);
+        Background_AllocateScreens((Foo0204af38*)&object->input, 1, &arena->inputAllocator);
+        Background_SetScroll((Obj0204b5e8*)&object->input, 0, 0);
+        SetSubBg0Control0208c9cc(0, 0, 15, 0, 0);
+        object->pending = 1;
+        object->source = object->filename;
+        object->format = 3;
 #if defined(jpn)
         arg0->unknown_bc_ = var0->QueueLoadFile(data_020f129e, 0);
 #else
         arg0->unknown_bc_ = var0->QueueLoadFileInGP2(data_020f11a2, data_020f11b3, 0);
 #endif
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 4) {
-        if (!var0->GetTaskStatus(arg0->unknown_bc_)) return;
-        Struct_0208cb08_4* var6 = arg0->unknown_0_;
-        var6->unknown_3c_.Reset();
-        void* var7;
-        void* var8;
-        unsigned int var9;
-        var0->GetLoadedFileByID(arg0->unknown_bc_, &var8, &var9);
-        int var10 = func_02046900((Struct_02020cb8_4*)var8);
-        int var11 = 0;
-        int var12;
-        for (; var11 < var10; ++var11) {
-            void* var13 = func_020467f0((Struct_02020aec*)var8, var11, &var7, &var12);
-            func_0205a528(arg0->unknown_60_, var13, var12, (int)&var6->unknown_3c_);
+        ++object->state;
+    } else if (object->state == 4) {
+        if (!loader->GetTaskStatus(object->taskId)) return;
+        Arena_0208cb08* arena = object->arena;
+        arena->resourceAllocator.Reset();
+        void* record;
+        void* file;
+        unsigned int length;
+        loader->GetLoadedFileByID(object->taskId, &file, &length);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int index = 0;
+        int size;
+        for (; index < count; ++index) {
+            void* data = Pac_GetFile((Rec020467f0*)file, index, &record, &size);
+            SpriteContext_LoadFile(object->resource, data, size, (int)&arena->resourceAllocator);
         }
         func_0205aed0(arg0->unknown_60_, arg0->unknown_b4_, 3, 0x40);
         var0->RemoveTask(arg0->unknown_bc_);
@@ -148,16 +148,16 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
 #else
         arg0->unknown_bc_ = var0->QueueLoadFileInGP2(data_020f11c0, data_020f11da, 0);
 #endif
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 6) {
-        if (!var0->GetTaskStatus(arg0->unknown_bc_)) return;
-        Struct_0208cb08_4* var14 = arg0->unknown_0_;
-        void* var15;
-        unsigned int var16;
-        var0->GetLoadedFileByID(arg0->unknown_bc_, &var15, &var16);
-        if (var14) {
-            var14->unknown_0_.Reset();
-            func_020dfec0(arg0->unknown_4_, &var14->unknown_0_, var15, var16);
+        ++object->state;
+    } else if (object->state == 6) {
+        if (!loader->GetTaskStatus(object->taskId)) return;
+        Arena_0208cb08* arena = object->arena;
+        void* file;
+        unsigned int length;
+        loader->GetLoadedFileByID(object->taskId, &file, &length);
+        if (arena) {
+            arena->fileAllocator.Reset();
+            KeyTable_Load(object->container, &arena->fileAllocator, file, length);
         }
         var0->RemoveTask(arg0->unknown_bc_);
         arg0->unknown_bc_ = -1;

@@ -20,16 +20,16 @@ extern "C"
     void* func_02053c6c(void*);
     void _Z25RunBufferedStream0205e104iiP12StreamHeaderi(const char*, SafeAllocator*, const void*, unsigned int);
 
-    void* func_0207df50(void*);
-    void func_0207df90(void*);
-    void func_0207dfac(void*);
+    void* _Z26CopyInternalFields0207df50P11Foo0207df50(void*);
+    void _Z17VramState_RestorePc(void*);
+    void _Z14VramState_SavePc(void*);
 
     void* func_0208a9b4();
     void func_02094d00(void*);
     Zone3D_StructPtr_8* func_02099950(void*, unsigned short id);
 
     void func_020c9be0();
-    void func_020de848(void*);
+    void _Z14ItemTable_InitPv(void*);
 
     void func_02013750(Zone3D*, bool);
 
@@ -127,7 +127,7 @@ void Zone3D::SwitchZone(unsigned short newID, int)
 
     atmosphericEffects_.Reset();
     lighting_.Reset();
-    func_020de848(&unknown_struct_2754_[0]);
+    _Z14ItemTable_InitPv(&unknown_struct_2754_[0]);
 
     pUnknownStruct_8_ = func_02099950(uVar3, newID);
     unknown_4_ = pUnknownStruct_8_->unknown_2_;

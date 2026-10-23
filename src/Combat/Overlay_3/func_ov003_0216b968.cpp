@@ -45,9 +45,9 @@ Global0216b968* GetGlobalField0x1c020421a0(void);
 extern "C" void func_0205d7a0(void* list, int index);
 extern "C" void func_ov003_0216da90(Self0216b968* self);
 void IterateEntries0205a330(struct Container0205a330* c, int arg);
-int GetActiveScaledSum0205d794(struct Struct_0205c570* list);
+int Window_GetSelectedIndex(struct Struct_0205c570* list);
 extern "C" void func_ov003_0216dc58(Self0216b968* self);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void* list);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int value);
@@ -70,25 +70,25 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
         func_0205d7a0(arg0->unknown_12c0_, 0);
         func_ov003_0216da90(arg0);
         ColorEffect_ConfigureAlphaBlend(0x04000050, 4, 1, 10, 6);
-        arg0->unknown_6_ = 2;
-    } else if (arg0->unknown_6_ == 2) {
-        GameState* var1 = GameState::GetInstance();
-        struct Struct_0205a330* var2 = var0->unknown_2e0_;
-        func_0205a330(var2, var1->GetTickCount());
-        var0->unknown_19ae_ = 0;
-        arg0->unknown_13ee_ = 0;
-        func_0205d794((struct Struct_0205c570*)arg0->unknown_12c0_);
-        if (arg0->unknown_10_ != 0) {
-            func_ov003_0216dc58(arg0);
+        self->step_ = 2;
+    } else if (self->step_ == 2) {
+        GameState* gameState = GameState::GetInstance();
+        struct Container0205a330* entries = global->entries_;
+        IterateEntries0205a330(entries, gameState->GetTickCount());
+        global->field_0x19ae = 0;
+        self->field_0x13ee = 0;
+        Window_GetSelectedIndex((struct Struct_0205c570*)self->list_);
+        if (self->field_0x10 != 0) {
+            func_ov003_0216dc58(self);
         }
 
-        int var3 = -1;
-        if (func_0205da38((struct Struct_0205da38*)arg0->unknown_12c0_, 0x14) != 0) {
-            var3 = func_0205d794((struct Struct_0205c570*)arg0->unknown_12c0_);
+        int selection = -1;
+        if (Window_IsSelectionTouched((struct Obj_0205da38*)self->list_, 0x14) != 0) {
+            selection = Window_GetSelectedIndex((struct Struct_0205c570*)self->list_);
         } else if (g_keyManager.TestKeysPressed(0x401) != 0) {
-            var3 = func_0205d794((struct Struct_0205c570*)arg0->unknown_12c0_);
-        } else if (g_keyManager.TestKeysPressed(2) != 0 || func_0205d97c(arg0->unknown_12c0_) == 2) {
-            var3 = -2;
+            selection = Window_GetSelectedIndex((struct Struct_0205c570*)self->list_);
+        } else if (g_keyManager.TestKeysPressed(2) != 0 || func_0205d97c(self->list_) == 2) {
+            selection = -2;
         }
 
 #if defined(jpn)

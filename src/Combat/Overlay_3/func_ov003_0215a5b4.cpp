@@ -42,36 +42,36 @@ struct Struct_ov003_0215a5b4_4 {
 struct Struct_0201099c_3;
 struct Struct_0205d81c;
 
-extern "C" struct Struct_ov003_0215a5b4_3* func_020421a0();
-extern "C" void func_0205deb4(struct Struct_0205d81c* arg0, int arg1, int arg2);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" void func_ov003_021592d8(struct Struct_ov003_0215a5b4_4* arg0, struct Struct_ov003_0215a5b4_2* arg1, char* arg2);
-extern "C" void func_ov003_02159250(struct Struct_ov003_0215a5b4_4* arg0, char* arg1);
-extern "C" void func_ov003_0215c01c(struct Struct_ov003_0215a5b4_4* arg0, int arg1, int arg2);
+struct MessageWork0215a5b4* GetGlobalField0x1c020421a0();
+void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+extern "C" void __clear(void* buf, int n);
+unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+extern "C" void func_ov003_021592d8(struct BattleMenu0215a5b4* self, struct Combatant0215a5b4* combatant, char* out);
+extern "C" void func_ov003_02159250(struct BattleMenu0215a5b4* self, char* text);
+extern "C" void func_ov003_0215c01c(struct BattleMenu0215a5b4* self, int mode, int flag);
 
 // USA: func_ov003_0215a5b4
-extern "C" ARM void func_ov003_0215a5b4(struct Struct_ov003_0215a5b4_4* arg0) {
-    struct Struct_ov003_0215a5b4_3* var0 = func_020421a0();
-    unsigned char var1 = arg0->unknown_580_;
-    if (var1 == 0) {
-        GameState* var2 = GameState::GetInstance();
-        func_0205deb4((struct Struct_0205d81c*)arg0->unknown_f4_, 0, 1);
-        func_0205deb4((struct Struct_0205d81c*)arg0->unknown_f4_, 1, 1);
-        func_0205deb4((struct Struct_0205d81c*)arg0->unknown_f4_, 2, 1);
-        memset(arg0->unknown_7c_, 0, Enum_ov003_0215a5b4_2400);
-        func_02042058(arg0->unknown_7c_,
-                             (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, 0x3fc));
-        unsigned char var3[4];
-        char* var4 = arg0->unknown_7c_ + Enum_ov003_0215a5b4_2144;
-        __clear(var3, sizeof(var3));
-        int var5 = func_020114ec((char*)var2, var3);
-        for (int var6 = 0; var6 < var5; var6++) {
-            struct Struct_ov003_0215a5b4_2* var7 =
-                (struct Struct_ov003_0215a5b4_2*)func_0200ff1c(var2, var3[var6]);
-            if (var7 == NULL) {
+extern "C" ARM void func_ov003_0215a5b4(struct BattleMenu0215a5b4* self) {
+    struct MessageWork0215a5b4* work = GetGlobalField0x1c020421a0();
+    unsigned char step = self->step;
+    if (step == 0) {
+        GameState* game = GameState::GetInstance();
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 0, 1);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 1, 1);
+        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 2, 1);
+        memset(self->text, 0, kRegion960);
+        AppendString02042058(self->text,
+                             (const char*)KeyTable_Get((struct Container020e0310*)self->messages, 0x3fc));
+        unsigned char ids[4];
+        char* line = self->text + kRegion860;
+        __clear(ids, sizeof(ids));
+        int count = CopyOutRegion0x571d_020114ec((char*)game, ids);
+        for (int i = 0; i < count; i++) {
+            struct Combatant0215a5b4* combatant =
+                (struct Combatant0215a5b4*)GetCombatantWithFlag0x100_0200ff1c(game, ids[i]);
+            if (combatant == NULL) {
                 continue;
             }
             int var8;
@@ -87,10 +87,10 @@ extern "C" ARM void func_ov003_0215a5b4(struct Struct_ov003_0215a5b4_4* arg0) {
             func_ov003_021592d8(arg0, var7, var4);
             func_02042058(arg0->unknown_7c_, var4);
         }
-        func_02042058(arg0->unknown_7c_,
-                             (const char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, 0x42e));
-        func_ov003_02159250(arg0, arg0->unknown_7c_);
-        arg0->unknown_580_++;
+        AppendString02042058(self->text,
+                             (const char*)KeyTable_Get((struct Container020e0310*)self->messages, 0x42e));
+        func_ov003_02159250(self, self->text);
+        self->step++;
     }
     if (var1 == 1 && var0->unknown_9a0_ == 3) {
         func_ov003_0215c01c(arg0, 1, 0);

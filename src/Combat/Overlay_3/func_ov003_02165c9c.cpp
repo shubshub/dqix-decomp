@@ -12,29 +12,29 @@ struct Struct_0201099c_16;
 struct Struct_ov003_0215f56c_3;
 struct Struct_ov003_02165c9c_5;
 
-extern "C" int func_02080b54(void* arg0, int arg1);
-extern "C" int func_ov003_021614e8(int);
-extern "C" void func_ov003_02166164(Struct_ov003_02165c9c_5*, int, int);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
-extern "C" int func_020865b0(Struct_0201099c_16*);
-extern "C" int func_ov003_0215f56c(Struct_ov003_0215f56c_3*);
-extern "C" int func_02080b40(void* arg0, int arg1);
-extern "C" void func_02080cc0(struct Struct_02080cc0* arg0, int arg1, int arg2);
-extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
-extern "C" void func_02080fe0(void*, int, int);
-extern "C" void func_02080fa8(struct Struct_02080fa8*, int, int);
-extern "C" void func_0208103c(void*, int, int);
-extern "C" void func_02080828(void*, int, short*, short*);
-extern "C" void func_020808c8(void*, int, short*, short*);
-extern "C" void func_02080854(void*, int, int, int);
-extern "C" int func_020e0434(struct Struct_0201099c_3*, int);
-extern "C" void func_ov003_0215f5e8(void* arg0, int arg1, int arg2);
-extern "C" void func_ov003_02160c58(void* arg0, short* arg1, short* arg2);
-extern "C" void func_02081198(struct Struct_02081198* arg0, int arg1, int arg2);
-extern "C" void func_02081164(struct Struct_02081164* arg0, int arg1, int arg2);
-extern "C" int func_020813ec(void* arg0, int arg1);
-extern "C" void func_ov003_02160678(void* arg0);
-extern "C" void func_ov003_02160794(void* arg0);
+int SetSublistEntriesFlag1_02080b54(void* obj, int id);
+int CompareThreshold_021614e8(int);
+void SetOrClearFlags464_02166164(Outer02166164*, int, int);
+extern "C" void func_02042764(void* src, void* dst, int flag);
+int GetFieldAt0x50(Struct020865b0*);
+int ClassifyRatio_0215f56c(S0215f56c*);
+int SetEntryFlagById02080b40(void* obj, int id);
+void SetEntryHighNibble0x13(struct Container02080cc0* obj, int id, int value);
+void SetEntryFirstField02080f8c(Container02080f8c*, int, int);
+void ResolveEntryValueByKey02080fe0(void*, int, int);
+void SetEntryFirstField02080fa8(struct Container02080fa8*, int, int);
+void SetEntryHalfword0xe_0208103c(void*, int, int);
+void GetEntryFieldsAt0x602080828(void*, int, short*, short*);
+void GetEntryOutputs020808c8(void*, int, short*, short*);
+void SetEntryFieldsAt0x602080854(void*, int, int, int);
+int KeyTable_Get(struct Container020e0310*, int);
+extern "C" void func_ov003_0215f5e8(void* menu, int page, int count);
+extern "C" void func_ov003_02160c58(void* self, short* outHigh, short* outLow);
+void SetEntryNibbleByShortId(struct StatusOwner02081198* owner, int id, int enable);
+void SetEntryFlag0x2ByShortId(struct StatusOwner02081164* obj, int id, int value);
+extern "C" int func_020813ec(void* obj, int id);
+extern "C" void func_ov003_02160678(void* self);
+extern "C" void func_ov003_02160794(void* self);
 
 struct Struct_ov003_02165c9c {
     signed char unknown_0_0_ : 6;
@@ -144,20 +144,20 @@ extern "C" ARM void func_ov003_02165c9c(Struct_ov003_02165c9c_4* arg0) {
     short var25, var26;
     Struct_ov003_02165c9c_3 var27;
 
-    func_02080b54(var0, 6);
-    var1 = inline_ov003_02165c9c();
-    var2 = var1->unknown1_2c8c_;
-    var12 = 0x15;
-    var4 = 100;
-    var5 = arg0->unknown_49f_ * 4;
-    var6 = -1;
-    var13 = 0xcb;
-    var7 = func_020e0434(&arg0->unknown_2dc_, 0x7530);
-    var8 = func_020e0434(&arg0->unknown_2dc_, 0x7531);
-    arg0->unknown_4bd_ = (unsigned char)var12;
-    memset(arg0->unknown_468_, 0, 4);
-    if (func_ov003_021614e8((int)arg0) == 0) {
-        var11 = 1;
+    SetSublistEntriesFlag1_02080b54(elementObj, 6);
+    party = GetParty();
+    count = party->count;
+    idA = 0x15;
+    idB = 100;
+    row = self->page * 4;
+    v = -1;
+    idC = 0xcb;
+    emptyName = KeyTable_Get(&self->cont2dc, 0x7530);
+    otherName = KeyTable_Get(&self->cont2dc, 0x7531);
+    self->flag4bd = (unsigned char)idA;
+    memset(self->counters, 0, 4);
+    if (CompareThreshold_021614e8((int)self) == 0) {
+        empty = 1;
     } else {
         var11 = 0;
     }

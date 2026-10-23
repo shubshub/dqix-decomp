@@ -11,8 +11,8 @@ struct Struct_0205d81c;
 struct Obj0205dee8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
@@ -70,18 +70,18 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
             *(char **) (var1 + 0x48) = arg0 + 0x750;
             *(unsigned int *) (arg0 + 0x22ac) |= 1;
         }
-    } else if (var0 == 1) {
-        *(unsigned int *) (arg0 + 0x22ac) |= 4;
-        func_ov002_02161b98(arg0);
-        int var3 = *(short *) (arg0 + 0x1ab0);
-        *(short *) (arg0 + 0x1ab0) =
-            func_0205d794((struct Struct_0205c570 *) (arg0 + 0xe20));
-        if (g_keyManager.TestKeysPressed(4) || func_0205df38(arg0 + 0xe20, 0x2b)) {
-            if (*(short *) (arg0 + 0x1aae) == *(signed char *) (arg0 + 0x1b37)) {
-                func_ov002_0215b458(arg0, 1);
-                *(short *) (arg0 + 0x1aea) =
-                    GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1ab0), *(signed char *) (arg0 + 0x1ae8));
-                func_ov023_021dcae0(var1, *(short *) (arg0 + 0x1aea));
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x22ac) |= 4;
+        func_ov002_02161b98(base);
+        int prev = *(short *) (base + 0x1ab0);
+        *(short *) (base + 0x1ab0) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xe20));
+        if (g_keyManager.TestKeysPressed(4) || func_0205df38(base + 0xe20, 0x2b)) {
+            if (*(short *) (base + 0x1aae) == *(signed char *) (base + 0x1b37)) {
+                func_ov002_0215b458(base, 1);
+                *(short *) (base + 0x1aea) =
+                    GetInventoryItemByID(base, *(short *) (base + 0x1ab0), *(signed char *) (base + 0x1ae8));
+                func_ov023_021dcae0(sub, *(short *) (base + 0x1aea));
                 return;
             }
         }
@@ -90,7 +90,7 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
         func_ov023_021dcae0(sub, *(short *) (base + 0x1aea));
         if (prev != *(short *) (base + 0x1ab0)) return;
         int a = g_keyManager.TestKeysPressed(0x601);
-        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xe20), 0x14);
+        int b = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xe20), 0x14);
         if ((a | b) ? 1 : 0) {
             *(unsigned char *) (base + 0xed8) = *(int *) (base + 0x1a80);
             *(unsigned int *) (base + 0x22ac) &= ~4;
@@ -148,18 +148,18 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
             *(char **) (arg0 + 0x98) = arg0 + 0x3ec + 0x400;
             *(unsigned int *) (arg0 + 0x2000 + 0x47c) |= 1;
         }
-    } else if (var9 == 1) {
-        *(unsigned int *) (arg0 + 0x2000 + 0x47c) |= 4;
-        func_ov002_02161b98(arg0);
-        int var11 = *(short *) (arg0 + 0x1b00 + 0xe8);
-        *(short *) (arg0 + 0x1b00 + 0xe8) =
-            func_0205d794((struct Struct_0205c570 *) (arg0 + 0x2c8 + 0xc00));
-        if (g_keyManager.TestKeysPressed(4) || func_0205df38(arg0 + 0x2c8 + 0xc00, 0x28)) {
-            if (*(short *) (arg0 + 0x1b00 + 0xe6) == *(signed char *) (arg0 + 0x1c00 + 0x73)) {
-                func_ov002_0215b458(arg0, 1);
-                *(short *) (arg0 + 0x1c00 + 0x22) =
-                    GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1b00 + 0xe8), *(signed char *) (arg0 + 0x1c00 + 0x20));
-                func_ov023_021dcae0(arg0 + 0x50, *(short *) (arg0 + 0x1c00 + 0x22));
+    } else if (state == 1) {
+        *(unsigned int *) (base + 0x2000 + 0x47c) |= 4;
+        func_ov002_02161b98(base);
+        int prev = *(short *) (base + 0x1b00 + 0xe8);
+        *(short *) (base + 0x1b00 + 0xe8) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
+        if (g_keyManager.TestKeysPressed(4) || func_0205df38(base + 0x2c8 + 0xc00, 0x28)) {
+            if (*(short *) (base + 0x1b00 + 0xe6) == *(signed char *) (base + 0x1c00 + 0x73)) {
+                func_ov002_0215b458(base, 1);
+                *(short *) (base + 0x1c00 + 0x22) =
+                    GetInventoryItemByID(base, *(short *) (base + 0x1b00 + 0xe8), *(signed char *) (base + 0x1c00 + 0x20));
+                func_ov023_021dcae0(base + 0x50, *(short *) (base + 0x1c00 + 0x22));
                 return;
             }
         }
@@ -168,7 +168,7 @@ extern "C" ARM void func_ov002_02162e50(char *arg0) {
         func_ov023_021dcae0(base + 0x50, *(short *) (base + 0x1c00 + 0x22));
         if (prev != *(short *) (base + 0x1b00 + 0xe8)) return;
         int a = g_keyManager.TestKeysPressed(0x601);
-        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14);
+        int b = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14);
         if ((a | b) ? 1 : 0) {
             *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;

@@ -3,20 +3,20 @@
 
 struct Struct_0201099c_3;
 
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" char *func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_020420e8(const char *arg0, int arg1);
-extern "C" void func_02041a90(char *arg0, int arg1, int arg2);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" int func_02041fac(char *arg0, int arg1, int arg2);
-extern "C" int func_02041b00(char *arg0, int arg1);
-extern "C" int func_02041e70(char *arg0, int arg1);
-extern "C" int func_02041b70(char *arg0, int arg1, const char *arg2);
-extern "C" int func_02041a28(char *arg0, int arg1);
-extern "C" int func_02041bac(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041cc0(char *arg0, int arg1);
-extern "C" void *__clear(void *arg0, int arg1);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+char *KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int func_020420e8(const char *text, int large);
+void AppendXYTag_02041a90(char *text, int x, int y);
+int AppendString02042058(char *dst, const char *src);
+int AppendFormatted02041fac(char *dst, int str, int b);
+int AppendHeightTag_02041b00(char *dst, int h);
+int AppendPaletteTag_02041e70(char *dst, int palette);
+int AppendNameTag_02041b70(char *dst, int n, const char *name);
+int AppendXTag_02041a28(char *dst, int x);
+int AppendSourceRectTag_02041bac(char *dst, int a, int b, int c, int d, int e);
+int AppendLineTag02041cc0(char *dst, int a1);
+extern "C" void *__clear(void *destination, int count);
 
 extern "C" char data_ov002_0216d2b3[];
 
@@ -40,47 +40,47 @@ extern "C" ARM void func_ov002_02160ce8(unsigned char *arg0, char *arg1, int arg
     if (arg2) {
         func_02041c08(arg1, var7, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var7);
-    char *var10 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0xfa6);
-    func_02041a90(arg1, (0xf0 - func_020420e8(var10, 0)) >> 1, 4);
-    func_02042058(arg1, var10);
-    func_02041fac(arg1, (int) data_ov002_0216d2b3, 0x10);
-    var1 = 0x11f8;
-    for (var3 = 0; var3 < 3; var3++) {
-        if (var3 == 2) {
-            func_02041b00(arg1, 7);
+    AppendCursorTag_02041ea4(dst, cursor);
+    char *title = KeyTable_Get((struct Container020e0310 *) (self + 0x20), 0xfa6);
+    AppendXYTag_02041a90(dst, (0xf0 - func_020420e8(title, 0)) >> 1, 4);
+    AppendString02042058(dst, title);
+    AppendFormatted02041fac(dst, (int) data_ov002_0216d2b3, 0x10);
+    key = 0x11f8;
+    for (r = 0; r < 3; r++) {
+        if (r == 2) {
+            AppendHeightTag_02041b00(dst, 7);
         }
-        func_02041e70(arg1, 0xf);
-        func_02041b70(arg1, var8,
-                      func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var1++));
-        if (var3 != 2) {
-            func_02041a28(arg1, 0x5a);
-            var4 = 0x11fb;
-            func_02041e70(arg1, 3);
-            func_02042058(
-                arg1, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var4++));
-            var5 = 0x7d;
-            for (var6 = 0; var6 < 5; var6++) {
-                func_02041a28(arg1, var5);
-                int var11 = 0xf;
-                if (var6 + 1 == *var0[var3]) {
-                    var11  = 5;
-                    var2 = var5;
+        AppendPaletteTag_02041e70(dst, 0xf);
+        AppendNameTag_02041b70(dst, row,
+                      KeyTable_Get((struct Container020e0310 *) (self + 0x20), key++));
+        if (r != 2) {
+            AppendXTag_02041a28(dst, 0x5a);
+            k = 0x11fb;
+            AppendPaletteTag_02041e70(dst, 3);
+            AppendString02042058(
+                dst, KeyTable_Get((struct Container020e0310 *) (self + 0x20), k++));
+            x = 0x7d;
+            for (c = 0; c < 5; c++) {
+                AppendXTag_02041a28(dst, x);
+                int pal = 0xf;
+                if (c + 1 == *sels[r]) {
+                    pal  = 5;
+                    selX = x;
                 }
-                func_02041e70(arg1, var11);
-                func_02041b70(arg1, var9,
-                              func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var4++));
-                var9++;
-                var5 += 0x10;
+                AppendPaletteTag_02041e70(dst, pal);
+                AppendNameTag_02041b70(dst, nameIdx,
+                              KeyTable_Get((struct Container020e0310 *) (self + 0x20), k++));
+                nameIdx++;
+                x += 0x10;
             }
-            func_02041a28(arg1, 0xce);
-            func_02041e70(arg1, 3);
-            func_02042058(
-                arg1, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var4));
-            func_02041a28(arg1, var2 + 3);
-            func_02041e70(arg1, 0xf);
-            func_02042058(
-                arg1, func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x1202));
+            AppendXTag_02041a28(dst, 0xce);
+            AppendPaletteTag_02041e70(dst, 3);
+            AppendString02042058(
+                dst, KeyTable_Get((struct Container020e0310 *) (self + 0x20), k));
+            AppendXTag_02041a28(dst, selX + 3);
+            AppendPaletteTag_02041e70(dst, 0xf);
+            AppendString02042058(
+                dst, KeyTable_Get((struct Container020e0310 *) (self + 0x20), 0x1202));
         }
         if (var3 != 2) {
             func_02042058(arg1, *(char **) (arg0 + 0x1bdc));

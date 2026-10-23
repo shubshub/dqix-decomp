@@ -7,25 +7,25 @@
 void* GetDataPtr02114e04_020d6c00(void);
 void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
 void OrGlobalFlag0x40_020dc2bc(void);
-void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* obj, int value);
-extern "C" void func_0204b5b4(void* obj, int value);
+void Background_SetMapSize(unsigned char* obj, int value);
+extern "C" void Background_SetPriority(void* obj, int value);
 struct Obj0204b5e8;
-void DispatchViaTable0204b5e8(struct Obj0204b5e8* obj, int a, int b);
+void Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
 struct Foo0204af38;
-void AllocateArray0204af38(struct Foo0204af38* obj, int count, SafeAllocator* alloc);
+void Background_AllocateScreens(struct Foo0204af38* obj, int count, SafeAllocator* alloc);
 struct AllocTarget0204b12c;
-void AllocateAndClearBuffer0204b12c(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
+void Background_AllocateMap(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
 struct Obj0204b010;
-void ClearBuffer0204b010(struct Obj0204b010* obj, void* p);
+void Background_ClearMap(struct Obj0204b010* obj, void* p);
 struct Obj0204b988;
 void DispatchIndexedEntry0204b988(struct Obj0204b988* obj, unsigned int a, int b, int c, unsigned short d);
 struct List0204b0e8;
-void FlushAndDispatchList0204b0e8(struct List0204b0e8* list, void* p);
+void Background_UploadMap(struct List0204b0e8* list, void* p);
 struct ActiveEntry02046900;
-int CountActiveEntries(struct ActiveEntry02046900* entries);
+int Pac_CountFiles(struct ActiveEntry02046900* entries);
 struct Rec020467f0;
-void* FindRecordByIndex(struct Rec020467f0* table, int index, void** outPtr, int* outCount);
-extern "C" void func_0204b174(void* obj, void* rec, SafeAllocator* alloc, int count);
+void* Pac_GetFile(struct Rec020467f0* table, int index, void** outPtr, int* outCount);
+extern "C" void Background_LoadFile(void* obj, void* rec, SafeAllocator* alloc, int count);
 
 extern char data_ov003_0217fcb5[];
 extern char data_ov003_0217fcc7[];
@@ -74,42 +74,42 @@ extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
         BG3CNTSUB = (BG3CNTSUB & ~3) | 3;
         DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | 0x1100;
 
-        SafeAllocator* var2 = arg0->unknown_0_;
-        var2->Reset();
-        arg0->unknown_34_0_ = 1;
-        arg0->unknown_34_4_ = 0;
-        func_0204b11c((unsigned char*)arg0->unknown_18_, 0);
-        func_0204b5b4(arg0->unknown_18_, 0);
-        func_0204b5e8((struct Struct_02020cb8_5*)arg0->unknown_18_, 0, 0);
-        func_0204af38((struct Struct_0204af38*)arg0->unknown_18_, 14, var2);
-        func_0204b12c((struct Struct_0204b12c*)arg0->unknown_18_, var2);
+        SafeAllocator* alloc = self->allocator;
+        alloc->Reset();
+        self->bits34Lo = 1;
+        self->bits34Hi = 0;
+        Background_SetMapSize((unsigned char*)self->backgrounds, 0);
+        Background_SetPriority(self->backgrounds, 0);
+        Background_SetScroll((struct Obj0204b5e8*)self->backgrounds, 0, 0);
+        Background_AllocateScreens((struct Foo0204af38*)self->backgrounds, 14, alloc);
+        Background_AllocateMap((struct AllocTarget0204b12c*)self->backgrounds, alloc);
 #if defined(jpn)
         arg0->unknown_50_ = var1->QueueLoadFile(data_ov003_0217fcb5, 0);
 #else
         arg0->unknown_50_ = var1->QueueLoadFileInGP2(data_ov003_0217fcb5, data_ov003_0217fcc7, 0);
 #endif
-        arg0->unknown_5b_++;
-    } else if (arg0->unknown_5b_ == 3) {
-        if (var1->GetTaskStatus(arg0->unknown_50_) != 0) {
-            SafeAllocator* var3 = arg0->unknown_0_;
-            void* var4;
-            void* var5;
-            unsigned int var6;
-            var1->GetLoadedFileByID(arg0->unknown_50_, &var5, &var6);
-            int var7 = func_02046900((struct Struct_02020cb8_4*)var5);
-            for (int var8 = 0; var8 < var7; var8++) {
-                int var9;
-                void* var10 = func_020467f0((struct Struct_02020aec*)var5, var8, &var4, &var9);
-                func_0204b174(arg0->unknown_18_, var10, var3, var9);
+        self->loadState++;
+    } else if (self->loadState == 3) {
+        if (loader->GetTaskStatus(self->taskId) != 0) {
+            SafeAllocator* alloc = self->allocator;
+            void* ent;
+            void* file;
+            unsigned int len;
+            loader->GetLoadedFileByID(self->taskId, &file, &len);
+            int count = Pac_CountFiles((struct ActiveEntry02046900*)file);
+            for (int i = 0; i < count; i++) {
+                int n;
+                void* rec = Pac_GetFile((struct Rec020467f0*)file, i, &ent, &n);
+                Background_LoadFile(self->backgrounds, rec, alloc, n);
             }
-            var1->RemoveTask(arg0->unknown_50_);
-            arg0->unknown_50_ = -1;
-            func_0204b010((struct Struct_0204b010*)arg0->unknown_18_, 0);
-            func_0204b988((struct Struct_0204b988*)arg0->unknown_18_, 0, 0, 0, 0xffff);
-            func_0204b0e8((struct Struct_02020cb8_2*)arg0->unknown_18_, 0);
-            arg0->unknown_5a_ = 1;
-            arg0->unknown_5b_ = 0;
-            arg0->unknown_5d_ |= 2;
+            loader->RemoveTask(self->taskId);
+            self->taskId = -1;
+            Background_ClearMap((struct Obj0204b010*)self->backgrounds, 0);
+            DispatchIndexedEntry0204b988((struct Obj0204b988*)self->backgrounds, 0, 0, 0, 0xffff);
+            Background_UploadMap((struct List0204b0e8*)self->backgrounds, 0);
+            self->ready = 1;
+            self->loadState = 0;
+            self->flags |= 2;
         }
     }
 }

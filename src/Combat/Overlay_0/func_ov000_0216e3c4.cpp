@@ -23,11 +23,11 @@ struct Struct_ov000_0216d368 { int unknown_0_, unknown_4_, unknown_8_; };
 struct Struct_0202e6a8;
 extern "C" void func_ov000_0216d370(Struct_020a212c_2*, int, int, int);
 extern "C" int func_ov000_0215e9fc(Random*, short*, int, int);
-extern "C" void func_0202e5d8(Struct_020a212c_2*, int, int, int);
-extern "C" Struct_ov000_0216e3c4* func_0200fea4(GameState*, int);
-extern "C" void func_0202e5c8(unsigned char*, int, int, int);
-extern "C" void func_ov000_0216d368(Struct_ov000_0216d368*, int, int, int);
-extern "C" void func_0202e6a8(Struct_0202e6a8*, int);
+extern "C" void func_0202e5d8(BattleCamera*, int, int, int);
+CameraCombatant* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+void Camera_SetTarget(unsigned char*, int, int, int);
+void StoreVec3Words0216d368(Vec3Ints0216d368*, int, int, int);
+void ApplyField0x70Tail(GlobalObj0202e6a8*, int);
 
 // USA: func_ov000_0216e3c4
 extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
@@ -66,21 +66,21 @@ extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
         GameObject* var15 = var0->GetGameObjectByIndex(var3[var14]);
         if (var15) var13 = var15->obj3D_.rotation_.y;
     }
-    var13 = fix32ReduceAngle0To2Pi(var13 - 0x648);
-    func_0202e5c8((unsigned char*)arg0, var5.x, 0x800, var5.z);
-    func_0202e5d8(arg0, var13, 0x1000, var11);
-    int var16 = 0;
-    arg0->unknown_238_ = 14;
-    arg0->unknown_278_ = 1;
-    Struct_ov000_0216d368 var17;
-    func_ov000_0216d368(&var17, 0, 0, 0);
-    for (int var18 = 0; var18 < 8; var18++) {
-        Struct_ov000_0216e3c4* var19 = func_0200fea4(var0, var18 + 0xc0);
-        if (var19 && var19->unknown_c2_4_) {
-            Vector3i var20;
-            var20 = var19->unknown_0_.position_;
-            Vector3fix_Add(&var20, (Vector3i*)&var17, (Vector3i*)&var17);
-            var16++;
+    angle = fix32ReduceAngle0To2Pi(angle - 0x648);
+    Camera_SetTarget((unsigned char*)camera, center.x, 0x800, center.z);
+    func_0202e5d8(camera, angle, 0x1000, distance);
+    int combatants = 0;
+    camera->mode = 14;
+    camera->active = 1;
+    Vec3Ints0216d368 sum;
+    StoreVec3Words0216d368(&sum, 0, 0, 0);
+    for (int i = 0; i < 8; i++) {
+        CameraCombatant* object = GetCombatantWithFlag0x400_0200fea4(game, i + 0xc0);
+        if (object && object->included) {
+            Vector3i position;
+            position = object->object.position_;
+            Vector3fix_Add(&position, (Vector3i*)&sum, (Vector3i*)&sum);
+            combatants++;
         }
     }
     if (var16) {

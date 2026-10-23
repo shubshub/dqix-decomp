@@ -11,8 +11,8 @@ extern const short CharacterCreationUI_slotLayouts[] = {
 	3, 32, 40, 32, 32, 40, 40, 5, 2, // hairstyle
 	4, 32, 40, 32, 32, 40, 40, 5, 2, // hair colour
 	5, 32, 40, 32, 32, 40, 40, 5, 2, // face
-	7, 40, 40, 32, 32, 48, 40, 4, 2, // skin colour
-	6, 40, 40, 32, 32, 48, 40, 4, 2, // eye colour
+	7, 40, 40, 32, 32, 48, 40, 4, 2, // eye colour
+	6, 40, 40, 32, 32, 48, 40, 4, 2, // skin colour
 	8, 24, 56, 16, 16, 16, 16, 11, 6, // name keyboard
 	-1,
 };

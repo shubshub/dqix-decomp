@@ -10,16 +10,16 @@ struct Struct_0205d274;
 struct Struct_0204af14;
 struct Struct_ov000_02173954;
 
-extern "C" void func_0204b010(struct Struct_0204b010*, void*);
-extern "C" void func_0204b8d0(struct Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_0205d1e0(struct Struct_0205d1e0*);
-extern "C" void func_0205d228(struct Struct_0205d228*);
-extern "C" void func_0205d274(struct Struct_0205d274*);
-extern "C" void* func_0204af14(struct Struct_0204af14*, unsigned int);
-extern "C" void func_0204b878(struct Struct_0204b878*, int, int, int, short, short, short, short, unsigned short);
-extern "C" void func_ov000_0217f5e4(struct Struct_ov000_02173954*, int);
+void Background_ClearMap(struct Obj0204b010*, void*);
+void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Window_ClearLayers(struct Cont0205d1e0*);
+void Window_DrawPanes(struct Cont0205d228*);
+void Window_FlushLayers(struct Cont0205d274*);
+void* Background_GetScreen(struct EntryList0204af14*, unsigned int);
+void CallFunc0204b620IfField0x14_0204b878(struct Obj0204b878*, int, int, int, short, short, short, short, unsigned short);
+void SetFieldRange0217f5e4(struct Struct0217f5e4*, int);
 
-extern "C" void func_0204b04c(void*, int);
+extern "C" void Background_FlushMap(void*, int);
 extern "C" void* func_0202ae18(void*);
 extern "C" void func_0203bd08(void*);
 extern "C" void func_ov000_0217a8f4(void*);
@@ -87,28 +87,28 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
 #else
     if (*(unsigned short*)(arg0 + 0x1d72) & 0x80) {
 #endif
-        func_0204b010((struct Struct_0204b010*)(arg0 + 0x8a4), 0);
-        func_0204b8d0((struct Struct_0204b8d0*)(arg0 + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-        func_0205d1e0((struct Struct_0205d1e0*)(arg0 + 0x188));
-        func_0204b04c(arg0 + 0x8c4, 0);
+        Background_ClearMap((struct Obj0204b010*)(obj + 0x8a4), 0);
+        Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+        Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
+        Background_FlushMap(obj + 0x8c4, 0);
         return;
     }
-    func_ov000_0217a8f4(arg0);
-    func_ov000_021750e4(arg0);
-    func_0204b010((struct Struct_0204b010*)(arg0 + 0x8a4), 0);
-    func_0204b8d0((struct Struct_0204b8d0*)(arg0 + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-    func_0205d1e0((struct Struct_0205d1e0*)(arg0 + 0x188));
+    func_ov000_0217a8f4(obj);
+    func_ov000_021750e4(obj);
+    Background_ClearMap((struct Obj0204b010*)(obj + 0x8a4), 0);
+    Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+    Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
 #if defined(jpn)
     if (*(unsigned char*)(arg0 + 0x1fb8) == 0 && (*(unsigned short*)(arg0 + 0x1faa) & 0x600)) {
 #else
     if (*(unsigned char*)(arg0 + 0x1d80) == 0 && (*(unsigned short*)(arg0 + 0x1d72) & 0x600)) {
 #endif
-        func_0205d228((struct Struct_0205d228*)(arg0 + 0x188));
-        func_ov000_02175544(arg0);
-        func_0204b04c(arg0 + 0x8a4, 0);
-        func_0204b04c(arg0 + 0x8c4, 0);
-        func_0205d274((struct Struct_0205d274*)(arg0 + 0x188));
-        func_ov000_02180bac(arg0);
+        Window_DrawPanes((struct Cont0205d228*)(obj + 0x188));
+        func_ov000_02175544(obj);
+        Background_FlushMap(obj + 0x8a4, 0);
+        Background_FlushMap(obj + 0x8c4, 0);
+        Window_FlushLayers((struct Cont0205d274*)(obj + 0x188));
+        func_ov000_02180bac(obj);
         return;
     }
     func_0203bd08(func_0202ae18(GameState::GetInstance()));
@@ -202,7 +202,7 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
                     func_ov000_021741e0(arg0, var23[var25], 1.52f, var10 + data_ov000_021833c8[var25][0], var27, var28, var29, var30, 1, 0);
                 }
             }
-            func_0204b8d0((struct Struct_0204b8d0*)(arg0 + 0x8c4), 1, 0, 0, var1, var2, 0x20, 0x19, var14 + 2);
+            Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 1, 0, 0, tx, ty, 0x20, 0x19, idx + 2);
 #if defined(jpn)
             if (!func_ov000_02174324(arg0, var0[var13], var10 + 0x25, var11 + 0x17)) {
                 func_ov000_021811f4(arg0, var14, arg0 + 0x8c4, var9, var1 + 7, var2 + 3);
@@ -263,9 +263,9 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
                     func_ov000_021741e0(arg0, var39[var41], 1.28f, var10 + data_ov000_021833d8[var41][0], var43, var44, var45, var46, 1, 1);
                 }
             }
-            char* var47 = arg0 + 0x8c4;
-            if (var12->unknown_24_ & 8) var47 = arg0 + 0x8a4;
-            void* var48 = func_0204af14((struct Struct_0204af14*)(arg0 + 0x8c4), 2);
+            char* list = obj + 0x8c4;
+            if (e->flags & 8) list = obj + 0x8a4;
+            void* ent = Background_GetScreen((struct EntryList0204af14*)(obj + 0x8c4), 2);
 #if defined(jpn)
             func_0204b878((struct Struct_0204b878*)var47, (int)var48, 0, 0, var1 + 2, var2, 0x20, 0x19, var14 + 2);
 #else
@@ -284,11 +284,11 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
             }
         }
     }
-    if (inline_ov000_0215f57c(var3)) {
-        func_0205d228((struct Struct_0205d228*)(arg0 + 0x188));
-        func_ov000_02175544(arg0);
+    if (InRange(found)) {
+        Window_DrawPanes((struct Cont0205d228*)(obj + 0x188));
+        func_ov000_02175544(obj);
     }
-    func_0204b04c(arg0 + 0x8a4, 0);
-    func_0204b04c(arg0 + 0x8c4, 0);
-    func_0205d274((struct Struct_0205d274*)(arg0 + 0x188));
+    Background_FlushMap(obj + 0x8a4, 0);
+    Background_FlushMap(obj + 0x8c4, 0);
+    Window_FlushLayers((struct Cont0205d274*)(obj + 0x188));
 }

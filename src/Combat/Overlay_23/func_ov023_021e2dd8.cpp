@@ -3,11 +3,11 @@
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020de848(void* arg0);
-extern "C" void func_ov023_021e20c0(void* arg0);
-extern "C" void func_020dc4d0(signed char* arg0, signed char* arg1);
+void* GetDataPtr02114e04_020d6c00(void);
+void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void ItemTable_Init(void* obj);
+void ClearFields_021e20c0(void* p);
+void FilterSlotsWithFlag0x800020dc4d0(signed char* out, signed char* outCount);
 
 // USA: func_ov023_021e2dd8
 extern "C" ARM void func_ov023_021e2dd8(unsigned char* arg0) {
@@ -39,7 +39,7 @@ extern "C" ARM void func_ov023_021e2dd8(unsigned char* arg0) {
     ((SafeAllocator*)(arg0 + 0x7c))->ResetAllocatorPointer();
     ((SafeAllocator*)(arg0 + 0x90))->ResetAllocatorPointer();
 
-    func_020de848(arg0 + 0xa4);
+    ItemTable_Init(obj + 0xa4);
 
     *(unsigned short*)(arg0 + 0xbc) = 0;
     *(unsigned short*)(arg0 + 0xbe) = 0;

@@ -12,11 +12,11 @@ extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
 struct Struct_0201099c_3;
 struct Struct_0205de24_2;
 
-extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void func_ov003_0215b6f0(char* arg0, char* arg1, int arg2);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_020420e8(const char* text, int large);
+extern "C" void* memset(void* dst, int value, unsigned int length);
+extern "C" void func_ov003_0215b6f0(char* base, char* dst, int flag);
 #if !defined(jpn)
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
@@ -53,11 +53,11 @@ extern "C" ARM void func_ov003_0215b5c4(Struct_ov003_0215b5c4* arg0) {
 #if defined(jpn)
     short var4 = 0xb;
 #else
-    int var1 = 0;
-    for (int var2 = 0; var2 < arg0->unknown_589_; var2++) {
-        short var3 = func_020420e8(func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, arg0->unknown_58a_[var2]), 0);
-        if (var1 < var3) {
-            var1 = var3;
+    int maxWidth = 0;
+    for (int i = 0; i < self->count_; i++) {
+        short w = func_020420e8(KeyTable_Get((struct Container020e0310*)self->texts_, self->entries_[i]), 0);
+        if (maxWidth < w) {
+            maxWidth = w;
         }
     }
     short var4 = (var1 + 0x18) >> 3;

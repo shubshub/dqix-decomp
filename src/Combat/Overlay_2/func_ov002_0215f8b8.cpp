@@ -1,28 +1,28 @@
 #include "GameState/GameState.h"
 #include <globaldefs.h>
 
-struct Struct_0201099c_3;
-struct Struct_02000c9c_8;
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" int func_02041fac(char *arg0, int arg1, int arg2);
-extern "C" int func_02041a28(char *arg0, int arg1);
-extern "C" int func_02041a90(char *arg0, int arg1, int arg2);
-extern "C" int func_02041acc(char *arg0, int arg1);
-extern "C" int func_02041cc0(char *arg0, int arg1);
-extern "C" int func_02041e70(char *arg0, int arg1);
-extern "C" int func_02041b70(char *arg0, int arg1, const char *arg2);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" int func_0200fb08(struct Struct_02000c9c_8 *arg0);
-extern "C" int func_020100a8(GameState *arg0);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-extern "C" int func_020420e8(int arg0, int arg1);
-extern "C" void *__clear(void *arg0, int arg1);
-extern "C" int func_ov002_02159774(void *arg0, int arg1, int arg2, int arg3, int arg4);
-struct Struct_ov002_0216ca70 {
-    short unknown_0_;
-    short unknown_2_;
+struct Container020e0310;
+struct Struct0200fb08;
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+int AppendFormatted02041fac(char *buf, int a, int b);
+int AppendXTag_02041a28(char *dst, int x);
+int AppendXYTag_02041a90(char *dst, int x, int y);
+int AppendWidthTag_02041acc(char *dst, int w);
+int AppendLineTag02041cc0(char *dst, int a);
+int AppendPaletteTag_02041e70(char *dst, int palette);
+int AppendNameTag_02041b70(char *dst, int n, const char *name);
+int AppendString02042058(char *dst, const char *src);
+int NormalizeField5_0200fb08(struct Struct0200fb08 *p);
+int GetField0x3acValue_020100a8(GameState *gs);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
+extern "C" int func_020420e8(int str, int a);
+extern "C" void *__clear(void *dst, int count);
+extern "C" int func_ov002_02159774(void *base, int id, int a2, int a3, int a4);
+struct XPair0215f8b8 {
+    short a;
+    short b;
 };
 extern "C" struct Struct_ov002_0216ca70 data_ov002_0216ca70[];
 extern "C" signed char data_ov002_0216ca10[];
@@ -43,51 +43,51 @@ extern "C" ARM void func_ov002_0215f8b8(unsigned char *arg0, char *arg1, int arg
     if (arg2) {
         func_02041c08(arg1, var2, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var2);
-    int var3 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0xfa2);
-    func_02041a28(arg1, (0xf0 - func_020420e8(var3, 0)) >> 1);
-    func_02041fac(arg1, var3, 0xf);
+    AppendCursorTag_02041ea4(dst, cursor);
+    int title = KeyTable_Get((struct Container020e0310 *) (base + 0x20), 0xfa2);
+    AppendXTag_02041a28(dst, (0xf0 - func_020420e8(title, 0)) >> 1);
+    AppendFormatted02041fac(dst, title, 0xf);
 
-    int var4                    = 0;
-    GameState *var5            = GameState::GetInstance();
-    unsigned char var6      = *(arg0 + 0x1000 + 0xc73);
-    signed char *var7         = (signed char *) (arg0 + 0x1c00 + 0x6e);
-    int var8                 = func_0200fb08((struct Struct_02000c9c_8 *) var5);
-    struct Struct_ov002_0216ca70 *var9 = &data_ov002_0216ca70[var8];
-    signed char *var10          = &data_ov002_0216ca10[var8 * 2];
-    __clear(var0, 8);
-    __clear(var1, 8);
-    func_02041acc(var0, var10[0]);
-    func_02041acc(var1, var10[1]);
-    int var11 = func_020100a8(var5);
-    int var12 = var6 + 1;
-    int var13 = var12 + var6 + 1;
-    for (unsigned char var14 = 0; var14 < var6; var14++) {
-        int var15        = var7[var14];
-        GameObject *var16 = var5->GetPartyMemberByIndex(var15);
-        if (var16 == NULL) continue;
-        func_02041e70(arg1, func_ov002_02159774(arg0, var15, 0, 1, 1));
-        var3 = (int) var16->baseStats_;
-        func_02042058(arg1, (const char *) var3);
-        func_02041a28(arg1, 0x4a);
-        func_02041e70(arg1, 0xf);
-        short var17 = (signed char) *(int *) (func_02053c6c((unsigned char *) var16) + 0x94c) + 0x109c;
-        if (var15 == var11) var17 = 0x109b;
-        func_02041b70(
-            arg1, var4,
-            (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), var17));
-        func_02041a28(arg1, var9->unknown_0_);
-        func_02041b70(arg1, var12, var0);
-        func_02041a28(arg1, var9->unknown_2_);
-        func_02041b70(arg1, var13, var1);
-        func_02042058(arg1, *(const char **) (arg0 + 0x1000 + 0xbdc));
-        var4++;
-        var12++;
-        var13++;
+    int n                    = 0;
+    GameState *gs            = GameState::GetInstance();
+    unsigned char count      = *(base + 0x1000 + 0xc73);
+    signed char *ids         = (signed char *) (base + 0x1c00 + 0x6e);
+    int mode                 = NormalizeField5_0200fb08((struct Struct0200fb08 *) gs);
+    struct XPair0215f8b8 *xs = &data_ov002_0216ca70[mode];
+    signed char *ws          = &data_ov002_0216ca10[mode * 2];
+    __clear(wa, 8);
+    __clear(wb, 8);
+    AppendWidthTag_02041acc(wa, ws[0]);
+    AppendWidthTag_02041acc(wb, ws[1]);
+    int me = GetField0x3acValue_020100a8(gs);
+    int k1 = count + 1;
+    int k2 = k1 + count + 1;
+    for (unsigned char i = 0; i < count; i++) {
+        int id        = ids[i];
+        GameObject *m = gs->GetPartyMemberByIndex(id);
+        if (m == NULL) continue;
+        AppendPaletteTag_02041e70(dst, func_ov002_02159774(base, id, 0, 1, 1));
+        title = (int) m->baseStats_;
+        AppendString02042058(dst, (const char *) title);
+        AppendXTag_02041a28(dst, 0x4a);
+        AppendPaletteTag_02041e70(dst, 0xf);
+        short key = (signed char) *(int *) (GetFieldAt0x150_02053c6c((unsigned char *) m) + 0x94c) + 0x109c;
+        if (id == me) key = 0x109b;
+        AppendNameTag_02041b70(
+            dst, n,
+            (const char *) KeyTable_Get((struct Container020e0310 *) (base + 0x20), key));
+        AppendXTag_02041a28(dst, xs->a);
+        AppendNameTag_02041b70(dst, k1, wa);
+        AppendXTag_02041a28(dst, xs->b);
+        AppendNameTag_02041b70(dst, k2, wb);
+        AppendString02042058(dst, *(const char **) (base + 0x1000 + 0xbdc));
+        n++;
+        k1++;
+        k2++;
     }
-    func_02041a90(arg1, 0x4a, data_ov002_0216ca44[var6]);
-    func_02041b70(
-        arg1, var4,
-        (const char *) func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x11fa));
-    func_02041cc0(arg1, data_ov002_0216ca1c[var6]);
+    AppendXYTag_02041a90(dst, 0x4a, data_ov002_0216ca44[count]);
+    AppendNameTag_02041b70(
+        dst, n,
+        (const char *) KeyTable_Get((struct Container020e0310 *) (base + 0x20), 0x11fa));
+    AppendLineTag02041cc0(dst, data_ov002_0216ca1c[count]);
 }

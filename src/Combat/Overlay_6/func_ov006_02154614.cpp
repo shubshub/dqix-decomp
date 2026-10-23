@@ -84,50 +84,50 @@ struct Struct_ov006_02154614 {
     unsigned char unknown_12bd_;
 };
 
-extern "C" void func_ov023_021dc134(Struct_ov006_02154614_2* arg0, short arg1, signed char arg2);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_ov006_0215479c(Struct_ov006_02156e54* arg0);
-extern "C" void func_020dbd9c(Struct_020dbd9c* arg0);
+extern "C" void func_ov023_021dc134(ItemInfoWindow* window, short item, signed char mode);
+void SpriteContext_Init(char* renderer);
+extern "C" void func_ov006_0215479c(IngredientSprite* sprite);
+void InitStruct020dbd9c(Struct020dbd9c* effect);
 
 // USA: func_ov006_02154614
 extern "C" ARM void func_ov006_02154614(Struct_ov006_02154614* arg0) {
 #if !defined(jpn)
     memset(arg0->unknown_0_, 0, sizeof(arg0->unknown_0_));
 #endif
-    arg0->unknown_180_ = 0;
-    arg0->unknown_184_ = 0;
-    arg0->unknown_188_ = 0;
-    arg0->unknown_1a0_ = 0;
-    arg0->unknown_1a8_ = 0;
-    arg0->unknown_1ac_ = 0;
-    arg0->unknown_1b0_ = 0;
-    arg0->unknown_1b4_ = 0;
-    arg0->unknown_1b8_ = 0;
-    arg0->unknown_1bc_ = 0;
-    arg0->unknown_1c0_ = 0;
-    arg0->unknown_1c4_ = 0;
-    arg0->unknown_1c8_ = 0;
-    arg0->unknown_1cc_ = 0;
-    arg0->unknown_1d0_ = 0;
-    arg0->unknown_1d4_ = 0;
-    arg0->unknown_1d8_ = 0;
-    arg0->unknown_1dc_ = 0;
-    arg0->unknown_1e0_ = 0;
-    arg0->unknown_1284_ = 0;
-    arg0->unknown_1280_ = 0;
-    func_ov023_021dc134(&arg0->unknown_ae4_, -1, 1);
-    arg0->unknown_ae4_.unknown_774_ |= 0x10 | 0x200;
-    func_0205a444(arg0->unknown_1e4_);
-    arg0->unknown_238_.Initialize();
-    arg0->unknown_2e4_.Initialize();
-    arg0->unknown_390_.Initialize();
-    arg0->unknown_43c_.Initialize();
-    arg0->unknown_4e8_.Initialize();
-    memset(arg0->unknown_594_, 0, sizeof(arg0->unknown_594_));
-    arg0->unknown_18c_.ResetAllocatorPointer();
-    for (unsigned char var0 = 0; var0 < 4; var0++) {
-        func_ov006_0215479c(&arg0->unknown_894_[var0]);
-        arg0->unknown_a84_[var0].ResetAllocatorPointer();
+    self->allocators_ = 0;
+    self->itemAllocator_ = 0;
+    self->nextItemAllocator_ = 0;
+    self->previousCamera_ = 0;
+    self->amounts_ = 0;
+    self->itemNames_ = 0;
+    self->texts_ = 0;
+    self->recipe_ = 0;
+    self->nextRecipe_ = 0;
+    self->unk_1bc = 0;
+    self->record_ = 0;
+    self->unk_1c4 = 0;
+    self->layout_ = 0;
+    self->backgrounds_ = 0;
+    self->canvases_ = 0;
+    self->menu_ = 0;
+    self->item_ = 0;
+    self->nextItem_ = 0;
+    self->sprites_ = 0;
+    self->windowSpriteAllocator_ = 0;
+    self->windowAllocator_ = 0;
+    func_ov023_021dc134(&self->window_, -1, 1);
+    self->window_.flags_ |= 0x10 | 0x200;
+    SpriteContext_Init(self->renderer_);
+    self->protagonist_.Initialize();
+    self->pot_.Initialize();
+    self->lid_.Initialize();
+    self->effect_.Initialize();
+    self->steam_.Initialize();
+    memset(self->unk_594, 0, sizeof(self->unk_594));
+    self->effectAllocator_.ResetAllocatorPointer();
+    for (unsigned char i = 0; i < 4; i++) {
+        func_ov006_0215479c(&self->ingredients_[i]);
+        self->ingredientAllocators_[i].ResetAllocatorPointer();
     }
     arg0->unknown_ad4_ = -1;
     arg0->unknown_ad8_ = -1;

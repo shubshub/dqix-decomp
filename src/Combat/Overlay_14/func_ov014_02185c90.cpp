@@ -90,10 +90,10 @@ struct Struct_ov014_02185c90 {
     char unknown_b8_[0x28];
 };
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
 extern "C" void func_0204c684(void*);
 struct Struct_02097054_5;
 extern "C" int func_02097224(Struct_02097054_5*, int);
@@ -101,26 +101,26 @@ extern "C" void __clear(void*, int);
 extern "C" void func_0206819c(const char*, char*, int);
 extern "C" void* func_020421a0();
 extern "C" void func_02046608(void*, int, char*, char*, int, int, int);
-extern "C" void func_ov023_021e24b0(void*, int, int, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
-extern "C" void func_ov023_021e23d0(void*, int, int, unsigned char, unsigned char);
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
-extern "C" struct Struct_ov003_0215d4fc* func_ov014_021842a0(void*, short);
-struct Struct_ov014_02185c90_3;
-extern "C" void* func_ov014_021893c4(Struct_ov014_02185c90_3*, int);
-extern "C" struct Struct_ov000_021700dc* func_ov014_0218940c(void*, int, void*);
+void SetPackedFields_021e24b0(void*, int, int, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
+void SetEntryFields_021e23d0(void*, int, int, unsigned char, unsigned char);
+struct Container020e0310;
+void* KeyTable_Get(Container020e0310*, int);
+extern "C" struct Ent* func_ov014_021842a0(void*, short);
+struct IndexedArrayStruct021893c4;
+void* FindOrGetDefaultElement_021893c4(IndexedArrayStruct021893c4*, int);
+extern "C" struct Slot* func_ov014_0218940c(void*, int, void*);
 extern "C" int* func_ov014_02189430(void*, int, void*);
 extern "C" void func_ov023_021e257c(void*);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void*, int);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
+struct List0204af64;
+void Background_Init(List0204af64*);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(void*, int);
+struct Obj0204b5e8;
+void Background_SetScroll(Obj0204b5e8*, int, int);
 extern "C" void func_0204b4c0(void*, void*);
-extern "C" void func_0204b2e0(void*, char*);
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
+void Background_FlushFile(void*, char*);
+struct SelfTag0204b3a0;
+void Background_UploadFile(SelfTag0204b3a0*, char*);
 
 #define FLAGOP(e, id, stmt) do { struct Struct_ov003_0215d4fc* p = func_ov014_021842a0(e, id); if (p) { stmt; } } while (0)
 #define SetBit4(e, id) FLAGOP(e, id, p->unknown_16_ |= 0x10)
@@ -128,126 +128,126 @@ extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
 #define ClrBit0(e, id) FLAGOP(e, id, p->unknown_16_ &= ~1)
 
 // USA: func_ov014_02185c90
-extern "C" ARM void func_ov014_02185c90(struct Struct_ov000_0217c638_2* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if ((arg0->unknown_81_ & 1) && arg0->unknown_7f_ == 5 && var0->GetTaskStatus(arg0->unknown_8c_)) {
-        void* var1;
-        void* var2;
-        unsigned int var3;
-        int var4;
-        struct Struct_ov014_02185c90 var5;
-        char var6[0x48];
-        char var7[0x48];
-        char var8[0x200];
-        char var9[0x48];
-        char var10[0x48];
-        struct Struct_ov014_02185c90_6 var11;
-        int var12;
-        var0->GetLoadedFileByID(arg0->unknown_8c_, &var2, &var3);
-        var12 = func_02046900((Struct_02020cb8_4*)var2);
-        if (var12 != 0) {
-            char* var13 = (char*)func_020467f0((Struct_02020aec*)var2, 0, &var1, &var4);
-            if (var13 != 0) {
-                func_0204c684(&var5);
-                var5.unknown_a8_ = 0x20;
-                var5.unknown_aa_ = 0x18;
-                var5.unknown_b4_ = 0xa;
-                var5.unknown_b6_ = 0xb;
-                var5.unknown_8_ = var13 + 0x10;
-                func_02097224((Struct_02097054_5*)((char*)arg0 + 0xc), arg0->unknown_48_->unknown_c_);
-                __clear(var6, 0x48);
-                __clear(var7, 0x48);
-                __clear(var8, 0x200);
-                __clear(var9, 0x48);
-                __clear(var10, 0x48);
-                func_0206819c(arg0->unknown_60_, var6, 0);
-                func_0206819c(arg0->unknown_64_, var7, 0);
-                char* var14 = var9;
-                char* var15 = var10;
-                char* var16 = var8;
-                void* var17 = func_020421a0();
-                func_02046608(var17, 0xa, var6, var14, 0x400, 0, 0);
-                func_02046608(var17, 0xa, var7, var15, 0x400, 0, 0);
-                func_02046608(var17, 0xa, (char*)arg0->unknown_68_, var16, 0x8c, 0, 0);
-                void* var18;
-                void* var19;
-                struct Struct_ov014_02185c90_2* var20;
-                struct Struct_ov014_02185c90_4* var21;
-                unsigned char var22 = arg0->unknown_80_;
-                var18 = arg0->unknown_58_;
-                var20 = arg0->unknown_50_;
-                var19 = arg0->unknown_5c_;
-                var21 = arg0->unknown_48_;
-                if (var18 && var21 && var19 && var20 && var20->unknown_0_0_) {
-                    func_ov023_021e24b0(var18, 2, var21->unknown_1a_, 8, 0xf, 1, 3, 0, 1);
-                    func_ov023_021e23d0(var18, 3, (int)var21->unknown_8_, 0xa, 0xf);
-                    func_ov023_021e23d0(var18, 4, (int)(func_020e0434((Struct_0201099c_3*)var19, var21->unknown_12_)), 0xa, 0xf);
-                    SetBit4(var18, 4);
-                    if (&arg0->unknown_9c_ && arg0->unknown_9c_.unknown_4_ > 0) {
-                        func_ov023_021e24b0(var18, 5, arg0->unknown_9c_.unknown_0_, 8, 0xf, 1, 6, 0, 0);
-                        func_ov023_021e24b0(var18, 6, arg0->unknown_9c_.unknown_6_, 8, 0xf, 1, 6, 0, 0);
+extern "C" ARM void func_ov014_02185c90(struct Panel* self) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if ((self->b81 & 1) && self->b7f == 5 && loader->GetTaskStatus(self->s8c)) {
+        void* rp;
+        void* file;
+        unsigned int size;
+        int rs;
+        struct Draw draw;
+        char buf358[0x48];
+        char buf310[0x48];
+        char buf110[0x200];
+        char bufc8[0x48];
+        char buf80[0x48];
+        struct ListObj list;
+        int count;
+        loader->GetLoadedFileByID(self->s8c, &file, &size);
+        count = Pac_CountFiles((ActiveEntry02046900*)file);
+        if (count != 0) {
+            char* rec = (char*)Pac_GetFile((Rec020467f0*)file, 0, &rp, &rs);
+            if (rec != 0) {
+                func_0204c684(&draw);
+                draw.s28 = 0x20;
+                draw.s2a = 0x18;
+                draw.s34 = 0xa;
+                draw.s36 = 0xb;
+                draw.p8 = rec + 0x10;
+                BinarySearchByField4_02097224((BinarySearch020971a8Container*)((char*)self + 0xc), self->rec->fc);
+                __clear(buf358, 0x48);
+                __clear(buf310, 0x48);
+                __clear(buf110, 0x200);
+                __clear(bufc8, 0x48);
+                __clear(buf80, 0x48);
+                CopyTextAndUppercaseIfFlagged0206819c(self->text60, buf358, 0);
+                CopyTextAndUppercaseIfFlagged0206819c(self->text64, buf310, 0);
+                char* n1 = bufc8;
+                char* n2 = buf80;
+                char* n3 = buf110;
+                void* g = GetGlobalField0x1c020421a0();
+                func_02046608(g, 0xa, buf358, n1, 0x400, 0, 0);
+                func_02046608(g, 0xa, buf310, n2, 0x400, 0, 0);
+                func_02046608(g, 0xa, (char*)self->p68, n3, 0x8c, 0, 0);
+                void* ents;
+                void* cont;
+                struct Pk* pk;
+                struct Rec* r;
+                unsigned char b80 = self->b80;
+                ents = self->ents;
+                pk = self->pk;
+                cont = self->cont;
+                r = self->rec;
+                if (ents && r && cont && pk && pk->lo) {
+                    SetPackedFields_021e24b0(ents, 2, r->f1a, 8, 0xf, 1, 3, 0, 1);
+                    SetEntryFields_021e23d0(ents, 3, (int)r->f8, 0xa, 0xf);
+                    SetEntryFields_021e23d0(ents, 4, (int)(KeyTable_Get((Container020e0310*)cont, r->f12)), 0xa, 0xf);
+                    SetBit4(ents, 4);
+                    if (&self->blk && self->blk.cnt > 0) {
+                        SetPackedFields_021e24b0(ents, 5, self->blk.a, 8, 0xf, 1, 6, 0, 0);
+                        SetPackedFields_021e24b0(ents, 6, self->blk.b, 8, 0xf, 1, 6, 0, 0);
                     }
-                    func_ov023_021e24b0(var18, 7, var20->unknown_0_0_, 8, 0xf, 1, 6, 0, 0);
-                    ClrBit0(var18, 8);
-                    ClrBit0(var18, 0xa);
-                    ClrBit0(var18, 0xc);
-                    ClrBit0(var18, 9);
-                    ClrBit0(var18, 0xb);
-                    ClrBit0(var18, 0xd);
-                    ClrBit0(var18, 0x16);
-                    ClrBit0(var18, 0x14);
-                    ClrBit0(var18, 0x1a);
-                    ClrBit0(var18, 0x1b);
-                    ClrBit0(var18, 0x17);
-                    ClrBit0(var18, 0x18);
-                    ClrBit0(var18, 0x19);
-                    SetBit0(var18, 0x15);
-                    short var23;
-                    short var24;
-                    short var25;
-                    int var26;
-                    var26 = 0;
-                    var25 = 8;
-                    var24 = 0xa;
-                    var23 = 0xc;
-                    if (var20->unknown_1_2_ || var20->unknown_0_0_) {
-                        var26 = 1;
-                        if (var14[0] != 0) {
-                            SetBit0(var18, 8);
-                            SetBit0(var18, 0xa);
-                            SetBit0(var18, 0xc);
-                            func_ov023_021e23d0(var18, 8, (int)var14, 0xa, 0xf);
-                            func_ov023_021e24b0(var18, 0xa, var20->unknown_1_3_, 8, 0xf, 1, 3, 0, 0);
-                            func_ov023_021e23d0(var18, 0xc, (int)(func_020e0434((Struct_0201099c_3*)var19, 0xf)), 0xa, 0xf);
-                            var25 = 9;
-                            var24 = 0xb;
-                            var23 = 0xd;
+                    SetPackedFields_021e24b0(ents, 7, pk->lo, 8, 0xf, 1, 6, 0, 0);
+                    ClrBit0(ents, 8);
+                    ClrBit0(ents, 0xa);
+                    ClrBit0(ents, 0xc);
+                    ClrBit0(ents, 9);
+                    ClrBit0(ents, 0xb);
+                    ClrBit0(ents, 0xd);
+                    ClrBit0(ents, 0x16);
+                    ClrBit0(ents, 0x14);
+                    ClrBit0(ents, 0x1a);
+                    ClrBit0(ents, 0x1b);
+                    ClrBit0(ents, 0x17);
+                    ClrBit0(ents, 0x18);
+                    ClrBit0(ents, 0x19);
+                    SetBit0(ents, 0x15);
+                    short c;
+                    short b;
+                    short a;
+                    int ok;
+                    ok = 0;
+                    a = 8;
+                    b = 0xa;
+                    c = 0xc;
+                    if (pk->b10 || pk->lo) {
+                        ok = 1;
+                        if (n1[0] != 0) {
+                            SetBit0(ents, 8);
+                            SetBit0(ents, 0xa);
+                            SetBit0(ents, 0xc);
+                            SetEntryFields_021e23d0(ents, 8, (int)n1, 0xa, 0xf);
+                            SetPackedFields_021e24b0(ents, 0xa, pk->c, 8, 0xf, 1, 3, 0, 0);
+                            SetEntryFields_021e23d0(ents, 0xc, (int)(KeyTable_Get((Container020e0310*)cont, 0xf)), 0xa, 0xf);
+                            a = 9;
+                            b = 0xb;
+                            c = 0xd;
                         }
                     }
-                    if (var20->unknown_2_2_ || var20->unknown_1_2_) {
-                        if (var15[0] != 0) {
-                            var26 = 1;
-                            SetBit0(var18, var25);
-                            SetBit0(var18, var24);
-                            SetBit0(var18, var23);
-                            func_ov023_021e23d0(var18, var25, (int)var15, 0xa, 0xf);
-                            func_ov023_021e24b0(var18, var24, var20->unknown_2_2_, 8, 0xf, 1, 3, 0, 0);
-                            func_ov023_021e23d0(var18, var23, (int)(func_020e0434((Struct_0201099c_3*)var19, 0xf)), 0xa, 0xf);
+                    if (pk->d || pk->b10) {
+                        if (n2[0] != 0) {
+                            ok = 1;
+                            SetBit0(ents, a);
+                            SetBit0(ents, b);
+                            SetBit0(ents, c);
+                            SetEntryFields_021e23d0(ents, a, (int)n2, 0xa, 0xf);
+                            SetPackedFields_021e24b0(ents, b, pk->d, 8, 0xf, 1, 3, 0, 0);
+                            SetEntryFields_021e23d0(ents, c, (int)(KeyTable_Get((Container020e0310*)cont, 0xf)), 0xa, 0xf);
                         }
                     }
-                    if (var26 == 0) {
-                        SetBit0(var18, 0x16);
-                        func_ov023_021e23d0(var18, 0x16, (int)(func_020e0434((Struct_0201099c_3*)var19, 0xe)), 0xa, 0xf);
+                    if (ok == 0) {
+                        SetBit0(ents, 0x16);
+                        SetEntryFields_021e23d0(ents, 0x16, (int)(KeyTable_Get((Container020e0310*)cont, 0xe)), 0xa, 0xf);
                     }
-                    func_ov023_021e23d0(var18, 0x13, (int)var16, 0xa, 0xf);
-                    if (var20->unknown_1_2_) {
-                        ClrBit0(var18, 0x14);
-                        SetBit0(var18, 0x17);
-                        func_ov023_021e23d0(var18, 0x17, (int)(func_020e0434((Struct_0201099c_3*)var19, 0x1c)), 8, 0xf);
-                        SetBit0(var18, 0x18);
-                        func_ov023_021e24b0(var18, 0x18, var22 + 1, 8, 0xf, 0, 1, 0, 0);
-                        SetBit0(var18, 0x19);
-                        func_ov023_021e24b0(var18, 0x19, 2, 8, 0xf, 0, 1, 0, 0);
+                    SetEntryFields_021e23d0(ents, 0x13, (int)n3, 0xa, 0xf);
+                    if (pk->b10) {
+                        ClrBit0(ents, 0x14);
+                        SetBit0(ents, 0x17);
+                        SetEntryFields_021e23d0(ents, 0x17, (int)(KeyTable_Get((Container020e0310*)cont, 0x1c)), 8, 0xf);
+                        SetBit0(ents, 0x18);
+                        SetPackedFields_021e24b0(ents, 0x18, b80 + 1, 8, 0xf, 0, 1, 0, 0);
+                        SetBit0(ents, 0x19);
+                        SetPackedFields_021e24b0(ents, 0x19, 2, 8, 0xf, 0, 1, 0, 0);
                     }
                     ClrBit0(var18, 0xe);
                     ClrBit0(var18, 0xf);
@@ -265,34 +265,34 @@ extern "C" ARM void func_ov014_02185c90(struct Struct_ov000_0217c638_2* arg0) {
                                 if (var30->unknown_2_0_) {
                                     func_ov023_021e23d0(var18, var28, (int)((void*)*var31), 0xa, 0xf);
                                 } else {
-                                    func_ov023_021e23d0(var18, var28, (int)(func_020e0434((Struct_0201099c_3*)var19, 0x15)), 0xa, 0xf);
+                                    SetEntryFields_021e23d0(ents, id, (int)(KeyTable_Get((Container020e0310*)cont, 0x15)), 0xa, 0xf);
                                 }
                                 var28++;
                             }
                         }
-                        if (var29->unknown_3_4_ >= 3) {
-                            if (func_ov014_0218940c(arg0->unknown_1c_, 2, var29)->unknown_2_0_) {
-                                SetBit0(var18, 0x10);
-                                func_ov023_021e23d0(var18, 0x10, (int)(func_020e0434((Struct_0201099c_3*)var19, 0x10)), 0xa, 0xf);
+                        if (arr->n >= 3) {
+                            if (func_ov014_0218940c(self->arr, 2, arr)->bit0) {
+                                SetBit0(ents, 0x10);
+                                SetEntryFields_021e23d0(ents, 0x10, (int)(KeyTable_Get((Container020e0310*)cont, 0x10)), 0xa, 0xf);
                             }
                         }
                     }
                 }
-                struct Struct_ov014_02185c90_7* var32 = arg0->unknown_58_;
-                var32->unknown_4_ = &var5;
-                var32->unknown_12_ = 1;
-                func_ov023_021e257c(arg0->unknown_58_);
-                func_0204af64((Struct_02020cb8*)&var11);
-                func_0204b11c((unsigned char*)&var11, 0);
-                var11.unknown_1c_0_ = 0;
-                var11.unknown_1c_4_ = 1;
-                func_0204b5b4(&var11, 1);
-                func_0204b5e8((Struct_02020cb8_5*)&var11, 0, 0);
-                for (int var33 = 0; var33 < var12; var33++) {
-                    void* var34 = func_020467f0((Struct_02020aec*)var2, var33, &var1, &var4);
-                    if (var34) {
-                        memcpy(arg0->unknown_0_[var33], var34, var4);
-                        func_0204b4c0(&var11, arg0->unknown_0_[var33]);
+                struct EntObj* e = self->ents;
+                e->p4 = &draw;
+                e->s12 = 1;
+                func_ov023_021e257c(self->ents);
+                Background_Init((List0204af64*)&list);
+                Background_SetMapSize((unsigned char*)&list, 0);
+                list.lo = 0;
+                list.hi = 1;
+                Background_SetPriority(&list, 1);
+                Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+                for (int i = 0; i < count; i++) {
+                    void* r2 = Pac_GetFile((Rec020467f0*)file, i, &rp, &rs);
+                    if (r2) {
+                        memcpy(self->bufs[i], r2, rs);
+                        func_0204b4c0(&list, self->bufs[i]);
                     }
                 }
                 arg0->unknown_81_ &= ~0x20;
@@ -302,25 +302,25 @@ extern "C" ARM void func_ov014_02185c90(struct Struct_ov000_0217c638_2* arg0) {
         arg0->unknown_8c_ = -1;
         arg0->unknown_7f_++;
     }
-    if ((arg0->unknown_81_ & 0x10) && arg0->unknown_7e_ == 1 && var0->GetTaskStatus(arg0->unknown_70_)) {
-        void* var35;
-        void* var36;
-        unsigned int var37;
-        int var38;
-        struct Struct_ov014_02185c90_6 var39;
-        var0->GetLoadedFileByID(arg0->unknown_70_, &var36, &var37);
-        int var40 = func_02046900((Struct_02020cb8_4*)var36);
-        func_0204af64((Struct_02020cb8*)&var39);
-        func_0204b11c((unsigned char*)&var39, 0);
-        var39.unknown_1c_0_ = 0;
-        var39.unknown_1c_4_ = 1;
-        func_0204b5b4(&var39, 1);
-        func_0204b5e8((Struct_02020cb8_5*)&var39, 0, 0);
-        for (int var41 = 0; var41 < var40; var41++) {
-            void* var42 = func_020467f0((Struct_02020aec*)var36, var41, &var35, &var38);
-            if (var42) {
-                func_0204b2e0(&var39, (char*)var42);
-                func_0204b3a0((Struct_02020cb8_6*)&var39, (char*)var42);
+    if ((self->b81 & 0x10) && self->b7e == 1 && loader->GetTaskStatus(self->id70)) {
+        void* rp;
+        void* file;
+        unsigned int size;
+        int rs;
+        struct ListObj list;
+        loader->GetLoadedFileByID(self->id70, &file, &size);
+        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        Background_Init((List0204af64*)&list);
+        Background_SetMapSize((unsigned char*)&list, 0);
+        list.lo = 0;
+        list.hi = 1;
+        Background_SetPriority(&list, 1);
+        Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+        for (int i = 0; i < count; i++) {
+            void* rec = Pac_GetFile((Rec020467f0*)file, i, &rp, &rs);
+            if (rec) {
+                Background_FlushFile(&list, (char*)rec);
+                Background_UploadFile((SelfTag0204b3a0*)&list, (char*)rec);
             }
         }
         var0->RemoveTask(arg0->unknown_70_);

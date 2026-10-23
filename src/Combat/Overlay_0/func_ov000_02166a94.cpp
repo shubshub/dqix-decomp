@@ -44,12 +44,12 @@ struct Struct_020d76fc;
 struct Struct_020d6ec8;
 extern "C" Struct_02057de0_2* func_02057924();
 extern "C" void func_020c9be0();
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_02057de0(Struct_02057de0_2*, int, SafeAllocator*, int, int);
-extern "C" void func_0203dafc(Struct_0203d028_11*);
-extern "C" void func_02047b30(void*, int, int, int);
-extern "C" void func_ov000_02182114(char*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void CreateAndRegisterNode02057de0(NodeList02057de0*, int, SafeAllocator*, int, int);
+void ClearEightWords_0203dafc(Struct_203dafc*);
+void Forward02047b30(void*, int, int, int);
+void ResetArrayAndEntry02182114(char*);
 extern "C" void func_ov000_0218214c(void*, SafeAllocator*, const void*);
 extern "C" char* func_02039e70();
 extern "C" void func_02039e7c(void*);
@@ -83,13 +83,13 @@ extern "C" ARM void func_ov000_02166a94(Struct_ov000_02166a94_3* arg0) {
     unsigned int var5;
     const void* var6;
     BackgroundLoader::AddLockGlobal();
-    if (!LoadFileIntoMemory(data_ov000_02183a5a, data_0211e33c, &var5)) func_020c9be0();
-    func_0207df90(var1->unknown_230_);
-    if (GetFileInNarc(data_0211e33c, data_ov000_02183a6f, &var6, &var5, 0)) {
-        void* var7 = var0->Allocate(var5);
-        if (var7) {
-            memcpy(var7, var6, var5);
-            func_02057de0(var2, 2, var0, (int)var7, var5);
+    if (!LoadFileIntoMemory(data_ov000_02183a5a, data_0211e33c, &size)) func_020c9be0();
+    VramState_Restore(pairTables->tables);
+    if (GetFileInNarc(data_0211e33c, data_ov000_02183a6f, &data, &size, 0)) {
+        void* buffer = sourceAllocator->Allocate(size);
+        if (buffer) {
+            memcpy(buffer, data, size);
+            CreateAndRegisterNode02057de0(nodes, 2, sourceAllocator, (int)buffer, size);
         }
     }
     SafeAllocator* var8[4] = {var0, arg0->unknown_4_, arg0->unknown_4_, arg0->unknown_4_};
@@ -147,21 +147,21 @@ extern "C" ARM void func_ov000_02166a94(Struct_ov000_02166a94_3* arg0) {
         func_02047b30(&arg0->unknown_5600_[1], (int)var6, var5, (int)var3);
         arg0->unknown_5600_[1].unknown_0_ = 0x3e;
     }
-    char* var23 = arg0->unknown_6ffc_;
-    func_ov000_02182114(var23);
-    func_ov000_0218214c(var23, var3, data_0211e33c);
-    char* var24 = func_02039e70();
-    func_02039e7c(var24);
-    func_02039f04(var24, (int)var3, data_0211e33c);
-    func_0207dfac(var1->unknown_230_);
-    arg0->unknown_ea4_ = var3->Allocate(0xa48);
-    func_020d6d18((Struct_020d6d18_2*)arg0->unknown_ea4_);
-    func_020d6d90((Struct_020d6d90_3*)arg0->unknown_ea4_, data_0211e33c, var3, var1->unknown_230_);
-    func_020d76fc((Struct_020d76fc*)arg0->unknown_ea4_);
-    func_020d771c((unsigned char*)arg0->unknown_ea4_);
-    func_020d6ec8((Struct_020d6ec8*)arg0->unknown_ea4_, arg0->unknown_4_);
-    func_0207df90(var1->unknown_230_);
-    func_0207dfac(var1->unknown_230_);
-    func_ov000_02160fa8(arg0, 0x40);
+    char* battleResources = self->battleResources;
+    ResetArrayAndEntry02182114(battleResources);
+    func_ov000_0218214c(battleResources, destinationAllocator, data_0211e33c);
+    char* objectResources = GetData02104b6c_02039e70();
+    ResetBattleArrays02039e7c(objectResources);
+    LoadObjectResourceFiles02039f04(objectResources, (int)destinationAllocator, data_0211e33c);
+    VramState_Save(pairTables->tables);
+    self->entryManager = destinationAllocator->Allocate(0xa48);
+    ConstructEntryManager020d6d18((Container020d6d18*)self->entryManager);
+    LoadFilesAndBuildNodeList020d6d90((Obj020d6d90*)self->entryManager, data_0211e33c, destinationAllocator, pairTables->tables);
+    MergeLowNibbleField((MergeLowNibbleField020d76fc*)self->entryManager);
+    OrMaskedField24IntoField26_020d771c((unsigned char*)self->entryManager);
+    InitEntryManagerAllocator020d6ec8((Container020d6f44*)self->entryManager, self->allocator);
+    VramState_Restore(pairTables->tables);
+    VramState_Save(pairTables->tables);
+    SetCombatWorkFlags0x55f4_ov000_02160fa8(self, 0x40);
     BackgroundLoader::RemoveLockGlobal();
 }

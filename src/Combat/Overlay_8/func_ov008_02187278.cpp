@@ -103,11 +103,11 @@ struct Struct_ov008_021842a0_2 {
 
 struct Struct_0201099c_3;
 
-extern "C" void* func_020421a0();
-extern "C" void func_02041e70(char* arg0, int arg1);
-extern "C" void func_02041a5c(char* arg0, int arg1);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+void* GetGlobalField0x1c020421a0();
+void AppendPaletteTag_02041e70(char* text, int color);
+void AppendYTag_02041a5c(char* text, int y);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void AppendString02042058(char* text, const char* append);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -165,28 +165,28 @@ extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* arg0, char* arg
         return;
     GameState::GetInstance();
 #if defined(jpn)
-    void* var4 = func_020421a0();
-    char var5[0x40];
-    __clear(var5, sizeof(var5));
-    func_02046380(var4);
-    func_020465c0((Struct_020465c0*)var4, 0, var0->unknown_0_);
-    func_020465f0((unsigned char*)var4, 0, 4);
-    func_020465d8((unsigned char*)var4, 0, 1);
-    func_020465c0((Struct_020465c0*)var4, 1, var0->unknown_2_);
-    func_020465f0((unsigned char*)var4, 1, 2);
-    func_020465d8((unsigned char*)var4, 1, 1);
-    func_020474a8(var4, 10, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 0x6e), var5);
-    func_02041e70(arg1, 0xe);
-    func_02042058(arg1, var5);
+    void* messages = GetGlobalField0x1c020421a0();
+    char buffer[0x40];
+    __clear(buffer, sizeof(buffer));
+    func_02046380(messages);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, time->hours);
+    SetByteInRange_020465f0((unsigned char*)messages, 0, 4);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, time->minutes);
+    SetByteInRange_020465f0((unsigned char*)messages, 1, 2);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 1, 1);
+    func_020474a8(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, 0x6e), buffer);
+    AppendPaletteTag_02041e70(text, 0xe);
+    AppendString02042058(text, buffer);
 #else
-    func_020421a0();
-    func_02041e70(arg1, 0xe);
-    func_02041a5c(arg1, 2);
-    char var6[0x40];
-    __clear(var6, sizeof(var6));
-    const char* var7 = func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 0x6e);
-    if (var7 != NULL)
-        sprintf(var6, var7, var0->unknown_0_, var0->unknown_2_);
-    func_02042058(arg1, var6);
+    GetGlobalField0x1c020421a0();
+    AppendPaletteTag_02041e70(text, 0xe);
+    AppendYTag_02041a5c(text, 2);
+    char buffer[0x40];
+    __clear(buffer, sizeof(buffer));
+    const char* format = KeyTable_Get((Container020e0310*)&self->texts_, 0x6e);
+    if (format != NULL)
+        sprintf(buffer, format, time->hours, time->minutes);
+    AppendString02042058(text, buffer);
 #endif
 }

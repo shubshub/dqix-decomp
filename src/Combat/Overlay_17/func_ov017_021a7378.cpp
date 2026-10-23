@@ -102,38 +102,38 @@ struct Struct_ov017_021a7378_3 {
     char unknown_270_[0x10];
 };
 
-extern "C" unsigned char* func_020100f8(char* arg0);
-extern "C" Struct_ov000_0217964c_3* func_020421a0();
-extern "C" Struct_ov017_021a7378_4* func_02012fe4(void);
-extern "C" Struct_ov001_02158ae4_3* func_0200ffd0(Struct_0200ffd0* arg0);
-extern "C" void func_0205c904(unsigned char* arg0, int arg1);
-extern "C" void* func_020d7a50(void);
-extern "C" void func_020d7aa0(Struct_020d7aa0_2* arg0);
-extern "C" void func_020a0cc4(unsigned int arg0);
-extern "C" void func_020ae38c(unsigned char* arg0);
-extern "C" void func_020ae380(unsigned char* arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_020dfec0(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" int func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" int func_020457e0(Struct_ov000_0217964c_3* arg0);
-extern "C" Struct_ov017_021a7378* func_0200fd0c(GameState* arg0);
-extern "C" void func_02070378(char* arg0);
-extern "C" void* func_02033fa0(void* arg0);
-extern "C" int func_0204bedc(unsigned short* arg0);
-extern "C" int func_0204bef4(Struct_0204bef4* arg0);
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
-extern "C" void func_ov017_021a65c4(void* arg0, unsigned char arg1, int arg2);
-extern "C" void func_ov017_021baedc(Struct_0201bdac* arg0, int arg1);
-extern "C" void func_ov017_021d1c2c(unsigned char arg0, unsigned short arg1);
-extern "C" void func_ov017_021d1dc0(unsigned short, int, int*, int, int);
-extern "C" void* func_02094d6c(void);
-extern "C" Struct_ov017_021a7378_2* func_02096134(Struct_0205faf4_7* arg0, int arg1);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_0205ce50(unsigned char* arg0);
-extern "C" void func_ov017_021a79f0(Struct_ov017_021a7378_3* arg0);
+unsigned char* GetFieldIfFlag4_020100f8(char* obj);
+MessageWindow* GetGlobalField0x1c020421a0();
+extern "C" FieldGlobals* func_02012fe4(void);
+CameraState* GetPointerAt0x330_0200ffd0(PointerField330_ffd0* obj);
+void SetupAndDispatch0205c904(unsigned char* obj, int value);
+void* GetGlobalResetObj020d7a50(void);
+void TeardownAndResetState020d7aa0(Obj020d7aa0* obj);
+extern "C" void func_020a0cc4(unsigned int size);
+void ClearByteFlagAt0x19c_020ae38c(unsigned char* obj);
+void SetByteFlagAt0x19c_020ae380(unsigned char* obj);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+extern "C" void KeyTable_Load(void* dest, SafeAllocator* allocator, void* fileData, unsigned int size);
+int KeyTable_Get(Container020e0310* c, int key);
+void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
+void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
+extern "C" int func_020457e0(MessageWindow* window);
+CameraParams* GetField0x3f8Address_0200fd0c(GameState* gs);
+void InitStruct02070378(char* obj);
+void* GetPtrField0x114_02033fa0(void* obj);
+int CheckBits5To9NonZero0204bedc(unsigned short* obj);
+int ConvertColorToDecimalOffset20000(ColorHolder0204bef4* obj);
+void InitAndResetHeader_0219e310(unsigned char* obj, int flag);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+void InitAndAppendState61_021a65c4(void* scene, unsigned char kind, int arg);
+extern "C" void func_ov017_021baedc(TailNode020469b4* node, int flag);
+void SetHalfFieldsAndEnqueueIfActive_021d1c2c(unsigned char a, unsigned short b);
+void EnqueueEventTagB5_021d1dc0(unsigned short, int, int*, int, int);
+void* GetGlobal02109418_02094d6c(void);
+EntryCounter* FindEntryById02096134(FindEntryById02096134Table* table, int id);
+void ReinitController02043204(char* obj);
+void SetupGlobalObjType3AndInitSelfPointer_0205ce50(unsigned char* obj);
+extern "C" void func_ov017_021a79f0(BattleIntro* self);
 
 extern AllocatorUnion data_02114e20;
 #if defined(jpn)
@@ -170,28 +170,28 @@ extern "C" ARM void func_ov017_021a7378(Struct_ov017_021a7378_3* arg0, int arg1)
             arg0->unknown_25c_.CreateTypeA(func_02012d88(&data_02114e20, Enum_ov017_021a7378_5120), Enum_ov017_021a7378_5120);
             arg0->unknown_8_ = 1;
         }
-    } else if (arg0->unknown_8_ == 1) {
-        BackgroundLoader* var6 = BackgroundLoader::GetInstance();
-        if (var6->GetTaskStatus(arg0->unknown_20_)) {
-            void* var7;
-            unsigned int var8;
-            var6->GetLoadedFileByID(arg0->unknown_20_, &var7, &var8);
-            arg0->unknown_25c_.Reset();
-            func_020dfec0(arg0->unknown_270_, &arg0->unknown_25c_, var7, var8);
-            var6->RemoveTask(arg0->unknown_20_);
-            arg0->unknown_20_ = -1;
-            if (arg0->unknown_c_ == 0) {
+    } else if (self->state == 1) {
+        BackgroundLoader* bl = BackgroundLoader::GetInstance();
+        if (bl->GetTaskStatus(self->taskId)) {
+            void* fileData;
+            unsigned int size;
+            bl->GetLoadedFileByID(self->taskId, &fileData, &size);
+            self->allocator.Reset();
+            KeyTable_Load(self->container, &self->allocator, fileData, size);
+            bl->RemoveTask(self->taskId);
+            self->taskId = -1;
+            if (self->mode == 0) {
 #if defined(jpn)
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x23), 0);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x23), 0);
 #else
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x23), 0, 0xe3);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x23), 0, 0xe3);
 #endif
                 arg0->unknown_8_ = 0xc8;
             } else {
 #if defined(jpn)
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x24), 0);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x24), 0);
 #else
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x24), 0, 0xe3);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x24), 0, 0xe3);
 #endif
                 arg0->unknown_8_ = 0x12c;
             }
@@ -233,9 +233,9 @@ extern "C" ARM void func_ov017_021a7378(Struct_ov017_021a7378_3* arg0, int arg1)
                 } else {
                     var2->unknown_998_ = 1;
 #if defined(jpn)
-                    func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x26), 0);
+                    func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x26), 0);
 #else
-                    func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x26), 0, 0xe3);
+                    func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x26), 0, 0xe3);
 #endif
                     arg0->unknown_8_ = 0x12d;
                     func_020a28a0(var1, 2);
@@ -243,9 +243,9 @@ extern "C" ARM void func_ov017_021a7378(Struct_ov017_021a7378_3* arg0, int arg1)
             } else {
                 var2->unknown_998_ = 1;
 #if defined(jpn)
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x25), 0);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x25), 0);
 #else
-                func_0204500c((Struct_02021b84*)var2, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_270_, 0x25), 0, 0xe3);
+                func_0204500c((MessageSystem*)window, (const char*)KeyTable_Get((Container020e0310*)self->container, 0x25), 0, 0xe3);
 #endif
                 arg0->unknown_8_ = 0x12d;
                 func_020a28a0(var1, 2);

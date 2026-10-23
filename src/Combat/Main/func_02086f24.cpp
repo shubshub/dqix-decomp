@@ -131,27 +131,27 @@ struct Struct_02086f24_6 { void* unknown_0_; };
 struct Struct_02086f24_7;
 struct Struct_02013fb4;
 
-extern "C" void func_02089db4(Struct_0201099c_6* arg0);
-extern "C" void func_02089ddc(Struct_0201099c_6* arg0);
-extern "C" void func_02089de8(void* arg0, void* arg1, const char* arg2);
-extern "C" Struct_02086f24* func_02089fb0(Struct_02086f24_5* arg0, int arg1);
-extern "C" void func_02086404(Struct_0201099c_20* arg0);
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" int func_020426bc(const void* arg0, void* arg1, int arg2);
-extern "C" void func_02082828(Struct_02086f24_2* arg0);
-extern "C" void func_02082d6c(Struct_02086f24_2* arg0, Struct_0201099c_20* arg1);
-extern "C" void func_02082fc4(void* arg0, void* arg1);
-extern "C" void func_020de824(void* arg0);
-extern "C" void func_020de848(void* arg0);
-extern "C" int func_020def44(int arg0, int arg1, int arg2, short arg3);
-extern "C" void func_02083e28(void* arg0, int arg1);
-extern "C" void func_0209a804(int* arg0);
-extern "C" void func_0209a8b4(Struct_02086f24_6* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
-extern "C" int func_0209ab20(Struct_02086f24_7* arg0, int arg1, int arg2, unsigned char* arg3);
-extern "C" int func_02086778(Struct_02086f24_4* arg0, Struct_0201099c_20* arg1, unsigned char arg2, unsigned char arg3);
+void ResetStructFields_02089db4(ResetFieldsStruct* s);
+void ForwardResetStructFields02089ddc(ResetFieldsStruct* s);
+void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
+RecruitTemplate02086f24* FindEntryBySignedId02089fb0(EntryArray02089fb0* arr, int id);
+extern "C" void func_02086404(CombatSelection* selection);
+extern "C" void __clear(void* dst, unsigned int size);
+extern "C" int Font_EncodeText(const void* a, void* b, int flag);
+extern "C" void func_02082828(CharacterRecord02086f24* record);
+extern "C" void func_02082d6c(CharacterRecord02086f24* dst, CombatSelection* src);
+void LoadAndApplyResourceEntry02082fc4(void* a, void* b);
+void ZeroInitReturn020de824(void* p);
+void ItemTable_Init(void* p);
+int InitAndDispatch020def44(int a0, int a1, int a2, short a3);
+extern "C" void func_02083e28(void* a, int arg2);
+void ClearField00209a804(int* p);
+void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
+int CollectPairsBelowThreshold0209ab20(Holder0209ab20* h, int slot, int threshold, unsigned char* out);
+extern "C" int func_02086778(Party02086f24* party, CombatSelection* sel, unsigned char c, unsigned char d);
 
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
 extern const signed char data_020e8a94[10];
 extern const char data_020f102e[];
 extern unsigned char data_0211e33c[];
@@ -221,9 +221,9 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
 #if defined(jpn)
         sprintf((char*)var0.unknown_140_, data_020f1150, var11->unknown_4_);
 #else
-        __clear(var5, sizeof(var5));
-        func_020426bc(var11->unknown_4_, var5, 1);
-        memcpy(var0.unknown_140_, var5, sizeof(var5));
+        __clear(nameBuf, sizeof(nameBuf));
+        Font_EncodeText(t->name, nameBuf, 1);
+        memcpy(sel.name, nameBuf, sizeof(nameBuf));
 #endif
         VectorizedInvertedMemcpy(var11->unknown_30_, var0.unknown_2_, sizeof(var0.unknown_2_));
         Struct_02086f24_8* var14 = &var0.unknown_160_;
@@ -239,13 +239,13 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
         func_02082d6c(&var2, &var0);
         func_02082fc4(&var2, &var1);
         BackgroundLoader::AddLockGlobal();
-        var8 = 0;
-        func_020de824(&var6);
-        func_020de848(&var6);
+        itemSize = 0;
+        ZeroInitReturn020de824(&items);
+        ItemTable_Init(&items);
 #if defined(jpn)
-        func_020e0968(data_020f2a38, &var8);
+        func_020e0968(g_itemDataArchive, &itemSize);
 #else
-        void* var15 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var8);
+        void* itemData = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &itemSize);
 #endif
         for (int var16 = 0; var16 < 10; var16++) {
             short var17 = inline_02086f24_4(var11, var16);

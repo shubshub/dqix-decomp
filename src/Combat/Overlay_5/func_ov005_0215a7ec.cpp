@@ -44,31 +44,31 @@ struct Struct_ov005_02153954 {
 };
 
 struct Struct_0205d81c;
-extern "C" Struct_ov005_02158e04* func_0205d8c4(Struct_0205d81c*);
-extern "C" int func_020e28dc(Struct_020e28dc* arg0);
-extern "C" void func_0205ae8c(void* arg0);
-extern "C" int func_0204c7e0(unsigned char* arg0);
-extern "C" int func_0205d794(Struct_0205c570* arg0);
-extern "C" void* func_ov017_021a193c(int* arg0);
-extern "C" void func_ov023_021e3304(void* arg0, short arg1, short arg2);
+MenuElement* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
+int GetInnerFlagBit0020e28dc(Outer020e28dc* p);
+extern "C" void func_0205ae8c(void* obj);
+int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char* obj);
+int Window_GetSelectedIndex(Struct_0205c570* window);
+void* GetField1c_021a193c(int* p);
+extern "C" void func_ov023_021e3304(void* cursor, short x, short y);
 
 // USA: func_ov005_0215a7ec
-extern "C" ARM void func_ov005_0215a7ec(Struct_ov005_02153954* arg0) {
-    Struct_ov005_02158e04* var0 = func_0205d8c4((Struct_0205d81c*)arg0->unknown_ee4_);
-    if (var0 != NULL) {
-        unsigned char var1 = var0->unknown_c4_;
-        if (arg0->unknown_e64_ != NULL && func_020e28dc(arg0->unknown_e64_)) {
-            func_0205ae8c(arg0->unknown_e68_);
-        } else if (var1 == 1 && func_0204c7e0((unsigned char*)var0)) {
-            short var2 = (short)(var0->unknown_ac_ << 3) + var0->unknown_bc_;
-            short var3 = (short)(var0->unknown_ae_ << 3) + var0->unknown_be_;
-            if (var1 == 2) {
-                var2 = 0xd4;
-                int var4 = func_0205d794((Struct_0205c570*)arg0->unknown_ee4_);
-                if (var4 == 0)
-                    var3 = 0x57;
-                else if (var4 == 1)
-                    var3 = 0x65;
+extern "C" ARM void func_ov005_0215a7ec(EquipmentMenu* self) {
+    MenuElement* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)self->window_);
+    if (elem != NULL) {
+        unsigned char kind = elem->kind_;
+        if (self->yesNo_ != NULL && GetInnerFlagBit0020e28dc(self->yesNo_)) {
+            func_0205ae8c(self->yesNoState_);
+        } else if (kind == 1 && CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)elem)) {
+            short x = (short)(elem->col_ << 3) + elem->offsetX_;
+            short y = (short)(elem->row_ << 3) + elem->offsetY_;
+            if (kind == 2) {
+                x = 0xd4;
+                int sum = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
+                if (sum == 0)
+                    y = 0x57;
+                else if (sum == 1)
+                    y = 0x65;
             }
             func_ov023_021e3304(func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]), var2 - 8, var3 - 2);
         }

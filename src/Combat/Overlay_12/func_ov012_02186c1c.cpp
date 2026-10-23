@@ -19,7 +19,7 @@ struct TableA68;
 struct SePlayer;
 struct Obj021e6e20;
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void BuildMessageB_021898bc(char*);
 void* FindEntryByKey_02072a68(TableA68*, int);
 void SePlayer_Play(SePlayer*, int, int);
@@ -52,12 +52,12 @@ extern "C" ARM void func_ov012_02186c1c(char* arg0) {
         (*(unsigned char*)(arg0 + 0x1340))++;
         return;
     }
-    if (*(unsigned char*)(arg0 + 0x1340) != 1) return;
-    *(unsigned char*)(arg0 + 0x1368) = 1;
-    *(int*)(arg0 + 0x1430) = func_0205d794((Struct_0205c570*)(arg0 + 0x90));
-    if (func_ov023_021e7148(arg0)) {
-        int var2 = 1;
-        switch (*(int*)(arg0 + 0x1430)) {
+    if (*(unsigned char*)(editor + 0x1340) != 1) return;
+    *(unsigned char*)(editor + 0x1368) = 1;
+    *(int*)(editor + 0x1430) = Window_GetSelectedIndex((Struct_0205c570*)(editor + 0x90));
+    if (func_ov023_021e7148(editor)) {
+        int rebuild = 1;
+        switch (*(int*)(editor + 0x1430)) {
         case 0:
             *(unsigned char*)(arg0 + 0x1341) = 3;
             *(unsigned char*)(arg0 + 0x1340) = 0;
@@ -143,7 +143,7 @@ static inline Struct_ov012_02186c1c_3* inline_ov012_02186c1c_2(GameState* arg0) 
     return &var0->unknown_569c_;
 }
 void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void BuildMessageB_021898bc(char*);
 void* FindEntryByKey_02072a68(TableA68*, int);
 void SePlayer_Play(SePlayer*, int, int);
@@ -179,12 +179,12 @@ extern "C" ARM void func_ov012_02186c1c(Struct_ov012_02185ab8* arg0) {
         arg0->unknown_1370_++;
         return;
     }
-    if (arg0->unknown_1370_ != 1) return;
-    arg0->unknown_13a0_ = 1;
-    arg0->unknown_13d8_ = func_0205d794((Struct_0205c570*)&arg0->unknown_ac_);
-    if (func_ov023_021e6de4(arg0)) {
-        int var7 = 1;
-        switch (arg0->unknown_13d8_) {
+    if (self->step != 1) return;
+    self->active = 1;
+    self->cursor = Window_GetSelectedIndex((Struct_0205c570*)&self->entries);
+    if (func_ov023_021e6de4(self)) {
+        int rebuild = 1;
+        switch (self->cursor) {
         case 0:
             arg0->unknown_1371_ = 3;
             arg0->unknown_1370_ = 0;

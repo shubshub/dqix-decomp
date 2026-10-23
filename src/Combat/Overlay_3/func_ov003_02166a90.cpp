@@ -77,11 +77,11 @@ extern "C" void func_020546b4(void*, int);
 typedef void (*Type_ov003_02166a90)(void*, int);
 extern "C" int func_02053c6c(unsigned char*);
 extern "C" void func_02042764(unsigned char*, char*, int);
-extern "C" int func_020865b0(Struct_0201099c_16*);
-extern "C" void func_02083ca0(unsigned char*, int);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" int func_02046b24(Struct_02015438**);
+int GetFieldAt0x50(Struct020865b0*);
+void PartyMember_SetVocation(unsigned char*, int);
+void* GetDataPtr02114e04_020d6c00(void);
+void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202b7d8(int*);
 extern "C" void func_ov017_021cc340(int, int, int);
@@ -175,10 +175,10 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         func_02042764(var0->unknown_140_, var15, 1);
         strcpy(((Struct_ov003_02166a90*)var8)->unknown_134_, var15);
 #endif
-        int var16 = func_020865b0((Struct_0201099c_16*)var0);
-        var14->unknown_16c_[var16] = var0->unknown_2_[func_020865b0((Struct_0201099c_16*)var0)];
-        func_02083ca0((unsigned char*)var14, func_020865b0((Struct_0201099c_16*)var0));
-        arg0->unknown_4bc_++;
+        int index = GetFieldAt0x50((Struct020865b0*)entry);
+        appearance->values[index] = entry->metadataValues[GetFieldAt0x50((Struct020865b0*)entry)];
+        PartyMember_SetVocation((unsigned char*)appearance, GetFieldAt0x50((Struct020865b0*)entry));
+        self->step++;
     }
     if (arg0->unknown_4bc_ == 2) {
         Struct_02015438** var17 = (Struct_02015438**)var3->unknown_ptr_array_36fc[1];

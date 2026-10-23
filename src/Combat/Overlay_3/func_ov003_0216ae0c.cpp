@@ -16,15 +16,15 @@ enum { Enum_ov003_0216ae0c_4812 = 0x12cc };
 #endif
 
 
-struct Struct_0205cfd4;
-extern "C" ARM void func_0205cfd4(struct Struct_0205cfd4* arg0);
-struct Struct_02020cb8;
-extern "C" ARM void func_0204af64(struct Struct_02020cb8* arg0);
-extern "C" void func_0204c684(void* arg0);
-struct Struct_02043368_2;
-extern "C" void func_0205a198(struct Struct_02043368_2*);
-struct Struct_02043368;
-extern "C" void func_0205a234(struct Struct_02043368* arg0);
+struct InitTarget0205cfd4;
+ARM void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+struct List0204af64;
+ARM void Background_Init(struct List0204af64* obj);
+extern "C" void func_0204c684(void* obj);
+struct Struct0205a198;
+void Sprite_Init(struct Struct0205a198*);
+struct ClearTarget0205a234;
+void ClearField0And40205a234(struct ClearTarget0205a234* target);
 
 struct Struct_ov003_0216ae0c {
     char unknown_0_[Enum_ov003_0216ae0c_4708];
@@ -49,8 +49,8 @@ extern "C" ARM void func_ov003_0216ae0c(void* arg0, SafeAllocator* arg1) {
     var0->unknown_12c8_ = var0->unknown_12d0_->Allocate(0xe0);
     func_0205cfd4((struct Struct_0205cfd4*)var0->unknown_12c0_);
 
-    for (int var1 = 0; var1 < 2; var1++) {
-        func_0204af64((struct Struct_02020cb8*)((char*)var0->unknown_12c4_ + var1 * 0x20));
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct List0204af64*)((char*)obj->p2c4 + i * 0x20));
     }
     for (int var2 = 0; var2 < 1; var2++) {
         func_0204c684((char*)var0->unknown_12c8_ + var2 * 0xe0);
@@ -59,8 +59,8 @@ extern "C" ARM void func_ov003_0216ae0c(void* arg0, SafeAllocator* arg1) {
     var0->unknown_1264_ = var0->unknown_12d0_->Allocate(0x258);
     var0->unknown_1268_ = var0->unknown_12d0_->Allocate(8);
 
-    for (int var3 = 0; var3 < 0xf; var3++) {
-        func_0205a198((struct Struct_02043368_2*)((char*)var0->unknown_1264_ + var3 * 0x28));
+    for (int i = 0; i < 0xf; i++) {
+        Sprite_Init((struct Struct0205a198*)((char*)obj->p264 + i * 0x28));
     }
     func_0205a234((struct Struct_02043368*)var0->unknown_1268_);
 }

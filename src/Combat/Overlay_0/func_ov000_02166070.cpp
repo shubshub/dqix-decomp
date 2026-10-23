@@ -62,18 +62,18 @@ struct Struct_ov000_02166070_2 {
     Object3D* unknown_eb8_[4];
 };
 
-extern "C" Struct_ov000_02166070_3* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" void func_020484d0(void*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_0203dafc(struct Struct_0203d028_11*);
-extern "C" Struct_ov000_02166070_4* func_02070fd0(struct Struct_02070b6c_3*, int);
-extern "C" void func_ov000_0216d1c4(int, struct Struct_02013fb4*, int, int*);
-extern "C" void func_020484f8(Object3D*, Struct_020484f8_2*);
-extern "C" void func_0207df50(struct Struct_0203d028*);
+ModelEntry* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+void SetFlag0x400Reset020484d0(void*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void ClearEightWords_0203dafc(struct Struct_203dafc*);
+ModelNames* SearchWithLow15Comparator02070fd0(struct Container02070e60*, int);
+void RunOverlayScript0216d1c4(int, struct StreamHeader*, int, int*);
+void InitObjectFields020484f8(Object3D*, Input020484f8*);
+void CopyInternalFields0207df50(struct Foo0207df50*);
 extern "C" void _ZN8Object3D10SetField78Et(Object3D*, unsigned int);
 extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
-extern "C" void func_0207de48(char*, int, int);
+extern "C" void VramState_Reserve(char*, int, int);
 
 // USA: func_ov000_02166070
 extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPair* arg1, int arg2, int arg3, int arg4, unsigned int arg5) {
@@ -123,13 +123,13 @@ extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPa
     }
     SetFlag0x400Reset020484d0(obj);
     obj->unknown_2_ = id;
-    RestorePairTables0207df90(self->tables1bc);
+    VramState_Restore(self->tables1bc);
     ClearEightWords_0203dafc(&params);
     params.fieldTable = (int)model;
     params.fieldLength = modelLength;
     params.allocator = alloc;
     obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
-    BackupPairTables0207dfac(self->tables1bc);
+    VramState_Save(self->tables1bc);
     ClearEightWords_0203dafc(&params);
     params.fieldTable = (int)anim;
     params.fieldLength = animLength;
@@ -143,16 +143,16 @@ extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPa
     } else {
         func_ov000_0216d1c4((int)var2, (Struct_02013fb4*)var12, var13, &var6.unknown_8_);
     }
-    func_020484f8(var17, &var6);
-    unsigned int var18 = (unsigned short)var6.unknown_4_->unknown_14_;
-    unsigned int var19;
-    _ZN8Object3D10SetField78Et(var17, (var19 = var6.unknown_4_->unknown_14_ >> 16, var18));
-    _ZN8Object3D10SetField7aEt(var17, var19);
-    arg0->unknown_eb8_[arg2] = var17;
-    if (arg3 == 0x13f || arg3 == 0x13d || arg3 == 0x321) {
-        func_0207df50((struct Struct_0203d028*)arg0->unknown_14c_);
-        func_0207df90(arg0->unknown_14c_);
-        func_0207de48(arg0->unknown_14c_, 0x800, 0);
-        func_0207de48(arg0->unknown_14c_, 0xb800, 0x400);
+    InitObjectFields020484f8(obj, &input);
+    unsigned int low = (unsigned short)input.names->words;
+    unsigned int high;
+    _ZN8Object3D10SetField78Et(obj, (high = input.names->words >> 16, low));
+    _ZN8Object3D10SetField7aEt(obj, high);
+    self->models[slot] = obj;
+    if (id == 0x13f || id == 0x13d || id == 0x321) {
+        CopyInternalFields0207df50((struct Foo0207df50*)self->tables14c);
+        VramState_Restore(self->tables14c);
+        VramState_Reserve(self->tables14c, 0x800, 0);
+        VramState_Reserve(self->tables14c, 0xb800, 0x400);
     }
 }

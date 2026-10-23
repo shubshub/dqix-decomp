@@ -70,7 +70,7 @@ void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, u
 extern "C" void func_ov023_021e6e60(ProfileEditor02187320* self);
 void BuildMessageD_02189f38(char* self);
 void SePlayer_Play(SePlayer* sound, int effect, int a);
-int GetActiveScaledSum0205d794(Struct_0205c570* window);
+int Window_GetSelectedIndex(Struct_0205c570* window);
 extern "C" int func_ov023_021e6de4(ProfileEditor02187320* self);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
 extern "C" void func_ov012_02185bf0(ProfileEditor02187320* self, unsigned char item, int selected);
@@ -128,10 +128,10 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
     }
     else if (arg0->unknown_1370_ == 3)
     {
-        arg0->unknown_13a0_ = 1;
-        arg0->unknown_13f8_ = func_0205d794((Struct_0205c570*)arg0->unknown_ac_);
-        int var2 = 0;
-        if (func_ov023_021e6de4(arg0) || func_ov023_021e6e20((Struct_ov012_02186a7c*)arg0))
+        self->unk_13a0 = 1;
+        self->unk_13f8 = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
+        int done = 0;
+        if (func_ov023_021e6de4(self) || TestFlagsAndActiveElement2_021e6e20((Obj021e6e20*)self))
         {
             func_ov012_02185bf0(self, self->state_, 1);
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);

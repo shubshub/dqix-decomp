@@ -2,8 +2,8 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-extern "C" int func_0205d0e0(void* arg0, int arg1);
-extern "C" int func_ov023_021e2868(void* arg0);
+extern "C" int Window_Update(void* p, int val);
+extern "C" int func_ov023_021e2868(void* obj);
 
 struct Block16Words0216e124 { unsigned int w[16]; };
 extern struct Block16Words0216e124 data_ov003_0217f5c0;
@@ -24,10 +24,10 @@ struct Struct_ov003_0216e124_2 {
 };
 
 // USA: func_ov003_0216e124
-extern "C" ARM int func_ov003_0216e124(struct Struct_ov003_0216e124_2* arg0) {
-    unsigned int var0 = GameState::GetInstance()->GetTickCount();
-    if (arg0->unknown_3c_ != 0) {
-        func_0205d0e0(arg0->unknown_3c_, var0);
+extern "C" ARM int func_ov003_0216e124(struct Obj0216e124* obj) {
+    unsigned int scaleCount = GameState::GetInstance()->GetTickCount();
+    if (obj->field3c != 0) {
+        Window_Update(obj->field3c, scaleCount);
     }
     if (arg0->unknown_d4_ != 0) {
         arg0->unknown_c_ = (short)func_ov023_021e2868(arg0->unknown_d4_);

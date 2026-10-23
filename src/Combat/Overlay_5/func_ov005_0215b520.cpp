@@ -30,16 +30,16 @@ struct Struct_0204b8d0 {
     char unknown_18_[5];
     unsigned char unknown_1d_;
 };
-extern "C" void func_0204b8d0(struct Struct_0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct Struct_0204b010;
-extern "C" void func_0204b010(struct Struct_0204b010* arg0, void* arg1);
-extern "C" void func_0204b04c(void* arg0, int arg1);
-extern "C" void func_02047554(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_0215792c(void* arg0, unsigned char arg1);
-extern "C" void func_ov005_021579ec(void* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" void func_ov005_02154d34(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d7c(void* arg0, int arg1, int arg2);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
+void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+struct Obj0204b010;
+void Background_ClearMap(struct Obj0204b010* obj, void* p);
+extern "C" void Background_FlushMap(void* p, int flag);
+extern "C" void func_02047554(void* obj, int val, int param1);
+extern "C" void func_ov005_0215792c(void* obj, unsigned char mode);
+extern "C" void func_ov005_021579ec(void* obj, unsigned int a, unsigned char b);
+extern "C" void func_ov005_02154d34(void* obj, int a, int b);
+extern "C" void func_ov005_02154d7c(void* obj, int a, int b);
+MemberScreen* GetField1c_021a193c(int* p);
 struct GameState;
 struct Struct_02052e14;
 extern "C" short* func_02052e14(Struct_02052e14*);
@@ -186,16 +186,16 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
                 arg0->unknown_3dec_ = 1;
             }
         }
-        func_0204b010((struct Struct_0204b010*)&arg0->unknown_ea4_, 0);
-        func_0204b8d0(&arg0->unknown_ea4_, 0, 0, 0, 0x20 - arg0->unknown_3de2_, 0, 0x10, 0x16, 0xffff);
-        unsigned char var11 = arg0->unknown_3dbc_;
-        short var12 = var11 * 2 + 0xf;
-        func_0204b8d0(&arg0->unknown_ea4_, (unsigned char)(var11 + 1), 0, 0, var12 + 0x10 - arg0->unknown_3de2_, 0, 4, 3, 0xffff);
-        func_0204b04c(&arg0->unknown_ea4_, 0);
-        if (arg0->unknown_3dec_ == 1) {
-            arg0->unknown_3dba_++;
-            arg0->unknown_3de2_ = 0;
-            arg0->unknown_3de8_ = 0;
+        Background_ClearMap((struct Obj0204b010*)&self->list, 0);
+        Background_DrawScreen(&self->list, 0, 0, 0, 0x20 - self->level, 0, 0x10, 0x16, 0xffff);
+        unsigned char cursor = self->cursor;
+        short y = cursor * 2 + 0xf;
+        Background_DrawScreen(&self->list, (unsigned char)(cursor + 1), 0, 0, y + 0x10 - self->level, 0, 4, 3, 0xffff);
+        Background_FlushMap(&self->list, 0);
+        if (self->phase == 1) {
+            self->state++;
+            self->level = 0;
+            self->accum = 0;
         }
     } else if (var0 == 2 && arg0->unknown_3dec_ == 1) {
         func_ov005_0215792c(arg0, 3);
@@ -217,16 +217,16 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
                 arg0->unknown_3dec_ = 2;
             }
         }
-        func_0204b010((struct Struct_0204b010*)&arg0->unknown_ea4_, 0);
-        func_0204b8d0(&arg0->unknown_ea4_, 0, 0, 0, arg0->unknown_3de2_ + 0x10, 0, 0x10, 0x16, 0xffff);
-        unsigned char var13 = arg0->unknown_3dbc_;
-        short var14 = var13 * 2 + 0xf;
-        func_0204b8d0(&arg0->unknown_ea4_, (unsigned char)(var13 + 1), 0, 0, var14 + arg0->unknown_3de2_, 0, 4, 3, 0xffff);
-        func_0204b04c(&arg0->unknown_ea4_, 0);
-        if (arg0->unknown_3dec_ == 2) {
-            arg0->unknown_3dba_++;
-            arg0->unknown_3de2_ = 0;
-            arg0->unknown_3de8_ = 0;
+        Background_ClearMap((struct Obj0204b010*)&self->list, 0);
+        Background_DrawScreen(&self->list, 0, 0, 0, self->level + 0x10, 0, 0x10, 0x16, 0xffff);
+        unsigned char cursor = self->cursor;
+        short y = cursor * 2 + 0xf;
+        Background_DrawScreen(&self->list, (unsigned char)(cursor + 1), 0, 0, y + self->level, 0, 4, 3, 0xffff);
+        Background_FlushMap(&self->list, 0);
+        if (self->phase == 2) {
+            self->state++;
+            self->level = 0;
+            self->accum = 0;
         }
     } else if (var0 == 1 && arg0->unknown_3dec_ == 2) {
         void* var15 = (void*)GameState::GetInstance();

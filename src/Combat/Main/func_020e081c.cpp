@@ -42,13 +42,13 @@ extern "C" char* func_0203bd08();
 extern "C" char* func_0203b628();
 extern "C" void func_020213fc(Struct_020213fc*, int);
 extern "C" void func_02021428(void*, int);
-extern "C" void func_020209d0(void* arg0);
-extern "C" void func_0203b66c(char*);
-extern "C" void func_0203bd24(char*);
-extern "C" void func_0205a198(Struct_02043368_2*);
-extern "C" void func_0205a444(char*);
-extern "C" int func_0205a498(void*, Struct_02020aec*, int, void*);
-extern "C" void* func_0203bd14();
+void InitSubScreenDisplay_020209d0(void* context);
+void TailForward0203b66c(char*);
+void InitBattleContext0203bd24(char*);
+void Sprite_Init(Struct0205a198*);
+void SpriteContext_Init(char*);
+int ProcessRecords0205a498(void*, Rec020467f0*, int, void*);
+void* GetGlobalPtr02105244_0203bd14();
 extern "C" void* func_0203be4c(char*);
 extern "C" void func_020c9be0();
 extern "C" void func_020c9820();
@@ -71,26 +71,26 @@ extern "C" ARM void func_020e081c(char* arg0) {
     GameState::GetInstance();
     BackgroundLoader* var0 = BackgroundLoader::GetInstance();
     func_02012fe4();
-    GameResources* var1 = GetGameResources();
-    char* var2 = func_0203bd08();
-    char* var3 = func_0203b628();
-    SafeAllocator* var4 = inline_02021578(var1, 12);
-    if (*(signed char*)(arg0 + Enum_020e081c_2498) == 0) {
-        func_020213fc((Struct_020213fc*)arg0, 0);
-        func_02021428(arg0, 0x19);
-        func_020209d0(arg0);
-        var4->Reset();
-        func_0203b66c(var3);
-        func_0203bd24(var2);
-        for (int var5 = 0; var5 < 28; ++var5)
-            func_0205a198(&((Struct_02043368_2*)(arg0 + 0xe8))[var5]);
-        func_0205a444(arg0 + 0x94);
-        Struct_020e081c* var6 = (Struct_020e081c*)(arg0 + 0x94);
-        var6->unknown_50_ = 1;
-        var6->unknown_40_ = (Struct_02043368_2*)(arg0 + 0xe8);
-        var6->unknown_4c_ = 5;
-        var0->AddFence();
-        *(int*)(arg0 + Enum_020e081c_2556) = var0->QueueLoadFile(data_020f2b78, 0);
+    GameResources* resources = GetGameResources();
+    char* battle = func_0203bd08();
+    char* table = GetData02105254_0203b628();
+    SafeAllocator* allocator = GetResourceAllocator(resources, 12);
+    if (*(signed char*)(self + kStage) == 0) {
+        SetFlag0x9c6_020213fc((SetFlagStruct*)self, 0);
+        func_02021428(self, 0x19);
+        InitSubScreenDisplay_020209d0(self);
+        allocator->Reset();
+        TailForward0203b66c(table);
+        InitBattleContext0203bd24(battle);
+        for (int i = 0; i < 28; ++i)
+            Sprite_Init(&((Struct0205a198*)(self + 0xe8))[i]);
+        SpriteContext_Init(self + 0x94);
+        Script020e081c* script = (Script020e081c*)(self + 0x94);
+        script->active = 1;
+        script->records = (Struct0205a198*)(self + 0xe8);
+        script->count = 5;
+        loader->AddFence();
+        *(int*)(self + kBaseTask) = loader->QueueLoadFile(data_020f2b78, 0);
 #if defined(jpn)
         *(int*)(arg0 + Enum_020e081c_2568) = var0->QueueLoadFile(data_020f2ce8, 0);
 #else

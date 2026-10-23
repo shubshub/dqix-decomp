@@ -12,16 +12,16 @@ extern "C" void func_020c39a0(short* arg0, int arg1);
 
 extern "C" void MapVRAMBanksToMainBG(int);
 extern "C" void func_ov020_0218c7bc(int, int, int, int, int);
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8*);
-extern "C" void func_0204b11c(unsigned char*, int);
-extern "C" void func_0204b5b4(void*, int);
-struct Struct_0204b12c;
-extern "C" void func_0204b12c(Struct_0204b12c*, SafeAllocator*);
-struct Struct_0204af38;
-extern "C" void func_0204af38(Struct_0204af38*, int, SafeAllocator*);
-struct Struct_02020cb8_5;
-extern "C" void func_0204b5e8(Struct_02020cb8_5*, int, int);
+struct List0204af64;
+void Background_Init(List0204af64*);
+void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetPriority(void*, int);
+struct AllocTarget0204b12c;
+void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
+struct Foo0204af38;
+void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+struct Obj0204b5e8;
+void Background_SetScroll(Obj0204b5e8*, int, int);
 extern "C" int DisableSubObjVRAMBanks();
 extern "C" int DisableSubBGVRAMBanks();
 extern "C" void func_020c3984(unsigned int);
@@ -29,17 +29,17 @@ extern "C" void MapVRAMBanksToSubObj(unsigned short value);
 extern "C" void MapVRAMBanksToSubBG(int);
 extern "C" void func_ov020_0218cd64(int, int, int, int, int);
 void LoadFileIntoMemory(const char*, void*, unsigned int*);
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4*);
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec*, int, void**, int*);
-extern "C" void func_0204b2e0(void*, char*);
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(Struct_02020cb8_6*, char*);
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2*, void*);
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(Struct_02020cb8_3*);
+struct ActiveEntry02046900;
+int Pac_CountFiles(ActiveEntry02046900*);
+struct Rec020467f0;
+void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void Background_FlushFile(void*, char*);
+struct SelfTag0204b3a0;
+void Background_UploadFile(SelfTag0204b3a0*, char*);
+struct List0204b0e8;
+void Background_UploadMap(List0204b0e8*, void*);
+struct List0204afb4;
+void ResetRecordList0204afb4(List0204afb4*);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 
 extern char data_ov020_0218dce2;
@@ -83,15 +83,15 @@ extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* arg0, in
     MapVRAMBanksToMainBG(8);
     func_ov020_0218c7bc(0, 1, 1, 1, 0);
 
-    func_0204af64((Struct_02020cb8*)(var0 + Enum_ov020_0218d32c_156 + 0x400));
-    func_0204b11c((unsigned char*)(var0 + Enum_ov020_0218d32c_156 + 0x400), 0);
-    struct Struct_ov020_0218d32c* var6 = (struct Struct_ov020_0218d32c*)(var0 + Enum_ov020_0218d32c_156 + 0x400);
-    var6->unknown_1c_0_ = 0;
-    var6->unknown_1c_4_ = 1;
-    func_0204b5b4(var6, 1);
-    func_0204b12c((Struct_0204b12c*)(var0 + Enum_ov020_0218d32c_156 + 0x400), (SafeAllocator*)&arg0->unknown_470_);
-    func_0204af38((Struct_0204af38*)(var0 + Enum_ov020_0218d32c_156 + 0x400), 1, (SafeAllocator*)&arg0->unknown_470_);
-    func_0204b5e8((Struct_02020cb8_5*)(var0 + Enum_ov020_0218d32c_156 + 0x400), 0, 0);
+    Background_Init((List0204af64*)(base + regionalOffset0 + 0x400));
+    Background_SetMapSize((unsigned char*)(base + regionalOffset0 + 0x400), 0);
+    struct List0218d32c* list = (struct List0218d32c*)(base + regionalOffset0 + 0x400);
+    list->lowNibble = 0;
+    list->highNibble = 1;
+    Background_SetPriority(list, 1);
+    Background_AllocateMap((AllocTarget0204b12c*)(base + regionalOffset0 + 0x400), (SafeAllocator*)&self->allocator);
+    Background_AllocateScreens((Foo0204af38*)(base + regionalOffset0 + 0x400), 1, (SafeAllocator*)&self->allocator);
+    Background_SetScroll((Obj0204b5e8*)(base + regionalOffset0 + 0x400), 0, 0);
 
     DisableSubObjVRAMBanks();
     DisableSubBGVRAMBanks();
@@ -121,26 +121,26 @@ extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* arg0, in
         LoadFileIntoMemory((const char*)&data_ov020_0218dcf8, (void*)&data_0211e33c, &var1);
     }
 
-    int var9 = func_02046900((Struct_02020cb8_4*)&data_0211e33c);
+    int count = Pac_CountFiles((ActiveEntry02046900*)&data_0211e33c);
 
-    for (int var10 = 0; var10 < var9; var10++) {
-        var3[var10] = (char*)func_020467f0((Struct_02020aec*)&data_0211e33c, var10, &var2, &var4[var10]);
+    for (int i = 0; i < count; i++) {
+        resultsArray[i] = (char*)Pac_GetFile((Rec020467f0*)&data_0211e33c, i, &recFieldScratch, &sizeArr[i]);
     }
 
-    func_0204af64((Struct_02020cb8*)var5);
-    var5[0x1c] = (var5[0x1c] & ~0xf) | 1;
-    var5[0x1c] = var5[0x1c] & ~0xf0;
-    func_0204b5b4(var5, 3);
-    func_0204b11c((unsigned char*)var5, 0);
-    func_0204b5e8((Struct_02020cb8_5*)var5, 0, 0);
+    Background_Init((List0204af64*)list3);
+    list3[0x1c] = (list3[0x1c] & ~0xf) | 1;
+    list3[0x1c] = list3[0x1c] & ~0xf0;
+    Background_SetPriority(list3, 3);
+    Background_SetMapSize((unsigned char*)list3, 0);
+    Background_SetScroll((Obj0204b5e8*)list3, 0, 0);
 
-    for (int var11 = 0; var11 < 3; var11++) {
-        func_0204b2e0(var5, var3[var11]);
-        func_0204b3a0((Struct_02020cb8_6*)var5, var3[var11]);
+    for (int j = 0; j < 3; j++) {
+        Background_FlushFile(list3, resultsArray[j]);
+        Background_UploadFile((SelfTag0204b3a0*)list3, resultsArray[j]);
     }
 
-    func_0204b0e8((Struct_02020cb8_2*)var5, (void*)0);
-    func_0204afb4((Struct_02020cb8_3*)var5);
+    Background_UploadMap((List0204b0e8*)list3, (void*)0);
+    ResetRecordList0204afb4((List0204afb4*)list3);
     BackgroundLoader::RemoveLockGlobal();
 
     *(volatile unsigned short*)0x4000050 = 0;

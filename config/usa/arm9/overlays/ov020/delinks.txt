@@ -49,7 +49,7 @@ src/Combat/Overlay_20/InitPointerPair_0218c7f0.cpp:
     complete
     .text start:0x0218c7f0 end:0x0218c840
 
-src/Combat/Overlay_20/func_ov020_0218cd98.cpp:
+src/Combat/Overlay_20/ResetAndReloadContext_0218cd98.cpp:
     complete
     .text start:0x0218cd98 end:0x0218cf8c
 
@@ -61,11 +61,11 @@ src/Combat/Overlay_20/data_ov020_0218db90.cpp:
     complete
     .init start:0x0218db90 end:0x0218dba8
 
-src/Combat/Overlay_20/func_ov020_0218cf8c.cpp:
+src/Combat/Overlay_20/InitializeAndDispatchLists_0218cf8c.cpp:
     complete
     .text start:0x0218cf8c end:0x0218d32c
 
-src/Combat/Overlay_20/func_ov020_0218c98c.cpp:
+src/Combat/Overlay_20/RunFieldGroupInitAndDispatch_0218c98c.cpp:
     complete
     .text start:0x0218c98c end:0x0218cd64
 

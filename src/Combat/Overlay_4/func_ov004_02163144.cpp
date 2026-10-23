@@ -5,19 +5,19 @@
 
 struct Struct_020534ac;
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct List0204af64;
+void Background_Init(struct List0204af64* obj);
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(struct Struct_02020cb8_6* arg0, char* arg1);
+struct SelfTag0204b3a0;
+void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
 
 
 struct Struct_ov004_02163144 {
@@ -53,16 +53,16 @@ extern "C" ARM int func_ov004_02163144() {
             void* var5;
             Struct_ov004_02163144 var6;
 
-            ((BackgroundLoader*)((struct Struct_020534ac*)var1))->GetLoadedFileByID((int)(data_ov004_021707e8.unknown_20_), (void**)(&var2), (unsigned int*)(&var3));
-            int var7 = func_02046900((struct Struct_02020cb8_4*)var2);
-            func_0204af64((struct Struct_02020cb8*)&var6);
-            var6.unknown_1c_0_ = 1;
-            var6.unknown_1c_4_ = 1;
-            for (int var8 = 0; var8 < var7; var8++) {
-                void* var9 = func_020467f0((struct Struct_02020aec*)var2, var8, &var5, &var4);
-                if (var9) {
-                    func_0204b2e0(&var6, (char*)var9);
-                    func_0204b3a0((struct Struct_02020cb8_6*)&var6, (char*)var9);
+            ((BackgroundLoader*)((struct List0202fec8*)data4))->GetLoadedFileByID((int)(data_ov004_021707e8.handle), (void**)(&recListHead), (unsigned int*)(&val2Ignored));
+            int count = Pac_CountFiles((struct ActiveEntry02046900*)recListHead);
+            Background_Init((struct List0204af64*)&s);
+            s.lo = 1;
+            s.hi = 1;
+            for (int i = 0; i < count; i++) {
+                void* rec = Pac_GetFile((struct Rec020467f0*)recListHead, i, &dummyPtr, &dummyOut44);
+                if (rec) {
+                    Background_FlushFile(&s, (char*)rec);
+                    Background_UploadFile((struct SelfTag0204b3a0*)&s, (char*)rec);
                 }
             }
             ((BackgroundLoader*)(var1))->RemoveTask((int)(data_ov004_021707e8.unknown_20_));

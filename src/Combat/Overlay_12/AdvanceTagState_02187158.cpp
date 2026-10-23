@@ -40,7 +40,7 @@ void SetupBattleTag02189d68(char* base);
 struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern int g_sePlayer;
@@ -71,9 +71,9 @@ extern "C" ARM void func_ov012_02187158(char* base) {
     }
     if (state != 1) return;
     *(unsigned char*)(base + R(0x1368,0x13a0)) = 1;
-    *(int*)(base + R(0x143c,0x13e4)) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + R(0x90,0xac)));
+    *(int*)(base + R(0x143c,0x13e4)) = Window_GetSelectedIndex((struct Struct_0205c570*)(base + R(0x90,0xac)));
     if (func_ov023_021e6448(base)) {
-        *(int*)(base + R(0x143c,0x13e4)) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + R(0x90,0xac)));
+        *(int*)(base + R(0x143c,0x13e4)) = Window_GetSelectedIndex((struct Struct_0205c570*)(base + R(0x90,0xac)));
     }
     if (func_ov023_021e6de4(base)) {
         SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);

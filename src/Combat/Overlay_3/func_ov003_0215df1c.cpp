@@ -5,14 +5,14 @@ struct Struct_0205de24_2;
 struct Struct_02020cb8_5;
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" char* func_020421a0(void);
-extern "C" int func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
-extern "C" void memset(void* arg0, int arg1, int arg2);
-extern "C" void func_ov003_0215e13c(char* arg0, char* arg1, int arg2);
+extern "C" int func_0202c540(void* obj);
+int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_020420e8(char* str, int id);
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+char* GetGlobalField0x1c020421a0(void);
+int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+extern "C" void memset(void* dst, int val, int size);
+void AppendEntryNames_0215e13c(char* base, char* dst, int flag);
 #if defined(jpn)
 extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -78,11 +78,11 @@ extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
 #if defined(jpn)
     short var5 = 7;
 #else
-    int var2 = 0;
-    for (int var3 = 0; var3 < arg0->unknown_3c0_; var3++) {
-        short var4 = func_020420e8((char*)func_020e0434((struct Struct_0201099c_3*)arg0->unknown_64_, arg0->unknown_3bd_[var3]), 0);
-        if (var2 < var4) {
-            var2 = var4;
+    int maxWidth = 0;
+    for (int i = 0; i < self->count; i++) {
+        short w = func_020420e8((char*)KeyTable_Get((struct Container020e0310*)self->messages, self->keys[i]), 0);
+        if (maxWidth < w) {
+            maxWidth = w;
         }
     }
     short var5 = (var2 + 0x18) >> 3;
@@ -107,12 +107,12 @@ extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
 #else
         short var6 = *(short*)(func_020421a0() + 0x916);
 #endif
-        short var7 = var6 / 8;
-        short var8 = var6 % 8;
-        arg0->unknown_13c_ = 0x20 - var5;
-        arg0->unknown_13e_ = var7 - var1;
-        for (int var9 = 0; var9 < 2; var9++) {
-            func_0204b5e8((struct Struct_02020cb8_5*)arg0->unknown_154_[var9], 2, -var8);
+        short row = pos / 8;
+        short offset = pos % 8;
+        self->x = 0x20 - width;
+        self->y = row - height;
+        for (int i = 0; i < 2; i++) {
+            Background_SetScroll((struct Obj0204b5e8*)self->scrollers[i], 2, -offset);
         }
     }
 

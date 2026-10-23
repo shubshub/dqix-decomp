@@ -10,10 +10,10 @@ struct Struct_0205c570;
 struct Struct_0205def8;
 struct SePlayer;
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void* GetFieldAt0x150_02053c6c(unsigned char* obj);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
@@ -87,16 +87,16 @@ extern char g_sePlayer;
 extern short data_ov000_02183658[];
 
 // USA: func_ov000_0217bdf4
-extern "C" ARM int func_ov000_0217bdf4(Struct_ov000_0217bdf4_3* arg0, int arg1, int arg2) {
-    data_ov000_02184294.unknown_8_->unknown_1d72_ |= 0x100;
-    arg0->unknown_23_ = func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    Struct_ov000_0217bdf4_4* var0 = data_ov000_02184294.unknown_8_;
-    func_0205def8((struct Struct_0205def8*)var0->unknown_188_, 1, 0x16);
-    int var1 = g_keyManager.TestKeysPressed(0x601);
-    int var2 = (var1 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var2 || arg0->unknown_444_ != 0) {
-        GameObject* var3 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_4c_);
-        if (var3 == NULL) {
+extern "C" ARM int func_ov000_0217bdf4(MenuObj_0217bdf4* obj, int arg1, int arg2) {
+    data_ov000_02184294.ctx->flags |= 0x100;
+    obj->field23 = Window_GetSelectedIndex((struct Struct_0205c570*)obj->field38);
+    MenuCtx_0217bdf4* ctx = data_ov000_02184294.ctx;
+    SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 1, 0x16);
+    int t = g_keyManager.TestKeysPressed(0x601);
+    int active = (t | Window_IsSelectionTouched((struct Obj_0205da38*)obj->field38, 0x14)) != 0;
+    if (active || obj->field444 != 0) {
+        GameObject* member = GameState::GetInstance()->GetPartyMemberByIndex(obj->memberIndex);
+        if (member == NULL) {
             return -1;
         }
         int kind = ((MemberInfo_0217bdf4*)GetFieldAt0x150_02053c6c((unsigned char*)member))->spellKind;

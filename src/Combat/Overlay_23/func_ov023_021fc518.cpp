@@ -104,26 +104,26 @@ struct Struct_0203d028;
 struct Struct_0202e5c0;
 struct Struct_0202df68;
 
-extern "C" void func_ov023_021f6ed8(Struct_ov023_021f6ed8* arg0);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" Struct_ov023_021fc518_3* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" Struct_ov023_021fc518_2* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_ov023_021e4e8c(void* arg0);
-extern "C" void func_ov023_021e4f64(void* arg0, SafeAllocator* arg1);
-extern "C" void func_ov023_021e4fd8(void* arg0);
-extern "C" void func_ov023_021e6198(void* arg0, int arg1);
-extern "C" void func_ov023_021e6150(void* arg0, unsigned char arg1);
-extern "C" void func_ov023_021e60e0(void* arg0, unsigned int arg1);
-extern "C" void func_ov023_021fc71c(void* arg0, int arg1, int arg2);
-extern "C" char* func_020100f8(char* arg0);
-extern "C" void func_0202e5c0(Struct_0202e5c0* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0202e5c8(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_0202e9ec(void* arg0);
-extern "C" void func_0202e9a4(Struct_0202df68* arg0, int arg1);
-extern "C" void func_020a27a0(void* arg0);
+extern "C" void func_ov023_021f6ed8(ObjBase021f6ed8* obj);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" MenuNode_021fc518* func_ov023_021f6880(void* list, int tag);
+extern "C" HeapNode_021fc518* func_ov011_021845f8(void* ctx, int heap);
+void CopyInternalFields0207df50(Foo0207df50* p);
+void VramState_Restore(char* p);
+void VramState_Save(char* p);
+void CharacterModel_Init(void* model);
+void CharacterModel_CreateAllocators(void* model, SafeAllocator* allocator);
+void CharacterModel_ReserveVram(void* model);
+void CharacterModel_SetItemTable(void* model, int value);
+void SetByteC11_021e6150(void* model, unsigned char value);
+void CharacterModel_SetAngle(void* model, unsigned int value);
+extern "C" void func_ov023_021fc71c(void* obj, int id, int flagArg);
+char* GetFieldIfFlag4_020100f8(char* gameState);
+void Camera_SetPosition(Vec3Target0202e5c0* camera, int x, int y, int z);
+void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+int GetField0x58_0202e9ec(void* camera);
+void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4* camera, int angle);
+void SetField0x238False_020a27a0(void* camera);
 
 // USA: func_ov023_021fc518
 extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5) {
@@ -150,27 +150,27 @@ extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, 
 #else
     char* var3 = GetGameResources()->unknown_2cc_;
 #endif
-    func_0207df50((Struct_0203d028*)var3);
-    func_0207df90(var3);
-    for (int var4 = 0; var4 < 2; var4++) {
-        func_ov023_021e4e8c(&arg0->unknown_20_[var4]);
-        func_ov023_021e4f64(&arg0->unknown_20_[var4], &var1->unknown_4_);
-        func_ov023_021e4fd8(&arg0->unknown_20_[var4]);
-        func_ov023_021e6198(&arg0->unknown_20_[var4], var2);
-        func_ov023_021e6150(&arg0->unknown_20_[var4], 1);
+    CopyInternalFields0207df50((Foo0207df50*)pairTables);
+    VramState_Restore(pairTables);
+    for (int i = 0; i < 2; i++) {
+        CharacterModel_Init(&self->models_[i]);
+        CharacterModel_CreateAllocators(&self->models_[i], &heapNode->allocator);
+        CharacterModel_ReserveVram(&self->models_[i]);
+        CharacterModel_SetItemTable(&self->models_[i], perspective);
+        SetByteC11_021e6150(&self->models_[i], 1);
     }
-    func_0207dfac(var3);
+    VramState_Save(pairTables);
 
-    func_ov023_021e60e0(&arg0->unknown_20_[0], 0x1eb);
-    func_ov023_021e60e0(&arg0->unknown_20_[1], 0x1eb);
-    if (arg5 >= 0)
-        func_ov023_021fc71c(arg0, arg5, 0);
+    CharacterModel_SetAngle(&self->models_[0], 0x1eb);
+    CharacterModel_SetAngle(&self->models_[1], 0x1eb);
+    if (character >= 0)
+        func_ov023_021fc71c(self, character, 0);
 
-    char* var5 = func_020100f8((char*)GameState::GetInstance());
-    func_0202e5c0((Struct_0202e5c0*)var5, 0xb666, 0xb800, 0x42ccc);
-    func_0202e5c8((unsigned char*)var5, 0xb666, 0xb800, 0);
-    arg0->unknown_1860_ = func_0202e9ec(var5);
-    func_0202e9a4((Struct_0202df68*)var5, 0xf000);
-    func_020a27a0(var5);
+    char* camera = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
+    Camera_SetPosition((Vec3Target0202e5c0*)camera, 0xb666, 0xb800, 0x42ccc);
+    Camera_SetTarget((unsigned char*)camera, 0xb666, 0xb800, 0);
+    self->perspective_ = GetField0x58_0202e9ec(camera);
+    SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)camera, 0xf000);
+    SetField0x238False_020a27a0(camera);
     return 1;
 }

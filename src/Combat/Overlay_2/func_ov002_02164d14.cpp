@@ -4,8 +4,6 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-#if defined(jpn)
-#endif
 
 struct Struct_0205de24_2;
 struct Struct_0205c570;
@@ -15,12 +13,12 @@ struct SePlayer;
 struct Obj02061bd8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int a, int b);
 void FilterSlotsWithFlag0x800020dc4d0(signed char *out, signed char *outCount);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
 int CheckField0x56bLowNibble(struct Obj02061bd8 *obj);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int GetDataPtr02114e04_020d6c00(void);
 void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int bits);
@@ -79,19 +77,19 @@ extern "C" ARM void func_ov002_02164d14(char *arg0) {
             func_0205def8((struct Struct_0205def8 *) (arg0 + OFF_LIST_02164d14), 1,
                                                                     K_29_02164d14);
         }
-        *(unsigned int *) (arg0 + OFF_FLAGS_02164d14) |= 4;
-        short var2 = *(short *) (arg0 + OFF_SEL_02164d14);
-        *(short *) (arg0 + OFF_SEL_02164d14) =
-            func_0205d794((struct Struct_0205c570 *) (arg0 + OFF_LIST_02164d14));
-        signed char var3[7];
-        signed char var4;
-        Struct_ov002_02164d14 *var5 = (Struct_ov002_02164d14 *) (arg0 + OFF_LIST_02164d14) + 1;
-        int var6         = 0;
-        func_020dc4d0(var3, &var4);
-        int var7 = var6;
-        for (int var8 = 0; var8 < var4; var8++) {
-            GameObject *var9 = func_0200ff1c(var1, var3[var8]);
-            if (var9 != NULL && func_02061bd8((struct Struct_0205faf4_11 *) var9)) var7++;
+        *(unsigned int *) (base + OFF_FLAGS_02164d14) |= 4;
+        short old = *(short *) (base + OFF_SEL_02164d14);
+        *(short *) (base + OFF_SEL_02164d14) =
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + OFF_LIST_02164d14));
+        signed char ids[7];
+        signed char count;
+        L02164d14 *list = (L02164d14 *) (base + OFF_LIST_02164d14) + 1;
+        int bad         = 0;
+        FilterSlotsWithFlag0x800020dc4d0(ids, &count);
+        int dead = bad;
+        for (int i = 0; i < count; i++) {
+            GameObject *c = GetCombatantWithFlag0x100_0200ff1c(gs, ids[i]);
+            if (c != NULL && CheckField0x56bLowNibble((struct Obj02061bd8 *) c)) dead++;
         }
         var4 -= var7;
         if (var4 + 1 != (var5 - 1)->unknown_60_) var6 = 1;
@@ -106,7 +104,7 @@ extern "C" ARM void func_ov002_02164d14(char *arg0) {
         }
         if (old != *(short *) (base + OFF_SEL_02164d14)) return;
         int a = g_keyManager.TestKeysPressed(0x601);
-        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + OFF_LIST_02164d14), 0x14);
+        int b = Window_IsSelectionTouched((struct Obj_0205da38*)(base + OFF_LIST_02164d14), 0x14);
         if ((a | b) ? 1 : 0) {
             if (*(unsigned int *) (base + OFF_FLAGS_02164d14) & 2) return;
             if (*(short *) (base + OFF_SEL_02164d14) == count) {

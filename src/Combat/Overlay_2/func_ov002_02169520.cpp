@@ -13,8 +13,8 @@ struct SePlayer;
 
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int GetField110ArrayValue021574d4(void *self, int idx);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
@@ -43,17 +43,17 @@ extern "C" ARM void func_ov002_02169520(char *arg0) {
         (*(int *) (arg0 + 0x1bc0 + Enum_ov002_02169520_0))++;
         return;
     }
-    if (var0 != 1) return;
-    *(int *) (arg0 + 0x247c + Enum_ov002_02169520_0_3) |= 4;
-    short var1                  = *(short *) (arg0 + 0x1c08 + Enum_ov002_02169520_0);
-    *(short *) (arg0 + 0x1c08 + Enum_ov002_02169520_0) = func_0205d794((struct Struct_ov002_0215624c_15 *) (arg0 + 0xec8 + Enum_ov002_02169520_0_2));
-    if (var1 != *(short *) (arg0 + 0x1c08 + Enum_ov002_02169520_0)) *(int *) (arg0 + 0x1bcc + Enum_ov002_02169520_0) = 1;
-    *(signed char *) (arg0 + 0x1c20 + Enum_ov002_02169520_0) = func_ov002_021574d4(arg0, *(short *) (arg0 + 0x1c08 + Enum_ov002_02169520_0));
+    if (phase != 1) return;
+    *(int *) (base + 0x247c + regionalFlags) |= 4;
+    short old                  = *(short *) (base + 0x1c08 + regionalState);
+    *(short *) (base + 0x1c08 + regionalState) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xec8 + regionalList));
+    if (old != *(short *) (base + 0x1c08 + regionalState)) *(int *) (base + 0x1bcc + regionalState) = 1;
+    *(signed char *) (base + 0x1c20 + regionalState) = GetField110ArrayValue021574d4(base, *(short *) (base + 0x1c08 + regionalState));
 #if defined(jpn)
     func_ov002_0215bba8(arg0);
 #endif
     int pressed                      = g_keyManager.TestKeysPressed(0x601);
-    int cancel = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xec8 + regionalList), 0x14)) ? 1 : 0;
+    int cancel = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xec8 + regionalList), 0x14)) ? 1 : 0;
     if (cancel) {
         *(unsigned char *) (base + 0xf80 + regionalList) = *(int *) (base + 0x1bb8 + regionalState);
         *(int *) (base + 0x247c + regionalFlags) &= ~4;

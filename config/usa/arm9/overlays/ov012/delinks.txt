@@ -16,7 +16,7 @@ src/Combat/Overlay_12/func_ov012_021859f4.cpp:
     complete
     .text start:0x021859f4 end:0x02185a24
 
-src/Combat/Overlay_12/func_ov012_02185f04.cpp:
+src/Combat/Overlay_12/ResetAndRebuildEntry_02185f04.cpp:
     complete
     .text start:0x02185f04 end:0x02185f74
 
@@ -64,11 +64,11 @@ src/Combat/Overlay_12/func_ov012_0218aabc.cpp:
     complete
     .text start:0x0218aabc end:0x0218ab34
 
-src/Combat/Overlay_12/func_ov012_02185a24.cpp:
+src/Combat/Overlay_12/Trans_02185a24.cpp:
     complete
     .text start:0x02185a24 end:0x02185ab8
 
-src/Combat/Overlay_12/func_ov012_02185ab8.cpp:
+src/Combat/Overlay_12/Trans_02185ab8.cpp:
     complete
     .text start:0x02185ab8 end:0x02185af0
 
@@ -124,11 +124,11 @@ src/Combat/Overlay_12/func_ov012_0218432c.cpp:
     complete
     .text start:0x0218432c end:0x02184384
 
-src/Combat/Overlay_12/func_ov012_021861e0.cpp:
+src/Combat/Overlay_12/InitBattleRecordsAndDispatch_021861e0.cpp:
     complete
     .text start:0x021861e0 end:0x021862fc
 
-src/Combat/Overlay_12/func_ov012_021845f8.cpp:
+src/Combat/Overlay_12/InitEntry_021845f8.cpp:
     complete
     .text start:0x021845f8 end:0x02184654
 
@@ -180,7 +180,7 @@ src/Combat/Overlay_12/func_ov012_0218a054.cpp:
     complete
     .text start:0x0218a054 end:0x0218a1f4
 
-src/Combat/Overlay_12/func_ov012_02184884.cpp:
+src/Combat/Overlay_12/InitBattleAllocatorsAndBuffers_02184884.cpp:
     complete
     .text start:0x02184884 end:0x02184acc
 

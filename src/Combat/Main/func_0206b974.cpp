@@ -27,17 +27,17 @@ public:
     unsigned int unknown_70_;
 };
 
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
-extern "C" int func_020424e4(int, int);
+extern "C" int func_02001aec(const void* lhs, const void* rhs, unsigned int length);
+int Font_FindCharacterIndex(int, int);
 
-extern "C" char* func_020424ac(char*);
-extern "C" Struct_0206b974_2::Struct_0206b974_3* func_020425b4(int arg0, int arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" int func_02042648(int arg0);
-extern "C" int func_02044420(void*, void*);
-extern "C" bool func_02044494(void*, void*);
-extern "C" int func_020d2ff0(const char*);
-extern "C" bool func_020d85dc(const char* arg0, const char* arg1);
+char* FindUnescapedAngleBracket_020424ac(char*);
+FontIndexFile::Glyph* Font_GetCharacter(int glyph, int fontType);
+int LookupKeyValue020425e4(int leftGlyph, int rightGlyph, int fontType);
+int GetWordFromTable02042648(int fontType);
+int Dispatch02044420(void*, void*);
+bool IsHighByteFF02044494(void*, void*);
+int StringLength_020d2ff0(const char*);
+bool StringStartsWithCI020d85dc(const char* str, const char* initial);
 
 struct Struct_020e7e04
 {
@@ -174,10 +174,10 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
             }
         }
 
-        int var16 = func_020424e4((int)arg2, arg7);
-        if (var12 == Enum_0206b974_65305)
-            var16 = -1;
-        if (var11 == '<' && var16 < 0)
+        int nextGlyphIndex = Font_FindCharacterIndex((int)input, fontType);
+        if (control == ControlWord_Unknown_ff19)
+            nextGlyphIndex = -1;
+        if (nextChar == '<' && nextGlyphIndex < 0)
         {
             char* var17 = func_020424ac(arg2);
             if (var17 != NULL)
@@ -234,12 +234,12 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
         }
         if (var16 >= 0)
         {
-            Struct_0206b974_2::Struct_0206b974_3* var25 = func_020425b4(var16, arg7);
-            var24 = var25->unknown_5_0_;
-            unsigned char var26 = var16;
-            int var27 = func_020425e4(var7, var26, arg7);
-            var7 = var26;
-            var23 = var27 + var25->unknown_4_;
+            FontIndexFile::Glyph* glyph = Font_GetCharacter(nextGlyphIndex, fontType);
+            ioCopyLength = glyph->tagLength;
+            unsigned char nextGlyphUC = nextGlyphIndex;
+            int kerning = LookupKeyValue020425e4(lastGlyphIndex, nextGlyphUC, fontType);
+            lastGlyphIndex = nextGlyphUC;
+            glyphSpacing = kerning + glyph->width;
 
             var22 = (var25->unknown_0_[0] == '-');
             if (var22)

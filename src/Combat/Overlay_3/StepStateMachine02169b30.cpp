@@ -28,7 +28,7 @@ struct Struct0205cf1c;
 void ClearFlagByte0205cf1c(struct Struct0205cf1c* s);
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -48,7 +48,7 @@ extern "C" ARM int func_ov003_02169b30(void* p) {
         *(unsigned char*)(obj + kRegionValue4E9_4E5) = *(unsigned char*)(obj + kRegionValue4E9_4E5) + 1;
     } else if (state == 1) {
         *(unsigned char*)(obj + kRegionValue59F_59B) |= 1;
-        int e = GetActiveScaledSum0205d794((struct Struct_0205c570*)(obj + kRegionValueE4_E0));
+        int e = Window_GetSelectedIndex((struct Struct_0205c570*)(obj + kRegionValueE4_E0));
         *(unsigned char*)(obj + kRegionValue4ED_4E9) = (unsigned char)e;
         if (func_ov003_0216950c(obj) != 0) {
             func_ov003_0216a974(obj, 1, 1);

@@ -17,11 +17,11 @@ extern "C" void func_02074af4(void* p);
 
 struct List0202fec8;
 struct ActiveEntry02046900;
-int CountActiveEntries(struct ActiveEntry02046900* entry);
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 struct Rec020467f0;
-void* FindRecordByIndex(struct Rec020467f0* rec, int index, void** out, int* out44);
-extern "C" void func_0205a528(void* a, void* ptr, int val, void* d);
-extern "C" void func_020dfec0(void* dest, void* allocator, void* fileData, unsigned int size);
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
+extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
 
 void ConfigureBgSub1AndClear_021dcc58(void* obj);
 ARM void ResetIfNonNeg_021db2e4(volatile int* p);
@@ -125,10 +125,10 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
             if (out1 != 0 && out2 != 0) {
 #endif
 
-                int count = CountActiveEntries((struct ActiveEntry02046900*)out1);
+                int count = Pac_CountFiles((struct ActiveEntry02046900*)out1);
                 for (int i = 0; i < count; i++) {
-                    void* result = FindRecordByIndex((struct Rec020467f0*)out1, i, &dummyOut, &fieldOut);
-                    func_0205a528(obj + regionalOffset9, result, fieldOut, *(void**)(obj + 0x44));
+                    void* result = Pac_GetFile((struct Rec020467f0*)out1, i, &dummyOut, &fieldOut);
+                    SpriteContext_LoadFile(obj + regionalOffset9, result, fieldOut, *(void**)(obj + 0x44));
                 }
             }
             *(signed char*)(obj + regionalOffset10) = 1;
@@ -157,7 +157,7 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
             if (out1b != 0 && out2b != 0) {
 #endif
 
-                func_020dfec0(obj + 0x54, obj + 0x14, (void*)out1b, (unsigned int)out2b);
+                KeyTable_Load(obj + 0x54, obj + 0x14, (void*)out1b, (unsigned int)out2b);
             }
             ((BackgroundLoader*)(dataResult))->RemoveTask((int)(*(int*)(obj + regionalOffset8)));
             *(int*)(obj + regionalOffset8) = -1;

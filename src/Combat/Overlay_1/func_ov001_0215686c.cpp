@@ -53,10 +53,10 @@ struct Struct_ov001_0215686c_4 {
 
 extern "C" int func_020c39c8(volatile unsigned short* arg0);
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020dc2bc();
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+void* GetDataPtr02114e04_020d6c00(void);
+void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void OrGlobalFlag0x40_020dc2bc();
+void Background_Init(struct List0204af64* obj);
 
 static inline unsigned int inline_ov001_0215686c(Struct_ov001_0215686c_2* arg0) {
     return arg0->unknown_a_;
@@ -133,8 +133,8 @@ cont:
     var8[7] = 0;
     var9[0x28] = 0;
 
-    func_0204af64(&var0);
-    var0.unknown_1c_0_ = 3;
+    Background_Init(&list);
+    list.b1c_lo = 3;
 
     unsigned char* var10 = ((struct Struct_ov001_0215686c_4*)var4)->unknown_2c_;
     CleanInvalidateCacheRange(var10 + 0xc, 0x20);

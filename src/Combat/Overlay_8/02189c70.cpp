@@ -253,20 +253,20 @@ extern "C" void func_0204500c(Struct_ov008_02189c70_12*, char*, int);
 #endif
 extern "C" void* func_020421a0();
 extern "C" int func_0202ae18();
-extern "C" void func_020728ac(void* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3, int arg4, int arg5, int arg6);
-extern "C" void* func_020d6c00();
-struct Struct_02038598_4;
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" void func_ov008_0218b240(Struct_ov008_02189c70_16* arg0);
-extern "C" Struct_ov008_02189c70_9* func_02053c6c(unsigned char*);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
-struct Struct_02072a68_2;
-extern "C" char* func_02072a68(Struct_02072a68_2*, int);
-struct Struct_0201099c_3;
-extern "C" char* func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_02099304(void* arg0, void* arg1, void* arg2, unsigned int arg3, char* arg4, int arg5, int arg6, char* arg7, char* arg8);
-extern "C" void func_02046380(void* arg0);
+extern "C" void func_020728ac(void* table, SafeAllocator* alloc, void* data, unsigned int size, int a, int b, int c);
+void* GetDataPtr02114e04_020d6c00();
+struct FlagWord020466f4;
+void ClearFlags020466f4(FlagWord020466f4*, unsigned int);
+extern "C" void __clear(void* p, unsigned int size);
+extern "C" void func_ov008_0218b240(Self02189c70* self);
+Ent02189c70* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void func_02042764(void* src, void* dst, int flag);
+struct TableA68;
+char* FindEntryByKey_02072a68(TableA68*, int);
+struct Container020e0310;
+char* KeyTable_Get(Container020e0310*, int);
+extern "C" void func_02099304(void* name, void* a1, void* a2, unsigned int a3, char* buf, int bufSize, int flag, char* p1, char* p2);
+extern "C" void func_02046380(void* w);
 extern "C" void* func_0205ec34();
 extern "C" int func_0206dfb0(int, unsigned char*, int);
 extern "C" void func_0206df6c(void*, unsigned char*, int, int);
@@ -422,14 +422,14 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
 #endif
             arg0->unknown_e24_ = 0;
         }
-        int var29 = arg0->unknown_ebc_ != 0 ? 3 : 1;
-        char* var30 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x280), (short)(arg0->unknown_e21_1_ + 10000));
-        char* var31;
-        int var32 = arg0->unknown_e22_3_;
-        if (var32 < 700) {
-            var31 = func_020e0434((Struct_0201099c_3*)((char*)arg0 + 0x288), (short)var32);
-        } else if (var32 < 800) {
-            int var33 = 20700;
+        int mode = self->ebc != 0 ? 3 : 1;
+        char* title = FindEntryByKey_02072a68((TableA68*)((char*)self + 0x280), (short)(self->e20_f9 + 10000));
+        char* body;
+        int v = self->e20_f19;
+        if (v < 700) {
+            body = KeyTable_Get((Container020e0310*)((char*)self + 0x288), (short)v);
+        } else if (v < 800) {
+            int key = 20700;
 #if !defined(jpn)
             if (arg0->unknown_e1f_1_ == 1) var33 += 50;
 #endif

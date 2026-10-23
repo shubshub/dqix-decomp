@@ -252,7 +252,7 @@ src/NitroSDK/Overlay_27/func_ov027_021da314.cpp:
     complete
     .text start:0x021da314 end:0x021da38c
 
-src/NitroSDK/Overlay_27/func_ov027_021d8c94.cpp:
+src/Combat/Overlay_23/CallIfFieldNot0Or3_021d8c94.cpp:
     complete
     .text start:0x021d8c94 end:0x021d9134
 

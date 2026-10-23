@@ -27,10 +27,10 @@ extern "C" char g_sePlayer[];
 extern "C" void func_ov005_02159904(EquipmentMenu* self);
 void SetChannelAFlag0205cef8(void* window);
 void SetChannelBFlag0205cf04(void* window);
-int GetActiveScaledSum0205d794(Struct_0205c570* window);
+int Window_GetSelectedIndex(Struct_0205c570* window);
 int CheckFlag30Or401_02157190(void* self);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(SePlayer* sound, int effect, int unk);
 void ClearChannelAFlag0205cf10(void* window);
 void ClearFlagByte0205cf1c(Struct0205cf1c* window);
@@ -44,8 +44,8 @@ extern "C" ARM void func_ov005_02158f80(EquipmentMenu* self) {
         SetChannelBFlag0205cf04(self->window_);
         self->menuStep_++;
     } else if (self->menuStep_ == 1) {
-        self->menuChoice_ = GetActiveScaledSum0205d794((Struct_0205c570*)self->window_);
-        if (CheckFlag30Or401_02157190(self) | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)self->window_, 0x14)) {
+        self->menuChoice_ = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
+        if (CheckFlag30Or401_02157190(self) | Window_IsSelectionTouched((struct Obj_0205da38*)self->window_, 0x14)) {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ClearChannelAFlag0205cf10(self->window_);
             ClearFlagByte0205cf1c((Struct0205cf1c*)self->window_);

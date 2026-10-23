@@ -16,22 +16,22 @@ char *GetGlobalField0x1c020421a0();
 void *GetDataPtr02114e04_020d6c00();
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
 extern "C" void *func_0202ae18();
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void func_0205def8(struct Struct_ov002_02155960_3 *arg0, int arg1, int arg2);
-extern "C" void func_020466e4(unsigned int *arg0, unsigned int arg1);
-struct Struct_ov002_0215624c_23;
-extern "C" void func_0205a198(Struct_ov002_0215624c_23*);
-struct Struct_ov002_0215624c_24;
-extern "C" void func_0205a234(Struct_ov002_0215624c_24*);
-extern "C" void func_0205a444(char *arg0);
-extern "C" void *func_020467f0(Struct_ov002_0215624c_25 *arg0, int arg1, void **arg2, int *arg3);
-extern "C" void func_0205a528(void *arg0, void *arg1, unsigned int arg2, SafeAllocator *arg3);
-extern "C" void func_020a9ea4(struct Struct_ov002_02169efc *arg0);
-extern "C" int func_020aad1c(void *arg0, void *arg1, int arg2, int arg3);
-extern "C" void func_020466f4(Struct_ov002_02168d54_9 *arg0, unsigned int arg1);
-extern "C" void func_0200fb94(char *arg0, unsigned char arg1);
-extern "C" void func_0209c678(Struct_ov002_02169efc_2 *arg0, int arg1);
-extern "C" void func_ov017_0218d258(void *arg0);
+int CheckField0NonZero_0202b7d8(int *p);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
+void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int mask);
+struct Struct0205a198;
+void Sprite_Init(Struct0205a198*);
+struct ClearTarget0205a234;
+void ClearField0And40205a234(ClearTarget0205a234*);
+void SpriteContext_Init(char *renderer);
+void *Pac_GetFile(Rec020467f0 *archive, int index, void **name, int *size);
+extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
+void ClearStruct020a9ea4(struct Struct020a9ea4 *p);
+extern "C" int func_020aad1c(void *loader, void *name, int a, int b);
+void ClearFlags020466f4(FlagWord020466f4 *field, unsigned int bits);
+void SetByte0x4_0200fb94(char *gs, unsigned char value);
+void DispatchContextByState0209c678(Actor0209c678 *actor, int state);
+void SetFieldFlag17188_0218d258(void *obj);
 
 extern "C" char data_ov002_0216d384[] __attribute__((aligned(4)));
 extern "C" char data_0211e33c;
@@ -89,23 +89,23 @@ extern "C" ARM void func_ov002_02169efc(char *self) {
         if (var7->GetTaskStatus(*(int *) (arg0 + RG(0x1bc4, 0x1a8c))) == 0) {
             return;
         }
-        for (unsigned char var9 = 0; var9 < 0x2c; var9++) {
-            func_0205a198((Struct_ov002_0215624c_23*)(*(char **) (arg0 + RG(0x1a64, 0x19bc)) + var9 * 0x28));
+        for (unsigned char i = 0; i < 0x2c; i++) {
+            Sprite_Init((Struct0205a198*)(*(char **) (self + 0x1a64) + i * 0x28));
         }
-        func_0205a234((Struct_ov002_0215624c_24*)(*(void **) (arg0 + RG(0x1a6c, 0x19c4))));
-        func_0205a444(*(char **) (arg0 + RG(0x1a68, 0x19c0)));
-        var4 = *(char **) (arg0 + RG(0x1a68, 0x19c0));
-        var4[0x50]                                      = 0;
-        char *var10                                      = inline_ov002_02169efc(arg0, RG(0x1a64, 0x19bc));
-        var4                                            = inline_ov002_02169efc(arg0, RG(0x1a68, 0x19c0));
-        *(char **) (var4 + 0x40)                        = var10;
-        *(short *) (var4 + 0x4c)                        = 8;
-        *(int *) (*(char **) (arg0 + RG(0x1a68, 0x19c0)) + 0x3c) = *(int *) (arg0 + RG(0x1a6c, 0x19c4));
-        ((SafeAllocator *) (arg0 + RG(0x78 + 0x800, 0x3dc + 0x400)))->Reset();
-        var7->GetLoadedFileByID(*(int *) (arg0 + RG(0x1bc4, 0x1a8c)), &var0, &var1);
-        for (int var11 = 0; var11 < 4; var11++) {
-            void *var12 = func_020467f0((Struct_ov002_0215624c_25 *) var0, var11, &var3, &var2);
-            func_0205a528(*(void **) (arg0 + RG(0x1a68, 0x19c0)), var12, var2, (SafeAllocator *) (arg0 + RG(0x78 + 0x800, 0x3dc + 0x400)));
+        ClearField0And40205a234((ClearTarget0205a234*)(*(void **) (self + 0x1a6c)));
+        SpriteContext_Init(*(char **) (self + 0x1a68));
+        char *r                                      = *(char **) (self + 0x1a68);
+        r[0x50]                                      = 0;
+        char *v                                      = Ld(self, 0x1a64);
+        r                                            = Ld(self, 0x1a68);
+        *(char **) (r + 0x40)                        = v;
+        *(short *) (r + 0x4c)                        = 8;
+        *(int *) (*(char **) (self + 0x1a68) + 0x3c) = *(int *) (self + 0x1a6c);
+        ((SafeAllocator *) (self + 0x78 + 0x800))->Reset();
+        loader->GetLoadedFileByID(*(int *) (self + 0x1bc4), &file, &size);
+        for (int j = 0; j < 4; j++) {
+            void *rec = Pac_GetFile((Rec020467f0 *) file, j, &name, &recSize);
+            SpriteContext_LoadFile(*(void **) (self + 0x1a68), rec, recSize, (SafeAllocator *) (self + 0x78 + 0x800));
         }
         var7->RemoveTask(*(int *) (arg0 + RG(0x1bc4, 0x1a8c)));
         *(int *) (arg0 + RG(0x1bc4, 0x1a8c)) = -1;

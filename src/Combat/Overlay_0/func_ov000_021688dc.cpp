@@ -165,13 +165,13 @@ struct Struct_02010604;
 extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
 extern "C" GameObject* func_ov017_021a278c(void* arg0, int arg1);
 
-struct Struct_0203d028;
-extern "C" void func_02072d58(int arg0, char* arg1, char* arg2);
-struct Struct_0205faf4_11;
-extern "C" int func_02061bd8(struct Struct_0205faf4_11* arg0);
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+void FormatAndAppendCombatMessage02072d58(int combatantId, char* statsBuf, char* outBuf);
+struct Obj02061bd8;
+int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 struct Struct_0203d028_11;
 extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
@@ -511,12 +511,12 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                             if (var56 != NULL) {
                                 sprintf(var3, data_ov000_02183b3b, var56[Enum_ov000_021688dc_17]);
                             }
-                            var55 = (SafeAllocator*)(var54 + 4);
-                            var55->Reset();
-                            func_0207df50((struct Struct_0203d028*)(var54 + 0xcc));
-                            func_0207df90((char*)(var54 + 0xcc));
-                            LoadFileIntoMemory(var3, data_0211e33c, &var8);
-                            var50 = data_0211e33c;
+                            alloc = (SafeAllocator*)(model + 4);
+                            alloc->Reset();
+                            CopyInternalFields0207df50((struct Foo0207df50*)(model + 0xcc));
+                            VramState_Restore((char*)(model + 0xcc));
+                            LoadFileIntoMemory(name, data_0211e33c, &size);
+                            buf = data_0211e33c;
                         } else {
                             sprintf(var3, data_ov000_02183b55, var1);
                             var55 = (SafeAllocator*)(var54 + 0x52c);
@@ -533,8 +533,8 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                             var53->obj3D_.LoadFromCCHROrCMOTArchive(&var4, NULL);
                         }
 
-                        if (func_02061bd8((struct Struct_0205faf4_11*)var53)) {
-                            func_0207dfac((char*)(var54 + 0xcc));
+                        if (CheckField0x56bLowNibble((struct Obj02061bd8*)c)) {
+                            VramState_Save((char*)(model + 0xcc));
                         } else {
                             sprintf(var3, data_ov000_02183b55, var2);
                             if (DecompressFileFromGPCByName(var0.pGPCFile, var0.machine, var50, var8, var51, var3)) {

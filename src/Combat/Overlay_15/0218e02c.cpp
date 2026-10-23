@@ -12,10 +12,10 @@
 
 extern "C" void* __clear(void* arg0, int arg1);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 struct Struct_0203d028_11;
 extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
@@ -62,10 +62,10 @@ extern "C" ARM int func_ov015_0218e02c(void* arg0, int* arg1) {
 
     (*(SafeAllocator**)((char*)arg0 + 8))->Reset();
 
-    int var4 = 1;
-    struct Struct_0203d028* var5 = *(struct Struct_0203d028**)*(void**)((char*)arg0 + 4);
-    func_0207df50(var5);
-    func_0207df90((char*)var5);
+    int ok = 1;
+    struct Foo0207df50* palette = *(struct Foo0207df50**)*(void**)((char*)self + 4);
+    CopyInternalFields0207df50(palette);
+    VramState_Restore((char*)palette);
 
     sprintf(var3, data_ov015_0219413f, arg1[1]);
 
@@ -132,7 +132,7 @@ extern "C" ARM int func_ov015_0218e02c(void* arg0, int* arg1) {
     }
 
     BackgroundLoader::RemoveLockGlobal();
-    func_0207dfac((char*)var5);
+    VramState_Save((char*)palette);
 
     if (var4 == 0) {
         return 0;

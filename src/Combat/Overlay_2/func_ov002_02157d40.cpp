@@ -81,7 +81,7 @@ void InsertNodeAfterHead(struct List02046a3c* list, struct Node02046a3c* node);
 void AppendString02042058(char* dst, const char* src);
 void ClearRecords02026644(char* p);
 void InitState69_021c2744(struct Obj021c2744* p);
-int GetFieldByKey020e0434(struct Container020e0310* c, int key);
+int KeyTable_Get(struct Container020e0310* c, int key);
 void Clear0x54Bytes0208247c(void* p);
 void ConsumeCounter02048350(struct Obj02048350* p, int a);
 void InitStateArray02157ce0(char* p);
@@ -425,15 +425,15 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     *(void**)var26 = arg0->unknown_8_;
 #endif
                 }
-                func_02046574((struct Struct_ov002_02157d40_6*)var26, 1, var17->unknown_0_);
-                if (var16 != 0) {
-                    FMT(var26, 0xc, func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 0x232d), (char*)(var1 + RG(0x860, 0x700)));
-                    func_02042058(arg0->unknown_1bd0_, (const char*)(var1 + RG(0x860, 0x700)));
-                    struct Struct_ov002_02157634_3* var27 = var0.unknown_c8_.unknown_8_;
-                    for (int var28 = 0; var28 < var0.unknown_c8_.unknown_3_; var28++) {
-                        Enum_ov002_02157d40 var29;
-                        if (var27[var28].unknown_0_[0] == 3) {
-                            var29 = Enum_ov002_02157d40_9004;
+                SetIndexedName02046574((struct Obj02046574*)msg, 1, entry->name);
+                if (res != 0) {
+                    FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), 0x232d), (char*)(tbl + RG(0x860, 0x700)));
+                    AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
+                    struct StateSlot* slots = f.st10c.first;
+                    for (int i = 0; i < f.st10c.count; i++) {
+                        MsgKey key;
+                        if (slots[i].a[0] == 3) {
+                            key = MSG_KEY_DEAD;
                         } else {
                             var29 = Enum_ov002_02157d40_9018;
                         }
@@ -450,10 +450,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                         func_020e4bf4(arg0->unknown_14_, var0.unknown_c8_.unknown_4_[var28]);
                         *(void**)(var26 + 0x10) = arg0->unknown_14_;
 #endif
-                        func_020465c0((struct Struct_ov002_02157d40_2*)var26, 9, var30->unknown_4_);
-                        FMT(var26, 0xc, func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), var29), (char*)(var1 + RG(0x860, 0x700)));
-                        func_02042058(arg0->unknown_1bd0_, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 8));
-                        func_02042058(arg0->unknown_1bd0_, (const char*)(var1 + RG(0x860, 0x700)));
+                        StoreInArray0x8b0_020465c0((struct StoreStruct*)msg, 9, target->id);
+                        FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), key), (char*)(tbl + RG(0x860, 0x700)));
+                        AppendString02042058(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                        AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
                     }
                     func_02048350((struct Struct_ov002_02157d40_8*)var7, var17->unknown_8_0_);
                     if (func_0202b7d8(var8) != 0) {
@@ -468,12 +468,12 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                         *(void**)(var26 + 0x10) = arg0->unknown_14_;
 #endif
                     }
-                    func_02042058((char*)(var1 + RG(0x860, 0x700)), (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 0x2333));
-                    func_02042058((char*)(var1 + RG(0x860, 0x700)), (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 8));
-                    if (var18 == 1) {
-                        func_02042058((char*)(var1 + RG(0x860, 0x700)), (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 0x2334));
+                    AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2333));
+                    AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                    if (n == 1) {
+                        AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2334));
                     } else {
-                        func_02042058((char*)(var1 + RG(0x860, 0x700)), (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 0x2335));
+                        AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2335));
                     }
                     FMT(var26, 0xc, (int)(var1 + RG(0x860, 0x700)), arg0->unknown_1bd0_);
                 }
@@ -529,8 +529,8 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 func_020e4bf4(arg0->unknown_8_, arg0->unknown_1c20_);
                 *(void**)var35 = arg0->unknown_8_;
 #endif
-                FMT(var35, 0xc, func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 0x7537), (char*)(var1 + RG(0x860, 0x700)));
-                func_02042058(arg0->unknown_1bd0_, (const char*)(var1 + RG(0x860, 0x700)));
+                FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), 0x7537), (char*)(tbl + RG(0x860, 0x700)));
+                AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
             }
             __clear(var0.unknown_10_, 4);
             int var37 = func_020114ec((char*)var2, var0.unknown_10_);
@@ -579,10 +579,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                         var43 = 0x7538;
                     }
                 }
-                memset(var1 + RG(0x860, 0x700), 0, 0x100);
-                FMT(var35, 0xc, func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), var43), (char*)(var1 + RG(0x860, 0x700)));
-                func_02042058(arg0->unknown_1bd0_, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0->unknown_20_), 8));
-                func_02042058(arg0->unknown_1bd0_, (const char*)(var1 + RG(0x860, 0x700)));
+                memset(tbl + RG(0x860, 0x700), 0, 0x100);
+                FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), key), (char*)(tbl + RG(0x860, 0x700)));
+                AppendString02042058(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
             }
             arg0->unknown_1c31_ = 1;
             memcpy(arg0->unknown_1bd4_, arg0->unknown_1bd0_, RG(0x960, 0x800));

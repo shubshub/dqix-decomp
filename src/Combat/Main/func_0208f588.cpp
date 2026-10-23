@@ -48,8 +48,8 @@ extern const struct Struct_020e8d54 data_020e8d54;
 extern "C" struct Struct_0208f588_3* func_02012fe4(void);
 struct ObjectArchiveLoadInfo;
 
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 
 // USA: func_0208f588
 extern "C" ARM int func_0208f588(struct Struct_0208f588_4* arg0, SafeAllocator* arg1, char* arg2) {
@@ -87,10 +87,10 @@ extern "C" ARM int func_0208f588(struct Struct_0208f588_4* arg0, SafeAllocator* 
     var2.unknown_4_ = arg0->unknown_0_;
     var2.unknown_8_ = arg0->unknown_4_;
 
-    func_0207df90(arg2);
-    ((Object3D*)&arg0->unknown_8_)->Initialize();
-    ((Object3D*)&arg0->unknown_8_)->LoadFromCHRArchive((ObjectArchiveLoadInfo*)&var2);
-    ((Object3D*)&arg0->unknown_8_)->MakeHidden();
-    func_0207dfac(arg2);
+    VramState_Restore(pairObj);
+    ((Object3D*)&self->object)->Initialize();
+    ((Object3D*)&self->object)->LoadFromCHRArchive((ObjectArchiveLoadInfo*)&info);
+    ((Object3D*)&self->object)->MakeHidden();
+    VramState_Save(pairObj);
     return 1;
 }

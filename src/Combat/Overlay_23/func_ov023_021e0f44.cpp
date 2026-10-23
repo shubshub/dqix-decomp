@@ -68,17 +68,17 @@ struct Struct_ov023_021ff9e0_15 {
 extern "C" Struct_ov023_021ff9e0_15 data_ov023_021ff9e0;
 extern "C" const short data_ov023_021fd5a8[2] __attribute__((aligned(4)));
 
-extern "C" void func_0204c684(Struct_ov023_021e0f44_2* arg0);
-extern "C" int func_ov023_021ddc34(void* arg0, short arg1, short arg2, short arg3, short arg4);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" Struct_ov023_021e0f44_4* func_ov023_021db4e4(Struct_ov023_021e0f44* arg0, int arg1);
-extern "C" void func_ov023_021e23d0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" void func_ov023_021db45c(void* arg0, struct Struct_ov023_021db45c* arg1, int arg2, short* arg3, short* arg4);
-extern "C" void func_ov023_021e257c(Struct_ov023_021e0f44* arg0);
-extern "C" void func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" unsigned int func_ov023_021ddc98(Struct_ov023_021e0f44_2* arg0, unsigned int arg1, unsigned short arg2, int arg3);
+extern "C" void func_0204c684(Canvas_021e0f44* canvas);
+int InitBufferFromDataField4_021ddc34(void* canvas, short x, short y, short width, short height);
+extern "C" void __clear(void* buffer, unsigned long size);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" LayoutElement_021e0f44* func_ov023_021db4e4(Layout_021e0f44* layout, int id);
+void SetEntryFields_021e23d0(void* layout, int id, int text, unsigned char color, unsigned char shadow);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* input, char* output, int flag);
+void UpdateEntryAndReset_021db45c(void* layout, struct StructAcAe021db45c* canvas, int id, short* x, short* y);
+extern "C" void func_ov023_021e257c(Layout_021e0f44* layout);
+void CreateAndSetFields8A_021db544(void* layout, void* id, int x, int y);
+extern "C" unsigned int func_ov023_021ddc98(Canvas_021e0f44* canvas, unsigned int offset, unsigned short palette, int bg1);
 
 #define SHOW_ELEMENT(layout, id)                                         \
     {                                                                    \
@@ -109,21 +109,21 @@ extern "C" ARM void func_ov023_021e0f44(Struct_ov023_021e0f44_3* arg0)
         char var1[2][0x80] = {0};
 #endif
 
-        const char* var2 = func_020e0434(data_ov023_021ff9e0.unknown_14_, 0x1f);
-        const char* var3 = func_020e0434(data_ov023_021ff9e0.unknown_14_, 0x1e);
-        SHOW_ELEMENT(&arg0->unknown_cc_, 0xe);
-        SHOW_ELEMENT(&arg0->unknown_cc_, 0xd);
-        func_ov023_021e23d0(&arg0->unknown_cc_, 0xb, (int)var2, 10, 15);
-        func_ov023_021e23d0(&arg0->unknown_cc_, 0xc, (int)var2, 10, 15);
-        func_ov023_021e23d0(&arg0->unknown_cc_, 0xd, (int)var3, 10, 15);
-        int var4 = 0;
-        short var5 = data_ov023_021ff9e0.unknown_20_->unknown_c2_;
-        for (; var4 < var5; var4++)
+        const char* found = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x1f);
+        const char* none = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x1e);
+        SHOW_ELEMENT(&self->layout_, 0xe);
+        SHOW_ELEMENT(&self->layout_, 0xd);
+        SetEntryFields_021e23d0(&self->layout_, 0xb, (int)found, 10, 15);
+        SetEntryFields_021e23d0(&self->layout_, 0xc, (int)found, 10, 15);
+        SetEntryFields_021e23d0(&self->layout_, 0xd, (int)none, 10, 15);
+        int i = 0;
+        short count = data_ov023_021ff9e0.sWindow->numMonsters_;
+        for (; i < count; i++)
         {
             if (var4 >= 2)
                 break;
-            const char* var6 = func_020e0434(data_ov023_021ff9e0.unknown_28_, data_ov023_021ff9e0.unknown_20_->unknown_bc_[var4]);
-            if (var6 != NULL)
+            const char* name = KeyTable_Get(data_ov023_021ff9e0.sMonsterNames, data_ov023_021ff9e0.sWindow->monsters_[i]);
+            if (name != NULL)
             {
 #if defined(jpn)
                 func_ov023_021e23d0(&arg0->unknown_cc_, data_ov023_021fd5a8[var4], (int)var6, 10, 15);

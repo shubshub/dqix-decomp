@@ -3,7 +3,7 @@
 extern int data_ov023_021fdd6c;
 extern "C" int _s32_div_f(int a, int b);
 extern "C" void func_0204f914(void* ctx, int mode, int x, int y, int x2, int y2);
-void* GetBoundedEntry020425b4(int idx, int tableIdx);
+void* Font_GetCharacter(int idx, int tableIdx);
 struct Entry0204254c;
 Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 extern "C" void func_0204f41c(void* ctx, short x, short y, int val, int d, int e, void* f, void* g, int h);
@@ -22,7 +22,7 @@ extern "C" ARM void func_ov023_021e709c(void* ctx, unsigned char* arr, int index
     if (id == 0xff) {
         return;
     }
-    void* entry = GetBoundedEntry020425b4(id, 1);
+    void* entry = Font_GetCharacter(id, 1);
     if (id == 0) {
         entry = Font_FindCharacter((int)&data_ov023_021fdd6c, 1);
     }

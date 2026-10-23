@@ -37,7 +37,7 @@ extern int g_sePlayer;
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 MemberScreen* GetField1c_021a193c(int* p);
 void SePlayer_Play(SePlayer* obj, int a, int b);
-extern "C" int func_0205bf58(void* cursor, int ticks);
+extern "C" int GridCursor_Update(void* cursor, int ticks);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
 extern "C" void func_ov005_0215742c(EquipmentMenu* self);
 extern "C" void func_ov005_0215751c(EquipmentMenu* self);
@@ -62,7 +62,7 @@ extern "C" ARM void func_ov005_0215730c(Struct_ov005_02153954* arg0) {
     int ticks = GameState::GetInstance()->GetTickCount();
     if (ticks == 0)
         ticks = 1;
-    func_0205bf58(self->cursor_, ticks);
+    GridCursor_Update(self->cursor_, ticks);
     GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_);
     switch (self->state_) {
     case 2:

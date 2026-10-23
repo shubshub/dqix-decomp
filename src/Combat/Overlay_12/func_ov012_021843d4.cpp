@@ -8,13 +8,13 @@ struct Struct_0201099c_14;
 struct Struct_0205cfd4;
 struct Struct_02020cb8;
 
-extern "C" void func_02074af4(void* arg0);
-extern "C" void func_ov023_021e7220(void* arg0, int arg1);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void func_020dfc40(Struct_0201099c_14* arg0);
-extern "C" void func_0205cfd4(Struct_0205cfd4* arg0);
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
-extern "C" void func_0204c684(void* arg0);
+extern "C" void func_02074af4(void* p);
+extern "C" void func_ov023_021e7220(void* card, int mode);
+void ResetListHeader020727d8(List020727d8* list);
+void KeyTable_Reset(Struct020dfc40* texts);
+void InitStruct0205cfd4(InitTarget0205cfd4* window);
+void Background_Init(List0204af64* background);
+extern "C" void func_0204c684(void* canvas);
 #if defined(jpn)
 #define func_ov012_021845f8 func_ov012_02185690
 extern "C" void _Z15GridCursor_InitP15Struct_0205bef8(void* cursor);
@@ -142,35 +142,35 @@ extern "C" ARM void func_ov012_021843d4(Struct_ov012_021843d4* arg0)
     arg0->unknown_20_[5].ResetAllocatorPointer();
     arg0->unknown_20_[6].ResetAllocatorPointer();
 #endif
-    func_ov023_021e7220(arg0->unknown_d28_, 2);
-    func_020727d8((Struct_020727d8*)arg0->unknown_133c_);
-    func_020dfc40((Struct_0201099c_14*)arg0->unknown_1344_);
-    arg0->unknown_135c_ = 0;
-    arg0->unknown_1364_ = 0;
-    arg0->unknown_1360_ = 0;
+    func_ov023_021e7220(self->card_, 2);
+    ResetListHeader020727d8((List020727d8*)self->strings_);
+    KeyTable_Reset((Struct020dfc40*)self->texts_);
+    self->renderer_ = 0;
+    self->sprites_ = 0;
+    self->unk_1360 = 0;
 #if !defined(jpn)
     arg0->unknown_1368_ = 0;
     arg0->unknown_136c_ = 0;
 #endif
-    func_0205cfd4((Struct_0205cfd4*)arg0->unknown_ac_);
-    for (int var0 = 0; var0 < 3; var0++)
-        func_0204af64((Struct_02020cb8*)&arg0->unknown_168_[var0]);
-    for (int var1 = 0; var1 < 13; var1++)
-        func_0204c684(&arg0->unknown_1c8_[var1]);
-    arg0->unknown_1370_ = 0;
-    arg0->unknown_1371_ = 0;
-    arg0->unknown_1374_ = 0;
-    arg0->unknown_137c_ = 0;
-    arg0->unknown_1378_ = 0;
-    arg0->unknown_139c_ = 0;
-    arg0->unknown_13a0_ = 0;
-    arg0->unknown_1398_ = 0;
-    for (int var2 = 0; var2 < (int)(sizeof(arg0->unknown_1380_) / sizeof(arg0->unknown_1380_[0])); var2++)
-        arg0->unknown_1380_[var2] = -1;
-    arg0->unknown_13a8_ = -1;
-    arg0->unknown_13a9_ = 0;
-    arg0->unknown_13aa_ = 0;
-    arg0->unknown_13ab_ = 0;
+    InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
+    for (int i = 0; i < 3; i++)
+        Background_Init((List0204af64*)&self->backgrounds_[i]);
+    for (int i = 0; i < 13; i++)
+        func_0204c684(&self->canvases_[i]);
+    self->step_ = 0;
+    self->state_ = 0;
+    self->text_ = 0;
+    self->pixels_ = 0;
+    self->unk_1378 = 0;
+    self->result_ = 0;
+    self->unk_13a0 = 0;
+    self->unk_1398 = 0;
+    for (int i = 0; i < (int)(sizeof(self->tasks_) / sizeof(self->tasks_[0])); i++)
+        self->tasks_[i] = -1;
+    self->unk_13a8 = -1;
+    self->unk_13a9 = 0;
+    self->unk_13aa = 0;
+    self->unk_13ab = 0;
 #if defined(jpn)
     self->nameFlag_ = 0;
     self->nameStep_ = 0;

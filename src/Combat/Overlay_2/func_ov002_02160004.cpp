@@ -2,8 +2,8 @@
 
 struct Struct_0201099c_3;
 
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02042058(char *arg0, const char *arg1);
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendString02042058(char *dst, const char *src);
 
 struct Struct_ov002_02160004 {
     char unknown_0_[0x6c];
@@ -31,6 +31,6 @@ extern "C" ARM void func_ov002_02160004(char *arg0, char *arg1) {
         return;
     }
 
-    int var4 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + RG(0x20, 8)), (short) (var3 + 0xfbe));
-    func_02042058(arg1, (const char *) var4);
+    int name = KeyTable_Get((struct Container020e0310 *) (p + RG(0x20, 8)), (short) (id + 0xfbe));
+    AppendString02042058(dst, (const char *) name);
 }

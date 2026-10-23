@@ -66,9 +66,9 @@ unsigned short GetPreferredPackedField020de234(StructDE234_020de234*, int);
 void SetByteField0x253_020397c0(void*);
 void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
 void CopyState0207dfc8(State0207dfc8*, State0207dfc8*);
-void RestorePairTables0207df90(char*);
+void VramState_Restore(char*);
 void Forward02047b30(void*, int, int, int);
-void BackupPairTables0207dfac(char*);
+void VramState_Save(char*);
 Controller021ae85c* GetGlobalField0x1c020421a0();
 extern "C" void __clear(void*, int);
 extern "C" void* func_020de824(void*);
@@ -133,22 +133,22 @@ extern "C" ARM void func_ov017_021ae85c(Struct_ov017_021ae85c_2* arg0) {
             func_ov017_021aeea8(arg0); arg0->unknown_1_ = 1;
             func_020397c0(var0->GetUnknownGameObject()); return;
         }
-        arg0->unknown_8_ = 3;
-    } else if (arg0->unknown_8_ == 3) {
-        if (!var1->GetTaskStatus(arg0->unknown_10_)) return;
-        void* var9 = 0; unsigned int var10 = 0;
-        var1->GetLoadedFileByID(arg0->unknown_10_, &var9, &var10);
-        if (var9) {
-            void* var11 = func_02012d88(&data_02114e20, 0x100);
-            if (var11) {
-                arg0->unknown_2c_.ResetAllocatorPointer();
-                arg0->unknown_2c_.CreateTypeA(var11, 0x100); arg0->unknown_2c_.Reset();
-                func_02047230(arg0->unknown_28_); func_0204719c(arg0->unknown_28_);
-                Struct_02015ef4_5 var12;
-                func_0207dfc8(&inline_ov017_021ae85c(var3)->unknown_230_, &var12);
-                func_0207df90((char*)&var12);
-                func_02047b30(arg0->unknown_28_, (int)var9, var10, (int)&arg0->unknown_2c_);
-                func_0207dfac((char*)&var12);
+        self->stage = 3;
+    } else if (self->stage == 3) {
+        if (!loader->GetTaskStatus(self->task)) return;
+        void* file = 0; unsigned int length = 0;
+        loader->GetLoadedFileByID(self->task, &file, &length);
+        if (file) {
+            void* buffer = AllocateAligned4_02012d88(&data_02114e20, 0x100);
+            if (buffer) {
+                self->allocator.ResetAllocatorPointer();
+                self->allocator.CreateTypeA(buffer, 0x100); self->allocator.Reset();
+                MaybeInvoke0204719c_02047230(self->sprite); func_0204719c(self->sprite);
+                State0207dfc8 saved;
+                CopyState0207dfc8(&ResourceStateBuffer021ae85c(resources)->spriteTables, &saved);
+                VramState_Restore((char*)&saved);
+                Forward02047b30(self->sprite, (int)file, length, (int)&self->allocator);
+                VramState_Save((char*)&saved);
             } else {
                 func_ov017_021aeea8(arg0); arg0->unknown_1_ = 1;
                 func_020397c0(var0->GetUnknownGameObject());

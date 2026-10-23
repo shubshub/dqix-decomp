@@ -3,10 +3,10 @@
 
 struct Struct_0201099c_3;
 
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int AppendString02042058(char* dst, const char* src);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
 
 extern "C" int func_02041e70(char* arg0, int arg1);
 extern "C" const char** func_02079e2c(char* arg0, int arg1);
@@ -39,12 +39,12 @@ struct Struct_ov000_0217a2dc {
 };
 
 // USA: func_ov000_0217a2dc
-extern "C" ARM void func_ov000_0217a2dc(struct Struct_ov000_0217a2dc* arg0, int arg1, char* arg2) {
-    struct Struct_0201099c_3* var0 = (struct Struct_0201099c_3*)((char*)arg0 + 0xb8);
-    const char* var1 = (const char*)func_020e0434(var0, 0x1f);
-    const char* var2 = (const char*)func_020e0434(var0, 0);
-    signed char var3 = arg0->unknown_1d6d_;
-    func_02042058(arg2, var2);
+extern "C" ARM void func_ov000_0217a2dc(struct ItemMenu0217a2dc* menu, int unused, char* dst) {
+    struct Container020e0310* strings = (struct Container020e0310*)((char*)menu + 0xb8);
+    const char* emptyName = (const char*)KeyTable_Get(strings, 0x1f);
+    const char* separator = (const char*)KeyTable_Get(strings, 0);
+    signed char cursor = menu->cursor;
+    AppendString02042058(dst, separator);
 
     if (arg0->unknown_1d81_) {
         if (func_ov000_0217542c(arg0)) {
@@ -124,15 +124,15 @@ extern "C" ARM void func_ov000_0217a2dc(struct Struct_ov000_0217a2dc* arg0, int 
 
     func_02041e70(arg2, 0xf);
 #if defined(jpn)
-    void* var13 = func_020421a0();
-    func_02046380(var13);
-    func_02046574(var13, 0,
-        (const char*)func_020e0434(var0, 0x21));
-    func_02042058(arg2, data_ov000_021851af);
+    void* formatter = GetGlobalField0x1c020421a0();
+    func_02046380(formatter);
+    _Z22SetIndexedName02046574P11Obj02046574iPc(formatter, 0,
+        (const char*)KeyTable_Get(strings, 0x21));
+    AppendString02042058(dst, data_ov000_021851af);
 #else
-    const char* var14 = (const char*)func_020e0434(var0, 0x21);
-    func_02041a90(arg2, (0xb0 - func_020420e8(var14, 0)) >> 1, 5);
-    func_02042058(arg2, var14);
-    func_02041cc0(arg2, 0x11);
+    const char* title = (const char*)KeyTable_Get(strings, 0x21);
+    AppendXYTag_02041a90(dst, (0xb0 - func_020420e8(title, 0)) >> 1, 5);
+    AppendString02042058(dst, title);
+    AppendLineTag02041cc0(dst, 0x11);
 #endif
 }

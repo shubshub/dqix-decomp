@@ -26,9 +26,9 @@ struct Struct_0205a658_3 {
     unsigned int unknown_48_;
     unsigned short unknown_4c_, unknown_4e_;
 };
-extern "C" int func_020b00a4(void*, void**);
-extern "C" void* func_020b00e0(Struct_0205a658_2*, unsigned int);
-extern "C" void func_0205a198(Struct_02043368_2*);
+int GetCellBankBlock_020b00a4(void*, void**);
+void* GetEntryVarStride_020b00e0(Hdr02b00e0*, unsigned int);
+void Sprite_Init(Struct0205a198*);
 
 // USA: func_0205a658
 extern "C" ARM int func_0205a658(Struct_0205a658_3* arg0, void* arg1, unsigned int arg2, SafeAllocator* arg3) {
@@ -40,11 +40,11 @@ extern "C" ARM int func_0205a658(Struct_0205a658_3* arg0, void* arg1, unsigned i
         memcpy(var0, arg1, arg2);
         if (!func_020b00a4(var0, (void**)&var1)) var0 = 0;
     }
-    if (!var0) return 1;
-    if (arg3 && !arg0->unknown_40_) {
-        arg0->unknown_4c_ = var1->unknown_0_;
-        arg0->unknown_40_ = (Struct_02043368_2*)arg3->Allocate(arg0->unknown_4c_ * sizeof(Struct_02043368_2));
-        for (unsigned short var2 = 0; var2 < arg0->unknown_4c_; ++var2) func_0205a198(&arg0->unknown_40_[var2]);
+    if (!buffer) return 1;
+    if (allocator && !self->records) {
+        self->recordCount = header->count;
+        self->records = (Struct0205a198*)allocator->Allocate(self->recordCount * sizeof(Struct0205a198));
+        for (unsigned short i = 0; i < self->recordCount; ++i) Sprite_Init(&self->records[i]);
     }
     Struct_02043368_2* var3;
     unsigned short var4 = arg0->unknown_4c_;

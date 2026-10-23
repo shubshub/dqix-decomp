@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_02083ca0(unsigned char* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_020897b4(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8);
-extern "C" void func_020e3b8c(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, unsigned char arg7);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+void PartyMember_SetVocation(unsigned char* obj, int index);
+int GetField0x3acValue_020100a8(GameState* battle);
+extern "C" void func_020897b4(int a, int b, int c, int d, int e, int f, int g, int h, int i);
+void InitAndRequeueEntry020e3b8c(char* mgr, int index, int p3, int p4, int p5, int p6, int p7, unsigned char p8);
 
 struct Struct_ov017_021cc830 {
     unsigned char unknown_0_;
@@ -28,10 +28,10 @@ extern "C" ARM void func_ov017_021cc830(void* arg0, struct Struct_ov017_021cc830
     unsigned char* var1 = (unsigned char*)func_02053c6c((unsigned char*)var0);
     if (var1 == NULL) return;
 
-    int var2 = arg1->unknown_5_3_;
-    func_02083ca0(var1, var2);
-    *(unsigned short*)(var1 + var2 * 2 + 0x16c) = arg1->unknown_4_3_;
-    *(var1 + var2 + 0x186) = arg1->unknown_c_;
+    int slot = evt->slot;
+    PartyMember_SetVocation(work, slot);
+    *(unsigned short*)(work + slot * 2 + 0x16c) = evt->value;
+    *(work + slot + 0x186) = evt->fieldc;
 
     if (arg1->unknown_5_7_) {
         if (arg1->unknown_d_ != 0) {

@@ -10,31 +10,31 @@ extern char data_ov001_02165745[];
 extern "C" unsigned int func_ov001_0215a750(const char* arg0, void** arg1);
 extern "C" void func_ov001_02162678(int arg0, int arg1, int arg2, int arg3);
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct ActiveEntry02046900;
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+struct Rec020467f0;
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct List0204af64;
+void Background_Init(struct List0204af64* obj);
 
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
+void Background_SetMapSize(unsigned char* obj, int value);
 
-extern "C" void func_0204b5b4(void*, int);
+extern "C" void Background_SetPriority(void*, int);
 
-struct Struct_02020cb8_5;
-extern "C" int func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
+struct Obj0204b5e8;
+int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
 
 extern "C" void func_020c9820();
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(struct Struct_02020cb8_6* arg0, char* arg1);
+struct SelfTag0204b3a0;
+void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
 
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(struct Struct_02020cb8_2* arg0, void* arg1);
+struct List0204b0e8;
+void Background_UploadMap(struct List0204b0e8* obj, void* buf);
 
 struct Struct_02020cb8_3;
 extern "C" void func_0204afb4(struct Struct_02020cb8_3* arg0);
@@ -70,30 +70,30 @@ extern "C" ARM int func_ov001_021624cc(void* arg0) {
             return 0;
         }
     }
-    int var9 = func_02046900((struct Struct_02020cb8_4*)var4);
-    for (int var10 = 0; var10 < var9; var10++) {
-        var1[var10] = (char*)func_020467f0((struct Struct_02020aec*)var4, var10, &var6, &var2[var10]);
+    int count = Pac_CountFiles((struct ActiveEntry02046900*)fileData);
+    for (int i = 0; i < count; i++) {
+        records[i] = (char*)Pac_GetFile((struct Rec020467f0*)fileData, i, &dummyPtr, &sizes[i]);
     }
     ReleaseMainBGVRAMBanks();
     MapVRAMBanksToMainBG(0x10);
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
-    func_ov001_02162678(0, 1, 1, 1);
-    func_0204af64((struct Struct_02020cb8*)&var3);
-    var3.unknown_1c_0_ = 0;
-    var3.unknown_1c_4_ = 3;
-    func_0204b5b4(&var3, 0);
-    func_0204b11c((unsigned char*)&var3, 0);
-    func_0204b5e8((struct Struct_02020cb8_5*)&var3, 0, 0);
-    func_020c9820();
-    for (int var11 = 0; var11 < var9; var11++) {
-        char* var12 = var1[var11];
-        func_0204b2e0(&var3, var12);
-        func_0204b3a0((struct Struct_02020cb8_6*)&var3, var12);
+    SetBg3ControlFields_02162678(0, 1, 1, 1);
+    Background_Init((struct List0204af64*)&s);
+    s.lo = 0;
+    s.hi = 3;
+    Background_SetPriority(&s, 0);
+    Background_SetMapSize((unsigned char*)&s, 0);
+    Background_SetScroll((struct Obj0204b5e8*)&s, 0, 0);
+    DelayThenSyncBit0_020c9820();
+    for (int i = 0; i < count; i++) {
+        char* record = records[i];
+        Background_FlushFile(&s, record);
+        Background_UploadFile((struct SelfTag0204b3a0*)&s, record);
     }
     if (var8) {
         BackgroundLoader::RemoveLockGlobal();
     }
-    func_0204b0e8((struct Struct_02020cb8_2*)&var3, 0);
-    func_0204afb4((struct Struct_02020cb8_3*)&var3);
+    Background_UploadMap((struct List0204b0e8*)&s, 0);
+    ResetRecordList0204afb4((struct List0204afb4*)&s);
     return 1;
 }

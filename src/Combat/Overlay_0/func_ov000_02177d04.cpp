@@ -9,27 +9,27 @@ struct Struct_ov000_02177d04 {
     const char* unknown_4_;
 };
 
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_ov000_02170c7c(void* arg0);
-extern "C" int func_02041dd0(char* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02041a28(char* arg0, int arg1);
-extern "C" Struct_ov000_02177d04* func_02054000(struct Struct_02054000* arg0);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+void* GetPtrField0x2a04_02010828(GameState* battleStruct);
+int KeyTable_Get(struct Container020e0310* c, int key);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+extern "C" void* func_ov000_02161318(void* obj, int index);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
+extern "C" int func_ov000_02170c7c(void* obj);
+int FormatCombatLogSuffix02041dd0(char* dst, int code);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int AppendXTag_02041a28(char* dst, int x);
+ActiveSub_02054000* GetActiveSub_02054000(struct Outer_02054000* p);
+extern "C" void* __clear(void* dst, int count);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+int AppendString02042058(char* dst, const char* src);
 
 // USA: func_ov000_02177d04
-extern "C" ARM void func_ov000_02177d04(char* arg0, char* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned char var1 = *((unsigned char*)func_02010828(var0) + 0xf7c);
-    const char* var2 = (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0);
+extern "C" ARM void func_ov000_02177d04(char* base, char* dst) {
+    GameState* gs = GameState::GetInstance();
+    unsigned char count = *((unsigned char*)GetPtrField0x2a04_02010828(gs) + 0xf7c);
+    const char* sep = (const char*)KeyTable_Get((struct Container020e0310*)(base + 0xb8), 0);
 #if defined(jpn)
     signed char var3 = *(signed char*)(arg0 + 0x1f00 + 0xa3);
 #else

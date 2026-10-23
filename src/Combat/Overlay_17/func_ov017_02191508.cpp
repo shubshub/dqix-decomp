@@ -48,12 +48,12 @@ struct Struct_ov017_02191508_6 {
     unsigned char unknown_56a_;
 };
 
-extern "C" Struct_ov017_02191508_6* func_02053c6c(unsigned char* arg0);
-extern "C" void func_02083cbc(void* arg0, void* arg1, void* arg2);
-extern "C" void func_02083e28(void* arg0, int arg1);
-extern "C" void func_02083ca0(unsigned char* arg0, int arg1);
-extern "C" void func_02083c18(char* arg0);
-extern "C" void func_02083b60(unsigned char* arg0, int arg1);
+Member02191508* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
+extern "C" void func_02083e28(void* a, int arg2);
+void PartyMember_SetVocation(unsigned char* obj, int bit);
+void ClearTwoRegions02083c18(char* obj);
+void PartyMember_LearnSpell(unsigned char* obj, int index);
 
 extern char g_stringFormat[];
 
@@ -80,31 +80,31 @@ extern "C" ARM void func_ov017_02191508(int arg0, Struct_ov017_02191508_2* arg1)
     }
 
 #endif
-    Struct_ov017_02191508_3 var3;
-    var3.unknown_0_0_ = 0;
-    var3.unknown_4_7_ = 0;
-    var3.unknown_4_0_ = arg1->unknown_12_;
-    var3.unknown_8_[0].unknown_0_0_ = arg1->unknown_14_[0].unknown_0_0_;
-    var3.unknown_8_[0].unknown_1_2_ = arg1->unknown_14_[0].unknown_1_2_;
-    var3.unknown_8_[0].unknown_2_4_ = arg1->unknown_14_[0].unknown_2_4_;
-    var3.unknown_8_[1].unknown_0_0_ = arg1->unknown_14_[1].unknown_0_0_;
-    var3.unknown_8_[1].unknown_1_2_ = arg1->unknown_14_[1].unknown_1_2_;
-    var3.unknown_8_[1].unknown_2_4_ = arg1->unknown_14_[1].unknown_2_4_;
-    var3.unknown_8_[2].unknown_0_0_ = arg1->unknown_14_[2].unknown_0_0_;
-    var3.unknown_8_[2].unknown_1_2_ = arg1->unknown_14_[2].unknown_1_2_;
-    var3.unknown_8_[2].unknown_2_4_ = arg1->unknown_14_[2].unknown_2_4_;
-    var1->unknown_56a_ = 0xb;
-    func_02083cbc(var1, &var3, NULL);
-    func_02083e28(var1, 0);
+    Packed02191508 packed;
+    packed.header = 0;
+    packed.extra = 0;
+    packed.kind = tmpl->kind;
+    packed.triples[0].fieldA = tmpl->triples[0].fieldA;
+    packed.triples[0].fieldB = tmpl->triples[0].fieldB;
+    packed.triples[0].fieldC = tmpl->triples[0].fieldC;
+    packed.triples[1].fieldA = tmpl->triples[1].fieldA;
+    packed.triples[1].fieldB = tmpl->triples[1].fieldB;
+    packed.triples[1].fieldC = tmpl->triples[1].fieldC;
+    packed.triples[2].fieldA = tmpl->triples[2].fieldA;
+    packed.triples[2].fieldB = tmpl->triples[2].fieldB;
+    packed.triples[2].fieldC = tmpl->triples[2].fieldC;
+    member->state = 0xb;
+    PartyMember_ApplyLevelStats(member, &packed, NULL);
+    func_02083e28(member, 0);
 
     if (var2 > -1) {
         var0->unknown_130_->unknown_4_ = var2;
     } else {
         var0->unknown_130_->unknown_4_ = var0->unknown_134_->primaryStats.maxHP;
     }
-    var0->unknown_130_->unknown_6_ = var0->unknown_134_->primaryStats.maxMP;
-    func_02083ca0((unsigned char*)var1, 0);
-    func_02083c18((char*)var1);
-    var1->unknown_16c_ = arg1->unknown_12_;
-    func_02083b60((unsigned char*)var1, arg1->unknown_13_);
+    combatant->status->mp = combatant->baseStats->primaryStats.maxMP;
+    PartyMember_SetVocation((unsigned char*)member, 0);
+    ClearTwoRegions02083c18((char*)member);
+    member->kind = tmpl->kind;
+    PartyMember_LearnSpell((unsigned char*)member, tmpl->slot);
 }

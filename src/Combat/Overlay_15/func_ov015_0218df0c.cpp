@@ -19,10 +19,10 @@
 extern "C" void* __clear(void* arg0, int arg1);
 void* LoadFileIntoMemory(const char* path, void* buf, unsigned int* outLen);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Restore(char* obj);
+void VramState_Save(char* obj);
 struct Vector3i;
 
 struct Struct_0203d028_11;
@@ -45,10 +45,10 @@ extern "C" ARM int func_ov015_0218df0c(void* arg0, int* arg1) {
 
     ((SafeAllocator*)(*(void**)((char*)arg0 + 8)))->Reset();
 
-    int var1 = 1;
-    struct Struct_0203d028* var2 = *(struct Struct_0203d028**)*(void**)((char*)arg0 + 4);
-    func_0207df50(var2);
-    func_0207df90((char*)var2);
+    int ok = 1;
+    struct Foo0207df50* mgr = *(struct Foo0207df50**)*(void**)((char*)self + 4);
+    CopyInternalFields0207df50(mgr);
+    VramState_Restore((char*)mgr);
 
     sprintf(var0, &data_ov015_02194129, arg1[1]);
 
@@ -79,7 +79,7 @@ extern "C" ARM int func_ov015_0218df0c(void* arg0, int* arg1) {
     }
 
     BackgroundLoader::RemoveLockGlobal();
-    func_0207dfac((char*)var2);
+    VramState_Save((char*)mgr);
 
     int var11;
     if (var1 == 0) {

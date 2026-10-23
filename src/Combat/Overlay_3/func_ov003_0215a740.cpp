@@ -19,9 +19,9 @@ enum { Enum_ov003_0215a740_2384 = 0x950, Enum_ov003_0215a740_336 = 0x150, Enum_o
 
 extern "C" void* func_020421a0(void);
 struct Struct_0205d81c;
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-struct Struct_0201099c_3;
-extern "C" void* func_020e0434(Struct_0201099c_3*, int);
+void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+struct Container020e0310;
+void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_02159250(void*, void*);
 extern "C" void func_ov003_02159290(void*, unsigned short, int);
 struct Struct_0205dee8;
@@ -91,13 +91,13 @@ extern "C" ARM void func_ov003_0215a740(void* arg0, int arg1, int arg2) {
 
     unsigned char var3 = *(unsigned char*)(var0 + 0x580);
 
-    if (var3 == 0) {
-        func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 0);
-        func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 1, 1);
-        func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 2, 0);
-        func_ov003_02159250(arg0,
-            func_020e0434((Struct_0201099c_3*)(var0 + 0x64), (short)arg2));
-        *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
+    if (state == 0) {
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 0, 0);
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 1, 1);
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)(s + 0xf4), 2, 0);
+        func_ov003_02159250(self,
+            KeyTable_Get((Container020e0310*)(s + 0x64), (short)p2));
+        *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
     }
 
     if (var3 == 1) {
@@ -201,9 +201,9 @@ extern "C" ARM void func_ov003_0215a740(void* arg0, int arg1, int arg2) {
                     *(unsigned char*)(var0 + *(signed char*)(var0 + 0x5a1) + 0x591));
                 *(void**)(var2 + 0x10) = &var13;
 #endif
-                func_ov003_02159250(arg0,
-                    func_020e0434((Struct_0201099c_3*)(var0 + 0x64), (short)(arg2 + 1)));
-                *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
+                func_ov003_02159250(self,
+                    KeyTable_Get((Container020e0310*)(s + 0x64), (short)(p2 + 1)));
+                *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
             }
         }
         func_0205deb4((Struct_0205d81c*)(var0 + 0xf4), 0, 0);
@@ -276,13 +276,13 @@ extern "C" ARM void func_ov003_0215a740(void* arg0, int arg1, int arg2) {
         *(unsigned char*)(var0 + 0x59f) = *(unsigned char*)(var0 + 0x59f) & ~0x10;
         *(unsigned char*)(var0 + 0x583) = 1;
         func_ov017_0218b5f8(-1);
-        func_ov017_021c9e00(var14, 1, 0, 1);
-        func_ov003_02159250(arg0,
-            func_020e0434((Struct_0201099c_3*)(var0 + 0x64), 0x42e));
-        *(signed char*)(var0 + 0x585) = -1;
-        func_ov003_0215c01c(arg0, 1, 0);
-        func_ov003_0215c01c(arg0, 2, 0);
-        *(unsigned char*)(var0 + 0x580) = *(unsigned char*)(var0 + 0x580) + 1;
+        func_ov017_021c9e00(cid, 1, 0, 1);
+        func_ov003_02159250(self,
+            KeyTable_Get((Container020e0310*)(s + 0x64), 0x42e));
+        *(signed char*)(s + 0x585) = -1;
+        func_ov003_0215c01c(self, 1, 0);
+        func_ov003_0215c01c(self, 2, 0);
+        *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
     }
 
     if (var3 == 6 && *(int*)(var2 + Enum_ov003_0215a740_2464) == 3) {

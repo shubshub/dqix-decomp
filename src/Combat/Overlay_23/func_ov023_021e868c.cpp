@@ -96,7 +96,7 @@ void func_02046608(Struct_02021b84* arg0, int arg1, const char* arg2, char* arg3
 #endif
 }
 #if defined(jpn)
-extern "C" int func_020e0434(Struct_0201099c_3* arg0, int arg1);
+int KeyTable_Get(Container020e0310* strings, int key);
 #endif
 
 // USA: func_ov023_021e868c
@@ -221,9 +221,9 @@ extern "C" ARM void func_ov023_021e868c(Struct_ov023_021e868c_3* arg0)
     }
     int var14 = var6->unknown_6_3_;
 #if defined(jpn)
-    const char* var16;
-    if (var14 < 700)
-        var16 = (const char*)func_020e0434(arg0->unknown_5f8_, (short)var14);
+    const char* accoladeText;
+    if (accolade < 700)
+        accoladeText = (const char*)KeyTable_Get(self->vocationStrings_, (short)accolade);
     else
         var16 = func_02072a68(arg0->unknown_5f4_, (short)(var14 + 20000));
 #else

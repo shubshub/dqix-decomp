@@ -9,8 +9,8 @@ struct Struct_0205def8;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int a, int b);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void CopyByteField0215aa5c(char *base);
@@ -29,7 +29,7 @@ extern "C" char g_sePlayer[];
 
 static inline int inline_ov002_021696c0(char *arg0) {
     return (g_keyManager.TestKeysPressed(0x601) |
-            func_0205da38((struct Struct_ov002_02164748*)OBJ, 0x14)) ? 1 : 0;
+            Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14)) ? 1 : 0;
 }
 
 #if defined(jpn)
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov002_021696c0(char *base) {
     } else if (state == 1) {
         *(unsigned int *) (base + 0x2000 + 0x47c) |= 4;
         *(short *) (base + 0x1c00 + 0xa) =
-            GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
         if (AnyConfirm021696c0(base) && *(short *) (base + 0x1c00 + 0xa) == 7) {
             CopyByteField0215aa14(base);
             SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);

@@ -5,14 +5,14 @@
 #endif
 struct Struct_0201099c_3;
 
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02041a28(char* arg0, int arg1);
+int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_020420e8(const char* text, int large);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char* dst, int cursor);
+int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int AppendString02042058(char* dst, const char* src);
+int AppendXTag_02041a28(char* dst, int x);
 
 extern int data_ov000_021834e0[6];
 
@@ -30,27 +30,27 @@ extern "C" ARM void func_ov000_02177ac8(char* arg0, char* arg1) {
 #endif
     signed char var1 = *(signed char*)(arg0 + Enum_ov000_02177ac8_7532);
 #if !defined(jpn)
-    for (int var2 = 0; var2 < 3; var2++) {
-        const char* var3 = (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), (short)(var2 + 30014));
-        int var4 = func_020420e8(var3, 0);
-        if (var0 < var4) {
-            var0 = var4;
+    for (int i = 0; i < 3; i++) {
+        const char* name = (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(i + 30014));
+        int width = func_020420e8(name, 0);
+        if (maxWidth < width) {
+            maxWidth = width;
         }
     }
 #endif
     if (func_ov000_0217542c(arg0)) {
         func_02041c08(arg1, var1, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var1);
-    for (int var5 = 0; var5 < 6; var5++) {
-        int var6 = data_ov000_021834e0[var5];
-        func_02041b70(arg1, var6, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), (short)(var6 + 30014)));
-        if (var5 == 5) {
+    AppendCursorTag_02041ea4(dst, cursor);
+    for (int i = 0; i < 6; i++) {
+        int id = data_ov000_021834e0[i];
+        AppendNameTag_02041b70(dst, id, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(id + 30014)));
+        if (i == 5) {
             break;
         }
-        int var7 = var5 & 1;
-        if (var7) {
-            func_02042058(arg1, (const char*)func_020e0434((struct Struct_0201099c_3*)(arg0 + 0xb8), 0));
+        int odd = i & 1;
+        if (odd) {
+            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
         }
         if (!var7) {
             func_02041a28(arg1, var0 + 0x20);

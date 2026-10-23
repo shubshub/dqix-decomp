@@ -15,7 +15,7 @@ void InitTag02185aac(unsigned char* obj);
 struct Obj0205dee8;
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8* obj, int val);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 struct SePlayer;
 extern struct SePlayer g_sePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -24,7 +24,7 @@ void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
 extern "C" void func_ov013_02185cc0(void* obj);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" void func_ov013_02186c1c(void* obj);
 
 // USA: func_ov013_0218683c  (semantic: AdvanceOrResetTagState0218683c)
@@ -52,7 +52,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
     }
 
     if (*(int*)(o + LOW_REGION(0x5d4, 0x648)) == 2) {
-        *(int*)(o + LOW_REGION(0x5e8, 0x660)) = (signed char)GetActiveScaledSum0205d794((struct Struct_0205c570*)(o + LOW_REGION(0x34, 0x38)));
+        *(int*)(o + LOW_REGION(0x5e8, 0x660)) = (signed char)Window_GetSelectedIndex((struct Struct_0205c570*)(o + LOW_REGION(0x34, 0x38)));
         dirty = 1;
     }
 
@@ -100,7 +100,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
             o[LOW_REGION(0x5ca, 0x63e)] = 0;
         } else {
             if (g_keyManager.TestKeysPressed(2) != 0 ||
-                (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 1 && IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0)) {
+                (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 1 && Window_IsSelectionTouched((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0)) {
                 if (g_keyManager.TestKeysPressed(2) == 0) {
                     SePlayer_Play(&g_sePlayer, 1, 0);
                 }
@@ -117,7 +117,7 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
                 func_ov013_02185cc0(o);
             } else {
                 if (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 0 &&
-                    IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0) {
+                    Window_IsSelectionTouched((struct Obj_0205da38*)(o + LOW_REGION(0x34, 0x38)), 0x14) != 0) {
                     SePlayer_Play(&g_sePlayer, 1, 0);
                     int one = 1;
                     if (o[LOW_REGION(0x5c8, 0x63c)] == 4) {

@@ -9,27 +9,27 @@ struct Struct_02087574;
 struct Struct_0201099c_16;
 struct Struct_020dcd40 { unsigned char unknown_0_[0x30]; };
 
-extern "C" unsigned short* func_02012fe4(void* arg0);
-extern "C" int func_02086e9c(Struct_02086e9c* arg0);
-extern "C" Struct_02086e50* func_02086e50(Struct_02086e50* arg0, int arg1);
-extern "C" void* func_020108f0(void* arg0, int arg1);
-extern "C" char* func_02010954(char* arg0);
-extern "C" void func_02086380(unsigned char* arg0);
-extern "C" void func_02082d6c(void* arg0, void* arg1);
-extern "C" void func_ov017_0218f064(void* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" void func_020875c4(Struct_02087574* arg0, int arg1, int arg2);
-extern "C" unsigned char func_020100a8(GameState* arg0);
-extern "C" void func_020546a0(void* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_020546b4(void*, int);
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
-extern "C" int func_020865b0(Struct_0201099c_16* arg0);
-extern "C" void func_02083ca0(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_02191108(void* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02086a04(Struct_02086a04* arg0, int arg1);
+extern "C" unsigned short* func_02012fe4(void* p);
+int GetFirstFlaggedValue02086e9c(FlaggedEntryContainer02086e9c* p);
+FindEntryContainer02086e50* FindEntryBySignedId02086e50(FindEntryContainer02086e50* p, int idx);
+void* FindRecordByShortField020108f0(void* state, int slot);
+char* FindSlotWithNegShort02010954(char* state);
+void ResetShortFields02086380(unsigned char* rec);
+extern "C" void func_02082d6c(void* rec, void* entry);
+extern "C" void func_ov017_0218f064(void* v, int slot, int flags, int a, int b);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* state, int id);
+void ArchiveEntryToCombatantField0x150_020875c4(EntryTable02087574* p, int idx, int slot);
+unsigned char GetField0x3acValue_020100a8(GameState* state);
+void SetField0x2d0_020546a0(void* obj, int value);
+int GetSignedByte0x2d0_020546a8(void* obj);
+void SetField0x2d1_020546b4(void*, int);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void __clear(void* p, int size);
+extern "C" void func_02042764(void* dst, void* src, int n);
+int GetFieldAt0x50(Struct020865b0* entry);
+void PartyMember_SetVocation(unsigned char* p, int idx);
+extern "C" void func_ov017_02191108(void* v, int a, int b, int c, int d);
+void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04* p, int idx);
 
 // USA: func_020dcd40
 extern "C" ARM int func_020dcd40() {
@@ -93,13 +93,13 @@ extern "C" ARM int func_020dcd40() {
         func_02042764((char*)var6 + 0x140, &var17, 1);
         strcpy((char*)var10->baseStats_, (const char*)&var17);
 #endif
-        int var18 = func_020865b0((Struct_0201099c_16*)var6);
-        unsigned char* var19 = (unsigned char*)var6 + func_020865b0((Struct_0201099c_16*)var6);
-        *(unsigned short*)(var16 + var18 * 2 + 0x16c) = var19[2];
-        func_02083ca0(var16, func_020865b0((Struct_0201099c_16*)var6));
-        func_ov017_02191108(var1, 1, 1, 1, 1);
-        func_02086a04((Struct_02086a04*)var11, var5);
-        var0++;
+        int a = GetFieldAt0x50((Struct020865b0*)entry);
+        unsigned char* p = (unsigned char*)entry + GetFieldAt0x50((Struct020865b0*)entry);
+        *(unsigned short*)(v7 + a * 2 + 0x16c) = p[2];
+        PartyMember_SetVocation(v7, GetFieldAt0x50((Struct020865b0*)entry));
+        func_ov017_02191108(v14, 1, 1, 1, 1);
+        RemoveOrShiftMarkedEntry02086a04((FindEntryContainer02086a04*)p8, idx);
+        count++;
     }
     return var0;
 }

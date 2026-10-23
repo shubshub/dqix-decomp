@@ -31,11 +31,11 @@ struct Struct_0200ffd0;
 struct Struct_02033834;
 struct Struct_02033fdc;
 
-extern "C" void* func_0200ffd0(struct Struct_0200ffd0* arg0);
-extern "C" void func_020ad59c(void* arg0);
-extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+void* GetPointerAt0x330_0200ffd0(struct PointerField330_ffd0* obj);
+void InitObj020ad59c(void* obj);
+void ClearEightWords_0203dafc(struct Struct_203dafc* obj);
+void VramState_Restore(char* tables);
+void VramState_Save(char* tables);
 extern "C" void func_02012fe4();
 extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
 extern "C" void func_02033fdc(struct Struct_02033fdc* arg0);
@@ -73,14 +73,14 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         if (var7 == NULL) {
             return;
         }
-        func_020ad59c(var7);
-        func_0203dafc((struct Struct_0203d028_11*)&var5);
-        func_0207df90(var3);
-        var5.unk_8 = var4;
-        var5.fileData = var6;
-        var5.allocator = var2;
-        var7->unknown_0_.LoadFromCHRArchive(&var5);
-        func_0207dfac(var3);
+        InitObj020ad59c(prop);
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        VramState_Restore(tables);
+        info.unk_8 = size;
+        info.fileData = file;
+        info.allocator = alloc;
+        prop->obj3D.LoadFromCHRArchive(&info);
+        VramState_Save(tables);
         func_02012fe4();
 
         GameObject* var8 = var0->GetUnknownGameObject();
@@ -109,20 +109,20 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         if (var12 == NULL) {
             return;
         }
-        var12->Initialize();
-        func_0203dafc((struct Struct_0203d028_11*)&var5);
-        func_0207df90(var3);
-        var5.unk_8 = var4;
-        var5.fileData = var6;
-        var5.allocator = var2;
-        var12->LoadFromCHRArchive(&var5);
-        func_0207dfac(var3);
-        var12->position_ = var9;
-        var12->SetScale(&var10);
-        var12->MakeVisible();
-        var12->EnableFlag(0x180);
-        func_0200fd38(var0, 0xcb, (GameObject*)var12);
-        var0->GetGameObjectByIndex(0xcc);
+        obj->Initialize();
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        VramState_Restore(tables);
+        info.unk_8 = size;
+        info.fileData = file;
+        info.allocator = alloc;
+        obj->LoadFromCHRArchive(&info);
+        VramState_Save(tables);
+        obj->position_ = pos;
+        obj->SetScale(&scale);
+        obj->MakeVisible();
+        obj->EnableFlag(0x180);
+        RegisterCombatantSlot_0200fd38(state, 0xcb, (GameObject*)obj);
+        state->GetGameObjectByIndex(0xcc);
 
         var6 = LoadFileIntoNewAllocation(data_020f1c38, *var2, &var4);
         if (var6 == NULL) {
@@ -132,24 +132,24 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         if (var12 == NULL) {
             return;
         }
-        var12->Initialize();
-        func_0203dafc((struct Struct_0203d028_11*)&var5);
-        func_0207df90(var3);
-        var5.unk_8 = var4;
-        var5.fileData = var6;
-        var5.allocator = var2;
-        var12->LoadFromCHRArchive(&var5);
-        func_0207dfac(var3);
-        var9 = var8->obj3D_.position_;
-        var9.y = 0;
-        var10.y = 0x300;
-        var10.x = var10.z = 0x96;
-        var12->position_ = var9;
-        var12->SetScale(&var10);
-        var12->MakeVisible();
-        var12->EnableFlag(0x180);
-        func_0200fd38(var0, 0xcc, (GameObject*)var12);
-        var0->GetGameObjectByIndex(0xcd);
+        obj->Initialize();
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        VramState_Restore(tables);
+        info.unk_8 = size;
+        info.fileData = file;
+        info.allocator = alloc;
+        obj->LoadFromCHRArchive(&info);
+        VramState_Save(tables);
+        pos = hero->obj3D_.position_;
+        pos.y = 0;
+        scale.y = 0x300;
+        scale.x = scale.z = 0x96;
+        obj->position_ = pos;
+        obj->SetScale(&scale);
+        obj->MakeVisible();
+        obj->EnableFlag(0x180);
+        RegisterCombatantSlot_0200fd38(state, 0xcc, (GameObject*)obj);
+        state->GetGameObjectByIndex(0xcd);
 
         var6 = LoadFileIntoNewAllocation(data_020f1c51, *var2, &var4);
         if (var6 == NULL) {
@@ -159,23 +159,23 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         if (var12 == NULL) {
             return;
         }
-        var12->Initialize();
-        func_0203dafc((struct Struct_0203d028_11*)&var5);
-        func_0207df90(var3);
-        var5.unk_8 = var4;
-        var5.fileData = var6;
-        var5.allocator = var2;
-        var12->LoadFromCHRArchive(&var5);
-        func_0207dfac(var3);
-        var9 = var8->obj3D_.position_;
-        var9.y = 0;
-        var10.y = 0x300;
-        var10.x = var10.z = 0x96;
-        var12->position_ = var9;
-        var12->SetScale(&var10);
-        var12->MakeVisible();
-        var12->EnableFlag(0x180);
-        func_0200fd38(var0, 0xcd, (GameObject*)var12);
+        obj->Initialize();
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        VramState_Restore(tables);
+        info.unk_8 = size;
+        info.fileData = file;
+        info.allocator = alloc;
+        obj->LoadFromCHRArchive(&info);
+        VramState_Save(tables);
+        pos = hero->obj3D_.position_;
+        pos.y = 0;
+        scale.y = 0x300;
+        scale.x = scale.z = 0x96;
+        obj->position_ = pos;
+        obj->SetScale(&scale);
+        obj->MakeVisible();
+        obj->EnableFlag(0x180);
+        RegisterCombatantSlot_0200fd38(state, 0xcd, (GameObject*)obj);
 
         func_020adfa8(var7);
         SafeAllocator* var13 = (SafeAllocator*)var2->Allocate(0x14);

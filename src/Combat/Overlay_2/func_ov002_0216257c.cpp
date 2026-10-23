@@ -15,8 +15,8 @@ struct Obj_0205da38;
 struct SePlayer;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 extern "C" void func_ov002_02161cf0(void *base);
@@ -46,9 +46,9 @@ extern "C" ARM void func_ov002_0216257c(char *base) {
     } else if (state == 1) {
         *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) |= 4;
         *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) =
-            GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)));
+            Window_GetSelectedIndex((struct Struct_0205c570 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)));
         int a = g_keyManager.TestKeysPressed(0x601);
-        int b = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0x14);
+        int b = Window_IsSelectionTouched((struct Obj_0205da38*)(base + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0x14);
         if ((a | b) ? 1 : 0) {
             *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) =
                 *(signed char *) (base + *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) + RG(0x1c00, 0x1b00) + RG(0x6e, 0x32));

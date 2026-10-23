@@ -5,161 +5,363 @@ extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/FileIO.h"
 #include "Filesystem/GPC.h"
 #include "GameState/GameState.h"
+#include "Graphics/CharacterModel.h"
 #include "Memory/SafeAllocator.h"
 #include "World/Object3D.h"
 
-struct Struct_ov003_021594c4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
-};
-
-struct Struct_ov006_02158478 {
-    char unknown_0_[4];
-    Struct_ov003_021594c4* unknown_4_;
-    char unknown_8_[0xe0 - 8];
-};
-
-struct Struct_ov009_02185634_3 {
-    char unknown_0_[0x98];
-    Struct_ov003_021594c4* unknown_98_;
-    char unknown_9c_[0xb2 - 0x9c];
-    unsigned char unknown_b2_;
-    char unknown_b3_[0xbc - 0xb3];
-};
-
-struct Struct_ov008_02184a4c_8 { char unknown_0_[0x28]; };
-
-#if defined(jpn)
-struct Struct_ov009_02185634_4 { signed char unknown_0_[10]; };
+enum SetupStep
+{
+    SetupStep_Init = 0,
+    SetupStep_LoadBackgrounds = 1,
+    SetupStep_LoadSprites = 2,
+#if !defined(jpn)
+    SetupStep_QueueKeyboard = 3,
+    SetupStep_LoadKeyboard = 4,
 #endif
-struct Struct_ov009_02185634_5 {
-    char unknown_0_[0x3c];
-    void* unknown_3c_;
-    Struct_ov008_02184a4c_8* unknown_40_;
-    char unknown_44_[0x4c - 0x44];
-    short unknown_4c_;
-    char unknown_4e_[2];
-    unsigned char unknown_50_;
+    SetupStep_Finish,
+};
+
+enum CreationAllocator
+{
+    CreationAllocator_MainLayers = 0,
+    CreationAllocator_TabLayers = 1,
+    CreationAllocator_BottomText = 2,
+    CreationAllocator_Characters = 3,
+    CreationAllocator_ItemTable = 4,
+    CreationAllocator_Texts = 5,
+    CreationAllocator_Sprites = 6,
+    CreationAllocator_NameFilter = 7,
+    CreationAllocator_KeyboardLayout = 8,
+};
+
+
+enum SetupLayers
+{
+    SetupLayers_Count = 4,
+    SetupLayers_BottomTextSlot = 3,
+};
+
+enum CreationWindowIndex
+{
+    CreationWindowIndex_Summary = 0,
+    CreationWindowIndex_Bottom = 1,
+};
+
+enum SummaryWindow
+{
+    SummaryWindow_PaneCount = 1,
+    SummaryWindow_BufferBytes = 0x1000,
+    SummaryWindow_PaneBytes = 0x200,
+};
+
+enum BottomWindow
+{
+    BottomWindow_PaneCount = 4,
+    BottomWindow_BufferBytes = 0x400,
+    BottomWindow_UnknownPane2 = 2,
+    BottomWindow_NamePane = 3,
+};
+
+enum MainSprites
+{
+    MainSprites_Count = 6,
+};
+
+enum SubSprites
+{
+    SubSprites_Count = 25,
+    SubSprites_FirstFile = 4,
+};
+
+enum SetupBgFile
+{
+    SetupBgFile_WindowTiles = 0,
+    SetupBgFile_LastBackdrop = 3,
+};
+
+enum BackdropScreen
+{
+    BackdropScreen_Npc = 0,
+    BackdropScreen_Hero = 1,
+};
+
+enum BackgroundMap
+{
+    BackgroundMap_Columns = 32,
+    BackgroundMap_Rows = 25,
+    BackgroundMap_ScreenRows = 24,
+    BackgroundMap_KeepPalette = 0xffff,
+};
+
+enum SetupText
+{
+    SetupText_SpriteArchive = 1000,
+    SetupText_WingsModel = 2000,
+    SetupText_BlankName = 17010,
+};
+
+enum CreationItemIds
+{
+    CreationItemIds_Count = 41,
+};
+
+enum CharacterModelSize
+{
+    CharacterModelSize_Bytes = 0xc20,
+};
+
 #if defined(jpn)
-    void inline_ov009_02185634(unsigned char arg0) { unknown_50_ = arg0; }
-    void inline_ov009_02185634_2(Struct_ov008_02184a4c_8* arg0, short arg1)
+enum TextFileBuffer
+{
+    TextFileBuffer_Bytes = 0x1800,
+};
+#endif
+
+enum WingsTextureVram
+{
+    WingsTextureVram_Bytes = 0xc00,
+};
+
+enum WingsPaletteVram
+{
+    WingsPaletteVram_Bytes = 0x30,
+};
+
+enum FinishEffectVram
+{
+    FinishEffectVram_TextureBytes = 0x1a00,
+    FinishEffectVram_PaletteBytes = 0x20,
+};
+
+enum DefaultCamera
+{
+    DefaultCamera_X = 0xd000,
+    DefaultCamera_Y = 0xf800,
+    DefaultCamera_PositionZ = 0x42ccc,
+};
+
+enum CreationSex
+{
+    CreationSex_Male = 0,
+    CreationSex_Female = 1,
+};
+
+enum AppearanceSlot
+{
+    AppearanceSlot_Face = 2,
+    AppearanceSlot_HairStyle = 3,
+};
+
+enum PlainOutfit
+{
+    PlainOutfit_Body = 0x32cd,
+    PlainOutfit_Arms = 0x36b5,
+    PlainOutfit_Legs = 0x3f55,
+    PlainOutfit_Feet = 0x43fe,
+};
+
+enum CelestrianOutfit
+{
+    CelestrianOutfit_Body = 0x32cf,
+    CelestrianOutfit_Arms = 0x36b7,
+    CelestrianOutfit_Legs = 0x3f57,
+    CelestrianOutfit_Feet = 0x42e0,
+};
+
+enum StartingWeapon
+{
+    StartingWeapon_Knife = 0x4a6a,
+    StartingWeapon_CopperSword = 0x4e24,
+    StartingWeapon_PeacockFan = 0x4e84,
+    StartingWeapon_OakStaff = 0x4fb3,
+    StartingWeapon_BambooSpear = 0x5014,
+    StartingWeapon_BambooPole = 0x5078,
+    StartingWeapon_Boomerang = 0x50dc,
+};
+
+struct BackgroundGraphics {
+    char unk_0[0x1c];
+    unsigned char subScreen_ : 4;
+    unsigned char bgNumber_ : 4;
+    unsigned char screenCount_;
+    char unk_1e[2];
+};
+
+struct WindowPane {
+    WindowPane* previous_;
+    BackgroundGraphics* layer_;
+    void* windowBuffer_;
+    char unk_c[0xd4 - 0xc];
+    void* buffer_;
+    char unk_d8[0xe0 - 0xd8];
+};
+
+struct Window {
+    char unk_0[0x98];
+    BackgroundGraphics* layers_;
+    WindowPane* panes_;
+    char unk_a0[0xb2 - 0xa0];
+    unsigned char layerCount_;
+    unsigned char paneCount_;
+    char unk_b4[0xbc - 0xb4];
+};
+
+struct Sprite { char unk_0[0x28]; };
+
+#if defined(jpn)
+struct CreationStyleOrder { signed char styles[10]; };
+#endif
+struct SpriteContext {
+    char unk_0[0x3c];
+    void* spriteEntries_;
+    Sprite* sprites_;
+    char unk_44[0x4c - 0x44];
+    short spriteCount_;
+    char unk_4e[2];
+    unsigned char subScreen_;
+#if defined(jpn)
+    void SetSubScreen(unsigned char subScreen) { subScreen_ = subScreen; }
+    void SetSprites(Sprite* sprites, short count)
     {
-        unknown_40_ = arg0;
-        unknown_4c_ = arg1;
+        sprites_ = sprites;
+        spriteCount_ = count;
     }
 #endif
 };
 
-struct Struct_ov009_02185634 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
-    short unknown_e_;
-    short unknown_10_;
-    short unknown_12_;
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
-    unsigned char unknown_15_4_ : 4;
-    short unknown_16_;
-    short unknown_18_;
-    short unknown_1a_;
+struct PartyMemberAppearance {
+    short body_;
+    short legs_;
+    short face_;
+    short hairStyle_;
+    short unk_8;
+    short feet_;
+    short unk_c;
+    short weapon_;
+    short unk_10;
+    short unk_12;
+    unsigned char female_ : 1;
+    unsigned char skinColor_ : 3;
+    unsigned char eyeColor_ : 4;
+    unsigned char hairColor_ : 4;
+    unsigned char unk_15_4_ : 4;
+    short defaultArms_;
+    short width_;
+    short height_;
 };
 
-struct Struct_ov008_02187f6c_3 {
-    char unknown_0_[0x488];
-    Struct_ov009_02185634 unknown_488_;
-    char unknown_4a4_[0x568 - 0x4a4];
-    short unknown_568_;
+struct PartyMemberData {
+    char unk_0[0x488];
+    PartyMemberAppearance appearance_;
+    char unk_4a4[0x568 - 0x4a4];
+    short vocation_;
 };
 
-struct Struct_ov009_0218aa40 { short unknown_0_[10]; };
-struct Struct_ov003_02154af4_3 {
-    char unknown_0_[0x800];
-    char unknown_800_[0xc58 - 0x924];
+struct AppearanceModels { short models[10]; };
+struct Scene {
+    char unk_124[0x924 - 0x124];
+    char camera_[0xc58 - 0x924];
 };
 
-struct Struct_ov009_02185634_2 {
-    char unknown_0_[4];
-    void* unknown_4_;
+struct MessageSystem {
+#if defined(jpn)
+    char unk_0[0x28];
+#else
+    char unk_0[0x5c];
+#endif
+    int textBuffer_;
+};
+
+struct KeyboardKey {
+    short x_;
+    short y_;
+    const char* text_;
+    const char* shiftedText_;
+    unsigned char pages_;
+    unsigned char action_;
+    unsigned char sizeClass_;
+    unsigned char disabled_;
+};
+
+struct Keyboard {
+    KeyboardKey* key_;
+    void* layout_;
 };
 
 struct Struct_ov009_021842a0_2 {
 #if defined(jpn)
-    SafeAllocator unknown_0_[8];
-    SafeAllocator* unknown_b4_;
-    char unknown_a4_[0xa8 - 0xa4];
-    char unknown_c8_[0xc0 - 0xa8];
-    char unknown_e0_[0xd8 - 0xc0];
-    int unknown_d8_;
-    char unknown_dc_[0xee - 0xdc];
-    short unknown_ee_;
-    char unknown_f0_[0xf8 - 0xf0];
-    SafeAllocator* unknown_f8_;
+    SafeAllocator allocators_[8];
+    SafeAllocator* modelAllocator_;
+    SafeAllocator* previewAllocators_;
+    char itemTable_[0x18];
+    char texts_[0x18];
+    int textBuffer_;
+    char nameFilter_[0xee - 0xdc];
+    short unk_ee;
+    int nameFilterTasks_[2];
+    SafeAllocator* nameFilterAllocator_;
 #else
-    SafeAllocator unknown_0_[9];
-    SafeAllocator* unknown_b4_;
-    char unknown_b8_[0xc0 - 0xb8];
-    Struct_ov009_02185634_2* unknown_c0_;
-    void* unknown_c4_;
-    char unknown_c8_[0xe0 - 0xc8];
-    char unknown_e0_[0xf8 - 0xe0];
-    int unknown1_f8_;
-    char unknown_fc_[0x138 - 0xfc];
+    SafeAllocator allocators_[9];
+    SafeAllocator* modelAllocator_;
+    SafeAllocator* previewAllocators_;
+    KeyboardKey* savedKey_;
+    Keyboard* keyboard_;
+    void* keyboardLayout_;
+    char itemTable_[0x18];
+    char texts_[0x18];
+    int textBuffer_;
+    char nameFilter_[0x138 - 0xfc];
 #endif
-    Struct_ov003_021594c4 unknown_138_[6];
-    Struct_ov009_02185634_3 unknown_1f8_;
-    Struct_ov009_02185634_3 unknown_2b4_;
-    Struct_ov006_02158478 unknown_370_[1];
-    Struct_ov006_02158478 unknown_450_[4];
-    void* unknown_7d0_;
-    void* unknown_7d4_;
-    Struct_ov009_02185634_5* unknown_7d8_;
-    Struct_ov008_02184a4c_8* unknown_7dc_;
-    void* unknown_7e0_;
-    Struct_ov009_02185634_5* unknown_7e4_;
-    Struct_ov008_02184a4c_8* unknown_7e8_;
-    void* unknown_7ec_;
-    void* unknown_7f0_[2];
-    void* unknown_7f8_;
-    void* unknown_7fc_;
-    char unknown1_800_[0x808 - 0x800];
-    char unknown_808_[0x878 - 0x808];
-    char unknown_878_[0x924 - 0x878];
-    char unknown_800_[0xc58 - 0x924];
-    signed char unknown_c58_;
-    unsigned char unknown_c59_;
-    char unknown_c5a_[0xc68 - 0xc5a];
-    char unknown_c68_[0xd88 - 0xc68];
-    Struct_ov008_02187f6c_3* unknown_d88_;
-    char unknown_d8c_[0xd90 - 0xd8c];
-    int unknown_d90_;
-    unsigned char unknown_d94_;
-    unsigned char unknown_d95_;
-    char unknown_d96_[0xd9c - 0xd96];
-    unsigned int unknown_d9c_;
-    char unknown_da0_[0xda2 - 0xda0];
-    unsigned char unknown_da2_;
-    unsigned char unknown_da3_;
-    unsigned char unknown_da4_[2];
-    unsigned char unknown_da6_[2];
-    unsigned char unknown_da8_[2];
-    unsigned char unknown_daa_[2];
-    unsigned char unknown_dac_[2];
-    unsigned char unknown_dae_[2];
+    BackgroundGraphics layers_[6];
+    Window windows_[2];
+    WindowPane window0Panes_[SummaryWindow_PaneCount];
+    WindowPane window1Panes_[BottomWindow_PaneCount];
+    void* windowBuffer0_;
+    void* windowBuffer1_;
+    SpriteContext* mainSpriteContext_;
+    Sprite* mainSprites_;
+    void* mainSpriteEntries_;
+    SpriteContext* subSpriteContext_;
+    Sprite* subSprites_;
+    void* subSpriteEntries_;
+    void* characterModels_[2];
+    void* character_;
+    void* nextCharacter_;
+    int unk_800;
+    int targetAngle_;
+    char wingsVramState_[0x878 - 0x808];
+    char wings_[0x924 - 0x878];
+    char camera_[0xc58 - 0x924];
+    signed char state_;
+    unsigned char step_;
+    char unk_c5a[2];
+    int modelTasks_[3];
+    char finishEffectVramState_[0xcd8 - 0xc68];
+    char finishEffect_[0xd84 - 0xcd8];
+    unsigned char selection_;
+    unsigned char windowInput_;
+    char unk_d86[2];
+    PartyMemberData* characterData_;
+    int touchedChoice_;
+    int resourceTask_;
+    unsigned char resourceStep_;
+    unsigned char mode_;
+    short waitTimer_;
+    short dimTimer_;
+    char unk_d9a[2];
+    unsigned int flags_;
+    signed char furthestState_[2];
+    unsigned char vocation_;
+    unsigned char sex_;
+    unsigned char bodyType_[2];
+    unsigned char faceStyle_[2];
+    unsigned char eyeColor_[2];
+    unsigned char skinColor_[2];
+    unsigned char hairStyle_[2];
+    unsigned char hairColor_[2];
 #if defined(jpn)
-    char unknown_d74_[0xb];
-    char unknown_d7f_[0xb];
-    char unknown_d8a_;
-    char unknown_d8b_;
+    char names_[2][0xb];
+    char nameLengths_[2];
 #endif
 };
 
@@ -180,209 +382,200 @@ struct Struct_0203d028;
 
 struct GameResources;
 char* GetGlobalField0x1c020421a0();
-void ZeroInit020de848(void* obj);
-extern "C" void func_020de9a4(void* list, SafeAllocator* alloc, void* data, unsigned int size, const void* entries, int count);
-extern "C" void func_020dfec0(void* container, SafeAllocator* alloc, void* data, unsigned int size);
-void InitTenAllocatorsAndClearFields_021e4e8c(void* model);
-void CreateTenAndOne_021e4f64(void* model, SafeAllocator* alloc);
-void InitBlockArray_021e4fd8(void* model);
-void SetIntC0C_021e6198(void* model, int value);
-const char* GetFieldByKey020e0434(Container020e0310* c, int key);
-extern "C" void func_0207de48(void* p, int a, int b);
-void CopyInternalFields0207df50(Foo0207df50* p);
-void RestorePairTables0207df90(char* p);
-void BackupPairTables0207dfac(char* p);
+void ItemTable_Init(void* itemTable);
+extern "C" void ItemTable_LoadIds(void* itemTable, SafeAllocator* allocator, void* itemData, unsigned int size, const void* ids,
+                              int count);
+extern "C" void KeyTable_Load(void* texts, SafeAllocator* allocator, void* textFile, unsigned int size);
+void CharacterModel_Init(void* model);
+void CharacterModel_CreateAllocators(void* model, SafeAllocator* allocator);
+void CharacterModel_ReserveVram(void* model);
+void CharacterModel_SetItemTable(void* model, int itemTable);
+const char* KeyTable_Get(Container020e0310* table, int key);
+extern "C" void VramState_Reserve(void* vramState, int textureBytes, int paletteBytes);
+void CopyInternalFields0207df50(Foo0207df50* vramState);
+void VramState_Restore(char* vramState);
+void VramState_Save(char* vramState);
 void InitCombatController020a2010(void* camera);
 struct Vec3Target0202e5c0;
-void SetVec3At0x4(Vec3Target0202e5c0* camera, int x, int y, int z);
-void SetFields0x10To0x18_0202e5c8(unsigned char* camera, int a, int b, int c);
+void Camera_SetPosition(Vec3Target0202e5c0* camera, int x, int y, int z);
+void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
 extern "C" void func_0202e0a4(void* camera);
 void SetField0x238False_020a27a0(void* camera);
-void SetField0x3b0Value_020100c4(GameState* gs, int camera);
-void CharacterCreationUI_GetBodyDimensions(unsigned char* base, int idx, short* out0, short* out1);
-extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int type, int idx);
+void SetField0x3b0Value_020100c4(GameState* gameState, int camera);
+void CharacterCreationUI_GetBodyDimensions(unsigned char* self, int bodyType, short* width, short* height);
+extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int tab, int slot);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
-extern "C" void CharacterModel_SetScale(void* model, short a, short b);
+extern "C" void CharacterModel_SetScale(void* model, short width, short height);
 void SetByteC11_021e6150(void* model, unsigned char value);
-void ResetList0204af64(List0204af64* background);
-void SetWord0x18ClearByte0x1f_0204b11c(unsigned char* background, int value);
-extern "C" void func_0204b5b4(BackgroundGraphics* background, int screen);
-void DispatchViaTable0204b5e8(Obj0204b5e8* background, int a, int b);
-void AllocateAndClearBuffer0204b12c(AllocTarget0204b12c* background, SafeAllocator* allocator);
-void AllocateArray0204af38(Foo0204af38* background, int count, SafeAllocator* allocator);
-int CountActiveEntries(ActiveEntry02046900* archive);
-void* FindRecordByIndex(Rec020467f0* archive, int index, void** name, int* size);
-extern "C" void func_0204b174(BackgroundGraphics* background, void* file, SafeAllocator* allocator, unsigned int size);
-void DispatchEntry0204b8d0(Obj0204b8d0* background, unsigned int a, int b, int c, short d, short e, short f, short g,
-                           unsigned short h);
-void FlushAndDispatchList0204b0e8(List0204b0e8* background, void* a);
-extern "C" void func_0204bc74(BackgroundGraphics* background, int a, int b, int c, int d, int e, int f);
-extern "C" void func_ov023_021da274(void* self);
-void AllocateBuffer0204c7a8(Obj0204c7a8* obj, SafeAllocator* alloc, int buffer, unsigned int len);
-void LinkArrayPrevPointers0205cf78(Struct_0205cf78* list, Elem_0205cf78* elems, unsigned char count);
-void InitStruct0205a444(char* table);
+void Background_Init(List0204af64* layer);
+void Background_SetMapSize(unsigned char* layer, int sizeIndex);
+extern "C" void Background_SetPriority(BackgroundGraphics* layer, int priority);
+void Background_SetScroll(Obj0204b5e8* layer, int x, int y);
+void Background_AllocateMap(AllocTarget0204b12c* layer, SafeAllocator* allocator);
+void Background_AllocateScreens(Foo0204af38* layer, int count, SafeAllocator* allocator);
+int Pac_CountFiles(ActiveEntry02046900* archive);
+void* Pac_GetFile(Rec020467f0* archive, int index, void** record, int* size);
+extern "C" void Background_LoadFile(BackgroundGraphics* layer, void* file, SafeAllocator* allocator, unsigned int size);
+void Background_DrawScreen(Obj0204b8d0* layer, unsigned int screen, int sourceX, int sourceY, short destX, short destY,
+                           short width, short height, unsigned short palette);
+void Background_UploadMap(List0204b0e8* layer, void* buffer);
+extern "C" void Background_FillRect(BackgroundGraphics* layer, int tile, int x, int y, int width, int height, int palette);
+extern "C" void CharacterCreationUI_DrawTabLayers(void* self);
+void WindowPane_AllocateBuffer(Obj0204c7a8* pane, SafeAllocator* allocator, int windowBuffer, unsigned int size);
+void Window_SetPanes(Struct_0205cf78* window, Elem_0205cf78* panes, unsigned char count);
+void SpriteContext_Init(char* context);
 struct Struct0205a198;
-void Init0205a198(Struct0205a198* entry);
+void Sprite_Init(Struct0205a198* sprite);
 struct ClearTarget0205a234;
-void ClearField0And40205a234(ClearTarget0205a234* tail);
-extern "C" void func_0205a528(Table0205a444* table, void* file, int size, SafeAllocator* alloc);
-extern "C" void func_ov003_0215e6f8(void* obj, SafeAllocator* alloc, void* data, unsigned int size);
-extern "C" void Keyboard_ResetToKey(Ov3Obj* obj, const char* name);
-extern "C" unsigned char* func_ov003_0215f4fc(Ov3Obj* obj, const char* name);
-void InitWordsQuad_021e60e0(void* model, unsigned int angle);
-extern "C" void func_ov023_021e5974(void* model, Hero* hero, short a, int b, int c);
-extern "C" void func_ov023_021d99a4(void* self);
+void ClearField0And40205a234(ClearTarget0205a234* spriteEntries);
+extern "C" void SpriteContext_LoadFile(SpriteContext* context, void* file, int size, SafeAllocator* allocator);
+extern "C" void KeyboardLayout_Load(void* layout, SafeAllocator* allocator, void* script, unsigned int size);
+extern "C" void Keyboard_ResetToKey(Keyboard* keyboard, const char* text);
+extern "C" KeyboardKey* Keyboard_FindKeyByText(Keyboard* keyboard, const char* text);
+void CharacterModel_SetAngle(void* model, unsigned int angle);
+extern "C" void CharacterModel_Load(void* model, PartyMemberData* member, short vocation, int unused, int force);
+extern "C" void CharacterCreationUI_CreateSummaryPane(void* self);
 void SetupTag021d9c7c(void* self);
-void SetupTag021d9da4(void* self);
-void SetElementFieldC2_0205deb4(Struct_0205d81c* s, int key, int value);
-void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
+void CharacterCreationUI_CreateNamePane(void* self);
+void SetElementFieldC2_0205deb4(Struct_0205d81c* window, int paneId, int value);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 
-#if defined(jpn)
-#define data_ov009_0218acb0 data_ov009_0218bc25
-#define data_ov009_0218ab48 data_ov009_0218bab0
-#define data_ov009_0218acd9 data_ov009_0218bc3e
-#define data_ov009_0218a9bc data_ov009_0218b998
-#define data_ov009_0218aa40 data_ov009_0218ba1c
-#define data_ov009_0218a96c data_ov009_0218b978
-#define data_ov009_0218a994 data_ov009_0218b95c
-#define data_ov009_0218a998 data_ov009_0218b968
-#define data_ov009_0218a99c data_ov009_0218b952
-#define data_ov009_0218a9a4 data_ov009_0218b990
-#endif
+extern const char CharacterCreationUI_textArchive[];
+extern const char CharacterCreationUI_textFile[];
+extern const char* g_itemDataArchive;
+extern const char* g_itemDataFile;
+extern const char CharacterCreationUI_itemIds[];
 
-extern const char data_ov009_0218acb0[];
-extern const char data_ov009_0218acc9[];
-extern const char* data_020f2a38;
-extern const char* data_020f2a30;
-extern const char data_ov009_0218ab48[];
-
-extern const char data_ov009_0218acd9[];
-extern signed char data_ov009_0218a9bc[10];
-extern const Struct_ov009_0218aa40 data_ov009_0218aa40;
-extern const unsigned char data_ov009_0218a96c[];
-extern const unsigned char data_ov009_0218a994[];
-extern const signed char data_ov009_0218a998[];
-extern const signed char data_ov009_0218a99c[];
-extern const unsigned short data_ov009_0218a9a4[];
-extern const char data_ov009_0218acf4[];
-extern const char data_ov009_0218ad0d[];
+extern const char CharacterCreationUI_characterArchive[];
+extern signed char CharacterCreationUI_styleOrder[10];
+extern const AppearanceModels CharacterCreationUI_defaultAppearance;
+extern const unsigned char CharacterCreationUI_setupBgSubScreen[];
+extern const unsigned char CharacterCreationUI_setupBgNumbers[];
+extern const signed char CharacterCreationUI_setupBgPriorities[];
+extern const signed char CharacterCreationUI_setupBgScreenCounts[];
+extern const unsigned short CharacterCreationUI_window1PaneSizes[];
+extern const char CharacterCreationUI_newGameKeyboardFile[];
+extern const char CharacterCreationUI_partyKeyboardFile[];
 extern const char CharacterCreationUI_firstKeyText[];
-extern const char data_ov009_0218ad28[];
+extern const char CharacterCreationUI_spaceKeyText[];
 
 #if defined(jpn)
-extern "C" void func_020e0484(void* list, SafeAllocator* alloc, const char* name, const void* entries, int count, int flag);
-extern "C" void func_ov009_02185888(void* obj);
-extern "C" void func_ov009_02185850(void* obj);
-extern "C" int func_ov009_02185c58(void* obj);
-void CharacterCreationUI_SwitchTab(unsigned char* self, int val);
-#define MODEL0 self->models_[0]
-#define MODEL1 self->models_[1]
-#define TABLE_A self->tableA_
-#define TABLE_B self->tableB_
+extern "C" void func_020e0484(void* itemTable, SafeAllocator* allocator, const char* path, const void* ids, int count,
+                              int flag);
+extern "C" void func_ov009_02185888(void* nameFilter);
+extern "C" void NameFilter_Reset(void* nameFilter);
+extern "C" int func_ov009_02185c58(void* nameFilter);
+void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
+#define CHARACTER_MODEL0 self->characterModels_[0]
+#define CHARACTER_MODEL1 self->characterModels_[1]
+#define MAIN_SPRITE_CONTEXT self->mainSpriteContext_
+#define SUB_SPRITE_CONTEXT self->subSpriteContext_
 #else
-#define MODEL0 var10
-#define MODEL1 var11
-#define TABLE_A var57
-#define TABLE_B var58
+#define CHARACTER_MODEL0 characterModel0
+#define CHARACTER_MODEL1 characterModel1
+#define MAIN_SPRITE_CONTEXT mainSpriteContext
+#define SUB_SPRITE_CONTEXT subSpriteContext
 #endif
-
-enum Enum_ov009_02185634 { Enum_ov009_02185634_3072 = 0xc00 };
-enum Enum_ov009_02185634_B { Enum_ov009_02185634_B_48 = 0x30 };
 
 // Overlay 9, originally func_ov009_02185634 (USA/EUR 0x02185634, JPN 0x02186814)
 extern "C" ARM void CharacterCreationUI_HandleSetup(CharacterCreation* self)
 {
-    unsigned int offset;
-    GameState* gs = GameState::GetInstance();
-    gs->GetResources();
+    unsigned int headerLength;
+    GameState* gameState = GameState::GetInstance();
+    gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     unsigned char step = self->step_;
-    if (step == 0)
+    if (step == SetupStep_Init)
     {
 #if defined(jpn)
-        arg0->unknown_0_[1].Reset();
-        void* var4 = arg0->unknown_0_[1].Allocate(0x1800);
-        unsigned int var5;
-        LoadFileIntoMemory(data_ov009_0218acb0, var4, &var5);
-        arg0->unknown_0_[5].Reset();
-        func_020dfec0(arg0->unknown_e0_, &arg0->unknown_0_[5], var4, var5);
-        arg0->unknown_d8_ = *(int*)(func_020421a0() + 0x28);
-        func_020de848(arg0->unknown_c8_);
-        func_020e0484(arg0->unknown_c8_, &arg0->unknown_0_[4], data_020f2a38, data_ov009_0218ab48, 0x29, 1);
+        self->allocators_[CreationAllocator_TabLayers].Reset();
+        void* textFile = self->allocators_[CreationAllocator_TabLayers].Allocate(TextFileBuffer_Bytes);
+        unsigned int textFileSize;
+        LoadFileIntoMemory(CharacterCreationUI_textArchive, textFile, &textFileSize);
+        self->allocators_[CreationAllocator_Texts].Reset();
+        KeyTable_Load(self->texts_, &self->allocators_[CreationAllocator_Texts], textFile, textFileSize);
+        self->textBuffer_ = ((MessageSystem*)GetGlobalField0x1c020421a0())->textBuffer_;
+        ItemTable_Init(self->itemTable_);
+        func_020e0484(self->itemTable_, &self->allocators_[CreationAllocator_ItemTable], g_itemDataArchive,
+                      CharacterCreationUI_itemIds, CreationItemIds_Count, 1);
 #else
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        unsigned int var6;
-        void* var7 = ExtractFileFromGP2(data_ov009_0218acb0, data_ov009_0218acc9, &var6);
-        arg0->unknown_0_[5].Reset();
-        func_020dfec0(arg0->unknown_e0_, &arg0->unknown_0_[5], var7, var6);
+        unsigned int textFileSize;
+        void* textFile = ExtractFileFromGP2(CharacterCreationUI_textArchive, CharacterCreationUI_textFile, &textFileSize);
+        self->allocators_[CreationAllocator_Texts].Reset();
+        KeyTable_Load(self->texts_, &self->allocators_[CreationAllocator_Texts], textFile, textFileSize);
         BackgroundLoader::RemoveLockGlobal();
-        arg0->unknown1_f8_ = *(int*)(func_020421a0() + 0x5c);
-        func_020de848(arg0->unknown_c8_);
+        self->textBuffer_ = ((MessageSystem*)GetGlobalField0x1c020421a0())->textBuffer_;
+        ItemTable_Init(self->itemTable_);
         BackgroundLoader::AddLockGlobal();
-        unsigned int var8;
-        void* var9 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var8);
-        if (var9 != NULL)
-            func_020de9a4(arg0->unknown_c8_, &arg0->unknown_0_[4], var9, var8, data_ov009_0218ab48, 0x29);
+        unsigned int itemDataSize;
+        void* itemData = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &itemDataSize);
+        if (itemData != NULL)
+            ItemTable_LoadIds(self->itemTable_, &self->allocators_[CreationAllocator_ItemTable], itemData, itemDataSize,
+                          CharacterCreationUI_itemIds, CreationItemIds_Count);
         BackgroundLoader::RemoveLockGlobal();
 #endif
 
-        arg0->unknown_7f0_[0] = arg0->unknown_0_[3].Allocate(0xc20);
+        self->characterModels_[0] = self->allocators_[CreationAllocator_Characters].Allocate(CharacterModelSize_Bytes);
 #if !defined(jpn)
-        void* var10 = arg0->unknown_7f0_[0];
+        void* characterModel0 = self->characterModels_[0];
 #endif
-        func_ov023_021e4e8c(MODEL0);
-        func_ov023_021e4f64(MODEL0, &arg0->unknown_0_[3]);
-        func_ov023_021e4fd8(MODEL0);
-        func_ov023_021e6198(MODEL0, (int)arg0->unknown_c8_);
-        arg0->unknown_7f0_[1] = arg0->unknown_0_[3].Allocate(0xc20);
+        CharacterModel_Init(CHARACTER_MODEL0);
+        CharacterModel_CreateAllocators(CHARACTER_MODEL0, &self->allocators_[CreationAllocator_Characters]);
+        CharacterModel_ReserveVram(CHARACTER_MODEL0);
+        CharacterModel_SetItemTable(CHARACTER_MODEL0, (int)self->itemTable_);
+        self->characterModels_[1] = self->allocators_[CreationAllocator_Characters].Allocate(CharacterModelSize_Bytes);
 #if !defined(jpn)
-        void* var11 = arg0->unknown_7f0_[1];
+        void* characterModel1 = self->characterModels_[1];
 #endif
-        func_ov023_021e4e8c(MODEL1);
-        func_ov023_021e4f64(MODEL1, &arg0->unknown_0_[3]);
-        func_ov023_021e4fd8(MODEL1);
-        func_ov023_021e6198(MODEL1, (int)arg0->unknown_c8_);
+        CharacterModel_Init(CHARACTER_MODEL1);
+        CharacterModel_CreateAllocators(CHARACTER_MODEL1, &self->allocators_[CreationAllocator_Characters]);
+        CharacterModel_ReserveVram(CHARACTER_MODEL1);
+        CharacterModel_SetItemTable(CHARACTER_MODEL1, (int)self->itemTable_);
 
         if (self->mode_ == CreationMode_NewGame)
         {
 #if defined(jpn)
-            Enum_ov009_02185634 var17 = Enum_ov009_02185634_3072;
-            Enum_ov009_02185634_B var18 = Enum_ov009_02185634_B_48;
+            WingsTextureVram textureBytes = WingsTextureVram_Bytes;
+            WingsPaletteVram paletteBytes = WingsPaletteVram_Bytes;
 #endif
             BackgroundLoader::AddLockGlobal();
             BackgroundLoader::FreeAllocationsGlobal();
-            GPCReadPair var12;
-            GPCReadPair* var13 = &var12;
-            unsigned int var14 = 0;
-            unsigned char* var15 = data_0211e33c;
-            int var16 = 0x30000;
-            ZeroInitGPCPointer(&var13->pGPCFile);
-            var13->ZeroInitializeMachine();
-            if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var12.pGPCFile, var12.machine, data_ov009_0218acd9, var15,
-                                                           var14, var16, false, 0))
+            GPCReadPair characterArchive;
+            GPCReadPair* characterArchiveRef = &characterArchive;
+            unsigned int decompressedLength = 0;
+            unsigned char* buffer = data_0211e33c;
+            int capacity = sizeof(data_0211e33c);
+            ZeroInitGPCPointer(&characterArchiveRef->pGPCFile);
+            characterArchiveRef->ZeroInitializeMachine();
+            if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&characterArchive.pGPCFile, characterArchive.machine,
+                                                           CharacterCreationUI_characterArchive, buffer,
+                                                           decompressedLength, capacity, false, 0))
             {
-                var0 = var14;
-                var16 -= var0;
+                headerLength = decompressedLength;
+                capacity -= headerLength;
 #if !defined(jpn)
-                Enum_ov009_02185634 var17 = Enum_ov009_02185634_3072;
-                Enum_ov009_02185634_B var18 = Enum_ov009_02185634_B_48;
+                WingsTextureVram textureBytes = WingsTextureVram_Bytes;
+                WingsPaletteVram paletteBytes = WingsPaletteVram_Bytes;
 #endif
-                if (DecompressFileFromGPCByName(var12.pGPCFile, var12.machine, var15 + var0, var14, var16,
-                                                func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 0x7d0)))
+                if (DecompressFileFromGPCByName(characterArchive.pGPCFile, characterArchive.machine, buffer + headerLength,
+                                                decompressedLength, capacity,
+                                                KeyTable_Get((Container020e0310*)self->texts_, SetupText_WingsModel)))
                 {
-                    func_0207de48(arg0->unknown_808_, var17, var18);
-                    func_0207df50((Struct_0203d028*)arg0->unknown_808_);
-                    func_0207df90(arg0->unknown_808_);
-                    ((Object3D*)arg0->unknown_878_)->SetModelFromFileCopy(arg0->unknown_b4_, var15 + var0, var14,
-                                                       Model3D::TextureStagingMode_Normal);
-                    func_0207dfac(arg0->unknown_808_);
+                    VramState_Reserve(self->wingsVramState_, textureBytes, paletteBytes);
+                    CopyInternalFields0207df50((Foo0207df50*)self->wingsVramState_);
+                    VramState_Restore(self->wingsVramState_);
+                    ((Object3D*)self->wings_)->SetModelFromFileCopy(self->modelAllocator_, buffer + headerLength,
+                                                                    decompressedLength,
+                                                                    Model3D::TextureStagingMode_Normal);
+                    VramState_Save(self->wingsVramState_);
                 }
             }
             BackgroundLoader::RemoveLockGlobal();
-            func_0207de48(arg0->unknown_c68_, 0x1a00, 0x20);
-            var12.Reset();
-            ZeroDestroyGPCPointer(&var12.pGPCFile);
+            VramState_Reserve(self->finishEffectVramState_, FinishEffectVram_TextureBytes, FinishEffectVram_PaletteBytes);
+            characterArchive.Reset();
+            ZeroDestroyGPCPointer(&characterArchive.pGPCFile);
         }
 
 #if defined(jpn)
@@ -390,373 +583,389 @@ extern "C" ARM void CharacterCreationUI_HandleSetup(CharacterCreation* self)
 #else
         Struct_ov003_02154af4_3* var19 = (Struct_ov003_02154af4_3*)((char*)arg0 + 0x124);
 #endif
-        func_020a2010(var19->unknown_800_);
-        func_0202e5c0((Struct_0202e5c0*)var19->unknown_800_, 0xd000, 0xf800, 0x42ccc);
-        func_0202e5c8((unsigned char*)var19->unknown_800_, 0xd000, 0xf800, 0);
-        func_0202e0a4(var19->unknown_800_);
-        func_020a27a0(var19->unknown_800_);
-        func_020100c4(var1, (int)var19->unknown_800_);
+        InitCombatController020a2010(scene->camera_);
+        Camera_SetPosition((Vec3Target0202e5c0*)scene->camera_, DefaultCamera_X, DefaultCamera_Y, DefaultCamera_PositionZ);
+        Camera_SetTarget((unsigned char*)scene->camera_, DefaultCamera_X, DefaultCamera_Y, 0);
+        func_0202e0a4(scene->camera_);
+        SetField0x238False_020a27a0(scene->camera_);
+        SetField0x3b0Value_020100c4(gameState, (int)scene->camera_);
 
-        self->sex_ = 0;
-        self->unk_da4[0] = 2;
-        self->unk_da4[1] = 2;
-        self->unk_da6[0] = 0;
-        self->unk_da6[1] = 0;
-        self->unk_da8[0] = 0;
-        self->unk_da8[1] = 5;
-        self->unk_daa[0] = 3;
-        self->unk_daa[1] = 3;
-        self->unk_dac[0] = 0;
-        self->unk_dac[1] = 0;
-        self->unk_dae[0] = 0;
-        self->unk_dae[1] = 3;
+        self->sex_ = CreationSex_Male;
+        self->bodyType_[CreationSex_Male] = 2;
+        self->bodyType_[CreationSex_Female] = 2;
+        self->faceStyle_[CreationSex_Male] = 0;
+        self->faceStyle_[CreationSex_Female] = 0;
+        self->eyeColor_[CreationSex_Male] = 0;
+        self->eyeColor_[CreationSex_Female] = 5;
+        self->skinColor_[CreationSex_Male] = 3;
+        self->skinColor_[CreationSex_Female] = 3;
+        self->hairStyle_[CreationSex_Male] = 0;
+        self->hairStyle_[CreationSex_Female] = 0;
+        self->hairColor_[CreationSex_Male] = 0;
+        self->hairColor_[CreationSex_Female] = 3;
         if (self->mode_ == CreationMode_PartyMemberCreation)
         {
-            arg0->unknown_da6_[0] = 1;
-            arg0->unknown_da6_[1] = 1;
-            arg0->unknown_dac_[1] = 1;
-            arg0->unknown_da8_[1] = 0;
-            arg0->unknown_dae_[1] = 0;
+            self->faceStyle_[CreationSex_Male] = 1;
+            self->faceStyle_[CreationSex_Female] = 1;
+            self->hairStyle_[CreationSex_Female] = 1;
+            self->eyeColor_[CreationSex_Female] = 0;
+            self->hairColor_[CreationSex_Female] = 0;
         }
 #if defined(jpn)
-        memcpy(arg0->unknown_d74_, func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 0x4272), 0xb);
-        arg0->unknown_d8a_ = 0;
-        memcpy(arg0->unknown_d7f_, func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 0x4272), 0xb);
-        arg0->unknown_d8b_ = 0;
+        memcpy(self->names_[CreationSex_Male], KeyTable_Get((Container020e0310*)self->texts_, SetupText_BlankName),
+               sizeof(self->names_[CreationSex_Male]));
+        self->nameLengths_[CreationSex_Male] = 0;
+        memcpy(self->names_[CreationSex_Female], KeyTable_Get((Container020e0310*)self->texts_, SetupText_BlankName),
+               sizeof(self->names_[CreationSex_Female]));
+        self->nameLengths_[CreationSex_Female] = 0;
 #endif
 
-        Struct_ov009_0218aa40 var20;
-        Struct_ov003_021594c4* var21[4];
-        Struct_ov009_02185634* var22 = &arg0->unknown_d88_->unknown_488_;
-        var22->unknown_14_0_ = arg0->unknown_da3_;
-        var22->unknown_14_1_ = arg0->unknown_daa_[arg0->unknown_da3_];
-        int var23 = arg0->unknown_da8_[arg0->unknown_da3_];
+        AppearanceModels appearanceModels;
+        BackgroundGraphics* setupLayers[SetupLayers_Count];
+        PartyMemberAppearance* appearance = &self->characterData_->appearance_;
+        appearance->female_ = self->sex_;
+        appearance->skinColor_ = self->skinColor_[self->sex_];
+        int eyeColor = self->eyeColor_[self->sex_];
         {
 #if defined(jpn)
-            Struct_ov009_02185634_4 var24 = *(Struct_ov009_02185634_4*)data_ov009_0218a9bc;
+            CreationStyleOrder order = *(CreationStyleOrder*)CharacterCreationUI_styleOrder;
 #else
-            signed char var25[10];
-            int var26;
-            unsigned char* var27;
-            unsigned char* var28 = (unsigned char*)data_ov009_0218a9bc;
-            var27 = (unsigned char*)var25;
-            var26 = 10;
+            signed char order[10];
+            int remaining;
+            unsigned char* dst;
+            unsigned char* src = (unsigned char*)CharacterCreationUI_styleOrder;
+            dst = (unsigned char*)order;
+            remaining = 10;
             do {
-                unsigned char var29 = *var28;
-                var28++;
-                *var27 = var29;
-                var27++;
-            } while (--var26);
+                unsigned char style = *src;
+                src++;
+                *dst = style;
+                dst++;
+            } while (--remaining);
 #endif
         }
-        var22->unknown_14_4_ = var23;
+        appearance->eyeColor_ = eyeColor;
         {
-            signed char var30[10];
-            int var31;
-            unsigned char* var32;
-            unsigned char* var33;
-            int var34 = arg0->unknown_dae_[arg0->unknown_da3_];
-            var33 = (unsigned char*)data_ov009_0218a9bc;
-            var32 = (unsigned char*)var30;
-            var31 = 10;
+            signed char order[10];
+            int remaining;
+            unsigned char* dst;
+            unsigned char* src;
+            int hairColor = self->hairColor_[self->sex_];
+            src = (unsigned char*)CharacterCreationUI_styleOrder;
+            dst = (unsigned char*)order;
+            remaining = 10;
             do {
-                unsigned char var35 = *var33;
-                var33++;
-                *var32 = var35;
-                var32++;
-            } while (--var31);
-            var22->unknown_15_0_ = var34;
+                unsigned char style = *src;
+                src++;
+                *dst = style;
+                dst++;
+            } while (--remaining);
+            appearance->hairColor_ = hairColor;
         }
-        CharacterCreationUI_GetBodyDimensions((unsigned char*)self, self->unk_da4[self->sex_], &look->unk_18, &look->unk_1a);
-        short top = CharacterCreationUI_SlotToStyleIndex(self, 5, self->unk_da6[self->sex_]) + 0x233c;
-        short bottom = CharacterCreationUI_SlotToStyleIndex(self, 3, self->unk_dac[self->sex_]) + 0x2328;
-        defaults = data_ov009_0218aa40;
-        defaults.unk[2] = top;
-        defaults.unk[3] = bottom;
-        memcpy(look, &defaults, 0x14);
-        look->unk_16 = -1;
-        CharacterModel_SetScale(MODEL0, look->unk_18, look->unk_1a);
-        CharacterModel_SetScale(MODEL1, look->unk_18, look->unk_1a);
+        CharacterCreationUI_GetBodyDimensions((unsigned char*)self, self->bodyType_[self->sex_], &appearance->width_,
+                                              &appearance->height_);
+        short face = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle_[self->sex_]) +
+                     AppearanceModel_FirstFace;
+        short hairStyle = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle_[self->sex_]) +
+                          AppearanceModel_FirstHairStyle;
+        appearanceModels = CharacterCreationUI_defaultAppearance;
+        appearanceModels.models[AppearanceSlot_Face] = face;
+        appearanceModels.models[AppearanceSlot_HairStyle] = hairStyle;
+        memcpy(appearance, &appearanceModels, sizeof(appearanceModels));
+        appearance->defaultArms_ = -1;
+        CharacterModel_SetScale(CHARACTER_MODEL0, appearance->width_, appearance->height_);
+        CharacterModel_SetScale(CHARACTER_MODEL1, appearance->width_, appearance->height_);
 
-        if (arg0->unknown_da2_ != 0)
+        if (self->vocation_ != 0)
         {
-            func_ov023_021e6150(MODEL0, 1);
-            func_ov023_021e6150(MODEL1, 1);
-            switch (arg0->unknown_da2_)
+            SetByteC11_021e6150(CHARACTER_MODEL0, 1);
+            SetByteC11_021e6150(CHARACTER_MODEL1, 1);
+            switch (self->vocation_)
             {
             case 1:
             case 7:
             case 8:
-                var22->unknown_e_ = 0x4e24;
+                appearance->weapon_ = StartingWeapon_CopperSword;
                 break;
             case 2:
             case 9:
-                var22->unknown_e_ = 0x5014;
+                appearance->weapon_ = StartingWeapon_BambooSpear;
                 break;
             case 3:
             case 10:
-                var22->unknown_e_ = 0x4fb3;
+                appearance->weapon_ = StartingWeapon_OakStaff;
                 break;
             case 4:
-                var22->unknown_e_ = 0x5078;
+                appearance->weapon_ = StartingWeapon_BambooPole;
                 break;
             case 6:
             case 11:
-                var22->unknown_e_ = 0x4e84;
+                appearance->weapon_ = StartingWeapon_PeacockFan;
                 break;
             case 5:
-                var22->unknown_e_ = 0x4a6a;
+                appearance->weapon_ = StartingWeapon_Knife;
                 break;
             case 12:
-                var22->unknown_e_ = 0x50dc;
+                appearance->weapon_ = StartingWeapon_Boomerang;
                 break;
             }
-            var22->unknown_0_ = 0x32cd;
-            var22->unknown_16_ = 0x36b5;
-            var22->unknown_2_ = 0x3f55;
-            var22->unknown_a_ = 0x43fe;
+            appearance->body_ = PlainOutfit_Body;
+            appearance->defaultArms_ = PlainOutfit_Arms;
+            appearance->legs_ = PlainOutfit_Legs;
+            appearance->feet_ = PlainOutfit_Feet;
         }
         if (self->mode_ == CreationMode_NewGame)
         {
-            var22->unknown_0_ = 0x32cf;
-            var22->unknown_16_ = 0x36b7;
-            var22->unknown_2_ = 0x3f57;
-            var22->unknown_a_ = 0x42e0;
+            appearance->body_ = CelestrianOutfit_Body;
+            appearance->defaultArms_ = CelestrianOutfit_Arms;
+            appearance->legs_ = CelestrianOutfit_Legs;
+            appearance->feet_ = CelestrianOutfit_Feet;
         }
 
-        var21[0] = &arg0->unknown_138_[0];
-        var21[1] = &arg0->unknown_138_[1];
-        var21[2] = &arg0->unknown_138_[2];
-        var21[3] = &arg0->unknown_138_[5];
-        for (int var38 = 0; var38 < 4; var38++)
+        setupLayers[0] = &self->layers_[CreationLayer_Backdrop];
+        setupLayers[1] = &self->layers_[CreationLayer_TabHighlight];
+        setupLayers[2] = &self->layers_[CreationLayer_SummaryText];
+        setupLayers[SetupLayers_BottomTextSlot] = &self->layers_[CreationLayer_BottomText];
+        for (int i = 0; i < SetupLayers_Count; i++)
         {
-            Struct_ov003_021594c4* var39 = var21[var38];
-            SafeAllocator* var40 = &arg0->unknown_0_[0];
-            if (var38 == 3)
-                var40 = &arg0->unknown_0_[2];
-            func_0204af64((Struct_02020cb8*)var39);
-            func_0204b11c((unsigned char*)var39, 0);
-            unsigned char var41 = data_ov009_0218a96c[var38];
-            var39->unknown_1c_0_ = var41;
-            var39->unknown_1c_4_ = data_ov009_0218a994[var38];
-            func_0204b5b4(var39, data_ov009_0218a998[var38]);
-            func_0204b5e8((Struct_02020cb8_5*)var39, 0, 0);
-            func_0204b12c((Struct_0204b12c*)var39, var40);
-            if (data_ov009_0218a99c[var38] > 0)
-                func_0204af38((Struct_0204af38*)var39, (unsigned char)data_ov009_0218a99c[var38], var40);
+            BackgroundGraphics* layer = setupLayers[i];
+            SafeAllocator* allocator = &self->allocators_[CreationAllocator_MainLayers];
+            if (i == SetupLayers_BottomTextSlot)
+                allocator = &self->allocators_[CreationAllocator_BottomText];
+            Background_Init((List0204af64*)layer);
+            Background_SetMapSize((unsigned char*)layer, 0);
+            unsigned char subScreen = CharacterCreationUI_setupBgSubScreen[i];
+            layer->subScreen_ = subScreen;
+            layer->bgNumber_ = CharacterCreationUI_setupBgNumbers[i];
+            Background_SetPriority(layer, CharacterCreationUI_setupBgPriorities[i]);
+            Background_SetScroll((Obj0204b5e8*)layer, 0, 0);
+            Background_AllocateMap((AllocTarget0204b12c*)layer, allocator);
+            if (CharacterCreationUI_setupBgScreenCounts[i] > 0)
+                Background_AllocateScreens((Foo0204af38*)layer, (unsigned char)CharacterCreationUI_setupBgScreenCounts[i], allocator);
         }
 
 #if defined(jpn)
-        arg0->unknown_d90_ = var2->QueueLoadFile(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, arg0->unknown_c58_), NULL);
+        self->resourceTask_ = loader->QueueLoadFile(KeyTable_Get((Container020e0310*)self->texts_, self->state_), NULL);
 #else
-        signed char var42 = arg0->unknown_c58_;
-        const char* var43 = func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, (short)(var42 + 0x32));
-        arg0->unknown_d90_ = var2->QueueLoadFileInGP2(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, var42),
-                                                 var43, NULL);
+        signed char tab = self->state_;
+        const char* innerFile = KeyTable_Get((Container020e0310*)self->texts_, (short)(tab + CreationText_InnerFileOffset));
+        self->resourceTask_ = loader->QueueLoadFileInGP2(KeyTable_Get((Container020e0310*)self->texts_, tab),
+                                                         innerFile, NULL);
 #endif
         arg0->unknown_c59_++;
     }
-    else if (var3 == 1)
+    else if (step == SetupStep_LoadBackgrounds)
     {
-        if (var2->GetTaskStatus(arg0->unknown_d90_) != 0)
+        if (loader->GetTaskStatus(self->resourceTask_) != 0)
         {
-            char name[4];
+            char record[4];
             void* archive;
             unsigned int archiveSize;
-            int size;
-            loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
-            int count = CountActiveEntries((ActiveEntry02046900*)archive);
+            int fileSize;
+            loader->GetLoadedFileByID(self->resourceTask_, &archive, &archiveSize);
+            int fileCount = Pac_CountFiles((ActiveEntry02046900*)archive);
             if (self->mode_ == CreationMode_PartyMemberCreation)
-                count--;
-            for (int i = 0; i < count; i++)
+                fileCount--;
+            for (int i = 0; i < fileCount; i++)
             {
-                void* var50 = func_020467f0((Struct_02020aec*)var45, var49, (void**)var44, &var47);
-                if (var50 != NULL)
+                void* file = Pac_GetFile((Rec020467f0*)archive, i, (void**)record, &fileSize);
+                if (file != NULL)
                 {
-                    if (var49 == 0)
+                    if (i == SetupBgFile_WindowTiles)
                     {
-                        func_0204b174(&arg0->unknown_138_[2], var50, &arg0->unknown_0_[0], var47);
-                        func_0204b174(&arg0->unknown_138_[5], var50, &arg0->unknown_0_[2], var47);
+                        Background_LoadFile(&self->layers_[CreationLayer_SummaryText], file,
+                                      &self->allocators_[CreationAllocator_MainLayers], fileSize);
+                        Background_LoadFile(&self->layers_[CreationLayer_BottomText], file,
+                                      &self->allocators_[CreationAllocator_BottomText], fileSize);
                     }
-                    else if (var49 <= 3)
+                    else if (i <= SetupBgFile_LastBackdrop)
                     {
-                        func_0204b174(&arg0->unknown_138_[0], var50, &arg0->unknown_0_[0], var47);
+                        Background_LoadFile(&self->layers_[CreationLayer_Backdrop], file,
+                                      &self->allocators_[CreationAllocator_MainLayers], fileSize);
                     }
                     else
                     {
-                        func_0204b174(&arg0->unknown_138_[1], var50, &arg0->unknown_0_[0], var47);
+                        Background_LoadFile(&self->layers_[CreationLayer_TabHighlight], file,
+                                      &self->allocators_[CreationAllocator_MainLayers], fileSize);
                     }
                 }
             }
-            loader->RemoveTask(self->task_);
-            self->task_ = -1;
-            int visible = 1;
+            loader->RemoveTask(self->resourceTask_);
+            self->resourceTask_ = -1;
+            int backdropScreen = BackdropScreen_Hero;
             if (self->mode_ == CreationMode_PartyMemberCreation)
-                visible = 0;
-            DispatchEntry0204b8d0((Obj0204b8d0*)&self->backgrounds_[0], visible, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
-            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[0], 0);
-            func_0204bc74(&self->backgrounds_[1], 0, 0, 0, 0x20, 0x19, 0);
-            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[1], 0);
-            func_0204bc74(&self->backgrounds_[2], 0, 0, 0, 0x20, 0x19, 0);
-            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[2], 0);
-            func_0204bc74(&self->backgrounds_[5], 0, 0, 0, 0x20, 0x19, 0);
-            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[5], 0);
-            self->flags_ |= 0x1000;
-            func_ov023_021da274(self);
-            FlushAndDispatchList0204b0e8((List0204b0e8*)&self->backgrounds_[1], 0);
-            self->flags_ &= ~0x1000;
+                backdropScreen = BackdropScreen_Npc;
+            Background_DrawScreen((Obj0204b8d0*)&self->layers_[CreationLayer_Backdrop], backdropScreen, 0, 0, 0, 0,
+                                  BackgroundMap_Columns, BackgroundMap_ScreenRows, BackgroundMap_KeepPalette);
+            Background_UploadMap((List0204b0e8*)&self->layers_[CreationLayer_Backdrop], 0);
+            Background_FillRect(&self->layers_[CreationLayer_TabHighlight], 0, 0, 0, BackgroundMap_Columns, BackgroundMap_Rows, 0);
+            Background_UploadMap((List0204b0e8*)&self->layers_[CreationLayer_TabHighlight], 0);
+            Background_FillRect(&self->layers_[CreationLayer_SummaryText], 0, 0, 0, BackgroundMap_Columns, BackgroundMap_Rows, 0);
+            Background_UploadMap((List0204b0e8*)&self->layers_[CreationLayer_SummaryText], 0);
+            Background_FillRect(&self->layers_[CreationLayer_BottomText], 0, 0, 0, BackgroundMap_Columns, BackgroundMap_Rows, 0);
+            Background_UploadMap((List0204b0e8*)&self->layers_[CreationLayer_BottomText], 0);
+            self->flags_ |= CreationFlag_RedrawTabHighlight;
+            CharacterCreationUI_DrawTabLayers(self);
+            Background_UploadMap((List0204b0e8*)&self->layers_[CreationLayer_TabHighlight], 0);
+            self->flags_ &= ~CreationFlag_RedrawTabHighlight;
 
-            arg0->unknown_7d0_ = arg0->unknown_0_[0].Allocate(0x1000);
-            Struct_ov006_02158478* var52;
-            unsigned int var53 = 0x200;
-            for (int var54 = 0; var54 < 1; var54++)
+            self->windowBuffer0_ = self->allocators_[CreationAllocator_MainLayers].Allocate(SummaryWindow_BufferBytes);
+            WindowPane* pane;
+            unsigned int window0PaneSize = SummaryWindow_PaneBytes;
+            for (int i = 0; i < SummaryWindow_PaneCount; i++)
             {
-                var52 = &arg0->unknown_370_[var54];
-                func_0204c7a8((Struct_0204c7a8*)var52, &arg0->unknown_0_[0], (int)arg0->unknown_7d0_, var53);
-                var52->unknown_4_ = &arg0->unknown_138_[2];
+                pane = &self->window0Panes_[i];
+                WindowPane_AllocateBuffer((Obj0204c7a8*)pane, &self->allocators_[CreationAllocator_MainLayers],
+                                       (int)self->windowBuffer0_, window0PaneSize);
+                pane->layer_ = &self->layers_[CreationLayer_SummaryText];
             }
-            arg0->unknown_1f8_.unknown_98_ = &arg0->unknown_138_[2];
-            arg0->unknown_1f8_.unknown_b2_ = 1;
-            func_0205cf78((Struct_0205cf78*)&arg0->unknown_1f8_, (Struct_0205cf78_2*)arg0->unknown_370_, 1);
+            self->windows_[CreationWindowIndex_Summary].layers_ = &self->layers_[CreationLayer_SummaryText];
+            self->windows_[CreationWindowIndex_Summary].layerCount_ = 1;
+            Window_SetPanes((Struct_0205cf78*)&self->windows_[CreationWindowIndex_Summary],
+                                          (Elem_0205cf78*)self->window0Panes_, SummaryWindow_PaneCount);
 
-            arg0->unknown_7d4_ = arg0->unknown_0_[2].Allocate(0x400);
-            for (int var55 = 0; var55 < 4; var55++)
+            self->windowBuffer1_ = self->allocators_[CreationAllocator_BottomText].Allocate(BottomWindow_BufferBytes);
+            for (int i = 0; i < BottomWindow_PaneCount; i++)
             {
-                var52 = &arg0->unknown_450_[var55];
-                func_0204c7a8((Struct_0204c7a8*)var52, &arg0->unknown_0_[2], (int)arg0->unknown_7d4_,
-                                       data_ov009_0218a9a4[var55]);
-                var52->unknown_4_ = &arg0->unknown_138_[5];
+                pane = &self->window1Panes_[i];
+                WindowPane_AllocateBuffer((Obj0204c7a8*)pane, &self->allocators_[CreationAllocator_BottomText],
+                                       (int)self->windowBuffer1_, CharacterCreationUI_window1PaneSizes[i]);
+                pane->layer_ = &self->layers_[CreationLayer_BottomText];
             }
-            arg0->unknown_2b4_.unknown_98_ = &arg0->unknown_138_[5];
-            arg0->unknown_2b4_.unknown_b2_ = 1;
-            func_0205cf78((Struct_0205cf78*)&arg0->unknown_2b4_, (Struct_0205cf78_2*)arg0->unknown_450_, 4);
+            self->windows_[CreationWindowIndex_Bottom].layers_ = &self->layers_[CreationLayer_BottomText];
+            self->windows_[CreationWindowIndex_Bottom].layerCount_ = 1;
+            Window_SetPanes((Struct_0205cf78*)&self->windows_[CreationWindowIndex_Bottom],
+                                          (Elem_0205cf78*)self->window1Panes_, BottomWindow_PaneCount);
 
             int var56;
 #if !defined(jpn)
-            Struct_ov009_02185634_5* var57 = arg0->unknown_7d8_;
+            SpriteContext* mainSpriteContext = self->mainSpriteContext_;
 #endif
-            func_0205a444((char*)TABLE_A);
-            TABLE_A->unknown_50_ = 0;
+            SpriteContext_Init((char*)MAIN_SPRITE_CONTEXT);
+            MAIN_SPRITE_CONTEXT->subScreen_ = 0;
 #if defined(jpn)
-            TABLE_A->inline_ov009_02185634_2(arg0->unknown_7dc_, 6);
+            MAIN_SPRITE_CONTEXT->SetSprites(self->mainSprites_, MainSprites_Count);
 #else
-            TABLE_A->unknown_40_ = arg0->unknown_7dc_;
-            TABLE_A->unknown_4c_ = 6;
+            MAIN_SPRITE_CONTEXT->sprites_ = self->mainSprites_;
+            MAIN_SPRITE_CONTEXT->spriteCount_ = MainSprites_Count;
 #endif
-            TABLE_A->unknown_3c_ = arg0->unknown_7e0_;
-            for (var56 = 0; var56 < 6; var56++)
-                func_0205a198((Struct_02043368_2*)&arg0->unknown_7dc_[var56]);
-            func_0205a234((Struct_02043368*)arg0->unknown_7e0_);
+            MAIN_SPRITE_CONTEXT->spriteEntries_ = self->mainSpriteEntries_;
+            for (i = 0; i < MainSprites_Count; i++)
+                Sprite_Init((Struct0205a198*)&self->mainSprites_[i]);
+            ClearField0And40205a234((ClearTarget0205a234*)self->mainSpriteEntries_);
 
 #if !defined(jpn)
-            Struct_ov009_02185634_5* var58 = arg0->unknown_7e4_;
+            SpriteContext* subSpriteContext = self->subSpriteContext_;
 #endif
-            func_0205a444((char*)TABLE_B);
+            SpriteContext_Init((char*)SUB_SPRITE_CONTEXT);
 #if defined(jpn)
-            TABLE_B->inline_ov009_02185634(1);
+            SUB_SPRITE_CONTEXT->SetSubScreen(1);
 #else
-            TABLE_B->unknown_50_ = 1;
+            SUB_SPRITE_CONTEXT->subScreen_ = 1;
 #endif
 #if defined(jpn)
-            TABLE_B->inline_ov009_02185634_2(arg0->unknown_7e8_, 0x19);
+            SUB_SPRITE_CONTEXT->SetSprites(self->subSprites_, SubSprites_Count);
 #else
-            TABLE_B->unknown_40_ = arg0->unknown_7e8_;
-            TABLE_B->unknown_4c_ = 0x19;
+            SUB_SPRITE_CONTEXT->sprites_ = self->subSprites_;
+            SUB_SPRITE_CONTEXT->spriteCount_ = SubSprites_Count;
 #endif
-            TABLE_B->unknown_3c_ = arg0->unknown_7ec_;
-            for (int var59 = 0; var59 < 0x19; var59++)
-                func_0205a198((Struct_02043368_2*)&arg0->unknown_7e8_[var59]);
-            func_0205a234((Struct_02043368*)arg0->unknown_7ec_);
+            SUB_SPRITE_CONTEXT->spriteEntries_ = self->subSpriteEntries_;
+            for (int j = 0; j < SubSprites_Count; j++)
+                Sprite_Init((Struct0205a198*)&self->subSprites_[j]);
+            ClearField0And40205a234((ClearTarget0205a234*)self->subSpriteEntries_);
 
 #if defined(jpn)
-            arg0->unknown_d90_ = var2->QueueLoadFile(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 1000), NULL);
+            self->resourceTask_ = loader->QueueLoadFile(KeyTable_Get((Container020e0310*)self->texts_, SetupText_SpriteArchive),
+                                                        NULL);
 #else
-            const char* var60 = func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 0x41a);
-            arg0->unknown_d90_ = var2->QueueLoadFileInGP2(func_020e0434((Struct_0201099c_3*)arg0->unknown_e0_, 1000),
-                                                     var60, NULL);
+            const char* innerFile = KeyTable_Get((Container020e0310*)self->texts_,
+                                                 SetupText_SpriteArchive + CreationText_InnerFileOffset);
+            self->resourceTask_ = loader->QueueLoadFileInGP2(KeyTable_Get((Container020e0310*)self->texts_, SetupText_SpriteArchive),
+                                                             innerFile, NULL);
 #endif
             arg0->unknown_c59_++;
         }
     }
-    else if (var3 == 2)
+    else if (step == SetupStep_LoadSprites)
     {
-        if (var2->GetTaskStatus(arg0->unknown_d90_) != 0)
+        if (loader->GetTaskStatus(self->resourceTask_) != 0)
         {
-            char var61[4];
-            void* var62;
-            unsigned int var63;
-            int var64;
-            var2->GetLoadedFileByID(arg0->unknown_d90_, &var62, &var63);
-            int var65 = func_02046900((Struct_02020cb8_4*)var62);
-            arg0->unknown_0_[6].Reset();
-            for (int var66 = 0; var66 < var65; var66++)
+            char record[4];
+            void* archive;
+            unsigned int archiveSize;
+            int fileSize;
+            loader->GetLoadedFileByID(self->resourceTask_, &archive, &archiveSize);
+            int fileCount = Pac_CountFiles((ActiveEntry02046900*)archive);
+            self->allocators_[CreationAllocator_Sprites].Reset();
+            for (int i = 0; i < fileCount; i++)
             {
-                void* var67 = func_020467f0((Struct_02020aec*)var62, var66, (void**)var61, &var64);
-                if (var67 != NULL)
+                void* file = Pac_GetFile((Rec020467f0*)archive, i, (void**)record, &fileSize);
+                if (file != NULL)
                 {
-                    if (var66 < 4)
-                        func_0205a528(arg0->unknown_7d8_, var67, var64, &arg0->unknown_0_[6]);
+                    if (i < SubSprites_FirstFile)
+                        SpriteContext_LoadFile(self->mainSpriteContext_, file, fileSize, &self->allocators_[CreationAllocator_Sprites]);
                     else
-                        func_0205a528(arg0->unknown_7e4_, var67, var64, &arg0->unknown_0_[6]);
+                        SpriteContext_LoadFile(self->subSpriteContext_, file, fileSize, &self->allocators_[CreationAllocator_Sprites]);
                 }
             }
-            var2->RemoveTask(arg0->unknown_d90_);
-            arg0->unknown_d90_ = -1;
-            arg0->unknown_c59_++;
+            loader->RemoveTask(self->resourceTask_);
+            self->resourceTask_ = -1;
+            self->step_++;
         }
     }
 #if !defined(jpn)
-    else if (var3 == 3)
+    else if (step == SetupStep_QueueKeyboard)
     {
         if (self->mode_ == CreationMode_NewGame)
-            self->task_ = loader->QueueLoadFile(data_ov009_0218acf4, NULL);
+            self->resourceTask_ = loader->QueueLoadFile(CharacterCreationUI_newGameKeyboardFile, NULL);
         else
-            arg0->unknown_d90_ = var2->QueueLoadFile(data_ov009_0218ad0d, NULL);
-        arg0->unknown_c59_++;
+            self->resourceTask_ = loader->QueueLoadFile(CharacterCreationUI_partyKeyboardFile, NULL);
+        self->step_++;
     }
-    else if (var3 == 4)
+    else if (step == SetupStep_LoadKeyboard)
     {
-        if (var2->GetTaskStatus(arg0->unknown_d90_) != 0)
+        if (loader->GetTaskStatus(self->resourceTask_) != 0)
         {
-            void* var68;
-            unsigned int var69;
-            var2->GetLoadedFileByID(arg0->unknown_d90_, &var68, &var69);
-            if (var68 != NULL && var69 != 0)
+            void* keyboardFile;
+            unsigned int keyboardFileSize;
+            loader->GetLoadedFileByID(self->resourceTask_, &keyboardFile, &keyboardFileSize);
+            if (keyboardFile != NULL && keyboardFileSize != 0)
             {
-                self->allocators_[8].Reset();
-                func_ov003_0215e6f8(self->unk_c4, &self->allocators_[8], data, size);
-                self->unk_c0->unk_4 = self->unk_c4;
-                Keyboard_ResetToKey(self->unk_c0, CharacterCreationUI_firstKeyText);
-                unsigned char* node = func_ov003_0215f4fc(self->unk_c0, data_ov009_0218ad28);
-                if (node != NULL)
-                    node[0xf] = 1;
+                self->allocators_[CreationAllocator_KeyboardLayout].Reset();
+                KeyboardLayout_Load(self->keyboardLayout_, &self->allocators_[CreationAllocator_KeyboardLayout], keyboardFile,
+                                    keyboardFileSize);
+                self->keyboard_->layout_ = self->keyboardLayout_;
+                Keyboard_ResetToKey(self->keyboard_, CharacterCreationUI_firstKeyText);
+                KeyboardKey* spaceKey = Keyboard_FindKeyByText(self->keyboard_, CharacterCreationUI_spaceKeyText);
+                if (spaceKey != NULL)
+                    spaceKey->disabled_ = 1;
             }
-            var2->RemoveTask(arg0->unknown_d90_);
-            arg0->unknown_d90_ = -1;
-            arg0->unknown_c59_++;
+            loader->RemoveTask(self->resourceTask_);
+            self->resourceTask_ = -1;
+            self->step_++;
         }
     }
 #endif
     else
     {
-        func_ov023_021e60e0(arg0->unknown_7f0_[0], 0x1eb);
-        func_ov023_021e60e0(arg0->unknown_7f0_[1], 0x1eb);
-        func_ov023_021e5974(arg0->unknown_7f0_[0], arg0->unknown_d88_, arg0->unknown_d88_->unknown_568_, 0, 0);
-        func_ov023_021e5974(arg0->unknown_7f0_[1], arg0->unknown_d88_, arg0->unknown_d88_->unknown_568_, 0, 0);
-        arg0->unknown_7f8_ = arg0->unknown_7f0_[0];
-        arg0->unknown_7fc_ = arg0->unknown_7f0_[1];
-        func_ov023_021d99a4(arg0);
-        func_ov023_021d9c7c(arg0);
-        func_ov023_021d9da4(arg0);
-        func_0205deb4((Struct_0205d81c*)&arg0->unknown_2b4_, 2, 0);
-        func_0205deb4((Struct_0205d81c*)&arg0->unknown_2b4_, 3, 0);
+        CharacterModel_SetAngle(self->characterModels_[0], CreationAngle_Default);
+        CharacterModel_SetAngle(self->characterModels_[1], CreationAngle_Default);
+        CharacterModel_Load(self->characterModels_[0], self->characterData_, self->characterData_->vocation_, 0, 0);
+        CharacterModel_Load(self->characterModels_[1], self->characterData_, self->characterData_->vocation_, 0, 0);
+        self->character_ = self->characterModels_[0];
+        self->nextCharacter_ = self->characterModels_[1];
+        CharacterCreationUI_CreateSummaryPane(self);
+        SetupTag021d9c7c(self);
+        CharacterCreationUI_CreateNamePane(self);
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)&self->windows_[CreationWindowIndex_Bottom], BottomWindow_UnknownPane2, 0);
+        SetElementFieldC2_0205deb4((Struct_0205d81c*)&self->windows_[CreationWindowIndex_Bottom], BottomWindow_NamePane, 0);
 #if defined(jpn)
-        func_ov009_02185888(arg0->unknown_dc_);
-        func_ov009_02185850(arg0->unknown_dc_);
-        arg0->unknown_f8_ = &arg0->unknown_0_[7];
-        arg0->unknown_ee_ = 1;
-        func_ov009_02185c58(arg0->unknown_dc_);
+        func_ov009_02185888(self->nameFilter_);
+        NameFilter_Reset(self->nameFilter_);
+        self->nameFilterAllocator_ = &self->allocators_[CreationAllocator_NameFilter];
+        self->unk_ee = 1;
+        func_ov009_02185c58(self->nameFilter_);
 #endif
-        CharacterCreationUI_SwitchTab((unsigned char*)self, 1);
+        CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Gender);
     }
 }

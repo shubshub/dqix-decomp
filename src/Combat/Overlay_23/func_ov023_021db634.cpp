@@ -87,15 +87,15 @@ struct Struct_ov023_021ff9e0 {
 extern "C" Struct_ov023_021ff9e0 data_ov023_021ff9e0;
 extern "C" const short data_ov023_021fd5b8[3];
 
-extern "C" const char* func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" const char* func_020e51cc(int arg0);
-extern "C" Struct_ov023_021db634_2* func_ov023_021db4e4(Struct_ov023_021db634_3* arg0, int arg1);
-extern "C" void func_ov023_021e23d0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" unsigned int strlen(const char* arg0);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" long func_02005a94(const char* arg0);
+const char* KeyTable_Get(struct Container020e0310* c, int key);
+const char* CallFunc020e0434With02153694_020e51cc(int id);
+extern "C" LayoutElement_021db634* func_ov023_021db4e4(Layout_021db634* layout, int id);
+void SetEntryFields_021e23d0(void* layout, int id, int text, unsigned char color, unsigned char shadow);
+extern "C" void* memset(void* dst, int value, unsigned int length);
+extern "C" unsigned int strlen(const char* text);
+extern "C" void __clear(void* buffer, unsigned long size);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int length);
+extern "C" long func_02005a94(const char* text);
 extern "C" void* func_02012fe4();
 extern "C" int func_0201bb78(struct Struct_0201bb78* arg0, unsigned int arg1);
 extern "C" void* func_0205ec34();
@@ -127,29 +127,29 @@ extern "C" void func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
 // USA: func_ov023_021db634
 extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov023_021db634* arg1)
 {
-    const char* var0;
-    const char* var1;
-    const char* var2;
-    const char* var3;
-    Struct_ov023_021db634_7 var4[4];
-    Struct_ov023_021db634_5* var5;
-    Struct_ov023_021db634_4* var6;
-    short var7;
-    unsigned char var8;
-    int var9;
-    int var10;
-    int var11;
-    int var12;
-    unsigned char var13;
-    int var14;
-    var0 = func_020e0434(data_ov023_021ff9e0.unknown_14_, 0x1f);
-    var1 = func_020e0434(data_ov023_021ff9e0.unknown_14_, 0x1e);
+    const char* found;
+    const char* none;
+    const char* trade;
+    const char* alchemy;
+    IntBytePair021dbb20 places[4];
+    ItemInfoList_021db634* list;
+    ItemInfoEntry_021db634* entry;
+    short entries;
+    unsigned char shown;
+    int last;
+    int i2;
+    int j;
+    int i3;
+    unsigned char count;
+    int i;
+    found = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x1f);
+    none = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x1e);
 #if defined(jpn)
     var2 = data_ov023_021fcdef;
     var3 = data_ov023_021fcdfe;
 #else
-    var2 = func_020e0434(data_ov023_021ff9e0.unknown_14_, 0x2a);
-    var3 = func_020e51cc(0x56);
+    trade = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x2a);
+    alchemy = CallFunc020e0434With02153694_020e51cc(0x56);
 #endif
 
     SHOW_ELEMENT(arg0, 0xf);
@@ -186,8 +186,8 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
                     short var19 = func_02005a94(var18);
                     if (!func_0201bb78((Struct_0201bb78*)func_02012fe4(), (unsigned short)(var19 + 20000)))
                         continue;
-                    var16 = func_020e0434(data_ov023_021ff9e0.unknown1_8_, (short)func_02005a94(var6->unknown_4_ + 5));
-                    var15.unknown_4_ = 2;
+                    text = KeyTable_Get(data_ov023_021ff9e0.sFieldNames, (short)func_02005a94(entry->text_ + 5));
+                    place.kind_ = 2;
                 }
             }
             else if (var17 == 'a')
@@ -225,8 +225,8 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
                     continue;
                 if (!func_0201bb78((Struct_0201bb78*)var25, var26))
                     continue;
-                var16 = func_020e0434(data_ov023_021ff9e0.unknown1_8_, (short)var26);
-                var15.unknown_4_ = 4;
+                text = KeyTable_Get(data_ov023_021ff9e0.sFieldNames, (short)id);
+                place.kind_ = 4;
             }
             }
             if (var16 == NULL)

@@ -2,12 +2,12 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_020bb700(int* arg0);
-extern "C" void func_020bb910(int* arg0);
-extern "C" int func_020bb588(unsigned int arg0, int arg1, int arg2);
-extern "C" void func_0207de48(void* arg0, int arg1, int arg2);
-extern "C" void func_020542b4(void* arg0, void* arg1, void* arg2);
+void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void BackupPairTableToBuffer_020bb700(int* out);
+void ReadGlobalPair020bb910(int* dst);
+extern "C" int func_020bb588(unsigned int size, int a, int b);
+extern "C" void VramState_Reserve(void* pObj, int a, int b);
+extern "C" void func_020542b4(void* a, void* b, void* c);
 
 extern AllocatorUnion data_02114e20;
 
@@ -71,12 +71,12 @@ extern "C" ARM void func_ov017_021a02f0(Struct_ov017_021a02f0_3* arg0) {
     func_020bb588(0x20000, 0, 0);
     func_020bb588(0x20000, 0, 0);
 
-    for (var0 = 0; data_ov017_021d6924[var0].unknown_4_ != 0; var0++) {
-        func_0207de48(&arg0->unknown_2cc_[data_ov017_021d6924[var0].unknown_0_], data_ov017_021d6924[var0].unknown_4_,
-                      data_ov017_021d6924[var0].unknown_8_);
-        if (var0 == 1) {
-            func_020bb700(arg0->unknown_2a78_[2].unknown_0_);
-            func_020bb910(arg0->unknown_2a78_[2].unknown_28_);
+    for (i = 0; data_ov017_021d6924[i].a != 0; i++) {
+        VramState_Reserve(&self->slots[data_ov017_021d6924[i].index], data_ov017_021d6924[i].a,
+                      data_ov017_021d6924[i].b);
+        if (i == 1) {
+            BackupPairTableToBuffer_020bb700(self->backups[2].table);
+            ReadGlobalPair020bb910(self->backups[2].pair);
         }
     }
 

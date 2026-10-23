@@ -40,10 +40,10 @@ struct Struct_02046574_2 {
 struct Struct_02092e0c_2 { int unknown_0_[3]; };
 extern "C" Struct_02046574_2* func_020421a0();
 extern "C" void func_02046380(void*);
-extern "C" int func_020100a8(GameState*);
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" void func_020e4bf4(void*, int);
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
+int GetField0x3acValue_020100a8(GameState*);
+void SetIndexedName02046574(Obj02046574*, int, char*);
+void InitObjFromCombatantId020e4bf4(void*, int);
+int KeyTable_Get(Container020e0310*, int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_02046574_2*, int, int, int);
 #endif
@@ -61,27 +61,27 @@ extern "C" ARM void func_02092e0c(Struct_02092e0c* arg0) {
         GameObject* var2 = var1->GetPartyMemberByIndex(func_020100a8(var1));
         if (var2) func_02046574(var0, 0, var2->baseStats_->unk);
 #if defined(jpn)
-        var2 = var1->GetPartyMemberByIndex(arg0->unknown_38_);
-        if (var2) func_02046574(var0, 1, var2->baseStats_->unk);
-        func_0204500c(var0, func_020e0434(&arg0->unknown_14_, arg0->unknown_30_), 0);
-        var0->unknown_998_ = 1;
-        if ((arg0->unknown_37_ & 1) && (arg0->unknown_37_ & 2)) {
-            var0->unknown_19b1_ = 0;
-            var0->unknown_1730_ = 12;
-            var0->unknown_1734_ = 16;
-            func_02043270(var0, var0->unknown_1730_, 0x90, 0x100, 0x30);
-            var0->unknown_195b_ |= 2;
+        member = state->GetPartyMemberByIndex(messages->namedPartySlot);
+        if (member) SetIndexedName02046574(display, 1, member->baseStats_->unk);
+        func_0204500c(display, KeyTable_Get(&messages->messages, messages->messageKey), 0);
+        display->active = 1;
+        if ((messages->flags & 1) && (messages->flags & 2)) {
+            display->state = 0;
+            display->unknown1730 = 12;
+            display->unknown1734 = 16;
+            func_02043270(display, display->unknown1730, 0x90, 0x100, 0x30);
+            display->flags |= 2;
         }
 #else
-        Struct_02092e0c_2 var3;
-        func_020e4bf4(&var3, arg0->unknown_38_);
-        var0->unknown_0_ = &var3;
-        func_0204500c(var0, func_020e0434(&arg0->unknown_14_, arg0->unknown_30_), 0, 0xe3);
-        var0->unknown_998_ = 1;
-        if ((arg0->unknown_37_ & 1) && (arg0->unknown_37_ & 2)) {
-            var0->unknown_19b1_ = 0;
-            func_02042b98(var0, 2, 0x92, 0xfc, 0x4a);
-            var0->unknown_195b_ |= 2;
+        CombatantInfo02092e0c info;
+        InitObjFromCombatantId020e4bf4(&info, messages->namedPartySlot);
+        display->combatant = &info;
+        func_0204500c(display, KeyTable_Get(&messages->messages, messages->messageKey), 0, 0xe3);
+        display->active = 1;
+        if ((messages->flags & 1) && (messages->flags & 2)) {
+            display->state = 0;
+            func_02042b98(display, 2, 0x92, 0xfc, 0x4a);
+            display->flags |= 2;
         }
 #endif
         arg0->unknown_30_ = -1;

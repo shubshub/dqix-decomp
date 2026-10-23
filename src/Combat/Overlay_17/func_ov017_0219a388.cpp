@@ -10,8 +10,8 @@ extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int ar
 extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #endif
 
-extern "C" int func_0205d0e0(void* arg0, int arg1);
-extern "C" void func_ov017_0219a644(void* arg0, int arg1);
+extern "C" int Window_Update(void* objPtr, int val);
+void ClearFourHalfwords_0219a644(void* base, int value);
 
 struct Struct_ov017_021d6448 { short unknown_0_[4]; };
 struct Struct_ov017_021d6444 { unsigned char unknown_0_[4]; };
@@ -77,7 +77,7 @@ extern "C" ARM void func_ov017_0219a388(unsigned char* arg0) {
         func_0205d304(var8, var7, 0, 0, 0, 1, 0, 0);
 #endif
 
-        func_0205d0e0(var8, var0->GetTickCount());
+        Window_Update(win, gs->GetTickCount());
     }
     func_ov017_0219a644(arg0, 0xff);
 }

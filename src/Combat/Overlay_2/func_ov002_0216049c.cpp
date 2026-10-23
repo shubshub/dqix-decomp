@@ -1,17 +1,17 @@
 #include "GameState/GameState.h"
 #include <globaldefs.h>
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02041c08(char *arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char *arg0, int arg1);
-extern "C" int func_02041fac(char *arg0, int arg1, int arg2);
-extern "C" int func_02041e70(char *arg0, int arg1);
-extern "C" int func_02041b70(char *arg0, int arg1, const char *arg2);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" GameObject *func_0200ff1c(GameState *arg0, int arg1);
-extern "C" int func_ov002_02159774(void *arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov002_02157480(void *arg0, int *arg1);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
+int AppendCursorTag_02041ea4(char *dst, int cursor);
+int AppendFormatted02041fac(char *buf, int a, int b);
+int AppendPaletteTag_02041e70(char *dst, int palette);
+int AppendNameTag_02041b70(char *dst, int n, const char *name);
+int AppendString02042058(char *dst, const char *src);
+GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
+extern "C" int func_ov002_02159774(void *base, int id, int a2, int a3, int a4);
+extern "C" void func_ov002_02157480(void *obj, int *arr);
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -44,8 +44,8 @@ extern "C" ARM void func_ov002_0216049c(unsigned char *arg0, char *arg1, int arg
 #if defined(jpn)
     func_02042638(arg1, data_ov002_0216da1d, 0x10);
 #else
-    int var5 = func_020e0434((struct Struct_0201099c_3 *) (arg0 + 0x20), 0x1004);
-    func_02041fac(arg1, var5, 0x10);
+    int field = KeyTable_Get((struct Container020e0310 *) (base + 0x20), 0x1004);
+    AppendFormatted02041fac(dst, field, 0x10);
 #endif
 
     for (int var6 = 0; var6 < 4; var6++) {

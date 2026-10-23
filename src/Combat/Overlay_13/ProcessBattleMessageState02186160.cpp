@@ -55,7 +55,7 @@ extern "C" void* __clear(void* dst, int count);
 struct Obj0205dee8;
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8* obj, int val);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 extern "C" void func_0205d7a0(unsigned char* obj, int val);
 struct Struct_0205d81c;
 extern "C" int func_0205d97c(Struct_0205d81c* window);
@@ -102,7 +102,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
     if (menu->selectedSkill >= 6) menu->selectedSkill = 0;
     int confirmationHit = g_touchInput.TestPressInRectangle(0x1e, 0x5a, 0x2a, 0xa);
     if (menu->windowInput == 2) {
-        menu->selectedSkill = (signed char)GetActiveScaledSum0205d794((Struct_0205c570*)menu->window);
+        menu->selectedSkill = (signed char)Window_GetSelectedIndex((Struct_0205c570*)menu->window);
         redraw = true;
     }
     if (menu->remainingPoints >= 0 && menu->selectedSkill < 5) {
@@ -236,7 +236,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
     redraw = 0;
     transitioned = redraw;
     nextState = redraw - 1;
-    menu->selectedSkill = GetActiveScaledSum0205d794((struct Struct_0205c570*)menu->window);
+    menu->selectedSkill = Window_GetSelectedIndex((struct Struct_0205c570*)menu->window);
 
     if (g_keyManager.TestKeysPressed(0x601) != 0) {
         if (menu->selectedSkill != 5) {

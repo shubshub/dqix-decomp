@@ -35,12 +35,12 @@ struct Struct_ov017_021bdc34_3 {
     unsigned char unknown_10_;
     unsigned char unknown_11_;
 };
-extern "C" Struct_ov017_021bdc34* func_ov017_021a11b4(Struct_ov017_0218f064_6*);
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_ov017_021bdb78(int);
-extern "C" void func_ov017_0218fcf8(int, int, int);
+LoadEntry021bdc34* FindNegativeEntry_021a11b4(S021a11b4*);
+void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void SetFieldndDispatch_021bdb78_021bdb78(int);
+void CallHelperIfCheckPasses_0218fcf8(int, int, int);
 extern "C" void func_ov017_0218f5a4(void*, int, int, int, int);
 #if defined(jpn)
 extern const char data_ov017_021d85ec[], data_ov017_021d8606[], data_ov017_021d861e[];
@@ -108,36 +108,36 @@ extern "C" ARM void func_ov017_021bdc34(Struct_ov017_021bdc34_3* arg0) {
             func_ov017_0218f5a4(var1, 0, 1, 0, 0);
             arg0->unknown_10_ = 2;
         }
-    } else if (arg0->unknown_10_ == 1) {
-        int var9 = 0;
-        for (int var10 = 0; var10 < 4; var10++) {
-            if (arg0->unknown_8_[var10] < 0) continue;
-            if (var2->GetTaskStatus(arg0->unknown_8_[var10]) != 0 && var2->GetDetailedTaskStatus(arg0->unknown_8_[var10]) == 2) {
-                void* var11;
-                unsigned int var12;
-                var2->GetLoadedFileByID(arg0->unknown_8_[var10], &var11, &var12);
-                SafeAllocator* var13 = var5[var10];
-                Object3D* var14 = (Object3D*)var13->Allocate(0xac);
-                if (var11 != 0 && var14 != 0) {
-                    ObjectArchiveLoadInfo var15;
-                    var15.fileData = var11;
-                    var15.unk_0 = 0;
-                    var15.unk_14 = 0;
-                    var15.unk_18 = 0;
-                    var15.packageID = 0;
-                    var15.unk_10 = 1;
-                    var15.allocator = var13;
-                    var15.unk_8 = var12;
-                    Struct_0203d028* var16 = var6[var10];
-                    func_0207df90((char*)var16);
-                    var14->Initialize();
-                    var14->LoadFromCCHROrCMOTArchive(&var15, 0);
-                    func_0207dfac((char*)var16);
-                    switch (var10) {
-                    case 0: var1->unknown_4334_ = var14; break;
-                    case 1: var1->unknown_4338_ = var14; break;
-                    case 2: var1->unknown_433c_ = var14; break;
-                    case 3: var1->unknown_4340_ = var14; break;
+    } else if (self->stage == 1) {
+        int pending = 0;
+        for (int i = 0; i < 4; i++) {
+            if (self->tasks[i] < 0) continue;
+            if (loader->GetTaskStatus(self->tasks[i]) != 0 && loader->GetDetailedTaskStatus(self->tasks[i]) == 2) {
+                void* file;
+                unsigned int length;
+                loader->GetLoadedFileByID(self->tasks[i], &file, &length);
+                SafeAllocator* allocator = allocators[i];
+                Object3D* object = (Object3D*)allocator->Allocate(0xac);
+                if (file != 0 && object != 0) {
+                    ObjectArchiveLoadInfo info;
+                    info.fileData = file;
+                    info.unk_0 = 0;
+                    info.unk_14 = 0;
+                    info.unk_18 = 0;
+                    info.packageID = 0;
+                    info.unk_10 = 1;
+                    info.allocator = allocator;
+                    info.unk_8 = length;
+                    Foo0207df50* pair = pairs[i];
+                    VramState_Restore((char*)pair);
+                    object->Initialize();
+                    object->LoadFromCCHROrCMOTArchive(&info, 0);
+                    VramState_Save((char*)pair);
+                    switch (i) {
+                    case 0: globals->first = object; break;
+                    case 1: globals->second = object; break;
+                    case 2: globals->third = object; break;
+                    case 3: globals->fourth = object; break;
                     }
                 }
                 var2->RemoveTask(arg0->unknown_8_[var10]);

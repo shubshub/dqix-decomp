@@ -50,7 +50,7 @@ void ForwardField0xc0_0205ebec(void*);
 extern char g_sePlayer[];
 extern "C" int func_0208f748(void*, int*);
 extern "C" void __clear(void*, unsigned int);
-extern "C" void func_020426bc(BaseCombatStats*, char*, int);
+extern "C" void Font_EncodeText(BaseCombatStats*, char*, int);
 extern "C" void VectorizedInvertedMemcpy(const void*, void*, unsigned int);
 extern "C" void func_02011744(GameState*);
 extern "C" const char* func_020e51cc(int);
@@ -95,10 +95,10 @@ extern "C" ARM void func_ov017_021be0c4(Struct_ov017_021be0c4* arg0) {
 #if defined(jpn)
                     VectorizedInvertedMemcpy(var0->GetProtagonist()->baseStats_, var3->activeMapData.DiscoveredBy, 10);
 #else
-                    char var5[10];
-                    __clear(var5, 10);
-                    func_020426bc(var0->GetProtagonist()->baseStats_, var5, 1);
-                    VectorizedInvertedMemcpy(var5, var3->activeMapData.DiscoveredBy, 10);
+                    char name[10];
+                    __clear(name, 10);
+                    Font_EncodeText(game->GetProtagonist()->baseStats_, name, 1);
+                    VectorizedInvertedMemcpy(name, grotto->activeMapData.DiscoveredBy, 10);
 #endif
                 }
                 func_02011744(var0);

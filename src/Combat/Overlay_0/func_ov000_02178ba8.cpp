@@ -47,12 +47,12 @@ struct Struct_ov000_02178ba8_3 {
     Struct_0205d81c unknown_188_;
 };
 
-extern "C" Struct_ov000_02178ba8* func_020421a0();
-extern "C" int func_0205bafc(void* arg0);
-extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" void func_ov000_02178d28(Struct_ov000_02178ba8_3* arg0, Struct_ov000_02178ba8_2* arg1);
-extern "C" void func_ov000_0217ab8c(Struct_ov000_02178ba8_2* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02178f28(Struct_ov000_02178ba8_3* arg0, Struct_ov000_02178ba8_2* arg1, void* arg2);
+GlobalField1c* GetGlobalField0x1c020421a0();
+int GridCursor_GetCount(void* obj);
+Elem_0205d81c* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+extern "C" void func_ov000_02178d28(Obj02178ba8* obj, Entry02178ba8* entry);
+extern "C" void func_ov000_0217ab8c(Entry02178ba8* entry, int a, int b);
+extern "C" void func_ov000_02178f28(Obj02178ba8* obj, Entry02178ba8* entry, void* buf);
 #if defined(jpn)
 extern "C" void func_0205d304(Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 #else
@@ -78,15 +78,15 @@ extern "C" ARM void func_ov000_02178ba8(Struct_ov000_02178ba8_3* arg0, Struct_ov
 #else
     var2->unknown_a4_ = (var0 >> 3) + 0x10;
 #endif
-    var2->unknown_a6_ = var1 >> 3;
-    var2->unknown_a8_ = 0xc;
-    var2->unknown_aa_ = 8;
-    var2->unknown_ac_ = 0xa;
-    var2->unknown_ae_ = 0xc;
-    var2->unknown_b1_ = 0xf;
-    int var3 = 0;
-    if (func_0205bafc(&var2->unknown_54_) > 4) {
-        var3 = 1;
+    panel->y = y >> 3;
+    panel->fieldA8 = 0xc;
+    panel->fieldAA = 8;
+    panel->fieldAC = 0xa;
+    panel->fieldAE = 0xc;
+    panel->fieldB1 = 0xf;
+    int flag = 0;
+    if (GridCursor_GetCount(&panel->field54) > 4) {
+        flag = 1;
     }
     void* var4 = func_020421a0()->unknown_5c_;
     memset(var4, 0, REGION_OFFSET_1);

@@ -121,24 +121,24 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-extern "C" Struct_ov006_021537d0* func_ov006_02158d50(Struct_ov006_02158d50_2* arg0, short arg1);
-extern "C" void func_02080bac(void* arg0, int arg1);
-extern "C" void func_0208065c(void* arg0, int arg1);
-extern "C" void func_02080fa8(Struct_02080fa8* arg0, int arg1, int arg2);
-extern "C" const char* func_020e0434(Struct_0201099c_3* arg0, int arg1);
-extern "C" void func_02080f8c(Struct_02080f8c* arg0, int arg1, int arg2);
-extern "C" void func_02080cc0(Struct_02080cc0* arg0, int arg1, int arg2);
-extern "C" Struct_ov006_021555b0* func_ov006_02153c6c(void* arg0, short arg1);
-extern "C" const char** func_020e5294(void* arg0, int arg1);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void func_020e4864(const char* arg0, char* arg1, int, int, int, int);
-extern "C" void func_020805f4(void* arg0, int arg1);
-extern "C" void func_020806b0(void* arg0, int arg1);
-extern "C" void func_02080b2c(void* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_02081ea4(Struct_0207fdcc_2* arg0, int arg1, int arg2);
-extern "C" void func_02081130(void* arg0, int arg1, int arg2);
-extern "C" void func_020813ec(void* arg0, int arg1);
+Recipe* FindNode_02158d50(Obj02158d50* self, short page);
+void ClearSublistEntriesFlag1_02080bac(void* menu, int id);
+void ClearSublistEntriesFlag2_0208065c(void* menu, int id);
+void SetEntryFirstField02080fa8(Container02080fa8* menu, int id, int value);
+const char* KeyTable_Get(Container020e0310* texts, int id);
+void SetEntryFirstField02080f8c(Container02080f8c* menu, int id, int text);
+void SetEntryHighNibble0x13(Container02080cc0* menu, int id, int value);
+extern "C" RecipeRecord* func_ov006_02153c6c(void* ingredients, short id);
+const char** CallFunc020e52a0_020e5294(void* names, int item);
+extern "C" void* memset(void* buffer, int value, unsigned int size);
+extern "C" void func_020e4864(const char* source, char* output, int, int, int, int);
+void Forward0207f7acObjPlus4Size0x40_020805f4(void* menu, int id);
+void AddSublistEntryFlag2_020806b0(void* menu, int id);
+void SetEntryFlagById02080b2c(void* menu, int id);
+void SetEntryLowNibbleAndElement02080c68(void* menu, int id, int value);
+void SetElementFlag0x40_02081ea4(Obj2081* menu, int id, int value);
+void SetOrClearEntryFlag0x102081130(void* menu, int id, int value);
+extern "C" void func_020813ec(void* menu, int id);
 
 // USA: func_ov006_0215f7e8
 extern "C" ARM void func_ov006_0215f7e8(Struct_ov006_02157a60* arg0) {
@@ -146,18 +146,18 @@ extern "C" ARM void func_ov006_0215f7e8(Struct_ov006_02157a60* arg0) {
     arg0->unknown_30_ = var0;
     if (var0 == 0)
         return;
-    arg0->unknown_394_ &= ~4;
-    if (arg0->unknown_389_ > 1)
-        arg0->unknown_394_ |= 4;
-    void* var1 = arg0->unknown_14_;
-    func_02080bac(var1, 9);
-    func_0208065c(var1, 9);
-    func_02080fa8((Struct_02080fa8*)var1, 0x3a, arg0->unknown_388_ + 1);
-    func_02080fa8((Struct_02080fa8*)var1, 0x3b, arg0->unknown_389_);
-    Struct_ov006_021537d0* var2 = arg0->unknown_30_;
-    const char* var3 = func_020e0434((Struct_0201099c_3*)arg0->unknown_158_, 0x25);
-    short var4 = 0x29;
-    for (unsigned char var5 = 0; var5 < 0x10; var5++)
+    self->flags_ &= ~4;
+    if (self->pages_ > 1)
+        self->flags_ |= 4;
+    void* menu = self->menu_;
+    ClearSublistEntriesFlag1_02080bac(menu, 9);
+    ClearSublistEntriesFlag2_0208065c(menu, 9);
+    SetEntryFirstField02080fa8((Container02080fa8*)menu, 0x3a, self->page_ + 1);
+    SetEntryFirstField02080fa8((Container02080fa8*)menu, 0x3b, self->pages_);
+    Recipe* entry = self->pageStart_;
+    const char* unknown = KeyTable_Get((Container020e0310*)self->menuTexts_, 0x25);
+    short item = 0x29;
+    for (unsigned char i = 0; i < 0x10; i++)
     {
         if (var2 != 0)
         {
@@ -168,9 +168,9 @@ extern "C" ARM void func_ov006_0215f7e8(Struct_ov006_02157a60* arg0) {
             {
                 const char* var7 = var3;
 #if defined(jpn)
-                if (var6->unknown_2_1_)
-                    var7 = func_020e0434((Struct_0201099c_3*)arg0->unknown_170_, var2->unknown_2_);
-                func_02080f8c((Struct_02080f8c*)var1, var4, (int)var7);
+                if (record->made_)
+                    text = KeyTable_Get((Container020e0310*)self->itemNames_, entry->item_);
+                SetEntryFirstField02080f8c((Container02080f8c*)menu, item, (int)text);
 #else
                 if (var6->unknown_2_1_)
                 {

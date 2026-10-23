@@ -95,11 +95,11 @@ extern "C" void func_ov008_021870e4(Struct_ov008_02184754* arg0, unsigned int ar
 extern "C" void func_0209ff6c(Struct_0209ff6c* arg0);
 
 extern "C" {
-void func_ov008_02188ef0(Struct_ov008_021842a0_2* arg0);
-unsigned char func_0205d0e0(Struct_02081870_2* arg0, int arg1);
-void func_ov008_02186e4c(Struct_ov008_021842a0_2* arg0, unsigned int arg1);
-void func_ov008_0218747c(Struct_ov008_021842a0_2* arg0, int arg1);
-void func_ov023_021eb43c(void* arg0);
+void func_ov008_02188ef0(BattleRecords* self);
+unsigned char Window_Update(TextWindow* window, int ticks);
+void func_ov008_02186e4c(BattleRecords* self, unsigned int ticks);
+void func_ov008_0218747c(BattleRecords* self, int index);
+void func_ov023_021eb43c(void* guide);
 }
 
 // USA: func_ov008_02184754
@@ -109,7 +109,7 @@ extern "C" ARM int func_ov008_02184754(Struct_ov008_021842a0_2* arg0)
     unsigned int ticks = GameState::GetInstance()->GetTickCount();
     if (ticks == 0)
         ticks = 1;
-    func_0205d0e0(&self->window_, ticks);
+    Window_Update(&self->window_, ticks);
     func_ov008_02186e4c(self, ticks);
     self->model_.AdvanceEffects();
     ClearFlagIfDone_021870e4_021870e4((Obj021870e4*)self, ticks);

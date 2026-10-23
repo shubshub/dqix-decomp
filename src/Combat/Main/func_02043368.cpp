@@ -9,12 +9,12 @@ struct Struct_02043368;
 struct Struct_02020cb8_4;
 struct Struct_02020aec;
 
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205a198(struct Struct_02043368_2* arg0);
-extern "C" void func_0205a234(struct Struct_02043368* arg0);
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
-extern "C" void func_0205a528(void* arg0, void* arg1, int arg2, void* arg3);
+void SpriteContext_Init(char* p);
+void Sprite_Init(struct Struct0205a198* p);
+void ClearField0And40205a234(struct ClearTarget0205a234* p);
+int Pac_CountFiles(struct ActiveEntry02046900* entry);
+void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* outLength);
+extern "C" void SpriteContext_LoadFile(void* a, void* b, int c, void* d);
 
 extern char data_020f007f;
 extern char data_020f0093;
@@ -78,10 +78,10 @@ extern "C" ARM void func_02043368(struct Struct_02043368_4* arg0) {
         arg0->unknown_2dc_ = (char*)arg0->unknown_2d4_->Allocate(0xf0);
         arg0->unknown_2e0_ = (struct Struct_02043368*)arg0->unknown_2d4_->Allocate(8);
 
-        if (arg0->unknown_2d8_ != 0 && arg0->unknown_2dc_ != 0 && arg0->unknown_2e0_ != 0) {
-            func_0205a444((char*)arg0->unknown_2d8_);
-            for (unsigned short var2 = 0; var2 < 6; var2++) {
-                func_0205a198((struct Struct_02043368_2*)(arg0->unknown_2dc_ + var2 * 0x28));
+        if (self->table != 0 && self->tableEntries != 0 && self->clearTarget != 0) {
+            SpriteContext_Init((char*)self->table);
+            for (unsigned short i = 0; i < 6; i++) {
+                Sprite_Init((struct Struct0205a198*)(self->tableEntries + i * 0x28));
             }
             func_0205a234(arg0->unknown_2e0_);
             arg0->unknown_2d8_->unknown_50_ = 0;
@@ -93,15 +93,15 @@ extern "C" ARM void func_02043368(struct Struct_02043368_4* arg0) {
             arg0->unknown_2d8_->unknown_3c_ = arg0->unknown_2e0_;
             arg0->unknown_2e4_ = 0;
 
-            void* var4;
-            void* var5;
-            unsigned int var6;
-            int var7;
-            var0->GetLoadedFileByID(arg0->unknown_2d0_, &var5, &var6);
-            int var8 = func_02046900((struct Struct_02020cb8_4*)var5);
-            for (int var9 = 0; var9 < var8; var9++) {
-                void* var10 = func_020467f0((struct Struct_02020aec*)var5, var9, &var4, &var7);
-                func_0205a528(arg0->unknown_2d8_, var10, var7, arg0->unknown_2d4_);
+            void* rec;
+            void* found;
+            unsigned int foundLen;
+            int recLen;
+            loader->GetLoadedFileByID(self->taskId, &found, &foundLen);
+            int count = Pac_CountFiles((struct ActiveEntry02046900*)found);
+            for (int i = 0; i < count; i++) {
+                void* r = Pac_GetFile((struct Rec020467f0*)found, i, &rec, &recLen);
+                SpriteContext_LoadFile(self->table, r, recLen, self->allocator);
             }
         }
 

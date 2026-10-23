@@ -34,7 +34,7 @@ struct TableEntry0217f8c0;
 extern struct SePlayer g_sePlayer;
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(Struct_0205c570*);
+int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
@@ -57,7 +57,7 @@ extern "C" void func_ov000_0217c638(Struct_ov000_02178d28_2* arg0, int arg1, int
 // USA: func_ov000_0217d674
 extern "C" ARM void func_ov000_0217d674(MenuState* menu, int arg1, int arg2) {
     menu->flags |= 0x100;
-    menu->activeSum = GetActiveScaledSum0205d794((Struct_0205c570*)menu->elements);
+    menu->activeSum = Window_GetSelectedIndex((Struct_0205c570*)menu->elements);
     if (func_ov000_0217c594(menu, 0) != 0) {
         SePlayer_Play(&g_sePlayer, 1, 0);
         int id = menu->slotIds[menu->activeSum];

@@ -39,14 +39,14 @@ struct Struct_ov017_021a7e14_4 {
 extern "C" Struct_020465c0* func_020421a0();
 extern "C" Struct_ov017_021bf9a0_3* func_02012fe4();
 extern "C" unsigned char* func_0205ec34();
-extern "C" int func_ov017_0218d618(Struct_ov017_0218d618_2*);
-extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_02047230(Struct_02012fa4*);
-extern "C" void func_0207dfc8(Struct_02015ef4_5*, Struct_02015ef4_5*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_02047b30(void*, int, int, int);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
+int IsField10Eq2_0218d618(Struct0218d618*);
+void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
+void MaybeInvoke0204719c_02047230(Foo02048004*);
+void CopyState0207dfc8(State0207dfc8*, State0207dfc8*);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void Forward02047b30(void*, int, int, int);
+int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
 extern "C" void func_0206df6c(void*, unsigned char*, int, int);
 extern "C" void func_ov017_021cdb00(int, int, int, int);
 extern "C" void __clear(void*, int);
@@ -71,27 +71,27 @@ extern "C" ARM int func_ov017_021bf9a0(Struct_ov017_021bf9a0_2* arg0) {
     func_020421a0();
     Struct_ov017_021bf9a0* var1 = arg0->unknown_c_;
     func_02012fe4();
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    LootableContainerManager* var3 = LootableContainerManager::GetMainInstance();
-    unsigned char* var4 = func_0205ec34();
-    if (!var3 || !var4) return 3;
-    if (arg0->unknown_48_) {
-        if (!func_ov017_0218d618((Struct_ov017_0218d618_2*)GetGameResources())) return 5;
-    } else if (arg0->unknown_14_ >= 0) {
-        if (var2->GetTaskStatus(arg0->unknown_14_)) {
-            void* var5 = 0;
-            unsigned int var6 = 0;
-            var2->GetLoadedFileByID(arg0->unknown_14_, &var5, &var6);
-            void* var7 = func_02012d88(&data_02114e20, 256);
-            if (var5 && var7) {
-                arg0->unknown_34_.CreateTypeA(var7, 256);
-                func_02047230(arg0->unknown_10_);
-                func_0204719c(arg0->unknown_10_);
-                Struct_02015ef4_5 var8;
-                func_0207dfc8((Struct_02015ef4_5*)&inline_ov017_021bf9a0(GetGameResources(), 0x230), &var8);
-                func_0207df90((char*)&var8);
-                func_02047b30(arg0->unknown_10_, (int)var5, var6, (int)&arg0->unknown_34_);
-                func_0207dfac((char*)&var8);
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    LootableContainerManager* manager = LootableContainerManager::GetMainInstance();
+    unsigned char* flags = func_0205ec34();
+    if (!manager || !flags) return 3;
+    if (self->special) {
+        if (!IsField10Eq2_0218d618((Struct0218d618*)GetGameResources())) return 5;
+    } else if (self->taskId >= 0) {
+        if (loader->GetTaskStatus(self->taskId)) {
+            void* file = 0;
+            unsigned int length = 0;
+            loader->GetLoadedFileByID(self->taskId, &file, &length);
+            void* buffer = AllocateAligned4_02012d88(&data_02114e20, 256);
+            if (file && buffer) {
+                self->allocator.CreateTypeA(buffer, 256);
+                MaybeInvoke0204719c_02047230(self->display);
+                func_0204719c(self->display);
+                State0207dfc8 saved;
+                CopyState0207dfc8((State0207dfc8*)&GetResourceStateBuffer(GetGameResources(), 0x230), &saved);
+                VramState_Restore((char*)&saved);
+                Forward02047b30(self->display, (int)file, length, (int)&self->allocator);
+                VramState_Save((char*)&saved);
             }
             var2->RemoveTask(arg0->unknown_14_);
             arg0->unknown_14_ = -1;

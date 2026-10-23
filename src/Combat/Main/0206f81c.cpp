@@ -2,7 +2,7 @@
 
 #if defined(jpn)
 #define REGION_VALUE(jpnValue, usaValue) jpnValue
-extern char* data_020f2a38;
+extern char* g_itemDataArchive;
 extern "C" int func_020e04f8(void*, void*, const char*, short, bool);
 #else
 #define REGION_VALUE(jpnValue, usaValue) usaValue
@@ -58,14 +58,14 @@ extern "C" int func_0202c540(void* arg0);
 extern "C" void func_ov017_021b7104(void* arg0, void* arg1);
 
 struct GameState;
-extern "C" void* func_020de824(void* arg0);
-extern "C" void func_020de848(void* arg0);
-extern char* data_020f2a38;
-extern char* data_020f2a30;
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" int func_020de980(void* arg0, void* arg1, void* arg2, int arg3, int arg4);
-extern "C" void func_0207cbe8(char* arg0);
-extern "C" void func_0207d300(void* arg0, short arg1, int arg2, int arg3);
+void* ZeroInitReturn020de824(void* obj);
+void ItemTable_Init(void* obj);
+extern char* g_itemDataArchive;
+extern char* g_itemDataFile;
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+int BuildDescriptorFlag1_020de980(void* a, void* b, void* c, int d, int e);
+void InitStruct0207cbe8(char* obj);
+extern "C" void func_0207d300(void* obj, short id, int a, int b);
 
 extern "C" int func_02086d88(unsigned char* arg0, int arg1);
 extern "C" unsigned char func_02011494(char* arg0, void* arg1);
@@ -341,16 +341,16 @@ extern "C" ARM void func_0206f81c(void* arg0) {
 #else
                     void* var34 = ((Struct_0206f81c_6*)var12)->inline_0206f81c(1);
 #endif
-                    func_020de824(var32);
-                    func_020de848(var32);
+                    ZeroInitReturn020de824(eventBuf);
+                    ItemTable_Init(eventBuf);
 #if defined(jpn)
-                    func_020e04f8(var32, (void*)var33, data_020f2a38, *(short*)(var14 + 2), true);
+                    func_020e04f8(eventBuf, (void*)r7base, g_itemDataArchive, *(short*)(node + 2), true);
 #else
                     BackgroundLoader::AddLockGlobal();
-                    unsigned int var35 = 0;
-                    void* var36 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var35);
-                    if (var36 != NULL) {
-                        func_020de980(var32, var34, var36, var35, (int)(*(short*)(var14 + 2)));
+                    unsigned int outSize = 0;
+                    void* loaded = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &outSize);
+                    if (loaded != NULL) {
+                        BuildDescriptorFlag1_020de980(eventBuf, r7base, loaded, outSize, (int)(*(short*)(node + 2)));
                     }
                     BackgroundLoader::RemoveLockGlobal();
 #endif
@@ -467,16 +467,16 @@ extern "C" ARM void func_0206f81c(void* arg0) {
 #else
                     void* var70 = ((Struct_0206f81c_6*)var12)->inline_0206f81c(1);
 #endif
-                    func_020de824(var68);
-                    func_020de848(var68);
+                    ZeroInitReturn020de824(eventBuf2);
+                    ItemTable_Init(eventBuf2);
 #if defined(jpn)
-                    func_020e04f8(var68, (void*)var69, data_020f2a38, *(short*)(var14 + 6), true);
+                    func_020e04f8(eventBuf2, (void*)r7base2, g_itemDataArchive, *(short*)(node + 6), true);
 #else
                     BackgroundLoader::AddLockGlobal();
-                    unsigned int var71 = 0;
-                    void* var72 = ExtractFileFromGP2(data_020f2a38, data_020f2a30, &var71);
-                    if (var72 != NULL) {
-                        func_020de980(var68, var70, var72, var71, (int)(*(short*)(var14 + 6)));
+                    unsigned int outSize2 = 0;
+                    void* loaded2 = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &outSize2);
+                    if (loaded2 != NULL) {
+                        BuildDescriptorFlag1_020de980(eventBuf2, r7base2, loaded2, outSize2, (int)(*(short*)(node + 6)));
                     }
                     BackgroundLoader::RemoveLockGlobal();
 #endif

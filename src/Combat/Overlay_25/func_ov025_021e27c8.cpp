@@ -89,26 +89,26 @@ extern "C" ARM void func_ov025_021e27c8(char* arg0, int arg1) {
     if (var8 != 0) {
         unsigned int var9 = var4;
         BackgroundLoader::GetInstance();
-        char* var10;
-        SafeAllocator* var11;
-        void* var12;
-        Struct_02057de0_2* var13;
-        var11 = func_ov025_021e8a54(data_ov025_021ef988.unknown_c_);
-        var10 = func_ov025_021e8a64(data_ov025_021ef988.unknown_c_);
-        var13 = func_02057924();
-        var12 = var11->Allocate(var9);
-        if (var12 != 0) {
-            memcpy(var12, var8, var9);
-            if (arg1 < 0) arg1 = data_ov025_021ef988.unknown1_8_ + 0x64;
-            Struct_ov025_021e267c_3* var14 = (Struct_ov025_021e267c_3*)var11->Allocate(0xc);
-            if (var14 != 0) {
-                var14->unknown_0_ = 1;
-                var14->unknown_4_ = arg1;
-                func_ov025_021e8bac((Struct_ov025_021e267c_2*)data_ov025_021ef988.unknown_c_, var14);
-                func_0207df90(var10);
-                func_02057de0(var13, arg1, var11, (int)var12, var9);
-                func_0207dfac(var10);
-                data_ov025_021ef988.unknown1_8_++;
+        char* tables;
+        SafeAllocator* alloc;
+        void* copy;
+        NodeList02057de0* list;
+        alloc = GetArrayEntry_021e8a54_021e8a54(data_ov025_021ef988.ui);
+        tables = GetArrayEntry_021e8a64_021e8a64(data_ov025_021ef988.ui);
+        list = func_02057924();
+        copy = alloc->Allocate(len);
+        if (copy != 0) {
+            memcpy(copy, src, len);
+            if (id < 0) id = data_ov025_021ef988.loadedCount + 0x64;
+            Node021e8bac* node = (Node021e8bac*)alloc->Allocate(0xc);
+            if (node != 0) {
+                node->byte0 = 1;
+                node->half4 = id;
+                PushLogNode021e8bac((Obj021e8bac*)data_ov025_021ef988.ui, node);
+                VramState_Restore(tables);
+                CreateAndRegisterNode02057de0(list, id, alloc, (int)copy, len);
+                VramState_Save(tables);
+                data_ov025_021ef988.loadedCount++;
             }
         }
     }

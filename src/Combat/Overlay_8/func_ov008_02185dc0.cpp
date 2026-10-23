@@ -141,7 +141,7 @@ void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
 void ResetListHeader020727d8(List020727d8* list);
 extern "C" void _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(void* list, StreamHeader* file, int size, int id, void* output, int female);
 int GetField0x3acValue_020100a8(GameState* gameState);
-const char* GetFieldByKey020e0434(Container020e0310* texts, int id);
+const char* KeyTable_Get(Container020e0310* texts, int id);
 void AppendString02042058(char* text, const char* append);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* cursor);
 void SePlayer_Play(SePlayer* sound, int effect, int value);
@@ -247,7 +247,7 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
                     }
                     BackgroundLoader::RemoveLockGlobal();
 #endif
-                    func_02042058(var12, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 1000));
+                    AppendString02042058(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
 #if defined(jpn)
                     func_0204500c(var2, var12, 0);
 #else
@@ -274,9 +274,9 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
                 if (REGION_MESSAGE(arg0, var4))
                 {
 #if defined(jpn)
-                    func_0204500c(var2, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 10000), 0);
+                    func_0204500c(messages, KeyTable_Get((Container020e0310*)&self->texts_, 10000), 0);
 #else
-                    func_0204500c(var2, func_020e0434((Struct_0201099c_3*)&arg0->unknown_a0_, 10000), 0, 0xe3);
+                    func_0204500c(messages, KeyTable_Get((Container020e0310*)&self->texts_, 10000), 0, 0xe3);
 #endif
                     var2->unknown_19b2_ = 1;
                     var2->unknown_19c8_ = 1;

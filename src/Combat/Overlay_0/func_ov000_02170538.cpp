@@ -23,8 +23,8 @@ struct Struct_0203c108_3;
 extern "C" void func_ov000_021704d8(struct Struct_0203c1c8* arg0, int* arg1, int* arg2, int* arg3);
 extern "C" int func_ov000_021719f8(int* arg0);
 #if defined(jpn)
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
 #endif
 extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
 extern "C" void func_0203c198(char* arg0);
@@ -104,9 +104,9 @@ extern "C" ARM void func_ov000_02170538(struct Struct_ov000_02170538_2* arg0, in
     if (func_ov000_021719f8((int*)arg0)) {
         if (var10 != var11) {
 #if defined(jpn)
-            char* var12 = (char*)func_020e0434(*(struct Struct_0201099c_3**)((char*)arg0 + 4), func_ov000_02171a74(arg0));
-            if (var12 != NULL) {
-                func_0203c108((struct Struct_0203c108_3*)&arg0->unknown_50_, var12);
+            char* str = (char*)KeyTable_Get(*(struct Container020e0310**)((char*)e + 4), func_ov000_02171a74(e));
+            if (str != NULL) {
+                SwapGlobalEntry0203c108((struct Obj0203c108*)&e->label, str);
             }
 #else
             char var13[0x80];

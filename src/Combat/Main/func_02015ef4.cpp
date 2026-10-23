@@ -66,13 +66,13 @@ extern "C" int func_020de234(Struct_02015ef4_4*, int);
 extern "C" int sprintf(char*, const char*, ...);
 extern "C" int func_02046b24(Struct_02015438**);
 extern "C" void func_0204719c(void*);
-extern "C" void func_0207dfc8(Struct_02015ef4_5*, Struct_02015ef4_5*);
-extern "C" void func_0207df90(char*);
-extern "C" void func_02047b30(void*, int, int, int);
-extern "C" void func_0207dfac(char*);
-extern "C" void* func_020100bc(GameState*);
-extern "C" void func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
+void CopyState0207dfc8(State0207dfc8*, State0207dfc8*);
+void VramState_Restore(char*);
+void Forward02047b30(void*, int, int, int);
+void VramState_Save(char*);
+void* GetField0x3b0Value_020100bc(GameState*);
+void ComputeTwoFromVec3_0202ec84(void*, Vec3copy0202ec84*, int*, int*);
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
 
 struct Struct_020e6e88 {
     char unknown_0_[0x20];
@@ -131,29 +131,29 @@ extern "C" ARM int func_02015ef4(Zone3D* arg0, int arg1) {
                 }
             }
         }
-        var1->unknown_20_ = 0;
-        var1->unknown_16_ = 5;
-    } else if (var1->unknown_16_ == 4) {
-        arg0->unk_23bc[1] = 1;
-        func_02015ae4(var1);
-        if (var3->GetTaskStatus(var1->unknown_12_) == 0) return 0;
-        void* var14 = 0;
-        unsigned int var15 = 0;
-        var3->GetLoadedFileByID(var1->unknown_12_, &var14, &var15);
-        GameResources* var16 = GetGameResources();
-        Struct_02015438** var17 = (Struct_02015438**)var16->unknown_ptr_array_36fc[0];
-        if (var14 && func_02046b24(var17) != 4) {
-            Struct_02012fa4* var18 = &reinterpret_cast<Struct_02012fa4*>(arg0->unknown_600_)[var1->unknown_14_];
-            var1->unknown_20_ = var18;
-            func_0204719c(var18);
-            var1->unknown_20_->unknown_84_2_ = 1;
-            char var19[0x70];
-            func_0207dfc8((Struct_02015ef4_5*)arg0->unknown_ptr_50_, (Struct_02015ef4_5*)var19);
-            func_0207df90(var19);
-            func_02047b30(var1->unknown_20_, (int)var14, var15, (int)arg0->pAllocator_68_);
-            func_0207dfac(var19);
-            *reinterpret_cast<int*>(arg0->unknown_600_ + 0x220) = 0x1f;
-            var1->unknown_19_ = 0;
+        entry->object = 0;
+        entry->state = 5;
+    } else if (entry->state == 4) {
+        self->unk_23bc[1] = 1;
+        func_02015ae4(entry);
+        if (loader->GetTaskStatus(entry->taskID) == 0) return 0;
+        void* file = 0;
+        unsigned int size = 0;
+        loader->GetLoadedFileByID(entry->taskID, &file, &size);
+        GameResources* root = GetGameResources();
+        HeadNode02046b24** head = (HeadNode02046b24**)root->unknown_ptr_array_36fc[0];
+        if (file && GetHeadNodeIdOrMinusOne(head) != 4) {
+            Foo02048004* slot = &reinterpret_cast<Foo02048004*>(self->unk_600)[entry->owner];
+            entry->object = slot;
+            func_0204719c(slot);
+            entry->object->bit2 = 1;
+            char saved[0x70];
+            CopyState0207dfc8((State0207dfc8*)self->unknown_ptr_50_, (State0207dfc8*)saved);
+            VramState_Restore(saved);
+            Forward02047b30(entry->object, (int)file, size, (int)self->pAllocator_68_);
+            VramState_Save(saved);
+            *reinterpret_cast<int*>(self->unk_600 + 0x220) = 0x1f;
+            entry->delay = 0;
         } else {
             var1->unknown_20_ = 0;
         }

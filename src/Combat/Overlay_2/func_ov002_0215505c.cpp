@@ -16,16 +16,16 @@ struct Struct_ov002_0215505c {
     unsigned char unknown_0_1_ : 7;
 };
 
-extern "C" void *func_020e46c4(void *arg0);
-struct Struct_ov002_0215505c_2;
-extern "C" void func_ov023_021e1318(Struct_ov002_0215505c_2*);
-extern "C" void func_020dfc40(struct Struct_0201099c_14 *arg0);
-extern "C" void func_02074af4(void *arg0);
-extern "C" void func_0205cfd4(struct Struct_0205cfd4 *arg0);
-extern "C" void func_0204af64(struct Struct_02020cb8 *arg0);
-extern "C" void func_0204c684(void *arg0);
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" int func_02011494(char *arg0, void *arg1);
+void *Clear12Bytes020e46c4(void *p);
+struct Obj021e1318;
+void ClearObj_021e1318(Obj021e1318*);
+void KeyTable_Reset(struct Struct020dfc40 *s);
+extern "C" void func_02074af4(void *state);
+void InitStruct0205cfd4(struct InitTarget0205cfd4 *t);
+void Background_Init(struct List0204af64 *l);
+extern "C" void func_0204c684(void *p);
+extern "C" void *memset(void *dst, int value, unsigned int length);
+int CopyOutRegion0x5718_02011494(char *obj, void *dst);
 extern "C" char *func_0205ec34(void);
 extern "C" unsigned short func_0206e384(unsigned char *arg0);
 extern "C" short func_0206e3d4(int arg0, int arg1);
@@ -55,7 +55,7 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     RESET(0x774);
     func_ov023_021e1318((Struct_ov002_0215505c_2*)(arg0 + 0x768));
     RESET(0x804);
-    func_020dfc40((struct Struct_0201099c_14 *) (arg0 + 0x8));
+    KeyTable_Reset((struct Struct020dfc40 *) (self + 0x8));
     U8(0x30) = 0;
     U8(0x31) = 0;
     func_02074af4(arg0 + 0x20);
@@ -64,9 +64,9 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     for (int var1 = 0; var1 < 5; var1++) {
         *(int *) (arg0 + var1 * 4 + 0x1a6c) = -1;
     }
-    func_0205cfd4((struct Struct_0205cfd4 *) (arg0 + 0xe20));
-    for (int var2 = 0; var2 < 3; var2++) {
-        func_0204af64((struct Struct_02020cb8 *) (arg0 + 0xedc + var2 * 0x20));
+    InitStruct0205cfd4((struct InitTarget0205cfd4 *) (self + 0xe20));
+    for (int i = 0; i < 3; i++) {
+        Background_Init((struct List0204af64 *) (self + 0xedc + i * 0x20));
     }
     for (int var3 = 0; var3 < 12; var3++) {
         func_0204c684(arg0 + 0xf3c + var3 * 0xe0);
@@ -253,7 +253,7 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     RESET(0x810);
     func_ov023_021e1318((Struct_ov002_0215505c_2*)(arg0 + 0x804));
     RESET(0x8a0);
-    func_020dfc40((struct Struct_0201099c_14 *) (arg0 + 0x20));
+    KeyTable_Reset((struct Struct020dfc40 *) (self + 0x20));
     U8(0x48) = 0;
     U8(0x49) = 0;
     func_02074af4(arg0 + 0x38);
@@ -262,9 +262,9 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     for (int var19 = 0; var19 < 5; var19++) {
         *(int *) (arg0 + var19 * 4 + 0x1ba4) = -1;
     }
-    func_0205cfd4((struct Struct_0205cfd4 *) (arg0 + 0x2c8 + 0xc00));
-    for (int var20 = 0; var20 < 3; var20++) {
-        func_0204af64((struct Struct_02020cb8 *) (arg0 + 0x384 + 0xc00 + var20 * 0x20));
+    InitStruct0205cfd4((struct InitTarget0205cfd4 *) (self + 0x2c8 + 0xc00));
+    for (int i = 0; i < 3; i++) {
+        Background_Init((struct List0204af64 *) (self + 0x384 + 0xc00 + i * 0x20));
     }
     for (int var21 = 0; var21 < 12; var21++) {
         func_0204c684(arg0 + 0x3e4 + 0xc00 + var21 * 0xe0);

@@ -16,24 +16,24 @@ struct Struct_ov003_0216759c {
 struct Struct_ov003_0216759c_2 { char unknown_0_[8]; unsigned int unknown_8_; void* unknown_c_; };
 extern "C" {
 void* __clear(void*, int);
-void func_0204af64(void*);
-void func_0204b11c(void*, int);
-void func_0204b5b4(void*, int);
-void func_0204b12c(void*,SafeAllocator*);
-void func_0204b5e8(void*,int,int);
-void func_0204af38(void*,int,SafeAllocator*);
+void _Z15Background_InitP12List0204af64(void*);
+void _Z21Background_SetMapSizePhi(void*, int);
+void Background_SetPriority(void*, int);
+void _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(void*,SafeAllocator*);
+void _Z20Background_SetScrollP11Obj0204b5e8ii(void*,int,int);
+void _Z26Background_AllocateScreensP11Foo0204af38iP13SafeAllocator(void*,int,SafeAllocator*);
 void DisableSubBGVRAMBanks();
 void MapVRAMBanksToSubBG(int);
-int func_02046900(void*);
-void* func_020467f0(void*,int,void**,int*);
-void func_0204b174(void*,void*,SafeAllocator*,int);
-void func_0204bc74(void*,int,int,int,int,int,int);
-void func_0204b0e8(void*,void*);
-Struct_ov003_0216759c_2* func_0204af14(void*,unsigned int);
+int _Z14Pac_CountFilesP19ActiveEntry02046900(void*);
+void* _Z11Pac_GetFileP11Rec020467f0iPPvPi(void*,int,void**,int*);
+void Background_LoadFile(void*,void*,SafeAllocator*,int);
+void Background_FillRect(void*,int,int,int,int,int,int);
+void _Z20Background_UploadMapP12List0204b0e8Pv(void*,void*);
+Entry6759c* _Z20Background_GetScreenP17EntryList0204af14j(void*,unsigned int);
 void _Z25CleanInvalidateCacheRangePKvj(const void*,unsigned int);
 void LoadToSubBG1ScreenData(void*,int,unsigned int);
 void func_0204c684(void*);
-void func_0204c7a8(void*,SafeAllocator*,int,unsigned int);
+void _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(void*,SafeAllocator*,int,unsigned int);
 #if defined(jpn)
 void func_02080654(void*,SafeAllocator*,const char*);
 #else
@@ -61,65 +61,65 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
     if (arg0->unknown_75_ == 0) {
         *(volatile unsigned int*)0x4001010 = 0;
         *(volatile unsigned int*)0x4001014 = 0;
-        SafeAllocator* var2 = arg0->unknown_4_;
-        var2->Reset();
-        arg0->unknown_8_ = (Struct_02020cb8*)var2->Allocate(0x40);
-        int var3[2];
-        __clear(var3, sizeof(var3));
-        Struct_02020cb8* var4;
-        for (int var5=0; var5<2; var5++) {
-            var4 = arg0->unknown_8_+var5;
-            func_0204af64(var4);
-            func_0204b11c(var4, var3[var5]);
-            var4->unknown_1c_0_=1;
-            var4->unknown_1c_4_=var5;
-            func_0204b5b4(var4,var5);
-            func_0204b12c(var4,var2);
-            func_0204b5e8(var4,0,0);
+        SafeAllocator* alloc = self->alloc;
+        alloc->Reset();
+        self->lists = (List0204af64*)alloc->Allocate(0x40);
+        int words[2];
+        __clear(words, sizeof(words));
+        List0204af64* list;
+        for (int i=0; i<2; i++) {
+            list = self->lists+i;
+            _Z15Background_InitP12List0204af64(list);
+            _Z21Background_SetMapSizePhi(list, words[i]);
+            list->b1c_lo=1;
+            list->b1c_hi=i;
+            Background_SetPriority(list,i);
+            _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(list,alloc);
+            _Z20Background_SetScrollP11Obj0204b5e8ii(list,0,0);
         }
-        func_0204af38(arg0->unknown_8_+1,1,var2);
+        _Z26Background_AllocateScreensP11Foo0204af38iP13SafeAllocator(self->lists+1,1,alloc);
         DisableSubBGVRAMBanks();
         MapVRAMBanksToSubBG(0x80);
         *(volatile unsigned short*)0x4001008 = (*(volatile unsigned short*)0x4001008 & 0x43) | 0xe00;
         *(volatile unsigned short*)0x400100a = (*(volatile unsigned short*)0x400100a & 0x43) | 0xf00;
         *(volatile unsigned short*)0x4001050 = 0;
-        var1->MaybeFreeAllocations();
-        arg0->unknown_64_ = var1->QueueLoadFile(data_ov003_021800a4,0);
-        arg0->unknown_75_++;
-        var0=0;
-    } else if (arg0->unknown_75_ == 1) {
-        if (var1->GetTaskStatus(arg0->unknown_64_) != 0) {
-            void* var6; void* var7; unsigned int var8; int var9;
-            var1->GetLoadedFileByID(arg0->unknown_64_,&var7,&var8);
-            int var10 = func_02046900(var7);
-            SafeAllocator* var11=arg0->unknown_4_;
-            Struct_02020cb8* var12=arg0->unknown_8_;
-            for (int var13=0;var13<var10;var13++) {
-                void* var14=func_020467f0(var7,var13,&var6,&var9);
-                if (var14) {
-                    func_0204b174(var12,var14,var11,var9);
-                    var12=arg0->unknown_8_+1;
+        loader->MaybeFreeAllocations();
+        self->task = loader->QueueLoadFile(data_ov003_021800a4,0);
+        self->stage++;
+        result=0;
+    } else if (self->stage == 1) {
+        if (loader->GetTaskStatus(self->task) != 0) {
+            void* out; void* data; unsigned int size; int value;
+            loader->GetLoadedFileByID(self->task,&data,&size);
+            int count = _Z14Pac_CountFilesP19ActiveEntry02046900(data);
+            SafeAllocator* alloc=self->alloc;
+            List0204af64* list=self->lists;
+            for (int i=0;i<count;i++) {
+                void* record=_Z11Pac_GetFileP11Rec020467f0iPPvPi(data,i,&out,&value);
+                if (record) {
+                    Background_LoadFile(list,record,alloc,value);
+                    list=self->lists+1;
                 }
             }
-            var1->RemoveTask(arg0->unknown_64_);
-            arg0->unknown_64_=-1;
-            var12=arg0->unknown_8_;
-            func_0204bc74(var12,0,0,0,0x20,0x19,0);
-            func_0204b0e8(var12,0);
-            Struct_ov003_0216759c_2* var15=func_0204af14(arg0->unknown_8_+1,0);
-            if (var15) {
-                void* var16; unsigned int var17=var15->unknown_8_; var16=var15->unknown_c_;
-                _Z25CleanInvalidateCacheRangePKvj(var16,var17);
-                LoadToSubBG1ScreenData(var16,0,var17);
+            loader->RemoveTask(self->task);
+            self->task=-1;
+            list=self->lists;
+            Background_FillRect(list,0,0,0,0x20,0x19,0);
+            _Z20Background_UploadMapP12List0204b0e8Pv(list,0);
+            Entry6759c* entry=_Z20Background_GetScreenP17EntryList0204af14j(self->lists+1,0);
+            if (entry) {
+                void* data; unsigned int size=entry->size; data=entry->data;
+                _Z25CleanInvalidateCacheRangePKvj(data,size);
+                LoadToSubBG1ScreenData(data,0,size);
             }
-            var11=arg0->unknown_4_;
-            var11[1].Reset();
-            arg0->unknown_c_=(Struct_0207f7f0_2*)var11[1].Allocate(0x380);
-            for (var0=0;var0<4;var0++) {
-                Struct_0207f7f0_2* var18=arg0->unknown_c_+var0;
-                func_0204c684(var18);
-                func_0204c7a8(var18,var11+1,arg0->unknown_0_,0x600);
-                var18->unknown_4_=arg0->unknown_8_;
+            alloc=self->alloc;
+            alloc[1].Reset();
+            self->objects=(Node0207f7f0*)alloc[1].Allocate(0x380);
+            for (result=0;result<4;result++) {
+                Node0207f7f0* obj=self->objects+result;
+                func_0204c684(obj);
+                _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(obj,alloc+1,self->value,0x600);
+                obj->lists=self->lists;
             }
             arg0->unknown_75_++;
         }

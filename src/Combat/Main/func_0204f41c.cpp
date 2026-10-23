@@ -14,7 +14,7 @@ struct Struct_0204f41c {
 extern "C" int func_0204fc40(Window0204f41c* window, const char** cursor, const char* tag, short* out, int count);
 extern "C" void func_0204df9c(Window0204f41c* window, Glyph0204f41c* glyph, short x, short y, unsigned char color, int font);
 Glyph0204f41c* Font_FindCharacter(int key, int tableIdx);
-Glyph0204f41c* GetBoundedEntry020425b4(int idx, int tableIdx);
+Glyph0204f41c* Font_GetCharacter(int idx, int tableIdx);
 
 extern const unsigned char data_020e7bd8[];
 extern const char data_020f0248[];
@@ -104,8 +104,8 @@ extern "C" ARM void func_0204f41c(Struct_0204f41c_2* arg0, short arg1, short arg
             if (*outHeight < bottom) *outHeight = bottom;
             p += glyph->length;
         } else {
-            if (*var4 != ' ') {
-                func_0204df9c(arg0, func_020425b4(0, arg8), arg1, arg2, var5, arg8);
+            if (*p != ' ') {
+                func_0204df9c(window, Font_GetCharacter(0, font), x, y, curColor, font);
             }
             var4++;
         }

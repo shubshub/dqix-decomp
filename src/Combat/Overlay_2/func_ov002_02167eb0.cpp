@@ -10,9 +10,9 @@ struct SePlayer;
 
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
@@ -38,10 +38,10 @@ extern "C" ARM void func_ov002_02167eb0(char *arg0) {
     if (phase != 1) return;
     *(int *) (base + 0x22ac) |= 4;
     short old                  = *(short *) (base + 0x1acc);
-    *(short *) (base + 0x1acc) = GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + 0xe20));
+    *(short *) (base + 0x1acc) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xe20));
     if (old != *(short *) (base + 0x1acc)) return;
     int pressed = g_keyManager.TestKeysPressed(0x601);
-    int confirm = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xe20), 0x14)) ? 1 : 0;
+    int confirm = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xe20), 0x14)) ? 1 : 0;
     if (confirm) {
         func_ov002_0215b9a4(base, *(int *) (base + 0x1a80) & 0xff, 1);
         SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
@@ -76,10 +76,10 @@ extern "C" ARM void func_ov002_02167eb0(char *arg0) {
     if (phase != 1) return;
     *(int *) (base + 0x247c) |= 4;
     short old                  = *(short *) (base + 0x1c04);
-    *(short *) (base + 0x1c04) = GetActiveScaledSum0205d794((struct Struct_0205c570 *) (base + 0xec8));
+    *(short *) (base + 0x1c04) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xec8));
     if (old != *(short *) (base + 0x1c04)) return;
     int pressed = g_keyManager.TestKeysPressed(0x601);
-    int confirm = (pressed | IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(base + 0xec8), 0x14)) ? 1 : 0;
+    int confirm = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xec8), 0x14)) ? 1 : 0;
     if (confirm) {
         func_ov002_0215b9a4(base, *(int *) (base + 0x1bb8) & 0xff, 1);
         SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);

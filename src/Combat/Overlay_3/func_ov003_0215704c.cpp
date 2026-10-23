@@ -19,9 +19,10 @@ int func_ov003_02155208(void *);
 void func_ov003_02153874(void *);
 void func_ov003_02155580(void *, int);
 int func_ov003_02155618(void *);
-void *func_02053c6c(void *);
-void *func_ov003_02155e14(void *, int);
-void func_020de9a4(void *, void *, void *, unsigned int, void *, int);
+void *_Z34GetCombatantWithFlag0x100_0200ff1cP9GameStatei(void *, int);
+void *_Z24GetFieldAt0x150_02053c6cPh(void *);
+void *_Z29OffsetByIndexTimes16_02155e14ii(void *, int);
+void ItemTable_LoadIds(void *, void *, void *, unsigned int, void *, int);
 void _ZN13SafeAllocator5ResetEv(void *);
 void func_ov003_0215873c(void *);
 void *func_020421a0(void);
@@ -52,8 +53,8 @@ int func_ov003_02158754(void *);
 
 extern char g_sePlayer[];
 extern char data_02109bf4[];
-extern const char *data_020f2a38;
-extern const char *data_020f2a30;
+extern const char *g_itemDataArchive;
+extern const char *g_itemDataFile;
 
 struct Struct_ov003_0215704c {
     char unknown_0_[0x36];
@@ -201,25 +202,25 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
         }
     } else if (var1 == 4) {
 #if defined(jpn)
-        arg0->unknown_1d0_  = BackgroundLoader::GetInstance()->QueueLoadGP1(data_020f2a38, 0);
+        self->task  = BackgroundLoader::GetInstance()->QueueLoadGP1(g_itemDataArchive, 0);
 #else
-        arg0->unknown_1d0_  = BackgroundLoader::GetInstance()->QueueLoadFileInGP2(data_020f2a38, data_020f2a30, 0);
+        self->task  = BackgroundLoader::GetInstance()->QueueLoadFileInGP2(g_itemDataArchive, g_itemDataFile, 0);
 #endif
-        arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
-    } else if (var1 == 5) {
-        BackgroundLoader *var8 = BackgroundLoader::GetInstance();
-        if (var8->GetTaskStatus(arg0->unknown_1d0_)) {
-            void *var9;
-            unsigned int var10;
-            var8->GetLoadedFileByID(arg0->unknown_1d0_, &var9, &var10);
-            _ZN13SafeAllocator5ResetEv((char *) arg0->unknown_0_ + 0x78);
-            void *var11 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_1f7_);
-            if (var11 != 0) {
-                char *var12 = (char *) func_02053c6c(var11);
-                if (var12 != 0) {
-                    void *var13 =
-                        func_ov003_02155e14(var12 + 0xa4 + 0x400, func_ov003_02156034(arg0));
-                    func_020de9a4(arg0->unknown_178_, (char *) arg0->unknown_0_ + 0x78, var9, var10, var13, 8);
+        self->state = self->state + 1;
+    } else if (state == 5) {
+        BackgroundLoader *loader = BackgroundLoader::GetInstance();
+        if (loader->GetTaskStatus(self->task)) {
+            void *file;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task, &file, &size);
+            _ZN13SafeAllocator5ResetEv((char *) self->alloc + 0x78);
+            void *pm = GameState::GetInstance()->GetPartyMemberByIndex(self->f1f7);
+            if (pm != 0) {
+                char *f = (char *) _Z24GetFieldAt0x150_02053c6cPh(pm);
+                if (f != 0) {
+                    void *slot =
+                        _Z29OffsetByIndexTimes16_02155e14ii(f + 0xa4 + 0x400, _Z29GetArrayEntryByIndex_02156034Pv(self));
+                    ItemTable_LoadIds(self->sub178, (char *) self->alloc + 0x78, file, size, slot, 8);
                 }
             }
             var8->RemoveTask(arg0->unknown_1d0_);

@@ -6,10 +6,10 @@
 struct Struct_0205c570;
 struct SePlayer;
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 int CheckFlagOrThreshold_02161b48(char *self, int flag);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void *GetFieldAt0x150_02053c6c(unsigned char *p);
 void SePlayer_Play(SePlayer *obj, int a, int b);
 void CopyPaletteEntry0215af64(char *self);
@@ -30,23 +30,23 @@ extern SePlayer g_sePlayer;
 
 // USA: func_ov002_0216806c
 #if defined(jpn)
-extern "C" ARM void func_ov002_0216806c(char *arg0) {
-    int var0 = *(int *) (arg0 + 0x1a88);
-    if (var0 == 0) {
-        func_ov002_02161cf0(arg0);
-        func_ov002_02160068(arg0);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215af64(arg0);
-        (*(int *) (arg0 + 0x1a88))++;
-    } else if (var0 == 1) {
-        short var1                  = *(short *) (arg0 + 0x1ace);
-        *(short *) (arg0 + 0x1ace) = func_0205d794((struct Struct_0205c570 *) (arg0 + 0xe20));
-        if (var1 != *(short *) (arg0 + 0x1ace)) {
-            func_ov002_0215af64(arg0);
-            func_ov002_0215b9a4(arg0, 0x1e, 0);
+extern "C" ARM void func_ov002_0216806c(char *self) {
+    int phase = *(int *) (self + 0x1a88);
+    if (phase == 0) {
+        func_ov002_02161cf0(self);
+        func_ov002_02160068(self);
+        func_ov002_02161cf0(self);
+        CopyPaletteEntry0215af64(self);
+        (*(int *) (self + 0x1a88))++;
+    } else if (phase == 1) {
+        short old                  = *(short *) (self + 0x1ace);
+        *(short *) (self + 0x1ace) = Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0xe20));
+        if (old != *(short *) (self + 0x1ace)) {
+            CopyPaletteEntry0215af64(self);
+            func_ov002_0215b9a4(self, 0x1e, 0);
         }
         int a  = g_keyManager.TestKeysPressed(0x601);
-        int b  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xe20), 0x14);
+        int b  = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0xe20), 0x14);
         int ok = (a | b) ? 1 : 0;
         if (ok) {
             SePlayer_Play(&g_sePlayer, 1, 0);
@@ -83,23 +83,23 @@ extern "C" ARM void func_ov002_0216806c(char *arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov002_0216806c(char *arg0) {
-    int var9 = *(int *) (arg0 + 0x1bc0);
-    if (var9 == 0) {
-        func_ov002_02161cf0(arg0);
-        func_ov002_02160068(arg0);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215af64(arg0);
-        (*(int *) (arg0 + 0x1bc0))++;
-    } else if (var9 == 1) {
-        short var10                  = *(short *) (arg0 + 0x1c06);
-        *(short *) (arg0 + 0x1c06) = func_0205d794((struct Struct_0205c570 *) (arg0 + 0xec8));
-        if (var10 != *(short *) (arg0 + 0x1c06)) {
-            func_ov002_0215af64(arg0);
-            func_ov002_0215b9a4(arg0, 0x1d, 0);
+extern "C" ARM void func_ov002_0216806c(char *self) {
+    int phase = *(int *) (self + 0x1bc0);
+    if (phase == 0) {
+        func_ov002_02161cf0(self);
+        func_ov002_02160068(self);
+        func_ov002_02161cf0(self);
+        CopyPaletteEntry0215af64(self);
+        (*(int *) (self + 0x1bc0))++;
+    } else if (phase == 1) {
+        short old                  = *(short *) (self + 0x1c06);
+        *(short *) (self + 0x1c06) = Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0xec8));
+        if (old != *(short *) (self + 0x1c06)) {
+            CopyPaletteEntry0215af64(self);
+            func_ov002_0215b9a4(self, 0x1d, 0);
         }
         int a  = g_keyManager.TestKeysPressed(0x601);
-        int b  = IsActiveElementFlag2Set0205da38((struct Obj_0205da38*)(self + 0xec8), 0x14);
+        int b  = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0xec8), 0x14);
         int ok = (a | b) ? 1 : 0;
         if (ok) {
             SePlayer_Play(&g_sePlayer, 1, 0);

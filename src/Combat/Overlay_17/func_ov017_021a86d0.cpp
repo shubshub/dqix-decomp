@@ -70,7 +70,7 @@ extern "C" int fix32_Atan2(int arg0, int arg1);
 #endif
 struct AllocatorUnion;
 void* AllocateAligned4_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_020dfec0(void* cont, void* alloc, void* data, unsigned int length);
+extern "C" void KeyTable_Load(void* cont, void* alloc, void* data, unsigned int length);
 struct Obj02046574;
 void SetIndexedName02046574(Obj02046574*, int, char*);
 struct SePlayer;
@@ -82,7 +82,7 @@ void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
 struct Node0205bacc;
 void GridCursor_SetCount(Node0205bacc*, int);
 struct Container020e0310;
-void* GetFieldByKey020e0434(Container020e0310*, int);
+void* KeyTable_Get(Container020e0310*, int);
 void ProcessCombatEntry0205cb74(char*, int);
 extern "C" void func_0205cc50(void* obj, int a, int b);
 struct Struct_0205bcdc;
@@ -184,7 +184,7 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
             unsigned int length;
             ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task, &data, &length);
             ((SafeAllocator*)self->allocator)->Reset();
-            func_020dfec0(self->container, self->allocator, data, length);
+            KeyTable_Load(self->container, self->allocator, data, length);
             ((BackgroundLoader*)loader)->RemoveTask(self->task);
             self->task = -1;
             SetIndexedName02046574((Obj02046574*)g, 0, *(char**)((char*)gs->GetProtagonist() + 0x134));
@@ -214,13 +214,13 @@ extern "C" ARM void func_ov017_021a86d0(Struct_ov017_021a86d0* arg0, void* arg1)
                 if (self->members[j] == 4) {
                     offset = 0xc;
                 }
-                func_0205cb74((char*)arg0->unknown_2c_, (int)(func_020e0434((Struct_0201099c_3*)arg0->unknown_278_, arg0->unknown_18_[var17])));
+                ProcessCombatEntry0205cb74((char*)self->sub, (int)(KeyTable_Get((Container020e0310*)self->container, self->members[j])));
             }
-            func_0205cb74((char*)arg0->unknown_2c_, (int)(func_020e0434((Struct_0201099c_3*)arg0->unknown_278_, 6)));
-            int var18 = arg0->unknown_20_;
-            int var19 = 0x60 - (var18 + 1) * 0xe;
-            if (var18 == 2) {
-                var19 = 0x38;
+            ProcessCombatEntry0205cb74((char*)self->sub, (int)(KeyTable_Get((Container020e0310*)self->container, 6)));
+            int n = self->count;
+            int y = 0x60 - (n + 1) * 0xe;
+            if (n == 2) {
+                y = 0x38;
             }
             if (var18 == 4) {
                 var19 = 0x18;

@@ -1,5 +1,5 @@
 #if defined(jpn)
-#define func_ov009_02184c30 func_ov011_02184c30
+#define CharacterCreationUI_Draw3D _Z28GetTaggedValueAsInt_02184c30P20TaggedNumber02184c30
 #define R(j,u) (j)
 #define data_ov005_0215cbd4 data_ov005_0215dfb4
 #define data_ov005_0215cd60 data_ov005_0215e140
@@ -31,7 +31,7 @@ struct Struct_ov011_021869b8_5 {
     Struct_ov011_02184c30 unknown_20_;
 };
 
-extern "C" int func_ov009_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int CharacterCreationUI_Draw3D(struct TaggedNumber02184c30* v);
 extern "C" ARM void* func_ov017_021b2164(void);
 extern "C" ARM void* func_ov011_021845f8(void* arg0, int arg1);
 extern "C" ARM void* func_ov011_021849c8(void* arg0);
@@ -48,10 +48,10 @@ extern "C" ARM struct Struct_ov011_021869b8_2* func_ov023_021f6880(void* arg0, i
 extern "C" ARM int func_ov023_021fbd00(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5,
                                        unsigned char arg6);
 
-extern "C" void* func_020dfc2c(void* arg0);
-extern "C" void* func_020df80c(void* arg0);
-extern "C" void func_0205a444(char* arg0);
-extern "C" void func_0205a494(void* arg0);
+void* ResetAndReturnSelf020dfc2c(void* p);
+void* ZeroInitReturn020df80c(void* p);
+void SpriteContext_Init(char* obj);
+void EmptyDestructor0205a494(void* obj);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
@@ -94,13 +94,13 @@ extern "C" ARM int func_ov011_021869b8(struct Struct_ov011_021869b8_5* arg0, int
     struct Struct_ov011_021869b8_2* var11;
     void* var12;
 
-    var10 = func_ov009_02184c30(&arg0->unknown_0_);
-    var8 = func_ov009_02184c30(&arg0->unknown_8_);
-    var9 = func_ov009_02184c30(&arg0->unknown_10_);
-    var6 = func_ov009_02184c30(&arg0->unknown_18_);
+    tag0 = CharacterCreationUI_Draw3D(&obj->a);
+    tag8 = CharacterCreationUI_Draw3D(&obj->b);
+    tag10 = CharacterCreationUI_Draw3D(&obj->c);
+    tag18 = CharacterCreationUI_Draw3D(&obj->d);
 
-    var1 = 0;
-    if (arg1 - 4) var1 = (unsigned char)func_ov009_02184c30(&arg0->unknown_20_);
+    flag = 0;
+    if (argc - 4) flag = (unsigned char)CharacterCreationUI_Draw3D(&obj->e);
 
     var2 = func_ov017_021b2164();
     var3 = func_ov011_021845f8(var2, var8);
@@ -115,18 +115,18 @@ extern "C" ARM int func_ov011_021869b8(struct Struct_ov011_021869b8_5* arg0, int
     var11 = func_ov023_021f6880(var12, var6);
     if (var11 != 0) var5 = var11->unknown_0_->unknown_e8_(var11);
 
-    var7 = &var0.unknown_20_;
-    var0.unknown_0_ = &data_ov024_021ff17c;
-    var7->unknown_0_.ResetAllocatorPointer();
-    var7->unknown_14_.ResetAllocatorPointer();
-    var7->unknown_28_.ResetAllocatorPointer();
-    func_020dfc2c(var7->unknown_54_);
-    func_020df80c(var7->unknown_6c_);
-    func_020df80c(var7->unknown_7c_);
-    func_020dfc2c(var7->unknown_8c_);
-    func_020dfc2c(var7->unknown_a4_);
-    func_0205a444(var7->unknown_12c_);
-    memcpy(var4, &var0, sizeof(Struct_ov011_021869b8_4));
+    sub = &local.sub;
+    local.vtable = &data_ov024_021ff17c;
+    sub->a0.ResetAllocatorPointer();
+    sub->a1.ResetAllocatorPointer();
+    sub->a2.ResetAllocatorPointer();
+    ResetAndReturnSelf020dfc2c(sub->m54);
+    ZeroInitReturn020df80c(sub->m6c);
+    ZeroInitReturn020df80c(sub->m7c);
+    ResetAndReturnSelf020dfc2c(sub->m8c);
+    ResetAndReturnSelf020dfc2c(sub->ma4);
+    SpriteContext_Init(sub->m12c);
+    memcpy(block, &local, sizeof(Buf021869b8));
 
     if (func_ov023_021fbd00(var4, var2, var10, var8, var9, var5, var1) == 0) {
         func_0205a494(var0.unknown_20_.unknown_12c_);

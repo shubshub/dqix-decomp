@@ -9,14 +9,14 @@ struct Struct_ov000_02178938 { char unknown_0_[0xb8]; char unknown_b8_[0x20]; ch
 #else
 struct Struct_ov000_02178938 { char unknown_0_[0xb8]; char unknown_b8_[0x20]; char unknown_d8_[0x1c44]; int unknown_1d1c_[8]; int unknown_1d3c_[8]; };
 #endif
-struct Struct_ov000_02178938_2 { char unknown_0_[0x1d]; signed char unknown_1d_; };
-extern "C" int func_ov000_02175348(void*, int);
-extern "C" int func_ov000_0217542c(void*);
-extern "C" Struct_020465c0* func_020421a0();
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-extern "C" void func_02041c08(char*, int, int, int, int, int);
-extern "C" void func_02041ea4(char*, int);
-extern "C" void func_02042058(char*, const char*);
+struct TargetSelection { char pad[0x1d]; signed char index; };
+int CountMatchingValues02175348(void*, int);
+int IsField0x118Equal2_ov000_0217542c(void*);
+StoreStruct* GetGlobalField0x1c020421a0();
+int KeyTable_Get(Container020e0310*, int);
+void AppendFrameTag02041c08(char*, int, int, int, int, int);
+void AppendCursorTag_02041ea4(char*, int);
+void AppendString02042058(char*, const char*);
 extern "C" void __clear(void*, int);
 extern "C" void func_02046380(Struct_020465c0*);
 extern "C" void func_020e46c4(void*);
@@ -60,9 +60,9 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
     int var7 = func_ov000_0217542c(arg0);
     Struct_020465c0* var8 = func_020421a0();
 #if !defined(jpn)
-    GameState* var9 = GameState::GetInstance();
-    const char* var10 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0);
-    const char* var11 = (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x754f);
+    GameState* game = GameState::GetInstance();
+    const char* separator = (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0);
+    const char* format = (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f);
 #endif
     var0 = -1;
     if (var7) {
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
             int var14 = func_ov000_02175348(arg0, var13);
             if (var14) {
 #if defined(jpn)
-                if (var2) func_02042058(arg3, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0));
+                if (appended) AppendString02042058(output, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0));
 #else
                 if (var2) func_02042058(arg3, var10);
 #endif
@@ -100,10 +100,10 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
                     memset(var15, 0, sizeof(var15));
                     func_ov000_0217aa08(var18, var15);
                 }
-                func_02046380(var8);
-                func_02046574(var8, 0, var15);
-                func_020465c0(var8, 0, var14);
-                func_020474a8(var8, 10, (const char*)func_020e0434((Struct_0201099c_3*)arg0->unknown_b8_, 0x754f), var16);
+                func_02046380(formatter);
+                _Z22SetIndexedName02046574P11Obj02046574iPc(formatter, 0, nameText);
+                StoreInArray0x8b0_020465c0(formatter, 0, groupSize);
+                func_020474a8(formatter, 10, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f), text);
 #else
                 func_02046380(var8);
                 Struct_ov000_02178938_3 var19;

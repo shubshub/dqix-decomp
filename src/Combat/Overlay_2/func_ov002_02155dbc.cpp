@@ -19,15 +19,15 @@ extern "C" void func_ov023_021e7868(void *arg0);
 #else
 extern "C" void func_ov023_021e761c(void *arg0);
 #endif
-extern "C" void func_ov023_021eb4b8(void *arg0);
-extern "C" void func_ov013_02184a58(void *arg0);
-extern "C" void func_0205d1e0(struct Struct_0205d1e0 *arg0);
-extern "C" void func_0205d228(struct Struct_0205d228 *arg0);
-extern "C" void func_0205d274(struct Struct_0205d274 *arg0);
-extern "C" int func_020e28dc(struct Struct_020e28dc *arg0);
-extern "C" void func_020e2794(struct Struct_020e2794_2 *arg0, void *arg1);
-extern "C" void func_0205da88(void *arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov002_0215aaa4(void *arg0);
+void InitBuffersIfFlag431_021eb4b8(void *p);
+void ResetCombatEntry02184a58(void *p);
+void Window_ClearLayers(struct Cont0205d1e0 *c);
+void Window_DrawPanes(struct Cont0205d228 *c);
+void Window_FlushLayers(struct Cont0205d274 *c);
+int GetInnerFlagBit0020e28dc(struct Outer020e28dc *o);
+void UpdateEntryIfActive020e2794(struct Struct020e2794 *s, void *p);
+extern "C" void func_0205da88(void *c, int a, int b, int d);
+extern "C" void func_ov002_0215aaa4(void *base);
 #if !defined(jpn)
 extern "C" void func_ov002_0215b9a4(void *arg0, int arg1, int arg2);
 #endif
@@ -55,14 +55,14 @@ extern "C" ARM void func_ov002_02155dbc(char *arg0) {
     if (*(int *) (arg0 + 0x1000 + LOW_REGION(0xa80, 0xbb8)) == LOW_REGION(0x1f, 0x1e) && *(int *) (arg0 + 0x1000 + LOW_REGION(0xa88, 0xbc0)) > 4) {
         func_ov013_02184a58(arg0 + LOW_REGION(0xc20, 0xd70) + 0x1000);
     } else {
-        char *var0 = arg0 + LOW_REGION(0x220, 0x2c8);
-        func_0205d1e0((struct Struct_0205d1e0 *) (var0 + 0xc00));
-        func_0205d228((struct Struct_0205d228 *) (var0 + 0xc00));
-        func_0205da88(var0 + 0xc00, 1, 2, 1);
-        func_0205da88(var0 + 0xc00, 1, 3, 1);
-        func_0205da88(var0 + 0xc00, 2, 3, 0);
-        func_0205d274((struct Struct_0205d274 *) (var0 + 0xc00));
-        func_ov002_0215aaa4(arg0);
+        char *list = base + LOW_REGION(0x220, 0x2c8);
+        Window_ClearLayers((struct Cont0205d1e0 *) (list + 0xc00));
+        Window_DrawPanes((struct Cont0205d228 *) (list + 0xc00));
+        func_0205da88(list + 0xc00, 1, 2, 1);
+        func_0205da88(list + 0xc00, 1, 3, 1);
+        func_0205da88(list + 0xc00, 2, 3, 0);
+        Window_FlushLayers((struct Cont0205d274 *) (list + 0xc00));
+        func_ov002_0215aaa4(base);
 #if !defined(jpn)
         if (*(unsigned char *) (arg0 + 0x1000 + 0xc34) != 0) {
             func_ov002_0215b9a4(arg0, 0x1b, 0);

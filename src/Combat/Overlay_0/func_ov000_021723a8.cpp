@@ -15,13 +15,13 @@ struct Struct_0203c0cc { char unknown_0_[0x18]; };
 enum { Enum_ov000_021723a8_1096 = 0x448, Enum_ov000_021723a8_9 = 9 };
 #endif
 
-void ZeroInit020de848(void* obj);
-void ResetList0204af64(struct List0204af64* obj);
+void ItemTable_Init(void* obj);
+void Background_Init(struct List0204af64* obj);
 void InitStruct0205cfd4(struct InitTarget0205cfd4* obj);
 void GridCursor_Init(struct Struct_0205bef8* obj);
 extern "C" void func_0204c684(void* obj);
 void InitObj02092aa4(Obj02092aa4* obj, int mode);
-void InitStruct0205a444(char* obj);
+void SpriteContext_Init(char* obj);
 extern "C" void* func_0202ae18(GameState* gs);
 int GetField0x3acValue_020100a8(GameState* gs);
 void InitFields0x0_0203c0cc(struct State0xc0cc* obj);
@@ -142,24 +142,24 @@ struct Struct_ov000_02184288_3 {
 extern struct Struct_ov000_02184288_3 data_ov000_02184288;
 
 // USA: func_ov000_021723a8
-extern "C" ARM void func_ov000_021723a8(struct Struct_ov000_021723a8* arg0, int arg1) {
-    arg0->unknown_20_ = -1;
-    arg0->unknown_1a78_.ResetAllocatorPointer();
-    arg0->unknown_1a8c_.ResetAllocatorPointer();
-    arg0->unknown_1ab4_.ResetAllocatorPointer();
-    arg0->unknown_1aa0_.ResetAllocatorPointer();
-    arg0->unknown_1ac8_.ResetAllocatorPointer();
-    arg0->unknown_1adc_.ResetAllocatorPointer();
-    arg0->unknown_1af8_.ResetAllocatorPointer();
-    func_020de848(arg0->unknown_d0_);
-    func_020de848(arg0->unknown_e8_);
-    data_ov000_02184288.unknown_8_ = arg0;
-    arg0->unknown_68_ = 0;
-    arg0->unknown_178_ = 0;
-    arg0->unknown_17c_ = -1;
-    arg0->unknown_1d72_ = 0;
-    arg0->unknown_1d72_ |= 2;
-    arg0->unknown_184_ = 0;
+extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
+    self->f20 = -1;
+    self->alloc1a78.ResetAllocatorPointer();
+    self->alloc1a8c.ResetAllocatorPointer();
+    self->alloc1ab4.ResetAllocatorPointer();
+    self->alloc1aa0.ResetAllocatorPointer();
+    self->alloc1ac8.ResetAllocatorPointer();
+    self->alloc1adc.ResetAllocatorPointer();
+    self->alloc1af8.ResetAllocatorPointer();
+    ItemTable_Init(self->listD0);
+    ItemTable_Init(self->listE8);
+    data_ov000_02184288.battle = self;
+    self->f68 = 0;
+    self->f178 = 0;
+    self->f17c = -1;
+    self->f1d72 = 0;
+    self->f1d72 |= 2;
+    self->f184 = 0;
     {
         volatile unsigned short* var0 = (volatile unsigned short*)0x4001008;
         volatile short var1, var2;
@@ -176,53 +176,53 @@ extern "C" ARM void func_ov000_021723a8(struct Struct_ov000_021723a8* arg0, int 
             var2;
         }
     }
-    ResetList0204af64(&self->lists[0]);
-    ResetList0204af64(&self->lists[1]);
-    ResetList0204af64(&self->lists[2]);
+    Background_Init(&self->lists[0]);
+    Background_Init(&self->lists[1]);
+    Background_Init(&self->lists[2]);
     InitStruct0205cfd4(&self->obj188);
     GridCursor_Init(&self->obj244);
     for (int i = 0; i < 7; i++) {
         func_0204c684(self->slots284[i]);
     }
-    arg0->unknown_1af0_ = arg1;
-    func_02092aa4(&arg0->unknown_7c_, 0);
-    func_0205a444(arg0->unknown_11c_);
-    arg0->unknown_170_ = 0;
-    arg0->unknown_174_ = 0;
-    arg0->unknown_910_ = 0;
-    arg0->unknown_934_ = 0;
-    arg0->unknown_908_ = 0;
-    arg0->unknown_90c_ = -1;
-    arg0->unknown_914_ = 0;
-    arg0->unknown_918_ = 0;
-    arg0->unknown_91c_ = 0;
-    arg0->unknown_920_ = 0x100;
-    arg0->unknown_924_ = 0x100;
-    arg0->unknown_928_ = 0x100;
-    arg0->unknown_92c_ = 0;
-    arg0->unknown_1d5e_ = 0x10;
-    arg0->unknown_93c_ = 0;
-    arg0->unknown_940_ = 0;
-    arg0->unknown_944_ = 0;
-    memset(arg0->unknown_1d60_, 0, 8);
-    arg0->unknown_1d68_ = 0;
-    arg0->unknown_1d60_[arg0->unknown_1d68_] = 1;
-    arg0->unknown_1d69_ = 0;
-    arg0->unknown_1d6b_ = -1;
-    arg0->unknown_1d6c_ = -1;
-    arg0->unknown_1d6e_ = -1;
-    arg0->unknown_1d6f_ = -1;
-    arg0->unknown_1d70_ = 0;
-    arg0->unknown_1d79_ = 1;
-    arg0->unknown_1d80_ = 0;
-    arg0->unknown_1d81_ = 0;
-    arg0->unknown_1d5c_ = 0;
-    arg0->unknown_1d7a_ = 0;
-    GameState* var6 = GameState::GetInstance();
-    func_0202ae18(var6);
-    int var7 = func_020100a8(var6);
-    if (var7 < 0) {
-        var7 = 0;
+    self->f1af0 = arg;
+    InitObj02092aa4(&self->obj7c, 0);
+    SpriteContext_Init(self->obj11c);
+    self->f170 = 0;
+    self->f174 = 0;
+    self->f910 = 0;
+    self->f934 = 0;
+    self->f908 = 0;
+    self->f90c = -1;
+    self->f914 = 0;
+    self->f918 = 0;
+    self->f91c = 0;
+    self->f920 = 0x100;
+    self->f924 = 0x100;
+    self->f928 = 0x100;
+    self->f92c = 0;
+    self->f1d5e = 0x10;
+    self->f93c = 0;
+    self->f940 = 0;
+    self->f944 = 0;
+    memset(self->flags1d60, 0, 8);
+    self->sel1d68 = 0;
+    self->flags1d60[self->sel1d68] = 1;
+    self->f1d69 = 0;
+    self->f1d6b = -1;
+    self->f1d6c = -1;
+    self->f1d6e = -1;
+    self->f1d6f = -1;
+    self->f1d70 = 0;
+    self->f1d79 = 1;
+    self->f1d80 = 0;
+    self->f1d81 = 0;
+    self->f1d5c = 0;
+    self->f1d7a = 0;
+    GameState* gs = GameState::GetInstance();
+    func_0202ae18(gs);
+    int id = GetField0x3acValue_020100a8(gs);
+    if (id < 0) {
+        id = 0;
     }
     arg0->unknown_17c_ = var7;
     func_ov000_0217228c(arg0);

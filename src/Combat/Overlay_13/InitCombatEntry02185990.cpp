@@ -17,7 +17,7 @@ struct Node0205bacc;
 void GridCursor_SetCount(struct Node0205bacc* s, int val);
 
 struct Container020e0310;
-int GetFieldByKey020e0434(struct Container020e0310* c, int key);
+int KeyTable_Get(struct Container020e0310* c, int key);
 
 void ProcessCombatEntry0205cb74(char* obj, int value);
 
@@ -54,10 +54,10 @@ extern "C" ARM void func_ov013_02185990(unsigned char* obj) {
     GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x3f0, 0x20)), 2);
     GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x440, 0x70)), 2);
 
-    int v0 = GetFieldByKey020e0434((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xa);
+    int v0 = KeyTable_Get((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xa);
     ProcessCombatEntry0205cb74((char*)(tag + LOW_REGION(0x3d0, 0)), v0);
 
-    int v1 = GetFieldByKey020e0434((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xb);
+    int v1 = KeyTable_Get((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xb);
     ProcessCombatEntry0205cb74((char*)(tag + LOW_REGION(0x3d0, 0)), v1);
 
     *(unsigned short*)(tag + LOW_REGION(0x484, 0xb4)) = 0xc2;

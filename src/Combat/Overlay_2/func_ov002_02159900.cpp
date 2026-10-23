@@ -26,12 +26,12 @@ extern "C" void __clear(void *arg0, int arg1);
 #if !defined(jpn)
 extern "C" void func_020dcf7c(int arg0, void *arg1);
 #endif
-extern "C" void func_020465f0(unsigned char *arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465c0(struct Struct_020465c0 *arg0, int arg1, int arg2);
-extern "C" int func_020e0434(struct Struct_0201099c_3 *arg0, int arg1);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" void func_02046608(void *arg0, int arg1, int arg2, void *arg3, int arg4, int arg5, int arg6);
-extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
+void SetByteInRange_020465f0(unsigned char *base, int index, unsigned char value);
+void StoreInArray0x8b0_020465c0(struct StoreStruct *base, int index, int value);
+int KeyTable_Get(struct Container020e0310 *c, int key);
+int AppendString02042058(char *dst, const char *src);
+extern "C" void func_02046608(void *a, int b, int c, void *d, int e, int f, int g);
+extern "C" void func_ov016_0218b5c0(int a, int b);
 
 struct Struct_ov002_02159900 {
     char *unknown_0_;
@@ -39,8 +39,8 @@ struct Struct_ov002_02159900 {
     int unknown_8_;
 };
 
-#define TXT(k) func_020e0434((struct Struct_0201099c_3 *) (arg0 + REGION_LAYOUT(8, 0x20)), (k))
-#define BD0 (*(char **) (arg0 + REGION_LAYOUT(0x1a98, 0x1000 + 0xbd0)))
+#define TXT(k) KeyTable_Get((struct Container020e0310 *) (base + REGION_LAYOUT(8, 0x20)), (k))
+#define BD0 (*(char **) (base + REGION_LAYOUT(0x1a98, 0x1000 + 0xbd0)))
 
 // USA: func_ov002_02159900
 extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {

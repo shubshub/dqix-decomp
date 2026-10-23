@@ -80,17 +80,17 @@ extern "C" void func_ov023_021e7404(void*, int);
 extern "C" void func_ov002_02156178(unsigned char*);
 extern "C" void func_ov023_021eb43c(void*);
 extern "C" int func_ov002_02154c30(void*);
-extern "C" void func_ov002_0215b648(unsigned char*);
-extern "C" void func_ov002_02156bc8(Struct_ov002_02155960_7*);
-extern "C" void func_ov002_02156c7c(Struct_ov002_02155960_7*);
-extern "C" void func_ov002_021561b0(Struct_ov002_02155960_7*);
-extern "C" Struct_ov002_02155960_4* func_0205d8c4(Struct_ov002_02155960_2*);
-extern "C" int func_0204c7cc(unsigned char*);
-extern "C" void func_0205bc24(void*, int);
-extern "C" int func_020e28dc(Struct_0201079c*);
-extern "C" void func_020e263c(Struct_0201079c_2*, int);
-extern "C" int func_0205d0e0(Struct_ov002_02155960_2*, int);
-extern "C" int func_ov002_02161b48(char*, int);
+void SyncElementFlags0215b648(unsigned char*);
+extern "C" void func_ov002_02156bc8(BattleActor*);
+extern "C" void func_ov002_02156c7c(BattleActor*);
+extern "C" void func_ov002_021561b0(BattleActor*);
+Elem_0205d81c* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
+int IsField0x9cEqual3_0204c7cc(unsigned char*);
+void SetFieldAt0x30_0205bc24(void*, int);
+int GetInnerFlagBit0020e28dc(Outer020e28dc*);
+void UpdateEntryStateAndPosition(Ctx020e263c*, int);
+extern "C" int Window_Update(Struct_0205d81c*, int);
+int CheckFlagOrThreshold_02161b48(char*, int);
 extern "C" void* func_0205ec34();
 extern "C" int func_020649b0(void*, int, void*);
 extern "C" void func_0206f81c(void*);
@@ -132,7 +132,7 @@ extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) 
         if (arg0->unknown_4_.unknown_0_ != 0 && func_020e28dc(arg0->unknown_4_.unknown_0_) != 0) {
             func_020e263c(arg0->unknown_4_.unknown1_0_, arg0->unknown_1ba0_);
         } else {
-            arg0->unknown_1bc8_ = func_0205d0e0((Struct_ov002_02155960_2*)&arg0->unknown_ec8_, arg0->unknown_1ba0_);
+            actor->displayMode = Window_Update((Struct_0205d81c*)&actor->elements, actor->delta);
         }
     }
     if (arg0->unknown_2485_ != 0) {

@@ -10,9 +10,9 @@ struct Struct_ov000_02170ffc_2 {
     int unknown_94c_;
 };
 
-struct Struct_0201099c_3;
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" struct Struct_ov000_02170ffc_2* func_02053c6c(unsigned char* arg0);
+struct Container020e0310;
+int KeyTable_Get(struct Container020e0310* c, int key);
+struct CombatantExt02170ffc* GetFieldAt0x150_02053c6c(unsigned char* obj);
 
 struct Struct_0203c108_3 {
     char unknown_0_[0x14];
@@ -58,10 +58,10 @@ extern "C" ARM void func_ov000_02170ffc(struct Struct_ov000_02170ffc* arg0) {
     }
     if (func_ov000_021719f8((int*)arg0)) {
 #if defined(jpn)
-        int var1 = func_ov000_02171a74(arg0);
-        struct Struct_0201099c_3* var2 = arg0->unknown_4_;
-        if (var2 != NULL && var1 >= 0) {
-            func_0203c108(&arg0->unknown_50_, (char*)func_020e0434(var2, var1));
+        int key = func_ov000_02171a74(obj);
+        struct Container020e0310* container = obj->container;
+        if (container != NULL && key >= 0) {
+            SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(container, key));
             return;
         }
 #else
@@ -77,7 +77,7 @@ extern "C" ARM void func_ov000_02170ffc(struct Struct_ov000_02170ffc* arg0) {
     if (var4 == NULL) {
         return;
     }
-    struct Struct_ov000_02170ffc_2* var5 = func_02053c6c((unsigned char*)var4);
-    var3 += (signed char)var5->unknown_94c_;
-    func_0203c108(&arg0->unknown_50_, (char*)func_020e0434(arg0->unknown_4_, var3));
+    struct CombatantExt02170ffc* ext = GetFieldAt0x150_02053c6c((unsigned char*)member);
+    key += (signed char)ext->field94c;
+    SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(obj->container, key));
 }

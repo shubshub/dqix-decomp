@@ -12,8 +12,8 @@ extern "C" int func_ov011_021844ec(struct Struct_ov011_021844ec* arg0);
 
 extern "C" void* func_ov023_021f79e4(void* arg0);
 
-struct Struct_0204c7a8;
-extern "C" void func_0204c7a8(struct Struct_0204c7a8* arg0, SafeAllocator* arg1, int arg2, unsigned int arg3);
+struct Obj0204c7a8;
+void WindowPane_AllocateBuffer(struct Obj0204c7a8* obj, SafeAllocator* alloc, int val, unsigned int len);
 
 struct Struct_ov011_02185318_3 {
     char unknown_0_[4];
@@ -69,7 +69,7 @@ extern "C" ARM int func_ov023_021f7da0(struct Struct_ov011_02185318_3* arg0, voi
         return 0;
     }
 
-    func_0204c7a8((struct Struct_0204c7a8*)&arg0->unknown_20_, var3, var1, var2);
+    WindowPane_AllocateBuffer((struct Obj0204c7a8*)&obj->f20, alloc, f9c, len);
 
     void* var4 = func_ov011_021849c8(arg1);
     void* var5 = func_ov023_021f6880(var4, arg4);

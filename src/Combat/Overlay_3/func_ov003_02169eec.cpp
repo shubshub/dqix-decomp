@@ -29,7 +29,7 @@ extern "C" void func_ov003_02169594(void* self);
 extern "C" void func_ov003_021696f4(void* self, int v);
 extern "C" int func_ov003_02169674(void* self, int x, int y, void* rects);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
-extern "C" int func_0205bf58(void* obj, int v);
+extern "C" int GridCursor_Update(void* obj, int v);
 
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
@@ -45,10 +45,10 @@ void GetFourSubstructPointers_0204f138(unsigned char* elem, unsigned char** a, u
 void SetFieldAt0x30_0205bc24(void* obj, int v);
 int UpdateActiveState0205bc2c(Struct_0205bc2c*, int);
 int GetScaledSumIfActive0205bd04(Struct_0205bd04* obj);
-int GetField0_0205bafc(void* obj);
+int GridCursor_GetCount(void* obj);
 void ClearFlagFields_02169658(void* self);
 void ClearBytes0x4cTo0x4e(Struct_0205bc10* obj);
-int GetActiveScaledSum0205d794(Struct_0205c570* chan);
+int Window_GetSelectedIndex(Struct_0205c570* chan);
 void UpdateEntryAndField4ea_021694b8(void* self, int v);
 void ResetState0205bf3c(Struct_0205bf3c* obj);
 int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
@@ -197,24 +197,24 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                     var15 = (short)(var15 - 10);
                 }
 #endif
-                arg0->unknown_574_ = var14;
-                arg0->unknown_576_ = var15;
-                arg0->unknown_5a8_.unknown_0_ = var14;
-                arg0->unknown_5a8_.unknown_2_ = var15;
-                func_0205bc24(arg0->unknown_53c_, func_ov003_02169674(arg0, var0, var1, &arg0->unknown_5a8_));
-                if (func_ov003_02169674(arg0, var0, var1, &arg0->unknown_5a8_) >= 0) {
-                    var10 = 1;
-                    if (func_0205bc2c((Struct_0205bc2c*)arg0->unknown_53c_, arg1) != 0) {
-                        arg0->unknown_59d_ = var10;
-                        arg0->unknown_4ea_ = 2;
-                        arg0->unknown_59e_ = 0x14;
-                        int var16 = func_0205bd04((Struct_0205bd04*)arg0->unknown_53c_);
-                        int var17 = (signed char)func_0205bafc(arg0->unknown_4fc_);
-                        if (var16 == 0) {
-                            var8[var7]++;
-                            signed char var18 = var8[var7];
-                            if (var18 == var17) {
-                                var8[var7] = 0;
+                self->h574 = x;
+                self->h576 = y;
+                self->rectA.originX = x;
+                self->rectA.originY = y;
+                SetFieldAt0x30_0205bc24(self->node, func_ov003_02169674(self, ax, ay, &self->rectA));
+                if (func_ov003_02169674(self, ax, ay, &self->rectA) >= 0) {
+                    r7 = 1;
+                    if (UpdateActiveState0205bc2c((Struct_0205bc2c*)self->node, sb) != 0) {
+                        self->b59d = r7;
+                        self->code = 2;
+                        self->b59e = 0x14;
+                        int dir = GetScaledSumIfActive0205bd04((Struct_0205bd04*)self->node);
+                        int n = (signed char)GridCursor_GetCount(self->list);
+                        if (dir == 0) {
+                            cells[cur]++;
+                            signed char cv = cells[cur];
+                            if (cv == n) {
+                                cells[cur] = 0;
                             }
                             arg0->unknown_59c_ = 1;
                             arg0->unknown_5a6_ = 1;
@@ -240,11 +240,11 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                             if (arg1 < (unsigned int)arg0->unknown_59e_) {
                                 arg0->unknown_59e_ -= arg1;
                             } else {
-                                arg0->unknown_59e_ = 10;
-                                var8[var7] += arg0->unknown_59c_;
-                                signed char var21 = func_0205bafc(arg0->unknown_4fc_);
-                                if (var8[var7] > var21 - 1) {
-                                    var8[var7] = var21 - 1;
+                                self->b59e = 10;
+                                cells[cur] += self->step;
+                                signed char n = GridCursor_GetCount(self->list);
+                                if (cells[cur] > n - 1) {
+                                    cells[cur] = n - 1;
                                 }
                                 if (var8[var7] < 0) {
                                     var8[var7] = 0;
@@ -264,14 +264,14 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                     }
                 }
             }
-            if (var10 == 0) {
-                int var22 = func_0205d794((Struct_0205c570*)arg0->unknown_e4_);
-                arg0->unknown_179_ = 0;
-                func_ov003_021694b8(arg0, arg1);
-                arg0->unknown_179_ = 1;
-                int var23 = func_0205d794((Struct_0205c570*)arg0->unknown_e4_);
-                if (var22 != var23) {
-                    func_ov003_021696f4(arg0, var23);
+            if (r7 == 0) {
+                int before = Window_GetSelectedIndex((Struct_0205c570*)self->chan);
+                self->b179 = 0;
+                UpdateEntryAndField4ea_021694b8(self, sb);
+                self->b179 = 1;
+                int after = Window_GetSelectedIndex((Struct_0205c570*)self->chan);
+                if (before != after) {
+                    func_ov003_021696f4(self, after);
                 }
             }
             if (var9 != 0 && g_touchInput.released_ != 0) {
@@ -286,20 +286,20 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 g_keyManager.TestKeysReleased(0x80)) {
                 ResetState0205bf3c((Struct_0205bf3c*)((char*)self + kResetOffset));
                 int old = cells[cur];
-                int n = GetField0_0205bafc(self->list);
+                int n = GridCursor_GetCount(self->list);
                 GridCursor_SetSelectedIndex(self->list, n - 1 - cells[cur]);
-                if (func_0205bf58(self->list, sb) != 0) {
+                if (GridCursor_Update(self->list, sb) != 0) {
                     cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
                     if (old != cells[cur]) {
                         self->code = 1;
                     }
                 }
             } else {
-                int var26 = func_0205d794((Struct_0205c570*)arg0->unknown_e4_);
-                func_ov003_021694b8(arg0, arg1);
-                int var27 = func_0205d794((Struct_0205c570*)arg0->unknown_e4_);
-                if (var26 != var27) {
-                    func_ov003_021696f4(arg0, var27);
+                int before = Window_GetSelectedIndex((Struct_0205c570*)self->chan);
+                UpdateEntryAndField4ea_021694b8(self, sb);
+                int after = Window_GetSelectedIndex((Struct_0205c570*)self->chan);
+                if (before != after) {
+                    func_ov003_021696f4(self, after);
                 }
                 if (g_keyManager.TestKeysPressed(0x10) && arg0->unknown_4ee_ == 3) {
                     for (int var28 = 0; var28 < 4; var28++) {
@@ -315,12 +315,12 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
             }
         }
 
-        arg0->unknown_4ee_ = func_0205d794((Struct_0205c570*)arg0->unknown_e4_);
-        unsigned int var30 = 0;
-        unsigned int var31 = 1000;
-        for (int var32 = 3; var32 >= 0; var32--) {
-            var30 += var31 * arg0->unknown_4ef_[var32];
-            var31 *= 10;
+        self->cursor = Window_GetSelectedIndex((Struct_0205c570*)self->chan);
+        unsigned int total = 0;
+        unsigned int mul = 1000;
+        for (int i = 3; i >= 0; i--) {
+            total += mul * self->cells[i];
+            mul *= 10;
         }
         if (var30 > arg0->unknown_4f8_) {
             for (int var33 = 0; var33 < 4; var33++) {

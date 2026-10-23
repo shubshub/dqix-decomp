@@ -6,10 +6,10 @@ struct Struct_0205c570;
 struct Struct_0205def8;
 struct SePlayer;
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 int IsBitFlagSet0217c4e8(void* obj, int bit);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern "C" void func_ov000_021716d0(void* obj);
@@ -89,25 +89,25 @@ extern char g_sePlayer;
 
 #if defined(jpn)
 // USA: func_ov000_0217b6d0
-extern "C" ARM int func_ov000_0217b6d0(Struct_ov000_0217b6d0_3* arg0, int arg1, int arg2) {
-    Struct_ov000_0217b6d0_4* var0;
-    enum Enum_ov000_0217b518 { Enum_ov000_0217b518_m32768 = -32768, Enum_ov000_0217b518_32767 = 32767 };
-    Enum_ov000_0217b518 var1;
-    data_ov000_02184294.unknown_0_->unknown_1d72_ |= 0x100;
-    const short var2 = arg0->inline_ov000_0217b6d0_2();
-    var1 = (Enum_ov000_0217b518)(short)func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    arg0->unknown_1e_ = var1;
+extern "C" ARM int func_ov000_0217b6d0(MenuObj_0217b6d0* obj, int arg1, int arg2) {
+    MenuCtx_0217b6d0* ctx;
+    enum Selection { kSelectionMin = -32768, kSelectionMax = 32767 };
+    Selection cur;
+    data_ov000_02184294.ctx->flags |= 0x100;
+    const short prev = obj->GetSelection();
+    cur = (Selection)(short)Window_GetSelectedIndex((struct Struct_0205c570*)obj->window);
+    obj->selected = cur;
     {
     var0 = data_ov000_02184294.inline_ov000_0217b6d0();
     func_0205def8((struct Struct_0205def8*)var0->unknown_188_, 1, 0x23);
     if (var2 != var1) {
         return -1;
     }
-    int var3 = g_keyManager.TestKeysPressed(0x601);
-    bool var4 = (var3 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var4 || arg0->unknown_444_ != 0) {
-        if (!func_ov000_0217c4e8(arg0, var1)) {
-            return arg0->unknown_10_[arg0->unknown_18_];
+    int t = g_keyManager.TestKeysPressed(0x601);
+    bool active = (t | Window_IsSelectionTouched((struct Obj_0205da38*)obj->window, 0x14)) != 0;
+    if (active || obj->field444 != 0) {
+        if (!IsBitFlagSet0217c4e8(obj, cur)) {
+            return obj->selections[obj->depth];
         }
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
         SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
@@ -138,23 +138,23 @@ extern "C" ARM int func_ov000_0217b6d0(Struct_ov000_0217b6d0_3* arg0, int arg1, 
 }
 #else
 // USA: func_ov000_0217b6d0
-extern "C" ARM int func_ov000_0217b6d0(Struct_ov000_0217b6d0_3* arg0, int arg1, int arg2) {
-    Struct_ov000_0217b6d0_4* var7;
-    short var8;
-    data_ov000_02184294.unknown1_8_->unknown_1d72_ |= 0x100;
-    short var9 = arg0->unknown_1e_;
-    var8 = func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    arg0->unknown_1e_ = var8;
-    var7 = data_ov000_02184294.unknown1_8_;
-    func_0205def8((struct Struct_0205def8*)var7->unknown1_188_, 1, 0x23);
-    if (var9 != var8) {
+extern "C" ARM int func_ov000_0217b6d0(MenuObj_0217b6d0* obj, int arg1, int arg2) {
+    MenuCtx_0217b6d0* ctx;
+    short cur;
+    data_ov000_02184294.ctx->flags |= 0x100;
+    short prev = obj->selected;
+    cur = Window_GetSelectedIndex((struct Struct_0205c570*)obj->window);
+    obj->selected = cur;
+    ctx = data_ov000_02184294.ctx;
+    SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 1, 0x23);
+    if (prev != cur) {
         return -1;
     }
-    int var10 = g_keyManager.TestKeysPressed(0x601);
-    int var11 = (var10 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var11 || arg0->unknown_444_ != 0) {
-        if (!func_ov000_0217c4e8(arg0, var8)) {
-            return arg0->unknown_10_[arg0->unknown_18_];
+    int t = g_keyManager.TestKeysPressed(0x601);
+    int active = (t | Window_IsSelectionTouched((struct Obj_0205da38*)obj->window, 0x14)) != 0;
+    if (active || obj->field444 != 0) {
+        if (!IsBitFlagSet0217c4e8(obj, cur)) {
+            return obj->selections[obj->depth];
         }
         SetElementFlag0x20ByKey0205def8((struct Struct_0205def8*)ctx->list, 0, 0x23);
         SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);

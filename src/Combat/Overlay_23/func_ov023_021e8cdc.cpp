@@ -3,11 +3,11 @@
 #include "GameState/GameState.h"
 
 extern int data_ov023_021fdd6c;
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020426bc(void* arg0, void* arg1, int arg2);
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_020424e4(int arg0, int arg1);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
+extern "C" void* __clear(void* dst, int count);
+extern "C" int Font_EncodeText(void* src, void* dst, int flag);
+int StringLength_020d2ff0(const char* s);
+int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" void func_02042764(void* a, void* b, int flag);
 
 struct Struct_0204254c {
     int unknown_0_;
@@ -61,16 +61,16 @@ extern "C" ARM void func_ov023_021e8cdc(char* arg0) {
     __clear(var6, 0x3a);
     __clear(var6 + 0x3a, 0x400);
 
-    char* var7 = *(char**)(arg0 + 0x600);
-    if (var7 != 0) {
-        var0 = func_020426bc(var7, var6, 1);
+    char* src = *(char**)(obj + 0x600);
+    if (src != 0) {
+        len = Font_EncodeText(src, buf, 1);
     } else {
         var0 = func_020d2ff0(var5 + 8);
         memcpy(var6, var5 + 8, var0);
     }
 
-    signed char var8 = (signed char)func_020424e4((int)&data_ov023_021fdd6c, 1);
-    for (; var0 < 0x39; var0++) var6[var0] = var8;
+    signed char idxByte = (signed char)Font_FindCharacterIndex((int)&data_ov023_021fdd6c, 1);
+    for (; len < 0x39; len++) buf[len] = idxByte;
 
     func_02042764(var6, var6 + 0x3a, 1);
 

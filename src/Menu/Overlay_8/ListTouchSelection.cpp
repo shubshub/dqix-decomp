@@ -36,7 +36,7 @@ struct Overlay8ListTouchView {
 extern char g_sePlayer[];
 extern char data_ov008_0218b490[];
 extern "C" {
-    int _Z18GetField0_0205bafcPv(void*);
+    int _Z19GridCursor_GetCountPv(void*);
     int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
     void GridCursor_SetSelectedIndex(void*, int);
     void _Z13SePlayer_PlayP8SePlayerii(void*, int, int);
@@ -44,7 +44,7 @@ extern "C" {
     int func_ov008_02186b18(Overlay8ListTouchView* menu, int touchX, int touchY) {
         if (!touchX || !touchY)
             return -1;
-        int count = _Z18GetField0_0205bafcPv(menu->cursor);
+        int count = _Z19GridCursor_GetCountPv(menu->cursor);
         if (count > 6)
             count = 6;
         for (int i = 0; i < count; ++i) {

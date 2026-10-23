@@ -25,9 +25,9 @@ struct Struct_ov000_02184294_3 {
 extern struct Struct_ov000_02184294_3 data_ov000_02184294;
 
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 int GetClampedArrayField0xd1c_ov000_021761c8(char* base, int index);
 int CountMatchingValues02175348(void* obj, int value);
 struct SePlayer;
@@ -51,17 +51,17 @@ struct Struct_ov000_0217b380 {
 };
 
 // USA: func_ov000_0217b380
-extern "C" ARM int func_ov000_0217b380(struct Struct_ov000_0217b380* arg0, int arg1, int arg2) {
-    data_ov000_02184294.unknown_8_->unknown_1d72_ |= 0x100;
-    int var0 = func_0205d794(arg0->unknown_38_);
-    arg0->unknown_1d_ = var0;
-    int var1 = g_keyManager.TestKeysPressed(0x601);
-    int var2 = (var1 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var2) {
-        if (func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) {
-            int var3 = func_ov000_021761c8((char*)data_ov000_02184294.unknown_8_, var0);
-            int var4 = func_ov000_02175348(data_ov000_02184294.unknown_8_, var3);
-            arg0->unknown_1d_ = NextRandomMax(GetBTRandom(), var4 * 100) / 100 + (signed char)var0;
+extern "C" ARM int func_ov000_0217b380(struct MenuState0217b380* self, int arg1, int arg2) {
+    data_ov000_02184294.menu->flags |= 0x100;
+    int base = Window_GetSelectedIndex(self->window);
+    self->selection = base;
+    int pressed = g_keyManager.TestKeysPressed(0x601);
+    int confirm = (pressed | Window_IsSelectionTouched((struct Obj_0205da38*)self->window, 0x14)) != 0;
+    if (confirm) {
+        if (Window_IsSelectionTouched((struct Obj_0205da38*)self->window, 0x14)) {
+            int value = GetClampedArrayField0xd1c_ov000_021761c8((char*)data_ov000_02184294.menu, base);
+            int matches = CountMatchingValues02175348(data_ov000_02184294.menu, value);
+            self->selection = NextRandomMax(GetBTRandom(), matches * 100) / 100 + (signed char)base;
         }
         SePlayer_Play(&g_sePlayer, 1, 0);
         self->stackTop++;

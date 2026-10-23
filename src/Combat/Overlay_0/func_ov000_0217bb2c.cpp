@@ -6,9 +6,9 @@ struct Struct_0205c570;
 struct SePlayer;
 struct S_10088;
 
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 int CheckFlagsOrField_0217ab48_0217ab48(void* obj);
 int IsFlag10088Set_02010088(struct S_10088* obj);
@@ -85,22 +85,22 @@ extern MenuGlobals_0217bb2c data_ov000_02184294;
 extern char g_sePlayer;
 
 // USA: func_ov000_0217bb2c
-extern "C" ARM int func_ov000_0217bb2c(Struct_ov000_0217bb2c_2* arg0, int arg1, int arg2) {
-    data_ov000_02184294.unknown_8_->unknown_1d72_ |= 0x100;
-    arg0->unknown_21_ = func_0205d794((struct Struct_0205c570*)arg0->unknown_38_);
-    arg0->unknown_2e_ = -1;
-    if (arg0->unknown_441_ != arg1) {
-        arg0->unknown_441_ = arg1;
-        arg0->unknown_442_ = arg0->unknown_30_[arg0->unknown_21_];
-        arg0->unknown_444_ = 1;
-        func_ov000_0217629c(arg0);
-        arg0->unknown_10_[arg0->unknown_18_] = 0;
-        arg0->unknown_18_--;
-        arg0->unknown_21_ = -1;
-        arg0->unknown_2e_ = -1;
-        func_ov000_0217ab8c(arg0, arg1, arg2);
-        int var0 = -1;
-        switch (arg0->unknown_10_[arg0->unknown_18_]) {
+extern "C" ARM int func_ov000_0217bb2c(MenuObj_0217bb2c* obj, int arg1, int arg2) {
+    data_ov000_02184294.ctx->flags |= 0x100;
+    obj->cursor = Window_GetSelectedIndex((struct Struct_0205c570*)obj->window);
+    obj->field2e = -1;
+    if (obj->field441 != arg1) {
+        obj->field441 = arg1;
+        obj->field442 = obj->order[obj->cursor];
+        obj->field444 = 1;
+        func_ov000_0217629c(obj);
+        obj->selections[obj->depth] = 0;
+        obj->depth--;
+        obj->cursor = -1;
+        obj->field2e = -1;
+        func_ov000_0217ab8c(obj, arg1, arg2);
+        int result = -1;
+        switch (obj->selections[obj->depth]) {
         case 0xf:
             var0 = func_ov000_0217b518(arg0, data_ov000_02184294.unknown_4_, data_ov000_02184294.unknown_0_);
             break;
@@ -113,11 +113,11 @@ extern "C" ARM int func_ov000_0217bb2c(Struct_ov000_0217bb2c_2* arg0, int arg1, 
         }
         return var0;
     }
-    int var1 = g_keyManager.TestKeysPressed(0x601);
-    int var2 = (var1 | func_0205da38((struct Struct_0205da38*)arg0->unknown_38_, 0x14)) != 0;
-    if (var2) {
-        GameObject* var3 = func_0200ff1c(GameState::GetInstance(), arg0->unknown_30_[arg0->unknown_21_]);
-        if (var3 == NULL) {
+    int t = g_keyManager.TestKeysPressed(0x601);
+    int active = (t | Window_IsSelectionTouched((struct Obj_0205da38*)obj->window, 0x14)) != 0;
+    if (active) {
+        GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), obj->order[obj->cursor]);
+        if (combatant == NULL) {
             return -1;
         }
         int var4 = !func_02010088((struct Struct_02010088*)var3);

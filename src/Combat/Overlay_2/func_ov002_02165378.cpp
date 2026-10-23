@@ -20,9 +20,9 @@ extern "C" void func_ov002_0215ece4(void *base, char *dst, int c, int productB, 
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 void SetOrClearByteC5Bit8_0216574c(void *elem, int on);
 int TryApplyElemFields0205d5d0(struct StructA0205d5d0 *, int, int, int, unsigned char);
-int GetActiveScaledSum0205d794(struct Struct_0205c570 *s);
+int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 struct Obj_0205da38;
-int IsActiveElementFlag2Set0205da38(struct Obj_0205da38* obj, int key);
+int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205df38(void *list, int key);
 Obj020d7aa0 *GetGlobalResetObj020d7a50();
 void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
@@ -70,18 +70,18 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
     if (var0 != 1) {
         return;
     }
-    *(unsigned int *) (arg0 + 0x22ac) |= 4;
-    short var3 = *(short *) (arg0 + 0x1ac0);
-    *(short *) (arg0 + 0x1ac0) =
-        func_0205d794((struct Struct_0205c570 *) (arg0 + 0xe20));
-    *(unsigned char *) (arg0 + 0x1ae8) = *(signed char *) (arg0 + *(short *) (arg0 + 0x1ac0) + 0x1b32);
-    if (var3 != *(short *) (arg0 + 0x1ac0)) {
-        func_ov002_02157174(arg0, *(signed char *) (arg0 + 0x1ae8));
-        memset(*(void **) (arg0 + 0x1a98), 0, 0x800);
-        func_ov002_0215ece4(arg0, *(char **) (arg0 + 0x1a98), *(signed char *) (arg0 + 0x1ae8), 0, 8);
-        int var4 = 0;
-        if ((short) ((*(unsigned char *) (arg0 + 0x2350) + 7) / 8) > 1) {
-            var4 = 1;
+    *(unsigned int *) (self + 0x22ac) |= 4;
+    short old = *(short *) (self + 0x1ac0);
+    *(short *) (self + 0x1ac0) =
+        Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0xe20));
+    *(unsigned char *) (self + 0x1ae8) = *(signed char *) (self + *(short *) (self + 0x1ac0) + 0x1b32);
+    if (old != *(short *) (self + 0x1ac0)) {
+        func_ov002_02157174(self, *(signed char *) (self + 0x1ae8));
+        memset(*(void **) (self + 0x1a98), 0, 0x800);
+        func_ov002_0215ece4(self, *(char **) (self + 0x1a98), *(signed char *) (self + 0x1ae8), 0, 8);
+        int on = 0;
+        if ((short) ((*(unsigned char *) (self + 0x2350) + 7) / 8) > 1) {
+            on = 1;
         }
         char *var5 = func_0205d81c((struct Struct_0205d81c *) (arg0 + 0xe20), 0x12);
         if (var5 != 0) {
@@ -91,11 +91,11 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
                                                              *(int *) (arg0 + 0x1a98), 1);
         return;
     }
-    int var6  = g_keyManager.TestKeysPressed(0x601);
-    int var7  = func_0205da38((struct Struct_0205da38*)(arg0 + 0xe20), 0x14);
-    int var8 = (var6 | var7) ? 1 : 0;
-    if (var8 || func_0205df38(arg0 + 0xe20, 0x12) != 0) {
-        if (*(unsigned int *) (arg0 + 0x22ac) & 2) {
+    int t  = g_keyManager.TestKeysPressed(0x601);
+    int u  = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0xe20), 0x14);
+    int ok = (t | u) ? 1 : 0;
+    if (ok || func_0205df38(self + 0xe20, 0x12) != 0) {
+        if (*(unsigned int *) (self + 0x22ac) & 2) {
             return;
         }
         TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
@@ -163,18 +163,18 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
     if (var9 != 1) {
         return;
     }
-    *(unsigned int *) (arg0 + 0x247c) |= 4;
-    short var12 = *(short *) (arg0 + 0x1bf8);
-    *(short *) (arg0 + 0x1bf8) =
-        func_0205d794((struct Struct_0205c570 *) (arg0 + 0x2c8 + 0xc00));
-    *(unsigned char *) (arg0 + 0x1c20) = *(signed char *) (arg0 + *(short *) (arg0 + 0x1bf8) + 0x1c6e);
-    if (var12 != *(short *) (arg0 + 0x1bf8)) {
-        func_ov002_02157174(arg0, *(signed char *) (arg0 + 0x1c20));
-        memset(*(void **) (arg0 + 0x1bd0), 0, 0x960);
-        func_ov002_0215ece4(arg0, *(char **) (arg0 + 0x1bd0), *(signed char *) (arg0 + 0x1c20), 0, 8);
-        int var13 = 0;
-        if ((short) ((*(unsigned char *) (arg0 + 0x2520) + 7) / 8) > 1) {
-            var13 = 1;
+    *(unsigned int *) (self + 0x247c) |= 4;
+    short old = *(short *) (self + 0x1bf8);
+    *(short *) (self + 0x1bf8) =
+        Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0x2c8 + 0xc00));
+    *(unsigned char *) (self + 0x1c20) = *(signed char *) (self + *(short *) (self + 0x1bf8) + 0x1c6e);
+    if (old != *(short *) (self + 0x1bf8)) {
+        func_ov002_02157174(self, *(signed char *) (self + 0x1c20));
+        memset(*(void **) (self + 0x1bd0), 0, 0x960);
+        func_ov002_0215ece4(self, *(char **) (self + 0x1bd0), *(signed char *) (self + 0x1c20), 0, 8);
+        int on = 0;
+        if ((short) ((*(unsigned char *) (self + 0x2520) + 7) / 8) > 1) {
+            on = 1;
         }
         char *var14 = func_0205d81c((struct Struct_0205d81c *) (arg0 + 0x2c8 + 0xc00), 0x11);
         if (var14 != 0) {
@@ -184,11 +184,11 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
                                                              *(int *) (arg0 + 0x1bd0), 1, 0);
         return;
     }
-    int var15  = g_keyManager.TestKeysPressed(0x601);
-    int var16  = func_0205da38((struct Struct_0205da38*)(arg0 + 0x2c8 + 0xc00), 0x14);
-    int var17 = (var15 | var16) ? 1 : 0;
-    if (var17 || func_0205df38(arg0 + 0x2c8 + 0xc00, 0x11) != 0) {
-        if (*(unsigned int *) (arg0 + 0x247c) & 2) {
+    int t  = g_keyManager.TestKeysPressed(0x601);
+    int u  = Window_IsSelectionTouched((struct Obj_0205da38*)(self + 0x2c8 + 0xc00), 0x14);
+    int ok = (t | u) ? 1 : 0;
+    if (ok || func_0205df38(self + 0x2c8 + 0xc00, 0x11) != 0) {
+        if (*(unsigned int *) (self + 0x247c) & 2) {
             return;
         }
         TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());

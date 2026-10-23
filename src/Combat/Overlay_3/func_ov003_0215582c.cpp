@@ -113,26 +113,26 @@ struct Struct_ov003_0215582c_7 {
     char unknown_1d4_[1];
 };
 
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" struct Struct_ov003_0215582c* func_02053c6c(unsigned char* arg0);
-extern "C" int func_ov003_02155e14(int arg0, int arg1);
-extern "C" short* func_02052e14(struct Struct_02052e14* arg0);
-extern "C" int func_0207c378(void* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_ov003_02156034(void* arg0);
-extern "C" void func_02083ca0(unsigned char* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" void func_020a06ec(struct Struct_020a06ec* arg0, unsigned int arg1);
-extern "C" void func_020a0258(struct Struct_020a0258* arg0, unsigned int arg1);
-extern "C" int func_020ac494(void* arg0);
-extern "C" int func_0207c7a0(void* arg0, int arg1, int arg2);
-extern "C" struct Struct_ov003_0215582c_10* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_02052d7c(void* arg0, int arg1, int arg2);
-extern "C" int func_0207c484(struct Struct_0207c484* arg0, int arg1, int arg2, int arg3);
-extern "C" short* func_02052e2c(struct Struct_02052e2c* arg0);
-extern "C" void func_02083738(void* arg0, int arg1);
-extern "C" void func_02083cbc(void* arg0, void* arg1, void* arg2);
-extern "C" void func_02083b60(unsigned char* arg0, int arg1);
+void* GetPtrField0x2a04_02010828(GameState* battleStruct);
+struct Stats0215582c* GetFieldAt0x150_02053c6c(unsigned char* obj);
+int OffsetByIndexTimes16_02155e14(int base, int idx);
+short* GetField150Ptr0x488(struct Field150Holder02052e14* obj);
+extern "C" int func_0207c378(void* obj, int value, int amount, int key);
+int GetArrayEntryByIndex_02156034(void* obj);
+void PartyMember_SetVocation(unsigned char* obj, int index);
+int GetField0x3acValue_020100a8(GameState* battleStruct);
+int LoadBattleBlock020ac4c0(void* dst);
+void AddClamped10BitFieldHighAt0x28_020a06ec(struct S_a06ec* p, unsigned int amount);
+void AddClamped10BitFieldAt0x1c_020a0258(struct S_a0258* p, unsigned int amount);
+int CopyInBattleField0x7540_020ac494(void* src);
+extern "C" int func_0207c7a0(void* map, int value, int key);
+struct ItemEntry0215582c* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+extern "C" void func_02052d7c(void* obj, int index, int value);
+int DecrementKeyedStackAmount0207c484(struct KeyedList0207c484* obj, int value, int amount, int key);
+short* GetField150Ptr0x488_02052e2c(struct Field150Holder02052e2c* obj);
+extern "C" void func_02083738(void* o, int a1);
+extern "C" void PartyMember_ApplyLevelStats(void* a, void* obj, void* tail);
+void PartyMember_LearnSpell(unsigned char* obj, int index);
 extern "C" void* func_0202ae18(void);
 extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, int arg4);
 
@@ -188,7 +188,7 @@ extern "C" ARM void func_ov003_0215582c(struct Struct_ov003_0215582c_5* arg0) {
         }
     }
 
-    func_02083ca0((unsigned char*)var3, func_ov003_02156034(arg0));
+    PartyMember_SetVocation((unsigned char*)stats, GetArrayEntryByIndex_02156034(self));
 
     var5 = func_020100a8(var0);
     if (var5 == var2->unknown_4_) {
@@ -295,13 +295,13 @@ extern "C" ARM void func_ov003_0215582c(struct Struct_ov003_0215582c_5* arg0) {
         }
     }
 
-    func_02083cbc(var3, arg0->unknown_90_, arg0->unknown_cc_);
-    switch (func_ov003_02156034(arg0)) {
+    PartyMember_ApplyLevelStats(stats, self->f90, self->fcc);
+    switch (GetArrayEntryByIndex_02156034(self)) {
     case 2:
-        func_02083b60((unsigned char*)var3, 0x1a);
+        PartyMember_LearnSpell((unsigned char*)stats, 0x1a);
         break;
     case 3:
-        func_02083b60((unsigned char*)var3, 0);
+        PartyMember_LearnSpell((unsigned char*)stats, 0);
         break;
     }
 

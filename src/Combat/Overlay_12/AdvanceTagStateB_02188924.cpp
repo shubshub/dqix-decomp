@@ -36,12 +36,12 @@ void SetupBattleTag0218a7a0(char* base);
 struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern int g_sePlayer;
 struct Container020e0310;
-int GetFieldByKey020e0434(struct Container020e0310* c, int key);
+int KeyTable_Get(struct Container020e0310* c, int key);
 
 struct StateField02188924 { unsigned short count : 5; unsigned short idx : 11; };
 
@@ -65,16 +65,16 @@ extern "C" ARM void func_ov012_02188924(char* base) {
     }
     if (state != 1) return;
     *(unsigned char*)(base + R(0x1368,0x13a0)) = 1;
-    *(int*)(base + R(0x1448,0x13f0)) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + R(0x90,0xac)));
+    *(int*)(base + R(0x1448,0x13f0)) = Window_GetSelectedIndex((struct Struct_0205c570*)(base + R(0x90,0xac)));
     if (func_ov023_021e6448(base)) {
-        *(int*)(base + R(0x1448,0x13f0)) = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + R(0x90,0xac)));
+        *(int*)(base + R(0x1448,0x13f0)) = Window_GetSelectedIndex((struct Struct_0205c570*)(base + R(0x90,0xac)));
     }
     if (func_ov023_021e6de4(base)) {
         short* sptr = *(short**)(base + 0x1000 + R(0x420,0x3c8));
         int sel = *(int*)(base + 0x1000 + R(0x448,0x3f0));
         short sKey = sptr[sel];
         struct Container020e0310* c = (struct Container020e0310*)(base + R(0x131c,0x1344));
-        char* name = (char*)GetFieldByKey020e0434(c, sKey);
+        char* name = (char*)KeyTable_Get(c, sKey);
         if (!name) return;
         SePlayer_Play((struct SePlayer*)&g_sePlayer, 1, 0);
         memset(base + R(0x1458,0x1400), 0, 0x40);

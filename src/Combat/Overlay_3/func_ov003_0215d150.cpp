@@ -61,27 +61,27 @@ static inline int inline_ov003_0215d150_2(Struct_01ff91ac_29 *arg0) { return arg
 
 extern "C" Struct_ov003_0215d150_2 *func_020421a0();
 extern "C" int *func_0202ae18();
-extern "C" Struct_ov003_0215d150 *func_02012fe4();
-extern "C" void func_02046380(void *arg0);
-struct Struct_020465c0;
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" void func_020465f0(unsigned char *, int, unsigned char);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" int func_0202c540(int *arg0);
-extern "C" int func_0202c508(int *arg0);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" const char * func_020e0434(Struct_0201099c_3*, int);
-extern "C" int func_02042058(char *arg0, const char *arg1);
-extern "C" void func_ov003_0215cab0(char *arg0, void *arg1);
-extern "C" void func_ov003_0215ddc0(char *arg0);
-extern "C" void func_ov003_0215df1c(void *arg0);
-extern "C" void func_ov003_0215dd3c(char *arg0);
+extern "C" Zone *func_02012fe4();
+extern "C" void func_02046380(void *obj);
+struct StoreStruct;
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+void SetByteInRange_020465f0(unsigned char *, int, unsigned char);
+int CheckField0NonZero_0202b7d8(int *p);
+extern "C" int func_0202c540(int *p);
+extern "C" int func_0202c508(int *p);
+struct Obj02046574;
+void SetIndexedName02046574(Obj02046574*, int, char*);
+const char * KeyTable_Get(Container020e0310*, int);
+int AppendString02042058(char *dst, const char *src);
+extern "C" void func_ov003_0215cab0(char *obj, void *flag);
+extern "C" void func_ov003_0215ddc0(char *base);
+extern "C" void func_ov003_0215df1c(void *self);
+extern "C" void func_ov003_0215dd3c(char *obj);
 struct Struct_0205d81c;
 void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
 void SetChannelAFlag0205cef8(void *obj);
 void SetChannelBFlag0205cf04(void *obj);
-int GetActiveScaledSum0205d794(Struct_0205c570 *);
+int Window_GetSelectedIndex(Struct_0205c570 *);
 struct Entry_0205d6a0;
 void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
 void SePlayer_Play(SePlayer *, int, int);
@@ -131,8 +131,8 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
                 var8 = (*(short *) ((char *) var0->GetUnknownGameObject() + 4) == 0) ? 1 : 0;
             }
 
-            if (var8 != 0) {
-                func_02042058(var7, func_020e0434(&arg0->unknown_64_, (short)0x64));
+            if (flag != 0) {
+                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)0x64));
             }
 
             if (inline_ov003_0215d150_2(inline_ov003_0215d150(var3)) == 6) {
@@ -142,18 +142,18 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
             } else {
                 var5 = 0x68;
             }
-            func_02042058(var7, func_020e0434(&arg0->unknown_64_, (short)var5));
+            AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k1));
 
-            if (var8 == 0) {
-                func_02042058(var7, func_020e0434(&arg0->unknown_64_, (short)0x6f));
+            if (flag == 0) {
+                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)0x6f));
             } else {
-                int var9;
-                var9 = (arg0->unknown_3d0_ != 0) ? 0x66 : 0x69;
-                func_02042058(var7, func_020e0434(&arg0->unknown_64_, (short)var9));
+                int k2;
+                k2 = (self->w3d0 != 0) ? 0x66 : 0x69;
+                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k2));
             }
         } else {
-            int var10 = var6 + 0x3e8;
-            func_02042058(var7, func_020e0434(&arg0->unknown_64_, (short)var10));
+            int k0 = sb + 0x3e8;
+            AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k0));
         }
 
         func_ov003_0215cab0((char *) arg0, var7);
@@ -188,7 +188,7 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
     }
     if (state == 4) {
         self->b3c2 = 1;
-        self->b3c1 = GetActiveScaledSum0205d794((Struct_0205c570 *) self->list98);
+        self->b3c1 = Window_GetSelectedIndex((Struct_0205c570 *) self->list98);
         if (func_ov003_0215dcb8((char *) self) != 0) {
             self->b3c2 = 0;
             ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);

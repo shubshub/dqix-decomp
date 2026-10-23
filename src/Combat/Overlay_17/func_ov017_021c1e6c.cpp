@@ -74,13 +74,13 @@ extern "C" void func_02039830(void*);
 extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
 extern "C" void func_ov017_02191234(GameResources*);
 extern "C" int func_0202c540(void*);
-extern "C" void func_ov017_021907dc(int, int, int, int, int);
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_02039d58(unsigned char*);
-extern "C" int func_02039d68(unsigned char*);
-extern "C" void func_02039d48(unsigned char*);
+void CallHelperWithBuf_021907dc(int, int, int, int, int);
+void VramState_Restore(char*);
+void VramState_Save(char*);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void ClearFlag0x1ceBit0x4_02039d58(unsigned char*);
+int CheckFlag0x1ceBit2Set_02039d68(unsigned char*);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
 #if defined(jpn)
 extern char data_ov017_021d87c4[], data_ov017_021d87d8[];
 #else
@@ -173,39 +173,39 @@ configureCombatant:
                 func_02059f38((Struct_02059cfc_2*)var17, (Struct_02059cfc_3*)&((Struct_ov017_021c1e6c_3*)var0)->unknown_7f60_);
                 func_02033874((Struct_02033834*)var17, ((Struct_ov017_021c1e6c_3*)var0)->unknown_7f5c_);
             }
-            if (var4->unknown_10_3_) func_ov017_02191508(var8, var4);
-            GameObject* var18 = var0->GetUnknownGameObject();
-            if (var18) func_02039830(var18);
-            func_ov017_02191108(var2, 1, 1, 1, 1);
-            func_ov017_02191234(var2);
-            if (func_0202c540(func_0202ae18())) func_ov017_021907dc((int)var2, 0, 1, 1, 1);
-        } else arg0->unknown_1_ = 1;
-    } else if (arg0->unknown_a_ == 2) {
-        if (!var1->GetTaskStatus(arg0->unknown_8_)) return;
-        if (var1->GetDetailedTaskStatus(arg0->unknown_8_) == 2) {
-            void* var19;
-            unsigned int var20;
-            var1->GetLoadedFileByID(arg0->unknown_8_, &var19, &var20);
-            if (var19) {
-                ObjectArchiveLoadInfo var21;
-                var21.allocator = &var2->allocator_11c0;
-                var21.unk_0 = 0;
-                var21.unk_10 = 0; var21.unk_14 = 0; var21.unk_18 = 0; var21.packageID = 0;
-                var21.fileData = var19;
-                var21.unk_8 = var20;
-                char* var22 = var2->unknown_11d4_;
-                GameObject* var23 = func_0200ff58(var0, 0xce);
-                if (var23) {
-                    func_0207df90(var22);
-                    var23->obj3D_.LoadFromCCHROrCMOTArchive(&var21, 0);
-                    func_0207dfac(var22);
-                    var23->obj3D_.SetScale(0x10a, 0x10a, 0x10a);
-                    func_020546a0(var23, 0);
-                    func_02033b88((Struct_02010604*)var23, 0);
-                    func_02039d58((unsigned char*)var23);
-                    for (int var24 = 0; var24 < 4; var24++) {
-                        GameObject* var25 = func_0200ff58(var0, var24);
-                        if (var25 && func_02039d68((unsigned char*)var25)) func_02039d48((unsigned char*)var23);
+            if (entry->special) func_ov017_02191508(combatantId, entry);
+            GameObject* leader = game->GetUnknownGameObject();
+            if (leader) CopyByteField0x253To0x252_02039830(leader);
+            func_ov017_02191108(resources, 1, 1, 1, 1);
+            func_ov017_02191234(resources);
+            if (func_0202c540(func_0202ae18())) CallHelperWithBuf_021907dc((int)resources, 0, 1, 1, 1);
+        } else self->done = 1;
+    } else if (self->state == 2) {
+        if (!loader->GetTaskStatus(self->task)) return;
+        if (loader->GetDetailedTaskStatus(self->task) == 2) {
+            void* file;
+            unsigned int length;
+            loader->GetLoadedFileByID(self->task, &file, &length);
+            if (file) {
+                ObjectArchiveLoadInfo info;
+                info.allocator = &resources->allocator_11c0;
+                info.unk_0 = 0;
+                info.unk_10 = 0; info.unk_14 = 0; info.unk_18 = 0; info.packageID = 0;
+                info.fileData = file;
+                info.unk_8 = length;
+                char* pairTables = resources->unknown_11d4;
+                GameObject* combatant = GetCombatantWithFlag0x1000_0200ff58(game, 0xce);
+                if (combatant) {
+                    VramState_Restore(pairTables);
+                    combatant->obj3D_.LoadFromCCHROrCMOTArchive(&info, 0);
+                    VramState_Save(pairTables);
+                    combatant->obj3D_.SetScale(0x10a, 0x10a, 0x10a);
+                    SetField0x2d0_020546a0(combatant, 0);
+                    SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
+                    ClearFlag0x1ceBit0x4_02039d58((unsigned char*)combatant);
+                    for (int i = 0; i < 4; i++) {
+                        GameObject* member = GetCombatantWithFlag0x1000_0200ff58(game, i);
+                        if (member && CheckFlag0x1ceBit2Set_02039d68((unsigned char*)member)) SetFlag0x1ceBit0x4_02039d48((unsigned char*)combatant);
                     }
                     GameObject* var26 = var0->GetGameObjectByIndex(0);
                     if (var26) {

@@ -36,7 +36,7 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char 
 extern "C" void func_ov023_021e6e60(void* obj);
 void BuildMessageE_0218a438(char* self);
 struct Struct_0205c570;
-int GetActiveScaledSum0205d794(struct Struct_0205c570* s);
+int Window_GetSelectedIndex(struct Struct_0205c570* s);
 extern "C" int func_ov023_021e6de4(char* obj);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov012_021884f4(char* base) {
     if (state != 1) return;
 
     *(unsigned char*)(base + kActiveOffset) = 1;
-    int sum = GetActiveScaledSum0205d794((struct Struct_0205c570*)(base + kWindowOffset));
+    int sum = Window_GetSelectedIndex((struct Struct_0205c570*)(base + kWindowOffset));
     *(int*)(base + kChoiceEOffset) = sum;
 
     if (func_ov023_021e6de4(base) != 0) {

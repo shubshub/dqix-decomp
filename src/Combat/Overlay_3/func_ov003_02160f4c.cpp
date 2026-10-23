@@ -9,16 +9,16 @@ struct Struct_ov003_02160f4c {
     unsigned char unknown_0_0_ : 1;
 };
 
-extern "C" void *func_020421a0(void);
-extern "C" void func_02046380(void *arg0);
-extern "C" void *func_02010828(GameState *arg0);
-extern "C" void func_020465c0(Struct_020465c0 *arg0, int arg1, int arg2);
-extern "C" void *__clear(void *arg0, int arg1);
-extern "C" void func_02046574(Struct_02046574_2 *arg0, int arg1, char *arg2);
-extern "C" void *func_020e0434(Struct_0201099c_3 *arg0, int arg1);
-extern "C" void func_020e4bf4(void *arg0, int arg1);
-extern "C" void *func_ov003_02160bf8(void *arg0, int arg1);
-extern "C" void func_02042764(void *arg0, void *arg1, int arg2);
+void *GetGlobalField0x1c020421a0(void);
+extern "C" void func_02046380(void *messages);
+void *GetPtrField0x2a04_02010828(GameState *gameState);
+void StoreInArray0x8b0_020465c0(StoreStruct *base, int index, int value);
+extern "C" void *__clear(void *destination, int count);
+void SetIndexedName02046574(Obj02046574 *obj, int index, char *str);
+void *KeyTable_Get(Container020e0310 *c, int key);
+void InitObjFromCombatantId020e4bf4(void *obj, int combatantId);
+extern "C" void *func_ov003_02160bf8(void *obj, int key);
+extern "C" void func_02042764(void *src, void *dst, int flag);
 extern "C" void func_020e4b34(void *, const char *, void *, unsigned int, unsigned char, unsigned char, unsigned char,
                               unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
 #if !defined(jpn)
@@ -42,9 +42,9 @@ extern "C" ARM void func_ov003_02160f4c(unsigned char *arg0) {
             if ((signed char) var1[1] != 0) {
                 func_02046574((Struct_02046574_2 *) var0, 0, (char *) (var1 + 1));
             } else {
-                func_02046574(
-                    (Struct_02046574_2 *) var0, 0,
-                    (char *) func_020e0434((Struct_0201099c_3 *) (arg0 + 0x1c4), 0x7530));
+                SetIndexedName02046574(
+                    (Obj02046574 *) ctl, 0,
+                    (char *) KeyTable_Get((Container020e0310 *) (self + 0x1c4), 0x7530));
             }
             *(unsigned int *) (arg0 + 0x28c) &= ~4u;
         }
@@ -64,15 +64,15 @@ extern "C" ARM void func_ov003_02160f4c(unsigned char *arg0) {
             }
             *(unsigned int *) (arg0 + 0x28c) &= ~0x28u;
         }
-        short var4            = *(short *) (arg0 + 0x200 + 0xac);
-        unsigned char var5 = 1;
-        if (var4 == 8 || var4 == 0x3d) var5 = 0;
-        void *var6 = func_020e0434((Struct_0201099c_3 *) (arg0 + 0x1c4), var4);
-        if (var6 == 0) {
-            *(short *) (arg0 + 0x200 + 0xac) = *(short *) (arg0 + 0x200 + 0xae);
-            *(short *) (arg0 + 0x200 + 0xae) = -1;
-            var6 = func_020e0434((Struct_0201099c_3 *) (arg0 + 0x1c4),
-                                                                 *(short *) (arg0 + 0x200 + 0xac));
+        short v            = *(short *) (self + 0x200 + 0xac);
+        unsigned char flag = 1;
+        if (v == 8 || v == 0x3d) flag = 0;
+        void *key = KeyTable_Get((Container020e0310 *) (self + 0x1c4), v);
+        if (key == 0) {
+            *(short *) (self + 0x200 + 0xac) = *(short *) (self + 0x200 + 0xae);
+            *(short *) (self + 0x200 + 0xae) = -1;
+            key = KeyTable_Get((Container020e0310 *) (self + 0x1c4),
+                                                                 *(short *) (self + 0x200 + 0xac));
         }
         func_0204500c(var0, var6, 0);
         *(int *) (var0 + 0x868) = 1;
@@ -134,9 +134,9 @@ extern "C" ARM void func_ov003_02160f4c(unsigned char *arg0) {
             if ((signed char) var12[1] != 0) {
                 func_02046574((Struct_02046574_2 *) var7, 0, (char *) (var12 + 1));
             } else {
-                func_02046574(
-                    (Struct_02046574_2 *) var7, 0,
-                    (char *) func_020e0434((Struct_0201099c_3 *) (arg0 + 0x2dc), 0x7530));
+                SetIndexedName02046574(
+                    (Obj02046574 *) ctl, 0,
+                    (char *) KeyTable_Get((Container020e0310 *) (self + 0x2dc), 0x7530));
             }
             *(unsigned int *) (arg0 + 0x464) &= ~4u;
         }
@@ -156,15 +156,15 @@ extern "C" ARM void func_ov003_02160f4c(unsigned char *arg0) {
             }
             *(unsigned int *) (arg0 + 0x464) &= ~0x28u;
         }
-        short var14            = *(short *) (arg0 + 0x400 + 0x84);
-        unsigned char var15 = 1;
-        if (var14 == 8 || var14 == 0x3d) var15 = 0;
-        void *var16 = func_020e0434((Struct_0201099c_3 *) (arg0 + 0x2dc), var14);
-        if (var16 == 0) {
-            *(short *) (arg0 + 0x400 + 0x84) = *(short *) (arg0 + 0x400 + 0x86);
-            *(short *) (arg0 + 0x400 + 0x86) = -1;
-            var16 = func_020e0434((Struct_0201099c_3 *) (arg0 + 0x2dc),
-                                                                 *(short *) (arg0 + 0x400 + 0x84));
+        short v            = *(short *) (self + 0x400 + 0x84);
+        unsigned char flag = 1;
+        if (v == 8 || v == 0x3d) flag = 0;
+        void *key = KeyTable_Get((Container020e0310 *) (self + 0x2dc), v);
+        if (key == 0) {
+            *(short *) (self + 0x400 + 0x84) = *(short *) (self + 0x400 + 0x86);
+            *(short *) (self + 0x400 + 0x86) = -1;
+            key = KeyTable_Get((Container020e0310 *) (self + 0x2dc),
+                                                                 *(short *) (self + 0x400 + 0x84));
         }
         func_0204500c(var7, var16, 0, 0xe3);
         *(int *) (var7 + 0x998) = 1;

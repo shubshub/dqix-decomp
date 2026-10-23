@@ -82,19 +82,19 @@ struct Struct_02092e0c {
 extern "C" Struct_ov023_021f0a5c* _ZZ21inline_ov023_021f4c04vE1s;
 extern char data_02109bf4[];
 
-extern "C" Struct_02092e0c* func_020421a0();
-extern "C" void func_02046380(Struct_02092e0c*);
-extern "C" char* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void* func_02010828(GameState*);
-extern "C" int func_02086ef0(Struct_02048150*, int);
-struct Struct_ov023_021eeaac_2;
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2*);
-extern "C" Struct_ov023_021f03a0* func_ov023_021f0360(void*, int);
-extern "C" int func_02082490(Struct_ov023_021f0a5c_3*, void*, unsigned int, unsigned char, unsigned int);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
-extern "C" Struct_ov000_0215d63c_2* func_02053c6c(unsigned char*);
-extern "C" void func_02083cbc(Struct_ov000_0215d63c_2*, Struct_ov023_021f0a5c_2*, Struct_ov023_021f0a5c_2*);
-extern "C" void func_02083e28(Struct_ov000_0215d63c_2*, int);
+MessageController* GetGlobalField0x1c020421a0();
+extern "C" void func_02046380(MessageController*);
+char* FindEntryByKey_02072a68(TableA68*, int);
+void* GetPtrField0x2a04_02010828(GameState*);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+struct Reset_021eefac;
+void ResetFields_021eefac(Reset_021eefac*);
+BattleResultEntry* FindByByteAt118_021f0360(void*, int);
+extern "C" int func_02082490(LoadedEntry*, void*, unsigned int, unsigned char, unsigned int);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
+CombatStats* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void PartyMember_ApplyLevelStats(CombatStats*, LevelStats*, LevelStats*);
+extern "C" void func_02083e28(CombatStats*, int);
 extern "C" unsigned char func_0209aa54(void*, GameObject*, unsigned char*, int);
 struct Struct_ov023_021edf54;
 extern "C" int func_ov023_021eea98(Struct_ov023_021edf54*);
@@ -163,22 +163,22 @@ extern "C" ARM int func_ov023_021f0a5c(Struct_ov000_02160da0* arg0) {
         if (var13 && func_02082490(&arg0->unknown_5770_[var14], var13, var12, var16->unknown_2_, var16->unknown_4_)) {
             if (!var16->unknown_3_) var15 = 1;
         }
-        Struct_ov023_021f0a5c_2* var17 = &arg0->unknown_5770_[var14].unknown_28_;
-        int var18 = var16->unknown_2_;
-        int var19 = var18 + var17->unknown_4_0_;
-        int var20 = 0;
-        if (var15) {
-            if (var10) {
-                GameObject* var21 = func_0200ff1c(var5, var14);
-                if (var21) {
-                    Struct_ov000_0215d63c_2* var22 = func_02053c6c((unsigned char*)var21);
-                    var22->unknown1_16c_[var22->unknown_950_] = var19;
-                    unsigned short var23 = 0xa28 - var22->unknown_564_;
-                    if (var23 < var17->unknown_4_7_) var17->unknown_4_7_ = var23;
-                    var22->unknown_564_ += var17->unknown_4_7_;
-                    func_02083cbc(var22, &arg0->unknown_5770_[var14].unknown_14_, &arg0->unknown_5770_[var14].unknown_3c_);
-                    func_02083e28(var22, 0);
-                    var6->unknown_6c_[var14] = func_0209aa54(var6->unknown_f0_, var21, var6->unknown_1c_[var14], var18);
+        LevelStats* extra = &work->loaded[id].extra;
+        int type = entry->type;
+        int level = type + extra->level;
+        int retry = 0;
+        if (learned) {
+            if (inParty) {
+                GameObject* actor = GetCombatantWithFlag0x100_0200ff1c(game, id);
+                if (actor) {
+                    CombatStats* stats = GetFieldAt0x150_02053c6c((unsigned char*)actor);
+                    stats->levels[stats->index] = level;
+                    unsigned short room = 0xa28 - stats->skillPoints;
+                    if (room < extra->pct) extra->pct = room;
+                    stats->skillPoints += extra->pct;
+                    PartyMember_ApplyLevelStats(stats, &work->loaded[id].gained, &work->loaded[id].bonus);
+                    func_02083e28(stats, 0);
+                    state->learnedCount[id] = func_0209aa54(state->skillTable, actor, state->learned[id], type);
                 }
             }
         } else {
