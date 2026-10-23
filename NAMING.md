@@ -107,6 +107,8 @@ its own copy of the `Keyboard` struct.
 | `CreationFlag_NameRejected` | `0x400000` | same | Set by `CharacterCreationUI_CheckName` for a forbidden name; the panel shows its message and name entry waits for A, X, a touch or B |
 | `CreationFlag_HideButtons` | `0x1000000` | same | `ConfigureEntryPositions_021da770` places the Confirm and Back sprites only while it's clear |
 | `CreationName_BufferSize`, `_MaxLength` | `0x48`, 8 | same | A name's buffer and its 8 characters |
+| `NameEntryStep` | `0`–`3` | `CharacterCreationUI_HandleNameEntry_02186e00.cpp` (file-local, one per region body) | `step_` on the name entry tab: Setup (the keyboard's text, limits and first key), Start (one frame: key repeat reset, stylus rotation on, info window refreshed), Input (keyboard and buttons), NameRejected (entered when `CreationFlag_NameRejected` is set; A, X, a touch or B clears it and goes back to Input). jpn has no Start step, so its values are 0–2. Read from each step's code |
+| `CreationFlag_RefreshInfoWindow` | `CreationFlag_RefreshName \| CreationFlag_RefreshSummary` | same (file-local) | Both info window refresh flags: the Name line (`CharacterCreationUI_RefreshNameText`) and the list (`BuildElemPaletteTags_021d9a6c`). Name entry sets the pair whenever the name changes, and only checks the name on START while neither is pending |
 | `KeyboardPage` | 1, 2, 4, 8 | `include/Resource/Keyboard.h` | The keyboard's pages (lowercase, uppercase, accents, symbols); each key has a mask of the pages it shows on. Read from the live key list |
 | `KeyboardAction` | 0-8 | same | A key's action, its slot in the key action table. The name keyboard has: type, caps (1), shift (2), A/1 (3), À (4), ← (5), OK (6), @ (7); 8 (random name) has no key |
 | `KeyboardResult` | 0-13 | same | What `Keyboard_Update` returns. Each confirmed in-game by pressing the key and logging `keyboardResult_` |
@@ -136,6 +138,7 @@ its own copy of the `Keyboard` struct.
 | Name | Original | In | What it does |
 |---|---|---|---|
 | `MOVE_CURSOR_TO_TAB_ICON` | `TAB_CURSOR` | `CharacterCreationUI_HandleInput` (both halves) | Puts the 16×16 highlight on tab icon N in the top row (`x = 0x78 + N × 16`, `y = 8`) |
+| `RESET_KEYBOARD_NAVIGATION` | (none; the block was written out twice) | `CharacterCreationUI_HandleNameEntry` | Puts `self`'s `GridCursor` back on the first cell of the 11 × 6 keyboard grid. It keeps its own `navigation` local: passing `&self->navigation_` straight to the calls compiles differently |
 
 ### Data
 
@@ -174,7 +177,7 @@ its own copy of the `Keyboard` struct.
 | `nameChecked` | `checked` | `CharacterCreationUI_HandleNameEntry` |
 | `widest` | `info` | `CharacterCreationUI_HandleNameEntry` |
 | `okKey` | `key` | `CharacterCreationUI_HandleNameEntry` |
-| `navigation` | `cursor` | `CharacterCreationUI_HandleNameEntry` |
+| `navigation` | `cursor` | `CharacterCreationUI_HandleNameEntry` (inside `RESET_KEYBOARD_NAVIGATION`) |
 | `tab`, `reached` | `state` | `CharacterCreationUI_HandleGenderSelection`, step 3's tab icon block |
 | `characterCreationStep` | `state` | `CharacterCreationUI_ApplyChoice` (usa half) |
 
