@@ -18,6 +18,7 @@
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include <Memory/SafeAllocator.h>
 #include <World/Object3D.h>
 #include <Filesystem/BackgroundLoader.h>
@@ -32,9 +33,6 @@ struct Struct_01ff8b48_13 {
     char unknown_0_[0x18];
 };
 
-struct Struct_ov003_021594c4 {
-    char unknown_0_[0x20];
-};
 
 struct Struct_02081870_2 {
     char unknown_0_[0xbc];
@@ -105,30 +103,29 @@ struct Struct_02021b84 {
     void* unknown_2e0_;
 };
 
-struct Struct_02045cac;
-struct Struct_0204b010;
-struct Struct_02020cb8_3;
-struct Struct_02038598_4;
+struct CombatSlots02045cac;
+struct BackgroundGraphics;
+struct FlagWord020466f4;
 
-void EmptyDestructor0205a494(void* renderer);
-MessageSystem* GetGlobalField0x1c020421a0();
-void InitCombatSlots02045cac(CombatSlots02045cac* messages);
-void ReinitController02043204(char* messages);
-void Background_ClearMap(Obj0204b010* background, void* value);
-void ResetRecordList0204afb4(List0204afb4* background);
+void SpriteContext_Destroy(void* renderer);
+MessageSystem* MessageSystem_GetInstance();
+void MessageSystem_ResetGlyphs(CombatSlots02045cac* messages);
+void MessageSystem_Reset(char* messages);
+void Background_ClearMap(BackgroundGraphics* background, void* value);
+void Background_Destroy(BackgroundGraphics* background);
 void SetFlagBytes02017d68(void* unused);
-void* GetDataPtr02114e04_020d6c00();
-void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
+void* GlobalFlags_GetInstance();
+void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
 
 extern "C" {
 void func_ov023_021eb26c(void* guide);
-void func_02043124(MessageSystem* messages);
+void MessageSystem_Stop(MessageSystem* messages);
 void Background_FlushMap(BackgroundGraphics* background, int value);
 void Background_TransferMap(BackgroundGraphics* background, int value);
 unsigned int GetMainBGAssignedVRAMSize();
 void func_020ca458(int value, void* destination, unsigned int size);
-void func_0205d048(Struct_02081870_2* arg0);
-void* func_02012fe4();
+void Window_Destroy(TextWindow* window);
+void* Zone3D_GetInstance();
 }
 
 // USA: func_ov008_021845ac
@@ -140,44 +137,44 @@ extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* arg0)
         var0->RemoveTask(arg0->unknown_b20_);
         arg0->unknown_b20_ = -1;
     }
-    if (arg0->unknown_730_ != NULL)
-        func_0205a494(arg0->unknown_730_);
-    if (arg0->unknown_73c_ != NULL)
-        func_0205a494(arg0->unknown_73c_);
-    if (arg0->unknown_b08_ != NULL)
-        func_ov023_021eb26c(arg0->unknown_b08_);
-    Struct_02021b84* var1 = func_020421a0();
-    func_02045cac((Struct_02045cac*)var1);
-    func_02043204((char*)var1);
-    func_02043124(var1);
-    var1->unknown_2d8_ = NULL;
-    var1->unknown_2dc_ = NULL;
-    var1->unknown_2e0_ = NULL;
-    Struct_ov003_021594c4* var2[3] = {&arg0->unknown_d0_[0], &arg0->unknown_d0_[1], &arg0->unknown_d0_[2]};
-    for (int var3 = 0; var3 < 3; var3++)
+    if (self->renderer_ != NULL)
+        SpriteContext_Destroy(self->renderer_);
+    if (self->iconRenderer_ != NULL)
+        SpriteContext_Destroy(self->iconRenderer_);
+    if (self->guide_ != NULL)
+        func_ov023_021eb26c(self->guide_);
+    MessageSystem* messages = MessageSystem_GetInstance();
+    MessageSystem_ResetGlyphs((CombatSlots02045cac*)messages);
+    MessageSystem_Reset((char*)messages);
+    MessageSystem_Stop(messages);
+    messages->unk_2d8 = NULL;
+    messages->unk_2dc = NULL;
+    messages->unk_2e0 = NULL;
+    BackgroundGraphics* backgrounds[3] = {&self->backgrounds_[0], &self->backgrounds_[1], &self->backgrounds_[2]};
+    for (int i = 0; i < 3; i++)
     {
         BackgroundGraphics* background = backgrounds[i];
-        Background_ClearMap((Obj0204b010*)background, 0);
+        Background_ClearMap((BackgroundGraphics*)background, 0);
         Background_FlushMap(background, 0);
         Background_TransferMap(background, 0);
-        ResetRecordList0204afb4((List0204afb4*)background);
+        Background_Destroy((BackgroundGraphics*)background);
     }
     func_020ca458(0, (void*)0x06000000, GetMainBGAssignedVRAMSize());
-    func_0205d048(&arg0->unknown_130_);
-    arg0->unknown_790_.Destroy();
-    arg0->unknown_b8_ = NULL;
-    arg0->unknown_72c_ = NULL;
-    SafeAllocator* var5[8] = {&arg0->unknown_0_,      &arg0->unknown_14_, &arg0->unknown_28_,
-                                    &arg0->unknown_3c_, &arg0->unknown_50_,       &arg0->unknown_64_,
-                                    &arg0->unknown_78_,  &arg0->unknown_8c_};
-    for (int var6 = 0; var6 < 7; var6++)
-        var5[var6]->Destroy();
-    if (arg0->unknown_b13_ == 0)
+    Window_Destroy(&self->window_);
+    self->model_.Destroy();
+    self->text_ = NULL;
+    self->pixels_ = NULL;
+    SafeAllocator* allocators[8] = {&self->allocator_,      &self->backgroundAllocator_, &self->textAllocator_,
+                                    &self->spriteAllocator_, &self->iconAllocator_,       &self->modelAllocator_,
+                                    &self->titleAllocator_,  &self->guideAllocator_};
+    for (int i = 0; i < 7; i++)
+        allocators[i]->Destroy();
+    if (self->exit_ == 0)
     {
         if (arg0->unknown_b24_ == 0)
         {
-            func_02017d68(func_02012fe4());
+            SetFlagBytes02017d68(Zone3D_GetInstance());
         }
-        func_020466f4((Struct_02038598_4*)func_020d6c00(), 0xf);
+        FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0xf);
     }
 }

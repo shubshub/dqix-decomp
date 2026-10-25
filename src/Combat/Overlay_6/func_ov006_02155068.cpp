@@ -94,9 +94,9 @@ struct Struct_ov006_02154614 {
     unsigned char unknown_12bd_;
 };
 
-void SetForwardAndStore0205ebc0(void* sound, int a, int b);
-void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
-void ForwardField0xc0_0205ebec(void* sound);
+void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
+void SePlayer_PlayExtra(void* sound, int a, int b);
+void SePlayer_UnloadExtraArchiveB(void* sound);
 
 extern char g_sePlayer[];
 extern char data_ov006_02160080[];
@@ -116,23 +116,23 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
     unsigned short flags = self->flags_;
     if (flags & 0x2000) {
         SetFlags04((GameResources*)resources, 0x2000);
-        self->steam_.MaybeSetRegularAnimation(data_ov006_02160080, 9);
+        self->steam_.SetAnimationByName(data_ov006_02160080, 9);
         self->steam_.EnableFlag(0x1000);
         return;
     }
     if (flags & 0x80) {
         if (self->animationStep_ == 0) {
-            SetForwardAndStore0205ebc0(g_sePlayer, 0x7a, 0x7a);
-            DispatchIfField0xc4NonNeg_0205ebfc(g_sePlayer, 0, 0);
-            self->pot_.MaybeSetRegularAnimation(data_ov006_02160080, 1);
-            self->effect_.MaybeSetRegularAnimation(data_ov006_02160087, 1);
-            self->steam_.MaybeSetRegularAnimation(data_ov006_02160080, 9);
+            SePlayer_LoadExtraArchiveB(g_sePlayer, 0x7a, 0x7a);
+            SePlayer_PlayExtra(g_sePlayer, 0, 0);
+            self->pot_.SetAnimationByName(data_ov006_02160080, 1);
+            self->effect_.SetAnimationByName(data_ov006_02160087, 1);
+            self->steam_.SetAnimationByName(data_ov006_02160080, 9);
             self->steam_.DisableFlag(0x1000);
         } else if (self->animationStep_ >= 1 && self->pot_.HasAnimationStopped()) {
             self->animationStep_ = 0;
             self->flags_ &= ~0x80;
-            self->effect_.MaybeSetRegularAnimation(data_ov006_02160089, 1);
-            self->pot_.MaybeSetRegularAnimation(data_ov006_0216008b, 0);
+            self->effect_.SetAnimationByName(data_ov006_02160089, 1);
+            self->pot_.SetAnimationByName(data_ov006_0216008b, 0);
             self->steam_.StopCurrentAnimation();
             return;
         }
@@ -142,17 +142,17 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
     if (var1 & 0x100) {
         if (!arg0->unknown_2e4_.HasAnimationReachedEnd())
             return;
-        if (arg0->unknown_ae1_ == 0) {
-            arg0->unknown_43c_.MaybeSetRegularAnimation(data_ov006_02160092, 0);
-        } else if (arg0->unknown_ae1_ == 1) {
-            arg0->unknown_43c_.MaybeSetRegularAnimation(data_ov006_02160094, 1);
-        } else if (arg0->unknown_ae1_ == 2) {
-            arg0->unknown_ae1_ = 0;
-            arg0->unknown_2e4_.StopCurrentAnimation();
-            arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_02160096, 1);
-            arg0->unknown_43c_.MaybeSetRegularAnimation(data_ov006_0216009e, 0);
-            arg0->unknown_4e8_.MaybeSetRegularAnimation(data_ov006_02160096, 1);
-            arg0->unknown_ae2_ &= ~0x100;
+        if (self->animationStep_ == 0) {
+            self->effect_.SetAnimationByName(data_ov006_02160092, 0);
+        } else if (self->animationStep_ == 1) {
+            self->effect_.SetAnimationByName(data_ov006_02160094, 1);
+        } else if (self->animationStep_ == 2) {
+            self->animationStep_ = 0;
+            self->pot_.StopCurrentAnimation();
+            self->pot_.SetAnimationByName(data_ov006_02160096, 1);
+            self->effect_.SetAnimationByName(data_ov006_0216009e, 0);
+            self->steam_.SetAnimationByName(data_ov006_02160096, 1);
+            self->flags_ &= ~0x100;
             return;
         }
         arg0->unknown_ae1_++;
@@ -165,25 +165,25 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
             return;
         }
         ClearFlags04((GameResources*)resources, 0x2000);
-        ForwardField0xc0_0205ebec(g_sePlayer);
+        SePlayer_UnloadExtraArchiveB(g_sePlayer);
         self->animationStep_ = 0;
-        self->pot_.MaybeSetRegularAnimation(data_ov006_021600a0, 1);
+        self->pot_.SetAnimationByName(data_ov006_021600a0, 1);
         self->effect_.StopCurrentAnimation();
         self->flags_ &= ~0x200;
         return;
     }
-    if (var1 & 0x400) {
-        if (arg0->unknown_2e4_.HasAnimationStopped()) {
-            arg0->unknown_ae1_ = 0;
-            arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_021600a9, 0);
-            arg0->unknown_43c_.StopCurrentAnimation();
-            arg0->unknown_ae2_ &= ~0x400;
+    if (flags & 0x400) {
+        if (self->pot_.HasAnimationStopped()) {
+            self->animationStep_ = 0;
+            self->pot_.SetAnimationByName(data_ov006_021600a9, 0);
+            self->effect_.StopCurrentAnimation();
+            self->flags_ &= ~0x400;
             return;
         }
-        arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_021600a0, 1);
+        self->pot_.SetAnimationByName(data_ov006_021600a0, 1);
         return;
     }
-    arg0->unknown_ae1_ = 0;
-    arg0->unknown_2e4_.MaybeSetRegularAnimation(data_ov006_021600a9, 0);
-    arg0->unknown_43c_.StopCurrentAnimation();
+    self->animationStep_ = 0;
+    self->pot_.SetAnimationByName(data_ov006_021600a9, 0);
+    self->effect_.StopCurrentAnimation();
 }

@@ -191,7 +191,7 @@ src/Combat/Overlay_5/func_ov005_02155d6c.cpp:
     complete
     .text start:0x0215735c end:0x021578a8
 
-src/Combat/Overlay_5/func_ov005_02157b74.cpp:
+src/Combat/Overlay_5/EquipMenu_EquipItem_02157b74.cpp:
     complete
     .text start:0x0215916c end:0x021599f4
 

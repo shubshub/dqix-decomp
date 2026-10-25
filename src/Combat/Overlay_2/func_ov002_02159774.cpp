@@ -34,17 +34,17 @@ extern "C" ARM int func_ov002_02159774(char *arg0, int arg1, int arg2, int arg3,
         if (*(short *) (arg0 + Enum_ov002_02159774_7206) == 0xd1) var5 = 1;
         if (func_020dc920(arg1 & 0xff, arg3, arg4, var5) == 0) return 3;
     }
-    int *var6 = data_020fdcb0[var0->obj3D_.unknown_4_];
-    var1    = (float) var6[0];
-    var2    = (float) var6[2];
-    if ((*(int *) (arg0 + Enum_ov002_02159774_9340) & 1) || *(int *) (arg0 + Enum_ov002_02159774_7096) == 4) {
-        if (func_ov017_0218b628(arg1)) {
-            var1 = (float) (int) var0->unknown_ac_.unknown_84_->unknown_4_;
-            var2 = (float) (int) var0->baseStats_->primaryStats.maxHP;
+    int *e = data_020fdcb0[c->obj3D_.actorIndex_];
+    cur    = (float) e[0];
+    max    = (float) e[2];
+    if ((*(int *) (self + regionalOffset1) & 1) || *(int *) (self + regionalOffset2) == 4) {
+        if (TestFlagBit55dIfActive_0218b628(id)) {
+            cur = (float) (int) c->combatFields_.savedState_130_->hp;
+            max = (float) (int) c->baseStats_->primaryStats.maxHP;
         } else {
-            Struct_ov002_02159774 *var7 = &((Struct_ov002_02159774 *) (arg0 + Enum_ov002_02159774_6832))[var0->obj3D_.unknown_4_];
-            var1             = (float) (unsigned int) var7->unknown_34_;
-            var2             = (float) (unsigned int) var7->unknown_36_;
+            Stat02159774 *s = &((Stat02159774 *) (self + regionalOffset3))[c->obj3D_.actorIndex_];
+            cur             = (float) (unsigned int) s->cur;
+            max             = (float) (unsigned int) s->max;
         }
     }
     var3 = 0.0f;

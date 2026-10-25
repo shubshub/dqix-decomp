@@ -24,44 +24,44 @@ struct Struct_ov017_021d1e50_3 : Struct_0201bdac {
 #endif
     unsigned char unknown_105_;
 };
-struct Struct_0202c1a4;
-extern "C" int func_0202c1a4(Struct_0202c1a4*);
-extern "C" int func_02046b08(void**);
-extern "C" Struct_ov017_021d1e50_2* func_02012fe4();
-extern "C" void func_ov017_021baedc(Struct_ov017_021d1e50_3*, int);
-extern "C" void func_ov017_021bbbf8(void*, unsigned short);
-extern "C" int func_0201079c(char*);
-extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" void func_02070378(char*);
-extern "C" void func_0200fcfc(void*, const void*);
-extern "C" void func_ov017_0219e310(unsigned char*, int);
-extern "C" void func_ov017_021a65c4(void*, unsigned char, int);
+struct SearchStruct0202c1a4;
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+int IsField0Null_02046b08(void**);
+extern "C" TransitionZone* Zone3D_GetInstance();
+extern "C" void func_ov017_021baedc(TransitionNode*, int);
+void SetField11c_021bbbf8(void*, unsigned short);
+int GetField5cb0Value_0201079c(char*);
+void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
+void* GetField0x3f8Address_0200fd0c(GameState*);
+void InitStruct02070378(char*);
+void CallFunc0200fbb4AtField0x3f8_0200fcfc(void*, const void*);
+void InitAndResetHeader_0219e310(unsigned char*, int);
+void InitAndAppendState61_021a65c4(void*, unsigned char, int);
 
 // USA: func_ov017_021d1e50
-extern "C" ARM void func_ov017_021d1e50(int arg0, Struct_ov017_021cd748_6* arg1, GameState* arg2, GameResources* arg3, Struct_0202c1a4* arg4) {
-    Struct_ov017_021d1e50* var0;
-    int var1;
-    int var2;
-    int var3;
-    Struct_0201bdac_2* var4;
-    Struct_ov017_021d1e50_3* var5;
-    if (!func_0202c1a4(arg4)) return;
-    var4 = (Struct_0201bdac_2*)arg3->unknown_ptr_array_36fc[0];
-    if (!func_02046b08((void**)var4)) return;
-    Struct_ov017_021d1e50_2* var6 = func_02012fe4();
-    var2 = var6->unknown_0_;
-    if (var2 != 0x1901 && var2 != 0x1902 && var2 != 0x1903 && var2 != 0x1904) return;
-    if (arg1->unknown_8_ || arg1->unknown_a_) {
-        var5 = (Struct_ov017_021d1e50_3*)arg3->unknown_ptr_array_371c[6];
-        func_ov017_021baedc(var5, 1);
-        var3 = arg1->unknown_8_;
-        int var7 = arg1->unknown_a_;
-        if (!var3) { var3 = var7; var7 = 0; }
-        var5->unknown_8_ = var3;
-        func_ov017_021bbbf8(var5, var7);
-        if (func_0201079c((char*)arg2) >= 0x13 && var3 == 0x7345 && (unsigned int)(var2 - 0x1901) <= 3) var5->unknown_105_ = 1;
-        func_020469b4(var4, var5);
+extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, GameState* game, GameResources* resources, SearchStruct0202c1a4* search) {
+    TransitionHeader* header;
+    int follow;
+    int id;
+    int first;
+    TailList020469b4* list;
+    TransitionNode* node;
+    if (!GetSearchStructCurrentArrEntry(search)) return;
+    list = (TailList020469b4*)resources->fieldTaskQueue_;
+    if (!IsField0Null_02046b08((void**)list)) return;
+    TransitionZone* zone = Zone3D_GetInstance();
+    id = zone->id;
+    if (id != 0x1901 && id != 0x1902 && id != 0x1903 && id != 0x1904) return;
+    if (event->first || event->second) {
+        node = (TransitionNode*)resources->unknown_ptr_array_371c[6];
+        func_ov017_021baedc(node, 1);
+        first = event->first;
+        int second = event->second;
+        if (!first) { first = second; second = 0; }
+        node->first = first;
+        SetField11c_021bbbf8(node, second);
+        if (GetField5cb0Value_0201079c((char*)game) >= 0x13 && first == 0x7345 && (unsigned int)(id - 0x1901) <= 3) node->special = 1;
+        AppendNodeToTail(list, node);
     } else {
         var0 = (Struct_ov017_021d1e50*)func_0200fd0c(arg2);
         func_02070378((char*)var0);
@@ -108,28 +108,28 @@ extern "C" ARM void func_ov017_021d1e50(int arg0, Struct_ov017_021cd748_6* arg1,
                 var0->unknown_10_.z = 0x1000;
                 break;
             }
-            func_0200fcfc(arg2, var0);
-            unsigned char* var8 = (unsigned char*)arg3->unknown_ptr_array_36fc[4];
-            func_ov017_0219e310(var8, 0);
-            func_020469b4(var4, (Struct_0201bdac*)var8);
-            if (var1) func_ov017_021a65c4(arg3, 1, 0);
-        } else if (arg1->unknown_6_) {
-            var0->unknown_61_ = 1;
-            var0->unknown_0_ = arg1->unknown_6_;
-            var0->unknown_1c_ = 0;
-            var0->unknown_10_.x = 0x100000;
-            var0->unknown_10_.y = 0;
-            var0->unknown_10_.z = 0x100000;
-            Vector3i var9;
-            var9.x = arg1->unknown_c_ << 7;
-            var9.y = arg1->unknown_e_ << 7;
-            var9.z = arg1->unknown_10_ << 7;
-            var6->unknown_27b8_ = var9;
-            func_0200fcfc(arg2, var0);
-            unsigned char* var10 = (unsigned char*)arg3->unknown_ptr_array_36fc[4];
-            func_ov017_0219e310(var10, 0);
-            func_020469b4(var4, (Struct_0201bdac*)var10);
-            func_ov017_021a65c4(arg3, var1, 0);
+            CallFunc0200fbb4AtField0x3f8_0200fcfc(game, header);
+            unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
+            InitAndResetHeader_0219e310(node, 0);
+            AppendNodeToTail(list, (TailNode020469b4*)node);
+            if (follow) InitAndAppendState61_021a65c4(resources, 1, 0);
+        } else if (event->target) {
+            header->direct = 1;
+            header->target = event->target;
+            header->angle = 0;
+            header->position.x = 0x100000;
+            header->position.y = 0;
+            header->position.z = 0x100000;
+            Vector3i position;
+            position.x = event->x << 7;
+            position.y = event->y << 7;
+            position.z = event->z << 7;
+            zone->position = position;
+            CallFunc0200fbb4AtField0x3f8_0200fcfc(game, header);
+            unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
+            InitAndResetHeader_0219e310(node, 0);
+            AppendNodeToTail(list, (TailNode020469b4*)node);
+            InitAndAppendState61_021a65c4(resources, follow, 0);
         }
     }
 }

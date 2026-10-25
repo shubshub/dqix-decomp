@@ -10,14 +10,14 @@ enum { Enum_ov017_021b2758_261 = 0x125, Enum_ov017_021b2758_268 = 0x12c };
 enum { Enum_ov017_021b2758_261 = 0x105, Enum_ov017_021b2758_268 = 0x10c };
 #endif
 
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a27ac(void* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov017_0218f758(void* arg0);
+void GameState_SetCamera(GameState* battleStruct, int value);
+void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+int GetFieldIfFlag4_020100f8(char* obj);
+void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
+void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
+void SetField0x23cTrue_020a27ac(void* obj);
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void CallHelperFourTimesWithSelf_0218f758(void* self);
 
 struct Struct_ov011_021849bc;
 extern "C" int func_ov011_021849bc(struct Struct_ov011_021849bc* arg0, int arg1);
@@ -25,7 +25,7 @@ extern "C" int func_ov011_021849bc(struct Struct_ov011_021849bc* arg0, int arg1)
 struct Struct_ov017_021a3ef0_12;
 extern "C" void func_ov017_021b2200(struct Struct_ov017_021a3ef0_12* arg0);
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void func_020a0c0c(void);
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
 
@@ -58,10 +58,10 @@ struct Struct_ov017_021b2758_3 {
 };
 
 // USA: func_ov017_021b2758
-extern "C" ARM int func_ov017_021b2758(Struct_ov017_021b2758_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    func_020100c4(var0, arg0->unknown_44_);
+extern "C" ARM int func_ov017_021b2758(SelfState_021b2758* self) {
+    GameState* battleStruct = GameState::GetInstance();
+    GameResources* ov = GetGameResources();
+    GameState_SetCamera(battleStruct, self->field0x44);
 
     if (data_ov017_021d83f0.unknown_4_ != 0) {
         if (func_ov011_021849bc((struct Struct_ov011_021849bc*)data_ov017_021d83f0.unknown_4_, 1)) arg0->unknown_38_.unknown1_0_.unknown_0_0_ = 1;
@@ -71,10 +71,10 @@ extern "C" ARM int func_ov017_021b2758(Struct_ov017_021b2758_3* arg0) {
         func_020a0c0c();
     }
 
-    ClearFlags00(var1, 0x10);
-    if (arg0->unknown_38_.unknown1_0_.unknown_0_0_) {
-        func_02012fe4();
-        ClearFlags00(var1, 4);
+    ClearFlags00(ov, 0x10);
+    if (self->field0x38.b.bit0) {
+        Zone3D_GetInstance();
+        ClearFlags00(ov, 4);
         func_ov017_0219bd1c(1, 0, 0, 0);
         arg0->unknown_38_.unknown_0_ &= ~2;
         void* var2 = func_0200fd0c(var0);
@@ -84,13 +84,13 @@ extern "C" ARM int func_ov017_021b2758(Struct_ov017_021b2758_3* arg0) {
     if (arg0->unknown_38_.unknown1_0_.unknown_0_1_) return 6;
     if (arg0->unknown_38_.unknown1_0_.unknown_0_2_) return 7;
 
-    var0->GetUnknownGameObject();
-    int var3 = func_020100f8((char*)var0);
-    unsigned char* var4 = (unsigned char*)func_02012fe4();
-    if (var3 != 0) {
-        func_020a28b0((unsigned char*)var3, 2);
-        if (arg0->unknown_3e_ != 0) {
-            func_020a28a0((unsigned char*)var3, 2);
+    battleStruct->GetUnknownGameObject();
+    int flagVal = GetFieldIfFlag4_020100f8((char*)battleStruct);
+    unsigned char* ctx = (unsigned char*)Zone3D_GetInstance();
+    if (flagVal != 0) {
+        ClearFlagBits_020a28b0((unsigned char*)flagVal, 2);
+        if (self->field0x3e != 0) {
+            SetFlagsAt0x244_020a28a0((unsigned char*)flagVal, 2);
         }
         func_020a27ac((void*)var3);
     }

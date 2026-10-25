@@ -32,15 +32,15 @@ struct Struct_ov025_021ef988_3 {
 
 };
 
-extern "C" SafeAllocator* func_ov025_021e8a54(char* arg0);
-extern "C" char* func_ov025_021e8a64(char* arg0);
-extern "C" Struct_02057de0_2* func_02057924(void);
-extern "C" unsigned char func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" int func_ov025_021e24d0(char* arg0, char* arg1, char* arg2);
-extern "C" void func_ov025_021e8bac(Struct_ov025_021e267c_2* arg0, Struct_ov025_021e267c_3* arg1);
-extern "C" int func_02057de0(Struct_02057de0_2* arg0, int arg1, SafeAllocator* arg2, int arg3, int arg4);
-extern "C" void func_ov025_021eb084(Struct_ov025_021e27c8* arg0, int arg1);
-extern "C" void __clear(void* arg0, int arg1);
+SafeAllocator* GetArrayEntry_021e8a54_021e8a54(char* obj);
+char* GetArrayEntry_021e8a64_021e8a64(char* obj);
+extern "C" NodeList02057de0* func_02057924(void);
+unsigned char GameState_GetLanguage(Struct0200fb08* obj);
+int FindTagAndCopy_021e24d0(char* s, char* out2, char* out1);
+void PushLogNode021e8bac(Obj021e8bac* obj, Node021e8bac* node);
+int CreateAndRegisterNode02057de0(NodeList02057de0* list, int id, SafeAllocator* alloc, int data, int size);
+void RemoveMatchingShort_021eb084(RemoveList021eb084* obj, int val);
+extern "C" void __clear(void* p, int n);
 
 extern Struct_ov025_021ef988_3 data_ov025_021ef988;
 
@@ -63,7 +63,7 @@ extern "C" ARM void func_ov025_021e27c8(char* arg0, int arg1) {
 #if defined(jpn)
 
 #else
-    int var6 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
+    int language = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
 #endif
 
     var3 = 0;

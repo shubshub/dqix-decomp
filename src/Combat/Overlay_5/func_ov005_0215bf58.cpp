@@ -16,8 +16,8 @@ struct Struct_ov005_02153ba4_2
     int unknown_4fc_;
 };
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
+struct ItemTable;
+struct Element020de650;
 
 struct Struct_ov005_02153ba4
 {
@@ -27,22 +27,22 @@ struct Struct_ov005_02153ba4
 
 struct Struct_ov005_02153954
 {
-    char unknown_0_[0xdf4];
-    Struct_0201099c_10* unknown_df4_;
-    char unknown_df8_[Enum_ov005_0215bf58_6584 - 0xdf8];
-    unsigned short unknown_19b8_;
-    char unknown_19ba_[Enum_ov005_0215bf58_11664 - Enum_ov005_0215bf58_6584 - 2];
-    Struct_ov005_02153ba4 unknown_2d90_[24];
-    char unknown_3030_[Enum_ov005_0215bf58_15803 - Enum_ov005_0215bf58_11664 - 24 * sizeof(Struct_ov005_02153ba4)];
-    signed char unknown_3dbb_;
+    char unk_0[0xdf4];
+    ItemTable* items_;
+    char unk_df8[kInfoFlags - 0xdf8];
+    unsigned short infoFlags_;
+    char unk_19ba[kSlots - kInfoFlags - 2];
+    EquipmentSlot slots_[24];
+    char unk_3030[kSelectedSlot - kSlots - 24 * sizeof(EquipmentSlot)];
+    signed char slot_;
 };
 
-extern "C" void func_ov005_021562b8(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215730c(Struct_ov005_02153954* arg0);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" Struct_0201099c_9* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" int func_020dd4c4(signed char arg0, Struct_0201099c_9* arg1);
-extern "C" void func_ov005_021551fc(char*, int, int);
+extern "C" void func_ov005_021562b8(EquipmentMenu* self);
+extern "C" void func_ov005_0215730c(EquipmentMenu* self);
+MemberScreen* GetField1c_021a193c(int* obj);
+Element020de650* ItemTable_Find(ItemTable* c, int key);
+extern "C" int func_020dd4c4(signed char member, Element020de650* entry);
+void DispatchByIdxAndCond021551fc(char*, int, int);
 
 // USA: func_ov005_0215bf58
 extern "C" ARM void func_ov005_0215bf58(Struct_ov005_02153954* arg0)
@@ -54,11 +54,11 @@ extern "C" ARM void func_ov005_0215bf58(Struct_ov005_02153954* arg0)
         func_ov005_021562b8(arg0);
         var0 = 1;
     }
-    if (!var0)
-        func_ov005_0215730c(arg0);
-    int var1 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3])->unknown_4fc_;
-    Struct_0201099c_9* var2 = func_020dedd0(arg0->unknown_df4_, arg0->unknown_2d90_[arg0->unknown_3dbb_].unknown_0_);
-    if (var2 != NULL)
+    if (!touchHandled)
+        func_ov005_0215730c(self);
+    int member = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member_;
+    Element020de650* entry = ItemTable_Find(self->items_, self->slots_[self->slot_].item_);
+    if (entry != NULL)
     {
         if (func_020dd4c4(var1, var2))
             arg0->unknown_19b8_ |= 0x100;

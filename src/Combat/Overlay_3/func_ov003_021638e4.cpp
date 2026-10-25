@@ -47,49 +47,49 @@ struct Struct_020bc1ec {
     int unknown_8_;
 };
 
-struct Struct_01ff91ac_30;
-extern "C" Struct_020bc1ec *func_02012fe4();
-extern "C" void func_020daf9c(int, int, int, int);
+struct Res;
+extern "C" Holder *Zone3D_GetInstance();
+void DispatchWithGlobalContext020daf9c(int, int, int, int);
 void SetAndLockBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
-extern "C" GameObject *func_0200ff1c(GameState *, int);
-extern "C" int func_020100a8(GameState *);
-struct Struct_02033834;
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_ov017_021af59c(Struct_ov000_0215b278 *);
-struct Struct_020469f8;
-struct Struct_020469f8_2;
-extern "C" void func_020469f8(Struct_020469f8*, Struct_020469f8_2*);
-struct Struct_ov003_021638e4_2;
-extern "C" void func_ov017_021b11b0(Struct_ov003_021638e4_2*);
+GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *, int);
+int GameState_GetProtagonistIndex(GameState *);
+struct Obj02033874;
+void SetVecYFromValue02033874(Obj02033874*, int);
+extern "C" void func_ov017_021af59c(Node *);
+struct HeadList020469f8;
+struct HeadNode020469f8;
+void PrependNodeToHead(HeadList020469f8*, HeadNode020469f8*);
+struct Struct021b11b0;
+void InitState39_021b11b0(Struct021b11b0*);
 extern "C" int *func_0202ae18();
 extern "C" int func_0202b7d8(int *);
 extern "C" void func_ov017_021d1810(int, int, signed char);
 extern "C" void *func_020936f8();
 extern "C" void func_02094030(void *, int, int, int);
-extern "C" unsigned int *func_020d6c00();
-struct Struct_02038598_4;
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
-extern "C" int func_020100b0(GameState *);
-struct Struct_02052e2c;
-extern "C" Struct_0209a678_2 * func_02052e2c(Struct_02052e2c*);
-extern "C" void func_ov017_021bbae4(Struct_ov000_0215b278 *, int, int);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
-struct Struct_02038598_5;
-extern "C" int func_02046b60(Struct_02038598_5*, int);
+unsigned int *GlobalFlags_GetInstance();
+struct FlagWord020466f4;
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
+int GameState_GetLeaderIndex(GameState *);
+struct Field150Holder02052e2c;
+Field150 * GetField150Ptr0x488_02052e2c(Field150Holder02052e2c*);
+extern "C" void func_ov017_021bbae4(Node *, int, int);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
+struct ListHead02046b60;
+int ListContainsId(ListHead02046b60*, int);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
-extern "C" int *func_0200fd0c(GameState *);
-extern "C" char *func_020421a0();
-extern "C" void func_02043204(char *);
-extern "C" void func_02043124(char *);
-extern "C" unsigned char *func_02053c6c(unsigned char *);
-extern "C" void func_02086380(unsigned char *);
-struct Struct_ov003_021638e4;
-extern "C" void func_ov017_021b6b8c(Struct_ov003_021638e4*);
+int *GetField0x3f8Address_0200fd0c(GameState *);
+char *MessageSystem_GetInstance();
+void MessageSystem_Reset(char *);
+extern "C" void MessageSystem_Stop(char *);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *);
+void ResetShortFields02086380(unsigned char *);
+struct S021b6b8c;
+void CallIfField24ThenSetFlag_021b6b8c(S021b6b8c*);
 extern "C" void __clear(void *, int);
 
 #if defined(jpn)
@@ -107,19 +107,19 @@ extern "C" void __clear(void *, int);
 #endif
 
 // USA: func_ov003_021638e4
-extern "C" ARM void func_ov003_021638e4(Struct_ov003_02154af4_3 *arg0) {
-    char *var0;
-    GameState *var1;
-    unsigned char *var2;
-    void *var3;
-    BackgroundLoader *var4;
-    var0    = (char *) GetGameResources();
-    var3   = *(void **) (var0 + 0x3000 + RES_LIST_021638e4);
-    var1     = GameState::GetInstance();
-    var4 = BackgroundLoader::GetInstance();
-    var2     = (unsigned char *)func_02010828(var1);
-    func_02012fe4();
-    unsigned char var5 = arg0->unknown_4a4_;
+extern "C" ARM void func_ov003_021638e4(Scene *self) {
+    char *res;
+    GameState *gs;
+    unsigned char *gp;
+    void *list;
+    BackgroundLoader *loader;
+    res    = (char *) GetGameResources();
+    list   = *(void **) (res + 0x3000 + RES_LIST_021638e4);
+    gs     = GameState::GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    gp     = (unsigned char *)GameState_GetParty(gs);
+    Zone3D_GetInstance();
+    unsigned char state = self->state;
 
     if (var5 == 0) {
         if (!(arg0->unknown_464_ & 0x40) || arg0->unknown_4b0_ != 0) {
@@ -137,16 +137,16 @@ extern "C" ARM void func_ov003_021638e4(Struct_ov003_02154af4_3 *arg0) {
             }
             arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
         }
-    } else if (var5 == 2) {
-        if (IsBrightnessTransitionActive((GameResources*)var0) == 0 && var4->GetNumQueuedTasks() <= 0) {
-            if (arg0->unknown_464_ & 0x40) {
-                GameObject *var8 = func_0200ff1c(var1, func_020100a8(var1));
-                if (var8 != 0) {
-                    Vector3i *var9 = &var8->obj3D_.position_;
-                    var9->x        = 0x5800;
-                    var9->y        = 0x199;
-                    var9->z        = -0x785;
-                    func_02033874((Struct_02033834*)var8, 0);
+    } else if (state == 2) {
+        if (IsBrightnessTransitionActive((GameResources*)res) == 0 && loader->GetNumQueuedTasks() <= 0) {
+            if (self->flags & 0x40) {
+                GameObject *c = GetCombatantWithFlag0x100_0200ff1c(gs, GameState_GetProtagonistIndex(gs));
+                if (c != 0) {
+                    Vector3i *v = &c->obj3D_.position_;
+                    v->x        = 0x5800;
+                    v->y        = 0x199;
+                    v->z        = -0x785;
+                    SetVecYFromValue02033874((Obj02033874*)c, 0);
                 }
                 Struct_ov000_0215b278 *var10 = *(Struct_ov000_0215b278 **) (var0 + 0x3000 + RES_NODE_A_021638e4);
                 func_ov017_021af59c(var10);
@@ -169,9 +169,9 @@ extern "C" ARM void func_ov003_021638e4(Struct_ov003_02154af4_3 *arg0) {
                     var14->obj3D_.MakeVisible();
                 }
             }
-            if (func_0202b7d8(func_0202ae18()) != 0) {
-                func_ov017_021d1810(0, -1, (signed char) func_020100a8(var1));
-                func_02094030(func_020936f8(), 1, -1, 0);
+            if (CheckField0NonZero_0202b7d8(func_0202ae18()) != 0) {
+                EnqueueEventTag173_021d1810(0, -1, (signed char) GameState_GetProtagonistIndex(gs));
+                func_02094030(GetGlobal02109030_020936f8(), 1, -1, 0);
             }
         } else {
             if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) {
@@ -191,21 +191,21 @@ extern "C" ARM void func_ov003_021638e4(Struct_ov003_02154af4_3 *arg0) {
                 }
             }
         }
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-    } else if (var5 == 4) {
-        if (IsBrightnessTransitionActive((GameResources*)var0) == 0) {
-            func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x80000);
-            Struct_020bc1ec *var19   = func_02012fe4();
-            Struct_ov000_0215b278 *var20     = *(Struct_ov000_0215b278 **) (var0 + 0x3000 + RES_NODE_C_021638e4);
-            Struct_0209a678_2 *var21 = func_02052e2c((Struct_02052e2c*)(var1->GetGameObjectByIndex(func_020100b0(var1))));
-            func_ov017_021bbae4(var20, var19->unknown_8_, 2);
-            var20->unknown_cd_ = func_020100b0(var1);
-            var20->unknown_ce_ = var21->unknown_14_0_;
-            if (arg0->unknown_464_ & 0x40) {
-                arg0->unknown_464_ &= ~0x40;
-                if (func_0202b7d8(func_0202ae18()) != 0) {
-                    var20->unknown_cf_ = 2;
-                    func_020469b4((Struct_0201bdac_2*)var3, (Struct_0201bdac*)var20);
+        self->state = self->state + 1;
+    } else if (state == 4) {
+        if (IsBrightnessTransitionActive((GameResources*)res) == 0) {
+            FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x80000);
+            Holder *h   = Zone3D_GetInstance();
+            Node *n     = *(Node **) (res + 0x3000 + RES_NODE_C_021638e4);
+            Field150 *f = GetField150Ptr0x488_02052e2c((Field150Holder02052e2c*)(gs->GetGameObjectByIndex(GameState_GetLeaderIndex(gs))));
+            func_ov017_021bbae4(n, h->f8, 2);
+            n->bcd = GameState_GetLeaderIndex(gs);
+            n->bce = f->b14;
+            if (self->flags & 0x40) {
+                self->flags &= ~0x40;
+                if (CheckField0NonZero_0202b7d8(func_0202ae18()) != 0) {
+                    n->bcf = 2;
+                    AppendNodeToTail((TailList020469b4*)list, (TailNode020469b4*)n);
                 }
                 if (func_02046b60((Struct_02038598_5*)var3, 3) == 0) {
                     SetBrightness((GameResources*)var0, 0, 8);
@@ -222,17 +222,17 @@ extern "C" ARM void func_ov003_021638e4(Struct_ov003_02154af4_3 *arg0) {
                 *((unsigned char *) var22 + 0x6e)  = 0x40;
                 *((unsigned char *) var22 + 0xa)   = 0;
             }
-            char *var23 = func_020421a0();
-            func_02043204(var23);
-            func_02043124(var23);
-            arg0->unknown_4a3_  = 0x10;
-            arg0->unknown_4a4_ = 0;
-            for (signed char var24 = 0; var24 < 4; var24++) {
-                GameObject *var25 = var1->GetPartyMemberByIndex(var24);
-                if (var25 != 0) {
-                    unsigned char *var26 = func_02053c6c((unsigned char *) var25);
-                    if (var26 != 0) {
-                        func_02086380(var26);
+            char *ctl = MessageSystem_GetInstance();
+            MessageSystem_Reset(ctl);
+            MessageSystem_Stop(ctl);
+            self->c4a3  = 0x10;
+            self->state = 0;
+            for (signed char i = 0; i < 4; i++) {
+                GameObject *m = gs->GetPartyMemberByIndex(i);
+                if (m != 0) {
+                    unsigned char *fld = GetFieldAt0x150_02053c6c((unsigned char *) m);
+                    if (fld != 0) {
+                        ResetShortFields02086380(fld);
                     }
                 }
             }

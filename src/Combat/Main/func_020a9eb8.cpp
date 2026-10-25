@@ -6,9 +6,6 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_020a99d0_3 {
     unsigned short unknown_0_[70];
@@ -325,51 +322,51 @@ struct Struct_020a9eb8_15 {
     Struct_020a9eb8_14* unknown_4_;
 };
 
-extern "C" int func_01ff85b8(void* arg0, int arg1);
-extern "C" Struct_020a95a4_2* func_02012fe4(void);
-extern "C" Struct_ov031_0224e6e0* func_0202ae18(void);
-extern "C" Struct_020a99d0_3* func_0205ec34(void);
-extern "C" int func_0202c540(Struct_ov031_0224e6e0* arg0);
-extern "C" int func_0202c508(Struct_ov031_0224e6e0* arg0);
-extern "C" int func_02075acc(int arg0, void* arg1, unsigned int arg2, int arg3);
-extern "C" void func_020830cc(Struct_020a95a4_5* arg0, Struct_020a95a4_7* arg1);
+extern "C" int func_01ff85b8(void* buf, int size);
+extern "C" FieldState* Zone3D_GetInstance(void);
+extern "C" SessionState* func_0202ae18(void);
+extern "C" Struct020a99d0* Scenario_GetInstance(void);
+extern "C" int func_0202c540(SessionState* session);
+extern "C" int func_0202c508(SessionState* session);
+extern "C" int func_02075acc(int offset, void* buf, unsigned int size, int flag);
+extern "C" void PartyMember_WriteRecord(MonsterRecord* record, BattleMemberData* dst);
 extern "C" void func_020a0c0c(void);
 extern "C" void func_020a0cc4(unsigned int arg0);
 
-extern "C" Struct_020a95a4_3* func_02094d6c(void);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_0202ba00(int* arg0);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" Struct_020a95a4_5* func_02053c6c(unsigned char* arg0);
-extern "C" unsigned short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" unsigned char* func_0207c60c(void* arg0, unsigned int arg1);
-extern "C" short func_0207c620(unsigned char* arg0, unsigned int arg1);
-extern "C" unsigned char func_0207c694(unsigned char* arg0, unsigned int arg1);
-extern "C" unsigned short* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" unsigned char func_0209ca98(char* arg0);
-extern "C" unsigned char func_0205ea18(unsigned char* arg0);
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" int func_02010804(char* arg0);
-extern "C" int func_0201081c(char* arg0);
-extern "C" void func_020ac4f8(int arg0);
-extern "C" int func_0201b588(int arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" int func_02011494(char* arg0, void* arg1);
-extern "C" void func_020a99d0(Struct_020a99d0_3* arg0, Struct_020a99d0_3* arg1);
-extern "C" int func_020ac7b4(int arg0);
-extern "C" void func_ov017_021d0d58(void);
-extern "C" Struct_020fdd44* func_02027ca4(void);
-extern "C" Struct_020fdd44* func_02028bd0(Struct_020fdd44* arg0, int arg1);
-extern "C" Struct_0203dce4_2* func_0203cf4c(void);
-extern "C" int func_0203e524(Struct_0203dce4_2* arg0, Struct_02028460_3* arg1, Struct_0203e524* arg2);
-extern "C" Struct_02087574_2* func_02087574(Struct_02087574* arg0, int arg1);
+Global02109418* GetGlobal02109418_02094d6c(void);
+int GameState_GetProtagonistIndex(GameState* gs);
+int CheckField0NonZero_0202b7d8(int* p);
+int GetFieldAt0x0_0202ba00(int* p);
+int Scenario_TestFlag(int base, unsigned char* bits, int bit);
+MonsterRecord* GetFieldAt0x150_02053c6c(unsigned char* obj);
+unsigned short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* roster, unsigned int idx);
+unsigned char* GetPointerAt0xbf0_0207c60c(void* roster, unsigned int idx);
+short GetShortFromArray0xc10_0207c620(unsigned char* roster, unsigned int idx);
+unsigned char GetByteFromArray0xc28_0207c694(unsigned char* roster, unsigned int idx);
+unsigned short* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+unsigned char GetField0xcc0209ca98(char* p);
+unsigned char GetByteFieldAt0xcc_0205ea18(unsigned char* p);
+int GetField5cb0Value_0201079c(char* gs);
+int GetField5cb4Value_020107d0(char* gs);
+int GetField5cb8Value_02010804(char* gs);
+int GetField5cbcValue_0201081c(char* gs);
+void UpdatePlayClocks020ac4f8(int running);
+int IsInRange0201b588(int mapId);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* p);
+int CopyOutRegion0x5718_02011494(char* gs, void* out);
+void CopyStruct020a99d0(Struct020a99d0* dst, Struct020a99d0* src);
+int SendBattleSaveBufferOrSetFlag020ac7b4(int flag);
+void EnqueueEventTag23Field_021d0d58(void);
+Entry_02028bd0* ZoneRecords_GetInstance(void);
+Entry_02028bd0* FindInlineEntryById(Entry_02028bd0* base, int id);
+EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c(void);
+int FindNearestEntryDistance0203e524(EntryList_203dce4* list, Vec3s32_020c3030* pos, OutVec3s16_0203e524* out);
+Entry02087574* FindEntryBySignedId02087574(EntryTable02087574* table, int id);
 
 extern char data_020f1bf0[];
-extern AllocatorUnion data_02114e20;
-extern Global02109bf4 data_02109bf4;
+extern AllocatorUnion g_mainAllocator;
+extern Global02109bf4 g_bgmPlayer;
 extern unsigned char g_sePlayer[];
 
 static inline int inline_020a9eb8(void* arg0, unsigned int arg1) {
@@ -389,22 +386,22 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
 #else
     int var6;
 #endif
-    int var7;
-    int var8;
-    int var9;
-    int var10;
-    int var11;
-    Struct_020a95a4_3* var12;
-    Struct_ov031_0224e6e0* var13;
-    int var14;
-    int var15;
-    var0 = GameState::GetInstance();
-    Struct_020a95a4_2* var16 = func_02012fe4();
-    Struct_ov031_0224e6e0* var17 = func_0202ae18();
-    var1 = func_0205ec34();
-    var2 = func_02094d6c();
-    var3 = static_cast<Struct_020a95a4_8*>(func_02010828(var0));
-    reinterpret_cast<Struct_020a9eb8_2*>(var0)->unknown_5cc8_ = 1;
+    int k;
+    int total;
+    int j;
+    int slot;
+    int i;
+    Global02109418* global2;
+    SessionState* session2;
+    int keepTimer;
+    int idCount;
+    gs = GameState::GetInstance();
+    FieldState* field = Zone3D_GetInstance();
+    SessionState* session = func_0202ae18();
+    record = Scenario_GetInstance();
+    global = GetGlobal02109418_02094d6c();
+    battle = static_cast<BattleData*>(GameState_GetParty(gs));
+    reinterpret_cast<GameStateSaveView*>(gs)->saving = 1;
 
     var4 = false;
     var5 = 0;
@@ -418,9 +415,9 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
         if (arg2 & 8) {
             var4 = true;
         }
-        if (var4) {
-            if (func_0206dfb0((int)var1, var1->unknown_8c_, 0x113c)) {
-                var5 = var3->unknown_2c94_;
+        if (useArea) {
+            if (Scenario_TestFlag((int)record, record->flagBits, 0x113c)) {
+                savedArea = battle->areaId;
             }
             var3->unknown_2c94_ = var16->unknown_0_;
             if (arg2 & 8) {
@@ -462,29 +459,29 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
 #endif
 
     {
-        Struct_020a95a4_6* var22;
-        Struct_020a95a4_2* var23;
-        GameState* var24 = GameState::GetInstance();
-        Struct_020a95a4_8* var25 = static_cast<Struct_020a95a4_8*>(func_02010828(var24));
-        var13 = func_0202ae18();
-        var23 = func_02012fe4();
+        BattleSave* save;
+        FieldState* field2;
+        GameState* gs2 = GameState::GetInstance();
+        BattleData* battle2 = static_cast<BattleData*>(GameState_GetParty(gs2));
+        session2 = func_0202ae18();
+        field2 = Zone3D_GetInstance();
         GetGameResources();
-        var12 = func_02094d6c();
-        func_020a0cc4(sizeof(Struct_020a95a4_6));
-        var22 = (Struct_020a95a4_6*)func_02012d88(&data_02114e20, sizeof(Struct_020a95a4_6));
-        if (var22 != NULL) {
-            memset(var22, 0, sizeof(Struct_020a95a4_6));
-            Struct_020a9eb8_2::Struct_020a9eb8_3 var26;
-            unsigned char var27[4];
-            var15 = func_02011494((char*)var24, var27);
-            memcpy(var22->unknown_0_, var25->unknown_f80_, var25->unknown_2c8c_ * sizeof(Struct_020a95a4_7));
-            for (var11 = 0; var11 < var15; var11++) {
-                var10 = var11 + var25->unknown_2c8c_;
-                GameObject* var28 = func_0200ff1c(var24, var27[var11]);
-                if (var28 != NULL) {
-                    Struct_020a95a4_5* var29 = func_02053c6c((unsigned char*)var28);
-                    if (var29 != NULL) {
-                        func_020830cc(var29, &var22->unknown_0_[var10]);
+        global2 = GetGlobal02109418_02094d6c();
+        func_020a0cc4(sizeof(BattleSave));
+        save = (BattleSave*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(BattleSave));
+        if (save != NULL) {
+            memset(save, 0, sizeof(BattleSave));
+            GameStateSaveView::Bytes6 name;
+            unsigned char ids[4];
+            idCount = CopyOutRegion0x5718_02011494((char*)gs2, ids);
+            memcpy(save->members, battle2->members, battle2->memberCount * sizeof(BattleMemberData));
+            for (i = 0; i < idCount; i++) {
+                slot = i + battle2->memberCount;
+                GameObject* obj = GetCombatantWithFlag0x100_0200ff1c(gs2, ids[i]);
+                if (obj != NULL) {
+                    MonsterRecord* rec = GetFieldAt0x150_02053c6c((unsigned char*)obj);
+                    if (rec != NULL) {
+                        PartyMember_WriteRecord(rec, &save->members[slot]);
                     }
                 }
             }
@@ -495,11 +492,11 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
                     memcpy(&var22->unknown_1d12_[var9], func_02053c6c((unsigned char*)var30)->unknown_454_, 0x10);
                 }
             }
-            memcpy(var22->unknown_1d0d_, var27, 4);
-            var22->unknown_1d11_ = var15;
-            if (func_020100a8(var24) != 0 || func_0202c540(var13) != 0) {
-                var22->unknown_1d0d_[0] = 0;
-                var22->unknown_1d11_ = 1;
+            memcpy(save->ids, ids, 4);
+            save->idCount = idCount;
+            if (GameState_GetProtagonistIndex(gs2) != 0 || func_0202c540(session2) != 0) {
+                save->ids[0] = 0;
+                save->idCount = 1;
             }
             memcpy(var22->unknown_1d5c_, var25->unknown_0_, sizeof(var25->unknown_0_));
             var8 = 0;
@@ -530,12 +527,12 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
                 var22->unknown_2c4c_ = var34->unknown_7e74_;
             }
             save->zero2 = 0;
-            unsigned short* words = GetField0x74deForValidIndex_020120a0((char*)gs2, GetField0x3acValue_020100a8(gs2));
+            unsigned short* words = GetField0x74deForValidIndex_020120a0((char*)gs2, GameState_GetProtagonistIndex(gs2));
             save->words[0] = words[0];
             save->words[1] = words[1];
             save->words[2] = words[2];
             save->words[3] = words[3];
-            save->globalByte = GetField0xcc0209ca98((char*)&data_02109bf4);
+            save->globalByte = GetField0xcc0209ca98((char*)&g_bgmPlayer);
             save->globalByte2 = GetByteFieldAt0xcc_0205ea18(g_sePlayer);
             save->byteF7d = battle2->byteF7d;
             save->byte63dc = view2->byte63dc;
@@ -591,12 +588,12 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
 #if !defined(jpn)
             var22->unknown_2ca2_ = var6;
 #endif
-            func_02075acc((char*)&arg1->unknown_4_ - var21, var22, sizeof(Struct_020a95a4_6), 0);
-            func_02012da4(&data_02114e20, var22);
+            func_02075acc((char*)&body->battle - base, save, sizeof(BattleSave), 0);
+            AllocatorUnion_Free(&g_mainAllocator, save);
         }
         func_020a0c0c();
-        if (func_0206dfb0((int)var1, var1->unknown_8c_, 0x113c)) {
-            var3->unknown_2c94_ = var5;
+        if (Scenario_TestFlag((int)record, record->flagBits, 0x113c)) {
+            battle->areaId = savedArea;
         }
     }
 
@@ -616,30 +613,30 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
         }
     }
 
-    if (!var14) {
-        Struct_020a9eb8_2* var40 = reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance());
-        Struct_020a9eb8_7* var41 = (Struct_020a9eb8_7*)func_02012d88(&data_02114e20, sizeof(Struct_020a9eb8_7));
-        if (var41 != NULL) {
-            var41->unknown_0_ = var40->unknown_5cda_;
-            memcpy(var41->unknown_4_, var40->unknown_5cdc_, sizeof(var41->unknown_4_));
-            func_02075acc((char*)&arg1->unknown_33c0_ - var21, var41, sizeof(Struct_020a9eb8_7), 0);
-            func_02012da4(&data_02114e20, var41);
+    if (!keepTimer) {
+        GameStateSaveView* view4 = reinterpret_cast<GameStateSaveView*>(GameState::GetInstance());
+        Block194* block = (Block194*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(Block194));
+        if (block != NULL) {
+            block->value = view4->byte5cda;
+            memcpy(block->data, view4->block5cdc, sizeof(block->data));
+            func_02075acc((char*)&body->block194 - base, block, sizeof(Block194), 0);
+            AllocatorUnion_Free(&g_mainAllocator, block);
         }
-        int var42 = (char*)arg1->unknown_3ec4_ - var21;
-        Struct_020a95a4* var43 = &func_02012fe4()->unknown_840_;
-        func_02075acc(var42, var43->unknown_0_, sizeof(var43->unknown_0_), 0);
-        func_020a0cc4(sizeof(Struct_020a9eb8_8));
-        Struct_020a9eb8_8* var44 = (Struct_020a9eb8_8*)func_02012d88(&data_02114e20, sizeof(Struct_020a9eb8_8));
-        if (var44 != NULL) {
-            VectorizedInvertedMemcpy(var43->unknown_d98_, var44->unknown_0_, sizeof(var43->unknown_d98_));
-            var44->unknown_d98_ = var43->unknown_1b38_;
-            var44->unknown_d9c_ = var43->unknown_1b34_;
-            var44->unknown_da0_ = var43->unknown_1b44_;
-            var44->unknown_da4_ = var43->unknown_1b3c_;
-            var44->unknown_da6_ = var43->unknown_1b61_;
-            var44->unknown_da7_ = 0;
-            func_02075acc(var42 + sizeof(var43->unknown_0_), var44, sizeof(Struct_020a9eb8_8), 0);
-            func_02012da4(&data_02114e20, var44);
+        int offset = (char*)body->field - base;
+        FieldSubState* sub = &Zone3D_GetInstance()->sub;
+        func_02075acc(offset, sub->current, sizeof(sub->current), 0);
+        func_020a0cc4(sizeof(FieldSave));
+        FieldSave* fieldSave = (FieldSave*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(FieldSave));
+        if (fieldSave != NULL) {
+            VectorizedInvertedMemcpy(sub->saved, fieldSave->data, sizeof(sub->saved));
+            fieldSave->value1b38 = sub->value1b38;
+            fieldSave->value1b34 = sub->value1b34;
+            fieldSave->value1b44 = sub->value1b44;
+            fieldSave->value1b3c = sub->value1b3c;
+            fieldSave->byte1b61 = sub->byte1b61;
+            fieldSave->zero = 0;
+            func_02075acc(offset + sizeof(sub->current), fieldSave, sizeof(FieldSave), 0);
+            AllocatorUnion_Free(&g_mainAllocator, fieldSave);
         }
         func_020a0c0c();
         Struct_020a9eb8_2* var45 = reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance());
@@ -671,12 +668,12 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
         int var52;
         var51 = (char*)&arg1->unknown_5e08_ - var21;
 #if defined(jpn)
-        Struct_020a95a4_2* var54;
-        GameState* var53 = GameState::GetInstance();
-        var54 = func_02012fe4();
+        FieldState* field5;
+        GameState* gs5 = GameState::GetInstance();
+        field5 = Zone3D_GetInstance();
 #else
-        GameState* var53 = GameState::GetInstance();
-        Struct_020a95a4_2* var54 = func_02012fe4();
+        GameState* gs5 = GameState::GetInstance();
+        FieldState* field5 = Zone3D_GetInstance();
 #endif
         Struct_020a9eb8 var55;
         if (arg3) {
@@ -704,18 +701,18 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             var58.unknown_4_ = var59->obj3D_.position_;
             var58.unknown_2_ = var59->obj3D_.rotation_.y;
         }
-        Struct_020a95a4_2* var60 = func_02012fe4();
-        Struct_020fdd44* var61 = func_02028bd0(func_02027ca4(), var60->unknown_0_);
-        if (var61 == NULL) {
-            var58.unknown_12_ = 0;
-            var58.unknown_10_ = 0;
+        FieldState* field6 = Zone3D_GetInstance();
+        Entry_02028bd0* entry = FindInlineEntryById(ZoneRecords_GetInstance(), field6->mapId);
+        if (entry == NULL) {
+            position.entryValue = 0;
+            position.area = 0;
         } else {
             var58.unknown_12_ = var61->unknown_4_;
             var58.unknown_10_ = var61->unknown_2_4_;
         }
-        var58.unknown_14_ = data_02109bf4.unknown_c8_2_;
-        var58.unknown_15_ = func_0203e524(func_0203cf4c(), (Struct_02028460_3*)&var59->obj3D_.position_, &var58.unknown_16_);
-        func_02075acc((char*)&arg1->unknown_695c_ - var21, &var58, sizeof(var58), 0);
+        position.globalBit = g_bgmPlayer.bit2;
+        position.distance = FindNearestEntryDistance0203e524(GetGlobalPtr021075f4_0203cf4c(), (Vec3s32_020c3030*)&obj->obj3D_.position_, &position.nearest);
+        func_02075acc((char*)&body->position - base, &position, sizeof(position), 0);
     }
 
     unsigned char* var62 = reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance())->unknown_71fc_;
@@ -735,18 +732,18 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             }
             func_02075acc((char*)&arg1->unknown_6d4c_ - var21, &var65, sizeof(var65), 0);
         }
-    } else if ((arg2 & 0x10) && arg3 == 0) {
-        int var66;
-        int var67;
-        Struct_020a95a4_8* var68 = static_cast<Struct_020a95a4_8*>(func_02010828(GameState::GetInstance()));
-        Struct_020a9eb8_12 var69;
-        memset(&var69, 0, sizeof(var69));
-        var67 = 0;
-        for (var66 = 0; var66 < var68->unknown_2c8c_; var66++) {
-            Struct_02087574_2* var70 = func_02087574((Struct_02087574*)var68, var68->unknown_f80_[var66].unknown_0_0_);
-            if (var70 != NULL) {
-                memcpy(&var69.unknown_4_[var67], var70, sizeof(Struct_02087574_2));
-                var67++;
+    } else if ((flags & 0x10) && mode == 0) {
+        int i;
+        int count;
+        BattleData* battle8 = static_cast<BattleData*>(GameState_GetParty(GameState::GetInstance()));
+        EntrySave entries;
+        memset(&entries, 0, sizeof(entries));
+        count = 0;
+        for (i = 0; i < battle8->memberCount; i++) {
+            Entry02087574* entry = FindEntryBySignedId02087574((EntryTable02087574*)battle8, battle8->members[i].entryId);
+            if (entry != NULL) {
+                memcpy(&entries.entries[count], entry, sizeof(Entry02087574));
+                count++;
             }
         }
         if (var67) {

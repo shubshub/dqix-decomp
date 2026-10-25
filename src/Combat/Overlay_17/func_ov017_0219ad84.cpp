@@ -35,24 +35,24 @@ struct Struct_ov017_0219ad84_4 {
     unsigned short unknown_1b2_;
 };
 
-extern "C" Struct_ov017_0219ad84* func_02012fe4();
-extern "C" Struct_ov017_0219ad84_2* func_020421a0();
-extern "C" int func_02046b24(Struct_02015438**);
-extern "C" void func_0204724c(Struct_0201730c*);
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
-extern "C" unsigned char func_02039d7c(char*);
-extern "C" int func_0203402c(Struct_0203402c*);
-extern "C" void func_0203a46c(Struct_0203a46c*, int, int, int);
-extern "C" void func_020478bc(Struct_02017098_3*, int);
-extern "C" void func_02047554(Struct_02012fa4*, int, int);
-extern "C" int func_020535c8(signed char*);
-extern "C" int func_02046b08(void**);
-extern "C" Struct_0202c1a4* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_0202c1a4(Struct_0202c1a4*);
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" void func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" int func_ov017_0218d4ec(void*, int);
+extern "C" Zone0219ad84* Zone3D_GetInstance();
+Controller0219ad84* MessageSystem_GetInstance();
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+void AdvanceStreamRecord0204724c(Obj0204724C*);
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+unsigned char GetByte0x26c_02039d7c(char*);
+int CheckField0xc4Low15BitsNonZero(BitField0203402c*);
+void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
+void RecomputeField0x7c(Struct020478bc*, int);
+extern "C" void func_02047554(Foo02048004*, int, int);
+int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+int IsField0Null_02046b08(void**);
+extern "C" SearchStruct0202c1a4* func_0202ae18();
+int CheckField0NonZero_0202b7d8(int*);
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+void* GetField0x3f8Address_0200fd0c(GameState*);
+void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+int HasFlagBit_0218d4ec(void*, int);
 
 static inline Struct_02012fa4* inline_ov017_0219ad84(GameResources* arg0) {
     return *(Struct_02012fa4**)&arg0->unknown_35a8[0x88];
@@ -63,18 +63,18 @@ static inline unsigned char inline_ov017_0219ad84_2(void* arg0) {
 
 // USA: func_ov017_0219ad84
 // JPN: func_ov017_0219b924
-extern "C" ARM void func_ov017_0219ad84(GameResources* arg0) {
-    if (TestFlags04(arg0, 0x40)) return;
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov017_0219ad84* var1 = func_02012fe4();
-    void* var2 = func_020100bc(var0);
-    Struct_ov017_0219ad84_2* var3 = func_020421a0();
-    Struct_ov017_0219ad84_3* var4 = (Struct_ov017_0219ad84_3*)func_0200fd0c(var0);
-    GameObject* var5 = var0->GetUnknownGameObject();
-    if (!var5) return;
+extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
+    if (TestFlags04(self, 0x40)) return;
+    GameState* game = GameState::GetInstance();
+    Zone0219ad84* zone = Zone3D_GetInstance();
+    void* camera = game->GetCamera();
+    Controller0219ad84* controller = MessageSystem_GetInstance();
+    Window0219ad84* field = (Window0219ad84*)GetField0x3f8Address_0200fd0c(game);
+    GameObject* actor = game->GetUnknownGameObject();
+    if (!actor) return;
 
-    if (func_02046b24((Struct_02015438**)arg0->unknown_ptr_array_36fc[0]) == 4) {
-        if (inline_ov017_0219ad84(arg0) == NULL || !inline_ov017_0219ad84(arg0)->unknown_84_0_) return;
+    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) == 4) {
+        if (CurrentSprite(self) == NULL || !CurrentSprite(self)->bit0) return;
         GXFIFO_MATRIX_PUSH = 0;
         if (inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[12] &&
             inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[13] &&
@@ -88,46 +88,46 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* arg0) {
         return;
     }
 
-    int var6 = 1;
-    unsigned int var7 = 0;
-    if (var3) var7 |= var3->unknown_998_;
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_36fc[5]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[10]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_371c[1]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[20]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[1]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[16]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[7]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[11]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[27]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[4]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[47]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[9]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[6]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[42]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[29]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[30]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[21]);
-    var7 |= inline_ov017_0219ad84_2(arg0->unknown_ptr_array_3afc[43]);
-    var7 |= func_02039d7c((char*)var5);
-    int var8 = func_0203402c((Struct_0203402c*)var5);
-    if (var7 | var8 | inline_ov017_0219ad84_2(var4)) var6 = 0;
-    if (var6) {
-        func_0203a46c((Struct_0203a46c*)&arg0->substruct_array_2b90[0], arg0->unknown_3634_[0] << 12, arg0->unknown_3646_[0] << 12, -0x1000);
-        func_020478bc((Struct_02017098_3*)&arg0->substruct_array_2b90[0], 1);
+    int idle = 1;
+    unsigned int busy = 0;
+    if (controller) busy |= controller->busy;
+    busy |= WindowOpen(self->unknown_ptr_array_3700[4]);
+    busy |= WindowOpen(self->fieldTasks_[10]);
+    busy |= WindowOpen(self->unknown_ptr_array_371c[1]);
+    busy |= WindowOpen(self->fieldTasks_[20]);
+    busy |= WindowOpen(self->fieldTasks_[1]);
+    busy |= WindowOpen(self->fieldTasks_[16]);
+    busy |= WindowOpen(self->fieldTasks_[7]);
+    busy |= WindowOpen(self->fieldTasks_[11]);
+    busy |= WindowOpen(self->fieldTasks_[27]);
+    busy |= WindowOpen(self->fieldTasks_[4]);
+    busy |= WindowOpen(self->fieldTasks_[47]);
+    busy |= WindowOpen(self->fieldTasks_[9]);
+    busy |= WindowOpen(self->fieldTasks_[6]);
+    busy |= WindowOpen(self->fieldTasks_[42]);
+    busy |= WindowOpen(self->fieldTasks_[29]);
+    busy |= WindowOpen(self->fieldTasks_[30]);
+    busy |= WindowOpen(self->fieldTasks_[21]);
+    busy |= WindowOpen(self->fieldTasks_[43]);
+    busy |= GetByte0x26c_02039d7c((char*)actor);
+    int check = CheckField0xc4Low15BitsNonZero((BitField0203402c*)actor);
+    if (busy | check | WindowOpen(field)) idle = 0;
+    if (idle) {
+        SetVec3At0x1c((Vec3Target0203a46c*)&self->substruct_array_2b90[0], self->fieldButtonX[0] << 12, self->fieldButtonY[0] << 12, -0x1000);
+        RecomputeField0x7c((Struct020478bc*)&self->substruct_array_2b90[0], 1);
         GXFIFO_MATRIX_PUSH = 0;
         func_02047554(&arg0->substruct_array_2b90[0], 0, 1);
         GXFIFO_MATRIX_POP = 1;
     }
 
-    if (arg0->unknown_36b4_[1] != 0x12 && !func_020535c8((signed char*)var5) &&
-        func_02046b08((void**)arg0->unknown_ptr_array_36fc[0])) {
-        int var9 = 1;
-        if (TestFlags04(arg0, 8) && arg0->unknown_36b4_[0] == 0) var9 = 0;
-        if (arg0->unknown_36b4_[1] == 0x11) var9 = 0;
-        if (var9) {
-            int var10 = arg0->unknown_36b4_[1];
-            Struct_02012fa4* var11 = arg0->substruct_array_2b90;
+    if (self->interactionSelection.spriteIndex != 0x12 && !CheckSubstructByte0x7cPositive_020535c8((signed char*)actor) &&
+        IsField0Null_02046b08((void**)self->fieldTaskQueue_)) {
+        int show = 1;
+        if (TestFlags04(self, 8) && self->interactionSelection.kind == 0) show = 0;
+        if (self->interactionSelection.spriteIndex == 0x11) show = 0;
+        if (show) {
+            int selection = self->interactionSelection.spriteIndex;
+            Foo02048004* sprites = self->substruct_array_2b90;
             GXFIFO_MATRIX_PUSH = 0;
             func_0204724c((Struct_0201730c*)&var11[var10]);
             func_020473c8((Struct_02015ef4_2*)&var11[var10], 1);
@@ -135,33 +135,33 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* arg0) {
         }
     }
 
-    Struct_0202c1a4* var12 = func_0202ae18();
-    if (!func_0202b7d8((int*)var12) || !var2) return;
-    if (func_020535c8((signed char*)var5)) return;
-    int var13 = func_0202c1a4(var12);
-    int var14 = 0;
-    for (int var15 = 0; var15 < 4; var15++) {
-        if (var15 == var13) continue;
-        Struct_ov017_0219ad84_4* var16 = (Struct_ov017_0219ad84_4*)func_0200ff1c(var0, var15);
-        if (!var16) continue;
-        if (!var16->unknown_0_.IsVisible()) continue;
-        if (!var16->unknown_0_.GetInheritedAlpha()) continue;
-        int var17 = 0;
-        if (var16->unknown_0_.GetFlag(0x800000) && var16->unknown_0_.GetFlag(0x400)) var17 = 1;
-        unsigned short var18 = var1->unknown_0_;
-        unsigned short var19 = var16->unknown_0_.GetField06();
-        if (var19 != var18 && !var17) continue;
-        Vector3fix var20 = var16->unknown_0_.position_;
-        var20.y += var16->unknown_0_.GetHeight();
-        int var21, var22;
-        func_0202ec84(var2, (Struct_02015ef4*)&var20, &var21, &var22);
-        var21 -= 12;
-        var22 -= 24;
-        if (var16->unknown_0_.GetFlag(0x400)) {
-            Struct_02012fa4* var23 = &arg0->unknown_3520;
-            func_0203a46c((Struct_0203a46c*)var23, var21 << 12, var22 << 12, -0xa000);
-            func_020478bc((Struct_02017098_3*)var23, 1);
-            func_0204724c((Struct_0201730c*)var23);
+    SearchStruct0202c1a4* search = func_0202ae18();
+    if (!CheckField0NonZero_0202b7d8((int*)search) || !camera) return;
+    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)actor)) return;
+    int current = GetSearchStructCurrentArrEntry(search);
+    int drawn = 0;
+    for (int i = 0; i < 4; i++) {
+        if (i == current) continue;
+        Combatant0219ad84* member = (Combatant0219ad84*)GetCombatantWithFlag0x100_0200ff1c(game, i);
+        if (!member) continue;
+        if (!member->obj3D.IsVisible()) continue;
+        if (!member->obj3D.GetInheritedAlpha()) continue;
+        int marked = 0;
+        if (member->obj3D.GetFlag(0x800000) && member->obj3D.GetFlag(0x400)) marked = 1;
+        unsigned short id = zone->id;
+        unsigned short field06 = member->obj3D.GetField06();
+        if (field06 != id && !marked) continue;
+        Vector3fix position = member->obj3D.position_;
+        position.y += member->obj3D.GetHeight();
+        int x, y;
+        Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
+        x -= 12;
+        y -= 24;
+        if (member->obj3D.GetFlag(0x400)) {
+            Foo02048004* marker = &self->unknown_3520;
+            SetVec3At0x1c((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
+            RecomputeField0x7c((Struct020478bc*)marker, 1);
+            AdvanceStreamRecord0204724c((Obj0204724C*)marker);
             GXFIFO_MATRIX_PUSH = 0;
             func_020473c8((Struct_02015ef4_2*)var23, 1);
             var14++;
@@ -175,10 +175,10 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* arg0) {
             func_020473c8((Struct_02015ef4_2*)var24, 1);
             var14++;
             GXFIFO_MATRIX_POP = 1;
-            if (var14 >= 3) break;
-        } else if (func_ov017_0218d4ec(arg0, var16->unknown_0_.unknown_4_)) {
-            Struct_02012fa4* var25 = &arg0->substruct_array_2b90[17];
-            func_0203a46c((Struct_0203a46c*)var25, var21 << 12, var22 << 12, -0xa000);
+            if (drawn >= 3) break;
+        } else if (HasFlagBit_0218d4ec(self, member->obj3D.actorIndex_)) {
+            Foo02048004* marker = &self->substruct_array_2b90[17];
+            SetVec3At0x1c((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             GXFIFO_MATRIX_PUSH = 0;
             func_0204724c((Struct_0201730c*)var25);
             func_020473c8((Struct_02015ef4_2*)var25, 1);

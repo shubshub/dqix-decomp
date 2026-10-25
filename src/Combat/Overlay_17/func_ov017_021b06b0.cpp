@@ -16,10 +16,10 @@ struct Struct_ov031_0224e1d0 { char unknown_0_[0x27c4]; short unknown_2784_; sho
 #else
 struct Struct_ov031_0224e1d0 { char unknown_0_[0x2784]; short unknown_2784_; short unknown_2786_; unsigned char unknown_2788_; };
 #endif
-struct Struct_ov017_021b06b0_2 { unsigned short unknown_0_; Vector3fix16 unknown_2_; };
-extern "C" Struct_ov031_0224e1d0* func_02012fe4();
-extern "C" void* func_0202ae24();
-extern "C" void func_ov017_021cdaa0();
+struct PlayerLocation { unsigned short zone_; Vector3fix16 position_; };
+extern "C" TransferSettings* Zone3D_GetInstance();
+void* GetData02100044_0202ae24();
+void EnqueueEventTag147_021cdaa0();
 extern "C" void func_ov017_021cf730(int, int);
 extern "C" void func_ov017_021cfc74(unsigned char);
 extern "C" void func_ov017_021d2184(unsigned char);
@@ -37,19 +37,19 @@ inline Struct_ov017_021b06b0& inline_ov017_021b06b0() {
 }
 
 // USA: func_ov017_021b06b0
-extern "C" ARM unsigned char func_ov017_021b06b0(Struct_ov017_021b06b0_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov031_0224e1d0* var1 = func_02012fe4();
-    GrottoStruct* var2 = var0->GetGrottoStruct();
-    void* var3 = func_0202ae24();
-    if (arg0->unknown_25_ == 0) {
-        func_ov017_021cdaa0();
-        func_ov017_021cf730(arg0->unknown_c_, 1);
-        func_ov017_021cfc74(var2->unknown_0[3]);
-        func_ov017_021d2184(arg0->unknown_c_);
-        for (int var4 = 0; var4 < 4; ++var4) {
-            Struct_ov017_021b06b0_2* var5 = func_020120a0((char*)var0, var4);
-            if (var5) func_ov017_021d360c(0, var4, var5->unknown_0_, var5->unknown_2_);
+extern "C" ARM unsigned char func_ov017_021b06b0(TransferState* self) {
+    GameState* state = GameState::GetInstance();
+    TransferSettings* settings = Zone3D_GetInstance();
+    GrottoStruct* grotto = state->GetGrottoStruct();
+    void* queue = GetData02100044_0202ae24();
+    if (self->phase_ == 0) {
+        EnqueueEventTag147_021cdaa0();
+        func_ov017_021cf730(self->player_, 1);
+        EnqueueEventTag162_021cfc74(grotto->unknown_0[3]);
+        func_ov017_021d2184(self->player_);
+        for (int i = 0; i < 4; ++i) {
+            PlayerLocation* location = GetField0x74deForValidIndex_020120a0((char*)state, i);
+            if (location) func_ov017_021d360c(0, i, location->zone_, location->position_);
         }
         if (var1->unknown_2788_) func_ov017_021d1a18(1, -1, 1, 0);
         else func_ov017_021d1a18(var1->unknown_2786_, var1->unknown_2784_, 0, 0);

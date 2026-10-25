@@ -124,11 +124,11 @@ extern "C" ARM int func_02019728(Zone3D* arg0, int arg1, Struct_020134e0* arg2, 
                 break;
             }
 
-            if (arg3 == 0) {
-                var8->unknown_0_ = func_020196fc(arg0, var3);
-                var9 = func_0201e434(var1, var0);
-                if (var9 != 0) {
-                    func_02019f24(&var8->unknown_4_, var9);
+            if (grid == 0) {
+                cell->node = Zone3D_GetScriptNode(obj, n);
+                entry = FindEntryByNameSubstr0201e434(list, name);
+                if (entry != 0) {
+                    CopyStruct02019f24(&cell->info, entry);
                 }
             } else {
                 var9 = func_0201e434(var1, var0);

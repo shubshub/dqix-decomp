@@ -38,14 +38,14 @@ extern Struct_ov023_021ff9e0_6 data_ov023_021ff9e0;
 extern Struct_ov023_021ffa0c data_ov023_021ffa0c[3];
 extern unsigned char data_ov023_021fd565[2][2];
 extern "C" void* func_0203bd08();
-extern "C" Struct_ov023_021dc520_3* func_0203be40(void*);
-extern "C" Struct_ov023_021dc520_3* func_0203be4c(void*);
-extern "C" void func_0205ac40(Struct_0205ac40*, Struct_0205ac40_2*);
-extern "C" short func_020dee58(Struct_020dee58*);
-extern "C" int func_02075db0(Struct_02075db0*, int, int);
-inline int inline_ov023_021dc520(int arg0) { return arg0 * 2; }
-inline int inline_ov023_021dc520_2(Struct_020dee58* arg0) {
-    return arg0->unknown_8_0_ <= 7;
+extern "C" ObjectBuffer021dc520* func_0203be40(void*);
+extern "C" ObjectBuffer021dc520* func_0203be4c(void*);
+extern "C" void SpriteContext_DrawSprite(SpriteContext0205ac40*, B174Outer*);
+short LookupValueFromField8(Obj020dee58*);
+int ForwardTableValue02075db0(Struct02075db0*, int, int);
+inline int PaletteOffset021dc520(int index) { return index * 2; }
+inline int IsStandardCategory021dc520(Obj020dee58* selection) {
+    return selection->lowNibble <= 7;
 }
 
 // USA: func_ov023_021dc520
@@ -82,16 +82,16 @@ extern "C" ARM void func_ov023_021dc520(Struct_ov023_021dc520* arg0) {
                 else if (var8 < 0.75f) var7 = 2;
                 else if (var8 < 1.0f) var7 = 1;
             }
-            if (var7 > 0) {
-                if (var7 == 1) var0 = &arg0->unknown_180_[26];
-                else if (var7 == 2) var0 = &arg0->unknown_180_[27];
-                else var0 = &arg0->unknown_180_[28];
-                int var9 = (var6->unknown_6_ + 10) << 12;
-                int var10 = (var6->unknown_4_ + REGION(190,202)) << 12;
-                var0->unknown_14_[0] = var10;
-                var0->unknown_14_[1] = var9;
-                var0->unknown_22_ = var4 + 0x48;
-                func_0205ac40(&arg0->unknown_12c_, var0);
+            if (style > 0) {
+                if (style == 1) sprite = &view->sprites[26];
+                else if (style == 2) sprite = &view->sprites[27];
+                else sprite = &view->sprites[28];
+                int y = (gauge->y + 10) << 12;
+                int x = (gauge->x + REGION(190,202)) << 12;
+                sprite->position[0] = x;
+                sprite->position[1] = y;
+                sprite->firstObject = i + 0x48;
+                SpriteContext_DrawSprite(&view->renderer, sprite);
             }
         }
     }
@@ -123,34 +123,34 @@ extern "C" ARM void func_ov023_021dc520(Struct_ov023_021dc520* arg0) {
                     else LoadToSubObjStandardPalette(&var19, var21, 2);
                 }
             }
-            var0->unknown_14_[0] = (var11 + var13) << 12;
-            var0->unknown_14_[1] = (var13 + 11) << 12;
-            var0->unknown_22_ = var12 + 0x4c;
-            func_0205ac40(&arg0->unknown_12c_, var0);
-            var11 += 8;
-            ++var12;
+            sprite->position[0] = (x + offset) << 12;
+            sprite->position[1] = (offset + 11) << 12;
+            sprite->firstObject = index + 0x4c;
+            SpriteContext_DrawSprite(&view->renderer, sprite);
+            x += 8;
+            ++index;
         }
     }
-    int var22 = func_020dee58(arg0->unknown_4c_);
-    var0 = &arg0->unknown_180_[var22 + 1];
-    var0->unknown_14_[0] = REGION(0x18000,0x10000);
-    var0->unknown_14_[1] = 0x8000;
-    var0->unknown_22_ = 0x52;
-    func_0205ac40(&arg0->unknown_12c_, var0);
-    if (inline_ov023_021dc520_2(arg0->unknown_4c_)) {
-        int var23 = 0, var24 = 0;
-        Struct_ov023_021dc520_2* var25 = arg0->unknown_4c_->unknown_0_;
-        if (var25) {
-            if (var25->unknown_7_3_ == 1) var23 = 1;
-            if (var25->unknown_7_4_ == 1) var24 = 1;
+    int lookup = LookupValueFromField8(view->selection);
+    sprite = &view->sprites[lookup + 1];
+    sprite->position[0] = REGION(0x18000,0x10000);
+    sprite->position[1] = 0x8000;
+    sprite->firstObject = 0x52;
+    SpriteContext_DrawSprite(&view->renderer, sprite);
+    if (IsStandardCategory021dc520(view->selection)) {
+        int first = 0, second = 0;
+        ParentFlags021dc520* parent = view->selection->parent;
+        if (parent) {
+            if (parent->first == 1) first = 1;
+            if (parent->second == 1) second = 1;
         }
-        unsigned char var26 = data_ov023_021fd565[var23][var24];
-        if (var26) {
-            var0 = &arg0->unknown_180_[var26];
-            var0->unknown_14_[0] = REGION(0x9a000,0x90000);
-            var0->unknown_14_[1] = 0x8000;
-            var0->unknown_22_ = 0x53;
-            func_0205ac40(&arg0->unknown_12c_, var0);
+        unsigned char indicator = data_ov023_021fd565[first][second];
+        if (indicator) {
+            sprite = &view->sprites[indicator];
+            sprite->position[0] = REGION(0x9a000,0x90000);
+            sprite->position[1] = 0x8000;
+            sprite->firstObject = 0x53;
+            SpriteContext_DrawSprite(&view->renderer, sprite);
         }
         if (!(arg0->unknown_774_ & 8)) {
             func_0203bd08();

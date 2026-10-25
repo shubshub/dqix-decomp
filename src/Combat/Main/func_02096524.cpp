@@ -18,16 +18,16 @@ extern "C" ARM void func_02096524(char* arg0) {
     Script var1;
 
     BackgroundLoader::AddLockGlobal();
-    void* var2 = LoadFileIntoMemory(data_020f14b0, data_0211e33c, &var0);
-    if (var2 != 0) {
-        char* var3 = arg0 + 0xac;
-        struct Struct_02109404_2* var4 = &data_02109404;
-        var4->unknown_10_ = var3;
-        unsigned int var5 = var0;
-        var1.Initialize();
-        var1.SetOpcodeLookup(data_020f1444);
-        var1.Load(var2, var5);
-        var1.Execute();
+    void* header = LoadFileIntoMemory(data_020f14b0, g_fileLoadBuffer, &count);
+    if (header != 0) {
+        char* slot = ctx + 0xac;
+        struct Manager02109404* manager = &data_02109404;
+        manager->f10 = slot;
+        unsigned int len = count;
+        script.Initialize();
+        script.SetOpcodeLookup(data_020f1444);
+        script.Load(header, len);
+        script.Execute();
     }
     BackgroundLoader::RemoveLockGlobal();
 }

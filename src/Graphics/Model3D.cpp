@@ -29,7 +29,7 @@ extern unsigned int (*data_020f1ef4)(unsigned int);
 
 void Model3D::Clear()
 {
-    unknown_flags_a8_0_ = false;
+    loaded_ = false;
     rawInternalModel_ = NULL;
     rawTEX_ = NULL;
     rawBMD_ = NULL;
@@ -60,10 +60,10 @@ void Model3D::LoadFromFile(const char* path, AllocatorUnion* alloc, TextureStagi
         return;
     BackgroundLoader::AddLockGlobal();
     unsigned int length;
-    void* scratchData = LoadFileIntoMemory(path, &data_0211e33c, &length);
+    void* scratchData = LoadFileIntoMemory(path, &g_fileLoadBuffer, &length);
     if (scratchData == NULL)
     {
-        unknown_flags_a8_0_ = false;
+        loaded_ = false;
     }
     else
     {
@@ -275,12 +275,12 @@ found_a_model:
         span.z = scaledZSize;
         maybeApproxRadius_ = Vector3fix_Length(&span) / 2;
     }
-    unknown_flags_a8_0_ = true;
+    loaded_ = true;
 }
 
 bool Model3D::Draw(bool applyClipping)
 {
-    if (!unknown_flags_a8_0_)
+    if (!loaded_)
         return false;
 
     if (applyClipping && !TestVisible())
@@ -305,7 +305,7 @@ bool Model3D::Draw(bool applyClipping)
 
 bool Model3D::DrawMeshWithMaterial(bool applyClipping, unsigned int material, unsigned int mesh, int bind)
 {
-    if (!unknown_flags_a8_0_)
+    if (!loaded_)
         return false;
 
     if (applyClipping && !TestVisible())
@@ -366,7 +366,7 @@ int Model3D::GetBoneIndex(const char *boneName)
 
 void Model3D::ApplyTexturesFromModel(Model3D* otherModel)
 {
-    if (!unknown_flags_a8_0_ || otherModel == NULL)
+    if (!loaded_ || otherModel == NULL)
         return;
     NSBXXMdl* mdl0 = GetMDL0();
     NSBXXTex* tex0 = (NSBXXTex*)otherModel->rawTEX_;

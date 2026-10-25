@@ -81,16 +81,16 @@ extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* arg0) {
             if (var5->unknown_1_ != var3->unknown_0_) {
                 continue;
             }
-            if (var5->unknown_0_0_ == 0 || var5->unknown_0_0_ == 1 || var5->unknown_0_0_ == 9 || var5->unknown_0_0_ == 0xb || var5->unknown_0_0_ == 0xc ||
-                var5->unknown_0_0_ == 0xd || var5->unknown_0_0_ == 0xa || var5->unknown_0_0_ == 4) {
-                GameObject* var7 = var0->GetGameObjectByIndex(var5->unknown_2_);
-                if (var7 != 0) {
-                    Object3D* var8 = &var7->obj3D_;
-                    unsigned char var9 = var8->animationFlags_;
-                    const char* var10 = (const char*)var8->activeAnimationRecord_;
-                    var8->RemoveAnimationPackageByID(3);
-                    if (var8->MaybeSetRegularAnimation(var10, var9) == false) {
-                        var8->MaybeSetRegularAnimation(data_ov001_02164bd1, 0);
+            if (walk->kind == 0 || walk->kind == 1 || walk->kind == 9 || walk->kind == 0xb || walk->kind == 0xc ||
+                walk->kind == 0xd || walk->kind == 0xa || walk->kind == 4) {
+                GameObject* obj = gs->GetGameObjectByIndex(walk->slot);
+                if (obj != 0) {
+                    Object3D* o = &obj->obj3D_;
+                    unsigned char animFlags = o->animationFlags_;
+                    const char* animName = (const char*)o->activeAnimationRecord_;
+                    o->RemoveAnimationPackageByID(3);
+                    if (o->SetAnimationByName(animName, animFlags) == false) {
+                        o->SetAnimationByName(data_ov001_02164bd1, 0);
                     }
                 }
             }

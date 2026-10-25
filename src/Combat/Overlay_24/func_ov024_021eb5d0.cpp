@@ -279,110 +279,110 @@ struct Random;
 float NextRandomFloatScaled(Random*, float, float, int);
 int NextRandomMax(Random*, int);
 struct GameObject;
-extern "C" int func_ov024_021eadfc(GameObject*);
-extern "C" int func_ov000_0215a124(void* arg0, int arg1, int arg2);
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
-extern "C" unsigned int func_020dd290(void* arg0, unsigned int arg1);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_ov024_021eb47c(Struct_ov024_021ea4d0*, int);
-extern "C" void func_020ac4c0(void* arg0);
-struct Struct_020a0530;
-extern "C" void func_020a0530(Struct_020a0530*, unsigned int);
-struct Struct_020a01b8;
-extern "C" void func_020a01b8(Struct_020a01b8*, unsigned int);
-extern "C" void func_020ac494(void* arg0);
-extern "C" int func_ov000_02159c58(void* arg0, int arg1);
-struct Struct_020a0674;
-extern "C" void func_020a0674(Struct_020a0674*, unsigned int);
-struct Struct_020a017c;
-extern "C" void func_020a017c(Struct_020a017c*, unsigned int);
-struct Struct_ov000_0215440c;
-extern "C" struct Struct_ov024_021eb5d0_5* func_ov000_021600f8(Struct_ov000_0215440c*, int);
-struct Struct_ov024_021ea4d0_2;
-extern "C" int func_ov024_021ea4d0(Struct_ov024_021ea4d0*, Struct_ov024_021ea4d0_2*);
-extern "C" int func_ov024_021ea500(struct Struct_ov024_021ea4d0* arg0, struct Struct_ov024_021eaa50_2* arg1, int arg2);
-extern "C" int func_ov000_02156cc4(void* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2, int arg3);
-struct Struct_02010088;
-extern "C" int func_02010088(Struct_02010088*);
-extern "C" int func_ov024_021e6798(GameObject*);
-extern "C" struct Struct_ov024_021eb5d0_5* func_ov000_0215e938(void* arg0);
-struct Struct_ov000_0215fef0;
-extern "C" void func_ov000_0215fef0(Struct_ov000_0215fef0*);
-extern "C" short func_ov000_02154c68(void* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" int func_ov024_021e9b74(struct Struct_ov024_021ea4d0* arg0, int arg1, short* arg2, struct Struct_ov024_021eaa50_2* arg3);
-extern "C" int func_ov024_021e9f68(struct Struct_ov024_021ea4d0* arg0, short* arg1, short* arg2, struct Struct_ov024_021eaa50_2* arg3, unsigned char* arg4);
-extern "C" int func_ov024_021ea584(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, struct Struct_ov024_021eaa50_2* arg3);
-extern "C" void func_ov000_0215cd80(void* arg0);
-extern "C" int func_ov000_02156f98(void* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" int func_ov000_02156e30(void* arg0, int arg1, int arg2, struct Struct_ov024_021eaa50_2* arg3);
-extern "C" int func_ov000_02156648(void* arg0, int arg1, int arg2, struct Struct_ov024_021eb5d0_5* arg3, struct Struct_ov024_021eaa50_2* arg4, struct Struct_ov024_021eb5d0_9* arg5, int arg6);
+int IsCombatantFlag2Mask512_021eadfc(GameObject*);
+int ConsumeMP0215a124(void* world, int id, int amount);
+int TestBitInArray0x8ec_02083b00(unsigned char* arr, int bit);
+unsigned int AdjustValueByFieldFlag_020dd290(void* obj, unsigned int v);
+int GameState_GetProtagonistIndex(GameState*);
+int IsValueInShortList_021eb47c(Act_021eb5d0*, int);
+void LoadBattleBlock020ac4c0(void* p);
+struct S_a0530;
+void AddClamped16BitFieldAt0x1c_020a0530(S_a0530*, unsigned int);
+struct S_a01b8;
+void AddClamped12BitFieldTopAt0x14_020a01b8(S_a01b8*, unsigned int);
+void CopyInBattleField0x7540_020ac494(void* p);
+int IsSpecialStateValue_02159c58(void* world, int v);
+struct S_a0674;
+void AddClamped12BitField_020a0674(S_a0674*, unsigned int);
+struct S_a017c;
+void AddClamped10BitFieldMidAt0x14_020a017c(S_a017c*, unsigned int);
+struct List021600f8;
+struct Node_021eb5d0* GetNodeAtIndex021600f8(List021600f8*, int);
+struct CheckStruct_021ea4d0;
+int CheckStateFlags3or4_021ea4d0(Act_021eb5d0*, CheckStruct_021ea4d0*);
+extern "C" int func_ov024_021ea500(struct Act_021eb5d0* self, struct Rec_021eb5d0* rec, int id);
+extern "C" int func_ov000_02156cc4(void* world, int id, struct Rec_021eb5d0* rec, int n);
+struct S_10088;
+int IsFlag10088Set_02010088(S_10088*);
+int IsCombatantFlag2Mask8192_021e6798(GameObject*);
+struct Node_021eb5d0* GetTableEntry0x8e01Bound0x88_ov000_0215e938(void* world);
+struct Struct0215fef0;
+void ResetStruct0215fef0(Struct0215fef0*);
+extern "C" short func_ov000_02154c68(void* world, int id, struct Rec_021eb5d0* rec);
+extern "C" int func_ov024_021e9b74(struct Act_021eb5d0* self, int a, short* b, struct Rec_021eb5d0* rec);
+extern "C" int func_ov024_021e9f68(struct Act_021eb5d0* self, short* a, short* b, struct Rec_021eb5d0* rec, unsigned char* flag);
+extern "C" int func_ov024_021ea584(struct Act_021eb5d0* self, int a, int b, struct Rec_021eb5d0* rec);
+void ZeroFieldsAt0xe58And0xe82And0x8e52_ov000_0215cd80(void* world);
+extern "C" int func_ov000_02156f98(void* world, int id, struct Rec_021eb5d0* rec);
+extern "C" int func_ov000_02156e30(void* world, int a, int b, struct Rec_021eb5d0* rec);
+extern "C" int func_ov000_02156648(void* world, int a, int b, struct Node_021eb5d0* n, struct Rec_021eb5d0* rec, struct List_021eb5d0* list, int flag);
 int GetAttackBaseDamage(int*, int, int, int*, int*);
-extern "C" void func_ov024_021da550(int* arg0);
-extern "C" int func_ov024_021da55c(int* arg0, void* arg1, unsigned short arg2, unsigned short arg3, int arg4, struct Struct_ov024_021eaa50_2* arg5, int arg6);
-extern "C" unsigned char* func_02053c6c(unsigned char*);
-extern "C" float func_02074948(int arg0);
-extern "C" int func_ov024_021e67c8(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2);
-extern "C" int func_ov024_021e6948(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_ov024_021e6a90(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, struct Struct_ov024_021eaa50_2* arg3, unsigned short arg4);
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov000_0215a8d4(unsigned char*, int);
-struct Struct_ov024_021da670_6;
-extern "C" int func_ov024_021da998(Struct_ov024_021da670_6*);
-struct Struct_ov024_021dd028_5;
-extern "C" int func_ov024_021dd260(Struct_ov024_021dd028_5*);
-extern "C" void func_ov000_02159eac(void* arg0, void* arg1, unsigned char arg2);
-extern "C" void func_ov000_0215a88c(void*, void*, int);
-extern "C" void func_ov000_0215ffc4(void* arg0, void* arg1, int arg2);
-extern "C" int func_ov000_021573a8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" struct Struct_ov024_021eb5d0_6* func_ov000_0215e958(void* arg0);
-extern "C" void func_ov000_0215ccbc(void* arg0, struct Struct_ov024_021eb5d0_6* arg1, void* arg2, short arg3, short arg4, int arg5, unsigned long long arg6, unsigned char arg7);
-extern "C" struct Struct_ov024_021eb5d0_8* func_ov000_0215fff4(void* arg0, int arg1, int arg2);
-extern "C" int func_ov000_02157288(void* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" void func_ov000_0215cd44(void* arg0, void* arg1, void* arg2, int arg3, unsigned long long arg4, int arg5);
-struct Struct_ov024_021da9e0_4;
-extern "C" void func_ov024_021eb4e4(Struct_ov024_021da9e0_4*, int);
-extern "C" short func_ov000_0215a1d4(void* arg0, int arg1, int arg2, short* arg3);
-extern "C" unsigned short func_ov024_021da644(int arg0, int arg1, int arg2);
-extern "C" void func_ov000_0215fe84(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov024_021e4c04(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, struct Struct_ov024_021eaa50_2* arg3, int arg4);
-extern "C" void func_ov024_021e556c(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, struct Struct_ov024_021eaa50_2* arg3, int arg4);
-struct Struct_ov000_0215767c_4;
-struct Struct_ov000_0215767c_5;
-extern "C" void func_ov000_021600cc(Struct_ov000_0215767c_5*, Struct_ov000_0215767c_4*);
-extern "C" int func_ov024_021eb1ec(void*, int);
-extern "C" int func_ov024_021eb2b4(struct Struct_ov024_021ea4d0* arg0);
-extern "C" int func_ov024_021eb344(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0215fc60(char*);
-extern "C" void func_ov024_021eb3e0(struct Struct_ov024_021ea4d0* arg0, int arg1);
-extern "C" void func_ov000_0215af54(void* arg0, int arg1, int arg2);
-struct Struct_0208978c;
-extern "C" void func_0208978c(Struct_0208978c*, short);
-extern "C" int func_ov000_0215eb1c(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov024_021eb08c(struct Struct_ov024_021ea4d0* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_0215a908(void* arg0, int arg1);
-extern "C" int func_ov000_02155f9c(void* arg0, int arg1, int arg2);
-extern "C" void func_ov024_021e6060(struct Struct_ov024_021ea4d0* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2, int arg3);
-extern "C" void func_ov024_021e6104(struct Struct_ov024_021ea4d0* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" void func_ov024_021e62cc(struct Struct_ov024_021ea4d0* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" int func_02085038(char*);
-extern "C" int func_ov000_02159d24(void* arg0, int arg1);
-struct Struct_ov000_0215440c_2;
-extern "C" struct Struct_ov024_021eb5d0_7* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
-extern "C" void func_020881ac(void* arg0);
-extern "C" void func_02088234(void* arg0);
-extern "C" void func_ov024_021e80e4(struct Struct_ov024_021ea4d0* arg0, struct Struct_ov024_021eb5d0_9* arg1, struct Struct_ov024_021eaa50_2* arg2, int arg3, int arg4, struct Struct_ov024_021eaa50_2* arg5);
-extern "C" unsigned short func_ov024_021e99d8(struct Struct_ov024_021ea4d0* arg0, struct Struct_ov024_021eb5d0_9* arg1, struct Struct_ov024_021eaa50_2* arg2);
-extern "C" void* func_ov000_02160130();
-extern "C" char* func_ov000_02160f08(void* arg0);
-extern "C" int func_020ddb38(int arg0, int arg1, void* arg2, void* arg3);
-extern "C" int func_ov000_0215fd24(int, int);
-extern "C" void func_ov017_021c3fb4(unsigned short arg0, int arg1);
-extern "C" void func_ov000_021584e8(void* arg0, void* arg1, void* arg2, void* arg3, int arg4, int arg5);
-extern "C" void func_02083e28(unsigned char* arg0, int arg1);
+void ClearFirstField_021da550(int* p);
+extern "C" int func_ov024_021da55c(int* p, void* world, unsigned short a, unsigned short b, int n, struct Rec_021eb5d0* rec, int dmg);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char*);
+float LookupTableD0Clamped_02074948(int v);
+extern "C" int func_ov024_021e67c8(struct Act_021eb5d0* self, int a, int b);
+extern "C" int func_ov024_021e6948(struct Act_021eb5d0* self, int a, int b, int c);
+extern "C" int func_ov024_021e6a90(struct Act_021eb5d0* self, int a, int b, struct Rec_021eb5d0* rec, unsigned short dmg);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char*, int);
+struct FlagObj_021da998;
+int IsFlagBit8388608Set_021da998(FlagObj_021da998*);
+struct FlagObj_021dd260;
+int IsFlagBit24Set_021dd260(FlagObj_021dd260*);
+extern "C" void func_ov000_02159eac(void* world, void* entry, unsigned char kind);
+void AddEntryAndIncrementCount0215a88c(void*, void*, int);
+void AppendToChainAndIncCount0215ffc4(void* node, void* entry, int v);
+extern "C" int func_ov000_021573a8(void* world, int id, int target, int dmg);
+extern "C" struct Entry_021eb5d0* func_ov000_0215e958(void* world);
+extern "C" void _Z22PopulateEntry_0215ccbciP17OutStruct0215ccbcP10GameObjectsssyh(void* world, struct Entry_021eb5d0* e, void* c, short a, short b, int d, unsigned long long f, unsigned char h);
+struct Depth_021eb5d0* FindNodeAtDepth0215fff4(void* node, int a, int b);
+extern "C" int func_ov000_02157288(void* world, int id, struct Rec_021eb5d0* rec);
+extern "C" void func_ov000_0215cd44(void* world, void* entry, void* c, int a, unsigned long long f, int e);
+struct SlotArrayStruct_021eb4e4;
+void SetFirstEmptySlot48_021eb4e4(SlotArrayStruct_021eb4e4*, int);
+short ApplyMPDelta0215a1d4(void* world, int id, int amount, short* out);
+unsigned short SelectByIndexRange0to3_021da644(int idx, int a, int b);
+void AppendToChainAndIncCount0215fe84(void* obj, void* entry, int v);
+extern "C" void func_ov024_021e4c04(struct Act_021eb5d0* self, int id, int target, struct Rec_021eb5d0* rec, int dmg);
+extern "C" void func_ov024_021e556c(struct Act_021eb5d0* self, int id, int target, struct Rec_021eb5d0* rec, int dmg);
+struct Node021600cc;
+struct Obj021600cc;
+void AppendNode021600cc(Obj021600cc*, Node021600cc*);
+int CheckAndClearOrEvaluateFlags_021eb1ec(void*, int);
+extern "C" int func_ov024_021eb2b4(struct Act_021eb5d0* self);
+extern "C" int func_ov024_021eb344(struct Act_021eb5d0* self, int id, int dmg);
+int ClassifyField0x81fe_ov000_0215fc60(char*);
+extern "C" void func_ov024_021eb3e0(struct Act_021eb5d0* self, int id);
+extern "C" void func_ov000_0215af54(void* world, int id, int v);
+struct SetField0208978c;
+void SetField0x32SavingOldTo0x34(SetField0208978c*, short);
+extern "C" int func_ov000_0215eb1c(void* world, short* buf, int count, int flag);
+extern "C" int func_ov024_021eb08c(struct Act_021eb5d0* self, int id, int target, int kind);
+extern "C" void func_ov000_0215a908(void* world, int id);
+extern "C" int func_ov000_02155f9c(void* world, int id, int v);
+extern "C" void func_ov024_021e6060(struct Act_021eb5d0* self, int id, struct Rec_021eb5d0* rec, int v);
+extern "C" void func_ov024_021e6104(struct Act_021eb5d0* self, int id, struct Rec_021eb5d0* rec);
+extern "C" void func_ov024_021e62cc(struct Act_021eb5d0* self, int id, struct Rec_021eb5d0* rec);
+int SumField4Bits20To26_02085038(char*);
+extern "C" int func_ov000_02159d24(void* world, int id);
+struct List02160094;
+struct Chain_021eb5d0* GetNodeAtIndex02160094(List02160094*, int);
+void ClearFlag0x1000000AndByte0x24_020881ac(void* p);
+void ClearFlag0x14Bit0x800000AndByte0x24_02088234(void* p);
+extern "C" void func_ov024_021e80e4(struct Act_021eb5d0* self, struct List_021eb5d0* list, struct Rec_021eb5d0* rec, int a, int b, struct Rec_021eb5d0* c);
+extern "C" unsigned short func_ov024_021e99d8(struct Act_021eb5d0* self, struct List_021eb5d0* list, struct Rec_021eb5d0* rec);
+void* GetActiveCombatWork_ov000_02160130();
+char* GetOffsetPtr02160f08(void* p);
+extern "C" int func_020ddb38(int a, int b, void* slot, void* world);
+int IsIdOrEffectMatchTarget0215fd24(int, int);
+extern "C" void func_ov017_021c3fb4(unsigned short a, int b);
+extern "C" void func_ov000_021584e8(void* world, void* a, void* b, void* c, int d, int e);
+extern "C" void PartyMember_RecalculateStats(unsigned char* p, int v);
 void ApplyCombatantBuffs(int, int);
 struct GameState;
-extern "C" void* func_02010828(GameState*);
+void* GameState_GetParty(GameState*);
 
 // USA: func_ov024_021eb5d0
 extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_021eb5d0* world, struct List_021eb5d0* list, struct Src_021eb5d0* src, unsigned char noCost) {
@@ -544,12 +544,12 @@ extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_
             }
         }
     }
-    if (var18 == func_020100a8((GameState*)var13)) {
-        if (func_ov024_021eb47c(arg0, var15->unknown_4_.unknown_0_0_) != 0) {
-            func_020ac4c0(var10);
-            func_020a0530((Struct_020a0530*)var10, 1);
-            func_020a01b8((Struct_020a01b8*)(var10 + 0x68), 1);
-            func_020ac494(var10);
+    if (id == GameState_GetProtagonistIndex((GameState*)bs)) {
+        if (IsValueInShortList_021eb47c(self, rec->f4.id) != 0) {
+            LoadBattleBlock020ac4c0(blkA);
+            AddClamped16BitFieldAt0x1c_020a0530((S_a0530*)blkA, 1);
+            AddClamped12BitFieldTopAt0x14_020a01b8((S_a01b8*)(blkA + 0x68), 1);
+            CopyInBattleField0x7540_020ac494(blkA);
         }
         if (func_ov000_02159c58(arg0->unknown_10_, (unsigned short)var15->unknown_4_.unknown_0_0_) != 0) {
             func_020ac4c0(var11);
@@ -759,15 +759,15 @@ extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_
             if (var46->unknown_4_.unknown_0_0_ == 0x79 && arg0->unknown_18_ != (var22 - 1) && var45 > 0) {
                 if (var33 <= 0) var33 = var45;
             }
-            var51 = 1;
-            if (arg0->unknown_c_->unknown_1c_.unknown_0_1_ != 0 || arg0->unknown_c_->unknown_1c_.unknown_0_2_ != 0) {
-                var51 = 0;
-                var45 = 0;
-                func_ov000_0215cd80(arg0->unknown_10_);
-                void* var61 = func_02010828((GameState*)(Struct_0203d028_2*)GameState::GetInstance());
-                if (arg0->unknown_c_->unknown_1c_.unknown_0_2_ != 0) {
-                    if (func_02086ef0((Struct_02048150*)var61, var4) != 0) {
-                        func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 6);
+            flagE = 1;
+            if (self->fc->f1c.b1 != 0 || self->fc->f1c.b2 != 0) {
+                flagE = 0;
+                dmg = 0;
+                ZeroFieldsAt0xe58And0xe82And0x8e52_ov000_0215cd80(self->f10);
+                void* arr = GameState_GetParty((GameState*)(BattleStruct*)GameState::GetInstance());
+                if (self->fc->f1c.b2 != 0) {
+                    if (ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)arr, s4) != 0) {
+                        IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)self->f10, 6);
                     }
                 }
             }
@@ -1050,10 +1050,10 @@ found:
     if (func_ov000_0215fd24((int)arg0->unknown_10_, arg2->unknown_10_->unknown_20_) != 0) {
         func_ov017_021c3fb4(arg2->unknown_10_->unknown_20_, 1);
     }
-    struct Struct_ov024_021eb5d0_6* var114 = func_ov000_0215e958(arg0->unknown_10_);
-    struct Struct_ov024_021eb5d0_12* var115 = (struct Struct_ov024_021eb5d0_12*)GetCombatantByID((int)arg0->unknown_10_, arg2->unknown_10_->unknown_20_);
-    if (var114 == 0 || var115 == 0) return;
-    func_ov000_021584e8(arg0->unknown_10_, var114, var115, arg2->unknown_10_, 0x258, 0);
-    func_02083e28(var115->unknown_150_, 0);
-    ApplyCombatantBuffs((int)arg0->unknown_10_, arg2->unknown_10_->unknown_20_);
+    struct Entry_021eb5d0* last = func_ov000_0215e958(self->f10);
+    struct Fighter_021eb5d0* lastc = (struct Fighter_021eb5d0*)GetCombatantByID((int)self->f10, list->f10->f20);
+    if (last == 0 || lastc == 0) return;
+    func_ov000_021584e8(self->f10, last, lastc, list->f10, 0x258, 0);
+    PartyMember_RecalculateStats(lastc->f150, 0);
+    ApplyCombatantBuffs((int)self->f10, list->f10->f20);
 }

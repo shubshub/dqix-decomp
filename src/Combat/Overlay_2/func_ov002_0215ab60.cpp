@@ -84,28 +84,28 @@ extern "C" ARM void func_ov002_0215ab60(Struct_ov002_0215ab60* arg0) {
         func_ov002_02154bcc(var4, var3, arg0->unknown_1a68_, 0x2a, 0xc, 0xff);
     }
 #endif
-    if (!func_0205d81c(&arg0->unknown_ec8_, Enum_ov002_0215ab60_25)) {
-        Struct_0205d0e0* var5 = func_0205d81c(&arg0->unknown_ec8_, Enum_ov002_0215ab60_24);
-        if (var5) {
-            GameState* var6 = GameState::GetInstance();
-            func_02010828(var6);
-            Type_020b1300 var7 = arg0->unknown_1c73_;
-            short var8 = var5->unknown_ac_ * 8;
-            short var9 = var5->unknown_ae_ * 8;
-            for (Type_020b1300 var10 = 0; var10 < var7; ++var10) {
-                Type_ov002_0215ab60 var11 = arg0->unknown_1c6e_[var10];
-                GameObject* var12 = var6->GetPartyMemberByIndex(var11);
-                if (var12) {
-                    short var13, var14, var15, var16;
-                    short var17 = var10 + var7 + 1;
-                    func_0204c610(var5, var17, &var13, &var14, &var15, &var16);
-                    int var18 = inline_ov002_0215ab60_4(&var13, var8);
-                    int var19 = inline_ov002_0215ab60_4(&var14, var9);
-                    Type_020b0a1c var20 = ((Struct_ov002_0215ab60_2*)var12->baseStats_)->unknown_3f_6_;
-                    var20 = var20 + Enum_ov002_0215ab60_18;
-                    func_ov002_02154bcc(var18, var19, arg0->unknown_1a68_, var20, (Type_020b1300)(var10 + 0x4c), 0xff);
-                    func_0204c610(var5, (short)(var17 + var7 + 1), &var13, &var14, &var15, &var16);
-                    func_ov002_02154bcc(var13 + var8, var14 + var9, arg0->unknown_1a68_, Enum_ov002_0215ab60_21, (Type_020b1300)(var11 + 0x50), (Type_020b1300)(var11 + 9));
+    if (!FindElementByC40205d81c(&self->elements, BlockingKey)) {
+        Elem_0205d81c* positions = FindElementByC40205d81c(&self->elements, PositionsKey);
+        if (positions) {
+            GameState* gameState = GameState::GetInstance();
+            GameState_GetParty(gameState);
+            u8 count = self->count;
+            short originX = positions->xOrigin * 8;
+            short originY = positions->yOrigin * 8;
+            for (u8 i = 0; i < count; ++i) {
+                s8 memberId = self->memberIds[i];
+                GameObject* member = gameState->GetPartyMemberByIndex(memberId);
+                if (member) {
+                    short x, y, width, height;
+                    short index = i + count + 1;
+                    GetFourShortsAtIndex(positions, index, &x, &y, &width, &height);
+                    int positionX = AddOrigin(&x, originX);
+                    int positionY = AddOrigin(&y, originY);
+                    u16 icon = ((FormationCombatStats*)member->baseStats_)->icon;
+                    icon = icon + FirstIcon;
+                    SetEntryFields02154bcc(positionX, positionY, self->entryList, icon, (u8)(i + 0x4c), 0xff);
+                    GetFourShortsAtIndex(positions, (short)(index + count + 1), &x, &y, &width, &height);
+                    SetEntryFields02154bcc(x + originX, y + originY, self->entryList, SecondIcon, (u8)(memberId + 0x50), (u8)(memberId + 9));
                 }
             }
         }

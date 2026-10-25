@@ -25,9 +25,9 @@ struct Struct_0205d0e0 {
     unsigned char unknown_0_[0xc5];
     unsigned char unknown_c5_;
 };
-struct Elem_0205d81c* FindElementForFieldB0_0205d8c4(struct Struct_0205d81c* s);
-int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
-void SetFieldAt0x30_0205bc24(void* obj, int value);
+struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
+int WindowPane_IsReady(unsigned char* obj);
+void TouchGrid_SetTouchedCell(void* obj, int value);
 extern "C" int Window_Update(void* p, int val);
 
 extern "C" void func_ov003_021594c4(void* arg0);
@@ -76,10 +76,10 @@ extern "C" ARM int func_ov003_02158e94(struct Struct_ov003_02158e94* arg0, int a
         return 0;
     }
 
-    if (arg0->unknown_570_ != 0 && !func_020e28dc(arg0->unknown_570_) && arg0->unknown_588_ != 0 && arg0->unknown_587_ == 0) {
-        struct Struct_0205d0e0* var0 = func_0205d8c4((struct Struct_0205d81c*)arg0->unknown_f4_);
-        if (var0 != 0 && func_0204c7cc((unsigned char*)var0) != 0 && (var0->unknown_c5_ & 2) == 0) {
-            func_0205bc24(arg0->unknown_f8_, -1);
+    if (self->choice != 0 && !GetInnerFlagBit0020e28dc(self->choice) && self->state != 0 && self->field_0x587 == 0) {
+        struct Elem_0205d81c* elem = Window_GetActivePane((struct Struct_0205d81c*)self->elements);
+        if (elem != 0 && WindowPane_IsReady((unsigned char*)elem) != 0 && (elem->flagsC5 & 2) == 0) {
+            TouchGrid_SetTouchedCell(self->field_0xf8, -1);
         }
         self->field_0x582 = Window_Update(self->elements, amount);
     }

@@ -43,15 +43,15 @@ unsigned long long GetCurrentTimestamp(void);
 struct ProcessorContext;
 void SetInterval(Alarm*, unsigned long long, unsigned long long, void (*)(ProcessorContext**), ProcessorContext**);
 void CancelAlarm(Alarm*);
-extern "C" void func_0203ad14(void*, int, void*, int);
-struct Struct_0203aba8;
-extern "C" void func_0203aba8(Struct_0203aba8*, void*, void*);
-extern "C" void func_0203ae4c(void* arg0, int arg1, void* arg2);
-extern "C" void func_0203ad88(void* arg0, void* arg1, int arg2);
-extern "C" void func_0203ac10(void* arg0, void* arg1, int arg2);
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" void func_ov016_0218c024(void);
+void SetKeyAndApplyRecord0203ad14(void*, int, void*, int);
+struct Obj0203aba8;
+void TryDispatchOrFallback0203aba8(Obj0203aba8*, void*, void*);
+void UpdateScaleOrApplyRecord0203ae4c(void* a, int b, void* c);
+void ScaleAndNotify0203ad88(void* a, void* b, int c);
+void SetContextAndDispatch0203ac10(void* a, void* b, int c);
+struct Struct0200fb08;
+int GameState_GetLanguage(Struct0200fb08*);
+void SetFlagAndMaybeIncrement_0218c024(void);
 
 struct Struct_ov016_0218c04c {
 	char unknown_0_[0x10];
@@ -86,7 +86,7 @@ struct Struct_ov016_0219d0c0_7 {
 extern Struct_ov016_0219d0c0_7 data_ov016_0219d0c0;
 extern char data_ov016_0219d0cc;
 extern char data_ov016_0219d118;
-extern char data_02109bf4;
+extern char g_bgmPlayer;
 
 // USA: func_ov016_0218c04c
 extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
@@ -162,15 +162,15 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 		var9 = (float)func_ov016_0218e678(var11) / 16777216.0f;
 		var10 = 0;
 
-		while (func_ov016_0218e6c0(var11)) {
-			if (data_ov016_0219d0c0.unknown_10_ == 0) {
-				Struct_ov016_0218c04c* var22 = data_ov016_0219d0c0.unknown_34_;
-				unsigned long long var23 = (GetCurrentTimestamp() << 6) / 0x82ea;
-				if (data_ov016_0219d0c0.unknown_40_ + var22->unknown_14_ <= var23) {
-					if (var22->unknown_10_ != 0) {
-						func_0203ad14(&data_02109bf4, var22->unknown_12_, 0, 0);
+		while (CallIfNonNullBool_0218e6c0(node)) {
+			if (data_ov016_0219d0c0.started == 0) {
+				Info_0218c04c* p = data_ov016_0219d0c0.info;
+				unsigned long long t = (GetCurrentTimestamp() << 6) / 0x82ea;
+				if (data_ov016_0219d0c0.startTime + p->delay <= t) {
+					if (p->isSet != 0) {
+						SetKeyAndApplyRecord0203ad14(&g_bgmPlayer, p->id, 0, 0);
 					} else {
-						func_0203aba8((Struct_0203aba8*)&data_02109bf4, (void*)var22->unknown_12_, &data_ov016_0219d0cc);
+						TryDispatchOrFallback0203aba8((Obj0203aba8*)&g_bgmPlayer, (void*)p->id, &data_ov016_0219d0cc);
 					}
 					func_020bbd9c();
 					data_ov016_0219d0c0.unknown_10_ = 1;
@@ -178,13 +178,13 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 				}
 			}
 			if ((*(unsigned short*)0x27fffa8 & 0x8000) >> 15) {
-				data_ov016_0219d0c0.unknown_38_ = 1;
-				if (data_ov016_0219d0c0.unknown_34_->unknown_10_ != 0) {
-					func_0203ae4c(&data_02109bf4, 1, 0);
+				data_ov016_0219d0c0.busy = 1;
+				if (data_ov016_0219d0c0.info->isSet != 0) {
+					UpdateScaleOrApplyRecord0203ae4c(&g_bgmPlayer, 1, 0);
 					func_020ce89c(0xc, 0, 0);
-					*(unsigned int*)(&data_02109bf4 + 0xa8) =
-						(unsigned int)(1000.0f * ((float)(var18 - var10) / var9));
-					func_0203ae4c(&data_02109bf4, 0, 0);
+					*(unsigned int*)(&g_bgmPlayer + 0xa8) =
+						(unsigned int)(1000.0f * ((float)(frame - lastFrame) / scale));
+					UpdateScaleOrApplyRecord0203ae4c(&g_bgmPlayer, 0, 0);
 				} else {
 					func_020ce89c(0xc, 0, 0);
 				}
@@ -279,9 +279,9 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 				int var31, var32, var33, var34;
 				int var35;
 				g_touchInput.RefreshState();
-				g_touchInput.GetTouchPoint(&var1, &var2);
-				var35 = (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) ? 1 : 0;
-				switch (func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance())) {
+				g_touchInput.GetTouchPoint(&sx, &sy);
+				touched = (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) ? 1 : 0;
+				switch (GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance())) {
 				case 1:
 					var31 = 0x4c; var32 = 0xbd; var33 = 0x67; var34 = 0x98;
 					break;
@@ -334,15 +334,15 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 			}
 		}
 		CancelAlarm((Alarm*)&data_ov016_0219d118);
-		((SafeAllocator*)data_ov016_0219d0c0.unknown_8_)->Free(data_ov016_0219d0c0.unknown_30_);
-		((SafeAllocator*)data_ov016_0219d0c0.unknown_8_)->Free(data_ov016_0219d0c0.unknown_2c_);
-		func_ov016_0218e640(var11);
-		NitroVM_FinishRead((NitroVM*)var0);
-		if (data_ov016_0219d0c0.unknown_34_->unknown_12_ > -1) {
-			if (data_ov016_0219d0c0.unknown_34_->unknown_10_ != 0) {
-				func_0203ad88(&data_02109bf4, 0, 0);
+		((SafeAllocator*)data_ov016_0219d0c0.alloc)->Free(data_ov016_0219d0c0.bufL);
+		((SafeAllocator*)data_ov016_0219d0c0.alloc)->Free(data_ov016_0219d0c0.bufR);
+		ClearAndReset_0218e640(node);
+		NitroVM_FinishRead((NitroVM*)vm);
+		if (data_ov016_0219d0c0.info->id > -1) {
+			if (data_ov016_0219d0c0.info->isSet != 0) {
+				ScaleAndNotify0203ad88(&g_bgmPlayer, 0, 0);
 			} else {
-				func_0203ac10(&data_02109bf4, &data_ov016_0219d0cc, 0);
+				SetContextAndDispatch0203ac10(&g_bgmPlayer, &data_ov016_0219d0cc, 0);
 			}
 			func_020bbd9c();
 		}

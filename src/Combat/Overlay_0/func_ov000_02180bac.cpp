@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_0204bbb4;
-extern "C" void func_0204bbb4(struct Struct_0204bbb4* arg0, unsigned int arg1, int arg2, int arg3,
-                           short arg4, short arg5, short arg6, short arg7, unsigned short arg8);
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+struct Obj0204bbb4;
+void CallListEntry0204bbb4(struct Obj0204bbb4* obj, unsigned int idx, int a2, int a3,
+                           short a4, short a5, short a6, short a7, unsigned short a8);
+extern "C" void SpriteContext_DrawSprite(void* dst, void* src);
 extern "C" int* func_0202ae18(void);
 extern "C" int func_0202b7d8(int* arg0);
 
@@ -50,8 +50,8 @@ extern "C" ARM void func_ov000_02180bac(struct Struct_ov000_02180bac_2* arg0) {
 #else
         var0->unknown_22_ = 0x48;
 #endif
-        var0->unknown_26_ = 1;
-        func_0205ac40(arg0->unknown_11c_, var0);
+        e->field26 = 1;
+        SpriteContext_DrawSprite(obj->field11c, e);
     }
     int var1 = (arg0->unknown_1d72_ & 0x400) ? 1 : 0;
     if (var1 & func_0202b7d8(func_0202ae18())) {
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov000_02180bac(struct Struct_ov000_02180bac_2* arg0) {
 #else
         var2->unknown_22_ = 0;
 #endif
-        var2->unknown_26_ = 0;
-        func_0205ac40(arg0->unknown_11c_, var2);
+        e->field26 = 0;
+        SpriteContext_DrawSprite(obj->field11c, e);
     }
 }

@@ -48,26 +48,26 @@ struct Struct_0201099c_9 {
     unsigned short unknown_14_;
 };
 
-struct Struct_0201099c_10;
+struct ItemTable;
 
 class Struct_ov004_0215eb40 {
 public:
-    virtual void inline_ov004_0215eb40(); virtual void inline_ov004_0215eb40_2(); virtual void inline_ov004_0215eb40_3(); virtual void inline_ov004_0215eb40_4();
-    virtual void inline_ov004_0215eb40_5(); virtual void inline_ov004_0215eb40_6(); virtual void inline_ov004_0215eb40_7(); virtual void inline_ov004_0215eb40_8();
-    virtual void inline_ov004_0215eb40_9(); virtual void inline_ov004_0215eb40_10(); virtual void inline_ov004_0215eb40_11(); virtual void inline_ov004_0215eb40_12();
-    virtual void inline_ov004_0215eb40_13(); virtual void inline_ov004_0215eb40_14(); virtual void inline_ov004_0215eb40_15(); virtual void inline_ov004_0215eb40_16();
-    virtual void inline_ov004_0215eb40_17(); virtual void inline_ov004_0215eb40_18(); virtual void inline_ov004_0215eb40_19(); virtual void inline_ov004_0215eb40_20();
-    virtual void inline_ov004_0215eb40_21(); virtual void inline_ov004_0215eb40_22(); virtual void inline_ov004_0215eb40_23(); virtual void inline_ov004_0215eb40_24();
-    virtual void inline_ov004_0215eb40_25(); virtual void inline_ov004_0215eb40_26(); virtual void inline_ov004_0215eb40_27(); virtual void inline_ov004_0215eb40_28();
-    virtual void inline_ov004_0215eb40_29(); virtual void inline_ov004_0215eb40_30(); virtual void inline_ov004_0215eb40_31(); virtual void inline_ov004_0215eb40_32();
-    virtual void inline_ov004_0215eb40_33(); virtual void inline_ov004_0215eb40_34(); virtual void inline_ov004_0215eb40_35(); virtual void inline_ov004_0215eb40_36();
-    virtual void inline_ov004_0215eb40_37(); virtual void inline_ov004_0215eb40_38(); virtual void inline_ov004_0215eb40_39(); virtual void inline_ov004_0215eb40_40();
-    virtual void inline_ov004_0215eb40_41(); virtual void inline_ov004_0215eb40_42(); virtual void inline_ov004_0215eb40_43(); virtual void inline_ov004_0215eb40_44();
-    virtual void inline_ov004_0215eb40_45(); virtual void inline_ov004_0215eb40_46(); virtual void inline_ov004_0215eb40_47(); virtual void inline_ov004_0215eb40_48();
-    virtual void inline_ov004_0215eb40_49(); virtual void inline_ov004_0215eb40_50(); virtual void inline_ov004_0215eb40_51(); virtual void inline_ov004_0215eb40_52();
-    virtual void inline_ov004_0215eb40_53(); virtual void inline_ov004_0215eb40_54(); virtual void inline_ov004_0215eb40_55(); virtual void inline_ov004_0215eb40_56();
-    virtual void inline_ov004_0215eb40_57(); virtual void inline_ov004_0215eb40_58();
-    virtual Struct_0201099c_10* inline_ov004_0215eb40_59();
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
+    virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+    virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43();
+    virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
+    virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51();
+    virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55();
+    virtual void v56(); virtual void v57();
+    virtual ItemTable* GetContainer();
 };
 
 struct Struct_ov004_0215eb40_3 { unsigned char unknown_0_[0x454]; short unknown_454_[8]; };
@@ -78,34 +78,34 @@ extern unsigned char data_ov004_021707e8;
 extern unsigned char data_ov004_0216fdd0[];
 extern char data_0212633c[];
 
-extern "C" void func_0209a338(struct Struct_0200f3a4_8*);
-extern "C" void func_0209a348(struct Struct_0209a348*, void*);
-extern "C" int func_0209a670(struct Struct_0209a670*);
-extern "C" struct Struct_ov004_0215eb40_4* func_0209a654(struct Struct_0209a654_2*, unsigned int);
-extern "C" void func_02083acc(unsigned char*, int);
-extern "C" void func_02083b28(unsigned char*, int);
-extern "C" int func_02083b00(unsigned char*, int);
-extern "C" void* func_02053c6c(unsigned char*);
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10*, int);
+void ClearFirstTwoWords0209a338(struct Pair0209a338*);
+void SetupAndRunBufferedScript0209a348(struct Ctx0209a348*, void*);
+int GetIntAt0x4(struct IntField0x4_0209a670*);
+struct ListEntry* GetEntryByIndex0209a654(struct GetList0209a654*, unsigned int);
+void SetBitInArray0x8ec_02083acc(unsigned char*, int);
+void ClearBitInArray0x8ec_02083b28(unsigned char*, int);
+int TestBitInArray0x8ec_02083b00(unsigned char*, int);
+void* GetFieldAt0x150_02053c6c(unsigned char*);
+struct Element020de650* ItemTable_Find(struct ItemTable*, int);
 extern "C" void* func_ov004_0215e47c(void*, int);
 extern "C" void func_ov004_0215ee90(void*);
 
 // USA: func_ov004_0215eb40
-extern "C" ARM void func_ov004_0215eb40(void* arg0) {
-    struct Struct_0209a348 var0;
-    GameState* var1;
-    unsigned char* var2;
-    unsigned char* var3;
-    BackgroundLoader* var4;
-    struct Struct_0201099c_10* var5;
-    int var6;
-    int var7;
-    short* var8;
-    int var9;
-    int var10;
-    int var11;
-    struct Struct_ov004_0215eb40_4* var12;
-    unsigned char var13[2];
+extern "C" ARM void func_ov004_0215eb40(void* self) {
+    struct Ctx0209a348 ctx;
+    GameState* gs;
+    unsigned char* combatant;
+    unsigned char* field150;
+    BackgroundLoader* loader;
+    struct ItemTable* container;
+    int k;
+    int found;
+    short* slots;
+    int j;
+    int total;
+    int count;
+    struct ListEntry* entry;
+    unsigned char mark[2];
 
     func_ov004_0215ee90(data_ov004_02170b90);
     var1 = GameState::GetInstance();
@@ -114,12 +114,12 @@ extern "C" ARM void func_ov004_0215eb40(void* arg0) {
     if (var2 == 0 || var3 == 0) {
         return;
     }
-    var4 = BackgroundLoader::GetInstance();
-    var4->MaybeWaitIdle();
-    char* var14 = data_0212633c;
-    func_0209a338((struct Struct_0200f3a4_8*)&var0);
-    func_0209a348(&var0, var14);
-    func_02010828(var1);
+    loader = BackgroundLoader::GetInstance();
+    loader->MaybeWaitIdle();
+    char* script = data_0212633c;
+    ClearFirstTwoWords0209a338((struct Pair0209a338*)&ctx);
+    SetupAndRunBufferedScript0209a348(&ctx, script);
+    GameState_GetParty(gs);
 
     var5 = 0;
     {
@@ -146,8 +146,8 @@ extern "C" ARM void func_ov004_0215eb40(void* arg0) {
                 break;
             }
         }
-        struct Struct_0201099c_9* var16 = func_020dedd0(var5, (short)var6);
-        if (var16 == 0) {
+        struct Element020de650* elem = ItemTable_Find(container, (short)k);
+        if (elem == 0) {
             continue;
         }
         if (var16->unknown_8_4_ != 0x1f) {

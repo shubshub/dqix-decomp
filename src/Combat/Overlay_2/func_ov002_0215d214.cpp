@@ -1,10 +1,10 @@
 #include "GameState/GameState.h"
 #include <globaldefs.h>
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_3;
-struct Struct_020465c0;
-struct Struct_02000c9c_8;
+struct ItemTable;
+struct Container020e0310;
+struct StoreStruct;
+struct Struct0200fb08;
 
 struct Struct_ov002_0215d214 {
     int unknown_0_;
@@ -34,18 +34,18 @@ struct Struct_ov002_0215d214_3 {
 };
 
 void *GetFieldAt0x150_02053c6c(unsigned char *member);
-char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
-char *GetGlobalField0x1c020421a0();
+char *ItemTable_Find(struct ItemTable *c, int key);
+char *MessageSystem_GetInstance();
 extern "C" void func_02046380(void *messages);
-void InitObjFromCombatantId020e4bf4(void *obj, int combatantId);
+void NameText_InitFromPartyMember(void *obj, int combatantId);
 extern "C" int func_ov002_02159774(void *self, int idx, int a, int b, int c);
-int NormalizeField5_0200fb08(Struct0200fb08 *s);
+int GameState_GetLanguage(Struct0200fb08 *s);
 char *KeyTable_Get(struct Container020e0310 *c, int key);
 extern "C" int sprintf(char *dst, const char *fmt, ...);
 extern "C" char *strstr(const char *str, const char *substr);
 extern "C" void *memcpy(void *dst, const void *src, unsigned int n);
 void StoreInArray0x8b0_020465c0(StoreStruct *messages, int index, int value);
-extern "C" void func_02046608(void *messages, int a, const char *format, char *output, int size, int b, int c);
+extern "C" void MessageSystem_FormatText(void *messages, int a, const char *format, char *output, int size, int b, int c);
 
 extern "C" unsigned char data_ov002_0216cac4[];
 extern "C" unsigned char data_ov002_0216cac5[];
@@ -70,30 +70,30 @@ extern "C" ARM void func_ov002_0215d214(char *arg0, char *arg1, int arg2) {
             var4 = (unsigned char *) (arg0 + 0x6e + 0x1c00);
         }
     }
-    int var6 = var4[*(short *) (arg0 + 0x1bec)];
-    char *var7 = (char *) func_0200ff1c(var3, var6);
-    if (var7 == 0) return;
-    Struct_ov002_0215d214_2 *var8 = (Struct_ov002_0215d214_2 *) func_02053c6c((unsigned char *) var7);
-    if (var8 == 0) return;
-    char *var9 = 0;
-    if (*(short *) (arg0 + 0x1c26) < 0) {
-        var9 = func_020dedd0((struct Struct_0201099c_10 *) (arg0 + 0x3ec + 0x400),
-                                                              *(short *) (arg0 + 0x1c22));
-        if (var9 == 0) return;
+    int cid = ids[*(short *) (self + 0x1bec)];
+    char *c = (char *) GetCombatantWithFlag0x100_0200ff1c(gs, cid);
+    if (c == 0) return;
+    Stats_0215d214 *pm = (Stats_0215d214 *) GetFieldAt0x150_02053c6c((unsigned char *) c);
+    if (pm == 0) return;
+    char *e = 0;
+    if (*(short *) (self + 0x1c26) < 0) {
+        e = ItemTable_Find((struct ItemTable *) (self + 0x3ec + 0x400),
+                                                              *(short *) (self + 0x1c22));
+        if (e == 0) return;
     }
-    char *var10 = func_020421a0();
-    func_02046380(var10);
-    func_020e4bf4(&var1, var6);
-    *(void **) var10 = &var1;
-    int var11;
-    char *var12 = *(char **) (var7 + 0x130);
-    char *var13 = *(char **) (var7 + 0x134);
-    int var14    = *(unsigned short *) (var12 + 4);
-    int var15    = *(unsigned short *) (var13 + 0x30);
-    var11        = 0x4ba;
-    int var16   = 1;
-    if (var9 != 0) {
-        switch (*(short *) (var9 + 0x18)) {
+    char *msgs = MessageSystem_GetInstance();
+    func_02046380(msgs);
+    NameText_InitFromPartyMember(&nameObj, cid);
+    *(void **) msgs = &nameObj;
+    int key;
+    char *s130 = *(char **) (c + 0x130);
+    char *s134 = *(char **) (c + 0x134);
+    int val    = *(unsigned short *) (s130 + 4);
+    int max    = *(unsigned short *) (s134 + 0x30);
+    key        = 0x4ba;
+    int show   = 1;
+    if (e != 0) {
+        switch (*(short *) (e + 0x18)) {
             case 0x55ff:
             case 0x5600:
             case 0x5601: var16 = 0;
@@ -159,11 +159,11 @@ extern "C" ARM void func_ov002_0215d214(char *arg0, char *arg1, int arg2) {
             var18   = var17;
             var20 = 1;
         }
-        if (var20 >= 0) {
-            int var22 = func_0200fb08((Struct_02000c9c_8 *) GameState::GetInstance());
-            for (int var23 = 0; var23 < 5; var23++) {
-                if (var22 == data_ov002_0216cac4[var23 * 7]) {
-                    var19 = (data_ov002_0216cac5 + var23 * 7 + var1.unknown_b_0_)[var20 * 2];
+        if (which >= 0) {
+            int x = GameState_GetLanguage((Struct0200fb08 *) GameState::GetInstance());
+            for (int j = 0; j < 5; j++) {
+                if (x == data_ov002_0216cac4[j * 7]) {
+                    mark = (data_ov002_0216cac5 + j * 7 + nameObj.kind)[which * 2];
                     break;
                 }
             }
@@ -180,7 +180,7 @@ extern "C" ARM void func_ov002_0215d214(char *arg0, char *arg1, int arg2) {
             memcpy(p + 4, tmp, 2);
         }
     }
-    func_020465c0((Struct_020465c0 *) var10, 0, var14);
-    func_020465c0((Struct_020465c0 *) var10, 1, var15);
-    func_02046608(var10, 10, var2, arg1, 0x100, 0, 0);
+    StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, val);
+    StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 1, max);
+    MessageSystem_FormatText(msgs, 10, buf, dst, 0x100, 0, 0);
 }

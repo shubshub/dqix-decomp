@@ -82,7 +82,7 @@ enum {
 struct Struct_ov000_02183218 { unsigned char unknown_0_[4]; };
 
 extern "C" void* func_0202ae18(void);
-extern "C" unsigned short* func_02012fe4(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void* func_0203bd08(void);
 extern "C" void func_02082828(int arg0);
 extern "C" void func_020542b4(void* arg0, void* arg1, void* arg2);
@@ -106,10 +106,10 @@ extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
 extern "C" void func_ov017_0218d274(void* arg0);
 extern "C" void func_ov017_021901ac(int arg0);
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
+int GameState_GetProtagonistIndex(GameState* state);
+void* GetField0x3f8Address_0200fd0c(GameState* state);
+void ClearCombatantSlot_0200fd48(GameState* state, int id);
+void GameState_SetCamera(GameState* state, int value);
 
 struct Struct_02010088;
 extern "C" int func_02010088(struct Struct_02010088* arg0);
@@ -131,13 +131,13 @@ extern "C" int func_ov000_02160fd4(void* arg0, int arg1);
 extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
 extern "C" int func_02053c6c(unsigned char* arg0);
 
-struct Struct_020fdd44;
-extern "C" struct Struct_020fdd44* func_02027cb0(void);
-extern "C" int func_020421a0(void);
-extern "C" void* func_0207d78c(void);
-extern "C" void* func_020d6c00(void);
+struct Entry_02028bd0;
+struct Entry_02028bd0* FindEntryByCurrentId02027cb0(void);
+int MessageSystem_GetInstance(void);
+void* GetData02108ea8_0207d78c(void);
+void* GlobalFlags_GetInstance(void);
 
-extern "C" void func_020397c0(void* arg0);
+void GameObject_EnableControl(void* obj);
 
 struct Struct_02053f7c_3;
 extern "C" void func_02053f7c(Struct_02053f7c_3* arg0, unsigned short arg1, int arg2);
@@ -169,7 +169,7 @@ struct Foo0207df50;
 void FormatAndAppendCombatMessage02072d58(int combatantId, char* statsBuf, char* outBuf);
 struct Obj02061bd8;
 int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 
@@ -182,14 +182,14 @@ struct Struct_0201bdac_2;
 struct Struct_0201bdac;
 extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
 
-extern "C" void func_0201bf38(unsigned char* arg0, int arg1, int arg2, int arg3, unsigned short arg4);
-extern "C" void func_0201bf70(unsigned char* arg0, int arg1);
-extern "C" void func_020e1154(void* arg0);
-extern "C" void func_ov017_02195530(unsigned char* arg0);
-struct Struct_02038598_4;
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" int func_ov000_0215fc60(char* arg0);
-extern "C" void func_ov017_021907dc(int arg0, int arg1, int arg2, int arg3, int arg4);
+void StoreBattleParams0201bf38(unsigned char* obj, int set, int a, int b, unsigned short c);
+void SetOrClearBit1_0201bf70(unsigned char* obj, int set);
+void InitContext020e1154(void* obj);
+void SetFlag320_02195530(unsigned char* obj);
+struct FlagWord020466f4;
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+int ClassifyField0x81fe_ov000_0215fc60(char* base);
+void CallHelperWithBuf_021907dc(int a, int b, int c, int d, int e);
 
 extern "C" void* func_020e3580(void);
 extern "C" int func_020e37e8(unsigned char* arg0);
@@ -203,19 +203,19 @@ struct Struct_ov000_021688dc { unsigned char unknown_0_0_ : 2; unsigned char unk
 
 extern Struct_ov000_02183218 data_ov000_02183218;
 extern int data_ov000_02183b0c;
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 extern const char data_ov000_02183b20[];
 extern const char data_ov000_02183b3b[];
 extern const char data_ov000_02183b55[];
 extern int g_sePlayer;
 
-extern "C" void func_020114c0(char* arg0, int arg1, void* arg2);
-struct Struct_ov000_02164fac_2 { char unknown_0_[0x70]; };
-static inline SafeAllocator* inline_ov000_02164fac(GameResources* arg0, int arg1) { return &arg0->allocator_array_38[arg1]; }
-static inline Struct_ov000_02164fac_2* inline_ov000_021688dc(GameResources* arg0, int arg1) { return &((Struct_ov000_02164fac_2*)arg0->unknown_2cc_)[arg1]; }
+void CopyInRegion0x571d_020114c0(char* obj, int len, void* src);
+struct Slot70 { char data[0x70]; };
+static inline SafeAllocator* GetAllocator38(GameResources* res, int i) { return &res->allocator_array_38[i]; }
+static inline Slot70* GetSlot2cc(GameResources* res, int i) { return &((Slot70*)res->vramStates_)[i]; }
 
-static inline short inline_ov000_021688dc_2(GameObject* arg0) { return arg0->obj3D_.unknown_4_; }
+static inline short GetObjectId(GameObject* c) { return c->obj3D_.actorIndex_; }
 
 static inline int inline_ov000_021688dc_3(GameObject* arg0) {
     return (**(int**)((char*)arg0 + 0x130) & 1) != 0;
@@ -237,27 +237,27 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     short var7[4];
     unsigned int var8;
 
-    GameState* var9 = GameState::GetInstance();
-    int var10 = (int)GetGameResources();
-    struct Struct_0202b2f0* var11 = (struct Struct_0202b2f0*)func_0202ae18();
-    unsigned short* var12 = func_02012fe4();
+    GameState* battle = GameState::GetInstance();
+    int ovBase = (int)GetGameResources();
+    struct SearchStruct* search = (struct SearchStruct*)func_0202ae18();
+    unsigned short* p30 = Zone3D_GetInstance();
     func_0203bd08();
 
-    void* var13 = *(void**)(arg0 + Enum_ov000_021688dc_668);
-    struct Struct_02048150* var14 = (struct Struct_02048150*)func_02010828(var9);
-    GameObject* var15 = var9->GetProtagonist();
-    struct Struct_020fdd44* var16 = func_02027cb0();
-    int var17 = func_020421a0();
-    void* var18 = func_0207d78c();
-    void* var19 = *(void**)(var10 + Enum_ov000_021688dc_14076);
-    unsigned char* var20 = *(unsigned char**)(var10 + Enum_ov000_021688dc_14132);
-    func_020d6c00();
+    void* p29c = *(void**)(work + kWorkData);
+    struct ArrayContainsByteStruct* arrStruct = (struct ArrayContainsByteStruct*)GameState_GetParty(battle);
+    GameObject* prot = battle->GetProtagonist();
+    struct Entry_02028bd0* entry = FindEntryByCurrentId02027cb0();
+    int globalBase = MessageSystem_GetInstance();
+    void* dataPtr20 = GetData02108ea8_0207d78c();
+    void* p1c = *(void**)(ovBase + kResourceNode);
+    unsigned char* p18 = *(unsigned char**)(ovBase + kResourceParams);
+    GlobalFlags_GetInstance();
 
-    if (*((unsigned char*)var13 + 0x8e97) != 0) {
-        GameObject* var21 = var9->GetPartyMemberByIndex(func_020100a8(var9));
-        if (var21 != NULL && func_02010088((struct Struct_02010088*)var21)) {
-            func_0208902c(*(unsigned char**)((char*)var21 + 0x138), 1);
-            func_ov017_02191108(var10, 1, 1, 1, 1);
+    if (*((unsigned char*)p29c + 0x8e97) != 0) {
+        GameObject* c = battle->GetPartyMemberByIndex(GameState_GetProtagonistIndex(battle));
+        if (c != NULL && IsFlag10088Set_02010088((struct S_10088*)c)) {
+            ResetFields14And18KeepFlag0x4_0208902c(*(unsigned char**)((char*)c + 0x138), 1);
+            func_ov017_02191108(ovBase, 1, 1, 1, 1);
         }
     }
 
@@ -311,24 +311,24 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
 
     int var31 = func_020a3634(*(unsigned char**)(arg0 + Enum_ov000_021688dc_672), var7);
 
-    if (var22 != NULL) {
-        func_020397c0(var22);
-        *((unsigned char*)var22 + 0xc3) = 0xf;
+    if (c397c != NULL) {
+        GameObject_EnableControl(c397c);
+        *((unsigned char*)c397c + 0xc3) = 0xf;
     }
 
-    short var32 = var15->obj3D_.unknown_4_;
-    if (func_02086ef0(var14, 0)) {
-        for (int var33 = 0; var33 < var14->unknown_f7c_; var33++) {
-            GameObject* var34 = var9->GetPartyMemberByIndex(var14->unknown_f78_[var33]);
-            if (var34 != NULL && !func_02010088((struct Struct_02010088*)var34)) {
-                if (!inline_ov000_021688dc_3(var34)) {
-                    var32 = var34->obj3D_.unknown_4_;
+    short leadId = prot->obj3D_.actorIndex_;
+    if (ArrayContainsByte_02086ef0(arrStruct, 0)) {
+        for (int idx = 0; idx < arrStruct->count; idx++) {
+            GameObject* c = battle->GetPartyMemberByIndex(arrStruct->arr[idx]);
+            if (c != NULL && !IsFlag10088Set_02010088((struct S_10088*)c)) {
+                if (!IsFlag130Bit0(c)) {
+                    leadId = c->obj3D_.actorIndex_;
                     break;
                 }
             }
         }
     } else {
-        var32 = var22->obj3D_.unknown_4_;
+        leadId = c397c->obj3D_.actorIndex_;
     }
 
     for (int var35 = 0; var35 < 4; var35++) {
@@ -346,9 +346,9 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                     func_0203400c((Struct_02032e58*)var36);
                 }
 
-                if (func_02086ef0(var14, inline_ov000_021688dc_2(var36))) {
-                    if (var32 != var36->obj3D_.unknown_4_) {
-                        func_02039d48((unsigned char*)var36);
+                if (ArrayContainsByte_02086ef0(arrStruct, GetObjectId(c))) {
+                    if (leadId != c->obj3D_.actorIndex_) {
+                        SetFlag0x1ceBit0x4_02039d48((unsigned char*)c);
                     }
                     if (func_ov000_02160fd4(arg0, 1)) {
                         var36->obj3D_.position_ = *(Vector3i*)(arg0 + Enum_ov000_021688dc_22800 + var32 * 16);
@@ -395,8 +395,8 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         }
     }
 
-    if (*(int*)(arg0 + Enum_ov000_021688dc_676) != 0) {
-        func_020100c4(var9, *(int*)(arg0 + Enum_ov000_021688dc_676));
+    if (*(int*)(work + kWorkState) != 0) {
+        GameState_SetCamera(battle, *(int*)(work + kWorkState));
     }
 
     int var40 = 0;
@@ -479,11 +479,11 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
 
-    GPCReadPair* var49 = &var0;
-    unsigned char* var50 = data_0211e33c;
-    unsigned int var51 = 0x30000;
-    ZeroInitGPCPointer(&var49->pGPCFile);
-    var49->ZeroInitializeMachine();
+    GPCReadPair* pp = &pair;
+    unsigned char* buf = g_fileLoadBuffer;
+    unsigned int capacity = 0x30000;
+    ZeroInitGPCPointer(&pp->pGPCFile);
+    pp->ZeroInitializeMachine();
 
     if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var0.pGPCFile, var0.machine,
             data_ov000_02183b20, var50, var8, var51, false, NULL)) {
@@ -513,38 +513,38 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                             }
                             alloc = (SafeAllocator*)(model + 4);
                             alloc->Reset();
-                            CopyInternalFields0207df50((struct Foo0207df50*)(model + 0xcc));
+                            VramState_Rewind((struct Foo0207df50*)(model + 0xcc));
                             VramState_Restore((char*)(model + 0xcc));
-                            LoadFileIntoMemory(name, data_0211e33c, &size);
-                            buf = data_0211e33c;
+                            LoadFileIntoMemory(name, g_fileLoadBuffer, &size);
+                            buf = g_fileLoadBuffer;
                         } else {
                             sprintf(var3, data_ov000_02183b55, var1);
                             var55 = (SafeAllocator*)(var54 + 0x52c);
                             DecompressFileFromGPCByName(var0.pGPCFile, var0.machine, var50, var8, var51, var3);
                         }
 
-                        if (var8 != 0) {
-                            func_0203dafc((struct Struct_0203d028_11*)&var4);
-                            var4.allocator = var55;
-                            var4.unk_10 = 1;
-                            var4.packageID = 0;
-                            var4.unk_8 = var8;
-                            var4.fileData = var50;
-                            var53->obj3D_.LoadFromCCHROrCMOTArchive(&var4, NULL);
+                        if (size != 0) {
+                            ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+                            info.allocator = alloc;
+                            info.unk_10 = 1;
+                            info.packageID = 0;
+                            info.fileSize = size;
+                            info.fileData = buf;
+                            c->obj3D_.LoadFromCCHROrCMOTArchive(&info, NULL);
                         }
 
                         if (CheckField0x56bLowNibble((struct Obj02061bd8*)c)) {
                             VramState_Save((char*)(model + 0xcc));
                         } else {
-                            sprintf(var3, data_ov000_02183b55, var2);
-                            if (DecompressFileFromGPCByName(var0.pGPCFile, var0.machine, var50, var8, var51, var3)) {
-                                func_0203dafc((struct Struct_0203d028_11*)&var5);
-                                var5.allocator = (SafeAllocator*)(var54 + 0x540);
-                                var5.unk_8 = var8;
-                                var5.unk_10 = 1;
-                                var5.packageID = 1;
-                                var5.fileData = var50;
-                                var53->obj3D_.LoadFromCCHROrCMOTArchive(&var5, NULL);
+                            sprintf(name, data_ov000_02183b55, outName);
+                            if (DecompressFileFromGPCByName(pair.pGPCFile, pair.machine, buf, size, capacity, name)) {
+                                ClearEightWords_0203dafc((struct Struct_203dafc*)&info2);
+                                info2.allocator = (SafeAllocator*)(model + 0x540);
+                                info2.fileSize = size;
+                                info2.unk_10 = 1;
+                                info2.packageID = 1;
+                                info2.fileData = buf;
+                                c->obj3D_.LoadFromCCHROrCMOTArchive(&info2, NULL);
                             }
                         }
 
@@ -567,9 +567,9 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     var57->SetZone((Zone3D*)var12);
     var57->BeginFade(0x1000, 0);
 
-    Struct_0208cb08* var58 = func_02094a00();
-    func_02094b40(var58);
-    func_02094ab0(var58);
+    FontBankLoader* g = FontBankLoader_GetInstance();
+    BlankFunction02094b40(g);
+    FontBankLoader_CancelLoads(g);
 
     battle->SetGameSpeed(0x1000);
     SetCombatWorkFlags0x55f4_ov000_02160fa8(work, 0x400);
@@ -581,17 +581,17 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         if (var20[3] != 0 || var20[2] != 0) {
             break;
         }
-        func_ov017_021baedc(var20, 1);
-        *(unsigned short*)(var20 + 8) = *(int*)(arg0 + var59 * 4 + Enum_ov000_021688dc_21912);
-        unsigned short* var60 = func_02012fe4();
-        GameObject* var61 = var9->GetProtagonist();
-        *(int*)((char*)var9 + Enum_ov000_021688dc_29172) = *var60;
-        int var62 = var61->obj3D_.rotation_.y;
-        Vector3i var63 = var61->obj3D_.position_;
-        *(Vector3i*)((char*)var9 + Enum_ov000_021688dc_29156) = var63;
-        *(int*)((char*)var9 + Enum_ov000_021688dc_29168) = var62;
-        func_020469b4((struct Struct_0201bdac_2*)var19, (struct Struct_0201bdac*)var20);
-        var59 = 1;
+        func_ov017_021baedc(p18, 1);
+        *(unsigned short*)(p18 + 8) = *(int*)(work + done * 4 + kWorkPartyIds);
+        unsigned short* p = Zone3D_GetInstance();
+        GameObject* pr = battle->GetProtagonist();
+        *(int*)((char*)battle + kBattleSelection) = *p;
+        int v54 = pr->obj3D_.rotation_.y;
+        Vector3i pos = pr->obj3D_.position_;
+        *(Vector3i*)((char*)battle + kBattlePosition) = pos;
+        *(int*)((char*)battle + kBattleRotation) = v54;
+        AppendNodeToTail((struct TailList020469b4*)p1c, (struct TailNode020469b4*)p18);
+        done = 1;
         break;
     }
 
@@ -619,12 +619,12 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     }
     func_ov017_02195530((unsigned char*)var10);
 
-    struct Struct_02038598_4* var65 = (struct Struct_02038598_4*)func_020d6c00();
-    func_020466f4(var65, 2);
-    func_020466f4(var65, 0x200);
-    func_020466f4(var65, 0x2000);
-    ClearFlags08((GameResources*)var10, 4);
-    func_020466f4(var65, 0x40000);
+    struct FlagWord020466f4* fw = (struct FlagWord020466f4*)GlobalFlags_GetInstance();
+    FlagWord_ClearBits(fw, 2);
+    FlagWord_ClearBits(fw, 0x200);
+    FlagWord_ClearBits(fw, 0x2000);
+    ClearFlags08((GameResources*)ovBase, 4);
+    FlagWord_ClearBits(fw, 0x40000);
 
     if (func_ov000_0215fc60((char*)var13)) {
         GameObject* var66 = func_0200ff1c(var9, 0);

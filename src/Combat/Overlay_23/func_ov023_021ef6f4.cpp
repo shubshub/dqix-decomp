@@ -30,34 +30,34 @@ struct Struct_020465c0 {
     char unknown_2cc_[0x998 - 0x2cc]; int unknown_998_; int unknown_99c_; int unknown_9a0_;
     char unknown_9a4_[0x19b2 - 0x9a4]; unsigned char unknown_19b2_;
 };
-struct Struct_ov023_021ef6f4 { char unknown_0_[0x23ec]; ActiveGrottoClass unknown_23ec_; };
-struct Struct_ov023_021ef6f4_2 { char* unknown_0_; };
-extern "C" Struct_ov023_021eeaac_2* _ZZ21inline_ov023_021f4c04vE1s;
-extern char data_02109bf4[] __attribute__((aligned(4)));
+struct GrottoZone { char pad0[0x23ec]; ActiveGrottoClass grotto_; };
+struct MoveName { char* name_; };
+extern "C" Reset_021eefac* _ZZ17GetGlobal021ffefcvE1s;
+extern char g_bgmPlayer[] __attribute__((aligned(4)));
 extern char data_ov023_021fe258[];
-extern "C" Struct_020465c0* func_020421a0();
-extern "C" int func_0202b7d8(int*);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" void func_ov000_02163b60(void*);
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2*);
-extern "C" Struct_ov000_0217964c_2* func_0200fea4(GameState*, int);
-extern "C" const char* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" int func_0209ca2c(void*);
-extern "C" void func_ov023_021f00f4(int*, int, int, int);
-extern "C" Vector3fix func_02049b54(Struct_02049b54_2*);
-extern "C" void func_02049f28(unsigned char*);
-extern "C" void func_0202ea4c(Struct_0202ea4c*);
-extern "C" void func_ov000_0216d50c(void*);
-extern "C" int func_020100a8(GameState*);
-extern "C" void func_0209c6d8(void*, int);
-extern "C" void func_020117cc(char*, DetailedTreasureMapData*);
-extern "C" void func_ov023_021ed988(char*, int);
-extern "C" Struct_ov023_021ef6f4_2* func_02079e2c(char*, int);
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+StoreStruct* MessageSystem_GetInstance();
+int CheckField0NonZero_0202b7d8(int*);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+void ZeroFieldAndShortTriple0x6e2e_ov000_02163b60(void*);
+void ResetFields_021eefac(Reset_021eefac*);
+BattleActor* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+const char* FindEntryByKey_02072a68(TableA68*, int);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+int IsAnimationActive0209ca2c(void*);
+void SetThreeInts_021f00f4(int*, int, int, int);
+Vector3fix GetSubTriple02049b54(Obj02049b54*);
+void SetSubstructByte0x56_02049f28(unsigned char*);
+void ComputeAngleHeightDistance0202ea4c(Obj0202ea4c*);
+void UpdateEntry0216d50c(void*);
+int GameState_GetProtagonistIndex(GameState*);
+void ResetAndDispatchActorContext0209c6d8(void*, int);
+void DispatchAndSetTreasureMapUnknownBit_020117cc(char*, DetailedTreasureMapData*);
+void ScaleOrResetCombatants_021ed988(char*, int);
+MoveName* SearchBothTables02079e2c(char*, int);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" {
 void* func_0202ae18();
-Struct_ov023_021ef6f4* func_02012fe4();
+GrottoZone* Zone3D_GetInstance();
 void __clear(void*, unsigned int);
 void func_020e4ce8(void*, Struct_ov000_0217964c_2*, int);
 void func_0204500c(Struct_020465c0*, const char*, int, int);
@@ -69,66 +69,66 @@ void func_02011744(GameState*);
 }
 
 // USA: func_ov023_021ef6f4
-extern "C" ARM int func_ov023_021ef6f4(Struct_ov023_021ef6f4_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov023_021eeaac_2* var1 = _ZZ21inline_ov023_021f4c04vE1s;
-    Struct_020465c0* var2 = func_020421a0();
-    void* var3 = func_0202ae18();
-    DetailedTreasureMapData* var4 = func_02012fe4()->unknown_23ec_.GetDetailedData();
-    char var5[0x300];
-    __clear(var5, sizeof(var5));
-    int var6[3];
-    if (var1->unknown_0_ == 0) {
-        if (!func_0202b7d8((int*)var3) || arg0->unknown_2a0_->unknown_2a_ == func_0202c1a4((Struct_0202c1a4*)var3)) {
-            func_ov000_02163b60(arg0);
-            var1->unknown_0_ = 1;
-        } else { func_ov023_021eefac(var1); return 5; }
-    } else if (var1->unknown_0_ == 1) {
-        int var7 = 1;
-        if (var4->legacy_.bossID_ == 9) var7 = 3;
-        for (int var8 = 0; var8 < var7; ++var8) {
-            Struct_ov000_0217964c_2* var9 = func_0200fea4(var0, var8 + 0xc0);
-            if (var9 && var9->unknown_138_) {
-                arg0->unknown_6e30_[arg0->unknown_6e2e_] = var9->unknown_4_;
-                ++arg0->unknown_6e2e_;
+extern "C" ARM int func_ov023_021ef6f4(BattleBossScene* self) {
+    GameState* game = GameState::GetInstance();
+    Reset_021eefac* state = _ZZ17GetGlobal021ffefcvE1s;
+    StoreStruct* messages = MessageSystem_GetInstance();
+    void* search = func_0202ae18();
+    DetailedTreasureMapData* map = Zone3D_GetInstance()->grotto_.GetDetailedData();
+    char message[0x300];
+    __clear(message, sizeof(message));
+    int actorContext[3];
+    if (state->phase_ == 0) {
+        if (!CheckField0NonZero_0202b7d8((int*)search) || self->info_->leader_ == GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search)) {
+            ZeroFieldAndShortTriple0x6e2e_ov000_02163b60(self);
+            state->phase_ = 1;
+        } else { ResetFields_021eefac(state); return 5; }
+    } else if (state->phase_ == 1) {
+        int count = 1;
+        if (map->legacy_.bossID_ == 9) count = 3;
+        for (int i = 0; i < count; ++i) {
+            BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, i + 0xc0);
+            if (actor && actor->active_) {
+                self->actors_[self->actorCount_] = actor->actorIndex_;
+                ++self->actorCount_;
             }
         }
-        if ((!var4->legacy_.minTurns_ || arg0->unknown_58cc_ < var4->legacy_.minTurns_) && arg0->unknown_58cc_ < 1000) {
-            Struct_ov000_0217964c_2* var10 = func_0200fea4(var0, arg0->unknown_6e30_[0]);
-            if (var4->legacy_.bossID_ == 9) var10 = func_0200fea4(var0, arg0->unknown_6e30_[1]);
-            func_020e4ce8(var6, var10, 1);
-            sprintf(var5, func_02072a68(&arg0->unknown_5904_, 0x23));
-            var2->unknown_20_ = var6;
-            func_020465c0(var2, 0, arg0->unknown_58cc_);
-            func_020465c0(var2, 1, var4->legacy_.level_);
-            func_0204500c(var2, var5, 1, 0xe3);
-            var2->unknown_19b2_ = 0;
-            var2->unknown_998_ = 1;
-            var1->unknown_0_ = 2;
-        } else var1->unknown_0_ = 3;
-    } else if (var1->unknown_0_ == 2) {
-        if (!func_0209ca2c(data_02109bf4) && func_ov023_021f4fc8()) var1->unknown_0_ = 3;
-    } else if (var1->unknown_0_ == 3) {
-        func_ov000_0216d370(&arg0->unknown_c18_, 1, 1, 1);
-        int var11 = 0x3000;
-        if (var4->legacy_.bossID_ == 9) var11 = 0x2333;
-        int var12 = 0;
-        int var13 = 0;
-        Vector3fix var14;
-        func_ov023_021f00f4(&var14.x, 0, 0, 0);
-        for (int var15 = 0; var15 < arg0->unknown_6e2e_; ++var15) {
-            Struct_ov000_0217964c_2* var16 = func_0200fea4(var0, arg0->unknown_6e30_[var15]);
-            var16->position_ = func_02049b54((Struct_02049b54_2*)var16);
-            var16->rotation_.x = 0;
-            var16->rotation_.y = 0;
-            var16->rotation_.z = 0;
-            Vector3fix_Add(&var14, &var16->position_, &var14);
-            var12 += var16->GetRadius();
-            if (var13 < var16->GetHeight()) var13 = var16->GetHeight();
-            var16->MaybeSetRegularAnimation(data_ov023_021fe258, 8);
-            var16->TransitionInheritedAlpha(31, 200);
-            var16->MakeVisible();
-            func_02049f28((unsigned char*)var16);
+        if ((!map->legacy_.minTurns_ || self->turns_ < map->legacy_.minTurns_) && self->turns_ < 1000) {
+            BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[0]);
+            if (map->legacy_.bossID_ == 9) actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[1]);
+            func_020e4ce8(actorContext, actor, 1);
+            sprintf(message, FindEntryByKey_02072a68(&self->text_, 0x23));
+            messages->actorContext_ = actorContext;
+            StoreInArray0x8b0_020465c0(messages, 0, self->turns_);
+            StoreInArray0x8b0_020465c0(messages, 1, map->legacy_.level_);
+            func_0204500c(messages, message, 1, 0xe3);
+            messages->flag19b2_ = 0;
+            messages->pending_ = 1;
+            state->phase_ = 2;
+        } else state->phase_ = 3;
+    } else if (state->phase_ == 2) {
+        if (!IsAnimationActive0209ca2c(g_bgmPlayer) && func_ov023_021f4fc8()) state->phase_ = 3;
+    } else if (state->phase_ == 3) {
+        func_ov000_0216d370(&self->camera_, 1, 1, 1);
+        int scale = 0x3000;
+        if (map->legacy_.bossID_ == 9) scale = 0x2333;
+        int radius = 0;
+        int height = 0;
+        Vector3fix average;
+        SetThreeInts_021f00f4(&average.x, 0, 0, 0);
+        for (int i = 0; i < self->actorCount_; ++i) {
+            BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[i]);
+            actor->position_ = GetSubTriple02049b54((Obj02049b54*)actor);
+            actor->rotation_.x = 0;
+            actor->rotation_.y = 0;
+            actor->rotation_.z = 0;
+            Vector3fix_Add(&average, &actor->position_, &average);
+            radius += actor->GetRadius();
+            if (height < actor->GetHeight()) height = actor->GetHeight();
+            actor->SetAnimationByName(data_ov023_021fe258, 8);
+            actor->TransitionInheritedAlpha(31, 200);
+            actor->MakeVisible();
+            SetSubstructByte0x56_02049f28((unsigned char*)actor);
         }
         var14.x = fix32_Divide(var14.x, arg0->unknown_6e2e_ << 12);
         var14.y = fix32_Divide(var14.y, arg0->unknown_6e2e_ << 12);
@@ -179,40 +179,40 @@ extern "C" ARM int func_ov023_021ef6f4(Struct_ov023_021ef6f4_3* arg0) {
         }
     } else if (var1->unknown_0_ == 5) {
         if (func_ov023_021f4fc8()) {
-            func_0200ff1c(var0, func_020100a8(var0));
-            sprintf(var5, func_02072a68(&arg0->unknown_5904_, 0x1e));
-            Struct_ov000_0217964c_2* var24 = func_0200fea4(var0, arg0->unknown_6e30_[0]);
-            if (var4->legacy_.bossID_ == 9) var24 = func_0200fea4(var0, arg0->unknown_6e30_[1]);
-            func_020e4ce8(var6, var24, 1);
-            var2->unknown_20_ = var6;
-            func_020465c0(var2, 0, arg0->unknown_58c0_);
-            func_0204500c(var2, var5, 1, 0xe3);
-            var2->unknown_19b2_ = 0;
-            var2->unknown_998_ = 1;
-            var2->unknown_2c8_ = 1;
-            var1->unknown_0_ = 6;
+            GetCombatantWithFlag0x100_0200ff1c(game, GameState_GetProtagonistIndex(game));
+            sprintf(message, FindEntryByKey_02072a68(&self->text_, 0x1e));
+            BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[0]);
+            if (map->legacy_.bossID_ == 9) actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[1]);
+            func_020e4ce8(actorContext, actor, 1);
+            messages->actorContext_ = actorContext;
+            StoreInArray0x8b0_020465c0(messages, 0, self->experience_);
+            func_0204500c(messages, message, 1, 0xe3);
+            messages->flag19b2_ = 0;
+            messages->pending_ = 1;
+            messages->choice_ = 1;
+            state->phase_ = 6;
         }
     } else if (var1->unknown_0_ == 6) {
         if (var2->unknown_9a0_ != 3) return arg0->unknown_eac_;
         if (!func_020457e0(var2)) var1->unknown_0_ = 7; else var1->unknown_0_ = 8;
     } else if (var1->unknown_0_ == 7) {
         if (func_ov023_021f4fc8()) {
-            arg0->unknown_576c_ = 1;
-            sprintf(var5, func_02072a68(&arg0->unknown_5904_, 0x1f));
-            Struct_ov000_0217964c_2* var25 = func_0200fea4(var0, arg0->unknown_6e30_[0]);
-            if (var4->legacy_.bossID_ == 9) var25 = func_0200fea4(var0, arg0->unknown_6e30_[1]);
-            func_020e4ce8(var6, var25, 1);
-            var2->unknown_20_ = var6;
-            func_020465c0(var2, 0, var4->legacy_.level_ + 1);
-            func_0204500c(var2, var5, 1, 0xe3);
-            var2->unknown_19b2_ = 0;
-            var2->unknown_998_ = 1;
-            func_0209c6d8(data_02109bf4, 0x35);
-            var4->UpdateFollowingCompletion(true, 0);
-            func_020117cc((char*)var0, var4);
-            func_02011744(var0);
-            if (var4->legacy_.GetLearnedMove(var4->legacy_.level_, -1)) var1->unknown_0_ = 9;
-            else var1->unknown_0_ = 11;
+            self->levelledUp_ = 1;
+            sprintf(message, FindEntryByKey_02072a68(&self->text_, 0x1f));
+            BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[0]);
+            if (map->legacy_.bossID_ == 9) actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[1]);
+            func_020e4ce8(actorContext, actor, 1);
+            messages->actorContext_ = actorContext;
+            StoreInArray0x8b0_020465c0(messages, 0, map->legacy_.level_ + 1);
+            func_0204500c(messages, message, 1, 0xe3);
+            messages->flag19b2_ = 0;
+            messages->pending_ = 1;
+            ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x35);
+            map->UpdateFollowingCompletion(true, 0);
+            DispatchAndSetTreasureMapUnknownBit_020117cc((char*)game, map);
+            func_02011744(game);
+            if (map->legacy_.GetLearnedMove(map->legacy_.level_, -1)) state->phase_ = 9;
+            else state->phase_ = 11;
         }
     } else if (var1->unknown_0_ == 8) {
         func_ov023_021ed988((char*)arg0, 1500);
@@ -222,18 +222,18 @@ extern "C" ARM int func_ov023_021ef6f4(Struct_ov023_021ef6f4_3* arg0) {
         var1->unknown_0_ = 10;
     } else if (var1->unknown_0_ == 9) {
         if (func_ov023_021f4fc8()) {
-            int var26 = var4->legacy_.GetLearnedMove(var4->legacy_.level_, 1);
-            if (var26) {
-                Struct_ov023_021ef6f4_2* var27 = func_02079e2c((char*)func_020797dc(), (short)var26);
-                sprintf(var5, func_02072a68(&arg0->unknown_5904_, 0x20));
-                Struct_ov000_0217964c_2* var28 = func_0200fea4(var0, arg0->unknown_6e30_[0]);
-                if (var4->legacy_.bossID_ == 9) var28 = func_0200fea4(var0, arg0->unknown_6e30_[1]);
-                func_020e4ce8(var6, var28, 1);
-                var2->unknown_20_ = var6;
-                func_02046574((Struct_02046574_2*)var2, 1, var27->unknown_0_);
-                func_0204500c(var2, var5, 1, 0xe3);
-                var2->unknown_19b2_ = 0;
-                var2->unknown_998_ = 1;
+            int move = map->legacy_.GetLearnedMove(map->legacy_.level_, 1);
+            if (move) {
+                MoveName* name = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), (short)move);
+                sprintf(message, FindEntryByKey_02072a68(&self->text_, 0x20));
+                BattleActor* actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[0]);
+                if (map->legacy_.bossID_ == 9) actor = GetCombatantWithFlag0x400_0200fea4(game, self->actors_[1]);
+                func_020e4ce8(actorContext, actor, 1);
+                messages->actorContext_ = actorContext;
+                MessageSystem_SetStringArgument((Obj02046574*)messages, 1, name->name_);
+                func_0204500c(messages, message, 1, 0xe3);
+                messages->flag19b2_ = 0;
+                messages->pending_ = 1;
             }
             var1->unknown_0_ = 11;
         }

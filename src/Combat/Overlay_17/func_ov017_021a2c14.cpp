@@ -43,11 +43,11 @@ extern "C" void func_02064e2c(int, int, int, Struct_02013fb4*, int);
 extern "C" void func_02064e88(void*, void*, SafeAllocator*);
 extern "C" void func_0203d028(void*, int, SafeAllocator*, unsigned char*);
 extern "C" void func_0203e2c4(void*, unsigned short);
-extern "C" void* func_02012fe4();
-extern "C" Struct_ov017_021a2c14_2* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" int func_02018fbc(void*, Vector3i*);
+extern "C" void* Zone3D_GetInstance();
+Entry021a2c14* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+extern "C" int Zone3D_GetGroundHeight(void*, Vector3i*);
 extern char data_ov017_021d76a6[];
-extern unsigned char data_0211e33c[];
+extern unsigned char g_fileLoadBuffer[];
 extern char data_ov017_021d76bb[];
 extern char data_ov017_021d76bf[];
 extern char data_ov017_021d76c9[];
@@ -78,13 +78,13 @@ extern "C" ARM int func_ov017_021a2c14(GameResources* arg0, Zone3D_StructPtr_8* 
     var14[3] = 0;
     if (var14[0] == 'F') var14[1] = 0;
     BackgroundLoader::AddLockGlobal();
-    sprintf(var9, data_ov017_021d76a6, var14);
-    if (!LoadFileIntoMemory(var9, data_0211e33c, &var15)) {
-        func_020401fc(func_0203d004(var2), 12, var3);
+    sprintf(path, data_ov017_021d76a6, prefix);
+    if (!LoadFileIntoMemory(path, g_fileLoadBuffer, &archiveSize)) {
+        InitPool020401fc(EmptyStub0203d004(context), 12, allocator);
         BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    if (!var10.Initialize(data_ov017_021d76bb, data_0211e33c)) {
+    if (!archive.Initialize(data_ov017_021d76bb, g_fileLoadBuffer)) {
         BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
@@ -123,20 +123,20 @@ extern "C" ARM int func_ov017_021a2c14(GameResources* arg0, Zone3D_StructPtr_8* 
     }
     var10.Destroy();
     BackgroundLoader::RemoveLockGlobal();
-    func_0203d028(var2, 0, var3, var4);
-    func_0203e2c4(var2, var5);
-    void* var23 = func_02012fe4();
-    for (int var24 = 0; var24 < 32; ++var24) {
-        Struct_ov017_021a2c14_2* var25 = func_0203dce4((Struct_0203dce4_2*)var2, var24);
-        if (!var25 || (var25->unknown_0_ & 0x800) || (var25->unknown_0_ & 0x1000)) continue;
-        if (var25->unknown_14_) {
-            Vector3i var26 = var25->unknown_14_->unknown_4_;
-            var26.y = func_02018fbc(var23, &var26);
-            var25->unknown_14_->unknown_4_ = var26;
-        } else if (var25->unknown_18_) {
-            Vector3i var27 = var25->unknown_18_->position_;
-            var27.y = func_02018fbc(var23, &var27);
-            var25->unknown_18_->position_ = var27;
+    func_0203d028(context, 0, allocator, zoneState);
+    func_0203e2c4(context, id);
+    void* zone = Zone3D_GetInstance();
+    for (int entryIndex = 0; entryIndex < 32; ++entryIndex) {
+        Entry021a2c14* entry = GetEntryUnlessFlag0x8000_0203dce4((EntryList_203dce4*)context, entryIndex);
+        if (!entry || (entry->flags & 0x800) || (entry->flags & 0x1000)) continue;
+        if (entry->holder) {
+            Vector3i holderPosition = entry->holder->position;
+            holderPosition.y = Zone3D_GetGroundHeight(zone, &holderPosition);
+            entry->holder->position = holderPosition;
+        } else if (entry->actor) {
+            Vector3i actorPosition = entry->actor->position_;
+            actorPosition.y = Zone3D_GetGroundHeight(zone, &actorPosition);
+            entry->actor->position_ = actorPosition;
         }
     }
     return 1;

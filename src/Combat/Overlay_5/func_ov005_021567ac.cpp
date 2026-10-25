@@ -67,8 +67,8 @@ extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
 // USA: func_ov005_021567ac
 extern "C" ARM void func_ov005_021567ac(Struct_ov005_02153954* arg0, int arg1, int arg2) {
     GameState::GetInstance();
-    Struct_ov005_02153ba4_2* var0 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    if (!func_ov005_02157ae8(arg0, var0->unknown_4fc_))
+    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    if (!func_ov005_02157ae8(self, screen->member_))
         return;
     arg0->unknown_3d78_ = func_ov005_02155670(arg0, arg1, arg2);
     if (arg0->unknown_3d78_ >= 8 && arg0->unknown_3d78_ < 24) {

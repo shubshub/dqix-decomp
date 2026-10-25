@@ -10,18 +10,18 @@ enum { Enum_ov017_021982ac_108 = 0x6c };
 struct Struct_020a2908;
 struct Struct_020a28e0;
 
-extern "C" void* func_0201e838(unsigned char* arg0, unsigned int arg1);
-extern "C" int func_020100f8(char* arg0);
-extern "C" int func_020a2cc4(unsigned char* arg0);
-extern "C" void func_020a2cd8(unsigned char* arg0, int arg1);
-extern "C" void func_020a2908(unsigned char* arg0, struct Struct_020a2908* arg1);
-extern "C" void func_020a296c(unsigned char* arg0, struct Struct_020a2908* arg1);
-extern "C" void func_020a28d0(unsigned char* arg0);
-extern "C" void func_020a28c4(unsigned char* arg0);
-extern "C" void func_020a28e0(struct Struct_020a28e0* arg0);
-extern "C" void func_020a298c(unsigned char* arg0);
+void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+int GetFieldIfFlag4_020100f8(char* obj);
+int CheckField0x245Bit0x2Set_020a2cc4(unsigned char* obj);
+void SetOrClearField0x245Bit0x2_020a2cd8(unsigned char* obj, int flag);
+void CopySubstateAndSetFlag4_020a2908(unsigned char* obj, struct Struct020a2928* src);
+void CopySubstateAndSetFlag4_020a296c(unsigned char* obj, struct Struct020a2928* src);
+void ClearFlagAt0x240_020a28d0(unsigned char* obj);
+void SetFlagAt0x240_020a28c4(unsigned char* obj);
+void ResetField270Block_020a28e0(struct S_a28e0* p);
+void ClearFlag0x4At0x245_020a298c(unsigned char* obj);
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_ov017_021982ac_2 {
     char unknown_0_[0x2c];
@@ -42,17 +42,17 @@ extern "C" void func_020a28dc(void* arg0, int arg1, void* arg2, void* arg3);
 
 // USA: func_ov017_021982ac
 extern "C" ARM void func_ov017_021982ac(void) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_02012fe4();
-    GameObject* var2 = var0->GetUnknownGameObject();
-    struct Struct_ov017_021982ac var3 = *(struct Struct_ov017_021982ac*)((char*)var2 + 0x44);
-    struct Struct_ov017_021982ac_2* var4;
-    unsigned char* var5;
-    int var6;
+    GameState* battle = GameState::GetInstance();
+    void* ctx = Zone3D_GetInstance();
+    GameObject* combatant = battle->GetUnknownGameObject();
+    struct Anchor_021982ac anchor = *(struct Anchor_021982ac*)((char*)combatant + 0x44);
+    struct PendingNode_021982ac* node;
+    unsigned char* state;
+    int applied;
 
-    var4 = (struct Struct_ov017_021982ac_2*)func_0201e838((unsigned char*)var1 + Enum_ov017_021982ac_108, 4);
-    var5 = (unsigned char*)func_020100f8((char*)var0);
-    if (var5 == 0) {
+    node = (struct PendingNode_021982ac*)ZoneFeatures_GetFirstOfType((unsigned char*)ctx + kRegionalFieldOffset, 4);
+    state = (unsigned char*)GetFieldIfFlag4_020100f8((char*)battle);
+    if (state == 0) {
         return;
     }
 

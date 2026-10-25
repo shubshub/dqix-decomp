@@ -35,7 +35,7 @@ int AnimateSubBG0Shake0208ca00(ShakeState0208ca00*, int);
 extern "C" void func_0208bf78(ShakeState0208ca00*);
 extern "C" void func_0208b788(int, float, SrcStruct0208baec*, int);
 int SetupDstFromSrcAndScale0208baec(int, DstStruct0208baec*, SrcStruct0208baec*, int, float, int, unsigned char);
-unsigned char NormalizeField5_0200fb08(Struct0200fb08*);
+unsigned char GameState_GetLanguage(Struct0200fb08*);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 int* GetGlobal02109418_02094d6c();
 unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
@@ -65,7 +65,7 @@ extern "C" ARM int func_0208bb78(Struct_0208bb78* arg0, int arg1) {
     GameResources* resources = state->GetResources();
     float scale;
     unsigned char slot;
-    HeadNode02046b24** head = (HeadNode02046b24**)resources->unknown_ptr_array_36fc[0];
+    HeadNode02046b24** head = (HeadNode02046b24**)resources->fieldTaskQueue_;
     if (self->flags & 8) {
         int adjust = (self->flags & 0x100) != 0;
         SrcStruct0208baec values;
@@ -85,7 +85,7 @@ extern "C" ARM int func_0208bb78(Struct_0208bb78* arg0, int arg1) {
             memcpy(&var9, &var8, sizeof(var9));
             var9.unknown_4_ += 0x38;
 #if !defined(jpn)
-            if (func_0200fb08((Struct_02000c9c_8*)var2) == 5) var9.unknown_4_ += 16;
+            if (GameState_GetLanguage((Struct0200fb08*)state) == 5) second.y += 16;
 #endif
 #if defined(jpn)
             func_0208baec((int)&arg0->unknown_60_, &arg0->unknown_b4_[(unsigned char)(var5 + 1)], &var9, 0x60, var4, var0, 1);

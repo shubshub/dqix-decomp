@@ -4,13 +4,13 @@
 #include "GameState/GameState.h"
 
 extern "C" void* func_02057924(void);
-extern "C" void func_02057f00(void* arg0, int arg1);
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-struct Struct_ov001_0215bcc0;
-struct Struct_0208f410;
+extern "C" void func_02057f00(void* obj, int value);
+void* GetActiveCombatWork_ov000_02160130(void);
+extern "C" void* func_ov000_02160f14(void* obj);
+void GameState_SetCamera(GameState* battleStruct, int value);
+void ClearCombatantSlot_0200fd48(GameState* battleStruct, int id);
+struct Container02037364;
+struct S1a0;
 
 struct Struct_ov025_021e8bc4 {
     unsigned char unknown_0_;
@@ -28,24 +28,24 @@ struct Struct_ov025_021e8bc4_2 {
 extern "C" ARM void func_ov025_021e8bc4(struct Struct_ov025_021e8bc4_2* arg0, int arg1) {
     if (!arg0->unknown_1d8_) return;
 
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_02057924();
-    func_020100bc(var0);
+    GameState* battle = GameState::GetInstance();
+    void* g = func_02057924();
+    battle->GetCamera();
 
     struct Struct_ov025_021e8bc4* var2 = arg0->unknown_1d8_;
     while (var2 != 0 && arg1 <= var2->unknown_1_) {
         switch (var2->unknown_0_) {
         case 0: {
-            GameObject* var3 = var0->GetGameObjectByIndex(var2->unknown_2_);
-            if (var3) {
-                char* var4 = *(char**)((char*)var3 + 0x14);
-                char var5[0x28];
-                if (var4) strcpy(var5, var4);
-                unsigned char var6 = var3->obj3D_.animationFlags_;
-                unsigned int var7 = var3->obj3D_.animationTime_;
-                ((Object3D*)((struct Struct_ov001_0215bcc0*)var3))->RemoveAnimationPackageByID(var2->unknown_4_);
-                var3->obj3D_.MaybeSetRegularAnimation((char const*)var5, var6);
-                ((Object3D*)((struct Struct_0208f410*)var3))->SetCurrentAnimationTime(var7);
+            GameObject* combatant = battle->GetGameObjectByIndex(node->id2);
+            if (combatant) {
+                char* name = *(char**)((char*)combatant + 0x14);
+                char buf[0x28];
+                if (name) strcpy(buf, name);
+                unsigned char b = combatant->obj3D_.animationFlags_;
+                unsigned int saved = combatant->obj3D_.animationTime_;
+                ((Object3D*)((struct Container02037364*)combatant))->RemoveAnimationPackageByID(node->id4);
+                combatant->obj3D_.SetAnimationByName((char const*)buf, b);
+                ((Object3D*)((struct S1a0*)combatant))->SetCurrentAnimationTime(saved);
             }
             break;
         }
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov025_021e8bc4(struct Struct_ov025_021e8bc4_2* arg0, in
             func_02057f00(var1, var2->unknown_4_);
             break;
         case 3:
-            func_020100c4(var0, (int)func_ov000_02160f14(func_ov000_02160130()));
+            GameState_SetCamera(battle, (int)func_ov000_02160f14(GetActiveCombatWork_ov000_02160130()));
             break;
         case 4: {
             GameObject* var8 = var0->GetGameObjectByIndex(var2->unknown_2_);

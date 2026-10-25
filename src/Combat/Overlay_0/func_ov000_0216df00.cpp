@@ -5,7 +5,7 @@ extern "C" void func_0202e7d4(unsigned char*,int*,int*,int*);
 int fix32abs(int);
 int Vector3fixSquaredDistance(const Vector3i*,const Vector3i*);
 void SetFlagOrState0216d530(void*,int);
-void Camera_SetTarget(unsigned char*,int,int,int);
+void Camera_SetTarget(struct Camera*,int,int,int);
 void* GetActiveCombatWork_ov000_02160130();
 extern "C" { void func_ov000_0216d370(void*,int,int,int); void func_0202e5d8(void*,int,int,int); void func_ov000_02167f10(void*); }
 struct Struct_ov000_0216df00 { char unknown_0_[0x10]; Vector3i unknown_10_; char unknown_1c_[0x5c-0x1c]; int unknown_5c_,unknown_60_; char unknown_64_[0x220-0x64]; unsigned char unknown_220_; char unknown_221_[3]; int unknown_224_; char unknown_228_[0x23c-0x228]; int unknown_23c_; };
@@ -44,8 +44,8 @@ extern "C" ARM void func_ov000_0216df00(Struct_ov000_0216df00* arg0,int arg1,int
     func_ov000_0216d370(self,1,1,1);
     self->mode=1;
     SetFlagOrState0216d530(self,id);
-    if(party) { int y=HeightOffset(half,offset); Camera_SetTarget((unsigned char*)self,0,y,0); }
-    else Camera_SetTarget((unsigned char*)self,0,half,0);
+    if(party) { int y=HeightOffset(half,offset); Camera_SetTarget((struct Camera*)self,0,y,0); }
+    else Camera_SetTarget((struct Camera*)self,0,half,0);
     int low=half-0x1800;
     if(low<0) low=0;
     func_0202e5d8(self,0,low,distance);

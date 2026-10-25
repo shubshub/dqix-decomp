@@ -13,14 +13,14 @@ struct Struct_ov000_02171c04_2 {
     unsigned char unknown_0_[0x194];
     Struct_ov000_02171c04 unknown_194_[8];
 };
-struct Struct_0201099c_10;
-struct Struct_ov000_02171c04_3 {
-    Struct_0201099c_10* unknown_0_;
-    unsigned char unknown_4_[0x4c - 0x4];
-    int unknown_4c_;
+struct ItemTable;
+struct BattleEquipmentList {
+    ItemTable* inventory;
+    unsigned char unknown04[0x4c - 0x4];
+    int partyIndex;
 };
 
-extern "C" Struct_ov000_02171c04* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
+BattleEquipmentEntry* ItemTable_Find(ItemTable* c, int key);
 extern "C" unsigned char data_ov000_02183388[8];
 
 // USA: func_ov000_02171d90
@@ -55,5 +55,5 @@ extern "C" ARM Struct_ov000_02171c04* func_ov000_02171d90(Struct_ov000_02171c04_
             }
         }
     }
-    return func_020dedd0(arg0->unknown_0_, arg1);
+    return ItemTable_Find(list->inventory, itemId);
 }

@@ -2,11 +2,11 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0205d048;
-struct Struct_02020cb8_3;
-extern "C" void func_0205d048(struct Struct_0205d048* arg0);
-extern "C" void func_0204afb4(struct Struct_02020cb8_3* arg0);
-extern "C" void func_ov000_02170054(void* arg0);
+struct Obj0205d048;
+struct BackgroundGraphics;
+extern "C" void Window_Destroy(struct Obj0205d048* obj);
+void Background_Destroy(struct BackgroundGraphics* obj);
+void ResetSlot02170054(void* obj);
 
 #if defined(jpn)
 #define SLOT_BYTES 0x488
@@ -58,9 +58,9 @@ extern "C" ARM void func_ov000_02172720(Struct_ov000_02172720* arg0) {
         var0->RemoveTask(arg0->unknown_90c_);
         arg0->unknown_90c_ = -1;
     }
-    func_0205d048((struct Struct_0205d048*)arg0->unknown_188_);
-    func_0204afb4((struct Struct_02020cb8_3*)arg0->unknown_8c4_);
-    func_0204afb4((struct Struct_02020cb8_3*)arg0->unknown_8a4_);
+    Window_Destroy((struct Obj0205d048*)self->field_0x188);
+    Background_Destroy((struct BackgroundGraphics*)self->list8c4);
+    Background_Destroy((struct BackgroundGraphics*)self->list8a4);
 #if defined(jpn)
     if (arg0->unknown_1aa0_.GetSignedAllocator() != 0) {
         arg0->unknown_1aa0_.Destroy();

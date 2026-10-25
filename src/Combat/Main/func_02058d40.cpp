@@ -322,11 +322,11 @@ extern "C" ARM void func_02058d40(struct Struct_02058d40_10* arg0, struct Struct
         }
     }
 
-    struct Struct_02058d40_11* var92 = (struct Struct_02058d40_11*)func_02055108(arg0->unknown_28_);
-    if (var92->unknown_4_ != 0) {
-        arg0->unknown_7c_.MaybeSetBCFGAnimation(0, 0);
+    struct WeatherFlags14* flags2 = (struct WeatherFlags14*)GetSubField0x14_02055108(self->weatherList);
+    if (flags2->field_0x4 != 0) {
+        self->object.SetAnimationByIndex(0, 0);
     } else {
-        arg0->unknown_7c_.MaybeSetBCFGAnimation(0, 1);
+        self->object.SetAnimationByIndex(0, 1);
     }
 
     if (var92->unknown_6_ != 0) {

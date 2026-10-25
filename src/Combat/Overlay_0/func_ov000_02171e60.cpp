@@ -25,12 +25,12 @@ struct Struct_ov000_02171e60_2 {
     unsigned char unknown_f7c_;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_020e4864(const char* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-struct Struct_02021b84;
-extern "C" struct Struct_02021b84* func_020421a0();
-extern "C" void func_02046608(struct Struct_02021b84* arg0, int arg1, const char* arg2, char* arg3, int arg4, int arg5, int arg6);
+extern "C" void __clear(void* buf, int n);
+extern "C" void func_020e4864(const char* src, char* dst, int a, int b, int c, int d);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+struct MessageSystem;
+struct MessageSystem* MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(struct MessageSystem* messages, int a, const char* format, char* output, int size, int b, int c);
 
 struct Struct_ov000_0215767c_8 {
     int unknown_0_;
@@ -78,25 +78,25 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
         SwapGlobalEntry0203c108(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
-    arg0->unknown_18_++;
-    arg0->unknown_10_[arg0->unknown_18_] = func_ov000_02171210(var1, arg0);
-    if (arg0->unknown_10_[arg0->unknown_18_] == 0x13) {
-        arg0->unknown_21_ = 0;
-        arg0->unknown_2e_ = arg0->unknown_4c_;
-        if (((struct Struct_ov000_02171e60_2*)func_02010828(GameState::GetInstance()))->unknown_f7c_ == 1) {
-            arg0->unknown_10_[arg0->unknown_18_] = 100;
+    self->stackTop++;
+    self->stack[self->stackTop] = func_ov000_02171210(rec, self);
+    if (self->stack[self->stackTop] == 0x13) {
+        self->field_0x21 = 0;
+        self->field_0x2e = self->field_0x4c;
+        if (((struct BattleInfo2a04*)GameState_GetParty(GameState::GetInstance()))->mode == 1) {
+            self->stack[self->stackTop] = 100;
         }
     }
 #if defined(jpn)
     func_0203c108(&arg0->unknown_50_, (char*)var0->unknown_4_);
 #else
-    char var2[0x80];
-    __clear(var2, 0x80);
-    char var3[0x80];
-    __clear(var3, 0x80);
-    func_020e4864(var0->unknown_4_, var2, 1, 0, 0, 0);
-    func_0206819c(var2, var3, 0);
-    func_02046608(func_020421a0(), 10, var3, var2, 0x100, 0, 0);
-    func_0203c108(&arg0->unknown_50_, var2);
+    char text[0x80];
+    __clear(text, 0x80);
+    char format[0x80];
+    __clear(format, 0x80);
+    func_020e4864(entry->name, text, 1, 0, 0, 0);
+    CopyTextAndUppercaseIfFlagged0206819c(text, format, 0);
+    MessageSystem_FormatText(MessageSystem_GetInstance(), 10, format, text, 0x100, 0, 0);
+    SwapGlobalEntry0203c108(&self->message, text);
 #endif
 }

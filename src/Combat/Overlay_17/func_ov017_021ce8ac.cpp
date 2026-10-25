@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_02083e28(void* arg0, int arg1);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 
 struct Struct_02084a64 {
     unsigned int unknown_0_0_ : 10;
@@ -36,15 +36,15 @@ extern "C" ARM void func_ov017_021ce8ac(int arg0, Struct_ov017_021ce8ac_2* arg1,
 #else
     Struct_02084a64* var2 = (Struct_02084a64*)(var1 + 0x91c);
 #endif
-    var2[0].unknown_0_0_ = arg1->unknown_4_.unknown_0_0_;
-    var2[0].unknown_1_2_ = arg1->unknown_4_.unknown_1_2_;
-    var2[0].unknown_2_4_ = arg1->unknown_4_.unknown_2_4_;
-    var2[1].unknown_0_0_ = arg1->unknown_8_.unknown_0_0_;
-    var2[1].unknown_1_2_ = arg1->unknown_8_.unknown_1_2_;
-    var2[1].unknown_2_4_ = arg1->unknown_8_.unknown_2_4_;
-    var2[2].unknown_0_0_ = arg1->unknown_c_.unknown_0_0_;
-    var2[2].unknown_1_2_ = arg1->unknown_c_.unknown_1_2_;
-    var2[2].unknown_2_4_ = arg1->unknown_c_.unknown_2_4_;
-    var2[3].unknown_0_0_ = arg1->unknown_10_.unknown_0_0_;
-    func_02083e28(var1, 0);
+    stats[0].f0 = src->w0.f0;
+    stats[0].f1 = src->w0.f1;
+    stats[0].f2 = src->w0.f2;
+    stats[1].f0 = src->w1.f0;
+    stats[1].f1 = src->w1.f1;
+    stats[1].f2 = src->w1.f2;
+    stats[2].f0 = src->w2.f0;
+    stats[2].f1 = src->w2.f1;
+    stats[2].f2 = src->w2.f2;
+    stats[3].f0 = src->w3.f0;
+    PartyMember_RecalculateStats(p, 0);
 }

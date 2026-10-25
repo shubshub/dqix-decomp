@@ -6,37 +6,37 @@ enum { Enum_0204ea5c_21 = 31, Enum_0204ea5c_22 = 32, Enum_0204ea5c_24 = 34, Enum
 enum { Enum_0204ea5c_21 = 21, Enum_0204ea5c_22 = 22, Enum_0204ea5c_24 = 24, Enum_0204ea5c_23 = 23 };
 #endif
 
-struct Struct_0204cd60 {
-    char unknown_0_[8];
-    unsigned char* unknown_8_;
-    short unknown_c_[18];
-    short unknown_30_[18];
-    short unknown_54_[18];
-    short unknown_78_[18];
-    char unknown_9c_[4];
-    int unknown_a0_;
-    int unknown_a4_;
-    short unknown_a8_;
-    short unknown_aa_;
-    char unknown_ac_[4];
-    short unknown_b0_;
-    short unknown_b2_;
-    char unknown_b4_[2];
-    short unknown_b6_;
-    char unknown_b8_[2];
-    short unknown_ba_;
-    short unknown_bc_;
-    short unknown_be_;
-    char unknown_c0_[5];
-    unsigned char unknown_c5_;
-    unsigned char unknown_c6_;
-    unsigned char unknown_c7_;
-    char unknown_c8_[0x10];
-    unsigned char unknown_d8_0_ : 2;
-    unsigned char unknown_d8_2_ : 1;
-    unsigned char unknown_d8_3_ : 5;
-    char unknown_d9_[2];
-    signed char unknown_db_[4];
+struct Wnd0204cd60 {
+    char pad0[8];
+    unsigned char* buf;
+    short arrA[18];
+    short arrB[18];
+    short arrC[18];
+    short arrD[18];
+    char pad9C[4];
+    int fA0;
+    int fA4;
+    short fA8;
+    short fAA;
+    char padAC[4];
+    short fB0;
+    short fB2;
+    char padB4[2];
+    short fB6;
+    char padB8[2];
+    short sizeTagLineHeight_;
+    short fBC;
+    short fBE;
+    char padC0[5];
+    unsigned char flags;
+    unsigned char fC6;
+    unsigned char fC7;
+    char padC8[0x10];
+    unsigned char bit0 : 2;
+    unsigned char useBg : 1;
+    unsigned char bit3 : 5;
+    char padD9[2];
+    signed char margins[4];
 };
 
 extern "C" int func_0204fd00(Struct_0204cd60* arg0, int arg1);

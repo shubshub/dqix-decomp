@@ -30,7 +30,7 @@ struct Struct_ov005_02153954
     unsigned short unknown_3e0c_[20][3];
 };
 
-extern "C" Struct_02021b84* func_020421a0();
+MessageSystem* MessageSystem_GetInstance();
 #if defined(jpn)
 extern "C" void func_02045f3c(Struct_02021b84* arg0, unsigned short* arg1, int arg2, int arg3, int arg4, int, int, int);
 #else
@@ -40,9 +40,9 @@ extern "C" void func_02045f3c(Struct_02021b84* arg0, unsigned short* arg1, int a
 // USA: func_ov005_0215aa44
 extern "C" ARM void func_ov005_0215aa44(Struct_ov005_02153954* arg0)
 {
-    Struct_02021b84* var0 = func_020421a0();
-    int var1 = arg0->unknown_3dbd_ + 1;
-    int var2 = arg0->unknown_3df4_[arg0->unknown_3dbc_];
+    MessageSystem* messages = MessageSystem_GetInstance();
+    int page = self->page_ + 1;
+    int count = self->pageCounts_[self->kind_];
     GXFIFO_MATRIX_PUSH = 0;
     GXFIFO_BEGIN_VTXS = 1;
     GXFIFO_MATRIX_TRANSLATE = 0;

@@ -18,11 +18,11 @@ struct Struct_020e0028_2 {
 
 typedef int (*Type_020e0028)(struct Struct_020e0028*);
 
-extern "C" struct Struct_020e0028* func_020e0310(struct Struct_0201099c_3* arg0, int arg1, Type_020e0028 arg2);
-extern "C" short func_020dfbd4(short* arg0);
-extern "C" char* func_020da150(SafeAllocator* arg0, const char* arg1);
-extern "C" int func_020e0280(struct Struct_020e0028_2* arg0, void* arg1, unsigned char* arg2, void* arg3);
-extern "C" char* func_020dfbfc(struct Struct_020e0028_2* arg0, char* arg1, int arg2);
+struct Element020e0310* BinarySearch020e0310(struct Container020e0310* c, int key, KeyFunc020e0310 fn);
+short GetShortAt0x0020dfbd4(short* obj);
+char* AllocateStringCopy020da150(SafeAllocator* allocator, const char* src);
+extern "C" int KeyTable_LoadInPlaceWithCallback(struct TextTable020e0028* self, void* src, unsigned char* outFlag, void* callback);
+extern "C" char* func_020dfbfc(struct TextTable020e0028* c, char* idx, int dflt);
 
 static inline void inline_020e0028_2(struct Struct_020e0028* arg0, struct Struct_020e0028* arg1) {
     arg0->unknown_0_ = arg1->unknown_0_;
@@ -45,10 +45,10 @@ extern "C" ARM int func_020e0028(struct Struct_020e0028_2* arg0, SafeAllocator* 
     int var5;
     int var6;
 
-    if (arg1 == NULL || arg2 == NULL || arg3 == 0 || arg4 == NULL || arg5 == 0) return 0;
-    memset(arg0, 0, sizeof(*arg0));
-    memset(&var1, 0, sizeof(var1));
-    func_020e0280(&var1, arg2, &var0, NULL);
+    if (allocator == NULL || file == NULL || size == 0 || ids == NULL || count == 0) return 0;
+    memset(self, 0, sizeof(*self));
+    memset(&src, 0, sizeof(src));
+    KeyTable_LoadInPlaceWithCallback(&src, file, &flag, NULL);
 
     var3 = 0;
     var2 = arg4;

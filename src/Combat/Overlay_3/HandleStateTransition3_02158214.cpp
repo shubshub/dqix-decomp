@@ -21,8 +21,8 @@ enum { kRegionValue200_1FC = 0x200 };
 enum { kRegionValue1F8_1F4 = 0x1f8 };
 #endif
 
-int GetGlobalField0x1c020421a0();
-void ReinitController02043204(char* obj);
+int MessageSystem_GetInstance();
+void MessageSystem_Reset(char* obj);
 
 struct Outer020e28dc;
 int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
@@ -45,7 +45,7 @@ extern "C" ARM void func_ov003_02158214(void* p) {
 
     if (state == 0) {
         *(int*)(self + kRegionValue32C_328) = 0;
-        ReinitController02043204((char*)GetGlobalField0x1c020421a0());
+        MessageSystem_Reset((char*)MessageSystem_GetInstance());
 
         *(short*)(self + kRegionValue1EE_1EA) = -1;
         *(short*)(self + kRegionValue1EC_1E8) = *(short*)(self + kRegionValue1EE_1EA);

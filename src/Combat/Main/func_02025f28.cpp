@@ -1,13 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" void* func_0205ec34(void);
-extern "C" void* func_0203b628(void);
-extern "C" void* func_02012fe4(void);
+extern "C" void* Scenario_GetInstance(void);
+void* GetData02105254_0203b628(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_02020fc4_3;
 extern "C" void func_0203bcb8(struct Struct_02020fc4_3* arg0, int arg1, int arg2);
@@ -18,8 +15,8 @@ extern "C" int func_0201bb78(struct Struct_0201bb78* arg0, unsigned int arg1);
 extern "C" void func_0202756c(void* arg0, int arg1, int arg2, int arg3,
         unsigned char arg4, unsigned char arg5, unsigned short arg6, unsigned char arg7, int arg8, int arg9);
 
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_0202630c(void* arg0, int* arg1, int arg2);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+void ClampPositionToBounds0202630c(void* obj, int* pos, int margin);
 
 extern "C" int _u32_div_f(int arg0, int arg1);
 extern "C" int _s32_div_f(int a, int b);
@@ -45,16 +42,16 @@ struct Struct_02025f28_2 {
 };
 
 // USA: func_02025f28
-extern "C" ARM void func_02025f28(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned char* var1 = (unsigned char*)func_0205ec34();
-    func_0203b628();
-    void* var2 = func_02012fe4();
-    unsigned short var3 = *(unsigned short*)var2;
-    void* var4 = *(void**)((char*)var2 + 8);
-    GameObject* var5 = var0->GetUnknownGameObject();
-    var0->GetProtagonist();
-    struct Struct_ov026_021de6dc var6 = *(struct Struct_ov026_021de6dc*)((char*)var5 + 0x44);
+extern "C" ARM void func_02025f28(unsigned char* obj) {
+    GameState* battle = GameState::GetInstance();
+    unsigned char* ctx = (unsigned char*)Scenario_GetInstance();
+    GetData02105254_0203b628();
+    void* g = Zone3D_GetInstance();
+    unsigned short g0 = *(unsigned short*)g;
+    void* g8 = *(void**)((char*)g + 8);
+    GameObject* c1 = battle->GetUnknownGameObject();
+    battle->GetProtagonist();
+    struct Vec3i pos0 = *(struct Vec3i*)((char*)c1 + 0x44);
 
     if (*(unsigned char*)(arg0 + 0x55c) != 0) {
         *(unsigned char*)(arg0 + 0x55c) = 0;
@@ -76,15 +73,15 @@ extern "C" ARM void func_02025f28(unsigned char* arg0) {
         }
     }
 
-    int var12 = (var3 != 10000) && (func_0206dfb0((int)var1, var1 + 0x8c, 0x2b) != 0);
-    int var13[3];
-    int var14 = 1;
-    if (var3 == 10000 || var3 == 10100) {
-        var13[0] = var6.unknown_0_ + 0x80000;
-        var13[2] = var6.unknown_8_ + 0x60000;
-    } else if (((struct Struct_02025f28_2*)var4)->unknown_c_0_ == 0) {
-        var13[0] = fix32_Divide((fix32_t)(var6.unknown_0_ + *(int*)((char*)var2 + 0x44)), (fix32_t)(0x6000)) + 0x80000;
-        var13[2] = fix32_Divide((fix32_t)(var6.unknown_8_ + *(int*)((char*)var2 + 0x48)), (fix32_t)(0x6000)) + 0x60000;
+    int flag2 = (g0 != 10000) && (Scenario_TestFlag((int)ctx, ctx + 0x8c, 0x2b) != 0);
+    int posVec[3];
+    int ok = 1;
+    if (g0 == 10000 || g0 == 10100) {
+        posVec[0] = pos0.x + 0x80000;
+        posVec[2] = pos0.z + 0x60000;
+    } else if (((struct G8Obj*)g8)->lowNibble == 0) {
+        posVec[0] = fix32_Divide((fix32_t)(pos0.x + *(int*)((char*)g + 0x44)), (fix32_t)(0x6000)) + 0x80000;
+        posVec[2] = fix32_Divide((fix32_t)(pos0.z + *(int*)((char*)g + 0x48)), (fix32_t)(0x6000)) + 0x60000;
     } else {
         int var15 = *(int*)((char*)var2 + 0x44);
         if (var15 == 0 || *(int*)((char*)var2 + 0x48) == 0) {
@@ -121,10 +118,10 @@ extern "C" ARM void func_02025f28(unsigned char* arg0) {
     var13[0] -= 0x4000;
     var13[2] -= 0x4000;
 
-    if (var14) {
-        short var25 = var5->obj3D_.unknown_4_;
-        unsigned char var26 = (unsigned char)(var25 + 0x44);
-        unsigned short var27 = (unsigned short)(var25 + 4);
-        func_0202756c(arg0, var13[0], var13[2], 5, var26, 0, var27, 0xff, 0x1000, 0x1000);
+    if (ok) {
+        short f4 = c1->obj3D_.actorIndex_;
+        unsigned char p5 = (unsigned char)(f4 + 0x44);
+        unsigned short p7 = (unsigned short)(f4 + 4);
+        _Z24SetElementFields0202756cPviiihhthii(obj, posVec[0], posVec[2], 5, p5, 0, p7, 0xff, 0x1000, 0x1000);
     }
 }

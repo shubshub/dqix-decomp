@@ -1,8 +1,7 @@
 #ifndef GAMESTATE_FIELD3B0_H
 #define GAMESTATE_FIELD3B0_H
 
-class GameState;
-
-extern "C" void* func_020100bc(GameState* arg0);
+// The camera getter is now GameState::GetCamera().
+#include "GameState/GameState.h"
 
 #endif

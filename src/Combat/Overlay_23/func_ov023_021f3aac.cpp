@@ -118,8 +118,8 @@ extern const char data_ov023_021fe316[];
 extern const char data_ov023_021fe2a0[];
 extern const char data_ov023_021fe2b7[];
 
-char* GetGlobalField0x1c020421a0();
-void ReinitController02043204(char* messages);
+char* MessageSystem_GetInstance();
+void MessageSystem_Reset(char* messages);
 void InitCombatEntry_021d8b6c(void* window);
 void Reset0209fe9c(char* titles);
 void InitManagerAndAllocateBuffers0209fee4(Obj0209fee4* titles, SafeAllocator* allocator, int file, int size);
@@ -158,8 +158,8 @@ extern "C" ARM int func_ov023_021f3aac(Struct_ov023_021f3aac_4* arg0)
     int var2 = var0->unknown_0_;
     if (var2 == 0)
     {
-        func_02043204(func_020421a0());
-        if (arg0->unknown_5588_ != NULL)
+        MessageSystem_Reset(MessageSystem_GetInstance());
+        if (self->resultWindow_ != NULL)
         {
             func_ov023_021f1818(arg0->unknown_3760_, 1);
             func_ov023_021d8b6c(arg0->unknown_5588_);

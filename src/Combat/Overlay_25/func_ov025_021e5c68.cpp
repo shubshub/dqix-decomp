@@ -30,16 +30,16 @@ extern "C" ARM int func_ov025_021e5c68(Struct_ov025_021e5c68_2* arg0, void* arg1
 #else
  enum {Enum_ov025_021e5c68_28629=0x6fd5};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov025_021e5c68* var1 = (Struct_ov025_021e5c68*)func_020100bc(var0);
-    if (arg0->unknown_14_ == 0) {
-        if (var1 != 0) func_0202e694(var1, (int*)&arg0->unknown_8_);
-    } else if (arg0->unknown_14_ == 2) {
-        fix32_t var2 = 1;
-        Struct_ov025_021e5c68_3* var3 = func_ov000_021600f8((Struct_ov000_0215440c*)arg1, 0);
-        if (var3 != 0) {
-            GameObject* var4 = var0->GetCombatantByIndex(var3->unknown_e_);
-            if (var4 != 0) var2 = var4->obj3D_.GetHeight();
+    GameState* gs = GameState::GetInstance();
+    Camera021e5c68* cam = (Camera021e5c68*)gs->GetCamera();
+    if (step->mode == 0) {
+        if (cam != 0) ApplyVec3Tail_0202e694(cam, (int*)&step->offset);
+    } else if (step->mode == 2) {
+        fix32_t height = 1;
+        Node021e5c68* node = GetNodeAtIndex021600f8((List021600f8*)list, 0);
+        if (node != 0) {
+            GameObject* c = gs->GetCombatantByIndex(node->combatant);
+            if (c != 0) height = c->obj3D_.GetHeight();
         }
         float var5 = 1.0f;
         if (var2 >= 0x24cc) {

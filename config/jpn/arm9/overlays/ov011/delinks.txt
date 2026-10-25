@@ -220,7 +220,7 @@ src/Combat/Overlay_11/func_ov011_02184ad8.cpp:
     complete
     .text start:0x02185bd8 end:0x02185be4
 
-src/Combat/Overlay_11/func_ov011_02184534.cpp:
+src/Combat/Overlay_12/AnyMatchInRange_02185634.cpp:
     complete
     .text start:0x02185634 end:0x02185640
 

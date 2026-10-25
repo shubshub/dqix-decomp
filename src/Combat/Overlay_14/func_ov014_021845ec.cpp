@@ -6,12 +6,12 @@
 
 extern int data_ov014_02189800;
 
-struct Struct_ov014_021844c4;
-struct Struct_ov014_021845ec;
-extern "C" ARM int func_ov014_02188d10(struct Struct_ov014_021845ec* arg0);
-extern "C" ARM void func_02096fc4(void* arg0);
-extern "C" ARM int func_ov014_02188bd0(struct Struct_ov014_021844c4* arg0);
-extern "C" ARM void func_020100c4(GameState* arg0, int arg1);
+struct HandleState_02188bd0;
+struct HandleState_02188d10;
+ARM int ResetHandle_02188d10(struct HandleState_02188d10* s);
+ARM void Clear0x10Bytes02096fc4(void* p);
+ARM int InitHandleState_02188bd0(struct HandleState_02188bd0* s);
+ARM void GameState_SetCamera(GameState* battleStruct, int value);
 
 struct Struct_ov014_021845ec_2 {
 	char unknown_0_[0xc];
@@ -44,11 +44,11 @@ extern "C" ARM void func_ov014_021845ec(struct Struct_ov014_021845ec_2* arg0) {
 			arg0->unknown_86_[var2] = -1;
 		}
 	}
-	func_ov014_02188d10((struct Struct_ov014_021845ec*)arg0->unknown_1c_);
-	func_02096fc4(arg0->unknown_c_);
-	func_ov014_02188bd0((struct Struct_ov014_021844c4*)arg0->unknown_1c_);
-	GameState* var3 = GameState::GetInstance();
-	func_020100c4(var3, *(int*)((char*)&data_ov014_02189800 + 0xc));
+	ResetHandle_02188d10((struct HandleState_02188d10*)obj->handleState);
+	Clear0x10Bytes02096fc4(obj->clr10);
+	InitHandleState_02188bd0((struct HandleState_02188bd0*)obj->handleState);
+	GameState* battle = GameState::GetInstance();
+	GameState_SetCamera(battle, *(int*)((char*)&data_ov014_02189800 + 0xc));
 	*(int*)((char*)&data_ov014_02189800 + 0xc) = 0;
 	void* var4 = LightingManager::GetInstance();
 	*((unsigned char*)var4 + 0x85) = 1;

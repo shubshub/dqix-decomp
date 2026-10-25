@@ -1,178 +1,152 @@
 #include <globaldefs.h>
+#include "Resource/GridCursor.h"
 #include "Input/Input.h"
 
-struct Struct_0205bb84 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
-    int unknown_20_;
-    int* unknown_24_;
-    int* unknown_28_;
-    int* unknown_2c_;
-};
-struct Struct_0205c4a8 : Struct_0205bb84 {};
-struct Struct_0205bf3c : Struct_0205c4a8 {
-    int unknown_30_;
-    unsigned short unknown_34_;
-    unsigned char unknown_36_;
-    unsigned char unknown_37_;
-    unsigned char unknown_38_;
-    unsigned char unknown_39_;
-    unsigned char unknown_3a_;
-    unsigned char unknown_3b_;
-    unsigned char unknown_3c_;
-    unsigned char unknown_3d_;
-};
 struct NavigationSteps { int values[4]; };
 struct NavigationKeys { unsigned short values[5]; };
 struct NavigationRepeatDirections { unsigned char values[4]; };
-void ResetState0205bf3c(Struct_0205bf3c*);
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
-void AdvanceWrappedAccumulator0205c4a8(Struct_0205c4a8*, int);
-extern "C" void GridCursor_SetSelectedIndex(Struct_0205bf3c*, int);
-extern const NavigationKeys data_020e7db8;
-extern const NavigationSteps data_020e7dc4;
-extern const NavigationRepeatDirections data_020e7db0, data_020e7db4;
+void GridCursor_ResetKeyRepeat(GridCursor*);
+int GridCursor_GetSelectedIndex(GridCursor*);
+void GridCursor_TurnPage(GridCursor*, int);
+extern "C" void GridCursor_SetSelectedIndex(GridCursor*, int);
+extern const NavigationKeys GridCursor_directionKeys;
+extern const NavigationSteps GridCursor_directionSteps;
+extern const NavigationRepeatDirections GridCursor_directionRowRepeats, GridCursor_directionColumnRepeats;
 
 // Main, originally func_0205bf58 (USA 0x0205bf58, EUR 0x0205bf68, JPN 0x0205d2b8)
-extern "C" ARM int GridCursor_Update(Struct_0205bf3c* navigation, unsigned int ticks) {
-    if (navigation->count == 0) return 0;
-    if (navigation->columns <= 0) return 0;
-    if (navigation->rows <= 0) return 0;
-    unsigned char initialDelay = navigation->initialDelay;
-    unsigned char repeatDelay = navigation->repeatDelay;
-    NavigationKeys keys = data_020e7db8;
-    int index = 0;
-    while (keys.values[index] != 0xffff && navigation->key == 0) {
-        unsigned short key = keys.values[index];
+extern "C" ARM int GridCursor_Update(GridCursor* cursor, unsigned int ticks) {
+    if (cursor->count == 0) return 0;
+    if (cursor->columns <= 0) return 0;
+    if (cursor->rows <= 0) return 0;
+    unsigned char initialDelay = cursor->initialDelay;
+    unsigned char repeatDelay = cursor->repeatDelay;
+    NavigationKeys keys = GridCursor_directionKeys;
+    int direction = 0;
+    while (keys.values[direction] != 0xffff && cursor->heldKey == 0) {
+        unsigned short key = keys.values[direction];
         if (g_keyManager.TestKeysPressed(key)) {
-            if (navigation->rowRepeat | navigation->columnRepeat) {
-                ResetState0205bf3c(navigation);
+            if (cursor->rowRepeat | cursor->columnRepeat) {
+                GridCursor_ResetKeyRepeat(cursor);
                 break;
             }
-            NavigationSteps steps = data_020e7dc4;
-            NavigationRepeatDirections rowRepeats = data_020e7db0;
-            NavigationRepeatDirections columnRepeats = data_020e7db4;
-            navigation->key = key;
-            navigation->countdown = initialDelay;
-            navigation->step = steps.values[index];
-            navigation->rowRepeat = rowRepeats.values[index];
-            navigation->columnRepeat = columnRepeats.values[index];
-            if (navigation->key == 0x40 || navigation->key == 0x80) {
-                int previous = navigation->row;
-                navigation->row += navigation->step;
-                if (navigation->wrapRows) {
-                    if (navigation->rows <= navigation->row) navigation->row = 0;
-                    else if (navigation->row < 0) navigation->row = navigation->rows - 1;
-                    if (navigation->key == 0x40) {
-                        int total = navigation->count;
-                        if (total <= GridCursor_GetSelectedIndex(navigation))
-                            GridCursor_SetSelectedIndex(navigation, total - 1);
-                    } else if (navigation->key == 0x80) {
-                        if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
-                            navigation->row = 0;
+            NavigationSteps steps = GridCursor_directionSteps;
+            NavigationRepeatDirections rowRepeats = GridCursor_directionRowRepeats;
+            NavigationRepeatDirections columnRepeats = GridCursor_directionColumnRepeats;
+            cursor->heldKey = key;
+            cursor->countdown = initialDelay;
+            cursor->step = steps.values[direction];
+            cursor->rowRepeat = rowRepeats.values[direction];
+            cursor->columnRepeat = columnRepeats.values[direction];
+            if (cursor->heldKey == KEY_UP || cursor->heldKey == KEY_DOWN) {
+                int previous = cursor->row;
+                cursor->row += cursor->step;
+                if (cursor->wrapRows) {
+                    if (cursor->rows <= cursor->row) cursor->row = 0;
+                    else if (cursor->row < 0) cursor->row = cursor->rows - 1;
+                    if (cursor->heldKey == KEY_UP) {
+                        int total = cursor->count;
+                        if (total <= GridCursor_GetSelectedIndex(cursor))
+                            GridCursor_SetSelectedIndex(cursor, total - 1);
+                    } else if (cursor->heldKey == KEY_DOWN) {
+                        if (cursor->count <= GridCursor_GetSelectedIndex(cursor))
+                            cursor->row = 0;
                     }
                 } else {
-                    if (navigation->rows <= navigation->row) navigation->row = previous;
-                    else if (navigation->row < 0) navigation->row = previous;
-                    if (GridCursor_GetSelectedIndex(navigation) >= navigation->count)
-                        navigation->row = previous;
+                    if (cursor->rows <= cursor->row) cursor->row = previous;
+                    else if (cursor->row < 0) cursor->row = previous;
+                    if (GridCursor_GetSelectedIndex(cursor) >= cursor->count)
+                        cursor->row = previous;
                 }
-            } else if (arg0->unknown_34_ == 0x20 || arg0->unknown_34_ == 0x10) {
-                int var10 = arg0->unknown_18_;
-                arg0->unknown_18_ += arg0->unknown_30_;
-                if (arg0->unknown_8_ <= arg0->unknown_18_) {
-                    if (arg0->unknown_3c_) {
-                        arg0->unknown_18_ = 0;
-                        if (arg0->unknown_4_ > 1) func_0205c4a8(arg0, 1);
+            } else if (cursor->heldKey == KEY_LEFT || cursor->heldKey == KEY_RIGHT) {
+                int previous = cursor->column;
+                cursor->column += cursor->step;
+                if (cursor->columns <= cursor->column) {
+                    if (cursor->wrapColumns) {
+                        cursor->column = 0;
+                        if (cursor->pageCount > 1) GridCursor_TurnPage(cursor, 1);
                     } else {
-                        if (arg0->unknown_4_ == 1) arg0->unknown_18_ = var10;
+                        if (cursor->pageCount == 1) cursor->column = previous;
                         else {
-                            arg0->unknown_18_ = 0;
-                            func_0205c4a8(arg0, 1);
+                            cursor->column = 0;
+                            GridCursor_TurnPage(cursor, 1);
                         }
                     }
-                } else if (arg0->unknown_18_ < 0) {
-                    if (arg0->unknown_3c_) {
-                        arg0->unknown_18_ = arg0->unknown_8_ - 1;
-                        if (arg0->unknown_4_ > 1) func_0205c4a8(arg0, -1);
+                } else if (cursor->column < 0) {
+                    if (cursor->wrapColumns) {
+                        cursor->column = cursor->columns - 1;
+                        if (cursor->pageCount > 1) GridCursor_TurnPage(cursor, -1);
                     } else {
-                        if (arg0->unknown_4_ == 1) arg0->unknown_18_ = var10;
+                        if (cursor->pageCount == 1) cursor->column = previous;
                         else {
-                            arg0->unknown_18_ = arg0->unknown_8_ - 1;
-                            func_0205c4a8(arg0, -1);
+                            cursor->column = cursor->columns - 1;
+                            GridCursor_TurnPage(cursor, -1);
                         }
                     }
                 }
-                if (GridCursor_GetSelectedIndex(navigation) >= navigation->count) {
-                    if (navigation->pages == 1) navigation->column = previous;
+                if (GridCursor_GetSelectedIndex(cursor) >= cursor->count) {
+                    if (cursor->pageCount == 1) cursor->column = previous;
                     else {
-                        arg0->unknown_18_ = 0;
-                        func_0205c4a8(arg0, 1);
+                        cursor->column = 0;
+                        GridCursor_TurnPage(cursor, 1);
                     }
                 }
             }
             return 1;
         }
-        ++var3;
+        ++direction;
     }
-    if (arg0->unknown_36_) {
-        if (g_keyManager.TestKeysHeld(0xf0)) {
-            unsigned char var11 = arg1;
-            if (var11 < arg0->unknown_38_) arg0->unknown_38_ -= var11;
+    if (cursor->rowRepeat) {
+        if (g_keyManager.TestKeysHeld(KEY_DPAD)) {
+            unsigned char elapsed = ticks;
+            if (elapsed < cursor->countdown) cursor->countdown -= elapsed;
             else {
-                navigation->countdown = repeatDelay;
-                navigation->rowRepeat = 1;
-                navigation->columnRepeat = 0;
-                navigation->row += navigation->step;
-                if (navigation->rows <= navigation->row) navigation->row = navigation->rows - 1;
-                else if (navigation->row < 0) navigation->row = 0;
-                int total = navigation->count;
-                if (total <= GridCursor_GetSelectedIndex(navigation))
-                    GridCursor_SetSelectedIndex(navigation, total - 1);
-                if (navigation->key == 0x40 || navigation->key == 0x20) {
-                    int total = navigation->count;
-                    if (total <= GridCursor_GetSelectedIndex(navigation))
-                        GridCursor_SetSelectedIndex(navigation, total - 1);
-                } else if (navigation->key == 0x80 || navigation->key == 0x10) {
-                    if (navigation->count <= GridCursor_GetSelectedIndex(navigation))
-                        navigation->row = 0;
+                cursor->countdown = repeatDelay;
+                cursor->rowRepeat = 1;
+                cursor->columnRepeat = 0;
+                cursor->row += cursor->step;
+                if (cursor->rows <= cursor->row) cursor->row = cursor->rows - 1;
+                else if (cursor->row < 0) cursor->row = 0;
+                int total = cursor->count;
+                if (total <= GridCursor_GetSelectedIndex(cursor))
+                    GridCursor_SetSelectedIndex(cursor, total - 1);
+                if (cursor->heldKey == KEY_UP || cursor->heldKey == KEY_LEFT) {
+                    int total = cursor->count;
+                    if (total <= GridCursor_GetSelectedIndex(cursor))
+                        GridCursor_SetSelectedIndex(cursor, total - 1);
+                } else if (cursor->heldKey == KEY_DOWN || cursor->heldKey == KEY_RIGHT) {
+                    if (cursor->count <= GridCursor_GetSelectedIndex(cursor))
+                        cursor->row = 0;
                 }
             }
         }
-        if (g_keyManager.TestKeysReleased(0xf0)) func_0205bf3c(arg0);
+        if (g_keyManager.TestKeysReleased(KEY_DPAD)) GridCursor_ResetKeyRepeat(cursor);
         return 1;
-    } else if (arg0->unknown_37_) {
-        if (g_keyManager.TestKeysHeld(0xf0)) {
-            unsigned char var14 = arg1;
-            if (var14 < arg0->unknown_38_) arg0->unknown_38_ -= var14;
+    } else if (cursor->columnRepeat) {
+        if (g_keyManager.TestKeysHeld(KEY_DPAD)) {
+            unsigned char elapsed = ticks;
+            if (elapsed < cursor->countdown) cursor->countdown -= elapsed;
             else {
-                arg0->unknown_38_ = var1;
-                arg0->unknown_36_ = 0;
-                arg0->unknown_37_ = 1;
-                arg0->unknown_18_ += arg0->unknown_30_;
-                if (arg0->unknown_8_ <= arg0->unknown_18_) {
-                    arg0->unknown_18_ = arg0->unknown_8_ - 1;
-                    func_0205c4a8(arg0, 1);
-                } else if (arg0->unknown_18_ < 0) {
-                    arg0->unknown_18_ = 0;
-                    func_0205c4a8(arg0, -1);
+                cursor->countdown = repeatDelay;
+                cursor->rowRepeat = 0;
+                cursor->columnRepeat = 1;
+                cursor->column += cursor->step;
+                if (cursor->columns <= cursor->column) {
+                    cursor->column = cursor->columns - 1;
+                    GridCursor_TurnPage(cursor, 1);
+                } else if (cursor->column < 0) {
+                    cursor->column = 0;
+                    GridCursor_TurnPage(cursor, -1);
                 }
-                if (GridCursor_GetSelectedIndex(navigation) >= navigation->count) {
-                    if (navigation->pages == 1) navigation->column = 0;
+                if (GridCursor_GetSelectedIndex(cursor) >= cursor->count) {
+                    if (cursor->pageCount == 1) cursor->column = 0;
                     else {
-                        arg0->unknown_18_ = 0;
-                        func_0205c4a8(arg0, 1);
+                        cursor->column = 0;
+                        GridCursor_TurnPage(cursor, 1);
                     }
                 }
             }
         }
-        if (g_keyManager.TestKeysReleased(0xf0)) func_0205bf3c(arg0);
+        if (g_keyManager.TestKeysReleased(KEY_DPAD)) GridCursor_ResetKeyRepeat(cursor);
         return 1;
     }
     return 0;

@@ -55,12 +55,12 @@ enum { Enum_ov017_0218f064_720 = 0x2c4, Enum_ov017_0218f064_724 = 0x2c8, Enum_ov
 #else
 enum { Enum_ov017_0218f064_720 = 0x2d0, Enum_ov017_0218f064_724 = 0x2d4, Enum_ov017_0218f064_760 = 0x2f8 };
 #endif
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" Zone3D* func_02012fe4();
+void* GetField0x3f8Address_0200fd0c(GameState*);
+extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void func_0202ae18();
-extern "C" void func_0207df50(Struct_0203d028*);
-extern "C" void func_020545b8(Struct_020545b8*);
-extern "C" void func_020542b4(Struct_020545b8*, SafeAllocator*, Struct_ov017_0218f064_8*);
+void VramState_Rewind(Foo0207df50*);
+void DestroyAllocators020545b8(T020545b8*);
+extern "C" void func_020542b4(T020545b8*, SafeAllocator*, InternalBlock0218f064*);
 extern "C" int func_ov017_021925e0();
 extern "C" void* func_ov017_021a11b4(Struct_ov017_0218f064_6*);
 extern "C" void func_02054464(Struct_020545b8*, SafeAllocator*, Struct_ov017_0218f064_8*);
@@ -93,9 +93,9 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
 #endif
     Struct_ov017_0218f064_4* var2 = (Struct_ov017_0218f064_4*)func_0200fd0c(var0);
 #if defined(jpn)
-    Struct_ov017_0218f064_10* var3 = ((Struct_ov017_0218f064_3*)func_02012fe4())->inline_ov017_0218f064_3();
+    ZoneEntryContext0218f064* entries = ((ZoneOwner0218f064*)Zone3D_GetInstance())->GetEntries();
 #else
-    var1 = func_02012fe4();
+    zone = Zone3D_GetInstance();
 #endif
     func_0202ae18();
     int var4 = 1;
@@ -107,16 +107,16 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
 #else
         var6 = inline_ov017_0218f064(var1)->unknown_b58_;
 #endif
-        if (!var6) return;
-        SafeAllocator* var7 = arg0->allocator_array_1a0;
-        SafeAllocator* var8 = &var7[3];
-        var5 = &var6->unknown_5d8_;
-        Struct_ov017_0218f064_8* var9 = inline_ov017_0218f064_2(arg0);
-        var8->Reset();
-        Struct_ov017_0218f064_8* var10 = &var9[21];
-        func_0207df50((Struct_0203d028*)var10);
-        func_020545b8(var6);
-        func_020542b4(var6, var8, var10);
+        if (!entry) return;
+        SafeAllocator* primaryAllocators = resources->allocator_array_1a0;
+        SafeAllocator* specialAllocator = &primaryAllocators[3];
+        allocator = &entry->allocator;
+        InternalBlock0218f064* blocks = InternalBlocks0218f064(resources);
+        specialAllocator->Reset();
+        InternalBlock0218f064* block = &blocks[21];
+        VramState_Rewind((Foo0207df50*)block);
+        DestroyAllocators020545b8(entry);
+        func_020542b4(entry, specialAllocator, block);
     } else {
         if (func_ov017_021925e0()) {
             for (int var11 = 0; var11 < 4; ++var11) {
@@ -159,51 +159,51 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
         if (var16) var16->unknown_2d2_ = func_ov017_02192548();
         var4 = 0;
     }
-    if (!var16) func_020c9be0();
-    var16->unknown_0_.unknown_4_ = (short)arg1;
-    var16->unknown_154_ = var6;
-    var6->unknown_0_ = (short)arg1;
-    func_0200fd38(var0, arg1, (GameObject*)var16);
-    if (var4) {
-        Struct_ov017_0218f064_7* var17 = (Struct_ov017_0218f064_7*)var5->Allocate(0x764);
-        if (!var17) func_020c9be0();
-        var17->unknown_0_[0].Initialize();
-        var17->unknown_0_[2].Initialize();
-        var17->unknown_0_[1].Initialize();
-        var17->unknown_0_[3].Initialize();
-        var17->unknown_0_[4].Initialize();
-        var17->unknown_0_[5].Initialize();
-        Object3D* var18 = &var17->unknown_0_[6];
-        var18->Initialize();
-        Object3D* var19 = &var17->unknown_0_[7];
-        var19->Initialize();
-        var17->unknown_0_[8].Initialize();
-        Object3D* var20 = &var17->unknown_0_[9];
-        var20->Initialize();
-        Object3D* var21 = &var17->unknown_0_[10];
-        var21->Initialize();
-        int var22 = arg1 * 12;
-        func_0200fd38(var0, var22 + 0x13, (GameObject*)&var17->unknown_0_[0]);
-        func_0200fd38(var0, var22 + 0x14, (GameObject*)&var17->unknown_0_[1]);
-        func_0200fd38(var0, var22 + 0x15, (GameObject*)&var17->unknown_0_[2]);
-        func_0200fd38(var0, var22 + 0x16, (GameObject*)&var17->unknown_0_[3]);
-        func_0200fd38(var0, var22 + 0x17, (GameObject*)&var17->unknown_0_[5]);
-        func_0200fd38(var0, var22 + 0x18, (GameObject*)var18);
-        func_0200fd38(var0, var22 + 0x19, (GameObject*)var19);
-        func_0200fd38(var0, var22 + 0x1a, (GameObject*)&var17->unknown_0_[8]);
-        func_0200fd38(var0, var22 + 0x1b, (GameObject*)&var17->unknown_0_[4]);
-        func_0200fd38(var0, var22 + 0x1c, (GameObject*)var20);
-        func_0200fd38(var0, var22 + 0x1d, (GameObject*)var21);
+    if (!combatant) func_020c9be0();
+    combatant->object.actorIndex_ = (short)id;
+    combatant->entry = entry;
+    entry->id = (short)id;
+    RegisterCombatantSlot_0200fd38(game, id, (GameObject*)combatant);
+    if (initialize) {
+        Components0218f064* components = (Components0218f064*)allocator->Allocate(0x764);
+        if (!components) func_020c9be0();
+        components->objects[0].Initialize();
+        components->objects[2].Initialize();
+        components->objects[1].Initialize();
+        components->objects[3].Initialize();
+        components->objects[4].Initialize();
+        components->objects[5].Initialize();
+        Object3D* sixth = &components->objects[6];
+        sixth->Initialize();
+        Object3D* seventh = &components->objects[7];
+        seventh->Initialize();
+        components->objects[8].Initialize();
+        Object3D* ninth = &components->objects[9];
+        ninth->Initialize();
+        Object3D* tenth = &components->objects[10];
+        tenth->Initialize();
+        int base = id * 12;
+        RegisterCombatantSlot_0200fd38(game, base + 0x13, (GameObject*)&components->objects[0]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x14, (GameObject*)&components->objects[1]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x15, (GameObject*)&components->objects[2]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x16, (GameObject*)&components->objects[3]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x17, (GameObject*)&components->objects[5]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x18, (GameObject*)sixth);
+        RegisterCombatantSlot_0200fd38(game, base + 0x19, (GameObject*)seventh);
+        RegisterCombatantSlot_0200fd38(game, base + 0x1a, (GameObject*)&components->objects[8]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x1b, (GameObject*)&components->objects[4]);
+        RegisterCombatantSlot_0200fd38(game, base + 0x1c, (GameObject*)ninth);
+        RegisterCombatantSlot_0200fd38(game, base + 0x1d, (GameObject*)tenth);
     }
-    var16->unknown_b0_ = 0x324;
-    var16->unknown_b4_ = 0x189;
-    var16->unknown_0_.SetHeight(0x1800);
-    var16->unknown_0_.SetRadius(0x1000);
-    var16->unknown_0_.MaybeSetRegularAnimation(data_ov017_021d73a4, 0);
-    var16->unknown_0_.position_ = var2->unknown_10_;
-    func_0203db34((unsigned char*)var16, var16->unknown_0_.rotation_.x, var2->unknown_1c_, var16->unknown_0_.rotation_.z);
-    func_02033b88((Struct_02010604*)var16, 0);
-    if (arg2 == 0x4000) {
+    combatant->field_b0 = 0x324;
+    combatant->field_b4 = 0x189;
+    combatant->object.SetHeight(0x1800);
+    combatant->object.SetRadius(0x1000);
+    combatant->object.SetAnimationByName(data_ov017_021d73a4, 0);
+    combatant->object.position_ = ticket->position;
+    StoreVec3AtField0x50_0203db34((unsigned char*)combatant, combatant->object.rotation_.x, ticket->rotation, combatant->object.rotation_.z);
+    SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
+    if (kind == 0x4000) {
 #if defined(jpn)
         char* var23 = var3->unknown_1b5c_;
 #else

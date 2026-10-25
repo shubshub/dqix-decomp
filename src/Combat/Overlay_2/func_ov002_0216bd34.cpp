@@ -12,13 +12,13 @@ struct Struct_0205de24_2;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
-struct Container020dedd0;
+struct ItemTable;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
-char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+char *ItemTable_Find(struct ItemTable *c, int key);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag02161798(char *base);
 extern "C" void func_ov002_02161cf0(void *base);
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
                 case 0:
                     SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                     *(unsigned char *) (base + 0x2000 + RG(0x487, 0x2b7)) = 1;
-                    if (FindElementByKey020dedd0((struct Container020dedd0 *) (base + RG(0x3ec + 0x400, 0x750)),
+                    if (ItemTable_Find((struct ItemTable *) (base + RG(0x3ec + 0x400, 0x750)),
                                                                           (short) key) == NULL)
                         break;
 #if defined(jpn)

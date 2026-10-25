@@ -6,10 +6,10 @@ struct Struct_0202b2f0;
 
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202c508(void);
-extern "C" int func_0202c578(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0207dcf0(int arg0);
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov017_021c9c64(int arg0, int arg1);
+int TestFlagBitAt0xe_0202c578(struct SearchStruct* obj, int value);
+extern "C" void func_0207dcf0(int a);
+extern "C" int memcmp(void* a, void* b, int c);
+extern "C" void func_ov017_021c9c64(int a, int b);
 
 struct Struct_0207d798 {
     unsigned short unknown_0_;
@@ -38,10 +38,10 @@ extern "C" ARM void func_0207dba8(struct Struct_0207d798* arg0) {
             if (var1->unknown_6_ < 0x3e8) {
                 var1->unknown_6_ = var1->unknown_6_ + var0->GetEffectiveDeltaTime();
             } else {
-                int var8 = (func_02001aec(var1->unknown_8_, &data_020e8a4c, 4) == 0);
-                if (var8) {
-                    func_ov017_021c9c64(var7, 0);
-                    func_0207d7c0(var1);
+                int found = (memcmp(e->arr8, &data_020e8a4c, 4) == 0);
+                if (found) {
+                    func_ov017_021c9c64(h0, 0);
+                    InitStruct0207d7c0(e);
                 }
             }
         } else {

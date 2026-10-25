@@ -33,16 +33,10 @@ extern PageFn0215bba8 __ptmf_null;
 extern ModePage0215bba8 data_ov002_0216cb18[];
 extern ModePage0215bba8 data_ov002_0216cb1c[];
 
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" unsigned char *func_0205d81c(char *arg0, unsigned char arg1);
-struct Struct_ov002_0215bba8_3;
-#if defined(jpn)
-extern "C" void func_0205d5d0(Struct_ov002_0215bba8_3*, int, int, int);
-#define APPLY(s, k, t) func_0205d5d0(s, k, t, 1)
-#else
-extern "C" void func_0205d5d0(Struct_ov002_0215bba8_3*, int, int, int, unsigned char);
-#define APPLY(s, k, t) func_0205d5d0(s, k, t, 0, 0)
-#endif
+extern "C" void *memset(void *dst, int value, unsigned int length);
+extern "C" unsigned char *_Z23FindElementByC40205d81cP15Struct_0205d81ci(char *s, unsigned char key);
+struct StructA0205d5d0;
+void Window_SetPaneText(StructA0205d5d0*, int, int, int, unsigned char);
 
 struct Struct_ov002_0215bba8 {
     char unknown_0_[0x34];
@@ -83,12 +77,9 @@ extern "C" ARM void func_ov002_0215bba8(Struct_ov002_0215bba8_2 *arg0) {
     if (data_ov002_0216d10c[var5] == 0) {
         return;
     }
-#if !defined(jpn)
-    if (func_0205d81c(OBJ, (unsigned char) var5) != 0) {
-#endif
-        (arg0->*data_ov002_0216d10c[*(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80))])(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), var2);
-        APPLY((Struct_ov002_0215bba8_3*)OBJ, (unsigned char) *(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80)), (int)(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98))));
-#if !defined(jpn)
+    if (_Z23FindElementByC40205d81cP15Struct_0205d81ci(base + 0x2c8 + 0xc00, (unsigned char) key) != 0) {
+        (self->*data_ov002_0216d10c[*(int *) (base + 0x1000 + 0xbb8)])(*(void **) (base + 0x1000 + 0xbd0), hl);
+        Window_SetPaneText((StructA0205d5d0*)(base + 0x2c8 + 0xc00), (unsigned char) *(int *) (base + 0x1000 + 0xbb8), (int)(*(void **) (base + 0x1000 + 0xbd0)), 0, 0);
     }
 #endif
     if (*(int *) (var0 + 0x1000 + RG(0xbcc, 0xa94)) == 0) {
@@ -105,9 +96,8 @@ extern "C" ARM void func_ov002_0215bba8(Struct_ov002_0215bba8_2 *arg0) {
             if (func_0205d81c(OBJ, var7) == 0) {
                 continue;
             }
-#endif
-            (arg0->*data_ov002_0216d10c[var7])(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), var2);
-            APPLY((Struct_ov002_0215bba8_3*)OBJ, (unsigned char) var7, (int)(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98))));
+            (self->*data_ov002_0216d10c[page])(*(void **) (base + 0x1000 + 0xbd0), hl);
+            Window_SetPaneText((StructA0205d5d0*)(base + 0x2c8 + 0xc00), (unsigned char) page, (int)(*(void **) (base + 0x1000 + 0xbd0)), 0, 0);
         }
     }
     *(int *) (var0 + 0x1000 + RG(0xbcc, 0xa94)) = 0;

@@ -2,13 +2,13 @@
 
 #include "GameState/GameState.h"
 
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-struct Struct_02046574_2;
-extern "C" struct Struct_02046574_2* func_020421a0(void);
-extern "C" void* func_ov000_02160130(void);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+struct Obj02046574;
+struct Obj02046574* MessageSystem_GetInstance(void);
+void* GetActiveCombatWork_ov000_02160130(void);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
 
 struct Struct_ov025_021e5e84 {
     char unknown_0_[8];
@@ -23,28 +23,28 @@ extern "C" ARM int func_ov025_021e5e84(struct Struct_ov025_021e5e84* arg0, int a
         return 1;
     }
 
-    GameState* var1 = GameState::GetInstance();
-    struct Struct_02046574_2* var2 = func_020421a0();
-    int var3 = var0[0];
-    func_ov000_02160130();
+    GameState* bs = GameState::GetInstance();
+    struct Obj02046574* names = MessageSystem_GetInstance();
+    int id = ids[0];
+    GetActiveCombatWork_ov000_02160130();
 #if defined(jpn)
-    GameObject* var4 = var1->GetCombatantByIndex(var3);
-    if (var4 != NULL) {
-        func_02046574(var2, arg0->unknown_8_, (char*)var4->baseStats_);
+    GameObject* c = bs->GetCombatantByIndex(id);
+    if (c != NULL) {
+        MessageSystem_SetStringArgument(names, p->nameIndex, (char*)c->baseStats_);
     }
 #else
     var1->GetCombatantByIndex(var3);
 
-    int var5 = (var3 >= 0 && var3 <= 3) ? 1 : 0;
-    if (var5) {
-        GameObject* var6 = func_0200ff1c(var1, var3);
-        if (var6 != NULL) {
-            func_02046574(var2, arg0->unknown_8_, (char*)var6->baseStats_);
+    int isPartyMember = (id >= 0 && id <= 3) ? 1 : 0;
+    if (isPartyMember) {
+        GameObject* c = GetCombatantWithFlag0x100_0200ff1c(bs, id);
+        if (c != NULL) {
+            MessageSystem_SetStringArgument(names, p->nameIndex, (char*)c->baseStats_);
         }
     } else {
-        GameObject* var7 = func_0200fea4(var1, var3);
-        if (var7 != NULL) {
-            func_02046574(var2, arg0->unknown_8_, (char*)var7 + 0x14c);
+        GameObject* c = GetCombatantWithFlag0x400_0200fea4(bs, id);
+        if (c != NULL) {
+            MessageSystem_SetStringArgument(names, p->nameIndex, (char*)c + 0x14c);
         }
     }
 #endif

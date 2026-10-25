@@ -4,7 +4,7 @@ struct Struct_0205bd04;
 extern "C" int func_0205bd04(struct Struct_0205bd04*);
 
 struct Struct_0205bcdc;
-extern "C" void func_0205bcdc(struct Struct_0205bcdc*, int);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc*, int);
 
 struct Struct_0205bd78 {
     int unknown_0_;
@@ -34,25 +34,25 @@ extern "C" ARM int func_0205bd78(struct Struct_0205bd78* arg0, int arg1, int arg
     arg1 -= arg0->unknown_38_;
     arg2 -= arg0->unknown_3a_;
 
-    int var0 = 0;
-    while (var0 < *arg0->unknown_24_) {
-        int var1 = 0;
-        while (var1 < *arg0->unknown_20_) {
-            int var2 = var1 * *arg0->unknown_24_ + var0;
-            if (arg0->unknown_34_ > var2) {
-                short var3 = arg0->unknown_3c_[var2];
-                short var4 = arg0->unknown_40_[var2];
-                short var5 = arg0->unknown_44_[var2];
-                short var6 = arg0->unknown_48_[var2];
-                int var7 = var3 + var5;
-                int var8 = var4 + var6;
-                if (arg1 >= var3 && var7 >= arg1 && arg2 >= var4 && var8 >= arg2) {
-                    *arg0->unknown_2c_ = var0;
-                    *arg0->unknown_28_ = var1;
-                    int var9 = func_0205bd04((struct Struct_0205bd04*)arg0);
-                    if (arg0->unknown_0_ <= var9) var9 = -1;
-                    func_0205bcdc((struct Struct_0205bcdc*)arg0, var9);
-                    return var9;
+    int row = 0;
+    while (row < *s->field24) {
+        int col = 0;
+        while (col < *s->field20) {
+            int idx = col * *s->field24 + row;
+            if (s->field34 > idx) {
+                short a = s->field3c[idx];
+                short b = s->field40[idx];
+                short c = s->field44[idx];
+                short d = s->field48[idx];
+                int right = a + c;
+                int bottom = b + d;
+                if (x >= a && right >= x && y >= b && bottom >= y) {
+                    *s->field2c = row;
+                    *s->field28 = col;
+                    int result = GetScaledSumIfActive0205bd04((struct Struct_0205bd04*)s);
+                    if (s->field0 <= result) result = -1;
+                    GridCursor_SelectIfValid((struct Struct_0205bcdc*)s, result);
+                    return result;
                 }
             }
             var1++;

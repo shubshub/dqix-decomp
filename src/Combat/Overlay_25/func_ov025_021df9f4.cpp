@@ -28,15 +28,15 @@ extern "C" ARM int func_ov025_021df9f4(GameObject* arg0) {
             var0 = 1;
         }
     }
-    bool var1 = false;
-    if (arg0->obj3D_.unknown_4_ >= 0 && arg0->obj3D_.unknown_4_ <= 3) {
-        var1 = true;
+    bool isParty = false;
+    if (obj->obj3D_.actorIndex_ >= 0 && obj->obj3D_.actorIndex_ <= 3) {
+        isParty = true;
     }
-    if (var1) {
-        GameState* var2 = GameState::GetInstance();
-        Struct_ov025_021df9f4* var3 = (Struct_ov025_021df9f4*)func_0200ff1c(var2, arg0->obj3D_.unknown_4_);
-        if (var3 != 0 && ((var3->unknown_18c_ & 1) || var3->unknown_c0_ == 8)) {
-            var0 = 0;
+    if (isParty) {
+        GameState* gs = GameState::GetInstance();
+        Combatant021df9f4* c = (Combatant021df9f4*)GetCombatantWithFlag0x100_0200ff1c(gs, obj->obj3D_.actorIndex_);
+        if (c != 0 && ((c->flags & 1) || c->state == 8)) {
+            result = 0;
         }
     }
     return var0;

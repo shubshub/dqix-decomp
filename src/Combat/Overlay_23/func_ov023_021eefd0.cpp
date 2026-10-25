@@ -139,29 +139,29 @@ struct Struct_ov023_021eefd0_7 {
 extern "C" Struct_ov023_021eefd0_6* _ZZ21inline_ov023_021f4c04vE1s;
 extern const char data_ov023_021fe230[];
 extern const char data_ov023_021fe246[];
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 #if defined(jpn)
 extern const char data_ov023_021fd4ec[];
 extern const char data_ov023_021fd504[];
 extern "C" void func_0204500c(Struct_ov023_021eefd0_9*, const char*, int);
 #endif
 
-extern "C" Struct_ov023_021eefd0_9* func_020421a0();
-extern "C" void func_0206efc4(void* arg0);
-extern "C" void func_0206f200(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void* func_0206f4f0(Struct_0206f01c_2* arg0, int arg1);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_020ac4c0(void* arg0);
-extern "C" void func_020a0330(Struct_020a0330* arg0, unsigned int arg1);
-extern "C" void func_020a0110(Struct_020a0110* arg0, unsigned int arg1);
-extern "C" void func_020a0388(Struct_020a0388* arg0, unsigned int arg1);
-extern "C" void func_020ac494(void* arg0);
-extern "C" void func_0209c6d8(void* arg0, int arg1);
-extern "C" void func_ov017_021cfc74(unsigned char arg0);
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2* arg0);
-extern "C" int func_0201b588(int arg0);
-extern "C" void func_020117cc(char* arg0, DetailedTreasureMapData* arg1);
+MessageSystem_021eefd0* MessageSystem_GetInstance();
+void Clear12Bytes0206efc4(void* monsters);
+void WrapCall0206f230With1000_0206f200(int monsters, int allocator, int file, int size, int monster);
+void* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct* monsters, int id);
+void Clear12Bytes020e46c4(void* name);
+const char* FindEntryByKey_02072a68(TableA68* texts, int id);
+void LoadBattleBlock020ac4c0(void* records);
+void AddClamped24BitFieldAt0x8_020a0330(S_a0330* records, unsigned int value);
+void AddClamped16BitFieldHighAt0x10_020a0110(S_a0110* time, unsigned int value);
+void AddClamped14BitFieldMidAt0xc_020a0388(S_a0388* records, unsigned int value);
+void CopyInBattleField0x7540_020ac494(void* records);
+void ResetAndDispatchActorContext0209c6d8(void* obj, int value);
+void EnqueueEventTag162_021cfc74(unsigned char value);
+void ResetFields_021eefac(Reset_021eefac* end);
+int IsInRange0201b588(int zone);
+void DispatchAndSetTreasureMapUnknownBit_020117cc(char* gameState, DetailedTreasureMapData* map);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -174,7 +174,7 @@ void* func_0202ae18();
 int func_0202c508(void* arg0);
 int func_0202c540(void* arg0);
 int func_ov023_021f4fc8();
-ZoneData_021eefd0* func_02012fe4();
+ZoneData_021eefd0* Zone3D_GetInstance();
 void Font_EncodeText(void* name, char* buffer, int a);
 void VectorizedMemset(void* dst, int value, unsigned int size);
 void VectorizedInvertedMemcpy(const void* src, void* dst, unsigned int size);
@@ -187,11 +187,11 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
     Struct_ov023_021eefd0_6* var0 = _ZZ21inline_ov023_021f4c04vE1s;
     if (var0->unknown_0_ == 0)
     {
-        void* var1 = arg0->unknown_2a0_->unknown_678_;
-        Struct_ov023_021eefd0_9* var2 = func_020421a0();
-        BackgroundLoader* var3 = BackgroundLoader::GetInstance();
-        int var4 = 1;
-        if (_ZZ21inline_ov023_021f4c04vE1s->unknown_c_ > BackgroundLoader::TaskStatus_Invalid)
+        void* monsters = self->info_->monsters_;
+        MessageSystem_021eefd0* messages = MessageSystem_GetInstance();
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        int load = 1;
+        if (_ZZ17GetGlobal021ffefcvE1s->task3_ > BackgroundLoader::TaskStatus_Invalid)
         {
             if (var3->GetTaskStatus(_ZZ21inline_ov023_021f4c04vE1s->unknown_c_))
             {
@@ -388,10 +388,10 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
             func_020a0110((Struct_020a0110*)var21.unknown_68_, 1);
             func_020ac494(&var21);
         }
-        if (!func_0202c540(func_0202ae18()) || arg0->unknown_2a0_->unknown_25_ == 0)
-            func_0209c6d8(data_02109bf4, 0x36);
-        var0->unknown_0_++;
-        if (arg0->unknown_2a0_->unknown_24_ != 0 || arg0->unknown_2a0_->unknown_25_ != 0)
+        if (!func_0202c540(func_0202ae18()) || self->info_->legacyBoss_ == 0)
+            ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x36);
+        end->step_++;
+        if (self->info_->grotto_ != 0 || self->info_->legacyBoss_ != 0)
         {
             GrottoStruct* var22 = GameState::GetInstance()->GetGrottoStruct();
             arg0->unknown_6e38_ = 1;
@@ -416,11 +416,11 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
     }
     else if (var0->unknown_0_ == 2)
     {
-        func_ov023_021eefac((Struct_ov023_021eeaac_2*)var0);
-        void* var23 = func_0202ae18();
-        Struct_ov023_021eefd0_2* var24 = func_02012fe4();
-        DetailedTreasureMapData* var25 = var24->unknown_23ec_.GetDetailedData();
-        if (arg0->unknown_2a0_->unknown_25_ != 0)
+        ResetFields_021eefac((Reset_021eefac*)end);
+        void* unk = func_0202ae18();
+        ZoneData_021eefd0* zone = Zone3D_GetInstance();
+        DetailedTreasureMapData* map = zone->grotto_.GetDetailedData();
+        if (self->info_->legacyBoss_ != 0)
         {
             if (func_0201b588(var24->unknown_0_))
             {
@@ -435,9 +435,9 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
         }
         if (arg0->unknown_2a0_->unknown_24_ != 0)
         {
-            DetailedTreasureMapData* var27 = func_02012fe4()->unknown_23ec_.GetDetailedData();
-            GameState* var28 = GameState::GetInstance();
-            if (func_0202c508(var23))
+            DetailedTreasureMapData* map2 = Zone3D_GetInstance()->grotto_.GetDetailedData();
+            GameState* gameState = GameState::GetInstance();
+            if (func_0202c508(unk))
             {
                 void* var29 = var28->GetProtagonist()->baseStats_;
 #if defined(jpn)

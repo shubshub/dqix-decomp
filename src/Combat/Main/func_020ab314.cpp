@@ -6,7 +6,6 @@
 
 #if defined(jpn)
 #define RG(u, j) (j)
-#define func_0205ec34 func_0205ff20
 #else
 #define RG(u, j) (u)
 #endif
@@ -56,18 +55,18 @@ struct Struct_020ab314_2 {
     char unknown_75f0_[0x4d0];
     char unknown_7ac0_[0x3b4];
 };
-struct Struct_020ab314_3 { char unknown_0_[0xa0]; char unknown_a0_[0xd8]; char unknown_178_[0x330]; };
-struct Struct_02011544;
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+struct Globals020ab314 { char data[0xa0]; char pad_a0[0xd8]; char extra[0x330]; };
+struct StateBits5ccc_11544;
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 extern const char data_020f1bf0[];
 extern "C" int func_02075910(int, void*, unsigned int, int);
 extern "C" int func_020a94f8(Struct_020a94f8_2*, int);
 extern "C" int func_020ac864(int);
 extern "C" void func_02011544(Struct_02011544*);
 extern "C" int func_01ff85b8(void*, int);
-extern "C" void* func_0205ec34();
-extern "C" Struct_020ab314_3* func_02094d6c();
-extern "C" void* func_020108d8(char*, int);
+extern "C" void* Scenario_GetInstance();
+Globals020ab314* GetGlobal02109418_02094d6c();
+void* GetSlotEntry020108d8(char*, int);
 #if defined(jpn)
 extern "C" int func_020a95a4(void*, void*);
 #else
@@ -88,26 +87,26 @@ extern "C" ARM int func_020ab314(int* arg0, int arg1, int arg2) {
     var1->unknown_5cc8_ = 0;
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
-    int var2;
-    int var3;
-    Struct_020ab314_5* var4;
-    var2 = 1;
-    if (arg2) var3 = 0x8084;
-    else var3 = 0x84;
-    var4 = &((Struct_020ab314*)data_0211e33c)->unknown_28000_;
-    VectorizedMemset(var4, 0, 0x8000);
-    if (!func_02075910(0, var4, 0x10, 0)) var2 = 0;
-    Struct_020a94f8_2 var5;
-    if (!func_020a94f8(&var5, arg2 != 0)) var2 = 0;
-    VectorizedInvertedMemcpy(&var5, &var4->unknown_10_, 0x14);
-    func_020ac864(arg2 ? 1 : 0);
-    VectorizedInvertedMemcpy(var1->unknown_6380_, var4->unknown_24_, 0x54);
-    if (!func_02075910(var3, &var4->unknown_84_, 0x6f60, 0)) var2 = 0;
-    Struct_020ab314_4* var6 = &var4->unknown_84_;
-    if (!strcmp(var5.unknown_8_, data_020f1bf0) && var2) {
-        if (func_01ff85b8(var6->unknown_4_, 0x6f5c) != var6->unknown_0_) {
-            var1->unknown_5cc8_ = arg2 ? 3 : 2;
-            var2 = 0;
+    int valid;
+    int id;
+    SaveBuffer020ab314* buffer;
+    valid = 1;
+    if (alternate) id = 0x8084;
+    else id = 0x84;
+    buffer = &((SaveScratch020ab314*)g_fileLoadBuffer)->buffer;
+    VectorizedMemset(buffer, 0, 0x8000);
+    if (!func_02075910(0, buffer, 0x10, 0)) valid = 0;
+    Buf020a94f8 header;
+    if (!VerifyBuffer020a94f8(&header, alternate != 0)) valid = 0;
+    VectorizedInvertedMemcpy(&header, &buffer->header, 0x14);
+    VerifyAndApplySaveBuffer_020ac864(alternate ? 1 : 0);
+    VectorizedInvertedMemcpy(saveState->globals, buffer->globals, 0x54);
+    if (!func_02075910(id, &buffer->body, 0x6f60, 0)) valid = 0;
+    SaveBody020ab314* body = &buffer->body;
+    if (!strcmp(header.signature, data_020f1bf0) && valid) {
+        if (func_01ff85b8(body->actorData, 0x6f5c) != body->checksum) {
+            saveState->error = alternate ? 3 : 2;
+            valid = 0;
         }
     }
     if (!var2) {
@@ -115,8 +114,8 @@ extern "C" ARM int func_020ab314(int* arg0, int arg1, int arg2) {
         BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    void* var7 = func_0205ec34();
-    Struct_020ab314_3* var8 = func_02094d6c();
+    void* context = Scenario_GetInstance();
+    Globals020ab314* globals = GetGlobal02109418_02094d6c();
 #if defined(jpn)
     func_020a95a4(var6->unknown_4_, func_020108d8((char*)var0, 0));
 #else

@@ -2,11 +2,11 @@
 #include "Combat/MapDisplay.h"
 
 struct InitTarget0205cfd4;
-extern void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+extern void Window_Init(struct InitTarget0205cfd4* s);
 
-extern void Background_Init(struct List0204af64* obj);
+extern void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204c684(void*);
+extern "C" void WindowPane_Init(void*);
 
 #if defined(jpn)
 static const int kLayoutShift=0x220;
@@ -16,11 +16,11 @@ static const int kLayoutShift=0;
 
 // USA: func_ov017_021a5b48
 ARM void InitFieldArenaLists_021a5b48(unsigned char* base) {
-    InitStruct0205cfd4(*(struct InitTarget0205cfd4**)(base + 0x4090 - kLayoutShift));
+    Window_Init(*(struct InitTarget0205cfd4**)(base + 0x4090 - kLayoutShift));
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)(base + 0x4094 - kLayoutShift + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)(base + 0x4094 - kLayoutShift + i * 0x20));
     }
-    func_0204c684(base + 0x40d4 - kLayoutShift);
+    WindowPane_Init(base + 0x40d4 - kLayoutShift);
     *(int*)(base + 0x41b8 - kLayoutShift) = 0;
     *(int*)(base + 0x41bc - kLayoutShift) = -1;
     *(int*)(base + 0x41b4 - kLayoutShift) = 0;

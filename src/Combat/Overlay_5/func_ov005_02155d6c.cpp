@@ -29,8 +29,8 @@ struct Struct_ov005_02155d6c {
     char unknown_0_[0x70];
 };
 
-void MaybeInvoke0204719c_02047230(Foo02048004* model);
-void CopyInternalFields0207df50(Foo0207df50* state);
+void SprSprite_Unload(Foo02048004* model);
+void VramState_Rewind(Foo0207df50* state);
 void VramState_Restore(char* state);
 extern "C" void func_02047b40(MenuModel* model, void* file, SafeAllocator* allocator);
 void VramState_Save(char* state);
@@ -90,8 +90,8 @@ extern "C" ARM void func_ov005_02155d6c(EquipmentMenu* self) {
         if (self->dragStep_ == 1) {
             EquipmentSlot* slot = &self->slots_[self->dragged_];
             if (slot->offset_ == 0) {
-                MaybeInvoke0204719c_02047230((Foo02048004*)&self->dragModel_);
-                CopyInternalFields0207df50((Foo0207df50*)&self->dragVramState_);
+                SprSprite_Unload((Foo02048004*)&self->dragModel_);
+                VramState_Rewind((Foo0207df50*)&self->dragVramState_);
                 VramState_Restore((char*)&self->dragVramState_);
                 self->dragAllocator_.Reset();
                 func_02047b40(&self->dragModel_, self->dragFile_, &self->dragAllocator_);

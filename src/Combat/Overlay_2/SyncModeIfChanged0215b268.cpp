@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 extern int g_sePlayer;
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 
 unsigned char GetByteFieldAt0xcc_0205ea18(unsigned char* obj);
 void SetModeClamped0209ca70(void* obj, int val);
@@ -19,7 +19,7 @@ ARM void SyncModeIfChanged0215b268(char* p) {
 #endif
     unsigned char a = GetByteFieldAt0xcc_0205ea18((unsigned char*)&g_sePlayer);
     unsigned char b1 = *(unsigned char*)(p + 0x1000 + regionalMode);
-    SetModeClamped0209ca70(&data_02109bf4, b1);
+    SetModeClamped0209ca70(&g_bgmPlayer, b1);
     unsigned char b2 = *(unsigned char*)(p + 0x1000 + regionalMode + 1);
     SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, b2);
     unsigned char b3 = *(unsigned char*)(p + 0x1000 + regionalMode + 1);

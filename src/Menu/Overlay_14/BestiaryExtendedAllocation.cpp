@@ -42,8 +42,8 @@ struct BestiaryAllocationState;
 extern "C" {
 void _Z11Sprite_InitP14Struct0205a198(void*);
 void _Z23ClearField0And40205a234P19ClearTarget0205a234(void*);
-void _Z15Background_InitP12List0204af64(void*);
-void func_0204c684(void*);
+void _Z15Background_InitP18BackgroundGraphics(void*);
+void WindowPane_Init(void*);
 void func_ov014_02184300(BestiaryAllocationState*, SafeAllocator*);
 extern const unsigned int data_ov014_021894b8[5];
 }
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov014_021868b8(BestiaryExtendedAllocationState* state, 
     state->groups = (BestiaryExtendedGroup*)allocator->Allocate(0x40);
     state->objects = (BestiaryExtendedObject*)allocator->Allocate(0x380);
     func_0207f84c(state->renderer);
-    for (unsigned char i = 0; i < 2; ++i) _Z15Background_InitP12List0204af64(&state->groups[i]);
-    for (unsigned char i = 0; i < 4; ++i) func_0204c684(&state->objects[i]);
+    for (unsigned char i = 0; i < 2; ++i) _Z15Background_InitP18BackgroundGraphics(&state->groups[i]);
+    for (unsigned char i = 0; i < 4; ++i) WindowPane_Init(&state->objects[i]);
     func_ov014_02184300((BestiaryAllocationState*)state, allocator);
 }

@@ -3,18 +3,18 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "GameState/GameState.h"
 
-extern "C" void func_02094ab0(void);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(void* arg0);
-extern "C" int func_02094a00(void);
-extern "C" void func_020397c0(void* arg0);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+extern "C" void FontBankLoader_CancelLoads(void);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(void* self);
+int FontBankLoader_GetInstance(void);
+void GameObject_EnableControl(void* obj);
+int GetFieldIfFlag4_020100f8(char* obj);
+void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 extern "C" void func_020a0c0c(void);
 
-extern int data_02114e20;
+extern int g_mainAllocator;
 
 struct Struct_ov017_021ac32c {
     char unknown_0_[0xc];
@@ -23,19 +23,19 @@ struct Struct_ov017_021ac32c {
 };
 
 // USA: func_ov017_021ac32c
-extern "C" ARM void func_ov017_021ac32c(struct Struct_ov017_021ac32c* arg0) {
-    void* var0 = (void*)func_020421a0();
-    func_02043204((char*)var0);
-    func_02043124(var0);
-    func_02094a00();
-    func_02094ab0();
-    GameState* var1 = GameState::GetInstance();
-    func_020397c0(var1->GetUnknownGameObject());
+extern "C" ARM void func_ov017_021ac32c(struct Obj021ac32c* self) {
+    void* ctrl = (void*)MessageSystem_GetInstance();
+    MessageSystem_Reset((char*)ctrl);
+    MessageSystem_Stop(ctrl);
+    FontBankLoader_GetInstance();
+    FontBankLoader_CancelLoads();
+    GameState* battle = GameState::GetInstance();
+    GameObject_EnableControl(battle->GetUnknownGameObject());
 
-    void* var2 = arg0->unknown_10_.GetSignedAllocator();
-    if (var2 != NULL) {
-        arg0->unknown_10_.Destroy();
-        func_02012da4((AllocatorUnion*)&data_02114e20, var2);
+    void* p = self->allocator.GetSignedAllocator();
+    if (p != NULL) {
+        self->allocator.Destroy();
+        AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
         func_020a0c0c();
     }
     arg0->unknown_c_ = 0;

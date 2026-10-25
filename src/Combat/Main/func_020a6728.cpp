@@ -37,11 +37,11 @@ void* LoadFileIntoNewAllocation(const char*, SafeAllocator&, unsigned int*);
 void InitActor020a75a0(char*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
-extern "C" Zone3D* func_02012fe4();
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_02033fdc(Struct_02033fdc*);
-extern "C" void func_0200fd38(GameState*, int, GameObject*);
-extern "C" void func_020da1ac(void*);
+extern "C" Zone3D* Zone3D_GetInstance();
+void SetVecYFromValue02033874(Obj02033874*, int);
+void ClearFlag0x4At0xe0(Flags02033fdc*);
+void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+void ResetContainerAndHandleFields020da1ac(void*);
 extern "C" void func_020a72ac(Zone3D*, int);
 extern char data_020f1b50[];
 extern char data_020f1b52[];
@@ -61,7 +61,7 @@ extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
     }
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     SafeAllocator* allocator = &self->allocator_array_38[7];
-    char* tables = (char*)&self->unknown_2cc + 0x310;
+    char* tables = (char*)&self->vramStates_ + 0x310;
     GetPointerAt0x32c_0200ffc0((PointerField32c_ffc0*)state);
     if (loader->GetNumQueuedTasks() > 0) return;
     unsigned int length;
@@ -73,7 +73,7 @@ extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
     ObjectArchiveLoadInfo loadInfo;
     loadInfo.unk_0 = 0;
     loadInfo.fileData = 0;
-    loadInfo.unk_8 = 0;
+    loadInfo.fileSize = 0;
     loadInfo.allocator = 0;
     loadInfo.unk_10 = 0;
     loadInfo.unk_14 = 0;
@@ -81,11 +81,11 @@ extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
     loadInfo.packageID = 0;
     VramState_Restore(tables);
     loadInfo.fileData = file;
-    loadInfo.unk_8 = length;
+    loadInfo.fileSize = length;
     loadInfo.allocator = allocator;
     actor->object.LoadFromCHRArchive(&loadInfo);
     VramState_Save(tables);
-    Zone3D* zone = func_02012fe4();
+    Zone3D* zone = Zone3D_GetInstance();
     state->GetUnknownGameObject();
     ZoneSavedActorState* saved = zone->GetSavedActorState();
     actor->object.position_ = saved->position;
@@ -111,5 +111,5 @@ extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
         data_ov017_021d82fc.allocator = extraAllocator;
         data_ov017_021d82fc.tables = tables;
     }
-    func_020a72ac(func_02012fe4(), 0);
+    func_020a72ac(Zone3D_GetInstance(), 0);
 }

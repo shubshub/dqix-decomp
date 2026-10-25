@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/ItemTable.h"
 #if defined(jpn)
 enum {
     Enum_ov003_02177dd4_2048 = 0x77c
@@ -49,79 +50,72 @@ struct Struct_ov003_02177dd4_2 {
     signed char unknown_13c_[152];
     Struct_0207c258 unknown_1d4_;
 };
-extern "C" int func_020a0b8c(struct Struct_020a0b8c *arg0);
-struct Struct_0207fdcc_2;
-extern "C" void func_02080c20(struct Struct_0207fdcc_2 *arg0, int arg1);
-extern "C" void func_02080c68(void *arg0, int arg1, int arg2);
-extern "C" void func_02080bac(void *arg0, int arg1);
-extern "C" void func_0208065c(void *arg0, int arg1);
-extern "C" void func_02081130(void *arg0, int arg1, int arg2);
-extern "C" void func_020806b0(void *arg0, int arg1);
-extern "C" int func_02080b2c(void *arg0, int arg1);
-extern "C" int func_0207c6b8(unsigned char *arg0, unsigned int arg1, int arg2);
-struct Struct_0201099c_9;
-struct Struct_0201099c_10 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[10];
-    struct Struct_0201099c_9* unknown_c_;
-    unsigned char unknown_10_[4];
-    unsigned char unknown_14_;
+int CountNonZeroValues020a0b8c(struct S_a0b8c *p);
+struct Obj2081;
+void ClearElementFlag0x20_02080c20(struct Obj2081 *obj, int key);
+void SetEntryLowNibbleAndElement02080c68(void *obj, int id, int value);
+void ClearSublistEntriesFlag1_02080bac(void *obj, int id);
+void ClearSublistEntriesFlag2_0208065c(void *obj, int id);
+void SetOrClearEntryFlag0x102081130(void *obj, int id, int set);
+void AddSublistEntryFlag2_020806b0(void *obj, int id);
+int SetEntryFlagById02080b2c(void *obj, int id);
+int FindNthPositiveShort0207c6b8(unsigned char *obj, unsigned int index, int target);
+struct Element020de650;
+struct Element020de650 {
+    char pad0[4];
+    int value;
+    char pad8[0x1a - 8];
+    unsigned short count;
 };
-struct Struct_0201099c_9 {
-    char unknown_0_[4];
-    int unknown_4_;
-    char unknown_8_[0x1a - 8];
-    unsigned short unknown_1a_;
-};
-extern "C" struct Struct_0201099c_9 *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" short func_0207c72c(void *arg0, unsigned int arg1, short arg2);
-extern "C" void func_ov003_0217818c(void *arg0, struct Struct_0201099c_9 *arg1, int arg2, int arg3);
-extern "C" void func_020805f4(void *arg0, int arg1);
-struct Struct_02080f8c;
-extern "C" void func_02080f8c(struct Struct_02080f8c *arg0, int arg1, int arg2);
-struct Struct_02080fa8;
-extern "C" void func_02080fa8(struct Struct_02080fa8 *arg0, int arg1, int arg2);
-extern "C" int func_02081010(void *arg0, int arg1);
-extern "C" void func_020813ec(void *arg0, int arg1);
+struct Element020de650 *ItemTable_Find(struct ItemTable *c, int key);
+short GetNthPositiveEntryValue_0207c72c(void *obj, unsigned int index, short n);
+extern "C" void func_ov003_0217818c(void *self, struct Element020de650 *elem, int id, int value);
+void Forward0207f7acObjPlus4Size0x40_020805f4(void *obj, int value);
+struct Container02080f8c;
+void SetEntryFirstField02080f8c(struct Container02080f8c *obj, int id, int value);
+struct Container02080fa8;
+void SetEntryFirstField02080fa8(struct Container02080fa8 *obj, int id, int value);
+int LookupValueByEntryKey02081010(void *obj, int key);
+extern "C" void func_020813ec(void *obj, int key);
 
-struct Struct_ov003_02177dd4 {
-    unsigned char unknown_0_[Enum_ov003_02177dd4_2048 + 0x74];
-    struct Struct_0201099c_10 unknown_874_;
-    unsigned char unknown_88c_[Enum_ov003_02177dd4_2204 - Enum_ov003_02177dd4_2048 - 0x74 - sizeof(Struct_0201099c_10)];
-    struct Struct_0207fdcc_2 *unknown_89c_;
-    unsigned char unknown_8a0_[Enum_ov003_02177dd4_4108 - Enum_ov003_02177dd4_2208];
-    short unknown_100c_;
-    short unknown_100e_;
-    short unknown_1010_;
-    short unknown_1012_;
-    short unknown_1014_;
-    short unknown_1016_;
+struct ListMenu_02177dd4 {
+    unsigned char pad0[kRegion800 + 0x74];
+    struct ItemTable container;
+    unsigned char paddingAfterContainer[kRegion89c - kRegion800 - 0x74 - sizeof(ItemTable)];
+    struct Obj2081 *elemObj;
+    unsigned char pad8a0[kRegion100c - kRegion8a0];
+    short mode;
+    short cursor;
+    short field_0x1010;
+    short tableCursor;
+    short page;
+    short pageCount;
 };
 
 // JPN: func_ov003_02177dd4 (02176d60)
 // USA: func_ov003_02177dd4
-extern "C" ARM void func_ov003_02177dd4(Struct_ov003_02177dd4 *arg0) {
-    Struct_ov003_02177dd4_2* var0 = static_cast<Struct_ov003_02177dd4_2*>(func_02010828(GameState::GetInstance()));
-    unsigned int var1  = 0;
-    short var2;
-    short var3;
-    short var4;
-    short var5;
-    short var6;
-    int var7;
-    short *var8             = 0;
-    signed char *var9       = 0;
-    struct Struct_0207fdcc_2 *var10 = arg0->unknown_89c_;
-    int var11               = 0x16;
-    var2                     = 0xa6;
-    short var12               = 0xa7;
-    short var13               = 0xaf;
-    short var14               = 0xb7;
-    var3                     = 0xbf;
-    short var15               = 0xc7;
-    var4                  = 0xcf;
-    var5             = 0xd0;
-    short var16           = 8;
+extern "C" ARM void func_ov003_02177dd4(ListMenu_02177dd4 *self) {
+    Inventory02177dd4* inventory = static_cast<Inventory02177dd4*>(GameState_GetParty(GameState::GetInstance()));
+    unsigned int table  = 0;
+    short hdr;
+    short idD;
+    short pageId;
+    short pageCountId;
+    short key;
+    int count;
+    short *keys             = 0;
+    signed char *vals       = 0;
+    struct Obj2081 *elemObj = self->elemObj;
+    int group               = 0x16;
+    hdr                     = 0xa6;
+    short idA               = 0xa7;
+    short idB               = 0xaf;
+    short idC               = 0xb7;
+    idD                     = 0xbf;
+    short idE               = 0xc7;
+    pageId                  = 0xcf;
+    pageCountId             = 0xd0;
+    short perPage           = 8;
 
     if (arg0->unknown_100c_ == 0x77) {
         short var17 = arg0->unknown_1012_ - 0x11e;
@@ -174,10 +168,10 @@ extern "C" ARM void func_ov003_02177dd4(Struct_ov003_02177dd4 *arg0) {
             } else {
                 var22 = func_0207c6b8(((unsigned char*)(&var0->unknown_1d4_)), var1, var18);
             }
-            struct Struct_0201099c_9 *var23 = func_020dedd0(&arg0->unknown_874_, var22);
-            if (var23 != NULL) {
-                var20 = var23->unknown_4_;
-                var21   = var23->unknown_1a_;
+            struct Element020de650 *elem = ItemTable_Find(&self->container, k);
+            if (elem != NULL) {
+                value = elem->value;
+                num   = elem->count;
             }
             int var24;
             if (var9 != 0) {

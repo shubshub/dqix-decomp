@@ -77,38 +77,38 @@ struct AllocatorUnion;
 
 extern "C" void* func_0202ae18();
 extern "C" void func_ov017_021c37a4();
-extern "C" Struct_ov017_021af66c_3* func_02012fe4();
-extern "C" void func_ov017_021baedc(Struct_ov017_021af66c* arg0, int arg1);
-extern "C" void func_ov017_021bbae4(Struct_ov017_021af66c* arg0, int arg1, int arg2);
-extern "C" void func_ov017_0219577c(int arg0, int arg1, int arg2);
-extern "C" int func_ov017_02195658(GameResources* arg0);
-extern "C" void* func_ov017_021b8468(Struct_ov017_021af66c* arg0);
-extern "C" void func_ov017_021afb8c(Struct_ov017_021af66c_4* arg0, unsigned char* arg1);
-extern "C" void func_ov017_0218b5c0(int arg0, int arg1);
+extern "C" GrottoInfo02012fe4* Zone3D_GetInstance();
+extern "C" void func_ov017_021baedc(CombatMenuNode* node, int v);
+extern "C" void func_ov017_021bbae4(CombatMenuNode* node, int param, int v);
+extern "C" void func_ov017_0219577c(int a, int b, int c);
+extern "C" int func_ov017_02195658(GameResources* res);
+extern "C" void* func_ov017_021b8468(CombatMenuNode* node);
+extern "C" void func_ov017_021afb8c(CombatStepObj* obj, unsigned char* p);
+extern "C" void func_ov017_0218b5c0(int a, int b);
 
-extern "C" void* func_020d6c00();
-extern "C" void* func_020936f8();
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_0205c904(unsigned char* arg0, int arg1);
-extern "C" int func_0202bd34(Struct_0202b2f0* arg0, int arg1);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
-extern "C" void func_02093a14(char* arg0);
-extern "C" void func_020dc2d0(int arg0);
-extern "C" void func_ov000_02163b14(void* arg0, void* arg1);
-extern "C" void func_ov000_02163b40(void* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02046968(Struct_02046968* arg0);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_02039830(void* arg0);
-extern "C" void func_0205ce94(unsigned char* arg0);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_020daf9c(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" Struct_02021b84* func_020421a0();
+void* GlobalFlags_GetInstance();
+void* GetGlobal02109030_020936f8();
+void GameObject_DisableControl(Obj020397cc* obj, int v);
+void SetupAndDispatch0205c904(unsigned char* obj, int v);
+int TestMaskBitBySignedByteIndex_0202bd34(SearchStruct* obj, int index);
+unsigned char GameState_GetLeaderIndex(GameState* gs);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+void ResetEightRegionsAndFlags_02093a14(char* obj);
+void SetCombatModeFromCase020dc2d0(int v);
+void InvokeIfInputLogBIs3_021dbd1c_ov000_02163b14(void* p, void* q);
+void InvokeIfInputLogBIs3_021dbe44_ov000_02163b40(void* p);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+void ClearListUntilFlagZero(ClearList02046968* list);
+void GameObject_EnableControl(void* obj);
+void CopyByteField0x253To0x252_02039830(void* obj);
+void ResetGlobalObjAndInitSelfPointer0205ce94(unsigned char* obj);
+void FlagWord_ClearBits(FlagWord020466f4* obj, unsigned int mask);
+void DispatchWithGlobalContext020daf9c(int a, int b, int c, int d);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* p);
+MessageSystem* MessageSystem_GetInstance();
 
-extern Struct_ov017_021d6aec data_ov017_021d6aec;
-extern AllocatorUnion data_02114e20;
+extern CombatStepTable data_ov017_021d6aec;
+extern AllocatorUnion g_mainAllocator;
 
 struct Struct_ov017_021af66c_5 {
     char unknown_0_[0xb2];
@@ -122,21 +122,21 @@ struct Struct_ov017_021af66c_5 {
 };
 
 // USA: func_ov017_021af66c
-extern "C" ARM void func_ov017_021af66c(Struct_ov017_021af66c_4* arg0, void* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    Struct_0202b2f0* var2 = (Struct_0202b2f0*)func_0202ae18();
-    Struct_ov017_021af66c_5* var3 = (Struct_ov017_021af66c_5*)var0->GetUnknownGameObject();
-    Struct_02038598_4* var4 = (Struct_02038598_4*)func_020d6c00();
-    char* var5 = (char*)func_020936f8();
-    Struct_ov017_021af66c* var6 = static_cast<Struct_ov017_021af66c*>(var1->unknown_ptr_3718);
-    func_020397cc((Struct_02018300_3*)var3, 0);
-    var3->unknown_b2_ = 0;
-    Struct_ov017_021d6aec var7 = data_ov017_021d6aec;
-    if (var7.unknown_0_[arg0->unknown_a_] != 0) {
-        int var8 = var0->GetTickCount();
-        if (var8 == 0) {
-            var8 = 1;
+extern "C" ARM void func_ov017_021af66c(CombatStepObj* obj, void* list) {
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    SearchStruct* search = (SearchStruct*)func_0202ae18();
+    CombatantView* combatant = (CombatantView*)gs->GetUnknownGameObject();
+    FlagWord020466f4* flags = (FlagWord020466f4*)GlobalFlags_GetInstance();
+    char* global = (char*)GetGlobal02109030_020936f8();
+    CombatMenuNode* menu = static_cast<CombatMenuNode*>(res->unknown_ptr_3718);
+    GameObject_DisableControl((Obj020397cc*)combatant, 0);
+    combatant->pendingAction = 0;
+    CombatStepTable table = data_ov017_021d6aec;
+    if (table.fn[obj->state] != 0) {
+        int tick = gs->GetTickCount();
+        if (tick == 0) {
+            tick = 1;
         }
         func_0205c904(arg0->unknown_48_, var8);
         arg0->unknown_a_ = var7.unknown_0_[arg0->unknown_a_](arg0);
@@ -152,21 +152,21 @@ extern "C" ARM void func_ov017_021af66c(Struct_ov017_021af66c_4* arg0, void* arg
     if (var1->unknown_42e2_ != 0) {
         if (arg0->unknown_9_ == 2) {
             func_ov017_021c37a4();
-            var1->unknown_42e3_[0] = 1;
-            Struct_ov017_021af66c_3* var9 = func_02012fe4();
-            if (var9->unknown_0_ == 1) {
-                SetBrightness(var1, 0, 30);
-                UnlockAndSetBrightness(var1, 0, 30);
+            res->unknown_42e3[0] = 1;
+            GrottoInfo02012fe4* info = Zone3D_GetInstance();
+            if (info->type == 1) {
+                SetBrightness(res, 0, 30);
+                UnlockAndSetBrightness(res, 0, 30);
             }
-            Struct_ov017_021af66c* var10 = static_cast<Struct_ov017_021af66c*>(var1->unknown_ptr_array_371c[6]);
-            if (var10->unknown_2_ == 0) {
-                func_ov017_021baedc(var10, 1);
-                func_ov017_021bbae4(var10, var9->unknown_8_, 2);
-                var10->unknown_cd_ = func_020100b0(var0);
-                var10->unknown_ce_ = var3->unknown_150_->unknown_49c_0_;
-                var10->unknown_cc_ = 1;
-                var10->unknown_cf_ = 3;
-                func_020469b4((Struct_0201bdac_2*)arg1, (Struct_0201bdac*)var10);
+            CombatMenuNode* node = static_cast<CombatMenuNode*>(res->unknown_ptr_array_371c[6]);
+            if (node->active == 0) {
+                func_ov017_021baedc(node, 1);
+                func_ov017_021bbae4(node, info->param, 2);
+                node->value397c = GameState_GetLeaderIndex(gs);
+                node->flagBit = combatant->flags->bit0;
+                node->kind = 1;
+                node->phase = 3;
+                AppendNodeToTail((TailList020469b4*)list, (TailNode020469b4*)node);
             }
             ClearFlags00(var1, 0x40);
         } else {
@@ -212,30 +212,30 @@ extern "C" ARM void func_ov017_021af66c(Struct_ov017_021af66c_4* arg0, void* arg
     if (var15->unknown_2_ != 0 && var15->unknown_cf_ == 2) {
         var16 = 0;
     }
-    if (var16) {
-        GameObject* var17 = var0->GetUnknownGameObject();
-        if (var17 != 0) {
-            func_020397c0(var17);
-            func_02039830(var17);
+    if (restore) {
+        GameObject* c = gs->GetUnknownGameObject();
+        if (c != 0) {
+            GameObject_EnableControl(c);
+            CopyByteField0x253To0x252_02039830(c);
         }
     }
-    func_0205ce94(arg0->unknown_48_);
-    func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x800000);
+    ResetGlobalObjAndInitSelfPointer0205ce94(obj->dispatcher);
+    FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x800000);
     func_ov017_0218b5c0(1, -1);
-    func_020daf9c(0, 1, 0, 1);
-    DISPCNT = (DISPCNT & ~0x1f00) | (arg0->unknown_280_ << 8);
-    ClearFlags04(var1, 0x40);
-    if (arg0->unknown_288_ != 0) {
-        func_02012da4(&data_02114e20, arg0->unknown_288_);
-        arg0->unknown_288_ = 0;
+    DispatchWithGlobalContext020daf9c(0, 1, 0, 1);
+    DISPCNT = (DISPCNT & ~0x1f00) | (obj->bgMode << 8);
+    ClearFlags04(res, 0x40);
+    if (obj->allocation != 0) {
+        AllocatorUnion_Free(&g_mainAllocator, obj->allocation);
+        obj->allocation = 0;
     }
-    Struct_02021b84* var18 = func_020421a0();
+    MessageSystem* messages = MessageSystem_GetInstance();
 #if defined(jpn)
     var18->unknown_17ff_.unknown_0_2_ = 0;
 #else
     var18->unknown_19d0_ = 0;
 #endif
-    if (static_cast<Struct_ov017_021af66c*>(var1->unknown_ptr_3718)->unknown_2_ == 0) {
-        func_020466f4(var4, 0x40000);
+    if (static_cast<CombatMenuNode*>(res->unknown_ptr_3718)->active == 0) {
+        FlagWord_ClearBits(flags, 0x40000);
     }
 }

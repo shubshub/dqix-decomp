@@ -12,10 +12,10 @@ struct Struct_0201099c_16;
 struct Struct_ov003_0215f56c_3;
 struct Struct_ov003_02165c9c_5;
 
-extern "C" int func_02080b54(void* arg0, int arg1);
-extern "C" void* func_02010828(GameState*);
-extern "C" void func_ov003_02166164(Struct_ov003_02165c9c_5*, int, int);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
+int SetSublistEntriesFlag1_02080b54(void* obj, int id);
+void* GameState_GetParty(GameState*);
+void SetOrClearFlags464_02166164(Outer02166164*, int, int);
+extern "C" void Font_DecodeText(void* src, void* dst, int flag);
 #if defined(jpn)
 extern "C" short func_020865b0(Struct_0201099c_16*);
 #else
@@ -138,17 +138,17 @@ extern "C" ARM void func_ov003_02166220(Struct_ov003_02166220_4* arg0) {
     short var20, var21;
     Struct_ov003_02166220_3 var22;
 
-    func_02080b54(var0, 6);
-    var1 = (Struct_ov003_02166220_2*)func_02010828(GameState::GetInstance());
-    var2 = var1->unknown1_2c8c_;
-    var8 = 0x15;
-    var4 = 100;
-    var7 = arg0->unknown_49f_ * 4;
-    arg0->unknown_4bd_ = (unsigned char)var8;
-    var5 = -1;
-    var10 = 0xcb;
-    memset(arg0->unknown_468_, 0, 4);
-    func_ov003_02166164((Struct_ov003_02165c9c_5*)arg0, var2 > 4, 1);
+    SetSublistEntriesFlag1_02080b54(elementObj, 6);
+    party = (Party02166220*)GameState_GetParty(GameState::GetInstance());
+    count = party->count;
+    idA = 0x15;
+    idB = 100;
+    row = self->page * 4;
+    self->flag4bd = (unsigned char)idA;
+    v = -1;
+    idC = 0xcb;
+    memset(self->counters, 0, 4);
+    SetOrClearFlags464_02166164((Outer02166164*)self, count > 4, 1);
 #if !defined(jpn)
     memset(arg0->unknown_39c_, 0, sizeof(arg0->unknown_39c_));
 #endif
@@ -158,9 +158,9 @@ extern "C" ARM void func_ov003_02166220(Struct_ov003_02166220_4* arg0) {
 #if defined(jpn)
         func_02080f8c((struct Struct_02080f8c*)var0, var8, (int)var3->unknown_140_);
 #else
-        var12 = var11 * 0x30;
-        func_02042764(var3->unknown_140_, (char*)arg0->unknown_39c_ + var12, 1);
-        func_02080f8c((struct Struct_02080f8c*)var0, var8, (int)&arg0->unknown_39c_[0][var12]);
+        off = i * 0x30;
+        Font_DecodeText(entry->name, (char*)self->names + off, 1);
+        SetEntryFirstField02080f8c((struct Container02080f8c*)elementObj, idA, (int)&self->names[0][off]);
 #endif
         if (func_020865b0((Struct_0201099c_16*)var3) != 0) {
             var5 = (short)(func_020865b0((Struct_0201099c_16*)var3) + 0x11);
@@ -214,12 +214,12 @@ extern "C" ARM void func_ov003_02166220(Struct_ov003_02166220_4* arg0) {
 #endif
     }
 
-    func_ov003_0215f5e8(var0, arg0->unknown_49f_, var2);
-    func_ov003_02160c58(arg0, &var20, &var21);
-    var1 = (Struct_ov003_02166220_2*)func_02010828(GameState::GetInstance());
-    var21 = var21 - (var1->unknown_f7c_ - 1);
-    func_02080fa8((struct Struct_02080fa8*)var0, 0x23, var21);
-    func_02080fa8((struct Struct_02080fa8*)var0, 0x24, var20);
+    func_ov003_0215f5e8(elementObj, self->page, count);
+    func_ov003_02160c58(self, &outHigh, &outLow);
+    party = (Party02166220*)GameState_GetParty(GameState::GetInstance());
+    outLow = outLow - (party->countF7c - 1);
+    SetEntryFirstField02080fa8((struct Container02080fa8*)elementObj, 0x23, outLow);
+    SetEntryFirstField02080fa8((struct Container02080fa8*)elementObj, 0x24, outHigh);
 
     var22 = data_ov003_0217f3ec.unknown_20_;
     for (int var23 = 0; var23 < 2; var23++) {

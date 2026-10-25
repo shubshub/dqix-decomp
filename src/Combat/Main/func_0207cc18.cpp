@@ -1,47 +1,41 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
-struct Struct_0207cc18 { char unknown_0_[0x8c]; unsigned char unknown_8c_[1]; };
-struct Struct_0207cc18_2 {
-    char unknown_0_[8];
-    unsigned int unknown_8_0_:4, unknown_8_4_:28;
-    unsigned int unknown_c_0_:12, unknown_d_4_:11, unknown_e_7_:9;
+struct Save0207cc18 { char pad[0x8c]; unsigned char bits[1]; };
+struct Entry0207cc18 {
+    char pad[8];
+    unsigned int type:4, unused8:28;
+    unsigned int unusedc:12, key:11, unusedc23:9;
 };
-struct Struct_0206e424_4;
-struct Struct_0207cc18_3;
-struct Struct_0207cc18_4 { char unknown_0_[0xb0]; };
-static inline int inline_0207cc18(unsigned char arg0) { return arg0 <= 7; }
-static inline int inline_0207cc18_2(unsigned char arg0) { return arg0 >= 8 && arg0 <= 9; }
-extern "C" Struct_0207cc18* func_0205ec34(void*);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" int func_020ac4c0(void*);
-extern "C" void func_020a04c8(Struct_0206e424_4*, unsigned int);
-extern "C" void func_020a0494(Struct_0207cc18_3*, unsigned int);
-extern "C" int func_020ac494(void*);
+struct S_a04c8;
+struct S_a0494;
+struct BattleBlock0207cc18 { char data[0xb0]; };
+static inline int IsType0207cc18(unsigned char type) { return type <= 7; }
+static inline int IsTypeRange0207cc18(unsigned char type) { return type >= 8 && type <= 9; }
+extern "C" Save0207cc18* Scenario_GetInstance(void*);
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+int LoadBattleBlock020ac4c0(void*);
+void AddClamped11BitFieldAt0x14_020a04c8(S_a04c8*, unsigned int);
+void AddClamped9BitFieldMidAt0x14_020a0494(S_a0494*, unsigned int);
+int CopyInBattleField0x7540_020ac494(void*);
 // USA: func_0207cc18
-extern "C" ARM void func_0207cc18(void* arg0, Struct_0207cc18_2* arg1) {
-    if (arg1) {
-        Struct_0207cc18* var0 = func_0205ec34(arg0);
-        int var1 = (unsigned short)arg1->unknown_d_4_;
-        if (var1 > 0) {
-            int var2 = var1 + 0xc76;
-            if (!func_0206dfb0((int)var0, var0->unknown_8c_, var2)) {
-                func_0206df6c(var0, var0->unknown_8c_, var2, 1);
-                Struct_0207cc18_4 var3;
-                func_020ac4c0(&var3);
-                unsigned char var4 = arg1->unknown_8_0_;
-                if (inline_0207cc18(var4))
-                    func_020a04c8((Struct_0206e424_4*)&var3, 1);
-                else if (inline_0207cc18_2(var4))
-                    func_020a0494((Struct_0207cc18_3*)&var3, 1);
-                func_020ac494(&var3);
+extern "C" ARM void func_0207cc18(void* obj, Entry0207cc18* entry) {
+    if (entry) {
+        Save0207cc18* save = Scenario_GetInstance(obj);
+        int key = (unsigned short)entry->key;
+        if (key > 0) {
+            int index = key + 0xc76;
+            if (!Scenario_TestFlag((int)save, save->bits, index)) {
+                Scenario_SetFlag(save, save->bits, index, 1);
+                BattleBlock0207cc18 block;
+                LoadBattleBlock020ac4c0(&block);
+                unsigned char type = entry->type;
+                if (IsType0207cc18(type))
+                    AddClamped11BitFieldAt0x14_020a04c8((S_a04c8*)&block, 1);
+                else if (IsTypeRange0207cc18(type))
+                    AddClamped9BitFieldMidAt0x14_020a0494((S_a0494*)&block, 1);
+                CopyInBattleField0x7540_020ac494(&block);
             }
         }
     }

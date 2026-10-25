@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_020aaf84(void* arg0, int arg1, int arg2, int arg3);
-struct Struct_02000c9c_11;
-extern "C" void func_0201155c(struct Struct_02000c9c_11* arg0);
-extern "C" unsigned char func_0209ca98(char* arg0);
-extern "C" unsigned char func_0205ea18(unsigned char* arg0);
-extern "C" void func_0209ca70(void* arg0, int arg1);
-struct Struct_02108760_2;
-extern "C" void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1);
-extern "C" int func_020ac864(int arg0);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" int func_020aba5c(int arg0);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(char* arg0);
-extern "C" void* func_ov004_0216ae9c(void* arg0, int arg1);
-extern "C" void func_ov023_021f8960(char* arg0, short arg1, unsigned short arg2);
-extern "C" void func_0200fb94(char* arg0, unsigned char arg1);
+extern "C" int func_020aaf84(void* ptr, int a, int b, int c);
+struct StateBits5ccc_1155c;
+void ClearFlag0x5cccBit0_0201155c(struct StateBits5ccc_1155c* state);
+unsigned char GetField0xcc0209ca98(char* obj);
+unsigned char GetByteFieldAt0xcc_0205ea18(unsigned char* obj);
+void SetModeClamped0209ca70(void* obj, int val);
+struct Obj0205e9f4;
+void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
+int VerifyAndApplySaveBuffer_020ac864(int flag);
+extern "C" void func_ov011_021848a0(void* obj, int val);
+int SendShortBufferOrReturnZero020aba5c(int flag);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(char* obj);
+void* GetNodeIfType6_0216ae9c(void* a, int id);
+void SetOffset100Fields_021f8960(char* base, short a, unsigned short b);
+void SetByte0x4_0200fb94(char* obj, unsigned char value);
 
 extern unsigned char data_ov004_02171034[];
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 extern int g_sePlayer;
 
 // USA: func_ov004_0216e490
@@ -41,7 +41,7 @@ extern "C" ARM int func_ov004_0216e490(void* arg0) {
         data_ov004_02171034[5] = 1;
 #endif
     } else {
-        unsigned char var2 = func_0209ca98((char*)&data_02109bf4);
+        unsigned char v1 = GetField0xcc0209ca98((char*)&g_bgmPlayer);
 #if defined(jpn)
         data_ov004_02171034[7] = var2;
 #else
@@ -53,7 +53,7 @@ extern "C" ARM int func_ov004_0216e490(void* arg0) {
 #else
         data_ov004_02171034[1] = var3;
 #endif
-        SetModeClamped0209ca70(&data_02109bf4, 3);
+        SetModeClamped0209ca70(&g_bgmPlayer, 3);
         SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, 3);
         if (VerifyAndApplySaveBuffer_020ac864(1) == 0) {
 #if defined(jpn)
@@ -77,13 +77,13 @@ extern "C" ARM int func_ov004_0216e490(void* arg0) {
 #else
     if (data_ov004_02171034[0] == 1) {
 #endif
-        if (func_020aba5c(1) == 0) {
-            char* var4 = (char*)func_020421a0();
-            func_02043204(var4);
-            func_02043124(var4);
-            void* var5 = func_ov004_0216ae9c(arg0, 0xd4);
-            func_ov023_021f8960((char*)var5, 0, 7);
-            func_ov011_021848a0(arg0, 0x1f5);
+        if (SendShortBufferOrReturnZero020aba5c(1) == 0) {
+            char* g = (char*)MessageSystem_GetInstance();
+            MessageSystem_Reset(g);
+            MessageSystem_Stop(g);
+            void* node = GetNodeIfType6_0216ae9c(obj, 0xd4);
+            SetOffset100Fields_021f8960((char*)node, 0, 7);
+            func_ov011_021848a0(obj, 0x1f5);
             return 0;
         } else {
             func_0200fb94((char*)var0, 5);

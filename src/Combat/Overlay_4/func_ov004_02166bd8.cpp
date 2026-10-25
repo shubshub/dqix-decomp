@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov004_02153e20 {
     char unknown_0_[0x5c];
@@ -55,23 +52,23 @@ struct Struct_ov004_0217101c_3 {
     char** unknown_4_;
 };
 
-extern "C" void* func_0205ec34();
-extern "C" void func_ov004_02166608(void*);
-extern "C" Struct_ov004_02153e20* func_ov023_021f6524(void*, int);
-extern "C" Struct_02065990_3* func_02094d6c();
-extern "C" void func_020421a0();
+extern "C" void* Scenario_GetInstance();
+void DispatchStateTransitions_02166608(void*);
+extern "C" Grid021f9b30* func_ov023_021f6524(void*, int);
+GetTableByteOrFFData* GetGlobal02109418_02094d6c();
+void MessageSystem_GetInstance();
 extern "C" void func_ov023_021f65d4(void*, int, int);
-extern "C" Struct_ov004_02166bd8_3* func_0208d994(Struct_0208bf78_5*, int);
-extern "C" void func_ov023_021f9b30(Struct_ov004_02153e20*, unsigned short, unsigned int, unsigned int);
-extern "C" Struct_ov004_02166bd8* func_ov004_02165ea4(void*, int, int);
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" unsigned int func_020965ac(Struct_02065990_3*, unsigned char);
-extern "C" int func_02096100(int, unsigned char*, int);
-extern "C" const char* func_ov023_021f63ac(void*, int, int);
+Found0208d994* FindElementByKey0208d994(List0208d994*, int);
+extern "C" void _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(Grid021f9b30*, unsigned short, unsigned int, unsigned int);
+Node02165ea4* SetFieldIfType1_02165ea4_02165ea4(void*, int, int);
+struct Struct0200fb08;
+int GameState_GetLanguage(Struct0200fb08*);
+unsigned int GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
+int TestBitInByteArray02096100(int, unsigned char*, int);
+const char* Lookup4Entry_021f63ac(void*, int, int);
 extern "C" void* memset(void*, int, unsigned int);
-extern "C" void func_02041a28(char*, int);
-extern "C" void func_02042058(char*, const char*);
+void AppendXTag_02041a28(char*, int);
+void Text_Append(char*, const char*);
 extern "C" void func_ov023_021f63f8(void*, int, char*, int);
 extern "C" void func_ov023_021f6600(void*, int, int);
 extern "C" void func_ov023_021f9d14(Struct_ov004_02153e20*, void*);
@@ -80,15 +77,15 @@ extern "C" void func_ov023_021f6630(int, int, short, short);
 extern Struct_ov004_0217101c_3 data_ov004_0217101c;
 
 // USA: func_ov004_02166bd8
-extern "C" ARM int func_ov004_02166bd8(void* arg0) {
-    func_0205ec34();
-    func_ov004_02166608(arg0);
-    short var0 = 0;
-    short var1 = 1;
-    Struct_ov004_02153e20* var2 = func_ov023_021f6524(arg0, 0x5b);
-    if (var2) {
-        var0 = var2->unknown_5c_;
-        var1 = var2->unknown_5e_;
+extern "C" ARM int func_ov004_02166bd8(void* a) {
+    Scenario_GetInstance();
+    DispatchStateTransitions_02166608(a);
+    short page = 0;
+    short field5e = 1;
+    Grid021f9b30* grid = func_ov023_021f6524(a, 0x5b);
+    if (grid) {
+        page = grid->page;
+        field5e = grid->field5e;
     }
     Struct_ov004_02166bd8_2* var3;
     int var4 = 0xbe;
@@ -102,30 +99,30 @@ extern "C" ARM int func_ov004_02166bd8(void* arg0) {
         var9--;
         var3 = var3->unknown_8_;
     }
-    Struct_02065990_3* var10 = func_02094d6c();
-    func_020421a0();
-    unsigned char* var11 = var10->unknown_a8_;
-    for (short var12 = 0; var12 < 8; var4++, var5++, var6++, var7++, var12++) {
-        int var13 = 0;
-        func_ov023_021f65d4(arg0, var4, 8);
-        func_ov023_021f65d4(arg0, var5, 8);
-        func_ov023_021f65d4(arg0, var6, 8);
-        func_ov023_021f65d4(arg0, var7, 8);
-        if (var3) {
-            Struct_ov004_02166bd8_3* var14 = func_0208d994(&var8->unknown_c_, var3->unknown_0_);
-            if (var14) {
-                var13 = 1;
-                func_ov023_021f9b30(var2, var4, (unsigned short)var12, 0);
-                int var15 = 0;
-                if (!var3->unknown_2_4_) {
-                    Struct_ov004_02166bd8* var16 = func_ov004_02165ea4(arg0, var7, 6);
-                    var16->unknown_44_ = 4;
-                    var16->unknown_46_ = 0;
-                    var16->unknown_3a_ = (var12 != 0);
-                    if (var12 >= 1 && var12 <= 3) {
-                        int var17 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
-                        int var18 = 2;
-                        switch (var17) {
+    GetTableByteOrFFData* table = GetGlobal02109418_02094d6c();
+    MessageSystem_GetInstance();
+    unsigned char* bits = table->bits;
+    for (short i = 0; i < 8; idA++, idB++, idC++, idD++, i++) {
+        int shown = 0;
+        func_ov023_021f65d4(a, idA, 8);
+        func_ov023_021f65d4(a, idB, 8);
+        func_ov023_021f65d4(a, idC, 8);
+        func_ov023_021f65d4(a, idD, 8);
+        if (entry) {
+            Found0208d994* found = FindElementByKey0208d994(&lists->list, entry->key);
+            if (found) {
+                shown = 1;
+                _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(grid, idA, (unsigned short)i, 0);
+                int extra = 0;
+                if (!entry->skipNode) {
+                    Node02165ea4* node = SetFieldIfType1_02165ea4_02165ea4(a, idD, 6);
+                    node->field44 = 4;
+                    node->field46 = 0;
+                    node->hidden = (i != 0);
+                    if (i >= 1 && i <= 3) {
+                        int lang = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
+                        int mode = 2;
+                        switch (lang) {
                         case 4:
                             var18 = 3;
                             break;
@@ -157,19 +154,19 @@ extern "C" ARM int func_ov004_02166bd8(void* arg0) {
                     var21 = 12;
                     break;
                 }
-                char* var23 = data_ov004_0217101c.unknown_4_[var12];
-                memset(var23, 0, 0x80);
-                func_02041a28(var23, 0x1c);
-                func_02042058(var23, var3->unknown_4_);
-                func_02041a28(var23, 0x2e);
-                if (var22)
-                    func_02042058(var23, var22);
-                func_ov023_021f63f8(arg0, var4, var23, 0xf);
-                func_ov004_02165ea4(arg0, var6, var21)->unknown_3a_ = 0;
-                func_ov023_021f6600(arg0, var4, 8);
-                func_ov023_021f6600(arg0, var6, 8);
-                if (var15)
-                    func_ov023_021f6600(arg0, var7, 8);
+                char* buf = data_ov004_0217101c.buffers[i];
+                memset(buf, 0, 0x80);
+                AppendXTag_02041a28(buf, 0x1c);
+                Text_Append(buf, entry->name);
+                AppendXTag_02041a28(buf, 0x2e);
+                if (text)
+                    Text_Append(buf, text);
+                func_ov023_021f63f8(a, idA, buf, 0xf);
+                SetFieldIfType1_02165ea4_02165ea4(a, idC, type)->hidden = 0;
+                ClearNodeMaskById_021f6600(a, idA, 8);
+                ClearNodeMaskById_021f6600(a, idC, 8);
+                if (extra)
+                    ClearNodeMaskById_021f6600(a, idD, 8);
             }
             var3 = var3->unknown_8_;
         }

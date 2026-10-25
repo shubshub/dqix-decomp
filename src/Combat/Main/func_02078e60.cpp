@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-struct Struct_020fdd44;
-extern "C" struct Struct_020fdd44* func_02027ca4(void);
-extern "C" struct Struct_020fdd44* func_02028bd0(struct Struct_020fdd44* arg0, int arg1);
+struct Entry_02028bd0;
+struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
 
 struct Struct_02039df4;
 
@@ -68,10 +68,10 @@ extern "C" ARM unsigned short func_02078e60(void* arg0, char* arg1) {
     int var10;
     int var11;
 
-    *arg1 = 0;
-    var1 = func_02027ca4();
-    var2 = func_02028bd0(var1, ((Object3D*)((struct Struct_02039df4*)var0))->GetField06());
-    if (var2 == NULL) {
+    *out = 0;
+    table = ZoneRecords_GetInstance();
+    entry = FindInlineEntryById(table, ((Object3D*)((struct U16Field0x6_020375f8*)o))->GetField06());
+    if (entry == NULL) {
         return 0;
     }
 #if defined(jpn)

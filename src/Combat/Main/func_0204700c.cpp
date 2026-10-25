@@ -34,11 +34,11 @@ extern "C" ARM int func_0204700c(char* arg0) {
 
     *(float*)(arg0 + 0xc) = _fsub(*(float*)(arg0 + 0xc), 0.4333f);
 
-    void* var4 = func_020100bc(var0);
-    short var5 = fix32ReduceAngle0To2Pi(_ffix(_fmul(4096.0f, var3)));
-    func_0202e874((unsigned char*)var4, var5);
-    func_0202e9a4((struct Struct_0202df68*)var4,
-                                 _ffix(_fmul(4096.0f, *(float*)(arg0 + 0xc))));
+    void* obj = gs->GetCamera();
+    short ang16 = fix32ReduceAngle0To2Pi(_ffix(_fmul(4096.0f, ang)));
+    _Z42SetField0x7cClearFields0x1ec0x1ee_0202e874Pht((unsigned char*)obj, ang16);
+    SetAngleAndTrigTable0202e9a4((struct AngleTrig0202e9a4*)obj,
+                                 _ffix(_fmul(4096.0f, *(float*)(self + 0xc))));
 
     Object3D* var6 = *(Object3D**)(arg0 + 0xe8);
     if (var6 != 0) {

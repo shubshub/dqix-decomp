@@ -97,13 +97,13 @@ extern "C" ARM int func_02046170(struct Struct_02046170* arg0, unsigned short* a
         } else if (func_02044494(arg0, &var5)) {
             var3 = 0xff;
         } else {
-            Struct_0204166c* var6 = &arg0->unknown_9b8_[var5];
-            int var7 = var6->unknown_17_;
-            var1 += func_020425e4(var3, var7, arg3);
-            var3 = var7;
-            int var8 = var0;
-            if (var6->unknown2_18_ != 0) var8 = var6->unknown2_18_->unknown_4_;
-            var1 += var8 + 1;
+            MessageGlyphSlot* slot = &window->glyphs[command];
+            int characterIndex = slot->characterIndex;
+            currentExtent += LookupKeyValue020425e4(previousCharacter, characterIndex, fontIndex);
+            previousCharacter = characterIndex;
+            int glyphWidth = fallbackGlyphWidth;
+            if (slot->character != 0) glyphWidth = slot->character->width_;
+            currentExtent += glyphWidth + 1;
         }
     }
 

@@ -1,27 +1,21 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
-extern "C" char *func_020421a0(void);
-extern "C" char *func_02012fe4(void);
-extern "C" void *func_0205ec34(void);
-extern "C" void func_ov003_02170960(void *arg0, int arg1, int arg2);
+char *MessageSystem_GetInstance(void);
+extern "C" char *Zone3D_GetInstance(void);
+extern "C" void *Scenario_GetInstance(void);
+extern "C" void func_ov003_02170960(void *self, int a, int b);
 #if defined(jpn)
 extern "C" void func_ov003_021701e4(void *arg0, int arg1);
 #endif
 
-struct Struct_ov003_0216efdc_2;
-struct Struct_ov003_0216efdc_3;
-extern "C" Struct_ov003_0216efdc_3 *func_ov003_0216f414(Struct_ov003_0216efdc_2 *arg0, int arg1);
-extern "C" int func_0206dfb0(int arg0, unsigned char *arg1, int arg2);
-extern "C" void func_0206df6c(void *arg0, unsigned char *arg1, int arg2, int arg3);
+struct Obj_0216f414;
+struct Entry0216efdc;
+Entry0216efdc *FindEntryByShortId_0216f414(Obj_0216f414 *list, int id);
+int Scenario_TestFlag(int a, unsigned char *bits, int index);
+extern "C" void Scenario_SetFlag(void *a, unsigned char *bits, int index, int set);
 
 struct Struct_ov003_0216efdc_3 {
     unsigned char unknown_0_[0x16];
@@ -76,33 +70,33 @@ enum { Enum_ov003_0216efdc_6208 = 0x1840 };
 #endif
 
 // USA: func_ov003_0216efdc
-extern "C" ARM void func_ov003_0216efdc(Struct_ov003_0216efdc *arg0) {
-    Struct_ov003_0216efdc_4 *var0     = (Struct_ov003_0216efdc_4 *) func_020421a0();
-    Struct_ov003_0216efdc_5 *var1 = (Struct_ov003_0216efdc_5 *) (func_02012fe4() + Enum_ov003_0216efdc_6208);
-    int var2                = var1->unknown_b38_;
-    int var3                  = arg0->unknown_2_;
-    if (var3 == 0) {
-        volatile unsigned short *var4 = (volatile unsigned short *) 0x4000008;
-        var4[0]                       = (var4[0] & ~3);
-        var4[1]                       = (var4[1] & ~3) | 1;
-        var4[2]                       = (var4[2] & ~3) | 2;
-        var4[3]                       = (var4[3] & ~3) | 3;
-        if (arg0->unknown_d4_ != 0) {
-            Struct_ov003_0216efdc_3 *var5 = func_ov003_0216f414((Struct_ov003_0216efdc_2 *) arg0->unknown_d4_, 0x19);
-            if (var5 != 0) {
-                var5->unknown_16_ |= 2;
+extern "C" ARM void func_ov003_0216efdc(Menu0216efdc *self) {
+    Global0216efdc *global     = (Global0216efdc *) MessageSystem_GetInstance();
+    Progress0216efdc *progress = (Progress0216efdc *) (Zone3D_GetInstance() + regionalOffset0);
+    int chapter                = progress->chapter;
+    int state                  = self->state_;
+    if (state == 0) {
+        volatile unsigned short *bg = (volatile unsigned short *) 0x4000008;
+        bg[0]                       = (bg[0] & ~3);
+        bg[1]                       = (bg[1] & ~3) | 1;
+        bg[2]                       = (bg[2] & ~3) | 2;
+        bg[3]                       = (bg[3] & ~3) | 3;
+        if (self->unk_d4 != 0) {
+            Entry0216efdc *e = FindEntryByShortId_0216f414((Obj_0216f414 *) self->unk_d4, 0x19);
+            if (e != 0) {
+                e->flags |= 2;
             }
             var5 = func_ov003_0216f414((Struct_ov003_0216efdc_2 *) arg0->unknown_d4_, 0x1a);
             if (var5 != 0) {
                 var5->unknown_16_ &= ~2;
             }
         }
-        void *var6 = func_0205ec34();
-        if (func_0206dfb0((int) var6, (unsigned char *) var6 + 0x8c, 0x783) != 0) {
-            arg0->unknown_2_ = 1;
+        void *save = Scenario_GetInstance();
+        if (Scenario_TestFlag((int) save, (unsigned char *) save + 0x8c, 0x783) != 0) {
+            self->state_ = 1;
             return;
         }
-        func_0206df6c(var6, (unsigned char *) var6 + 0x8c, 0x783, 1);
+        Scenario_SetFlag(save, (unsigned char *) save + 0x8c, 0x783, 1);
 #if defined(jpn)
         func_ov003_021701e4(arg0, 0x1f);
 #else

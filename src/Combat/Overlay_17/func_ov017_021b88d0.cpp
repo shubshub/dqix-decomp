@@ -38,12 +38,12 @@ struct Struct_ov017_021b88d0_3 {
     struct Struct_ov017_021b88d0_2 unknown_6c0_;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_ov000_0215fab0(struct Struct_ov000_0215fab0* arg0, unsigned char arg1);
-extern "C" void func_ov017_021b6f9c(struct Struct_ov017_021b88d0_3* arg0);
+extern "C" void __clear(void* buf, int n);
+int GameState_GetProtagonistIndex(GameState* gs);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* gs, int id);
+int GetSignedByte0x2d0_020546a8(void* obj);
+extern "C" void func_ov000_0215fab0(struct RingBuf0215fab0* ring, unsigned char val);
+extern "C" void func_ov017_021b6f9c(struct Battle_021b88d0* self);
 
 // USA: func_ov017_021b88d0
 extern "C" ARM void func_ov017_021b88d0(struct Struct_ov017_021b88d0_3* arg0, int arg1, int arg2) {
@@ -51,11 +51,11 @@ extern "C" ARM void func_ov017_021b88d0(struct Struct_ov017_021b88d0_3* arg0, in
         return;
     }
 
-    GameState* var0 = GameState::GetInstance();
-    if (arg1 == func_020100a8(var0)) {
-        if (arg0->unknown_6b4_ == 1) {
-            arg0->unknown_4c_ = 1;
-            arg0->unknown_6b4_ = 2;
+    GameState* gs = GameState::GetInstance();
+    if (id == GameState_GetProtagonistIndex(gs)) {
+        if (self->state == 1) {
+            self->field_0x4c = 1;
+            self->state = 2;
         }
         return;
     }

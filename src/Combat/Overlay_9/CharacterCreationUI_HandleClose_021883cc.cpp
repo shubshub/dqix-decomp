@@ -1,14 +1,15 @@
 #include <globaldefs.h>
+#include "NitroSDK/HWRegisters.h"
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 #include "Resource/CharacterCreationUI.h"
 #include "NitroSDK/ColorEffects.h"
+#include "NitroSDK/Graphics.h"
 
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 
-#define REG_BLDCNT_SUB 0x04001050
 
 // CharacterCreationUI::step on the close tab.
 enum CloseStep
@@ -28,8 +29,8 @@ extern "C" ARM void CharacterCreationUI_HandleClose(CharacterCreationUI* self) {
     }
     if (step != CloseStep_Finish || IsBrightnessTransitionActive(resources))
         return;
-    ResetEntryList0205d6a0((Entry_0205d6a0*)&self->windows[0], 1);
-    ResetEntryList0205d6a0((Entry_0205d6a0*)&self->windows[1], 1);
-    ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, 1, 0);
+    Window_ClosePane((Entry_0205d6a0*)&self->windows[0], 1);
+    Window_ClosePane((Entry_0205d6a0*)&self->windows[1], 1);
+    ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, BLEND_TARGET_BG0, Brightness_Normal);
     CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Done);
 }

@@ -7,44 +7,44 @@ extern "C" int func_02010038(GameState* arg0, unsigned char* arg1);
 struct Struct_02053f7c_3;
 extern "C" void func_02053f7c(Struct_02053f7c_3*, unsigned short, int);
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_ov017_021cdaa0(void);
-extern "C" int func_ov017_021c5bf8(int arg0, int arg1);
-extern "C" void func_ov017_021c5e28(int, int);
-extern "C" void func_ov017_021c5a8c(int arg0, int arg1);
-extern "C" int func_ov017_021c5a1c(int arg0);
-extern "C" void* func_0207d78c(void);
-extern "C" int func_0207d7f4(void* arg0, unsigned short arg1, int arg2, int arg3,
-                             signed char arg4, unsigned short arg5, unsigned char arg6);
-extern "C" int func_ov017_021c5c5c(int arg0, int arg1, int arg2);
-extern "C" void func_ov017_021c5b44(unsigned char arg0, int arg1, unsigned int arg2, unsigned char arg3, unsigned char arg4);
-extern "C" void func_0207dcf0(unsigned short arg0);
-extern "C" GameObject* func_ov017_021a278c(void* arg0, int arg1);
-extern "C" void func_02076ccc(void* arg0, int arg1);
-struct Struct_ov017_021c530c;
-extern "C" Struct_ov017_021c530c* func_ov017_021b8478(void* arg0);
-extern "C" int func_02046b08(void** arg0);
-struct Struct_ov017_021c530c_2 { unsigned short unknown_0_; unsigned short unknown_2_; unsigned char unknown_4_; unsigned char unknown_5_; unsigned char unknown_6_; };
-extern "C" void func_ov017_021c5f00(Struct_ov017_021c530c_2* arg0);
-struct Struct_02046b38;
-struct Struct_02046b38_2;
-extern "C" int func_02046b38(struct Struct_02046b38* arg0, struct Struct_02046b38_2* arg1);
-extern "C" void func_ov017_021b6f18(void* arg0);
-extern "C" void func_ov017_02196c08(unsigned char* arg0);
-extern "C" bool func_ov017_021b6e70(void* arg0, int arg1);
-extern "C" void func_ov017_021b7104(void* arg0, void* arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
-extern "C" void func_ov017_021a7a74(void* arg0, void* arg1);
-extern "C" int func_ov017_0219735c(unsigned char* arg0, unsigned short arg1);
-extern "C" void func_ov017_021972f8(void* arg0, unsigned short arg1);
-struct Struct_02038598_5;
-extern "C" int func_02046b60(struct Struct_02038598_5* arg0, int arg1);
-extern "C" unsigned short func_ov017_021bb9f4(void* arg0);
-extern "C" short func_ov017_021bb9fc(void* arg0);
-extern "C" void func_ov017_021bb9ec(void* arg0, unsigned short arg1);
-extern "C" void* func_02012fe4(void);
+extern "C" int func_0202c508(void* search);
+void EnqueueEventTag147_021cdaa0(void);
+int CheckByteAtIndex_021c5bf8(int index, int key);
+void MaybeResetEntry_021c5e28(int, int);
+extern "C" void func_ov017_021c5a8c(int a, int key);
+int IsValidCombatantValue_021c5a1c(int val);
+void* GetData02108ea8_0207d78c(void);
+extern "C" int func_0207d7f4(void* entries, unsigned short id, int charId, int flag,
+                             signed char field4, unsigned short field2, unsigned char field5);
+extern "C" int func_ov017_021c5c5c(int index, int id, int arg);
+extern "C" void func_ov017_021c5b44(unsigned char arg0, int combatantId, unsigned int arg2, unsigned char arg3, unsigned char arg4);
+extern "C" void func_0207dcf0(unsigned short id);
+GameObject* FindCombatantByField16a_021a278c(void* base, int val);
+void TrySetMode02076ccc(void* obj, int mode);
+struct Event021c530c;
+extern "C" Event021c530c* func_ov017_021b8478(void* node);
+int IsField0Null_02046b08(void** list);
+struct Src021c5f00 { unsigned short w0; unsigned short w2; unsigned char b4; unsigned char b5; unsigned char b6; };
+void EnqueueEventTag63_021c5f00(Src021c5f00* src);
+struct ListHead02046b38;
+struct ListNode02046b38;
+int ListContainsNode(struct ListHead02046b38* list, struct ListNode02046b38* target);
+extern "C" void func_ov017_021b6f18(void* node);
+void InitStruct_02196c08(unsigned char* obj);
+extern "C" bool func_ov017_021b6e70(void* obj, int combatantId);
+extern "C" void func_ov017_021b7104(void* node, void* src);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+extern "C" void func_ov017_021a7a74(void* unused, void* src);
+int HasMatchingHalfword_0219735c(unsigned char* obj, unsigned short key);
+void EnqueueHalfword_021972f8(void* obj, unsigned short val);
+struct ListHead02046b60;
+int ListContainsId(struct ListHead02046b60* list, int id);
+unsigned short GetFieldA_021bb9f4(void* obj);
+short GetField14e_021bb9fc(void* obj);
+void SetFieldA_021bb9ec(void* obj, unsigned short v);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_ov017_021c530c_3 {
     unsigned char unknown_0_[4];
@@ -374,9 +374,9 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
             var18 = 1;
         }
     } else {
-        var19 = func_0200ff1c(arg2, arg1->unknown_8_);
-        var20 = (Struct_ov017_021c530c_9*)func_02012fe4();
-        if (arg0 != 0) {
+        combatant = GetCombatantWithFlag0x100_0200ff1c(gs, cmd->field8);
+        zoneInfo = (Zone021c530c*)Zone3D_GetInstance();
+        if (index != 0) {
             return;
         }
         if (var19 != NULL) {

@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #if defined(jpn)
 #define REGION_LAYOUT(j,u) j
 #define REGION_FLAG(obj,flag) ((obj)->unknown_b18_ & (flag))
@@ -35,9 +36,6 @@ struct Struct_ov008_02185dc0 {
     int unknown_0_[2];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -120,18 +118,18 @@ struct Struct_ov000_02179cdc_4 : GameObject {
     Struct_ov000_02171ffc_2* unknown_150_;
 };
 
-struct Struct_020a05d8;
-struct Struct_020727d8;
-struct Struct_02013fb4;
-struct Struct_0201099c_3;
-struct Struct_0205bb84;
+struct S_a05d8;
+struct List020727d8;
+struct StreamHeader;
+struct Container020e0310;
+struct GridCursor;
 struct SePlayer;
 
 extern char data_ov008_0218b400[] __attribute__((aligned(4)));
-extern unsigned char data_0211e33c[];
+extern unsigned char g_fileLoadBuffer[];
 extern SePlayer g_sePlayer;
 
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 void SetBrightness(GameResources* resources, int screen, int brightness);
 int IsBrightnessTransitionActive(GameResources* resources);
 extern "C" void func_020ac4c0(void* arg0);
@@ -140,10 +138,10 @@ extern "C" void func_020ac494(void* arg0);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
 void ResetListHeader020727d8(List020727d8* list);
 extern "C" void _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(void* list, StreamHeader* file, int size, int id, void* output, int female);
-int GetField0x3acValue_020100a8(GameState* gameState);
+int GameState_GetProtagonistIndex(GameState* gameState);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void AppendString02042058(char* text, const char* append);
-int GridCursor_GetSelectedIndex(Struct_0205bb84* cursor);
+void Text_Append(char* text, const char* append);
+int GridCursor_GetSelectedIndex(GridCursor* cursor);
 void SePlayer_Play(SePlayer* sound, int effect, int value);
 
 extern "C" {
@@ -163,7 +161,7 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
-    MessageSystem* messages = GetGlobalField0x1c020421a0();
+    MessageSystem* messages = MessageSystem_GetInstance();
     if (messages->active != NULL)
         messages->b19ae = 0;
     signed char step = self->step_;
@@ -213,24 +211,24 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
                     }
                     memset(arg0->unknown_b8_, 0, REGION_LAYOUT(0x800, 0x960));
 #if defined(jpn)
-                    char* var6 = arg0->unknown_b8_;
-                    char* var12 = var6 + 0x80;
-                    Struct_ov008_02185dc0 var7;
-                    func_020727d8((Struct_020727d8*)&var7);
-                    func_020727f8(&var7, data_ov008_0218b400, arg0->unknown_b16_, var6, 0);
-                    Struct_ov000_02179cdc_4* var8 = (Struct_ov000_02179cdc_4*)func_0200ff1c(var0, func_020100a8(var0));
-                    func_020727d8((Struct_020727d8*)&var7);
-                    int var9 = var8->unknown_150_->unknown_49c_0_;
-                    func_020727f8(&var7, var6, arg0->unknown_b14_, var12, var9);
+                    char* path = self->text_;
+                    char* comment = path + 0x80;
+                    TextList list;
+                    ResetListHeader020727d8((List020727d8*)&list);
+                    _Z28SubmitScriptFromFile020727f8PvPKciS_h(&list, data_ov008_0218b400, self->comment_, path, 0);
+                    PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+                    ResetListHeader020727d8((List020727d8*)&list);
+                    int female = member->data_->female_;
+                    _Z28SubmitScriptFromFile020727f8PvPKciS_h(&list, path, self->title_, comment, female);
 #else
                     char* var10 = arg0->unknown_b8_;
                     char* var11 = var10 + 0x80;
                     char* var12 = var10 + 0x100;
                     BackgroundLoader::AddLockGlobal();
-                    Struct_ov008_02185dc0 var13;
-                    unsigned int var14;
-                    void* var15 = LoadFileIntoMemory(data_ov008_0218b400, data_0211e33c, &var14);
-                    if (var15 != NULL)
+                    TextList list;
+                    unsigned int size;
+                    void* file = LoadFileIntoMemory(data_ov008_0218b400, g_fileLoadBuffer, &size);
+                    if (file != NULL)
                     {
                         func_020727d8((Struct_020727d8*)&var13);
                         func_02072928(&var13, (Struct_02013fb4*)var15, var14, arg0->unknown_b16_, var10, 0);
@@ -240,14 +238,14 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
                     var15 = ExtractFileFromGP2(var10, var11, &var14);
                     if (var15 != NULL)
                     {
-                        Struct_ov000_02179cdc_4* var16 = (Struct_ov000_02179cdc_4*)func_0200ff1c(var0, func_020100a8(var0));
-                        func_020727d8((Struct_020727d8*)&var13);
-                        int var17 = var16->unknown_150_->unknown_49c_0_;
-                        func_02072928(&var13, (Struct_02013fb4*)var15, var14, arg0->unknown_b14_, var12, var17);
+                        PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+                        ResetListHeader020727d8((List020727d8*)&list);
+                        int female = member->data_->female_;
+                        _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(&list, (StreamHeader*)file, size, self->title_, comment, female);
                     }
                     BackgroundLoader::RemoveLockGlobal();
 #endif
-                    AppendString02042058(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
+                    Text_Append(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
 #if defined(jpn)
                     func_0204500c(var2, var12, 0);
 #else
@@ -299,7 +297,7 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
     if (var3 == 3)
     {
         int result = func_ov008_02186a30(self, ticks);
-        int selected = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->cursor_);
+        int selected = GridCursor_GetSelectedIndex((GridCursor*)&self->cursor_);
 #if defined(jpn)
         int var20 = 5;
         int var21 = arg0->unknown_b29_;

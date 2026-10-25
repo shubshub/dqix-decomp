@@ -29,9 +29,9 @@ struct Struct_ov005_02153954 {
 };
 
 struct Struct_0205d81c;
-MenuElement* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
-int IsField0x9cEqual3_0204c7cc(unsigned char*);
-void SetFieldAt0x30_0205bc24(void* p, int value);
+MenuElement* Window_GetActivePane(Struct_0205d81c*);
+int WindowPane_IsReady(unsigned char*);
+void TouchGrid_SetTouchedCell(void* p, int value);
 extern "C" unsigned char Window_Update(void* window, int arg);
 extern "C" void func_ov005_02158f80(EquipmentMenu* self);
 extern "C" void func_ov005_0215916c(EquipmentMenu* self);
@@ -42,9 +42,9 @@ extern "C" void func_ov005_02158ed0(EquipmentMenu* self);
 
 // USA: func_ov005_02158e04
 extern "C" ARM void func_ov005_02158e04(EquipmentMenu* self, int arg) {
-    MenuElement* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)self->window_);
-    if (elem != NULL && IsField0x9cEqual3_0204c7cc((unsigned char*)elem) && !(elem->flags_ & 2))
-        SetFieldAt0x30_0205bc24(self->GetWindow() + 4, -1);
+    MenuElement* elem = Window_GetActivePane((Struct_0205d81c*)self->window_);
+    if (elem != NULL && WindowPane_IsReady((unsigned char*)elem) && !(elem->flags_ & 2))
+        TouchGrid_SetTouchedCell(self->GetWindow() + 4, -1);
     self->menuResult_ = Window_Update(self->window_, arg);
     switch (self->menuState_) {
     case 0:

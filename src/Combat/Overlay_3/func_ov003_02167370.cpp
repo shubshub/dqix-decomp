@@ -16,10 +16,10 @@ extern "C" void func_02074bf4(struct Struct_02074bf4* arg0);
 extern "C" int DisableSubBGVRAMBanks(void);
 extern "C" void MapVRAMBanksToSubBG(int);
 extern "C" void MapVRAMBanksToSubObj(int value);
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(struct Struct_02020cb8_3* arg0);
-struct Struct_0204c754;
-extern "C" void func_0204c754(struct Struct_0204c754* arg0);
+struct BackgroundGraphics;
+void Background_Destroy(struct BackgroundGraphics* obj);
+struct Obj0204c754;
+void ResetObject0204c754(struct Obj0204c754* obj);
 
 // USA: func_ov003_02167370
 extern "C" ARM void func_ov003_02167370(char* arg0) {
@@ -45,9 +45,9 @@ extern "C" ARM void func_ov003_02167370(char* arg0) {
     MapVRAMBanksToSubBG(*(int*)(arg0 + 0x14));
     MapVRAMBanksToSubObj(*(int*)(arg0 + 0x18));
 
-    if (*(void**)(arg0 + 8) != 0) {
-        func_0204afb4(*(struct Struct_02020cb8_3**)(arg0 + 8));
-        *(int*)(arg0 + 8) = 0;
+    if (*(void**)(obj + 8) != 0) {
+        Background_Destroy(*(struct BackgroundGraphics**)(obj + 8));
+        *(int*)(obj + 8) = 0;
     }
     if (*(void**)(arg0 + 0xc) != 0) {
         func_0204c754(*(struct Struct_0204c754**)(arg0 + 0xc));

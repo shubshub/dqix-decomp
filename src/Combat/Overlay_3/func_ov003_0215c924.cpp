@@ -26,9 +26,9 @@ extern "C" void func_ov003_0215e3fc(struct Struct_ov003_0215c924_2* arg0);
 
 struct Struct_0205d81c;
 struct Elem_0205d81c;
-extern struct Elem_0205d81c* FindElementForFieldB0_0205d8c4(struct Struct_0205d81c* s);
-extern int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
-extern void SetFieldAt0x30_0205bc24(void* obj, int value);
+extern struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
+extern int WindowPane_IsReady(unsigned char* obj);
+extern void TouchGrid_SetTouchedCell(void* obj, int value);
 extern "C" int Window_Update(void* p, int val);
 
 typedef void (*Type_ov003_0215c924)(void*, int);
@@ -55,10 +55,10 @@ extern "C" ARM int func_ov003_0215c924(unsigned char* arg0, int arg1) {
         return 0;
     }
 
-    if (arg0[Enum_ov003_0215c924_956] != 0) {
-        struct Struct_0205d0e0* var0 = func_0205d8c4((struct Struct_0205d81c*)(arg0 + Enum_ov003_0215c924_152));
-        if (var0 != 0 && func_0204c7cc((unsigned char*)var0) != 0 && (*((unsigned char*)var0 + 0xc5) & 2) == 0) {
-            func_0205bc24(arg0 + Enum_ov003_0215c924_156, -1);
+    if (self[kRegionValue3BC_3D4] != 0) {
+        struct Elem_0205d81c* elem = Window_GetActivePane((struct Struct_0205d81c*)(self + kRegionValue98_B0));
+        if (elem != 0 && WindowPane_IsReady((unsigned char*)elem) != 0 && (*((unsigned char*)elem + 0xc5) & 2) == 0) {
+            TouchGrid_SetTouchedCell(self + kRegionValue9C_B4, -1);
         }
         self[kRegionValue3BA_3D2] = (unsigned char)Window_Update(self + kRegionValue98_B0, amount);
     }

@@ -1,17 +1,16 @@
 #include <globaldefs.h>
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 extern "C" void __clear(void* buf, int size);
-extern "C" void func_02042764(char* name, void* buf, int flag);
+extern "C" void Font_DecodeText(char* name, void* buf, int flag);
 struct Obj02046574;
-void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
-int CallFunc020e0434With02153694_020e51cc(int value);
-extern "C" void func_02046608(void* a, int b, int c, void* d, int e, int f, int g);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
+int StandardStrings_Get(int value);
+extern "C" void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 void InitBigStruct0205c790(char* obj);
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+struct GridCursor;
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 void ProcessCombatEntry0205cb74(char* obj, int value);
 extern "C" void func_0205cc50(void* obj, int a, int b);
 #if defined(jpn)
@@ -23,8 +22,8 @@ extern char data_ov017_021d8104[];
 struct ResetBytesAndSetByte0x16Data;
 void ResetBytesAndSetByte0x16_0205c77c(struct ResetBytesAndSetByte0x16Data* p, int val);
 void SetupGlobalObjType1AndInitSelfPointer_0205cd28(unsigned char* obj);
-void* GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 
 // USA: func_ov017_021afb8c  (semantic: InitObjAndDispatchName_021afb8c)
 extern "C" ARM void func_ov017_021afb8c(char* self, char* name) {
@@ -39,22 +38,22 @@ extern "C" ARM void func_ov017_021afb8c(char* self, char* name) {
         sprintf(buf2,data_ov017_021d8104,name);
 
 #else
-        void* g = (void*)GetGlobalField0x1c020421a0();
+        void* g = (void*)MessageSystem_GetInstance();
         char buf1[0x30];
         __clear(buf1, 0x30);
-        func_02042764(name, buf1, 1);
-        SetIndexedName02046574((struct Obj02046574*)g, 0, buf1);
+        Font_DecodeText(name, buf1, 1);
+        MessageSystem_SetStringArgument((struct Obj02046574*)g, 0, buf1);
 
-        int ret = CallFunc020e0434With02153694_020e51cc(0x24);
+        int ret = StandardStrings_Get(0x24);
         char buf2[0x64];
-        func_02046608(g, 0xc, ret, buf2, 0x100, 0, 1);
+        MessageSystem_FormatText(g, 0xc, ret, buf2, 0x100, 0, 1);
 
 #endif
         InitBigStruct0205c790(self + 0x48);
-        GridCursor_SetDimensions((struct Struct_0205ba68*)(self + 0x68), 1, 1, 0);
-        GridCursor_SetDimensions((struct Struct_0205ba68*)(self + 0xb8), 1, 1, 0);
-        GridCursor_SetCount((struct Node0205bacc*)(self + 0x68), 1);
-        GridCursor_SetCount((struct Node0205bacc*)(self + 0xb8), 1);
+        GridCursor_SetDimensions((struct GridCursor*)(self + 0x68), 1, 1, 0);
+        GridCursor_SetDimensions((struct GridCursor*)(self + 0xb8), 1, 1, 0);
+        GridCursor_SetCount((struct GridCursor*)(self + 0x68), 1);
+        GridCursor_SetCount((struct GridCursor*)(self + 0xb8), 1);
 
         ProcessCombatEntry0205cb74(self + 0x48, (int)buf2);
 
@@ -77,6 +76,6 @@ extern "C" ARM void func_ov017_021afb8c(char* self, char* name) {
         *(short*)(self + 0xfe) = 0x40;
 
         SetupGlobalObjType1AndInitSelfPointer_0205cd28((unsigned char*)(self + 0x48));
-        OrBitsIntoField0_020466e4((unsigned int*)GetDataPtr02114e04_020d6c00(), 0x800000);
+        FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x800000);
     }
 }

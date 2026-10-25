@@ -6,18 +6,15 @@ enum { Enum_ov017_02199578_17480 = 0x4448, Enum_ov017_02199578_17476 = 0x4444, E
 
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 extern "C" void* func_0202ae18(void);
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" void func_0202c288(void* arg0);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_020649b0(void* arg0, int arg1, void* arg2);
-extern "C" void func_0206f81c(void* arg0);
-extern "C" void func_ov017_0218b664(char* arg0);
+struct SearchStruct0202c1a4;
+signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+extern "C" void func_0202c288(void* obj);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_RunTrigger(void* a, int mode, void* c);
+extern "C" void EventQuery_RunQueuedCommands(void* p);
+void ResetFieldGroup4444_0218b664(char* base);
 
 struct Struct_0202c1a4 {
     char unknown_0_[0x100d];
@@ -41,12 +38,12 @@ extern "C" ARM void func_ov017_02199578(void* arg0, int arg1, int arg2, int arg3
     *((unsigned char*)arg0 + Enum_ov017_02199578_17476) = (unsigned char)var2;
     if ((var2 & 0xff) >= var0->unknown_100d_ - 1) *((unsigned char*)arg0 + Enum_ov017_02199578_17480) = 0;
 
-    if (!arg4) {
-        *((unsigned char*)arg0 + Enum_ov017_02199578_17481) = 0;
-        void* var3 = func_0205ec34();
-        Struct_ov017_02199578 var4;
-        if (func_020649b0(var3, 0x1d, &var4)) {
-            func_0206f81c(&var4);
+    if (!flag) {
+        *((unsigned char*)obj + RegionOffset4449) = 0;
+        void* list = Scenario_GetInstance();
+        LocalBuf02199578 c;
+        if (Scenario_RunTrigger(list, 0x1d, &c)) {
+            EventQuery_RunQueuedCommands(&c);
         }
         func_ov017_0218b664((char*)arg0);
         return;
@@ -56,11 +53,11 @@ extern "C" ARM void func_ov017_02199578(void* arg0, int arg1, int arg2, int arg3
     *((unsigned char*)arg0 + Enum_ov017_02199578_17477) = (unsigned char)var5;
     if ((var5 & 0xff) < var0->unknown_100d_ - 1) return;
 
-    *((unsigned char*)arg0 + Enum_ov017_02199578_17481) = 1;
-    void* var6 = func_0205ec34();
-    Struct_ov017_02199578 var7;
-    if (func_020649b0(var6, 0x1d, &var7)) {
-        func_0206f81c(&var7);
+    *((unsigned char*)obj + RegionOffset4449) = 1;
+    void* list2 = Scenario_GetInstance();
+    LocalBuf02199578 c2;
+    if (Scenario_RunTrigger(list2, 0x1d, &c2)) {
+        EventQuery_RunQueuedCommands(&c2);
     }
     func_ov017_0218b664((char*)arg0);
 }

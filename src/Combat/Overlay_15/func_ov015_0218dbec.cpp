@@ -3,7 +3,7 @@
 #include "Memory/SafeAllocator.h"
 #include "World/Object3D.h"
 #include "Filesystem/GPC.h"
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/FileIO.h"
 #include "Filesystem/BackgroundLoader.h"
 
@@ -17,12 +17,12 @@ extern "C" void* func_02070fd0(Struct_02070b6c_3*, int);
 extern "C" void func_0203dafc(struct Struct_0203d028_11*);
 
 extern "C" void* __clear(void* dst, int count);
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
 void ResetObjectState02079a3c(void*);
 extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
-extern "C" void func_0205ebc0(void*, int, int);
+void SePlayer_LoadExtraArchiveB(void*, int, int);
 
 struct Struct_ov015_0218dbec_4 {
     int unknown_0_;
@@ -78,7 +78,7 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
 
     int ok = 1;
     char* mgr = *self->pairsRoot;
-    CopyInternalFields0207df50((Foo0207df50*)mgr);
+    VramState_Rewind((Foo0207df50*)mgr);
     VramState_Restore(mgr);
 
     if (arg0->unknown_0_->unknown_1a1_ != 0) {
@@ -90,46 +90,46 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
 
-    GPCReadPair var3;
-    func_02079a3c(&var3);
-    unsigned int var4;
-    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var3.pGPCFile, var3.machine, &data_ov015_02194105,
-                                                   data_0211e33c, var4, 0x30000, false, 0)) {
-        unsigned int var5;
-        char* var6 = (char*)data_0211e33c + var4;
-        if (DecompressFileFromGPCByName(var3.pGPCFile, var3.machine, var6, var5, 0x30000 - var4, var0)) {
-            const void* var7 = 0;
-            unsigned int var8 = 0;
-            unsigned int var9 = 0;
-            unsigned int var10 = 0;
-            void* var11 = 0;
-            void* var12 = 0;
-            if (FindFilesInNarcBySubstring(var6, &data_ov015_0219411d, &var7, &var8, 1)) {
-                var11 = DecompressLZ77FileIntoAllocatedSpace(*arg0->unknown_8_, var7, var9);
+    GPCReadPair pair;
+    ResetObjectState02079a3c(&pair);
+    unsigned int headerSize;
+    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine, &data_ov015_02194105,
+                                                   g_fileLoadBuffer, headerSize, 0x30000, false, 0)) {
+        unsigned int fileSize;
+        char* narc = (char*)g_fileLoadBuffer + headerSize;
+        if (DecompressFileFromGPCByName(pair.pGPCFile, pair.machine, narc, fileSize, 0x30000 - headerSize, name)) {
+            const void* found = 0;
+            unsigned int foundSize = 0;
+            unsigned int sizeA = 0;
+            unsigned int sizeB = 0;
+            void* fileA = 0;
+            void* fileB = 0;
+            if (FindFilesInNarcBySubstring(narc, &data_ov015_0219411d, &found, &foundSize, 1)) {
+                fileA = DecompressLZ77FileIntoAllocatedSpace(*self->allocator, found, sizeA);
             }
             if (FindFilesInNarcBySubstring(var6, &data_ov015_02194123, &var7, &var8, 1)) {
                 var12 = DecompressLZ77FileIntoAllocatedSpace(*arg0->unknown_8_, var7, var10);
             }
-            ObjectArchiveLoadInfo var13;
-            if (var11 != 0) {
-                func_0203dafc((Struct_0203d028_11*)&var13);
-                var13.allocator = arg0->unknown_8_;
-                var13.unk_8 = var9;
-                var13.fileData = var11;
-                var13.unk_10 = 1;
-                arg0->unknown_24_->LoadFromCCHROrCMOTArchive(&var13, 0);
+            ObjectArchiveLoadInfo loadInfo;
+            if (fileA != 0) {
+                ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
+                loadInfo.allocator = self->allocator;
+                loadInfo.fileSize = sizeA;
+                loadInfo.fileData = fileA;
+                loadInfo.unk_10 = 1;
+                self->object->LoadFromCCHROrCMOTArchive(&loadInfo, 0);
             }
-            if (var12 != 0) {
-                func_0203dafc((Struct_0203d028_11*)&var13);
-                var13.allocator = arg0->unknown_8_;
-                var13.unk_8 = var10;
-                var13.fileData = var12;
-                var13.unk_10 = 1;
-                arg0->unknown_24_->LoadFromCCHROrCMOTArchive(&var13, 0);
+            if (fileB != 0) {
+                ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
+                loadInfo.allocator = self->allocator;
+                loadInfo.fileSize = sizeB;
+                loadInfo.fileData = fileB;
+                loadInfo.unk_10 = 1;
+                self->object->LoadFromCCHROrCMOTArchive(&loadInfo, 0);
             }
-            Struct_ov015_02193cf0 var14 = data_ov015_02193cf0;
-            arg0->unknown_24_->SetScale((const Vector3fix*)&var14);
-            arg0->unknown_24_->MaybeSetBCFGAnimation(0, arg0->unknown_44_);
+            Vec3Words02193cf0 scale = data_ov015_02193cf0;
+            self->object->SetScale((const Vector3fix*)&scale);
+            self->object->SetAnimationByIndex(0, self->animation);
         } else {
             var1 = 0;
         }
@@ -152,7 +152,7 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
         if (rec != 0) {
             self->object->SetField78(rec->packed & 0xffff);
             _ZN8Object3D10SetField7aEt(self->object, rec->packed >> 16);
-            SetForwardAndStore0205ebc0(&g_sePlayer, rec->packed & 0xffff, rec->packed >> 16);
+            SePlayer_LoadExtraArchiveB(&g_sePlayer, rec->packed & 0xffff, rec->packed >> 16);
         }
         arg0->unknown_c_ = arg0->unknown_10_->unknown_0_;
         var15 = 1;

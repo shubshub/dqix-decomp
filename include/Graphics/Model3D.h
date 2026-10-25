@@ -43,7 +43,7 @@ public:
     short alpha_; // ranges between 0 and 31
     short imageStagingTaskID_;
     short paletteStagingTaskID_;
-    int unknown_flags_a8_0_ : 1;
+    int loaded_ : 1; // set once a model file is processed (ProcessRawFile); cleared by Clear() and a failed load. Draw does nothing while clear
     int unknown_flags_a8_1_ : 1;
     int unknown_flags_a8_2_ : 1; // if 0x34, 0x38 match 0x90, 0x94 then this is set
 

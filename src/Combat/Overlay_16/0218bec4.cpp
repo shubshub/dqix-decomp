@@ -50,14 +50,14 @@ extern Struct_ov016_0219d0c0_2 data_ov016_0219d0c0;
 extern Struct_ov016_0219d0c0 data_ov016_0219d0c0;
 #endif
 void SleepCurrentContext(unsigned int ticks);
-extern "C" Struct_020e58dc_2* func_020e58dc(Struct_020e58dc* arg0, int arg1);
-extern "C" int func_ov016_0218be5c();
-extern "C" int func_ov016_0218e708(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" int func_ov016_0218e72c(void* arg0);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" int func_020421a0();
-extern "C" void func_02046608(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsigned short arg2, int arg3, int arg4, unsigned char arg5, int arg6, int arg7);
+RangeEntry020e58dc* FindRangeEntry020e58dc(RangeList020e58dc* list, int key);
+int GetSomeConstByFlag_0218be5c();
+int CallIfNonNullBool_0218e708(void* object, void* destination, int stride, int mode);
+int CallIfNonNullBool_0218e72c(void* object);
+extern "C" void* __clear(void* destination, int size);
+int MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(void* context, int unused, int id, int bufferAddress, int d, int e, int f);
+extern "C" void func_ov016_0218e240(unsigned short* destination, char* text, unsigned short color, int x, int y, unsigned char centered, int outline, int limit);
 
 // USA: func_ov016_0218bec4
 extern "C" ARM void func_ov016_0218bec4(void* arg0, int arg1) {
@@ -88,16 +88,16 @@ extern "C" ARM void func_ov016_0218bec4(void* arg0, int arg1) {
     while (data_ov016_0219d0c0.unknown_3c_ <= (var2 = data_ov016_0219d0c0.unknown_1c_)) {
         SleepCurrentContext(1);
     }
-    data_ov016_0219d0c0.unknown_4_ = 0;
-    if (data_ov016_0219d0c0.unknown_20_ < 2 ||
-        data_ov016_0219d0c0.unknown_3c_ - var2 <= 1) {
-        Struct_020e58dc_2* var3 = func_020e58dc((Struct_020e58dc*)arg1, var2);
-        func_ov016_0218e708(arg0, (void*)func_ov016_0218be5c(), 0x100, 0);
-        if (var3 != 0 && var3->unknown_4_ == 0) {
-            __clear(var1, 0x200);
-            func_02046608((void*)func_020421a0(), 0xc, var3->unknown_10_, (int)var1, 0xe3, 0, 1);
-            func_ov016_0218e240((unsigned short*)func_ov016_0218be5c(), var1, 0x7fff, 0, 0xa8, 1, 1, var3->unknown_0_);
-            var3->unknown_0_ += 4;
+    data_ov016_0219d0c0.pending = 0;
+    if (data_ov016_0219d0c0.consecutive < 2 ||
+        data_ov016_0219d0c0.elapsed - displayed <= 1) {
+        RangeEntry020e58dc* caption = FindRangeEntry020e58dc((RangeList020e58dc*)captionsAddress, displayed);
+        CallIfNonNullBool_0218e708(object, (void*)GetSomeConstByFlag_0218be5c(), 0x100, 0);
+        if (caption != 0 && caption->field4 == 0) {
+            __clear(buffer, 0x200);
+            MessageSystem_FormatText((void*)MessageSystem_GetInstance(), 0xc, caption->field10, (int)buffer, 0xe3, 0, 1);
+            func_ov016_0218e240((unsigned short*)GetSomeConstByFlag_0218be5c(), buffer, 0x7fff, 0, 0xa8, 1, 1, caption->field0);
+            caption->field0 += 4;
         }
         data_ov016_0219d0c0.unknown_14_ = 0;
     } else {

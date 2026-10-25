@@ -59,14 +59,14 @@ int func_020800fc(Struct_ov003_021745fc* arg0, short* arg1, short arg2, unsigned
 void func_020813ec(Struct_ov003_021745fc* arg0, short arg1);
 }
 
-extern "C" void func_ov003_02174988(char* arg0);
-extern "C" void func_ov003_0217451c(char* arg0);
-extern "C" int func_020421a0();
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_0207fc6c(Struct_0207fc6c* arg0, int arg1);
-extern "C" void func_020804fc(void* arg0, int arg1);
-extern "C" int func_020e28dc(Struct_020e28dc* arg0);
-extern "C" void func_020e263c(Struct_020e263c_2* arg0, int arg1);
+void ClearFlag80AtOffset1000_02174988(char* self);
+void SetElementFlagIfValid_0217451c(char* self);
+int MessageSystem_GetInstance();
+void MessageSystem_Reset(char* obj);
+void CallFunc0204c87cOverEntries0207fc6c(Obj0207fc6c* obj, int ticks);
+void ClearSublistEntriesFlag4_020804fc(void* menu, int group);
+int GetInnerFlagBit0020e28dc(Outer020e28dc* o);
+void UpdateEntryStateAndPosition(Ctx020e263c* ctx, int ticks);
 
 extern unsigned int data_ov003_02180cc8[2];
 extern StateFn021745fc __ptmf_null;
@@ -87,9 +87,9 @@ extern "C" ARM bool func_ov003_021745fc(Struct_ov003_021745fc_2* arg0, int arg1)
             return false;
         }
 #if defined(jpn)
-        ((unsigned char*)func_020421a0())[0x17de] = 0;
+        ((unsigned char*)MessageSystem_GetInstance())[0x17de] = 0;
 #else
-        ((unsigned char*)func_020421a0())[0x19ae] = 0;
+        ((unsigned char*)MessageSystem_GetInstance())[0x19ae] = 0;
 #endif
         Struct_ov003_021745fc* var0 = arg0->unknown_89c_;
         if (var0 != NULL)
@@ -113,9 +113,9 @@ extern "C" ARM bool func_ov003_021745fc(Struct_ov003_021745fc_2* arg0, int arg1)
         data_ov003_02180aa4[9] = __ptmf_null;
         data_ov003_02180cc8[0] |= 1;
     }
-    if (data_ov003_02180aa4[arg0->unknown_103e_] == NULL) {
-        func_02043204((char*)func_020421a0());
-        return !(arg0->unknown_1046_ & 0x80);
+    if (data_ov003_02180aa4[self->state_] == NULL) {
+        MessageSystem_Reset((char*)MessageSystem_GetInstance());
+        return !(self->flags_ & 0x80);
     }
     (arg0->*data_ov003_02180aa4[arg0->unknown_103e_])();
     return false;

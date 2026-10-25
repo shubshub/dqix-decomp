@@ -2,7 +2,7 @@
 
 extern "C" void __clear(void* buf, int size);
 extern "C" int Font_EncodeText(void* src, void* buf, int flag);
-extern "C" int func_02001aec(void* entry, void* param1, int category);
+extern "C" int memcmp(void* entry, void* param1, int category);
 #if !defined(jpn)
 extern "C" void func_0203bebc(void* entry, void* buf, void* dest);
 #endif
@@ -134,7 +134,7 @@ extern "C" ARM void func_0203c5a8(void* self, void* param1, short* outIndex)
     struct Entry0203c5a8* entry = (struct Entry0203c5a8*)((char*)self + 4);
     for (short i = 0; i < 0x20; entry = (struct Entry0203c5a8*)((char*)entry + 0x28), i++) {
         if (entry->inUse != 0 && entry->category == category) {
-            if (func_02001aec(entry, buf, category) == 0) {
+            if (memcmp(entry, buf, category) == 0) {
                 entry->inUse = entry->inUse + 1;
                 *outIndex = i;
                 return;

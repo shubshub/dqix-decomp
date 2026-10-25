@@ -7,7 +7,7 @@
 #include "Resource/Script.h"
 #include "Resource/Brightness.h"
 
-extern "C" unsigned short* func_02012fe4(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" char* func_0203bd08(void);
 extern "C" ARM void* func_0203b628(void);
 
@@ -87,13 +87,13 @@ extern struct Struct_020fdc4c_7 data_020fdc4c;
 // USA: func_020227dc
 extern "C" ARM void func_020227dc(Struct_02020554* arg0) {
     GameState::GetInstance();
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    unsigned short* var1 = func_02012fe4();
-    char* var2 = ((char*)GetGameResources());
-    char* var3 = func_0203bd08();
-    void* var4 = func_0203b628();
-    int var5;
-    SafeAllocator* var6 = (SafeAllocator*)(var2 + 0x128);
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    unsigned short* p6 = Zone3D_GetInstance();
+    char* axisObj = ((char*)GetGameResources());
+    char* p8 = func_0203bd08();
+    void* dataPtr = GetData02105254_0203b628();
+    int i;
+    SafeAllocator* sb = (SafeAllocator*)(axisObj + 0x128);
 
     if (arg0->unknown_9c2_ == 0) {
         func_02021428(arg0, 0x19);

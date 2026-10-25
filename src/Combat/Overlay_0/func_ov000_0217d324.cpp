@@ -14,7 +14,7 @@ struct TableEntry0217f8c0;
 
 int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(struct Struct0217f8c0* s);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* objRaw);
 extern "C" int func_ov000_0217c594(void* objRaw, int limit);
@@ -37,7 +37,7 @@ extern "C" ARM void func_ov000_0217d324(char* obj, int arg1, int arg2) {
         struct TableEntry0217f8c0* e = FindMatchingTableEntry0217f8c0((struct Struct0217f8c0*)obj);
         func_ov000_02176634(obj, e, 4, arg1, arg2);
     } else if (CheckFlagsOrField_0217c5f4_0217c5f4(obj) != 0) {
-        ResetEntryList0205d6a0((struct Entry_0205d6a0*)(obj + 0x188), 0);
+        Window_ClosePane((struct Entry_0205d6a0*)(obj + 0x188), 0);
         *(unsigned char*)(obj + *(signed char*)(obj + kCountOffset) + kArrayOffset) = 0;
         *(signed char*)(obj + kCountOffset) = *(signed char*)(obj + kCountOffset) - 1;
         *(signed char*)(obj + kSumOffset) = -1;

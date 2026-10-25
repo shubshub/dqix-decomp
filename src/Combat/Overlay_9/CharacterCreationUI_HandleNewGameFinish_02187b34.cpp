@@ -5,6 +5,7 @@
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
+#include "NitroSDK/HWRegisters.h"
 #include <std_library_functions.h>
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
@@ -12,27 +13,12 @@
 #include "NitroSDK/ColorEffects.h"
 #include "NitroSDK/Graphics.h"
 #include "Sound/SePlayer.h"
+#include "Graphics/CharacterModel.h"
+#include "GameState/PartyMember.h"
 
-#if defined(jpn)
-#define func_020c39a0 func_020c546c
-#endif
 
-#define REG_BLDCNT 0x04000050
-#define REG_BLDCNT_SUB 0x04001050
 #define BLEND_TARGET_BG_AND_OBJ (BLEND_TARGET_BG0 | BLEND_TARGET_BG1 | BLEND_TARGET_BG2 | BLEND_TARGET_BG3 | BLEND_TARGET_OBJ)
 #define FX32_FROM_FLOAT(x) ((int)((x) > 0.0f ? 0.5f + 4096.0f * (x) : 4096.0f * (x) - 0.5f))
-
-struct Struct_ov009_02187b34 {
-    short unknown_0_[10];
-    unsigned char unknown_14_[4];
-    short unknown_18_;
-    short unknown_1a_;
-};
-
-struct Struct_ov005_0215840c_2 {
-    char unknown_0_[0x488];
-    Struct_ov009_02187b34 unknown_488_;
-};
 
 struct FinishModelFile {
     SafeAllocator* allocator_;
@@ -104,23 +90,23 @@ struct Struct_0203d028;
 struct Struct_02038598_4;
 
 extern "C" Object3D* CharacterModel_GetBody(void* character);
-unsigned int* GetDataPtr02114e04_020d6c00();
+unsigned int* GlobalFlags_GetInstance();
 extern "C" void CharacterCreationUI_UpdateDim(void* self, unsigned int ticks);
 extern "C" int CharacterCreationUI_UpdateWaitTimer(void* self, unsigned int ticks);
-void Camera_EasePositionTo(char* camera, int position, int duration);
-void Camera_EaseTargetTo(char* camera, int target, int duration);
-void DispatchContextByState0209c678(Actor0209c678* actor, int state);
-int Camera_IsEasing(char* camera);
-void SetForwardAndStore0205ebc0(void* sound, int a, int b);
+void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
+void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
+void BgmPlayer_FadeOut(Actor0209c678* actor, int state);
+int Camera_IsEasing(struct Camera* camera);
+void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void CopyInternalFields0207df50(Foo0207df50* a);
+void VramState_Rewind(Foo0207df50* a);
 void VramState_Restore(char* a);
 void VramState_Save(char* a);
-void DispatchIfField0xc4NonNeg_0205ebfc(void* sound, int a, int b);
-void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
-void ClearFlags020466f4(FlagWord020466f4* field, unsigned int bits);
-extern "C" void func_020c39a0(volatile unsigned short* reg, int brightness);
-void ForwardField0xc0_0205ebec(void* sound);
+void SePlayer_PlayExtra(void* sound, int a, int b);
+void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
+extern "C" void GXx_SetMasterBrightness_(volatile unsigned short* reg, int brightness);
+void SePlayer_UnloadExtraArchiveB(void* sound);
 void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 
 struct Struct_ov009_0218aa28 {
@@ -134,37 +120,63 @@ extern const Vec3 CharacterCreationUI_finishCameraTarget;
 extern const FinishModelFiles CharacterCreationUI_finishModelFiles;
 extern char CharacterCreationUI_characterArchive[];
 extern char CharacterCreationUI_finishEffectAnimation[];
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 
+// The header's CharacterCreationUI up to sex, with CharacterCreationUI_HandleSetup's field names.
 struct CharacterCreation {
-    char unk_0[R(0xa0,0xb4)];
+    SafeAllocator allocators_[R(8,9)];
     SafeAllocator* modelAllocator_;
     SafeAllocator* previewAllocators_;
-    char unk_bc[R(0xc0-0xa8,0xe0-0xbc)];
+#if !defined(jpn)
+    void* savedKey_;
+    void* keyboard_;
+    void* keyboardLayout_;
+#endif
+    char itemTable_[0x18];
     char texts_[0x18];
-    char unk_f8[R(0x7bc-0xd8,0x7f8-0xf8)];
+    char* textBuffer_;
+    char nameFilter_[R(0x20,0x3c)];
+    char layers_[6][0x20];
+    char windows_[2][0xbc];
+    char window0Panes_[1][0xe0];
+    char window1Panes_[4][0xe0];
+    void* windowBuffers_[2];
+    void* mainSpriteContext_;
+    void* mainSprites_;
+    void* mainSpriteEntries_;
+    void* subSpriteContext_;
+    void* subSprites_;
+    void* subSpriteEntries_;
+    void* characterModels_[2];
     void* character_;
     void* nextCharacter_;
-    int unk_800;
+    int unknown800_;
     int targetAngle_;
     char wingsVramState_[0x70];
     Object3D wings_;
     char camera_[0x2c8];
-    char unk_bec[0xc58 - 0xbec];
+    char navigation_[0x40];
+    char grid_[0x20];
+    short cursorX_, cursorY_;
+    short cursorWidth_, cursorHeight_;
+    short lastCursorX_, lastCursorY_;
     signed char state_;
     unsigned char step_;
-    char unk_c5a[2];
+    char unknownAfterStep_[2];
     int modelTasks_[FinishFile_Count];
     char finishEffectVramState_[0x70];
     Object3D finishEffect_;
     unsigned char selection_;
     unsigned char windowInput_;
-    char unk_d86[2];
+    char unknownAfterWindowInput_[2];
     PartyMemberData* characterData_;
-    char unk_d8c[0xd96 - 0xd8c];
+    int touchedChoice_;
+    int resourceTask_;
+    unsigned char resourceStep_;
+    unsigned char mode_;
     short waitTimer_;
     short dimTimer_;
-    char unk_d9a[2];
+    char unknownBeforeFlags_[2];
     unsigned int flags_;
     signed char furthestState_[2];
     unsigned char vocation_;
@@ -177,7 +189,7 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
     Object3D* body = CharacterModel_GetBody(self->character_);
-    unsigned int* globalFlags = GetDataPtr02114e04_020d6c00();
+    unsigned int* globalFlags = GlobalFlags_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     if (loader == NULL)
         return;
@@ -197,11 +209,11 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
         self->flags_ |= CreationFlag_TurnToTarget;
         Vec3 position = CharacterCreationUI_finishCameraPosition;
         Vec3 target = CharacterCreationUI_finishCameraTarget;
-        Camera_EasePositionTo(self->camera_, (int)&position, CreationCamera_EaseSteps);
-        Camera_EaseTargetTo(self->camera_, (int)&target, CreationCamera_EaseSteps);
+        Camera_EasePositionTo((struct Camera*)self->camera_, (int)&position, CreationCamera_EaseSteps);
+        Camera_EaseTargetTo((struct Camera*)self->camera_, (int)&target, CreationCamera_EaseSteps);
         self->dimTimer_ = FinishTicks_Dim;
         self->flags_ |= CreationFlag_DimBackground;
-        DispatchContextByState0209c678((Actor0209c678*)data_02109bf4, 120);
+        BgmPlayer_FadeOut((Actor0209c678*)g_bgmPlayer, 120);
         self->step_ = FinishStep_WaitTurn;
         int* task = self->modelTasks_;
         for (unsigned char i = 0; i < FinishFile_Count; i++)
@@ -214,12 +226,12 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
     case FinishStep_WaitTurn:
         if (self->flags_ & CreationFlag_TurnToTarget)
             break;
-        if (Camera_IsEasing(self->camera_) != 0)
+        if (Camera_IsEasing((struct Camera*)self->camera_) != 0)
             break;
         self->flags_ |= CreationFlag_DimWithQuad;
         if (CharacterModel_GetBody(self->character_)->normalizedAnimationTime_ >= FinishStartAnimationTime)
         {
-            SetForwardAndStore0205ebc0(&g_sePlayer, 0x6f, 0x6f);
+            SePlayer_LoadExtraArchiveB(&g_sePlayer, SoundArchive_NewGameFinish, SoundArchive_NewGameFinish);
             self->step_ = FinishStep_QueueLoads;
         }
         break;
@@ -270,19 +282,19 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
                 continue;
             if (var4->GetTaskStatus(*var21) == 1)
             {
-                unsigned int var23 = 0;
-                void* var24 = NULL;
-                var4->GetLoadedFileByID(*var21, &var24, &var23);
-                ObjectArchiveLoadInfo var25;
-                var25.unk_0 = 0;
-                var25.allocator = NULL;
-                var25.unk_14 = 0;
-                var25.unk_18 = 0;
-                var25.unk_10 = 0;
-                var25.packageID = 0;
-                var25.fileData = var24;
-                var25.unk_8 = var23;
-                switch (var22)
+                unsigned int size = 0;
+                void* file = NULL;
+                loader->GetLoadedFileByID(*task, &file, &size);
+                ObjectArchiveLoadInfo info;
+                info.unk_0 = 0;
+                info.allocator = NULL;
+                info.unk_14 = 0;
+                info.unk_18 = 0;
+                info.unk_10 = 0;
+                info.packageID = 0;
+                info.fileData = file;
+                info.fileSize = size;
+                switch (i)
                 {
                 case FinishFile_BodyPackage:
                     info.allocator = self->previewAllocators_;
@@ -295,7 +307,7 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
                     break;
                 case FinishFile_Effect:
                     info.allocator = self->modelAllocator_;
-                    CopyInternalFields0207df50((Foo0207df50*)self->finishEffectVramState_);
+                    VramState_Rewind((Foo0207df50*)self->finishEffectVramState_);
                     VramState_Restore(self->finishEffectVramState_);
                     self->finishEffect_.LoadFromCHRArchive(&info);
                     VramState_Save(self->finishEffectVramState_);
@@ -307,7 +319,7 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
         }
         self->step_ = FinishStep_ModelsLoaded;
         body->StopCurrentAnimation();
-        body->MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        body->SetAnimationByName(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
         Vector3fix rotation;
         memset(&rotation, 0, sizeof(rotation));
         rotation = body->rotation_;
@@ -322,26 +334,26 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
         self->wings_.SetScale(scaleX, scaleY, scaleZ);
         self->wings_.rotation_ = rotation;
         self->wings_.StopCurrentAnimation();
-        self->wings_.MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        self->wings_.SetAnimationByName(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
         Vector3fix position;
-        position = ((Object3D*)((char*)body + 0x408))->position_;
+        position = ((Object3D*)((char*)body + CharacterModelPart_Feet * sizeof(Object3D)))->position_;
         self->finishEffect_.rotation_ = rotation;
         self->finishEffect_.position_ = position;
         self->finishEffect_.StopCurrentAnimation();
-        self->finishEffect_.MaybeSetRegularAnimation(CharacterCreationUI_finishEffectAnimation, 0);
+        self->finishEffect_.SetAnimationByName(CharacterCreationUI_finishEffectAnimation, 0);
 #else
         Object3D* wings = &self->wings_;
         wings->SetScale(scaleX, scaleY, scaleZ);
         wings->rotation_ = rotation;
         wings->StopCurrentAnimation();
-        wings->MaybeSetRegularAnimation(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
+        wings->SetAnimationByName(KeyTable_Get((Container020e0310*)self->texts_, FinishText_Animation), 0);
         Vector3fix position;
-        position = ((Object3D*)((char*)body + 0x408))->position_;
+        position = ((Object3D*)((char*)body + CharacterModelPart_Feet * sizeof(Object3D)))->position_;
         Object3D* finishEffect = &self->finishEffect_;
         finishEffect->rotation_ = rotation;
         finishEffect->position_ = position;
         finishEffect->StopCurrentAnimation();
-        finishEffect->MaybeSetRegularAnimation(CharacterCreationUI_finishEffectAnimation, 0);
+        finishEffect->SetAnimationByName(CharacterCreationUI_finishEffectAnimation, 0);
 #endif
         self->flags_ |= CreationFlag_ShowFinishModels;
         self->waitTimer_ = FinishTicks_ShowModels;
@@ -349,14 +361,14 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
         break;
     }
     case FinishStep_PlaySound:
-        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+        SePlayer_PlayExtra(&g_sePlayer, 0, 0);
         self->waitTimer_ = FinishTicks_BeforeWhite;
         self->step_ = FinishStep_FadeToWhite;
         break;
     case FinishStep_FadeToWhite:
-        OrBitsIntoField0_020466e4(globalFlags, 0x100);
+        FlagWord_SetBits(globalFlags, 0x100);
         SetBrightness(resources, Brightness_White, FinishTicks_FadeToWhite);
-        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 1, 0);
+        SePlayer_PlayExtra(&g_sePlayer, 1, 0);
         self->step_ = FinishStep_WaitWhite;
         break;
     case FinishStep_WaitWhite:
@@ -382,12 +394,12 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
     case FinishStep_WaitBlack:
         if (IsBrightnessTransitionActive(resources))
             break;
-        func_020c39a0(&REG_MASTER_BRIGHT, Brightness_Black);
-        func_020c39a0(&REG_MASTER_BRIGHT_SUB, Brightness_Black);
-        ClearFlags020466f4((FlagWord020466f4*)globalFlags, 0x100);
+        GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT, Brightness_Black);
+        GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT_SUB, Brightness_Black);
+        FlagWord_ClearBits((FlagWord020466f4*)globalFlags, 0x100);
         ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT, BLEND_TARGET_BG_AND_OBJ, Brightness_Normal);
         ColorEffect_ConfigureBrightnessAdjust(REG_BLDCNT_SUB, BLEND_TARGET_BG_AND_OBJ, Brightness_Normal);
-        ForwardField0xc0_0205ebec(&g_sePlayer);
+        SePlayer_UnloadExtraArchiveB(&g_sePlayer);
         self->step_ = FinishStep_Leave;
         break;
     case FinishStep_Leave:

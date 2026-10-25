@@ -2,9 +2,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Script.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0205faf4_3;
 struct Struct_0205faf4_4;
@@ -14,9 +11,9 @@ extern "C" int func_0206e260(Struct_0205faf4_4* arg0, int arg1);
 extern "C" int func_0206e2dc(Struct_0205faf4_13* arg0, int arg1);
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_ov017_021b9bcc(int arg0, const char* arg1);
+extern "C" int func_0202c540(void* p);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" int func_ov017_021b9bcc(int id, const char* name);
 
 static inline int inline_ov017_021ba524(Struct_0205faf4_3* arg0, int arg1, int arg2) {
     return func_0206e120(arg0, arg1) == arg2;
@@ -56,13 +53,13 @@ extern "C" ARM int func_ov017_021ba524(Script::Parameter* arg0, int arg1) {
     int var3 = var2->unknown_4_;
     if (var3 > 0) return 1;
 
-    Struct_0205faf4_3* var4 = (Struct_0205faf4_3*)func_0205ec34();
-    int var5 = arg0[0].ToInt();
-    int var6 = data_ov017_021d7c54.unknown_0_;
-    if (var6 != var5 && var6 > -1) {
-        if (inline_ov017_021ba524(var4, var5, 1) || inline_ov017_021ba524(var4, var5, 2) ||
-            (inline_ov017_021ba524(var4, data_ov017_021d7c54.unknown_0_, 3) && inline_ov017_021ba524(var4, var5, 3) &&
-             data_ov017_021d7c54.unknown_0_ <= var5)) {
+    PackedNibbleArray0206e120* nibbles = (PackedNibbleArray0206e120*)Scenario_GetInstance();
+    int slot = params[0].ToInt();
+    int cur = data_ov017_021d7c54.byte0;
+    if (cur != slot && cur > -1) {
+        if (NibbleIs(nibbles, slot, 1) || NibbleIs(nibbles, slot, 2) ||
+            (NibbleIs(nibbles, data_ov017_021d7c54.byte0, 3) && NibbleIs(nibbles, slot, 3) &&
+             data_ov017_021d7c54.byte0 <= slot)) {
         } else {
             return 1;
         }

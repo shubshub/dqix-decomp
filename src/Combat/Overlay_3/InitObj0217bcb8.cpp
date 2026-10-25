@@ -2,8 +2,8 @@
 #include "Memory/SafeAllocator.h"
 #include "World/Object3D.h"
 
-struct List0204af64;
-void Background_Init(List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics* obj);
 
 struct Obj0217bcb8 {
     int field0;
@@ -33,8 +33,8 @@ ARM void InitObj0217bcb8(Obj0217bcb8* self) {
     self->alloc4.ResetAllocatorPointer();
     self->alloc18.ResetAllocatorPointer();
     self->alloc2c.ResetAllocatorPointer();
-    Background_Init((List0204af64*)self->list40);
-    Background_Init((List0204af64*)self->list60);
+    Background_Init((BackgroundGraphics*)self->list40);
+    Background_Init((BackgroundGraphics*)self->list60);
     ((Object3D*)self->sub80)->Initialize();
     self->b12c = 0;
     int negOne = self->b12c - 1;

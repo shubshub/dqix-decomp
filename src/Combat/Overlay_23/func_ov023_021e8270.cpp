@@ -7,7 +7,7 @@ void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 extern "C" int func_02050064(void* obj);
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_EncodeText(void* src, void* dst, int flag);
-int StringLength_020d2ff0(const char* s);
+int STD_GetStringLength(const char* s);
 extern "C" void func_ov023_021e709c(void* ctx, void* arr, int index);
 void* GetTableEntry0204a5e4(int a, int b);
 void CleanInvalidateCacheRange(void const*, unsigned int);
@@ -47,8 +47,8 @@ extern "C" ARM void func_ov023_021e8270(char* arg0) {
     if (src != 0) {
         len = Font_EncodeText(src, buf, 1);
     } else {
-        var9 = func_020d2ff0(var7 + 8);
-        memcpy(var8, var7 + 8, var9);
+        len = STD_GetStringLength(battle + 8);
+        memcpy(buf, battle + 8, len);
     }
 
     func_ov023_021e709c(var1, var8, var9 - 1);

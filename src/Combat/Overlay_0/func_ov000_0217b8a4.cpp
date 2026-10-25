@@ -9,7 +9,7 @@ struct Obj_0205da38;
 struct SePlayer;
 int Window_GetSelectedIndex(Struct_0205c570*);
 extern "C" int abs(int);
-void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(void*, int);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov000_0217b8a4(Menu0217b8a4* obj, int arg1, int arg2) {
         var3--;
     }
     if (originalCursor != cursor) {
-        SetIndexIfValid0205bcdc((Struct_0205bcdc*)window->selection, cursor);
+        GridCursor_SelectIfValid((Struct_0205bcdc*)window->selection, cursor);
         GridCursor_SetSelectedIndex(window->controls, cursor);
     }
     obj->cursor = cursor;

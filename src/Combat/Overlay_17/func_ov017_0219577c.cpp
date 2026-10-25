@@ -2,14 +2,14 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" void func_ov017_021acd7c(void* arg0);
-extern "C" void func_ov017_021adb50(char* arg0);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
-struct Struct_02000c9c_54;
-extern "C" Struct_02000c9c_54* func_0200fd0c(GameState* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_ov017_021acd7c(void* obj);
+void InitCombatPairAndResetGlobal_021adb50(char* obj);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+struct Field3f8Struct;
+Field3f8Struct* GetField0x3f8Address_0200fd0c(GameState* bs);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int length);
 struct Struct_02038598_5;
 extern "C" int func_02046b60(struct Struct_02038598_5* arg0, int arg1);
@@ -65,12 +65,12 @@ extern "C" ARM void func_ov017_0219577c(unsigned char arg0, int arg1, int arg2) 
 #else
  enum {Enum_ov017_0219577c_1788=0x6fc,Enum_ov017_0219577c_2848=0xb20,Enum_ov017_0219577c_3236=0xca4,Enum_ov017_0219577c_1804=0x70c,Enum_ov017_0219577c_2968=0xb98};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = (char*)GetGameResources();
-    void* var2 = *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_1788);
-    func_02012fe4();
-    Struct_ov017_0219577c* var3 = *(Struct_ov017_0219577c**)(var1 + 0x3000 + Enum_ov017_0219577c_2848);
-    if (var3->unknown_2_) return;
+    GameState* gs = GameState::GetInstance();
+    char* ctx = (char*)GetGameResources();
+    void* list = *(void**)(ctx + 0x3000 + regionalList);
+    Zone3D_GetInstance();
+    Node0219577c* node = *(Node0219577c**)(ctx + 0x3000 + regionalNode);
+    if (node->busy) return;
 
     func_ov017_021acd7c(var3);
     var3->unknown_280_ = 1;

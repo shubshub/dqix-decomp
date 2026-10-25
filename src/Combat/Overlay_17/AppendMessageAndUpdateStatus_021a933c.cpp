@@ -21,7 +21,7 @@ struct MessageSelectionController {
     unsigned char messageFlag;
 };
 
-MessageSelectionController* GetGlobalField0x1c020421a0(void);
+MessageSelectionController* MessageSystem_GetInstance(void);
 int KeyTable_Get(struct Container020e0310*, int);
 #if !defined(jpn)
 extern "C" void func_0204500c(void*, const char*, int, int);
@@ -32,7 +32,7 @@ extern "C" void func_0204500c(void*, const char*, int);
 
 // USA: func_ov017_021a933c  (semantic: AppendMessageAndUpdateStatus_021a933c)
 extern "C" ARM void func_ov017_021a933c(MessageSelection* selection, int key) {
-    MessageSelectionController* controller = GetGlobalField0x1c020421a0();
+    MessageSelectionController* controller = MessageSystem_GetInstance();
     if (key <= 0xc7 && key >= 0x64) {
         if (selection->alternateSet == 1) key += 0x64;
     }

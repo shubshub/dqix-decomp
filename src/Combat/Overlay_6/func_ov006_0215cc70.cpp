@@ -74,39 +74,39 @@ struct Struct_ov006_0215cc70_3 {
     int inline_ov006_0215cc70() { return (unknown_394_ & 0x40) != 0; }
 };
 
-extern "C" Struct_ov006_0215cc70* func_ov006_0215fd60(void*, short*, unsigned char*, int);
-extern "C" int func_ov006_02153f24(void* arg0, int arg1);
-struct Struct_ov006_02159094;
-extern "C" void func_ov006_02159094(Struct_ov006_02159094*);
-struct Struct_ov006_0215a33c;
-extern "C" void func_ov006_0215a33c(Struct_ov006_0215a33c*, int);
-extern "C" int func_ov006_0215a384(Struct_ov006_0215cc70_3* arg0, int arg1);
-extern "C" void func_ov006_0215fe34(Struct_ov006_0215cc70_3* arg0, void* arg1);
-extern "C" int func_ov006_0215fecc(Struct_ov006_0215cc70_3* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020dd4c4(signed char arg0, void* arg1);
-extern "C" void func_ov006_02159db0(Struct_ov006_0215cc70_3* arg0);
-extern "C" int func_ov006_02159e50(Struct_ov006_0215cc70_3* arg0);
-extern "C" int func_ov006_021570b4(char*);
+Entry0215cc70* MergeIntoBuffers_0215fd60(void*, short*, unsigned char*, int);
+extern "C" int func_ov006_02153f24(void* table, int id);
+struct Obj02159094;
+void ExpireStatusSlot02159094(Obj02159094*);
+struct Obj0215a33c;
+void Func_0215a33c(Obj0215a33c*, int);
+extern "C" int func_ov006_0215a384(Obj0215cc70* self, int critical);
+extern "C" void func_ov006_0215fe34(Obj0215cc70* self, void* list);
+extern "C" int func_ov006_0215fecc(Obj0215cc70* self);
+int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" int func_020dd4c4(signed char a, void* list);
+extern "C" void func_ov006_02159db0(Obj0215cc70* self);
+extern "C" int func_ov006_02159e50(Obj0215cc70* self);
+int CheckAnyFlag_021570b4(char*);
 void* GetBTRandom(void);
 struct Random;
 unsigned int NextRandomMax(Random*, int);
-struct Struct_0207fdcc_2;
-extern "C" void func_02080c04(Struct_0207fdcc_2*, int);
-extern "C" void func_02080c20(Struct_0207fdcc_2*, int);
-extern "C" int func_ov006_02158c70(Struct_ov006_0215cc70_3* arg0);
-extern "C" void func_ov006_02153cbc(void* arg0, int arg1, int arg2, void* arg3);
-extern "C" void func_ov006_0215759c(void* arg0, Struct_ov006_0215cc70* arg1, int arg2);
-extern "C" void func_ov006_02158de0(Struct_ov006_0215cc70_3* arg0);
-extern "C" unsigned int* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-struct Struct_020a9ea4;
-extern "C" void func_020a9ea4(Struct_020a9ea4*);
+struct Obj2081;
+void SetElementFlag0x20_02080c04(Obj2081*, int);
+void ClearElementFlag0x20_02080c20(Obj2081*, int);
+extern "C" int _Z26CheckFlagOrByte55_02158c70v(Obj0215cc70* self);
+extern "C" void func_ov006_02153cbc(void* table, int a, int b, void* out);
+extern "C" void func_ov006_0215759c(void* list, Entry0215cc70* entry, int count);
+extern "C" void func_ov006_02158de0(Obj0215cc70* self);
+unsigned int* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int bits);
+struct Struct020a9ea4;
+void ClearStruct020a9ea4(Struct020a9ea4*);
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_020aad1c(void* arg0, void* arg1, int arg2, int arg3);
-struct Struct_02038598_4;
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
+extern "C" int func_0202c540(void* p);
+extern "C" int func_020aad1c(void* loader, void* name, int a, int b);
+struct FlagWord020466f4;
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 #if defined(jpn)
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310*, int);
@@ -133,8 +133,8 @@ static inline Struct_ov006_0215cc70* inline_ov006_0215cc70_4(Struct_ov006_0215cc
 static inline Struct_ov006_0215cc70* inline_ov006_0215cc70_4(Struct_ov006_0215cc70_3* arg0) { return *(Struct_ov006_0215cc70**)((char*)arg0 + 0x34); }
 #endif
 
-extern int data_0211e33c;
-extern int data_02109bf4;
+extern int g_fileLoadBuffer;
+extern int g_bgmPlayer;
 
 // USA: func_ov006_0215cc70
 extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
@@ -167,14 +167,14 @@ extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
             if (func_ov006_0215a384(arg0, 0)) {
                 func_ov006_0215fe34(arg0, arg0->unknown_17c_);
             }
-        } else if (func_ov006_0215fecc(arg0)) {
-            int var2 = func_020dd4c4(func_020100a8(GameState::GetInstance()), arg0->unknown_17c_);
-            arg0->unknown_390_ = 5;
-            if (var2 & 0x10) {
-                arg0->unknown_394_ |= 0x20;
-                arg0->unknown_37e_ = arg0->unknown_396_ + 4;
-                arg0->unknown_392_ = 0;
-                arg0->unknown_390_++;
+        } else if (func_ov006_0215fecc(self)) {
+            int r = func_020dd4c4(GameState_GetProtagonistIndex(GameState::GetInstance()), self->list);
+            self->state = 5;
+            if (r & 0x10) {
+                self->flags |= 0x20;
+                self->message = self->variant + 4;
+                self->messageTimer = 0;
+                self->state++;
             }
         }
     } else if (arg0->unknown_390_ == 3) {
@@ -323,9 +323,9 @@ extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
     } else if (arg0->unknown_390_ == 0xe) {
         arg0->unknown_394_ |= 0x200;
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() <= 0) {
-            func_020466e4(func_020d6c00(), 0x80);
-            func_020a9ea4((Struct_020a9ea4*)arg0->unknown_3c_);
-            arg0->unknown_390_++;
+            FlagWord_SetBits(GlobalFlags_GetInstance(), 0x80);
+            ClearStruct020a9ea4((Struct020a9ea4*)self->loader);
+            self->state++;
         }
     } else if (arg0->unknown_390_ == 0xf) {
         int var8;
@@ -335,10 +335,10 @@ extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
         if (func_0202c540(func_0202ae18())) {
             var8 = 0x14;
         }
-        if (func_020aad1c(arg0->unknown_3c_, &data_0211e33c, var8, 0) == 1) {
-            func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x80);
-            arg0->unknown_390_++;
-            arg0->unknown_394_ &= ~0x200;
+        if (func_020aad1c(self->loader, &g_fileLoadBuffer, size, 0) == 1) {
+            FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x80);
+            self->state++;
+            self->flags &= ~0x200;
         }
         BackgroundLoader::RemoveLockGlobal();
     } else if (arg0->unknown_390_ == 0x10) {
@@ -396,15 +396,15 @@ extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
             var10 = 0x3f;
             func_ov006_021571fc((char*)arg0->unknown_10_);
         }
-        func_0209c830((Struct_02109bf4_2*)&data_02109bf4, var10);
-        arg0->unknown_37e_ = 0xc;
-        arg0->unknown_392_ = 0;
-        arg0->unknown_390_++;
-    } else if (arg0->unknown_390_ == 0x16) {
-        if (func_ov006_02158c70(arg0)) {
-            arg0->unknown_37e_ = 0x38;
-            arg0->unknown_392_ = 0;
-            arg0->unknown_390_++;
+        SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, sound);
+        self->message = 0xc;
+        self->messageTimer = 0;
+        self->state++;
+    } else if (self->state == 0x16) {
+        if (_Z26CheckFlagOrByte55_02158c70v(self)) {
+            self->message = 0x38;
+            self->messageTimer = 0;
+            self->state++;
         }
     } else if (arg0->unknown_390_ == 0x17) {
         if (func_ov006_02158c70(arg0)) {
@@ -456,18 +456,18 @@ extern "C" ARM void func_ov006_0215cc70(Struct_ov006_0215cc70_3* arg0) {
             }
             func_020805f4(arg0->unknown_14_, 0x7f);
 #endif
-            func_020813ec(arg0->unknown_14_, 0x12);
-            func_ov006_02153cbc(arg0->unknown_74_, arg0->unknown_34_->unknown_0_, -1, arg0->unknown_14c_);
-            func_ov006_0215759c(arg0->unknown_17c_, arg0->unknown_34_, arg0->unknown_387_);
-            func_ov006_02158de0(arg0);
-            arg0->unknown_364_ = -1;
-            arg0->unknown_42f_ = 1;
-            func_0209c830((Struct_02109bf4_2*)&data_02109bf4, 0x3e);
-            var0->unknown_ae2_ |= 0x400;
-            func_02080c04((Struct_0207fdcc_2*)arg0->unknown_14_, 0);
-            arg0->unknown_37e_ = 0xc;
-            arg0->unknown_392_ = 0;
-            arg0->unknown_390_++;
+            func_020813ec(self->elements, 0x12);
+            func_ov006_02153cbc(self->table, self->entry->id, -1, self->out);
+            func_ov006_0215759c(self->list, self->entry, self->mergeCount);
+            func_ov006_02158de0(self);
+            self->selected = -1;
+            self->field42f = 1;
+            SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x3e);
+            ctx->flags |= 0x400;
+            SetElementFlag0x20_02080c04((Obj2081*)self->elements, 0);
+            self->message = 0xc;
+            self->messageTimer = 0;
+            self->state++;
         } else {
             func_ov006_02159094((Struct_ov006_02159094*)arg0);
             func_ov006_02159094((Struct_ov006_02159094*)arg0);

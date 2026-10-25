@@ -11,6 +11,7 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 #include "Resource/GameResources.h"
+#include "Graphics/CharacterModel.h"
 
 struct Struct_ov011_02184c30 {
     int unknown_0_;
@@ -35,32 +36,25 @@ struct Struct_ov011_02187720 {
     SafeAllocator unknown_4_;
 };
 
-struct Struct_ov011_02187720_2 {
-    char unknown_0_[0x6b8];
-    SafeAllocator unknown_6b8_[10];
-    SafeAllocator unknown_780_;
-    char unknown_794_[0xc20 - 0x794];
-};
-
-struct Struct_ov011_02187720_3 {
-    void* unknown_0_;
-    char unknown_4_[0x1c];
-    Struct_ov011_02187720_2 unknown_20_[2];
-    char unknown_1860_[0x10];
+struct MenuObject02187720 {
+    void* vtable;
+    char unk_4[0x1c];
+    CharacterModel models[2];
+    char unk_1860[0x10];
 };
 
 // USA: func_ov011_02187720
-extern "C" ARM int func_ov011_02187720(struct Struct_ov011_02184c30* arg0, int arg1) {
-    Struct_ov011_02187720_3 var0;
-    void* var1;
-    SafeAllocator* var2;
-    Struct_ov011_02187720_2* var3;
-    int var4;
-    Struct_ov011_02187720* var5;
-    void* var6;
-    int var7;
-    int var8;
-    int var9;
+extern "C" ARM int func_ov011_02187720(struct TaggedNumber02184c30* params, int count) {
+    MenuObject02187720 prototype;
+    void* object;
+    SafeAllocator* allocator;
+    CharacterModel* model;
+    int unk;
+    MenuHeap02187720* heap;
+    void* script;
+    int heapId;
+    int unk2;
+    int id;
 
     var9 = func_ov011_02184c30(&arg0[0]);
     var7 = func_ov011_02184c30(&arg0[1]);
@@ -80,12 +74,12 @@ extern "C" ARM int func_ov011_02187720(struct Struct_ov011_02184c30* arg0, int a
     var0.unknown_0_ = &data_ov023_021ff5b4;
     var3 = var0.unknown_20_;
     do {
-        var2 = var3->unknown_6b8_;
+        allocator = model->allocators_;
         do {
             allocator->ResetAllocatorPointer();
             allocator++;
-        } while (allocator < model->allocators + 10);
-        model->animationAllocator.ResetAllocatorPointer();
+        } while (allocator < model->allocators_ + 10);
+        model->animationAllocator_.ResetAllocatorPointer();
         CharacterModel_Init(model);
         model++;
     } while (model < prototype.models + 2);

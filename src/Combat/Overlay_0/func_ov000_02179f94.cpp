@@ -37,15 +37,15 @@ struct Struct_ov000_02179f94 {
     struct Struct_0205d81c unknown_188_;
 };
 
-extern "C" int func_020421a0();
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_ov000_0217a19c(struct Struct_ov000_02179f94* arg0, void* arg1);
-extern "C" void func_ov000_0217c638(struct Struct_ov000_02179f94* arg0, int arg1, int arg2);
-extern "C" void func_ov000_0217a2dc(struct Struct_ov000_02179f94* arg0, void* arg1, void* arg2);
+int MessageSystem_GetInstance();
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern "C" void func_ov000_0217a19c(struct Owner_02179f94* obj, void* entry);
+extern "C" void func_ov000_0217c638(struct Owner_02179f94* obj, int a, int b);
+extern "C" void func_ov000_0217a2dc(struct Owner_02179f94* obj, void* entry, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(struct Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(struct Struct_0205d81c* s, void* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(struct Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(struct Struct_0205d81c* s, void* buf, int a, int b, int c, int d, int e, int f);
 #endif
 
 static inline short inline_ov000_02179f94(const struct Struct_0205d0e0* arg0) { return arg0->unknown_aa_; }
@@ -75,17 +75,17 @@ extern "C" ARM void func_ov000_02179f94(struct Struct_ov000_02179f94* arg0, void
     var0->unknown_ae_ = 0xe;
     var0->unknown_b1_ = 0x17;
 #if defined(jpn)
-    void* var1 = *(void**)(func_020421a0() + 0x28);
-    memset(var1, 0, 0x800);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x28);
+    memset(buf, 0, 0x800);
 #else
-    void* var1 = *(void**)(func_020421a0() + 0x5c);
-    memset(var1, 0, 0x960);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x5c);
+    memset(buf, 0, 0x960);
 #endif
     func_ov000_0217a2dc(arg0, arg1, var1);
 #if defined(jpn)
-    func_0205d304(var0, var1, 0, 1, 0, 1, 0);
+    Window_OpenPane(s, buf, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var0, var1, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(s, buf, 0, 1, 0, 1, 0, 0);
 #endif
     struct Struct_0205d0e0* var2 = func_0205d81c(var0, 0x18);
     if (var2 == 0) {

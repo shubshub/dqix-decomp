@@ -8,11 +8,11 @@ enum { Enum_ov017_021983e0_14076 = 0x36fc, Enum_ov017_021983e0_108 = 0x6c };
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_02046b08(void** arg0);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" void* func_0201e838(unsigned char* arg0, unsigned int arg1);
-extern "C" int func_02094b9c(void* arg0, void* arg1);
+int IsField0Null_02046b08(void** obj);
+extern "C" void* Zone3D_GetInstance(void);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+extern "C" int func_02094b9c(void* a, void* b);
 int fix32ReduceAngle0To2Pi(int angle);
 extern "C" void func_ov017_0219a674(unsigned char* arg0);
 extern "C" void func_ov017_0218da48(void* arg0, int arg1, int arg2, int arg3, unsigned char arg4);
@@ -43,26 +43,26 @@ struct Struct_ov017_021983e0 {
     unsigned short unknown_12_;
 };
 
-// USA: func_ov017_021983e0
-extern "C" ARM void func_ov017_021983e0(unsigned char* arg0) {
-    if (func_02046b08(*(void***)(arg0 + Enum_ov017_021983e0_14076))) {
-        GameState* var0 = GameState::GetInstance();
-        void* var1 = func_02012fe4();
-        func_020100bc(var0);
-        GameObject* var2 = var0->GetUnknownGameObject();
-        if (func_020535c8((signed char*)var2) == 0) {
-            struct Struct_ov017_021983e0_2 var3 = *(struct Struct_ov017_021983e0_2*)((char*)var2 + 0x44);
-            struct Struct_ov017_021983e0_3* var4 = (struct Struct_ov017_021983e0_3*)func_0201e838((unsigned char*)var1 + Enum_ov017_021983e0_108, 5);
-            while (var4 != NULL) {
-                if (func_02094b9c(var4, &var3) != 0) {
-                    int var5 = (short)fix32ReduceAngle0To2Pi(var4->unknown_20_ + 0x3244);
-                    func_ov017_0218da48(arg0, var5, 0xccc, 0x800 - 0xccc, 0);
-                    struct Struct_ov017_021983e0 var6;
-                    func_ov017_0219a674((unsigned char*)&var6);
-                    var6.unknown_0_ = 7;
-                    var6.unknown_8_ = var4;
-                    var6.unknown_10_ = func_ov017_021a4700((struct Struct_ov009_0218aa28*)((char*)var2 + 0x44), (short)var2->obj3D_.rotation_.y, (struct Struct_ov009_0218aa28*)((char*)var4 + 8));
-                    func_ov017_0219b33c(arg0, &var6);
+// USA: func_ov017_021983e0  (semantic: FindFirstTargetAndForward_021983e0)
+extern "C" ARM void func_ov017_021983e0(unsigned char* obj) {
+    if (IsField0Null_02046b08(*(void***)(obj + RegionOffset36fc))) {
+        GameState* bs = GameState::GetInstance();
+        void* cache = Zone3D_GetInstance();
+        bs->GetCamera();
+        GameObject* c = bs->GetUnknownGameObject();
+        if (CheckSubstructByte0x7cPositive_020535c8((signed char*)c) == 0) {
+            struct FilterData021983e0 filter = *(struct FilterData021983e0*)((char*)c + 0x44);
+            struct TargetNode021983e0* node = (struct TargetNode021983e0*)ZoneFeatures_GetFirstOfType((unsigned char*)cache + RegionOffset6c, 5);
+            while (node != NULL) {
+                if (func_02094b9c(node, &filter) != 0) {
+                    int angle = (short)fix32ReduceAngle0To2Pi(node->angle + 0x3244);
+                    BuildAndForwardVec_0218da48(obj, angle, 0xccc, 0x800 - 0xccc, 0);
+                    struct EventBuf021983e0 buf;
+                    InitObj0219a674((unsigned char*)&buf);
+                    buf.tag = 7;
+                    buf.ptr = node;
+                    buf.field10 = GetAngleDeltaBetween_021a4700((struct Vec3*)((char*)c + 0x44), (short)c->obj3D_.rotation_.y, (struct Vec3*)((char*)node + 8));
+                    func_ov017_0219b33c(obj, &buf);
                     return;
                 }
                 var4 = var4->unknown_70_;

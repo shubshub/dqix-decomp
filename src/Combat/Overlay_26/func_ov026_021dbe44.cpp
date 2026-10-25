@@ -40,9 +40,9 @@ extern "C" int func_020a35e0(unsigned char*, unsigned char);
 extern "C" void func_ov026_021dce34(int, Struct_ov000_02160da0*, Struct_ov000_02161e30*, Struct_ov000_0217e870_2*, void*, void*, void*, void*, void*, void*, void*, void*);
 
 // USA: func_ov026_021dbe44
-extern "C" ARM void func_ov026_021dbe44(Struct_ov000_02160da0* arg0) {
-    void** var0 = (void**)GetGameResources()->unknown_ptr_array_36fc[2];
-    if (func_ov026_021d8a40() && func_02046b08(var0) && func_020a35e0((unsigned char*)arg0->unknown_2a0_, arg0->unknown_2a0_->unknown_2a_)) {
-        func_ov026_021dce34(-1, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, arg0->unknown_ec8_, arg0->unknown_5c3c_, arg0->unknown_5728_, arg0->unknown_e98_, arg0->unknown_ea0_, arg0->unknown_5910_, arg0->unknown_c18_);
+extern "C" ARM void func_ov026_021dbe44(BattleWork* self) {
+    void** field3704 = (void**)GetGameResources()->unknown_ptr_array_3700[1];
+    if (func_ov026_021d8a40() && IsField0Null_02046b08(field3704) && TestBitAt0x34_020a35e0((unsigned char*)self->party, self->party->myIndex)) {
+        func_ov026_021dce34(-1, self, self->battle, self->party, self->list, self->ctxEc8, self->ctx5c3c, self->ctx5728, self->scriptA, self->scriptB, self->ctx5910, self->view);
     }
 }

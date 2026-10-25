@@ -13,7 +13,7 @@ enum { Enum_ov000_02166e5c_724 = 0x2c8 };
 enum { Enum_ov000_02166e5c_724 = 0x2d4 };
 #endif
 
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 unsigned int FindFilesInNarcBySubstring(const void* narcBuffer, const char* substr, const void** pOutFilePtrs, unsigned int* pOutFileSizes, unsigned int maxOutputs);
 struct Struct_020545b8;
@@ -106,7 +106,7 @@ struct Struct_ov000_02183014 { unsigned char unknown_0_[4]; };
 
 void DestroyAllocators020545b8(T020545b8*);
 struct Foo0207df50;
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
 void ClearEightWords_0203dafc(Struct_203dafc*);
@@ -126,7 +126,7 @@ struct FindEntryByKindContainer020d3d90;
 ClassEntry02166e5c* FindEntryByKind(FindEntryByKindContainer020d3d90*, int);
 extern "C" int sprintf(char*, const char*, ...);
 extern "C" void PartyMember_ApplyLevelStats(CombatantData02166e5c*, Growth02166e5c*, void*);
-extern "C" void func_02083e28(CombatantData02166e5c*, int);
+extern "C" void PartyMember_RecalculateStats(CombatantData02166e5c*, int);
 void PartyMember_SetVocation(unsigned char*, int);
 void ClearTwoRegions02083c18(char*);
 void PartyMember_LearnSpell(unsigned char*, int);
@@ -134,7 +134,7 @@ void SetBitInField0x34_020a35cc(unsigned char*, unsigned char);
 struct Bytes02033b88;
 void SetByte0xbeShiftPrev(Bytes02033b88*, int);
 struct Obj020397cc;
-void CancelPendingAction020397cc(Obj020397cc*, int);
+void GameObject_DisableControl(Obj020397cc*, int);
 void CopyCombatantStats0208936c(char*, char*, char*);
 void CopyInRegion0x571d_020114c0(char*, int, void*);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
@@ -143,12 +143,12 @@ extern const char g_stringFormat[];
 extern const RegionCode02166e5c data_ov000_02183014;
 
 // USA: func_ov000_02166e5c
-extern "C" ARM void func_ov000_02166e5c(Struct_ov000_02166e5c* arg0) {
-    Struct_ov000_02166e5c_10* var0;
-    GameState* var1 = GameState::GetInstance();
-    GameResources* var2 = GetGameResources();
-    SafeAllocator* var3 = &var2->allocator_array_38[3];
-    var0 = (Struct_ov000_02166e5c_10*)var2->unknown_2cc_;
+extern "C" ARM void func_ov000_02166e5c(BattleWork02166e5c* self) {
+    InternalBlock02166e5c* blocks;
+    GameState* game = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    SafeAllocator* allocator = &resources->allocator_array_38[3];
+    blocks = (InternalBlock02166e5c*)resources->vramStates_;
 #if defined(jpn)
     Struct_ov000_02166e5c_10* var4 = &var0[3];
 #define blocks_3 (*var4)
@@ -157,11 +157,11 @@ extern "C" ARM void func_ov000_02166e5c(Struct_ov000_02166e5c* arg0) {
 #endif
     DestroyAllocators020545b8((T020545b8*)GetIndexedEntry_021a11f4(resources, 2));
     allocator->Reset();
-    CopyInternalFields0207df50((Foo0207df50*)&blocks_3);
+    VramState_Rewind((Foo0207df50*)&blocks_3);
     VramState_Restore(blocks_3.bytes);
     BackgroundLoader::AddLockGlobal();
-    unsigned int var5;
-    if (!LoadFileIntoMemory(data_ov000_02183aa5, data_0211e33c, &var5)) {
+    unsigned int size;
+    if (!LoadFileIntoMemory(data_ov000_02183aa5, g_fileLoadBuffer, &size)) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -170,37 +170,37 @@ extern "C" ARM void func_ov000_02166e5c(Struct_ov000_02166e5c* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    Struct_ov000_02166e5c_9 var7;
-    func_0203dafc(&var7.unknown_0_);
-    var7.unknown1_0_.fileData = data_0211e33c;
-    var7.unknown1_0_.unk_8 = var5;
-    var7.unknown1_0_.allocator = var3;
-    var7.unknown1_0_.unk_10 = 1;
-    func_02054664((Struct_02054664*)var6);
-    if (!var6->unknown_0_.LoadFromCCHROrCMOTArchive(&var7.unknown1_0_, 0)) {
+    CombatantLoadInfo02166e5c loadInfo;
+    ClearEightWords_0203dafc(&loadInfo.words);
+    loadInfo.archive.fileData = g_fileLoadBuffer;
+    loadInfo.archive.fileSize = size;
+    loadInfo.archive.allocator = allocator;
+    loadInfo.archive.unk_10 = 1;
+    ResetSelectionState02054664((Obj02054664*)combatant);
+    if (!combatant->object.LoadFromCCHROrCMOTArchive(&loadInfo.archive, 0)) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    var6->unknown_0_.SetScale(0x10a, 0x10a, 0x10a);
-    func_02053da0((char*)var6, &arg0->unknown_5734_);
-    func_02049c88(var6, &arg0->unknown_5cac_);
-    const void* var8;
-    unsigned int var9;
-    if (FindFilesInNarcBySubstring(data_0211e33c, data_ov000_021839e2, &var8, &var9, 1)) {
-        int var10 = 0;
-        func_ov000_0216d1c4((int)var3, (Struct_02013fb4*)var8, var9, &var10);
-        func_ov000_02165480(var6, var10);
+    combatant->object.SetScale(0x10a, 0x10a, 0x10a);
+    SetAndClearField0x19c_02053da0((char*)combatant, &self->selection);
+    func_02049c88(combatant, &self->model);
+    const void* script;
+    unsigned int scriptSize;
+    if (FindFilesInNarcBySubstring(g_fileLoadBuffer, data_ov000_021839e2, &script, &scriptSize, 1)) {
+        int scriptState = 0;
+        RunOverlayScript0216d1c4((int)allocator, (StreamHeader*)script, scriptSize, &scriptState);
+        SetPtrFieldIfNonNull0x13c_ov000_02165480(combatant, scriptState);
     }
-    if (!LoadFileIntoMemory(data_ov000_02183abe, data_0211e33c, &var5)) {
+    if (!LoadFileIntoMemory(data_ov000_02183abe, g_fileLoadBuffer, &size)) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_0203dafc(&var7.unknown_0_);
-    var7.unknown1_0_.fileData = data_0211e33c;
-    var7.unknown1_0_.unk_8 = var5;
-    var7.unknown1_0_.allocator = var3;
-    var7.unknown1_0_.unk_10 = 1;
-    if (!var6->unknown_0_.LoadFromCCHROrCMOTArchive(&var7.unknown1_0_, 0)) {
+    ClearEightWords_0203dafc(&loadInfo.words);
+    loadInfo.archive.fileData = g_fileLoadBuffer;
+    loadInfo.archive.fileSize = size;
+    loadInfo.archive.allocator = allocator;
+    loadInfo.archive.unk_10 = 1;
+    if (!combatant->object.LoadFromCCHROrCMOTArchive(&loadInfo.archive, 0)) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -230,7 +230,7 @@ extern "C" ARM void func_ov000_02166e5c(Struct_ov000_02166e5c* arg0) {
     growth.stats[2].second = entry->stats[2].second;
     growth.stats[2].third = entry->stats[2].third;
     PartyMember_ApplyLevelStats(data, &growth, 0);
-    func_02083e28(data, 0);
+    PartyMember_RecalculateStats(data, 0);
     combatant->stats->maxHP = combatant->baseStats->primaryStats.maxHP;
     combatant->stats->maxMP = combatant->baseStats->primaryStats.maxMP;
     PartyMember_SetVocation((unsigned char*)data, 0);
@@ -240,10 +240,10 @@ extern "C" ARM void func_ov000_02166e5c(Struct_ov000_02166e5c* arg0) {
     data->mode = 0xb;
     data->phase = 3;
     SetBitInField0x34_020a35cc(self->roster, 1);
-    PartyLog02166e5c* log = (PartyLog02166e5c*)GetPtrField0x2a04_02010828(game);
+    PartyLog02166e5c* log = (PartyLog02166e5c*)GameState_GetParty(game);
     log->entries[log->count++] = 1;
     SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
-    CancelPendingAction020397cc((Obj020397cc*)combatant, 1);
+    GameObject_DisableControl((Obj020397cc*)combatant, 1);
     CopyCombatantStats0208936c(combatant->savedStats, (char*)combatant->stats, (char*)combatant->baseStats);
     combatant->flags |= 0x20;
     VramState_Save(blocks_3.bytes);

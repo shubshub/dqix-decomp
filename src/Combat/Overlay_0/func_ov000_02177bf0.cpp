@@ -10,14 +10,14 @@
 
 #include "std_library_functions.h"
 
-extern "C" int func_020421a0();
+int MessageSystem_GetInstance();
 
 extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
 extern "C" void func_ov000_02177d04(void* arg0, void* arg1);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, int e, int f);
 #endif
 
 struct Struct_ov000_02177bf0 {
@@ -32,25 +32,25 @@ extern "C" ARM void func_ov000_02177bf0(void* arg0, struct Struct_ov000_02177bf0
     if (arg1 == 0) {
         return;
     }
-    int var1 = arg1->unknown_44_;
-    int var2 = arg1->unknown_48_;
-    func_ov000_0217c638(var0, arg2, arg3);
-    char* var3 = var0 + 0x188;
-    *(short*)(var3 + 0xa0) = 0x15;
-    *(short*)(var3 + 0xa2) = 7;
-    *(short*)(var3 + 0xa4) = (var1 >> 3) + 9;
-    *(short*)(var3 + 0xa6) = (var2 >> 3) + 1;
-    *(short*)(var3 + 0xa8) = 0xc;
-    *(short*)(var3 + 0xaa) = 5;
-    *(short*)(var3 + 0xac) = 0xa;
-    *(short*)(var3 + 0xae) = 0xc;
-    *(unsigned char*)(var3 + 0xb1) = 5;
-    void* var4 = *(void**)((char*)func_020421a0() + REGION_OFFSET_0);
-    memset(var4, 0, REGION_OFFSET_1);
-    func_ov000_02177d04(var0, var4);
+    int x = in->x;
+    int y = in->y;
+    func_ov000_0217c638(obj, arg2, arg3);
+    char* s = obj + 0x188;
+    *(short*)(s + 0xa0) = 0x15;
+    *(short*)(s + 0xa2) = 7;
+    *(short*)(s + 0xa4) = (x >> 3) + 9;
+    *(short*)(s + 0xa6) = (y >> 3) + 1;
+    *(short*)(s + 0xa8) = 0xc;
+    *(short*)(s + 0xaa) = 5;
+    *(short*)(s + 0xac) = 0xa;
+    *(short*)(s + 0xae) = 0xc;
+    *(unsigned char*)(s + 0xb1) = 5;
+    void* buf = *(void**)((char*)MessageSystem_GetInstance() + REGION_OFFSET_0);
+    memset(buf, 0, REGION_OFFSET_1);
+    func_ov000_02177d04(obj, buf);
 #if defined(jpn)
-    func_0205d304(var0 + 0x188, var4, 0, 0, 0, 1, 0);
+    Window_OpenPane(obj + 0x188, buf, 0, 0, 0, 1, 0);
 #else
-    func_0205d304(var0 + 0x188, var4, 0, 0, 0, 1, 0, 0);
+    Window_OpenPane(obj + 0x188, buf, 0, 0, 0, 1, 0, 0);
 #endif
 }

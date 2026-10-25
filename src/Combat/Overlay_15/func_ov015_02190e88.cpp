@@ -64,26 +64,26 @@ struct Struct_ov015_02190acc
     unsigned char unknown_350_;
 };
 
-extern "C" int func_ov015_021925a8(Struct_ov015_02190acc* arg0);
-extern "C" int func_ov015_02191284(Struct_02029988_2* arg0);
-extern "C" void func_ov015_02191af0(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" void func_ov015_02191ba0(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" void func_ov015_02191c70(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" Struct_ov015_0218b828_3* func_ov015_02193160(Struct_ov015_02190acc* arg0, int arg1, int* arg2);
-extern "C" void func_ov015_021931b4(Struct_ov015_02190d7c* arg0, int arg1);
-extern "C" int func_ov015_021931cc(Struct_ov015_02190d7c_2* arg0);
-extern "C" void func_ov015_02192700(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" int func_ov015_02190c2c(Struct_ov015_02190acc* arg0);
-extern "C" void func_ov015_02192158(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" void func_ov015_0218f308(Struct_ov015_0218c03c_2* arg0, const char* arg1);
-extern "C" void func_ov015_021900dc(Struct_ov015_021900dc* arg0);
-extern "C" void func_ov015_0218f0c4(Struct_ov015_0218c03c_2* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" Struct_ov015_0218c03c_2* func_ov015_021919e4(Struct_ov015_02190acc* arg0, Struct_ov015_0218b828_3* arg1);
-extern "C" void func_ov015_02192544(Struct_ov015_02190acc* arg0);
-extern "C" void func_ov015_02190090(Struct_ov015_0218c03c_2* arg0);
+extern "C" int func_ov015_021925a8(S02190c2c* self);
+extern "C" int func_ov015_02191284(DebugMenu* menu);
+extern "C" void func_ov015_02191af0(S02190c2c* self, int index);
+extern "C" void func_ov015_02191ba0(S02190c2c* self, int index);
+extern "C" void func_ov015_02191c70(S02190c2c* self, int index);
+extern "C" ViewerEntry* func_ov015_02193160(S02190c2c* self, int page, int* index);
+void PushArrayValue021931b4(Struct021931b4* self, int page);
+int Pop021931cc(Owner_021931cc* self);
+extern "C" void func_ov015_02192700(S02190c2c* self, int unk);
+int IsFieldValueInRange_02190c2c(S02190c2c* self);
+extern "C" void func_ov015_02192158(S02190c2c* self, int index);
+extern "C" void func_ov015_0218f308(ViewObject* object, const char* event);
+void UpdateField4c021900dc(Obj021900dc* object);
+extern "C" void func_ov015_0218f0c4(ViewObject* object);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" ViewObject* func_ov015_021919e4(S02190c2c* self, ViewerEntry* entry);
+extern "C" void func_ov015_02192544(S02190c2c* self);
+extern "C" void func_ov015_02190090(ViewObject* object);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov015_02190e88
 extern "C" ARM void func_ov015_02190e88(Struct_ov015_02190acc* arg0)
@@ -139,11 +139,11 @@ extern "C" ARM void func_ov015_02190e88(Struct_ov015_02190acc* arg0)
                 Struct_ov015_02190e88* var3 = arg0->unknown_2c_;
                 while (var3 != NULL)
                 {
-                    func_ov015_0218f0c4(var3->unknown_0_);
-                    func_02012da4(&data_02114e20, var3->unknown_0_);
-                    Struct_ov015_02190e88* var4 = var3;
-                    var3 = var3->unknown_4_;
-                    func_02012da4(&data_02114e20, var4);
+                    func_ov015_0218f0c4(node->object_);
+                    AllocatorUnion_Free(&g_mainAllocator, node->object_);
+                    ViewObjectNode* next = node;
+                    node = node->next_;
+                    AllocatorUnion_Free(&g_mainAllocator, next);
                 }
                 arg0->unknown_2c_ = NULL;
             }

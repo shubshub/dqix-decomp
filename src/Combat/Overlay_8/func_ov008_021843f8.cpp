@@ -52,21 +52,21 @@ static inline Struct_ov008_021843f8* inline_ov008_021843f8(GameState* arg0)
 #endif
 }
 
-struct Struct_0201099c_14;
-struct Struct_020a13c4;
-struct Struct_02020cb8;
-struct Struct_0205cfd4;
-struct Struct_0205bef8;
+struct Struct020dfc40;
+struct S020a13c4;
+struct BackgroundGraphics;
+struct InitTarget0205cfd4;
+struct GridCursor;
 
-void* GetDataPtr02114e04_020d6c00();
-void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int* field, unsigned int bits);
 void KeyTable_Reset(Struct020dfc40* texts);
 void ClearStruct020a13c4(S020a13c4* guides);
-void Background_Init(List0204af64* background);
-void InitStruct0205cfd4(InitTarget0205cfd4* window);
-void GridCursor_Init(Struct_0205bef8* cursor);
+void Background_Init(BackgroundGraphics* background);
+void Window_Init(InitTarget0205cfd4* window);
+void GridCursor_Init(GridCursor* cursor);
 void InitCombatController020a2010(void* camera);
-extern "C" void func_0204c684(void* canvas);
+extern "C" void WindowPane_Init(void* canvas);
 
 struct Struct_ov008_021842a0_2 {
     SafeAllocator unknown_0_;
@@ -126,7 +126,7 @@ extern "C" void func_ov008_02186cec(Struct_ov008_021842a0_2* arg0);
 // USA: func_ov008_021843f8
 extern "C" ARM void func_ov008_021843f8(Struct_ov008_021842a0_2* arg0)
 {
-    OrBitsIntoField0_020466e4((unsigned int*)GetDataPtr02114e04_020d6c00(), 0xf);
+    FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xf);
     self->allocator_.ResetAllocatorPointer();
     self->backgroundAllocator_.ResetAllocatorPointer();
     self->textAllocator_.ResetAllocatorPointer();
@@ -138,19 +138,19 @@ extern "C" ARM void func_ov008_021843f8(Struct_ov008_021842a0_2* arg0)
     KeyTable_Reset((Struct020dfc40*)self->texts_);
     self->text_ = NULL;
     ClearStruct020a13c4((S020a13c4*)self->titleTable_);
-    Background_Init((List0204af64*)self->backgrounds_[0]);
-    Background_Init((List0204af64*)self->backgrounds_[1]);
-    Background_Init((List0204af64*)self->backgrounds_[2]);
-    InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[0]);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[1]);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[2]);
+    Window_Init((InitTarget0205cfd4*)self->window_);
     for (int i = 0; i < 6; i++)
-        func_0204c684(self->canvases_[i]);
+        WindowPane_Init(self->canvases_[i]);
     self->pixels_ = NULL;
     self->renderer_ = NULL;
     self->sprites_ = NULL;
     self->animations_ = NULL;
     self->iconRenderer_ = NULL;
     self->sprites_ = NULL;
-    GridCursor_Init((Struct_0205bef8*)self->cursor_);
+    GridCursor_Init((GridCursor*)self->cursor_);
     self->model_.Initialize();
     InitCombatController020a2010(self->camera_);
     self->titles_ = NULL;

@@ -13,25 +13,25 @@ extern "C" void LoadToMainObjStandardPalette(const void *src, unsigned int offse
 
 // USA: func_ov002_02161a8c
 extern "C" ARM void func_ov002_02161a8c() {
-    unsigned short var0[2];
-    unsigned short *var1;
-    var0[1]           = 0x7fff;
-    var0[0]           = 0x2108;
-    GameState *var2       = GameState::GetInstance();
-    Struct_ov000_0215d63c *var3    = (Struct_ov000_0215d63c *)func_02010828(var2);
-    unsigned char var4 = var3->unknown_f7c_;
-    for (unsigned char var5 = 0; var5 < var4; var5++) {
-        int var6      = var3->unknown_f78_[var5];
-        var1        = &var0[1];
-        GameObject *var7 = var2->GetPartyMemberByIndex(var6);
-        if (var7 == 0) continue;
-        unsigned char *var8 = func_02053c6c((unsigned char*)var7);
-        if (var8 == 0) continue;
-        unsigned char var9 = var8[0x56a];
-        if (var9 == 1 || var9 == 15) var1 = &var0[0];
-        int var10 = (var6 + 9) * 16;
-        CleanInvalidateCacheRange(var1, 2);
-        var10 += 13;
-        LoadToMainObjStandardPalette(var1, var10 * 2, 2);
+    unsigned short colors[2];
+    unsigned short *color;
+    colors[1]           = 0x7fff;
+    colors[0]           = 0x2108;
+    GameState *gs       = GameState::GetInstance();
+    PartyInfo *party    = (PartyInfo *)GameState_GetParty(gs);
+    unsigned char count = party->count;
+    for (unsigned char i = 0; i < count; i++) {
+        int idx      = party->order[i];
+        color        = &colors[1];
+        GameObject *member = gs->GetPartyMemberByIndex(idx);
+        if (member == 0) continue;
+        unsigned char *f = GetFieldAt0x150_02053c6c((unsigned char*)member);
+        if (f == 0) continue;
+        unsigned char v = f[0x56a];
+        if (v == 1 || v == 15) color = &colors[0];
+        int pal = (idx + 9) * 16;
+        CleanInvalidateCacheRange(color, 2);
+        pal += 13;
+        LoadToMainObjStandardPalette(color, pal * 2, 2);
     }
 }

@@ -4,7 +4,7 @@
 
 #if defined(jpn)
 #define RG(u, j) (j)
-#define func_0205ec34 func_0205ff20
+#define func_ov002_0215bba8 func_ov002_0215cd18
 #else
 #define RG(u, j) (u)
 #endif
@@ -74,8 +74,8 @@ struct Struct_ov002_02155960 {
 };
 
 extern "C" int func_ov017_021959b4();
-extern "C" void func_ov002_02155024(unsigned char*);
-extern "C" int func_020421a0();
+void SetTag2aIfNotAlreadyFlagged_02155024(unsigned char*);
+int MessageSystem_GetInstance();
 extern "C" void func_ov023_021e7404(void*, int);
 extern "C" void func_ov002_02156178(unsigned char*);
 extern "C" void func_ov023_021eb43c(void*);
@@ -84,22 +84,22 @@ void SyncElementFlags0215b648(unsigned char*);
 extern "C" void func_ov002_02156bc8(BattleActor*);
 extern "C" void func_ov002_02156c7c(BattleActor*);
 extern "C" void func_ov002_021561b0(BattleActor*);
-Elem_0205d81c* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
-int IsField0x9cEqual3_0204c7cc(unsigned char*);
-void SetFieldAt0x30_0205bc24(void*, int);
+Elem_0205d81c* Window_GetActivePane(Struct_0205d81c*);
+int WindowPane_IsReady(unsigned char*);
+void TouchGrid_SetTouchedCell(void*, int);
 int GetInnerFlagBit0020e28dc(Outer020e28dc*);
 void UpdateEntryStateAndPosition(Ctx020e263c*, int);
 extern "C" int Window_Update(Struct_0205d81c*, int);
 int CheckFlagOrThreshold_02161b48(char*, int);
-extern "C" void* func_0205ec34();
-extern "C" int func_020649b0(void*, int, void*);
-extern "C" void func_0206f81c(void*);
+extern "C" void* Scenario_GetInstance();
+int Scenario_RunTrigger(void*, int, void*);
+extern "C" void EventQuery_RunQueuedCommands(void*);
 extern "C" void func_ov023_021dca88(void*);
-extern "C" void func_ov002_0215aa14(char*);
-extern "C" int func_0201079c(char*);
-extern "C" void func_0205def8(Struct_ov002_02155960_3*, int, int);
-extern "C" void func_0205deb4(Struct_ov002_02155960_2*, int, int);
-extern "C" void func_ov002_0215bba8(Struct_ov002_02155960_7*);
+void CopyByteField0215aa14(char*);
+int GetField5cb0Value_0201079c(char*);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
+void Window_SetPanePalette(Struct_0205d81c*, int, int);
+extern "C" void func_ov002_0215bba8(BattleActor*);
 extern unsigned int data_ov002_0216d3a8;
 extern BattleHandler __ptmf_null;
 extern BattleHandler data_ov002_0216cd74[RG(44, 47)];
@@ -109,28 +109,28 @@ static inline Struct_ov002_02155960_6* inline_ov002_02155960(Struct_ov002_021559
 // USA: func_ov002_02155960
 extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) {
     if (func_ov017_021959b4() != 0)
-        func_ov002_02155024((unsigned char*)arg0);
-    Struct_ov002_02155960_5* var0 = (Struct_ov002_02155960_5*)func_020421a0();
-    arg0->unknown_1ba0_ = arg1;
-    if (arg0->unknown_1cc3_ != 0)
-        func_ov023_021e7404(arg0->unknown_8b4_, arg0->unknown_1ba0_);
-    func_ov002_02156178((unsigned char*)arg0);
-    if (arg0->unknown_2468_ != 0)
-        func_ov023_021eb43c(arg0->unknown_2468_);
-    if (arg0->unknown_1bb8_ != 0) {
-        arg0->unknown_1cc4_ = 0;
-        arg0->unknown_1cc4_ = func_ov002_02154c30(arg0->unknown_ec8_.unknown_ba8_);
-        func_ov002_0215b648((unsigned char*)arg0);
-        if ((arg0->unknown_247c_ & 0x20) == 0) {
-            func_ov002_02156bc8(arg0);
-            func_ov002_02156c7c(arg0);
+        SetTag2aIfNotAlreadyFlagged_02155024((unsigned char*)actor);
+    BattleManager* manager = (BattleManager*)MessageSystem_GetInstance();
+    actor->delta = delta;
+    if (actor->effectEnabled != 0)
+        func_ov023_021e7404(actor->effect, actor->delta);
+    ClearFlagBit1IfEnabled_02156178((unsigned char*)actor);
+    if (actor->optional != 0)
+        func_ov023_021eb43c(actor->optional);
+    if (actor->state != 0) {
+        actor->elementsUpdated = 0;
+        actor->elementsUpdated = func_ov002_02154c30(actor->elements.current);
+        SyncElementFlags0215b648((unsigned char*)actor);
+        if ((actor->flags & 0x20) == 0) {
+            func_ov002_02156bc8(actor);
+            func_ov002_02156c7c(actor);
         }
-        func_ov002_021561b0(arg0);
-        Struct_ov002_02155960_4* var1 = func_0205d8c4((Struct_ov002_02155960_2*)&arg0->unknown_ec8_);
-        if (var1 != 0 && func_0204c7cc((unsigned char*)var1) != 0 && (var1->unknown_c5_ & 2) == 0)
-            func_0205bc24(inline_ov002_02155960(arg0)->unknown_4_, -1);
-        if (arg0->unknown_4_.unknown_0_ != 0 && func_020e28dc(arg0->unknown_4_.unknown_0_) != 0) {
-            func_020e263c(arg0->unknown_4_.unknown1_0_, arg0->unknown_1ba0_);
+        func_ov002_021561b0(actor);
+        Elem_0205d81c* element = Window_GetActivePane((Struct_0205d81c*)&actor->elements);
+        if (element != 0 && WindowPane_IsReady((unsigned char*)element) != 0 && (element->flags & 2) == 0)
+            TouchGrid_SetTouchedCell(GetElements(actor)->entries, -1);
+        if (actor->connection.owner != 0 && GetInnerFlagBit0020e28dc(actor->connection.owner) != 0) {
+            UpdateEntryStateAndPosition(actor->connection.context, actor->delta);
         } else {
             actor->displayMode = Window_Update((Struct_0205d81c*)&actor->elements, actor->delta);
         }
@@ -141,15 +141,15 @@ extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) 
             if (var0->unknown_998_ == 0)
                 arg0->unknown_2487_ = 1;
         }
-        if (arg0->unknown_2487_ == 1) {
-            Struct_ov002_02155960 var2;
-            if (func_020649b0(func_0205ec34(), 0x16, &var2) != 0)
-                func_0206f81c(&var2);
-            if (arg0->unknown_247c_ & 1)
-                func_ov023_021dca88(arg0->unknown_50_);
-            arg0->unknown_1bb8_ = RG(0x2b, 0x2e);
-            arg0->unknown_1bbc_ = RG(0x2b, 0x2e);
-            arg0->unknown_2487_ = 2;
+        if (actor->pendingState == 1) {
+            BattleTarget target;
+            if (Scenario_RunTrigger(Scenario_GetInstance(), 0x16, &target) != 0)
+                EventQuery_RunQueuedCommands(&target);
+            if (actor->flags & 1)
+                func_ov023_021dca88(actor->model);
+            actor->state = RG(0x2b, 0x2e);
+            actor->previousState = RG(0x2b, 0x2e);
+            actor->pendingState = 2;
         }
     }
     arg0->unknown_1bcc_ = 0;
@@ -187,16 +187,16 @@ extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) 
 #endif
         data_ov002_0216d3a8 |= 1;
     }
-    if (data_ov002_0216cd74[arg0->unknown_1bb8_] == 0)
-        return (arg0->unknown_247c_ & 1) == 0;
-    (arg0->*data_ov002_0216cd74[arg0->unknown_1bb8_])();
-    if (arg0->unknown_1bb8_ != 0 && arg0->unknown_1bb8_ != RG(0x1e, 0x1f) && arg0->unknown_1bb8_ != RG(0x2a, 0x2d) && arg0->unknown_1c30_ == 0 && arg0->unknown_1bc0_ == 1) {
-        var0 = (Struct_ov002_02155960_5*)func_020421a0();
-        if (g_keyManager.TestKeysPressed(0x800) != 0 && var0->unknown_998_ == 0) {
-            if (arg0->unknown_1bb8_ == RG(0x21, 0x24))
-                func_ov002_0215aa14((char*)arg0);
-            if (arg0->unknown_1bb8_ == RG(0xf, 0x10)) {
-                func_ov002_02155024((unsigned char*)arg0);
+    if (data_ov002_0216cd74[actor->state] == 0)
+        return (actor->flags & 1) == 0;
+    (actor->*data_ov002_0216cd74[actor->state])();
+    if (actor->state != 0 && actor->state != RG(0x1e, 0x1f) && actor->state != RG(0x2a, 0x2d) && actor->busy == 0 && actor->mode == 1) {
+        manager = (BattleManager*)MessageSystem_GetInstance();
+        if (g_keyManager.TestKeysPressed(0x800) != 0 && manager->blocked == 0) {
+            if (actor->state == RG(0x21, 0x24))
+                CopyByteField0215aa14((char*)actor);
+            if (actor->state == RG(0xf, 0x10)) {
+                SetTag2aIfNotAlreadyFlagged_02155024((unsigned char*)actor);
             } else {
                 if (arg0->unknown_247c_ & 1)
                     func_ov023_021dca88(arg0->unknown_50_);
@@ -208,8 +208,8 @@ extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) 
     if (func_0201079c((char*)GameState::GetInstance()) == 1 || arg0->unknown_2485_ != 0) {
         func_0205def8((Struct_ov002_02155960_3*)&arg0->unknown_ec8_, 0, RG(0x29, 0x2c));
     }
-    func_0205deb4((Struct_ov002_02155960_2*)&arg0->unknown_ec8_, RG(0x29, 0x2c), 0);
-    func_0205deb4((Struct_ov002_02155960_2*)&arg0->unknown_ec8_, RG(0x28, 0x2b), 0);
-    func_ov002_0215bba8(arg0);
+    Window_SetPanePalette((Struct_0205d81c*)&actor->elements, RG(0x29, 0x2c), 0);
+    Window_SetPanePalette((Struct_0205d81c*)&actor->elements, RG(0x28, 0x2b), 0);
+    func_ov002_0215bba8(actor);
     return 0;
 }

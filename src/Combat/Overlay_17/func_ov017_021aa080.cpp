@@ -11,15 +11,15 @@ extern int data_02107800;
 struct SePlayer;
 extern struct SePlayer g_sePlayer;
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 // USA: func_ov017_021aa080
 extern "C" ARM int func_ov017_021aa080() {
-    int var0 = func_020421a0();
-    int var1 = *(int*)(var0 + Enum_ov017_021aa080_2464);
-    int var2 = 0;
-    if (var1 == 3 || var1 == 0) {
+    int base = MessageSystem_GetInstance();
+    int field = *(int*)(base + RegionOffset9a0);
+    int flag = 0;
+    if (field == 3 || field == 0) {
         if (g_keyManager.TestKeysPressed(0x1) ||
             g_keyManager.TestKeysPressed(0x200) ||
             g_keyManager.TestKeysPressed(0x100) ||

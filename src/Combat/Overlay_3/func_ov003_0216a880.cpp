@@ -2,14 +2,14 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0;
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" int func_0204c7cc(unsigned char* arg0);
+struct Elem_0205d81c;
+extern struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern int WindowPane_IsReady(unsigned char* obj);
 
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(struct Struct_02000c9c_8*);
+struct Struct0200fb08;
+extern int GameState_GetLanguage(struct Struct0200fb08*);
 
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+extern "C" void SpriteContext_DrawSprite(void* dst, void* src);
 
 extern unsigned char data_ov003_0217f530;
 extern unsigned char data_ov003_0217f532;
@@ -23,12 +23,12 @@ extern "C" ARM void func_ov003_0216a880(unsigned char* arg0) {
 #else
     enum { Enum_ov003_0216a880_228 = 0xe4, Enum_ov003_0216a880_1236 = 0x4d4, Enum_ov003_0216a880_1152 = 0x480 };
 #endif
-    struct Struct_0205d0e0* var0 = func_0205d81c((struct Struct_0205d81c*)(arg0 + Enum_ov003_0216a880_228), 2);
-    if (var0 == 0) return;
-    if (!func_0204c7cc((unsigned char*)var0)) return;
+    struct Elem_0205d81c* e = FindElementByC40205d81c((struct Struct_0205d81c*)(obj + entriesOffset), 2);
+    if (e == 0) return;
+    if (!WindowPane_IsReady((unsigned char*)e)) return;
 
 #if !defined(jpn)
-    int var1 = func_0200fb08((struct Struct_02000c9c_8*)GameState::GetInstance());
+    int key = GameState_GetLanguage((struct Struct0200fb08*)GameState::GetInstance());
 #endif
 
     unsigned int var2 = 0x90000;
@@ -50,15 +50,15 @@ extern "C" ARM void func_ov003_0216a880(unsigned char* arg0) {
     }
 #endif
 
-    unsigned int var6 = var4 * 0x28;
-    unsigned char* var7 = *(unsigned char**)(arg0 + Enum_ov003_0216a880_1236) + var6;
-    *(unsigned int*)(var7 + 0x14) = var2;
-    *(unsigned int*)(var7 + 0x18) = 0x61000;
-    func_0205ac40(arg0 + Enum_ov003_0216a880_1152, *(unsigned char**)(arg0 + Enum_ov003_0216a880_1236) + var6);
+    unsigned int off0 = idx * 0x28;
+    unsigned char* p0 = *(unsigned char**)(obj + baseOffset) + off0;
+    *(unsigned int*)(p0 + 0x14) = lo;
+    *(unsigned int*)(p0 + 0x18) = 0x61000;
+    SpriteContext_DrawSprite(obj + listOffset, *(unsigned char**)(obj + baseOffset) + off0);
 
-    unsigned int var8 = (var4 + 1) * 0x28;
-    unsigned char* var9 = *(unsigned char**)(arg0 + Enum_ov003_0216a880_1236) + var8;
-    *(unsigned int*)(var9 + 0x14) = var3;
-    *(unsigned int*)(var9 + 0x18) = 0x61000;
-    func_0205ac40(arg0 + Enum_ov003_0216a880_1152, *(unsigned char**)(arg0 + Enum_ov003_0216a880_1236) + var8);
+    unsigned int off1 = (idx + 1) * 0x28;
+    unsigned char* p1 = *(unsigned char**)(obj + baseOffset) + off1;
+    *(unsigned int*)(p1 + 0x14) = hi;
+    *(unsigned int*)(p1 + 0x18) = 0x61000;
+    SpriteContext_DrawSprite(obj + listOffset, *(unsigned char**)(obj + baseOffset) + off1);
 }

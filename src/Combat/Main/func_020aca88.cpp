@@ -36,12 +36,12 @@ void InitObj020ad59c(void* obj);
 void ClearEightWords_0203dafc(struct Struct_203dafc* obj);
 void VramState_Restore(char* tables);
 void VramState_Save(char* tables);
-extern "C" void func_02012fe4();
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
-extern "C" void func_02033fdc(struct Struct_02033fdc* arg0);
-extern "C" void func_0200fd38(GameState* arg0, int arg1, GameObject* arg2);
-extern "C" void func_020adfa8(struct Struct_020aca88* arg0);
-extern "C" void func_020da1ac(void* arg0);
+extern "C" void Zone3D_GetInstance();
+void SetVecYFromValue02033874(struct Obj02033874* obj, int value);
+void ClearFlag0x4At0xe0(struct Flags02033fdc* obj);
+void RegisterCombatantSlot_0200fd38(GameState* state, int slot, GameObject* obj);
+extern "C" void func_020adfa8(struct Prop020aca88* prop);
+void ResetContainerAndHandleFields020da1ac(void* container);
 
 extern const char data_020f1c08[];
 extern const char data_020f1c20[];
@@ -52,14 +52,14 @@ extern const Vector3i data_020e9100;
 extern struct Struct_ov017_021d82fc_3 data_ov017_021d82fc;
 
 // USA: func_020aca88
-extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
-    if (arg1 == 0x2774) {
-        GameState* var0 = GameState::GetInstance();
-        BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-        SafeAllocator* var2 = &arg0->allocator_array_38[7];
-        char* var3 = ((Type_020aca88*)arg0->unknown_2cc_)[7];
-        func_0200ffd0((struct Struct_0200ffd0*)var0);
-        if (var1->GetNumQueuedTasks() > 0) {
+extern "C" ARM void func_020aca88(GameResources* res, int message) {
+    if (message == 0x2774) {
+        GameState* state = GameState::GetInstance();
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        SafeAllocator* alloc = &res->allocator_array_38[7];
+        char* tables = ((PairTable020aca88*)res->vramStates_)[7];
+        GetPointerAt0x330_0200ffd0((struct PointerField330_ffd0*)state);
+        if (loader->GetNumQueuedTasks() > 0) {
             return;
         }
 
@@ -76,12 +76,12 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         InitObj020ad59c(prop);
         ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
         VramState_Restore(tables);
-        info.unk_8 = size;
+        info.fileSize = size;
         info.fileData = file;
         info.allocator = alloc;
         prop->obj3D.LoadFromCHRArchive(&info);
         VramState_Save(tables);
-        func_02012fe4();
+        Zone3D_GetInstance();
 
         GameObject* var8 = var0->GetUnknownGameObject();
         Vector3i var9 = var8->obj3D_.position_;
@@ -112,7 +112,7 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         obj->Initialize();
         ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
         VramState_Restore(tables);
-        info.unk_8 = size;
+        info.fileSize = size;
         info.fileData = file;
         info.allocator = alloc;
         obj->LoadFromCHRArchive(&info);
@@ -135,7 +135,7 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         obj->Initialize();
         ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
         VramState_Restore(tables);
-        info.unk_8 = size;
+        info.fileSize = size;
         info.fileData = file;
         info.allocator = alloc;
         obj->LoadFromCHRArchive(&info);
@@ -162,7 +162,7 @@ extern "C" ARM void func_020aca88(GameResources* arg0, int arg1) {
         obj->Initialize();
         ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
         VramState_Restore(tables);
-        info.unk_8 = size;
+        info.fileSize = size;
         info.fileData = file;
         info.allocator = alloc;
         obj->LoadFromCHRArchive(&info);

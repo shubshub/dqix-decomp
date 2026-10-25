@@ -11,7 +11,7 @@ struct Struct_020695f4 {
 };
 
 char* FindUnescapedAngleBracket_020424ac(char* str);
-extern "C" int func_02001aec(void* a, void* b, int n);
+extern "C" int memcmp(void* a, void* b, int n);
 struct Entry020695f4* Font_FindCharacter(int key, int tableIdx);
 void ToUpperBounded_02067f5c(signed char* s, int count);
 
@@ -26,7 +26,7 @@ extern "C" ARM void func_020695f4(void* arg0, char* arg1, char* arg2, int arg3) 
         }
         if (c == '<') {
             char* gt = FindUnescapedAngleBracket_020424ac(src);
-            if (gt != 0 && func_02001aec(src + 1, data_020f0916, 4) == 0) {
+            if (gt != 0 && memcmp(src + 1, data_020f0916, 4) == 0) {
                 src = gt + 1;
                 struct Entry020695f4* e = Font_FindCharacter((int)src, id);
                 if (e != 0 && e->flag5) {

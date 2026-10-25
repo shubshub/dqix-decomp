@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02012de8;
-extern "C" Struct_02012de8* func_020d6c00();
-extern "C" int func_02046708(struct Struct_02012de8* arg0, unsigned int arg1);
-extern "C" int func_ov017_02191b58(void*, int);
-extern "C" void func_ov017_02191e5c(int, int, short, unsigned char, unsigned short);
-extern "C" void func_ov017_02191f4c(int, int);
-static inline int inline_ov017_02191cc0(GameObject* arg0) { return arg0->obj3D_.GetField06(); }
-extern "C" void func_ov017_0219230c(unsigned char* arg0, int arg1, int arg2);
-extern "C" void func_ov017_02192400(unsigned char* arg0, int arg1);
-extern "C" unsigned char* func_ov017_0219219c(unsigned char* arg0, int arg1);
+struct FlagWord02046708;
+FlagWord02046708* GlobalFlags_GetInstance();
+int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int GetByteAtPtrOrZero_02191b58(void*, int);
+void SetupAndDispatchCombatant_02191e5c(int, int, short, unsigned char, unsigned short);
+void DispatchOrSetupCombatant_02191f4c(int, int);
+static inline int GetField06(GameObject* obj) { return obj->obj3D_.GetField06(); }
+extern "C" void func_ov017_0219230c(unsigned char* obj, int idx, int c);
+extern "C" void func_ov017_02192400(unsigned char* obj, int idx);
+extern "C" unsigned char* func_ov017_0219219c(unsigned char* obj, int idx);
 
 // USA: func_ov017_02191cc0
 extern "C" ARM void func_ov017_02191cc0(unsigned char* arg0) {
@@ -19,11 +19,11 @@ extern "C" ARM void func_ov017_02191cc0(unsigned char* arg0) {
 #else
  enum {Enum_ov017_02191cc0_15184=0x3b50};
 #endif
-    if (func_02046708(func_020d6c00(), 0x20000)) return;
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetProtagonist();
-    if (var1 == 0) return;
-    unsigned short var2 = inline_ov017_02191cc0(var1);
+    if (TestFlags02046708(GlobalFlags_GetInstance(), 0x20000)) return;
+    GameState* battle = GameState::GetInstance();
+    GameObject* protagonist = battle->GetProtagonist();
+    if (protagonist == 0) return;
+    unsigned short field06 = GetField06(protagonist);
 
     for (int var3 = 0; var3 <= 199; var3++) {
         int var4 = func_ov017_02191b58(arg0, var3);

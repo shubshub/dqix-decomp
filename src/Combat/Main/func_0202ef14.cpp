@@ -4,9 +4,9 @@ struct Struct_0202ef14_2 {
     int unknown_0_;
 };
 
-extern "C" int func_020a10a8(int*);
-extern "C" void func_020a0dec(struct Struct_0202ef14_2*);
-extern "C" void func_0202e894(void*, int);
+int Vec3Ease_IsRunning(int*);
+void DispatchMemberFn020a0dec(struct DispatchObj020a0dec*);
+void RotateOffsetAndAdvance0202e894(void*, int);
 int fix32ReduceAngle0To2Pi(int);
 
 struct Struct_0202ef14 {
@@ -31,23 +31,23 @@ extern "C" ARM void func_0202ef14(struct Struct_0202ef14* arg0) {
     var2[1] = (struct Struct_0202ef14_2*)(var0 + 0x194);
     var2[2] = (struct Struct_0202ef14_2*)(var0 + 0x1bc);
 
-    int var3;
-    if (var1 & 2) {
-        struct Struct_020e73cc var4 = data_020e73e4;
-        for (var3 = 0; var3 < 3; var3++) {
-            if (func_020a10a8((int*)var2[var3])) {
-                func_020a0dec(var2[var3]);
-                void* var5 = (void*)((char*)var2[var3] + 4);
-                (arg0->*var4.unknown_0_[var3])(var5);
+    int i;
+    if (flags & 2) {
+        struct DispatchTable0202ef14 table = data_020e73e4;
+        for (i = 0; i < 3; i++) {
+            if (Vec3Ease_IsRunning((int*)arr[i])) {
+                DispatchMemberFn020a0dec(arr[i]);
+                void* arg = (void*)((char*)arr[i] + 4);
+                (self->*table.fns[i])(arg);
             }
         }
     } else {
-        struct Struct_020e73cc var6 = data_020e73cc;
-        for (var3 = 0; var3 < 3; var3++) {
-            if (func_020a10a8((int*)var2[var3])) {
-                func_020a0dec(var2[var3]);
-                void* var7 = (void*)((char*)var2[var3] + 4);
-                (arg0->*var6.unknown_0_[var3])(var7);
+        struct DispatchTable0202ef14 table = data_020e73cc;
+        for (i = 0; i < 3; i++) {
+            if (Vec3Ease_IsRunning((int*)arr[i])) {
+                DispatchMemberFn020a0dec(arr[i]);
+                void* arg = (void*)((char*)arr[i] + 4);
+                (self->*table.fns[i])(arg);
             }
         }
     }

@@ -65,10 +65,10 @@ extern "C" ARM void func_ov017_02190264(GameResources* arg0, int arg1) {
             return;
         }
     }
-    Struct_ov000_02161e30_4* var7 = func_ov017_021a4658(arg0, arg1);
-    if (var7->unknown_2_) {
-        func_02046a8c(arg0->unknown_ptr_array_36fc[1], var7);
-        func_ov017_021b33d8(var7);
+    PartySlot* slot = func_ov017_021a4658(resources, index);
+    if (slot->active) {
+        func_02046a8c(resources->unknown_ptr_array_3700[0], slot);
+        ResetEntriesAndNotify_021b33d8(slot);
     }
     GameObject* var8 = func_0200ff1c(var1, arg1);
     if (var8) {

@@ -4,19 +4,19 @@
 #include "World/Zone3D.h"
 #include "GameState/GameState.h"
 
-struct Struct_02033834;
-struct Struct_02010604;
-struct Struct_02018300_3;
-struct Struct_02000c9c_21;
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" void* func_02012fe4();
-extern "C" void func_02039d24(unsigned char*);
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" void func_ov017_021d440c(int);
+struct Obj02033874;
+struct Bytes02033b88;
+struct Obj020397cc;
+struct Owner020398b4;
+void SetVecYFromValue02033874(Obj02033874*, int);
+void* GetField0x3f8Address_0200fd0c(GameState*);
+extern "C" void* Zone3D_GetInstance();
+void ClearBytesAndZeroBlock02039d24(unsigned char*);
+int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void EnqueueEventTag60Field_021d440c(int);
 int fix32cos(int);
 int fix32sin(int);
-extern "C" void func_020397cc(Struct_02018300_3*, int);
+void GameObject_DisableControl(Obj020397cc*, int);
 #if defined(jpn)
 #define data_020efb4e data_020efa3e
 #endif
@@ -29,39 +29,39 @@ enum { Enum_020399b0_0 = 0 };
 #endif
 
 #define SET_ACTION_POINTS(firstNode, secondNode, reverseValue) \
-    var2.unknown_5c_ = secondNode; \
-    var2.unknown_58_ = firstNode; \
-    var2.unknown_c_.unknown1_0_ = firstNode->unknown_8_.unknown1_0_; \
-    var2.unknown_18_.unknown1_0_ = secondNode->unknown_8_.unknown1_0_; \
-    var2.unknown_30_.unknown1_0_ = firstNode->unknown_8_.unknown1_0_; \
-    var2.unknown_3c_.unknown1_0_ = secondNode->unknown_8_.unknown1_0_; \
-    var2.unknown_8_ = firstNode->unknown_20_; \
-    var2.unknown_a_ = secondNode->unknown_20_; \
-    var2.unknown_8_ -= 0x3243; \
-    var2.unknown_3_ = reverseValue; \
-    var2.unknown_3c_.unknown1_0_.x = var5.x + var2.unknown_3c_.unknown1_0_.x; \
-    var2.unknown_3c_.unknown1_0_.z += var5.z; \
-    var2.unknown_18_.unknown1_0_.y -= 0x1000; \
-    if (var2.unknown_8_ < 0) var2.unknown_8_ += 0x6487
+    block.endNode = secondNode; \
+    block.startNode = firstNode; \
+    block.start.vec = firstNode->unk_8.vec; \
+    block.end.vec = secondNode->unk_8.vec; \
+    block.startControl.vec = firstNode->unk_8.vec; \
+    block.endControl.vec = secondNode->unk_8.vec; \
+    block.startHeading = firstNode->angle; \
+    block.endHeading = secondNode->angle; \
+    block.startHeading -= 0x3243; \
+    block.reversed = reverseValue; \
+    block.endControl.vec.x = direction.x + block.endControl.vec.x; \
+    block.endControl.vec.z += direction.z; \
+    block.end.vec.y -= 0x1000; \
+    if (block.startHeading < 0) block.startHeading += 0x6487
 
 // USA: func_020399b0
-extern "C" ARM void func_020399b0(GameObject* arg0, unsigned short arg1, const Vector3i* arg2, int arg3) {
-    arg0->obj3D_.SetField06(arg1);
-    arg0->obj3D_.position_ = *arg2;
-    func_02033874(reinterpret_cast<Struct_02033834*>(arg0), arg3);
-    *(short*)((char*)arg0 + 0xb2) = 0;
-    if (((signed char*)arg0)[0x1c9 - Enum_020399b0_0] > 0) ((unsigned char*)arg0)[0x1ce - Enum_020399b0_0] |= 4;
-    ((signed char*)arg0)[0x1cb - Enum_020399b0_0] = -1;
-    ((unsigned char*)arg0)[0x1cc - Enum_020399b0_0] = 0;
-    unsigned char* var0 = static_cast<unsigned char*>(func_0200fd0c(GameState::GetInstance()));
-    Zone3D* var1 = static_cast<Zone3D*>(func_02012fe4());
-    func_02039d24(reinterpret_cast<unsigned char*>(arg0));
-    if (var0[0x66]) {
-        func_02038508((Struct_02037d10*)((char*)arg0 + 0x26c - Enum_020399b0_0));
-        ((Struct_02038598*)((char*)arg0 + 0xe0))->unknown_0_0_ = 0;
-        arg0->obj3D_.DisableFlag(0x1180);
-        func_02033b88(reinterpret_cast<Struct_02010604*>(arg0), 0);
-        func_ov017_021d3f00((Struct_02037d10*)((char*)arg0 + 0x26c - Enum_020399b0_0), 0, 1);
+extern "C" ARM void func_020399b0(GameObject* self, unsigned short field, const Vector3i* position, int heading) {
+    self->obj3D_.SetField06(field);
+    self->obj3D_.position_ = *position;
+    SetVecYFromValue02033874(reinterpret_cast<Obj02033874*>(self), heading);
+    *(short*)((char*)self + 0xb2) = 0;
+    if (((signed char*)self)[0x1c9 - kActorTailDelta] > 0) ((unsigned char*)self)[0x1ce - kActorTailDelta] |= 4;
+    ((signed char*)self)[0x1cb - kActorTailDelta] = -1;
+    ((unsigned char*)self)[0x1cc - kActorTailDelta] = 0;
+    unsigned char* settings = static_cast<unsigned char*>(GetField0x3f8Address_0200fd0c(GameState::GetInstance()));
+    Zone3D* zone = static_cast<Zone3D*>(Zone3D_GetInstance());
+    ClearBytesAndZeroBlock02039d24(reinterpret_cast<unsigned char*>(self));
+    if (settings[0x66]) {
+        InitBlock02038508((SubBlock02038508*)((char*)self + 0x26c - kActorTailDelta));
+        ((ActorActionFlags*)((char*)self + 0xe0))->active = 0;
+        self->obj3D_.DisableFlag(0x1180);
+        SetByte0xbeShiftPrev(reinterpret_cast<Bytes02033b88*>(self), 0);
+        func_ov017_021d3f00((SubBlock02038508*)((char*)self + 0x26c - kActorTailDelta), 0, 1);
     }
     if (*reinterpret_cast<short*>(var0 + 0x6c) < 0) {
         func_02033b88(reinterpret_cast<Struct_02010604*>(arg0), 0);
@@ -73,36 +73,36 @@ extern "C" ARM void func_020399b0(GameObject* arg0, unsigned short arg1, const V
         func_ov017_021d3f00((Struct_02037d10*)((char*)arg0 + 0x26c - Enum_020399b0_0), 0, 1);
         return;
     }
-    Struct_02037d10 var2;
-    func_02038508(&var2);
-    Struct_020134e0::Struct_02018300* var3 = func_0201e6d4(&var1->substruct_6c_, *reinterpret_cast<short*>(var0 + 0x6c));
-    if (!var3) return;
-    int var4 = fix32cos(var3->unknown_20_);
-    Vector3i var5;
-    var5.x = fix32sin(var3->unknown_20_);
-    var5.y = 0;
-    var5.z = var4;
-    Vector3fix_Normalize(&var5, &var5);
-    Struct_020134e0::Struct_02018300* var6 = func_0201e6d4(&var1->substruct_6c_, var3->unknown_2c_.unknown5_0_.unknown_2_);
-    if (!var6) return;
-    if (var3->unknown_2c_.unknown5_0_.unknown_5_ & 1) {
-        SET_ACTION_POINTS(var6, var3, 1);
+    SubBlock02038508 block;
+    InitBlock02038508(&block);
+    ZoneFeatures::Opcode6aEntry* node = FindNodeKind9ById_0201e6d4(&zone->substruct_6c_, *reinterpret_cast<short*>(settings + 0x6c));
+    if (!node) return;
+    int cosine = fix32cos(node->angle);
+    Vector3i direction;
+    direction.x = fix32sin(node->angle);
+    direction.y = 0;
+    direction.z = cosine;
+    Vector3fix_Normalize(&direction, &direction);
+    ZoneFeatures::Opcode6aEntry* linked = FindNodeKind9ById_0201e6d4(&zone->substruct_6c_, node->unk_2c.type9.unk_2);
+    if (!linked) return;
+    if (node->unk_2c.type9.unk_5 & 1) {
+        SET_ACTION_POINTS(linked, node, 1);
     } else {
         SET_ACTION_POINTS(var3, var6, 0);
     }
-    var2.unknown_1_ = 2;
-    var2.unknown_0_ = 1;
-    var2.unknown_6_ = var3->unknown_20_;
-    func_020398b4(arg0, &var2);
-    int var7 = var2.unknown_18_.unknown1_0_.y - var2.unknown_c_.unknown1_0_.y;
-    int var8 = var2.unknown_c_.unknown1_0_.y + FIX32_MULTIPLY(var7, *reinterpret_cast<short*>(var0 + 0x6a));
-    Vector3i var9;
-    var9 = arg0->obj3D_.position_;
-    var9.y = var8;
-    arg0->obj3D_.position_ = var9;
-    func_02033874(reinterpret_cast<Struct_02033834*>(arg0), var3->unknown_20_);
-    arg0->obj3D_.MaybeSetRegularAnimation(data_020efb4e, 0);
-    arg0->obj3D_.EnableFlag(0x180);
-    ((Struct_02038598*)((char*)arg0 + 0xe0))->unknown_0_0_ = 1;
-    func_020397cc(reinterpret_cast<Struct_02018300_3*>(arg0), 1);
+    block.command = 2;
+    block.active = 1;
+    block.heading = node->angle;
+    CopyBlockTo0x26c_020398b4(self, &block);
+    int difference = block.end.vec.y - block.start.vec.y;
+    int y = block.start.vec.y + FIX32_MULTIPLY(difference, *reinterpret_cast<short*>(settings + 0x6a));
+    Vector3i adjusted;
+    adjusted = self->obj3D_.position_;
+    adjusted.y = y;
+    self->obj3D_.position_ = adjusted;
+    SetVecYFromValue02033874(reinterpret_cast<Obj02033874*>(self), node->angle);
+    self->obj3D_.SetAnimationByName(data_020efb4e, 0);
+    self->obj3D_.EnableFlag(0x180);
+    ((ActorActionFlags*)((char*)self + 0xe0))->active = 1;
+    GameObject_DisableControl(reinterpret_cast<Obj020397cc*>(self), 1);
 }

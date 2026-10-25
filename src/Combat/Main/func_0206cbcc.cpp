@@ -4,28 +4,25 @@
 #include "Memory/SafeAllocator.h"
 #include "Combat/WorkRecord.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-struct Struct_0205faf4_3;
-struct Struct_0205faf4_4;
-struct Struct_0205faf4_13;
-extern "C" int func_0206e120(Struct_0205faf4_3*, int);
-extern "C" int func_0206e260(Struct_0205faf4_4*, int);
-extern "C" int func_0206e2dc(Struct_0205faf4_13*, int);
-extern "C" Struct_0205faf4_3* func_0205ec34();
-extern "C" void func_0206dd68(void*, int);
-struct Struct_02108cec {
-    int unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned short unknown_c_;
-    unsigned short unknown_e_;
-    void* unknown_10_;
-    SafeAllocator* unknown_14_;
+struct PackedNibbleArray0206e120;
+struct PackedNibbleArray0206e260;
+struct PackedNibbleArray0206e2dc;
+int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
+int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
+int GetPackedNibbleFlag0x8(PackedNibbleArray0206e2dc*, int);
+extern "C" PackedNibbleArray0206e120* Scenario_GetInstance();
+void UnlinkNodeByByteId0206dd68(void*, int);
+struct Data02108cec {
+    int field0;
+    short wait;
+    short group;
+    short previous;
+    unsigned short serial;
+    unsigned short level;
+    unsigned short field_e;
+    void* list;
+    SafeAllocator* allocator;
 };
 extern Struct_02108cec data_02108cec;
 static inline int inline_0206cbcc(Struct_0205faf4_3* arg0, int arg1, int arg2) {
@@ -46,12 +43,12 @@ extern "C" ARM int func_0206cbcc(Script::Parameter* arg0, int arg1) {
         data_02108cec.unknown_8_ = -1;
         data_02108cec.unknown_4_ = -1;
     }
-    if (data_02108cec.unknown_4_ > 0) return 1;
-    var0 = func_0205ec34();
-    if (data_02108cec.unknown_8_ != var1 && data_02108cec.unknown_8_ > -1 &&
-        !inline_0206cbcc(var0, var1, 1) && !inline_0206cbcc(var0, var1, 2) &&
-        inline_0206cbcc(var0, data_02108cec.unknown_8_, 3) && inline_0206cbcc(var0, var1, 3)) {
-        if (data_02108cec.unknown_8_ > var1) return 1;
+    if (data_02108cec.wait > 0) return 1;
+    table = Scenario_GetInstance();
+    if (data_02108cec.previous != index && data_02108cec.previous > -1 &&
+        !IsNibble0206cbcc(table, index, 1) && !IsNibble0206cbcc(table, index, 2) &&
+        IsNibble0206cbcc(table, data_02108cec.previous, 3) && IsNibble0206cbcc(table, index, 3)) {
+        if (data_02108cec.previous > index) return 1;
     }
     switch (var2) {
     case -1: if (!inline_0206cbcc(var0, var1, 0)) return 1; break;

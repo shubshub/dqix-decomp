@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02052df8;
-extern "C" int func_02052df8(Struct_02052df8*, int);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_020dd200(int, int);
-extern "C" int func_020dd154(int, int);
-struct Struct_020dd4c4_2 {
+struct Field150Holder02052df8;
+int GetHalfwordEntryFromField150(Field150Holder02052df8*, int);
+int GameState_GetProtagonistIndex(GameState*);
+int TestCombatantCategoryBit020dd200(int, int);
+int DispatchByField0x950Byte_020dd154(int, int);
+struct Requirements020dd4c4 {
     unsigned int : 7;
     unsigned int unknown_0_7_ : 4;
     unsigned int : 18;
@@ -56,21 +56,21 @@ static inline Struct_020dd4c4* inline_020dd4c4_2(int arg0) {
 }
 
 // USA: func_020dd4c4
-extern "C" ARM int func_020dd4c4(int arg0, Struct_020dd4c4_3* arg1) {
-    if (!arg1) return 0x200;
-    if (arg1->unknown_18_ <= 0) return 0x200;
-    Struct_020dd4c4* var0 = inline_020dd4c4_2(arg0);
-    if (!var0) return 0x20;
-    if (!var0->unknown_150_->unknown_950_) return 0;
-    int var1 = arg1->unknown_8_0_ <= 7;
-    if (!var1) return 8;
-    if (!arg1->unknown_0_) return 8;
-    int var2 = 0;
-    GameState* var3 = GameState::GetInstance();
-    var2 |= (arg1->unknown_0_->unknown_3_5_ && arg0 != func_020100a8(var3)) ? 0x100 : 0;
-    int var4;
-    if (arg1->unknown_8_0_ != 0 && arg1->unknown_8_0_ != 1) var4 = 0;
-    else if (func_020dd200(arg0 & 0xff, arg1->unknown_0_->unknown_0_7_ & 0xff)) var4 = 0;
+extern "C" ARM int func_020dd4c4(int id, Entry020dd4c4* entry) {
+    if (!entry) return 0x200;
+    if (entry->count <= 0) return 0x200;
+    Combatant020dd4c4* combatant = GetCombatant020dd4c4(id);
+    if (!combatant) return 0x20;
+    if (!combatant->record->vocation) return 0;
+    int valid = entry->kind <= 7;
+    if (!valid) return 8;
+    if (!entry->requirements) return 8;
+    int result = 0;
+    GameState* state = GameState::GetInstance();
+    result |= (entry->requirements->protagonistOnly && id != GameState_GetProtagonistIndex(state)) ? 0x100 : 0;
+    int categoryError;
+    if (entry->kind != 0 && entry->kind != 1) categoryError = 0;
+    else if (TestCombatantCategoryBit020dd200(id & 0xff, entry->requirements->category & 0xff)) categoryError = 0;
     else {
         if (func_020dd154(arg0, arg1->unknown_0_->unknown_0_7_ & 0xff)) var4 = 0;
         else var4 = 1;

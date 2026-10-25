@@ -8,11 +8,11 @@ struct S020466c8;
 struct Container020e0310;
 void *FindEntryByKey_02072a68(struct TableA68 *table, int key);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
-void *GetGlobalField0x1c020421a0();
-int AppendString02042058(char *dst, const char *src);
+void *MessageSystem_GetInstance();
+int Text_Append(char *dst, const char *src);
 int KeyTable_Get(struct Container020e0310 *c, int key);
-void SetIndexedName02046574(struct Obj02046574 *obj, int index, char *str);
-void InitObjFromCombatantId020e4bf4(void *obj, int combatantId);
+void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
+void NameText_InitFromPartyMember(void *obj, int combatantId);
 void *CallFunc020e52a0_020e5294(void *p, int key);
 void StoreInArray0x8b0_020465c0(struct StoreStruct *base, int index, int value);
 void SetField0x38(struct S020466c8 *p, int v);
@@ -51,29 +51,29 @@ extern "C" ARM void func_ov002_021685bc(unsigned char *base) {
             if (c != NULL) {
                 char obj[0xc];
                 char tmp[0x80];
-                unsigned char *g = (unsigned char *) GetGlobalField0x1c020421a0();
+                unsigned char *g = (unsigned char *) MessageSystem_GetInstance();
                 memset(*(char **) (base + 0x1000 + 0xbd0), 0, 0x960);
-                AppendString02042058(*(char **) (base + 0x1000 + 0xbd0), s);
-                AppendString02042058(*(char **) (base + 0x1000 + 0xbd0),
+                Text_Append(*(char **) (base + 0x1000 + 0xbd0), s);
+                Text_Append(*(char **) (base + 0x1000 + 0xbd0),
                                      (const char *) KeyTable_Get((struct Container020e0310 *) (base + 0x20), 7));
                 func_02046380(g);
-                SetIndexedName02046574((struct Obj02046574 *) g, 0, *(char **) ((char *) c + 0x134));
-                InitObjFromCombatantId020e4bf4(obj, id);
+                MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) ((char *) c + 0x134));
+                NameText_InitFromPartyMember(obj, id);
                 *(void **) g = obj;
                 if (e->type == 1) {
                     void **r            = (void **) CallFunc020e52a0_020e5294(*(void **) (base + 0x2000 + 0x44c), e->item);
                     *(void ***) (g + 8) = r;
                     __clear(tmp, 0x80);
                     func_020e4864(*r, tmp, 1, 0, 0, 0);
-                    SetIndexedName02046574((struct Obj02046574 *) g, 1, tmp);
+                    MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, tmp);
                 } else {
-                    SetIndexedName02046574(
+                    MessageSystem_SetStringArgument(
                         (struct Obj02046574 *) g, 1,
                         (char *) FindEntryByKey_02072a68(*(struct TableA68 **) (base + 0x2000 + 0x448), (short) (e->a + 0x64)));
                 }
                 int slot = 2;
                 if (e->type == 4 || e->type == 0x10) slot = 1;
-                SetIndexedName02046574(
+                MessageSystem_SetStringArgument(
                     (struct Obj02046574 *) g, slot,
                     (char *) FindEntryByKey_02072a68(*(struct TableA68 **) (base + 0x2000 + 0x448), (short) (e->k + 0xc8)));
                 StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 0, e->b);

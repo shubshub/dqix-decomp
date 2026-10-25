@@ -1,18 +1,7 @@
 #pragma once
 
 #include <globaldefs.h>
-
-struct Struct_020420e8 {
-    const char* unknown_0_;
-    signed char unknown_4_;
-    signed char unknown_5_0_ : 6;
-    signed char unknown_5_6_ : 1;
-    signed char unknown_5_7_ : 1;
-    char unknown_6_[2];
-};
-
-
-
+#include "Resource/Font.h"
 
 struct Struct_0204166c {
     unsigned char* unknown_0_;

@@ -4,18 +4,15 @@
 #include "World/Zone3D.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 #if defined(jpn)
 #define data_020e909c data_020e91a8
 #endif
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_0205ec34(void);
-extern "C" void* func_020100f8(char* arg0);
+extern "C" void* Scenario_GetInstance(void);
+void* GetFieldIfFlag4_020100f8(char* obj);
 
 struct Struct_0200ffc0
 {
@@ -40,10 +37,10 @@ extern "C" void func_ov017_021d1a18(int arg0, short arg1, short arg2, unsigned c
 struct Struct_02033834;
 extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
 
-extern "C" void* func_0201b678(void* arg0, void* arg1);
-struct Struct_020a6aac;
-extern "C" int func_02018fbc(Struct_020a6aac*, Vector3fix*);
-extern "C" void func_ov017_0219c598(int* arg0, short* arg1, int arg2);
+extern "C" void* func_0201b678(void* savedEvent, void* ptr);
+struct TerrainCtx02018fbc;
+extern "C" int Zone3D_GetGroundHeight(TerrainCtx02018fbc*, Vector3fix*);
+extern "C" void func_ov017_0219c598(int* srcVec3, short* srcAngle, int forceFlag);
 
 extern "C" void* func_0201b754(void* arg0, int arg1);
 extern "C" void func_0200fd48(GameState*, int);
@@ -115,15 +112,15 @@ struct Struct_020a6aac_6
 // USA: func_020a6aac
 extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
 {
-    GameState* var0 = GameState::GetInstance();
-    Zone3D* var1 = (Zone3D*)func_02012fe4();
+    GameState* state = GameState::GetInstance();
+    Zone3D* savedEvent = (Zone3D*)Zone3D_GetInstance();
     LightingManager::GetInstance();
-    void* var2 = func_0202ae18();
-    func_0205ec34();
-    Struct_020a6aac_2* var3 = (Struct_020a6aac_2*)func_020100f8((char*)var0);
-    Struct_020a6aac_3* var4 = (Struct_020a6aac_3*)func_0200ffc0((struct Struct_0200ffc0*)var0);
-    GameObject* var5 = var0->GetUnknownGameObject();
-    Struct_020a6aac_4* var6 = (Struct_020a6aac_4*)func_0200fd0c(var0);
+    void* events = func_0202ae18();
+    Scenario_GetInstance();
+    EventController020a6aac* controller = (EventController020a6aac*)GetFieldIfFlag4_020100f8((char*)state);
+    ActorView020a6aac* actor = (ActorView020a6aac*)GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)state);
+    GameObject* unknown = state->GetUnknownGameObject();
+    MovementView020a6aac* movement = (MovementView020a6aac*)GetField0x3f8Address_0200fd0c(state);
 
     if ((unsigned int)(arg1 - 0x170c) <= 3) {
         var3->unknown_1f8_ = 1;
@@ -181,40 +178,40 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
             return;
         }
         {
-            var4->unknown_154_ = 0;
-            var4->unknown_0_.SetScale(0x180, 0x180, 0x180);
-            if (arg2 == 0x2710) {
-                Struct_020a6aac_5* var12 = (Struct_020a6aac_5*)func_0201b678(var1, &var1->unknown_2774_.unknown_0_);
-                if (var12 != 0) {
-                    Vector3i var13 = var12->unknown_30_;
-                    var13.y = func_02018fbc((Struct_020a6aac*)var1, &var13);
-                    if (var6->unknown_5_ == 0) {
-                        var5->obj3D_.position_ = var13;
-                        func_0203db34((unsigned char*)var5, 0, var12->unknown_2e_, 0);
-                        func_ov017_0219c598(&var13.x, &var12->unknown_2e_, 0);
+            actor->scripted = 0;
+            actor->object.SetScale(0x180, 0x180, 0x180);
+            if (previousCode == 0x2710) {
+                EventNode020a6aac* node1 = (EventNode020a6aac*)func_0201b678(savedEvent, &savedEvent->savedActor_.position);
+                if (node1 != 0) {
+                    Vector3i spawnPosition = node1->spawnPosition;
+                    spawnPosition.y = Zone3D_GetGroundHeight((TerrainCtx02018fbc*)savedEvent, &spawnPosition);
+                    if (movement->busy == 0) {
+                        unknown->obj3D_.position_ = spawnPosition;
+                        StoreVec3AtField0x50_0203db34((unsigned char*)unknown, 0, node1->height, 0);
+                        func_ov017_0219c598(&spawnPosition.x, &node1->height, 0);
                     }
                     var1->unknown_2774_.unknown_10_ = var12->unknown_2c_;
                     var1->unknown_2774_.unknown_12_ = (unsigned short)arg1;
                 }
-                func_020a2770(var3, var5->obj3D_.unknown_4_);
-                ClearFlags04((GameResources*)arg0, 0x10004);
-                var1->unknown_2774_.unknown_14_ = 0;
-                short var14 = (short)var1->unknown_2774_.unknown_12_;
-                short var15 = var1->unknown_2774_.unknown_10_;
-                func_ov017_021d1a18(var14, var15, 0, 0);
-            } else if (arg2 == 0x170c) {
-                short var16 = var1->unknown_2774_.unknown_10_;
-                Struct_020a6aac_5* var17 = (Struct_020a6aac_5*)func_0201b754(var1, var16);
-                if (var17 != 0) {
-                    Vector3i var18 = var17->unknown_30_;
-                    var18.y = func_02018fbc((Struct_020a6aac*)var1, &var18);
-                    if (var6->unknown_5_ == 0) {
-                        var5->obj3D_.position_ = var18;
-                        func_ov017_0219c598(&var18.x, &var17->unknown_2e_, 0);
+                SetField0x21c_020a2770(controller, unknown->obj3D_.actorIndex_);
+                ClearFlags04((GameResources*)obj, 0x10004);
+                savedEvent->savedActor_.active = 0;
+                short savedEventId = (short)savedEvent->savedActor_.zoneId;
+                short savedNodeId = savedEvent->savedActor_.nodeId;
+                func_ov017_021d1a18(savedEventId, savedNodeId, 0, 0);
+            } else if (previousCode == 0x170c) {
+                short savedNodeId = savedEvent->savedActor_.nodeId;
+                EventNode020a6aac* node2 = (EventNode020a6aac*)FindNodeByField0x2c0201b754(savedEvent, savedNodeId);
+                if (node2 != 0) {
+                    Vector3i spawnPosition = node2->spawnPosition;
+                    spawnPosition.y = Zone3D_GetGroundHeight((TerrainCtx02018fbc*)savedEvent, &spawnPosition);
+                    if (movement->busy == 0) {
+                        unknown->obj3D_.position_ = spawnPosition;
+                        func_ov017_0219c598(&spawnPosition.x, &node2->height, 0);
                     }
                 }
-                func_020a2770(var3, var5->obj3D_.unknown_4_);
-                ClearFlags04((GameResources*)arg0, 0x10004);
+                SetField0x21c_020a2770(controller, unknown->obj3D_.actorIndex_);
+                ClearFlags04((GameResources*)obj, 0x10004);
             }
             unsigned short var19 = var1->unknown_2774_.unknown_12_;
             if (arg1 == var19) {
@@ -233,15 +230,15 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
                 var4->unknown_0_.MakeHidden();
             }
         }
-    } else if (arg1 == 0x170c) {
-        if (arg2 == 0x2710) {
-            GameObject* var23 = var0->GetUnknownGameObject();
-            func_020a2770(var3, var23->obj3D_.unknown_4_);
-            ClearFlags04((GameResources*)arg0, 0x10004);
-            func_0200fd48(var0, 0xc9);
-            if (func_0202c540(var2) != 0) {
-                if (var1->unknown_2774_.unknown_14_ == 0) {
-                    func_0201b8c8((struct Struct_02017a94*)var1, 0, 1, 0);
+    } else if (eventCode == 0x170c) {
+        if (previousCode == 0x2710) {
+            GameObject* currentObject = state->GetUnknownGameObject();
+            SetField0x21c_020a2770(controller, currentObject->obj3D_.actorIndex_);
+            ClearFlags04((GameResources*)obj, 0x10004);
+            ClearCombatantSlot_0200fd48(state, 0xc9);
+            if (func_0202c540(events) != 0) {
+                if (savedEvent->savedActor_.active == 0) {
+                    ApplyElementFlags0201b8c8((struct Obj0201b600*)savedEvent, 0, 1, 0);
                 } else {
                     func_0201b8c8((struct Struct_02017a94*)var1, 1, 0, 1);
                 }
@@ -261,24 +258,24 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
                 func_ov017_021d1a18(var24, var25, 0, 0);
             }
         }
-    } else if (arg1 == 0x76c) {
-        Zone3D* var26 = (Zone3D*)func_02012fe4();
-        if (arg2 == 0x2710) {
-            GameObject* var27 = var0->GetUnknownGameObject();
-            Vector3i var28 = data_020e909c;
-            short var29 = 0x570;
-            var27->obj3D_.position_ = var28;
-            func_02033874((struct Struct_02033834*)var27, var29);
-            func_ov017_0219c598(&var28.x, &var29, 0);
-            var26->unknown_2774_.unknown_14_ = 0;
-            func_ov017_021d1a18((short)arg1, -1, 0, 0);
-            var26->unknown_2774_.unknown_10_ = 0;
-            var26->unknown_2774_.unknown_12_ = (unsigned short)arg1;
-            short var30 = var0->GetUnknownGameObject()->obj3D_.unknown_4_;
-            func_020a2770(var3, var30);
-            ClearFlags04((GameResources*)arg0, 0x10004);
-            struct Struct_0201b600* var31 = func_0201b600((struct Struct_02017a94*)var26, 0, 4);
-            if (var31 != 0)
+    } else if (eventCode == 0x76c) {
+        Zone3D* savedState = (Zone3D*)Zone3D_GetInstance();
+        if (previousCode == 0x2710) {
+            GameObject* currentObject = state->GetUnknownGameObject();
+            Vector3i homePosition = data_020e909c;
+            short angle570 = 0x570;
+            currentObject->obj3D_.position_ = homePosition;
+            SetVecYFromValue02033874((struct Obj02033874*)currentObject, angle570);
+            func_ov017_0219c598(&homePosition.x, &angle570, 0);
+            savedState->savedActor_.active = 0;
+            func_ov017_021d1a18((short)eventCode, -1, 0, 0);
+            savedState->savedActor_.nodeId = 0;
+            savedState->savedActor_.zoneId = (unsigned short)eventCode;
+            short objectId = state->GetUnknownGameObject()->obj3D_.actorIndex_;
+            SetField0x21c_020a2770(controller, objectId);
+            ClearFlags04((GameResources*)obj, 0x10004);
+            struct Elem0201b600* firstSlot = FindElemByKeys((struct Obj0201b600*)savedState, 0, 4);
+            if (firstSlot != 0)
             {
                 func_02013380((struct Struct_02013380*)var31, 0, 1);
             }
@@ -315,17 +312,17 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
         }
         func_0200fd48(var0, 0xc9);
     } else {
-        if (arg2 == 0x2710) {
-            ClearFlags04((GameResources*)arg0, 0x10004);
-            func_0200fd48(var0, 0xc9);
-            short var38 = var0->GetUnknownGameObject()->obj3D_.unknown_4_;
-            func_020a2770(var3, var38);
-            short var39 = (short)var1->unknown_2774_.unknown_12_;
-            short var40 = var1->unknown_2774_.unknown_10_;
-            unsigned char var41 = var1->unknown_2774_.unknown_14_;
-            func_ov017_021d1a18(var39, var40, var41, 1);
-            unsigned char var42 = data_ov017_021d82fc.unknown_e_;
-            if (!(var42 != 1 && var42 != 2)) {
+        if (previousCode == 0x2710) {
+            ClearFlags04((GameResources*)obj, 0x10004);
+            ClearCombatantSlot_0200fd48(state, 0xc9);
+            short actorId = state->GetUnknownGameObject()->obj3D_.actorIndex_;
+            SetField0x21c_020a2770(controller, actorId);
+            short savedEventId = (short)savedEvent->savedActor_.zoneId;
+            short savedNodeId = savedEvent->savedActor_.nodeId;
+            unsigned char flag2788 = savedEvent->savedActor_.active;
+            func_ov017_021d1a18(savedEventId, savedNodeId, flag2788, 1);
+            unsigned char statusByte = data_ov017_021d82fc.status;
+            if (!(statusByte != 1 && statusByte != 2)) {
                 func_020da244(&data_ov017_021d82fc);
             }
         }

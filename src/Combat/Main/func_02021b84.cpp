@@ -9,14 +9,14 @@
 #include "NitroSDK/Memory.h"
 #include "NitroSDK/Cache.h"
 #include "NitroSDK/LoadToVRAM.h"
-extern "C" int func_020421a0(void);
-extern "C" void func_02023218(Struct_02020554* arg0, void* arg1, int arg2, unsigned int arg3);
+int MessageSystem_GetInstance(void);
+extern "C" void func_02023218(MapDisplay* self, void* buffer, int offset, unsigned int capacity);
 extern char data_020ef4b1[], data_020ef4c9[], data_020ef4d0[];
 #endif
 #include "Resource/GameResources.h"
 #include "Resource/Brightness.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* func_0203bd08(void);
 extern "C" void* func_0203b628(void);
 extern "C" void func_02021428(void* arg0, int arg1);
@@ -40,8 +40,8 @@ void SetEventStringAndAccumulateLength02026470(void* obj, int flag);
 struct Struct0205a198;
 void Sprite_Init(struct Struct0205a198* p);
 void SpriteContext_Init(char* obj);
-struct Rec020467f0;
-int ProcessRecords0205a498(void* a, struct Rec020467f0* b, int flag, void* d);
+struct PacRecord;
+int ProcessRecords0205a498(void* a, struct PacRecord* b, int flag, void* d);
 void SetBitfieldStoreBytes0205af38(int a, char* obj, int c, int d);
 void* GetGlobalPtr02105244_0203bd14();
 int InitAndCopyBuffer020233b8(void* arg0, int flag1);
@@ -82,15 +82,15 @@ extern "C" ARM void func_02021b84(Struct_02020554* arg0) {
     GrottoStruct* var9;
     int var10;
 
-    var3 = GameState::GetInstance();
-    var4 = BackgroundLoader::GetInstance();
-    func_02012fe4();
-    var5 = GetGameResources();
-    var6 = (char*)func_0203bd08();
-    var7 = (char*)func_0203b628();
-    var8 = inline_02021b84(var5, 12);
-    var9 = var3->GetGrottoStruct();
-    var10 = arg0->unknown_9c2_;
+    game = GameState::GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    Zone3D_GetInstance();
+    axis = GetGameResources();
+    battleCtx = (char*)func_0203bd08();
+    table = (char*)GetData02105254_0203b628();
+    alloc = GetAlloc02021b84(axis, 12);
+    grotto = game->GetGrottoStruct();
+    state = self->loadStage;
 
     if (var10 == 0) {
         func_02021428(arg0, 0x19);
@@ -192,7 +192,7 @@ extern "C" ARM void func_02021b84(Struct_02020554* arg0) {
         self->entryList.active = 1;
         self->entryList.records = self->records;
         self->entryList.count = 0x18;
-        ProcessRecords0205a498((char*)&self->entryList, (struct Rec020467f0*)fileData, fileLength, alloc);
+        ProcessRecords0205a498((char*)&self->entryList, (struct PacRecord*)fileData, fileLength, alloc);
         SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
         SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
         *(int*)((char*)GetGlobalPtr02105244_0203bd14() +
@@ -203,14 +203,14 @@ extern "C" ARM void func_02021b84(Struct_02020554* arg0) {
 #endif
         ) = 0x2000;
 #if defined(jpn)
-        Struct_02021b84* var13 = (Struct_02021b84*)func_020421a0();
-        char* var14 = var13->unknown_2c_;
-        char* var15 = (char*)0x06600000;
-        VectorizedInvertedMemcpy(var15 + 0x2bc0, var14, 0x540);
-        func_02023218(arg0, var14, 0, 0x540);
-        func_020c9820();
-        CleanInvalidateCacheRange(var14, 0x540);
-        LoadToSubObjVRAM(var14, 0x2bc0, 0x540);
+        MessageSystem* messages = (MessageSystem*)MessageSystem_GetInstance();
+        char* buffer = messages->formatBuffer;
+        char* vram = (char*)0x06600000;
+        VectorizedInvertedMemcpy(vram + 0x2bc0, buffer, 0x540);
+        func_02023218(self, buffer, 0, 0x540);
+        DelayThenSyncBit0_020c9820();
+        CleanInvalidateCacheRange(buffer, 0x540);
+        LoadToSubObjVRAM(buffer, 0x2bc0, 0x540);
 #else
         char* var16 = (char*)0x06600000;
         memcpy(arg0->unknown_bf0_, var16 + 0x2c00, 0x40);

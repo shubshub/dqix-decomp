@@ -3,11 +3,11 @@
 #include "GameState/GameState.h"
 #include "NitroSDK/Memory.h"
 
-struct Struct_02011b24;
-extern "C" void func_02011b24(struct Struct_02011b24* arg0);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" void func_ov017_021cf594(unsigned short, int, int);
-extern "C" void* func_02012fe4(void);
+struct FieldFlagBlock;
+void ResetAndEnableFieldFlag_02011b24(struct FieldFlagBlock* block);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+void EnqueueEventTag58_021cf594(unsigned short, int, int);
+extern "C" void* Zone3D_GetInstance(void);
 
 // USA: func_ov004_02168760
 extern "C" ARM int func_ov004_02168760(void) {
@@ -42,7 +42,7 @@ extern "C" ARM int func_ov004_02168760(void) {
 
     func_0200fba4(var0, var1);
 
-    unsigned short var4 = *(unsigned short*)func_02012fe4();
+    unsigned short zone = *(unsigned short*)Zone3D_GetInstance();
 
     for (signed char var5 = 1; var5 < 4; var5++) {
         GameObject* var6 = var0->GetPartyMemberByIndex(var5);

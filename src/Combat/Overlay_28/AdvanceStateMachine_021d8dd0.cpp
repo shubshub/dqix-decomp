@@ -27,14 +27,12 @@ struct FieldSet02097bc4;
 void SetFieldGroupFromFlags02097bc4(struct FieldSet02097bc4*, int);
 extern "C" void func_02097c18(void*, int, int, int, int, int, int, int);
 
-struct List0204af64;
-void Background_Init(List0204af64*);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 void Background_SetMapSize(unsigned char*, int);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 void Background_FlushFile(void*, char*);
-struct SelfTag0204b3a0;
-void Background_UploadFile(SelfTag0204b3a0*, char*);
+void Background_UploadFile(BackgroundGraphics*, char*);
 
 extern "C" void LoadToSubBGStandardPalette(int, int, unsigned int);
 extern "C" void LoadToSubBG1ScreenData(int, int, unsigned int);
@@ -47,14 +45,14 @@ extern int data_ov028_021d9aa0;
 
 // USA: func_ov028_021d8dd0  (semantic: AdvanceStateMachine_021d8dd0)  (semantic: AdvanceStateMachine_021d8dd0)
 extern "C" ARM void func_ov028_021d8dd0(unsigned char* self) {
-    FontBankLoader* g = GetGlobal02109400_02094a00();
+    FontBankLoader* g = FontBankLoader_GetInstance();
     void* data = BackgroundLoader::GetInstance();
     void* battle = GameState::GetInstance();
     void* word = (void*)((GameState*)battle)->GetResources();
     unsigned char state = self[0x81];
 
     if (state == 0) {
-        func_02094ab0(g);
+        FontBankLoader_CancelLoads(g);
         BlankFunction02094b34(g, 0x7a, 0x20b, 0, 0);
         self[0x81] = self[0x81] + 1;
     } else if (state == 1) {
@@ -76,17 +74,17 @@ extern "C" ARM void func_ov028_021d8dd0(unsigned char* self) {
         *reg400100a = (*reg400100a & 0x43) | 0x1000;
 
         unsigned char list[0x20];
-        Background_Init((List0204af64*)list);
+        Background_Init((BackgroundGraphics*)list);
         unsigned char v = list[0x1c];
         v = (v & ~0xf) | 1;
         v = v & 0xff;
         v = (v & ~0xf0) | 0x10;
         list[0x1c] = v;
         Background_SetMapSize((unsigned char*)list, 0);
-        Background_SetScroll((Obj0204b5e8*)list, 0, 0);
+        Background_SetScroll((BackgroundGraphics*)list, 0, 0);
         int tag = *(int*)((char*)word + 0x2c);
         Background_FlushFile(list, (char*)tag);
-        Background_UploadFile((SelfTag0204b3a0*)list, (char*)tag);
+        Background_UploadFile((BackgroundGraphics*)list, (char*)tag);
 
         unsigned short tmpVal = 0x67f5;
         memcpy(buf40, &tmpVal, 2);

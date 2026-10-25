@@ -1,6 +1,7 @@
 #pragma once
 
 #include <globaldefs.h>
+#include "NitroSDK/Matrix.h"
 
 struct Struct_0204719c
 {
@@ -10,35 +11,46 @@ struct Struct_0204719c
 
 struct Struct_02012fa4
 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned int unknown_8_;
-    unsigned int unknown_c_;
-    unsigned int unknown_10_;
-    Struct_0204719c unknown_14_;
-    unsigned int unknown_1c_[25];
-    unsigned short unknown_80_;
-    unsigned short unknown_82_;
-    unsigned char unknown_84_0_ : 1;
-    unsigned char unknown_84_1_ : 1;
-    unsigned char unknown_84_2_ : 1;
-    unsigned char unknown_84_3_ : 5;
+    unsigned int word0;
+    unsigned short f4;
+    unsigned short f6;
+    unsigned int w8;
+    unsigned int wc;
+    unsigned int w10;
+    NameTable02048080 nameTable;
+    Vector3fix position;            // where it's drawn: a pot's world position (Zone3D_SetUpLootables), an icon's screen
+                                    // x and y << 12 (ZoneChest_UpdateOpening, SearchPotTask_DrawSprite)
+    unsigned int words28[3];
+    Vector3fix scale;               // 1.0 on each axis after SprSprite_Init; a pot's 0x80 (Zone3D_SetUpLootables)
+    unsigned int words40[16];
+    unsigned short color;           // 0x7fff after SprSprite_Init; a pot's or barrel's diffuse colour
+    unsigned short alpha;           // 0x1f after SprSprite_Init; icons fade by it (ZoneChest_UpdateOpening)
+    unsigned char bit0 : 1;
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char rest : 5;
 };
 
-struct Struct_020133cc
+// ZoneLootableRecord::state
+enum ZoneLootableState {
+    ZoneLootableState_Searched = -1,    // ZoneLootable_Init, and searched ones on zone entry (Zone3D_SetSearchedLootables)
+    ZoneLootableState_Searchable = 0,   // Zone3D_SetUpLootables; func_ov017_0218dfd8 only considers these
+    ZoneLootableState_Breaking = 3,     // Zone3D_BreakLootable
+};
+
+struct ZoneLootableRecord
 {
-    unsigned short unknown_0_;
-    short unknown_2_;
-    short unknown_4_;
-    unsigned char unknown_6_[2];
-    Struct_02012fa4 unknown_8_[2];
-    Struct_02012fa4 unknown_118_[4];
-    unsigned char unknown_338_[0x30];
+    unsigned short id;
+    short state;                    // ZoneLootableState
+    short field4;
+    unsigned char reserved6[2];
+    Foo02048004 primary[2];
+    Foo02048004 fragments[4];
+    unsigned char tail338[0x30];
 };
 
-extern "C" void func_02048004(Struct_02012fa4* arg0, Struct_02012fa4* arg1);
-extern "C" void func_02047230(Struct_02012fa4* arg0);
-extern "C" void func_02048080(Struct_0204719c* arg0);
-extern "C" void func_0204719c(void* arg0);
+void CopyFieldsWithFlags02048004(Foo02048004* src, Foo02048004* dst);
+void SprSprite_Unload(Foo02048004* obj);
+void ClearNameTable(NameTable02048080* table);
+extern "C" void SprSprite_Init(void* obj);
 

@@ -61,14 +61,14 @@ struct Struct_ov000_021707f0 {
 
 void* GetOffsetPtr02160f08(void*);
 Elem_0205d81c* FindElementByC40205d81c(Struct_0205d81c*, int);
-int IsField0x9cEqual3_0204c7cc(unsigned char*);
+int WindowPane_IsReady(unsigned char*);
 void GetFourShortsAtIndex(ShortArrays0204c610*, int, short*, short*, short*, short*);
 extern "C" void* func_ov017_021b8468(void*);
 extern "C" double func_02009424(double);
-extern "C" void func_0205ac40(void*, void*);
-struct Struct_ov000_02183488 {
-    short unknown_0_;
-    short unknown_2_[2];
+extern "C" void SpriteContext_DrawSprite(void*, void*);
+struct PaletteChannel {
+    short value;
+    short pad[2];
 };
 #if defined(jpn)
 #define data_ov000_02183488 data_ov000_02184510
@@ -131,7 +131,7 @@ extern "C" ARM void func_ov000_021707f0(Struct_ov000_021707f0* arg0) {
     if (!var11 || !var13) {
         return;
     }
-    if (!func_0204c7cc((unsigned char*)var11)) {
+    if (!WindowPane_IsReady((unsigned char*)element)) {
         return;
     }
     if (var11->unknown_c2_) {
@@ -171,7 +171,7 @@ extern "C" ARM void func_ov000_021707f0(Struct_ov000_021707f0* arg0) {
             arg0->unknown_430_[var13] = var23 | (var24 << 5) | (var25 << 10);
         }
     }
-    CleanInvalidateCacheRange(arg0->unknown_430_, 4);
-    LoadToSubObjStandardPalette(arg0->unknown_430_, 0x142, 4);
-    func_0205ac40(var5, var6->unknown_320_);
+    CleanInvalidateCacheRange(owner->colors, 4);
+    LoadToSubObjStandardPalette(owner->colors, 0x142, 4);
+    SpriteContext_DrawSprite(list, cursor->drawEntry);
 }

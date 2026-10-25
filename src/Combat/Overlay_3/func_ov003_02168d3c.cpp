@@ -5,10 +5,10 @@ extern "C" void* memset(void*, int, unsigned int);
 struct Struct_0205d81c;
 struct Container020e0310;
 struct StoreStruct;
-void* GetGlobalField0x1c020421a0();
-void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+void* MessageSystem_GetInstance();
+void Window_SetPanePalette(Struct_0205d81c*, int, int);
 int KeyTable_Get(Container020e0310*, int);
-int AppendString02042058(char*, const char*);
+int Text_Append(char*, const char*);
 extern "C" void func_ov003_0216abd8(void*, char*);
 extern "C" void func_ov003_02169c3c(void*);
 extern "C" int func_ov003_02169eec(void*, void*);
@@ -24,8 +24,8 @@ extern "C" void func_020474a8(void*, int, int, char*);
 enum { Enum_ov003_02168d3c_228=0xe0, Enum_ov003_02168d3c_2464=0x870, Enum_ov003_02168d3c_6574=0x17de, Enum_ov003_02168d3c_2400=0x800 };
 #else
 extern "C" void func_0204500c(void*, int, int, int);
-extern "C" void func_02046608(void*, int, int, char*, int, int, int);
-enum { Enum_ov003_02168d3c_228=0xe4, Enum_ov003_02168d3c_2464=0x9a0, Enum_ov003_02168d3c_6574=0x19ae, Enum_ov003_02168d3c_2400=0x960 };
+extern "C" void MessageSystem_FormatText(void*, int, int, char*, int, int, int);
+enum { kMenu68d3c=0xe4, kStage68d3c=0x9a0, kFlag68d3c=0x19ae, kTextSize68d3c=0x960 };
 #endif
 struct Struct_ov003_02168d3c {
     char unknown_0_[0x64];
@@ -65,17 +65,17 @@ static inline void inline_ov003_02168d3c_2(Struct_ov003_02168d3c_2* arg0,int arg
 #if defined(jpn)
     func_020474a8(arg0,0xc,arg1,arg2);
 #else
-    func_02046608(arg0,0xc,arg1,arg2,0xe3,0,1);
+    MessageSystem_FormatText(g,0xc,fmt,out,0xe3,0,1);
 #endif
 }
 // USA: func_ov003_02168d3c
 extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
     GameState* gs=GameState::GetInstance();
-    Global68d3c* global=(Global68d3c*)GetGlobalField0x1c020421a0();
-    Party68d3c* party=(Party68d3c*)GetPtrField0x2a04_02010828(gs);
+    Global68d3c* global=(Global68d3c*)MessageSystem_GetInstance();
+    Party68d3c* party=(Party68d3c*)GameState_GetParty(gs);
     if(global->stage==3) global->flag=0;
     if(self->state==0) {
-        SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,1,1);
+        Window_SetPanePalette((Struct_0205d81c*)self->menu,1,1);
         if(key==0x3f2) {
             int error=-1;
             if(party->bank>=0x3b9ac618) error=(short)(key+5);
@@ -83,7 +83,7 @@ extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
             if(error>=0) {
                 memset(self->text,0,kTextSize68d3c);
                 int text=KeyTable_Get((Container020e0310*)self->messages,error);
-                AppendString02042058(self->text,(const char*)text);
+                Text_Append(self->text,(const char*)text);
                 func_ov003_0216abd8(self,self->text);
                 Show68d3c(global,(int)self->text);
                 self->state=3;
@@ -105,7 +105,7 @@ extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
             if(error>=0) {
                 memset(self->text,0,kTextSize68d3c);
                 int text=KeyTable_Get((Container020e0310*)self->messages,error);
-                AppendString02042058(self->text,(const char*)text);
+                Text_Append(self->text,(const char*)text);
                 func_ov003_0216abd8(self,self->text);
                 Show68d3c(global,(int)self->text);
                 self->state=3;
@@ -132,8 +132,8 @@ extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
     } else if(self->state==1) {
         if(global->stage==3) {
             func_ov003_02169c3c(self);
-            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,0,0);
-            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,2,0);
+            Window_SetPanePalette((Struct_0205d81c*)self->menu,0,0);
+            Window_SetPanePalette((Struct_0205d81c*)self->menu,2,0);
             self->state++;
         }
     } else if(self->state==2) {
@@ -141,10 +141,10 @@ extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
         if(result==-1) return;
         if(result==-2) {
             func_0205d6e4((Struct_0205d81c*)self->menu,1);
-            SetElementFieldC2_0205deb4((Struct_0205d81c*)self->menu,1,1);
+            Window_SetPanePalette((Struct_0205d81c*)self->menu,1,1);
             memset(self->text,0,kTextSize68d3c);
             int text=KeyTable_Get((Container020e0310*)self->messages,0x406);
-            AppendString02042058(self->text,(const char*)text);
+            Text_Append(self->text,(const char*)text);
             func_ov003_0216abd8(self,self->text);
             Show68d3c(global,(int)self->text);
             self->state++;
@@ -200,9 +200,9 @@ extern "C" ARM void func_ov003_02168d3c(Obj68d3c* self, void* arg, int key) {
         } else {
             memset(self->text,0,kTextSize68d3c);
             int text=KeyTable_Get((Container020e0310*)self->messages,(short)(message+2));
-            AppendString02042058(self->text,(const char*)text);
+            Text_Append(self->text,(const char*)text);
             text=KeyTable_Get((Container020e0310*)self->messages,message);
-            AppendString02042058(self->text,(const char*)text);
+            Text_Append(self->text,(const char*)text);
             Show68d3c(global,(int)self->text);
             for(int i=0;i<4;++i) self->digits[i]=0;
             self->selected=0;

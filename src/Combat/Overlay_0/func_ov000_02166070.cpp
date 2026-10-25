@@ -70,50 +70,50 @@ void ClearEightWords_0203dafc(struct Struct_203dafc*);
 ModelNames* SearchWithLow15Comparator02070fd0(struct Container02070e60*, int);
 void RunOverlayScript0216d1c4(int, struct StreamHeader*, int, int*);
 void InitObjectFields020484f8(Object3D*, Input020484f8*);
-void CopyInternalFields0207df50(struct Foo0207df50*);
+void VramState_Rewind(struct Foo0207df50*);
 extern "C" void _ZN8Object3D10SetField78Et(Object3D*, unsigned int);
 extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
 extern "C" void VramState_Reserve(char*, int, int);
 
 // USA: func_ov000_02166070
-extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPair* arg1, int arg2, int arg3, int arg4, unsigned int arg5) {
-    Struct_ov000_02166070* var0 = arg0->unknown_2a0_;
-    Struct_0206f01c_2* var1 = &var0->unknown_678_.unknown_0_;
-    SafeAllocator* var2 = &arg0->unknown_44_;
-    Struct_02070b6c_3* var3 = &var0->unknown_684_;
-    char var4[0x10];
-    struct Struct_0203d028_11 var5;
-    Struct_020484f8_2 var6;
-    unsigned int var7;
-    const void* var8;
-    unsigned int var9;
-    unsigned int var10;
-    unsigned int var11;
-    const void* var12;
-    unsigned int var13;
-    Struct_ov000_02166070_3* var14 = func_0206f4f0(var1, (short)arg3);
-    if (var14 == 0) return;
-    sprintf(var4, data_ov000_02183a47, var14->unknown_4_);
-    if (!DecompressFileFromGPCByName(arg1->pGPCFile, arg1->machine, data_0211e33c + arg5, var7, 0x30000 - arg5, var4)) {
-        arg1->Reset();
-        if (arg4) BackgroundLoader::RemoveLockGlobal();
+extern "C" ARM void func_ov000_02166070(Scene02166070* self, GPCReadPair* pair, int slot, int id, int flag, unsigned int offset) {
+    CombatantRoster02166070* roster = self->roster;
+    BinarySearchByComparatorStruct* search = &roster->search.table;
+    SafeAllocator* alloc = &self->allocator;
+    Container02070e60* names = &roster->names;
+    char path[0x10];
+    struct Struct_203dafc params;
+    Input020484f8 input;
+    unsigned int length;
+    const void* filePtr;
+    unsigned int fileSize;
+    unsigned int modelLength;
+    unsigned int animLength;
+    const void* scriptPtr;
+    unsigned int scriptSize;
+    ModelEntry* entry = SearchWithComparator0206f4f0(search, (short)id);
+    if (entry == 0) return;
+    sprintf(path, data_ov000_02183a47, entry->name);
+    if (!DecompressFileFromGPCByName(pair->pGPCFile, pair->machine, g_fileLoadBuffer + offset, length, 0x30000 - offset, path)) {
+        pair->Reset();
+        if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    if (!FindFilesInNarcBySubstring(data_0211e33c + arg5, data_ov000_02183a4e, &var8, &var9, 1)) {
-        arg1->Reset();
-        if (arg4) BackgroundLoader::RemoveLockGlobal();
+    if (!FindFilesInNarcBySubstring(g_fileLoadBuffer + offset, data_ov000_02183a4e, &filePtr, &fileSize, 1)) {
+        pair->Reset();
+        if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* var15 = DecompressLZ77FileIntoAllocatedSpace(*var2, var8, var10);
-    if (!FindFilesInNarcBySubstring(data_0211e33c + arg5, data_ov000_02183a54, &var8, &var9, 1)) {
-        arg1->Reset();
-        if (arg4) BackgroundLoader::RemoveLockGlobal();
+    void* model = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, modelLength);
+    if (!FindFilesInNarcBySubstring(g_fileLoadBuffer + offset, data_ov000_02183a54, &filePtr, &fileSize, 1)) {
+        pair->Reset();
+        if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* var16 = DecompressLZ77FileIntoAllocatedSpace(*var2, var8, var11);
-    if (!FindFilesInNarcBySubstring(data_0211e33c + arg5, data_ov000_021839e2, &var12, &var13, 1)) {
-        var12 = 0;
-        var13 = 0;
+    void* anim = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, animLength);
+    if (!FindFilesInNarcBySubstring(g_fileLoadBuffer + offset, data_ov000_021839e2, &scriptPtr, &scriptSize, 1)) {
+        scriptPtr = 0;
+        scriptSize = 0;
     }
     Object3D* var17 = (Object3D*)var2->Allocate(0xb8);
     if (var17 == 0) {
@@ -150,7 +150,7 @@ extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* arg0, GPCReadPa
     _ZN8Object3D10SetField7aEt(obj, high);
     self->models[slot] = obj;
     if (id == 0x13f || id == 0x13d || id == 0x321) {
-        CopyInternalFields0207df50((struct Foo0207df50*)self->tables14c);
+        VramState_Rewind((struct Foo0207df50*)self->tables14c);
         VramState_Restore(self->tables14c);
         VramState_Reserve(self->tables14c, 0x800, 0);
         VramState_Reserve(self->tables14c, 0xb800, 0x400);

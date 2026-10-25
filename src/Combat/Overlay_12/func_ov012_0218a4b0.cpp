@@ -18,38 +18,38 @@ struct Struct_02072a68_2 {
     short unknown_4_;
 };
 
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02041e70(char* arg0, int arg1);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
+int Text_AppendPaletteTag(char* dst, int palette);
 
 // USA: func_ov012_0218a4b0
 extern "C" ARM void func_ov012_0218a4b0(unsigned char* arg0, char* arg1, int arg2) {
     if (arg1 == 0) return;
 
-    int var0 = *(int*)(arg0 + R(0x1440,0x13e8));
-    if (arg2 != 0) {
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
+    int cursor = *(int*)(self + R(0x1440,0x13e8));
+    if (c != 0) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
+    Text_AppendCursorTag(dst, cursor);
 
-    void* var1 = func_02072a68((struct Struct_02072a68_2*)(arg0 + R(0x1314,0x133c)), 0xa);
-    func_02041b70(arg1, 0, (const char*)var1);
+    void* name = FindEntryByKey_02072a68((struct TableA68*)(self + R(0x1314,0x133c)), 0xa);
+    Text_AppendNTag(dst, 0, (const char*)name);
 
-    func_02042058(arg1, *(char**)(arg0 + R(0x1348,0x1378)));
+    Text_Append(dst, *(char**)(self + R(0x1348,0x1378)));
 
     unsigned short var2 = *(unsigned short*)(arg0 + R(0x141c,0x13c4));
     unsigned int var3 = ((unsigned int)var2 << 16) >> 21;
     if (var3 == 0) {
 #if defined(jpn)
-        func_02042058(arg1, data_ov012_0218bfdf);
+        Text_Append(dst, data_ov012_0218bfdf);
 #else
-        func_02041e70(arg1, 3);
+        Text_AppendPaletteTag(dst, 3);
 #endif
     }
 
-    void* var4 = func_02072a68((struct Struct_02072a68_2*)(arg0 + R(0x1314,0x133c)), 0xb);
-    func_02041b70(arg1, 1, (const char*)var4);
+    void* name2 = FindEntryByKey_02072a68((struct TableA68*)(self + R(0x1314,0x133c)), 0xb);
+    Text_AppendNTag(dst, 1, (const char*)name2);
 }

@@ -38,12 +38,12 @@ struct Struct_ov000_021735d0_3 {
 struct Struct_ov000_02175808_4 { char unknown_0_[0xf78]; signed char unknown_f78_[4]; unsigned char unknown_f7c_; };
 struct Struct_ov000_02175808 { char unknown_0_[0x10]; unsigned char unknown_10_[8]; signed char unknown_18_; };
 extern "C" void __clear(void*, unsigned long);
-extern "C" void func_ov000_021757ac(Struct_ov000_021735d0_3*, unsigned short);
-extern "C" int func_020100a8(GameState*);
-extern "C" Struct_ov000_02175808* func_ov000_02161318(Struct_ov000_021735d0_3*, int);
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" int func_ov000_0217f8c0(Struct_ov000_021735d0_3*);
-extern "C" void func_ov000_02176634(Struct_ov000_021735d0_3*, int, int, int, int);
+extern "C" void func_ov000_021757ac(Struct0217f8c0*, unsigned short);
+int GameState_GetProtagonistIndex(GameState*);
+extern "C" CombatCommand* func_ov000_02161318(Struct0217f8c0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
+int FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
+extern "C" void func_ov000_02176634(Struct0217f8c0*, int, int, int, int);
 extern unsigned short data_ov000_0218342a[];
 extern int data_ov000_02184288[3];
 extern int data_ov000_02183ff0;
@@ -69,21 +69,21 @@ extern "C" ARM void func_ov000_02175808(Struct_ov000_021735d0_3* arg0) {
             ++var1;
         }
     }
-    if (!var1) return;
-    GameState* var7 = GameState::GetInstance();
-    arg0->unknown_17c_ = func_020100a8(var7);
-    func_ov000_021757ac(arg0, 0);
-    Struct_ov000_02175808_4* var8 = (Struct_ov000_02175808_4*)func_02010828(var7);
-    unsigned char var9 = var8->unknown_f7c_;
-    for (unsigned char var10 = 0; var10 < var9; ++var10) {
-        Struct_ov000_02175808* var11 = func_ov000_02161318(arg0, var8->unknown_f78_[var10]);
-        if (var11) var11->unknown_10_[var11->unknown_18_] = 13;
+    if (!count) return;
+    GameState* current = GameState::GetInstance();
+    self->protagonist = GameState_GetProtagonistIndex(current);
+    func_ov000_021757ac(self, 0);
+    PartySlots* party = (PartySlots*)GameState_GetParty(current);
+    unsigned char slots = party->count;
+    for (unsigned char i = 0; i < slots; ++i) {
+        CombatCommand* command = func_ov000_02161318(self, party->ids[i]);
+        if (command) command->commands[command->index] = 13;
     }
-    func_0205d6a0(&arg0->unknown_188_, 1);
-    arg0->unknown_1d6d_ = 0;
-    ++arg0->unknown_1d68_;
-    arg0->unknown_1d60_[arg0->unknown_1d68_] = 0x17;
-    int var12 = func_ov000_0217f8c0(arg0);
-    func_ov000_02176634(arg0, var12, 0x17, data_ov000_02183ff0, data_ov000_02184288[1]);
-    arg0->unknown_1d81_ = 0;
+    Window_ClosePane(&self->list, 1);
+    self->step = 0;
+    ++self->commandIndex;
+    self->commands[self->commandIndex] = 0x17;
+    int entry = FindMatchingTableEntry0217f8c0(self);
+    func_ov000_02176634(self, entry, 0x17, data_ov000_02183ff0, data_ov000_02184288[1]);
+    self->state = 0;
 }

@@ -10,8 +10,8 @@ extern "C" void _Z21Window_TransferLayersP11Obj0205d2bc(void*);
 #define KINDS_OFFSET 0x1d60
 #endif
 
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
+struct Entry_0205d6a0;
+void Window_ClosePane(struct Entry_0205d6a0* list, int flag);
 
 struct Struct_ov000_0217c908;
 extern "C" int func_ov000_0217f910(struct Struct_ov000_0217c908* arg0);
@@ -46,9 +46,9 @@ struct Struct_ov000_0217c908 {
 };
 
 // USA: func_ov000_0217c908
-extern "C" ARM void func_ov000_0217c908(struct Struct_ov000_0217c908* arg0, int arg1, int arg2) {
-    if (func_ov000_0217f910(arg0) == 0) {
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_188_, 1);
+extern "C" ARM void func_ov000_0217c908(struct Battle0217c908* battle, int arg1, int arg2) {
+    if (func_ov000_0217f910(battle) == 0) {
+        Window_ClosePane((struct Entry_0205d6a0*)battle->entryList, 1);
         return;
     }
     switch (arg0->unknown_1d60_[arg0->unknown_1d68_]) {
@@ -114,7 +114,7 @@ extern "C" ARM void func_ov000_0217c908(struct Struct_ov000_0217c908* arg0, int 
         _Z18Window_ClearLayersP12Cont0205d1e0(battle->entryList);
         _Z18Window_FlushLayersP12Cont0205d274(battle->entryList);
         _Z21Window_TransferLayersP11Obj0205d2bc(battle->entryList);
-        ResetEntryList0205d6a0((struct Entry_0205d6a0*)battle->entryList, 1);
+        Window_ClosePane((struct Entry_0205d6a0*)battle->entryList, 1);
         battle->flags |= 2;
     }
 #endif

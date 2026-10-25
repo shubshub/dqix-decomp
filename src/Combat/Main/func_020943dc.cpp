@@ -22,8 +22,8 @@ struct Struct_020943dc {
     char unknown_13b_[2];
     unsigned char unknown_13d_;
 };
-extern "C" Struct_02046574_2* func_020421a0();
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+Obj02046574* MessageSystem_GetInstance();
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" void func_020e046c(char*, void*, unsigned int, int);
 extern "C" void func_020474a8(Struct_02046574_2*, int, char*, char*);
 extern const char data_020f146e[];
@@ -36,26 +36,26 @@ extern "C" ARM int func_020943dc(Struct_020943dc* arg0) {
             var0->RemoveTask(arg0->unknown_100_);
             arg0->unknown_100_ = -1;
         }
-        arg0->unknown_100_ = var0->QueueLoadFile(data_020f146e, 0);
-        ++arg0->unknown_138_0_;
-    } else if (arg0->unknown_138_0_ == 1) {
-        if (var0->GetTaskStatus(arg0->unknown_100_)) {
-            void* var1;
-            unsigned int var2;
-            var0->GetLoadedFileByID(arg0->unknown_100_, &var1, &var2);
-            if (var1) {
-                char var3[0x40] = {};
-                func_020e046c(var3, var1, var2, arg0->unknown_c_);
-                Struct_02046574_2* var4 = func_020421a0();
-                char* var5 = var4->unknown_37c_[0].unknown_0_;
-                char var6[0x40] = {};
-                if (var5) memcpy(var6, var5, strlen(var5));
-                func_02046574(var4, 0, arg0->unknown_0_);
-                memset(arg0->unknown_108_, 0, sizeof(arg0->unknown_108_));
-                func_020474a8(var4, 10, var3, arg0->unknown_108_);
-                arg0->unknown_108_[0x2f] = 0;
-                arg0->unknown_104_ = 0;
-                if (var5) func_02046574(var4, 0, var6);
+        state->taskId = loader->QueueLoadFile(data_020f146e, 0);
+        ++state->phase;
+    } else if (state->phase == 1) {
+        if (loader->GetTaskStatus(state->taskId)) {
+            void* file;
+            unsigned int size;
+            loader->GetLoadedFileByID(state->taskId, &file, &size);
+            if (file) {
+                char message[0x40] = {};
+                func_020e046c(message, file, size, state->messageId);
+                Obj02046574* formatter = MessageSystem_GetInstance();
+                char* previousName = formatter->names[0].text;
+                char savedName[0x40] = {};
+                if (previousName) memcpy(savedName, previousName, strlen(previousName));
+                MessageSystem_SetStringArgument(formatter, 0, state->name);
+                memset(state->text, 0, sizeof(state->text));
+                func_020474a8(formatter, 10, message, state->text);
+                state->text[0x2f] = 0;
+                state->position = 0;
+                if (previousName) MessageSystem_SetStringArgument(formatter, 0, savedName);
             }
             var0->RemoveTask(arg0->unknown_100_);
             arg0->unknown_100_ = -1;
@@ -86,10 +86,10 @@ struct Struct_020943dc {
     char unknown_3cb_[2];
     unsigned char unknown_3cd_;
 };
-extern "C" Struct_02046574_2* func_020421a0();
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+Obj02046574* MessageSystem_GetInstance();
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" void func_020e046c(char*, void*, unsigned int, int);
-extern "C" void func_02046608(Struct_02046574_2*, int, char*, char*, int, int, int);
+extern "C" void MessageSystem_FormatText(Obj02046574*, int, char*, char*, int, int, int);
 extern const char data_020f13aa[];
 extern const char data_020f13c5[];
 
@@ -102,26 +102,26 @@ extern "C" ARM int func_020943dc(Struct_020943dc* arg0) {
             var7->RemoveTask(arg0->unknown_340_);
             arg0->unknown_340_ = -1;
         }
-        arg0->unknown_340_ = var7->QueueLoadFileInGP2(data_020f13aa, data_020f13c5, 0);
-        ++arg0->unknown_3c8_0_;
-    } else if (arg0->unknown_3c8_0_ == 1) {
-        if (var7->GetTaskStatus(arg0->unknown_340_)) {
-            void* var8;
-            unsigned int var9;
-            var7->GetLoadedFileByID(arg0->unknown_340_, &var8, &var9);
-            if (var8) {
-                char var10[0x40] = {};
-                func_020e046c(var10, var8, var9, arg0->unknown_30_);
-                Struct_02046574_2* var11 = func_020421a0();
-                char* var12 = var11->unknown_4ac_[0].unknown_0_;
-                char var13[0x40] = {};
-                if (var12) memcpy(var13, var12, strlen(var12));
-                func_02046574(var11, 0, arg0->unknown_0_);
-                memset(arg0->unknown_348_, 0, sizeof(arg0->unknown_348_));
-                func_02046608(var11, 10, var10, arg0->unknown_348_, 0x100, 0, 0);
-                arg0->unknown_348_[0x7f] = 0;
-                arg0->unknown_344_ = 0;
-                if (var12) func_02046574(var11, 0, var13);
+        state->taskId = loader->QueueLoadFileInGP2(data_020f13aa, data_020f13c5, 0);
+        ++state->phase;
+    } else if (state->phase == 1) {
+        if (loader->GetTaskStatus(state->taskId)) {
+            void* file;
+            unsigned int size;
+            loader->GetLoadedFileByID(state->taskId, &file, &size);
+            if (file) {
+                char message[0x40] = {};
+                func_020e046c(message, file, size, state->messageId);
+                Obj02046574* formatter = MessageSystem_GetInstance();
+                char* previousName = formatter->names[0].text;
+                char savedName[0x40] = {};
+                if (previousName) memcpy(savedName, previousName, strlen(previousName));
+                MessageSystem_SetStringArgument(formatter, 0, state->name);
+                memset(state->text, 0, sizeof(state->text));
+                MessageSystem_FormatText(formatter, 10, message, state->text, 0x100, 0, 0);
+                state->text[0x7f] = 0;
+                state->position = 0;
+                if (previousName) MessageSystem_SetStringArgument(formatter, 0, savedName);
             }
             var7->RemoveTask(arg0->unknown_340_);
             arg0->unknown_340_ = -1;

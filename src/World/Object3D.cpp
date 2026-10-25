@@ -25,16 +25,15 @@ void CreateRotationZ(Matrix3x3* out, fix32_t s, fix32_t c);
 
 extern "C"
 {
-    void* func_020100bc(GameState*);
-    void func_02016d8c(void* rotation);
+    void _Z30RenderConfig_SetObjectRotationPv(void* rotation);
 
     const Matrix3x3* func_0202ed74(void*);
 
     void func_020311f0(fix32_t);
-    void func_02031234(fix32_t);
+    void G3_RotateY(fix32_t);
     void func_02031278(fix32_t);
 
-    void func_0203ac40(void*, int, int, int);
+    void SePlayer_PlayArchiveEntry(void*, int, int, int);
 
     void func_020ca528(const void*, void*);
 
@@ -110,7 +109,7 @@ void Object3D::Initialize()
 {
     unknown_0_ = 1;
     unknown_2_ = -1;
-    unknown_4_ = -1;
+    actorIndex_ = -1;
     unknown_6_ = -1;
     activeAnimationIndex_ = -1;
     animationFlags_ = 0;
@@ -299,15 +298,15 @@ void Object3D::AdvanceAnimations_v0()
         if (loopEntry->triggerTime == 0)
         {
             if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (loopEntry->triggerTime == 1.0)
         {
             if (animationEnded_)
-                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-            func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+            SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
     }
 }
 
@@ -411,15 +410,15 @@ void Object3D::AdvanceAnimations_v1()
             if (loopEntry->triggerTime == 0)
             {
                 if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                    func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (loopEntry->triggerTime == 1.0)
             {
                 if (animationEnded_)
-                    func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-                func_0203ac40(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
     }
 }
@@ -532,7 +531,7 @@ void Object3D::PopulateRenderConfigWorld()
                 Mat3x3_Multiply(&worldRotation, &axisRotation, &worldRotation);
             }
         }
-        func_02016d8c(&worldRotation);
+        _Z30RenderConfig_SetObjectRotationPv(&worldRotation);
         Vector3fix multipliedScale;
         Vector3fix ownScale;
         ownScale.x = scale_[0];
@@ -550,7 +549,7 @@ void Object3D::PopulateRenderConfigWorld()
         RenderConfig::SetObjectPosition(&position_);
         if (flags_ & (1 << OBJECT3D_FLAG_19))
         {
-            const Matrix3x3* rotation = func_0202ed74(func_020100bc(GameState::GetInstance()));
+            const Matrix3x3* rotation = _Z25GetPtrField0x144_0202ed74Pv(GameState::GetInstance()->GetCamera());
             func_020ca528(rotation, &data_0210a010.objectRotationPosition.rotation);
             data_0210a010.flags &= ~((1 << RENDER_CONFIG_FLAG_WORLDVIEW_CACHE_VALID) | (1 << RENDER_CONFIG_FLAG_5) | (1 << RENDER_CONFIG_FLAG_2));
         }
@@ -582,7 +581,7 @@ void Object3D::PopulateRenderConfigWorld()
                     Mat3x3_Multiply(&totalRotation, &axisRotation, &totalRotation);
                 }
             }
-            func_02016d8c(&totalRotation);
+            _Z30RenderConfig_SetObjectRotationPv(&totalRotation);
         }
         Vector3fix scaling;
         scaling.x = scale_[0];
@@ -808,7 +807,7 @@ void Object3D::MaybeUpdateBonePositions()
 
     Matrix3x3 rotationMatrix;
     Mat3x3_WriteRotationY(&rotationMatrix, sine, cosine);
-    func_02016d8c(&rotationMatrix);
+    _Z30RenderConfig_SetObjectRotationPv(&rotationMatrix);
     Vector3fix scale = { 0x1000, 0x1000, 0x1000 };
     RenderConfig::SetObjectScale(&scale);
     RenderConfig::SubmitToFifo();
@@ -840,7 +839,7 @@ void Object3D::SendRotationToFifo()
     if (rotation_.z != 0)
         func_02031278(rotation_.z);
     if (rotation_.y != 0)
-        func_02031234(rotation_.y);
+        G3_RotateY(rotation_.y);
     if (rotation_.x != 0)
         func_020311f0(rotation_.x);
 }
@@ -883,13 +882,13 @@ void Object3D::LoadType0AnimationFromFile(int slot, const char* filename, SafeAl
     {
         BackgroundLoader::AddLockGlobal();
         unsigned int length;
-        if (LoadFileIntoMemory(filename, data_0211e33c, &length))
+        if (LoadFileIntoMemory(filename, g_fileLoadBuffer, &length))
         {
             unsigned int lengthAgain = length;
             void* allocation = alloc->Allocate(lengthAgain);
             if (allocation != NULL)
             {
-                memcpy(allocation, data_0211e33c, lengthAgain);
+                memcpy(allocation, g_fileLoadBuffer, lengthAgain);
                 LoadType0AnimationFromPersistentMemory(slot, alloc, allocation, lengthAgain);
             }
         }
@@ -931,7 +930,7 @@ void Object3D::LoadType0AnimationPackageFromBCFGScript(const char *filename, Saf
 {
     BackgroundLoader::AddLockGlobal();
     unsigned int length;
-    const void* data = LoadFileIntoMemory(filename, data_0211e33c, &length);
+    const void* data = LoadFileIntoMemory(filename, g_fileLoadBuffer, &length);
     if (data != NULL)
         LoadType0AnimationPackageFromBCFGScript(alloc, data, length);
     BackgroundLoader::RemoveLockGlobal();
@@ -1332,7 +1331,7 @@ void Object3D::ShallowCloneModelAndAnimationsTo(Object3D *out)
     out->loadedAnimationPackageList_ = loadedAnimationPackageList_;
 }
 
-bool Object3D::MaybeSetRegularAnimation(const char *animName, int flags)
+bool Object3D::SetAnimationByName(const char *animName, int flags)
 {
     if (pModel_ == NULL || animName == NULL || (flags_ & (1 << OBJECT3D_FLAG_22)) || animName[0] == '\0')
         return false;
@@ -1431,7 +1430,7 @@ bool Object3D::MaybeSetRegularAnimation(const char *animName, int flags)
     return true;
 }
 
-bool Object3D::MaybeSetBCFGAnimation(int index, int flags)
+bool Object3D::SetAnimationByIndex(int index, int flags)
 {
     if (loadedAnimationPackageList_ == NULL)
         return false;
@@ -1767,7 +1766,7 @@ void Object3D::ComputeShadowPosition()
 
 ModelRenderContext* GetModel3DContext(Model3D* model)
 {
-    if (!model->unknown_flags_a8_0_)
+    if (!model->loaded_)
         return NULL;
     return &model->renderContext_;
 }

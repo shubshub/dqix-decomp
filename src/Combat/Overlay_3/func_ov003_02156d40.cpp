@@ -6,10 +6,10 @@ int func_02080468(void *, int);
 void func_0208203c(void *);
 int func_ov003_021550dc(void *);
 void _Z13SePlayer_PlayP8SePlayerii(void *, int, int);
-int _Z27GetField0x3acValue_020100a8P9GameState(void *);
+int _Z29GameState_GetProtagonistIndexP9GameState(void *);
 int _Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(void *, int);
 void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void *);
-void *_Z26GetPtrField0x2a04_02010828P9GameState(void *);
+void *_Z18GameState_GetPartyP9GameState(void *);
 int func_ov003_02155208(void *);
 void func_ov003_02155580(void *, int);
 int func_ov003_02155618(void *);
@@ -62,26 +62,26 @@ struct Struct_ov003_02156d40_3 {
 };
 
 // USA: func_ov003_02156d40
-extern "C" ARM void func_ov003_02156d40(struct Struct_ov003_02156d40_3 *arg0) {
-    void *var0              = _ZN9GameState11GetInstanceEv();
-    struct Struct_ov003_02156d40_2 *var1   = (struct Struct_ov003_02156d40_2 *) func_02010828(var0);
-    struct Struct_ov003_02156d40 *var2 = (struct Struct_ov003_02156d40 *) arg0->unknown_18_;
-    if (arg0->unknown_1f9_ == 0) {
-        func_ov003_02155580(arg0, 0);
-        arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
+extern "C" ARM void func_ov003_02156d40(struct Ctrl02156d40 *self) {
+    void *gs              = _ZN9GameState11GetInstanceEv();
+    struct Q02156d40 *q   = (struct Q02156d40 *) _Z18GameState_GetPartyP9GameState(gs);
+    struct Obj02156d40 *p = (struct Obj02156d40 *) self->f18;
+    if (self->state == 0) {
+        func_ov003_02155580(self, 0);
+        self->state = self->state + 1;
         return;
     }
-    if (arg0->unknown_1f9_ == 1) {
-        int var3 = func_ov003_02155618(arg0);
-        if (var3 != -1) {
-            if (var3 == 1) {
-                if (arg0->unknown_1fb_ == 0) {
-                    arg0->unknown_1f7_  = func_020100a8(var0);
-                    arg0->unknown_1f9_ = 0;
-                    if (func_ov003_02155f88(arg0, arg0->unknown_1f7_)) {
-                        arg0->unknown_1ec_  = 8;
-                        arg0->unknown_1f8_ = 7;
-                        func_0207fe44(var2);
+    if (self->state == 1) {
+        int r = func_ov003_02155618(self);
+        if (r != -1) {
+            if (r == 1) {
+                if (self->f1fb == 0) {
+                    self->f1f7  = _Z29GameState_GetProtagonistIndexP9GameState(gs);
+                    self->state = 0;
+                    if (_Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(self, self->f1f7)) {
+                        self->cmd  = 8;
+                        self->mode = 7;
+                        _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(p);
                         return;
                     }
                     arg0->unknown_1fc_ = arg0->unknown_1fc_ | 2;

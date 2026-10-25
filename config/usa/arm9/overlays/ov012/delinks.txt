@@ -4,7 +4,7 @@
     .data       start:0x0218b220 end:0x0218b320 kind:data align:32
     .bss        start:0x0218b320 end:0x0218b320 kind:bss align:32
 
-src/Combat/Overlay_12/func_ov012_02185634.cpp:
+src/Combat/Overlay_12/AnyMatchInRange_02185634.cpp:
     complete
     .text start:0x02185634 end:0x02185684
 
@@ -24,23 +24,23 @@ src/Combat/Overlay_12/func_ov012_021855f0.cpp:
     complete
     .text start:0x021855f0 end:0x02185634
 
-src/Combat/Overlay_12/func_ov012_021898bc.cpp:
+src/Combat/Overlay_12/BuildMessageB_021898bc.cpp:
     complete
     .text start:0x021898bc end:0x02189934
 
-src/Combat/Overlay_12/func_ov012_02189c44.cpp:
+src/Combat/Overlay_12/BuildMessageC_02189c44.cpp:
     complete
     .text start:0x02189c44 end:0x02189cbc
 
-src/Combat/Overlay_12/func_ov012_02189f38.cpp:
+src/Combat/Overlay_12/BuildMessageD_02189f38.cpp:
     complete
     .text start:0x02189f38 end:0x02189fb0
 
-src/Combat/Overlay_12/func_ov012_0218a438.cpp:
+src/Combat/Overlay_12/BuildMessageE_0218a438.cpp:
     complete
     .text start:0x0218a438 end:0x0218a4b0
 
-src/Combat/Overlay_12/func_ov012_0218a974.cpp:
+src/Combat/Overlay_12/BuildMessageF_0218a974.cpp:
     complete
     .text start:0x0218a974 end:0x0218a9ec
 
@@ -88,11 +88,11 @@ src/Combat/Overlay_12/AdvanceTagState_021884f4.cpp:
     complete
     .text start:0x021884f4 end:0x02188640
 
-src/Combat/Overlay_12/func_ov012_02189934.cpp:
+src/Combat/Overlay_12/AppendMessageNameTags_02189934.cpp:
     complete
     .text start:0x02189934 end:0x02189a78
 
-src/Combat/Overlay_12/func_ov012_021842a0.cpp:
+src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x0218432c
 
@@ -176,7 +176,7 @@ src/Combat/Overlay_12/func_ov012_0218ae74.cpp:
     complete
     .text start:0x0218ae74 end:0x0218af74
 
-src/Combat/Overlay_12/func_ov012_0218a054.cpp:
+src/Combat/Overlay_12/BuildAndEnqueueMessages_0218a054.cpp:
     complete
     .text start:0x0218a054 end:0x0218a1f4
 
@@ -303,7 +303,7 @@ src/Combat/Overlay_12/02184654.cpp:
     .text start:0x02184654 end:0x02184884
 
 
-src/Combat/Overlay_12/func_ov012_02186c1c.cpp:
+src/Combat/Overlay_13/ApplyElemFieldsSlot3_02186c1c.cpp:
     complete
     .text start:0x02186c1c end:0x02186e38
 

@@ -3,10 +3,10 @@
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 void Clear12Bytes020e46c4(void* buf);
-void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
-void* GetGlobalField0x1c020421a0(void);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
+void* MessageSystem_GetInstance(void);
 extern "C" void func_02046380(void* g);
-extern "C" void func_02046608(void* a, int b, int c, void* d, int e, int f, int g);
+extern "C" void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 
 struct Struct_ov000_02171a74 {
     char unknown_0_[4];
@@ -48,13 +48,13 @@ extern "C" ARM int func_ov000_02171a74(struct Struct_ov000_02171a74* arg0
         if (val == 0) {
             goto end;
         }
-        char var3[0xc];
-        func_020e46c4(var3);
-        func_020e4bf4(var3, arg0->unknown_4c_);
-        void* var4 = func_020421a0();
-        func_02046380(var4);
-        *(void**)var4 = var3;
-        func_02046608(var4, 0xa, var2, (void*)arg1, 0x100, 0, 0);
+        char buf[0xc];
+        Clear12Bytes020e46c4(buf);
+        NameText_InitFromPartyMember(buf, obj->field4c);
+        void* g = MessageSystem_GetInstance();
+        func_02046380(g);
+        *(void**)g = buf;
+        MessageSystem_FormatText(g, 0xa, val, (void*)param, 0x100, 0, 0);
     }
 end:
 #endif

@@ -4,15 +4,15 @@
 #include "World/ZoneResourceTree.h"
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" int func_02010804(char* arg0);
-struct Struct_ov017_021d0490_4;
-extern "C" Struct_ov017_021d0490_4* func_ov017_021b8470(void* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_0202c508(void* p);
+void* GetData02100044_0202ae24(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
+int GetField5cb0Value_0201079c(char* obj);
+int GetField5cb4Value_020107d0(char* obj);
+int GetField5cb8Value_02010804(char* obj);
+struct Battle021d0490;
+Battle021d0490* GetField6b0_021b8470(void* obj);
 
 struct Struct_ov017_0218e674;
 extern "C" int func_ov017_021bd3a4(Struct_ov017_0218e674* arg0);
@@ -83,23 +83,23 @@ struct Struct_ov017_021d0490_6 {
     Struct_ov017_021d0490_5 unknown_4_;
 };
 
-static inline Struct_ov017_021d0490_7* inline_ov017_021d0490(GameResources* arg0) { return (Struct_ov017_021d0490_7*)arg0->unknown_ptr_array_371c[6]; }
-static inline Struct_ov017_021d0490* inline_ov017_021d0490_2(GameResources* arg0) { return (Struct_ov017_021d0490*)arg0->unknown_ptr_3718; }
-static inline Struct_ov017_021d0490* inline_ov017_021d0490_3(GameResources* arg0) { return (Struct_ov017_021d0490*)arg0->unknown_ptr_array_3afc[13]; }
+static inline Actor021d0490* GetActor(GameResources* r) { return (Actor021d0490*)r->unknown_ptr_array_371c[6]; }
+static inline Zone021d0490* GetZone(GameResources* r) { return (Zone021d0490*)r->unknown_ptr_3718; }
+static inline Zone021d0490* GetOther(GameResources* r) { return (Zone021d0490*)r->fieldTasks_[13]; }
 
 // USA: func_ov017_021d0490
-extern "C" ARM void func_ov017_021d0490(int arg0) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    unsigned short* var2 = (unsigned short*)func_02012fe4();
-    GameResources* var3 = GetGameResources();
-    Struct_ov017_021d0490_7* var4 = inline_ov017_021d0490(var3);
-    Struct_ov017_021d0490* var5 = inline_ov017_021d0490_2(var3);
-    Struct_ov017_021d0490* var6 = inline_ov017_021d0490_3(var3);
-    void* var7 = func_0202ae24();
-    Struct_ov017_021d0490_6 var8;
-    var8.unknown_0_ = 0x97;
-    Struct_ov017_021d0490_5* var9 = &var8.unknown_4_;
+extern "C" ARM void func_ov017_021d0490(int mode) {
+    GameState* battle = GameState::GetInstance();
+    void* link = func_0202ae18();
+    unsigned short* data = (unsigned short*)Zone3D_GetInstance();
+    GameResources* res = GetGameResources();
+    Actor021d0490* actor = GetActor(res);
+    Zone021d0490* zone = GetZone(res);
+    Zone021d0490* other = GetOther(res);
+    void* queue = GetData02100044_0202ae24();
+    Packet021d0490 packet;
+    packet.tag = 0x97;
+    Payload021d0490* p = &packet.payload;
 
     if (func_0202c508(var1) != 0) {
         var9->unknown_3_0_ = arg0;

@@ -3,7 +3,7 @@
 #include "Util/Random.h"
 
 extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
-void Camera_SetTarget(unsigned char* obj, int x, int y, int z);
+void Camera_SetTarget(struct Camera* obj, int x, int y, int z);
 void ApplyVec3Tail_0202e694(void* obj, int* vec);
 void SetFlagOrState0216d530(void* obj, int val);
 
@@ -29,7 +29,7 @@ extern "C" ARM void func_ov000_0216d90c(unsigned char* arg0, int arg1) {
         var5 = 0;
     }
     func_ov000_0216d370(obj, 1, 1, 1);
-    Camera_SetTarget(obj, 0, 0x1000, 0x1000);
+    Camera_SetTarget((struct Camera*)obj, 0, 0x1000, 0x1000);
     int r = NextRandomMax(*(struct Random**)(obj + 0x21c), 8);
     if (tall) {
         if (r == 2) {

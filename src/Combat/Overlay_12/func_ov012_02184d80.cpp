@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/FileIO.h"
 
 struct Struct_ov009_02189a4c_2;
@@ -101,13 +101,13 @@ extern "C" ARM int func_ov012_02184d80(MessageSyntax* self, char* name, char* ou
     MessageCheckWork work;
     unsigned short secondFileSize = 0;
     work.fileSize_ = 0;
-    LoadFileIntoMemory(NameFilter_patternsFilePath, data_0211e33c, &work.fileSize_);
+    LoadFileIntoMemory(NameFilter_patternsFilePath, g_fileLoadBuffer, &work.fileSize_);
     memset(&self->file_, 0, 12);
-    unsigned char* buffer = data_0211e33c;
+    unsigned char* buffer = g_fileLoadBuffer;
     if (buffer) {
-        memcpy(&self->file_, data_0211e33c, 4);
+        memcpy(&self->file_, g_fileLoadBuffer, 4);
         unsigned int firstOffset = AlignUp(sizeof(ForbiddenWordHeader), 4);
-        unsigned char* base = data_0211e33c;
+        unsigned char* base = g_fileLoadBuffer;
         self->file_.patterns_ = (ForbiddenWordPattern*)(base + firstOffset);
         unsigned int bytes = PatternOffset(0, self->file_.header_.count_, sizeof(ForbiddenWordPattern), 4);
         self->file_.texts_ = (char*)(base + (firstOffset + bytes));
@@ -122,15 +122,15 @@ extern "C" ARM int func_ov012_02184d80(MessageSyntax* self, char* name, char* ou
                     for (i = 0; i < headerCount; ++i, ++headerPattern) func_ov012_0218558c(self->GetFile(), headerPattern);
                 }
             }
-            arg0->unknown_18_.unknown_0_.unknown_3_7_ = 1;
-            ((Struct_ov009_02189a4c_4*)data_0211e33c)->unknown_3_7_ = 1;
+            self->file_.header_.relocated_ = 1;
+            ((ForbiddenWordHeader*)g_fileLoadBuffer)->relocated_ = 1;
         }
     }
-    arg0->unknown_24_ = 0;
-    arg0->unknown_28_ = 0;
-    if (var19) {
-        arg0->unknown_24_ = data_0211e33c + var19;
-        arg0->unknown_28_ = var19;
+    self->secondFile_ = 0;
+    self->secondFileSize_ = 0;
+    if (secondFileSize) {
+        self->secondFile_ = g_fileLoadBuffer + secondFileSize;
+        self->secondFileSize_ = secondFileSize;
     }
     __clear(var17, 180);
     __clear(var16, 512);

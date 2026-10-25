@@ -1,20 +1,27 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
-struct Obj0204b010 { char b[0x20]; };
-void Background_ClearMap(Obj0204b010*, void*);
+void Background_ClearMap(BackgroundGraphics*, void*);
 
+// The header's CreationWindow, up to layerCount.
 struct Cont0205d1e0 {
-    char pad0[0x98];
-    Obj0204b010* list98;
-    char pad9c[0x16];
-    unsigned char countB2;
+    unsigned char unknown[4];
+    int frame[20];
+    int cursor[16];
+    unsigned char unknown94[4];
+    BackgroundGraphics* layers;
+    void* panes;
+    short layout[8];
+    unsigned char activeWindow;
+    unsigned char nextWindow;
+    unsigned char layerCount;
 };
 
 // Main, originally ClearBuffers0204b010OverList0x98 (USA 0x0205d1e0, EUR 0x0205d1f0, JPN 0x0205e510)
-ARM void Window_ClearLayers(Cont0205d1e0* obj) {
+ARM void Window_ClearLayers(Cont0205d1e0* window) {
     unsigned char i;
-    if (obj->list98 == NULL) return;
-    for (i = 0; i < obj->countB2; i++) {
-        Background_ClearMap(&obj->list98[i], NULL);
+    if (window->layers == NULL) return;
+    for (i = 0; i < window->layerCount; i++) {
+        Background_ClearMap(&window->layers[i], NULL);
     }
 }

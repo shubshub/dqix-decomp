@@ -16,18 +16,17 @@ void BackupSubBgControlRegisters(struct SubBgControlBackup02074b64* obj);
 extern "C" void func_02074af4(void* p);
 
 struct List0202fec8;
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
 
 void ConfigureBgSub1AndClear_021dcc58(void* obj);
 ARM void ResetIfNonNeg_021db2e4(volatile int* p);
 
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
-extern AllocatorUnion data_02114e20;
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern AllocatorUnion g_mainAllocator;
 
 #if defined(jpn)
 struct DataStruct_021dd59c { unsigned int pad0[5]; void* field4; };
@@ -61,7 +60,7 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
 
     if (*(unsigned char*)(obj + regionalOffset0) == 0) {
         if (data_ov023_021ff9e0.field4 == 0) {
-            data_ov023_021ff9e0.field4 = AllocateAligned4_02012d88(&data_02114e20, 0x1800);
+            data_ov023_021ff9e0.field4 = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x1800);
         }
         if (!(*(unsigned short*)(obj + regionalOffset1) & 0x40)) {
             *(unsigned char*)(obj + regionalOffset0) = 2;
@@ -87,11 +86,11 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
             *(unsigned char*)(obj + regionalOffset0) = 4;
             return;
         }
-        FontBankLoader* g = GetGlobal02109400_02094a00();
+        FontBankLoader* g = FontBankLoader_GetInstance();
         BlankFunction02094b30(g, 0x1fa, 0);
         *(unsigned char*)(obj + regionalOffset0) = *(unsigned char*)(obj + regionalOffset0) + 1;
     } else if (*(unsigned char*)(obj + regionalOffset0) == 3) {
-        if (AlwaysTrue02094b4c(GetGlobal02109400_02094a00()) != 0) {
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) != 0) {
             *(unsigned char*)(obj + regionalOffset0) = *(unsigned char*)(obj + regionalOffset0) + 1;
         }
     }
@@ -125,9 +124,9 @@ extern "C" ARM void func_ov023_021dd59c(void* objRaw) {
             if (out1 != 0 && out2 != 0) {
 #endif
 
-                int count = Pac_CountFiles((struct ActiveEntry02046900*)out1);
+                int count = Pac_CountFiles((struct PacRecord*)out1);
                 for (int i = 0; i < count; i++) {
-                    void* result = Pac_GetFile((struct Rec020467f0*)out1, i, &dummyOut, &fieldOut);
+                    void* result = Pac_GetFile((struct PacRecord*)out1, i, &dummyOut, &fieldOut);
                     SpriteContext_LoadFile(obj + regionalOffset9, result, fieldOut, *(void**)(obj + 0x44));
                 }
             }

@@ -22,7 +22,7 @@ int CheckFlagOrThreshold_02161b48(char *base, int a);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_0215c2c8(void *base);
 extern "C" void func_ov002_02156e90(void *base);
-extern "C" void func_02012fe4(void);
+extern "C" void Zone3D_GetInstance(void);
 extern "C" void func_02017c58(void);
 extern "C" char g_sePlayer[];
 
@@ -59,7 +59,7 @@ extern "C" ARM void func_ov002_0216257c(char *base) {
             SetNodeFieldsAndInsert_021a120c(GameState::GetInstance()->GetResources(), 3, v);
             *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
             *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
-            func_02012fe4();
+            Zone3D_GetInstance();
             func_02017c58();
         } else if (func_ov002_02161b48(arg0, 1)) {
             *(short *) (arg0 + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) = -1;

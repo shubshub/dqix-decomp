@@ -26,41 +26,41 @@ extern struct Entry0215fce8 __ptmf_null;
 extern struct Entry0215fce8 data_ov003_0217ff68[];
 
 extern "C" int func_ov017_021959b4();
-extern "C" void *func_020d6c00(void);
-extern "C" int *func_020936f8(void);
-extern "C" void func_020466e4(unsigned int *arg0, unsigned int arg1);
+void *GlobalFlags_GetInstance(void);
+int *GetGlobal02109030_020936f8(void);
+void FlagWord_SetBits(unsigned int *word, unsigned int bits);
 extern "C" void *func_0202ae18();
-extern "C" void *func_0202ae24(void);
-extern "C" void func_0202b0f4(void *arg0);
-extern "C" void func_ov017_02195748(unsigned char *arg0);
-extern "C" void func_ov017_02192594(unsigned char* arg0);
-extern "C" void func_020939fc(unsigned char *arg0);
-struct Struct_0205e854;
-extern "C" void *func_0205e854(Struct_0205e854 *arg0);
-struct Struct_ov003_021549a8;
-extern "C" Struct_ov003_021549a8 *func_020421a0(void);
-extern "C" void func_02043204(char *arg0);
-struct Struct_020e28dc;
-extern "C" int func_020e28dc(struct Struct_020e28dc *arg0);
-struct Struct_020e25e8;
-extern "C" void func_020e25e8(struct Struct_020e25e8 *arg0);
-struct Struct_020e263c_2;
-extern "C" void func_020e263c(struct Struct_020e263c_2 *arg0, int arg1);
-struct Struct_0207fc6c;
-extern "C" void func_0207fc6c(struct Struct_0207fc6c *arg0, int arg1);
-struct Struct_ov003_0215fce8;
-extern "C" void func_ov003_021604d0(struct Struct_ov003_0215fce8 *arg0);
-struct Struct_ov003_0215fce8_2;
-extern "C" void func_ov003_02160b2c(struct Struct_ov003_0215fce8_2 *arg0);
-extern "C" int func_ov003_02160cc0(char *arg0);
-extern "C" void func_ov003_02167494(void *arg0, int arg1);
-extern "C" void func_ov003_02160ec4(void *arg0);
-extern "C" void func_ov003_02160f4c(void *arg0);
-extern "C" void func_ov003_02160794(void *arg0);
-extern "C" int func_02081f20(void *arg0, int arg1);
-extern "C" int func_020800fc(void *arg0, short *arg1, short arg2, unsigned short arg3, unsigned char arg4, bool arg5);
-extern "C" void func_020804fc(void *arg0, int arg1);
-extern "C" void func_020813ec(void *arg0, int arg1);
+void *GetData02100044_0202ae24(void);
+extern "C" void func_0202b0f4(void *obj);
+void ClearTwoBytesAtField_02195748(unsigned char *base);
+void SetFlag1ForFlagombatants_02192594_02192594(unsigned char* base);
+void ClearFlag0x3c9Bit0AndCleanup_020939fc(unsigned char *obj);
+struct BitArrayObj0205e854;
+void *FillBitArray0x1524WithFF(BitArrayObj0205e854 *obj);
+struct Controller020421a0;
+Controller020421a0 *MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char *obj);
+struct Outer020e28dc;
+int GetInnerFlagBit0020e28dc(struct Outer020e28dc *o);
+struct Obj020e25e8;
+void ResetSelectionState020e25e8(struct Obj020e25e8 *obj);
+struct Ctx020e263c;
+void UpdateEntryStateAndPosition(struct Ctx020e263c *obj, int value);
+struct Obj0207fc6c;
+void CallFunc0204c87cOverEntries0207fc6c(struct Obj0207fc6c *obj, int arg);
+struct S021604d0;
+void UpdateIfFlag4a3_021604d0(struct S021604d0 *s);
+struct S02160b2c;
+void ClearGlobalField9ae_02160b2c(struct S02160b2c *s);
+int DispatchByFlags464_02160cc0(char *s);
+extern "C" void func_ov003_02167494(void *obj, int arg);
+extern "C" void func_ov003_02160ec4(void *self);
+extern "C" void func_ov003_02160f4c(void *self);
+extern "C" void func_ov003_02160794(void *self);
+extern "C" int func_02081f20(void *obj, int scaleCount);
+extern "C" int func_020800fc(void *menu, short *cursor, short prevCursor, unsigned short buttons, unsigned char a, bool b);
+void ClearSublistEntriesFlag4_020804fc(void *menu, int group);
+extern "C" void func_020813ec(void *obj, int key);
 
 #if defined(jpn)
 #define RG(usa, jpn) (jpn)
@@ -71,47 +71,47 @@ extern "C" void func_020813ec(void *arg0, int arg1);
 #endif
 
 // USA: func_ov003_0215fce8
-extern "C" ARM int func_ov003_0215fce8(unsigned char *arg0, int arg1) {
-    if (arg0[SO(0x4c0)] == 0 && func_ov017_021959b4() != 0) {
-        unsigned char var0 = arg0[SO(0x4a3)];
-        if ((var0 == 0xb && arg0[SO(0x4a4)] == 0x11) || (var0 == 6 && arg0[SO(0x4a4)] == 0)) {
-            void *var1 = func_020d6c00();
-            int *var2  = func_020936f8();
-            func_020466e4((unsigned int *) var1, 0x20);
-            unsigned char *var3 = (unsigned char*)GetGameResources();
-            void *var4          = func_0202ae18();
-            void *var5           = func_0202ae24();
-            SetFlags00((GameResources*)var3, 2);
-            func_0202b0f4(var4);
-            func_ov017_02195748(var3);
-            func_ov017_02192594(var3);
-            func_020939fc((unsigned char *) var2);
-            func_0205e854((Struct_0205e854 *) var5);
-            ClearFlags00((GameResources*)var3, 0x40);
-            var3[RG(0x42e3, 0x40c3)]               = 0;
-            var3[RG(0x42e2, 0x40c2)]               = 0;
-            *(short *) (arg0 + SO(0x484)) = 0x37;
-            arg0[SO(0x4a5)]                      = 0;
-            arg0[SO(0x4a4)]                      = 5;
-            arg0[SO(0x4a3)]                      = 0xb;
-            *(unsigned int *) (arg0 + SO(0x464)) = (*(unsigned int *) (arg0 + SO(0x464)) & ~2u) | 4u;
+extern "C" ARM int func_ov003_0215fce8(unsigned char *self, int arg) {
+    if (self[SO(0x4c0)] == 0 && func_ov017_021959b4() != 0) {
+        unsigned char a3 = self[SO(0x4a3)];
+        if ((a3 == 0xb && self[SO(0x4a4)] == 0x11) || (a3 == 6 && self[SO(0x4a4)] == 0)) {
+            void *p = GlobalFlags_GetInstance();
+            int *g  = GetGlobal02109030_020936f8();
+            FlagWord_SetBits((unsigned int *) p, 0x20);
+            unsigned char *r8 = (unsigned char*)GetGameResources();
+            void *r7          = func_0202ae18();
+            void *d           = GetData02100044_0202ae24();
+            SetFlags00((GameResources*)r8, 2);
+            func_0202b0f4(r7);
+            ClearTwoBytesAtField_02195748(r8);
+            SetFlag1ForFlagombatants_02192594_02192594(r8);
+            ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char *) g);
+            FillBitArray0x1524WithFF((BitArrayObj0205e854 *) d);
+            ClearFlags00((GameResources*)r8, 0x40);
+            r8[RG(0x42e3, 0x40c3)]               = 0;
+            r8[RG(0x42e2, 0x40c2)]               = 0;
+            *(short *) (self + SO(0x484)) = 0x37;
+            self[SO(0x4a5)]                      = 0;
+            self[SO(0x4a4)]                      = 5;
+            self[SO(0x4a3)]                      = 0xb;
+            *(unsigned int *) (self + SO(0x464)) = (*(unsigned int *) (self + SO(0x464)) & ~2u) | 4u;
         } else {
             arg0[SO(0x4c0)] = 1;
             arg0[SO(0x4bf)] = 1;
         }
     }
 
-    if (!(*(unsigned int *) (arg0 + SO(0x464)) & 0x2000000) && arg0[SO(0x4bf)] != 0) {
-        short *var6 = *(short **) (arg0 + SO(0x470));
-        if (var6 != 0) *var6 = -1;
-        *(int *) (arg0 + SO(0x470)) = 0;
-        func_02043204((char *) func_020421a0());
-        *(short *) (arg0 + SO(0x486)) = -1;
-        *(short *) (arg0 + SO(0x484)) = *(short *) (arg0 + SO(0x486));
-        arg0[SO(0x4a5)]                      = 0;
-        struct Struct_020e28dc *var7       = *(struct Struct_020e28dc **) (arg0 + SO(0x390));
-        if (var7 != 0 && func_020e28dc(var7) != 0) {
-            func_020e25e8(*(struct Struct_020e25e8 **) (arg0 + SO(0x390)));
+    if (!(*(unsigned int *) (self + SO(0x464)) & 0x2000000) && self[SO(0x4bf)] != 0) {
+        short *sel = *(short **) (self + SO(0x470));
+        if (sel != 0) *sel = -1;
+        *(int *) (self + SO(0x470)) = 0;
+        MessageSystem_Reset((char *) MessageSystem_GetInstance());
+        *(short *) (self + SO(0x486)) = -1;
+        *(short *) (self + SO(0x484)) = *(short *) (self + SO(0x486));
+        self[SO(0x4a5)]                      = 0;
+        struct Outer020e28dc *o390       = *(struct Outer020e28dc **) (self + SO(0x390));
+        if (o390 != 0 && GetInnerFlagBit0020e28dc(o390) != 0) {
+            ResetSelectionState020e25e8(*(struct Obj020e25e8 **) (self + SO(0x390)));
         }
         arg0[SO(0x4a3)] = 0xf;
         arg0[SO(0x4a4)] = 0;

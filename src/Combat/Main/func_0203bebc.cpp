@@ -23,7 +23,7 @@ struct Struct_0203bebc_4 {
 void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
 void SetField0_0205b220(void* obj, int value);
 void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
-void* GetGlobalField0x1c020421a0(void);
+void* MessageSystem_GetInstance(void);
 void* Font_GetCharacter(int idx, int tableIdx);
 int LookupKeyValue020425e4(int a, int b, int tableIdx);
 int GetWordFromTable02042648(int idx);
@@ -145,10 +145,10 @@ extern "C" ARM void func_0203bebc(void* arg0, void* arg1, void* arg2)
         LoadToSubObjVRAM(var14, (unsigned int)arg5, 256);
     }
 #else
-    int var16;
-    char* var17 = (char*)func_020421a0();
-    void* var18 = *(void**)(var17 + 0x60);
-    memset(var18, 0, 0x400);
+    int limit;
+    char* g = (char*)MessageSystem_GetInstance();
+    void* fp = *(void**)(g + 0x60);
+    memset(fp, 0, 0x400);
 
     struct Struct_020200c0_3 var19[4];
     int var20 = 0;

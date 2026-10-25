@@ -9,8 +9,8 @@ struct Struct_0205c570;
 int Window_GetSelectedIndex(Struct_0205c570*);
 int GetFieldC54ArrayValue021573f8(void *self, int v);
 struct Struct_0205d81c;
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
-extern "C" void func_ov002_0215b9a4(char *arg0, unsigned char arg1, int arg2);
+void Window_SetPanePalette(Struct_0205d81c*, int, int);
+extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 struct Struct_0205def8;
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void * FindElementByC40205d81c(Struct_0205d81c*, int);
@@ -42,7 +42,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
         *(char *) (self + 0x1ae8) = GetFieldC54ArrayValue021573f8(self, *(short *) (self + 0x1ab8));
         signed char cur = *(signed char *) (self + 0x1ae8);
         *(char *) (self + 0x1ae9) = cur;
-        SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xe20), 0xe, 1);
+        Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0xe, 1);
         if (*(short *) (self + 0x1ab8) != 0) {
             func_ov002_0215b9a4(self, 0xe, 0);
             SetElementFlag0x20ByKey0205def8((Struct_0205def8*)(self + 0xe20), 1, 0xe);
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
             *(char *) (self + 0x1afa) = 0;
             *(char *) (self + 0xed8) = *(int *) (self + 0x1a80);
             *(int *) (self + 0x22ac) &= ~4;
-            SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xe20), 0xc, 1);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0xc, 1);
             SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
             *(short *) (self + 0x1ada) = 0;
             *(short *) (self + 0x1af0) = 0x238d;
@@ -106,7 +106,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
         *(char *) (self + 0x1c20) = GetFieldC54ArrayValue021573f8(self, *(short *) (self + 0x1bf0));
         signed char cur = *(signed char *) (self + 0x1c20);
         *(char *) (self + 0x1c21) = cur;
-        SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xec8), 0xd, 1);
+        Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0xd, 1);
         if (*(short *) (self + 0x1bf0) != 0) {
             func_ov002_0215b9a4(self, 0xd, 0);
             SetElementFlag0x20ByKey0205def8((Struct_0205def8*)(self + 0xec8), 1, 0xd);
@@ -131,7 +131,7 @@ extern "C" ARM void func_ov002_021644a8(char *self) {
             *(char *) (self + 0x1c32) = 0;
             *(char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
             *(int *) (self + 0x247c) &= ~4;
-            SetElementFieldC2_0205deb4((Struct_0205d81c*)(self + 0xec8), 0xb, 1);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0xb, 1);
             SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
             *(short *) (self + 0x1c12) = 0;
             *(short *) (self + 0x1c28) = 0x238d;

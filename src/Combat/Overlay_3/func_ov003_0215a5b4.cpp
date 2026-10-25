@@ -42,10 +42,10 @@ struct Struct_ov003_0215a5b4_4 {
 struct Struct_0201099c_3;
 struct Struct_0205d81c;
 
-struct MessageWork0215a5b4* GetGlobalField0x1c020421a0();
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
+struct MessageWork0215a5b4* MessageSystem_GetInstance();
+void Window_SetPanePalette(struct Struct_0205d81c* s, int key, int value);
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 extern "C" void __clear(void* buf, int n);
 unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
 extern "C" void func_ov003_021592d8(struct BattleMenu0215a5b4* self, struct Combatant0215a5b4* combatant, char* out);
@@ -54,15 +54,15 @@ extern "C" void func_ov003_0215c01c(struct BattleMenu0215a5b4* self, int mode, i
 
 // USA: func_ov003_0215a5b4
 extern "C" ARM void func_ov003_0215a5b4(struct BattleMenu0215a5b4* self) {
-    struct MessageWork0215a5b4* work = GetGlobalField0x1c020421a0();
+    struct MessageWork0215a5b4* work = MessageSystem_GetInstance();
     unsigned char step = self->step;
     if (step == 0) {
         GameState* game = GameState::GetInstance();
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 0, 1);
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 1, 1);
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c*)self->menu, 2, 1);
+        Window_SetPanePalette((struct Struct_0205d81c*)self->menu, 0, 1);
+        Window_SetPanePalette((struct Struct_0205d81c*)self->menu, 1, 1);
+        Window_SetPanePalette((struct Struct_0205d81c*)self->menu, 2, 1);
         memset(self->text, 0, kRegion960);
-        AppendString02042058(self->text,
+        Text_Append(self->text,
                              (const char*)KeyTable_Get((struct Container020e0310*)self->messages, 0x3fc));
         unsigned char ids[4];
         char* line = self->text + kRegion860;
@@ -83,11 +83,11 @@ extern "C" ARM void func_ov003_0215a5b4(struct BattleMenu0215a5b4* self) {
             if (var8) {
                 continue;
             }
-            memset(var4, 0, 0x80);
-            func_ov003_021592d8(arg0, var7, var4);
-            func_02042058(arg0->unknown_7c_, var4);
+            memset(line, 0, 0x80);
+            func_ov003_021592d8(self, combatant, line);
+            Text_Append(self->text, line);
         }
-        AppendString02042058(self->text,
+        Text_Append(self->text,
                              (const char*)KeyTable_Get((struct Container020e0310*)self->messages, 0x42e));
         func_ov003_02159250(self, self->text);
         self->step++;

@@ -321,7 +321,7 @@ src/Combat/Overlay_6/func_ov006_0215f9e8.cpp:
     complete
     .text start:0x02160d5c end:0x02160d90
 
-src/Combat/Overlay_6/func_ov006_0215f348.cpp:
+src/Combat/Overlay_1/AllocateAndInitStateNode_02160768.cpp:
     complete
     .text start:0x02160768 end:0x021607f8
 

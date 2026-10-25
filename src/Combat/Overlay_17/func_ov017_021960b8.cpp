@@ -38,26 +38,26 @@ struct Struct_ov017_021960b8 {
 };
 
 extern "C" void* func_020704fc(void);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_020c52e8();
-extern "C" void func_020c5414();
-extern "C" void func_020c57d4(int, int, int, int, void*);
-extern "C" void func_020c5770(int, int, int, int, int, int, int, int, void*);
-extern "C" void func_ov017_021a3b30(int);
-extern "C" void func_020707c8(Struct_020707c8*);
-extern "C" int func_02046b24(Struct_02015438**);
-extern "C" void func_020444e0(Struct_020444e0*);
-extern "C" void func_ov017_0219ad84(Struct_ov017_021960b8*);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
+extern "C" void __clear(void* ptr, int size);
+void G3X_Reset();
+extern "C" void G3X_ResetMtxStack();
+void G3i_LookAt_(int, int, int, int, void*);
+void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
+void ForwardObjAndField0_021a3b30(int);
+void UpdateInterpTimer020707c8(Timer020707c8*);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+void ReleaseField0x38IfValid020444e0(Obj020444e0*);
+extern "C" void func_ov017_0219ad84(Battle021960b8*);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
 extern "C" void func_0205337c(GameObject*);
-extern "C" unsigned char func_02039820(void*);
-extern "C" int func_02039d7c(char*);
-extern "C" void func_02096824(unsigned char*);
-extern "C" int* func_020936f8();
-extern "C" void func_02093f68(char*);
-extern "C" void* func_02012fe4(void);
-extern "C" void func_ov017_021959ec(void*);
-extern "C" Struct_ov003_02174114* func_020421a0();
+unsigned char GetByteField0x252_02039820(void*);
+int GetByte0x26c_02039d7c(char*);
+void MaybeDispatchPendingAction02096824(unsigned char*);
+int* GetGlobal02109030_020936f8();
+void UpdateChannelStateIfEligible02093f68(char*);
+extern "C" void* Zone3D_GetInstance(void);
+void MaybeUpdateOrDispatchEntry_021959ec(void*);
+Global020421a0* MessageSystem_GetInstance();
 
 extern Vector3fix data_ov017_021d6408;
 extern Vector3fix data_ov017_021d6414;
@@ -68,23 +68,23 @@ extern int data_ov017_021d8348;
 extern int data_ov017_021d8350;
 
 // USA: func_ov017_021960b8
-extern "C" ARM void func_ov017_021960b8(Struct_ov017_021960b8* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov003_02174114* var1 = func_020421a0();
-    Struct_020707c8* var2 = (Struct_020707c8*)func_020704fc();
-    GameObject* var3 = var0->GetUnknownGameObject();
-    var0->GetTickCount();
+extern "C" ARM void func_ov017_021960b8(Battle021960b8* self) {
+    GameState* game = GameState::GetInstance();
+    Global020421a0* global = MessageSystem_GetInstance();
+    Timer020707c8* timer = (Timer020707c8*)func_020704fc();
+    GameObject* leader = game->GetUnknownGameObject();
+    game->GetTickCount();
 
     Vector3fix var4 = data_ov017_021d6408;
     Vector3fix var5;
     __clear(&var5, sizeof(var5));
     Vector3fix var6 = data_ov017_021d6414;
 
-    func_020c52e8();
-    func_020c5414();
+    G3X_Reset();
+    G3X_ResetMtxStack();
     *(volatile unsigned int*)0x04000440 = 0;
-    func_020c57d4((int)&var5, (int)&var6, (int)&var4, 1, NULL);
-    func_020c5770(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, 1, NULL);
+    G3i_LookAt_((int)&eye, (int)&up, (int)&target, 1, NULL);
+    G3i_OrthoW_(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, 1, NULL);
     *(volatile unsigned int*)0x04000440 = 2;
     func_ov017_021a3b30((int)arg0->unknown_36fc_);
 
@@ -128,8 +128,8 @@ extern "C" ARM void func_ov017_021960b8(Struct_ov017_021960b8* arg0) {
         func_02096824(arg0->unknown_4328_);
     }
 
-    func_02093f68((char*)func_020936f8());
-    if (((AtmosphericEffectSet*)((char*)func_02012fe4() + Enum_ov017_021960b8_244))->Draw()) {
-        func_ov017_021959ec(arg0);
+    UpdateChannelStateIfEligible02093f68((char*)GetGlobal02109030_020936f8());
+    if (((AtmosphericEffectSet*)((char*)Zone3D_GetInstance() + kAtmosphericOffset))->Draw()) {
+        MaybeUpdateOrDispatchEntry_021959ec(self);
     }
 }

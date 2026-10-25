@@ -3,7 +3,7 @@
 
 struct Struct_02048150;
 
-extern "C" void *func_02010828(GameState *arg0);
+void *GameState_GetParty(GameState *gameState);
 extern "C" int *func_0202ae18();
 extern "C" int func_02086ef0(Struct_02048150 *arg0, int arg1);
 extern "C" int func_ov002_02154b94(void *arg0, int arg1);
@@ -17,16 +17,16 @@ extern "C" int func_ov002_02154944(char *arg0, int arg1, int arg2, unsigned char
 extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
 
 // USA: func_ov002_021544f4
-extern "C" ARM int func_ov002_021544f4(char *arg0, char *arg1, char *arg2, int arg3) {
-    if (arg1 == 0) return 0;
-    if (arg2 == 0) return 0;
-    Struct_02048150 *var0 = (Struct_02048150 *) func_02010828(GameState::GetInstance());
-    int *var1                       = func_0202ae18();
-    int var2                   = 0;
-    char *var3                = arg1 + 8;
-    if (arg3) var3 = arg1 + 0x20;
-    for (int var4 = 0; var4 < 4; var4++) {
-        func_ov002_02153e90(var3 + var4 * 6);
+extern "C" ARM int func_ov002_021544f4(char *self, char *p, char *q, int flag) {
+    if (p == 0) return 0;
+    if (q == 0) return 0;
+    ArrayContainsByteStruct *arr = (ArrayContainsByteStruct *) GameState_GetParty(GameState::GetInstance());
+    int *x                       = func_0202ae18();
+    int result                   = 0;
+    char *entries                = p + 8;
+    if (flag) entries = p + 0x20;
+    for (int i = 0; i < 4; i++) {
+        func_ov002_02153e90(entries + i * 6);
     }
     for (int var5 = 0; var5 < *(unsigned char *) (arg1 + 3); var5++) {
         unsigned char *var6 = (unsigned char *) (var3 + var5 * 6);

@@ -17,31 +17,31 @@ struct Struct_ov031_02291e04 {
     char unknown_1c_[0x18]; void* unknown_34_;
 };
 #endif
-extern Struct_ov031_02291e04 data_ov031_02291e04;
-extern "C" int func_02001aec(const void*,const void*,unsigned int);
+extern PeerScriptState data_ov031_02291e04;
+extern "C" int memcmp(const void*,const void*,unsigned int);
 
 // USA: func_ov031_02243144
-extern "C" ARM int func_ov031_02243144(Script::Parameter* arg0) {
-    if(!data_ov031_02291e04.unknown_34_) return 1;
-    if(data_ov031_02291e04.unknown_3_) return 1;
-    arg0++->ToInt();
-    unsigned char var0[6];
-    for(int var1=0;var1<6;++var1) var0[var1]=(arg0++)->ToInt();
-    if(!func_02001aec(var0,data_ov031_02291e04.unknown_18_->unknown_4_,6)) {
-        data_ov031_02291e04.unknown_6_=1;
-        int var2=-1;
-        int var3=-1;
+extern "C" ARM int func_ov031_02243144(Script::Parameter* parameters) {
+    if(!data_ov031_02291e04.active) return 1;
+    if(data_ov031_02291e04.changed) return 1;
+    parameters++->ToInt();
+    unsigned char address[6];
+    for(int i=0;i<6;++i) address[i]=(parameters++)->ToInt();
+    if(!memcmp(address,data_ov031_02291e04.identity->address,6)) {
+        data_ov031_02291e04.received=1;
+        int slot=-1;
+        int oldest=-1;
 #if defined(jpn)
         Struct_ov031_02243144_2* var4=(Struct_ov031_02243144_2*)((char*)GameState::GetInstance()+0x7cdc);
 #else
         Struct_ov031_02243144_2* var4=(Struct_ov031_02243144_2*)&GameState::GetInstance()->unk_6fc0[0x7fb0-0x6fc0];
 #endif
-        Struct_ov031_02243144_2* var5=var4;
-        for(int var6=0;var6<8;++var6,++var5) {
-            if(!func_02001aec(var5,var0,6)) {
-                var2=var6;
-                if(var5->unknown_6_!=255 && !data_ov031_02291e04.unknown1_7_) {
-                    data_ov031_02291e04.unknown1_4_=var5->unknown_6_;
+        RecentPeer* peer=peers;
+        for(int i=0;i<8;++i,++peer) {
+            if(!memcmp(peer,address,6)) {
+                slot=i;
+                if(peer->age!=255 && !data_ov031_02291e04.ignoreAge) {
+                    data_ov031_02291e04.age=peer->age;
                     return 1;
                 }
                 break;

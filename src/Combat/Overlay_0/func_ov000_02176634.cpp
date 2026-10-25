@@ -109,33 +109,33 @@ struct Struct_ov000_02176634_8 {
     unsigned int unknown_a8_;
 };
 
-extern "C" void func_ov000_02177184(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02177454(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_0217768c(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_021779b4(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02177bf0(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02177e50(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02178074(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_021784d4(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-struct Struct_ov000_02170fd0;
-extern "C" void func_ov000_02170fd0(Struct_ov000_02170fd0*, int);
-extern "C" void func_ov000_021787b8(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02178ba8(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02179018(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_021794cc(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_0217992c(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02179b70(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_02179f94(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" void func_ov000_0217a514(Struct_ov000_02176634_11*, Struct_ov000_02176634*, int, int);
-extern "C" Struct_ov000_02176634_9* func_020421a0();
-extern "C" void func_02046380(Struct_ov000_02176634_9*);
+extern "C" void func_ov000_02177184(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02177454(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_0217768c(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_021779b4(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02177bf0(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02177e50(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02178074(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_021784d4(Menu02176634*, Entry02176634*, int, int);
+struct Struct02170fd0;
+void CallHandlerIfF38Set02170fd0(Struct02170fd0*, int);
+extern "C" void func_ov000_021787b8(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02178ba8(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02179018(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_021794cc(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_0217992c(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02179b70(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_02179f94(Menu02176634*, Entry02176634*, int, int);
+extern "C" void func_ov000_0217a514(Menu02176634*, Entry02176634*, int, int);
+Formatter02176634* MessageSystem_GetInstance();
+extern "C" void func_02046380(Formatter02176634*);
 extern "C" void __clear(void*, int);
 extern "C" void func_020e46c4(void*);
 extern "C" void* memset(void*, int, unsigned int);
-void InitObjFromCombatantId020e4bf4(void*, int);
+void NameText_InitFromPartyMember(void*, int);
 char* KeyTable_Get(Container020e0310*, int);
 struct Obj02046574;
-void SetIndexedName02046574(Obj02046574*, int, char*);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" Node02176634* func_ov000_02161318(Menu02176634*, int);
 Skill02176634* GetBoundedField420_0217199c(void*, int);
 int GetAdjustedByteField0x1d6b_ov000_021815c8(void*);
@@ -151,17 +151,17 @@ struct Struct_0207c484;
 extern "C" void func_0207c484(Struct_0207c484*, int, int, int);
 extern "C" void func_020483f0(unsigned char*, unsigned short);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
-extern "C" void func_02046608(Struct_ov000_02176634_9*, int, char*, char*, int, int, int);
-extern "C" void func_ov000_0217ab8c(Struct_ov000_02176634*, int, int);
+extern "C" void MessageSystem_FormatText(Formatter02176634*, int, char*, char*, int, int, int);
+extern "C" void func_ov000_0217ab8c(Entry02176634*, int, int);
 #if defined(jpn)
-extern "C" void func_0205d304(Struct_ov000_02176634_10*, char*, int, int, int, int, int);
+extern "C" void Window_OpenPane(Window02176634*, char*, int, int, int, int, int);
 extern "C" void func_0203bdf4(void*, char*);
-extern "C" int func_020dd4c4(int, Struct_ov000_02176634_3*);
-extern "C" void func_020474a8(Struct_ov000_02176634_9*, int, char*, char*);
-extern "C" int func_02042058(char*, const char*);
+extern "C" int func_020dd4c4(int, Item02176634*);
+extern "C" void func_020474a8(Formatter02176634*, int, char*, char*);
+int Text_Append(char*, const char*);
 extern unsigned int data_ov000_02184550[];
 #else
-extern "C" void func_0205d304(Struct_ov000_02176634_10*, char*, int, int, int, int, int, int);
+extern "C" void Window_OpenPane(Window02176634*, char*, int, int, int, int, int, int);
 #endif
 
 struct Struct_ov000_0218352a {
@@ -169,9 +169,9 @@ struct Struct_ov000_0218352a {
     short unknown_2_;
 };
 
-extern Struct_ov000_0218352a data_ov000_0218352a[];
-extern Struct_ov000_0218352a data_ov000_0218352c[];
-extern char data_02109bf4[];
+extern MessagePair02176634 data_ov000_0218352a[];
+extern MessagePair02176634 data_ov000_0218352c[];
+extern char g_bgmPlayer[];
 
 // USA: func_ov000_02176634
 extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_ov000_02176634* arg1, int arg2, int arg3, int arg4) {
@@ -253,31 +253,31 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         return;
     }
 
-    Struct_ov000_02176634_9* var13 = func_020421a0();
-    func_02046380(var13);
+    Formatter02176634* formatter = MessageSystem_GetInstance();
+    func_02046380(formatter);
 #if defined(jpn)
-    char var14[0x20];
-    __clear(var14, 0x20);
-    int var32;
-    var0 = func_020421a0()->inline_ov000_02176634_2();
-    memset(var0, 0, 0x800);
-    memset(var0, 0, 0x800);
-    func_0203bdf4((char*)arg1 + 0x88, var14);
-    var3 = (var1 >> 3) + 9;
-    var4 = (short)(var2 >> 3) + 1;
-    switch (arg2) {
+    char name[0x20];
+    __clear(name, 0x20);
+    int kind;
+    buf = MessageSystem_GetInstance()->GetTextBuffer();
+    memset(buf, 0, 0x800);
+    memset(buf, 0, 0x800);
+    func_0203bdf4((char*)entry + 0x88, name);
+    left = (x >> 3) + 9;
+    top = (short)(y >> 3) + 1;
+    switch (mode) {
     case 0xc:
         kind = 0xc;
-        AppendString02042058(buf, KeyTable_Get((Container020e0310*)menu->messages, 0x7554));
+        Text_Append(buf, KeyTable_Get((Container020e0310*)menu->messages, 0x7554));
         break;
     case 0x29:
         kind = 0x29;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x2a:
         kind = 0x2a;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x2b: {
@@ -287,7 +287,7 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
             func_0203bdf4((char*)var15 + 0x88, var14);
         }
         kind = 0x2b;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x23), buf);
         break;
     }
@@ -296,24 +296,24 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         Skill02176634* skill = GetBoundedField420_0217199c(entry, entry->cursor);
         if (skill != NULL && skill->kind == 6) msgId = 0x22;
         kind = 0x1a;
-        AppendString02042058(buf, KeyTable_Get((Container020e0310*)menu->messages, msgId));
+        Text_Append(buf, KeyTable_Get((Container020e0310*)menu->messages, msgId));
         break;
     }
     case 0x1b:
         kind = 0x1b;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7547), buf);
         break;
     case 0x1c:
         kind = 0x1c;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7547), buf);
         break;
     case 0x1d:
         kind = 0x1d;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7548), buf);
         break;
     case 0x1e: {
@@ -346,46 +346,46 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         break;
     }
     case 0x20: {
-        arg0->unknown_1d7a_ = 0;
-        short var25 = 0x14;
-        var12 = func_ov000_021815c8(arg0);
-        var5 = func_ov000_021815e4((char*)arg0);
-        GameState* var26 = GameState::GetInstance();
-        var6 = (char*)func_02010828(var26);
-        var7 = (Struct_ov000_02176634_7*)func_0200ff1c(var26, var12);
-        var8 = func_02053c6c((unsigned char*)var7);
-        Struct_ov000_02176634_3* var27 = func_02054000((Struct_02054000*)var7);
-        var32 = 0x20;
-        var9 = var5->unknown_18_;
-        func_02046574((Struct_02046574_2*)var13, 0, var7->inline_ov000_02176634());
-        func_02046574((Struct_02046574_2*)var13, 1, (char*)var5->unknown_4_);
+        menu->dispatched = 0;
+        short msgId = 0x14;
+        combatantId = GetAdjustedByteField0x1d6b_ov000_021815c8(menu);
+        elem = FindElementByComputedKey021815e4((char*)menu);
+        GameState* gs = GameState::GetInstance();
+        bag = (char*)GameState_GetParty(gs);
+        combatant = (Combatant02176634*)GetCombatantWithFlag0x100_0200ff1c(gs, combatantId);
+        data = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+        Item02176634* sub = GetActiveSub_02054000((Outer_02054000*)combatant);
+        kind = 0x20;
+        item = elem->id;
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, combatant->GetName());
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, (char*)elem->f4);
 
         if (var27 != NULL && var5->unknown_18_ == var27->unknown_18_) {
             var25 += 2;
             var9 = -1;
         }
-        var10 = 0;
-        if (var27 != NULL && var27->unknown_18_ > 0 && var27->unknown_8_0_ == 0 && var27->unknown_8_4_ <= 0xb && var27->unknown_a_2_) {
-            var10 = 1;
-            var25 = 0x25;
-            func_02046574((Struct_02046574_2*)var13, 1, (char*)var27->unknown_4_);
-            func_0209c6d8(data_02109bf4, 0x3d);
-            arg0->unknown_1d7a_ = 1;
+        handled = 0;
+        if (sub != NULL && sub->id > 0 && sub->category == 0 && sub->rank <= 0xb && sub->cursed) {
+            handled = 1;
+            msgId = 0x25;
+            MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, (char*)sub->f4);
+            ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x3d);
+            menu->dispatched = 1;
         }
         if (var10 == 0) {
             if (var27 != NULL) {
                 func_0207c378(var6 + 0x1d4, var27->unknown_18_, 1, var27->unknown_8_0_);
             }
-            func_02052d7c(var7, 7, var9);
-            func_0207c484((Struct_0207c484*)(var6 + 0x1d4), var9, 1, 0);
-            if (var7->unknown_138_->unknown_14_ & 1) var25++;
-            if (var5->unknown_a_2_) {
-                var25 = 0x24;
-                func_020483f0((unsigned char*)var7, 4);
-                var8->unknown_a8_ |= 4;
-                func_ov017_021c9e00(var12, 0, 0, 1);
-                func_0209c6d8(data_02109bf4, 0x3d);
-                arg0->unknown_1d7a_ = 1;
+            func_02052d7c(combatant, 7, item);
+            DecrementKeyedStackAmount0207c484((KeyedList0207c484*)(bag + 0x1d4), item, 1, 0);
+            if (combatant->stats->flags & 1) msgId++;
+            if (elem->cursed) {
+                msgId = 0x24;
+                TrySetFlags0x130_020483f0((unsigned char*)combatant, 4);
+                data->flags |= 4;
+                func_ov017_021c9e00(combatantId, 0, 0, 1);
+                ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x3d);
+                menu->dispatched = 1;
             }
         }
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf);
@@ -393,25 +393,25 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     }
     case 0x25:
         kind = 0x25;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x26:
         kind = 0x26;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x27:
         kind = 0x27;
-        SetIndexedName02046574((Obj02046574*)formatter, 0, name);
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 0, name);
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     case 0x28:
         kind = 0x28;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
         func_020474a8(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, 0x7555), buf);
         break;
     default:
@@ -419,25 +419,25 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     }
 
 #else
-    char var28[0x80];
-    char var29[0x80];
-    __clear(var28, 0x80);
-    __clear(var29, 0x80);
-    Struct_ov000_02176634_5 var30;
-    Struct_ov000_02176634_5 var31;
-    func_020e46c4(&var31);
-    var31.unknown_0_ = var28;
-    var31.unknown_4_ = var29;
-    int var32;
-    short var33 = 0x7554;
-    var11 = func_020421a0()->unknown_5c_;
-    memset(var11, 0, 0x960);
-    memset(var11, 0, 0x960);
-    func_020e4bf4(&var30, arg1->unknown_4c_);
-    var3 = (var1 >> 3) + 9;
-    var4 = (short)(var2 >> 3) + 1;
-    var13->unknown_0_ = &var30;
-    var13->unknown_10_ = &var30;
+    char singular[0x80];
+    char plural[0x80];
+    __clear(singular, 0x80);
+    __clear(plural, 0x80);
+    NameParts02176634 targetName;
+    NameParts02176634 itemName;
+    Clear12Bytes020e46c4(&itemName);
+    itemName.singular = singular;
+    itemName.plural = plural;
+    int kind;
+    short msgId = 0x7554;
+    buf = MessageSystem_GetInstance()->textBuffer;
+    memset(buf, 0, 0x960);
+    memset(buf, 0, 0x960);
+    NameText_InitFromPartyMember(&targetName, entry->combatantId);
+    left = (x >> 3) + 9;
+    top = (short)(y >> 3) + 1;
+    formatter->target = &targetName;
+    formatter->subject = &targetName;
 
     switch (arg2) {
     case 0xc:
@@ -445,18 +445,18 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         break;
     case 0x29:
         kind = 0x29;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7558));
         msgId = 0x7555;
         break;
     case 0x2a:
         kind = 0x2a;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7557));
         msgId = 0x7555;
         break;
     case 0x2b: {
-        Struct_ov000_02176634_4* var34 = func_ov000_02161318(arg0, arg0->unknown_70_[arg0->unknown_1d6b_]);
-        if (var34 != NULL) {
-            func_020e4bf4(&var30, var34->unknown_4c_);
+        Node02176634* node = func_ov000_02161318(menu, menu->slots[menu->slot]);
+        if (node != NULL) {
+            NameText_InitFromPartyMember(&targetName, node->combatantId);
         }
         var32 = 0x2b;
         var33 = 0x23;
@@ -473,12 +473,12 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     }
     case 0x1b:
         kind = 0x1b;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
         msgId = 0x7547;
         break;
     case 0x1c:
         kind = 0x1c;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
         msgId = 0x7547;
         break;
     case 0x1d:
@@ -500,30 +500,30 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
         break;
     }
     case 0x20: {
-        arg0->unknown_1d7a_ = 0;
-        var33 = 0x14;
-        var12 = func_ov000_021815c8(arg0);
-        var5 = func_ov000_021815e4((char*)arg0);
-        GameState* var38 = GameState::GetInstance();
-        var6 = (char*)func_02010828(var38);
-        var7 = (Struct_ov000_02176634_7*)func_0200ff1c(var38, var12);
-        var8 = func_02053c6c((unsigned char*)var7);
-        Struct_ov000_02176634_3* var39 = func_02054000((Struct_02054000*)var7);
-        var32 = 0x20;
-        var9 = var5->unknown_18_;
-        func_020e4bf4(&var30, var12);
-        if (var39 != NULL && var5->unknown_18_ == var39->unknown_18_) {
-            var33 += 2;
-            var9 = -1;
+        menu->dispatched = 0;
+        msgId = 0x14;
+        combatantId = GetAdjustedByteField0x1d6b_ov000_021815c8(menu);
+        elem = FindElementByComputedKey021815e4((char*)menu);
+        GameState* gs = GameState::GetInstance();
+        bag = (char*)GameState_GetParty(gs);
+        combatant = (Combatant02176634*)GetCombatantWithFlag0x100_0200ff1c(gs, combatantId);
+        data = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+        Item02176634* sub = GetActiveSub_02054000((Outer_02054000*)combatant);
+        kind = 0x20;
+        item = elem->id;
+        NameText_InitFromPartyMember(&targetName, combatantId);
+        if (sub != NULL && elem->id == sub->id) {
+            msgId += 2;
+            item = -1;
         }
-        var10 = 0;
-        if (var39 != NULL && var39->unknown_18_ > 0 && var39->unknown_8_0_ == 0 && var39->unknown_8_4_ <= 0xb && var39->unknown_a_2_) {
-            var10 = 1;
-            var33 = 0x25;
-            func_020dcf7c(var39->unknown_18_, &var31);
-            var13->unknown_18_ = &var31;
-            func_0209c6d8(data_02109bf4, 0x3d);
-            arg0->unknown_1d7a_ = 1;
+        handled = 0;
+        if (sub != NULL && sub->id > 0 && sub->category == 0 && sub->rank <= 0xb && sub->cursed) {
+            handled = 1;
+            msgId = 0x25;
+            DispatchIfCountPositive020dcf7c(sub->id, &itemName);
+            formatter->item = &itemName;
+            ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x3d);
+            menu->dispatched = 1;
         }
         if (var10 == 0) {
             if (var39 != NULL) {
@@ -540,42 +540,42 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
             if (var7->unknown_138_->unknown_14_ & 1) {
                 var33++;
             }
-            if (var5->unknown_a_2_) {
-                var33 = 0x24;
-                func_020483f0((unsigned char*)var7, 4);
-                var8->unknown_a8_ |= 4;
-                func_ov017_021c9e00(var12, 0, 0, 1);
-                func_0209c6d8(data_02109bf4, 0x3d);
-                arg0->unknown_1d7a_ = 1;
+            if (elem->cursed) {
+                msgId = 0x24;
+                TrySetFlags0x130_020483f0((unsigned char*)combatant, 4);
+                data->flags |= 4;
+                func_ov017_021c9e00(combatantId, 0, 0, 1);
+                ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x3d);
+                menu->dispatched = 1;
             }
         }
         break;
     }
     case 0x25:
         kind = 0x25;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7545));
         msgId = 0x7555;
         break;
     case 0x26:
         kind = 0x26;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7546));
         msgId = 0x7555;
         break;
     case 0x27:
         kind = 0x27;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7556));
         msgId = 0x7555;
         break;
     case 0x28:
         kind = 0x28;
-        SetIndexedName02046574((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
+        MessageSystem_SetStringArgument((Obj02046574*)formatter, 1, KeyTable_Get((Container020e0310*)menu->messages, 0x7559));
         msgId = 0x7555;
         break;
     default:
         return;
     }
 
-    func_02046608(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf, 0xa4, 0, 0);
+    MessageSystem_FormatText(formatter, 10, KeyTable_Get((Container020e0310*)menu->messages, msgId), buf, 0xa4, 0, 0);
 #endif
     func_ov000_0217ab8c(arg1, arg3, arg4);
     Struct_ov000_02176634_10* var40 = &arg0->unknown_188_;
@@ -589,9 +589,9 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     var40->unknown_ae_ = 0x11;
     var40->unknown_b1_ = var32;
 #if defined(jpn)
-    func_0205d304(var40, var0, 0, 1, 0, 1, 0);
+    Window_OpenPane(window, buf, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var40, var11, 0, 1, 0, 1, 0, 0);
-    func_02046380(var13);
+    Window_OpenPane(window, buf, 0, 1, 0, 1, 0, 0);
+    func_02046380(formatter);
 #endif
 }

@@ -88,51 +88,51 @@ extern unsigned char data_ov005_0215cd58[8];
 extern unsigned char data_ov005_0215cd50[8];
 extern int g_sePlayer;
 
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" int func_ov005_02157ae8(Struct_ov005_02153954* arg0, int arg1);
-struct Struct_ov005_0215690c;
-extern "C" Struct_ov005_0215690c_2* func_ov023_021e4e20(Struct_ov005_0215690c*);
-extern "C" int func_ov005_02155670(Struct_ov005_02153954* arg0, int arg1, int arg2);
-extern "C" int func_0202ec84(void* arg0, Struct_02015ef4* arg1, int* arg2, int* arg3);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
+MemberScreen* GetField1c_021a193c(int* p);
+extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
+struct Obj021e4e20;
+Body* RunIfPtr_021e4e20(Obj021e4e20*);
+extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
+int Camera_WorldToScreen(void* obj, Vec3copy0202ec84* src, int* out1, int* out2);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int id);
 extern "C" double func_0200b454(double x);
 short GetHalfwordEntryFromField150(Field150Holder02052df8* obj, int index);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
-void* GetPtrField0x2a04_02010828(GameState* gs);
+void* GameState_GetParty(GameState* gs);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
 extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_0215690c
-extern "C" ARM void func_ov005_0215690c(Struct_ov005_02153954* arg0, int arg1, int arg2) {
-    GameState* var0;
-    Struct_ov005_0215690c_2* var1;
-    var0 = GameState::GetInstance();
-    unsigned char var2;
-    Struct_ov005_02153ba4_2* var3 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    unsigned int var4 = var3->unknown_4fc_;
-    if (!func_ov005_02157ae8(arg0, var4))
+extern "C" ARM void func_ov005_0215690c(EquipmentMenu* self, int x, int y) {
+    GameState* gameState;
+    Body* body;
+    gameState = GameState::GetInstance();
+    unsigned char page;
+    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    unsigned int member = screen->member_;
+    if (!func_ov005_02157ae8(self, member))
         return;
-    var1 = func_ov023_021e4e20((Struct_ov005_0215690c*)var3);
-    func_ov005_02155670(arg0, arg1, arg2);
-    short var5 = -1;
-    unsigned char var6 = 0xff;
-    if (arg1 > 0 && arg1 < 0x80) {
-        int var7[8];
-        void* var8;
-        int var9;
-        int var10[8];
-        var8 = func_020100bc(var0);
-        int var11;
-        Matrix4x3 var12;
-        Vector3fix var13[8];
-        var12 = RotationMatrixY(var1->unknown_50_.y);
-        for (int var14 = 0; var14 < 8; var14++) {
-            Mat4x3_ApplyToVector(&data_ov005_0215cc84[var14], &var12, &var13[var14]);
-            func_0202ec84(var8, (Struct_02015ef4*)&var13[var14], &var7[var14], &var10[var14]);
+    body = RunIfPtr_021e4e20((Obj021e4e20*)screen);
+    func_ov005_02155670(self, x, y);
+    short item = -1;
+    unsigned char kind = 0xff;
+    if (x > 0 && x < 0x80) {
+        int screenX[8];
+        void* camera;
+        int dx;
+        int screenY[8];
+        camera = gameState->GetCamera();
+        int count;
+        Matrix4x3 matrix;
+        Vector3fix positions[8];
+        matrix = RotationMatrixY(body->rotation_.y);
+        for (int i = 0; i < 8; i++) {
+            Mat4x3_ApplyToVector(&data_ov005_0215cc84[i], &matrix, &positions[i]);
+            Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&positions[i], &screenX[i], &screenY[i]);
         }
         GameObject* var15 = func_0200ff1c(var0, var4);
         var11 = 0;
@@ -203,13 +203,13 @@ extern "C" ARM void func_ov005_0215690c(Struct_ov005_02153954* arg0, int arg1, i
         func_ov005_02158560(arg0, var6, 1);
         arg0->unknown_3dcc_ |= 0x100;
     }
-    short* var35 = func_0207c5f8((unsigned char*)func_02010828(var0) + 0x1d4, data_ov005_0215cd50[arg0->unknown_3dbc_]);
-    int var36 = -1;
-    int var37 = -1;
-    for (short var38 = 0; var38 < arg0->unknown_3d98_[arg0->unknown_3dbc_]; var38++) {
-        short var39 = var35[var38];
-        if (var5 == var39) {
-            var37 = var38;
+    short* items = GetPointerFromArray0xbd0_0207c5f8((unsigned char*)GameState_GetParty(gameState) + 0x1d4, data_ov005_0215cd50[self->kind_]);
+    int empty = -1;
+    int index = -1;
+    for (short i = 0; i < self->itemCounts_[self->kind_]; i++) {
+        short other = items[i];
+        if (item == other) {
+            index = i;
             break;
         }
         if (var36 < 0 && var39 == -1)

@@ -7,9 +7,6 @@
 #include "World/Object3D.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_02000c9c_36;
 struct Struct_0203dce4_2;
@@ -21,25 +18,25 @@ struct Struct_ov001_02155dd0 {
     unsigned short unknown_a_;
 };
 
-extern "C" char* func_020100f8(char* arg0);
-extern "C" void* func_02010768(void* arg0);
-extern "C" void* func_02012fe4();
-extern "C" char* func_020421a0();
-extern "C" void* func_0203cf4c(void);
-extern "C" void* func_0203d004(void* arg0);
-extern "C" void* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" int* func_02040528(int* arg0);
-struct Struct_0204027c_2;
-extern "C" int func_02040404(Struct_0204027c_2*, char const*);
-extern "C" void func_0204039c(Struct_0204039c* arg0, int arg1);
-extern "C" void func_02040504(int* arg0);
-extern "C" void func_0203dd10(Struct_0203dd10*, unsigned int, int);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(char* arg0);
-extern "C" int func_0203adfc(void* arg0, void* arg1);
-extern "C" void func_0203ad88(void* arg0, void* arg1, int arg2);
-extern "C" void func_0202e874(unsigned char*, unsigned short);
-extern "C" void func_0202f0c4(void* arg0, int arg1, int arg2);
+char* GetFieldIfFlag4_020100f8(char* obj);
+void* GetFieldPtrAt0x5ca4_02010768(void* obj);
+extern "C" void* Zone3D_GetInstance();
+char* MessageSystem_GetInstance();
+void* GetGlobalPtr021075f4_0203cf4c(void);
+void* EmptyStub0203d004(void* p);
+void* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+int* GetField0x8_02040528(int* p);
+struct Container02040404;
+int FindEntryIndexByName02040404(Container02040404*, char const*);
+void ReleaseOrDecrementSlot0204039c(Container0204039c* c, int idx);
+void Reset02040504(int* p);
+void SetSlotIfIndexBelow32(SlotArray0203dd10*, unsigned int, int);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(char* obj);
+int IsScaledFieldPositive0203adfc(void* a, void* b);
+void ScaleAndNotify0203ad88(void* a, void* b, int c);
+void SetField0x7cClearFields0x1ec0x1ee_0202e874(unsigned char*, unsigned short);
+void SetFields0x1f0And0x1f4_0202f0c4(void* obj, int a, int b);
 extern "C" void* func_020704fc();
 struct Struct_020708c8;
 extern "C" void func_020708c8(Struct_020708c8*, unsigned int);
@@ -47,17 +44,17 @@ extern "C" void func_0209c278(void* arg0);
 extern "C" void func_0209c290(void* arg0);
 extern "C" void func_0205ea20(void* arg0, int arg1);
 extern "C" void func_ov028_021d9714();
-extern "C" void func_020a1f4c(int arg0);
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
+void PopStack1AndTrigger_020a1f4c(int v);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int p, unsigned char* arr, int bit);
+struct Bytes02033b88;
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void ClearCombatantSlot_0200fd48(GameState* gs, int id);
+void GameState_SetCamera(GameState* gs, int val);
 
 extern char data_ov001_02164c4a[];
 extern char g_sePlayer[];
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 
 #define REG_DISPSTAT_304 (*(volatile unsigned short*)0x04000304)
 
@@ -80,13 +77,13 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
         char* var10;
         GameState* var11;
 
-    var11 = GameState::GetInstance();
-    var10 = func_020100f8((char*)var11);
-    var6 = GetGameResources();
-    var7 = (Zone3D*)func_02012fe4();
-    var2 = func_020421a0();
-    var1 = BackgroundLoader::GetInstance();
-    var5 = (int*)func_02010768(var11);
+    gs = GameState::GetInstance();
+    hud = GetFieldIfFlag4_020100f8((char*)gs);
+    res2 = GetGameResources();
+    area = (Zone3D*)Zone3D_GetInstance();
+    globalA = MessageSystem_GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    ptr6 = (int*)GetFieldPtrAt0x5ca4_02010768(gs);
 
     for (var4 = 0; var4 < 4; var4++) {
         var3 = var11->GetMaybeWanderingMonsterByIndex(var4);
@@ -108,10 +105,10 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
         }
     }
 
-    if (var5[1] != 0) {
-        if (func_020100f8((char*)var11) == 0) {
-            func_020100c4(var11, var5[1]);
-            var10 = func_020100f8((char*)var11);
+    if (ptr6[1] != 0) {
+        if (GetFieldIfFlag4_020100f8((char*)gs) == 0) {
+            GameState_SetCamera(gs, ptr6[1]);
+            hud = GetFieldIfFlag4_020100f8((char*)gs);
         }
     }
 
@@ -142,11 +139,11 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
         }
     }
 
-    ReinitController02043204(globalA);
-    func_02043124(globalA);
+    MessageSystem_Reset(globalA);
+    MessageSystem_Stop(globalA);
     ClearFlags04(res2, 8);
     if (IsScaledFieldPositive0203adfc(g_sePlayer, 0) != 0) {
-        ScaleAndNotify0203ad88(data_02109bf4, 0, 0);
+        ScaleAndNotify0203ad88(g_bgmPlayer, 0, 0);
     }
     ClearFlags04(var6, 0x2000);
     func_0202e874((unsigned char*)var10, 0);
@@ -157,8 +154,8 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
     REG_DISPSTAT_304 &= ~0x8000;
     if (TestFlags00(var6, 0x1000) != 0) {
 #if !defined(jpn)
-        ResetAndReinit0209c278(data_02109bf4);
-        Dispatch0203a974With0x57000_0209c290(data_02109bf4);
+        ResetAndReinit0209c278(g_bgmPlayer);
+        Dispatch0203a974With0x57000_0209c290(g_bgmPlayer);
         SetupContextForMode0205ea20(g_sePlayer, 0x64);
 #endif
         ClearFlags00((GameResources*)var6, 0x1000);
@@ -168,16 +165,16 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
 
     DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
 
-    void* var21 = func_0205ec34();
-    Struct_02013454* var22 = func_020196fc((Zone3D*)func_02012fe4(), 0);
-    Struct_02016874_2* var23;
-    int var24 = var22->unknown_4_.unknown_10_;
-    if (var22 != 0) {
-        for (int var25 = 0; var25 < var24; var25++) {
-            var23 = &var22->unknown_44_[var25];
-            if (func_0206dfb0((int)var21, (unsigned char*)((char*)var21 + 0x45b), var25 & 0xff) != 0) {
-                if (var23 != 0) {
-                    var23->unknown_2_ &= ~4;
+    void* events = Scenario_GetInstance();
+    BmdjScriptNode* node = Zone3D_GetScriptNode((Zone3D*)Zone3D_GetInstance(), 0);
+    BmdjSceneElement* e;
+    int count = node->scriptState.elementCount;
+    if (node != 0) {
+        for (int n = 0; n < count; n++) {
+            e = &node->elements[n];
+            if (Scenario_TestFlag((int)events, (unsigned char*)((char*)events + 0x45b), n & 0xff) != 0) {
+                if (e != 0) {
+                    e->flags &= ~4;
                 }
             } else {
                 if (var23 != 0) {

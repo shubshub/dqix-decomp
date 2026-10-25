@@ -62,7 +62,7 @@ extern const char* data_020f2a2c;
 
 int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
 void SetElementStateIfLess0217a9d0(int, int, int, Struct_0205d81c*);
@@ -89,12 +89,12 @@ extern "C" ARM void func_ov000_0217d87c(MenuState* menu, int arg1, int arg2) {
     if (prev != sum) {
         return;
     }
-    if (func_ov000_0217c594(arg0, 5) != 0) {
-        arg0->unknown_956_ = 0;
-        GameState* var3 = GameState::GetInstance();
-        unsigned char* var4 = (unsigned char*)func_02010828(var3);
-        int var5 = func_ov000_0218158c(arg0, arg0->unknown_1d6e_);
-        if (func_0207c984(var4 + 0x1d4, var2, var5 & 0xff, arg0->unknown_26_, &arg0->unknown_66_) != 0) {
+    if (func_ov000_0217c594(menu, 5) != 0) {
+        menu->field956 = 0;
+        GameState* gs = GameState::GetInstance();
+        unsigned char* party = (unsigned char*)GameState_GetParty(gs);
+        int bits = GetNthSetBit0218158c(menu, menu->activeSum);
+        if (func_0207c984(party + 0x1d4, id, bits & 0xff, menu->field26, &menu->field66) != 0) {
             return;
         }
         menu->mode = 6;
@@ -135,12 +135,12 @@ extern "C" ARM void func_ov000_0217d87c(MenuState* menu, int arg1, int arg2) {
             var8->unknown_10_[var8->unknown_18_] = 100;
             var8->unknown_24_ &= ~4;
         }
-        GameState* var9 = GameState::GetInstance();
-        unsigned char var10 = ((unsigned char*)func_02010828(var9))[0xf7c];
-        for (unsigned char var11 = 0; var11 < var10; var11++) {
-            int var12 = arg0->unknown_70_[var11];
-            Struct_ov000_0217d674* var13 = func_ov000_02161318(arg0, var12);
-            if (var13 == NULL) {
+        GameState* gs = GameState::GetInstance();
+        unsigned char count = ((unsigned char*)GameState_GetParty(gs))[0xf7c];
+        for (unsigned char i = 0; i < count; i++) {
+            int memberId = menu->members[i];
+            ElemNode* other = func_ov000_02161318(menu, memberId);
+            if (other == NULL) {
                 continue;
             }
             if (func_ov000_021719f8((int*)var13) != 0) {
@@ -151,13 +151,13 @@ extern "C" ARM void func_ov000_0217d87c(MenuState* menu, int arg1, int arg2) {
                 break;
             }
         }
-        func_ov000_02175258(arg0);
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_ = arg0->unknown_1d68_ - 1;
-        func_ov000_0217c638(arg0, arg1, arg2);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 1, 1);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 1, 2);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 1, 5);
+        func_ov000_02175258(menu);
+        Window_ClosePane((Entry_0205d6a0*)menu->elements, 0);
+        menu->modeStack[menu->depth] = 0;
+        menu->depth = menu->depth - 1;
+        func_ov000_0217c638(menu, arg1, arg2);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 1, 1);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 1, 2);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 1, 5);
     }
 }

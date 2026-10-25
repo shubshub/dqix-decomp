@@ -17,7 +17,7 @@ struct Obj020d8080;
 struct TailList020469b4;
 struct TailNode020469b4;
 extern MapList02164928* data_ov004_02171010;
-extern "C" Zone3D* func_02012fe4();
+extern "C" Zone3D* Zone3D_GetInstance();
 int IsBrightnessTransitionActive(GameResources*);
 extern "C" int func_ov004_021634dc(void*);
 extern "C" void* func_ov011_021849c8(void*);
@@ -44,7 +44,7 @@ extern "C" ARM int func_ov004_02164928(void* self) {
     if (data_ov004_02171010->count == 0) return 0;
     GameState* state = GameState::GetInstance();
     GameResources* resources = ((GameState*)((state)))->GetResources();
-    Zone3D* zone = func_02012fe4();
+    Zone3D* zone = Zone3D_GetInstance();
     ActiveGrottoClass* area = zone->GetActiveGrotto();
     GrottoStruct* grotto = state->GetGrottoStruct();
     if (IsBrightnessTransitionActive(resources)) return 0;
@@ -121,11 +121,11 @@ extern "C" ARM int func_ov004_02164928(void* self) {
 #else
     if (var13->discoveryState_ == 1) {
 #endif
-        Struct_0201bdac_2* var19;
-        Struct_020d8080* var20 = static_cast<Struct_020d8080*>(var1->unknown_ptr_array_3afc[42]);
-        var19 = static_cast<Struct_0201bdac_2*>(var1->unknown_ptr_array_36fc[0]);
-        func_020d8080(var20);
-        func_020469b4(var19, ((Struct_0201bdac*)(var20)));
+        TailList020469b4* list;
+        Obj020d8080* object = static_cast<Obj020d8080*>(resources->fieldTasks_[42]);
+        list = (TailList020469b4*)resources->fieldTaskQueue_;
+        InitObject020d8080(object);
+        AppendNodeToTail(list, ((TailNode020469b4*)(object)));
     }
     return 0;
 }

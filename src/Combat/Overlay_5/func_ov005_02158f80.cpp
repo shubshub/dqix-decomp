@@ -34,7 +34,7 @@ int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(SePlayer* sound, int effect, int unk);
 void ClearChannelAFlag0205cf10(void* window);
 void ClearFlagByte0205cf1c(Struct0205cf1c* window);
-void ResetEntryList0205d6a0(Entry_0205d6a0* window, int unk);
+void Window_ClosePane(Entry_0205d6a0* window, int unk);
 
 // USA: func_ov005_02158f80
 extern "C" ARM void func_ov005_02158f80(EquipmentMenu* self) {
@@ -49,7 +49,7 @@ extern "C" ARM void func_ov005_02158f80(EquipmentMenu* self) {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ClearChannelAFlag0205cf10(self->window_);
             ClearFlagByte0205cf1c((Struct0205cf1c*)self->window_);
-            ResetEntryList0205d6a0((Entry_0205d6a0*)self->window_, 0);
+            Window_ClosePane((Entry_0205d6a0*)self->window_, 0);
             if (self->slot_ >= 0 && self->slot_ < 8) {
                 switch (self->menuChoice_) {
                 case 0:
@@ -83,10 +83,10 @@ extern "C" ARM void func_ov005_02158f80(EquipmentMenu* self) {
         }
         if (!g_keyManager.TestKeysPressed(2))
             return;
-        func_0205cf10(arg0->unknown_ee4_);
-        func_0205cf1c((Struct_0205cf1c*)arg0->unknown_ee4_);
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ee4_, 0);
-        arg0->unknown_3ddf_ = 4;
-        arg0->unknown_3ddc_ = 0;
+        ClearChannelAFlag0205cf10(self->window_);
+        ClearFlagByte0205cf1c((Struct0205cf1c*)self->window_);
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 0);
+        self->menuState_ = 4;
+        self->menuStep_ = 0;
     }
 }

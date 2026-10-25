@@ -3,13 +3,7 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_ov002_02157634_5;
 struct Struct_ov002_02157634_6 {
@@ -49,9 +43,50 @@ struct Struct_ov002_02157634_9 {
 };
 struct Struct_ov002_02157634_2 {
 #if defined(jpn)
-    char unknown_0_[0x750];
-    char unknown_7ec_[0xb4];
-    char unknown_8a0_[0x127c];
+#define func_ov002_0216c42c func_ov002_0216ca7c
+#endif
+
+struct ItemTable;
+struct Struct020a8170 {
+    char pad[0xc];
+    unsigned short count;
+};
+struct Element02157634 {
+    int unk0;
+    int unk4;
+    unsigned int lo4 : 4;
+    unsigned int kind : 5;
+    unsigned int rest : 23;
+    int unkc;
+    int unk10;
+    short key;
+    short pad16;
+    short id;
+};
+struct TableEntry {
+    char* name;
+    int unk4;
+    unsigned int lo8 : 8;
+    unsigned int b8 : 2;
+    unsigned int b10 : 2;
+    unsigned int rest : 20;
+    int unkc;
+    int unk10;
+    unsigned int lo28 : 28;
+    unsigned int type : 4;
+    unsigned int lo5 : 5;
+    unsigned int group : 7;
+    unsigned int rest18 : 20;
+};
+struct MenuFlags {
+    unsigned char on : 1;
+    unsigned char rest : 7;
+};
+struct BattleMenu {
+#if defined(jpn)
+    char pad0[0x750];
+    char container7ec[0xb4];
+    char alloc8a0[0x127c];
 #else
     char unknown1_0_[0x7ec];
     char unknown_7ec_[0xb4];
@@ -113,32 +148,32 @@ struct Struct_ov002_02157634_4 {
     int unknown_38_;
 };
 
-extern "C" struct Struct_ov002_02157634_7* func_020dedd0(struct Struct_ov002_02157634_5* arg0, int arg1);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
-extern "C" int func_0201b868(void* arg0, int arg1);
-extern "C" void func_ov017_021a6b9c(void* arg0, int arg1);
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" void func_ov002_02157ce0(char* arg0);
-extern "C" void func_020a8170(struct Struct_ov002_02157634_6* arg0);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
+struct Element02157634* ItemTable_Find(struct ItemTable* c, int key);
+void* SearchBothTables02079e2c(char* p, int key);
+int IsIdInSpecialSet0201b868(void* p, int id);
+void Something_021a6b9c(void* a, int b);
+extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
+unsigned char GameState_GetLeaderIndex(GameState* gs);
+void* GameState_GetParty(GameState* gs);
+unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+void InitStateArray02157ce0(char* p);
+void ClearStruct020a8170(struct Struct020a8170* p);
+extern "C" void* __clear(void* dst, int count);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" unsigned char* func_0205ec34(void);
-extern "C" void func_020a818c(void* arg0, void* arg1);
-extern "C" void func_020a8304(void* arg0);
-extern "C" int func_ov017_021ab860(signed char arg0, int arg1);
-extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
-extern "C" void func_ov002_021536e0(void* arg0);
-extern "C" int func_ov002_021536ec(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov002_0215a7b4(char* arg0, int arg1, int arg2, int arg3, unsigned char arg4);
-extern "C" void func_ov002_0216c42c(void* arg0, void* arg1, void* arg2);
-extern "C" void func_ov002_02159900(char* arg0, char* arg1, int arg2);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_0202c540(void* p);
+extern "C" int func_0202c508(void* p);
+extern "C" unsigned char* Scenario_GetInstance(void);
+extern "C" void func_020a818c(void* p, void* allocator);
+extern "C" void func_020a8304(void* p);
+extern "C" int func_ov017_021ab860(signed char a, int b);
+extern "C" void func_ov016_0218b5c0(int a, int b);
+extern "C" void func_ov002_021536e0(void* p);
+extern "C" int func_ov002_021536ec(void* a, void* b, int c);
+extern "C" void func_ov002_0215a7b4(char* self, int type, int key, int extra, unsigned char flag);
+extern "C" void func_ov002_0216c42c(void* ctx, void* buf, void* entry);
+extern "C" void func_ov002_02159900(char* base, char* arr, int any);
 
 #if defined(jpn)
 enum { Enum_ov002_02157634_6 = 7, Enum_ov002_02157634_7 = 8, Enum_ov002_02157634_20 = 0x15, Enum_ov002_02157634_38 = 0x29, Enum_ov002_02157634_43 = 0x2e };
@@ -147,24 +182,24 @@ enum { Enum_ov002_02157634_6 = 6, Enum_ov002_02157634_7 = 7, Enum_ov002_02157634
 #endif
 
 // USA: func_ov002_02157634
-extern "C" ARM void func_ov002_02157634(struct Struct_ov002_02157634_2* arg0) {
-    struct Struct_ov002_02157634_4 var0;
-    unsigned char var1[4];
-    void* var2;
-    struct Struct_ov002_02157634_7* var3 = func_020dedd0((struct Struct_ov002_02157634_5*)arg0->unknown_7ec_, arg0->unknown_1c22_);
-    if (var3 == 0) {
+extern "C" ARM void func_ov002_02157634(struct BattleMenu* p) {
+    struct StateArray st;
+    unsigned char buf[4];
+    void* ctx;
+    struct Element02157634* e = ItemTable_Find((struct ItemTable*)p->container7ec, p->command);
+    if (e == 0) {
         return;
     }
-    GameState* var4 = GameState::GetInstance();
-    arg0->unknown_1bbc_ = arg0->unknown_1bb8_;
-    arg0->unknown_1bc0_ = 0;
-    int var5 = 0;
-    int var6 = Enum_ov002_02157634_38;
-    if (arg0->unknown_1bb8_ == Enum_ov002_02157634_6) {
-        void* var7 = func_0202ae18();
-        unsigned short* var8 = (unsigned short*)func_02012fe4();
-        unsigned short var9 = *var8;
-        switch (var3->unknown_18_) {
+    GameState* gs = GameState::GetInstance();
+    p->nextState = p->state;
+    p->timer = 0;
+    int flag = 0;
+    int next = regionalState26;
+    if (p->state == regionalState6) {
+        void* check = func_0202ae18();
+        unsigned short* obj = (unsigned short*)Zone3D_GetInstance();
+        unsigned short id = *obj;
+        switch (e->id) {
         case 0x5612:
             if (func_0202c540(var7) != 0) {
                 arg0->unknown_1c28_ = 0x797c;
@@ -199,8 +234,8 @@ extern "C" ARM void func_ov002_02157634(struct Struct_ov002_02157634_2* arg0) {
             }
             arg0->unknown_1bb8_ = var6;
             {
-                unsigned char* var10 = func_0205ec34();
-                func_0206df6c(var10, var10 + 0x8c, 0x1141, 1);
+                unsigned char* bits = Scenario_GetInstance();
+                Scenario_SetFlag(bits, bits + 0x8c, 0x1141, 1);
             }
             return;
         case 0x5603:
@@ -261,8 +296,8 @@ extern "C" ARM void func_ov002_02157634(struct Struct_ov002_02157634_2* arg0) {
         if (arg0->unknown_1c84_ == 2 || arg0->unknown_1c84_ == 7) {
             var6 = Enum_ov002_02157634_7;
         } else {
-            arg0->unknown_1c21_ = func_020100b0(var4);
-            var5 = 1;
+            p->target = GameState_GetLeaderIndex(gs);
+            flag = 1;
         }
     } else if (arg0->unknown_1bb8_ == Enum_ov002_02157634_7) {
         var5 = 1;
@@ -277,17 +312,17 @@ extern "C" ARM void func_ov002_02157634(struct Struct_ov002_02157634_2* arg0) {
         } else {
             var18 = 0;
         }
-        if (!var18) {
-            var16 = func_020100b0(var4);
+        if (!ok) {
+            actor = GameState_GetLeaderIndex(gs);
         }
-        Struct_02108e10* var19 = func_020797dc();
-        func_02010828(var4);
-        func_ov002_02157ce0((char*)&var0);
-        func_ov002_02157ce0((char*)&var0);
-        if (arg0->unknown_1c85_.unknown_0_0_) {
-            int var20 = var3->unknown_14_;
-            if (var3->unknown_8_4_ == 0x1f) {
-                var20 = 0xfc;
+        ActionDataTables* tbl = GetData02108e10_020797dc();
+        GameState_GetParty(gs);
+        InitStateArray02157ce0((char*)&st);
+        InitStateArray02157ce0((char*)&st);
+        if (p->flags.on) {
+            int key = e->key;
+            if (e->kind == 0x1f) {
+                key = 0xfc;
             }
             var0.unknown_0_ = var20;
             var0.unknown_2_ = var16;

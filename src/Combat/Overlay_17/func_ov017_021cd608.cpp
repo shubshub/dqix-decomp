@@ -12,12 +12,12 @@ struct Struct_ov017_021cd608_3 {
     unsigned short unknown_8_;
 };
 
-extern "C" struct Struct_ov017_021cd608_3* func_ov017_021b8478(void* arg0);
-extern "C" void* func_ov017_021b8468(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" int func_020ac494(void* arg0);
-extern "C" void func_ov000_02163378(void* arg0, int* arg1, unsigned char arg2);
+extern "C" struct Owner021cd608* func_ov017_021b8478(void* obj);
+extern "C" void* func_ov017_021b8468(void* obj);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+int LoadBattleBlock020ac4c0(void* dst);
+int CopyInBattleField0x7540_020ac494(void* src);
+void CopyFourAndSetFlag02163378(void* dst, int* src, unsigned char val);
 
 struct Struct_020a0858 {
     char unknown_0_[0x48];
@@ -73,12 +73,12 @@ extern "C" ARM void func_ov017_021cd608(int arg0, struct Struct_ov017_021cd608_2
     for (var0 = 0; var0 < 4; var0++) {
         var3[var0] = var2->unknown_2_[var0] + (var2->unknown_a_[var0] << 16);
     }
-    if (var2->unknown_f_) {
-        int var7 = func_020100a8(GameState::GetInstance());
-        func_020ac4c0(&var4);
-        func_020a0858(&var4.unknown_0_, var3[var7]);
-        func_020a0300(&var4.unknown_68_, var3[var7]);
-        func_020ac494(&var4);
+    if (p->apply) {
+        int idx = GameState_GetProtagonistIndex(GameState::GetInstance());
+        LoadBattleBlock020ac4c0(&block);
+        AddSaturateField0x48_020a0858(&block.head, amounts[idx]);
+        AddClamped24BitFieldAt0x24_020a0300(&block.tail, amounts[idx]);
+        CopyInBattleField0x7540_020ac494(&block);
     } else {
         func_ov000_02163378(var6, var3, var2->unknown_e_);
     }

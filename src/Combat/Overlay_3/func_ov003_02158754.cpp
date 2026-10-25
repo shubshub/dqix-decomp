@@ -5,15 +5,15 @@
 #include "Resource/Brightness.h"
 
 extern "C" {
-void func_0207dfc8(void *, void *);
+void _Z23VramState_CopyCurrentToP13State0207dfc8S0_(void *, void *);
 void _ZN13SafeAllocator5ResetEv(void *);
-void _Z26CopyInternalFields0207df50P11Foo0207df50(void *);
+void _Z16VramState_RewindP11Foo0207df50(void *);
 void _Z17VramState_RestorePc(void *);
 void _Z14VramState_SavePc(void *);
 void _Z19CopyVec3ToField0x44P14Target02059f38P13Vec3_02059f38(void *, void *);
 void _Z13SetFields0x44P14Fields020407b4iii(void *, int, int, int);
 int _Z17IsIdInSet02098210ii(int, int);
-unsigned short *func_02012fe4(void);
+unsigned short *Zone3D_GetInstance(void);
 }
 
 #if defined(jpn)
@@ -71,29 +71,29 @@ extern "C" ARM int func_ov003_02158754(struct Struct_ov003_02158754_3 *arg0) {
         unsigned int size = 0;
         loader->GetLoadedFileByID(self->task, &file, &size);
         char *res = (char *) GetGameResources();
-        _Z17CopyState0207dfc8P13State0207dfc8S0_(res + regionalOffset0, self->st210);
+        _Z23VramState_CopyCurrentToP13State0207dfc8S0_(res + regionalOffset0, self->st210);
         _ZN13SafeAllocator5ResetEv((char *) self->alloc + 0x8c);
-        _Z26CopyInternalFields0207df50P11Foo0207df50(self->st210);
+        _Z16VramState_RewindP11Foo0207df50(self->st210);
         _Z17VramState_RestorePc(self->st210);
         Object3D *obj = (Object3D *) self->obj280;
         obj->Initialize();
         ObjectArchiveLoadInfo info;
         info.fileData  = file;
-        info.unk_8     = size;
+        info.fileSize     = size;
         info.allocator = (SafeAllocator *) ((char *) self->alloc + 0x8c);
         info.unk_10    = 1;
         obj->LoadFromCHRArchive(&info);
         GameState *gs         = GameState::GetInstance();
         Object3D *pm          = (Object3D *) gs->GetPartyMemberByIndex(self->f1f7);
         struct GO02158754 *go = (struct GO02158754 *) gs->GetGameObjectByIndex(self->f1f7 * 0xc + 0x14);
-        unsigned short *d     = func_02012fe4();
+        unsigned short *d     = Zone3D_GetInstance();
         unsigned int id       = d[0];
         if (pm->IsVisible() && pm->GetInheritedAlpha() != 0 && id != 10000) {
             if (TestFlags04((GameResources*)res, 4) == 0 || ((struct PM02158754 *) pm)->f4 == 0) {
                 _Z19CopyVec3ToField0x44P14Target02059f38P13Vec3_02059f38(obj, (char *) pm + 0x44);
                 const Vector3fix &sc2 = pm->GetScale();
                 obj->SetScale(&sc2);
-                obj->MaybeSetRegularAnimation(data_ov003_0217fe16, 9);
+                obj->SetAnimationByName(data_ov003_0217fe16, 9);
                 obj->EnableFlag(0x40000);
             } else {
                 if (var8 != 0 && func_02098210((int) ((char *) var9 + Enum_ov003_02158754_2112), var10) != 0) {
@@ -105,10 +105,10 @@ extern "C" ARM int func_ov003_02158754(struct Struct_ov003_02158754_3 *arg0) {
                         } else if (var8->unknown_2_ == 0x2349) {
                             func_020407b4(var4, 0x2d70, 0x266, -13230);
                         }
-                        const Vector3fix &var12 = var7->GetScale();
-                        var4->SetScale(&var12);
-                        var4->MaybeSetRegularAnimation(data_ov003_0217fe16, 9);
-                        var4->EnableFlag(0x40000);
+                        const Vector3fix &sc = pm->GetScale();
+                        obj->SetScale(&sc);
+                        obj->SetAnimationByName(data_ov003_0217fe16, 9);
+                        obj->EnableFlag(0x40000);
                     }
                 }
             }

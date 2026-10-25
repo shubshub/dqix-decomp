@@ -111,7 +111,7 @@ struct Struct_0205d6a0;
 extern "C" void func_ov023_021e7404(void* card, int input);
 extern "C" int Window_Update(void* window, int input);
 extern "C" void func_ov012_02185cf8(ProfileEditor02184acc* self);
-Messages02184acc* GetGlobalField0x1c020421a0();
+Messages02184acc* MessageSystem_GetInstance();
 extern "C" void func_ov012_0218adac(ProfileEditor02184acc* self, int animate, int design, int keepPage);
 extern "C" int func_ov017_021959b4();
 extern "C" void func_ov012_021845f8(void* arg0);
@@ -121,9 +121,9 @@ struct Struct_0202b2f0;
 extern "C" Struct_0202b2f0* func_0202ae18();
 extern "C" int func_0202c578(Struct_0202b2f0*, int);
 #endif
-extern "C" void func_0205def8(Struct_0205def8* arg0, int arg1, int arg2);
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_02043204(char* arg0);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8* window, int a, int b);
+void Window_ClosePane(Entry_0205d6a0* window, int a);
+void MessageSystem_Reset(char* messages);
 
 extern "C" const StateTable02184acc data_ov012_0218b188;
 extern "C" StateFn02184acc __ptmf_null;
@@ -145,7 +145,7 @@ extern "C" ARM int func_ov012_02184acc(Struct_ov012_02184acc* arg0, int arg1)
         (self->*states.states[self->state_])();
     func_ov012_02185cf8(self);
 
-    Struct_ov012_02184acc_2* var1 = func_020421a0();
+    Messages02184acc* messages = MessageSystem_GetInstance();
 #if !defined(jpn)
     GameState* var2 = GameState::GetInstance();
 #endif
@@ -194,14 +194,14 @@ extern "C" ARM int func_ov012_02184acc(Struct_ov012_02184acc* arg0, int arg1)
                 }
             }
 
-            arg0->unknown_14bc_ = 1;
-            arg0->unknown_13a0_ = 0;
-            arg0->unknown_13d4_ = 0;
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-            arg0->unknown_1371_ = 15;
-            arg0->unknown1_1370_ = 0;
-            if (var1->unknown_998_ != 0)
-                func_02043204((char*)var1);
+            self->finished_ = 1;
+            self->unk_13a0 = 0;
+            self->selection_ = 0;
+            Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+            self->state_ = 15;
+            self->step_ = 0;
+            if (messages->busy_ != 0)
+                MessageSystem_Reset((char*)messages);
 
             BackgroundLoader* var4 = BackgroundLoader::GetInstance();
             for (int var5 = 0; var5 < (int)(sizeof(arg0->unknown_1380_) / sizeof(arg0->unknown_1380_[0])); var5++)

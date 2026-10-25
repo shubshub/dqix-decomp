@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-extern "C" void* func_ov000_02163524(void* arg0);
-extern "C" void* func_020421a0(void);
-extern "C" void func_ov000_0216dbf0(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
-extern "C" void func_02043124(void* arg0);
-extern "C" void* func_ov000_02160f20(void* arg0);
-struct Struct_ov025_021d8a40;
-extern "C" void func_ov025_021d8a40(void* arg0, struct Struct_ov025_021d8a40* arg1);
-extern "C" void func_ov025_021def30(unsigned char* arg0);
+void* GetField02163524(void* obj);
+void* MessageSystem_GetInstance(void);
+extern "C" void func_ov000_0216dbf0(void* obj, int a, int b, int c);
+extern "C" void func_ov000_021626a0(void* obj, int a, int b);
+extern "C" void MessageSystem_Stop(void* obj);
+void* GetSlotPtr02160f20(void* obj);
+struct S021d8a40;
+void ProcessPairs_021d8a40(void* obj0, struct S021d8a40* obj1);
+void IncrementCounterAndReset_021def30(unsigned char* obj);
 
 struct Struct_ov025_021dbe10 {
     int unknown_0_;
@@ -24,8 +24,8 @@ extern "C" struct Struct_ov025_021dbe10 _ZZ21inline_ov025_021dcf14vE1s;
 // USA: func_ov025_021dc880
 extern "C" ARM void func_ov025_021dc880(unsigned char* arg0) {
     GetGameResources();
-    func_ov000_02163524(arg0);
-    void* var0 = func_020421a0();
+    GetField02163524(obj);
+    void* global = MessageSystem_GetInstance();
 
     if (_ZZ21inline_ov025_021dcf14vE1s.unknown_8_ == 0) {
 #if defined(jpn)
@@ -33,9 +33,9 @@ extern "C" ARM void func_ov025_021dc880(unsigned char* arg0) {
 #else
         func_ov000_0216dbf0(arg0 + 0xc18, 0, 0, 0);
 #endif
-        func_ov000_021626a0(arg0, 4, 1);
-        func_02043124(var0);
-        _ZZ21inline_ov025_021dcf14vE1s.unknown_8_ = 1;
+        func_ov000_021626a0(obj, 4, 1);
+        MessageSystem_Stop(global);
+        _ZZ16GetTimer021ef974vE1s.state = 1;
     }
 
     if (_ZZ21inline_ov025_021dcf14vE1s.unknown_8_ != 1) {

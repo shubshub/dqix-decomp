@@ -6,8 +6,8 @@ ARM void KeyTable_Reset(struct Struct020dfc40*);
 struct StreamHeader0208d82c;
 ARM void InitStreamHeader0208d82c(struct StreamHeader0208d82c*);
 
-struct List0204af64;
-ARM void Background_Init(struct List0204af64*);
+struct BackgroundGraphics;
+ARM void Background_Init(struct BackgroundGraphics*);
 
 ARM void SpriteContext_Init(char*);
 
@@ -18,7 +18,7 @@ extern "C" ARM void func_0208b9a0(char* obj, unsigned char flag) {
     InitStreamHeader0208d82c((struct StreamHeader0208d82c*)(obj + 0x1c));
     *(unsigned char*)(obj + 0x3c) = 0;
     *(unsigned char*)(obj + 0x3d) = 0;
-    Background_Init((struct List0204af64*)(obj + 0x40));
+    Background_Init((struct BackgroundGraphics*)(obj + 0x40));
     SpriteContext_Init(obj + 0x60);
     *(int*)(obj + 0xb4) = 0;
     *(int*)(obj + 0xb8) = (*(volatile unsigned int*)0x04001000 & 0x1f00) >> 8;

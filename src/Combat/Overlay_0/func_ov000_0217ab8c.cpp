@@ -67,8 +67,8 @@ struct Struct_ov000_02184294_2 {
     Struct_ov000_0217ab8c_2* unknown1_8_;
 #endif
 };
-struct Struct_0207d300;
-struct Struct_0205ba68;
+struct Slots02083960;
+struct GridCursor;
 
 extern Struct_ov000_02184294_2 data_ov000_02184294;
 
@@ -84,11 +84,10 @@ struct Struct0205cf1c;
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void SetChannelAFlag0205cef8(void*);
 void SetChannelBFlag0205cf04(void*);
-void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
-struct Node0205bacc;
-void GridCursor_SetCount(Node0205bacc*, int);
+void GridCursor_SetDimensions(GridCursor*, int, int, int);
+void GridCursor_SetCount(GridCursor*, int);
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(Sub*, int);
 
 // USA: func_ov000_0217ab8c
@@ -197,13 +196,13 @@ extern "C" ARM void func_ov000_0217ab8c(Struct_ov000_0217ab8c* arg0, int arg1, i
     }
     SetChannelAFlag0205cef8(self->window);
     SetChannelBFlag0205cf04(self->window);
-    GridCursor_SetDimensions((Struct_0205ba68*)&w->a, step, visible, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&w->b, step, visible, 0);
-    GridCursor_SetCount((Node0205bacc*)&w->a, total);
-    GridCursor_SetCount((Node0205bacc*)&w->b, total);
+    GridCursor_SetDimensions((GridCursor*)&w->a, step, visible, 0);
+    GridCursor_SetDimensions((GridCursor*)&w->b, step, visible, 0);
+    GridCursor_SetCount((GridCursor*)&w->a, total);
+    GridCursor_SetCount((GridCursor*)&w->b, total);
     w->a.field4 = pages;
     w->b.field4 = pages;
-    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&w->a, selected);
+    GridCursor_SelectIfValid((Struct_0205bcdc*)&w->a, selected);
     GridCursor_SetSelectedIndex(&w->b, selected);
     data_ov000_02184294.root->flags &= ~0x100;
 }

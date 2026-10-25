@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "Resource/GameResources.h"
 #include "Graphics/Vector.h"
 #include "GameState/GameState.h"
@@ -22,17 +23,10 @@ struct Struct_ov005_02153ba4_2 {
 
 extern "C" void func_020c51a4(int arg0);
 
-struct Struct_02000c9c_91;
-struct Struct_0204b8d0 {
-    char unknown_0_[0x10];
-    Struct_02000c9c_91* unknown_10_;
-    unsigned short* unknown_14_;
-    char unknown_18_[5];
-    unsigned char unknown_1d_;
-};
-void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct Obj0204b010;
-void Background_ClearMap(struct Obj0204b010* obj, void* p);
+struct BackgroundResourceEntry;
+void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+struct BackgroundGraphics;
+void Background_ClearMap(struct BackgroundGraphics* obj, void* p);
 extern "C" void Background_FlushMap(void* p, int flag);
 extern "C" void func_02047554(void* obj, int val, int param1);
 extern "C" void func_ov005_0215792c(void* obj, unsigned char mode);
@@ -56,19 +50,19 @@ struct Struct_ov005_0215b520 {
     char unknown_0_[0x88];
 };
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
-struct Struct_ov003_02178910 {
-    char unknown_0_[0x48];
-    Struct_0201099c_10* unknown_48_;
-    Struct_0201099c_9* unknown_4c_;
-    char unknown_50_[REGION(0x680,0x704)];
-    int unknown_754_;
-    char unknown_758_[0x18];
-    short unknown_770_;
-    unsigned short unknown_772_;
-    unsigned short unknown_774_;
-    unsigned char unknown_776_;
+struct ItemTable;
+struct Element020de650;
+struct Obj021dcae0 {
+    char pad0[0x48];
+    ItemTable* field48;
+    Element020de650* field4c;
+    char pad50[REGION(0x680,0x704)];
+    int field754;
+    char pad758[0x18];
+    short field770;
+    unsigned short field772;
+    unsigned short flags;
+    unsigned char field776;
 };
 struct Struct_ov005_02153ba4 {
     short unknown_0_;
@@ -81,50 +75,50 @@ struct Struct_ov005_02153ba4 {
 };
 extern "C" void func_ov023_021dcba4(void*, short);
 
-struct Struct_ov005_0215b520_2 {
-    char unknown_0_[REGION(0xea0,0xea4)];
-    Struct_0204b8d0 unknown_ea4_;
-    char unknown_ec4_[0x1244 - 0xec4];
-    Struct_ov003_02178910 unknown_1244_;
-    char unknown_19bc_[REGION(0x19ac - 0x1240,0x1a34 - 0x1244) - sizeof(Struct_ov003_02178910)];
-    char unknown_1a34_[0x3c];
-    Struct_ov005_0215b520 unknown_1a70_[36];
-    Struct_ov005_02153ba4 unknown_2d90_[24];
-    Struct_ov005_0215b520 unknown_3030_[24];
-    Struct_ov005_0215b520 unknown_3cf0_;
-    short unknown_3d78_;
-    char unknown_3d7a_[0x3db8 - 0x3d7a];
-    unsigned char unknown_3db8_;
-    char unknown_3db9_;
-    unsigned char unknown_3dba_;
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
-    char unknown_3dbd_[0x3dcc - 0x3dbd];
-    unsigned int unknown_3dcc_;
-    char unknown_3dd0_[0x3de2 - 0x3dd0];
-    short unknown_3de2_;
-    int unknown_3de4_;
-    int unknown_3de8_;
-    int unknown_3dec_;
+struct Scene0215b520 {
+    char pad0[REGION(0xea0,0xea4)];
+    BackgroundGraphics list;
+    char beforeInfo[0x1244 - 0xec4];
+    Obj021dcae0 infoWindow;
+    char beforeMotion[REGION(0x19ac - 0x1240,0x1a34 - 0x1244) - sizeof(Obj021dcae0)];
+    char motion[0x3c];
+    Entry0215b520 models[36];
+    EquipmentSlot slots[24];
+    Entry0215b520 slotModels[24];
+    Entry0215b520 dragModel;
+    short dragged;
+    char beforeMode[0x3db8 - 0x3d7a];
+    unsigned char mode;
+    char pad4;
+    unsigned char state;
+    signed char modeB;
+    unsigned char cursor;
+    char pad5[0x3dcc - 0x3dbd];
+    unsigned int flags;
+    char pad6[0x3de2 - 0x3dd0];
+    short level;
+    int step;
+    int accum;
+    int phase;
 };
 
 // USA: func_ov005_0215b520
-extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
-    unsigned char var0 = arg0->unknown_3dba_;
-    if (var0 == 0 && arg0->unknown_3dec_ == 0) {
-        func_ov005_0215792c(arg0, 1);
-        arg0->unknown_3dcc_ |= 0x100;
-        void* var1 = (void*)GameState::GetInstance();
-        GameResources* var2 = GetGameResources();
-        Struct_ov005_02153ba4_2* var3 = func_ov017_021a193c((int*)var2->unknown_ptr_array_36fc[3]);
-        short* var4 = func_02052e14((Struct_02052e14*)func_0200ff1c((GameState*)var1, var3->unknown_4fc_));
-        arg0->unknown_3de8_ += arg0->unknown_3de4_;
-        if (arg0->unknown_3de8_ >= 3) {
-            arg0->unknown_3de8_ -= 3;
-            arg0->unknown_3de2_ += 0x29;
-            if (arg0->unknown_3de2_ >= 0x7b) {
-                arg0->unknown_3de2_ = 0x7b;
-                arg0->unknown_3dec_ = 1;
+extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
+    unsigned char state = self->state;
+    if (state == 0 && self->phase == 0) {
+        func_ov005_0215792c(self, 1);
+        self->flags |= 0x100;
+        void* gs = (void*)GameState::GetInstance();
+        GameResources* res = GetGameResources();
+        MemberScreen* holder = GetField1c_021a193c((int*)res->unknown_ptr_array_3700[2]);
+        short* tbl = GetField150Ptr0x488((Field150Holder02052e14*)GetCombatantWithFlag0x100_0200ff1c((GameState*)gs, holder->member));
+        self->accum += self->step;
+        if (self->accum >= 3) {
+            self->accum -= 3;
+            self->level += 0x29;
+            if (self->level >= 0x7b) {
+                self->level = 0x7b;
+                self->phase = 1;
             }
         }
         if (arg0->unknown_3db8_ == 1) {
@@ -186,7 +180,7 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
                 arg0->unknown_3dec_ = 1;
             }
         }
-        Background_ClearMap((struct Obj0204b010*)&self->list, 0);
+        Background_ClearMap((struct BackgroundGraphics*)&self->list, 0);
         Background_DrawScreen(&self->list, 0, 0, 0, 0x20 - self->level, 0, 0x10, 0x16, 0xffff);
         unsigned char cursor = self->cursor;
         short y = cursor * 2 + 0xf;
@@ -217,7 +211,7 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
                 arg0->unknown_3dec_ = 2;
             }
         }
-        Background_ClearMap((struct Obj0204b010*)&self->list, 0);
+        Background_ClearMap((struct BackgroundGraphics*)&self->list, 0);
         Background_DrawScreen(&self->list, 0, 0, 0, self->level + 0x10, 0, 0x10, 0x16, 0xffff);
         unsigned char cursor = self->cursor;
         short y = cursor * 2 + 0xf;
@@ -228,18 +222,18 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
             self->level = 0;
             self->accum = 0;
         }
-    } else if (var0 == 1 && arg0->unknown_3dec_ == 2) {
-        void* var15 = (void*)GameState::GetInstance();
-        GameResources* var16 = GetGameResources();
-        Struct_ov005_02153ba4_2* var17 = func_ov017_021a193c((int*)var16->unknown_ptr_array_36fc[3]);
-        short* var18 = func_02052e14((Struct_02052e14*)func_0200ff1c((GameState*)var15, var17->unknown_4fc_));
-        arg0->unknown_3de8_ += arg0->unknown_3de4_;
-        if (arg0->unknown_3de8_ >= 3) {
-            arg0->unknown_3de8_ -= 3;
-            arg0->unknown_3de2_ += 0x29;
-            if (arg0->unknown_3de2_ >= 0x7b) {
-                arg0->unknown_3de2_ = 0x7b;
-                arg0->unknown_3dec_ = 1;
+    } else if (state == 1 && self->phase == 2) {
+        void* gs = (void*)GameState::GetInstance();
+        GameResources* res = GetGameResources();
+        MemberScreen* holder = GetField1c_021a193c((int*)res->unknown_ptr_array_3700[2]);
+        short* tbl = GetField150Ptr0x488((Field150Holder02052e14*)GetCombatantWithFlag0x100_0200ff1c((GameState*)gs, holder->member));
+        self->accum += self->step;
+        if (self->accum >= 3) {
+            self->accum -= 3;
+            self->level += 0x29;
+            if (self->level >= 0x7b) {
+                self->level = 0x7b;
+                self->phase = 1;
             }
         }
         if (arg0->unknown_3db8_ == 1) {
@@ -294,10 +288,10 @@ extern "C" ARM void func_ov005_0215b520(Struct_ov005_0215b520_2* arg0) {
         }
     }
 #if defined(jpn)
-    func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    short var25 = arg0->unknown_2d90_[arg0->unknown_3dbb_].unknown_0_;
-    arg0->unknown_1244_.unknown_774_ |= 0x80;
-    func_ov023_021dcba4(&arg0->unknown_1244_, var25);
+    GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    short item = self->slots[self->modeB].item;
+    self->infoWindow.flags |= 0x80;
+    func_ov023_021dcba4(&self->infoWindow, item);
 #endif
 
 }

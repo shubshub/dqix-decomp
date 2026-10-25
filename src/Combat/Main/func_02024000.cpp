@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void *func_02012fe4(void);
-extern "C" int func_0201b588(int arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_0202756c(void *arg0, int arg1, int arg2, int arg3, unsigned char arg4, unsigned char arg5,
-                              unsigned short arg6, unsigned char arg7, int arg8, int arg9);
+extern "C" void *Zone3D_GetInstance(void);
+int IsInRange0201b588(int zoneId);
+int IsInRange0201b5b0(int zoneId);
+void SetElementFields0202756c(void *receiver, int x, int y, int elementIndex, unsigned char image, unsigned char palette,
+                              unsigned short tile, unsigned char flags, int scaleX, int scaleY);
 
 #if defined(jpn)
 enum { Enum_02024000_0 = 0x20, Enum_02024000_0_2 = -0xac, Enum_02024000_28620 = 0x6d8c };
@@ -59,12 +59,12 @@ static inline Struct_02024000_3 *inline_02024000_2(Struct_02024000_4 *arg0, int 
 }
 
 // USA: func_02024000
-extern "C" ARM void func_02024000(void *arg0) {
-    Struct_02024000_2 *var0 = static_cast<Struct_02024000_2 *>(arg0);
-    GameState *var1 = GameState::GetInstance();
-    Struct_02024000 *var2 = static_cast<Struct_02024000 *>(func_02012fe4());
-    unsigned short var3 = var2->unknown_0_;
-    if (!func_0201b588(var3)) {
+extern "C" ARM void func_02024000(void *receiver) {
+    ElementReceiver *state = static_cast<ElementReceiver *>(receiver);
+    GameState *game = GameState::GetInstance();
+    ZoneRecord *zone = static_cast<ZoneRecord *>(Zone3D_GetInstance());
+    unsigned short zoneId = zone->zoneId;
+    if (!IsInRange0201b588(zoneId)) {
         return;
     }
     func_0202756c(arg0, 0xbc000, 0x3000, 26, 0x42, 0, 0xff, 0xff, 0x1000, 0x1000);

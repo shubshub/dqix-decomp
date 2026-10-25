@@ -17,7 +17,7 @@ struct Cont0205d274;
 void Window_FlushLayers(Cont0205d274*);
 struct Obj0205d2bc;
 void Window_TransferLayers(struct Obj0205d2bc*);
-extern "C" void func_0205d048(void* obj);
+extern "C" void Window_Destroy(void* obj);
 
 void InitFieldArenaListsAndCounters_021996fc(unsigned char* base);
 
@@ -106,7 +106,7 @@ extern "C" ARM void func_ov017_02199780(unsigned char* self) {
 			Window_FlushLayers(*(Cont0205d274**)(self + 0x3000 + 0xa90));
 			Window_TransferLayers(*(Obj0205d2bc**)(self + 0x3000 + 0xa90));
 			ClearAndEncodeEntries_021996bc((Entry_02199684*)(self + 0x294 + 0x3800), 2);
-			func_0205d048(*(void**)(self + 0x3000 + 0xa90));
+			Window_Destroy(*(void**)(self + 0x3000 + 0xa90));
 #else
 		if (*(int*)(self + 0x4000 + 0x74) != 0) {
 			FillEntriesEncoded_02199684((Entry_02199684*)(self + 0xb4 + 0x3c00), 2, 0x800);
@@ -114,7 +114,7 @@ extern "C" ARM void func_ov017_02199780(unsigned char* self) {
 			Window_FlushLayers(*(Cont0205d274**)(self + 0x3000 + 0xcb0));
 			Window_TransferLayers(*(Obj0205d2bc**)(self + 0x3000 + 0xcb0));
 			ClearAndEncodeEntries_021996bc((Entry_02199684*)(self + 0xb4 + 0x3c00), 2);
-			func_0205d048(*(void**)(self + 0x3000 + 0xcb0));
+			Window_Destroy(*(void**)(self + 0x3000 + 0xcb0));
 #endif
 
 #if defined(jpn)

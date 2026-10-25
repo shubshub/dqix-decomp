@@ -3,7 +3,7 @@
 
 struct Obj0205d2bc;
 void Window_TransferLayers(Obj0205d2bc*);
-extern "C" void Background_TransferMap(CreationTileMap*, void*);
+extern "C" void Background_TransferMap(BackgroundGraphics*, void*);
 extern "C" void CharacterCreationUI_ApplyTabGraphics(unsigned char*);
 extern "C" void CharacterCreationUI_RefreshSummary(char*);
 void RefreshFieldIfFlag4000_021d9d34(char*);
@@ -19,8 +19,8 @@ extern "C" ARM void CharacterCreationUI_UpdateVBlank(unsigned char* storage) {
         return;
     if (self->flags & CreationFlag_TabLoading)
         return;
-    Window_TransferLayers((Obj0205d2bc*)&self->windows[0]);
-    Window_TransferLayers((Obj0205d2bc*)&self->windows[1]);
+    Window_TransferLayers((Obj0205d2bc*)&self->windows[CreationWindowIndex_Summary]);
+    Window_TransferLayers((Obj0205d2bc*)&self->windows[CreationWindowIndex_Bottom]);
     if (self->flags & CreationFlag_RedrawTabHighlight) {
         Background_TransferMap(&self->layers[CreationLayer_TabHighlight], 0);
         self->flags &= ~CreationFlag_RedrawTabHighlight;

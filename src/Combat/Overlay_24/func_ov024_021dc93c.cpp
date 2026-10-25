@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
-extern "C" void* func_02010828(GameState*);
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov000_0215a8d4(unsigned char*, int);
-extern "C" int func_020881c4(unsigned char*);
-extern "C" int func_0208810c(unsigned char*);
-extern "C" void func_02088220(void*, int);
-extern "C" int func_02088208(void*, int);
-extern "C" void func_02088150(void*);
-extern "C" int func_ov024_021e8c48(void*, signed char);
-extern "C" unsigned short func_ov024_021da644(int,int,int);
+void* GameState_GetParty(GameState*);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char*, int);
+int CheckField0x14FiveFlagsClear020881c4(unsigned char*);
+int CheckField0x14FiveFlagsClear0208810c(unsigned char*);
+void SetFlag0x800000AndByte0x24_02088220(void*, int);
+int SetFlag0x800000AndCall02088208(void*, int);
+void ResetAndSetFlag0x1000000_02088150(void*);
+int GetCodeForCategory_021e8c48(void*, signed char);
+unsigned short SelectByIndexRange0to3_021da644(int,int,int);
 extern "C" void* func_ov000_0215e958(void*);
 extern "C" void func_ov000_0215a88c(void*,void*,int);
 extern "C" void func_ov000_0215ffc4(void*,void*,int);
@@ -85,24 +85,24 @@ extern "C" ARM void* func_ov024_021dc93c(Struct_ov024_021dc93c_2* arg0,short arg
      }
     }
    }
-  }else if(func_020881c4((unsigned char*)var0->currentStats_)){
-   int var10=arg3->unknown_30_;
-   int var11=((Struct_ov024_021dc93c_6*)var0->currentStats_)->unknown_24_+var10;
-   if(var11>4)var10-=var11-4;
-   for(;var10>0;var10--){
-    int var12=func_02088208(var0->currentStats_, (int)inline_ov024_021dc93c(arg0));
-    var4=0;
-    var3=func_ov024_021e8c48(arg0, var12);
-    void* var13=func_ov000_0215e958(arg0->unknown_10_);
-    if(!var13)return 0;
-    if(var12>0){
-     func_ov000_02159eac(arg0->unknown_10_,&var4,0x23);
-     if(var12==4){
-      func_ov000_02159eac(arg0->unknown_10_,&var4,7);
-      func_ov000_0215af54(arg0->unknown_10_,arg2,0);
-      void* var14=func_02010828(GameState::GetInstance());
-      if(func_02086ef0((Struct_02048150*)var14, arg1) && var5==0xa8)
-       func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 3);
+  }else if(CheckField0x14FiveFlagsClear020881c4((unsigned char*)target->currentStats_)){
+   int count=params->count;
+   int total=((Stats021dc93c*)target->currentStats_)->stage+count;
+   if(total>4)count-=total-4;
+   for(;count>0;count--){
+    int result=SetFlag0x800000AndCall02088208(target->currentStats_, (int)GetCtx(obj));
+    effects=0;
+    message=GetCodeForCategory_021e8c48(obj, result);
+    void* entry=func_ov000_0215e958(obj->context);
+    if(!entry)return 0;
+    if(result>0){
+     func_ov000_02159eac(obj->context,&effects,0x23);
+     if(result==4){
+      func_ov000_02159eac(obj->context,&effects,7);
+      func_ov000_0215af54(obj->context,id,0);
+      void* list=GameState_GetParty(GameState::GetInstance());
+      if(ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)list, sourceID) && code==0xa8)
+       IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)obj->context, 3);
      }
     }else{
      var4=0;

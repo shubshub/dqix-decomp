@@ -1,50 +1,38 @@
 #include <globaldefs.h>
+#include "Graphics/VramState.h"
 
-extern "C" void func_020bb700(int* arg0);
-extern "C" void func_020bb910(int* arg0);
-extern "C" int func_020bb588(unsigned int arg0, int arg1, int arg2);
-extern "C" int func_020bb7cc(unsigned int arg0, int arg1, int arg2);
-
-struct Struct_0207de48 { unsigned int unknown_0_[10]; };
-struct Struct_0207de48_2 { int unknown_0_[2]; };
-struct Struct_0207de48_3 {
-    Struct_0207de48 unknown_0_;
-    Struct_0207de48 unknown_28_;
-    int unknown_50_;
-    int unknown_54_;
-    Struct_0207de48_2 unknown_58_;
-    Struct_0207de48_2 unknown_60_;
-    int unknown_68_;
-    int unknown_6c_;
-};
+void NNS_GfdGetFrmTexVramState(int* out);
+void NNS_GfdGetFrmPlttVramState(int* dst);
+extern "C" int NNS_GfdAllocFrmTexVram(unsigned int size, int fromFront, int unused);
+extern "C" int NNS_GfdAllocFrmPlttVram(unsigned int size, int b4Pltt, int bAllocFromLo);
 
 // Main, originally func_0207de48 (USA 0x0207de48, EUR 0x0207de58, JPN 0x0207ebc8)
-extern "C" ARM void VramState_Reserve(void* pObj, int a, int b) {
-    struct PairBackupCtx0207de48* obj = (struct PairBackupCtx0207de48*)pObj;
-    BackupPairTableToBuffer_020bb700((int*)&obj->bufA);
-    obj->bufB = obj->bufA;
-    ReadGlobalPair020bb910(obj->globalPair.v);
-    int remaining = a;
-    obj->globalPairCopy = obj->globalPair;
-    obj->checksumA = 0;
+extern "C" ARM void VramState_Reserve(void* state, int textureSize, int paletteSize) {
+    struct VramState* self = (struct VramState*)state;
+    NNS_GfdGetFrmTexVramState((int*)&self->startTexture);
+    self->texture = self->startTexture;
+    NNS_GfdGetFrmPlttVramState(self->startPalette.bounds);
+    int remaining = textureSize;
+    self->palette = self->startPalette;
+    self->textureKey = 0;
 
-    while (var1 > 0) {
-        if (var1 > 0x20000) {
-            var0->unknown_50_ = func_020bb588(0x20000, 0, 0);
-            var1 -= 0x20000;
+    while (remaining > 0) {
+        if (remaining > 0x20000) {
+            self->textureKey = NNS_GfdAllocFrmTexVram(0x20000, 0, 0);
+            remaining -= 0x20000;
         } else {
-            var0->unknown_50_ = func_020bb588(var1, 0, 0);
-            var1 = 0;
+            self->textureKey = NNS_GfdAllocFrmTexVram(remaining, 0, 0);
+            remaining = 0;
         }
     }
-    if (arg1 != 0 && var0->unknown_50_ == 0) arg1 = 0;
+    if (textureSize != 0 && self->textureKey == 0) textureSize = 0;
 
-    var0->unknown_68_ = 0;
-    if (arg2 != 0) {
-        var0->unknown_68_ = func_020bb7cc(arg2, 0, 0);
+    self->paletteKey = 0;
+    if (paletteSize != 0) {
+        self->paletteKey = NNS_GfdAllocFrmPlttVram(paletteSize, 0, 0);
     }
-    if (arg2 != 0 && var0->unknown_68_ == 0) arg2 = 0;
+    if (paletteSize != 0 && self->paletteKey == 0) paletteSize = 0;
 
-    var0->unknown_54_ = arg1;
-    var0->unknown_6c_ = arg2;
+    self->textureSize = textureSize;
+    self->paletteSize = paletteSize;
 }

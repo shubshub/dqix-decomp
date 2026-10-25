@@ -52,9 +52,9 @@ extern "C" ARM void func_ov000_0217fa60(struct Struct_ov000_0217fa60_3* arg0) {
     for (unsigned char var0 = 0; var0 < 4; var0++) {
         inline_ov000_0217fa60_2(arg0, arg0->unknown_6c_[var0])->unknown_87_ = 0;
     }
-    struct Struct_ov000_0217fa60_2* var1 = (struct Struct_ov000_0217fa60_2*)func_02010828(GameState::GetInstance());
-    for (unsigned char var2 = 0; var2 < var1->unknown_f7c_; var2++) {
-        inline_ov000_0217fa60_2(arg0, var1->unknown_f78_[var2])->unknown_87_ = 1;
+    struct Party_0217fa60* party = (struct Party_0217fa60*)GameState_GetParty(GameState::GetInstance());
+    for (unsigned char i = 0; i < party->count; i++) {
+        GetSlot(obj, party->ids[i])->active = 1;
     }
     struct Struct_ov000_0217fa60* var3;
     int var4 = -1;

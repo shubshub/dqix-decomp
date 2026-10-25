@@ -48,14 +48,14 @@ extern "C" short* func_02052e14(Struct_02052e14* arg0);
 extern "C" unsigned char data_ov005_0215cbd4[8];
 
 // USA: func_ov005_02155544
-extern "C" ARM void func_ov005_02155544(Struct_ov005_02153954* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov005_02153ba4_2* var1 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    GameObject* var2 = func_0200ff1c(var0, var1->unknown_4fc_);
-    short* var3 = func_02052e14((Struct_02052e14*)var2);
-    for (int var4 = 0; var4 < 8; var4++) {
-        Struct_ov005_02153ba4* var5 = &arg0->unknown_2d90_[var4];
-        var5->unknown_0_ = var3[data_ov005_0215cbd4[var4]];
-        var5->unknown_2_ = 1;
+extern "C" ARM void func_ov005_02155544(EquipmentMenu* self) {
+    GameState* gameState = GameState::GetInstance();
+    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, screen->member_);
+    short* equipment = GetField150Ptr0x488((Field150Holder02052e14*)member);
+    for (int i = 0; i < 8; i++) {
+        EquipmentSlot* slot = &self->slots_[i];
+        slot->item_ = equipment[data_ov005_0215cbd4[i]];
+        slot->count_ = 1;
     }
 }

@@ -14,10 +14,10 @@ struct Entry021b6d60 {
     unsigned char pad[RegionOffset2f];
 };
 
-extern "C" void func_02086404(void* p);
+extern "C" void PartyMemberRecord_Init(void* p);
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 short* GetField150Ptr0x488_02052e2c(struct Field150Holder02052e2c* obj);
-extern "C" void func_020830cc(void* field150, void* b);
+extern "C" void PartyMember_WriteRecord(void* field150, void* b);
 extern "C" void func_02082828(void* field150);
 void InvalidateField0_020545ac(short* obj);
 extern "C" void func_ov017_02190264(int val, int a);
@@ -30,7 +30,7 @@ void EnqueueEventTag9_021cc68c(int a);
 
 // USA: func_ov017_021b6d60  (semantic: ProcessCombatantFieldChain_021b6d60)
 extern "C" ARM int func_ov017_021b6d60(int a, void* b) {
-    func_02086404(b);
+    PartyMemberRecord_Init(b);
     GameState* bs = GameState::GetInstance();
     GameObject* c = GetCombatantWithFlag0x100_0200ff1c(bs, a);
     if (c == NULL) {
@@ -44,7 +44,7 @@ extern "C" ARM int func_ov017_021b6d60(int a, void* b) {
     if (p488 == NULL) {
         return 0;
     }
-    func_020830cc(field150, b);
+    PartyMember_WriteRecord(field150, b);
     int val = (int)bs->GetResources();
     func_02082828(field150);
     short* f154 = *(short**)((char*)c + RegionOffset154);

@@ -20,19 +20,19 @@ extern "C" int func_0202b7d8(int*);
 
 extern "C" void func_020794f8(void* arg0, int arg1, int arg2);
 
-struct Struct_02033b68;
-extern "C" void func_02033b68(struct Struct_02033b68* arg0, int arg1);
+struct Obj02033b68;
+void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
-struct Struct_02033834_2;
-extern "C" void func_02033834(struct Struct_02033834_2* arg0, int arg1);
+struct Obj02033834;
+void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
 extern "C" int func_0202c540(void* arg0);
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_02039df4;
 
-extern "C" int func_02018fbc(int arg0, void* arg1);
+extern "C" int Zone3D_GetGroundHeight(int seed, void* v);
 
 struct Vector3i;
 
@@ -70,9 +70,9 @@ extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
         return;
     }
 
-    arg0->unknown_b4_ = 0x1c2;
-    arg0->unknown_b2_ = 0x1c2;
-    func_02033b68((struct Struct_02033b68*)arg0, 1);
+    self->fb4 = 0x1c2;
+    self->fb2 = 0x1c2;
+    GameObject_SetMotionState((struct Obj02033b68*)self, 1);
 
     struct Struct_ov009_0218aa28 var1 = arg0->unknown_44_;
     var1.unknown_4_ = 0;
@@ -81,10 +81,10 @@ extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
     struct Struct_ov009_0218aa28 var3;
     int var4;
 
-    var4 = Vector3fix_Distance((const Vector3fix*)&var1, (const Vector3fix*)&var2);
-    Vector3fix_Subtract((const Vector3fix*)&var2, (const Vector3fix*)&var1, (Vector3fix*)&var3);
-    Vector3fix_Normalize((const Vector3fix*)&var3, (Vector3fix*)&var3);
-    func_02033834((struct Struct_02033834_2*)arg0, fix32_Atan2(var3.unknown_0_, var3.unknown_8_));
+    dist = Vector3fix_Distance((const Vector3fix*)&pos44, (const Vector3fix*)&pos158);
+    Vector3fix_Subtract((const Vector3fix*)&pos158, (const Vector3fix*)&pos44, (Vector3fix*)&delta);
+    Vector3fix_Normalize((const Vector3fix*)&delta, (Vector3fix*)&delta);
+    GameObject_SetFacing((struct Obj02033834*)self, fix32_Atan2(delta.x, delta.z));
 
     if (func_0202c540(var0) != 0) {
         return;
@@ -94,13 +94,13 @@ extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
         return;
     }
 
-    struct Struct_02078050_2* var5 = (struct Struct_02078050_2*)func_02012fe4();
-    struct Struct_ov009_0218aa28 var6 = arg0->unknown_44_;
-    unsigned short var7 = var5->unknown_0_;
+    struct Flags02078050* flags = (struct Flags02078050*)Zone3D_GetInstance();
+    struct Vec3 v = self->f44;
+    unsigned short curId = flags->f00;
 
-    if (var7 == ((Object3D*)((struct Struct_02039df4*)arg0))->GetField06() && var5->unknown_424_ == 0) {
-        var6.unknown_4_ = func_02018fbc((int)var5, &var6);
-        *(Vector3i*)((int*)&arg0->unknown_44_) = *(Vector3i const*)((int*)&var6);
+    if (curId == ((Object3D*)((struct U16Field0x6_020375f8*)self))->GetField06() && flags->f424 == 0) {
+        v.y = Zone3D_GetGroundHeight((int)flags, &v);
+        *(Vector3i*)((int*)&self->f44) = *(Vector3i const*)((int*)&v);
     }
 
     func_02076ccc(arg0, 1);

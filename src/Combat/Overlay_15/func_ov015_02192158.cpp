@@ -7,15 +7,15 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov015_0218ffa8;
-struct Struct_ov015_0218ffd0;
-struct Struct_ov015_0218fff8;
-struct Struct_ov015_02190020;
-struct Struct_ov015_0218ff7c;
-struct Struct_ov015_0219005c;
-struct Struct_0201099c_10;
-struct Struct_020deda4;
-struct Struct_ov015_021900dc;
+struct S_0218ffa8;
+struct S_0218ffd0;
+struct S_0218fff8;
+struct Obj02190020;
+struct SetStruct_0218ff7c;
+struct SetStruct_0219005c;
+struct ItemTable;
+struct Fields020deda4;
+struct Obj021900dc;
 
 struct Struct_ov015_0218b828_3
 {
@@ -60,18 +60,18 @@ struct Struct_ov015_02190acc
     int unknown_1a4_;
 };
 
-extern "C" Struct_ov015_0218b828_3* func_ov015_02193160(Struct_ov015_02190acc* arg0, int arg1, int* arg2);
-extern "C" void func_ov015_0218ffa8(Struct_ov015_0218ffa8* arg0, int arg1);
-extern "C" void func_ov015_0218f308(Struct_ov015_0218c03c_2* arg0, const char* arg1);
-extern "C" void func_ov015_02192700(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" void func_ov015_021900dc(Struct_ov015_021900dc* arg0);
-extern "C" void func_ov015_0218ffd0(Struct_ov015_0218ffd0* arg0, int arg1);
-extern "C" void func_ov015_0218fff8(Struct_ov015_0218fff8* arg0, int arg1);
-extern "C" void func_ov015_02190020(Struct_ov015_02190020* arg0, unsigned char arg1);
-extern "C" void func_ov015_0218ff7c(Struct_ov015_0218ff7c* arg0, int arg1, int arg2);
-extern "C" Struct_ov005_021556e4* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" Struct_ov005_021556e4* func_020deda4(int arg0, int arg1, Struct_020deda4* arg2);
-extern "C" void func_ov015_0219005c(Struct_ov015_0219005c* arg0, short arg1, short arg2);
+extern "C" ViewerEntry* func_ov015_02193160(S02190c2c* self, int page, int* index);
+void SetByteFieldIfChanged_0218ffa8(S_0218ffa8* object, int female);
+extern "C" void func_ov015_0218f308(ViewObject* object, const char* event);
+extern "C" void func_ov015_02192700(S02190c2c* self, int unk);
+void UpdateField4c021900dc(Obj021900dc* object);
+void SetByteFieldIfChanged_0218ffd0(S_0218ffd0* object, int color);
+void SetByteFieldIfChanged_0218fff8(S_0218fff8* object, int color);
+void SetField3c02190020(Obj02190020* object, unsigned char color);
+void SetIfChanged0218ff7c(SetStruct_0218ff7c* object, int part, int id);
+PartEntry* ItemTable_Find(ItemTable* names, int id);
+PartEntry* Forward10BitFields020deda4(int names, int category, Fields020deda4* entry);
+void SetPairIfChanged0219005c(SetStruct_0219005c* object, short width, short height);
 
 // USA: func_ov015_02192158
 extern "C" ARM void func_ov015_02192158(Struct_ov015_02190acc* arg0, int arg1)
@@ -169,11 +169,11 @@ extern "C" ARM void func_ov015_02192158(Struct_ov015_02190acc* arg0, int arg1)
         }
         else if (arg0->unknown_1a4_ == 23)
         {
-            func_ov015_0218ff7c((Struct_ov015_0218ff7c*)var4->unknown_0_, (unsigned char)var2, var3->unknown_8_);
-            Struct_ov005_021556e4* var5 = func_020deda4((int)&arg0->unknown_4c_, 0x61,
-                (Struct_020deda4*)func_020dedd0((Struct_0201099c_10*)&arg0->unknown_4c_, (short)var4->unknown_0_->unknown_20_[0]));
-            if (var5 != NULL)
-                func_ov015_0218ff7c((Struct_ov015_0218ff7c*)var4->unknown_0_, 5, var5->unknown_18_);
+            SetIfChanged0218ff7c((SetStruct_0218ff7c*)node->object_, (unsigned char)part, entry->id_);
+            PartEntry* skin = Forward10BitFields020deda4((int)&self->parts_, 0x61,
+                (Fields020deda4*)ItemTable_Find((ItemTable*)&self->parts_, (short)node->object_->parts_[0]));
+            if (skin != NULL)
+                SetIfChanged0218ff7c((SetStruct_0218ff7c*)node->object_, 5, skin->unk_18);
             else
                 func_ov015_0218ff7c((Struct_ov015_0218ff7c*)var4->unknown_0_, 5, 0x36b0);
         }

@@ -1,8 +1,5 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov004_02167434_2 {
     short unknown_0_;
@@ -30,12 +27,12 @@ struct Struct_0205d594 {
 struct Struct_02065990_3;
 struct Struct_02065990_2;
 
-extern "C" short func_ov004_02166684(int arg0);
-extern "C" short func_ov004_021666bc(void* arg0, char* arg1);
-extern "C" struct Struct_02065990_3* func_02094d6c(void);
-extern "C" struct Struct_0205d594* func_0205ec34(void);
-extern "C" unsigned char func_020965ac(Struct_02065990_3* arg0, unsigned char arg1);
-extern "C" int func_02095d30(struct Struct_02065990_3* arg0, int arg1, int arg2);
+short GetScaledFieldValue_02166684(int a);
+extern "C" short func_ov004_021666bc(void* a1, char* outFlag);
+struct GetTableByteOrFFData* GetGlobal02109418_02094d6c(void);
+extern "C" struct Ctx0205ec34* Scenario_GetInstance(void);
+unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData* s, unsigned char idx);
+extern "C" int func_02095d30(struct GetTableByteOrFFData* list, int value, int mode);
 extern "C" void func_ov004_02166198(void);
 extern "C" void func_ov004_02165f2c(void);
 extern "C" void func_ov004_02165ef4(void* arg0);
@@ -57,15 +54,15 @@ static inline Struct_ov004_02167434* inline_ov004_02167434() {
 extern "C" static inline unsigned char* func_0205d594(struct Struct_0205d594* arg0) { return arg0->unknown_2cc_; }
 
 // USA: func_ov004_02167434
-extern "C" ARM int func_ov004_02167434(void* arg0) {
-    short var0 = func_ov004_02166684((int)arg0);
-    short var1;
-    char var2;
-    short var3 = func_ov004_021666bc(arg0, &var2);
-    struct Struct_02065990_3* var4 = func_02094d6c();
-    struct Struct_0205d594* var5 = func_0205ec34();
-    unsigned char var6 = func_020965ac(var4, (unsigned char)var3);
-    func_02095d30(var4, var6, 1);
+extern "C" ARM int func_ov004_02167434(void* a1) {
+    short target = GetScaledFieldValue_02166684((int)a1);
+    short id;
+    char flag;
+    short key = func_ov004_021666bc(a1, &flag);
+    struct GetTableByteOrFFData* table = GetGlobal02109418_02094d6c();
+    struct Ctx0205ec34* ctx = Scenario_GetInstance();
+    unsigned char slot = GetTableByteOrFF_020965ac(table, (unsigned char)key);
+    func_02095d30(table, slot, 1);
 
     unsigned char var7 = var6 >> 1;
     unsigned char* var8 = func_0205d594(var5);

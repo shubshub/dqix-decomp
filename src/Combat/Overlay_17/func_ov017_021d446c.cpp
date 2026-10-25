@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_02012fe4(void);
-struct Struct_020fdd44;
-extern "C" struct Struct_020fdd44* func_02027ca4(void);
-extern "C" struct Struct_020fdd44* func_02028bd0(struct Struct_020fdd44* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+struct Entry_02028bd0;
+struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
 
 struct Struct_020fdd44 {
     unsigned short unknown_0_;
@@ -24,10 +24,10 @@ struct Struct_ov017_021d446c_2 {
 };
 
 // USA: func_ov017_021d446c
-extern "C" ARM int func_ov017_021d446c(Struct_ov017_021d446c* arg0, Struct_ov017_021d446c_2* arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_02012fe4();
-    struct Struct_020fdd44* var2 = func_02027ca4();
+extern "C" ARM int func_ov017_021d446c(Src021d446c* p0, Out021d446c* out, int p2) {
+    GameState* bs = GameState::GetInstance();
+    void* tbl = Zone3D_GetInstance();
+    struct Entry_02028bd0* entryBase = ZoneRecords_GetInstance();
 
     if (arg0->unknown_0_ != *(unsigned short*)var1 && arg2 != 1) {
         return 0;

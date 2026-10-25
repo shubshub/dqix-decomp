@@ -21,22 +21,22 @@ struct Struct_02077788 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" Vector3fix func_020341e0(void* arg0);
-extern "C" int func_020322c0(int arg0, int* arg1, int arg2);
-extern "C" void func_020794f8(void* arg0, int arg1, int arg2);
-extern "C" int func_0202b7d8(int* arg0);
-struct Struct_0202c1a4;
-struct Struct_02033f44;
-struct Struct_02033834_2;
-struct Struct_02033b68;
-struct Struct_02077788_2;
-extern "C" int func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" int func_02033f44(struct Struct_02033f44* arg0);
-extern "C" void func_02033834(struct Struct_02033834_2* arg0, int arg1);
-extern "C" void func_02033b68(struct Struct_02033b68* arg0, int arg1);
-extern "C" void func_02076ccc(void* arg0, int arg1);
-extern "C" int func_02077a20(struct Struct_02077788_2* arg0);
-extern "C" int func_02039760(void* arg0);
+extern "C" Vector3fix func_020341e0(void* obj);
+extern "C" int func_020322c0(int a, int* b, int c);
+extern "C" void func_020794f8(void* obj, int a, int b);
+int CheckField0NonZero_0202b7d8(int* obj);
+struct SearchStruct0202c1a4;
+struct BitFlag02033f44;
+struct Obj02033834;
+struct Obj02033b68;
+struct Outer02077a20;
+int GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+int GetField0xe4IfFlag0x40(struct BitFlag02033f44* obj);
+void GameObject_SetFacing(struct Obj02033834* obj, int angle);
+void GameObject_SetMotionState(struct Obj02033b68* obj, int value);
+void TrySetMode02076ccc(void* obj, int mode);
+int GetField0x8OrDefault02077a20(struct Outer02077a20* obj);
+int GetIntField0x264_02039760(void* obj);
 
 // USA: func_02077788
 extern "C" ARM void func_02077788(struct Struct_02077788* arg0) {
@@ -47,16 +47,16 @@ extern "C" ARM void func_02077788(struct Struct_02077788* arg0) {
         return;
     }
 
-    Vector3fix var3 = func_020341e0(var2);
-    Vector3fix var4;
-    Vector3fix_Subtract(&var3, &arg0->unknown_0_.position_, &var4);
-    Vector3fix_Normalize(&var4, &var4);
-    int var5 = fix32_Atan2(var4.x, var4.z);
-    func_02033834((struct Struct_02033834_2*)arg0, var5);
+    Vector3fix pos = func_020341e0(combatant);
+    Vector3fix delta;
+    Vector3fix_Subtract(&pos, &self->object.position_, &delta);
+    Vector3fix_Normalize(&delta, &delta);
+    int angle = fix32_Atan2(delta.x, delta.z);
+    GameObject_SetFacing((struct Obj02033834*)self, angle);
 
-    arg0->unknown_b4_ = 0x1c2;
-    arg0->unknown_b2_ = 0x1c2;
-    func_02033b68((struct Struct_02033b68*)arg0, 1);
+    self->fb4 = 0x1c2;
+    self->fb2 = 0x1c2;
+    GameObject_SetMotionState((struct Obj02033b68*)self, 1);
 
     int var6 = func_02033f44((struct Struct_02033f44*)arg0);
     int var7 = 0;

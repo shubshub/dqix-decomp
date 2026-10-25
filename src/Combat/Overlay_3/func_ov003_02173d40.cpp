@@ -35,22 +35,22 @@ enum { Enum_ov003_02173d40_736 = 0x2e0 };
 #include "std_library_functions.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_020421a0(void);
-extern "C" void* func_020d6c00(void);
-struct Struct_02038598_4;
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-struct Struct_0205a244;
-extern "C" void func_0205a244(struct Struct_0205a244* arg0);
-extern "C" void func_0205a494(void* arg0);
-extern "C" void func_020a64e8(void* arg0);
-struct Struct_02074bd0;
-extern "C" void func_02074bd0(struct Struct_02074bd0* arg0);
-struct Struct_02074bf4;
-extern "C" void func_02074bf4(struct Struct_02074bf4* arg0);
-struct Struct_020727d8 {
-    void* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+int MessageSystem_GetInstance(void);
+void* GlobalFlags_GetInstance(void);
+struct FlagWord020466f4;
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+struct ClearTarget0205a244;
+void ClearField0And40205a244(struct ClearTarget0205a244* target);
+void SpriteContext_Destroy(void* obj);
+extern "C" void _Z32ResetSubBg1AndClearCache020a64e8v(void* obj);
+struct Struct02074bd0;
+void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
+struct Struct02074bf4;
+void ClearFlag0x11IfSet(struct Struct02074bf4* obj);
+struct List020727d8 {
+    void* entries;
+    short capacity;
+    short count;
 };
 extern "C" void func_020727ec(struct Struct_020727d8* arg0);
 void CleanCacheRange(const void* addr, unsigned int size);
@@ -75,15 +75,15 @@ struct Struct_ov003_02173d40 {
 };
 
 // USA: func_ov003_02173d40
-extern "C" ARM void func_ov003_02173d40(Struct_ov003_02173d40* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    unsigned char* var2 = (unsigned char*)func_020421a0();
-    func_020466f4((struct Struct_02038598_4*)func_020d6c00(), 0x1000);
-    var2[0x1000 + Enum_ov003_02173d40_2494] = 0;
-    func_0205a244(arg0->unknown_12c_);
-    func_0205a494(arg0->unknown_130_);
-    func_020a64e8(arg0->unknown_d8_);
+extern "C" ARM void func_ov003_02173d40(BattleScene_02173d40* scene) {
+    GameState* gs = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    unsigned char* global = (unsigned char*)MessageSystem_GetInstance();
+    FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0x1000);
+    global[0x1000 + kRegion9be] = 0;
+    ClearField0And40205a244(scene->field_0x12c);
+    SpriteContext_Destroy(scene->field_0x130);
+    _Z32ResetSubBg1AndClearCache020a64e8v(scene->field_0xd8);
     *(volatile int*)0x4001010 = 0;
     func_02074bd0((struct Struct_02074bd0*)arg0->unknown_fa_);
     func_02074bf4((struct Struct_02074bf4*)arg0->unknown_10c_);

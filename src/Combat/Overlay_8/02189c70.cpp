@@ -16,13 +16,7 @@
 #include "NitroSDK/OverlayId.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_ov008_02189c70_17 { char unknown_0_[10]; };
 
@@ -251,55 +245,55 @@ extern char data_ov008_0218c196[];
 extern "C" void func_020474a8(Struct_ov008_02189c70_12*, int, char*, char*);
 extern "C" void func_0204500c(Struct_ov008_02189c70_12*, char*, int);
 #endif
-extern "C" void* func_020421a0();
+void* MessageSystem_GetInstance();
 extern "C" int func_0202ae18();
 extern "C" void func_020728ac(void* table, SafeAllocator* alloc, void* data, unsigned int size, int a, int b, int c);
-void* GetDataPtr02114e04_020d6c00();
+void* GlobalFlags_GetInstance();
 struct FlagWord020466f4;
-void ClearFlags020466f4(FlagWord020466f4*, unsigned int);
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 extern "C" void __clear(void* p, unsigned int size);
 extern "C" void func_ov008_0218b240(Self02189c70* self);
 Ent02189c70* GetFieldAt0x150_02053c6c(unsigned char*);
-extern "C" void func_02042764(void* src, void* dst, int flag);
+extern "C" void Font_DecodeText(void* src, void* dst, int flag);
 struct TableA68;
 char* FindEntryByKey_02072a68(TableA68*, int);
 struct Container020e0310;
 char* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_02099304(void* name, void* a1, void* a2, unsigned int a3, char* buf, int bufSize, int flag, char* p1, char* p2);
 extern "C" void func_02046380(void* w);
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void func_02046608(Struct_ov008_02189c70_12* arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+void NameText_InitFromPartyMember(void* obj, int id);
+extern "C" void MessageSystem_FormatText(Window02189c70* w, int a, char* str, char* buf, int b, int c, int d);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_ov008_02189c70_12* arg0, char* arg1, int arg2, int arg3);
 #endif
-extern "C" int func_0202c508(int arg0);
-extern "C" int func_020457e0(Struct_ov008_02189c70_12* arg0);
-extern "C" void func_ov008_0218b1e0(void* arg0);
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
+extern "C" int func_0202c508(int v);
+extern "C" int func_020457e0(Window02189c70* w);
+void AllocateFreeSlot0218b1e0(void* obj);
+struct Entry_0205d6a0;
+void Window_ClosePane(Entry_0205d6a0*, int);
 extern "C" void func_020a3720();
 struct DetailedTreasureMapData;
 bool ExportDetailedTreasureMapData(TreasureMapMetadata const*, DetailedTreasureMapData*, bool, unsigned char const*);
 extern "C" void func_020a395c();
-extern "C" void func_020464e8(char*, int, char*);
-extern "C" void func_020e4b34(void* arg0, void* arg1, void* arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11);
-extern "C" int func_020100b0(GameState* arg0);
-extern "C" unsigned char func_02011804(GameState* arg0);
-extern "C" void func_020ac760(void* arg0);
-extern "C" void func_020ac734(void* arg0);
-struct Struct_02011818;
-extern "C" void func_02011818(void*, Struct_02011818*);
-extern "C" void func_02011ab8(char*);
-extern "C" void func_02011a74(char*, unsigned int, char const*);
-extern "C" void func_ov017_021a9ff0(int arg0);
-extern "C" void func_020a1940(unsigned int arg0);
-struct Struct_02018300_3;
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+void CopyStringToIndexedField0x2ec_020464e8(char*, int, char*);
+extern "C" void func_020e4b34(void* obj, void* a, void* b, int c, int d, int e, int f, int g, int h, int i, int j, int k);
+int GameState_GetLeaderIndex(GameState* gs);
+unsigned char ReadBattleField0x64f4Byte_02011804(GameState* gameState);
+void CopyOutBattleRegion0x64f4_020ac760(void* dst);
+void CopyToBattleRegion0x64f4_020ac734(void* src);
+struct Src02011818;
+void SetNameEntries02011818(void*, Src02011818*);
+void ClearRegion0x649e_02011ab8(char*);
+void CopyStringToField0x649e_02011a74(char*, unsigned int, char const*);
+extern "C" void func_ov017_021a9ff0(int v);
+extern "C" void func_020a1940(unsigned int id);
+struct Obj020397cc;
+void GameObject_DisableControl(Obj020397cc*, int);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 
 static inline Struct_ov008_02189c70_8* inline_ov008_02189c70_2(Struct_ov008_02189c70_9* arg0, int arg1) {
     return (Struct_ov008_02189c70_8*)&arg0->unknown_44_[arg1];
@@ -319,58 +313,58 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
     char var8[0xc];
 #endif
 
-    GameState* var9 = GameState::GetInstance();
-    BackgroundLoader* var10 = BackgroundLoader::GetInstance();
-    Struct_ov008_02189c70_12* var11 = (Struct_ov008_02189c70_12*)func_020421a0();
-    Struct_ov008_02189c70_15* var12 = (Struct_ov008_02189c70_15*)GetGameResources();
-    Struct_ov008_02189c70_13* var13 = var12->unknown_3b84_;
-    int var14 = func_0202ae18();
+    GameState* gs = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    Window02189c70* win = (Window02189c70*)MessageSystem_GetInstance();
+    Res02189c70* res = (Res02189c70*)GetGameResources();
+    Sub3b84* sub = res->f3b84;
+    int token = func_0202ae18();
 
     if (arg0->unknown_e9a_ == 0) {
 #if defined(jpn)
-        if ((arg0->unknown_e98_ & 2) && var10->GetTaskStatus(arg0->unknown_eac_)) {
-            void* var15;
-            void* var16;
-            unsigned int var17;
-            unsigned int var18;
-            int var19 = 0;
-            var10->GetLoadedFileByID(arg0->unknown_eac_, &var15, &var17);
-            if (!GetFileInNarc(var15, data_ov008_0218c184, (const void**)&var16, &var18, 0))
-                var19 = 1;
-            arg0->unknown_250_.Reset();
-            func_020728ac((char*)arg0 + 0x280, &arg0->unknown_250_, var16, var18, 0, 0, 0);
-            arg0->unknown_de0_ = (char*)arg0 + 0x280;
-            arg0->unknown_ec0_1_ = 1;
-            if (!GetFileInNarc(var15, data_ov008_0218c196, (const void**)&var16, &var18, 0))
-                var19 = 1;
-            if (var19) {
-                var10->RemoveTask(arg0->unknown_eac_);
-                func_0205d6a0((Struct_0205d6a0*)((char*)arg0 + 0x18), 1);
-                arg0->unknown_e99_ = 2;
-                arg0->unknown_e9a_ = 0;
-                arg0->unknown_e9b_ = 2;
-                arg0->unknown_e9c_ = 0;
+        if ((self->e98 & 2) && loader->GetTaskStatus(self->eac)) {
+            void* archive;
+            void* data;
+            unsigned int archiveSize;
+            unsigned int size;
+            int failed = 0;
+            loader->GetLoadedFileByID(self->eac, &archive, &archiveSize);
+            if (!GetFileInNarc(archive, data_ov008_0218c184, (const void**)&data, &size, 0))
+                failed = 1;
+            self->alloc.Reset();
+            func_020728ac((char*)self + 0x280, &self->alloc, data, size, 0, 0, 0);
+            self->de0 = (char*)self + 0x280;
+            self->ec0_b1 = 1;
+            if (!GetFileInNarc(archive, data_ov008_0218c196, (const void**)&data, &size, 0))
+                failed = 1;
+            if (failed) {
+                loader->RemoveTask(self->eac);
+                Window_ClosePane((Entry_0205d6a0*)((char*)self + 0x18), 1);
+                self->e99 = 2;
+                self->state = 0;
+                self->e9b = 2;
+                self->e9c = 0;
                 return;
             }
-            arg0->unknown_ec4_ = var16;
-            arg0->unknown_ec8_ = var18;
-            func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x2f);
+            self->ec4 = data;
+            self->ec8 = size;
+            FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x2f);
             ClearFlags00(GetGameResources(), 0x10);
             arg0->unknown_e9a_ = arg0->unknown_e9a_ + 1;
         }
 #else
-        if ((arg0->unknown_e98_ & 2) && var10->GetTaskStatus(arg0->unknown_eac_) && var10->GetTaskStatus(arg0->unknown_eb0_)) {
-            void* var20;
-            unsigned int var21;
-            var10->GetLoadedFileByID(arg0->unknown_eac_, &var20, &var21);
-            arg0->unknown_250_.Reset();
-            func_020728ac((char*)arg0 + 0x280, &arg0->unknown_250_, var20, var21, 0, 0, 0);
-            arg0->unknown_de0_ = (char*)arg0 + 0x280;
-            arg0->unknown_ec0_1_ = 1;
-            var10->GetLoadedFileByID(arg0->unknown_eb0_, &var20, &var21);
-            arg0->unknown_ec4_ = var20;
-            arg0->unknown_ec8_ = var21;
-            func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x2f);
+        if ((self->e98 & 2) && loader->GetTaskStatus(self->eac) && loader->GetTaskStatus(self->eb0)) {
+            void* data;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->eac, &data, &size);
+            self->alloc.Reset();
+            func_020728ac((char*)self + 0x280, &self->alloc, data, size, 0, 0, 0);
+            self->de0 = (char*)self + 0x280;
+            self->ec0_b1 = 1;
+            loader->GetLoadedFileByID(self->eb0, &data, &size);
+            self->ec4 = data;
+            self->ec8 = size;
+            FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x2f);
             ClearFlags00(GetGameResources(), 0x10);
             arg0->unknown_e9a_ = arg0->unknown_e9a_ + 1;
         }
@@ -394,15 +388,15 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
 #if defined(jpn)
             var25 = (char*)arg0 + 0xdf2;
 #else
-            func_02042764((char*)arg0 + 0xdf6, var26, 1);
-            var25 = var26;
+            Font_DecodeText((char*)self + 0xdf6, clr1, 1);
+            name = clr1;
 #endif
         } else {
 #if defined(jpn)
             var25 = (char*)arg0->unknown_ebc_;
 #else
-            func_02042764(arg0->unknown_ebc_, var26, 1);
-            var25 = var26;
+            Font_DecodeText(self->ebc, clr1, 1);
+            name = clr1;
 #endif
             var24 = (signed char)arg0->unknown_ebc_->unknown_c_0_;
         }
@@ -437,19 +431,19 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
         } else {
             var31 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x280), (short)(var32 + 20000));
         }
-        func_02099304((char*)arg0 + LOW_REGION(0xe18,0xe1c), var25, arg0->unknown_ec4_, arg0->unknown_ec8_, var0, 0x400, var29, var30, var31);
-        func_02046380(var11);
-        int var34 = 0;
-        char* var35 = var0;
-        var35 += strlen(var0);
-        if (arg0->unknown_ebc_ == 0) {
-            void* var36 = func_0205ec34();
-            if (!func_0206dfb0((int)var36, (unsigned char*)((char*)var36 + 0x8c), 0x119b)) {
-                char* var37 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0x66);
-                int var38 = strlen(var37);
-                memcpy(var35, var37, var38);
-                var35 += var38;
-                func_0206df6c(var36, (unsigned char*)((char*)var36 + 0x8c), 0x119b, 1);
+        func_02099304((char*)self + LOW_REGION(0xe18,0xe1c), name, self->ec4, self->ec8, buf400, 0x400, mode, title, body);
+        func_02046380(win);
+        int found = 0;
+        char* p = buf400;
+        p += strlen(buf400);
+        if (self->ebc == 0) {
+            void* flags = Scenario_GetInstance();
+            if (!Scenario_TestFlag((int)flags, (unsigned char*)((char*)flags + 0x8c), 0x119b)) {
+                char* str = FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0x66);
+                int len = strlen(str);
+                memcpy(p, str, len);
+                p += len;
+                Scenario_SetFlag(flags, (unsigned char*)((char*)flags + 0x8c), 0x119b, 1);
             }
 #if defined(jpn)
             unsigned char* var41;
@@ -492,12 +486,12 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
             if (!var34) {
                 char* var46 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0x64);
 #if defined(jpn)
-                func_02046574((Struct_02046574_2*)var11, 0, var25);
-                func_020474a8(var11, 0xc, var46, var1);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 0, name);
+                func_020474a8(win, 0xc, str, buf100);
 #else
-                func_020e4bf4(var8, arg0->unknown_eb9_);
-                var11->unknown_10_ = var8;
-                func_02046608(var11, 0xc, var46, var1, 0xe3, 0, 1);
+                NameText_InitFromPartyMember(obj144, self->member);
+                win->f10 = obj144;
+                MessageSystem_FormatText(win, 0xc, str, buf100, 0xe3, 0, 1);
 #endif
                 memcpy(var35, var1, strlen(var1));
             }
@@ -539,14 +533,14 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
                 arg0->unknown_ebb_ = 1;
             } else {
 #if defined(jpn)
-                func_02046574((Struct_02046574_2*)var11, 0, (char*)arg0 + 0xdf2);
-                char* var48 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0x68);
-                func_020474a8(var11, 0xc, var48, var2);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 0, (char*)self + 0xdf2);
+                char* str = FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0x68);
+                func_020474a8(win, 0xc, str, buf80);
 #else
-                char* var49 = func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0x68);
-                func_020e4bf4(var8, arg0->unknown_eb9_);
-                var11->unknown_10_ = var8;
-                func_02046608(var11, 0xc, var49, var2, 0xe3, 0, 1);
+                char* str = FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0x68);
+                NameText_InitFromPartyMember(obj144, self->member);
+                win->f10 = obj144;
+                MessageSystem_FormatText(win, 0xc, str, buf80, 0xe3, 0, 1);
 #endif
                 func_ov008_0218b1e0(arg0);
             }
@@ -567,29 +561,29 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
             var13->unknown_9_ = 1;
             arg0->unknown_eba_ = 1;
         }
-        func_0205d6a0((Struct_0205d6a0*)((char*)arg0 + 0x18), 1);
-        arg0->unknown_e99_ = 2;
-        arg0->unknown_e9a_ = 0;
-        arg0->unknown_e9b_ = 2;
-        arg0->unknown_e9c_ = 0;
-    } else if (arg0->unknown_e9a_ == 3) {
-        if (var11->unknown_998_ != 0) return;
-        Struct_ov008_02189c70_18 var50 = arg0->unknown_ebc_->unknown_50_;
+        Window_ClosePane((Entry_0205d6a0*)((char*)self + 0x18), 1);
+        self->e99 = 2;
+        self->state = 0;
+        self->e9b = 2;
+        self->e9c = 0;
+    } else if (self->state == 3) {
+        if (win->busy != 0) return;
+        MapMeta02189c70 meta3 = self->ebc->meta;
         func_020a3720();
         ExportDetailedTreasureMapData((TreasureMapMetadata const*)&var50, (DetailedTreasureMapData*)&var3, 0, (unsigned char const*)0);
         func_020a395c();
 #if defined(jpn)
-        if (var3.unknown_1_ == 1) {
-            Struct_ov008_02189c70_19* var51 = &var3.unknown_4c_.unknown_0_;
-            func_02046574((Struct_02046574_2*)var11, 2, var51->unknown_3b_);
-            func_02046574((Struct_02046574_2*)var11, 3, var51->unknown_5b_);
-            func_02046574((Struct_02046574_2*)var11, 4, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xc8));
-            func_02046574((Struct_02046574_2*)var11, 5, var51->unknown_9b_);
-        } else if (var3.unknown_1_ == 2) {
-            Struct_ov008_02189c70* var52 = &var3.unknown_4c_.unknown1_0_;
-            func_02046574((Struct_02046574_2*)var11, 2, var52->unknown_90_);
-            func_02046574((Struct_02046574_2*)var11, 3, var52->unknown_b0_);
-            func_02046574((Struct_02046574_2*)var11, 5, var52->unknown_d0_);
+        if (detail3.type == 1) {
+            RegularMapNames02189c70* names = &detail3.names.regular;
+            MessageSystem_SetStringArgument((Obj02046574*)win, 2, names->prefix);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 3, names->suffix);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 4, FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0xc8));
+            MessageSystem_SetStringArgument((Obj02046574*)win, 5, names->level);
+        } else if (detail3.type == 2) {
+            LegacyMapNames02189c70* names = &detail3.names.legacy;
+            MessageSystem_SetStringArgument((Obj02046574*)win, 2, names->name);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 3, names->suffix);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 5, names->level);
         } else {
             arg0->unknown_e9a_ = 2;
             return;
@@ -605,16 +599,16 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
         }
 #endif
 #if defined(jpn)
-        func_02046574((Struct_02046574_2*)var11, 0, (char*)arg0->unknown_ebc_);
-        func_02046574((Struct_02046574_2*)var11, 1, *(char**)((char*)var9->GetUnknownGameObject() + 0x134));
+        MessageSystem_SetStringArgument((Obj02046574*)win, 0, (char*)self->ebc);
+        MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetUnknownGameObject() + 0x134));
 #else
-        char var53[0x30];
-        __clear(var53, 0x30);
-        func_02042764(arg0->unknown_ebc_, var53, 1);
-        func_020e4b34(var8, var53, var53, 0, 0, 0, 0, arg0->unknown_ebc_->unknown_2e_0_, 0, 1, 0, 1);
-        func_020e4bf4(var7, func_020100b0(var9));
-        var11->unknown_10_ = var8;
-        var11->unknown_0_ = var7;
+        char clr3[0x30];
+        __clear(clr3, 0x30);
+        Font_DecodeText(self->ebc, clr3, 1);
+        func_020e4b34(obj144, clr3, clr3, 0, 0, 0, 0, self->ebc->flag2e, 0, 1, 0, 1);
+        NameText_InitFromPartyMember(obj150, GameState_GetLeaderIndex(gs));
+        win->f10 = obj144;
+        win->f0 = obj150;
 #endif
         if (func_02011804(var9) >= 0x63) {
 #if defined(jpn)
@@ -642,9 +636,9 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
             var11->unknown_2c8_ = 1;
             func_0204500c(var11, var54, 0);
 #else
-            func_020e4bf4(var7, func_020100b0(var9));
-            var11->unknown_0_ = var7;
-            var11->unknown_2c8_ = 1;
+            NameText_InitFromPartyMember(obj150, GameState_GetLeaderIndex(gs));
+            win->f0 = obj150;
+            win->f2c8 = 1;
 #if defined(jpn)
             func_0204500c(var11, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xcb), 0);
 #else
@@ -726,33 +720,33 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
 #endif
         *(unsigned int*)((char*)var9 + LOW_REGION(0x61f4,0x6474)) = arg0->unknown_ebc_->unknown_10_ >> 2;
         func_ov017_021a9ff0(0);
-        func_0205d6a0((Struct_0205d6a0*)((char*)arg0 + 0x18), 1);
-        arg0->unknown_e9a_ = 2;
-    } else if (arg0->unknown_e9a_ == 6) {
-        if (var12->unknown_3b4c_->unknown_2_ != 0) return;
+        Window_ClosePane((Entry_0205d6a0*)((char*)self + 0x18), 1);
+        self->state = 2;
+    } else if (self->state == 6) {
+        if (res->f3b4c->f2 != 0) return;
         func_020a1940(OVERLAY_ID(8));
-        arg0->unknown_ec0_0_ = 0;
-        arg0->unknown_e9a_ = 7;
-    } else if (arg0->unknown_e9a_ == 7) {
-        void* var63 = var9->GetUnknownGameObject();
-        if (var63 != 0) func_020397cc((Struct_02018300_3*)var63, 1);
-        if (*((unsigned char*)var9 + LOW_REGION(0x6000 + 0x1ee,0x6000 + 0x46e)) != 0) {
-            Struct_ov008_02189c70_18 var64 = arg0->unknown_ebc_->unknown_50_;
+        self->ec0_b0 = 0;
+        self->state = 7;
+    } else if (self->state == 7) {
+        void* obj = gs->GetUnknownGameObject();
+        if (obj != 0) GameObject_DisableControl((Obj020397cc*)obj, 1);
+        if (*((unsigned char*)gs + LOW_REGION(0x6000 + 0x1ee,0x6000 + 0x46e)) != 0) {
+            MapMeta02189c70 meta7 = self->ebc->meta;
             func_020a3720();
             ExportDetailedTreasureMapData((TreasureMapMetadata const*)&var64, (DetailedTreasureMapData*)&var6, 0, (unsigned char const*)0);
             func_020a395c();
     #if defined(jpn)
-            if (var6.unknown_1_ == 1) {
-            Struct_ov008_02189c70_19* var65 = &var6.unknown_4c_.unknown_0_;
-                func_02046574((Struct_02046574_2*)var11, 2, var65->unknown_3b_);
-                func_02046574((Struct_02046574_2*)var11, 3, var65->unknown_5b_);
-                func_02046574((Struct_02046574_2*)var11, 4, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xc8));
-                func_02046574((Struct_02046574_2*)var11, 5, var65->unknown_9b_);
-            } else if (var6.unknown_1_ == 2) {
-            Struct_ov008_02189c70* var66 = &var6.unknown_4c_.unknown1_0_;
-                func_02046574((Struct_02046574_2*)var11, 2, var66->unknown_90_);
-                func_02046574((Struct_02046574_2*)var11, 3, var66->unknown_b0_);
-                func_02046574((Struct_02046574_2*)var11, 5, var66->unknown_d0_);
+            if (detail7.type == 1) {
+            RegularMapNames02189c70* names = &detail7.names.regular;
+                MessageSystem_SetStringArgument((Obj02046574*)win, 2, names->prefix);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 3, names->suffix);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 4, FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0xc8));
+                MessageSystem_SetStringArgument((Obj02046574*)win, 5, names->level);
+            } else if (detail7.type == 2) {
+            LegacyMapNames02189c70* names = &detail7.names.legacy;
+                MessageSystem_SetStringArgument((Obj02046574*)win, 2, names->name);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 3, names->suffix);
+                MessageSystem_SetStringArgument((Obj02046574*)win, 5, names->level);
             }
 #else
         if (var6.unknown_1_ == 1) {
@@ -762,14 +756,14 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
             }
 #endif
 #if defined(jpn)
-            func_02046574((Struct_02046574_2*)var11, 0, (char*)arg0->unknown_ebc_);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 0, (char*)self->ebc);
 #else
-            char var67[0x30];
-            __clear(var67, 0x30);
-            func_02042764(arg0->unknown_ebc_, var67, 1);
-            func_02046574((Struct_02046574_2*)var11, 0, var67);
+            char clr7[0x30];
+            __clear(clr7, 0x30);
+            Font_DecodeText(self->ebc, clr7, 1);
+            MessageSystem_SetStringArgument((Obj02046574*)win, 0, clr7);
 #endif
-            func_02046574((Struct_02046574_2*)var11, 1, *(char**)((char*)var9->GetUnknownGameObject() + 0x134));
+            MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetUnknownGameObject() + 0x134));
 #if defined(jpn)
             func_0204500c(var11, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xca), 0);
 #else

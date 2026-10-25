@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void func_ov002_0215b918(unsigned char* arg0, int arg1, int arg2, int arg3);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
+void SetElementStateOrCreate0215b918(unsigned char* obj, int key, int b, int c);
 
 // USA: func_ov002_0215ece4
 extern "C" ARM void func_ov002_0215ece4(void* arg0, char* arg1, int arg2, int arg3, int arg4) {
@@ -12,17 +12,17 @@ extern "C" ARM void func_ov002_0215ece4(void* arg0, char* arg1, int arg2, int ar
     int var3 = 0;
     int var4 = (arg2 >= 0) && (arg2 <= 3);
 
-    if (var4) {
-        int var5;
-        var2 = arg4 - 1;
-        var1 = var0 + 0x1000;
-        for (var5 = arg3; var5 < arg4; var5++) {
-            void* var6 = *(void**)(var0 + (var5 << 2) + 0x2000 + 0x4a0);
-            if (var6 != 0) {
-                const char* var7 = *(const char**)var6;
-                func_02041b70(arg1, var3, var7);
-                if (var5 != var2) {
-                    func_02042058(arg1, *(char**)(var1 + 0xbdc));
+    if (inRange) {
+        int i;
+        last = clampedSum - 1;
+        buf = obj + 0x1000;
+        for (i = productB; i < clampedSum; i++) {
+            void* entry = *(void**)(obj + (i << 2) + 0x2000 + 0x4a0);
+            if (entry != 0) {
+                const char* name = *(const char**)entry;
+                Text_AppendNTag(dst, tag, name);
+                if (i != last) {
+                    Text_Append(dst, *(char**)(buf + 0xbdc));
                 }
                 var3++;
             }

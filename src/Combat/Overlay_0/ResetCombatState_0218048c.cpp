@@ -13,7 +13,7 @@ struct Entry_0205d6a0;
 void Window_ClearLayers(struct Cont0205d1e0*);
 void Window_FlushLayers(struct Cont0205d274*);
 void Window_TransferLayers(struct Obj0205d2bc*);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0*, int);
+void Window_ClosePane(struct Entry_0205d6a0*, int);
 extern "C" void func_ov000_02174b14(void* obj);
 
 struct Entry0218048c {
@@ -34,7 +34,7 @@ extern "C" ARM void func_ov000_0218048c(char* obj) {
     Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
     Window_FlushLayers((struct Cont0205d274*)(obj + 0x188));
     Window_TransferLayers((struct Obj0205d2bc*)(obj + 0x188));
-    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(obj + 0x188), 1);
+    Window_ClosePane((struct Entry_0205d6a0*)(obj + 0x188), 1);
     for (idx = 0; idx < 4; idx++) {
         signed char e = *(signed char*)(obj + idx + 0x6c);
         struct Entry0218048c* entry = (struct Entry0218048c*)(obj + 0x958) + e;

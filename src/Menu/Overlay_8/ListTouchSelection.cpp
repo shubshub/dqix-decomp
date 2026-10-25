@@ -37,7 +37,7 @@ extern char g_sePlayer[];
 extern char data_ov008_0218b490[];
 extern "C" {
     int _Z19GridCursor_GetCountPv(void*);
-    int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
+    int _Z27GridCursor_GetSelectedIndexP10GridCursor(void*);
     void GridCursor_SetSelectedIndex(void*, int);
     void _Z13SePlayer_PlayP8SePlayerii(void*, int, int);
 
@@ -59,7 +59,7 @@ extern "C" {
             if (page != 0 && touchY >= 0 && touchY < 8) {
                 menu->page = page - 1;
                 int index = menu->page + 5;
-                if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) > index)
+                if (_Z27GridCursor_GetSelectedIndexP10GridCursor(menu->cursor) > index)
                     GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
@@ -67,7 +67,7 @@ extern "C" {
                 if (page + 6 < menu->count)
                     ++menu->page;
                 int index = menu->page;
-                if (_Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) < index)
+                if (_Z27GridCursor_GetSelectedIndexP10GridCursor(menu->cursor) < index)
                     GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
@@ -78,7 +78,7 @@ extern "C" {
 
         if (!(menu->flags & 0x80) && touchY > 16 && touchY < 96 && touchX > 176 && touchX < 208 && !(menu->flags & 0x4000)) {
             _Z13SePlayer_PlayP8SePlayerii(g_sePlayer, 0x5e, 0);
-            menu->object.MaybeSetRegularAnimation(data_ov008_0218b490, 0);
+            menu->object.SetAnimationByName(data_ov008_0218b490, 0);
             menu->flags |= 0x4000;
         }
         return -1;

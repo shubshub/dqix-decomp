@@ -138,11 +138,11 @@ extern "C" ARM int func_ov024_021eaa50(Struct_ov024_021ea4d0* arg0, Struct_ov024
         return var14;
     }
 
-    if (var2->unknown_2d_2_ == 6 && inline_ov000_02169850(var4)) {
-        int var15 = 0;
-        if (func_ov000_0215fd24((int)*(char**)(var0 + 0x10), var4)) {
-            void* var16 = func_02010828(var3);
-            if (*(unsigned int*)((char*)var16 + 0xf6c) < var2->unknown_32_) var15 = 1;
+    if (action->f2c == 6 && IsPartyMember(id)) {
+        int found = 0;
+        if (IsIdOrEffectMatchTarget0215fd24((int)*(char**)(a0 + 0x10), id)) {
+            void* arr = GameState_GetParty(gs);
+            if (*(unsigned int*)((char*)arr + 0xf6c) < action->f32) found = 1;
         } else {
             GameObject* var17 = func_0200ff58(var3, var4);
             if (var17 != 0) {

@@ -71,45 +71,45 @@ struct Struct_ov017_0219dc90 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" Struct_ov017_0219dc90_2* func_02027ca4(void);
-extern "C" void* func_02012fe4(void);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" void func_020288e0(Struct_ov017_0219dc90_2* arg0);
-extern "C" void func_ov017_0219e0ec(void* arg0);
-extern "C" int func_02028a54(Struct_ov017_0219dc90_2* arg0, int arg1);
-extern "C" void func_ov017_0219e180(Struct_ov017_0219dc90* arg0, int arg1);
-struct Struct_020fdd44;
-extern "C" Struct_ov017_0219dc90_2* func_02028bd0(Struct_020fdd44*, int);
-extern "C" unsigned short func_02028460(int* arg0, int* arg1);
-extern "C" int func_0201b588(int arg0);
-struct Struct_ov017_0219dc90_3;
-extern "C" void func_ov017_021b46d8(Struct_ov017_0219dc90_3*);
-struct Struct_0201bdac;
-extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
-struct Struct_ov017_0219dc90_4;
-extern "C" void func_ov017_021b4760(Struct_ov017_0219dc90_4*);
-extern "C" void func_02046a8c(Struct_0201bdac_2* arg0, Struct_ov017_0219dc90_5* arg1);
+InlineEntry* ZoneRecords_GetInstance(void);
+extern "C" void* Zone3D_GetInstance(void);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+extern "C" void func_020288e0(InlineEntry* table);
+void SetFlagsForFlaggedCombatants_0219e0ec(void* self);
+extern "C" int func_02028a54(InlineEntry* base, int id);
+extern "C" void func_ov017_0219e180(BattleOverlay0219dc90* self, int id);
+struct Entry_02028bd0;
+InlineEntry* FindInlineEntryById(Entry_02028bd0*, int);
+extern "C" unsigned short func_02028460(int* a, int* b);
+int IsInRange0201b588(int id);
+struct Struct021b46d8;
+void InitStruct_021b46d8(Struct021b46d8*);
+struct TailNode020469b4;
+void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
+struct Obj021b4760;
+void FieldTask_EndLoadZoneMonsters(Obj021b4760*);
+extern "C" void func_02046a8c(TailList020469b4* list, GrottoSlot* node);
 
 // USA: func_ov017_0219dc90
-extern "C" ARM void func_ov017_0219dc90(Struct_ov017_0219dc90* arg0, int arg1, int arg2, unsigned char arg3, unsigned short arg4) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    Struct_ov017_0219dc90_2* var2 = func_02027ca4();
-    func_02012fe4();
-    Struct_ov017_0219dc90_7* var3 = (Struct_ov017_0219dc90_7*)func_0200ff1c(var0, arg1);
-    if (func_0202c1a4((Struct_0202c1a4*)var1) != 0) return;
-    func_020288e0(var2);
-    func_ov017_0219e0ec(arg0);
-    if (var3 == NULL) return;
-    int var4 = func_02028a54(var2, arg2);
-    func_ov017_0219e180(arg0, arg2);
-    Struct_ov017_0219dc90_2* var5 = func_02028bd0((Struct_020fdd44*)var2, arg2);
-    Struct_ov017_0219dc90_6* var6 = &arg0->unknown_44b4_;
-    if (var5 != NULL) {
-        var3->unknown_b8_ = var5->unknown_34_ != 0 ? func_02028460(var5->unknown_18_, var3->unknown_44_) : 0;
-        signed char* var7 = (signed char*)var0->GetGrottoStruct();
-        if (func_0201b588(arg2) && var4) {
-            var5->unknown_d_ = var7[8];
+extern "C" ARM void func_ov017_0219dc90(BattleOverlay0219dc90* self, int combatantIdx, int id, unsigned char kind, unsigned short value) {
+    GameState* gs = GameState::GetInstance();
+    void* search = func_0202ae18();
+    InlineEntry* table = ZoneRecords_GetInstance();
+    Zone3D_GetInstance();
+    Combatant0219dc90* combatant = (Combatant0219dc90*)GetCombatantWithFlag0x100_0200ff1c(gs, combatantIdx);
+    if (GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) != 0) return;
+    func_020288e0(table);
+    SetFlagsForFlaggedCombatants_0219e0ec(self);
+    if (combatant == NULL) return;
+    int found = func_02028a54(table, id);
+    func_ov017_0219e180(self, id);
+    InlineEntry* entry = FindInlineEntryById((Entry_02028bd0*)table, id);
+    PendingGroup* pending = &self->pending;
+    if (entry != NULL) {
+        combatant->b8 = entry->f34 != 0 ? func_02028460(entry->vec18, combatant->vec44) : 0;
+        signed char* grotto = (signed char*)gs->GetGrottoStruct();
+        if (IsInRange0201b588(id) && found) {
+            entry->fd = grotto[8];
         }
         var5->unknown_8_ = 0;
         if (var4) {
@@ -126,13 +126,13 @@ extern "C" ARM void func_ov017_0219dc90(Struct_ov017_0219dc90* arg0, int arg1, i
                 var8->unknown_12_ = arg4;
                 func_020469b4(arg0->unknown_3704_, (Struct_0201bdac*)var8);
             } else {
-                func_ov017_021b4760((Struct_ov017_0219dc90_4*)var8);
-                func_02046a8c(arg0->unknown_3704_, var8);
-                func_ov017_021b46d8((Struct_ov017_0219dc90_3*)var8);
-                var8->unknown_8_ = var5;
-                var8->unknown_11_ = arg3;
-                var8->unknown_12_ = arg4;
-                func_020469b4(arg0->unknown_3704_, (Struct_0201bdac*)var8);
+                FieldTask_EndLoadZoneMonsters((Obj021b4760*)slot);
+                func_02046a8c(self->slotList, slot);
+                InitStruct_021b46d8((Struct021b46d8*)slot);
+                slot->entry = entry;
+                slot->kind = kind;
+                slot->value = value;
+                AppendNodeToTail(self->slotList, (TailNode020469b4*)slot);
             }
         } else {
             var3->unknown_c2_ |= 0x40;

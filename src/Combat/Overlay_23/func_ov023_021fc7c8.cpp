@@ -2,35 +2,29 @@
 #include "GameState/GameState.h"
 #include "Graphics/Vector.h"
 #include "Input/Input.h"
-
-struct Struct_ov023_021fc7c8
-{
-    char unknown_0_[0xc12];
-    unsigned char unknown_c12_;
-    char unknown_c13_[0xc20 - 0xc13];
-};
+#include "Graphics/CharacterModel.h"
 
 class Struct_ov023_021fc7c8_2
 {
 public:
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned char unknown_c_;
-    char unknown_d_[3];
-    const char* unknown_10_;
-    void* unknown_14_;
-    void* unknown_18_;
-    int unknown_1c_;
-    Struct_ov023_021fc7c8 unknown_20_[2];
-    int unknown_1860_;
-    unsigned char unknown_1864_0_ : 1;
-    unsigned char unknown_1864_1_ : 1;
-    unsigned char unknown_1864_2_ : 1;
-    unsigned char unknown_1864_3_ : 1;
-    void (**unknown_1868_)(void* script);
-    void (**unknown_186c_)(void* script);
+    unsigned short type_;
+    unsigned short id_;
+    unsigned short heap_;
+    unsigned short vramState_;
+    unsigned char flags_;
+    char unk_d[3];
+    const char* file_;
+    void* prev_;
+    void* next_;
+    int state_;
+    CharacterModel models_[2];
+    int perspective_;
+    unsigned char current_ : 1;
+    unsigned char turnBack_ : 1;
+    unsigned char unk_1864_2 : 1;
+    unsigned char swap_ : 1;
+    void (**leftCallback_)(void* script);
+    void (**rightCallback_)(void* script);
 
     virtual void inline_ov023_021fc7c8(void* arg0);
 };
@@ -38,13 +32,13 @@ public:
 struct Struct_ov009_02188454;
 
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" void CharacterModel_Update(CharacterModel_021fc7c8* model);
-extern "C" Vector3i CharacterModel_GetRotation(CharacterModel_021fc7c8* model);
+extern "C" void CharacterModel_Update(CharacterModel* model);
+extern "C" Vector3i CharacterModel_GetRotation(CharacterModel* model);
 char* GetFieldIfFlag4_020100f8(char* gameState);
 void SetFlagsAt0x244_020a28a0(unsigned char* camera, unsigned char flags);
 void ClearFlagBits_020a28b0(unsigned char* camera, int flags);
-void Camera_EasePositionTo(char*, int, int);
-void Camera_EaseTargetTo(char*, int, int);
+void Camera_EasePositionTo(struct Camera*, int, int);
+void Camera_EaseTargetTo(struct Camera*, int, int);
 void CharacterModel_SetRotation(void* model, Words021e60c4* rotation);
 
 extern const Vector3i data_ov023_021fda08;
@@ -71,7 +65,7 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
             arg0->unknown_1864_3_ = 0;
         }
     }
-    CharacterModel_021fc7c8* model = &self->models_[self->current_];
+    CharacterModel* model = &self->models_[self->current_];
     Vector3i rotation = CharacterModel_GetRotation(model);
     int difference = fix32ReduceAngle0To2Pi(0x1eb - rotation.y);
     int angle = 0;
@@ -86,8 +80,8 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
         const Vector3i target = data_ov023_021fd9fc;
         char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
         SetFlagsAt0x244_020a28a0((unsigned char*)camera, 2);
-        Camera_EasePositionTo(camera, (int)&position, 0xa000);
-        Camera_EaseTargetTo(camera, (int)&target, 0xa000);
+        Camera_EasePositionTo((struct Camera*)camera, (int)&position, 0xa000);
+        Camera_EaseTargetTo((struct Camera*)camera, (int)&target, 0xa000);
     }
     else if (g_keyManager.TestKeysHeld(0x80))
     {
@@ -95,8 +89,8 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
         const Vector3i target = data_ov023_021fd9e4;
         char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
         ClearFlagBits_020a28b0((unsigned char*)camera, 2);
-        Camera_EasePositionTo(camera, (int)&position, 0xa000);
-        Camera_EaseTargetTo(camera, (int)&target, 0xa000);
+        Camera_EasePositionTo((struct Camera*)camera, (int)&position, 0xa000);
+        Camera_EaseTargetTo((struct Camera*)camera, (int)&target, 0xa000);
     }
     if (arg0->unknown_1864_1_)
     {

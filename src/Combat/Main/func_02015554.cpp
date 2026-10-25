@@ -10,7 +10,7 @@ void SePlayer_Play(SePlayer *, int, int);
 int IsAnimationActive0209ca2c(void *);
 
 extern SePlayer g_sePlayer;
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 extern char data_020ef1f3[];
 extern char data_020ef1f8[];
 extern char data_020ef1fe[];
@@ -75,9 +75,9 @@ extern "C" ARM void func_02015554(void *arg0, void *arg1) {
     if ((entry->flags & 0x100) && entry->object) {
         if (entry->animationState == 0) {
             entry->object->SetAnimationPlaybackSpeed(0x1800, 0);
-            if (entry->object->MaybeSetRegularAnimation(data_020ef1f3, 1))
+            if (entry->object->SetAnimationByName(data_020ef1f3, 1))
                 SePlayer_Play(&g_sePlayer, 0x12, 0);
-            else if (entry->object->MaybeSetRegularAnimation(data_020ef1f8, 1))
+            else if (entry->object->SetAnimationByName(data_020ef1f8, 1))
                 SePlayer_Play(&g_sePlayer, 0x62, 0);
             entry->animationState = 1;
         } else if (entry->animationState == 1) {
@@ -89,10 +89,10 @@ extern "C" ARM void func_02015554(void *arg0, void *arg1) {
             unsigned int deltaTime = state->GetEffectiveDeltaTime();
             if (deltaTime < entry->delay) {
                 entry->delay -= deltaTime;
-            } else if (!IsAnimationActive0209ca2c(data_02109bf4)) {
-                if (entry->object->MaybeSetRegularAnimation(data_020ef1fe, 5))
+            } else if (!IsAnimationActive0209ca2c(g_bgmPlayer)) {
+                if (entry->object->SetAnimationByName(data_020ef1fe, 5))
                     SePlayer_Play(&g_sePlayer, 0x13, 0);
-                else if (entry->object->MaybeSetRegularAnimation(data_020ef204, 5))
+                else if (entry->object->SetAnimationByName(data_020ef204, 5))
                     SePlayer_Play(&g_sePlayer, 0x62, 0);
                 entry->flags &= ~0x100;
             }

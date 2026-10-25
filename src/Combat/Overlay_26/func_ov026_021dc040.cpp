@@ -25,16 +25,16 @@ struct Struct_ov026_021dc040 {
     unsigned int unknown_3f_7_ : 1;
     unsigned short inline_ov026_021dc040() { return unknown_3f_6_; }
 };
-extern "C" Object3D* func_0204a438(Struct_0204a438*);
-extern "C" int func_ov000_0215fc60(char*);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_020100c4(GameState*, int);
-extern "C" void func_ov000_0216118c(void*, int);
-extern "C" void func_ov000_02167e6c(unsigned char*);
-extern "C" void func_0200fd48(GameState*, int);
-extern "C" void func_02012050(Struct_02012050*);
+Object3D* GetField0x21c(S0204a438*);
+int ClassifyField0x81fe_ov000_0215fc60(char*);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+void SetVecYFromValue02033874(Obj02033874*, int);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameState_SetCamera(GameState*, int);
+void InitCombatantPosition_0216118c(void*, int);
+void RunFlaglearAndSetMode02167e6c_02167e6c(unsigned char*);
+void ClearCombatantSlot_0200fd48(GameState*, int);
+void ClearByte0x63d5_02012050(FieldBlock63d5_12050*);
 extern "C" {
 int func_ov000_0215e9fc(Struct_ov000_02161e30*, short*, int, int);
 int func_ov000_02160f14(Struct_ov000_02160da0*);
@@ -47,43 +47,43 @@ extern const Struct_ov026_021de6a0_2 data_ov026_021de6a0;
 extern const char data_ov026_021dee57[];
 
 // USA: func_ov026_021dc040
-extern "C" ARM int func_ov026_021dc040(SafeAllocator* arg0, Struct_ov000_02160da0* arg1, Struct_ov000_02161e30* arg2, Struct_ov000_0217e870_2* arg3) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_0204a438* var1 = (Struct_0204a438*)func_020100bc(var0);
-    if (!var1) return 1;
-    Object3D* var2 = func_0204a438(var1);
-    if (!var2) return 1;
-    GameObject* var3 = var0->GetGameObjectByIndex(0xcf);
-    if (!var3) return 1;
-    var3->obj3D_.MaybeUpdateBonePositions();
-    Model3D* var4 = var3->obj3D_.pModel_;
-    if (var4) {
-        short var5[4];
-        int var6 = func_ov000_0215e9fc(arg2, var5, 4, 0);
-        if (func_ov000_0215fc60((char*)arg2)) var6 = 1;
-        if (var6 > 0) {
-            Vector3fix var7 = {};
-            int var8[2] = {};
-            for (int var9 = 0; var9 < var6; ++var9) {
-                if (func_020a35e0((unsigned char*)arg3, var5[var9])) {
-                    GameObject* var10 = func_0200ff1c(var0, var5[var9]);
-                    if (var10 && var10->obj3D_.pModel_) {
-                        Struct_ov026_021dc040* var11 = (Struct_ov026_021dc040*)var10->baseStats_;
-                        ++var8[var11->inline_ov026_021dc040()];
-                        Struct_ov026_021de6a0_2 var12 = data_ov026_021de6a0;
-                        char var13[6];
-                        int var14 = ((Struct_ov026_021dc040*)var10->baseStats_)->inline_ov026_021dc040();
-                        sprintf(var13, data_ov026_021dee57, var12.unknown_0_[var14], var8[var14]);
-                        Object3D::TrackedBoneMatrix* var15 = var3->obj3D_.GetTrackedBoneMatrix(var4->GetBoneIndex(var13));
-                        if (var15) {
-                            Vector3fix var16;
-                            var16.x = var15->matrix.translation.x;
-                            var16.y = var15->matrix.translation.y;
-                            var16.z = var15->matrix.translation.z;
-                            Vector3fixMultiplyScalar(&var16, 266, &var16);
-                            var10->obj3D_.position_ = var16;
-                            func_02033874((Struct_02033834*)var10, fix32_Atan2(var15->matrix.rotation.rows[2].x, var15->matrix.rotation.rows[2].z));
-                            Vector3fix_Add(&var7, &var16, &var7);
+extern "C" ARM int func_ov026_021dc040(SafeAllocator* allocator, BattleWork* self, BattleState* battle, PartyState* party) {
+    GameState* game = GameState::GetInstance();
+    S0204a438* camera = (S0204a438*)game->GetCamera();
+    if (!camera) return 1;
+    Object3D* animation = GetField0x21c(camera);
+    if (!animation) return 1;
+    GameObject* formation = game->GetGameObjectByIndex(0xcf);
+    if (!formation) return 1;
+    formation->obj3D_.MaybeUpdateBonePositions();
+    Model3D* model = formation->obj3D_.pModel_;
+    if (model) {
+        short members[4];
+        int count = func_ov000_0215e9fc(battle, members, 4, 0);
+        if (ClassifyField0x81fe_ov000_0215fc60((char*)battle)) count = 1;
+        if (count > 0) {
+            Vector3fix center = {};
+            int groupCounts[2] = {};
+            for (int index = 0; index < count; ++index) {
+                if (TestBitAt0x34_020a35e0((unsigned char*)party, members[index])) {
+                    GameObject* member = GetCombatantWithFlag0x100_0200ff1c(game, members[index]);
+                    if (member && member->obj3D_.pModel_) {
+                        FormationStats* stats = (FormationStats*)member->baseStats_;
+                        ++groupCounts[stats->GetGroup()];
+                        BoneLabels labels = data_ov026_021de6a0;
+                        char name[6];
+                        int group = ((FormationStats*)member->baseStats_)->GetGroup();
+                        sprintf(name, data_ov026_021dee57, labels.letters[group], groupCounts[group]);
+                        Object3D::TrackedBoneMatrix* bone = formation->obj3D_.GetTrackedBoneMatrix(model->GetBoneIndex(name));
+                        if (bone) {
+                            Vector3fix position;
+                            position.x = bone->matrix.translation.x;
+                            position.y = bone->matrix.translation.y;
+                            position.z = bone->matrix.translation.z;
+                            Vector3fixMultiplyScalar(&position, 266, &position);
+                            member->obj3D_.position_ = position;
+                            SetVecYFromValue02033874((Obj02033874*)member, fix32_Atan2(bone->matrix.rotation.rows[2].x, bone->matrix.rotation.rows[2].z));
+                            Vector3fix_Add(&center, &position, &center);
                         }
                     }
                 }
@@ -115,15 +115,15 @@ extern "C" ARM int func_ov026_021dc040(SafeAllocator* arg0, Struct_ov000_02160da
                 }
             }
         }
-        func_020100c4(var0, func_ov000_02160f14(arg1));
-        func_ov000_0216118c(arg1, 1);
-        func_ov000_02167e6c((unsigned char*)arg1);
-        func_ov026_021daec8(arg2, (Struct_ov026_021daec8*)func_ov000_02160f14(arg1), 1);
-        func_ov000_021626a0(arg1, 0x26, 0);
-        func_ov000_021626a0(arg1, 0x27, 1);
-        arg0->Reset();
-        func_0200fd48(var0, 0xcf);
-        func_02012050((Struct_02012050*)var0);
+        GameState_SetCamera(game, func_ov000_02160f14(self));
+        InitCombatantPosition_0216118c(self, 1);
+        RunFlaglearAndSetMode02167e6c_02167e6c((unsigned char*)self);
+        func_ov026_021daec8(battle, (BattleView*)func_ov000_02160f14(self), 1);
+        func_ov000_021626a0(self, 0x26, 0);
+        func_ov000_021626a0(self, 0x27, 1);
+        allocator->Reset();
+        ClearCombatantSlot_0200fd48(game, 0xcf);
+        ClearByte0x63d5_02012050((FieldBlock63d5_12050*)game);
     }
     return 1;
 }

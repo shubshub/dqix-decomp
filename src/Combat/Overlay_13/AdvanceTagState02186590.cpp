@@ -9,20 +9,20 @@
 #include "Input/Input.h"
 
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 int GetScaledSumIfActive0205cecc(void* s);
 int CallFunc0205c570AtField0x1c_0205cb64(void* obj);
-void ReinitController02043204(char* obj);
+void MessageSystem_Reset(char* obj);
 void ResetGlobalObjAndInitSelfPointer0205ce94(unsigned char* p);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 
 extern "C" void func_ov013_02185990(void* obj);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
@@ -36,7 +36,7 @@ extern "C" ARM void func_ov013_02186590(void* obj) {
     if (o[R(0x5cb,0x63f)] != 0) {
         o[R(0x5c5,0x639)] = 1;
     }
-    int g = GetGlobalField0x1c020421a0();
+    int g = MessageSystem_GetInstance();
     unsigned char* gp = (unsigned char*)g;
     int oneFlag = 1;
     gp[0x1000 + R(0x7ee,0x9be)] = oneFlag;
@@ -47,10 +47,10 @@ extern "C" ARM void func_ov013_02186590(void* obj) {
         unsigned char tag = o[R(0x5c8,0x63c)];
         unsigned char* local = o + R(0x3ec,0x3f0);
         if (tag == 4) {
-            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(local + 4), oneFlag);
+            GridCursor_SelectIfValid((struct Struct_0205bcdc*)(local + 4), oneFlag);
             GridCursor_SetSelectedIndex(local + 0x54, oneFlag);
         } else {
-            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(local + 4), 0);
+            GridCursor_SelectIfValid((struct Struct_0205bcdc*)(local + 4), 0);
             GridCursor_SetSelectedIndex(local + 0x54, 0);
         }
         o[R(0x5ca,0x63e)] = o[R(0x5ca,0x63e)] + 1;
@@ -77,16 +77,16 @@ caseReset:
         unsigned char tag = o[R(0x5c8,0x63c)];
         if (tag == 4) {
             o[R(0x5c8,0x63c)] = 5;
-            ReinitController02043204((char*)gp);
+            MessageSystem_Reset((char*)gp);
             ResetGlobalObjAndInitSelfPointer0205ce94(o + R(0x3d0,0x3d4));
             o[R(0x5ec,0x664)] = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
         } else {
             o[R(0x5c8,0x63c)] = 5;
             o[R(0x5ec,0x664)] = 1;
-            ReinitController02043204((char*)gp);
+            MessageSystem_Reset((char*)gp);
             ResetGlobalObjAndInitSelfPointer0205ce94(o + R(0x3d0,0x3d4));
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + R(0x34,0x38)), 1);
+            Window_ClosePane((struct Entry_0205d6a0*)(o + R(0x34,0x38)), 1);
             SePlayer_Play(&g_sePlayer, 1, 0);
         }
         o[R(0x5ca,0x63e)] = 0;
@@ -101,7 +101,7 @@ caseInvalidate:
         SePlayer_Play(&g_sePlayer, 1, 0);
     }
     o[R(0x5ec,0x664)] = 0;
-    ReinitController02043204((char*)gp);
+    MessageSystem_Reset((char*)gp);
     ResetGlobalObjAndInitSelfPointer0205ce94(o + R(0x3d0,0x3d4));
     o[R(0x5c5,0x639)] = 0;
     func_ov013_02186c64(obj, 0, 0);

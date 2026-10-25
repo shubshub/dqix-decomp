@@ -6,12 +6,12 @@
 struct Struct_0201099c_3;
 
 int KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" int func_020420e8(const char* text, int large);
+extern "C" int Font_GetTextWidth(const char* text, int large);
 int IsField0x118Equal2_ov000_0217542c(void* obj);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
-int AppendString02042058(char* dst, const char* src);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
 int AppendXTag_02041a28(char* dst, int x);
 
 extern int data_ov000_021834e0[6];
@@ -32,25 +32,25 @@ extern "C" ARM void func_ov000_02177ac8(char* arg0, char* arg1) {
 #if !defined(jpn)
     for (int i = 0; i < 3; i++) {
         const char* name = (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(i + 30014));
-        int width = func_020420e8(name, 0);
+        int width = Font_GetTextWidth(name, 0);
         if (maxWidth < width) {
             maxWidth = width;
         }
     }
 #endif
-    if (func_ov000_0217542c(arg0)) {
-        func_02041c08(arg1, var1, 8, 5, 5, 5);
+    if (IsField0x118Equal2_ov000_0217542c(obj)) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    AppendCursorTag_02041ea4(dst, cursor);
+    Text_AppendCursorTag(dst, cursor);
     for (int i = 0; i < 6; i++) {
         int id = data_ov000_021834e0[i];
-        AppendNameTag_02041b70(dst, id, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(id + 30014)));
+        Text_AppendNTag(dst, id, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(id + 30014)));
         if (i == 5) {
             break;
         }
         int odd = i & 1;
         if (odd) {
-            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
+            Text_Append(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
         }
         if (!var7) {
             func_02041a28(arg1, var0 + 0x20);

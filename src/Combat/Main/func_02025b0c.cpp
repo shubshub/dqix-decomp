@@ -16,36 +16,36 @@ struct Struct_02024518 {
     int unknown_8_;
     int unknown_c_;
 };
-extern "C" void* func_0203b628();
-extern "C" void* func_02012fe4();
-extern "C" void func_0203b718(void*, int, int, int);
-extern "C" Struct_02024518_3* func_02027878(Struct_02024518_2*, int);
-extern "C" void func_0203bcb8(Struct_02020fc4_3*, int, int);
-extern "C" void func_0202441c(Struct_0202441c*);
-extern "C" int func_020243b8(void*, int);
-extern "C" int func_02024d48(Struct_020236dc*, int);
-extern "C" void func_0202756c(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
+void* GetData02105254_0203b628();
+extern "C" void* Zone3D_GetInstance();
+void SetArraySlotFlag0203b718(void*, int, int, int);
+Entry_02027878* GetEntryFromList(List_02027878*, int);
+void ForwardParamsToB8bc_0203bcb8(Bcb8Params*, int, int);
+void AccumulateBattleTimer0202441c(BattleTimer0202441c*);
+int CheckCombatantReadyForAction020243b8(void*, int);
+int CheckActionAllowed(CombatActionPosition*, int);
+void SetElementFields0202756c(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
 
 // USA: func_02025b0c
-extern "C" ARM void func_02025b0c(Struct_02020554* arg0) {
-    GameObject* var0 = GameState::GetInstance()->GetUnknownGameObject();
-    void* var1 = func_0203b628();
-    func_02012fe4();
-    Vector3i var2 = var0->obj3D_.position_;
-    Struct_020236dc var3[17];
-    unsigned char var4[32];
-    memset(var4, 0, sizeof(var4));
-    int var5 = func_020236dc(var3, var4, &var2);
-    int var6;
-    int var7;
-    fix32_t var8;
-    var8 = arg0->unknown_38_;
-    var6 = (int)((float)FIX32_MULTIPLY(var2.x, var8) / 4096.0f);
-    var7 = (int)((float)FIX32_MULTIPLY(arg0->unknown_5b0_, var8) / 4096.0f);
-    int var9 = (int)((float)FIX32_MULTIPLY(var2.y, var8) / 4096.0f);
-    if (var7 - var9 > 5 || var9 - var7 > 5) {
-        if (var9 < var7) {
-            arg0->unknown_5b0_ -= fix32_Divide((var7 - var9 - 5) << 12, var8);
+extern "C" ARM void func_02025b0c(MapDisplay* self) {
+    GameObject* object = GameState::GetInstance()->GetUnknownGameObject();
+    void* displayState = GetData02105254_0203b628();
+    Zone3D_GetInstance();
+    Vector3i position = object->obj3D_.position_;
+    CombatActionPosition entries[17];
+    unsigned char groups[32];
+    memset(groups, 0, sizeof(groups));
+    int count = func_020236dc(entries, groups, &position);
+    int screenX;
+    int cameraY;
+    fix32_t scale;
+    scale = self->scale;
+    screenX = (int)((float)FIX32_MULTIPLY(position.x, scale) / 4096.0f);
+    cameraY = (int)((float)FIX32_MULTIPLY(self->cameraZ, scale) / 4096.0f);
+    int objectY = (int)((float)FIX32_MULTIPLY(position.y, scale) / 4096.0f);
+    if (cameraY - objectY > 5 || objectY - cameraY > 5) {
+        if (objectY < cameraY) {
+            self->cameraZ -= fix32_Divide((cameraY - objectY - 5) << 12, scale);
         } else {
             arg0->unknown_5b0_ += fix32_Divide((var9 - var7 - 5) << 12, var8);
         }

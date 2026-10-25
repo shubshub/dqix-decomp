@@ -12,8 +12,8 @@ void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
 void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 #endif
-void Camera_EasePositionTo(char* camera, int position, int duration);
-void Camera_EaseTargetTo(char* camera, int target, int duration);
+void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
+void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
 
 extern const Vector3fix CharacterCreationUI_eyeTabCameraPosition;
 extern const Vector3fix CharacterCreationUI_eyeTabCameraTarget;
@@ -30,8 +30,8 @@ extern "C" ARM void CharacterCreationUI_HandleEyeColor(CharacterCreationUI* self
         CharacterCreationUI_MoveCursorToSlot(self, self->eyeColor[self->sex]);
         Vector3fix position = CharacterCreationUI_eyeTabCameraPosition;
         Vector3fix target = CharacterCreationUI_eyeTabCameraTarget;
-        Camera_EasePositionTo((char*)self->camera, (int)&position, CreationCamera_EaseSteps);
-        Camera_EaseTargetTo((char*)self->camera, (int)&target, CreationCamera_EaseSteps);
+        Camera_EasePositionTo((struct Camera*)self->camera, (int)&position, CreationCamera_EaseSteps);
+        Camera_EaseTargetTo((struct Camera*)self->camera, (int)&target, CreationCamera_EaseSteps);
         self->targetAngle = CreationAngle_Default;
         self->flags = (self->flags | CreationFlag_TurnToTarget) & ~CreationFlag_StylusRotation;
         self->step++;
@@ -72,8 +72,8 @@ extern "C" ARM void CharacterCreationUI_HandleEyeColor(CharacterCreationUI* self
         {
             Vector3fix position = CharacterCreationUI_eyeTabExitCameraPosition;
             Vector3fix target = CharacterCreationUI_eyeTabExitCameraTarget;
-            Camera_EasePositionTo((char*)self->camera, (int)&position, CreationCamera_EaseSteps);
-            Camera_EaseTargetTo((char*)self->camera, (int)&target, CreationCamera_EaseSteps);
+            Camera_EasePositionTo((struct Camera*)self->camera, (int)&position, CreationCamera_EaseSteps);
+            Camera_EaseTargetTo((struct Camera*)self->camera, (int)&target, CreationCamera_EaseSteps);
         }
     }
 }

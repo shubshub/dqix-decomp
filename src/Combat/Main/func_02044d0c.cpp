@@ -6,7 +6,7 @@
 
 extern char data_02107800;
 
-void Background_Init(struct List0204af64*);
+void Background_Init(struct BackgroundGraphics*);
 extern "C" void Background_LoadFile(void* list, void* rec, void* alloc, int size);
 extern "C" unsigned int GetMainBG1ScreenBase(void);
 extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, int d);
@@ -38,10 +38,10 @@ extern "C" ARM void func_02044d0c(void) {
 #endif
     char* var3 = *(char**)((char*)GetGameResources() + 0x2c);
 
-    struct List0204af64 local;
+    struct BackgroundGraphics local;
     Background_Init(&local);
-    local.b1c_lo = 0;
-    local.b1c_hi = 3;
+    local.subScreen_ = 0;
+    local.bgNumber_ = 3;
     Background_LoadFile(&local, rec, 0, 0);
 
     if (var2 != 0) {

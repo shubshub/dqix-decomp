@@ -56,7 +56,7 @@ struct PrimaryCombatStats {
 };
 
 struct BaseCombatStats {
-    char unk[0x2C];
+    char name[0x2C];
     PrimaryCombatStats primaryStats;
 };
 

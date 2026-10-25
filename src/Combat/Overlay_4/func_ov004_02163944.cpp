@@ -40,15 +40,15 @@ extern "C" void func_ov004_02163c40(void*);
 extern "C" bool func_ov004_021635d0(int*, int*);
 extern "C" void func_020e526c(void*);
 extern "C" void func_020e5604(void*, SafeAllocator*, void*, unsigned int);
-extern "C" Struct_ov004_02163944_3* func_02012fe4();
-extern "C" void func_02026420(unsigned char*, unsigned char);
-extern "C" void func_020263dc(unsigned char*, void*);
-extern "C" void func_020dc3b8();
+extern "C" MapZone* Zone3D_GetInstance();
+void SetByteFieldAt0x765_02026420(unsigned char*, unsigned char);
+void SetFieldAt0x76c_020263dc(unsigned char*, void*);
+void Notify02022d78WithCode2_020dc3b8();
 void SetSubBrightness(GameResources*, int, int);
 extern "C" void func_ov004_021636b0(void*, const char*);
-extern "C" char* func_020421a0();
-extern "C" void func_02043204(char*);
-extern "C" void func_020e2d24(int*, int, int);
+char* MessageSystem_GetInstance();
+void MessageSystem_Reset(char*);
+void SetFieldsAt0x4And0x8_020e2d24(int*, int, int);
 
 // JPN: 0x02163efc; USA/EUR: 0x02163944.
 extern "C" ARM int func_ov004_02163944(void* arg0) {
@@ -89,21 +89,21 @@ extern "C" ARM int func_ov004_02163944(void* arg0) {
     func_020e5604(data_ov004_02171010.unknown_8_, &var7->unknown_4_, var9, var8);
     BackgroundLoader::RemoveLockGlobal();
 #endif
-    Struct_ov004_02163944_3* var10 = func_02012fe4();
-    Struct_ov004_02163944_2* var11 = (Struct_ov004_02163944_2*)GetGameResources()->unknown_ptr_36d0;
-    data_ov004_02171010.unknown_0_->unknown_1910_ = var11->unknown_14_;
-    strcpy(data_ov004_02171010.unknown_0_->unknown_18ff_, var10->unknown_26_);
-    func_02026420((unsigned char*)var11, 1);
-    func_020263dc((unsigned char*)var11, var1);
-    func_020dc3b8();
-    GameResources* var12 = GetGameResources();
-    if (IsBrightnessWithinValidRange((GameResources*)var12, true)) SetSubBrightness(var12, -16, 0);
-    func_ov004_021636b0(arg0, data_ov004_02171010.unknown_0_->unknown_ad4_[var5].mapImageName_);
-    Struct_ov004_02163944_4* var13 = (Struct_ov004_02163944_4*)func_020421a0();
-    func_02043204((char*)var13);
-    var13->unknown_1962_ = 1;
-    func_020e2d24(var13->unknown_1964_, 9, 1);
-    func_020e2d24(var13->unknown_1988_, 25, 1);
-    data_ov004_02171010.unknown_0_->unknown_18fe_ = 0;
+    MapZone* zone = Zone3D_GetInstance();
+    ResourcePanel* panel = (ResourcePanel*)GetGameResources()->unknown_ptr_36d0;
+    data_ov004_02171010.buffer->state = panel->state;
+    strcpy(data_ov004_02171010.buffer->name, zone->name);
+    SetByteFieldAt0x765_02026420((unsigned char*)panel, 1);
+    SetFieldAt0x76c_020263dc((unsigned char*)panel, allocator);
+    Notify02022d78WithCode2_020dc3b8();
+    GameResources* resources = GetGameResources();
+    if (IsBrightnessWithinValidRange((GameResources*)resources, true)) SetSubBrightness(resources, -16, 0);
+    func_ov004_021636b0(obj, data_ov004_02171010.buffer->details[selection].mapImageName_);
+    MapController* controller = (MapController*)MessageSystem_GetInstance();
+    MessageSystem_Reset((char*)controller);
+    controller->active = 1;
+    SetFieldsAt0x4And0x8_020e2d24(controller->first, 9, 1);
+    SetFieldsAt0x4And0x8_020e2d24(controller->second, 25, 1);
+    data_ov004_02171010.buffer->busy = 0;
     return 0;
 }

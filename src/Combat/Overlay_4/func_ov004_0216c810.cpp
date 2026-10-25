@@ -7,15 +7,15 @@ struct Struct_02072a68_2;
 struct Struct_02000c9c_8;
 struct Struct_ov004_0216b7bc;
 
-extern "C" void func_0209ca70(void* arg0, int arg1);
-extern "C" void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1);
-extern "C" void func_0209c3b4(struct Struct_0209c3b4_2* arg0, int arg1);
-extern "C" void func_02012028(void* arg0, unsigned char arg1);
-extern "C" void* func_ov004_0216b1c4(void* arg0, int arg1);
-extern "C" void* func_ov004_0216ae9c(void* arg0, int arg1);
-extern "C" unsigned char func_0200fb08(struct Struct_02000c9c_8* arg0);
-extern "C" void func_ov011_02184ad8(struct Struct_ov004_0216b7bc* arg0);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
+void SetModeClamped0209ca70(void* obj, int val);
+void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
+void SetStateAndDispatch0209c3b4(struct Actor0209c3b4* actor, int val);
+void SetByte0x7f70_02012028(void* obj, unsigned char value);
+void* SetFieldAndClearBufferIfType7_0216b1c4(void* a, int id);
+void* GetNodeIfType6_0216ae9c(void* a, int id);
+unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
+void SetField1c8True_02184ad8(struct Obj_02184ad8* obj);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 
 class Struct_ov004_0216c810_3 {
 public:
@@ -63,22 +63,22 @@ struct Struct_ov004_02171034_2 {
     int unknown_c_;
 };
 
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" Struct_ov004_0216c810_3* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" void func_ov004_0216b498(void* arg0, int arg1, int arg2);
-extern "C" int func_ov004_0216b2c8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov004_0216b20c(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov023_021f9ba8(void* arg0, unsigned short arg1);
-extern "C" struct Struct_02072a68_2* func_ov023_021fa598(void* arg0);
-extern "C" Struct_ov004_0216c810* func_020421a0();
-extern "C" void func_0204500c(Struct_ov004_0216c810* arg0, void* arg1, int arg2, int arg3);
-extern "C" void func_ov023_021f8120(void* arg0);
-extern "C" void func_ov023_021f7eb8(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);
-extern "C" void func_ov004_0216ba70(void* arg0);
+extern "C" void* func_ov011_021849c8(void* a);
+extern "C" UiNode0216c810* func_ov023_021f6880(void* list, int key);
+extern "C" int func_ov023_021f6f10(void* node);
+extern "C" void func_ov011_021848a0(void* a, int val);
+extern "C" void func_ov004_0216b498(void* a, int mode, int sub);
+extern "C" int func_ov004_0216b2c8(void* obj, int id, int a, int b);
+extern "C" void func_ov004_0216b20c(void* a0, int key, int b, int c);
+extern "C" void func_ov023_021f9ba8(void* node, unsigned short count);
+extern "C" struct TableA68* func_ov023_021fa598(void* node);
+MessageWindow0216c810* MessageSystem_GetInstance();
+extern "C" void func_0204500c(MessageWindow0216c810* win, void* entry, int a, int b);
+extern "C" void func_ov023_021f8120(void* node);
+extern "C" void func_ov023_021f7eb8(void* node, void* a, int buf, int mode, int a5, int a6, int a7, int a8, int a9, int a10);
+extern "C" void func_ov004_0216ba70(void* a);
 
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 extern struct Obj0205e9f4 g_sePlayer;
 extern MenuState02171034 data_ov004_02171034;
 extern Bytes6 data_ov004_02170174;
@@ -92,20 +92,20 @@ extern "C" ARM int func_ov004_0216c810(void* arg0) {
     int var4;
     Struct_ov004_0216c810_3* var5;
 
-    SetModeClamped0209ca70(data_02109bf4, 3);
+    SetModeClamped0209ca70(g_bgmPlayer, 3);
     SetStateAndDispatch0205e9f4(&g_sePlayer, 3);
     data_ov004_02171034.byte4 = 3;
     data_ov004_02171034.byte1 = 3;
     data_ov004_02171034.messageId = 0;
     if (data_ov004_02171034.state3 != 4) {
-        SetStateAndDispatch0209c3b4((struct Actor0209c3b4*)data_02109bf4, 2);
+        SetStateAndDispatch0209c3b4((struct Actor0209c3b4*)g_bgmPlayer, 2);
     }
-    var0 = GameState::GetInstance();
-    func_02010828(var0);
-    var2 = 0;
-    var3 = 0;
-    data_ov004_02171034.unknown_2_ = 0;
-    func_ov023_021f6880(func_ov011_021849c8(arg0), 0xb)->unknown_c_ |= 8;
+    gs = GameState::GetInstance();
+    GameState_GetParty(gs);
+    mode = 0;
+    sub = 0;
+    data_ov004_02171034.flag2 = 0;
+    func_ov023_021f6880(func_ov011_021849c8(a), 0xb)->flagsC |= 8;
 
     if (data_ov004_02171034.unknown_3_ == 0) {
         func_ov023_021f6880(func_ov011_021849c8(arg0), 1)->unknown_c_ |= 8;
@@ -212,23 +212,23 @@ extern "C" ARM int func_ov004_0216c810(void* arg0) {
             var5->inline_ov004_0216c810_7(0xa);
             var5->inline_ov004_0216c810_21(0xa);
         }
-    } else if (data_ov004_02171034.unknown_3_ == 6) {
-        func_02012028(var0, 0);
-        void* var12 = func_ov011_021849c8(arg0);
-        Struct_ov004_0216c810_3* var13 = func_ov023_021f6880(var12, 1);
-        if (var13 == 0) return 0;
-        if (func_ov023_021f6f10(var13) != 0xb) return 0;
-        var13->unknown_c_ |= 8;
-        Struct_ov004_0216c810_3* var14 = func_ov023_021f6880(var12, 0x192);
-        if (var14 == 0) return 0;
-        if (func_ov023_021f6f10(var14) != 4) return 0;
-        struct Struct_02072a68_2* var15 = func_ov023_021fa598(var14);
-        Struct_ov004_0216c810* var16 = func_020421a0();
-        var16->unknown_998_ = 1;
-        func_0204500c(var16, func_02072a68(var15, 0x5dc), 0, 0xe3);
-        var16->unknown_19ca_ = 0;
-        var16->unknown_19af_ = 0;
-        func_02012028(var0, 0);
+    } else if (data_ov004_02171034.state3 == 6) {
+        SetByte0x7f70_02012028(gs, 0);
+        void* list = func_ov011_021849c8(a);
+        UiNode0216c810* box = func_ov023_021f6880(list, 1);
+        if (box == 0) return 0;
+        if (func_ov023_021f6f10(box) != 0xb) return 0;
+        box->flagsC |= 8;
+        UiNode0216c810* text = func_ov023_021f6880(list, 0x192);
+        if (text == 0) return 0;
+        if (func_ov023_021f6f10(text) != 4) return 0;
+        struct TableA68* table = func_ov023_021fa598(text);
+        MessageWindow0216c810* win = MessageSystem_GetInstance();
+        win->busy = 1;
+        func_0204500c(win, FindEntryByKey_02072a68(table, 0x5dc), 0, 0xe3);
+        win->flag19ca = 0;
+        win->flag19af = 0;
+        SetByte0x7f70_02012028(gs, 0);
         return 0;
     } else if (data_ov004_02171034.unknown_3_ == 7) {
         func_02012028(var0, 0);
@@ -236,15 +236,15 @@ extern "C" ARM int func_ov004_0216c810(void* arg0) {
         return 0;
     }
 
-    func_ov011_02184ad8((struct Struct_ov004_0216b7bc*)arg0);
-    int var17;
-    void* var18 = func_ov004_0216ae9c(arg0, 0xd2);
-    func_ov023_021f8120(var18);
-    var17 = 0x60;
-    unsigned char var19 = func_0200fb08((struct Struct_02000c9c_8*)GameState::GetInstance());
-    Struct_ov004_02170174 var20 = data_ov004_02170174;
-    int var21;
-    switch (var2) {
+    SetField1c8True_02184ad8((struct Obj_02184ad8*)a);
+    int y;
+    void* panel = GetNodeIfType6_0216ae9c(a, 0xd2);
+    func_ov023_021f8120(panel);
+    y = 0x60;
+    unsigned char kind = GameState_GetLanguage((struct Struct0200fb08*)GameState::GetInstance());
+    Bytes6 rows = data_ov004_02170174;
+    int n;
+    switch (mode) {
     case 0:
         func_ov023_021f7eb8(var18, arg0, var17, 1, 1, 0x12, 5, 0, 1, 0);
         var17 += 0xb40;

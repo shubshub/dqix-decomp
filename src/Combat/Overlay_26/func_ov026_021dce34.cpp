@@ -202,14 +202,14 @@ extern "C" ARM void func_ov026_021dce34(int arg0, Struct_ov000_02160da0* arg1, S
                     ((Struct_ov023_021f2a48_2*)var11)->unknown_18c_ |= 1;
                 }
             }
-            arg10[var6].unknown_0_ = var11->obj3D_.position_;
-            arg10[var6].unknown_c_ = var11->obj3D_.rotation_.y;
-            var5 = 1;
-            func_ov000_02168644((char*)arg1, var6);
-            func_02039894((unsigned char*)var11);
-            func_ov000_02167fb0(arg1, var11);
-            if (var11->obj3D_.unknown_4_ == 0 && func_0202c540(var4)) {
-                func_ov017_0219c774(arg5->unknown_8_, 0, 0);
+            entries[id].pos = m->obj3D_.position_;
+            entries[id].angle = m->obj3D_.rotation_.y;
+            added = 1;
+            AddEntry02168644((char*)self, id);
+            SetFlag0x1ceBit0x1_02039894((unsigned char*)m);
+            func_ov000_02167fb0(self, m);
+            if (m->obj3D_.actorIndex_ == 0 && func_0202c540(link)) {
+                func_ov017_0219c774(events->handle, 0, 0);
             }
         }
         func_ov017_021917f0(var6, 1);

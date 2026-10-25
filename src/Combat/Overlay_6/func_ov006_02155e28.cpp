@@ -21,6 +21,8 @@
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Window.h"
+#include "Graphics/Background.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
@@ -31,36 +33,22 @@ extern "C" void __clear(void* arg0, int arg1);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
 
 void SpriteContext_Init(char* obj);
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* data);
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* data, int index, void** outRec, int* outSize);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* data);
+void* Pac_GetFile(struct PacRecord* data, int index, void** outRec, int* outSize);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 
-struct Struct_02020cb8 {
-    unsigned char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_[3];
-};
-void Background_Init(struct List0204af64* list);
+void Background_Init(struct BackgroundGraphics* list);
 void Background_SetMapSize(unsigned char* list, int value);
 extern "C" void Background_SetPriority(void* list, int priority);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(struct AllocTarget0204b12c* list, SafeAllocator* alloc);
-struct Obj0204b5e8;
-void Background_SetScroll(struct Obj0204b5e8* list, int a, int b);
-struct Obj0204b010;
-void Background_ClearMap(struct Obj0204b010* list, void* buffer);
+struct BackgroundGraphics;
+void Background_AllocateMap(struct BackgroundGraphics* list, SafeAllocator* alloc);
+void Background_SetScroll(struct BackgroundGraphics* list, int a, int b);
+void Background_ClearMap(struct BackgroundGraphics* list, void* buffer);
 extern "C" void Background_LoadFile(void* list, void* data, void* alloc, int size);
 
-struct Struct_0204c7a8 {
-    int unknown_0_;
-    struct Struct_02020cb8* unknown_4_;
-    unsigned char unknown_8_[0xe0 - 8];
-};
-extern "C" void func_0204c684(void* node);
-void WindowPane_AllocateBuffer(struct Obj0204c7a8* node, SafeAllocator* alloc, int a, unsigned int size);
+extern "C" void WindowPane_Init(void* node);
+void WindowPane_AllocateBuffer(struct WindowPane* node, SafeAllocator* alloc, int a, unsigned int size);
 
 struct Struct_0207f7f0_2;
 struct Struct_0207f914;
@@ -91,15 +79,15 @@ struct Struct_ov003_0217d53c_4 {
     unsigned char unknown_0_[0xb3c];
     int unknown_b3c_;
 };
-extern "C" void* func_02012fe4(void);
-static inline struct Struct_ov003_0217d53c_4* inline_ov003_0216e714_2(void* arg0) {
-    return (struct Struct_ov003_0217d53c_4*)((char*)arg0 + R(0x1860,0x1840));
+extern "C" void* Zone3D_GetInstance(void);
+static inline struct Progress02012fe4* GetProgress(void* run) {
+    return (struct Progress02012fe4*)((char*)run + R(0x1860,0x1840));
 }
 
 int GetFieldIfFlag4_020100f8(char* gs);
-void SetField0x3b0Value_020100c4(GameState* gs, int value);
+void GameState_SetCamera(GameState* gs, int value);
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 struct Fields020407b4;
@@ -155,30 +143,30 @@ struct Struct_ov006_02155e28_4 {
 #if !defined(jpn)
     unsigned char unknown_0_[0x180];
 #endif
-    SafeAllocator* unknown_180_;
-    unsigned char unknown_184_[8];
-    SafeAllocator unknown_18c_;
-    int unknown_1a0_;
-    int unknown_1a4_;
-    unsigned char unknown_1a8_[0x20];
-    struct Struct_ov006_02155e28_2* unknown_1c8_;
-    struct Struct_02020cb8* unknown_1cc_;
-    struct Struct_0204c7a8* unknown_1d0_;
-    struct Struct_0207f7f0* unknown_1d4_;
-    unsigned char unknown_1d8_[8];
-    int unknown_1e0_;
-    struct Struct_ov006_02155e28_3 unknown_1e4_;
-    Object3D unknown_238_[5];
-    unsigned char unknown_594_[0x5cc - 0x594];
-    unsigned char unknown_5cc_[0xad4 - 0x5cc];
-    int unknown_ad4_;
-    int unknown_ad8_;
-    unsigned char unknown_adc_;
-    unsigned char unknown_add_;
-    unsigned char unknown_ade_[4];
-    unsigned short unknown_ae2_;
-    unsigned char unknown_ae4_[R(0x121c,0x12a0) - 0xae4];
-    struct Struct_020dbf18 unknown_12a0_;
+    SafeAllocator* allocs;
+    unsigned char pad184[8];
+    SafeAllocator modelAlloc;
+    int field1a0;
+    int field1a4;
+    unsigned char pad1a8[0x20];
+    struct Table021e20f0* table;
+    struct BackgroundGraphics* lists;
+    struct WindowPane* nodes;
+    struct Manager0207f7f0* mgr;
+    unsigned char pad1d8[8];
+    int field1e0;
+    struct Records0205a444 records;
+    Object3D objs[5];
+    unsigned char pad594[0x5cc - 0x594];
+    unsigned char entry[0xad4 - 0x5cc];
+    int taskId;
+    int taskB;
+    unsigned char result;
+    unsigned char state;
+    unsigned char padade[4];
+    unsigned short flags;
+    unsigned char padae4[R(0x121c,0x12a0) - 0xae4];
+    struct BattleTask020dbf18 task;
 };
 
 static inline SafeAllocator* inline_ov000_02166804(GameResources* arg0, int arg1) {
@@ -204,11 +192,11 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         unsigned int size;
         int recSize;
         loader->GetLoadedFileByID(self->taskId, &data, &size);
-        int count = Pac_CountFiles((struct ActiveEntry02046900*)data);
+        int count = Pac_CountFiles((struct PacRecord*)data);
         SafeAllocator* alloc = self->allocs;
         alloc->Reset();
         for (int i = 0; i < count; i++) {
-            void* found = Pac_GetFile((struct Rec020467f0*)data, i, &rec, &recSize);
+            void* found = Pac_GetFile((struct PacRecord*)data, i, &rec, &recSize);
             if (found != NULL) {
                 SpriteContext_LoadFile(&self->records, found, recSize, alloc);
             }
@@ -225,24 +213,24 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         alloc->Reset();
         struct Bytes3_0215ff54 priority = data_ov006_0215ff54;
         for (unsigned char i = 0; i < 2; i++) {
-            struct List0204af64* list = &self->lists[i];
+            struct BackgroundGraphics* list = &self->lists[i];
             Background_Init(list);
-            list->kind = 0;
-            list->slot = i + 1;
+            list->subScreen_ = 0;
+            list->bgNumber_ = i + 1;
             Background_SetMapSize((unsigned char*)list, 0);
             Background_SetPriority(list, priority.v[i]);
-            Background_AllocateMap((struct AllocTarget0204b12c*)list, alloc);
-            Background_SetScroll((struct Obj0204b5e8*)list, 0, 0);
+            Background_AllocateMap((struct BackgroundGraphics*)list, alloc);
+            Background_SetScroll((struct BackgroundGraphics*)list, 0, 0);
         }
-        Background_ClearMap((struct Obj0204b010*)&self->lists[0], NULL);
-        Background_ClearMap((struct Obj0204b010*)&self->lists[1], NULL);
+        Background_ClearMap((struct BackgroundGraphics*)&self->lists[0], NULL);
+        Background_ClearMap((struct BackgroundGraphics*)&self->lists[1], NULL);
         SafeAllocator* nodeAlloc = self->allocs;
         nodeAlloc[3].Reset();
         for (unsigned char j = 0; j < 1; j++) {
-            struct Obj0204c7a8* node = &self->nodes[j];
-            func_0204c684(node);
+            struct WindowPane* node = &self->nodes[j];
+            WindowPane_Init(node);
             WindowPane_AllocateBuffer(node, &nodeAlloc[3], self->field1a4, 0x1c0);
-            node->lists = self->lists;
+            node->layer_ = self->lists;
         }
         self->taskId = loader->QueueLoadFile(data_ov006_021600c4, NULL);
         self->state++;
@@ -253,10 +241,10 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         unsigned int size;
         int recSize;
         loader->GetLoadedFileByID(self->taskId, &data, &size);
-        int count = Pac_CountFiles((struct ActiveEntry02046900*)data);
+        int count = Pac_CountFiles((struct PacRecord*)data);
         SafeAllocator* alloc = self->allocs;
         for (int i = 0; i < count; i++) {
-            void* found = Pac_GetFile((struct Rec020467f0*)data, i, &rec, &recSize);
+            void* found = Pac_GetFile((struct PacRecord*)data, i, &rec, &recSize);
             if (found != NULL) {
                 Background_LoadFile(self->lists, found, &alloc[2], recSize);
             }
@@ -331,12 +319,12 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (arg0->unknown_ae2_ & 8) {
             arg0->unknown_add_ = 0x12;
         }
-    } else if (var1 == 8) {
-        int var36 = (signed char)inline_ov003_0216e714_2(func_02012fe4())->unknown_b3c_;
-        char var37[0x20];
-        __clear(var37, 0x20);
-        if (var36 < 1) {
-            var36 = 1;
+    } else if (state == 8) {
+        int chapter = (signed char)GetProgress(Zone3D_GetInstance())->chapter;
+        char path[0x20];
+        __clear(path, 0x20);
+        if (chapter < 1) {
+            chapter = 1;
         }
         if (var36 > 6) {
             var36 = 6;
@@ -354,16 +342,16 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
             alloc->Reset();
-            CopyInternalFields0207df50((struct Foo0207df50*)res->unknown_2cc);
-            VramState_Restore(res->unknown_2cc);
+            VramState_Rewind((struct Foo0207df50*)res->vramStates_);
+            VramState_Restore(res->vramStates_);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
-            info.unk_8 = size;
+            info.fileSize = size;
             info.allocator = alloc;
             info.unk_10 = 1;
             self->objs[0].LoadFromCHRArchive(&info);
-            self->objs[0].MaybeSetBCFGAnimation(0, 0);
-            VramState_Save(res->unknown_2cc);
+            self->objs[0].SetAnimationByIndex(0, 0);
+            VramState_Save(res->vramStates_);
             SetFields0x44((struct Fields020407b4*)&self->objs[0], -0x3800, -0xb3b, 0x60a3);
         }
         loader->RemoveTask(self->taskId);
@@ -380,15 +368,15 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            VramState_Restore(res->unknown_2cc);
+            VramState_Restore(res->vramStates_);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
-            info.unk_8 = size;
+            info.fileSize = size;
             info.allocator = alloc;
             info.unk_10 = 1;
             self->objs[1].LoadFromCCHROrCMOTArchive(&info, NULL);
-            self->objs[1].MaybeSetBCFGAnimation(0, 0);
-            VramState_Save(res->unknown_2cc);
+            self->objs[1].SetAnimationByIndex(0, 0);
+            VramState_Save(res->vramStates_);
             self->objs[1].SetScale(0x10a, 0x10a, 0x10a);
             SetFields0x44((struct Fields020407b4*)&self->objs[1], -0x41, -0xaac, 0x61f3);
         }
@@ -406,15 +394,15 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            VramState_Restore(res->unknown_2cc);
+            VramState_Restore(res->vramStates_);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
-            info.unk_8 = size;
+            info.fileSize = size;
             info.allocator = alloc;
             info.unk_10 = 1;
             self->objs[2].LoadFromCCHROrCMOTArchive(&info, NULL);
-            self->objs[2].MaybeSetBCFGAnimation(0, 0);
-            VramState_Save(res->unknown_2cc);
+            self->objs[2].SetAnimationByIndex(0, 0);
+            VramState_Save(res->vramStates_);
             self->objs[2].SetScale(0x10a, 0x10a, 0x10a);
             CopyVec3ToField0x44((struct Target02059f38*)&self->objs[2], (struct Vec3_02059f38*)&self->objs[1].position_);
         }
@@ -429,7 +417,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         GameResources* res = GetGameResources();
         self->modelAlloc.CreateTypeA(res->allocator_array_38[0].Allocate(0x8000), 0x8000);
         self->modelAlloc.Reset();
-        VramState_Restore(res->unknown_2cc);
+        VramState_Restore(res->vramStates_);
         void* data;
         unsigned int size;
         loader->GetLoadedFileByID(self->taskId, &data, &size);
@@ -437,7 +425,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             self->objs[3].Initialize();
             ObjectArchiveLoadInfo info;
             info.fileData = data;
-            info.unk_8 = size;
+            info.fileSize = size;
             info.allocator = &self->modelAlloc;
             info.unk_10 = 1;
             self->objs[3].LoadFromCHRArchive(&info);
@@ -445,7 +433,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
             CopyVec3ToField0x44((struct Target02059f38*)&self->objs[3], (struct Vec3_02059f38*)&self->objs[1].position_);
             self->objs[3].StopCurrentAnimation();
         }
-        VramState_Save(res->unknown_2cc);
+        VramState_Save(res->vramStates_);
         loader->RemoveTask(self->taskId);
         self->taskId = -1;
         self->state++;
@@ -460,32 +448,32 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         if (data != NULL) {
             GameResources* res = GameState::GetInstance()->GetResources();
             SafeAllocator* alloc = GetAllocator(res, 0);
-            VramState_Restore(res->unknown_2cc);
+            VramState_Restore(res->vramStates_);
             ObjectArchiveLoadInfo info;
             info.fileData = data;
-            info.unk_8 = size;
+            info.fileSize = size;
             info.allocator = alloc;
             info.unk_10 = 1;
             Object3D* obj = &self->objs[4];
             obj->LoadFromCCHROrCMOTArchive(&info, NULL);
-            obj->MaybeSetBCFGAnimation(0, 0);
-            VramState_Save(res->unknown_2cc);
+            obj->SetAnimationByIndex(0, 0);
+            VramState_Save(res->vramStates_);
             obj->SetScale(0x10a, 0x10a, 0x10a);
             CopyVec3ToField0x44((struct Target02059f38*)obj, (struct Vec3_02059f38*)&self->objs[1].position_);
             obj->StopCurrentAnimation();
-            obj->MaybeSetRegularAnimation(data_ov006_02160080, 9);
+            obj->SetAnimationByName(data_ov006_02160080, 9);
             obj->DisableFlag(0x1000);
             for (int i = 0; i < 3; i++) {
                 data_ov006_02160380[i] = -1;
             }
-            Model3D* var65 = arg0->unknown_238_[4].pModel_;
-            if (var65 != NULL) {
-                data_ov006_02160380_dup[0] = var65->GetBoneIndex(data_ov006_0216018b);
-                data_ov006_02160380_dup[1] = var65->GetBoneIndex(data_ov006_02160190);
-                data_ov006_02160380_dup[2] = var65->GetBoneIndex(data_ov006_02160195);
-                ModelRenderContext* var66;
-                if (!var65->unknown_flags_a8_0_) {
-                    var66 = NULL;
+            Model3D* model = self->objs[4].pModel_;
+            if (model != NULL) {
+                data_ov006_02160380_dup[0] = model->GetBoneIndex(data_ov006_0216018b);
+                data_ov006_02160380_dup[1] = model->GetBoneIndex(data_ov006_02160190);
+                data_ov006_02160380_dup[2] = model->GetBoneIndex(data_ov006_02160195);
+                ModelRenderContext* context;
+                if (!model->loaded_) {
+                    context = NULL;
                 } else {
                     var66 = &var65->renderContext_;
                 }
@@ -494,31 +482,31 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
                 }
             }
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_add_++;
-    } else if (var1 == 18) {
-        arg0->unknown_238_[1].StopCurrentAnimation();
-        arg0->unknown_238_[2].StopCurrentAnimation();
-        arg0->unknown_238_[1].MaybeSetBCFGAnimation(0, 0);
-        arg0->unknown_238_[2].MaybeSetBCFGAnimation(0, 0);
-        GameState* var67 = GameState::GetInstance();
-        arg0->unknown_1a0_ = func_020100f8((char*)var67);
-        func_ov006_021542f4(arg0->unknown_5cc_);
-        func_020100c4(var67, (int)arg0->unknown_5cc_);
-        struct Struct_0207f7f0* var68 = arg0->unknown_1d4_;
-        var68->unknown_2c_ = arg0->unknown_1cc_;
-        var68->unknown_38_ = 2;
-        func_0207f7f0(arg0->unknown_1d4_, (struct Struct_0207f7f0_2*)arg0->unknown_1d0_, 1);
-        arg0->unknown_1d4_->unknown_3a_ = 1;
-        volatile unsigned int* var69 = (volatile unsigned int*)0x4000000;
-        *var69 = (*var69 & ~0x1f00) | 0x1f00;
+        loader->RemoveTask(self->taskId);
+        self->taskId = -1;
+        self->state++;
+    } else if (state == 18) {
+        self->objs[1].StopCurrentAnimation();
+        self->objs[2].StopCurrentAnimation();
+        self->objs[1].SetAnimationByIndex(0, 0);
+        self->objs[2].SetAnimationByIndex(0, 0);
+        GameState* gs = GameState::GetInstance();
+        self->field1a0 = GetFieldIfFlag4_020100f8((char*)gs);
+        InitCombatEntry021542f4(self->entry);
+        GameState_SetCamera(gs, (int)self->entry);
+        struct Manager0207f7f0* mgr = self->mgr;
+        mgr->lists = self->lists;
+        mgr->mode = 2;
+        InitNodeChain0207f7f0(self->mgr, (struct Node0207f7f0*)self->nodes, 1);
+        self->mgr->active = 1;
+        volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+        *dispcnt = (*dispcnt & ~0x1f00) | 0x1f00;
         ColorEffect_ConfigureAlphaBlend((unsigned int*)0x4000050, 4, 1, 10, 6);
         self->flags = self->flags | 0x1000;
         self->flags = self->flags & ~0x40;
         GameResources* res = gs->GetResources();
         BeginTask020dbf18(&self->task, (int)data_ov006_0216019a, (int)&self->allocs[5],
-                          (int)res->unknown_2cc, 0x18);
+                          (int)res->vramStates_, 0x18);
         self->state++;
     } else if (state == 19) {
         if (self->task.status == 2) {

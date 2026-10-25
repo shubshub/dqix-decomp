@@ -12,11 +12,11 @@ struct Obj2081;
 struct Cont0207fdf0;
 struct SePlayer;
 struct Obj0208203c;
-struct Container020dedd0;
+struct ItemTable;
 struct Obj02179e18;
 struct Obj021dcae0;
 
-extern "C" void *func_02010828(GameState *arg0);
+void *GameState_GetParty(GameState *gs);
 
 extern "C" int func_ov003_02179f34(char *obj);
 short FindMappedMemberId02080468(void *obj, int id);
@@ -35,23 +35,23 @@ struct Element020de650 {
     char pad[8];
     unsigned int word;
 };
-extern "C" struct Struct_0201099c_9 *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" void func_0207fdf0(struct Struct_0207fdf0_2 *arg0, int arg1);
-extern "C" int func_ov003_02179da8(void *arg0, int arg1);
-extern "C" int func_ov003_021766e8(void *arg0);
-extern "C" void func_ov003_02177208(char *arg0);
-extern "C" void func_ov003_0217726c(char *arg0);
-extern "C" int func_ov003_02178218(void *arg0);
-extern "C" int func_02081f20(void *arg0, int arg1);
-extern "C" unsigned short func_ov003_0217b200(void **arg0);
-extern "C" int func_0207c7a0(void *arg0, int arg1, int arg2);
-extern "C" unsigned int func_ov003_02179e18(struct Struct_ov003_02179e18 *arg0);
-extern "C" int func_ov003_021782a0(struct Struct_0207fdcc_2 *arg0);
-extern "C" void func_0207fdcc(struct Struct_0207fdcc_2 *arg0, int arg1);
-extern "C" void func_ov003_02176468(unsigned char *arg0);
-extern "C" int func_ov003_021764f4(unsigned char *arg0);
-extern "C" void func_ov003_02175d78(char *arg0);
-extern "C" void func_ov003_02175df4(void *arg0);
+struct Element020de650 *ItemTable_Find(struct ItemTable *c, int key);
+void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0 *obj, int key);
+extern "C" int func_ov003_02179da8(void *obj, int flag);
+extern "C" int func_ov003_021766e8(void *self);
+extern "C" void func_ov003_02177208(char *obj);
+extern "C" void func_ov003_0217726c(char *obj);
+extern "C" int func_ov003_02178218(void *self);
+extern "C" int func_02081f20(void *obj, int scaleCount);
+unsigned short GetInnerShort_0217b200(void **obj);
+extern "C" int func_0207c7a0(void *map, int value, int key);
+unsigned int ComputeTimeRemaining_02179e18(struct Obj02179e18 *obj);
+extern "C" int func_ov003_021782a0(struct Obj2081 *obj);
+void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081 *obj, int key);
+extern "C" void func_ov003_02176468(unsigned char *self);
+extern "C" int func_ov003_021764f4(unsigned char *self);
+void RefillAndResetEntry_02175d78(char *obj);
+extern "C" void func_ov003_02175df4(void *self);
 
 extern struct SePlayer g_sePlayer;
 
@@ -61,11 +61,11 @@ static inline int inline_ov003_0217b430(struct Struct_0201099c_9 *arg0) {
 }
 
 // USA: func_ov003_0217b430
-extern "C" ARM void func_ov003_0217b430(unsigned char *arg0) {
-    GameState *var0 = GameState::GetInstance();
-    char *var1   = (char *) func_02010828(var0);
-    void *var2     = *(void **) (arg0 + REGIONAL_OFFSET(0x818, 0x89c));
-    int var3         = *(unsigned char *) (arg0 + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f);
+extern "C" ARM void func_ov003_0217b430(unsigned char *self) {
+    GameState *battle = GameState::GetInstance();
+    char *battleSum   = (char *) GameState_GetParty(battle);
+    void *elemObj     = *(void **) (self + REGIONAL_OFFSET(0x818, 0x89c));
+    int state         = *(unsigned char *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3f);
 
     if (var3 == 0) {
         int var4               = func_ov003_02179f34((char *) arg0);
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov003_0217b430(unsigned char *arg0) {
             ResetWithSub0208203c((struct Obj0208203c *) (self + REGIONAL_OFFSET(0x808, 0x88c)));
             *(void **) (self + REGIONAL_OFFSET(0xf74, 0xff8)) = 0;
             *(void **) (self + 8) =
-                FindElementByKey020dedd0((struct Container020dedd0 *) (self + REGIONAL_OFFSET(0x7f0, 0x874)), *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
+                ItemTable_Find((struct ItemTable *) (self + REGIONAL_OFFSET(0x7f0, 0x874)), *(short *) (self + REGIONAL_OFFSET(0xf7c, 0x1000) + 0x3a));
             if (*(void **) (self + 8) == 0) return;
             *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x78, 0xfc)) = *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe));
             SetEntryLowNibbleAndElement02080c68(elemObj, *(short *) (self + 0xf00 + REGIONAL_OFFSET(0x7a, 0xfe)), 1);

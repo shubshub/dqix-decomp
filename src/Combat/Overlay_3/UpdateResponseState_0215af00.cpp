@@ -7,9 +7,9 @@ enum { kRegionValue998_868 = 0x868 };
 enum { kRegionValue998_868 = 0x998 };
 #endif
 
-void* GetGlobalField0x1c020421a0(void);
+void* MessageSystem_GetInstance(void);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_02159250(void*, void*);
@@ -19,11 +19,11 @@ extern "C" void func_ov017_02191108(int, int, int, int, int);
 // USA: func_ov003_0215af00
 ARM void UpdateResponseState_0215af00(void* self) {
     unsigned char* s = (unsigned char*)self;
-    unsigned char* g = (unsigned char*)GetGlobalField0x1c020421a0();
+    unsigned char* g = (unsigned char*)MessageSystem_GetInstance();
     unsigned char state = *(unsigned char*)(s + 0x580);
 
     if (state == 0) {
-        ResetEntryList0205d6a0((Entry_0205d6a0*)(s + 0xf4), 1);
+        Window_ClosePane((Entry_0205d6a0*)(s + 0xf4), 1);
         void* val = KeyTable_Get((Container020e0310*)(s + 0x64), 0x442);
         func_ov003_02159250(self, val);
         *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;

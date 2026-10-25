@@ -27,11 +27,11 @@ struct Struct_0202b2f0 {
         return unknown_0_ != 0;
     }
 };
-struct Struct_02012de8;
-extern "C" unsigned short func_0202df58();
-extern "C" void* func_020d6c00();
-extern "C" int func_02046708(Struct_02012de8*, unsigned int);
-extern "C" int func_0202d6a8();
+struct FlagWord02046708;
+unsigned short GetGlobalHalf0x0_0202df58();
+void* GlobalFlags_GetInstance();
+int TestFlags02046708(FlagWord02046708*, unsigned int);
+int GetGlobalField0x10_0202d6a8();
 extern "C" int func_0202d8e8();
 extern "C" void func_0202db64(int, int, int);
 extern "C" void func_0202bc00(Struct_0202b2f0*, int);
@@ -69,8 +69,8 @@ extern "C" ARM void func_0202b2f0(Struct_0202b2f0* arg0) {
         var4->unknown_4_ = var6 & ~0xffff;
     }
     GameState::GetInstance();
-    if (func_02046708((Struct_02012de8*)func_020d6c00(), 0x1000000)) {
-        arg0->unknown_0_ = -1;
+    if (TestFlags02046708((FlagWord02046708*)GlobalFlags_GetInstance(), 0x1000000)) {
+        object->state = -1;
         return;
     }
     switch (func_0202d6a8()) {

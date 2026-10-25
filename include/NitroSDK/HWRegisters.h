@@ -16,6 +16,10 @@
 
 #define VCOUNT (*(volatile unsigned short*)0x04000006)
 
+// The blend control registers' addresses, for the ColorEffect_* functions (which also set BLDALPHA / BLDY after them).
+#define REG_BLDCNT 0x04000050
+#define REG_BLDCNT_SUB 0x04001050
+
 #define BG0CNT (*(volatile unsigned short*)(0x04000008))
 #define BG1CNT (*(volatile unsigned short*)(0x0400000a))
 #define BG2CNT (*(volatile unsigned short*)(0x0400000c))

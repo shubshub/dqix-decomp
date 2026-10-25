@@ -30,15 +30,15 @@ struct Struct_ov003_0215af9c {
     unsigned char unknown_19ae_;
 };
 
-BattleGlobals* GetGlobalField0x1c020421a0(void);
+BattleGlobals* MessageSystem_GetInstance(void);
 struct Actor0209c678;
-void DispatchContextByState0209c678(Actor0209c678*, int);
+void BgmPlayer_FadeOut(Actor0209c678*, int);
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 int IsMainBrightnessTransitionActive(GameResources*);
 void SetMainBrightness(GameResources*, int, int);
-extern "C" void func_02043124(BattleGlobals*);
-void ReinitController02043204(char*);
+extern "C" void MessageSystem_Stop(BattleGlobals*);
+void MessageSystem_Reset(char*);
 extern "C" void func_ov003_0215c270(BattleMessageScene*, unsigned int, unsigned int);
 struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
@@ -47,11 +47,11 @@ extern "C" int* func_0202ae18(void);
 extern "C" int func_0202b7d8(int*);
 extern "C" void func_ov017_021c37a4(void);
 
-extern unsigned char data_02109bf4;
+extern unsigned char g_bgmPlayer;
 
 // USA: func_ov003_0215b1dc
 extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
-    BattleGlobals* g = GetGlobalField0x1c020421a0();
+    BattleGlobals* g = MessageSystem_GetInstance();
     GameResources* res = GameState::GetInstance()->GetResources();
 
     if (var0->unknown_9a0_ == 3) {
@@ -60,19 +60,19 @@ extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
 
     unsigned char var2 = arg0->unknown_580_;
 
-    if (var2 == 0) {
-        if (var0->unknown_9a0_ != 3) return;
-        func_0209c678((Struct_02109bf4_4*)&data_02109bf4, 0xb4);
-        SetBrightness(var1, -16, 0xb4);
-        arg0->unknown_580_++;
+    if (step == 0) {
+        if (g->linkState != 3) return;
+        BgmPlayer_FadeOut((Actor0209c678*)&g_bgmPlayer, 0xb4);
+        SetBrightness(res, -16, 0xb4);
+        self->step++;
     }
 
-    if (var2 == 1) {
-        if (IsBrightnessTransitionActive(var1)) return;
-        func_02043124(var0);
-        func_02043204((char*)var0);
-        SetMainBrightness(var1, 0, 0x3c);
-        arg0->unknown_580_++;
+    if (step == 1) {
+        if (IsBrightnessTransitionActive(res)) return;
+        MessageSystem_Stop(g);
+        MessageSystem_Reset((char*)g);
+        SetMainBrightness(res, 0, 0x3c);
+        self->step++;
     }
 
     if (var2 == 2) {

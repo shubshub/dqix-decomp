@@ -17,10 +17,10 @@ struct Struct_ov011_02185be8_2 {
 
 extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
 extern "C" ARM void* func_ov017_021b2164(void);
-extern "C" ARM void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" ARM void* func_ov011_021849c8(void* arg0);
-extern "C" ARM void* func_ov011_02185ce0(void* arg0);
-extern "C" ARM void func_0205a494(void* arg0);
+extern "C" ARM void* func_ov011_021845f8(void* ctx, int v);
+extern "C" ARM void* func_ov011_021849c8(void* ctx);
+ARM void* InitObjWithVTable_02185ce0(void* obj);
+ARM void SpriteContext_Destroy(void* obj);
 #if defined(jpn)
 // JPN: InitObjWithVTable_02185ce0 is inlined, the object is 0x84 bytes and func_ov023_021fa760 takes 6 arguments.
 void SpriteContext_Init(char* obj);
@@ -82,12 +82,12 @@ extern "C" ARM int func_ov011_02185be8(struct Struct_ov011_02185be8_2* arg0) {
 #else
     if (func_ov023_021fa760(var6, var4, var0, var1, 0, var2, var3) == 0) {
 #endif
-        func_0205a494(var7.unknown_24_);
+        SpriteContext_Destroy(local.sub);
         return 0;
     }
 
-    void* var8 = func_ov011_021849c8(var4);
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)var8, (struct Struct_ov004_0215c30c_2*)var6);
-    func_0205a494(var7.unknown_24_);
+    void* list = func_ov011_021849c8(ctx);
+    AppendNodeToList_021f67ac((struct ListHead_021f67ac*)list, (struct ListNode_021f67ac*)block);
+    SpriteContext_Destroy(local.sub);
     return 1;
 }

@@ -16,7 +16,7 @@ extern "C" ARM int func_ov025_021e1f40(GameObject* arg0, int arg1) {
     if (func_02049ee8((unsigned char*)arg0) == 0) {
         return 0;
     }
-    if (arg1 == arg0->obj3D_.unknown_4_) {
+    if (targetId == obj->obj3D_.actorIndex_) {
         return 0;
     }
     if (func_02048bd0((unsigned char*)arg0)) {
@@ -28,14 +28,14 @@ extern "C" ARM int func_ov025_021e1f40(GameObject* arg0, int arg1) {
     if (func_02048c68((unsigned char*)arg0)) {
         return 0;
     }
-    int var0 = 0;
-    if (arg0->obj3D_.unknown_4_ >= 0 && arg0->obj3D_.unknown_4_ <= 3) {
-        var0 = 1;
+    int party = 0;
+    if (obj->obj3D_.actorIndex_ >= 0 && obj->obj3D_.actorIndex_ <= 3) {
+        party = 1;
     }
-    if (var0) {
-        GameState* var1 = GameState::GetInstance();
-        GameObject* var2 = func_0200ff1c(var1, arg0->obj3D_.unknown_4_);
-        if (var2 != NULL && (*(unsigned int*)((char*)var2 + Enum_ov025_021e1f40_396) & 1)) {
+    if (party) {
+        GameState* gs = GameState::GetInstance();
+        GameObject* c = GetCombatantWithFlag0x100_0200ff1c(gs, obj->obj3D_.actorIndex_);
+        if (c != NULL && (*(unsigned int*)((char*)c + regionalOffset0) & 1)) {
             return 0;
         }
     }

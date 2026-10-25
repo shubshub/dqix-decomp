@@ -6,10 +6,10 @@ extern "C" void func_ov002_0215be00(void *arg0, int arg1, int arg2, int arg3);
 extern "C" void func_ov002_0215c988(void *arg0, void *arg1, int arg2);
 #if defined(jpn)
 #define RG(u, j) (j)
-extern "C" void func_0205d304(void *arg0, void *arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6);
 #else
 #define RG(u, j) (u)
-extern "C" void func_0205d304(void *arg0, void *arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
 struct Struct_ov002_0215c8a4 {
@@ -38,8 +38,8 @@ extern "C" ARM void func_ov002_0215c8a4(char *arg0) {
     func_ov002_0215c988(arg0, ((struct Struct_ov002_0215c8a4 *) (arg0 + 0x1000))->unknown_bd0_, 0);
 
 #if defined(jpn)
-    func_0205d304(arg0 + 0xe20, ((struct Struct_ov002_0215c8a4 *) (arg0 + 0x1000))->unknown_bd0_, 0, 0, var1, 1, 0);
+    Window_OpenPane(base + 0xe20, ((struct BufOv0215c8a4 *) (base + 0x1000))->buf, 0, 0, flag, 1, 0);
 #else
-    func_0205d304(arg0 + 0xec8, ((struct Struct_ov002_0215c8a4 *) (arg0 + 0x1000))->unknown_bd0_, 0, 0, var1, 1, 0, 0);
+    Window_OpenPane(base + 0xec8, ((struct BufOv0215c8a4 *) (base + 0x1000))->buf, 0, 0, flag, 1, 0, 0);
 #endif
 }

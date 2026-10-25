@@ -12,8 +12,8 @@ void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 ARM void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 #endif
 
-int Camera_EasePositionTo(char* obj, int a, int b);
-void Camera_EaseTargetTo(char* obj, int a, int b);
+int Camera_EasePositionTo(struct Camera* obj, int a, int b);
+void Camera_EaseTargetTo(struct Camera* obj, int a, int b);
 
 extern Vector3fix CharacterCreationUI_faceTabCameraPosition;
 extern Vector3fix CharacterCreationUI_faceTabCameraTarget;
@@ -32,8 +32,8 @@ extern "C" ARM void CharacterCreationUI_HandleFace(CharacterCreationUI* self) {
 
         Vector3fix position = CharacterCreationUI_faceTabCameraPosition;
         Vector3fix target = CharacterCreationUI_faceTabCameraTarget;
-        Camera_EasePositionTo((char*)self->camera, (int)&position, CreationCamera_EaseSteps);
-        Camera_EaseTargetTo((char*)self->camera, (int)&target, CreationCamera_EaseSteps);
+        Camera_EasePositionTo((struct Camera*)self->camera, (int)&position, CreationCamera_EaseSteps);
+        Camera_EaseTargetTo((struct Camera*)self->camera, (int)&target, CreationCamera_EaseSteps);
 
         self->flags |= CreationFlag_StylusRotation;
         self->step = self->step + 1;
@@ -77,7 +77,7 @@ extern "C" ARM void CharacterCreationUI_HandleFace(CharacterCreationUI* self) {
     if (leavingTab != 0) {
         Vector3fix position = CharacterCreationUI_faceTabExitCameraPosition;
         Vector3fix target = CharacterCreationUI_faceTabExitCameraTarget;
-        Camera_EasePositionTo((char*)self->camera, (int)&position, CreationCamera_EaseSteps);
-        Camera_EaseTargetTo((char*)self->camera, (int)&target, CreationCamera_EaseSteps);
+        Camera_EasePositionTo((struct Camera*)self->camera, (int)&position, CreationCamera_EaseSteps);
+        Camera_EaseTargetTo((struct Camera*)self->camera, (int)&target, CreationCamera_EaseSteps);
     }
 }

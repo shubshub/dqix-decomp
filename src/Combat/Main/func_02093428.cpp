@@ -4,21 +4,21 @@
 struct Struct_02011b24;
 struct Struct_02093428_5;
 
-extern "C" void func_02012fe4();
+extern "C" void Zone3D_GetInstance();
 extern "C" int func_020457e0(char* g);
 extern "C" void func_020531f0(GameObject* c);
-extern "C" void func_02043124(char* g);
+extern "C" void MessageSystem_Stop(char* g);
 extern "C" void func_020945ac(struct Ctx0209459c* ctx);
 void ClearSubstructBytes_0200fb40(void* obj);
-void ReinitController02043204(char* obj);
+void MessageSystem_Reset(char* obj);
 void ResetAndEnableFieldFlag_02011b24(struct FieldFlagBlock* obj);
 void ClearFieldKeepBit0x10_02011af0(void* obj);
 void InitAndInsertNode_021acd30(char* self, unsigned char a, unsigned char b, unsigned char c);
 void EnqueueEventTag57WithAB_021cf4b0(int a, int b);
 void EnqueueEventTag173_021d1810(int, int, signed char);
-int GetField0x3acValue_020100a8(GameState* gs);
+int GameState_GetProtagonistIndex(GameState* gs);
 int* GetGlobal02109030_020936f8(void);
-char* GetGlobalField0x1c020421a0(void);
+char* MessageSystem_GetInstance(void);
 int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
 
 struct Struct_02093428_6 {
@@ -68,20 +68,20 @@ struct Struct_02093428_4 {
 };
 
 // USA: func_02093428
-extern "C" ARM void func_02093428(struct Struct_02093428_6* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = func_020421a0();
-    func_02012fe4();
-    unsigned char var2 = func_020100a8(var0);
-    unsigned char var3 = arg0->unknown_35_;
+extern "C" ARM void func_02093428(struct BattlePhaseState02093428* s) {
+    GameState* bs = GameState::GetInstance();
+    char* gf = MessageSystem_GetInstance();
+    Zone3D_GetInstance();
+    unsigned char v = GameState_GetProtagonistIndex(bs);
+    unsigned char state = s->field35;
 
-    if (var3 == 0) {
-        struct Struct_02093428* var4 = (struct Struct_02093428*)func_02010828(var0);
-        unsigned char var5 = var4->unknown_f7c_;
-        for (unsigned char var6 = 0; var6 < var5; var6++) {
-            GameObject* var7 = func_0200ff1c(var0, var4->unknown_f78_[var6]);
-            if (var7 != 0 && func_020535c8((signed char*)var7) != 0) {
-                func_020531f0(var7);
+    if (state == 0) {
+        struct CombatantIndexList02093428* list = (struct CombatantIndexList02093428*)GameState_GetParty(bs);
+        unsigned char count = list->count;
+        for (unsigned char i = 0; i < count; i++) {
+            GameObject* c = GetCombatantWithFlag0x100_0200ff1c(bs, list->entries[i]);
+            if (c != 0 && CheckSubstructByte0x7cPositive_020535c8((signed char*)c) != 0) {
+                func_020531f0(c);
             }
         }
         arg0->unknown_30_ = 10;
@@ -100,11 +100,11 @@ extern "C" ARM void func_02093428(struct Struct_02093428_6* arg0) {
             arg0->unknown_35_++;
             return;
         }
-        if (var8 != 1) return;
-        arg0->unknown_30_ = 3;
-        arg0->unknown_35_ = 4;
-        func_ov017_021cf4b0(var2, 3);
-        func_ov017_021d1810(10000, -1, (signed char)func_020100a8(var0));
+        if (r != 1) return;
+        s->field30 = 3;
+        s->field35 = 4;
+        EnqueueEventTag57WithAB_021cf4b0(v, 3);
+        EnqueueEventTag173_021d1810(10000, -1, (signed char)GameState_GetProtagonistIndex(bs));
         return;
     }
 
@@ -140,13 +140,13 @@ extern "C" ARM void func_02093428(struct Struct_02093428_6* arg0) {
         return;
     }
 
-    if (var3 == 3) {
-        func_02043204(var1);
-        func_02043124(var1);
-        func_020945ac((struct Struct_02093428_5*)func_020936f8());
-        arg0->unknown_34_ = 4;
-        arg0->unknown_35_ = 0;
-        func_0200fb40(var0);
+    if (state == 3) {
+        MessageSystem_Reset(gf);
+        MessageSystem_Stop(gf);
+        func_020945ac((struct Ctx0209459c*)GetGlobal02109030_020936f8());
+        s->field34 = 4;
+        s->field35 = 0;
+        ClearSubstructBytes_0200fb40(bs);
         return;
     }
 

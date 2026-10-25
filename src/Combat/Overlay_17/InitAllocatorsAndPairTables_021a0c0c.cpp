@@ -2,12 +2,12 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
-ARM void RestorePairTableFromBuffer_020bb740(int* out);
-ARM void WriteGlobalPair020bb92c(int* src);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+ARM void NNS_GfdSetFrmTexVramState(int* out);
+ARM void NNS_GfdSetFrmPlttVramState(int* src);
 extern "C" void VramState_Reserve(void* p, int a, int b);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 struct PairEntry021d6830 { int v; int pad; };
 extern struct PairEntry021d6830 data_ov017_021d6830[];
@@ -35,19 +35,19 @@ extern "C" ARM void func_ov017_021a0c0c(char* self) {
 
     int size;
     for (i = 0; (size = data_ov017_021d6834[i].v) != 0; i++) {
-        void* p = AllocateAligned4_02012d88(&data_02114e20, size);
+        void* p = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
         SafeAllocator* alloc = (SafeAllocator*)(self + 0x38 + data_ov017_021d6830[i].v * 0x14);
         alloc->CreateTypeA(p, size);
     }
 
-    RestorePairTableFromBuffer_020bb740((int*)(self + PairBufferOffset));
-    WriteGlobalPair020bb92c((int*)(self + GlobalPairOffset));
+    NNS_GfdSetFrmTexVramState((int*)(self + PairBufferOffset));
+    NNS_GfdSetFrmPlttVramState((int*)(self + GlobalPairOffset));
 
     for (i = 0; data_ov017_021d66fc[i].v != 0; i++) {
         VramState_Reserve(self + EntryBaseOffset + data_ov017_021d66f8[i].v * 0x70, data_ov017_021d66fc[i].v, data_ov017_021d6700[i].v);
     }
 
-    RestorePairTableFromBuffer_020bb740((int*)(self + SecondPairBufferOffset));
+    NNS_GfdSetFrmTexVramState((int*)(self + SecondPairBufferOffset));
 
     for (i = 0; data_ov017_021d6744[i].v != 0; i++) {
         VramState_Reserve(self + EntryBaseOffset + data_ov017_021d6740[i].v * 0x70, data_ov017_021d6744[i].v, data_ov017_021d6748[i].v);

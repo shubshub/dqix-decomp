@@ -2,8 +2,8 @@
 #include "Graphics/LightingManager.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" void func_ov001_021601f8(void* arg0, void* arg1);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_ov001_021601f8(void* a, void* b);
 
 struct Struct_ov001_02165880_42 {
     int unknown_0_;
@@ -40,18 +40,18 @@ struct Struct_ov001_02160504_3 { char unknown_0_[0x94]; int unknown_94_; int unk
 
 // USA: func_ov001_02160504
 extern "C" ARM int func_ov001_02160504(void) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov001_02160504_2* var1 = (Struct_ov001_02160504_2*)func_02012fe4();
-    Struct_ov001_02160504_3* var2 = (Struct_ov001_02160504_3*)LightingManager::GetInstance();
-    if (var1->unknown_834_ != 0) return 1;
-    int var3 = var0->GetTimeOfDay();
-    var2->unknown_98_ = var3;
-    if (!(data_ov001_02165880.unknown_c_ & 1)) {
-        data_ov001_02164d14.unknown_20_ = data_ov001_02165880.unknown_0_;
-        data_ov001_02164d14.unknown_24_ = data_ov001_02165880.unknown_10_;
-        data_ov001_02164d14.unknown_28_ = data_ov001_02165880.unknown_30_;
-        data_ov001_02164d14.unknown_2c_ = data_ov001_02165880.unknown_2c_;
-        data_ov001_02165880.unknown_c_ |= 1;
+    GameState* battle = GameState::GetInstance();
+    Big02160504* big = (Big02160504*)Zone3D_GetInstance();
+    DataStruct02160504* d = (DataStruct02160504*)LightingManager::GetInstance();
+    if (big->field834 != 0) return 1;
+    int idx = battle->GetTimeOfDay();
+    d->field98 = idx;
+    if (!(data_ov001_02165880.flag & 1)) {
+        data_ov001_02164d14.f20 = data_ov001_02165880.field0;
+        data_ov001_02164d14.f24 = data_ov001_02165880.field10;
+        data_ov001_02164d14.f28 = data_ov001_02165880.field30;
+        data_ov001_02164d14.f2c = data_ov001_02165880.field2c;
+        data_ov001_02165880.flag |= 1;
     }
     var2->unknown_94_ = data_ov001_02164d34[var3];
     if (var1->unknown_410_ == 1) {

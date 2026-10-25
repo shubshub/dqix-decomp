@@ -2,9 +2,6 @@
 #include <std_library_functions.h>
 #include "Memory/SafeAllocator.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov014_02188d48 {
     unsigned short unknown_0_;
@@ -40,18 +37,18 @@ struct Struct_ov014_02188bfc : public Struct_ov014_02188d48_3 {
 struct Struct_ov014_02188d48_4;
 struct Struct_0201bb78;
 
-extern "C" unsigned int func_ov014_0218934c(Struct_ov014_02188d48_3* arg0);
-extern "C" bool func_ov014_02188b20(Struct_ov014_02188d48_3* arg0, bool arg1);
-extern "C" void func_ov014_02189244(Struct_ov014_02188d48_4* arg0, Struct_ov014_02188d48_4* arg1, char* arg2, int arg3);
-extern "C" int func_ov014_02188b18(Struct_ov014_02188d48* arg0);
-extern "C" Struct_ov014_02188d48* func_ov014_021892d4(Struct_ov014_02188d48_3* arg0, int arg1, int (*arg2)(Struct_ov014_02188d48* entry));
-extern "C" char* func_ov014_02188ba0(Struct_ov014_02188d48_3* arg0, char* arg1, char* arg2);
-extern "C" char* func_0205ec34();
-extern "C" bool func_0206dfb0(int, unsigned char*, int arg2);
-extern "C" void* func_02012fe4();
-extern "C" char* func_020da150(SafeAllocator* arg0, const char* arg1);
-extern "C" bool func_0201b588(int arg0);
-extern "C" bool func_0201bb78(Struct_0201bb78* arg0, unsigned int arg1);
+extern "C" unsigned int func_ov014_0218934c(NatTable* table);
+extern "C" bool func_ov014_02188b20(NatTable* table, bool alreadyRelocated);
+void InitEntryFromSource_02189244(S02189244* table, S02189244* file, char* alreadyRelocated, int func);
+extern "C" int func_ov014_02188b18(NatEntry* entry);
+extern "C" NatEntry* func_ov014_021892d4(NatTable* table, int key, int (*getKey)(NatEntry* entry));
+extern "C" char* func_ov014_02188ba0(NatTable* table, char* pointer, char* defaultValue);
+extern "C" char* Scenario_GetInstance();
+bool Scenario_TestFlag(int, unsigned char*, int flag);
+extern "C" void* Zone3D_GetInstance();
+char* AllocateStringCopy020da150(SafeAllocator* allocator, const char* string);
+bool IsInRange0201b588(int zoneID);
+bool LookupBitFromValueRange0201bb78(Obj_0201bb78* zoneStruct, unsigned int zoneID);
 
 // USA: func_ov014_02188d48
 extern "C" ARM bool func_ov014_02188d48(Struct_ov014_02188bfc* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3, short arg4) {
@@ -103,9 +100,9 @@ extern "C" ARM bool func_ov014_02188d48(Struct_ov014_02188bfc* arg0, SafeAllocat
             Struct_ov014_02188d48_3 var15;
             char* var16;
 
-            var5 = func_0205ec34();
-            var6 = func_0206dfb0((int)var5, (unsigned char*)(var5 + 0x8c), 0x79d) != false;
-            var7 = func_02012fe4();
+            flags = Scenario_GetInstance();
+            grottosKnown = Scenario_TestFlag((int)flags, (unsigned char*)(flags + 0x8c), 0x79d) != false;
+            zoneStruct = Zone3D_GetInstance();
 
             var8 = (Struct_ov014_02188d48_2*)(var2.unknown_c_ + var2.unknown_0_);
             var9 = (unsigned short*)(var8 + var2.unknown_2_);

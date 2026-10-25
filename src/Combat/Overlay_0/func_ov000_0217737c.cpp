@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov000_02174da4(int arg0, void* arg1);
-extern "C" int func_ov000_0217542c(void* arg0);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
+void* CopyStaticData02174da4(int unused, void* dest);
+int IsField0x118Equal2_ov000_0217542c(void* obj);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+int Text_Append(char* dst, const char* src);
+int Text_AppendNTag(char* dst, int n, const char* name);
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
-int CallFunc020e0434With02153694_020e51cc(int value);
+int StandardStrings_Get(int value);
 
 extern short data_ov000_021834c4[4];
 
@@ -36,26 +36,26 @@ extern "C" ARM void func_ov000_0217737c(void* arg0, char* arg1) {
 #if !defined(jpn)
     int var4 = 0;
 #endif
-    if (func_ov000_0217542c(var0)) {
-        func_02041c08(arg1, var3, 8, 5, 5, 5);
+    if (IsField0x118Equal2_ov000_0217542c(obj)) {
+        Text_AppendFrameTag(dst, cursorId, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var3);
-    int var5 = 0;
-    for (int var6 = 0; var6 < 4; var6++) {
-        int var7 = var1[var6];
-        if (var7 < 0) {
+    Text_AppendCursorTag(dst, cursorId);
+    int keyArg = 0;
+    for (int i = 0; i < 4; i++) {
+        int v = localArr[i];
+        if (v < 0) {
             continue;
         }
         if (nameIdx != 0) {
             int f = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), keyArg);
-            AppendString02042058(dst, (const char*)f);
+            Text_Append(dst, (const char*)f);
         }
 #if defined(jpn)
         char* var9 = var2.unknown_0_[var7];
 #else
-        int var9 = func_020e51cc(data_ov000_021834c4[var7]);
+        int r = StandardStrings_Get(data_ov000_021834c4[v]);
 #endif
-        func_02041b70(arg1, var4, (const char*)var9);
-        var4++;
+        Text_AppendNTag(dst, nameIdx, (const char*)r);
+        nameIdx++;
     }
 }

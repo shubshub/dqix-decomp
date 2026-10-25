@@ -44,10 +44,10 @@ extern "C" void Window_Update(void* window);
 extern "C" void func_ov005_021589f4(EquipmentMenu* self);
 extern "C" int func_ov005_02158b3c(void* object, void* buffer);
 MenuElement* FindElementByC40205d81c(Struct_0205d81c* s, int key);
-int IsField0x9cEqual3_0204c7cc(unsigned char*);
+int WindowPane_IsReady(unsigned char*);
 int CheckFlag30Or401_02157190(void* self);
 void SePlayer_Play(SePlayer* sound, int effect, int unk);
-void ResetEntryList0205d6a0(Entry_0205d6a0* window, int unk);
+void Window_ClosePane(Entry_0205d6a0* window, int unk);
 // USA: func_ov005_02158878
 extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
     Window_Update(&self->window_);
@@ -56,10 +56,10 @@ extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
         self->step_++;
         return;
     }
-    if (arg0->unknown_3dd0_ == 1) {
-        if (func_0204c7cc((unsigned char*)(func_0205d81c((Struct_0205d81c*)&arg0->unknown_ee4_, 0)))) {
-            if (arg0->unknown_3dd1_ == 0xc || arg0->unknown_3dd1_ == 0xd)
-                arg0->unknown_3dcc_ |= 0x10000;
+    if (self->step_ == 1) {
+        if (WindowPane_IsReady((unsigned char*)(FindElementByC40205d81c((Struct_0205d81c*)&self->window_, 0)))) {
+            if (self->kind_ == 0xc || self->kind_ == 0xd)
+                self->flags_ |= 0x10000;
         }
         arg0->unknown_3dd0_++;
         return;
@@ -79,9 +79,9 @@ extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
             memset(self->text_, clear, LOW_REGION(0x800, 0x960));
             func_ov005_02158b3c(self, self->text_);
 #if defined(jpn)
-            func_0205d5d0((Struct_0205d5d0*)&arg0->unknown_ee4_, var0, (int)arg0->unknown_e10_, 1);
+            Window_SetPaneText((StructA0205d5d0*)&self->window_, clear, (int)self->text_, 1);
 #else
-            func_0205d5d0((Struct_0205d5d0*)&arg0->unknown_ee4_, var0, (int)arg0->unknown_e10_, 1, var0);
+            Window_SetPaneText((StructA0205d5d0*)&self->window_, clear, (int)self->text_, 1, clear);
 #endif
             return;
         }
@@ -89,9 +89,9 @@ extern "C" ARM void func_ov005_02158878(EquipmentMenu* self) {
     } else if (g_keyManager.TestKeysPressed(2)) {
         var0 = 1;
     }
-    if (var0) {
-        func_0205d6a0((Struct_0205d6a0*)&arg0->unknown_ee4_, 0);
-        arg0->unknown_3dd0_ = 0;
-        arg0->unknown_3dd1_ = 0;
+    if (clear) {
+        Window_ClosePane((Entry_0205d6a0*)&self->window_, 0);
+        self->step_ = 0;
+        self->kind_ = 0;
     }
 }

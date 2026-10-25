@@ -23,18 +23,18 @@ struct Struct_ov031_022439d8 {
 };
 
 extern SafeAllocator data_ov031_02291e3c;
-extern "C" void func_ov023_021f5b9c(void* arg0, void* arg1, int arg2, void* arg3);
-extern "C" void func_020397c0(void* arg0);
-extern "C" Struct_02038598_4* func_020d6c00(void);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
+extern "C" void func_ov023_021f5b9c(void* a, void* b, int c, void* d);
+void GameObject_EnableControl(void* p);
+FlagWord020466f4* GlobalFlags_GetInstance(void);
+void FlagWord_ClearBits(FlagWord020466f4* p, unsigned int flags);
 
 // USA: func_ov031_022439d8
-extern "C" ARM int func_ov031_022439d8(Struct_ov031_022439d8* arg0) {
-	void* var0 = GetGameResources();
-	BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-	GameObject* var2 = GameState::GetInstance()->GetUnknownGameObject();
-	if (var2 != 0) {
-		func_020397c0(var2);
+extern "C" ARM int func_ov031_022439d8(Struct022439d8* ctx) {
+	void* base = GetGameResources();
+	BackgroundLoader* loader = BackgroundLoader::GetInstance();
+	GameObject* obj = GameState::GetInstance()->GetUnknownGameObject();
+	if (obj != 0) {
+		GameObject_EnableControl(obj);
 	}
 #if defined(jpn)
 	*(int*)((char*)var0 + 0x41e4) = 0;
@@ -74,8 +74,8 @@ extern "C" ARM int func_ov031_022439d8(Struct_ov031_022439d8* arg0) {
 			arg0->unknown_28_->Free(var3);
 		}
 	}
-	if ((arg0->unknown_374_ & 0x20) == 0) {
-		func_020466f4(func_020d6c00(), 0x80);
+	if ((ctx->f374 & 0x20) == 0) {
+		FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x80);
 	}
 	arg0->unknown_30_ = 1;
 	return 2;

@@ -77,71 +77,71 @@ struct Struct_ov000_0215440c_6 {
     unsigned char unknown_f_[9];
 };
 
-extern "C" int func_020100a8(GameState*);
-extern "C" Struct_ov026_021d8ba0_6* func_ov026_021dae60(Struct_ov026_021d8ba0_4*, int);
-extern "C" Struct_ov023_021f4c04* func_020421a0();
-extern "C" void* func_0202ae24();
-extern "C" void* func_020d6c00();
-extern "C" unsigned char* func_020e3580();
-extern "C" int func_ov000_0215fc60(char*);
-extern "C" void func_ov000_02160d80(void*, int);
-extern "C" void func_ov000_02160fa8(void*, int);
-extern "C" void func_ov000_02160fbc(void*, int);
-extern "C" int func_ov000_02160fd4(void*, int);
-extern "C" void func_ov000_0218173c(void*);
-extern "C" int func_02012060(void*);
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_020a36a8(Struct_020a36a8*);
-extern "C" void func_ov000_0215e8e8(void*);
-extern "C" void func_0209a338(Struct_0200f3a4_8*);
-extern "C" void func_0209a470(Struct_0209a470*, SafeAllocator*, Struct_02013fb4*, int);
-extern "C" void func_0209a804(int*);
-extern "C" void func_0209a8b4(Struct_02086f24_6*, SafeAllocator*, Struct_02013fb4*, int);
-extern "C" void func_0205eb80(void*);
-extern "C" int func_0204671c(Struct_0204671c*);
-extern "C" void func_ov000_02180b3c(void*);
-extern "C" Struct_ov026_021d8ba0_8* func_ov000_0216f208(void*);
-extern "C" void func_ov000_0216118c(void*, int);
-extern "C" void func_ov000_02163710(void*, int);
-extern "C" void func_ov000_02167e6c(unsigned char*);
-extern "C" Struct_020d6ec8* func_ov000_02163524(void*);
-extern "C" void func_020d6f44(Struct_020d6ec8*);
-extern "C" void func_020d738c(void*);
-extern "C" void func_ov000_02163a7c(Struct_ov000_02163a7c*);
-extern "C" int func_020493a4(unsigned char*);
-extern "C" void func_02049390(unsigned char*, unsigned char);
-extern "C" void func_02049bd4(unsigned char*, int*);
-extern "C" void func_02043204(char*);
-extern "C" void func_ov000_02174dc0(void*);
-extern "C" GameObject* func_0200fea4(GameState*, int);
-extern "C" char* func_0200ff58(GameState*, int);
-extern "C" int func_02010088(Struct_02010088*);
-extern "C" int func_ov026_021dd3c4(Struct_ov026_021d8ba0_10*);
-extern "C" void func_0203c108(Struct_0203c108_3*, char*);
-extern "C" void func_ov000_021744f4(int, void*);
-extern "C" void func_ov000_02176054(void*);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" void* func_02053dc0(Struct_02053dc0*);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_ov000_02181364(void*);
-extern "C" void func_ov000_021816e8(void*, int);
-extern "C" void func_ov000_02181694(void*, int);
-extern "C" void func_ov000_0217f5d0(void*);
-extern "C" void func_0207dfc8(Struct_02015ef4_5*, Struct_02015ef4_5*);
-extern "C" void func_ov017_021ca174(unsigned short);
-extern "C" Struct_020e385c* func_020e3808();
-extern "C" int func_020e3ad0(Struct_020e385c*, int, int);
-extern "C" unsigned char* func_020e385c(Struct_020e385c*, int, int);
-extern "C" void func_020e3994(Struct_020e385c*, int, int);
+int GameState_GetProtagonistIndex(GameState*);
+SlotWork* FindSlotById_021dae60(Container_021dae60*, int);
+MessageWork* MessageSystem_GetInstance();
+void* GetData02100044_0202ae24();
+void* GlobalFlags_GetInstance();
+unsigned char* GetData02153634_020e3580();
+int ClassifyField0x81fe_ov000_0215fc60(char*);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
+void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void*, int);
+int GetCombatWorkFlags0x55f4_ov000_02160fd4(void*, int);
+void MarkSlots0218173c(void*);
+int GetByte0x63d5_02012060(void*);
+int CheckField0NonZero_0202b7d8(int*);
+int MatchesActiveIndex020a36a8(Combatant020A36A8*);
+void InitOverlay17Sub0215e8e8(void*);
+void ClearFirstTwoWords0209a338(Pair0209a338*);
+void SetupAndRunBufferedScript0209a470(Ctx0209a470*, SafeAllocator*, StreamHeader*, int);
+void ClearField00209a804(int*);
+void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4*, SafeAllocator*, StreamHeader*, int);
+void SePlayer_UnloadExtraArchiveA(void*);
+int GetField0x0(S0204671c*);
+void ResetField0x930And0x934_ov000_02180b3c(void*);
+ViewInfo* GetPtrField612_0216f208(void*);
+void InitCombatantPosition_0216118c(void*, int);
+void ClearFlagIfParityMismatch02163710_02163710(void*, int);
+void RunFlaglearAndSetMode02167e6c_02167e6c(unsigned char*);
+Container020d6f44* GetField02163524(void*);
+void ResetEntryManager020d6f44(Container020d6f44*);
+void ProcessCombatantReactions020d738c(void*);
+void ApplyField41ToGatheredCombatants02163a7c(GatherObj02163a7c*);
+int GetSubstructByte0x1c_020493a4(unsigned char*);
+void SetSubstructByte0x1c_02049390(unsigned char*, unsigned char);
+void SetSubstructFields0x10And0x18ClearFlag0x1_02049bd4(unsigned char*, int*);
+void MessageSystem_Reset(char*);
+void ReleaseEntriesTwoGroups02174dc0(void*);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+char* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
+int IsFlag10088Set_02010088(S_10088*);
+int IsFlagBit8192Set_021dd3c4(FlagObj_021dd3c4*);
+void SwapGlobalEntry0203c108(Obj0203c108*, char*);
+void SetStoredWorkPtr_ov000_021744f4(int, void*);
+void ClearFlag0x43e02176054(void*);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+void* GetField0x19cOrNull(S02053dc0*);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void Process02181364(void*);
+void ClearFlag_021816e8_021816e8(void*, int);
+void SetFlag_02181694_02181694(void*, int);
+void ClearByteField_0217f5d0_0217f5d0(void*);
+void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
+void EnqueueEventTag89_021ca174(unsigned short);
+TagValueEntry020e385c* GetData02153660_020e3808();
+int IsEntryCompleteOrMissing020e3ad0(TagValueEntry020e385c*, int, int);
+unsigned char* FindEntryByTagAndValue(TagValueEntry020e385c*, int, int);
+void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
 void SetBrightness(GameResources*, int, int);
 int IsField0Null_02046b08(void**);
 void UpdateFieldIfDiffers_02174514_02174514(void*);
 void ClearFlag0x1000AndBytes7eA1_02088e64(unsigned char*);
 void* KeyTable_Get(Container020e0310*, int);
-void SetIndexedName02046574(Obj02046574*, int, char*);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 int TestFlags02046708(FlagWord02046708*, unsigned int);
-void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
-void ClearFlags020466f4(FlagWord020466f4*, unsigned int);
+void FlagWord_SetBits(unsigned int*, unsigned int);
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 int GetByte2IfGlobalFlagSet_020e37e8(unsigned char*);
 void ClearBitOrNotifyOverlay020e3798(unsigned char*);
 void SetBitOrNotifyOverlay020e36f0(unsigned char*);
@@ -150,7 +150,7 @@ void SetBoundedArrayField0x4f4_ov000_02162c90(char*, int, int);
 int TestBitBySignedByteIndex_0202c1c0(SearchStruct*, int);
 int GetByteField_02168720_02168720(char*);
 void ClearSlotBitndSetByte_021813d4(void*);
-void SetForwardAndStore0205eb54(void*, int, int);
+void SePlayer_LoadExtraArchiveA(void*, int, int);
 void DispatchIfField0xc4NonNeg_0205eb90(void*, int, int);
 void EnqueueEventTag108_021cefe0(unsigned short, unsigned char, unsigned char);
 void EnqueueEventTag109_021cf650(unsigned short, int, int);
@@ -163,21 +163,21 @@ int* func_0202ae18();
 void func_ov026_021d8aac( Struct_ov000_02160da0*, int arg1, int arg2);
 void func_ov000_02181608(void*);
 void func_ov000_0218048c(void*);
-void func_ov000_02162cbc( Struct_ov000_02160da0*);
-void func_ov000_021626a0( Struct_ov000_02160da0*, int, int);
-void func_ov000_021629ec( Struct_ov000_02160da0*);
-int func_ov000_0215e9fc(Struct_ov000_02161e30*, short*, int, int);
-int func_ov000_0215ec1c(Struct_ov000_02161e30*, short*, int, int);
-int func_ov000_0215eb1c(Struct_ov000_02161e30*, short*, int, int);
-Struct_ov026_021d8ba0_2 func_ov000_0216f74c(int* arg0);
-void func_02043124(Struct_ov023_021f4c04*);
-void func_ov026_021daec8(Struct_ov000_02161e30*, void*, int);
+void func_ov000_02162cbc( BattleWork*);
+void func_ov000_021626a0( BattleWork*, int, int);
+void func_ov000_021629ec( BattleWork*);
+int func_ov000_0215e9fc(BattleState*, short*, int, int);
+int func_ov000_0215ec1c(BattleState*, short*, int, int);
+int func_ov000_0215eb1c(BattleState*, short*, int, int);
+Pos2i func_ov000_0216f74c(int* cell);
+void MessageSystem_Stop(MessageWork*);
+void func_ov026_021daec8(BattleState*, void*, int);
 void func_ov000_02174614(void*, int);
 void func_020e4864(void*, char*, int, int, int, int);
 void __clear(void*, int);
-void func_02046608(Struct_ov023_021f4c04*, int, char*, char*, int, int, int);
-void func_ov000_0217f518(Struct_ov026_021d8ba0_6*);
-void func_ov000_02162c14( Struct_ov000_02160da0*, int, void*);
+void MessageSystem_FormatText(MessageWork*, int, char*, char*, int, int, int);
+void func_ov000_0217f518(SlotWork*);
+void func_ov000_02162c14( BattleWork*, int, void*);
 void func_ov000_0217fa60(void*);
 void func_ov000_02175258(void*);
 void func_ov000_02174c14(void*);
@@ -446,17 +446,17 @@ extern "C" ARM void func_ov026_021d8ba0(Struct_ov000_02160da0* arg0) {
     Struct_ov026_021d8ba0_7* var48;
     unsigned char var49;
 
-    var17 = GameState::GetInstance();
-    var18 = GetGameResources();
-    var22 = func_0202ae18();
-    var19 = arg0->unknown_29c_;
-    var20 = func_ov026_021dae60((Struct_ov026_021d8ba0_4*)arg0->unknown_3760_, func_020100a8(var17));
-    var21 = func_020421a0();
-    var23 = BackgroundLoader::GetInstance();
-    var24 = func_0202ae24();
-    var25 = func_020d6c00();
-    var47 = (void**)var18->unknown_ptr_array_36fc[2];
-    var26 = func_020e3580();
+    gs = GameState::GetInstance();
+    res = GetGameResources();
+    link = func_0202ae18();
+    battle = self->battle;
+    slot = FindSlotById_021dae60((Container_021dae60*)self->list, GameState_GetProtagonistIndex(gs));
+    ctrl = MessageSystem_GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    slots = GetData02100044_0202ae24();
+    flagWord = GlobalFlags_GetInstance();
+    field3704 = (void**)res->unknown_ptr_array_3700[1];
+    notify = GetData02153634_020e3580();
 
     if (var19 == 0 || var20 == 0) {
         return;
@@ -523,22 +523,22 @@ state1:
     if (self->state == 3) {
         int i;
         if (self->fadeActive != 0) {
-            ForwardField0xc0_0205eb80(&g_sePlayer);
+            SePlayer_UnloadExtraArchiveA(&g_sePlayer);
             self->fadeActive = 0;
         }
-        arg0->unknown_7734_ = arg0->unknown_55f4_;
-        arg0->unknown_7710_ = 0;
-        arg0->unknown_7738_ = func_0204671c((Struct_0204671c*)func_020d6c00());
-        arg0->unknown_eb4_ = 0;
-        func_ov000_02160fa8(arg0, 0x80000);
-        ClearFlags00(var18, 0x10);
-        func_ov000_0218048c(arg0->unknown_3760_);
-        func_ov000_02180b3c(arg0->unknown_3760_);
-        arg0->unknown_54e0_ = 0;
-        arg0->unknown_54e1_ = 0;
-        arg0->unknown_7712_ = 0;
-        arg0->unknown_7714_ = arg0->unknown_771e_ = arg0->unknown_7720_ = -1;
-        arg0->unknown_7722_ = arg0->unknown_7724_ = -1;
+        self->savedWorkFlags = self->workFlags;
+        self->fadeTimer = 0;
+        self->savedField = GetField0x0((S0204671c*)GlobalFlags_GetInstance());
+        self->cursorLock = 0;
+        SetCombatWorkFlags0x55f4_ov000_02160fa8(self, 0x80000);
+        ClearFlags00(res, 0x10);
+        func_ov000_0218048c(self->list);
+        ResetField0x930And0x934_ov000_02180b3c(self->list);
+        self->ready = 0;
+        self->readyPrev = 0;
+        self->phase = 0;
+        self->objId = self->objId771e = self->objId7720 = -1;
+        self->objId7722 = self->objId7724 = -1;
         {
             int var57;
             for (var57 = 0; var57 < 4; var57++) {
@@ -636,28 +636,28 @@ state1:
             }
         }
     shifted:
-        func_02043204((char*)var21);
-        func_02043124(var21);
-        func_ov026_021daec8(arg0->unknown_29c_, arg0->unknown_c18_, var49);
+        MessageSystem_Reset((char*)ctrl);
+        MessageSystem_Stop(ctrl);
+        func_ov026_021daec8(self->battle, self->view, autoMode);
         {
-            Struct_ov000_02161e30* var71 = arg0->unknown_29c_;
-            Struct_ov000_0215440c_6* var72;
-            int var73;
-            int var74;
-            var43 = GameState::GetInstance();
-            var42 = arg0->unknown_526c_;
-            var41 = arg0->unknown_53bc_;
-            var72 = var71->unknown_81b0_;
-            var40 = func_020421a0();
-            var74 = 0;
-            func_ov000_02174614(arg0->unknown_3760_, -1);
-            func_ov000_02174dc0(arg0->unknown_3760_);
-            var39 = 0;
-            for (var38 = 0; var38 < var72->unknown_1_4_; var38++) {
-                var37 = 0;
-                for (var73 = 0; var73 < var72[var38].unknown_e_0_; var73++) {
-                    var36 = func_0200fea4(var43, var72[var38].unknown_6_[var73] + 0xc0);
-                    if (var36 == 0 || func_02010088((Struct_02010088*)var36) || func_ov026_021dd3c4((Struct_ov026_021d8ba0_10*)var36)) {
+            BattleState* b2 = self->battle;
+            Group* groups;
+            int j;
+            int count;
+            gs3 = GameState::GetInstance();
+            ownerNames = self->ownerNames;
+            memberNames = self->memberNames;
+            groups = b2->groups;
+            ctrl2 = MessageSystem_GetInstance();
+            count = 0;
+            func_ov000_02174614(self->list, -1);
+            ReleaseEntriesTwoGroups02174dc0(self->list);
+            ownerCount = 0;
+            for (g = 0; g < groups->numGroups; g++) {
+                first = 0;
+                for (j = 0; j < groups[g].count; j++) {
+                    c = GetCombatantWithFlag0x400_0200fea4(gs3, groups[g].ids[j] + 0xc0);
+                    if (c == 0 || IsFlag10088Set_02010088((S_10088*)c) || IsFlagBit8192Set_021dd3c4((FlagObj_021dd3c4*)c)) {
                         continue;
                     }
                     var48 = *(Struct_ov026_021d8ba0_7**)((char*)var36 + 0x144);
@@ -665,22 +665,22 @@ state1:
                         continue;
                     }
                     {
-                        var3 = data_ov026_021de6f8;
-                        func_020e4864((char*)var36 + 0x14c, var3.unknown_0_ + 5, 1, 0, 0, 0);
-                        __clear(var2, sizeof(var2));
-                        func_02046608(var40, 0xa, var3.unknown_0_, var2, 0x100, 0, 0);
-                        func_0203c108((Struct_0203c108_3*)(var41 + var74 * 0x18), var2);
+                        fmt = data_ov026_021de6f8;
+                        func_020e4864((char*)c + 0x14c, fmt.s + 5, 1, 0, 0, 0);
+                        __clear(text, sizeof(text));
+                        MessageSystem_FormatText(ctrl2, 0xa, fmt.s, text, 0x100, 0, 0);
+                        SwapGlobalEntry0203c108((Obj0203c108*)(memberNames + count * 0x18), text);
                     }
-                    arg0->unknown_547c_[var74] = *((unsigned char*)var36 + 0x17c);
-                    arg0->unknown_549c_[var74] = var72[var38].unknown_6_[var73] + 0xc0;
-                    if (var37 == 0) {
-                        var37 = 1;
-                        var1 = data_ov026_021de778;
-                        func_020e4864(var48->unknown_14_, var1.unknown_0_ + 5, 1, 0, 0, 0);
-                        __clear(var0, sizeof(var0));
-                        func_02046608(var40, 0xa, var1.unknown_0_, var0, 0x100, 0, 0);
-                        func_0203c108((Struct_0203c108_3*)(var42 + var39 * 0x18), var0);
-                        var39++;
+                    self->memberRanks[count] = *((unsigned char*)c + 0x17c);
+                    self->memberIds[count] = groups[g].ids[j] + 0xc0;
+                    if (first == 0) {
+                        first = 1;
+                        fmt2 = data_ov026_021de778;
+                        func_020e4864(owner->name, fmt2.s + 5, 1, 0, 0, 0);
+                        __clear(text2, sizeof(text2));
+                        MessageSystem_FormatText(ctrl2, 0xa, fmt2.s, text2, 0x100, 0, 0);
+                        SwapGlobalEntry0203c108((Obj0203c108*)(ownerNames + ownerCount * 0x18), text2);
+                        ownerCount++;
                     }
                     var74++;
                 }
@@ -699,15 +699,15 @@ state1:
                 func_ov000_0217f518(var75);
             }
         }
-        func_ov000_02162c14(arg0, func_020100a8(var17), &arg0->unknown_54e4_);
-        func_ov000_0217fa60(arg0->unknown_3760_);
-        func_ov000_02176054(arg0->unknown_3760_);
-        func_ov000_02175258(arg0->unknown_3760_);
-        func_ov000_02174c14(arg0->unknown_3760_);
-        func_ov000_021814bc(arg0->unknown_3760_);
-        arg0->unknown_54d2_ &= ~0x600;
-        if (func_ov000_0215fc60((char*)var19) != 0) {
-            arg0->unknown_54d8_ = 1;
+        func_ov000_02162c14(self, GameState_GetProtagonistIndex(gs), &self->cmd);
+        func_ov000_0217fa60(self->list);
+        ClearFlag0x43e02176054(self->list);
+        func_ov000_02175258(self->list);
+        func_ov000_02174c14(self->list);
+        func_ov000_021814bc(self->list);
+        self->uiFlags &= ~0x600;
+        if (ClassifyField0x81fe_ov000_0215fc60((char*)battle) != 0) {
+            self->versusFlag = 1;
         }
         {
             Struct_ov000_0217e870_2* var76;
@@ -758,19 +758,19 @@ state1:
         if (func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_)) {
             func_ov000_02160fa8(arg0, 0x40000000);
         }
-        if (((SafeAllocator*)arg0->unknown_774c_)->GetSignedAllocator() == 0) {
-            ((SafeAllocator*)arg0->unknown_774c_)->CreateTypeA(((SafeAllocator*)(arg0->unknown_30_))->Allocate(0x16000), 0x16000);
-            func_0207dfc8((Struct_02015ef4_5*)(arg0->unknown_14c_), (Struct_02015ef4_5*)(arg0->unknown_7760_));
+        if (((SafeAllocator*)self->cmdAlloc)->GetSignedAllocator() == 0) {
+            ((SafeAllocator*)self->cmdAlloc)->CreateTypeA(((SafeAllocator*)(self->alloc))->Allocate(0x16000), 0x16000);
+            VramState_CopyCurrentTo((State0207dfc8*)(self->stateA), (State0207dfc8*)(self->stateB));
         }
         arg0->unknown_eac_ = 0xe;
         {
-            Struct_ov026_021d8ba0_5* var80 = (Struct_ov026_021d8ba0_5*)func_02010828(var17);
-            unsigned char var81;
-            for (var81 = 0; var81 < var80->unknown_f7c_; var81++) {
-                if (arg0->unknown_774a_ != 0) {
-                    Struct_ov026_021d8ba0_6* var82 = func_ov026_021dae60((Struct_ov026_021d8ba0_4*)arg0->unknown_3760_, var81);
-                    if (var82 != 0) {
-                        func_ov000_0217f518(var82);
+            Roster* roster = (Roster*)GameState_GetParty(gs);
+            unsigned char m;
+            for (m = 0; m < roster->count; m++) {
+                if (self->slotsDirty != 0) {
+                    SlotWork* s = FindSlotById_021dae60((Container_021dae60*)self->list, m);
+                    if (s != 0) {
+                        func_ov000_0217f518(s);
                     }
                 }
                 func_ov000_02162c14(arg0, var80->unknown_f78_[var81], &var5);
@@ -798,39 +798,39 @@ state1:
             func_ov017_021c847c();
         }
     }
-    if (arg0->unknown_eac_ == 0x11) {
-        int var85;
-        Struct_020e385c* var86;
-        var85 = var19->unknown_8e18_->unknown_c_ >= 0 ? 1 : 0;
-        var21->unknown_19af_ = 0;
-        var21->unknown_19ca_ = 0;
-        var86 = func_020e3808();
-        if (!var85 || (func_020e3ad0(var86, 1, -1) && var85)) {
-            unsigned char* var87 = func_020e385c(var86, 1, -1);
-            int var88 = 0;
-            int var89;
-            if (var87 != 0 && (var87[5] & (1 << func_020100a8(var17)))) {
-                var88 = 1;
+    if (self->state == 0x11) {
+        int online;
+        TagValueEntry020e385c* tags;
+        online = battle->netInfo->state >= 0 ? 1 : 0;
+        ctrl->flag19af = 0;
+        ctrl->flag19ca = 0;
+        tags = GetData02153660_020e3808();
+        if (!online || (IsEntryCompleteOrMissing020e3ad0(tags, 1, -1) && online)) {
+            unsigned char* entry = FindEntryByTagAndValue(tags, 1, -1);
+            int mine = 0;
+            int all;
+            if (entry != 0 && (entry[5] & (1 << GameState_GetProtagonistIndex(gs)))) {
+                mine = 1;
             }
             var89 = 0;
             if (var87 != 0 && (var87[5] & arg0->unknown_2a0_->unknown_34_) == var87[5]) {
                 var89 = 1;
             }
-            if (var89 || !var88 || !var87) {
-                func_02043204((char*)var21);
-                arg0->unknown_eac_ = 4;
-                func_020e3994(var86, 1, -1);
+            if (all || !mine || !entry) {
+                MessageSystem_Reset((char*)ctrl);
+                self->state = 4;
+                ResetTaggedEntryAndNotifyOverlay020e3994(tags, 1, -1);
                 return;
             }
         }
-        if (((POWCNT & 0x8000) >> 15) == 1 && (IsBrightnessOutsideValidRange((GameResources*)var18, false) || IsBrightnessOutsideValidRange((GameResources*)var18, true)) && arg0->unknown_7712_ == 0) {
-            SetBrightness(var18, 0, 0xf);
-            if (var21->unknown_998_ == 0) {
-                void* var90 = func_020421a0()->unknown_5c_;
-                memset(var90, 0, 0x960);
-                func_020dd0b0(0, var90);
-                func_0204500c(var21, var90, 0, 0xe3);
-                var21->unknown_998_ = 1;
+        if (((POWCNT & 0x8000) >> 15) == 1 && (IsBrightnessOutsideValidRange((GameResources*)res, false) || IsBrightnessOutsideValidRange((GameResources*)res, true)) && self->phase == 0) {
+            SetBrightness(res, 0, 0xf);
+            if (ctrl->busy == 0) {
+                void* work = MessageSystem_GetInstance()->scriptWork;
+                memset(work, 0, 0x960);
+                func_020dd0b0(0, work);
+                func_0204500c(ctrl, work, 0, 0xe3);
+                ctrl->busy = 1;
             }
         }
         if (func_ov026_021ddd84(var18, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, &arg0->unknown_7748_, 1) != 0) {
@@ -884,13 +884,13 @@ state1:
         }
     checked:
         if (revived) {
-            MessageWork* msg = GetGlobalField0x1c020421a0();
+            MessageWork* msg = MessageSystem_GetInstance();
             Container020e0310* box = self->GetMsgBox();
             GameObject* c = GetCombatantWithFlag0x400_0200fea4(gs, target);
             void* text = KeyTable_Get(box, 0x28);
             if (text != 0 && c != 0) {
                 func_02046380(msg);
-                SetIndexedName02046574((Obj02046574*)msg, 0, (char*)c + 0x14c);
+                MessageSystem_SetStringArgument((Obj02046574*)msg, 0, (char*)c + 0x14c);
                 func_020e4ce8(name, (char*)c, 1);
                 msg->namePtr = name;
                 func_0204500c(msg, text, 0, 0xe3);
@@ -910,8 +910,8 @@ state1:
                 if (var103 == 0 && var104 == 2) {
                     var105 = 0;
                 }
-                if (var105) {
-                    func_020466e4((unsigned int*)var25, 0x200);
+                if (set) {
+                    FlagWord_SetBits((unsigned int*)flagWord, 0x200);
                 }
             }
             if (func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_) && func_020e37e8(var26)) {
@@ -920,13 +920,13 @@ state1:
         }
         func_ov000_0216258c(arg0);
         {
-            int var106 = (signed char)func_020100a8(var17);
-            int var107 = 0;
-            int var108 = var107;
-            int var109 = var107;
-            if (func_0202b7d8(var22) && var19->unknown_8e20_ == 0 && arg0->unknown_29c_->unknown_8e49_ == 2) {
-                if (var21->unknown_998_ != 0) {
-                    var109 = 1;
+            int me = (signed char)GameState_GetProtagonistIndex(gs);
+            int redo = 0;
+            int changed = redo;
+            int locked = redo;
+            if (CheckField0NonZero_0202b7d8(link) && battle->turns == 0 && self->battle->kind == 2) {
+                if (ctrl->busy != 0) {
+                    locked = 1;
                 }
             }
             if (var109 == 0) {
@@ -970,27 +970,27 @@ state1:
                 if (var110 >= 0) {
                     var111 = var110 <= 3;
                 }
-                if (var111) {
-                    int var113;
-                    func_ov000_02162c14(arg0, var110, &var6);
-                    var113 = !(var6.unknown_0_[0] == arg0->unknown_54e4_.unknown_0_[0] && var6.unknown_0_[1] == arg0->unknown_54e4_.unknown_0_[1] && var6.unknown_0_[2] == arg0->unknown_54e4_.unknown_0_[2] &&
-                                var6.unknown_0_[3] == arg0->unknown_54e4_.unknown_0_[3] && var6.unknown_6_ == arg0->unknown_54e4_.unknown_6_ && var6.unknown_8_ == arg0->unknown_54e4_.unknown_8_ && var6.unknown_4_ == arg0->unknown_54e4_.unknown_4_);
-                    if (var113 || var108) {
-                        func_ov017_021c6814(arg0->unknown_2a0_->unknown_8_, arg0->unknown_54f0_, &var6, arg0->unknown_54f4_[var106], -1, 0);
-                        arg0->unknown_54e4_.unknown_0_[0] = var6.unknown_0_[0];
-                        arg0->unknown_54e4_.unknown_0_[1] = var6.unknown_0_[1];
-                        arg0->unknown_54e4_.unknown_0_[2] = var6.unknown_0_[2];
-                        arg0->unknown_54e4_.unknown_0_[3] = var6.unknown_0_[3];
-                        arg0->unknown_54e4_.unknown_4_ = var6.unknown_4_;
-                        arg0->unknown_54e4_.unknown_6_ = var6.unknown_6_;
-                        arg0->unknown_54e4_.unknown_8_ = var6.unknown_8_;
-                        if (func_0202c508(var22) != 0 && ((var6.unknown_0_[0] == 100 && var6.unknown_0_[1] == 6) || var6.unknown_0_[0] == 0xd)) {
-                            Struct_ov026_021d8ba0_5* var114 = (Struct_ov026_021d8ba0_5*)func_02010828(var17);
-                            int var115;
-                            for (var115 = 0; var115 < var114->unknown_f7c_; var115++) {
-                                if (arg0->unknown_54f0_ == var115) continue;
-                                func_ov000_02162c14(arg0, var114->unknown_f78_[var115], &var7);
-                                func_ov017_021c6814(arg0->unknown_2a0_->unknown_8_, var114->unknown_f78_[var115], &var7, arg0->unknown_54f4_[var106], -1, 0);
+                if (valid) {
+                    int differs;
+                    func_ov000_02162c14(self, cur, &cmdB);
+                    differs = !(cmdB.b[0] == self->cmd.b[0] && cmdB.b[1] == self->cmd.b[1] && cmdB.b[2] == self->cmd.b[2] &&
+                                cmdB.b[3] == self->cmd.b[3] && cmdB.d == self->cmd.d && cmdB.e == self->cmd.e && cmdB.c == self->cmd.c);
+                    if (differs || changed) {
+                        func_ov017_021c6814(self->party->netId, self->curSlot, &cmdB, self->slotDone[me], -1, 0);
+                        self->cmd.b[0] = cmdB.b[0];
+                        self->cmd.b[1] = cmdB.b[1];
+                        self->cmd.b[2] = cmdB.b[2];
+                        self->cmd.b[3] = cmdB.b[3];
+                        self->cmd.c = cmdB.c;
+                        self->cmd.d = cmdB.d;
+                        self->cmd.e = cmdB.e;
+                        if (func_0202c508(link) != 0 && ((cmdB.b[0] == 100 && cmdB.b[1] == 6) || cmdB.b[0] == 0xd)) {
+                            Roster* roster = (Roster*)GameState_GetParty(gs);
+                            int m;
+                            for (m = 0; m < roster->count; m++) {
+                                if (self->curSlot == m) continue;
+                                func_ov000_02162c14(self, roster->ids[m], &cmdC);
+                                func_ov017_021c6814(self->party->netId, roster->ids[m], &cmdC, self->slotDone[me], -1, 0);
                             }
                         }
                     }
@@ -1029,20 +1029,20 @@ state1:
                 func_ov000_0217457c(self->list, -1);
                 if (self->phase == -1) {
                     self->fadeTimer = 60;
-                    ForwardField0xc0_0205eb80(&g_sePlayer);
+                    SePlayer_UnloadExtraArchiveA(&g_sePlayer);
                     self->fadeActive = 0;
-                    SetForwardAndStore0205eb54(&g_sePlayer, 0x1b3, 0x1b3);
+                    SePlayer_LoadExtraArchiveA(&g_sePlayer, 0x1b3, 0x1b3);
                     DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
                     self->fadeActive = 1;
                 }
                 {
-                    Object3D* var116;
-                    int var117;
-                    for (var117 = 0; var117 < 4; var117++) {
-                        var116 = (Object3D*)var17->GetGameObjectByIndex(arg0->unknown_7716_[var117]);
-                        if (var116 != 0) {
-                            var116->StopCurrentAnimation();
-                            var116->MaybeSetRegularAnimation(data_ov026_021dedec, 1);
+                    Object3D* o;
+                    int i;
+                    for (i = 0; i < 4; i++) {
+                        o = (Object3D*)gs->GetGameObjectByIndex(self->objIds[i]);
+                        if (o != 0) {
+                            o->StopCurrentAnimation();
+                            o->SetAnimationByName(data_ov026_021dedec, 1);
                         }
                     }
                 }
@@ -1094,10 +1094,10 @@ state1:
         if (func_ov026_021ddd84(var18, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, &arg0->unknown_7748_, 0) != 0) {
             return;
         }
-        if (func_020e37e8(var26) != 0 || func_02046708((Struct_02012de8*)var25, 0x200) == 0) {
-            func_020466f4((Struct_02038598_4*)var25, 0x200);
-            if (func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_)) {
-                arg0->unknown_eac_ = 8;
+        if (GetByte2IfGlobalFlagSet_020e37e8(notify) != 0 || TestFlags02046708((FlagWord02046708*)flagWord, 0x200) == 0) {
+            FlagWord_ClearBits((FlagWord020466f4*)flagWord, 0x200);
+            if (MatchesActiveIndex020a36a8((Combatant020A36A8*)self->party)) {
+                self->state = 8;
             } else {
                 arg0->unknown_eac_ = 0xa;
             }
@@ -1172,7 +1172,7 @@ state1:
         ((SafeAllocator*)arg0->unknown_774c_)->Destroy();
         arg0->unknown_7749_ = 0;
         func_02057f00(func_02057924(), 0x13);
-        if (func_02046b08((void**)var18->unknown_ptr_array_36fc[1]) == 0) {
+        if (IsField0Null_02046b08((void**)res->unknown_ptr_array_3700[0]) == 0) {
             return;
         }
         SetFlags00(var18, 0x10);
@@ -1206,12 +1206,12 @@ state1:
                     func_02053dd0((Struct_02053dd0*)var134);
                 }
             }
-            var133 = (Struct_ov026_021d8ba0_5*)func_02010828(var17);
-            if (var133 != 0) {
-                for (var132 = 0; var132 < var133->unknown_f7c_; var132++) {
-                    GameObject* var135 = func_0200ff1c(var17, var133->unknown_f78_[var132]);
-                    if (var135 != 0 && func_02010088((Struct_02010088*)var135) == 0) {
-                        arg0->unknown_58ce_++;
+            roster = (Roster*)GameState_GetParty(gs);
+            if (roster != 0) {
+                for (r = 0; r < roster->count; r++) {
+                    GameObject* c = GetCombatantWithFlag0x100_0200ff1c(gs, roster->ids[r]);
+                    if (c != 0 && IsFlag10088Set_02010088((S_10088*)c) == 0) {
+                        self->reviveCount++;
                         break;
                     }
                 }
@@ -1245,7 +1245,7 @@ state1:
             arg0->unknown_eac_ = 0;
         }
     }
-    if (arg0->unknown_eac_ == 0xf && func_020421a0()->unknown_998_ == 0) {
-        arg0->unknown_eac_ = 4;
+    if (self->state == 0xf && MessageSystem_GetInstance()->busy == 0) {
+        self->state = 4;
     }
 }

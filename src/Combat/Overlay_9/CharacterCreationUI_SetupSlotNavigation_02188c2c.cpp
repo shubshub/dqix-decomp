@@ -3,21 +3,19 @@
 #include "Resource/GridCursor.h"
 #include "Resource/Keyboard.h"
 
-struct Struct_0205bef8;
-void GridCursor_Init(struct Struct_0205bef8* s);
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int columns, int rows, int mode);
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
-struct SelfBB04;
-extern "C" void GridCursor_SetSelectedIndex(struct SelfBB04* self, int value);
+// The struct tags stay: these functions' C++ symbols are mangled with them.
+struct GridCursor;
+void GridCursor_Init(struct GridCursor* cursor);
+void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order);
+void GridCursor_SetCount(struct GridCursor* cursor, int count);
+extern "C" void GridCursor_SetSelectedIndex(GridCursor* cursor, int index);
 
 // Overlay 9, originally func_ov009_02188c2c (USA/EUR 0x02188c2c, JPN 0x02189af0)
 extern "C" ARM void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self) {
     int columns, rows, count, pageCount, selected;
-    signed char id = self->state;
+    signed char tab = self->state;
 
-    switch (id) {
+    switch (tab) {
     case CreationTab_Gender:
         columns = 1;
         rows = 2;
@@ -94,11 +92,11 @@ extern "C" ARM void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*
         break;
     }
 
-    CreationNavigation* navigation = &self->navigation;
-    GridCursor_Init((struct Struct_0205bef8*)navigation);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)navigation, columns, rows, GridCursorOrder_RowMajor);
-    GridCursor_SetCount((struct Node0205bacc*)navigation, count);
+    GridCursor* navigation = &self->navigation;
+    GridCursor_Init((struct GridCursor*)navigation);
+    GridCursor_SetDimensions((struct GridCursor*)navigation, columns, rows, GridCursorOrder_RowMajor);
+    GridCursor_SetCount((struct GridCursor*)navigation, count);
     navigation->pageCount = pageCount;
-    GridCursor_SetSelectedIndex((struct SelfBB04*)navigation, selected);
+    GridCursor_SetSelectedIndex(navigation, selected);
     navigation->wrapRows = 0;
 }

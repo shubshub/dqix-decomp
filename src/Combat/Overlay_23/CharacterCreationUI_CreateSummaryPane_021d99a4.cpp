@@ -1,69 +1,64 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
+#include "NitroSDK/OSLanguage.h"
+#include "Resource/CharacterCreationUI.h"
 
 struct Struct0200fb08;
-unsigned char NormalizeField5_0200fb08(struct Struct0200fb08* obj);
+unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
 
-struct Container020e0310;
 extern int KeyTable_Get(struct Container020e0310*, int);
 
 #if defined(jpn)
-extern "C" void func_0205d304(void* a, void* b, int p2, int p3, int p4, int p5, int p6);
+extern "C" void Window_OpenPane(void* window, void* text, int mode, int border, int flagBit3, int fullWidth, int extraStyle);
 #else
-extern "C" void func_0205d304(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
+extern "C" void Window_OpenPane(void* window, void* text, int mode, int border, int flagBit3, int fullWidth, int extraStyle, int font);
 #endif
 
 
 // Overlay 23, originally func_ov023_021d99a4 (USA/EUR 0x021d99a4, JPN 0x021da1b4)
 extern "C" ARM void CharacterCreationUI_CreateSummaryPane(void* objRaw) {
+    CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
 #if defined(jpn)
- enum {regionalOffset0=0x1bc};
-#else
- enum {regionalOffset0=0x1f8};
-#endif
-    char* obj = (char*)objRaw;
-#if defined(jpn)
-    int fieldA4 = 0x18;
-
-#else
-    struct Struct0200fb08* bs = (struct Struct0200fb08*)GameState::GetInstance();
-    int fieldA4 = 0x18;
-    int norm = NormalizeField5_0200fb08(bs);
-    if (norm == 4) fieldA4 = 0x19;
-
-#endif
-#if defined(jpn)
-    char* tag = obj;
-    enum { tagBias=0x1bc };
-#else
-    char* tag = obj + regionalOffset0;
-    enum { tagBias=0 };
-#endif
-    *(unsigned short*)(tag + tagBias + 0xa0) = 7;
-    *(unsigned short*)(tag + tagBias + 0xa2) = 0x11;
-    *(unsigned short*)(tag + tagBias + 0xa4) = fieldA4;
-    *(unsigned short*)(tag + tagBias + 0xa6) = 5;
-    *(unsigned short*)(tag + tagBias + 0xa8) = 6;
-    *(unsigned short*)(tag + tagBias + 0xaa) = 6;
-    *(unsigned short*)(tag + tagBias + 0xac) = 0xa;
-    *(unsigned short*)(tag + tagBias + 0xae) = 0x10;
+    int layout2 = 0x18;
+    self->windows[0].paneWidth = 7;
+    self->windows[0].paneHeight = 0x11;
+    self->windows[0].unknownA4[0] = layout2;
+    self->windows[0].unknownA4[1] = 5;
+    self->windows[0].paneTextX = 6;
+    self->windows[0].unknownAa[0] = 6;
+    self->windows[0].unknownAa[1] = 0xa;
+    self->windows[0].unknownAa[2] = 0x10;
     unsigned char zero = 0;
-    tag[tagBias + 0xb1] = zero;
-    tag[tagBias + 0xb5] = 1;
-    tag[tagBias + 0xb6] = 1;
-#if defined(jpn)
-    memset(*(void**)(obj + 0xd8), zero, 0x800);
-    int fmt = KeyTable_Get((struct Container020e0310*)(obj + 0xc0), 0x4274);
-    sprintf(*(char**)(obj + 0xd8), (const char*)(long)fmt);
-    func_0205d304(obj + 0x1bc, *(void**)(obj + 0xd8), 0, 0, 0, 0, 0);
-
+    self->windows[0].nextWindow = zero;
+    self->windows[0].flags = 1;
+    self->windows[0].noHorizontalInset = 1;
+    memset(self->textBuffer, zero, 0x800);
+    int fmt = KeyTable_Get(&self->texts, CreationText_WidthTag);
+    sprintf(self->textBuffer, (const char*)(long)fmt);
+    Window_OpenPane(&self->windows[0], self->textBuffer, 0, 0, 0, 0, 0);
 #else
-    void* buf = *(void**)(obj + 0xf8);
+    struct Struct0200fb08* gameState = (struct Struct0200fb08*)GameState::GetInstance();
+    int layout2 = 0x18;
+    int language = GameState_GetLanguage(gameState);
+    if (language == OSLanguage_Italian) layout2 = 0x19;
+    CreationWindow* window = &self->windows[0];
+    window->paneWidth = 7;
+    window->paneHeight = 0x11;
+    window->unknownA4[0] = layout2;
+    window->unknownA4[1] = 5;
+    window->paneTextX = 6;
+    window->unknownAa[0] = 6;
+    window->unknownAa[1] = 0xa;
+    window->unknownAa[2] = 0x10;
+    unsigned char zero = 0;
+    window->nextWindow = zero;
+    window->flags = 1;
+    window->noHorizontalInset = 1;
+    void* buf = self->textBuffer;
     memset(buf, zero, 0x960);
-    int fmt = KeyTable_Get((struct Container020e0310*)(obj + 0xe0), 0x4274);
+    int fmt = KeyTable_Get(&self->texts, CreationText_WidthTag);
     sprintf((char*)buf, (const char*)(long)fmt);
-    func_0205d304(tag, buf, 0, 0, 0, 0, 0, 0);
-
+    Window_OpenPane(window, buf, 0, 0, 0, 0, 0, 0);
 #endif
 }

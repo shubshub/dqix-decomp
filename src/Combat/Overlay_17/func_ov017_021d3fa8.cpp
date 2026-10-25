@@ -26,9 +26,9 @@ extern "C" void func_020dc548(signed char, Struct_ov017_021d6cfc*, signed char*)
 extern "C" void func_02039d48(unsigned char*);
 extern "C" void func_02039d24(unsigned char*);
 extern "C" int func_0202c540(void*);
-extern "C" void func_ov017_021907dc(int, int, int, int, int);
-extern "C" void func_02033b68(Struct_02033b68*, int);
-extern "C" void func_02033b88(Struct_02010604*, int);
+void CallHelperWithBuf_021907dc(int, int, int, int, int);
+void GameObject_SetMotionState(Obj02033b68*, int);
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
 
 // USA: func_ov017_021d3fa8
 extern "C" ARM void func_ov017_021d3fa8(int arg0, Struct_ov017_021d3fa8* arg1, GameState* arg2, void* arg3, void* arg4) {
@@ -59,68 +59,68 @@ extern "C" ARM void func_ov017_021d3fa8(int arg0, Struct_ov017_021d3fa8* arg1, G
         }
         if (func_0202c540(arg4)) func_ov017_021907dc((int)arg3, 0, 1, 1, 1);
     }
-    if (var1 == 0) return;
-    unsigned int var12 = var1->obj3D_.GetField06();
-    if (var12 != var0->obj3D_.GetField06()) return;
-    if (var4 != 0 || (((Struct_ov017_021d3fa8_2*)var1)->unknown_c1_0_ & 2)) {
-        func_02038508(var2);
-        if (var4 != 0) {
-            Struct_ov017_021d6cfc var13 = data_ov017_021d6d08;
-            signed char var14 = 0;
-            func_020dc548((signed char)arg1->unknown_7_, &var13, &var14);
-            for (int var15 = 0; var15 < var14; var15++) {
-                if (var13.unknown_0_[var15] == arg1->unknown_7_) continue;
-                GameObject* var16 = arg2->GetPartyMemberByIndex(var13.unknown_0_[var15]);
-                if (var16 == 0) continue;
-                unsigned int var17 = ((Struct_ov017_021d3fa8_2*)var16)->unknown_c1_0_;
-                if (!(var17 & 2)) {
-                    var16->obj3D_.position_ = var1->obj3D_.position_;
-                    var16->obj3D_.SetInheritedAlpha(31);
-                    func_02033b68((Struct_02033b68*)var16, 0);
-                    func_02039d48((unsigned char*)var16);
+    if (member == 0) return;
+    unsigned int member_id = member->obj3D_.GetField06();
+    if (member_id != protagonist->obj3D_.GetField06()) return;
+    if (reset != 0 || (((MemberState021d3fa8*)member)->flags & 2)) {
+        InitBlock02038508(state);
+        if (reset != 0) {
+            PartyOrder021d3fa8 order = data_ov017_021d6d08;
+            signed char count = 0;
+            func_020dc548((signed char)packet->index, &order, &count);
+            for (int i = 0; i < count; i++) {
+                if (order.members[i] == packet->index) continue;
+                GameObject* other = game->GetPartyMemberByIndex(order.members[i]);
+                if (other == 0) continue;
+                unsigned int flags = ((MemberState021d3fa8*)other)->flags;
+                if (!(flags & 2)) {
+                    other->obj3D_.position_ = member->obj3D_.position_;
+                    other->obj3D_.SetInheritedAlpha(31);
+                    GameObject_SetMotionState((Obj02033b68*)other, 0);
+                    SetFlag0x1ceBit0x4_02039d48((unsigned char*)other);
                 }
                 func_02039d24((unsigned char*)var16);
             }
             if (func_0202c540(arg4)) func_ov017_021907dc((int)arg3, 0, 1, 1, 1);
         }
-    } else if (var5 == 0) {
-        var1->obj3D_.DisableFlag(0x1000);
-        var1->obj3D_.EnableFlag(0x10);
-        var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82b1, 1);
-        var2->unknown_0_ = 1;
-        var2->unknown_1_ = 0;
-    } else if (var5 == 1) {
-        var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82b1, 1);
-        var2->unknown_0_ = 1;
-        var2->unknown_1_ = 1;
-    } else if (var5 == 5) {
-        var1->obj3D_.DisableFlag(0x1010);
-        func_02033b88((Struct_02010604*)var1, 1);
-        var2->unknown_0_ = 1;
-        var2->unknown_1_ = 5;
-    } else if (var5 == 4) {
-        var1->obj3D_.DisableFlag(0x1010);
-        var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82bb, 1);
-        var2->unknown_0_ = 1;
-        var2->unknown_1_ = 4;
-    } else if (var5 == 2) {
-        if (var3 == 1) {
-            var1->obj3D_.DisableFlag(0x1000);
-            var1->obj3D_.EnableFlag(0x10);
-            var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82c6, 0);
-            if (var6) var1->obj3D_.SetCurrentAnimationTime(var6);
-            var2->unknown_0_ = 1;
-        } else if (var3 == 2) {
-            var1->obj3D_.DisableFlag(0x1000);
-            var1->obj3D_.EnableFlag(0x10);
-            var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82c6, 4);
-            if (var6) var1->obj3D_.SetCurrentAnimationTime(var6);
-            var2->unknown_0_ = 1;
+    } else if (command == 0) {
+        member->obj3D_.DisableFlag(0x1000);
+        member->obj3D_.EnableFlag(0x10);
+        member->obj3D_.SetAnimationByName(data_ov017_021d82b1, 1);
+        state->active = 1;
+        state->command = 0;
+    } else if (command == 1) {
+        member->obj3D_.SetAnimationByName(data_ov017_021d82b1, 1);
+        state->active = 1;
+        state->command = 1;
+    } else if (command == 5) {
+        member->obj3D_.DisableFlag(0x1010);
+        SetByte0xbeShiftPrev((Bytes02033b88*)member, 1);
+        state->active = 1;
+        state->command = 5;
+    } else if (command == 4) {
+        member->obj3D_.DisableFlag(0x1010);
+        member->obj3D_.SetAnimationByName(data_ov017_021d82bb, 1);
+        state->active = 1;
+        state->command = 4;
+    } else if (command == 2) {
+        if (mode == 1) {
+            member->obj3D_.DisableFlag(0x1000);
+            member->obj3D_.EnableFlag(0x10);
+            member->obj3D_.SetAnimationByName(data_ov017_021d82c6, 0);
+            if (time) member->obj3D_.SetCurrentAnimationTime(time);
+            state->active = 1;
+        } else if (mode == 2) {
+            member->obj3D_.DisableFlag(0x1000);
+            member->obj3D_.EnableFlag(0x10);
+            member->obj3D_.SetAnimationByName(data_ov017_021d82c6, 4);
+            if (time) member->obj3D_.SetCurrentAnimationTime(time);
+            state->active = 1;
         } else {
-            var1->obj3D_.EnableFlag(0x1010);
-            var1->obj3D_.MaybeSetRegularAnimation(data_ov017_021d82c6, 0);
-            if (var6) var1->obj3D_.SetCurrentAnimationTime(var6);
-            var2->unknown_0_ = 1;
+            member->obj3D_.EnableFlag(0x1010);
+            member->obj3D_.SetAnimationByName(data_ov017_021d82c6, 0);
+            if (time) member->obj3D_.SetCurrentAnimationTime(time);
+            state->active = 1;
         }
     }
 }

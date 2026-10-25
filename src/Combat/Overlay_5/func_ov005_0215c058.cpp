@@ -89,11 +89,11 @@ extern "C" void func_ov005_02154d34(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_02154d50(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_02154d7c(CursorFrame0215c058* obj, int a, int b);
 extern "C" void func_ov005_021537bc(CursorFrame0215c058* frame, int mode, unsigned short value);
-struct Struct_0205bb84;
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+struct GridCursor;
+int GridCursor_GetSelectedIndex(GridCursor*);
 void SePlayer_Play(SePlayer*, int, int);
 int CheckFlag30Or401_02157190(void* self);
-unsigned char* GetPtrField0x2a04_02010828(GameState*);
+unsigned char* GameState_GetParty(GameState*);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
 signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
 extern "C" void func_ov005_0215792c(Menu0215c058* self, int mode);
@@ -199,7 +199,7 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
             func_ov005_021537bc(&var12, 0, 0x7fff);
         }
 
-        int sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)self->scroll) + 8;
+        int sel = GridCursor_GetSelectedIndex((GridCursor*)self->scroll) + 8;
         if (sel != self->selected)
         {
             self->selected = sel;
@@ -211,7 +211,7 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
         if (func_ov005_02157190(arg0) != 0 || var3)
         {
             short index = self->selected - 8 + self->page * 16;
-            unsigned char* bag = GetPtrField0x2a04_02010828(gs);
+            unsigned char* bag = GameState_GetParty(gs);
             short* ids = GetPointerFromArray0xbd0_0207c5f8(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
             signed char* amounts = GetPointerAt0xbf0_0207c60c(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
             short id = ids[self->held];

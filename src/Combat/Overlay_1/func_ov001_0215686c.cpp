@@ -53,10 +53,10 @@ struct Struct_ov001_0215686c_4 {
 
 extern "C" int func_020c39c8(volatile unsigned short* arg0);
 extern "C" void* func_0202ae18(void);
-void* GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 void OrGlobalFlag0x40_020dc2bc();
-void Background_Init(struct List0204af64* obj);
+void Background_Init(struct BackgroundGraphics* obj);
 
 static inline unsigned int inline_ov001_0215686c(Struct_ov001_0215686c_2* arg0) {
     return arg0->unknown_a_;
@@ -64,8 +64,8 @@ static inline unsigned int inline_ov001_0215686c(Struct_ov001_0215686c_2* arg0) 
 
 // USA: func_ov001_0215686c
 extern "C" ARM void func_ov001_0215686c(void) {
-    struct Struct_02020cb8 var0;
-    char var1[0x20];
+    struct BackgroundGraphics list;
+    char buf[0x20];
 
     int var2 = (*(unsigned short*)0x4000304 & 0x8000) >> 15;
     int var3 = 1;
@@ -116,8 +116,8 @@ cont:
         }
     }
 
-    func_020466e4((unsigned int*)func_020d6c00(), 1);
-    func_020dc2bc();
+    FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
+    OrGlobalFlag0x40_020dc2bc();
 
     volatile unsigned int* var8 = (volatile unsigned int*)0x4001000;
     volatile unsigned short* var9 = (volatile unsigned short*)0x4001000;
@@ -134,7 +134,7 @@ cont:
     var9[0x28] = 0;
 
     Background_Init(&list);
-    list.b1c_lo = 3;
+    list.subScreen_ = 3;
 
     unsigned char* var10 = ((struct Struct_ov001_0215686c_4*)var4)->unknown_2c_;
     CleanInvalidateCacheRange(var10 + 0xc, 0x20);

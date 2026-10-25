@@ -25,22 +25,22 @@ struct Struct_ov000_02170cf8 {
     unsigned int unknown_5_4_ : 20;
 };
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" struct Entry02170cf8* func_ov000_02170cf8(char* obj, int val);
 void NotifyLocalizedResourceLoad020dd040(int len, char* buf);
 int KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" void func_02046608(int g, int b, char* src, char* dst, int size, int f, int h);
+extern "C" void MessageSystem_FormatText(int g, int b, char* src, char* dst, int size, int f, int h);
 void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 #if defined(jpn)
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
-#define APPLY_TEXT(s,k,t) func_0205d5d0(s,k,(int)t,1)
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,1,0,1,0)
-enum { Enum_ov000_0217a19c_92=0x28, Enum_ov000_0217a19c_2400=0x800, Enum_ov000_0217a19c_7533=0x1fa5, Enum_ov000_0217a19c_7=6, Enum_ov000_0217a19c_24=0 };
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
+#define APPLY_TEXT(s,k,t) Window_SetPaneText(s,k,(int)t,1)
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,1,0,1,0)
+enum { textOffset=0x28, textSize=0x800, cursorOffset=0x1fa5, style=6, y=0 };
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
-#define APPLY_TEXT(s,k,t) func_0205d5d0(s,k,(int)t,1,0)
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,0,0,1,0,0)
-enum { Enum_ov000_0217a19c_92=0x5c, Enum_ov000_0217a19c_2400=0x960, Enum_ov000_0217a19c_7533=0x1d6d, Enum_ov000_0217a19c_7=7, Enum_ov000_0217a19c_24=0x18 };
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
+#define APPLY_TEXT(s,k,t) Window_SetPaneText(s,k,(int)t,1,0)
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,0,0,1,0,0)
+enum { textOffset=0x5c, textSize=0x960, cursorOffset=0x1d6d, style=7, y=0x18 };
 #endif
 
 // USA: func_ov000_0217a19c
@@ -49,17 +49,17 @@ extern "C" ARM void func_ov000_0217a19c(char* arg0, char* arg1) {
 #if !defined(jpn)
     char var1[0x800];
 #endif
-    char* var2 = *(char**)(func_020421a0() + Enum_ov000_0217a19c_92);
-    memset(var2, 0, Enum_ov000_0217a19c_2400);
-    signed char var3 = *(signed char*)(arg0 + Enum_ov000_0217a19c_7533);
-    struct Struct_ov000_02170cf8* var4 = func_ov000_02170cf8(arg1, *(unsigned short*)(arg0 + 0x10 + var3 * 2));
-    if (var4 != 0) {
-        func_020dd040(var4->unknown_4_0_, var2);
+    char* str = *(char**)(MessageSystem_GetInstance() + textOffset);
+    memset(str, 0, textSize);
+    signed char cursor = *(signed char*)(obj + cursorOffset);
+    struct Entry02170cf8* entry = func_ov000_02170cf8(table, *(unsigned short*)(obj + 0x10 + cursor * 2));
+    if (entry != 0) {
+        NotifyLocalizedResourceLoad020dd040(entry->textId, str);
     } else {
         str = (char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x20);
     }
 #if !defined(jpn)
-    func_02046608(func_020421a0(), 0xa, var2, var1, 0x98, 0, 0);
+    MessageSystem_FormatText(MessageSystem_GetInstance(), 0xa, str, text, 0x98, 0, 0);
 #endif
     var0 = (struct Struct_0205d5d0*)(arg0 + 0x188);
 #if !defined(jpn)

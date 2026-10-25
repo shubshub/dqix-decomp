@@ -2,25 +2,19 @@
 #include "GameState/GameState.h"
 #include "Resource/Script.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_0201c1c8 {
     int unknown_0_;
     union { int unknown_0_; float unknown1_0_; } unknown_4_;
 };
 
-extern "C" void* func_0205ec34(void);
-extern "C" void func_0206dfe8(void* arg0, int arg1, int arg2);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void func_0206dfe8(void* p, int a, int b);
 
-extern "C" void func_0206e080(char* arg0, int arg1);
-extern "C" void func_0206e0d0(char* arg0, int arg1);
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
+void ClearRegions0206e080(char* obj, int slot);
+void ClearIndexedEntryFields0206e0d0(char* obj, int slot);
+extern "C" void Scenario_SetFlag(void* obj, unsigned char* arr, int idx, int flag);
 
 extern "C" void func_02010774(char* arg0, int arg1);
 extern "C" void func_020107a8(char* arg0, int arg1);
@@ -69,24 +63,24 @@ extern "C" ARM int func_020716a4(struct Struct_0201c1c8* arg0, int arg1) {
     func_020107a8((char*)var7, var2);
     func_020107dc((char*)var7, var3);
 
-    var5 = func_0205ec34();
-    func_0206e080((char*)var5, *(unsigned char*)((char*)var5 + 0x332));
-    func_0206e0d0((char*)var5, *(unsigned char*)((char*)var5 + 0x332));
-    func_0206dfe8(var5, 0, 0x200);
-    func_0206dfe8(var5, 0x38e, 0x3e8);
+    entry = Scenario_GetInstance();
+    ClearRegions0206e080((char*)entry, *(unsigned char*)((char*)entry + 0x332));
+    ClearIndexedEntryFields0206e0d0((char*)entry, *(unsigned char*)((char*)entry + 0x332));
+    func_0206dfe8(entry, 0, 0x200);
+    func_0206dfe8(entry, 0x38e, 0x3e8);
 
     for (var6 = 0; var6 < arg1 - 4; var6++) {
         var4 = ((Script::Parameter*)arg0)->ToInt();
         arg0 = arg0 + 1;
         switch (var4 >> 16) {
         case 2:
-            func_0206df6c(var5, (unsigned char*)var5 + *(unsigned char*)((char*)var5 + 0x332) * 0x1c + 3, (unsigned short)var4, 1);
+            Scenario_SetFlag(entry, (unsigned char*)entry + *(unsigned char*)((char*)entry + 0x332) * 0x1c + 3, (unsigned short)v, 1);
             break;
         case 1:
-            func_0206df6c(var5, (unsigned char*)var5 + *(unsigned char*)((char*)var5 + 0x332) * 0x1c + 0x10, (unsigned short)var4, 1);
+            Scenario_SetFlag(entry, (unsigned char*)entry + *(unsigned char*)((char*)entry + 0x332) * 0x1c + 0x10, (unsigned short)v, 1);
             break;
         case 0:
-            func_0206df6c(var5, (unsigned char*)var5 + 0x8c, (unsigned short)var4, 1);
+            Scenario_SetFlag(entry, (unsigned char*)entry + 0x8c, (unsigned short)v, 1);
             break;
         }
     }

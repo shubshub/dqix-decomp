@@ -2,7 +2,7 @@
 #include "Resource/Brightness.h"
 
 struct AxisFloats0203b5f8;
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 extern char* data_ov004_02171010;
 struct SelectionState {
 #if defined(jpn)
@@ -34,7 +34,7 @@ ARM int UpdateAxisFlagAndDispatch_021652e8(void* a1) {
 #endif
     struct AxisFloats0203b5f8* axis = (struct AxisFloats0203b5f8*)GetGameResources();
     if (!IsBrightnessZero((GameResources*)axis, false) || !IsBrightnessZero((GameResources*)axis, true)) return 0;
-    if (*(void**)((char*)GetGlobalField0x1c020421a0() + StatusOffset021652e8) != NULL) return 0;
+    if (*(void**)((char*)MessageSystem_GetInstance() + StatusOffset021652e8) != NULL) return 0;
 
     {
         SelectionState* selection = (SelectionState*)data_ov004_02171010;

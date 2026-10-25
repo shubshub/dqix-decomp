@@ -11,12 +11,12 @@ extern "C" int func_02042638(char *arg0, int arg1, int arg2);
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310 *c, int key);
-int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char *dst, int cursor);
+int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char *dst, int cursor);
 int AppendFormatted02041fac(char *buf, int a, int b);
-int AppendPaletteTag_02041e70(char *dst, int palette);
-int AppendNameTag_02041b70(char *dst, int n, const char *name);
-int AppendString02042058(char *dst, const char *src);
+int Text_AppendPaletteTag(char *dst, int palette);
+int Text_AppendNTag(char *dst, int n, const char *name);
+int Text_Append(char *dst, const char *src);
 extern "C" int func_ov002_02159774(void *base, int id, int a2, int a3, int a4);
 
 // USA: func_ov002_0215d72c
@@ -26,10 +26,10 @@ extern "C" ARM void func_ov002_0215d72c(unsigned char *arg0, char *arg1, int arg
     GameState::GetInstance();
     int var0 = *(short *) (arg0 + RG(0x1bee, 0x1ab6));
 
-    if (arg2) {
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
+    if (flag) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
+    Text_AppendCursorTag(dst, cursor);
 
     int field = KeyTable_Get((struct Container020e0310 *) (base + RG(0x20, 0x8)), 0x514);
     AppendFormatted02041fac(dst, field, 0x10);
@@ -42,15 +42,15 @@ extern "C" ARM void func_ov002_0215d72c(unsigned char *arg0, char *arg1, int arg
             var3 = 4;
         }
         if (id == 4) {
-            AppendNameTag_02041b70(dst, i,
+            Text_AppendNTag(dst, i,
                           (const char *) KeyTable_Get(
                               (struct Container020e0310 *) (base + RG(0x20, 0x8)), 0x515));
             return;
         }
-        int var4 = func_ov002_02159774(arg0, var3, 1, 0, 0);
-        func_02041e70(arg1, var4);
-        func_02041b70(arg1, var2, (const char *) (arg0 + RG(0x1ab0, 0x1a08) + var3 * RG(0x3c, 0x18)));
-        func_02041e70(arg1, 0xf);
-        func_02042058(arg1, *(const char **) (arg0 + RG(0x1000 + 0xbdc, 0x1000 + 0xaa4)));
+        int pal = func_ov002_02159774(base, id, 1, 0, 0);
+        Text_AppendPaletteTag(dst, pal);
+        Text_AppendNTag(dst, i, (const char *) (base + RG(0x1ab0, 0x1a08) + id * RG(0x3c, 0x18)));
+        Text_AppendPaletteTag(dst, 0xf);
+        Text_Append(dst, *(const char **) (base + RG(0x1000 + 0xbdc, 0x1000 + 0xaa4)));
     }
 }

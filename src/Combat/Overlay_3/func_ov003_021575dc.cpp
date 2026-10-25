@@ -8,20 +8,14 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
-struct Struct_0203d028_3 {
-    unsigned short unknown_0_;
-    char unknown_2_[0x132];
-    struct BaseCombatStats* unknown_134_;
-    struct ModifiableCombatStats* unknown_138_;
+struct CombatantStruct {
+    unsigned short flags;
+    char unk[0x132];
+    struct BaseCombatStats* baseStats;
+    struct ModifiableCombatStats* currentStats;
 };
-extern "C" void* func_02010828(GameState*);
+void* GameState_GetParty(GameState*);
 
 int FindMappedMemberId02080468(void* obj, int id);
 struct Obj0208203c;
@@ -37,8 +31,8 @@ void SetFlag_02158a50_02158a50(unsigned char*);
 struct Struct0209c830;
 void SetValueAndActivate0209c830(Struct0209c830*, int);
 int IsAnimationActive0209ca2c(void* obj);
-extern "C" void func_0206df6c(void* a, unsigned char* b, int c, int d);
-void* ZeroInitReturn020de824(void* obj);
+extern "C" void Scenario_SetFlag(void* a, unsigned char* b, int c, int d);
+void* ItemTable_Construct(void* obj);
 void InitStruct0207cbe8(char* obj);
 void InitStruct0207cc0c(char* obj);
 int TestBattleBlockBit_021ed6cc(int tag);
@@ -54,46 +48,46 @@ void* FindElementByField020a15bc(Array020a15bc*, int);
 struct Obj02158140;
 void AppendFormattedNumber_02158140(Obj02158140*, int);
 
-int GetField0x3acValue_020100a8(GameState*);
-int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+int GameState_GetProtagonistIndex(GameState*);
+int Scenario_TestFlag(int, unsigned char*, int);
 void ItemTable_Init(void* obj);
 ARM int BuildDescriptorFlag1_020de980(void* a, void* b, void* c, int d, int e);
-int GetGlobalField0x1c020421a0(void);
-void ReinitController02043204(char* obj);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
 void SetCombatModeFromCase020dc2d0(int);
 struct GameResources;
 ARM int IsBrightnessTransitionActive(GameResources*);
-extern "C" ARM void* func_0208247c(void* arg0);
+ARM void* ResourceScriptEntry_Init(void* obj);
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" ARM int func_020813ec(void* arg0, int arg1);
-extern "C" void func_0207d300(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_0205ec34(void);
-extern "C" void func_020e046c(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" void func_02082490(void* arg0, void* arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov003_02158334(void* arg0);
-extern "C" int func_ov003_021550dc(void* arg0);
-extern "C" int func_ov003_02155208(void* arg0);
-extern "C" int func_ov003_02155fc0(void* arg0, int arg1);
-extern "C" void func_ov003_02155580(void* arg0, int arg1);
-extern "C" int func_ov003_02155618(void* arg0);
-extern "C" void func_ov003_02155e38(void* arg0);
-extern "C" void func_ov003_021580d8(void* arg0, void* arg1);
-extern "C" int func_ov003_02158754(void* arg0);
-extern "C" int func_ov023_021ed724(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov023_021eb138(void* arg0, int arg1);
-extern "C" void func_ov023_021eb080(void* arg0, void* arg1);
-extern "C" void func_ov023_021eb564(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov023_021eb43c(void* arg0);
-extern "C" void func_ov023_021eb26c(void* arg0);
+extern "C" void __clear(void* buf, int len);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" ARM int func_020813ec(void* obj, int id);
+extern "C" void func_0207d300(void* obj, int a, int b, int c);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void func_020e046c(void* a, void* b, int c, int d);
+extern "C" void ResourceScriptEntry_LoadLevel(void* a, void* b, int c, int d, int e);
+extern "C" void func_ov003_02158334(void* self);
+extern "C" int func_ov003_021550dc(void* self);
+extern "C" int func_ov003_02155208(void* self);
+extern "C" int func_ov003_02155fc0(void* self, int id);
+extern "C" void func_ov003_02155580(void* self, int a);
+extern "C" int func_ov003_02155618(void* self);
+extern "C" void func_ov003_02155e38(void* self);
+extern "C" void func_ov003_021580d8(void* dst, void* src);
+extern "C" int func_ov003_02158754(void* self);
+extern "C" int func_ov023_021ed724(void* a, void* b, int c);
+extern "C" void func_ov023_021eb138(void* a, int b);
+extern "C" void func_ov023_021eb080(void* a, void* b);
+extern "C" void func_ov023_021eb564(void* a, void* b, int c);
+extern "C" void func_ov023_021eb43c(void* a);
+extern "C" void func_ov023_021eb26c(void* a);
 
 extern char g_sePlayer;
 extern char data_ov003_0217fdbb;
 extern const char* g_itemDataArchive;
 extern const char* g_itemDataFile;
 extern short data_ov003_0217f2e8[];
-extern char data_02109bf4;
+extern char g_bgmPlayer;
 extern short data_ov003_0217f2ce[];
 extern char data_ov003_0217fdd0;
 extern char data_ov003_0217fde7;
@@ -101,14 +95,14 @@ extern char data_ov003_0217fde7;
 struct Struct_ov003_021575dc_3 { unsigned char unknown_0_0_ : 1; };
 
 // USA: func_ov003_021575dc
-extern "C" ARM void func_ov003_021575dc(void* arg0) {
-    char* var0 = (char*)arg0;
-    GameState* var1 = GameState::GetInstance();
-    void* var2 = func_02010828(var1);
-    unsigned char var3 = *(unsigned char*)(var0 + 0x1f9);
-    void* var4;
-    short* var5 = (short*)(var0 + 0x1ec);
-    void* var6 = *(void**)(var0 + 0x18);
+extern "C" ARM void func_ov003_021575dc(void* self) {
+    char* s = (char*)self;
+    GameState* bs = GameState::GetInstance();
+    void* p2a04 = GameState_GetParty(bs);
+    unsigned char state = *(unsigned char*)(s + 0x1f9);
+    void* root;
+    short* evt = (short*)(s + 0x1ec);
+    void* obj18 = *(void**)(s + 0x18);
 
     if (var3 == 0) {
         *(short*)(var0 + 0x1e6) = 3;
@@ -195,19 +189,19 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
             void* var18 = *(void**)((char*)var17 + 0x150);
             var16 = *(int*)((char*)var18 + 0x950);
         }
-        char var19[0x18];
-        __clear(var19, 0x18);
-        sprintf(var19, &data_ov003_0217fdbb, var16);
-        *(int*)(var0 + 0x1d0) = var14->QueueLoadFile(var19, (SafeAllocator*)0);
-        *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-    } else if (var3 == 6) {
-        BackgroundLoader* var20 = BackgroundLoader::GetInstance();
-        if (var20->GetTaskStatus(*(int*)(var0 + 0x1d0)) != 0) {
-            void* var21; unsigned int var22;
-            var20->GetLoadedFileByID(*(int*)(var0 + 0x1d0), &var21, &var22);
-            func_0208247c(var0 + 0x90);
-            if (var21 != 0) {
-                func_02082490(var0 + 0x90, var21, var22, 1, 0);
+        char buf[0x18];
+        __clear(buf, 0x18);
+        sprintf(buf, &data_ov003_0217fdbb, val);
+        *(int*)(s + 0x1d0) = loader->QueueLoadFile(buf, (SafeAllocator*)0);
+        *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+    } else if (state == 6) {
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        if (loader->GetTaskStatus(*(int*)(s + 0x1d0)) != 0) {
+            void* outPtr; unsigned int outLen;
+            loader->GetLoadedFileByID(*(int*)(s + 0x1d0), &outPtr, &outLen);
+            ResourceScriptEntry_Init(s + 0x90);
+            if (outPtr != 0) {
+                ResourceScriptEntry_LoadLevel(s + 0x90, outPtr, outLen, 1, 0);
             }
             var20->RemoveTask(*(int*)(var0 + 0x1d0));
             *(int*)(var0 + 0x1d0) = -1;
@@ -240,13 +234,13 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
             ResetFields_0215873c(self);
             *(unsigned char*)(s + 0x1f9) = 0x32;
         }
-    } else if (var3 == 9) {
-        func_02043204((char*)func_020421a0());
-        func_ov003_02158a50((unsigned char*)arg0);
-        func_0209c830((Struct_02109bf4_2*)&data_02109bf4, 0x34);
-        *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-    } else if (var3 == 0xa) {
-        if (func_0209ca2c(&data_02109bf4) != 0) {
+    } else if (state == 9) {
+        MessageSystem_Reset((char*)MessageSystem_GetInstance());
+        SetFlag_02158a50_02158a50((unsigned char*)self);
+        SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x34);
+        *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+    } else if (state == 0xa) {
+        if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) {
             goto tail;
         }
         if (((Object3D*)(var0 + 0x280))->HasAnimationStopped() == 0) {
@@ -261,43 +255,43 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
             void* var35 = *(void**)((char*)var33 + 0x150);
             var34 = *(int*)((char*)var35 + 0x950);
         }
-        if (var34 > 0) {
-            void* var36 = func_0205ec34();
-            if (func_0206dfb0((int)var36, (unsigned char*)var36 + 0x8c, var34 + 0x8b + 0x1100) == 0) {
-                func_0206df6c(var36, (unsigned char*)var36 + 0x8c, var34 + 0x8b + 0x1100, 1);
-                var5[0] = 0x16;
-                var5[1] = 0x17;
-                *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
+        if (field950 > 0) {
+            void* base = Scenario_GetInstance();
+            if (Scenario_TestFlag((int)base, (unsigned char*)base + 0x8c, field950 + 0x8b + 0x1100) == 0) {
+                Scenario_SetFlag(base, (unsigned char*)base + 0x8c, field950 + 0x8b + 0x1100, 1);
+                evt[0] = 0x16;
+                evt[1] = 0x17;
+                *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
 
-                char var37[0x38];
-                ((SafeAllocator*)var37)->ResetAllocatorPointer();
-                func_020de824(var37 + 0x14);
-                func_0207cbe8(var37);
-                func_0207cbe8(var37);
-                *(void**)(var37 + 0x2c) = var0 + 0x178;
-                func_0207d300(var37, *(short*)(var0 + 0x1f0), 1, 0);
-                func_0207cc0c(var37);
+                char bufFc[0x38];
+                ((SafeAllocator*)bufFc)->ResetAllocatorPointer();
+                ItemTable_Construct(bufFc + 0x14);
+                InitStruct0207cbe8(bufFc);
+                InitStruct0207cbe8(bufFc);
+                *(void**)(bufFc + 0x2c) = s + 0x178;
+                func_0207d300(bufFc, *(short*)(s + 0x1f0), 1, 0);
+                InitStruct0207cc0c(bufFc);
                 return;
             }
         }
-        *(unsigned char*)(var0 + 0x1f9) = 0x64;
-    } else if (var3 == 0xb) {
-        var5[0] = 0x18;
-        var5[1] = 0x19;
-        *(unsigned char*)(var0 + 0x1f8) = 7;
-    } else if (var3 == 0x64) {
-        short var38[12];
-        __clear(var38, 0x18);
-        unsigned short var39 = 0;
-        int var40 = func_020100a8(var1);
-        struct Struct_0203d028_3* var41 = (Struct_0203d028_3*)func_0200ff1c(var1, var40);
-        for (int var42 = 1; var42 < 13; var42++) {
-            void* var43 = *(void**)((char*)var41 + 0x150);
-            if (*(unsigned char*)((char*)var43 + (unsigned char)var42 + 0x186) >= 0xa) {
-                short var44 = data_ov003_0217f2ce[var42];
-                if (func_ov023_021ed6cc(var44) == 0) {
-                    var38[var39] = var44;
-                    var39++;
+        *(unsigned char*)(s + 0x1f9) = 0x64;
+    } else if (state == 0xb) {
+        evt[0] = 0x18;
+        evt[1] = 0x19;
+        *(unsigned char*)(s + 0x1f8) = 7;
+    } else if (state == 0x64) {
+        short tagBuffer[12];
+        __clear(tagBuffer, 0x18);
+        unsigned short sbCount = 0;
+        int fieldVal = GameState_GetProtagonistIndex(bs);
+        struct CombatantStruct* combatant = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c(bs, fieldVal);
+        for (int i = 1; i < 13; i++) {
+            void* p150 = *(void**)((char*)combatant + 0x150);
+            if (*(unsigned char*)((char*)p150 + (unsigned char)i + 0x186) >= 0xa) {
+                short tag = data_ov003_0217f2ce[i];
+                if (TestBattleBlockBit_021ed6cc(tag) == 0) {
+                    tagBuffer[sbCount] = tag;
+                    sbCount++;
                 }
             }
         }
@@ -398,15 +392,15 @@ extern "C" ARM void func_ov003_021575dc(void* arg0) {
                 *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
             }
         }
-    } else if (var3 == 0x66) {
-        Struct_0208cb08* var68 = func_02094a00();
-        func_02094b40(var68);
-        func_02094b34(var68, 0x66, 501, 0, 0);
-        *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
-    } else if (var3 == 0x67) {
-        if (func_02094b4c(func_02094a00()) != 0) {
-            func_020dc2d0(0);
-            *(unsigned char*)(var0 + 0x1f9) = *(unsigned char*)(var0 + 0x1f9) + 1;
+    } else if (state == 0x66) {
+        FontBankLoader* g = FontBankLoader_GetInstance();
+        BlankFunction02094b40(g);
+        BlankFunction02094b34(g, 0x66, 501, 0, 0);
+        *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
+    } else if (state == 0x67) {
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) != 0) {
+            SetCombatModeFromCase020dc2d0(0);
+            *(unsigned char*)(s + 0x1f9) = *(unsigned char*)(s + 0x1f9) + 1;
         }
     } else if (var3 == 0x68) {
         GameResources* var69 = GetGameResources();

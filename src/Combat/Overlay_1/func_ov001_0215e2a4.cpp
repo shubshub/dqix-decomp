@@ -12,9 +12,9 @@ extern "C" void func_0204500c(void*, int, int);
 #else
 extern "C" void func_0204500c(void*, int, int, int);
 #endif
-extern "C" int func_020421a0();
-struct Struct_ov001_021658d8;
-extern "C" void* func_ov001_02153884(struct Struct_ov001_021658d8* arg0, int arg1);
+int MessageSystem_GetInstance();
+struct Table_02153884;
+void* FindTableEntry_02153884(struct Table_02153884* t, int key);
 
 extern Struct_ov001_021658d8 data_ov001_021658d8;
 
@@ -22,10 +22,10 @@ struct Struct_ov001_0215e2a4 { char unknown_0_[4]; int unknown_4_; };
 struct Struct_ov001_0215e2a4_2 { int unknown_0_; };
 
 // USA: func_ov001_0215e2a4
-extern "C" ARM int func_ov001_0215e2a4(Struct_ov001_0215e2a4_2* arg0, int arg1) {
-    char* var0 = (char*)func_020421a0();
-    int var1 = arg0->unknown_0_;
-    switch (var1) {
+extern "C" ARM int func_ov001_0215e2a4(Self0215e2a4* self, int mode) {
+    char* g = (char*)MessageSystem_GetInstance();
+    int type = self->type;
+    switch (type) {
     case 0: {
         int var2 = func_ov017_021d60f4(arg0);
         Struct_ov001_0215e2a4* var3 = (Struct_ov001_0215e2a4*)func_ov001_02153884(&data_ov001_021658d8, var2);

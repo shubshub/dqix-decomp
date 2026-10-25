@@ -28,13 +28,13 @@ struct Struct_ov001_02160da8_2 {
     char unknown_d4_[0xf8 - 0xd4]; unsigned int unknown_f8_0_ : 27; unsigned int unknown_fb_3_ : 5;
     char unknown_fc_[0x116 - 0xfc]; signed char unknown_116_;
 };
-struct Struct_0205faf4_11;
-extern "C" int func_ov017_021d60f4(Struct_ov001_0215b72c*);
-extern "C" const char* func_ov017_021d612c(Struct_ov001_0215b72c*);
-extern "C" int func_020100b0(GameState*);
-extern "C" GameObject* func_0200ff58(GameState*, int);
-extern "C" int func_ov001_021612ac(void*);
-extern "C" int func_02061bd8(Struct_0205faf4_11*);
+struct Obj02061bd8;
+extern "C" int func_ov017_021d60f4(ScriptArgument*);
+extern "C" const char* func_ov017_021d612c(ScriptArgument*);
+int GameState_GetLeaderIndex(GameState*);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
+int GetNibbleAt56b_ov001_021612ac(void*);
+int CheckField0x56bLowNibble(Obj02061bd8*);
 extern SafeAllocator* data_ov001_021658b8[];
 extern const char data_ov001_02165728[];
 extern const char data_ov001_02165745[];
@@ -65,12 +65,12 @@ extern "C" ARM int func_ov001_02160da8(Struct_ov001_0215b72c* arg0, int arg1) {
     case 0:
     case 1:
     case 9:
-        if (arg1 < 2) return 0;
-        var1->unknown_1_ = func_ov017_021d60f4(arg0 + 1);
-        if (var1->unknown_0_0_ == 1) var1->unknown_2_ = func_020100b0(var0);
-        else if (var1->unknown_0_0_ == 9) {
-            var1->unknown_2_ = var2->unknown_116_;
-            if (!func_0200ff1c(var0, var1->unknown_2_)) var1->unknown_2_ = func_020100b0(var0);
+        if (count < 2) return 0;
+        command->action = func_ov017_021d60f4(arguments + 1);
+        if (command->kind == 1) command->objectId = GameState_GetLeaderIndex(game);
+        else if (command->kind == 9) {
+            command->objectId = state->selectedObject;
+            if (!GetCombatantWithFlag0x100_0200ff1c(game, command->objectId)) command->objectId = GameState_GetLeaderIndex(game);
         }
         if (var1->unknown_2_ == 0) var1->unknown_0_4_ = 1;
         else var1->unknown_0_4_ = 2;
@@ -78,15 +78,15 @@ extern "C" ARM int func_ov001_02160da8(Struct_ov001_0215b72c* arg0, int arg1) {
     case 11:
     case 12:
     case 13:
-        if (arg1 < 2) return 0;
-        var1->unknown_1_ = func_ov017_021d60f4(arg0 + 1);
-        var1->unknown_0_4_ = 2;
-        func_020100b0(var0);
-        if (var1->unknown_0_0_ == 11) var1->unknown_2_ = 3;
-        else if (var1->unknown_0_0_ == 12) var1->unknown_2_ = 2;
-        else if (var1->unknown_0_0_ == 13) var1->unknown_2_ = 1;
-        if (!var0->GetGameObjectByIndex(var1->unknown_2_)) {
-            var1->unknown_0_0_ = 15;
+        if (count < 2) return 0;
+        command->action = func_ov017_021d60f4(arguments + 1);
+        command->group = 2;
+        GameState_GetLeaderIndex(game);
+        if (command->kind == 11) command->objectId = 3;
+        else if (command->kind == 12) command->objectId = 2;
+        else if (command->kind == 13) command->objectId = 1;
+        if (!game->GetGameObjectByIndex(command->objectId)) {
+            command->kind = 15;
             return 0;
         }
         break;

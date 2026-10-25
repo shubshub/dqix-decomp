@@ -3,7 +3,7 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_0203de84 {
     unsigned int unknown_0_[3];
@@ -43,21 +43,21 @@ struct Struct_0203de84_7 {
 };
 
 // USA: func_0203de84
-extern "C" ARM void func_0203de84(void* arg0) {
-    struct Struct_0203de84_7* var0 = (struct Struct_0203de84_7*)arg0;
-    void* var1 = func_020100bc(GameState::GetInstance());
+extern "C" ARM void func_0203de84(void* self) {
+    struct Roster0203de84* roster = (struct Roster0203de84*)self;
+    void* v = GameState::GetInstance()->GetCamera();
     GetGameResources();
-    struct Struct_0203de84_5* var2 = (struct Struct_0203de84_5*)func_02012fe4();
-    unsigned short var3 = var2->unknown_38_;
-    int var4 = var2->unknown_3c_;
-    struct Struct_0203de84 var5;
-    int var6;
-    for (var6 = 0; var6 < 0x20; var6++) {
-        if (var0->unknown_c_[var6] == NULL) continue;
-        unsigned int var7 = var0->unknown_c_[var6]->unknown_0_;
-        if (var7 & 0x8000) continue;
-        if (var0->unknown_98_ != NULL && !(var7 & 0x10000)) continue;
-        if (!func_02040910((struct Struct_0203de84_4*)var0->unknown_c_[var6], (int)var1))
+    struct Ctx02012fe4* ctx = (struct Ctx02012fe4*)Zone3D_GetInstance();
+    unsigned short a = ctx->f38;
+    int b = ctx->f3c;
+    struct Vec3_020406f8 vec;
+    int i;
+    for (i = 0; i < 0x20; i++) {
+        if (roster->nodes[i] == NULL) continue;
+        unsigned int fl = roster->nodes[i]->flags;
+        if (fl & 0x8000) continue;
+        if (roster->f98 != NULL && !(fl & 0x10000)) continue;
+        if (!ProcessPendingSubStates((struct StateWithFourPtrs02040910*)roster->nodes[i], (int)v))
             continue;
         if (var7 & 0x20) continue;
         if (var7 & 0x40) continue;

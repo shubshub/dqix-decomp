@@ -4,9 +4,6 @@
 #include "Input/Input.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_020a75ec {
     Object3D unknown_0_;
@@ -32,17 +29,16 @@ struct Struct_02038598_5;
 struct Struct_02010604;
 struct Struct_02015ef4;
 extern short data_020e9450[];
-extern "C" Zone3D* func_02012fe4();
-extern "C" void func_020332ac(Struct_020a75ec*);
-extern "C" void func_020a78dc(Struct_020a75ec*);
-extern "C" int func_02046b60(Struct_02038598_5*, int);
-extern "C" void* func_02010828(GameState*);
-extern "C" void* func_020100bc(GameState*);
-extern "C" int func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" void* func_0205ec34();
-extern "C" int func_02046b08(void**);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" int func_02033b88(Struct_02010604*, int);
+extern "C" Zone3D* Zone3D_GetInstance();
+extern "C" void func_020332ac(WrappedActor020a75ec*);
+extern "C" void func_020a78dc(WrappedActor020a75ec*);
+int ListContainsId(ListHead02046b60*, int);
+void* GameState_GetParty(GameState*);
+int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" void* Scenario_GetInstance();
+int IsField0Null_02046b08(void**);
+int Scenario_TestFlag(int, unsigned char*, int);
+int SetByte0xbeShiftPrev(Bytes02033b88*, int);
 extern "C" void func_ov017_021a93f0(GameResources*, int, int);
 
 #if defined(jpn)
@@ -52,28 +48,28 @@ enum { Enum_020a75ec_10100 = 0x2774, Enum_020a75ec_10112 = 0x2780 };
 #endif
 
 // USA: func_020a75ec
-extern "C" ARM void func_020a75ec(Struct_020a75ec* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Zone3D* var1 = func_02012fe4();
-    short var2 = arg0->unknown_b4_;
-    func_020332ac(arg0);
-    arg0->unknown_b4_ = var2;
-    func_020a78dc(arg0);
-    arg0->unknown_13c_ += var0->GetTickCount() * 364;
-    arg0->unknown_140_ = data_020e9450[((arg0->unknown_13c_ >> 4) * 2 + 1)] >> 4;
-    if (var1->currentZoneID_ != 10000) return;
-    Vector3i var3;
-    int var4 = 0;
-    var3 = arg0->unknown_0_.position_;
-    arg0->unknown_130_ = 0;
-    if (var3.x >= 0x90000) {
-        var3.x -= 0x120000;
-        arg0->unknown_130_ |= 1;
-        var4 = 1;
-    } else if (var3.x < -0x90000) {
-        var3.x += 0x120000;
-        arg0->unknown_130_ |= 2;
-        var4 = 1;
+extern "C" ARM void func_020a75ec(WrappedActor020a75ec* actor) {
+    GameState* state = GameState::GetInstance();
+    Zone3D* zone = Zone3D_GetInstance();
+    short field = actor->field_b4;
+    func_020332ac(actor);
+    actor->field_b4 = field;
+    func_020a78dc(actor);
+    actor->phase += state->GetTickCount() * 364;
+    actor->oscillation = data_020e9450[((actor->phase >> 4) * 2 + 1)] >> 4;
+    if (zone->currentZoneID_ != 10000) return;
+    Vector3i position;
+    int changed = 0;
+    position = actor->object.position_;
+    actor->wrapFlags = 0;
+    if (position.x >= 0x90000) {
+        position.x -= 0x120000;
+        actor->wrapFlags |= 1;
+        changed = 1;
+    } else if (position.x < -0x90000) {
+        position.x += 0x120000;
+        actor->wrapFlags |= 2;
+        changed = 1;
     }
     if (var3.z >= 0x70000) {
         var3.z -= 0xe0000;
@@ -88,27 +84,27 @@ extern "C" ARM void func_020a75ec(Struct_020a75ec* arg0) {
         arg0->unknown_0_.position_ = var3;
         arg0->unknown_144_ = var3;
     }
-    GameResources* var5 = GetGameResources();
-    void* var6 = var5->unknown_ptr_array_36fc[0];
-    if (!func_02046b60((Struct_02038598_5*)var6, 3) && !func_02046b60((Struct_02038598_5*)var6, 1)) {
-        unsigned char* var7 = (unsigned char*)func_02010828(var0);
-        for (int var8 = 0; var8 < var7[0xf7c]; var8++) {
-            Struct_020a75ec_2* var9 = (Struct_020a75ec_2*)var0->GetPartyMemberByIndex(*(var7 + 0xf78 + var8));
-            if (var9) {
-                var9->unknown_0_.position_ = arg0->unknown_0_.position_;
-                var9->unknown_ac_ = 0;
+    GameResources* scene = GetGameResources();
+    void* head = scene->fieldTaskQueue_;
+    if (!ListContainsId((ListHead02046b60*)head, 3) && !ListContainsId((ListHead02046b60*)head, 1)) {
+        unsigned char* party = (unsigned char*)GameState_GetParty(state);
+        for (int i = 0; i < party[0xf7c]; i++) {
+            PartyActor020a75ec* member = (PartyActor020a75ec*)state->GetPartyMemberByIndex(*(party + 0xf78 + i));
+            if (member) {
+                member->object.position_ = actor->object.position_;
+                member->state = 0;
             }
         }
         *(Vector3i*)((char*)var1 + Enum_020a75ec_10100) = arg0->unknown_0_.position_;
         *(int*)((char*)var1 + Enum_020a75ec_10112) = arg0->unknown_ae_;
     }
-    int var10;
-    int var11;
-    void* var12 = func_020100bc(var0);
-    int var13 = 0;
-    if (func_0202ec84(var12, (Struct_02015ef4*)&arg0->unknown_0_.position_, &var10, &var11) == 0) {
-        int var14;
-        int var15;
+    int screenX;
+    int screenY;
+    void* view = state->GetCamera();
+    int hit = 0;
+    if (Camera_WorldToScreen(view, (Vec3copy0202ec84*)&actor->object.position_, &screenX, &screenY) == 0) {
+        int inputX;
+        int inputY;
         if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 10) {
             var14 = g_touchInput.prevX_;
             var15 = g_touchInput.prevY_;
@@ -116,12 +112,12 @@ extern "C" ARM void func_020a75ec(Struct_020a75ec* arg0) {
         if (var10 - 16 < var14 && var14 < var10 + 16 && var11 - 20 < var15 && var15 < var11 + 8) var13 = 1;
     }
 #if !defined(jpn)
-    unsigned char* var16 = (unsigned char*)func_0205ec34();
+    unsigned char* flags = (unsigned char*)Scenario_GetInstance();
 #endif
     if (g_keyManager.TestKeysPressed(2) || var13) {
         if (func_02046b08((void**)var6)
 #if !defined(jpn)
-            && func_0206dfb0((int)var16, var16 + 0x8c, 43)
+            && Scenario_TestFlag((int)flags, flags + 0x8c, 43)
 #endif
         ) {
             arg0->unknown_15a_ = 0;

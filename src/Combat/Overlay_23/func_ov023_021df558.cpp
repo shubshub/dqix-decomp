@@ -77,20 +77,20 @@ struct Struct_ov023_021ff9e0_13 {
 };
 extern "C" Struct_ov023_021ff9e0_13 data_ov023_021ff9e0;
 
-extern "C" void func_0204c684(Struct_ov023_021df558_2* arg0);
-extern "C" int func_ov023_021ddc34(void* arg0, short arg1, short arg2, short arg3, short arg4);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void* func_020421a0();
-extern "C" void func_02046608(void* arg0, int, const char* arg2, char* arg3, int, int, int);
-extern "C" Struct_ov023_021df558_5* func_ov023_021db4e4(Struct_ov023_021df558* arg0, int arg1);
-extern "C" void func_ov023_021e23d0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4);
-extern "C" void func_ov023_021db45c(void* arg0, struct Struct_ov023_021db45c* arg1, int arg2, short* arg3, short* arg4);
-extern "C" void func_ov023_021e257c(Struct_ov023_021df558* arg0);
-extern "C" void func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" unsigned int func_ov023_021ddc98(Struct_ov023_021df558_2* arg0, unsigned int arg1, unsigned short arg2, int arg3);
-extern "C" unsigned short func_020de194(void* arg0);
-extern "C" void func_ov023_021e24b0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4,
-                              unsigned char arg5, unsigned char arg6, unsigned char arg7, unsigned char arg8);
+extern "C" void WindowPane_Init(Canvas_021df558* canvas);
+int InitBufferFromDataField4_021ddc34(void* canvas, short x, short y, short width, short height);
+extern "C" void __clear(void* buffer, unsigned long size);
+void* MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(void* messages, int, const char* input, char* output, int, int, int);
+extern "C" LayoutElement_021df558* func_ov023_021db4e4(Layout_021df558* layout, int id);
+void SetEntryFields_021e23d0(void* layout, int id, int text, unsigned char color, unsigned char shadow);
+void UpdateEntryAndReset_021db45c(void* layout, struct StructAcAe021db45c* canvas, int id, short* x, short* y);
+extern "C" void func_ov023_021e257c(Layout_021df558* layout);
+void CreateAndSetFields8A_021db544(void* layout, void* id, int x, int y);
+extern "C" unsigned int func_ov023_021ddc98(Canvas_021df558* canvas, unsigned int offset, unsigned short palette, int bg1);
+unsigned short EvalOrDispatch020de194(void* item);
+void SetPackedFields_021e24b0(void* layout, int id, int value, unsigned char color, unsigned char shadow,
+                              unsigned char unk4, unsigned char digits, unsigned char unk5, unsigned char unk6);
 
 #define SHOW_ELEMENT(layout, id)                                           \
     {                                                                      \
@@ -114,9 +114,9 @@ static inline int inline_ov023_021df558(const Struct_ov023_021df558_3* arg0)
 // USA: func_ov023_021df558
 extern "C" ARM void func_ov023_021df558(Struct_ov023_021df558_4* arg0)
 {
-    Struct_ov023_021df558_2 var0;
-    func_0204c684(&var0);
-    if (func_ov023_021ddc34(&var0, 0, 0, 0xe, 8))
+    Canvas_021df558 canvas;
+    WindowPane_Init(&canvas);
+    if (InitBufferFromDataField4_021ddc34(&canvas, 0, 0, 0xe, 8))
     {
         Struct_ov023_021df558_3* var1 = arg0->unknown_4c_;
         if (var1 != NULL)
@@ -131,9 +131,9 @@ extern "C" ARM void func_ov023_021df558(Struct_ov023_021df558_4* arg0)
 #if defined(jpn)
             func_ov023_021e23d0(&arg0->unknown_cc_, var3, (int)arg0->unknown_62c_, 12, 15);
 #else
-            char var4[0x100] = {0};
-            func_02046608(func_020421a0(), 10, arg0->unknown_630_, var4, 0x68, 0, 0);
-            func_ov023_021e23d0(&arg0->unknown_cc_, var3, (int)var4, 10, 15);
+            char formatted[0x100] = {0};
+            MessageSystem_FormatText(MessageSystem_GetInstance(), 10, self->description_, formatted, 0x68, 0, 0);
+            SetEntryFields_021e23d0(&self->layout_, text, (int)formatted, 10, 15);
 #endif
 
             SHOW_ELEMENT(&arg0->unknown_cc_, var2);

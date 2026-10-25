@@ -1,41 +1,34 @@
 #include <globaldefs.h>
+#include "Resource/Font.h"
 
-struct Entry020426bc {
-    int val;
-    char pad4;
-    signed char field5 : 6;
-    signed char unused2 : 2;
-    char pad6[2];
-};
-
-struct Entry020426bc* Font_FindCharacter(int key, int tableIdx);
-int Font_FindCharacterIndex(int key, int tableIdx);
+struct FontCharacter* Font_FindCharacter(int text, int font);
+int Font_FindCharacterIndex(int text, int font);
 
 // Main, originally func_020426bc (USA 0x020426bc, EUR 0x020426cc; JPN not identified)
-extern "C" ARM int Font_EncodeText(char* str, unsigned char* out, int id) {
-    if (out == 0) return 0;
-    if (str == 0) {
-        if (out != 0) *out = 0;
+extern "C" ARM int Font_EncodeText(char* text, unsigned char* encoded, int font) {
+    if (encoded == 0) return 0;
+    if (text == 0) {
+        if (encoded != 0) *encoded = 0;
         return 0;
     }
     int count = 0;
     for (;;) {
-        signed char c = *str;
-        if (c == 0) {
-            *out = 0;
+        signed char firstByte = *text;
+        if (firstByte == 0) {
+            *encoded = 0;
             break;
         }
-        int step = 1;
+        int byteLength = 1;
         int code = 0;
-        struct Entry020426bc* e = Font_FindCharacter((int)str, id);
-        if (e != 0) {
-            step = e->field5;
+        struct FontCharacter* character = Font_FindCharacter((int)text, font);
+        if (character != 0) {
+            byteLength = character->byteLength_;
         }
-        if (c == 0x20) code = 0xff;
-        int idx = Font_FindCharacterIndex((int)str, id);
-        if (idx > 0) code = idx & 0xff;
-        *out++ = (unsigned char)code;
-        str += step;
+        if (firstByte == ' ') code = 0xff;
+        int index = Font_FindCharacterIndex((int)text, font);
+        if (index > 0) code = index & 0xff;
+        *encoded++ = (unsigned char)code;
+        text += byteLength;
         count++;
     }
     return count;

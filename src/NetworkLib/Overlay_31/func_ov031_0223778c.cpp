@@ -62,7 +62,7 @@ struct Struct_ov031_0223778c_3 { unsigned char unknown_0_[0x1300]; Struct_ov031_
 extern Struct_ov031_0223778c_3* data_ov031_02290d0c;
 extern unsigned char data_ov031_02249288[8];
 extern unsigned char data_ov031_02249280[6];
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
+extern "C" int memcmp(const void*, const void*, unsigned int);
 
 // USA: func_ov031_0223778c
 extern "C" ARM void func_ov031_0223778c(Struct_ov031_0223778c* arg0) {
@@ -71,18 +71,18 @@ extern "C" ARM void func_ov031_0223778c(Struct_ov031_0223778c* arg0) {
     var1 = 0;
     if ((int)arg0->unknown_e_ <= 0) return;
     do {
-        var0 = arg0->unknown_10_[var1];
-        InvalidateDataCacheRange(var0, 0xc0);
-        if (func_02001aec(var0->unknown_c_, data_ov031_02249288, 8) == 0) {
-            int var2 = 0;
-            Struct_ov031_0223778c_2* var3;
-            Struct_ov031_0223778c_2* var4;
-            Struct_ov031_0223778c_3* const var5 = data_ov031_02290d0c;
-            var3 = var5->unknown_1300_;
+        peer = list->bssDesc[peerIndex];
+        InvalidateDataCacheRange(peer, 0xc0);
+        if (memcmp(peer->ssid, data_ov031_02249288, 8) == 0) {
+            int existingIndex = 0;
+            PeerSlot3778c* existingSlot;
+            PeerSlot3778c* emptySlot;
+            PeerState3778c* const state = data_ov031_02290d0c;
+            existingSlot = state->slots;
             do {
-                if (func_02001aec(var0->unknown_4_, var3->unknown_0_, 6) == 0) {
-                    if (var5->unknown_1300_[var2].unknown_6_ == 0 && (var0->unknown_c_[9] & 1) != 0) {
-                        if (var5->unknown_1370_) var5->unknown_1370_(1);
+                if (memcmp(peer->bssid, existingSlot->name, 6) == 0) {
+                    if (state->slots[existingIndex].active == 0 && (peer->ssid[9] & 1) != 0) {
+                        if (state->notify) state->notify(1);
                         return;
                     }
                     goto nextPeer;
@@ -93,9 +93,9 @@ extern "C" ARM void func_ov031_0223778c(Struct_ov031_0223778c* arg0) {
             var4 = var5->unknown_1300_;
             int var6 = 0;
             do {
-                if (func_02001aec(var4->unknown_0_, data_ov031_02249280, 6) == 0) {
-                    VectorizedInvertedMemcpy(var0->unknown_4_, var5->unknown_1300_[var6].unknown_0_, 6);
-                    data_ov031_02290d0c->unknown_1300_[var6].unknown_6_ = (var0->unknown_c_[9] & 1) != 0;
+                if (memcmp(emptySlot->name, data_ov031_02249280, 6) == 0) {
+                    VectorizedInvertedMemcpy(peer->bssid, state->slots[emptyIndex].name, 6);
+                    data_ov031_02290d0c->slots[emptyIndex].active = (peer->ssid[9] & 1) != 0;
                     break;
                 }
                 ++var6;

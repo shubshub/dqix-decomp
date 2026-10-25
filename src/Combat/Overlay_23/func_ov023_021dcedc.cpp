@@ -40,10 +40,10 @@ extern char data_ov023_021fdb35[];
 extern char data_ov023_021fdb39[];
 extern char data_ov023_021fdb3b[];
 extern char data_ov023_021fdb3e[];
-extern "C" void* func_020421a0();
+void* MessageSystem_GetInstance();
 extern "C" int sprintf(char*, const char*, ...);
-extern "C" void func_0206819c(const char*, char*, int);
-extern "C" void func_02046608(void*, int, const char*, char*, int, int, int);
+void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
+extern "C" void MessageSystem_FormatText(void*, int, const char*, char*, int, int, int);
 #if defined(jpn)
 extern "C" void func_02050678(void*, short, short, const char*, int, int, short*, short*);
 #else
@@ -70,7 +70,7 @@ extern "C" ARM void func_ov023_021dcedc(Struct_ov023_021dcedc* arg0, void* arg1)
     }
     char var2[64] = {};
 #if !defined(jpn)
-    void* var3 = func_020421a0();
+    void* formatter = MessageSystem_GetInstance();
 #endif
     for (int var4 = 0; var4 < 3; var4++) {
         const char* var5 = arg0->unknown_784_[var4];
@@ -87,11 +87,11 @@ extern "C" ARM void func_ov023_021dcedc(Struct_ov023_021dcedc* arg0, void* arg1)
             short var11 = var10 + Enum_ov023_021dcedc_1;
             inline_ov023_021dcedc(arg1, Enum_ov023_021dcedc_5, var10, var5, 10, var9);
 #else
-            char var12[256] = {};
-            char var13[256] = {};
-            func_0206819c(var5, var12, 0);
-            func_02046608(var3, 10, var12, var13, 0x400, 0, 0);
-            inline_ov023_021dcedc(arg1, Enum_ov023_021dcedc_0_2, var10, var13, 10, var9);
+            char source[256] = {};
+            char converted[256] = {};
+            CopyTextAndUppercaseIfFlagged0206819c(name, source, 0);
+            MessageSystem_FormatText(formatter, 10, source, converted, 0x400, 0, 0);
+            DrawStatusText(canvas, ExpandedNameX, y, converted, 10, color);
 #endif
             sprintf(var2, data_ov023_021fdb2d);
 #if defined(jpn)
@@ -127,11 +127,11 @@ extern "C" ARM void func_ov023_021dcedc(Struct_ov023_021dcedc* arg0, void* arg1)
             short var15 = var14 + Enum_ov023_021dcedc_1;
             inline_ov023_021dcedc(arg1, Enum_ov023_021dcedc_70, var14, var5, 10, var9);
 #else
-            char var16[256] = {};
-            char var17[256] = {};
-            func_0206819c(var5, var16, 0);
-            func_02046608(var3, 10, var16, var17, 0x400, 0, 0);
-            inline_ov023_021dcedc(arg1, Enum_ov023_021dcedc_64, var14, var17, 10, var9);
+            char source[256] = {};
+            char converted[256] = {};
+            CopyTextAndUppercaseIfFlagged0206819c(name, source, 0);
+            MessageSystem_FormatText(formatter, 10, source, converted, 0x400, 0, 0);
+            DrawStatusText(canvas, CollapsedNameX, y, converted, 10, color);
 #endif
             sprintf(var2, data_ov023_021fdb2d);
 #if defined(jpn)

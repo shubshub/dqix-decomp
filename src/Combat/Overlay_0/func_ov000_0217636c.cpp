@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_0205d6a0;
-struct Struct_0205bacc;
+struct Entry_0205d6a0;
+struct GridCursor;
 struct Struct_0205bcdc;
 
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int mode);
+void Window_ClosePane(struct Entry_0205d6a0* list, int mode);
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
 void SetupDualPointerTables0205cf28(unsigned char* p, int a, int b, int c);
-void GridCursor_SetCount(struct Node0205bacc* node, int val);
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* obj, int index);
+void GridCursor_SetCount(struct GridCursor* node, int val);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* obj, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
 
 struct Struct_ov000_0217636c_2 {
@@ -21,12 +21,12 @@ struct Struct_ov000_0217636c_2 {
 #endif
     void* unknown_5c_;
 };
-extern "C" struct Struct_ov000_0217636c_2* func_020421a0();
+struct GlobalField0x1c* MessageSystem_GetInstance();
 
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* window, void* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* window, void* buf, int a, int b, int c, int d, int e, int f);
 #endif
 
 struct Struct_ov000_0217636c_3 {
@@ -68,13 +68,13 @@ extern "C" ARM void func_ov000_0217636c(struct Combatant* obj, int arg) {
     if (window != 0) {
         int x = obj->posX;
         int y = obj->posY;
-        ResetEntryList0205d6a0((struct Entry_0205d6a0*)window, 1);
+        Window_ClosePane((struct Entry_0205d6a0*)window, 1);
         SetChannelAFlag0205cef8(window);
         SetChannelBFlag0205cf04(window);
         SetupDualPointerTables0205cf28((unsigned char*)window, 2, 3, 0);
-        GridCursor_SetCount((struct Node0205bacc*)&window->nodeA, 6);
-        GridCursor_SetCount((struct Node0205bacc*)&window->nodeB, 6);
-        SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)&window->nodeA, 0);
+        GridCursor_SetCount((struct GridCursor*)&window->nodeA, 6);
+        GridCursor_SetCount((struct GridCursor*)&window->nodeB, 6);
+        GridCursor_SelectIfValid((struct Struct_0205bcdc*)&window->nodeA, 0);
         GridCursor_SetSelectedIndex(&window->nodeB, 0);
         window->nodeA.unk4 = 1;
         window->nodeB.unk4 = 1;
@@ -87,7 +87,7 @@ extern "C" ARM void func_ov000_0217636c(struct Combatant* obj, int arg) {
         window->unkAC = 0xa;
         window->unkAE = 0xe;
         window->unkB1 = 0xd;
-        void* buf = GetGlobalField0x1c020421a0()->tileBuffer;
+        void* buf = MessageSystem_GetInstance()->tileBuffer;
 #if defined(jpn)
         memset(var3, 0, 0x800);
 #else
@@ -95,9 +95,9 @@ extern "C" ARM void func_ov000_0217636c(struct Combatant* obj, int arg) {
 #endif
         func_ov000_02176500(arg0, var3, arg1);
 #if defined(jpn)
-        func_0205d304(arg0->unknown_38_, var3, 0, 1, 0, 1, 0);
+        Window_OpenPane(obj->window, buf, 0, 1, 0, 1, 0);
 #else
-        func_0205d304(arg0->unknown_38_, var3, 0, 1, 0, 1, 0, 0);
+        Window_OpenPane(obj->window, buf, 0, 1, 0, 1, 0, 0);
 #endif
     }
 }

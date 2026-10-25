@@ -10,7 +10,7 @@ struct Struct_02072e34 {
 extern "C" void func_02072e34(int arg0, struct Struct_02072e34* arg1);
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 void ApplyCombatantEffectByIndex020730e0(int id, int index);
@@ -24,29 +24,29 @@ extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
 struct Struct_02013fb4;
 extern "C" void func_ov000_0216d1c4(int arg0, struct Struct_02013fb4* arg1, int arg2, int* arg3);
 
-struct Struct_02053cf8;
-extern "C" void func_02053cf8(struct Struct_02053cf8* arg0);
-struct Struct_02053e10;
-extern "C" void func_02053e10(struct Struct_02053e10* arg0);
-extern "C" void func_ov017_021917f0(int arg0, int arg1);
-extern "C" void func_02026bc8(unsigned char* arg0, int arg1);
-struct Struct_02010604;
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
-struct Struct_0202b2f0;
-extern "C" struct Struct_0202b2f0* func_0202ae18(void);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" int func_0202be08(struct Struct_0202b2f0* arg0, int arg1);
-struct Struct_02054000;
-extern "C" void* func_02054000(struct Struct_02054000* arg0);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" int func_020483f0(unsigned char* arg0, unsigned short arg1);
-extern "C" void func_02083e28(void* arg0, int arg1);
+struct Obj02053cf8;
+extern "C" void func_02053cf8(struct Obj02053cf8* obj);
+struct Obj02053e10;
+void FillNameBytes02053e10(struct Obj02053e10* self);
+extern "C" void func_ov017_021917f0(int id, int flag);
+void SetBit02026bc8(unsigned char* obj, int index);
+struct Bytes02033b88;
+int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+struct SearchStruct;
+extern "C" struct SearchStruct* func_0202ae18(void);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
+int IsEntryFlagBit11Set_0202be08(struct SearchStruct* search, int id);
+struct Outer_02054000;
+void* GetActiveSub_02054000(struct Outer_02054000* p);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+int TrySetFlags0x130_020483f0(unsigned char* obj, unsigned short flag);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 void ApplyCombatantBuffs(int world, int id);
 extern "C" void func_ov017_021c6bc8(void);
-extern "C" void func_ov017_021cf078(int arg0, int arg1, int arg2);
-struct Struct_02015ef4_4;
-extern "C" unsigned short func_020de234(struct Struct_02015ef4_4* arg0, int arg1);
+extern "C" void func_ov017_021cf078(int combatantId, int slot, int flag);
+struct StructDE234_020de234;
+unsigned short ItemRecord_GetFileNumber(struct StructDE234_020de234* p, int preferMid);
 
 struct Struct_ov017_021d6b34 {
     int unknown_0_[8];
@@ -162,7 +162,7 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
         loader->GetLoadedFileByID(self->tasks[i], &file, &size);
         SafeAllocator* alloc = &models->allocator_array_4[i];
         char* pairs = models->unknown_cc + i * 0x70;
-        CopyInternalFields0207df50((struct Foo0207df50*)pairs);
+        VramState_Rewind((struct Foo0207df50*)pairs);
         VramState_Restore(pairs);
         obj->obj3D_.SetModelFromFile(alloc, file, size, (Model3D::TextureStagingMode)self->stagingMode);
         VramState_Save(pairs);
@@ -237,30 +237,30 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
         }
         switch (var25) {
         case 11: {
-            ObjectArchiveLoadInfo var28;
-            func_0203dafc((struct Struct_0203d028_11*)&var28);
-            var28.allocator = &var5->allocator_52c;
-            var28.fileData = var26;
-            var28.unk_8 = var27;
-            var23->obj3D_.LoadFromCCHROrCMOTArchive(&var28, NULL);
+            ObjectArchiveLoadInfo info;
+            ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+            info.allocator = &models->allocator_52c;
+            info.fileData = file;
+            info.fileSize = size;
+            body->obj3D_.LoadFromCCHROrCMOTArchive(&info, NULL);
             break;
         }
         case 13: {
-            ObjectArchiveLoadInfo var29;
-            func_0203dafc((struct Struct_0203d028_11*)&var29);
-            var29.allocator = &var5->allocator_540;
-            var29.fileData = var26;
-            var29.packageID = 1;
-            var29.unk_10 = 1;
-            var29.unk_8 = var27;
-            var23->obj3D_.LoadFromCCHROrCMOTArchive(&var29, NULL);
-            if (var20) {
-                const void* var30;
-                unsigned int var31;
-                if (FindFilesInNarcBySubstring(var26, data_ov017_021d7add, &var30, &var31, 1)) {
-                    int var32;
-                    func_ov000_0216d1c4((int)&var5->allocator_540, (struct Struct_02013fb4*)var30, var31, &var32);
-                    inline_ov000_021682ec(var10, var32);
+            ObjectArchiveLoadInfo info2;
+            ClearEightWords_0203dafc((struct Struct_203dafc*)&info2);
+            info2.allocator = &models->allocator_540;
+            info2.fileData = file;
+            info2.packageID = 1;
+            info2.unk_10 = 1;
+            info2.fileSize = size;
+            body->obj3D_.LoadFromCCHROrCMOTArchive(&info2, NULL);
+            if (hasScript) {
+                const void* script;
+                unsigned int scriptSize;
+                if (FindFilesInNarcBySubstring(file, data_ov017_021d7add, &script, &scriptSize, 1)) {
+                    int state;
+                    RunOverlayScript0216d1c4((int)&models->allocator_540, (struct StreamHeader*)script, scriptSize, &state);
+                    SetScriptState(member, state);
                 }
             }
             break;
@@ -289,12 +289,12 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
         func_02033b88((struct Struct_02010604*)var10, 0);
         var10->unknown_0_.EnableFlag(4);
 
-        if (var3 == 0) {
-            struct Struct_0202b2f0* var37 = func_0202ae18();
-            int var38 = var10->unknown_0_.unknown_4_;
-            GameObject* var39 = func_0200ff58(var8, var38);
-            if (var39 != NULL) {
-                var38 = func_020546a8(var39);
+        if (world == 0) {
+            struct SearchStruct* search = func_0202ae18();
+            int v = member->obj3D_.actorIndex_;
+            GameObject* c = GetCombatantWithFlag0x1000_0200ff58(gs, v);
+            if (c != NULL) {
+                v = GetSignedByte0x2d0_020546a8(c);
             }
             int var40 = func_0202be08(var37, var38);
             if (*var10->unknown_130_ & 1) {
@@ -310,7 +310,7 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
             if (*(int*)((char*)var10->unknown_138_ + 0x14) & 1) {
                 func_02033b88((struct Struct_02010604*)var10, 4);
             } else {
-                var10->unknown_0_.MaybeSetRegularAnimation(data_ov017_021d7ae3, 0);
+                member->obj3D_.SetAnimationByName(data_ov017_021d7ae3, 0);
             }
             if (var3 != 0) {
                 struct Struct_ov017_021b3e14_3* var41 = (struct Struct_ov017_021b3e14_3*)func_0200ff1c(var8, arg0->unknown_8_);
@@ -323,12 +323,12 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
                             var43[0xa8 / 4] |= 4;
                         }
                     }
-                    func_02083e28(var41->unknown_150_, 0);
-                    ModifiableCombatStats* var44 = var41->unknown_138_;
-                    unsigned short var45 = var41->unknown_134_->primaryStats.maxMP;
-                    var44->primaryStats.maxMP = var45;
-                    if (var45 < var44->primaryStats.currMP) {
-                        var44->primaryStats.currMP = var45;
+                    PartyMember_RecalculateStats(c->ext150, 0);
+                    ModifiableCombatStats* cur = c->currentStats138;
+                    unsigned short maxMP = c->baseStats134->primaryStats.maxMP;
+                    cur->primaryStats.maxMP = maxMP;
+                    if (maxMP < cur->primaryStats.currMP) {
+                        cur->primaryStats.currMP = maxMP;
                     }
                 }
                 ApplyCombatantBuffs(var3, arg0->unknown_8_);
@@ -381,14 +381,14 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
             }
         }
 
-        GameObject* var58 = var8->GetGameObjectByIndex(arg0->unknown_8_ * 12 + 0x14);
-        if (var58 != NULL) {
-            var58->obj3D_.MakeVisible();
-            struct Struct_ov017_021b3e14_2* var59 = var10->unknown_150_;
-            struct Struct_02015ef4_4* var60 = (struct Struct_02015ef4_4*)var59->unknown_274_;
-            if (var60 != NULL) {
-                if (func_020de234(var60, var59->unknown_49c_0_) / 100 == 5) {
-                    var58->obj3D_.MakeHidden();
+        GameObject* extra = gs->GetGameObjectByIndex(self->id * 12 + 0x14);
+        if (extra != NULL) {
+            extra->obj3D_.MakeVisible();
+            struct Ext150* ext = member->ext150;
+            struct StructDE234_020de234* packed = (struct StructDE234_020de234*)ext->sub274;
+            if (packed != NULL) {
+                if (ItemRecord_GetFileNumber(packed, ext->preferMid) / 100 == 5) {
+                    extra->obj3D_.MakeHidden();
                 }
             }
         }

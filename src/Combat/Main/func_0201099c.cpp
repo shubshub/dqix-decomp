@@ -1,4 +1,6 @@
 #include <globaldefs.h>
+#include "Resource/ItemTable.h"
+#include "Resource/KeyTable.h"
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Filesystem/BackgroundLoader.h"
@@ -113,20 +115,12 @@ struct Struct_0201099c_9 {
     unsigned int unknown_0_[8];
 };
 
-struct Struct_0201099c_10 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[10];
-    Struct_0201099c_9* unknown_c_;
-    unsigned char unknown_10_[4];
-    unsigned char unknown_14_;
-};
-
-struct Struct_0201099c_11 {
-    char unknown_0_[0x30];
-    unsigned short unknown_30_;
-    unsigned short unknown_32_;
-    unsigned short unknown_34_;
-    unsigned short unknown_36_;
+struct CharacterProfile0201099c {
+    char name[0x30];
+    unsigned short stat6c;
+    unsigned short stat6e;
+    unsigned short stat70;
+    unsigned short stat72;
 };
 
 struct Struct_0201099c_13 {
@@ -156,20 +150,16 @@ struct Struct_020e6d74 {
     unsigned char unknown_1_;
 };
 
-struct Struct_0201099c_14 {
-    unsigned char unknown_0_[0x18];
+struct Container020e0310;
+struct SetFlagBitStruct;
+struct Struct020865b0;
+struct SetBitArrayStruct020865b8;
+struct Ctx0209a810 {
+    int handle;
 };
 
-struct Struct_0201099c_3;
-struct Struct_0201099c_15;
-struct Struct_0201099c_16;
-struct Struct_0201099c_17;
-struct Struct_0201099c_18 {
-    int unknown_0_;
-};
-
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
-void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void ResetAndReturnSelf020dfc2c(void* p);
 void KeyTable_Reset(Struct020dfc40* p);
 void ResetAndDetach020dfc6c(Struct020dfc40* p);
@@ -178,7 +168,7 @@ void ResetStructFields_02089db4(ResetFieldsStruct* s);
 void ForwardResetStructFields02089ddc(ResetFieldsStruct* s);
 void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
 void* GetElementStride0x40_0208a018(unsigned char* obj, int index);
-extern "C" void func_02086404(CombatSelection* selection);
+extern "C" void PartyMemberRecord_Init(CombatSelection* selection);
 void SetFlagBitAndIndex_02086598(SetFlagBitStruct* s, int n);
 char* KeyTable_Get(Container020e0310* c, int key);
 extern "C" void __clear(void* dst, unsigned int size);
@@ -187,16 +177,16 @@ void ClearField00209a804(int* p);
 void SpellTable_Load(Ctx0209a810* ctx, void* value);
 int GetFieldAt0x50(Struct020865b0* p);
 void SetBitInArray020865b8(SetBitArrayStruct020865b8* s, int n);
-void ZeroInitReturn020de824(void* p);
+void ItemTable_Construct(void* p);
 void ItemTable_Init(void* p);
 extern "C" int func_020dea64(void* a, void* b, void* c, unsigned int d, const void* e, short f);
-void* Clear0x54Bytes0208247c(void* obj);
+void* ResourceScriptEntry_Init(void* obj);
 extern "C" void func_02082828(CharacterRecord0201099c* record);
 extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
-Element020de650* FindElementByKey020dedd0(Container020dedd0* c, int key);
-extern "C" void func_02083e28(void* a, int arg2);
+Element020de650* ItemTable_Find(ItemTable* c, int key);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern char data_020ef08c[];
 extern char data_020ef0a5[];
 extern const IdPair0201099c data_020e6d64;
@@ -205,15 +195,15 @@ extern const char* g_itemDataArchive;
 extern const char* g_itemDataFile;
 extern const char data_020e6d6c[];
 extern const char data_020ef0b5[];
-extern unsigned char data_0211e33c[];
-extern const Struct_020e6d74 data_020e6d74[];
+extern unsigned char g_fileLoadBuffer[];
+extern const SlotMap0201099c data_020e6d74[];
 #if defined(jpn)
 extern const Struct_020e6d98 data_020e763c[];
 extern const Struct_020e6d74 data_020e7618[];
 extern unsigned char data_020e7610[];
 extern const char data_020eeff3[];
 extern "C" int func_020e052c(void*, void*, const char*, void*, short, unsigned char);
-extern "C" int func_020d2ff0(const char*);
+int STD_GetStringLength(const char*);
 #endif
 
 static inline const Struct_020e6d98* inline_0201099c(int arg0) {
@@ -265,7 +255,7 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
     SafeAllocator nameAlloc;
     nameAlloc.ResetAllocatorPointer();
     nameAlloc.ResetAllocatorPointer();
-    nameAlloc.CreateTypeA(AllocateAligned4_02012d88(&data_02114e20, 0x5000), 0x5000);
+    nameAlloc.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x5000), 0x5000);
     Struct020dfc40 names;
     ResetAndReturnSelf020dfc2c(&names);
     KeyTable_Reset(&names);
@@ -283,10 +273,10 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
     SafeAllocator var15;
     var15.ResetAllocatorPointer();
 #if defined(jpn)
-    var15.CreateTypeA(func_02012d88(&data_02114e20, 0x1400), 0x1400);
+    scriptAlloc.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x1400), 0x1400);
 #else
-    var15.ResetAllocatorPointer();
-    var15.CreateTypeA(func_02012d88(&data_02114e20, 0x800), 0x800);
+    scriptAlloc.ResetAllocatorPointer();
+    scriptAlloc.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800), 0x800);
 #endif
     func_02089db4(&var14);
     func_02089de8(&var14, &var15, NULL);
@@ -310,24 +300,24 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
         if (var6 < 0) {
             continue;
         }
-        var4 = &arg0->unknown_3984_[var6];
-        func_02086404(var4);
-        var4->unknown_0_0_ = var6;
-        var4->unknown_0_6_ = 0;
-        var4->unknown_0_7_ = 0;
-        var4->unknown_1_0_ = var3->unknown_3e_;
-        Struct_0201099c_19* var17 = &var4->unknown_160_;
-        var17->unknown_16_ = var3->unknown_a_;
-        var17->unknown_14_1_ = NextRandomMax(var2, 8);
-        var17->unknown_14_4_ = NextRandomMax(var2, 8);
-        var17->unknown_15_0_ = NextRandomMax(var2, 10);
-        var17->unknown_14_0_ = var3->unknown_8_;
-        int var18 = var17->unknown_14_0_ * 5 + NextRandomMax(var2, 5);
-        var17->unknown_18_ = inline_0201099c(var18)->unknown_0_;
-        var17->unknown_1a_ = inline_0201099c(var18)->unknown_2_;
-        func_02086598((Struct_0201099c_15*)var4, var3->unknown_3d_);
-        for (int var19 = 0; var19 < 13; var19++) {
-            var4->unknown_2_[var19] = var3->unknown_30_[var19];
+        m = &gs->members[slot];
+        PartyMemberRecord_Init(m);
+        m->selected = slot;
+        m->active = 0;
+        m->reserved = 0;
+        m->count = t->count;
+        Appearance0201099c* look = &m->appearance;
+        look->voice = t->voice;
+        look->hairStyle = NextRandomMax(rng, 8);
+        look->hairColor = NextRandomMax(rng, 8);
+        look->face = NextRandomMax(rng, 10);
+        look->gender = t->gender;
+        int size = look->gender * 5 + NextRandomMax(rng, 5);
+        look->height = GetBodySize0201099c(size)->a;
+        look->width = GetBodySize0201099c(size)->b;
+        SetFlagBitAndIndex_02086598((SetFlagBitStruct*)m, t->vocation);
+        for (int j = 0; j < 13; j++) {
+            m->levels[j] = t->levels[j];
         }
 #if defined(jpn)
         const char** var20 = var17->unknown_14_0_ == 0 ? var14.unknown_c_ : var14.unknown_14_;
@@ -343,7 +333,7 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
         } else {
             var20 += NextRandomMax(var2, 5);
         }
-        memcpy(var4->unknown_140_, *var20, func_020d2ff0(*var20));
+        memcpy(m->name, *name, STD_GetStringLength(*name));
 #else
         short var22 = 20000;
         if (var17->unknown_14_0_ == 1) {
@@ -380,16 +370,16 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
         arg0->unknown_5690_++;
     }
 
-    func_02089ddc(&var14);
-    SignedAllocatorHeader* var30 = var15.GetSignedAllocator();
-    var15.Destroy();
-    func_02012da4(&data_02114e20, var30);
+    ForwardResetStructFields02089ddc(&templates);
+    SignedAllocatorHeader* scriptHeader = scriptAlloc.GetSignedAllocator();
+    scriptAlloc.Destroy();
+    AllocatorUnion_Free(&g_mainAllocator, scriptHeader);
 #if !defined(jpn)
-    func_020dfc6c(&var10);
-    SignedAllocatorHeader* var31 = var9.GetSignedAllocator();
-    if (var31 != NULL) {
-        var9.Destroy();
-        func_02012da4(&data_02114e20, var31);
+    ResetAndDetach020dfc6c(&names);
+    SignedAllocatorHeader* nameHeader = nameAlloc.GetSignedAllocator();
+    if (nameHeader != NULL) {
+        nameAlloc.Destroy();
+        AllocatorUnion_Free(&g_mainAllocator, nameHeader);
     }
 
 #endif
@@ -415,13 +405,13 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
         var39.ResetAllocatorPointer();
         var39.ResetAllocatorPointer();
 #if defined(jpn)
-        var39.CreateTypeA(func_02012d88(&data_02114e20, 0x12c00), 0x12c00);
+        itemAlloc.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x12c00), 0x12c00);
 #else
-        var39.CreateTypeA(func_02012d88(&data_02114e20, 0x13800), 0x13800);
+        itemAlloc.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x13800), 0x13800);
 #endif
         itemAlloc.Reset();
-        Container020dedd0 items;
-        ZeroInitReturn020de824(&items);
+        ItemTable items;
+        ItemTable_Construct(&items);
         ItemTable_Init(&items);
 #if defined(jpn)
         func_020e052c(&items, &itemAlloc, g_itemDataArchive, data_020e7610, 8, 1);
@@ -444,12 +434,12 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
 #else
             sprintf(var45, data_020ef0b5, var44);
 #endif
-            if (LoadFileIntoMemory(path, data_0211e33c, &size) != NULL) {
+            if (LoadFileIntoMemory(path, g_fileLoadBuffer, &size) != NULL) {
                 ResourceScriptEntry* res = &entry;
                 for (int j = 0; j < gs->memberCount; j++) {
                     m = &gs->members[j];
-                    Clear0x54Bytes0208247c(res);
-                    func_02082490(res, data_0211e33c, size, m->levels[v], 0);
+                    ResourceScriptEntry_Init(res);
+                    ResourceScriptEntry_LoadLevel(res, g_fileLoadBuffer, size, m->levels[v], 0);
                     m->experience[v] = res->initial.value0;
                     m->skillPoints += res->initial.value4High;
                     if (v == GetFieldAt0x50((Struct020865b0*)m)) {
@@ -459,34 +449,34 @@ extern "C" ARM void func_0201099c(Struct_0201099c_4* arg0) {
                         PartyMember_ApplyLevelStats(rec, &entry, entry.variants);
                         short* equipment = m->appearance.equipment;
                         for (int k = 0; k < 8; k++) {
-                            Element020de650* item = FindElementByKey020dedd0(&items, equipment[GetSlotMap0201099c(k)->appearanceIndex]);
+                            Element020de650* item = ItemTable_Find(&items, equipment[GetSlotMap0201099c(k)->appearanceIndex]);
                             if (item != NULL) {
                                 memcpy(&record.equipment[GetSlotMap0201099c(k)->recordIndex], item, sizeof(Element020de650));
                             }
                         }
-                        func_02083e28(&var32, 0);
-                        var4->unknown_14c_[0].unknown_0_0_ = var43->unknown_0_[0].unknown_0_0_;
-                        var4->unknown_14c_[0].unknown_1_2_ = var43->unknown_0_[0].unknown_1_2_;
-                        var4->unknown_14c_[0].unknown_2_4_ = var43->unknown_0_[0].unknown_2_4_;
-                        var4->unknown_14c_[1].unknown_0_0_ = var43->unknown_0_[1].unknown_0_0_;
-                        var4->unknown_14c_[1].unknown_1_2_ = var43->unknown_0_[1].unknown_1_2_;
-                        var4->unknown_14c_[1].unknown_2_4_ = var43->unknown_0_[1].unknown_2_4_;
-                        var4->unknown_14c_[2].unknown_0_0_ = var43->unknown_0_[2].unknown_0_0_;
-                        var4->unknown_14c_[2].unknown_1_2_ = inline_0201099c_3(var49);
-                        var4->unknown_14c_[2].unknown_2_4_ = inline_0201099c_4(var49);
-                        Struct_0201099c_12* var53 = &var4->unknown_14c_[3];
-                        var53->unknown_0_0_ = inline_0201099c_3(var49);
-                        var53->unknown_1_2_ = inline_0201099c_4(var49);
-                        var53->unknown_2_4_ = inline_0201099c_5(var49);
-                        var4->unknown_15c_0_ = inline_0201099c_6(var49);
-                        var4->unknown_15d_2_ = var43->unknown_0_[3].unknown_0_0_;
+                        PartyMember_RecalculateStats(&record, 0);
+                        m->vectors[0].x = rec->base[0].x;
+                        m->vectors[0].y = rec->base[0].y;
+                        m->vectors[0].z = rec->base[0].z;
+                        m->vectors[1].x = rec->base[1].x;
+                        m->vectors[1].y = rec->base[1].y;
+                        m->vectors[1].z = rec->base[1].z;
+                        m->vectors[2].x = rec->base[2].x;
+                        m->vectors[2].y = GetStat6c0201099c(profile);
+                        m->vectors[2].z = GetStat6e0201099c(profile);
+                        PackedTriple0201099c* current = &m->vectors[3];
+                        current->x = GetStat6c0201099c(profile);
+                        current->y = GetStat6e0201099c(profile);
+                        current->z = GetStat700201099c(profile);
+                        m->timer = GetStat720201099c(profile);
+                        m->timerLimit = rec->base[3].x;
                     }
                 }
             }
         }
         BackgroundLoader::RemoveLockGlobal();
-        SignedAllocatorHeader* var54 = var39.GetSignedAllocator();
-        var39.Destroy();
-        func_02012da4(&data_02114e20, var54);
+        SignedAllocatorHeader* itemHeader = itemAlloc.GetSignedAllocator();
+        itemAlloc.Destroy();
+        AllocatorUnion_Free(&g_mainAllocator, itemHeader);
     }
 }

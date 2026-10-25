@@ -10,10 +10,10 @@ extern "C" int func_02042638(char *arg0, int arg1, int arg2);
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310 *c, int key);
-int AppendFrameTag02041c08(char *dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char *dst, int cursor);
-int AppendNameTag_02041b70(char *dst, int n, const char *name);
-int AppendString02042058(char *dst, const char *src);
+int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char *dst, int cursor);
+int Text_AppendNTag(char *dst, int n, const char *name);
+int Text_Append(char *dst, const char *src);
 int AppendFormatted02041fac(char *dst, int str, int b);
 extern "C" void __clear(void *buf, int n);
 
@@ -30,10 +30,10 @@ extern "C" ARM void func_ov002_0215cd98(unsigned char *arg0, char *arg1, int arg
     short var0   = 0x4b0;
     int var1 = *(short *) (arg0 + RG(0x1bea, 0x1ab2));
 
-    if (arg2) {
-        func_02041c08(arg1, var1, 8, 5, 5, 5);
+    if (flag) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var1);
+    Text_AppendCursorTag(dst, cursor);
 
     const char *title =
         (const char *) KeyTable_Get((Container020e0310 *) (obj + RG(0x20, 0x8)), id++);
@@ -50,9 +50,9 @@ extern "C" ARM void func_ov002_0215cd98(unsigned char *arg0, char *arg1, int arg
 
     for (int i = 0; i < 4; i++) {
         int field = KeyTable_Get((Container020e0310 *) (obj + RG(0x20, 0x8)), id++);
-        AppendNameTag_02041b70(dst, i, (const char *) field);
+        Text_AppendNTag(dst, i, (const char *) field);
         if (i != 3) {
-            AppendString02042058(dst, *(char **) (obj + RG(0x1bdc, 0x1aa4)));
+            Text_Append(dst, *(char **) (obj + RG(0x1bdc, 0x1aa4)));
         }
     }
 }

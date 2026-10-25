@@ -2,7 +2,7 @@
 #include <GameState/GameState.h>
 #include <Filesystem/BackgroundLoader.h>
 #include <Filesystem/GPC.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include <Filesystem/FileIO.h>
 #include <std_library_functions.h>
 
@@ -36,26 +36,26 @@ extern "C" ARM int func_ov001_0215ca4c(Struct_ov001_0215b72c* arg0, int arg1) {
     if (!var9) {
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        var11 = 1;
-        GPCReadPair var12;
-        GPCReadPair* var13 = &var12;
-        ZeroInitGPCPointer(&var13->pGPCFile);
-        var13->ZeroInitializeMachine();
-        unsigned int var14;
-        int var15;
-        if (!LoadAndDecompressGPCHeaderAndInnerFileInfo(&var13->pGPCFile, var12.machine,
-                data_ov001_0216572d, data_0211e33c, var14, 0x30000, false, 0)) {
+        locked = 1;
+        GPCReadPair pair;
+        GPCReadPair* reader = &pair;
+        ZeroInitGPCPointer(&reader->pGPCFile);
+        reader->ZeroInitializeMachine();
+        unsigned int headerSize;
+        int result;
+        if (!LoadAndDecompressGPCHeaderAndInnerFileInfo(&reader->pGPCFile, pair.machine,
+                data_ov001_0216572d, g_fileLoadBuffer, headerSize, 0x30000, false, 0)) {
             BackgroundLoader::RemoveLockGlobal();
             var15 = 0;
             var13->Reset();
             ZeroDestroyGPCPointer(&var13->pGPCFile);
             return var15;
         }
-        void* var16 = data_0211e33c + var14;
-        unsigned int var17;
-        if (!DecompressFileFromGPCByName(var12.pGPCFile, var12.machine, var16,
-                var17, 0x30000 - var14, var2)) {
-            var12.Reset();
+        void* destination = g_fileLoadBuffer + headerSize;
+        unsigned int fileSize;
+        if (!DecompressFileFromGPCByName(pair.pGPCFile, pair.machine, destination,
+                fileSize, 0x30000 - headerSize, resource)) {
+            pair.Reset();
             BackgroundLoader::RemoveLockGlobal();
             var15 = 0;
             var12.Reset();
@@ -73,23 +73,23 @@ extern "C" ARM int func_ov001_0215ca4c(Struct_ov001_0215b72c* arg0, int arg1) {
         if (var11) BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    unsigned int var20;
-    void* var21 = DecompressLZ77FileIntoAllocatedSpace(*var6, var19, var20);
-    Object3D* var22 = (Object3D*)var6->Allocate(sizeof(Object3D));
-    var22->Initialize();
-    ObjectArchiveLoadInfo var23;
-    var23.unk_8 = var20;
-    var23.allocator = var6;
-    var23.fileData = var21;
-    var23.unk_0 = 0;
-    var23.unk_14 = 0;
-    var23.unk_18 = 0;
-    var23.packageID = 0;
-    var23.unk_10 = 0;
-    var22->LoadFromCCHROrCMOTArchive(&var23, 0);
-    if (var11) BackgroundLoader::RemoveLockGlobal();
-    func_0200fd38(var0, var4, (GameObject*)var22);
-    var22->SetScale(266, 266, 266);
-    var22->MaybeSetBCFGAnimation(0, 0);
+    unsigned int decompressedSize;
+    void* model = DecompressLZ77FileIntoAllocatedSpace(*allocator, compressedData, decompressedSize);
+    Object3D* object = (Object3D*)allocator->Allocate(sizeof(Object3D));
+    object->Initialize();
+    ObjectArchiveLoadInfo info;
+    info.fileSize = decompressedSize;
+    info.allocator = allocator;
+    info.fileData = model;
+    info.unk_0 = 0;
+    info.unk_14 = 0;
+    info.unk_18 = 0;
+    info.packageID = 0;
+    info.unk_10 = 0;
+    object->LoadFromCCHROrCMOTArchive(&info, 0);
+    if (locked) BackgroundLoader::RemoveLockGlobal();
+    RegisterCombatantSlot_0200fd38(game, id, (GameObject*)object);
+    object->SetScale(266, 266, 266);
+    object->SetAnimationByIndex(0, 0);
     return 1;
 }

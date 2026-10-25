@@ -1,26 +1,25 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 struct Struct_0205bcdc;
 struct Struct_0205cf1c;
 
-extern "C" void* func_02010828(GameState*);
-extern "C" void func_ov000_02174da4(int, void*);
+void* GameState_GetParty(GameState*);
+void CopyStaticData02174da4(int, void*);
 extern "C" void* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_ov000_0218155c(void*);
+int CheckField0NonZero_0202b7d8(int*);
+int GameState_GetProtagonistIndex(GameState*);
+int CountSetBitsLow12_0x68_ov000_0218155c(void*);
 extern "C" void* func_ov000_02161318(void*, int);
 void* GetFieldAt0x150_02053c6c(unsigned char*);
 void ClearChannelAFlag0205cf10(void*);
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void SetChannelAFlag0205cef8(void*);
 void SetChannelBFlag0205cf04(void*);
-void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
-void GridCursor_SetCount(Node0205bacc*, int);
-void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+void GridCursor_SetDimensions(GridCursor*, int, int, int);
+void GridCursor_SetCount(GridCursor*, int);
+void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(void*, int);
 
 #if defined(jpn)
@@ -88,9 +87,9 @@ extern "C" ARM void func_ov000_0217c638(Struct_ov000_0217c638_3* arg0, int arg1,
     data_ov000_02184294[1] = arg1;
     data_ov000_02184294[0] = arg2;
 #endif
-    GameState* var5 = GameState::GetInstance();
-    Struct_ov000_02182a74* var6 = (Struct_ov000_02182a74*)func_02010828(var5);
-    switch (arg0->unknown_1d60_[arg0->unknown_1d68_]) {
+    GameState* gs = GameState::GetInstance();
+    Party* party = (Party*)GameState_GetParty(gs);
+    switch (battle->commands[battle->index]) {
     case 1: {
         int var7[4];
         var1 = 0;
@@ -103,10 +102,10 @@ extern "C" ARM void func_ov000_0217c638(Struct_ov000_0217c638_3* arg0, int arg1,
         break;
     }
     case 2: {
-        void* var9 = func_0202ae18();
-        var2 = 3;
-        if (func_0202b7d8((int*)var9)) {
-            if (func_020100a8(var5) == 0) var2 = 4;
+        void* state = func_0202ae18();
+        rows = 3;
+        if (CheckField0NonZero_0202b7d8((int*)state)) {
+            if (GameState_GetProtagonistIndex(gs) == 0) rows = 4;
         }
         var1 = var2;
         var4 = arg0->unknown_1d69_[1];
@@ -179,12 +178,12 @@ extern "C" ARM void func_ov000_0217c638(Struct_ov000_0217c638_3* arg0, int arg1,
     }
     SetChannelAFlag0205cef8(battle->flags);
     SetChannelBFlag0205cf04(battle->flags);
-    GridCursor_SetDimensions((Struct_0205ba68*)&battle->first, columns, rows, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&battle->second, columns, rows, 0);
-    GridCursor_SetCount((Node0205bacc*)&battle->first, total);
-    GridCursor_SetCount((Node0205bacc*)&battle->second, total);
+    GridCursor_SetDimensions((GridCursor*)&battle->first, columns, rows, 0);
+    GridCursor_SetDimensions((GridCursor*)&battle->second, columns, rows, 0);
+    GridCursor_SetCount((GridCursor*)&battle->first, total);
+    GridCursor_SetCount((GridCursor*)&battle->second, total);
     battle->first.level = pages;
     battle->second.level = pages;
-    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&battle->first, selected);
+    GridCursor_SelectIfValid((Struct_0205bcdc*)&battle->first, selected);
     GridCursor_SetSelectedIndex(&battle->second, selected);
 }

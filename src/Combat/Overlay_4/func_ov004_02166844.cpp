@@ -12,9 +12,6 @@ enum { Enum_ov004_02166844_0 = 0, Enum_ov004_02166844_1 = 1, Enum_ov004_02166844
 #include "NitroSDK/LoadToVRAM.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0208b9a0 {
     unsigned int unknown_0_;
@@ -22,14 +19,14 @@ struct Struct_0208b9a0 {
     unsigned int unknown_8_;
     unsigned short unknown_c_, unknown_e_;
 };
-extern "C" void func_0208d82c(struct Struct_0208b9a0* arg0);
-extern "C" int* func_02094d6c(void);
-extern "C" int func_020421a0(void);
-extern "C" void func_020e2d24(int* arg0, int arg1, int arg2);
-extern "C" void* func_0205ec34(void);
-extern "C" void func_02095b30(int* arg0, int arg1);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void* func_ov004_02165e70(void* arg0, int arg1);
+void InitStreamHeader0208d82c(struct StreamHeader0208d82c* header);
+int* GetGlobal02109418_02094d6c(void);
+int MessageSystem_GetInstance(void);
+void SetFieldsAt0x4And0x8_020e2d24(int* obj, int a, int b);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void func_02095b30(int* g, int v);
+extern "C" void* func_ov011_021845f8(void* obj, int key);
+void* CheckTypeAndReturnNode_02165e70_02165e70(void* obj, int type);
 
 extern void* data_ov004_0217101c[2];
 extern int data_ov004_0217059c;
@@ -48,13 +45,13 @@ struct Struct_ov004_02166844 {
 };
 
 // USA: func_ov004_02166844
-extern "C" ARM int func_ov004_02166844(void* arg0) {
-    char* var0;
-    data_ov004_0217101c[Enum_ov004_02166844_0] = 0;
-    int* var1 = func_02094d6c();
-    char* var2 = (char*)func_0205ec34();
-    var0 = (char*)func_ov011_021845f8(arg0, 0);
-    if (var0 == 0) {
+extern "C" ARM int func_ov004_02166844(void* a1) {
+    char* node;
+    data_ov004_0217101c[MainIndex] = 0;
+    int* g = GetGlobal02109418_02094d6c();
+    char* c = (char*)Scenario_GetInstance();
+    node = (char*)func_ov011_021845f8(a1, 0);
+    if (node == 0) {
         return 0;
     }
 
@@ -113,9 +110,9 @@ extern "C" ARM int func_ov004_02166844(void* arg0) {
         ((void**)data_ov004_0217101c[Enum_ov004_02166844_1])[var9] = ((SafeAllocator*)(var0 + 4))->Allocate(0x80);
     }
 
-    char* var10 = (char*)func_020421a0();
-    *(unsigned char*)(var10 + 0x1000 + Enum_ov004_02166844_2402) = 1;
-    func_020e2d24((int*)(var10 + Enum_ov004_02166844_356 + Enum_ov004_02166844_6144), 9, 1);
-    func_020e2d24((int*)(var10 + Enum_ov004_02166844_392 + Enum_ov004_02166844_6144), 0x19, 1);
+    char* f = (char*)MessageSystem_GetInstance();
+    *(unsigned char*)(f + 0x1000 + FlagOffset) = 1;
+    SetFieldsAt0x4And0x8_020e2d24((int*)(f + FirstWindow + WindowPrefix), 9, 1);
+    SetFieldsAt0x4And0x8_020e2d24((int*)(f + SecondWindow + WindowPrefix), 0x19, 1);
     return 0;
 }

@@ -3,9 +3,6 @@
 #include "GameState/GameState.h"
 #include "World/Object3D.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_020fdd44;
 
@@ -23,28 +20,28 @@ struct Struct_ov017_0219dac4 {
 
 extern "C" void _ZN8Object3D10SetField06Et(Object3D* arg0, int arg1);
 extern "C" void* func_0202ae18(void);
-extern "C" struct Struct_020fdd44* func_02027ca4(void);
-extern "C" unsigned short* func_02012fe4(void);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_02053ed0(void* arg0);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_ov017_0219cdc0(unsigned short arg0, int arg1, signed char arg2);
-extern "C" void func_0203409c(unsigned char* arg0);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_ov017_021a01bc(unsigned char* arg0);
-extern "C" void func_ov017_021cdaa0(void);
+struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
+extern "C" void* Scenario_GetInstance(void);
+int GetField0x158_02053ed0(void* obj);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
+extern "C" void func_ov017_0219cdc0(unsigned short value, int a1, signed char id);
+void ClearField0xc4KeepBit0x8000_0203409c(unsigned char* obj);
+extern "C" int func_0202c540(void* p);
+extern "C" int func_0202c508(void* p);
+void SetByteIfDataAndCheckClear_021a01bc(unsigned char* self);
+void EnqueueEventTag147_021cdaa0(void);
 
 // USA: func_ov017_0219dac4
-extern "C" ARM void func_ov017_0219dac4(unsigned char* arg0, int arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    func_02027ca4();
-    unsigned short* var2 = func_02012fe4();
-    Struct_ov017_0219dac4* var3 = (Struct_ov017_0219dac4*)var0->GetPartyMemberByIndex(arg1);
-    func_0205ec34();
-    if (var3 == NULL) {
+extern "C" ARM void func_ov017_0219dac4(unsigned char* self, int id, int value) {
+    GameState* gs = GameState::GetInstance();
+    void* ctx = func_0202ae18();
+    ZoneRecords_GetInstance();
+    unsigned short* current = Zone3D_GetInstance();
+    Member_0219dac4* member = (Member_0219dac4*)gs->GetPartyMemberByIndex(id);
+    Scenario_GetInstance();
+    if (member == NULL) {
         return;
     }
 

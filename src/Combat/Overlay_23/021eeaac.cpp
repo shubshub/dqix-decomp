@@ -20,19 +20,19 @@ void CopyShortTriple0x8e4a_ov000_0215fa84(void* obj, short* a, short* b, short* 
 int AreAllListedCombatantsFlagged_021ed92c();
 void ItemTable_Init(void* obj);
 extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
-void* ZeroInitReturn020de824(void* obj);
+void* ItemTable_Construct(void* obj);
 void InitStruct0207cbe8(char* obj);
 extern "C" int func_0207d300(void* buf, int a, int b, int c);
 extern "C" int func_0207ccf0(void* buf, int a, int b, int c, int d, int e, int f);
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" Struct_0202b2f0* func_0202ae18(void);
-extern "C" int func_0202c1c0(Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0209a338(Struct_0200f3a4_8* arg0);
-extern "C" void func_0209a470(Struct_0209a470* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
-extern "C" void func_0209a804(int* arg0);
-extern "C" void func_0209a8b4(Struct_02086f24_6* arg0, SafeAllocator* arg1, Struct_02013fb4* arg2, int arg3);
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2* arg0);
+int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" SearchStruct* func_0202ae18(void);
+int TestBitBySignedByteIndex_0202c1c0(SearchStruct* search, int index);
+void ClearFirstTwoWords0209a338(Pair0209a338* pair);
+void SetupAndRunBufferedScript0209a470(Ctx0209a470* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
+void ClearField00209a804(int* field);
+void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
+void ResetFields_021eefac(Reset_021eefac* s);
 
 extern "C" int* _ZZ17GetGlobal021ffefcvE1s;
 extern const char* g_itemDataArchive;
@@ -147,35 +147,35 @@ extern "C" ARM int func_ov023_021eeaac(char* arg0) {
         if (*(short*)(*(char**)(self + regionalOffset4) + 0x8e4a) > 0) {
             count--;
             ((SafeAllocator*)buf)->ResetAllocatorPointer();
-            ZeroInitReturn020de824(buf + 0x14);
+            ItemTable_Construct(buf + 0x14);
             InitStruct0207cbe8(buf);
             InitStruct0207cbe8(buf);
             *(void**)(buf + 0x2c) = *(void**)(self + regionalOffset5);
             func_0207d300(buf, ids[count], 1, 0);
         }
-        var19 = *(void**)(arg0 + Enum_ov023_021eeaac_22796);
-        var20 = (Struct_ov023_021eeaac*)(arg0 + Enum_ov023_021eeaac_22736);
-        var21 = *(signed char*)(arg0 + Enum_ov023_021eeaac_22785);
-        var22 = GameState::GetInstance();
-        var23 = (char*)func_02010828(var22);
-        var24 = 0;
-        for (var14 = 0; var14 < *(unsigned char*)(var23 + 0xf7c); var14++) {
-            if (var21 & (1 << *(unsigned char*)(var23 + var14 + 0xf78))) {
-                var24 = 1;
+        list = *(void**)(self + regionalOffset5);
+        entry = (Entry021eeaac*)(self + regionalOffset3);
+        present = *(signed char*)(self + regionalOffset6);
+        gs = GameState::GetInstance();
+        party = (char*)GameState_GetParty(gs);
+        found = 0;
+        for (k = 0; k < *(unsigned char*)(party + 0xf7c); k++) {
+            if (present & (1 << *(unsigned char*)(party + k + 0xf78))) {
+                found = 1;
                 break;
             }
         }
-        if (var24) {
-            var28 = func_020100a8(var22);
-            for (var27 = 0; var27 < var9; var27++, var20++) {
-                ((SafeAllocator*)var25)->ResetAllocatorPointer();
-                func_020de824(var25 + 0x14);
-                func_0207cbe8(var25);
-                func_0207cbe8(var25);
-                *(void**)(var25 + 0x2c) = var19;
-                var6 = var20->unknown_5_;
-                if (var6 < 0) {
-                    var26 = func_0207d300(var25, var20->unknown_0_, 1, 1);
+        if (found) {
+            current = GameState_GetProtagonistIndex(gs);
+            for (j = 0; j < count; j++, entry++) {
+                ((SafeAllocator*)obj)->ResetAllocatorPointer();
+                ItemTable_Construct(obj + 0x14);
+                InitStruct0207cbe8(obj);
+                InitStruct0207cbe8(obj);
+                *(void**)(obj + 0x2c) = list;
+                slot = entry->slot;
+                if (slot < 0) {
+                    result = func_0207d300(obj, entry->id, 1, 1);
                 } else {
                     if (var28 != var6 && (func_0202c1c0(func_0202ae18(), var6) != 0 || var28 != 0)) {
                         if (var21 & (1 << var28)) {

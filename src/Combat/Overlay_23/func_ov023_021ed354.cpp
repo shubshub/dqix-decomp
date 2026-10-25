@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_0205de24_2;
-extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" int func_020421a0(void);
-extern "C" ARM void func_02046608(void* arg0, int arg1, int arg2, void* arg3, int arg4, int arg5, int arg6);
+struct Struct0205de24;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+int MessageSystem_GetInstance(void);
+extern "C" ARM void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02042058(char*, const char*);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
+void Text_Append(char*, const char*);
 #else
-extern "C" ARM void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" ARM void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 
@@ -58,25 +58,25 @@ extern "C" ARM void func_ov023_021ed354(char* arg0) {
     *(unsigned char*)(arg0 + 0x17a) = 0;
 
 #if defined(jpn)
-    char* var1 = *(char**)(arg0 + 0x20) + *(unsigned char*)(arg0 + 0x28) * 0x15c;
-    memset(*(void**)(arg0 + 0x1c), 0, 0x800);
-    func_02042058(*(char**)(arg0 + 0x1c), *(char**)(var1 + 4));
+    char* elem = *(char**)(obj + 0x20) + *(unsigned char*)(obj + 0x28) * 0x15c;
+    memset(*(void**)(obj + 0x1c), 0, 0x800);
+    Text_Append(*(char**)(obj + 0x1c), *(char**)(elem + 4));
 
 #else
-    void* var2 = (void*)func_020421a0();
-    memset(*(void**)(arg0 + 0x1c), 0, 0x960);
+    void* g = (void*)MessageSystem_GetInstance();
+    memset(*(void**)(obj + 0x1c), 0, 0x960);
 
-    void* var3 = *(void**)(arg0 + 0x20);
-    unsigned char var4 = *(unsigned char*)(arg0 + 0x28);
-    int var5 = *(int*)((char*)var3 + var4 * 0x244 + 4);
-    func_02046608(var2, 1, var5, *(void**)(arg0 + 0x1c), 0xe3, 0, 1);
+    void* base = *(void**)(obj + 0x20);
+    unsigned char idx = *(unsigned char*)(obj + 0x28);
+    int c = *(int*)((char*)base + idx * 0x244 + 4);
+    MessageSystem_FormatText(g, 1, c, *(void**)(obj + 0x1c), 0xe3, 0, 1);
 
 
 #endif
 #if defined(jpn)
-    func_0205d304(arg0 + 0xc4, *(void**)(arg0 + 0x1c), 0, 0, 0, 0, 0);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0);
 #else
-    func_0205d304(arg0 + 0xc4, *(void**)(arg0 + 0x1c), 0, 0, 0, 0, 0, 1);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0, 1);
 #endif
 
 }

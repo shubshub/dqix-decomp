@@ -37,12 +37,12 @@ struct Struct_02069234 {
     signed char unknown_1880_;
 };
 
-extern "C" char* func_020424ac(char* arg0);
-extern "C" int func_020d857c(signed char* arg0, signed char* arg1);
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_02005a94(void* arg0);
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
-extern "C" char* func_020e4958(char** arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+char* FindUnescapedAngleBracket_020424ac(char* str);
+int IsPrefixMatch020d857c(signed char* a, signed char* b);
+int STD_GetStringLength(const char* s);
+extern "C" int func_02005a94(void* p);
+extern "C" int memcmp(void* a, void* b, int n);
+extern "C" char* func_020e4958(char** dst, void* val, int a2, int a3, int a4, int a5);
 
 typedef void (*Type_02000c9c_14)(char* tag, char** dst, Struct_02069234* sb, int index);
 
@@ -93,12 +93,12 @@ extern "C" ARM void func_02069234(Struct_02069234* arg0, char* arg1, char* arg2)
                 if (!func_020d857c((signed char*)var4, (signed char*)var5->unknown_0_)) {
                     continue;
                 }
-                if (var5->unknown_4_ != 0) {
-                    int var6 = 0;
-                    int var7 = func_020d2ff0(var5->unknown_0_);
-                    signed char var8 = var4[var7];
-                    if (var8 >= '1' && var8 <= '9') {
-                        var6 = func_02005a94(var4 + var7) - 1;
+                if (rec->handler != 0) {
+                    int index = 0;
+                    int len = STD_GetStringLength(rec->prefix);
+                    signed char d = tag[len];
+                    if (d >= '1' && d <= '9') {
+                        index = func_02005a94(tag + len) - 1;
                     }
                     var5->unknown_4_(var4, &var0, arg0, var6);
                 }
@@ -126,15 +126,15 @@ extern "C" ARM void func_02069234(Struct_02069234* arg0, char* arg1, char* arg2)
                 if (var16 == 0) {
                     break;
                 }
-                int var17 = func_020d2ff0(var16);
-                if (func_02001aec(var4, var16, var17) == 0) {
-                    var3 = 1;
-                    var4 += var17;
-                    int var18 = 0;
-                    if (var15->unknown_5_ < 0) {
-                        signed char var19 = *var4;
-                        if (var19 >= '1' && var19 <= '9') {
-                            var18 = func_02005a94(var4) - 1;
+                int len = STD_GetStringLength(key);
+                if (memcmp(tag, key, len) == 0) {
+                    handled = 1;
+                    tag += len;
+                    int index = 0;
+                    if (opt->value < 0) {
+                        signed char d = *tag;
+                        if (d >= '1' && d <= '9') {
+                            index = func_02005a94(tag) - 1;
                         }
                     }
                     switch (var15->unknown_4_) {
@@ -162,26 +162,26 @@ extern "C" ARM void func_02069234(Struct_02069234* arg0, char* arg1, char* arg2)
             arg1 = var2 + 1;
             continue;
         }
-        if (var1 == '[') {
-            if (func_02001aec(arg1, data_020f0904, 4) == 0) {
-                arg1 += 4;
-                GameState* var20 = GameState::GetInstance();
-                Struct_02069234_4* var21 = (Struct_02069234_4*)func_0200ff1c(var20, arg0->unknown_1880_);
-                if (var21 != 0) {
-                    Struct_02069234_2* var22 = var21->unknown_150_->inline_02069234();
-                    if (var22 != 0) {
-                        if (var22->unknown_18_ > 0) {
-                            if (var22->unknown_8_0_ == 0) {
-                                var0 += sprintf(var0, var22->unknown_4_);
+        if (c == '[') {
+            if (memcmp(str, data_020f0904, 4) == 0) {
+                str += 4;
+                GameState* gameState = GameState::GetInstance();
+                Combatant02069234* combatant = (Combatant02069234*)GetCombatantWithFlag0x100_0200ff1c(gameState, sb->combatantId);
+                if (combatant != 0) {
+                    StatusEffectEntry02069234* eff = combatant->statusTable->GetEffect();
+                    if (eff != 0) {
+                        if (eff->duration > 0) {
+                            if (eff->kind == 0) {
+                                cursor += sprintf(cursor, eff->fmt);
                             }
                         }
                     }
                 }
                 goto skip_bracket;
             }
-            if (func_02001aec(arg1, data_020f0909, 6) == 0) {
-                arg1 += 6;
-                var0 += sprintf(var0, arg0->unknown_3ac_);
+            if (memcmp(str, data_020f0909, 6) == 0) {
+                str += 6;
+                cursor += sprintf(cursor, sb->text);
                 goto skip_bracket;
             }
             *var0 = var1;

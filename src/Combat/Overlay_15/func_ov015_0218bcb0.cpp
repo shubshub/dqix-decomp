@@ -23,15 +23,15 @@ struct Struct_ov015_02193df0
     unsigned int unknown_0_[11][2];
 };
 
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" Struct_ov015_0218bcb0_2* func_ov015_021931f8(char* arg0);
-extern "C" Struct_ov015_0218bcb0_2* func_ov015_0219322c(char* arg0);
-extern "C" Struct_ov015_0218bcb0_2* func_ov015_02193260(char* arg0);
-extern "C" void func_0205563c(Struct_0205563c* arg0);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+ViewerSlot* FindFreeSlot021931f8(char* viewer);
+ViewerSlot* FindFreeSlot0219322c(char* viewer);
+ViewerSlot* FindFreeSlot02193260(char* viewer);
+void ClearSevenWords_0205563c(Struct205563c* obj);
 
-extern AllocatorUnion data_02114e20;
-extern const Struct_ov015_02193d80 data_ov015_02193d80;
-extern const Struct_ov015_02193df0 data_ov015_02193df0;
+extern AllocatorUnion g_mainAllocator;
+extern const ObjectSizes data_ov015_02193d80;
+extern const PartSizes data_ov015_02193df0;
 
 // USA: func_ov015_0218bcb0
 extern "C" ARM int func_ov015_0218bcb0(void* arg0)
@@ -39,31 +39,31 @@ extern "C" ARM int func_ov015_0218bcb0(void* arg0)
     Struct_ov015_0218bcb0* var0 = static_cast<Struct_ov015_0218bcb0*>(arg0);
     if (var0->unknown_1c_ == 0 || var0->unknown_1c_ == 1)
     {
-        Struct_ov015_02193df0 var1 = data_ov015_02193df0;
-        var0->unknown_8_ = (SafeAllocator*)func_02012d88(&data_02114e20, 10 * sizeof(SafeAllocator));
-        if (var0->unknown_8_ == NULL)
+        PartSizes sizes = data_ov015_02193df0;
+        self->allocators_ = (SafeAllocator*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 10 * sizeof(SafeAllocator));
+        if (self->allocators_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
         }
-        var0->unknown_24_ = (Object3D*)func_02012d88(&data_02114e20, 10 * sizeof(Object3D));
-        if (var0->unknown_24_ == NULL)
+        self->objects_ = (Object3D*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 10 * sizeof(Object3D));
+        if (self->objects_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
         }
         for (int var2 = 0; var2 < 10; var2++)
         {
-            var0->unknown_8_[var2].ResetAllocatorPointer();
-            void* var3 = func_02012d88(&data_02114e20, var1.unknown_0_[var2][var0->unknown_1c_]);
-            if (var3 == NULL)
+            self->allocators_[i].ResetAllocatorPointer();
+            void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, sizes.sizes_[i][self->kind_]);
+            if (buffer == NULL)
                 return 0;
             var0->unknown_8_[var2].CreateTypeA(var3, var1.unknown_0_[var2][var0->unknown_1c_]);
             var0->unknown_8_[var2].Reset();
             var0->unknown_24_[var2].Initialize();
         }
-        var0->unknown_20_ = (int*)func_02012d88(&data_02114e20, 10 * sizeof(int));
-        if (var0->unknown_20_ == NULL)
+        self->parts_ = (int*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 10 * sizeof(int));
+        if (self->parts_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
@@ -85,10 +85,10 @@ extern "C" ARM int func_ov015_0218bcb0(void* arg0)
             func_ov015_0218f0c4(var0);
             return 0;
         }
-        var0->unknown_4_->unknown_4_ = 1;
-        var0->unknown_18_ = var1.unknown_0_[10][var0->unknown_1c_];
-        var0->unknown_14_ = func_02012d88(&data_02114e20, var0->unknown_18_);
-        if (var0->unknown_14_ == NULL)
+        self->slot_->used_ = 1;
+        self->bufferSize_ = sizes.sizes_[10][self->kind_];
+        self->buffer_ = AllocatorUnion_AllocateRounded(&g_mainAllocator, self->bufferSize_);
+        if (self->buffer_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
@@ -96,16 +96,16 @@ extern "C" ARM int func_ov015_0218bcb0(void* arg0)
     }
     else
     {
-        Struct_ov015_02193d80 var4 = data_ov015_02193d80;
-        var0->unknown_8_ = (SafeAllocator*)func_02012d88(&data_02114e20, sizeof(SafeAllocator));
-        if (var0->unknown_8_ == NULL)
+        ObjectSizes sizes = data_ov015_02193d80;
+        self->allocators_ = (SafeAllocator*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(SafeAllocator));
+        if (self->allocators_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
         }
-        var0->unknown_8_->ResetAllocatorPointer();
-        void* var5 = func_02012d88(&data_02114e20, var4.unknown_0_[var0->unknown_1c_]);
-        if (var5 == NULL)
+        self->allocators_->ResetAllocatorPointer();
+        void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, sizes.sizes_[self->kind_]);
+        if (buffer == NULL)
             return 0;
         var0->unknown_8_->CreateTypeA(var5, var4.unknown_0_[var0->unknown_1c_]);
         var0->unknown_8_->Reset();
@@ -118,16 +118,16 @@ extern "C" ARM int func_ov015_0218bcb0(void* arg0)
         var0->unknown_4_->unknown_4_ = 1;
         if (var0->unknown_1c_ == 2 || var0->unknown_1c_ == 3)
         {
-            var0->unknown_18_ = 0xc000;
-            var0->unknown_14_ = func_02012d88(&data_02114e20, var0->unknown_18_);
-            if (var0->unknown_14_ == NULL)
+            self->bufferSize_ = 0xc000;
+            self->buffer_ = AllocatorUnion_AllocateRounded(&g_mainAllocator, self->bufferSize_);
+            if (self->buffer_ == NULL)
             {
                 func_ov015_0218f0c4(var0);
                 return 0;
             }
         }
-        var0->unknown_24_ = (Object3D*)func_02012d88(&data_02114e20, sizeof(Object3D));
-        if (var0->unknown_24_ == NULL)
+        self->objects_ = (Object3D*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(Object3D));
+        if (self->objects_ == NULL)
         {
             func_ov015_0218f0c4(var0);
             return 0;
@@ -135,8 +135,8 @@ extern "C" ARM int func_ov015_0218bcb0(void* arg0)
         var0->unknown_24_->Initialize();
         if (var0->unknown_1c_ == 4)
         {
-            var0->unknown_28_ = (Struct_0205563c*)func_02012d88(&data_02114e20, 0x1c);
-            if (var0->unknown_28_ == NULL)
+            self->effect_ = (Struct205563c*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x1c);
+            if (self->effect_ == NULL)
             {
                 func_ov015_0218f0c4(var0);
                 return 0;

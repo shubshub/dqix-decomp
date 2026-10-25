@@ -5,25 +5,22 @@
 #include "Util/Random.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 extern "C" void* func_0202ae18(void);
-extern "C" unsigned char* func_02012fe4(void);
-struct Struct_0200ffc0;
-extern "C" void* func_0200ffc0(struct Struct_0200ffc0* arg0);
-extern "C" unsigned char* func_0205ec34(void);
-extern "C" int func_02046b08(void** arg0);
-struct Struct_02015438;
-extern "C" int func_02046b24(struct Struct_02015438** arg0);
-extern "C" int func_02053cdc(int* arg0);
-extern "C" int func_02039760(void* arg0);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+extern "C" unsigned char* Zone3D_GetInstance(void);
+struct PointerField32c_ffc0;
+void* GetPointerAt0x32c_0200ffc0(struct PointerField32c_ffc0* obj);
+extern "C" unsigned char* Scenario_GetInstance(void);
+int IsField0Null_02046b08(void** obj);
+struct HeadNode02046b24;
+int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
+int GetIntField0x264_02039760(void* obj);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 int NextRandomBetween(struct Random* rng, int lo, int hi);
-extern "C" void func_ov017_021b6f18(void* arg0);
-extern "C" void func_ov017_02196c08(unsigned char* arg0);
-extern "C" int func_020100a8(GameState* arg0);
+extern "C" void func_ov017_021b6f18(void* node);
+void InitStruct_02196c08(unsigned char* obj);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" unsigned short func_ov017_021a1a20(void);
 extern "C" void* func_02033fa0(void* arg0);
 struct Struct_0204be3c;
@@ -78,14 +75,14 @@ extern "C" ARM int func_ov017_02196c4c(Struct_ov017_02196c4c* arg0) {
 #endif
     GameState* var0 = GameState::GetInstance();
     func_0202ae18();
-    unsigned char* var1 = func_02012fe4();
-    unsigned short* var2 = arg0->unknown_36f8_;
-    GameObject* var3 = var0->GetUnknownGameObject();
-    void* var4 = func_0200ffc0((struct Struct_0200ffc0*)var0);
-    LightingManager* var5;
-    Struct_ov017_02196c4c_2* var6 = (Struct_ov017_02196c4c_2*)GetGameResources()->unknown_ptr_array_371c[6];
-    unsigned char* var7 = func_0205ec34();
-    var5 = LightingManager::GetInstance();
+    unsigned char* work = Zone3D_GetInstance();
+    unsigned short* entry = self->entry;
+    GameObject* combatant = battle->GetUnknownGameObject();
+    void* field32c = GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battle);
+    LightingManager* lighting;
+    Actor02196c4c* actor = (Actor02196c4c*)GetGameResources()->unknown_ptr_array_371c[6];
+    unsigned char* flags = Scenario_GetInstance();
+    lighting = LightingManager::GetInstance();
 
     if (func_02046b08((void**)arg0->unknown_36fc_) == 0) {
         return func_02046b24((struct Struct_02015438**)arg0->unknown_36fc_) == 0x45 ? 0 : 2;
@@ -111,7 +108,7 @@ extern "C" ARM int func_ov017_02196c4c(Struct_ov017_02196c4c* arg0) {
     if (*var2 != 10000) {
         return 0;
     }
-    if (!func_0206dfb0((int)var7, var7 + 0x8c, 0x2b)) {
+    if (!Scenario_TestFlag((int)flags, flags + 0x8c, 0x2b)) {
         return 0;
     }
 
@@ -124,19 +121,19 @@ extern "C" ARM int func_ov017_02196c4c(Struct_ov017_02196c4c* arg0) {
         return 0;
     }
 
-    func_ov017_021b6f18(arg0->unknown_3718_);
-    Struct_ov017_02196c4c_3 var9;
-    func_ov017_02196c08((unsigned char*)&var9);
-    var9.unknown_0_ = 1;
-    var9.unknown_1_ = func_020100a8(var0);
-    var9.unknown_4_ = func_ov017_021a1a20();
-    var9.unknown_2_ = 0xffff;
-    var9.unknown_e_ = 1;
-    var9.unknown_10_ = func_0204be3c((struct Struct_0204be3c*)func_02033fa0(var4));
-    var9.unknown_f_ = func_ov017_021970a0(0);
-    func_ov017_021b6e70(&var9, var9.unknown_2_);
-    var9.unknown_12_ = var5->timeOfDayIndex_;
-    func_ov017_021b7104(arg0->unknown_3718_, &var9);
-    func_020469b4((struct Struct_0201bdac_2*)arg0->unknown_36fc_, (struct Struct_0201bdac*)arg0->unknown_3718_);
+    func_ov017_021b6f18(self->node);
+    Event02196c4c evt;
+    InitStruct_02196c08((unsigned char*)&evt);
+    evt.kind = 1;
+    evt.field_0x1 = GameState_GetProtagonistIndex(battle);
+    evt.id = func_ov017_021a1a20();
+    evt.tag = 0xffff;
+    evt.field_0xe = 1;
+    evt.color = ConvertColorToDecimal_0204be3c((struct ColorHolder*)GetPtrField0x114_02033fa0(field32c));
+    evt.field_0xf = func_ov017_021970a0(0);
+    func_ov017_021b6e70(&evt, evt.tag);
+    evt.timeOfDay = lighting->timeOfDayIndex_;
+    func_ov017_021b7104(self->node, &evt);
+    AppendNodeToTail((struct TailList020469b4*)self->list, (struct TailNode020469b4*)self->node);
     return 1;
 }

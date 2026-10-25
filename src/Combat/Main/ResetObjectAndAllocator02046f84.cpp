@@ -7,9 +7,9 @@ void SetField0x7cClearFields0x1ec0x1ee_0202e874(unsigned char* obj, unsigned sho
 struct AngleTrig0202e9a4;
 void SetAngleAndTrigTable0202e9a4(struct AngleTrig0202e9a4* objParam, int angle);
 extern "C" void func_0202eab8(void* obj);
-void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
-extern int data_02114e20;
+extern int g_mainAllocator;
 
 struct Struct02046f84 {
     int field0;
@@ -23,7 +23,7 @@ struct Struct02046f84 {
 ARM void ResetObjectAndAllocator02046f84(struct Struct02046f84* s) {
     GameState* battleStruct = GameState::GetInstance();
     battleStruct->GetResources();
-    void* obj = GetField0x3b0Value_020100bc(battleStruct);
+    void* obj = battleStruct->GetCamera();
     SetField0x7cClearFields0x1ec0x1ee_0202e874((unsigned char*)obj, 0);
     SetAngleAndTrigTable0202e9a4((struct AngleTrig0202e9a4*)obj, 0xf000);
     func_0202eab8(obj);
@@ -33,7 +33,7 @@ ARM void ResetObjectAndAllocator02046f84(struct Struct02046f84* s) {
         if (p != NULL) {
             s->allocator.Reset();
             s->allocator.Destroy();
-            TailForward02012da4((AllocatorUnion*)&data_02114e20, p);
+            AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
         }
     }
     s->field0 = 0;

@@ -3,10 +3,10 @@
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
-int AppendString02042058(char* dst, const char* src);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
 int AppendFormatted02041fac(char* buf, int a, int b);
 int AppendXYTag_02041a90(char* dst, int x, int y);
 
@@ -20,7 +20,7 @@ struct Entry020a83b0* FindEntryByByteId020a83b0(struct List020a83b0* list, int i
 extern "C" int _s32_div_f(int a, int b);
 extern "C" void __clear(void* buf, int n);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
-extern "C" int func_020420e8(const char* str, int flags);
+extern "C" int Font_GetTextWidth(const char* str, int flags);
 
 extern int data_ov002_0216d2a8;
 
@@ -36,9 +36,9 @@ ARM void AppendEntryList_0215f224(char* p, char* dst, int flag2) {
     int cursor = *(short*)(p + 0x1bfc) % 6;
 
     if (flag2) {
-        AppendFrameTag02041c08(dst, cursor, 8, 5, 5, 5);
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    AppendCursorTag_02041ea4(dst, cursor);
+    Text_AppendCursorTag(dst, cursor);
 
     char* fld = p + 0x2c8 + 0xc00;
     int out1, out2;
@@ -52,9 +52,9 @@ ARM void AppendEntryList_0215f224(char* p, char* dst, int flag2) {
         struct Entry020a83b0* entry = FindEntryByByteId020a83b0((struct List020a83b0*)(*(int*)(p + 0x2000 + 0x474)), (short)i);
         if (entry != NULL) {
             int rem = i % 6;
-            AppendNameTag_02041b70(dst, rem, *(const char**)((char*)entry + 4));
+            Text_AppendNTag(dst, rem, *(const char**)((char*)entry + 4));
             if (i != out2 - 1) {
-                AppendString02042058(dst, *(char**)(p + 0x1000 + 0xbdc));
+                Text_Append(dst, *(char**)(p + 0x1000 + 0xbdc));
             }
         }
     }
@@ -65,10 +65,10 @@ ARM void AppendEntryList_0215f224(char* p, char* dst, int flag2) {
         char buf[4];
         __clear(buf, 4);
         sprintf(buf, (const char*)&data_ov002_0216d2a8, field68 + 1, n);
-        int width = func_020420e8(buf, 0);
+        int width = Font_GetTextWidth(buf, 0);
         int rounded = width + (width & 1);
         int xoff = (0x78 - rounded) >> 1;
         AppendXYTag_02041a90(dst, xoff, 0x63);
-        AppendString02042058(dst, buf);
+        Text_Append(dst, buf);
     }
 }

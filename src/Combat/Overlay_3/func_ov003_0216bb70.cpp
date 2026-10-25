@@ -35,10 +35,10 @@ struct Struct_ov003_0216bb70 {
     unsigned char unknown_13ec_;
 };
 
-extern "C" Struct_ov000_0217636c_2* func_020421a0();
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern AllocatorUnion data_02114e20;
+GlobalField0x1c* MessageSystem_GetInstance();
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern AllocatorUnion g_mainAllocator;
 
 extern "C" void func_ov003_0215c650(void* arg0);
 extern "C" void func_ov003_0215c568(void* arg0, SafeAllocator* arg1);
@@ -55,29 +55,29 @@ extern "C" ARM void func_ov003_0216bb70(Struct_ov003_0216bb70* arg0)
 {
     GameState* var0 = GameState::GetInstance();
 
-    if (arg0->unknown_6_ == 0) {
-        memset(func_020421a0()->unknown_5c_, 0, REGION_LAYOUT(0x800, 0x960));
-        void* var1 = func_02012d88(&data_02114e20, 0x10000);
-        VectorizedMemset(var1, 0, 0x10000);
-        arg0->unknown_12d4_.CreateTypeA(var1, 0x10000);
-        arg0->unknown_12d4_.Reset();
-        func_ov003_0215c650(arg0->unknown_14_);
-        func_ov003_0215c568(arg0->unknown_14_, &arg0->unknown_12d4_);
-        arg0->unknown_404_ = 1;
-        arg0->unknown_6_ = 1;
+    if (self->step == 0) {
+        memset(MessageSystem_GetInstance()->field_0x5c, 0, REGION_LAYOUT(0x800, 0x960));
+        void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x10000);
+        VectorizedMemset(buffer, 0, 0x10000);
+        self->allocator.CreateTypeA(buffer, 0x10000);
+        self->allocator.Reset();
+        func_ov003_0215c650(self->loader);
+        func_ov003_0215c568(self->loader, &self->allocator);
+        self->field_0x404 = 1;
+        self->step = 1;
     }
     if (arg0->unknown_6_ == 1) {
         if (func_ov003_0215c924(arg0->unknown_14_, var0->GetTickCount())) {
             arg0->unknown_6_ = 2;
         }
     }
-    if (arg0->unknown_6_ == 2) {
-        unsigned char var2 = arg0->unknown_405_;
-        func_ov003_0215c800(arg0->unknown_14_);
-        SignedAllocatorHeader* var3 = arg0->unknown_12d4_.GetSignedAllocator();
-        if (var3 != NULL) {
-            arg0->unknown_12d4_.Destroy();
-            func_02012da4(&data_02114e20, var3);
+    if (self->step == 2) {
+        unsigned char succeeded = self->loadSucceeded;
+        func_ov003_0215c800(self->loader);
+        SignedAllocatorHeader* header = self->allocator.GetSignedAllocator();
+        if (header != NULL) {
+            self->allocator.Destroy();
+            AllocatorUnion_Free(&g_mainAllocator, header);
         }
         if (var2 == 0) {
             arg0->unknown_4_ = 7;
@@ -85,8 +85,8 @@ extern "C" ARM void func_ov003_0216bb70(Struct_ov003_0216bb70* arg0)
             return;
         }
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1700;
-        arg0->unknown_a_ = 3;
-        func_020421a0()->unknown_998_ = 1;
+        self->field_0xa = 3;
+        MessageSystem_GetInstance()->field_0x998 = 1;
 #if defined(jpn)
         func_ov003_0216d8d4(arg0, 0x29);
 #else

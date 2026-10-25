@@ -1,39 +1,39 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-struct Struct_ov004_02154350_3 { unsigned int unknown_0_; SafeAllocator unknown_4_; };
-struct Struct_ov004_02154350 { short unknown_0_; short unknown_2_; unsigned char unknown_4_; unsigned char unknown_5_; };
-struct Struct_ov004_02154350_2 { Struct_ov004_02154350 unknown_0_[20]; unsigned short unknown_78_; unsigned short unknown_7a_; unsigned char unknown_7c_; };
-struct Struct_0201099c_10;
-struct Struct_ov002_0215b2c8;
-extern "C" Struct_ov004_02154350_3* func_ov011_021845f8(void*, int);
+struct AllocationNode02154350 { unsigned int field_0; SafeAllocator allocator; };
+struct Entry02154350 { short category; short index; unsigned char total; unsigned char matched; };
+struct Table02154350 { Entry02154350 entries[20]; unsigned short total; unsigned short matched; unsigned char side; };
+struct ItemTable;
+struct ObjStruct_021e1474;
+extern "C" AllocationNode02154350* func_ov011_021845f8(void*, int);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" void* func_ov023_021f6880(void*, int);
 extern "C" void func_ov004_02153b6c(void*, int, int, int, short*, short*);
-extern "C" void func_ov004_021545f0(Struct_ov004_02154350_2*, int, short, short, unsigned char, unsigned char);
-extern "C" void func_ov023_021e1518(void*);
-extern "C" void func_ov023_021e1474(Struct_ov002_0215b2c8*, Struct_0201099c_10*);
-extern Struct_ov004_02154350_2* data_ov004_021707c0;
+extern "C" void func_ov004_021545f0(Table02154350*, int, short, short, unsigned char, unsigned char);
+void ClearElements_021e1518(void*);
+void RefreshEntryStatusFlags_021e1474(ObjStruct_021e1474*, ItemTable*);
+extern Table02154350* data_ov004_021707c0;
 
 class Struct_ov004_02154350_4 {
 public:
-    virtual void inline_ov004_02154350_60(); virtual void inline_ov004_02154350(); virtual void inline_ov004_02154350_2(); virtual void inline_ov004_02154350_3();
-    virtual void inline_ov004_02154350_4(); virtual void inline_ov004_02154350_5(); virtual void inline_ov004_02154350_6(); virtual void inline_ov004_02154350_7();
-    virtual void inline_ov004_02154350_8(); virtual void inline_ov004_02154350_9(); virtual void inline_ov004_02154350_10(); virtual void inline_ov004_02154350_11();
-    virtual void inline_ov004_02154350_12(); virtual void inline_ov004_02154350_13(); virtual void inline_ov004_02154350_14(); virtual void inline_ov004_02154350_15();
-    virtual void inline_ov004_02154350_16(); virtual void inline_ov004_02154350_17(); virtual void inline_ov004_02154350_18(); virtual void inline_ov004_02154350_19();
-    virtual void inline_ov004_02154350_20(); virtual void inline_ov004_02154350_21(); virtual void inline_ov004_02154350_22(); virtual void inline_ov004_02154350_23();
-    virtual void inline_ov004_02154350_24(); virtual void inline_ov004_02154350_25(); virtual void inline_ov004_02154350_26(); virtual void inline_ov004_02154350_27();
-    virtual void inline_ov004_02154350_28(); virtual void inline_ov004_02154350_29(); virtual void inline_ov004_02154350_30(); virtual void inline_ov004_02154350_31();
-    virtual void inline_ov004_02154350_32(); virtual void inline_ov004_02154350_33(); virtual void inline_ov004_02154350_34(); virtual void inline_ov004_02154350_35();
-    virtual void inline_ov004_02154350_36(); virtual void inline_ov004_02154350_37(); virtual void inline_ov004_02154350_38(); virtual void inline_ov004_02154350_39();
-    virtual void inline_ov004_02154350_40(); virtual void inline_ov004_02154350_41(); virtual void inline_ov004_02154350_42(); virtual void inline_ov004_02154350_43();
-    virtual void inline_ov004_02154350_44(); virtual void inline_ov004_02154350_45(); virtual void inline_ov004_02154350_46(); virtual void inline_ov004_02154350_47();
-    virtual void inline_ov004_02154350_48(); virtual void inline_ov004_02154350_49(); virtual void inline_ov004_02154350_50(); virtual void inline_ov004_02154350_51();
-    virtual void inline_ov004_02154350_52(); virtual void inline_ov004_02154350_53(); virtual void inline_ov004_02154350_54(); virtual void inline_ov004_02154350_55();
-    virtual void inline_ov004_02154350_56(); virtual void inline_ov004_02154350_57();
-    virtual Struct_0201099c_10* inline_ov004_02154350_58();
-    virtual Struct_ov002_0215b2c8* inline_ov004_02154350_59();
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
+    virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+    virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43();
+    virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
+    virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51();
+    virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55();
+    virtual void v56(); virtual void v57();
+    virtual ItemTable* GetContainer();
+    virtual ObjStruct_021e1474* GetEntries();
 };
 
 // USA: func_ov004_02154350

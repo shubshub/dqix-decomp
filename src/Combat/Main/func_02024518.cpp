@@ -60,37 +60,37 @@ extern short data_020e7076[][2];
 extern signed char data_020e7056[][2];
 extern signed char data_020e7057[][2];
 
-extern "C" void *func_0203b628();
-extern "C" Zone3D *func_02012fe4();
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_02027974(void *arg0, const unsigned char* arg1, int arg2);
-extern "C" void func_0203b8bc(void *arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7,
-                              unsigned short arg8);
-extern "C" void func_0203b718(void *arg0, int arg1, int arg2, int arg3);
-extern "C" Struct_02024518_3 *func_02027878(Struct_02024518_2 *arg0, int arg1);
-extern "C" void func_0203bcb8(Struct_02020fc4_3 *arg0, int arg1, int arg2);
-extern "C" void func_0202441c(Struct_0202441c *arg0);
-extern "C" int func_020243b8(void *arg0, int arg1);
-extern "C" int func_02024d48(Struct_020236dc* arg0, int arg1);
-extern "C" void func_0202756c(void *arg0, int arg1, int arg2, int arg3, unsigned char arg4, unsigned char arg5,
-                              unsigned short arg6, unsigned char arg7, int arg8, int arg9);
+void *GetData02105254_0203b628();
+extern "C" Zone3D *Zone3D_GetInstance();
+int IsInRange0201b5b0(int id);
+extern "C" void func_02027974(void *object, const unsigned char* adjacencyData, int state);
+extern "C" void func_0203b8bc(void *data, int mode, int index, int x, int y, int state, int width, int height,
+                              unsigned short palette);
+void SetArraySlotFlag0203b718(void *owner, int mode, int index, int value);
+Entry_02027878 *GetEntryFromList(List_02027878 *list, int index);
+void ForwardParamsToB8bc_0203bcb8(Bcb8Params *params, int a, int b);
+void AccumulateBattleTimer0202441c(BattleTimer0202441c *receiver);
+int CheckCombatantReadyForAction020243b8(void *receiver, int combatantId);
+int CheckActionAllowed(CombatActionPosition* entry, int state);
+void SetElementFields0202756c(void *receiver, int x, int y, int index, unsigned char type, unsigned char flags,
+                              unsigned short palette, unsigned char opacity, int scaleX, int scaleY);
 
 // USA: func_02024518
 // JPN: func_02023eec
-extern "C" ARM void func_02024518(Struct_02024518_4 *arg0) {
-    int var0;
-    int var1;
-    GameState *var2  = GameState::GetInstance();
-    GameObject *var3    = var2->GetUnknownGameObject();
-    void *var4    = func_0203b628();
-    Zone3D *var5          = func_02012fe4();
-    int var6;
-    int var7            = var5->currentZoneID_;
-    Vector3i var8     = var3->obj3D_.position_;
-    Struct_020236dc var9[17];
-    unsigned char var10[32];
-    memset(var10, 0, sizeof(var10));
-    var6 = func_020236dc(var9, var10, &var8);
+extern "C" ARM void func_02024518(MapReceiver02024518 *self) {
+    int pz;
+    int px;
+    GameState *gameState  = GameState::GetInstance();
+    GameObject *object    = gameState->GetUnknownGameObject();
+    void *displayState    = GetData02105254_0203b628();
+    Zone3D *zone          = Zone3D_GetInstance();
+    int count;
+    int zoneId            = zone->currentZoneID_;
+    Vector3i position     = object->obj3D_.position_;
+    CombatActionPosition entries[17];
+    unsigned char groups[32];
+    memset(groups, 0, sizeof(groups));
+    count = func_020236dc(entries, groups, &position);
 
     fix32_t var11 = arg0->unknown_38_;
     int var12   = (int) ((float) FIX32_MULTIPLY(arg0->unknown_5ac_, arg0->unknown_38_) / 4096.0f);

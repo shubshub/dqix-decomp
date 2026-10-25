@@ -4,27 +4,23 @@
 #include "GameState/GameState.h"
 #include "Filesystem/FileIO.h"
 
-#ifdef jpn
-
-#define data_02108e78 data_02108dbc
-#endif
-
 extern "C"
 {
     // rng value between 0 and max-1 from A-table
     int func_02032370(int max);
 }
 
+// What the treasure scripts' opcodes work on while LoadZoneContainers or LoadFromScript runs one.
 struct {
-    LootDistribution* unknown_0_;
-    LootableContainerManager* unknown_4_;
-    SafeAllocator* unknown_8_;
-} extern data_02108e78;
+    LootDistribution* distribution;
+    LootableContainerManager* manager;
+    SafeAllocator* allocator;
+} extern Loot_scriptContext;
 
-extern LootableContainerManager data_02108e90;
+extern LootableContainerManager LootableContainerManager_mainInstance;
 
 LootableContainerManager *LootableContainerManager::GetMainInstance() {
-    return &data_02108e90;
+    return &LootableContainerManager_mainInstance;
 }
 
 int Loot_Opcode_64(Script::Parameter* params, int numParams) { return 1; }
@@ -33,7 +29,7 @@ int Loot_Opcode_65(Script::Parameter* params, int numParams) { return 1; }
 
 int LootManager_Unknown_66(Script::Parameter* params, int numParams)
 {
-    data_02108e78.unknown_4_->unk_10 = params[0].ToInt();
+    Loot_scriptContext.manager->unk_10 = params[0].ToInt();
     return 1;
 }
 
@@ -41,7 +37,7 @@ int LootManager_CreateContainer(Script::Parameter* params, int numParams)
 {
     (void)GetGameResources();
     LootableContainerManager::Container* container =
-        (LootableContainerManager::Container*)data_02108e78.unknown_8_->Allocate(sizeof(LootableContainerManager::Container));
+        (LootableContainerManager::Container*)Loot_scriptContext.allocator->Allocate(sizeof(LootableContainerManager::Container));
     if (container == NULL)
         return 0;
 
@@ -54,19 +50,19 @@ int LootManager_CreateContainer(Script::Parameter* params, int numParams)
 
     container->containerType = (flags >> 4) & 7;
     container->lootType = (flags >> 2) & 3;
-    container->unk_4_0 = flags & 3;
+    container->lock = flags & 3;
 
-    if (container->containerType == 3)
+    if (container->containerType == LootableContainerType_Cupboard)
     {
         container->position.x = 0;
         container->position.y = 0;
         container->position.z = 0;
-        container->unk_6 = 0;
-        container->unk_6 = (params++)->ToInt();
+        container->angleOrCupboardNode = 0;
+        container->angleOrCupboardNode = (params++)->ToInt();
     }
     else
     {
-        if (container->containerType == 0 || container->containerType == 4)
+        if (container->containerType == LootableContainerType_RedChest || container->containerType == LootableContainerType_BlueChest)
         {
             fix32_t entries[4] = { 0 };
             for (int counter = 0; counter < 4; counter++)
@@ -84,7 +80,7 @@ int LootManager_CreateContainer(Script::Parameter* params, int numParams)
             container->position.x = entries[0];
             container->position.y = entries[1];
             container->position.z = entries[2];
-            container->unk_6 = entries[3];
+            container->angleOrCupboardNode = entries[3];
         }
         else
         {
@@ -105,10 +101,10 @@ int LootManager_CreateContainer(Script::Parameter* params, int numParams)
             container->position.y = entries[1];
             container->position.z = entries[2];
             // out of range read?! probably not used in practice
-            container->unk_6 = entries[3];
+            container->angleOrCupboardNode = entries[3];
         }
     }
-    data_02108e78.unknown_4_->RegisterContainer(container);
+    Loot_scriptContext.manager->RegisterContainer(container);
     return 1;
 }
 
@@ -122,11 +118,11 @@ void LootableContainerManager::Reset()
 
 void LootableContainerManager::ResetAllocator(SafeAllocator *alloc)
 {
-    data_02108e78.unknown_8_ = &GetGameResources()->lootableContainerAllocator_18c_;
+    Loot_scriptContext.allocator = &GetGameResources()->lootableContainerAllocator_18c_;
     if (alloc != NULL)
         alloc->Reset();
     else
-        data_02108e78.unknown_8_->Reset();
+        Loot_scriptContext.allocator->Reset();
     pContainerList_ = 0;
     numEntries_ = 0;
 }
@@ -149,19 +145,19 @@ void LootableContainerManager::LoadZoneContainers(const void *treasureArchive,
     unsigned int scriptFileLength;
     if (!GetFileInNarcPermissive(treasureArchive, scriptFilename, &scriptFile, &scriptFileLength))
         return;
-    data_02108e78.unknown_4_ = this;
+    Loot_scriptContext.manager = this;
     GameResources* resources = GetGameResources();
 
     if (alloc != NULL)
-        data_02108e78.unknown_8_ = alloc;
+        Loot_scriptContext.allocator = alloc;
     else
-        data_02108e78.unknown_8_ = &resources->lootableContainerAllocator_18c_;
+        Loot_scriptContext.allocator = &resources->lootableContainerAllocator_18c_;
     Script runner;
     runner.Initialize();
     runner.SetOpcodeLookup(s_zoneContainerOpcodes);
     runner.Load(scriptFile, scriptFileLength);
     runner.Execute();
-    data_02108e78.unknown_8_ = &resources->lootableContainerAllocator_18c_;
+    Loot_scriptContext.allocator = &resources->lootableContainerAllocator_18c_;
 
     char allocationBuffer[0x400];
     SafeAllocator tempAlloc;
@@ -178,7 +174,7 @@ void LootableContainerManager::LoadZoneContainers(const void *treasureArchive,
         for (Container* container = pContainerList_; container != NULL; container = container->pNext)
         {
             // blue chests only here
-            if (container->containerType != 4)
+            if (container->containerType != LootableContainerType_BlueChest)
                 continue;
             const LootDistribution::Outcome* outcome = rng.Sample(container->itemIDOrRank);
             if (outcome != NULL)
@@ -188,7 +184,7 @@ void LootableContainerManager::LoadZoneContainers(const void *treasureArchive,
             }
             else
             {
-                container->lootType = 0;
+                container->lootType = LootType_Nothing;
                 container->itemIDOrRank = 0;
             }
         }
@@ -202,7 +198,7 @@ void LootableContainerManager::LoadZoneContainers(const void *treasureArchive,
         for (Container* container = pContainerList_; container != NULL; container = container->pNext)
         {
             // pots, barrels and cupboards
-            if (container->containerType != 1 && container->containerType != 2 && container->containerType != 3)
+            if (container->containerType != LootableContainerType_Pot && container->containerType != LootableContainerType_Barrel && container->containerType != LootableContainerType_Cupboard)
                 continue;
             const LootDistribution::Outcome* outcome = rng.Sample(container->itemIDOrRank);
             if (outcome != NULL)
@@ -212,7 +208,7 @@ void LootableContainerManager::LoadZoneContainers(const void *treasureArchive,
             }
             else
             {
-                container->lootType = 0;
+                container->lootType = LootType_Nothing;
                 container->itemIDOrRank = 0;
             }
         }
@@ -262,13 +258,13 @@ int LootDistribution_DeclareOutcome(Script::Parameter* params, int numParams)
     outcome.lootType = resultType;
     outcome.itemID = id;
     outcome.percentage = percentage;
-    data_02108e78.unknown_0_->InsertOutcome(&outcome);
+    Loot_scriptContext.distribution->InsertOutcome(&outcome);
     return 1;
 }
 
 int LootDistribution_AllocateOutcomes(Script::Parameter* params, int numParams)
 {
-    data_02108e78.unknown_0_->AllocateOutcomes(params[0].ToInt());
+    Loot_scriptContext.distribution->AllocateOutcomes(params[0].ToInt());
     return 1;
 }
 
@@ -290,14 +286,14 @@ static Script::OpcodeLookupEntry s_distributionOpcodes[] = {
 
 void LootDistribution::LoadFromScript(SafeAllocator* alloc, const void* script, unsigned int length)
 {
-    data_02108e78.unknown_0_ = this;
+    Loot_scriptContext.distribution = this;
     pAllocator_ = alloc;
     Script runner;
     runner.Initialize();
     runner.SetOpcodeLookup(s_distributionOpcodes);
     runner.Load(script, length);
     runner.Execute();
-    data_02108e78.unknown_0_ = NULL;
+    Loot_scriptContext.distribution = NULL;
 }
 
 void LootDistribution::InsertOutcome(Outcome *source)

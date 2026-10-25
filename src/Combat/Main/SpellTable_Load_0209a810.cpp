@@ -3,39 +3,34 @@
 
 #include "std_library_functions.h"
 #include "Resource/Script.h"
-
-struct ResetStruct;
-
-struct StreamState;
-struct StreamHeader;
-
-struct Struct02030774;
+#include "Resource/SpellTable.h"
 
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 
-extern char data_020f1668[];
-extern char data_0211e33c[];
-extern char data_020f1640[];
+extern char SpellTable_file[];
+extern char g_fileLoadBuffer[];
+extern char SpellTable_scriptOpcodes[];
 
-struct Ctx0209a810 { void* field0; };
-extern struct Ctx0209a810* data_02109ba8;
+// The spell table being loaded: spelltable.bin's opcodes add their {spell, level} entries to it through SpellTable_scriptContext.
+struct Ctx0209a810 { void* table; };
+extern struct Ctx0209a810* SpellTable_scriptContext;
 
 // Main, originally SetupAndRunBufferedScript0209a810 (USA 0x0209a810, EUR 0x0209a820, JPN 0x0209c588)
-ARM void SpellTable_Load(struct Ctx0209a810* ctx, void* value) {
-    unsigned int count;
-    char buf[0x430];
+ARM void SpellTable_Load(struct Ctx0209a810* ctx, void* table) {
+    unsigned int fileSize;
+    char script[0x430];
 
     BackgroundLoader::AddLockGlobal();
 
-    if (LoadFileIntoMemory(data_020f1668, data_0211e33c, &count) != NULL) {
-        ctx->field0 = value;
-        memset(value, 0, 0x550);
-        data_02109ba8 = ctx;
-        ((Script*)((struct ResetStruct*)buf))->Initialize();
-        ((Script*)buf)->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f1640);
-        ((Script*)((struct StreamState*)buf))->Load((struct StreamHeader*)data_0211e33c, count);
-        ((Script*)((struct Struct02030774*)buf))->Execute();
-        data_02109ba8 = NULL;
+    if (LoadFileIntoMemory(SpellTable_file, g_fileLoadBuffer, &fileSize) != NULL) {
+        ctx->table = table;
+        memset(table, 0, sizeof(SpellTable));
+        SpellTable_scriptContext = ctx;
+        ((Script*)script)->Initialize();
+        ((Script*)script)->SetOpcodeLookup((Script::OpcodeLookupEntry*)SpellTable_scriptOpcodes);
+        ((Script*)script)->Load(g_fileLoadBuffer, fileSize);
+        ((Script*)script)->Execute();
+        SpellTable_scriptContext = NULL;
     }
     BackgroundLoader::RemoveLockGlobal();
 }

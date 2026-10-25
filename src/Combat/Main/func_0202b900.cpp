@@ -8,7 +8,7 @@ extern "C" int func_0202d0b4(void);
 void SleepCurrentContext(unsigned int);
 extern "C" int func_0202dc40(int arg0, void* arg1);
 unsigned long long GetCurrentTimestamp(void);
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
+extern "C" int memcmp(void* a, void* b, int n);
 
 // USA: func_0202b900
 extern "C" ARM int func_0202b900(int* arg0, unsigned char* arg1) {
@@ -47,15 +47,15 @@ extern "C" ARM int func_0202b900(int* arg0, unsigned char* arg1) {
     var0 = (char*)arg0;
     var0 += 0x10;
 
-    for (; var4 < var3; var4++) {
-        if (func_02001aec(arg1, var0 + var4 * var5 + 4, 6) == 0) {
-            func_0202dc40(5, data_020feffc + var4 * var5);
-            *arg0 = 6;
-            var6 = GameState::GetInstance();
-            var7 = GetCurrentTimestamp();
-            *(unsigned int*)((char*)var6 + 0x3f0) = (unsigned int)var7;
-            var2 = var4;
-            *(unsigned int*)((char*)var6 + 0x3f4) = (unsigned int)(var7 >> 32);
+    for (; j < count; j++) {
+        if (memcmp(key, entries + j * stride + 4, 6) == 0) {
+            Init0202dc40(5, data_020feffc + j * stride);
+            *obj = 6;
+            battleStruct = GameState::GetInstance();
+            ts = GetCurrentTimestamp();
+            *(unsigned int*)((char*)battleStruct + 0x3f0) = (unsigned int)ts;
+            result = j;
+            *(unsigned int*)((char*)battleStruct + 0x3f4) = (unsigned int)(ts >> 32);
             break;
         }
     }

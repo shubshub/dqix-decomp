@@ -1,14 +1,17 @@
 #include <globaldefs.h>
 
-// The key list header Keyboard_FindKeyByAction walks: the keys at +0 and their count at +6.
-struct ResetLayout_0215e6d8 { int keys; short unk_4; short count; int unk_8; short unk_c; short unk_e; };
+// The key list header Keyboard_FindKeyByAction walks: the keys (0x14 bytes each) and their capacity and count, then
+// the page grids (8 bytes each: pages mask, columns, rows, cell count, key ids) and their capacity and count. The
+// keys and grids are allocated by InitAllocatedArray_0215e750 / InitArray_0215e85c and appended by the layout
+// script's opcodes (AppendEntryToArray_0215e790 / func_ov003_0215e898), which stop at the capacity.
+struct KeyboardLayout { int keys; short keyCapacity; short count; int grids; short gridCapacity; short gridCount; };
 
 // Overlay 3, originally ResetStruct_0215e6d8 (USA/EUR 0x0215e6d8; JPN not identified)
-ARM void KeyboardLayout_Init(ResetLayout_0215e6d8* s) {
-    s->keys = 0;
-    s->unk_4 = 0;
-    s->count = 0;
-    s->unk_8 = 0;
-    s->unk_c = 0;
-    s->unk_e = 0;
+ARM void KeyboardLayout_Init(KeyboardLayout* layout) {
+    layout->keys = 0;
+    layout->keyCapacity = 0;
+    layout->count = 0;
+    layout->grids = 0;
+    layout->gridCapacity = 0;
+    layout->gridCount = 0;
 }

@@ -60,17 +60,17 @@ AnimationWork* GetActiveCombatWork_ov000_02160130();
 void SePlayer_Play(SePlayer*, int, int);
 
 // USA: func_ov025_021e2980
-extern "C" ARM int func_ov025_021e2980(Struct_ov025_021e2980* arg0, Struct_ov025_021e2980_2* arg1, int arg2, void* arg3) {
-    GameState* var0 = GameState::GetInstance();
-    if (arg0->unknown_e_ == 0x19) {
-        void* var1 = func_020100bc(var0);
-        if (func_0202e09c((int)var1) & 0x10) {
-            Object3D* var2 = func_0204a438((Struct_0204a438*)var1);
-            if (var2) {
-                func_0202e9a4((Struct_0202df68*)var1, 0xf000);
-                var2->MaybeSetRegularAnimation(arg0->unknown_8_, arg0->unknown_c_);
-                func_0204a170((int)var1);
-                data_ov025_021ef988.unknown_1c_ |= 8;
+extern "C" ARM int func_ov025_021e2980(AnimationCommand* command, AnimationTargets* targets, int unused, void* context) {
+    GameState* game = GameState::GetInstance();
+    if (command->target == 0x19) {
+        void* camera = game->GetCamera();
+        if (GetFlags_0202e09c((int)camera) & 0x10) {
+            Object3D* object = GetField0x21c((S0204a438*)camera);
+            if (object) {
+                SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)camera, 0xf000);
+                object->SetAnimationByName(command->animation, command->animationFlags);
+                func_0204a170((int)camera);
+                data_ov025_021ef988.flags |= 8;
             }
         }
     } else {
@@ -87,12 +87,12 @@ extern "C" ARM int func_ov025_021e2980(Struct_ov025_021e2980* arg0, Struct_ov025
                 if (var7 != 0 && var7 != 4 && var7 != 6)
                     func_02033b88((Struct_02010604*)var6, 0);
             }
-            var6->unknown_0_.SetAnimationPlaybackSpeed(0x1000, 0);
-            var6->unknown_0_.SkipAnimationTransition();
-            if (!var6->unknown_0_.MaybeSetRegularAnimation(arg0->unknown_8_, arg0->unknown_c_) &&
-                strcmp(arg0->unknown_8_, data_ov025_021ef7d9) == 0) {
-                if (!var6->unknown_0_.MaybeSetRegularAnimation(data_ov025_021ef7df, arg0->unknown_c_))
-                    var6->unknown_0_.MaybeSetRegularAnimation(data_ov025_021ef7e6, arg0->unknown_c_);
+            combatant->object.SetAnimationPlaybackSpeed(0x1000, 0);
+            combatant->object.SkipAnimationTransition();
+            if (!combatant->object.SetAnimationByName(command->animation, command->animationFlags) &&
+                strcmp(command->animation, data_ov025_021ef7d9) == 0) {
+                if (!combatant->object.SetAnimationByName(data_ov025_021ef7df, command->animationFlags))
+                    combatant->object.SetAnimationByName(data_ov025_021ef7e6, command->animationFlags);
             }
         }
         LightingManager* var8 = LightingManager::GetInstance();

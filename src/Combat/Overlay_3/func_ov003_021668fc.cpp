@@ -23,10 +23,10 @@ extern unsigned short data_ov003_0217f4a6[9];
 extern "C" ARM void func_ov003_021668fc(char* arg0) {
     if (*(short*)(arg0 + Enum_ov003_021668fc_1152) < 0) return;
 
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_02010828(var0);
-    void* var2 = func_ov003_02160bf8(arg0, *(short*)(arg0 + Enum_ov003_021668fc_1152));
-    if (var2 == 0) return;
+    GameState* bs = GameState::GetInstance();
+    void* p2a04 = GameState_GetParty(bs);
+    void* found = func_ov003_02160bf8(self, *(short*)(self + kRegionValue480_2A8));
+    if (found == 0) return;
 
     char* var3 = (char*)var2 + 0x160;
 

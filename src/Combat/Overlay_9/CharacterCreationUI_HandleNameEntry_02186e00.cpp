@@ -5,8 +5,8 @@
 #include <std_library_functions.h>
 #include "Resource/CharacterCreationUI.h"
 #include "Sound/SePlayer.h"
+#include "GameState/PartyMember.h"
 
-struct PartyMemberData { char unknown[0x3c]; char name[1]; };
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_LoadSlotLayout(void*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
@@ -42,7 +42,7 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* sel
     } else if (self->step == NameEntryStep_Input) {
         if (self->flags & CreationFlag_TabLoading)
             return;
-        if (!func_ov009_02185c58(self->nameFilter))
+        if (!func_ov009_02185c58(&self->nameFilter))
             return;
         int result = CharacterCreationUI_HandleInput(self);
         if (result == CreationInput_Confirm) {
@@ -61,8 +61,8 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* sel
         if (self->flags & CreationFlag_NameAccepted) {
             if (result == CreationInput_Confirm)
                 self->flags |= CreationFlag_HideButtons;
-            PartyMemberData* member = (PartyMemberData*)self->characterData;
-            sprintf(member->name, g_stringFormat, self->names[self->sex]);
+            PartyMemberData* member = self->characterData;
+            sprintf(member->name_, g_stringFormat, self->names[self->sex]);
             CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Confirm);
         }
     } else if (self->step == NameEntryStep_NameRejected) {
@@ -82,9 +82,11 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* sel
 #include <std_library_functions.h>
 #include "GameState/GameState.h"
 #include "Resource/CharacterCreationUI.h"
+#include "Resource/Font.h"
 #include "Resource/GridCursor.h"
 #include "Resource/Keyboard.h"
 #include "Sound/SePlayer.h"
+#include "GameState/PartyMember.h"
 
 struct KeyboardKey {
     short x_;
@@ -124,25 +126,7 @@ struct Keyboard {
     }
 };
 
-struct FontCharacter {
-    const char* text_;
-    signed char width_;
-};
-
-struct GridCursor {
-    int count_;
-    int pageCount;
-    char unk_8[0x38];
-};
-
-struct Struct_ov005_0215840c_2 {
-    char unknown_0_[0x3c];
-    char unknown_3c_[1];
-};
-
-struct Struct_0205bef8;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 
 extern "C" void Keyboard_ResetToKey(Keyboard* keyboard, const char* text);
 FontCharacter* Font_FindCharacter(int character, int font);
@@ -153,9 +137,9 @@ void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 void CharacterCreationUI_RefreshNameText(char* self);
 extern "C" KeyboardKey* Keyboard_FindKeyByAction(Keyboard* keyboard, int action);
 void CharacterCreationUI_PickRandomName(void* self);
-void GridCursor_Init(Struct_0205bef8* cursor);
-void GridCursor_SetDimensions(Struct_0205ba68* cursor, int columns, int rows, int order);
-void GridCursor_SetCount(Node0205bacc* cursor, int count);
+void GridCursor_Init(GridCursor* cursor);
+void GridCursor_SetDimensions(GridCursor* cursor, int columns, int rows, int order);
+void GridCursor_SetCount(GridCursor* cursor, int count);
 extern "C" void GridCursor_SetSelectedIndex(GridCursor* cursor, int index);
 void Keyboard_SelectKeyByAction(Keyboard* keyboard, int action);
 extern "C" void Keyboard_GetKeySize(int sizeClass, short* width, short* height);
@@ -164,86 +148,58 @@ extern char CharacterCreationUI_firstKeyText[];
 extern char CharacterCreationUI_widestCharacter[];
 extern const char g_stringFormat[];
 
-struct CharacterCreation {
-    char unk_0[0xbc];
-    KeyboardKey* savedKey_;
-    Keyboard* keyboard_;
-    char unk_c4[0xbec - 0xc4];
-    GridCursor navigation_;
-    char unk_c2c[0xc4c - 0xc2c];
-    short cursorX_;
-    short cursorY_;
-    short cursorWidth_;
-    short cursorHeight_;
-    short lastCursorX_;
-    short lastCursorY_;
-    signed char state_;
-    unsigned char step_;
-    char unk_c5a[0xd88 - 0xc5a];
-    PartyMemberData* characterData_;
-    char unk_d8c[0xd9c - 0xd8c];
-    unsigned int flags_;
-    signed char furthestState_[2];
-    unsigned char vocation_;
-    unsigned char sex_;
-    char unk_da4[0xdb0 - 0xda4];
-    char** names_;
-    unsigned char nameFill_;
-    unsigned char keyboardResult_;
-};
-
 enum NameEntryStep { NameEntryStep_Setup, NameEntryStep_Start, NameEntryStep_Input, NameEntryStep_NameRejected };
 const unsigned int CreationFlag_RefreshInfoWindow = CreationFlag_RefreshName | CreationFlag_RefreshSummary;
 
 // The menu cursor over the keyboard's 11 x 6 grid, back on its first cell. Keeps its own local: passing
-// &self->navigation_ straight to the calls compiles differently.
+// &self->navigation straight to the calls compiles differently.
 #define RESET_KEYBOARD_NAVIGATION(self)                                                                    \
     {                                                                                                      \
-        GridCursor* navigation = &(self)->navigation_;                                                     \
-        GridCursor_Init((Struct_0205bef8*)navigation);                                                     \
-        GridCursor_SetDimensions((Struct_0205ba68*)navigation, KeyboardGrid_Columns, KeyboardGrid_Rows,    \
+        GridCursor* navigation = &(self)->navigation;                                                     \
+        GridCursor_Init((GridCursor*)navigation);                                                     \
+        GridCursor_SetDimensions((GridCursor*)navigation, KeyboardGrid_Columns, KeyboardGrid_Rows,    \
                                  GridCursorOrder_RowMajor);                                                \
-        GridCursor_SetCount((Node0205bacc*)navigation, KeyboardGrid_Cells);                                \
+        GridCursor_SetCount((GridCursor*)navigation, KeyboardGrid_Cells);                                \
         navigation->pageCount = 1;                                                                             \
         GridCursor_SetSelectedIndex(navigation, 0);                                                        \
     }
 
 // Overlay 9, originally func_ov009_02186e00 (USA/EUR 0x02186e00, JPN 0x02187f2c)
-extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
+extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreationUI* self)
 {
-    if (self->step_ == NameEntryStep_Setup)
+    if (self->step == NameEntryStep_Setup)
     {
-        self->keyboard_->SetText(self->names_[self->sex_], CreationName_BufferSize);
-        self->keyboard_->maxLength_ = CreationName_MaxLength;
-        self->keyboard_->font_ = 0;
-        self->keyboard_->wrap_ = 0;
-        self->keyboard_->autoRepeat_ = 1;
-        Keyboard_ResetToKey(self->keyboard_, CharacterCreationUI_firstKeyText);
-        self->savedKey_ = self->keyboard_->key_;
-        if (self->savedKey_ != NULL)
-            self->keyboard_->key_ = self->savedKey_;
-        self->savedKey_ = NULL;
+        self->keyboard->SetText(self->names[self->sex], CreationName_BufferSize);
+        self->keyboard->maxLength_ = CreationName_MaxLength;
+        self->keyboard->font_ = 0;
+        self->keyboard->wrap_ = 0;
+        self->keyboard->autoRepeat_ = 1;
+        Keyboard_ResetToKey(self->keyboard, CharacterCreationUI_firstKeyText);
+        self->savedKey = self->keyboard->key_;
+        if (self->savedKey != NULL)
+            self->keyboard->key_ = self->savedKey;
+        self->savedKey = NULL;
         FontCharacter* widest = Font_FindCharacter((int)CharacterCreationUI_widestCharacter, 0);
         if (widest != NULL)
-            self->keyboard_->widthLimit_ = widest->width_ * CreationName_MaxLength + (CreationName_MaxLength - 1);
-        self->step_++;
+            self->keyboard->widthLimit_ = widest->width_ * CreationName_MaxLength + (CreationName_MaxLength - 1);
+        self->step++;
     }
-    else if (self->step_ == NameEntryStep_Start)
+    else if (self->step == NameEntryStep_Start)
     {
-        self->keyboard_->repeatTimer_ = 0;
-        self->keyboard_->repeatDir_ = 0;
-        self->flags_ |= CreationFlag_StylusRotation;
-        self->flags_ &= ~CreationFlag_NameAccepted;
-        self->flags_ |= CreationFlag_RefreshInfoWindow;
-        self->step_++;
+        self->keyboard->repeatTimer_ = 0;
+        self->keyboard->repeatDir_ = 0;
+        self->flags |= CreationFlag_StylusRotation;
+        self->flags &= ~CreationFlag_NameAccepted;
+        self->flags |= CreationFlag_RefreshInfoWindow;
+        self->step++;
     }
-    else if (self->step_ == NameEntryStep_Input)
+    else if (self->step == NameEntryStep_Input)
     {
-        if (self->flags_ & CreationFlag_TabLoading)
+        if (self->flags & CreationFlag_TabLoading)
             return;
-        self->keyboardResult_ = Keyboard_Update(self->keyboard_, GameState::GetInstance()->GetTickCount());
+        self->keyboardResult = Keyboard_Update(self->keyboard, GameState::GetInstance()->GetTickCount());
         int result = CharacterCreationUI_HandleInput(self);
-        if (self->keyboardResult_ != KeyboardResult_None)
+        if (self->keyboardResult != KeyboardResult_None)
             result = CreationInput_None;
         int nameChecked = 0;
         if (result == CreationInput_Confirm)
@@ -259,15 +215,15 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
         else if (result >= CreationInput_FirstTabIcon && result <= CreationInput_LastTabIcon)
         {
             result -= CreationInput_TabIcon;
-            if (result <= self->furthestState_[self->sex_] && result != self->state_)
+            if (result <= self->furthestState[self->sex] && result != self->state)
             {
                 CharacterCreationUI_SwitchTab((unsigned char*)self, (unsigned char)result);
                 return;
             }
         }
 
-        self->flags_ |= CreationFlag_RedrawPanel;
-        switch (self->keyboardResult_)
+        self->flags |= CreationFlag_RedrawPanel;
+        switch (self->keyboardResult)
         {
         case KeyboardResult_CursorMoved:
             SePlayer_Play(&g_sePlayer, SoundEffect_Cursor, 0);
@@ -277,7 +233,7 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
                 CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_EyeColor);
             else
                 SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
-            self->flags_ |= CreationFlag_RefreshInfoWindow;
+            self->flags |= CreationFlag_RefreshInfoWindow;
             break;
         case KeyboardResult_Typed:
         case KeyboardResult_CapsToggled:
@@ -289,21 +245,21 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
             //When a Key is Pressed on the Keyboard
             if (!g_keyManager.TestKeysPressed(KEY_B))
                 SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
-            self->flags_ |= CreationFlag_RefreshInfoWindow;
+            self->flags |= CreationFlag_RefreshInfoWindow;
             break;
         case KeyboardResult_TypedFull:
             SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
-            self->flags_ |= CreationFlag_RefreshInfoWindow;
+            self->flags |= CreationFlag_RefreshInfoWindow;
             CharacterCreationUI_RefreshNameText((char*)self);
             if (g_keyManager.TestKeysPressed(KEY_A))
             {
-                KeyboardKey* okKey = Keyboard_FindKeyByAction(self->keyboard_, KeyboardAction_Ok);
+                KeyboardKey* okKey = Keyboard_FindKeyByAction(self->keyboard, KeyboardAction_Ok);
                 if (okKey != NULL)
-                    self->keyboard_->key_ = okKey;
+                    self->keyboard->key_ = okKey;
             }
             break;
         case KeyboardResult_Ok:
-            if (*self->names_[self->sex_] == 0)
+            if (*self->names[self->sex] == 0)
                 SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
             if (nameChecked == 0)
             {
@@ -318,72 +274,72 @@ extern "C" ARM void CharacterCreationUI_HandleNameEntry(CharacterCreation* self)
         case KeyboardResult_RandomName:
             SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
             CharacterCreationUI_PickRandomName(self);
-            self->flags_ |= CreationFlag_RefreshInfoWindow;
+            self->flags |= CreationFlag_RefreshInfoWindow;
             return;
         default:
-            self->flags_ &= ~CreationFlag_RedrawPanel;
+            self->flags &= ~CreationFlag_RedrawPanel;
             if (g_keyManager.TestKeysPressed(KEY_SELECT) && result != CreationInput_Confirm)
             {
-                if (arg0->unknown_c0_->unknown_0_ != NULL)
+                if (self->keyboard->key_ != NULL)
                 {
                     CharacterCreationUI_PickRandomName(self);
-                    self->flags_ |= CreationFlag_RefreshInfoWindow;
+                    self->flags |= CreationFlag_RefreshInfoWindow;
                     return;
                 }
             }
             else if (g_keyManager.TestKeysPressed(KEY_UP | KEY_DOWN))
             {
-                self->flags_ |= CreationFlag_RedrawPanel;
+                self->flags |= CreationFlag_RedrawPanel;
             }
             break;
         }
 
-        if (self->keyboardResult_ != KeyboardResult_None && self->keyboardResult_ != KeyboardResult_Deleted)
+        if (self->keyboardResult != KeyboardResult_None && self->keyboardResult != KeyboardResult_Deleted)
         {
             RESET_KEYBOARD_NAVIGATION(self);
         }
-        if (g_keyManager.TestKeysPressed(KEY_START) && !(self->flags_ & CreationFlag_RefreshInfoWindow) &&
-            self->keyboard_->key_ != NULL && nameChecked == 0)
+        if (g_keyManager.TestKeysPressed(KEY_START) && !(self->flags & CreationFlag_RefreshInfoWindow) &&
+            self->keyboard->key_ != NULL && nameChecked == 0)
             CharacterCreationUI_CheckName(self);
-        if (self->flags_ & CreationFlag_NameRejected)
+        if (self->flags & CreationFlag_NameRejected)
         {
-            self->flags_ |= CreationFlag_RedrawPanel | CreationFlag_HideButtons;
-            self->step_++;
+            self->flags |= CreationFlag_RedrawPanel | CreationFlag_HideButtons;
+            self->step++;
         }
-        if (self->flags_ & CreationFlag_NameAccepted)
+        if (self->flags & CreationFlag_NameAccepted)
         {
             RESET_KEYBOARD_NAVIGATION(self);
-            Keyboard_SelectKeyByAction(self->keyboard_, KeyboardAction_Ok);
-            self->flags_ |= CreationFlag_HideButtons;
-            sprintf(self->characterData_->name_, g_stringFormat, self->names_[self->sex_]);
+            Keyboard_SelectKeyByAction(self->keyboard, KeyboardAction_Ok);
+            self->flags |= CreationFlag_HideButtons;
+            sprintf(self->characterData->name_, g_stringFormat, self->names[self->sex]);
             CharacterCreationUI_SwitchTab((unsigned char*)self, CreationTab_Confirm);
         }
     }
-    else if (self->step_ == NameEntryStep_NameRejected)
+    else if (self->step == NameEntryStep_NameRejected)
     {
         if (g_keyManager.TestKeysPressed(KEY_A | KEY_X) || g_touchInput.pressed_ != 0)
         {
             SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
-            self->flags_ = (self->flags_ & ~(CreationFlag_NameRejected | CreationFlag_HideButtons)) | CreationFlag_RedrawPanel;
-            self->step_ = NameEntryStep_Input;
+            self->flags = (self->flags & ~(CreationFlag_NameRejected | CreationFlag_HideButtons)) | CreationFlag_RedrawPanel;
+            self->step = NameEntryStep_Input;
         }
         else if (g_keyManager.TestKeysPressed(KEY_B))
         {
-            self->flags_ = (self->flags_ & ~(CreationFlag_NameRejected | CreationFlag_HideButtons)) | CreationFlag_RedrawPanel;
-            self->step_ = NameEntryStep_Input;
+            self->flags = (self->flags & ~(CreationFlag_NameRejected | CreationFlag_HideButtons)) | CreationFlag_RedrawPanel;
+            self->step = NameEntryStep_Input;
         }
     }
 
-    Struct_ov003_0215f4e4_2* var10 = arg0->unknown_c0_->unknown_0_;
-    if (var10 != NULL)
+    KeyboardKey* key = self->keyboard->key_;
+    if (key != NULL)
     {
         short width;
         short height;
         Keyboard_GetKeySize(key->sizeClass_, &width, &height);
-        self->cursorX_ = key->x_;
-        self->cursorY_ = key->y_;
-        self->cursorWidth_ = width;
-        self->cursorHeight_ = height;
+        self->cursorX = key->x_;
+        self->cursorY = key->y_;
+        self->cursorWidth = width;
+        self->cursorHeight = height;
     }
 }
 

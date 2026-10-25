@@ -44,8 +44,8 @@ extern "C" ARM void func_ov012_02185bf0(char* obj, int id, int flag) {
         (((Obj02185bf0*)obj)->*table.e[id])(*(void**)(obj + 0x1000 + kDestOffset), flag);
 
 #if defined(jpn)
-    TryApplyElemFields0205d5d0((struct StructA0205d5d0*)(obj + kElemOffset), id, *(int*)(obj + 0x1000 + kDestOffset), 0);
+    Window_SetPaneText((struct StructA0205d5d0*)(obj + kElemOffset), id, *(int*)(obj + 0x1000 + kDestOffset), 0);
 #else
-    TryApplyElemFields0205d5d0((struct StructA0205d5d0*)(obj + kElemOffset), id, *(int*)(obj + 0x1000 + kDestOffset), 0, 0);
+    Window_SetPaneText((struct StructA0205d5d0*)(obj + kElemOffset), id, *(int*)(obj + 0x1000 + kDestOffset), 0, 0);
 #endif
 }

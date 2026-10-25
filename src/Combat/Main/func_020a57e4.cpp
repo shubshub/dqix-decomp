@@ -30,7 +30,7 @@ void DetailedTreasureMapData::LoadLegacyBossStats(bool compute, const unsigned c
     BackgroundLoader::AddLockGlobal();
 
     unsigned int archiveSize = 0;
-    const void* archive = data_0211e33c;
+    const void* archive = g_fileLoadBuffer;
     if (providedArchive != NULL)
         archive = providedArchive;
     else if (LoadFileIntoMemory(data_020f1ae4, (void*)archive, &archiveSize) == NULL)

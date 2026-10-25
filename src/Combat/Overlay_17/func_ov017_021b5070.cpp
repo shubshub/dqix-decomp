@@ -42,7 +42,7 @@ extern "C" void func_0209af58(void* arg0, Struct_02013fb4* arg1, int arg2, int a
 
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 extern char data_ov017_021d7b85[];
 extern char data_ov017_021d7b9b[];
 extern char data_ov017_021d7bb1[];
@@ -89,7 +89,7 @@ extern "C" ARM void func_ov017_021b5070(Struct_ov017_021b5070_2* arg0) {
         unsigned int var9;
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        short* var10 = (short*)LoadFileIntoMemory(data_ov017_021d7b85, data_0211e33c, &var9);
+        short* data = (short*)LoadFileIntoMemory(data_ov017_021d7b85, g_fileLoadBuffer, &size);
         BackgroundLoader::RemoveLockGlobal();
         if (var10 == NULL) {
             var8 = NULL;

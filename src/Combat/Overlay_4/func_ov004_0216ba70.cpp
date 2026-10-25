@@ -64,12 +64,12 @@ struct Struct_ov004_02171034 {
     int unknown_c_;
 };
 
-struct Struct_02000c9c_8;
-extern "C" unsigned char func_0200fb08(struct Struct_02000c9c_8* arg0);
-extern "C" int func_020e51cc(int arg0);
-struct Struct_ov004_0216b7bc;
-extern "C" void func_ov011_02184ad8(struct Struct_ov004_0216b7bc* arg0);
-extern "C" void* func_ov004_0216ae9c(void* arg0, int arg1);
+struct Struct0200fb08;
+extern unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
+extern int StandardStrings_Get(int value);
+struct Obj_02184ad8;
+extern void SetField1c8True_02184ad8(struct Obj_02184ad8* obj);
+void* GetNodeIfType6_0216ae9c(void* a, int id);
 
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" Struct_ov004_0216ba70* func_ov023_021f6880(void* arg0, int arg1);
@@ -168,10 +168,10 @@ extern "C" ARM int func_ov004_0216ba70(void* arg0) {
     func_ov004_0216b120(arg0, 0x28, 2, 0xd3, 2, 0x10, 0xcb, 1);
 
     {
-    int var12 = 0;
-    if (func_0200fb08((struct Struct_02000c9c_8*)var5) == 4 ||
-        func_0200fb08((struct Struct_02000c9c_8*)var5) == 2) {
-        var12 = 2;
+    int flag = 0;
+    if (GameState_GetLanguage((struct Struct0200fb08*)bs2) == 4 ||
+        GameState_GetLanguage((struct Struct0200fb08*)bs2) == 2) {
+        flag = 2;
     }
     var3 = 0;
 
@@ -179,9 +179,9 @@ extern "C" ARM int func_ov004_0216ba70(void* arg0) {
     func_ov004_0216afb0(arg0, 0x39, 2, 0xd3, 0x3e7, 0x57, var3 + 0x13, 0xa, 1);
     func_ov004_0216afb0(arg0, 0x3a, 2, 0xd3, 0x15, 0xa8 - var12, var3 + 0x13, 0xa, 1);
 
-    Struct_ov004_0216ba70* var13 = func_ov023_021f6880(func_ov011_021849c8(arg0), 0x3a);
-    if (var13) {
-        var13->unknown_20_ = (void*)func_020e51cc(0x3f3);
+    VObjNode* node4 = func_ov023_021f6880(func_ov011_021849c8(a), 0x3a);
+    if (node4) {
+        node4->field20 = (void*)StandardStrings_Get(0x3f3);
     }
 
     func_ov004_0216afb0(arg0, 0x47, 2, 0xd3, 0x3e7, 0xa1, var3 + 0x13, 8, 1);
@@ -201,9 +201,9 @@ extern "C" ARM int func_ov004_0216ba70(void* arg0) {
             func_ov004_0216afb0(arg0, var15 + 0x39, 2, 0xd3, var14, 0x57, var3 + 0x13, 0xa, 1);
             func_ov004_0216afb0(arg0, var15 + 0x3a, 2, 0xd3, 0x15, 0xa8 - var12, var3 + 0x13, 0xa, 1);
 
-            Struct_ov004_0216ba70* var16 = func_ov023_021f6880(func_ov011_021849c8(arg0), var15 + 0x3a);
-            if (var16) {
-                var16->unknown_20_ = (void*)func_020e51cc(0x3f3);
+            VObjNode* node5 = func_ov023_021f6880(func_ov011_021849c8(a), idx3 + 0x3a);
+            if (node5) {
+                node5->field20 = (void*)StandardStrings_Get(0x3f3);
             }
 
             func_ov004_0216afb0(arg0, var1 + 0x47, 2, 0xd3, var14, 0xa1, var3 + 0x13, 8, 1);

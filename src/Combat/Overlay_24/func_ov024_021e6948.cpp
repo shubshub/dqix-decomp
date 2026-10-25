@@ -23,11 +23,11 @@ extern "C" float func_02074938(int arg0);
 struct GameObject;
 extern "C" int func_ov024_021e67b0(GameObject*);
 struct GameState;
-extern "C" void* func_02010828(GameState*);
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov000_0215a8d4(unsigned char*, int);
-extern "C" int func_ov000_02156068(struct Struct_02000c9c_76* arg0, int arg1, int arg2, int arg3);
+void* GameState_GetParty(GameState*);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char*, int);
+extern "C" int func_ov000_02156068(struct Battle_021e6948* battle, int id, int kind, int mode);
 struct Random;
 int NextRandomMax(Random*, int);
 struct Struct_ov024_021dd028_5;
@@ -44,9 +44,9 @@ extern "C" ARM int func_ov024_021e6948(struct Struct_ov024_021e6948_2* arg0, int
         if (func_ov024_021e67b0((GameObject*)var1)) {
             var0 = var0 * func_02074938(1);
         }
-        if (func_02086ef0((Struct_02048150*)(func_02010828((GameState*)GameState::GetInstance())), arg1) &&
-            var1 && var1->unknown_138_->unknown_21_ == 1) {
-            func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 0);
+        if (ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)(GameState_GetParty((GameState*)GameState::GetInstance())), targetId) &&
+            target && target->stats->rank21 == 1) {
+            IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)ctx->battle, 0);
         }
     }
     if (var0 > 0 && func_ov000_02156068(arg0->unknown_10_, arg1, 0, 1)) {

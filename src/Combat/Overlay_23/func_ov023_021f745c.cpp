@@ -10,17 +10,16 @@
 struct Struct_ov023_021f6ed8;
 extern "C" ARM void func_ov023_021f6ed8(struct Struct_ov023_021f6ed8* arg0);
 
-void Background_Init(struct List0204af64* obj);
+void Background_Init(struct BackgroundGraphics* obj);
 void Background_SetMapSize(unsigned char* obj, int value);
 extern "C" void Background_SetPriority(void*, int);
 
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8*, int, int);
+struct BackgroundGraphics;
+int Background_SetScroll(struct BackgroundGraphics*, int, int);
 
 extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
 
-struct AllocTarget0204b12c;
-void Background_AllocateMap(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
+void Background_AllocateMap(struct BackgroundGraphics* obj, SafeAllocator* alloc);
 
 struct Struct_ov023_021f745c;
 extern "C" ARM void func_ov023_021f7a08(struct Struct_ov023_021f745c* arg0, void* arg1);
@@ -46,20 +45,20 @@ extern "C" ARM int func_ov023_021f745c(char* arg0, void* arg1, int arg2, int arg
 
     *(int*)(obj + 0x10) = p6;
     *(int*)(obj + regionalOffset1) = 0;
-    Background_Init((struct List0204af64*)(obj + regionalOffset0));
+    Background_Init((struct BackgroundGraphics*)(obj + regionalOffset0));
     Background_SetMapSize((unsigned char*)(obj + regionalOffset0), 0);
 
-    struct Struct_02020cb8* var0 = (struct Struct_02020cb8*)(arg0 + Enum_ov023_021f745c_40);
-    var0->unknown_1c_0_ = (unsigned char)arg6;
-    var0->unknown_1c_4_ = (unsigned char)arg7;
+    struct BackgroundGraphics* list = (struct BackgroundGraphics*)(obj + regionalOffset0);
+    list->subScreen_ = (unsigned char)p7;
+    list->bgNumber_ = (unsigned char)p8;
 
     Background_SetPriority(obj + regionalOffset0, p9);
-    Background_SetScroll((struct Obj0204b5e8*)(obj + regionalOffset0), 0, 0);
+    Background_SetScroll((struct BackgroundGraphics*)(obj + regionalOffset0), 0, 0);
 
     void* var1 = func_ov011_021845f8(arg1, *(unsigned short*)(arg0 + 0x8));
     if (var1 == 0) return 0;
 
-    Background_AllocateMap((struct AllocTarget0204b12c*)(obj + regionalOffset0), (SafeAllocator*)((char*)result + 4));
+    Background_AllocateMap((struct BackgroundGraphics*)(obj + regionalOffset0), (SafeAllocator*)((char*)result + 4));
     func_ov023_021f7a08((struct Obj021f7a08*)obj, arg1);
     *(short*)(obj + regionalOffset2) = 0;
     *(short*)(obj + regionalOffset3) = 0;

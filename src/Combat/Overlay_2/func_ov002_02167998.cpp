@@ -33,7 +33,7 @@ struct Struct_ov002_02167998_4 {
     unsigned int unknown_3_7_ : 1;
 };
 
-int GetField0x3acValue_020100a8(GameState *gs);
+int GameState_GetProtagonistIndex(GameState *gs);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
@@ -72,12 +72,12 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
         for (int var7 = 0; var7 < 5; var7++) {
             func_0205def8((struct Struct_ov002_02155960_3 *) var0, 0, data_ov002_0216cc98[var7]);
         }
-        arg0[RG(0x1c20, 0x1ae8)]               = func_020100a8(var5);
-        *(short *) (arg0 + RG(0x1c02, 0x1aca)) = 0;
-        func_0205de24((struct Struct_ov002_0215624c_11 *) var0, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215f6a4(arg0);
-        (*(int *) (arg0 + RG(0x1bc0, 0x1a88)))++;
+        base[0x1c20]               = GameState_GetProtagonistIndex(gs);
+        *(short *) (base + 0x1c02) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) obj, 0, 2);
+        func_ov002_02161cf0(base);
+        func_ov002_0215f6a4(base);
+        (*(int *) (base + 0x1bc0))++;
         func_ov002_02161a8c();
 #if !defined(jpn)
         func_ov002_021619b4(*(signed char *) (arg0 + 0x1c20), *(int *) (arg0 + 0x1a68), *(int *) (arg0 + 0x1bd8));
@@ -146,7 +146,7 @@ extern "C" ARM void func_ov002_02167998(char *arg0) {
         if (var22 == 0) return;
         switch (var14) {
         case 0:
-            if (member == GetField0x3acValue_020100a8(gs)) return;
+            if (member == GameState_GetProtagonistIndex(gs)) return;
             func_ov002_0215b9a4(base, *(int *) (base + 0x1bb8) & 0xff, 1);
             SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
             *(int *) (base + 0x1bb8)   = 0x19;

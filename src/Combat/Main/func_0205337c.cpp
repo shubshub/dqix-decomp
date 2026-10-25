@@ -2,11 +2,11 @@
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_020d6c00(void);
-extern "C" int func_02046708(struct Struct_02012de8* arg0, unsigned int arg1);
+void* GlobalFlags_GetInstance(void);
+int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
 
-struct Struct_02015ef4 { int unknown_0_; int unknown_4_; int unknown_8_; };
-extern "C" ARM int func_0202ec84(void* arg0, struct Struct_02015ef4* arg1, int* arg2, int* arg3);
+struct Vec3copy0202ec84 { int x; int y; int z; };
+ARM int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
 
 struct Struct_02015ef4_2;
 extern "C" ARM void func_020473c8(struct Struct_02015ef4_2* arg0, int arg1);
@@ -41,20 +41,20 @@ struct Struct_0205337c_2 {
 };
 
 // USA: func_0205337c
-extern "C" ARM void func_0205337c(struct Struct_0205337c_2* arg0) {
-    if (func_02046708((struct Struct_02012de8*)func_020d6c00(), 2)) return;
-    if (arg0->unknown_190_ == NULL) return;
+extern "C" ARM void func_0205337c(struct Obj0205337c* obj) {
+    if (TestFlags02046708((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) return;
+    if (obj->node == NULL) return;
 
-    void* var0 = func_020100bc(GameState::GetInstance());
+    void* target = GameState::GetInstance()->GetCamera();
     *(volatile int*)0x4000444 = 0;
 
     struct Struct_02015ef4 var1 = arg0->unknown_44_;
     var1.unknown_4_ += 0x1b33;
 
-    int var2, var3;
-    func_0202ec84(var0, &var1, &var2, &var3);
-    var2 -= 0xc;
-    var3 -= 0xc;
+    int outB, outA;
+    Camera_WorldToScreen(target, &pose, &outB, &outA);
+    outB -= 0xc;
+    outA -= 0xc;
 
     int var4 = arg0->unknown_178_.inline_0205337c_2();
     signed char* var5 = arg0->unknown_178_.inline_0205337c();

@@ -47,7 +47,7 @@ struct Struct_ov000_0217d438_3 {
 
 int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* objRaw);
 extern "C" int func_ov000_0217c594(void* objRaw, int limit);
 extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
@@ -112,15 +112,15 @@ extern "C" ARM void func_ov000_0217d438(struct Menu0217d438* menu, int arg1, int
             func_ov000_02174c14(arg0);
             return;
         }
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_ = arg0->unknown_1d68_ - 1;
-        func_ov000_0217c638(arg0, arg1, arg2);
+        Window_ClosePane((struct Entry_0205d6a0*)menu->elements, 0);
+        menu->stack[menu->depth] = 0;
+        menu->depth = menu->depth - 1;
+        func_ov000_0217c638(menu, arg1, arg2);
         func_ov017_021c847c();
-    } else if (func_ov000_0217c5f4(arg0) != 0) {
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_ = arg0->unknown_1d68_ - 1;
-        func_ov000_0217c638(arg0, arg1, arg2);
+    } else if (CheckFlagsOrField_0217c5f4_0217c5f4(menu) != 0) {
+        Window_ClosePane((struct Entry_0205d6a0*)menu->elements, 0);
+        menu->stack[menu->depth] = 0;
+        menu->depth = menu->depth - 1;
+        func_ov000_0217c638(menu, arg1, arg2);
     }
 }

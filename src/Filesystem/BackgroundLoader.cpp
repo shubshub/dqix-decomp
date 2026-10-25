@@ -25,7 +25,7 @@ struct Struct_02104304
 
 extern "C"
 {
-    int func_0200fb08(GameState*);
+    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
 
     void func_020c9be0();
 
@@ -186,7 +186,7 @@ int BackgroundLoader::QueueFileTask(const char* filename, int type, const char* 
     int newID = -1;
     LockResourceMutex();
 #if defined(usa)
-    int language = func_0200fb08(GameState::GetInstance());
+    int language = _Z21GameState_GetLanguageP14Struct0200fb08(GameState::GetInstance());
     char replacedFilename[80] = { 0 };
     StringReplaceLanguageTag(filename, replacedFilename, language);
 #endif

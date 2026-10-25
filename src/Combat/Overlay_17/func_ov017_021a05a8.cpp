@@ -2,10 +2,10 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 struct Struct_ov017_021d6874 { int unknown_0_; int unknown_4_; };
 struct Struct_ov017_021d6878 { int unknown_0_; int unknown_4_; };
@@ -18,21 +18,21 @@ struct Struct_02000c9c_58 {
 };
 
 // USA: func_ov017_021a05a8
-extern "C" ARM void func_ov017_021a05a8(char* arg0) {
-    SafeAllocator* var0 = (SafeAllocator*)(arg0 + 0x9c);
-    void* var1 = var0->GetSignedAllocator();
-    if (var1) {
-        var0->Destroy();
-        func_02012da4(&data_02114e20, var1);
+extern "C" ARM void func_ov017_021a05a8(char* self) {
+    SafeAllocator* topAlloc = (SafeAllocator*)(self + 0x9c);
+    void* p = topAlloc->GetSignedAllocator();
+    if (p) {
+        topAlloc->Destroy();
+        AllocatorUnion_Free(&g_mainAllocator, p);
     }
 
-    arg0 = arg0 + 0x38;
-    int var2 = 0;
-    for (; data_ov017_021d6878[var2].unknown_0_ != 0; var2++) {
-        int var3 = data_ov017_021d6878[var2].unknown_0_;
-        void* var4 = func_02012d88(&data_02114e20, var3);
-        int var5 = data_ov017_021d6874[var2].unknown_0_;
-        SafeAllocator* var6 = (SafeAllocator*)(arg0 + var5 * 0x14);
-        var6->CreateTypeA(var4, var3);
+    self = self + 0x38;
+    int i = 0;
+    for (; data_ov017_021d6878[i].size != 0; i++) {
+        int size = data_ov017_021d6878[i].size;
+        void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
+        int idx = data_ov017_021d6874[i].index;
+        SafeAllocator* alloc = (SafeAllocator*)(self + idx * 0x14);
+        alloc->CreateTypeA(buf, size);
     }
 }

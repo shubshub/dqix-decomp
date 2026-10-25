@@ -16,7 +16,7 @@ struct Cont0207fdf0;
 struct SePlayer;
 struct Obj0208203c;
 
-void* GetPtrField0x2a04_02010828(GameState* gs);
+void* GameState_GetParty(GameState* gs);
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
 extern "C" void func_ov003_021749c0(char* base);
 short FindMappedMemberId02080468(void* obj, int id);
@@ -64,14 +64,14 @@ struct Struct_ov003_0217a4ac {
 };
 
 // USA: func_ov003_0217a4ac
-extern "C" ARM void func_ov003_0217a4ac(struct Struct_ov003_0217a4ac* arg0) {
-    func_02010828(GameState::GetInstance());
-    struct Struct_0207fdcc_2* var0 = arg0->unknown_89c_;
-    if (arg0->unknown_103f_ == 0) {
-        arg0->unknown_1014_ = 0;
-        arg0->unknown_1016_ = 0;
-        func_0207fdf0((struct Struct_0207fdf0_2*)var0, 0);
-        arg0->unknown_103f_++;
+extern "C" ARM void func_ov003_0217a4ac(struct Menu_0217a4ac* self) {
+    GameState_GetParty(GameState::GetInstance());
+    struct Obj2081* menu = self->menu;
+    if (self->step == 0) {
+        self->member1014 = 0;
+        self->member1016 = 0;
+        CallFunc0204c804OnNonMatchingKey((struct Cont0207fdf0*)menu, 0);
+        self->step++;
         return;
     }
     if (arg0->unknown_103f_ == 1) {

@@ -1,26 +1,7 @@
 #include <globaldefs.h>
 #include "Graphics/CharacterModel.h"
 #include "Resource/CharacterCreationUI.h"
-
-struct PartyMemberAppearance {
-    short unk_0[2];
-    short face_;
-    short hairStyle_;
-    short unk_8[6];
-    unsigned char female_ : 1;
-    unsigned char skinColor_ : 3;
-    unsigned char eyeColor_ : 4;
-    unsigned char hairColor_ : 4;
-    unsigned char unk_15_4 : 4;
-    short unk_16;
-    short width_;
-    short height_;
-};
-
-struct Struct_ov005_0215840c_2 {
-    char unknown_0_[0x488];
-    Struct_ov009_02187b34 unknown_488_;
-};
+#include "GameState/PartyMember.h"
 
 extern "C" void CharacterModel_InvalidatePart(void* character, int part);
 void CharacterCreationUI_GetBodyDimensions(unsigned char* self, int bodyType, short* width, short* height);
@@ -32,7 +13,7 @@ extern "C" void CharacterModel_ApplyColors(void* character);
 #if defined(jpn)
 extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice)
 {
-    PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance_;
+    PartyMemberAppearance* appearance = &self->characterData->appearance_;
     int tab = self->state;
     if (tab == CreationTab_Gender)
     {
@@ -82,10 +63,10 @@ extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, i
 #else
 extern "C" ARM void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice)
 {
-    PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance_;
+    PartyMemberAppearance* appearance = &self->characterData->appearance_;
     int tab = self->state;
-    void* next = self->nextCharacter;
-    void* current = self->character;
+    CharacterModel* next = self->nextCharacter;
+    CharacterModel* current = self->character;
     if (tab == CreationTab_Gender)
     {
         appearance->female_ = choice;

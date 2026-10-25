@@ -54,19 +54,19 @@ struct Struct_ov000_02174738_7 {
     short unknown_a_;
 };
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_0205b20c(struct Struct_ov000_02174738_6* arg0);
-extern "C" void func_0205b220(void* arg0, int arg1);
-extern "C" void func_0205b228(void* arg0, int arg1, unsigned char arg2);
-extern "C" void* func_020421b0(int arg0);
-extern "C" void func_ov000_02174a38(void* arg0, int arg1);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
+void SetField0_0205b220(void* obj, int value);
+void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
+void* GetTableEntry020421b0(int idx);
+void SetOrClearFlag0x4At0x24_ov000_02174a38(void* obj, int cond);
 
 extern "C" void func_ov000_021710ac(struct Struct_ov000_02174738_3* arg0, int arg1, int arg2);
 extern "C" void func_ov000_02171138(void* arg0);
 extern "C" void func_ov000_02174b14(struct Struct_ov000_02174738_5* arg0);
 extern "C" int func_ov017_021bdbcc();
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" void func_0205b234(struct Struct_ov000_02174738_6* arg0, short arg1, int arg2, void* arg3, unsigned char arg4, unsigned char arg5);
+extern "C" int Font_GetTextWidth(char* label, int extra);
+extern "C" void func_0205b234(struct S_b20c* a, short b, int c, void* buf, unsigned char d, unsigned char e);
 
 extern char data_ov000_0218405b;
 extern int data_ov000_02183ff0;
@@ -98,18 +98,79 @@ checkvalid:
         }
     }
 
-    GameState* var5 = GameState::GetInstance();
-    for (int var6 = 0; var6 < 4; var6++) {
-        struct Struct_ov000_02174738_3* var7 = &arg0->unknown_158_.unknown_800_[arg0->unknown_6c_[var6]];
-        if (arg0->unknown_6c_[var6] != arg1) {
+    void* vram = self->group.vram;
+    char* info;
+    char* info2;
+    GameObject* c = GameState::GetInstance()->GetPartyMemberByIndex(id);
+    if (c != NULL) {
+        char* slot = GetBoundedArrayElement0x40((struct Obj0216fe74*)((char*)self + 0x11c),
+                                                (unsigned short)(id + 0x20));
+        if (slot != NULL) {
+          info = *(char**)(slot + 8);
+          if (info != NULL) {
+            int idx950 = *(int*)(*(char**)((char*)c + 0x150) + 0x950);
+            unsigned char sel = (unsigned char)(idx950 * 4 + 0x28);
+            GetGameResources();
+            if (func_ov017_021bdbcc() != 0) {
+                sel = 0x28;
+            }
+            memcpy(vram, GetTableEntry020421b0(sel), 0x80);
+
+            unsigned short tm = *(unsigned short*)(info + 4) & 0x3ff;
+            unsigned int off = tm << 7;
+            CleanInvalidateCacheRange(vram, 0x80);
+            LoadToSubObjVRAM(vram, off, 0x80);
+            CleanCacheRange(vram, 0x80);
+          }
+        }
+        {
+            char* slot2 = GetBoundedArrayElement0x40((struct Obj0216fe74*)((char*)self + 0x11c),
+                                                     (unsigned short)(id + 0x24));
+            if (slot2 != NULL) {
+              info2 = *(char**)(slot2 + 8);
+              if (info2 != NULL) {
+                memset(vram, 0, 0x80);
+                struct S_b20c local;
+                struct TextSlot02174738 text;
+                text.a = 0;
+                text.b = 0;
+                text.c = 0;
+                text.d = 0x10;
+                text.e = 0x10;
+                ClearTwoWordsAndByte_0205b20c(&local);
+                SetField0_0205b220(&local, (int)vram);
+                SetFieldsAt0x4And0x8_0205b228(&local, (int)&text, 1);
+                char* field150 = *(char**)((char*)c + 0x150);
+                int idx = *(int*)(field150 + 0x950);
+                char* p = field150 + idx * 2 + 0x100;
+                unsigned short val = *(unsigned short*)(p + 0x6c);
+                char label[8];
+                sprintf(label, &data_ov000_0218405b, val);
+                short posX = (short)(0x10 - Font_GetTextWidth(label, 0));
+                func_0205b234(&local, posX, 0, label, 0xf, 0);
+
+                unsigned short tm2 = *(unsigned short*)(info2 + 4) & 0x3ff;
+                unsigned int off2 = tm2 << 7;
+                CleanInvalidateCacheRange(vram, 0x80);
+                LoadToSubObjVRAM(vram, off2, 0x80);
+                CleanCacheRange(vram, 0x80);
+              }
+            }
+        }
+    }
+
+    GameState* bs = GameState::GetInstance();
+    for (int i = 0; i < 4; i++) {
+        struct Entry02174738* e = &self->group.entries[self->order[i]];
+        if (self->order[i] != id) {
             continue;
         }
         if (var7->unknown_4c_ >= 0) {
             continue;
         }
-        func_ov000_021710ac(var7, arg1, arg1 == func_020100a8(var5));
-        func_ov000_02174a38(var7, arg1 == func_020100a8(var5));
-        func_ov000_02171138(var7);
+        func_ov000_021710ac(e, id, id == GameState_GetProtagonistIndex(bs));
+        SetOrClearFlag0x4At0x24_ov000_02174a38(e, id == GameState_GetProtagonistIndex(bs));
+        func_ov000_02171138(e);
         data_ov000_02183ff0 = data_ov000_02183ff0 + 1;
         func_ov000_02174b14(arg0);
         if (data_ov000_02183ff0 > 4) {

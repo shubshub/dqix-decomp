@@ -22,24 +22,24 @@ extern "C" void func_020e2110(void*);
 extern "C" void func_020e23f4(void*);
 void InvokeSubHandlerIfPresent_020e2478(int*);
 void SetEntryEnabled020e2cc4(Entry020e2cc4*, int);
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 extern int g_sePlayer;
 
 #else
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void* func_020e46c4(void*);
-extern "C" void func_020dcf7c(int, void*);
-extern "C" int func_020d2ff0(const char*);
-extern "C" void func_02044f3c(struct Struct_02021b84* arg0, const char* arg1, int arg2);
-extern "C" void func_0206b198(struct Struct_0204500c_4*, unsigned short);
-extern "C" void func_0205e944(void* arg0, int arg1);
-extern "C" void func_020416c0(struct Struct_0204166c*);
-extern "C" void func_02042b98(struct Struct_02021b84* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02042fcc(struct Struct_02042c68*);
-extern "C" void func_02045824(struct Struct_02042c68_2*, int, int);
+extern "C" void __clear(void* dst, int size);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int size);
+extern "C" void* memset(void* dst, int value, unsigned int size);
+void* Clear12Bytes020e46c4(void*);
+void DispatchIfCountPositive020dcf7c(int, void*);
+int STD_GetStringLength(const char*);
+extern "C" void func_02044f3c(struct MessageSystem* window, const char* text, int mode);
+void DecrementSlotRef0206b198(struct CombatSlots0206b198*, unsigned short);
+extern "C" void func_0205e944(void* target, int level);
+void Forward020416c0(struct State0204166c*);
+extern "C" void func_02042b98(struct MessageSystem* window, int a, int b, int c, int d);
+void ResetFoo02042fcc(struct Foo02042fcc*);
+void SetRingBufferSlot02045824(struct RingBuffer02045824*, int, int);
 extern "C" void func_02044d0c(void);
 extern "C" void func_0204394c(struct Struct_0204394c*);
 extern "C" void func_0206831c(struct Struct_02021b84* arg0, const char* arg1, char* arg2);
@@ -54,9 +54,9 @@ extern "C" void func_020e1b2c(void*, int);
 extern "C" int func_020e1f1c(void*);
 extern "C" void func_020e2110(void*);
 extern "C" void func_020e23f4(void*);
-extern "C" void func_020e2478(int*);
-extern "C" void func_020e2cc4(struct Struct_020439b0*, int);
-extern "C" void func_0207df50(struct Struct_0203d028*);
+void InvokeSubHandlerIfPresent_020e2478(int*);
+void SetEntryEnabled020e2cc4(struct Entry020e2cc4*, int);
+void VramState_Rewind(struct Foo0207df50*);
 
 extern int g_sePlayer;
 
@@ -195,7 +195,7 @@ extern "C" ARM void func_0204500c(Struct_02021b84* arg0, const char* arg1, int a
         for (int var7 = 0; var7 < 2; var7++) {
             func_020e2cc4(&arg0->unknown_1964_[var7].unknown_0_, 0);
         }
-        if (arg0->unknown_1e28_ != 0) func_0207df50(arg0->unknown_1e28_);
+        if (window->encoder != 0) VramState_Rewind(window->encoder);
     }
 }
 #else
@@ -219,12 +219,12 @@ extern "C" ARM void func_0204500c(struct Struct_02021b84* arg0, const char* arg1
         return;
     }
 
-    int var13 = func_020d2ff0(arg1);
-    for (int var14 = 0; var14 < var13;) {
-        int var15 = 0x40;
-        char var16[0x43] = {};
-        if (var13 < var14 + 0x40) {
-            var15 = var13 - var14;
+    int len = STD_GetStringLength(text);
+    for (int pos = 0; pos < len;) {
+        int n = 0x40;
+        char chunk[0x43] = {};
+        if (len < pos + 0x40) {
+            n = len - pos;
         }
         memcpy(var16, arg1 + var14, var15);
         var14 += var15;
@@ -366,8 +366,8 @@ extern "C" ARM void func_0204500c(struct Struct_02021b84* arg0, const char* arg1
         for (int var24 = 0; var24 < 2; var24++) {
             func_020e2cc4(&arg0->unknown_1964_[var24], 0);
         }
-        if (arg0->unknown_1e28_ != 0) {
-            func_0207df50(arg0->unknown_1e28_);
+        if (window->encoder != 0) {
+            VramState_Rewind(window->encoder);
         }
     }
     arg0->unknown_30_ = -1;

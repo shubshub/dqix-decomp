@@ -2,9 +2,9 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "std_library_functions.h"
 
-extern "C" void func_0204719c(void* arg0, int arg1);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_02047b40(void* arg0, void* arg1, void* arg2);
+extern "C" void SprSprite_Init(void* obj, int flag);
+extern "C" void* __clear(void* dst, int count);
+extern "C" void func_02047b40(void* obj, void* handle, void* extra);
 
 extern "C" int func_020429d4(void);
 void* LoadFileIntoMemory(const char* path, void* dst, unsigned int* outCount);
@@ -26,10 +26,10 @@ extern "C" ARM void func_02047a78(struct Struct_02047a78* arg0, const char* arg1
     if (arg1 == 0) {
         return;
     }
-    var1 = arg0->unknown_84_0_;
-    if (var1) {
-        if (var1) {
-            func_0204719c(arg0, var1);
+    flag = obj->flag0;
+    if (flag) {
+        if (flag) {
+            SprSprite_Init(obj, flag);
         }
         arg0->unknown_84_0_ = 0;
     }

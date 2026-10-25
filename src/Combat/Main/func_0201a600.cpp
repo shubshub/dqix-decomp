@@ -110,13 +110,13 @@ unsigned short _ZNK17ActiveGrottoClass19GetActiveGrottoSeedEv(const Struct_0201a
 int _ZNK17ActiveGrottoClass22GetActiveGrottoEnvironEv(const Struct_0201a600_9* arg0);
 int _ZNK17ActiveGrottoClass13GetFloorCountEv(const Struct_0201a600_9* arg0);
 int _Z39GenerateGrottoObjectPositionOrientationPviiPiS0_PK24TileFeaturePlacementDatab(
-    void* arg0, int arg1, int arg2, int* arg3, int* arg4, const void* arg5, bool arg6);
-int _ZNK8FloorMap16GetAdjacencyBitsEii(const Struct_0201a600_8* arg0, int arg1, int arg2);
-Struct_0201a600_6* func_0201ae8c(Struct_0201a600_6* arg0, Struct_0201a600_6* arg1);
-Struct_0201a600_5* func_0200fd0c(GameState* arg0);
-int func_02018fbc(Struct_0201a600_3* arg0, Vector3i* arg1);
-void __clear(void* arg0, int arg1);
-void func_02024d94(void* arg0, unsigned short arg1, Vector3i* arg2);
+    void* zone, int tileX, int tileY, int* outX, int* outZ, const void* tileData, bool preferFaceDown);
+int _ZNK8FloorMap16GetAdjacencyBitsEii(const FloorMap0201a600* map, int x, int y);
+Struct0201ae8c* _Z18CopyStruct0201ae8cP14Struct0201ae8cS0_(Struct0201ae8c* dst, Struct0201ae8c* src);
+Field3f8_0201a600* _Z29GetField0x3f8Address_0200fd0cP9GameState(GameState* gs);
+int Zone3D_GetGroundHeight(Zone0201a600* zone, Vector3i* pos);
+void __clear(void* buf, int size);
+void func_02024d94(void* obj, unsigned short zoneId, Vector3i* pos);
 }
 
 extern const unsigned char data_020e6e44[15];
@@ -290,16 +290,16 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
     {
         Struct_0201a600_5* var35 = func_0200fd0c(var0);
 
-        if ((var7 > arg0->unknown_2_ || !func_0201b588(arg0->unknown_2_))
-            && var35->unknown_62_ == 0 && var35->unknown_63_ == 0
-            && arg0->unknown_2_ != 0 && var35->unknown_68_ == 0) {
-            var35->unknown_7_ = 1;
-            if (func_0201b5d8(var7)) {
-                var35->unknown_10_.x = 0;
-                var35->unknown_10_.y = 0;
-                var35->unknown_10_.z = 0xc000;
-                var35->unknown_10_.y = func_02018fbc(arg0, &var35->unknown_10_);
-                var35->unknown_1c_ = 0x323d;
+        if ((zoneId > self->previousZoneID || !_Z17IsInRange0201b588i(self->previousZoneID))
+            && request->unk_62 == 0 && request->unk_63 == 0
+            && self->previousZoneID != 0 && request->unk_68 == 0) {
+            request->active = 1;
+            if (_Z22IsValueInRange0201b5d8i(zoneId)) {
+                request->pos.x = 0;
+                request->pos.y = 0;
+                request->pos.z = 0xc000;
+                request->pos.y = Zone3D_GetGroundHeight(self, &request->pos);
+                request->angle = 0x323d;
             } else {
                 Vector3i var36;
                 short var37;
@@ -321,9 +321,9 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
                     var36.x -= 0x1800;
                     var37 = 0x4b65;
                 }
-                var36.y = func_02018fbc(arg0, &var36);
-                var35->unknown_1c_ = var37;
-                var35->unknown_10_ = var36;
+                pos.y = Zone3D_GetGroundHeight(self, &pos);
+                request->angle = angle;
+                request->pos = pos;
             }
         }
     }
@@ -420,10 +420,10 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
                 var41.x -= 0x1800;
                 var42 = 0x4b65;
             }
-            var41.y = func_02018fbc(arg0, &var41);
-            var39->unknown_1c_ = var42;
-            var39->unknown_10_ = var41;
-            var39->unknown_7_ = 1;
+            pos.y = Zone3D_GetGroundHeight(self, &pos);
+            request->angle = angle;
+            request->pos = pos;
+            request->active = 1;
         }
         _ZN15Struct_020134e013func_0201e574ERKNS_17Struct_0201cb60_3E(arg0->unknown_6c_, &var9);
     }

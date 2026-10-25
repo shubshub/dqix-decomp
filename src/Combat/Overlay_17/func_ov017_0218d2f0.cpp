@@ -2,38 +2,38 @@
 #include "Combat/CombatantRecovery.h"
 #include "GameState/GameState.h"
 
-struct Struct_ov000_02175808_4 { char unknown_0_[0xf78]; signed char unknown_f78_[4]; unsigned char unknown_f7c_; };
-struct Struct_ov017_021d82e0 { int unknown_0_; void* unknown_4_; };
-extern Struct_ov017_021d82e0 data_ov017_021d82e0;
-extern "C" void func_02039830(void*);
-extern "C" unsigned char func_02039820(void*);
-extern "C" unsigned char func_020100b0(GameState*);
-extern "C" void func_02048418(unsigned char*, unsigned short);
+struct PartySlots { char pad0[0xf78]; signed char ids[4]; unsigned char count; };
+struct BattleContext { int field0; void* controller; };
+extern BattleContext data_ov017_021d82e0;
+void CopyByteField0x253To0x252_02039830(void*);
+unsigned char GetByteField0x252_02039820(void*);
+unsigned char GameState_GetLeaderIndex(GameState*);
+void TryClearFlags0x130_02048418(unsigned char*, unsigned short);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
 extern "C" void func_ov017_02191108(void*, int, int, int, int);
-extern "C" void func_020397c0(void*);
-struct Struct_02018300_3;
-extern "C" void func_020397cc(Struct_02018300_3*, int);
+void GameObject_EnableControl(void*);
+struct Obj020397cc;
+void GameObject_DisableControl(Obj020397cc*, int);
 
 // USA: func_ov017_0218d2f0
-extern "C" ARM void func_ov017_0218d2f0(unsigned char arg0, unsigned char arg1, int arg2, unsigned char arg3) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov000_02175808_4* var1 = (Struct_ov000_02175808_4*)func_02010828(var0);
-    int var2 = 1;
-    unsigned char var3 = var1->unknown_f7c_;
-    GameObject* var4 = var0->GetUnknownGameObject();
-    if (var4) {
-        func_02039830(var4);
-        var2 = func_02039820(var4) != 0;
+extern "C" ARM void func_ov017_0218d2f0(unsigned char revive, unsigned char cure, int amount, unsigned char all) {
+    GameState* game = GameState::GetInstance();
+    PartySlots* party = (PartySlots*)GameState_GetParty(game);
+    int active = 1;
+    unsigned char count = party->count;
+    GameObject* leader = game->GetUnknownGameObject();
+    if (leader) {
+        CopyByteField0x253To0x252_02039830(leader);
+        active = GetByteField0x252_02039820(leader) != 0;
     }
-    for (unsigned char var5 = 0; var5 < var3; ++var5) {
-        short var6 = var1->unknown_f78_[var5];
-        GameObject* var7 = func_0200ff1c(var0, var6);
-        if (!var7 || (!arg3 && var6 != func_020100b0(var0))) continue;
-        if (arg0) {
-            if (var7->unknown_ac_.unknown_84_->unknown_0_ & 1) {
-                func_02053fe4(var7, 1, 1);
-                func_02048418((unsigned char*)var7, 1);
+    for (unsigned char i = 0; i < count; ++i) {
+        short index = party->ids[i];
+        GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(game, index);
+        if (!combatant || (!all && index != GameState_GetLeaderIndex(game))) continue;
+        if (revive) {
+            if (combatant->combatFields_.savedState_130_->flags & 1) {
+                ClearFieldBit02053fe4(combatant, 1, 1);
+                TryClearFlags0x130_02048418((unsigned char*)combatant, 1);
             }
         }
         if (arg1 && !(var7->unknown_ac_.unknown_84_->unknown_0_ & 1)) {
@@ -50,9 +50,9 @@ extern "C" ARM void func_ov017_0218d2f0(unsigned char arg0, unsigned char arg1, 
         func_ov017_021c9e00(var6, 1, 0, 1);
         func_ov017_02191108(data_ov017_021d82e0.unknown_4_, 1, 1, 1, 1);
     }
-    var4 = var0->GetUnknownGameObject();
-    if (var4) {
-        if (var2) func_020397c0(var4);
-        else func_020397cc((Struct_02018300_3*)var4, 1);
+    leader = game->GetUnknownGameObject();
+    if (leader) {
+        if (active) GameObject_EnableControl(leader);
+        else GameObject_DisableControl((Obj020397cc*)leader, 1);
     }
 }

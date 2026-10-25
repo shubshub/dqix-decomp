@@ -4,33 +4,30 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" int func_020421a0(void);
-struct Struct_02048150;
-extern "C" int func_02086ef0(struct Struct_02048150* arg0, int arg1);
-struct Struct_0209a9dc_2;
-struct Struct_0209a9dc_3 { unsigned short unknown_0_; unsigned short unknown_2_; };
-extern "C" struct Struct_0209a9dc_3* func_0209a9dc(struct Struct_0209a9dc_2* arg0, int arg1);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
-struct Struct_02072a68_2;
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-struct Struct_02046574_2;
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
+int MessageSystem_GetInstance(void);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(struct ArrayContainsByteStruct* s, int val);
+struct Holder0209a9dc;
+struct Entry0209a9dc { unsigned short id; unsigned short pad; };
+struct Entry0209a9dc* FindEntryById0209a9dc(struct Holder0209a9dc* h, int i);
+void* SearchBothTables02079e2c(char* p, int key);
+struct TableA68;
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
 #if defined(jpn)
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2);
 #else
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2, int arg3);
 #endif
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" int func_ov023_021f5228(int arg0);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" int func_ov023_021f4438(void* arg0);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+int CheckThresholdOverAny_021f5228(int id);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" int func_ov023_021f4438(void* obj);
 extern "C" int func_ov023_021f4fc8(void);
 struct Struct_ov023_021eeaac_2;
 extern "C" void func_ov023_021eefac(struct Struct_ov023_021eeaac_2* arg0);
@@ -62,13 +59,13 @@ extern "C" ARM int func_ov023_021f2368(unsigned char* arg0) {
 #else
  enum {Enum_ov023_021f2368_22788=0x5904, Enum_ov023_021f2368_6578=0x19b2, Enum_ov023_021f2368_2456=0x998, Enum_ov023_021f2368_22272=0x5700, Enum_ov023_021f2368_156=0x9c, Enum_ov023_021f2368_6602=0x19ca, Enum_ov023_021f2368_22376=0x5768, Enum_ov023_021f2368_6574=0x19ae, Enum_ov023_021f2368_6575=0x19af, Enum_ov023_021f2368_3756=0xeac};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_ov023_021f2368_2* var1 = _ZZ21inline_ov023_021f4c04vE1s;
-    int var2 = func_020421a0();
-    unsigned char* var3 = (unsigned char*)var2;
+    GameState* battleStruct = GameState::GetInstance();
+    struct GlobalState021f2368* g = _ZZ17GetGlobal021ffefcvE1s;
+    int state = MessageSystem_GetInstance();
+    unsigned char* stateObj = (unsigned char*)state;
     (int)BackgroundLoader::GetInstance();
-    int var4 = var1->unknown_18_;
-    int var5 = func_02086ef0((struct Struct_02048150*)func_02010828(var0), var4);
+    int id = g->id;
+    int contains = ArrayContainsByte_02086ef0((struct ArrayContainsByteStruct*)GameState_GetParty(battleStruct), id);
 
     if (var1->unknown_0_ == 0) {
         struct Struct_0209a9dc_3* var6 = func_0209a9dc((struct Struct_0209a9dc_2*)((char*)var1 + 0xf0),
@@ -95,17 +92,17 @@ extern "C" ARM int func_ov023_021f2368(unsigned char* arg0) {
                     func_0204500c(var3, var12, 1);
 
 #else
-                    char var15[0xc];
-                    char var16[0x80];
-                    char* var17 = (char*)func_02072a68((struct Struct_02072a68_2*)(arg0 + Enum_ov023_021f2368_22788), 0xc);
-                    sprintf(var16, var17);
-                    char* var18 = (char*)func_02072a68((struct Struct_02072a68_2*)(arg0 + Enum_ov023_021f2368_22788), 0x22);
-                    strcat(var16, var18);
-                    func_020e4bf4(var15, var4);
-                    *(void**)(var3 + 0x10) = var15;
-                    char* var19 = *(char**)var9;
-                    func_02046574((struct Struct_02046574_2*)var3, 1, var19);
-                    func_0204500c(var3, var16, 1, 0xe3);
+                    char buf1[0xc];
+                    char msgBuf[0x80];
+                    char* e1 = (char*)FindEntryByKey_02072a68((struct TableA68*)(obj + regionalOffset0), 0xc);
+                    sprintf(msgBuf, e1);
+                    char* e2 = (char*)FindEntryByKey_02072a68((struct TableA68*)(obj + regionalOffset0), 0x22);
+                    strcat(msgBuf, e2);
+                    NameText_InitFromPartyMember(buf1, id);
+                    *(void**)(stateObj + 0x10) = buf1;
+                    char* name = *(char**)found;
+                    MessageSystem_SetStringArgument((struct Obj02046574*)stateObj, 1, name);
+                    func_0204500c(stateObj, msgBuf, 1, 0xe3);
 
 #endif
                     var3[Enum_ov023_021f2368_6578] = 0;
@@ -113,21 +110,21 @@ extern "C" ARM int func_ov023_021f2368(unsigned char* arg0) {
                 }
             }
         }
-        var1->unknown_70_ = var1->unknown_70_ + 1;
-        if (var1->unknown_6c_[var4] <= var1->unknown_70_) {
-            void* var20 = func_02010828(var0);
-            GameObject* var21 = func_0200ff1c(var0, var4);
-            unsigned char* var22 = (unsigned char*)func_02053c6c((unsigned char*)var21);
-            struct Struct_ov023_021f2368_3* var23 = (struct Struct_ov023_021f2368_3*)(arg0 + var4 * 0x54 + Enum_ov023_021f2368_22272 + Enum_ov023_021f2368_156);
-            if (var23->unknown_0_7_ != 0) {
-                var1->unknown_e5_ = 0xc;
-            } else if (func_02086ef0((struct Struct_02048150*)var20, var4) &&
-                       func_ov023_021f5228(var4) != 0 &&
-                       *(unsigned short*)(var22 + 0x564) != 0) {
-                var1->unknown_e5_ = 8;
-                void* var24 = func_0205ec34();
-                if (func_0206dfb0((int)var24, (unsigned char*)var24 + 0x8c, 0x119c)) {
-                    var3[Enum_ov023_021f2368_6602] = 0;
+        g->field70 = g->field70 + 1;
+        if (g->byteArr6c[id] <= g->field70) {
+            void* p2a04b = GameState_GetParty(battleStruct);
+            GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(battleStruct, id);
+            unsigned char* field150 = (unsigned char*)GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+            struct PctBits021f2368* pb = (struct PctBits021f2368*)(obj + id * 0x54 + regionalOffset3 + regionalOffset4);
+            if (pb->pct != 0) {
+                g->e5 = 0xc;
+            } else if (ArrayContainsByte_02086ef0((struct ArrayContainsByteStruct*)p2a04b, id) &&
+                       CheckThresholdOverAny_021f5228(id) != 0 &&
+                       *(unsigned short*)(field150 + 0x564) != 0) {
+                g->e5 = 8;
+                void* base = Scenario_GetInstance();
+                if (Scenario_TestFlag((int)base, (unsigned char*)base + 0x8c, 0x119c)) {
+                    stateObj[regionalOffset5] = 0;
                 }
             } else {
                 var1->unknown_e5_ = 7;

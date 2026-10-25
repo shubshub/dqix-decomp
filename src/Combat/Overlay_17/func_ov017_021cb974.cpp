@@ -33,36 +33,36 @@ struct Struct_ov017_021d82e0 {
 #else
  char unknown1_0_[0x3718];
 #endif
- void* unknown_3718_; };
-extern "C" void* func_ov017_021b8470(void*);
-extern "C" int func_020100a8(GameState*);
+ void* table; };
+void* GetField6b0_021b8470(void*);
+int GameState_GetProtagonistIndex(GameState*);
 
 // USA: func_ov017_021cb974
-extern "C" ARM void func_ov017_021cb974(int, Struct_ov017_021cb974* arg1, GameState* arg2, Struct_ov017_021d82e0* arg3) {
-    Struct_ov017_021cb974_4* var0 = (Struct_ov017_021cb974_4*)func_ov017_021b8470(arg3->unknown_3718_);
-    Struct_ov017_021cb974_3* var1;
-    if (!var0 || !(var1 = var0->unknown_8e18_)) return;
-    if (var1->unknown_2a_ == func_020100a8(arg2)) return;
-    if (var1->unknown_8_ != arg1->unknown_4_) return;
-    int var2 = arg1->unknown_6_ - 0xc0;
-    if (var2 < 0 || var2 >= 8) return;
-    Struct_ov017_021cb974_2* var3 = &var1->unknown_158_[var2];
-    if (arg1->unknown_10_ == 1) {
-        var3->unknown_70_[0] = arg1->unknown_8_0_;
-        var3->unknown_70_[1] = arg1->unknown_8_3_;
-        var3->unknown_70_[2] = arg1->unknown_8_6_;
-        var3->unknown_70_[3] = arg1->unknown_9_1_;
-        var3->unknown_70_[4] = arg1->unknown_9_4_;
-        var3->unknown_70_[5] = arg1->unknown_9_7_;
-        var3->unknown_70_[6] = arg1->unknown_a_2_;
-        var3->unknown_70_[7] = arg1->unknown_a_5_;
-        var3->unknown_70_[8] = arg1->unknown_b_0_;
-        var3->unknown_70_[9] = arg1->unknown_b_3_;
-        var3->unknown_70_[10] = arg1->unknown_c_0_;
-        var3->unknown_70_[11] = arg1->unknown_c_3_;
-        var3->unknown_70_[12] = arg1->unknown_c_6_;
-        var3->unknown_70_[13] = arg1->unknown_d_1_;
-        var3->unknown_70_[14] = arg1->unknown_d_4_;
+extern "C" ARM void func_ov017_021cb974(int, PackedStatus* packet, GameState* game, BattleContext* context) {
+    BattleStatus* status = (BattleStatus*)GetField6b0_021b8470(context->table);
+    StatusOwner* owner;
+    if (!status || !(owner = status->owner)) return;
+    if (owner->owner == GameState_GetProtagonistIndex(game)) return;
+    if (owner->battleId != packet->battleId) return;
+    int index = packet->entryId - 0xc0;
+    if (index < 0 || index >= 8) return;
+    StatusEntry* target = &owner->entries[index];
+    if (packet->mode == 1) {
+        target->current[0] = packet->value0;
+        target->current[1] = packet->value1;
+        target->current[2] = packet->value2;
+        target->current[3] = packet->value3;
+        target->current[4] = packet->value4;
+        target->current[5] = packet->value5;
+        target->current[6] = packet->value6;
+        target->current[7] = packet->value7;
+        target->current[8] = packet->value8;
+        target->current[9] = packet->value9;
+        target->current[10] = packet->value10;
+        target->current[11] = packet->value11;
+        target->current[12] = packet->value12;
+        target->current[13] = packet->value13;
+        target->current[14] = packet->value14;
     } else {
         var3->unknown_93_[0] = arg1->unknown_8_0_;
         var3->unknown_93_[1] = arg1->unknown_8_3_;

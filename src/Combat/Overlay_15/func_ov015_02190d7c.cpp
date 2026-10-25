@@ -8,7 +8,7 @@
 #include "GameState/Field3b0.h"
 #include "Input/Input.h"
 
-extern "C" void func_020a20d8(void* arg0);
+void FollowCamera_Update(void* actor);
 
 struct Struct_ov015_02190d7c;
 extern "C" void func_ov015_021931b4(struct Struct_ov015_02190d7c* arg0, int arg1);
@@ -41,9 +41,9 @@ extern "C" ARM void func_ov015_02190d7c(struct Struct_ov015_02190d7c_4* arg0) {
     if (var0 == 0) {
         return;
     }
-    void* var1 = func_020100bc(var0);
-    if (var1 != 0) {
-        func_020a20d8(var1);
+    void* f3b0 = bs->GetCamera();
+    if (f3b0 != 0) {
+        FollowCamera_Update(f3b0);
     }
 
     struct Struct_ov015_02190d7c_3* var2 = arg0->unknown_2c_;

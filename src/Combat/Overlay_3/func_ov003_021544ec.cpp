@@ -5,9 +5,9 @@
 
 struct EntryManager020e2490;
 void InitEntryManager020e2490(struct EntryManager020e2490* obj, int arg1, int arg2, void* arg3, SafeAllocator* alloc, int count, unsigned char flag);
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
-extern "C" void func_0204c684(void*);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void WindowPane_Init(void*);
 struct Struct0205a198;
 void Sprite_Init(struct Struct0205a198*);
 
@@ -27,22 +27,22 @@ struct Struct_ov003_0217f320 {
 };
 extern Struct_ov003_0217f320 data_ov003_0217f320;
 
-struct Struct_ov003_021544ec_2 {
-    SafeAllocator* unknown_0_;
-    struct Struct_ov003_021544ec* unknown_4_;
-    char unknown_8_[4];
-    void* unknown_c_;
-    struct Struct_02020cb8* unknown_10_;
-    char* unknown_14_;
-    Struct_0207f7f0* unknown_18_;
-    struct Struct_020e2490* unknown_1c_;
-    int* unknown_20_;
-    struct Struct_02043368_2* unknown_24_;
-    void* unknown_28_;
-    char unknown_2c_[0x90 - 0x2c];
-    char unknown_90_[0xfc - 0x90];
-    char unknown_fc_[0x114 - 0xfc];
-    char unknown_114_[1];
+struct Obj021544ec {
+    SafeAllocator* allocators;
+    struct CombatSubsystem0215376c* subsystem;
+    char pad8[4];
+    void* bufC;
+    struct BackgroundGraphics* lists;
+    char* buf14;
+    Manager0207f7f0* buf18;
+    struct EntryManager020e2490* entryManager;
+    int* words;
+    struct Struct0205a198* buf24;
+    void* buf28;
+    char pad2c[0x90 - 0x2c];
+    char field90[0xfc - 0x90];
+    char fieldFc[0x114 - 0xfc];
+    char field114[1];
 };
 
 #if defined(jpn)
@@ -52,19 +52,19 @@ enum { Enum_ov003_021544ec_128 = 0x80, Enum_ov003_021544ec_4 = 4 };
 #endif
 
 // USA: func_ov003_021544ec
-extern "C" ARM void func_ov003_021544ec(struct Struct_ov003_021544ec_2* arg0, SafeAllocator* arg1) {
-    if (arg1 != 0) {
-        arg0->unknown_0_ = (SafeAllocator*)arg1->Allocate(0xa0);
-        arg0->unknown_4_ = (struct Struct_ov003_021544ec*)arg1->Allocate(0x60);
-        arg0->unknown_c_ = arg1->Allocate(0x4c00);
-        arg0->unknown_10_ = (struct Struct_02020cb8*)arg1->Allocate(0x40);
-        arg0->unknown_14_ = (char*)arg1->Allocate(0x2a0);
-        arg0->unknown_18_ = static_cast<Struct_0207f7f0*>(arg1->Allocate(Enum_ov003_021544ec_128));
-        arg0->unknown_20_ = (int*)arg1->Allocate(0x30);
-        arg0->unknown_24_ = (struct Struct_02043368_2*)arg1->Allocate(0x190);
-        arg0->unknown_28_ = arg1->Allocate(8);
-        arg0->unknown_1c_ = (struct Struct_020e2490*)arg1->Allocate(0x24);
-        func_020e2490(arg0->unknown_1c_, 0, 1, arg0->unknown_28_, arg1, Enum_ov003_021544ec_4, 0x40);
+extern "C" ARM void func_ov003_021544ec(struct Obj021544ec* obj, SafeAllocator* alloc) {
+    if (alloc != 0) {
+        obj->allocators = (SafeAllocator*)alloc->Allocate(0xa0);
+        obj->subsystem = (struct CombatSubsystem0215376c*)alloc->Allocate(0x60);
+        obj->bufC = alloc->Allocate(0x4c00);
+        obj->lists = (struct BackgroundGraphics*)alloc->Allocate(0x40);
+        obj->buf14 = (char*)alloc->Allocate(0x2a0);
+        obj->buf18 = static_cast<Manager0207f7f0*>(alloc->Allocate(kNotificationBufferSize));
+        obj->words = (int*)alloc->Allocate(0x30);
+        obj->buf24 = (struct Struct0205a198*)alloc->Allocate(0x190);
+        obj->buf28 = alloc->Allocate(8);
+        obj->entryManager = (struct EntryManager020e2490*)alloc->Allocate(0x24);
+        InitEntryManager020e2490(obj->entryManager, 0, 1, obj->buf28, alloc, kEntryCount, 0x40);
 
         Struct_ov003_0217f320 var0 = data_ov003_0217f320;
         for (unsigned char var1 = 0; var1 < 8; var1++) {
@@ -75,10 +75,10 @@ extern "C" ARM void func_ov003_021544ec(struct Struct_ov003_021544ec_2* arg0, Sa
             var2[var1].Reset();
         }
         for (unsigned char i = 0; i < 2; i++) {
-            Background_Init((struct List0204af64*)((char*)obj->lists + i * 0x20));
+            Background_Init((struct BackgroundGraphics*)((char*)obj->lists + i * 0x20));
         }
-        for (unsigned char var5 = 0; var5 < 3; var5++) {
-            func_0204c684(arg0->unknown_14_ + var5 * 0xe0);
+        for (unsigned char i = 0; i < 3; i++) {
+            WindowPane_Init(obj->buf14 + i * 0xe0);
         }
         func_0207f84c(arg0->unknown_18_);
         for (unsigned char var6 = 0; var6 < 12; var6++) {

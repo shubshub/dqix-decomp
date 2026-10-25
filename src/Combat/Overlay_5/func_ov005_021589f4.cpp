@@ -13,9 +13,9 @@ enum { Enum_ov005_021589f4_2400 = 0x960 };
 extern "C" void* __clear(void* arg0, int arg1);
 extern "C" int func_ov005_02158b3c(void* arg0, void* arg1);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, bool arg4, bool arg5, void* arg6);
+extern "C" void Window_OpenPane(void* renderer, void* buffer, int a, int b, bool c, bool d, void* styles);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, bool arg4, bool arg5, void* arg6, bool arg7);
+extern "C" void Window_OpenPane(void* renderer, void* buffer, int a, int b, bool c, bool d, void* styles, bool e);
 #endif
 
 struct Struct_ov005_021589f4 {
@@ -75,7 +75,7 @@ extern "C" ARM void func_ov005_021589f4(Struct_ov005_021589f4_2* arg0) {
         var5 = true;
         for (int var6 = 1; var6 < 4; var6++) var4[var6] = 2;
     }
-    func_0205d304(var2, arg0->unknown_e10_, 0, var1, false, var5, var4);
+    Window_OpenPane(panel, object->textBuffer, 0, mode, false, special, styles);
 
 }
 #else
@@ -119,7 +119,7 @@ extern "C" ARM void func_ov005_021589f4(Struct_ov005_021589f4_2* arg0) {
         var12 = true;
         for (int var13 = 1; var13 < 4; var13++) var11[var13] = 2;
     }
-    func_0205d304(var9, arg0->unknown_e10_, 0, var8, false, var12, var11, false);
+    Window_OpenPane(panel, object->textBuffer, 0, mode, false, special, styles, false);
 
 }
 #endif

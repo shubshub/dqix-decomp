@@ -204,7 +204,7 @@ src/Combat/Overlay_9/CharacterCreationUI_GetTouchedInput_02189854.cpp:
     .text start:0x02189854 end:0x02189a4c
 
 
-src/Combat/Overlay_9/CharacterCreationUI_Allocate_021842a0.cpp:
+src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x0218454c
 
@@ -279,7 +279,7 @@ src/Combat/Overlay_9/CharacterCreationUI_CheckName_02189a4c.cpp:
     .text start:0x02189a4c end:0x0218a420
 
 
-src/Combat/Overlay_9/CharacterCreationUI_HandleSetup_02185634.cpp:
+src/Combat/Overlay_12/AnyMatchInRange_02185634.cpp:
     complete
     .text start:0x02185634 end:0x021863d0
 

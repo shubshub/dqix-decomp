@@ -30,7 +30,7 @@ enum { Enum_ov003_02169c3c_1262 = 0x4ee };
 #endif
 
 #if defined(jpn)
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
 #endif
 #include "std_library_functions.h"
 
@@ -43,7 +43,7 @@ extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, i
 
 extern "C" void func_ov003_02169d10(void* arg0, void* arg1, int arg2);
 #if !defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov003_02169c3c
@@ -66,9 +66,9 @@ extern "C" ARM void func_ov003_02169c3c(char* arg0) {
     memset(*(void**)(arg0 + 0x7c), 0, Enum_ov003_02169c3c_2400);
     func_ov003_02169d10(arg0, *(void**)(arg0 + 0x7c), 0);
 #if defined(jpn)
-    func_0205d304(arg0 + Enum_ov003_02169c3c_228, *(void**)(arg0 + 0x7c), 0, 0, 0, 1, 0);
+    Window_OpenPane(obj + kRegione4, *(void**)(obj + 0x7c), 0, 0, 0, 1, 0);
 #else
-    func_0205d304(arg0 + Enum_ov003_02169c3c_228, *(void**)(arg0 + 0x7c), 0, 0, 0, 0, 0, 1);
+    Window_OpenPane(obj + kRegione4, *(void**)(obj + 0x7c), 0, 0, 0, 0, 0, 1);
 #endif
 
     struct Struct_0205d0e0* var0 = func_0205d81c((struct Struct_0205d81c*)(arg0 + Enum_ov003_02169c3c_228), 2);

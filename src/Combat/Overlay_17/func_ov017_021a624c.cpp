@@ -17,11 +17,11 @@
 #endif
 
 extern "C" void* func_0202ae18(void);
-extern "C" Zone3D* func_02012fe4(void);
-extern "C" int func_0202c540(void* arg0);
+extern "C" Zone3D* Zone3D_GetInstance(void);
+extern "C" int func_0202c540(void* p);
 
-extern "C" int func_02039750(void* arg0);
-extern "C" int func_020421a0();
+int GetIntField0x260_02039750(void* obj);
+int MessageSystem_GetInstance();
 extern "C" void* func_020daf90(void);
 extern "C" int func_02046b08(void** arg0);
 
@@ -63,32 +63,32 @@ extern "C" ARM void func_ov017_021a624c(GameResources* arg0) {
     GameObject* var2 = var1->GetProtagonist();
     if (var2 == 0) return;
 
-    int var3 = func_02039750(var2);
-    int var4 = func_020421a0();
-    GrottoStruct* var5;
-    Zone3D_StructPtr_8* var6;
-    Zone3D* var7 = func_02012fe4();
-    var6 = var7->pUnknownStruct_8_;
-    var5 = var1->GetGrottoStruct();
-    void* var8 = func_020daf90();
+    int f260 = GetIntField0x260_02039750(protagonist);
+    int glob1c = MessageSystem_GetInstance();
+    GrottoStruct* grotto;
+    Zone3D_StructPtr_8* info;
+    Zone3D* zone = Zone3D_GetInstance();
+    info = zone->pUnknownStruct_8_;
+    grotto = gs->GetGrottoStruct();
+    void* ctx = func_020daf90();
 
-    if (var1->GetGrottoStruct()->unknown_0[0] == 0 ||
-        arg0->unknown_4080_ != 0 || var3 != -1 ||
-        !func_02046b08((void**)arg0->unknown_ptr_array_36fc[0]) ||
-        func_0202c540(var0) ||
-        func_020117f0(GameState::GetInstance()) != 0 ||
-        *(int*)((char*)var4 + GLOB1C_FLAG_021a624c) != 0 ||
-        func_02015a2c((struct Struct_02015a2c_2*)var7) ||
-        var6 == 0 || var6->unknown_c_low_ != 0 ||
-        func_020db2d4(var8)) {
-        var5->unknown_0[2] = 1;
-        func_ov017_021a5bac((unsigned char*)arg0);
-    } else if (*(int*)(arg0->unknown_4094 + 0x12c) == 0) {
-        *(Struct_ov017_021a624c*)arg0->unknown_ptr_array_4088[0] = inline_ov017_021a624c();
-        *(Struct_ov017_021a624c*)arg0->unknown_ptr_array_4088[1] = inline_ov017_021a624c_2();
-        var5->unknown_0[2] = 0;
-        func_ov017_021a5b48((unsigned char*)arg0);
-        *(int*)(arg0->unknown_4094 + 0x12c) = 1;
+    if (gs->GetGrottoStruct()->unknown_0[0] == 0 ||
+        self->unknown_4080 != 0 || f260 != -1 ||
+        !IsField0Null_02046b08((void**)self->fieldTaskQueue_) ||
+        func_0202c540(searchObj) ||
+        IsGlobalU16InRange_020117f0(GameState::GetInstance()) != 0 ||
+        *(int*)((char*)glob1c + GLOB1C_FLAG_021a624c) != 0 ||
+        CheckSlotsForFlagState02015a2c((struct Something02015a2c*)zone) ||
+        info == 0 || info->unknown_c_low_ != 0 ||
+        GetField0x50_020db2d4(ctx)) {
+        grotto->unknown_0[2] = 1;
+        func_ov017_021a5bac((unsigned char*)self);
+    } else if (*(int*)(self->unknown_4094 + 0x12c) == 0) {
+        *(BgControl*)self->unknown_ptr_array_4088[0] = GetBg1Control();
+        *(BgControl*)self->unknown_ptr_array_4088[1] = GetBg2Control();
+        grotto->unknown_0[2] = 0;
+        InitFieldArenaLists_021a5b48((unsigned char*)self);
+        *(int*)(self->unknown_4094 + 0x12c) = 1;
     } else {
         func_ov017_021a5cbc(arg0);
     }

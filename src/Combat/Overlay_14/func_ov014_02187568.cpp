@@ -23,8 +23,8 @@ struct Struct_ov014_02184f78 {
     char unknown_1c_[4];
 };
 
-struct Struct_02020cb8;
-struct Struct_0207f7f0_2;
+struct BackgroundGraphics;
+struct Node0207f7f0;
 
 struct Struct_020974b0 {
     char unknown_0_[0x10];
@@ -52,54 +52,53 @@ struct Struct_ov008_02188d74 {
     }
 };
 
-struct Struct_ov014_02186bc8 {
-    char unknown_0_[0xa4];
-    Struct_020974b0 unknown_a4_;
-    SafeAllocator* unknown_b4_;
-    Struct_ov014_02184f78* unknown_b8_;
-    Struct_ov014_02184f78* unknown_bc_;
-    Struct_0207f7f0* unknown_c0_;
-    Struct_02020cb8* unknown_c4_;
-    Struct_0207f7f0_2* unknown_c8_;
-    void* unknown_cc_;
-    short* unknown_d0_;
-    void* unknown_d4_;
-    void* unknown_d8_;
-    void* unknown_dc_;
-    Struct_01ff8b48_13 unknown_e0_;
-    Struct_ov008_02188d74 unknown_f8_;
-    char unknown_14c_[0xc];
-    unsigned short unknown_158_;
-    unsigned char unknown_15a_;
-    char unknown_15b_;
-    int unknown_15c_;
-    int unknown_160_;
-    int unknown_164_;
-    int unknown_168_;
-    int unknown_16c_;
-    short unknown_170_;
-    short unknown_172_;
-    short unknown_174_;
-    short unknown_176_;
-    short unknown_178_;
-    unsigned char unknown_17a_;
-    unsigned char unknown_17b_;
-    unsigned char unknown_17c_;
-    signed char unknown_17d_;
-    unsigned char unknown_17e_;
-    bool unknown_17f_;
-    short unknown_180_;
-    short unknown_182_[8];
+struct MonsterListScreen {
+    char unk_0[0xa4];
+    MonsterList list_;
+    SafeAllocator* listAllocators_;
+    MonsterListEntry* entries_;
+    MonsterListEntry* pageEntry_;
+    Manager0207f7f0* menu_;
+    BackgroundGraphics* backgrounds_;
+    Node0207f7f0* canvases_;
+    void* canvasBuffer_;
+    short* cursor_;
+    void* listSprites_;
+    void* animations_;
+    void* records_;
+    TextTable textTable_;
+    SpriteRenderer spriteRenderer_;
+    char repeat_[0xc];
+    unsigned short repeatButtons_;
+    unsigned char unk_15a;
+    char unk_15b;
+    int unk_15c;
+    int menuEvents_;
+    int ticks_;
+    int listTaskID_;
+    int listBackgroundTaskID_;
+    short group_;
+    short modeCursor_;
+    short familyCursor_;
+    short monsterCursor_;
+    short prevCursor_;
+    unsigned char listState_;
+    unsigned char listStep_;
+    unsigned char listBackgroundStep_;
+    signed char family_;
+    unsigned char listFlags_;
+    bool closing_;
+    short numMonsters_;
+    short variantIDs_[8];
 };
 
-struct Struct_02097420;
-struct Struct_02097418;
-struct Struct_0207f914;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0201099c_14;
-struct Struct_0207f7f0;
-struct Struct_0207f7f0_2;
+struct Field4Low12_02097420;
+struct BufferField8_02097418;
+struct Obj0207f914;
+struct PacRecord;
+struct Struct020dfc40;
+struct Manager0207f7f0;
+struct Node0207f7f0;
 
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 void Set3DClearColor_020c5588(int, int, int, int, int);
@@ -108,8 +107,8 @@ MonsterListEntry* GetBufferField8(BufferField8_02097418*);
 void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
 void SetFieldsFromFormattedValue0207f914(Obj0207f914*, int, int, int);
 void SetSublistEntryField14LowBits_02080798(void*, int, int);
-int Pac_CountFiles(ActiveEntry02046900*);
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 void KeyTable_Reset(Struct020dfc40*);
 void CopyOutBattleRegion0x75f0_020abf38(void*);
 void InitNodeChain0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
@@ -140,18 +139,18 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
     if (self->listStep_ == 0)
     {
         SetFlags04(GetGameResources(), 0x609fe);
-        func_020c54a4(0, 0, 0, 0);
-        func_020c5588(0, 0, 0x7fff, 0, 0);
-        Struct_0208cb08* var2 = func_02094a00();
-        func_02094ab0(var2);
-        func_02094b40(var2);
-        func_02094b30(var2, 0x6a, 0);
-        arg0->unknown_17b_++;
+        SetFogState_020c54a4(0, 0, 0, 0);
+        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        FontBankLoader* music = FontBankLoader_GetInstance();
+        FontBankLoader_CancelLoads(music);
+        BlankFunction02094b40(music);
+        BlankFunction02094b30(music, 0x6a, 0);
+        self->listStep_++;
     }
     else if (arg0->unknown_17b_ == 1)
     {
-        if (func_02094b4c(func_02094a00()))
-            arg0->unknown_17b_++;
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
+            self->listStep_++;
     }
     else if (arg0->unknown_17b_ == 2)
     {
@@ -229,12 +228,12 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
             SafeAllocator* allocators;
             int numFiles;
             loader->GetLoadedFileByID(self->listTaskID_, &file, &size);
-            numFiles = Pac_CountFiles((ActiveEntry02046900*)file);
+            numFiles = Pac_CountFiles((PacRecord*)file);
             allocators = self->listAllocators_;
             allocators[3].Reset();
             for (int i = 0; i < numFiles; i++)
             {
-                void* cells = Pac_GetFile((Rec020467f0*)file, i, &name, (int*)&cellsSize);
+                void* cells = Pac_GetFile((PacRecord*)file, i, &name, (int*)&cellsSize);
                 if (cells != NULL)
                     SpriteContext_LoadFile(&self->spriteRenderer_, cells, cellsSize, &allocators[3]);
             }

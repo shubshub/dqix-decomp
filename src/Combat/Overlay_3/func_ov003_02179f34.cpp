@@ -9,23 +9,23 @@ enum { Enum_ov003_02179f34_4096 = 0x1000 };
 enum { Enum_ov003_02179f34_2204 = 0x89c };
 #endif
 
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" unsigned char func_0207ca94(int arg0);
-extern "C" short func_0207c638(void* arg0, unsigned int arg1);
-extern "C" int func_02053c6c(unsigned char* arg0);
-struct Struct_0207d300;
-extern "C" int func_02083960(struct Struct_0207d300* arg0);
-struct Struct_020a0b8c;
-extern "C" int func_020a0b8c(struct Struct_020a0b8c* arg0);
+void* GameState_GetParty(GameState* battleStruct);
+short FindMappedMemberId02080468(void* obj, int id);
+unsigned char GetTableByte0207ca94(int index);
+short CountPositiveEntries0207c638(void* base, unsigned int index);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+struct Slots02083960;
+int CountPositiveSlots02083960(struct Slots02083960* s);
+struct S_a0b8c;
+int CountNonZeroValues020a0b8c(struct S_a0b8c* p);
 
 // USA: func_ov003_02179f34
-extern "C" ARM int func_ov003_02179f34(char* arg0) {
-    int var0 = 0;
-    GameState* var1 = GameState::GetInstance();
-    void* var2 = func_02010828(var1);
-    short var3 = *(short*)(arg0 + Enum_ov003_02179f34_4096 + 0xc);
-    void* var4 = *(void**)(arg0 + Enum_ov003_02179f34_2204);
+extern "C" ARM int func_ov003_02179f34(char* obj) {
+    int result = 0;
+    GameState* battle = GameState::GetInstance();
+    void* ptr = GameState_GetParty(battle);
+    short val = *(short*)(obj + kRegionValue1000_F7C + 0xc);
+    void* field89c = *(void**)(obj + kRegionValue89C_818);
 
     if (var3 == 0x77) {
         short var5 = func_02080468(var4, 0x1d);

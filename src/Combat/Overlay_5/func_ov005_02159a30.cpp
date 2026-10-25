@@ -23,39 +23,39 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3ddf_;
 };
 
-void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
-void AppendCursorTag_02041ea4(char* text, int a);
+void Text_AppendFrameTag(char* text, int a, int b, int c, int d, int e);
+void Text_AppendCursorTag(char* text, int a);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-extern "C" int func_020420e8(const char* text, int large);
-void AppendNameTag_02041b70(char* text, int item, const char* itemText);
-void AppendString02042058(char* text, const char* append);
+extern "C" int Font_GetTextWidth(const char* text, int large);
+void Text_AppendNTag(char* text, int item, const char* itemText);
+void Text_Append(char* text, const char* append);
 
 // USA: func_ov005_02159a30
 extern "C" ARM void func_ov005_02159a30(Struct_ov005_02153954* arg0, char* arg1, int arg2) {
     if (arg1 == NULL)
         return;
-    int var0 = arg0->unknown_3dde_;
-    if (arg2)
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
-    func_02041ea4(arg1, var0);
-    int var1 = 4;
-    int var2 = 0;
-    if (arg0->unknown_3dbb_ >= 0 && arg0->unknown_3dbb_ < 8) {
-        var1--;
-        var2 = 1;
+    int choice = self->menuChoice_;
+    if (framed)
+        Text_AppendFrameTag(text, choice, 8, 5, 5, 5);
+    Text_AppendCursorTag(text, choice);
+    int count = 4;
+    int shifted = 0;
+    if (self->slot_ >= 0 && self->slot_ < 8) {
+        count--;
+        shifted = 1;
     }
 #if defined(jpn)
     for (int i = 0; i < count; i++) {
         if (shifted) {
             if (i == 0)
-                AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, 4));
+                Text_AppendNTag(text, i, KeyTable_Get(&self->messages, 4));
             else
-                AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, (short)(i + 1)));
+                Text_AppendNTag(text, i, KeyTable_Get(&self->messages, (short)(i + 1)));
         } else {
-            AppendNameTag_02041b70(text, i, KeyTable_Get(&self->messages, (short)i));
+            Text_AppendNTag(text, i, KeyTable_Get(&self->messages, (short)i));
         }
         if (i != count - 1)
-            AppendString02042058(text, KeyTable_Get(&self->messages, 0x64));
+            Text_Append(text, KeyTable_Get(&self->messages, 0x64));
     }
 #else
     Container020e0310* strings = &self->messages;
@@ -69,12 +69,12 @@ extern "C" ARM void func_ov005_02159a30(Struct_ov005_02153954* arg0, char* arg1,
                 key = 4;
         }
         const char* name = KeyTable_Get(strings, key);
-        int width = func_020420e8(name, 0);
+        int width = Font_GetTextWidth(name, 0);
         if (maxWidth < width)
             maxWidth = width;
-        AppendNameTag_02041b70(text, i, name);
+        Text_AppendNTag(text, i, name);
         if (i != count - 1)
-            AppendString02042058(text, separator);
+            Text_Append(text, separator);
     }
     int var11 = ((var6 + 0x1b) & ~7) >> 3;
     var11 += var11 & 1;

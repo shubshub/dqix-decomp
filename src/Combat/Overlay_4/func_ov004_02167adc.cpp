@@ -8,13 +8,13 @@ extern "C" int func_ov004_02167a6c(void* arg0, void* arg1);
 extern short data_ov004_02170012;
 
 // USA: func_ov004_02167adc
-extern "C" ARM int func_ov004_02167adc(void* arg0) {
-    short var0, var1, var2;
-    unsigned char var3;
-    int var4;
-    func_02010828(GameState::GetInstance());
-    func_ov004_0216794c(&var0, &var1, &var2, &var3, &var4);
-    if (var4 < 0) {
+extern "C" ARM int func_ov004_02167adc(void* self) {
+    short m1, m2, m3;
+    unsigned char flag;
+    int idx;
+    GameState_GetParty(GameState::GetInstance());
+    func_ov004_0216794c(&m1, &m2, &m3, &flag, &idx);
+    if (idx < 0) {
         goto end;
     }
     if (var0 + var1 >= var2) {

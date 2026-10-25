@@ -9,8 +9,7 @@
 #define K(u, j) (u)
 #endif
 
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 struct Struct_0205bcdc;
 struct Struct0205cf1c;
 void SetChannelAFlag0205cef8(void *p);
@@ -19,9 +18,9 @@ void ClearChannelAFlag0205cf10(void *p);
 void ClearFlagByte0205cf1c(struct Struct0205cf1c *p);
 unsigned char ReadBattleField0x64f4Byte_02011804(GameState* gameState);
 int GetCountByType02157108(void *base, int id);
-void GridCursor_SetDimensions(struct Struct_0205ba68 *p, int a, int b, int c);
-void GridCursor_SetCount(struct Node0205bacc *p, int v);
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *p, int v);
+void GridCursor_SetDimensions(struct GridCursor *p, int a, int b, int c);
+void GridCursor_SetCount(struct GridCursor *p, int v);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc *p, int v);
 extern "C" void GridCursor_SetSelectedIndex(void *p, int v);
 extern "C" int func_020dc428();
 extern "C" void func_ov002_02156080(void *arg0, short *arg1, short *arg2);
@@ -271,13 +270,13 @@ extern "C" ARM void func_ov002_02161cf0(char *arg0) {
             func_0205cf1c((struct Struct_0205cf1c *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)));
             return;
     }
-    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 4), cols, rows, flag);
-    GridCursor_SetDimensions((struct Struct_0205ba68 *) (list + 0x54), cols, rows, flag);
-    GridCursor_SetCount((struct Node0205bacc *) (list + 4), total);
-    GridCursor_SetCount((struct Node0205bacc *) (list + 0x54), total);
+    GridCursor_SetDimensions((struct GridCursor *) (list + 4), cols, rows, flag);
+    GridCursor_SetDimensions((struct GridCursor *) (list + 0x54), cols, rows, flag);
+    GridCursor_SetCount((struct GridCursor *) (list + 4), total);
+    GridCursor_SetCount((struct GridCursor *) (list + 0x54), total);
     *(int *) (list + 8)    = pages;
     *(int *) (list + 0x58) = pages;
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), cursor);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc *) (list + 4), cursor);
     GridCursor_SetSelectedIndex(list + 0x54, cursor);
     *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
 }

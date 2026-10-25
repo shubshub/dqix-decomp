@@ -72,25 +72,25 @@ extern "C" ARM int func_02057fd8(Struct_02057fd8_3* arg0, Struct_02057fd8_2* arg
             break;
         }
     }
-    if (var1 == -1) return -1;
-    arg0->unknown_8_[var2].unknown_ac_ = arg1->unknown_1e8_;
-    if (arg1->unknown_1e8_ == 0) {
-        Object3D* var3 = &arg0->unknown_8_[var2].unknown_0_.unknown1_0_;
-        var3->Initialize();
-        arg0->unknown_8_[var2].unknown_d0_ = arg1->unknown_0_;
-        arg1->unknown_14_.ShallowCloneTo(var3);
-        var3->position_ = arg2->unknown_2c_;
-        var3->rotation_ = arg2->unknown_38_;
-        var3->SetScale(arg2->unknown_44_.x, arg2->unknown_44_.y, arg2->unknown_44_.z);
-        if (arg2->unknown_0_[0] == 0) var3->MaybeSetBCFGAnimation(0, arg2->unknown_10_);
-        else var3->MaybeSetRegularAnimation(arg2->unknown_0_, arg2->unknown_10_);
-        arg0->unknown_8_[var2].unknown_b0_ = arg2->unknown_12_;
-        arg0->unknown_8_[var2].unknown_b2_ = arg2->unknown_14_;
-        arg0->unknown_8_[var2].unknown_b4_ = arg2->unknown_16_;
-        arg0->unknown_8_[var2].unknown_b6_ = arg2->unknown_18_;
-        arg0->unknown_8_[var2].unknown_b8_ = arg2->unknown_1a_;
-        arg0->unknown_8_[var2].unknown_bc_ = arg2->unknown_1c_;
-        arg0->unknown_8_[var2].unknown_c0_ = arg2->unknown_20_;
+    if (id == -1) return -1;
+    manager->slots[index].type = node->type;
+    if (node->type == 0) {
+        Object3D* object = &manager->slots[index].payload.object;
+        object->Initialize();
+        manager->slots[index].reason = node->reason;
+        node->model.ShallowCloneTo(object);
+        object->position_ = config->position;
+        object->rotation_ = config->rotation;
+        object->SetScale(config->scale.x, config->scale.y, config->scale.z);
+        if (config->animationName[0] == 0) object->SetAnimationByIndex(0, config->animationFlags);
+        else object->SetAnimationByName(config->animationName, config->animationFlags);
+        manager->slots[index].delay = config->delay;
+        manager->slots[index].targetId = config->targetId;
+        manager->slots[index].field16 = config->field16;
+        manager->slots[index].duration = config->duration;
+        manager->slots[index].field1a = config->field1a;
+        manager->slots[index].field1c = config->field1c;
+        manager->slots[index].velocity = config->velocity;
         COPY_REACTION_FLAGS_02057FD8();
         func_0200fd38(var0, var1, reinterpret_cast<GameObject*>(var3));
         if (var3->pModel_) {

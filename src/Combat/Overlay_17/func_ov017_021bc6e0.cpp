@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_02012fe4(GameState* arg0);
+extern "C" void* Zone3D_GetInstance(GameState* battleStruct);
 
 struct Struct_02061c04_10 {
 	unsigned short unknown_0_;
@@ -17,20 +17,20 @@ struct Struct_02061c04_10 {
 extern "C" void func_ov017_021cd6d8(Struct_02061c04_10* arg0);
 
 // USA: func_ov017_021bc6e0
-extern "C" ARM void func_ov017_021bc6e0(char* arg0, unsigned char arg1, int arg2) {
-	GameState* var0 = GameState::GetInstance();
-	void* var1 = func_02012fe4(var0);
-	Struct_02061c04_10 var2;
-	var2.unknown_0_ = 0;
-	var2.unknown_c_ = -1;
-	var2.unknown_2_ = 0;
-	var2.unknown_4_ = 0;
-	var2.unknown_6_ = 0;
-	var2.unknown_8_ = 0;
-	var2.unknown_a_ = 0;
-	var2.unknown_10_ = 0.0f;
-	if (!(arg2 & 0x800)) {
-		var2.unknown_0_ = *(unsigned short*)var1;
+extern "C" ARM void func_ov017_021bc6e0(char* self, unsigned char byteArg, int flags) {
+	GameState* battleStruct = GameState::GetInstance();
+	void* obj2 = Zone3D_GetInstance(battleStruct);
+	Src021cd6d8 params;
+	params.f0 = 0;
+	params.fc = -1;
+	params.f2 = 0;
+	params.f4 = 0;
+	params.f6 = 0;
+	params.f8 = 0;
+	params.fa = 0;
+	params.f10 = 0.0f;
+	if (!(flags & 0x800)) {
+		params.f0 = *(unsigned short*)obj2;
 	}
 	var2.unknown_2_ = *(unsigned short*)(arg0 + 0x16);
 	var2.unknown_4_ = *(unsigned short*)(arg0 + 0x18);

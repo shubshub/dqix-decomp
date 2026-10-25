@@ -41,8 +41,8 @@ struct Struct_ov008_0218aee4_3 {
     signed char unknown_e99_;
 };
 
-extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0205ac40(void* arg0, Struct_ov008_0218aee4* arg1);
+Elem_0205d81c* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+extern "C" void SpriteContext_DrawSprite(void* renderer, Cell0218aee4* cell);
 
 // USA: func_ov008_0218aee4
 extern "C" ARM void func_ov008_0218aee4(Struct_ov008_0218aee4_3* arg0) {
@@ -53,16 +53,16 @@ extern "C" ARM void func_ov008_0218aee4(Struct_ov008_0218aee4_3* arg0) {
     if (var0 == NULL) {
         return;
     }
-    short var1 = var0->unknown_ac_ * 8;
-    short var2 = var0->unknown_ae_;
-    Struct_ov008_0218aee4_2* var3 = arg0->unknown_1f8_;
-    short var4 = var0->unknown_a8_;
-    var3->unknown_f0_[0].unknown_14_ = (var1 - 1) << 12;
-    short var5 = var2 * 8;
-    var3->unknown_f0_[0].unknown_18_ = (var5 - 1) << 12;
-    func_0205ac40(arg0->unknown_1f4_, &var3->unknown_f0_[0]);
-    var3 = arg0->unknown_1f8_;
-    var3->unknown_f0_[1].unknown_14_ = LOW_REGION((var1 + 0x50), (var1 + (short)(var4 * 8) - 8)) << 12;
-    var3->unknown_f0_[1].unknown_18_ = (var5 - 1) << 12;
-    func_0205ac40(arg0->unknown_1f4_, &var3->unknown_f0_[1]);
+    short x = elem->tileX * 8;
+    short tileY = elem->tileY;
+    Cursor0218aee4* cursor = self->cursor;
+    short width = elem->width;
+    cursor->cells[0].x = (x - 1) << 12;
+    short y = tileY * 8;
+    cursor->cells[0].y = (y - 1) << 12;
+    SpriteContext_DrawSprite(self->renderer, &cursor->cells[0]);
+    cursor = self->cursor;
+    cursor->cells[1].x = LOW_REGION((x + 0x50), (x + (short)(width * 8) - 8)) << 12;
+    cursor->cells[1].y = (y - 1) << 12;
+    SpriteContext_DrawSprite(self->renderer, &cursor->cells[1]);
 }

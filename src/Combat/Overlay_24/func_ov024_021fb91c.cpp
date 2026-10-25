@@ -148,15 +148,15 @@ extern "C" ARM void func_ov024_021fb91c(Struct_ov024_021fb91c_2* arg0) {
             arg0->unknown_25c_.unknown_410_ = var9;
             func_ov024_021fd858(arg0);
         }
-        if (var0->unknown_17_4_ == 2 || var0->unknown_17_4_ == 1 || var0->unknown_17_4_ == 8) {
-            func_ov024_021f9874(arg0, &var8, 0, (unsigned char)var10->obj3D_.unknown_4_);
-            memset(&var8, 0, sizeof(var8));
+        if (action->targetKind == 2 || action->targetKind == 1 || action->targetKind == 8) {
+            func_ov024_021f9874(context, &list, 0, (unsigned char)target->obj3D_.actorIndex_);
+            memset(&list, 0, sizeof(list));
         }
     }
-    if (var0->unknown_17_4_ == 4 || var0->unknown_17_4_ == 3) {
-        GetCombatantByID((int)arg0->unknown_0_, 0);
-        int var18 = (unsigned char)var3->obj3D_.unknown_4_;
-        if (var0->unknown_17_4_ == 3) var18 = 0xff;
-        func_ov024_021f9874(arg0, &var8, 0, var18);
+    if (action->targetKind == 4 || action->targetKind == 3) {
+        GetCombatantByID((int)context->battle, 0);
+        int target = (unsigned char)actor->obj3D_.actorIndex_;
+        if (action->targetKind == 3) target = 0xff;
+        func_ov024_021f9874(context, &list, 0, target);
     }
 }

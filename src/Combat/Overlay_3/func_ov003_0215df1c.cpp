@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-struct Struct_0201099c_3;
-struct Struct_0205de24_2;
-struct Struct_02020cb8_5;
+struct Container020e0310;
+struct Struct0205de24;
+struct BackgroundGraphics;
 
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202c540(void* obj);
 int KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" int func_020420e8(char* str, int id);
+extern "C" int Font_GetTextWidth(char* str, int id);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
-char* GetGlobalField0x1c020421a0(void);
-int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+char* MessageSystem_GetInstance(void);
+int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 extern "C" void memset(void* dst, int val, int size);
 void AppendEntryNames_0215e13c(char* base, char* dst, int flag);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* window, char* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
 struct Struct_ov003_0215df1c {
@@ -80,7 +80,7 @@ extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
 #else
     int maxWidth = 0;
     for (int i = 0; i < self->count; i++) {
-        short w = func_020420e8((char*)KeyTable_Get((struct Container020e0310*)self->messages, self->keys[i]), 0);
+        short w = Font_GetTextWidth((char*)KeyTable_Get((struct Container020e0310*)self->messages, self->keys[i]), 0);
         if (maxWidth < w) {
             maxWidth = w;
         }
@@ -103,16 +103,16 @@ extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
 
     if (arg0->unknown_3f2_) {
 #if defined(jpn)
-        short var6 = *(short*)(func_020421a0() + 0x7e6);
+        short pos = *(short*)(MessageSystem_GetInstance() + 0x7e6);
 #else
-        short var6 = *(short*)(func_020421a0() + 0x916);
+        short pos = *(short*)(MessageSystem_GetInstance() + 0x916);
 #endif
         short row = pos / 8;
         short offset = pos % 8;
         self->x = 0x20 - width;
         self->y = row - height;
         for (int i = 0; i < 2; i++) {
-            Background_SetScroll((struct Obj0204b5e8*)self->scrollers[i], 2, -offset);
+            Background_SetScroll((struct BackgroundGraphics*)self->scrollers[i], 2, -offset);
         }
     }
 
@@ -124,8 +124,8 @@ extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
 #endif
     func_ov003_0215e13c((char*)arg0, arg0->unknown_7c_, 0);
 #if defined(jpn)
-    func_0205d304(arg0->unknown_98_, arg0->unknown_7c_, 0, 1, 0, 1, 0);
+    Window_OpenPane(self->window, self->text, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(arg0->unknown_98_, arg0->unknown_7c_, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(self->window, self->text, 0, 1, 0, 1, 0, 0);
 #endif
 }

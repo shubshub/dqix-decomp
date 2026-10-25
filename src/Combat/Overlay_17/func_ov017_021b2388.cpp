@@ -16,23 +16,23 @@ enum { Enum_ov017_021b2388_14080 = 0x3700 };
 #define func_020c9be0 func_020cb6ac
 #endif
 
-extern "C" int func_020100f8(char* arg0);
-struct Struct_02018300_3;
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a27b8(unsigned char* arg0);
-extern "C" int func_02046b08(void** arg0);
+int GetFieldIfFlag4_020100f8(char* obj);
+struct Obj020397cc;
+void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
+void ClearIntAt0x23c_020a27b8(unsigned char* obj);
+int IsField0Null_02046b08(void** obj);
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern "C" void func_020c9be0(void);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
-struct Struct_0214e34c;
-extern "C" struct Struct_0214e34c* func_020d7a50();
-struct Struct_020d7aa0_2;
-extern "C" void func_020d7aa0(struct Struct_020d7aa0_2* arg0);
+struct ResetObj020d7a5c;
+struct ResetObj020d7a5c* TextQueue_GetInstance();
+struct Obj020d7aa0;
+void TextQueue_Reset(struct Obj020d7aa0* obj);
 
-extern int data_02114e20;
+extern int g_mainAllocator;
 extern char data_ov017_021d7a28;
 
 struct Struct_ov017_021b2388 {
@@ -66,8 +66,8 @@ extern "C" ARM int func_ov017_021b2388(struct Struct_ov017_021b2388_2* arg0) {
     unsigned int var6 = GetFlags04((GameResources*)var1);
     arg0->unknown_40_ = var6;
 
-    if (var3) {
-        func_020397cc((struct Struct_02018300_3*)var3, 1);
+    if (combatant) {
+        GameObject_DisableControl((struct Obj020397cc*)combatant, 1);
     }
 
     if (var2) {
@@ -83,8 +83,8 @@ extern "C" ARM int func_ov017_021b2388(struct Struct_ov017_021b2388_2* arg0) {
 
     SetFlags00((GameResources*)var1, 0x10);
     func_020a0cc4(0x2f800);
-    void* var7 = func_02012d88((AllocatorUnion*)&data_02114e20, 0x2f800);
-    if (!var7) {
+    void* buf = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, 0x2f800);
+    if (!buf) {
         func_020c9be0();
     }
     arg0->unknown_10_.CreateTypeA(var7, 0x2f800);
@@ -97,6 +97,6 @@ extern "C" ARM int func_ov017_021b2388(struct Struct_ov017_021b2388_2* arg0) {
         SetBrightness((GameResources*)var1, -16, 30);
     }
 
-    func_020d7aa0((struct Struct_020d7aa0_2*)func_020d7a50());
+    TextQueue_Reset((struct Obj020d7aa0*)TextQueue_GetInstance());
     return 1;
 }

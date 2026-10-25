@@ -21,7 +21,7 @@ struct Struct_ov017_021bd704_2 {
     unsigned char unknown_f7c_;
 };
 extern "C" void* func_0202ae18();
-extern "C" unsigned char func_020100b0(GameState*);
+unsigned char GameState_GetLeaderIndex(GameState*);
 extern "C" int func_0202c508(void*);
 extern "C" void func_02039d48(unsigned char*);
 int fix32sin(int);
@@ -46,17 +46,17 @@ extern "C" ARM void func_ov017_021bd704(Struct_ov017_021bd704* arg0) {
         var4 = var0->GetUnknownGameObject()->obj3D_.position_;
         var5 = var0->GetUnknownGameObject()->obj3D_.rotation_.y;
     }
-    Struct_ov017_021bd704_2* var6 = (Struct_ov017_021bd704_2*)func_02010828(var0);
-    if (var6 != 0) {
-        for (int var7 = 0; var7 < var6->unknown_f7c_; var7++) {
-            int var8 = var6->unknown_f78_[var7];
-            GameObject* var9 = var0->GetPartyMemberByIndex(var8);
-            if (var9 == 0) continue;
-            if (func_0202c508(var1)) {
-                int var10 = var9->obj3D_.unknown_4_;
-                if (var10 != func_020100b0(var0) && var2) {
-                    var9->obj3D_.SetInheritedAlpha(0);
-                    func_02039d48((unsigned char*)var9);
+    PartyList021bd704* party = (PartyList021bd704*)GameState_GetParty(game);
+    if (party != 0) {
+        for (int i = 0; i < party->count; i++) {
+            int id = party->members[i];
+            GameObject* member = game->GetPartyMemberByIndex(id);
+            if (member == 0) continue;
+            if (func_0202c508(search)) {
+                int member_id = member->obj3D_.actorIndex_;
+                if (member_id != GameState_GetLeaderIndex(game) && anchor) {
+                    member->obj3D_.SetInheritedAlpha(0);
+                    SetFlag0x1ceBit0x4_02039d48((unsigned char*)member);
                 }
             } else if (arg0->unknown_5_ && !var3) {
                 if (var8 == 1) {

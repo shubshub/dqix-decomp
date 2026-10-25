@@ -58,22 +58,22 @@ extern "C" ARM void func_0204956c(Struct_0204956c_2* arg0) {
         }
         var2->unknown_52_ = 0;
     }
-    if (!var2->unknown_4f_) {
-        int var5 = var3->unknown_4_;
-        int var6 = var5 + func_020494a0(var0) + var2->unknown_54_;
-        int var7 = func_020494a0(var0);
-        if (var7 == 0xff) { func_02049ae4(var0); return; }
-        GameObject* var8 = var1->GetCombatantByIndex(var7);
-        if (!var8) { func_02049ae4(var0); return; }
-        Struct_02107850* var9 = &ClipAlias0204956c::data_02107850;
-        if (data_02107850.unknown_1c_) {
-            Vector3i var10 = var9->unknown_0_;
-            Vector3i var11 = var9->unknown_c_;
-            Vector3i var12 = var3->position_;
-            Vector3i var13;
-            int var14 = func_02031468(&var10, &var11, &var12, &var13);
-            if (var14 < var9->unknown_18_ + (var3->GetRadius() >> 1) + 0x2000) {
-                func_02049ae4(var0);
+    if (!state->remaining) {
+        int actorId = object->actorIndex_;
+        int selection = actorId + GetByteWithFallback_020494a0(bytes) + state->iteration;
+        int targetId = GetByteWithFallback_020494a0(bytes);
+        if (targetId == 0xff) { ClearSubstructFlag0x4_02049ae4(bytes); return; }
+        GameObject* target = game->GetCombatantByIndex(targetId);
+        if (!target) { ClearSubstructFlag0x4_02049ae4(bytes); return; }
+        ClipState0204956c* clip = &ClipAlias0204956c::data_02107850;
+        if (data_02107850.enabled) {
+            Vector3i start = clip->start;
+            Vector3i end = clip->end;
+            Vector3i position = object->position_;
+            Vector3i closest;
+            int distance = func_02031468(&start, &end, &position, &closest);
+            if (distance < clip->radius + (object->GetRadius() >> 1) + 0x2000) {
+                ClearSubstructFlag0x4_02049ae4(bytes);
                 return;
             }
         }
@@ -104,8 +104,8 @@ extern "C" ARM void func_0204956c(Struct_0204956c_2* arg0) {
             unsigned int var24 = (unsigned int)((float)fix32_Divide(var23->endTime - var23->startTime, var23->frameRate) / 4096.0f);
             var2->unknown_50_ = 0xc00 / (var24 * 17);
         }
-        var3->MaybeSetRegularAnimation(data_020f01a4, 1);
-        func_020494c0(reinterpret_cast<Struct_02048f64_2*>(arg0));
+        object->SetAnimationByName(data_020f01a4, 1);
+        DispatchTargetByte020494c0(reinterpret_cast<Obj020494c0*>(actor));
         return;
     }
     int var25 = func_020494a0(var0);
@@ -134,23 +134,23 @@ extern "C" ARM void func_0204956c(Struct_0204956c_2* arg0) {
         break;
     default: func_02049ae4(var0); break;
     }
-    int var31 = var1->GetEffectiveDeltaTime();
-    Vector3i var32;
-    Vector3fixMultiplyScalar(&var29, var2->unknown_50_ * var31, &var32);
-    Vector3fix_Add(&var27, &var32, &var27);
-    var3->position_ = var27;
-    if (var3->HasAnimationStopped()) {
-        --var2->unknown_4f_;
-        if (!var2->unknown_4f_) {
-            int var33 = var3->unknown_4_;
-            int var34 = var33 + func_020494a0(var0) + var2->unknown_54_;
-            Struct_020e7b54 var35 = data_020e7b54;
-            var2->unknown_52_ = var35.unknown_0_[var34 % 3];
-            ++var2->unknown_54_;
+    int elapsed = game->GetEffectiveDeltaTime();
+    Vector3i delta;
+    Vector3fixMultiplyScalar(&direction, state->speed * elapsed, &delta);
+    Vector3fix_Add(&position, &delta, &position);
+    object->position_ = position;
+    if (object->HasAnimationStopped()) {
+        --state->remaining;
+        if (!state->remaining) {
+            int actorId = object->actorIndex_;
+            int selection = actorId + GetByteWithFallback_020494a0(bytes) + state->iteration;
+            DelayTable0204956c delays = data_020e7b54;
+            state->delay = delays.values[selection % 3];
+            ++state->iteration;
         } else {
-            var3->StopCurrentAnimation();
-            var3->MaybeSetRegularAnimation(data_020f01a4, 1);
-            func_020494c0(reinterpret_cast<Struct_02048f64_2*>(arg0));
+            object->StopCurrentAnimation();
+            object->SetAnimationByName(data_020f01a4, 1);
+            DispatchTargetByte020494c0(reinterpret_cast<Obj020494c0*>(actor));
         }
     } else if (var3->activeAnimationRecord_ && strcmp(var3->activeAnimationRecord_->name, data_020f01a4)) {
         func_02049ae4(var0);

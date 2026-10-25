@@ -18,9 +18,9 @@ extern Struct_ov031_02248ee0 data_ov031_02248ee0;
 extern Struct_ov031_0222d720_2* data_ov031_02290c98;
 extern unsigned char data_ov031_0224ba7c[];
 
-extern "C" void* func_ov031_0223cf4c(unsigned int arg0, int arg1);
-extern "C" void func_ov031_02227520(int*, int*);
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
+extern "C" void* func_ov031_0223cf4c(unsigned int len, int align);
+void GetFields181c_02227520(int*, int*);
+extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" void func_ov031_0222d894(void);
 extern "C" void func_ov031_02223998(int);
 extern "C" void func_ov031_0222336c(int, int, int);
@@ -47,9 +47,9 @@ extern "C" ARM void func_ov031_0222d720(void) {
     func_ov031_02227520(&var2, 0);
     var0.unknown_0_[var2](data_ov031_02290c98->unknown_8_);
 
-    Struct_ov031_0222d720_2* var3 = data_ov031_02290c98;
-    if (func_02001aec(var3->unknown_8_, data_ov031_0224ba7c, 3) != 0) {
-        var3->unknown_14_ = 3;
+    State_0222d720* state = data_ov031_02290c98;
+    if (memcmp(state->digits, data_ov031_0224ba7c, 3) != 0) {
+        state->cursor = 3;
     } else {
         VectorizedMemset(var3->unknown_8_, 0, 0xc);
         data_ov031_02290c98->unknown_14_ = 0;

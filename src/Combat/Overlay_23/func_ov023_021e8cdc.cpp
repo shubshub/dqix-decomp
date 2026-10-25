@@ -5,9 +5,9 @@
 extern int data_ov023_021fdd6c;
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_EncodeText(void* src, void* dst, int flag);
-int StringLength_020d2ff0(const char* s);
+int STD_GetStringLength(const char* s);
 int Font_FindCharacterIndex(int key, int tableIdx);
-extern "C" void func_02042764(void* a, void* b, int flag);
+extern "C" void Font_DecodeText(void* a, void* b, int flag);
 
 struct Struct_0204254c {
     int unknown_0_;
@@ -18,11 +18,11 @@ struct Struct_0204254c {
 };
 struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 int AppendXTag_02041a28(char* dst, int x);
-void AppendString02042058(char* dst, const char* src);
+void Text_Append(char* dst, const char* src);
 int AppendYTag_02041a5c(char* dst, int y);
 
 #if defined(jpn)
-extern "C" void func_020420e8(char*, int);
+extern "C" void Font_GetTextWidth(char*, int);
 extern "C" void func_02042428(char*, int);
 struct Struct_02072a68_2;
 extern "C" char* func_02072a68(Struct_02072a68_2*, int);
@@ -36,22 +36,22 @@ extern "C" ARM void func_ov023_021e8cdc(char* arg0) {
     char* var1 = *(char**)(arg0 + 0x5d8);
 
 #if defined(jpn)
-    char* var2 = (char*)GameState::GetInstance() + 0x3c + 0x5400;
-    func_020420e8(var1, 8);
-    func_02042428(var1, 12);
-    func_02042058(var1, func_02072a68(*(Struct_02072a68_2**)(arg0 + 0x5f4), 0x73));
-    var1 += strlen(var1);
-    char* var3 = var2 + 8;
-    if (*(char**)(arg0 + 0x600)) var3 = *(char**)(arg0 + 0x600);
-    for (int var4 = 0; var4 < 3; ++var4) {
-        memcpy(var1, var3, 0x26);
-        var3 += 0x26;
-        var1 += 0x26;
-        if (var4 != 2) {
-            func_02041a90(var1, 1, var4 * 0x13 + 0x1b);
-            var1 += strlen(var1);
-            memcpy(var1, func_02072a68(*(Struct_02072a68_2**)(arg0 + 0x5f4), 0x7b), 2);
-            var1 += 2;
+    char* battle = (char*)GameState::GetInstance() + 0x3c + 0x5400;
+    Font_GetTextWidth(dst, 8);
+    func_02042428(dst, 12);
+    Text_Append(dst, FindEntryByKey_02072a68(*(TableA68**)(obj + 0x5f4), 0x73));
+    dst += strlen(dst);
+    char* src = battle + 8;
+    if (*(char**)(obj + 0x600)) src = *(char**)(obj + 0x600);
+    for (int row = 0; row < 3; ++row) {
+        memcpy(dst, src, 0x26);
+        src += 0x26;
+        dst += 0x26;
+        if (row != 2) {
+            AppendXYTag_02041a90(dst, 1, row * 0x13 + 0x1b);
+            dst += strlen(dst);
+            memcpy(dst, FindEntryByKey_02072a68(*(TableA68**)(obj + 0x5f4), 0x7b), 2);
+            dst += 2;
         }
     }
 #else
@@ -65,14 +65,14 @@ extern "C" ARM void func_ov023_021e8cdc(char* arg0) {
     if (src != 0) {
         len = Font_EncodeText(src, buf, 1);
     } else {
-        var0 = func_020d2ff0(var5 + 8);
-        memcpy(var6, var5 + 8, var0);
+        len = STD_GetStringLength(battle + 8);
+        memcpy(buf, battle + 8, len);
     }
 
     signed char idxByte = (signed char)Font_FindCharacterIndex((int)&data_ov023_021fdd6c, 1);
     for (; len < 0x39; len++) buf[len] = idxByte;
 
-    func_02042764(var6, var6 + 0x3a, 1);
+    Font_DecodeText(buf, buf + 0x3a, 1);
 
     char* var9 = var6 + 0x3a;
     int var10 = 0xf;
@@ -85,7 +85,7 @@ extern "C" ARM void func_ov023_021e8cdc(char* arg0) {
         struct Entry0204254c* e = Font_FindCharacter((int)p, step);
         if (e != 0) {
             AppendXTag_02041a28(dst, x);
-            AppendString02042058(dst, (const char*)e->val);
+            Text_Append(dst, (const char*)e->val);
             step = e->field5;
         }
         var13++;

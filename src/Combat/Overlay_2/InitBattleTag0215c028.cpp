@@ -18,7 +18,7 @@ struct BattleTagLineState {
 }
 
 extern "C" void func_ov002_0215be00(void*, int, short, short);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" void Window_Update(void*, int);
 struct Struct_0205def8;
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
@@ -28,10 +28,10 @@ extern "C" void func_020474a8(void*, unsigned char, const char*, char*);
 extern "C" int func_0204234c(char*, int);
 #else
 extern const char data_ov002_0216d26c[];
-extern "C" void func_02046608(void*, int, int, int, int, int, int);
+extern "C" void MessageSystem_FormatText(void*, int, int, int, int, int, int);
 int AppendLineTag02041cc0(char*, int);
 #endif
-extern "C" void func_0205d304(void*, const char*, int, unsigned char, unsigned char, unsigned char, void*
+extern "C" void Window_OpenPane(void*, const char*, int, unsigned char, unsigned char, unsigned char, void*
 #if !defined(jpn)
                             , unsigned char
 #endif
@@ -42,16 +42,16 @@ extern "C" void func_0205d304(void*, const char*, int, unsigned char, unsigned c
 ARM void InitBattleTag0215c028(char* base) {
     BattleTagLineState* state = ((BattleTagLineState*)(base));
     func_ov002_0215be00(state, LayoutPreset, 0x15, 0x13);
-    void* messages = ((void*)(GetGlobalField0x1c020421a0()));
+    void* messages = ((void*)(MessageSystem_GetInstance()));
     memset(state->text, 0, TextCapacity);
 #if defined(jpn)
     func_020474a8(messages, 8, data_ov002_0216d91f, state->text);
     func_0204234c(state->text, 0x11);
 #else
-    func_02046608(messages, 8, ((int)(data_ov002_0216d26c)), ((int)(state->text)), 0x100, 0, 0);
+    MessageSystem_FormatText(messages, 8, ((int)(data_ov002_0216d26c)), ((int)(state->text)), 0x100, 0, 0);
     AppendLineTag02041cc0(state->text, 0x11);
 #endif
-    func_0205d304(&state->window, state->text, 0, 0, 0, 1, 0
+    Window_OpenPane(&state->window, state->text, 0, 0, 0, 1, 0
 #if !defined(jpn)
                  , 0
 #endif

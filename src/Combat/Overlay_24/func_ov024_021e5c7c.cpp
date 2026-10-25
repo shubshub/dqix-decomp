@@ -38,31 +38,31 @@ extern "C" void func_ov000_0215fe84(void*, void*, int);
 static inline int inline_ov000_02169850(int arg0) { return arg0 >= 0 && arg0 <= 3; }
 
 // USA: func_ov024_021e5c7c
-extern "C" ARM void func_ov024_021e5c7c(Struct_ov024_021e5c7c_3* arg0, int arg1, int arg2, int arg3) {
-    if (arg3 <= 0) return;
-    GameObject* var0 = GetCombatantByID((int)arg0->unknown_10_, arg1);
-    if (!var0) return;
-    if ((int)(float)NextRandomMax((Random*)arg0->unknown_10_, 2) <= 0) return;
-    void* var1 = func_ov000_0215e958(arg0->unknown_10_);
-    if (!var1) return;
-    Struct_ov024_021e5c7c_4* var2 = (Struct_ov024_021e5c7c_4*)func_02010828(GameState::GetInstance());
-    int var3;
-    int var4;
-    Struct_ov024_021e5c7c_2* var5 = arg0->unknown_c_;
-    if (!var5) return;
-    var3 = func_ov000_0215ffa0(var5);
-    if (inline_ov000_02169850(var3)) return;
-    var4 = 0;
-    if (inline_ov000_02169850(arg1)) {
-        Struct_ov024_021e5c7c_6* var6 = (Struct_ov024_021e5c7c_6*)func_ov000_021536f8((int)arg0->unknown_10_, var3);
-        if (var6) {
-            var4 = (int)(0.1f * (float)(unsigned int)var6->unknown_148_->unknown_c_);
-            if (var4 > 100) var4 = 100;
-            if (var4 > 0) {
-                if (func_ov000_0215fd24((int)arg0->unknown_10_, arg1)) {
-                    unsigned int var7 = var2->unknown_f6c_ + var4;
-                    if (var7 > 9999999) var2->unknown_f6c_ = 9999999;
-                    else var2->unknown_f6c_ = var7;
+extern "C" ARM void func_ov024_021e5c7c(GoldAction* action, int id, int unused, int damage) {
+    if (damage <= 0) return;
+    GameObject* combatant = GetCombatantByID((int)action->battle, id);
+    if (!combatant) return;
+    if ((int)(float)NextRandomMax((Random*)action->battle, 2) <= 0) return;
+    void* entry = func_ov000_0215e958(action->battle);
+    if (!entry) return;
+    GoldInventory* inventory = (GoldInventory*)GameState_GetParty(GameState::GetInstance());
+    int other;
+    int amount;
+    GoldActionEntry* source = action->source;
+    if (!source) return;
+    other = func_ov000_0215ffa0(source);
+    if (IsPartyMember(other)) return;
+    amount = 0;
+    if (IsPartyMember(id)) {
+        GoldCombatant* monster = (GoldCombatant*)GetCombatantWithFlag0x400ByID_ov000_021536f8((int)action->battle, other);
+        if (monster) {
+            amount = (int)(0.1f * (float)(unsigned int)monster->monster->gold);
+            if (amount > 100) amount = 100;
+            if (amount > 0) {
+                if (IsIdOrEffectMatchTarget0215fd24((int)action->battle, id)) {
+                    unsigned int total = inventory->gold + amount;
+                    if (total > 9999999) inventory->gold = 9999999;
+                    else inventory->gold = total;
                 }
                 var5->unknown_1b_ = var4;
                 func_ov000_0215a88c(arg0->unknown_10_, var1, 0x172);

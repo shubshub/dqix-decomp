@@ -29,7 +29,7 @@ extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
 
 extern "C" void func_ov000_0216fe9c(void* arg0);
 
-extern "C" int func_020100a8(GameState* arg0);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 // USA: func_ov000_02171138
 extern "C" ARM void func_ov000_02171138(void* arg0) {
@@ -68,14 +68,14 @@ extern "C" ARM void func_ov000_02171138(void* arg0) {
     *(short*)(var0 + 0xe) = var11;
     *(short*)(var0 + 0xa) = var12;
 
-    *(int*)(var0 + 0x28) = *(int*)(var4 + 0xa8);
-    *(unsigned char*)(var0 + 0x1c) = 0;
-    *(unsigned short*)(var0 + REGION_OFFSET_5) = 0;
-    *(unsigned short*)(var0 + REGION_OFFSET_6) = 0;
-    *(unsigned char*)(var0 + REGION_OFFSET_7) = 0;
-    int var13 = func_020100a8(var2);
-    if (*(int*)(var0 + 0x4c) == var13) {
-        *(unsigned char*)(var0 + 0x24) |= 2;
+    *(int*)(obj + 0x28) = *(int*)(field150 + 0xa8);
+    *(unsigned char*)(obj + 0x1c) = 0;
+    *(unsigned short*)(obj + REGION_OFFSET_5) = 0;
+    *(unsigned short*)(obj + REGION_OFFSET_6) = 0;
+    *(unsigned char*)(obj + REGION_OFFSET_7) = 0;
+    int fieldVal = GameState_GetProtagonistIndex(bs);
+    if (*(int*)(obj + 0x4c) == fieldVal) {
+        *(unsigned char*)(obj + 0x24) |= 2;
     }
     *(unsigned char*)(var0 + 0x24) &= ~1;
 }

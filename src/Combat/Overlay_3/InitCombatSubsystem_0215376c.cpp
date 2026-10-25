@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 struct SubBgControlBackup02074b64;
 void BackupSubBgControlRegisters(struct SubBgControlBackup02074b64* obj);
 
@@ -13,7 +13,7 @@ extern "C" ARM void func_ov003_0215376c(char* obj) {
     *(int*)(obj + 0xc) = 0;
     *(int*)(obj + 0x14) = 0;
     *(int*)(obj + 0x10) = 0;
-    Background_Init((struct List0204af64*)(obj + 0x18));
+    Background_Init((struct BackgroundGraphics*)(obj + 0x18));
     int negOne;
     *(unsigned char*)(obj + 0x48) = 0;
     *(unsigned char*)(obj + 0x49) = 0;

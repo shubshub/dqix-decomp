@@ -9,10 +9,10 @@
 #define LOW_REGION(j,u) (u)
 #endif
 
-struct Struct_02021b84;
-struct Struct_02052e14;
-struct Struct_0201099c_10;
-struct Struct_0201099c_3;
+struct MessageSystem;
+struct Field150Holder02052e14;
+struct ItemTable;
+struct Container020e0310;
 
 struct Struct_ov005_02153ba4_2
 {
@@ -28,23 +28,23 @@ struct Struct_0201099c_9
 
 struct Struct_ov005_02153954
 {
-    char unknown_0_[0xdf4];
-    Struct_0201099c_10* unknown_df4_;
-    char unknown_df8_[LOW_REGION(0x3d7c,0x3e04) - 0xdf8];
-    signed char unknown_3e04_;
-    char unknown_3e05_[0x3e84 - 0x3e05];
-    unsigned short unknown_3e84_[8][LOW_REGION(0xa,0x40)];
-    unsigned char unknown_4284_[8];
+    char unk_0[0xdf4];
+    ItemTable* items_;
+    char texts_[LOW_REGION(0x3d7c,0x3e04) - 0xdf8];
+    signed char unk_3e04;
+    char unk_3e05[0x3e84 - 0x3e05];
+    unsigned short names_[8][LOW_REGION(0xa,0x40)];
+    unsigned char longNames_[8];
 };
 
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 MemberScreen* GetField1c_021a193c(int* obj);
 short* GetField150Ptr0x488(Field150Holder02052e14* member);
 extern "C" void func_020462d0(MessageSystem* messages, unsigned short* codes, int count);
-Element020de650* FindElementByKey020dedd0(Container020dedd0* c, int key);
+Element020de650* ItemTable_Find(ItemTable* c, int key);
 extern "C" void __clear(void* buffer, unsigned long size);
 void CopyTextAndUppercaseIfFlagged0206819c(const char* name, char* output, int flag);
-extern "C" void func_02046608(MessageSystem* messages, int, const char* format, char* output, int size, int, int);
+extern "C" void MessageSystem_FormatText(MessageSystem* messages, int, const char* format, char* output, int size, int, int);
 const char* KeyTable_Get(Container020e0310* texts, int id);
 int FindSubstring_020d2f88(char* text, char* search);
 extern "C" void func_02045d14(MessageSystem* messages, const char* text, unsigned short* codes, int);
@@ -60,11 +60,11 @@ extern "C" char data_ov005_0215ce08[];
 // USA: func_ov005_0215ae7c
 extern "C" ARM void func_ov005_0215ae7c(Struct_ov005_02153954* arg0)
 {
-    Struct_02021b84* var0 = func_020421a0();
-    GameState* var1 = GameState::GetInstance();
-    Struct_02052e14* var2 =
-        (Struct_02052e14*)func_0200ff1c(var1, func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3])->unknown_4fc_);
-    if (var2 == NULL)
+    MessageSystem* messages = MessageSystem_GetInstance();
+    GameState* gameState = GameState::GetInstance();
+    Field150Holder02052e14* member =
+        (Field150Holder02052e14*)GetCombatantWithFlag0x100_0200ff1c(gameState, GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member_);
+    if (member == NULL)
         return;
     short* var3 = func_02052e14(var2);
     for (int var4 = 0; var4 < 8; var4++)
@@ -82,8 +82,8 @@ extern "C" ARM void func_ov005_0215ae7c(Struct_ov005_02153954* arg0)
     }
     for (int var6 = 0; var6 < 8; var6++)
     {
-        short var7 = var3[data_ov005_0215cc04[var6]];
-        Struct_0201099c_9* var8 = func_020dedd0(arg0->unknown_df4_, var7);
+        short item = equipment[data_ov005_0215cc04[i]];
+        Element020de650* entry = ItemTable_Find(self->items_, item);
 #if defined(jpn)
         if (var8 != NULL)
         {
@@ -102,18 +102,18 @@ extern "C" ARM void func_ov005_0215ae7c(Struct_ov005_02153954* arg0)
         __clear(var9, sizeof(var9));
         if (var8 != NULL)
         {
-            char var10[0x80];
-            __clear(var10, sizeof(var10));
-            func_0206819c(var8->unknown_4_, var10, 0);
-            func_02046608(var0, 0, var10, var9, 0x58, 0, 0);
+            char name[0x80];
+            __clear(name, sizeof(name));
+            CopyTextAndUppercaseIfFlagged0206819c(entry->unk_4, name, 0);
+            MessageSystem_FormatText(messages, 0, name, text, 0x58, 0, 0);
         }
         else if (var7 <= 0)
         {
-            func_02046608(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x2ee0), text, 0x58, 0, 0);
+            MessageSystem_FormatText(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x2ee0), text, 0x58, 0, 0);
         }
         else
         {
-            func_02046608(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x32c7), text, 0x58, 0, 0);
+            MessageSystem_FormatText(messages, 0, KeyTable_Get((Container020e0310*)self->texts_, 0x32c7), text, 0x58, 0, 0);
         }
         if (func_020d2f88(var9, data_ov005_0215ce08))
             arg0->unknown_4284_[var6] = 1;

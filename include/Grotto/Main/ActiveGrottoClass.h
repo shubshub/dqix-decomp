@@ -10,7 +10,7 @@
 // to DetailedTreasureMapData having extra buffers.
 // This is stored at offset 0x23EC in the 'zone struct'
 // (which I haven't detailed yet but is at location 020FB3F0
-// in the USA version, and whose pointer is returned by func_02012fe4).
+// in the USA version, and whose pointer is returned by Zone3D_GetInstance).
 // Holds data about the grotto the player is currently in, including (but not
 // limited to) data about the current floor. 
 class ActiveGrottoClass

@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #if defined(jpn)
 #define REGION_LAYOUT(j,u) j
 #define REGION_FLAG(obj,flag) ((obj)->unknown_b18_ & (flag))
@@ -68,9 +69,6 @@ struct Struct_ov008_02185dc0 {
     int unknown_0_[2];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -159,18 +157,18 @@ struct Struct_0205d81c;
 struct SePlayer;
 
 extern char data_ov008_0218b400[] __attribute__((aligned(4)));
-extern unsigned char data_0211e33c[];
+extern unsigned char g_fileLoadBuffer[];
 extern SePlayer g_sePlayer;
 
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsBrightnessTransitionActive(GameResources* resources);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
 void ResetListHeader020727d8(List020727d8* list);
 void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
-int GetField0x3acValue_020100a8(GameState* gameState);
+int GameState_GetProtagonistIndex(GameState* gameState);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 Canvas* FindElementByC40205d81c(Struct_0205d81c* window, int canvas);
 struct Manager02187664;
 void InitConfig02187664(Manager02187664*, int);
@@ -209,7 +207,7 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
     BackgroundLoader::GetInstance();
-    Struct_02021b84* var3 = func_020421a0();
+    MessageSystem* messages = MessageSystem_GetInstance();
 #if defined(jpn)
     var0 = inline_ov008_021843f8(var1);
 #define CLEAR_RECORDS inline_ov008_02186388(var0, 0)
@@ -255,24 +253,24 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
         {
             memset(arg0->unknown_b8_, 0, REGION_LAYOUT(0x800, 0x960));
 #if defined(jpn)
-            char* var8 = arg0->unknown_b8_;
-            char* var14 = var8 + 0x80;
-            Struct_ov008_02185dc0 var9;
-            func_020727d8((Struct_020727d8*)&var9);
-            func_020727f8(&var9, data_ov008_0218b400, 1001, var8, 0);
-            Struct_ov000_02179cdc_4* var10 = (Struct_ov000_02179cdc_4*)func_0200ff1c(var1, func_020100a8(var1));
-            func_020727d8((Struct_020727d8*)&var9);
-            unsigned char var11 = var10->unknown_150_->unknown_49c_0_;
-            func_020727f8(&var9, var8, CLEAR_TITLE, var14, var11);
+            char* path = self->text_;
+            char* comment = path + 0x80;
+            TextList list;
+            ResetListHeader020727d8((List020727d8*)&list);
+            SubmitScriptFromFile020727f8(&list, data_ov008_0218b400, 1001, path, 0);
+            PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+            ResetListHeader020727d8((List020727d8*)&list);
+            unsigned char female = member->data_->female_;
+            SubmitScriptFromFile020727f8(&list, path, CLEAR_TITLE, comment, female);
 #else
             char* var12 = arg0->unknown_b8_;
             char* var13 = var12 + 0x80;
             char* var14 = var12 + 0x100;
             BackgroundLoader::AddLockGlobal();
-            Struct_ov008_02185dc0 var15;
-            unsigned int var16;
-            void* var17 = LoadFileIntoMemory(data_ov008_0218b400, data_0211e33c, &var16);
-            if (var17 != NULL)
+            TextList list;
+            unsigned int size;
+            void* file = LoadFileIntoMemory(data_ov008_0218b400, g_fileLoadBuffer, &size);
+            if (file != NULL)
             {
                 func_020727d8((Struct_020727d8*)&var15);
                 func_02072928(&var15, (Struct_02013fb4*)var17, var16, 1001, var12, 0);
@@ -282,14 +280,14 @@ extern "C" ARM void func_ov008_02186388(Struct_ov008_021842a0_2* arg0)
             var17 = ExtractFileFromGP2(var12, var13, &var16);
             if (var17 != NULL)
             {
-                Struct_ov000_02179cdc_4* var18 = (Struct_ov000_02179cdc_4*)func_0200ff1c(var1, func_020100a8(var1));
-                func_020727d8((Struct_020727d8*)&var15);
-                unsigned char var19 = var18->unknown_150_->unknown_49c_0_;
-                func_02072928(&var15, (Struct_02013fb4*)var17, var16, CLEAR_TITLE, var14, var19);
+                PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+                ResetListHeader020727d8((List020727d8*)&list);
+                unsigned char female = member->data_->female_;
+                SubmitAndRunScript02072928(&list, (StreamHeader*)file, size, CLEAR_TITLE, comment, female);
             }
             BackgroundLoader::RemoveLockGlobal();
 #endif
-            AppendString02042058(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
+            Text_Append(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
 #if defined(jpn)
             func_0204500c(var3, var14, 0);
 #else

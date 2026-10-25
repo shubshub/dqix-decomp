@@ -32,15 +32,15 @@ struct Struct_ov017_021a1ad0_4 {
 
     Struct_ov017_021a1ad0_4(const Vector3fix& arg0) : unknown_0_(arg0) {}
 };
-extern "C" Struct_020fdd44* func_02027ca4();
-extern "C" Struct_020fdd44* func_02028bac(Struct_02028bac*, int);
-extern "C" Struct_020fdd44* func_02028bd0(Struct_020fdd44*, int);
-extern "C" void func_02076b58(Struct_02076a8c_2*);
-extern "C" int func_0201b5d8(int);
-extern "C" int func_0202b7d8(int*);
-extern "C" void func_ov017_021c9544(int, int, int, int);
+Entry_02028bd0* ZoneRecords_GetInstance();
+Entry_02028bd0* GetElementStride0x318(Element0x318_02028bac*, int);
+Entry_02028bd0* FindInlineEntryById(Entry_02028bd0*, int);
+void TickActorAndDispatchPhase02076b58(Obj02076b58*);
+int IsValueInRange0201b5d8(int);
+int CheckField0NonZero_0202b7d8(int*);
+void EnqueueEventTag134_021c9544(int, int, int, int);
 extern "C" int* func_0202ae18();
-extern "C" unsigned short* func_02012fe4();
+extern "C" unsigned short* Zone3D_GetInstance();
 extern "C" int func_0202c508(int*);
 extern "C" void func_02034104(Vector3fix*, GameObject*);
 extern "C" int func_02031118(Vector3fix*, Struct_ov017_021a1ad0_2*);
@@ -48,28 +48,28 @@ extern "C" void func_02076a8c(Struct_ov017_021a1ad0*);
 
 // USA: func_ov017_021a1ad0
 extern "C" ARM void func_ov017_021a1ad0() {
-    GameState* var0 = GameState::GetInstance();
-    Struct_020fdd44* var1 = func_02027ca4();
-    int* var2 = func_0202ae18();
-    unsigned short* var3 = func_02012fe4();
-    if (func_0202c508(var2)) {
-        int var4;
-        int var5;
-        Struct_020fdd44* var6;
-        for (var5 = 0; var5 < 4; var5++) {
-            var6 = func_02028bac((Struct_02028bac*)var1, var5);
-            if (!var6->unknown_2_2_) continue;
-            var4 = var5 * 12 + 0x70;
-            int var7 = -1;
-            for (int var8 = 0; var8 < 12; var8++) {
-                Struct_ov017_021a1ad0* var9 = (Struct_ov017_021a1ad0*)var0->GetMaybeFieldMonsterByIndex(var8 + var4);
-                if (!var9 || !var9->unknown_0_.IsVisible()) continue;
-                func_02076b58((Struct_02076a8c_2*)var9);
-                int var10 = 1;
-                if ((var9->unknown_17d_ & 2) || (var9->unknown_17d_ & 4) || func_0201b5d8(*var3)) var10 = 0;
-                if (var9->unknown_17d_ & 8) var10 = 0;
-                if (!var10) continue;
-                int var11;
+    GameState* state = GameState::GetInstance();
+    Entry_02028bd0* table = ZoneRecords_GetInstance();
+    int* manager = func_0202ae18();
+    unsigned short* currentArea = Zone3D_GetInstance();
+    if (func_0202c508(manager)) {
+        int base;
+        int group;
+        Entry_02028bd0* entry;
+        for (group = 0; group < 4; group++) {
+            entry = GetElementStride0x318((Element0x318_02028bac*)table, group);
+            if (!entry->active) continue;
+            base = group * 12 + 0x70;
+            int tag = -1;
+            for (int slot = 0; slot < 12; slot++) {
+                FieldMonster021a1ad0* monster = (FieldMonster021a1ad0*)state->GetMaybeFieldMonsterByIndex(slot + base);
+                if (!monster || !monster->object.IsVisible()) continue;
+                TickActorAndDispatchPhase02076b58((Obj02076b58*)monster);
+                int removable = 1;
+                if ((monster->flags & 2) || (monster->flags & 4) || IsValueInRange0201b5d8(*currentArea)) removable = 0;
+                if (monster->flags & 8) removable = 0;
+                if (!removable) continue;
+                int clear;
                 {
                     GameObject* var12;
                     GameState* var13 = GameState::GetInstance();

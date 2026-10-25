@@ -10,7 +10,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 void Forward0204359c(void*, int);
 extern "C" void func_020439b0(void*, int);
 struct Obj0205d2bc;
@@ -26,7 +26,7 @@ extern "C" ARM void func_ov013_02184aec(void* obj) {
     }
 
     void* battle = GameState::GetInstance();
-    void* field = GetGlobalField0x1c020421a0();
+    void* field = MessageSystem_GetInstance();
     int count = ((GameState*)battle)->GetTickCount();
     Forward0204359c(field, count);
     func_020439b0(field, 0);

@@ -48,14 +48,14 @@ extern "C" ARM int func_ov025_021e604c(void* arg0, int arg1, int arg2, void* arg
     if (var13 == NULL) {
         return 1;
     }
-    int var14 = func_ov000_021820bc(arg3, arg1, 0x18, (int)var0);
-    for (int var15 = 0; var15 < var14; var15++) {
-        GameObject* var16 = var12->GetCombatantByIndex(var0[var15]);
-        if (var16 != NULL) {
-            func_ov000_02161c0c(var13, var0[var15]);
-            func_02049f28((unsigned char*)var16);
-            func_ov000_02167fb0(var13, var16);
-            var16->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef802, 1);
+    int count = DispatchByIndex021820bc(c, b, 0x18, (int)ids);
+    for (int i = 0; i < count; i++) {
+        GameObject* obj = bs->GetCombatantByIndex(ids[i]);
+        if (obj != NULL) {
+            func_ov000_02161c0c(work, ids[i]);
+            SetSubstructByte0x56_02049f28((unsigned char*)obj);
+            func_ov000_02167fb0(work, obj);
+            obj->obj3D_.SetAnimationByName(data_ov025_021ef802, 1);
         }
     }
     func_ov000_021677fc(work);

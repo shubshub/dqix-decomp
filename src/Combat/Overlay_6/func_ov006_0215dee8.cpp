@@ -160,7 +160,7 @@ void Func_0215a33c(Obj0215a33c*, int);
 extern "C" unsigned char func_ov006_0215a384(AlchemyMenu* self, int great);
 extern "C" void func_ov006_0215fe34(AlchemyMenu* self, void* result);
 extern "C" unsigned char func_ov006_0215fecc(AlchemyMenu* self);
-int GetField0x3acValue_020100a8(GameState* gameState);
+int GameState_GetProtagonistIndex(GameState* gameState);
 extern "C" int func_020dd4c4(signed char member, void* results);
 extern "C" int func_ov006_02153a78(void* ingredients, int times);
 void SetEntryLowNibbleAndElement02080c68(void* menu, int id, int value);
@@ -323,8 +323,8 @@ extern "C" ARM void func_ov006_0215dee8(Struct_ov006_02157a60* arg0) {
             unsigned char var9 = func_ov006_0215fecc(arg0);
             if (var9 == 0)
                 return;
-            arg0->unknown_3b4_ = 0;
-            if (!(func_020dd4c4(func_020100a8(GameState::GetInstance()), arg0->unknown_17c_) & 4))
+            self->showResult_ = 0;
+            if (!(func_020dd4c4(GameState_GetProtagonistIndex(GameState::GetInstance()), self->results_) & 4))
             {
                 arg0->unknown_390_ = 7;
                 return;

@@ -18,19 +18,18 @@ struct Struct_ov005_02153954 {
     unsigned int unknown_3dcc_;
 };
 
-struct Struct_0204b010;
-struct Struct_0204b8d0;
+struct BackgroundGraphics;
 
-void Background_ClearMap(Obj0204b010* background, void* unk);
-void Background_DrawScreen(Obj0204b8d0* background, unsigned int a, int b, int c, short d, short e, short f, short g, unsigned short h);
+void Background_ClearMap(BackgroundGraphics* background, void* unk);
+void Background_DrawScreen(BackgroundGraphics* background, unsigned int a, int b, int c, short d, short e, short f, short g, unsigned short h);
 extern "C" void Background_FlushMap(void* background, int unk);
 
 // USA: func_ov005_0215a720
 extern "C" ARM void func_ov005_0215a720(Struct_ov005_02153954* arg0) {
     if (!(arg0->unknown_3dcc_ & 0x100))
         return;
-    Background_ClearMap((Obj0204b010*)self->background1_, 0);
-    Background_DrawScreen((Obj0204b8d0*)self->background1_, 0, 0, 0, 0x10, 0, 0x10, 0x16, 0xffff);
-    Background_DrawScreen((Obj0204b8d0*)self->background1_, (unsigned char)(self->kind_ + 1), 0, 0, (short)(self->kind_ * 2 + 0xf), 0, 4, 3, 0xffff);
+    Background_ClearMap((BackgroundGraphics*)self->background1_, 0);
+    Background_DrawScreen((BackgroundGraphics*)self->background1_, 0, 0, 0, 0x10, 0, 0x10, 0x16, 0xffff);
+    Background_DrawScreen((BackgroundGraphics*)self->background1_, (unsigned char)(self->kind_ + 1), 0, 0, (short)(self->kind_ * 2 + 0xf), 0, 4, 3, 0xffff);
     Background_FlushMap(self->background1_, 0);
 }

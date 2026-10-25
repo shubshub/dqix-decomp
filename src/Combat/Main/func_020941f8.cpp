@@ -28,14 +28,13 @@ struct Struct_020941f8 {
     unsigned char unknown_50_;
 };
 
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct PacRecord;
 
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-extern void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+int Pac_CountFiles(struct PacRecord* entry);
+extern void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 unsigned char IsPowCnt1Bit15Clear020938cc();
 ARM void SpriteContext_Init(char* obj);
-ARM void EmptyDestructor0205a494(void* obj);
+ARM void SpriteContext_Destroy(void* obj);
 extern "C" ARM int SpriteContext_LoadFile(void* obj, void* data, int arg2, int arg3);
 extern "C" int func_020937f0(int a);
 extern const char data_020f1394[];
@@ -63,7 +62,7 @@ extern "C" ARM int func_020941f8(struct Struct_020941f8_2* arg0) {
         int size;
         if (n == 1 && bgl->GetTaskStatus(p->handle340) != 0) {
             bgl->GetLoadedFileByID(p->handle340, &file, &length);
-            int count = Pac_CountFiles((struct ActiveEntry02046900*)file);
+            int count = Pac_CountFiles((struct PacRecord*)file);
             p->flag3c8 = IsPowCnt1Bit15Clear020938cc();
             int value = func_020937f0(p->flag3c8);
             if (value != 0) {
@@ -76,10 +75,10 @@ extern "C" ARM int func_020941f8(struct Struct_020941f8_2* arg0) {
                 for (i = 0; i < count; i++) {
                     void* rec;
                     size = 0;
-                    rec = Pac_GetFile((struct Rec020467f0*)file, i, &out1, &size);
+                    rec = Pac_GetFile((struct PacRecord*)file, i, &out1, &size);
                     SpriteContext_LoadFile(&ctx, rec, size, 0);
                 }
-                func_0205a494(&var8);
+                SpriteContext_Destroy(&ctx);
             }
             var0->RemoveTask(arg0->unknown_340_);
             arg0->unknown_340_ = -1;

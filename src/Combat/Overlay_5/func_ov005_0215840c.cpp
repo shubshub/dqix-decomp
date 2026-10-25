@@ -33,22 +33,22 @@ struct Struct_02052df8 {
     Struct_ov005_0215840c_2* unknown_150_;
 };
 
-struct Struct_0201099c_10;
+struct ItemTable;
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[0xdf4];
-    Struct_0201099c_10* unknown_df4_;
+struct EquipmentMenu {
+    char unk_0[0xdf4];
+    ItemTable* items_;
 };
 
 extern "C" const unsigned char data_ov005_0215cc0c[];
 
-extern "C" int func_02052df8(Struct_02052df8* arg0, int arg1);
-extern "C" Struct_ov005_021556e4* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" Struct_ov005_0215840c_2* func_02053c6c(unsigned char* arg0);
-extern "C" void func_02052d7c(Struct_02052df8* arg0, int arg1, short arg2);
-extern "C" void func_0208358c(Struct_ov005_0215840c_2* arg0, Struct_ov005_021556e4* arg1, int arg2);
-extern "C" void func_02083738(Struct_ov005_0215840c_2* arg0, int arg1);
-extern "C" int func_0207c378(void* arg0, int arg1, int arg2, int arg3);
+int GetHalfwordEntryFromField150(Field150Holder02052df8* member, int part);
+PartEntry* ItemTable_Find(ItemTable* items, int id);
+PartyMemberData* GetFieldAt0x150_02053c6c(unsigned char* member);
+extern "C" void func_02052d7c(Field150Holder02052df8* member, int part, short item);
+extern "C" void PartyMember_Equip(PartyMemberData* data, PartEntry* item, int unk);
+extern "C" void func_02083738(PartyMemberData* data, int category);
+extern "C" int func_0207c378(void* lists, int item, int count, int list);
 
 // USA: func_ov005_0215840c
 extern "C" ARM int func_ov005_0215840c(Struct_ov005_02153954* arg0, int arg1) {
@@ -56,13 +56,13 @@ extern "C" ARM int func_ov005_0215840c(Struct_ov005_02153954* arg0, int arg1) {
     Struct_02052df8* var1 = (Struct_02052df8*)func_0200ff1c(var0, arg1);
     if (var1 == NULL)
         return 0;
-    int var2 = 0;
-    unsigned int var3 = var1->unknown_150_->unknown_49c_0_;
-    for (int var4 = 0; var4 < 7; var4++) {
-        unsigned char var5 = data_ov005_0215cc0c[var4];
-        int var6 = func_02052df8(var1, var5);
-        Struct_ov005_021556e4* var7 = func_020dedd0(arg0->unknown_df4_, var6);
-        if (var7 == NULL)
+    int removed = 0;
+    unsigned int female = partyMember->data_->female_;
+    for (int i = 0; i < 7; i++) {
+        unsigned char part = data_ov005_0215cc0c[i];
+        int current = GetHalfwordEntryFromField150(partyMember, part);
+        PartEntry* entry = ItemTable_Find(self->items_, current);
+        if (entry == NULL)
             continue;
         unsigned int var8[2];
         var8[0] = var7->unknown_0_->unknown_7_3_;
@@ -75,15 +75,15 @@ extern "C" ARM int func_ov005_0215840c(Struct_ov005_02153954* arg0, int arg1) {
             var10 = 0;
             var9 = 1000;
         }
-        func_02052d7c(var1, var5, -1);
-        Struct_ov005_0215840c_2* var11 = func_02053c6c((unsigned char*)var1);
-        Struct_ov005_021556e4* var12 = func_020dedd0(arg0->unknown_df4_, var9);
-        if (var12 != NULL)
-            func_0208358c(var11, var12, var10);
+        func_02052d7c(partyMember, part, -1);
+        PartyMemberData* data = GetFieldAt0x150_02053c6c((unsigned char*)partyMember);
+        PartEntry* replacementEntry = ItemTable_Find(self->items_, replacement);
+        if (replacementEntry != NULL)
+            PartyMember_Equip(data, replacementEntry, unk);
         else
-            func_02083738(var11, var7->unknown_8_0_);
-        func_0207c378((char*)func_02010828(var0) + 0x1d4, var6, 1, var7->unknown_8_0_);
-        var2 = 1;
+            func_02083738(data, entry->category_);
+        func_0207c378((char*)GameState_GetParty(gameState) + 0x1d4, current, 1, entry->category_);
+        removed = 1;
     }
     return var2;
 }

@@ -26,7 +26,7 @@ extern "C" ARM void func_ov023_021fd120(struct Obj021fd120* obj, void* ctx, int 
     local.f8 = p3;
     local.fc = alloc;
     ((Object3D*)((int)((char*)obj + 0x20)))->LoadFromCHRArchive((ObjectArchiveLoadInfo*)((int)&local));
-    ((Object3D*)((char*)obj + 0x20))->MaybeSetBCFGAnimation(0, 0);
+    ((Object3D*)((char*)obj + 0x20))->SetAnimationByIndex(0, 0);
     ((Object3D*)((struct Shorts5c_374e0*)((char*)obj + 0x20)))->SetScale(0x10a, 0x10a, 0x10a);
     VramState_Save((char*)node + 4);
     alloc->GetSizeWithLargestBlockRemoved();

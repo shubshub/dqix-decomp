@@ -201,7 +201,7 @@ src/Combat/Overlay_0/func_ov000_0216c680.cpp:
     complete
     .text start:0x0216ddac end:0x0216ddfc
 
-src/Combat/Overlay_0/func_ov000_0216c6d0.cpp:
+src/Combat/Overlay_3/UpdateEntryOnFlag_0216ddfc.cpp:
     complete
     .text start:0x0216ddfc end:0x0216de4c
 
@@ -1025,7 +1025,7 @@ src/Combat/Overlay_0/func_ov000_0215e918.cpp:
     complete
     .text start:0x02160098 end:0x021600b8
 
-src/Combat/Overlay_0/func_ov000_0215e938.cpp:
+src/Combat/Overlay_3/SyncPositionAndFlags_021600b8.cpp:
     complete
     .text start:0x021600b8 end:0x021600d8
 
@@ -1565,7 +1565,7 @@ src/Combat/Overlay_0/func_ov000_02181f30.cpp:
     complete
     .text start:0x0218317c end:0x02183198
 
-src/Combat/Overlay_0/func_ov000_02160b54.cpp:
+src/Combat/Overlay_1/Function_021622d0.cpp:
     complete
     .text start:0x021622d0 end:0x021623dc
 
@@ -2333,7 +2333,7 @@ src/Combat/Overlay_0/func_ov000_02168144.cpp:
     complete
     .text start:0x02169880 end:0x02169934
 
-src/Combat/Overlay_0/func_ov000_021682ec.cpp:
+src/Combat/Overlay_4/SetIndexedNameFromElem_02169a28.cpp:
     complete
     .text start:0x02169a28 end:0x02169d80
 
@@ -2733,7 +2733,7 @@ src/Combat/Overlay_0/func_ov000_021761ec.cpp:
     complete
     .text start:0x021775b4 end:0x021775d8
 
-src/Combat/Overlay_0/func_ov000_0216265c.cpp:
+src/Combat/Overlay_1/SetFlagInIndirectField_02163dc8.cpp:
     complete
     .text start:0x02163dc8 end:0x02163e0c
 

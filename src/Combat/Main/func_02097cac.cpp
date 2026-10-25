@@ -14,27 +14,27 @@ struct Struct_02097cac_2 {
 };
 
 extern "C" void* func_0202ae18();
-extern "C" Struct_0208fa8c* func_02012fe4();
-extern "C" int func_0202c508(void* arg0);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" int func_020981e4(int arg0, int arg1);
-extern "C" int func_02098240(int arg0, int arg1);
-extern "C" int func_02098210(int arg0, int arg1);
-extern "C" void func_020989cc(Struct_02097cac_2* arg0);
-extern "C" void func_ov017_021d3e3c(unsigned char arg0);
+extern "C" ZoneState* Zone3D_GetInstance();
+extern "C" int func_0202c508(void* obj);
+extern "C" int func_0202c540(void* obj);
+void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+int IsIdInRange020981e4(int a, int id);
+int IsIdInRange02098240(int a, int id);
+int IsIdInSet02098210(int a, int id);
+void UpdateRankLevel020989cc(Base020989cc* base);
+void EnqueueEventTag186_021d3e3c(unsigned char tag);
 
 #define FLAG130(obj) (*(int*)(*(void**)((char*)(obj) + 0x130)))
 
 // USA: func_02097cac
-extern "C" ARM void func_02097cac(Struct_02097cac_2* arg0) {
-    void* var0 = func_0202ae18();
-    GameState* var1 = GameState::GetInstance();
-    Struct_02097cac* var2 = (Struct_02097cac*)func_0200fd0c(var1);
-    Struct_0208fa8c* var3 = func_02012fe4();
-    int var4 = var2->unknown_0_;
-    GameObject* var5;
-    int var6 = var3->unknown_0_;
+extern "C" ARM void func_02097cac(Base020989cc* state) {
+    void* search = func_0202ae18();
+    GameState* gameState = GameState::GetInstance();
+    ZoneState02097cac* zoneState = (ZoneState02097cac*)GetField0x3f8Address_0200fd0c(gameState);
+    ZoneState* currentZone = Zone3D_GetInstance();
+    int zoneId = zoneState->zoneId;
+    GameObject* protagonist;
+    int previousZoneId = currentZone->zoneId;
 
     if (!func_020981e4((int)arg0, var4) &&
         !func_020981e4((int)arg0, var6)) return;

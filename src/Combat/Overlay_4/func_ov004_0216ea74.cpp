@@ -31,14 +31,14 @@ struct Struct_ov004_0216ea74_4 {
 struct Struct_ov004_02171048 { char unknown_0_[4]; struct Struct_ov004_0216ea74_4* unknown_4_; };
 extern Struct_ov004_02171048 data_ov004_02171048;
 
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_ov017_021b2090(Struct_ov004_021589e8 arg0, Struct_ov004_021589e8 arg1);
-extern "C" int func_0201e830(struct Struct_0201e830* arg0);
-extern "C" void func_020c5588(int, int, int, int, int);
-extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
-extern "C" int func_020cf0fc(int);
-extern "C" int func_020cf1a8(int);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_ov017_021b2090(PackedField017 a, PackedField017 b);
+int GetFieldAt0x7e_0201e830(struct S_e830* p);
+void Set3DClearColor_020c5588(int, int, int, int, int);
+void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
+int RegisterSlotA020cf0fc(int);
+int RegisterSlotB020cf1a8(int);
 
 struct Struct_ov004_0216ea74 {
     unsigned char unknown_0_[4];
@@ -91,11 +91,11 @@ extern "C" ARM int func_ov004_0216ea74(SafeAllocator* arg0) {
     memset(var3->unknown_3c_, 0, 0xc);
     var3->unknown_48_ = 0;
 
-    Zone3D* var4 = (Zone3D*)func_02012fe4();
-    if (!var4) return 0;
-    Struct_0201e830* var5 = inline_ov004_0216ea74(var4);
-    if (!var5) return 0;
-    data_ov004_02171048.unknown_4_->unknown_c_ = func_0201e830(var5);
+    Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
+    if (!zone) return 0;
+    S_e830* p = GetZonePlacementData(zone);
+    if (!p) return 0;
+    data_ov004_02171048.ptr->half0c = GetFieldAt0x7e_0201e830(p);
 
     GameResources* var6 = GetGameResources();
     data_ov004_02171048.unknown_4_->unknown_0_ = GetFlags00(var6);

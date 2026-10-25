@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
 #if defined(jpn)
 enum { Enum_ov005_0215a620_3716 = 0xe80, Enum_ov005_0215a620_15768 = 0x3d10, Enum_ov005_0215a620_22 = 24, Enum_ov005_0215a620_10 = 8 };
@@ -6,18 +7,11 @@ enum { Enum_ov005_0215a620_3716 = 0xe80, Enum_ov005_0215a620_15768 = 0x3d10, Enu
 enum { Enum_ov005_0215a620_3716 = 0xe84, Enum_ov005_0215a620_15768 = 0x3d98, Enum_ov005_0215a620_22 = 22, Enum_ov005_0215a620_10 = 10 };
 #endif
 
-struct Struct_02000c9c_91;
-struct Struct_0204b8d0 {
-    char unknown_0_[0x10];
-    Struct_02000c9c_91* unknown_10_;
-    unsigned short* unknown_14_;
-    char unknown_18_[5];
-    unsigned char unknown_1d_;
-};
-void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+struct BackgroundResourceEntry;
+void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8*, void*);
+struct BackgroundGraphics;
+void Background_UploadMap(struct BackgroundGraphics*, void*);
 
 struct Struct_ov005_0215c530
 {
@@ -39,11 +33,11 @@ struct Struct_02020cb8_8
 
 struct Struct_ov005_0215a620_2
 {
-    char unknown_0_[Enum_ov005_0215a620_3716 - 0x244];
-    Struct_0204b8d0 unknown_c40_[3];
-    char unknown_ca0_[0x1000 - (Enum_ov005_0215a620_3716 - 0x244) - sizeof(Struct_0204b8d0) * 3];
-    Struct_02020cb8_8 unknown_1000_;
-    char unknown_1008_[0x179c - 0x1000 - sizeof(Struct_02020cb8_8)];
+    char pad0[backgroundOffset - 0x244];
+    BackgroundGraphics backgrounds[3];
+    char beforeContainer[0x1000 - (backgroundOffset - 0x244) - sizeof(BackgroundGraphics) * 3];
+    Container0215c530 container;
+    char pad1[0x179c - 0x1000 - sizeof(Container0215c530)];
 };
 
 struct Struct_ov005_0215a620
@@ -89,6 +83,6 @@ extern "C" ARM void func_ov005_0215a620(Struct_ov005_0215a620* arg0) {
         else if (kind == 3) j = 3;
         Background_DrawScreen(&obj->sub.backgrounds[0], j, 0, 0, tileX, 22, tileWidth, 2, 0xffff);
     }
-    Background_UploadMap((List0204b0e8*)&obj->sub.backgrounds[0], 0);
+    Background_UploadMap((BackgroundGraphics*)&obj->sub.backgrounds[0], 0);
     obj->dirty &= ~0x800;
 }

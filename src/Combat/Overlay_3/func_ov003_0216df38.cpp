@@ -5,9 +5,9 @@ extern "C" void* __clear(void* arg0, int arg1);
 struct Container020e0310;
 extern int KeyTable_Get(struct Container020e0310* c, int key);
 
-extern "C" int func_020420e8(void* arg0, int arg1);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+extern "C" int Font_GetTextWidth(void* p, int flag);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
+extern int Text_Append(char* dst, const char* src);
 
 extern const char data_ov003_02180208;
 extern const char data_ov003_02180215;
@@ -24,19 +24,19 @@ extern "C" ARM short func_ov003_0216df38(char* arg0, struct Struct_0201099c_3* a
     f1 = KeyTable_Get(c, key1);
     f2 = KeyTable_Get(c, 7);
 
-    var1 = func_020420e8((void*)var3, 0);
-    int var5 = func_020420e8((void*)var4, 0);
-    if (var1 < var5) var1 = var5;
+    w1 = Font_GetTextWidth((void*)f1, 0);
+    int w2 = Font_GetTextWidth((void*)f2, 0);
+    if (w1 < w2) w1 = w2;
 
-    sprintf(var0, &data_ov003_02180208, var3);
-    func_02042058(arg0, var0);
+    sprintf(buf, &data_ov003_02180208, f1);
+    Text_Append(dst, buf);
 
-    sprintf(var0, &data_ov003_02180215, var4);
-    func_02042058(arg0, var0);
+    sprintf(buf, &data_ov003_02180215, f2);
+    Text_Append(dst, buf);
 
     int f3 = KeyTable_Get(c, 0xe);
     sprintf(buf, (const char*)f3);
-    AppendString02042058(dst, buf);
+    Text_Append(dst, buf);
 
     int var7 = (var1 + 0x1b) & ~7;
     int var8 = var7 >> 3;

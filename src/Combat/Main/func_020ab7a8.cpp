@@ -48,7 +48,7 @@ struct Struct_020ab7a8 {
     struct Struct_020ab7a8_5* unknown_4_;
 };
 
-extern "C" char data_0211e33c[];
+extern "C" char g_fileLoadBuffer[];
 extern "C" char data_020f1be8;
 
 // USA: func_020ab7a8
@@ -64,8 +64,8 @@ extern "C" ARM int func_020ab7a8(void* arg0, int arg1) {
             return 1;
         }
         BackgroundLoader::FreeAllocationsGlobal();
-        var0->unknown_4_ = (struct Struct_020ab7a8_5*)((unsigned char*)&data_0211e33c[0] + 0x2901c);
-        if (func_02075910(arg1 ? 0x8010 : 0x10, var0->unknown_4_, 0x6fe4, 1) == 0) {
+        task->buf = (struct SaveBuf020ab7a8*)((unsigned char*)&g_fileLoadBuffer[0] + 0x2901c);
+        if (func_02075910(flag ? 0x8010 : 0x10, task->buf, 0x6fe4, 1) == 0) {
             return 1;
         }
         var0->unknown_1_ = 1;

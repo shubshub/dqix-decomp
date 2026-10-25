@@ -38,16 +38,16 @@ struct Struct_ov003_0215c0ec_3 {
 struct Struct_0205d5d0;
 struct Struct_020465c0;
 
-extern "C" void func_ov003_0215b6f0(struct Struct_ov003_0215c0ec_3* arg0, char* arg1, int arg2);
-extern "C" void func_ov003_0215b964(struct Struct_ov003_0215c0ec_3* arg0, char* arg1, int arg2);
-extern "C" void func_ov003_0215be70(struct Struct_ov003_0215c0ec_3* arg0, char* arg1, int arg2);
-extern "C" int func_020421a0();
-extern "C" void func_02046380(void* arg0);
-extern "C" int func_020e51cc(int arg0);
-extern "C" int func_02042058(char* arg0, const char* arg1);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
+extern "C" void func_ov003_0215b6f0(struct BattleMenu0215c0ec* self, char* dst, int flag);
+extern "C" void func_ov003_0215b964(struct BattleMenu0215c0ec* self, char* dst, int flag);
+extern "C" void func_ov003_0215be70(struct BattleMenu0215c0ec* self, char* dst, int flag);
+int MessageSystem_GetInstance();
+extern "C" void func_02046380(void* obj);
+int StandardStrings_Get(int value);
+int Text_Append(char* dst, const char* src);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
 
 // USA: func_ov003_0215c0ec
 extern "C" ARM void func_ov003_0215c0ec(struct Struct_ov003_0215c0ec_3* arg0) {
@@ -74,32 +74,32 @@ extern "C" ARM void func_ov003_0215c0ec(struct Struct_ov003_0215c0ec_3* arg0) {
             break;
         }
 #if defined(jpn)
-        func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_f4_, var2, (int)arg0->unknown_7c_, 1);
+        Window_SetPaneText((struct StructA0205d5d0*)self->menu, mode, (int)self->text, 1);
 #else
-        func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_f4_, var2, (int)arg0->unknown_7c_, 1, 0);
+        Window_SetPaneText((struct StructA0205d5d0*)self->menu, mode, (int)self->text, 1, 0);
 #endif
     }
-    if (arg0->unknown_583_ != 0) {
-        GameState* var3 = GameState::GetInstance();
-        int var4 = func_020421a0();
-        memset(arg0->unknown_7c_, 0, Enum_ov003_0215c0ec_2400);
+    if (self->refresh != 0) {
+        GameState* game = GameState::GetInstance();
+        int messages = MessageSystem_GetInstance();
+        memset(self->text, 0, kTextSize);
 #if defined(jpn)
-        func_02042428(arg0->unknown_7c_, 8);
-        func_02042058(arg0->unknown_7c_, data_ov003_0217e68e);
-        func_02042158(arg0->unknown_7c_, 2);
-        func_02042058(arg0->unknown_7c_, data_ov003_0217e696);
+        func_02042428(self->text, 8);
+        Text_Append(self->text, data_ov003_0217e68e);
+        func_02042158(self->text, 2);
+        Text_Append(self->text, data_ov003_0217e696);
 #else
-        func_02042058(arg0->unknown_7c_, (const char*)func_020e51cc(0x3f1));
+        Text_Append(self->text, (const char*)StandardStrings_Get(0x3f1));
 #endif
-        func_02046380((void*)var4);
-        func_020465c0((struct Struct_020465c0*)var4, 0,
-                          ((struct Struct_ov003_0215c0ec_2*)func_02010828(var3))->unknown_f6c_);
-        func_020465f0((unsigned char*)var4, 0, 7);
-        func_020465d8((unsigned char*)var4, 0, 1);
+        func_02046380((void*)messages);
+        StoreInArray0x8b0_020465c0((struct StoreStruct*)messages, 0,
+                          ((struct BattleData0215c0ec*)GameState_GetParty(game))->field_0xf6c);
+        SetByteInRange_020465f0((unsigned char*)messages, 0, 7);
+        SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
 #if defined(jpn)
-        func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_f4_, 0, (int)arg0->unknown_7c_, 1);
+        Window_SetPaneText((struct StructA0205d5d0*)self->menu, 0, (int)self->text, 1);
 #else
-        func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_f4_, 0, (int)arg0->unknown_7c_, 1, 0);
+        Window_SetPaneText((struct StructA0205d5d0*)self->menu, 0, (int)self->text, 1, 0);
 #endif
         arg0->unknown_583_ = 0;
     }

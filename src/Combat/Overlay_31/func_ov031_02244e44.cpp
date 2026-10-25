@@ -82,10 +82,10 @@ extern "C" int func_ov031_022075a4(Struct_ov031_022075a4*, int, int);
 extern "C" Struct_ov031_02244e44* func_ov031_02207440(Struct_ov031_022075a4*);
 extern "C" int func_ov031_02207230(void*, Struct_ov031_02207230*);
 extern "C" int func_ov031_0220783c(int*, int, int, int);
-extern "C" int func_ov031_0220728c(int, int, int);
-extern "C" int func_02001aec(const void*, const void*, int);
-extern "C" int func_ov031_02245750(Struct_02245528*, Struct_ov031_02244e44_4*);
-extern "C" int func_ov031_02207434(Struct_ov031_022075a4*);
+int CallWithZeroZeroZero_0220728c(int, int, int);
+extern "C" int memcmp(const void*, const void*, int);
+extern "C" int func_ov031_02245750(Struct_02245528*, PeerReply02244e44*);
+extern "C" int func_ov031_02207434(Obj022075a4*);
 extern "C" void func_ov031_022077c0();
 extern "C" void func_ov031_02245938();
 extern "C" int func_ov031_0220d540();
@@ -190,12 +190,12 @@ extern "C" ARM void func_ov031_02244e44(Struct_02245528* arg0) {
             memset(&var12, 0, 0x14);
             if (func_ov031_0220728c((int)arg0->unknown_42c_, (int)&var12, 0x14) < 0) {
                 GetCurrentTimestamp();
-                if (data_ov031_02291e04.unknown_18_) {
-                    Struct_ov031_02244e44_2* var13 = ((Struct_ov031_02244e44_3*)GameState::GetInstance())->inline_ov031_02244e44();
-                    for (int var14 = 0; var14 < 8; var14++, var13++) {
-                        if (!func_02001aec(var13, data_ov031_02291e04.unknown_18_->unknown_4_, 6)) {
-                            if (!data_ov031_02291e04.unknown_2_) var13->unknown_6_ = 0xff;
-                            else memset(var13, 0, 8);
+                if (data_ov031_02291e04.peer) {
+                    SavedPeer02244e44* peer = ((SessionGame02244e44*)GameState::GetInstance())->GetPeers();
+                    for (int index = 0; index < 8; index++, peer++) {
+                        if (!memcmp(peer, data_ov031_02291e04.peer->address, 6)) {
+                            if (!data_ov031_02291e04.present) peer->status = 0xff;
+                            else memset(peer, 0, 8);
                             break;
                         }
                     }

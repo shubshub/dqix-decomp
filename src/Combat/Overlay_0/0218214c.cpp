@@ -3,10 +3,10 @@
 #include "Filesystem/FileIO.h"
 #include "GameState/GameState.h"
 
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void func_02047b40(Struct_02012fa4* arg0, const void* arg1, SafeAllocator* arg2);
+struct Struct0200fb08;
+int GameState_GetLanguage(Struct0200fb08*);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
+extern "C" void func_02047b40(Foo02048004* sprite, const void* file, SafeAllocator* allocator);
 
 extern const char data_ov000_02184184[];
 extern const char data_ov000_02184186[];
@@ -90,13 +90,13 @@ extern "C" ARM void func_ov000_0218214c(Struct_02012fa4* arg0, SafeAllocator* ar
     var1[1].unknown_4_->unknown_0_ = 0x3e;
     var1[2].unknown_4_->unknown_0_ = 0x3e;
 #else
-    char var5[0x28];
-    Struct_ov000_0218214c var6[13];
-    int var7;
-    int var8;
-    int var9;
-    int var10 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
-    int var11;
+    char buf[0x28];
+    ComboSpriteBinding bindings[13];
+    int i;
+    int j;
+    int skip;
+    int mode = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
+    int count;
 
     var9 = 2;
     var6[0].unknown_0_ = data_ov000_02184184;

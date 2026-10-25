@@ -1,21 +1,18 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" void* func_0205ec34();
+extern "C" void* Scenario_GetInstance();
 struct GameState;
-extern "C" void* func_02010828(GameState*);
-extern "C" int func_0209645c(void* arg0, int arg1);
-struct Struct_0205faf4_3;
-extern "C" int func_0206e120(Struct_0205faf4_3*, int);
-extern "C" void func_0206e218(unsigned char*, int);
-extern "C" void func_0206eb64(unsigned char*, int, int);
-struct Struct_02053f7c;
-extern "C" int func_02086aec(Struct_02053f7c*, int);
-extern "C" int func_02086d88(unsigned char*, int);
+void* GameState_GetParty(GameState*);
+extern "C" int func_0209645c(void* list, int value);
+struct PackedNibbleArray0206e120;
+int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
+void SetNibbleBit0206e218(unsigned char*, int);
+void SetBitWithOffset0206eb64(unsigned char*, int, int);
+struct Obj02086aec;
+int Party_CountItem(Obj02086aec*, int);
+int DecrementKeyEverywhere02086d88(unsigned char*, int);
 
 struct Struct_02095d30 {
     unsigned short unknown_0_0_ : 9;
@@ -38,12 +35,12 @@ extern "C" ARM int func_02095d30(struct Struct_02095d30_2* arg0, int arg1, int a
     if (arg0->unknown_a4_ == 0) {
         return 0;
     }
-    void* var0 = GameState::GetInstance();
-    void* var1 = func_0205ec34();
-    void* var2 = func_02010828((GameState*)var0);
-    struct Struct_02095d30* var3;
-    for (var3 = arg0->unknown_a4_; var3 != 0; var3 = var3->unknown_28_) {
-        if (var3->unknown_0_0_ != arg1) {
+    void* gs = GameState::GetInstance();
+    void* nibbles = Scenario_GetInstance();
+    void* obj = GameState_GetParty((GameState*)gs);
+    struct Node02095d30* cur;
+    for (cur = list->head; cur != 0; cur = cur->next) {
+        if (cur->id != value) {
             continue;
         }
         int var4 = (func_0206e120((Struct_0205faf4_3*)var1, arg1) == 2);
@@ -69,9 +66,9 @@ extern "C" ARM int func_02095d30(struct Struct_02095d30_2* arg0, int arg1, int a
                 if (var10 <= 0) {
                     continue;
                 }
-                var8 = func_02086aec((Struct_02053f7c*)var2, var10);
-                for (var9 = 0; var9 < var8; var9++) {
-                    func_02086d88((unsigned char*)var2, var3->unknown_1e_[var7]);
+                n = Party_CountItem((Obj02086aec*)obj, v);
+                for (k = 0; k < n; k++) {
+                    DecrementKeyEverywhere02086d88((unsigned char*)obj, cur->list1[j]);
                 }
             }
             break;

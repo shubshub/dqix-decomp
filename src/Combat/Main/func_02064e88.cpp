@@ -35,15 +35,15 @@ struct Struct_02064e88_3 {
     struct Struct_02064e88_3* unknown_10_;
 };
 
-extern "C" unsigned short* func_02012fe4(void);
-extern "C" int func_02098284(int, int);
-extern "C" int func_020982a4(int, int);
-extern "C" void func_020984b0(struct Struct_02064e88*);
-extern "C" int func_020984dc(struct Struct_02064e88_2*, int, struct Struct_02064e88_2**);
-extern "C" void* func_0206db20(void*, int);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_02042764(struct Struct_02064e88_2* arg0, void* arg1, int arg2);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
+extern "C" unsigned short* Zone3D_GetInstance(void);
+int GetTableValueMod100_02098284(int, int);
+int LookupTable020982a4(int, int);
+void ClearField0xcBits24To29(struct Elem020984b0*);
+int CollectEntriesByType020984dc(struct Entry020984dc*, int, struct Entry020984dc**);
+void* FindNodeByByteId_0206db20(void*, int);
+extern "C" void __clear(void* buf, int size);
+extern "C" void Font_DecodeText(struct Entry020984dc* entry, void* buf, int flag);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
 
 extern char data_020f0618[];
 extern char data_020f061e[];
@@ -88,16 +88,16 @@ extern "C" ARM int func_02064e88(struct Struct_02064e88_3** arg0, void* arg1, Sa
     char var8[0x30];
 #endif
 
-    var0 = func_02012fe4();
-    var1 = *var0;
-    var2 = func_020982a4((int)((char*)var0 + Enum_02064e88_2112),
-                               func_02098284((int)((char*)var0 + Enum_02064e88_2112), var1));
-    func_020984b0((struct Struct_02064e88*)((char*)var0 + Enum_02064e88_2112));
-    var3 = func_020984dc((struct Struct_02064e88_2*)((char*)var0 + Enum_02064e88_2112),
-                                         func_02098284((int)((char*)var0 + Enum_02064e88_2112), var1), var7);
-    for (var4 = 0; var4 < var3; var4++) {
-        var5 = var4 + 1 + var2;
-        if (func_0206db20(arg1, var5) == 0) {
+    global = Zone3D_GetInstance();
+    zone = *global;
+    base = LookupTable020982a4((int)((char*)global + kResourceOffset),
+                               GetTableValueMod100_02098284((int)((char*)global + kResourceOffset), zone));
+    ClearField0xcBits24To29((struct Elem020984b0*)((char*)global + kResourceOffset));
+    count = CollectEntriesByType020984dc((struct Entry020984dc*)((char*)global + kResourceOffset),
+                                         GetTableValueMod100_02098284((int)((char*)global + kResourceOffset), zone), entries);
+    for (i = 0; i < count; i++) {
+        id = i + 1 + base;
+        if (FindNodeByByteId_0206db20(nodeDb, id) == 0) {
             continue;
         }
         var6 = (struct Struct_02064e88_3*)arg2->Allocate(sizeof(Struct_02064e88_3));
@@ -109,8 +109,8 @@ extern "C" ARM int func_02064e88(struct Struct_02064e88_3** arg0, void* arg1, Sa
 #if defined(jpn)
         strcpy(var6->unknown_4_, (const char*)var7[var4]);
 #else
-        __clear(var8, 0x30);
-        func_02042764(var7[var4], var8, 1);
+        __clear(buf, 0x30);
+        Font_DecodeText(entries[i], buf, 1);
 #endif
         if (var7[var4]->unknown_2e_0_ == 0) {
             switch (var7[var4]->unknown_c_0_) {

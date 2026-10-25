@@ -4,21 +4,21 @@
 struct Struct_0201099c_3;
 
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 int IsField0x118Equal2_ov000_0217542c(void* obj);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
 
-extern "C" int func_02041e70(char* arg0, int arg1);
-extern "C" const char** func_02079e2c(char* arg0, int arg1);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" int func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" int func_02041cc0(char* arg0, int arg1);
+int Text_AppendPaletteTag(char* dst, int palette);
+const char** SearchBothTables02079e2c(char* table, int key);
+int Text_AppendCursorTag(char* dst, int cursor);
+int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" int Font_GetTextWidth(const char* text, int large);
+int AppendXYTag_02041a90(char* dst, int x, int y);
+int AppendLineTag02041cc0(char* dst, int a1);
 #if defined(jpn)
-extern "C" void* func_020421a0();
+void* MessageSystem_GetInstance();
 extern "C" void func_02046380(void*);
-extern "C" void func_02046574(void*, int, const char*);
+extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(void*, int, const char*);
 extern "C" void __clear(void*, int);
 extern "C" void func_02041f50(const char*, char*);
 extern char data_ov000_021851af[];
@@ -44,11 +44,11 @@ extern "C" ARM void func_ov000_0217a2dc(struct ItemMenu0217a2dc* menu, int unuse
     const char* emptyName = (const char*)KeyTable_Get(strings, 0x1f);
     const char* separator = (const char*)KeyTable_Get(strings, 0);
     signed char cursor = menu->cursor;
-    AppendString02042058(dst, separator);
+    Text_Append(dst, separator);
 
-    if (arg0->unknown_1d81_) {
-        if (func_ov000_0217542c(arg0)) {
-            func_02041c08(arg2, var3, 8, 5, 5, 5);
+    if (menu->field1D81) {
+        if (IsField0x118Equal2_ov000_0217542c(menu)) {
+            Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
         }
         Struct_02108e10* var4 = func_020797dc();
         if (var4 == NULL) {
@@ -56,83 +56,83 @@ extern "C" ARM void func_ov000_0217a2dc(struct ItemMenu0217a2dc* menu, int unuse
         }
         for (int var5 = 0; var5 < arg0->unknown_1a_; var5++) {
 #if defined(jpn)
-            if (var5 == var3) {
-                func_02041e70(arg2, 5);
+            if (i == cursor) {
+                Text_AppendPaletteTag(dst, 5);
             } else {
-                func_02041e70(arg2, 3);
+                Text_AppendPaletteTag(dst, 3);
             }
 #else
             int var6 = 3;
             if (var5 == var3) {
                 var6 = 5;
             }
-            func_02041e70(arg2, var6);
+            Text_AppendPaletteTag(dst, palette);
 #endif
-            if (arg0->unknown_10_[var5] == 0) {
-                func_02042058(arg2, var1);
+            if (menu->itemIds[i] == 0) {
+                Text_Append(dst, emptyName);
             } else {
                 const char** var7 = func_02079e2c((char*)var4, (short)arg0->unknown_10_[var5]);
                 if (var7 == NULL) {
                     continue;
                 }
 #if defined(jpn)
-                char var8[0x40];
-                __clear(var8, sizeof(var8));
-                func_02041f50(*var7, var8);
-                func_02042058(arg2, var8);
+                char name[0x40];
+                __clear(name, sizeof(name));
+                func_02041f50(*entry, name);
+                Text_Append(dst, name);
 #else
-                func_02042058(arg2, *var7);
+                Text_Append(dst, *entry);
 #endif
             }
             if (var5 == arg0->unknown_1a_ - 1) {
                 continue;
             }
-            func_02042058(arg2, var2);
+            Text_Append(dst, separator);
         }
     } else {
-        if (func_ov000_0217542c(arg0)) {
-            func_02041c08(arg2, var3, 8, 5, 5, 5);
+        if (IsField0x118Equal2_ov000_0217542c(menu)) {
+            Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
         }
-        func_02041ea4(arg2, var3);
-        Struct_02108e10* var9 = func_020797dc();
-        if (var9 == NULL) {
+        Text_AppendCursorTag(dst, cursor);
+        ActionDataTables* table = GetData02108e10_020797dc();
+        if (table == NULL) {
             return;
         }
-        for (int var10 = 0; var10 < arg0->unknown_1a_; var10++) {
-            if (arg0->unknown_10_[var10] == 0) {
-                func_02041b70(arg2, var10, var1);
+        for (int i = 0; i < menu->itemCount; i++) {
+            if (menu->itemIds[i] == 0) {
+                Text_AppendNTag(dst, i, emptyName);
             } else {
                 const char** var11 = func_02079e2c((char*)var9, (short)arg0->unknown_10_[var10]);
                 if (var11 == NULL) {
                     continue;
                 }
 #if defined(jpn)
-                char var12[0x40];
-                __clear(var12, sizeof(var12));
-                func_02041f50(*var11, var12);
-                func_02041b70(arg2, var10, var12);
+                char name[0x40];
+                __clear(name, sizeof(name));
+                func_02041f50(*entry, name);
+                Text_AppendNTag(dst, i, name);
 #else
-                func_02041b70(arg2, var10, *var11);
+                Text_AppendNTag(dst, i, *entry);
 #endif
             }
             if (var10 == arg0->unknown_1a_ - 1) {
                 continue;
             }
-            func_02042058(arg2, var2);
+            Text_Append(dst, separator);
         }
     }
 
-    func_02041e70(arg2, 0xf);
+    Text_AppendPaletteTag(dst, 0xf);
 #if defined(jpn)
-    void* formatter = GetGlobalField0x1c020421a0();
+    void* formatter = MessageSystem_GetInstance();
     func_02046380(formatter);
-    _Z22SetIndexedName02046574P11Obj02046574iPc(formatter, 0,
+    _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(formatter, 0,
         (const char*)KeyTable_Get(strings, 0x21));
-    AppendString02042058(dst, data_ov000_021851af);
+    Text_Append(dst, data_ov000_021851af);
 #else
     const char* title = (const char*)KeyTable_Get(strings, 0x21);
-    AppendXYTag_02041a90(dst, (0xb0 - func_020420e8(title, 0)) >> 1, 5);
-    AppendString02042058(dst, title);
+    AppendXYTag_02041a90(dst, (0xb0 - Font_GetTextWidth(title, 0)) >> 1, 5);
+    Text_Append(dst, title);
     AppendLineTag02041cc0(dst, 0x11);
 #endif
 }

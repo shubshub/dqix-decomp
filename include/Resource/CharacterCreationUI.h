@@ -2,14 +2,19 @@
 
 #include "World/Object3D.h"
 #include "Memory/SafeAllocator.h"
+#include "Graphics/Background.h"
 #include "Resource/CreationSlotLayout.h"
 #include "Resource/CreationEnums.h"
+#include "Resource/GridCursor.h"
+#include "Resource/NameFilter.h"
 
 struct SpriteContext0205ac40;
 struct Keyboard;
 struct KeyboardKey;
 struct B174Outer;
 struct Container0205a3d0;
+struct CharacterModel;
+struct PartyMemberData;
 
 // {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
 extern const short CharacterCreationUI_slotLayouts[];
@@ -25,25 +30,18 @@ struct Struct_0201099c_3 {
     Struct_02000c9c_6* unknown_4_;
 };
 
-struct Struct_02000c9c_7 {
-    unsigned char unknown_0_[0x10];
-    void* unknown_10_;
-    void* unknown_14_;
-    unsigned int unknown_18_;
-    unsigned char unknown_1c_;
-    unsigned char unknown_1d_;
-    unsigned char unknown_1e_;
-    unsigned char unknown_1f_;
-};
-
 struct CreationWindow {
     unsigned char unknown[4];
     int frame[20];
     int cursor[16];
     unsigned char unknown94[4];
-    CreationTileMap* layers;        // Window_ClearLayers / _FlushLayers / _TransferLayers loop over these
+    BackgroundGraphics* layers;     // Window_ClearLayers / _FlushLayers / _TransferLayers loop over these
     void* panes;                    // set by Window_SetPanes
-    short layout[8];
+    short paneWidth;                // what Window_OpenPane copies into the pane it opens: its width and height in
+    short paneHeight;               // tiles (func_0204c980: the text is width * 8 pixels wide, the map width * height)
+    short unknownA4[2];
+    short paneTextX;                // the pane's text x (func_0204c980 passes it to MessageSystem_FormatText)
+    short unknownAa[3];
     unsigned char activeWindow;
     unsigned char nextWindow;
     unsigned char layerCount;
@@ -52,31 +50,8 @@ struct CreationWindow {
     unsigned char flags;
     unsigned char noHorizontalInset;
     unsigned char fontHeight;
-    unsigned int pendingClose;      // pane Window_Update closes, 0xff for none
-};
-
-// A GridCursor over a tab's slots; field names as GridCursor_Update (the cursor's per-frame D-pad update) uses them.
-struct CreationNavigation {
-    int count;
-    int pageCount;
-    int columns, rows;
-    unsigned char order;            // GridCursorOrder
-    unsigned char unknown11[3];
-    int page;
-    int column, row;
-    int* primaryDimension;
-    int* secondaryDimension;
-    int* primaryCursor;
-    int* secondaryCursor;
-    int step;                       // -1 or 1, the direction of the held key
-    unsigned short heldKey;         // KEY_UP, KEY_DOWN, KEY_LEFT or KEY_RIGHT
-    unsigned char rowRepeat, columnRepeat;
-    unsigned char countdown;        // ticks to the next repeat
-    unsigned char initialDelay;     // 20
-    unsigned char repeatDelay;      // 10
-    unsigned char unknown3b;
-    unsigned char wrapColumns, wrapRows;
-    unsigned char unknown3e[2];
+    unsigned char pendingClose;     // pane Window_Update closes, 0xff for none (read and written as a byte)
+    unsigned char unknownB9[3];
 };
 
 struct CharacterCreationUI {
@@ -96,12 +71,8 @@ struct CharacterCreationUI {
     Container020e0310 texts;
     unsigned char unknownBeforeTextBuffer[0x10];
     char* textBuffer;
-#if defined(jpn)
-    unsigned char nameFilter[0x20]; // jpn's name checker is a different object
-#else
-    unsigned char nameFilter[0x3c]; // NameFilter: the forbidden-word files and pattern characters
-#endif
-    CreationTileMap layers[6];      // main BG1 backdrop, BG2 tab highlight, BG3 summary text; sub BG0 page, BG1 selection, BG2 text
+    NameFilter nameFilter;
+    BackgroundGraphics layers[6];   // main BG1 backdrop, BG2 tab highlight, BG3 summary text; sub BG0 page, BG1 selection, BG2 text
     CreationWindow windows[2];      // [0] the summary list (main screen), [1] the bottom screen's text
     unsigned char window0Panes[1][0xe0];
     unsigned char window1Panes[4][0xe0];
@@ -112,15 +83,15 @@ struct CharacterCreationUI {
     SpriteContext0205ac40* subSpriteContext;  // subScreen 1: 25 sprites (buttons, tab icons, cursors)
     B174Outer* subSprites;
     Container0205a3d0* subSpriteEntries;
-    void* characterModels[2];       // the two CharacterModels that character and nextCharacter point into
-    void* character;
-    void* nextCharacter;
+    CharacterModel* characterModels[2]; // the two models; character and nextCharacter point at them
+    CharacterModel* character;
+    CharacterModel* nextCharacter;
     unsigned int unknown800;
     int targetAngle;
     unsigned char wingsVramState[0x70]; // texture/palette VRAM reserved for model
     Object3D wings;                 // new game finish: the wings and halo (d_hane)
     unsigned char camera[0x2c8];
-    CreationNavigation navigation;
+    GridCursor navigation;          // over the tab's slots
     CreationSlotLayout grid;
     short cursorX, cursorY;
     short cursorWidth, cursorHeight;
@@ -132,9 +103,9 @@ struct CharacterCreationUI {
     unsigned char finishEffectVramState[0x70];
     Object3D finishEffect;          // new game finish: the glowing rings (ev999993000.chr)
     unsigned char selection;
-    unsigned char windowInput;      // what windows[1]'s update returned: 1 moved, 2 the stylus slid onto another item
+    unsigned char windowInput;      // what windows[1]'s update returned (WindowInput)
     unsigned char unknownAfterWindowInput[2];
-    void* characterData;
+    PartyMemberData* characterData;
     int touchedChoice;
     int resourceTask;
     unsigned char resourceStep;

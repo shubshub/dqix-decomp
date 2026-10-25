@@ -26,33 +26,33 @@ struct Struct_020dd8b4_4 {
     unsigned short unknown_74_; short unknown_76_;
     unsigned short unknown_78_;
 };
-extern "C" char* func_02053c6c(unsigned char*);
-extern "C" int func_02084fc8(char*);
-extern "C" int func_02084ee8(void*);
-extern "C" int func_02084f58(void*);
-extern "C" int func_02084e78(void*);
-extern "C" void func_02083e28(char*, Struct_020dd8b4_3*);
-static inline int inline_020dd8b4(int arg0) { return arg0 >= 0 && arg0 <= 3; }
+char* GetFieldAt0x150_02053c6c(unsigned char*);
+int AccumulateSlotBits20To29AsTenths_02084fc8(char*);
+int AccumulateCharm02084ee8(void*);
+int AccumulateMagicalMight02084f58(void*);
+int AccumulateMagicalMending02084e78(void*);
+extern "C" void PartyMember_RecalculateStats(char*, Details020dd8b4*);
+static inline int IsPartyMember020dd8b4(int id) { return id >= 0 && id <= 3; }
 // USA: func_020dd8b4
-extern "C" ARM void func_020dd8b4(Struct_020dd8b4_4* arg0, int arg1, int arg2, unsigned char arg3) {
-    if (!inline_020dd8b4(arg1)) return;
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_4_.unknown_0_ = arg2;
-    arg0->unknown_38_ = arg3;
-    Struct_020dd8b4_2* var0 = (Struct_020dd8b4_2*)func_0200ff1c(GameState::GetInstance(), arg0->unknown_0_);
-    if (!var0) return;
-    char* var1 = func_02053c6c((unsigned char*)var0);
-    arg0->unknown_3c_ = var0->unknown_134_->primaryStats.attack;
-    arg0->unknown_40_ = var0->unknown_134_->primaryStats.defense;
-    arg0->unknown_44_ = func_02084fc8(var1);
-    arg0->unknown_4c_ = func_02084ee8(var1);
-    arg0->unknown_54_ = func_02084f58(var1);
-    arg0->unknown_5c_ = func_02084e78(var1);
-    arg0->unknown_64_ = var0->unknown_150_->unknown_4_0_;
-    arg0->unknown_68_ = var0->unknown_134_->primaryStats.agility;
-    arg0->unknown_6c_ = var0->unknown_134_->primaryStats.magicalMight;
-    arg0->unknown_70_ = var0->unknown_134_->primaryStats.magicalMending;
-    arg0->unknown_74_ = var0->unknown_134_->primaryStats.maxHP;
-    arg0->unknown_78_ = var0->unknown_134_->primaryStats.maxMP;
-    func_02083e28(var1, &arg0->unknown_4_);
+extern "C" ARM void func_020dd8b4(Summary020dd8b4* obj, int id, int arg, unsigned char flag) {
+    if (!IsPartyMember020dd8b4(id)) return;
+    obj->id = id;
+    obj->details.arg = arg;
+    obj->flag = flag;
+    Combatant020dd8b4* combatant = (Combatant020dd8b4*)GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), obj->id);
+    if (!combatant) return;
+    char* data = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+    obj->attack = combatant->stats->primaryStats.attack;
+    obj->defense = combatant->stats->primaryStats.defense;
+    obj->slotBonus = AccumulateSlotBits20To29AsTenths_02084fc8(data);
+    obj->charmBonus = AccumulateCharm02084ee8(data);
+    obj->mightBonus = AccumulateMagicalMight02084f58(data);
+    obj->mendingBonus = AccumulateMagicalMending02084e78(data);
+    obj->intrinsicAgility = combatant->intrinsic->agility;
+    obj->agility = combatant->stats->primaryStats.agility;
+    obj->might = combatant->stats->primaryStats.magicalMight;
+    obj->mending = combatant->stats->primaryStats.magicalMending;
+    obj->hp = combatant->stats->primaryStats.maxHP;
+    obj->mp = combatant->stats->primaryStats.maxMP;
+    PartyMember_RecalculateStats(data, &obj->details);
 }

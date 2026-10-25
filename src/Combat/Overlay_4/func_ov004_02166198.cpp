@@ -2,9 +2,6 @@
 #include <Memory/SafeAllocator.h>
 #include <std_library_functions.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov004_02166198 {
     unsigned short unknown_0_0_ : 9;
@@ -43,12 +40,12 @@ struct Struct_ov004_02166198_2 {
     short unknown_4c_;
     short unknown_4e_;
 };
-extern "C" int* func_02094d6c();
-extern "C" void* func_0205ec34();
-extern "C" unsigned char func_020965ac(Struct_02065990_3*, unsigned char);
-extern "C" int func_0206e120(Struct_0205faf4_3*, int);
-extern "C" int func_0206e2dc(Struct_0205faf4_13*, int);
-extern "C" int func_02096088(void*, int);
+int* GetGlobal02109418_02094d6c();
+extern "C" void* Scenario_GetInstance();
+unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
+int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
+int GetPackedNibbleFlag0x8(PackedNibbleArray0206e2dc*, int);
+int TestBitInByteArrayAt0x84_02096088(void*, int);
 extern "C" void func_ov004_021660f4();
 struct Struct_ov004_0217101c_2 {
 #if defined(jpn)
@@ -69,24 +66,24 @@ extern char data_ov004_021705a0[];
 
 // USA: func_ov004_02166198
 extern "C" ARM void func_ov004_02166198() {
-    Struct_ov000_02179cdc_2* var0;
-    Struct_ov000_02179cdc_2* var1;
-    Struct_ov004_02166198* var2;
-    Struct_ov004_02166198_2* var3 = data_ov004_0217101c.inline_ov004_02166198();
-    short var4 = var3->unknown_4e_;
-    Struct_02065990_3* var5 = (Struct_02065990_3*)(func_02094d6c());
-    var2 = var5->unknown_a8_;
-    void* var6 = func_0205ec34();
-    short var7 = 0;
-    short var8 = 0;
-    Struct_ov004_02166198* var9;
-    short var10;
-    for (var10 = 1; var10 <= var4; var10++) {
-        int var11 = func_020965ac(var5, (unsigned char)(var10));
-        var9 = var2;
-        int var12;
-        for (var12 = 0; var12 < 0xcc; var12++, var9++) {
-            if (var9->unknown_0_0_ == var11) break;
+    MenuEntry* regular;
+    MenuEntry* special;
+    TableItem* items;
+    MenuLists* lists = data_ov004_0217101c.GetMain();
+    short count = lists->count;
+    GetTableByteOrFFData* table = (GetTableByteOrFFData*)(GetGlobal02109418_02094d6c());
+    items = table->items;
+    void* save = Scenario_GetInstance();
+    short regularCount = 0;
+    short specialCount = 0;
+    TableItem* firstItem;
+    short firstIndex;
+    for (firstIndex = 1; firstIndex <= count; firstIndex++) {
+        int id = GetTableByteOrFF_020965ac(table, (unsigned char)(firstIndex));
+        firstItem = items;
+        int j;
+        for (j = 0; j < 0xcc; j++, firstItem++) {
+            if (firstItem->id == id) break;
         }
         if (var12 == 0xcc) continue;
         if (var9->unknown_0_0_ == 0 || var9->unknown_0_0_ >= 0xff) continue;

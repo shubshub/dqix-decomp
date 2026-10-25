@@ -55,8 +55,8 @@ struct Struct_ov023_021e68cc_2 {
     unsigned char unknown_13ab_;
 };
 
-extern "C" Struct_ov023_021e68cc_3* func_0205d81c(Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+Element_021e68cc* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+extern "C" void SpriteContext_DrawSprite(void* renderer, void* sprite);
 
 // USA: func_ov023_021e68cc
 extern "C" ARM void func_ov023_021e68cc(Struct_ov023_021e68cc_2* arg0) {
@@ -97,10 +97,10 @@ extern "C" ARM void func_ov023_021e68cc(Struct_ov023_021e68cc_2* arg0) {
                 var11->unknown_14_ = var1;
                 var11->unknown_18_ = (var12 - var10) << 12;
             }
-            if (!(arg0->unknown_13ab_ & (1 << var2)))
-                var11->unknown_25_ = 0xd;
-            func_0205ac40(arg0->unknown_135c_, var11);
-            var2++;
+            if (!(self->enabledMask_ & (1 << slot)))
+                sprite->palette = 0xd;
+            SpriteContext_DrawSprite(self->renderer_, sprite);
+            slot++;
         }
     }
     arg0->unknown_13a8_ = -1;

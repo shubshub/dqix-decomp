@@ -134,41 +134,41 @@ struct Struct_0207d7f4 {
     signed char unknown_8_[4];
 };
 
-extern "C" Struct_ov017_021b7284_4* func_02012fe4(void);
-extern "C" Struct_ov017_021b7284_6* func_02027cb0(void);
-extern "C" Struct_ov017_021b7284_7* func_ov017_021a278c(void* arg0, int arg1);
-extern "C" int func_ov017_021b8a34(Struct_0209afd4_5* arg0, int arg1, int arg2);
-extern "C" int func_ov017_021b8abc(int arg0, Struct_ov017_021b7284* arg1);
-extern "C" void func_ov017_021b8b34(Struct_ov017_021b7284_2* arg0);
-extern "C" void func_0209b448(Struct_0209afd4_5* arg0, int arg1, Struct_ov017_021b7284_2* arg2, Struct_ov017_021b7284_6* arg3);
-extern "C" Struct_0204bd7c* func_02033fa0(void* arg0);
-extern "C" unsigned short func_0204bd7c(Struct_0204bd7c* arg0);
-extern "C" Struct_02099a68* func_02011584(void* arg0);
-extern "C" int func_02099a68(Struct_02099a68* arg0, unsigned short arg1);
-extern "C" Struct_ov017_021b7284_5* func_0209bdc8(Struct_0209bdc8* arg0, int arg1, unsigned int arg2);
-extern "C" void func_0209afd4(Struct_0209afd4_5* arg0, short arg1, short arg2, short arg3, Struct_ov017_021b7284_2* arg4, Struct_ov017_021b7284_6* arg5);
-extern "C" void func_ov000_0215d414(Struct_01ff91ac_22* arg0, Struct_ov017_021b7284_3* arg1);
-extern "C" void func_ov000_02160140(void* arg0);
-extern "C" void func_ov017_02195540(unsigned char* arg0);
-extern "C" void func_ov000_021605d0(unsigned char* arg0, Struct_ov000_021605d0* arg1);
-extern "C" Struct_0205859c* func_02057924(void);
-extern "C" void func_0205859c(Struct_0205859c* arg0);
-extern "C" Struct_0202c1a4* func_0202ae18(void);
-struct Struct_0200ffc0;
-extern "C" void* func_0200ffc0(Struct_0200ffc0* arg0);
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_02053f7c(Struct_02053f7c_3* arg0, unsigned short arg1, int arg2);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov017_021b848c(Struct_ov017_021b7284_9* arg0, signed char* arg1, signed char arg2, int arg3, unsigned short arg4, signed char arg5, int arg6, int arg7);
-extern "C" Struct_0207d7f4* func_0207d78c(void);
-extern "C" int func_0207d978(Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" int func_0207da30(unsigned char* arg0, int arg1, int arg2);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" void func_0207d7f4(Struct_0207d7f4* arg0, unsigned short arg1, int arg2, int arg3, signed char arg4, unsigned short arg5, unsigned char arg6);
-extern "C" Struct_0207d7f4* func_0207d9bc(Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" void func_ov017_021ca2a0(int arg0, int arg1);
+extern "C" Holder021b7284* Zone3D_GetInstance(void);
+BattleTable021b7284* FindEntryByCurrentId02027cb0(void);
+Combatant021b7284* FindCombatantByField16a_021a278c(void* unused, int val);
+int PickWeightedSubEntry_021b8a34(FindRowByIdRow* table, int id, int key12);
+int DecodeEntry_021b8abc(int id, Out021b8abc* out);
+void ClearSixHalfwords_021b8b34(Halfwords6_021b8b34* obj);
+extern "C" void func_0209b448(FindRowByIdRow* table, int group, Halfwords6_021b8b34* out, BattleTable021b7284* entry);
+ColorHolder0204bd7c* GetPtrField0x114_02033fa0(void* obj);
+unsigned short ConvertColorToDecimalOffset30000(ColorHolder0204bd7c* obj);
+SearchList02099a68* GetPtrField0x468_02011584(void* obj);
+int FindKeyGetBitflag02099a68(SearchList02099a68* list, unsigned short key);
+ActiveEntry021b7284* FindActiveEntry0209bdc8(Container0209bdc8* c, int flag, unsigned int mask);
+extern "C" void func_0209afd4(FindRowByIdRow* table, short key, short value, short group, Halfwords6_021b8b34* out, BattleTable021b7284* entry);
+extern "C" void func_ov000_0215d414(BattleContext021b7284* context, Request021b7284* req);
+extern "C" void func_ov000_02160140(void* p);
+void ClearFlag320_02195540(unsigned char* obj);
+void SetParamsAndRandomState021605d0(unsigned char* obj, Params021605d0* params);
+extern "C" MainBlock0205859c* func_02057924(void);
+void ResetBattleEncounterState0205859c(MainBlock0205859c* p);
+extern "C" SearchStruct0202c1a4* func_0202ae18(void);
+struct PointerField32c_ffc0;
+void* GetPointerAt0x32c_0200ffc0(PointerField32c_ffc0* obj);
+void GameObject_DisableControl(Obj020397cc* obj, int arg1);
+void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c* obj, unsigned short a, int b);
+int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void __clear(void* buf, int n);
+int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" void func_ov017_021b848c(BattleScene021b7284* self, signed char* flags, signed char idx, int val, unsigned short color, signed char arg5, int arg6, int encounter);
+Entry0207d9bc* GetData02108ea8_0207d78c(void);
+int CheckEntryBytes0207d978(Entry0207d9bc* arr, unsigned short key);
+int HasActiveEntryForId_0207da30(unsigned char* arr, int id, int offset);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+extern "C" void func_0207d7f4(Entry0207d9bc* arr, unsigned short key, int a, int flag, signed char b, unsigned short color, unsigned char c);
+Entry0207d9bc* FindEntryByHalfword(Entry0207d9bc* arr, unsigned short key);
+void EnqueueEventTag90_021ca2a0(int a, int b);
 
 struct Struct_ov017_021b7284_10 {
     unsigned short unknown_0_;
@@ -187,28 +187,28 @@ extern "C" void func_ov017_021cff8c(int arg0, int arg1);
 
 // USA: func_ov017_021b7284
 // JPN: func_ov017_021b7834
-extern "C" ARM void func_ov017_021b7284(Struct_ov017_021b7284_9* arg0) {
-    int var0;
-    int var1;
-    int var2;
-    GameState* var3 = GameState::GetInstance();
-    Struct_ov017_021b7284_4* var4 = func_02012fe4();
-    Struct_ov017_021b7284_3 var5;
-    Struct_ov000_021605d0 var6;
-    Struct_ov017_021b7284_10 var7;
-    Struct_ov017_021b7284 var8;
-    Struct_ov017_021b7284_2 var9;
-    Struct_ov017_021b7284_2 var10;
-    Struct_ov017_021b7284 var11;
-    signed char var12[4];
-    var5.unknown_0_ = &arg0->unknown1_1c_;
-    int var13 = arg0->unknown_28_;
-    var2 = arg0->unknown_44_;
-    unsigned char var14 = arg0->unknown_42_;
-    unsigned short var15 = arg0->unknown_24_;
-    GameState* var16 = GameState::GetInstance();
-    GameResources* var17 = GetGameResources();
-    memset(&var11, 0, sizeof(var11));
+extern "C" ARM void func_ov017_021b7284(BattleScene021b7284* self) {
+    int i;
+    int sub;
+    int group;
+    GameState* gs = GameState::GetInstance();
+    Holder021b7284* holder = Zone3D_GetInstance();
+    Request021b7284 req;
+    Params021605d0 params;
+    Src021c5284 src;
+    Out021b8abc result;
+    Halfwords6_021b8b34 alt2;
+    Halfwords6_021b8b34 alt;
+    Out021b8abc out;
+    signed char present[4];
+    req.info = &self->info;
+    int encounter = self->encounter;
+    group = self->group;
+    unsigned char useAlt = self->useAlt;
+    unsigned short id = self->id;
+    GameState* state = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    memset(&out, 0, sizeof(out));
 
     if (var13 >= 0) {
         func_02074114(&arg0->unknown_2c_, var13);
@@ -296,15 +296,15 @@ done:
     func_0205859c(func_02057924());
     Struct_0202c1a4* var32 = func_0202ae18();
 
-    if (arg0->unknown_20_ != 0) {
-        Struct_02018300_3* var33 = (Struct_02018300_3*)var3->GetUnknownGameObject();
-        void* var34 = func_0200ffc0((Struct_0200ffc0*)var3);
-        Struct_ov017_021b7284_8* var35 = (Struct_ov017_021b7284_8*)func_02010828(var3);
-        func_020397cc(var33, 1);
-        var33->unknown_b2_ = 0;
-        Struct_0204bd7c* var36;
-        if (arg0->unknown_42_ != 0 && var34 != NULL) {
-            var36 = func_02033fa0(var34);
+    if (self->hasParty != 0) {
+        Obj020397cc* leader = (Obj020397cc*)gs->GetUnknownGameObject();
+        void* other = GetPointerAt0x32c_0200ffc0((PointerField32c_ffc0*)gs);
+        Party021b7284* party = (Party021b7284*)GameState_GetParty(gs);
+        GameObject_DisableControl(leader, 1);
+        leader->fieldB2 = 0;
+        ColorHolder0204bd7c* colorHolder;
+        if (self->useAlt != 0 && other != NULL) {
+            colorHolder = GetPtrField0x114_02033fa0(other);
         } else {
             var36 = func_02033fa0(var33);
         }
@@ -316,22 +316,22 @@ done:
             for (int var38 = 0; var38 < var35->unknown_f7c_; var38++) {
                 var12[var35->unknown_f78_[var38]] = 1;
             }
-            int var39 = func_020100a8(var3);
-            func_ov017_021b848c(arg0, var12, var39, 0, func_0204bd7c(var36), arg0->unknown_51_, 1, arg0->unknown_28_);
+            int idx = GameState_GetProtagonistIndex(gs);
+            func_ov017_021b848c(self, present, idx, 0, ConvertColorToDecimalOffset30000(colorHolder), self->field_51, 1, self->encounter);
         } else {
-            Struct_0207d7f4* var40 = func_0207d78c();
-            int var41 = func_0207d978(var40, arg0->unknown_24_) != 0 ? 1 : 0;
-            if (func_0207da30((unsigned char*)var40, arg0->unknown_24_, func_020100a8(var3))) {
-                var41 = 0;
+            Entry0207d9bc* entries = GetData02108ea8_0207d78c();
+            int found = CheckEntryBytes0207d978(entries, self->id) != 0 ? 1 : 0;
+            if (HasActiveEntryForId_0207da30((unsigned char*)entries, self->id, GameState_GetProtagonistIndex(gs))) {
+                found = 0;
             }
-            if (func_0202c1a4(var32) == 0) {
-                int var42 = func_020100a8(var3);
-                int var43 = func_020100a8(var3);
-                func_0207d7f4(var40, arg0->unknown_24_, var42, 1, var43, func_0204bd7c(var36), arg0->unknown_51_);
-                if (func_0207d978(var40, arg0->unknown_24_)) {
-                    Struct_0207d7f4* var44 = func_0207d9bc(var40, arg0->unknown_24_);
-                    if (var44 != NULL) {
-                        func_ov017_021b848c(arg0, var44->unknown_8_, var44->unknown_4_, var41, var44->unknown_2_, var44->unknown_5_, var41 == 0, arg0->unknown_28_);
+            if (GetSearchStructCurrentArrEntry(search) == 0) {
+                int a = GameState_GetProtagonistIndex(gs);
+                int b = GameState_GetProtagonistIndex(gs);
+                func_0207d7f4(entries, self->id, a, 1, b, ConvertColorToDecimalOffset30000(colorHolder), self->field_51);
+                if (CheckEntryBytes0207d978(entries, self->id)) {
+                    Entry0207d9bc* entry = FindEntryByHalfword(entries, self->id);
+                    if (entry != NULL) {
+                        func_ov017_021b848c(self, entry->flags, entry->a, found, entry->value, entry->b, found == 0, self->encounter);
                     }
                 }
             }
@@ -361,10 +361,10 @@ done:
         }
     }
 
-    if (func_0202b7d8(&var32->unknown_0_)) {
-        Struct_ov017_021b7284_8* var46 = (Struct_ov017_021b7284_8*)func_02010828(var3);
-        for (int var47 = 0; var47 < var46->unknown_f7c_; var47++) {
-            func_ov017_021cff8c(var46->unknown_f78_[var47], 0);
+    if (CheckField0NonZero_0202b7d8(&search->active)) {
+        Party021b7284* party = (Party021b7284*)GameState_GetParty(gs);
+        for (int i = 0; i < party->count; i++) {
+            func_ov017_021cff8c(party->ids[i], 0);
         }
     }
     arg0->unknown_6b6_ |= 0x100;

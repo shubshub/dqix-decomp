@@ -24,14 +24,13 @@ struct Container020e0310;
 char* KeyTable_Get(Container020e0310*, int);
 struct Obj0203c108;
 void SwapGlobalEntry0203c108(Obj0203c108*, char*);
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 void Clear12Bytes020e46c4(void* buf);
 extern "C" void func_02046380(void* g);
-extern "C" void func_02046608(void* a, int b, char* c, void* d, int e, int f, int g);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" void MessageSystem_FormatText(void* a, int b, char* c, void* d, int e, int f, int g);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
 void SetBitfieldStoreBytes0205af38(int, char*, int, int);
@@ -43,25 +42,22 @@ void ConfigureSubBg0Control_02172944(int screenSize, int colorMode, int screenBa
 void ConfigureSubBg1Control_02172978(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void* obj, int value);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
-struct Foo0204af38;
-void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
-extern "C" void func_0204c684(void* obj);
-char* CallFunc020e0434With02153694_020e51cc(int key);
+struct BackgroundGraphics;
+void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" void WindowPane_Init(void* obj);
+char* StandardStrings_Get(int key);
 extern "C" void func_0204f914(void* obj, int a, short x0, short y0, short x1, short y1);
 extern "C" void func_0204f41c(void* obj, short x, short y, void* str, int d, int e, short* outA, short* outB, int zero);
 extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int size);
-struct Obj0204b8d0;
-void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
+void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_UploadMap(BackgroundGraphics*, void*);
 extern "C" void Background_FillRect(void* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-struct Obj0204c7a8;
-void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
-struct Elem_0205cf78;
+struct WindowPane;
+void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+struct WindowPane;
 struct Struct_0205cf78;
-void Window_SetPanes(Struct_0205cf78*, Elem_0205cf78*, unsigned char);
+void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
 extern "C" void func_020dc7e8(int a, int b);
 struct Canvas0204e998;
 void InitAndFillIndexBuffer0204c964(Canvas0204e998*);
@@ -307,17 +303,17 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                 SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], KeyTable_Get((Container020e0310*)self->container, data_ov000_02183418[i]));
             }
 #else
-            void* var25 = func_020421a0();
-            for (int var26 = 0; var26 < 9; var26++) {
-                __clear(var1, sizeof(var1));
-                func_020e46c4(&var3);
-                if (var26 >= 5) {
-                    var3.unknown_b_0_ = 1;
+            void* g = MessageSystem_GetInstance();
+            for (int i = 0; i < 9; i++) {
+                __clear(text, sizeof(text));
+                Clear12Bytes020e46c4(&param);
+                if (i >= 5) {
+                    param.mode = 1;
                 }
                 func_02046380(g);
                 int key = data_ov000_02183418[i];
                 *(void**)g = &param;
-                func_02046608(g, 0xa, KeyTable_Get((Container020e0310*)self->container, key), text, 0x100, 0, 0);
+                MessageSystem_FormatText(g, 0xa, KeyTable_Get((Container020e0310*)self->container, key), text, 0x100, 0, 0);
                 SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], text);
             }
 
@@ -355,10 +351,10 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
     } else if (self->state == 4) {
         if (loader->GetTaskStatus(self->handle) != 0) {
             loader->GetLoadedFileByID(self->handle, &file4, &len4);
-            int count = Pac_CountFiles((ActiveEntry02046900*)file4);
+            int count = Pac_CountFiles((PacRecord*)file4);
             self->allocs[0].Reset();
             for (int i = 0; i < count; i++) {
-                void* rec = Pac_GetFile((Rec020467f0*)file4, i, &recData4, &recSize4);
+                void* rec = Pac_GetFile((PacRecord*)file4, i, &recData4, &recSize4);
                 if (rec != 0) {
                     SpriteContext_LoadFile(self->records, rec, recSize4, &self->allocs[0]);
                 }
@@ -392,19 +388,19 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
         list->lo = 1;
         list->hi = 0;
         Background_SetPriority(list, 2);
-        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
+        Background_AllocateMap((BackgroundGraphics*)list, &self->allocs[3]);
 
         list = &self->lists[1];
         Background_SetMapSize((unsigned char*)list, 0);
         list->lo = 1;
         list->hi = 1;
         Background_SetPriority(list, 3);
-        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
+        Background_AllocateMap((BackgroundGraphics*)list, &self->allocs[3]);
 
 #if defined(jpn)
-        Background_AllocateScreens((Foo0204af38*)list, 29, &self->allocs[3]);
+        Background_AllocateScreens((BackgroundGraphics*)list, 29, &self->allocs[3]);
 #else
-        Background_AllocateScreens((Foo0204af38*)list, 10, &self->allocs[3]);
+        Background_AllocateScreens((BackgroundGraphics*)list, 10, &self->allocs[3]);
 #endif
 
         list = &self->lists[2];
@@ -412,39 +408,39 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
         list->lo = 1;
         list->hi = 2;
         Background_SetPriority(list, 0);
-        Background_AllocateMap((AllocTarget0204b12c*)list, &self->allocs[3]);
+        Background_AllocateMap((BackgroundGraphics*)list, &self->allocs[3]);
 
         self->handle = loader->QueueLoadFile(data_ov000_02184046, 0);
         self->state++;
     } else if (self->state == 6) {
         if (loader->GetTaskStatus(self->handle) != 0) {
             loader->GetLoadedFileByID(self->handle, &file6, &len6);
-            int count = Pac_CountFiles((ActiveEntry02046900*)file6);
+            int count = Pac_CountFiles((PacRecord*)file6);
             for (int i = 0; i < count; i++) {
-                void* rec = Pac_GetFile((Rec020467f0*)file6, i, &recData6, &recSize6);
+                void* rec = Pac_GetFile((PacRecord*)file6, i, &recData6, &recSize6);
                 if (rec != 0) {
 #if !defined(jpn)
-                    if (var34 == 0) {
-                        func_0204c684(&var2);
-                        var2.unknown_a8_ = 0x20;
-                        var2.unknown_aa_ = 0x20;
-                        var2.unknown_8_ = (char*)var35 + 0x10;
-                        char* var36;
-                        char* var37 = func_020e51cc(0xc9);
-                        var36 = func_020e51cc(0xca);
-                        short var38;
-                        short var39;
-                        short var40;
-                        for (int var41 = 0; var41 < 2; var41++) {
-                            var38 = data_ov000_021833ba[var41].unknown_0_;
-                            var39 = data_ov000_021833bc[var41].unknown_0_;
-                            var40 = data_ov000_021833be[var41].unknown_0_;
-                            func_0204f914(&var2, 3, var38, var39, var38 + 0x10, var39 + 8);
-                            func_0204f41c(&var2, var38 + 1, var39 - 2, var37, 8, 2, &var17, &var16, 0);
-                            func_0204f41c(&var2, var38, var39 - 2, var37, 8, 0xa, &var17, &var16, 0);
-                            func_0204f914(&var2, 3, var38, var40, var38 + 0x10, var40 + 8);
-                            func_0204f41c(&var2, var38 + 1, var40 - 2, var36, 8, 2, &var17, &var16, 0);
-                            func_0204f41c(&var2, var38, var40 - 2, var36, 8, 0xa, &var17, &var16, 0);
+                    if (i == 0) {
+                        WindowPane_Init(&canvas);
+                        canvas.width = 0x20;
+                        canvas.height = 0x20;
+                        canvas.text = (char*)rec + 0x10;
+                        char* label1;
+                        char* label0 = StandardStrings_Get(0xc9);
+                        label1 = StandardStrings_Get(0xca);
+                        short x;
+                        short y0;
+                        short y1;
+                        for (int k = 0; k < 2; k++) {
+                            x = data_ov000_021833ba[k].value;
+                            y0 = data_ov000_021833bc[k].value;
+                            y1 = data_ov000_021833be[k].value;
+                            func_0204f914(&canvas, 3, x, y0, x + 0x10, y0 + 8);
+                            func_0204f41c(&canvas, x + 1, y0 - 2, label0, 8, 2, &outA, &outB, 0);
+                            func_0204f41c(&canvas, x, y0 - 2, label0, 8, 0xa, &outA, &outB, 0);
+                            func_0204f914(&canvas, 3, x, y1, x + 0x10, y1 + 8);
+                            func_0204f41c(&canvas, x + 1, y1 - 2, label1, 8, 2, &outA, &outB, 0);
+                            func_0204f41c(&canvas, x, y1 - 2, label1, 8, 0xa, &outA, &outB, 0);
                         }
                     }
 #endif
@@ -455,22 +451,22 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                     Background_LoadFile(target, rec, &self->allocs[3], recSize6);
                 }
             }
-            Background_DrawScreen((Obj0204b8d0*)&self->lists[1], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-            Background_UploadMap((List0204b0e8*)&self->lists[1], 0);
+            Background_DrawScreen((BackgroundGraphics*)&self->lists[1], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+            Background_UploadMap((BackgroundGraphics*)&self->lists[1], 0);
             Background_FillRect(&self->lists[0], 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((List0204b0e8*)&self->lists[0], 0);
-            Background_DrawScreen((Obj0204b8d0*)&self->lists[2], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
-            Background_UploadMap((List0204b0e8*)&self->lists[2], 0);
+            Background_UploadMap((BackgroundGraphics*)&self->lists[0], 0);
+            Background_DrawScreen((BackgroundGraphics*)&self->lists[2], 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+            Background_UploadMap((BackgroundGraphics*)&self->lists[2], 0);
 
             self->allocs[2].Reset();
             self->buffer = self->allocs[2].Allocate(0x5c00);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[0], &self->allocs[2], (int)self->buffer, 0x30c);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[1], &self->allocs[2], (int)self->buffer, 0x240);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[2], &self->allocs[2], (int)self->buffer, 0x240);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[3], &self->allocs[2], (int)self->buffer, 0x200);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[4], &self->allocs[2], (int)self->buffer, 0x200);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[5], &self->allocs[2], (int)self->buffer, 0x200);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->elems[6], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[0], &self->allocs[2], (int)self->buffer, 0x30c);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[1], &self->allocs[2], (int)self->buffer, 0x240);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[2], &self->allocs[2], (int)self->buffer, 0x240);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[3], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[4], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[5], &self->allocs[2], (int)self->buffer, 0x200);
+            WindowPane_AllocateBuffer((WindowPane*)&self->elems[6], &self->allocs[2], (int)self->buffer, 0x200);
             for (int j = 0; j < 7; j++) {
                 self->elems[j].list = &self->lists[2];
             }
@@ -478,7 +474,7 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
             self->handle = -1;
             self->linkList = &self->lists[2];
             self->linkFlag = 1;
-            Window_SetPanes((Struct_0205cf78*)self->linkHead, (Elem_0205cf78*)self->elems, 7);
+            Window_SetPanes((Struct_0205cf78*)self->linkHead, (WindowPane*)self->elems, 7);
             self->state++;
             self->f1d72 |= 0x40;
         }

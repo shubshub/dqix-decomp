@@ -10,8 +10,8 @@ struct Struct_ov006_021580b8
 
 struct Struct_ov008_02188d74;
 
-extern "C" void func_0205af84(int arg0, void* arg1, int);
-extern "C" void func_0205ac40(Struct_ov008_02188d74* arg0, Struct_ov006_021580b8* arg1);
+void SetBitfield0205af84(int renderer, void* sprite, int);
+extern "C" void SpriteContext_DrawSprite(SpriteRenderer* renderer, Sprite* sprite);
 
 extern const signed char data_ov008_0218b300[2];
 extern const unsigned char data_ov008_0218b30c[4][2];
@@ -47,11 +47,11 @@ extern "C" ARM void func_ov008_02188934(Struct_ov008_021842a0_2* arg0)
             var2 = 2;
         if (data_ov008_0218b30c[var2][var1])
         {
-            Struct_ov006_021580b8* var3 = &arg0->unknown_734_[data_ov008_0218b300[var1]];
-            var3->unknown_14_ = 0x46000;
-            var3->unknown_18_ = data_ov008_0218b314[var1];
-            func_0205af84((int)arg0->unknown_730_, &arg0->unknown_734_[data_ov008_0218b300[var1]], 1);
-            func_0205ac40(arg0->unknown_730_, &arg0->unknown_734_[data_ov008_0218b300[var1]]);
+            Sprite* sprite = &self->sprites_[data_ov008_0218b300[i]];
+            sprite->x_ = 0x46000;
+            sprite->y_ = data_ov008_0218b314[i];
+            SetBitfield0205af84((int)self->renderer_, &self->sprites_[data_ov008_0218b300[i]], 1);
+            SpriteContext_DrawSprite(self->renderer_, &self->sprites_[data_ov008_0218b300[i]]);
         }
     }
 }

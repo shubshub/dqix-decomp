@@ -72,10 +72,10 @@ extern "C" struct Struct_02072a68_2* func_ov023_021fa598(Struct_ov004_02162108_2
 #if !defined(jpn)
 extern "C" char* func_02072a68(struct Struct_02072a68_2* arg0, short arg1);
 #endif
-extern "C" char* func_020d2f88(char* arg0, char* arg1);
-extern "C" int func_020421a0(void);
-extern "C" void func_02046608(int arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_ov004_0215f6f4(void* arg0, short arg1, short arg2, int arg3);
+char* FindSubstring_020d2f88(char* str, char* sub);
+int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_FormatText(int g, int mode, char* fmt, char* dst, int size, int a, int b);
+void SetNodeFieldsAndMaybeNotify_0215f6f4(void* a, short v1, short v2, int flag);
 
 extern struct Struct_ov004_021707e8_5 data_ov004_021707e8;
 extern struct Struct_ov004_02170b90_4 data_ov004_02170b90[];
@@ -181,20 +181,20 @@ extern "C" ARM int func_ov004_02162108(void* arg0) {
 #if defined(jpn)
                     func_ov004_0215e49c(arg0, var19, var22);
 #else
-                    var24 = func_ov004_0215e47c(arg0, 0x320);
-                    if (var24 != 0 && func_ov023_021f6f10(var24) == 4) {
-                        int var25;
-                        char* var26;
-                        struct Struct_02072a68_2* var27;
-                        Struct_ov004_02162108_2* var28;
-                        var27 = func_ov023_021fa598(var24);
-                        var26 = data_ov004_021707e8.unknown_c_ + (var21 + var16) * 0x80;
-                        memset(var26, 0, 0x80);
-                        var25 = 0;
-                        if (func_020d2f88(func_02072a68(var27, var22), data_ov004_02170527)) var25 = 0x14;
-                        func_02046608(func_020421a0(), 0, func_02072a68(var27, var22), var26, 0x78 - var25, 0, 0);
-                        var28 = func_ov004_0215e47c(arg0, var19);
-                        if (var28 != 0 && func_ov023_021f6f10(var28) == 8) var28->unknown_20_ = var26;
+                    msg = func_ov004_0215e47c(self, 0x320);
+                    if (msg != 0 && func_ov023_021f6f10(msg) == 4) {
+                        int indent;
+                        char* text;
+                        struct TableA68* table;
+                        Node02162108* label;
+                        table = func_ov023_021fa598(msg);
+                        text = data_ov004_021707e8.textBuf + (k + off) * 0x80;
+                        memset(text, 0, 0x80);
+                        indent = 0;
+                        if (FindSubstring_020d2f88(_Z23FindEntryByKey_02072a68P8TableA68i(table, key), data_ov004_02170527)) indent = 0x14;
+                        MessageSystem_FormatText(MessageSystem_GetInstance(), 0, _Z23FindEntryByKey_02072a68P8TableA68i(table, key), text, 0x78 - indent, 0, 0);
+                        label = func_ov004_0215e47c(self, id);
+                        if (label != 0 && func_ov023_021f6f10(label) == 8) label->data = text;
                     }
 #endif
                     Struct_ov004_02162108_2* var29 = func_ov023_021f6880(var1, var19);

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
-extern "C" char* func_020424ac(char*);
-extern "C" int func_020d857c(signed char*, signed char*);
-extern "C" int func_020d2ff0(const char*);
+char* FindUnescapedAngleBracket_020424ac(char*);
+int IsPrefixMatch020d857c(signed char*, signed char*);
+int STD_GetStringLength(const char*);
 extern "C" int func_02005a94(const char*);
 struct Struct_020e7e5c {
     signed char* unknown_0_;
@@ -14,21 +14,21 @@ extern "C" ARM void func_0206831c(void* arg0, signed char* arg1, signed char* ar
     if (!arg1 || !arg2) return;
     var0 = arg2;
     while (1) {
-        if (!*arg1) break;
-        if (*arg1 == '<') {
-            signed char* var1 = (signed char*)func_020424ac((char*)arg1);
-            if (var1) {
-                int var2 = 0;
-                Struct_020e7e5c* var3 = data_020e7e5c;
-                signed char* var4 = arg1 + 1;
-                while (var3->unknown_0_) {
-                    if (func_020d857c(var4, var3->unknown_0_)) {
-                        if (var3->unknown_4_) {
-                            int var5 = 0;
-                            int var6 = func_020d2ff0((char*)var3->unknown_0_);
-                            signed char var7 = var4[var6];
-                            if (var7 >= '1' && var7 <= '9') var5 = func_02005a94((char*)var4 + var6) - 1;
-                            var3->unknown_4_(var4, &var0, arg0, var5);
+        if (!*input) break;
+        if (*input == '<') {
+            signed char* end = (signed char*)FindUnescapedAngleBracket_020424ac((char*)input);
+            if (end) {
+                int found = 0;
+                Tag0206831c* tag = data_020e7e5c;
+                signed char* name = input + 1;
+                while (tag->name) {
+                    if (IsPrefixMatch020d857c(name, tag->name)) {
+                        if (tag->expand) {
+                            int index = 0;
+                            int length = STD_GetStringLength((char*)tag->name);
+                            signed char digit = name[length];
+                            if (digit >= '1' && digit <= '9') index = func_02005a94((char*)name + length) - 1;
+                            tag->expand(name, &output, context, index);
                         }
                         arg1 = var1 + 1;
                         var2 = 1;

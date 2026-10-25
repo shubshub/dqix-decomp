@@ -52,7 +52,7 @@ extern "C" ARM int func_ov001_0216013c(int arg0) {
         if (var2 == 0) {
             return 0;
         }
-        ((Object3D*)var2)->MaybeSetRegularAnimation((char const*)&data_ov001_02165769, 0);
+        ((Object3D*)obj2)->SetAnimationByName((char const*)&data_ov001_02165769, 0);
     }
 
     return 1;

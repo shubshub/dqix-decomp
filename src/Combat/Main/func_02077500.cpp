@@ -38,17 +38,17 @@ struct Struct_02077500_3 {
     unsigned short unknown_164_;
 };
 
-extern "C" Struct_020fdd44* func_02027ca4();
-extern "C" Struct_020fdd44* func_02028bd0(Struct_020fdd44* arg0, int arg1);
-extern "C" Struct_02077500_2* func_020283c0(Struct_0201a300_11* arg0, int arg1);
+extern Entry_02028bd0* ZoneRecords_GetInstance();
+extern Entry_02028bd0* FindInlineEntryById(Entry_02028bd0* table, int id);
+extern TableEntry_02077500* FindListEntryById(List_020283c0* list, int id);
 extern "C" void func_0202ae18();
 extern "C" int func_0202c508();
 extern "C" void func_ov017_021c927c(int arg0, int arg1, int arg2, Struct_02077500 arg3, int arg4, int arg5, int arg6);
 
 // USA: func_02077500
-extern "C" ARM int func_02077500(Struct_02077500_3* arg0) {
-    Struct_020fdd44* var0 = func_02027ca4();
-    if (var0 == 0) {
+extern "C" ARM int func_02077500(Actor_02077500* obj) {
+    Entry_02028bd0* table = ZoneRecords_GetInstance();
+    if (table == 0) {
         return 0;
     }
     Struct_020fdd44* var1 = func_02028bd0(var0, ((Object3D*)((Struct_02039df4*)arg0))->GetField06());

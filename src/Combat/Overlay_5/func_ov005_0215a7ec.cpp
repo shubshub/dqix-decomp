@@ -44,22 +44,22 @@ struct Struct_ov005_02153954 {
 };
 
 struct Struct_0205d81c;
-MenuElement* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
+MenuElement* Window_GetActivePane(Struct_0205d81c*);
 int GetInnerFlagBit0020e28dc(Outer020e28dc* p);
-extern "C" void func_0205ae8c(void* obj);
-int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char* obj);
+extern "C" void SpriteContext_DrawEntries(void* obj);
+int WindowPane_IsOpen(unsigned char* obj);
 int Window_GetSelectedIndex(Struct_0205c570* window);
 void* GetField1c_021a193c(int* p);
 extern "C" void func_ov023_021e3304(void* cursor, short x, short y);
 
 // USA: func_ov005_0215a7ec
 extern "C" ARM void func_ov005_0215a7ec(EquipmentMenu* self) {
-    MenuElement* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)self->window_);
+    MenuElement* elem = Window_GetActivePane((Struct_0205d81c*)self->window_);
     if (elem != NULL) {
         unsigned char kind = elem->kind_;
         if (self->yesNo_ != NULL && GetInnerFlagBit0020e28dc(self->yesNo_)) {
-            func_0205ae8c(self->yesNoState_);
-        } else if (kind == 1 && CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)elem)) {
+            SpriteContext_DrawEntries(self->yesNoState_);
+        } else if (kind == 1 && WindowPane_IsOpen((unsigned char*)elem)) {
             short x = (short)(elem->col_ << 3) + elem->offsetX_;
             short y = (short)(elem->row_ << 3) + elem->offsetY_;
             if (kind == 2) {
@@ -70,12 +70,12 @@ extern "C" ARM void func_ov005_0215a7ec(EquipmentMenu* self) {
                 else if (sum == 1)
                     y = 0x65;
             }
-            func_ov023_021e3304(func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]), var2 - 8, var3 - 2);
+            func_ov023_021e3304(GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]), x - 8, y - 2);
         }
     }
-    if (arg0->unknown_3db8_ == 0) {
-        short var5 = arg0->unknown_3dbc_ * 0x18 + 4;
-        void* var6 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-        func_ov023_021e3304(var6, 0x74, var5);
+    if (self->state_ == 0) {
+        short y = self->kind_ * 0x18 + 4;
+        void* cursor = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+        func_ov023_021e3304(cursor, 0x74, y);
     }
 }

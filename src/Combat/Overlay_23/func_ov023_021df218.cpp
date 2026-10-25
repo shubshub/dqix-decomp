@@ -1,27 +1,24 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 // USA: func_ov023_021df218
 
 struct Struct_ov023_021db45c;
 
-extern "C" void func_0204c684(void* arg0);
-extern "C" int func_ov023_021ddc34(void* arg0, short arg1, short arg2, short arg3, short arg4);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" int func_020dd19c(unsigned int arg0, int arg1);
-extern "C" void func_ov023_021e29b8(void* arg0, int arg1, unsigned char arg2);
-extern "C" void* func_ov023_021e2550(void* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021db45c(void* arg0, struct Struct_ov023_021db45c* arg1, int arg2, short* arg3, short* arg4);
-extern "C" void func_ov023_021e257c(void* arg0);
-extern "C" void* func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" void* func_ov023_021db4e4(void* arg0, int arg1);
-extern "C" int func_ov023_021ddc98(void* arg0, int arg1, unsigned short arg2, int arg3);
-extern "C" unsigned short* func_ov023_021db2b8(signed char arg0, int arg1);
+extern "C" void WindowPane_Init(void* buf);
+int InitBufferFromDataField4_021ddc34(void* obj, short a, short b, short c, short d);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int length);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int flags, unsigned char* flags2, int id);
+int MatchesAnyTableEntry020dd19c(unsigned int a, int b);
+void SetByteField_021e29b8(void* a, int b, unsigned char v);
+extern "C" void* func_ov023_021e2550(void* obj, int unused, int index);
+void UpdateEntryAndReset_021db45c(void* obj, struct StructAcAe021db45c* p1, int p2, short* p3, short* p4);
+extern "C" void func_ov023_021e257c(void* obj);
+void* CreateAndSetFields8A_021db544(void* a, void* b, int c, int d);
+extern "C" void* func_ov023_021db4e4(void* obj, int key);
+extern "C" int func_ov023_021ddc98(void* buf, int val, unsigned short len, int flag);
+extern "C" unsigned short* func_ov023_021db2b8(signed char screen, int bg1);
 void CleanInvalidateCacheRange(void const*, unsigned int);
 extern "C" void func_ov023_021e2bdc(void* arg0, int arg1, short* arg2, short* arg3);
 
@@ -85,8 +82,8 @@ extern "C" ARM void func_ov023_021df218(Struct_ov023_021df218_4* arg0)
     short var9;
     unsigned short* var10;
 
-    func_0204c684(var0);
-    if (!func_ov023_021ddc34(var0, 0, 0, 7, 0x10))
+    WindowPane_Init(buf);
+    if (!InitBufferFromDataField4_021ddc34(buf, 0, 0, 7, 0x10))
         return;
 
     var8 = 0;
@@ -106,11 +103,11 @@ extern "C" ARM void func_ov023_021df218(Struct_ov023_021df218_4* arg0)
             memcpy(var1, data_ov023_021fd626, 0xd);
 
             {
-                void* var17 = func_0205ec34();
-                for (var12 = 7; var12 < 0xd; var12++)
+                void* f = Scenario_GetInstance();
+                for (j = 7; j < 0xd; j++)
                 {
-                    if (func_0206dfb0((int)var17, (unsigned char*)var17 + 0x8c, 0x113f + var12))
-                        var1[var12] = 1;
+                    if (Scenario_TestFlag((int)f, (unsigned char*)f + 0x8c, 0x113f + j))
+                        flags[j] = 1;
                 }
             }
 

@@ -83,20 +83,20 @@ struct Struct_ov026_021de6a0 {
     char unknown_d_[0xb];
 };
 
-extern "C" void func_0207df50(Struct_0203d028* arg0);
+void VramState_Rewind(Foo0207df50* p);
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 void SetMainBrightness(GameResources*, int, int);
-extern "C" void func_0205eb54(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eb90(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eb80(void* arg0);
-extern "C" void func_02078484(Struct_02078398_2* arg0);
-extern "C" int func_02057fb4(void* arg0, int arg1, void* arg2);
-extern "C" void func_02049f50(Struct_02049f50* arg0, int arg1, int arg2);
-extern "C" void func_ov000_021637c8(void* arg0);
-extern "C" void func_ov000_021636ac(void* arg0);
-extern "C" void func_ov000_02163710(void* arg0, int arg1);
-extern "C" void func_ov000_02167e6c(unsigned char* arg0);
+void SePlayer_LoadExtraArchiveA(void* obj, int arg1, int arg2);
+void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
+void SePlayer_UnloadExtraArchiveA(void* obj);
+void InitStruct02078484(InitStruct02078484Struct* req);
+int FindNodeAndProcess02057fb4(void* list, int id, void* req);
+void SetField41AndScaleSub02049f50(Obj02049f50* obj, int val, int count);
+void ResetTwoFields021637c8(void* obj);
+void UpdateFlag8AndBit4_021636ac(void* objRaw);
+void ClearFlagIfParityMismatch02163710_02163710(void* obj, int flag);
+void RunFlaglearAndSetMode02167e6c_02167e6c(unsigned char* work);
 
 extern "C" {
 void* func_02057924();
@@ -122,17 +122,17 @@ extern char g_sePlayer[];
 extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
     GameResources* var0 = GetGameResources();
 
-    if (arg0->unknown_7712_ == 0) {
-        if (func_ov000_021759f4(arg0->unknown_3760_)) {
-            arg0->unknown_774c_.Reset();
-            func_0207df50(&arg0->unknown_7760_);
-            arg0->unknown_7714_ = arg0->unknown_771e_ = arg0->unknown_7720_ = -1;
-            SetBrightness(var0, -0x10, 0xf);
-            arg0->unknown_7714_ = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee0c, &arg0->unknown_774c_);
-            arg0->unknown_771e_ = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee23, &arg0->unknown_774c_);
-            arg0->unknown_7720_ = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee3a, &arg0->unknown_774c_);
-            arg0->unknown_7712_ = 1;
-            arg0->unknown_7749_ = 1;
+    if (self->phase == 0) {
+        if (func_ov000_021759f4(self->list)) {
+            self->cmdAlloc.Reset();
+            VramState_Rewind(&self->stateB);
+            self->objId = self->objId771e = self->objId7720 = -1;
+            SetBrightness(res, -0x10, 0xf);
+            self->objId = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee0c, &self->cmdAlloc);
+            self->objId771e = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee23, &self->cmdAlloc);
+            self->objId7720 = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov026_021dee3a, &self->cmdAlloc);
+            self->phase = 1;
+            self->reinitFlag = 1;
         }
     } else if (arg0->unknown_7712_ == 1) {
         BackgroundLoader* var1 = BackgroundLoader::GetInstance();
@@ -162,7 +162,7 @@ extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
         }
     } else if (self->phase == 2) {
         InitStruct02078484Struct req;
-        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        SePlayer_LoadExtraArchiveA(g_sePlayer, 0x1b3, 0x1b3);
         DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 1, 0);
         self->fadeActive = 1;
         func_ov000_021626a0(self, 0x26, 0);
@@ -212,7 +212,7 @@ extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
         }
     } else if (self->phase == 5) {
         InitStruct02078484Struct req;
-        ForwardField0xc0_0205eb80(g_sePlayer);
+        SePlayer_UnloadExtraArchiveA(g_sePlayer);
         self->fadeActive = 0;
         SetMainBrightness(res, -0x10, 0);
         GameState* gs = GameState::GetInstance();
@@ -233,7 +233,7 @@ extern "C" ARM void func_ov026_021db5a4(Struct_ov000_02160da0* arg0) {
         func_ov000_02163894(self);
         UpdateFlag8AndBit4_021636ac(self);
         self->phase = 6;
-        SetForwardAndStore0205eb54(g_sePlayer, 0x1b3, 0x1b3);
+        SePlayer_LoadExtraArchiveA(g_sePlayer, 0x1b3, 0x1b3);
         DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 2, 0);
         self->fadeActive = 1;
     } else if (self->phase == 6) {

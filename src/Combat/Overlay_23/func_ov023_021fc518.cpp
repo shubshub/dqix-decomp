@@ -2,31 +2,28 @@
 #include "GameState/GameState.h"
 #include "Memory/SafeAllocator.h"
 #include "Resource/GameResources.h"
-
-struct Struct_02000c9c_75 {
-    char unknown_0_[0xc20];
-};
+#include "Graphics/CharacterModel.h"
 
 class Struct_ov023_021fc518 {
 public:
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned char unknown_c_;
-    char unknown_d_[3];
-    const char* unknown_10_;
-    void* unknown_14_;
-    void* unknown_18_;
-    int unknown_1c_;
-    Struct_02000c9c_75 unknown_20_[2];
-    int unknown_1860_;
-    unsigned char unknown_1864_0_ : 1;
-    unsigned char unknown_1864_1_ : 1;
-    unsigned char unknown_1864_2_ : 1;
-    unsigned char unknown_1864_3_ : 1;
-    void (**unknown_1868_)(void* script);
-    void (**unknown_186c_)(void* script);
+    unsigned short type_;
+    unsigned short id_;
+    unsigned short heap_;
+    unsigned short vramState_;
+    unsigned char flags_;
+    char unk_d[3];
+    const char* file_;
+    void* prev_;
+    void* next_;
+    int state_;
+    CharacterModel models_[2];
+    int perspective_;
+    unsigned char current_ : 1;
+    unsigned char turnBack_ : 1;
+    unsigned char unk_1864_2 : 1;
+    unsigned char swap_ : 1;
+    void (**leftCallback_)(void* script);
+    void (**rightCallback_)(void* script);
 
     virtual void inline_ov023_021fc518_54(void* arg0);
 };
@@ -99,31 +96,31 @@ struct Struct_ov023_021fc518_2 {
     SafeAllocator unknown_4_;
 };
 
-struct Struct_ov023_021f6ed8;
-struct Struct_0203d028;
-struct Struct_0202e5c0;
-struct Struct_0202df68;
+struct ObjBase021f6ed8;
+struct Foo0207df50;
+struct Camera;
+struct AngleTrig0202e9a4;
 
 extern "C" void func_ov023_021f6ed8(ObjBase021f6ed8* obj);
 extern "C" void* func_ov011_021849c8(void* ctx);
 extern "C" MenuNode_021fc518* func_ov023_021f6880(void* list, int tag);
 extern "C" HeapNode_021fc518* func_ov011_021845f8(void* ctx, int heap);
-void CopyInternalFields0207df50(Foo0207df50* p);
+void VramState_Rewind(Foo0207df50* p);
 void VramState_Restore(char* p);
 void VramState_Save(char* p);
 void CharacterModel_Init(void* model);
 void CharacterModel_CreateAllocators(void* model, SafeAllocator* allocator);
 void CharacterModel_ReserveVram(void* model);
 void CharacterModel_SetItemTable(void* model, int value);
-void SetByteC11_021e6150(void* model, unsigned char value);
+void CharacterModel_SetForceStandAnimation(void* model, unsigned char value);
 void CharacterModel_SetAngle(void* model, unsigned int value);
 extern "C" void func_ov023_021fc71c(void* obj, int id, int flagArg);
 char* GetFieldIfFlag4_020100f8(char* gameState);
-void Camera_SetPosition(Vec3Target0202e5c0* camera, int x, int y, int z);
-void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+void Camera_SetPosition(Camera* camera, int x, int y, int z);
+void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
 int GetField0x58_0202e9ec(void* camera);
 void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4* camera, int angle);
-void SetField0x238False_020a27a0(void* camera);
+void FollowCamera_DisableFollow(void* camera);
 
 // USA: func_ov023_021fc518
 extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5) {
@@ -148,16 +145,16 @@ extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, 
 #if defined(jpn)
     char* var3 = (char*)GetGameResources() + 0x27c;
 #else
-    char* var3 = GetGameResources()->unknown_2cc_;
+    char* pairTables = GetGameResources()->vramStates_;
 #endif
-    CopyInternalFields0207df50((Foo0207df50*)pairTables);
+    VramState_Rewind((Foo0207df50*)pairTables);
     VramState_Restore(pairTables);
     for (int i = 0; i < 2; i++) {
         CharacterModel_Init(&self->models_[i]);
         CharacterModel_CreateAllocators(&self->models_[i], &heapNode->allocator);
         CharacterModel_ReserveVram(&self->models_[i]);
         CharacterModel_SetItemTable(&self->models_[i], perspective);
-        SetByteC11_021e6150(&self->models_[i], 1);
+        CharacterModel_SetForceStandAnimation(&self->models_[i], 1);
     }
     VramState_Save(pairTables);
 
@@ -167,10 +164,10 @@ extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, 
         func_ov023_021fc71c(self, character, 0);
 
     char* camera = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
-    Camera_SetPosition((Vec3Target0202e5c0*)camera, 0xb666, 0xb800, 0x42ccc);
-    Camera_SetTarget((unsigned char*)camera, 0xb666, 0xb800, 0);
+    Camera_SetPosition((Camera*)camera, 0xb666, 0xb800, 0x42ccc);
+    Camera_SetTarget((struct Camera*)camera, 0xb666, 0xb800, 0);
     self->perspective_ = GetField0x58_0202e9ec(camera);
     SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)camera, 0xf000);
-    SetField0x238False_020a27a0(camera);
+    FollowCamera_DisableFollow(camera);
     return 1;
 }

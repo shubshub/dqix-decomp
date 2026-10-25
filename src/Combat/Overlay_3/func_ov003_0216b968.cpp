@@ -41,22 +41,22 @@ struct Struct_ov003_0216b968_2 {
     unsigned char unknown_13ee_;
 };
 
-Global0216b968* GetGlobalField0x1c020421a0(void);
+Global0216b968* MessageSystem_GetInstance(void);
 extern "C" void func_0205d7a0(void* list, int index);
 extern "C" void func_ov003_0216da90(Self0216b968* self);
-void IterateEntries0205a330(struct Container0205a330* c, int arg);
+void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
 int Window_GetSelectedIndex(struct Struct_0205c570* list);
 extern "C" void func_ov003_0216dc58(Self0216b968* self);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void* list);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int value);
+void Window_ClosePane(struct Entry_0205d6a0* list, int value);
 
 extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0216b968
-extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
-    Struct_ov003_0216b968* var0 = func_020421a0();
+extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
+    Global0216b968* global = MessageSystem_GetInstance();
 
     if (arg0->unknown_6_ == 0) {
         if (var0->unknown_9a0_ == 3) {
@@ -74,7 +74,7 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
     } else if (self->step_ == 2) {
         GameState* gameState = GameState::GetInstance();
         struct Container0205a330* entries = global->entries_;
-        IterateEntries0205a330(entries, gameState->GetTickCount());
+        SpriteEntryList_AdvanceAnimations(entries, gameState->GetTickCount());
         global->field_0x19ae = 0;
         self->field_0x13ee = 0;
         Window_GetSelectedIndex((struct Struct_0205c570*)self->list_);
@@ -97,30 +97,30 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
             self->result_ = 3;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
+            Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 1:
             self->result_ = 5;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
+            Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 2:
             self->result_ = 4;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
+            Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 3:
             self->result_ = 6;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)self->list_, 0);
+            Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case -2:
-            arg0->unknown_4_ = 6;
-            arg0->unknown_6_ = 0;
-            func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+            self->result_ = 6;
+            self->step_ = 0;
+            Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         default:
             break;
@@ -154,7 +154,7 @@ extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* arg0) {
         if (dispatch) {
             SePlayer_Play(&g_sePlayer, 1, 0);
         }
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_12c0_, 0);
+        Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
 #endif
     }
 }

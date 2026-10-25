@@ -1,10 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_0205de24_2;
-struct Struct_0205ba68;
+struct Struct0205de24;
+struct GridCursor;
 struct Struct_0205d81c;
-struct Struct_0205bacc;
-struct Struct_0201099c_3;
+struct Container020e0310;
 
 struct Struct_ov003_0217dd60 {
     char unknown_0_[0x8];
@@ -59,43 +58,43 @@ struct Struct_ov003_0217dd60_2 {
 };
 #endif
 
-extern "C" void func_0205de24(struct Struct_0205de24_2*, unsigned char, unsigned char);
-extern "C" void func_0205cf04(void*);
-extern "C" void func_0205cef8(void*);
-extern "C" int func_020421a0();
-extern "C" void func_02012fe4();
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24*, unsigned char, unsigned char);
+void SetChannelBFlag0205cf04(void*);
+void SetChannelAFlag0205cef8(void*);
+int MessageSystem_GetInstance();
+extern "C" void Zone3D_GetInstance();
 extern "C" void __clear(void* buf, int n);
 int KeyTable_Get(struct Container020e0310* c, int key);
-void AppendNameTag_02041b70(char* dst, int n, const char* name);
-void AppendString02042058(char* dst, const char* src);
+void Text_AppendNTag(char* dst, int n, const char* name);
+void Text_Append(char* dst, const char* src);
 unsigned char* GetElementByB4IfAbsent_0205e00c(struct Struct_0205d81c* s, int key);
 void SetField0xd8State_02050400(unsigned char* elem, int state);
-void SetByte0xd9AndFlag0x2_0205042c(unsigned char* elem, unsigned char value);
-void SetByte0xdaAndFlag0x2_02050440(unsigned char* elem, int value);
+void WindowPane_SetIndicatorPage(unsigned char* elem, unsigned char value);
+void WindowPane_SetIndicatorPageCount(unsigned char* elem, int value);
 #if defined(jpn)
-struct Struct_020465c0;
-extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_020465c0(struct Struct_020465c0*, int, int);
-extern "C" void func_020465f0(unsigned char*, int, unsigned char);
-extern "C" void func_020465d8(unsigned char*, int, unsigned char);
-extern "C" void func_02042428(char* arg0, int arg1);
+struct StoreStruct;
+extern "C" void Window_OpenPane(void* window, char* buf, int a, int b, int c, int d, int e);
+extern "C" void func_02046380(void* w);
+void StoreInArray0x8b0_020465c0(struct StoreStruct*, int, int);
+void SetByteInRange_020465f0(unsigned char*, int, unsigned char);
+void SetByteAtIndex_020465d8(unsigned char*, int, unsigned char);
+extern "C" void func_02042428(char* dst, int size);
 #else
-extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* window, char* buf, int a, int b, int c, int d, int e, int f);
 #endif
-void GridCursor_SetDimensions(struct Struct_0205ba68* t, int a, int b, int c);
-void GridCursor_SetCount(struct Node0205bacc* n, int value);
+void GridCursor_SetDimensions(struct GridCursor* t, int a, int b, int c);
+void GridCursor_SetCount(struct GridCursor* n, int value);
 
 extern const char data_ov003_02180c7f[];
 
 // USA: func_ov003_0217dd60
 #if defined(jpn)
-extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
-    char var0[0x400];
-    func_02012fe4();
-    struct Struct_020465c0* var1 = (struct Struct_020465c0*)func_020421a0();
-    func_0205de24((struct Struct_0205de24_2*)arg0->unknown_8c_, 0, 1);
-    arg0->unknown_8c_->unknown_b1_ = 0;
+extern "C" ARM void func_ov003_0217dd60(struct ListMenu0217dd60* menu) {
+    char buf[0x400];
+    Zone3D_GetInstance();
+    struct StoreStruct* g = (struct StoreStruct*)MessageSystem_GetInstance();
+    FindAndLinkMatchingEntry0205de24((struct Struct0205de24*)menu->window, 0, 1);
+    menu->window->fieldb1 = 0;
     {
         struct Struct_ov003_0217dd60* var2 = arg0->unknown_8c_;
         var2->unknown_a0_ = 14;
@@ -129,9 +128,9 @@ extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
     }
     for (i = page * 6; i < end; i++) {
         const char* name = (const char*)KeyTable_Get((struct Container020e0310*)menu->names, (short)(menu->items[i] + 100));
-        AppendNameTag_02041b70(buf, i % 6, name);
+        Text_AppendNTag(buf, i % 6, name);
         if (i != end - 1) {
-            AppendString02042058(buf, data_ov003_02180c7f);
+            Text_Append(buf, data_ov003_02180c7f);
         }
     }
     if (menu->field32 > 1) {
@@ -143,34 +142,34 @@ extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
         SetByteAtIndex_020465d8((unsigned char*)g, 0, 1);
         SetByteAtIndex_020465d8((unsigned char*)g, 1, 0);
         func_02042428(buf, 8);
-        AppendString02042058(buf, (const char*)KeyTable_Get((struct Container020e0310*)menu->names, 200));
+        Text_Append(buf, (const char*)KeyTable_Get((struct Container020e0310*)menu->names, 200));
     }
-    if (arg0->unknown_2e_ > 1) {
-        func_0205d304(arg0->unknown_8c_, var0, 0, 0, 1, 1, 0);
+    if (menu->field32 > 1) {
+        Window_OpenPane(menu->window, buf, 0, 0, 1, 1, 0);
     } else {
-        func_0205d304(arg0->unknown_8c_, var0, 0, 0, 0, 1, 0);
+        Window_OpenPane(menu->window, buf, 0, 0, 0, 1, 0);
     }
     int field32 = menu->field32;
     struct ListWindow0217dd60* window = menu->window;
     window->field8 = field32;
     window->field58 = field32;
-    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    GridCursor_SetDimensions((struct GridCursor*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct GridCursor*)((char*)window + 0x54), 1, 6, 0);
     unsigned char itemCount = menu->itemCount;
-    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
-    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    GridCursor_SetCount((struct GridCursor*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct GridCursor*)((char*)window + 0x54), itemCount);
     window->field94 = 1;
     window->field95 = 1;
 }
 #else
-extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
-    char var13[0x400];
-    func_02012fe4();
-    func_020421a0();
-    func_0205de24((struct Struct_0205de24_2*)arg0->unknown_90_, 0, 1);
-    int var14 = arg0->unknown_10_;
-    arg0->unknown_90_->unknown_b1_ = 0;
-    short var15 = (short)(var14 >> 3);
+extern "C" ARM void func_ov003_0217dd60(struct ListMenu0217dd60* menu) {
+    char buf[0x400];
+    Zone3D_GetInstance();
+    MessageSystem_GetInstance();
+    FindAndLinkMatchingEntry0205de24((struct Struct0205de24*)menu->window, 0, 1);
+    int field10Value = menu->field10;
+    menu->window->fieldb1 = 0;
+    short scaled = (short)(field10Value >> 3);
     {
         struct Struct_ov003_0217dd60* var16 = arg0->unknown_90_;
         var16->unknown_a0_ = var15;
@@ -209,33 +208,33 @@ extern "C" ARM void func_ov003_0217dd60(struct Struct_ov003_0217dd60_2* arg0) {
     }
     for (i = page * 6; i < end; i++) {
         const char* name = (const char*)KeyTable_Get((struct Container020e0310*)menu->names, (short)(menu->items[i] + 100));
-        AppendNameTag_02041b70(buf, i % 6, name);
+        Text_AppendNTag(buf, i % 6, name);
         if (i != end - 1) {
-            AppendString02042058(buf, data_ov003_02180c7f);
+            Text_Append(buf, data_ov003_02180c7f);
         }
     }
-    if (arg0->unknown_32_ > 1) {
-        unsigned char* var25 = func_0205e00c((struct Struct_0205d81c*)arg0->unknown_90_, 0);
-        if (var25 != NULL) {
-            func_02050400(var25, 1);
-            func_0205042c(var25, var23);
-            func_02050440(var25, arg0->unknown_32_);
+    if (menu->field32 > 1) {
+        unsigned char* elem = GetElementByB4IfAbsent_0205e00c((struct Struct_0205d81c*)menu->window, 0);
+        if (elem != NULL) {
+            SetField0xd8State_02050400(elem, 1);
+            WindowPane_SetIndicatorPage(elem, page);
+            WindowPane_SetIndicatorPageCount(elem, menu->field32);
         }
     }
-    if (arg0->unknown_32_ > 1) {
-        func_0205d304(arg0->unknown_90_, var13, 0, 0, 1, 1, 0, 0);
+    if (menu->field32 > 1) {
+        Window_OpenPane(menu->window, buf, 0, 0, 1, 1, 0, 0);
     } else {
-        func_0205d304(arg0->unknown_90_, var13, 0, 0, 0, 1, 0, 0);
+        Window_OpenPane(menu->window, buf, 0, 0, 0, 1, 0, 0);
     }
     int field32 = menu->field32;
     struct ListWindow0217dd60* window = menu->window;
     window->field8 = field32;
     window->field58 = field32;
-    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 4), 1, 6, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)((char*)window + 0x54), 1, 6, 0);
+    GridCursor_SetDimensions((struct GridCursor*)((char*)window + 4), 1, 6, 0);
+    GridCursor_SetDimensions((struct GridCursor*)((char*)window + 0x54), 1, 6, 0);
     unsigned char itemCount = menu->itemCount;
-    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 4), itemCount);
-    GridCursor_SetCount((struct Node0205bacc*)((char*)window + 0x54), itemCount);
+    GridCursor_SetCount((struct GridCursor*)((char*)window + 4), itemCount);
+    GridCursor_SetCount((struct GridCursor*)((char*)window + 0x54), itemCount);
     window->field94 = 1;
     window->field95 = 1;
 }

@@ -1,27 +1,29 @@
 #include <globaldefs.h>
+#include "Resource/Font.h"
 #include "Resource/Keyboard.h"
 
+// One key, with Keyboard_FindKeyByText's field names.
 struct KeyboardKey {
-    char pad0[4];
+    short x;
+    short y;
     int text;
     int shiftedText;
-    char padC[3];
+    unsigned char pages;
+    unsigned char action;
+    unsigned char sizeClass;
     unsigned char disabled;
 };
 
-struct Struct_0204254c {
-    char unknown_0_[4];
-    signed char unknown_4_;
-};
-
+// The keyboard, with CharacterCreationUI_HandleNameEntry's field names.
 struct Keyboard {
     struct KeyboardKey* key;
-    char pad4[4];
+    void* layout;
     char* text;
     int widthLimit;
-    char pad10[4];
+    int textSize;
     int maxLen;
-    char pad18[0x1e - 0x18];
+    int repeatTimer;
+    short repeatDir;
     unsigned char page;
     unsigned char font;
     unsigned char shift;
@@ -30,77 +32,78 @@ struct Keyboard {
 extern "C" void __clear(void* buf, int size);
 int Font_FindCharacterIndex(int key, int tableIdx);
 extern "C" int Font_EncodeText(void* src, void* dst, int flag);
-extern "C" void func_02042764(void* src, void* dst, int flag);
-extern "C" int func_020420e8(void* str, int flag);
-struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
+extern "C" void Font_DecodeText(void* src, void* dst, int flag);
+extern "C" int Font_GetTextWidth(void* str, int flag);
+struct FontCharacter* Font_FindCharacter(int key, int tableIdx);
 
-extern unsigned char data_ov003_0217f3b0[];
+// By shift: the page on which a key types its shiftedText ({KeyboardPage_Uppercase, KeyboardPage_Lowercase} in the ROM).
+extern unsigned char Keyboard_shiftedTextPages[];
 
 // Overlay 3, originally func_ov003_0215ec90 (USA/EUR 0x0215ec90; no JPN match, its keyboard differs)
-extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* input) {
-    unsigned char buf[0x100];
-    unsigned char work[0x100];
-    unsigned char* p;
-    int code;
-    int ch;
-    struct Entry0204254c* entry;
+extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* keyboard) {
+    unsigned char encoded[0x100];
+    unsigned char decoded[0x100];
+    unsigned char* slot;
+    int keyText;
+    int characterIndex;
+    struct FontCharacter* character;
     int width;
     int i;
-    int len;
+    int length;
     char* text;
     int widthLimit;
     int font;
     int maxLen;
-    struct KeyboardKey* key = input->key;
+    struct KeyboardKey* key = keyboard->key;
     if (key != 0) {
         if (key->disabled != 0) {
             return KeyboardResult_KeyDisabled;
         }
 
-        font = input->font;
-        text = input->text;
-        code = key->text;
-        if (data_ov003_0217f3b0[input->shift] == input->page) {
-            code = key->shiftedText;
+        font = keyboard->font;
+        text = keyboard->text;
+        keyText = key->text;
+        if (Keyboard_shiftedTextPages[keyboard->shift] == keyboard->page) {
+            keyText = key->shiftedText;
         }
-        var10 = arg0->unknown_c_;
-        var12 = arg0->unknown_14_;
+        widthLimit = keyboard->widthLimit;
+        maxLen = keyboard->maxLen;
 
-        __clear(buf, 0x100);
-        ch = Font_FindCharacterIndex(code, font);
-        len = Font_EncodeText(text, buf, font);
-        p = buf;
-        for (i = 0; i < maxLen; i++, p++) {
+        __clear(encoded, sizeof(encoded));
+        characterIndex = Font_FindCharacterIndex(keyText, font);
+        length = Font_EncodeText(text, encoded, font);
+        slot = encoded;
+        for (i = 0; i < maxLen; i++, slot++) {
             if (i == maxLen - 1) {
-                unsigned char prev = *p;
-                *p = ch;
+                unsigned char previous = *slot;
+                *slot = characterIndex;
                 if (widthLimit != 0) {
-                    __clear(work, 0x100);
-                    func_02042764(buf, work, font);
-                    if (widthLimit < func_020420e8(work, 0)) {
-                        *p = prev;
+                    __clear(decoded, sizeof(decoded));
+                    Font_DecodeText(encoded, decoded, font);
+                    if (widthLimit < Font_GetTextWidth(decoded, 0)) {
+                        *slot = previous;
                         break;
                     }
                 }
-                func_02042764(buf, text, font);
-                input->shift = 0;
-                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
+                Font_DecodeText(encoded, text, font);
+                keyboard->shift = 0;
+                return (maxLen <= length + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
-            if (*p == 0) {
+            if (*slot == 0) {
                 if (widthLimit != 0) {
-                    width = func_020420e8(text, 0);
-                    entry = Font_FindCharacter(code, 0);
-                    if (entry != 0) {
-                        width += entry->width + 1;
+                    width = Font_GetTextWidth(text, 0);
+                    character = Font_FindCharacter(keyText, 0);
+                    if (character != 0) {
+                        width += character->width_ + 1;
                     }
                     if (var10 < var6) {
                         break;
                     }
                 }
-                *p = ch;
-                func_02042764(buf, text, font);
-                input->shift = 0;
-                return (maxLen <= len + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
+                *slot = characterIndex;
+                Font_DecodeText(encoded, text, font);
+                keyboard->shift = 0;
+                return (maxLen <= length + 1) ? KeyboardResult_TypedFull : KeyboardResult_Typed;
             }
         }
     }

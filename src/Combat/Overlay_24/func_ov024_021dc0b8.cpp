@@ -2,14 +2,14 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
 
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" unsigned short func_ov024_021da644(int arg0, int arg1, int arg2);
-extern "C" void func_ov000_0215a8d4(unsigned char* arg0, int arg1);
-extern "C" void* func_ov000_0215e958(void* arg0);
-extern "C" void func_ov000_0215a88c(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov000_0215cd44(void* arg0, void* arg1, void* arg2, int arg3, unsigned long long arg4, int arg5);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* s, int val);
+void* GameState_GetParty(GameState* gameState);
+unsigned short SelectByIndexRange0to3_021da644(int idx, int a, int b);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char* battle, int idx);
+extern "C" void* func_ov000_0215e958(void* a0);
+void AddEntryAndIncrementCount0215a88c(void* objRaw, void* listRaw, int c);
+extern "C" void func_ov000_0215cd44(void* a, void* b, void* c, int d, unsigned long long ef, int g);
 
 struct Struct_ov024_021dc0b8_3 {
 	unsigned int unknown_0_0_ : 10;
@@ -37,20 +37,20 @@ extern "C" unsigned short func_ov024_021e9018(struct Struct_ov024_021dc0b8_2* ar
 extern "C" void func_ov024_021e8bf0(void* arg0, void* arg1, unsigned short* arg2);
 
 // USA: func_ov024_021dc0b8
-extern "C" ARM void* func_ov024_021dc0b8(struct Struct_ov024_021dc0b8_2* arg0, int arg1, int arg2, struct Struct_ov024_021dc0b8_4* arg3, int arg4, int arg5, unsigned char arg6) {
-	GameObject* var0 = GetCombatantByID((int)arg0->unknown_10_, arg2);
-	if (!var0) return 0;
-	unsigned short var1 = 0;
-	unsigned long long var2 = 0;
-	int var3 = ((struct Struct_ov024_021dc0b8*)(arg0->unknown_c_ + 0x1c))->unknown_0_7_ != 0;
-	int var4 = 0;
-	if (arg6 != 0) {
-		var2 = func_ov024_021e4b14(arg0, arg1, arg2, arg3, 1);
-		if (var2 != 0) {
-			var1 = func_ov024_021da644(arg2, arg3->unknown_20_.unknown_2_4_, arg3->unknown_24_.unknown_0_0_);
-			void* var5 = func_02010828(GameState::GetInstance());
-			if (var3 && func_02086ef0((Struct_02048150*)var5, arg1) && arg3->unknown_4_0_ == 0xa9) {
-				func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 5);
+extern "C" ARM void* func_ov024_021dc0b8(struct Obj_021dc0b8* obj, int target, int id, struct Params_021dc0b8* params, int unused4, int unused5, unsigned char flagArg) {
+	GameObject* c = GetCombatantByID((int)obj->field0x10, id);
+	if (!c) return 0;
+	unsigned short sel = 0;
+	unsigned long long ef = 0;
+	int flag = ((struct Flag_021dc0b8*)(obj->field0xc + 0x1c))->flag != 0;
+	int handled = 0;
+	if (flagArg != 0) {
+		ef = func_ov024_021e4b14(obj, target, id, params, 1);
+		if (ef != 0) {
+			sel = SelectByIndexRange0to3_021da644(id, params->f20.c, params->f24.a);
+			void* list = GameState_GetParty(GameState::GetInstance());
+			if (flag && ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)list, target) && params->actionId == 0xa9) {
+				IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)obj->field0x10, 5);
 			}
 			arg0->unknown_14_++;
 			var4 = 1;

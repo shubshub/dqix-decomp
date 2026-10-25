@@ -45,7 +45,7 @@ struct Struct_020e8d54 {
 
 extern const struct Struct_020e8d54 data_020e8d54;
 
-extern "C" struct Struct_0208f588_3* func_02012fe4(void);
+extern "C" struct Context02012fe4* Zone3D_GetInstance(void);
 struct ObjectArchiveLoadInfo;
 
 void VramState_Restore(char* obj);
@@ -58,10 +58,10 @@ extern "C" ARM int func_0208f588(struct Struct_0208f588_4* arg0, SafeAllocator* 
     struct Struct_0208f588 var2;
     void* var3;
 
-    arg0->unknown_b4_ = 0;
-    ((Object3D*)&arg0->unknown_8_)->Destroy();
-    ((Object3D*)&arg0->unknown_8_)->Initialize();
-    if (func_02012fe4()->unknown_8_->unknown_c_0_ != 0) {
+    self->loaded = 0;
+    ((Object3D*)&self->object)->Destroy();
+    ((Object3D*)&self->object)->Initialize();
+    if (Zone3D_GetInstance()->flags->mode != 0) {
         return 0;
     }
 

@@ -14,13 +14,12 @@ enum { Enum_ov003_02169594_1261 = 0x4ed };
 enum { Enum_ov003_02169594_405 = 0x195 };
 #endif
 
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 struct Struct_0205bcdc;
 
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
+void GridCursor_SetCount(struct GridCursor* s, int val);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Struct_ov003_02169594 {
@@ -68,13 +67,13 @@ extern "C" ARM void func_ov003_02169594(struct Struct_ov003_02169594_2* arg0) {
         break;
     }
 
-    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 0), cols, rows, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)GetGrid(self, 1), cols, rows, 0);
-    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 0), count);
-    GridCursor_SetCount((struct Node0205bacc*)GetGrid(self, 1), count);
+    GridCursor_SetDimensions((struct GridCursor*)GetGrid(self, 0), cols, rows, 0);
+    GridCursor_SetDimensions((struct GridCursor*)GetGrid(self, 1), cols, rows, 0);
+    GridCursor_SetCount((struct GridCursor*)GetGrid(self, 0), count);
+    GridCursor_SetCount((struct GridCursor*)GetGrid(self, 1), count);
     GetGrid(self, 0)->field4 = field4;
     GetGrid(self, 1)->field4 = field4;
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)GetGrid(self, 0), index);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)GetGrid(self, 0), index);
     GridCursor_SetSelectedIndex(GetGrid(self, 1), index);
     struct Grid02169594* grid = GetGrid(self, 1);
     grid->field3c = 0;

@@ -5,8 +5,8 @@ extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
 extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
 extern "C" int func_02053c6c(unsigned char* arg0);
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" int func_ov023_021f44d0(void* arg0);
+void* GameState_GetParty(GameState* battleStruct);
+extern "C" int func_ov023_021f44d0(void* obj);
 
 // USA: func_ov023_021f5150
 extern "C" ARM int func_ov023_021f5150(void* arg0, unsigned char* arg1, int* arg2, int* arg3) {
@@ -15,8 +15,8 @@ extern "C" ARM int func_ov023_021f5150(void* arg0, unsigned char* arg1, int* arg
 #else
  enum {Enum_ov023_021f5150_2384=0x950};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = (char*)func_02010828(var0);
+    GameState* bs = GameState::GetInstance();
+    char* g = (char*)GameState_GetParty(bs);
     func_0202ae18();
 
     int var2 = 0;

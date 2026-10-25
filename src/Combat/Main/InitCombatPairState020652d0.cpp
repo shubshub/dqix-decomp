@@ -8,11 +8,10 @@ enum { kEnabled = 0x234, kActive = 0x233 };
 
 void InitBigStruct0205c790(char* obj);
 
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+struct GridCursor;
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 
 void ProcessCombatEntry0205cb74(char* obj, int value);
 
@@ -23,11 +22,11 @@ extern "C" void func_0206cfd4(char*);
 extern "C" void func_0205cc50(void* obj, int a, int b);
 #endif
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 void StoreClampedDeltas_0206b7b0(char* base);
 
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
@@ -47,11 +46,11 @@ ARM void InitCombatPairState020652d0(char* obj, int a, int b, int c) {
 
     obj[0xb1] = 1;
     obj[0xb0] = 1;
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + 0x20), 1, 2, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + 0x70), 1, 2, 0);
+    GridCursor_SetDimensions((struct GridCursor*)(obj + 0x20), 1, 2, 0);
+    GridCursor_SetDimensions((struct GridCursor*)(obj + 0x70), 1, 2, 0);
 
-    GridCursor_SetCount((struct Node0205bacc*)(obj + 0x20), 2);
-    GridCursor_SetCount((struct Node0205bacc*)(obj + 0x70), 2);
+    GridCursor_SetCount((struct GridCursor*)(obj + 0x20), 2);
+    GridCursor_SetCount((struct GridCursor*)(obj + 0x70), 2);
 
 #if defined(jpn)
     ProcessCombatEntry0205cb74(obj, (int)b);
@@ -66,15 +65,15 @@ ARM void InitCombatPairState020652d0(char* obj, int a, int b, int c) {
 
 #if defined(jpn)
     func_0205dfa8(obj);
-    func_0206cfd4((char*)GetGlobalField0x1c020421a0());
+    func_0206cfd4((char*)MessageSystem_GetInstance());
     func_0205dfa8(obj);
 #else
     func_0205cc50(obj, 1, -4);
-    StoreClampedDeltas_0206b7b0((char*)GetGlobalField0x1c020421a0());
+    StoreClampedDeltas_0206b7b0((char*)MessageSystem_GetInstance());
     func_0205cc50(obj, 1, -4);
 #endif
 
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(obj + 0x20), a);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)(obj + 0x20), a);
     GridCursor_SetSelectedIndex(obj + 0x70, a);
 
     obj[kEnabled] = 1;

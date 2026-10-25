@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 extern "C" void InvalidateDataCacheRange(const void* addr, unsigned int len);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
+extern "C" int memcmp(const void* a, const void* b, unsigned int len);
 
 typedef void (*Type_ov031_022378e4)(int);
 
@@ -64,14 +64,14 @@ extern "C" ARM void func_ov031_022378e4(Struct_ov031_022378e4_4* arg0) {
     }
     var7 = data_ov031_02290d0c;
     do {
-        var3 = arg0->unknown_10_[var4];
-        if (func_02001aec(var3->unknown_c_, data_ov031_02249288, 8) == 0 && (var3->unknown_15_ & 1) != 0) {
-            var6 = var7->unknown_1300_;
-            var5 = 0;
+        peer = list->peers[i];
+        if (memcmp(peer->signature, data_ov031_02249288, 8) == 0 && (peer->flags & 1) != 0) {
+            slot = sys->slots;
+            j = 0;
             do {
-                if (func_02001aec(var3->unknown_4_, var6->unknown_0_, 6) == 0) {
-                    Type_ov031_022378e4 var9;
-                    if (var7->unknown_1300_[var5].unknown_6_ != 0) {
+                if (memcmp(peer->name, slot->name, 6) == 0) {
+                    NotifyCallback_022378e4 notify;
+                    if (sys->slots[j].inUse != 0) {
                         break;
                     }
                     var9 = var7->unknown_1370_;

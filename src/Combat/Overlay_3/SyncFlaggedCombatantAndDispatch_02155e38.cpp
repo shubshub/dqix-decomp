@@ -13,7 +13,7 @@ enum { kRegionValue950_8B8 = 0x950 };
 
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void PartyMember_ApplyLevelStats(void* a, void* obj, void* tail);
-extern "C" void func_02083e28(void* a, int arg2);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 extern "C" void* func_0202ae18(void);
 int CheckField0NonZero_0202b7d8(int* obj);
 
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov003_02155e38(void* p) {
         cntArr[slot] = v = 10;
     }
     PartyMember_ApplyLevelStats(arr, obj + 0x90, obj + 0xcc);
-    func_02083e28(arr, 0);
+    PartyMember_RecalculateStats(arr, 0);
     *(unsigned short*)(*(char**)((char*)c + 0x130) + 4) = *(unsigned short*)(*(char**)((char*)c + 0x134) + 0x30);
     *(unsigned short*)(*(char**)((char*)c + 0x130) + 6) = *(unsigned short*)(*(char**)((char*)c + 0x134) + 0x32);
     if (CheckField0NonZero_0202b7d8((int*)func_0202ae18()) == 0) {

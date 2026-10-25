@@ -5,7 +5,7 @@
 
 struct FlagWord02046708 { unsigned int flags; };
 
-void* GetDataPtr02114e04_020d6c00(void);
+void* GlobalFlags_GetInstance(void);
 extern "C" void* func_0202ae18(void);
 int CheckField0NonZero_0202b7d8(int* obj);
 int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
@@ -17,7 +17,7 @@ int IsPowcntBit0Set_020cede0(void);
 
 // USA: func_02012de8  (semantic: HandleBrightnessOrDispatchState02012de8)
 extern "C" ARM void func_02012de8(void) {
-    struct FlagWord02046708* p1 = (struct FlagWord02046708*)GetDataPtr02114e04_020d6c00();
+    struct FlagWord02046708* p1 = (struct FlagWord02046708*)GlobalFlags_GetInstance();
     int* p2 = (int*)func_0202ae18();
 
     int bit15 = (*(volatile unsigned short*)0x027fffa8 & 0x8000) >> 15;

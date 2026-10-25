@@ -14,16 +14,16 @@ struct Struct_ov017_0218d06c {
 };
 
 // USA: func_ov017_0218d06c
-extern "C" ARM void func_ov017_0218d06c(GameResources* arg0) {
-    if (TestFlags00(arg0, 0x800) != 0) return;
-    int var0 = 0;
-    if (func_02046b24((Struct_02015438**)arg0->unknown_ptr_array_36fc[0]) != 0x26) {
-        func_ov017_0218e674(arg0);
-        var0 = 1;
+extern "C" ARM void func_ov017_0218d06c(GameResources* resources) {
+    if (TestFlags00(resources, 0x800) != 0) return;
+    int shouldAdvance = 0;
+    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) != 0x26) {
+        func_ov017_0218e674(resources);
+        shouldAdvance = 1;
     }
-    if (func_02046b24((Struct_02015438**)arg0->unknown_ptr_array_36fc[0]) != 0x26 ||
-        ((Struct_ov017_0218d06c*)arg0->unknown_ptr_array_3afc[13])->unknown_b_ == 0) {
-        func_ov017_021a1ad0(arg0);
+    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) != 0x26 ||
+        ((EventAdvanceGate*)resources->fieldTasks_[13])->flag == 0) {
+        func_ov017_021a1ad0(resources);
     }
     if (var0 != 0) {
         func_ov017_02197394(arg0);

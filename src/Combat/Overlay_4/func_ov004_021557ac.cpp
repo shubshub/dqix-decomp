@@ -1,48 +1,45 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-struct Struct_ov004_021557ac_2 { unsigned int unknown_0_; SafeAllocator unknown_4_; };
-struct Struct_ov004_021557ac_3 { short unknown_0_; short unknown_2_; unsigned char unknown_4_; unsigned char unknown_5_; };
-struct Struct_ov004_021557ac_4 { Struct_ov004_021557ac_3 unknown_0_[2]; unsigned short unknown_c_; unsigned short unknown_e_; unsigned char unknown_10_; };
-struct Struct_0201099c_10;
-struct Struct_ov002_0215b2c8;
-struct Struct_ov004_021557ac_5 { unsigned char unknown_0_[0x8c]; unsigned char unknown_8c_[1]; };
-struct Struct_ov004_021557ac_6 { unsigned int unknown_0_; unsigned int unknown_4_; unsigned int unknown_8_; unsigned int unknown_c_; };
-extern "C" Struct_ov004_021557ac_2* func_ov011_021845f8(void*, int);
+struct AllocationNode021557ac { unsigned int field_0; SafeAllocator allocator; };
+struct Entry021557ac { short category; short index; unsigned char total; unsigned char matched; };
+struct Table021557ac { Entry021557ac entries[2]; unsigned short total; unsigned short matched; unsigned char side; };
+struct ItemTable;
+struct ObjStruct_021e1474;
+struct Save021557ac { unsigned char field_0[0x8c]; unsigned char bits[1]; };
+struct Item021557ac { unsigned int field_0; unsigned int field_4; unsigned int field_8; unsigned int flags; };
+extern "C" AllocationNode021557ac* func_ov011_021845f8(void*, int);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" void* func_ov023_021f6880(void*, int);
 extern "C" int func_ov023_021f6f10(void*);
-extern "C" Struct_ov004_021557ac_5* func_0205ec34();
-extern "C" int func_020deb58(Struct_0201099c_10*, int, int, int, int);
-extern "C" Struct_ov004_021557ac_6* func_020dec30(Struct_0201099c_10*, int, int, int, int, int);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" void func_ov023_021e1518(void*);
-extern "C" void func_ov023_021e1474(Struct_ov002_0215b2c8*, Struct_0201099c_10*);
-extern Struct_ov004_021557ac_4* data_ov004_021707c4;
+extern "C" Save021557ac* Scenario_GetInstance();
+extern "C" int func_020deb58(ItemTable*, int, int, int, int);
+extern "C" Item021557ac* func_020dec30(ItemTable*, int, int, int, int, int);
+int Scenario_TestFlag(int, unsigned char*, int);
+void ClearElements_021e1518(void*);
+void RefreshEntryStatusFlags_021e1474(ObjStruct_021e1474*, ItemTable*);
+extern Table021557ac* data_ov004_021707c4;
 
 class Struct_ov004_021557ac {
 public:
-    virtual void inline_ov004_021557ac(); virtual void inline_ov004_021557ac_2(); virtual void inline_ov004_021557ac_3(); virtual void inline_ov004_021557ac_4();
-    virtual void inline_ov004_021557ac_5(); virtual void inline_ov004_021557ac_6(); virtual void inline_ov004_021557ac_7(); virtual void inline_ov004_021557ac_8();
-    virtual void inline_ov004_021557ac_9(); virtual void inline_ov004_021557ac_10(); virtual void inline_ov004_021557ac_11(); virtual void inline_ov004_021557ac_12();
-    virtual void inline_ov004_021557ac_13(); virtual void inline_ov004_021557ac_14(); virtual void inline_ov004_021557ac_15(); virtual void inline_ov004_021557ac_16();
-    virtual void inline_ov004_021557ac_17(); virtual void inline_ov004_021557ac_18(); virtual void inline_ov004_021557ac_19(); virtual void inline_ov004_021557ac_20();
-    virtual void inline_ov004_021557ac_21(); virtual void inline_ov004_021557ac_22(); virtual void inline_ov004_021557ac_23(); virtual void inline_ov004_021557ac_24();
-    virtual void inline_ov004_021557ac_25(); virtual void inline_ov004_021557ac_26(); virtual void inline_ov004_021557ac_27(); virtual void inline_ov004_021557ac_28();
-    virtual void inline_ov004_021557ac_29(); virtual void inline_ov004_021557ac_30(); virtual void inline_ov004_021557ac_31(); virtual void inline_ov004_021557ac_32();
-    virtual void inline_ov004_021557ac_33(); virtual void inline_ov004_021557ac_34(); virtual void inline_ov004_021557ac_35(); virtual void inline_ov004_021557ac_36();
-    virtual void inline_ov004_021557ac_37(); virtual void inline_ov004_021557ac_38(); virtual void inline_ov004_021557ac_39(); virtual void inline_ov004_021557ac_40();
-    virtual void inline_ov004_021557ac_41(); virtual void inline_ov004_021557ac_42(); virtual void inline_ov004_021557ac_43(); virtual void inline_ov004_021557ac_44();
-    virtual void inline_ov004_021557ac_45(); virtual void inline_ov004_021557ac_46(); virtual void inline_ov004_021557ac_47(); virtual void inline_ov004_021557ac_48();
-    virtual void inline_ov004_021557ac_49(); virtual void inline_ov004_021557ac_50(); virtual void inline_ov004_021557ac_51(); virtual void inline_ov004_021557ac_52();
-    virtual void inline_ov004_021557ac_53(); virtual void inline_ov004_021557ac_54(); virtual void inline_ov004_021557ac_55(); virtual void inline_ov004_021557ac_56();
-    virtual void inline_ov004_021557ac_57(); virtual void inline_ov004_021557ac_58();
-    virtual Struct_0201099c_10* inline_ov004_021557ac_59();
-    virtual Struct_ov002_0215b2c8* inline_ov004_021557ac_60();
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
+    virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+    virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43();
+    virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
+    virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51();
+    virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55();
+    virtual void v56(); virtual void v57();
+    virtual ItemTable* GetContainer();
+    virtual ObjStruct_021e1474* GetEntries();
 };
 
 // USA: func_ov004_021557ac
@@ -58,26 +55,26 @@ extern "C" ARM int func_ov004_021557ac(void* arg0) {
         var1->unknown_0_[var2].unknown_4_ = 0;
         var1->unknown_0_[var2].unknown_5_ = 0;
     }
-    var1->unknown_c_ = 0;
-    var1->unknown_e_ = 0;
-    var1->unknown_10_ = 0;
-    unsigned char var3 = 0;
-    short var4 = 8;
-    short var5;
-    short var6 = 0;
-    long var7 = 0;
-    for (; var4 <= 9; var4++, var3++) {
-        Struct_ov004_021557ac* var8 = (Struct_ov004_021557ac*)func_ov023_021f6880(func_ov011_021849c8(arg0), 0x2d);
-        if (var8 && func_ov023_021f6f10(var8) == 0x11) {
-            Struct_0201099c_10* var9 = var8->inline_ov004_021557ac_59();
-            Struct_ov004_021557ac_5* var10 = func_0205ec34();
-            var7 = func_020deb58(var9, 0, -1, (signed char)var4, -1);
-            var6 = 0;
-            for (var5 = 0; var5 < var7; var5++) {
-                Struct_ov004_021557ac_6* var11 = func_020dec30(var9, var5, 0, -1, (signed char)var4, -1);
-                if (var11) {
-                    int var12 = (unsigned short)((var11->unknown_c_ << 9) >> 21);
-                    if (var12 > 0 && func_0206dfb0((int)var10, var10->unknown_8c_, var12 + 0x76 + 0xc00)) var6++;
+    table->total = 0;
+    table->matched = 0;
+    table->side = 0;
+    unsigned char index = 0;
+    short category = 8;
+    short i;
+    short matched = 0;
+    long total = 0;
+    for (; category <= 9; category++, index++) {
+        Node021557ac* source = (Node021557ac*)func_ov023_021f6880(func_ov011_021849c8(self), 0x2d);
+        if (source && func_ov023_021f6f10(source) == 0x11) {
+            ItemTable* container = source->GetContainer();
+            Save021557ac* save = Scenario_GetInstance();
+            total = func_020deb58(container, 0, -1, (signed char)category, -1);
+            matched = 0;
+            for (i = 0; i < total; i++) {
+                Item021557ac* item = func_020dec30(container, i, 0, -1, (signed char)category, -1);
+                if (item) {
+                    int id = (unsigned short)((item->flags << 9) >> 21);
+                    if (id > 0 && Scenario_TestFlag((int)save, save->bits, id + 0x76 + 0xc00)) matched++;
                 }
             }
         }

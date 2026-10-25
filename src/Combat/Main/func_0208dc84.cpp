@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
-extern "C" int func_020d2ff0(char const*);
-extern "C" char* strcpy(char* arg0, const char* arg1);
+struct Variant02030b0c;
+int STD_GetStringLength(char const*);
+extern "C" char* strcpy(char* dst, const char* src);
 
 struct Struct_0208dc84;
 struct Struct_0208dc84_2;
@@ -80,21 +80,21 @@ extern "C" ARM int func_0208dc84(char* arg0
 #else
         var0.unknown_2_.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToInt();
 #endif
-        for (var4 = 0; var4 < *data_02108fd4.unknown_0_; var4++) {
-            if (data_02108fd4.unknown_4_[var4] == var0.unknown_2_.unknown_1_1_) {
-                if (var2 != 0) {
-                    var3 = ((SafeAllocator*)data_02108fd4.unknown_c_)->Allocate((unsigned int)(func_020d2ff0(var2) + 1));
-                    var0.unknown_4_ = (int)var3;
-                    if (var3 != 0) {
-                        strcpy((char*)var3, var2);
+        for (i = 0; i < *data_02108fd4.field0; i++) {
+            if (data_02108fd4.field4[i] == c.field2.b9) {
+                if (s != 0) {
+                    dst = ((SafeAllocator*)data_02108fd4.fieldC)->Allocate((unsigned int)(STD_GetStringLength(s) + 1));
+                    c.field4 = (int)dst;
+                    if (dst != 0) {
+                        strcpy((char*)dst, s);
                     }
                 }
 #if defined(jpn)
-                if (var1 != 0) {
-                    var3 = ((SafeAllocator*)data_02108fd4.unknown_c_)->Allocate((unsigned int)(func_020d2ff0(var1) + 1));
-                    var0.unknown_8_ = (int)var3;
-                    if (var3 != 0) {
-                        strcpy((char*)var3, var1);
+                if (extra != 0) {
+                    dst = ((SafeAllocator*)data_02108fd4.fieldC)->Allocate((unsigned int)(STD_GetStringLength(extra) + 1));
+                    c.field8 = (int)dst;
+                    if (dst != 0) {
+                        strcpy((char*)dst, extra);
                     }
                 }
 #endif
@@ -105,13 +105,13 @@ extern "C" ARM int func_0208dc84(char* arg0
             }
         }
     } else {
-        var0.unknown_0_ = (short)((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-        var2 = (char*)(void*)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 8)))->ToString();
-        if (var2 != 0) {
-            var3 = ((SafeAllocator*)data_02108fd4.unknown_c_)->Allocate((unsigned int)(func_020d2ff0(var2) + 1));
-            var0.unknown_4_ = (int)var3;
-            if (var3 != 0) {
-                strcpy((char*)var3, var2);
+        c.field0 = (short)((Script::Parameter*)((struct Variant02030b0c*)p))->ToInt();
+        s = (char*)(void*)((Script::Parameter*)((struct Variant02030b0c*)(p + 8)))->ToString();
+        if (s != 0) {
+            dst = ((SafeAllocator*)data_02108fd4.fieldC)->Allocate((unsigned int)(STD_GetStringLength(s) + 1));
+            c.field4 = (int)dst;
+            if (dst != 0) {
+                strcpy((char*)dst, s);
             }
         }
         var0.unknown_2_.unknown_0_0_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x10)))->ToInt();
@@ -126,11 +126,11 @@ extern "C" ARM int func_0208dc84(char* arg0
         var0.unknown_2_.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToInt();
 #endif
 #if defined(jpn)
-        if (var1 != 0) {
-            var3 = ((SafeAllocator*)data_02108fd4.unknown_c_)->Allocate((unsigned int)(func_020d2ff0(var1) + 1));
-            var0.unknown_8_ = (int)var3;
-            if (var3 != 0) {
-                strcpy((char*)var3, var1);
+        if (extra != 0) {
+            dst = ((SafeAllocator*)data_02108fd4.fieldC)->Allocate((unsigned int)(STD_GetStringLength(extra) + 1));
+            c.field8 = (int)dst;
+            if (dst != 0) {
+                strcpy((char*)dst, extra);
             }
         }
 #endif

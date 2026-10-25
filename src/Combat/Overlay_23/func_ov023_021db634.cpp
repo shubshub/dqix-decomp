@@ -2,9 +2,6 @@
 #include "GameState/GameState.h"
 
 #if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
-#if defined(jpn)
 extern "C" const char data_ov023_021fcdef[];
 extern "C" const char data_ov023_021fcdfe[];
 #endif
@@ -88,7 +85,7 @@ extern "C" Struct_ov023_021ff9e0 data_ov023_021ff9e0;
 extern "C" const short data_ov023_021fd5b8[3];
 
 const char* KeyTable_Get(struct Container020e0310* c, int key);
-const char* CallFunc020e0434With02153694_020e51cc(int id);
+const char* StandardStrings_Get(int id);
 extern "C" LayoutElement_021db634* func_ov023_021db4e4(Layout_021db634* layout, int id);
 void SetEntryFields_021e23d0(void* layout, int id, int text, unsigned char color, unsigned char shadow);
 extern "C" void* memset(void* dst, int value, unsigned int length);
@@ -96,19 +93,19 @@ extern "C" unsigned int strlen(const char* text);
 extern "C" void __clear(void* buffer, unsigned long size);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int length);
 extern "C" long func_02005a94(const char* text);
-extern "C" void* func_02012fe4();
-extern "C" int func_0201bb78(struct Struct_0201bb78* arg0, unsigned int arg1);
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_020ac2d4(int, short* arg1, void* arg2, int arg3);
-extern "C" int func_0206e384(unsigned char* arg0);
-extern "C" int func_0206e3d4(int arg0, int arg1);
-extern "C" unsigned int func_ov023_021db564(char* arg0);
-extern "C" void func_ov023_021dbb20(struct Struct_ov023_021db634_7* arg0, struct Struct_ov023_021db634_7* arg1);
-extern "C" int func_0201079c(char* arg0);
-extern "C" void func_ov023_021db45c(void* arg0, struct Struct_ov023_021db45c* arg1, int arg2, short* arg3, short* arg4);
-extern "C" void func_ov023_021e257c(Struct_ov023_021db634_3* arg0);
-extern "C" void func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
+extern "C" void* Zone3D_GetInstance();
+int LookupBitFromValueRange0201bb78(struct Obj_0201bb78* flags, unsigned int id);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int flags, unsigned char* flags2, int id);
+extern "C" void func_020ac2d4(int, short* ids, void* results, int count);
+int BuildBitmask0206e384(unsigned char* flags);
+int GetShortFromTable0206e3d4(int flags, int index);
+unsigned int ParseCodeLetter_021db564(char* text);
+void CopyIntAndByte_021dbb20(struct IntBytePair021dbb20* dst, struct IntBytePair021dbb20* src);
+int GetField5cb0Value_0201079c(char* gameState);
+void UpdateEntryAndReset_021db45c(void* layout, struct StructAcAe021db45c* canvas, int id, short* x, short* y);
+extern "C" void func_ov023_021e257c(Layout_021db634* layout);
+void CreateAndSetFields8A_021db544(void* layout, void* id, int x, int y);
 
 #define SHOW_ELEMENT(layout, id)                                           \
     {                                                                      \
@@ -149,7 +146,7 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
     var3 = data_ov023_021fcdfe;
 #else
     trade = KeyTable_Get(data_ov023_021ff9e0.sTexts, 0x2a);
-    alchemy = CallFunc020e0434With02153694_020e51cc(0x56);
+    alchemy = StandardStrings_Get(0x56);
 #endif
 
     SHOW_ELEMENT(arg0, 0xf);
@@ -181,10 +178,10 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
             {
                 if (strlen(var16) >= 5)
                 {
-                    char var18[4] = {0};
-                    memcpy(var18, var6->unknown_4_ + 2, 2);
-                    short var19 = func_02005a94(var18);
-                    if (!func_0201bb78((Struct_0201bb78*)func_02012fe4(), (unsigned short)(var19 + 20000)))
+                    char number[4] = {0};
+                    memcpy(number, entry->text_ + 2, 2);
+                    short field = func_02005a94(number);
+                    if (!LookupBitFromValueRange0201bb78((Obj_0201bb78*)Zone3D_GetInstance(), (unsigned short)(field + 20000)))
                         continue;
                     text = KeyTable_Get(data_ov023_021ff9e0.sFieldNames, (short)func_02005a94(entry->text_ + 5));
                     place.kind_ = 2;
@@ -192,9 +189,9 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
             }
             else if (var17 == 'a')
             {
-                short var20 = func_02005a94(var16 + 1);
-                void* var21 = func_0205ec34();
-                if (!func_0206dfb0((int)var21, (unsigned char*)var21 + 0x8c, 0x1198))
+                short recipe = func_02005a94(text + 1);
+                void* flags = Scenario_GetInstance();
+                if (!Scenario_TestFlag((int)flags, (unsigned char*)flags + 0x8c, 0x1198))
                     continue;
                 struct
                 {
@@ -210,18 +207,18 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
             }
             else if (var17 == 'b')
             {
-                void* var23 = func_0205ec34();
-                int var24 = func_0206e384((unsigned char*)var23);
-                if (!((1 << (func_0206e3d4((int)var23, 0x17) - 1)) & (var24 << 0x10)))
+                void* flags = Scenario_GetInstance();
+                int bits = BuildBitmask0206e384((unsigned char*)flags);
+                if (!((1 << (GetShortFromTable0206e3d4((int)flags, 0x17) - 1)) & (bits << 0x10)))
                     continue;
                 var15.unknown_4_ = 3;
                 var16 = var2;
             }
             else if (var17 >= 'A' && var17 <= 'Z')
             {
-                void* var25 = func_02012fe4();
-                unsigned short var26 = func_ov023_021db564((char*)var6->unknown_4_);
-                if (var26 == 0)
+                void* flags = Zone3D_GetInstance();
+                unsigned short id = ParseCodeLetter_021db564((char*)entry->text_);
+                if (id == 0)
                     continue;
                 if (!func_0201bb78((Struct_0201bb78*)var25, var26))
                     continue;

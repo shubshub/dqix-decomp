@@ -5,12 +5,12 @@ void ComputeProductSums0205c508(struct UnkStruct0205c508* s, int* out1, int* out
 struct Container020e0310;
 char* KeyTable_Get(struct Container020e0310* c, int key);
 int IsField0x118Equal2_ov000_0217542c(void* obj);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 void* GetPointerField_02171b9c_02171b9c(void* obj, int idx);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int Text_AppendNTag(char* dst, int n, const char* name);
 extern "C" void __clear(void* buf, int n);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 #if defined(jpn)
 extern "C" int func_02042158(char* arg0, int arg1);
 #define func_02041acc func_02042158
@@ -50,14 +50,14 @@ extern "C" ARM void func_ov000_0217979c(char* arg0, struct Struct_ov000_0217979c
     char* prefix = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x13);
     char* separator = KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0);
 #endif
-    if (func_ov000_0217542c(arg0)) {
-        func_02041c08(arg2, var4 - var2, 8, 5, 5, 5);
+    if (IsField0x118Equal2_ov000_0217542c(obj)) {
+        Text_AppendFrameTag(dst, cursor - start, 8, 5, 5, 5);
     }
-    func_02041ea4(arg2, var4 - var2);
-    for (signed char var7 = var2; var7 < var3; var7++) {
-        struct Struct_ov000_0217979c* var8 = (struct Struct_ov000_0217979c*)func_ov000_02171b9c(arg1, var7);
-        if (var8 == NULL) {
-            func_02041b70(arg2, var7 - var2, data_ov000_02184069);
+    Text_AppendCursorTag(dst, cursor - start);
+    for (signed char i = start; i < end; i++) {
+        struct ListItem0217979c* item = (struct ListItem0217979c*)GetPointerField_02171b9c_02171b9c(list, i);
+        if (item == NULL) {
+            Text_AppendNTag(dst, i - start, data_ov000_02184069);
             continue;
         }
         char var9[0x80];
@@ -65,28 +65,28 @@ extern "C" ARM void func_ov000_0217979c(char* arg0, struct Struct_ov000_0217979c
         int var10 = var8->unknown_8_0_ <= 7;
         if (var10) {
 #if defined(jpn)
-            AppendString02042058(text, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x13));
+            Text_Append(text, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0x13));
 #else
-            func_02042058(var9, var5);
-            func_02041acc(var9, 3);
+            Text_Append(text, prefix);
+            AppendWidthTag_02041acc(text, 3);
 #endif
         } else {
             func_02041acc(var9, 8);
         }
 #if defined(jpn)
-        func_02042058(var9, var8->unknown_4_);
+        Text_Append(text, item->name);
 #else
-        char var11[0x100];
-        __clear(var11, 0x100);
-        func_0206819c(var8->unknown_4_, var11, 0);
-        func_02042058(var9, var11);
+        char name[0x100];
+        __clear(name, 0x100);
+        CopyTextAndUppercaseIfFlagged0206819c(item->name, name, 0);
+        Text_Append(text, name);
 #endif
-        func_02041b70(arg2, var7 - var2, var9);
-        if (var7 != var3 - 1) {
+        Text_AppendNTag(dst, i - start, text);
+        if (i != end - 1) {
 #if defined(jpn)
-            AppendString02042058(dst, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
+            Text_Append(dst, KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
 #else
-            func_02042058(arg2, var6);
+            Text_Append(dst, separator);
 #endif
         }
     }

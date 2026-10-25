@@ -17,28 +17,37 @@ struct Struct_02016874 {
     };
 };
 
-struct Struct_02016874_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    signed char unknown_4_0_ : 7;
-    signed char unknown_4_7_ : 1;
-    char unknown_5_;
-    short unknown_6_;
-    Vector3i unknown_8_;
-    unsigned char unknown_14_[0x10];
-    Struct_02016874* unknown_24_;
-    Struct_02016874_2* unknown_28_;
-    Struct_02016874_2* unknown_2c_;
-    unsigned char unknown_30_[4];
-    short unknown_34_;
-    short unknown_36_;
-    short unknown_38_;
-    short unknown_3a_;
-    Vector3i unknown_3c_;
-    Vector3i unknown_48_;
-    unsigned char unknown_54_[4];
-    Vector3i unknown_58_;
-    Vector3i unknown_64_;
+// BmdjSceneElement::flags bits. Zone3D_CollectTerrainPolygons skips an element with Hidden set on it or on any
+// parent, and (outside grotto floors) one with Open set; the renderers (func_02016874, ProcessNode0201aedc) skip
+// Hidden ones too.
+enum BmdjElementFlag {
+    BmdjElementFlag_Open = 0x1,     // an open door: Zone3D_OpenDoor sets it on the door and its collision element
+                                    // (func_0201874c and func_02018918 clear it)
+    BmdjElementFlag_Hidden = 0x4,   // removed from the scene: not drawn, no collision
+};
+
+struct BmdjSceneElement {
+    unsigned short id;
+    unsigned short flags;           // BmdjElementFlag
+    signed char state : 7;
+    signed char flag4 : 1;
+    char unknown5;
+    short angle;
+    Vector3i position;
+    unsigned char unknown14[0x10];
+    BmdjElementResource* resource;
+    BmdjSceneElement* parent;
+    BmdjSceneElement* linkedElement2c;
+    unsigned char unknown30[4];
+    short destinationAngle;
+    short rotationSpeed;
+    short copiedAngle;
+    short movementSpeed;
+    Vector3i destination;
+    Vector3i direction;
+    unsigned char unknown54[4];
+    Vector3i lowerMargins;
+    Vector3i upperMargins;
 };
 
 struct Struct_02018b34 {
@@ -70,12 +79,12 @@ struct Struct_02013490 {
     Vector3i unknown_3c_;
 };
 
-extern "C" Struct_02013454* func_020196fc(Zone3D* arg0, int arg1);
-extern "C" void func_02013490(Struct_02013490* arg0);
-extern "C" void func_02013454(Struct_02013454* arg0);
-extern "C" void func_0201f01c(Struct_02018b34* arg0);
-extern "C" void func_0201aedc(Zone3D* arg0);
-extern "C" TileFeaturePlacementData* func_0201e434(Struct_020134e0* arg0, const char* arg1);
-extern "C" TileFeaturePlacementData* func_02019f24(TileFeaturePlacementData* arg0, const TileFeaturePlacementData* arg1);
-extern "C" int func_02019728(Zone3D* arg0, int arg1, Struct_020134e0* arg2, TileFeaturePlacementData* arg3, FloorMap* arg4);
+BmdjScriptNode* Zone3D_GetScriptNode(Zone3D* zone, int depth);
+void Reset02013490(GrottoTileMapRecord* record);
+void InitStruct02013454(BmdjScriptNode* node);
+void ResetTrackerState_0201f01c(BmdjScriptState* state);
+void ProcessNode0201aedc(Zone3D* zone);
+TileFeaturePlacementData* FindEntryByNameSubstr0201e434(ZoneFeatures* features, const char* name);
+TileFeaturePlacementData* CopyStruct02019f24(TileFeaturePlacementData* destination, const TileFeaturePlacementData* source);
+extern "C" int func_02019728(Zone3D* zone, int unused, ZoneFeatures* features, TileFeaturePlacementData* grid, FloorMap* map);
 

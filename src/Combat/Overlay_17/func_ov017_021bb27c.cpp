@@ -57,27 +57,27 @@ struct Struct_ov017_021bb27c {
 struct Struct_ov017_021d6c20 { int unknown_0_; Vector3fix unknown_4_, unknown_10_, unknown_1c_; };
 extern "C" int func_020100f8(char*);
 extern "C" int* func_0202ae18();
-extern "C" Struct_ov017_021bb27c_4* func_02012fe4();
-extern "C" void func_ov001_0215aa5c();
-extern "C" void func_02033fdc(Struct_02033fdc*);
-extern "C" void func_02033b58(Struct_02033b58*, unsigned char);
-extern "C" int func_02039d7c(char*);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" void func_02053ec8(void*, int);
-extern "C" void func_02053f04(void*);
-extern "C" int func_020100b0(GameState*);
-extern "C" void func_02012da4(AllocatorUnion*, void*);
-extern "C" Struct_02038598_4* func_020d6c00();
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
+extern "C" Zone021bb27c* Zone3D_GetInstance();
+void DestroyActiveAllocators_0215aa5c();
+void ClearFlag0x4At0xe0(Flags02033fdc*);
+void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+int GetByte0x26c_02039d7c(char*);
+void SetVecYFromValue02033874(Obj02033874*, int);
+int CheckField0NonZero_0202b7d8(int*);
+void SetField0x158_02053ec8(void*, int);
+void ResetTransformState02053f04(void*);
+int GameState_GetLeaderIndex(GameState*);
+void AllocatorUnion_Free(AllocatorUnion*, void*);
+FlagWord020466f4* GlobalFlags_GetInstance();
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 extern "C" void func_ov017_02191fec(GameResources*, int);
 extern "C" void* func_0200fd0c(GameState*);
 extern "C" int func_02046b60(Struct_02038598_5*, int);
 extern "C" void func_020dc2d0(int);
 extern "C" void func_ov017_02190264(GameResources*, int);
 extern "C" void func_ov017_0218f5a4(GameResources*, int, int, int, int);
-extern "C" void func_020397c0(void*);
-extern "C" void func_020a27ac(void*);
+void GameObject_EnableControl(void*);
+void SetField0x23cTrue_020a27ac(void*);
 extern "C" void func_ov017_021921fc(const Vector3fix*, int, int);
 extern "C" void func_ov017_021d035c(unsigned char, unsigned char, unsigned char);
 extern "C" int func_02039790(void*, int);
@@ -88,56 +88,56 @@ extern "C" void func_ov017_021bd4d0(Struct_ov017_021bb27c_7*, unsigned char, int
 #define data_ov017_021d6c20 data_ov017_021d7018
 #endif
 extern const char data_ov017_021d7d6c[], data_ov017_021d7d72[];
-extern AllocatorUnion data_02114e20;
-extern const Struct_ov017_021d6c20 data_ov017_021d6c20[3];
+extern AllocatorUnion g_mainAllocator;
+extern const Bounds021bb27c data_ov017_021d6c20[3];
 
 static inline Struct_ov017_021bb27c_6* inline_ov017_021bb27c(GameResources* arg0) {
     return (Struct_ov017_021bb27c_6*)arg0->unknown_ptr_3718;
 }
 
 // USA: func_ov017_021bb27c
-extern "C" ARM void func_ov017_021bb27c(Struct_ov017_021bb27c_7* arg0) {
-    int* var0;
-    GameState* var1 = GameState::GetInstance();
-    GameResources* var2 = GetGameResources();
-    Struct_02038598_5* var3 = (Struct_02038598_5*)var2->unknown_ptr_array_36fc[0];
-    Struct_ov017_021bb27c_6* var4 = inline_ov017_021bb27c(var2);
-    GameObject* var5 = var1->GetUnknownGameObject();
-    void* var6 = (void*)func_020100f8((char*)var1);
-    var0 = func_0202ae18();
-    Struct_ov017_021bb27c_4* var7 = func_02012fe4();
-    if (!TestFlags00(var2, 0x1000)) {
-        func_ov001_0215aa5c();
+extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
+    int* search;
+    GameState* game = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    ListHead02046b60* list = (ListHead02046b60*)resources->fieldTaskQueue_;
+    Detail021bb27c* detail = GetEncounterDetail(resources);
+    GameObject* leader = game->GetUnknownGameObject();
+    void* controlled = (void*)GetFieldIfFlag4_020100f8((char*)game);
+    search = func_0202ae18();
+    Zone021bb27c* zone = Zone3D_GetInstance();
+    if (!TestFlags00(resources, 0x1000)) {
+        DestroyActiveAllocators_0215aa5c();
     }
-    if (arg0->unknown_8_ == 0x7343 || arg0->unknown_8_ == 0x7346 || arg0->unknown_8_ == 0x7349) var7->unknown_27d6_ = arg0->unknown_8_;
-    for (int var8 = 0; var8 < 4; var8++) {
-        GameObject* var9 = var1->GetPartyMemberByIndex(var8);
-        if (!var9) continue;
-        func_02033fdc((Struct_02033fdc*)var9);
-        func_02033b58((Struct_02033b58*)var9, 0);
-        if (!func_02039d7c((char*)var9) || func_020399a8(var9)->unknown_1_ != 2) {
-                var9->obj3D_.MaybeSetRegularAnimation(data_ov017_021d7d6c, 0x10);
-        } else if (arg0->unknown_11_) {
-                ((Struct_ov017_021bb27c_2*)var9)->unknown_e0_ &= ~1;
-                var9->obj3D_.DisableFlag(0x1180);
-                func_02038508(func_020399a8(var9));
-                var9->obj3D_.MaybeSetRegularAnimation(data_ov017_021d7d6c, 0x10);
-        } else var9->obj3D_.MaybeSetRegularAnimation(data_ov017_021d7d72, 0);
-        func_02033874((Struct_02033834*)var9, var9->obj3D_.rotation_.y);
-        var9->obj3D_.DisableFlag(0x10);
+    if (self->zone == 0x7343 || self->zone == 0x7346 || self->zone == 0x7349) zone->key = self->zone;
+    for (int i = 0; i < 4; i++) {
+        GameObject* actor = game->GetPartyMemberByIndex(i);
+        if (!actor) continue;
+        ClearFlag0x4At0xe0((Flags02033fdc*)actor);
+        SetByteSavingPrevious((Foo02033b58*)actor, 0);
+        if (!GetByte0x26c_02039d7c((char*)actor) || GetFieldPtrAt0x26c_020399a8(actor)->command != 2) {
+                actor->obj3D_.SetAnimationByName(data_ov017_021d7d6c, 0x10);
+        } else if (self->resetActor) {
+                ((Actor021bb27c*)actor)->flags &= ~1;
+                actor->obj3D_.DisableFlag(0x1180);
+                InitBlock02038508(GetFieldPtrAt0x26c_020399a8(actor));
+                actor->obj3D_.SetAnimationByName(data_ov017_021d7d6c, 0x10);
+        } else actor->obj3D_.SetAnimationByName(data_ov017_021d7d72, 0);
+        SetVecYFromValue02033874((Obj02033874*)actor, actor->obj3D_.rotation_.y);
+        actor->obj3D_.DisableFlag(0x10);
     }
-    if (func_0202b7d8(var0)) {
-        Struct_ov017_021bb27c_3* var10 = (Struct_ov017_021bb27c_3*)func_02010828(var1);
-        for (int var11 = 0; var11 < var10->unknown_f7c_; var11++) {
-            Struct_ov017_021bb27c_2* var12 = (Struct_ov017_021bb27c_2*)func_0200ff1c(var1, var10->unknown_f78_[var11]);
-            if (var12) { func_02053ec8(var12, 0); func_02053f04(var12); }
+    if (CheckField0NonZero_0202b7d8(search)) {
+        PartyState021bb27c* party = (PartyState021bb27c*)GameState_GetParty(game);
+        for (int i = 0; i < party->count; i++) {
+            Actor021bb27c* actor = (Actor021bb27c*)GetCombatantWithFlag0x100_0200ff1c(game, party->indices[i]);
+            if (actor) { SetField0x158_02053ec8(actor, 0); ResetTransformState02053f04(actor); }
         }
-        if (arg0->unknown_12_) {
-            func_020100b0(var1);
-            for (int var13 = 0; var13 < 4; var13++) {
-                Struct_ov017_021bb27c_2* var14 = (Struct_ov017_021bb27c_2*)func_0200ff1c(var1, var13);
-                if (var14) {
-                    var14->unknown_c1_0_ &= ~1; var14->unknown_c1_0_ &= ~2; var14->unknown_18c_ &= ~2;
+        if (self->resetAll) {
+            GameState_GetLeaderIndex(game);
+            for (int i = 0; i < 4; i++) {
+                Actor021bb27c* actor = (Actor021bb27c*)GetCombatantWithFlag0x100_0200ff1c(game, i);
+                if (actor) {
+                    actor->state &= ~1; actor->state &= ~2; actor->field18c &= ~2;
                 }
             }
         }
@@ -154,53 +154,53 @@ extern "C" ARM void func_ov017_021bb27c(Struct_ov017_021bb27c_7* arg0) {
         ClearFlags00(var2, 0x800);
         ClearFlags00(var2, 0x4000);
     }
-    void* var16 = arg0->unknown_124_.GetSignedAllocator();
-    if (var16) { arg0->unknown_124_.Destroy(); arg0->unknown_7c_.Free(var16); }
-    if (!TestFlags00(var2, 0x1000)) {
-        var16 = arg0->unknown_7c_.GetSignedAllocator();
-        if (var16) { arg0->unknown_7c_.Destroy(); func_02012da4(&data_02114e20, var16); }
+    void* allocation = self->nestedAllocator.GetSignedAllocator();
+    if (allocation) { self->nestedAllocator.Destroy(); self->allocator.Free(allocation); }
+    if (!TestFlags00(resources, 0x1000)) {
+        allocation = self->allocator.GetSignedAllocator();
+        if (allocation) { self->allocator.Destroy(); AllocatorUnion_Free(&g_mainAllocator, allocation); }
     }
-    if (arg0->unknown_138_) {
-        var16 = arg0->unknown_138_->GetSignedAllocator();
-        if (var16) { arg0->unknown_138_->Destroy(); func_02012da4(&data_02114e20, var16); }
-        arg0->unknown_138_ = 0;
+    if (self->externalAllocator) {
+        allocation = self->externalAllocator->GetSignedAllocator();
+        if (allocation) { self->externalAllocator->Destroy(); AllocatorUnion_Free(&g_mainAllocator, allocation); }
+        self->externalAllocator = 0;
     }
-    func_020466f4(func_020d6c00(), 0x20000);
-    for (int var17 = 0; var17 < 4; var17++) func_ov017_02191fec(var2, var17);
-    func_020466f4(func_020d6c00(), 0x400f);
-    Struct_ov017_021bb27c_5* var18 = (Struct_ov017_021bb27c_5*)func_0200fd0c(var1);
-    if (arg0->unknown_104_ && !var4->unknown_2_ && (!var18->unknown_2_ || arg0->unknown_10c_) &&
-        !func_02046b60(var3, 10) && !(arg0->unknown_16_ == 1 && arg0->unknown_cf_ == 2)) {
-        func_020dc2d0(0);
+    FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x20000);
+    for (int i = 0; i < 4; i++) func_ov017_02191fec(resources, i);
+    FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x400f);
+    Encounter021bb27c* encounter = (Encounter021bb27c*)GetField0x3f8Address_0200fd0c(game);
+    if (self->field104 && !detail->field2 && (!encounter->active || self->field10c) &&
+        !ListContainsId(list, 10) && !(self->kind == 1 && self->fieldcf == 2)) {
+        SetCombatModeFromCase020dc2d0(0);
     }
     arg0->unknown_ff_ = 1;
     for (int var19 = 0; var19 < 4; var19++) {
         if (arg0->unknown_174_ & (1 << var19)) func_ov017_02190264(var2, var19);
         if (arg0->unknown_175_ & (1 << var19)) func_ov017_0218f5a4(var2, var19, 0, 0, 1);
     }
-    if (var5) func_020397c0(var5);
-    if (var6) func_020a27ac(var6);
-    const Struct_ov017_021d6c20* var20 = data_ov017_021d6c20;
-    for (int var21 = 0; var21 < 3; var21++, var20++) {
-        if (var20->unknown_0_ != arg0->unknown_8_) continue;
-        GameObject* var22 = var1->GetUnknownGameObject();
-        Vector3fix var23 = var22->obj3D_.position_;
-        if (fix32abs(var23.x - var20->unknown_4_.x) > var20->unknown_10_.x) break;
-        if (fix32abs(var23.y - var20->unknown_4_.y) > var20->unknown_10_.y) break;
-        if (fix32abs(var23.z - var20->unknown_4_.z) > var20->unknown_10_.z) break;
-        func_ov017_021921fc(&var20->unknown_1c_, var22->obj3D_.rotation_.y, 0); break;
+    if (leader) GameObject_EnableControl(leader);
+    if (controlled) SetField0x23cTrue_020a27ac(controlled);
+    const Bounds021bb27c* bounds = data_ov017_021d6c20;
+    for (int i = 0; i < 3; i++, bounds++) {
+        if (bounds->zone != self->zone) continue;
+        GameObject* actor = game->GetUnknownGameObject();
+        Vector3fix position = actor->obj3D_.position_;
+        if (fix32abs(position.x - bounds->origin.x) > bounds->extent.x) break;
+        if (fix32abs(position.y - bounds->origin.y) > bounds->extent.y) break;
+        if (fix32abs(position.z - bounds->origin.z) > bounds->extent.z) break;
+        func_ov017_021921fc(&bounds->destination, actor->obj3D_.rotation_.y, 0); break;
     }
-    arg0->unknown_cf_ = 0xff; arg0->unknown_9a_ = 0;
-    Struct_ov017_021bb27c* var24 = (Struct_ov017_021bb27c*)var2;
-    if (arg0->unknown_18_ == var24->unknown_44ac_) var24->unknown_44ac_ = 0;
-    if (func_0202b7d8(var0)) {
-        if (arg0->unknown_a_ <= 2 && arg0->unknown_fd_) return;
-        Struct_ov017_021bb27c_5* var25 = (Struct_ov017_021bb27c_5*)func_0200fd0c(var1);
-        if (var25->unknown_2_ && arg0->unknown_108_) var25->unknown_e_ = 1;
-        else func_ov017_021d035c(0, func_020100b0(var1), arg0->unknown_108_);
-        for (int var26 = 0; var26 < 4; var26++) {
-            GameObject* var27 = var1->GetPartyMemberByIndex(var26);
-            if (var27 && func_02039790(var27, 0x20)) func_ov017_021bd4d0(arg0, var26, 0, 0);
+    self->fieldcf = 0xff; self->field9a = 0;
+    ResourceKey021bb27c* resourceKey = (ResourceKey021bb27c*)resources;
+    if (self->key == resourceKey->key) resourceKey->key = 0;
+    if (CheckField0NonZero_0202b7d8(search)) {
+        if (self->mode <= 2 && self->fieldfd) return;
+        Encounter021bb27c* encounter = (Encounter021bb27c*)GetField0x3f8Address_0200fd0c(game);
+        if (encounter->active && self->field108) encounter->fieldE = 1;
+        else EnqueueEventTag150_021d035c(0, GameState_GetLeaderIndex(game), self->field108);
+        for (int i = 0; i < 4; i++) {
+            GameObject* actor = game->GetPartyMemberByIndex(i);
+            if (actor && GetByteFieldMasked0x1ce_02039790(actor, 0x20)) func_ov017_021bd4d0(self, i, 0, 0);
         }
     }
 }

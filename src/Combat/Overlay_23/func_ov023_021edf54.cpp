@@ -236,28 +236,28 @@ int func_020abe84(void* arg0, short* arg1, Struct_ov023_021ed7e0* arg2, int arg3
 int func_ov023_021f5150(Struct_ov023_021edf54_16* arg0, Struct_ov023_021edf54_15* arg1, int* arg2, int* arg3, int arg4);
 }
 
-extern "C" Struct_ov023_021edf54_20* func_020421a0();
-extern "C" void func_02049ae4(unsigned char* arg0);
-extern "C" void func_ov023_021f50fc();
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" void func_020a0858(Struct_020a0858* arg0, unsigned int arg1);
-extern "C" void func_020a0300(Struct_020a0300* arg0, unsigned int arg1);
-extern "C" int func_020ac494(void* arg0);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
-extern "C" int func_ov000_02160fd4(void* arg0, int arg1);
-extern "C" void func_ov023_021ed7e0(Struct_ov023_021ed7e0* arg0);
-extern "C" int func_020ac020(void* arg0, short* arg1, int* arg2, int arg3);
-extern "C" unsigned short func_0202053c(void* arg0);
-extern "C" int func_02010088(Struct_02010088* arg0);
-extern "C" int func_ov023_021eea98(Struct_ov023_021edf54* arg0);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" Struct_020e385c* func_020e3808();
-extern "C" void func_020e39d4(Struct_020e385c* arg0, int arg1, int arg2, int arg3);
+Renderer_021edf54* MessageSystem_GetInstance();
+void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
+void SetFieldForListedCombatants021f50fc();
+int CheckField0NonZero_0202b7d8(int* mode);
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* mode);
+int TestBitAt0x34_020a35e0(unsigned char* info, unsigned char index);
+int GameState_GetProtagonistIndex(GameState* game);
+int LoadBattleBlock020ac4c0(void* dst);
+void AddSaturateField0x48_020a0858(S_a0858* block, unsigned int amount);
+void AddClamped24BitFieldAt0x24_020a0300(S_a0300* block, unsigned int amount);
+int CopyInBattleField0x7540_020ac494(void* src);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* self, int flag);
+int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* self, int flag);
+void ClearFlagBits10to24_021ed7e0(Flags_021ed7e0* flags);
+int CopyIndexedRegion0x75f0_020ac020(void* unused, short* indices, int* dest, int count);
+unsigned short GetTableValue_0202053c(void* obj);
+int IsFlag10088Set_02010088(S_10088* obj);
+int GetTableEntry138_021eea98(Obj021eea98* obj);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+unsigned char CopyOutRegion0x571d_020114ec(char* game, void* dst);
+TagValueEntry020e385c* GetData02153660_020e3808();
+void SetEntryBitUnlessMatching020e39d4(TagValueEntry020e385c* tags, int a, int b, int c);
 
 static inline unsigned int inline_020417b0_2(float arg0, int arg1) {
     return arg1 * arg0;
@@ -280,9 +280,9 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
     if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0)
         return arg0->unknown_eac_;
 
-    Struct_ov023_021edf54_19* var6 = (Struct_ov023_021edf54_19*)GetGameResources();
-    Struct_ov023_021edf54_20* var7 = func_020421a0();
-    var0 = func_0202ae18();
+    Resources_021edf54* resources = (Resources_021edf54*)GetGameResources();
+    Renderer_021edf54* renderer = MessageSystem_GetInstance();
+    mode = func_0202ae18();
 
     Struct_ov023_021edf54_14* var8 = arg0->unknown_29c_;
     if (var8 != 0) {
@@ -394,13 +394,13 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
                     if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var33))
                         var2[var33] = func_ov023_021f4098(arg0, var33, var31);
                 }
-                func_ov017_021cd590(arg0->unknown_2a0_->unknown_8_, var2, 0, 1);
-                int var34 = func_020100a8(var32);
-                Struct_ov023_021edf54_21 var35;
-                func_020ac4c0(&var35);
-                func_020a0858((Struct_020a0858*)&var35, var2[var34]);
-                func_020a0300((Struct_020a0300*)var35.unknown_68_, var2[var34]);
-                func_020ac494(&var35);
+                func_ov017_021cd590(self->info_->event_, gained, 0, 1);
+                int leader = GameState_GetProtagonistIndex(state);
+                BattleBlock_021edf54 block;
+                LoadBattleBlock020ac4c0(&block);
+                AddSaturateField0x48_020a0858((S_a0858*)&block, gained[leader]);
+                AddClamped24BitFieldAt0x24_020a0300((S_a0300*)block.sub68_, gained[leader]);
+                CopyInBattleField0x7540_020ac494(&block);
             }
         }
     } else {

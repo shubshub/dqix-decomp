@@ -26,19 +26,19 @@ struct Struct_0205c570;struct SePlayer;struct Struct0217f8c0;struct TableEntry02
 struct Struct_0205d81c;struct Entry_0205d6a0;struct Obj02092aa4;
 int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(SePlayer*,int,int);
-void* GetPtrField0x2a04_02010828(GameState*);
+void* GameState_GetParty(GameState*);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*,int);
 TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
-int GetField0x3acValue_020100a8(GameState*);
+int GameState_GetProtagonistIndex(GameState*);
 int CountSetBitsLow12_0x68_ov000_0218155c(void*);
 void SetElementStateIfLess0217a9d0(int,int,int,Struct_0205d81c*);
 void InitObj02092aa4(Obj02092aa4*, int);
 void CreateTypeAFromAllocator_02092a74(SafeAllocator*,SafeAllocator*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
-void ResetEntryList0205d6a0(Entry_0205d6a0*,int);
+void Window_ClosePane(Entry_0205d6a0*,int);
 extern SePlayer g_sePlayer;
 extern "C" {
-void func_02012fe4();int func_ov000_0217c594(void*,int);
+void Zone3D_GetInstance();int func_ov000_0217c594(void*,int);
 void* func_ov000_02161318(void*,int);int func_ov000_0217f5dc(void*);
 void func_ov000_02177038(void*,int,int,int,int);
 void func_ov000_02176634(void*,void*,int,int,int);
@@ -50,7 +50,7 @@ void func_ov000_0217c638(void*,int,int);
 // USA: func_ov000_0217ce24
 extern "C" ARM void func_ov000_0217ce24(Struct_ov000_021682ec_5* arg0,int arg1,int arg2)
 {
-    func_02012fe4();
+    Zone3D_GetInstance();
     self->flags|=0x100;
     int mode=Window_GetSelectedIndex((Struct_0205c570*)self->updateState);
     if(mode<0)mode=0;
@@ -59,7 +59,7 @@ extern "C" ARM void func_ov000_0217ce24(Struct_ov000_021682ec_5* arg0,int arg1,i
         self->flag956=0;
         SePlayer_Play(&g_sePlayer,1,0);
         GameState* game=GameState::GetInstance();
-        Party* party=(Party*)GetPtrField0x2a04_02010828(game);
+        Party* party=(Party*)GameState_GetParty(game);
         signed char count=0;bool active=false;
         unsigned char i=0;unsigned char total=party->count;
         for(;i<total;i++){
@@ -85,16 +85,16 @@ extern "C" ARM void func_ov000_0217ce24(Struct_ov000_021682ec_5* arg0,int arg1,i
             }
             break;
         case 1:
-            func_ov000_02177038(arg0,0,arg0->unknown_1d60_[arg0->unknown_1d68_],arg1,arg2);
-            arg0->unknown_1d6e_=0;arg0->unknown_1d6b_=0;arg0->unknown_1d68_++;arg0->unknown_1d60_[arg0->unknown_1d68_]=5;
-            if(var2->unknown_f7c_==1||var4||var3==1){
-                int var11=(signed char)func_020100a8(var1);
-                arg0->unknown_68_=func_020dd3cc(var11);
-                arg0->unknown_68_=func_ov000_0217c514(var11,arg0->unknown_68_);
-                arg0->unknown_1d60_[arg0->unknown_1d68_]=6;
-                if(arg0->unknown_68_==0){
-                    arg0->unknown_1d60_[arg0->unknown_1d68_]=43;
-                    func_ov000_02176634(arg0,func_ov000_02161318(arg0,var11),43,arg1,arg2);
+            func_ov000_02177038(self,0,self->commands[self->index],a,b);
+            self->special=0;self->count=0;self->index++;self->commands[self->index]=5;
+            if(party->count==1||active||count==1){
+                int member=(signed char)GameState_GetProtagonistIndex(game);
+                self->mask=func_020dd3cc(member);
+                self->mask=func_ov000_0217c514(member,self->mask);
+                self->commands[self->index]=6;
+                if(self->mask==0){
+                    self->commands[self->index]=43;
+                    func_ov000_02176634(self,func_ov000_02161318(self,member),43,a,b);
                     break;
                 }
             }
@@ -117,10 +117,10 @@ extern "C" ARM void func_ov000_0217ce24(Struct_ov000_021682ec_5* arg0,int arg1,i
             arg0->unknown_b3_|=8;
             break;
         }
-    }else if(func_ov000_0217c5f4(arg0)){
-        arg0->unknown_956_=0;
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_,0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_]=0;arg0->unknown_1d68_--;
-        func_ov000_0217c638(arg0,arg1,arg2);
+    }else if(CheckFlagsOrField_0217c5f4_0217c5f4(self)){
+        self->flag956=0;
+        Window_ClosePane((Entry_0205d6a0*)self->updateState,0);
+        self->commands[self->index]=0;self->index--;
+        func_ov000_0217c638(self,a,b);
     }
 }

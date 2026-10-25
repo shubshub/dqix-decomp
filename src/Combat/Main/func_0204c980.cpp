@@ -35,17 +35,17 @@ struct Struct_0204c980 {
     void* unknown_d4_;
 };
 
-extern "C" void func_0204f0ec(char*);
-extern "C" void* func_020421a0();
-extern "C" int func_0204a5e4(int, int);
+void ClearFourRegions0204f0ec(char*);
+void* MessageSystem_GetInstance();
+int GetTableEntry0204a5e4(int, int);
 #if defined(jpn)
 extern "C" void func_020474a8(void*, unsigned char, const char*, char*);
 extern "C" short func_0204f6a0(Struct_0204c980*, char*, int, unsigned char, unsigned char);
 extern "C" void func_0204daf8(Struct_0204c980*, char*, short);
 #else
-extern "C" void func_02046608(void*, unsigned char, const char*, char*, int, int, unsigned char);
-extern "C" short func_0204e3e0(Struct_0204c980*, char*, int, unsigned char, unsigned char, unsigned char);
-extern "C" void func_0204cd60(Struct_0204c980*, char*, short, short);
+extern "C" void MessageSystem_FormatText(void*, unsigned char, const char*, char*, int, int, unsigned char);
+extern "C" short func_0204e3e0(Window0204c980*, char*, int, unsigned char, unsigned char, unsigned char);
+extern "C" void func_0204cd60(Window0204c980*, char*, short, short);
 #endif
 typedef void (*Type_0204c980)(const void*, unsigned int, unsigned int);
 
@@ -62,18 +62,18 @@ extern "C" ARM void func_0204c980(Struct_0204c980* arg0, const char* arg1, unsig
     if (arg0->unknown_4_ && arg0->unknown_8_ && arg1) {
         func_0204f0ec((char*)arg0);
 #if defined(jpn)
-        char var0[0x800] = {};
-        func_020474a8(func_020421a0(), arg0->unknown_c7_, arg1, var0);
-        short var1 = func_0204f6a0(arg0, var0, arg3, arg4, arg5);
-        func_0204daf8(arg0, var0, var1);
+        char buffer[0x800] = {};
+        func_020474a8(MessageSystem_GetInstance(), window->fontHeight, text, buffer);
+        short padding = func_0204f6a0(window, buffer, mode, border, fullWidth);
+        func_0204daf8(window, buffer, padding);
 #else
-        int var2 = arg0->unknown_a8_ * 8;
-        if (!(arg0->unknown_c5_ & 0x10)) var2 -= 4;
-        if (arg5) var2 = 256;
-        char var3[0x800] = {};
-        func_02046608(func_020421a0(), arg0->unknown_c7_, arg1, var3, var2, arg0->unknown_b0_, arg6);
-        short var4 = func_0204e3e0(arg0, var3, arg3, arg4, arg5, arg6);
-        func_0204cd60(arg0, var3, var4, arg6);
+        int width = window->width * 8;
+        if (!(window->flags & 0x10)) width -= 4;
+        if (fullWidth) width = 256;
+        char buffer[0x800] = {};
+        MessageSystem_FormatText(MessageSystem_GetInstance(), window->fontHeight, text, buffer, width, window->textX, font);
+        short padding = func_0204e3e0(window, buffer, mode, border, fullWidth, font);
+        func_0204cd60(window, buffer, padding, font);
 #endif
         arg0->unknown_a0_ = arg2;
         Type_0204c980 var5 = (Type_0204c980)inline_0204c980(inline_0204c980_2(arg0->unknown_4_), arg0->unknown_4_->unknown_1c_0_);

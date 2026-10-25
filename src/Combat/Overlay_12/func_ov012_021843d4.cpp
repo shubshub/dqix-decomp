@@ -3,21 +3,21 @@
 #include "NitroSDK/Graphics.h"
 #include "std_library_functions.h"
 
-struct Struct_020727d8;
-struct Struct_0201099c_14;
-struct Struct_0205cfd4;
-struct Struct_02020cb8;
+struct List020727d8;
+struct Struct020dfc40;
+struct InitTarget0205cfd4;
+struct BackgroundGraphics;
 
 extern "C" void func_02074af4(void* p);
 extern "C" void func_ov023_021e7220(void* card, int mode);
 void ResetListHeader020727d8(List020727d8* list);
 void KeyTable_Reset(Struct020dfc40* texts);
-void InitStruct0205cfd4(InitTarget0205cfd4* window);
-void Background_Init(List0204af64* background);
-extern "C" void func_0204c684(void* canvas);
+void Window_Init(InitTarget0205cfd4* window);
+void Background_Init(BackgroundGraphics* background);
+extern "C" void WindowPane_Init(void* canvas);
 #if defined(jpn)
 #define func_ov012_021845f8 func_ov012_02185690
-extern "C" void _Z15GridCursor_InitP15Struct_0205bef8(void* cursor);
+extern "C" void _Z15GridCursor_InitP10GridCursor(void* cursor);
 void ClearFields_021e20c0(void* profile);
 #endif
 extern "C" void func_ov012_021845f8(void* arg0);
@@ -152,11 +152,11 @@ extern "C" ARM void func_ov012_021843d4(Struct_ov012_021843d4* arg0)
     arg0->unknown_1368_ = 0;
     arg0->unknown_136c_ = 0;
 #endif
-    InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
+    Window_Init((InitTarget0205cfd4*)self->window_);
     for (int i = 0; i < 3; i++)
-        Background_Init((List0204af64*)&self->backgrounds_[i]);
+        Background_Init((BackgroundGraphics*)&self->backgrounds_[i]);
     for (int i = 0; i < 13; i++)
-        func_0204c684(&self->canvases_[i]);
+        WindowPane_Init(&self->canvases_[i]);
     self->step_ = 0;
     self->state_ = 0;
     self->text_ = 0;
@@ -174,7 +174,7 @@ extern "C" ARM void func_ov012_021843d4(Struct_ov012_021843d4* arg0)
 #if defined(jpn)
     self->nameFlag_ = 0;
     self->nameStep_ = 0;
-    _Z15GridCursor_InitP15Struct_0205bef8(self->nameCursor_);
+    _Z15GridCursor_InitP10GridCursor(self->nameCursor_);
     self->profileIndex_ = 0;
     ClearFields_021e20c0(self->profile_);
 #endif

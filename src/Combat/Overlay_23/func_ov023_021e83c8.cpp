@@ -25,7 +25,7 @@ struct Struct_ov023_021fd75c_2 {
 };
 }
 
-extern "C" int func_020421a0(void);
+int MessageSystem_GetInstance(void);
 
 struct Struct_020465c0;
 extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
@@ -38,11 +38,11 @@ int KeyTable_Get(struct Container020e0310* c, int key);
 #if defined(jpn)
 extern "C" void func_020474a8(void* arg0, unsigned char arg1, const char* arg2, char* arg3);
 #else
-extern "C" ARM void func_02046608(void* arg0, int arg1, void* arg2, void* arg3, int arg4, int arg5, int arg6);
+extern "C" ARM void MessageSystem_FormatText(void* a, int b, void* c, void* d, int e, int f, int g);
 #endif
 
-struct Struct_02000c9c_8;
-extern "C" ARM unsigned char func_0200fb08(Struct_02000c9c_8* arg0);
+struct Struct0200fb08;
+ARM unsigned char GameState_GetLanguage(Struct0200fb08* obj);
 
 #if defined(jpn)
 #define data_ov023_021fd75c data_ov023_021fd760
@@ -55,9 +55,9 @@ struct Struct_01ff8b48_15 { char unknown_0_[0x38]; int unknown_38_; int unknown_
 
 // USA: func_ov023_021e83c8
 // JPN: func_ov023_021e8404
-extern "C" ARM void func_ov023_021e83c8(void* arg0) {
-    Struct_ov023_021e83c8* var0 = static_cast<Struct_ov023_021e83c8*>(arg0);
-    int var1 = func_020421a0();
+extern "C" ARM void func_ov023_021e83c8(void* obj) {
+    ProfileFormatState* state = static_cast<ProfileFormatState*>(obj);
+    int field = MessageSystem_GetInstance();
 
     int* var2;
     int var3;
@@ -80,14 +80,14 @@ extern "C" ARM void func_ov023_021e83c8(void* arg0) {
 #if defined(jpn)
     func_020474a8(((void*)(var1)), 0xa, ((const char*)(var6)), var0->unknown_5d8_);
 #else
-    func_02046608(((void*)(var1)), 0xa, ((void*)(var6)), var0->unknown_5d8_, 0x100, 0, 0);
+    MessageSystem_FormatText(((void*)(field)), 0xa, ((void*)(key)), state->text, 0x100, 0, 0);
 
-    int var7, var8;
-    char* var9 = strstr(var0->unknown_5d8_, &data_ov023_021fddb0);
-    char* var10 = strstr(var9 + 1, &data_ov023_021fddb0);
-    var7 = 0x82; var8 = 0xb4;
-    int var11 = func_0200fb08((struct Struct_02000c9c_8*)GameState::GetInstance());
-    switch (var11) {
+    int a, b;
+    char* p1 = strstr(state->text, &data_ov023_021fddb0);
+    char* p2 = strstr(p1 + 1, &data_ov023_021fddb0);
+    a = 0x82; b = 0xb4;
+    int norm = GameState_GetLanguage((struct Struct0200fb08*)GameState::GetInstance());
+    switch (norm) {
     case 2:
     case 5:
         var7 = 0xa5; var8 = 0xc1;

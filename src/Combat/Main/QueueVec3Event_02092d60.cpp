@@ -14,7 +14,7 @@ int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
 void* GetActiveCombatWork_ov000_02160130(void);
 void* GetSlot021677d8(void* obj, int id);
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
 
@@ -46,13 +46,13 @@ extern "C" ARM void func_02092d60(struct Param1_02092d60* p1, int p2) {
         if (head == 0xa) {
             void* work = GetActiveCombatWork_ov000_02160130();
             if (work != 0) {
-                void* slot = GetSlot021677d8(work, c->obj3D_.unknown_4_);
+                void* slot = GetSlot021677d8(work, c->obj3D_.actorIndex_);
                 if (slot != 0) {
                     *(Vector3i*)&vecBuf.x = *(Vector3i const*)((int*)slot);
                 }
             }
         }
-        struct GlobalStructShort02012fe4* g = (struct GlobalStructShort02012fe4*)func_02012fe4();
+        struct GlobalStructShort02012fe4* g = (struct GlobalStructShort02012fe4*)Zone3D_GetInstance();
         unsigned short shortVal = g->f0;
         int bits = CheckBitsInField0x63dc_02011b50(bs, 1);
         func_ov017_021cf3c0(vecBuf, shortVal, p2, bits, p1->f38);

@@ -3,8 +3,8 @@
 #include "Graphics/Vector.h"
 #include "std_library_functions.h"
 
-extern "C" void* func_02012fe4(void* arg0);
-extern "C" unsigned char* func_020177a8(unsigned char* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void* self);
+unsigned char* Zone3D_GetChest(unsigned char* p, int i);
 
 struct Struct_ov017_021d6318 {
     unsigned char unknown_0_[0xc0];
@@ -44,12 +44,12 @@ static inline fix32_t inline_ov000_0216f3d4(fix32_t arg0) {
 }
 
 // USA: func_ov017_02193290
-extern "C" ARM int func_ov017_02193290(int arg0, int arg1, int arg2, Vector3i* arg3, int arg4, int arg5, int arg6) {
-    Struct_ov017_02193290_3* var0 = (Struct_ov017_02193290_3*)func_02012fe4(GameState::GetInstance());
-    int var1 = 0;
-    for (int var2 = 0; var2 < var0->unknown_477_; var2++) {
-        Struct_ov017_02193290_2* var3 = (Struct_ov017_02193290_2*)func_020177a8((unsigned char*)var0, var2);
-        if (var3 == NULL) {
+extern "C" ARM int func_ov017_02193290(int a, int b, int c, Vector3i* pos, int d, int e, int f) {
+    Owner02193290* owner = (Owner02193290*)Zone3D_GetInstance(GameState::GetInstance());
+    int total = 0;
+    for (int i = 0; i < owner->count; i++) {
+        Element02193290* elem = (Element02193290*)Zone3D_GetChest((unsigned char*)owner, i);
+        if (elem == NULL) {
             continue;
         }
         Vector3i var4 = *arg3;

@@ -3,15 +3,16 @@
 #include "Resource/CreationEnums.h"
 #include "Resource/CreationSlotLayout.h"
 
-// CharacterCreationUI's usa/eur layout; jpn's copy of this function (0x0218a8b4) is still asm.
+// CharacterCreationUI's usa/eur layout; jpn's copy of this function (0x0218a8b4) is still asm. The pads stand for
+// the header's fields (allocators ... camera; step ... unknownBeforeFlags).
 struct CharacterCreation {
-    unsigned char unknown000[0xbec];
-    CreationNavigation navigation;
+    unsigned char pad000[0xbec];
+    GridCursor navigation;
     CreationSlotLayout grid;
     short cursorX, cursorY, cursorWidth, cursorHeight;
     short lastCursorX, lastCursorY;
     signed char state;
-    unsigned char unknownc59[0xd9c - 0xc59];
+    unsigned char padC59[0xd9c - 0xc59];
     unsigned int flags;
 };
 
@@ -32,9 +33,9 @@ enum CreationButton
 
 // A touch on nothing: not a button, a tab icon or a slot. CharacterCreationUI_HandleInput ignores it.
 
-struct Struct_0205bb84;
+struct GridCursor;
 int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(GridCursor*);
 
 extern "C" {
     void GridCursor_SetSelectedIndex(void*, int);
@@ -96,7 +97,7 @@ extern "C" {
             CharacterCreationUI_SetupSlotNavigation(self);
             GridCursor_SetSelectedIndex(&self->navigation, slot);
             self->flags |= CreationFlag_RedrawPanel;
-            int selectedSlot = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
+            int selectedSlot = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation);
             CharacterCreationUI_MoveCursorToSlot(self, selectedSlot);
         }
         return slot;

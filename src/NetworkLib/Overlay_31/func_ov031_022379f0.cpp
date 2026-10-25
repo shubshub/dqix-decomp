@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 unsigned long long GetCurrentTimestamp(void);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
+extern "C" int memcmp(const void* a, const void* b, unsigned int len);
 extern "C" void func_ov031_0223e2c0(int, void*);
 
 typedef void (*Type_02001aec_2)(int);
@@ -44,9 +44,9 @@ extern "C" ARM void func_ov031_022379f0(void* arg0) {
     var6 = (char*)var1;
     var5 = (char*)var1 + 0x1300;
     do {
-        if (func_02001aec(var5, data_ov031_02249280, 6) != 0) {
-            if (*(unsigned char*)(var6 + 0x1306) != 0) {
-                var3 = 1;
+        if (memcmp(name, data_ov031_02249280, 6) != 0) {
+            if (*(unsigned char*)(entry + 0x1306) != 0) {
+                used = 1;
             } else {
                 var4 = 1;
             }

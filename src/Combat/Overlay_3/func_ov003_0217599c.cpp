@@ -2,17 +2,11 @@
 #include "GameState/GameState.h"
 #include "Memory/SafeAllocator.h"
 #include <globaldefs.h>
+#include "Resource/ItemTable.h"
 
-struct Struct_0201099c_9;
-struct Struct_0201099c_10 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[10];
-    struct Struct_0201099c_9* unknown_c_;
-    unsigned char unknown_10_[4];
-    unsigned char unknown_14_;
-};
-struct Struct_02052e2c;
-struct Struct_02052df8;
+struct Element020de650;
+struct Field150Holder02052e2c;
+struct Field150Holder02052df8;
 
 struct Struct_ov003_0217599c_3 {
     int unknown_0_;
@@ -48,12 +42,12 @@ struct Struct_ov003_0217599c {
 struct Struct_ov003_0217e33c {
     unsigned char unknown_0_[8];
 };
-struct Struct_0206b37c {
-    SafeAllocator unknown_0_;
-    char unknown_14_[0x18];
-    Struct_0201099c_10 *unknown_2c_;
-    int unknown_30_;
-    int unknown_34_;
+struct TextContext {
+    SafeAllocator allocator;
+    char list[0x18];
+    ItemTable *containerData;
+    int field30;
+    int field34;
 };
 struct Struct_01ff91ac_34 {
     char unknown_0_[0x74];
@@ -66,27 +60,27 @@ struct Struct_ov003_0217599c_2 {
 #else
     char unknown1_0_[0x874];
 #endif
-    Struct_0201099c_10 unknown_874_;
-    char unknown_88c_[0x103a - 0x874 - sizeof(Struct_0201099c_10)];
-    short unknown_103a_;
-    unsigned char unknown_103c_;
-    char unknown_103d_[6];
-    signed char unknown_1043_;
+    ItemTable entries;
+    char paddingAfterEntries[0x103a - 0x874 - sizeof(ItemTable)];
+    short selected;
+    unsigned char count;
+    char pad3d[6];
+    signed char character;
 };
 
 extern "C" int *func_0202ae18();
-extern "C" int func_0202b7d8(int *);
-extern "C" short *func_02052e2c(Struct_02052e2c *);
-extern "C" Struct_ov003_0217599c_4 *func_020dedd0(Struct_0201099c_10 *, int);
-extern "C" void *func_020de824(void *);
-extern "C" void func_0207cbe8(char *);
-extern "C" void func_0207cc18(void *, Struct_ov003_0217599c_4 *);
-extern "C" void func_0207cc0c(char *);
+int CheckField0NonZero_0202b7d8(int *);
+short *GetField150Ptr0x488_02052e2c(Field150Holder02052e2c *);
+EquipEntry *ItemTable_Find(ItemTable *, int);
+void *ItemTable_Construct(void *);
+void InitStruct0207cbe8(char *);
+extern "C" void func_0207cc18(void *, EquipEntry *);
+void InitStruct0207cc0c(char *);
 extern "C" int func_020dd4c4(int, void *);
-extern "C" int func_02052df8(Struct_02052df8 *, int);
-extern "C" void func_02052d7c(Struct_ov003_0217599c *, int, short);
-extern "C" void *func_02053c6c(unsigned char *);
-extern "C" void func_0208358c(void *, Struct_ov003_0217599c_4 *, int);
+int GetHalfwordEntryFromField150(Field150Holder02052df8 *, int);
+extern "C" void func_02052d7c(Combatant0217599c *, int, short);
+void *GetFieldAt0x150_02053c6c(unsigned char *);
+extern "C" void PartyMember_Equip(void *, EquipEntry *, int);
 extern "C" void func_0207c378(char *, int, int, int);
 static inline int inline_ov003_0217599c(unsigned int arg0) {
     return arg0 <= 7;
@@ -106,41 +100,41 @@ extern Struct_ov003_0217e33c data_ov003_0217faac;
 
 // JPN: func_ov003_0217599c (021749d4)
 // USA: func_ov003_0217599c
-extern "C" ARM int func_ov003_0217599c(Struct_ov003_0217599c_2 *arg0) {
-    GameState *var0        = GameState::GetInstance();
-    int *var1          = func_0202ae18();
-    Struct_ov003_0217599c *var2 = (Struct_ov003_0217599c *) func_0200ff1c(var0, arg0->unknown_1043_);
-    if (!var2) return 0;
-    if (!func_02052e2c((Struct_02052e2c *) var2)) return 0;
-    Struct_ov003_0217599c_4 *var3 =
-        func_020dedd0(&arg0->unknown_874_, arg0->unknown_103a_);
-    if (!var3) return 0;
-    unsigned int var4 = var3->unknown_8_0_;
-    Struct_0206b37c var5;
-    var5.unknown_0_.ResetAllocatorPointer();
-    func_020de824(var5.unknown_14_);
-    func_0207cbe8((char *) &var5);
-    func_0207cbe8((char *) &var5);
-    var5.unknown_2c_ = &arg0->unknown_874_;
-    func_0207cc18(&var5, var3);
-    func_0207cc0c((char *) &var5);
-    if (!inline_ov003_0217599c(var4)) return 0;
-    if (func_020dd4c4(arg0->unknown_1043_, var3)) return 0;
+extern "C" ARM int func_ov003_0217599c(MenuB *menu) {
+    GameState *gs        = GameState::GetInstance();
+    int *search          = func_0202ae18();
+    Combatant0217599c *c = (Combatant0217599c *) GetCombatantWithFlag0x100_0200ff1c(gs, menu->character);
+    if (!c) return 0;
+    if (!GetField150Ptr0x488_02052e2c((Field150Holder02052e2c *) c)) return 0;
+    EquipEntry *elem =
+        ItemTable_Find(&menu->entries, menu->selected);
+    if (!elem) return 0;
+    unsigned int category = elem->category;
+    TextContext context;
+    context.allocator.ResetAllocatorPointer();
+    ItemTable_Construct(context.list);
+    InitStruct0207cbe8((char *) &context);
+    InitStruct0207cbe8((char *) &context);
+    context.containerData = &menu->entries;
+    func_0207cc18(&context, elem);
+    InitStruct0207cc0c((char *) &context);
+    if (!IsType0217599c(category)) return 0;
+    if (func_020dd4c4(menu->character, elem)) return 0;
 #if defined(jpn)
     int var6 = data_ov003_0217e388[var4];
 #else
     int var6 = data_ov003_0217faf4[var4];
 #endif
-    if (var6 < 0) return 1;
-    char *var7      = (char *) func_02010828(var0);
-    int var8 = func_02052df8((Struct_02052df8 *) var2, var6);
-    int var9       = arg0->unknown_103a_ == var8;
-    if (!var9) {
-        func_02052d7c(var2, var6, arg0->unknown_103a_);
-        func_0208358c(func_02053c6c((unsigned char *) var2), var3, -1);
+    if (slotId < 0) return 1;
+    char *bag      = (char *) GameState_GetParty(gs);
+    int equippedId = GetHalfwordEntryFromField150((Field150Holder02052df8 *) c, slotId);
+    int same       = menu->selected == equippedId;
+    if (!same) {
+        func_02052d7c(c, slotId, menu->selected);
+        PartyMember_Equip(GetFieldAt0x150_02053c6c((unsigned char *) c), elem, -1);
     }
-    if (func_020dedd0(&arg0->unknown_874_, var8)) {
-        func_0207c378(var7 + 0x1d4, var8, 1, var4);
+    if (ItemTable_Find(&menu->entries, equippedId)) {
+        func_0207c378(bag + 0x1d4, equippedId, 1, category);
     }
     arg0->unknown_103c_--;
     if (var9) return 1;

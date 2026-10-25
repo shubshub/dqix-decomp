@@ -2,14 +2,14 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_0200ff58(GameState*,int);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_ov000_021761c8(char*,int);
-extern "C" int func_ov000_021761ec(char*,int);
-extern "C" void func_ov017_021c6a9c(unsigned short, int, int, unsigned char, unsigned char, signed char);
-struct Struct_ov000_02175be4 {
-    char unknown_0_[0x1d]; signed char unknown_1d_; char unknown_1e_[8]; unsigned short unknown_26_;
-    char unknown_28_[6]; signed char unknown_2e_;
+void* GetCombatantWithFlag0x1000_0200ff58(GameState*,int);
+int GameState_GetProtagonistIndex(GameState*);
+int GetClampedArrayField0xd1c_ov000_021761c8(char*,int);
+int GetClampedArrayField0xd3c_ov000_021761ec(char*,int);
+void EnqueueEventTag67_021c6a9c(unsigned short, int, int, unsigned char, unsigned char, signed char);
+struct Node02175be4 {
+    char p0[0x1d]; signed char selection; char p1[8]; unsigned short key;
+    char p2[6]; signed char state;
 };
 struct Struct_ov000_02175be4_2 {
     unsigned short unknown_0_[4]; signed char unknown_8_[4],unknown_c_[4];
@@ -32,17 +32,17 @@ extern "C" ARM void func_ov000_02175be4(Struct_ov000_02175be4_2* arg0) {
     for (signed char var1=0;var1<4;var1++) {
         if (!func_0200ff58(var0,var1)) func_ov000_02161318(arg0,var1);
     }
-    if (arg0->unknown_1b_ != func_020100a8(var0)) return;
-    unsigned char var2 = 0;
-    short var3[4] = {0};
-    Struct_ov000_021833a8 var4(data_ov000_021833a8);
-    for (signed char var5=0;var5<4;var5++) {
-        if (!func_0200ff58(var0,var5)) {
-            Struct_ov000_02175be4* var6 = func_ov000_02161318(arg0,var5);
-            if (var6) {
-                var3[var2] = var6->unknown_26_;
-                var4.unknown_0_[var2] = var6->unknown_1d_;
-                var2++;
+    if (obj->phase != GameState_GetProtagonistIndex(gs)) return;
+    unsigned char count = 0;
+    short keys[4] = {0};
+    FourShort02175be4 selections(data_ov000_021833a8);
+    for (signed char i=0;i<4;i++) {
+        if (!GetCombatantWithFlag0x1000_0200ff58(gs,i)) {
+            Node02175be4* node = func_ov000_02161318(obj,i);
+            if (node) {
+                keys[count] = node->key;
+                selections.v[count] = node->selection;
+                count++;
             }
         }
     }

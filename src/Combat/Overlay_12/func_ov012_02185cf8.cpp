@@ -73,8 +73,8 @@ extern "C" ARM void func_ov012_02185cf8(Struct_ov012_02185cf8* arg0)
     if (functions.functions[self->state_] != 0)
         (self->*functions.functions[self->state_])(self->text_, hidden);
 #if defined(jpn)
-    func_0205d5d0((Struct_0205d5d0*)arg0->unknown_ac_, arg0->unknown_1371_, (int)arg0->unknown_1374_, 0);
+    Window_SetPaneText((StructA0205d5d0*)self->window_, self->state_, (int)self->text_, 0);
 #else
-    func_0205d5d0((Struct_0205d5d0*)arg0->unknown_ac_, arg0->unknown_1371_, (int)arg0->unknown_1374_, 0, 0);
+    Window_SetPaneText((StructA0205d5d0*)self->window_, self->state_, (int)self->text_, 0, 0);
 #endif
 }

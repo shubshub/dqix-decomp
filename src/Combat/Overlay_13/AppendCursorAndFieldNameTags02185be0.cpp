@@ -43,16 +43,16 @@ struct SkillPointMenu {
 };
 
 struct Container020e0310;
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 extern "C" void* __clear(void* dst, int count);
 #if defined(jpn)
 extern "C"
 #endif
 int AppendSizeTag_02041d9c(char* dst, int size);
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
+int Text_AppendNTag(char* dst, int n, const char* name);
 
 // USA: func_ov013_02185be0  (semantic: AppendCursorAndFieldNameTags02185be0)
 extern "C" ARM void func_ov013_02185be0(SkillPointMenu* menu, char* dst) {
@@ -60,17 +60,17 @@ extern "C" ARM void func_ov013_02185be0(SkillPointMenu* menu, char* dst) {
     int choice;
 
     if (menu->windowInput == 2) {
-        AppendFrameTag02041c08(dst, menu->confirmationChoice, 9, 3, 6, 2);
+        Text_AppendFrameTag(dst, menu->confirmationChoice, 9, 3, 6, 2);
     }
-    AppendCursorTag_02041ea4(dst, menu->confirmationChoice);
+    Text_AppendCursorTag(dst, menu->confirmationChoice);
 
     for (choice = 0; choice < 2; choice++) {
         __clear(choiceText, 0x20);
         AppendSizeTag_02041d9c(choiceText, 0xc);
-        AppendString02042058(choiceText, (const char*)KeyTable_Get((Container020e0310*)menu->texts, (short)(choice + 0xa)));
-        AppendNameTag_02041b70(dst, choice, choiceText);
+        Text_Append(choiceText, (const char*)KeyTable_Get((Container020e0310*)menu->texts, (short)(choice + 0xa)));
+        Text_AppendNTag(dst, choice, choiceText);
         if (choice < 1) {
-            AppendString02042058(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, 0));
+            Text_Append(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, 0));
         }
     }
 }

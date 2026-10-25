@@ -8,10 +8,9 @@
 struct Struct_0205de24_2;
 struct Struct_0205c570;
 struct Struct_0205d81c;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
-struct Struct_0201099c_3;
-struct Struct_02000c9c_8;
+struct GridCursor;
+struct Container020e0310;
+struct Struct0200fb08;
 
 struct Struct_ov003_0216da90_2
 {
@@ -74,19 +73,19 @@ struct Struct_ov003_0216da90
 extern "C" void __clear(void* buf, int size);
 void FindAndLinkMatchingEntry0205de24(Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 void SetChannelAFlag0205cef8(void* obj);
-unsigned char NormalizeField5_0200fb08(Struct0200fb08* obj);
+unsigned char GameState_GetLanguage(Struct0200fb08* obj);
 int Window_GetSelectedIndex(Struct_0205c570* s);
-void AppendFrameTag02041c08(char* text, int a, int b, int c, int d, int e);
+void Text_AppendFrameTag(char* text, int a, int b, int c, int d, int e);
 const char* KeyTable_Get(Container020e0310* c, int key);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 Window0216da90* FindElementByC40205d81c(Struct_0205d81c* s, int key);
-void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int b, int mode);
-void GridCursor_SetCount(Node0205bacc* s, int val);
+void GridCursor_SetDimensions(GridCursor* s, int a, int b, int mode);
+void GridCursor_SetCount(GridCursor* s, int val);
 
 extern short data_ov003_0217f560[];
 
@@ -105,9 +104,9 @@ extern "C" ARM void func_ov003_0216da90(Struct_ov003_0216da90* arg0)
     func_0205cef8(arg0->unknown_12c0_);
 
 #if !defined(jpn)
-    short var0 = data_ov003_0217f560[func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance())];
-    arg0->unknown_12c0_->unknown_a0_.inline_ov003_0216da90(var0, 7);
-    arg0->unknown_12c0_->unknown_a0_.inline_ov003_0216da90_2(0x1f - var0, 1);
+    short x = data_ov003_0217f560[GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance())];
+    self->window->frame.SetPosition(x, 7);
+    self->window->frame.SetSize(0x1f - x, 1);
 #endif
 
     char text[0x100];
@@ -115,12 +114,12 @@ extern "C" ARM void func_ov003_0216da90(Struct_ov003_0216da90* arg0)
     __clear(text, 0x100);
     __clear(sub, 0x40);
     if (self->mode == 2)
-        AppendFrameTag02041c08(text, Window_GetSelectedIndex((Struct_0205c570*)self->window), 8, 5, 5, 5);
-    AppendString02042058(text, KeyTable_Get((Container020e0310*)self->texts_, 0x5c));
+        Text_AppendFrameTag(text, Window_GetSelectedIndex((Struct_0205c570*)self->window), 8, 5, 5, 5);
+    Text_Append(text, KeyTable_Get((Container020e0310*)self->texts_, 0x5c));
 #if defined(jpn)
-    func_0205d304(arg0->unknown_12c0_, var1, 0, 0, 0, 1, 0);
+    Window_OpenPane(self->window, text, 0, 0, 0, 1, 0);
 #else
-    func_0205d304(arg0->unknown_12c0_, var1, 0, 0, 0, 1, 0, 0);
+    Window_OpenPane(self->window, text, 0, 0, 0, 1, 0, 0);
 #endif
 
 #if !defined(jpn)
@@ -132,10 +131,10 @@ extern "C" ARM void func_ov003_0216da90(Struct_ov003_0216da90* arg0)
     Window0216da90* window = self->window;
     window->tableA.field4 = 1;
     window->tableB.field4 = 1;
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableA, 1, 4, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->tableB, 1, 4, 0);
-    GridCursor_SetCount((Node0205bacc*)&window->tableA, 4);
-    GridCursor_SetCount((Node0205bacc*)&window->tableB, 4);
+    GridCursor_SetDimensions((GridCursor*)&window->tableA, 1, 4, 0);
+    GridCursor_SetDimensions((GridCursor*)&window->tableB, 1, 4, 0);
+    GridCursor_SetCount((GridCursor*)&window->tableA, 4);
+    GridCursor_SetCount((GridCursor*)&window->tableB, 4);
     window->activeA = 1;
     window->activeB = 1;
 }

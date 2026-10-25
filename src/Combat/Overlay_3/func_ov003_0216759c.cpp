@@ -4,8 +4,8 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_ov003_0216759c {
-    int unknown_0_; SafeAllocator* unknown_4_; Struct_02020cb8* unknown_8_; Struct_0207f7f0_2* unknown_c_; Struct_0207f7f0* unknown_10_;
+struct View6759c {
+    int value; SafeAllocator* alloc; BackgroundGraphics* lists; Node0207f7f0* objects; Manager0207f7f0* manager;
 #if defined(jpn)
     char unknown_14_[0x34-0x14];
 #else
@@ -16,24 +16,24 @@ struct Struct_ov003_0216759c {
 struct Struct_ov003_0216759c_2 { char unknown_0_[8]; unsigned int unknown_8_; void* unknown_c_; };
 extern "C" {
 void* __clear(void*, int);
-void _Z15Background_InitP12List0204af64(void*);
+void _Z15Background_InitP18BackgroundGraphics(void*);
 void _Z21Background_SetMapSizePhi(void*, int);
 void Background_SetPriority(void*, int);
-void _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(void*,SafeAllocator*);
-void _Z20Background_SetScrollP11Obj0204b5e8ii(void*,int,int);
-void _Z26Background_AllocateScreensP11Foo0204af38iP13SafeAllocator(void*,int,SafeAllocator*);
+void _Z22Background_AllocateMapP18BackgroundGraphicsP13SafeAllocator(void*,SafeAllocator*);
+void _Z20Background_SetScrollP18BackgroundGraphicsii(void*,int,int);
+void _Z26Background_AllocateScreensP18BackgroundGraphicsiP13SafeAllocator(void*,int,SafeAllocator*);
 void DisableSubBGVRAMBanks();
 void MapVRAMBanksToSubBG(int);
-int _Z14Pac_CountFilesP19ActiveEntry02046900(void*);
-void* _Z11Pac_GetFileP11Rec020467f0iPPvPi(void*,int,void**,int*);
+int _Z14Pac_CountFilesP9PacRecord(void*);
+void* _Z11Pac_GetFileP9PacRecordiPPvPi(void*,int,void**,int*);
 void Background_LoadFile(void*,void*,SafeAllocator*,int);
 void Background_FillRect(void*,int,int,int,int,int,int);
-void _Z20Background_UploadMapP12List0204b0e8Pv(void*,void*);
-Entry6759c* _Z20Background_GetScreenP17EntryList0204af14j(void*,unsigned int);
+void _Z20Background_UploadMapP18BackgroundGraphicsPv(void*,void*);
+Entry6759c* _Z20Background_GetScreenP18BackgroundGraphicsj(void*,unsigned int);
 void _Z25CleanInvalidateCacheRangePKvj(const void*,unsigned int);
 void LoadToSubBG1ScreenData(void*,int,unsigned int);
-void func_0204c684(void*);
-void _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(void*,SafeAllocator*,int,unsigned int);
+void WindowPane_Init(void*);
+void _Z25WindowPane_AllocateBufferP10WindowPaneP13SafeAllocatorij(void*,SafeAllocator*,int,unsigned int);
 #if defined(jpn)
 void func_02080654(void*,SafeAllocator*,const char*);
 #else
@@ -63,21 +63,21 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
         *(volatile unsigned int*)0x4001014 = 0;
         SafeAllocator* alloc = self->alloc;
         alloc->Reset();
-        self->lists = (List0204af64*)alloc->Allocate(0x40);
+        self->lists = (BackgroundGraphics*)alloc->Allocate(0x40);
         int words[2];
         __clear(words, sizeof(words));
-        List0204af64* list;
+        BackgroundGraphics* list;
         for (int i=0; i<2; i++) {
             list = self->lists+i;
-            _Z15Background_InitP12List0204af64(list);
+            _Z15Background_InitP18BackgroundGraphics(list);
             _Z21Background_SetMapSizePhi(list, words[i]);
-            list->b1c_lo=1;
-            list->b1c_hi=i;
+            list->subScreen_=1;
+            list->bgNumber_=i;
             Background_SetPriority(list,i);
-            _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(list,alloc);
-            _Z20Background_SetScrollP11Obj0204b5e8ii(list,0,0);
+            _Z22Background_AllocateMapP18BackgroundGraphicsP13SafeAllocator(list,alloc);
+            _Z20Background_SetScrollP18BackgroundGraphicsii(list,0,0);
         }
-        _Z26Background_AllocateScreensP11Foo0204af38iP13SafeAllocator(self->lists+1,1,alloc);
+        _Z26Background_AllocateScreensP18BackgroundGraphicsiP13SafeAllocator(self->lists+1,1,alloc);
         DisableSubBGVRAMBanks();
         MapVRAMBanksToSubBG(0x80);
         *(volatile unsigned short*)0x4001008 = (*(volatile unsigned short*)0x4001008 & 0x43) | 0xe00;
@@ -91,11 +91,11 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
         if (loader->GetTaskStatus(self->task) != 0) {
             void* out; void* data; unsigned int size; int value;
             loader->GetLoadedFileByID(self->task,&data,&size);
-            int count = _Z14Pac_CountFilesP19ActiveEntry02046900(data);
+            int count = _Z14Pac_CountFilesP9PacRecord(data);
             SafeAllocator* alloc=self->alloc;
-            List0204af64* list=self->lists;
+            BackgroundGraphics* list=self->lists;
             for (int i=0;i<count;i++) {
-                void* record=_Z11Pac_GetFileP11Rec020467f0iPPvPi(data,i,&out,&value);
+                void* record=_Z11Pac_GetFileP9PacRecordiPPvPi(data,i,&out,&value);
                 if (record) {
                     Background_LoadFile(list,record,alloc,value);
                     list=self->lists+1;
@@ -105,8 +105,8 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
             self->task=-1;
             list=self->lists;
             Background_FillRect(list,0,0,0,0x20,0x19,0);
-            _Z20Background_UploadMapP12List0204b0e8Pv(list,0);
-            Entry6759c* entry=_Z20Background_GetScreenP17EntryList0204af14j(self->lists+1,0);
+            _Z20Background_UploadMapP18BackgroundGraphicsPv(list,0);
+            Entry6759c* entry=_Z20Background_GetScreenP18BackgroundGraphicsj(self->lists+1,0);
             if (entry) {
                 void* data; unsigned int size=entry->size; data=entry->data;
                 _Z25CleanInvalidateCacheRangePKvj(data,size);
@@ -117,8 +117,8 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
             self->objects=(Node0207f7f0*)alloc[1].Allocate(0x380);
             for (result=0;result<4;result++) {
                 Node0207f7f0* obj=self->objects+result;
-                func_0204c684(obj);
-                _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(obj,alloc+1,self->value,0x600);
+                WindowPane_Init(obj);
+                _Z25WindowPane_AllocateBufferP10WindowPaneP13SafeAllocatorij(obj,alloc+1,self->value,0x600);
                 obj->lists=self->lists;
             }
             arg0->unknown_75_++;

@@ -10,34 +10,29 @@ extern char data_ov001_02165745[];
 extern "C" unsigned int func_ov001_0215a750(const char* arg0, void** arg1);
 extern "C" void func_ov001_02162678(int arg0, int arg1, int arg2, int arg3);
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
 
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 
 void Background_SetMapSize(unsigned char* obj, int value);
 
 extern "C" void Background_SetPriority(void*, int);
 
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
 extern "C" void func_020c9820();
 
 void Background_FlushFile(void* obj, char* str);
 
-struct SelfTag0204b3a0;
-void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
+void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8* obj, void* buf);
+void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(struct Struct_02020cb8_3* arg0);
+void Background_Destroy(struct BackgroundGraphics* obj);
 
 struct Struct_ov001_021624cc {
     unsigned char unknown_0_[0x1c];
@@ -70,30 +65,30 @@ extern "C" ARM int func_ov001_021624cc(void* arg0) {
             return 0;
         }
     }
-    int count = Pac_CountFiles((struct ActiveEntry02046900*)fileData);
+    int count = Pac_CountFiles((struct PacRecord*)fileData);
     for (int i = 0; i < count; i++) {
-        records[i] = (char*)Pac_GetFile((struct Rec020467f0*)fileData, i, &dummyPtr, &sizes[i]);
+        records[i] = (char*)Pac_GetFile((struct PacRecord*)fileData, i, &dummyPtr, &sizes[i]);
     }
     ReleaseMainBGVRAMBanks();
     MapVRAMBanksToMainBG(0x10);
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
     SetBg3ControlFields_02162678(0, 1, 1, 1);
-    Background_Init((struct List0204af64*)&s);
+    Background_Init((struct BackgroundGraphics*)&s);
     s.lo = 0;
     s.hi = 3;
     Background_SetPriority(&s, 0);
     Background_SetMapSize((unsigned char*)&s, 0);
-    Background_SetScroll((struct Obj0204b5e8*)&s, 0, 0);
+    Background_SetScroll((struct BackgroundGraphics*)&s, 0, 0);
     DelayThenSyncBit0_020c9820();
     for (int i = 0; i < count; i++) {
         char* record = records[i];
         Background_FlushFile(&s, record);
-        Background_UploadFile((struct SelfTag0204b3a0*)&s, record);
+        Background_UploadFile((struct BackgroundGraphics*)&s, record);
     }
     if (var8) {
         BackgroundLoader::RemoveLockGlobal();
     }
-    Background_UploadMap((struct List0204b0e8*)&s, 0);
-    ResetRecordList0204afb4((struct List0204afb4*)&s);
+    Background_UploadMap((struct BackgroundGraphics*)&s, 0);
+    Background_Destroy((struct BackgroundGraphics*)&s);
     return 1;
 }

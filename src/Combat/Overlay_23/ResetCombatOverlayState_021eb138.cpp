@@ -8,13 +8,13 @@ void BackupSubBgControlRegisters(struct SubBgControlBackup02074b64* obj);
 struct Struct020dfc40;
 void KeyTable_Reset(struct Struct020dfc40* p);
 
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204c684(void*);
+extern "C" void WindowPane_Init(void*);
 
 struct InitTarget0205cfd4;
-void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+void Window_Init(struct InitTarget0205cfd4* s);
 
 // USA: func_ov023_021eb138  (semantic: ResetCombatOverlayState_021eb138)
 extern "C" ARM void func_ov023_021eb138(void* obj, unsigned char flag) {
@@ -33,16 +33,16 @@ extern "C" ARM void func_ov023_021eb138(void* obj, unsigned char flag) {
     KeyTable_Reset(sub4);
 
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)((char*)obj + 0x44 + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)((char*)obj + 0x44 + i * 0x20));
     }
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)((char*)obj + 0x84 + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)((char*)obj + 0x84 + i * 0x20));
     }
     for (int i = 0; i < 3; i++) {
-        func_0204c684((char*)obj + 0x180 + i * 0xe0);
+        WindowPane_Init((char*)obj + 0x180 + i * 0xe0);
     }
 
-    InitStruct0205cfd4((struct InitTarget0205cfd4*)((char*)obj + 0xc4));
+    Window_Init((struct InitTarget0205cfd4*)((char*)obj + 0xc4));
 
     *(int*)((char*)obj + 0x420) = 0;
     *(int*)((char*)obj + 0x424) = 0;

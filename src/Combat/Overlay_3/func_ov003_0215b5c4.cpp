@@ -6,7 +6,7 @@ enum { Enum_ov003_0215b5c4_2400 = 0x960 };
 #endif
 
 #if defined(jpn)
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
 #endif
 
 struct Struct_0201099c_3;
@@ -14,11 +14,11 @@ struct Struct_0205de24_2;
 
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 const char* KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" int func_020420e8(const char* text, int large);
+extern "C" int Font_GetTextWidth(const char* text, int large);
 extern "C" void* memset(void* dst, int value, unsigned int length);
 extern "C" void func_ov003_0215b6f0(char* base, char* dst, int flag);
 #if !defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
 struct Struct_ov003_0215b5c4 {
@@ -55,7 +55,7 @@ extern "C" ARM void func_ov003_0215b5c4(Struct_ov003_0215b5c4* arg0) {
 #else
     int maxWidth = 0;
     for (int i = 0; i < self->count_; i++) {
-        short w = func_020420e8(KeyTable_Get((struct Container020e0310*)self->texts_, self->entries_[i]), 0);
+        short w = Font_GetTextWidth(KeyTable_Get((struct Container020e0310*)self->texts_, self->entries_[i]), 0);
         if (maxWidth < w) {
             maxWidth = w;
         }
@@ -76,8 +76,8 @@ extern "C" ARM void func_ov003_0215b5c4(Struct_ov003_0215b5c4* arg0) {
     memset(arg0->unknown_7c_, 0, Enum_ov003_0215b5c4_2400);
     func_ov003_0215b6f0((char*)arg0, arg0->unknown_7c_, 0);
 #if defined(jpn)
-    func_0205d304(arg0->unknown_f4_, arg0->unknown_7c_, 0, 1, 0, 1, 0);
+    Window_OpenPane(self->window_, self->buffer_, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(arg0->unknown_f4_, arg0->unknown_7c_, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(self->window_, self->buffer_, 0, 1, 0, 1, 0, 0);
 #endif
 }

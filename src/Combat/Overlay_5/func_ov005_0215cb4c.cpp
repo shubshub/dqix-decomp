@@ -20,7 +20,7 @@ struct Struct_ov005_02153954
 extern "C" void func_0209c830(Struct_02109bf4_2* arg0, int arg1);
 extern "C" int func_0209ca2c(void* arg0);
 
-extern "C" Struct_02109bf4_2 data_02109bf4;
+extern "C" Struct0209c830 g_bgmPlayer;
 
 // USA: func_ov005_0215cb4c
 extern "C" ARM int func_ov005_0215cb4c(Struct_ov005_02153954* arg0)
@@ -30,12 +30,12 @@ extern "C" ARM int func_ov005_0215cb4c(Struct_ov005_02153954* arg0)
     unsigned char var0 = arg0->unknown_3df3_;
     if (var0 == 0)
     {
-        func_0209c830(&data_02109bf4, 0x3d);
-        arg0->unknown_3df3_++;
+        SetValueAndActivate0209c830(&g_bgmPlayer, 0x3d);
+        self->fadeStep_++;
     }
     if (var0 == 1)
     {
-        if (func_0209ca2c(&data_02109bf4))
+        if (IsAnimationActive0209ca2c(&g_bgmPlayer))
             return 1;
         arg0->unknown_3dcc_ &= ~0x10000;
         arg0->unknown_3df3_ = 0;

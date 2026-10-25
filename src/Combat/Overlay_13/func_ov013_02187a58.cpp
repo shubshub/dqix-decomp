@@ -16,17 +16,17 @@ struct Struct_ov013_02187a58_2 {
     int unknown_0_;
     float unknown_4_;
 };
-struct Struct_0208e024;
-struct Struct_0208e024_2;
-extern "C" Struct_0208e024_2* func_0208e024(Struct_0208e024* arg0, int arg1, int arg2);
-#define func_0208e934(list, kind, index) ((Struct_ov013_02187a58*)func_0208e024((Struct_0208e024*)(list), (kind), (index)))
-struct Struct_0208e06c;
-extern "C" Struct_ov013_02187a58* func_0208e06c(Struct_0208e06c* arg0, int arg1);
-extern "C" int func_020dd11c(unsigned int, unsigned int);
-extern "C" int func_02053c6c(unsigned char*);
-struct Struct_02072a68_2;
-extern "C" void* func_02072a68(Struct_02072a68_2*, int);
-extern "C" int func_020d2ff0(const char*);
+struct List0208e024;
+struct Node0208e024;
+Node0208e024* FindNthNodeByKind0208e024(List0208e024* list, int kind, int index);
+#define func_0208e934(list, kind, index) ((SkillEntry02187a58*)FindNthNodeByKind0208e024((List0208e024*)(list), (kind), (index)))
+struct List0208e06c;
+SkillEntry02187a58* FindNodeById0208e06c(List0208e06c* list, int id);
+int GetTableByte020dd11c(unsigned int, unsigned int);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+struct TableA68;
+void* FindEntryByKey_02072a68(TableA68*, int);
+int STD_GetStringLength(const char*);
 extern "C" void __clear(void*, int);
 extern "C" void func_02050678(void*, short, short, const char*, int, unsigned char, short*, short*);
 extern "C" void func_020749ac(void*, int, int, int);
@@ -54,14 +54,14 @@ extern "C" ARM void func_ov013_02187a58(void* arg0, void* arg1) {
     char var12[32];
     char var13[16];
 
-    func_02050678(arg1, (short)(128 - (func_020d2ff0(var7) >> 2) * 10), 12, var7, 10, 15, &var8, &var9);
-    memset(var10, 0, sizeof(var10));
-    for (unsigned char var14 = 0; var14 < 10; var14++) {
-        Struct_ov013_02187a58_2* var15 = &var10[var14];
-        Struct_ov013_02187a58* var16 = func_0208e934(var0 + 0xc, var4, var14);
-        if (var16) {
-            var15->unknown_0_ = var16->unknown_0_;
-            var15->unknown_4_ = var16->unknown_2_2_;
+    func_02050678(canvas, (short)(128 - (STD_GetStringLength(title) >> 2) * 10), 12, title, 10, 15, &width, &height);
+    memset(entries, 0, sizeof(entries));
+    for (unsigned char i = 0; i < 10; i++) {
+        SkillSortEntry02187a58* sorted = &entries[i];
+        SkillEntry02187a58* skill = func_0208e934(menu + 0xc, kind, i);
+        if (skill) {
+            sorted->id = skill->id;
+            sorted->points = skill->points;
         }
     }
     func_020749ac(var10, 0, 9, 0);
@@ -110,22 +110,22 @@ struct Struct_0208e024;
 struct Struct_0208e06c;
 struct Struct_02072a68_2;
 
-extern "C" ARM struct Struct_ov013_02187a58_3* func_0208e024(struct Struct_0208e024* arg0, int arg1, int arg2);
-extern "C" ARM struct Struct_ov013_02187a58_3* func_0208e06c(struct Struct_0208e06c* arg0, int arg1);
-extern "C" ARM void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" ARM int func_020dd11c(unsigned int arg0, unsigned int arg1);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void* func_020421a0(void);
+ARM struct Node02187a58* FindNthNodeByKind0208e024(struct List0208e024* list, int kind, int index);
+ARM struct Node02187a58* FindNodeById0208e06c(struct List0208e06c* list, int id);
+ARM void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+ARM int GetTableByte020dd11c(unsigned int a, unsigned int b);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+void* MessageSystem_GetInstance(void);
 
 extern "C" void __clear(void* arg0, int arg1);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
 extern "C" float _ffltu(unsigned int v);
-extern "C" int func_020420e8(void* arg0, int arg1);
-extern "C" void func_0204f41c(void* arg0, short arg1, short arg2, void* arg3, int arg4,
-                              unsigned char arg5, short* arg6, short* arg7, int arg8);
-extern "C" void func_020749ac(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02046608(void* arg0, int arg1, int arg2, void* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_020e4864(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" int Font_GetTextWidth(void* p, int flag);
+extern "C" void func_0204f41c(void* ctx, short x, short y, void* str, int size,
+                              unsigned char palette, short* outA, short* outB, int flag);
+extern "C" void func_020749ac(void* arr, int lo, int hi, int mode);
+extern "C" void MessageSystem_FormatText(void* g, int a, int b, void* dst, int cap, int e, int f);
+extern "C" void func_020e4864(void* src, void* dst, int a, int b, int c, int d);
 
 extern signed char data_ov013_02187dc8[];
 extern char data_ov013_02187ec3;
@@ -166,8 +166,8 @@ extern "C" ARM void func_ov013_02187a58(void* arg0, void* arg1) {
     char var35[0x100];
     char var36[0x100];
 
-    func_0204f41c(arg1, (short)((0x100 - func_020420e8(var30, 0)) >> 1), 0xc, var30,
-                  0xa, 0xf, &var31, &var32, 0);
+    func_0204f41c(ctx, (short)((0x100 - Font_GetTextWidth(label, 0)) >> 1), 0xc, label,
+                  0xa, 0xf, &outA, &outB, 0);
 
     memset((void*)var34, (int)(0), (unsigned int)(0x50));
     for (unsigned char var37 = 0; var37 < 10; var37++) {
@@ -200,21 +200,21 @@ extern "C" ARM void func_ov013_02187a58(void* arg0, void* arg1) {
             if (var28 >= var44) {
                 var25 = 0xf;
             }
-            __clear(var33, 0x20);
-            sprintf(var33, &data_ov013_02187ec3, var44);
-            func_0204f41c(arg1, (short)(0x22 - func_020420e8(var33, 0)), (short)var29, var33,
-                          0xa, (unsigned char)var25, &var31, &var32, 0);
+            __clear(text, 0x20);
+            sprintf(text, &data_ov013_02187ec3, level);
+            func_0204f41c(ctx, (short)(0x22 - Font_GetTextWidth(text, 0)), (short)y, text,
+                          0xa, (unsigned char)palette, &outA, &outB, 0);
 
-            __clear(var35, 0x100);
-            __clear(var36, 0x100);
-            func_02046608(func_020421a0(), 0xa, var43->unknown_4_, var35, 0x100, 0, 0);
-            func_020e4864(var35, var36, 1, 0, 0, 0);
+            __clear(rawBuf, 0x100);
+            __clear(nameBuf, 0x100);
+            MessageSystem_FormatText(MessageSystem_GetInstance(), 0xa, n->field4, rawBuf, 0x100, 0, 0);
+            func_020e4864(rawBuf, nameBuf, 1, 0, 0, 0);
 
-            if (var43->unknown_3_7_ != 0 && *(signed char*)(var23 + 0x6a) >= 0) {
-                (*(short**)(var23 + 0x50))[var42] = (short)(func_020420e8(var36, 0) + 0x2e);
-                (*(short**)(var23 + 0x54))[var42] = (short)(var29 - 2);
-                if (var25 == 0xf) {
-                    (*(unsigned char**)(var23 + 0x58))[var42] = 1;
+            if (n->high != 0 && *(signed char*)(obj + 0x6a) >= 0) {
+                (*(short**)(obj + 0x50))[j] = (short)(Font_GetTextWidth(nameBuf, 0) + 0x2e);
+                (*(short**)(obj + 0x54))[j] = (short)(y - 2);
+                if (palette == 0xf) {
+                    (*(unsigned char**)(obj + 0x58))[j] = 1;
                 }
             }
 

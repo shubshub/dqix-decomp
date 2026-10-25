@@ -176,7 +176,7 @@ extern const char data_ov023_021fe273[];
 extern const char data_ov023_021fe284[];
 extern const char data_ov023_021fe2a0[];
 extern const char data_ov023_021fe2b7[];
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #if defined(jpn)
 extern const char data_ov023_021fd517[];
 extern const char data_ov023_021fd533[];
@@ -184,9 +184,9 @@ extern "C" void func_02073864(Struct_02072a68_2* arg0, SafeAllocator* arg1, cons
 extern "C" void func_020e1fc4(Struct_ov023_021f1868_7* arg0, SafeAllocator* arg1, const char* arg2, short* arg3, unsigned short arg4, int arg5, int arg6);
 #endif
 
-extern "C" Struct_ov023_021f1868_3* func_020421a0();
-extern "C" Struct_02048150* func_02010828(GameState* arg0);
-extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
+MessageSystem_021f1868* MessageSystem_GetInstance();
+ArrayContainsByteStruct* GameState_GetParty(GameState* gameState);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* array, int id);
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 void ClearFirstTwoWords0209a338(Pair0209a338* p);
 void SetupAndRunBufferedScript0209a470(Ctx0209a470* ctx, SafeAllocator* allocator, StreamHeader* file, int size);
@@ -199,12 +199,12 @@ void SetIntAt0x60(IntField0x60_0209ff64* titles, int value);
 void PollOv017Task0209ff6c(TaskState0209ff6c* titles);
 int AreFields60And64AllOnes_021f21f4(Fields60_021f21f4* titles);
 Member_021f1868* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int id);
-int AppendString02042058(char* dst, const char* src);
-void SetIndexedName02046574(Obj02046574* obj, int index, char* str);
-void InitObjFromCombatantId020e4bf4(void* obj, int id);
+int Text_Append(char* dst, const char* src);
+void MessageSystem_SetStringArgument(Obj02046574* obj, int index, char* str);
+void NameText_InitFromPartyMember(void* obj, int id);
 void** CallFunc020e52a0_020e5294(void* p, int key);
 void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
-void ReinitController02043204(char* messages);
+void MessageSystem_Reset(char* messages);
 void ClearStruct020a13c4(S020a13c4* table);
 void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int ids, unsigned short count, unsigned char mode);
 void* ResetAndReturnSelf020dfc2c(void* texts);
@@ -247,13 +247,13 @@ static inline int inline_ov023_021f1868(Struct_ov023_021f1868_6* arg0) { return 
 extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
 {
 #if defined(jpn)
-    GameState* var19 = GameState::GetInstance();
-    Struct_ov023_021f1868_8* var20 = _ZZ21inline_ov023_021f4c04vE1s;
-    Struct_ov023_021f1868_3* var0 = func_020421a0();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    int var2 = var20->unknown_18_;
-    int var3 = func_02086ef0(func_02010828(var19), var2);
-    if (var20->unknown_0_ == 0)
+    GameState* gameState = GameState::GetInstance();
+    BattleEnd_021f1868* end = _ZZ17GetGlobal021ffefcvE1s;
+    MessageSystem_021f1868* messages = MessageSystem_GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    int id = end->current_;
+    int inParty = ArrayContainsByte_02086ef0(GameState_GetParty(gameState), id);
+    if (end->step_ == 0)
     {
         arg0->unknown_77d1_ = 1;
         arg0->unknown_30_.Reset();
@@ -294,13 +294,13 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
                 Struct_ov023_021f1868* var7 = func_0200ff1c(var19, var2);
                 if (var7 != NULL)
                 {
-                    char var8[0x80];
-                    __clear(var8, sizeof(var8));
-                    func_02042058(var8, var6);
-                    func_02042058(var8, func_02072a68(&arg0->unknown_5af4_, 0x22));
-                    func_02046380(var0);
-                    func_02046574((Struct_02046574_2*)var0, 0, var7->unknown_134_);
-                    if (var3)
+                    char text[0x80];
+                    __clear(text, sizeof(text));
+                    Text_Append(text, name);
+                    Text_Append(text, FindEntryByKey_02072a68(&self->texts_, 0x22));
+                    func_02046380(messages);
+                    MessageSystem_SetStringArgument((Obj02046574*)messages, 0, member->name_);
+                    if (inParty)
                     {
                         func_0204500c(var0, var8, 1);
                         var0->unknown_17e2_ = 0;
@@ -337,7 +337,7 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         int var11 = arg0->unknown_57b4_->unknown_68_;
         if (var11 > 0)
         {
-            ReinitController02043204((char*)messages);
+            MessageSystem_Reset((char*)messages);
             SafeAllocator* idAllocator = &self->menuAllocator_;
             idAllocator->Reset();
             count = self->titles_->count_;
@@ -376,44 +376,44 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         }
         else if (var11 == 0)
         {
-            arg0->unknown_30_.Reset();
-            arg0->unknown_5770_ = NULL;
-            arg0->unknown_57b4_ = NULL;
-            arg0->unknown_77d1_ = 0;
-            Struct_0208cb08* var18 = func_02094a00();
-            func_02094b40(var18);
-            func_02094b34(var18, 0x65, 500, 0, 0);
-            var20->unknown_0_ = 8;
+            self->allocator_.Reset();
+            self->skillTable_ = NULL;
+            self->titles_ = NULL;
+            self->busy_ = 0;
+            FontBankLoader* music = FontBankLoader_GetInstance();
+            BlankFunction02094b40(music);
+            BlankFunction02094b34(music, 0x65, 500, 0, 0);
+            end->step_ = 8;
         }
     }
 #else
-    GameState* var19 = GameState::GetInstance();
-    Struct_ov023_021f1868_8* var20 = _ZZ21inline_ov023_021f4c04vE1s;
-    Struct_ov023_021f1868_3* var21 = func_020421a0();
-    BackgroundLoader* var22 = BackgroundLoader::GetInstance();
-    int var23 = var20->unknown_18_;
-    int var24 = func_02086ef0(func_02010828(var19), var23);
-    if (var20->unknown_0_ == 0)
+    GameState* gameState = GameState::GetInstance();
+    BattleEnd_021f1868* end = _ZZ17GetGlobal021ffefcvE1s;
+    MessageSystem_021f1868* messages = MessageSystem_GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    int id = end->current_;
+    int inParty = ArrayContainsByte_02086ef0(GameState_GetParty(gameState), id);
+    if (end->step_ == 0)
     {
         arg0->unknown_77d1_ = 1;
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        arg0->unknown_30_.Reset();
-        unsigned int var25;
-        void* var26 = LoadFileIntoMemory(data_ov023_021fe200, data_0211e33c, &var25);
-        func_0209a338((Struct_0200f3a4_8*)arg0->unknown_e98_);
-        if (var26 != NULL)
-            func_0209a470((Struct_0209a470*)arg0->unknown_e98_, &arg0->unknown_30_, (Struct_02013fb4*)var26, var25);
-        var26 = ExtractFileFromGP2(func_02072a68(&arg0->unknown_5904_, 0x2b), func_02072a68(&arg0->unknown_5904_, 0x21), &var25);
-        arg0->unknown_557c_ = (Struct_02072a68_2*)arg0->unknown_30_.Allocate(8);
-        func_020727d8((Struct_020727d8*)arg0->unknown_557c_);
-        if (var26 != NULL)
-            func_020728ac(arg0->unknown_557c_, &arg0->unknown_30_, var26, var25, 0, 0, 0);
-        var26 = ExtractFileFromGP2(data_ov023_021fe25e, data_ov023_021fe273, &var25);
-        arg0->unknown_5580_ = arg0->unknown_30_.Allocate(0xc);
-        func_020e526c(arg0->unknown_5580_);
-        if (var26 != NULL)
-            func_020e5604(arg0->unknown_5580_, &arg0->unknown_30_, var26, var25);
+        self->allocator_.Reset();
+        unsigned int size;
+        void* file = LoadFileIntoMemory(data_ov023_021fe200, g_fileLoadBuffer, &size);
+        ClearFirstTwoWords0209a338((Pair0209a338*)self->script_);
+        if (file != NULL)
+            SetupAndRunBufferedScript0209a470((Ctx0209a470*)self->script_, &self->allocator_, (StreamHeader*)file, size);
+        file = ExtractFileFromGP2(FindEntryByKey_02072a68(&self->texts_, 0x2b), FindEntryByKey_02072a68(&self->texts_, 0x21), &size);
+        self->skillTable_ = (TableA68*)self->allocator_.Allocate(8);
+        ResetListHeader020727d8((List020727d8*)self->skillTable_);
+        if (file != NULL)
+            func_020728ac(self->skillTable_, &self->allocator_, file, size, 0, 0, 0);
+        file = ExtractFileFromGP2(data_ov023_021fe25e, data_ov023_021fe273, &size);
+        self->items_ = self->allocator_.Allocate(0xc);
+        Zero4Bytes_020e526c(self->items_);
+        if (file != NULL)
+            func_020e5604(self->items_, &self->allocator_, file, size);
         BackgroundLoader::RemoveLockGlobal();
         arg0->unknown_55c4_ = NULL;
         var20->unknown_4_ = var22->QueueLoadFile(data_ov023_021fe284, NULL);
@@ -452,34 +452,34 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
                 Struct_ov023_021f1868* var31 = func_0200ff1c(GameState::GetInstance(), var23);
                 if (var31 != NULL)
                 {
-                    char var32[0x200];
-                    char var33[12];
-                    char var34[0x80];
-                    __clear(var32, sizeof(var32));
-                    func_02042058(var32, var30);
-                    func_02042058(var32, func_02072a68(&arg0->unknown_5904_, 0x22));
-                    func_02046380(var21);
-                    func_02046574((Struct_02046574_2*)var21, 0, var31->unknown_134_);
-                    func_020e4bf4(var33, var23);
-                    var21->unknown1_0_ = var33;
-                    if (var29->unknown_6_4_ == 1)
+                    char text[0x200];
+                    char actorName[12];
+                    char item[0x80];
+                    __clear(text, sizeof(text));
+                    Text_Append(text, name);
+                    Text_Append(text, FindEntryByKey_02072a68(&self->texts_, 0x22));
+                    func_02046380(messages);
+                    MessageSystem_SetStringArgument((Obj02046574*)messages, 0, member->name_);
+                    NameText_InitFromPartyMember(actorName, id);
+                    messages->actor_ = actorName;
+                    if (skill->type_ == 1)
                     {
-                        void** var35 = func_020e5294(arg0->unknown_5580_, var29->unknown_2_);
-                        var21->unknown_8_ = var35;
-                        __clear(var34, sizeof(var34));
-                        func_020e4864(*var35, var34, 1, 0, 0, 0);
-                        func_02046574((Struct_02046574_2*)var21, 1, var34);
+                        void** entry = CallFunc020e52a0_020e5294(self->items_, skill->item_);
+                        messages->item_ = entry;
+                        __clear(item, sizeof(item));
+                        func_020e4864(*entry, item, 1, 0, 0, 0);
+                        MessageSystem_SetStringArgument((Obj02046574*)messages, 1, item);
                     }
                     else
                     {
-                        func_02046574((Struct_02046574_2*)var21, 1, func_02072a68(arg0->unknown_557c_, (short)(var29->unknown_4_0_ + 100)));
+                        MessageSystem_SetStringArgument((Obj02046574*)messages, 1, FindEntryByKey_02072a68(self->skillTable_, (short)(skill->prefix_ + 100)));
                     }
-                    int var36 = 2;
-                    if (var29->unknown_6_4_ == 4 || var29->unknown_6_4_ == 0x10)
-                        var36 = 1;
-                    func_02046574((Struct_02046574_2*)var21, var36, func_02072a68(arg0->unknown_557c_, (short)(var29->unknown_1_3_ + 200)));
-                    func_020465c0((Struct_020465c0*)var21, 0, var29->unknown_5_4_);
-                    if (var24)
+                    int slot = 2;
+                    if (skill->type_ == 4 || skill->type_ == 0x10)
+                        slot = 1;
+                    MessageSystem_SetStringArgument((Obj02046574*)messages, slot, FindEntryByKey_02072a68(self->skillTable_, (short)(skill->suffix_ + 200)));
+                    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, skill->value_);
+                    if (inParty)
                     {
                         func_0204500c(var21, var32, 1, 0xe3);
                         var21->unknown_19b2_ = 0;
@@ -514,7 +514,7 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         int var37 = arg0->unknown_55c4_->unknown_68_;
         if (var37 > 0)
         {
-            ReinitController02043204((char*)messages);
+            MessageSystem_Reset((char*)messages);
             char* menu = self->menu_; SafeAllocator* idAllocator = (SafeAllocator*)(menu + 0x1af8);
             idAllocator->Reset();
             count = self->titles_->count_;
@@ -566,15 +566,15 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         }
         else if (var37 == 0)
         {
-            arg0->unknown_30_.Reset();
-            arg0->unknown_557c_ = NULL;
-            arg0->unknown_5580_ = NULL;
-            arg0->unknown_55c4_ = NULL;
-            arg0->unknown_77d1_ = 0;
-            Struct_0208cb08* var52 = func_02094a00();
-            func_02094b40(var52);
-            func_02094b34(var52, 0x65, 500, 0, 0);
-            var20->unknown_0_ = 8;
+            self->allocator_.Reset();
+            self->skillTable_ = NULL;
+            self->items_ = NULL;
+            self->titles_ = NULL;
+            self->busy_ = 0;
+            FontBankLoader* music = FontBankLoader_GetInstance();
+            BlankFunction02094b40(music);
+            BlankFunction02094b34(music, 0x65, 500, 0, 0);
+            end->step_ = 8;
         }
     }
 #endif
@@ -608,15 +608,15 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
         self->firstGuide_ = 0;
         self->busy_ = 0;
         SetMainBrightness(gameState->GetResources(), 0, 0xf);
-        FontBankLoader* music = GetGlobal02109400_02094a00();
+        FontBankLoader* music = FontBankLoader_GetInstance();
         BlankFunction02094b40(music);
         BlankFunction02094b34(music, 0x65, 500, 0, 0);
         end->step_++;
     }
     else if (var20->unknown_0_ == 8)
     {
-        if (func_02094b4c(func_02094a00()))
-            var20->unknown_0_++;
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
+            end->step_++;
     }
     else if (var20->unknown_0_ == 9)
     {

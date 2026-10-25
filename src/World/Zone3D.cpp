@@ -20,7 +20,7 @@ extern "C"
     void* func_02053c6c(void*);
     void _Z25RunBufferedStream0205e104iiP12StreamHeaderi(const char*, SafeAllocator*, const void*, unsigned int);
 
-    void* _Z26CopyInternalFields0207df50P11Foo0207df50(void*);
+    void* _Z16VramState_RewindP11Foo0207df50(void*);
     void _Z17VramState_RestorePc(void*);
     void _Z14VramState_SavePc(void*);
 
@@ -68,7 +68,7 @@ extern char data_020ef1f3[];
 extern char data_020ef1f8[];
 extern char data_020ef1fe[];
 extern char data_020ef204[];
-extern char data_020ef20b[];
+extern char ZoneChest_itemIconPathFormat[];
 extern char data_020ef222[];
 extern char data_020ef22c[];
 
@@ -84,8 +84,8 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     pAllocator_68_ = pAllocator_4c_;
     pAllocator_68_->Reset();
 
-    func_0207df50(unknown_ptr_50_);
-    func_02013750(this, true);
+    _Z16VramState_RewindP11Foo0207df50(vramState_);
+    _Z22ResetBigStruct02013750Pvi(this, true);
 
     previousZoneID_ = currentZoneID_;
     currentZoneID_ = newID;
@@ -95,11 +95,11 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     unknown_424_ = 1;
     firstBMDJStruct_41c_ = 0;
     firstModel_418_ = NULL;
-    unknown_476_ = 0;
+    numLootables_ = 0;
     numChests_ = 0;
-    unknown_82c_ = 0;
+    terrainElementCount_ = 0;
     unknown_474_ = 0;
-    unknown_82c_ = 0;
+    terrainElementCount_ = 0;
     unknown_42c_ = 0;
 
     mapListLoadHandle_ = -1;
@@ -108,8 +108,8 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     mapAMDJLoadHandle_ = -1;
     atsAMBLLoadHandle_ = -1;
 
-    unknown_478_ = 0;
-    unknown_47c_ = 0;
+    lootables_ = 0;
+    chests_ = 0;
     unknown_834_ = 0;
     unknown_2820_ = 0;
 
@@ -127,7 +127,7 @@ void Zone3D::SwitchZone(unsigned short newID, int)
 
     atmosphericEffects_.Reset();
     lighting_.Reset();
-    _Z14ItemTable_InitPv(&unknown_struct_2754_[0]);
+    _Z14ItemTable_InitPv(&containerItems_[0]);
 
     pUnknownStruct_8_ = func_02099950(uVar3, newID);
     unknown_4_ = pUnknownStruct_8_->unknown_2_;
@@ -142,8 +142,8 @@ void Zone3D::SwitchZone(unsigned short newID, int)
         }
     }
 
-    *(bool*)((int)func_0208a9b4() + 0x9c) = pUnknownStruct_8_->unknown_c_high_ != 0;
-    func_02094d00(&unknown_struct_2724_[0]);
+    *(bool*)((int)_Z24GetData02108f0c_0208a9b4v() + 0x9c) = pUnknownStruct_8_->unknown_c_high_ != 0;
+    _Z23ClearThreeWords02094d00P29ClearThreeWords02094d00Struct(&grottoChestList_[0]);
 
     grottoTileMapData_420_ = NULL;
 

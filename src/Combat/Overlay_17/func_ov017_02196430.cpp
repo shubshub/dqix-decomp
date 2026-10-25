@@ -113,65 +113,65 @@ struct Struct_ov017_021d6438 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" Struct_ov017_02196430_3* func_02012fe4(void);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" int func_02046b08(void** arg0);
-extern "C" int func_02046b24(Struct_02015438** arg0);
-extern "C" int func_02053cdc(int* arg0);
-extern "C" int func_02039d7c(char* arg0);
-extern "C" int func_02039760(void* arg0);
-extern "C" int func_02077a20(Struct_02077788_2* arg0);
-extern "C" void func_ov017_0219a674(unsigned char* arg0);
-extern "C" short func_ov017_021a4754(Vector3fix* arg0, int arg1, Vector3fix* arg2);
-extern "C" void func_ov017_0219b33c(Struct_ov017_02196430_8* arg0, Struct_ov017_02196430_4* arg1);
-extern "C" int func_ov017_0219735c(unsigned char* arg0, unsigned short arg1);
-extern "C" int func_020795cc(unsigned char* arg0);
-extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
-extern "C" int func_ov017_02196fc8(GameObject* arg0, GameObject* arg1, int arg2);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_02076ccc(void* arg0, int arg1);
-extern "C" unsigned short func_ov017_021971c4(Struct_ov017_02196430_8* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" int func_0202c540(void* arg0);
-struct Struct_0207d7f4;
-extern "C" Struct_0207d7f4* func_0207d78c();
-extern "C" Struct_ov017_02196430_6* func_0207d9bc(Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" void func_ov017_021b6f18(void* arg0);
-extern "C" void func_ov017_02196c08(unsigned char* arg0);
-extern "C" void func_ov017_021b6e70(Struct_ov017_02196430_5* arg0, int arg1);
-extern "C" int func_ov017_021970a0(int arg0);
-extern "C" void func_ov017_021b7104(void* arg0, Struct_ov017_02196430_5* arg1);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
+extern "C" Work02196430* Zone3D_GetInstance(void);
+void* GetField0x3f8Address_0200fd0c(GameState* state);
+int IsField0Null_02046b08(void** obj);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24** obj);
+int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
+int GetByte0x26c_02039d7c(char* obj);
+int GetIntField0x264_02039760(void* obj);
+int GetField0x8OrDefault02077a20(Outer02077a20* p);
+void InitObj0219a674(unsigned char* self);
+short GetAbsAngleDeltaBetween_021a4754(Vector3fix* p0, int baseAngle, Vector3fix* p2);
+extern "C" void func_ov017_0219b33c(Ctx02196430* self, Msg02196430* msg);
+int HasMatchingHalfword_0219735c(unsigned char* obj, unsigned short key);
+int GetField0x17dBits4To5IfFlag8_020795cc(unsigned char* obj);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* arr, int value);
+int CheckProximity_02196fc8(GameObject* self, GameObject* other, int extra);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GameState_GetProtagonistIndex(GameState* state);
+void TrySetMode02076ccc(void* obj, int mode);
+extern "C" unsigned short func_ov017_021971c4(Ctx02196430* self);
+extern "C" int func_0202c508(void* obj);
+extern "C" int func_0202c540(void* obj);
+struct Entry0207d9bc;
+Entry0207d9bc* GetData02108ea8_0207d78c();
+EventEntry02196430* FindEntryByHalfword(Entry0207d9bc* table, unsigned short id);
+extern "C" void func_ov017_021b6f18(void* node);
+void InitStruct_02196c08(unsigned char* obj);
+extern "C" void func_ov017_021b6e70(Event02196430* evt, int index);
+extern "C" int func_ov017_021970a0(int mode);
+extern "C" void func_ov017_021b7104(void* node, Event02196430* evt);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 
 extern Struct_ov017_021d6438 data_ov017_021d6438;
 
 // USA: func_ov017_02196430
 // JPN: func_ov017_02196ff8
-extern "C" ARM int func_ov017_02196430(GameResources* arg0) {
-    Struct_ov017_02196430_8* var0 = (Struct_ov017_02196430_8*)arg0;
-    GameState* var1 = GameState::GetInstance();
-    void* var2 = func_0202ae18();
-    Struct_ov017_02196430_7* var3 = var0->unknown_36f8_;
-    Struct_ov017_02196430* var4 = (Struct_ov017_02196430*)var1->GetUnknownGameObject();
-    Struct_ov017_02196430_8* var5 = (Struct_ov017_02196430_8*)GetGameResources();
-    Struct_ov017_02196430_3* var6 = func_02012fe4();
-    LightingManager* var7 = LightingManager::GetInstance();
-    Struct_02048150* var8 = (Struct_02048150*)func_02010828(var1);
-    unsigned short var9;
-    int var10;
-    int var11;
-    int var12;
-    int var13;
-    int var14 = var5->unknown_42e8_;
-    Struct_ov017_02196430_4 var15;
-    Struct_ov017_02196430_4 var16;
-    Struct_ov017_02196430_4 var17;
-    Struct_ov017_02196430_5 var18;
-    Vector3fix var19;
-    Vector3fix var20;
-    Vector3fix var21;
-    Struct_ov017_021d6438 var22;
+extern "C" ARM int func_ov017_02196430(GameResources* resources) {
+    Ctx02196430* self = (Ctx02196430*)resources;
+    GameState* game = GameState::GetInstance();
+    void* session = func_0202ae18();
+    Entry02196430* entry = self->entry;
+    Actor02196430* player = (Actor02196430*)game->GetUnknownGameObject();
+    Ctx02196430* res = (Ctx02196430*)GetGameResources();
+    Work02196430* work = Zone3D_GetInstance();
+    LightingManager* lighting = LightingManager::GetInstance();
+    ArrayContainsByteStruct* party = (ArrayContainsByteStruct*)GameState_GetParty(game);
+    unsigned short tag;
+    int special;
+    int facing;
+    int index;
+    int i;
+    int allowRepeat = res->allowRepeat;
+    Msg02196430 approachMsg;
+    Msg02196430 contactMsg;
+    Msg02196430 nearbyMsg;
+    Event02196430 evt;
+    Vector3fix pos;
+    Vector3fix offset;
+    Vector3fix dir;
+    Kinds02196430 kinds;
 
     if (var0->unknown_42e2_ != 0) {
         return 2;
@@ -244,13 +244,13 @@ extern "C" ARM int func_ov017_02196430(GameResources* arg0) {
                     }
                     var28 = var32 < var31 + 0x1000;
                 }
-                if (var28 && func_0202c508(var2)) {
-                    func_ov017_0219a674((unsigned char*)&var15);
-                    var15.unknown_0_ = 9;
-                    var15.unknown_2_ = var27->unknown_0_.unknown_4_;
-                    var15.unknown_10_ = func_ov017_021a4754(&var4->unknown_0_.position_, (short)var4->unknown_0_.rotation_.y, &var27->unknown_0_.position_);
-                    if (var15.unknown_10_ < 0x1922) {
-                        func_ov017_0219b33c(var0, &var15);
+                if (touching && func_0202c508(session)) {
+                    InitObj0219a674((unsigned char*)&approachMsg);
+                    approachMsg.kind = 9;
+                    approachMsg.field2 = other->obj3D.actorIndex_;
+                    approachMsg.angle = GetAbsAngleDeltaBetween_021a4754(&player->obj3D.position_, (short)player->obj3D.rotation_.y, &other->obj3D.position_);
+                    if (approachMsg.angle < 0x1922) {
+                        func_ov017_0219b33c(self, &approachMsg);
                     }
                 }
                 continue;
@@ -311,9 +311,9 @@ extern "C" ARM int func_ov017_02196430(GameResources* arg0) {
             if (var27->unknown_130_ == 0 && !(var27->unknown_17d_ & 8)) {
                 continue;
             }
-            if (var27->unknown_130_ != 8 && var27->unknown_130_ != 9 && var27->unknown_130_ != 0) {
-                var27->unknown_166_ = func_020100a8(var1);
-                func_02076ccc(var27, 8);
+            if (other->mode != 8 && other->mode != 9 && other->mode != 0) {
+                other->field166 = GameState_GetProtagonistIndex(game);
+                TrySetMode02076ccc(other, 8);
             }
             var26 = var27->unknown_16a_;
             var23 = 1;
@@ -369,12 +369,12 @@ extern "C" ARM int func_ov017_02196430(GameResources* arg0) {
         if (var10) {
             var18.unknown_e_ = 1;
         }
-        var18.unknown_1_ = func_020100a8(var1);
-        var18.unknown_4_ = var26;
-        var18.unknown_2_ = var12;
-        func_ov017_021b6e70(&var18, var12);
-        if (var25) {
-            var18.unknown_f_ = 0;
+        evt.field_0x1 = GameState_GetProtagonistIndex(game);
+        evt.id = id;
+        evt.tag = index;
+        func_ov017_021b6e70(&evt, index);
+        if (direct) {
+            evt.field_0xf = 0;
         } else {
             var18.unknown_f_ = func_ov017_021970a0(var11);
         }

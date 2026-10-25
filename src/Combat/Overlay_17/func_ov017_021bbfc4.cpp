@@ -6,13 +6,7 @@
 #include <std_library_functions.h>
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_02013fb4;
 struct Struct_020213fc;
@@ -87,25 +81,25 @@ struct Struct_ov017_021bbfc4_3 { char unknown_0_[0x5cac]; unsigned char unknown_
 #endif
 int IsSubBrightnessTransitionActive(GameResources*);
 extern "C" int* func_0202ae18();
-extern "C" unsigned char* func_020100f8(char*);
-extern "C" Zone3D* func_02012fe4();
+unsigned char* GetFieldIfFlag4_020100f8(char*);
+extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void func_020531f0(GameObject*);
 extern "C" void func_ov017_021bb27c(Struct_ov017_021bbfc4_5*);
 extern "C" void* GetMainBG1CharacterBase();
 extern "C" void* GetMainBG1ScreenBase();
 extern "C" int func_0208dc00(Struct_02013fb4*, int, int);
 void SetBrightness(GameResources*, int, int);
-extern "C" Struct_ov017_021bbfc4_2* func_0200fd0c(GameState*);
-extern "C" void func_020213fc(Struct_020213fc*, int);
-extern "C" void func_02070378(char*);
-extern "C" int func_02071488(Struct_02013fb4*, int, int, Struct_02071488*);
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" void* func_0205ec34();
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" Struct_0204bd7c* func_02033fa0(void*);
-extern "C" int func_0204bd7c(Struct_0204bd7c*);
+Ticket021bbfc4* GetField0x3f8Address_0200fd0c(GameState*);
+void SetFlag0x9c6_020213fc(SetFlagStruct*, int);
+void InitStruct02070378(char*);
+int RunScriptAndAdjustObj02071488(StreamHeader*, int, int, Obj02071488*);
+unsigned int* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int*, unsigned int);
+extern "C" void* Scenario_GetInstance();
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+int Scenario_TestFlag(int, unsigned char*, int);
+ColorHolder0204bd7c* GetPtrField0x114_02033fa0(void*);
+int ConvertColorToDecimalOffset30000(ColorHolder0204bd7c*);
 extern "C" int func_0202c540(int*);
 extern "C" int func_0201079c(char*);
 extern "C" int func_020107d0(char*);
@@ -121,21 +115,21 @@ extern "C" void func_ov017_021bc6e0(Struct_ov017_021bbfc4_5*, int, int);
 extern "C" int func_0209c3ac(char*);
 extern "C" void func_0209c2e0(void*, int, int);
 void SetMainBrightness(GameResources*, int, int);
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 
 // USA: func_ov017_021bbfc4
-extern "C" ARM int func_ov017_021bbfc4(Struct_ov017_021bbfc4_5* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    GameResources* var2 = GetGameResources();
-    int* var3 = func_0202ae18();
-    GameObject* var4 = var0->GetUnknownGameObject();
-    func_020100f8((char*)var0);
-    Zone3D* var5 = func_02012fe4();
-    if (IsSubBrightnessTransitionActive(var2)) return arg0->unknown_a_;
-    for (int var6 = 0; var6 < 4; ++var6) {
-        GameObject* var7 = var0->GetPartyMemberByIndex(var6);
-        if (var7) func_020531f0(var7);
+extern "C" ARM int func_ov017_021bbfc4(LoadEvent021bbfc4* self) {
+    GameState* game = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GameResources* resources = GetGameResources();
+    int* search = func_0202ae18();
+    GameObject* original = game->GetUnknownGameObject();
+    GetFieldIfFlag4_020100f8((char*)game);
+    Zone3D* zone = Zone3D_GetInstance();
+    if (IsSubBrightnessTransitionActive(resources)) return self->next;
+    for (int i = 0; i < 4; ++i) {
+        GameObject* member = game->GetPartyMemberByIndex(i);
+        if (member) func_020531f0(member);
     }
     if (!var1->GetTaskStatus(arg0->unknown_74_)) return arg0->unknown_a_;
     if (var1->GetDetailedTaskStatus(arg0->unknown_74_) != BackgroundLoader::TaskStatus_Complete) {
@@ -184,24 +178,24 @@ extern "C" ARM int func_ov017_021bbfc4(Struct_ov017_021bbfc4_5* arg0) {
         arg0->unknown_1_ = 1;
         return arg0->unknown_a_;
     }
-    var1->RemoveTask(arg0->unknown_74_);
-    if (arg0->unknown_50_ & 0x100) func_020466e4(func_020d6c00(), 1);
-    arg0->unknown_118_ = arg0->unknown_c_.unknown_c_;
-    int var15;
-    int var16;
-    int var17;
-    int var18;
-    Struct_ov017_021bbfc4* var19 = (Struct_ov017_021bbfc4*)func_0205ec34();
-    if (arg0->unknown_98_) func_0206df6c(var19, var19->unknown_8c_, arg0->unknown_52_ + 0x38e, 0);
-    var18 = 0;
-    if (func_0206dfb0((int)var19, var19->unknown_8c_, arg0->unknown_52_ + 0x38e)) var18 = 1;
-    if (var18) {
-        SetBrightness(var2, 0, 0x28);
-        ((Struct_ov017_021bbfc4_3*)var0)->unknown_71f4_ = 0;
-        func_ov017_021bb27c(arg0);
-        arg0->unknown_1_ = 1;
-        func_020213fc((Struct_020213fc*)var2->unknown_ptr_36d0, 0);
-        return arg0->unknown_a_;
+    loader->RemoveTask(self->task);
+    if (self->flags & 0x100) FlagWord_SetBits(GlobalFlags_GetInstance(), 1);
+    self->copiedParameter = self->script.parameter;
+    int transition;
+    int restart;
+    int reposition;
+    int exists;
+    Flags021bbfc4* flags = (Flags021bbfc4*)Scenario_GetInstance();
+    if (self->reset) Scenario_SetFlag(flags, flags->bits, self->key + 0x38e, 0);
+    exists = 0;
+    if (Scenario_TestFlag((int)flags, flags->bits, self->key + 0x38e)) exists = 1;
+    if (exists) {
+        SetBrightness(resources, 0, 0x28);
+        ((GameView021bbfc4*)game)->pending = 0;
+        func_ov017_021bb27c(self);
+        self->inactive = 1;
+        SetFlag0x9c6_020213fc((SetFlagStruct*)resources->unknown_ptr_36d0, 0);
+        return self->next;
     }
     var15 = 0;
     var16 = 0;
@@ -263,15 +257,15 @@ extern "C" ARM int func_ov017_021bbfc4(Struct_ov017_021bbfc4_5* arg0) {
         arg0->unknown_1_ = 1;
         return arg0->unknown_a_;
     }
-    if (func_0202b7d8(var3) && arg0->unknown_c_.unknown_6_ && arg0->unknown_116_ < 0 && func_0202c508(var3)) func_ov017_021bc6e0(arg0, -1, arg0->unknown_50_);
-    arg0->unknown_94_ = func_0209c3ac(data_02109bf4);
-    if (arg0->unknown_c_.unknown_4_ == 3) func_0209c2e0(data_02109bf4, 0, 0);
-    if (((arg0->unknown_50_ & 1) || (arg0->unknown_50_ & 4)) && !arg0->unknown_fd_) {
-        int var32 = GetBrightness((GameResources*)var2, false);
-        if (var32 > 0) SetMainBrightness(var2, 16, 30);
-        else SetMainBrightness(var2, -16, 30);
-        arg0->unknown_101_ = 1;
-        arg0->unknown_102_ = 1;
+    if (CheckField0NonZero_0202b7d8(search) && self->script.request && self->searchIndex < 0 && func_0202c508(search)) func_ov017_021bc6e0(self, -1, self->flags);
+    self->status = GetField0xcd0209c3ac(g_bgmPlayer);
+    if (self->script.kind == 3) func_0209c2e0(g_bgmPlayer, 0, 0);
+    if (((self->flags & 1) || (self->flags & 4)) && !self->restart) {
+        int brightness = GetBrightness((GameResources*)resources, false);
+        if (brightness > 0) SetMainBrightness(resources, 16, 30);
+        else SetMainBrightness(resources, -16, 30);
+        self->ready = 1;
+        self->done = 1;
     }
     if (arg0->unknown_fd_ && arg0->unknown_106_) arg0->unknown_106_ = 0;
     arg0->unknown_fd_ = 0;

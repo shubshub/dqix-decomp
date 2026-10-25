@@ -1,15 +1,9 @@
 #include <globaldefs.h>
-
-struct Vec3Target0202e5c0 {
-    char pad[4];
-    int x;
-    int y;
-    int z;
-};
+#include "Graphics/Camera.h"
 
 // Main, originally SetVec3At0x4 (USA 0x0202e5c0, EUR 0x0202e5d0, JPN 0x0202e130)
-ARM void Camera_SetPosition(struct Vec3Target0202e5c0* obj, int x, int y, int z) {
-    obj->x = x;
-    obj->y = y;
-    obj->z = z;
+ARM void Camera_SetPosition(Camera* camera, int x, int y, int z) {
+    camera->position.x = x;
+    camera->position.y = y;
+    camera->position.z = z;
 }

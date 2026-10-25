@@ -91,7 +91,7 @@ extern "C" int func_ov023_021e6de4(ProfileEditor02187adc* self);
 int CalculateAge_02098f20(int year, int month, int day);
 extern "C" void func_ov012_0218adac(ProfileEditor02187adc* self, int animate, int design, int keepPage);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
-void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
+void Window_ClosePane(Entry_0205d6a0* window, int a);
 extern "C" void func_ov023_021e6e60(ProfileEditor02187adc* self);
 extern "C" void func_ov012_0218943c(ProfileEditor02187adc* self);
 
@@ -248,8 +248,8 @@ extern "C" ARM void func_ov012_02187adc(Struct_ov012_02187adc* arg0)
         }
         if (var6)
         {
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-            arg0->unknown_1370_++;
+            Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+            self->step_++;
             return;
         }
         return;

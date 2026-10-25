@@ -2,12 +2,12 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0201099c_10;
-struct Struct_0207c484;
-struct Struct_02052e14;
-struct Struct_02052e2c;
-struct Struct_020a06ec;
-struct Struct_020a0258;
+struct ItemTable;
+struct KeyedList0207c484;
+struct Field150Holder02052e14;
+struct Field150Holder02052e2c;
+struct S_a06ec;
+struct S_a0258;
 
 struct Struct_ov003_0215582c_8 {
     char unknown_0_[8];
@@ -113,20 +113,20 @@ struct Struct_ov003_0215582c_7 {
     char unknown_1d4_[1];
 };
 
-void* GetPtrField0x2a04_02010828(GameState* battleStruct);
+void* GameState_GetParty(GameState* battleStruct);
 struct Stats0215582c* GetFieldAt0x150_02053c6c(unsigned char* obj);
 int OffsetByIndexTimes16_02155e14(int base, int idx);
 short* GetField150Ptr0x488(struct Field150Holder02052e14* obj);
 extern "C" int func_0207c378(void* obj, int value, int amount, int key);
 int GetArrayEntryByIndex_02156034(void* obj);
 void PartyMember_SetVocation(unsigned char* obj, int index);
-int GetField0x3acValue_020100a8(GameState* battleStruct);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 int LoadBattleBlock020ac4c0(void* dst);
 void AddClamped10BitFieldHighAt0x28_020a06ec(struct S_a06ec* p, unsigned int amount);
 void AddClamped10BitFieldAt0x1c_020a0258(struct S_a0258* p, unsigned int amount);
 int CopyInBattleField0x7540_020ac494(void* src);
 extern "C" int func_0207c7a0(void* map, int value, int key);
-struct ItemEntry0215582c* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+struct ItemEntry0215582c* ItemTable_Find(struct ItemTable* c, int key);
 extern "C" void func_02052d7c(void* obj, int index, int value);
 int DecrementKeyedStackAmount0207c484(struct KeyedList0207c484* obj, int value, int amount, int key);
 short* GetField150Ptr0x488_02052e2c(struct Field150Holder02052e2c* obj);
@@ -145,11 +145,11 @@ static inline int inline_ov003_0215582c(unsigned int arg0) {
 }
 
 // USA: func_ov003_0215582c
-extern "C" ARM void func_ov003_0215582c(struct Struct_ov003_0215582c_5* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_ov003_0215582c_7* var1 = (struct Struct_ov003_0215582c_7*)func_02010828(var0);
-    struct Struct_ov003_0215582c_4* var2 = (struct Struct_ov003_0215582c_4*)var0->GetPartyMemberByIndex(arg0->unknown_1f7_);
-    if (var2 == NULL) {
+extern "C" ARM void func_ov003_0215582c(struct Self0215582c* self) {
+    GameState* gs = GameState::GetInstance();
+    struct Party0215582c* party = (struct Party0215582c*)GameState_GetParty(gs);
+    struct Combatant0215582c* c = (struct Combatant0215582c*)gs->GetPartyMemberByIndex(self->combatantId);
+    if (c == NULL) {
         return;
     }
     struct Struct_ov003_0215582c* var3 = func_02053c6c((unsigned char*)var2);
@@ -190,9 +190,9 @@ extern "C" ARM void func_ov003_0215582c(struct Struct_ov003_0215582c_5* arg0) {
 
     PartyMember_SetVocation((unsigned char*)stats, GetArrayEntryByIndex_02156034(self));
 
-    var5 = func_020100a8(var0);
-    if (var5 == var2->unknown_4_) {
-        GameState* var12 = GameState::GetInstance();
+    value = GameState_GetProtagonistIndex(gs);
+    if (value == c->id) {
+        GameState* g = GameState::GetInstance();
 #if defined(jpn)
         struct Struct_ov003_0215582c_6* var13 = (struct Struct_ov003_0215582c_6*)((char*)var12 + 0x3c + 0x5400);
 #else
@@ -228,17 +228,17 @@ extern "C" ARM void func_ov003_0215582c(struct Struct_ov003_0215582c_5* arg0) {
         }
     }
 
-    if (var8[7] == 0x4680 && func_0207c7a0(var1->unknown_1d4_, 0x4680, 7) == 0) {
-        bool var20[2];
-        for (int var21 = 0; var21 < 7; var21++) {
-            struct Struct_ov003_0215582c_10* var22 = func_020dedd0((struct Struct_0201099c_10*)arg0->unknown_178_, var8[var21]);
-            struct Struct_ov003_0215582c_9* var23;
-            if (var22 != NULL && (var23 = var22->unknown_0_) != NULL) {
-                var20[0] = var23->unknown_7_3_;
-                var20[1] = var23->unknown_7_4_;
-                if (var20[var2->unknown_150_->unknown_49c_0_] == 0) {
-                    if (var23->unknown_7_5_ == 0) {
-                        var8[var21] = -1;
+    if (set[7] == 0x4680 && func_0207c7a0(party->bag, 0x4680, 7) == 0) {
+        bool allowed[2];
+        for (int i = 0; i < 7; i++) {
+            struct ItemEntry0215582c* e = ItemTable_Find((struct ItemTable*)self->list, set[i]);
+            struct ItemFlags0215582c* d;
+            if (e != NULL && (d = e->data) != NULL) {
+                allowed[0] = d->allowedMale;
+                allowed[1] = d->allowedFemale;
+                if (allowed[c->data->female] == 0) {
+                    if (d->keep == 0) {
+                        set[i] = -1;
                     }
                 }
             }

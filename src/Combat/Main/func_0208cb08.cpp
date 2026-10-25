@@ -11,17 +11,14 @@ struct Struct_0208cb08_2 {
     unsigned int unknown_4_;
     unsigned short unknown_8_[4];
 };
-struct Struct_02015438;
-struct Struct_02074b64 { unsigned char unknown_0_[0x14]; };
-struct Struct_0204b12c;
-struct Struct_0204af38;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0208cb08_3 {
-    unsigned char unknown_0_[0x1c];
-    unsigned char unknown_1c_;
-    unsigned char unknown_1d_[3];
+struct HeadNode02046b24;
+struct SubBgControlBackup02074b64 { unsigned char registers[0x14]; };
+struct BackgroundGraphics;
+struct PacRecord;
+struct Input_0208cb08 {
+    unsigned char padding[0x1c];
+    unsigned char flags;
+    unsigned char padding_0x1d[3];
 };
 struct Struct_0208cb08_4 {
     SafeAllocator unknown_0_;
@@ -50,20 +47,20 @@ struct Struct_0208cb08_5 {
     unsigned char unknown_d7_[3];
     unsigned short unknown_da_;
 };
-unsigned int* GetDataPtr02114e04_020d6c00();
-void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
+unsigned int* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int*, unsigned int);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 void BackupSubBgControlRegisters(SubBgControlBackup02074b64*);
 void OrGlobalFlag0x40_020dc2bc();
 void SetSubBrightness(GameResources*, int, int);
 int IsSubBrightnessTransitionActive(GameResources*);
 void Background_SetMapSize(unsigned char*, int);
-void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
-void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 void SetSubBg0Control0208c9cc(int, int, int, int, int);
-int Pac_CountFiles(ActiveEntry02046900*);
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
 extern "C" void Background_SetPriority(void*, int);
 extern "C" int SpriteContext_LoadFile(void*, void*, int, int);
@@ -82,10 +79,10 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
     GameResources* resources = GameState::GetInstance()->GetResources();
     if (object->state == 0) {
         SetFlags00(resources, 0x6000);
-        OrBitsIntoField0_020466e4(GetDataPtr02114e04_020d6c00(), 1);
-        FontBankLoader* global = GetGlobal02109400_02094a00();
+        FlagWord_SetBits(GlobalFlags_GetInstance(), 1);
+        FontBankLoader* global = FontBankLoader_GetInstance();
         int notification = 0x67;
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->unknown_ptr_array_36fc[0]) != 0x2d) {
+        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) != 0x2d) {
             if (object->target < 0) notification = 0x32;
             else {
                 int var4 = arg0->unknown_d2_ / 20;
@@ -96,7 +93,7 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
         BlankFunction02094b30(global, notification, 0);
         ++object->state;
     } else if (object->state == 1) {
-        if (AlwaysTrue02094b4c(GetGlobal02109400_02094a00())) ++object->state;
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance())) ++object->state;
     } else if (object->state == 2) {
         BackupSubBgControlRegisters(&object->backup);
         OrGlobalFlag0x40_020dc2bc();
@@ -110,9 +107,9 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
         object->input.flags = (object->input.flags & ~0xf) | 1;
         object->input.flags &= ~0xf0;
         Background_SetPriority(&object->input, 0);
-        Background_AllocateMap((AllocTarget0204b12c*)&object->input, &arena->inputAllocator);
-        Background_AllocateScreens((Foo0204af38*)&object->input, 1, &arena->inputAllocator);
-        Background_SetScroll((Obj0204b5e8*)&object->input, 0, 0);
+        Background_AllocateMap((BackgroundGraphics*)&object->input, &arena->inputAllocator);
+        Background_AllocateScreens((BackgroundGraphics*)&object->input, 1, &arena->inputAllocator);
+        Background_SetScroll((BackgroundGraphics*)&object->input, 0, 0);
         SetSubBg0Control0208c9cc(0, 0, 15, 0, 0);
         object->pending = 1;
         object->source = object->filename;
@@ -131,11 +128,11 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
         void* file;
         unsigned int length;
         loader->GetLoadedFileByID(object->taskId, &file, &length);
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int count = Pac_CountFiles((PacRecord*)file);
         int index = 0;
         int size;
         for (; index < count; ++index) {
-            void* data = Pac_GetFile((Rec020467f0*)file, index, &record, &size);
+            void* data = Pac_GetFile((PacRecord*)file, index, &record, &size);
             SpriteContext_LoadFile(object->resource, data, size, (int)&arena->resourceAllocator);
         }
         func_0205aed0(arg0->unknown_60_, arg0->unknown_b4_, 3, 0x40);
@@ -159,28 +156,28 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
             arena->fileAllocator.Reset();
             KeyTable_Load(object->container, &arena->fileAllocator, file, length);
         }
-        var0->RemoveTask(arg0->unknown_bc_);
-        arg0->unknown_bc_ = -1;
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 7) {
-        func_0208bf78(arg0);
-        ++arg0->unknown_d5_;
-    } else if (arg0->unknown_d5_ == 8) {
-        if (!arg0->unknown_d6_) {
-            REG_SUB_BG_0208cb08.unknown_8_[0] &= ~3;
-            REG_SUB_BG_0208cb08.unknown_8_[1] = (REG_SUB_BG_0208cb08.unknown_8_[1] & ~3) | 2;
-            REG_SUB_BG_0208cb08.unknown_8_[2] = (REG_SUB_BG_0208cb08.unknown_8_[2] & ~3) | 3;
-            REG_SUB_BG_0208cb08.unknown_8_[3] = (REG_SUB_BG_0208cb08.unknown_8_[3] & ~3) | 1;
-            REG_SUB_BG_0208cb08.unknown_0_ = (REG_SUB_BG_0208cb08.unknown_0_ & ~0x1f00) | 0x1900;
-            if (func_02046b24((Struct_02015438**)var1->unknown_ptr_array_36fc[0]) == 0x2d) {
-                if (!IsSubBrightnessTransitionActive(var1)) SetSubBrightness(var1, 0, 25);
-            } else if (!(arg0->unknown_da_ & 0x10)) SetSubBrightness(var1, 0, 8);
-            ++arg0->unknown_d5_;
-        } else func_0208bf78(arg0);
-    } else if (arg0->unknown_d5_ == 9) {
-        if (!IsSubBrightnessTransitionActive(var1)) {
-            arg0->unknown_d4_ = 1;
-            arg0->unknown_d5_ = 0;
+        loader->RemoveTask(object->taskId);
+        object->taskId = -1;
+        ++object->state;
+    } else if (object->state == 7) {
+        func_0208bf78(object);
+        ++object->state;
+    } else if (object->state == 8) {
+        if (!object->mode) {
+            REG_SUB_BG_0208cb08.backgrounds[0] &= ~3;
+            REG_SUB_BG_0208cb08.backgrounds[1] = (REG_SUB_BG_0208cb08.backgrounds[1] & ~3) | 2;
+            REG_SUB_BG_0208cb08.backgrounds[2] = (REG_SUB_BG_0208cb08.backgrounds[2] & ~3) | 3;
+            REG_SUB_BG_0208cb08.backgrounds[3] = (REG_SUB_BG_0208cb08.backgrounds[3] & ~3) | 1;
+            REG_SUB_BG_0208cb08.display = (REG_SUB_BG_0208cb08.display & ~0x1f00) | 0x1900;
+            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
+                if (!IsSubBrightnessTransitionActive(resources)) SetSubBrightness(resources, 0, 25);
+            } else if (!(object->flags & 0x10)) SetSubBrightness(resources, 0, 8);
+            ++object->state;
+        } else func_0208bf78(object);
+    } else if (object->state == 9) {
+        if (!IsSubBrightnessTransitionActive(resources)) {
+            object->complete = 1;
+            object->state = 0;
         }
     }
 }

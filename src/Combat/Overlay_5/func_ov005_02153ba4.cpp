@@ -12,13 +12,13 @@
 
 #define REG_DISPCNT (*(volatile unsigned int*)0x04000000)
 
-struct Struct_0201e830;
-struct Struct_0201099c_14;
-struct Struct_02020cb8;
-struct Struct_0205cfd4;
-struct Struct_ov002_0215505c_2;
-struct Struct_0205bef8;
-struct Struct_02052df8;
+struct S_e830;
+struct Struct020dfc40;
+struct BackgroundGraphics;
+struct InitTarget0205cfd4;
+struct Obj021e1318;
+struct GridCursor;
+struct Field150Holder02052df8;
 
 struct Struct_ov005_02155d6c_2 {
     char unknown_0_[0x88];
@@ -149,24 +149,24 @@ struct Struct_ov005_02153954 {
 #endif
 };
 
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void func_02074af4(void* arg0);
-extern "C" char* func_02012fe4();
+extern "C" void __clear(void* buffer, unsigned long size);
+extern "C" void func_02074af4(void* state);
+extern "C" char* Zone3D_GetInstance();
 short GetFieldAt0x7e_0201e830(S_e830* p);
 void KeyTable_Reset(Struct020dfc40* texts);
 void ClearFields_021e20c0(void* layout);
-void Background_Init(List0204af64* bg);
-void InitStruct0205cfd4(InitTarget0205cfd4* window);
-extern "C" void func_0204c684(void* canvas);
+void Background_Init(BackgroundGraphics* bg);
+void Window_Init(InitTarget0205cfd4* window);
+extern "C" void WindowPane_Init(void* canvas);
 extern "C" void func_ov023_021dc134(void* window, int a, int b);
 void ClearObj_021e1318(Obj021e1318* list);
 extern "C" void func_ov023_021dad78(void* table);
 extern "C" void func_ov005_021536e0(void* frame);
-void* GetPtrField0x2a04_02010828(GameState* gameState);
+void* GameState_GetParty(GameState* gameState);
 unsigned char GetTableByte0215a948(void* unused, int index);
 unsigned char GetTableByte0215a918(void* unused, int index);
 short GetShortFromArray0xc10_0207c620(unsigned char* p, unsigned int list);
-void GridCursor_Init(Struct_0205bef8* cursor);
+void GridCursor_Init(GridCursor* cursor);
 MemberScreen* GetField1c_021a193c(int* p);
 int CountPositiveEntries0207c638(void* p, unsigned int list);
 short GetHalfwordEntryFromField150(Field150Holder02052df8* member, int part);
@@ -179,7 +179,7 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
     self->unk_e7d = 0;
     func_02074af4(self->screenState_);
     self->layers_ = (REG_DISPCNT & 0x1f00) >> 8;
-    self->unk_3dc2 = GetFieldAt0x7e_0201e830((S_e830*)(func_02012fe4() + REGION(0x8c,0x6c)));
+    self->unk_3dc2 = GetFieldAt0x7e_0201e830((S_e830*)(Zone3D_GetInstance() + REGION(0x8c,0x6c)));
     self->allocator_.ResetAllocatorPointer();
     self->modelAllocator_.ResetAllocatorPointer();
     for (int i = 0; i < 8; i++)
@@ -199,22 +199,22 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
     ClearFields_021e20c0(self->layout_);
     self->unk_e64 = NULL;
     self->unk_e68 = 0;
-    Background_Init((List0204af64*)self->backgrounds_[0]);
-    Background_Init((List0204af64*)self->backgrounds_[1]);
-    Background_Init((List0204af64*)self->backgrounds_[2]);
-    InitStruct0205cfd4((InitTarget0205cfd4*)self->window_);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[0]);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[1]);
+    Background_Init((BackgroundGraphics*)self->backgrounds_[2]);
+    Window_Init((InitTarget0205cfd4*)self->window_);
     for (int i = 0; i < 3; i++)
-        func_0204c684(self->canvases_[i]);
+        WindowPane_Init(self->canvases_[i]);
     self->pixels_ = NULL;
     func_ov023_021dc134(self->infoWindow_, -1, 0);
     ClearObj_021e1318((Obj021e1318*)self->sortList_);
     func_ov023_021dad78(self->modelTable_);
     func_ov005_021536e0(self->frame_);
     for (int i = 0; i < 36; i++)
-        func_0204719c(&self->models_[i]);
+        SprSprite_Init(&self->models_[i]);
     for (int i = 0; i < 24; i++)
-        func_0204719c(&self->slotModels_[i]);
-    func_0204719c(&self->dragModel_);
+        SprSprite_Init(&self->slotModels_[i]);
+    SprSprite_Init(&self->dragModel_);
     self->dragged_ = -1;
     self->unk_3d7c = 0;
     self->unk_3d80 = 0;
@@ -235,7 +235,7 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
         self->slots_[i].loadedItem_ = -1;
     }
     GameState* gameState = GameState::GetInstance();
-    char* party = (char*)GetPtrField0x2a04_02010828(gameState);
+    char* party = (char*)GameState_GetParty(gameState);
     for (int i = 0; i < 8; i++)
         self->itemCounts_[i] = GetShortFromArray0xc10_0207c620((unsigned char*)(party + 0x1d4), GetTableByte0215a948(self, i));
     self->unk_3da8 = 0;
@@ -260,7 +260,7 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
     self->task_ = 0;
     memset(&self->flags_, 0, sizeof(self->flags_));
     self->unk_3dc0 = -1;
-    GridCursor_Init((Struct_0205bef8*)self->cursor_);
+    GridCursor_Init((GridCursor*)self->cursor_);
     self->cursor_[0x3d] = 0;
     self->unk_3dd0 = 0;
     self->unk_3dd1 = 0;
@@ -281,26 +281,26 @@ extern "C" ARM void func_ov005_02153ba4(EquipmentMenu* self) {
         arg0->unknown_4284_[var10] = 0;
 #endif
     }
-    arg0->unknown_3de2_ = 0;
-    arg0->unknown_3de4_ = 0;
-    arg0->unknown_3de8_ = 0;
-    arg0->unknown_3dec_ = 0;
-    arg0->unknown_3df0_ = 3;
-    arg0->unknown_3df1_ = 30;
-    arg0->unknown_3df2_ = 30;
-    arg0->unknown_3df3_ = 0;
-    Struct_ov005_02153ba4_2* var12 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    int* var13 = var12->unknown_4ec_;
-    int var14 = var12->unknown_4e8_;
-    for (int var15 = 0; var15 < 8; var15++) {
-        unsigned char var16 = func_ov005_0215a948(arg0, var15);
-        int var17 = func_ov005_0215a918(arg0, var15);
-        int var18 = func_0207c638(var7 + 0x1d4, var16);
-        short var19[4];
-        __clear(var19, sizeof(var19));
-        for (int var20 = 0; var20 < var14; var20++) {
-            void* var21 = func_0200ff1c(var6, var13[var20]);
-            if (var21 == NULL)
+    self->animationX_ = 0;
+    self->ticks_ = 0;
+    self->animationTime_ = 0;
+    self->animationPhase_ = 0;
+    self->blinks_ = 3;
+    self->blinkTimer_ = 30;
+    self->blinkTimer2_ = 30;
+    self->fadeStep_ = 0;
+    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    int* members = screen->members_;
+    int memberCount = screen->memberCount_;
+    for (int kind = 0; kind < 8; kind++) {
+        unsigned char list = GetTableByte0215a948(self, kind);
+        int part = GetTableByte0215a918(self, kind);
+        int count = CountPositiveEntries0207c638(party + 0x1d4, list);
+        short equipped[4];
+        __clear(equipped, sizeof(equipped));
+        for (int i = 0; i < memberCount; i++) {
+            void* member = GetCombatantWithFlag0x100_0200ff1c(gameState, members[i]);
+            if (member == NULL)
                 continue;
             var19[var20] = func_02052df8((Struct_02052df8*)var21, var17);
             if (var19[var20] <= 0)

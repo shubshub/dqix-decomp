@@ -57,22 +57,22 @@ struct Struct_ov023_021edc08_3 { char unknown_0_[0x240c]; ActiveGrottoClass unkn
 struct Struct_ov023_021edc08_3 { char unknown_0_[0x23ec]; ActiveGrottoClass unknown_23ec_; };
 #endif
 
-struct Struct_ov023_021edc08_4 { short unknown_0_, unknown_2_; short unknown_4_[3]; };
-struct Struct_ov023_021fd870 { int unknown_0_[6]; };
-extern "C" Struct_ov023_021edc08_2 _ZZ21inline_ov023_021f4c04vE1s;
-extern Struct_02109bf4_4 data_02109bf4;
-extern const Struct_ov023_021fd870 data_ov023_021fd870;
+struct GrottoRewardView { short field0_, field2_; short ids_[3]; };
+struct SoundIds { int ids_[6]; };
+extern "C" CombatGlobal _ZZ17GetGlobal021ffefcvE1s;
+extern Actor0209c678 g_bgmPlayer;
+extern const SoundIds data_ov023_021fd870;
 #if defined(jpn)
 extern const char data_ov023_021fd45c[];
 extern "C" void func_0204500c(Struct_02081870*, const char*, int);
 #endif
 extern "C" void* func_0202ae18();
-extern "C" Struct_02081870* func_020421a0();
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" void func_ov017_021c9ad4(unsigned short);
+TextRenderer* MessageSystem_GetInstance();
+unsigned int* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int*, unsigned int);
+void EnqueueEventTag86_021c9ad4(unsigned short);
 extern "C" void func_ov017_021a23b0(GameResources*, int);
-extern "C" void func_0209c678(Struct_02109bf4_4*, int);
+void BgmPlayer_FadeOut(Actor0209c678*, int);
 extern "C" void func_ov000_0216d370(void*, int, int, int);
 extern "C" void* func_02057924();
 extern "C" void func_02057f00(void*, int);
@@ -88,13 +88,13 @@ extern "C" void func_0206efc4(void*);
 extern "C" void func_020a1ef0(int);
 extern "C" void func_ov023_021f52f8(void*, void*);
 extern "C" int func_0202c540(void*);
-extern "C" void func_02046380(Struct_02081870*);
-extern "C" Struct_ov023_021edc08_3* func_02012fe4();
-extern "C" void func_020e46c4(void*);
-extern "C" void* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" Struct_ov023_021edc08_5 func_ov023_021ed804(Struct_ov023_021edc08_5, void*);
-extern "C" void func_ov023_021edf38(void*, Struct_ov023_021edc08_5*);
-extern "C" const char* func_020e51cc(int);
+extern "C" void func_02046380(TextRenderer*);
+extern "C" ZoneData* Zone3D_GetInstance();
+void Clear12Bytes020e46c4(void*);
+void* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+extern "C" Words021edf38 func_ov023_021ed804(Words021edf38, void*);
+void SetWords_021edf38_021edf38(void*, Words021edf38*);
+const char* StandardStrings_Get(int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_02081870*, const char*, int, int);
 #endif
@@ -117,21 +117,21 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
     GameState::GetInstance();
 #endif
 
-    GameResources* var1 = GetGameResources();
-    void* var2 = func_0202ae18();
-    Struct_02081870* var3 = func_020421a0();
-    func_020466e4(func_020d6c00(), 0x20000);
-    func_ov017_021c9ad4(arg0->unknown_2a0_->unknown_8_);
-    func_ov017_021a23b0(var1, arg0->unknown_2a0_->unknown_8_);
-    func_0209c678(&data_02109bf4, 0);
-    func_ov000_0216d370(arg0->unknown_c18_, 0, 0, 1);
-    void* var4 = func_02057924();
-    Struct_ov023_021fd870 var5 = data_ov023_021fd870;
-    for (int* var6 = var5.unknown_0_; *var6 >= 0; ++var6) func_02057f00(var4, *var6);
-    if (arg0->unknown_ea4_) {
-        func_020d6f0c(arg0->unknown_ea4_);
-        func_020d6d18((Struct_020d6d18_2*)arg0->unknown_ea4_);
-        arg0->unknown_ea4_ = 0;
+    GameResources* resources = GetGameResources();
+    void* mode = func_0202ae18();
+    TextRenderer* renderer = MessageSystem_GetInstance();
+    FlagWord_SetBits(GlobalFlags_GetInstance(), 0x20000);
+    EnqueueEventTag86_021c9ad4(self->battle_->event_);
+    func_ov017_021a23b0(resources, self->battle_->event_);
+    BgmPlayer_FadeOut(&g_bgmPlayer, 0);
+    func_ov000_0216d370(self->camera_, 0, 0, 1);
+    void* sound = func_02057924();
+    SoundIds sounds = data_ov023_021fd870;
+    for (int* id = sounds.ids_; *id >= 0; ++id) func_02057f00(sound, *id);
+    if (self->manager_) {
+        DestroyAllocatorAt0xa28(self->manager_);
+        ConstructEntryManager020d6d18((Container020d6d18*)self->manager_);
+        self->manager_ = 0;
     }
     func_ov000_021823a4(arg0->unknown_6ffc_);
     func_0203a54c(func_02039e70());
@@ -163,33 +163,33 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
     func_ov023_021f52f8(_ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_f4_, var7);
     if (func_0202c540(var2) && arg0->unknown_2a0_->unknown_25_) {
 #if defined(jpn)
-        GameObject* var10 = var0->GetPartyMemberByIndex(0);
-        DetailedTreasureMapData* var11 = func_02012fe4()->unknown_240c_.GetDetailedData();
-        char var12[128];
-        sprintf(var12, data_ov023_021fd45c, *(const char**)((char*)var10 + 0x134), (char*)var11 + 0x5a);
-        func_0204500c(var3, var12, 1);
+        GameObject* member = game->GetPartyMemberByIndex(0);
+        DetailedTreasureMapData* detail = Zone3D_GetInstance()->grotto_.GetDetailedData();
+        char message[128];
+        sprintf(message, data_ov023_021fd45c, *(const char**)((char*)member + 0x134), (char*)detail + 0x5a);
+        func_0204500c(renderer, message, 1);
 #else
-        func_02046380(var3);
-        Struct_ov023_021edc08_4* var13 = (Struct_ov023_021edc08_4*)&func_02012fe4()->unknown_23ec_.GetDetailedData()->regular_;
-        Struct_ov023_021edc08_5 var14;
-        func_020e46c4(&var14);
-        Struct_ov003_02162f40* var15 = arg0->unknown_2a0_;
-        for (int var16 = 0; var16 < 3; ++var16) {
-            void* var17 = func_0206f4f0(&var15->unknown_678_, var13->unknown_4_[var16]);
-            if (var17) {
-                const Struct_ov023_021edc08_5& var18 = func_ov023_021ed804(var14, var17);
-                func_ov023_021edf38(&var14, const_cast<Struct_ov023_021edc08_5*>(&var18));
-                var3->unknown1_10_ = &var14;
+        func_02046380(renderer);
+        GrottoRewardView* rewards = (GrottoRewardView*)&Zone3D_GetInstance()->grotto_.GetDetailedData()->regular_;
+        Words021edf38 words;
+        Clear12Bytes020e46c4(&words);
+        BattleInfo* battle = self->battle_;
+        for (int i = 0; i < 3; ++i) {
+            void* found = SearchWithComparator0206f4f0(&battle->rewards_, rewards->ids_[i]);
+            if (found) {
+                const Words021edf38& copy = func_ov023_021ed804(words, found);
+                SetWords_021edf38_021edf38(&words, const_cast<Words021edf38*>(&copy));
+                renderer->argument_ = &words;
                 break;
             }
         }
-        char var19[256];
-        sprintf(var19, func_020e51cc(200));
-        func_0204500c(var3, var19, 1, 0xe3);
+        char message[256];
+        sprintf(message, StandardStrings_Get(200));
+        func_0204500c(renderer, message, 1, 0xe3);
 
 #endif
-        var3->unknown_998_ = 1;
-        func_0209c6d8(&data_02109bf4, 0x36);
+        renderer->active_ = 1;
+        ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x36);
     }
     if (func_0202c508(var2) && arg0->unknown_2a0_->unknown_c_ == 19) {
         Struct_020e385c* var20 = func_020e3808();

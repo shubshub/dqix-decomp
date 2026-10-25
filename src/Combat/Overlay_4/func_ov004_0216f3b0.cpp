@@ -2,16 +2,16 @@
 #include "Resource/GameResources.h"
 
 
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" void* func_ov017_021b1d44(void* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021b1e24(void* arg0, void* arg1);
-struct Struct_ov004_0215883c_4;
-extern "C" unsigned char func_ov017_021b2060(Struct_ov004_0215883c_4* arg0);
-struct Struct_ov004_0215883c_3;
-extern "C" unsigned char func_ov017_021b204c(Struct_ov004_0215883c_3* arg0);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
+extern "C" void func_ov011_021848a0(void* obj, int val);
+extern "C" void* func_ov017_021b1d44(void* p, int a, int b);
+extern "C" void FieldTask_ConnectWifi(void* a, void* b);
+struct Obj24_021b2060;
+unsigned char GetSubByteField439_021b2060(Obj24_021b2060* obj);
+struct Obj24_021b204c;
+unsigned char GetSubByteField438_021b204c(Obj24_021b204c* obj);
+extern "C" void* func_ov011_021849c8(void* obj);
+extern "C" void* func_ov023_021f6880(void* obj, int id);
 
 struct Struct_ov004_02171048_4 { char unknown_0_[4]; unsigned char* unknown_4_; };
 extern Struct_ov004_02171048_4 data_ov004_02171048;
@@ -41,10 +41,10 @@ extern "C" ARM int func_ov004_0216f3b0(void* arg0) {
         goto returnOne;
     }
 
-    if (var3 == 1) {
-        func_ov017_021b1e24(var2, var1);
-        if (func_ov017_021b2060((Struct_ov004_0215883c_4*)var2)) {
-            if (func_ov017_021b204c((Struct_ov004_0215883c_3*)var2)) {
+    if (flag == 1) {
+        FieldTask_ConnectWifi(five, list);
+        if (GetSubByteField439_021b2060((Obj24_021b2060*)five)) {
+            if (GetSubByteField438_021b204c((Obj24_021b204c*)five)) {
 #if defined(jpn)
                 if (*(int*)((char*)var0 + 0x4000 + 0x1e4) == 0) {
 #else

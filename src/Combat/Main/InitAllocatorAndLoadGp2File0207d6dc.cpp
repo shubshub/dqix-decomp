@@ -4,7 +4,7 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Filesystem/FileIO.h"
 
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void ItemTable_Init(void* obj);
 
 extern "C" void* ItemTable_LoadIds(void* a, void* b, void* c, unsigned int d, int e, unsigned int f);
@@ -12,14 +12,14 @@ extern "C" void* ItemTable_LoadIds(void* a, void* b, void* c, unsigned int d, in
 #if defined(jpn)
 extern "C" void func_020e0484(void*, SafeAllocator*, char*, int, unsigned int, int);
 #endif
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern char* g_itemDataArchive;
 extern char* g_itemDataFile;
 
 // USA: func_0207d6dc
 ARM void* InitAllocatorAndLoadGp2File0207d6dc(SafeAllocator* self, int param1, int param2) {
     unsigned int allocSize = (unsigned int)param2 << 8;
-    void* mem = AllocateAligned4_02012d88(&data_02114e20, allocSize);
+    void* mem = AllocatorUnion_AllocateRounded(&g_mainAllocator, allocSize);
     self->CreateTypeA(mem, allocSize);
     self->Reset();
     ItemTable_Init((char*)self + 0x14);

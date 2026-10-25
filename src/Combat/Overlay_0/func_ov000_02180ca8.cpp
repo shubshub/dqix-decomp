@@ -72,20 +72,20 @@ struct Struct_ov000_02180ca8_2  {
     char unknown_0_[0x138];
     Struct_ov000_02180ca8* unknown_138_;
 };
-struct Struct_0204af14;
-struct Struct_0204b878;
-struct Struct_ov000_02180ca8_3  {
-    char unknown_0_[0x11c];
-    char unknown_11c_[0x54];
-    Struct_ov000_02180ca8_4* unknown_170_;
-    char unknown_174_[0x8c4 - 0x174];
-    char unknown_8c4_[0x930 - 0x8c4];
-    char unknown_930_[0x940 - 0x930];
-    int unknown_940_;
-    int unknown_944_;
-    char unknown_948_[8];
-    int unknown_950_;
-    unsigned char unknown_954_;
+struct BackgroundGraphics;
+struct Obj0204b878;
+struct State02180ca8  {
+    char padding0[0x11c];
+    char display[0x54];
+    DisplayEntry02180ca8* displayEntries;
+    char padding174[0x8c4 - 0x174];
+    char entryList[0x930 - 0x8c4];
+    char padding930[0x940 - 0x930];
+    int xOffset;
+    int yOffset;
+    char padding948[8];
+    int selected;
+    unsigned char mode;
 #if defined(jpn)
     char unknown_955_[0x1b64 - 0x955];
 #else
@@ -103,18 +103,18 @@ struct Struct_ov000_02180ca8_3  {
     int unknown_1d1c_[16];
     unsigned char unknown_1d5c_;
 };
-extern "C" int func_ov000_0217fe30(Struct_ov000_02180ca8_3*);
-extern "C" void func_0205ac40(void*, void*);
-extern "C" int func_ov000_021719f8(int*);
-extern "C" int func_ov000_02174e34(int, int);
-extern "C" Struct_0203c1c8* func_ov000_02174e1c(void*, int);
-extern "C" int func_ov000_02171ffc(Struct_ov000_02180ca8_5*);
+extern "C" int func_ov000_0217fe30(State02180ca8*);
+extern "C" void SpriteContext_DrawSprite(void*, void*);
+int HasAnyFlags_021719f8_021719f8(int*);
+int GetHPCategory02174e34(int, int);
+Struct0203c1c8* GetSlotSubField0x68_ov000_02174e1c(void*, int);
+extern "C" int func_ov000_02171ffc(Action02180ca8*);
 #if defined(jpn)
 extern "C" void func_0203c1c8(Struct_0203c1c8*, int);
 #else
 extern "C" void func_0203c1c8(Struct_0203c1c8*);
 #endif
-void* Background_GetScreen(EntryList0204af14*, unsigned int);
+void* Background_GetScreen(BackgroundGraphics*, unsigned int);
 void CallFunc0204b620IfField0x14_0204b878(Obj0204b878*, int, int, int, short, short, short, short, unsigned short);
 extern const int data_ov000_02183674[11];
 static inline int inline_ov000_02180ca8(int arg0)  { return arg0 >= 0 && arg0 <= 3; }
@@ -147,8 +147,8 @@ extern "C" ARM void func_ov000_02180ca8(Struct_ov000_02180ca8_3* arg0, Struct_ov
 #else
         var9->unknown_22_ = arg1->unknown_4c_ + 0x44;
 #endif
-        var9->unknown_26_ = 0;
-        func_0205ac40(arg0->unknown_11c_, var9);
+        display->active = 0;
+        SpriteContext_DrawSprite(self->display, display);
     }
     signed char var10 = arg1->unknown_10_[arg1->unknown_18_];
     if (var10 == 0x67)  {
@@ -164,8 +164,8 @@ extern "C" ARM void func_ov000_02180ca8(Struct_ov000_02180ca8_3* arg0, Struct_ov
 #else
             var11->unknown_22_ = arg1->unknown_4c_;
 #endif
-            var11->unknown_26_ = 1;
-            func_0205ac40(arg0->unknown_11c_, var11);
+            display->active = 1;
+            SpriteContext_DrawSprite(self->display, display);
         }
         if (arg1->unknown_1c_ == 6 || arg1->unknown_c_ == 0 || func_ov000_021719f8(arg1->unknown_0_) || arg1->unknown_1c_ == 2 || arg1->unknown_443_ != 5)  {
             return;
@@ -257,7 +257,7 @@ extern "C" ARM void func_ov000_02180ca8(Struct_ov000_02180ca8_3* arg0, Struct_ov
             var13->unknown_10_ = 1;
         }
         entry->category = 0;
-        void* selectedEntry = Background_GetScreen((EntryList0204af14*)self->entryList, 3);
+        void* selectedEntry = Background_GetScreen((BackgroundGraphics*)self->entryList, 3);
         CallFunc0204b620IfField0x14_0204b878(list, (int)selectedEntry, 0, 0,
 #if defined(jpn)
             var4 + 16,

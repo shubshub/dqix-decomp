@@ -11,10 +11,10 @@ struct Struct_ov015_0218f794
     unsigned char unknown_19b0_;
 };
 
-extern "C" Struct_ov015_0218f794* func_020421a0();
-extern "C" void func_02069fec(Struct_ov015_0218f794* arg0, const char* arg1, char* arg2);
-extern "C" void func_02045d14(Struct_ov015_0218f794* arg0, const char* arg1, unsigned short* arg2, int arg3);
-extern "C" void func_02045f3c(Struct_ov015_0218f794* arg0, unsigned short* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);
+MessageSystem0218f794* MessageSystem_GetInstance();
+extern "C" void func_02069fec(MessageSystem0218f794* system, const char* text, char* converted);
+extern "C" void func_02045d14(MessageSystem0218f794* system, const char* converted, unsigned short* line, int unk);
+extern "C" void func_02045f3c(MessageSystem0218f794* system, unsigned short* line, int x, int y, int color, int a, int b, int c, int d, int e);
 
 extern const char data_ov015_0219417c[];
 extern const char data_ov015_02194192[];
@@ -36,8 +36,8 @@ extern const char data_ov015_02194242[];
 
 #define PREPARE_TEXT()                                                            \
     {                                                                             \
-        memset(var1, 0, sizeof(var1));                                            \
-        Struct_ov015_0218f794* system = func_020421a0();        \
+        memset(line, 0, sizeof(line));                                            \
+        MessageSystem0218f794* system = MessageSystem_GetInstance();        \
         char converted[0x40];                                                     \
         __clear(converted, sizeof(converted));                                    \
         func_02069fec(system, var0, converted);                                   \
@@ -56,8 +56,8 @@ extern "C" ARM void func_ov015_0218f794(Struct_ov015_0218bcb0* arg0)
     char var0[0x20];
     unsigned short var1[0x20];
 
-    Struct_ov015_0218f794* var2 = func_020421a0();
-    if (arg0->unknown_1c_ == 0 || arg0->unknown_1c_ == 1)
+    MessageSystem0218f794* messages = MessageSystem_GetInstance();
+    if (self->kind_ == 0 || self->kind_ == 1)
     {
         PRINT_HEAP(data_ov015_0219417c, arg0->unknown_8_[2]);
         PREPARE_TEXT();

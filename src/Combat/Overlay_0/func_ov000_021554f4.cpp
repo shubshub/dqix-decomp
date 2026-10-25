@@ -130,31 +130,31 @@ extern "C" int func_ov000_02155154(GameObject*);
 extern "C" int func_02086ef0(Struct_02048150*, int);
 extern "C" void func_ov000_0215a8d4(unsigned char*, int);
 extern "C" float func_ov000_02155a04(char*);
-extern "C" Struct_ov000_021554f4_8* func_02054000(Struct_02054000*);
-extern "C" unsigned short func_02052df8(Struct_02052df8*, int);
-struct Struct_020a0840;
-struct Struct_020a02d0;
-struct Struct_020a0644;
-extern "C" void func_020a0840(Struct_020a0840*, unsigned int);
-extern "C" void func_020a02d0(Struct_020a02d0*, unsigned int);
-extern "C" void func_020a0644(Struct_020a0644*, unsigned int);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_020ac494(void*);
+Active021554f4* GetActiveSub_02054000(Outer_02054000*);
+unsigned short GetHalfwordEntryFromField150(Field150Holder02052df8*, int);
+struct S_a0840;
+struct S_a02d0;
+struct S_a0644;
+void AddSaturateField0x44_020a0840(S_a0840*, unsigned int);
+void AddClamped24BitFieldAt0x20_020a02d0(S_a02d0*, unsigned int);
+void AddClamped16BitHighAt0x24_020a0644(S_a0644*, unsigned int);
+int GameState_GetProtagonistIndex(GameState*);
+int CopyInBattleField0x7540_020ac494(void*);
 
 extern const signed char data_ov000_02182a7c[9];
 
 static inline int inline_ov000_021554f4_8(int arg0) { return arg0 >= 0 && arg0 <= 3; }
 
 // USA: func_ov000_021554f4
-extern "C" ARM void func_ov000_021554f4(Struct_ov000_021554f4_6* arg0, int arg1, int arg2, Struct_ov000_021554f4_7* arg3, unsigned char arg4, int arg5) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_02048150* var1 = (Struct_02048150*)func_02010828(GameState::GetInstance());
-    Struct_ov000_021554f4_2* var2 = func_0200fea4(var0, arg1);
-    if (!var2) return;
-    if (var2->inline_ov000_021554f4_7()->unknown_0_ == 0 && arg5 == 8) {
-        int var3 = arg0->unknown_8e06_;
-        if (var3 < 0) return;
-        if (arg0->unknown_8e04_ == arg1) arg0->unknown_5c60_[var3].unknown_1e_ = arg5;
+extern "C" ARM void func_ov000_021554f4(Root021554f4* self, int id, int other, Rec021554f4* rec, unsigned char arg, int flags) {
+    GameState* gs = GameState::GetInstance();
+    ArrayContainsByteStruct* party = (ArrayContainsByteStruct*)GameState_GetParty(GameState::GetInstance());
+    Unit021554f4* c = GetCombatantWithFlag0x400_0200fea4(gs, id);
+    if (!c) return;
+    if (c->GetStats()->currHP == 0 && flags == 8) {
+        int idx = self->curIdx;
+        if (idx < 0) return;
+        if (self->curId == id) self->entries[idx].flags = flags;
         return;
     }
     if (var2->unknown_144_ && var2->unknown_144_->unknown_8_ == 0xf5 && func_ov000_02155154((GameObject*)var2)
@@ -214,16 +214,16 @@ extern "C" ARM void func_ov000_021554f4(Struct_ov000_021554f4_6* arg0, int arg1,
         for (int var11 = 0; data_ov000_02182a7c[var11] != -1; var11++)
             var5->unknown_30_[var11] = func_02052df8((Struct_02052df8*)var9, data_ov000_02182a7c[var11]);
     }
-    if (!func_02086ef0(var1, arg2)) return;
-    if (arg5 & 1) return;
-    if (arg5 & 2) return;
-    if (arg5 & 4) return;
-    if (arg5 & 0x10) return;
-    if (arg5 & 0x20) return;
-    Struct_02061c04 var12;
-    func_020ac4c0(&var12);
-    func_020a0840((Struct_020a0840*)&var12, 1);
-    func_020a02d0((Struct_020a02d0*)&var12.unknown_68_, 1);
-    if (arg2 == func_020100a8(var0)) func_020a0644((Struct_020a0644*)&var12, 1);
-    func_020ac494(&var12);
+    if (!ArrayContainsByte_02086ef0(party, other)) return;
+    if (flags & 1) return;
+    if (flags & 2) return;
+    if (flags & 4) return;
+    if (flags & 0x10) return;
+    if (flags & 0x20) return;
+    BattleRecordSnapshot snap;
+    LoadBattleBlock020ac4c0(&snap);
+    AddSaturateField0x44_020a0840((S_a0840*)&snap, 1);
+    AddClamped24BitFieldAt0x20_020a02d0((S_a02d0*)&snap.secondaryClocks, 1);
+    if (other == GameState_GetProtagonistIndex(gs)) AddClamped16BitHighAt0x24_020a0644((S_a0644*)&snap, 1);
+    CopyInBattleField0x7540_020ac494(&snap);
 }

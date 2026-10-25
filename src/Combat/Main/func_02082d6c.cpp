@@ -82,7 +82,7 @@ extern "C" void func_02082828(struct Struct_02082d6c*);
 extern "C" void func_02082fc4(void*, void*);
 extern "C" void func_02082fa8(struct Struct_02082fa8*, struct Struct_02082fa8*);
 extern "C" void __clear(void*, unsigned int);
-extern "C" void func_02042764(void*, void*, int);
+extern "C" void Font_DecodeText(void*, void*, int);
 extern char g_stringFormat[];
 
 // USA: func_02082d6c
@@ -124,7 +124,7 @@ extern "C" ARM void func_02082d6c(struct Struct_02082d6c* arg0, struct Struct_02
 #else
     char local[0x30];
     __clear(local, 0x30);
-    func_02042764(src->b140, local, 1);
+    Font_DecodeText(src->b140, local, 1);
     sprintf(dst->name3c, g_stringFormat, local);
 #endif
     arg0->unknown_7b_6_ = arg1->unknown_1_4_;

@@ -22,11 +22,11 @@ extern "C" int func_0202c508(void* arg0);
 extern "C" int func_020322c0(void* arg0, int* arg1);
 extern "C" Vector3fix func_02034104(void* arg0);
 
-struct Struct_02033834_2;
-extern "C" void func_02033834(struct Struct_02033834_2* arg0, int arg1);
+struct Obj02033834;
+void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
-struct Struct_02033b68;
-extern "C" void func_02033b68(struct Struct_02033b68* arg0, int arg1);
+struct Obj02033b68;
+void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
 // USA: func_02077be0
 extern "C" ARM void func_02077be0(Struct_02076a8c* arg0) {
@@ -37,19 +37,19 @@ extern "C" ARM void func_02077be0(Struct_02076a8c* arg0) {
         return;
     }
 
-    Vector3fix var3 = arg0->unknown_0_.unknown_0_.unknown_0_.position_;
-    var3.y = 0;
-    int var4 = 0;
-    Vector3fix var5 = arg0->unknown_158_;
-    var5.y = 0;
-    Vector3fix var6;
-    Vector3fix_Subtract(&var5, &var3, &var6);
-    Vector3fix_Normalize(&var6, &var6);
-    int var7 = fix32_Atan2(var6.x, var6.z);
-    func_02033834((struct Struct_02033834_2*)arg0, var7);
-    arg0->unknown_0_.unknown_0_.unknown_b4_ = 0x1c2;
-    arg0->unknown_0_.unknown_0_.unknown_b2_ = 0x1c2;
-    func_02033b68((struct Struct_02033b68*)arg0, 1);
+    Vector3fix pos44 = self->actor.base.object.position_;
+    pos44.y = 0;
+    int flag = 0;
+    Vector3fix pos158 = self->targetPosition;
+    pos158.y = 0;
+    Vector3fix delta;
+    Vector3fix_Subtract(&pos158, &pos44, &delta);
+    Vector3fix_Normalize(&delta, &delta);
+    int angle = fix32_Atan2(delta.x, delta.z);
+    GameObject_SetFacing((struct Obj02033834*)self, angle);
+    self->actor.base.fieldB4 = 0x1c2;
+    self->actor.base.fieldB2 = 0x1c2;
+    GameObject_SetMotionState((struct Obj02033b68*)self, 1);
 
     int* var8 = func_02033f44((struct Struct_02033f44*)arg0);
     if (var8 != NULL) {

@@ -37,12 +37,12 @@ struct Struct_02046574_2 {
 #endif
     unsigned char unknown_19b1_;
 };
-struct Struct_02092e0c_2 { int unknown_0_[3]; };
-extern "C" Struct_02046574_2* func_020421a0();
+struct CombatantInfo02092e0c { int fields[3]; };
+Obj02046574* MessageSystem_GetInstance();
 extern "C" void func_02046380(void*);
-int GetField0x3acValue_020100a8(GameState*);
-void SetIndexedName02046574(Obj02046574*, int, char*);
-void InitObjFromCombatantId020e4bf4(void*, int);
+int GameState_GetProtagonistIndex(GameState*);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+void NameText_InitFromPartyMember(void*, int);
 int KeyTable_Get(Container020e0310*, int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_02046574_2*, int, int, int);
@@ -53,16 +53,16 @@ extern "C" void func_0204500c(Struct_02046574_2*, int, int);
 extern "C" void func_02043270(Struct_02046574_2*, int, int, int, int);
 #endif
 // USA: func_02092e0c
-extern "C" ARM void func_02092e0c(Struct_02092e0c* arg0) {
-    if (arg0->unknown_30_ >= 0) {
-        Struct_02046574_2* var0 = func_020421a0();
-        func_02046380(var0);
-        GameState* var1 = GameState::GetInstance();
-        GameObject* var2 = var1->GetPartyMemberByIndex(func_020100a8(var1));
-        if (var2) func_02046574(var0, 0, var2->baseStats_->unk);
+extern "C" ARM void func_02092e0c(MessageController* messages) {
+    if (messages->messageKey >= 0) {
+        Obj02046574* display = MessageSystem_GetInstance();
+        func_02046380(display);
+        GameState* state = GameState::GetInstance();
+        GameObject* member = state->GetPartyMemberByIndex(GameState_GetProtagonistIndex(state));
+        if (member) MessageSystem_SetStringArgument(display, 0, member->baseStats_->name);
 #if defined(jpn)
         member = state->GetPartyMemberByIndex(messages->namedPartySlot);
-        if (member) SetIndexedName02046574(display, 1, member->baseStats_->unk);
+        if (member) MessageSystem_SetStringArgument(display, 1, member->baseStats_->name);
         func_0204500c(display, KeyTable_Get(&messages->messages, messages->messageKey), 0);
         display->active = 1;
         if ((messages->flags & 1) && (messages->flags & 2)) {
@@ -74,7 +74,7 @@ extern "C" ARM void func_02092e0c(Struct_02092e0c* arg0) {
         }
 #else
         CombatantInfo02092e0c info;
-        InitObjFromCombatantId020e4bf4(&info, messages->namedPartySlot);
+        NameText_InitFromPartyMember(&info, messages->namedPartySlot);
         display->combatant = &info;
         func_0204500c(display, KeyTable_Get(&messages->messages, messages->messageKey), 0, 0xe3);
         display->active = 1;

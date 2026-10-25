@@ -15,7 +15,7 @@ extern "C" void func_020474a8(void* arg0, int arg1, int arg2, char* arg3);
 extern "C" GameObject* func_0200ff94(GameState* arg0, int arg1);
 #else
 #define RG(u, j) (u)
-#define FMT(a, b, c, d) func_02046608(a, b, c, d, 0xe3, 0, 1)
+#define FMT(a, b, c, d) MessageSystem_FormatText(a, b, c, d, 0xe3, 0, 1)
 #define ST(x) (x)
 #endif
 struct Struct_ov002_02157d40_19 {
@@ -55,13 +55,13 @@ struct List02046a3c;
 struct Node02046a3c;
 struct List02026a28;
 struct List02026abc;
-struct Obj021c2744;
+struct WhistleTask;
 struct Obj021c2b28;
 
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_020e2ff8(void);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
+extern "C" void* __clear(void* dst, int count);
+extern "C" void* Zone3D_GetInstance(void);
+void* GetData02153637_020e2ff8(void);
+void* SearchBothTables02079e2c(char* p, int key);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202053c(void* arg0);
 extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
@@ -78,40 +78,40 @@ void ClearStruct020a8170(struct Struct020a8170* p);
 int CopyOutRegion0x571d_020114ec(char* dst, void* src);
 int GetByteFieldAt0x9ba_0202663c(unsigned char* p);
 void InsertNodeAfterHead(struct List02046a3c* list, struct Node02046a3c* node);
-void AppendString02042058(char* dst, const char* src);
+void Text_Append(char* dst, const char* src);
 void ClearRecords02026644(char* p);
-void InitState69_021c2744(struct Obj021c2744* p);
+void FieldTask_InitWhistle(struct WhistleTask* p);
 int KeyTable_Get(struct Container020e0310* c, int key);
-void Clear0x54Bytes0208247c(void* p);
+void ResourceScriptEntry_Init(void* p);
 void ConsumeCounter02048350(struct Obj02048350* p, int a);
 void InitStateArray02157ce0(char* p);
-void SetIndexedName02046574(struct Obj02046574* p, int a, char* s);
+void MessageSystem_SetStringArgument(struct Obj02046574* p, int a, char* s);
 int CountEntriesByField0x8c(struct List02026a28* p);
 int CountEntriesByField0x8e(struct List02026abc* p);
 void InitByteHeader_021c2688(unsigned char* p);
 void SetFlagsAndReset02026678(char* p);
 int IsEntryEligibleAndFlagged(struct Struct0201bc94* p);
 void EnqueueEventTag34_021d27a0(int, int, int);
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 void InitAndInsertNode_021acd30(char* p, unsigned char a, unsigned char b, unsigned char c);
 int CountMatchingEntries02026a78(char* p);
 void SePlayer_Play(struct SePlayer* p, int a, int b);
 struct GameObject;
-extern "C" void func_020e4c74(void*, GameObject*);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" int func_02048448(struct Struct_ov002_02157d40_3* arg0, int arg1);
+void InitObjFromCombatant020e4c74(void*, GameObject*);
+void NameText_InitFromPartyMember(void* p, int a);
+int ClampAndCompareThreshold02048448(struct Struct02048448* p, int a);
 
 extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
 extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
 
 
-extern "C" int func_02026780(void* arg0, void* arg1, unsigned int arg2);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046608(void* arg0, int arg1, int arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02052d7c(void* arg0, signed char arg1, int arg2);
-extern "C" void func_0207c378(void* arg0, short arg1, int arg2, unsigned int arg3);
+extern "C" int func_02026780(void* list, void* buf, unsigned int size);
+extern "C" int func_0202c540(void* p);
+extern "C" void func_02046380(void* obj);
+extern "C" void MessageSystem_FormatText(void* obj, int a, int b, char* buf, int c, int d, int e);
+extern "C" void func_02052d7c(void* obj, signed char idx, int flag);
+extern "C" void func_0207c378(void* p, short val, int flag, unsigned int nibble);
 
 extern "C" void func_020a818c(void* arg0, void* arg1);
 extern "C" void func_020a8304(void* arg0);
@@ -134,7 +134,7 @@ extern "C" void func_ov017_021c9e00(signed char arg0, int arg1, int arg2, int ar
 extern int g_sePlayer;
 extern unsigned char data_ov002_0216c992;
 extern int data_ov002_0216cf51;
-extern int data_0211e33c;
+extern int g_fileLoadBuffer;
 extern int data_ov002_0216cf66;
 
 struct Struct_ov002_02157d40_14 {
@@ -290,7 +290,7 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
     char* tbl;
     struct BattleStruct* gs = (BattleStruct*)GameState::GetInstance();
     int word = (int)((GameState*)gs)->GetResources();
-    unsigned short* obj = (unsigned short*)func_02012fe4();
+    unsigned short* obj = (unsigned short*)Zone3D_GetInstance();
     ActionDataTables* actionTables = GetData02108e10_020797dc();
     tbl = (char*)actionTables;
     struct TableEntry* entryA = (struct TableEntry*)SearchBothTables02079e2c(tbl, p->command);
@@ -322,22 +322,22 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
             arg0->unknown_1bbc_ = ST(0x11);
             return;
         }
-        if (arg0->unknown_1c26_ == 0xd7) {
-            var9 = 1;
-            var10 = 1;
-            char* var12 = (char*)GetGameResources();
-            *inline_ov002_02157d40(var12) = arg0->unknown_1c20_;
-            func_ov017_021c12fc(var12, 1, 0);
-        } else if (arg0->unknown_1c26_ == 0xd9) {
-            var9 = 1;
-            if (func_0201bc94((struct Struct_ov002_02157d40_4*)func_02012fe4()) != 0) {
+        if (p->command == 0xd7) {
+            flagA = 1;
+            flagB = 1;
+            char* ov = (char*)GetGameResources();
+            *ListField22(ov) = p->actor;
+            func_ov017_021c12fc(ov, 1, 0);
+        } else if (p->command == 0xd9) {
+            flagA = 1;
+            if (IsEntryEligibleAndFlagged((struct Struct0201bc94*)Zone3D_GetInstance()) != 0) {
                 func_ov016_0218b5c0(0, -1);
-                arg0->unknown_1c21_ = arg0->unknown_1c20_;
-                arg0->unknown_1c28_ = 0x754a;
-                var10 = 1;
-                struct Struct_ov002_02157d40_18* var13 = (struct Struct_ov002_02157d40_18*)func_02010828((GameState*)var2);
-                for (int var14 = 0; var14 < var13->unknown_f7c_; var14++) {
-                    func_020541a4((struct Struct_ov002_02157d40_5*)(Struct_ov002_02157d40*)((GameState*)var2)->GetPartyMemberByIndex(var13->unknown_f78_[var14]), 0);
+                p->target = p->actor;
+                p->msgId = 0x754a;
+                flagB = 1;
+                struct PartyList* party = (struct PartyList*)GameState_GetParty((GameState*)gs);
+                for (int i = 0; i < party->count; i++) {
+                    NotifySub020541a4((struct Obj020541a4*)(CombatantStruct*)((GameState*)gs)->GetPartyMemberByIndex(party->ids[i]), 0);
                 }
             } else {
                 arg0->unknown_1c28_ = 0x754e;
@@ -414,21 +414,21 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     arg0->unknown_1bc0_ = 0;
                     return;
                 }
-                unsigned char* var26 = (unsigned char*)func_020421a0();
-                func_02046380(var26);
-                memset(arg0->unknown_1bd0_, 0, RG(0x960, 0x800));
-                var1 = arg0->unknown_1bd0_;
-                if (var7 != 0) {
-                    func_02046574((struct Struct_ov002_02157d40_6*)var26, 0, var7->unknown_134_);
+                unsigned char* msg = (unsigned char*)MessageSystem_GetInstance();
+                func_02046380(msg);
+                memset(p->text, 0, RG(0x960, 0x800));
+                tbl = p->text;
+                if (comb != 0) {
+                    MessageSystem_SetStringArgument((struct Obj02046574*)msg, 0, comb->name);
 #if !defined(jpn)
-                    func_020e4bf4(arg0->unknown_8_, inline_ov002_02157d40_4(var7));
-                    *(void**)var26 = arg0->unknown_8_;
+                    NameText_InitFromPartyMember(p->obj8, UnitId(comb));
+                    *(void**)msg = p->obj8;
 #endif
                 }
-                SetIndexedName02046574((struct Obj02046574*)msg, 1, entry->name);
+                MessageSystem_SetStringArgument((struct Obj02046574*)msg, 1, entry->name);
                 if (res != 0) {
                     FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), 0x232d), (char*)(tbl + RG(0x860, 0x700)));
-                    AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
+                    Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
                     struct StateSlot* slots = f.st10c.first;
                     for (int i = 0; i < f.st10c.count; i++) {
                         MsgKey key;
@@ -444,36 +444,36 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                         if (var30 == 0) {
                             continue;
                         }
-                        func_02046380(var26);
-                        func_02046574((struct Struct_ov002_02157d40_6*)var26, 2, inline_ov002_02157d40_5(var30));
+                        func_02046380(msg);
+                        MessageSystem_SetStringArgument((struct Obj02046574*)msg, 2, UnitName(target));
 #if !defined(jpn)
-                        func_020e4bf4(arg0->unknown_14_, var0.unknown_c8_.unknown_4_[var28]);
-                        *(void**)(var26 + 0x10) = arg0->unknown_14_;
+                        NameText_InitFromPartyMember(p->obj14, f.st10c.ids[i]);
+                        *(void**)(msg + 0x10) = p->obj14;
 #endif
                         StoreInArray0x8b0_020465c0((struct StoreStruct*)msg, 9, target->id);
                         FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), key), (char*)(tbl + RG(0x860, 0x700)));
-                        AppendString02042058(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
-                        AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
+                        Text_Append(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                        Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
                     }
                     func_02048350((struct Struct_ov002_02157d40_8*)var7, var17->unknown_8_0_);
                     if (func_0202b7d8(var8) != 0) {
                         func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
                     }
                 } else {
-                    struct Struct_ov002_02157d40* var31 = (Struct_ov002_02157d40*)((GameState*)var2)->GetUnknownGameObject();
-                    if (var31 != 0) {
-                        func_02046574((struct Struct_ov002_02157d40_6*)var26, 2, ((struct Struct_ov002_02157d40_17*)var31)->unknown_134_);
+                    struct CombatantStruct* unknown = (CombatantStruct*)((GameState*)gs)->GetUnknownGameObject();
+                    if (unknown != 0) {
+                        MessageSystem_SetStringArgument((struct Obj02046574*)msg, 2, ((struct Unit*)unknown)->name);
 #if !defined(jpn)
                         func_020e4c74(arg0->unknown_14_, (GameObject*)(Struct_ov002_02157d40*)((GameState*)var2)->GetUnknownGameObject());
                         *(void**)(var26 + 0x10) = arg0->unknown_14_;
 #endif
                     }
-                    AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2333));
-                    AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                    Text_Append((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2333));
+                    Text_Append((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
                     if (n == 1) {
-                        AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2334));
+                        Text_Append((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2334));
                     } else {
-                        AppendString02042058((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2335));
+                        Text_Append((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2335));
                     }
                     FMT(var26, 0xc, (int)(var1 + RG(0x860, 0x700)), arg0->unknown_1bd0_);
                 }
@@ -504,33 +504,33 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     return;
                 }
             }
-        } else if (arg0->unknown_1c26_ == 0xcf) {
-            unsigned char* var32 = (unsigned char*)GetGameResources();
-            unsigned char* var33;
-            unsigned char* var34 = *(unsigned char**)(var32 + RG(0x3bac, 0x398c));
-            var33 = *(unsigned char**)(var32 + RG(0x36fc, 0x34ec));
-            if (var34[2] == 0) {
-                func_ov017_021c2744((struct Struct_ov002_02157d40_13*)var34);
-                *(int*)(var34 + 0x14) = var7->unknown_4_;
-                func_02046a3c((struct Struct_ov002_02157d40_9*)var33, (struct Struct_ov002_02157d40_10*)var34);
+        } else if (p->command == 0xcf) {
+            unsigned char* ov = (unsigned char*)GetGameResources();
+            unsigned char* list;
+            unsigned char* node = *(unsigned char**)(ov + RG(0x3bac, 0x398c));
+            list = *(unsigned char**)(ov + RG(0x36fc, 0x34ec));
+            if (node[2] == 0) {
+                FieldTask_InitWhistle((struct WhistleTask*)node);
+                *(int*)(node + 0x14) = comb->id;
+                InsertNodeAfterHead((struct List02046a3c*)list, (struct Node02046a3c*)node);
             }
             arg0->unknown_1bb8_ = ST(0x2b);
             arg0->unknown_1bbc_ = ST(0x2b);
             return;
-        } else if (arg0->unknown_1c26_ == 0xd0) {
-            unsigned char* var35 = (unsigned char*)func_020421a0();
-            memset(arg0->unknown_1bd0_, 0, RG(0x960, 0x800));
-            var1 = arg0->unknown_1bd0_;
-            struct Struct_ov002_02157d40_17* var36 = (struct Struct_ov002_02157d40_17*)(Struct_ov002_02157d40*)func_0200ff1c((GameState*)var2, arg0->unknown_1c20_);
-            if (var36 != 0) {
-                func_02046380(var35);
-                func_02046574((struct Struct_ov002_02157d40_6*)var35, 0, var36->unknown_134_);
+        } else if (p->command == 0xd0) {
+            unsigned char* msg = (unsigned char*)MessageSystem_GetInstance();
+            memset(p->text, 0, RG(0x960, 0x800));
+            tbl = p->text;
+            struct Unit* actor = (struct Unit*)(CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)gs, p->actor);
+            if (actor != 0) {
+                func_02046380(msg);
+                MessageSystem_SetStringArgument((struct Obj02046574*)msg, 0, actor->name);
 #if !defined(jpn)
-                func_020e4bf4(arg0->unknown_8_, arg0->unknown_1c20_);
-                *(void**)var35 = arg0->unknown_8_;
+                NameText_InitFromPartyMember(p->obj8, p->actor);
+                *(void**)msg = p->obj8;
 #endif
                 FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), 0x7537), (char*)(tbl + RG(0x860, 0x700)));
-                AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
+                Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
             }
             __clear(var0.unknown_10_, 4);
             int var37 = func_020114ec((char*)var2, var0.unknown_10_);
@@ -551,23 +551,23 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 if (var42) {
                     continue;
                 }
-                func_02046380(var35);
-                func_02046574((struct Struct_ov002_02157d40_6*)var35, 0, var40->unknown_134_);
+                func_02046380(msg);
+                MessageSystem_SetStringArgument((struct Obj02046574*)msg, 0, member->name);
 #if !defined(jpn)
-                func_020e4bf4(arg0->unknown_8_, var0.unknown_10_[var39]);
-                *(void**)var35 = arg0->unknown_8_;
+                NameText_InitFromPartyMember(p->obj8, f.ids54[k]);
+                *(void**)msg = p->obj8;
 #endif
                 int var43;
                 if (func_0202053c((void*)var40) == 0x63) {
                     var43 = 0x7539;
                 } else {
                     BackgroundLoader::AddLockGlobal();
-                    var41 = var40->unknown_150_;
-                    sprintf(var0.unknown_a0_, (const char*)&data_ov002_0216cf51, var41->unknown_950_);
-                    void* var44 = LoadFileIntoMemory(var0.unknown_a0_, &data_0211e33c, &var0.unknown_c_);
-                    func_0208247c(var0.unknown_104_);
-                    if (var44 != 0) {
-                        func_02082490(var0.unknown_104_, var44, var0.unknown_c_, func_0202053c((void*)var40) + 1, 0);
+                    ext = member->ext;
+                    sprintf(f.path, (const char*)&data_ov002_0216cf51, ext->level);
+                    void* loaded = LoadFileIntoMemory(f.path, &g_fileLoadBuffer, &f.size50);
+                    ResourceScriptEntry_Init(f.obj148);
+                    if (loaded != 0) {
+                        ResourceScriptEntry_LoadLevel(f.obj148, loaded, f.size50, GetTableValue_0202053c((void*)member) + 1, 0);
                     }
                     BackgroundLoader::RemoveLockGlobal();
                     int var45 = *var38 - inline_ov002_02157d40_3(var40->unknown_150_);
@@ -581,8 +581,8 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 }
                 memset(tbl + RG(0x860, 0x700), 0, 0x100);
                 FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), key), (char*)(tbl + RG(0x860, 0x700)));
-                AppendString02042058(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
-                AppendString02042058(p->text, (const char*)(tbl + RG(0x860, 0x700)));
+                Text_Append(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
+                Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
             }
             arg0->unknown_1c31_ = 1;
             memcpy(arg0->unknown_1bd4_, arg0->unknown_1bd0_, RG(0x960, 0x800));
@@ -643,10 +643,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 } else {
                     func_02026644((char*)var50);
                     BackgroundLoader::AddLockGlobal();
-                    var0.unknown_8_ = 0;
-                    void* var51 = LoadFileIntoMemory((const char*)&data_ov002_0216cf66, &data_0211e33c, &var0.unknown_8_);
-                    if (func_02026780(var50, var51, var0.unknown_8_) == 0) {
-                        var49 = 0;
+                    f.size4c = 0;
+                    void* data = LoadFileIntoMemory((const char*)&data_ov002_0216cf66, &g_fileLoadBuffer, &f.size4c);
+                    if (func_02026780(rec, data, f.size4c) == 0) {
+                        ok = 0;
                     } else {
                         func_02026a78((char*)var50);
                         arg0->unknown_2490_ = func_02026a28((struct Struct_ov002_02157d40_11*)var50);
@@ -833,12 +833,12 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 if (func_0202b7d8(var69) != 0) {
                     func_ov017_021c9e00(arg0->unknown_1c21_, 0, 0, 1);
                 }
-                unsigned char* var70 = (unsigned char*)func_02010828((GameState*)var2);
-                var0.unknown_1c_ = *(struct Struct_ov002_02157d40_20*)&data_ov002_0216c992;
-                int var71 = 0;
-                int var72;
-                for (var72 = 0; var72 < 0xb; var72++) {
-                    if (var72 == 2 || var72 == 3 || var72 == 4) {
+                unsigned char* party = (unsigned char*)GameState_GetParty((GameState*)gs);
+                f.tab = *(struct Table11*)&data_ov002_0216c992;
+                int any = 0;
+                int q;
+                for (q = 0; q < 0xb; q++) {
+                    if (q == 2 || q == 3 || q == 4) {
                         continue;
                     }
                     struct Struct_ov002_02157d40_15* var73 = &var68->unknown_150_->unknown_194_[(unsigned char)var72];

@@ -14,10 +14,10 @@
 #include <Memory/SafeAllocator.h>
 #include <NitroSDK/Graphics.h>
 
-struct Struct_0201099c_14;
-struct Struct_02020cb8;
-struct Struct_0205cfd4;
-struct Struct_020a9ea4;
+struct Struct020dfc40;
+struct BackgroundGraphics;
+struct InitTarget0205cfd4;
+struct Struct020a9ea4;
 
 struct Struct_ov003_02158bb8_2 {
     char unknown_0_[0x10];
@@ -27,10 +27,10 @@ struct Struct_ov003_02158bb8_2 {
 };
 
 extern "C" void func_02074af4(ScreenState02158bb8* state);
-extern "C" void func_0204c684(void* canvas);
+extern "C" void WindowPane_Init(void* canvas);
 void SpriteContext_Init(char* obj);
-void InitStruct0205cfd4(InitTarget0205cfd4* window);
-void Background_Init(List0204af64* background);
+void Window_Init(InitTarget0205cfd4* window);
+void Background_Init(BackgroundGraphics* background);
 void KeyTable_Reset(Struct020dfc40* texts);
 void ClearStruct020a9ea4(Struct020a9ea4* p);
 
@@ -100,12 +100,12 @@ extern "C" ARM void func_ov003_02158bb8(Struct_ov003_02158bb8* arg0)
     self->alloc28.ResetAllocatorPointer();
     self->alloc14.ResetAllocatorPointer();
     self->alloc0.ResetAllocatorPointer();
-    InitStruct0205cfd4((InitTarget0205cfd4*)self->window);
+    Window_Init((InitTarget0205cfd4*)self->window);
     for (int i = 0; i < 2; i++) {
-        Background_Init((List0204af64*)self->backgrounds[i]);
+        Background_Init((BackgroundGraphics*)self->backgrounds[i]);
     }
-    for (int var1 = 0; var1 < 4; var1++) {
-        func_0204c684(arg0->unknown_1f0_[var1]);
+    for (int i = 0; i < 4; i++) {
+        WindowPane_Init(self->canvases[i]);
     }
     KeyTable_Reset((Struct020dfc40*)self->texts);
     self->field_0x587 = 0;

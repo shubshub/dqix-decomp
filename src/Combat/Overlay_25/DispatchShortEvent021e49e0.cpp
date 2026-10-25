@@ -1,6 +1,6 @@
 #include <globaldefs.h>
+#include "Sound/SePlayer.h"
 
-struct SePlayer { char pad_00[0xb4]; short field_b4; };
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 extern struct SePlayer g_sePlayer;

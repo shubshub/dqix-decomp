@@ -36,27 +36,27 @@ struct Struct_ov017_021b848c_2 {
     unsigned char unknown_6c6_;
 };
 
-extern "C" int func_020421a0();
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov017_021c9c64(unsigned short arg0, unsigned char arg1);
-extern "C" void func_ov017_021c8b78(unsigned short arg0);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
-extern "C" void func_020a35cc(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
+int MessageSystem_GetInstance();
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void func_ov017_021c9c64(unsigned short a0, unsigned char a1);
+void EnqueueEventTag122_021c8b78(unsigned short param);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int mask);
+void FlagWord_SetBits(unsigned int* obj, unsigned int mask);
+void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+void SetBitInField0x34_020a35cc(unsigned char* obj, unsigned char index);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
 extern "C" void func_020c9be0(void);
 extern "C" void func_ov017_021c3f70(unsigned short arg0);
 
 // USA: func_ov017_021b848c
 extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed char* arg1, int arg2, int arg3,
                                          unsigned short arg4, signed char arg5, int arg6, int arg7) {
-    GameState* var0 = GameState::GetInstance();
-    func_020421a0();
-    unsigned short var1 = arg0->unknown_6b4_;
-    if (var1 == 4 || var1 == 6 || var1 == 0) return;
-    if (arg1[func_020100a8(var0)] == 0) return;
+    GameState* battle = GameState::GetInstance();
+    MessageSystem_GetInstance();
+    unsigned short state = self->state;
+    if (state == 4 || state == 6 || state == 0) return;
+    if (present[GameState_GetProtagonistIndex(battle)] == 0) return;
 
     int var2 = arg2 >= 0 && arg2 <= 3;
     if (!var2 || arg1[arg2] == 0 || var0->GetGameObjectByIndex(arg2) == NULL) {
@@ -66,13 +66,13 @@ extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed ch
         return;
     }
 
-    void* var3 = func_020d6c00();
-    func_020466f4((Struct_02038598_4*)var3, 0x200);
-    func_020466e4((unsigned int*)var3, 0x40000);
-    GameObject* var4 = var0->GetUnknownGameObject();
-    if (var4 != NULL) {
-        func_020397cc((struct Struct_02018300_3*)var4, 1);
-        *(unsigned short*)((char*)var4 + 0xb2) = 0;
+    void* flags = GlobalFlags_GetInstance();
+    FlagWord_ClearBits((FlagWord020466f4*)flags, 0x200);
+    FlagWord_SetBits((unsigned int*)flags, 0x40000);
+    GameObject* actor = battle->GetUnknownGameObject();
+    if (actor != NULL) {
+        GameObject_DisableControl((struct Obj020397cc*)actor, 1);
+        *(unsigned short*)((char*)actor + 0xb2) = 0;
     }
     if (arg1[0] != 0 && var0->GetGameObjectByIndex(0) != NULL) {
         func_020a35cc(arg0->unknown_1c_, 0);
@@ -86,21 +86,21 @@ extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed ch
     if (arg1[3] != 0 && var0->GetGameObjectByIndex(3) != NULL) {
         func_020a35cc(arg0->unknown_1c_, 3);
     }
-    arg0->unknown_46_ = arg2;
-    if (func_020a35e0(arg0->unknown_1c_, arg0->unknown_46_) == 0) func_020c9be0();
-    if (arg3 == 0) func_020100a8(var0);
-    arg0->unknown_48_ = arg3;
-    arg0->unknown_1e_ = arg4;
-    if (arg7 >= 0) arg0->unknown_28_ = arg7;
+    self->member = member;
+    if (TestBitAt0x34_020a35e0(self->info, self->member) == 0) func_020c9be0();
+    if (arg3 == 0) GameState_GetProtagonistIndex(battle);
+    self->field_48 = arg3;
+    self->field_1e = arg4;
+    if (arg7 >= 0) self->field_28 = arg7;
     if (arg5 > -1) {
         arg0->unknown_51_ = arg5;
         if (arg0->unknown_6b0_ != NULL) arg0->unknown_6b0_->unknown_8e49_ = arg5;
     }
-    func_ov017_021c3f70(arg0->unknown_24_);
-    if (arg2 != func_020100a8(var0)) {
-        if (arg6 != 0) arg0->unknown_6c6_ = 1;
-        arg0->unknown_6b8_ = 0;
-        arg0->unknown_6b4_ = 4;
+    EnqueueEventTag127ForParty_021c3f70(self->id);
+    if (member != GameState_GetProtagonistIndex(battle)) {
+        if (arg6 != 0) self->field_6c6 = 1;
+        self->field_6b8 = 0;
+        self->state = 4;
     } else {
         arg0->unknown_6b4_ = 6;
     }

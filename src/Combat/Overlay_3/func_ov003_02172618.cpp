@@ -7,8 +7,8 @@ struct Struct_ov003_0217fa14 {
 
 extern struct Struct_ov003_0217fa14 data_ov003_0217fa14;
 
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" void func_0204f41c(void* arg0, short arg1, short arg2, void* arg3, int arg4, int arg5, short* arg6, short* arg7, int arg8);
+extern "C" int Font_GetTextWidth(char* label, int extra);
+extern "C" void func_0204f41c(void* obj, short x, short y, void* str, int d, int e, short* outA, short* outB, int zero);
 
 // USA: func_ov003_02172618
 extern "C" ARM void func_ov003_02172618(void* arg0, int arg1, char** arg2) {
@@ -20,9 +20,9 @@ extern "C" ARM void func_ov003_02172618(void* arg0, int arg1, char** arg2) {
         if (var4 == NULL) {
             continue;
         }
-        int var5 = (0x100 - func_020420e8(var4, 1)) >> 1;
-        int var6 = var2[var3];
-        func_0204f41c(arg0, var5 + 1, var6, var4, 0xc, 0xe, &var0, &var1, 0);
-        func_0204f41c(arg0, var5, var6, var4, 0xc, 0xf, &var0, &var1, 0);
+        int x = (0x100 - Font_GetTextWidth(label, 1)) >> 1;
+        int ly = ys[i];
+        func_0204f41c(canvas, x + 1, ly, label, 0xc, 0xe, &outA, &outB, 0);
+        func_0204f41c(canvas, x, ly, label, 0xc, 0xf, &outA, &outB, 0);
     }
 }

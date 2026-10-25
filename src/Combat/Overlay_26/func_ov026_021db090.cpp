@@ -94,13 +94,13 @@ struct Struct_ov023_021f2a48_4 {
 };
 
 extern "C" void __clear(void* p, int size);
-MessageWindow* GetGlobalField0x1c020421a0();
+MessageWindow* MessageSystem_GetInstance();
 int IsFlag10088Set_02010088(struct S_10088*);
 void InitObjFromCombatant020e4c74(void*, GameObject*);
 void SetField0x158_02053ec8(void*, int);
 void EnqueueEventTag86_021c9ad4(unsigned short);
 void SePlayer_Play(SePlayer*, int, int);
-void ReinitController02043204(char*);
+void MessageSystem_Reset(char*);
 void SetFieldsAndSignalData02184220_ov000_02160d80(void*, int);
 CommandSlot* FindSlotById_021dae60(Container_021dae60*, int);
 
@@ -108,15 +108,15 @@ extern "C" {
 int func_ov000_0215e9fc(Struct_ov000_02161e30*, short*, int, int);
 void func_ov000_02162c14(Struct_ov000_02160da0*, int, Struct_ov026_021db090*);
 void func_020dd0b0(int, char*);
-void func_02012fe4();
+void Zone3D_GetInstance();
 void func_ov017_021a23b0(GameResources*, unsigned short);
 #if defined(jpn)
 void func_0204500c(Struct_ov000_0217964c_3*, char*, int);
 #else
 void func_0204500c(Struct_ov000_0217964c_3*, char*, int, int);
 #endif
-void func_02043124(Struct_ov000_0217964c_3*);
-void func_ov000_02160da0(Struct_ov000_02160da0*);
+void MessageSystem_Stop(MessageWindow*);
+void func_ov000_02160da0(BattleWork*);
 }
 
 #if defined(jpn)
@@ -131,9 +131,9 @@ extern IdList data_ov026_021de6bc;
 extern SePlayer g_sePlayer;
 
 // USA: func_ov026_021db090
-extern "C" ARM void func_ov026_021db090(Struct_ov000_02160da0* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov000_0217964c_3* var1 = func_020421a0();
+extern "C" ARM void func_ov026_021db090(BattleWork* self) {
+    GameState* gs = GameState::GetInstance();
+    MessageWindow* win = MessageSystem_GetInstance();
 
     if (arg0->unknown_eac_ == 0) {
 #if defined(jpn)
@@ -207,45 +207,45 @@ extern "C" ARM void func_ov026_021db090(Struct_ov000_02160da0* arg0) {
 #if defined(jpn)
             sprintf(var2, data_ov026_021df3ff, var5);
 #else
-            var13 = ((Struct_ov023_021f2a48_4*)func_020421a0())->unknown_5c_;
-            memset(var13, 0, 0x960);
-            func_020dd0b0(1, var13);
-            strcat(var3, var13);
+            text = ((TextBuffers*)MessageSystem_GetInstance())->text;
+            memset(text, 0, 0x960);
+            func_020dd0b0(1, text);
+            strcat(message, text);
 #endif
 
-            int var16;
-            Struct_ov000_02182a60* var17;
-            GameState* var18;
-            var18 = GameState::GetInstance();
-            var17 = (Struct_ov000_02182a60*)func_02010828(var18);
-            for (var16 = 0; var16 < var17->unknown_f7c_; var16++) {
-                GameObject* var19 = func_0200ff1c(var18, var17->unknown_f78_[var16]);
-                if (var19 != NULL) {
-                    func_02053ec8(var19, 2);
+            int j;
+            PartyList* party;
+            GameState* state;
+            state = GameState::GetInstance();
+            party = (PartyList*)GameState_GetParty(state);
+            for (j = 0; j < party->count; j++) {
+                GameObject* member = GetCombatantWithFlag0x100_0200ff1c(state, party->members[j]);
+                if (member != NULL) {
+                    SetField0x158_02053ec8(member, 2);
                 }
             }
-            GameResources* var20 = GetGameResources();
-            func_02012fe4();
-            unsigned short var21 = arg0->unknown_2a0_->unknown_8_;
-            func_ov017_021c9ad4(var21);
-            func_ov017_021a23b0(var20, var21);
-        } else if (arg0->unknown_5950_ == 4) {
+            GameResources* res = GetGameResources();
+            Zone3D_GetInstance();
+            unsigned short netId = self->party->netId;
+            EnqueueEventTag86_021c9ad4(netId);
+            func_ov017_021a23b0(res, netId);
+        } else if (self->mode == 4) {
 #if defined(jpn)
             sprintf(var2, data_ov026_021df423, var5);
 #else
-            var13 = ((Struct_ov023_021f2a48_4*)func_020421a0())->unknown_5c_;
-            memset(var13, 0, 0x960);
-            func_020dd0b0(2, var13);
-            strcat(var3, var13);
+            text = ((TextBuffers*)MessageSystem_GetInstance())->text;
+            memset(text, 0, 0x960);
+            func_020dd0b0(2, text);
+            strcat(message, text);
 #endif
         } else {
 #if defined(jpn)
             sprintf(var2, data_ov026_021df465, var5);
 #else
-            var13 = ((Struct_ov023_021f2a48_4*)func_020421a0())->unknown_5c_;
-            memset(var13, 0, 0x960);
-            func_020dd0b0(3, var13);
-            strcat(var3, var13);
+            text = ((TextBuffers*)MessageSystem_GetInstance())->text;
+            memset(text, 0, 0x960);
+            func_020dd0b0(3, text);
+            strcat(message, text);
 #endif
         }
 
@@ -265,8 +265,8 @@ extern "C" ARM void func_ov026_021db090(Struct_ov000_02160da0* arg0) {
     } else if (win->busy == 0) {
         self->state++;
         if (self->state >= 0x1e) {
-            ReinitController02043204((char*)win);
-            func_02043124(win);
+            MessageSystem_Reset((char*)win);
+            MessageSystem_Stop(win);
             if (self->mode == 2) {
                 SetFieldsAndSignalData02184220_ov000_02160d80(self, 4);
             } else {

@@ -1,16 +1,15 @@
 #include <globaldefs.h>
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 
 // USA: func_0205a498
-ARM int ProcessRecords0205a498(void* a, struct Rec020467f0* b, int flag, void* d) {
+ARM int ProcessRecords0205a498(void* a, struct PacRecord* b, int flag, void* d) {
     int ret;
     if (flag) {
-        int count = Pac_CountFiles((struct ActiveEntry02046900*)b);
+        int count = Pac_CountFiles((struct PacRecord*)b);
         for (int i = 0; i < count; i++) {
             void* dummyOut = 0;
             int fieldOut = 0;

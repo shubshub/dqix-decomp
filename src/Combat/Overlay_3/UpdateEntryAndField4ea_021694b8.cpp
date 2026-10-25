@@ -17,18 +17,18 @@ struct Struct_0205d81c {
     unsigned char fieldB4;
 };
 
-struct Struct_0205d81c* FindElementForFieldB0_0205d8c4(struct Struct_0205d81c*);
-int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
-void SetFieldAt0x30_0205bc24(void* obj, int value);
+struct Struct_0205d81c* Window_GetActivePane(struct Struct_0205d81c*);
+int WindowPane_IsReady(unsigned char* obj);
+void TouchGrid_SetTouchedCell(void* obj, int value);
 extern "C" int Window_Update(void*, int);
 
 // USA: func_ov003_021694b8
 ARM void UpdateEntryAndField4ea_021694b8(void* obj, int id) {
-    struct Struct_0205d81c* entry = FindElementForFieldB0_0205d8c4((struct Struct_0205d81c*)((char*)obj + kRegione4));
+    struct Struct_0205d81c* entry = Window_GetActivePane((struct Struct_0205d81c*)((char*)obj + kRegione4));
     if (entry != 0) {
-        if (IsField0x9cEqual3_0204c7cc((unsigned char*)entry)) {
+        if (WindowPane_IsReady((unsigned char*)entry)) {
             if (!(((unsigned char*)entry)[0xc5] & 0x2)) {
-                SetFieldAt0x30_0205bc24((char*)obj + kRegione8, -1);
+                TouchGrid_SetTouchedCell((char*)obj + kRegione8, -1);
             }
         }
     }

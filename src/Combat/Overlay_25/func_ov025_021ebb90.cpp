@@ -110,27 +110,27 @@ struct Struct_ov025_021ebb90_5 { unsigned char unknown_0_; unsigned char unknown
 struct Struct_02010604;
 struct Struct_0203a588_2;
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" unsigned char func_ov025_021dcc64(void* arg0);
-extern "C" void func_ov025_021dcc58(void* arg0, unsigned char arg1);
-extern "C" int func_ov000_02162954(void* arg0);
-extern "C" int func_ov025_021ed2f4(void* arg0);
-extern "C" void func_ov025_021ebb24(struct Struct_ov025_021ebb90_6* arg0);
-extern "C" struct Struct_ov000_021600f8* func_ov000_021600f8(struct Struct_ov000_0215440c* arg0, int arg1);
-extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" struct Struct_ov025_021ebb90* func_02079e2c(char* arg0, int arg1);
-extern "C" void func_ov000_0216346c(char* arg0, int arg1);
-extern "C" void func_ov000_021634c8(char* arg0, int arg1);
-extern "C" short func_ov000_0215ffa0(void* arg0);
-extern "C" int func_ov025_021d8c30(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02049ae4(unsigned char* arg0);
-extern "C" int func_02049ee8(unsigned char* arg0);
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" void* func_020421a0(void);
-extern "C" void func_02043124(void* arg0);
-extern "C" struct Struct_0203a588_2* func_02039e70(void);
-extern "C" void func_0203a588(struct Struct_0203a588_2* arg0);
-extern "C" void func_ov000_02182a44(void* arg0);
+void* GetActiveCombatWork_ov000_02160130(void);
+unsigned char GetByte_021dcc64_021dcc64(void* obj);
+void SetByte_021dcc58(void* obj, unsigned char v);
+int CheckCombatantStatusOrTable_02162954(void* self);
+int Check021ed2f4(void* obj);
+extern "C" void func_ov025_021ebb24(struct Struct021ecb90* obj);
+struct ListNode021600f8* GetNodeAtIndex021600f8(struct List021600f8* list, int index);
+struct ListNode02160094* GetNodeAtIndex02160094(struct List02160094* list, int index);
+struct Row02079e2c* SearchBothTables02079e2c(char* table, int key);
+void AppendUniqueShort0216346c(char* obj, int val);
+void AppendUniqueShort021634c8(char* obj, int val);
+extern "C" short func_ov000_0215ffa0(void* obj);
+extern "C" int func_ov025_021d8c30(void* sl_, void* sb_, int kind, int category, int idx, int inner, int flag);
+void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
+int GetSubstructByte0x56_02049ee8(unsigned char* obj);
+int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+void* MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Stop(void* self);
+struct Obj0203a588* GetData02104b6c_02039e70(void);
+void ResetLowFlagEntries0203a588(struct Obj0203a588* obj);
+void ZeroFieldsAt0x6e8_ov000_02182a44(void* obj);
 struct GameResources;
 void SetMainBrightness(GameResources*, int, int);
 extern "C" int func_02085078(unsigned char* arg0);
@@ -138,20 +138,20 @@ extern "C" int func_020850a4(unsigned char* arg0);
 extern "C" void* func_02057924(void);
 struct Vector3i;
 void Vector3fixMultiplyScalar(Vector3i const*, int, Vector3i*);
-extern "C" int func_020c32f8(int);
-extern "C" int func_020c3260(int);
-extern "C" float func_0200c700(int);
-extern "C" short func_ov000_0216352c(int arg0, float arg1, float arg2);
-extern "C" int func_ov000_021635e4(int arg0, unsigned char arg1);
-extern "C" int func_ov000_02163c0c(void* arg0, int arg1);
-extern "C" void func_02057fb4(void* arg0, int arg1, void* arg2);
-extern "C" void func_0205ebfc(void* arg0, int arg1, int arg2);
-extern "C" int func_ov025_021ee438(struct Struct_ov025_021ee438* arg0, int arg1);
-extern "C" void func_ov025_021dcf14(void* arg0);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" void func_ov000_0216df00(void* arg0, int arg1, int arg2, int arg3, float arg4);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
-extern "C" void func_ov025_021ecb90(struct Struct_ov025_021ebb90_6* arg0, struct Struct_ov025_021ebb90_6* arg1);
+extern "C" int fix32_CosFx64c(int);
+extern "C" int fix32_SinFx64c(int);
+extern "C" float _ll_sto_f(int);
+short ClampScaledStat_0216352c(int id, float a, float b);
+extern "C" int func_ov000_021635e4(int id, unsigned char mode);
+int IsCombatantStateSpecial02163c0c(void* unused, int id);
+void FindNodeAndProcess02057fb4(void* list, int id, void* config);
+void SePlayer_PlayExtra(void* obj, int a, int b);
+int IsIdUnique021ee438(struct Ctx021ee438* obj, int id);
+extern "C" void func_ov025_021dcf14(void* combatWork);
+extern "C" void* func_ov000_02160f14(void* combatWork);
+extern "C" void func_ov000_0216df00(void* handle, int a, int b, int c, float scale);
+extern "C" void func_ov000_021626a0(void* combatWork, int a, int b);
+void CopyStructFields_021ecb90(struct Struct021ecb90* dst, struct Struct021ecb90* src);
 
 extern int g_sePlayer;
 extern "C" void __clear(void* dst, unsigned int n);
@@ -325,9 +325,9 @@ extern "C" ARM void func_ov025_021ebb90(struct Struct_ov025_021e9778_4* arg0) {
                                 func_02033b88((struct Struct_02010604*)var44, 0);
                             }
                         }
-                        func_02043124(func_020421a0());
-                        func_0203a588(func_02039e70());
-                        func_ov000_02182a44(var12 + Enum_ov025_021ebb90_28668);
+                        MessageSystem_Stop(MessageSystem_GetInstance());
+                        ResetLowFlagEntries0203a588(GetData02104b6c_02039e70());
+                        ZeroFieldsAt0x6e8_ov000_02182a44(cw + Field6ffc);
                     }
                 }
                 arg0->unknown_0_[var17].unknown_6_ |= 8;
@@ -412,27 +412,27 @@ extern "C" ARM void func_ov025_021ebb90(struct Struct_ov025_021e9778_4* arg0) {
                                 break;
                             case 1:
                             case 4: {
-                                var2.unknown_8_ = var18->unknown_32_;
-                                float var54 = var18->unknown_34_ / 4096.0f;
-                                var53 = (short)(func_ov000_0216352c(var47, var54, 1.0f) - (int)var54);
-                                if (var53 <= 0) var53 = 0;
-                                var2.unknown_4_ = 0;
-                                var2.unknown_0_ = 0;
-                                if (var18->unknown_36_ != 0) {
-                                    GameObject* var55 = var11->GetGameObjectByIndex(var45);
-                                    GameObject* var56 = var11->GetGameObjectByIndex(var47);
-                                    if (var55 != 0 && var56 != 0) {
-                                        *(Vector3i*)&var4 = *(Vector3i const*)((struct Struct_ov009_0218aa28*)((char*)var55 + 0x44));
-                                        *(Vector3i*)&var3 = *(Vector3i const*)((struct Struct_ov009_0218aa28*)((char*)var56 + 0x44));
-                                        Vector3fix_Subtract((const Vector3fix*)&var4, (const Vector3fix*)&var3, (Vector3fix*)&var5);
-                                        Vector3fix_Normalize((const Vector3fix*)&var5, (Vector3fix*)&var5);
-                                        Vector3fixMultiplyScalar((Vector3i const*)&var5, var2.unknown_8_, (Vector3i*)&var2);
-                                        *(Vector3i*)&var6 = *(Vector3i const*)((struct Struct_ov009_0218aa28*)((char*)var56 + 0x50));
-                                        int var57 = -var6.unknown_4_;
-                                        int var58 = (int)(4096.0f * (func_0200c700(func_020c32f8(var57)) / 4294967296.0f));
-                                        int var59 = (int)(4096.0f * (func_0200c700(func_020c3260(var57)) / 4294967296.0f));
-                                        Mat3x3_WriteRotationY((Matrix3x3*)&var7, (fix32_t)var59, (fix32_t)var58);
-                                        Mat3x3_ApplyToVector((const Vector3fix*)&var2, (const Matrix3x3*)&var7, (Vector3fix*)&var2);
+                                dir.z = e->r;
+                                float speed = e->s / 4096.0f;
+                                sf = (short)(ClampScaledStat_0216352c(targetId3, speed, 1.0f) - (int)speed);
+                                if (sf <= 0) sf = 0;
+                                dir.y = 0;
+                                dir.x = 0;
+                                if (e->t != 0) {
+                                    GameObject* owner = battle->GetGameObjectByIndex(ownerId);
+                                    GameObject* victim = battle->GetGameObjectByIndex(targetId3);
+                                    if (owner != 0 && victim != 0) {
+                                        *(Vector3i*)&selfPos = *(Vector3i const*)((struct Vec3*)((char*)owner + 0x44));
+                                        *(Vector3i*)&targetPos = *(Vector3i const*)((struct Vec3*)((char*)victim + 0x44));
+                                        Vector3fix_Subtract((const Vector3fix*)&selfPos, (const Vector3fix*)&targetPos, (Vector3fix*)&toTarget);
+                                        Vector3fix_Normalize((const Vector3fix*)&toTarget, (Vector3fix*)&toTarget);
+                                        Vector3fixMultiplyScalar((Vector3i const*)&toTarget, dir.z, (Vector3i*)&dir);
+                                        *(Vector3i*)&targetRot = *(Vector3i const*)((struct Vec3*)((char*)victim + 0x50));
+                                        int yaw = -targetRot.y;
+                                        int cosv = (int)(4096.0f * (_ll_sto_f(fix32_CosFx64c(yaw)) / 4294967296.0f));
+                                        int sinv = (int)(4096.0f * (_ll_sto_f(fix32_SinFx64c(yaw)) / 4294967296.0f));
+                                        Mat3x3_WriteRotationY((Matrix3x3*)&rot, (fix32_t)sinv, (fix32_t)cosv);
+                                        Mat3x3_ApplyToVector((const Vector3fix*)&dir, (const Matrix3x3*)&rot, (Vector3fix*)&dir);
                                     }
                                 }
                                 break;
@@ -476,7 +476,7 @@ extern "C" ARM void func_ov025_021ebb90(struct Struct_ov025_021e9778_4* arg0) {
         }
 
         if (!(obj->entries[i].d & 4) && sp14 <= obj->entries[i].m && obj->entries[i].m < sp4c) {
-            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, obj->entries[i].l, 0);
+            SePlayer_PlayExtra(&g_sePlayer, obj->entries[i].l, 0);
             obj->entries[i].d |= 4;
         }
 

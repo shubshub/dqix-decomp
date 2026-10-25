@@ -6,10 +6,10 @@ enum { Enum_ov000_02174c14_7520 = 0x1d60, Enum_ov000_02174c14_7528 = 0x1d68, Enu
 #endif
 #include "std_library_functions.h"
 
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
-extern "C" int func_ov000_021719f8(int* arg0);
-extern "C" void func_0204c804(void* arg0);
+struct Entry_0205d6a0;
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
+int HasAnyFlags_021719f8_021719f8(int* obj);
+void ResetElem2081Entry_0204c804(void* obj);
 
 struct Struct_ov000_02174c14 {
     char unknown_0_[0xc];
@@ -40,10 +40,10 @@ extern "C" ARM void func_ov000_02174c14(char* arg0) {
     struct Struct_ov000_02174c14* var0;
     int var1;
 
-    func_0205d6a0((struct Struct_0205d6a0*)(arg0 + 0x188), 1);
-    memset(arg0 + Enum_ov000_02174c14_7520, 0, 8);
-    *(signed char*)(arg0 + Enum_ov000_02174c14_7528) = 0;
-    (arg0 + *(signed char*)(arg0 + Enum_ov000_02174c14_7528))[Enum_ov000_02174c14_7520] = 1;
+    Window_ClosePane((struct Entry_0205d6a0*)(obj + 0x188), 1);
+    memset(obj + queueOffset, 0, 8);
+    *(signed char*)(obj + countOffset) = 0;
+    (obj + *(signed char*)(obj + countOffset))[queueOffset] = 1;
 
     for (var1 = 0; var1 < 4; var1++) {
         var0 = (struct Struct_ov000_02174c14*)(arg0 + 0x958) + *(signed char*)(arg0 + 0x6c + var1);

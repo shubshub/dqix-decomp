@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char* obj);
+int WindowPane_IsOpen(unsigned char* obj);
 extern "C" int func_0204fd00(void* ctx, int mask);
 extern "C" void Background_FillRect(void* target, int type, short a, short b, short c, short d, int flags);
 
@@ -60,7 +60,7 @@ extern "C" ARM void func_0205da88(struct Struct_0205da88_3* arg0, int arg1, int 
         tile &= 0x3ff;
         for (i = 0; i < obj->elemCount; i++) {
             el = &obj->elems[i];
-            if (!CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)el)) continue;
+            if (!WindowPane_IsOpen((unsigned char*)el)) continue;
             if (el->fc5 & 0x20) continue;
             if (el->fc5 & 0x80) continue;
             if (source != el->matched) continue;

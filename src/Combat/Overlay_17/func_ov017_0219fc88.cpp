@@ -8,12 +8,9 @@ enum { Enum_ov017_0219fc88_1788 = 0x6fc, Enum_ov017_0219fc88_1844 = 0x734, Enum_
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_0200fd0c(GameState* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
 
 struct Struct_02071488 {
     char unknown_0_[0x46];
@@ -22,8 +19,8 @@ struct Struct_02071488 {
 };
 extern "C" struct Struct_02071488* func_02071574(unsigned int arg0, struct Struct_02071488* arg1);
 
-extern "C" void* func_0205ec34(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 extern "C" void func_ov017_021baedc(void* arg0, int arg1);
 
@@ -36,8 +33,8 @@ extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201
 
 extern "C" void func_ov017_021bd398(void* arg0);
 
-extern "C" int func_020649f4(void* arg0, void* arg1);
-extern "C" void func_0206f81c(void* arg0);
+int Dispatch020649f4(void* a, void* b);
+extern "C" void EventQuery_RunQueuedCommands(void* p);
 
 struct Struct_ov017_0219fc88 {
     char unknown_0_[2];
@@ -55,23 +52,23 @@ struct Struct_ov017_0219fc88_2 {
     char unknown_10_[0x34 - 0x10];
 };
 
-// USA: func_ov017_0219fc88
-extern "C" ARM int func_ov017_0219fc88(void* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned short* var1 = (unsigned short*)func_02012fe4();
-    void* var2;
-    int var3;
-    void* var4 = GetGameResources();
-    struct Struct_0201bdac_2* var5 = *(struct Struct_0201bdac_2**)((char*)var4 + 0x3000 + Enum_ov017_0219fc88_1788);
-    var2 = func_0200fd0c(var0);
+// USA: func_ov017_0219fc88  (semantic: RunScriptAndRegisterEntryNode_0219fc88)
+extern "C" ARM int func_ov017_0219fc88(void* unusedSelf, int scriptId) {
+    GameState* battle = GameState::GetInstance();
+    unsigned short* g = (unsigned short*)Zone3D_GetInstance();
+    void* ctx;
+    int success;
+    void* self = GetGameResources();
+    struct TailList020469b4* list = *(struct TailList020469b4**)((char*)self + 0x3000 + RegionOffset6fc);
+    ctx = GetField0x3f8Address_0200fd0c(battle);
 
     struct Struct_02071488 var6;
     var3 = 0;
 
-    if (func_02071574((unsigned short)arg1, &var6) != NULL) {
-        void* var7 = func_0205ec34();
-        if (func_0206dfb0((int)var7, (unsigned char*)var7 + 0x8c, var6.unknown_46_ + 0x38e) == 0) {
-            struct Struct_ov017_0219fc88* var8 = *(struct Struct_ov017_0219fc88**)((char*)var4 + 0x3000 + Enum_ov017_0219fc88_1844);
+    if (RunScriptByValueRange02071574((unsigned short)scriptId, &objBuf) != NULL) {
+        void* work = Scenario_GetInstance();
+        if (Scenario_TestFlag((int)work, (unsigned char*)work + 0x8c, objBuf.f46 + 0x38e) == 0) {
+            struct Entry021baedc* entry = *(struct Entry021baedc**)((char*)self + 0x3000 + RegionOffset734);
 
             if (var8->unknown_2_ != 0) {
                 var8->unknown_8_ = arg1;
@@ -89,12 +86,12 @@ extern "C" ARM int func_ov017_0219fc88(void* arg0, int arg1) {
         }
     }
 
-    if (!var3) {
-        void* var9 = func_0205ec34();
-        struct Struct_ov017_0219fc88_2 var10;
-        var10.unknown_c_ = *var1;
-        if (func_020649f4(var9, &var10)) {
-            func_0206f81c(&var10);
+    if (!success) {
+        void* work2 = Scenario_GetInstance();
+        struct DispatchLocal0219fc88 d;
+        d.f0xc = *g;
+        if (Dispatch020649f4(work2, &d)) {
+            EventQuery_RunQueuedCommands(&d);
         }
     }
 

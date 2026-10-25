@@ -5,9 +5,9 @@ extern "C" void __clear(void* arg0, unsigned int arg1);
 extern "C" int func_02039730(void* arg0, int arg1);
 extern "C" void func_ov017_0219a544(unsigned char* arg0, char* arg1, int arg2, int arg3);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 extern "C" int Window_Update(void* objPtr, int val);
@@ -72,9 +72,9 @@ extern "C" ARM void func_ov017_0219a388(unsigned char* arg0) {
         __clear(var7, 0x80);
         func_ov017_0219a544(arg0, var7, var10, (signed char)func_02039730(var1, var6.unknown_0_[var9]));
 #if defined(jpn)
-        func_0205d304(var8, var7, 0, 0, 0, 1, 0);
+        Window_OpenPane(win, buf, 0, 0, 0, 1, 0);
 #else
-        func_0205d304(var8, var7, 0, 0, 0, 1, 0, 0);
+        Window_OpenPane(win, buf, 0, 0, 0, 1, 0, 0);
 #endif
 
         Window_Update(win, gs->GetTickCount());

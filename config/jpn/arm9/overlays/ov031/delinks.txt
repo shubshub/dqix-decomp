@@ -3236,7 +3236,7 @@ src/NetworkLib/Overlay_31/func_ov031_02241404.cpp:
     complete
     .text start:0x02241be4 end:0x02241c60
 
-src/NetworkLib/Overlay_31/func_ov031_02207230.cpp:
+src/NetworkLib/Overlay_31/ClearMatchingSlot_02207a10.cpp:
     complete
     .text start:0x02207a10 end:0x02207a6c
 
@@ -3980,7 +3980,7 @@ src/WifiLib/Overlay_31/func_ov031_0221e650.cpp:
     complete
     .text start:0x0221ee30 end:0x0221ee44
 
-src/NetworkLib/Overlay_31/func_ov031_022358b4.cpp:
+src/NetworkLib/Overlay_31/CopySlotAndValidateChecksums_02236094.cpp:
     complete
     .text start:0x02236094 end:0x022360c8
 

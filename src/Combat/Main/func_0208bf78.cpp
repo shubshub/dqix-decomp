@@ -6,22 +6,16 @@
 #include "Resource/CharacterCreationUI.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-struct Struct_0208b9a0;
-struct Struct_02013fb4;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0208bf78_5;
-struct Struct_0205faf4_3;
-struct Struct_0205faf4_4;
-struct Struct_0205faf4_7;
-struct Struct_02015438;
-struct Struct_02020cb8;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_6;
+struct StreamHeader0208d82c;
+struct StreamHeader;
+struct PacRecord;
+struct List0208d994;
+struct PackedNibbleArray0206e120;
+struct PackedNibbleArray0206e260;
+struct FindEntryById02096134Table;
+struct HeadNode02046b24;
+struct BackgroundGraphics;
 
 struct Struct_0208bf78_6 {
     unsigned int unknown_0_0_ : 7;
@@ -105,8 +99,8 @@ void ForwardInitStreamHeader0208d854(StreamHeader0208d82c*);
 GetTableByteOrFFData* GetGlobal02109418_02094d6c();
 unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
 int RunBufferedScript02095870(void*, StreamHeader*, int, int, unsigned char*);
-int Pac_CountFiles(ActiveEntry02046900*);
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 int GetElementField4ByKey0208d9e8(List0208d994*, int);
 int TestBitInByteArrayAt0x84_02096088(void*, int);
 int TestBitInByteArray02096100(int, unsigned char*, int);
@@ -119,21 +113,21 @@ int GetElementField8ByKey0208da00(List0208d994*, int);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 int GetElementField0x14ByKey_0208dadc(List0208d994*, int);
 int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
-StoreStruct* GetGlobalField0x1c020421a0();
+StoreStruct* MessageSystem_GetInstance();
 StatEntry0208bf78* FindEntryById02096134(FindEntryById02096134Table*, int);
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
-void Background_Init(List0204af64*);
+void Background_Init(BackgroundGraphics*);
 void Background_SetMapSize(unsigned char*, int);
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 void SetSubBg0Control0208c9cc(int, int, int, int, int);
 void Background_FlushFile(void*, char*);
-void Background_UploadFile(SelfTag0204b3a0*, char*);
-extern "C" void func_0204c684(TextWindow0208bf78*);
-extern "C" PackedNibbleArray0206e120* func_0205ec34();
+void Background_UploadFile(BackgroundGraphics*, char*);
+extern "C" void WindowPane_Init(TextWindow0208bf78*);
+extern "C" PackedNibbleArray0206e120* Scenario_GetInstance();
 extern "C" void func_0204f41c(TextWindow0208bf78*, short, short, const char*, int, unsigned char, short*, short*, int);
 extern "C" void func_02046380(StoreStruct*);
-extern "C" void func_02046608(StoreStruct*, int, const char*, char*, int, int, int);
-extern "C" int func_020420e8(char*, int);
+extern "C" void MessageSystem_FormatText(StoreStruct*, int, const char*, char*, int, int, int);
+extern "C" int Font_GetTextWidth(char*, int);
 extern "C" void func_0208d42c(void*, TextWindow0208bf78*, short, short, int, unsigned char, unsigned char, unsigned char, unsigned char);
 extern "C" void Background_SetPriority(void*, int);
 
@@ -148,8 +142,8 @@ static inline Struct_0208bf78_6 inline_0208bf78_3(Struct_02065990_3* arg0, unsig
     return arg0->unknown_178_[arg1];
 }
 
-static inline bool inline_0208bf78_4(unsigned char arg0, int arg1) {
-    return func_0206e120(func_0205ec34(), arg0) == arg1;
+static inline bool HasStatus0208bf78(unsigned char id, int status) {
+    return GetPackedNibbleField(Scenario_GetInstance(), id) == status;
 }
 
 static inline bool inline_0208bf78_5(Struct_0205faf4_3* arg0, unsigned char arg1, int arg2) {
@@ -208,33 +202,33 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
         void* file;
         unsigned int length;
         loader->GetLoadedFileByID(view->taskId, &file, &length);
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int count = Pac_CountFiles((PacRecord*)file);
         int sizes[4];
         for (int i = 0; i < count; i++) {
-            records[i] = Pac_GetFile((Rec020467f0*)file, i, &record, &sizes[i]);
+            records[i] = Pac_GetFile((PacRecord*)file, i, &record, &sizes[i]);
         }
-        Struct_0208bf78_2 var15;
-        short var16;
-        short var17;
-        char* var18 = (char*)var8[0];
-        func_0204c684(&var15);
-        var15.unknown_8_ = var18 + 0x10;
-        var15.unknown_8c_.unknown_1c_ = 0x20;
-        var15.unknown_8c_.unknown_1e_ = 0x18;
-        var15.unknown_8c_.unknown_28_ = 0xc;
-        var15.unknown_8c_.unknown_2a_ = 0x10;
-        arg0->unknown_da_ &= ~8;
-        if (arg0->unknown_d2_ != 9999) {
-            func_0205ec34();
-            Struct_02065990_3* var19 = func_02094d6c();
-            short var20 = arg0->unknown_d2_;
-            char var21[8] = {0};
-            sprintf(var21, data_020f1192, var20);
-            func_0204f41c(&var15, 0x18, 0x14, var21, 0xc, 0xf, &var16, &var17, 0);
-            int var22 = func_0208d9e8((Struct_0208bf78_5*)&arg0->unknown_1c_, var20);
-            bool var23 = 0;
-            if (arg0->unknown_dd_ && !func_02096088(var19, inline_0208bf78_2(var19, var20))) {
-                if (!func_02096100((int)var19, var19->unknown_4a8_, inline_0208bf78_2(var19, var20))) var23 = 1;
+        TextWindow0208bf78 window;
+        short width;
+        short height;
+        char* data = (char*)records[0];
+        WindowPane_Init(&window);
+        window.text = data + 0x10;
+        window.layout.width = 0x20;
+        window.layout.height = 0x18;
+        window.layout.firstFont = 0xc;
+        window.layout.lastFont = 0x10;
+        view->flags &= ~8;
+        if (view->target != 9999) {
+            Scenario_GetInstance();
+            GetTableByteOrFFData* table = GetGlobal02109418_02094d6c();
+            short target = view->target;
+            char number[8] = {0};
+            sprintf(number, data_020f1192, target);
+            func_0204f41c(&window, 0x18, 0x14, number, 0xc, 0xf, &width, &height, 0);
+            int text = GetElementField4ByKey0208d9e8((List0208d994*)&view->elements, target);
+            bool unknown = 0;
+            if (view->revealed && !TestBitInByteArrayAt0x84_02096088(table, GetMonsterIndex0208bf78(table, target))) {
+                if (!TestBitInByteArray02096100((int)table, table->defeated, GetMonsterIndex0208bf78(table, target))) unknown = 1;
             }
             if (unknown) text = KeyTable_Get(&view->strings, 3);
             int kind = 0;
@@ -254,7 +248,7 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                 kind = 2;
             } else {
                 unsigned char id = GetMonsterIndex0208bf78(table, target);
-                PackedNibbleArray0206e120* status = func_0205ec34();
+                PackedNibbleArray0206e120* status = Scenario_GetInstance();
                 bool seen = IsStatus0208bf78(status, id, 0) || IsStatus0208bf78(status, id, 1);
                 if (seen) {
                     text = GetElementField8ByKey0208da00((List0208d994*)&view->elements, target);
@@ -264,29 +258,29 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                             text = KeyTable_Get(&view->strings, 4);
                         } else if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 1)) {
                             GameResources* resources = GameState::GetInstance()->GetResources();
-                            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->unknown_ptr_array_36fc[0]) == 0x2d) {
+                            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
                                 text = GetElementField0x14ByKey_0208dadc((List0208d994*)&view->elements, target);
                             }
                         }
                     }
                 } else {
-                    Struct_0205faf4_4* var29 = (Struct_0205faf4_4*)func_0205ec34();
-                    if (func_0206e260(var29, inline_0208bf78_2(var19, var20))) {
-                        var22 = func_0208da00((Struct_0208bf78_5*)&arg0->unknown_1c_, var20);
+                    PackedNibbleArray0206e260* flags = (PackedNibbleArray0206e260*)Scenario_GetInstance();
+                    if (GetPackedNibbleFlag0x4(flags, GetMonsterIndex0208bf78(table, target))) {
+                        text = GetElementField8ByKey0208da00((List0208d994*)&view->elements, target);
                     }
                 }
             }
-            Struct_020465c0* var30 = func_020421a0();
-            char* var31 = var30->unknown_60_;
-            memset(var31, 0, 0x960);
-            Struct_0208bf78_7* var32 = func_02096134((Struct_0205faf4_7*)var19, inline_0208bf78_2(var19, var20));
-            if (var32) {
-                func_02046380(var30);
-                if (var32->unknown_2_0_) {
-                    for (int var33 = 0; var33 < 3; var33++) {
-                        int var34 = var32->unknown_a_[var33];
-                        if (var34 > 99) var34 = 99;
-                        func_020465c0(var30, var33, var34);
+            StoreStruct* formatter = MessageSystem_GetInstance();
+            char* buffer = formatter->buffer;
+            memset(buffer, 0, 0x960);
+            StatEntry0208bf78* entry = FindEntryById02096134((FindEntryById02096134Table*)table, GetMonsterIndex0208bf78(table, target));
+            if (entry) {
+                func_02046380(formatter);
+                if (entry->hasResists) {
+                    for (int i = 0; i < 3; i++) {
+                        int value = entry->stats[i];
+                        if (value > 99) value = 99;
+                        StoreInArray0x8b0_020465c0(formatter, i, value);
                     }
                 }
                 for (int var35 = 0; var35 < 2; var35++) {
@@ -295,7 +289,7 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                     func_020465c0(var30, var35 + 3, var36);
                 }
             }
-            func_02046608(formatter, 0xc, (const char*)text, buffer, 0xe0, 0, 1);
+            MessageSystem_FormatText(formatter, 0xc, (const char*)text, buffer, 0xe0, 0, 1);
             func_0204f41c(&window, 0x10, 0x28, buffer, 0xc, 0xf, &width, &height, 0);
             window.layout.firstFont = 0xa;
             window.layout.lastFont = 0x10;
@@ -306,22 +300,22 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                 SaveDate0208bf78 date = GetSaveDate0208bf78(table, GetMonsterIndex0208bf78(table, target));
                 char text2[0x100] = {0};
                 sprintf(text2, data_020f1197, date.day, KeyTable_Get(&view->strings, (short)(date.month + 4)), date.year + 2000);
-                func_0204f41c(&window, 0xc6 - func_020420e8(text2, 0), 0xa8, text2, 8, 0xf, &width, &height, 0);
+                func_0204f41c(&window, 0xc6 - Font_GetTextWidth(text2, 0), 0xa8, text2, 8, 0xf, &width, &height, 0);
                 func_0208d42c(view, &window, 0xd7, 0xa8, date.hour, 0xf, 2, 1, 1);
                 func_0208d42c(view, &window, 0xda, 0xa8, date.minute, 0xf, 2, 0, 1);
             }
         }
         RecordList0208bf78 list;
-        Background_Init((List0204af64*)&list);
+        Background_Init((BackgroundGraphics*)&list);
         Background_SetMapSize((unsigned char*)&list, 0);
         list.mode = 1;
         list.layer = 0;
         Background_SetPriority(&list, 0);
-        Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+        Background_SetScroll((BackgroundGraphics*)&list, 0, 0);
         SetSubBg0Control0208c9cc(0, 0, 15, 0, 0);
         for (int i = 0; i < count; i++) {
             Background_FlushFile(&list, (char*)records[i]);
-            Background_UploadFile((SelfTag0204b3a0*)&list, (char*)records[i]);
+            Background_UploadFile((BackgroundGraphics*)&list, (char*)records[i]);
         }
         var0->RemoveTask(arg0->unknown_bc_);
         arg0->unknown_bc_ = -1;

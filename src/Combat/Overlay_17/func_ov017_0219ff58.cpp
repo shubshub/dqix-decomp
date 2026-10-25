@@ -35,23 +35,23 @@ struct Struct_ov017_0219ff58_3 {
     unsigned int unknown_18c_;
 };
 
-extern "C" int func_02011b50(void* arg0, int arg1);
-extern "C" void func_02011b3c(void* arg0, unsigned char arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_02048150(void* arg0, int arg1, int arg2);
-extern "C" int func_02048260(struct Struct_02048260_2* arg0);
-extern "C" int func_020482bc(struct Struct_02010604_3* arg0);
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" void func_02039858(unsigned char*, int);
-extern "C" void func_0203986c(unsigned char* arg0, int arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_ov017_021cedf4(int arg0, int arg1, int arg2);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_02070378(char* arg0);
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
+void SetBitsInField0x63dc_02011b3c(void* obj, unsigned char mask);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void func_02048150(void* combatant, int a, int b);
+int RestoreMaxHpToFull(struct Combatant02048260* c);
+int RestoreMaxMpToFull(struct Combatant020482bc* c);
+int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+void SetByte0x1c8_02039858(unsigned char*, int);
+void SetByte0x1c9_0203986c(unsigned char* obj, int value);
+void GameObject_EnableControl(void* obj);
+extern "C" void func_ov017_021cedf4(int a, int b, int c);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
+void InitStruct02070378(char* obj);
+void InitAndResetHeader_0219e310(unsigned char* obj, int flag);
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // USA: func_ov017_0219ff58
 extern "C" ARM int func_ov017_0219ff58(unsigned char* arg0, int arg1, int arg2, int arg3) {
@@ -64,18 +64,18 @@ extern "C" ARM int func_ov017_0219ff58(unsigned char* arg0, int arg1, int arg2, 
     if (func_02011b50(var0, 1) != 0) {
         if (arg3 != 0) {
             GetGameResources();
-            signed char var1 = func_020100a8(var0);
-            Struct_ov017_0219ff58_3* var2 = (Struct_ov017_0219ff58_3*)var0->GetPartyMemberByIndex(var1);
-            if (var2 != NULL) {
-                func_02048150(var2, 0, 1);
-                func_02048260((struct Struct_02048260_2*)var2);
-                func_020482bc((struct Struct_02010604_3*)var2);
-                var2->unknown_18c_ &= ~1;
-                func_02033b88((struct Struct_02010604*)var2, 0);
-                if (var2->unknown_130_->unknown_0_ & 1) {
-                    func_02039858((unsigned char*)var2, -1);
-                    func_0203986c((unsigned char*)var2, 0);
-                    func_020397c0(var2);
+            signed char leader = GameState_GetProtagonistIndex(battle);
+            Combatant0219ff58* c = (Combatant0219ff58*)battle->GetPartyMemberByIndex(leader);
+            if (c != NULL) {
+                func_02048150(c, 0, 1);
+                RestoreMaxHpToFull((struct Combatant02048260*)c);
+                RestoreMaxMpToFull((struct Combatant020482bc*)c);
+                c->flags18c &= ~1;
+                SetByte0xbeShiftPrev((struct Bytes02033b88*)c, 0);
+                if (c->status->flags & 1) {
+                    SetByte0x1c8_02039858((unsigned char*)c, -1);
+                    SetByte0x1c9_0203986c((unsigned char*)c, 0);
+                    GameObject_EnableControl(c);
                 }
                 func_ov017_021cedf4(var1, 1, 0);
                 func_ov017_021c9e00(var1, 0, 0, 1);

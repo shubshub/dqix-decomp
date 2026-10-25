@@ -12,17 +12,17 @@ extern "C" void func_ov017_021c3fb4(int arg0, int arg1);
 extern "C" void func_ov017_021c4418(int arg0, int arg1);
 extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, int arg4);
 
-extern "C" int func_020100a8(GameState*);
-extern "C" void* func_02010828(GameState*);
-extern "C" void* func_020421a0();
-extern "C" int func_020535c8(signed char*);
-extern "C" int func_02046b08(void**);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
-extern "C" int func_02048418(unsigned char*, unsigned short);
-extern "C" void func_ov017_021d27a0(int, int, int);
-extern "C" void* func_02079e2c(char*, int);
-struct Struct_02048350_2;
-extern "C" int func_02048350(struct Struct_02048350_2*, int);
+int GameState_GetProtagonistIndex(GameState*);
+void* GameState_GetParty(GameState*);
+void* MessageSystem_GetInstance();
+int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+int IsField0Null_02046b08(void**);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
+int TryClearFlags0x130_02048418(unsigned char*, unsigned short);
+void EnqueueEventTag34_021d27a0(int, int, int);
+void* SearchBothTables02079e2c(char*, int);
+struct Obj02048350;
+int ConsumeCounter02048350(struct Obj02048350*, int);
 
 extern "C" void func_ov017_021a5a68();
 typedef void (*Type_ov017_021d27e4)(int tag, int first, int second);
@@ -69,38 +69,38 @@ extern Struct_ov017_021d6d0c data_ov017_021d6d0c;
 #endif
 
 // USA: func_ov017_021d27e4
-extern "C" ARM void func_ov017_021d27e4(void* arg0, Struct_ov017_021d27e4_2* arg1, GameState* arg2, GameResources* arg3) {
-    func_020100a8(arg2);
-    unsigned char* var0 = static_cast<unsigned char*>(func_02010828(arg2));
-    signed char var1 = arg1->unknown_5_;
-    signed char var2 = arg1->unknown_6_;
-    unsigned char* var3 = var0 + 0xf78;
-    int var4 = 0;
-    int var5 = 0;
-    int var6 = var0[0xf7c];
-    int var7;
-    for (var7 = 0; var7 < var6; var7++) {
-        unsigned char var8 = var3[var7];
-        if (var8 == var1) var4 = 1;
-        if (var8 == var2) var5 = 1;
+extern "C" ARM void func_ov017_021d27e4(void* unused0, Evt021d27e4* evt, GameState* gs, GameResources* ctx) {
+    GameState_GetProtagonistIndex(gs);
+    unsigned char* party = static_cast<unsigned char*>(GameState_GetParty(gs));
+    signed char first = evt->first;
+    signed char second = evt->second;
+    unsigned char* ids = party + 0xf78;
+    int hasFirst = 0;
+    int hasSecond = 0;
+    int count = party[0xf7c];
+    int i;
+    for (i = 0; i < count; i++) {
+        unsigned char id = ids[i];
+        if (id == first) hasFirst = 1;
+        if (id == second) hasSecond = 1;
     }
 
     switch (arg1->unknown_4_) {
     case 1: {
-        if (!var5) return;
-        int var9 = 1;
-        if ((*reinterpret_cast<int*>(static_cast<char*>(func_020421a0()) + Enum_ov017_021d27e4_2456)) != 0) var9 = 0;
-        if (func_020535c8((signed char*)arg2->GetUnknownGameObject()) != 0) var9 = 0;
-        if (func_02046b08(static_cast<void**>(arg3->unknown_ptr_array_36fc[0])) == 0) var9 = 0;
-        if (func_020dc920((unsigned char)var1, 1, 1, 0) == 0) var9 = 0;
-        if (var9) {
-            int var10 = 0;
-            GameObject* var11 = func_0200ff1c(arg2, var2);
-            if (var11 != NULL) {
-                if (**(unsigned int**)((char*)var11 + 0x130) & 4) var10 = 1;
+        if (!hasSecond) return;
+        int ok = 1;
+        if ((*reinterpret_cast<int*>(static_cast<char*>(MessageSystem_GetInstance()) + MessageActiveOffset)) != 0) ok = 0;
+        if (CheckSubstructByte0x7cPositive_020535c8((signed char*)gs->GetUnknownGameObject()) != 0) ok = 0;
+        if (IsField0Null_02046b08((void**)ctx->fieldTaskQueue_) == 0) ok = 0;
+        if (func_020dc920((unsigned char)first, 1, 1, 0) == 0) ok = 0;
+        if (ok) {
+            int flagged = 0;
+            GameObject* c = GetCombatantWithFlag0x100_0200ff1c(gs, second);
+            if (c != NULL) {
+                if (**(unsigned int**)((char*)c + 0x130) & 4) flagged = 1;
             }
-            if (var10) {
-                var0 = static_cast<unsigned char*>(func_02010828(arg2));
+            if (flagged) {
+                party = static_cast<unsigned char*>(GameState_GetParty(gs));
 #if defined(jpn)
                 Struct_ov017_021d6d0c var12 = data_ov017_021d7154;
 #else

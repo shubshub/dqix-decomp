@@ -2,17 +2,17 @@
 
 // Overlay 9, originally ToUpperCopy0218a484 (USA/EUR 0x0218a484; JPN not identified)
 ARM void NameFilter_CopyUppercase(int self, char *src, char *dst) {
-	int c;
-	while ((c = *src) != 0) {
-		if (c >= 'a' && c <= 'z') {
-			c -= 0x20;
-			*dst = c;
-			c = *dst;
+	int character;
+	while ((character = *src) != 0) {
+		if (character >= 'a' && character <= 'z') {
+			character -= 'a' - 'A';
+			*dst = character;
+			character = *dst;
 		} else {
-			*dst = c;
-			c = *dst;
+			*dst = character;
+			character = *dst;
 		}
-		if (c) {
+		if (character) {
 			src++;
 		}
 		dst++;

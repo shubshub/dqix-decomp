@@ -6,7 +6,7 @@ extern "C" int func_02069408(void*, unsigned short);
 extern "C" int func_02069430(void*, unsigned short);
 extern "C" void func_0206cb14(void*, int, unsigned short);
 extern "C" void __clear(void*, int);
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
+extern "C" int memcmp(const void*, const void*, unsigned int);
 extern const char data_020f07ce[];
 extern const char data_020f0aeb[];
 
@@ -29,9 +29,9 @@ extern "C" ARM void func_0206c794(void* arg0) {
             var4 = 1;
             break;
         }
-        if (!func_02069430(var0, *var3)) {
-            if (func_02001aec(var3, data_020f07ce, 2) == 0) {
-                var0->unknown_17f3_ = 0;
+        if (!func_02069430(self, *cursor)) {
+            if (memcmp(cursor, data_020f07ce, 2) == 0) {
+                self->b19c2 = 0;
                 break;
             }
             var1[var2] = *var3;
@@ -42,18 +42,18 @@ extern "C" ARM void func_0206c794(void* arg0) {
     }
     var3++;
     for (;;) {
-        if (func_02069408(var0, *var3)) break;
-        if (!func_02069430(var0, *var3)) {
-            if (func_02001aec(var3, data_020f0aeb, 2) == 0) {
-                var2 = 0;
-                var0->unknown_1774_ = -1;
-                var0->unknown_1772_ = 0;
-                var0->unknown_19c4_ = 0;
-                var0->unknown_17f3_ = var5;
-                var4 = 1;
+        if (func_02069408(self, *cursor)) break;
+        if (!func_02069430(self, *cursor)) {
+            if (memcmp(cursor, data_020f0aeb, 2) == 0) {
+                length = 0;
+                self->h1944 = -1;
+                self->lineGlyphCount = 0;
+                self->b19c4 = 0;
+                self->b19c2 = previousStatus;
+                changed = 1;
                 break;
             }
-            if (func_02001aec(var3, data_020f07ce, 2) == 0) break;
+            if (memcmp(cursor, data_020f07ce, 2) == 0) break;
         }
         var3++;
     }

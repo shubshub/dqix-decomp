@@ -13,27 +13,22 @@ struct Struct_ov001_021626e4 {
 extern "C" int func_ov017_021d612c(void* args);
 extern "C" int func_ov017_021d60f4(void* args);
 unsigned int LoadResourceIntoGlobalBuffer_0215a750(const char* path, void** outPtr);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 void SetBg3ControlFields_02162678(int a, int b, int c, int d);
 void SetSubBgMode_020c3984(unsigned int mode);
 void SetSubBg3ControlFields_021628d4(int a, int b, int c, int d);
-struct List0204af64;
-void Background_Init(List0204af64*);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 extern "C" void Background_SetPriority(Background021626e4* background, int a);
 void Background_SetMapSize(unsigned char*, int);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 void DelayThenSyncBit0_020c9820();
 void Background_FlushFile(void*, char*);
-struct SelfTag0204b3a0;
-void Background_UploadFile(SelfTag0204b3a0*, char*);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
-struct List0204afb4;
-void ResetRecordList0204afb4(List0204afb4*);
+void Background_UploadFile(BackgroundGraphics*, char*);
+void Background_UploadMap(BackgroundGraphics*, void*);
+void Background_Destroy(BackgroundGraphics*);
 
 extern char data_ov001_02165745[];
 
@@ -70,9 +65,9 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
         }
     }
 
-    count = Pac_CountFiles((ActiveEntry02046900*)file);
+    count = Pac_CountFiles((PacRecord*)file);
     for (int i = 0; i < count; i++) {
-        records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &recordSizes[i]);
+        records[i] = Pac_GetFile((PacRecord*)file, i, &name, &recordSizes[i]);
     }
 
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
@@ -85,19 +80,19 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
         func_ov001_021628d4(0, 0, 0xe, 0);
     }
 
-    Background_Init((List0204af64*)&background);
+    Background_Init((BackgroundGraphics*)&background);
     background.screen = subScreen;
     background.layer = 3;
     Background_SetPriority(&background, 0);
     Background_SetMapSize((unsigned char*)&background, 0);
-    Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+    Background_SetScroll((BackgroundGraphics*)&background, 0, 0);
     DelayThenSyncBit0_020c9820();
     for (int i = 0; i < count; i++) {
         Background_FlushFile(&background, (char*)records[i]);
-        Background_UploadFile((SelfTag0204b3a0*)&background, (char*)records[i]);
+        Background_UploadFile((BackgroundGraphics*)&background, (char*)records[i]);
     }
-    Background_UploadMap((List0204b0e8*)&background, NULL);
-    ResetRecordList0204afb4((List0204afb4*)&background);
+    Background_UploadMap((BackgroundGraphics*)&background, NULL);
+    Background_Destroy((BackgroundGraphics*)&background);
 
     if (var9) {
         BackgroundLoader::RemoveLockGlobal();

@@ -7,9 +7,9 @@ struct Struct_0208f36c {
 };
 
 // USA: func_0208f36c
-extern "C" ARM void func_0208f36c(Struct_0208f36c* arg0, Object3D* arg1) {
-    arg0->unknown_8_ = arg1;
-    if (!arg0->unknown_8_) return;
-    arg0->unknown_8_->SetScale(0x10a, 0x10a, 0x10a);
-    arg0->unknown_8_->MaybeSetBCFGAnimation(0, 0);
+extern "C" ARM void func_0208f36c(Self0208f36c* self, Object3D* obj) {
+    self->obj_ = obj;
+    if (!self->obj_) return;
+    self->obj_->SetScale(0x10a, 0x10a, 0x10a);
+    self->obj_->SetAnimationByIndex(0, 0);
 }

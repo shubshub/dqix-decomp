@@ -3,15 +3,15 @@
 struct Struct_02109bf4_4;
 struct Struct_0209c3b4_2;
 
-extern "C" void func_0209c678(struct Struct_02109bf4_4* arg0, int arg1);
-extern "C" int func_0209c0f4(int arg0, int arg1);
-extern "C" void func_0209c3b4(struct Struct_0209c3b4_2* arg0, int arg1);
-extern "C" void func_0203aa80(void* arg0, int arg1);
-extern "C" int func_0203ab6c(void*, void*);
-extern "C" int func_0209c140();
-extern "C" void* func_020bc068(void* arg0, int arg1);
-extern "C" int func_0209c6bc(void* arg0);
-extern "C" void func_0209c5e8(void* arg0);
+void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
+int IsMissingFromTable0209c0f4(int value, int type);
+void SetStateAndDispatch0209c3b4(struct Actor0209c3b4* actor, int val);
+void Forward0203aa80(void* obj, int arg2);
+int SetContextAndQuery0203ab6c(void*, void*);
+int IsBattleActiveAndCombatantsBit0Set_0209c140();
+void* CallFunc020bc594OnField0_020bc068(void* obj, int unused);
+int IsHandleB8Active0209c6bc(void* obj);
+extern "C" void func_0209c5e8(void* actor);
 
 struct Struct_0209c530 {
     char unknown_0_[0xb0];
@@ -34,8 +34,8 @@ struct Struct_0209c530 {
 extern "C" ARM void func_0209c530(struct Struct_0209c530* arg0) {
     if (arg0->unknown_b0_ != 2) return;
 
-    func_0209c678((struct Struct_02109bf4_4*)arg0, 0);
-    arg0->unknown_b0_ = 1;
+    BgmPlayer_FadeOut((struct Actor0209c678*)a, 0);
+    a->state = 1;
 
     if (func_0209c0f4(arg0->unknown_b8_, arg0->unknown_ba_) != 0) {
         short var0 = arg0->unknown_b8_;
@@ -45,9 +45,9 @@ extern "C" ARM void func_0209c530(struct Struct_0209c530* arg0) {
         if (arg0->unknown_b4_ > 0) {
             func_0203aa80(arg0, arg0->unknown_b4_);
         }
-        func_0203ab6c(arg0, (void*)arg0->unknown_b8_);
-        if (func_0209c140() != 0) {
-            func_0209c678((struct Struct_02109bf4_4*)arg0, 0);
+        SetContextAndQuery0203ab6c(a, (void*)a->field_b8);
+        if (IsBattleActiveAndCombatantsBit0Set_0209c140() != 0) {
+            BgmPlayer_FadeOut((struct Actor0209c678*)a, 0);
         } else {
             func_020bc068(&arg0->unknown_bc_, 0);
             if (func_0209c6bc(arg0) == 0) {

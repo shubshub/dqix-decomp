@@ -13,7 +13,7 @@ Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
 extern "C" void func_0206b104(MessageSystem*);
 void SePlayer_Play(SePlayer*, int, int);
 void SetFlag0x2IfByte0xd4Not3_0208beb4(unsigned char*);
-extern "C" void func_02043124(MessageSystem*);
+extern "C" void MessageSystem_Stop(MessageSystem*);
 
 #if defined(jpn)
 extern "C" void func_0206cba0(Struct_02021b84*);
@@ -35,16 +35,16 @@ ARM int Struct_02021b84::func_020440cc() {
 #else
     if (unknown_19cf_) var0 |= 0x100;
 #endif
-    if (g_keyManager.TestKeysPressed(var0)) var1 = 1;
-    if (g_keyManager.TestKeysPressed(0xf0)) var1 = 1;
-    if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 20) var1 = 1;
-    if (func_020656d0() == 0xff0c) {
-        unsigned int var2 = GameState::GetInstance()->GetTickCount();
-        if (unknown_1961_) {
-            if (unknown_1961_ <= var2) {
-                unknown_1961_ = 0;
-                var1 = 1;
-            } else unknown_1961_ -= var2;
+    if (g_keyManager.TestKeysPressed(mask)) triggered = 1;
+    if (g_keyManager.TestKeysPressed(KEY_DPAD)) triggered = 1;
+    if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 20) triggered = 1;
+    if (GetIndexedHalfword_020656d0() == 0xff0c) {
+        unsigned int ticks = GameState::GetInstance()->GetTickCount();
+        if (inputDelay) {
+            if (inputDelay <= ticks) {
+                inputDelay = 0;
+                triggered = 1;
+            } else inputDelay -= ticks;
         }
     }
     if (!var1) return 0;
@@ -117,11 +117,11 @@ ARM int Struct_02021b84::func_020440cc() {
                 }
                 ++unknown_78_;
             }
-            func_02045688();
-            unknown_9a0_ = 0;
-            func_02043040(this);
-            func_02043124(this);
-            func_020430b0(this);
+            ProcessPendingFlag02045688();
+            mode = 0;
+            InitCombatSlots02043040(this);
+            MessageSystem_Stop(this);
+            ResetControllerState020430b0(this);
         } else {
 #if defined(jpn)
             if (!flags17ff.flag5) SePlayer_Play(&g_sePlayer, 1, 0);

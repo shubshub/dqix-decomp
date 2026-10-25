@@ -46,12 +46,12 @@ struct Struct_ov000_02160da0 {
     unsigned char unknown_7748_;
 };
 
-extern "C" char func_020100a8(GameState* arg0);
-extern "C" void* func_0207d78c();
-extern "C" int func_020a36a8(Struct_020a36a8* arg0);
-extern "C" unsigned char func_0207db58(Struct_0207d7f4* arg0, unsigned short arg1, char arg2);
-extern "C" void func_ov000_0216377c(Struct_ov000_0216377c* arg0, unsigned char arg1);
-extern "C" void func_ov017_021cc050(unsigned short arg0);
+char GameState_GetProtagonistIndex(GameState* gs);
+void* GetData02108ea8_0207d78c();
+int MatchesActiveIndex020a36a8(Combatant020A36A8* c);
+unsigned char AssignEntrySlot0207db58(Entry0207d9bc* arr, unsigned short key, char val);
+void Foo0216377c(Struct0216377c* obj, unsigned char val);
+void EnqueueEventTag130_021cc050(unsigned short tag);
 
 extern "C" {
 int func_020a35e0(Struct_ov000_0217e870_2* arg0, unsigned char arg1);
@@ -86,9 +86,9 @@ extern "C" ARM void func_ov026_021dbd1c(Struct_ov000_02160da0* arg0, int arg1, i
     func_0207da94(var4, arg1);
     func_ov017_02191b40(var6, arg1);
 
-    if (arg1 == var1->unknown_2a_) {
-        if (func_0202c508(var5)) {
-            func_ov000_0216377c((Struct_ov000_0216377c*)arg0, func_0207db58((Struct_0207d7f4*)var4, var1->unknown_8_, func_020100a8(var0)));
+    if (member == party->myIndex) {
+        if (func_0202c508(link)) {
+            Foo0216377c((Struct0216377c*)self, AssignEntrySlot0207db58((Entry0207d9bc*)entries, party->netId, GameState_GetProtagonistIndex(gs)));
         } else {
             func_ov017_021c9b90(var1->unknown_8_, arg1);
         }

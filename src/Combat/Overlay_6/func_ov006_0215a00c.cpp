@@ -58,12 +58,12 @@ struct Struct_ov006_0215a00c_5 {
 extern "C" void func_02080c20(struct Struct_0207fdcc_2*, int);
 extern "C" void func_020813ec(void*, int);
 int KeyTable_Get(struct Container020e0310*, int);
-struct StoreStruct* GetGlobalField0x1c020421a0();
+struct StoreStruct* MessageSystem_GetInstance();
 extern "C" void func_02046380(struct StoreStruct*);
 void* CallFunc020e52a0_020e5294(void*, int);
 void StoreInArray0x8b0_020465c0(struct StoreStruct*, int, int);
-void InitObjFromCombatantId020e4bf4(void*, int);
-extern "C" void func_02046608(struct StoreStruct*, int, const char*, char*, int, int, int);
+void NameText_InitFromPartyMember(void*, int);
+extern "C" void MessageSystem_FormatText(struct StoreStruct*, int, const char*, char*, int, int, int);
 char* Font_FindCharacter(int, int);
 extern "C" void __clear(void*, int);
 extern "C" void func_02080f8c(Struct_02080f8c*, int, int);
@@ -92,11 +92,11 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
         arg0->unknown_300_.unknown_92_ = arg0->unknown_300_.unknown_92_ + 1;
         return;
     }
-    if (var3 == 1) {
-        struct Struct_020465c0* var4 = func_020421a0();
-        char* var5 = var4->unknown_5c_;
-        memset(var5, 0, 0x960);
-        func_02046380(var4);
+    if (state == 1) {
+        struct StoreStruct* fmt = MessageSystem_GetInstance();
+        char* base = fmt->field5c;
+        memset(base, 0, 0x960);
+        func_02046380(fmt);
 
         unsigned short var6 = 0;
         if (arg0->unknown_34_ != 0) {
@@ -109,10 +109,10 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
         func_020465c0(var4, 0, arg0->unknown_300_.unknown_87_);
         func_020465c0(var4, 1, var6);
 
-        struct Struct_ov006_0215a00c_2* var8 = (struct Struct_ov006_0215a00c_2*)((GameState*)((struct Struct_ov006_0215a00c*)GameState::GetInstance()))->GetUnknownGameObject();
-        if (var8 != 0) {
-            func_020e4bf4(&var1, var8->unknown_4_);
-            var4->unknown_0_ = &var1;
+        struct CombatantObj* gobj = (struct CombatantObj*)((GameState*)((struct GameStateStub*)GameState::GetInstance()))->GetUnknownGameObject();
+        if (gobj != 0) {
+            NameText_InitFromPartyMember(&combatant, gobj->id);
+            fmt->field0 = &combatant;
         }
 
         short* var9 = (short*)data_ov006_0215ffd2;
@@ -130,7 +130,7 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
         }
 
         const char* msg = (const char*)KeyTable_Get(&self->field158, self->sub.field7e);
-        func_02046608(fmt, 0xc, msg, base, 0xe3, 0, 1);
+        MessageSystem_FormatText(fmt, 0xc, msg, base, 0xe3, 0, 1);
 
         char* var13 = var5 + arg0->unknown_300_.unknown_80_;
         unsigned short var14 = arg0->unknown_300_.unknown_80_;

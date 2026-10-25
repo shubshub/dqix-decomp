@@ -30,7 +30,7 @@ enum { Enum_ov003_0216997c_2400 = 0x960 };
 #endif
 
 #if defined(jpn)
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
 #endif
 #include "std_library_functions.h"
 
@@ -39,10 +39,10 @@ extern "C" ARM void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char 
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" int func_020420e8(char* str, int id);
+extern "C" int Font_GetTextWidth(char* str, int id);
 extern "C" void func_ov003_02169a84(char* base, char* dst, int flag);
 #if !defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov003_0216997c
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov003_0216997c(void* arg0) {
     short maxLen = 0;
     for (int i = 0; i < 3; i++) {
         int name = KeyTable_Get(c, (short)i);
-        short len = (short)func_020420e8((char*)name, 0);
+        short len = (short)Font_GetTextWidth((char*)name, 0);
         if (maxLen < len) maxLen = len;
     }
 
@@ -79,8 +79,8 @@ extern "C" ARM void func_ov003_0216997c(void* arg0) {
     memset(*(char**)(var0 + 0x7c), 0, Enum_ov003_0216997c_2400);
     func_ov003_02169a84(var0, *(char**)(var0 + 0x7c), 0);
 #if defined(jpn)
-    func_0205d304(var0 + Enum_ov003_0216997c_228, *(char**)(var0 + 0x7c), 0, 1, 0, 1, 0);
+    Window_OpenPane(obj + kRegione4, *(char**)(obj + 0x7c), 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var0 + Enum_ov003_0216997c_228, *(char**)(var0 + 0x7c), 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(obj + kRegione4, *(char**)(obj + 0x7c), 0, 1, 0, 1, 0, 0);
 #endif
 }

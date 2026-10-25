@@ -63,12 +63,12 @@ struct Struct_ov004_0216a610_3 {
     struct Struct_ov004_0216a610_2* unknown_190_;
 };
 
-extern "C" struct Struct_ov004_02153e20* func_ov023_021f6524(void* arg0, int arg1);
-extern "C" Struct_ov004_0216a610_4* func_ov004_02168a6c(void* arg0, int arg1);
-extern "C" Struct_ov004_0216a610_4* func_ov004_02168a38(void* arg0, int arg1);
-extern "C" void func_02042764(void* arg0, void* arg1, int arg2);
-extern "C" int func_ov023_021f9b30(struct Struct_ov004_02153e20* arg0, unsigned short arg1, unsigned int arg2, unsigned int arg3);
-extern "C" void func_ov023_021f6630(int arg0, int arg1, short arg2, short arg3);
+extern "C" struct Grid021f9b30* func_ov023_021f6524(void* ctx, int value);
+Widget0216a610* GetNodeIfType8_02168a6c(void* a, int id);
+Widget0216a610* GetNodeIfType15_02168a38(void* a, int id);
+extern "C" void Font_DecodeText(void* src, void* dst, int flag);
+extern "C" int _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(struct Grid021f9b30* self, unsigned short val, unsigned int x, unsigned int y);
+void DispatchNode_021f6630(int a, int b, short c, short d);
 
 extern struct Struct_ov004_0216a610_3* data_ov004_02171030;
 
@@ -92,9 +92,9 @@ extern "C" ARM int func_ov004_0216a610(void* arg0) {
 #if defined(jpn)
             var5->unknown_20_ = var9->unknown_6_;
 #else
-            char* var10 = data_ov004_02171030->unknown_0_[var4];
-            func_02042764(var9->unknown_6_, var10, 1);
-            var5->unknown_20_ = var10;
+            char* name = data_ov004_02171030->names[i];
+            Font_DecodeText(e->name, name, 1);
+            label->text = name;
 #endif
             var7->inline_ov004_0216a610_30(var9->unknown_12_0_);
             var8->inline_ov004_0216a610_30(var9->unknown_11_);

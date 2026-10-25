@@ -10,49 +10,49 @@ struct Struct_020dc920 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_0202be08(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" int func_0202be70(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" int func_0202bed8(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" char* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
+int CheckField0NonZero_0202b7d8(int* obj);
+int GameState_GetProtagonistIndex(GameState* gameState);
+int IsEntryFlagBit11Set_0202be08(struct SearchStruct* search, int id);
+int IsEntryFlagBit13Set_0202be70(struct SearchStruct* search, int id);
+int IsEntryFlagBit14Set_0202bed8(struct SearchStruct* search, int id);
+char* GetCombatantWithFlag0x1000_0200ff58(GameState* gameState, int index);
+int GetSignedByte0x2d0_020546a8(void* obj);
 
 // USA: func_020dc920
-extern "C" ARM int func_020dc920(int arg0, int arg1, int arg2, int arg3) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetProtagonist();
-    struct Struct_0202b2f0* var2 = (struct Struct_0202b2f0*)func_0202ae18();
-    if (var1 != NULL) {
-        GameObject* var3 = var0->GetPartyMemberByIndex(arg0);
-        if (var3 != NULL) {
-            if (func_0202b7d8((int*)var2) && arg3) {
-                int var4 = arg0;
-                if (var3->obj3D_.unknown_0_ & 0x1000)
-                    var4 = 0;
-                if (var4 != func_020100a8(var0)) {
-                    if (!func_0202be70(var2, var4))
+extern "C" ARM int func_020dc920(int a, int b, int c, int d) {
+    GameState* battle = GameState::GetInstance();
+    GameObject* protagonist = battle->GetProtagonist();
+    struct SearchStruct* search = (struct SearchStruct*)func_0202ae18();
+    if (protagonist != NULL) {
+        GameObject* party = battle->GetPartyMemberByIndex(a);
+        if (party != NULL) {
+            if (CheckField0NonZero_0202b7d8((int*)search) && d) {
+                int id = a;
+                if (party->obj3D_.unknown_0_ & 0x1000)
+                    id = 0;
+                if (id != GameState_GetProtagonistIndex(battle)) {
+                    if (!IsEntryFlagBit13Set_0202be70(search, id))
                         return 0;
                 }
             }
-            if (arg1 != 0 && arg0 != func_020100a8(var0)) {
-                if (func_0202be08(var2, arg0))
+            if (b != 0 && a != GameState_GetProtagonistIndex(battle)) {
+                if (IsEntryFlagBit11Set_0202be08(search, a))
                     return 0;
-                char* var5 = func_0200ff58(var0, arg0);
-                if (var5 != NULL) {
-                    int var6 = func_020546a8(var5);
-                    if (func_0202be08(var2, var6)) {
-                        if (var6 != func_020100a8(var0))
+                char* combatant = GetCombatantWithFlag0x1000_0200ff58(battle, a);
+                if (combatant != NULL) {
+                    int id = GetSignedByte0x2d0_020546a8(combatant);
+                    if (IsEntryFlagBit11Set_0202be08(search, id)) {
+                        if (id != GameState_GetProtagonistIndex(battle))
                             return 0;
                     }
                 }
                 if (func_0202bed8(var2, arg0))
                     return 0;
-                var5 = func_0200ff58(var0, arg0);
-                if (var5 != NULL) {
-                    int var7 = func_020546a8(var5);
-                    if (func_0202bed8(var2, var7)) {
-                        if (var7 != func_020100a8(var0))
+                combatant = GetCombatantWithFlag0x1000_0200ff58(battle, a);
+                if (combatant != NULL) {
+                    int id = GetSignedByte0x2d0_020546a8(combatant);
+                    if (IsEntryFlagBit14Set_0202bed8(search, id)) {
+                        if (id != GameState_GetProtagonistIndex(battle))
                             return 0;
                     }
                 }

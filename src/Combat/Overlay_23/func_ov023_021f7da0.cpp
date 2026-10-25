@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-extern "C" void func_ov023_021f6ed8(void* arg0);
-extern "C" void func_0204c684(void* arg0);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
+extern "C" void func_ov023_021f6ed8(void* obj);
+extern "C" void WindowPane_Init(void* obj);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" void* func_ov023_021f6880(void* list, int value);
 
 struct Struct_ov011_021844ec;
 extern "C" int func_ov011_021844ec(struct Struct_ov011_021844ec* arg0);
 
 extern "C" void* func_ov023_021f79e4(void* arg0);
 
-struct Obj0204c7a8;
-void WindowPane_AllocateBuffer(struct Obj0204c7a8* obj, SafeAllocator* alloc, int val, unsigned int len);
+struct WindowPane;
+void WindowPane_AllocateBuffer(struct WindowPane* obj, SafeAllocator* alloc, int val, unsigned int len);
 
 struct Struct_ov011_02185318_3 {
     char unknown_0_[4];
@@ -38,20 +38,20 @@ struct Struct_ov011_02185318_3 {
     unsigned short unknown_10e_;
 };
 
-// USA: func_ov023_021f7da0
-extern "C" ARM int func_ov023_021f7da0(struct Struct_ov011_02185318_3* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
-    func_ov023_021f6ed8(arg0);
-    arg0->unknown_4_ = 6;
-    arg0->unknown_6_ = arg2;
-    arg0->unknown_8_ = arg3;
-    arg0->unknown_10_ = arg0->unknown_a_ = 0;
-    arg0->unknown_1c_ = 2;
-    arg0->unknown_106_ = 0;
-    arg0->unknown_104_ = 0;
-    arg0->unknown_10a_ = 0xf;
-    arg0->unknown_10c_ = 0;
-    arg0->unknown_10e_ = 1;
-    func_0204c684(&arg0->unknown_20_);
+// USA: func_ov023_021f7da0  (semantic: InitObjKind6AndLinkNodes_021f7da0)
+extern "C" ARM int func_ov023_021f7da0(struct Obj021f7da0* obj, void* ctx, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
+    func_ov023_021f6ed8(obj);
+    obj->f4 = 6;
+    obj->f6 = arg3;
+    obj->f8 = arg4;
+    obj->f10 = obj->fa = 0;
+    obj->f1c = 2;
+    obj->f106 = 0;
+    obj->f104 = 0;
+    obj->f10a = 0xf;
+    obj->f10c = 0;
+    obj->f10e = 1;
+    WindowPane_Init(&obj->f20);
 
     void* var0 = func_ov011_021845f8(arg1, arg0->unknown_8_);
     if (var0 == NULL) {
@@ -69,7 +69,7 @@ extern "C" ARM int func_ov023_021f7da0(struct Struct_ov011_02185318_3* arg0, voi
         return 0;
     }
 
-    WindowPane_AllocateBuffer((struct Obj0204c7a8*)&obj->f20, alloc, f9c, len);
+    WindowPane_AllocateBuffer((struct WindowPane*)&obj->f20, alloc, f9c, len);
 
     void* var4 = func_ov011_021849c8(arg1);
     void* var5 = func_ov023_021f6880(var4, arg4);

@@ -14,10 +14,10 @@ struct Struct_ov001_0215e5b0 {
 
 void SetSubBg0Control_0215e758(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
 void SetSubBg1Control_0215e78c(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
-void Background_Init(struct List0204af64* obj);
+void Background_Init(struct BackgroundGraphics* obj);
 extern "C" void Background_LoadFile(void* list, void* rec, void* alloc, int size);
 
-extern char data_0211e33c[] __attribute__((aligned(4)));
+extern char g_fileLoadBuffer[] __attribute__((aligned(4)));
 
 // USA: func_ov001_0215e5b0
 extern "C" ARM int func_ov001_0215e5b0(void) {
@@ -25,11 +25,11 @@ extern "C" ARM int func_ov001_0215e5b0(void) {
     BackgroundLoader::FreeAllocationsGlobal();
     struct Word0x0_0215e5b0* word = (Word0x0_0215e5b0*)GameState::GetInstance()->GetResources();
 
-    char* var1 = data_0211e33c;
-    volatile unsigned int* var2 = (volatile unsigned int*)0x4001000;
-    *var2 = (*var2 & ~0x1f00) | 0x300;
-    func_ov001_0215e758(0, 0, 0xe, 0, 0);
-    func_ov001_0215e78c(0, 0, 0xf, 0, 0);
+    char* buf = g_fileLoadBuffer;
+    volatile unsigned int* dispcnt = (volatile unsigned int*)0x4001000;
+    *dispcnt = (*dispcnt & ~0x1f00) | 0x300;
+    SetSubBg0Control_0215e758(0, 0, 0xe, 0, 0);
+    SetSubBg1Control_0215e78c(0, 0, 0xf, 0, 0);
 
     volatile unsigned short* var3 = (volatile unsigned short*)0x4001008;
     var3[0] = (var3[0] & ~3);
@@ -41,9 +41,9 @@ extern "C" ARM int func_ov001_0215e5b0(void) {
     *(volatile unsigned int*)0x4000014 = 0;
     *(volatile unsigned short*)0x4001050 = 0;
 
-    struct List0204af64 list;
+    struct BackgroundGraphics list;
     Background_Init(&list);
-    list.b1c_lo = 1;
+    list.subScreen_ = 1;
     Background_LoadFile(&list, word->record, 0, 0);
 
     unsigned int var5 = 0x6400;

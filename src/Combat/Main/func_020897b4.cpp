@@ -19,13 +19,13 @@ struct Struct_02086f24_6 { void* unknown_0_; };
 
 extern char data_020f1019[];
 extern char data_020f102e[];
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
-void* Clear0x54Bytes0208247c(void* obj);
+void* ResourceScriptEntry_Init(void* obj);
 int InitAndRunScript0208274c(void* spellTable, StreamHeader* script, int size, int arg3);
 extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
-extern "C" void func_02083e28(void* model, int arg);
+extern "C" void PartyMember_RecalculateStats(void* model, int arg);
 void SetBitsFromIndexList02083b8c(unsigned char* obj, unsigned char* learnedSpells, unsigned int count);
 void ClearField00209a804(int* field);
 void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* spellTable, SafeAllocator* spellAllocator, StreamHeader* buffer, int length);
@@ -71,18 +71,18 @@ extern "C" ARM void func_020897b4(unsigned char arg0, unsigned char arg1, int ar
     }
     BackgroundLoader::AddLockGlobal();
 
-    if (arg5 == 0) {
-        sprintf(var0, data_020f1019, arg2);
-        if (LoadFileIntoMemory(var0, &data_0211e33c, &var5) == 0) {
+    if (levelScript == 0) {
+        sprintf(path, data_020f1019, vocation);
+        if (LoadFileIntoMemory(path, &g_fileLoadBuffer, &size) == 0) {
             BackgroundLoader::RemoveLockGlobal();
             return;
         }
-        arg5 = &data_0211e33c;
-        arg6 = var5;
+        levelScript = &g_fileLoadBuffer;
+        levelScriptSize = size;
     }
 
-    func_0208247c(&var1);
-    func_0208274c(&var1, (Struct_02013fb4*)arg5, arg6, arg1);
+    ResourceScriptEntry_Init(&entry);
+    InitAndRunScript0208274c(&entry, (StreamHeader*)levelScript, levelScriptSize, level);
 
     ResourceScriptEntry* const levelData = &entry;
     VocationRecord* record = reinterpret_cast<VocationRecord*>(GetFieldAt0x150_02053c6c((unsigned char*)combatant));
@@ -93,17 +93,17 @@ extern "C" ARM void func_020897b4(unsigned char arg0, unsigned char arg1, int ar
     record->unknown564 = levelData->initial.value4High;
     PartyMember_ApplyLevelStats(record, levelData, entry.variants);
 
-    if (arg4 != 0) {
-        func_02083e28(var9, 0);
-        Struct_020897b4_3* var10 = reinterpret_cast<Struct_020897b4_3*>(var7);
-        var10->unknown_130_->unknown_4_ = var7->baseStats_->primaryStats.maxHP;
-        var10->unknown_130_->unknown_6_ = var7->baseStats_->primaryStats.maxMP;
+    if (restoreHpMp != 0) {
+        PartyMember_RecalculateStats(record, 0);
+        CombatantRestorationView* actor = reinterpret_cast<CombatantRestorationView*>(combatant);
+        actor->restoration->hp = combatant->baseStats_->primaryStats.maxHP;
+        actor->restoration->mp = combatant->baseStats_->primaryStats.maxMP;
     }
 
-    if (arg7 == 0) {
-        if (LoadFileIntoMemory(data_020f102e, &data_0211e33c, &var5) != 0) {
-            arg7 = &data_0211e33c;
-            arg8 = var5;
+    if (spellScript == 0) {
+        if (LoadFileIntoMemory(data_020f102e, &g_fileLoadBuffer, &size) != 0) {
+            spellScript = &g_fileLoadBuffer;
+            spellScriptSize = size;
         }
     }
 

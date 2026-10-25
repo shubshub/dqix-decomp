@@ -3,18 +3,18 @@
 #include "Resource/Script.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0207267c { short unknown_0_; int unknown_4_; };
-struct Struct_02072a28;
-extern "C" void func_02072a28(Struct_02072a28* arg0, Struct_0207267c* arg1);
-extern "C" int func_020d2ff0(const char* arg0);
-struct Struct_02108db0_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    char* unknown_4_;
-    short* unknown_8_;
-    SafeAllocator* unknown_c_;
-    Struct_02072a28* unknown_10_;
+struct Elem02072a28 { short a; int b; };
+struct List02072a28;
+void AppendShortWordPair02072a28(List02072a28* list, Elem02072a28* src);
+int STD_GetStringLength(const char* text);
+struct ScriptStringState0207267c {
+    unsigned char skipCount;
+    unsigned char padding;
+    unsigned short filterCount;
+    char* destination;
+    short* filterIds;
+    SafeAllocator* allocator;
+    List02072a28* list;
 };
 extern Struct_02108db0_2 data_02108db0;
 extern char data_020f0cf0[];
@@ -41,12 +41,12 @@ extern "C" ARM int func_0207267c(Script::Parameter* arg0) {
         if (var5 != NULL) strcpy(data_02108db0.unknown_4_, var5);
         return 1;
     }
-    var4 = 0;
-    if (var5 != NULL) var4 = func_020d2ff0(var5);
-    var0.unknown_4_ = (int)data_02108db0.unknown_c_->Allocate(var4 + 1);
-    if (var0.unknown_4_ == 0) return 0;
-    ((char*)var0.unknown_4_)[var4] = 0;
-    if (var0.unknown_4_ != 0) sprintf((char*)var0.unknown_4_, data_020f0cf0, var5);
-    func_02072a28(data_02108db0.unknown_10_, &var0);
+    length = 0;
+    if (text != NULL) length = STD_GetStringLength(text);
+    entry.b = (int)data_02108db0.allocator->Allocate(length + 1);
+    if (entry.b == 0) return 0;
+    ((char*)entry.b)[length] = 0;
+    if (entry.b != 0) sprintf((char*)entry.b, data_020f0cf0, text);
+    AppendShortWordPair02072a28(data_02108db0.list, &entry);
     return 1;
 }

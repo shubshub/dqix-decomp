@@ -15,8 +15,8 @@ ARM void ResetAndApply0215be20(void* obj) {
 	memset(*(void**)((char*)obj + 0x7c), 0, kRegion960);
 	func_ov003_0215b964(obj, *(void**)((char*)obj + 0x7c), 0);
 #if defined(jpn)
-	TryApplyElemFields0205d5d0((StructA0205d5d0*)((char*)obj + 0xf4), 2, *(int*)((char*)obj + 0x7c), 1);
+	Window_SetPaneText((StructA0205d5d0*)((char*)obj + 0xf4), 2, *(int*)((char*)obj + 0x7c), 1);
 #else
-	TryApplyElemFields0205d5d0((StructA0205d5d0*)((char*)obj + 0xf4), 2, *(int*)((char*)obj + 0x7c), 1, 0);
+	Window_SetPaneText((StructA0205d5d0*)((char*)obj + 0xf4), 2, *(int*)((char*)obj + 0x7c), 1, 0);
 #endif
 }

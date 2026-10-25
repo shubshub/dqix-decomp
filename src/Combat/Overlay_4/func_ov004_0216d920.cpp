@@ -11,18 +11,18 @@ extern "C" void func_02012028(void* arg0, unsigned char arg1);
 extern "C" void func_ov017_0218d258(void* arg0);
 extern "C" void func_0209ca70(void* arg0, int arg1);
 
-struct Struct_02109bf4_4;
-extern "C" void func_0209c678(struct Struct_02109bf4_4* arg0, int arg1);
-struct Struct_02109bf4_3;
-extern "C" void func_0209c20c(struct Struct_02109bf4_3* arg0);
-struct Struct_0205e8ec;
-extern "C" void func_0205e8ec(struct Struct_0205e8ec* arg0);
-struct Struct_02108760_2;
-extern "C" void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1);
-struct Struct_02011544;
-extern "C" void func_02011544(struct Struct_02011544* arg0);
+struct Actor0209c678;
+void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
+struct Actor0209c20c;
+void InitActorContext0209c20c(struct Actor0209c20c* actor);
+struct Obj_0205e8ec;
+void RefreshDisplayState0205e8ec(struct Obj_0205e8ec* a);
+struct Obj0205e9f4;
+void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
+struct StateBits5ccc_11544;
+void SetFlag0x5cccBit0_02011544(struct StateBits5ccc_11544* state);
 
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 extern int g_sePlayer;
 extern unsigned char data_ov004_02171034[];
 
@@ -37,11 +37,11 @@ extern "C" ARM int func_ov004_0216d920() {
     GameState* bs = GameState::GetInstance();
     GameResources* obj = GetGameResources();
     if (GetByte0x4_0200fb9c((char*)bs) != 2) {
-        DispatchContextByState0209c678((struct Actor0209c678*)&data_02109bf4, 0);
-        InitActorContext0209c20c((struct Actor0209c20c*)&data_02109bf4);
+        BgmPlayer_FadeOut((struct Actor0209c678*)&g_bgmPlayer, 0);
+        InitActorContext0209c20c((struct Actor0209c20c*)&g_bgmPlayer);
         RefreshDisplayState0205e8ec((struct Obj_0205e8ec*)&g_sePlayer);
     }
-    SetModeClamped0209ca70((void*)&data_02109bf4, data_ov004_02171034[kContextIndex]);
+    SetModeClamped0209ca70((void*)&g_bgmPlayer, data_ov004_02171034[kContextIndex]);
     SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)&g_sePlayer, data_ov004_02171034[kStateIndex]);
     ClearFlags00(obj, -1);
     ClearFlags04(obj, -1);

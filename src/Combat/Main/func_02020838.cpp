@@ -2,7 +2,7 @@
 #include "Combat/MapDisplay.h"
 #include "World/Zone3D.h"
 
-extern "C" Zone3D* func_02012fe4(void);
+extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" void DisableSubObjVRAMBanks(void);
 extern "C" int DisableSubBGVRAMBanks(void);
 extern "C" void func_020c3984(unsigned int arg0);
@@ -12,9 +12,9 @@ extern "C" void func_02020968(int arg0, int arg1, int arg2, int arg3, int arg4);
 extern "C" void func_0202099c(int arg0, int arg1, int arg2, int arg3, int arg4);
 
 // USA: func_02020838
-extern "C" ARM void func_02020838(Struct_02020554* arg0) {
-    volatile unsigned int* var0 = (volatile unsigned int*)0x4001000;
-    Zone3D_StructPtr_8* var1 = func_02012fe4()->pUnknownStruct_8_;
+extern "C" ARM void func_02020838(MapDisplay* unusedContext) {
+    volatile unsigned int* dispcnt = (volatile unsigned int*)0x4001000;
+    Zone3D_StructPtr_8* state = Zone3D_GetInstance()->pUnknownStruct_8_;
 
     DisableSubBGVRAMBanks();
     DisableSubObjVRAMBanks();

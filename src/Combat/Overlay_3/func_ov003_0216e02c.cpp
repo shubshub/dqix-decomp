@@ -4,13 +4,13 @@
 struct Struct_02043368;
 extern "C" void func_0205a234(struct Struct_02043368* arg0);
 
-struct List0204af64;
-extern void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+extern void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204c684(char* arg0);
+extern "C" void WindowPane_Init(char* obj);
 
-struct Struct_0205cfd4;
-extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
+struct InitTarget0205cfd4;
+extern void Window_Init(struct InitTarget0205cfd4* s);
 
 extern "C" void func_ov023_021e20c0(void* arg0);
 
@@ -52,14 +52,14 @@ extern "C" ARM void func_ov003_0216e02c(char* arg0, SafeAllocator* arg1) {
     ((SafeAllocator*)(arg0 + 0xbc))->CreateTypeA(var2, 0x400);
     ((SafeAllocator*)(arg0 + 0xbc))->Reset();
 
-    func_0205cfd4((struct Struct_0205cfd4*)*(void**)(arg0 + 0x3c));
+    Window_Init((struct InitTarget0205cfd4*)*(void**)(self + 0x3c));
 
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)(*(char**)(self + 0x40) + (i << 5)));
+        Background_Init((struct BackgroundGraphics*)(*(char**)(self + 0x40) + (i << 5)));
     }
 
-    for (int var4 = 0; var4 < 2; var4++) {
-        func_0204c684(*(char**)(arg0 + 0x44) + var4 * 0xe0);
+    for (int i = 0; i < 2; i++) {
+        WindowPane_Init(*(char**)(self + 0x44) + i * 0xe0);
     }
 
     func_ov023_021e20c0(*(void**)(arg0 + 0xd4));

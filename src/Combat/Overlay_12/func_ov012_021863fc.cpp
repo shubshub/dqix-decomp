@@ -9,9 +9,6 @@
 #include "std_library_functions.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov012_021863fc_3
 {
@@ -118,9 +115,9 @@ struct Struct_ov012_021863fc_2
 struct Struct_02072a68_2;
 
 int IsField0Null_02046b08(void** p);
-void* GetDataPtr02114e04_020d6c00();
-void OrBitsIntoField0_020466e4(unsigned int* word, unsigned int bits);
-Messages021863fc* GetGlobalField0x1c020421a0();
+void* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int* word, unsigned int bits);
+Messages021863fc* MessageSystem_GetInstance();
 void OrGlobalFlag0x40_020dc2bc();
 extern "C" void func_ov012_02185e18(ProfileEditor021863fc* self);
 void ClearAndCopyEntry_02185ea8(char* self);
@@ -131,15 +128,15 @@ extern "C" void func_ov012_021862fc(ProfileEditor021863fc* self);
 extern "C" void func_ov012_02184654(ProfileEditor021863fc* self);
 void SetSubBrightness(GameResources* resources, int brightness, int frames);
 int IsSubBrightnessTransitionActive(GameResources* resources);
-extern "C" void func_ov023_021e7220(void* arg0, int arg1);
-extern "C" void func_ov023_021e71b4(void* arg0, SafeAllocator* arg1);
-extern "C" int func_ov023_021e76c4(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov023_021e7b34(void* arg0, int arg1);
-extern "C" void func_ov012_0218adac(Struct_ov012_021863fc_2* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
+extern "C" void func_ov023_021e7220(void* card, int mode);
+void CreateThreeAllocators_021e71b4(void* card, SafeAllocator* allocator);
+extern "C" int func_ov023_021e76c4(void* card);
+int GameState_GetProtagonistIndex(GameState* gameState);
+extern "C" void func_ov023_021e7b34(void* card, int design);
+extern "C" void func_ov012_0218adac(ProfileEditor021863fc* self, int animate, int design, int keepPage);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int a, unsigned char* bits, int index);
+const char* FindEntryByKey_02072a68(TableA68* table, int key);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_ov012_021863fc_3* arg0, const char* arg1, int arg2, int arg3);
 #endif
@@ -252,26 +249,26 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    GetGlobal02109400_02094a00();
+    FontBankLoader_GetInstance();
     if (self->step_ == 0)
     {
         if (func_02046b08(*(void***)((char*)var1 + 0x34f0)))
         {
-            SetFlags00(var1, 0x10);
-            func_020466e4((unsigned int*)func_020d6c00(), 0xf);
-            arg0->unknown_1344_ = (char*)((Struct_ov012_021863fc_4*)func_020421a0())->unknown_28_;
-            unsigned int var3 = 0;
-            Struct_ov012_021863fc_6* var4 = (Struct_ov012_021863fc_6*)var0->GetProtagonist();
-            if (var4 != 0)
-                var3 = var4->unknown_144_->unknown_488_.unknown_14_0_;
-            char var5[0x40];
-            sprintf(var5, data_ov012_0218bf66, var3);
-            arg0->unknown_1350_[0] = var2->QueueLoadFile(data_ov012_0218bf81, 0);
-            arg0->unknown_1350_[1] = var2->QueueLoadFile(var5, 0);
-            arg0->unknown_1350_[2] = var2->QueueLoadFile(data_ov012_0218bf9a, 0);
-            arg0->unknown_1350_[3] = var2->QueueLoadFile(data_ov012_0218bfad, 0);
-            func_020dc2bc();
-            arg0->unknown_1340_++;
+            SetFlags00(resources, 0x10);
+            FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xf);
+            self->text_ = (char*)((MessagesJ021863fc*)MessageSystem_GetInstance())->unk_28;
+            unsigned int female = 0;
+            MemberJ021863fc* protagonist = (MemberJ021863fc*)gameState->GetProtagonist();
+            if (protagonist != 0)
+                female = protagonist->partyData_->appearance_.female_;
+            char archive[0x40];
+            sprintf(archive, data_ov012_0218bf66, female);
+            self->tasks_[0] = loader->QueueLoadFile(data_ov012_0218bf81, 0);
+            self->tasks_[1] = loader->QueueLoadFile(archive, 0);
+            self->tasks_[2] = loader->QueueLoadFile(data_ov012_0218bf9a, 0);
+            self->tasks_[3] = loader->QueueLoadFile(data_ov012_0218bfad, 0);
+            OrGlobalFlag0x40_020dc2bc();
+            self->step_++;
         }
         return;
     }
@@ -317,16 +314,16 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
         BG2CNT = (BG2CNT & ~3) | 1;
         BG3CNT = (BG3CNT & ~3) | 0;
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1f00;
-        Struct_0208cb08* var8 = func_02094a00();
-        func_02094ab0(var8);
-        func_02094b34(var8, 0x6e, 0x1ff, 0, 0);
-        SetSubBrightness(var1, -16, 15);
-        arg0->unknown_1340_++;
+        FontBankLoader* music = FontBankLoader_GetInstance();
+        FontBankLoader_CancelLoads(music);
+        BlankFunction02094b34(music, 0x6e, 0x1ff, 0, 0);
+        SetSubBrightness(resources, -16, 15);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1340_ == 3)
     {
-        if (func_02094b4c(func_02094a00()) && !IsSubBrightnessTransitionActive(var1))
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) && !IsSubBrightnessTransitionActive(resources))
         {
             func_020dc2bc();
             arg0->unknown_18_[2].Reset();
@@ -348,13 +345,13 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
     {
         if (func_ov012_02186f3c(&arg0->unknown_14d8_) && func_ov023_021e76c4(&arg0->unknown_d0c_))
         {
-            func_ov023_021e7b34(&arg0->unknown_d0c_, func_020100a8(var0));
-            func_ov012_0218bba0(arg0, 1, -1);
-            SetSubBrightness(var1, 0, 15);
-            void* var9 = func_0205ec34();
-            for (int var10 = 0; var10 < 0x12; var10++)
+            func_ov023_021e7b34(&self->card_, GameState_GetProtagonistIndex(gameState));
+            func_ov012_0218bba0(self, 1, -1);
+            SetSubBrightness(resources, 0, 15);
+            void* unk = Scenario_GetInstance();
+            for (int i = 0; i < 0x12; i++)
             {
-                if (func_0206dfb0((int)var9, (unsigned char*)var9 + 0x8c, var10 + 0x200))
+                if (Scenario_TestFlag((int)unk, (unsigned char*)unk + 0x8c, i + 0x200))
                 {
                     arg0->unknown_1418_[arg0->unknown_141c_0_] = var10;
                     arg0->unknown_141c_0_++;
@@ -381,15 +378,15 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
     }
     else if (arg0->unknown_1340_ == 5)
     {
-        Struct_ov012_021863fc_4* var13 = (Struct_ov012_021863fc_4*)func_020421a0();
-        func_0204500c(var13, func_02072a68((Struct_02072a68_2*)arg0->unknown_1314_, 500), 0);
-        var13->unknown_868_ = 1;
-        arg0->unknown_1340_++;
+        MessagesJ021863fc* messages = (MessagesJ021863fc*)MessageSystem_GetInstance();
+        func_0204500c(messages, FindEntryByKey_02072a68((TableA68*)self->strings_, 500), 0);
+        messages->busy_ = 1;
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1340_ == 6)
     {
-        if (((Struct_ov012_021863fc_4*)func_020421a0())->unknown_868_ == 0)
+        if (((MessagesJ021863fc*)MessageSystem_GetInstance())->busy_ == 0)
         {
             Struct_ov012_021863fc_13* var14 = inline_ov012_021863fc_2(var0);
             var14->unknown_7_6_ = 1;
@@ -405,30 +402,30 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    GetGlobal02109400_02094a00();
+    FontBankLoader_GetInstance();
     if (self->step_ == 0)
     {
         if (func_02046b08(*(void***)((char*)var16 + 0x3700)))
         {
-            SetFlags00(var16, 0x10);
-            func_020466e4((unsigned int*)func_020d6c00(), 0xf);
-            arg0->unknown_1374_ = (char*)func_020421a0()->unknown_5c_;
-            unsigned int var18 = 0;
-            Struct_ov012_021863fc_12* var19 = (Struct_ov012_021863fc_12*)var15->GetProtagonist();
-            if (var19 != 0)
-                var18 = var19->unknown_150_->unknown_488_.unknown_14_0_;
-            char var20[0x40];
-            char var21[0x20];
-            sprintf(var20, data_ov012_0218b224, var18);
-            sprintf(var21, data_ov012_0218b23b, var18);
-            arg0->unknown_1380_[0] = var17->QueueLoadFileInGP2(data_ov012_0218b24e, data_ov012_0218b263, 0);
-            arg0->unknown_1380_[1] = var17->QueueLoadFileInGP2(data_ov012_0218b274, data_ov012_0218b289, 0);
-            arg0->unknown_1380_[2] = var17->QueueLoadFileInGP2(var20, var21, 0);
-            arg0->unknown_1380_[3] = var17->QueueLoadFile(data_ov012_0218b29a, 0);
-            arg0->unknown_1380_[4] = var17->QueueLoadFileInGP2(data_ov012_0218b2ad, data_ov012_0218b2c2, 0);
-            arg0->unknown_1380_[5] = var17->QueueLoadFile(data_ov012_0218b2d3, 0);
-            func_020dc2bc();
-            arg0->unknown_1370_++;
+            SetFlags00(resources, 0x10);
+            FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xf);
+            self->text_ = (char*)MessageSystem_GetInstance()->unk_5c;
+            unsigned int female = 0;
+            Member021863fc* protagonist = (Member021863fc*)gameState->GetProtagonist();
+            if (protagonist != 0)
+                female = protagonist->partyData_->appearance_.female_;
+            char archive[0x40];
+            char file[0x20];
+            sprintf(archive, data_ov012_0218b224, female);
+            sprintf(file, data_ov012_0218b23b, female);
+            self->tasks_[0] = loader->QueueLoadFileInGP2(data_ov012_0218b24e, data_ov012_0218b263, 0);
+            self->tasks_[1] = loader->QueueLoadFileInGP2(data_ov012_0218b274, data_ov012_0218b289, 0);
+            self->tasks_[2] = loader->QueueLoadFileInGP2(archive, file, 0);
+            self->tasks_[3] = loader->QueueLoadFile(data_ov012_0218b29a, 0);
+            self->tasks_[4] = loader->QueueLoadFileInGP2(data_ov012_0218b2ad, data_ov012_0218b2c2, 0);
+            self->tasks_[5] = loader->QueueLoadFile(data_ov012_0218b2d3, 0);
+            OrGlobalFlag0x40_020dc2bc();
+            self->step_++;
         }
         return;
     }
@@ -480,16 +477,16 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
         BG2CNT = (BG2CNT & ~3) | 1;
         BG3CNT = (BG3CNT & ~3) | 0;
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1f00;
-        Struct_0208cb08* var24 = func_02094a00();
-        func_02094ab0(var24);
-        func_02094b34(var24, 0x6e, 0x1ff, 0, 0);
-        SetSubBrightness(var16, -16, 15);
-        arg0->unknown_1370_++;
+        FontBankLoader* music = FontBankLoader_GetInstance();
+        FontBankLoader_CancelLoads(music);
+        BlankFunction02094b34(music, 0x6e, 0x1ff, 0, 0);
+        SetSubBrightness(resources, -16, 15);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 3)
     {
-        if (func_02094b4c(func_02094a00()) && !IsSubBrightnessTransitionActive(var16))
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) && !IsSubBrightnessTransitionActive(resources))
         {
             func_020dc2bc();
             arg0->unknown_20_[2].Reset();
@@ -508,13 +505,13 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
     {
         if (func_ov023_021e76c4(&arg0->unknown_d28_))
         {
-            func_ov023_021e7b34(&arg0->unknown_d28_, func_020100a8(var15));
-            func_ov012_0218adac(arg0, 1, -1, 0);
-            SetSubBrightness(var16, 0, 15);
-            void* var25 = func_0205ec34();
-            for (int var26 = 0; var26 < 0x12; var26++)
+            func_ov023_021e7b34(&self->card_, GameState_GetProtagonistIndex(gameState));
+            func_ov012_0218adac(self, 1, -1, 0);
+            SetSubBrightness(resources, 0, 15);
+            void* unk = Scenario_GetInstance();
+            for (int i = 0; i < 0x12; i++)
             {
-                if (func_0206dfb0((int)var25, (unsigned char*)var25 + 0x8c, var26 + 0x200))
+                if (Scenario_TestFlag((int)unk, (unsigned char*)unk + 0x8c, i + 0x200))
                 {
                     arg0->unknown_13c0_[arg0->unknown_13c4_0_] = var26;
                     arg0->unknown_13c4_0_++;
@@ -555,15 +552,15 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
     }
     else if (arg0->unknown_1370_ == 5)
     {
-        Struct_ov012_021863fc_3* var33 = func_020421a0();
-        func_0204500c(var33, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 500), 0, 0xe3);
-        var33->unknown_998_ = 1;
-        arg0->unknown_1370_++;
+        Messages021863fc* messages = MessageSystem_GetInstance();
+        func_0204500c(messages, FindEntryByKey_02072a68((TableA68*)self->strings_, 500), 0, 0xe3);
+        messages->busy_ = 1;
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 6)
     {
-        if (func_020421a0()->unknown_998_ == 0)
+        if (MessageSystem_GetInstance()->busy_ == 0)
         {
             Struct_ov012_021863fc_13* var34 = inline_ov012_021863fc(var15);
             var34->unknown_7_6_ = 1;

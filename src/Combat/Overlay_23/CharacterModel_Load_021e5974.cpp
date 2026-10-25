@@ -5,8 +5,10 @@
 #include "Memory/SafeAllocator.h"
 #include "Graphics/Model3D.h"
 #include "World/Object3D.h"
+#include "Graphics/CharacterModel.h"
+#include "GameState/PartyMember.h"
 
-struct Struct_0201099c_10;
+struct ItemTable;
 
 struct Struct_ov023_021e5974_2
 {
@@ -16,94 +18,53 @@ struct Struct_ov023_021e5974_2
     unsigned int unknown_6_4_ : 12;
 };
 
-struct Struct_02015ef4_4
+// One record of the item table (the struct tag is kept: ItemRecord_GetFileNumber's C++ symbol is
+// mangled with it).
+struct StructDE234_020de234
 {
     PartModel_021e5974* model_;
     int unk_4;
     int unk_8;
     int unk_c;
-    unsigned int unk_10_0 : 20;
+    unsigned int maleFileNumber_ : 10;
+    unsigned int femaleFileNumber_ : 10;
     unsigned int letter_ : 8;
     unsigned int unk_10_28 : 4;
     short unk_14;
     short unk_16;
     short itemId_;
 };
+typedef StructDE234_020de234 ItemRecord;
 
-struct Struct_ov023_021e5974_3
-{
-    short models_[10];
-    unsigned char female_ : 1;
-    unsigned char skinColor_ : 3;
-    unsigned char eyeColor_ : 4;
-    unsigned char hairColor_ : 4;
-    unsigned char unk_15_4 : 4;
-    short unk_16;
-    short width_;
-    short height_;
-};
-
-struct Struct_ov023_021e5974_4
-{
-    char pad0[0x488];
-    PartyMemberAppearance_021e5974 appearance_;
-    char pad4a4[0x568 - 0x4a4];
-    short vocation_;
-    unsigned char bareBodyColor;
-};
-
-struct Struct_02000c9c_72
-{
-    char unknown_0_[0x70];
-};
-
-struct Struct_ov023_021e5974
-{
-    Object3D unknown_0_[10];
-    SafeAllocator unknown_6b8_[10];
-    SafeAllocator unknown_780_;
-    Struct_02000c9c_72 unknown_794_[10];
-    short unknown_bf4_[12];
-    struct Struct_0201099c_10* unknown_c0c_;
-    unsigned char unknown_c10_;
-    unsigned char unknown_c11_;
-    unsigned char unknown_c12_;
-    unsigned char unknown_c13_;
-    unsigned char unknown_c14_;
-    unsigned char unknown_c15_;
-    char unknown_c16_[2];
-    Struct_ov023_021e5974_4* unknown_c18_;
-    short unknown_c1c_;
-    unsigned char unknown_c1e_;
-    char unknown_c1f_;
-};
-
-struct Struct_ov023_021fd678
+struct CharacterModelExtension
 {
     char unknown_0_[8];
 };
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov023_021e5fdc(void* arg0, short* arg1, short* arg2);
-extern "C" Struct_02015ef4_4* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" unsigned short func_020de234(Struct_02015ef4_4* arg0, int arg1);
-extern "C" void func_ov023_021e61a0(Struct_ov023_021e5974* arg0);
+int GameState_GetProtagonistIndex(GameState* state);
+void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
+ItemRecord* ItemTable_Find(struct ItemTable* itemTable, int itemId);
+unsigned short ItemRecord_GetFileNumber(ItemRecord* item, int female);
+extern "C" void CharacterModel_CancelLoads(CharacterModel* self);
 
-extern const int data_ov023_021fd698[5];
-extern const Struct_ov023_021fd678 data_ov023_021fd678;
-extern const char data_ov023_021fdd16[];
-extern const char data_ov023_021fd680[10];
-extern const char data_ov023_021fdd1c[];
-extern const char data_ov023_021fdd2a[];
-extern const char data_ov023_021fdd45[];
-extern const char data_ov023_021fdd58[];
+extern const int CharacterModel_bodyReloadParts[5];
+extern const CharacterModelExtension CharacterModel_modelExtension;
+extern const char CharacterModel_textureExtension[];
+extern const char CharacterModel_hairVariantsByHeadgear[10];
+extern const char CharacterModel_partFileFormat[];
+extern const char CharacterModel_archivePath[];
+extern const char CharacterModel_animationFileFormat[];
+extern const char CharacterModel_animationConfigFormat[];
 
-// The item a part shows when nothing is equipped there (CopyAndClampShorts_021e5fdc's default body); its file
+// The item a part shows when nothing is equipped there (CharacterModel_GetPartModels's default body); its file
 // number takes the member's bareBodyColor.
 enum { BareBodyItem = 1000 };
+// The arms item CharacterModel_GetPartModels falls back to when neither the arms nor defaultArms_ is set; the arms
+// part then takes the body's file number.
+enum { BareArmsItem = 8010 };
 
 // Overlay 23, originally func_ov023_021e5974 (USA/EUR 0x021e5974, JPN 0x021e5b58)
-extern "C" ARM void CharacterModel_Load(CharacterModel_021e5974* self, PartyMemberData_021e5974* member,
+extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* member,
                                         int vocation, int unused, int force)
 {
     char var0[0x80];
@@ -114,36 +75,36 @@ extern "C" ARM void CharacterModel_Load(CharacterModel_021e5974* self, PartyMemb
     if (arg1 == NULL)
         return;
 
-    arg0->unknown_c18_ = arg1;
-    func_ov023_021e61a0(arg0);
-    GameState* var4 = GameState::GetInstance();
-    BackgroundLoader* var5 = BackgroundLoader::GetInstance();
-    Struct_ov023_021e5974_3* var6 = &arg1->unknown_488_;
-    if (arg2 < 0)
-        arg2 = arg1->unknown_568_;
-    if (arg2 < 0)
-        arg2 = func_020100a8(var4);
-    arg0->unknown_c15_ = arg2;
-    func_ov023_021e5fdc((void*)arg2, var2, var6->unknown_0_);
-    arg0->unknown_0_[3].unknown_2_ = -1;
-    arg0->unknown_0_[4].unknown_2_ = -1;
-    func_020dedd0(arg0->unknown_c0c_, var2[7]);
-    Struct_02015ef4_4* var7[10] = {0};
-    var7[0] = func_020dedd0(arg0->unknown_c0c_, var2[0]);
-    var7[7] = func_020dedd0(arg0->unknown_c0c_, var2[7]);
-    arg0->unknown_c1c_ = arg0->unknown_0_[0].rotation_.y;
+    self->member_ = member;
+    CharacterModel_CancelLoads(self);
+    GameState* state = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    PartyMemberAppearance* appearance = &member->appearance_;
+    if (vocation < 0)
+        vocation = member->unk_568;
+    if (vocation < 0)
+        vocation = GameState_GetProtagonistIndex(state);
+    self->vocation_ = vocation;
+    CharacterModel_GetPartModels((void*)vocation, models, (short*)appearance);
+    self->parts_[CharacterModelPart_Hair].unknown_2_ = -1;
+    self->parts_[CharacterModelPart_HairTexture].unknown_2_ = -1;
+    ItemTable_Find(self->itemTable_, models[CharacterModelPart_Headgear]);
+    ItemRecord* items[CharacterModelPart_Count] = {0};
+    items[CharacterModelPart_Body] = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Body]);
+    items[CharacterModelPart_Headgear] = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Headgear]);
+    self->angle_ = self->parts_[CharacterModelPart_Body].rotation_.y;
 
     arg0->unknown_c13_ = 0;
     for (int var8 = 0; var8 < 5; var8++)
     {
-        int var9 = data_ov023_021fd698[var8];
-        if (var2[var9] != (var3 = arg0->unknown_0_[var9].unknown_2_) || arg4 != 0)
+        int part = CharacterModel_bodyReloadParts[i];
+        if (models[part] != (modelId = self->parts_[part].unknown_2_) || force != 0)
         {
-            arg0->unknown_c13_ = 1;
-            arg0->unknown_0_[0].unknown_2_ = -1;
-            arg0->unknown_0_[6].unknown_2_ = -1;
-            arg0->unknown_0_[5].unknown_2_ = -1;
-            arg0->unknown_0_[1].unknown_2_ = -1;
+            self->bodyChanged_ = 1;
+            self->parts_[CharacterModelPart_Body].unknown_2_ = -1;
+            self->parts_[CharacterModelPart_Feet].unknown_2_ = -1;
+            self->parts_[CharacterModelPart_Arms].unknown_2_ = -1;
+            self->parts_[CharacterModelPart_Legs].unknown_2_ = -1;
             break;
         }
     }
@@ -152,14 +113,14 @@ extern "C" ARM void CharacterModel_Load(CharacterModel_021e5974* self, PartyMemb
     {
         if (var2[var10] < 0)
         {
-            arg0->unknown_0_[var10].Destroy();
-            arg0->unknown_0_[var10].unknown_2_ = -1;
-            if (var10 == 0)
-                var2[5] = -1;
+            self->parts_[i].Destroy();
+            self->parts_[i].unknown_2_ = -1;
+            if (i == CharacterModelPart_Body)
+                models[CharacterModelPart_Arms] = -1;
             continue;
         }
-        Struct_02015ef4_4* var11 = func_020dedd0(arg0->unknown_c0c_, var2[var10]);
-        if (var11 == NULL)
+        ItemRecord* item = ItemTable_Find(self->itemTable_, models[i]);
+        if (item == NULL)
         {
             arg0->unknown_0_[var10].Initialize();
             arg0->unknown_0_[var10].unknown_2_ = var2[var10];
@@ -174,39 +135,39 @@ extern "C" ARM void CharacterModel_Load(CharacterModel_021e5974* self, PartyMemb
         }
         else
         {
-            int var13;
-            Struct_02015ef4_4* var14 = var7[0];
-            Struct_02015ef4_4* var15 = var7[7];
-            int var16 = arg1->unknown_488_.unknown_14_0_;
-            var13 = func_020de234(var11, var16);
-            Struct_ov023_021fd678 var17 = data_ov023_021fd678;
-            char var18[2] = {0};
+            int fileNumber;
+            ItemRecord* body = items[CharacterModelPart_Body];
+            ItemRecord* headgear = items[CharacterModelPart_Headgear];
+            int female = member->appearance_.female_;
+            fileNumber = ItemRecord_GetFileNumber(item, female);
+            CharacterModelExtension extension = CharacterModel_modelExtension;
+            char suffix[2] = {0};
 
-            if (var10 == 4)
+            if (i == CharacterModelPart_HairTexture)
             {
-                strcpy(var17.unknown_0_, data_ov023_021fdd16);
-                var18[0] = 'a';
-                var18[1] = 0;
-                var13 += var6->unknown_15_0_;
+                strcpy(extension.name_, CharacterModel_textureExtension);
+                suffix[0] = 'a';
+                suffix[1] = 0;
+                fileNumber += appearance->hairColor_;
             }
-            if (var10 == 3)
+            if (i == CharacterModelPart_Hair)
             {
-                prefix[0] = 'a';
-                prefix[1] = 0;
-                if (weapon != NULL && weapon->itemId_ > -1)
+                suffix[0] = 'a';
+                suffix[1] = 0;
+                if (headgear != NULL && headgear->itemId_ > -1)
                 {
-                    unsigned int var19 = (unsigned int)func_020de234(var15, var16) / 100;
-                    if (var19 < 10)
+                    unsigned int rank = (unsigned int)ItemRecord_GetFileNumber(headgear, female) / 100;
+                    if (rank < 10)
                     {
-                        char var20 = data_ov023_021fd680[var19];
-                        if (var20 == 0)
+                        char hairVariant = CharacterModel_hairVariantsByHeadgear[rank];
+                        if (hairVariant == 0)
                         {
                             var12 = false;
                             goto queue;
                         }
-                        var18[0] = var20;
-                        if (var19 == 3 && var16 == 0 && var6->unknown_0_[3] == 0x2329)
-                            var18[0] = 'f';
+                        suffix[0] = hairVariant;
+                        if (rank == 3 && female == 0 && appearance->hairStyle_ == AppearanceModel_FirstHairStyle + 1)
+                            suffix[0] = 'f';
                     }
                     else
                     {
@@ -215,46 +176,46 @@ extern "C" ARM void CharacterModel_Load(CharacterModel_021e5974* self, PartyMemb
                     }
                 }
             }
-            if (var10 == 5)
+            if (i == CharacterModelPart_Arms)
             {
-                var3 = var6->unknown_0_[4];
-                if (var3 == 0x1f4a || var3 < 0)
-                    var13 = func_020de234(var14, var16);
+                modelId = appearance->arms_;
+                if (modelId == BareArmsItem || modelId < 0)
+                    fileNumber = ItemRecord_GetFileNumber(body, female);
             }
-            if (entry->itemId_ == BareBodyItem)
-                id += member->bareBodyColor;
-            sprintf(path, data_ov023_021fdd1c, (char)entry->letter_, id, prefix, ext.name_);
+            if (item->itemId_ == BareBodyItem)
+                fileNumber += member->bareBodyColor_;
+            sprintf(path, CharacterModel_partFileFormat, (char)item->letter_, fileNumber, suffix, extension.name_);
             ok = true;
         }
     queue:
         if (var12)
         {
-            arg0->unknown_bf4_[var10] = var5->QueueLoadFileInGP2(data_ov023_021fdd2a, var0, NULL);
-            arg0->unknown_0_[var10].unknown_2_ = var2[var10];
+            self->tasks_[i] = loader->QueueLoadFileInGP2(CharacterModel_archivePath, path, NULL);
+            self->parts_[i].unknown_2_ = models[i];
         }
     }
 
     arg0->unknown_c13_ = 1;
     if (arg0->unknown_c13_)
     {
-        Struct_02015ef4_4* var21 = func_020dedd0(arg0->unknown_c0c_, var2[0]);
-        Struct_02015ef4_4* var22 = func_020dedd0(arg0->unknown_c0c_, var2[8]);
-        unsigned char var23 = 0;
-        if (var22 != NULL)
-            var23 = var22->unknown_0_->unknown_5_4_;
-        if (var21 != NULL)
+        ItemRecord* body = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Body]);
+        ItemRecord* weapon = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Weapon]);
+        unsigned char weaponId = 0;
+        if (weapon != NULL)
+            weaponId = weapon->model_->id_;
+        if (body != NULL)
         {
-            int var24 = 'm';
-            if (var6->unknown_14_0_ == 1)
-                var24 = 'w';
-            sprintf(var1, data_ov023_021fdd45, var21->unknown_0_->unknown_5_4_, var23, var24);
-            arg0->unknown_bf4_[10] = var5->QueueLoadFileInGP2(data_ov023_021fdd2a, var1, NULL);
-            sprintf(var1, data_ov023_021fdd58, var21->unknown_0_->unknown_5_4_, var23, var24);
-            arg0->unknown_bf4_[11] = var5->QueueLoadFileInGP2(data_ov023_021fdd2a, var1, NULL);
-            if (arg0->unknown_0_[0].pModel_ != NULL)
-                arg0->unknown_0_[0].pModel_->RemoveAnimations();
-            arg0->unknown_0_[0].RemoveAllAnimationPackages();
-            arg0->unknown_780_.Reset();
+            int sex = 'm';
+            if (appearance->female_ == 1)
+                sex = 'w';
+            sprintf(anim, CharacterModel_animationFileFormat, body->model_->id_, weaponId, sex);
+            self->tasks_[10] = loader->QueueLoadFileInGP2(CharacterModel_archivePath, anim, NULL);
+            sprintf(anim, CharacterModel_animationConfigFormat, body->model_->id_, weaponId, sex);
+            self->tasks_[11] = loader->QueueLoadFileInGP2(CharacterModel_archivePath, anim, NULL);
+            if (self->parts_[CharacterModelPart_Body].pModel_ != NULL)
+                self->parts_[CharacterModelPart_Body].pModel_->RemoveAnimations();
+            self->parts_[CharacterModelPart_Body].RemoveAllAnimationPackages();
+            self->animationAllocator_.Reset();
         }
     }
     arg0->unknown_c12_ = 1;

@@ -21,15 +21,15 @@ extern "C" ARM void func_ov000_02166978(unsigned char* arg0) {
     BackgroundLoader* var1 = BackgroundLoader::GetInstance();
     *(signed char*)(arg0 + Enum_ov000_02166978_22289) = 0;
     for (;;) {
-        signed char var2 = *(signed char*)(arg0 + Enum_ov000_02166978_22289);
-        if (var2 == 0) {
-            Struct_0208cb08* var3 = func_02094a00();
-            func_02094b40(var3);
-            func_02094b34(var3, 0x65, 500, 0, 0);
-            *(signed char*)(arg0 + Enum_ov000_02166978_22289) = 1;
-        } else if (var2 == 1) {
-            if (func_02094b4c(func_02094a00()) != 0) {
-                *(signed char*)(arg0 + Enum_ov000_02166978_22289) = -1;
+        signed char state = *(signed char*)(obj + stateOffset);
+        if (state == 0) {
+            FontBankLoader* g = FontBankLoader_GetInstance();
+            BlankFunction02094b40(g);
+            BlankFunction02094b34(g, 0x65, 500, 0, 0);
+            *(signed char*)(obj + stateOffset) = 1;
+        } else if (state == 1) {
+            if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) != 0) {
+                *(signed char*)(obj + stateOffset) = -1;
                 break;
             }
         }

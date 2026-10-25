@@ -1,5 +1,6 @@
 #include "Resource/ActionDataTables.h"
 #include <globaldefs.h>
+#include "Resource/ItemTable.h"
 
 #if defined(jpn)
 enum Enum_02000c9c_F { Enum_02000c9c_F_336 = 0x144, Enum_02000c9c_F_2384 = 0x8b8, Enum_02000c9c_F_135 = 0xc7 };
@@ -50,14 +51,13 @@ struct Struct_0206f81c_8 {
     short unknown_18_;
     char unknown_1a_[6];
 };
-struct Struct_0201099c_10 { char unknown_0_[0x18]; };
-struct Struct_ov026_021d8ba0_4 { char unknown_0_[0xd0]; Struct_0201099c_10 unknown_d0_; };
-struct Struct_ov026_021db090_4 {
-    char unknown_0_[0x10];
-    unsigned char unknown_10_[8];
-    signed char unknown_18_;
-    char unknown_19_[Enum_02000c9c_F_135 - 0x19];
-    unsigned char unknown_87_;
+struct Container_021dae60 { char pad0[0xd0]; ItemTable commands; };
+struct CommandSlot {
+    char pad0[0x10];
+    unsigned char selections[8];
+    signed char selection;
+    char pad19[kEligibilityOffset - 0x19];
+    unsigned char eligible;
 };
 struct Struct_ov026_021dc8fc {
     char unknown_0_[0x454];
@@ -78,27 +78,27 @@ struct Struct_ov026_021dc8fc_3 {
     unsigned short unknown_22_6_ : 10;
 };
 
-extern "C" int func_02053c6c(unsigned char*);
-extern "C" Struct_ov026_021db090_4* func_ov026_021dae60(Struct_ov026_021d8ba0_4*, int);
-extern "C" void func_ov000_0217193c(Struct_ov000_0217193c*);
-extern "C" void func_ov000_02171614(Struct_ov000_02171614*);
-extern "C" Struct_0201099c_9* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" void func_02083acc(unsigned char*, int);
-extern "C" void func_02083b28(unsigned char*, int);
-extern "C" int func_02083b00(unsigned char*, int);
-extern "C" int func_020839dc(Struct_020839dc*, unsigned char*, int);
-extern "C" Struct_0209a9dc_3* func_0209a9dc(Struct_0209a9dc_2*, int);
-extern "C" Struct_ov026_021dc8fc_5* func_02079e2c(char*, int);
-extern "C" void func_ov000_02171640(Struct_ov000_02171640*, int, int);
-extern "C" void func_ov000_02171968(Struct_ov000_02171968*, int, int);
-extern "C" int func_02083960(Struct_0207d300*);
-extern "C" void func_ov000_02171b3c(Struct_ov000_02171b3c*);
-extern "C" void func_ov000_02171b68(void*, int, void*);
-extern "C" Struct_0206f81c_8* func_02083554(Struct_0206f81c*, int);
-extern "C" int func_020882f8(unsigned char*);
-extern "C" int func_ov026_021dce1c(Struct_ov026_021dc8fc_4*);
-extern "C" Struct_ov026_021dc8fc_2* func_0209a594(void*, int);
-extern "C" int func_0209ab7c(Struct_0209a9dc_2*, GameObject*, unsigned char*);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+CommandSlot* FindSlotById_021dae60(Container_021dae60*, int);
+void ZeroArr1a4AndFlag0x840217193c(Struct0217193c*);
+void ZeroArr9cAndFlag0x8202171614(Struct02171614*);
+Element020de650* ItemTable_Find(ItemTable*, int);
+void SetBitInArray0x8ec_02083acc(unsigned char*, int);
+void ClearBitInArray0x8ec_02083b28(unsigned char*, int);
+int TestBitInArray0x8ec_02083b00(unsigned char*, int);
+int CollectSetBitIndices020839dc(BitArray020839dc*, unsigned char*, int);
+Entry0209a9dc* FindEntryById0209a9dc(Holder0209a9dc*, int);
+CommandEntry* SearchBothTables02079e2c(char*, int);
+void SetFieldAndUpdateCount02171640(S02171698*, int, int);
+void SetFieldAndUpdateCount02171968(S021719c0*, int, int);
+int CountPositiveSlots02083960(Slots02083960*);
+void ZeroArr3f0AndFlag0x8602171b3c(Struct02171b3c*);
+void SetPointerField0x3f002171b68(void*, int, void*);
+Entry02083554* FindEntryByShortField02083554(Container02083554*, int);
+int CheckFlag0x14Bit0x10Set_020882f8(unsigned char*);
+int IsFlagBit8Set_021dce1c(FlagObj_021dce1c*);
+extern "C" AbilityEntry* func_0209a594(void*, int);
+extern "C" int func_0209ab7c(Holder0209a9dc*, GameObject*, unsigned char*);
 
 // USA: func_ov026_021dc8fc
 extern "C" ARM void func_ov026_021dc8fc(void*, void*, void*, Struct_ov026_021d8ba0_4* arg3,
@@ -124,10 +124,10 @@ extern "C" ARM void func_ov026_021dc8fc(void*, void*, void*, Struct_ov026_021d8b
         for (int var12 = 0; var12 < 8; ++var12) {
             if (var9 == var10[var12]) { var11 = 1; break; }
         }
-        Struct_0201099c_9* var13 = func_020dedd0(&arg3->unknown_d0_, (short)var9);
-        if (var13 && var13->unknown_8_4_ == 0x1f) {
-            if (var11) func_02083acc((unsigned char*)var2, var13->unknown_14_);
-            else func_02083b28((unsigned char*)var2, var13->unknown_14_);
+        Element020de650* entry = ItemTable_Find(&work->commands, (short)key);
+        if (entry && entry->learnedType == 0x1f) {
+            if (found) SetBitInArray0x8ec_02083acc((unsigned char*)learned, entry->bitIndex);
+            else ClearBitInArray0x8ec_02083b28((unsigned char*)learned, entry->bitIndex);
         }
     }
     for (unsigned short var14 = 0; var14 < 0x11f; ++var14) {
@@ -175,21 +175,21 @@ extern "C" ARM void func_ov026_021dc8fc(void*, void*, void*, Struct_ov026_021d8b
             }
         }
     }
-    int var27 = func_02083960((Struct_0207d300*)var2);
-    for (int var28 = 0; var28 < 8; ++var28) var7[var28] = var2->unknown_454_[var28];
-    short* var29 = var2->unknown_488_;
-    int var30;
-    unsigned char var31[8] = {7, 8, 0, 1, 6, 4, 5, 0xff};
-    int var32;
-    var30 = 0;
-    func_ov000_02171b3c((Struct_ov000_02171b3c*)var3);
-    for (var32 = 0; var32 < 16; ++var32) {
-        if (var32 < 8) {
-            if (var32 < var27) {
-                Struct_0201099c_9* var33 = func_020dedd0(&arg3->unknown_d0_, (short)var7[var32]);
-                if (var33) {
-                    func_ov000_02171b68(var3, var30, var33);
-                    ++var30;
+    int equippedCount = CountPositiveSlots02083960((Slots02083960*)learned);
+    for (int i = 0; i < 8; ++i) equippedIds[i] = learned->equipped[i];
+    short* equipment = learned->equipment;
+    int stored;
+    unsigned char order[8] = {7, 8, 0, 1, 6, 4, 5, 0xff};
+    int equipmentIndex;
+    stored = 0;
+    ZeroArr3f0AndFlag0x8602171b3c((Struct02171b3c*)slot);
+    for (equipmentIndex = 0; equipmentIndex < 16; ++equipmentIndex) {
+        if (equipmentIndex < 8) {
+            if (equipmentIndex < equippedCount) {
+                Element020de650* entry = ItemTable_Find(&work->commands, (short)equippedIds[equipmentIndex]);
+                if (entry) {
+                    SetPointerField0x3f002171b68(slot, stored, entry);
+                    ++stored;
                 }
             }
         } else {
@@ -209,11 +209,11 @@ extern "C" ARM void func_ov026_021dc8fc(void*, void*, void*, Struct_ov026_021d8b
             }
         }
     }
-    int var37 = 0;
-    var3->unknown_87_ = 0;
-    Struct_0208ab34_3* var38 = (Struct_0208ab34_3*)func_02010828(var0);
-    for (int var39 = 0; var39 < var38->unknown_f7c_; ++var39) {
-        if (arg6 == var38->unknown_f78_[var39]) { var37 = 1; break; }
+    int listed = 0;
+    slot->eligible = 0;
+    PartyRoster* roster = (PartyRoster*)GameState_GetParty(game);
+    for (int i = 0; i < roster->count; ++i) {
+        if (id == roster->ids[i]) { listed = 1; break; }
     }
     GameObject* var40 = var0->GetCombatantByIndex(arg6);
     if (var40) {

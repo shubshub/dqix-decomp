@@ -24,11 +24,11 @@ extern "C" ARM void CharacterCreationUI_Draw2D(void* objRaw) {
     CharacterCreationUI_PlaceSprites(self);
     CharacterCreationUI_PlaceCursorSprites(self);
     if (self->state != CreationTab_NewGameFinish) {
-        Window_ClearLayers((Cont0205d1e0*)&self->windows[0]);
-        Window_DrawPanes((Cont0205d228*)&self->windows[0]);
-        Window_FlushLayers((Cont0205d274*)&self->windows[0]);
+        Window_ClearLayers((Cont0205d1e0*)&self->windows[CreationWindowIndex_Summary]);
+        Window_DrawPanes((Cont0205d228*)&self->windows[CreationWindowIndex_Summary]);
+        Window_FlushLayers((Cont0205d274*)&self->windows[CreationWindowIndex_Summary]);
     }
-    Window_ClearLayers((Cont0205d1e0*)&self->windows[1]);
-    Window_DrawPanes((Cont0205d228*)&self->windows[1]);
-    Window_FlushLayers((Cont0205d274*)&self->windows[1]);
+    Window_ClearLayers((Cont0205d1e0*)&self->windows[CreationWindowIndex_Bottom]);
+    Window_DrawPanes((Cont0205d228*)&self->windows[CreationWindowIndex_Bottom]);
+    Window_FlushLayers((Cont0205d274*)&self->windows[CreationWindowIndex_Bottom]);
 }

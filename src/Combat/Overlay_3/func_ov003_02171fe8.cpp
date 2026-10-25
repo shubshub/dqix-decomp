@@ -6,16 +6,12 @@
 extern "C" void __clear(void *dst, int count);
 extern "C" void func_ov003_02170a7c(char *in, char *out);
 extern "C" void Font_EncodeText(const char *text, char *codes, int a);
-extern "C" void *func_02012fe4(void);
-extern "C" int func_ov003_021725a4(void *arg0, void *arg1);
+extern "C" void *Zone3D_GetInstance(void);
+extern "C" int func_ov003_021725a4(void *self, void *rec);
 
-struct Struct_02000c9c_8;
-extern "C" int func_0200fb08(Struct_02000c9c_8 *arg0);
-extern "C" int func_0209890c(void *arg0, void *arg1);
-#if defined(jpn)
-extern "C" void *func_0202ae18(void);
-extern "C" void func_0202bad4(void *arg0, unsigned char arg1);
-#endif
+struct Struct0200fb08;
+int GameState_GetLanguage(Struct0200fb08 *p);
+int CheckNoConflictInArray0209890c(void *zone, void *rec);
 
 extern const char *data_ov003_021805bc[];
 
@@ -144,7 +140,7 @@ extern "C" ARM void func_ov003_02171fe8(Self0217 *self, int id, void *data, unsi
                 memcpy(&local.h50_, &self->wire_.tm_, 0x1c);
                 memcpy(&local.s14_, &self->wire_.s_, 6);
                 local.w6c_.v[0] |= 0x4000000;
-                int kind = NormalizeField5_0200fb08((Struct0200fb08 *) gs);
+                int kind = GameState_GetLanguage((Struct0200fb08 *) gs);
                 int idx  = 0;
                 switch (kind) {
                     case 2: idx = 1; break;
@@ -186,7 +182,7 @@ extern "C" ARM void func_ov003_02171fe8(Self0217 *self, int id, void *data, unsi
                 memset(tm + 0xb, 0, 10);
                 Font_EncodeText(a, tm + 0xb, 1);
             }
-            char *zone = (char *) func_02012fe4();
+            char *zone = (char *) Zone3D_GetInstance();
             if (self->b718_ < 3) {
                 if (CheckNoConflictInArray0209890c(zone + 0x840, &local) != 0) {
                     if (func_ov003_021725a4(self, &local) != 0) {

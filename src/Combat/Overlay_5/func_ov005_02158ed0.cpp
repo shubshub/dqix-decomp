@@ -51,8 +51,8 @@ extern "C" ARM void func_ov005_02158ed0(Struct_ov005_02153954* arg0) {
     if (var2 == 1)
         func_ov005_02159a30(arg0, arg0->unknown_e10_, var1);
 #if defined(jpn)
-    func_0205d5d0((Struct_0205d5d0*)&arg0->unknown_ee4_, var2, (int)arg0->unknown_e10_, 1);
+    Window_SetPaneText((StructA0205d5d0*)&self->window_, style, (int)self->text_, 1);
 #else
-    func_0205d5d0((Struct_0205d5d0*)&arg0->unknown_ee4_, var2, (int)arg0->unknown_e10_, 1, 0);
+    Window_SetPaneText((StructA0205d5d0*)&self->window_, style, (int)self->text_, 1, 0);
 #endif
 }

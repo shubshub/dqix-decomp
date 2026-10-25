@@ -2,14 +2,14 @@
 #include "Resource/MessageSystem.h"
 
 struct Container020e0310;
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 int KeyTable_Get(Container020e0310* container, int key);
 
 // KEEP-NAME
 // USA: func_ov013_02185774
 ARM void SetupBattleMessage02185774(void* obj) {
     unsigned char* menu = (unsigned char*)obj;
-    MessageSystem* messages = (MessageSystem*)GetGlobalField0x1c020421a0();
+    MessageSystem* messages = (MessageSystem*)MessageSystem_GetInstance();
 #if defined(jpn)
     unsigned char mode = menu[0x5c8];
     if (mode == 4) {

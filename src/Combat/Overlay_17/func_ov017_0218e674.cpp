@@ -36,12 +36,12 @@ extern "C" ARM void func_ov017_0218e674(unsigned char* arg0) {
 #endif
     GameState* var0 = GameState::GetInstance();
     func_0202ae18();
-    if (func_020100bc(var0) == 0) return;
+    if (battle->GetCamera() == 0) return;
 
-    struct Struct_ov017_0218e674_2* var1 = (struct Struct_ov017_0218e674_2*)func_02010828(var0);
-    int var2[4];
-    __clear(var2, sizeof(var2));
-    var0->GetEffectiveDeltaTime();
+    struct Party2a04* party = (struct Party2a04*)GameState_GetParty(battle);
+    int handled[4];
+    __clear(handled, sizeof(handled));
+    battle->GetEffectiveDeltaTime();
 
     int var3 = 1;
     if ((TestFlags00((GameResources*)arg0, 0x20) != 0 && g_keyManager.TestKeysHeld(var3) != 0) ||
@@ -70,15 +70,15 @@ extern "C" ARM void func_ov017_0218e674(unsigned char* arg0) {
         if (var5 != 0 && var4 != 0) func_020d9834(1);
         var5++;
         if (func_0202c540(func_0202ae18()) != 0 &&
-            var9->obj3D_.GetField06() == var0->GetUnknownGameObject()->obj3D_.GetField06() &&
-            ((var9->obj3D_.unknown_0_ & 0x1000) != 0 ||
-             (var9->obj3D_.unknown_4_ == 0 && (*(unsigned int*)((char*)var9 + Enum_ov017_0218e674_396) & 1) != 0)) &&
-            func_02039860(var9) >= 0) {
-            var2[var8] = 1;
-            func_02037d88(var9);
-            func_ov017_02193428(var9, NULL);
-        } else if (func_02039874(var9) != 0) {
-            func_02037d88(var9);
+            member->obj3D_.GetField06() == battle->GetUnknownGameObject()->obj3D_.GetField06() &&
+            ((member->obj3D_.unknown_0_ & 0x1000) != 0 ||
+             (member->obj3D_.actorIndex_ == 0 && (*(unsigned int*)((char*)member + regionalOffset1) & 1) != 0)) &&
+            GetSignedByte0x1c8_02039860(member) >= 0) {
+            handled[i] = 1;
+            func_02037d88(member);
+            DispatchWithZeroExtras_02193428(member, NULL);
+        } else if (GetSignedByte0x1c9_02039874(member) != 0) {
+            func_02037d88(member);
         } else {
             func_02052ae8((struct Struct_02037d88_11*)var9);
         }

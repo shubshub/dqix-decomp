@@ -5,21 +5,18 @@
 #include "World/Object3D.h"
 #include "Input/Input.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" int func_020421a0(void);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" int func_02039874(void* arg0);
-extern "C" int func_02053604(signed char* arg0);
+int MessageSystem_GetInstance(void);
+unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+int GetSignedByte0x1c9_02039874(void* obj);
+int GetIndexedEntryField0x178_02053604(signed char* obj);
 
 extern "C" void func_020531f0(void* arg0);
 struct ObjectArchiveLoadInfo;
-extern "C" void* func_02012fe4(void);
-extern "C" void func_0205308c(void* arg0, int arg1);
-extern "C" void* func_0205ec34(void);
-extern "C" void func_0206f81c(void* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_0205308c(void* obj, int val);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void EventQuery_RunQueuedCommands(void* p);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -64,13 +61,13 @@ extern "C" ARM void func_02053634(void* arg0) {
     char* var0 = (char*)arg0;
     GameState* var1 = GameState::GetInstance();
 
-    int var2 = var0[OBJECT_OFFSET(0x17c)] > 0 ? 1 : 0;
-    if (var2 != 0) {
-        short var3 = *(short*)(var0 + 4);
-        int var4 = func_020100b0(var1);
-        if (var4 == var3
-            && ((unsigned char*)func_020421a0())[GLOBAL_ACTIVE_OFFSET] != 0) {
-            func_020531f0(var0);
+    int hasEntries0 = ctx[OBJECT_OFFSET(0x17c)] > 0 ? 1 : 0;
+    if (hasEntries0 != 0) {
+        short cid0 = *(short*)(ctx + 4);
+        int activeCid0 = GameState_GetLeaderIndex(bs);
+        if (activeCid0 == cid0
+            && ((unsigned char*)MessageSystem_GetInstance())[GLOBAL_ACTIVE_OFFSET] != 0) {
+            func_020531f0(ctx);
             return;
         }
     }
@@ -122,9 +119,9 @@ extern "C" ARM void func_02053634(void* arg0) {
             if (((Object3D*)var0)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&var14, (int (*)(BCFG::AnimationRecord*))0) == 0) {
                 goto loadFail;
             }
-            if (((Object3D*)var0)->MaybeSetRegularAnimation(&data_020f0477, 1) == 0) {
-                if (((Object3D*)var0)->MaybeSetRegularAnimation(&data_020f047e, 1) == 0) {
-                    func_020531f0(var0);
+            if (((Object3D*)ctx)->SetAnimationByName(&data_020f0477, 1) == 0) {
+                if (((Object3D*)ctx)->SetAnimationByName(&data_020f047e, 1) == 0) {
+                    func_020531f0(ctx);
                     return;
                 }
                 var0[OBJECT_OFFSET(0x17f)] = 1;
@@ -145,7 +142,7 @@ extern "C" ARM void func_02053634(void* arg0) {
                 if (var15->unknown_2_ == 0x4e) {
                     var16 = var0 + OBJECT_OFFSET(0x198);
                 }
-                unsigned short val = *(unsigned short*)func_02012fe4();
+                unsigned short val = *(unsigned short*)Zone3D_GetInstance();
                 if (val == ((Object3D*)ctx)->GetField06()) {
                     SePlayer_Play((struct SePlayer*)&g_sePlayer, e->kind, (int)arg2);
                 }
@@ -190,16 +187,16 @@ extern "C" ARM void func_02053634(void* arg0) {
                     *(int*)(var0 + OBJECT_OFFSET(0x190)) = 0;
                     return;
                 }
-                short var20 = *(short*)(var0 + 4);
-                if (var20 == func_020100b0(var1)) {
-                    void* var21 = func_0205ec34();
-                    unsigned char var22[0x34];
-                    for (int var23 = 0; var23 < 4; var23++) {
-                        char* var24 = var0 + var23 + 0x100;
-                        ((signed char*)(var22 + 0x2a))[var23] = var24[OBJECT_OFFSET(0x78)];
+                short cid = *(short*)(ctx + 4);
+                if (cid == GameState_GetLeaderIndex(bs)) {
+                    void* p = Scenario_GetInstance();
+                    unsigned char req[0x34];
+                    for (int i = 0; i < 4; i++) {
+                        char* q = ctx + i + 0x100;
+                        ((signed char*)(req + 0x2a))[i] = q[OBJECT_OFFSET(0x78)];
                     }
-                    if (func_02064a9c(var21, var22) != 0) {
-                        func_0206f81c(var22);
+                    if (SetTargetFieldAndForEach02064a9c(p, req) != 0) {
+                        EventQuery_RunQueuedCommands(req);
                     }
                 }
                 func_020531f0(var0);
@@ -212,8 +209,8 @@ extern "C" ARM void func_02053634(void* arg0) {
                         ForwardToTargetOrDefault0205eabc((void*)&g_sePlayer, ctx + OBJECT_OFFSET(0x198), 0);
                     }
                 }
-                if (((Object3D*)var0)->MaybeSetRegularAnimation(&data_020f0481, var25) != 0) {
-                    var0[OBJECT_OFFSET(0x17e)] = 2;
+                if (((Object3D*)ctx)->SetAnimationByName(&data_020f0481, mode) != 0) {
+                    ctx[OBJECT_OFFSET(0x17e)] = 2;
                     return;
                 }
                 func_020531f0(var0);
@@ -231,8 +228,8 @@ extern "C" ARM void func_02053634(void* arg0) {
                     var27 = 1;
                 }
             } else {
-                short var28 = *(short*)(var0 + 4);
-                if (var28 == func_020100b0(var1)
+                short cid = *(short*)(ctx + 4);
+                if (cid == GameState_GetLeaderIndex(bs)
                     && g_keyManager.TestKeysPressed(0xc03) != 0) {
                     var27 = 1;
                     func_ov017_021cc2f0(*(short*)(var0 + 4));
@@ -251,8 +248,8 @@ extern "C" ARM void func_02053634(void* arg0) {
             if (var27 == 0) {
                 return;
             }
-            if (((Object3D*)var0)->MaybeSetRegularAnimation(&data_020f0486, 1) == 0) {
-                func_020531f0(var0);
+            if (((Object3D*)ctx)->SetAnimationByName(&data_020f0486, 1) == 0) {
+                func_020531f0(ctx);
                 return;
             }
             {
@@ -279,16 +276,16 @@ extern "C" ARM void func_02053634(void* arg0) {
                 *(int*)(var0 + OBJECT_OFFSET(0x190)) = 0;
                 return;
             }
-            short var33 = *(short*)(var0 + 4);
-            if (var33 == func_020100b0(var1)) {
-                void* var34 = func_0205ec34();
-                unsigned char var35[0x34];
-                for (int var36 = 0; var36 < 4; var36++) {
-                    char* var37 = var0 + var36 + 0x100;
-                    ((signed char*)(var35 + 0x2a))[var36] = var37[OBJECT_OFFSET(0x78)];
+            short cid = *(short*)(ctx + 4);
+            if (cid == GameState_GetLeaderIndex(bs)) {
+                void* p = Scenario_GetInstance();
+                unsigned char req[0x34];
+                for (int i = 0; i < 4; i++) {
+                    char* q = ctx + i + 0x100;
+                    ((signed char*)(req + 0x2a))[i] = q[OBJECT_OFFSET(0x78)];
                 }
-                if (func_02064a9c(var34, var35) != 0) {
-                    func_0206f81c(var35);
+                if (SetTargetFieldAndForEach02064a9c(p, req) != 0) {
+                    EventQuery_RunQueuedCommands(req);
                 }
             }
             func_020531f0(var0);

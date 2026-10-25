@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" int func_020981e4(int arg0, int arg1);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+int IsIdInRange020981e4(int a, int id);
+extern "C" void* func_ov011_021845f8(void* a, int b);
 
 struct Struct_ov004_021707e8_10 {
     char unknown_0_[0xc];
@@ -20,12 +20,12 @@ extern Struct_ov004_021707e8_10 data_ov004_021707e8;
 static inline int inline_ov004_02163304(char* arg0) { SDK_NULL_ASSERT(arg0); return *(unsigned short*)arg0; }
 
 // USA: func_ov004_02163304
-extern "C" ARM int func_ov004_02163304(void* arg0) {
-    int var0 = 3;
-    char* var1 = (char*)func_02012fe4();
-    char* var2 = var1 + 0x840;
-    if (var2 != NULL && func_020981e4((int)var2, inline_ov004_02163304(var1))) {
-        var0 = 7;
+extern "C" ARM int func_ov004_02163304(void* self) {
+    int kind = 3;
+    char* zone = (char*)Zone3D_GetInstance();
+    char* grotto = zone + 0x840;
+    if (grotto != NULL && IsIdInRange020981e4((int)grotto, GetZoneId(zone))) {
+        kind = 7;
     }
     char* var3 = (char*)func_ov011_021845f8(arg0, var0);
     SafeAllocator* var4 = (SafeAllocator*)(var3 + 4);

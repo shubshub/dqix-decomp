@@ -99,7 +99,7 @@ extern "C" ARM void func_ov014_02184700(BestiaryUpdateState* state) {
         if (state->model->HasAnimationStopped() || state->model->HasAnimationReachedEnd()) {
             model = state->model;
             const char* animation = (const char*)model->activeAnimationRecord_;
-            if (animation && strcmp(data_ov014_021895c8, animation) && strcmp(data_ov014_021895ce, animation)) model->MaybeSetRegularAnimation(data_ov014_021895c8, 0);
+            if (animation && strcmp(data_ov014_021895c8, animation) && strcmp(data_ov014_021895ce, animation)) model->SetAnimationByName(data_ov014_021895c8, 0);
         }
     }
     state->unknown92 = 0;

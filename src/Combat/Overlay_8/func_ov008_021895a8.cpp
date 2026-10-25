@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "Resource/FontBankLoader.h"
 
 #if defined(jpn)
@@ -27,25 +28,14 @@ struct Struct_02021b84
     void* unknown_5c_;
 };
 
-struct Struct_02043368_2;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_2;
-struct Struct_0204c7a8;
+struct Struct0205a198;
+struct PacRecord;
+struct BackgroundGraphics;
+struct WindowPane;
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
-struct Struct_02043368;
+struct WindowPane;
+struct ClearTarget0205a234;
 
-struct Struct_ov003_021594c4
-{
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
-};
 
 struct Struct_ov006_02158478
 {
@@ -127,21 +117,21 @@ extern "C" void func_ov008_0218b240(void* arg0);
 extern "C" void func_ov008_0218aa24(void* arg0);
 
 int IsField0Null_02046b08(void** field);
-unsigned int* GetDataPtr02114e04_020d6c00();
-void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
-MessageSystem* GetGlobalField0x1c020421a0();
+unsigned int* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+MessageSystem* MessageSystem_GetInstance();
 PartyMemberData* GetFieldAt0x150_02053c6c(unsigned char* member);
 void Background_SetMapSize(unsigned char* background, int);
-void Background_AllocateMap(AllocTarget0204b12c* background, SafeAllocator* allocator);
-void Background_SetScroll(Obj0204b5e8* background, int, int);
-void Background_UploadMap(List0204b0e8* background, void*);
-void WindowPane_AllocateBuffer(Obj0204c7a8* canvas, SafeAllocator* allocator, int pixels, unsigned int size);
-void Window_SetPanes(Struct_0205cf78* window, Elem_0205cf78* canvases, unsigned char count);
+void Background_AllocateMap(BackgroundGraphics* background, SafeAllocator* allocator);
+void Background_SetScroll(BackgroundGraphics* background, int, int);
+void Background_UploadMap(BackgroundGraphics* background, void*);
+void WindowPane_AllocateBuffer(WindowPane* canvas, SafeAllocator* allocator, int pixels, unsigned int size);
+void Window_SetPanes(Struct_0205cf78* window, WindowPane* canvases, unsigned char count);
 void Sprite_Init(Struct0205a198* sprite);
 void ClearField0And40205a234(ClearTarget0205a234* list);
 void SpriteContext_Init(char* renderer);
-int Pac_CountFiles(ActiveEntry02046900* archive);
-void* Pac_GetFile(Rec020467f0* archive, int index, void** name, int* size);
+int Pac_CountFiles(PacRecord* archive);
+void* Pac_GetFile(PacRecord* archive, int index, void** name, int* size);
 
 extern char data_ov008_0218b4c8[];
 extern char data_ov008_0218b4df[];
@@ -218,7 +208,7 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
     GameState* gameState = GameState::GetInstance();
     char* resources = (char*)gameState->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    GetGlobal02109400_02094a00();
+    FontBankLoader_GetInstance();
     signed char step = self->step_;
     if (step == 0)
     {
@@ -230,12 +220,12 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
 #endif
             return;
         SetFlags00(GetGameResources(), 0x10);
-        func_020466e4(func_020d6c00(), 0xd);
-        unsigned int var4;
-        arg0->unknown_2a0_ = (char*)func_020421a0()->unknown_5c_;
-        var4 = 0;
-        Struct_ov008_02188f5c_2* var5 = arg0->unknown_ebc_;
-        if (var5 == NULL)
+        FlagWord_SetBits(GlobalFlags_GetInstance(), 0xd);
+        unsigned int female;
+        self->text_ = (char*)MessageSystem_GetInstance()->unk_5c;
+        female = 0;
+        GuestData* guest = self->guest_;
+        if (guest == NULL)
         {
             GameObject* var6 = var0->GetPartyMemberByIndex(arg0->unknown_eb9_);
             if (var6 == NULL)
@@ -304,11 +294,11 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
             {
                 background = &self->backgrounds_[i];
                 Background_SetMapSize((unsigned char*)background, 0);
-                background->unk_1c_0_ = 0;
-                background->unk_1c_4_ = layers[i];
+                background->subScreen_ = 0;
+                background->bgNumber_ = layers[i];
                 Background_SetPriority(background, priorities[i]);
-                Background_AllocateMap((AllocTarget0204b12c*)background, &self->allocator_);
-                Background_SetScroll((Obj0204b5e8*)background, 0, 0);
+                Background_AllocateMap((BackgroundGraphics*)background, &self->allocator_);
+                Background_SetScroll((BackgroundGraphics*)background, 0, 0);
             }
             REG_BG1CNT = (REG_BG1CNT & 0x43) | 0x1d00;
             REG_BG2CNT = (REG_BG2CNT & 0x43) | 0x1e00;
@@ -324,11 +314,11 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
             void* archive;
             unsigned int archiveSize;
             loader->GetLoadedFileByID(self->backgroundTask_, &archive, &archiveSize);
-            int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+            int count = Pac_CountFiles((PacRecord*)archive);
             for (int i = 0; i < count; i++)
             {
                 unsigned int size;
-                void* file = Pac_GetFile((Rec020467f0*)archive, i, (void**)name, (int*)&size);
+                void* file = Pac_GetFile((PacRecord*)archive, i, (void**)name, (int*)&size);
                 if (file != NULL)
                     Background_LoadFile(&self->backgrounds_[1], file, &self->allocator_, size);
             }
@@ -339,14 +329,14 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
             {
                 background = &self->backgrounds_[i];
                 Background_FillRect(background, 0, 0, 0, 0x20, 0x19, 0);
-                Background_UploadMap((List0204b0e8*)background, 0);
+                Background_UploadMap((BackgroundGraphics*)background, 0);
             }
             self->pixels_ = self->allocator_.Allocate(0x800);
-            WindowPane_AllocateBuffer((Obj0204c7a8*)&self->canvas_, &self->allocator_, (int)self->pixels_, 0x100);
+            WindowPane_AllocateBuffer((WindowPane*)&self->canvas_, &self->allocator_, (int)self->pixels_, 0x100);
             self->canvas_.background_ = &self->backgrounds_[1];
             self->window_.background_ = &self->backgrounds_[0];
             self->window_.unk_b2 = 2;
-            Window_SetPanes((Struct_0205cf78*)&self->window_, (Elem_0205cf78*)&self->canvas_, 1);
+            Window_SetPanes((Struct_0205cf78*)&self->window_, (WindowPane*)&self->canvas_, 1);
             for (unsigned char i = 0; i < 8; i++)
             {
                 int offset = i * sizeof(Sprite);
@@ -370,12 +360,12 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
             void* archive;
             unsigned int archiveSize;
             loader->GetLoadedFileByID(self->spriteTask_, &archive, &archiveSize);
-            int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+            int count = Pac_CountFiles((PacRecord*)archive);
             self->spriteAllocator_.Reset();
             for (int i = 0; i < count; i++)
             {
                 unsigned int size;
-                SpriteContext_LoadFile(self->renderer_, Pac_GetFile((Rec020467f0*)archive, i, (void**)name, (int*)&size), size, &self->spriteAllocator_);
+                SpriteContext_LoadFile(self->renderer_, Pac_GetFile((PacRecord*)archive, i, (void**)name, (int*)&size), size, &self->spriteAllocator_);
             }
             var2->RemoveTask(arg0->unknown_ea8_);
             arg0->unknown_ea8_ = -1;
@@ -384,13 +374,13 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
             REG_BG2CNT = REG_BG2CNT & ~3;
             REG_BG3CNT = (REG_BG3CNT & ~3) | 3;
             REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | 0x1700;
-            func_02094b34(func_02094a00(), 0x6b, 0x206, 0, 0);
-            arg0->unknown_e9a_++;
+            BlankFunction02094b34(FontBankLoader_GetInstance(), 0x6b, 0x206, 0, 0);
+            self->step_++;
         }
     }
     else if (var3 == 5)
     {
-        if (func_02094b4c(func_02094a00()))
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
         {
             func_ov008_0218aa24(arg0);
 #if defined(jpn)

@@ -2,25 +2,25 @@
 #include "std_library_functions.h"
 #include <globaldefs.h>
 
-struct Struct_020a0b8c;
-struct Struct_020a0bcc;
-struct Struct_020a095c;
-struct Struct_0207cf30_4;
-struct Struct_ov002_0215b2c8;
-struct Struct_0201099c_10;
+struct S_a0b8c;
+struct S020a0bcc;
+struct S_a0af4;
+struct KeyMap020a095c;
+struct ObjStruct_021e1474;
+struct ItemTable;
 struct Struct_0205d81c;
-extern "C" int func_020a0b8c(struct Struct_020a0b8c *arg0);
-extern "C" void func_020a0bcc(struct Struct_020a0bcc *arg0);
-extern "C" int func_020a0af4(struct Struct_020a095c *arg0, int arg1);
-extern "C" void func_020a095c(struct Struct_0207cf30_4 *arg0, int arg1, int arg2);
-extern "C" void func_ov023_021e1518(void *arg0);
-extern "C" void func_ov023_021e1474(struct Struct_ov002_0215b2c8 *arg0,
-                                                                                              struct Struct_0201099c_10 *arg1);
-extern "C" void func_ov023_021e1870(void *arg0, void *arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov023_021e1814(void *arg0, void *arg1, int arg2, int arg3, int arg4);
-struct Struct_ov002_0215b458_4 {
-    char unknown_0_[0xc5];
-    unsigned char unknown_c5_;
+int CountNonZeroValues020a0b8c(struct S_a0b8c *s);
+void ClearArrays020a0bcc(struct S020a0bcc *s);
+int FindKeyIndex020a0af4(struct S_a0af4 *s, int key);
+void AddKeyValueClamped020a095c(struct KeyMap020a095c *m, int key, int val);
+void ClearElements_021e1518(void *p);
+void RefreshEntryStatusFlags_021e1474(struct ObjStruct_021e1474 *obj,
+                                                                                              struct ItemTable *c);
+void BuildChain_021e1870(void *a, void *b, int c, int d, int e);
+void BuildChain_021e1814(void *a, void *b, int c, int d, int e);
+struct Elem0215b458 {
+    char pad[0xc5];
+    unsigned char flags;
 };
 extern "C" struct Struct_ov002_0215b458_4 *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
 extern "C" int GetInventoryItemByID(char *arg0, int arg1, int arg2);
@@ -41,30 +41,30 @@ struct Struct_ov002_0215b458_3 {
 };
 
 // USA: func_ov002_0215b458
-extern "C" ARM void func_ov002_0215b458(char *arg0, int arg1) {
-    GameState *var0;
-    char *var1;
-    int var2;
-    short *var3;
-    struct Struct_ov002_0215b458_3 *var4;
-    int var5;
-    signed char *var6;
-    struct Struct_ov002_0215b458_2 *var7;
-    var0    = GameState::GetInstance();
-    var4 = (struct Struct_ov002_0215b458_3 *) func_02010828(var0);
-    var2   = GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1b00 + 0xe8), *(signed char *) (arg0 + 0x1c00 + 0x20));
-    var3  = var4->unknown_0_;
-    var6  = var4->unknown_4_;
-    var5 = func_020a0b8c((struct Struct_020a0b8c *) var4);
-    if (var5 == 0) return;
+extern "C" ARM void func_ov002_0215b458(char *base, int flag) {
+    GameState *gs;
+    char *sub;
+    int sel;
+    short *keys;
+    struct Party0215b458 *party;
+    int count;
+    signed char *vals;
+    struct Node0215b458 *node;
+    gs    = GameState::GetInstance();
+    party = (struct Party0215b458 *) GameState_GetParty(gs);
+    sel   = GetInventoryItemByID(base, *(short *) (base + 0x1b00 + 0xe8), *(signed char *) (base + 0x1c00 + 0x20));
+    keys  = party->keys;
+    vals  = party->vals;
+    count = CountNonZeroValues020a0b8c((struct S_a0b8c *) party);
+    if (count == 0) return;
 
-    var1 = arg0 + 4;
-    func_ov023_021e1518(var1 + 0x800);
-    func_ov023_021e1474(
-        (struct Struct_ov002_0215b2c8 *) (var1 + 0x800), (struct Struct_0201099c_10 *) (arg0 + 0x3ec + 0x400));
-    if (*(unsigned char *) (arg0 + 0x2000 + 0x48d) == 2) {
-        func_ov023_021e1870(var1 + 0x800, (void *) 1, -1, -1, 0);
-        *(unsigned char *) (arg0 + 0x2000 + 0x48d) = 1;
+    sub = base + 4;
+    ClearElements_021e1518(sub + 0x800);
+    RefreshEntryStatusFlags_021e1474(
+        (struct ObjStruct_021e1474 *) (sub + 0x800), (struct ItemTable *) (base + 0x3ec + 0x400));
+    if (*(unsigned char *) (base + 0x2000 + 0x48d) == 2) {
+        BuildChain_021e1870(sub + 0x800, (void *) 1, -1, -1, 0);
+        *(unsigned char *) (base + 0x2000 + 0x48d) = 1;
     } else {
         func_ov023_021e1814(var1 + 0x800, (void *) 1, -1, -1, 0);
         *(unsigned char *) (arg0 + 0x2000 + 0x48d) = 2;

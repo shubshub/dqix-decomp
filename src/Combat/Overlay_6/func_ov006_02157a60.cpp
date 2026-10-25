@@ -4,27 +4,22 @@
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
-struct Struct_02020cb8;
-struct Struct_ov006_021536e0;
-struct Struct_02081ee4;
-struct Struct_02081ee4_2;
-struct Struct_02071be8;
-struct Struct_0201099c_14;
-struct Struct_ov006_02157a60_2;
+struct BackgroundGraphics;
+struct StructInit36e0;
+struct Obj02081ee4;
+struct Sub02081ee4;
+struct Struct02071be8;
+struct Struct020dfc40;
+struct Obj02157c78;
 
-extern "C" void* func_0205ec34();
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-void Background_Init(List0204af64*);
+extern "C" void* Scenario_GetInstance();
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+void Background_Init(BackgroundGraphics*);
 void InitStruct_021536e0(StructInit36e0*);
 void InitWithSub02081ee4(Obj02081ee4*, Sub02081ee4*);
 void SpriteContext_Init(char*);
@@ -50,9 +45,6 @@ public:
     GameObject* GetProtagonist();
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_ov006_02156f04 {
     int unknown_0_[0x74 / 4];
@@ -153,9 +145,9 @@ struct Struct_ov006_02157a60 {
 // USA: func_ov006_02157a60
 extern "C" ARM void func_ov006_02157a60(Struct_ov006_02157a60* arg0)
 {
-    char* var0 = (char*)func_0205ec34();
-    if (!func_0206dfb0((int)var0, (unsigned char*)(var0 + 0x8c), 0x777))
-        func_0206df6c(var0, (unsigned char*)(var0 + 0x8c), 0x777, 1);
+    char* flags = (char*)Scenario_GetInstance();
+    if (!Scenario_TestFlag((int)flags, (unsigned char*)(flags + 0x8c), 0x777))
+        Scenario_SetFlag(flags, (unsigned char*)(flags + 0x8c), 0x777, 1);
 #if !defined(jpn)
     arg0->unknown_0_ = 0;
 #endif
@@ -180,7 +172,7 @@ extern "C" ARM void func_ov006_02157a60(Struct_ov006_02157a60* arg0)
     self->items_ = 0;
     self->counts_ = 0;
     self->sizes_ = 0;
-    Background_Init((List0204af64*)&self->subBackground_);
+    Background_Init((BackgroundGraphics*)&self->subBackground_);
     InitStruct_021536e0((StructInit36e0*)self->ingredients_);
     InitWithSub02081ee4((Obj02081ee4*)self->repeat_, (Sub02081ee4*)&self->buttons_);
     SpriteContext_Init((char*)self->renderer_);

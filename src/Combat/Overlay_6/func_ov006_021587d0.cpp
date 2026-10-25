@@ -37,8 +37,8 @@ extern const short data_ov006_0215ffe2[];
 extern const unsigned char data_ov006_0215ffc0[];
 }
 
-extern "C" void func_ov023_021e2bdc(void*, int, short*, short*);
-extern "C" void func_0205ac40(void*, Struct_ov006_021580b8*);
+void ComputeShortPair_021e2bdc(void*, int, short*, short*);
+extern "C" void SpriteContext_DrawSprite(void*, Sprite*);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
@@ -166,9 +166,9 @@ extern "C" ARM void func_ov006_021587d0(Struct_ov006_02157a60* arg0)
             var2++;
             var3++;
         }
-        var5->unknown_14_ = var2 << 12;
-        var5->unknown_18_ = var3 << 12;
-        var5->unknown_22_ = data_ov006_0215ffc0[var1];
-        func_0205ac40(arg0->unknown_ac_, var5);
+        sprite->x_ = x << 12;
+        sprite->y_ = y << 12;
+        sprite->unk_22 = data_ov006_0215ffc0[i];
+        SpriteContext_DrawSprite(self->renderer_, sprite);
     }
 }

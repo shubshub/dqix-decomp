@@ -20,7 +20,7 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char 
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215eadc(void *obj, int val);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *obj, int val);
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int key, int value);
 extern "C" void func_ov002_0215b9a4(void *self, int mode, int flag);
 extern "C" void func_ov002_02161b98(char *self);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
@@ -44,16 +44,16 @@ extern "C" char g_sePlayer;
 #undef OBJ
 #define OBJ (arg0 + 0xe20)
 
-extern "C" ARM void func_ov002_02165764(char *arg0) {
-    int var0 = *(int *) (arg0 + 0x1a88);
-    if (var0 == 0) {
-        *(short *) (arg0 + 0x1ac2) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) OBJ, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215eadc(arg0, 0);
-        func_0205dee8((struct Struct_0205dee8 *) OBJ, 0x12);
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x12, 0);
-        *(int *) (arg0 + 0x1a88) += 1;
+extern "C" ARM void func_ov002_02165764(char *self) {
+    int state = *(int *) (self + 0x1a88);
+    if (state == 0) {
+        *(short *) (self + 0x1ac2) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) OBJ, 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215eadc(self, 0);
+        SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) OBJ, 0x12);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x12, 0);
+        *(int *) (self + 0x1a88) += 1;
         return;
     }
     if (state == 1) {
@@ -64,8 +64,8 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
         if (old != *(short *) (self + 0x1ac2)) {
             *(int *) (self + 0x1a94) = 1;
         }
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x13, 0);
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) OBJ, 0x14, 0);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x13, 0);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x14, 0);
         func_ov002_0215b9a4(self, *(int *) (self + 0x1a80) & 0xff, 0);
         int t  = g_keyManager.TestKeysPressed(0x601);
         int u  = Window_IsSelectionTouched((struct Obj_0205da38*)OBJ, 0x14);
@@ -98,18 +98,18 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
             func_ov002_02157d40(arg0);
             return;
         }
-        if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + 0x1ac2) = -1;
-            *(short *) (arg0 + 0x1aee) = -1;
-            *(int *) (arg0 + 0x1a80)   = 0x11;
-            func_ov002_02156ff0((unsigned char *) arg0, 0x12);
-            func_0205deb4((struct Struct_0205d81c *) OBJ, 0x12, 1);
-            func_0205dee8((struct Struct_0205dee8 *) OBJ, 0x11);
-            func_0205deb4((struct Struct_0205d81c *) OBJ, 0x11, 0);
-            *(int *) (arg0 + 0x1a88) = 1;
-            *(int *) (arg0 + 0x1a80) = 0x11;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1a80) & 0xff, 0);
-            func_ov002_02161cf0(arg0);
+        if (CheckFlagOrThreshold_02161b48(self, 1)) {
+            *(short *) (self + 0x1ac2) = -1;
+            *(short *) (self + 0x1aee) = -1;
+            *(int *) (self + 0x1a80)   = 0x11;
+            ClearMatchingEntry_02156ff0((unsigned char *) self, 0x12);
+            Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x12, 1);
+            SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) OBJ, 0x11);
+            Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x11, 0);
+            *(int *) (self + 0x1a88) = 1;
+            *(int *) (self + 0x1a80) = 0x11;
+            func_ov002_0215b9a4(self, *(int *) (self + 0x1a80) & 0xff, 0);
+            func_ov002_02161cf0(self);
         }
         return;
     }
@@ -135,18 +135,18 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov002_02165764(char *arg0) {
-    int var8 = *(int *) (arg0 + 0x1bc0);
-    if (var8 == 0) {
-        func_0205def8((struct Struct_0205def8 *) OBJ, 0, 0x29);
-        *(short *) (arg0 + 0x1bfa) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) OBJ, 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_0215eadc(arg0, 0);
-        func_0205dee8((struct Struct_0205dee8 *) OBJ, 0x11);
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x11, 0);
-        func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1bb8) & 0xff, 0);
-        *(int *) (arg0 + 0x1bc0) += 1;
+extern "C" ARM void func_ov002_02165764(char *self) {
+    int state = *(int *) (self + 0x1bc0);
+    if (state == 0) {
+        SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) OBJ, 0, 0x29);
+        *(short *) (self + 0x1bfa) = 0;
+        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) OBJ, 0, 2);
+        func_ov002_02161cf0(self);
+        func_ov002_0215eadc(self, 0);
+        SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) OBJ, 0x11);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x11, 0);
+        func_ov002_0215b9a4(self, *(int *) (self + 0x1bb8) & 0xff, 0);
+        *(int *) (self + 0x1bc0) += 1;
         return;
     }
     if (state == 1) {
@@ -157,9 +157,9 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
         if (old != *(short *) (self + 0x1bfa)) {
             *(int *) (self + 0x1bcc) = 1;
         }
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x12, 0);
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 0x13, 0);
-        if (func_ov002_0216197c(*(int *) (arg0 + 0x1bb8) & 0xff,
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x12, 0);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x13, 0);
+        if (IsElementFlagBit40Set_0216197c(*(int *) (self + 0x1bb8) & 0xff,
                                                                   (struct Struct_0205d81c *) OBJ))
         {
             func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1bb8) & 0xff, 0);
@@ -195,19 +195,19 @@ extern "C" ARM void func_ov002_02165764(char *arg0) {
             func_ov002_02157d40(arg0);
             return;
         }
-        if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + 0x1bfa) = -1;
-            *(short *) (arg0 + 0x1c26) = -1;
-            *(int *) (arg0 + 0x1bb8)   = 0x10;
-            func_ov002_02156ff0((unsigned char *) arg0, 0x11);
-            func_0205deb4((struct Struct_0205d81c *) OBJ, 0x11, 1);
-            func_0205dee8((struct Struct_0205dee8 *) OBJ, 0x10);
-            func_0205deb4((struct Struct_0205d81c *) OBJ, 0x10, 0);
-            *(int *) (arg0 + 0x1bc0) = 1;
-            *(int *) (arg0 + 0x1bb8) = 0x10;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1bb8) & 0xff, 0);
-            func_ov002_02161cf0(arg0);
-            func_0205def8((struct Struct_0205def8 *) OBJ, 1, 0x29);
+        if (CheckFlagOrThreshold_02161b48(self, 1)) {
+            *(short *) (self + 0x1bfa) = -1;
+            *(short *) (self + 0x1c26) = -1;
+            *(int *) (self + 0x1bb8)   = 0x10;
+            ClearMatchingEntry_02156ff0((unsigned char *) self, 0x11);
+            Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x11, 1);
+            SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) OBJ, 0x10);
+            Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x10, 0);
+            *(int *) (self + 0x1bc0) = 1;
+            *(int *) (self + 0x1bb8) = 0x10;
+            func_ov002_0215b9a4(self, *(int *) (self + 0x1bb8) & 0xff, 0);
+            func_ov002_02161cf0(self);
+            SetElementFlag0x20ByKey0205def8((struct Struct_0205def8 *) OBJ, 1, 0x29);
         }
         return;
     }

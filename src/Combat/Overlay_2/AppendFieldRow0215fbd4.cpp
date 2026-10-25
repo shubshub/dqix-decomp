@@ -2,14 +2,14 @@
 
 struct Container020e0310;
 
-extern "C" int func_020420e8(const char* str, int flags);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+extern "C" int Font_GetTextWidth(const char* str, int flags);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 int KeyTable_Get(struct Container020e0310* c, int key);
 int AppendXTag_02041a28(char* dst, int x);
 int AppendFormatted02041fac(char* buf, int a, int b);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
-int AppendString02042058(char* dst, const char* src);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
 
 #if defined(jpn)
 extern "C" int func_02042638(char* dst, int str, int a);
@@ -24,9 +24,9 @@ ARM void AppendFieldRow0215fbd4(char* obj, char* dst, int flag) {
     short key = 0x109c;
 
     if (flag) {
-        AppendFrameTag02041c08(dst, cursor, 8, 5, 5, 5);
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    AppendCursorTag_02041ea4(dst, cursor);
+    Text_AppendCursorTag(dst, cursor);
 
     AppendXTag_02041a28(dst, 0xf);
     struct Container020e0310* c = (struct Container020e0310*)(obj + 0x8);
@@ -41,9 +41,9 @@ ARM void AppendFieldRow0215fbd4(char* obj, char* dst, int flag) {
         short oldKey = key;
         key++;
         int name = KeyTable_Get(c, oldKey);
-        AppendNameTag_02041b70(dst, i, (const char*)name);
+        Text_AppendNTag(dst, i, (const char*)name);
         if (i != 5) {
-            AppendString02042058(dst, *(char**)(ptr + 0xaa4));
+            Text_Append(dst, *(char**)(ptr + 0xaa4));
         }
     }
 }
@@ -55,13 +55,13 @@ ARM void AppendFieldRow0215fbd4(char* obj, char* dst, int flag) {
     short key = 0x109c;
 
     if (flag) {
-        AppendFrameTag02041c08(dst, cursor, 8, 5, 5, 5);
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    AppendCursorTag_02041ea4(dst, cursor);
+    Text_AppendCursorTag(dst, cursor);
 
     struct Container020e0310* c = (struct Container020e0310*)(obj + 0x20);
     cursor = KeyTable_Get(c, 0x109a);
-    int width = func_020420e8((const char*)cursor, 0);
+    int width = Font_GetTextWidth((const char*)cursor, 0);
     AppendXTag_02041a28(dst, (0x78 - width) >> 1);
     AppendFormatted02041fac(dst, cursor, 0x10);
 
@@ -73,9 +73,9 @@ ARM void AppendFieldRow0215fbd4(char* obj, char* dst, int flag) {
         short oldKey = key;
         key++;
         int name = KeyTable_Get(c, oldKey);
-        AppendNameTag_02041b70(dst, i, (const char*)name);
+        Text_AppendNTag(dst, i, (const char*)name);
         if (i != 5) {
-            AppendString02042058(dst, *(char**)(ptr + 0xbdc));
+            Text_Append(dst, *(char**)(ptr + 0xbdc));
         }
     }
 }

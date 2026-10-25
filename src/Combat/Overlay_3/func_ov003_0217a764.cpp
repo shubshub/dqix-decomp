@@ -11,7 +11,7 @@ struct Obj2081;
 struct Cont0207fdf0;
 struct SePlayer;
 struct Obj0208203c;
-struct Container020dedd0;
+struct ItemTable;
 struct Obj021dcae0;
 struct Element020de650;
 
@@ -22,14 +22,14 @@ struct Struct_ov003_0217a764 {
 };
 
 struct GameState;
-extern "C" void* func_02010828(GameState*);
-extern "C" void func_ov003_0217a220(unsigned char* arg0);
+void* GameState_GetParty(GameState*);
+void ComputeMappedOffset_0217a220(unsigned char* obj);
 
 short FindMappedMemberId02080468(void* obj, int id);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
-struct Element020de650* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
 ARM int RefillAndResetEntry_02175d78(char* obj);
 
@@ -47,11 +47,11 @@ extern "C" void func_ov023_021dcae0(struct Struct_ov003_02178910* arg0, int arg1
 extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217a764
-extern "C" ARM void func_ov003_0217a764(unsigned char* arg0) {
-    void* var0 = GameState::GetInstance();
-    func_02010828((GameState*)var0);
-    struct Struct_0207fdcc_2* var1 = *(struct Struct_0207fdcc_2**)(arg0 + (0x89c - Enum_ov003_0217a764_0));
-    int var2 = *(unsigned char*)(arg0 + (0x1000 + 0x3f - Enum_ov003_0217a764_0));
+extern "C" ARM void func_ov003_0217a764(unsigned char* self) {
+    void* battle = GameState::GetInstance();
+    GameState_GetParty((GameState*)battle);
+    struct Obj2081* elemObj = *(struct Obj2081**)(self + (0x89c - kRegionSelfShift));
+    int state = *(unsigned char*)(self + (0x1000 + 0x3f - kRegionSelfShift));
 
     if (var2 == 0) {
         int var3 = 0x11;
@@ -86,7 +86,7 @@ extern "C" ARM void func_ov003_0217a764(unsigned char* arg0) {
             SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)(self + (0x88c - kRegionSelfShift)));
             *(void**)(self + (0xff8 - kRegionSelfShift)) = 0;
-            void* elem = (void*)FindElementByKey020dedd0((struct Container020dedd0*)(self + (0x874 - kRegionSelfShift)), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));
+            void* elem = (void*)ItemTable_Find((struct ItemTable*)(self + (0x874 - kRegionSelfShift)), *(short*)(self + (0x1000 + 0x3a - kRegionSelfShift)));
             *(void**)(self + 8) = elem;
             if (elem == 0) return;
             int tier = func_ov003_02179da8(elem, 0);

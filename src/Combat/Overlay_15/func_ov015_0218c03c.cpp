@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-struct Struct_0201099c_10;
-struct Struct_02015ef4_4;
+struct ItemTable;
+struct StructDE234_020de234;
 
 struct Struct_ov005_021556e4
 {
@@ -44,8 +44,8 @@ struct Struct_ov015_02193ce5
     char unknown_0_[10];
 };
 
-extern "C" Struct_ov005_021556e4* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" unsigned short func_020de234(Struct_02015ef4_4* arg0, int arg1);
+PartEntry* ItemTable_Find(ItemTable* c, int key);
+unsigned short ItemRecord_GetFileNumber(StructDE234_020de234* p, int preferMid);
 
 extern const Struct_ov015_02193cd4 data_ov015_02193cd4;
 extern const Struct_ov015_02193ce5 data_ov015_02193ce5;
@@ -56,13 +56,13 @@ extern const char data_ov015_02193ffa[];
 // USA: func_ov015_0218c03c
 extern "C" ARM bool func_ov015_0218c03c(Struct_ov015_0218c03c_2* arg0, char* arg1, unsigned int arg2, int arg3)
 {
-    Struct_ov005_021556e4* var0 = func_020dedd0((Struct_0201099c_10*)&arg0->unknown_0_->unknown_4c_, (short)arg0->unknown_20_[arg2]);
-    Struct_ov005_021556e4* var1 = func_020dedd0((Struct_0201099c_10*)&arg0->unknown_0_->unknown_4c_, (short)arg0->unknown_20_[7]);
-    int var2 = func_020de234((Struct_02015ef4_4*)var0, arg0->unknown_3b_);
-    Struct_ov015_02193cd4 var3 = data_ov015_02193cd4;
-    char var4[2] = {0};
-    char var5[2] = {0};
-    switch (arg2)
+    PartEntry* entry = ItemTable_Find((ItemTable*)&self->viewer_->parts_, (short)self->parts_[part]);
+    PartEntry* body = ItemTable_Find((ItemTable*)&self->viewer_->parts_, (short)self->parts_[7]);
+    int number = ItemRecord_GetFileNumber((StructDE234_020de234*)entry, self->female_);
+    ModelExtension extension = data_ov015_02193cd4;
+    char suffix[2] = {0};
+    char suffix2[2] = {0};
+    switch (part)
     {
     case 0:
     case 1:
@@ -80,8 +80,8 @@ extern "C" ARM bool func_ov015_0218c03c(Struct_ov015_0218c03c_2* arg0, char* arg
         var4[1] = 0;
         if (var1 != NULL && var1->unknown_18_ > -1)
         {
-            int var6 = (int)func_020de234((Struct_02015ef4_4*)var1, arg0->unknown_3b_) / 100;
-            if ((unsigned int)var6 >= 10)
+            int index = (int)ItemRecord_GetFileNumber((StructDE234_020de234*)body, self->female_) / 100;
+            if ((unsigned int)index >= 10)
                 return false;
             Struct_ov015_02193ce5 var7 = data_ov015_02193ce5;
             char var8 = var7.unknown_0_[var6];

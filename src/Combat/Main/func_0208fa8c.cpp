@@ -19,7 +19,7 @@ extern "C" void func_02027ad8(int, int);
 extern "C" int func_0202b7d8(int*);
 extern "C" {
 int* func_0202ae18();
-Struct_0208fa8c* func_02012fe4();
+ZoneState* Zone3D_GetInstance();
 void func_020a0cc4(int);
 void func_020a3720();
 void func_020a395c();
@@ -29,21 +29,21 @@ int func_0202c540(int*);
 void ExportDetailedTreasureMapData(const TreasureMapMetadata*, DetailedTreasureMapData*, bool, const unsigned char*);
 
 // USA: func_0208fa8c
-extern "C" ARM void func_0208fa8c(DetailedTreasureMapData* arg0) {
-    Struct_0208fa8c* var0;
-    GameState* var1 = GameState::GetInstance();
-    GameResources* var2 = GetGameResources();
-    int* var3 = func_0202ae18();
-    var0 = (Struct_0208fa8c*)func_0200fd0c(var1);
-    GrottoStruct* var4 = var1->GetGrottoStruct();
-    int var5;
-    void* var6 = var2->unknown_ptr_36d0;
-    Struct_0208fa8c* var7 = func_02012fe4();
-    var5 = var0->unknown_0_;
-    int var8 = var7->unknown_0_;
-    if (func_0201b588(var5) && !func_0201b588(var8) &&
-        (var8 < 30000 || var8 > 39999)) {
-        arg0->Clear();
+extern "C" ARM void func_0208fa8c(DetailedTreasureMapData* map) {
+    ZoneState* current;
+    GameState* game = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    int* session = func_0202ae18();
+    current = (ZoneState*)GetField0x3f8Address_0200fd0c(game);
+    GrottoStruct* grotto = game->GetGrottoStruct();
+    int currentZone;
+    void* region = resources->unknown_ptr_36d0;
+    ZoneState* destination = Zone3D_GetInstance();
+    currentZone = current->zoneId;
+    int nextZone = destination->zoneId;
+    if (IsInRange0201b588(currentZone) && !IsInRange0201b588(nextZone) &&
+        (nextZone < 30000 || nextZone > 39999)) {
+        map->Clear();
         func_020a0cc4(0x2000);
         func_020a3720();
         ExportDetailedTreasureMapData(&var4->activeMapData, arg0, true, 0);

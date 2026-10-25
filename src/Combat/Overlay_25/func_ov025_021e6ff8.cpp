@@ -34,12 +34,12 @@ extern "C" ARM int func_ov025_021e6ff8(Struct_ov025_021e6ff8* arg0, Struct_ov000
 #else
  enum { Enum_ov025_021e6ff8_28629=0x6fd5 };
 #endif
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_020100bc(var0);
-    void* var2 = func_ov000_02160130();
-    if (var2 != NULL) {
-        *((unsigned char*)var2 + Enum_ov025_021e6ff8_28629) = 1;
-        if (func_ov025_021dcc64(var2)) {
+    GameState* gs = GameState::GetInstance();
+    void* camera = gs->GetCamera();
+    void* work = GetActiveCombatWork_ov000_02160130();
+    if (work != NULL) {
+        *((unsigned char*)work + regionalOffset) = 1;
+        if (GetByte_021dcc64_021dcc64(work)) {
             return 1;
         }
     }

@@ -2,7 +2,7 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 
-extern "C" int func_020bb7cc(unsigned int arg0, int arg1, int arg2);
+extern "C" int NNS_GfdAllocFrmPlttVram(unsigned int size, int a, int b);
 
 extern unsigned short data_020e7a0c[];
 
@@ -110,30 +110,30 @@ extern "C" ARM void func_0203fd5c(Struct_0203fd5c_4* arg0, char* arg1, SafeAlloc
             }
         }
 
-        memcpy(&var8, arg3 + var1, 4);
-        var1 += 4;
-        arg0->unknown_c_ = var8;
-        if (arg0->unknown_c_ <= 0x10)
-            arg0->unknown_c_ = 0x10;
-        else if (arg0->unknown_c_ <= 0x100)
-            arg0->unknown_c_ = 0x100;
-        arg0->unknown_14_ = (unsigned short)func_020bb7cc(arg0->unknown_c_ * 2, 0, 0) << 3;
-        arg0->unknown_10_ = (unsigned short*)arg2->Allocate(arg0->unknown_c_ * 2);
-        memcpy(arg0->unknown_10_, arg3 + var1, arg0->unknown_c_ * 2);
-        var1 += var8 * 2;
-        memcpy(&arg0->unknown_18_, arg3 + (var1 + 0x1e), 4);
-        var1 += 0x22;
-        arg0->unknown_1c_ = (Struct_0203fd5c_3*)arg2->Allocate(arg0->unknown_18_ * sizeof(Struct_0203fd5c_3));
-        for (var4 = 0; var4 < arg0->unknown_18_; var4++) {
-            Struct_0203fd5c_3* var13 = &arg0->unknown_1c_[var4];
-            memcpy(var10, arg3 + var1, 0x1e);
-            var1 += 0x1e;
-            int var14 = strlen(var10) + 1;
-            if (var14 % 4 != 0)
-                var14 = (var14 / 4 + 1) * 4;
-            char* var15 = (char*)arg2->Allocate(var14);
-            var13->unknown_0_ = var15;
-            strcpy(var15, var10);
+        memcpy(&tableCount, src + off, 4);
+        off += 4;
+        hdr->tableCount = tableCount;
+        if (hdr->tableCount <= 0x10)
+            hdr->tableCount = 0x10;
+        else if (hdr->tableCount <= 0x100)
+            hdr->tableCount = 0x100;
+        hdr->tableShift = (unsigned short)NNS_GfdAllocFrmPlttVram(hdr->tableCount * 2, 0, 0) << 3;
+        hdr->table = (unsigned short*)alloc->Allocate(hdr->tableCount * 2);
+        memcpy(hdr->table, src + off, hdr->tableCount * 2);
+        off += tableCount * 2;
+        memcpy(&hdr->entryCount, src + (off + 0x1e), 4);
+        off += 0x22;
+        hdr->entries = (ResEntry*)alloc->Allocate(hdr->entryCount * sizeof(ResEntry));
+        for (j = 0; j < hdr->entryCount; j++) {
+            ResEntry* entry = &hdr->entries[j];
+            memcpy(name, src + off, 0x1e);
+            off += 0x1e;
+            int len = strlen(name) + 1;
+            if (len % 4 != 0)
+                len = (len / 4 + 1) * 4;
+            char* str = (char*)alloc->Allocate(len);
+            entry->name = str;
+            strcpy(str, name);
         }
         for (var6 = 0; var6 < arg0->unknown_18_; var6++) {
             Struct_0203fd5c_3* var16 = &arg0->unknown_1c_[var6];

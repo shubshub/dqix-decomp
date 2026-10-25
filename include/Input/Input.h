@@ -23,6 +23,7 @@
 #define KEY_L 0x200
 #define KEY_X 0x400
 #define KEY_Y 0x800
+#define KEY_DPAD (KEY_RIGHT | KEY_LEFT | KEY_UP | KEY_DOWN)
 
 extern class KeyManager g_keyManager;
 extern class TouchInput g_touchInput;

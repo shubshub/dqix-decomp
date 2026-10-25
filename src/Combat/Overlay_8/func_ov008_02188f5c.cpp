@@ -5,10 +5,10 @@
 
 #define REG_DISPCNT (*(volatile unsigned int*)0x04000000)
 
-struct Struct_0205cfd4;
-struct Struct_02020cb8;
-struct Struct_020727d8;
-struct Struct_0201099c_14;
+struct InitTarget0205cfd4;
+struct BackgroundGraphics;
+struct List020727d8;
+struct Struct020dfc40;
 
 struct Struct_ov005_0215840c_2
 {
@@ -57,13 +57,13 @@ struct Struct_ov008_02188f5c_2
 extern "C" void __clear(void* arg0, unsigned long arg1);
 extern "C" void* func_0202ae18();
 extern "C" void func_02074af4(void* state);
-extern "C" void func_0204c684(void* canvas);
+extern "C" void WindowPane_Init(void* canvas);
 extern "C" void Font_EncodeText(const char* name, char* codes, int);
 extern "C" void func_ov008_021843f8(void* records);
 extern "C" void func_ov017_021d1014(signed char member, int, int);
 extern "C" void func_ov017_021d1118(signed char member, int, int, int);
-void InitStruct0205cfd4(InitTarget0205cfd4* window);
-void Background_Init(List0204af64* background);
+void Window_Init(InitTarget0205cfd4* window);
+void Background_Init(BackgroundGraphics* background);
 void ResetListHeader020727d8(List020727d8* texts);
 void KeyTable_Reset(Struct020dfc40* texts);
 void ResetSubStruct02189228(void* entry);
@@ -139,10 +139,10 @@ extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* arg0, signed ch
     func_02074af4(arg0);
     arg0->unknown_14_ = (REG_DISPCNT & 0x1f00) >> 8;
     REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | 0x100;
-    InitStruct0205cfd4((InitTarget0205cfd4*)&self->window_);
-    Background_Init((List0204af64*)&self->backgrounds_[0]);
-    Background_Init((List0204af64*)&self->backgrounds_[1]);
-    func_0204c684(&self->canvas_);
+    Window_Init((InitTarget0205cfd4*)&self->window_);
+    Background_Init((BackgroundGraphics*)&self->backgrounds_[0]);
+    Background_Init((BackgroundGraphics*)&self->backgrounds_[1]);
+    WindowPane_Init(&self->canvas_);
     ResetListHeader020727d8((List020727d8*)&self->texts_);
     ResetListHeader020727d8((List020727d8*)&self->profileTexts_);
     KeyTable_Reset((Struct020dfc40*)&self->titles_);

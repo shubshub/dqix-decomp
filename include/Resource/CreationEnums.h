@@ -113,14 +113,77 @@ enum TabLoadStep
     TabLoadStep_Loaded = 2, // CharacterCreationUI_ApplyTabGraphics builds the layers and sets it back to 0
 };
 
-// Keys in character creation's text table (str_cm_<LG>.nat) that are file names: key N is tab N's archive,
-// N + 50 the file inside it, and N + 100 the female version of tabs 2, 3 and 5.
+// Keys in character creation's text table (str_cm_<LG>.nat). The file names: key N is tab N's archive, N + 50 the
+// file inside it, and N + 100 the female version of tabs 2, 3 and 5. The summary's choice texts: base + the choice
+// (Gender, HairStyle and Face also + sex * FemaleOffset). Texts quoted from the usa ROM's str_cm_en.nat.
 enum CreationText
 {
     CreationText_InnerFileOffset = 50,
     CreationText_FemaleOffset = 100,
+    CreationText_Gender = 10000,    // "Male", 10100 "Female"
+    CreationText_BodyType = 11000,  // "Type 1", ...
+    CreationText_Face = 12000,
+    CreationText_EyeColor = 13000,
+    CreationText_SkinColor = 14000,
+    CreationText_HairStyle = 15000,
+    CreationText_HairColor = 16000,
+    CreationText_BlankName = 17010, // "*****": jpn's empty name
+    CreationText_NewLine = 17011,   // "\n", after each summary line and between Yes and No
+    CreationText_WidthTag = 17012,  // "<W=10>": shown for an empty name, and a new pane's first text
+    CreationText_Yes = 18010,       // "Yes": the Yes/No menu writes CreationText_Yes + its item
+    CreationText_No = 18011,        // "No"
     CreationText_FirstRandomName = 20000, // random names: 20000 + sex * 1000 + n
     CreationText_RandomNameStride = 1000,
+};
+
+// CharacterCreationUI::sex, the index of every per-sex choice array.
+enum CreationSex
+{
+    CreationSex_Male = 0,
+    CreationSex_Female = 1,
+};
+
+// CharacterCreationUI::allocators: what each one holds (CharacterCreationUI_Allocate creates them, in this order).
+enum CreationAllocator
+{
+    CreationAllocator_MainLayers = 0,
+    CreationAllocator_TabLayers = 1,
+    CreationAllocator_BottomText = 2,
+    CreationAllocator_Characters = 3,
+    CreationAllocator_ItemTable = 4,
+    CreationAllocator_Texts = 5,
+    CreationAllocator_Sprites = 6,
+    CreationAllocator_NameFilter = 7,
+    CreationAllocator_KeyboardLayout = 8, // usa only
+};
+
+// CharacterCreationUI::windows.
+enum CreationWindowIndex
+{
+    CreationWindowIndex_Summary = 0, // the summary list (main screen)
+    CreationWindowIndex_Bottom = 1,  // the bottom screen's text
+};
+
+// windows[CreationWindowIndex_Bottom]: its panes by id, and its buffer.
+enum BottomWindow
+{
+    BottomWindow_PaneCount = 4,
+    BottomWindow_BufferBytes = 0x400,
+    BottomWindow_YesNoPane = 1,      // CharacterCreationUI_OpenYesNoWindow opens it, _RefreshYesNoMenu writes it
+    BottomWindow_UnknownPane2 = 2,
+    BottomWindow_NamePane = 3,
+};
+
+// The sprite sets: CharacterCreationUI::mainSprites (subScreen 0) and subSprites (subScreen 1).
+enum MainSprites
+{
+    MainSprites_Count = 6,
+};
+
+enum SubSprites
+{
+    SubSprites_Count = 25,
+    SubSprites_FirstFile = 4, // cell_cm_<LG>.pac files 0-3 go to the main set, 4-7 to this one
 };
 
 // CharacterCreationUI::step on the confirm tab ("Begin your adventure with this character?").

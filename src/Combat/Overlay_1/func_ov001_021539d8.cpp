@@ -141,9 +141,9 @@ struct Struct_ov001_021539d8_5* func_0203cf4c(void);
 
 void* func_0202ae18(void);
 int func_0202c508(void* obj);
-unsigned char _Z28GetField0x397cValue_020100b0P9GameState(GameState* gs);
-int _Z27GetField0x3acValue_020100a8P9GameState(GameState* gs);
-void _Z26CopyInternalFields0207df50P11Foo0207df50(struct PairTables021539d8* p);
+unsigned char _Z24GameState_GetLeaderIndexP9GameState(GameState* gs);
+int _Z29GameState_GetProtagonistIndexP9GameState(GameState* gs);
+void _Z16VramState_RewindP11Foo0207df50(struct PairTables021539d8* p);
 void _Z17VramState_RestorePc(struct PairTables021539d8* p);
 void _Z14VramState_SavePc(struct PairTables021539d8* p);
 void func_ov001_0215ab54(int kind, int id, int index);
@@ -158,24 +158,24 @@ void _ZN8Object3D10EnableFlagEi(struct Obj021539d8* obj, int mask);
 void _ZN8Object3D18LoadFromCHRArchiveEP21ObjectArchiveLoadInfo(struct Obj021539d8* obj, struct ArchiveInfo021539d8* info);
 void _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(struct Obj021539d8* obj, struct ArchiveInfo021539d8* info, void* callback);
 void _ZN8Object3D8SetScaleEiii(struct Obj021539d8* obj, int x, int y, int z);
-void _ZN8Object3D21MaybeSetBCFGAnimationEii(struct Obj021539d8* obj, int a, int b);
+void _ZN8Object3D19SetAnimationByIndexEii(struct Obj021539d8* obj, int a, int b);
 void _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(struct Obj021539d8* obj, SafeAllocator* allocator, void* data, unsigned int size, int mode);
-void func_02012fe4(void);
-void func_020404c0(struct Struct_ov001_021539d8* arg0);
-void func_0206bf2c(void* arg0);
-void func_0203c794(struct Struct_ov001_021539d8_12* arg0);
-char* strstr(const char* arg0, const char* arg1);
-void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-int sprintf(char* arg0, const char* arg1, ...);
-void func_02040530(struct Struct_ov001_021539d8* arg0, void* arg1);
-void func_02040520(struct Struct_ov001_021539d8* arg0, struct Struct_ov001_021539d8_2* arg1);
-void func_0203f02c(struct Struct_ov001_021539d8_12* arg0, char* arg1, SafeAllocator* arg2, struct Struct_ov001_021539d8_7* arg3, void* arg4, unsigned int arg5);
-void func_0203f138(struct Struct_ov001_021539d8_12* arg0, int arg1);
-void func_020408c8(struct Struct_ov001_021539d8* arg0, int arg1, int arg2, int arg3);
-int func_0203e03c(void* arg0);
-void func_0203dd10(void* arg0, int arg1, struct Struct_ov001_021539d8* arg2);
-int _Z26FindFilesInNarcBySubstringPKvPKcPS0_Pjj(void* arg0, const char* arg1, void** arg2, unsigned int* arg3, unsigned int arg4);
-void* _Z36DecompressLZ77FileIntoAllocatedSpaceR13SafeAllocatorPKvRj(SafeAllocator* arg0, void* arg1, unsigned int* arg2);
+void Zone3D_GetInstance(void);
+void _Z12Init020404c0Pi(struct Emitter021539d8* emitter);
+void _Z23ClearWorkRecord0206bf2cP11Rec0206bf2c(void* record);
+void _Z30InitializeRandomMotion0203c794Pv(struct Stream021539d8* stream);
+char* strstr(const char* text, const char* needle);
+void* memcpy(void* dst, const void* src, unsigned int size);
+int sprintf(char* dst, const char* format, ...);
+void _Z20SetField0xc_02040530Pii(struct Emitter021539d8* emitter, void* record);
+void _Z20SetField0x8_02040520Pii(struct Emitter021539d8* emitter, struct Label021539d8* label);
+void _Z27UpdateElementStream0203f02cP11Obj0203f02ciiPcii(struct Stream021539d8* stream, char* name, SafeAllocator* allocator, struct PairTables021539d8* pair, void* data, unsigned int size);
+void func_0203f138(struct Stream021539d8* stream, int enabled);
+void _Z28SetActiveChildShorts020408c8P12Node020408c8sss(struct Emitter021539d8* emitter, int a, int b, int c);
+int _Z18FindEmptySlotIndexP18SlotArray_0203e03c(void* list);
+void _Z21SetSlotIfIndexBelow32P17SlotArray0203dd10ji(void* list, int index, struct Emitter021539d8* emitter);
+int _Z26FindFilesInNarcBySubstringPKvPKcPS0_Pjj(void* narc, const char* text, void** outFile, unsigned int* outSize, unsigned int count);
+void* _Z36DecompressLZ77FileIntoAllocatedSpaceR13SafeAllocatorPKvRj(SafeAllocator* allocator, void* file, unsigned int* outSize);
 void NSBXX_Model_SetPolygonID(NSBXXInternalModel* model, int id);
 void __clear(unsigned char* arg0, int arg1);
 }
@@ -220,16 +220,16 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
     struct Struct_ov001_021539d8_2* var20;
     struct Struct_ov001_021539d8_7* var21;
 
-    for (var5 = arg0->unknown_d0_; var5 != 0; var5 = var5->unknown_34_) {
-        if (var5->unknown_0_0_ == 1) {
-            if (func_0202c508(var4) == 0 || !(arg0->unknown_f8_0_ & 0x10)) {
-                int var22 = func_020100b0(var0);
-                if (var22 != 0) {
-                    struct Struct_ov001_021539d8_3* var23;
-                    for (var23 = arg0->unknown_d0_; var23 != 0; var23 = var23->unknown_34_) {
-                        if (var23->unknown_0_0_ >= 0xb && var23->unknown_0_0_ <= 0xd && var23->unknown_2_ == var22) {
-                            var23->unknown_2_ = 0;
-                            var23->unknown_0_4_ = 0;
+    for (node = self->loads; node != 0; node = node->next) {
+        if (node->type == 1) {
+            if (func_0202c508(search) == 0 || !(self->mode & 0x10)) {
+                int current = _Z24GameState_GetLeaderIndexP9GameState(gs);
+                if (current != 0) {
+                    struct LoadNode021539d8* other;
+                    for (other = self->loads; other != 0; other = other->next) {
+                        if (other->type >= 0xb && other->type <= 0xd && other->slot == current) {
+                            other->slot = 0;
+                            other->unused = 0;
                             break;
                         }
                     }
@@ -248,13 +248,13 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             continue;
         }
 
-        var21 = &((struct Struct_ov001_021539d8_7*)(var3 + PAIR_TABLES_021539d8))[27];
-        if (var5->unknown_30_ == 1) {
-            var21 = &((struct Struct_ov001_021539d8_7*)(var3 + PAIR_TABLES_021539d8))[7];
-            if (!var7) {
-                if ((arg0->unknown_50_ & 4) || (arg0->unknown_50_ & 1)) {
-                    func_0207df50(var21);
-                    var7 = true;
+        pair = &((struct PairTables021539d8*)(base + PAIR_TABLES_021539d8))[27];
+        if (node->kind == 1) {
+            pair = &((struct PairTables021539d8*)(base + PAIR_TABLES_021539d8))[7];
+            if (!copied) {
+                if ((self->flags & 4) || (self->flags & 1)) {
+                    _Z16VramState_RewindP11Foo0207df50(pair);
+                    copied = true;
                 }
             }
         }
@@ -265,18 +265,18 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             if (var24 == 0) {
                 break;
             }
-            if ((arg0->unknown_f8_0_ & 0x10) || !(*var24->unknown_130_ & 1)) {
-                func_ov001_0215ab54(4, 0, var5->unknown_1_);
-            } else if (func_0202c508(var4) != 0) {
-                func_ov001_0215ab54(5, func_020100b0(var0), var5->unknown_1_);
+            if ((self->mode & 0x10) || !(*obj->status & 1)) {
+                func_ov001_0215ab54(4, 0, node->index);
+            } else if (func_0202c508(search) != 0) {
+                func_ov001_0215ab54(5, _Z24GameState_GetLeaderIndexP9GameState(gs), node->index);
             } else {
-                int var25 = func_020100a8(var0);
-                int var26;
-                for (var26 = 3; var26 > 0; var26--) {
-                    if (var25 != var26) {
-                        var24 = (struct Struct_ov001_021539d8_11*)var0->GetPartyMemberByIndex(var26);
-                        if (var24 != 0 && (var24->unknown_0_ & 0x1000) && !(*var24->unknown_130_ & 1)) {
-                            func_ov001_0215ab54(5, var26, var5->unknown_1_);
+                int current = _Z29GameState_GetProtagonistIndexP9GameState(gs);
+                int i;
+                for (i = 3; i > 0; i--) {
+                    if (current != i) {
+                        obj = (struct Obj021539d8*)gs->GetPartyMemberByIndex(i);
+                        if (obj != 0 && (obj->flags & 0x1000) && !(*obj->status & 1)) {
+                            func_ov001_0215ab54(5, i, node->index);
                             break;
                         }
                     }
@@ -289,7 +289,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             break;
         }
         case 1:
-            func_ov001_0215ab54(5, func_020100b0(var0), var5->unknown_1_);
+            func_ov001_0215ab54(5, _Z24GameState_GetLeaderIndexP9GameState(gs), node->index);
             break;
         case 9:
         case 11:
@@ -348,16 +348,16 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             }
             _Z14VramState_SavePc(pair);
             _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _ZN8Object3D19SetAnimationByIndexEii(obj, 0, 0);
             _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
             if (node->flags & 1) {
-                func_02012fe4();
-                var8 = LightingManager::GetInstance();
-                var18 = var34->unknown_8_->unknown_54_;
-                NSBXXNameList* var35 = var18->GetMeshListSafe();
-                unsigned int var36;
-                unsigned int* var37;
-                int var38;
+                Zone3D_GetInstance();
+                lighting = LightingManager::GetInstance();
+                model = obj->holder->model;
+                NSBXXNameList* meshList = model->GetMeshListSafe();
+                unsigned int readPos;
+                unsigned int* operandPtr;
+                int totalNumOperands;
 
                 for (var9 = 0; var9 < var18->numMeshes_; var9++) {
                     unsigned char var39;
@@ -525,7 +525,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             }
             _Z14VramState_SavePc(pair);
             _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _ZN8Object3D19SetAnimationByIndexEii(obj, 0, 0);
             _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
             func_ov001_0215ab54(1, node->slot, node->index);
             loader->RemoveTask(node->task);
@@ -556,7 +556,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStagingModeE(obj, allocator, copy, size, 0);
             _Z14VramState_SavePc(pair);
             _ZN8Object3D8SetScaleEiii(obj, 0x10a, 0x10a, 0x10a);
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _ZN8Object3D19SetAnimationByIndexEii(obj, 0, 0);
             _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
             func_ov001_0215ab54(1, node->slot, node->index);
             loader->RemoveTask(node->task);
@@ -592,7 +592,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             obj->posX = 0;
             obj->posY = -0xa000;
             obj->posZ = 0x1000;
-            _ZN8Object3D21MaybeSetBCFGAnimationEii(obj, 0, 0);
+            _ZN8Object3D19SetAnimationByIndexEii(obj, 0, 0);
             _Z30RegisterCombatantSlot_0200fd38P9GameStateiP10GameObject(gs, node->slot, obj);
             _ZN8Object3D10MakeHiddenEv(obj);
             func_ov001_0215ab54(1, node->slot, node->index);
@@ -637,7 +637,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
                         } else if (var74 == 1) {
                             _ZN8Object3D25LoadFromCCHROrCMOTArchiveEP21ObjectArchiveLoadInfoPFiPN4BCFG15AnimationRecordEE(var69, &var70, 0);
                         }
-                        _ZN8Object3D21MaybeSetBCFGAnimationEii(var69, 0, 0);
+                        _ZN8Object3D19SetAnimationByIndexEii(obj, 0, 0);
                         break;
                     }
                 }

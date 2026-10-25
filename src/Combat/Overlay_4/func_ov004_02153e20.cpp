@@ -11,9 +11,6 @@
 #endif
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov004_02153e20;
 
@@ -68,33 +65,33 @@ public:
     virtual Struct_ov004_02153e20_3** inline_ov004_02153e20_60();
 };
 
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" unsigned char* func_0205ec34(void);
-extern "C" int func_ov023_021f9b30(struct Struct_ov004_02153e20* arg0, unsigned short arg1, unsigned int arg2, unsigned int arg3);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_ov023_021f9d14(void* arg0, void* arg1);
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
-extern "C" int func_ov004_02153d8c(void* arg0);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" void* func_ov023_021f6880(void* list, int id);
+extern "C" int func_ov023_021f6f10(void* obj);
+extern "C" unsigned char* Scenario_GetInstance(void);
+extern "C" int _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(struct Grid021f9b30* self, unsigned short val, unsigned int x, unsigned int y);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" void func_ov023_021f9d14(void* grid, void* ctx);
+extern "C" void func_ov023_021f809c(void* obj, void* ctx);
+int CheckType16ThenTestBit_02153d8c(void* ctx);
 
 // USA: func_ov004_02153e20
-extern "C" ARM int func_ov004_02153e20(void* arg0) {
-    void* var0 = func_ov011_021849c8(arg0);
-    short var1, var2;
-    Struct_ov004_02153e20_4* var3 = (Struct_ov004_02153e20_4*)func_ov023_021f6880(var0, 0x2c);
-    if (!var3) return 0;
-    if (func_ov023_021f6f10(var3) != 7) return 0;
-    var1 = var3->unknown_5c_;
-    var2 = var3->unknown_5e_;
-    Struct_ov004_02153e20_7* var4 = (Struct_ov004_02153e20_7*)func_ov023_021f6880(var0, 0x39);
-    if (!var4) return 0;
-    if (func_ov023_021f6f10(var4) != 0x12) return 0;
-    Struct_ov004_02153e20_3** var5 = var4->inline_ov004_02153e20_60();
-    if (!var5) return 0;
-    Struct_ov004_02153e20_3* var6 = *var5;
-    if (!var6) return 0;
-    unsigned char* var7 = func_0205ec34();
+extern "C" ARM int func_ov004_02153e20(void* ctx) {
+    void* list = func_ov011_021849c8(ctx);
+    short x, y;
+    Board02153e20* board = (Board02153e20*)func_ov023_021f6880(list, 0x2c);
+    if (!board) return 0;
+    if (func_ov023_021f6f10(board) != 7) return 0;
+    x = board->x;
+    y = board->y;
+    ListOwner02153e20* owner = (ListOwner02153e20*)func_ov023_021f6880(list, 0x39);
+    if (!owner) return 0;
+    if (func_ov023_021f6f10(owner) != 0x12) return 0;
+    ListNode02153e20** head = owner->GetList();
+    if (!head) return 0;
+    ListNode02153e20* node = *head;
+    if (!node) return 0;
+    unsigned char* flags = Scenario_GetInstance();
 
     short var8 = var1 * 16;
     short var9 = 0;
@@ -114,13 +111,13 @@ extern "C" ARM int func_ov004_02153e20(void* arg0) {
                 func_ov023_021f9b30((Struct_ov004_02153e20*)var3, 0, (unsigned short)(var10 >> 1), (unsigned short)(var10 & 1));
                 var12->unknown_c_ |= 8;
             } else {
-                func_ov023_021f9b30((Struct_ov004_02153e20*)var3, (unsigned short)var11, (unsigned short)(var10 >> 1), (unsigned short)(var10 & 1));
-                Struct_ov004_02153e20_2* var13 = var6->unknown_4_;
-                if (var13) {
-                    int var14 = (unsigned short)((var13->unknown_c_ << 9) >> 21);
-                    if (var14 > 0) {
-                        if (func_0206dfb0((int)var7, var7 + 0x8c, var14 + 0x76 + 0xc00)) {
-                            var12->unknown_20_ = var13->unknown_4_;
+                _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj((Grid021f9b30*)board, (unsigned short)id, (unsigned short)(j >> 1), (unsigned short)(j & 1));
+                Entry02153e20* entry = node->entry;
+                if (entry) {
+                    int bits = (unsigned short)((entry->flags << 9) >> 21);
+                    if (bits > 0) {
+                        if (Scenario_TestFlag((int)flags, flags + 0x8c, bits + 0x76 + 0xc00)) {
+                            slot->value = entry->value;
                         }
                     }
                 }

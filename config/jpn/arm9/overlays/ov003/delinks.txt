@@ -33,7 +33,7 @@ src/Combat/Overlay_3/021767ec.cpp:
     complete
     .text start:0x02175834 end:0x021759f8
 
-src/Combat/Overlay_3/0217e6b0.cpp:
+src/Combat/Overlay_3/FieldTask_CreatePartyMember_0217e6b0.cpp:
     complete
     .text start:0x0217d3b8 end:0x0217dbac
 
@@ -425,7 +425,7 @@ src/Combat/Overlay_3/func_ov003_02168560.cpp:
     complete
     .text start:0x021683e8 end:0x02168430
 
-src/Combat/Overlay_3/func_ov003_0217f260.cpp:
+src/Combat/Overlay_3/FieldTask_EndTalkToErinn_0217f260.cpp:
     complete
     .text start:0x0217df64 end:0x0217df7c
 
@@ -457,7 +457,7 @@ src/Combat/Overlay_3/func_ov003_0217f1b8.cpp:
     complete
     .text start:0x0217debc end:0x0217df1c
 
-src/Combat/Overlay_3/func_ov003_0217e5b0.cpp:
+src/Combat/Overlay_3/FieldTask_EndBank_0217e5b0.cpp:
     complete
     .text start:0x0217d2b8 end:0x0217d2e4
 
@@ -865,7 +865,7 @@ src/Combat/Overlay_3/func_ov003_0216664c.cpp:
     complete
     .text start:0x02166534 end:0x021665ac
 
-src/Combat/Overlay_3/func_ov003_02168438.cpp:
+src/Combat/Overlay_2/Trans_021682c0.cpp:
     complete
     .text start:0x021682c0 end:0x021683e8
 
@@ -1085,7 +1085,7 @@ src/Combat/Overlay_3/func_ov003_02167a5c.cpp:
     complete
     .text start:0x02167934 end:0x02167a08
 
-src/Combat/Overlay_3/func_ov003_02167b34.cpp:
+src/Combat/Overlay_4/DecrementKeyForCount_02167a0c.cpp:
     complete
     .text start:0x02167a0c end:0x02167b74
 
@@ -1337,7 +1337,7 @@ src/Combat/Overlay_3/func_ov003_0217e1e4.cpp:
     complete
     .text start:0x0217ceec end:0x0217d008
 
-src/Combat/Overlay_3/func_ov003_0217ef58.cpp:
+src/Combat/Overlay_3/FieldTask_TalkToErinn_0217ef58.cpp:
     complete
     .text start:0x0217dc5c end:0x0217de1c
 
@@ -1361,7 +1361,7 @@ src/Combat/Overlay_3/func_ov003_0217e67c.cpp:
 src/Combat/Overlay_3/func_ov003_0217f230.cpp:
     .text start:0x0217df34 end:0x0217df4c
 
-src/Combat/Overlay_3/func_ov003_0217ef0c.cpp:
+src/Combat/Overlay_3/FieldTask_EndCreatePartyMember_0217ef0c.cpp:
     .text start:0x0217dc10 end:0x0217dc28
 
 src/Combat/Overlay_3/func_ov003_0217eea8.cpp:
@@ -1370,7 +1370,7 @@ src/Combat/Overlay_3/func_ov003_0217eea8.cpp:
 src/Combat/Overlay_3/func_ov003_02156034.cpp:
     .text start:0x02157690 end:0x021576b0
 
-src/Combat/Overlay_3/func_ov003_0217e3b8.cpp:
+src/Combat/Overlay_3/FieldTask_Bank_0217e3b8.cpp:
     complete
     .text start:0x0217d0c0 end:0x0217d288
 
@@ -1414,7 +1414,7 @@ src/Combat/Overlay_3/func_ov003_02167240.cpp:
     complete
     .text start:0x02167120 end:0x0216712c
 
-src/Combat/Overlay_3/func_ov003_0215caa4.cpp:
+src/Combat/Overlay_3/SetupBattleEntry_0215ddc0.cpp:
     complete
     .text start:0x0215ddc0 end:0x0215ddcc
 
@@ -1770,7 +1770,7 @@ src/Combat/Overlay_3/func_ov003_0216bcfc.cpp:
     complete
     .text start:0x0216b960 end:0x0216bc60
 
-src/Combat/Overlay_3/func_ov003_02160344.cpp:
+src/Combat/Overlay_3/SetEntryFields_021604f4.cpp:
     complete
     .text start:0x021604f4 end:0x02160554
 

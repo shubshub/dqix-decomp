@@ -37,7 +37,7 @@ struct Struct_0205c570;
 int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 struct Struct0217f8c0;
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
@@ -75,19 +75,19 @@ extern "C" ARM void func_ov000_0217d674(MenuState* menu, int arg1, int arg2) {
         if (var1 == NULL) {
             return;
         }
-        var1->unknown_10_[var1->unknown_18_] = 1;
-        func_ov000_02175258(arg0);
-        arg0->unknown_1d68_ = arg0->unknown_1d68_ + 1;
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 6;
-        func_ov000_02176634(arg0, func_ov000_0217f8c0((Struct_ov000_021735d0_3*)arg0), 6, arg1, arg2);
-        func_ov000_0217a9d0(6, func_ov000_0218155c(arg0), 4, (Struct_0205d81c*)arg0->unknown_188_);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 0, 1);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 0, 2);
-        func_0205def8((Struct_0205def8*)arg0->unknown_188_, 0, 5);
-    } else if (func_ov000_0217c5f4(arg0) != 0) {
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_ = arg0->unknown_1d68_ - 1;
-        func_ov000_0217c638(arg0, arg1, arg2);
+        node->marks[node->markIndex] = 1;
+        func_ov000_02175258(menu);
+        menu->depth = menu->depth + 1;
+        menu->modeStack[menu->depth] = 6;
+        func_ov000_02176634(menu, FindMatchingTableEntry0217f8c0((Struct0217f8c0*)menu), 6, arg1, arg2);
+        SetElementStateIfLess0217a9d0(6, CountSetBitsLow12_0x68_ov000_0218155c(menu), 4, (Struct_0205d81c*)menu->elements);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 0, 1);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 0, 2);
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)menu->elements, 0, 5);
+    } else if (CheckFlagsOrField_0217c5f4_0217c5f4(menu) != 0) {
+        Window_ClosePane((Entry_0205d6a0*)menu->elements, 0);
+        menu->modeStack[menu->depth] = 0;
+        menu->depth = menu->depth - 1;
+        func_ov000_0217c638(menu, arg1, arg2);
     }
 }

@@ -21,20 +21,20 @@
 
 extern "C"
 {
-    bool func_02046708(void*, unsigned int);
-    void* func_020d6c00();
+    bool _Z17TestFlags02046708P16FlagWord02046708j(void*, unsigned int);
+    void* _Z23GlobalFlags_GetInstancev();
 
-    int func_0200fb08(GameState*);
+    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
 
-    char* func_020d2f88(char* searchString, const char* targetString);
-    int func_020d2ff0(const char* str);
+    char* _Z22FindSubstring_020d2f88PcS_(char* searchString, const char* targetString);
+    int _Z19STD_GetStringLengthPKc(const char* str);
 
     void LZ77UnCompReadNormalWrite8bit(const void* src, void* dst);
 }
 
 int MakeCharUpperCase(char ch);
 
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 
 extern const char data_020e692c[];
 
@@ -55,7 +55,7 @@ void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength
     GameState* gameState = GameState::GetInstance();
 
     char replacedPath[128] = { 0 };
-    int language = func_0200fb08(gameState);
+    int language = _Z21GameState_GetLanguageP14Struct0200fb08(gameState);
     StringReplaceLanguageTag(path, replacedPath, language);
 #elif defined(jpn)
     const char* replacedPath = path;
@@ -63,7 +63,7 @@ void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength
 
     void* alwaysNull = NULL;
 
-    if (buffer >= data_0211e33c && buffer < &data_0211e33c[0x30000])
+    if (buffer >= g_fileLoadBuffer && buffer < &g_fileLoadBuffer[0x30000])
         BackgroundLoader::FreeAllocationsGlobal();
 
     ExtendedNitroVM reader;
@@ -95,7 +95,7 @@ void* LoadFileIntoNewAllocation(const char* path, SafeAllocator& alloc, unsigned
 
     char replacedPath[128] = { 0 };
 
-    int language = func_0200fb08(gameState);
+    int language = _Z21GameState_GetLanguageP14Struct0200fb08(gameState);
     StringReplaceLanguageTag(path, replacedPath, language);
 #elif defined(jpn)
     const char* replacedPath = path;

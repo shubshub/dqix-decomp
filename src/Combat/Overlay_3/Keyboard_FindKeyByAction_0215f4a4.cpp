@@ -1,32 +1,40 @@
 #include <globaldefs.h>
 
-struct Elem0215f4a4 {
-    char pad0[0xd];
-    unsigned char key;
-    char pad1[0x14 - 0xd - 1];
+// One key (0x14 bytes), with Keyboard_FindKeyByText's field names.
+struct KeyboardKey {
+    short x;
+    short y;
+    const char* text;
+    const char* shiftedText;
+    unsigned char pages;
+    unsigned char action;
+    unsigned char sizeClass;
+    unsigned char disabled;
+    char unk_10[4];
 };
 
-struct Header0215f4a4 {
-    struct Elem0215f4a4* base;
-    char pad4[2];
+// The key list: the keys and their capacity and count (KeyboardLayout_Init's names).
+struct KeyboardLayout {
+    struct KeyboardKey* keys;
+    short keyCapacity;
     short count;
 };
 
-struct Obj0215f4a4 {
-    char pad0[4];
-    struct Header0215f4a4* header;
+struct Keyboard {
+    struct KeyboardKey* key;
+    struct KeyboardLayout* layout;
 };
 
 // Overlay 3, originally func_ov003_0215f4a4 (USA/EUR 0x0215f4a4; JPN not identified)
-extern "C" ARM struct Elem0215f4a4* Keyboard_FindKeyByAction(struct Obj0215f4a4* obj, int key) {
-    struct Header0215f4a4* h = obj->header;
-    short count = h->count;
-    struct Elem0215f4a4* e = h->base;
+extern "C" ARM struct KeyboardKey* Keyboard_FindKeyByAction(struct Keyboard* keyboard, int action) {
+    struct KeyboardLayout* layout = keyboard->layout;
+    short count = layout->count;
+    struct KeyboardKey* key = layout->keys;
     short i = 0;
     while (i < count) {
-        if (e->key == key) return e;
+        if (key->action == action) return key;
         i = (short)(i + 1);
-        e = (struct Elem0215f4a4*)((char*)e + 0x14);
+        key = (struct KeyboardKey*)((char*)key + sizeof(struct KeyboardKey));
     }
     return 0;
 }

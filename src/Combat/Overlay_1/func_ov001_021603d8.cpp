@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Graphics/LightingManager.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" void func_ov001_021601f8(void* arg0, void* arg1);
-extern "C" void func_02016874(void* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_ov017_021d60f4(void* a);
+extern "C" void func_ov001_021601f8(void* a, void* b);
+extern "C" void func_02016874(void* big);
 
 struct Struct_ov001_021603d8 { char unknown_0_[0x44]; int unknown_44_; char unknown_48_[0x54 - 0x48]; struct Struct_ov001_021603d8* unknown_54_; };
 struct Struct_ov001_021603d8_2 {
@@ -54,17 +54,17 @@ extern Struct_ov001_02164d14 data_ov001_02164d14;
 extern int data_ov001_02164d24[];
 
 // USA: func_ov001_021603d8
-extern "C" ARM int func_ov001_021603d8(void* arg0) {
-    Struct_ov001_021603d8_2* var0 = (Struct_ov001_021603d8_2*)func_02012fe4();
-    Struct_ov001_021603d8_3* var1 = (Struct_ov001_021603d8_3*)LightingManager::GetInstance();
-    int var2 = func_ov017_021d60f4(arg0);
-    var1->unknown_98_ = var2;
-    if (!(data_ov001_02165880.unknown_14_ & 1)) {
-        data_ov001_02164d14.unknown_10_ = data_ov001_02165880.unknown_0_;
-        data_ov001_02164d14.unknown_14_ = data_ov001_02165880.unknown_10_;
-        data_ov001_02164d14.unknown_18_ = data_ov001_02165880.unknown_30_;
-        data_ov001_02164d14.unknown_1c_ = data_ov001_02165880.unknown_2c_;
-        data_ov001_02165880.unknown_14_ |= 1;
+extern "C" ARM int func_ov001_021603d8(void* obj) {
+    Big_021603d8* big = (Big_021603d8*)Zone3D_GetInstance();
+    DataStruct_021603d8* d = (DataStruct_021603d8*)LightingManager::GetInstance();
+    int idx = func_ov017_021d60f4(obj);
+    d->field98 = idx;
+    if (!(data_ov001_02165880.field14 & 1)) {
+        data_ov001_02164d14.field10 = data_ov001_02165880.field0;
+        data_ov001_02164d14.field14 = data_ov001_02165880.field10;
+        data_ov001_02164d14.field18 = data_ov001_02165880.field30;
+        data_ov001_02164d14.field1c = data_ov001_02165880.field2c;
+        data_ov001_02165880.field14 |= 1;
     }
     var1->unknown_94_ = data_ov001_02164d24[var2];
 

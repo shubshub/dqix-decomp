@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_0207fdcc_2;
-struct Struct_0207fdcc;
-extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2*, int);
-extern "C" int func_0204c7e0(unsigned char*);
-extern "C" void func_020809c4(void*, int, int, short*, short*);
+struct Obj2081;
+struct Elem2081;
+extern struct Elem2081* FindElementByByte0xc4_02081da8(struct Obj2081*, int);
+extern int WindowPane_IsOpen(unsigned char*);
+extern void GetLookAndTurnOffsets020809c4(void*, int, int, short*, short*);
 
 struct Struct_0205a254;
 struct Struct_0205a330;
@@ -17,10 +17,10 @@ struct Struct_ov014_02186e2c {
     unsigned char unknown_15_;
 };
 
-extern "C" struct Struct_ov014_02186e2c* func_0205a3d0(struct Struct_0205a254*, int);
-extern "C" void func_0205a370(struct Struct_0205a254*, int);
-extern "C" void func_0205a330(struct Struct_0205a330*, int);
-extern "C" void func_0205ae8c(void*);
+extern struct Elem02186e2c* SpriteEntryList_Find(struct Container0205a3d0*, int);
+extern void SpriteEntryList_PlayAnimation(struct Container0205a3d0*, int);
+extern void SpriteEntryList_AdvanceAnimations(struct Container0205a330*, int);
+extern "C" void SpriteContext_DrawEntries(void*);
 
 struct Struct_ov014_02186e2c_2 {
     char unknown_0_[0xc0];
@@ -43,28 +43,28 @@ extern "C" ARM void func_ov014_02186e2c(struct Struct_ov014_02186e2c_2* arg0) {
     short var2, var3;
     short var4, var5;
 
-    if (arg0->unknown_d0_ == NULL) return;
-    if (arg0->unknown_170_ < 0) return;
-    var0 = func_02081da8((struct Struct_0207fdcc_2*)arg0->unknown_c0_, arg0->unknown_170_);
-    if (var0 == NULL) return;
-    if (func_0204c7e0((unsigned char*)var0) == 0) return;
+    if (self->field0xd0 == NULL) return;
+    if (self->field0x170 < 0) return;
+    elem = FindElementByByte0xc4_02081da8((struct Obj2081*)self->field0xc0, self->field0x170);
+    if (elem == NULL) return;
+    if (WindowPane_IsOpen((unsigned char*)elem) == 0) return;
 
     func_020809c4(arg0->unknown_c0_, arg0->unknown_170_, *arg0->unknown_d0_, &var2, &var3);
     var2 -= 0x10;
     var3 -= 3;
 
-    func_0205a370(arg0->unknown_d8_, 0);
-    var1 = func_0205a3d0(arg0->unknown_d8_, 0);
-    if (var1 != NULL) {
-        var1->unknown_15_ |= 8;
+    SpriteEntryList_PlayAnimation(self->field0xd8, 0);
+    e = SpriteEntryList_Find(self->field0xd8, 0);
+    if (e != NULL) {
+        e->flags15 |= 8;
     }
-    func_0205a330((struct Struct_0205a330*)arg0->unknown_d8_, arg0->unknown_164_);
-    var5 = var3;
-    var4 = var2;
-    var1 = func_0205a3d0(arg0->unknown_d8_, 0);
-    if (var1 != NULL) {
-        var1->unknown_4_ = var4;
-        var1->unknown_6_ = var5;
+    SpriteEntryList_AdvanceAnimations((struct Container0205a330*)self->field0xd8, self->field0x164);
+    unk6val = outA;
+    unk4val = outB;
+    e = SpriteEntryList_Find(self->field0xd8, 0);
+    if (e != NULL) {
+        e->unk4 = unk4val;
+        e->unk6 = unk6val;
     }
-    func_0205ae8c(&arg0->unknown_f8_);
+    SpriteContext_DrawEntries(&self->field0xf8);
 }

@@ -2,7 +2,7 @@
 #include "Graphics/itcm/VRAMStaging.h"
 
 extern "C" int func_0204027c(void* list, int a, int b, int c, int d);
-extern "C" int func_020bb588(int a, int b, int c);
+extern "C" int NNS_GfdAllocFrmTexVram(int a, int b, int c);
 
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
@@ -46,7 +46,7 @@ ARM void UpdateElementStream0203f02c(struct Obj0203f02c* obj, int param1, int pa
 
     struct Element0203f02c* element = GetValidElement02040468(obj->list, obj->field0x28);
     if (element != NULL) {
-        int v = func_020bb588(element->field0x34, 0, 0);
+        int v = NNS_GfdAllocFrmTexVram(element->field0x34, 0, 0);
         obj->field0x4c = ((unsigned int)v << 16) >> 13;
         CancelVRAMStagingOperation(obj->field0x5a);
         obj->field0x5a = StageMemoryToVRAM(VRAMSubregion_TexturePalette, element->field0x20, element->field0x24, element->field0x1c << 1, false, false);

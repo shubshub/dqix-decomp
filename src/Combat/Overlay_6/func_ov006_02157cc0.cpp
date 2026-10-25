@@ -17,9 +17,9 @@
 struct Struct_ov006_021536e0;
 struct Struct_ov006_02154614;
 
-extern "C" void func_ov006_021547c8(Struct_ov006_02154614*);
-extern "C" void func_ov006_02153730(Struct_ov006_021536e0*);
-extern "C" char* func_020421a0();
+extern "C" void func_ov006_021547c8(AlchemyPot*);
+void TailCallInitStruct_02153730(StructInit36e0*);
+char* MessageSystem_GetInstance();
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
@@ -83,9 +83,9 @@ extern "C" ARM void func_ov006_02157cc0(Struct_ov006_02157a60* arg0)
         var0->RemoveTask(arg0->unknown_358_);
         arg0->unknown_358_ = -1;
     }
-    func_ov006_02153730((Struct_ov006_021536e0*)arg0->unknown_74_);
-    *(int*)(func_020421a0() + R(0x228, 0x2d8)) = 0;
-    if (arg0->unknown_c_ == 0)
+    TailCallInitStruct_02153730((StructInit36e0*)self->ingredients_);
+    *(int*)(MessageSystem_GetInstance() + R(0x228, 0x2d8)) = 0;
+    if (self->allocators_ == 0)
         return;
     for (unsigned char var1 = 0; var1 < 10; var1++)
     {

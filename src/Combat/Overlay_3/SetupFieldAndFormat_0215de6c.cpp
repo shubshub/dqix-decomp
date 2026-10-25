@@ -18,16 +18,16 @@ struct StoreStruct;
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
 void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
 void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" void func_02046380(void* global);
-int CallFunc020e0434With02153694_020e51cc(int value);
-extern "C" void func_02046608(int a, int b, void* fmt, void* dst, int p4, int p5, int p6);
+int StandardStrings_Get(int value);
+extern "C" void MessageSystem_FormatText(int a, int b, void* fmt, void* dst, int p4, int p5, int p6);
 
 // USA: func_ov003_0215de6c
 ARM void SetupFieldAndFormat_0215de6c(char* base, void* buf) {
     GameState* battleStruct = GameState::GetInstance();
-    int field = GetGlobalField0x1c020421a0();
-    void* ptr = GetPtrField0x2a04_02010828(battleStruct);
+    int field = MessageSystem_GetInstance();
+    void* ptr = GameState_GetParty(battleStruct);
 
     unsigned char flag = *(unsigned char*)(base + kRegion3bb);
     int value = *(int*)((char*)ptr + 0xf6c);
@@ -45,7 +45,7 @@ ARM void SetupFieldAndFormat_0215de6c(char* base, void* buf) {
     int fmt = KeyTable_Get((Container020e0310*)(base + 0x7c), 0xa);
     func_020474a8(field, 8, (void*)fmt, buf);
 #else
-    int fmt = CallFunc020e0434With02153694_020e51cc(0x3f1);
-    func_02046608(field, 8, (void*)fmt, buf, 0x100, 0, 0);
+    int fmt = StandardStrings_Get(0x3f1);
+    MessageSystem_FormatText(field, 8, (void*)fmt, buf, 0x100, 0, 0);
 #endif
 }

@@ -18,7 +18,7 @@
 #define data_020f0972 data_020f0ae4
 extern const char data_020e88a5[][3];
 extern const unsigned short data_020e884a[];
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
+extern "C" int memcmp(const void*, const void*, unsigned int);
 #endif
 
 struct EntryList_203dce4;
@@ -257,14 +257,14 @@ extern "C" ARM const char* func_0206a3c0(Struct_0206a3c0_2* arg0, const char* ar
             }
             unsigned char var21 = 0;
 #if defined(jpn)
-            char var22[3] = {};
-            signed char var23 = 0;
-            memcpy(var22, arg1 + 7, 2);
-            for (; data_020e88a5[var23][0]; var23++) {
-                if (func_02001aec(var22, data_020e88a5[var23], 2) == 0) {
-                    arg0->unknown_1000_.unknown_87c_ = data_020e884a[var23];
-                    arg1 += var20 + 1;
-                    var21 = 1;
+            char name[3] = {};
+            signed char colorIndex = 0;
+            memcpy(name, text + 7, 2);
+            for (; data_020e88a5[colorIndex][0]; colorIndex++) {
+                if (memcmp(name, data_020e88a5[colorIndex], 2) == 0) {
+                    self->state.color = data_020e884a[colorIndex];
+                    text += close + 1;
+                    done = 1;
                     break;
                 }
             }

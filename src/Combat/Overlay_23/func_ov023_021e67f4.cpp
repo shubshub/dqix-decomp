@@ -21,12 +21,12 @@ struct Struct_0205d81c;
 struct Struct_0205a254;
 struct Struct_0205a330;
 
-extern "C" Struct_ov023_021e67f4_3* func_0205d8c4(struct Struct_0205d81c* arg0);
-extern "C" int func_0204c7e0(unsigned char* arg0);
-extern "C" void func_0205a370(struct Struct_0205a254* arg0, int arg1);
-extern "C" Struct_ov023_021e67f4_2* func_0205a3d0(struct Struct_0205a254* arg0, int arg1);
-extern "C" void func_0205a330(struct Struct_0205a330* arg0, int arg1);
-extern "C" void func_0205ae8c(void* arg0);
+Canvas_021e67f4* Window_GetActivePane(struct Struct_0205d81c* s);
+int WindowPane_IsOpen(unsigned char* obj);
+void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
+Animation_021e67f4* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
+void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
+extern "C" void SpriteContext_DrawEntries(void* obj);
 
 #if defined(jpn)
 struct Struct_ov023_021e67f4 {
@@ -58,25 +58,25 @@ extern "C" ARM void func_ov023_021e67f4(Struct_ov023_021e67f4* arg0)
 {
     if (arg0->unknown_13a0_ == 0)
         return;
-    Struct_ov023_021e67f4_3* var0 = func_0205d8c4((Struct_0205d81c*)arg0->unknown_ac_);
-    if (var0 == NULL)
+    Canvas_021e67f4* canvas = Window_GetActivePane((Struct_0205d81c*)self->window_);
+    if (canvas == NULL)
         return;
-    if (!func_0204c7e0((unsigned char*)var0))
+    if (!WindowPane_IsOpen((unsigned char*)canvas))
         return;
-    short var1 = var0->unknown_ac_ * 8;
-    short var2 = var0->unknown_ae_ * 8;
-    var1 += var0->unknown_bc_;
-    var2 += var0->unknown_be_;
-    func_0205a370((Struct_0205a254*)arg0->unknown_1360_, 0);
-    Struct_ov023_021e67f4_2* var3 = func_0205a3d0((Struct_0205a254*)arg0->unknown_1360_, 0);
-    if (var3 != NULL)
-        var3->unknown_15_ |= 8;
-    func_0205a330((Struct_0205a330*)arg0->unknown_1360_, arg0->unknown_13a4_);
-    var3 = func_0205a3d0((Struct_0205a254*)arg0->unknown_1360_, 0);
-    if (var3 != NULL)
+    short x = canvas->x_ * 8;
+    short y = canvas->y_ * 8;
+    x += canvas->unk_bc;
+    y += canvas->unk_be;
+    SpriteEntryList_PlayAnimation((Container0205a3d0*)self->unk_1360, 0);
+    Animation_021e67f4* animation = SpriteEntryList_Find((Container0205a3d0*)self->unk_1360, 0);
+    if (animation != NULL)
+        animation->flags_ |= 8;
+    SpriteEntryList_AdvanceAnimations((Container0205a330*)self->unk_1360, self->unk_13a4);
+    animation = SpriteEntryList_Find((Container0205a3d0*)self->unk_1360, 0);
+    if (animation != NULL)
     {
         var3->unknown_4_ = var1 - 8;
         var3->unknown_6_ = var2 - 2;
     }
-    func_0205ae8c(arg0->unknown_135c_);
+    SpriteContext_DrawEntries(self->renderer_);
 }

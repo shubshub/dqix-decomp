@@ -2,8 +2,8 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 
-extern "C" void func_0204719c(void* arg0, int arg1);
-extern "C" void func_02047f70(void* arg0, void* arg1, unsigned int arg2, SafeAllocator* arg3);
+extern "C" void SprSprite_Init(void* obj, int flag);
+extern "C" void func_02047f70(void* obj, void* buf, unsigned int size, SafeAllocator* alloc);
 
 struct Struct_02047b40_4;
 struct Struct_02017098_3;
@@ -89,10 +89,10 @@ extern "C" ARM void func_02047b40(struct Struct_02047b40_3* arg0, unsigned char*
     if (arg1 == 0) {
         return;
     }
-    var2 = arg0->unknown_84_0_;
-    if (var2) {
-        if (var2) {
-            func_0204719c(arg0, var2);
+    flag = obj->flag0;
+    if (flag) {
+        if (flag) {
+            SprSprite_Init(obj, flag);
         }
         arg0->unknown_84_0_ = 0;
     }

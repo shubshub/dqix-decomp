@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02084a64(unsigned char* arg0, int arg1);
-extern "C" void func_02083e28(unsigned char* arg0, int arg1);
-extern "C" void func_02089494(char* arg0, char* arg1, char* arg2);
+extern "C" int func_02084a64(unsigned char* obj, int id);
+extern "C" void PartyMember_RecalculateStats(unsigned char* p, int v);
+void CopyPackedFields02089494(char* dst, char* buf, char* src);
 void ApplyCombatantBuffs(int world, int id);
 extern "C" unsigned short func_ov024_021da644(int arg0, int arg1, int arg2);
 extern "C" void* func_ov000_0215e958(void* arg0);
@@ -42,16 +42,16 @@ struct Struct_ov024_021de54c {
 };
 
 // USA: func_ov024_021de54c
-extern "C" ARM void* func_ov024_021de54c(struct Struct_ov024_021de54c_4* arg0, int arg1, int arg2, struct Struct_ov024_021de54c_5* arg3) {
-	struct Struct_ov024_021de54c* var0 = (struct Struct_ov024_021de54c*)func_0200ff1c(GameState::GetInstance(), arg2);
-	if (!var0) return 0;
-	unsigned short var1;
-	if (func_02084a64(var0->unknown_150_, arg3->unknown_4_0_) > 0) {
-		var1 = func_ov024_021da644(arg2, arg3->unknown_20_.unknown_2_4_, arg3->unknown_24_.unknown_0_0_);
-		func_02083e28(var0->unknown_150_, 0);
-		func_02089494(var0->unknown_138_, var0->unknown_130_, var0->unknown_134_);
-		ApplyCombatantBuffs((int)arg0->unknown_10_, arg2);
-		arg0->unknown_14_++;
+extern "C" ARM void* func_ov024_021de54c(struct Obj_021de54c* obj, int unused, int id, struct Params_021de54c* params) {
+	struct Combatant_021de54c* c = (struct Combatant_021de54c*)GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), id);
+	if (!c) return 0;
+	unsigned short sel;
+	if (func_02084a64(c->field0x150, params->itemId) > 0) {
+		sel = SelectByIndexRange0to3_021da644(id, params->f20.c, params->f24.a);
+		PartyMember_RecalculateStats(c->field0x150, 0);
+		CopyPackedFields02089494(c->currentStats, c->field0x130, c->baseStats);
+		ApplyCombatantBuffs((int)obj->field0x10, id);
+		obj->count++;
 	} else {
 		var1 = func_ov024_021da644(arg2, arg3->unknown_24_.unknown_1_2_, arg3->unknown_24_.unknown_2_4_);
 	}

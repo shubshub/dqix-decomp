@@ -18,12 +18,12 @@ extern "C" void func_02022da0(void*);
 #include "Resource/Brightness.h"
 #include "NitroSDK/Memory.h"
 
-extern "C" Zone3D* func_02012fe4(void);
+extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" void* func_0203bd08(void);
 extern "C" void* func_0203b628(void);
 extern "C" void func_02021428(void* arg0, int arg1);
 
-extern "C" int func_020420e8(void* arg0, int arg1);
+extern "C" int Font_GetTextWidth(void* p, int flag);
 
 void TailForward0203b66c(char* obj);
 void InitSubObject0203bd78(char* obj);
@@ -88,13 +88,13 @@ extern "C" ARM void func_02021578(Struct_02020554* arg0) {
     int var13;
 
     GameState::GetInstance();
-    var4 = BackgroundLoader::GetInstance();
-    var9 = func_02012fe4()->pUnknownStruct_8_;
-    var5 = GetGameResources();
-    var10 = (char*)func_0203bd08();
-    var11 = (char*)func_0203b628();
-    var13 = arg0->unknown_9c2_;
-    var12 = inline_02021578(var5, 12);
+    loader = BackgroundLoader::GetInstance();
+    modes = Zone3D_GetInstance()->pUnknownStruct_8_;
+    axis = GetGameResources();
+    battleCtx = (char*)func_0203bd08();
+    table = (char*)GetData02105254_0203b628();
+    state = self->loadStage;
+    alloc = GetResourceAllocator(axis, 12);
 
     if (var13 == 0) {
         arg0->unknown_9c7_ = 0;
@@ -113,23 +113,23 @@ extern "C" ARM void func_02021578(Struct_02020554* arg0) {
         arg0->unknown_9cc_ = var4->QueueLoadFile(&data_020ef5a5, (SafeAllocator*)0);
         arg0->unknown_9c2_ = arg0->unknown_9c2_ + 1;
 #if !defined(jpn)
-    } else if (var13 == 1) {
-        if (var4->GetTaskStatus(arg0->unknown_9f8_) == 0) return;
-        VectorizedMemset(arg0->unknown_ba2_, 0, 0x40);
-        data_020fdc4c.unknown_4_ = 0;
-        arg0->unknown_be4_ = 0;
-        arg0->unknown_be8_ = 0;
-        arg0->unknown_bec_ = 0;
-        arg0->unknown_bee_ = 0;
-        var4->GetLoadedFileByID(arg0->unknown_9f8_, &var0, &var1);
-        var3.Initialize();
-        var3.SetOpcodeLookup(data_020ef4e8);
-        var3.Load(var0, var1);
-        var3.Execute();
-        const char* var14 = data_020fdc4c.unknown_4_;
-        if (var14 != 0) {
-            memcpy(arg0->unknown_ba2_, var14, strlen(var14));
-            arg0->unknown_be4_ = func_020420e8(arg0->unknown_ba2_, 0);
+    } else if (state == 1) {
+        if (loader->GetTaskStatus(self->scriptTask) == 0) return;
+        VectorizedMemset(self->scriptName, 0, 0x40);
+        data_020fdc4c.nameOverride = 0;
+        self->scriptNameWidth = 0;
+        self->fieldb3c = 0;
+        self->fieldb40 = 0;
+        self->fieldb42 = 0;
+        loader->GetLoadedFileByID(self->scriptTask, &fileData, &fileLength);
+        script.Initialize();
+        script.SetOpcodeLookup(data_020ef4e8);
+        script.Load(fileData, fileLength);
+        script.Execute();
+        const char* name = data_020fdc4c.nameOverride;
+        if (name != 0) {
+            memcpy(self->scriptName, name, strlen(name));
+            self->scriptNameWidth = Font_GetTextWidth(self->scriptName, 0);
         }
         BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_9f8_);
         arg0->unknown_9f8_ = -1;

@@ -4,27 +4,22 @@
 #include "NitroSDK/Graphics.h"
 #include "Resource/Brightness.h"
 
-void* GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int* field, unsigned int bits);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* field, unsigned int bits);
 void OrGlobalFlag0x40_020dc2bc(void);
 void Background_SetMapSize(unsigned char* obj, int value);
 extern "C" void Background_SetPriority(void* obj, int value);
-struct Obj0204b5e8;
-void Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
-struct Foo0204af38;
-void Background_AllocateScreens(struct Foo0204af38* obj, int count, SafeAllocator* alloc);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(struct AllocTarget0204b12c* obj, SafeAllocator* alloc);
-struct Obj0204b010;
-void Background_ClearMap(struct Obj0204b010* obj, void* p);
+struct BackgroundGraphics;
+void Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
+void Background_AllocateScreens(struct BackgroundGraphics* obj, int count, SafeAllocator* alloc);
+void Background_AllocateMap(struct BackgroundGraphics* obj, SafeAllocator* alloc);
+void Background_ClearMap(struct BackgroundGraphics* obj, void* p);
 struct Obj0204b988;
 void DispatchIndexedEntry0204b988(struct Obj0204b988* obj, unsigned int a, int b, int c, unsigned short d);
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8* list, void* p);
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entries);
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* table, int index, void** outPtr, int* outCount);
+void Background_UploadMap(struct BackgroundGraphics* list, void* p);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entries);
+void* Pac_GetFile(struct PacRecord* table, int index, void** outPtr, int* outCount);
 extern "C" void Background_LoadFile(void* obj, void* rec, SafeAllocator* alloc, int count);
 
 extern char data_ov003_0217fcb5[];
@@ -60,11 +55,11 @@ extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
             SetSubBrightness(var0, -16, 1);
             arg0->unknown_5b_++;
         }
-    } else if (arg0->unknown_5b_ == 1) {
-        if (IsSubBrightnessTransitionActive(var0) == 0) {
-            func_020466e4((unsigned int*)func_020d6c00(), 1);
-            func_020dc2bc();
-            arg0->unknown_5b_++;
+    } else if (self->loadState == 1) {
+        if (IsSubBrightnessTransitionActive(resources) == 0) {
+            FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
+            OrGlobalFlag0x40_020dc2bc();
+            self->loadState++;
         }
     } else if (arg0->unknown_5b_ == 2) {
         BG0CNTSUB = (BG0CNTSUB & 0x43) | 0xf00;
@@ -80,9 +75,9 @@ extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
         self->bits34Hi = 0;
         Background_SetMapSize((unsigned char*)self->backgrounds, 0);
         Background_SetPriority(self->backgrounds, 0);
-        Background_SetScroll((struct Obj0204b5e8*)self->backgrounds, 0, 0);
-        Background_AllocateScreens((struct Foo0204af38*)self->backgrounds, 14, alloc);
-        Background_AllocateMap((struct AllocTarget0204b12c*)self->backgrounds, alloc);
+        Background_SetScroll((struct BackgroundGraphics*)self->backgrounds, 0, 0);
+        Background_AllocateScreens((struct BackgroundGraphics*)self->backgrounds, 14, alloc);
+        Background_AllocateMap((struct BackgroundGraphics*)self->backgrounds, alloc);
 #if defined(jpn)
         arg0->unknown_50_ = var1->QueueLoadFile(data_ov003_0217fcb5, 0);
 #else
@@ -96,17 +91,17 @@ extern "C" ARM void func_ov003_021541b0(struct SubScreenBackground* self) {
             void* file;
             unsigned int len;
             loader->GetLoadedFileByID(self->taskId, &file, &len);
-            int count = Pac_CountFiles((struct ActiveEntry02046900*)file);
+            int count = Pac_CountFiles((struct PacRecord*)file);
             for (int i = 0; i < count; i++) {
                 int n;
-                void* rec = Pac_GetFile((struct Rec020467f0*)file, i, &ent, &n);
+                void* rec = Pac_GetFile((struct PacRecord*)file, i, &ent, &n);
                 Background_LoadFile(self->backgrounds, rec, alloc, n);
             }
             loader->RemoveTask(self->taskId);
             self->taskId = -1;
-            Background_ClearMap((struct Obj0204b010*)self->backgrounds, 0);
+            Background_ClearMap((struct BackgroundGraphics*)self->backgrounds, 0);
             DispatchIndexedEntry0204b988((struct Obj0204b988*)self->backgrounds, 0, 0, 0, 0xffff);
-            Background_UploadMap((struct List0204b0e8*)self->backgrounds, 0);
+            Background_UploadMap((struct BackgroundGraphics*)self->backgrounds, 0);
             self->ready = 1;
             self->loadState = 0;
             self->flags |= 2;

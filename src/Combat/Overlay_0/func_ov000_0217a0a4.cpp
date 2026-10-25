@@ -42,21 +42,21 @@ struct Struct_ov000_0217a0a4 {
     unsigned char unknown_1d81_;
 };
 
-extern "C" int func_020421a0();
-extern "C" void func_0205def8(struct Struct_0205def8*, int, int);
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c*, int);
-extern "C" void func_ov000_0217a2dc(struct Struct_ov000_0217a0a4*, int, void*);
-extern "C" void func_ov000_0217a19c(struct Struct_ov000_0217a0a4*, int);
+int MessageSystem_GetInstance();
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8*, int, int);
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c*, int);
+extern "C" void func_ov000_0217a2dc(struct BattleField0217a0a4*, int, void*);
+extern "C" void func_ov000_0217a19c(struct BattleField0217a0a4*, int);
 
 // USA: func_ov000_0217a0a4
-extern "C" ARM void func_ov000_0217a0a4(struct Struct_ov000_0217a0a4* arg0) {
-    void* var0 = *(void**)(func_020421a0() + REGION_OFFSET_0);
-    memset(var0, 0, REGION_OFFSET_1);
-    func_ov000_0217a2dc(arg0, 0, var0);
+extern "C" ARM void func_ov000_0217a0a4(struct BattleField0217a0a4* field) {
+    void* buf = *(void**)(MessageSystem_GetInstance() + REGION_OFFSET_0);
+    memset(buf, 0, REGION_OFFSET_1);
+    func_ov000_0217a2dc(field, 0, buf);
 #if defined(jpn)
-    func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_188_, 0x17, (int)var0, 1);
+    Window_SetPaneText((struct StructA0205d5d0*)field->elements, 0x17, (int)buf, 1);
 #else
-    func_0205d5d0((struct Struct_0205d5d0*)arg0->unknown_188_, 0x17, (int)var0, 1, 0);
+    Window_SetPaneText((struct StructA0205d5d0*)field->elements, 0x17, (int)buf, 1, 0);
 #endif
     if (arg0->unknown_1d81_) {
         func_0205def8((struct Struct_0205def8*)arg0->unknown_188_, 0, 0x18);

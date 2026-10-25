@@ -19,13 +19,13 @@ extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" void func_ov002_0215ece4(void *base, char *dst, int c, int productB, int clampedSum);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 void SetOrClearByteC5Bit8_0216574c(void *elem, int on);
-int TryApplyElemFields0205d5d0(struct StructA0205d5d0 *, int, int, int, unsigned char);
+int Window_SetPaneText(struct StructA0205d5d0 *, int, int, int, unsigned char);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 struct Obj_0205da38;
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205df38(void *list, int key);
-Obj020d7aa0 *GetGlobalResetObj020d7a50();
-void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
+Obj020d7aa0 *TextQueue_GetInstance();
+void TextQueue_Reset(Obj020d7aa0 *obj);
 void SePlayer_Play(struct SePlayer *obj, int a, int b);
 int IsFlagAt130Bit0Set_0216364c(void *member);
 int CheckFlagOrThreshold_02161b48(char *self, int v);
@@ -35,7 +35,8 @@ extern "C" char g_sePlayer;
 
 // USA: func_ov002_02165378
 #if defined(jpn)
-extern "C" void func_ov002_0215fe54(void *arg0, char *arg1, int arg2, int arg3, int arg4);
+int Window_SetPaneText(struct StructA0205d5d0 *, int, int, int);
+extern "C" void func_ov002_0215fe54(void *base, char *dst, int c, int productB, int clampedSum);
 #define func_ov002_0215ece4 func_ov002_0215fe54
 extern "C" ARM void func_ov002_02165378(char *arg0) {
     int var0 = *(int *) (arg0 + 0x1a88);
@@ -62,9 +63,9 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (var2 != 0) {
             func_ov002_0216574c(var2, var1);
         }
-        ((int (*)(struct Struct_0205d5d0*, int, int, int))func_0205d5d0)((struct Struct_0205d5d0 *) (arg0 + 0xe20), 0x12,
-                                                             *(int *) (arg0 + 0x1a98), 1);
-        *(int *) (arg0 + 0x1a88) += 1;
+        Window_SetPaneText((struct StructA0205d5d0 *) (self + 0xe20), 0x12,
+                                                             *(int *) (self + 0x1a98), 1);
+        *(int *) (self + 0x1a88) += 1;
         return;
     }
     if (var0 != 1) {
@@ -87,8 +88,8 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (var5 != 0) {
             func_ov002_0216574c(var5, var4);
         }
-        ((int (*)(struct Struct_0205d5d0*, int, int, int))func_0205d5d0)((struct Struct_0205d5d0 *) (arg0 + 0xe20), 0x12,
-                                                             *(int *) (arg0 + 0x1a98), 1);
+        Window_SetPaneText((struct StructA0205d5d0 *) (self + 0xe20), 0x12,
+                                                             *(int *) (self + 0x1a98), 1);
         return;
     }
     int t  = g_keyManager.TestKeysPressed(0x601);
@@ -98,7 +99,7 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (*(unsigned int *) (self + 0x22ac) & 2) {
             return;
         }
-        TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
+        TextQueue_Reset(TextQueue_GetInstance());
         *(unsigned char *) (self + 0xed8) = *(int *) (self + 0x1a80);
         *(unsigned int *) (self + 0x22ac) &= ~4;
         SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
@@ -155,9 +156,9 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (var11 != 0) {
             func_ov002_0216574c(var11, var10);
         }
-        func_0205d5d0((struct Struct_0205d5d0 *) (arg0 + 0x2c8 + 0xc00), 0x11,
-                                                             *(int *) (arg0 + 0x1bd0), 1, 0);
-        *(int *) (arg0 + 0x1bc0) += 1;
+        Window_SetPaneText((struct StructA0205d5d0 *) (self + 0x2c8 + 0xc00), 0x11,
+                                                             *(int *) (self + 0x1bd0), 1, 0);
+        *(int *) (self + 0x1bc0) += 1;
         return;
     }
     if (var9 != 1) {
@@ -180,8 +181,8 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (var14 != 0) {
             func_ov002_0216574c(var14, var13);
         }
-        func_0205d5d0((struct Struct_0205d5d0 *) (arg0 + 0x2c8 + 0xc00), 0x11,
-                                                             *(int *) (arg0 + 0x1bd0), 1, 0);
+        Window_SetPaneText((struct StructA0205d5d0 *) (self + 0x2c8 + 0xc00), 0x11,
+                                                             *(int *) (self + 0x1bd0), 1, 0);
         return;
     }
     int t  = g_keyManager.TestKeysPressed(0x601);
@@ -191,7 +192,7 @@ extern "C" ARM void func_ov002_02165378(char *arg0) {
         if (*(unsigned int *) (self + 0x247c) & 2) {
             return;
         }
-        TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
+        TextQueue_Reset(TextQueue_GetInstance());
         *(unsigned char *) (self + 0xf80) = *(int *) (self + 0x1bb8);
         *(unsigned int *) (self + 0x247c) &= ~4;
         SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);

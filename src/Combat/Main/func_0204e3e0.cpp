@@ -21,7 +21,7 @@ struct Struct_0204e3e0 {
 };
 
 extern "C" void* __clear(void* dst, int count);
-extern "C" int func_020420e8(char* str, int id);
+extern "C" int Font_GetTextWidth(char* str, int id);
 int Font_FindCharacterIndex(int key, int tableIdx);
 char* FindUnescapedAngleBracket_020424ac(char* str);
 Glyph0204e3e0* Font_GetCharacter(int idx, int tableIdx);
@@ -133,19 +133,19 @@ extern "C" ARM short func_0204e3e0(Struct_0204e3e0_2* arg0, char* arg1, int arg2
                     x = wnd->fB0;
                     y = boxY + wnd->fB2;
                 }
-            } else if (func_0204fc40(arg0, &var13, data_020f02e7, var14, 1)) {
-                if (var3 < var1) var3 = var1;
-                var1 = var14[0];
-                var5 = 0xff;
-                var9 = var1;
-                __clear(var15, 0x100);
-                char* var21 = var13;
-                char* var22 = strstr(var21, data_020f02eb);
-                if (var22 != 0) {
-                    int var23 = var22 - var21;
-                    if (var23 < 0x100) {
-                        memcpy(var15, var21, var23);
-                        var1 -= func_020420e8(var15, arg5);
+            } else if (func_0204fc40(wnd, &p, data_020f02e7, out, 1)) {
+                if (maxX < x) maxX = x;
+                x = out[0];
+                prev = 0xff;
+                savedX = x;
+                __clear(tmp, 0x100);
+                char* start = p;
+                char* found = strstr(start, data_020f02eb);
+                if (found != 0) {
+                    int len = found - start;
+                    if (len < 0x100) {
+                        memcpy(tmp, start, len);
+                        x -= Font_GetTextWidth(tmp, font);
                     }
                 }
             } else if (func_0204fc40(arg0, &var13, data_020f02f1, var14, 0)) {

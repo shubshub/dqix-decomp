@@ -11,22 +11,22 @@ enum { Enum_ov004_02168b44_336 = 0x144, Enum_ov004_02168b44_29888 = 0x7280, Enum
 enum { Enum_ov004_02168b44_336 = 0x150, Enum_ov004_02168b44_29888 = 0x74c0, Enum_ov004_02168b44_420 = 0x1a4, Enum_ov004_02168b44_29180 = 0x71fc, Enum_ov004_02168b44_22172 = 0x569c, Enum_ov004_02168b44_108 = 0x6c, Enum_ov004_02168b44_15236 = 0x3b84, Enum_ov004_02168b44_6498 = 0x1962, Enum_ov004_02168b44_6500 = 0x1964, Enum_ov004_02168b44_6536 = 0x1988 };
 #endif
 
-struct Struct_0201e830;
-extern "C" int func_020a0870(Struct_02061c04* arg0);
-extern "C" int func_020a08a4(Struct_02061c04* arg0);
-extern "C" int func_020a08d8(Struct_02061c04* arg0);
-extern "C" int func_020a090c(Struct_02061c04* arg0);
-extern "C" int func_0201e830(struct Struct_0201e830* arg0);
-extern "C" int func_0202ba00(int* arg0);
-extern "C" int func_020ac4f8(int arg0);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" int func_020ac0b4(void* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_020e2d24(int* arg0, int arg1, int arg2);
-extern "C" void* func_ov004_02168ad4(void* arg0, int arg1);
-extern "C" void* func_02012fe4(void);
+struct S_e830;
+int GetFieldPercentOver307_020a0870(BattleRecordSnapshot* p);
+int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot* p);
+int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot* p);
+int GetFieldPercentOver448_020a090c(BattleRecordSnapshot* p);
+int GetFieldAt0x7e_0201e830(struct S_e830* p);
+int GetFieldAt0x0_0202ba00(int* obj);
+int UpdatePlayClocks020ac4f8(int commit);
+int LoadBattleBlock020ac4c0(void* dst);
+int CopyOutBattleField0x7ac0_020ac0b4(void* dst);
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+void SetFieldsAt0x4And0x8_020e2d24(int* obj, int a, int b);
+void* GetNodeIfType11_02168ad4(void* a, int id);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* func_0202ae18(void);
 extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
 extern "C" void func_ov011_021848a0(void* arg0, int arg1);
@@ -181,11 +181,11 @@ extern "C" ARM int func_ov004_02168b44(void* arg0) {
     data_ov004_02171030->unknown_19c_ = ((SafeAllocator*)((char*)var7 + 4))->Allocate(0x800);
     memset(data_ov004_02171030->unknown_19c_, 0, 4);
 
-    void* var15 = func_02012fe4();
-    if (!var15) return 0;
-    struct Struct_0201e830* var16 = (struct Struct_0201e830*)((char*)var15 + Enum_ov004_02168b44_108);
-    if (!var16) return 0;
-    data_ov004_02171030->unknown_18c_ = func_0201e830(var16);
+    void* base = Zone3D_GetInstance();
+    if (!base) return 0;
+    struct S_e830* rec = (struct S_e830*)((char*)base + entryOffset);
+    if (!rec) return 0;
+    data_ov004_02171030->f18c = GetFieldAt0x7e_0201e830(rec);
 
     unsigned int* var17 = (unsigned int*)GetGameResources();
     data_ov004_02171030->unknown_180_ = GetFlags00((GameResources*)var17);
@@ -216,10 +216,10 @@ extern "C" ARM int func_ov004_02168b44(void* arg0) {
         func_ov011_021848a0(arg0, 0x64);
     }
 
-    char* var22 = (char*)func_020421a0();
-    func_02043204(var22);
-    *(unsigned char*)(var22 + Enum_ov004_02168b44_6498) = 1;
-    func_020e2d24((int*)(var22 + Enum_ov004_02168b44_6500), 9, 1);
-    func_020e2d24((int*)(var22 + Enum_ov004_02168b44_6536), 0x19, 1);
+    char* g = (char*)MessageSystem_GetInstance();
+    MessageSystem_Reset(g);
+    *(unsigned char*)(g + flagOffset) = 1;
+    SetFieldsAt0x4And0x8_020e2d24((int*)(g + firstOffset), 9, 1);
+    SetFieldsAt0x4And0x8_020e2d24((int*)(g + secondOffset), 0x19, 1);
     return 0;
 }

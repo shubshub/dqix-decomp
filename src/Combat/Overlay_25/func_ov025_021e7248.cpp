@@ -27,8 +27,8 @@ extern "C" ARM int func_ov025_021e7248(struct Struct_ov025_021e7248* arg0) {
             return 1;
         }
     }
-    GameState* var1 = GameState::GetInstance();
-    char* var2 = (char*)func_020100bc(var1);
-    func_0202edb4(var2, (int)((char*)arg0 + 8), arg0->unknown_14_, arg0->unknown_18_, arg0->unknown_1c_);
+    GameState* bs = GameState::GetInstance();
+    char* field = (char*)bs->GetCamera();
+    CallFunc020a0d6cAtField0x194AndClearFlag2_0202edb4(field, (int)((char*)p + 8), p->f14, p->f18, p->f1c);
     return 1;
 }

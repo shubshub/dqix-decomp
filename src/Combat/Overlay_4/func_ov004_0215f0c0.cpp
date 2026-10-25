@@ -91,30 +91,30 @@ struct Struct_ov004_0215f0c0_9 {
 struct Struct_02000c9c_8;
 struct Struct_02072a68_2;
 
-extern "C" int func_020d2ff0(const char*);
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" Struct_ov004_0215f0c0_5* func_ov004_0215e47c(void* arg0, int arg1);
-extern "C" void* func_ov023_021fad18(void* arg0);
-extern "C" struct Struct_ov004_0215f0c0_8* func_ov004_0215e438(void* arg0, int arg1);
-extern "C" int func_ov017_021bdbcc(void* arg0);
-extern "C" void* func_020421b0(int arg0);
-extern "C" unsigned char func_0200fb08(struct Struct_02000c9c_8* arg0);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" Struct_ov004_0215f0c0_5* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(Struct_ov004_0215f0c0_5* arg0);
-extern "C" int func_02042190(int arg0);
-extern "C" int func_020420e8(void* arg0, int arg1);
-extern "C" int func_020e51cc(int arg0);
-extern "C" int func_ov004_0215e460(void);
-extern "C" void func_ov004_0215e49c(void*, int, int);
-extern "C" struct Struct_02072a68_2* func_ov023_021fa598(Struct_ov004_0215f0c0_5* arg0);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" int func_020421a0(void);
-extern "C" void func_02046380(void* arg0);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_02046608(int arg0, int arg1, void* arg2, void* arg3, int arg4, int arg5, int arg6);
-extern "C" void* func_ov004_0215e4c0(void* arg0, int arg1);
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
+int STD_GetStringLength(const char*);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" HudNode* func_ov004_0215e47c(void* a, int key);
+extern "C" void* func_ov023_021fad18(void* node);
+struct PortraitEntry* GetArrayEntry_0215e438(void* arr, int idx);
+extern "C" int func_ov017_021bdbcc(void* obj);
+void* GetTableEntry020421b0(int idx);
+unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" HudNode* func_ov023_021f6880(void* list, int key);
+extern "C" int func_ov023_021f6f10(HudNode* node);
+int IsValueEqual12_02042190(int x);
+extern "C" int Font_GetTextWidth(void* p, int flag);
+int StandardStrings_Get(int value);
+int CheckAfterTwoCalls_0215e460(void);
+void SetField38IfState8_0215e49c(void*, int, int);
+extern "C" struct TableA68* func_ov023_021fa598(HudNode* node);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
+int MessageSystem_GetInstance(void);
+extern "C" void func_02046380(void* global);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+extern "C" void MessageSystem_FormatText(int a, int b, void* fmt, void* dst, int p4, int p5, int p6);
+void* CheckNodeState6_0215e4c0(void* a, int key);
+extern "C" void func_ov023_021f809c(void* obj, void* param2);
 
 extern struct Struct_ov004_021707e8 data_ov004_021707e8;
 extern int data_ov004_0216fe04[];
@@ -177,7 +177,7 @@ extern "C" ARM void func_ov004_0215f0c0(void* arg0) {
         }
     }
 
-    unsigned char var18 = func_0200fb08((struct Struct_02000c9c_8*)var0);
+    unsigned char level = GameState_GetLanguage((struct Struct0200fb08*)gs);
 #endif
     void* var19 = func_ov011_021849c8(arg0);
     Struct_ov004_0215f0c0_5* var20 = func_ov023_021f6880(var19, 0x7f);
@@ -193,10 +193,10 @@ extern "C" ARM void func_ov004_0215f0c0(void* arg0) {
             int var23 = 0;
             if (var22 != 0) {
 #if defined(jpn)
-                var23 = func_020d2ff0((const char*)var22);
-                var23 = (var23 * var21->unknown_44_0_) >> 1;
+                width = STD_GetStringLength((const char*)baseStats);
+                width = (width * node->kind) >> 1;
 #else
-                var23 = func_020420e8(var22, func_02042190(var21->unknown_44_0_));
+                width = Font_GetTextWidth(baseStats, IsValueEqual12_02042190(node->kind));
 #endif
             }
             Vector3i var24;
@@ -266,9 +266,9 @@ extern "C" ARM void func_ov004_0215f0c0(void* arg0) {
             var30.x = (data_ov004_0216fe04[var18] + 0x72) << 12;
             var20->inline_ov004_0215f0c0_32(&var30);
         }
-        var20 = func_ov023_021f6880(var19, 0x7d);
-        if (var20 != 0) {
-            var20->unknown_20_ = (void*)func_020e51cc(0x3f3);
+        node = func_ov023_021f6880(list, 0x7d);
+        if (node != 0) {
+            node->data = (void*)StandardStrings_Get(0x3f3);
         }
 #endif
     } else {
@@ -308,9 +308,9 @@ extern "C" ARM void func_ov004_0215f0c0(void* arg0) {
             var34.x = (data_ov004_0216fe04[var18] + 0x72) << 12;
             var20->inline_ov004_0215f0c0_32(&var34);
         }
-        var20 = func_ov023_021f6880(var19, 0x7d);
-        if (var20 != 0) {
-            var20->unknown_20_ = (void*)func_020e51cc(0x3f3);
+        node = func_ov023_021f6880(list, 0x7d);
+        if (node != 0) {
+            node->data = (void*)StandardStrings_Get(0x3f3);
         }
 #endif
     }
@@ -351,16 +351,16 @@ extern "C" ARM void func_ov004_0215f0c0(void* arg0) {
 #if defined(jpn)
         func_ov004_0215e49c(arg0, 0x7c, 0x202);
 #else
-        Struct_ov004_0215f0c0_5* var39 = func_ov023_021f6880(var19, 6);
-        if (var39 != 0 && func_ov023_021f6f10(var39) == 4) {
-            struct Struct_02072a68_2* var40 = func_ov023_021fa598(var39);
-            struct Struct_ov004_0215f0c0_9 var41;
-            func_020e4bf4(&var41, data_ov004_021707e8.unknown_1c_);
-            int var42 = func_020421a0();
-            func_02046380((void*)var42);
-            *(struct Struct_ov004_0215f0c0_9**)var42 = &var41;
-            func_02046608(var42, 0, func_02072a68(var40, 0x202), var35, 0x1e, 0, 0);
-            var37->unknown_20_ = var35;
+        HudNode* msg = func_ov023_021f6880(list, 6);
+        if (msg != 0 && func_ov023_021f6f10(msg) == 4) {
+            struct TableA68* table = func_ov023_021fa598(msg);
+            struct CombatantName name;
+            NameText_InitFromPartyMember(&name, data_ov004_021707e8.combatantId);
+            int g = MessageSystem_GetInstance();
+            func_02046380((void*)g);
+            *(struct CombatantName**)g = &name;
+            MessageSystem_FormatText(g, 0, FindEntryByKey_02072a68(table, 0x202), text, 0x1e, 0, 0);
+            label->data = text;
         }
 #endif
         for (int var43 = 0; var43 < 3; var43++) {

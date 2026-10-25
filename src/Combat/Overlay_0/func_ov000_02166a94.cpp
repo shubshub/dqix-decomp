@@ -48,7 +48,7 @@ void VramState_Restore(char*);
 void VramState_Save(char*);
 void CreateAndRegisterNode02057de0(NodeList02057de0*, int, SafeAllocator*, int, int);
 void ClearEightWords_0203dafc(Struct_203dafc*);
-void Forward02047b30(void*, int, int, int);
+void SprSprite_LoadFile(void*, int, int, int);
 void ResetArrayAndEntry02182114(char*);
 extern "C" void func_ov000_0218214c(void*, SafeAllocator*, const void*);
 extern "C" char* func_02039e70();
@@ -70,93 +70,93 @@ extern int data_ov000_021838fc[];
 extern Struct_ov000_02183028 data_ov000_02183028;
 
 // USA: func_ov000_02166a94
-extern "C" ARM void func_ov000_02166a94(Struct_ov000_02166a94_3* arg0) {
-    SafeAllocator* var0;
-    Struct_ov000_02166a94_4* var1;
-    Struct_02057de0_2* var2;
-    SafeAllocator* var3;
-    GameResources* var4 = GetGameResources();
-    var2 = func_02057924();
-    var0 = &var4->allocator_array_38[0];
-    var3 = &var4->allocator_array_38[5];
-    var1 = (Struct_ov000_02166a94_4*)var4->unknown_2cc_;
-    unsigned int var5;
-    const void* var6;
+extern "C" ARM void func_ov000_02166a94(BattleWork02166a94* self) {
+    SafeAllocator* sourceAllocator;
+    BattlePairTables02166a94* pairTables;
+    NodeList02057de0* nodes;
+    SafeAllocator* destinationAllocator;
+    GameResources* resources = GetGameResources();
+    nodes = func_02057924();
+    sourceAllocator = &resources->allocator_array_38[0];
+    destinationAllocator = &resources->allocator_array_38[5];
+    pairTables = (BattlePairTables02166a94*)resources->vramStates_;
+    unsigned int size;
+    const void* data;
     BackgroundLoader::AddLockGlobal();
-    if (!LoadFileIntoMemory(data_ov000_02183a5a, data_0211e33c, &size)) func_020c9be0();
+    if (!LoadFileIntoMemory(data_ov000_02183a5a, g_fileLoadBuffer, &size)) func_020c9be0();
     VramState_Restore(pairTables->tables);
-    if (GetFileInNarc(data_0211e33c, data_ov000_02183a6f, &data, &size, 0)) {
+    if (GetFileInNarc(g_fileLoadBuffer, data_ov000_02183a6f, &data, &size, 0)) {
         void* buffer = sourceAllocator->Allocate(size);
         if (buffer) {
             memcpy(buffer, data, size);
             CreateAndRegisterNode02057de0(nodes, 2, sourceAllocator, (int)buffer, size);
         }
     }
-    SafeAllocator* var8[4] = {var0, arg0->unknown_4_, arg0->unknown_4_, arg0->unknown_4_};
-    SafeAllocator* var9[4] = {var3, var3, arg0->unknown_4_, arg0->unknown_4_};
-    long var10;
-    SafeAllocator** var11;
-    SafeAllocator** var12;
-    var10 = 0;
-    var11 = var8;
-    var12 = var9;
-    for (; data_ov000_021838fc[var10] >= 0; ++var10, ++var11, ++var12) {
-        if (GetFileInNarc(data_0211e33c, data_ov000_02183910[var10], &var6, &var5, 0)) {
-            void* var13 = (*var11)->Allocate(var5);
-            if (var13) {
-                memcpy(var13, var6, var5);
-                func_02057de0(var2, data_ov000_021838fc[var10], *var12, (int)var13, var5);
+    SafeAllocator* sourceAllocators[4] = {sourceAllocator, self->allocator, self->allocator, self->allocator};
+    SafeAllocator* destinationAllocators[4] = {destinationAllocator, destinationAllocator, self->allocator, self->allocator};
+    long resourceIndex;
+    SafeAllocator** sourceSlot;
+    SafeAllocator** destinationSlot;
+    resourceIndex = 0;
+    sourceSlot = sourceAllocators;
+    destinationSlot = destinationAllocators;
+    for (; data_ov000_021838fc[resourceIndex] >= 0; ++resourceIndex, ++sourceSlot, ++destinationSlot) {
+        if (GetFileInNarc(g_fileLoadBuffer, data_ov000_02183910[resourceIndex], &data, &size, 0)) {
+            void* buffer = (*sourceSlot)->Allocate(size);
+            if (buffer) {
+                memcpy(buffer, data, size);
+                CreateAndRegisterNode02057de0(nodes, data_ov000_021838fc[resourceIndex], *destinationSlot, (int)buffer, size);
             }
         }
     }
-    Object3D* var14[3] = {};
-    var14[0] = &arg0->unknown_5ab0_[0];
-    var14[1] = &arg0->unknown_5ab0_[1];
-    char var15[80];
-    Struct_ov000_02166a94 var16;
-    Object3D* const* var17;
-    Struct_ov000_02183028* var18;
-    long var19;
-    Object3D* var20;
-    for (var19 = 0; data_ov000_02183028.unknown_0_[var19] > 0; ++var19) {
-        var18 = &data_ov000_02183028;
-        sprintf(var15, data_ov000_02183a7a, var18->inline_ov000_02166a94(var19));
-        GetFileInNarc(data_0211e33c, var15, &var6, &var5, 0);
-        if (var6) {
-            var17 = var14;
-            var20 = var17[var19];
-            func_0203dafc(&var16.unknown_0_);
-            const void* var21;
-            int var22;
-            var22 = var5;
-            var21 = var6;
-            var16.unknown1_0_.unk_10 = 1;
-            var16.unknown1_0_.fileData = var21;
-            var16.unknown1_0_.allocator = var3;
-            var16.unknown1_0_.unk_8 = var22;
-            var20->Initialize();
-            var20->LoadFromCHRArchive(&var16.unknown1_0_);
-            var20->SetScale(0x10a, 0x10a, 0x10a);
+    Object3D* models[3] = {};
+    models[0] = &self->models[0];
+    models[1] = &self->models[1];
+    char path[80];
+    BattleModelLoadInfo02166a94 loadInfo;
+    Object3D* const* modelSlots;
+    BattleModelIDList02166a94* modelIDs;
+    long modelIndex;
+    Object3D* model;
+    for (modelIndex = 0; data_ov000_02183028.entries[modelIndex] > 0; ++modelIndex) {
+        modelIDs = &data_ov000_02183028;
+        sprintf(path, data_ov000_02183a7a, modelIDs->Get(modelIndex));
+        GetFileInNarc(g_fileLoadBuffer, path, &data, &size, 0);
+        if (data) {
+            modelSlots = models;
+            model = modelSlots[modelIndex];
+            ClearEightWords_0203dafc(&loadInfo.words);
+            const void* modelData;
+            int modelSize;
+            modelSize = size;
+            modelData = data;
+            loadInfo.archive.unk_10 = 1;
+            loadInfo.archive.fileData = modelData;
+            loadInfo.archive.allocator = destinationAllocator;
+            loadInfo.archive.fileSize = modelSize;
+            model->Initialize();
+            model->LoadFromCHRArchive(&loadInfo.archive);
+            model->SetScale(0x10a, 0x10a, 0x10a);
         }
     }
-    if (GetFileInNarc(data_0211e33c, data_ov000_02183a85, &var6, &var5, 0)) {
-        func_02047b30(&arg0->unknown_5600_[0], (int)var6, var5, (int)var3);
-        arg0->unknown_5600_[0].unknown_0_ = 0x3e;
+    if (GetFileInNarc(g_fileLoadBuffer, data_ov000_02183a85, &data, &size, 0)) {
+        SprSprite_LoadFile(&self->effects[0], (int)data, size, (int)destinationAllocator);
+        self->effects[0].state = 0x3e;
     }
-    if (GetFileInNarc(data_0211e33c, data_ov000_02183a93, &var6, &var5, 0)) {
-        func_02047b30(&arg0->unknown_5600_[1], (int)var6, var5, (int)var3);
-        arg0->unknown_5600_[1].unknown_0_ = 0x3e;
+    if (GetFileInNarc(g_fileLoadBuffer, data_ov000_02183a93, &data, &size, 0)) {
+        SprSprite_LoadFile(&self->effects[1], (int)data, size, (int)destinationAllocator);
+        self->effects[1].state = 0x3e;
     }
     char* battleResources = self->battleResources;
     ResetArrayAndEntry02182114(battleResources);
-    func_ov000_0218214c(battleResources, destinationAllocator, data_0211e33c);
+    func_ov000_0218214c(battleResources, destinationAllocator, g_fileLoadBuffer);
     char* objectResources = GetData02104b6c_02039e70();
     ResetBattleArrays02039e7c(objectResources);
-    LoadObjectResourceFiles02039f04(objectResources, (int)destinationAllocator, data_0211e33c);
+    LoadObjectResourceFiles02039f04(objectResources, (int)destinationAllocator, g_fileLoadBuffer);
     VramState_Save(pairTables->tables);
     self->entryManager = destinationAllocator->Allocate(0xa48);
     ConstructEntryManager020d6d18((Container020d6d18*)self->entryManager);
-    LoadFilesAndBuildNodeList020d6d90((Obj020d6d90*)self->entryManager, data_0211e33c, destinationAllocator, pairTables->tables);
+    LoadFilesAndBuildNodeList020d6d90((Obj020d6d90*)self->entryManager, g_fileLoadBuffer, destinationAllocator, pairTables->tables);
     MergeLowNibbleField((MergeLowNibbleField020d76fc*)self->entryManager);
     OrMaskedField24IntoField26_020d771c((unsigned char*)self->entryManager);
     InitEntryManagerAllocator020d6ec8((Container020d6f44*)self->entryManager, self->allocator);

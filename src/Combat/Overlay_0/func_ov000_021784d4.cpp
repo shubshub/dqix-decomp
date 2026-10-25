@@ -39,14 +39,14 @@ struct Struct_ov000_02178074_4 {
     char* unknown_5c_;
 };
 
-extern "C" Struct_ov000_02178074_4* func_020421a0();
+TextWorkspace* MessageSystem_GetInstance();
 
 extern "C" void func_ov000_0217c638(struct Struct_ov000_021784d4_2* arg0, int arg1, int arg2);
 extern "C" void func_ov000_02178648(struct Struct_ov000_021784d4_2* arg0, void* arg1);
 #if defined(jpn)
-extern "C" void func_0205d304(struct Struct_ov000_021784d4* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(struct Panel_021784d4* panel, void* textBuffer, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(struct Struct_ov000_021784d4* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(struct Panel_021784d4* panel, void* textBuffer, int a, int b, int c, int d, int e, int f);
 #endif
 
 // USA: func_ov000_021784d4
@@ -54,12 +54,12 @@ extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* arg0, st
     if (arg1 == 0) {
         return;
     }
-    int var0 = arg1->unknown_44_;
-    int var1 = arg1->unknown_48_;
-    func_02010828(GameState::GetInstance());
-    unsigned char var2 = arg0->unknown_79_;
-    func_ov000_0217c638(arg0, arg2, arg3);
-    struct Struct_ov000_021784d4* var3 = &arg0->unknown_188_;
+    int x = in->x;
+    int y = in->y;
+    GameState_GetParty(GameState::GetInstance());
+    unsigned char memberCount = obj->memberCount;
+    func_ov000_0217c638(obj, arg2, arg3);
+    struct Panel_021784d4* panel = &obj->panel;
 #if defined(jpn)
     var3->unknown_a0_ = 0xa;
 #else
@@ -86,8 +86,8 @@ extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* arg0, st
         var3->unknown_ac_ = 0xa;
         var3->unknown_ae_ = 0xb;
     }
-    var3->unknown_b1_ = 8;
-    char* var4 = func_020421a0()->unknown_5c_;
+    panel->field_0xb1 = 8;
+    char* textBuffer = MessageSystem_GetInstance()->textBuffer;
 #if defined(jpn)
     memset(var4, 0, 0x800);
 #else
@@ -95,8 +95,8 @@ extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* arg0, st
 #endif
     func_ov000_02178648(arg0, var4);
 #if defined(jpn)
-    func_0205d304(&arg0->unknown_188_, var4, 0, 1, 0, 1, 0);
+    Window_OpenPane(&obj->panel, textBuffer, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var3, var4, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(panel, textBuffer, 0, 1, 0, 1, 0, 0);
 #endif
 }

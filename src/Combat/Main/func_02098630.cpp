@@ -42,11 +42,11 @@ struct Struct_02098630_2
     int unknown_c_;
 };
 
-extern "C" int func_02001aec(const void*, const void*, int);
-extern "C" int func_02098a84(Struct_02097cac_2*);
-extern "C" Struct_02098630* func_02098834(Struct_02098630*, Struct_02098630*);
-extern "C" void func_020989cc(Struct_02097cac_2*);
-extern "C" int func_020cf0fc(int);
+extern "C" int memcmp(const void*, const void*, int);
+extern "C" int func_02098a84(Base020989cc*);
+S02098834* CopyStruct02098834(S02098834*, S02098834*);
+void UpdateRankLevel020989cc(Base020989cc*);
+int RegisterSlotA020cf0fc(int);
 
 // USA: func_02098630
 extern "C" ARM int func_02098630(Struct_02097cac_2* arg0, Struct_02098630* arg1, int arg2, int arg3)
@@ -55,7 +55,7 @@ extern "C" ARM int func_02098630(Struct_02097cac_2* arg0, Struct_02098630* arg1,
         return 0;
     for (int var0 = 0; var0 < 30; var0++)
     {
-        if (func_02001aec(arg0->unknown_0_[var0].unknown_14_, arg1->unknown_14_, 6) == 0)
+        if (memcmp(self->records[i].key, source->key, 6) == 0)
             return 0;
     }
     int var1 = func_02098a84(arg0);

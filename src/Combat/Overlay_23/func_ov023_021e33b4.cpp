@@ -7,15 +7,14 @@
 #include "Resource/Brightness.h"
 
 struct GameResources;
-struct Struct_020deb08;
-struct Struct_0205faf4_9;
-struct Struct_ov005_02159c24;
-struct Struct_0203d028;
-struct Struct_0202e5c0;
-struct Struct_02043368_2;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_0201099c_3;
+struct Pair020deb08;
+struct EntryList020deb24;
+struct Obj02159c24;
+struct Foo0207df50;
+struct Camera;
+struct Struct0205a198;
+struct PacRecord;
+struct Container020e0310;
 
 struct Struct_ov023_021e33b4_2 {
     char unknown_0_[0xc20];
@@ -136,7 +135,7 @@ extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
 int IsMainBrightnessTransitionActive(GameResources* resources);
 void VramState_Restore(char* tables);
 void VramState_Save(char* tables);
-void CopyInternalFields0207df50(Foo0207df50* tables);
+void VramState_Rewind(Foo0207df50* tables);
 void ItemTable_Init(void* descriptor);
 void BuildDescriptorFlag1_020dea40(void* descriptor, void* allocator, void* data, int size, int flag);
 int GetMaxOfHalfwords0And4(Pair020deb08* descriptor);
@@ -145,27 +144,27 @@ void CharacterModel_Init(void* model);
 void CharacterModel_CreateAllocators(void* model, SafeAllocator* allocator);
 void CharacterModel_ReserveVram(void* model);
 void CharacterModel_SetItemTable(void* model, int value);
-void SetByteC11_021e6150(void* model, unsigned char value);
+void CharacterModel_SetForceStandAnimation(void* model, unsigned char value);
 void CharacterModel_SetAngle(void* model, unsigned int value);
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 void SetField0x1e28_02042b30(void* messages, void* tables);
-void SetField0x3b0Value_020100c4(GameState* gameState, int camera);
-int GetField0x3acValue_020100a8(GameState* gameState);
+void GameState_SetCamera(GameState* gameState, int camera);
+int GameState_GetProtagonistIndex(GameState* gameState);
 void InitCombatController020a2010(void* camera);
-void Camera_SetPosition(Vec3Target0202e5c0* camera, int x, int y, int z);
-void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
-void SetField0x238False_020a27a0(void* camera);
+void Camera_SetPosition(Camera* camera, int x, int y, int z);
+void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
+void FollowCamera_DisableFollow(void* camera);
 void SetFogState_020c54a4(int a, unsigned int b, unsigned int c, unsigned short d);
 void SpriteContext_Init(char* list);
 void Sprite_Init(Struct0205a198* entry);
-int Pac_CountFiles(ActiveEntry02046900* file);
-void* Pac_GetFile(Rec020467f0* file, int index, void** record, int* size);
+int Pac_CountFiles(PacRecord* file);
+void* Pac_GetFile(PacRecord* file, int index, void** record, int* size);
 void Clear12Bytes020e46c4(void* arg);
-void InitObjFromCombatantId020e4bf4(void* arg, int combatant);
+void NameText_InitFromPartyMember(void* arg, int combatant);
 void* KeyTable_Get(Container020e0310* container, int key);
 void ClearFields_021e20c0(void* table);
 void* GetFieldAt0x150_02053c6c(unsigned char* combatant);
-void CallWithAddr4000330_020c555c(int addr);
+void G3X_SetEdgeColorTable(int addr);
 void CopyByteFieldToNextAndSet_021e33a0_021e33a0(char* self, signed char mode);
 void InitEntryManagerAndAllocator02159c24(Obj02159c24*, void*, void*);
 
@@ -183,7 +182,7 @@ void VramState_Reserve(void* tables, int a, int b);
 void func_020432c4(void* messages);
 void SpriteContext_LoadFile(void* sprites, void* record, int size, SafeAllocator* allocator);
 void func_02046380(void* messages);
-void func_02046608(void* messages, int a, void* format, void* output, int size, int b, int c);
+void MessageSystem_FormatText(void* messages, int a, void* format, void* output, int size, int b, int c);
 void func_ov023_021e20f0(void* table, void* allocator, void* data, unsigned int size);
 void func_ov023_021e3d3c(void* table, int id, int value);
 int CharacterModel_Load(void* model, void* a, int combatant, int b, int c);
@@ -206,14 +205,14 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
 
     if (arg0->unknown_4e4_ == 1)
     {
-        Struct_0208cb08* var3 = func_02094a00();
-        func_02094b40(var3);
-        func_02094b34(var3, 0x79, 0x1fa, 0, 0);
-        arg0->unknown_4e4_++;
+        FontBankLoader* music = FontBankLoader_GetInstance();
+        BlankFunction02094b40(music);
+        BlankFunction02094b34(music, 0x79, 0x1fa, 0, 0);
+        self->step_4e4++;
     }
     else if (arg0->unknown_4e4_ == 2)
     {
-        if (func_02094b4c(func_02094a00()))
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
         {
             func_ov017_0219ba0c(var1, 1);
 #if defined(jpn)
@@ -281,14 +280,14 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             CharacterModel_CreateAllocators(self->models_120[0], self->allocator_4);
             CharacterModel_ReserveVram(self->models_120[0]);
             CharacterModel_SetItemTable(self->models_120[0], (int)self->descriptor_a4);
-            SetByteC11_021e6150(self->models_120[0], 1);
+            CharacterModel_SetForceStandAnimation(self->models_120[0], 1);
 
             self->models_120[1] = (Model021e33b4*)self->allocator_4->Allocate(0xc20);
             CharacterModel_Init(self->models_120[1]);
             CharacterModel_CreateAllocators(self->models_120[1], self->allocator_4);
             CharacterModel_ReserveVram(self->models_120[1]);
             CharacterModel_SetItemTable(self->models_120[1], (int)self->descriptor_a4);
-            SetByteC11_021e6150(self->models_120[1], 1);
+            CharacterModel_SetForceStandAnimation(self->models_120[1], 1);
 
             self->allocator_14->Reset();
             ItemTable_Init(self->descriptor_a4);
@@ -303,25 +302,25 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
                 *(void**)((char*)arg0->unknown_0_ + 0xdf4) = arg0->unknown_a4_;
 
             VramState_Reserve(self->pairTables_474, 0x4000, 0x40);
-            CopyInternalFields0207df50((Foo0207df50*)self->pairTables_474);
+            VramState_Rewind((Foo0207df50*)self->pairTables_474);
             if (self->mode_4e5 == 3 && self->battle_0 != NULL)
                 func_ov005_02153b20(self->battle_0);
 
             VramState_Reserve(self->pairTables_404, 0, 0);
-            CopyInternalFields0207df50((Foo0207df50*)self->pairTables_404);
+            VramState_Rewind((Foo0207df50*)self->pairTables_404);
 
-            void* messages = GetGlobalField0x1c020421a0();
+            void* messages = MessageSystem_GetInstance();
             SetField0x1e28_02042b30(messages, self->pairTables_474);
             VramState_Restore(self->pairTables_474);
             func_020432c4(messages);
             VramState_Save(self->pairTables_474);
 
-            self->camera_138 = GetField0x3b0Value_020100bc(gameState);
+            self->camera_138 = gameState->GetCamera();
             InitCombatController020a2010(self->camera_13c);
-            Camera_SetPosition((Vec3Target0202e5c0*)self->camera_13c, 0xb666, 0xa800, 0x42ccc);
-            Camera_SetTarget((unsigned char*)self->camera_13c, 0xb666, 0xa800, 0);
-            SetField0x238False_020a27a0(self->camera_13c);
-            SetField0x3b0Value_020100c4(gameState, (int)self->camera_13c);
+            Camera_SetPosition((Camera*)self->camera_13c, 0xb666, 0xa800, 0x42ccc);
+            Camera_SetTarget((struct Camera*)self->camera_13c, 0xb666, 0xa800, 0);
+            FollowCamera_DisableFollow(self->camera_13c);
+            GameState_SetCamera(gameState, (int)self->camera_13c);
             SetFogState_020c54a4(0, 0, 0, 0);
 
             var2->RemoveTask(arg0->unknown_630_);
@@ -367,11 +366,11 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             void* data;
             unsigned int size;
             loader->GetLoadedFileByID(self->task_630, &data, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900*)data);
+            int count = Pac_CountFiles((PacRecord*)data);
             for (int i = 0; i < count; i++)
             {
                 int recordSize;
-                void* found = Pac_GetFile((Rec020467f0*)data, i, &record, &recordSize);
+                void* found = Pac_GetFile((PacRecord*)data, i, &record, &recordSize);
                 if (found != NULL)
                     SpriteContext_LoadFile(self->sprites_c8, found, recordSize, &self->spriteAllocator_68);
             }
@@ -391,17 +390,17 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
     else if (arg0->unknown_4e4_ == 7)
     {
 #if !defined(jpn)
-        Struct_ov023_021e33b4_4 var19;
-        func_020e46c4(&var19);
-        func_020e4bf4(&var19, func_020100a8(var0));
-        void* var20 = func_020421a0();
-        Struct_0201099c_3* var21 = (Struct_0201099c_3*)((char*)arg0->unknown_0_ + 0xdf8);
-        for (int var22 = 0; var22 < 2; var22++)
+        TextArg021e33b4 arg;
+        Clear12Bytes020e46c4(&arg);
+        NameText_InitFromPartyMember(&arg, GameState_GetProtagonistIndex(gameState));
+        void* messages = MessageSystem_GetInstance();
+        Container020e0310* texts = (Container020e0310*)((char*)self->battle_0 + 0xdf8);
+        for (int i = 0; i < 2; i++)
         {
             arg.index_8 = i;
             func_02046380(messages);
             *(TextArg021e33b4**)messages = &arg;
-            func_02046608(messages, 8, KeyTable_Get(texts, 0x226), self->buffers_640[i], 0x100, 0, 0);
+            MessageSystem_FormatText(messages, 8, KeyTable_Get(texts, 0x226), self->buffers_640[i], 0x100, 0, 0);
         }
 #endif
         arg0->unknown_630_ = var2->QueueLoadFile(data_ov023_021fdcc4, NULL);
@@ -443,11 +442,11 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
             func_ov005_0215a960(arg0->unknown_0_);
             func_ov005_0215ae7c(arg0->unknown_0_);
         }
-        func_020c555c((int)data_ov023_021fdc94);
-        func_ov023_021e3d3c(arg0->unknown_d4_, 0x11, 1);
-        func_ov023_021e3d3c(arg0->unknown_d4_, 0x12, 1);
-        func_ov023_021e3d3c(arg0->unknown_d4_, 0x1b, 1);
-        func_ov023_021e3d3c(arg0->unknown_d4_, 0x20, 1);
+        G3X_SetEdgeColorTable((int)data_ov023_021fdc94);
+        func_ov023_021e3d3c(self->table_d4, 0x11, 1);
+        func_ov023_021e3d3c(self->table_d4, 0x12, 1);
+        func_ov023_021e3d3c(self->table_d4, 0x1b, 1);
+        func_ov023_021e3d3c(self->table_d4, 0x20, 1);
 #if !defined(jpn)
         func_ov023_021e2ce8(arg0->unknown_4fc_, arg0->unknown_c8_);
 #endif

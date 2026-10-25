@@ -54,40 +54,40 @@ struct Struct_02089b90 {
     void* unknown_4_;
 };
 
-extern "C" int func_020d2ff0(const char* arg0);
+int STD_GetStringLength(const char* s);
 extern "C" float _fflt(int v);
 extern "C" float _fdiv(float arg0, float arg1);
 
 // USA: func_02089b90
-extern "C" ARM int func_02089b90(struct Struct_02089b90* arg0) {
-    struct Struct_02089b90_4 var0;
-    char* var1;
-    int var2;
-    int var3;
-    struct Struct_02089b90* var4;
-    var0.unknown_0_ = -1;
-    var0.unknown_4_ = 0;
-    var0.unknown_8_ = 0;
-    var0.unknown_a_ = 0;
-    var0.unknown_c_ = 0;
-    var0.unknown_10_ = 0;
-    var0.unknown_11_ = 0;
-    var0.unknown_12_ = 0;
-    var0.unknown_14_ = 1.0f;
-    var0.unknown_18_ = 1.0f;
-    memset(&var0.unknown_1c_, -1, sizeof(var0.unknown_1c_));
-    memset(&var0.unknown_30_, -1, sizeof(var0.unknown_30_));
-    var0.unknown_3d_ = 0;
-    var0.unknown_3e_ = 0;
-    var0.unknown_3f_ = 0;
-    if (data_02108efc.unknown_0_->unknown_8_ == 1) {
-        var0.unknown_0_ = (signed char)((Script::Parameter*)&arg0[0])->ToInt();
-        var1 = (char*)(void*)((Script::Parameter*)&arg0[1])->ToString();
-        if (var1 != 0) {
-            int var5 = func_020d2ff0(var1);
-            var0.unknown_4_ = (int)data_02108efc.unknown_c_->Allocate(var5 + 1);
-            memset((void*)var0.unknown_4_, 0, var5 + 1);
-            memcpy((void*)var0.unknown_4_, var1, var5);
+extern "C" ARM int func_02089b90(struct Parameter02089b90* p) {
+    struct Element02089edc e;
+    char* str;
+    int i;
+    int idx;
+    struct Parameter02089b90* base;
+    e.b0 = -1;
+    e.w4 = 0;
+    e.b8 = 0;
+    e.ha = 0;
+    e.wc = 0;
+    e.b10 = 0;
+    e.b11 = 0;
+    e.b12 = 0;
+    e.w14 = 1.0f;
+    e.w18 = 1.0f;
+    memset(&e.block1c, -1, sizeof(e.block1c));
+    memset(&e.block30, -1, sizeof(e.block30));
+    e.b3d = 0;
+    e.b3e = 0;
+    e.b3f = 0;
+    if (data_02108efc.pool->field8 == 1) {
+        e.b0 = (signed char)((Script::Parameter*)&p[0])->ToInt();
+        str = (char*)(void*)((Script::Parameter*)&p[1])->ToString();
+        if (str != 0) {
+            int len = STD_GetStringLength(str);
+            e.w4 = (int)data_02108efc.alloc->Allocate(len + 1);
+            memset((void*)e.w4, 0, len + 1);
+            memcpy((void*)e.w4, str, len);
         }
         var0.unknown_8_ = (unsigned char)((Script::Parameter*)&arg0[2])->ToInt();
         var0.unknown_a_ = (short)((Script::Parameter*)&arg0[3])->ToInt();

@@ -42,7 +42,7 @@ extern const short data_ov006_0215ffca[];
 extern const short data_ov006_0215ffc4[];
 extern const unsigned char data_ov006_0215ffb4[];
 int func_ov023_021e2c38(void*, short);
-void func_0205ac40(void*, Struct_ov006_021580b8*);
+void SpriteContext_DrawSprite(void*, Sprite*);
 }
 
 extern "C" Struct_ov006_02158478* func_02081da8(Struct_0207fdcc_2*, int);
@@ -155,22 +155,22 @@ extern "C" ARM void func_ov006_02158914(Struct_ov006_02157a60* arg0)
         short var1 = data_ov006_0215ffca[var0];
         if (func_ov023_021e2c38(arg0->unknown_100_, var1))
         {
-            short var2;
-            short var3;
-            func_ov023_021e2bdc(arg0->unknown_100_, var1, &var2, &var3);
-            short var4 = data_ov006_0215ffc4[var0];
-            Struct_ov006_021580b8* var5 = &arg0->unknown_24_[var4];
-            if (var0 == 2 && !(arg0->unknown_10_->unknown_1258_ & 0x800))
-                var5 = &arg0->unknown_24_[var4 + 1];
-            var5->unknown_14_ = var2 << 12;
-            var5->unknown_18_ = var3 << 12;
-            var5->unknown_22_ = data_ov006_0215ffb4[var0];
-            var5->unknown_26_ = 2;
-            if (var4 == 8)
-                var5->unknown_25_ = 0xb;
-            else if (var4 == 9)
-                var5->unknown_25_ = 1;
-            func_0205ac40(arg0->unknown_ac_, var5);
+            short x;
+            short y;
+            ComputeShortPair_021e2bdc(self->layout_, id, &x, &y);
+            short index = data_ov006_0215ffc4[i];
+            Sprite* sprite = &self->sprites_[index];
+            if (i == 2 && !(self->pot_->windowFlags_ & 0x800))
+                sprite = &self->sprites_[index + 1];
+            sprite->x_ = x << 12;
+            sprite->y_ = y << 12;
+            sprite->unk_22 = data_ov006_0215ffb4[i];
+            sprite->unk_26 = 2;
+            if (index == 8)
+                sprite->unk_25 = 0xb;
+            else if (index == 9)
+                sprite->unk_25 = 1;
+            SpriteContext_DrawSprite(self->renderer_, sprite);
         }
     }
 }

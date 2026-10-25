@@ -1,13 +1,7 @@
 #include "GameState/GameState.h"
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_ov003_0216201c {
 #if defined(jpn)
@@ -63,30 +57,30 @@ extern "C" int func_ov003_02160a68(Scene *);
 extern "C" int func_ov003_02160854(Scene *);
 extern "C" void func_ov003_02160c58(Scene *, short *, short *);
 void SetEntryLowNibbleAndElement02080c68(void *, int, int);
-extern "C" void *func_0205ec34();
-extern "C" unsigned char *func_02053c6c(unsigned char *);
-extern "C" int func_02011494(char*, void*);
-extern "C" void func_0206df6c(void *, unsigned char *, int, int);
-extern "C" int func_0206dfb0(int, unsigned char *, int);
-extern "C" int func_02083b00(unsigned char *, int);
-extern "C" void func_02083acc(unsigned char *, int);
+extern "C" void *Scenario_GetInstance();
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *);
+int CopyOutRegion0x5718_02011494(char*, void*);
+extern "C" void Scenario_SetFlag(void *, unsigned char *, int, int);
+int Scenario_TestFlag(int, unsigned char *, int);
+int TestBitInArray0x8ec_02083b00(unsigned char *, int);
+void SetBitInArray0x8ec_02083acc(unsigned char *, int);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
 extern "C" void func_ov017_021ccfd0(int);
 
 // USA: func_ov003_0216201c
-extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
-    GameState *var0        = GameState::GetInstance();
-    unsigned char *var1    = (unsigned char *)func_02010828(var0);
-    unsigned char *var2  = (unsigned char *) func_0205ec34();
-    unsigned char *var3 = func_02053c6c((unsigned char *) var0->GetPartyMemberByIndex(0));
-    unsigned char var4  = arg0->unknown_4a4_;
-    Struct_ov003_0216201c *var5     = arg0->unknown_324_;
+extern "C" ARM void func_ov003_0216201c(Scene *self) {
+    GameState *gs        = GameState::GetInstance();
+    unsigned char *gp    = (unsigned char *)GameState_GetParty(gs);
+    unsigned char *bits  = (unsigned char *) Scenario_GetInstance();
+    unsigned char *field = GetFieldAt0x150_02053c6c((unsigned char *) gs->GetPartyMemberByIndex(0));
+    unsigned char state  = self->state;
+    Entries *entries     = self->entries;
 
-    if (var4 == 0) {
-        func_0207fe44((Struct_0207fe44*)var5);
-        arg0->unknown_488_ = 0x1e;
-        if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) == 1) {
-            arg0->unknown_488_ = 0x1d;
+    if (state == 0) {
+        CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
+        self->h488 = 0x1e;
+        if (*((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0xf7c) == 1) {
+            self->h488 = 0x1d;
         }
         self->h48a   = FindMappedMemberId02080468(entries, self->h488);
         self->h474   = self->h48a;
@@ -106,15 +100,15 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
             switch (self->h48a) {
                 case 0xb4:
                 case 0xb7:
-                    int var6 = func_ov003_02160b84(arg0);
-                    var6 += var1[0xf7c];
-                    if (var6 == 4) {
-                        arg0->unknown_484_ = 6;
-                        arg0->unknown_486_ = 2;
-                    } else if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0x2000 + 0xc8c) == 0) {
-                        func_0207fe44((Struct_0207fe44*)var5);
-                        arg0->unknown_4a3_  = 2;
-                        arg0->unknown_4a4_ = 0;
+                    int cv = CountValidCombatantsMinusField_02160b84(self);
+                    cv += gp[0xf7c];
+                    if (cv == 4) {
+                        self->h484 = 6;
+                        self->h486 = 2;
+                    } else if (*((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0x2000 + 0xc8c) == 0) {
+                        CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
+                        self->c4a3  = 2;
+                        self->state = 0;
                     } else {
                         func_0207fe44((Struct_0207fe44*)var5);
                         arg0->unknown_484_  = 0x4c;
@@ -135,16 +129,16 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
                         }
                         var10++;
                     }
-                    short var11;
-                    short var12;
-                    arg0->unknown_4ad_ = arg0->unknown_4ad_ - 1;
-                    func_ov003_02160c58(arg0, &var11, &var12);
-                    if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) == 1) {
-                        arg0->unknown_484_ = 0x10;
-                        arg0->unknown_486_ = 2;
-                    } else if (var12 == 0) {
-                        arg0->unknown_484_ = 0x45;
-                        arg0->unknown_486_ = 2;
+                    short a;
+                    short b;
+                    self->cnt = self->cnt - 1;
+                    func_ov003_02160c58(self, &a, &b);
+                    if (*((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0xf7c) == 1) {
+                        self->h484 = 0x10;
+                        self->h486 = 2;
+                    } else if (b == 0) {
+                        self->h484 = 0x45;
+                        self->h486 = 2;
                     } else {
                         func_0207fe44((Struct_0207fe44*)var5);
                         arg0->unknown_484_  = 0xa;
@@ -173,13 +167,13 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
                 }
                 case 0xb5:
                 case 0xb9:
-                    if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0x2000 + 0xc8c) != 0) {
-                        func_0207fe44((Struct_0207fe44*)var5);
-                        arg0->unknown_4a3_ = 5;
-                        arg0->unknown_49f_ = 0;
-                        func_0206df6c(var2, var2 + 0x8c, 0x785, 1);
-                        arg0->unknown_484_  = 0x1d;
-                        arg0->unknown_4a4_ = 0x64;
+                    if (*((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0x2000 + 0xc8c) != 0) {
+                        CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
+                        self->c4a3 = 5;
+                        self->c49f = 0;
+                        Scenario_SetFlag(bits, bits + 0x8c, 0x785, 1);
+                        self->h484  = 0x1d;
+                        self->state = 0x64;
                     } else {
                         arg0->unknown_484_ = 0x1b;
                         arg0->unknown_486_ = 2;
@@ -187,9 +181,9 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
                     break;
                 case 0xb6:
                 case 0xba:
-                    func_0207fe44((Struct_0207fe44*)var5);
-                    if (func_0206dfb0((int) var2, var2 + 0x8c, 0x784) != 0 && var3 != 0 &&
-                        func_02083b00(var3, 0x11e) == 0)
+                    CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
+                    if (Scenario_TestFlag((int) bits, bits + 0x8c, 0x784) != 0 && field != 0 &&
+                        TestBitInArray0x8ec_02083b00(field, 0x11e) == 0)
                     {
                         arg0->unknown_484_ = 0x59;
                         if (var3 != 0) {
@@ -202,11 +196,11 @@ extern "C" ARM void func_ov003_0216201c(Struct_ov003_02154af4_3 *arg0) {
                     }
                     break;
             }
-            func_02080c68(var5, arg0->unknown_488_, 1);
-        } else if (func_ov003_02160a68(arg0) != 0) {
-            func_0207fe44((Struct_0207fe44*)var5);
-            if (func_0206dfb0((int) var2, var2 + 0x8c, 0x784) != 0 && var3 != 0 &&
-                func_02083b00(var3, 0x11e) == 0)
+            SetEntryLowNibbleAndElement02080c68(entries, self->h488, 1);
+        } else if (func_ov003_02160a68(self) != 0) {
+            CallFunc0204c804OverAllElems((Cont0207fe44*)entries);
+            if (Scenario_TestFlag((int) bits, bits + 0x8c, 0x784) != 0 && field != 0 &&
+                TestBitInArray0x8ec_02083b00(field, 0x11e) == 0)
             {
                 arg0->unknown_484_ = 0x59;
                 if (var3 != 0) {

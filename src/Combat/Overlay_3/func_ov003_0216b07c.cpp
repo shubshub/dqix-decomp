@@ -5,12 +5,12 @@
 #include "NitroSDK/Graphics.h"
 #include <globaldefs.h>
 
-struct Struct_ov003_0216b07c_2 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
+struct Background0216b07c {
+    char unk_0[0x1c];
+    unsigned char subScreen_ : 4;
+    unsigned char bgNumber_ : 4;
+    unsigned char screenCount_;
+    char unk_1e[2];
 };
 
 struct Struct_ov003_0216b07c_3 {
@@ -84,31 +84,28 @@ struct Struct_ov003_0216b07c {
     int unknown_13fc_[3];
 };
 
-struct Struct_02018300_3;
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_02020cb8_2;
-struct Struct_0204c7a8;
+struct Obj020397cc;
+struct BackgroundGraphics;
+struct PacRecord;
+struct WindowPane;
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
+struct WindowPane;
 
-void CancelPendingAction020397cc(Obj020397cc *obj, int a);
-int AppendString02042058(char *dst, const char *src);
-const char *CallFunc020e0434With02153694_020e51cc(int id);
+void GameObject_DisableControl(Obj020397cc *obj, int a);
+int Text_Append(char *dst, const char *src);
+const char *StandardStrings_Get(int id);
 void Background_SetMapSize(unsigned char *background, int a);
-int Pac_CountFiles(ActiveEntry02046900 *archive);
-void *Pac_GetFile(Rec020467f0 *archive, int index, void **name, int *size);
+int Pac_CountFiles(PacRecord *archive);
+void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
 int CheckField0NonZero_0202b7d8(int *p);
 extern "C" void *func_0202ae18();
 extern "C" int func_0202c508();
 extern "C" int func_0202c540(void *arg0);
 extern "C" void func_02046380(void *arg0);
 #if defined(jpn)
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2 *arg0, int arg1, char *arg2);
-extern "C" void func_0204500c(void *arg0, const char *arg1, int arg2);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574 *obj, int index, char *name);
+extern "C" void func_0204500c(void *p, const char *text, int a);
 extern char data_ov003_0217e930[];
 #else
 extern "C" void func_0204500c(void *arg0, const char *arg1, int arg2, int arg3);
@@ -116,18 +113,18 @@ extern "C" void func_0204500c(void *arg0, const char *arg1, int arg2, int arg3);
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 extern "C" void KeyTable_Load(void *texts, SafeAllocator *allocator, void *file, unsigned int size);
 extern "C" void Background_SetPriority(Background0216b07c *background, int a);
-void Background_AllocateMap(AllocTarget0204b12c *background,
+void Background_AllocateMap(BackgroundGraphics *background,
                                                                                          SafeAllocator *allocator);
-void Background_SetScroll(Obj0204b5e8 *background, int a, int b);
+void Background_SetScroll(BackgroundGraphics *background, int a, int b);
 extern "C" void Background_LoadFile(Background0216b07c *background, void *file, SafeAllocator *allocator, unsigned int size);
 extern "C" void Background_FillRect(Background0216b07c *background, int a, int b, int c, int d, int e, int f);
-void Background_UploadMap(List0204b0e8 *background, void *a);
-void WindowPane_AllocateBuffer(Obj0204c7a8 *canvas, SafeAllocator *allocator,
+void Background_UploadMap(BackgroundGraphics *background, void *a);
+void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
                                                                            int pixels, unsigned int size);
 void Window_SetPanes(Struct_0205cf78 *window,
-                                                                                     Elem_0205cf78 *canvases,
+                                                                                     WindowPane *canvases,
                                                                                      unsigned char count);
-void *GetGlobalField0x1c020421a0();
+void *MessageSystem_GetInstance();
 
 struct Struct_ov003_0217f56c {
     const char *unknown_0_[3];
@@ -141,26 +138,26 @@ struct Struct_ov003_0216b07c_4 {
 };
 
 // USA: func_ov003_0216b07c
-extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
-    Struct_ov003_0216b07c_6 *var0   = (Struct_ov003_0216b07c_6 *) func_020421a0();
-    GameState *var1         = GameState::GetInstance();
-    BackgroundLoader *var2 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
+    Global0216b07c *global   = (Global0216b07c *) MessageSystem_GetInstance();
+    GameState *state         = GameState::GetInstance();
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
 
-    if (arg0->unknown_6_ == 0) {
-        func_020397cc((Struct_02018300_3 *) var1->GetUnknownGameObject(), 1);
+    if (self->step_ == 0) {
+        GameObject_DisableControl((Obj020397cc *) state->GetUnknownGameObject(), 1);
         ColorEffect_ConfigureAlphaBlend(0x4000050, 0x10, 1, 0x1f, 0);
         func_0202ae18();
         if (func_0202c508() != 0 && *(short *) ((char *) var1->GetUnknownGameObject() + 4) == 0) {
             if (arg0->unknown_a_ == 3) {
                 var0->unknown_998_ = 1;
 #if defined(jpn)
-                func_02042058(var0->unknown_28_, data_ov003_0217e930);
-                func_0204500c(var0, var0->unknown_28_, 0);
+                Text_Append(global->text_, data_ov003_0217e930);
+                func_0204500c(global, global->text_, 0);
 #else
-                char *var3      = var0->unknown_5c_;
-                func_02042058(var3, func_020e51cc(0x44));
-                func_02046380(var0);
-                func_0204500c(var0, var0->unknown_5c_, 0, 0xe3);
+                char *text      = global->text_;
+                Text_Append(text, StandardStrings_Get(0x44));
+                func_02046380(global);
+                func_0204500c(global, global->text_, 0, 0xe3);
 #endif
                 var0->unknown_19b2_ = 1;
                 var0->unknown_99c_  = 2;
@@ -222,10 +219,10 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         int var13 = arg0->unknown_13fc_[2];
 #endif
         loader->GetLoadedFileByID(task, &file, &size);
-        int count            = Pac_CountFiles((ActiveEntry02046900 *) file);
+        int count            = Pac_CountFiles((PacRecord *) file);
         SafeAllocator *alloc = &self->allocators_[1];
         for (int i = 0; i < count; i++) {
-            void *data = Pac_GetFile((Rec020467f0 *) file, i, &name, &fileSize);
+            void *data = Pac_GetFile((PacRecord *) file, i, &name, &fileSize);
 #if defined(jpn)
             SpriteContext_LoadFile((char *) self + 0x10fc, data, fileSize, alloc);
 #else
@@ -243,18 +240,18 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
 #if defined(jpn)
     if (self->step_ == 3) {
         Background_SetMapSize((unsigned char *) self->backgrounds_, 0);
-        self->backgrounds_->unk_1c_0_ = 0;
-        self->backgrounds_->unk_1c_4_ = 1;
+        self->backgrounds_->subScreen_ = 0;
+        self->backgrounds_->bgNumber_ = 1;
         Background_SetPriority(self->backgrounds_, 0);
-        Background_AllocateMap((AllocTarget0204b12c *) self->backgrounds_, self->allocator_);
-        Background_SetScroll((Obj0204b5e8 *) self->backgrounds_, 0, 0);
+        Background_AllocateMap((BackgroundGraphics *) self->backgrounds_, self->allocator_);
+        Background_SetScroll((BackgroundGraphics *) self->backgrounds_, 0, 0);
         BG1CNT = (BG1CNT & 0x43) | 0xd08;
         Background_SetMapSize((unsigned char *) &self->backgrounds_[1], 0);
-        self->backgrounds_[1].unk_1c_0_ = 0;
-        self->backgrounds_[1].unk_1c_4_ = 2;
+        self->backgrounds_[1].subScreen_ = 0;
+        self->backgrounds_[1].bgNumber_ = 2;
         Background_SetPriority(&self->backgrounds_[1], 1);
-        Background_AllocateMap((AllocTarget0204b12c *) &self->backgrounds_[1], self->allocator_);
-        Background_SetScroll((Obj0204b5e8 *) &self->backgrounds_[1], 0, 0);
+        Background_AllocateMap((BackgroundGraphics *) &self->backgrounds_[1], self->allocator_);
+        Background_SetScroll((BackgroundGraphics *) &self->backgrounds_[1], 0, 0);
         BG2CNT = (BG2CNT & 0x43) | 0xe08;
         void *name;
         void *file;
@@ -263,9 +260,9 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         int sizes[2];
         int task = self->tasks_[1];
         loader->GetLoadedFileByID(task, &file, &size);
-        int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+        int count = Pac_CountFiles((PacRecord *) file);
         for (int i = 0; i < count; i++) {
-            datas[i] = Pac_GetFile((Rec020467f0 *) file, i, &name, &sizes[i]);
+            datas[i] = Pac_GetFile((PacRecord *) file, i, &name, &sizes[i]);
         }
         for (int i = 0; i < count; i++) {
             if (datas[i] != 0) Background_LoadFile(self->backgrounds_, datas[i], self->allocator_, sizes[i]);
@@ -273,17 +270,17 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         loader->RemoveTask(task);
         self->tasks_[1] = -1;
         Background_FillRect(self->backgrounds_, 0, 0, 0, 0x20, 0x19, 0);
-        Background_UploadMap((List0204b0e8 *) self->backgrounds_, 0);
+        Background_UploadMap((BackgroundGraphics *) self->backgrounds_, 0);
         Background_FillRect(&self->backgrounds_[1], 0, 0, 0, 0x20, 0x19, 0);
-        Background_UploadMap((List0204b0e8 *) &self->backgrounds_[1], 0);
+        Background_UploadMap((BackgroundGraphics *) &self->backgrounds_[1], 0);
         self->pixels_ = self->allocator_->Allocate(0x2800);
-        WindowPane_AllocateBuffer((Obj0204c7a8 *) self->canvases_, self->allocator_, (int) self->pixels_, 0x400);
+        WindowPane_AllocateBuffer((WindowPane *) self->canvases_, self->allocator_, (int) self->pixels_, 0x400);
         self->canvases_->background_ = self->backgrounds_;
         self->canvases_->unk_c4      = 0;
         Window0216b07c *window       = self->window_;
         window->background_          = self->backgrounds_;
         window->unk_b2               = 2;
-        Window_SetPanes((Struct_0205cf78 *) self->window_, (Elem_0205cf78 *) self->canvases_, 1);
+        Window_SetPanes((Struct_0205cf78 *) self->window_, (WindowPane *) self->canvases_, 1);
         ((BgCnt0216b07c *) 0x4000008)[0].priority_ = 3;
         ((BgCnt0216b07c *) 0x4000008)[1].priority_ = 1;
         ((BgCnt0216b07c *) 0x4000008)[2].priority_ = 2;
@@ -295,21 +292,21 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
     if (self->step_ == 3) {
         Background0216b07c *background = self->backgrounds_;
         Background_SetMapSize((unsigned char *) background, 0);
-        background->unk_1c_0_ = 0;
-        background->unk_1c_4_ = 1;
+        background->subScreen_ = 0;
+        background->bgNumber_ = 1;
         Background_SetPriority(background, 0);
-        Background_AllocateMap((AllocTarget0204b12c *) background,
+        Background_AllocateMap((BackgroundGraphics *) background,
                                                                                  self->allocator_);
-        Background_SetScroll((Obj0204b5e8 *) background, 0, 0);
+        Background_SetScroll((BackgroundGraphics *) background, 0, 0);
         BG1CNT                     = (BG1CNT & 0x43) | 0xd08;
         Background0216b07c *second = self->backgrounds_;
         Background_SetMapSize((unsigned char *) &second[1], 0);
-        second[1].unk_1c_0_ = 0;
-        second[1].unk_1c_4_ = 2;
+        second[1].subScreen_ = 0;
+        second[1].bgNumber_ = 2;
         Background_SetPriority(&second[1], 1);
-        Background_AllocateMap((AllocTarget0204b12c *) &second[1],
+        Background_AllocateMap((BackgroundGraphics *) &second[1],
                                                                                  self->allocator_);
-        Background_SetScroll((Obj0204b5e8 *) &second[1], 0, 0);
+        Background_SetScroll((BackgroundGraphics *) &second[1], 0, 0);
         BG2CNT = (BG2CNT & 0x43) | 0xe08;
         void *name;
         void *file;
@@ -318,10 +315,10 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         int sizes[2];
         int task = self->tasks_[1];
         loader->GetLoadedFileByID(task, &file, &size);
-        int count  = Pac_CountFiles((ActiveEntry02046900 *) file);
+        int count  = Pac_CountFiles((PacRecord *) file);
         background = self->backgrounds_;
         for (int i = 0; i < count; i++) {
-            datas[i] = Pac_GetFile((Rec020467f0 *) file, i, &name, &sizes[i]);
+            datas[i] = Pac_GetFile((PacRecord *) file, i, &name, &sizes[i]);
         }
         for (int i = 0; i < count; i++) {
             if (datas[i] != 0) Background_LoadFile(background, datas[i], self->allocator_, sizes[i]);
@@ -329,13 +326,13 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         loader->RemoveTask(task);
         self->tasks_[1] = -1;
         Background_FillRect(background, 0, 0, 0, 0x20, 0x19, 0);
-        Background_UploadMap((List0204b0e8 *) background, 0);
+        Background_UploadMap((BackgroundGraphics *) background, 0);
         second = self->backgrounds_;
         Background_FillRect(&second[1], 0, 0, 0, 0x20, 0x19, 0);
-        Background_UploadMap((List0204b0e8 *) &second[1], 0);
+        Background_UploadMap((BackgroundGraphics *) &second[1], 0);
         self->pixels_          = self->allocator_->Allocate(0x2800);
         Canvas0216b07c *canvas = self->canvases_;
-        WindowPane_AllocateBuffer((Obj0204c7a8 *) canvas, self->allocator_,
+        WindowPane_AllocateBuffer((WindowPane *) canvas, self->allocator_,
                                                                    (int) self->pixels_, 0x400);
         canvas->background_    = self->backgrounds_;
         canvas->unk_c4         = 0;
@@ -343,7 +340,7 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         window->background_    = self->backgrounds_;
         window->unk_b2         = 2;
         Window_SetPanes((Struct_0205cf78 *) self->window_,
-                                                                             (Elem_0205cf78 *) self->canvases_, 1);
+                                                                             (WindowPane *) self->canvases_, 1);
         ((BgCnt0216b07c *) 0x4000008)[0].priority_ = 3;
         ((BgCnt0216b07c *) 0x4000008)[1].priority_ = 1;
         ((BgCnt0216b07c *) 0x4000008)[2].priority_ = 2;
@@ -386,7 +383,7 @@ extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *arg0) {
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1700;
         arg0->unknown_13ec_ |= 1;
 #if defined(jpn)
-        func_02046574((Struct_02046574_2 *) var0, 0, *(char **) ((char *) var1->GetUnknownGameObject() + 0x134));
+        MessageSystem_SetStringArgument((Obj02046574 *) global, 0, *(char **) ((char *) state->GetUnknownGameObject() + 0x134));
 #endif
         void *var49 = func_0202ae18();
         if ((func_0202b7d8((int *) var49) != 0 && func_0202c540(var49) != 0) ||

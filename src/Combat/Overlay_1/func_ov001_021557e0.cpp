@@ -7,32 +7,32 @@
 
 extern "C" int func_ov001_02153994(void);
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void* func_020e2ff8(void);
-struct Struct_02033fcc;
-extern "C" void func_02033fcc(struct Struct_02033fcc* arg0);
-extern "C" unsigned char func_02039d7c(char* arg0);
-extern "C" void func_02039d24(unsigned char* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-struct Struct_02010834;
-extern "C" void func_02010834(struct Struct_02010834* arg0, int arg1, int* arg2, int* arg3);
-extern "C" void func_02039d58(unsigned char* arg0);
-extern "C" void* func_020d6c00(void);
-extern "C" void* func_02010828(GameState* arg0);
-struct Struct_02048150;
-extern "C" int func_02086ef0(struct Struct_02048150* arg0, int arg1);
-struct Struct_0205420c;
-extern "C" void func_0205420c(struct Struct_0205420c* arg0, int arg1, int arg2);
-extern "C" void func_ov017_02191f4c(int arg0, int arg1);
-extern "C" void func_ov017_02192400(int arg0, int arg1);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" void func_ov017_021917f0(int arg0, int arg1);
-extern "C" void func_020e3368(unsigned char* arg0, unsigned char arg1);
-struct Struct_ov001_02154de4;
-extern "C" int func_ov001_02154de4(struct Struct_ov001_02154de4* arg0);
+extern "C" int func_0202c540(void* obj);
+extern "C" int func_0202c508(void* obj);
+void* GetData02153637_020e2ff8(void);
+struct Flags02033fcc;
+void SetFlag0x4At0xe0(struct Flags02033fcc* obj);
+unsigned char GetByte0x26c_02039d7c(char* obj);
+void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+struct Base02010834;
+void CopyCountedBytesToIntArray02010834(struct Base02010834* base, int index, int* out, int* outCount);
+void ClearFlag0x1ceBit0x4_02039d58(unsigned char* obj);
+void* GlobalFlags_GetInstance(void);
+void* GameState_GetParty(GameState* battleStruct);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(struct ArrayContainsByteStruct* s, int val);
+struct T0205420c;
+void MaybeCall0205420c(struct T0205420c* obj, int a, int b);
+void DispatchOrSetupCombatant_02191f4c(int a, int b);
+extern "C" void func_ov017_02192400(int a, int b);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+int CheckField0NonZero_0202b7d8(int* obj);
+unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+extern "C" void func_ov017_021917f0(int a, int b);
+void StoreInFirstEmptySlot_020e3368(unsigned char* base, unsigned char val);
+struct Self02154de4;
+int ProcessAndDispatchState_02154de4(struct Self02154de4* self);
 
 #if defined(jpn)
 #define data_ov001_02164bd1 data_ov001_02166171
@@ -102,31 +102,31 @@ extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
             if (var5 == 0) {
                 continue;
             }
-            func_02033fcc((struct Struct_02033fcc*)var5);
-            if (func_02039d7c((char*)var5) == 0 || func_020399a8(var5)->unknown_1_ != 2) {
-                var5->obj3D_.MaybeSetRegularAnimation(data_ov001_02164bd1, 0x10);
+            SetFlag0x4At0xe0((struct Flags02033fcc*)m);
+            if (GetByte0x26c_02039d7c((char*)m) == 0 || GetFieldPtrAt0x26c_020399a8(m)->command != 2) {
+                m->obj3D_.SetAnimationByName(data_ov001_02164bd1, 0x10);
             }
             func_02039d24((unsigned char*)var5);
             var5->obj3D_.EnableFlag(0x800000);
         }
 
-        int var6[4];
-        int var7;
-        func_02010834((struct Struct_02010834*)var2, func_020100a8(var2), var6, &var7);
-        for (int var8 = 0; var8 < var7; var8++) {
-            GameObject* var9 = var2->GetPartyMemberByIndex(var6[var8]);
-            if (var9 == 0) {
+        int list[4];
+        int count;
+        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex(bs), list, &count);
+        for (int j = 0; j < count; j++) {
+            GameObject* m = bs->GetPartyMemberByIndex(list[j]);
+            if (m == 0) {
                 continue;
             }
             var9->obj3D_.SetInheritedAlpha(0x1f);
             func_02039d58((unsigned char*)var9);
         }
 
-        unsigned int* var10 = (unsigned int*)func_020d6c00();
-        void* var11 = func_02010828(var2);
-        for (int var12 = 0; var12 < 4; var12++) {
-            struct Struct_ov001_021557e0* var13 = (struct Struct_ov001_021557e0*)func_0200ff1c(var2, var12);
-            if (var13 == 0) {
+        unsigned int* data = (unsigned int*)GlobalFlags_GetInstance();
+        void* arr = GameState_GetParty(bs);
+        for (int k = 0; k < 4; k++) {
+            struct Combatant021557e0* c = (struct Combatant021557e0*)GetCombatantWithFlag0x100_0200ff1c(bs, k);
+            if (c == 0) {
                 continue;
             }
             if (func_02086ef0((struct Struct_02048150*)var11, var12) != 0) {
@@ -135,14 +135,14 @@ extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
             func_ov017_02191f4c((int)var0, var12);
             func_ov017_02192400((int)var0, var12);
         }
-        func_020466e4(var10, 0x20000);
+        FlagWord_SetBits(data, 0x20000);
     }
 
-    if (func_0202b7d8((int*)var1) != 0 && arg0->unknown_12_ != 0 && arg0->unknown_116_ < 0) {
-        if (arg0->unknown_101_ != 0) {
-            int var14 = func_020100b0(var2);
-            for (int var15 = 0; var15 < 4; var15++) {
-                if (var15 == var14) {
+    if (CheckField0NonZero_0202b7d8((int*)search) != 0 && self->f12 != 0 && self->f116 < 0) {
+        if (self->f101 != 0) {
+            int limit = GameState_GetLeaderIndex(bs);
+            for (int n = 0; n < 4; n++) {
+                if (n == limit) {
                     continue;
                 }
                 struct Struct_ov001_021557e0* var16 = (struct Struct_ov001_021557e0*)func_0200ff1c(var2, var15);

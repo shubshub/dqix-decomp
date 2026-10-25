@@ -16,14 +16,14 @@ struct Struct_ov003_0217c2bc {
     unsigned char unknown_142_;
 };
 
-extern "C" void func_0205ebfc(void *arg0, int arg1, int arg2);
-extern "C" void func_ov003_0217cb3c(Struct_ov003_0217c2bc *arg0, int arg1, int arg2);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov003_0217c974(Struct_ov003_0217c2bc *arg0);
-extern "C" void func_0209c830(Struct_02109bf4_2*, int);
+void SePlayer_PlayExtra(void *obj, int a, int b);
+extern "C" void func_ov003_0217cb3c(Scene0217c2bc *self, int mainScreen, int alternate);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+extern "C" void func_ov003_0217c974(Scene0217c2bc *self);
+void SetValueAndActivate0209c830(Struct0209c830*, int);
 
 extern int g_sePlayer;
-extern struct Struct0209c830 data_02109bf4;
+extern struct Struct0209c830 g_bgmPlayer;
 
 // USA: func_ov003_0217c2bc
 extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
@@ -34,7 +34,7 @@ extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
         self->state++;
     } else if (self->state == 1) {
         if (--self->timer != 0) return;
-        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+        SePlayer_PlayExtra(&g_sePlayer, 0, 0);
         func_ov003_0217cb3c(self, 1, 0);
         ((Object3D*)self->object)->MakeVisible();
         Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
@@ -66,51 +66,51 @@ extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
         if (IsBrightnessTransitionActive(var0)) return;
         func_020c5588(0, 0x1f, 0x7fff, 0, 0);
         *(volatile unsigned int *) 0x4000000 = (*(volatile unsigned int *) 0x4000000 & ~0x1f00) | 0x100;
-        arg0->unknown_4_.Reset();
-        ((Object3D*)arg0->unknown_80_)->Initialize();
-        func_ov003_0217c974(arg0);
-        arg0->unknown_142_ = 0x3c;
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 8) {
-        if (--arg0->unknown_142_ != 0) return;
-        func_ov003_0217cb3c(arg0, 0, 0);
-        SetMainBrightness(var0, 0, 0x5a);
-        arg0->unknown_142_ = 0x28;
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 9) {
-        if (--arg0->unknown_142_ != 0) return;
-        SetSubBrightness(var0, 0, 2);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 10) {
-        if (IsSubBrightnessTransitionActive(var0)) return;
-        SetSubBrightness(var0, -16, 5);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 11) {
-        if (IsMainBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, 0x10, 0xa);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 12) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        func_0209c830(&data_02109bf4, 0x43);
-        SetBrightness(var0, 0, 0x3c);
-        func_ov003_0217cb3c(arg0, 0, 1);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 13) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        arg0->unknown_142_ = 0xf;
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 14) {
-        if (--arg0->unknown_142_ != 0) return;
-        SetBrightness(var0, 0x10, 0xa);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 15) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, 0, 0x1e);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 16) {
-        if (!IsBrightnessTransitionActive(var0)) {
-            arg0->unknown_140_  = 3;
-            arg0->unknown_141_ = 0;
+        self->allocA.Reset();
+        ((Object3D*)self->object)->Initialize();
+        func_ov003_0217c974(self);
+        self->timer = 0x3c;
+        self->state++;
+    } else if (self->state == 8) {
+        if (--self->timer != 0) return;
+        func_ov003_0217cb3c(self, 0, 0);
+        SetMainBrightness(resources, 0, 0x5a);
+        self->timer = 0x28;
+        self->state++;
+    } else if (self->state == 9) {
+        if (--self->timer != 0) return;
+        SetSubBrightness(resources, 0, 2);
+        self->state++;
+    } else if (self->state == 10) {
+        if (IsSubBrightnessTransitionActive(resources)) return;
+        SetSubBrightness(resources, -16, 5);
+        self->state++;
+    } else if (self->state == 11) {
+        if (IsMainBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, 0x10, 0xa);
+        self->state++;
+    } else if (self->state == 12) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetValueAndActivate0209c830(&g_bgmPlayer, 0x43);
+        SetBrightness(resources, 0, 0x3c);
+        func_ov003_0217cb3c(self, 0, 1);
+        self->state++;
+    } else if (self->state == 13) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        self->timer = 0xf;
+        self->state++;
+    } else if (self->state == 14) {
+        if (--self->timer != 0) return;
+        SetBrightness(resources, 0x10, 0xa);
+        self->state++;
+    } else if (self->state == 15) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, 0, 0x1e);
+        self->state++;
+    } else if (self->state == 16) {
+        if (!IsBrightnessTransitionActive(resources)) {
+            self->mode  = 3;
+            self->state = 0;
         }
     }
 }

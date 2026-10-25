@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include <GameState/GameState.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0202c1a4;
 struct Struct_0201bdac_2;
@@ -65,14 +62,14 @@ struct Struct_ov017_021cd748_5 { char unknown_0_[0x41fc]; unsigned short unknown
 #else
 struct Struct_ov017_021cd748_5 { char unknown_0_[0x44ac]; unsigned short unknown_44ac_; };
 #endif
-struct Struct_0206ea7c_2 { unsigned char unknown_0_; unsigned char unknown_1_; unsigned char unknown_2_; char unknown_3_[25]; };
-struct Struct_0206ea7c { char unknown_0_[0x332]; unsigned char unknown_332_; char unknown_333_; };
-extern "C" Struct_0206ea7c* func_0205ec34();
-extern "C" Struct_ov017_021cd748* func_02012fe4();
-extern "C" int func_0202c540(Struct_0202c1a4*);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" int func_02046b08(void**);
+struct Get28ByteElementAt0x334Elem { unsigned char field_0; unsigned char field_1; unsigned char field_2; char pad_3[25]; };
+struct Get28ByteElementAt0x334Struct { char pad_0[0x332]; unsigned char index; char field_333; };
+extern "C" Get28ByteElementAt0x334Struct* Scenario_GetInstance();
+extern "C" AreaState* Zone3D_GetInstance();
+extern "C" int func_0202c540(SearchStruct0202c1a4*);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+void* GetField0x3f8Address_0200fd0c(GameState*);
+int IsField0Null_02046b08(void**);
 extern "C" void func_ov017_021baedc(void*, int);
 extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
 extern "C" Struct_0206ea7c_2* func_0206ea7c(Struct_0206ea7c*, int);
@@ -81,27 +78,27 @@ extern "C" int func_0202c508(Struct_0202c1a4*);
 extern "C" void func_ov017_021bc6e0(Struct_ov017_021cd748_7*, int, int);
 
 // USA: func_ov017_021cd748
-extern "C" ARM void func_ov017_021cd748(int arg0, Struct_ov017_021cd748_6* arg1, GameState* arg2, GameResources* arg3, Struct_0202c1a4* arg4) {
-    int var0;
-    GameState* var1;
-    Struct_ov017_021cd748_7* var2;
-    unsigned short var3;
-    var1 = GameState::GetInstance();
-    Struct_0201bdac_2* var4 = (Struct_0201bdac_2*)arg3->unknown_ptr_array_36fc[0];
-    var2 = (Struct_ov017_021cd748_7*)arg3->unknown_ptr_array_371c[6];
-    func_0205ec34();
-    Struct_ov017_021cd748* var5 = func_02012fe4();
-    var3 = var5->unknown_0_;
-    if ((func_0202c540(arg4) && arg0 == 0) || arg1->unknown_e_) {
-        if (arg1->unknown_f_ >= 0 && arg1->unknown_f_ != func_0202c1a4(arg4)) return;
-        if (((Struct_ov017_021cd748_4*)var1)->unknown_5cac_) return;
-        var0 = 0;
-        if (var3 == arg1->unknown_4_) var0 = 1;
-        if (var3 == arg1->unknown_a_) var0 = 1;
-        if (!var0 && ((Struct_ov017_021cd748_3*)arg3->unknown_ptr_array_36fc[4])->unknown_3_) {
-            unsigned short var6 = ((Struct_ov017_021cd748_2*)func_0200fd0c(arg2))->unknown_0_;
-            if (var6 == arg1->unknown_4_) var0 = 1;
-            if (var6 == arg1->unknown_a_) var0 = 1;
+extern "C" ARM void func_ov017_021cd748(int sender, TransitionEvent* event, GameState* game, GameResources* resources, SearchStruct0202c1a4* search) {
+    int matches;
+    GameState* instance;
+    TransitionState* state;
+    unsigned short area;
+    instance = GameState::GetInstance();
+    TailList020469b4* list = (TailList020469b4*)resources->fieldTaskQueue_;
+    state = (TransitionState*)resources->unknown_ptr_array_371c[6];
+    Scenario_GetInstance();
+    AreaState* areaState = Zone3D_GetInstance();
+    area = areaState->area;
+    if ((func_0202c540(search) && sender == 0) || event->enabled) {
+        if (event->recipient >= 0 && event->recipient != GetSearchStructCurrentArrEntry(search)) return;
+        if (((GameStatus*)instance)->blocked) return;
+        matches = 0;
+        if (area == event->firstArea) matches = 1;
+        if (area == event->secondArea) matches = 1;
+        if (!matches && ((AlternateMode*)resources->unknown_ptr_array_3700[3])->enabled) {
+            unsigned short alternate = ((AlternateArea*)GetField0x3f8Address_0200fd0c(game))->area;
+            if (alternate == event->firstArea) matches = 1;
+            if (alternate == event->secondArea) matches = 1;
         }
         if (!var0) return;
         unsigned short var7 = arg1->unknown_8_;
@@ -124,20 +121,20 @@ extern "C" ARM void func_ov017_021cd748(int arg0, Struct_ov017_021cd748_6* arg1,
                     var8 = 1;
                 }
             }
-            if (var8 && func_0202c540(arg4)) {
-                Struct_0206ea7c* var9 = func_0205ec34();
-                Struct_0206ea7c_2* var10 = func_0206ea7c(var9, var9->unknown_332_);
-                var2->unknown_178_0_ = 0;
-                var2->unknown_178_1_ = 0;
-                var2->unknown_179_ = 0;
-                var2->unknown_17a_ = 0;
-                var2->unknown_17b_ = 0;
-                var2->unknown_17c_ = -1.0f;
-                var2->unknown_178_0_ = 1;
-                var2->unknown_179_ = var10->unknown_0_;
-                var2->unknown_17a_ = var10->unknown_1_;
-                var2->unknown_17b_ = var10->unknown_2_;
-                var2->unknown_17c_ = arg1->unknown_10_;
+            if (changed && func_0202c540(search)) {
+                Get28ByteElementAt0x334Struct* party = Scenario_GetInstance();
+                Get28ByteElementAt0x334Elem* entry = Get28ByteElementAt0x334_0206ea7c(party, party->index);
+                state->valid = 0;
+                state->flags = 0;
+                state->field_179 = 0;
+                state->field_17a = 0;
+                state->field_17b = 0;
+                state->parameter = -1.0f;
+                state->valid = 1;
+                state->field_179 = entry->field_0;
+                state->field_17a = entry->field_1;
+                state->field_17b = entry->field_2;
+                state->parameter = event->parameter;
             }
         } else {
             if (!func_ov017_021bd3a4((Struct_ov017_0218e674*)var2)) ((Struct_ov017_021cd748_5*)arg3)->unknown_44ac_ = var7;

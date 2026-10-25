@@ -167,35 +167,35 @@ struct Struct_ov023_021f68b8;
 struct Struct_02072a68_2;
 struct Struct_ov023_021f8240_7;
 
-extern "C" Struct_ov023_021f68b8* func_ov011_021849c8(void* arg0);
-extern "C" Struct_ov023_021f8240* func_ov023_021f68b8(Struct_ov023_021f68b8* arg0, int arg1);
-extern "C" unsigned short func_ov023_021f6f10(Struct_ov023_021f8240* arg0);
-extern "C" Struct_ov023_021f8240* func_ov023_021f6880(Struct_ov023_021f68b8* arg0, int arg1);
-extern "C" Struct_02072a68_2* func_ov023_021fa598(Struct_ov023_021f8240* arg0);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_02042190(int arg0);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" void* func_020421a0();
-extern "C" void func_02046608(void* arg0, int, const char* arg2, char* arg3, int, int, int);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" void func_0204f41c(Struct_ov023_021f8240_5* arg0, short arg1, short arg2, const char* arg3, unsigned char arg4,
-                              unsigned char arg5, unsigned short* arg6, unsigned short* arg7, int);
-extern "C" void func_ov023_021f8c48(unsigned char*, unsigned short);
-extern "C" void func_ov023_021f8c58(unsigned char*, unsigned short);
-extern "C" void func_0204f7e8(Struct_ov023_021f8240_5* arg0, short arg1, short arg2, int arg3, unsigned char arg4,
-                              unsigned char arg5, unsigned short* arg6, unsigned short* arg7, int, int, int, int);
-extern "C" void func_ov023_021fbcb0(Struct_ov023_021f8240_3* arg0, unsigned short arg1);
-extern "C" void func_ov023_021fbcb8(void* arg0, unsigned short arg1);
-extern "C" unsigned short func_ov023_021fc4fc(Struct_ov023_021f8240_4* arg0);
-extern "C" unsigned short func_ov023_021fc504(Struct_ov023_021f8240_7* arg0);
-extern "C" void func_0204f914(Struct_ov023_021f8240_5* arg0, unsigned char arg1, short arg2, short arg3, short arg4,
-                              short arg5);
-extern "C" Struct_ov023_021f8240* func_ov023_021f6f18(void* arg0);
+extern "C" Node021f68b8* func_ov011_021849c8(void* script);
+MenuObject_021f8240* GetNthNode_021f68b8(Node021f68b8* list, int index);
+extern "C" unsigned short func_ov023_021f6f10(MenuObject_021f8240* object);
+extern "C" MenuObject_021f8240* func_ov023_021f6880(Node021f68b8* list, int id);
+extern "C" TableA68* func_ov023_021fa598(MenuObject_021f8240* texts);
+const char* FindEntryByKey_02072a68(TableA68* texts, int id);
+int IsValueEqual12_02042190(int font);
+extern "C" void __clear(void* buffer, unsigned long size);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* text, char* output, int font);
+void* MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(void* messages, int, const char* input, char* output, int, int, int);
+extern "C" int Font_GetTextWidth(const char* text, int font);
+extern "C" void func_0204f41c(Canvas_021f8240* canvas, short x, short y, const char* text, unsigned char font,
+                              unsigned char color, unsigned short* width, unsigned short* height, int);
+void SetShortAt_021f8c48_021f8c48(unsigned char*, unsigned short);
+void SetShortAt_021f8c58_021f8c58(unsigned char*, unsigned short);
+extern "C" void func_0204f7e8(Canvas_021f8240* canvas, short x, short y, int value, unsigned char font,
+                              unsigned char color, unsigned short* width, unsigned short* height, int, int, int, int);
+extern "C" void func_ov023_021fbcb0(MenuNumber_021f8240* number, unsigned short width);
+void SetField_021fbcb8_021fbcb8(void* number, unsigned short height);
+extern "C" unsigned short func_ov023_021fc4fc(MenuBox_021f8240* box);
+unsigned short GetField2c_021fc504(S021fc504* box);
+extern "C" void func_0204f914(Canvas_021f8240* canvas, unsigned char color, short x, short y, short right,
+                              short bottom);
+MenuObject_021f8240* GetField18_021f6f18(void* object);
 
 #if defined(jpn)
-extern "C" int func_020d2ff0(const char*);
-extern "C" void func_02050678(Struct_ov023_021f8240_5*, short, short, const char*, int, unsigned char, unsigned short*, unsigned short*);
+int STD_GetStringLength(const char*);
+extern "C" void func_02050678(Canvas_021f8240*, short, short, const char*, int, unsigned char, unsigned short*, unsigned short*);
 #endif
 
 // USA: func_ov023_021f8240
@@ -260,10 +260,10 @@ extern "C" ARM void func_ov023_021f8240(Struct_ov023_021f8240_6* arg0, void* arg
             arg0->unknown_20_.unknown_b4_ = var12;
             arg0->unknown_20_.unknown_b6_ = var13;
 #if defined(jpn)
-            short var14 = var4->unknown_42_;
-            int var15 = func_020d2ff0(var6);
-            int var16 = (var15 * var8) >> 1;
-            switch (var4->unknown_45_1_)
+            short leftOffset = text->unk_42;
+            int length = STD_GetStringLength(string);
+            int width = (length * font) >> 1;
+            switch (text->alignment_)
             {
             case 1: var10.unknown_0_ = var14 * 4096; break;
             case 3: var10.unknown_0_ = ((var0 - var16) >> 1) * 4096; break;
@@ -278,14 +278,14 @@ extern "C" ARM void func_ov023_021f8240(Struct_ov023_021f8240_6* arg0, void* arg
             char var20[0x100] = {0};
             if (var7)
             {
-                func_0206819c(var6, var19, var5);
-                func_02046608(func_020421a0(), 10, var19, var20, 0x400, 0, 0);
-                var6 = var20;
+                CopyTextAndUppercaseIfFlagged0206819c(string, codes, size);
+                MessageSystem_FormatText(MessageSystem_GetInstance(), 10, codes, formattedText, 0x400, 0, 0);
+                string = formattedText;
             }
-            int var21 = func_020420e8(var6, var5);
-            int var22 = var10.unknown_0_ / 4096.0f;
-            int var23 = var10.unknown_4_ / 4096.0f;
-            switch (var4->unknown1_45_1_)
+            int width = Font_GetTextWidth(string, size);
+            int x = position.x / 4096.0f;
+            int y = position.y / 4096.0f;
+            switch (text->alignment_)
             {
             case 1:
                 break;

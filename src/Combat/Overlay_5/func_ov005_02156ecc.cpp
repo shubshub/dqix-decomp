@@ -1,7 +1,6 @@
 #if defined(jpn)
 #define R(j,u) (j)
 #define data_ov005_0215cd48 data_ov005_0215e128
-#define func_ov005_02157b74 func_ov005_0215916c
 #define func_ov013_02185990 func_ov013_02186b88
 #else
 #define R(j,u) (u)
@@ -70,9 +69,9 @@ extern unsigned char data_ov005_0215cd48[8];
 
 MemberScreen* GetField1c_021a193c(int* p);
 void CopyThreeFields02157174(Dst02157174* dst, Src02157174* src);
-extern "C" void func_ov005_02157b74(EquipmentMenu* self, int item, int keep);
+extern "C" void EquipMenu_EquipItem(EquipmentMenu* self, int item, int keep);
 extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
-void* GetPtrField0x2a04_02010828(GameState* gs);
+void* GameState_GetParty(GameState* gs);
 short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
 signed char* GetPointerAt0xbf0_0207c60c(void* obj, unsigned int index);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
@@ -84,42 +83,42 @@ extern "C" ARM void func_ov005_02156ecc(Struct_ov005_02153954* arg0, int arg1, i
     if (arg0->unknown_3d78_ < 0)
         return;
     GameState::GetInstance();
-    Struct_ov005_02153ba4_2* var0 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    Vector3fix var1 = arg0->unknown_3cf0_.unknown_1c_;
-    Struct_ov005_02155d6c_2* var2 = arg0->unknown_2d90_[arg0->unknown_3d78_].unknown_8_;
-    var1.z = 0;
-    func_ov005_02157174((Struct_ov005_02156ecc*)var2, (Struct_ov005_02156ecc_2*)&var1);
-    var2->unknown_82_ = 0;
-    if (arg0->unknown_3d78_ >= 0 && arg0->unknown_3d78_ < 8)
-        var2->unknown_82_ = 0x1f;
-    if (arg1 < 0x80) {
-        if (arg0->unknown_3dc0_ == 0)
-            func_ov005_02157b74(arg0, arg0->unknown_2d90_[arg0->unknown_3d78_].unknown_0_, 0);
-    } else if (arg2 > 0x15 && arg2 < 0x2e) {
-        if (arg1 > 0x83 && arg0->unknown_3dc0_ == 0)
-            func_ov005_02157b74(arg0, arg0->unknown_2d90_[arg0->unknown_3d78_].unknown_0_, 0);
-    } else if (arg2 > 0x30 && arg0->unknown_3dc0_ == 1) {
-        func_ov005_02157b74(arg0, 0xffff, 0);
+    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    Vector3fix position = self->dragModel_.position_;
+    MenuModel* model = self->slots_[self->dragged_].model_;
+    position.z = 0;
+    CopyThreeFields02157174((Dst02157174*)model, (Src02157174*)&position);
+    model->unk_82 = 0;
+    if (self->dragged_ >= 0 && self->dragged_ < 8)
+        model->unk_82 = 0x1f;
+    if (x < 0x80) {
+        if (self->unk_3dc0 == 0)
+            EquipMenu_EquipItem(self, self->slots_[self->dragged_].item_, 0);
+    } else if (y > 0x15 && y < 0x2e) {
+        if (x > 0x83 && self->unk_3dc0 == 0)
+            EquipMenu_EquipItem(self, self->slots_[self->dragged_].item_, 0);
+    } else if (y > 0x30 && self->unk_3dc0 == 1) {
+        EquipMenu_EquipItem(self, 0xffff, 0);
     }
-    if (arg0->unknown_3dc0_ == 0) {
-        int var3 = func_ov005_02155670(arg0, arg1, arg2);
-        if (var3 >= 8 && var3 < 24 && arg0->unknown_3dbb_ != var3) {
-            short var4 = (var3 - 8) + arg0->unknown_3dbd_ * 16;
-            char* var5 = (char*)func_02010828(GameState::GetInstance());
-            short* var6 = func_0207c5f8((unsigned char*)var5 + 0x1d4, data_ov005_0215cd48[arg0->unknown_3dbc_]);
-            signed char* var7 = func_0207c60c(var5 + 0x1d4, data_ov005_0215cd48[arg0->unknown_3dbc_]);
-            short var8 = arg0->unknown_3de0_;
-            short var9 = var6[var8];
-            signed char var10 = var7[var8];
-            var6[var8] = var6[var4];
-            var7[arg0->unknown_3de0_] = var7[var4];
-            var6[var4] = var9;
-            var7[var4] = var10;
-            func_ov005_021555c0(arg0);
-            arg0->unknown_3dcc_ |= 0x40;
-            arg0->unknown_3daa_ = 0;
-            arg0->unknown_3de0_ = -1;
-            arg0->unknown_3dbb_ = var3;
+    if (self->unk_3dc0 == 0) {
+        int slot = func_ov005_02155670(self, x, y);
+        if (slot >= 8 && slot < 24 && self->slot_ != slot) {
+            short index = (slot - 8) + self->page_ * 16;
+            char* party = (char*)GameState_GetParty(GameState::GetInstance());
+            short* items = GetPointerFromArray0xbd0_0207c5f8((unsigned char*)party + 0x1d4, data_ov005_0215cd48[self->kind_]);
+            signed char* counts = GetPointerAt0xbf0_0207c60c(party + 0x1d4, data_ov005_0215cd48[self->kind_]);
+            short swapped = self->swapped_;
+            short item = items[swapped];
+            signed char count = counts[swapped];
+            items[swapped] = items[index];
+            counts[self->swapped_] = counts[index];
+            items[index] = item;
+            counts[index] = count;
+            func_ov005_021555c0(self);
+            self->flags_ |= 0x40;
+            self->pageStep_ = 0;
+            self->swapped_ = -1;
+            self->slot_ = slot;
         }
     }
     func_ov005_021579ec(self, self->state_, self->slot_);

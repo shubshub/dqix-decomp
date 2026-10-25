@@ -1,13 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" void* func_0205ec34(void);
-extern "C" void* func_0203b628(void);
-extern "C" void* func_02012fe4(void);
+extern "C" void* Scenario_GetInstance(void);
+void* GetData02105254_0203b628(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_02020fc4_3;
 extern "C" void func_0203bcb8(struct Struct_02020fc4_3* arg0, int arg1, int arg2);
@@ -18,8 +15,8 @@ extern "C" int func_0201bb78(struct Struct_0201bb78* arg0, unsigned int arg1);
 extern "C" void func_0202756c(void* arg0, int arg1, int arg2, int arg3,
         unsigned char arg4, unsigned char arg5, unsigned short arg6, unsigned char arg7, int arg8, int arg9);
 
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_0202630c(void* arg0, int* arg1, int arg2);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+void ClampPositionToBounds0202630c(void* obj, int* pos, int margin);
 
 extern "C" int abs(int arg0);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, int c, int d);
@@ -49,18 +46,18 @@ extern "C" ARM void func_02025f28(unsigned char* arg0) {
 #else
     enum { Enum_02025f28_2713 = 0xa99, Enum_02025f28_2716 = 0xa9c, Enum_02025f28_68 = 0x44, Enum_02025f28_72 = 0x48, Enum_02025f28_10100 = 0x2774, Enum_02025f28_12 = 0xc };
 #endif
-    GameState* var0 = GameState::GetInstance();
-    unsigned char* var1 = (unsigned char*)func_0205ec34();
-    func_0203b628();
-    void* var2 = func_02012fe4();
-    unsigned short var3 = *(unsigned short*)var2;
-    GameObject* var4;
-    int var5;
-    int var6;
-    void* var7 = *(void**)((char*)var2 + 8);
-    var4 = var0->GetUnknownGameObject();
-    var0->GetProtagonist();
-    struct Struct_ov026_021de6dc var8 = *(struct Struct_ov026_021de6dc*)((char*)var4 + 0x44);
+    GameState* battle = GameState::GetInstance();
+    unsigned char* ctx = (unsigned char*)Scenario_GetInstance();
+    GetData02105254_0203b628();
+    void* g = Zone3D_GetInstance();
+    unsigned short g0 = *(unsigned short*)g;
+    GameObject* c1;
+    int i;
+    int flag2;
+    void* g8 = *(void**)((char*)g + 8);
+    c1 = battle->GetUnknownGameObject();
+    battle->GetProtagonist();
+    struct Vec3i pos0 = *(struct Vec3i*)((char*)c1 + 0x44);
 
     if (*(unsigned char*)(arg0 + 0x55c) != 0) {
         *(unsigned char*)(arg0 + 0x55c) = 0;
@@ -82,19 +79,19 @@ extern "C" ARM void func_02025f28(unsigned char* arg0) {
         }
     }
 
-    var5 = 1;
-    var6 = var5;
-    if (var3 == 10000 || func_0206dfb0((int)var1, var1 + 0x8c, 0x2b) == 0) var6 = 0;
-    int var12[3];
-    if (var3 == 10000 || var3 == 10100) {
-        var12[0] = var8.unknown_0_ + 0x80000;
-        var12[2] = var8.unknown_8_ + 0x60000;
-    } else if (((struct Struct_02025f28_2*)var7)->unknown_c_0_ == 0) {
-        var12[0] = fix32_Divide((fix32_t)(var8.unknown_0_ + *(int*)((char*)var2 + Enum_02025f28_68)), (fix32_t)(0x6000)) + 0x80000;
-        var12[2] = fix32_Divide((fix32_t)(var8.unknown_8_ + *(int*)((char*)var2 + Enum_02025f28_72)), (fix32_t)(0x6000)) + 0x60000;
-    } else if (*(int*)((char*)var2 + Enum_02025f28_68) != 0 && *(int*)((char*)var2 + Enum_02025f28_72) != 0) {
-        var12[0] = *(int*)((char*)var2 + Enum_02025f28_68) + 0x80000;
-        var12[2] = *(int*)((char*)var2 + Enum_02025f28_72) + 0x60000;
+    i = 1;
+    flag2 = i;
+    if (g0 == 10000 || Scenario_TestFlag((int)ctx, ctx + 0x8c, 0x2b) == 0) flag2 = 0;
+    int posVec[3];
+    if (g0 == 10000 || g0 == 10100) {
+        posVec[0] = pos0.x + 0x80000;
+        posVec[2] = pos0.z + 0x60000;
+    } else if (((struct G8Obj*)g8)->lowNibble == 0) {
+        posVec[0] = fix32_Divide((fix32_t)(pos0.x + *(int*)((char*)g + regionalOffset2)), (fix32_t)(0x6000)) + 0x80000;
+        posVec[2] = fix32_Divide((fix32_t)(pos0.z + *(int*)((char*)g + regionalOffset3)), (fix32_t)(0x6000)) + 0x60000;
+    } else if (*(int*)((char*)g + regionalOffset2) != 0 && *(int*)((char*)g + regionalOffset3) != 0) {
+        posVec[0] = *(int*)((char*)g + regionalOffset2) + 0x80000;
+        posVec[2] = *(int*)((char*)g + regionalOffset3) + 0x60000;
     } else {
         var5 = 0;
     }
@@ -120,10 +117,10 @@ extern "C" ARM void func_02025f28(unsigned char* arg0) {
     var12[0] -= 0x4000;
     var12[2] -= 0x4000;
 
-    if (var5) {
-        short var16 = var4->obj3D_.unknown_4_;
-        unsigned char var17 = (unsigned char)(var16 + 0x44);
-        unsigned short var18 = (unsigned short)(var16 + 4);
-        func_0202756c(arg0, var12[0], var12[2], 5, var17, 0, var18, 0xff, 0x1000, 0x1000);
+    if (i) {
+        short f4 = c1->obj3D_.actorIndex_;
+        unsigned char p5 = (unsigned char)(f4 + 0x44);
+        unsigned short p7 = (unsigned short)(f4 + 4);
+        SetElementFields0202756c(obj, posVec[0], posVec[2], 5, p5, 0, p7, 0xff, 0x1000, 0x1000);
     }
 }

@@ -4,8 +4,8 @@
 #include "Util/Random.h"
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_02032370(int arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_02032370(int span);
 
 struct Struct_02010088;
 struct Struct_02053dfc;
@@ -138,13 +138,13 @@ extern "C" ARM void func_ov023_021f454c(struct Struct_ov023_021f454c_6* arg0) {
     var1 = GameState::GetInstance();
     var12 = (struct Struct_02070b6c_3*)((char*)arg0->unknown_2a0_ + 0x684);
     func_0202ae18();
-    var13 = ((ActiveGrottoClass*)((char*)func_02012fe4() + Enum_ov023_021f454c_9196))->GetDetailedData();
-    var2 = 0;
-    if (IsSpecial(arg0->unknown_2a0_)) {
-        if (var13->mapType_ == 1) {
-            var2 = var13->regular_.bossMonsterID_;
-        } else if (var13->mapType_ == 2) {
-            var2 = var13->legacy_.MaybeGetCurrentAlternateID();
+    detail = ((ActiveGrottoClass*)((char*)Zone3D_GetInstance() + regionalOffset0))->GetDetailedData();
+    altId = 0;
+    if (IsSpecial(self->info)) {
+        if (detail->mapType_ == 1) {
+            altId = detail->regular_.bossMonsterID_;
+        } else if (detail->mapType_ == 2) {
+            altId = detail->legacy_.MaybeGetCurrentAlternateID();
         }
     }
 

@@ -5,9 +5,6 @@
 #include "Resource/Script.h"
 #include "Combat/WorkRecord.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0201c1c8;
 struct Struct_0201d530;
@@ -15,10 +12,10 @@ struct Vector3i;
 
 struct GameState;
 
-extern "C" char* func_0205ec34();
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" int func_0206eb98(unsigned char*, int);
-extern "C" void func_0206dd68(void*, int);
+extern "C" char* Scenario_GetInstance();
+int Scenario_TestFlag(int, unsigned char*, int);
+int TestBitWithBias0206eb98(unsigned char*, int);
+void UnlinkNodeByByteId0206dd68(void*, int);
 
 struct Struct_02108cec {
     unsigned char unknown_0_[0xa];
@@ -39,20 +36,20 @@ extern "C" ARM int func_0206d4e0(void* arg0, int arg1) {
     if (arg1 % 2 == 0) {
         var0 = true;
     }
-    int var1;
-    int var2;
-    int var3 = (var0 ? arg1 - 8 : arg1 - 7) / 2;
-    char* var4 = func_0205ec34();
-    struct Struct_0201c1c8* var5 = (struct Struct_0201c1c8*)arg0;
-    for (var1 = var3; var1 > 0; var1--) {
-        int var6 = ((Script::Parameter*)var5)->ToInt();
-        struct Struct_0201c1c8* var7 = (struct Struct_0201c1c8*)((char*)var5 + 8);
-        var5 = (struct Struct_0201c1c8*)((char*)var5 + 0x10);
-        var2 = ((Script::Parameter*)var7)->ToInt();
-        int var8 = var6 >> 16;
-        if (var8 == 1) {
-            int var9 = func_0206dfb0((int)var4, (unsigned char*)(var4 + 0x8c), (unsigned short)var6);
-            if ((var2 != 0 && var9 == 0) || (var2 == 0 && var9 != 0)) {
+    int n;
+    int second;
+    int half = (even ? param1 - 8 : param1 - 7) / 2;
+    char* ctx = Scenario_GetInstance();
+    struct Variant02030b0c* arg = (struct Variant02030b0c*)param0;
+    for (n = half; n > 0; n--) {
+        int packed = ((Script::Parameter*)arg)->ToInt();
+        struct Variant02030b0c* next = (struct Variant02030b0c*)((char*)arg + 8);
+        arg = (struct Variant02030b0c*)((char*)arg + 0x10);
+        second = ((Script::Parameter*)next)->ToInt();
+        int mode = packed >> 16;
+        if (mode == 1) {
+            int hit = Scenario_TestFlag((int)ctx, (unsigned char*)(ctx + 0x8c), (unsigned short)packed);
+            if ((second != 0 && hit == 0) || (second == 0 && hit != 0)) {
                 return 1;
             }
         } else if (var8 == 2) {

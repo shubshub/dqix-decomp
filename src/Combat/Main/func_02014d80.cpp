@@ -33,20 +33,20 @@ extern "C" const char* func_0201f368(Struct_0201f368*, int);
 extern "C" void func_020e2fc0(RenderCommandHandler*);
 
 // USA: func_02014d80
-extern "C" ARM int func_02014d80(Zone3D* arg0, void* arg1, Struct_02012ff0* arg2, Struct_02014a24* arg3) {
-    Struct_02014d80_4* var0 = (Struct_02014d80_4*)arg1;
-    Struct_02014d80_2* var1 = (Struct_02014d80_2*)arg2;
-    Struct_02014d80_3* var2 = (Struct_02014d80_3*)arg3;
-    GameState* var3 = GameState::GetInstance();
-    char* var4 = (char*)arg0->unknown_ptr_50_;
-    SafeAllocator* var5 = arg0->pAllocator_68_;
-    LightingManager* var6 = LightingManager::GetInstance();
-    int var7 = var6->timeOfDayIndex_;
-    Zone3D::Model3DListNode* var8 = 0;
-    int var9 = ((Struct_02014d80*)func_0200fd0c(var3))->unknown_20_ < 0;
-    arg0->unknown_834_ = var9;
-    for (Struct_02014d80_3* var10 = var2->unknown_8_; var10; var10 = var10->unknown_8_) {
-        if (var10->unknown_0_ == var7) { var2 = var10; break; }
+extern "C" ARM int func_02014d80(Zone3D* zone, void* nodeData, Struct02012ff0* trackerData, Src02015134* recordData) {
+    ResourceNode14D* node = (ResourceNode14D*)nodeData;
+    ModelTracker14D* tracker = (ModelTracker14D*)trackerData;
+    ResourceRecord14D* record = (ResourceRecord14D*)recordData;
+    GameState* game = GameState::GetInstance();
+    char* tables = (char*)zone->vramState_;
+    SafeAllocator* allocator = zone->pAllocator_68_;
+    LightingManager* lighting = LightingManager::GetInstance();
+    int lightingIndex = lighting->timeOfDayIndex_;
+    Zone3D::Model3DListNode* alternate = 0;
+    int tinted = ((ZoneLoadState*)GetField0x3f8Address_0200fd0c(game))->unknown20 < 0;
+    zone->unknown_834_ = tinted;
+    for (ResourceRecord14D* candidate = record->next; candidate; candidate = candidate->next) {
+        if (candidate->lightingIndex == lightingIndex) { record = candidate; break; }
     }
     char filename[80];
     unsigned int fileLength;
@@ -65,12 +65,12 @@ extern "C" ARM int func_02014d80(Zone3D* arg0, void* arg1, Struct_02012ff0* arg2
                 zone->textureImageMemory_ += NSBXX_Tex_GetBlock1Length(texture);
                 zone->texturePaletteMemory_ += NSBXX_Tex_GetBlock4Length(texture);
             }
-            ModelRenderContext* var16 = var1->unknown_4_->unknown_flags_a8_0_ ? &var1->unknown_4_->renderContext_ : 0;
-            if (var16) SetModelRenderContextRenderCommandHook(var16, func_020e2fc0, 0, 8, 1);
-            if (!(var2->unknown_2_ & 0x20) && var9) var6->ModelTransformTintBrightnessContrast(var1->unknown_4_->rawInternalModel_);
-            for (Zone3D::Model3DListNode* var17 = arg0->firstModel_418_; var17; var17 = var17->pNext_) {
-                var1->unknown_4_->ApplyTexturesFromModel(&var17->model_);
-                var1->unknown_4_->SetTEX0(var17->model_.GetTEX0());
+            ModelRenderContext* context = tracker->model->loaded_ ? &tracker->model->renderContext_ : 0;
+            if (context) SetModelRenderContextRenderCommandHook(context, CallHandlerFlag0_020e2fc0, 0, 8, 1);
+            if (!(record->flags & 0x20) && tinted) lighting->ModelTransformTintBrightnessContrast(tracker->model->rawInternalModel_);
+            for (Zone3D::Model3DListNode* model = zone->firstModel_418_; model; model = model->pNext_) {
+                tracker->model->ApplyTexturesFromModel(&model->model_);
+                tracker->model->SetTEX0(model->model_.GetTEX0());
             }
             Zone3D::Model3DListNode* var18 = arg0->firstModel_418_;
             const char* var19;

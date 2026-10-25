@@ -69,27 +69,27 @@ struct Struct_ov000_02179cdc_4 {
 #endif
 extern unsigned short data_ov000_02183510[];
 
-extern "C" Struct_020465c0* func_020421a0(void);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" Struct_0209a678* func_ov000_02170cf8(Struct_ov000_02179cdc_2* arg0, int arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void func_020dd040(int arg0, char* arg1);
-extern "C" void func_02046608(Struct_020465c0* arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02046380(Struct_020465c0* arg0);
-extern "C" int func_ov000_02153a8c(GameObject* arg0);
-extern "C" int func_020dd290(void*, unsigned int);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" const char* func_020e51cc(int arg0);
-extern "C" void func_02042058(char* arg0, const char* arg1);
+StoreStruct* MessageSystem_GetInstance(void);
+extern "C" void* memset(void* dst, int c, unsigned int n);
+extern "C" SkillEntry* func_ov000_02170cf8(MenuEntry* entry, int key);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int idx);
+void NotifyLocalizedResourceLoad020dd040(int id, char* buf);
+extern "C" void MessageSystem_FormatText(StoreStruct* store, int kind, char* src, char* dst, int a, int b, int c);
+extern "C" void func_02046380(StoreStruct* store);
+int IsFlag0x18Bit0x200Set_ov000_02153a8c(GameObject* obj);
+int AdjustValueByFieldFlag_020dd290(void*, unsigned int);
+void StoreInArray0x8b0_020465c0(StoreStruct* store, int index, int value);
+const char* StandardStrings_Get(int key);
+void Text_Append(char* dst, const char* src);
 struct Struct_0205d81c;
 extern "C" void* func_0205d81c(Struct_0205d81c*, int);
 #if defined(jpn)
-extern "C" void func_0205d304(Struct_ov000_02179cdc* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_020465f0(unsigned char*, int, unsigned char);
-extern "C" void func_020465d8(unsigned char*, int, unsigned char);
+extern "C" void Window_OpenPane(ElemList* list, char* text, int a, int b, int c, int d, int e);
+void SetByteInRange_020465f0(unsigned char*, int, unsigned char);
+void SetByteAtIndex_020465d8(unsigned char*, int, unsigned char);
 extern char data_ov000_02185169[];
 #else
-extern "C" void func_0205d304(Struct_ov000_02179cdc* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(ElemList* list, char* text, int a, int b, int c, int d, int e, int f);
 #endif
 
 // USA: func_ov000_02179cdc
@@ -99,7 +99,7 @@ extern "C" ARM void func_ov000_02179cdc(Struct_ov000_02176e3c* arg0, Struct_ov00
     if (arg1 == 0) {
         return;
     }
-    char* var2 = func_020421a0()->unknown_5c_;
+    char* buf = MessageSystem_GetInstance()->textBuffer;
 #if defined(jpn)
     memset(var2, 0, 0x800);
 #else
@@ -126,36 +126,36 @@ extern "C" ARM void func_ov000_02179cdc(Struct_ov000_02176e3c* arg0, Struct_ov00
 #if defined(jpn)
     var0 = var2;
 #else
-    func_02046608(func_020421a0(), 10, var2, var8, 0x72, 0, 0);
-    var0 = var8;
+    MessageSystem_FormatText(MessageSystem_GetInstance(), 10, buf, text, 0x72, 0, 0);
+    msg = text;
 #endif
-    var1 = func_020421a0();
-    func_02046380(var1);
-    int var9;
-    if (func_ov000_02153a8c(var4) != 0) {
-        var9 = 0;
-    } else if (var6->unknown_8_0_ >= 0xff) {
-        var9 = arg1->unknown_e_;
+    store = MessageSystem_GetInstance();
+    func_02046380(store);
+    int value;
+    if (IsFlag0x18Bit0x200Set_ov000_02153a8c(combatant) != 0) {
+        value = 0;
+    } else if (skill->adjustFlag >= 0xff) {
+        value = entry->value;
     } else {
         var9 = func_020dd290(var7, var6->unknown_8_0_);
     }
     func_020465c0(var1, 0, var9);
     func_020465c0(var1, 1, arg1->unknown_e_);
 #if defined(jpn)
-    func_020465f0((unsigned char*)var1, 0, 3);
-    func_020465f0((unsigned char*)var1, 1, 3);
-    func_020465d8((unsigned char*)var1, 0, 1);
-    func_020465d8((unsigned char*)var1, 1, 1);
-    func_02042058(var0, data_ov000_02185169);
+    SetByteInRange_020465f0((unsigned char*)store, 0, 3);
+    SetByteInRange_020465f0((unsigned char*)store, 1, 3);
+    SetByteAtIndex_020465d8((unsigned char*)store, 0, 1);
+    SetByteAtIndex_020465d8((unsigned char*)store, 1, 1);
+    Text_Append(msg, data_ov000_02185169);
 #else
-    func_02042058(var0, func_020e51cc(0x3ec));
+    Text_Append(msg, StandardStrings_Get(0x3ec));
 #endif
     Struct_ov000_02179cdc* var10 = &arg0->unknown_188_;
     if (func_0205d81c((Struct_0205d81c*)var10, 0x16) != 0) {
 #if defined(jpn)
-        func_0205d5d0((Struct_0205d5d0*)var10, 0x16, (int)var0, 1);
+        Window_SetPaneText((StructA0205d5d0*)list, 0x16, (int)msg, 1);
 #else
-        func_0205d5d0((Struct_0205d5d0*)var10, 0x16, (int)var0, 1, 0);
+        Window_SetPaneText((StructA0205d5d0*)list, 0x16, (int)msg, 1, 0);
 #endif
         return;
     }
@@ -191,8 +191,8 @@ extern "C" ARM void func_ov000_02179cdc(Struct_ov000_02176e3c* arg0, Struct_ov00
     var10->unknown_ae_ = 0xe;
     var10->unknown_b1_ = 0x16;
 #if defined(jpn)
-    func_0205d304(var10, var0, 1, 0, 0, 1, 0);
+    Window_OpenPane(list, msg, 1, 0, 0, 1, 0);
 #else
-    func_0205d304(var10, var0, 1, 0, 0, 1, 0, 0);
+    Window_OpenPane(list, msg, 1, 0, 0, 1, 0, 0);
 #endif
 }

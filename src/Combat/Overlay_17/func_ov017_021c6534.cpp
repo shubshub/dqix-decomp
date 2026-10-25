@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
+extern "C" void* func_ov017_021b8478(void* obj);
+void* GetField6b0_021b8470(void* obj);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov017_021c6534 {
     unsigned char unknown_0_0_ : 4;
@@ -63,9 +63,9 @@ extern "C" ARM void func_ov017_021c6534(int arg0, Struct_ov017_021c6534_3* arg1,
     void* var2 = func_ov017_021b8470(var0);
     if (!var2) return;
 
-    if (var1->unknown_2a_ == func_020100a8(arg2)) return;
-    Struct_ov017_021c6534_2* var3 = &arg1->unknown_4_;
-    if (var1->unknown_8_ != var3->unknown_0_) return;
+    if (fieldObj->field_0x2a == GameState_GetProtagonistIndex(battleStruct)) return;
+    EvtData021c6534* data = &evt->data;
+    if (fieldObj->key != data->key) return;
 
     Struct_ov017_021c6534_6* var4 = (Struct_ov017_021c6534_6*)((char*)var2 + 0x1b0 + 0x8000);
     unsigned char var5[3];

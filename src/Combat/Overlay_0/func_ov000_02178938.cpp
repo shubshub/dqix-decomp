@@ -12,27 +12,27 @@ struct Struct_ov000_02178938 { char unknown_0_[0xb8]; char unknown_b8_[0x20]; ch
 struct TargetSelection { char pad[0x1d]; signed char index; };
 int CountMatchingValues02175348(void*, int);
 int IsField0x118Equal2_ov000_0217542c(void*);
-StoreStruct* GetGlobalField0x1c020421a0();
+StoreStruct* MessageSystem_GetInstance();
 int KeyTable_Get(Container020e0310*, int);
-void AppendFrameTag02041c08(char*, int, int, int, int, int);
-void AppendCursorTag_02041ea4(char*, int);
-void AppendString02042058(char*, const char*);
+void Text_AppendFrameTag(char*, int, int, int, int, int);
+void Text_AppendCursorTag(char*, int);
+void Text_Append(char*, const char*);
 extern "C" void __clear(void*, int);
-extern "C" void func_02046380(Struct_020465c0*);
-extern "C" void func_020e46c4(void*);
-extern "C" GameObject* func_0200fea4(GameState*, int);
-extern "C" void func_020e4ce8(Struct_ov000_02178938_3*, GameObject*, int);
-extern "C" void func_ov000_0217aa08(char*, char*);
-extern "C" void func_020e4f18(Struct_ov000_02178938_3*, Struct_ov000_02178938_3*, int);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" void func_02046608(Struct_020465c0*, int, const char*, char*, int, int, int);
-extern "C" void func_02041b70(char*, int, const char*);
+extern "C" void func_02046380(StoreStruct*);
+void Clear12Bytes020e46c4(void*);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+extern "C" void func_020e4ce8(NameParts*, GameObject*, int);
+void TrimTrailingLetterCode_0217aa08(char*, char*);
+extern "C" void func_020e4f18(NameParts*, NameParts*, int);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+extern "C" void MessageSystem_FormatText(StoreStruct*, int, const char*, char*, int, int, int);
+void Text_AppendNTag(char*, int, const char*);
 extern const char data_ov000_02184060[];
 
 #if defined(jpn)
 extern "C" void func_0203bdf4(char*, char*);
-extern "C" void func_02046574(Struct_020465c0*, int, char*);
-extern "C" void func_020474a8(Struct_020465c0*, int, const char*, char*);
+extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(StoreStruct*, int, char*);
+extern "C" void func_020474a8(StoreStruct*, int, const char*, char*);
 #endif
 
 // USA: func_ov000_02178938
@@ -57,28 +57,28 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
             if (var4 <= var3 && var3 < var4 + var6) var1 = var4;
         }
     }
-    int var7 = func_ov000_0217542c(arg0);
-    Struct_020465c0* var8 = func_020421a0();
+    int showCursor = IsField0x118Equal2_ov000_0217542c(menu);
+    StoreStruct* formatter = MessageSystem_GetInstance();
 #if !defined(jpn)
     GameState* game = GameState::GetInstance();
     const char* separator = (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0);
     const char* format = (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f);
 #endif
-    var0 = -1;
-    if (var7) {
-        func_02041c08(arg3, var1, 8, 5, 5, 5);
+    previous = -1;
+    if (showCursor) {
+        Text_AppendFrameTag(output, selectedStart, 8, 5, 5, 5);
     }
-    func_02041ea4(arg3, var1);
-    for (int var12 = 0; var12 < arg2; var12++) {
-        int var13 = arg0->unknown_1d1c_[var12];
-        if (var0 != var13) {
-            var0 = var13;
-            int var14 = func_ov000_02175348(arg0, var13);
-            if (var14) {
+    Text_AppendCursorTag(output, selectedStart);
+    for (int i = 0; i < count; i++) {
+        int kind = menu->kinds[i];
+        if (previous != kind) {
+            previous = kind;
+            int groupSize = CountMatchingValues02175348(menu, kind);
+            if (groupSize) {
 #if defined(jpn)
-                if (appended) AppendString02042058(output, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0));
+                if (appended) Text_Append(output, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0));
 #else
-                if (var2) func_02042058(arg3, var10);
+                if (appended) Text_Append(output, separator);
 #endif
 #if defined(jpn)
                 char var15[0x20];
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
                     func_ov000_0217aa08(var18, var15);
                 }
                 func_02046380(formatter);
-                _Z22SetIndexedName02046574P11Obj02046574iPc(formatter, 0, nameText);
+                _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(formatter, 0, nameText);
                 StoreInArray0x8b0_020465c0(formatter, 0, groupSize);
                 func_020474a8(formatter, 10, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f), text);
 #else
@@ -124,16 +124,16 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
                     func_020e4f18(&var23, &var19, 2);
                     var19.unknown_8_ &= ~0x80000000;
                 }
-                var8->unknown_20_ = &var19;
-                func_020465c0(var8, 0, var14);
-                func_02046608(var8, 10, var11, var16, 256, 0, 0);
+                formatter->name = &name;
+                StoreInArray0x8b0_020465c0(formatter, 0, groupSize);
+                MessageSystem_FormatText(formatter, 10, format, text, 256, 0, 0);
 #endif
-                func_02041b70(arg3, var12, var16);
-                var2 = 1;
+                Text_AppendNTag(output, i, text);
+                appended = 1;
             }
         }
     }
 #if !defined(jpn)
-    func_02042058(arg3, data_ov000_02184060);
+    Text_Append(output, data_ov000_02184060);
 #endif
 }

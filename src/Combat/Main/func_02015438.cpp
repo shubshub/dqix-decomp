@@ -5,14 +5,14 @@
 #include "Resource/GameResources.h"
 #include "World/Zone3D.h"
 
-struct Struct_02015438;
-struct Struct_02015438_2;
-extern "C" int func_02046b24(struct Struct_02015438** arg0);
-extern "C" void func_02015518(void* arg0, char* arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_02013e18(Zone3D* arg0);
-extern "C" void func_02017208(struct Struct_02015438_2* arg0);
-extern "C" void func_020158cc(Zone3D* arg0);
+struct HeadNode02046b24;
+struct EntryList0217208;
+int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+void ForEachElement02015518(void* a, char* list);
+void GameObject_EnableControl(void* obj);
+extern "C" void func_02013e18(Zone3D* self);
+extern "C" void func_02017208(struct EntryList0217208* self);
+extern "C" void Zone3D_UpdateChests(Zone3D* self);
 extern "C" void func_020a84e0();
 extern "C" void func_0201ba68(void*);
 extern "C" void func_0201bdac(unsigned char*);
@@ -39,24 +39,24 @@ extern "C" ARM void func_02015438(Zone3D* arg0) {
         var1 = *(char**)(var1 + 0x54);
     }
 
-    unsigned char var2 = arg0->unk_830[0];
-    if (var2 != 0) {
-        var2--;
-        arg0->unk_830[0] = var2;
-        if ((arg0->unk_830[0] & 0xff) == 0) {
-            void* var3 = var0->GetProtagonist();
-            if (var3 != 0) {
-                if (func_02046b24(
-                        *(struct Struct_02015438***)((char*)GetGameResources() + 0x3000 + Enum_02015438_1788)) != 4) {
-                    func_020397c0(var3);
+    unsigned char n = self->unk_830[0];
+    if (n != 0) {
+        n--;
+        self->unk_830[0] = n;
+        if ((self->unk_830[0] & 0xff) == 0) {
+            void* actor = battle->GetProtagonist();
+            if (actor != 0) {
+                if (GetHeadNodeIdOrMinusOne(
+                        *(struct HeadNode02046b24***)((char*)GetGameResources() + 0x3000 + headOffset)) != 4) {
+                    GameObject_EnableControl(actor);
                 }
             }
             arg0->unk_830[0] = 0;
         }
     }
 
-    func_02017208((struct Struct_02015438_2*)arg0);
-    func_020158cc(arg0);
+    func_02017208((struct EntryList0217208*)self);
+    Zone3D_UpdateChests(self);
     LightingManager::GetInstance()->RecomputeAdvancedLighting();
     func_020a84e0();
     func_0201ba68(arg0);

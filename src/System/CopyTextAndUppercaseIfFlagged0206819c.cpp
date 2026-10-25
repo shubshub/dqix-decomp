@@ -1,17 +1,9 @@
 #include <globaldefs.h>
 
 #include "std_library_functions.h"
+#include "Resource/Font.h"
 
-struct Entry0204254c {
-    int val;
-    char pad4;
-    signed char field5 : 6;
-    signed char unused6 : 1;
-    signed char uppercase : 1;
-    char pad6[2];
-};
-
-Entry0204254c *Font_FindCharacter(int key, int tableIdx);
+FontCharacter *Font_FindCharacter(int key, int tableIdx);
 void ToUpperBounded_02067f5c(signed char *text, int count);
 
 // USA: func_0206819c
@@ -19,7 +11,7 @@ ARM void CopyTextAndUppercaseIfFlagged0206819c(const char *source, char *destina
     if (source == NULL) return;
     sprintf(destination, source);
     if (*source == 0) return;
-    Entry0204254c *entry = Font_FindCharacter(reinterpret_cast<int>(source), tableIndex);
-    if (entry == NULL || !entry->uppercase) return;
-    ToUpperBounded_02067f5c(reinterpret_cast<signed char *>(destination), entry->field5);
+    FontCharacter *entry = Font_FindCharacter(reinterpret_cast<int>(source), tableIndex);
+    if (entry == NULL || !entry->lowercase_) return;
+    ToUpperBounded_02067f5c(reinterpret_cast<signed char *>(destination), entry->byteLength_);
 }

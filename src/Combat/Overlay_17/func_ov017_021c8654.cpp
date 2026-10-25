@@ -4,8 +4,8 @@
 extern "C" void* func_0202ae24(void);
 extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
 extern "C" void func_0202ae18(void);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
+void* GameState_GetParty(GameState* battleStruct);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
 
 struct Struct_ov017_021c8654 {
     unsigned char unknown_0_;
@@ -25,13 +25,13 @@ extern "C" ARM void func_ov017_021c8654(void) {
         var3[var4] = -1;
     }
 
-    unsigned char* var5 = (unsigned char*)func_02010828(var0);
-    for (int var6 = 0; var6 < var5[0xf7c]; var6++) {
-        unsigned char* var7 = var5 + var6;
-        unsigned char var8 = var7[0xf78];
-        GameObject* var9 = func_0200ff58(var0, var8);
-        if (var9 == NULL) {
-            var3[var8] = *(int*)(var5 + 0xf6c);
+    unsigned char* list = (unsigned char*)GameState_GetParty(bs);
+    for (int i = 0; i < list[0xf7c]; i++) {
+        unsigned char* row = list + i;
+        unsigned char id = row[0xf78];
+        GameObject* c = GetCombatantWithFlag0x1000_0200ff58(bs, id);
+        if (c == NULL) {
+            arr[id] = *(int*)(list + 0xf6c);
         }
     }
 

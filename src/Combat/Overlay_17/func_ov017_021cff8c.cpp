@@ -19,10 +19,10 @@ struct Struct_ov017_021cff8c_2 {
 };
 
 // USA: func_ov017_021cff8c
-extern "C" ARM void func_ov017_021cff8c(int arg0, int arg1) {
-    void* var0 = func_0202ae24();
-    GameState* var1 = GameState::GetInstance();
-    unsigned char* var2 = (unsigned char*)func_02010828(var1);
+extern "C" ARM void func_ov017_021cff8c(int id, int skipCheck) {
+    void* mgr = GetData02100044_0202ae24();
+    GameState* battle = GameState::GetInstance();
+    unsigned char* list = (unsigned char*)GameState_GetParty(battle);
 
     int var3 = 0;
     if (arg1) {

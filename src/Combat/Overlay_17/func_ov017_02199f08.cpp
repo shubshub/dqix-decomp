@@ -3,20 +3,20 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-extern "C" int func_02046b08(void** arg0);
-extern "C" void func_ov017_02199e98(void* arg0);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" int func_02039750(void* arg0);
-extern "C" int func_0203402c(struct Struct_0203402c* arg0);
-extern "C" unsigned char func_02039820(void* arg0);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_ov017_021a5bac(unsigned char* arg0);
-extern "C" void func_ov017_021996fc(unsigned char* arg0);
-extern "C" int func_02046708(struct Struct_02012de8* arg0, unsigned int arg1);
-extern "C" void func_ov017_021999fc(unsigned char* arg0);
+int IsField0Null_02046b08(void** obj);
+void CancelActionIfHeadIdMatches_02199e98(void* obj);
+void* GameState_GetParty(GameState* gs);
+int GetIntField0x260_02039750(void* obj);
+int CheckField0xc4Low15BitsNonZero(struct BitField0203402c* p);
+unsigned char GetByteField0x252_02039820(void* obj);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+extern "C" void func_ov017_021a5bac(unsigned char* base);
+void InitFieldArenaListsAndCounters_021996fc(unsigned char* base);
+int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+extern "C" void func_ov017_021999fc(unsigned char* self);
 
 struct Struct_ov017_02199684 { unsigned char unknown_0_[0x14]; int unknown_14_; unsigned char unknown_18_[0x20 - 0x18]; };
 extern "C" void func_ov017_02199684(Struct_ov017_02199684* arg0, int arg1, int arg2);
@@ -24,8 +24,8 @@ extern "C" void func_ov017_021996bc(Struct_ov017_02199684* arg0, int arg1);
 
 struct TileMap0204bc74;
 extern "C" void Background_FillRect(TileMap0204bc74* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8* obj, void* buf);
+struct BackgroundGraphics;
+void Background_UploadMap(BackgroundGraphics* obj, void* buf);
 
 struct Struct_ov017_02199780 {
     unsigned short unknown_0_0_ : 2;
@@ -51,24 +51,24 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
         return;
     }
 
-    GameState* var0 = GameState::GetInstance();
-    var0->GetProtagonist();
-    GameObject* var1 = var0->GetUnknownGameObject();
-    unsigned char* var2 = (unsigned char*)func_02010828(var0);
-    int var3 = func_02039750(var1);
+    GameState* gs = GameState::GetInstance();
+    gs->GetProtagonist();
+    GameObject* actor = gs->GetUnknownGameObject();
+    unsigned char* party = (unsigned char*)GameState_GetParty(gs);
+    int mode = GetIntField0x260_02039750(actor);
 
     if (var3 == -1) {
         if (func_0203402c((Struct_0203402c*)var1) == 0 &&
             *(int*)(arg0 + Enum_ov017_02199f08_16512) == 0) {
             if (g_keyManager.TestKeysPressed(2) &&
-                func_02039820(var1) &&
-                (*(int*)((char*)var1 + Enum_ov017_02199f08_396) & 1) == 0 &&
-                func_020535c8((signed char*)var1) == 0 &&
-                *(short*)((char*)var1 + 0xac) == 0) {
-                func_020397cc((Struct_02018300_3*)var1, 1);
-                *(unsigned short*)((char*)var1 + 0xb2) = 0;
-                func_020466e4((unsigned int*)func_020d6c00(), 0x400);
-                func_ov017_021a5bac(arg0);
+                GetByteField0x252_02039820(actor) &&
+                (*(int*)((char*)actor + regionalOffset7) & 1) == 0 &&
+                CheckSubstructByte0x7cPositive_020535c8((signed char*)actor) == 0 &&
+                *(short*)((char*)actor + 0xac) == 0) {
+                GameObject_DisableControl((Obj020397cc*)actor, 1);
+                *(unsigned short*)((char*)actor + 0xb2) = 0;
+                FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x400);
+                func_ov017_021a5bac(self);
 
                 volatile unsigned short* var4 = (volatile unsigned short*)0x400000a;
                 volatile short var5, var6;
@@ -109,8 +109,8 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
         }
     }
 
-    if (func_02046708((Struct_02012de8*)func_020d6c00(), 4) != 0) {
-        func_ov017_02199e98(arg0);
+    if (TestFlags02046708((FlagWord02046708*)GlobalFlags_GetInstance(), 4) != 0) {
+        CancelActionIfHeadIdMatches_02199e98(self);
         return;
     }
 
@@ -123,7 +123,7 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
         for (i = 0; i < 2; i++) {
             e = (Entry_02199684*)(self + regionalOffset3 + regionalOffset4) + i;
             Background_FillRect((TileMap0204bc74*)e, 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((List0204b0e8*)e, 0);
+            Background_UploadMap((BackgroundGraphics*)e, 0);
         }
         func_ov017_021996bc((Struct_ov017_02199684*)(arg0 + Enum_ov017_02199f08_180 + Enum_ov017_02199f08_15360), 2);
     }

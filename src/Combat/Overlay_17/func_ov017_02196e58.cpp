@@ -3,19 +3,19 @@
 #include "Graphics/LightingManager.h"
 #include "World/Zone3D.h"
 
-extern "C" void func_020a1df8(int arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" Zone3D* func_02012fe4(void);
-extern "C" void func_ov004_0216fa08(void* arg0);
-extern "C" void func_ov004_0216fa74(void* arg0, unsigned char arg1);
-extern "C" int func_ov004_0216f990(int arg0, int arg1, int arg2);
-extern "C" void func_ov017_021b6f18(void* arg0);
-extern "C" void func_ov017_02196c08(unsigned char* arg0);
-extern "C" bool func_ov017_021b6e70(void* arg0, int arg1);
-extern "C" void func_ov017_021b7104(void* arg0, void* arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+void PushInputLogA_020a1df8(int value);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" Zone3D* Zone3D_GetInstance(void);
+extern "C" void func_ov004_0216fa08(void* node);
+extern "C" void func_ov004_0216fa74(void* node, unsigned char value);
+extern "C" int func_ov004_0216f990(int mode, int key, int flag);
+extern "C" void func_ov017_021b6f18(void* node);
+void InitStruct_02196c08(unsigned char* obj);
+extern "C" bool func_ov017_021b6e70(void* msg, int id);
+extern "C" void func_ov017_021b7104(void* node, void* msg);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 struct Struct_ov017_02196e58_2 {
     unsigned char unknown_0_;
@@ -68,17 +68,17 @@ extern "C" ARM void func_ov017_02196e58(struct Struct_ov017_02196e58* arg0) {
     func_020469b4(arg0->unknown_36fc_, arg0->unknown_3b74_);
     func_ov017_021b6f18(arg0->unknown_3718_);
 
-    struct Struct_ov017_02196e58_2 var3;
-    func_ov017_02196c08((unsigned char*)&var3);
-    var3.unknown_0_ = 1;
-    var3.unknown_1_ = func_020100a8(var0);
-    var3.unknown_4_ = *(unsigned short*)((unsigned char*)var2 + 0x16a);
-    var3.unknown_2_ = arg0->unknown_36b6_;
-    var3.unknown_12_ = var1->timeOfDayIndex_;
+    struct NodeMsg msg;
+    InitStruct_02196c08((unsigned char*)&msg);
+    msg.kind = 1;
+    msg.actor = GameState_GetProtagonistIndex(bs);
+    msg.value = *(unsigned short*)((unsigned char*)monster + 0x16a);
+    msg.id = work->monsterIndex;
+    msg.f12 = lighting->timeOfDayIndex_;
 
-    Zone3D* var4 = func_02012fe4();
-    ActiveGrottoClass* var5 = NULL;
-    if (var4 != NULL) {
+    Zone3D* zone = Zone3D_GetInstance();
+    ActiveGrottoClass* grotto = NULL;
+    if (zone != NULL) {
 #if defined(jpn)
         var5 = &var4->grotto_;
 #else

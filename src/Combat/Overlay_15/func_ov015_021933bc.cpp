@@ -43,11 +43,11 @@ struct Struct_ov015_02190acc
     void* unknown_344_;
 };
 
-extern "C" void func_ov015_0218f0c4(Struct_ov015_0218c03c_2* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_ov015_0218b828(Struct_02000c9c_53* arg0);
+extern "C" void func_ov015_0218f0c4(ViewObject* object);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void func_ov015_0218b828(ViewerConfig* config);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov015_021933bc
 extern "C" ARM void func_ov015_021933bc(Struct_ov015_02190acc* arg0)
@@ -55,35 +55,35 @@ extern "C" ARM void func_ov015_021933bc(Struct_ov015_02190acc* arg0)
     Struct_ov015_02190e88* var0 = arg0->unknown_2c_;
     while (var0 != NULL)
     {
-        func_ov015_0218f0c4(var0->unknown_0_);
-        func_02012da4(&data_02114e20, var0->unknown_0_);
-        Struct_ov015_02190e88* var1 = var0;
-        var0 = var0->unknown_4_;
-        func_02012da4(&data_02114e20, var1);
+        func_ov015_0218f0c4(node->object_);
+        AllocatorUnion_Free(&g_mainAllocator, node->object_);
+        ViewObjectNode* next = node;
+        node = node->next_;
+        AllocatorUnion_Free(&g_mainAllocator, next);
     }
     for (int var2 = 0; var2 < 4; var2++)
     {
-        if (arg0->unknown_c4_[var2].unknown_0_ != NULL)
-            func_02012da4(&data_02114e20, arg0->unknown_c4_[var2].unknown_0_);
-        if (arg0->unknown_e4_[var2].unknown_0_ != NULL)
-            func_02012da4(&data_02114e20, arg0->unknown_e4_[var2].unknown_0_);
-        if (arg0->unknown_104_[var2].unknown_0_ != NULL)
-            func_02012da4(&data_02114e20, arg0->unknown_104_[var2].unknown_0_);
+        if (self->playerSlots_[i].states_ != NULL)
+            AllocatorUnion_Free(&g_mainAllocator, self->playerSlots_[i].states_);
+        if (self->dollSlots_[i].states_ != NULL)
+            AllocatorUnion_Free(&g_mainAllocator, self->dollSlots_[i].states_);
+        if (self->slots_[i].states_ != NULL)
+            AllocatorUnion_Free(&g_mainAllocator, self->slots_[i].states_);
     }
-    func_02012da4(&data_02114e20, arg0->unknown_88_.GetSignedAllocator());
-    func_02012da4(&data_02114e20, arg0->unknown_9c_.GetSignedAllocator());
-    func_02012da4(&data_02114e20, arg0->unknown_b0_.GetSignedAllocator());
-    arg0->unknown_88_.Destroy();
-    arg0->unknown_9c_.Destroy();
-    arg0->unknown_b0_.Destroy();
-    func_ov015_0218b828(&arg0->unknown_3c_);
-    if (arg0->unknown_84_ != NULL)
+    AllocatorUnion_Free(&g_mainAllocator, self->partsAllocator_.GetSignedAllocator());
+    AllocatorUnion_Free(&g_mainAllocator, self->monstersAllocator_.GetSignedAllocator());
+    AllocatorUnion_Free(&g_mainAllocator, self->soundsAllocator_.GetSignedAllocator());
+    self->partsAllocator_.Destroy();
+    self->monstersAllocator_.Destroy();
+    self->soundsAllocator_.Destroy();
+    func_ov015_0218b828(&self->config_);
+    if (self->buffer_ != NULL)
     {
-        func_02012da4(&data_02114e20, arg0->unknown_84_);
-        arg0->unknown_84_ = NULL;
+        AllocatorUnion_Free(&g_mainAllocator, self->buffer_);
+        self->buffer_ = NULL;
     }
     if (arg0->unknown_344_ == NULL)
         return;
-    func_02012da4(&data_02114e20, arg0->unknown_344_);
-    arg0->unknown_344_ = NULL;
+    AllocatorUnion_Free(&g_mainAllocator, self->items_);
+    self->items_ = NULL;
 }

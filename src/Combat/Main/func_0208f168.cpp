@@ -2,13 +2,13 @@
 #include "GameState/GameState.h"
 #include "NitroSDK/Matrix.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* func_0208e0a8(void);
 extern "C" void* func_02057924(void);
 extern "C" int rand(void);
 extern "C" int _s32_div_f(int a, int b);
-extern "C" int func_02018fbc(int arg0, void* arg1);
-extern "C" int func_0208e824(void* arg0, char* arg1);
+extern "C" int Zone3D_GetGroundHeight(int seed, void* v);
+int LootPointList_AppliesToMap(void* unused, char* str);
 
 struct Struct_0208f168_2 {
     unsigned int unknown_0_0_ : 9;
@@ -58,21 +58,21 @@ extern "C" ARM void func_0208f168(struct Struct_0208f168* arg0, void* arg1) {
         return;
     }
 
-    void* var0 = func_02012fe4();
-    char* var1 = *(char**)((char*)var0 + 8);
-    struct Struct_0208f168_5* var2 = (struct Struct_0208f168_5*)func_0208e0a8();
+    void* g = Zone3D_GetInstance();
+    char* name = *(char**)((char*)g + 8);
+    struct Head0208f168* h = (struct Head0208f168*)func_0208e0a8();
 
     if (var1 == 0) {
         return;
     }
-    if (func_0208e824(var2, var1 + 5) == 0) {
+    if (LootPointList_AppliesToMap(h, name + 5) == 0) {
         return;
     }
 
-    if (arg0->unknown_8_ != 0) {
-        ((Object3D*)arg0->unknown_8_)->MaybeSetBCFGAnimation(0, 0);
-        void* var3 = ((Object3D*)arg0->unknown_8_)->GetCurrentAnimationConfig();
-        if (var3 == 0) {
+    if (self->obj != 0) {
+        ((Object3D*)self->obj)->SetAnimationByIndex(0, 0);
+        void* cfg = ((Object3D*)self->obj)->GetCurrentAnimationConfig();
+        if (cfg == 0) {
             return;
         }
         BCFG::AnimationRecord* var4 = ((BCFG*)var3)->GetAnimationRecord(0);
@@ -109,15 +109,15 @@ extern "C" ARM void func_0208f168(struct Struct_0208f168* arg0, void* arg1) {
                         if (var14 == 0) {
                             return;
                         }
-                        var14->unknown_0_ = var12 + (var8 << 3);
-                        int var15 = var4->startTime;
-                        var14->unknown_10_ = var15 + (rand() % (var4->endTime - var15));
-                        var7->unknown_c_[var12].y = func_02018fbc((int)var0, (void*)&var13[var12]);
-                        *(Vector3i*)((int*)&var14->unknown_4_) = *(Vector3i const*)((int*)&var13[var12]);
-                        struct Struct_0208f168_6* var16 = arg0->unknown_c_;
-                        if (var16 == 0) {
-                            arg0->unknown_c_ = var14;
-                            var14->unknown_14_ = 0;
+                        item->index = j + (counter << 3);
+                        int base = rec->startTime;
+                        item->frame = base + (rand() % (rec->endTime - base));
+                        node->vec[j].y = Zone3D_GetGroundHeight((int)g, (void*)&v[j]);
+                        *(Vector3i*)((int*)&item->vec) = *(Vector3i const*)((int*)&v[j]);
+                        struct Item0208f168* n = self->head;
+                        if (n == 0) {
+                            self->head = item;
+                            item->link = 0;
                         } else {
                             while (var16->unknown_14_ != 0) {
                                 var16 = var16->unknown_14_;

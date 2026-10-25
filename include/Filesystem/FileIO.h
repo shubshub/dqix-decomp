@@ -5,7 +5,7 @@
 #ifdef jpn
 #endif
 
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 void* LoadFileIntoNewAllocation(const char* path, SafeAllocator& alloc, unsigned int* outLength);

@@ -13,41 +13,38 @@ enum { Enum_ov002_0215624c_43 = 0x2e };
 enum { Enum_ov002_0215624c_43 = 0x2b };
 #endif
 
-struct Struct_ov002_02155960_2;
-struct Struct_ov002_0215624c_15;
-struct Struct_ov002_0215624c_17;
-struct Struct_ov002_0215624c_18;
-struct Struct_ov002_0215624c_19;
-struct Struct_ov002_0215624c_20;
-struct Struct_ov002_0215624c_21;
-struct Struct_ov002_0215624c_22;
-struct Struct_ov002_0215624c_23;
-struct Struct_ov002_0215624c_24;
-struct Struct_ov002_0215624c_25;
-struct Struct_ov002_0215624c_11;
-struct Struct_ov002_0215624c_26;
-struct Struct_0201099c_3;
+struct Struct_0205d81c;
+struct Struct_0205c570;
+struct BackgroundGraphics;
+struct WindowPane;
+struct Struct_0205cf78;
+struct WindowPane;
+struct Struct0205a198;
+struct ClearTarget0205a234;
+struct PacRecord;
+struct Struct0205de24;
+struct Container020e0310;
 
-unsigned char *FindElementForFieldB0_0205d8c4(struct Struct_0205d81c *s);
-int IsField0x9cEqual3_0204c7cc(unsigned char *obj);
-void SetFieldAt0x30_0205bc24(void *obj, int value);
+unsigned char *Window_GetActivePane(struct Struct_0205d81c *s);
+int WindowPane_IsReady(unsigned char *obj);
+void TouchGrid_SetTouchedCell(void *obj, int value);
 extern "C" int Window_Update(void *obj, int val);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 void PushInputLogB_020a1ef0(int id);
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 void Background_SetMapSize(unsigned char *obj, int value);
 extern "C" void Background_SetPriority(void *obj, int val);
-void Background_AllocateMap(struct AllocTarget0204b12c *obj,
+void Background_AllocateMap(struct BackgroundGraphics *obj,
                                                                                          SafeAllocator *alloc);
-int Background_SetScroll(struct Obj0204b5e8 *obj, int a, int b);
+int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
 extern "C" void ColorEffect_ConfigureAlphaBlend(int reg, int a, int b, int c, int d);
 extern "C" void Background_FillRect(void *obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-void Background_UploadMap(struct List0204b0e8 *obj, void *buf);
+void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
 extern "C" void Background_LoadFile(void *obj, void *data, SafeAllocator *alloc, int size);
-void WindowPane_AllocateBuffer(struct Obj0204c7a8 *obj, SafeAllocator *alloc,
+void WindowPane_AllocateBuffer(struct WindowPane *obj, SafeAllocator *alloc,
                                                                            int buf, unsigned int size);
 void Window_SetPanes(struct Struct_0205cf78 *s,
-                                                                                     struct Elem_0205cf78 *arr,
+                                                                                     struct WindowPane *arr,
                                                                                      unsigned char count);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" void *memcpy(void *dst, const void *src, unsigned int length);
@@ -58,11 +55,11 @@ extern "C" void LoadToMainBG3CharacterData(const void *data, unsigned int offset
 void Sprite_Init(struct Struct0205a198 *s);
 void ClearField0And40205a234(struct ClearTarget0205a234 *t);
 void SpriteContext_Init(char *p);
-void *Pac_GetFile(struct Rec020467f0 *rec, int index, void **out, int *out44);
+void *Pac_GetFile(struct PacRecord *rec, int index, void **out, int *out44);
 extern "C" void SpriteContext_LoadFile(void *a, void *ptr, int val, void *d);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Pac_CountFiles(struct ActiveEntry02046900 *entry);
+int Pac_CountFiles(struct PacRecord *entry);
 extern "C" void KeyTable_Load(void *dest, void *allocator, void *fileData, unsigned int size);
 int KeyTable_Get(struct Container020e0310 *c, int key);
 extern "C" void func_020dc7e8(int a, int b);
@@ -142,9 +139,9 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         return;
     }
 
-    unsigned char *var2 = func_0205d8c4((struct Struct_ov002_02155960_2 *) (arg0 + REGIONAL_OFFSET(0xe20, 0xec8)));
-    if (var2 != 0 && func_0204c7cc(var2) && !(var2[0xc5] & 2)) {
-        func_0205bc24(&((struct Struct_ov002_0215624c_12 *) (arg0 + REGIONAL_OFFSET(0xe20, 0xec8)))->unknown_4_, -1);
+    unsigned char *e = Window_GetActivePane((struct Struct_0205d81c *) (self + REGIONAL_OFFSET(0xe20, 0xec8)));
+    if (e != 0 && WindowPane_IsReady(e) && !(e[0xc5] & 2)) {
+        TouchGrid_SetTouchedCell(&((struct Obj0ec8_0215624c *) (self + REGIONAL_OFFSET(0xe20, 0xec8)))->f4, -1);
     }
     S32(REGIONAL_OFFSET(0x1a90, 0x1bc8)) = Window_Update(self + REGIONAL_OFFSET(0xe20, 0xec8), S32(REGIONAL_OFFSET(0x1a68, 0x1ba0)));
     short old   = S16(REGIONAL_OFFSET(0x1aa8, 0x1be0));
@@ -160,7 +157,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
     if (S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) == 0) {
         PushInputLogB_020a1ef0(1);
         char *w     = (char *) GameState::GetInstance()->GetResources();
-        S32(REGIONAL_OFFSET(0x1a98, 0x1bd0)) = *(int *) ((char *) GetGlobalField0x1c020421a0() + REGIONAL_OFFSET(0x28, 0x5c));
+        S32(REGIONAL_OFFSET(0x1a98, 0x1bd0)) = *(int *) ((char *) MessageSystem_GetInstance() + REGIONAL_OFFSET(0x28, 0x5c));
         ((SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)))->Reset();
 
         struct Bytes3_0215624c prio  = data_ov002_0216c96c.prio;
@@ -172,9 +169,9 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
             o->lo = 0;
             o->hi = prio.v[i];
             Background_SetPriority(o, layer.v[i]);
-            Background_AllocateMap((struct AllocTarget0204b12c *) o,
+            Background_AllocateMap((struct BackgroundGraphics *) o,
                                                                                      (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)));
-            Background_SetScroll((struct Obj0204b5e8 *) o, 0, 0);
+            Background_SetScroll((struct BackgroundGraphics *) o, 0, 0);
         }
 
         REG16(0x0400000a) = (REG16(0x0400000a) & 0x43) | 0x1d00;
@@ -186,7 +183,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         for (int i = 0; i < 3; i++) {
             o2 = self + REGIONAL_OFFSET(0xedc, 0xf84) + i * 0x20;
             Background_FillRect(o2, 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((struct List0204b0e8 *) o2, 0);
+            Background_UploadMap((struct BackgroundGraphics *) o2, 0);
         }
 
         void *gfx = *(void **) (w + 0x2c);
@@ -202,14 +199,14 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)) = (int) ((SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)))->Allocate(0x4400);
         for (int i = 0; i < 12; i++) {
             char *o = self + REGIONAL_OFFSET(0xf3c, 0xfe4) + i * 0xe0;
-            WindowPane_AllocateBuffer((struct Obj0204c7a8 *) o,
+            WindowPane_AllocateBuffer((struct WindowPane *) o,
                                                                        (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)), S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), 0x400);
             *(char **) (o + 4) = self + REGIONAL_OFFSET(0xefc, 0xfa4);
         }
         *(char **) (arg0 + REGIONAL_OFFSET(0xeb8, 0xf60)) = arg0 + REGIONAL_OFFSET(0xedc, 0xf84);
         U8(REGIONAL_OFFSET(0xed2, 0xf7a))                 = 3;
         Window_SetPanes((struct Struct_0205cf78 *) (self + REGIONAL_OFFSET(0xe20, 0xec8)),
-                                                                             (struct Elem_0205cf78 *) (self + REGIONAL_OFFSET(0xf3c, 0xfe4)), 12);
+                                                                             (struct WindowPane *) (self + REGIONAL_OFFSET(0xf3c, 0xfe4)), 12);
 
         memset((void *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), 0, 0x60);
         memset((char *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)) + 0x20, 0x11111111, 0x20);
@@ -236,7 +233,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         for (int i = 0; i < 4; i++) {
             int val;
             void *out;
-            void *rec = Pac_GetFile((struct Rec020467f0 *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), i, &out, &val);
+            void *rec = Pac_GetFile((struct PacRecord *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), i, &out, &val);
             SpriteContext_LoadFile((void *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68)), rec, val, self + REGIONAL_OFFSET(0x7dc, 0x878));
         }
 
@@ -301,7 +298,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
             unsigned int len;
             int val;
             loader->GetLoadedFileByID(S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)), &data, &len);
-            int n = Pac_CountFiles((struct ActiveEntry02046900 *) data);
+            int n = Pac_CountFiles((struct PacRecord *) data);
             for (unsigned char i = 0; i < REGIONAL_OFFSET(0x2c, 0x2b); i++) {
                 Sprite_Init((struct Struct0205a198 *) (S32(REGIONAL_OFFSET(0x19bc, 0x1a64)) + i * 0x28));
             }
@@ -316,7 +313,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
             *(int *) (S32(REGIONAL_OFFSET(0x19c0, 0x1a68)) + 0x3c) = S32(REGIONAL_OFFSET(0x19c4, 0x1a6c));
             ((SafeAllocator *) (self + REGIONAL_OFFSET(0x7dc, 0x878)))->Reset();
             for (int i = 0; i < n; i++) {
-                void *rec = Pac_GetFile((struct Rec020467f0 *) data, i, &out, &val);
+                void *rec = Pac_GetFile((struct PacRecord *) data, i, &out, &val);
                 SpriteContext_LoadFile((void *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68)), rec, val, self + REGIONAL_OFFSET(0x7dc, 0x878));
             }
             var0->RemoveTask(S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)));

@@ -48,20 +48,20 @@ struct Struct_ov017_021c96c0_4 {
 
 struct Struct_02033f44;
 
-extern "C" Struct_ov017_021c96c0_2* func_02012fe4(void);
-extern "C" int func_ov017_021d446c(void* arg0, Struct_ov017_021c96c0* arg1, int arg2);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_02018fbc(Struct_ov017_021c96c0_2* arg0, Vector3i* arg1);
-extern "C" int* func_02033f44(Struct_02033f44* arg0);
-struct Struct_02033834_2;
-extern "C" void func_02033834(Struct_02033834_2* arg0, int arg1);
-extern "C" void func_02076ccc(void*, int);
+extern "C" Player021c96c0* Zone3D_GetInstance(void);
+extern "C" int func_ov017_021d446c(void* key, Lookup021c96c0* out, int kind);
+extern "C" int func_0202c540(void* search);
+extern "C" int Zone3D_GetGroundHeight(Player021c96c0* player, Vector3i* v);
+int* GetField0xe4IfFlag0x40(BitFlag02033f44* obj);
+struct Obj02033834;
+void GameObject_SetFacing(Obj02033834* obj, int arg);
+void TrySetMode02076ccc(void*, int);
 
 // USA: func_ov017_021c96c0
-extern "C" ARM void func_ov017_021c96c0(int arg0, Struct_ov017_021c96c0_4* arg1, int arg2, int arg3, void* arg4) {
-    Struct_ov017_021c96c0_2* var0 = func_02012fe4();
-    Struct_ov017_021c96c0 var1;
-    if (!func_ov017_021d446c(&arg1->unknown_4_, &var1, arg1->unknown_6_0_)) return;
+extern "C" ARM void func_ov017_021c96c0(int unused0, Evt021c96c0* evt, int unused2, int unused3, void* search) {
+    Player021c96c0* player = Zone3D_GetInstance();
+    Lookup021c96c0 found;
+    if (!func_ov017_021d446c(&evt->id, &found, evt->kind)) return;
 
     if (arg1->unknown_6_0_ == 10) {
         var1.unknown_8_->unknown_166_ = arg1->unknown_7_4_;
@@ -94,12 +94,12 @@ extern "C" ARM void func_ov017_021c96c0(int arg0, Struct_ov017_021c96c0_4* arg1,
             if (func_02033f44((Struct_02033f44*)var1.unknown_8_)) {
                 var2 = var1.unknown_8_->unknown_44_;
             }
-            var2.y = func_02018fbc(var0, &var2);
-            var1.unknown_8_->unknown_44_ = var2;
+            v.y = Zone3D_GetGroundHeight(player, &v);
+            found.actor->pos = v;
         }
 
-        if (var3 != 0) {
-            func_02033834((Struct_02033834_2*)var1.unknown_8_, var3);
+        if (angle != 0) {
+            GameObject_SetFacing((Obj02033834*)found.actor, angle);
         }
         if (var4) {
             var1.unknown_8_->unknown_17b_ = 1;

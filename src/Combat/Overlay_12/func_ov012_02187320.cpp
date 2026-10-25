@@ -58,14 +58,14 @@ struct SePlayer;
 struct Struct_0205c570;
 struct Struct_ov012_02186a7c;
 
-extern "C" Struct_ov012_02187320* func_020421a0();
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
+Messages02187320* MessageSystem_GetInstance();
+const char* FindEntryByKey_02072a68(TableA68* table, int key);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int arg2);
 #else
 extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int arg2, int arg3);
 #endif
-void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
+void Window_ClosePane(Entry_0205d6a0* window, int a);
 void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
 extern "C" void func_ov023_021e6e60(ProfileEditor02187320* self);
 void BuildMessageD_02189f38(char* self);
@@ -79,9 +79,9 @@ extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* arg0, int arg1, int
 #else
 extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* arg0, int arg1, int arg2, int arg3);
 #endif
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_ov012_0218943c(Struct_ov012_02187320_3* arg0);
-extern "C" int func_020457e0(Struct_ov012_02187320* arg0);
+void MessageSystem_Reset(char* messages);
+extern "C" void func_ov012_0218943c(ProfileEditor02187320* self);
+extern "C" int func_020457e0(Messages02187320* messages);
 
 extern "C" char g_sePlayer[];
 
@@ -93,20 +93,20 @@ static inline Struct_ov012_02187320_2* inline_ov012_02187320(GameState* arg0)
 // USA: func_ov012_02187320
 extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
 {
-    Struct_ov012_02187320* var0 = func_020421a0();
-    int var1 = var0->unknown_9a0_;
-    if (var1 == 3)
-        var0->unknown_19ae_ = 0;
-    if (arg0->unknown_1370_ == 0)
+    Messages02187320* messages = MessageSystem_GetInstance();
+    int windowState = messages->unk_9a0;
+    if (windowState == 3)
+        messages->unk_19ae = 0;
+    if (self->step_ == 0)
     {
 #if defined(jpn)
         func_0204500c(var0, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 0xf), 0);
 #else
         func_0204500c(var0, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 0xf), 0, 0xe3);
 #endif
-        var0->unknown_998_ = 1;
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        arg0->unknown_1370_ = 10;
+        messages->busy_ = 1;
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        self->step_ = 10;
         return;
     }
     else if (arg0->unknown_1370_ == 1)
@@ -160,12 +160,12 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
         }
         if (!var2)
             return;
-        Struct_ov012_02187320* var4 = func_020421a0();
-        int var5 = var4->unknown_998_ == 0 ? 1 : 0;
-        if (!var5)
-            func_02043204((char*)var4);
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        arg0->unknown_1370_++;
+        Messages02187320* system = MessageSystem_GetInstance();
+        int busy = system->busy_ == 0 ? 1 : 0;
+        if (!busy)
+            MessageSystem_Reset((char*)system);
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 4)
@@ -201,7 +201,7 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
 #else
         func_ov012_0218adac(arg0, 0, -1, 0);
 #endif
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        arg0->unknown_1370_ = 5;
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        self->step_ = 5;
     }
 }

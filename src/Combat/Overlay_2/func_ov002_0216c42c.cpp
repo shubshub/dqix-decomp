@@ -46,22 +46,22 @@ struct Struct_ov002_0216c42c_6 {
     unsigned int unknown_18_5_ : 7;
 };
 
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" int func_02086ef0(Struct_ov002_0216c42c* arg0, int arg1);
+void* GameState_GetParty(GameState* gs);
+extern "C" void* memset(void* dst, int c, unsigned int n);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* s, int val);
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov017_021d2cc0(void* arg0);
+int GameState_GetProtagonistIndex(GameState* gs);
+void EnqueueEventTag37_021d2cc0(void* src);
 
 // USA: func_ov002_0216c42c
-extern "C" ARM void func_ov002_0216c42c(char* arg0, Struct_ov002_0216c42c_5* arg1, Struct_ov002_0216c42c_6* arg2) {
-    if (arg1 == NULL || arg2 == NULL) return;
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov002_0216c42c* var1 = (Struct_ov002_0216c42c*)func_02010828(var0);
-    Struct_ov002_0216c42c_3 var2;
-    memset(&var2, 0, 0x10);
-    var2.unknown_0_ = 1;
-    switch (arg2->unknown_18_5_) {
+extern "C" ARM void func_ov002_0216c42c(char* base, Src0216c42c* src, Action0216c42c* action) {
+    if (src == NULL || action == NULL) return;
+    GameState* gs = GameState::GetInstance();
+    ArrayContainsByteStruct* party = (ArrayContainsByteStruct*)GameState_GetParty(gs);
+    Event0216c42c ev;
+    memset(&ev, 0, 0x10);
+    ev.kind = 1;
+    switch (action->id) {
     case 7:
         var2.unknown_1_ = 3;
         break;
@@ -100,7 +100,7 @@ extern "C" ARM void func_ov002_0216c42c(char* arg0, Struct_ov002_0216c42c_5* arg
             var3++;
         }
     }
-    var2.unknown_7_ = var3;
-    var2.unknown_e_ = func_020100a8(var0);
-    func_ov017_021d2cc0(&var2);
+    ev.count = n;
+    ev.fe = GameState_GetProtagonistIndex(gs);
+    EnqueueEventTag37_021d2cc0(&ev);
 }

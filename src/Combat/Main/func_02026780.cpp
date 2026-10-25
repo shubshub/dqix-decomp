@@ -6,21 +6,21 @@
 struct Struct_02020554;
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void* func_02012fe4(void);
+extern "C" int func_0202c540(void* p);
+extern "C" void* Zone3D_GetInstance(void);
 
 extern "C" void func_02026644(char* arg0);
 extern "C" void func_020269e4(char* arg0, const void* arg1);
 
-struct Struct_02026780_4 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_0_ : 2;
-    unsigned short unknown_4_2_ : 2;
-    unsigned short unknown_4_4_ : 3;
-    short unknown_6_;
-    Vector3fix unknown_8_;
-    struct Struct_02026780_4* unknown_14_;
+struct Cont02026780 {
+    unsigned short uniqueID;
+    unsigned short itemIDOrRank;
+    unsigned short lock : 2;
+    unsigned short lootType : 2;
+    unsigned short containerType : 3;
+    short angleOrCupboardNode;
+    Vector3fix position;
+    struct Cont02026780* pNext;
 };
 
 struct Struct_02026780_5 {
@@ -89,10 +89,10 @@ extern "C" ARM int func_02026780(Struct_02020554* arg0, void* arg1, unsigned int
         return 0;
     }
 
-    func_02012fe4();
-    var2.ResetAllocatorPointer();
-    var2.ResetAllocatorPointer();
-    var2.CreateTypeA(var1, sizeof(var1));
+    Zone3D_GetInstance();
+    alloc.ResetAllocatorPointer();
+    alloc.ResetAllocatorPointer();
+    alloc.CreateTypeA(buffer, sizeof(buffer));
 
     var0->unknown_780_ = 0;
 
@@ -125,13 +125,13 @@ extern "C" ARM int func_02026780(Struct_02020554* arg0, void* arg1, unsigned int
         ((LootableContainerManager*)&var3)->LoadZoneContainers(
             arg1, arg2, var0->unknown_77c_ + var5 * 0x1a + 2, &var2);
 
-        for (Struct_02026780_4* var11 = var3.unknown_4_; var11 != 0; var11 = var11->unknown_14_) {
-            VectorizedMemset(&var4, 0, sizeof(var4));
-            var4.unknown_0_ = var11->unknown_0_;
-            var4.unknown_2_ = var11->unknown_4_0_;
-            var4.unknown_4_ = var11->unknown_4_2_;
-            var4.unknown_6_ = var11->unknown_4_4_;
-            var4.unknown_10_ = var11->unknown_8_;
+        for (Cont02026780* c = mgr.pContainerList_; c != 0; c = c->pNext) {
+            VectorizedMemset(&rec, 0, sizeof(rec));
+            rec.id = c->uniqueID;
+            rec.f2 = c->lock;
+            rec.f4 = c->lootType;
+            rec.f6 = c->containerType;
+            rec.pos = c->position;
 
             if (var4.unknown_6_ == 0) {
                 if (var11->unknown_2_ == 0) {

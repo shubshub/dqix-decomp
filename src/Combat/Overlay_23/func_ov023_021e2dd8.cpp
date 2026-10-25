@@ -3,8 +3,8 @@
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
 
-void* GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int* p, unsigned int mask);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 void ItemTable_Init(void* obj);
 void ClearFields_021e20c0(void* p);
 void FilterSlotsWithFlag0x800020dc4d0(signed char* out, signed char* outCount);
@@ -23,8 +23,8 @@ extern "C" ARM void func_ov023_021e2dd8(unsigned char* arg0) {
     int var4;
     int var5;
 
-    var0 = func_020d6c00();
-    func_020466e4((unsigned int*)var0, 0xf);
+    p = GlobalFlags_GetInstance();
+    FlagWord_SetBits((unsigned int*)p, 0xf);
 
     *(unsigned int*)(arg0 + 0x0) = 0;
     *(unsigned int*)(arg0 + 0x4) = 0;

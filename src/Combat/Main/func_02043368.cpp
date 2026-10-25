@@ -4,16 +4,15 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 
-struct Struct_02043368_2;
-struct Struct_02043368;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct Struct0205a198;
+struct ClearTarget0205a234;
+struct PacRecord;
 
 void SpriteContext_Init(char* p);
 void Sprite_Init(struct Struct0205a198* p);
 void ClearField0And40205a234(struct ClearTarget0205a234* p);
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* outLength);
+int Pac_CountFiles(struct PacRecord* entry);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* outLength);
 extern "C" void SpriteContext_LoadFile(void* a, void* b, int c, void* d);
 
 extern char data_020f007f;
@@ -98,9 +97,9 @@ extern "C" ARM void func_02043368(struct Struct_02043368_4* arg0) {
             unsigned int foundLen;
             int recLen;
             loader->GetLoadedFileByID(self->taskId, &found, &foundLen);
-            int count = Pac_CountFiles((struct ActiveEntry02046900*)found);
+            int count = Pac_CountFiles((struct PacRecord*)found);
             for (int i = 0; i < count; i++) {
-                void* r = Pac_GetFile((struct Rec020467f0*)found, i, &rec, &recLen);
+                void* r = Pac_GetFile((struct PacRecord*)found, i, &rec, &recLen);
                 SpriteContext_LoadFile(self->table, r, recLen, self->allocator);
             }
         }

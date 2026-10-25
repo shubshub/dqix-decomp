@@ -62,28 +62,28 @@ struct Struct_ov025_021dc940_5 {
 struct Struct_02109bf4_5;
 
 extern "C" void* func_02057924(void);
-extern "C" int func_ov000_0215e9fc(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215ec1c(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_02058618(void* arg0);
-extern "C" unsigned char* func_02039e70(void);
-extern "C" int func_0203a5d0(unsigned char* arg0);
-extern "C" int func_ov025_021ed2f4(void* arg0);
-extern "C" int func_ov025_021ed0fc(void* arg0);
-extern "C" int func_0209ca2c(void* arg0);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" Struct_ov025_021dc940_4* func_ov000_02160f20(void* arg0);
-extern "C" void func_ov000_021754e0(int, int);
-extern "C" void func_ov000_0218142c(void* arg0, int arg1);
-extern "C" void func_ov000_0216f1e4(void* arg0, int* arg1, int arg2, int arg3);
-extern "C" void* func_020421a0(void);
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_0209c7fc(void* arg0);
-extern "C" void func_0209c73c(Struct_02109bf4_5* arg0);
-extern "C" void func_02048994(void);
+extern "C" int func_ov000_0215e9fc(void* party, short* buf, int max, int start);
+extern "C" int func_ov000_0215ec1c(void* party, short* buf, int max, int start);
+int CountValidCombatants02058618(void* mgr);
+unsigned char* GetData02104b6c_02039e70(void);
+int CheckFields6d0And6d4Equal_0203a5d0(unsigned char* data);
+int Check021ed2f4(void* obj);
+int IsByteFieldZero_021ed0fc(void* obj);
+int IsAnimationActive0209ca2c(void* obj);
+struct Bytes02033b88;
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+extern "C" void __clear(void* dst, int size);
+Slot_021dc940* GetSlotPtr02160f20(void* obj);
+void SetFlag0x2_021754e0(int, int);
+extern "C" void func_ov000_0218142c(void* list, int id);
+void SetPosAndFields0216f1e4(void* obj, int* pos, int a, int b);
+void* MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Stop(void* obj);
+void StopAndReset0209c7fc(void* obj);
+void DispatchActorState0209c73c(Actor0209c73c* actor);
+void ClearGlobalBuffer02107850_02048994(void);
 
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 
 static inline unsigned char inline_ov025_021dc940(GameObject* arg0) {
     return *((unsigned char*)arg0 + 0xbe);
@@ -137,7 +137,7 @@ extern "C" ARM int func_ov025_021dc940(Struct_ov025_021dc940_5* arg0) {
     if (func_ov025_021ed0fc(arg0->unknown_4d4_) == 0) {
         return 0;
     }
-    if (func_0209ca2c(&data_02109bf4) != 0) {
+    if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) {
         return 0;
     }
 
@@ -183,14 +183,14 @@ extern "C" ARM int func_ov025_021dc940(Struct_ov025_021dc940_5* arg0) {
             func_ov000_0218142c(arg0->unknown_3760_, var15);
         }
     }
-    func_ov000_0216f1e4(arg0->unknown_c18_, arg0->unknown_c88_, 0, 0);
-    func_02043124(func_020421a0());
+    SetPosAndFields0216f1e4(obj->cameraBase, obj->cameraPos, 0, 0);
+    MessageSystem_Stop(MessageSystem_GetInstance());
 
-    Struct_ov025_021dc940* var16 = arg0->unknown_29c_;
-    if (((Struct_ov025_021dc940_2*)((int)arg0 + 0x5000))->unknown_5d8_ == var16->unknown_8e24_ - 1 && var16->unknown_8e14_ != 0) {
-        func_0209c7fc(&data_02109bf4);
+    Battle_021dc940* battle = obj->battle;
+    if (((TurnBlock_021dc940*)((int)obj + 0x5000))->turn == battle->f8e24 - 1 && battle->f8e14 != 0) {
+        StopAndReset0209c7fc(&g_bgmPlayer);
     } else {
-        func_0209c73c((Struct_02109bf4_5*)&data_02109bf4);
+        DispatchActorState0209c73c((Actor0209c73c*)&g_bgmPlayer);
     }
     func_02048994();
     return 1;

@@ -4,23 +4,30 @@ struct Struct_0205bd20;
 struct Struct_0205d81c;
 struct Elem_0205d81c;
 
-int CheckActive0205bd20(struct Struct_0205bd20* s, int key);
+int TouchGrid_IsSelectionTapped(struct Struct_0205bd20* s, int key);
 struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
-int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
+int WindowPane_IsReady(unsigned char* obj);
 
+// A window: the header's CreationWindow, up to activeWindow.
 struct Obj_0205da38 {
-    char pad0[0xb0];
-    unsigned char fb0;
+    unsigned char unknown[4];
+    int frame[20];
+    int cursor[16];
+    unsigned char unknown94[4];
+    void* layers;
+    void* panes;
+    short layout[8];
+    unsigned char activeWindow;
 };
 
 // Main, originally IsActiveElementFlag2Set0205da38 (USA 0x0205da38, EUR 0x0205da48, JPN 0x0205ed4c)
-ARM int Window_IsSelectionTouched(struct Obj_0205da38* a, int key) {
-    unsigned char* e;
-    if (CheckActive0205bd20((struct Struct_0205bd20*)((char*)a + 0x4), key) == 0) goto ret0;
-    e = (unsigned char*)FindElementByC40205d81c((struct Struct_0205d81c*)a, a->fb0);
-    if (e == NULL) goto ret0;
-    if (IsField0x9cEqual3_0204c7cc(e) == 0) goto ret0;
-    if (e[0xc5] & 2) return 1;
+ARM int Window_IsSelectionTouched(struct Obj_0205da38* window, int key) {
+    unsigned char* pane;
+    if (TouchGrid_IsSelectionTapped((struct Struct_0205bd20*)window->frame, key) == 0) goto ret0;
+    pane = (unsigned char*)FindElementByC40205d81c((struct Struct_0205d81c*)window, window->activeWindow);
+    if (pane == NULL) goto ret0;
+    if (WindowPane_IsReady(pane) == 0) goto ret0;
+    if (pane[0xc5] & 2) return 1;
 ret0:
     return 0;
 }

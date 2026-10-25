@@ -3,13 +3,7 @@
 #include "Resource/Brightness.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_0201099c_16;
 struct Struct_02033834;
@@ -61,26 +55,26 @@ struct Struct_ov003_02166a90_4 {
 extern Vector3i data_ov003_0217f4b8[3];
 
 extern "C" SelectedEntry02166a90* func_ov003_02160bf8(SelectionPage02166a90*, int);
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_020108f0(void*, int);
-extern "C" void* func_02010954(char*);
-extern "C" void func_02086380(unsigned char*);
-extern "C" void func_02082d6c(Struct_02082d6c*, Struct_02082d6c_2*);
+extern "C" void* Zone3D_GetInstance(void);
+void* FindRecordByShortField020108f0(void*, int);
+void* FindSlotWithNegShort02010954(char*);
+void ResetShortFields02086380(unsigned char*);
+extern "C" void func_02082d6c(SlotState02082d6c*, SlotRecord02082d6c*);
 extern "C" void func_ov017_0218f064(GameResources*, int, int, int, int);
 extern "C" GameObject* func_0200ff58(GameState*, int);
 extern "C" void func_02033874(Struct_02033834*, int);
 extern "C" unsigned char* func_ov017_021a4658(unsigned char*, int);
-extern "C" int func_020100a8(GameState*);
-extern "C" void func_020546a0(void*, int);
-extern "C" int func_020546a8(void*);
-extern "C" void func_020546b4(void*, int);
-typedef void (*Type_ov003_02166a90)(void*, int);
-extern "C" int func_02053c6c(unsigned char*);
-extern "C" void func_02042764(unsigned char*, char*, int);
+int GameState_GetProtagonistIndex(GameState*);
+void SetField0x2d0_020546a0(void*, int);
+int GetSignedByte0x2d0_020546a8(void*);
+void SetField0x2d1_020546b4(void*, int);
+typedef void (*ByteSetterWithIntArgument02166a90)(void*, int);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void Font_DecodeText(unsigned char*, char*, int);
 int GetFieldAt0x50(Struct020865b0*);
 void PartyMember_SetVocation(unsigned char*, int);
-void* GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int*, unsigned int);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int*, unsigned int);
 int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202b7d8(int*);
@@ -89,10 +83,10 @@ extern "C" void func_ov017_021cf078(int, unsigned short, unsigned char);
 extern "C" void func_ov017_021cc97c(int);
 extern "C" void func_ov017_021cca5c(int, int);
 extern "C" void func_ov017_021ccb58(int, int);
-extern "C" void* func_0205ec34(void);
+extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0206e424(void*, int);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 extern "C" void func_ov017_02191234(unsigned char*);
 extern "C" void func_020dc2d0(int);
 extern "C" void func_ov017_02191108(void*, int, int, int, int);
@@ -112,7 +106,7 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
     }
     GameState* state = GameState::GetInstance();
     GameResources* resources = state->GetResources();
-    unsigned short* field06 = (unsigned short*)func_02012fe4();
+    unsigned short* field06 = (unsigned short*)Zone3D_GetInstance();
     if (self->step == 0) {
         int freeSlot = -1;
         for (int slot = 3; slot >= 0; slot--) {
@@ -154,37 +148,37 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         if (var1 == 0) {
             var9->unknown_b_ |= 8;
         }
-        int var10 = func_020100a8(var2);
-        ((Type_ov003_02166a90)func_020546a0)(var8, var10);
-        int var11 = 0;
-        for (int var12 = 0; var12 < 4; var12++) {
-            GameObject* var13 = func_0200ff58(var2, var12);
-            if (var13 != 0 && var12 != arg0->unknown_4a2_) {
-                if (var10 == func_020546a8(var13)) {
-                    var11++;
+        int group = GameState_GetProtagonistIndex(state);
+        ((ByteSetterWithIntArgument02166a90)SetField0x2d0_020546a0)(member, group);
+        int sameGroup = 0;
+        for (int slot = 0; slot < 4; slot++) {
+            GameObject* other = GetCombatantWithFlag0x1000_0200ff58(state, slot);
+            if (other != 0 && slot != self->slot) {
+                if (group == GetSignedByte0x2d0_020546a8(other)) {
+                    sameGroup++;
                 }
             }
         }
-        ((Type_ov003_02166a90)func_020546b4)(var8, var11);
-        func_02010828(var2);
-        Struct_ov003_02166a90_2* var14 = (Struct_ov003_02166a90_2*)func_02053c6c((unsigned char*)var8);
+        ((ByteSetterWithIntArgument02166a90)SetField0x2d1_020546b4)(member, sameGroup);
+        GameState_GetParty(state);
+        Appearance02166a90* appearance = (Appearance02166a90*)GetFieldAt0x150_02053c6c((unsigned char*)member);
 #if defined(jpn)
         strcpy(((Struct_ov003_02166a90*)var8)->unknown_134_, (char*)var0->unknown_140_);
 #else
-        char var15[0x30] = {0};
-        func_02042764(var0->unknown_140_, var15, 1);
-        strcpy(((Struct_ov003_02166a90*)var8)->unknown_134_, var15);
+        char name[0x30] = {0};
+        Font_DecodeText(entry->name, name, 1);
+        strcpy(((Combatant02166a90*)member)->name, name);
 #endif
         int index = GetFieldAt0x50((Struct020865b0*)entry);
         appearance->values[index] = entry->metadataValues[GetFieldAt0x50((Struct020865b0*)entry)];
         PartyMember_SetVocation((unsigned char*)appearance, GetFieldAt0x50((Struct020865b0*)entry));
         self->step++;
     }
-    if (arg0->unknown_4bc_ == 2) {
-        Struct_02015438** var17 = (Struct_02015438**)var3->unknown_ptr_array_36fc[1];
-        func_020466e4((unsigned int*)func_020d6c00(), 0x41);
-        if (func_02046b24(var17) != 0x13) {
-            arg0->unknown_4bc_++;
+    if (self->step == 2) {
+        HeadNode02046b24** head = (HeadNode02046b24**)resources->unknown_ptr_array_3700[0];
+        FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x41);
+        if (GetHeadNodeIdOrMinusOne(head) != 0x13) {
+            self->step++;
         }
     }
     if (arg0->unknown_4bc_ == 3) {
@@ -201,15 +195,15 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
             func_ov017_021ccb58(arg0->unknown_4a2_, 7);
             func_ov017_021ccb58(arg0->unknown_4a2_, 10);
         }
-        func_0206e424(func_0205ec34(), arg0->unknown_4a2_);
-        var2->GetPartyMemberByIndex(arg0->unknown_4a2_);
-        Struct_ov003_02166a90_4* var19 = (Struct_ov003_02166a90_4*)func_0205ec34();
-        func_0206df6c(var19, var19->unknown_8c_, 0x784, 1);
-        arg0->unknown_4bc_ = 0;
-        func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x41);
-        func_ov017_02191234((unsigned char*)var3);
-        if (var1 != 0) {
-            func_020dc2d0(0);
+        func_0206e424(Scenario_GetInstance(), self->slot);
+        state->GetPartyMemberByIndex(self->slot);
+        PartyFlags02166a90* flags = (PartyFlags02166a90*)Scenario_GetInstance();
+        Scenario_SetFlag(flags, flags->flags, 0x784, 1);
+        self->step = 0;
+        FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x41);
+        func_ov017_02191234((unsigned char*)resources);
+        if (special != 0) {
+            SetCombatModeFromCase020dc2d0(0);
         }
         func_ov017_02191108(var3, 1, 1, 1, 1);
         func_020dc7e8(6, -1);

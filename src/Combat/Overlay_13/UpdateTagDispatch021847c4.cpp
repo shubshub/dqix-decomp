@@ -15,29 +15,28 @@
 #include "GameState/GameState.h"
 
 struct Struct0205d888;
-void* GetLastEntry0205d888(struct Struct0205d888* p);
-int IsField0x9cEqual3_0204c7cc(unsigned char* obj);
-void SetFieldAt0x30_0205bc24(void* obj, int value);
-int GetGlobalField0x1c020421a0(void);
+void* Window_GetTopPane(struct Struct0205d888* p);
+int WindowPane_IsReady(unsigned char* obj);
+void TouchGrid_SetTouchedCell(void* obj, int value);
+int MessageSystem_GetInstance(void);
 void SetupAndDispatch0205c904(unsigned char* p, int val);
 
 struct Container0205a330;
-void IterateEntries0205a330(struct Container0205a330* c, int arg);
+void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
 
 struct Struct_0205bc10;
 void ClearBytes0x4cTo0x4e(struct Struct_0205bc10* s);
 
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+struct GridCursor;
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 
 struct Struct_0205d81c;
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
+void Window_SetPanePalette(struct Struct_0205d81c* s, int key, int value);
 
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 extern "C" int Window_Update(void* p, int val);
@@ -61,11 +60,11 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
     bs = GameState::GetInstance();
     *(int*)(o + R(0x5d0,0x644)) = bs->GetTickCount();
 
-    last = GetLastEntry0205d888((struct Struct0205d888*)(o + R(0x34,0x38)));
+    last = Window_GetTopPane((struct Struct0205d888*)(o + R(0x34,0x38)));
     if (last != 0) {
-        if (IsField0x9cEqual3_0204c7cc((unsigned char*)last) != 0) {
+        if (WindowPane_IsReady((unsigned char*)last) != 0) {
             if ((((unsigned char*)last)[0xc5] & 2) == 0) {
-                SetFieldAt0x30_0205bc24(o + R(0x38,0x3c), -1);
+                TouchGrid_SetTouchedCell(o + R(0x38,0x3c), -1);
             }
         }
     }
@@ -74,10 +73,10 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
     SetupAndDispatch0205c904(o + R(0x3d0,0x3d4), *(int*)(o + R(0x5d0,0x644)));
 
     {
-        int g = GetGlobalField0x1c020421a0();
+        int g = MessageSystem_GetInstance();
         struct Container0205a330* c = *(struct Container0205a330**)(g + R(0x230,0x2e0));
         if (c != 0) {
-            IterateEntries0205a330(c, bs->GetTickCount());
+            SpriteEntryList_AdvanceAnimations(c, bs->GetTickCount());
         }
     }
 
@@ -89,12 +88,12 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
             o[R(0xe5,0xe9)] = 0;
             *(int*)(o + R(0x3c,0x40)) = 1;
             *(int*)(o + R(0x8c,0x90)) = 1;
-            GridCursor_SetDimensions((struct Struct_0205ba68*)(o + R(0x38,0x3c)), 1, 6, 0);
-            GridCursor_SetDimensions((struct Struct_0205ba68*)(o + R(0x88,0x8c)), 1, 6, 0);
-            GridCursor_SetCount((struct Node0205bacc*)(o + R(0x38,0x3c)), 6);
-            GridCursor_SetCount((struct Node0205bacc*)(o + R(0x88,0x8c)), 6);
+            GridCursor_SetDimensions((struct GridCursor*)(o + R(0x38,0x3c)), 1, 6, 0);
+            GridCursor_SetDimensions((struct GridCursor*)(o + R(0x88,0x8c)), 1, 6, 0);
+            GridCursor_SetCount((struct GridCursor*)(o + R(0x38,0x3c)), 6);
+            GridCursor_SetCount((struct GridCursor*)(o + R(0x88,0x8c)), 6);
             i = *(int*)(o + R(0x5e4,0x65c));
-            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(o + R(0x38,0x3c)), i);
+            GridCursor_SelectIfValid((struct Struct_0205bcdc*)(o + R(0x38,0x3c)), i);
             GridCursor_SetSelectedIndex(o + R(0x88,0x8c), i);
             func_ov013_02186bd4(obj);
         }
@@ -102,11 +101,11 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
             o[R(0xe5,0xe9)] = 3;
             *(int*)(o + R(0x3c,0x40)) = 1;
             *(int*)(o + R(0x8c,0x90)) = 1;
-            GridCursor_SetDimensions((struct Struct_0205ba68*)(o + R(0x38,0x3c)), 1, 2, 0);
-            GridCursor_SetDimensions((struct Struct_0205ba68*)(o + R(0x88,0x8c)), 1, 2, 0);
-            GridCursor_SetCount((struct Node0205bacc*)(o + R(0x38,0x3c)), 2);
-            GridCursor_SetCount((struct Node0205bacc*)(o + R(0x88,0x8c)), 2);
-            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(o + R(0x38,0x3c)), 0);
+            GridCursor_SetDimensions((struct GridCursor*)(o + R(0x38,0x3c)), 1, 2, 0);
+            GridCursor_SetDimensions((struct GridCursor*)(o + R(0x88,0x8c)), 1, 2, 0);
+            GridCursor_SetCount((struct GridCursor*)(o + R(0x38,0x3c)), 2);
+            GridCursor_SetCount((struct GridCursor*)(o + R(0x88,0x8c)), 2);
+            GridCursor_SelectIfValid((struct Struct_0205bcdc*)(o + R(0x38,0x3c)), 0);
             GridCursor_SetSelectedIndex(o + R(0x88,0x8c), 0);
         }
         o[R(0x5cb,0x63f)] = 0;
@@ -138,7 +137,7 @@ extern "C" ARM unsigned char func_ov013_021847c4(void* obj, int param1) {
         unsigned char* p = o + i;
         unsigned char v = p[R(0x5c4,0x638)];
         struct Struct_0205d81c* s = (struct Struct_0205d81c*)(o + R(0x34,0x38));
-        SetElementFieldC2_0205deb4(s, (unsigned char)i, v);
+        Window_SetPanePalette(s, (unsigned char)i, v);
     }
 
     o[R(0x5cb,0x63f)] = (o[R(0x5c8,0x63c)] != o[R(0x5c9,0x63d)]) ? 1 : 0;

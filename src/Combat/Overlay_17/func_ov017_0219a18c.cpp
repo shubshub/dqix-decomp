@@ -4,10 +4,10 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-extern "C" void func_020534ac(char* arg0);
-extern "C" int func_02039750(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_02053604(signed char* arg0);
+void ProcessCombatState020534ac(char* combatant);
+int GetIntField0x260_02039750(void* obj);
+int GameState_GetProtagonistIndex(GameState* gameState);
+int GetIndexedEntryField0x178_02053604(signed char* obj);
 
 struct Struct_ov017_02199684 { unsigned char unknown_0_[0x14]; int unknown_14_; unsigned char unknown_18_[0x20 - 0x18]; };
 extern "C" void func_ov017_02199684(Struct_ov017_02199684* arg0, int arg1, int arg2);
@@ -67,13 +67,13 @@ extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
     Window_DrawPanes(*(Cont0205d228**)(self + 0x3000 + regionalOffset5));
     func_0205da88(*(void**)(self + 0x3000 + regionalOffset5), 1, 2, 1);
 
-    GameObject* var3 = var2->GetProtagonist();
-    GameObject* var4 = func_0200ff1c(var2, func_020100a8(var2));
-    int var5 = 0;
-    int var6;
-    int var7 = func_02039750(var3);
-    int var8 = func_02053604((signed char*)var4);
-    switch (var7) {
+    GameObject* protagonist = gs->GetProtagonist();
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(gs, GameState_GetProtagonistIndex(gs));
+    int found = 0;
+    int key;
+    int mode = GetIntField0x260_02039750(protagonist);
+    int entry = GetIndexedEntryField0x178_02053604((signed char*)combatant);
+    switch (mode) {
     case -1:
         break;
     case 0:

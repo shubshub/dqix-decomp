@@ -27,10 +27,10 @@ extern "C" void func_02080b54(void* arg0, int arg1);
 extern "C" void func_02080608(void* arg0, int arg1);
 extern "C" void func_02081130(void* arg0, int arg1, int arg2);
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" unsigned int func_ov003_02175898(char* arg0, void* arg1);
+struct ItemTable;
+struct Element020de650;
+struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
+unsigned int ComputeRatio_02175898(char* obj, void* s);
 
 extern "C" void func_0208077c(void* arg0, int arg1, short arg2);
 extern "C" int func_02080b40(void* arg0, int arg1);
@@ -72,20 +72,20 @@ extern "C" ARM int func_ov003_021767ec(char* arg0) {
     unsigned char var7 = var5 * 6;
     var6 = var7 + 6;
 
-    for (; var7 < var6; ) {
-        int var8 = 0;
-        unsigned int var9 = 0;
-        unsigned char var10 = *(unsigned char*)(arg0 + Enum_ov003_021767ec_2101);
-        if (var7 < var10) {
-            short var11 = *(short*)(arg0 + Enum_ov003_021767ec_2120 + var7 * 2);
-            struct Struct_0201099c_9* var12 = func_020dedd0((struct Struct_0201099c_10*)(arg0 + Enum_ov003_021767ec_2164), var11);
-            if (var12 != NULL) {
-                var8 = *(unsigned int*)((char*)var12 + 4);
-                var9 = func_ov003_02175898(arg0, var12);
-                func_0208077c(var0, var1, Enum_ov003_021767ec_13);
-                func_02080b40(var0, var1);
-                func_02080b40(var0, var2);
-                func_02080b40(var0, var3);
+    for (; idx < bound; ) {
+        int local1 = 0;
+        unsigned int local2 = 0;
+        unsigned char limit = *(unsigned char*)(self + kRegionValue835_7B1);
+        if (idx < limit) {
+            short key = *(short*)(self + kRegionValue848_7C4 + idx * 2);
+            struct Element020de650* elem = ItemTable_Find((struct ItemTable*)(self + kRegionValue874_7F0), key);
+            if (elem != NULL) {
+                local1 = *(unsigned int*)((char*)elem + 4);
+                local2 = ComputeRatio_02175898(self, elem);
+                SetSublistEntryField28_0208077c(o, id0, kRegionValueD_C);
+                SetEntryFlagById02080b40(o, id0);
+                SetEntryFlagById02080b40(o, id1);
+                SetEntryFlagById02080b40(o, id2);
 #if !defined(jpn)
                 func_ov003_0217818c(arg0, (struct Struct_ov003_021767ec*)var12, var2, var3);
 #endif

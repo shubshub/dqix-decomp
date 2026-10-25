@@ -10,9 +10,9 @@ struct Struct_0201d530 {
     union { int unknown_0_; float unknown1_0_; } unknown_4_;
 };
 
-struct Struct_0201099c_9;
-struct Struct_0201099c_10;
-extern "C" Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10*, int);
+struct Element020de650;
+struct ItemTable;
+Element020de650* ItemTable_Find(struct ItemTable*, int);
 
 struct Struct_ov023_021f5848 {
     unsigned short unknown_0_0_ : 13;
@@ -28,13 +28,13 @@ struct Struct_ov023_021f5848_2 {
     struct Struct_ov023_021f5848 unknown_10c_;
 };
 
-struct Struct_ov023_021fff08_6 {
-    char unknown_0_[1];
-    unsigned char unknown_1_;
-    char unknown_2_[2];
-    struct Struct_0201099c_10* unknown_4_;
-    char unknown_8_[4];
-    struct Struct_ov023_021f5848_2* unknown_c_;
+struct Data021fff08_021f5848 {
+    char pad0[1];
+    unsigned char flag;
+    char pad1[2];
+    struct ItemTable* container;
+    char pad2[4];
+    struct Target021f5848* ptr;
 };
 extern struct Struct_ov023_021fff08_6 data_ov023_021fff08;
 
@@ -51,21 +51,21 @@ extern "C" ARM int func_ov023_021f5848(struct Struct_0201c1c8* arg0) {
             var1->unknown_10c_.unknown_0_0_ |= 2;
             return 0;
         }
-        struct Struct_ov023_021f5848_3* var2 = (struct Struct_ov023_021f5848_3*)func_020dedd0(data_ov023_021fff08.unknown_4_, (short)var0);
-        if (var2 == 0) {
-            data_ov023_021fff08.unknown_1_ = 1;
-            data_ov023_021fff08.unknown_c_->unknown_10c_.unknown_0_0_ |= 2;
+        struct ElementHalf1a_021f5848* found = (struct ElementHalf1a_021f5848*)ItemTable_Find(data_ov023_021fff08.container, (short)v);
+        if (found == 0) {
+            data_ov023_021fff08.flag = 1;
+            data_ov023_021fff08.ptr->bits.low13 |= 2;
             return 0;
         }
-        func_02010828(GameState::GetInstance());
-        float var3 = ((Script::Parameter*)((struct Struct_0201d530*)((char*)arg0 + 8)))->ToFloat();
-        float var4 = ((Script::Parameter*)((struct Struct_0201d530*)((char*)arg0 + 0x10)))->ToFloat();
-        struct Random* var5 = GetBTRandom();
-        unsigned short var6 = var2->unknown_1a_;
-        float var7 = NextRandomFloatBetween(var5, var3, var4);
-        int var8 = (int)((float)var6 * var7);
-        if (var8 >= data_ov023_021fff08.unknown_c_->unknown_fc_ || (data_ov023_021fff08.unknown_c_->unknown_10c_.unknown_0_0_ & 4) != 0) {
-            data_ov023_021fff08.unknown_c_->unknown_10c_.unknown_0_0_ |= 1;
+        GameState_GetParty(GameState::GetInstance());
+        float a = ((Script::Parameter*)((struct TaggedValue02030b44*)((char*)obj + 8)))->ToFloat();
+        float b = ((Script::Parameter*)((struct TaggedValue02030b44*)((char*)obj + 0x10)))->ToFloat();
+        struct Random* rng = GetBTRandom();
+        unsigned short half1a = found->half1a;
+        float randVal = NextRandomFloatBetween(rng, a, b);
+        int result = (int)((float)half1a * randVal);
+        if (result >= data_ov023_021fff08.ptr->half0xfc || (data_ov023_021fff08.ptr->bits.low13 & 4) != 0) {
+            data_ov023_021fff08.ptr->bits.low13 |= 1;
         } else {
             data_ov023_021fff08.unknown_c_->unknown_10c_.unknown_0_0_ |= 2;
         }

@@ -7,8 +7,7 @@
 #include "NitroSDK/Matrix.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0204b010;
-struct Struct_02020cb8_3;
+struct BackgroundGraphics;
 
 struct Struct_ov003_0217c7a0
 {
@@ -41,13 +40,13 @@ struct Struct_ov003_0217c7a0_2
     int unknown_150_[3];
 };
 
-void Background_ClearMap(Obj0204b010* obj, void* buf);
+void Background_ClearMap(BackgroundGraphics* obj, void* buf);
 extern "C" void Background_FlushMap(void* obj, int flag);
 extern "C" void Background_TransferMap(void* obj, int flag);
-void ResetRecordList0204afb4(List0204afb4* list);
+void Background_Destroy(BackgroundGraphics* list);
 void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
 void ApplyVec3Tail_0202e694(void* obj, int* vec);
-void SetField0x238True_020a2794(void* obj);
+void FollowCamera_EnableFollow(void* obj);
 void ApplyVecFromField0x21e_020a2744(char* obj);
 int SetPowCnt1Bit15_0217c2a0(int enable);
 void ClearCombatantSlot_0200fd48(GameState* gs, int id);
@@ -96,23 +95,23 @@ extern "C" ARM void func_ov003_0217c7a0(Struct_ov003_0217c7a0_2* arg0)
         var3->RemoveTask(arg0->unknown_138_);
         arg0->unknown_138_ = -1;
 
-        Background_ClearMap((Obj0204b010*)&self->listA, 0);
+        Background_ClearMap((BackgroundGraphics*)&self->listA, 0);
         Background_FlushMap(&self->listA, 0);
         Background_TransferMap(&self->listA, 0);
-        ResetRecordList0204afb4((List0204afb4*)&self->listA);
-        Background_ClearMap((Obj0204b010*)&self->listB, 0);
+        Background_Destroy((BackgroundGraphics*)&self->listA);
+        Background_ClearMap((BackgroundGraphics*)&self->listB, 0);
         Background_FlushMap(&self->listB, 0);
         Background_TransferMap(&self->listB, 0);
-        ResetRecordList0204afb4((List0204afb4*)&self->listB);
+        Background_Destroy((BackgroundGraphics*)&self->listB);
 
-        func_020c5588(0, 0, 0x7fff, 0, 0);
-        Struct_ov003_0217c7a0* var4 = (Struct_ov003_0217c7a0*)func_020100bc(var1);
-        var4->unknown_10_ = arg0->unknown_144_;
-        func_0202e694(var4, arg0->unknown_150_);
-        func_020a2794(var4);
-        func_020a2744((char*)var4);
-        func_ov003_0217c2a0(0);
-        func_0200fd48(var1, 0xa0);
-        arg0->unknown_143_ = 1;
+        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Camera0217c7a0* camera = (Camera0217c7a0*)gs->GetCamera();
+        camera->position = self->cameraPosition;
+        ApplyVec3Tail_0202e694(camera, self->cameraTail);
+        FollowCamera_EnableFollow(camera);
+        ApplyVecFromField0x21e_020a2744((char*)camera);
+        SetPowCnt1Bit15_0217c2a0(0);
+        ClearCombatantSlot_0200fd48(gs, 0xa0);
+        self->finished = 1;
     }
 }

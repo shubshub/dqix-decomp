@@ -2,15 +2,15 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-extern "C" int func_020421a0(void);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void** arg0, int arg1);
-extern "C" void* func_ov023_021fad18(void* arg0);
+int MessageSystem_GetInstance(void);
+extern "C" void* func_ov011_021849c8(void* a);
+extern "C" void* func_ov023_021f6880(void** list, int value);
+extern "C" void* func_ov023_021fad18(void* obj);
 
 struct Struct_ov023_021faed0;
 extern "C" ARM void* func_ov023_021fa854(char* arg0, unsigned int arg1);
 
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+extern "C" void SpriteContext_DrawSprite(void* obj, void* entry);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -78,38 +78,38 @@ struct Struct_ov023_021faed0_2 {
 #endif
 };
 
-// USA: func_ov023_021faed0
-extern "C" ARM void func_ov023_021faed0(struct Struct_ov023_021faed0_2* arg0, void* arg1) {
-    if ((arg0->unknown_c_ & 8) == 0) {
-        void** var0 = (void**)func_ov011_021849c8(arg1);
-        void* var1 = func_ov023_021f6880(var0, arg0->unknown_20_);
-        void* var2 = func_ov023_021fad18(var1);
-        struct Struct_ov023_021faed0* var3 = (struct Struct_ov023_021faed0*)func_ov023_021fa854((char*)var2, arg0->unknown_22_);
-        int* var4 = (int*)func_020421a0();
+// USA: func_ov023_021faed0  (semantic: SyncEntryPositionAndDispatch_021faed0)
+extern "C" ARM void func_ov023_021faed0(struct Obj021faed0* obj, void* arg1) {
+    if ((obj->flags0xc & 8) == 0) {
+        void** listHead = (void**)func_ov011_021849c8(arg1);
+        void* node = func_ov023_021f6880(listHead, obj->f20);
+        void* z = func_ov023_021fad18(node);
+        struct Entry021faed0* entryPtr = (struct Entry021faed0*)GetEntryPtr_021fa854((char*)z, obj->f22);
+        int* state = (int*)MessageSystem_GetInstance();
 
         if (var3 != 0) {
 #if defined(jpn)
-            int var5 = 0;
-            signed char var6 = var3->unknown_25_;
-            signed char var7 = var3->unknown_26_;
-            if (arg0->unknown_4e_ != 0) var5 = 0x1000;
-            var3->unknown_22_ = (unsigned char)arg0->unknown_24_;
-            var3->unknown_14_ = arg0->unknown_28_ + var5;
-            var3->unknown_18_ = arg0->unknown_2c_ + var5;
-            signed char var8 = arg0->unknown_38_;
-            if (var8 >= 0) var3->unknown_25_ = var8 & 0xf;
-            signed char var9 = arg0->unknown_39_;
-            if (var9 >= 0) var3->unknown_26_ = var9 & 3;
-            func_0205ac40(var2, var3);
-            var3->unknown_14_ = arg0->unknown_28_;
-            var3->unknown_18_ = arg0->unknown_2c_;
-            arg0->unknown_4e_ = 0;
-            var3->unknown_25_ = var6;
-            var3->unknown_26_ = var7;
-            int var10 = arg0->unknown_44_;
-            if (arg0->unknown_48_ != -1) {
-                int var11 = *(int*)((char*)var4 + 0x10c) >= 2;
-                if (var11) var10 = arg0->unknown_48_;
+            int delta = 0;
+            signed char saved25 = entryPtr->b25;
+            signed char saved26 = entryPtr->b26;
+            if (obj->f4a != 0) delta = 0x1000;
+            entryPtr->b22 = (unsigned char)obj->f24;
+            entryPtr->f14 = obj->f28 + delta;
+            entryPtr->f18 = obj->f2c + delta;
+            signed char v38 = obj->f38;
+            if (v38 >= 0) entryPtr->b25 = v38 & 0xf;
+            signed char v39 = obj->f39;
+            if (v39 >= 0) entryPtr->b26 = v39 & 3;
+            SpriteContext_DrawSprite(z, entryPtr);
+            entryPtr->f14 = obj->f28;
+            entryPtr->f18 = obj->f2c;
+            obj->f4a = 0;
+            entryPtr->b25 = saved25;
+            entryPtr->b26 = saved26;
+            int selected = obj->f44;
+            if (obj->f46 != -1) {
+                int cond = *(int*)((char*)state + 0x10c) >= 2;
+                if (cond) selected = obj->f46;
             }
             if (var10 >= 0) {
                 func_0203bd08();
@@ -147,16 +147,16 @@ extern "C" ARM void func_ov023_021faed0(struct Struct_ov023_021faed0_2* arg0, vo
             }
             if (var20 != 0) var3->unknown_0_ = var20;
 
-            int var22 = *(int*)((char*)var4 + 0x14c) >= 2;
-            if (var22 && arg0->unknown_3a_ != 0) {
-                unsigned short var23 = var3->unknown_0_;
-                if (var23 > 2) {
-                    var3->unknown_0_ = var23 - 2;
-                    func_0205ac40(var2, var3);
-                    var3->unknown_0_ = var23;
+            int cond2 = *(int*)((char*)state + 0x14c) >= 2;
+            if (cond2 && obj->f3a != 0) {
+                unsigned short v0 = entryPtr->us0;
+                if (v0 > 2) {
+                    entryPtr->us0 = v0 - 2;
+                    SpriteContext_DrawSprite(z, entryPtr);
+                    entryPtr->us0 = v0;
                 }
             } else {
-                func_0205ac40(var2, var3);
+                SpriteContext_DrawSprite(z, entryPtr);
             }
 
             var3->unknown_14_ = arg0->unknown_28_;

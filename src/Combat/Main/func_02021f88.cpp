@@ -8,7 +8,7 @@
 #include "Grotto/Main/ActiveGrottoClass.h"
 #include "Resource/Brightness.h"
 
-extern "C" unsigned short* func_02012fe4(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void* func_0203bd08(void);
 extern "C" void* func_0203b628(void);
 extern "C" void func_02021428(void* arg0, int arg1);
@@ -24,11 +24,11 @@ void SpriteContext_Init(char* obj);
 
 extern "C" void* func_0203bd14();
 extern "C" void* func_0203be4c(void);
-struct Struct_02020aec;
-extern "C" int func_0205a498(void* arg0, struct Struct_02020aec* arg1, int arg2, void* arg3);
-extern "C" void func_0205af38(int arg0, char* arg1, int arg2, int arg3);
-extern "C" int func_0205a1f0(void* arg0, void* arg1, int arg2);
-extern "C" int func_020421a0(void);
+struct PacRecord;
+int ProcessRecords0205a498(void* a, struct PacRecord* b, int flag, void* d);
+void SetBitfieldStoreBytes0205af38(int a, char* obj, int c, int d);
+int ValidateResourceLookup0205a1f0(void* a, void* b, int c);
+int MessageSystem_GetInstance(void);
 extern "C" void VectorizedInvertedMemcpy(void* dst, void* src, int size);
 extern "C" void func_020c9820(void);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
@@ -41,8 +41,8 @@ extern "C" void func_02020fc4(void* arg0, int arg1, SafeAllocator* arg2);
 extern "C" void func_02020fc4(void* arg0, int* arg1, SafeAllocator* arg2);
 #endif
 extern "C" void func_020210f8(char* obj, int* handle, SafeAllocator* alloc);
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int size);
 extern "C" void func_0202445c(void* obj);
 extern "C" void func_ov017_02191234(void* obj);
@@ -130,13 +130,13 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
     SafeAllocator* var17;
 
     GameState::GetInstance();
-    var11 = BackgroundLoader::GetInstance();
-    var12 = func_02012fe4();
-    var13 = GetGameResources();
-    var14 = (char*)func_0203bd08();
-    var15 = (char*)func_0203b628();
-    var16 = arg0->unknown_9c2_;
-    var17 = inline_02021f88(var13, 12);
+    loader = BackgroundLoader::GetInstance();
+    p6 = Zone3D_GetInstance();
+    axis = GetGameResources();
+    battleCtx = (char*)func_0203bd08();
+    table = (char*)GetData02105254_0203b628();
+    state = self->loadStage;
+    alloc = GetAlloc02021f88(axis, 12);
 
     if (var16 == 0) {
         func_02021428(arg0, 0x19);
@@ -197,43 +197,43 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
         if (func_0201b5d8(*var12)) {
             if (var11->GetTaskStatus(arg0->unknown_9d0_) == 0) return;
         }
-        var4 = 0;
-        var5 = 0;
-        var11->GetLoadedFileByID(arg0->unknown_a10_, &var4, &var5);
-        func_0205a498((char*)&arg0->unknown_94_, (struct Struct_02020aec*)var4, var5, var17);
-        func_0205af38((int)((char*)&arg0->unknown_94_), (char*)&arg0->unknown_e8_[9], 1, 1);
-        func_0205af38((int)((char*)&arg0->unknown_94_), (char*)&arg0->unknown_e8_[11], 1, 1);
-        BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a10_);
-        arg0->unknown_a10_ = -1;
-        var11->GetLoadedFileByID(arg0->unknown_a14_, &var4, &var5);
-        var6 = 0;
-        if (func_0205a1f0(&var6, var4, var5) != 0) return;
-        char* var22 = (char*)func_020421a0();
-        char* var23 = *(char**)(var22 + Enum_02021f88_96);
-        VectorizedInvertedMemcpy(var6->unknown_14_, var23, var6->unknown_10_);
-        func_020c9820();
-        CleanInvalidateCacheRange(var23, var6->unknown_10_);
-        LoadToSubObjVRAM((int)var23, 0x2c20, var6->unknown_10_);
-        BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a14_);
-        arg0->unknown_a14_ = -1;
-        func_02020aa0(arg0);
-        arg0->unknown_24_ = 0;
-        arg0->unknown_30_ = 0;
-        if (func_0201b5b0(*var12)) {
-            strcpy(arg0->unknown_548_, data_020ef649);
-            arg0->unknown_38_ = 0x2000;
-            arg0->unknown_6c_ = var17->Allocate(0x800);
-            func_02027974(arg0, (int)((ActiveGrottoClass*)inline_02021f88_3(inline_02021f88_2(var12)))->floorMap_.pMapAdjacencyData, arg0->unknown_6c_);
-            arg0->unknown_18_ = -1;
-            arg0->unknown_1c_ = -1;
-            Struct_02021f88* var24 = (Struct_02021f88*)var17->Allocate(0x14);
-            if (var24 == 0) return;
-            var24->unknown_0_ = 0;
-            var24->unknown_2_ = 1;
-            var24->unknown_4_ = (short*)var17->Allocate(var24->unknown_2_ * 2);
-            if (var24->unknown_4_ == 0) return;
-            for (int var25 = 0; var25 < var24->unknown_2_; var25++) {
-                var24->unknown_4_[var25] = *var12;
+        fileData = 0;
+        fileLength = 0;
+        loader->GetLoadedFileByID(self->taska10, &fileData, &fileLength);
+        ProcessRecords0205a498((char*)&self->entryList, (struct PacRecord*)fileData, fileLength, alloc);
+        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
+        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
+        BackgroundLoader::GetInstance()->RemoveTask(self->taska10);
+        self->taska10 = -1;
+        loader->GetLoadedFileByID(self->taska14, &fileData, &fileLength);
+        res = 0;
+        if (ValidateResourceLookup0205a1f0(&res, fileData, fileLength) != 0) return;
+        char* vram = (char*)MessageSystem_GetInstance();
+        char* dst = *(char**)(vram + VramDataOffset);
+        VectorizedInvertedMemcpy(res->f14, dst, res->f10);
+        DelayThenSyncBit0_020c9820();
+        CleanInvalidateCacheRange(dst, res->f10);
+        LoadToSubObjVRAM((int)dst, 0x2c20, res->f10);
+        BackgroundLoader::GetInstance()->RemoveTask(self->taska14);
+        self->taska14 = -1;
+        InitFourEntrySlots02020aa0(self);
+        self->nameCount = 0;
+        self->forwardingCount = 0;
+        if (IsInRange0201b5b0(*p6)) {
+            strcpy(self->name, data_020ef649);
+            self->scale = 0x2000;
+            self->mapState = alloc->Allocate(0x800);
+            func_02027974(self, (int)((ActiveGrottoClass*)Off2000_02021f88(Zone02021f88(p6)))->floorMap_.pMapAdjacencyData, self->mapState);
+            self->forwardingX = -1;
+            self->forwardingY = -1;
+            Node02021f88* node = (Node02021f88*)alloc->Allocate(0x14);
+            if (node == 0) return;
+            node->type = 0;
+            node->count = 1;
+            node->data = (short*)alloc->Allocate(node->count * 2);
+            if (node->data == 0) return;
+            for (int i = 0; i < node->count; i++) {
+                node->data[i] = *p6;
             }
             Struct_02021f88* var26 = arg0->unknown_754_;
             var24->unknown_1_ = var26 ? var26->unknown_1_ + 1 : 1;
@@ -275,9 +275,9 @@ extern "C" ARM void func_02021f88(Struct_02020554* arg0) {
             self->mapPalette = self->forwardingFill + 1;
             char* zone = Zone02021f88(p6);
             Background_Init(&self->list4c);
-            self->list4c.b1c_lo = 1;
-            self->list4c.b1c_hi = 0;
-            self->list4c.byteCount = self->mapPalette << 5;
+            self->list4c.subScreen_ = 1;
+            self->list4c.bgNumber_ = 0;
+            self->list4c.characterOffset_ = self->mapPalette << 5;
             loader->AddFence();
             ActiveGrottoClass* grotto = (ActiveGrottoClass*)(zone + ZoneLargeOffset);
             if (grotto->GetActiveGrottoEnviron() == 0) {

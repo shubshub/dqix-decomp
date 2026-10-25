@@ -25,7 +25,7 @@ extern "C" void func_020289c4(Struct_020288e0*);
 extern "C" void func_0200fd48(GameState*, int);
 extern "C" void func_0200fd38(GameState*, int, GameObject*);
 extern "C" void func_0202ae18();
-extern "C" void func_02012fe4();
+extern "C" void Zone3D_GetInstance();
 extern "C" void func_02076a8c(GameObject*);
 
 // USA: func_02028a54
@@ -34,10 +34,10 @@ extern "C" ARM int func_02028a54(Struct_020288e0* arg0, int arg1)
     GameState* var0 = GameState::GetInstance();
     func_0202ae18();
     GetGameResources();
-    func_02012fe4();
-    var0->GetGrottoStruct();
-    for (int var1 = 0; var1 < 4; ++var1) {
-        if (arg1 == arg0[var1].unknown_0_) return 0;
+    Zone3D_GetInstance();
+    state->GetGrottoStruct();
+    for (int i = 0; i < 4; ++i) {
+        if (id == records[i].id) return 0;
     }
     int var2 = -1;
     for (int var3 = 0; var3 < 4; ++var3) {

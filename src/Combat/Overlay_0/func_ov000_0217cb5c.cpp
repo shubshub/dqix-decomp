@@ -43,12 +43,12 @@ struct Struct_ov000_0215ab88 {
 
 int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(SePlayer*, int, int);
-void* GetPtrField0x2a04_02010828(GameState*);
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void* GameState_GetParty(GameState*);
+void Window_ClosePane(Entry_0205d6a0*, int);
 TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
 extern SePlayer g_sePlayer;
 extern "C" {
-void func_02012fe4();
+void Zone3D_GetInstance();
 int func_ov000_0217c594(void*, int);
 void func_ov000_02174da4(void*, void*);
 void func_ov000_02177038(void*, int, int, int, int);
@@ -62,7 +62,7 @@ void func_ov000_02180394(void*);
 // USA: func_ov000_0217cb5c
 extern "C" ARM void func_ov000_0217cb5c(Struct_ov000_0215767c_2* arg0, int arg1, int arg2)
 {
-    func_02012fe4();
+    Zone3D_GetInstance();
     self->flags |= 0x100;
     int mode = Window_GetSelectedIndex((Struct_0205c570*)self->entryList);
     if (mode < 0) mode = 0;
@@ -73,21 +73,21 @@ extern "C" ARM void func_ov000_0217cb5c(Struct_ov000_0215767c_2* arg0, int arg1,
         _Z22CopyStaticData02174da4iPv(self, table);
         switch (table[self->mode]) {
         case 0:
-            func_ov000_02177038(arg0, 0, arg0->unknown_1d60_[arg0->unknown_1d68_], arg1, arg2);
-            arg0->unknown_1d68_++;
-            arg0->unknown_1d60_[arg0->unknown_1d68_] = 13;
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 1);
-            arg0->unknown_1d72_ |= 4;
-            if (func_ov000_0217f990(arg0) == 0) {
-                arg0->unknown_1d72_ &= ~4;
-                arg0->unknown_17c_ = -1;
-                GameState* var2 = GameState::GetInstance();
-                Struct_ov000_02182a74* var3 = (Struct_ov000_02182a74*)func_02010828(var2);
-                unsigned char var4 = var3->unknown_f7c_;
-                for (unsigned char var5 = 0; var5 < var4; var5++) {
-                    Struct_ov000_0215ab88* var6 = func_ov000_02161318(arg0, arg0->unknown_70_[var5]);
-                    if (var6) {
-                        var6->unknown_10_[var6->unknown_18_] = 100;
+            func_ov000_02177038(self, 0, self->kinds[self->kindIndex], a, b);
+            self->kindIndex++;
+            self->kinds[self->kindIndex] = 13;
+            Window_ClosePane((Entry_0205d6a0*)self->entryList, 1);
+            self->flags |= 4;
+            if (func_ov000_0217f990(self) == 0) {
+                self->flags &= ~4;
+                self->field17c = -1;
+                GameState* game = GameState::GetInstance();
+                Party* party = (Party*)GameState_GetParty(game);
+                unsigned char count = party->count;
+                for (unsigned char i = 0; i < count; i++) {
+                    Combatant* c = func_ov000_02161318(self, self->members[i]);
+                    if (c) {
+                        c->slots[c->slot] = 100;
                     }
                 }
             }
@@ -107,11 +107,11 @@ extern "C" ARM void func_ov000_0217cb5c(Struct_ov000_0215767c_2* arg0, int arg1,
             arg0->unknown_1d60_[arg0->unknown_1d68_] = 10;
             break;
         case 3:
-            func_ov000_02177038(arg0, 0, arg0->unknown_1d60_[arg0->unknown_1d68_], arg1, arg2);
-            arg0->unknown_1d68_++;
-            arg0->unknown_1d60_[arg0->unknown_1d68_] = 11;
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 1);
-            func_ov000_02180394(arg0);
+            func_ov000_02177038(self, 0, self->kinds[self->kindIndex], a, b);
+            self->kindIndex++;
+            self->kinds[self->kindIndex] = 11;
+            Window_ClosePane((Entry_0205d6a0*)self->entryList, 1);
+            func_ov000_02180394(self);
             break;
         }
     }

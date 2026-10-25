@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-extern "C" char *func_020421a0(void);
-extern "C" char *func_02012fe4(void);
-extern "C" void func_ov003_0216fc58(void *arg0, int arg1, int arg2);
-extern "C" void func_ov003_0216ff90(void *arg0);
-extern "C" void func_ov003_0216fe74(void *arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov003_02170960(void *arg0, int arg1, void *arg2);
+char *MessageSystem_GetInstance(void);
+extern "C" char *Zone3D_GetInstance(void);
+extern "C" void func_ov003_0216fc58(void *self, int a, int b);
+extern "C" void func_ov003_0216ff90(void *self);
+extern "C" void func_ov003_0216fe74(void *self, int a, int b, int c);
+extern "C" void func_ov003_02170960(void *self, int a, void *item);
 #if defined(jpn)
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2 *, int, char *);
-extern "C" void func_ov003_021701e4(void *arg0, int arg1);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574 *, int, char *);
+extern "C" void func_ov003_021701e4(void *self, int a);
 #define REGION_NOTIFY(self, a, item) func_ov003_021701e4(self, a)
 #else
 #define REGION_NOTIFY(self, a, item) func_ov003_02170960(self, a, item)
@@ -92,17 +92,17 @@ enum { Enum_ov003_0216f474_2112 = 0x840 };
 #endif
 
 // USA: func_ov003_0216f474
-extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *arg0) {
-    char *var0;
-    Struct_ov003_0216f474_2 *var1;
-    var1    = (Struct_ov003_0216f474_2 *) func_020421a0();
-    var0      = func_02012fe4();
-    int var2 = arg0->unknown_2_;
-    if (var2 == 0) {
-        if (arg0->unknown_d4_ != 0) {
-            Struct_ov003_0216f474 *var3 = func_ov003_0216f414(arg0->unknown_d4_, 0x19);
-            if (var3 != 0) {
-                var3->unknown_16_ &= ~2;
+extern "C" ARM void func_ov003_0216f474(Menu0216f474 *self) {
+    char *base;
+    Global0216f474 *global;
+    global    = (Global0216f474 *) MessageSystem_GetInstance();
+    base      = Zone3D_GetInstance();
+    int state = self->state_;
+    if (state == 0) {
+        if (self->unk_d4 != 0) {
+            Entry0216f474 *e = FindEntryByShortId_0216f414(self->unk_d4, 0x19);
+            if (e != 0) {
+                e->flags &= ~2;
             }
             var3 = func_ov003_0216f414(arg0->unknown_d4_, 0x1a);
             if (var3 != 0) {
@@ -180,7 +180,7 @@ extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *arg0) {
     } else if (var2 == 2) {
         Struct_ov003_0216f474_3 *var7 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
 #if defined(jpn)
-        func_02046574((Struct_02046574_2 *) var1, 0, (char *) var7);
+        MessageSystem_SetStringArgument((Obj02046574 *) global, 0, (char *) item);
 #endif
         if (var7->unknown_c_4_ == 9 || var7->unknown_c_4_ == 0xa) {
             REGION_NOTIFY(arg0, 0x25, var7);
@@ -222,8 +222,8 @@ extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *arg0) {
         }
     } else if (var2 == 3) {
 #if defined(jpn)
-        func_02046574((Struct_02046574_2 *) var1, 0, (char *) arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_]);
-        func_ov003_021701e4(arg0, 0x26);
+        MessageSystem_SetStringArgument((Obj02046574 *) global, 0, (char *) self->items_[(self->unk_0 - 1) * 8 + self->unk_6]);
+        func_ov003_021701e4(self, 0x26);
 #else
         func_ov003_02170960(arg0, 0x26, arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_]);
 #endif

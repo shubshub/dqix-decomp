@@ -1,12 +1,12 @@
 #include "Resource/CreationEnums.h"
 #include <globaldefs.h>
+#include "Resource/Font.h"
 #include <std_library_functions.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/FileIO.h"
+#include "Resource/NameFilter.h"
 
-struct ForbiddenWordFile;
-struct ForbiddenWordPattern;
 extern "C" int ForbiddenWordFile_RelocatePattern(ForbiddenWordFile*, ForbiddenWordPattern*);
 
 // The font every lookup here uses: data/pack_lv5/fi_me.bin (RegisterFieldTableEntries02042944 loads "me" second).
@@ -36,74 +36,21 @@ enum NameSpanChunk {
     NameSpanChunk_Length = 19,
 };
 
-// The two files loaded into data_0211e33c, indexing fileSizes.
+// The two files loaded into g_fileLoadBuffer, indexing fileSizes.
 enum NameFilterFile {
     NameFilterFile_Patterns = 0,      // data/bin/tv.nat
     NameFilterFile_ReservedNames = 1, // data/bin/res.nat, at the next 512-byte boundary after it
     NameFilterFile_Alignment = 512,
 };
 
-// Where in a word of the name a pattern's word must sit. 4-7 are the same four with the word as a
-// NameFilter_MatchPattern pattern instead of plain text.
-enum ForbiddenWordMatch {
-    ForbiddenWordMatch_Whole = 0,
-    ForbiddenWordMatch_Contains = 1,
-    ForbiddenWordMatch_Suffix = 2,
-    ForbiddenWordMatch_Prefix = 3,
-    ForbiddenWordMatch_PatternWhole = 4,
-    ForbiddenWordMatch_PatternContains = 5,
-    ForbiddenWordMatch_PatternSuffix = 6,
-    ForbiddenWordMatch_PatternPrefix = 7,
-};
-
-enum ForbiddenWord {
-    ForbiddenWord_MaxWords = 5,
-};
-
-// One entry of tv.nat: up to 5 words that must follow each other in the name, each with its own match type.
-struct ForbiddenWordPattern {
-    char* words_[ForbiddenWord_MaxWords];
-    signed char lengths_[ForbiddenWord_MaxWords];        // in tokens; for a pattern, the fewest it matches
-    unsigned char matchTypes_[ForbiddenWord_MaxWords];   // ForbiddenWordMatch
-    unsigned char count_;
-    char pad1f;
-};
-struct ForbiddenWordHeader {
-    unsigned int count_ : 12;
-    unsigned int textSize_ : 19;
-    unsigned int relocated_ : 1;
-};
-static inline unsigned int inline_ov009_02189a4c_4(unsigned int arg0, unsigned int arg1) {
-    unsigned int var0 = arg1 - 1;
-    return (arg0 + var0) & ~var0;
+static inline unsigned int AlignUp(unsigned int value, unsigned int alignment) {
+    unsigned int mask = alignment - 1;
+    return (value + mask) & ~mask;
 }
-struct Struct_ov009_02189a4c_2 {
-    Struct_ov009_02189a4c_4 unknown_0_;
-    Struct_ov009_02189a4c_3* unknown_4_;
-    char* unknown_8_;
-};
-struct FontCharacter {
-    char* text_;
-    signed char width_;
-    signed char byteLength_ : 6;
-    signed char unknownBit6_ : 1;
-    signed char lowercase_ : 1;
-    char pad6[2];
-};
 struct Header020e0424 { unsigned int count_ : 12; unsigned int textSize_ : 19; unsigned int relocated_ : 1; };
 struct KeyTableEntry { int key_; char* text_; };
 struct Container020e0310 : Header020e0424 { KeyTableEntry* entries_; char* texts_; };
 struct Struct020dfc40 : Container020e0310 { short unknownC_; short unknownE_; int loaderTask_; void* unknown14_; };
-struct NameFilter {
-    Struct020dfc40 reservedNames;
-    ForbiddenWordFile patterns;
-    void* reservedNamesData;
-    unsigned short reservedNamesSize;
-    unsigned char letterClassId, groupStartId, groupEndId, repeatStartId, repeatEndId, negateId, rangeId, wildcardId;
-    unsigned char dollarId, slashId, atId, ampersandId, commaId, cSlashId, apostropheId;
-    unsigned char pad39[3];
-    inline ForbiddenWordFile* GetPatterns() { return &patterns; }
-};
 struct CharacterCreation {
     char pad0[0xfc];
     NameFilter nameFilter_;
@@ -170,17 +117,17 @@ extern "C" ARM void CharacterCreationUI_CheckName(CharacterCreation* self) {
     NameFilter_Reset(&self->nameFilter_);
     fileSizes[NameFilterFile_Patterns] = 0;
     fileSizes[NameFilterFile_ReservedNames] = 0;
-    LoadFileIntoMemory(NameFilter_patternsFilePath, data_0211e33c, &fileSizes[NameFilterFile_Patterns]);
+    LoadFileIntoMemory(NameFilter_patternsFilePath, g_fileLoadBuffer, &fileSizes[NameFilterFile_Patterns]);
     unsigned int reservedNamesOffset = (fileSizes[NameFilterFile_Patterns] + (NameFilterFile_Alignment - 1)) & ~(NameFilterFile_Alignment - 1);
-    LoadFileIntoMemory(NameFilter_reservedNamesFilePath, data_0211e33c + reservedNamesOffset, &fileSizes[NameFilterFile_ReservedNames]);
-    KeyTable_Reset(&self->nameFilter_.reservedNames);
-    KeyTable_LoadInPlace(&self->nameFilter_.reservedNames, data_0211e33c + reservedNamesOffset, fileSizes[NameFilterFile_ReservedNames]);
+    LoadFileIntoMemory(NameFilter_reservedNamesFilePath, g_fileLoadBuffer + reservedNamesOffset, &fileSizes[NameFilterFile_ReservedNames]);
+    KeyTable_Reset((Struct020dfc40*)self->nameFilter_.reservedNames);
+    KeyTable_LoadInPlace(self->nameFilter_.reservedNames, g_fileLoadBuffer + reservedNamesOffset, fileSizes[NameFilterFile_ReservedNames]);
     memset(&self->nameFilter_.patterns, 0, sizeof(ForbiddenWordFile));
-    unsigned char* patternsFile = data_0211e33c;
+    unsigned char* patternsFile = g_fileLoadBuffer;
     if (patternsFile) {
-        memcpy(&self->nameFilter_.patterns, data_0211e33c, sizeof(ForbiddenWordHeader));
+        memcpy(&self->nameFilter_.patterns, g_fileLoadBuffer, sizeof(ForbiddenWordHeader));
         unsigned int patternsOffset = AlignUp(sizeof(ForbiddenWordHeader), 4);
-        unsigned char* base = data_0211e33c;
+        unsigned char* base = g_fileLoadBuffer;
         self->nameFilter_.patterns.patterns_ = (ForbiddenWordPattern*)(base + patternsOffset);
         unsigned int patternsSize = PatternOffset(0, self->nameFilter_.patterns.header_.count_, sizeof(ForbiddenWordPattern), 4);
         self->nameFilter_.patterns.texts_ = (char*)(base + (patternsOffset + patternsSize));
@@ -196,13 +143,13 @@ extern "C" ARM void CharacterCreationUI_CheckName(CharacterCreation* self) {
                 }
             }
             self->nameFilter_.patterns.header_.relocated_ = 1;
-            ((ForbiddenWordHeader*)data_0211e33c)->relocated_ = 1;
+            ((ForbiddenWordHeader*)g_fileLoadBuffer)->relocated_ = 1;
         }
     }
     self->nameFilter_.reservedNamesData = 0;
     self->nameFilter_.reservedNamesSize = 0;
     if (fileSizes[NameFilterFile_ReservedNames]) {
-        self->nameFilter_.reservedNamesData = data_0211e33c + reservedNamesOffset;
+        self->nameFilter_.reservedNamesData = g_fileLoadBuffer + reservedNamesOffset;
         self->nameFilter_.reservedNamesSize = fileSizes[NameFilterFile_ReservedNames];
     }
     int rejected;
@@ -227,9 +174,9 @@ extern "C" ARM void CharacterCreationUI_CheckName(CharacterCreation* self) {
         }
         int nameLength = strlen(upperName);
         int reservedIndex;
-        int reservedCount = KeyTable_GetCount(&self->nameFilter_.reservedNames);
+        int reservedCount = KeyTable_GetCount((Struct020dfc40*)self->nameFilter_.reservedNames);
         for (reservedIndex = 0; reservedIndex < reservedCount; ++reservedIndex) {
-            char* reservedName = (char*)KeyTable_Get(&self->nameFilter_.reservedNames, (short)reservedIndex);
+            char* reservedName = (char*)KeyTable_Get((Struct020dfc40*)self->nameFilter_.reservedNames, (short)reservedIndex);
             if (reservedName && *reservedName) {
                 int reservedLength = strlen(reservedName);
                 if (reservedLength == nameLength && strcmp(reservedName, upperName) == 0) { isReservedName = 1; goto reservedChecked; }

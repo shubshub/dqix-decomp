@@ -44,7 +44,7 @@ extern char data_ov025_021efb1e[];
 extern char data_ov025_021efb3a[];
 #endif
 extern char data_ov025_021ef83e[];
-extern char data_0211e33c[];
+extern char g_fileLoadBuffer[];
 extern char data_ov025_021ef857[];
 extern char data_ov025_021ef86d[];
 
@@ -61,16 +61,16 @@ extern "C" ARM int func_ov025_021e771c(short* arg0, int arg1, int arg2, int arg3
     BackgroundLoader::AddLockGlobal();
     unsigned int var6;
 #if defined(jpn)
-    void* var7 = LoadFileIntoMemory(data_ov025_021efb1e, data_0211e33c, &var6);
+    void* data = LoadFileIntoMemory(data_ov025_021efb1e, g_fileLoadBuffer, &size);
 #else
-    void* var7 = LoadFileIntoMemory(data_ov025_021ef83e, data_0211e33c, &var6);
+    void* data = LoadFileIntoMemory(data_ov025_021ef83e, g_fileLoadBuffer, &size);
 #endif
 
     if (var7 != 0) {
         func_020709d8(var4);
         func_02070b6c(var4, var5, var7, var6, arg2, arg3);
 #if defined(jpn)
-        void* var8 = LoadFileIntoMemory(data_ov025_021efb3a, data_0211e33c, &var6);
+        void* data2 = LoadFileIntoMemory(data_ov025_021efb3a, g_fileLoadBuffer, &size);
 #else
         void* var8 = ExtractFileFromGP2(data_ov025_021ef857, data_ov025_021ef86d, &var6);
 #endif

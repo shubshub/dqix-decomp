@@ -35,14 +35,14 @@ extern Struct_021098e8_2 data_021098e8;
 extern Script::OpcodeLookupEntry data_020f1504[];
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_02046380(Struct_020465c0* arg0);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void func_020cf0fc(int arg0);
-extern "C" Struct_020465c0* func_020421a0(void);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" int func_02098f20(int arg0, int arg1, int arg2);
-extern "C" void func_02046574(Struct_02046574_2* arg0, int arg1, char* arg2);
+extern "C" int func_0202c508(void* gs);
+extern "C" void func_02046380(StoreStruct* store);
+extern "C" void* memset(void* dst, int value, unsigned int length);
+void RegisterSlotA020cf0fc(int out);
+StoreStruct* MessageSystem_GetInstance(void);
+void StoreInArray0x8b0_020465c0(StoreStruct* store, int index, int value);
+int CalculateAge_02098f20(int a, int b, int c);
+void MessageSystem_SetStringArgument(Obj02046574* obj, int index, char* name);
 
 // USA: func_02099304
 extern "C" ARM int func_02099304(Struct_02099304* arg0, char* arg1, const void* arg2, unsigned int arg3, void* arg4, int arg5, unsigned char arg6, char* arg7, char* arg8) {
@@ -91,15 +91,15 @@ extern "C" ARM int func_02099304(Struct_02099304* arg0, char* arg1, const void* 
         }
     }
 
-    Struct_020465c0* var3 = func_020421a0();
-    func_02046380(var3);
-    unsigned int var4 = arg0->unknown_2_0_;
-    func_020465c0(var3, 1, arg0->unknown_1_4_);
-    func_020465c0(var3, 2, var4);
-    if (arg0->unknown_3_7_) {
-        int var5;
-        if (arg0->unknown_4_0_ < 0) {
-            var5 = 0;
+    StoreStruct* store = MessageSystem_GetInstance();
+    func_02046380(store);
+    unsigned int hi = request->hi;
+    StoreInArray0x8b0_020465c0(store, 1, request->mid);
+    StoreInArray0x8b0_020465c0(store, 2, hi);
+    if (request->top) {
+        int age;
+        if (request->offset < 0) {
+            age = 0;
         } else {
             var5 = func_02098f20(arg0->unknown_0_0_, arg0->unknown_1_4_, arg0->unknown_2_0_);
             if (var5 < 0) {
@@ -108,9 +108,9 @@ extern "C" ARM int func_02099304(Struct_02099304* arg0, char* arg1, const void* 
         }
         func_020465c0(var3, 0, var5);
     }
-    func_02046574((Struct_02046574_2*)var3, 0, arg1);
-    func_02046574((Struct_02046574_2*)var3, 1, arg7);
-    func_02046574((Struct_02046574_2*)var3, 2, arg8);
+    MessageSystem_SetStringArgument((Obj02046574*)store, 0, name);
+    MessageSystem_SetStringArgument((Obj02046574*)store, 1, nameA);
+    MessageSystem_SetStringArgument((Obj02046574*)store, 2, nameB);
 
     var2.Initialize();
     var2.SetOpcodeLookup(data_020f1504);

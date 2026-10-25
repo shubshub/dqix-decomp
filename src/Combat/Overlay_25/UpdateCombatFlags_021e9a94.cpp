@@ -16,7 +16,7 @@ struct In021e9a94 {
 // USA: func_ov025_021e9a94
 ARM void UpdateCombatFlags_021e9a94(struct In021e9a94* obj) {
     GameState* bs = GameState::GetInstance();
-    void* val = GetField0x3b0Value_020100bc(bs);
+    void* val = bs->GetCamera();
     bs->GetResources();
     GetActiveCombatWork_ov000_02160130();
     if (data_ov025_021ef9a4 & 1) {

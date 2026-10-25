@@ -46,6 +46,14 @@ enum KeyboardResult
     KeyboardResult_KeyDisabled = 13,
 };
 
+// The auto-repeat of a held D-pad direction (Keyboard::repeatTimer), in ticks: Keyboard_Update starts the timer at
+// InitialDelay when a direction is pressed and restarts it at Delay after each repeat.
+enum KeyboardRepeat
+{
+    KeyboardRepeat_InitialDelay = 20,
+    KeyboardRepeat_Delay = 10,
+};
+
 // The name keyboard as a grid for a GridCursor: 11 columns by 6 rows.
 enum KeyboardGrid
 {

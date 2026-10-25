@@ -8,9 +8,9 @@ struct Struct_ov028_021d97d8_2;
 extern "C" void func_ov028_021d999c(Struct_ov028_021d97d8_2* arg0, Struct_ov028_021d97d8* arg1);
 
 extern "C" void func_ov028_021d987c(void*);
-struct Struct_0201c1c8;
-struct Struct_0201c3a4;
-extern "C" int func_020d2ff0(const char* arg0);
+struct Variant02030b0c;
+struct Struct02030b7c;
+int STD_GetStringLength(const char* s);
 
 struct Struct_ov028_021d9bc4_2 {
     void* unknown_0_;
@@ -19,20 +19,20 @@ struct Struct_ov028_021d9bc4_2 {
 extern Struct_ov028_021d9bc4_2 data_ov028_021d9bc4;
 
 // USA: func_ov028_021d97d8
-extern "C" ARM int func_ov028_021d97d8(void* arg0) {
-    Struct_ov028_021d97d8 var0;
-    func_ov028_021d987c(&var0);
-    var0.unknown_0_ = (short)((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-    var0.unknown_4_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 8)))->ToInt();
-    var0.unknown_2_ = (short)((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x10)))->ToInt();
-    const char* var1 = (const char*)(void*)((Script::Parameter*)((struct Struct_0201c3a4*)((char*)arg0 + 0x18)))->ToString();
-    if (var1 != 0) {
-        int var2 = func_020d2ff0(var1);
-        char* var3 = (char*)data_ov028_021d9bc4.unknown_4_->Allocate(var2 + 1);
-        if (var3 != 0) {
-            memset(var3, 0, var2);
-            sprintf(var3, var1);
-            var0.unknown_8_ = (int)var3;
+extern "C" ARM int func_ov028_021d97d8(void* obj) {
+    Entry_021d999c local;
+    func_ov028_021d987c(&local);
+    local.a = (short)((Script::Parameter*)((struct Variant02030b0c*)obj))->ToInt();
+    local.c = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+    local.b = (short)((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x10)))->ToInt();
+    const char* text = (const char*)(void*)((Script::Parameter*)((struct Struct02030b7c*)((char*)obj + 0x18)))->ToString();
+    if (text != 0) {
+        int len = STD_GetStringLength(text);
+        char* buf = (char*)data_ov028_021d9bc4.field4->Allocate(len + 1);
+        if (buf != 0) {
+            memset(buf, 0, len);
+            sprintf(buf, text);
+            local.d = (int)buf;
         }
     }
     func_ov028_021d999c((Struct_ov028_021d97d8_2*)data_ov028_021d9bc4.unknown_0_, &var0);

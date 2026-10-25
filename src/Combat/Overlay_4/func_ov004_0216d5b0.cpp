@@ -11,8 +11,8 @@ extern "C" unsigned int func_ov023_021f6f10(void* arg0);
 extern "C" int func_ov024_021f6f10(void* arg0);
 #define NODE_KIND_CALL func_ov024_021f6f10
 #endif
-extern "C" void* func_ov023_021fa598(void* arg0);
-extern "C" int func_020421a0();
+extern "C" void* func_ov023_021fa598(void* p);
+int MessageSystem_GetInstance();
 extern "C" int func_020abb64(void);
 struct Struct_02072a68_2;
 extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
@@ -26,9 +26,9 @@ extern "C" ARM int func_ov004_0216d5b0(void* arg0) {
     if (!var0) return 0;
     if (NODE_KIND_CALL(var0) != 4) return 0;
 
-    struct Struct_02072a68_2* var1 = (struct Struct_02072a68_2*)func_ov023_021fa598(var0);
-    GameState* var2 = GameState::GetInstance();
-    Struct_02021b84* var3 = (Struct_02021b84*)func_020421a0();
+    struct TableA68* table = (struct TableA68*)func_ov023_021fa598(node);
+    GameState* battle = GameState::GetInstance();
+    MessageSystem* message = (MessageSystem*)MessageSystem_GetInstance();
 
     if (func_020abb64() == 0) {
         void* var4 = func_02072a68(var1, 0x5dd);

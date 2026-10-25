@@ -96,15 +96,15 @@ extern "C" ARM void func_ov017_021c8c44(int arg0, Struct_ov017_021c8c44* arg1, G
         }
     }
 
-    for (int var11 = 0; var11 < 4; var11++) {
-        Struct_ov017_021c8c44_2* var12 = (Struct_ov017_021c8c44_2*)func_0200ff1c(arg2, var11);
-        if (var12 != NULL) {
-            if (arg0 == var12->unknown_0_.unknown_4_) {
-                func_02053f7c((Struct_02053f7c_3*)var12, 0, 1);
-            } else if (var12->unknown_0_.unknown_0_ & 0x1000) {
-                Struct_ov017_021c8c44_2* var13 = (Struct_ov017_021c8c44_2*)func_0200ff1c(arg2, 0);
-                if (var13 != NULL) {
-                    func_02053f7c((Struct_02053f7c_3*)var12, var13->unknown_1b2_, 1);
+    for (int j = 0; j < 4; j++) {
+        Combatant021c8c44* c = (Combatant021c8c44*)GetCombatantWithFlag0x100_0200ff1c(gs, j);
+        if (c != NULL) {
+            if (id == c->obj3D.actorIndex_) {
+                SetField0x1b2IfMatchOrFlag02053f7c((Obj02053f7c*)c, 0, 1);
+            } else if (c->obj3D.unknown_0_ & 0x1000) {
+                Combatant021c8c44* leader = (Combatant021c8c44*)GetCombatantWithFlag0x100_0200ff1c(gs, 0);
+                if (leader != NULL) {
+                    SetField0x1b2IfMatchOrFlag02053f7c((Obj02053f7c*)c, leader->field_1b2, 1);
                 }
             }
         }

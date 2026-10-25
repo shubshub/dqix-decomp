@@ -59,12 +59,12 @@ struct Struct_02016874_3 {
     void* unknown_2750_;
 };
 
-extern "C" void* func_0202ed74(void* arg0);
-extern "C" void func_02016d8c(void* arg0);
-extern "C" int func_020c56b0(int* arg0);
-extern "C" void func_02047648(unsigned char* arg0, int arg1, int arg2);
-extern "C" void func_0204724c(Struct_0201730c* arg0);
-extern "C" void func_020472e4(Struct_0201730c_2* arg0, int arg1);
+void* GetPtrField0x144_0202ed74(void* obj);
+void RenderConfig_SetObjectRotation(void* arg);
+int GetBoxTestResult_020c56b0(int* out);
+void SubmitGxCommands02047648(unsigned char* obj, int idx, int something);
+void AdvanceStreamRecord0204724c(Obj0204724C* obj);
+void RenderTransformedFlaggedIndexedEntry(StructAt020472e4* obj, int param);
 
 extern Vector3i data_020e6e20;
 extern int data_020e6e64[4];
@@ -73,12 +73,12 @@ extern int data_020e6e64[4];
 extern "C" ARM void func_0201730c(Struct_02016874_3* arg0) {
     if (arg0->unknown_2750_ == NULL) return;
 
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_020100bc(var0);
-    if (var1 == NULL) return;
-    var0->GetTickCount();
-    unsigned short var2 = LightingManager::GetInstance()->maybePotBarrelDiffuseColor_;
-    func_02016d8c(func_0202ed74(var1));
+    GameState* game = GameState::GetInstance();
+    void* camera = game->GetCamera();
+    if (camera == NULL) return;
+    game->GetTickCount();
+    unsigned short lightColor = LightingManager::GetInstance()->maybePotBarrelDiffuseColor_;
+    RenderConfig_SetObjectRotation(GetPtrField0x144_0202ed74(camera));
 
     for (int var3 = 0; var3 < arg0->unknown_476_; var3++) {
         Struct_0201730c_4* var4 = &arg0->unknown_478_[var3];
@@ -134,18 +134,18 @@ extern "C" ARM void func_0201730c(Struct_02016874_3* arg0) {
                 func_0204724c((Struct_0201730c*)&var4->unknown_90_);
                 func_020472e4(&var4->unknown_90_, 1);
             }
-            for (int var9 = 0; var9 < 4; var9++) {
-                Struct_0201730c_3* var10 = &var4->unknown_118_[var9];
-                RenderConfig::SetObjectPosition(&var10->unknown_1c_);
-                Matrix3x3* var11 = (Matrix3x3*)func_0202ed74(var1);
-                Matrix3x3 var12;
-                Matrix3x3 var13;
-                fix32_t var14 = data_020e6e64[var9];
-                fix32_t var15 = fix32cos(var14);
-                fix32_t var16 = fix32sin(var14);
-                Mat3x3_WriteRotationY(&var12, var16, var15);
-                Mat3x3_Multiply(var11, &var12, &var13);
-                func_02016d8c(&var13);
+            for (int j = 0; j < 4; j++) {
+                CombatRecord* segment = &entry->segments[j];
+                RenderConfig::SetObjectPosition(&segment->position);
+                Matrix3x3* viewMatrix = (Matrix3x3*)GetPtrField0x144_0202ed74(camera);
+                Matrix3x3 rotation;
+                Matrix3x3 transformed;
+                fix32_t angle = data_020e6e64[j];
+                fix32_t cosine = fix32cos(angle);
+                fix32_t sine = fix32sin(angle);
+                Mat3x3_WriteRotationY(&rotation, sine, cosine);
+                Mat3x3_Multiply(viewMatrix, &rotation, &transformed);
+                RenderConfig_SetObjectRotation(&transformed);
                 RenderConfig::SubmitToFifo();
                 func_02047648((unsigned char*)var10, 0, 1);
             }

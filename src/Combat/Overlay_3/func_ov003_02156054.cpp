@@ -1,11 +1,8 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-extern "C" void* func_0205ec34(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 extern int data_ov003_0217f304[];
 
@@ -25,12 +22,12 @@ extern "C" ARM void func_ov003_02156054(struct Struct_ov003_02156054* arg0) {
         arg0->unknown_20_[var0] = var1;
         var0++;
     }
-    unsigned char* var2 = (unsigned char*)func_0205ec34();
-    for (unsigned char var3 = 0; data_ov003_0217f304[var3] != 0; var3++) {
-        int var4 = inline_ov003_02156054(var3);
-        if (func_0206dfb0((int)var2, var2 + 0x8c, var4 + 0x113f)) {
-            arg0->unknown_20_[var0] = var4;
-            var0++;
+    unsigned char* ctx = (unsigned char*)Scenario_GetInstance();
+    for (unsigned char j = 0; data_ov003_0217f304[j] != 0; j++) {
+        int id = GetId02156054(j);
+        if (Scenario_TestFlag((int)ctx, ctx + 0x8c, id + 0x113f)) {
+            self->entries[count] = id;
+            count++;
         }
     }
 }

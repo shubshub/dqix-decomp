@@ -14,7 +14,7 @@ enum { Enum_ov003_0217c974_716 = 0x2cc };
 struct Struct_020534ac;
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 struct Vector3i;
@@ -32,7 +32,7 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
     ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(arg0 + 0x130)), (void**)(&var1), (unsigned int*)(&var2));
 
     void* mgr = GetGameResources();
-    CopyInternalFields0207df50((struct Foo0207df50*)((char*)mgr + kRegionValue2CC_27C));
+    VramState_Rewind((struct Foo0207df50*)((char*)mgr + kRegionValue2CC_27C));
     VramState_Restore((char*)mgr + kRegionValue2CC_27C);
 
     unsigned int var4;
@@ -47,16 +47,16 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
         return;
     }
 
-    ObjectArchiveLoadInfo var8;
-    var8.unk_0 = 0;
-    var8.fileData = var7;
-    var8.unk_14 = 0;
-    var8.unk_18 = 0;
-    var8.packageID = 0;
-    var8.allocator = (SafeAllocator*)(arg0 + 4);
-    var8.unk_8 = var6;
-    var8.unk_10 = 1;
-    ((Object3D*)(arg0 + 0x80))->LoadFromCCHROrCMOTArchive(&var8, 0);
+    ObjectArchiveLoadInfo params;
+    params.unk_0 = 0;
+    params.fileData = decompressed;
+    params.unk_14 = 0;
+    params.unk_18 = 0;
+    params.packageID = 0;
+    params.allocator = (SafeAllocator*)(self + 4);
+    params.fileSize = decompSize;
+    params.unk_10 = 1;
+    ((Object3D*)(self + 0x80))->LoadFromCCHROrCMOTArchive(&params, 0);
 
     VramState_Save((char*)mgr + kRegionValue2CC_27C);
 
@@ -66,5 +66,5 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
     *(int*)(arg0 + 0xcc) = 0;
     ((Object3D*)((unsigned char*)(arg0 + 0x80)))->SetScale((Vector3i const*)&var9);
 
-    ((Object3D*)(arg0 + 0x80))->MaybeSetRegularAnimation((char const*)&data_ov003_02180c23, 0);
+    ((Object3D*)(self + 0x80))->SetAnimationByName((char const*)&data_ov003_02180c23, 0);
 }

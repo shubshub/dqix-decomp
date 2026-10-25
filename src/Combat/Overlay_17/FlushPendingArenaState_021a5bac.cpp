@@ -21,7 +21,7 @@ void Window_FlushLayers(struct Cont0205d274* obj);
 struct Obj0205d2bc;
 void Window_TransferLayers(struct Obj0205d2bc* obj);
 struct Obj0205d048;
-extern "C" void func_0205d048(struct Obj0205d048* obj);
+extern "C" void Window_Destroy(struct Obj0205d048* obj);
 
 void InitFieldArenaLists_021a5b48(unsigned char* base);
 
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov017_021a5bac(unsigned char* base) {
 
             ClearAndEncodeField14_021a5b08((struct Node0x20_021a5ad0*)(base + RegionOffset4094), 2);
 
-            func_0205d048((struct Obj0205d048*)list);
+            Window_Destroy((struct Obj0205d048*)list);
 
             *dispcnt = (*dispcnt & ~0x1f00) | 0x1300;
         }

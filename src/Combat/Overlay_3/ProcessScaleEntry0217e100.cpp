@@ -13,30 +13,30 @@ enum { kRegionValue3C_38 = 0x3c };
 
 struct Struct_0205d81c;
 struct Elem_0205d81c;
-Elem_0205d81c* FindElementForFieldB0_0205d8c4(Struct_0205d81c*);
+Elem_0205d81c* Window_GetActivePane(Struct_0205d81c*);
 
-int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char*);
+int WindowPane_IsOpen(unsigned char*);
 
 struct Struct_0205c570;
 int Window_GetSelectedIndex(Struct_0205c570*);
 
 struct Container0205a3d0;
 struct Elem0205a3d0;
-void SetEntryFlag2ByKey0205a370(Container0205a3d0*, int);
-Elem0205a3d0* FindEntryByHalfword0205a3d0(Container0205a3d0*, int);
+void SpriteEntryList_PlayAnimation(Container0205a3d0*, int);
+Elem0205a3d0* SpriteEntryList_Find(Container0205a3d0*, int);
 
 struct Container0205a330;
-void IterateEntries0205a330(Container0205a330*, int);
+void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
 
-extern "C" void func_0205ae8c(void*);
+extern "C" void SpriteContext_DrawEntries(void*);
 
 // USA: func_ov003_0217e100
 ARM void ProcessScaleEntry0217e100(void* obj) {
     GameState* battleStruct = GameState::GetInstance();
     void* sub = *(void**)((char*)obj + kRegionValue90_8C);
-    Elem_0205d81c* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)sub);
+    Elem_0205d81c* elem = Window_GetActivePane((Struct_0205d81c*)sub);
     if (elem == NULL) return;
-    if (!CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)elem)) return;
+    if (!WindowPane_IsOpen((unsigned char*)elem)) return;
 
     sub = *(void**)((char*)obj + kRegionValue90_8C);
     short a = *(short*)((char*)elem + 0xae);
@@ -51,20 +51,20 @@ ARM void ProcessScaleEntry0217e100(void* obj) {
     Container0205a3d0* cont = *(Container0205a3d0**)((char*)obj + kRegionValue78_74);
     if (cont == NULL) return;
 
-    SetEntryFlag2ByKey0205a370(cont, 0);
-    Elem0205a3d0* entry = FindEntryByHalfword0205a3d0(cont, 0);
+    SpriteEntryList_PlayAnimation(cont, 0);
+    Elem0205a3d0* entry = SpriteEntryList_Find(cont, 0);
     if (entry != NULL) {
         *(unsigned char*)((char*)entry + 0x15) |= 8;
     }
 
     int scaleCount = (int)battleStruct->GetTickCount();
-    IterateEntries0205a330((Container0205a330*)cont, scaleCount);
+    SpriteEntryList_AdvanceAnimations((Container0205a330*)cont, scaleCount);
 
-    entry = FindEntryByHalfword0205a3d0(cont, 0);
+    entry = SpriteEntryList_Find(cont, 0);
     if (entry != NULL) {
         *(short*)((char*)entry + 0x4) = (short)((int)c << 3) - 4;
         *(short*)((char*)entry + 0x6) = comp + 2;
     }
 
-    func_0205ae8c((char*)obj + kRegionValue3C_38);
+    SpriteContext_DrawEntries((char*)obj + kRegionValue3C_38);
 }

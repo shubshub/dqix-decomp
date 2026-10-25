@@ -3,9 +3,9 @@
 #include "Combat/BattleSkillEligibility.h"
 #include "Grotto/Main/ActiveGrottoClass.h"
 
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void* func_ov000_02153758(void* arg0, int arg1);
-extern "C" char* func_02012fe4(void);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
+void* FindEntryForCombatant02153758(void* obj, int idx);
+extern "C" char* Zone3D_GetInstance(void);
 
 struct Struct_ov000_02159dbc {
     char unknown_0_[0xa];
@@ -29,8 +29,8 @@ extern "C" ARM int func_ov000_02159dbc(char* arg0, int arg1) {
     if (var2 == 0) {
         return 1;
     }
-    char* var3 = func_02012fe4();
-    if (func_020117f0(var0) && (*(struct Struct_ov000_02159dbc_2**)(arg0 + 0x8e18))->unknown_25_ != 0) {
+    char* zone = Zone3D_GetInstance();
+    if (IsGlobalU16InRange_020117f0(gs) && (*(struct PartyWork_02159dbc**)(battle + 0x8e18))->field_0x25 != 0) {
 #if defined(jpn)
         enum { Enum_ov000_02159dbc_9196 = 0x240c };
 #else

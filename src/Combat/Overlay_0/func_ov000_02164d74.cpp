@@ -83,14 +83,14 @@ extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
 #define REG_POWCNT1 (*(volatile unsigned short*)0x04000304)
 
 // USA: func_ov000_02164d74
-extern "C" ARM void func_ov000_02164d74(struct Struct_ov000_02164d74_5* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    func_ov000_02163524(arg0);
-    struct Struct_ov000_02164d74* var2 = (Struct_ov000_02164d74*)func_02010828(var0);
-    int var3;
-    for (var3 = 0; var3 < var2->unknown_f7c_; var3++) {
-        func_ov000_0217feb0(arg0->unknown_3760_, 1, var2->unknown_f78_[var3]);
+extern "C" ARM void func_ov000_02164d74(struct Battle02164d74* battle) {
+    GameState* gs = GameState::GetInstance();
+    GameResources* ov = GetGameResources();
+    GetField02163524(battle);
+    struct PtrBlock02164d74* pb = (PtrBlock02164d74*)GameState_GetParty(gs);
+    int i;
+    for (i = 0; i < pb->count; i++) {
+        func_ov000_0217feb0(battle->sub3760, 1, pb->ids[i]);
     }
     REG_POWCNT1 |= 0x8000;
     for (var3 = 0; var3 < 4; var3++) {

@@ -6270,7 +6270,7 @@ from:0x021ae6ec kind:arm_call to:0x021c2744 module:overlay(17)
 from:0x021ae710 kind:arm_call to:0x02046a4c module:main
 from:0x021ae718 kind:arm_call to:0x021ae760 module:overlay(17)
 from:0x021ae734 kind:load to:0x021d799c module:overlay(17)
-from:0x021ae738 kind:load to:0x021d79a2 module:overlay(17)
+from:0x021ae738 kind:load to:0x021d799c add:0x6 module:overlay(17)
 from:0x021ae740 kind:load to:0x02114e20 module:main
 from:0x021ae750 kind:load to:0x02108760 module:main
 from:0x021ae758 kind:load to:0x021d6ac4 module:overlay(17)

@@ -175,54 +175,54 @@ extern "C" void func_0203409c(unsigned char*);
 extern "C" void func_02039d58(unsigned char*);
 extern "C" int func_02039888(void*);
 void Vector3fixMultiplyScalar(const Vector3i* v, int s, Vector3i* out);
-extern "C" void func_020338d4(Struct_020338d4*, Struct_ov009_0218aa28*);
-extern "C" void func_ov017_021cee78(int arg0, unsigned char arg1);
-extern "C" void func_02053ec8(void*, int);
-extern "C" int func_0202b7d8(int*);
-struct Struct_0202c1a4;
-extern "C" int func_0202c1a4(Struct_0202c1a4*);
-extern "C" void func_02076ccc(void*, int);
-extern "C" void func_02076a8c(Struct_ov000_0215f7a8* arg0);
-extern "C" void func_ov017_0219bf74();
-extern "C" void func_ov017_0219bd1c(int arg0, int arg1, int arg2, int arg3);
-extern "C" struct Struct_ov017_0219e384* func_0200fd0c(GameState*);
-extern "C" int func_020100a8(GameState*);
-extern "C" void func_ov017_021a27e8(void* arg0);
-extern "C" void func_ov017_0219b938(int arg0);
-extern "C" int func_0203cf4c();
-extern "C" int func_0203e06c(void*);
-extern "C" void func_ov000_02160fa8(void*, int);
+void AimAndSetVecY020338d4(Struct020338d4*, Vec3*);
+void EnqueueEventTag20_021cee78(int id, unsigned char v);
+void SetField0x158_02053ec8(void*, int);
+int CheckField0NonZero_0202b7d8(int*);
+struct SearchStruct0202c1a4;
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+void TrySetMode02076ccc(void*, int);
+extern "C" void func_02076a8c(Actor* a);
+void ResetOverlayAndAllocator_0219bf74();
+extern "C" void func_ov017_0219bd1c(int a, int b, int c, int d);
+struct Field3f8* GetField0x3f8Address_0200fd0c(GameState*);
+int GameState_GetProtagonistIndex(GameState*);
+void ClearSlotsAndProcess_021a27e8(void* controller);
+extern "C" void func_ov017_0219b938(int ov);
+int GetGlobalPtr021075f4_0203cf4c();
+int GetField0x8c_0203e06c(void*);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
 struct Struct_0203cfb4;
-extern "C" void func_0203cfb4(Struct_0203cfb4*);
-extern "C" void func_ov017_021a316c(int arg0);
-extern "C" void func_ov000_02163524(void*);
-extern "C" void func_ov000_0216d2d0(void* arg0);
-extern "C" void func_ov000_0216f700(void* arg0, int arg1);
-struct Struct_0202df68;
-extern "C" void func_0202e9a4(Struct_0202df68*, int);
-extern "C" void func_020100c4(GameState*, int);
-extern "C" void func_020134e0(void* arg0);
-extern "C" void func_ov017_021a050c(GameResources* arg0);
-extern "C" int func_ov017_0219e008(void*);
-extern "C" void func_ov017_021a1114(char*);
-extern "C" void func_ov017_021a07f4(int arg0);
-extern "C" void func_ov017_0219dffc(void*, int);
-struct Struct_02053da0;
-extern "C" void func_02053da0(char*, Struct_02053da0*);
-extern "C" void func_ov000_02161300(Struct_ov000_021643d4_7* arg0, int arg1);
-extern "C" void func_02039894(unsigned char*);
-extern "C" int func_0202c540(int arg0);
-extern "C" void func_ov017_0219c774(int arg0, int arg1, int arg2);
-extern "C" void func_ov017_021cdaa0();
-extern "C" void func_020ac4c0(void*);
-struct Struct_020a07e0;
-extern "C" void func_020a07e0(Struct_020a07e0*, unsigned int);
-struct Struct_020a00d4;
-extern "C" void func_020a00d4(Struct_020a00d4*, unsigned int);
-extern "C" void func_020ac494(void*);
-extern "C" void func_0201075c(char*, unsigned char);
-extern "C" void func_ov017_021c894c(int arg0);
-extern "C" void func_ov017_021c8758(int arg0);
+void Init0203cfb4(Struct_0203cfb4*);
+extern "C" void func_ov017_021a316c(int ov);
+void GetField02163524(void*);
+extern "C" void func_ov000_0216d2d0(void* p);
+void SetIntField540_0216f700(void* p, int v);
+struct AngleTrig0202e9a4;
+void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4*, int);
+void GameState_SetCamera(GameState*, int);
+extern "C" void func_020134e0(void* p);
+void ResetTaskAndDestroyAllocators_021a050c(GameResources* resources);
+int GetFieldB08_0219e008(void*);
+void DestroyAllocatorsFromTable_021a1114(char*);
+extern "C" void func_ov017_021a07f4(int ov);
+void SetFieldB08_0219dffc(void*, int);
+struct Field0x19cData;
+void SetAndClearField0x19c_02053da0(char*, Field0x19cData*);
+extern "C" void func_ov000_02161300(CombatRoot* c, int i);
+void SetFlag0x1ceBit0x1_02039894(unsigned char*);
+extern "C" int func_0202c540(int p);
+extern "C" void func_ov017_0219c774(int a, int b, int c);
+void EnqueueEventTag147_021cdaa0();
+void LoadBattleBlock020ac4c0(void*);
+struct S_a07e0;
+void AddClamped24BitFieldAt0x3c_020a07e0(S_a07e0*, unsigned int);
+struct S_a00d4;
+void AddClamped16BitFieldAt0x10_020a00d4(S_a00d4*, unsigned int);
+void CopyInBattleField0x7540_020ac494(void*);
+void SetField0x5729Value_0201075c(char*, unsigned char);
+extern "C" void func_ov017_021c894c(int a);
+extern "C" void func_ov017_021c8758(int a);
 extern "C" void func_ov017_021c8654();
 extern "C" void func_ov017_021c847c();
 extern "C" void func_02048994();
@@ -232,19 +232,19 @@ extern float data_ov000_021838e8[5];
 extern float data_ov000_0218423c[5];
 
 // USA: func_ov000_021643d4
-extern "C" ARM void func_ov000_021643d4(Struct_ov000_021643d4_7* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_0202ae18(BackgroundLoader::GetInstance());
-    GameResources* var2 = GetGameResources();
-    int var3 = (int)var2;
-    Struct_ov000_021643d4* var4 = (Struct_ov000_021643d4*)func_02027cb0();
-    Zone3D* var5 = func_02012fe4();
-    Struct_ov000_021643d4_2* var6 = (Struct_ov000_021643d4_2*)func_02010828(var0);
-    Struct_ov000_0215f7a8* var7 = (Struct_ov000_0215f7a8*)var0->GetProtagonist();
-    Struct_ov000_0215f7a8* var8 = func_ov017_021a278c((void*)var3, arg0->unknown_2a0_->unknown_8_);
-    var0->GetUnknownGameObject();
-    Struct_ov000_0215f7a8* var9 = (Struct_ov000_0215f7a8*)var0->GetPartyMemberByIndex(arg0->unknown_2a0_->unknown_2a_);
-    arg0->unknown_0_ = (*(volatile unsigned int*)0x4000000 & 0x1f00) >> 8;
+extern "C" ARM void func_ov000_021643d4(CombatRoot* c) {
+    GameState* gs = GameState::GetInstance();
+    int search = func_0202ae18(BackgroundLoader::GetInstance());
+    GameResources* resources = GetGameResources();
+    int ov = (int)resources;
+    EntryInfo* entry = (EntryInfo*)FindEntryByCurrentId02027cb0();
+    Zone3D* obj14 = Zone3D_GetInstance();
+    PtrBlock* pb = (PtrBlock*)GameState_GetParty(gs);
+    Actor* hero = (Actor*)gs->GetProtagonist();
+    Actor* enemy = FindCombatantByField16a_021a278c((void*)ov, c->info->id8);
+    gs->GetUnknownGameObject();
+    Actor* leader = (Actor*)gs->GetPartyMemberByIndex(c->info->partyIdx);
+    c->savedPlanes = (*(volatile unsigned int*)0x4000000 & 0x1f00) >> 8;
     {
         volatile unsigned int* var10 = (volatile unsigned int*)0x4001000;
         unsigned int var11 = (*var10 & 0x1f00) >> 8;
@@ -281,24 +281,24 @@ extern "C" ARM void func_ov000_021643d4(Struct_ov000_021643d4_7* arg0) {
             var13->unknown_50_ = var14->unknown_50_;
         }
     }
-    if (var8) {
-        Vector3i var15 = var8->unknown_44_;
-        for (int var16 = 0; var16 < var6->unknown_f7c_; var16++) {
-            int var17 = var6->unknown_f78_[var16];
-            Struct_ov000_0215f7a8* var18 = (Struct_ov000_0215f7a8*)var0->GetMaybeWanderingMonsterByIndex(var17);
-            if (!var18) continue;
-            if (arg0->unknown_2a0_->unknown_4_ == 0) {
-                Vector3i var19 = var18->unknown_44_;
-                Vector3i var20, var21;
-                Vector3fix_Subtract(&var15, &var19, &var20);
-                Vector3fix_Normalize(&var20, &var20);
-                int var22 = Vector3fix_Distance(&var15, &var19);
-                int var23 = ((Object3D*)var18)->GetRadius();
-                int var24 = (var23 + ((Object3D*)var8)->GetRadius()) / 2;
-                Vector3fixMultiplyScalar(&var20, var22 - (var24 + 0x1000), &var21);
-                var19 = func_02019210(var5, &var19, &var21, ((Object3D*)var18)->GetRadius() / 2);
-                var19.y = func_02018fbc(var5, &var19);
-                var18->unknown_44_ = var19;
+    if (enemy) {
+        Vector3i ep = enemy->pos;
+        for (int j = 0; j < pb->count; j++) {
+            int id = pb->ids[j];
+            Actor* mon = (Actor*)gs->GetMaybeWanderingMonsterByIndex(id);
+            if (!mon) continue;
+            if (c->info->flag4 == 0) {
+                Vector3i mp = mon->pos;
+                Vector3i dir, off;
+                Vector3fix_Subtract(&ep, &mp, &dir);
+                Vector3fix_Normalize(&dir, &dir);
+                int dist = Vector3fix_Distance(&ep, &mp);
+                int r = ((Object3D*)mon)->GetRadius();
+                int half = (r + ((Object3D*)enemy)->GetRadius()) / 2;
+                Vector3fixMultiplyScalar(&dir, dist - (half + 0x1000), &off);
+                mp = Zone3D_ClipMoveAgainstWalls(obj14, &mp, &off, ((Object3D*)mon)->GetRadius() / 2);
+                mp.y = Zone3D_GetGroundHeight(obj14, &mp);
+                mon->pos = mp;
             }
             func_020338d4((Struct_020338d4*)var18, (Struct_ov009_0218aa28*)&var15);
             func_ov017_021cee78(var17, 0);
@@ -318,10 +318,10 @@ extern "C" ARM void func_ov000_021643d4(Struct_ov000_021643d4_7* arg0) {
     }
     func_ov017_0219bf74();
     func_ov017_0219bd1c(0, 4, 1, 0);
-    char* var25 = (char*)func_0200fd0c(var0);
-    int var26 = func_020100a8(var0);
-    *(Vector3i*)(var25 + 0x10) = arg0->unknown_5910_[var26].unknown_0_;
-    *(short*)(var25 + 0x1c) = arg0->unknown_5910_[var26].unknown_c_;
+    char* f3f8 = (char*)GetField0x3f8Address_0200fd0c(gs);
+    int sel = GameState_GetProtagonistIndex(gs);
+    *(Vector3i*)(f3f8 + 0x10) = c->party[sel].pos;
+    *(short*)(f3f8 + 0x1c) = c->party[sel].angle;
 #if defined(jpn)
     unsigned int var27 = *(unsigned short*)(*(char**)((char*)var3 + 0x3000 + 0x508) + 0x600 + 0xc4);
 #else
@@ -342,29 +342,29 @@ extern "C" ARM void func_ov000_021643d4(Struct_ov000_021643d4_7* arg0) {
     if (func_0203e06c((void*)var31) > 0) {
         func_ov000_02160fa8(arg0, 0x1000);
     }
-    func_0203cfb4((Struct_0203cfb4*)var31);
-    func_ov017_021a316c(var3);
-    SetFlags04((GameResources*)var3, 0x80);
-    SetFlags04((GameResources*)var3, 4);
-    SetFlags04((GameResources*)var3, 0x10);
-    func_ov000_02163524(arg0);
-    SetFlags04((GameResources*)var3, 2);
-    SetFlags00((GameResources*)var3, 4);
-    SetFlags00((GameResources*)var3, 0x20);
-    SetFlags04((GameResources*)var3, 0x10);
-    SetFlags04((GameResources*)var3, 0x40);
-    SetFlags04((GameResources*)var3, 0x80);
-    inline_ov000_021643d4_2(*var5).inline_ov000_021643d4() = 0;
-    SetFlags08((GameResources*)var3, 4);
-    func_ov000_0216d2d0(arg0->unknown_c18_);
-    func_ov000_0216f700(arg0->unknown_c18_, arg0->unknown_29c_);
-    arg0->unknown_e20_ = 0x800;
-    arg0->unknown_e24_ = 1;
-    arg0->unknown_2a4_ = func_020100bc(var0);
-    if (arg0->unknown_2a4_) {
-        func_0202e9a4((Struct_0202df68*)((int)arg0->unknown_2a4_), 0xf);
+    Init0203cfb4((Struct_0203cfb4*)glob);
+    func_ov017_021a316c(ov);
+    SetFlags04((GameResources*)ov, 0x80);
+    SetFlags04((GameResources*)ov, 4);
+    SetFlags04((GameResources*)ov, 0x10);
+    GetField02163524(c);
+    SetFlags04((GameResources*)ov, 2);
+    SetFlags00((GameResources*)ov, 4);
+    SetFlags00((GameResources*)ov, 0x20);
+    SetFlags04((GameResources*)ov, 0x10);
+    SetFlags04((GameResources*)ov, 0x40);
+    SetFlags04((GameResources*)ov, 0x80);
+    GetInitState(*obj14).ByteB6() = 0;
+    SetFlags08((GameResources*)ov, 4);
+    func_ov000_0216d2d0(c->sub_c18);
+    SetIntField540_0216f700(c->sub_c18, c->f29c);
+    c->fe20 = 0x800;
+    c->fe24 = 1;
+    c->f2a4 = gs->GetCamera();
+    if (c->f2a4) {
+        SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)((int)c->f2a4), 0xf);
     }
-    func_020100c4(var0, (int)arg0->unknown_c18_);
+    GameState_SetCamera(gs, (int)c->sub_c18);
 #if defined(jpn)
     func_020134e0((char*)arg0 + 0x244 + 0xc00);
 #else
@@ -410,10 +410,10 @@ extern "C" ARM void func_ov000_021643d4(Struct_ov000_021643d4_7* arg0) {
             func_02053ec8(var39, 1);
         }
     }
-    if (!func_0202b7d8((int*)var1)) {
-        func_ov000_02160fa8(arg0, 2);
-    } else if (func_020100a8(var0) == arg0->unknown_2a0_->unknown_2a_) {
-        func_ov000_02160fa8(arg0, 2);
+    if (!CheckField0NonZero_0202b7d8((int*)search)) {
+        SetCombatWorkFlags0x55f4_ov000_02160fa8(c, 2);
+    } else if (GameState_GetProtagonistIndex(gs) == c->info->partyIdx) {
+        SetCombatWorkFlags0x55f4_ov000_02160fa8(c, 2);
     }
     if (func_0202c540(var1)) {
         func_ov017_0219c774(0, 1, 0);

@@ -22,7 +22,7 @@ void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 char *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
 void GetFourShortsAtIndex(struct ShortArrays0204c610 *p, int idx, short *a, short *b, short *c, short *d);
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc *s, int idx);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc *s, int idx);
 void SyncModeIfChanged0215b268(char *base);
 extern "C" void GridCursor_SetSelectedIndex(void *p, int idx);
 extern "C" void func_ov002_02161cf0(void *base);
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov002_02169bb0(char *base) {
                             *vals[i]                         = v;
                             int sel                          = *(short *) (base + RG(0x1c00 + 0xe, 0x1a00 + 0xd6));
                             char *list                       = base + RG(0x2c8 + 0xc00, 0xe20);
-                            SetIndexIfValid0205bcdc((struct Struct_0205bcdc *) (list + 4), sel);
+                            GridCursor_SelectIfValid((struct Struct_0205bcdc *) (list + 4), sel);
                             GridCursor_SetSelectedIndex(list + 0x54, sel);
                             func_ov002_0215b9a4(base, RG(0x23, 0x26), 0);
                             SyncModeIfChanged0215b268(base);

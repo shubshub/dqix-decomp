@@ -5,13 +5,13 @@ struct Struct_0205de24_2;
 extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
 #if defined(jpn)
 #define func_ov013_02185e40 func_ov013_02186f4c
-extern "C" void func_0205d304(void*, char*, int, int, int, int, void*);
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,0,0,1,NULL)
-enum { Enum_ov013_02185cc0_56=0x34, Enum_ov013_02185cc0_1600=0x5cc, Enum_ov013_02185cc0_1620=0x5dc, Enum_ov013_02185cc0_2400=0x800 };
+extern "C" void Window_OpenPane(void*, char*, int, int, int, int, void*);
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,0,0,1,NULL)
+enum { windowOffset=0x34, subScreenOffset=0x5cc, canvasOffset=0x5dc, textSize=0x800 };
 #else
-extern "C" void func_0205d304(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5, void* arg6, int arg7);
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,0,0,1,NULL,0)
-enum { Enum_ov013_02185cc0_56=0x38, Enum_ov013_02185cc0_1600=0x640, Enum_ov013_02185cc0_1620=0x654, Enum_ov013_02185cc0_2400=0x960 };
+extern "C" void Window_OpenPane(void* window, char* text, int c, int d, int e, int f, void* g, int h);
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,0,0,1,NULL,0)
+enum { windowOffset=0x38, subScreenOffset=0x640, canvasOffset=0x654, textSize=0x960 };
 #endif
 extern "C" void func_ov013_02185e40(void* arg0, char* arg1);
 

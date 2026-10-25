@@ -12,21 +12,21 @@
 #include <GameState/GameState.h>
 #include "Resource/GameResources.h"
 
-struct Struct_0201099c_10;
-struct Struct_02052e14;
-struct Struct_ov005_0215acc0_2 { char unknown_0_[LOW_REGION(0x4f8, 0x4fc)]; int unknown_4fc_; };
-struct Struct_ov005_0215b0a0 {
+struct ItemTable;
+struct Field150Holder02052e14;
+struct CombatObject { char pad[LOW_REGION(0x4f8, 0x4fc)]; int index; };
+struct NameSprite {
 #if defined(jpn)
     unsigned short unknown_0_[10];
 #else
     char unknown1_0_[0x80];
 #endif
 };
-struct Struct_ov005_0215acc0 { char unknown_0_[0xdf4]; Struct_0201099c_10* unknown_df4_; char unknown_df8_[LOW_REGION(0x2f38, 0x2fc0)]; unsigned char unknown_3db8_; char unknown_3db9_[3]; unsigned char unknown_3dbc_; char unknown_3dbd_[0xc7]; Struct_ov005_0215b0a0 unknown_3e84_[8]; unsigned char unknown_4284_[8]; };
-extern "C" void* func_020421a0();
-extern "C" short* func_02052e14(Struct_02052e14*);
-extern "C" void* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" Struct_ov005_0215acc0_2* func_ov017_021a193c(int*);
+struct CombatDisplay { char pad0[0xdf4]; ItemTable* container; char pad1[LOW_REGION(0x2f38, 0x2fc0)]; unsigned char state; char pad2[3]; unsigned char selected; char pad3[0xc7]; NameSprite names[8]; unsigned char raised[8]; };
+void* MessageSystem_GetInstance();
+short* GetField150Ptr0x488(Field150Holder02052e14*);
+void* ItemTable_Find(ItemTable*, int);
+CombatObject* GetField1c_021a193c(int*);
 #if defined(jpn)
 extern "C" void func_02045f3c(void*, unsigned short*, int, int, int, int, int, int);
 #else
@@ -37,23 +37,23 @@ extern unsigned char data_ov005_0215cbfc[];
 #define REG_END (*(volatile unsigned int*)0x04000504)
 
 // USA: func_ov005_0215b0a0
-extern "C" ARM void func_ov005_0215b0a0(Struct_ov005_0215acc0* arg0) {
-    void* var0 = func_020421a0();
-    GameState* var1 = GameState::GetInstance();
-    GameObject* var2 = func_0200ff1c(var1, func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3])->unknown_4fc_);
-    if (!var2) return;
-    short* var3 = func_02052e14((Struct_02052e14*)var2);
-    int var4 = LOW_REGION(29, 28);
+extern "C" ARM void func_ov005_0215b0a0(CombatDisplay* display) {
+    void* renderer = MessageSystem_GetInstance();
+    GameState* game = GameState::GetInstance();
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(game, GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->index);
+    if (!combatant) return;
+    short* effects = GetField150Ptr0x488((Field150Holder02052e14*)combatant);
+    int y = LOW_REGION(29, 28);
 #if defined(jpn)
     int var6;
 #endif
     if (arg0->unknown_3db8_ == 0) {
         for (int var5 = 0; var5 < 8; var5++) {
 #if defined(jpn)
-            if (func_020dedd0(arg0->unknown_df4_, var3[data_ov005_0215cbfc[var5]])) var6 = 0x7fff;
-            else var6 = 0x3def;
+            if (ItemTable_Find(display->container, effects[data_ov005_0215cbfc[i]])) color = 0x7fff;
+            else color = 0x3def;
 #else
-            int var6 = func_020dedd0(arg0->unknown_df4_, var3[data_ov005_0215cbfc[var5]]) ? 0x7fff : 0x3def;
+            int color = ItemTable_Find(display->container, effects[data_ov005_0215cbfc[i]]) ? 0x7fff : 0x3def;
 #endif
             if (var5 == arg0->unknown_3dbc_) var6 = 0xf0a;
             int var7 = var5 * 24;
@@ -75,10 +75,10 @@ extern "C" ARM void func_ov005_0215b0a0(Struct_ov005_0215acc0* arg0) {
         }
     } else {
 #if defined(jpn)
-        if (func_020dedd0(arg0->unknown_df4_, var3[data_ov005_0215cbfc[arg0->unknown_3dbc_]])) var6 = 0x7fff;
-        else var6 = 0x3def;
+        if (ItemTable_Find(display->container, effects[data_ov005_0215cbfc[display->selected]])) color = 0x7fff;
+        else color = 0x3def;
 #else
-        int var6 = func_020dedd0(arg0->unknown_df4_, var3[data_ov005_0215cbfc[arg0->unknown_3dbc_]]) ? 0x7fff : 0x3def;
+        int color = ItemTable_Find(display->container, effects[data_ov005_0215cbfc[display->selected]]) ? 0x7fff : 0x3def;
 #endif
         if (arg0->unknown_3db8_ == 3) var6 = 0xf0a;
 #if !defined(jpn)

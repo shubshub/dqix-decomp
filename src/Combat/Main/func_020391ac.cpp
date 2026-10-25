@@ -41,13 +41,13 @@ struct Struct_020391ac_3 {
 };
 
 extern "C" void func_ov017_021917f0(int, int);
-extern "C" void func_02033b68(Struct_02033b68*, int);
+void GameObject_SetMotionState(Obj02033b68*, int);
 int fix32ReduceAngle0To2Pi(int);
-extern "C" void func_02033834(Struct_02033834_2*, int);
-extern "C" void func_02039d24(unsigned char*);
-extern "C" void func_02033b58(Struct_02033b58*, unsigned char);
-extern "C" int func_02046b08(void**);
-extern "C" void func_02033874(Struct_02033834*, int);
+void GameObject_SetFacing(Obj02033834*, int);
+void ClearBytesAndZeroBlock02039d24(unsigned char*);
+void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+int IsField0Null_02046b08(void**);
+void SetVecYFromValue02033874(Obj02033874*, int);
 
 // USA: func_020391ac
 extern "C" ARM void func_020391ac(Struct_020391ac_3* arg0) {
@@ -66,52 +66,52 @@ extern "C" ARM void func_020391ac(Struct_020391ac_3* arg0) {
     void** var12;
     if (arg0->unknown_1ce_ & 1)
         return;
-    var12 = (void**)GetGameResources()->unknown_ptr_array_36fc[0];
-    var0 = GameState::GetInstance();
-    var1 = (Struct_020391ac_3*)var0->GetPartyMemberByIndex(arg0->unknown_1c8_);
-    var2 = (Struct_020391ac_3*)var0->GetPartyMemberByIndex(arg0->unknown_1ca_);
-    if (var1 == 0 || var2 == 0)
+    resource = (void**)GetGameResources()->fieldTaskQueue_;
+    game = GameState::GetInstance();
+    leader = (FollowingActor*)game->GetPartyMemberByIndex(actor->partyIndex);
+    target = (FollowingActor*)game->GetPartyMemberByIndex(actor->targetIndex);
+    if (leader == 0 || target == 0)
         return;
-    if (var1->unknown_be_ == 2) {
-        if (arg0->unknown_be_ != 2) {
-            func_ov017_021917f0(arg0->unknown_0_.unknown_4_, 1);
+    if (leader->state == 2) {
+        if (actor->state != 2) {
+            func_ov017_021917f0(actor->object.actorIndex_, 1);
         }
-        func_02033b68((Struct_02033b68*)arg0, 2);
+        GameObject_SetMotionState((Obj02033b68*)actor, 2);
         return;
     }
-    if (arg0->unknown_be_ == 2) {
-        func_ov017_021917f0(arg0->unknown_0_.unknown_4_, 0);
-        func_02033b68((Struct_02033b68*)arg0, 0);
+    if (actor->state == 2) {
+        func_ov017_021917f0(actor->object.actorIndex_, 0);
+        GameObject_SetMotionState((Obj02033b68*)actor, 0);
     }
-    if (var2->unknown_26c_) {
-        if (var2->unknown_26d_ == 0 || var2->unknown_26d_ == 1 || var2->unknown_26d_ == 2) {
-            Vector3fix var13 = arg0->unknown_0_.position_;
-            var13.y = 0;
-            Vector3fix var14 = var2->unknown_0_.position_;
-            var14.y = 0;
-            Vector3fix var15;
-            Vector3fix_Subtract(&var14, &var13, &var15);
-            int var16 = Vector3fix_Length(&var15);
-            Vector3fix_Normalize(&var15, &var15);
-            func_02033834((Struct_02033834_2*)arg0, fix32ReduceAngle0To2Pi(fix32_Atan2(var15.x, var15.z)));
-            if (var16 < 0x1000)
-                func_02033b68((Struct_02033b68*)arg0, 0);
+    if (target->followerEnabled) {
+        if (target->targetMode == 0 || target->targetMode == 1 || target->targetMode == 2) {
+            Vector3fix origin = actor->object.position_;
+            origin.y = 0;
+            Vector3fix destination = target->object.position_;
+            destination.y = 0;
+            Vector3fix direction;
+            Vector3fix_Subtract(&destination, &origin, &direction);
+            int distance = Vector3fix_Length(&direction);
+            Vector3fix_Normalize(&direction, &direction);
+            GameObject_SetFacing((Obj02033834*)actor, fix32ReduceAngle0To2Pi(fix32_Atan2(direction.x, direction.z)));
+            if (distance < 0x1000)
+                GameObject_SetMotionState((Obj02033b68*)actor, 0);
             else {
-                arg0->unknown_b4_ = 0x189;
-                func_02033b68((Struct_02033b68*)arg0, 1);
+                actor->animation = 0x189;
+                GameObject_SetMotionState((Obj02033b68*)actor, 1);
             }
-            arg0->unknown_0_.SetInheritedAlpha(31 - arg0->unknown_268_);
-            arg0->unknown_1ce_ &= ~4;
-            arg0->unknown_268_ += (int)(1.5f * var0->GetTickCount());
-            if (arg0->unknown_268_ > 31)
-                arg0->unknown_268_ = 31;
-        } else if (var2->unknown_26d_ == 3 || var2->unknown_26d_ == 4 || var2->unknown_26d_ == 5) {
-            arg0->unknown_268_ = 0;
-            arg0->unknown_0_.position_ = var2->unknown_0_.position_;
-            arg0->unknown_0_.SetInheritedAlpha(31);
-            func_02039d24((unsigned char*)arg0);
-            func_02033b68((Struct_02033b68*)arg0, 0);
-            arg0->unknown_1ce_ |= 4;
+            actor->object.SetInheritedAlpha(31 - actor->fade);
+            actor->followFlags &= ~4;
+            actor->fade += (int)(1.5f * game->GetTickCount());
+            if (actor->fade > 31)
+                actor->fade = 31;
+        } else if (target->targetMode == 3 || target->targetMode == 4 || target->targetMode == 5) {
+            actor->fade = 0;
+            actor->object.position_ = target->object.position_;
+            actor->object.SetInheritedAlpha(31);
+            ClearBytesAndZeroBlock02039d24((unsigned char*)actor);
+            GameObject_SetMotionState((Obj02033b68*)actor, 0);
+            actor->followFlags |= 4;
         }
         return;
     }
@@ -187,15 +187,15 @@ extern "C" ARM void func_020391ac(Struct_020391ac_3* arg0) {
         if (var3)
             func_02033874((Struct_02033834*)arg0, var1->unknown_0_.rotation_.y);
         else
-            func_02033834((Struct_02033834_2*)arg0, var10);
-        if (var24 <= 0x800 && arg0->unknown_1cc_ != arg0->unknown_1cb_) {
-            ++arg0->unknown_1cc_;
-            arg0->unknown_1cc_ %= 16;
+            GameObject_SetFacing((Obj02033834*)actor, angle);
+        if (distance <= 0x800 && actor->readIndex != actor->writeIndex) {
+            ++actor->readIndex;
+            actor->readIndex %= 16;
         }
-        if (var3)
-            func_02033b68((Struct_02033b68*)arg0, 0);
-        else if (arg0->unknown_be_ != 1)
-            func_02033b68((Struct_02033b68*)arg0, 1);
-    } else if (arg0->unknown_be_ != 0)
-        func_02033b68((Struct_02033b68*)arg0, 0);
+        if (moving)
+            GameObject_SetMotionState((Obj02033b68*)actor, 0);
+        else if (actor->state != 1)
+            GameObject_SetMotionState((Obj02033b68*)actor, 1);
+    } else if (actor->state != 0)
+        GameObject_SetMotionState((Obj02033b68*)actor, 0);
 }

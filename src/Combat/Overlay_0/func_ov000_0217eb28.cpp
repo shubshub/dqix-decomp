@@ -49,28 +49,28 @@ struct Struct_ov000_0217e870_2 {
     unsigned char unknown_0_[0xf7c];
     unsigned char unknown_f7c_;
 };
-extern Struct_02109bf4_5 data_02109bf4;
-extern "C" int func_0209ca2c(void*);
-extern "C" void func_0209c73c(Struct_02109bf4_5*);
+extern Actor0209c73c g_bgmPlayer;
+int IsAnimationActive0209ca2c(void*);
+void DispatchActorState0209c73c(Actor0209c73c*);
 extern "C" int func_0205d97c(void*);
 extern "C" int func_ov000_021815c8(void*);
 extern "C" int* func_0202ae18();
 extern "C" int func_0202b7d8(int*);
 extern "C" void func_ov017_021c3fb4(int, int);
 extern "C" void func_ov017_0218f5a4(GameResources*, int, int, int, int);
-extern "C" Struct_ov000_0217e870* func_ov000_02161318(Struct_ov004_021707e8*, int);
-extern "C" int func_ov000_021719f8(int*);
-extern "C" void func_ov000_02171c04(Struct_ov000_0217e870*);
-extern "C" Struct_ov000_02179cdc_2* func_0205d888(Struct_0205d0e0_2*);
-extern "C" void func_0205d6a0(Struct_0205d6a0*, int);
-extern "C" void func_ov000_0217c638(Struct_ov004_021707e8*, int, int);
-extern "C" void func_0205def8(Struct_0205def8*, int, int);
+extern "C" BattleCommand* func_ov000_02161318(BattleMenuState*, int);
+int HasAnyFlags_021719f8_021719f8(int*);
+extern "C" void func_ov000_02171c04(BattleCommand*);
+MenuEntry* Window_GetTopPane(Struct0205d888*);
+void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void func_ov000_0217c638(BattleMenuState*, int, int);
+void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 
 // USA: func_ov000_0217eb28
-extern "C" ARM void func_ov000_0217eb28(Struct_ov004_021707e8* arg0, int arg1, int arg2) {
-    if (arg0->unknown_1d7a_) {
-        if (func_0209ca2c(&data_02109bf4)) return;
-        func_0209c73c(&data_02109bf4);
+extern "C" ARM void func_ov000_0217eb28(BattleMenuState* state, int first, int second) {
+    if (state->animation) {
+        if (IsAnimationActive0209ca2c(&g_bgmPlayer)) return;
+        DispatchActorState0209c73c(&g_bgmPlayer);
     }
     int var0 = g_keyManager.TestKeysPressed(0x601);
     var0 |= g_keyManager.TestKeysPressed(0x802);
@@ -94,19 +94,19 @@ extern "C" ARM void func_ov000_0217eb28(Struct_ov004_021707e8* arg0, int arg1, i
             var3->unknown_10_[var3->unknown_18_] = 0x64;
             var3->unknown_24_ &= ~4;
         }
-        func_ov000_02171c04(var3);
-        Struct_ov000_02179cdc_2* var4 = func_0205d888((Struct_0205d0e0_2*)arg0->unknown_188_);
-        while (var4) {
-            if (var4->unknown_c4_ == 2) break;
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 0);
-            var4 = func_0205d888((Struct_0205d0e0_2*)arg0->unknown_188_);
+        func_ov000_02171c04(command);
+        MenuEntry* entry = Window_GetTopPane((Struct0205d888*)state->entries);
+        while (entry) {
+            if (entry->type == 2) break;
+            Window_ClosePane((Entry_0205d6a0*)state->entries, 0);
+            entry = Window_GetTopPane((Struct0205d888*)state->entries);
         }
-        unsigned char var5 = ((Struct_ov000_0217e870_2*)func_02010828(GameState::GetInstance()))->unknown_f7c_;
-        for (unsigned char var6 = 0; var6 < var5; var6++) {
-            int var7 = arg0->unknown_70_[var6];
-            Struct_ov000_0217e870* var8 = func_ov000_02161318(arg0, var7);
-            if (var8 && !func_ov000_021719f8((int*)var8) && var8->unknown_87_) {
-                arg0->unknown_17c_ = var7;
+        unsigned char count = ((PartyState*)GameState_GetParty(GameState::GetInstance()))->count;
+        for (unsigned char i = 0; i < count; i++) {
+            int id = state->party[i];
+            BattleCommand* candidate = func_ov000_02161318(state, id);
+            if (candidate && !HasAnyFlags_021719f8_021719f8((int*)candidate) && candidate->active) {
+                state->current = id;
                 break;
             }
         }
@@ -117,9 +117,9 @@ extern "C" ARM void func_ov000_0217eb28(Struct_ov004_021707e8* arg0, int arg1, i
         arg0->unknown_1d6b_ = -1;
         arg0->unknown_1d6f_ = 0;
     } else {
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_--;
-        func_ov000_0217c638(arg0, arg1, arg2);
+        Window_ClosePane((Entry_0205d6a0*)state->entries, 0);
+        state->commands[state->selected] = 0;
+        state->selected--;
+        func_ov000_0217c638(state, first, second);
     }
 }

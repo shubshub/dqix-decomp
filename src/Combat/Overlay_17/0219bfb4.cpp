@@ -13,9 +13,6 @@ enum { Enum_ov017_0219bfb4_9196 = 0x23ec, Enum_ov017_0219bfb4_610 = 0x262, Enum_
 #include "NitroSDK/OverlayId.h"
 #include "World/Object3D.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_02013fb4;
 struct Struct_020a8170;
@@ -39,67 +36,67 @@ struct Struct_020a83fc_2 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_0205ec34(void);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_0206e558(void* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" void func_020a8170(Struct_020a8170* arg0);
-extern "C" void func_020a818c(void* arg0, SafeAllocator* arg1);
-extern "C" void func_020a8304(void* arg0);
-extern "C" Struct_020a83fc_2* func_020a83fc(Struct_020a83fc* arg0, int arg1);
-extern "C" void func_ov017_021d1a18(short arg0, short arg1, int arg2, int arg3);
-extern "C" void func_ov017_021d1c2c(unsigned char arg0, unsigned short arg1);
-extern "C" void func_02070378(char* arg0);
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-extern "C" void func_020469b4(Struct_0201bdac_2* arg0, Struct_0201bdac* arg1);
-extern "C" void func_02017d7c(void* arg0);
-extern "C" void func_02039d58(unsigned char* arg0);
-extern "C" void func_02039d48(unsigned char* arg0);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" int func_ov017_0219ff58(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_021b2174(unsigned char* arg0);
-extern "C" void func_ov017_021b2ba0(Struct_0206f81c_2* arg0, char* arg1);
-extern "C" void func_ov017_021b2bd0(void* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021b2bf4(Struct_0206f81c_3* arg0, unsigned int arg1);
-extern "C" void func_ov017_021b2c0c(Struct_0206f81c_4* arg0, unsigned int arg1);
-extern "C" void func_ov017_021b2bdc(Struct_0206f81c_5* arg0, unsigned int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void* Scenario_GetInstance(void);
+void* GameState_GetParty(GameState* gameState);
+void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+extern "C" int func_0202c540(void* p);
+extern "C" int func_0206e558(void* obj);
+extern "C" int func_0202c508(void* p);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" void __clear(void* dst, unsigned int size);
+void ClearStruct020a8170(Struct020a8170* s);
+extern "C" void func_020a818c(void* cont, SafeAllocator* alloc);
+extern "C" void func_020a8304(void* cont);
+Entry020a83fc* FindEntryById020a83fc(Container020a83fc* cont, int id);
+extern "C" void func_ov017_021d1a18(short a, short b, int c, int d);
+void SetHalfFieldsAndEnqueueIfActive_021d1c2c(unsigned char a, unsigned short b);
+void InitStruct02070378(char* obj);
+void InitAndResetHeader_0219e310(unsigned char* node, int v);
+void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+void ClearFlagBytes02017d7c(void* obj);
+void ClearFlag0x1ceBit0x4_02039d58(unsigned char* obj);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char* obj);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+extern "C" int func_ov017_0219ff58(void* base, int a, int b, int c);
+void InitObjState_021b2174(unsigned char* obj);
+void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
+void SetFields30And34_021b2bd0(void* obj, int a, int b);
+void SetBit4_021b2bf4(S021b2bf4* obj, unsigned int v);
+void SetBit5_021b2c0c(S021b2c0c* obj, unsigned int v);
+void SetBit3_021b2bdc(S021b2bdc* obj, unsigned int v);
 int LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" int func_0201079c(char* arg0);
-extern "C" void func_02072928(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3, void* arg4, unsigned char arg5);
-extern "C" int func_020d3018(const char* arg0, const char* arg1);
-extern "C" int func_02005a94(signed char* arg0);
-extern "C" void func_ov017_021ba90c(Struct_ov017_0219bfb4* arg0);
-extern "C" void func_ov004_021689d8(SafeAllocator* arg0, void* arg1);
+void ResetListHeader020727d8(List020727d8* list);
+int GetField5cb0Value_0201079c(char* obj);
+void SubmitAndRunScript02072928(void* list, StreamHeader* header, int length, int id, void* out, unsigned char index);
+int STD_CompareString(const char* a, const char* b);
+extern "C" int func_02005a94(signed char* s);
+void InitState16_021ba90c(Obj021ba90c* p);
+void AllocateAndCopyBuf20_021689d8(SafeAllocator* a, void* target);
 
 extern char data_ov017_021d75d0;
 extern char data_ov017_021d75dc;
 extern char data_ov017_021d75fa;
-extern char data_0211e33c;
+extern char g_fileLoadBuffer;
 
 static inline unsigned char inline_ov017_0219bfb4(int arg0, int arg1) {
     return arg0 * 4 + arg1;
 }
 
 // USA: func_ov017_0219bfb4
-extern "C" ARM void func_ov017_0219bfb4(int arg0, unsigned short arg1) {
-    GameResources* var0 = GetGameResources();
-    GameState* var1 = GameState::GetInstance();
-    char* var2 = (char*)func_02010828(var1);
-    char* var3 = (char*)func_0200fd0c(var1);
-    void* var4 = func_0202ae18();
-    char* var5 = (char*)func_02012fe4();
-    unsigned char* var6 = (unsigned char*)func_0205ec34();
-    char* var7 = var5 + Enum_ov017_0219bfb4_9196;
-    Struct_0201bdac_2* var8 = (Struct_0201bdac_2*)var0->unknown_ptr_array_36fc[0];
-    unsigned char* var9 = (unsigned char*)var0->unknown_ptr_array_36fc[4];
-    unsigned char* var10 = (unsigned char*)var0->unknown_ptr_array_371c[4];
+extern "C" ARM void func_ov017_0219bfb4(int mode, unsigned short id) {
+    GameResources* res = GetGameResources();
+    GameState* gs = GameState::GetInstance();
+    char* party = (char*)GameState_GetParty(gs);
+    char* record = (char*)GetField0x3f8Address_0200fd0c(gs);
+    void* search = func_0202ae18();
+    char* field = (char*)Zone3D_GetInstance();
+    unsigned char* flags = (unsigned char*)Scenario_GetInstance();
+    char* status = field + kStatusOffset;
+    TailList020469b4* list = (TailList020469b4*)res->fieldTaskQueue_;
+    unsigned char* node = (unsigned char*)res->unknown_ptr_array_3700[3];
+    unsigned char* marker = (unsigned char*)res->unknown_ptr_array_371c[4];
     BackgroundLoader::GetInstance()->MaybeFreeAllocations();
 
     unsigned short var11 = arg1;
@@ -113,28 +110,28 @@ extern "C" ARM void func_ov017_0219bfb4(int arg0, unsigned short arg1) {
     if (arg0 == 2) {
         var7[Enum_ov017_0219bfb4_610] = 0;
     }
-    if (arg0 == 2 && func_0202c508(var4)) {
-        if (func_0206dfb0((int)var6, var6 + 0x8c, 0x2b)) {
-            char var12[0x533];
-            __clear(var12, 0x533);
-            SafeAllocator var13;
-            var13.ResetAllocatorPointer();
-            var13.ResetAllocatorPointer();
-            var13.CreateTypeA(var12, 0x533);
-            char var14[0x10];
-            func_020a8170((Struct_020a8170*)var14);
-            func_020a818c(var14, &var13);
-            func_020a8304(var14);
-            Struct_020a83fc_2* var15 = func_020a83fc((Struct_020a83fc*)var14, var11);
-            if (var15) {
-                *(unsigned short*)(var5 + Enum_ov017_0219bfb4_10118) = var15->unknown_1a_;
-                *(unsigned short*)(var5 + Enum_ov017_0219bfb4_10116) = var15->unknown_1c_;
-                var5[Enum_ov017_0219bfb4_10120] = 0;
-                Vector3i var16 = *(Vector3i*)(var5 + Enum_ov017_0219bfb4_10100);
-                var16.x = var15->unknown_20_;
-                var16.z = var15->unknown_24_;
-                *(Vector3i*)((int*)(var5 + Enum_ov017_0219bfb4_10100)) = *(Vector3i const*)((int*)&var16);
-                func_ov017_021d1a18(var15->unknown_1a_, var15->unknown_1c_, 0, 1);
+    if (mode == 2 && func_0202c508(search)) {
+        if (Scenario_TestFlag((int)flags, flags + 0x8c, 0x2b)) {
+            char buf[0x533];
+            __clear(buf, 0x533);
+            SafeAllocator alloc;
+            alloc.ResetAllocatorPointer();
+            alloc.ResetAllocatorPointer();
+            alloc.CreateTypeA(buf, 0x533);
+            char cont[0x10];
+            ClearStruct020a8170((Struct020a8170*)cont);
+            func_020a818c(cont, &alloc);
+            func_020a8304(cont);
+            Entry020a83fc* entry = FindEntryById020a83fc((Container020a83fc*)cont, sceneId);
+            if (entry) {
+                *(unsigned short*)(field + kFieldXOffset) = entry->x;
+                *(unsigned short*)(field + kFieldYOffset) = entry->y;
+                field[kFieldFlagOffset] = 0;
+                Vector3i pos = *(Vector3i*)(field + kFieldPositionOffset);
+                pos.x = entry->posX;
+                pos.z = entry->posZ;
+                *(Vector3i*)((int*)(field + kFieldPositionOffset)) = *(Vector3i const*)((int*)&pos);
+                func_ov017_021d1a18(entry->x, entry->y, 0, 1);
             }
             var13.Destroy();
         }
@@ -176,25 +173,25 @@ extern "C" ARM void func_ov017_0219bfb4(int arg0, unsigned short arg1) {
         return;
     }
 
-    char* var19 = (char*)func_020421a0();
-    memset(*(void**)(var19 + Enum_ov017_0219bfb4_92), 0, Enum_ov017_0219bfb4_2400);
-    func_02043204(var19);
-    if (func_ov017_0219ff58(var0, 0, 0, 1)) {
-        unsigned char* var20 = (unsigned char*)var0->unknown_ptr_array_3afc[0x14];
-        func_ov017_021b2174(var20);
-        func_ov017_021b2ba0((Struct_0206f81c_2*)var20, &data_ov017_021d75d0);
-        func_ov017_021b2bd0(var20, (int)func_ov004_021689d8, OVERLAY_ID(4));
-        func_ov017_021b2bf4((Struct_0206f81c_3*)var20, 1);
-        func_ov017_021b2c0c((Struct_0206f81c_4*)var20, 1);
-        func_ov017_021b2bdc((Struct_0206f81c_5*)var20, 0);
-        func_020469b4(var8, (Struct_0201bdac*)var20);
+    char* controller = (char*)MessageSystem_GetInstance();
+    memset(*(void**)(controller + kControllerBufferOffset), 0, kControllerBufferSize);
+    MessageSystem_Reset(controller);
+    if (func_ov017_0219ff58(res, 0, 0, 1)) {
+        unsigned char* obj = (unsigned char*)res->fieldTasks_[0x14];
+        InitObjState_021b2174(obj);
+        SetNameChecked_021b2ba0((S021b2ba0*)obj, &data_ov017_021d75d0);
+        SetFields30And34_021b2bd0(obj, (int)AllocateAndCopyBuf20_021689d8, OVERLAY_ID(4));
+        SetBit4_021b2bf4((S021b2bf4*)obj, 1);
+        SetBit5_021b2c0c((S021b2c0c*)obj, 1);
+        SetBit3_021b2bdc((S021b2bdc*)obj, 0);
+        AppendNodeToTail(list, (TailNode020469b4*)obj);
         return;
     }
 
     BackgroundLoader::AddLockGlobal();
-    unsigned int var21 = 0;
-    LoadFileIntoMemory(&data_ov017_021d75dc, &data_0211e33c, &var21);
-    if (var21 == 0) {
+    unsigned int length = 0;
+    LoadFileIntoMemory(&data_ov017_021d75dc, &g_fileLoadBuffer, &length);
+    if (length == 0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -207,23 +204,23 @@ extern "C" ARM void func_ov017_0219bfb4(int arg0, unsigned short arg1) {
     if (arg1 != 0) {
         var24 = arg1;
     }
-    int var25 = func_0201079c((char*)var1);
-    for (int var26 = 0; var26 < 3; var26++) {
-        unsigned char var27 = inline_ov017_0219bfb4(var26, 0);
-        unsigned char var28 = inline_ov017_0219bfb4(var26, 1);
-        char var29[8];
-        __clear(var29, 8);
-        char var30[8];
-        __clear(var30, 8);
-        func_02072928(var22, (Struct_02013fb4*)&data_0211e33c, var21, var24, var29, var27);
-        func_02072928(var22, (Struct_02013fb4*)&data_0211e33c, var21, var24, var30, var28);
-        int var31 = 0;
-        int var32 = 0;
-        if (func_020d3018(var29, &data_ov017_021d75fa)) {
-            var31 = func_02005a94((signed char*)var29);
+    int now = GetField5cb0Value_0201079c((char*)gs);
+    for (int j = 0; j < 3; j++) {
+        unsigned char fromIndex = GetScriptIndex(j, 0);
+        unsigned char toIndex = GetScriptIndex(j, 1);
+        char from[8];
+        __clear(from, 8);
+        char to[8];
+        __clear(to, 8);
+        SubmitAndRunScript02072928(scripts, (StreamHeader*)&g_fileLoadBuffer, length, scriptId, from, fromIndex);
+        SubmitAndRunScript02072928(scripts, (StreamHeader*)&g_fileLoadBuffer, length, scriptId, to, toIndex);
+        int start = 0;
+        int end = 0;
+        if (STD_CompareString(from, &data_ov017_021d75fa)) {
+            start = func_02005a94((signed char*)from);
         }
-        if (func_020d3018(var30, &data_ov017_021d75fa)) {
-            var32 = func_02005a94((signed char*)var30);
+        if (STD_CompareString(to, &data_ov017_021d75fa)) {
+            end = func_02005a94((signed char*)to);
         }
         int var33 = 0;
         if (var31 == 0 && var32 == 0) {
@@ -238,15 +235,15 @@ extern "C" ARM void func_ov017_0219bfb4(int arg0, unsigned short arg1) {
             } else {
                 var34 = (unsigned int)var26 * 4 + 3;
             }
-            func_02072928(var22, (Struct_02013fb4*)&data_0211e33c, var21, var24, var23, var34);
+            SubmitAndRunScript02072928(scripts, (StreamHeader*)&g_fileLoadBuffer, length, scriptId, result, index);
             break;
         }
     }
     BackgroundLoader::RemoveLockGlobal();
 
-    signed char var35 = 1;
-    if (func_020d3018(var23, &data_ov017_021d75fa)) {
-        var35 = func_02005a94((signed char*)var23);
+    signed char state = 1;
+    if (STD_CompareString(result, &data_ov017_021d75fa)) {
+        state = func_02005a94((signed char*)result);
     }
     if (var35 != 3) {
         func_ov017_021ba90c((Struct_ov017_0219bfb4*)var10);

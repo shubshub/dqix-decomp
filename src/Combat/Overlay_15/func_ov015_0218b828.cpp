@@ -32,10 +32,10 @@ struct Struct_ov015_0218b810
     int unknown_c_;
 };
 
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void func_ov015_0218b810(Struct_ov015_0218b810* arg0);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+void ZeroFourFields0218b810(Struct0218b810* s);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov015_0218b828
 extern "C" ARM void func_ov015_0218b828(Struct_ov015_0218b810* arg0)
@@ -44,21 +44,21 @@ extern "C" ARM void func_ov015_0218b828(Struct_ov015_0218b810* arg0)
     {
         if (arg0->unknown_0_[var0].unknown_0_ != NULL)
         {
-            func_02012da4(&data_02114e20, arg0->unknown_0_[var0].unknown_0_);
-            arg0->unknown_0_[var0].unknown_0_ = NULL;
+            AllocatorUnion_Free(&g_mainAllocator, self->entries_[i].name_);
+            self->entries_[i].name_ = NULL;
         }
         if (arg0->unknown_0_[var0].unknown_4_ != NULL)
         {
-            func_02012da4(&data_02114e20, arg0->unknown_0_[var0].unknown_4_);
-            arg0->unknown_0_[var0].unknown_4_ = NULL;
+            AllocatorUnion_Free(&g_mainAllocator, self->entries_[i].file_);
+            self->entries_[i].file_ = NULL;
         }
     }
     for (int var1 = 0; var1 < arg0->unknown_c_; var1++)
     {
         if (arg0->unknown_4_[var1].unknown_0_ != NULL)
         {
-            func_02012da4(&data_02114e20, arg0->unknown_4_[var1].unknown_0_);
-            arg0->unknown_4_[var1].unknown_0_ = NULL;
+            AllocatorUnion_Free(&g_mainAllocator, self->presets_[i].name_);
+            self->presets_[i].name_ = NULL;
         }
         Struct_ov015_0218b828* var2 = arg0->unknown_4_[var1].unknown_4_;
         while (var2 != NULL)
@@ -66,22 +66,22 @@ extern "C" ARM void func_ov015_0218b828(Struct_ov015_0218b810* arg0)
             Struct_ov015_0218b828* var3 = var2->unknown_8_;
             if (var2->unknown_0_ != NULL)
             {
-                func_02012da4(&data_02114e20, var2->unknown_0_);
-                var2->unknown_0_ = NULL;
+                AllocatorUnion_Free(&g_mainAllocator, item->file_);
+                item->file_ = NULL;
             }
-            func_02012da4(&data_02114e20, var2);
-            var2 = var3;
+            AllocatorUnion_Free(&g_mainAllocator, item);
+            item = next;
         }
     }
     if (arg0->unknown_0_ != NULL)
     {
-        func_02012da4(&data_02114e20, arg0->unknown_0_);
-        arg0->unknown_0_ = NULL;
+        AllocatorUnion_Free(&g_mainAllocator, self->entries_);
+        self->entries_ = NULL;
     }
     if (arg0->unknown_4_ != NULL)
     {
-        func_02012da4(&data_02114e20, arg0->unknown_4_);
-        arg0->unknown_4_ = NULL;
+        AllocatorUnion_Free(&g_mainAllocator, self->presets_);
+        self->presets_ = NULL;
     }
     func_ov015_0218b810(arg0);
 }

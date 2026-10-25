@@ -13,11 +13,11 @@ enum { kRegionValue3BD_3D5 = 0x3bd };
 #endif
 
 struct Container020e0310;
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
-int AppendString02042058(char* dst, const char* src);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
 
 extern char data_ov003_0217ff3e;
 
@@ -27,18 +27,18 @@ ARM void AppendEntryNames_0215e13c(char* base, char* dst, int flag) {
 
     signed char cursor = *(signed char*)(base + kRegionValue3C1_3D9);
     if (flag) {
-        AppendFrameTag02041c08(dst, cursor, 8, 5, 5, 5);
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    AppendCursorTag_02041ea4(dst, cursor);
+    Text_AppendCursorTag(dst, cursor);
 
     struct Container020e0310* c = (struct Container020e0310*)(base + kRegionValue64_7C);
     int i = 0;
     while (i < *(unsigned char*)(base + kRegionValue3C0_3D8)) {
         unsigned char key = *(unsigned char*)(base + i + kRegionValue3BD_3D5);
         int name = KeyTable_Get(c, key);
-        AppendNameTag_02041b70(dst, i, (const char*)name);
+        Text_AppendNTag(dst, i, (const char*)name);
         if (i != *(unsigned char*)(base + kRegionValue3C0_3D8) - 1) {
-            AppendString02042058(dst, &data_ov003_0217ff3e);
+            Text_Append(dst, &data_ov003_0217ff3e);
         }
         i++;
     }

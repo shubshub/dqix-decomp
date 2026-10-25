@@ -4,8 +4,8 @@
 #include "std_library_functions.h"
 
 extern "C" void* __clear(void*, int);
-struct Struct_02015ef4 { unsigned int unknown_0_[3]; };
-extern "C" int func_0202ec84(void*, Struct_02015ef4*, int*, int*);
+struct Vec3copy0202ec84 { unsigned int v[3]; };
+int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 
 struct Struct_02039fec {
     unsigned char unknown_0_[5];
@@ -40,32 +40,32 @@ struct Struct_0203a5e8_2 {
 };
 
 // USA: func_0203a5e8
-extern "C" ARM void func_0203a5e8(Struct_02039fec_2* arg0, int arg1) {
-    Struct_0203a5e8* var0 = (Struct_0203a5e8*)&arg0->unknown_550_[arg1];
-    Struct_0203a5e8_2* var1 = (Struct_0203a5e8_2*)arg0;
-    signed char var2 = 0;
-    int var3 = 0;
-    void* var4 = func_020100bc(GameState::GetInstance());
-    if (var4 != NULL) {
-        bool var5 = false;
-        int var6 = var5;
-        int var7[16];
-        int var8[16];
-        int var9[16];
-        __clear(var7, sizeof(var7));
-        __clear(var8, sizeof(var8));
-        __clear(var9, sizeof(var9));
-        for (int var10 = 0; var10 < 16; var10++) {
-            if (var1->unknown_550_[var10].unknown_5_ > 0) {
-                int var11, var12 = 0;
-                func_0202ec84(var4, &var1->unknown_550_[var10].unknown_c_, &var11, &var12);
-                var11 += var1->unknown_550_[var10].unknown_4_;
-                var12 += var1->unknown_550_[var10].unknown_2_;
-                var9[var10] = var12;
-                if (var12 < 36) var12 = 36;
-                else if (var12 > 196) var12 = 196;
-                var7[var10] = var11;
-                var8[var10] = var12;
+extern "C" ARM void func_0203a5e8(Obj02039fec* obj, int index) {
+    SlotProjection0203a5e8* current = (SlotProjection0203a5e8*)&obj->slots[index];
+    ObjProjection0203a5e8* projection = (ObjProjection0203a5e8*)obj;
+    signed char horizontal = 0;
+    int vertical = 0;
+    void* camera = GameState::GetInstance()->GetCamera();
+    if (camera != NULL) {
+        bool alternate = false;
+        int step = alternate;
+        int xs[16];
+        int clampedYs[16];
+        int ys[16];
+        __clear(xs, sizeof(xs));
+        __clear(clampedYs, sizeof(clampedYs));
+        __clear(ys, sizeof(ys));
+        for (int i = 0; i < 16; i++) {
+            if (projection->slots[i].timer > 0) {
+                int x, y = 0;
+                Camera_WorldToScreen(camera, &projection->slots[i].vector, &x, &y);
+                x += projection->slots[i].horizontalOffset;
+                y += projection->slots[i].verticalOffset;
+                ys[i] = y;
+                if (y < 36) y = 36;
+                else if (y > 196) y = 196;
+                xs[i] = x;
+                clampedYs[i] = y;
             }
         }
         for (int var13 = 0; var13 < 16; var13++) {

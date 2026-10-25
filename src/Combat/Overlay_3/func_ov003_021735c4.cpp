@@ -15,14 +15,13 @@ enum { Enum_ov003_021735c4_216 = 0xd8 };
 #include "NitroSDK/Cache.h"
 #include "NitroSDK/LoadToVRAM.h"
 
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct PacRecord;
 
 extern "C" void* memset(void* dst, int value, unsigned int length);
 extern "C" void func_020a620c(void* obj);
 int IsFieldSet_020a64a8(unsigned char* obj);
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* outSize);
+int Pac_CountFiles(struct PacRecord* entry);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* outSize);
 
 extern char data_ov003_02180a76[];
 
@@ -59,9 +58,9 @@ extern "C" ARM void func_ov003_021735c4(struct Struct_ov003_021735c4* arg0) {
             unsigned char* recs[3];
             int sizes[3];
             loader->GetLoadedFileByID(self->handle, &file, &length);
-            int count = Pac_CountFiles((struct ActiveEntry02046900*)file);
+            int count = Pac_CountFiles((struct PacRecord*)file);
             for (int i = 0; i < count; i++) {
-                recs[i] = (unsigned char*)Pac_GetFile((struct Rec020467f0*)file, i, &recData, &sizes[i]);
+                recs[i] = (unsigned char*)Pac_GetFile((struct PacRecord*)file, i, &recData, &sizes[i]);
             }
             memset((void*)GetSubBG0ScreenBase(), 0, 0x800);
             unsigned char* var9 = var5[2];

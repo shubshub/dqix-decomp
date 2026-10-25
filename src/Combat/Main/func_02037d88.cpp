@@ -5,10 +5,10 @@
 #include "Resource/Brightness.h"
 
 extern "C" void func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" void func_020391ac(void* arg0);
-extern "C" void func_02038138(void* arg0);
-extern "C" void func_02038598(void* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_020391ac(void* obj);
+extern "C" void func_02038138(void* obj);
+extern "C" void func_02038598(void* obj);
 
 struct Vector3i;
 
@@ -29,10 +29,10 @@ extern "C" int func_02046b08(void** arg0);
 struct Struct_0203402c;
 extern "C" int func_0203402c(struct Struct_0203402c* arg0);
 
-extern "C" int func_020421a0();
+int MessageSystem_GetInstance();
 
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" int func_020100f8(char* arg0);
+unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+int GetFieldIfFlag4_020100f8(char* obj);
 
 struct Struct_02037d88_12;
 extern "C" int func_020a2c70(struct Struct_02037d88_12* arg0);
@@ -128,10 +128,10 @@ extern "C" ARM void func_02037d88(struct Struct_02037d88_7* arg0) {
     }
 
     {
-        void* var5 = GameState::GetInstance();
-        void* var6 = func_020100bc((GameState*)var5);
-        void* var7 = func_02012fe4();
-        int* var8 = (int*)arg0->unknown_130_;
+        void* bsOrig = GameState::GetInstance();
+        void* field3b0 = ((GameState*)bsOrig)->GetCamera();
+        void* ctx = Zone3D_GetInstance();
+        int* ptr130 = (int*)obj->field130;
 
         if ((*var8 & 1) != 0
             || func_020535c8((signed char*)arg0) != 0
@@ -157,20 +157,20 @@ extern "C" ARM void func_02037d88(struct Struct_02037d88_7* arg0) {
             && func_ov017_0219a370(var1) != 0
             && func_02046b08((void**)var13) != 0
             && g_keyManager.TestKeysHeld(2) != 0
-            && func_0203402c((struct Struct_0203402c*)arg0) == 0
-            && ((struct Struct_02037d88_6*)func_020421a0())->unknown_1000_.unknown_9b1_ == 0) {
+            && CheckField0xc4Low15BitsNonZero((struct BitField0203402c*)obj) == 0
+            && ((struct GlobalOuter020421a0*)MessageSystem_GetInstance())->sub.flag == 0) {
 
-            unsigned char* var14 = (unsigned char*)func_02010828((GameState*)var5);
+            unsigned char* ptr2a04 = (unsigned char*)GameState_GetParty((GameState*)bsOrig);
 
-            void* var15 = GameState::GetInstance();
-            short var16 = arg0->unknown_4_;
-            unsigned char var17 = func_020100b0((GameState*)var15);
-            if (var17 == var16) {
-                int var18 = func_020100f8((char*)var15);
-                if (var18 != 0) {
-                    if (func_ov017_0219a370(var1) != 0) {
-                        if (func_020a2c70((struct Struct_02037d88_12*)var18) != 0) {
-                            SetFlags04((GameResources*)var1, 0x80);
+            void* bsOrig2 = GameState::GetInstance();
+            short id3 = obj->combatantId;
+            unsigned char field397c_1 = GameState_GetLeaderIndex((GameState*)bsOrig2);
+            if (field397c_1 == id3) {
+                int p2 = GetFieldIfFlag4_020100f8((char*)bsOrig2);
+                if (p2 != 0) {
+                    if (IsCountAtLeast4_0219a370(r6) != 0) {
+                        if (MarkStateIfFlag020a2c70((struct S020a2c70*)p2) != 0) {
+                            SetFlags04((GameResources*)r6, 0x80);
                         }
                     }
                 }
@@ -203,21 +203,21 @@ extern "C" ARM void func_02037d88(struct Struct_02037d88_7* arg0) {
                 return;
             }
         } else {
-            void* var24 = GameState::GetInstance();
-            short var25 = arg0->unknown_4_;
-            unsigned char var26 = func_020100b0((GameState*)var24);
-            if (var26 == var25) {
-                int var27 = func_020100f8((char*)var24);
-                if (var27 != 0) {
-                    unsigned char* var28 = (unsigned char*)var27 + 0x2c4;
-                    if (var28 != 0) {
-                        unsigned char var29 = var28[0];
-                        if (var29 == 1) {
-                            func_020a2c8c((unsigned char*)var27);
-                        } else if (var29 == 2) {
-                            short var30 = *(short*)(var28 + 2);
-                            if (var30 < 0x199) {
-                                ClearFlags04((GameResources*)var1, 0x80);
+            void* bs3 = GameState::GetInstance();
+            short id2 = obj->combatantId;
+            unsigned char field397c_2 = GameState_GetLeaderIndex((GameState*)bs3);
+            if (field397c_2 == id2) {
+                int p = GetFieldIfFlag4_020100f8((char*)bs3);
+                if (p != 0) {
+                    unsigned char* state = (unsigned char*)p + 0x2c4;
+                    if (state != 0) {
+                        unsigned char stateByte = state[0];
+                        if (stateByte == 1) {
+                            SetByte0x2c4To2IfByte0x2c5Set_020a2c8c((unsigned char*)p);
+                        } else if (stateByte == 2) {
+                            short v = *(short*)(state + 2);
+                            if (v < 0x199) {
+                                ClearFlags04((GameResources*)r6, 0x80);
                             }
                         }
                     }

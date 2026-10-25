@@ -19,12 +19,12 @@ struct Struct_0205d81c;
 extern "C" void func_ov000_0217964c(void* obj, void* entry);
 extern "C" void func_ov000_0217ab8c(void* entry, int a, int b);
 int GridCursor_GetCount(void* obj);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" void func_ov000_0217979c(void* obj, void* entry, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
 extern "C" void func_ov000_02176210(void* arg0, int arg1, int arg2);
@@ -59,14 +59,14 @@ extern "C" ARM void func_ov000_021794cc(char* arg0, void* arg1, int arg2, int ar
     int many = 0;
     if (GridCursor_GetCount(base + 0x54) > 4) many = 1;
 
-    int var4 = func_020421a0();
-    void* var5 = *(void**)((char*)var4 + REGION_OFFSET_0);
-    memset(var5, 0, REGION_OFFSET_1);
-    func_ov000_0217979c(arg0, arg1, var5);
+    int g = MessageSystem_GetInstance();
+    void* buf = *(void**)((char*)g + REGION_OFFSET_0);
+    memset(buf, 0, REGION_OFFSET_1);
+    func_ov000_0217979c(obj, entry, buf);
 #if defined(jpn)
-    func_0205d304(var2, var5, 0, 0, var3, 1, 0);
+    Window_OpenPane(base, buf, 0, 0, many, 1, 0);
 #else
-    func_0205d304(var2, var5, 0, 0, var3, 1, 0, 0);
+    Window_OpenPane(base, buf, 0, 0, many, 1, 0, 0);
 #endif
 
     struct Struct_0205d0e0* var6 = func_0205d81c((struct Struct_0205d81c*)var2, 0x24);

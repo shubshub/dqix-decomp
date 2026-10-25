@@ -18,19 +18,19 @@ extern "C" void func_ov002_0215c614(char *self);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 extern "C" void func_ov002_0215b9a4(void *self, int mode, int flag);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int key, int value);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int key, int value);
 extern "C" int func_0205df38(void *obj, int key);
 extern "C" void func_ov002_0215b458(char *self, int v);
 struct Obj_0205da38;
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-int GetField0x3acValue_020100a8(GameState *gs);
-Obj020d7aa0 *GetGlobalResetObj020d7a50();
-void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
+int GameState_GetProtagonistIndex(GameState *gs);
+Obj020d7aa0 *TextQueue_GetInstance();
+void TextQueue_Reset(Obj020d7aa0 *obj);
 void SePlayer_Play(struct SePlayer *obj, int a, int b);
 int GetFieldC54ArrayValue021573f8(void *self, int v);
 int GetCountByType02157108(void *self, int type);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *obj);
-void *GetPtrField0x2a04_02010828(GameState *gameState);
+void *GameState_GetParty(GameState *gameState);
 int FindKeyIndex020a0af4(struct S_a0af4 *s, int key);
 int CheckFlagOrThreshold_02161b48(char *self, int v);
 void ResetAllocatorsAndClearFields0215b428(unsigned char *obj);
@@ -92,7 +92,7 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
             func_ov002_0215b9a4(arg0, 5, 0);
             func_0205def8((struct Struct_0205def8 *) OBJ, SEL >= 0 ? 1 : 0, 5);
         }
-        func_0205deb4((struct Struct_0205d81c *) OBJ, 5, 1);
+        Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 5, 1);
         if (g_keyManager.TestKeysHeld(0x40)) {
             return;
         }
@@ -114,8 +114,8 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
         int u  = Window_IsSelectionTouched((struct Obj_0205da38*)OBJ, 0x14);
         int ok = (t | u) ? 1 : 0;
         if (ok || pick) {
-            *(unsigned char *) (self + RG(0x1c21, 0x1ae9)) = GetField0x3acValue_020100a8(GameState::GetInstance());
-            TeardownAndResetState020d7aa0(GetGlobalResetObj020d7a50());
+            *(unsigned char *) (self + RG(0x1c21, 0x1ae9)) = GameState_GetProtagonistIndex(GameState::GetInstance());
+            TextQueue_Reset(TextQueue_GetInstance());
             *(unsigned char *) (self + RG(0xf80, 0xed8)) = *(int *) (self + RG(0x1bb8, 0x1a80));
             *(unsigned int *) (self + RG(0x247c, 0x22ac)) &= ~4;
             SePlayer_Play((struct SePlayer *) &g_sePlayer, 1, 0);
@@ -123,16 +123,16 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
                 if (LAST != 1) {
                     *(int *) (arg0 + RG(0x1bb8, 0x1a80)) = RG(0xb, 0xc);
                 } else {
-                    *(unsigned char *) (arg0 + RG(0x1c32, 0x1afa)) = 0;
-                    func_0205deb4((struct Struct_0205d81c *) OBJ, 4, 1);
-                    *(short *) (arg0 + RG(0x1bf0, 0x1ab8)) = *(unsigned char *) (arg0 + RG(0x2521, 0x2351)) = 1;
-                    SEL                                = func_ov002_021573f8(arg0, 1);
-                    *(short *) (arg0 + RG(0x1c12, 0x1ada))         = 0;
-                    *(short *) (arg0 + RG(0x1c28, 0x1af0))         = 0x238d;
-                    *(short *) (arg0 + RG(0x1c2a, 0x1af2))         = -1;
-                    *(int *) (arg0 + RG(0x1bb8, 0x1a80))           = RG(0x26, 0x29);
-                    *(int *) (arg0 + RG(0x1bbc, 0x1a84))           = 4;
-                    *(unsigned char *) (arg0 + RG(0x1c2e, 0x1af6)) = 1;
+                    *(unsigned char *) (self + RG(0x1c32, 0x1afa)) = 0;
+                    Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 4, 1);
+                    *(short *) (self + RG(0x1bf0, 0x1ab8)) = *(unsigned char *) (self + RG(0x2521, 0x2351)) = 1;
+                    SEL                                = GetFieldC54ArrayValue021573f8(self, 1);
+                    *(short *) (self + RG(0x1c12, 0x1ada))         = 0;
+                    *(short *) (self + RG(0x1c28, 0x1af0))         = 0x238d;
+                    *(short *) (self + RG(0x1c2a, 0x1af2))         = -1;
+                    *(int *) (self + RG(0x1bb8, 0x1a80))           = RG(0x26, 0x29);
+                    *(int *) (self + RG(0x1bbc, 0x1a84))           = 4;
+                    *(unsigned char *) (self + RG(0x1c2e, 0x1af6)) = 1;
                 }
                 *(int *) (arg0 + RG(0x1bc0, 0x1a88)) = 0;
                 return;
@@ -163,11 +163,11 @@ extern "C" ARM void func_ov002_02162964(char *arg0) {
             if (!var10) {
                 return;
             }
-            unsigned char *var11 = func_02053c6c((unsigned char *) var10);
-            *(short *) (arg0 + RG(0x1be8, 0x1ab0)) =
-                func_020a0af4((struct Struct_020a095c *) func_02010828(var9), *(short *) (var11 + RG(0x958, 0x8c0)));
-            if (*(short *) (arg0 + RG(0x1be8, 0x1ab0)) == -1) {
-                *(short *) (arg0 + RG(0x1be8, 0x1ab0)) = 0;
+            unsigned char *q = GetFieldAt0x150_02053c6c((unsigned char *) hero);
+            *(short *) (self + RG(0x1be8, 0x1ab0)) =
+                FindKeyIndex020a0af4((struct S_a0af4 *) GameState_GetParty(gs), *(short *) (q + RG(0x958, 0x8c0)));
+            if (*(short *) (self + RG(0x1be8, 0x1ab0)) == -1) {
+                *(short *) (self + RG(0x1be8, 0x1ab0)) = 0;
             }
         } else if (func_ov002_02161b48(arg0, 1)) {
 #if !defined(jpn)

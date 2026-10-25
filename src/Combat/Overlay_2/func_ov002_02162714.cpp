@@ -22,8 +22,8 @@ int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void *GetFieldAt0x150_02053c6c(unsigned char *p);
 void SePlayer_Play(SePlayer *obj, int a, int b);
 int GetCountByType02157108(void *self, int type);
-Obj020d7aa0 *GetGlobalResetObj020d7a50();
-void TeardownAndResetState020d7aa0(Obj020d7aa0 *obj);
+Obj020d7aa0 *TextQueue_GetInstance();
+void TextQueue_Reset(Obj020d7aa0 *obj);
 extern "C" void func_020d7978(char *self);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215c474(char *self);
@@ -77,11 +77,11 @@ extern "C" ARM void func_ov002_02162714(char *self) {
                     if (GetCountByType02157108(self, *(signed char *) (self + RG(0x1c20, 0x1ae8))) != 0) {
                         return;
                     }
-                    func_020d7aa0(func_020d7a50());
-                    *(short *) (arg0 + RG(0x1c28, 0x1af0)) = 0x2395;
-                    *(short *) (arg0 + RG(0x1c2a, 0x1af2)) = -1;
-                    *(int *) (arg0 + RG(0x1bb8, 0x1a80))   = RG(0x26, 0x29);
-                    *(int *) (arg0 + RG(0x1bbc, 0x1a84))   = 3;
+                    TextQueue_Reset(TextQueue_GetInstance());
+                    *(short *) (self + RG(0x1c28, 0x1af0)) = 0x2395;
+                    *(short *) (self + RG(0x1c2a, 0x1af2)) = -1;
+                    *(int *) (self + RG(0x1bb8, 0x1a80))   = RG(0x26, 0x29);
+                    *(int *) (self + RG(0x1bbc, 0x1a84))   = 3;
                     break;
                 case 2:
                     func_020d7978(arg0);

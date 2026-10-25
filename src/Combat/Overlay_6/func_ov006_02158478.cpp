@@ -6,19 +6,19 @@
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #if defined(jpn)
 #define func_ov006_02154fe4 func_ov006_02156730
 #endif
 
-struct Struct_0207fdcc_2;
-struct Struct_02020cb8;
-struct Struct_02020cb8_5;
-struct Struct_ov006_02155480_2;
-struct Struct_020e28dc;
-struct Struct_020439b0;
-struct Struct_020e2834;
-struct Struct_0207fd88;
-struct Struct_ov006_02154614;
+struct Obj2081;
+struct BackgroundGraphics;
+struct Obj02155480;
+struct Outer020e28dc;
+struct Entry020e2cc4;
+struct SelfState020e2834;
+struct Cont0207fd88;
+struct AlchemyPot;
 
 struct Struct_ov006_021580b8 {
     char unknown_0_[0x14];
@@ -42,13 +42,6 @@ struct Struct_ov006_02156e54_2 {
     char unknown_50_[0x70 - 0x50];
 };
 
-struct Struct_ov003_021594c4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
-};
 
 struct Struct_ov006_02158478 {
     char unknown_0_[0xac];
@@ -60,8 +53,8 @@ extern "C" void* GetSubBG0ScreenBase();
 extern "C" void* memset(void*, int, unsigned int);
 int CheckElementFlag_02158080_02158080(Obj2081*, int);
 Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
-void Background_Init(List0204af64*);
-int Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_Init(BackgroundGraphics*);
+int Background_SetScroll(BackgroundGraphics*, int, int);
 void CallFunc0204b620IfField0x14_0204b938(void*, void*, int, int, unsigned short);
 extern "C" void func_ov006_02154fe4(AlchemyPot*);
 void ResetDisplayState02155480(Obj02155480*);
@@ -182,11 +175,11 @@ extern "C" ARM void func_ov006_02158478(Struct_ov006_02157a60* arg0)
         x = canvas->x_;
         y = canvas->y_;
         BackgroundGraphics background;
-        Background_Init((List0204af64*)&background);
-        background.unk_1c_0_ = 1;
-        background.unk_1c_4_ = 0;
-        *(unsigned short**)&background.unk_0[0x14] = screen;
-        Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+        Background_Init((BackgroundGraphics*)&background);
+        background.subScreen_ = 1;
+        background.bgNumber_ = 0;
+        background.map_ = screen;
+        Background_SetScroll((BackgroundGraphics*)&background, 0, 0);
         CallFunc0204b620IfField0x14_0204b938(&background, layer, x, y, 0xffff);
     }
     func_ov006_02154fe4(R(*(Struct_ov006_02154614**)((char*)arg0+8),arg0->unknown_10_));

@@ -158,7 +158,7 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
         fix32_t var5 = 4096.0f * (arg0++)->ToFloat();
         var1.unknown_22_ = _Z22fix32ReduceAngle0To2Pii(var5);
     }
-    var1.unknown_20_ = 4096.0f * (arg0++)->ToFloat();
+    entry.angle = 4096.0f * (params++)->ToFloat();
 
     fix32_t var6 = var1.unknown_14_.unknown1_0_.x / 2;
     fix32_t var7 = var1.unknown_14_.unknown1_0_.z / 2;
@@ -169,9 +169,9 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
 
     if (var1.unknown_4_ == 2)
     {
-        var1.unknown_2c_.unknown1_0_.unknown_0_ = (arg0++)->ToInt();
-        var1.unknown_2c_.unknown1_0_.unknown_1_ = (arg0++)->ToInt();
-        var1.unknown_2c_.unknown1_0_.unknown_2_4_ = (arg0++)->ToInt();
+        entry.unk_2c.type2.nodeId = (params++)->ToInt();
+        entry.unk_2c.type2.elementId = (params++)->ToInt();
+        entry.unk_2c.type2.flags = (params++)->ToInt();
     }
     else if (var1.unknown_4_ == 3)
     {
@@ -237,9 +237,9 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
     }
     else if (var1.unknown_4_ == 5)
     {
-        var1.unknown_2c_.unknown4_0_.unknown_0_ = (arg0++)->ToInt();
-        var1.unknown_2c_.unknown4_0_.unknown_2_ = (arg0++)->ToInt();
-        var1.unknown_2c_.unknown4_0_.unknown_4_ = 0;
+        entry.unk_2c.type5.unk_0 = (params++)->ToInt();
+        entry.unk_2c.type5.unk_2 = (params++)->ToInt();
+        entry.unk_2c.type5.cupboardContainerId = 0;
     }
 
     Struct_020134e0* var17 = data_020fdc20.unknown_8_;
@@ -250,20 +250,20 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
 
 void Struct_020134e0::Struct_02018300::func_0201d424()
 {
-    VectorizedMemset(this, 0, sizeof(Struct_02018300));
-    unknown_0_ = 0;
-    unknown_4_ = 0;
-    unknown_20_ = 0;
-    unknown_22_ = 0;
-    unknown_24_ = 0;
-    unknown_8_.unknown1_0_.x = 0;
-    unknown_8_.unknown1_0_.y = 0;
-    unknown_8_.unknown1_0_.z = 0;
-    unknown_14_.unknown1_0_.x = 0;
-    unknown_14_.unknown1_0_.y = 0;
-    unknown_14_.unknown1_0_.z = 0;
-    unknown_28_ = 0;
-    unknown_70_ = NULL;
+    VectorizedMemset(this, 0, sizeof(Opcode6aEntry));
+    unk_0 = 0;
+    maybeType = 0;
+    angle = 0;
+    unk_22 = 0;
+    unk_24 = 0;
+    unk_8.vec.x = 0;
+    unk_8.vec.y = 0;
+    unk_8.vec.z = 0;
+    unk_14.vec.x = 0;
+    unk_14.vec.y = 0;
+    unk_14.vec.z = 0;
+    unk_28 = 0;
+    pNext = NULL;
 }
 
 Struct_0201d044 &Struct_0201d044::func_0201d474(const Struct_0201d044 &arg0)
@@ -306,8 +306,8 @@ extern "C" int func_0201d530(Script::Parameter* arg0, int arg1)
     arg0 = arg0->ToVec3fix(&var1);
     var0.unknown_14_.unknown1_0_ = var1;
 
-    var0.unknown_22_ = _Z22fix32ReduceAngle0To2Pii(4096.0f * (arg0++)->ToFloat());
-    var0.unknown_20_ = 4096.0f * (arg0++)->ToFloat();
+    entry.unk_22 = _Z22fix32ReduceAngle0To2Pii(4096.0f * (params++)->ToFloat());
+    entry.angle = 4096.0f * (params++)->ToFloat();
 
     fix32_t var2 = var0.unknown_14_.unknown1_0_.x / 2;
     fix32_t var3 = var0.unknown_14_.unknown1_0_.z / 2;
@@ -345,24 +345,24 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
     case 2:
         if (arg1 == 3)
         {
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_0_ = (arg0++)->ToInt();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_1_ = (arg0++)->ToInt();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_4_ = (arg0++)->ToInt();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_0_ = 0;
+            data_020fdc20.currentEntry->unk_2c.type2.nodeId = (params++)->ToInt();
+            data_020fdc20.currentEntry->unk_2c.type2.elementId = (params++)->ToInt();
+            data_020fdc20.currentEntry->unk_2c.type2.flags = (params++)->ToInt();
+            data_020fdc20.currentEntry->unk_2c.type2.soundIndex = 0;
         }
         else
         {
-            int var1 = 0;
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_0_ = (arg0++)->ToInt();
-            var1++;
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_1_ = (arg0++)->ToInt();
-            var1++;
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_4_ = (arg0++)->ToInt();
-            var1++;
-            data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_0_ = (arg0++)->ToInt();
-            var1++;
+            int numArgsConsumed = 0;
+            data_020fdc20.currentEntry->unk_2c.type2.nodeId = (params++)->ToInt();
+            numArgsConsumed++;
+            data_020fdc20.currentEntry->unk_2c.type2.elementId = (params++)->ToInt();
+            numArgsConsumed++;
+            data_020fdc20.currentEntry->unk_2c.type2.flags = (params++)->ToInt();
+            numArgsConsumed++;
+            data_020fdc20.currentEntry->unk_2c.type2.soundIndex = (params++)->ToInt();
+            numArgsConsumed++;
 
-            if (data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_4_ & 8)
+            if (data_020fdc20.currentEntry->unk_2c.type2.flags & 8)
             {
                 if (arg0->type == 0)
                 {
@@ -409,9 +409,9 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
                 (void)((arg0++)->ToInt());
                 var1++;
             }
-            if (data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_2_4_ & 0x20)
+            if (data_020fdc20.currentEntry->unk_2c.type2.flags & DoorFlag_Slides)
             {
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_40_ = 4096.0f * (arg0++)->ToFloat();
+                data_020fdc20.currentEntry->unk_2c.type2.slideDistance = 4096.0f * (params++)->ToFloat();
             }
         }
         break;

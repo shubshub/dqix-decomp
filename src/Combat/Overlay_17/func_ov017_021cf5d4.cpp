@@ -2,12 +2,12 @@
 #include "Combat/Main/CopyRecord0200fbb4.h"
 #include "GameState/GameState.h"
 
-struct Struct_02046b1c;
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_02046b1c(struct Struct_02046b1c* arg0);
-extern "C" void func_02070378(char*);
-struct Struct_02011b24;
-extern "C" void func_02011b24(struct Struct_02011b24* arg0);
+struct S02046b1c;
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+int GetField0x0List02046b1c(struct S02046b1c* p);
+void InitStruct02070378(char*);
+struct FieldFlagBlock;
+void ResetAndEnableFieldFlag_02011b24(struct FieldFlagBlock* block);
 
 struct Struct_ov017_021cf5d4 {
     unsigned char unknown_0_[4];
@@ -29,8 +29,8 @@ extern "C" ARM void func_ov017_021cf5d4(void* arg0, struct Struct_ov017_021cf5d4
 #else
  enum {Enum_ov017_021cf5d4_1788=0x6fc};
 #endif
-    int var0 = func_020100a8(arg2);
-    if (arg1->unknown_6_ != var0) {
+    int v = GameState_GetProtagonistIndex(battle);
+    if (evt->field6 != v) {
         return;
     }
     struct Struct_02046b1c* var1 = *(struct Struct_02046b1c**)(arg3 + 0x3000 + Enum_ov017_021cf5d4_1788);

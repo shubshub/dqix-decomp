@@ -31,7 +31,7 @@ enum { Enum_ov003_0216982c_409 = 0x199 };
 
 #if defined(jpn)
 extern "C" void func_02042428(void*, int);
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
 struct Container020e0310;
 int KeyTable_Get(Container020e0310*, int);
 #endif
@@ -41,10 +41,10 @@ int KeyTable_Get(Container020e0310*, int);
 struct Struct_0205de24_2;
 extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
 
-extern "C" int func_020421a0();
-extern "C" void func_02046380(void* arg0);
-extern "C" int func_020e51cc(int arg0);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int MessageSystem_GetInstance();
+extern "C" void func_02046380(void* obj);
+int StandardStrings_Get(int value);
+int Text_Append(char* dst, const char* src);
 
 struct Struct_020465c0;
 extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
@@ -52,14 +52,14 @@ extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2)
 extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
 
 #if !defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov003_0216982c
-extern "C" ARM void func_ov003_0216982c(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_020421a0();
-    void* var2 = func_02010828(var0);
+extern "C" ARM void func_ov003_0216982c(unsigned char* self) {
+    GameState* battle = GameState::GetInstance();
+    int field = MessageSystem_GetInstance();
+    void* ptr = GameState_GetParty(battle);
 
     func_0205de24((struct Struct_0205de24_2*)(arg0 + Enum_ov003_0216982c_228), 0, 2);
 
@@ -79,10 +79,10 @@ extern "C" ARM void func_ov003_0216982c(unsigned char* arg0) {
 #if defined(jpn)
     func_02042428(*(void**)(self + 0x7c), 8);
     int msg = KeyTable_Get((Container020e0310*)(self + 0x64), 0x65);
-    AppendString02042058((char*)*(void**)(self + 0x7c), (const char*)msg);
+    Text_Append((char*)*(void**)(self + 0x7c), (const char*)msg);
 #else
-    int var4 = func_020e51cc(0x3f1);
-    func_02042058((char*)*(void**)(arg0 + 0x7c), (const char*)var4);
+    int msg = StandardStrings_Get(0x3f1);
+    Text_Append((char*)*(void**)(self + 0x7c), (const char*)msg);
 #endif
 
     func_02046380((void*)var1);
@@ -93,8 +93,8 @@ extern "C" ARM void func_ov003_0216982c(unsigned char* arg0) {
     func_020465d8((unsigned char*)var1, 0, 1);
 
 #if defined(jpn)
-    func_0205d304(arg0 + Enum_ov003_0216982c_228, *(void**)(arg0 + 0x7c), 0, 0, 0, 1, 0);
+    Window_OpenPane(self + kRegione4, *(void**)(self + 0x7c), 0, 0, 0, 1, 0);
 #else
-    func_0205d304(arg0 + Enum_ov003_0216982c_228, *(void**)(arg0 + 0x7c), 0, 0, 0, 1, 0, 0);
+    Window_OpenPane(self + kRegione4, *(void**)(self + 0x7c), 0, 0, 0, 1, 0, 0);
 #endif
 }

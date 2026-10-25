@@ -33,10 +33,10 @@ struct Struct_ov025_021dc168_3 {
 };
 
 // USA: func_ov025_021dc168
-extern "C" ARM void func_ov025_021dc168(struct Struct_ov025_021dc168_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = arg0->unknown_29c_;
-    func_020100bc(var0);
+extern "C" ARM void func_ov025_021dc168(struct Obj021dc168* obj) {
+    GameState* bs = GameState::GetInstance();
+    int field29c = obj->field29c;
+    bs->GetCamera();
     GetGameResources();
 
     short var2[12];

@@ -28,8 +28,8 @@ extern "C" ARM int func_0205b234(GlyphDestination0205b234* destination, short x,
         if (index != 0xff) {
             FontCharacter* character = Font_GetCharacter(index, font);
             func_0205b36c(destination, character, cursorX, y, color, font);
-            advance = character->width + 1;
-            length = character->byteLength;
+            advance = character->width_ + 1;
+            length = character->byteLength_;
         }
         var4 = var6;
         arg3 += var8;

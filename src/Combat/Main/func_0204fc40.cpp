@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_02001aec(unsigned char* arg0, unsigned char* arg1, int arg2);
-extern "C" int func_02005a94(void* arg0);
+int STD_GetStringLength(const char* s);
+extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
+extern "C" int func_02005a94(void* p);
 
 // USA: func_0204fc40
-extern "C" ARM int func_0204fc40(void* arg0, char** arg1, char* arg2, short* arg3, int arg4) {
-    int var0 = func_020d2ff0(arg2);
-    char* var1 = *arg1;
-    if (func_02001aec((unsigned char*)var1, (unsigned char*)arg2, var0) == 0) {
-        var1 += var0;
-        short var2;
-        for (var2 = 0; var2 < arg4; var2++) {
-            int var3 = func_02005a94(var1);
-            arg3[var2] = (short)var3;
-            if (var2 == arg4 - 1) break;
-            while (*var1 != ',') var1++;
-            var1++;
+extern "C" ARM int func_0204fc40(void* unused0, char** cursor, char* tag, short* out, int max) {
+    int len = STD_GetStringLength(tag);
+    char* p = *cursor;
+    if (memcmp((unsigned char*)p, (unsigned char*)tag, len) == 0) {
+        p += len;
+        short i;
+        for (i = 0; i < max; i++) {
+            int val = func_02005a94(p);
+            out[i] = (short)val;
+            if (i == max - 1) break;
+            while (*p != ',') p++;
+            p++;
         }
         while (*var1 != '>' && *var1 != 0) var1++;
         *arg1 = var1 + 1;

@@ -4,11 +4,11 @@
 #include "std_library_functions.h"
 #include "Input/Input.h"
 
-struct Struct_02072a68_2;
-struct Struct_0205d6a0;
-struct Struct_ov003_0215e6d8;
-struct Struct_ov003_0215efb8;
-struct Struct_0205de24_2;
+struct TableA68;
+struct Entry_0205d6a0;
+struct KeyboardLayout;
+struct Struct0215efb8;
+struct Struct0205de24;
 struct Struct_0205def8;
 struct SePlayer;
 
@@ -84,9 +84,9 @@ struct Struct_ov012_02188cd0
     unsigned char unknown_1480_[0x14bc - 0x1480];
 };
 
-void ResetEntryList0205d6a0(Entry_0205d6a0* window, int a);
-extern "C" void func_02042764(const void* codes, char* text, int a);
-void KeyboardLayout_Init(ResetLayout_0215e6d8* layout);
+void Window_ClosePane(Entry_0205d6a0* window, int a);
+extern "C" void Font_DecodeText(const void* codes, char* text, int a);
+void KeyboardLayout_Init(KeyboardLayout* layout);
 extern "C" void KeyboardLayout_Load(void* layout, SafeAllocator* allocator, void* file, unsigned int size);
 void Keyboard_Init(Struct0215efb8* keyboard);
 extern "C" int func_ov012_0218ae74(ProfileEditor02188cd0* self, Profile02188cd0* profile);
@@ -104,7 +104,7 @@ extern "C" int func_ov012_02184d80(void* checker, char* text);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8* window, int a, int b);
 extern "C" void Font_EncodeText(const char* text, char* codes, int a);
 extern "C" void func_ov012_0218943c(ProfileEditor02188cd0* self);
-Messages02188cd0* GetGlobalField0x1c020421a0();
+Messages02188cd0* MessageSystem_GetInstance();
 const char* FindEntryByKey_02072a68(TableA68* texts, int id);
 extern "C" void func_0204500c(Messages02188cd0* messages, const char* text, int a, int b);
 
@@ -122,13 +122,13 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
 {
     if (arg0->unknown_1370_ == 0)
     {
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        Struct_ov012_02188cd0_3* var0 = inline_ov012_02188cd0(GameState::GetInstance());
-        memset(arg0->unknown_13d0_, 0, 0x400);
-        arg0->unknown_1328_ = arg0->unknown_13d0_;
-        func_02042764(var0->unknown_8_, arg0->unknown_13d0_, 1);
-        arg0->unknown_1380_[0] = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov012_0218b2ea, 0);
-        arg0->unknown_1370_++;
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        Profile02188cd0* profile = GetProfile02188cd0(GameState::GetInstance());
+        memset(self->message_, 0, 0x400);
+        self->cardMessage_ = self->message_;
+        Font_DecodeText(profile->unk_8, self->message_, 1);
+        self->tasks_[0] = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov012_0218b2ea, 0);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 1)
@@ -147,7 +147,7 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
             if (var2 != 0 && var3 != 0)
             {
                 ((SafeAllocator*)self->allocators_[4])->Reset();
-                KeyboardLayout_Init((ResetLayout_0215e6d8*)self->unk_4);
+                KeyboardLayout_Init((KeyboardLayout*)self->unk_4);
                 KeyboardLayout_Load(self->unk_4, (SafeAllocator*)self->allocators_[4], file, size);
                 Keyboard_Init((Struct0215efb8*)self->unk_0);
                 ((Keyboard02188cd0*)self->unk_0)->layout_ = self->unk_4;
@@ -191,8 +191,8 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
     {
         if ((g_keyManager.TestKeysPressed(2) || func_0205d97c(arg0->unknown_ac_) == 2) && *arg0->unknown_13d0_ == 0)
         {
-            func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-            arg0->unknown_1370_++;
+            Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+            self->step_++;
         }
         Keyboard02188cd0* keyboard = (Keyboard02188cd0*)self->unk_0;
         unsigned char page = keyboard->unk_20;
@@ -241,8 +241,8 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
                         return;
                     }
                 }
-                func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-                arg0->unknown_1370_++;
+                Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+                self->step_++;
                 return;
         }
     }
@@ -270,15 +270,15 @@ extern "C" ARM void func_ov012_02188cd0(Struct_ov012_02188cd0* arg0)
     }
     else if (arg0->unknown_1370_ == 10)
     {
-        Struct_ov012_02188cd0_4* var8 = func_020421a0();
-        func_0204500c(var8, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 501), 0, 0xe3);
-        var8->unknown_998_ = 1;
-        arg0->unknown_1370_++;
+        Messages02188cd0* messages = MessageSystem_GetInstance();
+        func_0204500c(messages, FindEntryByKey_02072a68((TableA68*)self->strings_, 501), 0, 0xe3);
+        messages->busy_ = 1;
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 11)
     {
-        if (func_020421a0()->unknown_998_ == 0)
+        if (MessageSystem_GetInstance()->busy_ == 0)
         {
             func_0205def8((Struct_0205def8*)arg0->unknown_ac_, 1, 14);
             arg0->unknown_1370_ = 4;

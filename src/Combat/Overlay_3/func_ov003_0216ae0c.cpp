@@ -17,10 +17,10 @@ enum { Enum_ov003_0216ae0c_4812 = 0x12cc };
 
 
 struct InitTarget0205cfd4;
-ARM void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
-struct List0204af64;
-ARM void Background_Init(struct List0204af64* obj);
-extern "C" void func_0204c684(void* obj);
+ARM void Window_Init(struct InitTarget0205cfd4* s);
+struct BackgroundGraphics;
+ARM void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void WindowPane_Init(void* obj);
 struct Struct0205a198;
 void Sprite_Init(struct Struct0205a198*);
 struct ClearTarget0205a234;
@@ -43,17 +43,17 @@ extern "C" ARM void func_ov003_0216ae0c(void* arg0, SafeAllocator* arg1) {
     if (arg1 == 0) return;
     struct Struct_ov003_0216ae0c* var0 = (struct Struct_ov003_0216ae0c*)arg0;
 
-    var0->unknown_12d0_ = arg1;
-    var0->unknown_12c0_ = var0->unknown_12d0_->Allocate(0xbc);
-    var0->unknown_12c4_ = var0->unknown_12d0_->Allocate(0x40);
-    var0->unknown_12c8_ = var0->unknown_12d0_->Allocate(0xe0);
-    func_0205cfd4((struct Struct_0205cfd4*)var0->unknown_12c0_);
+    obj->alloc = allocator;
+    obj->p2c0 = obj->alloc->Allocate(0xbc);
+    obj->p2c4 = obj->alloc->Allocate(0x40);
+    obj->p2c8 = obj->alloc->Allocate(0xe0);
+    Window_Init((struct InitTarget0205cfd4*)obj->p2c0);
 
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)((char*)obj->p2c4 + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)((char*)obj->p2c4 + i * 0x20));
     }
-    for (int var2 = 0; var2 < 1; var2++) {
-        func_0204c684((char*)var0->unknown_12c8_ + var2 * 0xe0);
+    for (int i = 0; i < 1; i++) {
+        WindowPane_Init((char*)obj->p2c8 + i * 0xe0);
     }
 
     var0->unknown_1264_ = var0->unknown_12d0_->Allocate(0x258);

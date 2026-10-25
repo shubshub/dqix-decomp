@@ -18,23 +18,23 @@ extern "C" void func_ov017_02192654(int arg0, int arg1, int arg2);
 extern "C" void* func_ov017_021b8468(void* arg0);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int size);
 
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_0202c600(Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c718(Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c21c(Struct_0202b2f0* arg0, int arg1);
-extern "C" Struct_0207da94* func_0207d78c(void);
-extern "C" void func_ov017_0218d500(void* arg0);
-extern "C" void func_0207da94(Struct_0207da94* arg0, int arg1);
-extern "C" Struct_020e3544* func_020e2ff8(void);
-extern "C" void func_020e3544(Struct_020e3544* arg0, int arg1);
-extern "C" Struct_020e3b08* func_020e3808(void);
-extern "C" void func_020e3b08(Struct_020e3b08* arg0, int arg1);
-extern "C" int func_0207959c(Struct_0207959c* arg0, int arg1);
-extern "C" void func_0207958c(Struct_0207958c* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" unsigned short func_ov017_021b8480(void* arg0);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+void ClearSearchFlagBit0202c600(SearchStruct* obj, int value);
+void ClearSearchFlagBit0202c718(SearchStruct* obj, int value);
+void RemoveSearchEntry0202c21c(SearchStruct* obj, int value);
+Entry0207da94* GetData02108ea8_0207d78c(void);
+void ClearByteField17201_0218d500(void* obj);
+void ProcessEntries0207da94(Entry0207da94* list, int idx);
+Entry020e3544* GetData02153637_020e2ff8(void);
+void ClearMatchingEntries020e3544(Entry020e3544* p, int id);
+BitEntry020e3b08* GetData02153660_020e3808(void);
+void ClearBitInEntries(BitEntry020e3b08* entries, int bit);
+int CheckField0x17dBits4And5Equal0207959c(Obj0207959c* obj, int mode);
+void ClearField0x17dBits0x38_0207958c(ClearField0x17dBits0x38Struct* s);
+void* GetField6b0_021b8470(void* obj);
+unsigned short GetField6b4_021b8480(void* obj);
 
 struct Struct_ov017_021905b8 {
     char unknown_0_[6];
@@ -75,10 +75,10 @@ extern "C" ARM void func_ov017_021905b8(GameResources* arg0, int arg1, int arg2)
     if (arg1 <= 0) {
         return;
     }
-    if (arg1 == func_0202c1a4((Struct_0202c1a4*)var1) || arg1 == func_020100b0(var0) ||
-        arg1 == func_020100a8(var0)) {
-        func_0202c600(var1, arg1);
-        func_0202c718(var1, arg1);
+    if (id == GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) || id == GameState_GetLeaderIndex(gs) ||
+        id == GameState_GetProtagonistIndex(gs)) {
+        ClearSearchFlagBit0202c600(search, id);
+        ClearSearchFlagBit0202c718(search, id);
         return;
     }
 

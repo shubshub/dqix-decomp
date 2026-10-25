@@ -61,59 +61,59 @@ struct Struct_ov017_02197a64 {
     short unknown_12_;
 };
 
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_0201e838(unsigned char* arg0, unsigned int arg1);
-extern "C" Struct_020968d0* func_ov017_0218d268(void* arg0);
-extern "C" void func_ov017_0219a674(unsigned char* arg0);
-extern "C" int func_02094b9c(void* arg0, void* arg1);
-extern "C" int func_ov017_0218da48(void* arg0, int arg1, int arg2, int arg3, unsigned char arg4);
-extern "C" int func_020968d0(Struct_020968d0* arg0, int* arg1);
-extern "C" void __clear(void* arg0, int arg1);
-struct Struct_ov009_0218aa28;
-extern "C" short func_ov017_021a4754(Vector3fix*, int, Vector3fix*);
-extern "C" void func_ov017_0219b33c(Struct_ov017_02197a64_5* arg0, Struct_ov017_02197a64* arg1);
-extern "C" void func_ov017_02198f84(Struct_ov017_02197a64_5* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+Obj020968d0* GetField4328_0218d268(void* res);
+void InitObj0219a674(unsigned char* self);
+extern "C" int func_02094b9c(void* a, void* b);
+int BuildAndForwardVec_0218da48(void* obj, int angle, int c, int d, unsigned char e);
+int CheckAndComputeDistance020968d0(Obj020968d0* obj, int* outDist);
+extern "C" void __clear(void* buf, int count);
+struct Vec3;
+short GetAbsAngleDeltaBetween_021a4754(Vector3fix*, int, Vector3fix*);
+extern "C" void func_ov017_0219b33c(Self02197a64* self, GroupEvent02197a64* event);
+extern "C" void func_ov017_02198f84(Self02197a64* self);
 
 #define FACING_LIMIT ((int)(0.8f * 4096.0f))
 
 // USA: func_ov017_02197a64
-extern "C" ARM void func_ov017_02197a64(Struct_ov017_02197a64_5* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov017_02197a64_4* var1 = (Struct_ov017_02197a64_4*)GetGameResources();
-    void* var2 = func_02012fe4();
-    Struct_ov017_02197a64_3* var3 = (Struct_ov017_02197a64_3*)var0->GetUnknownGameObject();
-    Vector3fix var4 = var3->unknown_44_;
-    Struct_ov017_02197a64_2* var5 = (Struct_ov017_02197a64_2*)func_0201e838((unsigned char*)var2 + Enum_ov017_02197a64_108, 2);
-    Struct_020968d0* var6 = func_ov017_0218d268(var1);
-    int var7 = 0;
-    Struct_ov017_02197a64 var8;
-    func_ov017_0219a674((unsigned char*)&var8);
-    int var9 = 0;
-    int var10 = 0;
+extern "C" ARM void func_ov017_02197a64(Self02197a64* self) {
+    GameState* gs = GameState::GetInstance();
+    Resources02197a64* res = (Resources02197a64*)GetGameResources();
+    void* cache = Zone3D_GetInstance();
+    Leader02197a64* leader = (Leader02197a64*)gs->GetUnknownGameObject();
+    Vector3fix filter = leader->position;
+    GroupNode02197a64* node = (GroupNode02197a64*)ZoneFeatures_GetFirstOfType((unsigned char*)cache + RegionOffset6c, 2);
+    Obj020968d0* field = GetField4328_0218d268(res);
+    int notify = 0;
+    GroupEvent02197a64 event;
+    InitObj0219a674((unsigned char*)&event);
+    int counted = 0;
+    int built = 0;
 
     while (var5 != NULL && var8.unknown_4_ < 2) {
         if (!(var5->unknown_2e_4_ & 1) && !(var5->unknown_2e_4_ & 4) && func_02094b9c(var5, &var4)) {
             if (!var10) {
                 var10 = func_ov017_0218da48(arg0, var5->unknown_20_, FACING_LIMIT, FACING_LIMIT >> 3, 0);
             }
-            Vector3fix var11;
-            int var12 = fix32cos(var5->unknown_20_);
-            var11.x = fix32sin(var5->unknown_20_);
-            var11.y = 0;
-            var11.z = var12;
-            Vector3fix_Normalize(&var11, &var11);
-            Vector3fix var13;
-            var12 = fix32cos(var3->unknown_54_);
-            var13.x = fix32sin(var3->unknown_54_);
-            var13.y = 0;
-            var13.z = var12;
-            Vector3fix_Normalize(&var13, &var13);
-            Vector3fix var14 = var1->unknown_4438_;
-            int var15 = Vector3fix_InnerProduct(&var11, &var13);
-            int var16 = Vector3fix_InnerProduct(&var11, &var14);
-            if ((var14.x != 0 || var14.z != 0) &&
-                (func_020968d0(var6, NULL) != 0 || g_keyManager.TestKeysHeld(0xf0) != 0)) {
-                var15 = var16;
+            Vector3fix dir;
+            int c = fix32cos(node->angle);
+            dir.x = fix32sin(node->angle);
+            dir.y = 0;
+            dir.z = c;
+            Vector3fix_Normalize(&dir, &dir);
+            Vector3fix fwd;
+            c = fix32cos(leader->rotationY);
+            fwd.x = fix32sin(leader->rotationY);
+            fwd.y = 0;
+            fwd.z = c;
+            Vector3fix_Normalize(&fwd, &fwd);
+            Vector3fix heading = res->heading;
+            int facing = Vector3fix_InnerProduct(&dir, &fwd);
+            int along = Vector3fix_InnerProduct(&dir, &heading);
+            if ((heading.x != 0 || heading.z != 0) &&
+                (CheckAndComputeDistance020968d0(field, NULL) != 0 || g_keyManager.TestKeysHeld(KEY_DPAD) != 0)) {
+                facing = along;
             }
             if (var5->unknown_2e_4_ & 0x10) {
                 Vector3fix var17;

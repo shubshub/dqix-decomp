@@ -3,21 +3,21 @@
 #include "Input/Input.h"
 #include "Resource/GameResources.h"
 
-struct Struct_ov003_0217d6ac;
-extern "C" struct Struct_ov003_0217d6ac *func_02012fe4(void);
-extern "C" void func_0205d7a0(void *arg0, int arg1);
+struct Run02012fe4;
+extern "C" struct Run02012fe4 *Zone3D_GetInstance(void);
+extern "C" void func_0205d7a0(void *list, int index);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int *out, unsigned char a, unsigned char b, unsigned char c, int d);
-extern "C" char *func_020421a0(void);
-struct Struct_0205a330;
-extern "C" void func_0205a330(struct Struct_0205a330 *arg0, int arg1);
+char *MessageSystem_GetInstance(void);
+struct Container0205a330;
+void SpriteEntryList_AdvanceAnimations(struct Container0205a330 *c, int arg);
 struct Struct_0205c570;
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 struct Obj_0205da38;
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void *p);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0 *a, int flag);
-void ReinitController02043204(char *obj);
+void Window_ClosePane(struct Entry_0205d6a0 *a, int flag);
+void MessageSystem_Reset(char *obj);
 struct SePlayer;
 extern struct SePlayer g_sePlayer;
 void SePlayer_Play(struct SePlayer *obj, int a, int b);
@@ -99,9 +99,9 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     var1     = (char *) GetGameResources();
     var5    = *(struct Struct_0201bdac_2 **) (var1 + RG(0x36fc, 0x34ec));
 #if defined(jpn)
-    var6 = inline_ov003_0216e714_2(func_02012fe4());
+    progress = GetProgress(Zone3D_GetInstance());
 #else
-    var7 = func_02012fe4();
+    current = Zone3D_GetInstance();
 #endif
     if (arg0->unknown_5_ == 0) {
         func_0205d7a0(arg0->unknown_90_, 0);
@@ -113,9 +113,9 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     if (arg0->unknown_5_ != 1) return;
 
     gs                                = GameState::GetInstance();
-    global                            = GetGlobalField0x1c020421a0();
+    global                            = MessageSystem_GetInstance();
     struct Container0205a330 *entries = *(struct Container0205a330 **) (global + RG(0x2e0, 0x230));
-    IterateEntries0205a330(entries, gs->GetTickCount());
+    SpriteEntryList_AdvanceAnimations(entries, gs->GetTickCount());
     global[RG(0x19ae, 0x17de)] = 0;
     Window_GetSelectedIndex((struct Struct_0205c570 *) self->list);
     extra = 0;
@@ -135,11 +135,11 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     if (arg0->unknown_14_ != 0 || var3 != 0) {
         func_ov003_0217dfb4(arg0);
     }
-    if (var4 == -2) {
-        arg0->unknown_4_ = 4;
-        arg0->unknown_5_  = 0;
-        func_0205d6a0((struct Struct_0205d6a0 *) arg0->unknown_90_, 0);
-        func_02043204(var2);
+    if (sel == -2) {
+        self->state = 4;
+        self->busy  = 0;
+        Window_ClosePane((struct Entry_0205d6a0 *) self->list, 0);
+        MessageSystem_Reset(global);
         return;
     }
     if (var4 == -1) return;
@@ -147,8 +147,8 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
     self->state = 4;
     self->busy  = 0;
     SePlayer_Play(&g_sePlayer, 1, 0);
-    ResetEntryList0205d6a0((struct Entry_0205d6a0 *) self->list, 0);
-    ReinitController02043204(global);
+    Window_ClosePane((struct Entry_0205d6a0 *) self->list, 0);
+    MessageSystem_Reset(global);
     BattleEvent_0217d6ac *event = *(BattleEvent_0217d6ac **) (res + RG(0x3734, 0x3524));
     func_ov017_021baedc(event, 1);
     event->active = 1;

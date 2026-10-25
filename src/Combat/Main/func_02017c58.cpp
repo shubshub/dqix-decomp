@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 #if defined(jpn)
 enum { Enum_02017c58_1052 = 0x43c };
@@ -11,10 +8,10 @@ enum { Enum_02017c58_1052 = 0x43c };
 enum { Enum_02017c58_1052 = 0x41c };
 #endif
 
-extern "C" void* func_0205ec34(void);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" void func_0206eb20(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" void func_0206ea8c(void* arg0, unsigned char arg1, short arg2, int arg3);
+extern "C" void* Scenario_GetInstance(void);
+void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void CallLoop0206eb20(void* a, void* b, int c, int limit);
+extern "C" void func_0206ea8c(void* obj, unsigned char a, short b, int flag);
 
 struct Struct_02017c58 {
     unsigned short unknown_0_;
@@ -42,8 +39,8 @@ extern "C" ARM void func_02017c58(void* arg0) {
     if (var1 == NULL) {
         return;
     }
-    void* var2 = func_0205ec34();
-    if (var2 == NULL) {
+    void* ctx = Scenario_GetInstance();
+    if (ctx == NULL) {
         return;
     }
 

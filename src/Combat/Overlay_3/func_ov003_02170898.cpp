@@ -6,7 +6,7 @@ enum { Enum_ov003_02170898_2112 = 0x860 };
 enum { Enum_ov003_02170898_2112 = 0x840 };
 #endif
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_020985ec {
     unsigned char unknown_0_[0x10];
@@ -20,9 +20,9 @@ struct Struct_ov003_02170898 {
 };
 
 // USA: func_ov003_02170898
-extern "C" ARM void func_ov003_02170898(unsigned char* arg0) {
-    struct Struct_020985ec* var0 = (struct Struct_020985ec*)((char*)func_02012fe4() + Enum_ov003_02170898_2112);
-    int var1 = (*(struct Struct_ov003_02170898**)(arg0 + 0x170))->unknown_1b38_;
+extern "C" ARM void func_ov003_02170898(unsigned char* self) {
+    struct Elem020985ec* arr = (struct Elem020985ec*)((char*)Zone3D_GetInstance() + kRegionValue840_860);
+    int count = (*(struct Ctx020985ec**)(self + 0x170))->count;
 
     int var2;
     for (var2 = 0; var2 < 0x1e; var2++) {

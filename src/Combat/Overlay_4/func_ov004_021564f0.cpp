@@ -13,7 +13,7 @@ extern "C" int func_ov023_021fa598(void*);
 extern "C" int func_ov023_021f9bc8(void*);
 extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
 
-extern "C" int func_020421a0(void);
+int MessageSystem_GetInstance(void);
 
 struct Struct_020a15bc_2 { unsigned int unknown_0_0_ : 9; unsigned int unknown_1_1_ : 23; unsigned int unknown_4_; unsigned int unknown_8_; };
 struct Struct_020a15bc { struct Struct_020a15bc_2* unknown_0_; unsigned short unknown_4_; unsigned short unknown_6_; };
@@ -23,18 +23,18 @@ struct Struct_02072a68 { short unknown_0_; void* unknown_4_; };
 struct Struct_02072a68_2 { struct Struct_02072a68* unknown_0_; short unknown_4_; };
 extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
 
-extern "C" int func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int AppendXYTag_02041a90(char* dst, int x, int y);
+int Text_Append(char* dst, const char* src);
 
-extern "C" int func_020420e8(void* arg0, int arg1);
-extern "C" int func_02046608(void* arg0, int arg1, unsigned int arg2, void* arg3, int arg4, int arg5, int arg6);
+extern "C" int Font_GetTextWidth(void* entry, int flag);
+extern "C" int MessageSystem_FormatText(void* g, int a, unsigned int b, void* buf, int c, int d, int e);
 
 #if defined(jpn)
-struct Struct_ov004_021707c8 { char unknown_0_[4]; short* unknown1_8_; struct Struct_020a15bc* unknown_8_; };
-extern "C" void func_02041f50(void* arg0, char* arg1);
-extern "C" void func_02042428(char* arg0, int arg1);
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" void func_ov023_021f8960(char* arg0, short arg1, unsigned short arg2);
+struct Data021707c8 { char pad[4]; short* keys; struct Array020a15bc* arr; };
+extern "C" void func_02041f50(void* entry, char* dst);
+extern "C" void func_02042428(char* dst, int size);
+int STD_GetStringLength(const char* s);
+void SetOffset100Fields_021f8960(char* node, short a, unsigned short b);
 #else
 struct Struct_ov004_021707c8 { char unknown_0_[8]; short* unknown1_8_; struct Struct_020a15bc* unknown_c_; };
 #endif
@@ -75,8 +75,8 @@ extern "C" ARM int func_ov004_021564f0(void* arg0) {
     struct Struct_020a15bc_2* var8 = func_020a15bc(data_ov004_021707c8.unknown_8_, var7);
     if (var8 != NULL) {
 
-    void* var9 = (void*)func_020421a0();
-    char* var10 = *(char**)((char*)var9 + 0x28);
+    void* g = (void*)MessageSystem_GetInstance();
+    char* buf = *(char**)((char*)g + 0x28);
 
     void* var11 = func_ov023_021f6880(var0, 0x82);
     if (!var11) {
@@ -86,21 +86,21 @@ extern "C" ARM int func_ov004_021564f0(void* arg0) {
         return 0;
     }
 
-    *(void**)((char*)var11 + 0x20) = 0;
-    if (var7 > 0) {
-        memset(var10, 0, 0x800);
-        void* var12 = func_02072a68(var5, var7);
-        func_02041f50(var12, var10 + 0x700);
-        int var13 = func_020d2ff0(var10 + 0x700);
-        int var14 = (0x80 - (var13 / 2) * 12) / 2;
-        int var15 = 6;
-        if (var13 != func_020d2ff0((const char*)var12)) {
-            var15 = 8;
+    *(void**)((char*)node3 + 0x20) = 0;
+    if (key > 0) {
+        memset(buf, 0, 0x800);
+        void* entry = FindEntryByKey_02072a68(table, key);
+        func_02041f50(entry, buf + 0x700);
+        int len = STD_GetStringLength(buf + 0x700);
+        int x = (0x80 - (len / 2) * 12) / 2;
+        int y = 6;
+        if (len != STD_GetStringLength((const char*)entry)) {
+            y = 8;
         }
-        func_02042428(var10, 0xc);
-        func_02041a90(var10, var14, var15);
-        func_02042058(var10, (const char*)var12);
-        *(void**)((char*)var11 + 0x20) = var10;
+        func_02042428(buf, 0xc);
+        AppendXYTag_02041a90(buf, x, y);
+        Text_Append(buf, (const char*)entry);
+        *(void**)((char*)node3 + 0x20) = buf;
     }
 
     void* var16 = func_ov023_021f6880(var0, 0x35);
@@ -147,8 +147,8 @@ extern "C" ARM int func_ov004_021564f0(void* arg0) {
     struct Struct_020a15bc_2* var21 = func_020a15bc(data_ov004_021707c8.unknown_c_, var20);
     if (var21 != NULL) {
 
-    void* var22 = (void*)func_020421a0();
-    char* var23 = *(char**)((char*)var22 + 0x5c);
+    void* g = (void*)MessageSystem_GetInstance();
+    char* buf = *(char**)((char*)g + 0x5c);
 
     void* var24 = func_ov023_021f6880(var0, 0x82);
     if (!var24) {
@@ -158,18 +158,18 @@ extern "C" ARM int func_ov004_021564f0(void* arg0) {
         return 0;
     }
 
-    *(void**)((char*)var24 + 0x20) = 0;
-    if (var20 > 0) {
-        memset(var23, 0, 0x960);
-        void* var25 = func_02072a68(var5, var20);
-        int var26 = 0xa0 - func_020420e8(var25, 1);
-        int var27 = var26 / 2;
-        if (var27 < 0) {
-            var27 = 0;
+    *(void**)((char*)node3 + 0x20) = 0;
+    if (key > 0) {
+        memset(buf, 0, 0x960);
+        void* entry = FindEntryByKey_02072a68(table, key);
+        int diff = 0xa0 - Font_GetTextWidth(entry, 1);
+        int half = diff / 2;
+        if (half < 0) {
+            half = 0;
         }
-        func_02041a90(var23, var27, 6);
-        if (var25) {
-            func_02042058(var23, (const char*)var25);
+        AppendXYTag_02041a90(buf, half, 6);
+        if (entry) {
+            Text_Append(buf, (const char*)entry);
         }
         *(void**)((char*)var24 + 0x20) = var23;
     }
@@ -193,11 +193,11 @@ extern "C" ARM int func_ov004_021564f0(void* arg0) {
         return 0;
     }
 
-    *(void**)((char*)var29 + 0x20) = 0;
-    if (var20 > 0) {
-        memset(var23, 0, 0x960);
-        func_02046608(var22, 0xc, var21->unknown_4_, var23, 0xe3, 0, 1);
-        *(void**)((char*)var29 + 0x20) = var23;
+    *(void**)((char*)node5 + 0x20) = 0;
+    if (key > 0) {
+        memset(buf, 0, 0x960);
+        MessageSystem_FormatText(g, 0xc, elem->w1, buf, 0xe3, 0, 1);
+        *(void**)((char*)node5 + 0x20) = buf;
     }
 
     void* var30 = func_ov023_021f6880(var0, 0x36);

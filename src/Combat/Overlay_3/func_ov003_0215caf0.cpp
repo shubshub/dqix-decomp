@@ -2,19 +2,15 @@
 #include "Memory/SafeAllocator.h"
 #include <globaldefs.h>
 
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_2;
-struct Struct_02020cb8;
-struct Struct_0204c7a8;
+struct BackgroundGraphics;
+struct WindowPane;
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
-struct Struct_02043368_2;
-struct Struct_02043368;
-struct Struct_02020aec;
-struct Struct_02020cb8_4;
-struct Struct_0201099c_3;
-struct Struct_0206f7f4;
+struct WindowPane;
+struct Struct0205a198;
+struct ClearTarget0205a234;
+struct PacRecord;
+struct Container020e0310;
+struct List0206f7f4;
 
 extern "C" Struct_0206f7f4 *func_0206f504();
 extern "C" short func_0206f7f4(Struct_0206f7f4 *, int);
@@ -24,22 +20,22 @@ extern "C" void *__clear(void *arg0, int arg1);
 extern "C" int func_02005a94();
 extern "C" void func_ov003_0215e1ec(char *self);
 void SetAndMulField_0215ca90(void *self, int v);
-void Background_Init(struct List0204af64 *obj);
+void Background_Init(struct BackgroundGraphics *obj);
 void Background_SetMapSize(unsigned char *obj, int value);
 extern "C" void Background_SetPriority(void *obj, int val);
-void Background_AllocateMap(struct AllocTarget0204b12c *obj,
+void Background_AllocateMap(struct BackgroundGraphics *obj,
                                                                                          SafeAllocator *alloc);
-int Background_SetScroll(struct Obj0204b5e8 *obj, int a, int b);
+int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
 extern "C" void ColorEffect_ConfigureAlphaBlend(int reg, int a, int b, int c, int d);
-int Pac_CountFiles(struct ActiveEntry02046900 *entry);
-void *Pac_GetFile(struct Rec020467f0 *rec, int index, void **out, int *out44);
+int Pac_CountFiles(struct PacRecord *entry);
+void *Pac_GetFile(struct PacRecord *rec, int index, void **out, int *out44);
 extern "C" void Background_LoadFile(void *obj, void *data, SafeAllocator *alloc, int size);
 extern "C" void Background_FillRect(void *obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-void Background_UploadMap(struct List0204b0e8 *obj, void *buf);
-void WindowPane_AllocateBuffer(struct Obj0204c7a8 *obj, SafeAllocator *alloc,
+void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
+void WindowPane_AllocateBuffer(struct WindowPane *obj, SafeAllocator *alloc,
                                                                            int buf, unsigned int size);
 void Window_SetPanes(struct Struct_0205cf78 *s,
-                                                                                     struct Elem_0205cf78 *arr,
+                                                                                     struct WindowPane *arr,
                                                                                      unsigned char count);
 void Sprite_Init(struct Struct0205a198 *s);
 void ClearField0And40205a234(struct ClearTarget0205a234 *t);
@@ -182,14 +178,14 @@ extern "C" ARM void func_ov003_0215caf0(char *arg0) {
             struct Layer0215caf0 *o;
             for (int i = 0; i < 2; i++) {
                 o = (struct Layer0215caf0 *) (self + 0x154 + regionalShift + i * 0x20);
-                Background_Init((struct List0204af64 *) o);
+                Background_Init((struct BackgroundGraphics *) o);
                 Background_SetMapSize((unsigned char *) o, 0);
                 o->lo = 0;
                 o->hi = prio.v[i];
                 Background_SetPriority(o, layer.v[i]);
-                Background_AllocateMap((struct AllocTarget0204b12c *) o,
+                Background_AllocateMap((struct BackgroundGraphics *) o,
                                                                                          (SafeAllocator *) (self + 0x28));
-                Background_SetScroll((struct Obj0204b5e8 *) o, 0, 0);
+                Background_SetScroll((struct BackgroundGraphics *) o, 0, 0);
             }
             REG16(0x0400000a) = (REG16(0x0400000a) & 0x43) | 0xd08;
             REG16(0x0400000c) = (REG16(0x0400000c) & 0x43) | 0xe08;
@@ -200,9 +196,9 @@ extern "C" ARM void func_ov003_0215caf0(char *arg0) {
             unsigned int len2;
             int val;
             loader->GetLoadedFileByID(((int *) S32(0x3b4))[1 + regionalTasks], &data2, &len2);
-            int n = Pac_CountFiles((struct ActiveEntry02046900 *) data2);
+            int n = Pac_CountFiles((struct PacRecord *) data2);
             for (int i = 0; i < n; i++) {
-                void *rec = Pac_GetFile((struct Rec020467f0 *) data2, i, &out, &val);
+                void *rec = Pac_GetFile((struct PacRecord *) data2, i, &out, &val);
                 if (rec != 0) {
                     Background_LoadFile(self + 0x174 + regionalShift, rec, (SafeAllocator *) (self + 0x28), val);
                 }
@@ -211,20 +207,20 @@ extern "C" ARM void func_ov003_0215caf0(char *arg0) {
             for (int i = 0; i < 2; i++) {
                 o2 = self + 0x154 + regionalShift + i * 0x20;
                 Background_FillRect(o2, 0, 0, 0, 0x20, 0x19, 0);
-                Background_UploadMap((struct List0204b0e8 *) o2, 0);
+                Background_UploadMap((struct BackgroundGraphics *) o2, 0);
             }
             S32(0x354) = (int) ((SafeAllocator *) (self + 0x28))->Allocate(regionalScreenBuf);
             char *o3;
             for (int i = 0; i < 2; i++) {
                 o3 = self + 0x194 + regionalShift + i * 0xe0;
-                WindowPane_AllocateBuffer((struct Obj0204c7a8 *) o3,
+                WindowPane_AllocateBuffer((struct WindowPane *) o3,
                                                                            (SafeAllocator *) (self + 0x28), S32(0x354), regionalCharBuf);
                 *(char **) (o3 + 4) = self + 0x174 + regionalShift;
             }
             *(char **) (arg0 + 0x130 + Enum_ov003_0215caf0_0) = arg0 + 0x154 + Enum_ov003_0215caf0_0;
             U8(0x14a)                 = 2;
             Window_SetPanes((struct Struct_0205cf78 *) (self + 0x98 + regionalShift),
-                                                                                 (struct Elem_0205cf78 *) (self + 0x194 + regionalShift), 2);
+                                                                                 (struct WindowPane *) (self + 0x194 + regionalShift), 2);
             REG16(0x04000008) = (REG16(0x04000008) & ~3) | 2;
             REG16(0x0400000a) = (REG16(0x0400000a) & ~3) | 1;
             REG16(0x0400000c) = (REG16(0x0400000c) & ~3);
@@ -251,9 +247,9 @@ extern "C" ARM void func_ov003_0215caf0(char *arg0) {
             unsigned int len3;
             int val3;
             loader->GetLoadedFileByID(((int *) S32(0x3b4))[2 + regionalTasks], &data3, &len3);
-            int n3 = Pac_CountFiles((struct ActiveEntry02046900 *) data3);
+            int n3 = Pac_CountFiles((struct PacRecord *) data3);
             for (int i = 0; i < n3; i++) {
-                void *rec3 = Pac_GetFile((struct Rec020467f0 *) data3, i, &out3, &val3);
+                void *rec3 = Pac_GetFile((struct PacRecord *) data3, i, &out3, &val3);
                 SpriteContext_LoadFile(self + 0x358 + regionalShift, rec3, val3, self + 0x50);
             }
             var0->RemoveTask(((int *) S32(0x3b4))[2 + Enum_ov003_0215caf0_0_2]);

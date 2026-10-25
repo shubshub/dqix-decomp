@@ -1,38 +1,38 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
-extern "C" int func_0205a658(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" int func_0205a984(void* arg0, void* arg1, int arg2, int arg3);
-struct Struct_0205a528;
-extern "C" int func_0205aaf8(Struct_0205a528*, void*, int);
-extern "C" int func_0205ab78(void* arg0, void* arg1, int arg2);
+extern "C" void __clear(void* dst, int size);
+extern "C" int memcmp(const void* a, const void* b, unsigned int length); // memcmp
+extern "C" int SpriteContext_LoadCells(void* context, void* file, int size, int allocator);
+extern "C" int SpriteContext_LoadAnimations(void* context, void* file, int size, int allocator);
+struct Obj0205aaf8;
+int ValidateAndDispatchResource(Obj0205aaf8*, void*, int);
+extern "C" int SpriteContext_LoadPalette(void* context, void* file, int size);
 
-extern char data_020f0504[];
-extern char data_020f0509[];
-extern char data_020f050e[];
-extern char data_020f0513[];
+extern char SpriteContext_ncerMagic[];
+extern char SpriteContext_nanrMagic[];
+extern char SpriteContext_ncgrMagic[];
+extern char SpriteContext_nclrMagic[];
 
 // Main, originally func_0205a528 (USA 0x0205a528, EUR 0x0205a538, JPN 0x0205b8c4)
-extern "C" ARM int SpriteContext_LoadFile(void* obj, void* data, int arg2, int arg3) {
+extern "C" ARM int SpriteContext_LoadFile(void* context, void* file, int size, int allocator) {
     char magic[5];
 
-    __clear(var0, 5);
-    memcpy(var0, arg1, 4);
+    __clear(magic, 5);
+    memcpy(magic, file, 4);
 
-    if (func_02001aec(var0, data_020f0504, 4) == 0 && func_0205a658(arg0, arg1, arg2, arg3)) {
+    if (memcmp(magic, SpriteContext_ncerMagic, 4) == 0 && SpriteContext_LoadCells(context, file, size, allocator)) {
         return 1;
-    } else if (func_02001aec(var0, data_020f0509, 4) == 0) {
-        if (func_0205a984(arg0, arg1, arg2, arg3)) {
+    } else if (memcmp(magic, SpriteContext_nanrMagic, 4) == 0) {
+        if (SpriteContext_LoadAnimations(context, file, size, allocator)) {
             return 1;
         }
-    } else if (func_02001aec(var0, data_020f050e, 4) == 0) {
-        if (func_0205aaf8((Struct_0205a528*)arg0, arg1, arg2)) {
+    } else if (memcmp(magic, SpriteContext_ncgrMagic, 4) == 0) {
+        if (ValidateAndDispatchResource((Obj0205aaf8*)context, file, size)) {
             return 1;
         }
-    } else if (func_02001aec(var0, data_020f0513, 4) == 0) {
-        if (func_0205ab78(arg0, arg1, arg2)) {
+    } else if (memcmp(magic, SpriteContext_nclrMagic, 4) == 0) {
+        if (SpriteContext_LoadPalette(context, file, size)) {
             return 1;
         }
     }

@@ -3,6 +3,7 @@
 #include <globaldefs.h>
 #include "NitroSDK/Matrix.h"
 #include "Memory/SafeAllocator.h"
+#include "Graphics/Background.h"
 
 struct Struct_020210f8 {
     int unknown_0_;
@@ -31,64 +32,52 @@ struct Struct_02021578 {
     unsigned char unknown_51_[3];
 };
 
-struct Struct_02020cb8 {
-    int unknown_0_;
-    char unknown_4_[8];
-    unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned short unknown_e_;
-    int unknown_10_, unknown_14_, unknown_18_;
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_, unknown_1e_, unknown_1f_;
-};
+struct ForwardingRecord02024518;
+struct Node02021f88;
 
-struct Struct_02024518;
-struct Struct_02021f88;
-
-struct Struct_02020554 {
-    char* inline_02023218() { return (char*)unknown_5b4_; }
-    char* inline_02023218_2() { return (char*)&unknown_5b4_[0x40]; }
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[0x10];
-    unsigned char unknown_12_;
-    unsigned char unknown_13_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
-    Struct_020210f8* unknown_20_;
-    int unknown_24_;
-    int unknown_28_;
-    Struct_02024518* unknown_2c_;
-    int unknown_30_;
-    int unknown_34_;
-    fix32_t unknown_38_;
-    fix32_t unknown_3c_;
-    fix32_t unknown_40_;
-    int unknown_44_;
-    int unknown_48_;
-    Struct_02020cb8 unknown_4c_;
-    void* unknown_6c_;
-    int unknown_70_;
-    int unknown_74_;
-    unsigned char unknown_78_[0x94 - 0x78];
-    Struct_02021578 unknown_94_;
-    Struct_02043368_2 unknown_e8_[28];
-    char unknown_548_[0x10];
-    unsigned char unknown_558_[4];
-    unsigned char unknown_55c_;
-    unsigned char unknown_55d_;
-    unsigned char unknown_55e_;
-    unsigned char unknown_55f_;
-    int unknown_560_[4];
-    unsigned char unknown_570_[4];
-    unsigned char unknown_574_[0x5a4 - 0x574];
-    int unknown_5a4_;
-    unsigned char unknown_5a8_;
-    unsigned char unknown_5a9_[3];
-    fix32_t unknown_5ac_;
-    fix32_t unknown_5b0_;
+struct MapDisplay {
+    char* GetMapNameText() { return (char*)unknown5b4; }
+    char* GetLevelLabelText() { return (char*)&unknown5b4[0x40]; }
+    unsigned char state;
+    unsigned char unknown1;
+    char headerName[0x10];
+    unsigned char field12;
+    unsigned char unknown13;
+    int displayMode;
+    int forwardingX;
+    int forwardingY;
+    Entry02021578* names;
+    int nameCount;
+    int field28;
+    ForwardingRecord02024518* forwarding;
+    int forwardingCount;
+    int field34;
+    fix32_t scale;
+    fix32_t cameraBiasX;
+    fix32_t cameraBiasZ;
+    int screenX;
+    int screenY;
+    BackgroundGraphics list4c;
+    void* mapState;
+    int mapPalette;
+    int forwardingFill;
+    unsigned char unknown78[0x94 - 0x78];
+    MapEntryList entryList;
+    Struct0205a198 records[28];
+    char name[0x10];
+    unsigned char recordVisible[4];
+    unsigned char forwardingPending;
+    unsigned char mask55d;
+    unsigned char field55e;
+    unsigned char unknown55f;
+    int slots[4];
+    unsigned char slotFlags[4];
+    unsigned char unknown574[0x5a4 - 0x574];
+    int flags;
+    unsigned char field5a8;
+    unsigned char unknown5a9[3];
+    fix32_t cameraX;
+    fix32_t cameraZ;
 #if defined(jpn)
     unsigned char unknown_5b4_[0x6a8 - 0x5b4];
 #else

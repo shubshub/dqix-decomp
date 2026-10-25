@@ -4,11 +4,11 @@
 #include "World/ZoneResourceTree.h"
 
 extern "C" void* func_0202ae18(void);
-extern "C" unsigned short* func_02012fe4(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void* func_0202ae24(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
+extern "C" int func_0202c508(void* search);
+extern "C" void func_0205e330(void* a, void* b, int c);
+extern "C" void* memset(void* dst, int c, unsigned int n);
+void* GetData02100044_0202ae24(void);
 
 struct Struct_020fdd44 {
     unsigned short unknown_0_;
@@ -16,8 +16,8 @@ struct Struct_020fdd44 {
     unsigned short unknown_2_4_ : 12;
     unsigned short unknown_4_;
 };
-extern "C" struct Struct_020fdd44* func_02027ca4(void);
-extern "C" struct Struct_020fdd44* func_02028bd0(struct Struct_020fdd44* arg0, int arg1);
+struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
 
 struct Struct_ov017_0218e674;
 extern "C" int func_ov017_021bd3a4(Struct_ov017_0218e674* arg0);
@@ -92,13 +92,13 @@ extern "C" ARM void func_ov017_021c4fa0(int arg0, int arg1) {
     Struct_ov017_021c4fa0_3* var12;
     Struct_ov017_021c4fa0_5 var13;
 
-    var0 = GameState::GetInstance();
-    var8 = func_0202ae18();
-    var1 = func_02012fe4();
-    var4 = GetGameResources();
-    var7 = (Struct_ov017_021c4fa0_6*)var4->unknown_ptr_array_371c[6];
-    func_02027ca4();
-    var2 = func_0202ae24();
+    gs = GameState::GetInstance();
+    search = func_0202ae18();
+    cur = Zone3D_GetInstance();
+    res = GetGameResources();
+    unit = (Unit_021c4fa0*)res->unknown_ptr_array_371c[6];
+    ZoneRecords_GetInstance();
+    data = GetData02100044_0202ae24();
 
     var13.unknown_0_ = 0x8f;
     var5 = &var13.unknown_4_;
@@ -134,11 +134,11 @@ extern "C" ARM void func_ov017_021c4fa0(int arg0, int arg1) {
             var5->unknown_4_ = *var1;
         }
 
-        var5->unknown_8_ = var0->GetDayTimer();
-        var11 = func_02028bd0(func_02027ca4(), arg1);
-        if (var11 != NULL) {
-            var5->unknown_c_ = var11->unknown_2_4_;
-            var5->unknown_e_ = var11->unknown_4_;
+        p->time = gs->GetDayTimer();
+        entry = FindInlineEntryById(ZoneRecords_GetInstance(), id);
+        if (entry != NULL) {
+            p->fieldC = entry->value;
+            p->fieldE = entry->value2;
         } else {
 #if defined(jpn)
             var12 = (Struct_ov017_021c4fa0_3*)((char*)var4 + 0x4204);

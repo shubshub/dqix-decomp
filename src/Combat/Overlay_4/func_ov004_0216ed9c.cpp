@@ -65,19 +65,19 @@ struct Struct_ov004_0215883c_3;
 struct Struct_ov004_021583a8;
 struct Struct_ov004_021583a8_2;
 
-extern "C" void* func_ov004_0216ea38(void* arg0, int arg1);
-extern "C" int func_020421a0(void);
-extern "C" int func_020d4ac8(void);
+extern "C" void* func_ov004_0216ea38(void* ctx, int key);
+int MessageSystem_GetInstance(void);
+int GetBattleSubField0xbcForState_020d4ac8(void);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" Struct_ov004_0216ed9c_3* func_ov023_021f6880(void*, int);
 extern "C" int func_ov023_021f6f10(void*);
-extern "C" void func_ov023_021fb27c(void* arg0, unsigned short arg1);
-extern "C" void func_ov017_021b1e24(void* arg0, void* arg1);
-extern "C" int func_ov017_021b1fd4(void* arg0);
-extern "C" void func_ov023_021fa078(void* arg0, void* arg1, unsigned short arg2, Struct_ov004_0216ed9c_2* arg3, int arg4, int arg5);
-extern "C" unsigned char func_ov017_021b2024(Struct_ov004_021583a8_4* arg0);
-extern "C" unsigned char func_ov017_021b2038(Struct_ov004_021583a8_5* arg0);
-extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
+extern "C" void func_ov023_021fb27c(void* node, unsigned short v);
+extern "C" void FieldTask_ConnectWifi(void* a, void* b);
+int GetFieldromField_021b1fd4_021b1fd4(void* obj);
+extern "C" void func_ov023_021fa078(void* obj, void* ctx, unsigned short val, Vec3_0216ed9c* srcVec, int p5, int p6);
+unsigned char GetSubByteField34_021b2024(Obj24_021b2024* obj);
+unsigned char GetSubByteField35_021b2038(Obj24_021b2038* obj);
+void* FindEntryByKey_02072a68(TableA68* table, int key);
 #if defined(jpn)
 extern "C" void func_0204500c(void* arg0, void* arg1, int arg2);
 #define FUNC_0204500C(g, b) func_0204500c(g, b, 0)
@@ -101,15 +101,15 @@ static inline char* inline_ov004_0216ed9c(char* arg0) {
 }
 
 // USA: func_ov004_0216ed9c
-extern "C" ARM int func_ov004_0216ed9c(void* arg0) {
-    Struct_ov004_0216ed9c_3* var0;
-    GameState* var1 = GameState::GetInstance();
-    char* var2 = (char*)GetGameResources();
-    void* var3 = *(void**)(var2 + 0x3000 + Enum_ov004_0216ed9c_1788);
-    char* var4 = inline_ov004_0216ed9c(var2);
-    Struct_02072a68_2* var5 = (Struct_02072a68_2*)func_ov004_0216ea38(arg0, 4);
-    int var6 = func_020421a0();
-    unsigned char var7 = data_ov004_02171048.unknown_4_->unknown_2e_[0];
+extern "C" ARM int func_ov004_0216ed9c(void* self) {
+    Node0216ed9c* node;
+    GameState* gs = GameState::GetInstance();
+    char* actor = (char*)GetGameResources();
+    void* list = *(void**)(actor + 0x3000 + listOffset);
+    char* five = GetFive(actor);
+    TableA68* table = (TableA68*)func_ov004_0216ea38(self, 4);
+    int g = MessageSystem_GetInstance();
+    unsigned char state = data_ov004_02171048.ptr->flags2e[0];
 
     if (var7 == 2) {
         int var8 = func_020d4ac8();
@@ -117,8 +117,8 @@ extern "C" ARM int func_ov004_0216ed9c(void* arg0) {
         if (var0 == 0 || func_ov023_021f6f10(var0) != 1) {
             var0 = 0;
         }
-        func_ov023_021fb27c(var0, var8 + 8);
-        func_ov017_021b1e24(var4, var3);
+        func_ov023_021fb27c(node, v + 8);
+        FieldTask_ConnectWifi(five, list);
         {
             int var9;
             Struct_ov004_0216ed9c_4* var10;

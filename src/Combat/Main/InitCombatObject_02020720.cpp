@@ -9,8 +9,8 @@
 #include "Combat/MapDisplay.h"
 #include "Combat/CombatScriptContext.h"
 
-struct List0204af64;
-ARM void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+ARM void Background_Init(struct BackgroundGraphics* obj);
 
 extern "C" ARM void func_0202445c(void* obj);
 

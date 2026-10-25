@@ -15,8 +15,8 @@ struct Struct_020e0a78 {
     unsigned int unknown_774_;
 };
 
-extern "C" void *func_020d6c00();
-extern "C" int func_02046708(Struct_02012de8 *arg0, unsigned int arg1);
+void *GlobalFlags_GetInstance();
+int TestFlags02046708(FlagWord02046708 *flags, unsigned int mask);
 extern "C" void VectorizedInvertedMemcpy(void *dst, void *src, unsigned int size);
 extern "C" void func_020e0df8(void*, int, int, int);
 extern "C" void func_020e0cfc(void*, int, int, int);
@@ -34,7 +34,7 @@ extern "C" ARM int func_020e0a78(void *arg0) {
     if (var0->unknown_76c_ == 0) {
         return 0;
     }
-    if (func_02046708(static_cast<Struct_02012de8 *>(func_020d6c00()), 0x41)) {
+    if (TestFlags02046708(static_cast<FlagWord02046708 *>(GlobalFlags_GetInstance()), 0x41)) {
         return 0;
     }
 

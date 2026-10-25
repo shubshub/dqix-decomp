@@ -8,17 +8,17 @@ extern "C" int func_ov017_02195658(GameResources* arg0);
 extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
 extern "C" void func_020a367c(unsigned char* arg0, int arg1);
 
-extern "C" void func_ov017_021c8b78(unsigned short arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov000_0215f03c(struct Struct_02000c9c_33* arg0);
-extern "C" void func_ov000_021663a0(struct Struct_ov000_021640dc_4* arg0);
-extern "C" void func_ov000_02164d74(struct Struct_ov000_021640dc_4* arg0);
-extern "C" void func_ov000_021674f4(unsigned char* arg0, int arg1);
-extern "C" unsigned char* func_0208a9b4(void);
-extern "C" void func_0208b4c0(unsigned char* arg0);
-extern "C" void func_ov000_02160d80(void* arg0, int arg1);
-extern "C" void func_ov000_021750e4(void* arg0);
-extern "C" void func_ov000_021760d4(void* arg0);
+void EnqueueEventTag122_021c8b78(unsigned short tag);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void func_ov000_0215f03c(struct BattleData021640dc* data);
+extern "C" void func_ov000_021663a0(struct BattleScene021640dc* scene);
+extern "C" void func_ov000_02164d74(struct BattleScene021640dc* scene);
+void ProcessFlagits021674f4_021674f4(unsigned char* scene, int flag);
+unsigned char* GetData02108f0c_0208a9b4(void);
+void SetField0xacMinusOneClearField0xb0_0208b4c0(unsigned char* obj);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void* p, int val);
+extern "C" void func_ov000_021750e4(void* obj);
+void UpdateCombatantFlagByte021760d4(void* obj);
 
 struct Struct_ov000_021640dc {
     unsigned char unknown_0_;
@@ -105,8 +105,8 @@ extern "C" ARM void func_ov000_021640dc(struct Struct_ov000_021640dc_4* arg0) {
     if (!func_ov000_02160fd4(arg0, 0x200000)) {
         return;
     }
-    if (arg0->unknown_2a0_->unknown_2a_ != func_020100a8(var0)) {
-        func_ov000_0215f03c(arg0->unknown_29c_);
+    if (scene->config->partyId != GameState_GetProtagonistIndex(gs)) {
+        func_ov000_0215f03c(scene->data);
     }
     func_ov000_021663a0(arg0);
     func_ov000_02164d74(arg0);

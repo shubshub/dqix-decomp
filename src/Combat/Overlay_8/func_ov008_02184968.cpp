@@ -46,9 +46,9 @@ extern "C" ARM void func_ov008_02184968(struct Struct_ov008_02184968_2* arg0) {
         memset(arg0->unknown_b8_, 0, LOW_REGION(0x800, 0x960));
         func_ov008_02187278(arg0, arg0->unknown_b8_, 0, 0);
 #if defined(jpn)
-        func_0205d5d0((struct Struct_0205d5d0*)((char*)arg0 + 0x130), 1, (int)arg0->unknown_b8_, 1);
+        Window_SetPaneText((struct StructA0205d5d0*)((char*)obj + 0x130), 1, (int)obj->bufPtr, 1);
 #else
-        func_0205d5d0((struct Struct_0205d5d0*)((char*)arg0 + 0x130), 1, (int)arg0->unknown_b8_, 1, 0);
+        Window_SetPaneText((struct StructA0205d5d0*)((char*)obj + 0x130), 1, (int)obj->bufPtr, 1, 0);
 #endif
         arg0->unknown_b18_ &= ~0x800;
     }

@@ -48,31 +48,31 @@ struct Struct_02038138_4 {
     short unknown_256_;
 };
 
-extern "C" char* func_02012fe4();
-extern "C" struct Struct_02038138_3* func_ov017_0218d268(void*);
-extern "C" void func_02033b88(struct Struct_02010604*, int);
-extern "C" void func_02033b68(struct Struct_02033b68*, int);
-extern "C" void func_02033b58(struct Struct_02033b58*, unsigned char);
-extern "C" int func_0202e7f0(void*);
+extern "C" char* Zone3D_GetInstance();
+struct Field4328* GetField4328_0218d268(void*);
+void SetByte0xbeShiftPrev(struct Bytes02033b88*, int);
+void GameObject_SetMotionState(struct Obj02033b68*, int);
+void SetByteSavingPrevious(struct Foo02033b58*, unsigned char);
+int GetField0x70_0202e7f0(void*);
 int fix32ReduceAngle0To2Pi(int);
 extern "C" struct Struct_02038138_2* func_0201e8fc(struct Struct_0201e8fc_2*, struct Struct_ov009_0218aa28*);
 int fix32SignedAngleDistance(int, int);
 int fix32abs(int);
-extern "C" void func_02033834(struct Struct_02033834_2*, int);
-extern "C" short func_020968c4(struct Struct_02038138*);
+void GameObject_SetFacing(struct Obj02033834*, int);
+short GetShortAt0x22e(struct ShortField0x22e_020968c4*);
 
 extern int data_020e780c[8];
 
 // USA: func_02038138
-extern "C" ARM void func_02038138(struct Struct_02038138_4* arg0) {
-    char* var0;
-    void* var1;
-    GameResources* var2;
-    int var3;
-    var1 = func_020100bc(GameState::GetInstance());
-    var2 = GetGameResources();
-    var0 = func_02012fe4();
-    var3 = 0;
+extern "C" ARM void func_02038138(struct Actor02038138* self) {
+    char* world;
+    void* camera;
+    GameResources* ov;
+    int mode;
+    camera = GameState::GetInstance()->GetCamera();
+    ov = GetGameResources();
+    world = Zone3D_GetInstance();
+    mode = 0;
 
     if (g_keyManager.IsUpHeld() && g_keyManager.IsLeftHeld()) {
         arg0->unknown_250_ = 0xc;
@@ -132,10 +132,10 @@ extern "C" ARM void func_02038138(struct Struct_02038138_4* arg0) {
         if (arg0->unknown_252_ != 0 && arg0->unknown_be_ == 1) {
             func_02033b88((struct Struct_02010604*)arg0, 0);
         }
-        arg0->unknown_255_ = -1;
-    } else if (var3 == 1) {
-        if (arg0->unknown_c0_ == 0 || arg0->unknown_c0_ == 0xa) {
-            func_02033b68((struct Struct_02033b68*)arg0, 1);
+        self->lockedDir = -1;
+    } else if (mode == 1) {
+        if (self->fc0 == 0 || self->fc0 == 0xa) {
+            GameObject_SetMotionState((struct Obj02033b68*)self, 1);
         } else {
             func_02033b58((struct Struct_02033b58*)arg0, 1);
         }
@@ -161,15 +161,15 @@ extern "C" ARM void func_02038138(struct Struct_02038138_4* arg0) {
                 arg0->unknown_255_ = -1;
             }
         }
-        func_02033834((struct Struct_02033834_2*)arg0, var10);
-    } else if (var3 == 2) {
-        if (arg0->unknown_c0_ == 0) {
-            func_02033b68((struct Struct_02033b68*)arg0, 1);
+        GameObject_SetFacing((struct Obj02033834*)self, angle);
+    } else if (mode == 2) {
+        if (self->fc0 == 0) {
+            GameObject_SetMotionState((struct Obj02033b68*)self, 1);
         } else {
             func_02033b58((struct Struct_02033b58*)arg0, 1);
         }
-        if (var4->unknown_224_ != 0) {
-            func_02033834((struct Struct_02033834_2*)arg0, func_020968c4((struct Struct_02038138*)var4));
+        if (f->active != 0) {
+            GameObject_SetFacing((struct Obj02033834*)self, GetShortAt0x22e((struct ShortField0x22e_020968c4*)f));
         }
         arg0->unknown_255_ = -1;
     }

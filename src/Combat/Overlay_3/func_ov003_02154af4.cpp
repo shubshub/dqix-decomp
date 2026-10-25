@@ -34,12 +34,12 @@ extern short data_ov003_0217f2a8[3];
 extern Table data_ov003_0217f340;
 extern Dispatch __ptmf_null;
 extern "C" int func_ov017_021959b4();
-extern "C" char* func_020421a0();
-extern "C" void func_02043204(char*);
-struct Struct_020e28dc;
-extern "C" int func_020e28dc(Struct_020e28dc*);
-struct Struct_020e25e8;
-extern "C" void func_020e25e8(Struct_020e25e8*);
+char* MessageSystem_GetInstance();
+void MessageSystem_Reset(char*);
+struct Outer020e28dc;
+int GetInnerFlagBit0020e28dc(Outer020e28dc*);
+struct Obj020e25e8;
+void ResetSelectionState020e25e8(Obj020e25e8*);
 extern "C" void func_ov003_021537d4(void*,unsigned int);
 extern "C" void func_ov003_021552b8(Struct_ov003_02154af4_3*);
 struct Struct_0207fc6c;
@@ -55,38 +55,38 @@ extern "C" void func_020813ec(Struct_ov003_02154af4_2*,int);
 struct Struct_020e263c_2;
 extern "C" void func_020e263c(Struct_020e263c_2*, int);
 // USA: func_ov003_02154af4
-extern "C" ARM int func_ov003_02154af4(Struct_ov003_02154af4_3* arg0,unsigned int arg1) {
- arg0->unknown_1dc_=arg1;
- if (!arg0->unknown_33a_ && func_ov017_021959b4()) { arg0->unknown_33a_=1; arg0->unknown_339_=1; }
- if (arg0->unknown_339_ && !arg0->unknown_338_) {
-  if(arg0->unknown_8_) *arg0->unknown_8_=-1;
-  arg0->unknown_8_=0;
-  func_02043204(func_020421a0());
-  arg0->unknown_1ee_=-1; arg0->unknown_1ec_=arg0->unknown_1ee_;
-  if(arg0->unknown_1c_ && func_020e28dc((Struct_020e28dc*)arg0->unknown_1c_)) func_020e25e8((Struct_020e25e8*)arg0->unknown_1c_);
-  arg0->unknown_1f8_=6; arg0->unknown_1f9_=0; arg0->unknown_339_=0;
+extern "C" ARM int func_ov003_02154af4(Scene* self,unsigned int scale) {
+ self->scale=scale;
+ if (!self->started && func_ov017_021959b4()) { self->started=1; self->reset=1; }
+ if (self->reset && !self->blocked) {
+  if(self->selection) *self->selection=-1;
+  self->selection=0;
+  MessageSystem_Reset(MessageSystem_GetInstance());
+  self->field1ea=-1; self->pending=self->field1ea;
+  if(self->inner && GetInnerFlagBit0020e28dc((Outer020e28dc*)self->inner)) ResetSelectionState020e25e8((Obj020e25e8*)self->inner);
+  self->state=6; self->flag=0; self->reset=0;
  }
- if(!arg0->unknown_204_) func_ov003_021537d4(arg0->unknown_4_,arg1);
- if(arg0->unknown_1ec_>=0) { func_ov003_021552b8(arg0); return 0; }
- if(arg0->unknown_1f8_) func_020421a0()[Enum_ov003_02154af4_6574]=0;
- Struct_ov003_02154af4_2* var0=arg0->unknown_18_;
- if(var0) {
-  if(!arg0->unknown_204_) func_0207fc6c((Struct_0207fc6c*)var0, arg1);
-  int var1; Struct_ov003_02154af4* var2; Struct_ov000_0217c638* var3; bool var4; int var5; Struct_ov000_02182a74* var6; GameState* var7;
-  var4=false;
-  var7=GameState::GetInstance();
-  var6=(Struct_ov000_02182a74*)func_02010828(var7);
-  int var8=var6->unknown_f7c_;
-  for(var1=0;var1<var8;var1++) {
-   var5=var6->unknown_f78_[var1];
-   var3=(Struct_ov000_0217c638*)var7->GetPartyMemberByIndex(var5);
-   if(var3) {
-    var2=&arg0->unknown_190_[var5];
-    unsigned int var9=var3->inline_ov003_02154af4();
-    unsigned int var10,var11,var12,var13,var14;
-    if(!(var2->unknown_4_==var9 && ((var10=var3->inline_ov003_02154af4_2()), var2->unknown_6_==var10) && ((var11=var3->inline_ov003_02154af4_3()), var2->unknown_8_==var11) && ((var12=var3->inline_ov003_02154af4_4()), var2->unknown_a_==var12) && ((var13=var3->inline_ov003_02154af4_5()), var2->unknown_d_==var13) && var2->unknown_c_==func_0202053c(var3) && ((var14=var3->inline_ov003_02154af4_6()), var2->unknown_0_==var14))) {
-     var2->unknown_4_=var3->unknown_130_->unknown_4_; var2->unknown_6_=var3->unknown_134_->unknown_30_; var2->unknown_8_=var3->unknown_130_->unknown_6_; var2->unknown_a_=var3->unknown_134_->unknown_32_;
-     var2->unknown_d_=var3->unknown_150_->unknown_950_; var2->unknown_c_=func_0202053c(var3); var4=true; var2->unknown_0_=var3->unknown_130_->unknown_0_;
+ if(!self->skip) func_ov003_021537d4(self->controller,scale);
+ if(self->pending>=0) { func_ov003_021552b8(self); return 0; }
+ if(self->state) MessageSystem_GetInstance()[kGlobalFlag]=0;
+ Model* model=self->model;
+ if(model) {
+  if(!self->skip) CallFunc0204c87cOverEntries0207fc6c((Obj0207fc6c*)model, scale);
+  int i; Cache* c; Member* member; bool changed; int id; Party* party; GameState* gs;
+  changed=false;
+  gs=GameState::GetInstance();
+  party=(Party*)GameState_GetParty(gs);
+  int count=party->count;
+  for(i=0;i<count;i++) {
+   id=party->ids[i];
+   member=(Member*)gs->GetPartyMemberByIndex(id);
+   if(member) {
+    c=&self->cache[id];
+    unsigned int hp=member->HP();
+    unsigned int maxhp,mp,maxmp,voc,flags;
+    if(!(c->hp==hp && ((maxhp=member->MaxHP()), c->maxHP==maxhp) && ((mp=member->MP()), c->mp==mp) && ((maxmp=member->MaxMP()), c->maxMP==maxmp) && ((voc=member->Voc()), c->vocation==voc) && c->table==GetTableValue_0202053c(member) && ((flags=member->Flags()), c->flags==flags))) {
+     c->hp=member->status->hp; c->maxHP=member->profile->hp; c->mp=member->status->mp; c->maxMP=member->profile->mp;
+     c->vocation=member->vocation->value; c->table=GetTableValue_0202053c(member); changed=true; c->flags=member->status->flags;
     }
    }
   }

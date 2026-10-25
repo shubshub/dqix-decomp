@@ -5,8 +5,8 @@
 struct Struct0215efb8;
 ARM void Keyboard_Init(Struct0215efb8* s);
 
-struct ResetLayout_0215e6d8;
-ARM void KeyboardLayout_Init(ResetLayout_0215e6d8* s);
+struct KeyboardLayout;
+ARM void KeyboardLayout_Init(KeyboardLayout* s);
 
 ARM int LoadBattleBlock020ac460(void* dst);
 
@@ -27,7 +27,7 @@ extern "C" ARM void func_ov012_02184884(char* self, SafeAllocator* alloc) {
 
     void* p4 = alloc->Allocate(0x10);
     *(void**)(self + 0x4) = p4;
-    if (p4 != 0) KeyboardLayout_Init((ResetLayout_0215e6d8*)p4);
+    if (p4 != 0) KeyboardLayout_Init((KeyboardLayout*)p4);
 
 #endif
 

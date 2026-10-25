@@ -17,17 +17,17 @@ extern "C" int func_02086b98(struct Struct_0201bdac_4* arg0);
 extern "C" int func_02010088(struct Struct_02010088* arg0);
 
 // USA: func_ov000_02163c80
-extern "C" ARM int func_ov000_02163c80(struct Struct_ov000_02163c80* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_0201bdac_4* var1 = (struct Struct_0201bdac_4*)func_02010828(var0);
-    int var2 = 1;
-    int var3;
-    int var4;
-    for (var3 = 0; var3 < 4; var3++) {
-        GameObject* var5 = var0->GetPartyMemberByIndex(var3);
-        if (var5 == NULL) continue;
-        if (func_020a35e0(arg0->unknown_2a0_, var3 & 0xff)) continue;
-        if (!(**(int**)((char*)var5 + 0x130) & 1)) var2 = 0;
+extern "C" ARM int func_ov000_02163c80(struct S02163c80* self, int checkEnemies) {
+    GameState* bs = GameState::GetInstance();
+    struct Obj02086b98* list = (struct Obj02086b98*)GameState_GetParty(bs);
+    int partyOk = 1;
+    int i;
+    int j;
+    for (i = 0; i < 4; i++) {
+        GameObject* m = bs->GetPartyMemberByIndex(i);
+        if (m == NULL) continue;
+        if (TestBitAt0x34_020a35e0(self->bitsPtr, i & 0xff)) continue;
+        if (!(**(int**)((char*)m + 0x130) & 1)) partyOk = 0;
     }
     int var6 = func_02086b98(var1) != 0;
     if (arg1) {

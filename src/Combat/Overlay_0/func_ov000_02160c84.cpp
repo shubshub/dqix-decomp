@@ -48,19 +48,19 @@ struct Struct_ov000_02160c84 {
     char unknown_6ffc_[1];
 };
 
-extern "C" void func_ov023_021eb4b8(void* arg0);
-extern "C" void func_ov000_02175480(void* arg0);
-extern "C" void func_ov013_02184a58(void* arg0);
-extern "C" void func_ov023_021d8c60(struct Struct_ov023_021d8c60* arg0);
-extern "C" struct Struct_0203a588_2* func_02039e70(void);
-extern "C" int func_020a1fa8(void);
-extern "C" struct Struct_020444e0* func_020421a0();
-extern "C" void func_020444e0(struct Struct_020444e0* arg0);
-extern "C" void func_ov013_02187784(void* arg0);
-extern "C" void func_ov000_02173954(char* arg0);
-extern "C" void func_0203a0b4(struct Struct_0203a588_2* arg0);
-extern "C" void func_ov000_0218251c(void* arg0);
-extern "C" void func_ov026_021dddcc(struct Struct_ov000_02160c84* arg0);
+void InitBuffersIfFlag431_021eb4b8(void* obj);
+void DispatchAndFlush02175480(void* obj);
+void ResetCombatEntry02184a58(void* obj);
+void CallIfFieldNot0Or3_021d8c60(struct Obj021d8c60* obj);
+struct Obj0203a588* GetData02104b6c_02039e70(void);
+int PeekInputLogB_020a1fa8(void);
+struct Obj020444e0* MessageSystem_GetInstance();
+void ReleaseField0x38IfValid020444e0(struct Obj020444e0* obj);
+extern "C" void func_ov013_02187784(void* obj);
+extern "C" void func_ov000_02173954(char* obj);
+extern "C" void func_0203a0b4(struct Obj0203a588* data);
+extern "C" void func_ov000_0218251c(void* obj);
+extern "C" void func_ov026_021dddcc(struct CombatWork02160c84* self);
 
 // USA: func_ov000_02160c84
 extern "C" ARM void func_ov000_02160c84(struct Struct_ov000_02160c84* arg0) {
@@ -89,8 +89,8 @@ extern "C" ARM void func_ov000_02160c84(struct Struct_ov000_02160c84* arg0) {
         }
     }
     GameState::GetInstance()->GetTickCount();
-    struct Struct_020444e0* var0 = func_020421a0();
-    if (var0->unknown_998_) {
-        func_020444e0(var0);
+    struct Obj020444e0* global = MessageSystem_GetInstance();
+    if (global->field998) {
+        ReleaseField0x38IfValid020444e0(global);
     }
 }

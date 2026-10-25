@@ -2,11 +2,11 @@
 #include "Combat/MapDisplay.h"
 
 struct InitTarget0205cfd4;
-extern void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+extern void Window_Init(struct InitTarget0205cfd4* s);
 
-extern void Background_Init(struct List0204af64* obj);
+extern void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204c684(void*);
+extern "C" void WindowPane_Init(void*);
 
 // USA: func_ov017_021996fc
 ARM void InitFieldArenaListsAndCounters_021996fc(unsigned char* base) {
@@ -15,14 +15,14 @@ ARM void InitFieldArenaListsAndCounters_021996fc(unsigned char* base) {
 #else
  enum {regionalOffset0=0xcb0, regionalOffset1=0xb4, regionalOffset2=0xf4, regionalOffset3=0x3c00, regionalOffset4=0x4000, regionalOffset5=0x74, regionalOffset6=0x78, regionalOffset7=0x7c, regionalOffset8=0x80, regionalOffset9=0x84};
 #endif
-    InitStruct0205cfd4(*(struct InitTarget0205cfd4**)(base + 0x3000 + regionalOffset0));
+    Window_Init(*(struct InitTarget0205cfd4**)(base + 0x3000 + regionalOffset0));
 
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)(base + regionalOffset1 + regionalOffset3 + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)(base + regionalOffset1 + regionalOffset3 + i * 0x20));
     }
 
     for (int j = 0; j < 4; j++) {
-        func_0204c684(base + regionalOffset2 + regionalOffset3 + j * 0xe0);
+        WindowPane_Init(base + regionalOffset2 + regionalOffset3 + j * 0xe0);
     }
 
     *(int*)(base + regionalOffset4 + regionalOffset5) = 0;

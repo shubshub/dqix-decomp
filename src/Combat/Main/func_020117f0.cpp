@@ -4,9 +4,9 @@
 
 extern "C" int func_0201b588(int);
 
-extern "C" unsigned short *func_02012fe4(void);
+extern "C" unsigned short *Zone3D_GetInstance(void);
 
 // USA: func_020117f0
-extern "C" ARM int func_020117f0(GameState *) {
-    return func_0201b588((int) (*func_02012fe4()));
+ARM int IsGlobalU16InRange_020117f0(GameState *) {
+    return IsInRange0201b588((int) (*Zone3D_GetInstance()));
 }

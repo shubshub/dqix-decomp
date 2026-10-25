@@ -90,10 +90,10 @@ extern char data_ov031_02249582[][3];
 extern "C" void func_ov031_022433d0();
 extern "C" void func_ov031_02243404();
 extern "C" int func_ov031_02212ab4(void*, const char*, const char*);
-extern "C" int func_ov031_02212c18(int);
-extern "C" void func_ov031_02212bcc(void*);
-extern "C" int func_ov031_02212c3c(void*, void*, int);
-extern "C" int func_0200fb08(Struct_02000c9c_8*);
+int RunIfGlobalUnset_02212c18(int);
+void SetCallbackAndRegister_02212bcc(void*);
+int InitAndProcessArray_02212c3c(void*, void*, int);
+int GameState_GetLanguage(Struct0200fb08*);
 extern "C" int func_ov031_022123d4();
 extern "C" int func_ov031_02212c84(void*, int, int);
 extern "C" void func_ov031_022120f8();
@@ -162,16 +162,16 @@ extern "C" ARM void func_ov031_02244050(Struct_02245528* arg0) {
                 }
             }
 #else
-            int var4 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
-            for (int var5 = 0; var5 < arg0->unknown_38_; var5++) {
-                int var6 = var5 * sizeof(Struct_ov031_02244050_2);
-                for (int var7 = 0; var7 < 4; var7++) {
-                    Struct_ov031_02244050_2* var8 = (Struct_ov031_02244050_2*)&data_ov031_02291e04.unknown1_20_->unknown1_0_[var6];
-                    if (!strstr(var8->unknown_88_, data_ov031_022495b4[var7])) continue;
-                    if (var7 == 0 && !strstr(var8->unknown_88_ + 11, data_ov031_02249582[var4])) continue;
-                    if (arg0->unknown_40_ & (1 << var7)) continue;
-                    arg0->unknown_40_ |= 1 << var7;
-                    memcpy(&arg0->unknown_50_[var7], &data_ov031_02291e04.unknown1_20_->unknown_0_[var5], 0xb0);
+            int language = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
+            for (int record = 0; record < session->count; record++) {
+                int record_offset = record * sizeof(SessionRecord02244050);
+                for (int kind = 0; kind < 4; kind++) {
+                    SessionRecord02244050* entry = (SessionRecord02244050*)&data_ov031_02291e04.records->bytes[record_offset];
+                    if (!strstr(entry->name, data_ov031_022495b4[kind])) continue;
+                    if (kind == 0 && !strstr(entry->name + 11, data_ov031_02249582[language])) continue;
+                    if (session->present & (1 << kind)) continue;
+                    session->present |= 1 << kind;
+                    memcpy(&session->records[kind], &data_ov031_02291e04.records->entries[record], 0xb0);
                 }
             }
 #endif

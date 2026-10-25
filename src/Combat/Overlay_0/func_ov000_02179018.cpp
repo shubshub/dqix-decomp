@@ -40,16 +40,16 @@ struct Struct_ov000_02179018_2 {
     int unknown_48_;
 };
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 int GridCursor_GetCount(void* obj);
 struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 extern "C" void func_ov000_02179194(struct Owner_02179018* obj, struct Entry_02179018* entry);
 extern "C" void func_ov000_0217ab8c(struct Entry_02179018* entry, int a, int b);
 extern "C" void func_ov000_0217936c(struct Owner_02179018* obj, struct Entry_02179018* entry, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(struct Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(struct Struct_0205d81c* s, void* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(struct Struct_0205d81c* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(struct Struct_0205d81c* s, void* buf, int a, int b, int c, int d, int e, int f);
 #endif
 extern "C" void func_ov000_02176210(struct Struct_0205d81c* arg0, int arg1, int arg2);
 
@@ -82,17 +82,17 @@ extern "C" ARM void func_ov000_02179018(struct Struct_ov000_02179018* arg0, stru
         many = 1;
     }
 #if defined(jpn)
-    void* var4 = *(void**)(func_020421a0() + 0x28);
-    memset(var4, 0, 0x800);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x28);
+    memset(buf, 0, 0x800);
 #else
-    void* var4 = *(void**)(func_020421a0() + 0x5c);
-    memset(var4, 0, 0x960);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x5c);
+    memset(buf, 0, 0x960);
 #endif
     func_ov000_0217936c(arg0, arg1, var4);
 #if defined(jpn)
-    func_0205d304(var2, var4, 0, 0, var3, 1, 0);
+    Window_OpenPane(s, buf, 0, 0, many, 1, 0);
 #else
-    func_0205d304(var2, var4, 0, 0, var3, 1, 0, 0);
+    Window_OpenPane(s, buf, 0, 0, many, 1, 0, 0);
 #endif
     struct Struct_0205d0e0* var5 = func_0205d81c(var2, 0x23);
     if (var5 != 0) {

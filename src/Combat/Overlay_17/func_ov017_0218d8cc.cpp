@@ -32,11 +32,11 @@ struct Struct_ov017_0218d8cc_3 {
 };
 
 // USA: func_ov017_0218d8cc
-extern "C" ARM void func_ov017_0218d8cc(Struct_ov017_0218d8cc_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetUnknownGameObject();
-    Struct_ov017_0218d8cc* var2 = (Struct_ov017_0218d8cc*)func_020100bc(var0);
-    if (var1 == 0 || var2 == 0) {
+extern "C" ARM void func_ov017_0218d8cc(Battle0218d8cc* self) {
+    GameState* gs = GameState::GetInstance();
+    GameObject* player = gs->GetUnknownGameObject();
+    Camera0218d8cc* camera = (Camera0218d8cc*)gs->GetCamera();
+    if (player == 0 || camera == 0) {
         return;
     }
 

@@ -29,29 +29,29 @@ struct Struct_ov004_02171010 {
 
 extern struct Struct_ov004_02171010 data_ov004_02171010;
 
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" struct Struct_02072a68_2* func_ov023_021fa598(void* arg0);
-extern "C" int func_ov004_0216f8c0(unsigned short arg0);
-extern "C" void func_02046608(int arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void* __clear(void* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void* func_ov011_021849c8(void* obj);
+extern "C" void* func_ov023_021f6880(void* obj, int index);
+extern "C" struct TableA68* func_ov023_021fa598(void* obj);
+extern "C" int func_ov004_0216f8c0(unsigned short id);
+extern "C" void MessageSystem_FormatText(int a, int b, char* text, char* slot, int c, int d, int e);
+extern "C" void* __clear(void* destination, int count);
 
-extern "C" unsigned int func_ov023_021f6f10(void* arg0);
-extern "C" int func_ov023_021f9bb0(struct Struct_ov004_021549e4_2* arg0);
-extern "C" void func_02026428(void* arg0, const char* arg1);
-extern "C" void func_02026470(void* arg0, int arg1);
-extern "C" void func_020264e4(char* arg0, char* arg1);
-extern "C" void func_02026528(char* arg0, char* arg1);
-extern "C" void func_0202656c(struct Struct_0202656c* arg0, int arg1);
-extern "C" int func_020421a0(void);
-extern "C" void func_020265a8(char* arg0, int arg1, const char* arg2, int arg3);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" void* func_020e5294(void* arg0, int arg1);
-extern "C" void func_020263c8(unsigned char* arg0, int arg1);
-extern "C" void func_02026418(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020dc3d4(void);
+extern "C" unsigned int func_ov023_021f6f10(void* self);
+int GetShort28_021f9bb0(struct Obj021f9bb0* obj);
+void CopyStringOrDefault02026428(void* dst, const char* src);
+void SetEventStringAndAccumulateLength02026470(void* dst, int value);
+void SetString020264e4(char* dst, char* src);
+void SetString02026528(char* dst, char* src);
+void SetField766AndNotify0202656c(struct Obj0202656c* obj, int value);
+int MessageSystem_GetInstance(void);
+void SetIndexedRecord020265a8(char* dst, int index, const char* name, int rate);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* source, char* destination, int tableIndex);
+void* CallFunc020e52a0_020e5294(void* obj, int index);
+void SetBoolFlag020263c8(unsigned char* obj, int value);
+void SetByteFieldAt0x764_02026418(unsigned char* buf, unsigned char val);
+void RestartTaskWithDebugLog020dc3d4(void);
 
 #if defined(jpn)
 extern "C" int func_ov004_0216ff54(unsigned short arg0, char* arg1);
@@ -65,7 +65,7 @@ extern "C" ARM void func_ov004_021636b0(void* arg0, const char* arg1) {
 #endif
     char var1[0x80];
 
-    char* var2 = (char*)func_02012fe4();
+    char* zone = (char*)Zone3D_GetInstance();
 #if !defined(jpn)
     DetailedTreasureMapData* var3;
 #endif
@@ -143,29 +143,29 @@ extern "C" ARM void func_ov004_021636b0(void* arg0, const char* arg1) {
 #else
     memset(data_ov004_02171010.unknown_4_, 0, 0x333);
 
-    for (int var15 = 0; var15 < 3; var15++) {
-        __clear(var0, 0x80);
-        __clear(var1, 0x80);
-        int var16 = func_020421a0();
-        if (var3->discoveredTreasures_[var15] == 0) {
-            func_020265a8((char*)var7, (unsigned char)var15, NULL, var3->treasureDropRates_[var15]);
+    for (int i = 0; i < 3; i++) {
+        __clear(bufB, 0x80);
+        __clear(bufA, 0x80);
+        int tableRoot = MessageSystem_GetInstance();
+        if (det->discoveredTreasures_[i] == 0) {
+            SetIndexedRecord020265a8((char*)buf, (unsigned char)i, NULL, det->treasureDropRates_[i]);
             continue;
         }
 
-        var5 = data_ov004_02171010.unknown_4_ + var15 * 0x80;
-        memset(var5, 0, 0x80);
-        int var17 = func_ov004_0216f8c0(var3->treasureItemIDs_[var15]);
-        if (var17 != 0) {
-            void* var18 = func_ov023_021f6880(var4, 0x32);
-            if (var18 == NULL) return;
-            if (func_ov023_021f6f10(var18) != 4) return;
-            struct Struct_02072a68_2* var19 = func_ov023_021fa598(var18);
-            func_0206819c((const char*)func_02072a68(var19, (short)var17), var1, 0);
-            func_02046608(var16, 0, var1, var5, 0x60, 0, 0);
+        slot = data_ov004_02171010.slotBuffer + i * 0x80;
+        memset(slot, 0, 0x80);
+        int key = func_ov004_0216f8c0(det->treasureItemIDs_[i]);
+        if (key != 0) {
+            void* obj2 = func_ov023_021f6880(ov011, 0x32);
+            if (obj2 == NULL) return;
+            if (func_ov023_021f6f10(obj2) != 4) return;
+            struct TableA68* table = func_ov023_021fa598(obj2);
+            CopyTextAndUppercaseIfFlagged0206819c((const char*)FindEntryByKey_02072a68(table, (short)key), bufA, 0);
+            MessageSystem_FormatText(tableRoot, 0, bufA, slot, 0x60, 0, 0);
         } else {
-            char** var20 = (char**)func_020e5294(data_ov004_02171010.unknown_8_, (short)var3->treasureItemIDs_[var15]);
-            func_0206819c(*var20, var1, 0);
-            func_02046608(var16, 0, var1, var5, 0x60, 0, 0);
+            char** entry = (char**)CallFunc020e52a0_020e5294(data_ov004_02171010.callTarget, (short)det->treasureItemIDs_[i]);
+            CopyTextAndUppercaseIfFlagged0206819c(*entry, bufA, 0);
+            MessageSystem_FormatText(tableRoot, 0, bufA, slot, 0x60, 0, 0);
         }
         func_020265a8((char*)var7, (unsigned char)var15, var5, var3->treasureDropRates_[var15]);
     }

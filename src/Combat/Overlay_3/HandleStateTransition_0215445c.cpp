@@ -6,9 +6,9 @@ struct GameResources;
 void SetSubBrightness(GameResources*, int, int);
 struct Struct02074bf4;
 extern "C" void func_02074e54(struct Struct02074bf4*);
-void* GetDataPtr02114e04_020d6c00(void);
+void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4;
-void ClearFlags020466f4(struct FlagWord020466f4* word, unsigned int mask);
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 void SetCombatModeFromCase020dc2d0(int);
 
 struct SelfState0215445c {
@@ -37,7 +37,7 @@ ARM void HandleStateTransition_0215445c(struct SelfState0215445c* self) {
     if (IsSubBrightnessTransitionActive((GameResources*)w) != 0) return;
 
     func_02074e54((struct Struct02074bf4*)((char*)self + 0x38));
-    ClearFlags020466f4((struct FlagWord020466f4*)GetDataPtr02114e04_020d6c00(), 1);
+    FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 1);
     SetCombatModeFromCase020dc2d0(0);
     self->f5a = 3;
     self->f5b = 0;

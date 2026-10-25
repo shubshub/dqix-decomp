@@ -98,11 +98,11 @@ struct Struct_ov006_02154614 {
     unsigned char unknown_12bd_;
 };
 
-extern "C" void func_ov023_021dc354(Struct_ov006_02154614_2* arg0);
-extern "C" void func_ov006_02156e54(Struct_ov006_02154614* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" void func_020dbebc(void* arg0);
-extern "C" void func_ov006_02154614(Struct_ov006_02154614* arg0);
+extern "C" void func_ov023_021dc354(ItemInfoWindow* window);
+extern "C" void func_ov006_02156e54(AlchemyPot* self);
+void GameState_SetCamera(GameState* gameState, int camera);
+void ResetTask020dbebc(void* effect);
+extern "C" void func_ov006_02154614(AlchemyPot* self);
 
 // USA: func_ov006_021547c8
 extern "C" ARM void func_ov006_021547c8(Struct_ov006_02154614* arg0) {
@@ -138,10 +138,10 @@ extern "C" ARM void func_ov006_021547c8(Struct_ov006_02154614* arg0) {
         if (arg0->unknown_a84_[var4].GetSignedAllocator() != 0)
             arg0->unknown_a84_[var4].Destroy();
     }
-    if (arg0->unknown_1a0_ != 0) {
-        GameState* var5 = GameState::GetInstance();
-        func_020100c4(var5, (int)arg0->unknown_1a0_);
-        arg0->unknown_1a0_ = 0;
+    if (self->previousCamera_ != 0) {
+        GameState* gameState = GameState::GetInstance();
+        GameState_SetCamera(gameState, (int)self->previousCamera_);
+        self->previousCamera_ = 0;
     }
     if (!(arg0->unknown_ae2_ & 8)) {
         arg0->unknown_238_.Destroy();

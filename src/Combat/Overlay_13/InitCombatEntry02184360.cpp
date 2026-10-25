@@ -11,11 +11,11 @@ ARM void BackupSubBgControlRegisters(struct SubBgControlBackup02074b64* obj);
 struct MainBgControlBackup02074af4;
 extern "C" ARM void func_02074af4(struct MainBgControlBackup02074af4* obj);
 struct InitTarget0205cfd4;
-ARM void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
+ARM void Window_Init(struct InitTarget0205cfd4* s);
 ARM void InitBigStruct0205c790(char* obj);
-struct List0204af64;
-ARM void Background_Init(struct List0204af64* obj);
-extern "C" void func_0204c684(void* obj);
+struct BackgroundGraphics;
+ARM void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void WindowPane_Init(void* obj);
 struct Struct020dfc40;
 ARM void KeyTable_Reset(Struct020dfc40* p);
 
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov013_02184360(void* entry, void* param) {
         *reg = (v & ~0x1f00u) | 0x100u;
     }
 
-    InitStruct0205cfd4((InitTarget0205cfd4*)(obj + R(0x34, 0x38)));
+    Window_Init((InitTarget0205cfd4*)(obj + R(0x34, 0x38)));
     InitBigStruct0205c790((char*)(obj + R(0x3d0, 0x3d4)));
 
     if (obj[R(0x5cc, 0x640)] != 0) {
@@ -80,10 +80,10 @@ extern "C" ARM void func_ov013_02184360(void* entry, void* param) {
     }
 
     for (int i = 0; i < 2; i++) {
-        Background_Init((List0204af64*)(obj + R(0xf0, 0xf4) + i * 0x20));
+        Background_Init((BackgroundGraphics*)(obj + R(0xf0, 0xf4) + i * 0x20));
     }
     for (int i = 0; i < 3; i++) {
-        func_0204c684((void*)(obj + R(0x130, 0x134) + i * 0xe0));
+        WindowPane_Init((void*)(obj + R(0x130, 0x134) + i * 0xe0));
     }
 
     ((SafeAllocator*)(obj + R(0x598, 0x60c)))->ResetAllocatorPointer();

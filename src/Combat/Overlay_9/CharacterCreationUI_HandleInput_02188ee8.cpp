@@ -8,61 +8,45 @@
 #include "Resource/Keyboard.h"
 #include "Sound/SePlayer.h"
 #include "Graphics/CharacterModel.h"
+#include "GameState/PartyMember.h"
 
-struct Struct_0205bef8;
-struct Struct_0205ba68;
-struct Struct_0205bb84;
-struct Node0205bacc;
-void GridCursor_Init(Struct_0205bef8*);
-void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
-void GridCursor_SetCount(Node0205bacc*, int);
+struct GridCursor;
+void GridCursor_Init(GridCursor*);
+void GridCursor_SetDimensions(GridCursor*, int, int, int);
+void GridCursor_SetCount(GridCursor*, int);
 int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(GridCursor*);
 int KeyTable_Get(Container020e0310*, int);
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
+extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" int CharacterCreationUI_GetTouchedInput(CharacterCreationUI*, int, int);
 extern "C" int CharacterCreationUI_PressNameKey(CharacterCreationUI*, unsigned char);
 extern "C" void func_ov009_0218ad0c(void*);
 extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void CharacterCreationUI_PickRandomName(CharacterCreationUI*);
-extern "C" void GridCursor_SetSelectedIndex(CreationNavigation*, int);
-extern "C" int GridCursor_Update(CreationNavigation*, unsigned int);
+extern "C" void GridCursor_SetSelectedIndex(GridCursor*, int);
+extern "C" int GridCursor_Update(GridCursor*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, int);
 
-struct PartyMemberAppearance {
-    short unknown0[2];
-    short face;
-    short hairStyle;
-    short unknown8[6];
-    unsigned char female : 1;
-    unsigned char skinColor : 3;
-    unsigned char eyeColor : 4;
-    unsigned char hairColor : 4;
-    unsigned char unknown15 : 4;
-    short unknown16, width, height;
-};
-struct PartyMemberData { char unknown0[0x488]; PartyMemberAppearance appearance; };
 
 // The row of tab icons at the top of the touchscreen, one per tab from Gender to NameEntry: icon N is the
 // 16 x 16 square at x = 0x78 + N * 16, y = 8 (where CharacterCreationUI_PlaceSprites puts their sprites).
 
 // A jpn name: up to 5 two-byte characters (CharacterCreationUI_PressNameKey stops adding at 5, and names[sex] holds 10 bytes
-// and a NUL). An empty name is text 0x4272, which CharacterCreationUI_PickRandomName copies in before a random name.
+// and a NUL). An empty name is CreationText_BlankName, which CharacterCreationUI_PickRandomName copies in before a random name.
 enum JpnName
 {
     JpnName_MaxLength = 5,
     JpnName_Size = JpnName_MaxLength * 2,
-    JpnName_EmptyText = 0x4272,
 };
 
 #define RESET_NAVIGATION(columns, rows, count, index) \
-    CreationNavigation* navigation = &self->navigation; \
-    GridCursor_Init((Struct_0205bef8*)navigation); \
-    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, GridCursorOrder_RowMajor); \
-    GridCursor_SetCount((Node0205bacc*)navigation, count); \
+    GridCursor* navigation = &self->navigation; \
+    GridCursor_Init((GridCursor*)navigation); \
+    GridCursor_SetDimensions((GridCursor*)navigation, columns, rows, GridCursorOrder_RowMajor); \
+    GridCursor_SetCount((GridCursor*)navigation, count); \
     navigation->pageCount = 1; \
     GridCursor_SetSelectedIndex(navigation, index); \
     navigation->wrapRows = 0
@@ -120,7 +104,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
         if (!ticks) ticks = 1;
         int previousRow = self->navigation.row;
         if (GridCursor_Update(&self->navigation, ticks))
-            choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
+            choice = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation);
         if (self->state == CreationTab_NameEntry) {
             int rows = self->navigation.rows;
             int cellCount = GridCursor_GetCount(&self->navigation);
@@ -132,18 +116,18 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
                     RESET_NAVIGATION(KeyboardGrid_Columns, KeyboardGrid_Rows, KeyboardGrid_Cells, self->keyboardChoice);
                     GridCursor_SetSelectedIndex(&self->navigation, self->navigation.column);
-                    self->keyboardChoice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
+                    self->keyboardChoice = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation);
                     self->flags |= CreationFlag_RedrawPanel;
-                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((GridCursor*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(KEY_A)) {
-                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    input = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
                         SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
                 } else if (g_keyManager.TestKeysPressed(KEY_B)) {
-                    if (func_02001aec(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, JpnName_EmptyText), JpnName_Size) == 0)
+                    if (memcmp(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, CreationText_BlankName), JpnName_Size) == 0)
                         input = CreationInput_Back;
                     else {
                         func_ov009_0218b200(self, 0);
@@ -175,7 +159,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                         self->flags &= ~CreationFlag_KeyboardOk;
                     }
                 } else if (g_keyManager.TestKeysPressed(KEY_B)) {
-                    if (func_02001aec(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, JpnName_EmptyText), JpnName_Size) == 0)
+                    if (memcmp(self->names[self->sex], (const void*)KeyTable_Get(&self->texts, CreationText_BlankName), JpnName_Size) == 0)
                         input = CreationInput_Back;
                     else {
                         func_ov009_0218b200(self, 0);
@@ -194,12 +178,12 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                 if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= CreationFlag_RedrawPanel;
-                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((GridCursor*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(KEY_A)) {
-                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    input = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
                         SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
                 } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
@@ -235,16 +219,16 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
         if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, SoundEffect_Cursor, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
-            PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
+            PartyMemberAppearance* appearance = &self->characterData->appearance_;
             self->flags |= (CreationFlag_ResetAngleOnSwap | CreationFlag_RescaleOnSwap);
             unsigned char skinColor = GetSkinColor(self);
-            appearance->skinColor = skinColor;
+            appearance->skinColor_ = skinColor;
             unsigned char eyeColor = GetEyeColor(self);
-            appearance->eyeColor = eyeColor;
+            appearance->eyeColor_ = eyeColor;
             unsigned char hairColor = GetHairColor(self);
-            appearance->hairColor = hairColor;
-            appearance->face = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
-            appearance->hairStyle = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
+            appearance->hairColor_ = hairColor;
+            appearance->face_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
+            appearance->hairStyle_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
         }
         if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
         self->flags |= (0x4000 | CreationFlag_RedrawPanel | CreationFlag_RefreshSummary);
@@ -262,40 +246,28 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
 #include "Resource/Keyboard.h"
 #include "Sound/SePlayer.h"
 #include "Graphics/CharacterModel.h"
+#include "GameState/PartyMember.h"
 
-struct Struct_0205bef8;
-struct Struct_0205ba68;
-struct Struct_0205bb84;
-struct Node0205bacc;
-void GridCursor_Init(Struct_0205bef8*);
-void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
-void GridCursor_SetCount(Node0205bacc*, int);
+void GridCursor_Init(GridCursor*);
+void GridCursor_SetDimensions(GridCursor*, int, int, int);
+void GridCursor_SetCount(GridCursor*, int);
 int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+int GridCursor_GetSelectedIndex(GridCursor*);
 
 // The keyboard's fields this file touches, as CharacterCreationUI_HandleNameEntry names them.
 struct Keyboard {
     KeyboardKey* key_;
-    char unknown4[0x14];
+    void* layout_;
+    char* text_;
+    int widthLimit_;
+    int textSize_;
+    int maxLength_;
     int repeatTimer_;
     short repeatDir_;
 };
-struct PartyMemberAppearance {
-    short unknown0[2];
-    short face;
-    short hairStyle;
-    short unknown8[6];
-    unsigned char female : 1;
-    unsigned char skinColor : 3;
-    unsigned char eyeColor : 4;
-    unsigned char hairColor : 4;
-    unsigned char unknown15 : 4;
-    short unknown16, width, height;
-};
-struct PartyMemberData { char unknown0[0x488]; PartyMemberAppearance appearance; };
 extern "C" int CharacterCreationUI_GetTouchedInput(CharacterCreationUI*, int, int);
-extern "C" void GridCursor_SetSelectedIndex(CreationNavigation*, int);
-extern "C" int GridCursor_Update(CreationNavigation*, unsigned int);
+extern "C" void GridCursor_SetSelectedIndex(GridCursor*, int);
+extern "C" int GridCursor_Update(GridCursor*, unsigned int);
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI*);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI*, int);
@@ -305,10 +277,10 @@ extern "C" int CharacterCreationUI_SlotToStyleIndex(CharacterCreationUI*, int, i
 // 16 x 16 square at x = 0x78 + N * 16, y = 8 (where CharacterCreationUI_PlaceSprites puts their sprites).
 
 #define RESET_NAVIGATION(columns, rows, count, index) \
-    CreationNavigation* navigation = &self->navigation; \
-    GridCursor_Init((Struct_0205bef8*)navigation); \
-    GridCursor_SetDimensions((Struct_0205ba68*)navigation, columns, rows, GridCursorOrder_RowMajor); \
-    GridCursor_SetCount((Node0205bacc*)navigation, count); \
+    GridCursor* navigation = &self->navigation; \
+    GridCursor_Init((GridCursor*)navigation); \
+    GridCursor_SetDimensions((GridCursor*)navigation, columns, rows, GridCursorOrder_RowMajor); \
+    GridCursor_SetCount((GridCursor*)navigation, count); \
     navigation->pageCount = 1; \
     GridCursor_SetSelectedIndex(navigation, index); \
     navigation->wrapRows = 0
@@ -362,7 +334,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self) {
         unsigned int ticks = GameState::GetInstance()->GetTickCount();
         if (!ticks) ticks = 1;
         int previousRow = self->navigation.row;
-        if (GridCursor_Update(&self->navigation, ticks)) choice = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation);
+        if (GridCursor_Update(&self->navigation, ticks)) choice = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation);
         if (self->state == CreationTab_NameEntry) {
             int rows = self->navigation.rows;
             int cellCount = GridCursor_GetCount(&self->navigation);
@@ -381,7 +353,7 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self) {
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(KEY_A)) {
-                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    input = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
                         SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
                 }
@@ -405,16 +377,16 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self) {
                 if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
                     CharacterCreationUI_SetupSlotNavigation(self);
                     self->flags |= CreationFlag_RedrawPanel;
-                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation));
+                    CharacterCreationUI_MoveCursorToSlot(self, GridCursor_GetSelectedIndex((GridCursor*)&self->navigation));
                     return CreationInput_None;
                 }
                 if (choice >= 0) { MOVE_CURSOR_TO_TAB_ICON(choice); }
                 if (g_keyManager.TestKeysPressed(KEY_A)) {
-                    input = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->navigation) + CreationInput_FirstTabIcon;
+                    input = GridCursor_GetSelectedIndex((GridCursor*)&self->navigation) + CreationInput_FirstTabIcon;
                     if (input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
                         SePlayer_Play(&g_sePlayer, SoundEffect_Select, 0);
                 } else if (g_keyManager.TestKeysPressed(KEY_B)) input = CreationInput_Back;
-                if (input == CreationInput_TabIcon + CreationTab_NameEntry) GridCursor_SetDimensions((Struct_0205ba68*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
+                if (input == CreationInput_TabIcon + CreationTab_NameEntry) GridCursor_SetDimensions((GridCursor*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
                 return input;
             }
             if (g_keyManager.TestKeysPressed(KEY_UP) && previousRow == 0) {
@@ -448,22 +420,22 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self) {
         if (self->state != CreationTab_NameEntry || !touched) SePlayer_Play(&g_sePlayer, SoundEffect_Cursor, 0);
         CharacterCreationUI_ApplyChoice(self, choice);
         if (self->state == CreationTab_Gender) {
-            PartyMemberAppearance* appearance = &((PartyMemberData*)self->characterData)->appearance;
+            PartyMemberAppearance* appearance = &self->characterData->appearance_;
             self->flags |= (CreationFlag_ResetAngleOnSwap | CreationFlag_RescaleOnSwap);
             unsigned char skinColor = GetSkinColor(self);
-            appearance->skinColor = skinColor;
+            appearance->skinColor_ = skinColor;
             unsigned char eyeColor = GetEyeColor(self);
-            appearance->eyeColor = eyeColor;
+            appearance->eyeColor_ = eyeColor;
             unsigned char hairColor = GetHairColor(self);
-            appearance->hairColor = hairColor;
-            appearance->face = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
-            appearance->hairStyle = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
+            appearance->hairColor_ = hairColor;
+            appearance->face_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_Face, self->faceStyle[self->sex]) + AppearanceModel_FirstFace;
+            appearance->hairStyle_ = CharacterCreationUI_SlotToStyleIndex(self, CreationTab_HairStyle, self->hairStyle[self->sex]) + AppearanceModel_FirstHairStyle;
         }
         if (!touched) CharacterCreationUI_MoveCursorToSlot(self, choice);
         self->flags |= (0x4000 | CreationFlag_RedrawPanel | CreationFlag_RefreshSummary);
     }
     if (input == CreationInput_TabIcon + CreationTab_NameEntry && input - CreationInput_TabIcon <= self->furthestState[self->sex] && input - CreationInput_TabIcon != self->state)
-        GridCursor_SetDimensions((Struct_0205ba68*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
+        GridCursor_SetDimensions((GridCursor*)&self->navigation, KeyboardGrid_Columns, KeyboardGrid_Rows, GridCursorOrder_ColumnMajor);
     return input;
 }
 

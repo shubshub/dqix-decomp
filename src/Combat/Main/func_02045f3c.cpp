@@ -84,8 +84,8 @@ extern "C" ARM void func_02045f3c(Struct_02045f3c* arg0, unsigned short* arg1, i
         } else {
             func_020417b0(var3, arg4, 0, 31);
         }
-        if (var3->unknown2_18_) {
-            var5 += var3->unknown2_18_->unknown_4_ + 1;
+        if (glyph->character) {
+            cx += glyph->character->width_ + 1;
         }
     }
     *(volatile int*)0x04000448 = 1;

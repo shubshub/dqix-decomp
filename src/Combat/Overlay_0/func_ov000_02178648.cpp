@@ -4,14 +4,14 @@
 struct Struct_0201099c_3;
 
 int IsField0x118Equal2_ov000_0217542c(void* obj);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 int FormatCombatLogSuffix02041dd0(char* dst, int kind);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
-int AppendPaletteTag_02041e70(char* dst, int palette);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_AppendPaletteTag(char* dst, int palette);
 int AppendXTag_02041a28(char* dst, int x);
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 extern "C" int func_ov000_02170c7c(void* entry);
 
 struct Struct_ov000_02178648 {
@@ -40,15 +40,15 @@ extern "C" ARM void func_ov000_02178648(char* arg0, char* arg1) {
 #else
     signed char var0 = *(signed char*)(arg0 + 0x1d6b);
 #endif
-    int var1 = 0;
-    unsigned char var2;
-    GameState* var3 = GameState::GetInstance();
-    func_02010828(var3);
+    int n = 0;
+    unsigned char count;
+    GameState* gs = GameState::GetInstance();
+    GameState_GetParty(gs);
 
-    if (func_ov000_0217542c(arg0)) {
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
+    if (IsField0x118Equal2_ov000_0217542c(obj)) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
+    Text_AppendCursorTag(dst, cursor);
 
     count = *(unsigned char*)(obj + 0x79);
     for (unsigned char i = 0; i < count; i++) {
@@ -56,13 +56,13 @@ extern "C" ARM void func_ov000_02178648(char* arg0, char* arg1) {
         GameObject* member = gs->GetPartyMemberByIndex((signed char)entry->field4c);
         if (member != NULL) {
             FormatCombatLogSuffix02041dd0(dst, func_ov000_02170c7c(entry));
-            AppendNameTag_02041b70(dst, n, (const char*)member->baseStats_);
-            AppendPaletteTag_02041e70(dst, 0xf);
+            Text_AppendNTag(dst, n, (const char*)member->baseStats_);
+            Text_AppendPaletteTag(dst, 0xf);
             AppendXTag_02041a28(dst, 0x46);
             struct MemberInfo02178648* info = (struct MemberInfo02178648*)member->baseStats_;
-            AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)((unsigned short)info->flag30 + 0x7551)));
+            Text_Append(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)((unsigned short)info->flag30 + 0x7551)));
             if (i != count - 1) {
-                AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
+                Text_Append(dst, (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), 0));
             }
         }
         var1++;

@@ -3,8 +3,8 @@
 
 struct AxisFloats0203b5a0;
 extern char g_sePlayer;
-void ForwardField0xc0_0205eb80(void* obj);
-void SetForwardAndStore0205eb54(void* obj, int arg1, int arg2);
+void SePlayer_UnloadExtraArchiveA(void* obj);
+void SePlayer_LoadExtraArchiveA(void* obj, int arg1, int arg2);
 void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
 extern "C" void* func_0202ae18(void);
 struct SearchStruct0202c1a4;
@@ -27,8 +27,8 @@ extern "C" ARM void func_020a87d0(struct Obj020a87d0* obj) {
 
     struct AxisFloats0203b5a0* s = (struct AxisFloats0203b5a0*)GetGameResources();
     if (IsBrightnessWithinValidRange((GameResources*)s, false) != 0) {
-        ForwardField0xc0_0205eb80(&g_sePlayer);
-        SetForwardAndStore0205eb54(&g_sePlayer, 0x72, 0x72);
+        SePlayer_UnloadExtraArchiveA(&g_sePlayer);
+        SePlayer_LoadExtraArchiveA(&g_sePlayer, 0x72, 0x72);
         DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
     }
 

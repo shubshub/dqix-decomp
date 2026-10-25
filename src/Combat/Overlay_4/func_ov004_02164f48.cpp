@@ -13,11 +13,11 @@ struct Struct_02011930 {
 extern "C" unsigned char func_02011930(void* arg0, struct Struct_02011930* arg1, void* arg2, void* arg3);
 extern "C" void func_ov011_021848a0(void* arg0, int arg1);
 extern char* data_ov004_02171010;
-extern "C" void* func_02012fe4(void);
-struct Struct_020985ec {
-    unsigned char unknown_0_[0x10];
-    unsigned int unknown_10_;
-    unsigned char unknown_14_[0xd4];
+extern "C" void* Zone3D_GetInstance(void);
+struct Elem020985ec {
+    unsigned char pad0[0x10];
+    unsigned int key;
+    unsigned char pad1[0xd4];
 };
 extern "C" struct Struct_020985ec* func_020985ec(struct Struct_020985ec* arg0, int arg1);
 
@@ -95,9 +95,9 @@ extern "C" ARM int func_ov004_02164f48(void* arg0) {
 #endif
         if (var11 >= 0) {
 #if defined(jpn)
-            struct Struct_020985ec* var12 = (struct Struct_020985ec*)((char*)func_02012fe4() + 0x860);
+            struct Elem020985ec* base = (struct Elem020985ec*)((char*)Zone3D_GetInstance() + 0x860);
 #else
-            struct Struct_020985ec* var12 = (struct Struct_020985ec*)((char*)func_02012fe4() + 0x840);
+            struct Elem020985ec* base = (struct Elem020985ec*)((char*)Zone3D_GetInstance() + 0x840);
 #endif
             struct Struct_020985ec* var13 = func_020985ec(var12, var11);
             if (var13) {

@@ -12,17 +12,17 @@ struct Struct_020aca30;
 struct Struct_0208f820;
 struct Struct_0208f410_3;
 
-extern "C" Zone3D* func_02012fe4();
-extern "C" Struct_02057a10* func_02057924();
-extern "C" void* func_02010768(void* arg0);
-extern "C" void func_ov017_021a3dcc(int arg0);
-extern "C" void func_02016874(Zone3D* arg0);
-extern "C" unsigned char func_0200fb9c(char* arg0);
-extern "C" int func_0201201c(void* arg0);
-extern "C" void func_0202343c(void* arg0);
-extern "C" Struct_0203dde0_2* func_0203cf4c();
-extern "C" void func_0203de84(void* arg0);
-extern "C" void func_0203dde0(Struct_0203dde0_2* arg0);
+extern "C" Zone3D* Zone3D_GetInstance();
+extern "C" Container02057a10* func_02057924();
+void* GetFieldPtrAt0x5ca4_02010768(void* obj);
+void ForwardObjAndField0_021a3dcc(int obj);
+extern "C" void func_02016874(Zone3D* self);
+unsigned char GetByte0x4_0200fb9c(char* obj);
+int GetWord0x7f6c_0201201c(void* gs);
+extern "C" void func_0202343c(void* obj);
+Obj0203dde0* GetGlobalPtr021075f4_0203cf4c();
+extern "C" void func_0203de84(void* self);
+void UpdateEntrySubObjects0203dde0(Obj0203dde0* obj);
 extern "C" void* func_0202ae18(void);
 extern "C" int NSBXX_Model_GetMaterialPolygonID(NSBXXInternalModel* model, unsigned int materialIndex);
 extern "C" void func_0208f87c(const void* arg0, int arg1, int arg2, int arg3, int arg4);
@@ -81,10 +81,10 @@ extern "C" ARM void func_ov017_02195bbc(Struct_ov017_02195bbc* arg0) {
     unsigned short var9;
     GameState* var10;
 
-    var3 = GameState::GetInstance();
-    var1 = func_02012fe4();
-    var2 = func_02057924();
-    var4 = (Zone3D**)func_02010768(var3);
+    gs = GameState::GetInstance();
+    zone = Zone3D_GetInstance();
+    entries = func_02057924();
+    field5ca4 = (Zone3D**)GetFieldPtrAt0x5ca4_02010768(gs);
 
     if (IsBrightnessWithinValidRange((GameResources*)arg0, false)) {
         func_ov017_021a3dcc(arg0->unknown_36fc_);
@@ -119,17 +119,17 @@ extern "C" ARM void func_ov017_02195bbc(Struct_ov017_02195bbc* arg0) {
     if (TestFlags04((GameResources*)(arg0->unknown_0_), 0x100) == 0) {
         var10 = GameState::GetInstance();
         func_0202ae18();
-        var0 = func_02012fe4();
-        var9 = var0->substruct_c_.unknown_2c_;
-        for (var8 = 0xa0; var8 <= 0xbf; var8++) {
-            var7 = var10->GetMaybeWanderingMonsterByIndex(var8);
-            if (var7 == NULL) continue;
-            if (!var7->obj3D_.IsVisible()) continue;
-            if (var7->obj3D_.GetFlag(0x10) != 0) continue;
-            var6 = 1;
-            Model3D* var11 = var7->obj3D_.pModel_;
-            if (var11 != NULL && var11->rawInternalModel_ != NULL) {
-                var6 = NSBXX_Model_GetMaterialPolygonID(var11->rawInternalModel_, 0);
+        ctx = Zone3D_GetInstance();
+        color = ctx->substruct_c_.unknown_2c_;
+        for (i = 0xa0; i <= 0xbf; i++) {
+            monster = state->GetMaybeWanderingMonsterByIndex(i);
+            if (monster == NULL) continue;
+            if (!monster->obj3D_.IsVisible()) continue;
+            if (monster->obj3D_.GetFlag(0x10) != 0) continue;
+            polygonId = 1;
+            Model3D* model = monster->obj3D_.pModel_;
+            if (model != NULL && model->rawInternalModel_ != NULL) {
+                polygonId = NSBXX_Model_GetMaterialPolygonID(model->rawInternalModel_, 0);
             }
             const Vector3fix& var12 = var7->obj3D_.MaybeGetShadowSource();
             func_0208f87c(&var12, var9, 0x1000, var0->substruct_c_.unknown_30_, var6);

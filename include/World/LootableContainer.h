@@ -3,6 +3,23 @@
 #include "../Memory/SafeAllocator.h"
 #include "../Graphics/Vector.h"
 
+// LootableContainerManager::Container::containerType
+enum LootableContainerType {
+    LootableContainerType_RedChest = 0,
+    LootableContainerType_Pot = 1,      // Zone3D_SetUpLootableModels' pot templates (0-2); breaking plays sound 0x10
+    LootableContainerType_Barrel = 2,   // the barrel templates (3-5); breaking plays sound 0x11
+    LootableContainerType_Cupboard = 3, // no position: tied to a type 5 zone feature (Zone3D_SetUpContainers)
+    LootableContainerType_BlueChest = 4,// its chest record gets kind ZoneChestKind_Blue
+};
+
+// LootableContainerManager::Container::lootType, LootDistribution::Outcome::lootType
+enum LootType {
+    LootType_Nothing = 0,   // an opened chest's (Zone3D_SetUpContainers)
+    LootType_Gold = 1,      // itemIDOrRank is the amount; the icon is the gold bag d_i127
+    LootType_Item = 2,      // itemIDOrRank is the item; the icon is the item's d_%c%03d
+    LootType_Ambush = 3,
+};
+
 // sizeof == 0xc == 12.
 // Reads configurations of red/blue chests, pots, barrels etc from script files
 // within data/scenario/treasure.nsarc.
@@ -13,14 +30,13 @@ public:
     {
         unsigned short uniqueID;
         unsigned short itemIDOrRank;
-        unsigned short unk_4_0 : 2;
-        // 0 = nothing, 1 = gold, 2 = item, 3 = ambush
-        unsigned short lootType : 2;
-        // 0 = red chest
-        // 1 = pot, 2 = barrel, 3 = cupboard?
-        // 4 = blue chest
-        unsigned short containerType : 3;
-        short unk_6;
+        // 0 none; 1 opens with item 0x561a or 0x561b; 2 only with 0x561b; item 0x561c opens either
+        // (FieldTask_OpenChest, which clears it when the chest opens)
+        unsigned short lock : 2;
+        unsigned short lootType : 2;        // LootType
+        unsigned short containerType : 3;   // LootableContainerType
+        short angleOrCupboardNode;  // a chest's angle (copied to its ZoneChestRenderRecord); for a cupboard (type 3,
+                                    // no position) the id of the zone feature node it opens (Zone3D_SetUpContainers)
         Vector3fix position;
         Container* pNext;
     };

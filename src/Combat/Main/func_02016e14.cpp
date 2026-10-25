@@ -55,8 +55,8 @@ struct Struct_02016e14 {
     Object3D* unknown_54_;
 };
 
-extern "C" void func_02016d8c(void* arg0);
-extern "C" void Mat3x3_WriteRotationY(Matrix3x3* arg0, int arg1, int arg2);
+void RenderConfig_SetObjectRotation(void* arg0);
+extern "C" void Mat3x3_WriteRotationY(Matrix3x3* out, int sine, int cosine);
 
 // USA: func_02016e14
 extern "C" ARM void func_02016e14(struct Struct_02016e14_6* arg0, void* arg1, struct Struct_02016e14* arg2, int arg3) {
@@ -102,11 +102,11 @@ extern "C" ARM void func_02016e14(struct Struct_02016e14_6* arg0, void* arg1, st
         if (arg2->unknown_38_ != 0) {
             var8 = fix32ReduceAngle0To2Pi(var8 + arg2->unknown_38_);
         }
-        fix32_t var9 = fix32cos(var8);
-        fix32_t var10 = fix32sin(var8);
-        Matrix3x3 var11;
-        Mat3x3_WriteRotationY(&var11, var10, var9);
-        func_02016d8c(&var11);
+        fix32_t cosine = fix32cos(angle);
+        fix32_t sine = fix32sin(angle);
+        Matrix3x3 rotation;
+        Mat3x3_WriteRotationY(&rotation, sine, cosine);
+        RenderConfig_SetObjectRotation(&rotation);
 
         Vector3i var12;
         var12.x = arg2->unknown_14_.x;

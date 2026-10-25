@@ -67,7 +67,7 @@ extern "C" void func_ov005_02156658(EquipmentMenu* self, int x, int y);
 extern "C" void func_ov005_021567ac(EquipmentMenu* self, int x, int y);
 extern "C" void func_ov005_0215690c(EquipmentMenu* self, int x, int y);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-void MaybeInvoke0204719c_02047230(Foo02048004* model);
+void SprSprite_Unload(Foo02048004* model);
 extern "C" void func_ov005_02156e1c(EquipmentMenu* self, int x, int y);
 extern "C" void func_ov005_02156ecc(EquipmentMenu* self, int x, int y);
 
@@ -82,7 +82,7 @@ extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
     if (g_touchInput.pressed_) {
         if (var0 == 0 || var1 == 0)
             return;
-        MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
+        MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
         if (!(self->flags_ & 0x400) && (screen->flags_ & 0x800)) {
             SePlayer_Play((SePlayer*)&g_sePlayer, 0x1b, 0);
             func_ov005_0215792c(self, 1);
@@ -113,12 +113,12 @@ extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
                     screen->flags_ &= ~1;
                     screen->flags_ &= ~0x80;
                 }
-                func_02047230((Struct_02012fa4*)arg0->unknown_3cf0_);
-                arg0->unknown_3d78_ = -1;
-                arg0->unknown_3dc0_ = -1;
-                arg0->unknown_3e05_ = 0;
-                arg0->unknown_3e07_ = -2;
-                arg0->unknown_3e06_ = 0;
+                SprSprite_Unload((Foo02048004*)self->dragModel_);
+                self->dragged_ = -1;
+                self->unk_3dc0 = -1;
+                self->touchTime_ = 0;
+                self->tappedSlot_ = -2;
+                self->tapTimer_ = 0;
                 return;
             }
             arg0->unknown_3e07_ = -2;
@@ -149,9 +149,9 @@ extern "C" ARM void func_ov005_021562b8(Struct_ov005_02153954* arg0) {
             arg0->unknown_3e08_ = -1;
             arg0->unknown_3e0a_ = -1;
         }
-        func_ov005_02156ecc(arg0, var0, var1);
-        func_02047230((Struct_02012fa4*)arg0->unknown_3cf0_);
-        arg0->unknown_3d78_ = -1;
-        arg0->unknown_3dc0_ = -1;
+        func_ov005_02156ecc(self, x, y);
+        SprSprite_Unload((Foo02048004*)self->dragModel_);
+        self->dragged_ = -1;
+        self->unk_3dc0 = -1;
     }
 }

@@ -10,14 +10,14 @@
 
 #include "std_library_functions.h"
 
-extern "C" int func_020421a0();
+int MessageSystem_GetInstance();
 
 extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
 extern "C" void func_ov000_02177f74(void* arg0, void* arg1);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, int e);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, int e, int f);
 #endif
 
 struct Struct_ov000_02177e50 {
@@ -41,23 +41,23 @@ extern "C" ARM void func_ov000_02177e50(void* arg0, struct Struct_ov000_02177e50
 #else
     *(short*)(var3 + 0xa0) = 0xb;
 #endif
-    *(short*)(var3 + 0xa2) = 9;
-    *(short*)(var3 + 0xa4) = (var1 >> 3) + 9;
-    *(short*)(var3 + 0xa6) = var2 >> 3;
-    *(short*)(var3 + 0xa8) = 0xc;
-    *(short*)(var3 + 0xaa) = 8;
-    *(short*)(var3 + 0xac) = 0xa;
-    *(short*)(var3 + 0xae) = 0xd;
-    *(unsigned char*)(var3 + 0xb1) = 6;
-    void* var4;
-    int var5 = *(int*)(var3 + 0x58);
-    var4 = *(void**)((char*)func_020421a0() + REGION_OFFSET_0);
-    memset(var4, 0, REGION_OFFSET_1);
-    func_ov000_02177f74(var0, var4);
-    int var6 = (var5 > 1) ? 1 : 0;
+    *(short*)(s + 0xa2) = 9;
+    *(short*)(s + 0xa4) = (x >> 3) + 9;
+    *(short*)(s + 0xa6) = y >> 3;
+    *(short*)(s + 0xa8) = 0xc;
+    *(short*)(s + 0xaa) = 8;
+    *(short*)(s + 0xac) = 0xa;
+    *(short*)(s + 0xae) = 0xd;
+    *(unsigned char*)(s + 0xb1) = 6;
+    void* buf;
+    int savedField58 = *(int*)(s + 0x58);
+    buf = *(void**)((char*)MessageSystem_GetInstance() + REGION_OFFSET_0);
+    memset(buf, 0, REGION_OFFSET_1);
+    func_ov000_02177f74(obj, buf);
+    int flag = (savedField58 > 1) ? 1 : 0;
 #if defined(jpn)
-    func_0205d304(var0 + 0x188, var4, 0, 0, var6, 1, 0);
+    Window_OpenPane(obj + 0x188, buf, 0, 0, flag, 1, 0);
 #else
-    func_0205d304(var3, var4, 0, 0, var6, 1, 0, 0);
+    Window_OpenPane(s, buf, 0, 0, flag, 1, 0, 0);
 #endif
 }

@@ -29,48 +29,48 @@ struct Struct_ov002_0215624c_11;
 extern "C" void func_020a1940(unsigned int id);
 extern "C" void func_ov002_021682c0(char* self);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_020dc2bc(void);
-extern "C" void func_0209a338(Struct_ov002_02168d54_2* arg0);
-extern "C" void func_0209a470(Struct_ov002_02168d54_3* arg0, SafeAllocator* arg1, Struct_ov002_02168d54_4* arg2, int arg3);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+void OrGlobalFlag0x40_020dc2bc(void);
+void ClearFirstTwoWords0209a338(Pair0209a338* p);
+void SetupAndRunBufferedScript0209a470(Ctx0209a470* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
 int IsSubBrightnessTransitionActive(GameResources* resources);
-extern "C" int func_ov013_021870f0(char* arg0);
-extern "C" void func_ov013_02184360(char* arg0, int arg1);
-extern "C" void func_ov013_02184cf0(char* arg0, SafeAllocator* arg1);
-extern "C" int func_ov002_021574d4(void* arg0, int arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void func_ov013_02184b4c(char* arg0, GameObject* arg1);
-extern "C" void func_ov002_02168354(char* arg0);
-extern "C" void func_ov013_0218782c(char* arg0, int arg1, int arg2);
-extern "C" void func_ov013_021870c0(void* arg0);
-extern "C" void func_ov002_021685bc(char* arg0);
-extern "C" void func_ov002_0216885c(char* arg0);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_020a1ef0(int arg0);
-extern "C" void func_0209fe9c(char* arg0);
-extern "C" void func_0209fee4(Struct_ov002_02168d54_7* arg0, SafeAllocator* arg1, int arg2, int arg3);
-extern "C" void func_0209ff64(Struct_ov002_02168d54_5* arg0, int arg1);
-extern "C" void func_0209ff6c(Struct_ov002_02168d54_6* arg0);
-extern "C" int func_ov002_02168c00(unsigned char* arg0);
-extern "C" void func_ov013_02186fa0(char* arg0);
-extern "C" void func_ov002_021688f8(char* arg0);
-extern "C" void func_020727ec(Struct_ov002_02168d54_8* arg0);
-extern "C" void func_020e5280(void* arg0);
-extern "C" void func_ov023_021eb138(char* arg0, int arg1);
-extern "C" void func_ov023_021eb080(char* arg0, SafeAllocator* arg1);
-extern "C" void func_ov023_021eb564(char* arg0, int arg1, int arg2);
-extern "C" void func_ov023_021eb26c(void* arg0);
+extern "C" int func_ov013_021870f0(char* obj);
+extern "C" void func_ov013_02184360(char* obj, int v);
+extern "C" void func_ov013_02184cf0(char* obj, SafeAllocator* alloc);
+int GetField110ArrayValue021574d4(void* self, int index);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
+extern "C" void func_ov013_02184b4c(char* obj, GameObject* combatant);
+extern "C" void func_ov002_02168354(char* self);
+extern "C" void func_ov013_0218782c(char* obj, int a, int b);
+void HandleFieldFlagsAndState021870c0(void* obj);
+extern "C" void func_ov002_021685bc(char* self);
+extern "C" void _Z31UpdateBattleTagCounter_0216885cPc(char* self);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(void* self);
+void PushInputLogB_020a1ef0(int id);
+void Reset0209fe9c(char* obj);
+void InitManagerAndAllocateBuffers0209fee4(Obj0209fee4* obj, SafeAllocator* alloc, int data, int length);
+void SetIntAt0x60(IntField0x60_0209ff64* obj, int v);
+void PollOv017Task0209ff6c(TaskState0209ff6c* task);
+int AreFields60And64BothNegOne_02168c00(unsigned char* obj);
+extern "C" void func_ov013_02186fa0(char* obj);
+extern "C" void func_ov002_021688f8(char* self);
+void ResetListHeader020727ec(List020727d8* list);
+void Zero4Bytes020e5280(void* obj);
+extern "C" void func_ov023_021eb138(char* obj, int v);
+extern "C" void func_ov023_021eb080(char* obj, SafeAllocator* alloc);
+extern "C" void func_ov023_021eb564(char* obj, int a, int b);
+extern "C" void func_ov023_021eb26c(void* obj);
 extern "C" void ColorEffect_ConfigureAlphaBlend(int control, unsigned int pixel1Source, unsigned int pixel2Source, unsigned int pixel1Alpha, unsigned int pixel2Alpha);
-extern "C" void func_020466f4(Struct_ov002_02168d54_9* arg0, unsigned int arg1);
-extern "C" void func_020a1f4c(int arg0);
-extern "C" void func_020dc2d0(int arg0);
-extern "C" void func_ov002_0215a938(char* arg0);
-extern "C" void func_ov002_02161cf0(char* arg0);
-extern "C" void func_0205de24(Struct_ov002_0215624c_11* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_ov002_02160274(char* arg0);
+void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int mask);
+void PopStack1AndTrigger_020a1f4c(int flag);
+void SetCombatModeFromCase020dc2d0(int mode);
+extern "C" void func_ov002_0215a938(char* self);
+extern "C" void func_ov002_02161cf0(char* base);
+void FindAndLinkMatchingEntry0205de24(Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+extern "C" void func_ov002_02160274(char* self);
 
 extern char data_ov002_0216d350;
 extern char data_ov002_0216d368;
@@ -92,8 +92,8 @@ extern "C" ARM void func_ov002_02168d54(char* arg0) {
         SetSubBrightness(var1, -0x10, 0xf);
         *(int*)(arg0 + REGION_VALUE(0x228c, 0x2458)) = var2->QueueLoadFile(&data_ov002_0216d350, NULL);
 #if !defined(jpn)
-        func_020466e4((unsigned int*)func_020d6c00(), 1);
-        func_020dc2bc();
+        FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
+        OrGlobalFlag0x40_020dc2bc();
 #endif
     } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 1) {
         if (*(int*)(arg0 + REGION_VALUE(0x228c, 0x2458)) >= 0) {
@@ -108,8 +108,8 @@ extern "C" ARM void func_ov002_02168d54(char* arg0) {
             }
         } else if (!IsSubBrightnessTransitionActive(var1)) {
 #if defined(jpn)
-            func_020466e4((unsigned int*)func_020d6c00(), 1);
-            func_020dc2bc();
+            FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
+            OrGlobalFlag0x40_020dc2bc();
 #endif
             (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
         }
@@ -155,32 +155,32 @@ extern "C" ARM void func_ov002_02168d54(char* arg0) {
 #if !defined(jpn)
         func_ov013_021870c0(arg0 + REGION_VALUE(0x1bc8, 0x1d04));
 #endif
-        char* var8 = (char*)func_020421a0();
-        if (*(int*)(var8 + REGION_VALUE(0x868, 0x998)) != 0) {
-            var8[REGION_VALUE(0x17de, 0x19ae)] = 0;
-            if (*(int*)(var8 + REGION_VALUE(0x870, 0x9a0)) != 3) {
+        char* controller = (char*)MessageSystem_GetInstance();
+        if (*(int*)(controller + REGION_VALUE(0x868, 0x998)) != 0) {
+            controller[REGION_VALUE(0x17de, 0x19ae)] = 0;
+            if (*(int*)(controller + REGION_VALUE(0x870, 0x9a0)) != 3) {
                 return;
             }
             if (!g_keyManager.TestKeysPressed(0x203) && !g_touchInput.IsPressed()) {
                 return;
             }
         }
-        func_02043204(var8);
-        func_02043124(var8);
-        Struct_0208cb08* var9 = func_02094a00();
-        func_02094b3c(var9, 0xc);
-        func_02094ab0(var9);
-        arg0[REGION_VALUE(0x2288, 0x2454)] = 0;
-        arg0[REGION_VALUE(0x2289, 0x2455)] = 0;
-        (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
-        SetSubBrightness(var1, -0x10, 0xf);
-        arg0[REGION_VALUE(0x228a, 0x2456)] = 0;
-        func_020a1ef0(1);
-        arg0[REGION_VALUE(0x22a2, 0x2472)] = 1;
-        arg0[REGION_VALUE(0x1afb, 0x1c33)] = 1;
-        arg0[REGION_VALUE(0x22bf, 0x248f)] = 1;
-        *(int*)(arg0 + REGION_VALUE(0x228c, 0x2458)) = var2->QueueLoadFile(&data_ov002_0216d368, NULL);
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 9) {
+        MessageSystem_Reset(controller);
+        MessageSystem_Stop(controller);
+        FontBankLoader* global = FontBankLoader_GetInstance();
+        BlankFunction02094b3c(global, 0xc);
+        FontBankLoader_CancelLoads(global);
+        self[REGION_VALUE(0x2288, 0x2454)] = 0;
+        self[REGION_VALUE(0x2289, 0x2455)] = 0;
+        (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)))++;
+        SetSubBrightness(res, -0x10, 0xf);
+        self[REGION_VALUE(0x228a, 0x2456)] = 0;
+        PushInputLogB_020a1ef0(1);
+        self[REGION_VALUE(0x22a2, 0x2472)] = 1;
+        self[REGION_VALUE(0x1afb, 0x1c33)] = 1;
+        self[REGION_VALUE(0x22bf, 0x248f)] = 1;
+        *(int*)(self + REGION_VALUE(0x228c, 0x2458)) = loader->QueueLoadFile(&data_ov002_0216d368, NULL);
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 9) {
 #if !defined(jpn)
         func_ov013_021870c0(arg0 + REGION_VALUE(0x1bc8, 0x1d04));
 #endif
@@ -238,38 +238,38 @@ extern "C" ARM void func_ov002_02168d54(char* arg0) {
         if (*(unsigned short*)(*(char**)(arg0 + REGION_VALUE(0x2298, 0x2468)) + 0x438) & 4) {
             (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
         }
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 0xe) {
-        arg0[REGION_VALUE(0x22a2, 0x2472)] = 0;
-        func_ov023_021eb26c(*(void**)(arg0 + REGION_VALUE(0x2298, 0x2468)));
-        ((SafeAllocator*)(arg0 + REGION_VALUE(0x78c, 0x828)))->Reset();
-        ((SafeAllocator*)(arg0 + REGION_VALUE(0x7c8, 0x864)))->Reset();
-        *(void**)(arg0 + REGION_VALUE(0x2298, 0x2468)) = NULL;
-        *(int*)(arg0 + REGION_VALUE(0x229c, 0x246c)) = 0;
-        arg0[REGION_VALUE(0x22a0, 0x2470)] = 0;
-        arg0[REGION_VALUE(0x22a1, 0x2471)] = 0;
-        (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 0xf) {
-        Struct_0208cb08* var13 = func_02094a00();
-        func_02094b40(var13);
-        func_02094b30(var13, 100, 0);
-        (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 0x10) {
-        if (func_02094b4c(func_02094a00())) {
-            *(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) = 100;
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 0xe) {
+        self[REGION_VALUE(0x22a2, 0x2472)] = 0;
+        func_ov023_021eb26c(*(void**)(self + REGION_VALUE(0x2298, 0x2468)));
+        ((SafeAllocator*)(self + REGION_VALUE(0x78c, 0x828)))->Reset();
+        ((SafeAllocator*)(self + REGION_VALUE(0x7c8, 0x864)))->Reset();
+        *(void**)(self + REGION_VALUE(0x2298, 0x2468)) = NULL;
+        *(int*)(self + REGION_VALUE(0x229c, 0x246c)) = 0;
+        self[REGION_VALUE(0x22a0, 0x2470)] = 0;
+        self[REGION_VALUE(0x22a1, 0x2471)] = 0;
+        (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)))++;
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 0xf) {
+        FontBankLoader* global = FontBankLoader_GetInstance();
+        BlankFunction02094b40(global);
+        BlankFunction02094b30(global, 100, 0);
+        (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)))++;
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 0x10) {
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance())) {
+            *(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) = 100;
             ColorEffect_ConfigureAlphaBlend(0x04000050, 2, 1, 10, 6);
         }
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 100) {
-        func_020466f4((Struct_ov002_02168d54_9*)func_020d6c00(), 1);
-        func_020a1f4c(1);
-        arg0[REGION_VALUE(0x1afb, 0x1c33)] = 0;
-        arg0[REGION_VALUE(0x22bf, 0x248f)] = 0;
-        func_020dc2d0(0);
-        *(int*)(arg0 + REGION_VALUE(0x22ac, 0x247c)) |= 2;
-        arg0[REGION_VALUE(0x22aa, 0x247a)] = 0;
-        (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
-    } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 101) {
-        if (!(*(int*)(arg0 + REGION_VALUE(0x22ac, 0x247c)) & 2)) {
-            (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 100) {
+        FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 1);
+        PopStack1AndTrigger_020a1f4c(1);
+        self[REGION_VALUE(0x1afb, 0x1c33)] = 0;
+        self[REGION_VALUE(0x22bf, 0x248f)] = 0;
+        SetCombatModeFromCase020dc2d0(0);
+        *(int*)(self + REGION_VALUE(0x22ac, 0x247c)) |= 2;
+        self[REGION_VALUE(0x22aa, 0x247a)] = 0;
+        (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)))++;
+    } else if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 101) {
+        if (!(*(int*)(self + REGION_VALUE(0x22ac, 0x247c)) & 2)) {
+            (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)))++;
         }
     } else if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 102) {
         (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)))++;

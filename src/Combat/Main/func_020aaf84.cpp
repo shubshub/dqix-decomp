@@ -4,13 +4,7 @@
 #include "Graphics/LightingManager.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 struct Struct_020a94f8_2 {
     int unknown_0_;
@@ -85,11 +79,11 @@ struct Struct_020aaf84_5 { char unknown_0_[0xa0]; char unknown_a0_[0xd8]; char u
 struct Struct_02011544;
 struct Struct_02038598_4;
 
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 extern const char data_020f1bf0[];
 extern "C" int func_02075910(int, void*, unsigned int, int);
 extern "C" int func_01ff85b8(void*, int);
-extern "C" Struct_020aaf84_4* func_0205ec34();
+extern "C" Context020aaf84* Scenario_GetInstance();
 #if defined(jpn)
 extern "C" int func_020a95a4(void*, void*);
 #else
@@ -99,20 +93,20 @@ extern "C" int func_020a9a50(void*, void*, int);
 extern "C" void func_020a9b2c(void*);
 extern "C" void func_020a9c14(void*);
 extern "C" void func_020a9e30(void*);
-extern "C" Zone3D* func_02012fe4();
-extern "C" int func_020a94f8(Struct_020a94f8_2*, int);
-extern "C" void* func_020d6c00();
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
-extern "C" void func_02011544(Struct_02011544*);
-extern "C" Struct_020aaf84_5* func_02094d6c();
-extern "C" void* func_020108d8(char*, int);
-extern "C" void func_020a9af8(unsigned char*);
-extern "C" void func_020a9ba4(void*);
-extern "C" void func_020a9d78(void*);
-extern "C" void* func_02010828(GameState*);
-extern "C" void func_020865ec(char*);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
+extern "C" Zone3D* Zone3D_GetInstance();
+int VerifyBuffer020a94f8(Buf020a94f8*, int);
+void* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int*, unsigned int);
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
+void SetFlag0x5cccBit0_02011544(StateBits5ccc_11544*);
+Globals020aaf84* GetGlobal02109418_02094d6c();
+void* GetSlotEntry020108d8(char*, int);
+void LoadBattleRegion0x5cdc_020a9af8(unsigned char*);
+void CopyBlobIntoBattleStruct020a9ba4(void*);
+void CopyBlobIntoBattleStruct020a9d78(void*);
+void* GameState_GetParty(GameState*);
+void ClearRegion020865ec(char*);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 
 // USA: func_020aaf84
 #if defined(jpn)
@@ -152,14 +146,14 @@ extern "C" ARM int func_020aaf84(int* arg0, int arg1, int arg2, int arg3) {
     if (!func_020a94f8(&var1, arg2 != 0)) var2 = 0;
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
-    if (arg2) var7 = 0x8084;
-    else var7 = 0x84;
-    var12 = &((Struct_020aaf84*)data_0211e33c)->unknown_28000_;
-    if (!func_02075910(var7, var12, 0x6f60, 0)) var2 = 0;
-    if (!strcmp(var1.unknown_8_, data_020f1bf0) && var2) {
-        if (func_01ff85b8(var12->unknown_4_, 0x6f5c) != var12->unknown_0_) {
-            var3->unknown_5a68_ = arg2 ? 3 : 2;
-            var2 = 0;
+    if (alternate) id = 0x8084;
+    else id = 0x84;
+    body = &((SaveScratch020aaf84*)g_fileLoadBuffer)->body;
+    if (!func_02075910(id, body, 0x6f60, 0)) valid = 0;
+    if (!strcmp(header.signature, data_020f1bf0) && valid) {
+        if (func_01ff85b8(body->actorData, 0x6f5c) != body->checksum) {
+            saveState->error = alternate ? 3 : 2;
+            valid = 0;
         }
     }
     if (arg3) {
@@ -171,28 +165,28 @@ extern "C" ARM int func_020aaf84(int* arg0, int arg1, int arg2, int arg3) {
         BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    var4 = func_0205ec34();
-    var6 = func_02094d6c();
-    func_020a95a4(var12->unknown_4_, func_020108d8((char*)var0, 0));
-    func_020a9a50(var12->unknown_2cac_, var4, 0);
-    memcpy(var6, var12->unknown_2ff0_, 0xa0);
-    memcpy(func_02094d6c()->unknown_178_, var12->unknown_3090_, 0x330);
-    func_020a9af8(var12->unknown_33c0_);
-    memcpy(var3->unknown_73b0_, var12->unknown_3554_, 0x4d0);
-    memcpy(var3->unknown_7880_, var12->unknown_3a24_, 0x3b4);
-    memcpy(var3->unknown_72c4_, var12->unknown_3dd8_, 0xec);
-    func_020a9b2c(var12->unknown_3ec4_);
-    func_020a9ba4(var12->unknown_5a04_);
-    func_020a9c14(var12->unknown_5e08_);
-    memcpy(((Struct_020aaf84_6*)GameState::GetInstance())->unknown_543c_, var12->unknown_68e0_, 0x7c);
-    if (arg2) {
-        func_020a9d78(var12->unknown_695c_);
-        func_020a9e30(&var12->unknown_6d4c_);
+    context = Scenario_GetInstance();
+    globals = GetGlobal02109418_02094d6c();
+    func_020a95a4(body->actorData, GetSlotEntry020108d8((char*)state, 0));
+    func_020a9a50(body->context, context, 0);
+    memcpy(globals, body->globalData, 0xa0);
+    memcpy(GetGlobal02109418_02094d6c()->extra, body->globalExtra, 0x330);
+    LoadBattleRegion0x5cdc_020a9af8(body->region);
+    memcpy(saveState->state75f0, body->state75f0, 0x4d0);
+    memcpy(saveState->state7ac0, body->state7ac0, 0x3b4);
+    memcpy(saveState->state7504, body->state7504, 0xec);
+    func_020a9b2c(body->load3ec4);
+    CopyBlobIntoBattleStruct020a9ba4(body->battle5a04);
+    func_020a9c14(body->battle5e08);
+    memcpy(((SaveStateJ020aaf84*)GameState::GetInstance())->state569c, body->state569c, 0x7c);
+    if (alternate) {
+        CopyBlobIntoBattleStruct020a9d78(body->extra695c);
+        func_020a9e30(&body->entries);
     } else {
-        var11 = &var12->unknown_6d4c_;
-        var10 = (Struct_020aaf84_3*)func_02010828(GameState::GetInstance());
-        for (var9 = 0; var9 < 3; var9++) {
-            func_020865ec((char*)&var10->unknown_f2c_[var9]);
+        entries = &body->entries;
+        battle = (BattleEntries020aaf84*)GameState_GetParty(GameState::GetInstance());
+        for (i = 0; i < 3; i++) {
+            ClearRegion020865ec((char*)&battle->entries[i]);
         }
         if (var11->unknown_0_ && var11->unknown_2_) {
             for (var8 = 0; var8 < var11->unknown_2_; var8++) {
@@ -200,15 +194,15 @@ extern "C" ARM int func_020aaf84(int* arg0, int arg1, int arg2, int arg3) {
             }
         }
     }
-    memcpy(((Struct_020aaf84_6*)GameState::GetInstance())->unknown_6fbc_, var12->unknown_6978_, 0x2c4);
-    memcpy(((Struct_020aaf84_6*)GameState::GetInstance())->unknown_5c0c_, var12->unknown_6c3c_, 0x110);
-    var5 = LightingManager::GetInstance();
-    var0->SetDayTimer(var1.unknown_10_);
-    var5->dayNightTimer_ = var1.unknown_10_;
-    var5->timeOfDayIndex_ = var0->GetTimeOfDay();
-    var5->SetZone(func_02012fe4());
-    var5->RecomputeAdvancedLighting();
-    func_0206df6c(var4, var4->unknown_8c_, 3, 0);
+    memcpy(((SaveStateJ020aaf84*)GameState::GetInstance())->state71fc, body->state71fc, 0x2c4);
+    memcpy(((SaveStateJ020aaf84*)GameState::GetInstance())->state5e6c, body->state5e6c, 0x110);
+    lighting = LightingManager::GetInstance();
+    state->SetDayTimer(header.dayTimer);
+    lighting->dayNightTimer_ = header.dayTimer;
+    lighting->timeOfDayIndex_ = state->GetTimeOfDay();
+    lighting->SetZone(Zone3D_GetInstance());
+    lighting->RecomputeAdvancedLighting();
+    Scenario_SetFlag(context, context->bits, 3, 0);
     BackgroundLoader::RemoveLockGlobal();
     return 1;
 }
@@ -236,52 +230,52 @@ extern "C" ARM int func_020aaf84(int* arg0, int arg1, int arg2, int arg3) {
     if (!func_020a94f8(&var14, arg2 != 0)) var15 = 0;
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
-    var17 = (unsigned int*)func_020d6c00();
-    func_020466e4(var17, 0x2000000);
-    if (arg2) var21 = 0x8084;
-    else var21 = 0x84;
-    var27 = &((Struct_020aaf84*)data_0211e33c)->unknown_28000_;
-    if (!func_02075910(var21, var27, 0x6f60, 0)) var15 = 0;
-    if (!strcmp(var14.unknown_8_, data_020f1bf0) && var15) {
-        if (func_01ff85b8(var27->unknown_4_, 0x6f5c) != var27->unknown_0_) {
-            var16->unknown_5cc8_ = arg2 ? 3 : 2;
-            var15 = 0;
+    flags = (unsigned int*)GlobalFlags_GetInstance();
+    FlagWord_SetBits(flags, 0x2000000);
+    if (alternate) id = 0x8084;
+    else id = 0x84;
+    body = &((SaveScratch020aaf84*)g_fileLoadBuffer)->body;
+    if (!func_02075910(id, body, 0x6f60, 0)) valid = 0;
+    if (!strcmp(header.signature, data_020f1bf0) && valid) {
+        if (func_01ff85b8(body->actorData, 0x6f5c) != body->checksum) {
+            saveState->error = alternate ? 3 : 2;
+            valid = 0;
         }
     }
-    if (arg3) {
-        func_020466f4((Struct_02038598_4*)var17, 0x2000000);
+    if (quiet) {
+        FlagWord_ClearBits((FlagWord020466f4*)flags, 0x2000000);
         BackgroundLoader::RemoveLockGlobal();
         return var15;
     }
-    if (!var15) {
-        func_02011544((Struct_02011544*)var13);
-        func_020466f4((Struct_02038598_4*)var17, 0x2000000);
+    if (!valid) {
+        SetFlag0x5cccBit0_02011544((StateBits5ccc_11544*)state);
+        FlagWord_ClearBits((FlagWord020466f4*)flags, 0x2000000);
         BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    var26 = func_0205ec34();
-    var20 = func_02094d6c();
-    var18 = 0;
-    func_020a95a4(var27->unknown_4_, func_020108d8((char*)var13, 0), &var18);
-    func_020a9a50(var27->unknown_2cac_, var26, 0);
-    memcpy(var20, var27->unknown_2ff0_, 0xa0);
-    memcpy(func_02094d6c()->unknown_178_, var27->unknown_3090_, 0x330);
-    func_020a9af8(var27->unknown_33c0_);
-    memcpy(var16->unknown_75f0_, var27->unknown_3554_, 0x4d0);
-    memcpy(var16->unknown_7ac0_, var27->unknown_3a24_, 0x3b4);
-    memcpy(var16->unknown_7504_, var27->unknown_3dd8_, 0xec);
-    func_020a9b2c(var27->unknown_3ec4_);
-    func_020a9ba4(var27->unknown_5a04_);
-    func_020a9c14(var27->unknown_5e08_);
-    memcpy(((Struct_020aaf84_2*)GameState::GetInstance())->unknown_569c_, var27->unknown_68e0_, 0x7c);
-    if (arg2) {
-        func_020a9d78(var27->unknown_695c_);
-        func_020a9e30(&var27->unknown_6d4c_);
-    } else if (var18) {
-        var25 = &var27->unknown_6d4c_;
-        var24 = (Struct_020aaf84_3*)func_02010828(GameState::GetInstance());
-        for (var23 = 0; var23 < 3; var23++) {
-            func_020865ec((char*)&var24->unknown_f2c_[var23]);
+    context = Scenario_GetInstance();
+    globals = GetGlobal02109418_02094d6c();
+    status = 0;
+    func_020a95a4(body->actorData, GetSlotEntry020108d8((char*)state, 0), &status);
+    func_020a9a50(body->context, context, 0);
+    memcpy(globals, body->globalData, 0xa0);
+    memcpy(GetGlobal02109418_02094d6c()->extra, body->globalExtra, 0x330);
+    LoadBattleRegion0x5cdc_020a9af8(body->region);
+    memcpy(saveState->state75f0, body->state75f0, 0x4d0);
+    memcpy(saveState->state7ac0, body->state7ac0, 0x3b4);
+    memcpy(saveState->state7504, body->state7504, 0xec);
+    func_020a9b2c(body->load3ec4);
+    CopyBlobIntoBattleStruct020a9ba4(body->battle5a04);
+    func_020a9c14(body->battle5e08);
+    memcpy(((SaveState020aaf84*)GameState::GetInstance())->state569c, body->state569c, 0x7c);
+    if (alternate) {
+        CopyBlobIntoBattleStruct020a9d78(body->extra695c);
+        func_020a9e30(&body->entries);
+    } else if (status) {
+        entries = &body->entries;
+        battle = (BattleEntries020aaf84*)GameState_GetParty(GameState::GetInstance());
+        for (i = 0; i < 3; i++) {
+            ClearRegion020865ec((char*)&battle->entries[i]);
         }
         if (var25->unknown_0_ && var25->unknown_2_) {
             for (var22 = 0; var22 < var25->unknown_2_; var22++) {
@@ -289,16 +283,16 @@ extern "C" ARM int func_020aaf84(int* arg0, int arg1, int arg2, int arg3) {
             }
         }
     }
-    memcpy(((Struct_020aaf84_2*)GameState::GetInstance())->unknown_71fc_, var27->unknown_6978_, 0x2c4);
-    memcpy(((Struct_020aaf84_2*)GameState::GetInstance())->unknown_5e6c_, var27->unknown_6c3c_, 0x110);
-    var19 = LightingManager::GetInstance();
-    var13->SetDayTimer(var14.unknown_10_);
-    var19->dayNightTimer_ = var14.unknown_10_;
-    var19->timeOfDayIndex_ = var13->GetTimeOfDay();
-    var19->SetZone(func_02012fe4());
-    var19->RecomputeAdvancedLighting();
-    func_0206df6c(var26, var26->unknown_8c_, 3, 0);
-    func_020466f4((Struct_02038598_4*)var17, 0x2000000);
+    memcpy(((SaveState020aaf84*)GameState::GetInstance())->state71fc, body->state71fc, 0x2c4);
+    memcpy(((SaveState020aaf84*)GameState::GetInstance())->state5e6c, body->state5e6c, 0x110);
+    lighting = LightingManager::GetInstance();
+    state->SetDayTimer(header.dayTimer);
+    lighting->dayNightTimer_ = header.dayTimer;
+    lighting->timeOfDayIndex_ = state->GetTimeOfDay();
+    lighting->SetZone(Zone3D_GetInstance());
+    lighting->RecomputeAdvancedLighting();
+    Scenario_SetFlag(context, context->bits, 3, 0);
+    FlagWord_ClearBits((FlagWord020466f4*)flags, 0x2000000);
     BackgroundLoader::RemoveLockGlobal();
     return 1;
 }

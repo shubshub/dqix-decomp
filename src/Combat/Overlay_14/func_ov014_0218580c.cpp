@@ -46,9 +46,8 @@ struct Struct_ov006_021580b8 {
     char unknown_27_;
 };
 
-struct Struct_ov008_02188d74;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct SpriteRenderer;
+struct PacRecord;
 
 struct Struct_ov014_02184dcc {
     void** unknown_0_;
@@ -84,17 +83,17 @@ extern char data_ov014_021896a7[];
 void ClearFields_021e20c0(void* layout);
 extern "C" int func_ov023_021e20f0(void* layout, SafeAllocator* allocator, void* file, unsigned int size);
 extern "C" LayoutElement* func_ov014_021842a0(void* layout, short id);
-int Pac_CountFiles(ActiveEntry02046900* pac);
-void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
+int Pac_CountFiles(PacRecord* pac);
+void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
 extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
 void ComputeShortPair_021e2bdc(void* layout, int id, short* x, short* y);
 void* GetFieldIfFlag4_020100f8(char* gameState);
 void InitCombatController020a2010(void* camera);
-void Camera_SetTarget(unsigned char* camera, int x, int y, int z);
+void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
 extern "C" void func_0202e5d8(void* camera, int x, int y, int z);
-extern "C" void func_0202e0a4(void* camera);
-void SetField0x238False_020a27a0(void* camera);
-void SetField0x3b0Value_020100c4(GameState* gameState, int camera);
+extern "C" void Camera_Update(void* camera);
+void FollowCamera_DisableFollow(void* camera);
+void GameState_SetCamera(GameState* gameState, int camera);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 void Set3DClearColor_020c5588(int, int, int, int, int);
 
@@ -142,10 +141,10 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         unsigned int size;
         int cellsSize;
         loader->GetLoadedFileByID(self->taskID_, &file, &size);
-        int numFiles = Pac_CountFiles((ActiveEntry02046900*)file);
+        int numFiles = Pac_CountFiles((PacRecord*)file);
         self->allocators_[5].Reset();
         for (int i = 0; i < numFiles; i++) {
-            void* cells = Pac_GetFile((Rec020467f0*)file, i, &name, &cellsSize);
+            void* cells = Pac_GetFile((PacRecord*)file, i, &name, &cellsSize);
             if (cells != NULL)
                 SpriteContext_LoadFile(self->spriteRenderer_, cells, cellsSize, &self->allocators_[5]);
         }
@@ -187,11 +186,11 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         GameState* gameState = GameState::GetInstance();
         data_ov014_02189800.previousCamera = GetFieldIfFlag4_020100f8((char*)gameState);
         InitCombatController020a2010(self->camera_);
-        Camera_SetTarget((unsigned char*)self->camera_, 0, 0, 0);
+        Camera_SetTarget((struct Camera*)self->camera_, 0, 0, 0);
         func_0202e5d8(self->camera_, 0, 0, 0xa000);
-        func_0202e0a4(self->camera_);
-        SetField0x238False_020a27a0(self->camera_);
-        SetField0x3b0Value_020100c4(gameState, (int)self->camera_);
+        Camera_Update(self->camera_);
+        FollowCamera_DisableFollow(self->camera_);
+        GameState_SetCamera(gameState, (int)self->camera_);
         GameResources* resources = GetGameResources();
         SetFlags04(resources, 0x6093e);
         ClearFlags04(resources, 0x20);

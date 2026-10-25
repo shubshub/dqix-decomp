@@ -7,8 +7,8 @@ struct Struct_020fdd44 {
     unsigned short unknown_2_0_ : 2;
     unsigned short : 14;
 };
-extern "C" struct Struct_020fdd44* func_02027ca4(void);
-extern "C" struct Struct_020fdd44* func_02028bd0(struct Struct_020fdd44* arg0, int arg1);
+struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202b7d8(int* arg0);
 struct Struct_0202c1a4;
@@ -16,12 +16,12 @@ extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
 extern "C" GameObject* func_ov017_021a2738(void* arg0, int arg1);
 
 // USA: func_ov017_0219e180
-extern "C" ARM void func_ov017_0219e180(void* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_020fdd44* var1 = func_02027ca4();
-    void* var2 = func_0202ae18();
-    if (func_0202b7d8((int*)var2) != 0) {
-        if (func_0202c1a4((struct Struct_0202c1a4*)var2) != 0) {
+extern "C" ARM void func_ov017_0219e180(void* param, int id) {
+    GameState* bs = GameState::GetInstance();
+    struct Entry_02028bd0* table = ZoneRecords_GetInstance();
+    void* search = func_0202ae18();
+    if (CheckField0NonZero_0202b7d8((int*)search) != 0) {
+        if (GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)search) != 0) {
             return;
         }
     }

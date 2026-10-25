@@ -13,10 +13,9 @@ void Sprite_Init(Struct0205a198*);
 struct ClearTarget0205a234;
 void ClearField0And40205a234(ClearTarget0205a234*);
 void SpriteContext_Init(char*);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void SpriteContext_LoadFile(void*, void*, int, void*);
 
 // USA: func_ov012_021861e0
@@ -39,10 +38,10 @@ extern "C" ARM void func_ov012_021861e0(char* editor) {
     unsigned int fileSize;
     int fieldOut;
     loader->GetLoadedFileByID(*(int*)(editor + kTaskOffset), &fileData, &fileSize);
-    int count = Pac_CountFiles((ActiveEntry02046900*)fileData);
+    int count = Pac_CountFiles((PacRecord*)fileData);
     ((SafeAllocator*)(editor + kAllocatorOffset))->Reset();
     for (int i = 0; i < count; ++i) {
-        void* record = Pac_GetFile((Rec020467f0*)fileData, i, &recordOut, &fieldOut);
+        void* record = Pac_GetFile((PacRecord*)fileData, i, &recordOut, &fieldOut);
         SpriteContext_LoadFile(*(char**)(editor + kContainerOffset), record, fieldOut, editor + kAllocatorOffset);
     }
     loader->RemoveTask(*(int*)(editor + kTaskOffset));

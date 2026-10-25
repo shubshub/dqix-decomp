@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -14,7 +14,7 @@ extern "C" ARM int func_ov023_021f4fc8(void) {
 #else
  enum {regionalOffset0=0x9a0, regionalOffset1=0x998};
 #endif
-    void* obj = (void*)GetGlobalField0x1c020421a0();
+    void* obj = (void*)MessageSystem_GetInstance();
     int state = *(int*)((char*)obj + regionalOffset0);
     int flag = 0;
     if (state == 3 || state == 0) {

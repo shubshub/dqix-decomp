@@ -3,8 +3,8 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-struct Struct_0205d6a0;
-extern "C" void func_0205d6a0(struct Struct_0205d6a0* arg0, int arg1);
+struct Entry_0205d6a0;
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 
 extern "C" void func_ov023_021d921c(void* arg0, int arg1, int arg2, int arg3);
 
@@ -26,11 +26,11 @@ extern "C" ARM int func_ov023_021d90d0(char* arg0) {
     if (var0 == 0) var0 = 1;
     unsigned char var1 = *(unsigned char*)(arg0 + 0x11c);
 
-    if (var1 == 0) {
-        func_0205d6a0((struct Struct_0205d6a0*)(arg0 + 0x20), 1);
-        int var2 = *(unsigned char*)(arg0 + 0x11c) + 1;
-        *(unsigned char*)(arg0 + 0x11c) = (unsigned char)var2;
-        return var2;
+    if (step == 0) {
+        Window_ClosePane((struct Entry_0205d6a0*)(obj + 0x20), 1);
+        int next = *(unsigned char*)(obj + 0x11c) + 1;
+        *(unsigned char*)(obj + 0x11c) = (unsigned char)next;
+        return next;
     }
     if (var1 == 1) {
         *(unsigned char*)(arg0 + 0x118) = 0;
@@ -57,14 +57,14 @@ extern "C" ARM int func_ov023_021d90d0(char* arg0) {
     func_ov023_021d94e4(arg0, *(void**)(arg0 + 4), *(unsigned char*)(arg0 + 0x118));
 
 #if defined(jpn)
-    func_0205d5d0((struct Struct_0205d5d0*)(arg0 + 0x20), 0, *(int*)(arg0 + 4), 1);
+    Window_SetPaneText((struct StructA0205d5d0*)(obj + 0x20), 0, *(int*)(obj + 4), 1);
 
 #else
-    unsigned char* var6 = (unsigned char*)func_0205d81c((struct Struct_0205d81c*)(arg0 + 0x20), 0);
-    if (var6 != NULL) {
-        var6[0xd8] |= 4;
-        func_0205d5d0((struct Struct_0205d5d0*)(arg0 + 0x20), 0, *(int*)(arg0 + 4), 1, 0);
-        var6[0xd8] &= ~4;
+    unsigned char* elem = (unsigned char*)FindElementByC40205d81c((struct Struct_0205d81c*)(obj + 0x20), 0);
+    if (elem != NULL) {
+        elem[0xd8] |= 4;
+        Window_SetPaneText((struct StructA0205d5d0*)(obj + 0x20), 0, *(int*)(obj + 4), 1, 0);
+        elem[0xd8] &= ~4;
     }
 
 #endif

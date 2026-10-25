@@ -68,24 +68,24 @@ extern "C" ARM void func_0208ea10(void* arg0, int arg1) {
     __clear(var2, 0x40);
     var3 = 0;
 
-    if (LoadFileIntoMemory(data_020f1330, data_0211e33c, &var3) != 0) {
-        if (GetFileInNarc(data_0211e33c, data_020f134a, &var5, &var4, 0) != 0) {
-            ((Script*)((struct Struct_0208ea10_2*)var0))->Initialize();
-            ((Script*)((struct Struct_0208ea10_2*)var0))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
-            ((Script*)((struct Struct_0208ea10_2*)var0))->Load(var5, var4);
-            ((Script*)((struct Struct_0208ea10_2*)var0))->Execute();
+    if (LoadFileIntoMemory(data_020f1330, g_fileLoadBuffer, &fileLen) != 0) {
+        if (GetFileInNarc(g_fileLoadBuffer, data_020f134a, &ptr, &size, 0) != 0) {
+            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Initialize();
+            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
+            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Load(ptr, size);
+            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Execute();
             ((unsigned char*)func_0208e0a8())[0xa] = 1;
         }
 
-        int var7;
-        for (var7 = 1; var7 <= 0x3f; var7++) {
-            sprintf(var2, data_020f1356, var7);
-            var3 = 0;
-            if (GetFileInNarc(data_0211e33c, var2, &var5, &var4, 0) != 0) {
-                ((Script*)((struct Struct_0208ea10_2*)var1))->Initialize();
-                ((Script*)((struct Struct_0208ea10_2*)var1))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
-                ((Script*)((struct Struct_0208ea10_2*)var1))->Load(var5, var4);
-                ((Script*)((struct Struct_0208ea10_2*)var1))->Execute();
+        int i;
+        for (i = 1; i <= 0x3f; i++) {
+            sprintf(name, data_020f1356, i);
+            fileLen = 0;
+            if (GetFileInNarc(g_fileLoadBuffer, name, &ptr, &size, 0) != 0) {
+                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Initialize();
+                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
+                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Load(ptr, size);
+                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Execute();
             }
         }
 

@@ -64,25 +64,25 @@ struct Struct_ov017_021afe00_2 {
 };
 
 extern "C" void* func_0202ae18();
-extern "C" void* func_02012fe4();
-extern "C" void func_020531f0(void* arg0);
-extern "C" void func_ov017_021cff8c(int arg0, int arg1);
-extern "C" void func_ov017_021d0b30(int arg0, int arg1, int arg2);
+extern "C" void* Zone3D_GetInstance();
+extern "C" void func_020531f0(void* p);
+extern "C" void func_ov017_021cff8c(int a, int b);
+extern "C" void func_ov017_021d0b30(int a, int b, int c);
 
-extern "C" int func_0202c1c0(Struct_0202b2f0* arg0, int arg1);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" unsigned short func_0201e830(Struct_0201e830* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" int func_ov017_021a193c(int* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" unsigned int func_02012078(void* arg0);
-extern "C" void func_020116c8(void* arg0);
-extern "C" void func_020dc2d0(int arg0);
+int TestBitBySignedByteIndex_0202c1c0(SearchStruct* obj, int index);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+unsigned short GetFieldAt0x7e_0201e830(S_e830* obj);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GetField1c_021a193c(int* obj);
+int GameState_GetProtagonistIndex(GameState* gs);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+unsigned int GetWord0x71f8_02012078(void* gs);
+void ClearAllTreasureMapUnknownBits_020116c8(void* gs);
+void SetCombatModeFromCase020dc2d0(int v);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov017_021afe00
 extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
@@ -103,23 +103,23 @@ extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
             return arg0->unknown_a_;
         }
     }
-    arg0->unknown_b_ = 1;
-    char* var4 = (char*)func_02012fe4();
-    Struct_ov017_021afe00* var5 = (Struct_ov017_021afe00*)(var4 + 0x840);
-    if (arg0->unknown_9_ != 2) {
-        GameResources* var6 = GetGameResources();
-        if (IsBrightnessTransitionActive(var6) != 0) {
+    self->unkB = 1;
+    char* g = (char*)Zone3D_GetInstance();
+    Sub021afe00* sub = (Sub021afe00*)(g + 0x840);
+    if (self->state != 2) {
+        GameResources* res = GetGameResources();
+        if (IsBrightnessTransitionActive(res) != 0) {
             return 1;
         }
         arg0->unknown_3c_ = GetBrightness((GameResources*)var6, false);
         if (IsBrightnessOutsideValidRange((GameResources*)var6, false) != 0) {
             arg0->unknown_42_ = 1;
             DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
-            char* var7 = (char*)func_02012fe4();
-            if (var7 != 0) {
-                Struct_0201e830* var8 = (Struct_0201e830*)(var7 + 0x6c);
-                if (var8 != 0) {
-                    arg0->unknown_40_ = func_0201e830(var8);
+            char* info = (char*)Zone3D_GetInstance();
+            if (info != 0) {
+                S_e830* color = (S_e830*)(info + 0x6c);
+                if (color != 0) {
+                    self->clearColor = GetFieldAt0x7e_0201e830(color);
                 }
             }
             int var9 = 0;
@@ -152,11 +152,11 @@ extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
             DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
         }
     }
-    if (arg0->unknown_9_ == 1) {
-        func_ov017_021cff8c(func_020100a8(var0), 0);
+    if (self->state == 1) {
+        func_ov017_021cff8c(GameState_GetProtagonistIndex(gs), 0);
     }
-    if (arg0->unknown_9_ == 2 || arg0->unknown_9_ == 0) {
-        arg0->unknown_288_ = (Struct_ov017_021afe00_4*)func_02012d88(&data_02114e20, 0x2e0);
+    if (self->state == 2 || self->state == 0) {
+        self->alloc = (Alloc021afe00*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x2e0);
     }
     if (arg0->unknown_9_ == 0) {
         Struct_ov017_021afe00_4* var12 = arg0->unknown_288_;

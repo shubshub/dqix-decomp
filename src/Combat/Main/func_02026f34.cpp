@@ -7,8 +7,8 @@
 
 struct Struct_02012de8;
 
-extern "C" void* func_020d6c00();
-extern "C" int func_02046708(Struct_02012de8* arg0, unsigned int arg1);
+void* GlobalFlags_GetInstance();
+int TestFlags02046708(FlagWord02046708* flags, unsigned int mask);
 
 struct Struct_020fdc60_4 {
     unsigned char unknown_0_;
@@ -69,9 +69,9 @@ enum { Enum_02026f34_1880 = 0x758, Enum_02026f34_1884 = 0x75c };
 #endif
 
 // USA: func_02026f34
-extern "C" ARM void func_02026f34(void* arg0) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    if (func_02046708((Struct_02012de8*)func_020d6c00(), 0x41)) return;
+extern "C" ARM void func_02026f34(void* objv) {
+    unsigned char* obj = (unsigned char*)objv;
+    if (TestFlags02046708((FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) return;
 
     GameState* var1 = GameState::GetInstance();
     unsigned int var2 = var1->GetEffectiveDeltaTime();

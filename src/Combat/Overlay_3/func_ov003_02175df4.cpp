@@ -52,11 +52,11 @@ struct Struct_ov003_02175df4_2 {
 };
 
 // USA: func_ov003_02175df4
-extern "C" ARM int func_ov003_02175df4(Struct_ov003_02175df4_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = (char*)func_02010828(var0);
-    if (arg0->unknown_100c_ == 0x77) {
-        return func_0207c484((struct Struct_0207c484*)(var1 + 0x1d4), arg0->unknown_103a_, arg0->unknown_103c_, arg0->unknown_8_->unknown_8_0_);
+extern "C" ARM int func_ov003_02175df4(Ctx02175df4* self) {
+    GameState* bs = GameState::GetInstance();
+    char* bag = (char*)GameState_GetParty(bs);
+    if (self->mode_ == 0x77) {
+        return DecrementKeyedStackAmount0207c484((struct KeyedList0207c484*)(bag + 0x1d4), self->key_, self->amount_, self->owner_->category_);
     }
     int var2;
     switch (arg0->unknown_1030_) {

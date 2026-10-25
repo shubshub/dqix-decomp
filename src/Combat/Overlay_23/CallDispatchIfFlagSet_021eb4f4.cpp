@@ -2,8 +2,8 @@
 
 struct Obj0205d2bc;
 void Window_TransferLayers(struct Obj0205d2bc*);
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8*, int, int);
+struct BackgroundGraphics;
+int Background_SetScroll(struct BackgroundGraphics*, int, int);
 extern "C" void Background_TransferMap(void*, int);
 #if defined(jpn)
 #define func_ov023_021ed44c func_ov023_021ed394
@@ -17,7 +17,7 @@ ARM void CallDispatchIfFlagSet_021eb4f4(char* obj) {
 	unsigned short flags = *(unsigned short*)(obj + 0x400 + 0x38);
 	if ((flags & 0x40) || (flags & 0x200)) {
 		short val = *(short*)(obj + 0x400 + 0x3a);
-		Background_SetScroll((struct Obj0204b5e8*)(obj + 0x64), 0, val);
+		Background_SetScroll((struct BackgroundGraphics*)(obj + 0x64), 0, val);
 		Background_TransferMap(obj + 0x64, 0);
 		unsigned short flags2 = *(unsigned short*)(obj + 0x400 + 0x38);
 		flags2 &= ~0x200;

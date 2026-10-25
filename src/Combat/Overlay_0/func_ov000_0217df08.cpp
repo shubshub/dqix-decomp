@@ -56,7 +56,7 @@ struct Struct_ov000_0217df08_9 {
     unsigned short unknown_1d72_;
 };
 
-Messages0217df08* GetGlobalField0x1c020421a0();
+Messages0217df08* MessageSystem_GetInstance();
 extern "C" Node0217df08* func_ov000_02161318(void* obj, int id);
 int IsFlag0x28Bit0Set_ov000_02171a60(void*);
 void Clear12Bytes020e46c4(void*);
@@ -68,18 +68,18 @@ Combatant0217df08* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 extern "C" void func_020e4ce8(NameParts0217df08*, Combatant0217df08*, int);
 extern "C" int func_ov000_0217ff34(void* self, int id, int* amount);
 extern "C" void func_02046380(Messages0217df08*);
-void InitObjFromCombatantId020e4bf4(void*, int);
-void AppendString02042058(char*, const char*);
+void NameText_InitFromPartyMember(void*, int);
+void Text_Append(char*, const char*);
 extern "C" char* func_020e046c(char* buf, void* data, unsigned int size, int idx);
-extern "C" void func_02046608(Messages0217df08*, int, char*, char*, int, int, int);
+extern "C" void MessageSystem_FormatText(Messages0217df08*, int, char*, char*, int, int, int);
 extern "C" void __clear(void*, int);
 extern "C" void func_ov000_0217aa08(char*, char*);
 extern "C" void func_020e4f18(Struct_ov000_0217df08*, Struct_ov000_0217df08*, int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_ov000_0217df08_8*, char*, int, int);
 #endif
-extern "C" void func_02043124(Struct_ov000_0217df08_8*);
-extern "C" void func_02043204(char*);
+extern "C" void MessageSystem_Stop(Messages0217df08*);
+void MessageSystem_Reset(char*);
 #if !defined(jpn)
 extern "C" void func_ov000_0217c638(Struct_ov000_0217df08_9* arg0, int arg1, int arg2);
 #endif
@@ -125,19 +125,19 @@ struct Struct_ov000_0217df08_5 {
     unsigned short unknown_1faa_;
 };
 
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" void func_020474a8(Struct_ov000_0217df08_4*, int, char*, char*);
-extern "C" void func_0204500c(Struct_ov000_0217df08_4*, char*, int);
-extern "C" void func_ov000_0217c638(Struct_ov000_0217df08_5* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02176e3c(Struct_ov000_0217df08_5* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+extern "C" void func_020474a8(MessagesJ0217df08*, int, char*, char*);
+extern "C" void func_0204500c(MessagesJ0217df08*, char*, int);
+extern "C" void func_ov000_0217c638(BattleJ0217df08* obj, int arg1, int arg2);
+extern "C" void func_ov000_02176e3c(BattleJ0217df08* obj, int zero, int val, int arg1, int arg2, int one);
 extern const char data_ov000_021851cc[];
 
 // USA: func_ov000_0217df08
-extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_5* arg0, int arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov000_0217df08_4* var1 = (Struct_ov000_0217df08_4*)func_020421a0();
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov000_0217df08(BattleJ0217df08* self, int arg1, int arg2) {
+    GameState* gs = GameState::GetInstance();
+    MessagesJ0217df08* g = (MessagesJ0217df08*)MessageSystem_GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (arg0->unknown_1fa8_ == 0) {
         if (arg0->unknown_90c_ >= 0) {
@@ -190,20 +190,20 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_5* arg0, int arg1,
                             if (var19 != 0) {
                                 var18 = *(char**)((char*)var19 + 0x134);
                             }
-                            func_02046380((Struct_ov000_0217df08_8*)var1);
-                            func_02046574((Struct_02046574_2*)var1, 0, var13->unknown_14c_);
-                            func_02046574((Struct_02046574_2*)var1, 1, var18);
-                            if (var10 != 0) {
-                                func_02042058(var7, var5);
+                            func_02046380((Messages0217df08*)g);
+                            MessageSystem_SetStringArgument((Obj02046574*)g, 0, c->name);
+                            MessageSystem_SetStringArgument((Obj02046574*)g, 1, memberName);
+                            if (appended != 0) {
+                                Text_Append(text, separator);
                             }
-                            var10 = 1;
-                            memset(var6, 0, 0x800);
-                            func_020e046c(var6, var3, var4, var14);
-                            func_02042058(var7, var6);
-                            memset(var6, 0, 0x800);
-                            func_020474a8(var1, 0xc, var7, var6);
-                            memset(var7, 0, 0x800);
-                            sprintf(var7, var6);
+                            appended = 1;
+                            memset(work, 0, 0x800);
+                            func_020e046c(work, data, size, msg);
+                            Text_Append(text, work);
+                            memset(work, 0, 0x800);
+                            func_020474a8(g, 0xc, text, work);
+                            memset(text, 0, 0x800);
+                            sprintf(text, work);
                         }
                     }
                 }
@@ -221,10 +221,10 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_5* arg0, int arg1,
                     if (var9 != 0) {
                         func_ov000_0217aa08(var9, var21);
                     }
-                    func_02046380((Struct_ov000_0217df08_8*)var1);
-                    func_02046574((Struct_02046574_2*)var1, 2, var21);
-                    func_020e046c(var7, var3, var4, var20);
-                    func_020474a8(var1, 0xc, var7, var6);
+                    func_02046380((Messages0217df08*)g);
+                    MessageSystem_SetStringArgument((Obj02046574*)g, 2, name);
+                    func_020e046c(text, data, size, msg);
+                    func_020474a8(g, 0xc, text, work);
                 }
                 func_0204500c(var1, var6, 0);
                 var1->unknown_868_ = 1;
@@ -233,25 +233,25 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_5* arg0, int arg1,
             arg0->unknown_90c_ = -1;
             arg0->unknown_1fa8_++;
         }
-    } else if (arg0->unknown_1fa8_ == 2) {
-        if (var1->unknown_868_ == 0 || g_keyManager.TestKeysPressed(0x800) != 0) {
-            func_02043124((Struct_ov000_0217df08_8*)var1);
-            func_02043204((char*)var1);
-            arg0->unknown_1fa8_ = 0;
-            arg0->unknown_1f98_[arg0->unknown_1fa0_] = 0;
-            arg0->unknown_1fa0_ = arg0->unknown_1fa0_ - 1;
-            func_ov000_0217c638(arg0, arg1, arg2);
-            arg0->unknown_1faa_ |= 0x100;
-            func_ov000_02176e3c(arg0, 0, 1, arg1, arg2, 0);
+    } else if (self->state == 2) {
+        if (g->active == 0 || g_keyManager.TestKeysPressed(0x800) != 0) {
+            MessageSystem_Stop((Messages0217df08*)g);
+            MessageSystem_Reset((char*)g);
+            self->state = 0;
+            self->commands[self->index] = 0;
+            self->index = self->index - 1;
+            func_ov000_0217c638(self, arg1, arg2);
+            self->flags |= 0x100;
+            func_ov000_02176e3c(self, 0, 1, arg1, arg2, 0);
         }
     }
 }
 #else
 // USA: func_ov000_0217df08
-extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_9* arg0, int arg1, int arg2) {
-    GameState* var22 = GameState::GetInstance();
-    Struct_ov000_0217df08_8* var23 = func_020421a0();
-    BackgroundLoader* var24 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov000_0217df08(Battle0217df08* self, int arg1, int arg2) {
+    GameState* gs = GameState::GetInstance();
+    Messages0217df08* g = MessageSystem_GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     if (arg0->unknown_1d70_ == 0) {
         if (arg0->unknown_90c_ >= 0) {
@@ -309,32 +309,32 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_9* arg0, int arg1,
                         }
                     }
                 }
-                var40 = 0;
-                for (var39 = 0; var39 < arg2; var39++) {
-                    Struct_ov000_0217df08_6* var44 = func_0200fea4(var22, arg0->unknown_1d3c_[var39]);
-                    if (var44 != 0) {
-                        int var45 = -1;
-                        var41 = func_ov000_0217ff34(arg0, arg0->unknown_1d3c_[var39], &var45);
-                        if (var41 >= 0) {
-                            func_02046380(var23);
-                            func_020e4ce8(&var32, var44, 1);
-                            func_020e4ce8(&var33, var44, 0);
-                            func_020e4bf4(&var31, var45);
-                            var23->unknown_20_ = &var32;
-                            var23->unknown_10_ = &var31;
-                            if (var40 != 0) {
-                                func_02042058(var36, var34);
+                appended = 0;
+                for (j = 0; j < arg2; j++) {
+                    Combatant0217df08* c = GetCombatantWithFlag0x400_0200fea4(gs, self->combatantIds[j]);
+                    if (c != 0) {
+                        int amount = -1;
+                        msg = func_ov000_0217ff34(self, self->combatantIds[j], &amount);
+                        if (msg >= 0) {
+                            func_02046380(g);
+                            func_020e4ce8(&parts, c, 1);
+                            func_020e4ce8(&original, c, 0);
+                            NameText_InitFromPartyMember(&names, amount);
+                            g->parts = &parts;
+                            g->names = &names;
+                            if (appended != 0) {
+                                Text_Append(text, separator);
                             }
-                            var40 = 1;
-                            memset(var35, 0, 0x960);
-                            func_020e046c(var35, var25, var26, var41);
-                            func_02042058(var36, var35);
-                            memset(var35, 0, 0x960);
-                            var23->unknown_30_ = var27;
-                            var23->unknown_31_ = var28;
-                            func_02046608(var23, 0xc, var36, var35, 0xe3, 0, 1);
-                            memset(var36, 0, 0x960);
-                            sprintf(var36, var35);
+                            appended = 1;
+                            memset(work, 0, 0x960);
+                            func_020e046c(work, data, size, msg);
+                            Text_Append(text, work);
+                            memset(work, 0, 0x960);
+                            g->count30 = present;
+                            g->count31 = ready;
+                            MessageSystem_FormatText(g, 0xc, text, work, 0xe3, 0, 1);
+                            memset(text, 0, 0x960);
+                            sprintf(text, work);
                         }
                     }
                 }
@@ -347,22 +347,22 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_9* arg0, int arg1,
                     if (arg2 > 1) {
                         var46 = var46 + 2;
                     }
-                    func_02046380(var23);
-                    char var47[0x80];
-                    __clear(var47, 0x80);
-                    char var48[0x80];
-                    __clear(var48, 0x80);
-                    func_ov000_0217aa08(var32.unknown_0_, var47);
-                    func_ov000_0217aa08(var32.unknown_4_, var48);
-                    var32.unknown_0_ = var47;
-                    var32.unknown_4_ = var48;
-                    func_020e4f18(&var33, &var32, 2);
-                    var32.unknown_8_ &= ~0x80000000;
-                    var23->unknown_20_ = &var32;
-                    func_020e046c(var36, var25, var26, var46);
-                    var23->unknown_30_ = var27;
-                    var23->unknown_31_ = var28;
-                    func_02046608(var23, 0xc, var36, var35, 0xe3, 0, 1);
+                    func_02046380(g);
+                    char singular[0x80];
+                    __clear(singular, 0x80);
+                    char plural[0x80];
+                    __clear(plural, 0x80);
+                    TrimTrailingLetterCode_0217aa08(parts.singular, singular);
+                    TrimTrailingLetterCode_0217aa08(parts.plural, plural);
+                    parts.singular = singular;
+                    parts.plural = plural;
+                    func_020e4f18(&original, &parts, 2);
+                    parts.flags &= ~0x80000000;
+                    g->parts = &parts;
+                    func_020e046c(text, data, size, msg);
+                    g->count30 = present;
+                    g->count31 = ready;
+                    MessageSystem_FormatText(g, 0xc, text, work, 0xe3, 0, 1);
                 }
                 var23->unknown_30_ = var27;
                 var23->unknown_31_ = var28;
@@ -374,16 +374,16 @@ extern "C" ARM void func_ov000_0217df08(Struct_ov000_0217df08_9* arg0, int arg1,
             arg0->unknown_90c_ = -1;
             arg0->unknown_1d70_++;
         }
-    } else if (arg0->unknown_1d70_ == 2) {
-        if (var23->unknown_998_ == 0 || g_keyManager.TestKeysPressed(0x800) != 0) {
-            func_02043124(var23);
-            func_02043204((char*)var23);
-            arg0->unknown_1d70_ = 0;
-            arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-            arg0->unknown_1d68_ = arg0->unknown_1d68_ - 1;
-            func_ov000_0217c638(arg0, arg1, arg2);
-            arg0->unknown_1d72_ |= 0x100;
-            func_ov000_02176e3c(arg0, 0, 1, arg1, arg2, 0);
+    } else if (self->state == 2) {
+        if (g->active == 0 || g_keyManager.TestKeysPressed(0x800) != 0) {
+            MessageSystem_Stop(g);
+            MessageSystem_Reset((char*)g);
+            self->state = 0;
+            self->commands[self->index] = 0;
+            self->index = self->index - 1;
+            func_ov000_0217c638(self, arg1, arg2);
+            self->flags |= 0x100;
+            func_ov000_02176e3c(self, 0, 1, arg1, arg2, 0);
         }
     }
 }

@@ -6,23 +6,21 @@
 #include "Filesystem/BackgroundLoader.h"
 
 struct List0202fec8;
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-extern "C" void func_0204c684(void* obj);
+extern "C" void WindowPane_Init(void* obj);
 extern "C" void func_ov013_02187a58(void* obj, void* buf);
 extern "C" void Background_LoadFile(void* list, void* payload, int a3, int a4);
 
-struct EntryList0204af14;
-void* Background_GetScreen(struct EntryList0204af14* list, unsigned int index);
+struct BackgroundGraphics;
+void* Background_GetScreen(struct BackgroundGraphics* list, unsigned int index);
 struct Tilemap0204ae44;
 void FillTilemapPalette0204ae44(struct Tilemap0204ae44* obj, int palette);
 struct Obj0204b988;
 void DispatchIndexedEntry0204b988(struct Obj0204b988* obj, unsigned int index, int a3, int a4, unsigned short a5);
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8* obj, void* buf);
+void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
 extern const char data_ov013_02187eaf[];
 
@@ -83,11 +81,11 @@ extern "C" ARM void func_ov013_021878b0(Struct_ov013_021878b0* arg0) {
             unsigned int fileSize;
             int field44;
             loader->GetLoadedFileByID(window->loadTask, &file, &fileSize);
-            Pac_CountFiles((struct ActiveEntry02046900*)file);
-            void* end = Pac_GetFile((struct Rec020467f0*)file, 0, &recOut, &field44);
+            Pac_CountFiles((struct PacRecord*)file);
+            void* end = Pac_GetFile((struct PacRecord*)file, 0, &recOut, &field44);
             if (end != 0) {
                 LocalBuf021878b0 buf;
-                func_0204c684(&buf);
+                WindowPane_Init(&buf);
                 buf.field8 = (char*)end + 0x10;
                 buf.halfB4 = 0xa;
                 buf.halfB6 = 0xb;
@@ -98,12 +96,12 @@ extern "C" ARM void func_ov013_021878b0(Struct_ov013_021878b0* arg0) {
             }
             loader->RemoveTask(window->loadTask);
             window->loadTask = -1;
-            void* e = Background_GetScreen((struct EntryList0204af14*)window->entryList, 0);
+            void* e = Background_GetScreen((struct BackgroundGraphics*)window->entryList, 0);
             if (e != 0) {
                 FillTilemapPalette0204ae44((struct Tilemap0204ae44*)e, window->partyIndex);
             }
             DispatchIndexedEntry0204b988((struct Obj0204b988*)window->entryList, 0, 0, 0, 0xffff);
-            Background_UploadMap((struct List0204b0e8*)window->entryList, 0);
+            Background_UploadMap((struct BackgroundGraphics*)window->entryList, 0);
             window->loadState = 0;
             window->flags &= ~1;
         }

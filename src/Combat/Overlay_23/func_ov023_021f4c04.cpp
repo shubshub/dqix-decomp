@@ -147,7 +147,7 @@ inline Struct_ov023_021ed9f8& inline_ov023_021f4c04() {
     return s;
 }
 
-extern Struct_02109bf4_4 data_02109bf4;
+extern Actor0209c678 g_bgmPlayer;
 extern const char data_ov023_021fe1d8[];
 extern const char data_ov023_021fe1ee[];
 #if defined(jpn)
@@ -156,45 +156,45 @@ extern "C" void func_02073864(void*, void*, const char*, int, int, int);
 extern "C" void func_0204500c(void*, const char*, int);
 #endif
 
-MessageWork* GetGlobalField0x1c020421a0();
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_020d6c00();
-extern "C" void* func_02010828(GameState* arg0);
+MessageWork* MessageSystem_GetInstance();
+extern "C" void* Zone3D_GetInstance(void);
+void* GlobalFlags_GetInstance();
+void* GameState_GetParty(GameState* gameState);
 extern "C" void* func_0202ae18(void);
 extern "C" void func_0201075c(char* arg0, unsigned char arg1);
 extern "C" unsigned char func_02010750(char* arg0);
 extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
 extern "C" int func_0202b7d8(int* arg0);
 extern "C" void func_ov017_021d2400(void);
-extern "C" void func_0209c678(Struct_02109bf4_4* arg0, int arg1);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
-extern "C" void func_020466f4(Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_020727d8(Struct_020727d8* arg0);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1,
-                                    unsigned int* arg2);
-extern "C" void func_020728ac(void* arg0, void* arg1, void* arg2, int arg3, int arg4, int arg5,
-                              int arg6);
-extern "C" void func_ov023_021f50fc();
-extern "C" int func_ov000_02163c80(void* arg0, int arg1);
-extern "C" GameObject* func_ov017_021a278c(void* arg0, int arg1);
-extern "C" void func_ov017_021c9b20(int arg0, int arg1);
-extern "C" int func_02076ccc(void* arg0, int arg1);
-extern "C" void func_ov017_021a23b0(void* arg0, int arg1);
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
+void BgmPlayer_FadeOut(Actor0209c678* actor, int arg);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
+void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int mask);
+void ResetListHeader020727d8(List020727d8* list);
+extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath,
+                                    unsigned int* outSize);
+extern "C" void func_020728ac(void* list, void* alloc, void* buffer, int length, int a4, int a5,
+                              int a6);
+void SetFieldForListedCombatants021f50fc();
+extern "C" int func_ov000_02163c80(void* work, int mode);
+GameObject* FindCombatantByField16a_021a278c(void* unused, int val);
+void EnqueueEventTag87_021c9b20(int a, int b);
+int TrySetMode02076ccc(void* obj, int mode);
+extern "C" void func_ov017_021a23b0(void* base, int v);
+unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+extern "C" void func_ov000_0216d370(void* obj, int flagA, int flagB, int flagC);
+void* FindEntryByKey_02072a68(TableA68* table, int key);
+extern "C" int sprintf(char* buffer, const char* format, ...);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, const char* arg1, int arg2, int arg3);
 #endif
 extern "C" void func_0209c6d8(void* arg0, int arg1);
 extern "C" int func_ov017_021959b4(void);
-extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
-extern "C" void func_ov017_021cbfb8(unsigned short arg0, unsigned char arg1);
-extern "C" void func_0209c7fc(void* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_ov000_02160d80(void* arg0, int arg1);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* s, int val);
+void EnqueueEventTag129_021cbfb8(unsigned short a, unsigned char b);
+void StopAndReset0209c7fc(void* obj);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(void* obj);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void* p, int val);
 
 // USA: func_ov023_021f4c04
 extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
@@ -205,13 +205,13 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
 #endif
 
     GameState* gs = GameState::GetInstance();
-    MessageWork* ctrl = GetGlobalField0x1c020421a0();
+    MessageWork* ctrl = MessageSystem_GetInstance();
     int res = (int)gs->GetResources();
-    func_02012fe4();
-    BackgroundLoader* var6 = BackgroundLoader::GetInstance();
-    Struct_02038598_4* var7 = (Struct_02038598_4*)func_020d6c00();
-    void* var8 = func_02010828(var3);
-    void* var9 = func_0202ae18();
+    Zone3D_GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    FlagWord020466f4* flags = (FlagWord020466f4*)GlobalFlags_GetInstance();
+    void* battle = GameState_GetParty(gs);
+    void* owner = func_0202ae18();
 
     inline_ov023_021f4c04().unknown_4_ += var3->GetEffectiveDeltaTime();
     int var10 = arg0->unknown_eac_;
@@ -228,16 +228,16 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
         if (func_02010750((char*)var3) != 0 && func_0202b7d8((int*)var9) != 0) {
             func_ov017_021d2400();
         }
-        func_0209c678(&data_02109bf4, 0x1e);
-        func_ov000_02160fa8(arg0, 0x800000);
-        func_020466f4(var7, 0x40000);
-        inline_ov023_021f4c04().unknown_4_ = 0;
-        arg0->unknown_eac_ = 1;
-    } else if (var10 == 1) {
-        if (inline_ov023_021f4c04().unknown_4_ < 1000) return;
-        if (var6->GetNumQueuedTasks() > 0) return;
-        ((SafeAllocator*)arg0->unknown_30_)->Reset();
-        func_020727d8((Struct_020727d8*)arg0->unknown_5904_);
+        BgmPlayer_FadeOut(&g_bgmPlayer, 0x1e);
+        SetCombatWorkFlags0x55f4_ov000_02160fa8(self, 0x800000);
+        FlagWord_ClearBits(flags, 0x40000);
+        GetGlobal021ffefc().elapsed = 0;
+        self->state = 1;
+    } else if (state == 1) {
+        if (GetGlobal021ffefc().elapsed < 1000) return;
+        if (loader->GetNumQueuedTasks() > 0) return;
+        ((SafeAllocator*)self->alloc)->Reset();
+        ResetListHeader020727d8((List020727d8*)self->rosterList);
 #if defined(jpn)
         func_02073864(arg0->unknown_5904_, arg0->unknown_30_, data_ov023_021fd49e, 0, 0, 0);
 #else
@@ -286,20 +286,20 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
         sprintf(var0, (const char*)func_02072a68((Struct_02072a68_2*)arg0->unknown_5904_, 0x14));
         func_0204500c(var4, var0, 1, 0xe3);
 #endif
-        var4->unknown_998_ = 1;
-        func_0209c6d8(&data_02109bf4, 0x3a);
-        arg0->unknown_eac_ = 2;
-    } else if (var10 == 2) {
-        if (func_ov017_021959b4() == 0 && *(unsigned char*)((char*)var3 + REGION_LAYOUT(0x54c8, 0x5728)) == 0) {
-            if (var4->unknown_998_ != 0) return;
+        ctrl->busy = 1;
+        ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x3a);
+        self->state = 2;
+    } else if (state == 2) {
+        if (func_ov017_021959b4() == 0 && *(unsigned char*)((char*)gs + REGION_LAYOUT(0x54c8, 0x5728)) == 0) {
+            if (ctrl->busy != 0) return;
         }
         if (func_02086ef0((Struct_02048150*)var8, arg0->unknown_2a0_->unknown_2a_)) {
             func_ov017_021cbfb8(arg0->unknown_2a0_->unknown_8_, 1);
         }
-        *(unsigned char*)((char*)var3 + REGION_LAYOUT(0x54c8, 0x5728)) = 0;
-        func_0209c7fc(&data_02109bf4);
-        func_02043204((char*)var4);
-        func_02043124(var4);
-        func_ov000_02160d80(arg0, 4);
+        *(unsigned char*)((char*)gs + REGION_LAYOUT(0x54c8, 0x5728)) = 0;
+        StopAndReset0209c7fc(&g_bgmPlayer);
+        MessageSystem_Reset((char*)ctrl);
+        MessageSystem_Stop(ctrl);
+        SetFieldsAndSignalData02184220_ov000_02160d80(self, 4);
     }
 }

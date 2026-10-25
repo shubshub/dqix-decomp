@@ -1,8 +1,7 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 
 struct Struct_ov000_02178074_4 {
 #if defined(jpn)
@@ -37,18 +36,18 @@ struct Struct_ov000_021787b8_4 {
     Struct_ov000_021787b8_3 unknown_244_;
 };
 
-TextWorkspace* GetGlobalField0x1c020421a0();
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+TextWorkspace* MessageSystem_GetInstance();
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 extern "C" int func_ov000_0217538c(void* objRaw);
 extern "C" int func_ov000_021753d8(void* objRaw, int targetIndex);
 extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
 extern "C" void func_ov000_02178938(void* obj, void* in, int b, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 struct Struct_ov000_021787b8 {
@@ -87,11 +86,11 @@ extern "C" ARM void func_ov000_021787b8(Struct_ov000_021787b8_4* arg0, struct St
     panel->fieldAC = 0xa;
     panel->fieldAE = 0x10;
     panel->elementId = 0xe;
-    GridCursor_SetDimensions((struct Struct_0205ba68*)&menu->groups, 1, groupCount, 0);
+    GridCursor_SetDimensions((struct GridCursor*)&menu->groups, 1, groupCount, 0);
     menu->groups.pages = 1;
-    GridCursor_SetCount((struct Node0205bacc*)&menu->groups, groupCount);
+    GridCursor_SetCount((struct GridCursor*)&menu->groups, groupCount);
     GridCursor_SetSelectedIndex(&menu->groups, group);
-    char* text = GetGlobalField0x1c020421a0()->textBuffer;
+    char* text = MessageSystem_GetInstance()->textBuffer;
 #if defined(jpn)
     memset(var5, 0, 0x800);
 #else
@@ -99,8 +98,8 @@ extern "C" ARM void func_ov000_021787b8(Struct_ov000_021787b8_4* arg0, struct St
 #endif
     func_ov000_02178938(arg0, arg1, arg3, var5);
 #if defined(jpn)
-    func_0205d304(var4, var5, 0, 1, 0, 1, 0);
+    Window_OpenPane(panel, text, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var4, var5, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(panel, text, 0, 1, 0, 1, 0, 0);
 #endif
 }

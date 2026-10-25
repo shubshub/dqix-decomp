@@ -5,6 +5,7 @@
 #define LOW_REGION(j, u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "GameState/BattleRecordSnapshot.h"
 #include "GameState/GameState.h"
 #include "World/Object3D.h"
@@ -33,9 +34,6 @@ struct Struct_01ff8b48_13 {
     int unknown_0_[0x18 / 4];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -103,11 +101,11 @@ struct Struct_ov008_021842a0_2 {
 
 struct Struct_0201099c_3;
 
-void* GetGlobalField0x1c020421a0();
-void AppendPaletteTag_02041e70(char* text, int color);
+void* MessageSystem_GetInstance();
+void Text_AppendPaletteTag(char* text, int color);
 void AppendYTag_02041a5c(char* text, int y);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 
 extern "C" {
 void __clear(void* arg0, unsigned long arg1);
@@ -165,7 +163,7 @@ extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* arg0, char* arg
         return;
     GameState::GetInstance();
 #if defined(jpn)
-    void* messages = GetGlobalField0x1c020421a0();
+    void* messages = MessageSystem_GetInstance();
     char buffer[0x40];
     __clear(buffer, sizeof(buffer));
     func_02046380(messages);
@@ -176,17 +174,17 @@ extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* arg0, char* arg
     SetByteInRange_020465f0((unsigned char*)messages, 1, 2);
     SetByteAtIndex_020465d8((unsigned char*)messages, 1, 1);
     func_020474a8(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, 0x6e), buffer);
-    AppendPaletteTag_02041e70(text, 0xe);
-    AppendString02042058(text, buffer);
+    Text_AppendPaletteTag(text, 0xe);
+    Text_Append(text, buffer);
 #else
-    GetGlobalField0x1c020421a0();
-    AppendPaletteTag_02041e70(text, 0xe);
+    MessageSystem_GetInstance();
+    Text_AppendPaletteTag(text, 0xe);
     AppendYTag_02041a5c(text, 2);
     char buffer[0x40];
     __clear(buffer, sizeof(buffer));
     const char* format = KeyTable_Get((Container020e0310*)&self->texts_, 0x6e);
     if (format != NULL)
         sprintf(buffer, format, time->hours, time->minutes);
-    AppendString02042058(text, buffer);
+    Text_Append(text, buffer);
 #endif
 }

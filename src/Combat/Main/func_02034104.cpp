@@ -19,18 +19,18 @@ extern "C" ARM Vector3fix func_02034104(void* arg0) {
     Object3D* var0 = (Object3D*)arg0;
     void* var1 = func_0202ae18();
     GetGameResources();
-    if (func_0202b7d8((int*)var1)) {
-        if (func_0202c508(var1)) {
-            short var2 = var0->unknown_4_;
-            if (func_0202c178((struct Struct_0202b2f0*)var1, var2)) {
-                var2 = var0->unknown_4_;
-                signed char var3 = func_0202c1a4((struct Struct_0202c1a4*)var1);
-                if (var3 != var2) {
-                    Struct_02034104* var4 = (Struct_02034104*)((char*)arg0 + 0xc1);
-                    if (var4->unknown_0_0_ & 1) {
-                        var2 = var0->unknown_4_;
-                        Struct_0202b2f0_2* var5 = func_0202c178((struct Struct_0202b2f0*)var1, var2);
-                        Vector3fix16 var6;
+    if (CheckField0NonZero_0202b7d8((int*)thing)) {
+        if (func_0202c508(thing)) {
+            short field4 = object->actorIndex_;
+            if (GetEntryBySignedByteIndex_0202c178((struct SearchStruct*)thing, field4)) {
+                field4 = object->actorIndex_;
+                signed char cur = GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)thing);
+                if (cur != field4) {
+                    FlagsByte0xc1_02034104* flags = (FlagsByte0xc1_02034104*)((char*)obj + 0xc1);
+                    if (flags->lowBits2 & 1) {
+                        field4 = object->actorIndex_;
+                        SearchEntry0202c178* entry = GetEntryBySignedByteIndex_0202c178((struct SearchStruct*)thing, field4);
+                        Vector3fix16 tmp;
 #if defined(jpn)
                         var6.x = var5->unknown_8_;
                         var6.y = var5->unknown_a_;

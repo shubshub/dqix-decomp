@@ -32,18 +32,18 @@ struct Struct_ov002_02154230_2 {
 };
 
 // USA: func_ov002_02154230
-extern "C" ARM int func_ov002_02154230(char *arg0, struct Struct_ov002_02154230 *arg1, int arg2, int arg3) {
-    if (arg1 == NULL) return 0;
-    if (arg2 == 0) return 0;
-    GameState *var0                  = GameState::GetInstance();
-    GameResources *var1             = GetGameResources();
-    Struct_02048150 *var2 = (Struct_02048150 *) func_02010828(var0);
-    int *var3                       = func_0202ae18();
-    struct Struct_ov002_02154230_2 *var4       = (struct Struct_ov002_02154230_2 *) ((char *) arg1 + 8);
-    unsigned char var5              = 0;
-    if (arg3) var4 = (struct Struct_ov002_02154230_2 *) ((char *) arg1 + 0x20);
-    for (int var6 = 0; var6 < 4; var6++) {
-        func_ov002_02153e90((char *) &var4[var6]);
+extern "C" ARM int func_ov002_02154230(char *base, struct Act02154230 *act, int target, int alt) {
+    if (act == NULL) return 0;
+    if (target == 0) return 0;
+    GameState *gs                  = GameState::GetInstance();
+    GameResources *res             = GetGameResources();
+    ArrayContainsByteStruct *party = (ArrayContainsByteStruct *) GameState_GetParty(gs);
+    int *ctx                       = func_0202ae18();
+    struct Rec02154230 *recs       = (struct Rec02154230 *) ((char *) act + 8);
+    unsigned char any              = 0;
+    if (alt) recs = (struct Rec02154230 *) ((char *) act + 0x20);
+    for (int i = 0; i < 4; i++) {
+        func_ov002_02153e90((char *) &recs[i]);
     }
     for (int var7 = 0; var7 < arg1->unknown_3_; var7++) {
         struct Struct_ov002_02154230_2 *var8 = &var4[var7];

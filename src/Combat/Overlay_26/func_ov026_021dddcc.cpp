@@ -83,27 +83,27 @@ struct Struct_ov026_021def00 {
 
 extern "C" {
 GameState* _ZN9GameState11GetInstanceEv();
-Struct_ov000_0215ab88* _ZN9GameState21GetPartyMemberByIndexEi(GameState* arg0, int arg1);
-unsigned char* func_02053c6c(unsigned char* arg0);
-char* func_020a6084();
-Struct_ov026_021d8ba0_6* func_ov026_021dae60(Struct_ov026_021d8ba0_4* arg0, int arg1);
-int func_ov000_021719f8(int* arg0);
-int func_ov000_021761c8(char* arg0, int arg1);
-int func_ov000_021761ec(char* arg0, int arg1);
-Struct_ov000_0215ab88* func_0200fea4(GameState* arg0, int arg1);
-void* func_020100bc(GameState* arg0);
-int _ZNK8Object3D9GetHeightEv(Struct_ov000_0215ab88* arg0);
-int func_0202ec84(void* arg0, Struct_ov026_021dddcc* arg1, int* arg2, int* arg3);
-void func_020473c8(Struct_ov026_021dddcc_2* arg0, int arg1);
-void Vector3fix_Add(const Struct_ov026_021dddcc* arg0, const Struct_ov026_021dddcc* arg1, Struct_ov026_021dddcc* arg2);
-void Vector3fix_Normalize(const Struct_ov026_021dddcc* arg0, Struct_ov026_021dddcc* arg1);
-int func_ov000_0217fd60(void* arg0, int arg1);
-int func_ov000_0215e9fc(Struct_ov000_02161e30* arg0, short* arg1, int arg2, int arg3);
-int func_ov000_0215eb1c(Struct_ov000_02161e30* arg0, short* arg1, int arg2, int arg3);
-int func_ov000_02153e78(Struct_ov000_02161e30* arg0, short* arg1, int arg2, int arg3, int arg4);
-int func_ov000_02171ffc(Struct_ov026_021d8ba0_6* arg0);
-double func_02009424(double arg0);
-void __clear(void* arg0, int arg1);
+Combatant* _ZN9GameState21GetPartyMemberByIndexEi(GameState* gs, int index);
+unsigned char* _Z24GetFieldAt0x150_02053c6cPh(unsigned char* obj);
+char* _Z24GetData02109dcc_020a6084v();
+SlotWork* _Z21FindSlotById_021dae60P18Container_021dae60i(Container_021dae60* list, int id);
+int _Z29HasAnyFlags_021719f8_021719f8Pi(int* obj);
+int _Z40GetClampedArrayField0xd1c_ov000_021761c8Pci(char* base, int index);
+int _Z40GetClampedArrayField0xd3c_ov000_021761ecPci(char* base, int index);
+Combatant* _Z34GetCombatantWithFlag0x400_0200fea4P9GameStatei(GameState* gs, int id);
+void* _ZN9GameState9GetCameraEv(GameState* gs); // GameState::GetCamera()
+int _ZNK8Object3D9GetHeightEv(Combatant* obj);
+int _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(void* obj, Pos3* src, int* out1, int* out2);
+void _Z25RenderFlaggedIndexedEntryP16StructAt020473c8i(IconSprite* obj, int param1);
+void Vector3fix_Add(const Pos3* a, const Pos3* b, Pos3* out);
+void Vector3fix_Normalize(const Pos3* in, Pos3* out);
+int func_ov000_0217fd60(void* list, int id);
+int func_ov000_0215e9fc(BattleState* battle, short* out, int max, int flag);
+int func_ov000_0215eb1c(BattleState* battle, short* out, int max, int flag);
+int func_ov000_02153e78(BattleState* battle, short* out, int max, int group, int flag);
+int func_ov000_02171ffc(SlotWork* slot);
+double func_02009424(double x);
+void __clear(void* dst, int size);
 }
 
 extern Struct_ov026_021de6cc data_ov026_021de7fa;
@@ -296,36 +296,36 @@ extern "C" ARM void func_ov026_021dddcc(Struct_ov000_02160da0* arg0) {
             var36 = 1;
             break;
         }
-        for (var37 = 0; var37 < var36; var37++) {
-            Struct_ov000_0215ab88* var39 = func_0200fea4(var6, var38.unknown_0_[var37]);
-            int var40;
-            if (var39 == 0) continue;
-            var40 = var39->unknown_4_ - 0xc0;
-            if (var40 < 0) continue;
-            if (var40 >= 8) continue;
-            if (var30 == arg0->unknown_38dc_) {
-                Struct_ov026_021dddcc var41;
-                Struct_ov026_021dddcc var42;
-                Struct_ov026_021dddcc var43;
-                int var44, var45;
-                int var46;
-                void* var47;
-                Struct_ov026_021dddcc_2* var48;
-                var41.unknown_0_[1] = 1;
-                var41.unknown_0_[0] = 1;
-                var41.unknown_0_[2] = 0;
-                Vector3fix_Normalize(&var41, &var42);
-                var42.unknown_0_[0] = (float)var42.unknown_0_[0] * (0.2f * data_ov026_021def00.unknown_0_);
-                var42.unknown_0_[1] = (float)var42.unknown_0_[1] * (0.2f * data_ov026_021def00.unknown_0_);
-                var47 = func_020100bc(var6);
-                var43 = var39->unknown_44_;
-                var43.unknown_0_[1] += _ZNK8Object3D9GetHeightEv(var39);
-                Vector3fix_Add(&var43, &var42, &var43);
-                func_0202ec84(var47, &var43, &var44, &var45);
-                var46 = 0x18;
-                if (var29 != 0) {
-                    if (var33 == var38.unknown_0_[var37]) {
-                        var46 = 0x20;
+        for (j = 0; j < count; j++) {
+            Combatant* c = _Z34GetCombatantWithFlag0x400_0200fea4P9GameStatei(gs, targets.v[j]);
+            int e;
+            if (c == 0) continue;
+            e = c->id - 0xc0;
+            if (e < 0) continue;
+            if (e >= 8) continue;
+            if (id == self->activeSlot) {
+                Pos3 dir;
+                Pos3 shake;
+                Pos3 pos;
+                int x, y;
+                int dy;
+                void* view;
+                IconSprite* spr;
+                dir.v[1] = 1;
+                dir.v[0] = 1;
+                dir.v[2] = 0;
+                Vector3fix_Normalize(&dir, &shake);
+                shake.v[0] = (float)shake.v[0] * (0.2f * data_ov026_021def00.value);
+                shake.v[1] = (float)shake.v[1] * (0.2f * data_ov026_021def00.value);
+                view = _ZN9GameState9GetCameraEv(gs);
+                pos = c->pos;
+                pos.v[1] += _ZNK8Object3D9GetHeightEv(c);
+                Vector3fix_Add(&pos, &shake, &pos);
+                _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(view, &pos, &x, &y);
+                dy = 0x18;
+                if (grouped != 0) {
+                    if (target == targets.v[j]) {
+                        dy = 0x20;
                     }
                 }
                 var48 = &arg0->unknown_5600_[0];
@@ -335,29 +335,29 @@ extern "C" ARM void func_ov026_021dddcc(Struct_ov000_02160da0* arg0) {
                 func_020473c8(var48, 1);
                 inline_ov026_021dddcc_2(1);
             } else {
-                Struct_ov026_021dddcc var49;
-                Struct_ov026_021dddcc var50;
-                Struct_ov026_021dddcc var51;
-                int var52, var53;
-                void* var54;
-                Struct_ov026_021dddcc_2* var55;
-                var49.unknown_0_[1] = 1;
-                var49.unknown_0_[2] = 0;
-                var49.unknown_0_[0] = 0;
-                Vector3fix_Normalize(&var49, &var50);
-                var50.unknown_0_[0] = 0;
-                var50.unknown_0_[1] = 0;
-                var54 = func_020100bc(var6);
-                var51 = var39->unknown_44_;
-                var51.unknown_0_[1] += _ZNK8Object3D9GetHeightEv(var39);
-                Vector3fix_Add(&var51, &var50, &var51);
-                func_0202ec84(var54, &var51, &var52, &var53);
-                var55 = &arg0->unknown_5600_[1];
-                var55->unknown_80_ = var3[var30];
-                inline_ov026_021dddcc();
-                inline_ov026_021dddcc_3((var52 + var2[var40]) << 12, (var53 - 0x18) << 12, 0);
-                func_020473c8(var55, 1);
-                inline_ov026_021dddcc_2(1);
+                Pos3 dir;
+                Pos3 shake;
+                Pos3 pos;
+                int x, y;
+                void* view;
+                IconSprite* spr;
+                dir.v[1] = 1;
+                dir.v[2] = 0;
+                dir.v[0] = 0;
+                Vector3fix_Normalize(&dir, &shake);
+                shake.v[0] = 0;
+                shake.v[1] = 0;
+                view = _ZN9GameState9GetCameraEv(gs);
+                pos = c->pos;
+                pos.v[1] += _ZNK8Object3D9GetHeightEv(c);
+                Vector3fix_Add(&pos, &shake, &pos);
+                _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(view, &pos, &x, &y);
+                spr = &self->icons[1];
+                spr->icon = icons[id];
+                G3_PushMtx();
+                G3_Translate((x + offs[e]) << 12, (y - 0x18) << 12, 0);
+                _Z25RenderFlaggedIndexedEntryP16StructAt020473c8i(spr, 1);
+                G3_PopMtx(1);
             }
             var2[var40] += 10;
         }

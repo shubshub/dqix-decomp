@@ -5,12 +5,12 @@
 #include "World/Object3D.h"
 #include "std_library_functions.h"
 
-extern "C" SafeAllocator* func_ov025_021e8a54(char* arg0);
-struct Struct_ov025_021e27c8;
-extern "C" void func_ov025_021eb084(struct Struct_ov025_021e27c8* arg0, int arg1);
-struct Struct_0203d028_11;
-extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
+SafeAllocator* GetArrayEntry_021e8a54_021e8a54(char* obj);
+struct RemoveList021eb084;
+void RemoveMatchingShort_021eb084(struct RemoveList021eb084* obj, int val);
+struct Struct_203dafc;
+void ClearEightWords_0203dafc(struct Struct_203dafc* obj);
+void GameState_SetCamera(GameState* battleStruct, int value);
 
 struct Struct_0204a120;
 extern "C" void func_0204a120(struct Struct_0204a120* arg0);
@@ -92,16 +92,16 @@ extern "C" ARM int func_ov025_021e4be4(struct Struct_ov025_021e4be4* arg0) {
         return 1;
     }
 
-    var10->Initialize();
-    ObjectArchiveLoadInfo var12;
-    func_0203dafc((struct Struct_0203d028_11*)&var12);
-    var12.fileData = var7;
-    var12.unk_8 = var8;
-    var12.allocator = var2;
-    var12.unk_10 = 1;
-    if (!var10->LoadFromCHRArchive(&var12)) {
-        var1->RemoveTask(var9);
-        func_ov025_021eb084((struct Struct_ov025_021e27c8*)data_ov025_021ef988.unknown_c_, var9);
+    model->Initialize();
+    ObjectArchiveLoadInfo info;
+    ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+    info.fileData = fileData;
+    info.fileSize = length;
+    info.allocator = allocator;
+    info.unk_10 = 1;
+    if (!model->LoadFromCHRArchive(&info)) {
+        loader->RemoveTask(taskId);
+        RemoveMatchingShort_021eb084((struct RemoveList021eb084*)data_ov025_021ef988.battle, taskId);
         return 1;
     }
     var1->RemoveTask(var9);
@@ -114,12 +114,12 @@ extern "C" ARM int func_ov025_021e4be4(struct Struct_ov025_021e4be4* arg0) {
         return 1;
     }
 
-    func_0204a120((struct Struct_0204a120*)var13);
-    func_0204a3f0((struct Struct_0204a3f0_2*)var13, (struct Struct_0204a3f0*)var10);
-    func_0204a440(var13, data_ov025_021ef7f7);
-    func_0204a464(var13, data_ov025_021ef7fb);
-    func_020100c4(var0, (int)var13);
-    var11->unknown_0_ = 3;
-    func_ov025_021e8bac((struct Struct_ov025_021e267c_2*)data_ov025_021ef988.unknown_c_, var11);
+    InitState0204a120((struct Obj0204a120*)state);
+    SetHolderAndMarkNode0204a3f0((struct Owner0204a3f0*)state, (struct Holder0204a3f0*)model);
+    SetName0204a440(state, data_ov025_021ef7f7);
+    SetStringField0234_0204a464(state, data_ov025_021ef7fb);
+    GameState_SetCamera(gs, (int)state);
+    node->type = 3;
+    PushLogNode021e8bac((struct Obj021e8bac*)data_ov025_021ef988.battle, node);
     return 1;
 }

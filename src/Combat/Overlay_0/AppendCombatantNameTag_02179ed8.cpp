@@ -7,11 +7,11 @@ void ComputeProductSums0205c508(struct UnkStruct0205c508* s, int* out1, int* out
 int IsField0x118Equal2_ov000_0217542c(void* obj);
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendNameTag_02041b70(char* dst, int n, const char* name);
+int Text_AppendNTag(char* dst, int n, const char* name);
 
 struct Entry02179ed8 {
     char pad[0x23];
@@ -35,10 +35,10 @@ extern "C" ARM void func_ov000_02179ed8(char* obj, struct Entry02179ed8* entry, 
 #endif
             signed char byteVal = entry->field23;
             if (IsField0x118Equal2_ov000_0217542c(obj)) {
-                AppendFrameTag02041c08(dst, byteVal - (aShifted >> 24), 8, 5, 5, 5);
+                Text_AppendFrameTag(dst, byteVal - (aShifted >> 24), 8, 5, 5, 5);
             }
-            AppendCursorTag_02041ea4(dst, byteVal - (aShifted >> 24));
-            AppendNameTag_02041b70(dst, byteVal - (aShifted >> 24), (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(field950 + 0x63)));
+            Text_AppendCursorTag(dst, byteVal - (aShifted >> 24));
+            Text_AppendNTag(dst, byteVal - (aShifted >> 24), (const char*)KeyTable_Get((struct Container020e0310*)(obj + 0xb8), (short)(field950 + 0x63)));
         }
     }
 }

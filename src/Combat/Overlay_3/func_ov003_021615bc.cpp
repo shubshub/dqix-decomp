@@ -7,13 +7,7 @@
 #include "NitroSDK/Graphics.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 #if defined(jpn)
 enum { Enum_ov003_021615bc_4 = 3, Enum_ov003_021615bc_205 = 0xc9 };
@@ -36,7 +30,7 @@ extern "C" void func_ov003_021672e4(void* a, int b, int c);
 struct Struct205563c;
 void ClearSevenWords_0205563c(Struct205563c*);
 extern "C" void func_02032e58(void* a);
-extern "C" void func_0204c684(void* a);
+extern "C" void WindowPane_Init(void* a);
 extern "C" void KeyTable_Load(void* a, void* b, void* c, unsigned int d);
 extern "C" void Background_SetPriority(void* a, int b);
 extern "C" void Background_LoadFile(void* a, void* b, void* c, int d);
@@ -44,25 +38,21 @@ extern "C" void Background_FillRect(void* a, int b, int c, int d, int e, int f, 
 extern "C" void SpriteContext_LoadFile(void* a, void* b, int c, void* d);
 extern "C" int func_0207f9f4(void* a);
 extern "C" void func_02081224(void* a, int b);
-extern "C" void* func_0205ec34();
-struct List0204af64;
-void Background_Init(List0204af64*);
+extern "C" void* Scenario_GetInstance();
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 void Background_SetMapSize(unsigned char*, int);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
-struct Foo0204af38;
-void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
-struct Obj0204c7a8;
-void WindowPane_AllocateBuffer(Obj0204c7a8*, SafeAllocator*, int, unsigned int);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+void Background_SetScroll(BackgroundGraphics*, int, int);
+void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+struct WindowPane;
+void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 struct Obj0207f914;
 void SetFieldsFromFormattedValue0207f914(Obj0207f914*, int, int, int);
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 void DispatchEntryOp0x8_0208108c(void* a, int b);
 void SetEntryValueAndFlag02081058(void* a, int b, int c);
 void SetSublistEntryField14LowBits_02080798(void* a, int b, int c);
@@ -72,15 +62,14 @@ struct ClearTarget0205a234;
 void ClearField0And40205a234(ClearTarget0205a234*);
 struct EntryManager020e2490;
 void InitEntryManager020e2490(EntryManager020e2490*, int, int, void*, SafeAllocator*, int, unsigned char);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
+void Background_UploadMap(BackgroundGraphics*, void*);
 void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
 struct Manager0207f7f0;
 struct Node0207f7f0;
 void InitNodeChain0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
 unsigned char CheckField0AndBattleState_02160b50(void* a);
-int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 
 extern char data_ov003_0217fff0[];
@@ -107,64 +96,64 @@ struct Struct_ov003_021615bc_2 {
     int unknown_9a0_;
 };
 
-struct Struct_ov003_021615bc_3 {
-    char unknown_0_[Enum_ov003_021615bc_552];
-    SafeAllocator unknown_228_;
-    char unknown_23c_[0x264 - 0x228 - sizeof(SafeAllocator)];
-    SafeAllocator unknown_264_;
-    SafeAllocator unknown_278_;
-    SafeAllocator unknown_28c_;
-    SafeAllocator unknown_2a0_;
-    SafeAllocator unknown_2b4_;
-    SafeAllocator unknown_2c8_;
-    char unknown_2dc_[0x3c];
-    void* unknown_318_;
-    void* unknown_31c_;
-    void* unknown_320_;
-    Struct_0207f7f0* unknown_324_;
-    Struct_02020cb8* unknown_328_;
-    Struct_0207f7f0_2* unknown_32c_;
-    char unknown_330_[4];
-    char unknown_334_[0x3c];
-    void* unknown_370_;
-    void* unknown_374_;
-    char unknown_378_[0x380 - 0x378];
-    unsigned short unknown_380_;
-    char unknown_382_[2];
-    unsigned char unknown_384_;
-    char unknown_385_[3];
-    Struct_ov003_021615bc* unknown_388_;
-    void* unknown_38c_;
-    void* unknown_390_;
-    void** unknown_394_;
-    void* unknown_398_;
-    char unknown_39c_[Enum_ov003_021615bc_200];
-    unsigned int unknown_464_;
-    char unknown_468_[4];
-    int unknown_46c_;
-    char unknown_470_[0xc];
-    short unknown_47c_;
-    short unknown_47e_;
-    short unknown_480_;
-    short unknown_482_;
-    short unknown_484_;
-    short unknown_486_;
-    char unknown_488_[0x49e - 0x488];
-    unsigned char unknown_49e_;
-    char unknown_49f_[2];
-    unsigned char unknown_4a1_;
-    char unknown_4a2_;
-    unsigned char unknown_4a3_;
-    unsigned char unknown_4a4_;
-    unsigned char unknown_4a5_;
-    char unknown_4a6_;
-    unsigned char unknown_4a7_;
+struct Scene021615bc {
+    char pad0[kScenePrefix];
+    SafeAllocator a228;
+    char pad1[0x264 - 0x228 - sizeof(SafeAllocator)];
+    SafeAllocator a264;
+    SafeAllocator a278;
+    SafeAllocator a28c;
+    SafeAllocator a2a0;
+    SafeAllocator a2b4;
+    SafeAllocator a2c8;
+    char x2dc[0x3c];
+    void* p318;
+    void* p31c;
+    void* p320;
+    Manager0207f7f0* p324;
+    BackgroundGraphics* p328;
+    Node0207f7f0* p32c;
+    char pad2[4];
+    char x334[0x3c];
+    void* p370;
+    void* p374;
+    char pad3[0x380 - 0x378];
+    unsigned short h380;
+    char pad3b[2];
+    unsigned char b384;
+    char pad4[3];
+    Entry28* p388;
+    void* p38c;
+    void* p390;
+    void** p394;
+    void* p398;
+    char pad5[kSceneExtraPadding];
+    unsigned int flags464;
+    char pad6[4];
+    int taskId;
+    char pad7[0xc];
+    short jpHiraganaEntry;
+    short jpKatakanaEntry;
+    short h480;
+    short h482;
+    short h484;
+    short h486;
+    char pad8[0x49e - 0x488];
+    unsigned char b49e;
+    char pad9[2];
+    unsigned char b4a1;
+    char pad10;
+    unsigned char b4a3;
+    unsigned char step;
+    unsigned char b4a5;
+    char pad11;
+    unsigned char b4a7;
 };
 
 // USA: func_ov003_021615bc
 extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    List0204af64* l;
+    BackgroundGraphics* l;
     int i;
     int x;
     int k;
@@ -174,7 +163,7 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         self->p31c = self->a228.Allocate(0x1c);
         self->p320 = self->a228.Allocate(0x130);
         self->p324 = (Manager0207f7f0*)self->a228.Allocate(kManagerAllocation);
-        self->p328 = (List0204af64*)self->a228.Allocate(0x60);
+        self->p328 = (BackgroundGraphics*)self->a228.Allocate(0x60);
         self->p32c = (Node0207f7f0*)self->a228.Allocate(0x380);
         self->p394 = (void**)self->a228.Allocate(0x10);
         func_ov003_021602bc(self);
@@ -183,10 +172,10 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         func_02032e58(self->p320);
         func_0207f84c(self->p324);
         for (int i = 0; i < 3; i++) {
-            Background_Init((List0204af64*)(self->p328 + i));
+            Background_Init((BackgroundGraphics*)(self->p328 + i));
         }
-        for (int var6 = 0; var6 < 4; var6++) {
-            func_0204c684(arg0->unknown_32c_ + var6);
+        for (int i = 0; i < 4; i++) {
+            WindowPane_Init(self->p32c + i);
         }
         if (arg0->unknown_464_ & 0x10000) {
 #if defined(jpn)
@@ -221,13 +210,13 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
             l = self->p328 + i;
             Background_SetMapSize((unsigned char*)l, 0);
             k = data_ov003_0217f454[i];
-            l->b1c_lo = 0;
-            l->b1c_hi = k;
+            l->subScreen_ = 0;
+            l->bgNumber_ = k;
             Background_SetPriority(l, data_ov003_0217f460[i]);
-            Background_AllocateMap((AllocTarget0204b12c*)l, (SafeAllocator*)&self->a264);
-            Background_SetScroll((Obj0204b5e8*)l, 0, 0);
+            Background_AllocateMap((BackgroundGraphics*)l, (SafeAllocator*)&self->a264);
+            Background_SetScroll((BackgroundGraphics*)l, 0, 0);
             if (k == 3) {
-                Background_AllocateScreens((Foo0204af38*)l, 5, (SafeAllocator*)&self->a264);
+                Background_AllocateScreens((BackgroundGraphics*)l, 5, (SafeAllocator*)&self->a264);
             }
         }
         BG1CNT = (BG1CNT & 0x43) | 0x1e00;
@@ -249,9 +238,9 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
             void* data;
             unsigned int len;
             loader->GetLoadedFileByID(self->taskId, &data, &len);
-            int n = Pac_CountFiles((ActiveEntry02046900*)data);
+            int n = Pac_CountFiles((PacRecord*)data);
             for (int i = 0; i < n; i++) {
-                recs[i] = Pac_GetFile((Rec020467f0*)data, i, &out, &idx[i]);
+                recs[i] = Pac_GetFile((PacRecord*)data, i, &out, &idx[i]);
             }
             for (int i = 0; i < n; i++) {
                 if (recs[i] != NULL) {
@@ -264,18 +253,18 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
             }
             loader->RemoveTask(self->taskId);
             self->taskId = -1;
-            List0204af64* l;
+            BackgroundGraphics* l;
             for (int i = 0; i < 3; i++) {
                 l = self->p328 + i;
                 Background_FillRect(l, 0, 0, 0, 0x20, 0x19, 0);
-                Background_UploadMap((List0204b0e8*)l, NULL);
+                Background_UploadMap((BackgroundGraphics*)l, NULL);
             }
             self->a278.Reset();
             self->p398 = self->a278.Allocate(0x6000);
             Node0207f7f0* o;
             for (int i = 0; i < 4; i++) {
                 o = self->p32c + i;
-                WindowPane_AllocateBuffer((Obj0204c7a8*)o, (SafeAllocator*)&self->a278, (int)self->p398, 0x400);
+                WindowPane_AllocateBuffer((WindowPane*)o, (SafeAllocator*)&self->a278, (int)self->p398, 0x400);
                 o->lists = self->p328 + 1;
             }
             arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
@@ -305,9 +294,9 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         var22->unknown_3b_ = 0x12;
         var22->unknown_3c_ = 0x10;
 #endif
-        if (arg0->unknown_464_ & 0x20000) {
-            Struct_ov003_021615bc_2* var23 = (Struct_ov003_021615bc_2*)func_020421a0();
-            if (var23->unknown_998_ != 0 && var23->unknown_9a0_ != 3) {
+        if (self->flags464 & 0x20000) {
+            Global998* g = (Global998*)MessageSystem_GetInstance();
+            if (g->f998 != 0 && g->f9a0 != 3) {
                 return;
             }
             arg0->unknown_464_ &= ~0x20000;
@@ -359,9 +348,9 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
             unsigned int len;
             int idx;
             loader->GetLoadedFileByID(self->taskId, &data, &len);
-            int n = Pac_CountFiles((ActiveEntry02046900*)data);
+            int n = Pac_CountFiles((PacRecord*)data);
             for (int i = 0; i < n; i++) {
-                void* rec = Pac_GetFile((Rec020467f0*)data, i, &out, &idx);
+                void* rec = Pac_GetFile((PacRecord*)data, i, &out, &idx);
                 SpriteContext_LoadFile(self->x334, rec, idx, &self->a2a0);
             }
             func_0205aed0(arg0->unknown_334_, (char*)arg0->unknown_388_, 0x19, 0x40);
@@ -392,32 +381,32 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         func_02081224(var36, 0x1b);
         arg0->unknown_49e_ = func_ov003_02160b50(arg0);
 #endif
-        char* var37 = (char*)func_0205ec34();
-        if (arg0->unknown_464_ & 0x10000) {
-            arg0->unknown_4a3_ = 0xa;
-            arg0->unknown_4a4_ = 0;
-        } else if (arg0->unknown_4a1_ == 1) {
-            arg0->unknown_4a3_ = 4;
-            arg0->unknown_4a4_ = 2;
-        } else if (arg0->unknown_4a1_ == 2) {
-            arg0->unknown_4a3_ = 4;
-            arg0->unknown_4a4_ = 0;
-        } else if (arg0->unknown_4a1_ == 3) {
-            arg0->unknown_484_ = 0x50;
-            arg0->unknown_486_ = 2;
-            arg0->unknown_4a4_ = 0;
-            arg0->unknown_4a5_ = 0;
-            arg0->unknown_4a3_ = 1;
-            arg0->unknown_464_ |= 0x10;
-            char* var38 = (char*)GetGameResources();
-            arg0->unknown_482_ = *(unsigned char*)(*(char**)(var38 + 0x3000 + Enum_ov003_021615bc_1844) + Enum_ov003_021615bc_205);
-        } else if (arg0->unknown_4a1_ == 4) {
-            arg0->unknown_484_ = 0xd;
-            arg0->unknown_486_ = 2;
-            arg0->unknown_4a4_ = 0;
-            arg0->unknown_4a5_ = 0;
-            arg0->unknown_4a3_ = 1;
-            arg0->unknown_464_ |= 8;
+        char* save = (char*)Scenario_GetInstance();
+        if (self->flags464 & 0x10000) {
+            self->b4a3 = 0xa;
+            self->step = 0;
+        } else if (self->b4a1 == 1) {
+            self->b4a3 = 4;
+            self->step = 2;
+        } else if (self->b4a1 == 2) {
+            self->b4a3 = 4;
+            self->step = 0;
+        } else if (self->b4a1 == 3) {
+            self->h484 = 0x50;
+            self->h486 = 2;
+            self->step = 0;
+            self->b4a5 = 0;
+            self->b4a3 = 1;
+            self->flags464 |= 0x10;
+            char* g = (char*)GetGameResources();
+            self->h482 = *(unsigned char*)(*(char**)(g + 0x3000 + kResourceSlot) + kResourceByte);
+        } else if (self->b4a1 == 4) {
+            self->h484 = 0xd;
+            self->h486 = 2;
+            self->step = 0;
+            self->b4a5 = 0;
+            self->b4a3 = 1;
+            self->flags464 |= 8;
         } else {
 #if defined(jpn)
             arg0->unknown_49e_ = func_ov003_02160b50(arg0);
@@ -438,11 +427,11 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
                 arg0->unknown_486_ = -1;
                 var39 = 0;
             }
-            if (var39 != 0 && arg0->unknown_49e_ != 2) {
-                if (func_0206dfb0((int)var37, (unsigned char*)(var37 + 0x8c), 0x77e) == 0) {
-                    func_0206df6c(var37, (unsigned char*)(var37 + 0x8c), 0x77e, 1);
-                    arg0->unknown_484_ = 0x4b;
-                    arg0->unknown_486_ = var3;
+            if (flag != 0 && self->b49e != 2) {
+                if (Scenario_TestFlag((int)save, (unsigned char*)(save + 0x8c), 0x77e) == 0) {
+                    Scenario_SetFlag(save, (unsigned char*)(save + 0x8c), 0x77e, 1);
+                    self->h484 = 0x4b;
+                    self->h486 = x;
                 }
             }
             arg0->unknown_4a3_ = 1;

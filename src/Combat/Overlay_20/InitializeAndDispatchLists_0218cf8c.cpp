@@ -2,35 +2,26 @@
 #include "Memory/SafeAllocator.h"
 #include "Filesystem/BackgroundLoader.h"
 
-#if defined(jpn)
-#define func_020c39a0 func_020c546c
-#endif
 
-extern "C" void func_020c39a0(short* out, int value);
+extern "C" void GXx_SetMasterBrightness_(short* out, int value);
 
 extern "C" void MapVRAMBanksToMainBG(int);
 extern "C" void func_ov020_0218c7bc(int, int, int, int, int);
-struct List0204af64;
-void Background_Init(List0204af64*);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void*, int);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
-struct Foo0204af38;
-void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 extern "C" void MapVRAMBanksToSubBG(int);
 extern "C" void func_ov020_0218cd64(int, int, int, int, int);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void Background_LoadFile(void*, void*, void*, int);
-struct Obj0204b8d0;
-void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
+void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_UploadMap(BackgroundGraphics*, void*);
 
 extern char data_ov020_0218dcca;
 
@@ -61,26 +52,26 @@ extern "C" ARM void func_ov020_0218cf8c(struct SetupContext0218cf8c* self) {
     MapVRAMBanksToMainBG(8);
     func_ov020_0218c7bc(0, 0, 0x1f, 2, 0);
 
-    Background_Init((List0204af64*)(base + regionalOffset0 + 0x400));
+    Background_Init((BackgroundGraphics*)(base + regionalOffset0 + 0x400));
     Background_SetMapSize((unsigned char*)(base + regionalOffset0 + 0x400), 0);
     base[regionalOffset1] = base[regionalOffset1] & ~0xf;
     base[regionalOffset1] = (base[regionalOffset1] & ~0xf0) | 0x10;
     Background_SetPriority(base + regionalOffset0 + 0x400, 0);
-    Background_AllocateMap((AllocTarget0204b12c*)(base + regionalOffset0 + 0x400), (SafeAllocator*)&self->allocator);
-    Background_AllocateScreens((Foo0204af38*)(base + regionalOffset0 + 0x400), 1, (SafeAllocator*)&self->allocator);
-    Background_SetScroll((Obj0204b5e8*)(base + regionalOffset0 + 0x400), 0, 0);
+    Background_AllocateMap((BackgroundGraphics*)(base + regionalOffset0 + 0x400), (SafeAllocator*)&self->allocator);
+    Background_AllocateScreens((BackgroundGraphics*)(base + regionalOffset0 + 0x400), 1, (SafeAllocator*)&self->allocator);
+    Background_SetScroll((BackgroundGraphics*)(base + regionalOffset0 + 0x400), 0, 0);
 
     MapVRAMBanksToSubBG(4);
     func_ov020_0218cd64(0, 0, 1, 1, 0);
 
-    Background_Init((List0204af64*)(base + regionalOffset3 + 0x400));
+    Background_Init((BackgroundGraphics*)(base + regionalOffset3 + 0x400));
     Background_SetMapSize((unsigned char*)(base + regionalOffset3 + 0x400), 0);
     base[regionalOffset2] = (base[regionalOffset2] & ~0xf) | 1;
     base[regionalOffset2] = base[regionalOffset2] & ~0xf0;
     Background_SetPriority(base + regionalOffset3 + 0x400, 0);
-    Background_AllocateMap((AllocTarget0204b12c*)(base + regionalOffset3 + 0x400), (SafeAllocator*)&self->allocator);
-    Background_AllocateScreens((Foo0204af38*)(base + regionalOffset3 + 0x400), 1, (SafeAllocator*)&self->allocator);
-    Background_SetScroll((Obj0204b5e8*)(base + regionalOffset3 + 0x400), 0, 0);
+    Background_AllocateMap((BackgroundGraphics*)(base + regionalOffset3 + 0x400), (SafeAllocator*)&self->allocator);
+    Background_AllocateScreens((BackgroundGraphics*)(base + regionalOffset3 + 0x400), 1, (SafeAllocator*)&self->allocator);
+    Background_SetScroll((BackgroundGraphics*)(base + regionalOffset3 + 0x400), 0, 0);
 
     int taskId;
     void* loader = BackgroundLoader::GetInstance();
@@ -94,12 +85,12 @@ extern "C" ARM void func_ov020_0218cf8c(struct SetupContext0218cf8c* self) {
     void* fileData;
     unsigned int fileLen;
     ((BackgroundLoader*)loader)->GetLoadedFileByID(taskId, &fileData, &fileLen);
-    int count = Pac_CountFiles((ActiveEntry02046900*)fileData);
+    int count = Pac_CountFiles((PacRecord*)fileData);
 
     void* resultsArray[6];
     int recSizeArray[6];
     for (int idx = 0; idx < count; idx++) {
-        resultsArray[idx] = Pac_GetFile((Rec020467f0*)fileData, idx, &recFieldScratch, &recSizeArray[idx]);
+        resultsArray[idx] = Pac_GetFile((PacRecord*)fileData, idx, &recFieldScratch, &recSizeArray[idx]);
     }
 
     Triple3 table1 = data_ov020_0218d950;
@@ -121,10 +112,10 @@ extern "C" ARM void func_ov020_0218cf8c(struct SetupContext0218cf8c* self) {
 
     ((BackgroundLoader*)loader)->RemoveTask(taskId);
 
-    Background_DrawScreen((Obj0204b8d0*)(base + regionalOffset0 + 0x400), 0, 0, 0, 0, 0, 0x20, 0x19, 0);
-    Background_DrawScreen((Obj0204b8d0*)(base + regionalOffset3 + 0x400), 0, 0, 0, 0, 0, 0x20, 0x19, 0);
-    Background_UploadMap((List0204b0e8*)(base + regionalOffset0 + 0x400), (void*)0);
-    Background_UploadMap((List0204b0e8*)(base + regionalOffset3 + 0x400), (void*)0);
+    Background_DrawScreen((BackgroundGraphics*)(base + regionalOffset0 + 0x400), 0, 0, 0, 0, 0, 0x20, 0x19, 0);
+    Background_DrawScreen((BackgroundGraphics*)(base + regionalOffset3 + 0x400), 0, 0, 0, 0, 0, 0x20, 0x19, 0);
+    Background_UploadMap((BackgroundGraphics*)(base + regionalOffset0 + 0x400), (void*)0);
+    Background_UploadMap((BackgroundGraphics*)(base + regionalOffset3 + 0x400), (void*)0);
     goto afterLoop;
   waitForLoad:
     ((BackgroundLoader*)loader)->RemoveAllLocks();
@@ -138,6 +129,6 @@ extern "C" ARM void func_ov020_0218cf8c(struct SetupContext0218cf8c* self) {
     volatile unsigned int* reg1000 = (volatile unsigned int*)0x4001000;
     *reg1000 = (*reg1000 & ~0x1f00) | 0x100;
 
-    func_020c39a0((short*)0x400006c, -16);
-    func_020c39a0((short*)0x400106c, -16);
+    GXx_SetMasterBrightness_((short*)0x400006c, -16);
+    GXx_SetMasterBrightness_((short*)0x400106c, -16);
 }

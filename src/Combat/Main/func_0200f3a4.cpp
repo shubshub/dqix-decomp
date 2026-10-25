@@ -5,21 +5,21 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" void func_020c99c8(void* arg0);
-extern "C" void func_0208660c(char* arg0);
-struct Struct_0200f3a4_7;
-extern "C" void func_02082828(Struct_0200f3a4_7* arg0);
-extern "C" void func_0200fb40(void* arg0);
-struct Struct_0200f3a4_8;
-extern "C" void func_0209a338(Struct_0200f3a4_8* arg0);
-struct Struct_0200f3a4_9;
-extern "C" void func_02010124(Struct_0200f3a4_9* arg0);
-extern "C" void func_020118fc(void* arg0);
-extern "C" void* func_020d6c00();
-struct Struct_0200f3a4_10;
-extern "C" void func_02046730(Struct_0200f3a4_10* arg0);
-struct Struct_0200f3a4_11;
-extern "C" void func_0200fad4(Struct_0200f3a4_11* arg0);
+extern "C" void func_020c99c8(void* out);
+void InitBigManagerStruct0208660c(char* base);
+struct PartyExtension;
+extern "C" void func_02082828(PartyExtension* ext);
+void ClearSubstructBytes_0200fb40(void* obj);
+struct Pair0209a338;
+void ClearFirstTwoWords0209a338(Pair0209a338* p);
+struct S_02010124;
+void InitFields02010124(S_02010124* obj);
+void ResetState_020118fc(void* obj);
+void* GlobalFlags_GetInstance();
+struct S02046730;
+void ClearField0x0_02046730(S02046730* p);
+struct State0200fad4;
+void ClearFlagsAndValue0200fad4(State0200fad4* s);
 
 struct Struct_020f33b4 {
     unsigned char unknown_0_;
@@ -119,10 +119,10 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
 
     func_0208660c(var1 + J(0x2a04));
 
-    var0->unknown_3b0_ = 0;
-    var0->protagonistObjectIndex_ = 0;
-    for (int var4 = 0; var4 < 4; var4++) {
-        func_02082828((Struct_0200f3a4_7*)(var1 + 0x474 + var4 * J_PARTY_STRIDE));
+    gs->camera_ = 0;
+    gs->protagonistObjectIndex_ = 0;
+    for (int i = 0; i < 4; i++) {
+        func_02082828((PartyExtension*)(base + 0x474 + i * J_PARTY_STRIDE));
     }
 
     VectorizedMemset(var1 + 0x3f8, 0, 0x70);
@@ -299,7 +299,7 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(int*)(var1 + J(0x71f0)) = 0;
     *(int*)(var1 + J(0x71f4)) = 0;
 
-    func_02046730((Struct_0200f3a4_10*)func_020d6c00());
+    ClearField0x0_02046730((S02046730*)GlobalFlags_GetInstance());
 
     memset(var1 + J(0x7504), 0, 0xec);
     memset(var1 + J(0x75f0), 0, 0x4d0);

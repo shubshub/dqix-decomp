@@ -15,17 +15,17 @@ enum { Enum_ov003_021728fc_250 = 0xfa };
 enum { Enum_ov003_021728fc_969 = 0x3c9 };
 #endif
 
-extern "C" int func_020421a0();
+int MessageSystem_GetInstance();
 
-extern "C" int func_020ac4f8(int arg0);
-struct Struct_02074af4;
-extern "C" ARM void func_02074af4(struct Struct_02074af4* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int* func_020936f8(void);
-extern "C" void func_020941b0(struct Struct_02093b90_2* arg0);
-extern "C" void func_020939dc(void* arg0);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
+int UpdatePlayClocks020ac4f8(int commit);
+struct MainBgControlBackup02074af4;
+extern "C" ARM void func_02074af4(struct MainBgControlBackup02074af4* obj);
+void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+int* GetGlobal02109030_020936f8(void);
+void ReleaseHandleAndClearFlags(struct Obj020941b0* p);
+void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 
 struct Struct_ov003_021728fc {
     char unknown_0_[Enum_ov003_021728fc_236];
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* arg0) {
 
     func_020ac4f8(0);
 #if defined(jpn)
-    *(int*)((char*)arg0 + 0xf0) = *(int*)(func_020421a0() + 0x28);
+    *(int*)((char*)obj + 0xf0) = *(int*)(MessageSystem_GetInstance() + 0x28);
 #endif
     func_02074af4((struct Struct_02074af4*)((char*)arg0 + Enum_ov003_021728fc_250));
 
@@ -70,7 +70,7 @@ extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* arg0) {
     ((unsigned char*)var5)[Enum_ov003_021728fc_969] = (((unsigned char*)var5)[Enum_ov003_021728fc_969] & ~1) | 1;
     func_020939dc(var5);
 
-    func_020466e4((unsigned int*)func_020d6c00(), 0x1000);
+    FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x1000);
 
     arg0->unknown_ec_ = 1;
     arg0->unknown_ee_ = 0;

@@ -99,11 +99,11 @@ extern "C" ARM void func_ov003_02163fd4(Struct_ov003_02154af4_3 *arg0) {
             self->p470 = 0;
             switch (self->h48a) {
                 case 0xa6:
-                    if ((int) *((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) > 1) {
-                        var3[0]        = 3;
-                        var3[1]        = 4;
-                        arg0->unknown_4a3_  = 0xb;
-                        arg0->unknown_4a4_ = 0;
+                    if ((int) *((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0xf7c) > 1) {
+                        p[0]        = 3;
+                        p[1]        = 4;
+                        self->c4a3  = 0xb;
+                        self->state = 0;
                     } else {
                         func_0207fe44((Struct_0207fe44*)var1);
                         var3[0]        = 3;
@@ -112,9 +112,9 @@ extern "C" ARM void func_ov003_02163fd4(Struct_ov003_02154af4_3 *arg0) {
                     }
                     break;
                 case 0xa7:
-                    if (*((unsigned char *)func_02010828(GameState::GetInstance()) + 0xf7c) == 4) {
-                        var3[0] = 0x14;
-                        var3[1] = 1;
+                    if (*((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0xf7c) == 4) {
+                        p[0] = 0x14;
+                        p[1] = 1;
                     } else {
                         func_0207fe44((Struct_0207fe44*)var1);
                         arg0->unknown_4a3_  = 0xd;

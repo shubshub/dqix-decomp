@@ -23,9 +23,9 @@ enum { Enum_ov003_02160cf8_1192 = 0x4a8 };
 enum { Enum_ov003_02160cf8_1128 = 0x468 };
 #endif
 
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_ov003_02161438(void* arg0);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int* word, unsigned int bits);
+void ApplyElementEffect02161438(void* obj);
 
 struct Struct_ov003_02160cf8_2 {
 	void* unknown_0_;
@@ -49,22 +49,22 @@ struct Struct_ov003_02160cf8 {
 };
 
 // USA: func_ov003_02160cf8
-extern "C" ARM int func_ov003_02160cf8(struct Struct_ov003_02160cf8* arg0) {
-	GameResources* var0 = GetGameResources();
-	void* var1 = func_020d6c00();
-	int var2 = 0;
+extern "C" ARM int func_ov003_02160cf8(struct Self02160cf8* self) {
+	GameResources* res = GetGameResources();
+	void* dataPtr = GlobalFlags_GetInstance();
+	int result = 0;
 
-	if (arg0->unknown_4a8_ == 0) {
-		SetSubBrightness(var0, -16, 8);
-		arg0->unknown_4a8_++;
-	} else if (arg0->unknown_4a8_ == 1) {
-		if (IsSubBrightnessTransitionActive(var0) == 0) {
-			func_020466e4((unsigned int*)var1, 1);
-			arg0->unknown_23c_.Reset();
-			func_ov003_021672e4(arg0->unknown_318_, 0, -1);
-			arg0->unknown_318_->unknown_0_ = arg0->unknown_398_;
-			func_ov003_0216724c(arg0->unknown_318_, &arg0->unknown_23c_);
-			arg0->unknown_4a8_++;
+	if (self->state == 0) {
+		SetSubBrightness(res, -16, 8);
+		self->state++;
+	} else if (self->state == 1) {
+		if (IsSubBrightnessTransitionActive(res) == 0) {
+			FlagWord_SetBits((unsigned int*)dataPtr, 1);
+			self->alloc23c.Reset();
+			func_ov003_021672e4(self->view, 0, -1);
+			self->view->field0 = self->field398;
+			func_ov003_0216724c(self->view, &self->alloc23c);
+			self->state++;
 		}
 	} else if (arg0->unknown_4a8_ == 2) {
 		if (func_ov003_0216759c(arg0->unknown_318_) != 0) {

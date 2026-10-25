@@ -13,7 +13,7 @@
 extern "C" void* __clear(void* arg0, int arg1);
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 
@@ -64,26 +64,26 @@ extern "C" ARM int func_ov015_0218e02c(void* arg0, int* arg1) {
 
     int ok = 1;
     struct Foo0207df50* palette = *(struct Foo0207df50**)*(void**)((char*)self + 4);
-    CopyInternalFields0207df50(palette);
+    VramState_Rewind(palette);
     VramState_Restore((char*)palette);
 
     sprintf(var3, data_ov015_0219413f, arg1[1]);
 
     BackgroundLoader::AddLockGlobal();
 
-    unsigned int var6 = 0;
-    if (LoadFileIntoMemory(var3, data_0211e33c, &var6) != 0) {
-        if (var0.Initialize(data_ov015_02194152, data_0211e33c)) {
-            NitroVM_Initialize(&var1);
-            for (unsigned int var7 = 0; PrepareReadFileInNARCByID(&var1, &var0, var7); ++var7) {
-                __clear(var2, 0x50);
-                NitroVM_WriteOutFilePath(&var1, var2, 0x50);
-                if (strstr(var2, data_ov015_02194156) != 0) {
-                    const void* var8 = var0.GetFileByIndex(var7);
-                    unsigned int var9 = var1.fileInfo.unknown_8_ - var1.fileInfo.unknown_4_;
-                    unsigned int var10 = var6;
-                    if (var10 & 3) {
-                        var10 += 4 - (var10 & 3);
+    unsigned int length = 0;
+    if (LoadFileIntoMemory(path, g_fileLoadBuffer, &length) != 0) {
+        if (narc.Initialize(data_ov015_02194152, g_fileLoadBuffer)) {
+            NitroVM_Initialize(&vm);
+            for (unsigned int index = 0; PrepareReadFileInNARCByID(&vm, &narc, index); ++index) {
+                __clear(tmp, 0x50);
+                NitroVM_WriteOutFilePath(&vm, tmp, 0x50);
+                if (strstr(tmp, data_ov015_02194156) != 0) {
+                    const void* file = narc.GetFileByIndex(index);
+                    unsigned int size = vm.fileInfo.endOffset - vm.fileInfo.startOffset;
+                    unsigned int len = length;
+                    if (len & 3) {
+                        len += 4 - (len & 3);
                     }
                     void* var11 = (*(SafeAllocator**)((char*)arg0 + 8))->Allocate(var10);
                     if (var11 == 0) {
@@ -109,24 +109,24 @@ extern "C" ARM int func_ov015_0218e02c(void* arg0, int* arg1) {
         }
         var0.Destroy();
 
-        Struct_02053634 var12;
-        func_0203dafc((struct Struct_0203d028_11*)&var12);
-        void* var13 = *(void**)((char*)arg0 + 8);
-        void* var14 = &data_0211e33c;
-        unsigned int var15 = var6;
-        int var16 = 1;
-        var12.unknown_c_ = var13;
-        var12.unknown_4_ = var14;
-        var12.unknown_8_ = var15;
-        var12.unknown_10_ = var16;
-        (*(Object3D**)((char*)arg0 + 0x24))->LoadFromCHRArchive((ObjectArchiveLoadInfo*)&var12);
+        Params02036804 info;
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        void* allocPtr = *(void**)((char*)self + 8);
+        void* dataPtr = &g_fileLoadBuffer;
+        unsigned int sz = length;
+        int onePtr = 1;
+        info.alloc = allocPtr;
+        info.data = dataPtr;
+        info.size = sz;
+        info.one = onePtr;
+        (*(Object3D**)((char*)self + 0x24))->LoadFromCHRArchive((ObjectArchiveLoadInfo*)&info);
 
         func_02055718(*(struct Struct_02055718**)((char*)arg0 + 0x28),
                                     *(int*)((char*)arg0 + 0x24), *(int*)((char*)arg0 + 8));
 
-        Vector3i var17 = data_ov015_02193d08;
-        (*(Object3D**)((char*)arg0 + 0x24))->SetScale(&var17);
-        (*(Object3D**)((char*)arg0 + 0x24))->MaybeSetBCFGAnimation(0, *(int*)((char*)arg0 + 0x44));
+        Vector3i v = data_ov015_02193d08;
+        (*(Object3D**)((char*)self + 0x24))->SetScale(&v);
+        (*(Object3D**)((char*)self + 0x24))->SetAnimationByIndex(0, *(int*)((char*)self + 0x44));
     } else {
         var4 = 0;
     }

@@ -20,13 +20,13 @@ struct Struct_ov031_0224b114_2 {
     int unknown_0_;
     int unknown_4_;
 };
-extern Struct_ov031_0224b1d4 data_ov031_0224b1d4 __attribute__((aligned(4)));
-extern Struct_ov031_0224fb18 data_ov031_0224fb20;
-extern Struct_ov031_0224fb18 data_ov031_0224fb18;
-extern Struct_ov031_0224b114_2 data_ov031_0224b114;
-extern "C" int func_ov031_022205d8(void* arg0);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void func_ov031_022228f4(char* arg0, const Struct_ov031_0224fb18* arg1);
+extern InternetAddress data_ov031_0224b1d4 __attribute__((aligned(4)));
+extern HardwareAddress data_ov031_0224fb20;
+extern HardwareAddress data_ov031_0224fb18;
+extern AddressDebug data_ov031_0224b114;
+extern "C" int func_ov031_022205d8(void* address);
+extern "C" int memcmp(const void* first, const void* second, unsigned int size);
+extern "C" void func_ov031_022228f4(char* destination, const HardwareAddress* address);
 
 #define COPY_ADDRESS(destination, source) do { \
     Struct_ov031_0224fb18* targetAddress = &(destination); \
@@ -41,25 +41,25 @@ extern "C" void func_ov031_022228f4(char* arg0, const Struct_ov031_0224fb18* arg
 
 // USA: func_ov031_022205e4
 // KEEP-NAME: func_ov031_022205e4
-extern "C" THUMB int func_ov031_022205e4(Struct_ov031_022205e4* arg0) {
-    char var0[32];
-    char var1[32];
-    Struct_ov031_0224fb18 var2[2];
-    unsigned char* var3 = arg0->unknown_c_.unknown_0_;
-    const unsigned char* var4 = data_ov031_0224b1d4.unknown_0_;
-    var3[0] = var4[0];
-    var3[1] = var4[1];
-    var3[2] = var4[2];
-    var3[3] = var4[3];
-    COPY_ADDRESS(var2[1], data_ov031_0224fb20);
-    var2[1].unknown_0_[0] &= 0xfd;
-    func_ov031_022205d8(&var2[0]);
-    const Struct_ov031_0224fb18* var5 = &var2[0];
-    COPY_ADDRESS(data_ov031_0224fb18, *var5);
-    const Struct_ov031_0224fb18* var6;
-    if (func_02001aec(&var2[1], var5, 6) <= 0) {
-        COPY_ADDRESS(arg0->unknown_0_, var2[0]);
-        var6 = &var2[1];
+extern "C" THUMB int func_ov031_022205e4(AddressPair* output) {
+    char firstText[32];
+    char secondText[32];
+    HardwareAddress addresses[2];
+    unsigned char* network = output->network.bytes;
+    const unsigned char* sourceNetwork = data_ov031_0224b1d4.bytes;
+    network[0] = sourceNetwork[0];
+    network[1] = sourceNetwork[1];
+    network[2] = sourceNetwork[2];
+    network[3] = sourceNetwork[3];
+    COPY_ADDRESS(addresses[1], data_ov031_0224fb20);
+    addresses[1].bytes[0] &= 0xfd;
+    func_ov031_022205d8(&addresses[0]);
+    const HardwareAddress* primary = &addresses[0];
+    COPY_ADDRESS(data_ov031_0224fb18, *primary);
+    const HardwareAddress* second;
+    if (memcmp(&addresses[1], primary, 6) <= 0) {
+        COPY_ADDRESS(output->first, addresses[0]);
+        second = &addresses[1];
     } else {
         COPY_ADDRESS(arg0->unknown_0_, var2[1]);
         var6 = &var2[0];

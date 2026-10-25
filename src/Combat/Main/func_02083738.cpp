@@ -22,9 +22,9 @@ struct Struct_02083738 {
     struct Struct_0200f3a4_14 unknown_6f0_[11];
 };
 
-struct Struct_02083508_2;
-extern "C" void func_020de1d4(struct Struct_02083508_2*);
-extern "C" unsigned char* func_0208349c(unsigned char* arg0, int arg1);
+struct StructDE1D4;
+void ItemRecord_Clear(struct StructDE1D4*);
+unsigned char* GetIndexedBlockPointer0208349c(unsigned char* base, int idx);
 
 // USA: func_02083738
 extern "C" ARM void func_02083738(struct Struct_02083738* arg0, int arg1) {
@@ -51,8 +51,8 @@ extern "C" ARM void func_02083738(struct Struct_02083738* arg0, int arg1) {
 #else
         *(unsigned char*)var4 = 0;
 #endif
-        func_020de1d4((struct Struct_02083508_2*)var2);
-        var2->unknown_0_ = &arg0->unknown_6f0_[var0];
+        ItemRecord_Clear((struct StructDE1D4*)e);
+        e->pB = &o->arrB[i];
 #if defined(jpn)
         var2->unknown_4_ = (unsigned char*)arg0 + 0x56f + var0 * 0x15;
 #else

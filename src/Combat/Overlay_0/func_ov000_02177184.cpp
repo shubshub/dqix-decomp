@@ -3,21 +3,21 @@
 
 struct Canvas0204e998;
 struct Entry_0205d6a0;
-int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char* obj);
+int WindowPane_IsOpen(unsigned char* obj);
 void InitAndFillIndexBuffer0204c964(struct Canvas0204e998* canvas);
 void* CopyStaticData02174da4(int unused, void* dest);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 void SetChannelBFlag0205cf04(void* obj);
 void SetChannelAFlag0205cef8(void* obj);
 void SetupDualPointerTables0205cf28(unsigned char* obj, int a, int count, int b);
 extern "C" void GridCursor_SetSelectedIndex(void* cursor, int index);
 extern "C" void func_0205d7a0(unsigned char* obj, int val);
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 extern "C" void func_ov000_0217737c(void* obj, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 extern "C" void func_ov000_0217a8f4(void* arg0);
 
@@ -57,11 +57,11 @@ extern "C" ARM void func_ov000_02177184(struct Struct_ov000_02177184_2* arg0, in
     if (!arg1) {
         return;
     }
-    struct Struct_ov000_02177184* var0 = &arg0->unknown_188_;
-    unsigned char* var1 = var0->unknown_9c_;
-    if (func_0204c7e0(var1)) {
-        func_0204c964((struct Struct_0204c87c*)var1);
-        arg0->unknown_1d72_ &= ~2;
+    struct Window02177184* window = &menu->window;
+    unsigned char* canvas = window->canvas;
+    if (WindowPane_IsOpen(canvas)) {
+        InitAndFillIndexBuffer0204c964((struct Canvas0204e998*)canvas);
+        menu->flags &= ~2;
         return;
     }
     int var2[4];
@@ -73,7 +73,7 @@ extern "C" ARM void func_ov000_02177184(struct Struct_ov000_02177184_2* arg0, in
         }
     }
     menu->selection = 0;
-    ResetEntryList0205d6a0((struct Entry_0205d6a0*)window, 1);
+    Window_ClosePane((struct Entry_0205d6a0*)window, 1);
     SetChannelBFlag0205cf04(window);
     SetChannelAFlag0205cef8(window);
     SetupDualPointerTables0205cf28((unsigned char*)window, 1, count, 0);
@@ -102,17 +102,17 @@ extern "C" ARM void func_ov000_02177184(struct Struct_ov000_02177184_2* arg0, in
     var0->unknown_b1_ = 1;
     func_0205d7a0((unsigned char*)var0, arg0->unknown_1d69_);
 #if defined(jpn)
-    void* var5 = *(void**)(func_020421a0() + 0x28);
-    memset(var5, 0, 0x800);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x28);
+    memset(buf, 0, 0x800);
 #else
-    void* var5 = *(void**)(func_020421a0() + 0x5c);
-    memset(var5, 0, 0x960);
+    void* buf = *(void**)(MessageSystem_GetInstance() + 0x5c);
+    memset(buf, 0, 0x960);
 #endif
     func_ov000_0217737c(arg0, var5);
 #if defined(jpn)
-    func_0205d304(var0, var5, 0, 1, 0, 1, 0);
+    Window_OpenPane(window, buf, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var0, var5, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(window, buf, 0, 1, 0, 1, 0, 0);
 #endif
     func_ov000_0217a8f4(arg0);
 }

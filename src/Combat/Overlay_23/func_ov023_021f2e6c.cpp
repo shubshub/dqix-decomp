@@ -39,23 +39,23 @@ struct Struct_ov023_021f2e6c_7 { int unknown_0_[3]; };
 struct Struct_ov023_021f2e6c_8 { char* unknown_0_; char* unknown_4_; int unknown_8_; };
 struct Struct_ov023_021f2e6c_9 { int unknown_0_[0x15]; };
 
-extern "C" Struct_ov023_021f2e6c_4* func_02094d6c(void);
-extern "C" unsigned char* func_020421a0(void);
-extern "C" void func_ov023_021d8b6c(void* arg0);
-extern "C" void func_ov023_021d8af8(void* arg0);
-extern "C" void func_ov000_0215fa84(void* arg0, short* arg1, short* arg2, short* arg3);
-struct Struct_0205faf4_7;
-extern "C" void* func_02096134(Struct_0205faf4_7*, int);
-extern "C" void func_02046380(unsigned char* arg0);
-struct Struct_02072a68_2;
-extern "C" char* func_02072a68(Struct_02072a68_2*, int);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" unsigned char* func_0200fea4(GameState* arg0, int arg1);
-extern "C" Struct_ov023_021f2e6c_7 func_ov023_021ed804(Struct_ov023_021f2e6c_7 arg0, void* arg1);
-extern "C" void func_ov023_021edf38(Struct_ov023_021f2e6c_7* arg0, const Struct_ov023_021f2e6c_7& arg1);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_020dcf7c(int arg0, void* arg1);
-extern "C" void func_0209c6d8(void* arg0, int arg1);
+Table021f2e6c* GetGlobal02109418_02094d6c(void);
+unsigned char* MessageSystem_GetInstance(void);
+void InitCombatEntry_021d8b6c(void* p);
+extern "C" void func_ov023_021d8af8(void* p);
+void CopyShortTriple0x8e4a_ov000_0215fa84(void* obj, short* a, short* b, short* c);
+struct FindEntryById02096134Table;
+void* FindEntryById02096134(FindEntryById02096134Table*, int);
+extern "C" void func_02046380(unsigned char* st);
+struct TableA68;
+char* FindEntryByKey_02072a68(TableA68*, int);
+void Clear12Bytes020e46c4(void* p);
+unsigned char* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
+extern "C" Triple021f2e6c func_ov023_021ed804(Triple021f2e6c t, void* p);
+extern "C" void _Z26SetWords_021edf38_021edf38PvP13Words021edf38(Triple021f2e6c* dst, const Triple021f2e6c& src);
+extern "C" void __clear(void* dst, int n);
+void DispatchIfCountPositive020dcf7c(int count, void* buf);
+void ResetAndDispatchActorContext0209c6d8(void* actor, int arg);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2, int arg3);
 #endif
@@ -103,7 +103,7 @@ void SetSubstructByte0x56_02049f28(unsigned char* obj);
 extern "C" void* func_ov000_02160f14(void* self);
 extern "C" void func_ov000_0216d370(void* cam, int a, int b, int c);
 void SetFlagOrState0216d530(void* cam, int v);
-void Camera_SetTarget(unsigned char*, int, int, int);
+void Camera_SetTarget(struct Camera*, int, int, int);
 extern "C" void func_0202e5d8(void* cam, int a, int b, int c);
 extern "C" void func_ov000_02163b90(void* self, int v);
 void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
@@ -113,8 +113,8 @@ struct Dst0202ed0c;
 struct Src0202ed0c;
 void CopyGroupedBlocks0202ed0c(Dst0202ed0c*, Src0202ed0c*);
 
-extern "C" int* _ZZ21inline_ov023_021f4c04vE1s;
-extern char data_02109bf4;
+extern "C" int* _ZZ17GetGlobal021ffefcvE1s;
+extern char g_bgmPlayer;
 extern char data_ov023_021fe2ca;
 extern char data_ov023_021fe2e5;
 extern const char* g_itemDataArchive;
@@ -126,10 +126,10 @@ extern char data_ov023_021fe2f7;
 extern char data_ov023_021fd54e[];
 extern char data_ov023_021fd578[];
 extern char data_ov023_021fd5a2[];
-struct Struct_0206f01c_2;
-extern "C" void* func_0206f4f0(Struct_0206f01c_2*, int);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+struct BinarySearchByComparatorStruct;
+void* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" void func_020de968(int,char*);
 extern "C" void func_0204500c(void*,char*,int);
 extern "C" int func_020e052c(void*,void*,const char*,void*,short,unsigned char);
@@ -141,18 +141,18 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
 #else
  enum {Enum_ov023_021f2e6c_21896=0x5588, Enum_ov023_021f2e6c_21904=0x5590, Enum_ov023_021f2e6c_21908=0x5594, Enum_ov023_021f2e6c_21948=0x55bc, Enum_ov023_021f2e6c_21900=0x558c, Enum_ov023_021f2e6c_668=0x29c, Enum_ov023_021f2e6c_6578=0x19b2, Enum_ov023_021f2e6c_2456=0x998, Enum_ov023_021f2e6c_3756=0xeac, Enum_ov023_021f2e6c_21952=0x55c0, Enum_ov023_021f2e6c_552=0x228, Enum_ov023_021f2e6c_3784=0xec8, Enum_ov023_021f2e6c_21946=0x55ba, Enum_ov023_021f2e6c_21950=0x55be, Enum_ov023_021f2e6c_21912=0x5598, Enum_ov023_021f2e6c_21944=0x55b8};
 #endif
-    unsigned char* var0;
-    int* var1 = _ZZ21inline_ov023_021f4c04vE1s;
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    Struct_ov023_021f2e6c_4* var3 = func_02094d6c();
-    var0 = func_020421a0();
-    Struct_ov023_021f2e6c_3* var4;
-    int var5 = var1[0];
-    if (var5 == 0) {
-        if (*(void**)(arg0 + Enum_ov023_021f2e6c_21896) != 0) {
-            func_ov023_021d8b6c(*(void**)(arg0 + Enum_ov023_021f2e6c_21896));
-            func_ov023_021d8af8(*(void**)(arg0 + Enum_ov023_021f2e6c_21896));
-            *(void**)(arg0 + Enum_ov023_021f2e6c_21896) = 0;
+    unsigned char* st;
+    int* g = _ZZ17GetGlobal021ffefcvE1s;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    Table021f2e6c* tbl = GetGlobal02109418_02094d6c();
+    st = MessageSystem_GetInstance();
+    Entry021f2e6c* found_entries;
+    int state = g[0];
+    if (state == 0) {
+        if (*(void**)(self + regionalOffset0) != 0) {
+            InitCombatEntry_021d8b6c(*(void**)(self + regionalOffset0));
+            func_ov023_021d8af8(*(void**)(self + regionalOffset0));
+            *(void**)(self + regionalOffset0) = 0;
         }
         *(void**)(arg0 + Enum_ov023_021f2e6c_21904) = 0;
         *(void**)(arg0 + Enum_ov023_021f2e6c_21908) = 0;
@@ -168,14 +168,14 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
             if (var7 != 0 && var9 != 0) {
                 func_02046380(var0);
 #if defined(jpn)
-                char* var10 = data_ov023_021fd54e;
-                if (var6 == 0x12) var10 = data_ov023_021fd578;
-                void* var11 = func_0206f4f0((Struct_0206f01c_2*)(*(char**)(arg0 + 0x21c) + 0x678), var8);
-                if (var11 != 0) func_02046574((Struct_02046574_2*)var0, 0, *(char**)var11);
-                char var12[0x40];
-                __clear(var12,0x40);
-                func_020de968(var7,var12);
-                func_02046574((Struct_02046574_2*)var0, 1, var12);
+                char* msg = data_ov023_021fd54e;
+                if (kind == 0x12) msg = data_ov023_021fd578;
+                void* name = SearchWithComparator0206f4f0((BinarySearchByComparatorStruct*)(*(char**)(self + 0x21c) + 0x678), target);
+                if (name != 0) MessageSystem_SetStringArgument((Obj02046574*)st, 0, *(char**)name);
+                char rawName[0x40];
+                __clear(rawName,0x40);
+                func_020de968(count,rawName);
+                MessageSystem_SetStringArgument((Obj02046574*)st, 1, rawName);
 #else
                 int var13 = 0x29;
                 if (var6 == 0x12) {
@@ -208,7 +208,7 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                 *(Struct_ov023_021f2e6c_8**)(var0 + 0x18) = &var22;
 
 #endif
-                func_0209c6d8(&data_02109bf4, 0x3e);
+                ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x3e);
 #if defined(jpn)
                 func_0204500c(var0, var10, 1);
 #else
@@ -241,16 +241,16 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
             func_ov023_021eefac((Struct_ov023_021eeaac_2*)var1);
             return 0xf;
         }
-        *(Struct_ov023_021f2e6c_5**)(arg0 + Enum_ov023_021f2e6c_21908) = (Struct_ov023_021f2e6c_5*)((SafeAllocator*)(arg0 + 0x30))->Allocate(0x18);
-        *(Struct_ov023_021f2e6c_6**)(arg0 + Enum_ov023_021f2e6c_21904) = (Struct_ov023_021f2e6c_6*)((SafeAllocator*)(arg0 + 0x30))->Allocate(0x8a0);
-        func_020d784c((Struct_020d784c*)(*(Struct_ov023_021f2e6c_5**)(arg0 + Enum_ov023_021f2e6c_21908)));
-        *(SafeAllocator**)(arg0 + Enum_ov023_021f2e6c_21952) = (SafeAllocator*)((SafeAllocator*)(arg0 + 0x30))->Allocate(0x14);
-        (*(SafeAllocator**)(arg0 + Enum_ov023_021f2e6c_21952))->CreateTypeA(((SafeAllocator*)(arg0 + 0x30))->Allocate(0xf000), 0xf000);
-        Struct_0208cb08* var27 = func_02094a00();
-        func_02094b40(var27);
-        func_02094b30(var27, 0x210, 1);
-        var1[0] = 1;
-    } else if (var5 == 10) {
+        *(IdList021f2e6c**)(self + regionalOffset2) = (IdList021f2e6c*)((SafeAllocator*)(self + 0x30))->Allocate(0x18);
+        *(Mgr021f2e6c**)(self + regionalOffset1) = (Mgr021f2e6c*)((SafeAllocator*)(self + 0x30))->Allocate(0x8a0);
+        InitStruct020d784c((Buffer020d784c*)(*(IdList021f2e6c**)(self + regionalOffset2)));
+        *(SafeAllocator**)(self + regionalOffset9) = (SafeAllocator*)((SafeAllocator*)(self + 0x30))->Allocate(0x14);
+        (*(SafeAllocator**)(self + regionalOffset9))->CreateTypeA(((SafeAllocator*)(self + 0x30))->Allocate(0xf000), 0xf000);
+        FontBankLoader* h = FontBankLoader_GetInstance();
+        BlankFunction02094b40(h);
+        BlankFunction02094b30(h, 0x210, 1);
+        g[0] = 1;
+    } else if (state == 10) {
         if (func_ov023_021f4fc8() != 0) {
             var1[0] = 0;
         }
@@ -285,9 +285,9 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
             var1[0] = 4;
             *(short*)(arg0 + Enum_ov023_021f2e6c_21948) = 1;
         }
-    } else if (var5 == 1) {
-        if (func_02094b4c(func_02094a00()) != 0) {
-            char* var35;
+    } else if (state == 1) {
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) != 0) {
+            char* heap;
 #if defined(jpn)
             char* var36 = arg0 + 0x3ec;
 #else
@@ -444,7 +444,7 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                             if (var63 < 0) {
                                 var63 = 0;
                             }
-                            Camera_SetTarget((unsigned char*)cam, 0, y, 0);
+                            Camera_SetTarget((struct Camera*)cam, 0, y, 0);
                             int z = (int)(((long long)height * 0x2333 + 0x800) >> 12);
                             int y2 = y + 0x800;
                             if (y2 < 0) {

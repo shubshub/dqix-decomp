@@ -9,7 +9,7 @@ enum { Enum_ov003_0215b478_2 = 2 };
 
 #if defined(jpn)
 extern "C" void func_02042428(void*, int);
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
 extern "C" void func_02042158(void*, int);
 extern char data_ov003_0217e68e[], data_ov003_0217e696[];
 #endif
@@ -19,10 +19,10 @@ extern char data_ov003_0217e68e[], data_ov003_0217e696[];
 struct Struct_0205de24_2;
 extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1, unsigned char arg2);
 
-extern "C" int func_020421a0();
-extern "C" void func_02046380(void* arg0);
-extern "C" int func_020e51cc(int arg0);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int MessageSystem_GetInstance();
+extern "C" void func_02046380(void* obj);
+int StandardStrings_Get(int value);
+int Text_Append(char* dst, const char* src);
 
 struct Struct_020465c0;
 extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
@@ -30,13 +30,13 @@ extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2)
 extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
 
 #if !defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov003_0215b478
-extern "C" ARM void func_ov003_0215b478(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_020421a0();
+extern "C" ARM void func_ov003_0215b478(unsigned char* self) {
+    GameState* battle = GameState::GetInstance();
+    int field = MessageSystem_GetInstance();
 
     func_0205de24((struct Struct_0205de24_2*)(arg0 + 0xf4), 0, 2);
 
@@ -54,26 +54,26 @@ extern "C" ARM void func_ov003_0215b478(unsigned char* arg0) {
     memset(*(void**)(arg0 + 0x7c), 0, Enum_ov003_0215b478_2400);
 
 #if defined(jpn)
-    func_02042428(*(void**)(arg0 + 0x7c), 8);
-    func_02042058(*(char**)(arg0 + 0x7c), data_ov003_0217e68e);
-    func_02042158(*(void**)(arg0 + 0x7c), 2);
-    func_02042058(*(char**)(arg0 + 0x7c), data_ov003_0217e696);
+    func_02042428(*(void**)(self + 0x7c), 8);
+    Text_Append(*(char**)(self + 0x7c), data_ov003_0217e68e);
+    func_02042158(*(void**)(self + 0x7c), 2);
+    Text_Append(*(char**)(self + 0x7c), data_ov003_0217e696);
 #else
-    int var2 = func_020e51cc(0x3f1);
-    func_02042058((char*)*(void**)(arg0 + 0x7c), (const char*)var2);
+    int msg = StandardStrings_Get(0x3f1);
+    Text_Append((char*)*(void**)(self + 0x7c), (const char*)msg);
 #endif
 
     func_02046380((void*)var1);
 
-    void* var3 = func_02010828(var0);
-    int var4 = *(int*)((char*)var3 + 0xf6c);
-    func_020465c0((struct Struct_020465c0*)var1, 0, var4);
-    func_020465f0((unsigned char*)var1, 0, 7);
-    func_020465d8((unsigned char*)var1, 0, 1);
+    void* ptr = GameState_GetParty(battle);
+    int value = *(int*)((char*)ptr + 0xf6c);
+    StoreInArray0x8b0_020465c0((struct StoreStruct*)field, 0, value);
+    SetByteInRange_020465f0((unsigned char*)field, 0, 7);
+    SetByteAtIndex_020465d8((unsigned char*)field, 0, 1);
 
 #if defined(jpn)
-    func_0205d304(arg0 + 0xf4, *(void**)(arg0 + 0x7c), 0, 0, 0, 1, 0);
+    Window_OpenPane(self + 0xf4, *(void**)(self + 0x7c), 0, 0, 0, 1, 0);
 #else
-    func_0205d304(arg0 + 0xf4, *(void**)(arg0 + 0x7c), 0, 0, 0, 1, 0, 0);
+    Window_OpenPane(self + 0xf4, *(void**)(self + 0x7c), 0, 0, 0, 1, 0, 0);
 #endif
 }

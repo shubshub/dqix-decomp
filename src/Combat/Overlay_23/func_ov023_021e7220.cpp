@@ -8,18 +8,18 @@ extern "C" unsigned short GetSubObjVRAMBanks(void);
 struct Struct_02074b64;
 extern "C" void func_02074b64(struct Struct_02074b64* arg0);
 
-struct Struct_0205cfd4;
-extern "C" void func_0205cfd4(struct Struct_0205cfd4* arg0);
+struct InitTarget0205cfd4;
+void Window_Init(struct InitTarget0205cfd4* s);
 
 struct Struct020dfc40;
 extern void KeyTable_Reset(Struct020dfc40* p);
 
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204c684(void*);
+extern "C" void WindowPane_Init(void*);
 
-extern "C" int func_020100a8(GameState* arg0);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov023_021e71a0;
 extern "C" void func_ov023_021e71a0(struct Struct_ov023_021e71a0* arg0);
@@ -42,26 +42,26 @@ extern "C" ARM void func_ov023_021e7220(void* arg0, int arg1) {
     *(unsigned char*)((char*)obj + 0x74) = 0;
     *(unsigned char*)((char*)obj + 0x75) = 0;
     BackupSubBgControlRegisters((struct SubBgControlBackup02074b64*)((char*)obj + 0x64));
-    InitStruct0205cfd4((struct InitTarget0205cfd4*)((char*)obj + 0x78));
+    Window_Init((struct InitTarget0205cfd4*)((char*)obj + 0x78));
     KeyTable_Reset((Struct020dfc40*)((char*)obj + 0x4c));
     for (int i = 0; i < 2; i++) {
-        Background_Init((struct List0204af64*)((char*)obj + 0x134 + i * 0x20));
+        Background_Init((struct BackgroundGraphics*)((char*)obj + 0x134 + i * 0x20));
     }
-    for (int var2 = 0; var2 < 5; var2++) {
-        func_0204c684((char*)arg0 + 0x174 + var2 * 0xe0);
+    for (int i = 0; i < 5; i++) {
+        WindowPane_Init((char*)obj + 0x174 + i * 0xe0);
     }
-    *(int*)((char*)arg0 + 0x5d4) = 0;
-    *(int*)((char*)arg0 + 0x5d8) = 0;
-    *(int*)((char*)arg0 + 0x5dc) = 0;
-    *(int*)((char*)arg0 + 0x5e0) = 0;
-    *(int*)((char*)arg0 + 0x5e4) = -1;
-    *(int*)((char*)arg0 + 0x5ec) = 0;
-    *(int*)((char*)arg0 + 0x5e8) = 0;
-    *(int*)((char*)arg0 + 0x5f0) = func_020100a8(var0);
-    *(int*)((char*)arg0 + 0x5f4) = 0;
-    *(int*)((char*)arg0 + 0x5f8) = 0;
-    *(int*)((char*)arg0 + 0x5fc) = 0;
-    *(int*)((char*)arg0 + 0x600) = 0;
+    *(int*)((char*)obj + 0x5d4) = 0;
+    *(int*)((char*)obj + 0x5d8) = 0;
+    *(int*)((char*)obj + 0x5dc) = 0;
+    *(int*)((char*)obj + 0x5e0) = 0;
+    *(int*)((char*)obj + 0x5e4) = -1;
+    *(int*)((char*)obj + 0x5ec) = 0;
+    *(int*)((char*)obj + 0x5e8) = 0;
+    *(int*)((char*)obj + 0x5f0) = GameState_GetProtagonistIndex(battleStruct);
+    *(int*)((char*)obj + 0x5f4) = 0;
+    *(int*)((char*)obj + 0x5f8) = 0;
+    *(int*)((char*)obj + 0x5fc) = 0;
+    *(int*)((char*)obj + 0x600) = 0;
 #if !defined(jpn)
     *(int*)((char*)arg0 + 0x604) = 0;
     *(int*)((char*)arg0 + 0x608) = 0;

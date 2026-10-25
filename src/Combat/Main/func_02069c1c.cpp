@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" double func_020055d4(char* arg0);
-extern "C" int func_020421a0(void);
+extern "C" double func_020055d4(char* str);
+int MessageSystem_GetInstance(void);
 
 // USA: func_02069c1c
 extern "C" ARM int func_02069c1c(char** arg0, char* arg1) {
@@ -23,10 +23,10 @@ extern "C" ARM int func_02069c1c(char** arg0, char* arg1) {
             }
         }
     }
-    char* var4 = (char*)func_020421a0();
-    *(int*)(var4 + 0x1000 + 0x840) = (int)(var0[0] * 4096.0f);
-    void* var5 = *arg0;
-    unsigned short var6 = 0xff2a;
-    memcpy(var5, &var6, 2);
+    char* g = (char*)MessageSystem_GetInstance();
+    *(int*)(g + 0x1000 + 0x840) = (int)(localArr[0] * 4096.0f);
+    void* dst = *obj;
+    unsigned short marker = 0xff2a;
+    memcpy(dst, &marker, 2);
     return 2;
 }

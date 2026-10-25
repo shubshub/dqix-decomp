@@ -26,7 +26,7 @@ enum {
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 
-void* GetGlobal02109400_02094a00();
+void* FontBankLoader_GetInstance();
 
 struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
@@ -39,7 +39,7 @@ extern struct SePlayer g_sePlayer;
 int SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 
 struct Obj021e6e20;
 int TestFlagsAndActiveElement2_021e6e20(struct Obj021e6e20* obj);
@@ -52,7 +52,7 @@ extern "C" void func_ov012_0218943c(void* self);
 extern "C" ARM void func_ov012_02186a7c(char* self) {
 	GameState::GetInstance()->GetResources();
 	BackgroundLoader::GetInstance();
-	GetGlobal02109400_02094a00();
+	FontBankLoader_GetInstance();
 
 	unsigned char state = *(unsigned char*)(self + kStepOffset);
 	if (state == 0) {
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov012_02186a7c(char* self) {
 	if (flag == 0) return;
 	*(unsigned char*)(self + kActiveOffset) = 0;
 	*(int*)(self + kMainChoiceOffset) = 0;
-	ResetEntryList0205d6a0((struct Entry_0205d6a0*)(self + kWindowOffset), 1);
+	Window_ClosePane((struct Entry_0205d6a0*)(self + kWindowOffset), 1);
 	*(unsigned char*)(self + kStateOffset) = 0xf;
 	*(unsigned char*)(self + kStepOffset) = 0;
 }

@@ -3,7 +3,7 @@
 struct Struct_0201099c_3;
 
 int KeyTable_Get(struct Container020e0310 *c, int key);
-int AppendString02042058(char *dst, const char *src);
+int Text_Append(char *dst, const char *src);
 
 struct Struct_ov002_02160004 {
     char unknown_0_[0x6c];
@@ -32,5 +32,5 @@ extern "C" ARM void func_ov002_02160004(char *arg0, char *arg1) {
     }
 
     int name = KeyTable_Get((struct Container020e0310 *) (p + RG(0x20, 8)), (short) (id + 0xfbe));
-    AppendString02042058(dst, (const char *) name);
+    Text_Append(dst, (const char *) name);
 }

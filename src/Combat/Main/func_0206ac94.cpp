@@ -30,7 +30,7 @@ struct Struct_0204254c {
 
 extern bool IsHighByteFF02044494(void* obj, void* src);
 extern bool IsHighByteFF0206ac6c(void* base, void* src);
-extern "C" int func_02001aec(unsigned char* a, unsigned char* b, int n);
+extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
 extern int Func0206abf8(void* obj, void* src);
 struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
@@ -49,10 +49,10 @@ extern "C" ARM int func_0206ac94(void* arg0, unsigned short arg1, unsigned char*
         if (!*var1) {
             break;
         }
-        if (func_0206ac6c(arg0, var1)) {
-            int var2;
-            if (!func_02001aec((unsigned char*)&arg1, var1, 2)) {
-                return (int)var1;
+        if (IsHighByteFF0206ac6c(obj, q)) {
+            int step;
+            if (!memcmp((unsigned char*)&buf, q, 2)) {
+                return (int)q;
             }
             var2 = func_0206abf8(arg0, var1) * 2 + 2;
             var1 += var2;

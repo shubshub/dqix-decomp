@@ -11,8 +11,8 @@ struct ProfileValueState {
 };
 }
 
-void* GetPtrField0x2a04_02010828(GameState* battleStruct);
-int GetGlobalField0x1c020421a0(void);
+void* GameState_GetParty(GameState* battleStruct);
+int MessageSystem_GetInstance(void);
 
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
@@ -25,7 +25,7 @@ int KeyTable_Get(struct Container020e0310* c, int key);
 #if defined(jpn)
 extern "C" void func_020474a8(void* messages, unsigned char font, const char* format, char* output);
 #else
-extern "C" void func_02046608(int a, int b, void* c, void* d, int e, int f, int g);
+extern "C" void MessageSystem_FormatText(int a, int b, void* c, void* d, int e, int f, int g);
 #endif
 
 struct Combatant021e8604 { char pad[0xf74]; int val; };
@@ -35,8 +35,8 @@ struct Combatant021e8604 { char pad[0xf74]; int val; };
 extern "C" ARM void func_ov023_021e8604(void* obj) {
     ProfileValueState* state = static_cast<ProfileValueState*>(obj);
     GameState* battleStruct = GameState::GetInstance();
-    Combatant021e8604* combatant = static_cast<Combatant021e8604*>(GetPtrField0x2a04_02010828(battleStruct));
-    int field = GetGlobalField0x1c020421a0();
+    Combatant021e8604* combatant = static_cast<Combatant021e8604*>(GameState_GetParty(battleStruct));
+    int field = MessageSystem_GetInstance();
     StoreInArray0x8b0_020465c0((struct StoreStruct*)field, 0, combatant->val);
     SetByteAtIndex_020465d8((unsigned char*)field, 0, 1);
     SetByteInRange_020465f0((unsigned char*)field, 0, 0xa);
@@ -44,6 +44,6 @@ extern "C" ARM void func_ov023_021e8604(void* obj) {
 #if defined(jpn)
     func_020474a8(((void*)(field)), 0xa, ((const char*)(key)), state->text);
 #else
-    func_02046608(field, 0xa, ((void*)(key)), state->text, 0x100, 0, 0);
+    MessageSystem_FormatText(field, 0xa, ((void*)(key)), state->text, 0x100, 0, 0);
 #endif
 }

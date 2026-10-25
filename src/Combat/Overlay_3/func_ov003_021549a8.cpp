@@ -40,8 +40,8 @@ extern "C" void func_0207fd44(struct Struct_0207fd44_2* arg0);
 struct Struct_0207fd88;
 extern "C" void func_0207fd88(struct Struct_0207fd88* arg0);
 extern "C" int LoadToMainBG1CharacterData(int src, int offset, unsigned int size);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(void* arg0);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(void* self);
 
 struct Struct_ov003_021549a8 {
     char unknown_0_[Enum_ov003_021549a8_728];
@@ -51,7 +51,7 @@ struct Struct_ov003_021549a8 {
     char unknown_2e7_[Enum_ov003_021549a8_2456 - Enum_ov003_021549a8_743];
     int unknown_998_;
 };
-extern "C" Struct_ov003_021549a8* func_020421a0(void);
+Controller020421a0* MessageSystem_GetInstance(void);
 
 struct Struct_ov003_021549a8_2 {
     SafeAllocator* unknown_0_;
@@ -104,10 +104,10 @@ extern "C" ARM void func_ov003_021549a8(Struct_ov003_021549a8_2* arg0) {
     }
     arg0->unknown_c_ = NULL;
 
-    Struct_ov003_021549a8* var3 = func_020421a0();
-    if (var3->unknown_998_ != 0) {
-        func_02043204((char*)var3);
-        func_02043124(var3);
+    Controller020421a0* g = MessageSystem_GetInstance();
+    if (g->active != 0) {
+        MessageSystem_Reset((char*)g);
+        MessageSystem_Stop(g);
     }
     var3->unknown_2d8_ = 0;
     var3->unknown_2e6_ = 1;

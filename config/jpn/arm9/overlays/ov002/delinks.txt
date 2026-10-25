@@ -471,7 +471,7 @@ src/Combat/Overlay_2/func_ov002_021665b0.cpp:
     complete
     .text start:0x02167068 end:0x0216846c
 
-src/Combat/Overlay_2/func_ov002_0215a658.cpp:
+src/Combat/Overlay_1/AllocateAndRegisterCombatant_0215ba64.cpp:
     complete
     .text start:0x0215ba64 end:0x0215bbac
 
@@ -707,7 +707,7 @@ src/Combat/Overlay_2/func_ov002_0215ce94.cpp:
     complete
     .text start:0x0215dfd0 end:0x0215e184
 
-src/Combat/Overlay_2/func_ov002_0215d950.cpp:
+src/Combat/Overlay_1/StoreField_0215e938_0215e938.cpp:
     complete
     .text start:0x0215e938 end:0x0215eb60
 

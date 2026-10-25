@@ -138,25 +138,25 @@ struct Struct_020a95a4_6 {
     unsigned char unknown_2ca3_[5];
 };
 
-extern "C" void* func_02010828(GameState* arg0);
+void* GameState_GetParty(GameState* gs);
 extern "C" void* func_0202ae18(void);
-extern "C" Struct_020a95a4_2* func_02012fe4(void);
-extern "C" Struct_020a95a4_3* func_02094d6c(void);
-extern "C" void func_020a93e0(char* arg0);
-extern "C" void func_02082d6c(void* arg0, void* arg1);
-extern "C" int func_020838c4(struct Struct_020838c4* arg0, int arg1);
-extern "C" void func_020a093c(struct Struct_0208660c* arg0, int arg1, int arg2, short arg3);
-extern "C" int func_020a0a08(struct Struct_02061c04_23* arg0, int arg1, int arg2);
-extern "C" void func_0207c258(void* arg0);
-extern "C" unsigned short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" unsigned char* func_0207c60c(void* arg0, unsigned int arg1);
-extern "C" short func_0207c620(unsigned char* arg0, unsigned int arg1);
-extern "C" void func_0207c6a8(unsigned char* arg0, unsigned int arg1, unsigned char arg2);
-extern "C" unsigned short* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" void func_0209ca70(void* arg0, int arg1);
-extern "C" void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1);
+extern "C" FieldState* Zone3D_GetInstance(void);
+Global02109418* GetGlobal02109418_02094d6c(void);
+extern "C" void func_020a93e0(char* param0);
+extern "C" void func_02082d6c(void* dst, void* src);
+int RemoveSlotValueAndCompact020838c4(struct Slots020838c4* s, int value);
+void SetFields020a093c(struct Fields020a093c* obj, int a, int b, short c);
+int DecrementKeyValue020a0a08(struct KeyMap020a0a08* map, int key, int amount);
+extern "C" void func_0207c258(void* p);
+unsigned short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* roster, unsigned int idx);
+unsigned char* GetPointerAt0xbf0_0207c60c(void* roster, unsigned int idx);
+short GetShortFromArray0xc10_0207c620(unsigned char* roster, unsigned int idx);
+void SetByteInArray0xc28_0207c6a8(unsigned char* base, unsigned int index, unsigned char value);
+unsigned short* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+void SetModeClamped0209ca70(void* obj, int val);
+void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
 
-extern unsigned char data_02109bf4[];
+extern unsigned char g_bgmPlayer[];
 extern unsigned char g_sePlayer[];
 
 // USA: func_020a95a4
@@ -165,10 +165,10 @@ extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg
 #else
 extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg1, unsigned char* arg2) {
 #endif
-    GameState* var0 = GameState::GetInstance();
-    Struct_020a95a4_8* var1 = static_cast<Struct_020a95a4_8*>(func_02010828(var0));
+    GameState* gs = GameState::GetInstance();
+    BattleData* battle = static_cast<BattleData*>(GameState_GetParty(gs));
     func_0202ae18();
-    Struct_020a95a4_2* var2 = func_02012fe4();
+    FieldState* field = Zone3D_GetInstance();
     GetGameResources();
     Struct_020a95a4_3* var3 = func_02094d6c();
 #if !defined(jpn)
@@ -235,7 +235,7 @@ extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg
     battle->areaId = save->areaId;
     view->value7e74 = save->areaId;
     memcpy(GetField0x74deForValidIndex_020120a0((char*)gs, 0), save->words, sizeof(save->words));
-    SetModeClamped0209ca70(data_02109bf4, save->globalByte);
+    SetModeClamped0209ca70(g_bgmPlayer, save->globalByte);
     SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)g_sePlayer, save->globalByte2);
     battle->byteF7d = save->byteF7d;
     view->byte63dc = save->byte63dc;

@@ -20,28 +20,28 @@ struct Struct_ov000_02178938 {
 };
 
 int CountMatchingValues02175348(void*, int);
-StoreStruct* GetGlobalField0x1c020421a0();
+StoreStruct* MessageSystem_GetInstance();
 int KeyTable_Get(Container020e0310*, int);
 int IsField0x118Equal2_ov000_0217542c(void*);
-int AppendFrameTag02041c08(char*, int, int, int, int, int);
-int AppendCursorTag_02041ea4(char*, int);
-int AppendString02042058(char*, const char*);
+int Text_AppendFrameTag(char*, int, int, int, int, int);
+int Text_AppendCursorTag(char*, int);
+int Text_Append(char*, const char*);
 extern "C" void* __clear(void*, int);
-extern "C" void func_02046380(Struct_020465c0*);
-extern "C" void* func_020e46c4(void*);
-extern "C" GameObject* func_0200fea4(GameState*, int);
-extern "C" void func_020e4ce8(Struct_020200c0_5*, GameObject*, int);
-extern "C" void func_ov000_0217aa08(char*, char*);
-extern "C" void func_020e4f18(Struct_020200c0_5*, Struct_020200c0_5*, int);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" void func_02046608(Struct_020465c0*, int, const char*, char*, int, int, int);
-extern "C" int func_02041b70(char*, int, const char*);
+extern "C" void func_02046380(StoreStruct*);
+void* Clear12Bytes020e46c4(void*);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+extern "C" void func_020e4ce8(NameDescriptor*, GameObject*, int);
+void TrimTrailingLetterCode_0217aa08(char*, char*);
+extern "C" void func_020e4f18(NameDescriptor*, NameDescriptor*, int);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+extern "C" void MessageSystem_FormatText(StoreStruct*, int, const char*, char*, int, int, int);
+int Text_AppendNTag(char*, int, const char*);
 extern char data_ov000_02184060[];
 
 #if defined(jpn)
 extern "C" void func_0203bdf4(char*, char*);
-extern "C" void func_02046574(Struct_020465c0*, int, char*);
-extern "C" void func_020474a8(Struct_020465c0*, int, const char*, char*);
+extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(StoreStruct*, int, char*);
+extern "C" void func_020474a8(StoreStruct*, int, const char*, char*);
 #endif
 
 // USA: func_ov000_0217a688
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
         int var6 = func_ov000_02175348(arg0, var5);
         if (var4 <= var3 && var3 < var4 + var6) var0 = var4;
     }
-    Struct_020465c0* var7 = func_020421a0();
+    StoreStruct* store = MessageSystem_GetInstance();
 #if !defined(jpn)
     GameState* game = GameState::GetInstance();
     const char* separator = (const char*)KeyTable_Get(&self->strings_, 0);
@@ -81,18 +81,18 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
 #else
     if (func_ov000_0217542c(arg0))
 #endif
-        func_02041c08(arg3, var0, 8, 5, 5, 5);
-    func_02041ea4(arg3, var0);
-    for (int var12 = 0; var12 < arg2; ++var12) {
-        int var13 = arg0->unknown_1d1c_[var12];
-        if (var1 == var13) continue;
-        var1 = var13;
-        int var14 = func_ov000_02175348(arg0, var13);
-        if (!var14) continue;
+        Text_AppendFrameTag(output, cursor, 8, 5, 5, 5);
+    Text_AppendCursorTag(output, cursor);
+    for (int i = 0; i < count; ++i) {
+        int group = self->groupIDs_[i];
+        if (previous == group) continue;
+        previous = group;
+        int members = CountMatchingValues02175348(self, group);
+        if (!members) continue;
 #if defined(jpn)
-        if (separated) AppendString02042058(output, (const char*)KeyTable_Get(&self->strings_, 0));
+        if (separated) Text_Append(output, (const char*)KeyTable_Get(&self->strings_, 0));
 #else
-        if (var2) func_02042058(arg3, var9);
+        if (separated) Text_Append(output, separator);
 #endif
 #if defined(jpn)
         char var15[0x20];
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
             func_ov000_0217aa08(var18, var15);
         }
         func_02046380(store);
-        _Z22SetIndexedName02046574P11Obj02046574iPc(store, 0, nameText);
+        _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(store, 0, nameText);
         StoreInArray0x8b0_020465c0(store, 0, members);
         func_020474a8(store, 10, (const char*)KeyTable_Get(&self->strings_, 0x754f), text);
 #else
@@ -138,14 +138,14 @@ extern "C" ARM void func_ov000_0217a688(Struct_ov000_02178938* arg0, void* arg1,
             func_020e4f18(&var23, &var19, 2);
             var19.unknown_8_ &= ~0x80000000;
         }
-        var7->unknown_20_ = &var19;
-        func_020465c0(var7, 0, var14);
-        func_02046608(var7, 10, var10, var16, 0x100, 0, 0);
+        store->names_ = &names;
+        StoreInArray0x8b0_020465c0(store, 0, members);
+        MessageSystem_FormatText(store, 10, format, text, 0x100, 0, 0);
 #endif
-        func_02041b70(arg3, var12, var16);
-        var2 = 1;
+        Text_AppendNTag(output, i, text);
+        separated = 1;
     }
 #if !defined(jpn)
-    func_02042058(arg3, data_ov000_02184060);
+    Text_Append(output, data_ov000_02184060);
 #endif
 }

@@ -14,22 +14,22 @@ extern "C" void func_020531f0(GameObject*);
 extern "C" void func_ov000_02160fa8(void*, int);
 extern "C" int func_ov000_02160fd4(void*, int);
 extern "C" int func_ov017_02195658(GameResources*);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" void func_ov017_021c8b78(unsigned short);
-extern "C" void func_020a367c(unsigned char*, int);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_020535c8(signed char*);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+void EnqueueEventTag122_021c8b78(unsigned short);
+void ClearBitAt0x34_020a367c(unsigned char*, int);
+int GameState_GetProtagonistIndex(GameState*);
+int CheckSubstructByte0x7cPositive_020535c8(signed char*);
 #if defined(jpn)
 #define func_ov000_02165490 func_ov000_02166bdc
 #endif
-extern "C" int func_020535e0(int*);
-extern "C" Struct_020d7aa0_2* func_020d7a50();
-extern "C" void func_020d7aa0(Struct_020d7aa0_2*);
+int IsField0x180NonNegative_020535e0(int*);
+Obj020d7aa0* TextQueue_GetInstance();
+void TextQueue_Reset(Obj020d7aa0*);
 extern "C" void func_ov017_021bd5d0(int);
 extern "C" int func_02046b08(void**);
 extern "C" void func_ov017_02191234(GameResources*);
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_020466e4(unsigned int*, unsigned int);
+unsigned int* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int*, unsigned int);
 extern "C" void func_02012de8();
 extern "C" void func_ov000_02164280(void*);
 extern "C" void func_ov000_02166e5c(void*);
@@ -90,26 +90,26 @@ extern "C" ARM void func_ov000_02163db4(Struct_ov000_02163db4_2* arg0) {
         }
         inline_ov000_02163db4((unsigned char*)var6, var7);
     }
-    if (arg0->unknown_2a0_->unknown_2a_ != func_020100a8(var0) && !func_ov000_02160fd4(arg0, 2)) return;
-    for (int var8 = 0; var8 < 4; var8++) {
-        GameObject* var9 = func_0200ff1c(var0, var8);
-        if (!var9) continue;
-        if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var8 & 0xff)) {
-            if (func_020535c8((signed char*)var9)) func_020531f0(var9);
+    if (scene->config->partyId != GameState_GetProtagonistIndex(state) && !GetCombatWorkFlags0x55f4_ov000_02160fd4(scene, 2)) return;
+    for (int i = 0; i < 4; i++) {
+        GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(state, i);
+        if (!combatant) continue;
+        if (TestBitAt0x34_020a35e0((unsigned char*)scene->config, i & 0xff)) {
+            if (CheckSubstructByte0x7cPositive_020535c8((signed char*)combatant)) func_020531f0(combatant);
         } else {
             if (func_020535e0((int*)var9)) func_020531f0(var9);
         }
     }
-    func_020d7aa0(func_020d7a50());
-    if (arg0->unknown_2a0_->unknown_c_ >= 0) func_ov017_021bd5d0(arg0->unknown_2a0_->unknown_c_);
-    if (var2->GetNumQueuedTasks() > 0) return;
-    if (!func_02046b08((void**)var1->unknown_ptr_array_36fc[1])) return;
-    func_ov017_02191234(var1);
-    SetFlags00(var1, 0x10);
-    unsigned int* var10 = func_020d6c00();
-    func_020466e4(var10, 1);
-    func_020466e4(var10, 2);
-    func_020466e4(var10, 0x2000);
+    TextQueue_Reset(TextQueue_GetInstance());
+    if (scene->config->mode >= 0) func_ov017_021bd5d0(scene->config->mode);
+    if (loader->GetNumQueuedTasks() > 0) return;
+    if (!IsField0Null_02046b08((void**)resources->unknown_ptr_array_3700[0])) return;
+    func_ov017_02191234(resources);
+    SetFlags00(resources, 0x10);
+    unsigned int* data = GlobalFlags_GetInstance();
+    FlagWord_SetBits(data, 1);
+    FlagWord_SetBits(data, 2);
+    FlagWord_SetBits(data, 0x2000);
     func_02012de8();
     func_ov000_02164280(arg0);
     if (arg0->unknown_2a0_->unknown_c_ == 0x1a && !var0->GetGameObjectByIndex(1)) func_ov000_02166e5c(arg0);

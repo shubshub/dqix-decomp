@@ -56,7 +56,7 @@ struct Struct_ov012_0218ab34_3 {
 
 KeyboardCanvas* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 const char* FindEntryByKey_02072a68(struct TableA68* table, int key);
-extern "C" int func_020420e8(const char* text, int large);
+extern "C" int Font_GetTextWidth(const char* text, int large);
 void SetField0xa0AndByte0xc4IfFlag0x1Clear_0204f160(unsigned char* obj, int value, int key);
 extern "C" void func_0204ecb4(KeyboardCanvas* wnd, int a, int b, int w, int h, signed char* margins);
 extern "C" void func_0204f41c(KeyboardCanvas* ctx, short x, short y, const char* str, int size,
@@ -77,10 +77,10 @@ extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
     if (var0 == NULL)
         return;
 
-    short var1 = var0->unknown_ac_ * 8;
-    short var2 = var0->unknown_ae_ * 8;
-    const char* var3 = func_02072a68((struct Struct_02072a68_2*)arg0->unknown_133c_, 0xe);
-    int var4 = (0xf0 - func_020420e8(var3, 1)) >> 1;
+    short originX = canvas->originX_ * 8;
+    short originY = canvas->originY_ * 8;
+    const char* title = FindEntryByKey_02072a68((struct TableA68*)self->texts_, 0xe);
+    int titleX = (0xf0 - Font_GetTextWidth(title, 1)) >> 1;
 
     Struct_ov003_0215f4e4* var5 = arg0->unknown_0_;
     Struct_ov012_0218ab34* var6 = arg0->unknown_4_;
@@ -119,7 +119,7 @@ extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
         if (var10->unknown_d_ != 0)
             var18 = var17;
 
-        int textWidth = func_020420e8(text, 1);
+        int textWidth = Font_GetTextWidth(text, 1);
         Keyboard_GetKeySize(key->size_, &width, &height);
         short x = key->x_ - originX;
         short y = key->y_ - originY;

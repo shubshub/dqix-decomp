@@ -11,7 +11,7 @@
 #define data_ov010_02184aa6 data_ov010_02185b54
 #endif
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern int g_sePlayer;
 extern const char data_ov010_02184a80[];
 extern const char data_ov010_02184a95[];
@@ -20,9 +20,9 @@ extern const char data_ov010_02184aa6[];
 struct Struct_ov010_021842d8;
 extern "C" void func_ov010_021842d8(struct Struct_ov010_021842d8* arg0);
 
-struct Struct_02018300_3;
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
+struct Obj020397cc;
+void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 
 struct Struct_020727d8 {
     void* unknown_0_;
@@ -37,9 +37,9 @@ extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void SetForwardAndStore0205ebc0(void* obj, int a, int b);
-void DispatchIfField0xc4NonNeg_0205ebfc(void* obj, int a, int b);
-void ForwardField0xc0_0205ebec(void* obj);
+void SePlayer_LoadExtraArchiveB(void* obj, int a, int b);
+void SePlayer_PlayExtra(void* obj, int a, int b);
+void SePlayer_UnloadExtraArchiveB(void* obj);
 
 struct Struct_0204bd7c;
 extern "C" unsigned short func_0204bd7c(struct Struct_0204bd7c* arg0);
@@ -55,21 +55,21 @@ struct Struct_02099950 {
 struct Struct_02095924_2;
 extern "C" struct Struct_02099950* func_02099950(struct Struct_02095924_2* arg0, int arg1);
 
-extern "C" void* func_02033fa0(void* arg0);
-extern "C" void* func_02011584(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" unsigned char func_020100b0(GameState* arg0);
+void* GetPtrField0x114_02033fa0(void* obj);
+void* GetPtrField0x468_02011584(void* obj);
+int GameState_GetProtagonistIndex(GameState* b);
+void* GetField0x74deForValidIndex_020120a0(char* base, unsigned int index);
+unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 
 struct Struct_020340b4;
 extern "C" void func_020340b4(struct Struct_020340b4* arg0);
 
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void func_02046380(void* arg0);
-extern "C" int func_020457e0(void* arg0);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" void func_02046380(void* global);
+extern "C" int func_020457e0(void* global);
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 
@@ -86,8 +86,8 @@ struct Struct_02048350_2;
 extern "C" int func_02048350(struct Struct_02048350_2* arg0, int arg1);
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_0202c508(void* arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_0202c508(void* obj);
 
 struct Struct_ov010_02184354 { short unknown_0_; short unknown_2_; short unknown_4_; };
 extern "C" void func_ov017_021d360c(int arg0, unsigned char arg1, int arg2, struct Struct_ov010_02184354 arg3);
@@ -111,7 +111,7 @@ struct Struct_ov010_02184354_4 {
     unsigned char unknown_0_[0xc];
     unsigned char unknown_c_;
 };
-extern "C" Struct_02021b84* func_020421a0(void);
+MessageSystem* MessageSystem_GetInstance(void);
 
 struct Struct_ov010_02184354_5 {
     unsigned char unknown_0_[8];
@@ -157,22 +157,22 @@ struct Struct_ov010_02184354_8 {
 };
 
 // USA: func_ov010_02184354
-extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    Struct_02021b84* var1 = func_020421a0();
-    GameState* var2 = GameState::GetInstance();
-    GameObject* var3;
-    struct Struct_ov010_02184354_2* var4;
+extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    MessageSystem* presenter = MessageSystem_GetInstance();
+    GameState* bs = GameState::GetInstance();
+    GameObject* caster;
+    struct MoveRecord02184354* move;
 #if defined(jpn)
     struct Struct_ov010_02184354_4* var5 = *(Struct_ov010_02184354_4**)((char*)GetGameResources() + 0x3988);
 #else
     struct Struct_ov010_02184354_4* var5 = *(Struct_ov010_02184354_4**)((char*)GetGameResources() + 0x3ba8);
 #endif
-    var3 = var2->GetPartyMemberByIndex(var5->unknown_c_);
-    GameObject* var6 = var2->GetPartyMemberByIndex(func_020100b0(var2));
-    void* var7 = func_0202ae18();
-    void* var8 = GetGameResources();
-    var4 = (struct Struct_ov010_02184354_2*)func_02012fe4();
+    caster = bs->GetPartyMemberByIndex(actorInfo->combatantId);
+    GameObject* active = bs->GetPartyMemberByIndex(GameState_GetLeaderIndex(bs));
+    void* scene = func_0202ae18();
+    void* ov17 = GetGameResources();
+    move = (struct MoveRecord02184354*)Zone3D_GetInstance();
 #if defined(jpn)
     char var9[200];
 #endif
@@ -182,12 +182,12 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         return 1;
     }
 
-    unsigned char var10 = arg0->unknown_0_;
-    if (var10 == 0) {
-        func_020397cc((struct Struct_02018300_3*)var6, 1);
-        void* var11 = func_02012d88(&data_02114e20, 0x7800);
-        if (var11 == NULL) {
-            func_ov010_021842d8((struct Struct_ov010_021842d8*)arg0);
+    unsigned char state = obj->state;
+    if (state == 0) {
+        GameObject_DisableControl((struct Obj020397cc*)active, 1);
+        void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x7800);
+        if (buffer == NULL) {
+            ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
             return 1;
         }
         arg0->unknown_14_.CreateTypeA(var11, 0x7800);
@@ -210,9 +210,9 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         func_020728ac(&arg0->unknown_c_, &arg0->unknown_14_, var12, var13, 0, 0, 0);
         var0->RemoveTask(arg0->unknown_4_);
 
-        unsigned short* var14 = (unsigned short*)func_020120a0((char*)var2, func_020100a8(var2));
-        if (var14 == NULL) {
-            func_ov010_021842d8((struct Struct_ov010_021842d8*)arg0);
+        unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
+        if (slot == NULL) {
+            ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
             return 1;
         }
         struct Struct_ov010_02184354_3* var15 = var4->unknown_8_;
@@ -260,12 +260,12 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         func_0204500c(var1, var9, 0);
         var1->unknown_998_ = 1;
 #else
-        struct Struct_ov010_02184354_6 var23;
-        func_020e4bf4(&var23, var5->unknown_c_);
-        func_02046380(var1);
-        *(void**)var1 = &var23;
-        func_0204500c(var1, (const char*)var22, 0, 0xe3);
-        var1->unknown_998_ = 1;
+        struct Vec3i02184354 casterObj;
+        NameText_InitFromPartyMember(&casterObj, actorInfo->combatantId);
+        func_02046380(presenter);
+        *(void**)presenter = &casterObj;
+        func_0204500c(presenter, (const char*)entry, 0, 0xe3);
+        presenter->active = 1;
 #endif
     } else if (var10 == 2) {
 #if defined(jpn)
@@ -280,15 +280,15 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             func_0204500c(var1, var9, 0);
             var1->unknown_998_ = 1;
 #else
-            struct Struct_ov010_02184354_6 var25;
-            func_020e4bf4(&var25, var5->unknown_c_);
-            func_02046380(var1);
-            *(void**)var1 = &var25;
-            func_0204500c(var1, (const char*)var24, 0, 0xe3);
-            var1->unknown_998_ = 1;
+            struct Vec3i02184354 casterObj;
+            NameText_InitFromPartyMember(&casterObj, actorInfo->combatantId);
+            func_02046380(presenter);
+            *(void**)presenter = &casterObj;
+            func_0204500c(presenter, (const char*)entry, 0, 0xe3);
+            presenter->active = 1;
 #endif
             SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
-            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GetField0x3acValue_020100a8(bs));
+            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
             if (slot != NULL) *slot = 0;
             obj->state = 4;
         } else {
@@ -309,8 +309,8 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
             arg0->unknown_2_ = arg0->unknown_2_ + 1;
             return 0;
         }
-        SetForwardAndStore0205ebc0(&g_sePlayer, 0x74, 0x74);
-        DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, 0, 0);
+        SePlayer_LoadExtraArchiveB(&g_sePlayer, 0x74, 0x74);
+        SePlayer_PlayExtra(&g_sePlayer, 0, 0);
 
         void* var27;
         unsigned int var28;
@@ -322,7 +322,7 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         char* var29 = (char*)var8 + 0x2cc;
 #endif
         struct Vec3i02184354 pos = *(struct Vec3i02184354*)((char*)caster + 0x44);
-        CopyInternalFields0207df50((struct Foo0207df50*)(stage + 0xc40));
+        VramState_Rewind((struct Foo0207df50*)(stage + 0xc40));
         VramState_Restore(stage + 0xc40);
         void* nodes = func_02057924();
         CreateAndRegisterNode02057de0((struct NodeList02057de0*)nodes, 0x11, &obj->alloc,
@@ -373,13 +373,13 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         var34.unknown_2_ = (short)(var30.unknown_4_ >> 4);
         var34.unknown_4_ = (short)(var30.unknown_8_ >> 4);
 
-        if (func_0202c508(var7) != 0) {
-            unsigned short* var35 = (unsigned short*)func_020120a0((char*)var2, func_020100a8(var2));
-            if (var35 != NULL) {
-                var35[0] = var4->unknown_0_;
-                var35[1] = var34.unknown_0_;
-                var35[2] = var34.unknown_2_;
-                var35[3] = var34.unknown_4_;
+        if (func_0202c508(scene) != 0) {
+            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
+            if (slot != NULL) {
+                slot[0] = move->id;
+                slot[1] = anchor.x;
+                slot[2] = anchor.y;
+                slot[3] = anchor.z;
             }
         }
 
@@ -392,12 +392,12 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         if (var37 != NULL) {
             func_020340b4((struct Struct_020340b4*)var37);
         }
-        func_ov017_021d360c(0, func_020100a8(var2), var4->unknown_0_, var34);
-        arg0->unknown_0_ = 3;
-    } else if (var10 == 3) {
-        GameState* var38 = GameState::GetInstance();
-        int var39 = 0;
-        if (arg0->unknown_1_ != 0) {
+        func_ov017_021d360c(0, GameState_GetProtagonistIndex(bs), move->id, anchor);
+        obj->state = 3;
+    } else if (state == 3) {
+        GameState* now = GameState::GetInstance();
+        int finished = 0;
+        if (obj->visible != 0) {
 #if defined(jpn)
             if (var38->GetGameObjectByIndex(arg0->unknown_8_) == NULL && var1->unknown_998_ == 0) {
 #else
@@ -414,7 +414,7 @@ extern "C" ARM int func_ov010_02184354(struct Struct_ov010_02184354_8* arg0) {
         }
         if (finished != 0) {
             ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
-            ForwardField0xc0_0205ebec(&g_sePlayer);
+            SePlayer_UnloadExtraArchiveB(&g_sePlayer);
             return 1;
         }
     }

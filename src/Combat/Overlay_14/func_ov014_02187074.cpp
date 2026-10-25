@@ -87,7 +87,7 @@ struct Obj2081;
 struct SePlayer;
 
 Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
-bool CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char*);
+bool WindowPane_IsOpen(unsigned char*);
 void SePlayer_Play(SePlayer*, int, int);
 void ClearSublistEntriesFlag4_020804fc(void*, int);
 
@@ -109,9 +109,9 @@ inline short inline_ov014_02187074(short arg0)
 // USA: func_ov014_02187074
 extern "C" ARM bool func_ov014_02187074(Struct_ov014_02186bc8* arg0)
 {
-    bool var0 = false;
-    Struct_ov006_02158478* var1 = func_02081da8((Struct_0207fdcc_2*)arg0->unknown_c0_, 4);
-    if (var1 != NULL && func_0204c7e0((unsigned char*)var1))
+    bool toggle = false;
+    Canvas* canvas = FindElementByByte0xc4_02081da8((Obj2081*)self->menu_, 4);
+    if (canvas != NULL && WindowPane_IsOpen((unsigned char*)canvas))
     {
         short var2 = var1->unknown_ae_;
         short var3 = var1->unknown_aa_;

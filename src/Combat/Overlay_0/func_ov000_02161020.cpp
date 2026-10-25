@@ -30,25 +30,25 @@ struct Struct_ov000_02161020_3 {
 };
 
 extern "C" void* func_02057924(void);
-extern "C" Struct_ov000_02161020_2* func_02012fe4(void);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_02032fdc(GameObject* arg0, int arg1, int arg2);
-extern "C" void func_02057ab8(void* arg0, int arg1);
-extern "C" void func_0208f87c(const void* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_020d76b8(Struct_020d76b8* arg0, int arg1);
-extern "C" void func_020d76d8(unsigned char* arg0, int arg1);
+extern "C" RenderCtx02161020* Zone3D_GetInstance(void);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
+extern "C" int func_02032fdc(GameObject* obj, int a1, int a2);
+extern "C" void func_02057ab8(void* g, int id);
+void SyncBattleState0208f87c(const void* pos, int color, int scale, int alpha, int polygonId);
+void SetRemappedBitAt0xa26_020d76b8(RemapFlagOwner* obj, int index);
+void ClearFlagBit_020d76d8(unsigned char* base, int bit);
 
 // USA: func_ov000_02161020
-extern "C" ARM void func_ov000_02161020(Struct_ov000_02161020* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    void* var2 = func_02057924();
-    Struct_ov000_02161020_2* var3 = func_02012fe4();
-    Struct_020d76b8* var4 = arg0->unknown_ea4_;
-    unsigned short var5 = var3->unknown_38_;
-    for (int var6 = 0; var6 < 8; var6++) {
-        GameObject* var7 = func_0200fea4(var0, var6 + 0xc0);
-        if (var7 == NULL) {
+extern "C" ARM void func_ov000_02161020(BattleWork02161020* work) {
+    GameState* bs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    void* g = func_02057924();
+    RenderCtx02161020* ctx = Zone3D_GetInstance();
+    RemapFlagOwner* owner = work->remapOwner;
+    unsigned short color = ctx->color;
+    for (int i = 0; i < 8; i++) {
+        GameObject* c = GetCombatantWithFlag0x400_0200fea4(bs, i + 0xc0);
+        if (c == NULL) {
             continue;
         }
         if (!var7->obj3D_.IsVisible()) {

@@ -20,8 +20,8 @@ struct Struct_ov005_02156ecc_2;
 struct Struct_ov005_02156ecc;
 extern "C" void func_ov005_02157174(Struct_ov005_02156ecc*, Struct_ov005_02156ecc_2*);
 
-struct Struct_0205bb84;
-int GridCursor_GetSelectedIndex(Struct_0205bb84*);
+struct GridCursor;
+int GridCursor_GetSelectedIndex(GridCursor*);
 extern "C" int GridCursor_Update(void*, int);
 int CheckFlag30Or401_02157190(void*);
 char* GetField1c_021a193c(int*);
@@ -114,7 +114,7 @@ extern "C" ARM void func_ov005_0215b2bc(Struct_ov000_0217ab8c* arg0) {
             found = 1;
             unsigned int tick = GameState::GetInstance()->GetTickCount();
             GridCursor_Update(self->scale_, tick ? tick : found);
-            sel = GridCursor_GetSelectedIndex((Struct_0205bb84*)&self->scale_[0]);
+            sel = GridCursor_GetSelectedIndex((GridCursor*)&self->scale_[0]);
             if (CheckFlag30Or401_02157190(self)) flag2 = 1;
         }
         if (var0 != 0 && arg0->unknown_3dbc_ != var2) {
@@ -125,7 +125,7 @@ extern "C" ARM void func_ov005_0215b2bc(Struct_ov000_0217ab8c* arg0) {
             arg0->unknown_3dbd_ = arg0->unknown_3dfc_[var2 & 0xff];
         }
         self->f3dbb_ = self->kind_;
-        MenuTail* hold = (MenuTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
+        MenuTail* hold = (MenuTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
         DispatchByIdxAndCond021551fc((char*)self, hold->index, 0);
         if (flag2 == 0) return;
         SePlayer_Play(&g_sePlayer, 1, 0);

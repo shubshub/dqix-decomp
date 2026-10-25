@@ -4,8 +4,8 @@
 #include "std_library_functions.h"
 #include <globaldefs.h>
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_3;
+struct ItemTable;
+struct Container020e0310;
 
 struct Struct_ov003_021760cc {
     char unknown_0_[0x1a];
@@ -64,14 +64,14 @@ struct Struct_ov003_021760cc_5 {
     short unknown_1048_;
 };
 
-extern "C" int func_02042058(char *, const char *);
-extern "C" Struct_ov003_021760cc_4 *func_020421a0();
+int Text_Append(char *, const char *);
+Messages021760cc *MessageSystem_GetInstance();
 extern "C" void __clear(void *, int);
 void Clear12Bytes020e46c4(void *);
 extern "C" void func_020e5334(Loaded021760cc *, void *, unsigned int, int);
 extern "C" void func_02046380(Messages021760cc *);
-void InitObjFromCombatantId020e4bf4(void *, int);
-Element021760cc *FindElementByKey020dedd0(Container020dedd0 *, int);
+void NameText_InitFromPartyMember(void *, int);
+Element021760cc *ItemTable_Find(ItemTable *, int);
 int ComputeRatio_02175898(char *, void *);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(StoreStruct *, int, int);
@@ -82,8 +82,8 @@ extern "C" void func_0204500c(Struct_ov003_021760cc_4 *, const char *, int);
 extern "C" void func_0204500c(Struct_ov003_021760cc_4 *, const char *, int, int);
 #endif
 extern "C" void func_ov003_021749c0(char *);
-extern "C" void func_02043204(char *);
-extern "C" void func_02043124(Struct_ov003_021760cc_4 *);
+void MessageSystem_Reset(char *);
+extern "C" void MessageSystem_Stop(Messages021760cc *);
 
 extern const char data_ov003_02180b9f[];
 extern const char data_ov003_02180bb5[];
@@ -114,21 +114,21 @@ struct Struct_ov003_021760cc_2 {
     unsigned short unknown_fc2_;
     short unknown_fc4_;
 };
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2 *, int, char *);
-extern "C" char *func_020e046c(char *arg0, void *arg1, unsigned int arg2, int arg3);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574 *, int, char *);
+extern "C" char *func_020e046c(char *buf, void *data, unsigned int size, int idx);
 extern const char data_ov003_0217eddd[];
 extern const unsigned char data_ov003_0217e326[];
 extern const unsigned char data_ov003_0217e320[];
 
 // USA: func_ov003_021760cc
-extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_2 *arg0) {
-    BackgroundLoader *var0 = BackgroundLoader::GetInstance();
-    Struct_ov003_021760cc_4 *var1   = func_020421a0();
-    if (arg0->unknown_fbc_ == 0) {
-        if (arg0->unknown_f68_ > 0) {
-            var0->RemoveTask(arg0->unknown_f68_);
-            arg0->unknown_f68_ = -1;
+extern "C" ARM void func_ov003_021760cc(MenuJ021760cc *menu) {
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
+    Messages021760cc *msgs   = MessageSystem_GetInstance();
+    if (menu->step == 0) {
+        if (menu->task > 0) {
+            loader->RemoveTask(menu->task);
+            menu->task = -1;
         }
         arg0->unknown_f68_ = var0->QueueLoadFile(data_ov003_0217eddd, 0);
         arg0->unknown_fbc_++;
@@ -146,34 +146,34 @@ extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_2 *arg0) {
                     func_020e046c(var2, var3, var4, arg0->unknown_fb6_);
                 }
             }
-            var0->RemoveTask(arg0->unknown_f68_);
-            short var5 = arg0->unknown_fb2_;
-            func_02046380(var1);
-            GameObject *var6 = GameState::GetInstance()->GetPartyMemberByIndex(arg0->unknown_fbf_);
-            if (var6) {
-                func_02046574((Struct_02046574_2 *) var1, 0, (char *) var6->baseStats_);
+            loader->RemoveTask(menu->task);
+            short cur = menu->cur;
+            func_02046380(msgs);
+            GameObject *member = GameState::GetInstance()->GetPartyMemberByIndex(menu->character);
+            if (member) {
+                MessageSystem_SetStringArgument((Obj02046574 *) msgs, 0, (char *) member->baseStats_);
             }
-            Struct_ov003_021760cc *var7 = func_020dedd0((Struct_0201099c_10 *) arg0->unknown_7f0_, arg0->unknown_fb6_);
-            if (var7) {
-                int var8;
-                if (arg0->unknown_f80_ == 4) {
-                    var8 = func_ov003_02175898((char *) arg0, var7);
+            Element021760cc *element = ItemTable_Find((ItemTable *) menu->container, menu->selected);
+            if (element) {
+                int value;
+                if (menu->mode == 4) {
+                    value = ComputeRatio_02175898((char *) menu, element);
                 } else {
                     var8 = var7->unknown_1a_;
                 }
-                var8 *= arg0->unknown_fb8_;
-                func_02046574((Struct_02046574_2 *) var1, 1, var2);
-                func_020465c0((Struct_020465c0 *) var1, 0, var8);
-                func_020465c0((Struct_020465c0 *) var1, 1, arg0->unknown_fb8_);
+                value *= menu->count;
+                MessageSystem_SetStringArgument((Obj02046574 *) msgs, 1, title);
+                StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, value);
+                StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 1, menu->count);
             }
             unsigned char kind = menu->kind;
             char *first  = (char *) KeyTable_Get((Container020e0310 *) menu->messages, (short) (data_ov003_0217e326[kind] + 0x25));
             char *second = (char *) KeyTable_Get((Container020e0310 *) menu->messages, (short) (data_ov003_0217e320[kind] + 0x25));
-            SetIndexedName02046574((Obj02046574 *) msgs, 2, first);
-            SetIndexedName02046574((Obj02046574 *) msgs, 3, second);
+            MessageSystem_SetStringArgument((Obj02046574 *) msgs, 2, first);
+            MessageSystem_SetStringArgument((Obj02046574 *) msgs, 3, second);
             if (menu->flags & 0x200) {
                 char *text = msgs->text;
-                AppendString02042058(text, KeyTable_Get((Container020e0310 *) menu->messages, cur));
+                Text_Append(text, KeyTable_Get((Container020e0310 *) menu->messages, cur));
                 char *buffer = msgs->buffer;
                 memset(buffer, 0, 0x800);
                 memcpy(buffer, text, 0x800);
@@ -197,15 +197,15 @@ extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_2 *arg0) {
                     func_ov003_021749c0((char *) arg0);
                     arg0->unknown_fc2_ &= ~0x2000;
                 }
-            } else if (var1->unknown_870_ == 3) {
-                *(unsigned char *) ((char *) func_020421a0() + 0x17de) = 0;
-                arg0->unknown_fb2_  = arg0->unknown_fb4_;
-                arg0->unknown_fb4_ = -1;
-                if (arg0->unknown_fb2_ < 0) {
-                    if (arg0->unknown_fc2_ & 0x20) {
-                        func_02043204((char *) var1);
-                        func_02043124(var1);
-                        arg0->unknown_fc2_ &= ~0x20;
+            } else if (msgs->state == 3) {
+                *(unsigned char *) ((char *) MessageSystem_GetInstance() + 0x17de) = 0;
+                menu->cur  = menu->next;
+                menu->next = -1;
+                if (menu->cur < 0) {
+                    if (menu->flags & 0x20) {
+                        MessageSystem_Reset((char *) msgs);
+                        MessageSystem_Stop(msgs);
+                        menu->flags &= ~0x20;
                     }
                     if (arg0->unknown_fc2_ & 0x2000) {
                         func_ov003_021749c0((char *) arg0);
@@ -219,13 +219,13 @@ extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_2 *arg0) {
 }
 #else
 // USA: func_ov003_021760cc
-extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_5 *arg0) {
-    BackgroundLoader *var14 = BackgroundLoader::GetInstance();
-    Struct_ov003_021760cc_4 *var15   = func_020421a0();
-    if (arg0->unknown_1040_ == 0) {
-        if (arg0->unknown_fec_ >= 0) {
-            var14->RemoveTask(arg0->unknown_fec_);
-            arg0->unknown_fec_ = -1;
+extern "C" ARM void func_ov003_021760cc(Menu021760cc *menu) {
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
+    Messages021760cc *msgs   = MessageSystem_GetInstance();
+    if (menu->step == 0) {
+        if (menu->task >= 0) {
+            loader->RemoveTask(menu->task);
+            menu->task = -1;
         }
         arg0->unknown_fec_ = var14->QueueLoadFileInGP2(data_ov003_02180b9f, data_ov003_02180bb5, 0);
         arg0->unknown_1040_++;
@@ -250,24 +250,24 @@ extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_5 *arg0) {
                     func_020e5334(&var18, var20, var21, arg0->unknown_103a_);
                 }
             }
-            var14->RemoveTask(arg0->unknown_fec_);
-            arg0->unknown_fec_ = -1;
-            short var22  = arg0->unknown_1036_;
-            func_02046380(var15);
-            func_020e4bf4(var19, arg0->unknown_1043_);
-            var15->unknown_10_             = var19;
-            Struct_ov003_021760cc *var23 = func_020dedd0(
-                (Struct_0201099c_10 *) (arg0->unknown_74_ + 0x800), arg0->unknown_103a_);
-            if (var23) {
-                int var24 = (arg0->unknown_1004_ == 4 ? func_ov003_02175898((char *) arg0, var23) : var23->unknown_1a_);
-                var24 *= arg0->unknown_103c_;
-                func_020465c0((Struct_020465c0 *) var15, 0, var24);
-                func_020465c0((Struct_020465c0 *) var15, 1, arg0->unknown_103c_);
+            loader->RemoveTask(menu->task);
+            menu->task = -1;
+            short cur  = menu->cur;
+            func_02046380(msgs);
+            NameText_InitFromPartyMember(name, menu->character);
+            msgs->target             = name;
+            Element021760cc *element = ItemTable_Find(
+                (ItemTable *) (menu->container + 0x800), menu->selected);
+            if (element) {
+                int value = (menu->mode == 4 ? ComputeRatio_02175898((char *) menu, element) : element->value);
+                value *= menu->count;
+                StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 0, value);
+                StoreInArray0x8b0_020465c0((StoreStruct *) msgs, 1, menu->count);
             }
             msgs->loaded = &loaded;
             if (menu->flags & 0x200) {
                 char *text = msgs->text;
-                AppendString02042058(
+                Text_Append(
                     text, KeyTable_Get((Container020e0310 *) (menu->messages), cur));
                 char *buffer = msgs->buffer;
                 memset(buffer, 0, 0x960);
@@ -294,15 +294,15 @@ extern "C" ARM void func_ov003_021760cc(Struct_ov003_021760cc_5 *arg0) {
                     func_ov003_021749c0((char *) arg0);
                     arg0->unknown_1046_ &= ~0x2000;
                 }
-            } else if (var15->unknown_9a0_ == 3) {
-                *(unsigned char *) ((char *) func_020421a0() + 0x19ae) = 0;
-                arg0->unknown_1036_                                                                = arg0->unknown_1038_;
-                arg0->unknown_1038_                                                               = -1;
-                if (arg0->unknown_1036_ < 0) {
-                    if (arg0->unknown_1046_ & 0x20) {
-                        func_02043204((char *) var15);
-                        func_02043124(var15);
-                        arg0->unknown_1046_ &= ~0x20;
+            } else if (msgs->state == 3) {
+                *(unsigned char *) ((char *) MessageSystem_GetInstance() + 0x19ae) = 0;
+                menu->cur                                                                = menu->next;
+                menu->next                                                               = -1;
+                if (menu->cur < 0) {
+                    if (menu->flags & 0x20) {
+                        MessageSystem_Reset((char *) msgs);
+                        MessageSystem_Stop(msgs);
+                        menu->flags &= ~0x20;
                     }
                     if (arg0->unknown_1046_ & 0x2000) {
                         func_ov003_021749c0((char *) arg0);

@@ -28,25 +28,25 @@ struct Struct_02048e2c {
     Struct_02048e2c_2* unknown_13c_;
 };
 
-extern "C" int func_02049ee8(unsigned char*);
-struct Struct_02048f64_2;
-extern "C" void func_020494c0(Struct_02048f64_2*);
-struct Struct_02033b58;
-extern "C" void func_02033b58(Struct_02033b58*, unsigned char);
-struct Struct_02033b68;
-extern "C" void func_02033b68(Struct_02033b68*, int);
-struct Struct_02048f64_3;
-extern "C" void func_02049520(Struct_02048f64_3*);
-struct Struct_02048f64;
-extern "C" void func_02049a74(Struct_02048f64*);
-struct Struct_02048c90;
-extern "C" void func_02048c90(Struct_02048c90*);
-extern "C" void func_02049390(unsigned char*, unsigned char);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
-struct Struct_02033834_2;
-extern "C" void func_02033834(Struct_02033834_2*, int);
-extern "C" Vector3i func_ov025_021ee488(Vector3i* arg0, int arg1, int arg2);
+int GetSubstructByte0x56_02049ee8(unsigned char*);
+struct Obj020494c0;
+void DispatchTargetByte020494c0(Obj020494c0*);
+struct Foo02033b58;
+void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+struct Obj02033b68;
+void GameObject_SetMotionState(Obj02033b68*, int);
+struct Obj02049520;
+void ClearSubFieldsAndFlag02049520(Obj02049520*);
+struct Obj02049a74;
+void ApplyFlag0x4IfEligible02049a74(Obj02049a74*);
+struct Obj02048c90;
+void ResetInnerState02048c90(Obj02048c90*);
+void SetSubstructByte0x1c_02049390(unsigned char*, unsigned char);
+struct Bytes02033b88;
+void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+struct Obj02033834;
+void GameObject_SetFacing(Obj02033834*, int);
+extern "C" Vector3i func_ov025_021ee488(Vector3i* points, int count, int progress);
 
 static inline Struct_02048cf0 inline_02048e2c_2(const int& arg0) {
     return func_ov000_0216f74c(const_cast<int*>(&arg0));
@@ -124,8 +124,8 @@ extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
             func_02033b58((Struct_02033b58*)arg0, 0);
             var22 = 0;
         }
-    } else if (func_02049ee8((unsigned char*)arg0)) {
-        func_02033b68((Struct_02033b68*)arg0, 1);
+    } else if (GetSubstructByte0x56_02049ee8((unsigned char*)actor)) {
+        GameObject_SetMotionState((Obj02033b68*)actor, 1);
     }
 
     short var24 = var21 * 12;
@@ -156,13 +156,13 @@ extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
         var22 = 0;
     }
 
-    Vector3i var26 = arg0->unknown_44_;
-    Vector3i var27;
-    Vector3fix_Subtract(&var25, &var26, &var27);
-    Vector3fix_Normalize(&var27, &var27);
-    fix32_t var28   = fix32ReduceAngle0To2Pi(fix32_Atan2(var27.x, var27.z));
-    arg0->unknown_44_ = var25;
-    if (var22) {
-        func_02033834((Struct_02033834_2*)arg0, var28);
+    Vector3i current = actor->position;
+    Vector3i delta;
+    Vector3fix_Subtract(&target, &current, &delta);
+    Vector3fix_Normalize(&delta, &delta);
+    fix32_t angle   = fix32ReduceAngle0To2Pi(fix32_Atan2(delta.x, delta.z));
+    actor->position = target;
+    if (keepFacing) {
+        GameObject_SetFacing((Obj02033834*)actor, angle);
     }
 }

@@ -4,14 +4,14 @@
 #include "NitroSDK/Memory/SignedAllocator.h"
 #include "GameState/GameState.h"
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
-struct Struct_0205faf4_11;
-struct Struct_0207d300;
+struct ItemTable;
+struct Element020de650;
+struct Obj02061bd8;
+struct Slots02083960;
 
-struct Struct_0207ccf0_4 {
-    char unknown_0_[0x2c];
-    struct Struct_0201099c_10* unknown_2c_;
+struct Obj0207d200 {
+    char pad[0x2c];
+    struct ItemTable* container;
 };
 
 struct Struct_0201099c_9 {
@@ -21,19 +21,19 @@ struct Struct_0201099c_9 {
     unsigned int unknown_b_1_ : 1;
 };
 
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void* func_0207d6dc(SafeAllocator* arg0, int arg1, int arg2);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_02061bd8(struct Struct_0205faf4_11* arg0);
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" int func_02083960(struct Struct_0207d300* arg0);
-extern "C" int func_0207ccf0(struct Struct_0207ccf0_4* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" int func_0207cf30(struct Struct_0207ccf0_4* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0207d134(struct Struct_0207ccf0_4* arg0, int arg1, int arg2);
-extern "C" int func_0207d200(struct Struct_0207ccf0_4* arg0, short arg1, int arg2);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern AllocatorUnion data_02114e20;
+extern struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
+extern void* InitAllocatorAndLoadGp2File0207d6dc(SafeAllocator* self, int param1, int param2);
+extern void* GameState_GetParty(GameState* battleStruct);
+extern GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
+extern int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
+extern unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern int CountPositiveSlots02083960(struct Slots02083960* slots);
+extern "C" int func_0207ccf0(struct Obj0207d200* self, int key, int one, int id, int zero0, int zero1, int zero2);
+extern "C" int func_0207cf30(struct Obj0207d200* self, int key, int count, int zero);
+extern "C" void func_0207d134(struct Obj0207d200* self, int key, int count);
+extern int UpdateKeyValue0207d200(struct Obj0207d200* self, short key, int amount);
+extern void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern AllocatorUnion g_mainAllocator;
 
 static inline int inline_0207d300(struct Struct_0201099c_9* arg0) {
     return arg0->unknown_8_0_ <= 7;
@@ -46,28 +46,28 @@ extern "C" ARM int func_0207d300(struct Struct_0207ccf0_4* arg0, short arg1, sho
         func_0207d6dc((SafeAllocator*)arg0, (int)&arg1, 1);
         var0 = 1;
     }
-    int var1 = -1;
-    struct Struct_0201099c_9* var2 = func_020dedd0(arg0->unknown_2c_, arg1);
-    if (var2 == NULL) {
-        var1 = -2;
-    } else if (inline_0207d300(var2) != 0) {
-        func_0207d134(arg0, arg1, arg2);
-        var1 = 3;
-    } else if (var2->unknown_8_0_ == 9) {
-        func_0207d200(arg0, arg1, arg2);
-        var1 = 5;
-    } else if (var2->unknown_b_1_) {
-        if (func_0207cf30(arg0, arg1, arg2, 0) != 0) {
-            var1 = 2;
+    int result = -1;
+    struct Element020de650* elem = ItemTable_Find(self->container, key);
+    if (elem == NULL) {
+        result = -2;
+    } else if (IsLow(elem) != 0) {
+        func_0207d134(self, key, count);
+        result = 3;
+    } else if (elem->type == 9) {
+        UpdateKeyValue0207d200(self, key, count);
+        result = 5;
+    } else if (elem->flag25) {
+        if (func_0207cf30(self, key, count, 0) != 0) {
+            result = 2;
         }
     } else {
-        GameState* var3 = GameState::GetInstance();
-        char* var4 = (char*)func_02010828(var3);
-        unsigned char var5;
-        for (var5 = 0; var5 < *(unsigned char*)(var4 + 0xf7c); var5++) {
-            int var6 = *(signed char*)(var4 + var5 + 0xf78);
-            GameObject* var7 = func_0200ff1c(var3, var6);
-            if (var7 == NULL) {
+        GameState* bs = GameState::GetInstance();
+        char* p = (char*)GameState_GetParty(bs);
+        unsigned char i;
+        for (i = 0; i < *(unsigned char*)(p + 0xf7c); i++) {
+            int id = *(signed char*)(p + i + 0xf78);
+            GameObject* c = GetCombatantWithFlag0x100_0200ff1c(bs, id);
+            if (c == NULL) {
                 continue;
             }
             if (func_02061bd8((struct Struct_0205faf4_11*)var7) != 0) {
@@ -103,12 +103,12 @@ extern "C" ARM int func_0207d300(struct Struct_0207ccf0_4* arg0, short arg1, sho
             }
         }
     }
-    if (var0) {
-        SafeAllocator* var10 = (SafeAllocator*)arg0;
-        SignedAllocatorHeader* var11 = var10->GetSignedAllocator();
-        var10->Destroy();
-        func_02012da4(&data_02114e20, var11);
-        arg0->unknown_2c_ = NULL;
+    if (initDone) {
+        SafeAllocator* alloc = (SafeAllocator*)self;
+        SignedAllocatorHeader* sig = alloc->GetSignedAllocator();
+        alloc->Destroy();
+        AllocatorUnion_Free(&g_mainAllocator, sig);
+        self->container = NULL;
     }
     return var1;
 }

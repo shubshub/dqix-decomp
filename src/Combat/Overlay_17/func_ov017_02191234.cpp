@@ -3,15 +3,15 @@
 
 struct Struct_0202b2f0;
 
-extern "C" Struct_0202b2f0* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_0202c1c0(Struct_0202b2f0* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" unsigned char* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_02026348(char* arg0, unsigned char* arg1, int arg2);
-extern "C" void func_020114c0(char* arg0, int arg1, void* arg2);
-extern "C" void func_02011468(void* arg0, int arg1, void* arg2);
+extern "C" SearchStruct* func_0202ae18(void);
+int CheckField0NonZero_0202b7d8(int* obj);
+int TestBitBySignedByteIndex_0202c1c0(SearchStruct* search, int index);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+unsigned char* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
+void StoreByteList02026348(char* obj, unsigned char* src, int count);
+void CopyInRegion0x571d_020114c0(char* obj, int len, void* src);
+void WriteBlockWithSize02011468(void* obj, int size, void* src);
 
 // USA: func_ov017_02191234
 extern "C" ARM void func_ov017_02191234(unsigned char* arg0) {
@@ -27,14 +27,14 @@ extern "C" ARM void func_ov017_02191234(unsigned char* arg0) {
     unsigned char var4[4];
     unsigned char var5[4];
 
-    if (func_0202b7d8((int*)var1)) {
-        for (int var6 = 0; var6 < 4; var6++) {
-            if (!func_0202c1c0(var1, var6)) continue;
-            var4[var2++] = var6;
-            int var7 = 0;
-            if (var6 == func_020100a8(var0)) {
-                var5[var3++] = var6;
-                var7 = 1;
+    if (CheckField0NonZero_0202b7d8((int*)search)) {
+        for (int group = 0; group < 4; group++) {
+            if (!TestBitBySignedByteIndex_0202c1c0(search, group)) continue;
+            list[count++] = group;
+            int isCurrent = 0;
+            if (group == GameState_GetProtagonistIndex(battle)) {
+                subList[subCount++] = group;
+                isCurrent = 1;
             }
             for (int var8 = 1; var8 < 4; var8++) {
                 unsigned char* var9 = func_0200ff58(var0, var8);

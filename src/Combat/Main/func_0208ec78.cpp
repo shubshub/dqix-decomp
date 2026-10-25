@@ -2,9 +2,6 @@
 #include "Combat/LootPointEvent.h"
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_01ff91ac_7;
 
@@ -13,11 +10,11 @@ struct Struct_0204a054_2;
 
 extern "C" void func_0208e0a8(void);
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void* func_0205ec34(void);
-extern "C" void func_0208f048(unsigned char* arg0);
+extern "C" int func_0202c540(void* obj);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void func_0208f048(unsigned char* p0);
 extern "C" int rand(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 struct Struct_0208ec78_2 {
     char unknown_0_[0x10];
@@ -78,18 +75,18 @@ extern "C" ARM void func_0208ec78(struct Struct_0208ec78_3* arg0) {
         arg0->unknown_4_ = 0.0f;
     }
 
-    unsigned char var10 = arg0->unknown_0_;
-    Struct_0208ec78* var11;
-    int var12 = 0;
-    var11 = &var3[var10];
-    if (var11->unknown_0_.unknown_3_7_ == 0) var12 = 1;
-    unsigned int var13 = var11->unknown_0_.unknown_3_5_;
-    if (var13 != 1) {
-        void* var14 = func_0205ec34();
-        if (var11->unknown_0_.unknown_3_5_ == 2 && func_0206dfb0((int)var14, (unsigned char*)var14 + 0x8c, 1944) == 0) {
-            var12 = 1;
-        } else if (var11->unknown_0_.unknown_3_5_ == 3 && func_0206dfb0((int)var14, (unsigned char*)var14 + 0x8c, 1942) == 0) {
-            var12 = 1;
+    unsigned char id0 = p0->id;
+    LootPointState* e;
+    int avail = 0;
+    e = &arr[id0];
+    if (e->fields.active == 0) avail = 1;
+    unsigned int kind = e->fields.kind;
+    if (kind != 1) {
+        void* ctx = Scenario_GetInstance();
+        if (e->fields.kind == 2 && Scenario_TestFlag((int)ctx, (unsigned char*)ctx + 0x8c, 1944) == 0) {
+            avail = 1;
+        } else if (e->fields.kind == 3 && Scenario_TestFlag((int)ctx, (unsigned char*)ctx + 0x8c, 1942) == 0) {
+            avail = 1;
         }
     }
 

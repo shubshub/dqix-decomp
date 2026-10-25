@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 #include "Memory/SafeAllocator.h"
 #include "GameState/GameState.h"
 #include "Graphics/LightingManager.h"
@@ -18,12 +19,8 @@ struct Struct_02074af4 {
     unsigned char unknown_11_;
 };
 
-struct Struct_0201099c_14 {
-    char unknown_0_[0x18];
-};
-
-struct Struct_0205cfd4 {
-    char unknown_0_[0xbc];
+struct InitTarget0205cfd4 {
+    char data[0xbc];
 };
 
 struct Struct_02000c9c_83 {
@@ -40,55 +37,55 @@ struct Struct_ov003_0215c650 {
 #if defined(jpn)
     struct Struct_0201099c_14 unknown_7c_;
 #endif
-    void* unknown1_7c_;
-    struct Struct_02074af4 unknown_80_;
-    int unknown_94_;
-    struct Struct_0205cfd4 unknown_98_;
-    struct Struct_02020cb8 unknown_154_[2];
-    struct Struct_02000c9c_83 unknown_194_[2];
-    int unknown_354_;
-    char unknown_358_[0x3ac - 0x358];
-    int unknown_3ac_;
-    int unknown_3b0_;
-    int unknown_3b4_;
-    unsigned char unknown_3b8_;
-    unsigned char unknown_3b9_;
-    unsigned char unknown_3ba_;
-    unsigned char unknown_3bb_;
-    unsigned char unknown_3bc_;
-    unsigned char unknown_3bd_[3];
-    unsigned char unknown_3c0_;
-    signed char unknown_3c1_;
-    unsigned char unknown_3c2_;
-    unsigned char unknown_3c3_;
-    unsigned char unknown_3c4_[4];
-    int unknown_3c8_;
-    int unknown_3cc_;
-    int unknown_3d0_;
-    float unknown_3d4_;
-    float unknown_3d8_;
-    float unknown_3dc_;
-    float unknown_3e0_;
-    float unknown_3e4_;
-    int unknown_3e8_;
-    unsigned char unknown_3ec_;
-    unsigned char unknown_3ed_;
-    unsigned char unknown_3ee_;
-    unsigned char unknown_3ef_;
-    unsigned char unknown_3f0_;
-    unsigned char unknown_3f1_;
-    unsigned char unknown_3f2_;
-    unsigned char unknown_3f3_;
-    unsigned char unknown_3f4_;
-    unsigned char unknown_3f5_;
-    int unknown_3f8_;
+    void* textBuf;
+    struct MainBgControlBackup02074af4 bgBackup;
+    int savedBgPlanes;
+    struct InitTarget0205cfd4 sub98;
+    struct BackgroundGraphics lists[2];
+    struct Elem0204c684 elems[2];
+    int field354;
+    char sub358[0x3ac - 0x358];
+    int field3ac;
+    int field3b0;
+    int field3b4;
+    unsigned char field3b8;
+    unsigned char field3b9;
+    unsigned char field3ba;
+    unsigned char field3bb;
+    unsigned char field3bc;
+    unsigned char field3bd[3];
+    unsigned char field3c0;
+    signed char field3c1;
+    unsigned char field3c2;
+    unsigned char field3c3;
+    unsigned char field3c4[4];
+    int field3c8;
+    int field3cc;
+    int timeOfDay;
+    float nightToMorning;
+    float morningToDay;
+    float dayToEvening;
+    float eveningToNight;
+    float transitionTime;
+    int field3e8;
+    unsigned char field3ec;
+    unsigned char field3ed;
+    unsigned char field3ee;
+    unsigned char field3ef;
+    unsigned char field3f0;
+    unsigned char field3f1;
+    unsigned char field3f2;
+    unsigned char field3f3;
+    unsigned char field3f4;
+    unsigned char field3f5;
+    int field3f8;
 };
 
 extern "C" void func_02074af4(struct MainBgControlBackup02074af4* obj);
 void KeyTable_Reset(struct Struct020dfc40* p);
-void InitStruct0205cfd4(struct InitTarget0205cfd4* s);
-void Background_Init(struct List0204af64* obj);
-extern "C" void func_0204c684(struct Elem0204c684* obj);
+void Window_Init(struct InitTarget0205cfd4* s);
+void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void WindowPane_Init(struct Elem0204c684* obj);
 void SpriteContext_Init(char* obj);
 
 // USA: func_ov003_0215c650
@@ -107,14 +104,14 @@ extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* arg0) {
 #if defined(jpn)
     KeyTable_Reset(&self->sub7c);
 #endif
-    arg0->unknown1_7c_ = 0;
-    func_0205cfd4(&arg0->unknown_98_);
+    self->textBuf = 0;
+    Window_Init(&self->sub98);
 
     for (int i = 0; i < 2; i++) {
         Background_Init(&self->lists[i]);
     }
-    for (int var1 = 0; var1 < 2; var1++) {
-        func_0204c684(&arg0->unknown_194_[var1]);
+    for (int j = 0; j < 2; j++) {
+        WindowPane_Init(&self->elems[j]);
     }
 
     self->field354 = 0;

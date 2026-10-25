@@ -17,27 +17,24 @@ extern "C" struct Struct_02072a68_2* func_ov004_02169040(void* arg0, int arg1);
 #else
 extern "C" struct Struct_02072a68_2* func_ov004_02168b08(void* arg0, int arg1);
 #endif
-extern "C" int func_020421a0(void);
-extern "C" void* func_02053c6c(unsigned char* arg0);
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
-extern "C" void* func_0205ec34(void* arg0);
-extern "C" int func_ov023_021f9bc8(char* arg0);
-extern "C" unsigned int func_ov023_021f9b6c(struct Struct_ov004_021549e4_3* arg0, unsigned int arg1, unsigned int arg2);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_02042764(const char* arg0, char* arg1, int arg2);
-extern "C" void* func_ov004_02168a6c(void* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
-extern "C" void func_02046608(void* arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" char* func_020d2f88(char* arg0, char* arg1);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
+int MessageSystem_GetInstance(void);
+void* GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void* Scenario_GetInstance(void* obj);
+extern "C" int func_ov023_021f9bc8(char* obj);
+unsigned int GetTableEntry_021f9b6c(struct Obj9b6c* obj, unsigned int a, unsigned int b);
+extern "C" void __clear(void* buf, int len);
+extern "C" void Font_DecodeText(const char* name, char* dest, int flag);
+void* GetNodeIfType8_02168a6c(void* a, int id);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+extern "C" void func_02046380(void* global);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
+extern "C" void MessageSystem_FormatText(void* a, int b, char* c, char* d, int e, int f, int g);
+char* FindSubstring_020d2f88(char* haystack, char* needle);
+int LoadBattleBlock020ac4c0(void* dst);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
 #if defined(jpn)
 extern "C" void* func_ov004_02168fa4(void*, int);
 extern "C" void func_ov023_021f809c(void*, void*);
@@ -146,9 +143,9 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
 #else
     struct Struct_02072a68_2* var2 = func_ov004_02168b08(arg0, 3);
 #endif
-    void* var3 = (void*)func_020421a0();
-    unsigned char* var4 = (unsigned char*)func_02053c6c((unsigned char*)GameState::GetInstance()->GetProtagonist());
-    unsigned char* var5 = (unsigned char*)func_0205ec34(var4);
+    void* g = (void*)MessageSystem_GetInstance();
+    unsigned char* prot = (unsigned char*)GetFieldAt0x150_02053c6c((unsigned char*)GameState::GetInstance()->GetProtagonist());
+    unsigned char* flags = (unsigned char*)Scenario_GetInstance(prot);
 #if defined(jpn)
     struct Struct_02072a68_2* var6 = func_ov004_02169040(arg0, 9);
 #else
@@ -184,8 +181,8 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
 #if defined(jpn)
         var14 = var12->unknown_6_;
 #else
-        func_02042764(var12->unknown_6_, var13, 1);
-        var14 = var13;
+        Font_DecodeText(area->name, buf, 1);
+        name = buf;
 #endif
     }
 
@@ -254,12 +251,12 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
     } else {
         var19 = static_cast<char*>(func_02072a68(var7, var15->unknown_14_));
     }
-    func_02046574((struct Struct_02046574_2*)var3, 0, var19);
-    func_02046574((struct Struct_02046574_2*)var3, 1, var14);
+    MessageSystem_SetStringArgument((struct Obj02046574*)g, 0, title);
+    MessageSystem_SetStringArgument((struct Obj02046574*)g, 1, name);
 #if defined(jpn)
     func_020474a8(var3, 0xa, static_cast<char*>(func_02072a68(var2, 0x22)), var16);
 #else
-    func_02046608(var3, 0xa, static_cast<char*>(func_02072a68(var2, 0x22)), var16, 0xf0, 1, 0);
+    MessageSystem_FormatText(g, 0xa, static_cast<char*>(FindEntryByKey_02072a68(tblA, 0x22)), out, 0xf0, 1, 0);
 #endif
 
     var17 = static_cast<Struct_ov004_02169b4c_7*>(func_ov004_02168a6c(arg0, 0x192));
@@ -272,16 +269,16 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
 #endif
     var16 += strlen(var16) + 1;
 
-    func_02046380(var3);
-    unsigned char var21 = 0;
-    unsigned char var22 = 0;
-    struct Struct_ov004_02169b4c_3 var23;
-    func_020ac4c0(&var23);
-    var22 |= 1;
-    func_020465c0(static_cast<Struct_020465c0*>(var3), var21++, var15->unknown_5_6_);
-    if (func_0206dfb0((int)var5, var5 + 0x8c, 0x1198)) {
-        var22 |= 2;
-        func_020465c0(static_cast<Struct_020465c0*>(var3), var21++, var15->unknown_1_6_);
+    func_02046380(g);
+    unsigned char count = 0;
+    unsigned char mask = 0;
+    struct Blk02169b4c blk;
+    LoadBattleBlock020ac4c0(&blk);
+    mask |= 1;
+    StoreInArray0x8b0_020465c0(static_cast<StoreStruct*>(g), count++, rec->w4B);
+    if (Scenario_TestFlag((int)flags, flags + 0x8c, 0x1198)) {
+        mask |= 2;
+        StoreInArray0x8b0_020465c0(static_cast<StoreStruct*>(g), count++, rec->w0B);
     }
     var22 |= 4;
     func_020465c0(static_cast<Struct_020465c0*>(var3), var21++, var15->unknown_c_0_);
@@ -293,9 +290,9 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
         var22 |= 0x10;
         func_020465c0(static_cast<Struct_020465c0*>(var3), var21++, var15->unknown_d_2_);
     }
-    if (func_0206dfb0((int)var5, var5 + 0x8c, 0x1199)) {
-        var22 |= 0x20;
-        func_020465c0(static_cast<Struct_020465c0*>(var3), var21++, var15->unknown_11_1_);
+    if (Scenario_TestFlag((int)flags, flags + 0x8c, 0x1199)) {
+        mask |= 0x20;
+        StoreInArray0x8b0_020465c0(static_cast<StoreStruct*>(g), count++, rec->w10B);
     }
 
     unsigned char var24 = 0;
@@ -313,7 +310,7 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
 #if defined(jpn)
             func_020474a8(var3, 8, static_cast<char*>(func_02072a68(var2, (short)(var24 + 0x14))), var16);
 #else
-            func_02046608(var3, 8, static_cast<char*>(func_02072a68(var2, (short)(var24 + 0x14))), var16, 0x100, 0, 0);
+            MessageSystem_FormatText(g, 8, static_cast<char*>(FindEntryByKey_02072a68(tblA, (short)(k + 0x14))), out, 0x100, 0, 0);
 #endif
             var17 = static_cast<Struct_ov004_02169b4c_7*>(func_ov004_02168a6c(arg0, var26 + 0x1f5));
             if (!var17) continue;
@@ -361,7 +358,7 @@ extern "C" ARM int func_ov004_02169b4c(void* arg0) {
 #if defined(jpn)
         func_020474a8(var3, 8, static_cast<char*>(func_02072a68(var2, (short)(var31 + 0x1e))), var16);
 #else
-        func_02046608(var3, 8, static_cast<char*>(func_02072a68(var2, (short)(var31 + 0x1e))), var16, 0x100, 0, 0);
+        MessageSystem_FormatText(g, 8, static_cast<char*>(FindEntryByKey_02072a68(tblA, (short)(r + 0x1e))), out, 0x100, 0, 0);
 #endif
         (static_cast<Struct_ov004_02169b4c_7*>(func_ov004_02168a6c(arg0, var31 * 2 + 6 + 0x200)))->unknown_20_ = var16;
         var16 += strlen(var16) + 1;

@@ -2,7 +2,7 @@
 
 extern "C" int func_ov017_021d60f4(void*);
 extern int g_sePlayer;
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 void ShutdownAndReinit0205e92c(void* obj);
 void ResetAndReinit0209c278(void* obj);
 int Dispatch0203a974With0xA2000_0209c2b8(void* ctx);
@@ -14,11 +14,11 @@ extern "C" ARM int func_ov001_02163a5c(void* self) {
     int cond = func_ov017_021d60f4(self);
     if (cond != 0) {
         ShutdownAndReinit0205e92c(&g_sePlayer);
-        ResetAndReinit0209c278(&data_02109bf4);
-        Dispatch0203a974With0xA2000_0209c2b8(&data_02109bf4);
+        ResetAndReinit0209c278(&g_bgmPlayer);
+        Dispatch0203a974With0xA2000_0209c2b8(&g_bgmPlayer);
     } else {
-        ResetAndReinit0209c278(&data_02109bf4);
-        Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
+        ResetAndReinit0209c278(&g_bgmPlayer);
+        Dispatch0203a974With0x57000_0209c290(&g_bgmPlayer);
         SetupContextForMode0205ea20(&g_sePlayer, 0x64);
     }
     return 1;

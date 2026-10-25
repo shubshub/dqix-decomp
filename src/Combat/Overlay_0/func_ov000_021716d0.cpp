@@ -85,10 +85,10 @@ extern "C" ARM void func_ov000_021716d0(MenuEntry_021716d0* self) {
     } else {
         var4 = func_020dd290(var3, var4);
     }
-    if (arg0->unknown_1a4_[var1]->unknown_2d_2_ == 6) {
-        Struct_ov000_021716d0_3* var6 = (Struct_ov000_021716d0_3*)func_02010828(var2);
-        var5 = var6->unknown_f6c_;
-        var4 = arg0->unknown_1a4_[var1]->unknown_32_;
+    if (self->spells[sel]->kind == 6) {
+        PartyInfo_021716d0* party = (PartyInfo_021716d0*)GameState_GetParty(gs);
+        have = party->gold;
+        cost = self->spells[sel]->goldCost;
     }
     if (var5 < var4) {
         var0->unknown_10_++;

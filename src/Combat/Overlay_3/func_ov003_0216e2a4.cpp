@@ -3,12 +3,12 @@
 #include "NitroSDK/Graphics.h"
 #include <globaldefs.h>
 
-struct Struct_ov003_0216e2a4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
+struct Background0216e2a4 {
+    char unk_0[0x1c];
+    unsigned char subScreen_ : 4;
+    unsigned char bgNumber_ : 4;
+    unsigned char screenCount_;
+    char unk_1e[2];
 };
 
 struct Struct_ov003_0216e2a4_2 {
@@ -57,29 +57,26 @@ struct Struct_ov003_0216e2a4_4 {
     char unknown_dc_[0x20];
 };
 
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_02020cb8_2;
-struct Struct_0204c7a8;
+struct BackgroundGraphics;
+struct PacRecord;
+struct WindowPane;
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
+struct WindowPane;
 
 void Background_SetMapSize(unsigned char *background, int a);
-int Pac_CountFiles(ActiveEntry02046900 *archive);
-void *Pac_GetFile(Rec020467f0 *archive, int index, void **name, int *size);
+int Pac_CountFiles(PacRecord *archive);
+void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
 extern "C" void Background_SetPriority(Background0216e2a4 *background, int a);
-void Background_AllocateMap(AllocTarget0204b12c *background,
+void Background_AllocateMap(BackgroundGraphics *background,
                                                                                          SafeAllocator *allocator);
-void Background_SetScroll(Obj0204b5e8 *background, int a, int b);
+void Background_SetScroll(BackgroundGraphics *background, int a, int b);
 extern "C" void Background_LoadFile(Background0216e2a4 *background, void *file, SafeAllocator *allocator, unsigned int size);
 extern "C" void Background_FillRect(Background0216e2a4 *background, int a, int b, int c, int d, int e, int f);
-void Background_UploadMap(List0204b0e8 *background, void *a);
-void WindowPane_AllocateBuffer(Obj0204c7a8 *canvas, SafeAllocator *allocator,
+void Background_UploadMap(BackgroundGraphics *background, void *a);
+void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
                                                                            int pixels, unsigned int size);
 void Window_SetPanes(Struct_0205cf78 *window,
-                                                                                     Elem_0205cf78 *canvases,
+                                                                                     WindowPane *canvases,
                                                                                      unsigned char count);
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 extern "C" void KeyTable_Load(void *texts, SafeAllocator *allocator, void *file, unsigned int size);
@@ -109,18 +106,18 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
 
     if (self->step_ == 0) {
         Background_SetMapSize((unsigned char *) &self->backgrounds_[0], 0);
-        self->backgrounds_[0].unk_1c_0_ = 0;
-        self->backgrounds_[0].unk_1c_4_ = 1;
+        self->backgrounds_[0].subScreen_ = 0;
+        self->backgrounds_[0].bgNumber_ = 1;
         Background_SetPriority(&self->backgrounds_[0], 0);
-        Background_AllocateMap((AllocTarget0204b12c *) &self->backgrounds_[0], self->allocatorPtr_);
-        Background_SetScroll((Obj0204b5e8 *) &self->backgrounds_[0], 0, 0);
+        Background_AllocateMap((BackgroundGraphics *) &self->backgrounds_[0], self->allocatorPtr_);
+        Background_SetScroll((BackgroundGraphics *) &self->backgrounds_[0], 0, 0);
         BG1CNT = (BG1CNT & 0x43) | 0xd08;
         Background_SetMapSize((unsigned char *) &self->backgrounds_[1], 0);
-        self->backgrounds_[1].unk_1c_0_ = 0;
-        self->backgrounds_[1].unk_1c_4_ = 2;
+        self->backgrounds_[1].subScreen_ = 0;
+        self->backgrounds_[1].bgNumber_ = 2;
         Background_SetPriority(&self->backgrounds_[1], 1);
-        Background_AllocateMap((AllocTarget0204b12c *) &self->backgrounds_[1], self->allocatorPtr_);
-        Background_SetScroll((Obj0204b5e8 *) &self->backgrounds_[1], 0, 0);
+        Background_AllocateMap((BackgroundGraphics *) &self->backgrounds_[1], self->allocatorPtr_);
+        Background_SetScroll((BackgroundGraphics *) &self->backgrounds_[1], 0, 0);
         BG2CNT = (BG2CNT & 0x43) | 0xe08;
         self->task_ = loader->QueueLoadFile(data_ov003_02180222, 0);
         self->step_ = 1;
@@ -132,30 +129,30 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             unsigned int size;
             int sizes[2];
             loader->GetLoadedFileByID(self->task_, &file, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int count = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < count; i++)
-                datas[i] = Pac_GetFile((Rec020467f0 *) file, i, &name, &sizes[i]);
+                datas[i] = Pac_GetFile((PacRecord *) file, i, &name, &sizes[i]);
             for (int i = 0; i < count; i++) {
                 if (datas[i] != 0) Background_LoadFile(self->backgrounds_, datas[i], self->allocatorPtr_, sizes[i]);
             }
             loader->RemoveTask(self->task_);
             self->task_                    = -1;
             Background_FillRect(&self->backgrounds_[0], 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((List0204b0e8 *) &self->backgrounds_[0], 0);
+            Background_UploadMap((BackgroundGraphics *) &self->backgrounds_[0], 0);
             Background_FillRect(&self->backgrounds_[1], 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((List0204b0e8 *) &self->backgrounds_[1], 0);
+            Background_UploadMap((BackgroundGraphics *) &self->backgrounds_[1], 0);
             self->pixels_ = self->allocatorPtr_->Allocate(0x2800);
-            WindowPane_AllocateBuffer((Obj0204c7a8 *) &self->canvases_[0], self->allocatorPtr_, (int) self->pixels_, 0x500);
+            WindowPane_AllocateBuffer((WindowPane *) &self->canvases_[0], self->allocatorPtr_, (int) self->pixels_, 0x500);
             self->canvases_[0].background_ = &self->backgrounds_[0];
             self->canvases_[0].unk_c4      = 0;
-            WindowPane_AllocateBuffer((Obj0204c7a8 *) &self->canvases_[1], self->allocatorPtr_, (int) self->pixels_, 0x500);
+            WindowPane_AllocateBuffer((WindowPane *) &self->canvases_[1], self->allocatorPtr_, (int) self->pixels_, 0x500);
             self->canvases_[1].background_ = &self->backgrounds_[1];
             self->canvases_[1].unk_c4      = 0;
             Window0216e2a4 *window = self->window_;
             window->background_    = self->backgrounds_;
             window->unk_b2         = 2;
             Window_SetPanes((Struct_0205cf78 *) self->window_,
-                                                                                 (Elem_0205cf78 *) self->canvases_, 2);
+                                                                                 (WindowPane *) self->canvases_, 2);
             self->unk_b8 = 0;
             self->unk_a8 = self->unk_60;
             self->unk_b4 = 0xa;
@@ -170,9 +167,9 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             unsigned int size;
             int fileSize;
             loader->GetLoadedFileByID(self->task_, &file, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int count = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < count; i++) {
-                void *data = Pac_GetFile((Rec020467f0 *) file, i, &name, &fileSize);
+                void *data = Pac_GetFile((PacRecord *) file, i, &name, &fileSize);
                 SpriteContext_LoadFile((char *) self + 0x68, data, fileSize, &self->allocator_);
             }
             var0->RemoveTask(arg0->unknown_1c_);
@@ -212,12 +209,12 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
         Background0216e2a4 *background = self->backgrounds_;
         for (int i = 0; i < 2; i++) {
             Background_SetMapSize((unsigned char *) background, 0);
-            background->unk_1c_0_ = 0;
-            background->unk_1c_4_ = data_ov003_0217f5ba[i];
+            background->subScreen_ = 0;
+            background->bgNumber_ = data_ov003_0217f5ba[i];
             Background_SetPriority(background, data_ov003_0217f5b8[i]);
-            Background_AllocateMap((AllocTarget0204b12c *) background,
+            Background_AllocateMap((BackgroundGraphics *) background,
                                                                                      self->allocatorPtr_);
-            Background_SetScroll((Obj0204b5e8 *) background, 0, 0);
+            Background_SetScroll((BackgroundGraphics *) background, 0, 0);
             background++;
         }
         BG1CNT      = (BG1CNT & 0x43) | 0xd08;
@@ -232,9 +229,9 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             unsigned int size;
             int sizes[2];
             loader->GetLoadedFileByID(self->task_, &file, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int count = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < count; i++)
-                datas[i] = Pac_GetFile((Rec020467f0 *) file, i, &name, &sizes[i]);
+                datas[i] = Pac_GetFile((PacRecord *) file, i, &name, &sizes[i]);
             for (int i = 0; i < count; i++) {
                 if (datas[i] != 0) Background_LoadFile(self->backgrounds_, datas[i], self->allocatorPtr_, sizes[i]);
             }
@@ -243,13 +240,13 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             Background0216e2a4 *background = self->backgrounds_;
             for (int i = 0; i < 2; i++) {
                 Background_FillRect(background, 0, 0, 0, 0x20, 0x19, 0);
-                Background_UploadMap((List0204b0e8 *) background, 0);
+                Background_UploadMap((BackgroundGraphics *) background, 0);
                 background++;
             }
             self->pixels_          = self->allocatorPtr_->Allocate(0x2800);
             Canvas0216e2a4 *canvas = self->canvases_;
             for (int i = 0; i < 2; i++) {
-                WindowPane_AllocateBuffer((Obj0204c7a8 *) canvas, self->allocatorPtr_,
+                WindowPane_AllocateBuffer((WindowPane *) canvas, self->allocatorPtr_,
                                                                            (int) self->pixels_, 0x500);
                 canvas->background_ = &self->backgrounds_[i];
                 canvas->unk_c4      = 0;
@@ -259,7 +256,7 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             window->background_    = self->backgrounds_;
             window->unk_b2         = 2;
             Window_SetPanes((Struct_0205cf78 *) self->window_,
-                                                                                 (Elem_0205cf78 *) self->canvases_, 2);
+                                                                                 (WindowPane *) self->canvases_, 2);
             self->unk_b8 = 0;
             self->unk_a8 = self->unk_60;
             self->unk_b4 = 0x16;
@@ -274,9 +271,9 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             unsigned int size;
             int fileSize;
             loader->GetLoadedFileByID(self->task_, &file, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int count = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < count; i++) {
-                void *data = Pac_GetFile((Rec020467f0 *) file, i, &name, &fileSize);
+                void *data = Pac_GetFile((PacRecord *) file, i, &name, &fileSize);
                 SpriteContext_LoadFile((char *) self + 0x68, data, fileSize, &self->allocator_);
             }
             var21->RemoveTask(arg0->unknown_1c_);

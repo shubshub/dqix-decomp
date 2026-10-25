@@ -50,64 +50,64 @@ struct Struct_020200c0_8 : GameObject {
 
 struct Struct_020200c0_2;
 
-extern "C" Struct_020200c0_6* func_020421a0(void);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" void func_02020520(struct Struct_020200c0_3* arg0);
-extern "C" void func_0205b890(struct Struct_020200c0_3* arg0, int arg1, int arg2);
-extern "C" void func_0205b20c(struct Struct_020200c0_4* arg0);
-extern "C" void func_0205b220(void* arg0, int arg1);
-extern "C" void func_0205b228(void* arg0, int arg1, unsigned char arg2);
-extern "C" void func_0205b734(struct Struct_020200c0_4* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" const char* func_020e51cc(int arg0);
-extern "C" void func_0205b234(struct Struct_020200c0_4* arg0, short arg1, int arg2, const char* arg3, int arg4, int arg5);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" int func_ov017_021bdbcc(GameResources* arg0);
-extern "C" void* func_020421b0(int arg0);
-extern "C" void func_0205b530(struct Struct_020200c0_4* arg0, void* arg1, short arg2, short arg3, int arg4, int arg5);
-extern "C" unsigned short func_0202053c(void* arg0);
-extern "C" void func_0205b674(struct Struct_020200c0_2* arg0, short arg1, int arg2, int arg3,
-                                         unsigned char arg4, unsigned char arg5, unsigned char arg6, unsigned char arg7);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
-extern "C" void func_02046608(Struct_020200c0_6* arg0, int arg1, const char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_020c9820(void);
+MessageStore020200c0* MessageSystem_GetInstance(void);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
+void ClearStruct02020520(struct Struct02020520* s);
+extern "C" void func_0205b890(struct Struct02020520* layout, int mode, int value);
+void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
+void SetField0_0205b220(void* obj, int value);
+void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
+extern "C" void func_0205b734(struct S_b20c* dest, int x, int y, int width, int height, int mode);
+const char* StandardStrings_Get(int key);
+extern "C" void func_0205b234(struct S_b20c* dest, short x, int y, const char* text, int color, int mode);
+extern "C" int Font_GetTextWidth(const char* text, int large);
+extern "C" int func_ov017_021bdbcc(GameResources* res);
+void* GetTableEntry020421b0(int index);
+extern "C" void func_0205b530(struct S_b20c* dest, void* tile, short x, short y, int size, int color);
+unsigned short GetTableValue_0202053c(void* obj);
+void PositionAndFormatValueLabel0205b674(struct Obj0205b674* obj, short posX, int param2, int param3,
+                                         unsigned char param4, unsigned char param5, unsigned char param6, unsigned char param7);
+extern "C" void __clear(void* buf, int n);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
+void Clear12Bytes020e46c4(void* p);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" void MessageSystem_FormatText(MessageStore020200c0* store, int a, const char* format, char* output, int size, int b, int c);
+void DelayThenSyncBit0_020c9820(void);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" void LoadToSubObjVRAM(const void* src, unsigned int offset, unsigned int size);
 extern char data_020ef580[];
 
 // USA: func_020200c0
-extern "C" ARM void func_020200c0(int arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    int var1;
-    if (arg0 >= 0 && arg0 <= 3) var1 = 1;
-    else var1 = 0;
-    if (!var1 || arg1 == 0) return;
-    GameResources* var2 = GetGameResources();
-    if (var2 == NULL || var2->unknown_ptr_36d0 == NULL) return;
-    unsigned int var3 = (arg0 + 1) << 11;
-    Struct_020200c0_6* var4 = func_020421a0();
-    void* var5 = var4->unknown_60_;
-    if (var5 == NULL) return;
-    memcpy(var5, (void*)0x06600000, 0x800);
+extern "C" ARM void func_020200c0(int combatantId, int value) {
+    GameState* gameState = GameState::GetInstance();
+    int isPartySlot;
+    if (combatantId >= 0 && combatantId <= 3) isPartySlot = 1;
+    else isPartySlot = 0;
+    if (!isPartySlot || value == 0) return;
+    GameResources* res = GetGameResources();
+    if (res == NULL || res->unknown_ptr_36d0 == NULL) return;
+    unsigned int offset = (combatantId + 1) << 11;
+    MessageStore020200c0* store = MessageSystem_GetInstance();
+    void* buffer = store->tileBuffer;
+    if (buffer == NULL) return;
+    memcpy(buffer, (void*)0x06600000, 0x800);
 
-    Struct_020200c0_3 var6;
-    func_02020520(&var6);
-    func_0205b890(&var6, 1, arg1);
-    Struct_020200c0_4 var7;
-    func_0205b20c(&var7);
-    func_0205b220(&var7, (int)var5);
-    func_0205b228(&var7, (int)&var6, 1);
-    func_0205b734(&var7, 7, 0x10, 0x17, 0x18, 1);
-    func_0205b234(&var7, 7, 0xe, func_020e51cc(0xc9), 0xf, 0);
-    func_0205b734(&var7, 7, 0x1c, 0x17, 0x24, 1);
-    func_0205b234(&var7, 7, 0x1a, func_020e51cc(0xca), 0xf, 0);
+    Struct02020520 layout;
+    ClearStruct02020520(&layout);
+    func_0205b890(&layout, 1, value);
+    S_b20c dest;
+    ClearTwoWordsAndByte_0205b20c(&dest);
+    SetField0_0205b220(&dest, (int)buffer);
+    SetFieldsAt0x4And0x8_0205b228(&dest, (int)&layout, 1);
+    func_0205b734(&dest, 7, 0x10, 0x17, 0x18, 1);
+    func_0205b234(&dest, 7, 0xe, StandardStrings_Get(0xc9), 0xf, 0);
+    func_0205b734(&dest, 7, 0x1c, 0x17, 0x24, 1);
+    func_0205b234(&dest, 7, 0x1a, StandardStrings_Get(0xca), 0xf, 0);
 
-    Struct_020200c0_8* var8 = (Struct_020200c0_8*)func_0200ff1c(var0, arg0);
-    if (var8 == NULL) return;
-    char* var9 = var8->baseStats_->unk;
-    func_0205b234(&var7, (short)((0x40 - func_020420e8(var9, 0)) >> 1), 3, var9, 0xf, 0);
+    PartyMember020200c0* member = (PartyMember020200c0*)GetCombatantWithFlag0x100_0200ff1c(gameState, combatantId);
+    if (member == NULL) return;
+    char* name = member->baseStats_->name;
+    func_0205b234(&dest, (short)((0x40 - Font_GetTextWidth(name, 0)) >> 1), 3, name, 0xf, 0);
 
     int var10;
     int var11;
@@ -133,16 +133,16 @@ extern "C" ARM void func_020200c0(int arg0, int arg1) {
     } else if (var17 & 4) {
         var11 = 0x10;
     } else {
-        int var18 = 5;
-        if (var15 == 10) var18 = 0xd;
-        const char* var19 = func_020e51cc(0x3f3);
-        int var20 = func_020420e8(var19, 0);
-        if (var12 >= 0) {
-            char* var21 = (char*)func_020421b0((unsigned char)(var12 * 4 + 0x28));
-            for (var14 = 0; var14 < 2; var14++) {
-                for (var13 = 0; var13 < 2; var13++) {
-                    func_0205b530(&var7, var21, var13 * 8 + 6, var14 * 8 + 0x29, 8, 0xf);
-                    var21 += 0x20;
+        int revocationColor = 5;
+        if (revocations == 10) revocationColor = 0xd;
+        const char* levelLabel = StandardStrings_Get(0x3f3);
+        int labelWidth = Font_GetTextWidth(levelLabel, 0);
+        if (vocation >= 0) {
+            char* tile = (char*)GetTableEntry020421b0((unsigned char)(vocation * 4 + 0x28));
+            for (row = 0; row < 2; row++) {
+                for (col = 0; col < 2; col++) {
+                    func_0205b530(&dest, tile, col * 8 + 6, row * 8 + 0x29, 8, 0xf);
+                    tile += 0x20;
                 }
             }
         }
@@ -155,16 +155,16 @@ extern "C" ARM void func_020200c0(int arg0, int arg1) {
             func_0205b234(&var7, 0x13, 0x2b, var22, var18, 0);
         }
     }
-    if (var11 >= 0) {
-        Struct_020200c0_5 var23;
-        func_020e46c4(&var23);
-        func_020e4bf4(&var23, arg0);
-        const char* var24 = func_020e51cc(var11);
-        char var25[0x80];
-        __clear(var25, 0x80);
-        var4->unknown_0_ = &var23;
-        func_02046608(var4, 10, var24, var25, 0x100, 0, 0);
-        func_0205b234(&var7, (short)((0x40 - func_020420e8(var25, 0)) >> 1), 0x2b, var25, var10, 0);
+    if (messageKey >= 0) {
+        NameDescriptor names;
+        Clear12Bytes020e46c4(&names);
+        NameText_InitFromPartyMember(&names, combatantId);
+        const char* format = StandardStrings_Get(messageKey);
+        char text[0x80];
+        __clear(text, 0x80);
+        store->names = &names;
+        MessageSystem_FormatText(store, 10, format, text, 0x100, 0, 0);
+        func_0205b234(&dest, (short)((0x40 - Font_GetTextWidth(text, 0)) >> 1), 0x2b, text, color, 0);
     }
     func_020c9820();
     CleanInvalidateCacheRange(var5, 0x800);

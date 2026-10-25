@@ -14,21 +14,21 @@ extern "C" void* func_ov004_02168fd8(void*, int);
 extern "C" void* func_ov004_02168aa0(void* arg0, int arg1);
 #define TYPE1_LOOKUP func_ov004_02168aa0
 #endif
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" int func_0204c7e0(unsigned char* arg0);
-extern "C" void func_ov023_021f8120(void* arg0);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void func_ov023_021f6844(void* arg0, int arg1);
-struct Struct_ov004_02158dcc;
-extern "C" void func_ov011_021849e0(struct Struct_ov004_02158dcc* arg0, unsigned short arg1);
-extern "C" void* func_ov023_021f6524(void* arg0, int arg1);
-struct Struct_ov004_021698f4;
-extern "C" void* func_ov023_021f9c0c(struct Struct_ov004_021698f4* arg0);
-extern "C" void func_ov023_021fb274(void* arg0, int arg1);
-extern "C" void func_ov004_02169658(void* arg0);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" void* func_ov023_021f6880(void* list, int value);
+extern "C" int func_ov023_021f6f10(void* obj);
+int WindowPane_IsOpen(unsigned char* obj);
+extern "C" void func_ov023_021f8120(void* obj);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
+extern "C" void func_ov023_021f6844(void* extra, int v);
+struct Fields021849e0;
+void SetFieldConditional_021849e0(struct Fields021849e0* obj, unsigned short val);
+extern "C" void* func_ov023_021f6524(void* ctx, int value);
+struct S021f9c0c;
+void* ClearBuffer_021f9c0c(struct S021f9c0c* obj);
+void SetByte38_021fb274(void* obj, int val);
+extern "C" void func_ov004_02169658(void* a);
+extern "C" void func_ov011_021848a0(void* obj, int val);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -55,14 +55,14 @@ extern "C" ARM int func_ov004_021698f4(void* arg0) {
     if (!var2 || func_ov023_021f6f10(var2) != 6) var2 = 0;
 #endif
 
-    if (var2) {
-        unsigned char* var3 = (unsigned char*)var2 + 0x20;
-        if (var3 && func_0204c7e0(var3)) {
-            func_ov023_021f8120(var2);
-            void* var4 = func_ov011_021845f8(arg0, 2);
-            if (var4) {
-                func_ov023_021f6844(func_ov011_021849c8(arg0), 2);
-                ((SafeAllocator*)((char*)var4 + 4))->Reset();
+    if (node2) {
+        unsigned char* f20 = (unsigned char*)node2 + 0x20;
+        if (f20 && WindowPane_IsOpen(f20)) {
+            func_ov023_021f8120(node2);
+            void* av = func_ov011_021845f8(a, 2);
+            if (av) {
+                func_ov023_021f6844(func_ov011_021849c8(a), 2);
+                ((SafeAllocator*)((char*)av + 4))->Reset();
             }
             func_ov011_021849e0((struct Struct_ov004_02158dcc*)arg0, 0);
             void* var5 = func_ov023_021f6524(arg0, 0x64);

@@ -66,7 +66,7 @@ struct Struct_ov023_021d94e4_5
 struct Struct_02046574_2;
 struct Struct_020465c0;
 
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 BattleResultMember_021d94e4* Find_021d994c(void* self, int id);
 int AccumulateFlaggedSlotBits02085fb4(unsigned char* data);
 int AccumulateFlaggedSlotBits02086020(unsigned char* data);
@@ -78,18 +78,18 @@ int AccumulateFlaggedSlotBits0208623c(unsigned char* data);
 int AccumulateSlotBitsFromTable020862a8(unsigned char* data);
 int AccumulateSlotBitsFromTable02086314(unsigned char* data);
 const char* KeyTable_Get(struct Container020e0310* c, int key);
-extern "C" int func_020420e8(const char* text, int large);
+extern "C" int Font_GetTextWidth(const char* text, int large);
 void AppendXYTag_02041a90(char* text, int x, int y);
 void AppendFormatted02041fac(char* text, int line, int value);
 extern "C" void __clear(void* buffer, unsigned long size);
 extern "C" void func_02046380(void* messages);
-void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
 void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
 void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
 extern "C" int sprintf(char* buffer, const char* format, ...);
-extern "C" void func_02046608(void* messages, int, const char* input, char* output, int, int, int);
-void AppendString02042058(char* text, const char* append);
+extern "C" void MessageSystem_FormatText(void* messages, int, const char* input, char* output, int, int, int);
+void Text_Append(char* text, const char* append);
 
 #if defined(jpn)
 extern "C" void func_020474a8(void*,int,const char*,char*);
@@ -100,8 +100,8 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
     if (arg1 == NULL || arg0->unknown_ec_ == -1)
         return;
     GameState::GetInstance();
-    void* var0 = func_020421a0();
-    if (arg0->unknown_120_ == NULL)
+    void* messages = MessageSystem_GetInstance();
+    if (self->members_ == NULL)
         return;
     Struct_ov023_021d94e4_3* var1 = func_ov023_021d994c(arg0, arg0->unknown_ec_);
     if (var1 == NULL)
@@ -150,13 +150,13 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
     }
 #if defined(jpn)
     const char* title = KeyTable_Get(self->texts_, 0x7602);
-    AppendString02042058(text, title);
+    Text_Append(text, title);
     for (int line = 0; line < 9; line++) {
         if (lines != 0) {
             AppendXYTag_02041a90(text, 10, line * 15 + 0x15);
             char input[0x100] = {0};
     func_02046380(messages);
-    SetIndexedName02046574((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
+    MessageSystem_SetStringArgument((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
     short before = stats[line][0];
     StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, before);
     SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
@@ -172,14 +172,14 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
             SetByteAtIndex_020465d8((unsigned char*)messages, 2, 1);
             SetByteInRange_020465f0((unsigned char*)messages, 2, 0);
             func_020474a8(messages,12,KeyTable_Get(self->texts_,0x7603),input);
-            AppendString02042058(text, input);
+            Text_Append(text, input);
             lines--;
         }
     }
 
 #else
     const char* title = KeyTable_Get(self->texts_, 0x7602);
-    AppendXYTag_02041a90(text, (0xd0 - func_020420e8(title, 0)) >> 1, 1);
+    AppendXYTag_02041a90(text, (0xd0 - Font_GetTextWidth(title, 0)) >> 1, 1);
     AppendFormatted02041fac(text, (int)title, 0x10);
     int line;
     const char* format = KeyTable_Get(self->texts_, 0x7603);
@@ -190,7 +190,7 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
     char output[0x100] = {0};
     char input[0x100] = {0};
     func_02046380(messages);
-    SetIndexedName02046574((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
+    MessageSystem_SetStringArgument((Obj02046574*)messages, 0, (char*)KeyTable_Get(self->texts_, (short)(line + 0x760c)));
     short before = stats[line][0];
     StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, before);
     SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
@@ -203,8 +203,8 @@ extern "C" ARM void func_ov023_021d94e4(Struct_ov023_021d94e4_5* arg0, char* arg
     if (after > before)
         color = 5;
     sprintf(input, format, color);
-    func_02046608(messages, 12, input, output, 0xe3, 0, 1);
-    AppendString02042058(text, output);
+    MessageSystem_FormatText(messages, 12, input, output, 0xe3, 0, 1);
+    Text_Append(text, output);
 
 #endif
 }

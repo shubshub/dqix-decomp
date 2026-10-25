@@ -10,9 +10,10 @@
 extern "C"
 {
 
-unsigned int func_020100a8(GameState*);
+unsigned int _Z29GameState_GetProtagonistIndexP9GameState(GameState*);
+char* _Z34GetCombatantWithFlag0x100_0200ff1cP9GameStatei(GameState*, unsigned int);
 
-void* func_02012fe4();
+void* Zone3D_GetInstance();
 }
 
 // USA: func_020a5cb8
@@ -20,8 +21,8 @@ void* func_02012fe4();
 unsigned short GenerateNewMapQuality()
 {
     GameState* gameState = GameState::GetInstance();
-    char* maybeMainCharDataPtr = (char*)func_0200ff1c(gameState, func_020100a8(gameState));
-    (void)func_02012fe4();
+    char* maybeMainCharDataPtr = _Z34GetCombatantWithFlag0x100_0200ff1cP9GameStatei(gameState, _Z29GameState_GetProtagonistIndexP9GameState(gameState));
+    (void)Zone3D_GetInstance();
     GrottoStruct* grotto = gameState->GetGrottoStruct();
 
 #ifdef jpn

@@ -22,8 +22,8 @@ extern "C" ARM void func_020d7978() {
     SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
     GameResources* res = GetGameResources();
     TailList020469b4* list;
-    unsigned char* obj = static_cast<unsigned char*>(res->unknown_ptr_array_3afc[20]);
-    list = static_cast<TailList020469b4*>(res->unknown_ptr_array_36fc[0]);
+    unsigned char* obj = static_cast<unsigned char*>(res->fieldTasks_[20]);
+    list = (TailList020469b4*)res->fieldTaskQueue_;
     InitObjState_021b2174(obj);
     SetNameChecked_021b2ba0((S021b2ba0*)obj, &data_020f2334);
     SetFields30And34_021b2bd0(obj, (int)CopyGlobalBlockAndDispatch_02165df4, OVERLAY_ID(4));

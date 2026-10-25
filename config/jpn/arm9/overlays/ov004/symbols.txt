@@ -512,8 +512,8 @@ func_ov004_0216f854 kind:function(arm,size=0x6c) addr:0x0216fee8
 func_ov004_0216ff54 kind:function(arm,size=0x1cc) addr:0x0216ff54
 func_ov004_0216f990 kind:function(arm,size=0x78) addr:0x02170120
 func_ov004_0216fa08 kind:function(arm,size=0x34) addr:0x02170198
-func_ov004_0216fa3c kind:function(arm,size=0xc) addr:0x021701cc
-func_ov004_0216fa48 kind:function(arm,size=0x2c) addr:0x021701d8
+FieldTask_GrottoBossIntro kind:function(arm,size=0xc) addr:0x021701cc
+FieldTask_EndGrottoBossIntro kind:function(arm,size=0x2c) addr:0x021701d8
 func_ov004_0216fa74 kind:function(arm,size=0x8) addr:0x02170204
 data_ov004_0216fa7c kind:data(any) addr:0x0217020c
 data_ov004_0216fa80 kind:data(any) addr:0x02170210

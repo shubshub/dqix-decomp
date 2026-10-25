@@ -30,8 +30,8 @@ struct Struct_ov000_02174324_3 {
     struct Struct_ov000_02174324_2* unknown_170_;
 };
 
-extern "C" struct Struct_ov000_02174324* func_ov000_02161318(struct Struct_ov000_02174324_3* arg0, int arg1);
-extern "C" int func_0205ac40(void* arg0, struct Struct_ov000_02174324_2* arg1, int arg2);
+extern "C" struct Combatant02174324* func_ov000_02161318(struct Battle02174324* obj, int id);
+extern "C" int SpriteContext_DrawSprite(void* queue, struct Slot02174324* slot, int count);
 
 extern unsigned int data_ov000_02183460[];
 extern unsigned char data_ov000_021833b0[];
@@ -77,11 +77,11 @@ extern "C" ARM int func_ov000_02174324(struct Struct_ov000_02174324_3* arg0, int
 
     if (!var2) return 0;
 
-    struct Struct_ov000_02174324_2* var7 = &arg0->unknown_170_[var4];
-    var7->unknown_14_ = arg2 << 12;
-    var7->unknown_18_ = arg3 << 12;
-    var7->unknown_22_ = var5;
-    var7->unknown_26_ = 1;
-    func_0205ac40(arg0->unknown_11c_, var7, 1);
+    struct Slot02174324* slot = &battle->slots[slotIdx];
+    slot->x = x << 12;
+    slot->y = y << 12;
+    slot->palette = palette;
+    slot->active = 1;
+    SpriteContext_DrawSprite(battle->queue, slot, 1);
     return 1;
 }

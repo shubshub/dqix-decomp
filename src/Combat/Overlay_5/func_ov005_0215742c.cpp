@@ -17,7 +17,7 @@
 #include "Input/Input.h"
 
 struct SePlayer;
-struct Struct_0205bb84;
+struct GridCursor;
 
 struct Struct_ov005_02153954 {
     char unknown_0_[R(0x196c, 0x19f4)];
@@ -41,7 +41,7 @@ extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
 void SePlayer_Play(SePlayer* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(GridCursor* s);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov005_0215742c(Struct_ov005_02153954* arg0) {
         func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
-    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))
+    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((GridCursor*)self->cursor_), 0))
         return;
     arg0->unknown_3dcc_ |= 0x100;
     func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbc_);

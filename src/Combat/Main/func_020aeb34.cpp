@@ -9,34 +9,32 @@ struct Struct_02015438;
 struct GameResources;
 struct Struct_0203cec4;
 struct Struct_0203fc5c;
-struct Struct_0203de84_2;
-struct Struct_0203de84 { int unknown_0_; int unknown_4_; int unknown_8_; };
-struct Struct_0203d028_15;
-struct Struct_020409b0;
-struct Struct_0203e2c4_2;
-struct Struct_020aeb34 { char unknown_0_[0x10]; int unknown_10_; int unknown_14_; int unknown_18_; short unknown_1c_; };
-struct Struct_ov009_0218aa28 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Node020406f8;
+struct Vec3_020406f8 { int x; int y; int z; };
+struct Node02040774;
+struct Npc;
+struct Obj02040b2c;
+struct EntryPositionState { char unknown0[0x10]; int x; int y; int z; short value; };
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" int rand(void);
-extern "C" long long func_020c3260(int arg0);
-extern "C" long long func_020c32f8(int arg0);
-extern "C" float func_0200c700(long long);
-extern "C" void Vector3fix_Add(struct Struct_ov009_0218aa28* arg0, struct Struct_ov009_0218aa28* arg1, struct Struct_ov009_0218aa28* arg2);
-extern "C" struct Struct_0203dce4_2* func_0203cf4c();
-extern "C" int func_02046b24(struct Struct_02015438**);
-extern "C" struct Struct_02017a94* func_0201b600(Struct_02017a94*, int, unsigned short);
-extern "C" struct Struct_0203dce4* func_0203dce4(struct Struct_0203dce4_2*, int);
-extern "C" void func_02040648(unsigned int*);
-extern "C" int func_02046b08(void**);
+extern "C" long long fix32_SinFx64c(int phase);
+extern "C" long long fix32_CosFx64c(int phase);
+extern "C" float _ll_sto_f(long long);
+struct EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
+int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24**);
+struct Obj0201b600* FindElemByKeys(Obj0201b600*, int, unsigned short);
+struct Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(struct EntryList_203dce4*, int);
+void ClearFlag0x1_02040648(unsigned int*);
+int IsField0Null_02046b08(void**);
 int IsMainBrightnessTransitionActive(struct GameResources*);
 int GetMainBrightnessTransitionState(struct GameResources*);
-extern "C" void func_02040774(struct Struct_0203d028_15*, int, int, int);
-extern "C" void func_02040b2c(struct Struct_0203e2c4_2*, int);
-extern "C" void func_020406f8(struct Struct_0203de84*, struct Struct_0203de84_2*);
-extern "C" void func_0203cec4(struct Struct_0203cec4*, int);
-extern "C" void func_0203fc5c(struct Struct_0203fc5c*, float);
-extern "C" void func_020409b0(struct Struct_020409b0*, int);
+void SetActiveChildFields02040774(struct Node02040774*, int, int, int);
+void PropagateValueToActiveSlot02040b2c(struct Obj02040b2c*, int);
+void SelectVec3FromSources020406f8(struct Vec3_020406f8*, struct Node020406f8*);
+void SetOrClearFlag0x8_0203cec4(struct Struct_203cec4*, int);
+void SetField40IfPositive(struct Struct_0203fc5c*, float);
+void Npc_WalkTo(struct Npc*, int);
 
 // USA: func_020aeb34
 extern "C" ARM void func_020aeb34(void) {
@@ -47,12 +45,12 @@ extern "C" ARM void func_020aeb34(void) {
     int var4;
     struct Struct_02015438** var5;
 
-    var3 = (struct Struct_02017a94*)func_02012fe4();
-    var0 = func_0203cf4c();
-    var2 = GetGameResources();
-    var5 = (Struct_02015438**)var2->unknown_ptr_array_36fc[0];
-    func_02046b24(var5);
-    var3 = func_0201b600(var3, 0, 0x2a);
+    elem = (struct Obj0201b600*)Zone3D_GetInstance();
+    list = GetGlobalPtr021075f4_0203cf4c();
+    base = GetGameResources();
+    head = (HeadNode02046b24**)base->fieldTaskQueue_;
+    GetHeadNodeIdOrMinusOne(head);
+    elem = FindElemByKeys(elem, 0, 0x2a);
 
     if (var3 == NULL) return;
 
@@ -86,21 +84,21 @@ extern "C" ARM void func_020aeb34(void) {
 
     int var9 = var3->unknown_6_;
 
-    for (int var10 = 0; var10 < 4; var10++) {
-        int var11;
-        struct Struct_ov009_0218aa28 var12;
-        struct Struct_ov009_0218aa28 var13;
-        struct Struct_ov009_0218aa28 var14;
-        struct Struct_0203de84 var15;
+    for (int k = 0; k < 4; k++) {
+        int phase;
+        Vector3fix vecB;
+        Vector3fix vecA;
+        Vector3fix out;
+        struct Vec3_020406f8 sel;
 
         var9 += 0x1921;
         if (var9 >= 0x6487) var9 -= 0x6487;
         var11 = var9 - 0xcc;
         if (var11 <= 0) var11 += 0x6487;
 
-        var12.unknown_0_ = (int)(4096.0f * (func_0200c700(func_020c3260(var11)) / 4294967296.0f)) * 2;
-        var12.unknown_4_ = 0;
-        var12.unknown_8_ = (int)(4096.0f * (func_0200c700(func_020c32f8(var11)) / 4294967296.0f)) * 2;
+        vecB.x = (int)(4096.0f * (_ll_sto_f(fix32_SinFx64c(phase)) / 4294967296.0f)) * 2;
+        vecB.y = 0;
+        vecB.z = (int)(4096.0f * (_ll_sto_f(fix32_CosFx64c(phase)) / 4294967296.0f)) * 2;
 
         var13.unknown_0_ = var8;
         struct Struct_0203dce4* var16 = var1[var10];
@@ -110,9 +108,9 @@ extern "C" ARM void func_020aeb34(void) {
 
         Vector3fix_Add(&var13, &var12, &var14);
 
-        if ((var16->unknown_14_) != NULL) func_0203cec4((struct Struct_0203cec4*)(var16->unknown_14_), 1);
-        if ((var16->unknown_14_) != NULL) func_0203fc5c((struct Struct_0203fc5c*)(var16->unknown_14_), 0.8f);
-        func_020409b0((struct Struct_020409b0*)var16, (int)&var14);
-        func_02040774((struct Struct_0203d028_15*)var16, var14.unknown_0_, var14.unknown_4_, var14.unknown_8_);
+        if ((entry->child14) != NULL) SetOrClearFlag0x8_0203cec4((struct Struct_203cec4*)(entry->child14), 1);
+        if ((entry->child14) != NULL) SetField40IfPositive((struct Struct_0203fc5c*)(entry->child14), 0.8f);
+        Npc_WalkTo((struct Npc*)entry, (int)&out);
+        SetActiveChildFields02040774((struct Node02040774*)entry, out.x, out.y, out.z);
     }
 }

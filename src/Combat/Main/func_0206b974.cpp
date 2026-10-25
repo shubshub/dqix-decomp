@@ -27,7 +27,7 @@ public:
     unsigned int unknown_70_;
 };
 
-extern "C" int func_02001aec(const void* lhs, const void* rhs, unsigned int length);
+extern "C" int memcmp(const void* lhs, const void* rhs, unsigned int length);
 int Font_FindCharacterIndex(int, int);
 
 char* FindUnescapedAngleBracket_020424ac(char*);
@@ -36,7 +36,7 @@ int LookupKeyValue020425e4(int leftGlyph, int rightGlyph, int fontType);
 int GetWordFromTable02042648(int fontType);
 int Dispatch02044420(void*, void*);
 bool IsHighByteFF02044494(void*, void*);
-int StringLength_020d2ff0(const char*);
+int STD_GetStringLength(const char*);
 bool StringStartsWithCI020d85dc(const char* str, const char* initial);
 
 struct Struct_020e7e04
@@ -145,7 +145,7 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
             continue;
         }
 
-        if (func_02001aec(arg2, data_020f0981, 6) == 0)
+        if (memcmp(input, data_020f0981, 6) == 0)
         {
             var4 = 0;
             var0 = arg5;
@@ -160,7 +160,7 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
             continue;
         }
 
-        if (func_02001aec(arg2, data_020f08dc, 2) == 0)
+        if (memcmp(input, data_020f08dc, 2) == 0)
         {
             char* var14 = strstr(arg2, data_020f0988);
             if (var14 != NULL)
@@ -189,8 +189,8 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
                     if (!func_020d85dc(var18, var19->unknown_0_))
                         continue;
 
-                    int var20 = var19->unknown_4_(var18 + func_020d2ff0(var19->unknown_0_), &var0, arg7, arg5);
-                    if (var20 != 1)
+                    int procRet = candidate->proc(tagInner + STD_GetStringLength(candidate->tag), &local_2c, fontType, margin);
+                    if (procRet != 1)
                     {
                         if (var20 == 2)
                         {
@@ -224,7 +224,7 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
         {
             var9 = 0;
         }
-        if (func_02001aec(arg2, data_020f098c, 3) == 0)
+        if (memcmp(input, data_020f098c, 3) == 0)
         {
             var16 = -1;
             arg2 += 3;

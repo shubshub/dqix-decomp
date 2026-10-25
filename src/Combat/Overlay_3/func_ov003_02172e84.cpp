@@ -179,8 +179,8 @@ struct Struct_ov003_02172e84_7 {
 };
 #endif
 
-extern "C" Struct_ov003_02172e84_3 *func_020421a0();
-extern "C" const char *func_02072a68(Struct_02072a68_2 *arg0, int arg1);
+Messages02172e84 *MessageSystem_GetInstance();
+const char *FindEntryByKey_02072a68(TableA68 *table, int key);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_ov003_02172e84_3 *arg0, const char *arg1, int arg2);
 extern "C" void func_020e2168(char *arg0, const char *arg1, int arg2, int arg3, int arg4);
@@ -191,20 +191,20 @@ extern char data_ov003_0217ec1d[];
 #else
 extern "C" void func_0204500c(Struct_ov003_02172e84_3 *arg0, const char *arg1, int arg2, int arg3);
 #endif
-extern "C" Struct_ov003_02172e84_6 *func_02012fe4(void);
-extern "C" void __clear(void *arg0, int arg1);
-extern "C" void func_02042764(Struct_ov003_02172e84_9 *arg0, char *arg1, int arg2);
-extern "C" void *ExtractFileFromGP2(const char *arg0, const char *arg1, unsigned int *arg2);
-extern "C" char *func_020e046c(char *arg0, void *arg1, unsigned int arg2, int arg3);
-extern "C" void func_ov003_0217bd38(void *arg0, int arg1);
-extern "C" unsigned char func_ov017_021b1fa8(void *arg0);
+extern "C" Zone02172e84 *Zone3D_GetInstance(void);
+extern "C" void __clear(void *dst, int count);
+extern "C" void Font_DecodeText(Member02172e84 *member, char *buf, int flag);
+extern "C" void *ExtractFileFromGP2(const char *gp2Path, const char *innerFilePath, unsigned int *outSize);
+extern "C" char *func_020e046c(char *buf, void *data, unsigned int size, int idx);
+extern "C" void func_ov003_0217bd38(void *obj, int arg);
+unsigned char GetByteField28_021b1fa8(void *obj);
 extern "C" void *func_0202ae18(void);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void func_0202b0f4(void *arg0);
-extern "C" int func_ov003_021734dc(int arg0, int arg1, int arg2);
-extern "C" void func_0205a330(Struct_0205a330 *arg0, int arg1);
-extern "C" int func_020457e0(Struct_ov003_02172e84_3 *arg0);
-extern "C" int func_ov003_02172570(unsigned char *arg0, void *arg1);
+int CheckField0NonZero_0202b7d8(int *obj);
+extern "C" void func_0202b0f4(void *obj);
+int IsInRangePair_021734dc(int unused, int a, int b);
+void SpriteEntryList_AdvanceAnimations(Container0205a330 *c, int arg);
+extern "C" int func_020457e0(Messages02172e84 *window);
+extern "C" int func_ov003_02172570(unsigned char *obj, void *extra);
 
 extern char data_ov003_02180a49[];
 extern char data_ov003_02180a4c[];
@@ -212,26 +212,26 @@ extern char data_ov003_02180a63[];
 
 // USA: func_ov003_02172e84
 #if defined(jpn)
-extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
-    GameResources *var0 = GetGameResources();
-    Struct_ov003_02172e84_3 *var1 = func_020421a0();
-    Struct_ov003_02172e84_2 *var2 = (Struct_ov003_02172e84_2 *) var0->unknown_ptr_array_3afc[19];
-    if (arg0->unknown_ea_ == 0) {
-        if (IsMainBrightnessTransitionActive(var0) == 0) {
-            func_0204500c(var1, data_ov003_0217eb9b, 0);
-            var1->unknown_17ee_ = 1;
-            var1->unknown_868_ = 1;
-            arg0->unknown_ea_ = 1;
+extern "C" ARM void func_ov003_02172e84(Self02172e84 *self) {
+    GameResources *res = GetGameResources();
+    Messages02172e84 *msg = MessageSystem_GetInstance();
+    Battle02172e84 *battle = (Battle02172e84 *) res->fieldTasks_[19];
+    if (self->step_ == 0) {
+        if (IsMainBrightnessTransitionActive(res) == 0) {
+            func_0204500c(msg, data_ov003_0217eb9b, 0);
+            msg->flag19be_ = 1;
+            msg->busy_ = 1;
+            self->step_ = 1;
         }
-    } else if (arg0->unknown_ea_ == 1) {
-        Struct_ov003_02172e84_6 *var3 = func_02012fe4();
-        Struct_ov003_02172e84_5 *var4 = &var3->unknown_840_;
-        unsigned char var5 = arg0->unknown_cc_->unknown_614_;
-        unsigned int var6 = arg0->unknown_cc_->unknown_738_ & ~1;
-        var6 &= var6 ^ var4->unknown_1000_.unknown_b48_;
-        if (var2->unknown_28_ != 0) {
-            if (!inline_ov003_02172e84_3(arg0->unknown_cc_)) {
-                arg0->unknown_350_ = 1;
+    } else if (self->step_ == 1) {
+        Zone02172e84 *zone = Zone3D_GetInstance();
+        Save02172e84 *save = &zone->save_;
+        unsigned char count = self->party_->count_;
+        unsigned int joined = self->party_->joined_ & ~1;
+        joined &= joined ^ save->progress_.seen_;
+        if (battle->flag28_ != 0) {
+            if (!IsLinked(self->party_)) {
+                self->pending_ = 1;
             }
         }
         if (var6 != 0 && arg0->unknown_d0_ < 3) {
@@ -285,23 +285,23 @@ extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
                 arg0->unknown_0_ = 0;
             }
         }
-    } else if (arg0->unknown_ea_ == 2) {
-        func_0204500c(var1, data_ov003_0217ec1d, 0);
-        var1->unknown_868_ = 1;
-        arg0->unknown_ea_ = 3;
-    } else if (arg0->unknown_ea_ == 3) {
-        GameState *var14 = GameState::GetInstance();
-        var1->unknown_228_ = arg0->unknown_13c_;
-        var1->unknown_22c_ = arg0->unknown_134_;
-        var1->unknown_230_ = arg0->unknown_138_;
-        arg0->unknown_0_ = 0;
-        Struct_0205a330 *var15 = var1->unknown_230_;
-        func_0205a330(var15, var14->GetTickCount() >> 2);
-        if (var1->unknown_870_ == 0) {
-            var1->unknown_868_ = 1;
-            if (func_020457e0(var1) == 0) {
-                arg0->unknown_c8_ = 1;
-                arg0->unknown_ea_ = 4;
+    } else if (self->step_ == 2) {
+        func_0204500c(msg, data_ov003_0217ec1d, 0);
+        msg->busy_ = 1;
+        self->step_ = 3;
+    } else if (self->step_ == 3) {
+        GameState *state = GameState::GetInstance();
+        msg->target_ = self->field130_;
+        msg->field2dc_ = self->field128_;
+        msg->entries_ = self->entries_;
+        self->active_ = 0;
+        Container0205a330 *entries = msg->entries_;
+        SpriteEntryList_AdvanceAnimations(entries, state->GetTickCount() >> 2);
+        if (msg->state_ == 0) {
+            msg->busy_ = 1;
+            if (func_020457e0(msg) == 0) {
+                self->done_ = 1;
+                self->step_ = 4;
             } else {
                 arg0->unknown_ea_ = 0;
             }
@@ -321,26 +321,26 @@ extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
-    GameResources *var16 = GetGameResources();
-    Struct_ov003_02172e84_3 *var17 = func_020421a0();
-    Struct_ov003_02172e84_2 *var18 = (Struct_ov003_02172e84_2 *) var16->unknown_ptr_array_3afc[19];
-    if (arg0->unknown_ee_ == 0) {
-        if (IsMainBrightnessTransitionActive(var16) == 0) {
-            func_0204500c(var17, func_02072a68(&arg0->unknown_1d8_, 100), 0, 0xe3);
-            var17->unknown_19be_ = 1;
-            var17->unknown_998_ = 1;
-            arg0->unknown_ee_ = 1;
+extern "C" ARM void func_ov003_02172e84(Self02172e84 *self) {
+    GameResources *res = GetGameResources();
+    Messages02172e84 *msg = MessageSystem_GetInstance();
+    Battle02172e84 *battle = (Battle02172e84 *) res->fieldTasks_[19];
+    if (self->step_ == 0) {
+        if (IsMainBrightnessTransitionActive(res) == 0) {
+            func_0204500c(msg, FindEntryByKey_02072a68(&self->texts_, 100), 0, 0xe3);
+            msg->flag19be_ = 1;
+            msg->busy_ = 1;
+            self->step_ = 1;
         }
-    } else if (arg0->unknown_ee_ == 1) {
-        Struct_ov003_02172e84_6 *var19 = func_02012fe4();
-        Struct_ov003_02172e84_5 *var20 = &var19->unknown_840_;
-        unsigned char var21 = arg0->unknown_d0_->unknown_718_;
-        unsigned int var22 = arg0->unknown_d0_->unknown_738_ & ~1;
-        var22 &= var22 ^ var20->unknown_1000_.unknown_b48_;
-        if (var18->unknown_28_ != 0) {
-            if (!inline_ov003_02172e84_3(arg0->unknown_d0_)) {
-                arg0->unknown_344_ = 1;
+    } else if (self->step_ == 1) {
+        Zone02172e84 *zone = Zone3D_GetInstance();
+        Save02172e84 *save = &zone->save_;
+        unsigned char count = self->party_->count_;
+        unsigned int joined = self->party_->joined_ & ~1;
+        joined &= joined ^ save->progress_.seen_;
+        if (battle->flag28_ != 0) {
+            if (!IsLinked(self->party_)) {
+                self->pending_ = 1;
             }
         }
         if (var22 != 0 && arg0->unknown_d4_ < 3) {
@@ -351,22 +351,22 @@ extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
             for (var23 = 1; var23 < 24; var23++) {
                 if (var22 & (1 << var23)) break;
             }
-            var20->unknown_1000_.unknown_b48_ |= 1 << var23;
-            var20->unknown_1000_.unknown_b4c_ |= 1 << var23;
-            sprintf(arg0->unknown_4_, data_ov003_02180a49, func_02072a68(&arg0->unknown_1d8_, (short) var23));
-            arg0->unknown_2_ = var23;
-            arg0->unknown_c4_++;
-            arg0->unknown_ee_ = 99;
-        } else if (arg0->unknown_d5_ != var21 && arg0->unknown_d4_ < 3) {
-            Struct_ov003_02172e84_9 *var24 = &arg0->unknown_d0_->unknown_460_[arg0->unknown_d5_];
-            arg0->unknown_d5_++;
-            arg0->unknown_cb_ = 1;
-            arg0->unknown_d4_++;
-            char var25[0x30];
-            __clear(var25, sizeof(var25));
-            func_02042764(var24, var25, 1);
-            sprintf(arg0->unknown_4_, data_ov003_02180a49, var25);
-            if (inline_ov003_02172e84_2(inline_ov003_02172e84(var24)) < 700) {
+            save->progress_.seen_ |= 1 << i;
+            save->progress_.announced_ |= 1 << i;
+            sprintf(self->text_, data_ov003_02180a49, FindEntryByKey_02072a68(&self->texts_, (short) i));
+            self->bit_ = i;
+            self->announceCount_++;
+            self->step_ = 99;
+        } else if (self->memberIndex_ != count && self->shownCount_ < 3) {
+            Member02172e84 *member = &self->party_->members_[self->memberIndex_];
+            self->memberIndex_++;
+            self->busy_ = 1;
+            self->shownCount_++;
+            char name[0x30];
+            __clear(name, sizeof(name));
+            Font_DecodeText(member, name, 1);
+            sprintf(self->text_, data_ov003_02180a49, name);
+            if (GetAccolade(GetProfile(member)) < 700) {
                 BackgroundLoader::AddLockGlobal();
                 unsigned int var26 = 0;
                 char var27[0x40];
@@ -414,23 +414,23 @@ extern "C" ARM void func_ov003_02172e84(Struct_ov003_02172e84_7 *arg0) {
                 arg0->unknown_0_ = 0;
             }
         }
-    } else if (arg0->unknown_ee_ == 2) {
-        func_0204500c(var17, func_02072a68(&arg0->unknown_1d8_, 101), 0, 0xe3);
-        var17->unknown_998_ = 1;
-        arg0->unknown_ee_ = 3;
-    } else if (arg0->unknown_ee_ == 3) {
-        GameState *var35 = GameState::GetInstance();
-        var17->unknown_2d8_ = arg0->unknown_130_;
-        var17->unknown_2dc_ = arg0->unknown_128_;
-        var17->unknown_2e0_ = arg0->unknown_12c_;
-        arg0->unknown_0_ = 0;
-        Struct_0205a330 *var36 = var17->unknown_2e0_;
-        func_0205a330(var36, var35->GetTickCount() >> 2);
-        if (var17->unknown_9a0_ == 0) {
-            var17->unknown_998_ = 1;
-            if (func_020457e0(var17) == 0) {
-                arg0->unknown_ca_ = 1;
-                arg0->unknown_ee_ = 4;
+    } else if (self->step_ == 2) {
+        func_0204500c(msg, FindEntryByKey_02072a68(&self->texts_, 101), 0, 0xe3);
+        msg->busy_ = 1;
+        self->step_ = 3;
+    } else if (self->step_ == 3) {
+        GameState *state = GameState::GetInstance();
+        msg->target_ = self->field130_;
+        msg->field2dc_ = self->field128_;
+        msg->entries_ = self->entries_;
+        self->active_ = 0;
+        Container0205a330 *entries = msg->entries_;
+        SpriteEntryList_AdvanceAnimations(entries, state->GetTickCount() >> 2);
+        if (msg->state_ == 0) {
+            msg->busy_ = 1;
+            if (func_020457e0(msg) == 0) {
+                self->done_ = 1;
+                self->step_ = 4;
             } else {
                 arg0->unknown_ee_ = 0;
             }

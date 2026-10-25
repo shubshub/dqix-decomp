@@ -3,9 +3,6 @@
 #include "GameState/GameState.h"
 #include "NitroSDK/Matrix.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov017_02198f84 {
     unsigned short unknown_0_;
@@ -50,56 +47,56 @@ struct Struct_ov017_02198f84_3 {
     unsigned short unknown_42ec_;
 };
 
-extern "C" void* func_02012fe4(void);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_020649b0(void* arg0, int arg1, void* arg2);
-extern "C" void func_0206f81c(void* arg0);
-extern "C" void func_ov017_021ab250(struct Struct_ov017_021ab250* arg0);
-extern "C" Struct_ov017_02198f84* func_0200fd0c(GameState* arg0);
-extern "C" void func_ov017_021ab698(char* arg0, int arg1);
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_RunTrigger(void* a, int mode, void* c);
+extern "C" void EventQuery_RunQueuedCommands(void* p);
+void InitState6_021ab250(struct Struct021ab250* p);
+Pending02198f84* GetField0x3f8Address_0200fd0c(GameState* state);
+void SetIntField_021ab698_021ab698(char* p, int v);
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // USA: func_ov017_02198f84
-extern "C" ARM void func_ov017_02198f84(Struct_ov017_02198f84_3* arg0) {
-    Zone3D* var0 = (Zone3D*)func_02012fe4();
-    for (int var1 = 0; var1 < arg0->unknown_36b8_; var1++) {
-        Struct_020134e0::Struct_02018300* var2 = arg0->unknown_36bc_[var1];
-        if (var2 == NULL) {
+extern "C" ARM void func_ov017_02198f84(Self02198f84* self) {
+    Zone3D* ctx = (Zone3D*)Zone3D_GetInstance();
+    for (int i = 0; i < self->nodeCount; i++) {
+        ZoneFeatures::Opcode6aEntry* node = self->nodes[i];
+        if (node == NULL) {
             continue;
         }
-        int var3 = 0;
-        void* var4 = func_0205ec34();
-        Struct_ov017_02198f84_2 var5;
-        var5.unknown_28_ = var2->unknown_20_;
-        var5.unknown_1e_ = var2->unknown_2c_.unknown1_0_.unknown_1_;
-        var5.unknown_1c_ = var2->unknown_2c_.unknown1_0_.unknown_0_;
-        if (func_020649b0(var4, 0x11, &var5)) {
-            func_0206f81c(&var5);
+        int clear = 0;
+        void* r = Scenario_GetInstance();
+        Query02198f84 q;
+        q.field_0x28 = node->angle;
+        q.field_0x1e = node->unk_2c.type2.elementId;
+        q.field_0x1c = node->unk_2c.type2.nodeId;
+        if (Scenario_RunTrigger(r, 0x11, &q)) {
+            EventQuery_RunQueuedCommands(&q);
         }
-        if (!(var2->unknown_2c_.unknown1_0_.unknown_2_4_ & 4)) {
-            func_02018300(var0, var2, 1, 1, 1);
-            if ((var2->unknown_2c_.unknown1_0_.unknown_2_4_ & 8) && var2->unknown_2c_.unknown1_0_.unknown_4_ != 0) {
-                func_ov017_021ab250(arg0->unknown_3b10_);
-                Struct_ov017_02198f84* var6 = func_0200fd0c(GameState::GetInstance());
-                if (var6->unknown_2_ != 0) {
-                    var2->unknown_2c_.unknown1_0_.unknown_4_ = var6->unknown_0_;
-                    var2->unknown_2c_.unknown1_0_.unknown_c_[0] = var6->unknown_10_;
-                    var2->unknown_2c_.unknown1_0_.unknown_3c_ = var6->unknown_1c_;
-                    var2->unknown_2c_.unknown1_0_.unknown_3e_ = var6->unknown_b_;
-                    var2->unknown_2c_.unknown1_0_.unknown_c_[1] = var6->unknown_3c_;
-                    var2->unknown_2c_.unknown1_0_.unknown_c_[2] = var6->unknown_48_;
-                    var2->unknown_2c_.unknown1_0_.unknown_c_[3] = var6->unknown_54_;
-                    var6->unknown_2_ = 0;
+        if (!(node->unk_2c.type2.flags & 4)) {
+            Zone3D_OpenDoor(ctx, node, 1, 1, 1);
+            if ((node->unk_2c.type2.flags & 8) && node->unk_2c.type2.maybeZone != 0) {
+                InitState6_021ab250(self->state6);
+                Pending02198f84* pending = GetField0x3f8Address_0200fd0c(GameState::GetInstance());
+                if (pending->pending != 0) {
+                    node->unk_2c.type2.maybeZone = pending->id;
+                    node->unk_2c.type2.vectors_c[0] = pending->pos;
+                    node->unk_2c.type2.unk_3c = pending->field_0x1c;
+                    node->unk_2c.type2.unk_3e = pending->field_0xb;
+                    node->unk_2c.type2.vectors_c[1] = pending->vecA;
+                    node->unk_2c.type2.vectors_c[2] = pending->vecB;
+                    node->unk_2c.type2.vectors_c[3] = pending->vecC;
+                    pending->pending = 0;
                 }
-                func_ov017_021ab698((char*)arg0->unknown_3b10_, (int)var2);
-                func_020469b4(arg0->unknown_36fc_, (struct Struct_0201bdac*)arg0->unknown_3b10_);
-            } else if (!(var2->unknown_2c_.unknown1_0_.unknown_2_4_ & 8)) {
-                var3 = 1;
+                SetIntField_021ab698_021ab698((char*)self->state6, (int)node);
+                AppendNodeToTail(self->tailList, (struct TailNode020469b4*)self->state6);
+            } else if (!(node->unk_2c.type2.flags & 8)) {
+                clear = 1;
             }
         } else {
-            arg0->unknown_42ec_ = 0;
-            var2->unknown_2c_.unknown1_0_.unknown_2_4_ &= ~4;
+            self->field_0x42ec = 0;
+            node->unk_2c.type2.flags &= ~4;
         }
         if (var3) {
             arg0->unknown_42ec_ = 0;

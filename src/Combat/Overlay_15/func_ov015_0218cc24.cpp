@@ -39,11 +39,11 @@ struct Vector3i;
 void DelayThenSyncBit0_020c9820();
 void ResetObjectState02079a3c(void*);
 struct Foo0207df50;
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
-struct Container020dedd0;
-void* FindElementByKey020dedd0(Container020dedd0*, int);
+struct ItemTable;
+void* ItemTable_Find(ItemTable*, int);
 extern "C" int func_ov015_0218c03c(void* self, char* buf, int i, int one);
 extern "C" void func_ov015_0218c538(void* self, int zero);
 extern "C" void func_ov015_0218c3a4(void* self, int v);
@@ -52,7 +52,7 @@ struct Fields020407b4;
 void SetFields0x44(Fields020407b4*, int, int, int);
 extern "C" int fix32_Divide(int, int);
 
-extern int data_0211e33c __attribute__((aligned(4)));
+extern int g_fileLoadBuffer __attribute__((aligned(4)));
 extern char data_ov015_021940c0;
 extern char data_ov015_021940db;
 extern char data_ov015_021940e1;
@@ -89,35 +89,35 @@ extern "C" ARM int func_ov015_0218cc24(Struct_ov015_0218cc24_2* arg0) {
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
 
-    unsigned int var6 = 0;
-    char* var7 = (char*)&data_0211e33c;
-    unsigned int var8 = 0x30000;
-    GPCReadPair var9;
-    char var10[0x80];
-    func_02079a3c(&var9);
-    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var9.pGPCFile, var9.machine, &data_ov015_021940c0,
-                                                   var7, var6, var8, false, 0)) {
-        var7 += var6;
-        var8 -= var6;
-        for (int var11 = 0; var11 < 10; var11++) {
-            if (arg0->unknown_2c_ != 2 && arg0->unknown_20_[var11] == (var5 = arg0->unknown_24_[var11].unknown_2_)) {
+    unsigned int size = 0;
+    char* buf = (char*)&g_fileLoadBuffer;
+    unsigned int room = 0x30000;
+    GPCReadPair pair;
+    char name[0x80];
+    ResetObjectState02079a3c(&pair);
+    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine, &data_ov015_021940c0,
+                                                   buf, size, room, false, 0)) {
+        buf += size;
+        room -= size;
+        for (int i = 0; i < 10; i++) {
+            if (self->state != 2 && self->ids[i] == (id = self->ents[i].unknown_2_)) {
                 continue;
             }
-            Vector3fix var12 = arg0->unknown_24_[var11].position_;
-            var1 = (char*)*arg0->unknown_4_;
-            var0 = var11 * 0x70;
-            var4 = arg0->unknown_8_;
-            var3 = var11 * 0x14;
-            ((SafeAllocator*)((char*)var4 + var3))->Reset();
-            func_0207df50((Struct_0203d028*)(var1 + var0));
-            arg0->unknown_24_[var11].Initialize();
-            arg0->unknown_24_[var11].position_ = var12;
-            arg0->unknown_24_[var11].unknown_2_ = arg0->unknown_20_[var11];
-            if (arg0->unknown_20_[var11] < 0) {
+            Vector3fix savedPos = self->ents[i].position_;
+            pairs = (char*)*self->pairsRoot;
+            off70 = i * 0x70;
+            alloc = self->allocs;
+            off14 = i * 0x14;
+            ((SafeAllocator*)((char*)alloc + off14))->Reset();
+            VramState_Rewind((Foo0207df50*)(pairs + off70));
+            self->ents[i].Initialize();
+            self->ents[i].position_ = savedPos;
+            self->ents[i].unknown_2_ = self->ids[i];
+            if (self->ids[i] < 0) {
                 continue;
             }
-            Struct_ov015_0218cc24* var13 = (Struct_ov015_0218cc24*)func_020dedd0((Struct_0201099c_10*)((char*)arg0->unknown_0_ + 0x4c), (short)arg0->unknown_20_[var11]);
-            if (var13 == 0) {
+            Elem0218cc24* elem = (Elem0218cc24*)ItemTable_Find((ItemTable*)((char*)self->container + 0x4c), (short)self->ids[i]);
+            if (elem == 0) {
                 continue;
             }
             if (func_ov015_0218c03c(arg0, var10, var11, 1) == 0) {

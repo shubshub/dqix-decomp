@@ -9,12 +9,12 @@
 #endif
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" int func_0202c540(void* p);
-extern "C" void func_0205ac40(void* a, void* b);
+extern "C" void SpriteContext_DrawSprite(void* a, void* b);
 
 int GetIntField0x260_02039750(void* obj);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" void* func_020daf90(void);
 int IsField0Null_02046b08(void** obj);
 
@@ -28,7 +28,7 @@ void FillFieldWithEncoded_021a5ad0(struct Node0x20_021a5ad0* arr, int count, int
 void ClearAndEncodeField14_021a5b08(struct Node0x20_021a5ad0* arr, int count);
 
 struct Struct0200fb08;
-unsigned char NormalizeField5_0200fb08(struct Struct0200fb08* obj);
+unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
 
 struct Cont0205d1e0;
 struct Cont0205d228;
@@ -75,8 +75,8 @@ extern "C" ARM void func_ov017_021a63d0(unsigned char* base) {
 
     void* searchObj = func_0202ae18();
     int f260 = GetIntField0x260_02039750(GameState::GetInstance()->GetProtagonist());
-    int glob1c = GetGlobalField0x1c020421a0();
-    void* g = func_02012fe4();
+    int glob1c = MessageSystem_GetInstance();
+    void* g = Zone3D_GetInstance();
     void* ctx = func_020daf90();
 
     if (GameState::GetInstance()->GetGrottoStruct()->unknown_0[0] == 0) return;
@@ -107,7 +107,7 @@ extern "C" ARM void func_ov017_021a63d0(unsigned char* base) {
         } while (--n);
     }
 
-    unsigned char count = NormalizeField5_0200fb08((struct Struct0200fb08*)GameState::GetInstance());
+    unsigned char count = GameState_GetLanguage((struct Struct0200fb08*)GameState::GetInstance());
 
  #endif
 
@@ -141,7 +141,7 @@ extern "C" ARM void func_ov017_021a63d0(unsigned char* base) {
             *(int*)(q + 0xc) = 0x1000;
             *(int*)(q + 0x10) = 0x1000;
             void* p2 = *(void**)(base + OFF_41c4);
-            func_0205ac40(p2, q);
+            SpriteContext_DrawSprite(p2, q);
         }
     }
 

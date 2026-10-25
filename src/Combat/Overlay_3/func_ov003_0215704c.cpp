@@ -24,11 +24,11 @@ void *_Z24GetFieldAt0x150_02053c6cPh(void *);
 void *_Z29OffsetByIndexTimes16_02155e14ii(void *, int);
 void ItemTable_LoadIds(void *, void *, void *, unsigned int, void *, int);
 void _ZN13SafeAllocator5ResetEv(void *);
-void func_ov003_0215873c(void *);
-void *func_020421a0(void);
-void func_02043204(void *);
-void func_ov003_02158a50(void *);
-void func_0209c830(void *, int);
+void _Z20ResetFields_0215873cPv(void *);
+void *_Z25MessageSystem_GetInstancev(void);
+void _Z19MessageSystem_ResetPc(void *);
+void _Z25SetFlag_02158a50_02158a50Ph(void *);
+void _Z27SetValueAndActivate0209c830P14Struct0209c830i(void *, int);
 void func_ov003_0215582c(void *);
 int func_02046b24(void *);
 int _ZNK8Object3D19HasAnimationStoppedEv(void *);
@@ -39,7 +39,7 @@ void func_ov017_021c4418(int, int);
 void func_ov017_021cf078(int, int, int);
 void func_ov017_021ccc34(int);
 void func_ov017_021cc730(int, int, int, int);
-void func_02083e28(void *, int);
+void PartyMember_RecalculateStats(void *, int);
 void func_ov003_02155740(void *);
 void *func_02094d6c(void);
 int func_ov003_02158754(void *);
@@ -52,7 +52,7 @@ int func_ov003_02158754(void *);
 #endif
 
 extern char g_sePlayer[];
-extern char data_02109bf4[];
+extern char g_bgmPlayer[];
 extern const char *g_itemDataArchive;
 extern const char *g_itemDataFile;
 
@@ -229,17 +229,17 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
             arg0->unknown_1f9_ = 0x32;
             arg0->unknown_338_  = 1;
         }
-    } else if (var1 == 6) {
-        arg0->unknown_1d4_ = 0;
-        func_02043204(func_020421a0());
-        func_ov003_02158a50(arg0);
-        func_0209c830(data_02109bf4, 0x34);
-        arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
-    } else if (var1 == 7) {
-        arg0->unknown_1d4_ = arg0->unknown_1d4_ + arg0->unknown_1dc_;
-        if (arg0->unknown_1d4_ > 0x8c) {
-            func_ov003_0215582c(arg0);
-            arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
+    } else if (state == 6) {
+        self->f1d4 = 0;
+        _Z19MessageSystem_ResetPc(_Z25MessageSystem_GetInstancev());
+        _Z25SetFlag_02158a50_02158a50Ph(self);
+        _Z27SetValueAndActivate0209c830P14Struct0209c830i(g_bgmPlayer, 0x34);
+        self->state = self->state + 1;
+    } else if (state == 7) {
+        self->f1d4 = self->f1d4 + self->f1dc;
+        if (self->f1d4 > 0x8c) {
+            func_ov003_0215582c(self);
+            self->state = self->state + 1;
         }
     } else if (var1 == 8) {
         char *var14 = (char *) GetGameResources();
@@ -259,9 +259,9 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
             func_ov017_021ccc34(arg0->unknown_1f7_);
             func_ov017_021cc730(arg0->unknown_1f7_, 1, 0, 0);
         }
-        void *var15 = func_0200ff1c((GameState *)var0, arg0->unknown_1f7_);
-        if (var15 != 0) {
-            func_02083e28(*(void **) ((char *) var15 + JPN_OFS(0x144, 0x150)), 0);
+        void *c2 = _Z34GetCombatantWithFlag0x100_0200ff1cP9GameStatei(gs, self->f1f7);
+        if (c2 != 0) {
+            PartyMember_RecalculateStats(*(void **) ((char *) c2 + JPN_OFS(0x144, 0x150)), 0);
         }
         func_ov003_02155740(arg0);
         struct Struct_ov003_0215704c_4 *var16 = (struct Struct_ov003_0215704c_4 *) func_02094d6c();

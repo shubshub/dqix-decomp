@@ -20,7 +20,7 @@ extern "C" void* __clear(void* arg0, int arg1);
 void* LoadFileIntoMemory(const char* path, void* buf, unsigned int* outLen);
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 struct Vector3i;
@@ -31,8 +31,8 @@ extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
 struct Struct_ov015_02193cfc { unsigned int unknown_0_[3]; };
 
 extern char data_ov015_02194129;
-extern struct Struct_ov015_02193cfc data_ov015_02193cfc;
-extern int data_0211e33c;
+extern struct Vec3Words02193cfc data_ov015_02193cfc;
+extern int g_fileLoadBuffer;
 
 // USA: func_ov015_0218df0c
 extern "C" ARM int func_ov015_0218df0c(void* arg0, int* arg1) {
@@ -47,35 +47,35 @@ extern "C" ARM int func_ov015_0218df0c(void* arg0, int* arg1) {
 
     int ok = 1;
     struct Foo0207df50* mgr = *(struct Foo0207df50**)*(void**)((char*)self + 4);
-    CopyInternalFields0207df50(mgr);
+    VramState_Rewind(mgr);
     VramState_Restore((char*)mgr);
 
     sprintf(var0, &data_ov015_02194129, arg1[1]);
 
     BackgroundLoader::AddLockGlobal();
 
-    unsigned int var3 = 0;
-    void* var4 = LoadFileIntoMemory(var0, &data_0211e33c, &var3);
+    unsigned int length = 0;
+    void* buffer = LoadFileIntoMemory(buf, &g_fileLoadBuffer, &length);
 
     if (var4 == 0) {
         var1 = 0;
     } else {
-        ObjectArchiveLoadInfo var5;
-        func_0203dafc((struct Struct_0203d028_11*)&var5);
-        SafeAllocator* var6 = *(SafeAllocator**)((char*)arg0 + 8);
-        unsigned int var7 = var3;
-        void* var8 = &data_0211e33c;
-        int var9 = var1;
-        var5.fileData = var8;
-        var5.unk_8 = var7;
-        var5.allocator = var6;
-        var5.unk_10 = var9;
-        ((Object3D*)(*(void**)((char*)arg0 + 0x24)))->LoadFromCCHROrCMOTArchive(&var5, 0);
+        ObjectArchiveLoadInfo params;
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&params);
+        SafeAllocator* allocPtr = *(SafeAllocator**)((char*)self + 8);
+        unsigned int sz = length;
+        void* dataPtr = &g_fileLoadBuffer;
+        int onePtr = ok;
+        params.fileData = dataPtr;
+        params.fileSize = sz;
+        params.allocator = allocPtr;
+        params.unk_10 = onePtr;
+        ((Object3D*)(*(void**)((char*)self + 0x24)))->LoadFromCCHROrCMOTArchive(&params, 0);
 
         struct Struct_ov015_02193cfc var10 = data_ov015_02193cfc;
         ((Object3D*)((unsigned char*)*(void**)((char*)arg0 + 0x24)))->SetScale((Vector3i const*)&var10);
 
-        ((Object3D*)(*(void**)((char*)arg0 + 0x24)))->MaybeSetBCFGAnimation(0, *(int*)((char*)arg0 + 0x44));
+        ((Object3D*)(*(void**)((char*)self + 0x24)))->SetAnimationByIndex(0, *(int*)((char*)self + 0x44));
     }
 
     BackgroundLoader::RemoveLockGlobal();

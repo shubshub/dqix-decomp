@@ -1,24 +1,15 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-extern int data_020e7b98[][4];
-
-struct AllocTarget0204b12c {
-    char pad0[0x14];
-    void* field14;
-    unsigned int field18;
-    unsigned char pad1c[3];
-    unsigned char field1f;
-};
-
 // Main, originally AllocateAndClearBuffer0204b12c (USA 0x0204b12c, EUR 0x0204b13c, JPN 0x0204bf4c)
-ARM void Background_AllocateMap(struct AllocTarget0204b12c* obj, SafeAllocator* alloc) {
+ARM void Background_AllocateMap(struct BackgroundGraphics* layer, SafeAllocator* alloc) {
     unsigned int size;
-    void* p;
+    unsigned short* map;
     if (alloc == NULL) return;
-    size = data_020e7b98[obj->field1f][obj->field18];
-    p = alloc->Allocate(size);
-    obj->field14 = p;
-    memset(p, 0, size);
+    size = Background_mapSizes[layer->mapType_][layer->mapSize_];
+    map = (unsigned short*)alloc->Allocate(size);
+    layer->map_ = map;
+    memset(map, 0, size);
 }

@@ -33,7 +33,7 @@ struct Struct_0202a6c4_2 {
 
 extern char data_020ef772[];
 extern char data_020ef775[];
-extern "C" int func_020420e8(const char*, int);
+extern "C" int Font_GetTextWidth(const char*, int);
 #if defined(jpn)
 extern "C" void func_02028ce4(const char*, int*, int*);
 #endif
@@ -52,7 +52,7 @@ extern "C" ARM void func_0202a6c4(Struct_0202a6c4_2* arg0) {
         int var3;
         func_02028ce4(arg0->unknown_4_, &var2, &var3);
 #else
-        if (arg0->unknown_4_ != NULL) var2 = func_020420e8(arg0->unknown_4_, 1);
+        if (menu->text != NULL) measured = Font_GetTextWidth(menu->text, 1);
 #endif
         var2 /= data_020ef74c.unknown_8_;
         var1 = var2;
@@ -67,7 +67,7 @@ extern "C" ARM void func_0202a6c4(Struct_0202a6c4_2* arg0) {
             int var8;
             func_02028ce4(var4->unknown_4_, &var7, &var8);
 #else
-            if (var4->unknown_4_ != NULL) var7 = func_020420e8(var4->unknown_4_, 1);
+            if (entry->text != NULL) measured = Font_GetTextWidth(entry->text, 1);
 #endif
             var7 /= data_020ef74c.unknown_8_;
             var6 = var7;

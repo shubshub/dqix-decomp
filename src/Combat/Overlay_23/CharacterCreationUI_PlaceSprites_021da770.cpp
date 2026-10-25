@@ -5,8 +5,8 @@
 #include "Resource/CharacterCreationUI.h"
 #include "Graphics/SpriteAffineTransform.h"
 
-extern "C" void func_0205ac40(SpriteContext0205ac40*, B174Outer*);
-extern "C" void func_ov023_021dab5c(CharacterCreationUI*, int, int, int, int);
+extern "C" void SpriteContext_DrawSprite(SpriteContext0205ac40*, B174Outer*);
+extern "C" void CharacterCreationUI_PlaceCursorCorners(CharacterCreationUI*, int, int, int, int);
 
 // Overlay 23, originally func_ov023_021da770 (USA/EUR 0x021da770, JPN 0x021daf74)
 extern "C" ARM void CharacterCreationUI_PlaceSprites(CharacterCreationUI* self) {
@@ -16,23 +16,23 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(CharacterCreationUI* self) 
             fix32_t* position = self->subSprites[7].position;
             position[0] = 0xe000;
             position[1] = 0xa9000;
-            func_0205ac40(self->subSpriteContext, &self->subSprites[7]);
+            SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[7]);
             position = self->subSprites[6].position;
             position[0] = 0x19000;
             position[1] = 0xa9000;
-            func_0205ac40(self->subSpriteContext, &self->subSprites[6]);
+            SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[6]);
             position = self->subSprites[8].position;
             position[0] = 0x3b000;
             position[1] = 0xa9000;
-            func_0205ac40(self->subSpriteContext, &self->subSprites[8]);
+            SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[8]);
             position = self->subSprites[9].position;
             position[0] = 0x98000;
             position[1] = 0xa9000;
-            func_0205ac40(self->subSpriteContext, &self->subSprites[9]);
+            SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[9]);
             position = self->subSprites[10].position;
             position[0] = 0xd2000;
             position[1] = 0xa9000;
-            func_0205ac40(self->subSpriteContext, &self->subSprites[10]);
+            SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[10]);
         }
     }
     for (int i = 0; i < 8; ++i) {
@@ -51,7 +51,7 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(CharacterCreationUI* self) 
         fix32_t* position = self->subSprites[i + 11].position;
         position[0] = x;
         position[1] = 0x8000;
-        func_0205ac40(self->subSpriteContext, &self->subSprites[i + 11]);
+        SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[i + 11]);
     }
     if (self->resourceStep == 1) return;
     int index = -1;
@@ -70,15 +70,15 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(CharacterCreationUI* self) 
         fix32_t* position = self->subSprites[index].position;
         position[0] = x << 12;
         position[1] = y << 12;
-        func_0205ac40(self->subSpriteContext, &self->subSprites[index]);
+        SpriteContext_DrawSprite(self->subSpriteContext, &self->subSprites[index]);
     }
     if (!handled || (self->flags & CreationFlag_NameRejected)) return;
-    func_ov023_021dab5c(self, self->cursorX, self->cursorY,
+    CharacterCreationUI_PlaceCursorCorners(self, self->cursorX, self->cursorY,
                       self->cursorWidth, self->cursorHeight);
 }
 #else
-extern "C" int func_0205ac40(void*, void*);
-extern "C" void func_ov023_021dab5c(void*, int, int, int, int);
+extern "C" int SpriteContext_DrawSprite(void*, void*);
+extern "C" void CharacterCreationUI_PlaceCursorCorners(void*, int, int, int, int);
 
 // USA: CharacterCreationUI_PlaceSprites  (semantic: ConfigureEntryPositions_021da770)
 extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
@@ -95,27 +95,27 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
             e = arr + 0x118;
             *(int*)(e + 0x14) = 0xe000;
             *(int*)(e + 0x18) = 0xa9000;
-            func_0205ac40(ctx, e);
+            SpriteContext_DrawSprite(ctx, e);
 
             e = arr + 0xf0;
             *(int*)(e + 0x14) = 0x15000;
             *(int*)(e + 0x18) = 0xa9000;
-            func_0205ac40(ctx, e);
+            SpriteContext_DrawSprite(ctx, e);
 
             e = arr + 0x140;
             *(int*)(e + 0x14) = 0x3b000;
             *(int*)(e + 0x18) = 0xa9000;
-            func_0205ac40(ctx, e);
+            SpriteContext_DrawSprite(ctx, e);
 
             e = arr + 0x168;
             *(int*)(e + 0x14) = 0x8e000;
             *(int*)(e + 0x18) = 0xa9000;
-            func_0205ac40(ctx, e);
+            SpriteContext_DrawSprite(ctx, e);
 
             e = arr + 0x190;
             *(int*)(e + 0x14) = 0xc8000;
             *(int*)(e + 0x18) = 0xa9000;
-            func_0205ac40(ctx, e);
+            SpriteContext_DrawSprite(ctx, e);
         }
     }
 
@@ -140,7 +140,7 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
         *(unsigned char*)(e + 0x25) = (unsigned char)type;
         *(int*)(e + 0x14) = val;
         *(int*)(e + 0x18) = 0x8000;
-        func_0205ac40(ctx, e);
+        SpriteContext_DrawSprite(ctx, e);
     }
 
     if (*(unsigned char*)(base + 0xd94) == 1) return;
@@ -165,7 +165,7 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
         short y1 = *(short*)(base + 0xc00 + 0x56);
         *(int*)(e + 0x14) = y0 << 12;
         *(int*)(e + 0x18) = y1 << 12;
-        func_0205ac40(ctx, e);
+        SpriteContext_DrawSprite(ctx, e);
     }
 
     if (!handled) return;
@@ -175,6 +175,6 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
     short s4c = *(short*)(base + 0xc00 + 0x4c);
     short s4e = *(short*)(base + 0xc00 + 0x4e);
     short s50 = *(short*)(base + 0xc00 + 0x50);
-    func_ov023_021dab5c(obj, s4c, s4e, s50, s52);
+    CharacterCreationUI_PlaceCursorCorners(obj, s4c, s4e, s50, s52);
 }
 #endif

@@ -7,18 +7,18 @@ struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
 struct Struct_0205d81c;
-struct Container020dedd0;
+struct ItemTable;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
 void InitBattleTag0215ccc4(char *base);
 int IsFlagAt130Bit0Set_0216364c(void *member);
-char *FindElementByKey020dedd0(struct Container020dedd0 *c, int key);
+char *ItemTable_Find(struct ItemTable *c, int key);
 void SetupTargetAndApplyState021575d4(char *base);
 int GetInventoryItemFlagField_02157500(char *base, int, int);
 int CheckAndClearEntryStatus_0215b7d0(char* base);
@@ -89,10 +89,10 @@ extern "C" ARM void func_ov002_021631e8(char *arg0) {
                         return;
                     }
                     {
-                        char *var9 = func_020dedd0(
-                            (struct Struct_0201099c_10 *) (arg0 + RG(0x3ec + 0x400, 0x750)), *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)));
-                        if (var9 != NULL && func_ov002_0215b720(arg0, *(short *) (var9 + 0x14))) {
-                            *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88)) = 2;
+                        char *e = ItemTable_Find(
+                            (struct ItemTable *) (base + RG(0x3ec + 0x400, 0x750)), *(short *) (base + RG(0x1c00 + 0x22, 0x1aea)));
+                        if (e != NULL && func_ov002_0215b720(base, *(short *) (e + 0x14))) {
+                            *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88)) = 2;
                             return;
                         }
                     }
@@ -136,10 +136,10 @@ extern "C" ARM void func_ov002_021631e8(char *arg0) {
                     func_ov002_02156e90(arg0);
                     return;
             }
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + RG(0x1b00 + 0xea, 0x1ab2)) = -1;
-            func_ov002_02156e90(arg0);
-            func_0205deb4((struct Struct_0205d81c *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), 4, 1);
+        } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
+            *(short *) (base + RG(0x1b00 + 0xea, 0x1ab2)) = -1;
+            func_ov002_02156e90(base);
+            Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), 4, 1);
         }
     } else if (var0 == 2) {
         int var11 = func_ov002_0215b7d0(arg0);

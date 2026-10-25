@@ -9,8 +9,7 @@ enum { Enum_ov003_02169eec_228 = 0xe4, Enum_ov003_02169eec_8 = 8, Enum_ov003_021
 #endif
 
 struct Struct_0205bbcc;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 struct Struct_0205bcdc;
 struct Struct_0205bd58;
 struct Struct_ov003_02169eec_2;
@@ -19,8 +18,6 @@ struct Struct_0205bc2c;
 struct Struct_0205bd04;
 struct Struct_0205bc10;
 struct Struct_0205c570;
-struct Struct_0205bf3c;
-struct Struct_0205bb84;
 struct Struct0200fb08;
 struct SePlayer;
 struct Struct0205cf1c;
@@ -34,15 +31,15 @@ extern "C" int GridCursor_Update(void* obj, int v);
 void SetChannelAFlag0205cef8(void* chan);
 void SetChannelBFlag0205cf04(void* chan);
 void Init0205bbcc(Struct_0205bbcc* obj);
-void GridCursor_SetDimensions(Struct_0205ba68* obj, int a, int b, int c);
-void GridCursor_SetCount(Node0205bacc* obj, int v);
-void SetIndexIfValid0205bcdc(Struct_0205bcdc* obj, int v);
+void GridCursor_SetDimensions(GridCursor* obj, int a, int b, int c);
+void GridCursor_SetCount(GridCursor* obj, int v);
+void GridCursor_SelectIfValid(Struct_0205bcdc* obj, int v);
 void SetFields0205bd58(Struct_0205bd58* obj, int a, int b, int c, int d, int e);
 void ClearFields_0216a85c(S0216a85c* obj);
-unsigned char* FindElementForFieldB0_0205d8c4(Struct_0205d81c* chan);
+unsigned char* Window_GetActivePane(Struct_0205d81c* chan);
 void GetFourSubstructPointers_0204f138(unsigned char* elem, unsigned char** a, unsigned char** b, unsigned char** c,
                               unsigned char** d);
-void SetFieldAt0x30_0205bc24(void* obj, int v);
+void TouchGrid_SetTouchedCell(void* obj, int v);
 int UpdateActiveState0205bc2c(Struct_0205bc2c*, int);
 int GetScaledSumIfActive0205bd04(Struct_0205bd04* obj);
 int GridCursor_GetCount(void* obj);
@@ -50,9 +47,9 @@ void ClearFlagFields_02169658(void* self);
 void ClearBytes0x4cTo0x4e(Struct_0205bc10* obj);
 int Window_GetSelectedIndex(Struct_0205c570* chan);
 void UpdateEntryAndField4ea_021694b8(void* self, int v);
-void ResetState0205bf3c(Struct_0205bf3c* obj);
-int GridCursor_GetSelectedIndex(Struct_0205bb84* obj);
-int NormalizeField5_0200fb08(Struct0200fb08* gs);
+void GridCursor_ResetKeyRepeat(GridCursor* obj);
+int GridCursor_GetSelectedIndex(GridCursor* obj);
+int GameState_GetLanguage(Struct0200fb08* gs);
 void SePlayer_Play(SePlayer* obj, int a, int b);
 void ClearChannelAFlag0205cf10(void* chan);
 void ClearFlagByte0205cf1c(Struct0205cf1c* chan);
@@ -140,10 +137,10 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
         SetChannelBFlag0205cf04(self->chan);
         func_ov003_021696f4(self, self->cursor);
         Init0205bbcc((Struct_0205bbcc*)self->node);
-        GridCursor_SetDimensions((Struct_0205ba68*)self->node, 1, 2, 0);
+        GridCursor_SetDimensions((GridCursor*)self->node, 1, 2, 0);
         self->w540 = 1;
-        GridCursor_SetCount((Node0205bacc*)self->node, 2);
-        SetIndexIfValid0205bcdc((Struct_0205bcdc*)self->node, 0);
+        GridCursor_SetCount((GridCursor*)self->node, 2);
+        GridCursor_SelectIfValid((Struct_0205bcdc*)self->node, 0);
         self->h58c[0] = 0;
         self->h58c[1] = 0;
         self->h58c[2] = 0;
@@ -161,7 +158,7 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
         self->rectA.xWidthArr = &self->h58c[4];
         self->rectA.yWidthArr = &self->h58c[6];
         ClearFields_0216a85c((S0216a85c*)&self->rectB);
-        unsigned char* elem = FindElementForFieldB0_0205d8c4((Struct_0205d81c*)self->chan);
+        unsigned char* elem = Window_GetActivePane((Struct_0205d81c*)self->chan);
         short ex = ElemX(elem);
         short ey = ElemY(elem);
         self->rectB.originX = ex << 3;
@@ -176,9 +173,9 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
         cur = self->cursor;
         if (g_touchInput.pressed_ != 0 || (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) ||
             g_touchInput.released_ != 0) {
-            g_touchInput.GetTouchPoint(&var0, &var1);
-            int var9 = (func_0205d8c4((Struct_0205d81c*)arg0->unknown_e4_)[0xc5] & 2) != 0;
-            unsigned char var10 = 0;
+            g_touchInput.GetTouchPoint(&ax, &ay);
+            int r8 = (Window_GetActivePane((Struct_0205d81c*)self->chan)[0xc5] & 2) != 0;
+            unsigned char r7 = 0;
             if (g_touchInput.pressed_ != 0) {
                 short var11 = inline_ov003_02169eec(arg0);
                 short var12 = inline_ov003_02169eec_2(arg0);
@@ -201,7 +198,7 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 self->h576 = y;
                 self->rectA.originX = x;
                 self->rectA.originY = y;
-                SetFieldAt0x30_0205bc24(self->node, func_ov003_02169674(self, ax, ay, &self->rectA));
+                TouchGrid_SetTouchedCell(self->node, func_ov003_02169674(self, ax, ay, &self->rectA));
                 if (func_ov003_02169674(self, ax, ay, &self->rectA) >= 0) {
                     r7 = 1;
                     if (UpdateActiveState0205bc2c((Struct_0205bc2c*)self->node, sb) != 0) {
@@ -284,12 +281,12 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 g_keyManager.TestKeysReleased(0x40) || g_keyManager.TestKeysHeld(0x80) ||
                 g_keyManager.TestKeysPressed(0x80) ||
                 g_keyManager.TestKeysReleased(0x80)) {
-                ResetState0205bf3c((Struct_0205bf3c*)((char*)self + kResetOffset));
+                GridCursor_ResetKeyRepeat((GridCursor*)((char*)self + kResetOffset));
                 int old = cells[cur];
                 int n = GridCursor_GetCount(self->list);
                 GridCursor_SetSelectedIndex(self->list, n - 1 - cells[cur]);
                 if (GridCursor_Update(self->list, sb) != 0) {
-                    cells[cur] = n - 1 - GridCursor_GetSelectedIndex((Struct_0205bb84*)self->list);
+                    cells[cur] = n - 1 - GridCursor_GetSelectedIndex((GridCursor*)self->list);
                     if (old != cells[cur]) {
                         self->code = 1;
                     }
@@ -339,17 +336,17 @@ extern "C" ARM int func_ov003_02169eec(Struct_ov003_02169eec* arg0, unsigned int
                 short var39 = 0xc8;
                 short var40 = 0xec;
 #else
-                int var36 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
-                short var37 = 0x8f;
-                short var38 = 0xba;
-                short var39 = 0xc5;
-                short var40 = 0xed;
-                for (int var41 = 0; var41 < 5; var41++) {
-                    if (var36 == data_ov003_0217f544[var41 * 5]) {
-                        var37 = data_ov003_0217f545[var41 * 5] - 1;
-                        var38 = data_ov003_0217f546[var41 * 5] + var37 + 2;
-                        var39 = data_ov003_0217f547[var41 * 5] - 1;
-                        var40 = data_ov003_0217f548[var41 * 5] + var39 + 2;
+                int key = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
+                short lox = 0x8f;
+                short hix = 0xba;
+                short loy = 0xc5;
+                short hiy = 0xed;
+                for (int i = 0; i < 5; i++) {
+                    if (key == data_ov003_0217f544[i * 5]) {
+                        lox = data_ov003_0217f545[i * 5] - 1;
+                        hix = data_ov003_0217f546[i * 5] + lox + 2;
+                        loy = data_ov003_0217f547[i * 5] - 1;
+                        hiy = data_ov003_0217f548[i * 5] + loy + 2;
                         break;
                     }
                 }

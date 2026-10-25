@@ -54,12 +54,12 @@ extern "C" ARM int func_02094030(struct Struct_02094030* arg0, int arg1, int arg
     struct Struct_02093ad8* var3 = &arg0->unknown_0_[arg0->unknown_3cb_];
     func_02093980((char*)var3);
 
-    if (var0 == 0 || arg1 == 3) {
-        char* var4 = var2->unknown_435c_[arg3];
-        if (var4[0] == 0) return 1;
-        sprintf(var3->unknown_0_.unknown_0_, var4);
-    } else if (var0 != 0) {
-        sprintf(var3->unknown_0_.unknown_0_, var0->baseStats_->unk);
+    if (combatant == 0 || requestId == 3) {
+        char* name = cachedNames->partyNames[slot];
+        if (name[0] == 0) return 1;
+        sprintf(request->payload.data, name);
+    } else if (combatant != 0) {
+        sprintf(request->payload.data, combatant->baseStats_->name);
     }
 
     var3->unknown_30_ = (short)arg1;

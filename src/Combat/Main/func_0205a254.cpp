@@ -6,26 +6,26 @@ struct Struct_0205a254_2 {
     unsigned short unknown_10_, unknown_12_;
     unsigned char unknown_14_, unknown_15_; unsigned short unknown_16_;
 };
-struct Struct_0205a254;
-extern "C" Struct_0205a254_2* func_0205a3d0(Struct_0205a254*, int);
-extern "C" void func_0205a3ac(Struct_0205a254*, int);
+struct Container0205a3d0;
+Elem0205a3d0* SpriteEntryList_Find(Container0205a3d0*, int);
+void SetEntryFlag1ByKey0205a3ac(Container0205a3d0*, int);
 // USA: func_0205a254
-extern "C" ARM void func_0205a254(Struct_0205a254* arg0, int arg1, int arg2) {
-    Struct_0205a254_3* var0;
-    unsigned short var1;
-    int var2;
-    unsigned short var3 = arg2;
-    Struct_0205a254_2* var4 = func_0205a3d0(arg0, arg1);
-    if (!var4) return;
-    if (!(var4->unknown_15_ & 2) || !var4->unknown_0_) return;
-    var4->unknown_12_ += var3;
-    var0 = var4->unknown_c_;
-    var2 = var4->unknown_10_;
-    const unsigned short& var5 = var0[var2].unknown_0_;
-    var1 = var4->unknown_12_;
-    if (var5 <= var1) {
-        var4->unknown_12_ = var1 - var5;
-        switch (var4->unknown_0_) {
+extern "C" ARM void func_0205a254(Container0205a3d0* container, int key, int delta) {
+    Frame0205a254* frames;
+    unsigned short elapsed;
+    int frameOffset;
+    unsigned short increment = delta;
+    Elem0205a3d0* entry = SpriteEntryList_Find(container, key);
+    if (!entry) return;
+    if (!(entry->flags & 2) || !entry->mode) return;
+    entry->elapsed += increment;
+    frames = entry->frames;
+    frameOffset = entry->index;
+    const unsigned short& duration = frames[frameOffset].duration;
+    elapsed = entry->elapsed;
+    if (duration <= elapsed) {
+        entry->elapsed = elapsed - duration;
+        switch (entry->mode) {
         case 0: break;
         case 1:
             var4->unknown_10_++;

@@ -2,8 +2,8 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
+void* GetField6b0_021b8470(void* obj);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov017_021ca918 {
     char unknown_0_[4];
@@ -29,8 +29,8 @@ extern "C" ARM void func_ov017_021ca918(int arg0, struct Struct_ov017_021ca918* 
     unsigned char* var2 = *(unsigned char**)((char*)var1 + 0x8000 + 0xe18);
     if (var2 == NULL) return;
 
-    if (*(signed char*)(var2 + 0x2a) == func_020100a8(arg2)) return;
-    if (*(unsigned short*)(var2 + 8) != arg1->unknown_4_) return;
+    if (*(signed char*)(obj + 0x2a) == GameState_GetProtagonistIndex(battleStruct)) return;
+    if (*(unsigned short*)(obj + 8) != src->field4) return;
 
     int var3 = arg1->unknown_6_ - 0xc0;
     if (var3 < 0) return;

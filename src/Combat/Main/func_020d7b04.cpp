@@ -4,10 +4,10 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0208cb08;
-extern "C" void* func_020421a0();
-struct Struct_02038598_5;
-extern "C" int func_02046b60(Struct_02038598_5*, int);
+struct FontBankLoader;
+void* MessageSystem_GetInstance();
+struct ListHead02046b60;
+int ListContainsId(ListHead02046b60*, int);
 extern "C" void func_ov016_0218b5c0(int, int);
 extern "C" void func_ov017_0218b5f8(int);
 extern "C" void func_02046380(void*);
@@ -16,8 +16,8 @@ extern "C" void func_0204500c(void*, void*, int);
 #else
 extern "C" void func_0204500c(void*, void*, int, int);
 #endif
-extern "C" void func_02042b3c(void*);
-extern "C" void func_02043204(char*);
+void InitFields02042b3c(void*);
+void MessageSystem_Reset(char*);
 extern char data_020f2348[];
 
 struct Struct_020d7b04_2 {
@@ -65,16 +65,16 @@ struct Struct_020d7b04 {
 #endif
 };
 
-extern "C" ARM void func_020d7b04(Struct_020d7b04_3* arg0) {
-    char var0[0xc8];
-    GameState* var1 = GameState::GetInstance();
-    Struct_0208cb08* var2 = func_02094a00();
-    Struct_020d7b04* var3 = static_cast<Struct_020d7b04*>(func_020421a0());
-    if (arg0->unknown_150_7_ && !func_02094b4c(var2)) return;
+extern "C" ARM void func_020d7b04(TextMessageQueue* queue) {
+    char formattedText[0xc8];
+    GameState* game = GameState::GetInstance();
+    FontBankLoader* fonts = FontBankLoader_GetInstance();
+    MessageWindowState* window = static_cast<MessageWindowState*>(MessageSystem_GetInstance());
+    if (queue->fontRequested && !AlwaysTrue02094b4c(fonts)) return;
 
-    void* var4 = GetGameResources()->unknown_ptr_array_36fc[0];
-    if (func_02046b60((Struct_02038598_5*)var4, 0x25)) return;
-    if (func_02046b60((Struct_02038598_5*)var4, 0x26)) return;
+    void* requests = GetGameResources()->fieldTaskQueue_;
+    if (ListContainsId((ListHead02046b60*)requests, 0x25)) return;
+    if (ListContainsId((ListHead02046b60*)requests, 0x26)) return;
 
     unsigned short var5 = var1->GetEffectiveDeltaTime();
     if (arg0->unknown_152_ != 0) {
@@ -138,13 +138,13 @@ extern "C" ARM void func_020d7b04(Struct_020d7b04_3* arg0) {
         arg0->unknown_150_0_ = 0;
         return;
     } else {
-        if (arg0->unknown_150_7_) {
-            func_02094ab0(var2);
-            arg0->unknown_150_7_ = 0;
+        if (queue->fontRequested) {
+            FontBankLoader_CancelLoads(fonts);
+            queue->fontRequested = 0;
         }
-        if (arg0->unknown_150_6_) {
-            func_02043204(static_cast<char*>(func_020421a0()));
-            arg0->unknown_150_6_ = 0;
+        if (queue->windowActive) {
+            MessageSystem_Reset(static_cast<char*>(MessageSystem_GetInstance()));
+            queue->windowActive = 0;
         }
     }
     arg0->unknown_152_ = 0;

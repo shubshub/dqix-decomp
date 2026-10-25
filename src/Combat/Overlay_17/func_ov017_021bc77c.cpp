@@ -12,77 +12,71 @@ enum { Enum_ov017_021bc77c_29156 = 0x71e4, Enum_ov017_021bc77c_29168 = 0x71f0, E
 #include "Graphics/LightingManager.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
 enum { Enum_ov017_021bc77c_m1 = -1 };
 
 struct AllocatorUnion;
 
 extern "C" void* func_0202ae18();
-extern "C" void* func_020100f8(char*);
-extern "C" unsigned short* func_02012fe4();
-extern "C" unsigned char* func_0205ec34();
-extern "C" unsigned int* func_020d6c00();
-extern "C" void func_02019678(unsigned short* arg0, int arg1);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" Object3D* func_ov017_021bdbc0(unsigned char*);
-extern "C" int func_0201bfc0(unsigned char*, int);
-extern "C" void func_020e1154(void*);
-extern "C" void func_020a2794(void* arg0);
-extern "C" void func_020a2744(char*);
-extern "C" void func_0206df6c(void*, unsigned char*, int, int);
-extern "C" void func_ov017_0219b624(void* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_ov017_021a2fa0(void* arg0);
-extern "C" int func_0202b7d8(int*);
-struct Struct_02011590;
-extern "C" int func_02011590(Struct_02011590*);
-extern "C" void func_020115f4(void*, unsigned short);
-extern "C" void func_ov017_021bb27c(void* arg0);
-extern "C" void func_ov017_021bb0c4(unsigned char*);
-extern "C" int func_020649b0(void*, int, void*);
-extern "C" void func_0206f81c(void* arg0);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" unsigned char* func_ov017_021b8478(unsigned char* arg0);
-extern "C" void func_02046a8c(void* arg0, unsigned char* arg1);
-extern "C" int func_0209ca68(char*);
-extern "C" void func_0209c530(void* arg0);
-extern "C" unsigned char* func_0200fd0c(GameState* arg0);
-extern "C" void* func_020e3808();
-extern "C" int func_020100a8(GameState* arg0);
-struct Struct_020e385c;
-extern "C" void func_020e3a50(Struct_020e385c*, int, int, int);
-extern "C" void func_020e3994(Struct_020e385c*, int, int);
-struct Struct_02040774_2;
-extern "C" void func_020407b4(Struct_02040774_2*, int, int, int);
-struct Struct_02033834;
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_02039d48(unsigned char*);
+void* GetFieldIfFlag4_020100f8(char*);
+extern "C" unsigned short* Zone3D_GetInstance();
+extern "C" unsigned char* Scenario_GetInstance();
+unsigned int* GlobalFlags_GetInstance();
+extern "C" void func_02019678(unsigned short* p, int v);
+void ClearCombatantSlot_0200fd48(GameState* gs, int idx);
+Object3D* GetField4334_021bdbc0(unsigned char*);
+int TestFlagBitAt0x2744_0201bfc0(unsigned char*, int);
+void InitContext020e1154(void*);
+void FollowCamera_EnableFollow(void* p);
+void ApplyVecFromField0x21e_020a2744(char*);
+extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
+extern "C" void func_ov017_0219b624(void* res);
+void AllocatorUnion_Free(AllocatorUnion* a, void* p);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* a, unsigned int size);
+extern "C" void func_ov017_021a2fa0(void* res);
+int CheckField0NonZero_0202b7d8(int*);
+struct FieldBlock63d6_11590;
+int IsByte0x63d6Set_02011590(FieldBlock63d6_11590*);
+void SetHalfword0x63d8_020115f4(void*, unsigned short);
+extern "C" void func_ov017_021bb27c(void* self);
+void ClearFields_021bb0c4(unsigned char*);
+int Scenario_RunTrigger(void*, int, void*);
+extern "C" void EventQuery_RunQueuedCommands(void* node);
+extern "C" int func_0202c540(void* p);
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" unsigned char* func_ov017_021b8478(unsigned char* p);
+extern "C" void func_02046a8c(void* a, unsigned char* b);
+int GetState0209ca68(char*);
+extern "C" void func_0209c530(void* p);
+unsigned char* GetField0x3f8Address_0200fd0c(GameState* gs);
+void* GetData02153660_020e3808();
+int GameState_GetProtagonistIndex(GameState* gs);
+struct TagValueEntry020e385c;
+void SetOrClearEntryBitAndNotify020e3a50(TagValueEntry020e385c*, int, int, int);
+void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
+struct Fields020407b4;
+void SetFields0x44(Fields020407b4*, int, int, int);
+struct Obj02033874;
+void SetVecYFromValue02033874(Obj02033874*, int);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
 void SetBrightness(GameResources*, int, int);
 extern "C" int func_0209cd50(unsigned short arg0);
 struct Struct_0209c3b4_2;
 extern "C" void func_0209c3b4(Struct_0209c3b4_2*, int);
 extern "C" void func_ov017_021bd704(void* arg0);
 void SetMainBrightness(GameResources*, int, int);
-extern "C" void func_ov017_021cdd70(unsigned short arg0, unsigned short arg1, unsigned short arg2, unsigned short arg3, unsigned short arg4, unsigned short arg5, unsigned char arg6);
-extern "C" void func_ov017_021b6728(void* arg0, int arg1, int arg2);
-extern "C" void func_020397c0(void*);
-extern "C" void func_02039830(void*);
-extern "C" int func_ov017_0219bddc(unsigned char* arg0);
-extern "C" void func_ov017_0219bf04(int arg0, int arg1);
-extern "C" void func_ov017_021c178c(unsigned char* arg0);
-extern "C" void func_ov017_021b8bb0(unsigned short arg0);
-extern "C" void func_02070378(char*);
-extern "C" void func_02017d68(void* arg0);
-extern "C" int func_020a1eb0();
+void EnqueueEventTag107_021cdd70(unsigned short a, unsigned short b, unsigned short c, unsigned short d, unsigned short e, unsigned short f, unsigned char g);
+extern "C" void func_ov017_021b6728(void* res, int a, int b);
+void GameObject_EnableControl(void*);
+void CopyByteField0x253To0x252_02039830(void*);
+extern "C" int func_ov017_0219bddc(unsigned char* p);
+extern "C" void func_ov017_0219bf04(int a, int b);
+void SetByte1True_021c178c(unsigned char* p);
+extern "C" void func_ov017_021b8bb0(unsigned short id);
+void InitStruct02070378(char*);
+void SetFlagBytes02017d68(void* p);
+int PeekInputLogA_020a1eb0();
 #if defined(jpn)
 extern "C" void func_ov001_02156b20(void*);
 #else
@@ -92,8 +86,8 @@ extern "C" void func_ov017_021a01bc(unsigned char*);
 extern "C" void func_0209c2e0(void* arg0, int arg1, int arg2);
 extern "C" void func_ov017_0219bcac(unsigned char arg0);
 
-extern AllocatorUnion data_02114e20;
-extern char data_02109bf4[];
+extern AllocatorUnion g_mainAllocator;
+extern char g_bgmPlayer[];
 
 struct Struct_ov017_021bc77c {
     int unknown_0_[0x11];
@@ -200,8 +194,8 @@ static inline SafeAllocator* inline_ov017_021bc77c(GameResources* arg0, int arg1
     return &arg0->allocator_array_38[arg1];
 }
 
-static inline void inline_01ff91ac_2(SafeAllocator* arg0, unsigned int arg1) {
-    arg0->CreateTypeA(func_02012d88(&data_02114e20, arg1), arg1);
+static inline void InitAllocator_021bc77c(SafeAllocator* sa, unsigned int size) {
+    sa->CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, size), size);
 }
 
 static inline Vector3i inline_ov017_021bc77c_2(GameState* arg0) {
@@ -213,30 +207,30 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
     if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) {
         return arg0->unknown_a_;
     }
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    void* var2 = func_0202ae18();
-    GameObject* var3 = var0->GetUnknownGameObject();
-    GameObject* var4 = var0->GetPartyMemberByIndex(0);
-    void* var5 = func_020100f8((char*)var0);
-    unsigned short* var6;
-    GameState* var7;
-    GameResources* var8;
-    unsigned char* var9;
-    unsigned char* var10;
-    unsigned char* var11;
-    unsigned short* var12 = func_02012fe4();
-    unsigned char* var13 = func_0205ec34();
-    var10 = RES_PTR(var1, 710);
-    unsigned char* var14 = RES_PTR(var1, 718);
-    var11 = RES_PTR(var1, b58);
-    func_020d6c00();
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    void* x34 = func_0202ae18();
+    GameObject* unk = gs->GetUnknownGameObject();
+    GameObject* party0 = gs->GetPartyMemberByIndex(0);
+    void* f28 = GetFieldIfFlag4_020100f8((char*)gs);
+    unsigned short* p2;
+    GameState* gs2;
+    GameResources* res3;
+    unsigned char* bits3;
+    unsigned char* p14;
+    unsigned char* p10;
+    unsigned short* p = Zone3D_GetInstance();
+    unsigned char* bits = Scenario_GetInstance();
+    p14 = RES_PTR(res, 710);
+    unsigned char* r8 = RES_PTR(res, 718);
+    p10 = RES_PTR(res, b58);
+    GlobalFlags_GetInstance();
     {
-        Struct_ov017_021bc77c var15 = arg0->unknown_c_;
-        unsigned char var16 = arg0->unknown_9c_;
-        var7 = GameState::GetInstance();
-        GameResources* var17 = GetGameResources();
-        var6 = func_02012fe4();
+        Block_021bc77c blk = self->blk;
+        unsigned char b9c = self->b9c;
+        gs2 = GameState::GetInstance();
+        GameResources* res2 = GetGameResources();
+        p2 = Zone3D_GetInstance();
         func_0202ae18();
         if (!(var15.unknown_44_ & 0x400)) {
             func_02019678(var6, var16);
@@ -257,34 +251,34 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
             func_020e1154((void*)0x1388);
         }
     }
-    func_020a2794(var5);
-    func_020a2744((char*)var5);
-    if (arg0->unknown_c_.unknown_46_ > Enum_ov017_021bc77c_m1) {
-        func_0206df6c(var13, var13 + 0x8c, arg0->unknown_c_.unknown_46_ + 0x38e, 1);
+    FollowCamera_EnableFollow(f28);
+    ApplyVecFromField0x21e_020a2744((char*)f28);
+    if (self->blk.s46 > kInvalidId) {
+        Scenario_SetFlag(bits, bits + 0x8c, self->blk.s46 + 0x38e, 1);
     }
-    if (arg0->unknown_a0_ > Enum_ov017_021bc77c_m1 && arg0->unknown_9c_) {
-        func_0206df6c(var13, var13 + 0x8c, arg0->unknown_a0_ + 0xbea, 1);
+    if (self->sa0 > kInvalidId && self->b9c) {
+        Scenario_SetFlag(bits, bits + 0x8c, self->sa0 + 0xbea, 1);
     }
     if (arg0->unknown_9a_) {
         func_ov017_0219b624(var1);
     }
-    if (arg0->unknown_138_) {
-        SignedAllocatorHeader* var21 = arg0->unknown_138_->GetSignedAllocator();
-        if (var21) {
-            arg0->unknown_138_->Destroy();
-            func_02012da4(&data_02114e20, var21);
+    if (self->alloc138) {
+        SignedAllocatorHeader* h = self->alloc138->GetSignedAllocator();
+        if (h) {
+            self->alloc138->Destroy();
+            AllocatorUnion_Free(&g_mainAllocator, h);
         }
         arg0->unknown_138_ = 0;
     }
-    if (!TestFlags00(var1, 0x1000) || arg0->unknown_11a_ == 0) {
-        int var22 = arg0->unknown_90_;
-        if (var22) {
-            SafeAllocator* var23 = inline_ov017_021bc77c(var1, 7);
-            var23->CreateTypeA(func_02012d88(&data_02114e20, var22), var22);
-            func_ov017_021a2fa0(var1);
-            arg0->unknown_90_ = 0;
-        } else if (arg0->unknown_c_.unknown_44_ & 4) {
-            func_ov017_021a2fa0(var1);
+    if (!TestFlags00(res, 0x1000) || self->u11a == 0) {
+        int size = self->i90;
+        if (size) {
+            SafeAllocator* sa = GetAllocator_021bc77c(res, 7);
+            sa->CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, size), size);
+            func_ov017_021a2fa0(res);
+            self->i90 = 0;
+        } else if (self->blk.flags & 4) {
+            func_ov017_021a2fa0(res);
         }
     }
     if (!func_0202b7d8((int*)var2) && func_02011590((Struct_02011590*)var0)) {
@@ -301,20 +295,20 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         func_ov017_021bb0c4((unsigned char*)arg0);
         return 0;
     }
-    if (*((unsigned char*)var1 + Enum_ov017_021bc77c_17122) == 0) {
-        Struct_ov017_021bc77c_2 var24;
-        var24.unknown_8_ = arg0->unknown_8_;
-        if (func_020649b0(var13, 0xb, &var24)) {
-            func_0206f81c(&var24);
+    if (*((unsigned char*)res + kResourceFlagOffset) == 0) {
+        Node_021bc77c node;
+        node.id = self->f8;
+        if (Scenario_RunTrigger(bits, 0xb, &node)) {
+            EventQuery_RunQueuedCommands(&node);
         }
-        if (func_0202c540(var2)) {
-            int var25 = 0;
-            if (arg0->unknown_13c_ == 2) {
-                if (var14[2]) var25 = 1;
-            } else if (arg0->unknown_13c_ == 1) {
-                if (var14[2] && !func_0206dfb0((int)var13, var13 + 0x8c, arg0->unknown_148_ + 0x38e)) {
-                    if (arg0->unknown_148_ == 0xffff) {
-                        if (arg0->unknown_14c_ != *(unsigned short*)((unsigned char*)arg0 + 0x18)) var25 = 1;
+        if (func_0202c540(x34)) {
+            int flag = 0;
+            if (self->b13c == 2) {
+                if (r8[2]) flag = 1;
+            } else if (self->b13c == 1) {
+                if (r8[2] && !Scenario_TestFlag((int)bits, bits + 0x8c, self->u148 + 0x38e)) {
+                    if (self->u148 == 0xffff) {
+                        if (self->u14c != *(unsigned short*)((unsigned char*)self + 0x18)) flag = 1;
                     } else {
                         var25 = 1;
                     }
@@ -325,10 +319,10 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
                     if (var26 != (short)arg0->unknown_146_) var25 = 1;
                 }
             }
-            if (var25) {
-                func_02046a8c(arg1, var14);
-                if (func_0209ca68((char*)data_02109bf4) == 2) {
-                    func_0209c530(data_02109bf4);
+            if (flag) {
+                func_02046a8c(arg, r8);
+                if (GetState0209ca68((char*)g_bgmPlayer) == 2) {
+                    func_0209c530(g_bgmPlayer);
                 }
                 ClearFlags04(var1, 4);
                 ClearFlags04(var1, 0x10);
@@ -340,12 +334,12 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
     } else {
         arg0->unknown_13c_ = 2;
     }
-    unsigned char* var27 = func_0200fd0c(var0);
-    void* var28 = func_020e3808();
-    if (var14[2]) {
-        func_020e3a50((Struct_020e385c*)var28, func_020100a8(var0), 1, *(unsigned short*)((unsigned char*)arg0 + 0x18));
-    } else if (*(int*)(var27 + 0x20) <= 0 || var27[2] == 0) {
-        func_020e3994((Struct_020e385c*)var28, 1, *(unsigned short*)((unsigned char*)arg0 + 0x18));
+    unsigned char* f = GetField0x3f8Address_0200fd0c(gs);
+    void* tags = GetData02153660_020e3808();
+    if (r8[2]) {
+        SetOrClearEntryBitAndNotify020e3a50((TagValueEntry020e385c*)tags, GameState_GetProtagonistIndex(gs), 1, *(unsigned short*)((unsigned char*)self + 0x18));
+    } else if (*(int*)(f + 0x20) <= 0 || f[2] == 0) {
+        ResetTaggedEntryAndNotifyOverlay020e3994((TagValueEntry020e385c*)tags, 1, *(unsigned short*)((unsigned char*)self + 0x18));
     }
     if (arg0->unknown_cc_ && arg0->unknown_cf_ == 3) {
         func_020407b4((Struct_02040774_2*)var3, 0x48cc, 0x199, -0x733);
@@ -359,21 +353,21 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
             }
         }
     }
-    if (var27[2]) {
-        SetBrightness(var1, -16, 0);
-    } else if (var10[2]) {
-        func_0209c3b4((Struct_0209c3b4_2*)data_02109bf4, func_0209cd50(*var12));
-        func_ov017_021bd704(&arg0->unknown_c_);
-        SetMainBrightness(var1, 0, 0x28);
-    } else if (var14[2]) {
-        SetBrightness(var1, -16, 0);
-        *(unsigned short*)(var14 + 0x6c4) = arg0->unknown_184_;
-        if (func_0202c540(var2)) {
-            arg0->unknown_14e_ = *(int*)(func_ov017_021b8478(*(unsigned char**)((unsigned char*)var1 + Enum_ov017_021bc77c_14104)) + 0xc);
-            func_ov017_021cdd70(arg0->unknown_14e_, 0, 0, 0, 0, 0, 0);
-            unsigned char* var31 = RES_PTR(var1, 70c);
-            if (var31[2]) {
-                func_02046a8c(arg1, var31);
+    if (f[2]) {
+        SetBrightness(res, -16, 0);
+    } else if (p14[2]) {
+        SetStateAndDispatch0209c3b4((Actor0209c3b4*)g_bgmPlayer, func_0209cd50(*p));
+        func_ov017_021bd704(&self->blk);
+        SetMainBrightness(res, 0, 0x28);
+    } else if (r8[2]) {
+        SetBrightness(res, -16, 0);
+        *(unsigned short*)(r8 + 0x6c4) = self->u184;
+        if (func_0202c540(x34)) {
+            self->u14e = *(int*)(func_ov017_021b8478(*(unsigned char**)((unsigned char*)res + kResourceNodeOffset)) + 0xc);
+            EnqueueEventTag107_021cdd70(self->u14e, 0, 0, 0, 0, 0, 0);
+            unsigned char* q = RES_PTR(res, 70c);
+            if (q[2]) {
+                func_02046a8c(arg, q);
             }
             return 5;
         }
@@ -381,9 +375,9 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         if (arg0->unknown_cc_ == 1) {
             func_ov017_021b6728(var1, arg0->unknown_cf_, -1);
         }
-        if (arg0->unknown_cf_ == 2) {
-            func_020397c0(var3);
-            func_02039830(var3);
+        if (self->bcf == 2) {
+            GameObject_EnableControl(unk);
+            CopyByteField0x253To0x252_02039830(unk);
         }
         SetMainBrightness(var1, 0, 0x28);
         func_ov017_021bb27c(arg0);
@@ -393,26 +387,26 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         int var32;
         unsigned short var33;
         {
-            unsigned short* var34;
-            unsigned short var35 = arg0->unknown_8_;
-            void* var36 = func_0202ae18();
-            var34 = func_02012fe4();
-            var9 = func_0205ec34();
-            var8 = GetGameResources();
-            unsigned char* var37 = RES_PTR(var8, 734);
-            unsigned char var38 = 0;
-            unsigned short var39 = *var34;
-            if (!func_0202c540(var36)) { var32 = 0; goto checked; }
-            if (arg0->unknown_13c_ != 1) { var32 = 0; goto checked; }
-            if (arg0->unknown_140_ != var39 && arg0->unknown_142_ != var39) { var32 = 0; goto checked; }
-            if (!arg0->unknown_144_) { var32 = 0; goto checked; }
-            if (func_0206dfb0((int)var9, var9 + 0x8c, arg0->unknown_148_ + 0x38e)) { var32 = 0; goto checked; }
-            unsigned short var40 = arg0->unknown_146_;
-            if (var40 == var35) { var32 = 0; goto checked; }
-            if (var35 == 0x733c || var35 == 0x733f || var35 == 0x7342 || var35 == 0x7345 || var35 == 0x7348) {
-                if (var40 == 0x733d || var40 == 0x7340 || var40 == 0x7343 || var40 == 0x7346 || var40 == 0x7349 || var40 == 0x721a ||
-                    var40 == 0x7080) {
-                    var32 = 0;
+            unsigned short* p3;
+            unsigned short id = self->f8;
+            void* x = func_0202ae18();
+            p3 = Zone3D_GetInstance();
+            bits3 = Scenario_GetInstance();
+            res3 = GetGameResources();
+            unsigned char* o = RES_PTR(res3, 734);
+            unsigned char buf = 0;
+            unsigned short cur = *p3;
+            if (!func_0202c540(x)) { ok = 0; goto checked; }
+            if (self->b13c != 1) { ok = 0; goto checked; }
+            if (self->u140 != cur && self->u142 != cur) { ok = 0; goto checked; }
+            if (!self->b144) { ok = 0; goto checked; }
+            if (Scenario_TestFlag((int)bits3, bits3 + 0x8c, self->u148 + 0x38e)) { ok = 0; goto checked; }
+            unsigned short v = self->u146;
+            if (v == id) { ok = 0; goto checked; }
+            if (id == 0x733c || id == 0x733f || id == 0x7342 || id == 0x7345 || id == 0x7348) {
+                if (v == 0x733d || v == 0x7340 || v == 0x7343 || v == 0x7346 || v == 0x7349 || v == 0x721a ||
+                    v == 0x7080) {
+                    ok = 0;
                     goto checked;
                 }
             }
@@ -450,27 +444,27 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         }
         func_ov017_021bb0c4((unsigned char*)arg0);
         return 0;
-    } else if (func_0202b7d8((int*)var2) && func_0202c540(var2) && var4 && (var33 = *var12, var33 == var4->obj3D_.GetField06()) &&
-               arg0->unknown_13c_ == 0 && (short)arg0->unknown_146_ >= 0) {
-        func_ov017_021b8bb0((short)arg0->unknown_146_);
-    } else if (arg0->unknown_9c_ && arg0->unknown_a2_ != *var12) {
-        func_02070378((char*)var27);
-        var27[2] = 1;
-        *(unsigned short*)var27 = arg0->unknown_a2_;
-        var27[7] = 1;
-        *(Vector3i*)(var27 + 0x10) = arg0->unknown_bc_;
-        *(short*)(var27 + 0x1c) = arg0->unknown_c8_;
-        SetBrightness(var1, -16, 0);
-    } else if (*(int*)((unsigned char*)var0 + Enum_ov017_021bc77c_29172) > 0) {
-        func_02070378((char*)var27);
-        var27[2] = 1;
-        *(unsigned short*)var27 = *(int*)((unsigned char*)var0 + Enum_ov017_021bc77c_29172);
-        var27[7] = 1;
-        *(Vector3i*)(var27 + 0x10) = inline_ov017_021bc77c_2(var0);
-        *(short*)(var27 + 0x1c) = *(int*)((unsigned char*)var0 + Enum_ov017_021bc77c_29168);
-        *(int*)((unsigned char*)var0 + Enum_ov017_021bc77c_29172) = 0;
-        SetBrightness(var1, -16, 0);
-        func_02017d68(func_02012fe4());
+    } else if (CheckField0NonZero_0202b7d8((int*)x34) && func_0202c540(x34) && party0 && (mapId = *p, mapId == party0->obj3D_.GetField06()) &&
+               self->b13c == 0 && (short)self->u146 >= 0) {
+        func_ov017_021b8bb0((short)self->u146);
+    } else if (self->b9c && self->ua2 != *p) {
+        InitStruct02070378((char*)f);
+        f[2] = 1;
+        *(unsigned short*)f = self->ua2;
+        f[7] = 1;
+        *(Vector3i*)(f + 0x10) = self->vbc;
+        *(short*)(f + 0x1c) = self->sc8;
+        SetBrightness(res, -16, 0);
+    } else if (*(int*)((unsigned char*)gs + kGamePositionState) > 0) {
+        InitStruct02070378((char*)f);
+        f[2] = 1;
+        *(unsigned short*)f = *(int*)((unsigned char*)gs + kGamePositionState);
+        f[7] = 1;
+        *(Vector3i*)(f + 0x10) = GetPos_021bc77c(gs);
+        *(short*)(f + 0x1c) = *(int*)((unsigned char*)gs + kGamePositionY);
+        *(int*)((unsigned char*)gs + kGamePositionState) = 0;
+        SetBrightness(res, -16, 0);
+        SetFlagBytes02017d68(Zone3D_GetInstance());
     } else {
         if (func_020a1eb0() == 1) {
 #if defined(jpn)
@@ -479,20 +473,20 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
             func_ov000_02156b20((GameObject*)arg0);
 #endif
         }
-        func_0209c3b4((Struct_0209c3b4_2*)data_02109bf4, func_0209cd50(*var12));
-        func_ov017_021bd704(&arg0->unknown_c_);
-        func_ov017_021a01bc((unsigned char*)var1);
-        if (var11[2]) {
-            SetBrightness(var1, -16, 0);
-        } else if (!arg0->unknown_10b_) {
-            SetMainBrightness(var1, 0, 0x28);
+        SetStateAndDispatch0209c3b4((Actor0209c3b4*)g_bgmPlayer, func_0209cd50(*p));
+        func_ov017_021bd704(&self->blk);
+        SetByteIfDataAndCheckClear_021a01bc((unsigned char*)res);
+        if (p10[2]) {
+            SetBrightness(res, -16, 0);
+        } else if (!self->b10b) {
+            SetMainBrightness(res, 0, 0x28);
         }
-        func_020397c0(var3);
-        func_02039830(var3);
-        func_0209c2e0(data_02109bf4, 0x7f, 0);
-        if (arg0->unknown_114_) {
-            *(unsigned short*)((unsigned char*)var1 + Enum_ov017_021bc77c_17580) = arg0->unknown_114_;
-            arg0->unknown_114_ = 0;
+        GameObject_EnableControl(unk);
+        CopyByteField0x253To0x252_02039830(unk);
+        func_0209c2e0(g_bgmPlayer, 0x7f, 0);
+        if (self->u114) {
+            *(unsigned short*)((unsigned char*)res + kResourceHalfwordOffset) = self->u114;
+            self->u114 = 0;
         }
         if (arg0->unknown_8_ == 0x6013) {
             LightingManager* var43 = LightingManager::GetInstance();

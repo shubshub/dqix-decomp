@@ -29,36 +29,35 @@ struct Struct_020675fc_2 {
     unsigned char unknown_195d_[Enum_020675fc_90];
     unsigned char unknown_19b7_;
 };
-extern "C" Struct_0203dce4_2* func_0203cf4c();
-extern "C" Struct_0203dce4* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" void* func_020100bc(GameState*);
-extern "C" void func_020406f8(Struct_0203de84*, Struct_0203de84_2*);
-extern "C" int func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
+EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
+Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
+int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
 extern unsigned char data_020e7e08[];
 
 // USA: func_020675fc
-extern "C" ARM void func_020675fc(Struct_020675fc_2* arg0) {
-    if (!arg0->unknown_998_) return;
-    Struct_0203dce4* var0 = func_0203dce4(func_0203cf4c(), arg0->unknown_1838_);
-    if (var0 && arg0->unknown_19b7_) {
-        GameResources* var1 = GetGameResources();
-        void* var2 = func_020100bc(GameState::GetInstance());
-        int var3;
-        int var4;
-        Struct_02015ef4 var5;
-        Struct_020675fc var6;
-        func_020406f8(&var6.unknown_0_, (Struct_0203de84_2*)var0);
-        var5 = var6.unknown1_0_;
-        func_0202ec84(var2, &var5, &var3, &var4);
-        var3 -= 12;
-        var4 -= 62;
-        int var7 = var3 << 12;
-        Struct_02012fa4* var8 = &var1->substruct_array_2b90[data_020e7e08[arg0->unknown_195c_]];
-        int var9 = var4 << 12;
-        var8->unknown_1c_[0] = var7;
-        var8->unknown_1c_[1] = var9;
-        var8->unknown_1c_[2] = 0;
-        func_020473c8((Struct_02015ef4_2*)var8, 1);
+extern "C" ARM void func_020675fc(Owner020675fc* owner) {
+    if (!owner->active) return;
+    Entry_203dce4* entry = GetEntryUnlessFlag0x8000_0203dce4(GetGlobalPtr021075f4_0203cf4c(), owner->entryId);
+    if (entry && owner->enabled) {
+        GameResources* resources = GetGameResources();
+        void* view = GameState::GetInstance()->GetCamera();
+        int x;
+        int y;
+        Vec3copy0202ec84 copied;
+        VectorBuffer020675fc vector;
+        SelectVec3FromSources020406f8(&vector.selected, (Node020406f8*)entry);
+        copied = vector.copied;
+        Camera_WorldToScreen(view, &copied, &x, &y);
+        x -= 12;
+        y -= 62;
+        int scaledX = x << 12;
+        Foo02048004* output = &resources->substruct_array_2b90[data_020e7e08[owner->index]];
+        int scaledY = y << 12;
+        output->position.x = scaledX;
+        output->position.y = scaledY;
+        output->position.z = 0;
+        RenderFlaggedIndexedEntry((StructAt020473c8*)output, 1);
     }
 }

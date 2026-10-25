@@ -10,10 +10,10 @@ struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 struct Obj02033834;
-void SetVecYByMode02033834(struct Obj02033834* obj, int arg);
+void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
 struct Obj02033b68;
-void SetByteIfChanged02033b68(struct Obj02033b68* obj, int newVal);
+void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
 struct S02037418;
 
@@ -64,10 +64,10 @@ ARM int SyncCombatantPosition02078898(struct Entity02078898* p) {
     Vector3fix_Subtract((const Vector3fix*)&pos, (const Vector3fix*)&p->vecField44, (Vector3fix*)&diff);
     Vector3fix_Normalize((const Vector3fix*)&diff, (Vector3fix*)&diff);
     int angle = fix32_Atan2(diff.x, diff.z);
-    SetVecYByMode02033834((struct Obj02033834*)p, angle);
+    GameObject_SetFacing((struct Obj02033834*)p, angle);
 
     p->fieldB2 = 0;
-    SetByteIfChanged02033b68((struct Obj02033b68*)p, 0);
+    GameObject_SetMotionState((struct Obj02033b68*)p, 0);
     ((Object3D*)((unsigned char*)p))->DisableFlag(0x80);
     ((Object3D*)((struct S02037418*)p))->SetInheritedAlpha(0x1f);
     p->field17c = 0;

@@ -78,10 +78,10 @@ struct Struct_ov000_02160da0 {
     Struct_0203d028 unknown_7760_;
 };
 
-extern "C" Struct_ov023_021f4c04* func_020421a0();
-extern "C" void func_0207df50(Struct_0203d028* arg0);
-extern "C" void func_02078484(Struct_02078398_2* arg0);
-extern "C" int func_02057fb4(void* arg0, int arg1, void* arg2);
+MessageWork* MessageSystem_GetInstance();
+void VramState_Rewind(Foo0207df50* p);
+void InitStruct02078484(InitStruct02078484Struct* req);
+int FindNodeAndProcess02057fb4(void* list, int id, void* req);
 
 extern "C" {
 void* func_02057924();
@@ -96,29 +96,29 @@ extern "C" ARM void func_ov026_021db3d8(Struct_ov000_02160da0* arg0) {
         BackgroundLoader* var0 = BackgroundLoader::GetInstance();
         void* var1 = func_02057924();
 
-        if (arg0->unknown_772e_ == 0) {
-            if (func_020421a0()->unknown_9a0_ == 4) {
-                arg0->unknown_772e_ = 1;
+        if (self->effectTrigger == 0) {
+            if (MessageSystem_GetInstance()->phase == 4) {
+                self->effectTrigger = 1;
             }
-        } else if (arg0->unknown_772e_ == 1) {
-            if (func_020421a0()->unknown_9a0_ == 5) {
-                arg0->unknown_772e_ = 2;
+        } else if (self->effectTrigger == 1) {
+            if (MessageSystem_GetInstance()->phase == 5) {
+                self->effectTrigger = 2;
             }
         }
 
-        if (arg0->unknown_7728_ == 0) {
-            arg0->unknown_774c_.Reset();
-            func_0207df50(&arg0->unknown_7760_);
-            arg0->unknown_772a_ = var0->QueueLoadFile(data_ov026_021dedf0, &arg0->unknown_774c_);
-            arg0->unknown_7728_ = 1;
-        } else if (arg0->unknown_7728_ == 1) {
-            if (var0->GetTaskStatus(arg0->unknown_772a_)) {
-                void* var2;
-                unsigned int var3;
-                var0->GetLoadedFileByID(arg0->unknown_772a_, &var2, &var3);
-                func_02057e6c(var1, 0x13, &arg0->unknown_774c_, var2, var3, &arg0->unknown_7760_);
-                var0->RemoveTask(arg0->unknown_772a_);
-                arg0->unknown_7728_ = 2;
+        if (self->effectLoadState == 0) {
+            self->cmdAlloc.Reset();
+            VramState_Rewind(&self->stateB);
+            self->effectTaskId = loader->QueueLoadFile(data_ov026_021dedf0, &self->cmdAlloc);
+            self->effectLoadState = 1;
+        } else if (self->effectLoadState == 1) {
+            if (loader->GetTaskStatus(self->effectTaskId)) {
+                void* data;
+                unsigned int size;
+                loader->GetLoadedFileByID(self->effectTaskId, &data, &size);
+                func_02057e6c(list, 0x13, &self->cmdAlloc, data, size, &self->stateB);
+                loader->RemoveTask(self->effectTaskId);
+                self->effectLoadState = 2;
             }
         } else if (arg0->unknown_7728_ == 2 && arg0->unknown_772e_ == 2) {
             Struct_02078398_2 var4;

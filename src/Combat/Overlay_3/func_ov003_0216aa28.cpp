@@ -49,19 +49,19 @@ struct Struct_ov003_0216aa28_3 {
 struct Struct_020465c0;
 
 const char* KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 #if defined(jpn)
-#define APPLY_MENU(a,b,c,d,e) func_0205d5d0(a,b,c,d)
+#define APPLY_MENU(a,b,c,d,e) Window_SetPaneText(a,b,c,d)
 #else
-#define APPLY_MENU(a,b,c,d,e) func_0205d5d0(a,b,c,d,e)
+#define APPLY_MENU(a,b,c,d,e) Window_SetPaneText(a,b,c,d,e)
 #endif
-extern "C" void func_ov003_02169a84(struct Struct_ov003_0216aa28_2* arg0, char* arg1, int arg2);
-extern "C" void func_ov003_02169d10(struct Struct_ov003_0216aa28_2* arg0, char* arg1, int arg2);
-extern "C" struct Struct_020465c0* func_020421a0();
-extern "C" void func_02046380(struct Struct_020465c0* arg0);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_020465d8(unsigned char* arg0, int arg1, unsigned char arg2);
+extern "C" void func_ov003_02169a84(struct Menu0216aa28* menu, char* dst, int flag);
+extern "C" void func_ov003_02169d10(struct Menu0216aa28* menu, char* dst, int flag);
+struct StoreStruct* MessageSystem_GetInstance();
+extern "C" void func_02046380(struct StoreStruct* g);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
+void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+void SetByteAtIndex_020465d8(unsigned char* base, int index, unsigned char value);
 
 static inline struct Struct_ov003_0216aa28* inline_ov003_02169594(void* arg0) { SDK_NULL_ASSERT(arg0); return ((struct Struct_02000c9c_86*)arg0)->unknown_4_; }
 
@@ -106,14 +106,14 @@ extern "C" ARM void func_ov003_0216aa28(struct Struct_ov003_0216aa28_2* arg0) {
     if (arg0->unknown_4eb_ == 0) {
         return;
     }
-    GameState* var3 = GameState::GetInstance();
-    struct Struct_020465c0* var4 = func_020421a0();
-    struct Struct_ov003_0216aa28_3* var5 = (struct Struct_ov003_0216aa28_3*)func_02010828(var3);
-    memset(arg0->unknown_7c_, 0, TEXT_BYTES);
+    GameState* gs = GameState::GetInstance();
+    struct StoreStruct* g = MessageSystem_GetInstance();
+    struct Ptr2a04_0216aa28* p = (struct Ptr2a04_0216aa28*)GameState_GetParty(gs);
+    memset(menu->textBuf, 0, TEXT_BYTES);
 #if defined(jpn)
     func_02042428(arg0->unknown_7c_, 8);
 #endif
-    AppendString02042058(menu->textBuf, KeyTable_Get((struct Container020e0310*)menu->names, 0x65));
+    Text_Append(menu->textBuf, KeyTable_Get((struct Container020e0310*)menu->names, 0x65));
     func_02046380(g);
     StoreInArray0x8b0_020465c0(g, 0, p->value);
     SetByteInRange_020465f0((unsigned char*)g, 0, 7);

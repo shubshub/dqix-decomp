@@ -50,19 +50,19 @@ struct Struct_ov000_02176e3c {
     struct Struct_ov000_0217964c_3 unknown_188_;
 };
 
-extern "C" Struct_ov000_0217964c* func_020421a0();
-extern "C" void* func_02053c6c(unsigned char* arg0);
-extern "C" Struct_ov000_02171ffc_5* func_ov000_02171b9c(void* arg0, int arg1);
-extern "C" void func_02046608(Struct_ov000_0217964c* arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
+GlobalText* MessageSystem_GetInstance();
+void* GetFieldAt0x150_02053c6c(unsigned char* obj);
+ActionInfo* GetPointerField_02171b9c_02171b9c(void* obj, int idx);
+extern "C" void MessageSystem_FormatText(GlobalText* g, int a, char* src, char* dst, int b, int c, int d);
+void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
 #if defined(jpn)
-extern "C" void func_0205d304(void*, void*, int, int, int, int, int);
-#define APPLY_TEXT(s,k,t) func_0205d5d0(s,k,(int)t,1)
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,0,0,1,0)
+extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);
+#define APPLY_TEXT(s,k,t) Window_SetPaneText(s,k,(int)t,1)
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,0,0,1,0)
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
-#define APPLY_TEXT(s,k,t) func_0205d5d0(s,k,(int)t,1,0)
-#define DRAW_TEXT(s,t) func_0205d304(s,t,0,0,0,1,0,0)
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
+#define APPLY_TEXT(s,k,t) Window_SetPaneText(s,k,(int)t,1,0)
+#define DRAW_TEXT(s,t) Window_OpenPane(s,t,0,0,0,1,0,0)
 #endif
 
 // USA: func_ov000_0217964c
@@ -75,10 +75,10 @@ extern "C" ARM void func_ov000_0217964c(Struct_ov000_02176e3c* arg0, Struct_ov00
     if (arg1 == NULL) {
         return;
     }
-    char* var3 = func_020421a0()->unknown_5c_;
-    memset(var3, 0, Enum_ov000_0217964c_2400);
-    GameObject* var4 = func_0200ff1c(GameState::GetInstance(), arg1->unknown_4c_);
-    if (var4 == NULL) {
+    char* text = MessageSystem_GetInstance()->textBuf;
+    memset(text, 0, textSize);
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), actor->combatantId);
+    if (combatant == NULL) {
         return;
     }
     func_02053c6c((unsigned char*)var4);
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov000_0217964c(Struct_ov000_02176e3c* arg0, Struct_ov00
     }
     func_020dcfc8(var5->unknown_18_, var3);
 #if !defined(jpn)
-    func_02046608(func_020421a0(), 0xa, var3, var2, 0x72, 0, 0);
+    MessageSystem_FormatText(MessageSystem_GetInstance(), 0xa, text, buf, 0x72, 0, 0);
 #endif
     var1 = &arg0->unknown_188_;
 #if defined(jpn)

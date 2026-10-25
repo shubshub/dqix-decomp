@@ -34,28 +34,28 @@ struct Struct_ov017_021a1d98_4 {
     Struct_ov017_021a1d98_4() : unknown_0_(0x0270f000), unknown_4_(0) {}
 };
 
-extern "C" Struct_020fdd44* func_02027ca4();
-extern "C" Struct_020fdd44* func_02028bd0(Struct_020fdd44*, int);
-extern "C" Struct_ov017_021a1d98_2* func_02012fe4();
-extern "C" int func_02076bec(GameObject*, void*);
-struct Struct_0203402c;
-extern "C" int func_0203402c(Struct_0203402c*);
-extern "C" void func_0208f87c(const void* arg0, int arg1, int arg2, int arg3, int arg4);
+Entry_02028bd0* ZoneRecords_GetInstance();
+Entry_02028bd0* FindInlineEntryById(Entry_02028bd0*, int);
+extern "C" SpawnParams* Zone3D_GetInstance();
+int TickActorFlagStateAndDispatch02076bec(GameObject*, void*);
+struct BitField0203402c;
+int CheckField0xc4Low15BitsNonZero(BitField0203402c*);
+void SyncBattleState0208f87c(const void* self, int b, int c, int d, int polygonId);
 
 // USA: func_ov017_021a1d98
-extern "C" ARM void func_ov017_021a1d98(unsigned int* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_020fdd44* var1 = func_02028bd0(func_02027ca4(), arg1);
-    if (!var1) return;
-    Struct_ov017_021a1d98_2* var2 = func_02012fe4();
-    unsigned short var3 = var2->unknown_38_;
-    unsigned int var4 = var2->unknown_3c_;
-    int var5 = 1;
-    if (TestFlags04((GameResources*)arg0, 0x1000)) var5 = 0;
-    int var6 = 0;
-    for (int var7 = 0; var7 < 4; var7++) {
-        GameObject* var8 = var0->GetPartyMemberByIndex(var7);
-        if (var8 && arg1 == var8->obj3D_.GetField06()) var6++;
+extern "C" ARM void func_ov017_021a1d98(unsigned int* flags, int id) {
+    GameState* state = GameState::GetInstance();
+    Entry_02028bd0* entry = FindInlineEntryById(ZoneRecords_GetInstance(), id);
+    if (!entry) return;
+    SpawnParams* params = Zone3D_GetInstance();
+    unsigned short field38 = params->field_38;
+    unsigned int field3c = params->field_3c;
+    int arg = 1;
+    if (TestFlags04((GameResources*)flags, 0x1000)) arg = 0;
+    int partyCount = 0;
+    for (int i = 0; i < 4; i++) {
+        GameObject* member = state->GetPartyMemberByIndex(i);
+        if (member && id == member->obj3D_.GetField06()) partyCount++;
     }
     int var9 = 7 - var6;
     Vector3fix var10 = var0->GetUnknownGameObject()->obj3D_.position_;

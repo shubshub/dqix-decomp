@@ -1,21 +1,19 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0204b010;
-struct Struct_0204b8d0;
-struct Struct_0204b878;
-struct Struct_0205d1e0;
-struct Struct_0205d228;
-struct Struct_0205d274;
-struct Struct_0204af14;
-struct Struct_ov000_02173954;
+struct BackgroundGraphics;
+struct Obj0204b878;
+struct Cont0205d1e0;
+struct Cont0205d228;
+struct Cont0205d274;
+struct Struct0217f5e4;
 
-void Background_ClearMap(struct Obj0204b010*, void*);
-void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_ClearMap(struct BackgroundGraphics*, void*);
+void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 void Window_ClearLayers(struct Cont0205d1e0*);
 void Window_DrawPanes(struct Cont0205d228*);
 void Window_FlushLayers(struct Cont0205d274*);
-void* Background_GetScreen(struct EntryList0204af14*, unsigned int);
+void* Background_GetScreen(struct BackgroundGraphics*, unsigned int);
 void CallFunc0204b620IfField0x14_0204b878(struct Obj0204b878*, int, int, int, short, short, short, short, unsigned short);
 void SetFieldRange0217f5e4(struct Struct0217f5e4*, int);
 
@@ -87,16 +85,16 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
 #else
     if (*(unsigned short*)(arg0 + 0x1d72) & 0x80) {
 #endif
-        Background_ClearMap((struct Obj0204b010*)(obj + 0x8a4), 0);
-        Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+        Background_ClearMap((struct BackgroundGraphics*)(obj + 0x8a4), 0);
+        Background_DrawScreen((struct BackgroundGraphics*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
         Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
         Background_FlushMap(obj + 0x8c4, 0);
         return;
     }
     func_ov000_0217a8f4(obj);
     func_ov000_021750e4(obj);
-    Background_ClearMap((struct Obj0204b010*)(obj + 0x8a4), 0);
-    Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
+    Background_ClearMap((struct BackgroundGraphics*)(obj + 0x8a4), 0);
+    Background_DrawScreen((struct BackgroundGraphics*)(obj + 0x8c4), 0, 0, 0, 0, 0, 0x20, 0x19, 0xffff);
     Window_ClearLayers((struct Cont0205d1e0*)(obj + 0x188));
 #if defined(jpn)
     if (*(unsigned char*)(arg0 + 0x1fb8) == 0 && (*(unsigned short*)(arg0 + 0x1faa) & 0x600)) {
@@ -202,7 +200,7 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
                     func_ov000_021741e0(arg0, var23[var25], 1.52f, var10 + data_ov000_021833c8[var25][0], var27, var28, var29, var30, 1, 0);
                 }
             }
-            Background_DrawScreen((struct Obj0204b8d0*)(obj + 0x8c4), 1, 0, 0, tx, ty, 0x20, 0x19, idx + 2);
+            Background_DrawScreen((struct BackgroundGraphics*)(obj + 0x8c4), 1, 0, 0, tx, ty, 0x20, 0x19, idx + 2);
 #if defined(jpn)
             if (!func_ov000_02174324(arg0, var0[var13], var10 + 0x25, var11 + 0x17)) {
                 func_ov000_021811f4(arg0, var14, arg0 + 0x8c4, var9, var1 + 7, var2 + 3);
@@ -265,7 +263,7 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
             }
             char* list = obj + 0x8c4;
             if (e->flags & 8) list = obj + 0x8a4;
-            void* ent = Background_GetScreen((struct EntryList0204af14*)(obj + 0x8c4), 2);
+            void* ent = Background_GetScreen((struct BackgroundGraphics*)(obj + 0x8c4), 2);
 #if defined(jpn)
             func_0204b878((struct Struct_0204b878*)var47, (int)var48, 0, 0, var1 + 2, var2, 0x20, 0x19, var14 + 2);
 #else

@@ -7,8 +7,8 @@ extern "C" int func_ov017_021d60f4(void*);
 extern "C" void* func_ov017_021d612c(void*);
 extern "C" int func_ov001_0215ad2c(int arg0);
 extern SafeAllocator* data_ov001_021658b8[8];
-extern "C" void* func_02010768(void* arg0);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
+void* GetFieldPtrAt0x5ca4_02010768(void* obj);
+void GameState_SetCamera(GameState* battleStruct, int value);
 
 struct Struct_0204a120;
 extern "C" void func_0204a120(struct Struct_0204a120* arg0);
@@ -37,7 +37,7 @@ extern "C" ARM int func_ov001_0215f854(char* arg0) {
 
 	void* var8 = var1->Allocate(0x268);
 
-	*(void**)((char*)var2 + 0x4) = func_020100bc(var0);
+	*(void**)((char*)fieldPtr + 0x4) = bs->GetCamera();
 
 	func_0204a120((struct Struct_0204a120*)var8);
 	func_0204a3f0((struct Struct_0204a3f0_2*)var8, (struct Struct_0204a3f0*)var7);
@@ -47,6 +47,6 @@ extern "C" ARM int func_ov001_0215f854(char* arg0) {
 	((Object3D*)((unsigned char*)var7))->EnableFlag(1);
 	((Object3D*)((unsigned char*)var7))->EnableFlag(0x20);
 
-	func_020100c4(var0, (int)var8);
+	GameState_SetCamera(bs, (int)newObj);
 	return 1;
 }

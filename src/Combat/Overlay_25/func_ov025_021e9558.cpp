@@ -4,11 +4,11 @@
 #include "Graphics/LightingManager.h"
 #include "World/Object3D.h"
 
-struct Struct_02033fdc;
-extern "C" void func_02033fdc(struct Struct_02033fdc* arg0);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" void* func_ov000_02160130(void);
-extern "C" void func_0205ebec(void* arg0);
+struct Flags02033fdc;
+void ClearFlag0x4At0xe0(struct Flags02033fdc* p);
+void ClearCombatantSlot_0200fd48(GameState* battleStruct, int id);
+void* GetActiveCombatWork_ov000_02160130(void);
+void SePlayer_UnloadExtraArchiveB(void* obj);
 extern "C" void* func_02057924(void);
 extern "C" void func_02057f00(void* arg0, int arg1);
 
@@ -109,13 +109,13 @@ extern "C" ARM void func_ov025_021e9558(struct Struct_ov025_021e9558_4* arg0) {
     char* var11 = (char*)var1 + 0xbf0;
     var11++;
 #endif
-    var1->unknown_5954_[0].MaybeSetRegularAnimation(data_ov025_021ef8dc, 1);
+    work->actors[0].SetAnimationByName(data_ov025_021ef8dc, 1);
 #if defined(jpn)
-    ((Object3D*)(var11 - 1 + 0x5000))->MaybeSetRegularAnimation(data_ov025_021ef8dc, 1);
+    ((Object3D*)(secondActorBase - 1 + 0x5000))->SetAnimationByName(data_ov025_021ef8dc, 1);
 #else
-    var1->unknown_5954_[1].MaybeSetRegularAnimation(data_ov025_021ef8dc, 1);
+    work->actors[1].SetAnimationByName(data_ov025_021ef8dc, 1);
 #endif
-    ForwardField0xc0_0205ebec(g_sePlayer);
+    SePlayer_UnloadExtraArchiveB(g_sePlayer);
     LightingManager::GetInstance()->BeginFade(0x1000, 1000);
     arg0->unknown_1c4_ = 0;
 }

@@ -7,9 +7,6 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0202c1a4;
 struct Struct_02033834;
@@ -17,20 +14,20 @@ struct Struct_02053f7c_3;
 struct Struct_02083508_2 { char unknown_0_[0x20]; };
 
 extern "C" void* func_0202ae18(void);
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void func_0202c288(void*);
 extern "C" void func_02039880(unsigned char*, int);
 extern "C" int func_0202c1c0(Struct_0202b2f0* arg0, int arg1);
 extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
 extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
-extern "C" void func_ov017_021907dc(int, int, int, int, int);
-extern "C" signed char func_02039888(void*);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_020120d4(unsigned char*, unsigned char);
-extern "C" void* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" void func_0201206c(void*, int);
-extern "C" void func_02053f7c(Struct_02053f7c_3*, unsigned short, int);
-extern "C" void* func_0205ec34(void);
+void CallHelperWithBuf_021907dc(int, int, int, int, int);
+signed char GetSignedByte0x1ca_02039888(void*);
+void SetVecYFromValue02033874(Obj02033874*, int);
+void SetByte0x5cdaAndClearField0xa_020120d4(unsigned char*, unsigned char);
+void* GetField0x74deForValidIndex_020120a0(char* p, unsigned int index);
+void SetWord0x71f8_0201206c(void*, int);
+void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c*, unsigned short, int);
+extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0206dfe8(void*, int, int);
 void CopyRegionsAndClearField0206e70c(char*);
 void ApplySlotBytesToBattleStruct_0206df14(unsigned char*);
@@ -39,9 +36,9 @@ void InitFieldsFromCombatant_0219bcac(unsigned char);
 unsigned char* GetField0x3f8Address_0200fd0c(GameState*);
 void* GetGlobal02109418_02094d6c();
 void* CallFunc0205ec34_020965f8();
-void* ZeroInitReturn020de824(void*);
+void* ItemTable_Construct(void*);
 void ItemTable_Init(void*);
-void InitStruct020de1d4(StructDE1D4*);
+void ItemRecord_Clear(StructDE1D4*);
 extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
 #if defined(jpn)
 extern "C" void* func_020e08f0(int arg0, unsigned int* arg1);
@@ -49,12 +46,12 @@ extern "C" void* func_020e08f0(int arg0, unsigned int* arg1);
 extern "C" int func_020def44(int, int, int, short);
 extern "C" void func_0207cbe8(char*);
 extern "C" void func_0207cc18(void*, void*);
-extern "C" void* func_02010828(GameState*);
-struct Struct_0207cf30_4;
-extern "C" void func_020a095c(Struct_0207cf30_4*, int, int);
-extern "C" void func_020dbc5c(char*, int);
-extern "C" int func_020100b0(GameState*);
-extern "C" void func_ov017_021cee78(int, unsigned char);
+void* GameState_GetParty(GameState*);
+struct KeyMap020a095c;
+void AddKeyValueClamped020a095c(KeyMap020a095c*, int, int);
+void InitAndAppendEntry020dbc5c(char*, int);
+int GameState_GetLeaderIndex(GameState*);
+void EnqueueEventTag20_021cee78(int, unsigned char);
 extern "C" void func_ov017_02191234(GameResources*);
 
 extern const char* data_020f2a18;
@@ -149,10 +146,10 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
     short var3[4];
     unsigned int var4;
 
-    GameState* var5 = GameState::GetInstance();
-    GameResources* var6 = GetGameResources();
-    Struct_0202b2f0* var7 = (Struct_0202b2f0*)func_0202ae18();
-    Struct_ov017_021b0bc0_2* var8 = (Struct_ov017_021b0bc0_2*)func_02012fe4();
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    SearchStruct* search = (SearchStruct*)func_0202ae18();
+    Zone021b0bc0* zone = (Zone021b0bc0*)Zone3D_GetInstance();
 #if defined(jpn)
     Struct_ov017_021b0bc0* var9 = inline_ov017_021b0bc0(var8);
 #endif
@@ -162,9 +159,9 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
     if (arg0->unknown_4_ != NULL && *arg0->unknown_4_ == 10) {
         var10 = 0;
     }
-    GameObject* var11 = var5->GetPartyMemberByIndex(arg0->unknown_c_);
-    if (var11 != NULL) {
-        func_02039880((unsigned char*)var11, var11->obj3D_.unknown_4_);
+    GameObject* leader = gs->GetPartyMemberByIndex(self->leader);
+    if (leader != NULL) {
+        SetByte0x1ca_02039880((unsigned char*)leader, leader->obj3D_.actorIndex_);
     }
     short* var12 = var3;
     for (int var13 = 0; var13 < 4; var13++, var12++) {
@@ -238,23 +235,23 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
             }
         }
 
-        void* var21 = func_0205ec34();
-        func_0206dfe8(var21, 0x38e, 0x3e8);
-        func_0206dfe8(var21, 0x79e, 0x2bc);
-        func_0206e70c((char*)var21);
-        func_0206df14((unsigned char*)var21);
-        var5->SetDayTimer(func_020103e8(var5));
-        LightingManager* var22 = LightingManager::GetInstance();
-        var22->dayNightTimer_ = var5->GetDayTimer();
-        var22->timeOfDayIndex_ = var5->GetTimeOfDay();
-        func_ov017_0219bcac(1);
-        func_0200fd0c(var5)[0xa] = 0;
-        func_02094d6c();
-        func_020965f8();
+        void* save = Scenario_GetInstance();
+        func_0206dfe8(save, 0x38e, 0x3e8);
+        func_0206dfe8(save, 0x79e, 0x2bc);
+        CopyRegionsAndClearField0206e70c((char*)save);
+        ApplySlotBytesToBattleStruct_0206df14((unsigned char*)save);
+        gs->SetDayTimer(GetActiveBitIndex_020103e8(gs));
+        LightingManager* lighting = LightingManager::GetInstance();
+        lighting->dayNightTimer_ = gs->GetDayTimer();
+        lighting->timeOfDayIndex_ = gs->GetTimeOfDay();
+        InitFieldsFromCombatant_0219bcac(1);
+        GetField0x3f8Address_0200fd0c(gs)[0xa] = 0;
+        GetGlobal02109418_02094d6c();
+        CallFunc0205ec34_020965f8();
 
-        ZeroInitReturn020de824(list);
+        ItemTable_Construct(list);
         ItemTable_Init(list);
-        InitStruct020de1d4(&entry);
+        ItemRecord_Clear(&entry);
         BackgroundLoader::AddLockGlobal();
 #if defined(jpn)
         void* var23 = func_020e08f0(8, &var4);
@@ -265,19 +262,19 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
             func_020def44((int)&var1, (int)var23, var4, 0x5612);
         }
         BackgroundLoader::RemoveLockGlobal();
-        var2.unknown_0_.ResetAllocatorPointer();
-        func_020de824(var2.unknown_14_);
-        func_0207cbe8((char*)&var2);
-        func_0207cbe8((char*)&var2);
-        func_0207cc18(&var2, &var1);
-        func_020a095c((Struct_0207cf30_4*)func_02010828(var5), 0x5612, 1);
-    } else if (arg0->unknown_9_ == 0) {
-        func_020dbc5c((char*)var6, arg0->unknown_c_);
-        unsigned char* var24 = (unsigned char*)func_02010828(var5) + 0xf78;
-        for (int var25 = 0; var25 < 4; var25++, var24++) {
-            unsigned char var26 = *var24;
-            if (var26 != func_020100b0(var5)) {
-                func_ov017_021cee78(var26, 0);
+        context.allocator.ResetAllocatorPointer();
+        ItemTable_Construct(context.list);
+        InitStruct0207cbe8((char*)&context);
+        InitStruct0207cbe8((char*)&context);
+        func_0207cc18(&context, &entry);
+        AddKeyValueClamped020a095c((KeyMap020a095c*)GameState_GetParty(gs), 0x5612, 1);
+    } else if (self->mode == 0) {
+        InitAndAppendEntry020dbc5c((char*)res, self->leader);
+        unsigned char* slots = (unsigned char*)GameState_GetParty(gs) + 0xf78;
+        for (int i = 0; i < 4; i++, slots++) {
+            unsigned char id = *slots;
+            if (id != GameState_GetLeaderIndex(gs)) {
+                EnqueueEventTag20_021cee78(id, 0);
             }
         }
     }

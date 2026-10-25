@@ -34,8 +34,8 @@ extern "C" ARM void func_ov003_0216a974(unsigned char* arg0, int arg1, int arg2)
     case 2: func_ov003_02169d10(arg0, *(void**)(arg0 + 0x7c), arg2); break;
     }
 #if defined(jpn)
-    func_0205d5d0((struct Struct_0205d5d0*)(arg0 + Enum_ov003_0216a974_228), arg1, *(int*)(arg0 + 0x7c), 1);
+    Window_SetPaneText((struct StructA0205d5d0*)(obj + kRegione4), mode, *(int*)(obj + 0x7c), 1);
 #else
-    func_0205d5d0((struct Struct_0205d5d0*)(arg0 + Enum_ov003_0216a974_228), arg1, *(int*)(arg0 + 0x7c), 1, 0);
+    Window_SetPaneText((struct StructA0205d5d0*)(obj + kRegione4), mode, *(int*)(obj + 0x7c), 1, 0);
 #endif
 }

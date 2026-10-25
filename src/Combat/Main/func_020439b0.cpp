@@ -21,8 +21,8 @@ extern "C" void func_02042b98(void* arg0, int arg1, int arg2, int arg3, int arg4
 extern "C" void func_0204408c(struct Struct_020439b0_7* arg0, short arg1, short arg2, short arg3, short arg4);
 extern "C" void func_02043600(void* arg0, void* arg1);
 #include "Resource/MessageUpdate.h"
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_020437bc(void* arg0, void* arg1, int arg2);
+extern "C" void MessageSystem_Stop(void* self);
+extern "C" void func_020437bc(void* buf, void* box, int index);
 
 struct Struct_0204394c;
 #if defined(jpn)
@@ -222,10 +222,10 @@ extern "C" ARM void func_020439b0(char* arg0, int arg1) {
 
         FreeVRAMStagingMemory((const void*)(*(Struct_020439b0_6**)(arg0 + Enum_020439b0_52))->unknown_8_);
 
-        if (var0->unknown_998_ == 0) {
-            func_02043040((Struct_02021b84*)arg0);
-            func_02043124(arg0);
-            func_020430b0((Struct_02021b84*)arg0);
+        if (controller->active == 0) {
+            InitCombatSlots02043040((MessageSystem*)self);
+            MessageSystem_Stop(self);
+            ResetControllerState020430b0((MessageSystem*)self);
         }
     }
 

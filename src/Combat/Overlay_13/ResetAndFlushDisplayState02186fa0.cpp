@@ -13,14 +13,13 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-struct EntryList0204af14;
-void* Background_GetScreen(struct EntryList0204af14* list, unsigned int index);
+struct BackgroundGraphics;
+void* Background_GetScreen(struct BackgroundGraphics* list, unsigned int index);
 
 void CleanInvalidateCacheRange(const void* where, unsigned int len);
 extern "C" void LoadToMainBG1CharacterData(int, int, unsigned int);
 
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8* obj, void* buf);
+void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
 struct Struct02074bd0;
 void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
@@ -30,18 +29,18 @@ void ClearFlag0x11IfSet(struct Struct02074bf4* obj);
 
 // USA: func_ov013_02186fa0  (semantic: ResetAndFlushDisplayState02186fa0)
 extern "C" ARM void func_ov013_02186fa0(unsigned char* obj) {
-    FontBankLoader* g = GetGlobal02109400_02094a00();
+    FontBankLoader* g = FontBankLoader_GetInstance();
     BlankFunction02094b38(g, 0x68);
-    func_02094ab0(g);
+    FontBankLoader_CancelLoads(g);
 
     if (obj[R(0x50,0x64)] == 0) {
-        void* entry = Background_GetScreen((struct EntryList0204af14*)(obj + 0x28), 0);
+        void* entry = Background_GetScreen((struct BackgroundGraphics*)(obj + 0x28), 0);
         void* buf;
         if (entry != 0 && (buf = *(void**)((char*)entry + 0xc)) != 0) {
             memset(buf, 0, 0x600);
             CleanInvalidateCacheRange(buf, 0x20);
             LoadToMainBG1CharacterData((int)buf, 0, 0x20);
-            Background_UploadMap((struct List0204b0e8*)(obj + 0x28), buf);
+            Background_UploadMap((struct BackgroundGraphics*)(obj + 0x28), buf);
         }
 
         ClearFlag0x10IfSet((struct Struct02074bd0*)(obj + 0x14));

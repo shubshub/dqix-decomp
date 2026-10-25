@@ -27,11 +27,11 @@ extern "C" ARM int func_ov001_0215dbd0(void* arg0) {
     var2.unknown_4_ = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x8));
     var2.unknown_8_ = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x10));
 
-    Vector3fix var3 = *(Vector3fix*)((char*)func_020100bc(var0) + 0x70);
-    Vector3fix var4;
-    var4.x = 0;
-    var4.y = var3.y;
-    var4.z = fix32_Sqrt(inline_ov001_0215dbd0(var3.z, var3.z) - inline_ov001_0215dbd0(var3.y, var3.y));
+    Vector3fix polar = *(Vector3fix*)((char*)gs->GetCamera() + 0x70);
+    Vector3fix offset;
+    offset.x = 0;
+    offset.y = polar.y;
+    offset.z = fix32_Sqrt(FixedMulRound_0215dbd0(polar.z, polar.z) - FixedMulRound_0215dbd0(polar.y, polar.y));
 
     Matrix4x3 var5 = RotationMatrixY(var3.x);
     Mat4x3_ApplyToVector(&var4, &var5, &var4);

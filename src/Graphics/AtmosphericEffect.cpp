@@ -406,7 +406,7 @@ void AtmosphericEffectSet::ProcessArchive(AtmosphericEffectSet *target, SafeAllo
             ObjectArchiveLoadInfo loadInfo;
             loadInfo.unk_0 = 0;
             loadInfo.fileData = NULL;
-            loadInfo.unk_8 = 0;
+            loadInfo.fileSize = 0;
             loadInfo.allocator = NULL;
             loadInfo.unk_10 = 0;
             loadInfo.unk_14 = 0;
@@ -439,7 +439,7 @@ void AtmosphericEffectSet::ProcessArchive(AtmosphericEffectSet *target, SafeAllo
             _Z17VramState_RestorePc(pZone50Thing);
             loadInfo.allocator = allocator;
             loadInfo.fileData = loopObject->archiveFileData_;
-            loadInfo.unk_8 = loopObject->archiveFileSize_;
+            loadInfo.fileSize = loopObject->archiveFileSize_;
             loadInfo.unk_10 = 1;
             loopObject->object_.LoadFromCHRArchive(&loadInfo);
             _Z14VramState_SavePc(pZone50Thing);

@@ -45,7 +45,7 @@ Entry0204254c* Font_FindCharacter(int, int);
 int Font_FindCharacterIndex(int, int);
 int FindMatchingEntryIndex(Container02045c00*, int);
 extern "C" int func_020459b8(TextContext02067b28*, unsigned char, Entry0204254c*, unsigned char);
-extern "C" int func_02001aec(const void*, const void*, int);
+extern "C" int memcmp(const void*, const void*, int);
 extern char data_020f08dc[3];
 
 // USA: func_02067b28
@@ -67,11 +67,11 @@ extern "C" ARM void func_02067b28(Struct_02067b28* arg0) {
             arg0->unknown_6c_ += var3;
             continue;
         }
-        if (!arg0->unknown_19c2_) {
-            arg0->unknown_19c4_ = 1;
-            if (arg0->unknown_1946_ <= 0) arg0->unknown_19c4_ = 0;
-            if (!func_02001aec(var0, data_020f08dc, 2)) {
-                if (arg0->unknown_1942_ == 0) arg0->unknown_19c4_ = 0;
+        if (!state->wrapped) {
+            state->canWrap = 1;
+            if (state->available <= 0) state->canWrap = 0;
+            if (!memcmp(source, data_020f08dc, 2)) {
+                if (state->ringIndex == 0) state->canWrap = 0;
                 else {
                     arg0->unknown_934_ = arg0->unknown_1944_ + 18 + (short)(8 - (arg0->unknown_1944_ & 7));
                     arg0->unknown_936_ = 22;

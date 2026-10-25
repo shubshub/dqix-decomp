@@ -58,8 +58,8 @@ extern "C" ARM void func_ov024_021fd66c(struct Struct_ov024_021fd66c* arg0) {
 				var4 = 50.0f;
 			}
 		}
-	} else if (var5 == 0x52) {
-		if (!func_ov000_02156068(arg0->unknown_0_, var0->obj3D_.unknown_4_, 9, 0)) return;
+	} else if (code == 0x52) {
+		if (!func_ov000_02156068(obj->field0, c->obj3D_.actorIndex_, 9, 0)) return;
 	}
 	if (var4 > 100.0f) var4 = 100.0f;
 	func_ov024_021fe6b4((struct Struct_ov024_021fd1bc*)arg0, 1);

@@ -25,27 +25,27 @@ struct Struct_ov017_021c3e18_3 {
     unsigned char unknown_3_;
 };
 
-extern "C" unsigned short* func_02012fe4(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void* func_0202ae18(void);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" void func_ov017_021c3f68(struct Struct_ov017_021c3e18* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_ov017_021b8468(void* arg0);
-extern "C" void* func_ov000_021677d8(void* arg0, int arg1);
-extern "C" void func_ov017_021d2ad0(short, int, int, int, unsigned char);
-extern "C" int func_0202c508(void* arg0);
+unsigned char GameState_GetLeaderIndex(GameState* gs);
+void SetVec3_021c3f68(struct Vec3_021c3f68* obj, int x, int y, int z);
+extern "C" void* func_ov017_021b8468(void* obj);
+void* GetSlot021677d8(void* work, int idx);
+void EnqueueEventTag35_021d2ad0(short, int, int, int, unsigned char);
+extern "C" int func_0202c508(void* p);
 
 // USA: func_ov017_021c3e18
-extern "C" ARM void func_ov017_021c3e18(unsigned char arg0) {
-    unsigned short* var0 = func_02012fe4();
-    GameState* var1 = GameState::GetInstance();
-    GameResources* var2 = GetGameResources();
-    Struct_ov017_021c3e18_2* var3 = (Struct_ov017_021c3e18_2*)func_02010828(var1);
-    Struct_ov017_021c3e18_3* var4 = (Struct_ov017_021c3e18_3*)var2->unknown_ptr_3718;
-    void* var5 = func_0202ae18();
-    unsigned char var6 = func_020100b0(var1);
-    for (int var7 = 0; var7 < var3->unknown_f7c_; var7++) {
-        unsigned char var8 = var3->unknown_f78_[var7];
-        if (var8 == var6) {
+extern "C" ARM void func_ov017_021c3e18(unsigned char arg) {
+    unsigned short* mapId = Zone3D_GetInstance();
+    GameState* gs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    Party021c3e18* party = (Party021c3e18*)GameState_GetParty(gs);
+    Battle021c3e18* battle = (Battle021c3e18*)res->unknown_ptr_3718;
+    void* search = func_0202ae18();
+    unsigned char self = GameState_GetLeaderIndex(gs);
+    for (int i = 0; i < party->memberCount; i++) {
+        unsigned char id = party->memberIds[i];
+        if (id == self) {
             continue;
         }
         GameObject* var9 = var1->GetPartyMemberByIndex(var8);
@@ -62,7 +62,7 @@ extern "C" ARM void func_ov017_021c3e18(unsigned char arg0) {
                 var10 = *(Vector3i*)func_ov000_021677d8(var11, var8);
             }
         }
-        func_ov017_021d2ad0(var9->obj3D_.unknown_4_, var10.x, var10.y, var10.z, arg0);
+        EnqueueEventTag35_021d2ad0(member->obj3D_.actorIndex_, pos.x, pos.y, pos.z, arg);
     }
     if (func_0202c508(var5)) {
         Vector3i var12 = *(Vector3i*)((char*)var1 + Enum_ov017_021c3e18_32608);

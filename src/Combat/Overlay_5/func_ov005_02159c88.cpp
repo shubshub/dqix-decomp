@@ -13,20 +13,20 @@ struct Struct_ov005_02153ba4_2 {
 };
 
 extern "C" long labs(long);
-struct Struct_ov005_02156ecc;
-struct Struct_ov005_02156ecc_2;
-extern "C" void func_ov005_02157174(Struct_ov005_02156ecc*, Struct_ov005_02156ecc_2*);
-struct Struct_02015ef4_2;
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
-extern "C" void func_02047554(void* arg0, int arg1, int arg2);
-struct Struct_0201099c_10;
-extern "C" void* func_020dedd0(Struct_0201099c_10*, int);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" int func_020dd4c4(char arg0, void* arg1);
-extern "C" void func_ov005_02154d18(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d34(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d50(void* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d7c(void* arg0, int arg1, int arg2);
+struct Dst02157174;
+struct Src02157174;
+void CopyThreeFields02157174(Dst02157174*, Src02157174*);
+struct StructAt020473c8;
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+extern "C" void func_02047554(void* obj, int val, int param1);
+struct ItemTable;
+void* ItemTable_Find(ItemTable*, int);
+MemberScreen* GetField1c_021a193c(int* p);
+extern "C" int func_020dd4c4(char a, void* b);
+extern "C" void func_ov005_02154d18(void* obj, int a, int b);
+extern "C" void func_ov005_02154d34(void* obj, int a, int b);
+extern "C" void func_ov005_02154d50(void* obj, int a, int b);
+extern "C" void func_ov005_02154d7c(void* obj, int a, int b);
 
 #define G3_MTX_PUSH  (*(volatile int*)0x04000444)
 #define G3_MTX_POP   (*(volatile int*)0x04000448)
@@ -157,18 +157,18 @@ extern "C" ARM void func_ov005_02159c88(Struct_ov005_02159c88_4* arg0) {
                 func_020473c8((Struct_02015ef4_2*)arg0->unknown_2c80_, 1);
                 G3_MTX_POP = 1;
             }
-            int var25 = var20->unknown_0_;
-            if (var25 >= 0) {
-                void* var26 = func_020dedd0((Struct_0201099c_10*)arg0->unknown_df4_, (short)var25);
-                if (var26 != 0) {
-                    Struct_ov005_02159c88_2* var27 = var20->unknown_8_;
-                    GameResources* var28 = GetGameResources();
-                    Struct_ov005_02153ba4_2* var29 = func_ov017_021a193c((int*)var28->unknown_ptr_array_36fc[3]);
-                    if (func_020dd4c4(var29->unknown_4fc_, var26) != 0) {
-                        int var30 = var20->unknown_c_;
-                        int var31 = var20->unknown_10_;
-                        Struct_ov005_02159c88 var32 = var27->unknown_1c_;
-                        if (var19 >= 8 && var19 < 0x18) {
+            int id = s->id;
+            if (id >= 0) {
+                void* elem = ItemTable_Find((ItemTable*)self->container, (short)id);
+                if (elem != 0) {
+                    Obj02159c88* o = s->obj;
+                    GameResources* res = GetGameResources();
+                    MemberScreen* holder = GetField1c_021a193c((int*)res->unknown_ptr_array_3700[2]);
+                    if (func_020dd4c4(holder->member, elem) != 0) {
+                        int px = s->x;
+                        int py = s->y;
+                        Vec3_02159c88 p = o->pos;
+                        if (i >= 8 && i < 0x18) {
                             G3_MTX_PUSH = 0;
                             G3_MTX_TRANS = var30;
                             G3_MTX_TRANS = var31;

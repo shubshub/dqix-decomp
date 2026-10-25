@@ -7,9 +7,6 @@
 #include "std_library_functions.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_02015ef4_4 {
     int unknown_0_, unknown_4_, unknown_8_, unknown_c_;
@@ -20,28 +17,28 @@ struct Struct_02015ef4_4 {
     short unknown_14_, unknown_16_, unknown_18_, unknown_1a_, unknown_1c_;
 };
 
-struct Struct_02019508_3;
-struct Struct_0201099c_10;
-struct Struct_02012fa4;
+struct Base02019508;
+struct ItemTable;
+struct Foo02048004;
 
-extern "C" void* func_02012fe4(void);
-extern "C" void func_0201ba1c(struct Struct_02019508_3* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021cfe40(unsigned short arg0, unsigned short arg1, unsigned short arg2);
-extern "C" unsigned char* func_0205ec34(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_02047230(struct Struct_02012fa4* arg0);
-extern "C" Struct_02015ef4_4* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_ov017_0218d510(int arg0, void* arg1);
-extern "C" unsigned short func_020de234(struct Struct_02015ef4_4* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+void ClearAndFlagEntry0201ba1c(struct Base02019508* base, int key1, int key2);
+void EnqueueEventTag166_021cfe40(unsigned short a, unsigned short b, unsigned short c);
+extern "C" unsigned char* Scenario_GetInstance(void);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+void SprSprite_Unload(struct Foo02048004* obj);
+StructDE234_020de234* ItemTable_Find(struct ItemTable* c, int key);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void GameResources_LoadSpecialItemEffect(int a, void* b);
+unsigned short ItemRecord_GetFileNumber(struct StructDE234_020de234* p, int preferMid);
 
 struct Struct_ov017_021d6ca4 {
     char unknown_0_[0x20];
 };
 
-extern AllocatorUnion data_02114e20;
-extern const Struct_ov017_021d6ca4 data_ov017_021d6ca4;
+extern AllocatorUnion g_mainAllocator;
+extern const FileName_021bf7ac data_ov017_021d6ca4;
 extern const char data_ov017_021d7ee8[];
 
 struct Struct_ov017_021bf7ac {
@@ -71,45 +68,45 @@ extern "C" ARM int func_ov017_021bf7ac(struct Struct_ov017_021bf7ac_2* arg0) {
 #else
  enum {Enum_ov017_021bf7ac_852=0x354, Enum_ov017_021bf7ac_1536=0x600};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    var0->GetUnknownGameObject();
-    unsigned short* var1 = (unsigned short*)func_02012fe4();
-    struct Struct_ov017_021bf7ac* var2 = arg0->unknown_c_;
-    BackgroundLoader* var3 = BackgroundLoader::GetInstance();
-    unsigned short var4 = var2->unknown_2c_;
-    unsigned short var5 = var2->unknown_2e_;
-    func_0201ba1c((struct Struct_02019508_3*)var1, var4, var5);
-    func_ov017_021cfe40(*var1, var4, var5);
+    GameState* gs = GameState::GetInstance();
+    gs->GetUnknownGameObject();
+    unsigned short* events = (unsigned short*)Zone3D_GetInstance();
+    struct Info_021bf7ac* info = obj->info;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    unsigned short key1 = info->key1;
+    unsigned short key2 = info->key2;
+    ClearAndFlagEntry0201ba1c((struct Base02019508*)events, key1, key2);
+    EnqueueEventTag166_021cfe40(*events, key1, key2);
 
-    LootableContainerManager* var6 = LootableContainerManager::GetMainInstance();
-    unsigned char* var7 = func_0205ec34();
-    if (var6 == 0 || var7 == 0) {
+    LootableContainerManager* mgr = LootableContainerManager::GetMainInstance();
+    unsigned char* flags = Scenario_GetInstance();
+    if (mgr == 0 || flags == 0) {
         return 3;
     }
 
-    unsigned short var8 = 0;
-    LootableContainerManager::Container* var9 = var6->GetContainerByID(var2->unknown_30_, &var8);
-    if (var9 != 0 && !func_0206dfb0((int)var7, var7 + 0x8c, var9->uniqueID + 0x79e)) {
-        char* var10 = (char*)func_02012fe4();
-        char* var11 = var10 + Enum_ov017_021bf7ac_852;
-        arg0->unknown_10_ = (struct Struct_02012fa4*)(var10 + Enum_ov017_021bf7ac_1536 + func_020100a8(var0) * 0x88);
-        func_02047230(arg0->unknown_10_);
-        if (var9->lootType == 1) {
-            Struct_ov017_021d6ca4 var12 = data_ov017_021d6ca4;
-            arg0->unknown_14_ = var3->QueueLoadFile(var12.unknown_0_, 0);
+    unsigned short listPos = 0;
+    LootableContainerManager::Container* container = mgr->GetContainerByID(info->containerId, &listPos);
+    if (container != 0 && !Scenario_TestFlag((int)flags, flags + 0x8c, container->uniqueID + 0x79e)) {
+        char* base = (char*)Zone3D_GetInstance();
+        char* sub = base + regionalOffset0;
+        obj->entry = (struct Foo02048004*)(base + regionalOffset1 + GameState_GetProtagonistIndex(gs) * 0x88);
+        SprSprite_Unload(obj->entry);
+        if (container->lootType == 1) {
+            FileName_021bf7ac name = data_ov017_021d6ca4;
+            obj->taskId = loader->QueueLoadFile(name.path, 0);
         } else {
-            Struct_02015ef4_4* var13 = func_020dedd0((struct Struct_0201099c_10*)(var11 + 0x2400), (short)var9->itemIDOrRank);
-            if (var13 != 0) {
-                if (var13->unknown_18_ == 0x5617) {
-                    arg0->unknown_48_ = 1;
-                    arg0->unknown_4c_.ResetAllocatorPointer();
-                    arg0->unknown_4c_.CreateTypeA(func_02012d88(&data_02114e20, 0x4000), 0x4000);
-                    arg0->unknown_4c_.Reset();
-                    func_ov017_0218d510((int)GetGameResources(), &arg0->unknown_4c_);
+            StructDE234_020de234* elem = ItemTable_Find((struct ItemTable*)(sub + 0x2400), (short)container->itemIDOrRank);
+            if (elem != 0) {
+                if (elem->g == 0x5617) {
+                    obj->field48 = 1;
+                    obj->allocator.ResetAllocatorPointer();
+                    obj->allocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x4000), 0x4000);
+                    obj->allocator.Reset();
+                    GameResources_LoadSpecialItemEffect((int)GetGameResources(), &obj->allocator);
                 } else {
-                    char var14[0x80];
-                    sprintf(var14, data_ov017_021d7ee8, (signed char)var13->unknown_12_4_, func_020de234(var13, 0));
-                    arg0->unknown_14_ = var3->QueueLoadFile(var14, 0);
+                    char path[0x80];
+                    sprintf(path, data_ov017_021d7ee8, (signed char)elem->field10High, ItemRecord_GetFileNumber(elem, 0));
+                    obj->taskId = loader->QueueLoadFile(path, 0);
                 }
             }
         }

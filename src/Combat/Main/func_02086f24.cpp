@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/ItemTable.h"
 #include "Memory/SafeAllocator.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/FileIO.h"
@@ -113,17 +114,9 @@ struct Struct_02086f24_2 {
 #endif
 };
 
-struct Struct_0201099c_10 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[10];
-    Struct_0201099c_9* unknown_c_;
-    unsigned char unknown_10_[4];
-    unsigned char unknown_14_;
-};
-
-struct Struct_02086f24_4 {
-    unsigned char unknown_0_[0xf70];
-    unsigned int unknown_f70_;
+struct Party02086f24 {
+    unsigned char pad[0xf70];
+    unsigned int memberCount;
 };
 
 struct Struct_02086f24_5;
@@ -135,26 +128,26 @@ void ResetStructFields_02089db4(ResetFieldsStruct* s);
 void ForwardResetStructFields02089ddc(ResetFieldsStruct* s);
 void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
 RecruitTemplate02086f24* FindEntryBySignedId02089fb0(EntryArray02089fb0* arr, int id);
-extern "C" void func_02086404(CombatSelection* selection);
+extern "C" void PartyMemberRecord_Init(CombatSelection* selection);
 extern "C" void __clear(void* dst, unsigned int size);
 extern "C" int Font_EncodeText(const void* a, void* b, int flag);
 extern "C" void func_02082828(CharacterRecord02086f24* record);
 extern "C" void func_02082d6c(CharacterRecord02086f24* dst, CombatSelection* src);
 void LoadAndApplyResourceEntry02082fc4(void* a, void* b);
-void ZeroInitReturn020de824(void* p);
+void ItemTable_Construct(void* p);
 void ItemTable_Init(void* p);
 int InitAndDispatch020def44(int a0, int a1, int a2, short a3);
-extern "C" void func_02083e28(void* a, int arg2);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 void ClearField00209a804(int* p);
 void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
 int CollectPairsBelowThreshold0209ab20(Holder0209ab20* h, int slot, int threshold, unsigned char* out);
-extern "C" int func_02086778(Party02086f24* party, CombatSelection* sel, unsigned char c, unsigned char d);
+extern "C" int Party_AddMemberRecord(Party02086f24* party, CombatSelection* sel, unsigned char c, unsigned char d);
 
 extern const char* g_itemDataArchive;
 extern const char* g_itemDataFile;
 extern const signed char data_020e8a94[10];
 extern const char data_020f102e[];
-extern unsigned char data_0211e33c[];
+extern unsigned char g_fileLoadBuffer[];
 #if defined(jpn)
 extern "C" void* func_020e0968(const char* arg0, unsigned int* arg1);
 extern const char data_020f1150[];
@@ -194,30 +187,30 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
 #if !defined(jpn)
     unsigned char var5[12];
 #endif
-    Struct_0201099c_10 var6;
-    unsigned char var7[20];
-    unsigned int var8;
-    unsigned int var9;
-    Struct_02086f24_6 var10;
+    ItemTable items;
+    unsigned char skills[20];
+    unsigned int itemSize;
+    unsigned int size;
+    Ctx0209a8b4 ctx;
 
     if (arg2->GetMaxPossibleAllocation() < HEAP_SIZE_02086f24) {
         return 0;
     }
-    var4.ResetAllocatorPointer();
-    var4.ResetAllocatorPointer();
-    var4.CreateTypeA(arg2->Allocate(HEAP_SIZE_02086f24), HEAP_SIZE_02086f24);
-    var4.Reset();
-    func_02089db4(&var3);
-    func_02089de8(&var3, &var4, NULL);
-    Struct_02086f24* var11 = func_02089fb0((Struct_02086f24_5*)&var3, (short)(arg1 + 7));
-    func_02086404(&var0);
-    int var12 = 0;
-    int var13;
-    if (var11 != NULL) {
-        var0.unknown_0_6_ = 1;
-        var0.unknown_1_0_ = var11->unknown_3e_;
-        var0.unknown_13f_0_ = var11->unknown_3f_;
-        inline_02086f24(&var0, var11->unknown_3d_);
+    scriptAlloc.ResetAllocatorPointer();
+    scriptAlloc.ResetAllocatorPointer();
+    scriptAlloc.CreateTypeA(heap->Allocate(HEAP_SIZE_02086f24), HEAP_SIZE_02086f24);
+    scriptAlloc.Reset();
+    ResetStructFields_02089db4(&templates);
+    SetupHeaderAndRunBufferedScript02089de8(&templates, &scriptAlloc, NULL);
+    RecruitTemplate02086f24* t = FindEntryBySignedId02089fb0((EntryArray02089fb0*)&templates, (short)(id + 7));
+    PartyMemberRecord_Init(&sel);
+    int vocation = 0;
+    int ok;
+    if (t != NULL) {
+        sel.active = 1;
+        sel.count = t->count;
+        sel.cursor = t->cursor;
+        SetVocation02086f24(&sel, t->vocation);
 #if defined(jpn)
         sprintf((char*)var0.unknown_140_, data_020f1150, var11->unknown_4_);
 #else
@@ -240,7 +233,7 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
         func_02082fc4(&var2, &var1);
         BackgroundLoader::AddLockGlobal();
         itemSize = 0;
-        ZeroInitReturn020de824(&items);
+        ItemTable_Construct(&items);
         ItemTable_Init(&items);
 #if defined(jpn)
         func_020e0968(g_itemDataArchive, &itemSize);
@@ -250,56 +243,56 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
         for (int var16 = 0; var16 < 10; var16++) {
             short var17 = inline_02086f24_4(var11, var16);
 #if defined(jpn)
-            func_020def44((int)&var2.unknown_194_[data_020e8a94[var16]], (int)data_0211e33c, var8, var17);
+            InitAndDispatch020def44((int)&record.equipment[data_020e8a94[k]], (int)g_fileLoadBuffer, itemSize, equip);
 #else
             func_020def44((int)&var2.unknown_194_[data_020e8a94[var16]], (int)var15, var8, var17);
 #endif
         }
         BackgroundLoader::RemoveLockGlobal();
-        func_02083e28(&var2, 0);
-        var0.unknown_14c_[0].unknown_0_0_ = var2.unknown_0_[0].unknown_0_0_;
-        var0.unknown_14c_[0].unknown_1_2_ = var2.unknown_0_[0].unknown_1_2_;
-        var0.unknown_14c_[0].unknown_2_4_ = var2.unknown_0_[0].unknown_2_4_;
-        var0.unknown_14c_[1].unknown_0_0_ = var2.unknown_0_[1].unknown_0_0_;
-        var0.unknown_14c_[1].unknown_1_2_ = var2.unknown_0_[1].unknown_1_2_;
-        var0.unknown_14c_[1].unknown_2_4_ = var2.unknown_0_[1].unknown_2_4_;
-        var0.unknown_14c_[2].unknown_0_0_ = var2.unknown_0_[2].unknown_0_0_;
-        var0.unknown_14c_[2].unknown_1_2_ = inline_02086f24_5(&var2.unknown_3c_);
-        var0.unknown_14c_[3].unknown_0_0_ = inline_02086f24_5(&var2.unknown_3c_) & 0x3ff;
-        var0.unknown_14c_[2].unknown_2_4_ = inline_02086f24_6(&var2.unknown_3c_);
-        var0.unknown_14c_[3].unknown_1_2_ = inline_02086f24_6(&var2.unknown_3c_);
-        var0.unknown_14c_[3].unknown_2_4_ = inline_02086f24_7(&var2.unknown_3c_);
-        var0.unknown_15c_0_ = inline_02086f24_8(&var2.unknown_3c_);
-        var0.unknown_15d_2_ = var2.unknown_0_[3].unknown_0_0_;
-        var0.unknown_f4_ = var1.unknown_0_.unknown_4_7_;
-        var0.unknown_1c_[var11->unknown_3d_] = var1.unknown_0_.unknown_0_0_;
-        var12 = var11->unknown_3d_;
+        PartyMember_RecalculateStats(&record, 0);
+        sel.vectors[0].x = record.base[0].x;
+        sel.vectors[0].y = record.base[0].y;
+        sel.vectors[0].z = record.base[0].z;
+        sel.vectors[1].x = record.base[1].x;
+        sel.vectors[1].y = record.base[1].y;
+        sel.vectors[1].z = record.base[1].z;
+        sel.vectors[2].x = record.base[2].x;
+        sel.vectors[2].y = GetStat6c02086f24(&record.profile);
+        sel.vectors[3].x = GetStat6c02086f24(&record.profile) & 0x3ff;
+        sel.vectors[2].z = GetStat6e02086f24(&record.profile);
+        sel.vectors[3].y = GetStat6e02086f24(&record.profile);
+        sel.vectors[3].z = GetStat7002086f24(&record.profile);
+        sel.timer = GetStat7202086f24(&record.profile);
+        sel.timerLimit = record.base[3].x;
+        sel.skillPoints = entry.initial.value4High;
+        sel.experience[t->vocation] = entry.initial.value0;
+        vocation = t->vocation;
     } else {
         var13 = 0;
     }
-    func_02089ddc(&var3);
-    var4.Reset();
-    if (var13) {
-        void* var18 = LoadFileIntoMemory(data_020f102e, data_0211e33c, &var9);
-        if (var18 != NULL) {
-            func_0209a804((int*)&var10);
-            func_0209a8b4(&var10, &var4, (Struct_02013fb4*)var18, var9);
-            int var19 = func_0209ab20((Struct_02086f24_7*)&var10, var12, var0.unknown_2_[var12], var7);
-            unsigned char* var20 = var7;
-            for (int var21 = 0; var21 < var19; var21++) {
-                int var22 = *var20;
-                int var23 = inline_02086f24_2(var22);
-                int var24 = inline_02086f24_3(var22);
-                var0.unknown_111_[var23] |= 1 << var24;
-                var20++;
+    ForwardResetStructFields02089ddc(&templates);
+    scriptAlloc.Reset();
+    if (ok) {
+        void* data = LoadFileIntoMemory(data_020f102e, g_fileLoadBuffer, &size);
+        if (data != NULL) {
+            ClearField00209a804((int*)&ctx);
+            SetupAndRunBufferedScript0209a8b4(&ctx, &scriptAlloc, (StreamHeader*)data, size);
+            int count = CollectPairsBelowThreshold0209ab20((Holder0209ab20*)&ctx, vocation, sel.levels[vocation], skills);
+            unsigned char* p = skills;
+            for (int i = 0; i < count; i++) {
+                int skill = *p;
+                int byte = SkillByteIndex02086f24(skill);
+                int bit = SkillBitIndex02086f24(skill);
+                sel.groupFlags[byte] |= 1 << bit;
+                p++;
             }
         }
     }
-    if (var13) {
-        var13 = func_02086778(arg0, &var0, 1, 0);
-        arg0->unknown_f70_++;
-        if (arg0->unknown_f70_ > 4) {
-            arg0->unknown_f70_ = 4;
+    if (ok) {
+        ok = Party_AddMemberRecord(party, &sel, 1, 0);
+        party->memberCount++;
+        if (party->memberCount > 4) {
+            party->memberCount = 4;
         }
     }
     var4.Destroy();

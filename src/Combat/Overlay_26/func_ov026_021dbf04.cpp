@@ -64,12 +64,12 @@ struct Struct_ov000_02160da0 {
     unsigned int unknown_7738_;
 };
 
-extern "C" Struct_ov026_021d8ba0_6* func_ov026_021dae60(Struct_ov026_021d8ba0_4* arg0, int arg1);
-extern "C" int func_ov000_02160fd4(void* arg0, int arg1);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
-extern "C" void* func_020d6c00();
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" void func_ov000_02176038(Struct_ov000_02176038* arg0);
+SlotWork* FindSlotById_021dae60(Container_021dae60* c, int id);
+int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* work, int mask);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
+void* GlobalFlags_GetInstance();
+void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+void SetFlagAndCall02176038(Obj02176038* obj);
 
 extern "C" {
 void* memset(void*, int, unsigned int);
@@ -94,14 +94,14 @@ extern "C" ARM void func_ov026_021dbf04(Struct_ov000_02160da0* arg0) {
     arg0->unknown_772f_ = 0;
     memset(arg0->unknown_54f4_, 0, sizeof(arg0->unknown_54f4_));
 
-    Struct_ov026_021d8ba0_5* var2 = (Struct_ov026_021d8ba0_5*)func_02010828(GameState::GetInstance());
-    for (int var3 = 0; var3 < var2->unknown_f7c_; var3++) {
-        int var4 = var2->unknown_f78_[var3];
-        Struct_ov026_021d8ba0_6* var5 = func_ov026_021dae60(&arg0->unknown_3760_, var4);
-        if (var5 != NULL) {
-            func_ov000_0217f518(var5);
-            func_ov000_02162c14(arg0, var4, &var0);
-            func_ov017_021c6814(arg0->unknown_2a0_->unknown_8_, var4, &var0, 0, -1, 0);
+    Roster* roster = (Roster*)GameState_GetParty(GameState::GetInstance());
+    for (int i = 0; i < roster->count; i++) {
+        int id = roster->ids[i];
+        SlotWork* slot = FindSlotById_021dae60(&self->list, id);
+        if (slot != NULL) {
+            func_ov000_0217f518(slot);
+            func_ov000_02162c14(self, id, &cmd);
+            func_ov017_021c6814(self->party->netId, id, &cmd, 0, -1, 0);
         }
     }
 
@@ -110,6 +110,6 @@ extern "C" ARM void func_ov026_021dbf04(Struct_ov000_02160da0* arg0) {
     if (var6) {
         func_ov000_02160fa8(arg0, 0x2000000);
     }
-    func_020466e4((unsigned int*)func_020d6c00(), arg0->unknown_7738_);
-    func_ov000_02176038((Struct_ov000_02176038*)&arg0->unknown_3760_);
+    FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), self->savedField);
+    SetFlagAndCall02176038((Obj02176038*)&self->list);
 }

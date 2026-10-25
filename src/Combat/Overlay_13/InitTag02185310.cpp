@@ -11,21 +11,20 @@
 struct Struct0205de24;
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
 
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+struct GridCursor;
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 extern "C" void func_ov013_02185424(void* obj, void* buf);
 #if defined(jpn)
-extern "C" void func_0205d304(void* a, void* b, int p2, int p3, int p4, int p5, int p6);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6);
 #else
-extern "C" void func_0205d304(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
 // USA: func_ov013_02185310
@@ -50,18 +49,18 @@ ARM void InitTag02185310(unsigned char* obj) {
     func_ov013_02185424(obj, *(void**)(obj + R(0x5e0, 0x658)));
 
 #if defined(jpn)
-    func_0205d304(obj + R(0x34, 0x38), *(void**)(obj + R(0x5e0, 0x658)), 0, 0, 0, 1, 0);
+    Window_OpenPane(obj + R(0x34, 0x38), *(void**)(obj + R(0x5e0, 0x658)), 0, 0, 0, 1, 0);
 #else
-    func_0205d304(obj + R(0x34, 0x38), *(void**)(obj + R(0x5e0, 0x658)), 0, 0, 0, 1, 0, 0);
+    Window_OpenPane(obj + R(0x34, 0x38), *(void**)(obj + R(0x5e0, 0x658)), 0, 0, 0, 1, 0, 0);
 #endif
 
     obj[R(0xe5, 0xe9)] = 0;
     *(int*)(obj + R(0x3c, 0x40)) = 1;
     *(int*)(obj + R(0x8c, 0x90)) = 1;
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + R(0x38, 0x3c)), 1, 6, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(obj + R(0x88, 0x8c)), 1, 6, 0);
-    GridCursor_SetCount((struct Node0205bacc*)(obj + R(0x38, 0x3c)), 6);
-    GridCursor_SetCount((struct Node0205bacc*)(obj + R(0x88, 0x8c)), 6);
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)(obj + R(0x38, 0x3c)), 1);
+    GridCursor_SetDimensions((struct GridCursor*)(obj + R(0x38, 0x3c)), 1, 6, 0);
+    GridCursor_SetDimensions((struct GridCursor*)(obj + R(0x88, 0x8c)), 1, 6, 0);
+    GridCursor_SetCount((struct GridCursor*)(obj + R(0x38, 0x3c)), 6);
+    GridCursor_SetCount((struct GridCursor*)(obj + R(0x88, 0x8c)), 6);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)(obj + R(0x38, 0x3c)), 1);
     GridCursor_SetSelectedIndex(obj + R(0x88, 0x8c), 1);
 }

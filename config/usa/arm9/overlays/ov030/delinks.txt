@@ -44,6 +44,6 @@ src/Combat/Overlay_30/func_ov030_021d9340.cpp:
     .text start:0x021d9340 end:0x021d9c5c
 
 
-src/Combat/Overlay_30/func_ov030_021d8a40.cpp:
+src/Combat/Overlay_28/Trans_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d9250

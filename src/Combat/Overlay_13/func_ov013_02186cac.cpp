@@ -9,17 +9,17 @@ struct Struct_0205d0e0 {
     short unknown_bc_;
     short unknown_be_;
 };
-extern "C" Struct_0205d0e0* func_0205d8c4(Struct_0205d81c*);
-extern "C" int func_0204c7e0(unsigned char*);
+Elem_0205d81c* Window_GetActivePane(Struct_0205d81c*);
+int WindowPane_IsOpen(unsigned char*);
 
-struct Struct_0205a254;
-extern "C" void func_0205a370(Struct_0205a254*, int);
-extern "C" unsigned char* func_0205a3d0(Struct_0205a254*, int);
+struct Container0205a3d0;
+void SpriteEntryList_PlayAnimation(Container0205a3d0*, int);
+unsigned char* SpriteEntryList_Find(Container0205a3d0*, int);
 
-struct Struct_0205a330;
-extern "C" void func_0205a330(Struct_0205a330*, int);
+struct Container0205a330;
+void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
 
-extern "C" void func_0205ae8c(void*);
+extern "C" void SpriteContext_DrawEntries(void*);
 
 struct Struct_ov013_02186cac {
     char unknown_0_[0x3c];
@@ -44,9 +44,9 @@ extern "C" ARM void func_ov013_02186cac(void* arg0) {
     if (*(void**)(var0 + 0x18) == 0) return;
     if (!(var0[Enum_ov013_02186cac_1724] & 1)) return;
 
-    var1 = func_0205d8c4((Struct_0205d81c*)(var0 + Enum_ov013_02186cac_56));
-    if (var1 == 0) return;
-    if (!func_0204c7e0((unsigned char*)var1)) return;
+    elem = Window_GetActivePane((Struct_0205d81c*)(o + regionalElem));
+    if (elem == 0) return;
+    if (!WindowPane_IsOpen((unsigned char*)elem)) return;
 
     var2 = var1->unknown_ac_ * 8;
     var3 = var1->unknown_ae_ * 8;
@@ -65,17 +65,17 @@ extern "C" ARM void func_ov013_02186cac(void* arg0) {
     var6 = (Struct_0205a254*)var5->unknown_3c_;
     if (var6 == 0) return;
 
-    func_0205a370(var6, *(unsigned short*)(var0 + 0x1c));
-    var7 = func_0205a3d0(var6, *(unsigned short*)(var0 + 0x1c));
-    if (var7 != 0) var7[0x15] |= 8;
+    SpriteEntryList_PlayAnimation(container, *(unsigned short*)(o + 0x1c));
+    entry = SpriteEntryList_Find(container, *(unsigned short*)(o + 0x1c));
+    if (entry != 0) entry[0x15] |= 8;
 
-    func_0205a330((Struct_0205a330*)var6, *(int*)(var0 + 0x14));
+    SpriteEntryList_AdvanceAnimations((Container0205a330*)container, *(int*)(o + 0x14));
 
-    var7 = func_0205a3d0(var6, *(unsigned short*)(var0 + 0x1c));
-    if (var7 != 0) {
-        *(short*)(var7 + 4) = var2;
-        *(short*)(var7 + 6) = var3;
+    entry = SpriteEntryList_Find(container, *(unsigned short*)(o + 0x1c));
+    if (entry != 0) {
+        *(short*)(entry + 4) = x;
+        *(short*)(entry + 6) = y;
     }
 
-    func_0205ae8c(*(void**)(var0 + 0x18));
+    SpriteContext_DrawEntries(*(void**)(o + 0x18));
 }

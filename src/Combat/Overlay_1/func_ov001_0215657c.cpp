@@ -5,7 +5,6 @@
 
 #if defined(jpn)
 #include <std_library_functions.h>
-#define func_0205ec34 func_0205ff20
 #endif
 
 struct Struct_ov001_0215657c_2 {
@@ -49,18 +48,18 @@ struct Struct_02046574_2 {
     unsigned char unknown_19be_;
 };
 #endif
-struct Struct_02070900 { int unknown_0_; int unknown_4_; int unknown_8_; };
-struct Struct_02070900_2;
-struct Struct_020707c8;
-struct Struct_ov001_0215657c { char unknown_0_[0x8c]; unsigned char unknown_8c_[1]; };
-extern "C" char* func_020100f8(char*);
-extern "C" Struct_ov001_0215657c* func_0205ec34();
-extern "C" int func_0206dfb0(int, unsigned char*, int);
-extern "C" unsigned short* func_02012fe4();
-extern "C" Struct_02046574_2* func_020421a0();
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
-extern "C" int func_020e51cc(int);
-extern "C" void func_02046608(Struct_02046574_2*, int, int, char*, int, int, int);
+struct Rgb02070900 { int red; int green; int blue; };
+struct EffectParam02070900;
+struct Timer020707c8;
+struct EventFlags0215657c { char field_0[0x8c]; unsigned char flags[1]; };
+char* GetFieldIfFlag4_020100f8(char*);
+extern "C" EventFlags0215657c* Scenario_GetInstance();
+int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" unsigned short* Zone3D_GetInstance();
+Obj02046574* MessageSystem_GetInstance();
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+int StandardStrings_Get(int);
+extern "C" void MessageSystem_FormatText(Obj02046574*, int, int, char*, int, int, int);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_02046574_2*, char*, int);
 #else
@@ -74,10 +73,10 @@ extern "C" void func_0209c2e0(void*, int, int);
 extern "C" void func_02046a8c(void*, void*);
 extern "C" void func_ov017_021bb0c4(unsigned char*);
 void SetBrightness(GameResources*, int, int);
-extern "C" void func_020a2794(void*);
-extern "C" void func_020a2718(char*);
+void FollowCamera_EnableFollow(void*);
+void ApplyVecFromField0x246_020a2718(char*);
 extern "C" void func_ov017_021bb27c(void*);
-extern int data_02109bf4 __attribute__((aligned(4)));
+extern int g_bgmPlayer __attribute__((aligned(4)));
 
 // USA: func_ov001_0215657c
 extern "C" ARM int func_ov001_0215657c(Struct_ov001_0215657c_2* arg0, void* arg1) {
@@ -92,27 +91,27 @@ extern "C" ARM int func_ov001_0215657c(Struct_ov001_0215657c_2* arg0, void* arg1
     if (arg0->unknown_16_ == arg0->unknown_152_) var3 = 1;
     else if (arg0->unknown_18_ == arg0->unknown_158_) var3 = 1;
     else {
-        Struct_ov001_0215657c* var6 = func_0205ec34();
-        if (func_0206dfb0((int)var6, var6->unknown_8c_, arg0->unknown_154_ + 0x38e)) var3 = 1;
-        else if (arg0->unknown_156_ == *func_02012fe4()) var4 = 1;
+        EventFlags0215657c* flags = Scenario_GetInstance();
+        if (Scenario_TestFlag((int)flags, flags->flags, transition->flag + 0x38e)) blocked = 1;
+        else if (transition->area == *Zone3D_GetInstance()) sameArea = 1;
     }
-    if (var3) {
-        GameState* var7 = GameState::GetInstance();
-        GameResources* var8 = GetGameResources();
-        Struct_02046574_2* var9 = func_020421a0();
-        GameObject* var10 = func_0200ff1c(var7, 0);
-        if (var10) {
-            char* var11 = (char*)var10->baseStats_;
+    if (blocked) {
+        GameState* state = GameState::GetInstance();
+        GameResources* display = GetGameResources();
+        Obj02046574* message = MessageSystem_GetInstance();
+        GameObject* member = GetCombatantWithFlag0x100_0200ff1c(state, 0);
+        if (member) {
+            char* name = (char*)member->baseStats_;
 #if defined(jpn)
             char var12[0x50];
             sprintf(var12, data_ov001_021661e8, var11);
             func_0204500c(var9, var12, 0);
 #else
-            func_02046574(var9, 0, var11);
-            char var13[0x100];
-            int var14 = func_020e51cc(0x34);
-            func_02046608(var9, 12, var14, var13, 0xe3, 0, 1);
-            func_0204500c(var9, var13, 0, 0xe3);
+            MessageSystem_SetStringArgument(message, 0, name);
+            char text[0x100];
+            int messageId = StandardStrings_Get(0x34);
+            MessageSystem_FormatText(message, 12, messageId, text, 0xe3, 0, 1);
+            func_0204500c(message, text, 0, 0xe3);
 #endif
             var9->unknown_998_ = 1;
             var9->unknown_19b2_ = 0;
@@ -125,19 +124,19 @@ extern "C" ARM int func_ov001_0215657c(Struct_ov001_0215657c_2* arg0, void* arg1
         func_020707c8((Struct_020707c8*)var15);
         return 5;
     }
-    if (var4) {
-        arg0->unknown_8_ = arg0->unknown_152_;
-        func_0209c2e0(&data_02109bf4, arg0->unknown_94_, 0);
-        func_02046a8c(arg1, var5);
-        func_ov017_021bb0c4((unsigned char*)arg0);
+    if (sameArea) {
+        transition->destination = transition->targetId;
+        func_0209c2e0(&g_bgmPlayer, transition->context, 0);
+        func_02046a8c(list, node);
+        ClearFields_021bb0c4((unsigned char*)transition);
         return 0;
     }
-    SetBrightness(var1, 0, 30);
-    func_020a2794(var2);
-    func_020a2718(var2);
-    func_0209c2e0(&data_02109bf4, arg0->unknown_94_, 0);
-    func_ov017_021bb27c(arg0);
-    arg0->unknown_1_ = 1;
-    func_02046a8c(arg1, var5);
-    return arg0->unknown_a_;
+    SetBrightness(resources, 0, 30);
+    FollowCamera_EnableFollow(field);
+    ApplyVecFromField0x246_020a2718(field);
+    func_0209c2e0(&g_bgmPlayer, transition->context, 0);
+    func_ov017_021bb27c(transition);
+    transition->done = 1;
+    func_02046a8c(list, node);
+    return transition->state;
 }

@@ -6,7 +6,7 @@ enum { stateByteOffset = 0x9ca, clearPointerOffset = 0x10, readyFlagIndex = 2 };
 #endif
 #include "GameState/GameState.h"
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 void SetByte0x7f70_02012028(void* obj, unsigned char value);
 
 struct Struct020a9ea4;
@@ -25,8 +25,8 @@ extern "C" int func_ov023_021f6f10(void* self);
 int ScaleStatsIfType12_021f6f10(void* self);
 #endif
 void* GetFieldPtrAt_021f79e4_021f79e4(void* obj);
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+struct BackgroundGraphics;
+int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
 struct Vec3_0216e638 { int x, y, z; };
 class VObj0216e638 {
@@ -56,7 +56,7 @@ extern unsigned char g_sePlayer;
 // USA: func_ov004_0216e638  (semantic: DispatchFixedSequenceAndSetVec_0216e638)
 extern "C" ARM int func_ov004_0216e638(void* a) {
     void* self = a;
-    *(unsigned char*)((char*)GetGlobalField0x1c020421a0() + 0x1000 + stateByteOffset) = 0;
+    *(unsigned char*)((char*)MessageSystem_GetInstance() + 0x1000 + stateByteOffset) = 0;
     SetByte0x7f70_02012028(GameState::GetInstance(), 0);
 
     ClearStruct020a9ea4(*(struct Struct020a9ea4**)((char*)&data_ov004_02171034 + clearPointerOffset));
@@ -78,7 +78,7 @@ extern "C" ARM int func_ov004_0216e638(void* a) {
 #else
         if (ScaleStatsIfType12_021f6f10(n1) != 2) continue;
 #endif
-        Background_SetScroll((struct Obj0204b5e8*)GetFieldPtrAt_021f79e4_021f79e4(n1), 2, 4);
+        Background_SetScroll((struct BackgroundGraphics*)GetFieldPtrAt_021f79e4_021f79e4(n1), 2, 4);
 
         void* n2 = func_ov023_021f6880(node, j + 0x4b0);
         if (!n2) continue;

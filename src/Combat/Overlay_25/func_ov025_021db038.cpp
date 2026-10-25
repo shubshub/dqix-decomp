@@ -97,7 +97,7 @@ extern "C" void func_ov025_021dbe10(Work*);
 void ResetStruct0216fe48(Struct0216fe48*);
 void AppendUniqueShort0216fdf8(ShortSetStruct0216fdf8*, int);
 void SetField0FromCallFunc0202fa38(Struct0216fd0c*);
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 void CheckOrSetFlagA0_0216fd38(Struct0216fd38*);
 int GetArrayEntry_021e8a54_021e8a54(char*);
 void BeginListEntryTask_0216fd80(EntryTask0216fd80*, int);
@@ -170,29 +170,29 @@ extern "C" ARM void func_ov025_021db038(Struct_ov000_021537b8* arg0) {
             func_ov000_0216fd0c((Struct_ov000_0216fd0c*)var0);
         }
     }
-    if (func_ov000_02160fd4(arg0, 0x1000000)) {
-        GameState* var9;
-        char* var10;
-        GameObject* var11;
-        Struct_02021b84* var12;
-        var9 = GameState::GetInstance();
-        var12 = func_020421a0();
-        Struct_ov025_021db038* var13 = &arg0->unknown_a40_;
-        if (!var13->unknown_a0_) {
-            func_ov000_0216fd38((Struct_ov000_0216fd38*)var13);
-            if (!var13->unknown_a0_) return;
-            func_ov000_0216fd80((Struct_ov000_0216fd80*)var13, func_ov025_021e8a54(arg0->unknown_2a8_));
-            var11 = func_0200ff1c(var9, 0);
-            var10 = 0;
-            if (func_ov000_0215fc60((char*)var1) == 1) var10 = func_ov000_0216fcfc(var13, 0x1ee);
-            else if (func_ov000_0215fc60((char*)var1) == 2) var10 = func_ov000_0216fcfc(var13, 0x211);
-            if (!var11 || !var10) return;
-            char* var14 = (char*)var11->baseStats_;
-            int var15 = strlen(var10);
-            var15 += strlen(var14);
-            char* var16 = (char*)arg0->unknown_30_.Allocate(inline_ov025_021db038(var15 - 1));
-            if (!var16) return;
-            sprintf(var16, var10, var11->baseStats_);
+    if (GetCombatWorkFlags0x55f4_ov000_02160fd4(work, 0x1000000)) {
+        GameState* game;
+        char* format;
+        GameObject* actor;
+        MessageSystem* messages;
+        game = GameState::GetInstance();
+        messages = MessageSystem_GetInstance();
+        ListEntryTask* task = &work->task;
+        if (!task->ready) {
+            CheckOrSetFlagA0_0216fd38((Struct0216fd38*)task);
+            if (!task->ready) return;
+            BeginListEntryTask_0216fd80((EntryTask0216fd80*)task, GetArrayEntry_021e8a54_021e8a54(work->display));
+            actor = GetCombatantWithFlag0x100_0200ff1c(game, 0);
+            format = 0;
+            if (ClassifyField0x81fe_ov000_0215fc60((char*)battle) == 1) format = GetFieldByKeyFromWork0x88_ov000_0216fcfc(task, 0x1ee);
+            else if (ClassifyField0x81fe_ov000_0215fc60((char*)battle) == 2) format = GetFieldByKeyFromWork0x88_ov000_0216fcfc(task, 0x211);
+            if (!actor || !format) return;
+            char* name = (char*)actor->baseStats_;
+            int length = strlen(format);
+            length += strlen(name);
+            char* text = (char*)work->allocator.Allocate(AlignedSize(length - 1));
+            if (!text) return;
+            sprintf(text, format, actor->baseStats_);
 #if defined(jpn)
             func_0204500c(var12, var16, 0);
 #else

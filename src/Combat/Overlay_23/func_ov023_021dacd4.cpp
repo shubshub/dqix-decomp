@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-// USA: func_ov023_021dacd4
-extern "C" ARM void func_ov023_021dacd4(void* arg0, int arg1, int arg2) {
+// Overlay 23, originally func_ov023_021dacd4 (USA/EUR 0x021dacd4, JPN 0x021db548)
+extern "C" ARM void CharacterCreationUI_DrawFullscreenQuad(void* unused, int color, int attr) {
     *(volatile unsigned int*)0x40004a8 = 0x900000;
     *(volatile unsigned int*)0x40004a4 = (arg2 << 0x10) | 0xc0;
     *(volatile unsigned int*)0x4000444 = 0;

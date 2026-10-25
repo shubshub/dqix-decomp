@@ -3,7 +3,7 @@
 
 
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 void Forward0204359c(void* obj, int count);
 extern "C" void func_020439b0(void* obj, int flag);
 struct Obj0205d2bc;
@@ -22,7 +22,7 @@ extern "C" ARM void func_ov003_02170280(void* obj) {
         return;
     }
     battleStruct = GameState::GetInstance();
-    g = (void*)GetGlobalField0x1c020421a0();
+    g = (void*)MessageSystem_GetInstance();
     scaleCount = battleStruct->GetTickCount();
     Forward0204359c(g, scaleCount);
     func_020439b0(g, 0);

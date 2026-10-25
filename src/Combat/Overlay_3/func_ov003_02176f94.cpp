@@ -36,29 +36,29 @@ enum {
 
 #include "GameState/GameState.h"
 
-struct Struct_0207fdcc_2;
-extern "C" void func_02080c20(struct Struct_0207fdcc_2 *arg0, int arg1);
-extern "C" void func_02080c68(void *arg0, int arg1, int arg2);
-extern "C" void func_02080bac(void *arg0, int arg1);
-struct Struct_0201099c_10;
-struct Struct_ov003_02176f94;
-extern "C" struct Struct_ov003_02176f94 *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" void *func_02053c6c(unsigned char *arg0);
-struct Struct_02083994;
-extern "C" int func_02083994(struct Struct_02083994 *arg0, int arg1);
-struct Struct_02080f8c;
-extern "C" void func_02080f8c(struct Struct_02080f8c *arg0, int arg1, int arg2);
-extern "C" int func_020dcc98(int arg0);
-struct Struct_02080cc0;
-extern "C" void func_02080cc0(struct Struct_02080cc0 *arg0, int arg1, int arg2);
-struct Struct_02080fa8;
-extern "C" void func_02080fa8(struct Struct_02080fa8 *arg0, int arg1, int arg2);
-extern "C" int func_02080b2c(void *arg0, int arg1);
-extern "C" void func_02080b54(void *arg0, int arg1);
-extern "C" void func_02080c04(struct Struct_0207fdcc_2 *arg0, int arg1);
-extern "C" short func_02086bf4(char *arg0, int arg1);
-extern "C" void func_020813ec(void *arg0, int arg1);
-extern "C" void *func_02010828(GameState *arg0);
+struct Obj2081;
+void ClearElementFlag0x20_02080c20(struct Obj2081 *obj, int key);
+void SetEntryLowNibbleAndElement02080c68(void *obj, int id, int value);
+void ClearSublistEntriesFlag1_02080bac(void *obj, int id);
+struct ItemTable;
+struct Node02176f94;
+struct Node02176f94 *ItemTable_Find(struct ItemTable *c, int key);
+void *GetFieldAt0x150_02053c6c(unsigned char *obj);
+struct Slots02083994;
+int CountMatchingUntilNegative02083994(struct Slots02083994 *s, int value);
+struct Container02080f8c;
+void SetEntryFirstField02080f8c(struct Container02080f8c *obj, int id, int value);
+extern "C" int func_020dcc98(int combatantId);
+struct Container02080cc0;
+void SetEntryHighNibble0x13(struct Container02080cc0 *obj, int id, int value);
+struct Container02080fa8;
+void SetEntryFirstField02080fa8(struct Container02080fa8 *obj, int id, int value);
+int SetEntryFlagById02080b2c(void *obj, int id);
+void SetSublistEntriesFlag1_02080b54(void *obj, int id);
+void SetElementFlag0x20_02080c04(struct Obj2081 *obj, int key);
+short SumKeyedLookups02086bf4(char *obj, int key);
+extern "C" void func_020813ec(void *obj, int key);
+void *GameState_GetParty(GameState *battleStruct);
 
 struct Struct_ov003_02176f94 {
     char unknown_0_[8];
@@ -81,10 +81,10 @@ static inline int inline_ov003_02176f94(unsigned int arg0) {
     return arg0 <= 7;
 }
 
-extern "C" ARM void func_ov003_02176f94(Struct_ov003_02176f94_2* arg0) {
-    struct Struct_0207fdcc_2 *var0 = arg0->unknown_89c_;
-    GameState *var1    = GameState::GetInstance();
-    char *var2            = (char *) func_02010828(var1);
+extern "C" ARM void func_ov003_02176f94(Menu02176f94* self) {
+    struct Obj2081 *elem = self->menu;
+    GameState *battle    = GameState::GetInstance();
+    char *bag            = (char *) GameState_GetParty(battle);
 
     int var3    = 0x19;
     short var4    = 0xe9;
@@ -119,23 +119,23 @@ extern "C" ARM void func_ov003_02176f94(Struct_ov003_02176f94_2* arg0) {
     func_02080c68(var0, var3, 0);
     func_02080bac(var0, var3);
 
-    bool var8                 = true;
-    struct Struct_ov003_02176f94 *var9 = func_020dedd0(
-        (struct Struct_0201099c_10 *) ((char*)arg0 + Enum_ov003_02176f94_2164), arg0->unknown_103a_);
-    if (var9 != NULL) var8 = inline_ov003_02176f94(var9->unknown_8_0_);
-    if (!var8) {
-        for (unsigned char var10 = 0; var10 < arg0->unknown_1030_; var10++) {
-            int var11;
-            short var12;
-            int var13;
-            var13                = (signed char) arg0->unknown_101c_[var10];
-            var11         = 0;
-            var12              = 0;
-            GameObject *var14 = var1->GetPartyMemberByIndex(var13);
-            if (var14 != NULL) {
-                var11 = (int)var14->baseStats_;
-                var12 = func_02083994(
-                    (struct Struct_02083994 *) func_02053c6c((unsigned char *) var14), arg0->unknown_103a_);
+    bool skip                 = true;
+    struct Node02176f94 *node = ItemTable_Find(
+        (struct ItemTable *) ((char*)self + kNodeOffset), self->selectedItem);
+    if (node != NULL) skip = ShouldHideMemberCounts(node->type);
+    if (!skip) {
+        for (unsigned char i = 0; i < self->memberCount; i++) {
+            int memberData;
+            short count;
+            int cid;
+            cid                = (signed char) self->memberIds[i];
+            memberData         = 0;
+            count              = 0;
+            GameObject *member = battle->GetPartyMemberByIndex(cid);
+            if (member != NULL) {
+                memberData = (int)member->baseStats_;
+                count = CountMatchingUntilNegative02083994(
+                    (struct Slots02083994 *) GetFieldAt0x150_02053c6c((unsigned char *) member), self->selectedItem);
             }
             func_02080f8c((struct Struct_02080f8c *) var0, var4, var11);
             func_02080cc0((struct Struct_02080cc0 *) var0, var4, func_020dcc98(var13));

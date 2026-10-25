@@ -10,24 +10,22 @@ extern "C" unsigned char func_ov023_021dcb70(struct Struct_ov023_021dcb70* arg0)
 
 struct Struct_020534ac;
 
-void Background_Init(struct List0204af64* obj);
+void Background_Init(struct BackgroundGraphics* obj);
 
 extern "C" void Background_SetPriority(void*, int);
 void Background_SetMapSize(unsigned char* obj, int value);
 
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+struct BackgroundGraphics;
+int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
 
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
 void Background_FlushFile(void* obj, char* str);
 
-struct SelfTag0204b3a0;
-void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
+void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
 extern "C" int func_ov023_021e20f0(void*, void*, void*, void*);
 
@@ -48,14 +46,14 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
 #else
  enum {Enum_ov023_021dfecc_1844=0x734, Enum_ov023_021dfecc_1792=0x700, Enum_ov023_021dfecc_124=0x7c, Enum_ov023_021dfecc_1912=0x778, Enum_ov023_021dfecc_1884=0x75c, Enum_ov023_021dfecc_123=0x7b, Enum_ov023_021dfecc_1888=0x760, Enum_ov023_021dfecc_1896=0x768, Enum_ov023_021dfecc_1913=0x779, Enum_ov023_021dfecc_116=0x74, Enum_ov023_021dfecc_1848=0x738};
 #endif
-    unsigned char* var0 = (unsigned char*)arg0;
-    struct Struct_02020cb8 var1;
-    int var2;
-    void* var3;
-    int var4;
-    int var5;
-    void* var6;
-    int var7;
+    unsigned char* obj = (unsigned char*)objRaw;
+    struct BackgroundGraphics listObj;
+    int listVal1;
+    void* recPtr;
+    int listVal2;
+    int sizeOut;
+    void* dummyOut;
+    int result;
 
     int var8 = (int)BackgroundLoader::GetInstance();
     int var9 = *(int*)(var0 + Enum_ov023_021dfecc_1844);
@@ -71,18 +69,18 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
 
             Background_Init(&listObj);
 
-            signed char var11 = *(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124);
-            if (var11 == 1) {
-                var1.unknown_1c_0_ = var11;
-                var1.unknown_1c_4_ = 1;
+            signed char f7c = *(signed char*)(obj + regionalOffset1 + regionalOffset2);
+            if (f7c == 1) {
+                listObj.subScreen_ = f7c;
+                listObj.bgNumber_ = 1;
             } else {
-                var1.unknown_1c_0_ = var11;
-                var1.unknown_1c_4_ = 3;
+                listObj.subScreen_ = f7c;
+                listObj.bgNumber_ = 3;
             }
 
             Background_SetPriority(&listObj, 3);
             Background_SetMapSize((unsigned char*)&listObj, 0);
-            Background_SetScroll((struct Obj0204b5e8*)&listObj, 0, 0);
+            Background_SetScroll((struct BackgroundGraphics*)&listObj, 0, 0);
 
             if (*(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124) == 1) {
                 volatile unsigned int* var12 = (volatile unsigned int*)0x4001000;
@@ -92,12 +90,12 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
             }
 
             if (lookupResult == 0 && *(unsigned char*)(obj + regionalOffset3) != 0) {
-                int count = Pac_CountFiles((struct ActiveEntry02046900*)listVal1);
+                int count = Pac_CountFiles((struct PacRecord*)listVal1);
                 for (unsigned char i = 0; i < count; i++) {
-                    recPtr = Pac_GetFile((struct Rec020467f0*)listVal1, i, &dummyOut, &sizeOut);
+                    recPtr = Pac_GetFile((struct PacRecord*)listVal1, i, &dummyOut, &sizeOut);
                     if (recPtr) {
                         Background_FlushFile(&listObj, (char*)recPtr);
-                        Background_UploadFile((struct SelfTag0204b3a0*)&listObj, (char*)recPtr);
+                        Background_UploadFile((struct BackgroundGraphics*)&listObj, (char*)recPtr);
                         func_ov023_021e20f0(obj + 0xcc, obj, recPtr, (void*)sizeOut);
                     }
                 }
@@ -109,7 +107,7 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
                             (const void**)&recPtr, (unsigned int*)&sizeOut, 1) != 0) {
                         if (i != 3) {
                             Background_FlushFile(&listObj, (char*)recPtr);
-                            Background_UploadFile((struct SelfTag0204b3a0*)&listObj, (char*)recPtr);
+                            Background_UploadFile((struct BackgroundGraphics*)&listObj, (char*)recPtr);
                         } else {
                             func_ov023_021e20f0(var0 + 0xcc, var0, var3, (void*)var5);
                         }

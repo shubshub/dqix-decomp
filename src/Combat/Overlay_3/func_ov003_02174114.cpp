@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0201099c_14;
-struct Struct_ov003_02174114_4;
-struct Struct_02081ee4;
-struct Struct_02081ee4_2;
-struct Struct_02020cb8;
+struct Struct020dfc40;
+struct InitStruct02174408;
+struct Obj02081ee4;
+struct Sub02081ee4;
+struct BackgroundGraphics;
 
 struct Struct_ov003_02174114 {
 #if defined(jpn)
@@ -86,7 +86,7 @@ struct Struct_ov003_02174114_3 {
     unsigned char unknown_104f_;
 };
 
-extern "C" Struct_ov003_02174114 *func_020421a0(void);
+Global020421a0 *MessageSystem_GetInstance(void);
 #if defined(jpn)
 extern "C" void func_0204500c(Struct_ov003_02174114 *, int, int);
 #else
@@ -98,10 +98,10 @@ extern "C" void func_ov023_021dc134(void *, int, int);
 void SpriteContext_Init(char *);
 void InitObj02174408(InitStruct02174408 *);
 void InitWithSub02081ee4(Obj02081ee4 *, Sub02081ee4 *);
-void Background_Init(List0204af64 *);
-extern "C" void func_0204c684(void *);
-extern "C" unsigned char func_02011494(char *, void *);
-extern "C" GameObject *func_0200ff1c(GameState *, int);
+void Background_Init(BackgroundGraphics *);
+extern "C" void WindowPane_Init(void *);
+unsigned char CopyOutRegion0x5718_02011494(char *, void *);
+GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *, int);
 
 #if defined(jpn)
 #define FIGHTER_OFF_02174114 0x144
@@ -110,10 +110,10 @@ extern "C" GameObject *func_0200ff1c(GameState *, int);
 #endif
 
 // USA: func_ov003_02174114
-extern "C" ARM void func_ov003_02174114(Struct_ov003_02174114_3 *arg0) {
-    Struct_ov003_02174114 *var0 = func_020421a0();
-    int var1             = var0->unknown_5c_;
-    arg0->unknown_ff0_       = var0->unknown_99c_;
+extern "C" ARM void func_ov003_02174114(Battle02174114 *self) {
+    Global020421a0 *g = MessageSystem_GetInstance();
+    int p             = g->p5c_;
+    self->fff0_       = g->f99c_;
 #if defined(jpn)
     func_0204500c(var0, var1, 0);
 #else
@@ -140,9 +140,9 @@ extern "C" ARM void func_ov003_02174114(Struct_ov003_02174114_3 *arg0) {
     InitWithSub02081ee4((Obj02081ee4 *) self->s88c_, (Sub02081ee4 *) self->s898_);
     self->f89c_ = 0;
     for (int i = 0; i < 2; i++)
-        Background_Init((List0204af64 *) (self->lists_ + i * 32));
+        Background_Init((BackgroundGraphics *) (self->lists_ + i * 32));
     for (int j = 0; j < 8; j++)
-        func_0204c684(self->slots_ + j * 0xe0);
+        WindowPane_Init(self->slots_ + j * 0xe0);
 
     arg0->unknown_fe0_     = 0;
     arg0->unknown_fe4_     = 0;

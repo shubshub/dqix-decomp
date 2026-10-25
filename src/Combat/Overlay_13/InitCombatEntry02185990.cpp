@@ -10,11 +10,10 @@
 #define func_ov013_02185990 func_ov013_02186b88
 #endif
 
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+struct GridCursor;
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
@@ -49,10 +48,10 @@ extern "C" ARM void func_ov013_02185990(unsigned char* obj) {
     *(unsigned char*)(tag + LOW_REGION(0x481, 0xb1)) = 1;
     *(unsigned char*)(tag + LOW_REGION(0x480, 0xb0)) = 1;
 
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(tag + LOW_REGION(0x3f0, 0x20)), 1, 2, 0);
-    GridCursor_SetDimensions((struct Struct_0205ba68*)(tag + LOW_REGION(0x440, 0x70)), 1, 2, 0);
-    GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x3f0, 0x20)), 2);
-    GridCursor_SetCount((struct Node0205bacc*)(tag + LOW_REGION(0x440, 0x70)), 2);
+    GridCursor_SetDimensions((struct GridCursor*)(tag + LOW_REGION(0x3f0, 0x20)), 1, 2, 0);
+    GridCursor_SetDimensions((struct GridCursor*)(tag + LOW_REGION(0x440, 0x70)), 1, 2, 0);
+    GridCursor_SetCount((struct GridCursor*)(tag + LOW_REGION(0x3f0, 0x20)), 2);
+    GridCursor_SetCount((struct GridCursor*)(tag + LOW_REGION(0x440, 0x70)), 2);
 
     int v0 = KeyTable_Get((struct Container020e0310*)(obj + LOW_REGION(0x5ac, 0x620)), 0xa);
     ProcessCombatEntry0205cb74((char*)(tag + LOW_REGION(0x3d0, 0)), v0);

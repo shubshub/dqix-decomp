@@ -39,20 +39,20 @@ typedef char ResultNameOffsetCheck[offsetof(BattleResultMemberName, name) == 8 ?
 
 struct Container020e0310;
 int KeyTable_Get(Container020e0310*, int);
-int GetGlobalField0x1c020421a0(void);
-extern "C" int func_020420e8(void*, int);
+int MessageSystem_GetInstance(void);
+extern "C" int Font_GetTextWidth(void*, int);
 int AppendXTag_02041a28(char*, int);
 int AppendHeightTag_02041b00(char*, int);
 int AppendFormatted02041fac(char*, int, int);
 extern "C" void __clear(void*, int);
 void* Find_021d994c(void*, int);
-int AppendString02042058(char*, const char*);
+int Text_Append(char*, const char*);
 extern "C" void func_02046380(int);
-ARM void InitObjFromCombatantId020e4bf4(void*, int);
+ARM void NameText_InitFromPartyMember(void*, int);
 int ApplyEqual12Flag020426a4(int, int);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(struct StoreStruct*, int, int);
-extern "C" void func_02046608(int, int, void*, void*, int, int, int);
+extern "C" void MessageSystem_FormatText(int, int, void*, void*, int, int, int);
 int AppendXYTag_02041a90(char*, int, int);
 extern "C" int sprintf(char*, const char*, ...);
 
@@ -68,10 +68,10 @@ extern "C" ARM void func_ov023_021d9290(char* obj, char* buf, unsigned char coun
     if (!buf) return;
 
     GameState::GetInstance();
-    int g = GetGlobalField0x1c020421a0();
+    int g = MessageSystem_GetInstance();
 
     char* fieldStr = (char*)KeyTable_Get(window->texts, 0x75f8);
-    int len = func_020420e8(fieldStr, 0);
+    int len = Font_GetTextWidth(fieldStr, 0);
     AppendXTag_02041a28(buf, (0xc0 - len) >> 1);
     AppendHeightTag_02041b00(buf, 1);
     AppendFormatted02041fac(buf, (int)fieldStr, 0x10);
@@ -99,12 +99,12 @@ extern "C" ARM void func_ov023_021d9290(char* obj, char* buf, unsigned char coun
                 __clear(buf2, 0x100);
                 if (found != 0) {
                     char* fieldStr0 = (char*)KeyTable_Get(window->texts, 0);
-                    AppendString02042058(buf, fieldStr0);
+                    Text_Append(buf, fieldStr0);
                     AppendHeightTag_02041b00(buf, adj);
                 }
                 func_02046380(g);
                 struct EntryLocal_021d9290 local;
-                InitObjFromCombatantId020e4bf4(&local, id);
+                NameText_InitFromPartyMember(&local, id);
                 void* val = entry->name;
                 local.f0 = val;
                 local.f4 = val;
@@ -112,8 +112,8 @@ extern "C" ARM void func_ov023_021d9290(char* obj, char* buf, unsigned char coun
                 int applyResult = ApplyEqual12Flag020426a4(8, window->resultCounts[i]);
                 sprintf(buf2, fieldStr2, 0x94 - applyResult);
                 StoreInArray0x8b0_020465c0((struct StoreStruct*)g, 1, window->resultCounts[i]);
-                func_02046608(g, 0xa, buf2, buf1, 0x100, 0, 0);
-                AppendString02042058(buf, buf1);
+                MessageSystem_FormatText(g, 0xa, buf2, buf1, 0x100, 0, 0);
+                Text_Append(buf, buf1);
                 found = 1;
                 count = count - 1;
             }
@@ -122,9 +122,9 @@ extern "C" ARM void func_ov023_021d9290(char* obj, char* buf, unsigned char coun
 
     if (found == 0) {
         char* fieldStr3 = (char*)KeyTable_Get(window->texts, 0x75fa);
-        int len3 = func_020420e8(fieldStr3, 0);
+        int len3 = Font_GetTextWidth(fieldStr3, 0);
         len3 = 0xc0 - len3;
         AppendXYTag_02041a90(buf, len3 >> 1, (total8 - 0x1a) / 2 + 0x10);
-        AppendString02042058(buf, fieldStr3);
+        Text_Append(buf, fieldStr3);
     }
 }

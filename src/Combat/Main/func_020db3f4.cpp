@@ -4,9 +4,9 @@
 struct Struct_020db3f4_3;
 extern "C" void func_020db844(struct Struct_020db3f4_3* arg0, int arg1, int arg2, int arg3);
 
-extern "C" void* func_020d6c00(void);
+void* GlobalFlags_GetInstance(void);
 
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
+void FlagWord_SetBits(unsigned int* word, unsigned int mask);
 
 extern "C" int func_020937f0(int arg0);
 
@@ -66,7 +66,7 @@ extern "C" ARM void func_020db3f4(struct Struct_020db3f4* arg0) {
     func_020db844((struct Struct_020db3f4_3*)arg0, arg0->unknown_3c_, arg0->unknown_6a_, 0);
     arg0->unknown_51_ = 1;
 
-    func_020466e4((unsigned int*)func_020d6c00(), 0x8000);
+    FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x8000);
 
     int var0 = func_020937f0(arg0->unknown_3c_);
     int var1 = var0 - 0xb80;

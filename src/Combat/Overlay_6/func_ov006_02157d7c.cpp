@@ -12,20 +12,20 @@ struct Struct_020e28dc;
 struct Struct_020e263c_2;
 
 extern "C" int func_ov017_021959b4(void);
-extern "C" void func_ov006_021585ac(void* arg0);
-extern "C" int func_0209ca2c(void* arg0);
-extern char data_02109bf4[];
-extern "C" void func_ov006_021549ac(void* arg0, int arg1);
-extern "C" void func_0207fc6c(struct Struct_0207fc6c* arg0, int arg1);
-extern "C" void func_ov006_0215a00c(void* arg0, int arg1);
-extern "C" int func_ov006_02158c70();
-extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" unsigned short func_02081f20(void* arg0, int arg1);
-extern "C" int func_020800fc(void* arg0, short* arg1, short arg2, unsigned short arg3, unsigned char arg4, int arg5);
-extern "C" int func_020804fc(void* arg0, int arg1);
-extern "C" int func_020813ec(void* arg0, int arg1);
-extern "C" int func_020e28dc(struct Struct_020e28dc* arg0);
-extern "C" void func_020e263c(struct Struct_020e263c_2* arg0, int arg1);
+void SetFlags_021585ac_021585ac(void* p);
+int IsAnimationActive0209ca2c(void* obj);
+extern char g_bgmPlayer[];
+extern "C" void func_ov006_021549ac(void* pot, int ticks);
+void CallFunc0204c87cOverEntries0207fc6c(struct Obj0207fc6c* obj, int arg);
+extern "C" void func_ov006_0215a00c(void* self, int n);
+int CheckFlagOrByte55_02158c70();
+void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
+extern "C" unsigned short func_02081f20(void* obj, int ticks);
+extern "C" int func_020800fc(void* obj, short* key, short a, unsigned short b, unsigned char c, int d);
+int ClearSublistEntriesFlag4_020804fc(void* obj, int id);
+extern "C" int func_020813ec(void* obj, int id);
+int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
+void UpdateEntryStateAndPosition(struct Ctx020e263c* c, int key);
 
 typedef int (*Type_ov006_02157d7c)(void* self);
 
@@ -91,8 +91,8 @@ extern "C" ARM int func_ov006_02157d7c(struct Struct_ov006_02157d7c* arg0, int a
         arg0->unknown_42c_ = (signed char)(((signed char*)((char*)arg0 + 0x400))[0x2c] & 0x3f);
     }
 
-    if (func_0209ca2c(data_02109bf4) == 0)
-        arg0->unknown_42f_ = 0;
+    if (IsAnimationActive0209ca2c(g_bgmPlayer) == 0)
+        self->f42f = 0;
 
     func_ov006_021549ac(arg0->unknown_10_, arg1);
 

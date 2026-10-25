@@ -19,7 +19,7 @@ struct Struct_ov023_021fa644 {
     unsigned char unknown_49c_0_ : 1;
 };
 
-extern "C" int func_020100a8(GameState* arg0);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_020727d8;
 extern "C" void func_020727d8(struct Struct_020727d8* arg0);
@@ -65,15 +65,15 @@ extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* arg0, void* arg
         return;
     }
 
-    unsigned char var3 = arg0->unknown_2c_;
-    int var4 = 0;
-    if (var3 == 1) {
-        GameState* var5 = GameState::GetInstance();
-        int var6 = func_020100a8(var5);
-        GameObject* var7 = var5->GetPartyMemberByIndex(var6);
-        if (var7 != 0) {
-            Struct_ov023_021fa644* var8 = *(Struct_ov023_021fa644**)((char*)var7 + Enum_ov023_021fa644_336);
-            var4 = var8->unknown_49c_0_;
+    unsigned char kind = obj->field2c;
+    int flag5 = 0;
+    if (kind == 1) {
+        GameState* bs = GameState::GetInstance();
+        int val = GameState_GetProtagonistIndex(bs);
+        GameObject* combatant = bs->GetPartyMemberByIndex(val);
+        if (combatant != 0) {
+            Sub0x150_021fa644* sub = *(Sub0x150_021fa644**)((char*)combatant + regionalOffset0);
+            flag5 = sub->bit0;
         }
     } else if (var3 == 2) {
     } else if (var3 == 3) {

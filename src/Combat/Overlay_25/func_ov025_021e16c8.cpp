@@ -30,9 +30,9 @@ extern "C" void func_ov025_021e1c20(int, unsigned char*, unsigned char*, int, vo
 extern "C" unsigned char func_ov025_021e1480(int, unsigned char*, int);
 extern "C" Struct_ov025_021e16c8_6* func_02079e2c(char*, int);
 
-static inline int inline_ov025_021e16c8(Struct_ov025_021e16c8_3* arg0) { return arg0->unknown_8_->obj3D_.unknown_4_; }
-static inline void inline_ov025_021e120c_2(unsigned char* arg0, unsigned int arg1, unsigned char arg2) {
-    if (arg1 < 81) arg0[arg1] = arg2;
+static inline int ActorID(FormationEntry* entry) { return entry->actor_->obj3D_.actorIndex_; }
+static inline void SetCell(unsigned char* cells, unsigned int index, unsigned char value) {
+    if (index < 81) cells[index] = value;
 }
 
 // USA: func_ov025_021e16c8

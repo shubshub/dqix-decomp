@@ -232,7 +232,7 @@ src/Combat/Overlay_23/func_ov023_021fb364.cpp:
     complete
     .text start:0x021fa70c end:0x021fa770
 
-src/Combat/Overlay_23/func_ov023_021e61a0.cpp:
+src/Combat/Overlay_23/CharacterModel_CancelLoads_021e61a0.cpp:
     complete
     .text start:0x021e6384 end:0x021e63d8
 
@@ -312,7 +312,7 @@ src/Combat/Overlay_23/func_ov023_021dbc58.cpp:
     complete
     .text start:0x021dc550 end:0x021dc608
 
-src/Combat/Overlay_23/func_ov023_021e5fdc.cpp:
+src/Combat/Overlay_23/CharacterModel_GetPartModels_021e5fdc.cpp:
     complete
     .text start:0x021e61c0 end:0x021e626c
 
@@ -448,7 +448,7 @@ src/Combat/Overlay_23/func_ov023_021f6590.cpp:
     complete
     .text start:0x021f5b04 end:0x021f5b28
 
-src/Combat/Overlay_23/func_ov023_021dacd4.cpp:
+src/Combat/Overlay_23/CharacterCreationUI_DrawFullscreenQuad_021dacd4.cpp:
     complete
     .text start:0x021db548 end:0x021db5ec
 
@@ -1004,7 +1004,7 @@ src/Combat/Overlay_23/func_ov023_021f9da0.cpp:
     complete
     .text start:0x021f922c end:0x021f9234
 
-src/Combat/Overlay_23/func_ov023_021e6150.cpp:
+src/Combat/Overlay_23/CharacterModel_SetForceStandAnimation_021e6150.cpp:
     complete
     .text start:0x021e6334 end:0x021e633c
 
@@ -1456,7 +1456,7 @@ src/Combat/Overlay_23/func_ov023_021f57c4.cpp:
     complete
     .text start:0x021f4d7c end:0x021f4e00
 
-src/Combat/Overlay_23/func_ov023_021e60c4.cpp:
+src/Combat/Overlay_23/Object3D_SetRotation_021e60c4.cpp:
     complete
     .text start:0x021e62a8 end:0x021e62c4
 
@@ -1993,7 +1993,7 @@ src/Combat/Overlay_23/func_ov023_021e0f44.cpp:
     complete
     .text start:0x021e1478 end:0x021e16a8
 
-src/Combat/Overlay_23/func_ov023_021e802c.cpp:
+src/Combat/Overlay_23/ApplyElemFieldsTwice_021e81f4.cpp:
     complete
     .text start:0x021e81f4 end:0x021e83a0
 
@@ -2189,7 +2189,7 @@ src/Combat/Overlay_23/func_ov023_021d921c.cpp:
     complete
     .text start:0x021d9aa8 end:0x021d9b18
 
-src/Combat/Overlay_23/CharacterModel_GetBody_021e6194.cpp:
+src/Combat/Overlay_23/SetThreeElementFields_021e6378.cpp:
     complete
     .text start:0x021e6378 end:0x021e637c
 
@@ -3042,7 +3042,7 @@ src/Combat/Overlay_23/CharacterCreationUI_PlaceSprites_021da770.cpp:
     complete
     .text start:0x021daf74 end:0x021db240
 
-src/Combat/Overlay_23/func_ov023_021dab5c.cpp:
+src/Combat/Overlay_23/CharacterCreationUI_PlaceCursorCorners_021dab5c.cpp:
     complete
     .text start:0x021db3c8 end:0x021db4b4
 

@@ -39,11 +39,11 @@ void SePlayer_Play(SePlayer*,int,int);
 int KeyTable_Get(Container020e0310*,int);
 void SwapGlobalEntry0203c108(Obj0203c108*,char*);
 int CheckFlagsOrField_0217ab48_0217ab48(void*);
-void ResetEntryList0205d6a0(Entry_0205d6a0*,int);
+void Window_ClosePane(Entry_0205d6a0*,int);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" {
-void func_02012fe4();
-void* func_ov000_02174504(Struct_ov000_0217ab8c_2*);
+void Zone3D_GetInstance();
+void* _Z31GetStoredWorkPtr_ov000_02174504v(GlobalRoot*);
 int func_ov000_0217c2a0(void*);int func_ov000_0217aa78(void*,int,int);
 void func_ov000_0217c32c(void*);void func_ov000_02171c04(void*);
 }
@@ -51,10 +51,10 @@ void func_ov000_0217c32c(void*);void func_ov000_02171c04(void*);
 // USA: func_ov000_0217ae90
 extern "C" ARM int func_ov000_0217ae90(Struct_ov000_021682ec_5* arg0)
 {
-    Struct_ov000_0215ed8c_4* var0=(Struct_ov000_0215ed8c_4*)func_0200ff1c(GameState::GetInstance(),arg0->unknown_4c_);
-    int var1=0;
-    if(var0)var1=func_02053c6c((unsigned char*)var0);
-    func_02012fe4();
+    Unit* unit=(Unit*)GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(),self->member);
+    int state=0;
+    if(unit)state=GetFieldAt0x150_02053c6c((unsigned char*)unit);
+    Zone3D_GetInstance();
     CommandState* command=&self->command;
     command->mode=Window_GetSelectedIndex(self->active);
     command->kind=0;
@@ -127,9 +127,9 @@ extern "C" ARM int func_ov000_0217ae90(Struct_ov000_021682ec_5* arg0)
             }
             break;
         }
-    }else if(func_ov000_0217ab48(arg0)){
-        var2->unknown_1e_=0;data_ov000_02184294.unknown1_8_->unknown_1d72_&=~0x100;
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_38_,1);
+    }else if(CheckFlagsOrField_0217ab48_0217ab48(self)){
+        command->kind=0;data_ov000_02184294.root->flags&=~0x100;
+        Window_ClosePane((Entry_0205d6a0*)self->active,1);
         return -2;
     }
     return -1;

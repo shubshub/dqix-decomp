@@ -2,7 +2,7 @@
 #include "Memory/SafeAllocator.h"
 
 struct Foo0207df50;
-ARM void CopyInternalFields0207df50(struct Foo0207df50* p);
+ARM void VramState_Rewind(struct Foo0207df50* p);
 ARM void VramState_Restore(char* obj);
 ARM void VramState_Save(char* obj);
 extern "C" void VramState_Reserve(void* p, int a, int b);
@@ -19,7 +19,7 @@ extern "C" ARM int func_02054464(char* arg0, SafeAllocator* arg1, char* arg2) {
     void* var2;
 
     alloc->Reset();
-    CopyInternalFields0207df50((struct Foo0207df50*)p);
+    VramState_Rewind((struct Foo0207df50*)p);
     VramState_Restore(p);
 
     for (i = 0; i < 10; i++) {

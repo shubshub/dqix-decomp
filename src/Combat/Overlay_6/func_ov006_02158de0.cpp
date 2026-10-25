@@ -38,14 +38,14 @@ struct Struct_ov006_02157a60 {
     char unknown_14c_[0xc];
 };
 
-extern "C" Struct_ov000_02182a74* func_02010828(GameState* arg0);
-extern "C" void* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" short func_0207c620(unsigned char* arg0, unsigned int arg1);
-extern "C" short* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" unsigned char* func_0207c60c(void* arg0, unsigned int arg1);
-extern "C" void func_ov006_02158fd8(Struct_ov006_02157a60* arg0, unsigned int arg1, short arg2, unsigned char arg3);
-extern "C" void func_ov006_0215373c(void* arg0, void* arg1);
-extern "C" void func_ov006_021537c8(void* arg0, short** arg1, unsigned char** arg2, unsigned short* arg3);
+Party* GameState_GetParty(GameState* gameState);
+void* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int member);
+short GetShortFromArray0xc10_0207c620(unsigned char* lists, unsigned int list);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* lists, unsigned int list);
+unsigned char* GetPointerAt0xbf0_0207c60c(void* lists, unsigned int list);
+extern "C" void func_ov006_02158fd8(AlchemyMenu* self, unsigned int category, short item, unsigned char count);
+extern "C" void func_ov006_0215373c(void* ingredients, void* table);
+extern "C" void func_ov006_021537c8(void* ingredients, short** items, unsigned char** counts, unsigned short* sizes);
 
 extern "C" const unsigned short data_ov006_0215fffe[9];
 extern "C" const int data_ov006_02160010[8];
@@ -61,16 +61,16 @@ extern "C" ARM void func_ov006_02158de0(Struct_ov006_02157a60* arg0) {
         memset(arg0->unknown_4c_[var1], 0, var2);
         arg0->unknown_50_[var1] = 0;
     }
-    GameState* var3 = GameState::GetInstance();
-    Struct_ov000_02182a74* var4 = func_02010828(var3);
-    for (unsigned short var5 = 0; var5 < 0x98; var5++)
-        func_ov006_02158fd8(arg0, 8, *(short*)((char*)var4 + 0xc + var5 * 2), *((char*)var4 + 0x13c + var5));
-    for (unsigned char var6 = 0; var6 < var4->unknown_f7c_; var6++) {
-        GameObject* var7 = (GameObject*)func_0200ff1c(var3, var4->unknown_f78_[var6]);
-        if (var7 != 0) {
-            unsigned short* var8 = var7->unknown_150_->unknown_454_;
-            for (unsigned char var9 = 0; var9 < 8; var9++)
-                func_ov006_02158fd8(arg0, 8, var8[var9], 1);
+    GameState* gameState = GameState::GetInstance();
+    Party* party = GameState_GetParty(gameState);
+    for (unsigned short j = 0; j < 0x98; j++)
+        func_ov006_02158fd8(self, 8, *(short*)((char*)party + 0xc + j * 2), *((char*)party + 0x13c + j));
+    for (unsigned char k = 0; k < party->count_; k++) {
+        GameObject* member = (GameObject*)GetCombatantWithFlag0x100_0200ff1c(gameState, party->members_[k]);
+        if (member != 0) {
+            unsigned short* items = member->partyData_->unk_454;
+            for (unsigned char l = 0; l < 8; l++)
+                func_ov006_02158fd8(self, 8, items[l], 1);
         }
     }
     for (unsigned char var10 = 0; var10 < 8; var10++) {

@@ -11,7 +11,7 @@ struct ProfileAppendState {
 };
 }
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 #if defined(jpn)
 extern "C" int func_0204234c(char* dst, int a1);
 #define AppendLineTag02041cc0 func_0204234c
@@ -30,7 +30,7 @@ int KeyTable_Get(struct Container020e0310* c, int key);
 #if defined(jpn)
 extern "C" void func_020474a8(void* messages, unsigned char font, const char* format, char* output);
 #else
-extern "C" void func_02046608(int a, int b, void* c, void* d, int e, int f, int g);
+extern "C" void MessageSystem_FormatText(int a, int b, void* c, void* d, int e, int f, int g);
 #endif
 
 struct Combatant021e853c { char pad[0xf68]; int f68; int f6c; };
@@ -39,8 +39,8 @@ struct Combatant021e853c { char pad[0xf68]; int f68; int f6c; };
 // JPN: func_ov023_021e84c0
 extern "C" ARM void func_ov023_021e853c(void* obj) {
     ProfileAppendState* state = static_cast<ProfileAppendState*>(obj);
-    Combatant021e853c* combatant = static_cast<Combatant021e853c*>(GetPtrField0x2a04_02010828(GameState::GetInstance()));
-    int field = GetGlobalField0x1c020421a0();
+    Combatant021e853c* combatant = static_cast<Combatant021e853c*>(GameState_GetParty(GameState::GetInstance()));
+    int field = MessageSystem_GetInstance();
     AppendLineTag02041cc0(state->text, 0x18);
     int arr[2] = { combatant->f6c, combatant->f68 };
     for (int i = 0; i < 2; i++) {
@@ -52,7 +52,7 @@ extern "C" ARM void func_ov023_021e853c(void* obj) {
 #if defined(jpn)
     func_020474a8(((void*)(field)), 0xa, ((const char*)(key)), state->text);
 #else
-    func_02046608(field, 0xa, ((void*)(key)), state->text, 0x100, 0, 0);
+    MessageSystem_FormatText(field, 0xa, ((void*)(key)), state->text, 0x100, 0, 0);
 #endif
 }
 

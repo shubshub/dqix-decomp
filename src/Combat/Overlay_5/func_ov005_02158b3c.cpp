@@ -10,16 +10,16 @@
 #include <Resource/GameResources.h>
 #include <Resource/CharacterCreationUI.h>
 
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 extern "C" void func_02046380(void* global);
 int* GetField1c_021a193c(int* p);
-void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
 extern "C" void* __clear(void* dst, int count);
 void Clear12Bytes020e46c4(void* p);
 short GetTableByte0215a930(void* obj, int index);
 void DispatchIfCountPositive020dcf7c(int count, void* buf);
 char* KeyTable_Get(Container020e0310* c, int key);
-extern "C" void func_02046608(void* a, unsigned char b, const char* c, char* d, int e, int f, unsigned char g);
+extern "C" void MessageSystem_FormatText(void* a, unsigned char b, const char* c, char* d, int e, int f, unsigned char g);
 
 struct Struct_ov005_02158b3c_6 {
     char unknown_0_[LOW_REGION(0x4f8, 0x4fc)];
@@ -82,38 +82,38 @@ struct Struct_ov005_02158b3c_5 {
 };
 
 #if defined(jpn)
-extern "C" void func_020de968(int arg0, char* arg1);
-extern "C" void func_02046574(void*, int, char*);
+extern "C" void func_020de968(int value, char* text);
+extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(void*, int, char*);
 #endif
 
 // USA: func_ov005_02158b3c
-extern "C" ARM int func_ov005_02158b3c(void* arg0, void* arg1) {
-    if (arg1 == 0) return 0;
-    Struct_ov005_02158b3c_2* var0 = (Struct_ov005_02158b3c_2*)func_020421a0();
-    func_02046380(var0);
-    GameState* var1 = GameState::GetInstance();
+extern "C" ARM int func_ov005_02158b3c(void* object, void* buffer) {
+    if (buffer == 0) return 0;
+    Global_02158b3c* g = (Global_02158b3c*)MessageSystem_GetInstance();
+    func_02046380(g);
+    GameState* game = GameState::GetInstance();
 #if defined(jpn)
-    int var3 = ((Struct_ov005_02158b3c_6*)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]))->unknown_4fc_;
+    int id = ((CombatantTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]))->index;
 #else
-    Struct_ov005_02158b3c_6* var2 = (Struct_ov005_02158b3c_6*)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-    int var3 = var2->unknown_4fc_;
+    CombatantTail* tail = (CombatantTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    int id = tail->index;
 #endif
     Struct_ov005_02158b3c_7* var4 = (Struct_ov005_02158b3c_7*)func_0200ff1c(var1, var3);
     if (var4 == 0) return 0;
 
 #if defined(jpn)
-    func_02046574(var0, 1, *(char**)((char*)var4 + 0x134));
+    _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 1, *(char**)((char*)combatant + 0x134));
 #else
-    Struct_ov005_02158b3c_3 var5;
-    func_020e4bf4(&var5, var3);
-    var0->unknown_10_ = &var5;
-    Struct_ov005_02158b3c_4 var6;
-    __clear(var6.unknown_80_, 0x80);
-    __clear(var6.unknown_0_, 0x80);
-    Struct_ov005_02158b3c_3 var7;
-    func_020e46c4(&var7);
-    var7.unknown_0_ = var6.unknown_80_;
-    var7.unknown_4_ = var6.unknown_0_;
+    Local12_02158b3c obj;
+    NameText_InitFromPartyMember(&obj, id);
+    g->field10_ = &obj;
+    Buffers_02158b3c bufs;
+    __clear(bufs.bufB_, 0x80);
+    __clear(bufs.bufA_, 0x80);
+    Local12_02158b3c s;
+    Clear12Bytes020e46c4(&s);
+    s.a_ = bufs.bufB_;
+    s.b_ = bufs.bufA_;
 
 #endif
     Struct_ov005_02158b3c_5* var8 = (Struct_ov005_02158b3c_5*)arg0;
@@ -123,10 +123,10 @@ extern "C" ARM int func_ov005_02158b3c(void* arg0, void* arg1) {
         if (var10) {
             func_02046380(var0);
 #if defined(jpn)
-            char var11[0x40];
-            __clear(var11, 0x40);
-            func_020de968(var10->unknown_18_, var11);
-            func_02046574(var0, 0, var11);
+            char name[0x40];
+            __clear(name, 0x40);
+            func_020de968(e->count_, name);
+            _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 0, name);
 #else
             func_020dcf7c(var10->unknown_18_, &var7);
             var0->unknown_18_ = &var7;
@@ -137,10 +137,10 @@ extern "C" ARM int func_ov005_02158b3c(void* arg0, void* arg1) {
         signed char var12 = var8->unknown_3dbb_;
         short var13 = var8->unknown_2d90_[var12].unknown_0_;
 #if defined(jpn)
-        char var14[0x40];
-        __clear(var14, 0x40);
-        func_020de968(var13, var14);
-        func_02046574(var0, 0, var14);
+        char name[0x40];
+        __clear(name, 0x40);
+        func_020de968(value, name);
+        _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 0, name);
 #else
         func_020dcf7c(var13, &var7);
         var0->unknown_18_ = &var7;
@@ -173,10 +173,10 @@ extern "C" ARM int func_ov005_02158b3c(void* arg0, void* arg1) {
         sprintf((char*)buffer, KeyTable_Get(&menu->messages, v));
     }
 #if !defined(jpn)
-    char var18[0x800];
-    __clear(var18, 0x800);
-    func_02046608(var0, 10, (const char*)arg1, var18, var15, 0, 0);
-    sprintf((char*)arg1, var18);
+    char text[0x800];
+    __clear(text, 0x800);
+    MessageSystem_FormatText(g, 10, (const char*)buffer, text, w, 0, 0);
+    sprintf((char*)buffer, text);
 
 #endif
     if (var17 >= 0x2af8) {

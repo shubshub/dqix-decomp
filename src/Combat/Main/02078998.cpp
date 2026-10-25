@@ -119,11 +119,11 @@ extern "C" ARM void func_02078998(Struct_02078998_2* arg0) {
             break;
         }
     }
-    if (!func_0202b7d8(var3) || func_0202c1a4((Struct_0202c1a4*)var3)) return;
-    unsigned short var10 = arg0->unknown_0_.GetField06();
-    int var11 = arg0->unknown_0_.unknown_2_;
-    int var12 = (arg0->unknown_0_.unknown_4_ - 112) % 12;
-    if (var12 >= 0 && var12 < 12) {
-        inline_02078998(var10, var12, var11, var9, arg0);
+    if (!CheckField0NonZero_0202b7d8(search) || GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search)) return;
+    unsigned short id = self->obj.GetField06();
+    int unused = self->obj.unknown_2_;
+    int nibble = (self->obj.actorIndex_ - 112) % 12;
+    if (nibble >= 0 && nibble < 12) {
+        SendModeEvent02078998(id, nibble, unused, mode, self);
     }
 }

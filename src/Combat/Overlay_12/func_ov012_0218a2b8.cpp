@@ -14,13 +14,13 @@ struct Struct_02072a68_2 {
     short unknown_4_;
 };
 
-extern "C" int func_020421a0();
-extern "C" int func_02041dd0(char* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" int func_02041a90(char* arg0, int arg1, int arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int MessageSystem_GetInstance();
+int FormatCombatLogSuffix02041dd0(char* buf, int index);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" int Font_GetTextWidth(char* str, int id);
+int AppendXYTag_02041a90(char* dst, int x, int y);
+int Text_Append(char* dst, const char* src);
 #if defined(jpn)
 struct Struct_020465c0;
 extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
@@ -33,35 +33,35 @@ extern "C" void func_02042428(char* arg0, int arg1);
 extern "C" ARM void func_ov012_0218a2b8(unsigned char* arg0, char* arg1) {
     if (arg1 == 0) return;
 #if defined(jpn)
-    struct Struct_020465c0* var0 = (struct Struct_020465c0*)func_020421a0();
-    func_020465c0(var0, 0, arg0[0x1456]);
-    func_020465f0((unsigned char*)var0, 0, 2);
-    func_020465d8((unsigned char*)var0, 0, 1);
-    func_02042428(arg1, 0xc);
-    if (arg0[0x1341] == 8) {
-        void* var1 = func_02072a68((struct Struct_02072a68_2*)(arg0 + 0x1314), 0x68);
-        func_02041b70(arg1, 0, (const char*)var1);
+    struct StoreStruct* base = (struct StoreStruct*)MessageSystem_GetInstance();
+    StoreInArray0x8b0_020465c0(base, 0, self[0x1456]);
+    SetByteInRange_020465f0((unsigned char*)base, 0, 2);
+    SetByteAtIndex_020465d8((unsigned char*)base, 0, 1);
+    func_02042428(dst, 0xc);
+    if (self[0x1341] == 8) {
+        void* name = FindEntryByKey_02072a68((struct TableA68*)(self + 0x1314), 0x68);
+        Text_AppendNTag(dst, 0, (const char*)name);
     } else {
-        void* var2 = func_02072a68((struct Struct_02072a68_2*)(arg0 + 0x1314), 0x65);
-        func_02041b70(arg1, 0, (const char*)var2);
+        void* name = FindEntryByKey_02072a68((struct TableA68*)(self + 0x1314), 0x65);
+        Text_AppendNTag(dst, 0, (const char*)name);
     }
 #else
-    func_020421a0();
+    MessageSystem_GetInstance();
 
     if (arg0[0x1371] == 8) {
         func_02041dd0(arg1, 4);
     }
 
-    void* var3 = func_02072a68((struct Struct_02072a68_2*)(arg0 + 0x133c), (short)(arg0[0x13fe] + 0x13));
-    func_02041b70(arg1, 0, (const char*)var3);
+    void* name = FindEntryByKey_02072a68((struct TableA68*)(self + 0x133c), (short)(self[0x13fe] + 0x13));
+    Text_AppendNTag(dst, 0, (const char*)name);
 
     if (arg0[0x1371] == 8) {
         func_02041dd0(arg1, 0);
     }
 
-    void* var4 = func_02072a68((struct Struct_02072a68_2*)(arg0 + 0x133c), 0x29);
-    int var5 = func_020420e8((char*)var4, 0);
-    func_02041a90(arg1, (0x48 - var5) >> 1, 1);
-    func_02042058(arg1, (const char*)var4);
+    void* str = FindEntryByKey_02072a68((struct TableA68*)(self + 0x133c), 0x29);
+    int len = Font_GetTextWidth((char*)str, 0);
+    AppendXYTag_02041a90(dst, (0x48 - len) >> 1, 1);
+    Text_Append(dst, (const char*)str);
 #endif
 }

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" int func_ov003_02171df0(unsigned char* arg0);
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
+int AllBytesZero_02171df0(unsigned char* arr);
+extern "C" int memcmp(void* a, void* b, int n);
 
 struct Struct_ov003_02171e1c {
     unsigned char unknown_0_[6];
@@ -22,15 +22,15 @@ extern "C" ARM void func_ov003_02171e1c(Struct_ov003_02171e1c_2* arg0, unsigned 
     if (arg1 == 0) return;
     if (func_ov003_02171df0(arg1) != 0) return;
     {
-        Struct_ov003_02171e1c* var0 = 0;
-        int var1 = 0;
-        Struct_ov003_02171e1c* var2 = arg0->unknown_8_;
-        for (int var3 = 0; var3 < 0x32; var3++, var2++) {
-            int var4 = var2->unknown_6_;
-            if (var4 != 0 && func_02001aec(var2, arg1, 6) == 0) {
-                var0 = var2;
-                var1 = var4;
-                var2->unknown_6_ = 0x32;
+        KeyEntry_02171e1c* found = 0;
+        int foundAge = 0;
+        KeyEntry_02171e1c* e = list->entries;
+        for (int i = 0; i < 0x32; i++, e++) {
+            int age = e->age;
+            if (age != 0 && memcmp(e, key, 6) == 0) {
+                found = e;
+                foundAge = age;
+                e->age = 0x32;
                 break;
             }
         }

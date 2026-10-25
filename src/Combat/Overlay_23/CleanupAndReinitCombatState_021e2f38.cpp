@@ -8,25 +8,25 @@ enum {regionalOffset0=0x630, regionalOffset1=0x124, regionalOffset2=0x120, regio
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 
-void* GetDataPtr02114e04_020d6c00(void);
+void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4;
-void ClearFlags020466f4(struct FlagWord020466f4*, unsigned int);
+void FlagWord_ClearBits(struct FlagWord020466f4*, unsigned int);
 extern "C" void func_ov005_02154198(void*);
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 void SetFlagBytes02017d68(void* obj);
 void CharacterModel_Destroy(void* obj);
-void EmptyDestructor0205a494(void* obj);
-int GetGlobalField0x1c020421a0(void);
+void SpriteContext_Destroy(void* obj);
+int MessageSystem_GetInstance(void);
 struct CombatSlots02045cac;
-void InitCombatSlots02045cac(struct CombatSlots02045cac*);
-void ReinitController02043204(char*);
-extern "C" void func_02043124(int);
+void MessageSystem_ResetGlyphs(struct CombatSlots02045cac*);
+void MessageSystem_Reset(char*);
+extern "C" void MessageSystem_Stop(int);
 
 // USA: func_ov023_021e2f38
 ARM void CleanupAndReinitCombatState_021e2f38(void* obj) {
     char* o = (char*)obj;
 
-    ClearFlags020466f4((struct FlagWord020466f4*)GetDataPtr02114e04_020d6c00(), 0xf);
+    FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0xf);
 
     int data4 = (int)BackgroundLoader::GetInstance();
     if (*(int*)(o + regionalOffset0) > 0) {
@@ -34,14 +34,14 @@ ARM void CleanupAndReinitCombatState_021e2f38(void* obj) {
         *(int*)(o + regionalOffset0) = -1;
     }
 
-    FontBankLoader* g = GetGlobal02109400_02094a00();
+    FontBankLoader* g = FontBankLoader_GetInstance();
     BlankFunction02094b40(g);
-    func_02094ab0(g);
+    FontBankLoader_CancelLoads(g);
 
     if (*(void**)(o + 0x0) != 0) {
         func_ov005_02154198(*(void**)(o + 0x0));
         *(void**)(o + 0x0) = 0;
-        SetFlagBytes02017d68(func_02012fe4());
+        SetFlagBytes02017d68(Zone3D_GetInstance());
     }
 
     CharacterModel_Destroy(*(void**)(o + regionalOffset1));
@@ -49,7 +49,7 @@ ARM void CleanupAndReinitCombatState_021e2f38(void* obj) {
         CharacterModel_Destroy(*(void**)(o + regionalOffset2));
     }
     if (*(void**)(o + 0xc8) != 0) {
-        EmptyDestructor0205a494(*(void**)(o + 0xc8));
+        SpriteContext_Destroy(*(void**)(o + 0xc8));
     }
 
     ((SafeAllocator*)(o + 0x90))->Destroy();
@@ -62,10 +62,10 @@ ARM void CleanupAndReinitCombatState_021e2f38(void* obj) {
     *(int*)(o + 0xc0) = 0;
     *(int*)(o + 0xc4) = 0;
 
-    int gg = GetGlobalField0x1c020421a0();
-    InitCombatSlots02045cac((struct CombatSlots02045cac*)gg);
-    ReinitController02043204((char*)gg);
-    func_02043124(gg);
+    int gg = MessageSystem_GetInstance();
+    MessageSystem_ResetGlyphs((struct CombatSlots02045cac*)gg);
+    MessageSystem_Reset((char*)gg);
+    MessageSystem_Stop(gg);
 
     *(int*)((char*)gg + regionalOffset3) = 0;
     *(int*)((char*)gg + regionalOffset4) = 0;

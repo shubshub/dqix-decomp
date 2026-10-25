@@ -7,12 +7,12 @@ void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 
 #if defined(jpn)
-extern "C" void func_0205d304(void* a, void* b, int c, int d, int e, int f, int g);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* a, void* b, int c, int d, int e, int f, int g, int h);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov023_021ed600  (semantic: InitAndDispatchEntry_021ed600)
@@ -42,11 +42,11 @@ extern "C" ARM void func_ov023_021ed600(char* obj) {
 #endif
 
     int key = KeyTable_Get((struct Container020e0310*)(obj + 0x4), 0x3e8);
-    AppendString02042058(*(char**)(obj + 0x1c), (const char*)(long)key);
+    Text_Append(*(char**)(obj + 0x1c), (const char*)(long)key);
 
 #if defined(jpn)
-    func_0205d304(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 1, 0);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 1, 0);
 #else
-    func_0205d304(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0, 1);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0, 1);
 #endif
 }

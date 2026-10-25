@@ -4,7 +4,6 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-    #define func_020c39a0 func_020c546c
     #define func_020c39c8 func_020c5494
     #define func_020daf90 func_020dc998
     #define func_020db9cc func_020dd3d4
@@ -14,7 +13,7 @@
 extern "C"
 {
 // write brightness to master register
-void func_020c39a0(volatile unsigned short* reg, int brightness);
+void GXx_SetMasterBrightness_(volatile unsigned short* reg, int brightness);
 // get brightness from master register
 int func_020c39c8(volatile unsigned short* reg);
 
@@ -97,12 +96,12 @@ void ApplyBrightness(GameResources* resources)
     resources->allowBrightnessApply = 0;
 
     if (resources->mainBrightnessDirty)
-        func_020c39a0(&REG_MASTER_BRIGHT, (int)resources->mainBrightness);
+        GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT, (int)resources->mainBrightness);
 
     resources->mainBrightnessDirty = false;
 
     if (resources->subBrightnessDirty)
-        func_020c39a0(&REG_MASTER_BRIGHT_SUB, (int) resources->subBrightness);
+        GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT_SUB, (int) resources->subBrightness);
 
     resources->subBrightnessDirty = false;
 }
@@ -377,8 +376,8 @@ unsigned int TestFlags08(GameResources* resources, unsigned int mask)
 
 // usa: func_0203b540
 void WriteBrightnessToHardware(GameResources* gameResources) {
-    func_020c39a0(&REG_MASTER_BRIGHT, (int)gameResources->mainBrightness);
-    func_020c39a0(&REG_MASTER_BRIGHT_SUB, (int)gameResources->subBrightness);
+    GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT, (int)gameResources->mainBrightness);
+    GXx_SetMasterBrightness_(&REG_MASTER_BRIGHT_SUB, (int)gameResources->subBrightness);
 }
 
 // usa: func_0203b57c

@@ -2,46 +2,44 @@
 #include "Resource/CharacterCreationUI.h"
 #include "Memory/SafeAllocator.h"
 
-void* GetDataPtr02114e04_020d6c00(void);
+void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4;
-void ClearFlags020466f4(struct FlagWord020466f4* word, unsigned int mask);
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 void CharacterModel_Destroy(void* obj);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 struct CombatSlots02045cac;
-void InitCombatSlots02045cac(struct CombatSlots02045cac* obj);
-void ReinitController02043204(char* obj);
-extern "C" void func_02043124(char* obj);
-void EmptyDestructor0205a494(void* obj);
+void MessageSystem_ResetGlyphs(struct CombatSlots02045cac* obj);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(char* obj);
+void SpriteContext_Destroy(void* obj);
 void* GetGlobalPtr02105244_0203bd14();
-void ResetBattleObject0203c4c4(char* obj);
-struct Obj0204b010;
-void Background_ClearMap(Obj0204b010* obj, void* p);
+void CachedTextTable_Reset(char* obj);
+struct BackgroundGraphics;
+void Background_ClearMap(BackgroundGraphics* obj, void* p);
 extern "C" void Background_FlushMap(void* p, int flag);
 extern "C" void Background_TransferMap(void* p, int flag);
-struct List0204afb4;
-void ResetRecordList0204afb4(struct List0204afb4* obj);
-struct Obj0205d048;
-extern "C" void func_0205d048(struct Obj0205d048* obj);
+void Background_Destroy(struct BackgroundGraphics* obj);
+extern "C" void Window_Destroy(CreationWindow* window); // resets the window's panes and layers
 extern "C" void* __clear(void* dst, int count);
 
 // Overlay 9, originally func_ov009_02184848 (USA/EUR 0x02184848, JPN 0x021858e4)
 extern "C" ARM void CharacterCreationUI_Destroy(CharacterCreationUI* self) {
     if (self->mode == CreationMode_PartyMemberCreation) {
-        ClearFlags020466f4((struct FlagWord020466f4*)GetDataPtr02114e04_020d6c00(), 0xf);
+        FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0xf);
     }
     CharacterModel_Destroy(self->characterModels[0]);
     CharacterModel_Destroy(self->characterModels[1]);
-    void* messageSystem = (void*)GetGlobalField0x1c020421a0();
-    InitCombatSlots02045cac((struct CombatSlots02045cac*)messageSystem);
-    ReinitController02043204((char*)messageSystem);
-    func_02043124((char*)messageSystem);
+    void* messageSystem = (void*)MessageSystem_GetInstance();
+    MessageSystem_ResetGlyphs((struct CombatSlots02045cac*)messageSystem);
+    MessageSystem_Reset((char*)messageSystem);
+    MessageSystem_Stop((char*)messageSystem);
     if (self->mainSpriteContext != 0) {
-        EmptyDestructor0205a494(self->mainSpriteContext);
+        SpriteContext_Destroy(self->mainSpriteContext);
     }
     if (self->subSpriteContext != 0) {
-        EmptyDestructor0205a494(self->subSpriteContext);
+        SpriteContext_Destroy(self->subSpriteContext);
     }
-    ResetBattleObject0203c4c4((char*)GetGlobalPtr02105244_0203bd14());
+    CachedTextTable_Reset((char*)GetGlobalPtr02105244_0203bd14());
     {
         void* layers[6];
         layers[0] = &self->layers[0];
@@ -52,14 +50,14 @@ extern "C" ARM void CharacterCreationUI_Destroy(CharacterCreationUI* self) {
         layers[5] = &self->layers[5];
         for (int i = 0; i < 6; i++) {
             void* layer = layers[i];
-            Background_ClearMap((Obj0204b010*)layer, 0);
+            Background_ClearMap((BackgroundGraphics*)layer, 0);
             Background_FlushMap(layer, 0);
             Background_TransferMap(layer, 0);
-            ResetRecordList0204afb4((struct List0204afb4*)layer);
+            Background_Destroy((struct BackgroundGraphics*)layer);
         }
     }
-    func_0205d048((struct Obj0205d048*)&self->windows[0]);
-    func_0205d048((struct Obj0205d048*)&self->windows[1]);
+    Window_Destroy(&self->windows[CreationWindowIndex_Summary]);
+    Window_Destroy(&self->windows[CreationWindowIndex_Bottom]);
     *(int*)&self->textBuffer = 0;
     *(int*)&self->windowBuffers[0] = 0;
     *(int*)&self->windowBuffers[1] = 0;
@@ -77,24 +75,24 @@ extern "C" ARM void CharacterCreationUI_Destroy(CharacterCreationUI* self) {
 #endif
     __clear(allocators, sizeof(allocators));
 #if defined(jpn)
-    allocators[0] = &self->allocators[7];
-    allocators[1] = &self->allocators[6];
-    allocators[2] = &self->allocators[5];
-    allocators[3] = &self->allocators[4];
-    allocators[4] = &self->allocators[3];
-    allocators[5] = &self->allocators[2];
-    allocators[6] = &self->allocators[1];
-    allocators[7] = &self->allocators[0];
+    allocators[0] = &self->allocators[CreationAllocator_NameFilter];
+    allocators[1] = &self->allocators[CreationAllocator_Sprites];
+    allocators[2] = &self->allocators[CreationAllocator_Texts];
+    allocators[3] = &self->allocators[CreationAllocator_ItemTable];
+    allocators[4] = &self->allocators[CreationAllocator_Characters];
+    allocators[5] = &self->allocators[CreationAllocator_BottomText];
+    allocators[6] = &self->allocators[CreationAllocator_TabLayers];
+    allocators[7] = &self->allocators[CreationAllocator_MainLayers];
 #else
-    allocators[0] = &self->allocators[8];
-    allocators[1] = &self->allocators[7];
-    allocators[2] = &self->allocators[6];
-    allocators[3] = &self->allocators[5];
-    allocators[4] = &self->allocators[4];
-    allocators[5] = &self->allocators[3];
-    allocators[6] = &self->allocators[2];
-    allocators[7] = &self->allocators[1];
-    allocators[8] = &self->allocators[0];
+    allocators[0] = &self->allocators[CreationAllocator_KeyboardLayout];
+    allocators[1] = &self->allocators[CreationAllocator_NameFilter];
+    allocators[2] = &self->allocators[CreationAllocator_Sprites];
+    allocators[3] = &self->allocators[CreationAllocator_Texts];
+    allocators[4] = &self->allocators[CreationAllocator_ItemTable];
+    allocators[5] = &self->allocators[CreationAllocator_Characters];
+    allocators[6] = &self->allocators[CreationAllocator_BottomText];
+    allocators[7] = &self->allocators[CreationAllocator_TabLayers];
+    allocators[8] = &self->allocators[CreationAllocator_MainLayers];
 #endif
     int i = 0;
     while (allocators[i] != 0) {

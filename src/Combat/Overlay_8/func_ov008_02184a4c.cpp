@@ -23,9 +23,6 @@
 #include "World/Object3D.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
 extern "C" int sprintf(char* arg0, const char* arg1, ...);
@@ -40,15 +37,15 @@ extern const char data_ov008_0218b3e0[];
 extern const char data_ov008_0218b465[];
 extern const char data_ov008_0218b47c[];
 extern const char data_ov008_0218b48f[];
-extern char data_0211e33c[];
-extern int data_02109bf4;
+extern char g_fileLoadBuffer[];
+extern int g_bgmPlayer;
 
 struct Struct_ov008_0218b31c { int unknown_0_; int unknown_4_; int unknown_8_; };
 extern const Struct_ov008_0218b31c data_ov008_0218b328;
 extern const Struct_ov008_0218b31c data_ov008_0218b334;
 extern const Struct_ov008_0218b31c data_ov008_0218b31c;
 
-extern "C" int func_020d2ff0(const char* arg0);
+int STD_GetStringLength(const char* s);
 
 struct Struct_ov008_02184a4c {
     void* unknown_0_;
@@ -191,8 +188,8 @@ struct Struct_ov008_02184a4c_12 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" char* func_0205ec34(void);
-extern "C" int _Z27TestBitInByteArray_0206dfb0iPhi(char* unused, char* arr, int index);
+extern "C" char* Scenario_GetInstance(void);
+extern "C" int _Z17Scenario_TestFlagiPhi(char* unused, char* arr, int index);
 int LoadBattleBlock020ac4c0(void* dst);
 extern "C" int func_0202c508(void* obj);
 extern "C" int func_0202c540(void* obj);
@@ -211,23 +208,18 @@ extern "C" void* ExtractFileFromGP2(const char* gp2, const char* inner, unsigned
 extern "C" void KeyTable_Load(void* container, SafeAllocator* alloc, void* data, unsigned int size);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void* obj, int a);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
-struct AllocTarget0204b12c;
-void Background_AllocateMap(AllocTarget0204b12c*, SafeAllocator*);
-struct Foo0204af38;
-void Background_AllocateScreens(Foo0204af38*, int, SafeAllocator*);
+struct BackgroundGraphics;
+void Background_SetScroll(BackgroundGraphics*, int, int);
+void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
 struct Container020e0310;
 const char* KeyTable_Get(Container020e0310*, int);
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void Background_LoadFile(void* obj, void* rec, SafeAllocator* alloc, int size);
-struct Obj0204b8d0;
-void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
+void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_UploadMap(BackgroundGraphics*, void*);
 extern "C" int func_ov008_02188a54(Obj02184a4c* obj, int a);
 void SpriteContext_Init(char*);
 struct Struct0205a198;
@@ -237,18 +229,18 @@ void ClearField0And40205a234(ClearTarget0205a234*);
 extern "C" int SpriteContext_LoadFile(void* obj, void* data, int size, SafeAllocator* alloc);
 extern "C" int func_ov008_02188d74(Obj02184a4c* obj);
 struct Foo0207df50;
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 int LoadFileIntoMemory(const char* path, void* dst, unsigned int* outSize);
 struct ObjectArchiveLoadInfo;
 struct Vector3i;
 void InitCombatController020a2010(void* obj);
-struct Vec3Target0202e5c0;
-void Camera_SetPosition(Vec3Target0202e5c0*, int, int, int);
-void Camera_SetTarget(unsigned char*, int, int, int);
-void SetField0x238False_020a27a0(void* obj);
-void SetField0x3b0Value_020100c4(GameState*, int);
+struct Camera;
+void Camera_SetPosition(Camera*, int, int, int);
+void Camera_SetTarget(struct Camera*, int, int, int);
+void FollowCamera_DisableFollow(void* obj);
+void GameState_SetCamera(GameState*, int);
 struct S020a13c4;
 void ClearStruct020a13c4(S020a13c4*);
 void SetupGlobalAndRunScript020a13e4(void* a, void* b, int c, unsigned short d, unsigned char e);
@@ -257,7 +249,7 @@ struct Array020a15bc;
 MessageSrc02184a4c* FindElementByField020a15bc(Array020a15bc*, int);
 extern "C" void func_020e046c(char* buf, void* b, unsigned int c, int idx);
 int GetField5cbcValue_0201081c(char*);
-int CompareStrings_020d3018(const char* a, const char* b);
+int STD_CompareString(const char* a, const char* b);
 int CheckField0NonZero_0202b7d8(int*);
 extern "C" void func_ov008_0218712c(Obj02184a4c* obj, int a);
 struct Manager02187664;
@@ -265,12 +257,12 @@ void InitConfig02187664(Manager02187664*, int);
 extern "C" void func_ov008_02187a70(Obj02184a4c* obj, int a);
 extern "C" void func_ov008_02187f6c(Obj02184a4c* obj, int a);
 struct Struct_0205d81c;
-extern "C" Struct_ov008_02184a4c_10* func_0205d81c(Struct_0205d81c*, int);
-extern "C" char* func_020421a0(void);
-extern "C" void func_020432c4(char* arg0);
-struct Struct_0209c3b4_2;
-extern "C" void func_0209c3b4(Struct_0209c3b4_2*, int);
-extern "C" void func_ov008_02186964(Struct_ov008_02184a4c_12* arg0);
+Elem0205d81c02184a4c* FindElementByC40205d81c(Struct_0205d81c*, int);
+char* MessageSystem_GetInstance(void);
+extern "C" void func_020432c4(char* obj);
+struct Actor0209c3b4;
+void SetStateAndDispatch0209c3b4(Actor0209c3b4*, int);
+extern "C" void func_ov008_02186964(Obj02184a4c* obj);
 
 struct Struct_ov008_02184a4c_14 {
     int unknown_0_;
@@ -302,23 +294,23 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
     BackgroundLoader* var2 = BackgroundLoader::GetInstance();
     void* var3 = func_0202ae18();
 
-    unsigned char var4 = arg0->unknown_b11_;
-    if (var4 == 0) {
-        arg0->unknown_b18_ |= 0x200000;
-        char* var5 = func_0205ec34();
-        int var6 = func_0206dfb0(var5, var5 + 0x8c, 0x113b);
-        if (var6 != 0) {
-            arg0->unknown_b18_ |= 0x80;
-            arg0->unknown_b18_ &= ~1;
+    unsigned char state = obj->b11;
+    if (state == 0) {
+        obj->flags |= 0x200000;
+        char* save = Scenario_GetInstance();
+        int seen = _Z17Scenario_TestFlagiPhi(save, save + 0x8c, 0x113b);
+        if (seen != 0) {
+            obj->flags |= 0x80;
+            obj->flags &= ~1;
         }
-        Struct_ov008_02184a4c_4 var7;
-        func_020ac4c0(&var7);
-        Struct_ov008_02184a4c_4* var8 = &var7;
-        unsigned int var9 = var8->inline_ov008_02184a4c_2()->inline_ov008_02184a4c();
-        if (var9 == 0) {
-            if (func_0206dfb0(var5, var5 + 0x8c, 0x796) != 0) {
-                if (func_0202c508(var3) != 0) {
-                    arg0->unknown_b18_ |= 2;
+        BattleBlock02184a4c block;
+        LoadBattleBlock020ac4c0(&block);
+        BattleBlock02184a4c* pb = &block;
+        unsigned int scriptId = pb->GetTail()->GetScriptId();
+        if (scriptId == 0) {
+            if (_Z17Scenario_TestFlagiPhi(save, save + 0x8c, 0x796) != 0) {
+                if (func_0202c508(scene) != 0) {
+                    obj->flags |= 2;
                 }
             }
         } else if (var9 != 0) {
@@ -381,12 +373,12 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
                 return;
             }
         }
-        Struct_0208cb08* var14 = func_02094a00();
-        func_02094b40(var14);
-        func_02094b34(var14, 0x6b, 0x1fc, 0, 0);
-        arg0->unknown_b11_++;
-    } else if (var4 == 3) {
-        if (func_02094b4c(func_02094a00()) != 0) {
+        FontBankLoader* global = FontBankLoader_GetInstance();
+        BlankFunction02094b40(global);
+        BlankFunction02094b34(global, 0x6b, 0x1fc, 0, 0);
+        obj->b11++;
+    } else if (state == 3) {
+        if (AlwaysTrue02094b4c(FontBankLoader_GetInstance()) != 0) {
 #if defined(jpn)
             obj->alloc14.Reset();
             void* data = obj->alloc14.Allocate(0x2000);
@@ -411,9 +403,9 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
                 obj->ecLo = 0;
                 obj->ecHi = 1;
                 Background_SetPriority(obj->list, 3);
-                Background_SetScroll((Obj0204b5e8*)obj->list, 0, 0);
-                Background_AllocateMap((AllocTarget0204b12c*)obj->list, &obj->alloc00);
-                Background_AllocateScreens((Foo0204af38*)obj->list, 1, &obj->alloc00);
+                Background_SetScroll((BackgroundGraphics*)obj->list, 0, 0);
+                Background_AllocateMap((BackgroundGraphics*)obj->list, &obj->alloc00);
+                Background_AllocateScreens((BackgroundGraphics*)obj->list, 1, &obj->alloc00);
                 obj->taskId = loader->QueueLoadFile(KeyTable_Get((Container020e0310*)obj->container, 0), NULL);
                 obj->b11++;
             }
@@ -425,17 +417,17 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
             unsigned int size;
             int recSize;
             loader->GetLoadedFileByID(obj->taskId, &data, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900*)data);
+            int count = Pac_CountFiles((PacRecord*)data);
             for (int i = 0; i < count; i++) {
-                void* found = Pac_GetFile((Rec020467f0*)data, i, &rec, &recSize);
+                void* found = Pac_GetFile((PacRecord*)data, i, &rec, &recSize);
                 if (found != NULL) {
                     Background_LoadFile(obj->list, found, &obj->alloc00, recSize);
                 }
             }
             loader->RemoveTask(obj->taskId);
             obj->taskId = -1;
-            Background_DrawScreen((Obj0204b8d0*)obj->list, 0, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
-            Background_UploadMap((List0204b0e8*)obj->list, NULL);
+            Background_DrawScreen((BackgroundGraphics*)obj->list, 0, 0, 0, 0, 0, 0x20, 0x18, 0xffff);
+            Background_UploadMap((BackgroundGraphics*)obj->list, NULL);
             obj->b11++;
         }
     } else if (state == 5) {
@@ -468,10 +460,10 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
             unsigned int size;
             int recSize;
             loader->GetLoadedFileByID(obj->taskId, &data, &size);
-            int count = Pac_CountFiles((ActiveEntry02046900*)data);
+            int count = Pac_CountFiles((PacRecord*)data);
             obj->alloc3c.Reset();
             for (int i = 0; i < count; i++) {
-                void* found = Pac_GetFile((Rec020467f0*)data, i, &rec, &recSize);
+                void* found = Pac_GetFile((PacRecord*)data, i, &rec, &recSize);
                 if (found != NULL) {
                     SpriteContext_LoadFile(obj->table, found, recSize, &obj->alloc3c);
                 }
@@ -491,18 +483,18 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
         }
     } else if (state == 8) {
         char* stage = ov17->stage;
-        CopyInternalFields0207df50((Foo0207df50*)(stage + 0x230));
+        VramState_Rewind((Foo0207df50*)(stage + 0x230));
         VramState_Restore(stage + 0x230);
         BackgroundLoader::AddLockGlobal();
         unsigned int size = 0;
-        if (LoadFileIntoMemory(KeyTable_Get((Container020e0310*)obj->container, 10), data_0211e33c, &size) != 0) {
+        if (LoadFileIntoMemory(KeyTable_Get((Container020e0310*)obj->container, 10), g_fileLoadBuffer, &size) != 0) {
             ArchiveInfo02184a4c info;
             info.unk_0 = 0;
             info.unk_14 = 0;
             info.unk_18 = 0;
             info.packageID = 0;
             info.allocator = &obj->alloc64;
-            info.fileData = data_0211e33c;
+            info.fileData = g_fileLoadBuffer;
             info.size = size;
             info.unk_10 = 1;
             ((Object3D*)&obj->model)->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&info, (int (*)(BCFG::AnimationRecord*))NULL);
@@ -512,15 +504,15 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
             obj->GetModel()->SetPosition(&pos);
             Vec3i02184a4c rot = data_ov008_0218b31c;
             *(Vector3i*)&obj->modelRot = *(Vector3i const*)&rot;
-            ((Object3D*)&obj->model)->MaybeSetBCFGAnimation(0, 0);
+            ((Object3D*)&obj->model)->SetAnimationByIndex(0, 0);
         }
         BackgroundLoader::RemoveLockGlobal();
         VramState_Save(stage + 0x230);
         InitCombatController020a2010(obj->controller);
-        Camera_SetPosition((Vec3Target0202e5c0*)obj->controller, 0, 0x8000, 0x40000);
-        Camera_SetTarget((unsigned char*)obj->controller, 0, 0, 0);
-        SetField0x238False_020a27a0(obj->controller);
-        SetField0x3b0Value_020100c4(gs, (int)obj->controller);
+        Camera_SetPosition((Camera*)obj->controller, 0, 0x8000, 0x40000);
+        Camera_SetTarget((struct Camera*)obj->controller, 0, 0, 0);
+        FollowCamera_DisableFollow(obj->controller);
+        GameState_SetCamera(gs, (int)obj->controller);
         obj->b11++;
     } else if (state == 9) {
         if (!obj->HasFlag(1)) {
@@ -544,32 +536,32 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
                 } else {
                     arg0->unknown_b16_ = 1000;
                 }
-                arg0->unknown_b14_ = var42[0];
-                arg0->unknown_78_.Reset();
-                arg0->unknown_b04_ = NULL;
-                arg0->unknown_b0c_ = (Struct_ov008_02184a4c_7*)arg0->unknown_78_.Allocate(REGION_VALUE(0x15c, 0x244));
-                Struct_ov008_02184a4c_7* var45 = arg0->unknown_b0c_;
-                var45->unknown_0_0_ = 0;
-                var45->unknown_1_1_ = 0;
-                var45->unknown_2_2_ = 0;
-                var45->unknown_3_3_ = 0;
-                var45->unknown_3_6_ = 0;
-                var45->unknown_4_ = NULL;
-                var45->unknown_8_ = 0;
-                memset(var45->unknown_c_, 0, 0x38);
-                memset(var45->unknown_44_, 0, REGION_VALUE(0x118, 0x200));
-                var45->unknown_4_ = var45->unknown_44_;
-                Struct_ov008_02184a4c_6* var46 = func_020a15bc((Struct_020a15bc*)arg0->unknown_bc_, var42[0]);
-                var45 = arg0->unknown_b0c_;
-                if (var46 != NULL) {
-                    *(unsigned int*)var45 = var46->unknown_0_;
-                    var45->unknown_4_ = (char*)var46->unknown_4_;
-                    var45->unknown_8_ = var46->unknown_8_;
-                    var45->unknown_4_ = var45->unknown_44_;
-                    const char* var47 = var46->unknown_4_;
-                    if (var47 != NULL) {
-                        memset(var45->unknown_44_, 0, REGION_VALUE(0x118, 0x200));
-                        sprintf(var45->unknown_44_ + func_020d2ff0(var45->unknown_44_), data_ov008_0218b3e0, var47);
+                obj->b14 = ids[0];
+                obj->alloc78.Reset();
+                obj->poller = NULL;
+                obj->message = (Message02184a4c*)obj->alloc78.Allocate(REGION_VALUE(0x15c, 0x244));
+                Message02184a4c* msg = obj->message;
+                msg->a = 0;
+                msg->b = 0;
+                msg->c = 0;
+                msg->d = 0;
+                msg->e = 0;
+                msg->text = NULL;
+                msg->f8 = 0;
+                memset(msg->name, 0, 0x38);
+                memset(msg->buf, 0, REGION_VALUE(0x118, 0x200));
+                msg->text = msg->buf;
+                MessageSrc02184a4c* src = FindElementByField020a15bc((Array020a15bc*)obj->script, ids[0]);
+                msg = obj->message;
+                if (src != NULL) {
+                    *(unsigned int*)msg = src->word0;
+                    msg->text = (char*)src->text;
+                    msg->f8 = src->f8;
+                    msg->text = msg->buf;
+                    const char* text = src->text;
+                    if (text != NULL) {
+                        memset(msg->buf, 0, REGION_VALUE(0x118, 0x200));
+                        sprintf(msg->buf + STD_GetStringLength(msg->buf), data_ov008_0218b3e0, text);
                     }
                 }
                 Struct_ov008_02184a4c_11* var48 = (Struct_ov008_02184a4c_11*)GameState::GetInstance()->GetProtagonist();
@@ -602,12 +594,12 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
                     arg0->unknown_b18_ |= 0x100;
                     var55 = 0x3eb;
                 }
-                memset(arg0->unknown_b8_, 0, REGION_VALUE(0x800, 0x960));
-                Struct_ov008_02184a4c var56;
-                func_020727d8((Struct_020727d8*)&var56);
-                func_020727f8(&var56, data_ov008_0218b400, (short)var55, arg0->unknown_b8_, REGION_VALUE(1, 2));
-                if (func_020d3018(arg0->unknown_b8_, data_ov008_0218b48f) == 0) {
-                    arg0->unknown_b11_ = 0xff;
+                memset(obj->pathBuf, 0, REGION_VALUE(0x800, 0x960));
+                List02184a4c list;
+                ResetListHeader020727d8((List020727d8*)&list);
+                SubmitScriptFromFile020727f8(&list, data_ov008_0218b400, (short)id, obj->pathBuf, REGION_VALUE(1, 2));
+                if (STD_CompareString(obj->pathBuf, data_ov008_0218b48f) == 0) {
+                    obj->b11 = 0xff;
                 } else {
                     arg0->unknown_b20_ = var2->QueueLoadFile(arg0->unknown_b8_, NULL);
                     arg0->unknown_b11_++;
@@ -683,12 +675,12 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
         }
         if (obj->b24 == 0) {
             char* stage = ov17->stage;
-            char* presenter = GetGlobalField0x1c020421a0();
-            CopyInternalFields0207df50((Foo0207df50*)(stage + 0x5b0));
+            char* presenter = MessageSystem_GetInstance();
+            VramState_Rewind((Foo0207df50*)(stage + 0x5b0));
             VramState_Restore(stage + 0x5b0);
             func_020432c4(presenter);
             VramState_Save(stage + 0x5b0);
-            SetStateAndDispatch0209c3b4((Actor0209c3b4*)&data_02109bf4, 0x29);
+            SetStateAndDispatch0209c3b4((Actor0209c3b4*)&g_bgmPlayer, 0x29);
             obj->b10 = 3;
             obj->b11 = 0;
             if (obj->message == NULL) {

@@ -28,8 +28,7 @@ struct Struct_02065990_2 {
     signed char unknown_d9_;
     unsigned short unknown_da_;
 };
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct PacRecord;
 #if defined(jpn)
 extern char data_020f12cc[];
 #endif
@@ -38,16 +37,16 @@ extern char data_020f11fe[];
 extern char g_sePlayer[];
 void SetSubBrightness(GameResources*, int, int);
 void SetFieldD20208bf28(Obj0208bf28*, int, unsigned char);
-int Pac_CountFiles(ActiveEntry02046900*);
+int Pac_CountFiles(PacRecord*);
 void SpriteContext_Init(char*);
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void SpriteContext_LoadFile(TransitionList0208cfcc*, void*, int, SafeAllocator*);
 void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
 void SetBitfieldStoreBytes0205af38(int, char*, int, int);
 int IsSubBrightnessTransitionActive(GameResources*);
-extern "C" void func_0205eb54(void*, int, int);
-extern "C" void func_0205eb90(void*, int, int);
-extern "C" void func_0205eb80(void*);
+void SePlayer_LoadExtraArchiveA(void*, int, int);
+void DispatchIfField0xc4NonNeg_0205eb90(void*, int, int);
+void SePlayer_UnloadExtraArchiveA(void*);
 
 static inline int inline_0208cfcc(Struct_02065990_2* arg0) { return (arg0->unknown_da_ & 0x100) == 0; }
 
@@ -85,14 +84,14 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
             void* file;
             unsigned int length;
             loader->GetLoadedFileByID(obj->task, &file, &length);
-            int count = Pac_CountFiles((ActiveEntry02046900*)file);
+            int count = Pac_CountFiles((PacRecord*)file);
             SpriteContext_Init((char*)&obj->list);
             obj->list.active = 1;
             obj->list.entries = obj->entries;
             obj->list.type = 3;
             for (int i = 0; i < count; i++) {
                 int size;
-                void* entry = Pac_GetFile((Rec020467f0*)file, i, &record, &size);
+                void* entry = Pac_GetFile((PacRecord*)file, i, &record, &size);
                 SpriteContext_LoadFile(&obj->list, entry, size, &owner->allocator);
             }
             func_0205aed0(&arg0->unknown_60_, (char*)arg0->unknown_b4_, 3, 64);
@@ -117,7 +116,7 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
         if (arg0->unknown_cc_ < 1.0f) arg0->unknown_cc_ += 0.2f;
         else {
             obj->blend = 1.0f;
-            SetForwardAndStore0205eb54(g_sePlayer, 110, 110);
+            SePlayer_LoadExtraArchiveA(g_sePlayer, 110, 110);
             DispatchIfField0xc4NonNeg_0205eb90(g_sePlayer, 0, 0);
             obj->state++;
             obj->delay = 30;
@@ -134,7 +133,7 @@ extern "C" ARM void func_0208cfcc(Struct_02065990_2* arg0) {
             }
         }
     } else if (obj->state == 6 && obj->delay == 0) {
-        ForwardField0xc0_0205eb80(g_sePlayer);
+        SePlayer_UnloadExtraArchiveA(g_sePlayer);
         obj->complete = 1;
         obj->state = 0;
     }

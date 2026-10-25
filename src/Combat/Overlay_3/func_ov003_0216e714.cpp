@@ -6,32 +6,28 @@
 
 struct Struct_ov003_0216e714;
 #if !defined(jpn)
-extern "C" struct Struct_ov003_0216e714 *func_02012fe4(void);
+extern "C" struct Run0216e714 *Zone3D_GetInstance(void);
 #endif
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900 *pac);
-struct Rec020467f0;
-void *Pac_GetFile(Rec020467f0 *pac, int index, void **outName, int *outSize);
-extern "C" void func_0204c684(void *obj);
+struct PacRecord;
+int Pac_CountFiles(PacRecord *pac);
+void *Pac_GetFile(PacRecord *pac, int index, void **outName, int *outSize);
+extern "C" void WindowPane_Init(void *obj);
 extern "C" void __clear(void *dst, int count);
-extern "C" void func_02042764(void *src, void *dst, int flag);
+extern "C" void Font_DecodeText(void *src, void *dst, int flag);
 extern "C" void func_0204f41c(void *obj, short x, short y, void *str, int d, int e, short *outA, short *outB, int zero);
 struct Container020e0310;
 int KeyTable_Get(Container020e0310 *c, int key);
-extern "C" int func_020420e8(void *p, int flag);
+extern "C" int Font_GetTextWidth(void *p, int flag);
 extern "C" void func_0204e038(void *canvas, char *str, int a, int b, int c, int d, int e, int f);
-struct List0204af64;
-void Background_Init(struct List0204af64 *obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics *obj);
 void Background_SetMapSize(unsigned char *obj, int value);
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8 *obj, int a, int b);
+int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
 void CleanInvalidateCacheRange(const void *addr, unsigned int size);
 extern "C" int LoadToMainBG3ScreenData(int arg0, int arg1, unsigned int arg2);
 extern "C" void Background_LoadFile(void *graphics, void *file, SafeAllocator *allocator, unsigned int size);
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8 *obj, void *buf);
-struct List0204afb4;
-void ResetRecordList0204afb4(struct List0204afb4 *obj);
+void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
+void Background_Destroy(struct BackgroundGraphics *obj);
 
 extern char data_ov003_0218028b[];
 extern char data_ov003_0218029b[];
@@ -57,7 +53,7 @@ struct Struct_ov003_0216e714_2 {
     unsigned char unknown_0_[0x860];
     struct Struct_ov003_0216e714 unknown_860_;
 };
-extern "C" struct Struct_ov003_0216e714_2 *func_02012fe4(void);
+extern "C" struct Game0216e714 *Zone3D_GetInstance(void);
 #else
 struct Struct_ov003_0216e714 {
     unsigned char unknown_0_[0x1840];
@@ -153,18 +149,18 @@ struct Struct_ov003_0216e714_8 {
     char unknown_0_[0x40];
 };
 
-extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
-    int var0;
-    int var1;
-    int var2;
-    Struct_ov003_0216e714_3 *var3;
-    int var4;
-    Struct_ov003_0216e714 *var5         = &func_02012fe4()->unknown_860_;
-    BackgroundLoader *var6 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_2_ == 0) {
-        Struct_ov003_0216e714_8 var7 = *(Struct_ov003_0216e714_8 *) data_ov003_0217e264;
-        arg0->unknown_1c_        = var6->QueueLoadFile(var7.unknown_0_, 0);
-        if (!(arg0->unknown_20_ & 0x20)) {
+extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
+    int row;
+    int start;
+    int index;
+    Record0216e714 *rec;
+    int end;
+    Run0216e714 *run         = &Zone3D_GetInstance()->run;
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
+    if (self->step == 0) {
+        Path0216e714 path = *(Path0216e714 *) data_ov003_0217e264;
+        self->task        = loader->QueueLoadFile(path.s, 0);
+        if (!(self->flags & 0x20)) {
             ColorEffect_ConfigureAlphaBlend(0x04000050, 0x18, 1, 0, 0x10);
         }
         self->step = 1;
@@ -182,27 +178,27 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
             short outB;
             int y;
             loader->GetLoadedFileByID(self->task, &file, &size);
-            int numFiles = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int numFiles = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < numFiles; i++) {
-                files[i] = (File0216e714 *) Pac_GetFile((Rec020467f0 *) file, i, &entry, &sizes[i]);
+                files[i] = (File0216e714 *) Pac_GetFile((PacRecord *) file, i, &entry, &sizes[i]);
             }
-            func_0204c684(&var8);
-            var8.unknown_8_   = (char *) var10[0] + 0x10;
-            var8.unknown_a8_  = 0x20;
-            var8.unknown_aa_ = 0x18;
-            var8.unknown_b4_  = 10;
-            var8.unknown_b6_  = 10;
-            var0           = 0;
-            var1         = (arg0->unknown_0_ - 1) * 8;
-            __clear(var9, sizeof(var9));
-            var4 = var1 + 8;
-            for (var2 = var1; var2 < var4; var0++, var2++) {
-                if (var2 >= inline_ov003_0216e714(inline_ov003_0216e714_2(var5))) break;
-                var3          = arg0->unknown_f4_[var2];
-                var8.unknown_b4_ = 10;
-                var8.unknown_b6_ = 10;
-                if (var2 == arg0->unknown_7_ + (arg0->unknown_0_ - 1) * 8) {
-                    sprintf(var9, data_ov003_0217ea1f, var3);
+            WindowPane_Init(&canvas);
+            canvas.text   = (char *) files[0] + 0x10;
+            canvas.width  = 0x20;
+            canvas.height = 0x18;
+            canvas.fontW  = 10;
+            canvas.fontH  = 10;
+            row           = 0;
+            start         = (self->page - 1) * 8;
+            __clear(text, sizeof(text));
+            end = start + 8;
+            for (index = start; index < end; row++, index++) {
+                if (index >= GetCount(GetProgress(run))) break;
+                rec          = self->records[index];
+                canvas.fontW = 10;
+                canvas.fontH = 10;
+                if (index == self->selected + (self->page - 1) * 8) {
+                    sprintf(text, data_ov003_0217ea1f, rec);
                 } else {
                     sprintf(var9, data_ov003_0217ea2b, var3);
                 }
@@ -258,11 +254,11 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
             if (arg0->unknown_6_ >= arg0->unknown_5_) {
                 arg0->unknown_6_ = arg0->unknown_5_ - 1;
             }
-            Background_Init((struct List0204af64 *) &bg);
+            Background_Init((struct BackgroundGraphics *) &bg);
             bg.lo = 0;
             bg.hi = 3;
             Background_SetMapSize((unsigned char *) &bg, 0);
-            Background_SetScroll((struct Obj0204b5e8 *) &bg, 0, 0);
+            Background_SetScroll((struct BackgroundGraphics *) &bg, 0, 0);
             BG3CNT = (BG3CNT & 0x43) | 0xf00;
             for (int var21 = 0; var21 < var19; var21++) {
                 if (var21 == 2) {
@@ -274,8 +270,8 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
                     Background_LoadFile(&bg, files[i], 0, sizes[i]);
                 }
             }
-            Background_UploadMap((struct List0204b0e8 *) &bg, 0);
-            ResetRecordList0204afb4((struct List0204afb4 *) &bg);
+            Background_UploadMap((struct BackgroundGraphics *) &bg, 0);
+            Background_Destroy((struct BackgroundGraphics *) &bg);
             loader->RemoveTask(self->task);
             self->task = -1;
             if (!(self->flags & 0x20)) {
@@ -300,13 +296,13 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
 }
 #else
 // USA: func_ov003_0216e714
-extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
-    int var24;
-    Struct_ov003_0216e714 *var25         = func_02012fe4();
-    BackgroundLoader *var26 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_2_ == 0) {
-        arg0->unknown_1c_ = var26->QueueLoadFileInGP2(data_ov003_0218028b, data_ov003_0218029b, 0);
-        if (!(arg0->unknown_20_ & 0x20)) {
+extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
+    int end;
+    Run0216e714 *run         = Zone3D_GetInstance();
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
+    if (self->step == 0) {
+        self->task = loader->QueueLoadFileInGP2(data_ov003_0218028b, data_ov003_0218029b, 0);
+        if (!(self->flags & 0x20)) {
             ColorEffect_ConfigureAlphaBlend(0x04000050, 0x18, 1, 0, 0x10);
         }
         self->step = 1;
@@ -330,32 +326,32 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
             int y;
             int slot;
             loader->GetLoadedFileByID(self->task, &file, &size);
-            int numFiles = Pac_CountFiles((ActiveEntry02046900 *) file);
+            int numFiles = Pac_CountFiles((PacRecord *) file);
             for (int i = 0; i < numFiles; i++) {
-                files[i] = (File0216e714 *) Pac_GetFile((Rec020467f0 *) file, i, &entry, &sizes[i]);
+                files[i] = (File0216e714 *) Pac_GetFile((PacRecord *) file, i, &entry, &sizes[i]);
             }
-            func_0204c684(&var27);
-            var27.unknown_8_   = (char *) var29[0] + 0x10;
-            var27.unknown_a8_  = 0x20;
-            var27.unknown_aa_ = 0x18;
-            var27.unknown_b4_  = 10;
-            var27.unknown_b6_  = 10;
-            var38           = 0;
-            var39         = (arg0->unknown_0_ - 1) * 8;
-            __clear(var28, sizeof(var28));
-            var43 = 0;
-            memset(arg0->unknown_3b0_, -1, sizeof(arg0->unknown_3b0_));
-            var24 = var39 + 8;
-            for (var40 = var39; var40 < var24; var38++, var40++) {
-                if (var40 >= inline_ov003_0216e714(inline_ov003_0216e714_2(var25))) break;
-                var41          = arg0->unknown_f4_[var40];
-                var42            = var38 * 16 + 0x2f;
-                var27.unknown_b4_ = 10;
-                var27.unknown_b6_ = 10;
-                __clear(var31, sizeof(var31));
-                func_02042764(var41, var31, 1);
-                if (var40 == arg0->unknown_7_ + (arg0->unknown_0_ - 1) * 8) {
-                    sprintf(var28, data_ov003_021802a7, var31);
+            WindowPane_Init(&canvas);
+            canvas.text   = (char *) files[0] + 0x10;
+            canvas.width  = 0x20;
+            canvas.height = 0x18;
+            canvas.fontW  = 10;
+            canvas.fontH  = 10;
+            row           = 0;
+            start         = (self->page - 1) * 8;
+            __clear(text, sizeof(text));
+            slot = 0;
+            memset(self->kinds, -1, sizeof(self->kinds));
+            end = start + 8;
+            for (index = start; index < end; row++, index++) {
+                if (index >= GetCount(GetProgress(run))) break;
+                rec          = self->records[index];
+                y            = row * 16 + 0x2f;
+                canvas.fontW = 10;
+                canvas.fontH = 10;
+                __clear(name, sizeof(name));
+                Font_DecodeText(rec, name, 1);
+                if (index == self->selected + (self->page - 1) * 8) {
+                    sprintf(text, data_ov003_021802a7, name);
                 } else {
                     sprintf(var28, data_ov003_021802b3, var31);
                 }
@@ -373,17 +369,17 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
                     case 10: var46 = 3; break;
                 }
                 sprintf(text, (char *) KeyTable_Get((Container020e0310 *) self->texts, key));
-                func_0204f41c(&canvas, 0xb0 - func_020420e8(text, 0), y, text, 10, 15, &outA, &outB, 0);
+                func_0204f41c(&canvas, 0xb0 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
                 canvas.fontW = 8;
                 canvas.fontH = 8;
                 sprintf(text, data_ov003_021802b6, rec->level);
-                func_0204f41c(&canvas, 0xc8 - func_020420e8(text, 0), y, text, 10, 15, &outA, &outB, 0);
+                func_0204f41c(&canvas, 0xc8 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
                 sprintf(text, data_ov003_021802b3,
                         (char *) KeyTable_Get((Container020e0310 *) self->texts,
                                                                                 (short) (rec->rank + 0xe)));
                 func_0204f41c(&canvas, 0xce, y, text, 10, 15, &outA, &outB, 0);
                 sprintf(text, data_ov003_021802b6, rec->year + 2000);
-                func_0204f41c(&canvas, 0xf4 - func_020420e8(text, 0), y, text, 10, 15, &outA, &outB, 0);
+                func_0204f41c(&canvas, 0xf4 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
             }
             if (inline_ov003_0216e714(inline_ov003_0216e714_2(var25)) > 8) {
                 char *var47 = func_02042a50(8, data_ov003_021802b9);
@@ -394,11 +390,11 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
                 if (var47 != 0) {
                     func_0204e038(&var27, var47, 0xee, 0xb2, 8, 8, 0xf0, 0xf);
                 }
-                func_0204f41c(&var27, 0x7e, 0xaf, data_ov003_0217f5bc, 8, 15, &var36, &var37, 0);
-                sprintf(var28, data_ov003_021802b6, arg0->unknown_0_);
-                func_0204f41c(&var27, 0x7d - func_020420e8(var28, 0), 0xaf, var28, 8, 15, &var36, &var37, 0);
-                sprintf(var28, data_ov003_021802b6, arg0->unknown_4_);
-                func_0204f41c(&var27, 0x82, 0xaf, var28, 8, 15, &var36, &var37, 0);
+                func_0204f41c(&canvas, 0x7e, 0xaf, data_ov003_0217f5bc, 8, 15, &outA, &outB, 0);
+                sprintf(text, data_ov003_021802b6, self->page);
+                func_0204f41c(&canvas, 0x7d - Font_GetTextWidth(text, 0), 0xaf, text, 8, 15, &outA, &outB, 0);
+                sprintf(text, data_ov003_021802b6, self->pages);
+                func_0204f41c(&canvas, 0x82, 0xaf, text, 8, 15, &outA, &outB, 0);
             }
             switch (arg0->unknown_3_) {
                 case 1: arg0->unknown_6_ = arg0->unknown_5_ - 1; break;
@@ -408,11 +404,11 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
             if (arg0->unknown_6_ >= arg0->unknown_5_) {
                 arg0->unknown_6_ = arg0->unknown_5_ - 1;
             }
-            Background_Init((struct List0204af64 *) &bg);
+            Background_Init((struct BackgroundGraphics *) &bg);
             bg.lo = 0;
             bg.hi = 3;
             Background_SetMapSize((unsigned char *) &bg, 0);
-            Background_SetScroll((struct Obj0204b5e8 *) &bg, 0, 0);
+            Background_SetScroll((struct BackgroundGraphics *) &bg, 0, 0);
             BG3CNT = (BG3CNT & 0x43) | 0xf00;
             for (int var48 = 0; var48 < var44; var48++) {
                 if (var48 == 2) {
@@ -424,8 +420,8 @@ extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *arg0) {
                     Background_LoadFile(&bg, files[i], 0, sizes[i]);
                 }
             }
-            Background_UploadMap((struct List0204b0e8 *) &bg, 0);
-            ResetRecordList0204afb4((struct List0204afb4 *) &bg);
+            Background_UploadMap((struct BackgroundGraphics *) &bg, 0);
+            Background_Destroy((struct BackgroundGraphics *) &bg);
             loader->RemoveTask(self->task);
             self->task = -1;
             if (!(self->flags & 0x20)) {

@@ -23,52 +23,52 @@ struct Struct_ov017_021c9f18_2 {
     unsigned char unknown_0_[2];
     unsigned char unknown_2_;
 };
-extern "C" void* func_02053c6c(unsigned char*);
-extern "C" void func_02083e28(void*, int);
-extern "C" unsigned short func_ov017_021b8480(void*);
-extern "C" void func_02054224(void*);
-extern "C" void func_02054234(void*);
+void* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void PartyMember_RecalculateStats(void*, int);
+unsigned short GetField6b4_021b8480(void*);
+void SetFlags0x180At0x18c_02054224(void*);
+void ClearFlag0x80SetFlag0x100_02054234(void*);
 extern "C" void func_ov017_0218b5f8(int);
-extern "C" void func_02026f08(unsigned char*, int, int);
-extern "C" void func_02026f20(int, int);
-extern "C" int func_020546a8(void*);
-extern "C" int func_020100b0(GameState*);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" void func_ov017_021907dc(int, int, int, int, int);
+void SetBoolFlagAt558_02026f08(unsigned char*, int, int);
+void SetArrayEntryFlag02026f20(int, int);
+int GetSignedByte0x2d0_020546a8(void*);
+int GameState_GetLeaderIndex(GameState*);
+signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+void CallHelperWithBuf_021907dc(int, int, int, int, int);
 extern "C" void func_ov017_02191108(void*, int, int, int, int);
 
 // USA: func_ov017_021c9f18
-extern "C" ARM void func_ov017_021c9f18(void* arg0, const Struct_ov017_021c9f18* arg1, GameState* arg2, GameResources* arg3, Struct_0202c1a4* arg4) {
-    int var0;
-    Struct_020236dc_2* var1;
-    int var2;
-    int var3;
-    int var4 = arg1->unknown_4_0_;
-    int var5 = var4 >= 0 && var4 <= 3;
-    if (var5 == 0) return;
-    var1 = static_cast<Struct_020236dc_2*>(arg2->GetPartyMemberByIndex(var4));
-    if (var1 == NULL) return;
-    void* var6 = func_02053c6c((unsigned char*)var1);
-    if (var6 == NULL) return;
-    var2 = 0;
-    int var7 = var1->unknown_ac_.unknown_84_->unknown_0_ & 1;
-    if ((var7 != 0 && (arg1->unknown_10_ & 1) == 0) || (var7 == 0 && (arg1->unknown_10_ & 1) != 0)) var2 = 1;
-    unsigned short var8 = var1->unknown_ac_.unknown_84_->unknown_4_;
-    unsigned short var9 = var1->unknown_ac_.unknown_84_->unknown_6_;
-    var1->unknown_ac_.unknown_84_->unknown_4_ = arg1->unknown_6_;
-    var1->unknown_ac_.unknown_84_->unknown_6_ = arg1->unknown_a_;
-    var1->baseStats_->primaryStats.maxHP = arg1->unknown_8_;
-    var1->baseStats_->primaryStats.maxMP = arg1->unknown_c_;
-    var1->unknown_ac_.unknown_84_->unknown_0_ = arg1->unknown_10_ & 0xffff;
-    var1->unknown_ac_.unknown_84_->unknown_8_ = arg1->unknown_5_;
-    if (arg1->unknown_4_4_ != 0) func_02083e28(var6, 0);
-    Struct_ov017_021c9f18_2* var10 = static_cast<Struct_ov017_021c9f18_2*>(arg3->unknown_ptr_3718);
-    var3 = 1;
-    if (var10->unknown_2_ != 0 && func_ov017_021b8480(var10) == 0) var3 = 0;
-    if (arg1->unknown_4_3_ != 0) {
-        if (var3 != 0) {
-            if (arg1->unknown_6_ == 0) var1->unknown_18c_ |= 1;
-            else var1->unknown_18c_ &= ~1;
+extern "C" ARM void func_ov017_021c9f18(void* unused, const PartyStatsEvent* event, GameState* game, GameResources* controller, SearchStruct0202c1a4* search) {
+    int memberIndex;
+    CombatantRecovery* member;
+    int changed;
+    int allowVisibility;
+    int index = event->index;
+    int valid = index >= 0 && index <= 3;
+    if (valid == 0) return;
+    member = static_cast<CombatantRecovery*>(game->GetPartyMemberByIndex(index));
+    if (member == NULL) return;
+    void* effect = GetFieldAt0x150_02053c6c((unsigned char*)member);
+    if (effect == NULL) return;
+    changed = 0;
+    int wasDead = member->combatFields_.savedState_130_->flags & 1;
+    if ((wasDead != 0 && (event->flags & 1) == 0) || (wasDead == 0 && (event->flags & 1) != 0)) changed = 1;
+    unsigned short oldHP = member->combatFields_.savedState_130_->hp;
+    unsigned short oldMP = member->combatFields_.savedState_130_->mp;
+    member->combatFields_.savedState_130_->hp = event->hp;
+    member->combatFields_.savedState_130_->mp = event->mp;
+    member->baseStats_->primaryStats.maxHP = event->maxHP;
+    member->baseStats_->primaryStats.maxMP = event->maxMP;
+    member->combatFields_.savedState_130_->flags = event->flags & 0xffff;
+    member->combatFields_.savedState_130_->status = event->condition;
+    if (event->resetEffect != 0) PartyMember_RecalculateStats(effect, 0);
+    BattlePolicy* policy = static_cast<BattlePolicy*>(controller->unknown_ptr_3718);
+    allowVisibility = 1;
+    if (policy->enabled != 0 && GetField6b4_021b8480(policy) == 0) allowVisibility = 0;
+    if (event->updateVisibility != 0) {
+        if (allowVisibility != 0) {
+            if (event->hp == 0) member->recoveryFlags |= 1;
+            else member->recoveryFlags &= ~1;
         } else {
             if (arg1->unknown_6_ == 0) func_02054224(var1);
             else func_02054234(var1);
@@ -80,10 +80,10 @@ extern "C" ARM void func_ov017_021c9f18(void* arg0, const Struct_ov017_021c9f18*
         func_02026f08((unsigned char*)var11, (unsigned char)var4, arg1->unknown_4_5_);
         if (arg1->unknown_4_5_ != 0 && (var8 != arg1->unknown_6_ || var9 != arg1->unknown_a_)) func_02026f20((int)var11, var4 & 0xff);
     }
-    if (var2 == 0) return;
-    var0 = var4;
-    if ((var1->obj3D_.unknown_0_ & 0x1000) != 0) var0 = func_020546a8(var1);
-    func_020100b0(arg2);
-    if (var0 != func_0202c1a4(arg4)) func_ov017_021907dc((int)arg3, var0, 1, 1, 1);
-    else func_ov017_02191108(arg3, 1, 1, 1, 1);
+    if (changed == 0) return;
+    memberIndex = index;
+    if ((member->obj3D_.unknown_0_ & 0x1000) != 0) memberIndex = GetSignedByte0x2d0_020546a8(member);
+    GameState_GetLeaderIndex(game);
+    if (memberIndex != GetSearchStructCurrentArrEntry(search)) CallHelperWithBuf_021907dc((int)controller, memberIndex, 1, 1, 1);
+    else func_ov017_02191108(controller, 1, 1, 1, 1);
 }

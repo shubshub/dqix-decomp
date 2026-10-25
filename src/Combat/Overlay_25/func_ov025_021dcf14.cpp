@@ -128,11 +128,11 @@ extern "C" int func_ov000_0215ffa0(void* node);
 struct In021dce7c;
 int TryDispatch_021dce7c(unsigned char*, In021dce7c*, int);
 extern "C" void* func_02057924(void);
-extern "C" void func_02078484(struct Struct_02078398_2* arg0);
-extern "C" void func_02057fb4(void*, int, void*);
-extern "C" void func_0205ebfc(void*, int, int);
-extern "C" void func_ov025_021eabd0(void* arg0, bool arg1);
-extern "C" void func_ov025_021ead5c(void* arg0, bool arg1);
+void InitStruct02078484(struct InitStruct02078484Struct* p);
+void FindNodeAndProcess02057fb4(void*, int, void*);
+void SePlayer_PlayExtra(void*, int, int);
+extern "C" void func_ov025_021eabd0(void* obj, bool party);
+extern "C" void func_ov025_021ead5c(void* obj, bool party);
 
 extern Vector3fix data_ov025_021eeed4;
 extern char data_ov025_021ef460[];
@@ -262,30 +262,30 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                     var17.x = -var17.x;
                     var18.x = -var18.x;
                 }
-                Matrix4x3 var19 = RotationMatrixY(var10->obj3D_.rotation_.y);
-                Mat4x3_ApplyToVector(&var17, &var19, &var17);
-                Vector3fix var20 = var2[var15]->obj3D_.position_;
-                Vector3fix var21 = var10->obj3D_.position_;
-                Vector3fix_Add(&var21, &var17, &var20);
-                Matrix4x3 var22 = RotationMatrixY(var10->obj3D_.rotation_.y);
-                Mat4x3_ApplyToVector(&var18, &var22, &var18);
-                Vector3fix var23;
-                Vector3fix_Add(&var20, &var18, &var23);
-                Vector3fix var24;
-                Vector3fix_Subtract(&var20, &var23, &var24);
-                Vector3fix_Normalize(&var24, &var24);
-                int var25 = fix32_Atan2(var24.x, var24.z);
-                var2[var15]->obj3D_.position_ = var23;
-                func_02033874((Struct_02033834*)var2[var15], var25);
-                struct Struct_ov025_021dcf14_5 var26;
-                func_ov025_021de110(&var26);
-                var26.unknown_0_ = 0;
-                var26.unknown_8_ = ((short*)(arg0 + Enum_ov025_021dcf14_28400))[var15];
-                var26.unknown_a_ = 0x96;
-                var26.unknown_c_ = var20;
-                func_ov025_021eee48((Struct_ov025_021dcf14_7*)(arg0 + Enum_ov025_021dcf14_2864), (Struct_ov025_021dcf14_8*)&var26);
-                var2[var15]->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef460, 0);
-                func_02033fcc((Struct_02033fcc*)var2[var15]);
+                Matrix4x3 rot = RotationMatrixY(lead->obj3D_.rotation_.y);
+                Mat4x3_ApplyToVector(&off, &rot, &off);
+                Vector3fix dst = objs[i]->obj3D_.position_;
+                Vector3fix src = lead->obj3D_.position_;
+                Vector3fix_Add(&src, &off, &dst);
+                Matrix4x3 rot2 = RotationMatrixY(lead->obj3D_.rotation_.y);
+                Mat4x3_ApplyToVector(&face, &rot2, &face);
+                Vector3fix look;
+                Vector3fix_Add(&dst, &face, &look);
+                Vector3fix dir;
+                Vector3fix_Subtract(&dst, &look, &dir);
+                Vector3fix_Normalize(&dir, &dir);
+                int angle = fix32_Atan2(dir.x, dir.z);
+                objs[i]->obj3D_.position_ = look;
+                SetVecYFromValue02033874((Obj02033874*)objs[i], angle);
+                struct Rec021dcf14 rec;
+                ResetFields_021de110(&rec);
+                rec.f0 = 0;
+                rec.id = ((short*)(sl + Field6ef0))[i];
+                rec.val = 0x96;
+                rec.pos = dst;
+                PushNodeFromFreeList_021eee48((Obj021eee48*)(sl + PendingList), (Rec021eee48*)&rec);
+                objs[i]->obj3D_.SetAnimationByName(data_ov025_021ef460, 0);
+                SetFlag0x4At0xe0((Flags02033fcc*)objs[i]);
             }
         }
 
@@ -529,39 +529,39 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                     if (var72 == NULL) {
                         continue;
                     }
-                    if (func_02049ee8((unsigned char*)var72) == 0 || func_02048c68((unsigned char*)var72) != 0) {
-                        var72->obj3D_.TransitionInheritedAlpha(0, 0x12c);
-                        int var73 = 0;
-                        if (var72->obj3D_.unknown_4_ >= 0 && var72->obj3D_.unknown_4_ <= 3) {
-                            var73 = 1;
+                    if (GetSubstructByte0x56_02049ee8((unsigned char*)c) == 0 || CheckSubstructFlag0x100_02048c68((unsigned char*)c) != 0) {
+                        c->obj3D_.TransitionInheritedAlpha(0, 0x12c);
+                        int party = 0;
+                        if (c->obj3D_.actorIndex_ >= 0 && c->obj3D_.actorIndex_ <= 3) {
+                            party = 1;
                         }
                         if (var73 || func_02048c68((unsigned char*)var72)) {
                             func_0204a0c8((unsigned char*)var72);
                         }
                     } else {
-                        Vector3fix var74 = data_ov025_021eeee0;
-                        var74.x = data_ov025_021eeeec[var70];
-                        var71 = var72->obj3D_.rotation_.y;
-                        Matrix4x3 var75 = RotationMatrixY(var71);
-                        Mat4x3_ApplyToVector(&var74, &var75, &var74);
-                        Vector3fix var76 = var72->obj3D_.position_;
-                        Vector3fix var77;
-                        Vector3fix_Add(&var76, &var74, &var77);
-                        struct Struct_ov025_021dcf14_5 var78;
-                        func_ov025_021de110(&var78);
-                        var78.unknown_0_ = 1;
-                        var78.unknown_8_ = var1->unknown_18_;
-                        var78.unknown_a_ = 0x64;
-                        var78.unknown1_c_ = fix32ReduceAngle0To2Pi(var71 + data_ov025_021eeef8[var70]);
-                        func_ov025_021eee48((Struct_ov025_021dcf14_7*)(arg0 + Enum_ov025_021dcf14_2864), (Struct_ov025_021dcf14_8*)&var78);
-                        func_ov025_021de110(&var78);
-                        var78.unknown_0_ = 0;
-                        var78.unknown_8_ = ((short*)(arg0 + Enum_ov025_021dcf14_28400))[var70];
-                        var78.unknown_a_ = 0x12c;
-                        var78.unknown_c_ = var77;
-                        func_ov025_021eee48((Struct_ov025_021dcf14_7*)(arg0 + Enum_ov025_021dcf14_2864), (Struct_ov025_021dcf14_8*)&var78);
-                        var2[var70]->obj3D_.MaybeSetRegularAnimation(data_ov025_021ef460, 0);
-                        func_02033fcc((Struct_02033fcc*)var2[var70]);
+                        Vector3fix off = data_ov025_021eeee0;
+                        off.x = data_ov025_021eeeec[i];
+                        rotY = c->obj3D_.rotation_.y;
+                        Matrix4x3 rot = RotationMatrixY(rotY);
+                        Mat4x3_ApplyToVector(&off, &rot, &off);
+                        Vector3fix pos = c->obj3D_.position_;
+                        Vector3fix dst;
+                        Vector3fix_Add(&pos, &off, &dst);
+                        struct Rec021dcf14 rec;
+                        ResetFields_021de110(&rec);
+                        rec.f0 = 1;
+                        rec.id = cur->actorId;
+                        rec.val = 0x64;
+                        rec.angle = fix32ReduceAngle0To2Pi(rotY + data_ov025_021eeef8[i]);
+                        PushNodeFromFreeList_021eee48((Obj021eee48*)(sl + PendingList), (Rec021eee48*)&rec);
+                        ResetFields_021de110(&rec);
+                        rec.f0 = 0;
+                        rec.id = ((short*)(sl + Field6ef0))[i];
+                        rec.val = 0x12c;
+                        rec.pos = dst;
+                        PushNodeFromFreeList_021eee48((Obj021eee48*)(sl + PendingList), (Rec021eee48*)&rec);
+                        objs[i]->obj3D_.SetAnimationByName(data_ov025_021ef460, 0);
+                        SetFlag0x4At0xe0((Flags02033fcc*)objs[i]);
                     }
                 }
                 arg0[Enum_ov025_021dcf14_28238] = 0;
@@ -592,7 +592,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                         var84.unknown_2c_.y += var79->obj3D_.GetHeight() / 2;
                     }
                     FindNodeAndProcess02057fb4(list, pending.id, &req);
-                    DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
+                    SePlayer_PlayExtra(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
                 }
                 if (!var63) {
                     if (var62) {
@@ -701,8 +701,8 @@ extern "C" void func_ov025_021eabd0(void* obj, bool party);
 extern "C" void func_ov025_021ead5c(void* obj, bool party);
 extern "C" void func_ov025_021ed344(void* obj, int val);
 int Check021ed2f4(void* obj);
-int GetGlobalField0x1c020421a0(void);
-extern "C" void func_02043124(int obj);
+int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Stop(int obj);
 extern "C" void* func_02057924(void);
 extern "C" void func_02078484(struct Struct_02078398_2* arg0);
 extern "C" short func_ov000_0216352c(int arg0, float arg1, float arg2);
@@ -802,7 +802,7 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
             if (*(unsigned int*)(arg0 + Enum_ov025_021dcf14_28576) & 1) {
                 var16.unknown_2c_.y += var14->obj3D_.GetHeight() / 2;
             }
-            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
+            SePlayer_PlayExtra(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
             FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
             TIMER = *(unsigned int*)(sl + Field6fc8);
         }
@@ -910,11 +910,11 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
         if (!func_ov025_021ed2f4(arg0 + Enum_ov025_021dcf14_2192)) {
             return 1;
         }
-        func_02043124(func_020421a0());
-        func_ov000_021626a0(arg0, 4, 0);
-        GameObject* var36 = var0->GetCombatantByIndex(*(short*)(arg0 + Enum_ov025_021dcf14_28412));
-        if (var36) {
-            var36->obj3D_.MakeVisible();
+        MessageSystem_Stop(MessageSystem_GetInstance());
+        func_ov000_021626a0(sl, 4, 0);
+        GameObject* lead = battle->GetCombatantByIndex(*(short*)(sl + Field6efc));
+        if (lead) {
+            lead->obj3D_.MakeVisible();
         }
         var1 = var2->unknown_0_;
         struct Struct_ov025_021dcf14_4* var37 =
@@ -975,9 +975,9 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
             }
             FindNodeAndProcess02057fb4(fx, *(short*)(sl + Field6f98), &req);
             if (*(short*)(sl + Field6f9a) != -1) {
-                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
+                SePlayer_PlayExtra(&g_sePlayer, *(short*)(sl + Field6f9a), 0);
             } else if (*(unsigned short*)(sl + Field6f04) != -1) {
-                DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
+                SePlayer_PlayExtra(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
             }
             TIMER = *(unsigned int*)(arg0 + Enum_ov025_021dcf14_28616);
         } else if (arg0[Enum_ov025_021dcf14_3640] == 3 || var38 == 0 || var40 != 0) {
@@ -997,7 +997,7 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
                 var49->obj3D_.position_ = var50;
                 var49->obj3D_.MakeVisible();
             }
-            DispatchIfField0xc4NonNeg_0205ebfc(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
+            SePlayer_PlayExtra(&g_sePlayer, *(unsigned short*)(sl + Field6f04), 0);
             req.objectId = savedId;
             FindNodeAndProcess02057fb4(fx, *(unsigned short*)(sl + Field6f02), &req);
             TIMER = *(unsigned int*)(sl + Field6fd0);

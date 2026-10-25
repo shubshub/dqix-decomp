@@ -14,10 +14,10 @@ extern "C" int func_ov023_021f6f10(void* arg0);
 #else
 extern "C" int func_ov024_021f6f10(void* arg0);
 #endif
-extern "C" void* func_ov023_021fa598(void* arg0);
-extern "C" int func_020421a0();
-struct Struct_02072a68_2;
-extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
+extern "C" void* func_ov023_021fa598(void* node);
+int MessageSystem_GetInstance();
+struct TableA68;
+void* FindEntryByKey_02072a68(TableA68* table, int key);
 
 // USA: func_ov011_021873c4
 extern "C" ARM int func_ov011_021873c4(Struct_ov011_02184c30* arg0) {
@@ -32,10 +32,10 @@ extern "C" ARM int func_ov011_021873c4(Struct_ov011_02184c30* arg0) {
 #else
     if (func_ov024_021f6f10(var4) != 4) return 1;
 #endif
-    Struct_02072a68_2* var5 = (Struct_02072a68_2*)func_ov023_021fa598(var4);
-    if (!var5) return 1;
-    Struct_02021b84* var6 = (Struct_02021b84*)func_020421a0();
-    const char* var7 = (const char*)func_02072a68(var5, (short)var1);
+    TableA68* texts = (TableA68*)func_ov023_021fa598(node);
+    if (!texts) return 1;
+    MessageSystem* messages = (MessageSystem*)MessageSystem_GetInstance();
+    const char* text = (const char*)FindEntryByKey_02072a68(texts, (short)textKey);
 #if defined(jpn)
     func_0204500c(var6, var7, 0);
     var6->unknown_998_ = 1;

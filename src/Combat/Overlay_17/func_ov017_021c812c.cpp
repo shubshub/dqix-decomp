@@ -50,23 +50,23 @@ extern "C" ARM void func_ov017_021c812c(unsigned char arg0, int arg1) {
         for (int var6 = 0; var6 < 8; var6++) {
             var4->unknown_5_[var6] = 0xff;
         }
-        void* var7 = func_ov017_021b8470(*(void**)(var1 + 0x3000 + Enum_ov017_021c812c_1816));
-        if (var7 != NULL) {
-            short var8[8];
-            int var9 = func_ov000_0215e9fc(var7, var8, 8, 0x10);
-            for (int var10 = 0; var10 < var9; var10++) {
-                GameObject* var11 = var0->GetCombatantByIndex(var8[var10]);
-                if (var11 != NULL) {
-                    int var12 = var11->obj3D_.unknown_4_;
-                    var4->unknown_1_[var12] = func_020493a4((unsigned char*)var11);
+        void* obj = GetField6b0_021b8470(*(void**)(base + 0x3000 + regionalOffset));
+        if (obj != NULL) {
+            short buf[8];
+            int n = func_ov000_0215e9fc(obj, buf, 8, 0x10);
+            for (int i = 0; i < n; i++) {
+                GameObject* c = bs->GetCombatantByIndex(buf[i]);
+                if (c != NULL) {
+                    int idx = c->obj3D_.actorIndex_;
+                    fp->party[idx] = GetSubstructByte0x1c_020493a4((unsigned char*)c);
                 }
             }
-            var9 = func_ov000_0215eb1c(var7, var8, 8, 0x10);
-            for (int var13 = 0; var13 < var9; var13++) {
-                GameObject* var14 = var0->GetCombatantByIndex(var8[var13]);
-                if (var14 != NULL) {
-                    int var15 = var14->obj3D_.unknown_4_ - 0xc0;
-                    var4->unknown_5_[var15] = func_020493a4((unsigned char*)var14);
+            n = func_ov000_0215eb1c(obj, buf, 8, 0x10);
+            for (int i = 0; i < n; i++) {
+                GameObject* c = bs->GetCombatantByIndex(buf[i]);
+                if (c != NULL) {
+                    int idx = c->obj3D_.actorIndex_ - 0xc0;
+                    fp->monsters[idx] = GetSubstructByte0x1c_020493a4((unsigned char*)c);
                 }
             }
         }

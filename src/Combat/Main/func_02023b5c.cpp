@@ -4,7 +4,7 @@
 #include "NitroSDK/ColorEffects.h"
 #include "NitroSDK/Matrix.h"
 
-extern "C" void func_02012fe4();
+extern "C" void Zone3D_GetInstance();
 extern "C" void* func_0202ae18();
 extern "C" int func_0202c540(void* arg0);
 extern "C" int func_02023a9c(char* arg0, int arg1);
@@ -36,10 +36,10 @@ struct Struct_02023b5c_2 {
 };
 
 // USA: func_02023b5c
-extern "C" ARM void func_02023b5c(void *arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5) {
-    Struct_02023b5c_2 *var0 = static_cast<Struct_02023b5c_2 *>(arg0);
-    func_02012fe4();
-    if (!var0->unknown_77c_) return;
+extern "C" ARM void func_02023b5c(void *receiver, int tileX, int tileY, int xOffset, int yOffset, unsigned char flag) {
+    MarkerReceiver02023b5c *self = static_cast<MarkerReceiver02023b5c *>(receiver);
+    Zone3D_GetInstance();
+    if (!self->active) return;
     if (func_0202c540(func_0202ae18())) return;
     var0->unknown_9b4_ = (var0->unknown_9b4_ + GameState::GetInstance()->GetEffectiveDeltaTime()) % 0x300;
     int var1 = abs((var0->unknown_9b4_ - 0x180) / 0x18) + 2;

@@ -25,7 +25,7 @@ enum { CancelMessage = 1000, ConfirmMessage = 1001, PointLimitMessage = 1002 };
 int AppendSizeTag_02041d9c(char* dst, int size);
 struct Container020e0310;
 int KeyTable_Get(Container020e0310* texts, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 
 // USA: func_ov013_02185900
 extern "C" ARM void func_ov013_02185900(SkillPointMenu* menu, char* dst) {
@@ -33,10 +33,10 @@ extern "C" ARM void func_ov013_02185900(SkillPointMenu* menu, char* dst) {
 
     unsigned char state = menu->state;
     if (state == 4) {
-        AppendString02042058(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, CancelMessage));
+        Text_Append(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, CancelMessage));
     } else if (state == 3) {
-        AppendString02042058(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, ConfirmMessage));
+        Text_Append(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, ConfirmMessage));
     } else if (state == 2) {
-        AppendString02042058(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, PointLimitMessage));
+        Text_Append(dst, (const char*)KeyTable_Get((Container020e0310*)menu->texts, PointLimitMessage));
     }
 }

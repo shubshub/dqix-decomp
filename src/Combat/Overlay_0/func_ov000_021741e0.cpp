@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" int fix32_Divide(unsigned int arg0, unsigned int arg1);
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+extern "C" int fix32_Divide(unsigned int numerHi, unsigned int denomLo);
+extern "C" void SpriteContext_DrawSprite(void* dst, void* src);
 
 struct Struct_ov000_021741e0 {
     char unknown_0_[0xc];
@@ -43,12 +43,12 @@ extern "C" ARM void func_ov000_021741e0(void* arg0, float arg1, float arg2, int 
         }
     }
 
-    var2->unknown_14_ = var3;
-    var2->unknown_18_ = var4;
-    var2->unknown_c_ = var8;
-    var2->unknown_10_ = 0x1000;
-    var2->unknown_20_ = arg7;
-    var2->unknown_22_ = arg6;
-    var2->unknown_26_ = arg8;
-    func_0205ac40((char*)arg0 + 0x11c, var2);
+    e->field14 = fixedX;
+    e->field18 = fixedArgE;
+    e->field0c = divResult;
+    e->field10 = 0x1000;
+    e->field20 = byteH;
+    e->field22 = byteG;
+    e->field26 = byteI;
+    SpriteContext_DrawSprite((char*)obj + 0x11c, e);
 }

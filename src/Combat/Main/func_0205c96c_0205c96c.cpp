@@ -7,12 +7,12 @@
 #endif
 
 struct Struct_0205c570;
-extern "C" int func_020421a0(void);
-extern "C" int func_0205c570(struct Struct_0205c570* arg0);
-extern "C" void func_02042b10(void* arg0, void* arg1);
-extern "C" void func_0202f404(void* arg0, int arg1, int arg2);
-extern "C" void func_02042b1c(unsigned char* arg0);
-extern "C" int func_0205cde8(unsigned char* arg0);
+int MessageSystem_GetInstance(void);
+int GetActiveScaledSum0205c570(struct Struct_0205c570* s);
+void SetField0x1e20_02042b10(void* obj, void* value);
+void EmitScaledField0x440_0202f404(void* obj, int a, int b);
+void InitSelfPointer_02042b1c(unsigned char* base);
+int CheckGlobalObjState2AndInit0205cde8(unsigned char* p);
 #if defined(jpn)
 extern "C" void func_02046c78(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
 #else
@@ -27,9 +27,9 @@ struct Struct_0205c96c {
     char unknown_8_[0xd];
     unsigned char unknown_15_;
 };
-extern "C" void func_0205a370(struct Struct_0205a254* arg0, int arg1);
-extern "C" struct Struct_0205c96c* func_0205a3d0(struct Struct_0205a254* arg0, int arg1);
-extern "C" void func_0205ae8c(void* arg0);
+void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
+struct Entry0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
+extern "C" void SpriteContext_DrawEntries(void* obj);
 
 static inline int inline_0205c96c(unsigned char* arg0) { return *(int*)(arg0 + 0x88); }
 static inline int inline_0205c96c_2(unsigned char* arg0) { return *(int*)(arg0 + 0x8c); }
@@ -57,12 +57,12 @@ extern "C" ARM void func_0205c96c(unsigned char* arg0, int arg1) {
         return;
     }
 
-    var0 = (unsigned char*)func_020421a0();
-    var1 = *(int*)(arg0 + 0x50);
-    var3 = func_0205c570((struct Struct_0205c570*)(arg0 + 0x1c));
-    var4 = 0x7fff;
-    if (arg0[RG(0x234, 0x1c4)] == 0) {
-        var4 = 0x3def;
+    ctx = (unsigned char*)MessageSystem_GetInstance();
+    cursor = *(int*)(obj + 0x50);
+    sum = GetActiveScaledSum0205c570((struct Struct_0205c570*)(obj + 0x1c));
+    color = 0x7fff;
+    if (obj[RG(0x234, 0x1c4)] == 0) {
+        color = 0x3def;
     }
 
     if (arg1 == 0) {
@@ -113,15 +113,15 @@ extern "C" ARM void func_0205c96c(unsigned char* arg0, int arg1) {
         return;
     }
 
-    func_0205a370(var13, var14);
-    var15 = func_0205a3d0(var13, var14);
-    if (var15 != NULL) {
-        var15->unknown_15_ |= 8;
+    SpriteEntryList_PlayAnimation(entries, key);
+    entry = SpriteEntryList_Find(entries, key);
+    if (entry != NULL) {
+        entry->f15 |= 8;
     }
-    var15 = func_0205a3d0(var13, var14);
-    if (var15 != NULL) {
-        var15->unknown_4_ = var5;
-        var15->unknown_6_ = var6;
+    entry = SpriteEntryList_Find(entries, key);
+    if (entry != NULL) {
+        entry->f4 = x;
+        entry->f6 = y;
     }
-    func_0205ae8c(var12);
+    SpriteContext_DrawEntries(list);
 }

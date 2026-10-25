@@ -32,7 +32,7 @@ extern Struct_0203c35c* data_02105244;
 #define data_020e78b0 data_020e81ec
 #define data_020e78a0 data_020e81dc
 #else
-extern "C" int func_020421a0();
+int MessageSystem_GetInstance();
 #endif
 extern Struct_020e78c4 data_020e78c4[] __attribute__((aligned(4)));
 extern float data_020e78b0[];
@@ -51,7 +51,7 @@ extern "C" ARM void func_0203c35c(Struct_0203c35c* arg0) {
 #if defined(jpn)
     var4 = data_02105244->unknown_614_;
 #else
-    var4 = ((Struct_0203c35c_2*)func_020421a0())->unknown_60_;
+    palette = ((PaletteWork0203c35c*)MessageSystem_GetInstance())->palette;
 #endif
     unsigned short var8 = 0xe0;
     memset(var4, 0, var8);

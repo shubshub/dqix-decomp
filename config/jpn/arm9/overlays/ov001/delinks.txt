@@ -281,7 +281,7 @@ src/Combat/Overlay_1/func_ov001_0215aa5c.cpp:
     complete
     .text start:0x0215c0e0 end:0x0215c12c
 
-src/Combat/Overlay_1/func_ov001_0215ea40.cpp:
+src/Combat/Overlay_3/SyncPositionAndFlags_021600b8.cpp:
     complete
     .text start:0x021600b8 end:0x02160128
 
@@ -1057,7 +1057,7 @@ src/Combat/Overlay_1/func_ov001_021649d4.cpp:
     complete
     .text start:0x02165f60 end:0x02165fb4
 
-src/Combat/Overlay_1/func_ov001_02159ea8.cpp:
+src/Combat/Overlay_3/AddCappedFieldF6c_0215b580.cpp:
     complete
     .text start:0x0215b580 end:0x0215b588
 
@@ -1249,7 +1249,7 @@ src/Combat/Overlay_1/func_ov001_021628d4.cpp:
     complete
     .text start:0x02163e60 end:0x02163e8c
 
-src/Combat/Overlay_1/func_ov001_021590dc.cpp:
+src/Combat/Overlay_2/ApplyElementRemovalOrDecrement_0215a7b4.cpp:
     complete
     .text start:0x0215a7b4 end:0x0215a7d4
 
@@ -1671,7 +1671,7 @@ src/Combat/Overlay_1/func_ov001_02160904.cpp:
 src/Combat/Overlay_1/func_ov001_02161988.cpp:
     .text start:0x02162f9c end:0x02162fd0
 
-src/Combat/Overlay_1/func_ov001_02161a90.cpp:
+src/Combat/Overlay_4/ClearFlagAndResetVec_021630a4.cpp:
     .text start:0x021630a4 end:0x021630cc
 
 src/Combat/Overlay_1/func_ov001_02163200.cpp:
@@ -1889,7 +1889,7 @@ src/Combat/Overlay_1/func_ov001_0215ed2c.cpp:
     .text start:0x0216030c end:0x021603cc
 
 
-src/Combat/Overlay_1/func_ov001_021620bc.cpp:
+src/Combat/Overlay_1/ClampAndDispatchState_021636d0.cpp:
     complete
     .text start:0x021636d0 end:0x02163760
 

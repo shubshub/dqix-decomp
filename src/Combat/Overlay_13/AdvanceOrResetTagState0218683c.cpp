@@ -20,7 +20,7 @@ struct SePlayer;
 extern struct SePlayer g_sePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
 extern "C" void func_ov013_02185cc0(void* obj);
 struct Obj_0205da38;
@@ -63,16 +63,16 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
                 int one = 1;
                 if (*(int*)(o + LOW_REGION(0x5e8, 0x660)) == 0) {
                     o[LOW_REGION(0x5c8, 0x63c)] = 5;
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
                     o[LOW_REGION(0x5ec, 0x664)] = 0;
                 } else {
                     o[LOW_REGION(0x5c8, 0x63c)] = one;
                     g_keyManager.CancelCurrentKeyRepeat();
                     o[LOW_REGION(0x5ec, 0x664)] = 0;
                     SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 3);
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                     SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 2);
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                     o[LOW_REGION(0x5c5, 0x639)] = 0;
                     o[LOW_REGION(0x644, 0x6bc)] &= ~1;
                     func_ov013_02186c64(o, 0, 0);
@@ -83,12 +83,12 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
                     int one = 1;
                     o[LOW_REGION(0x5ec, 0x664)] = one;
                     o[LOW_REGION(0x5c8, 0x63c)] = 5;
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
                 } else {
                     SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 3);
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                     SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 2);
-                    ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                    Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                     o[LOW_REGION(0x5c5, 0x639)] = 0;
                     o[LOW_REGION(0x5c8, 0x63c)] = 1;
                     g_keyManager.CancelCurrentKeyRepeat();
@@ -105,9 +105,9 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
                     SePlayer_Play(&g_sePlayer, 1, 0);
                 }
                 SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 3);
-                ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                 SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)(o + LOW_REGION(0x34, 0x38)), 2);
-                ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
+                Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), 0);
                 o[LOW_REGION(0x5c5, 0x639)] = 0;
                 o[LOW_REGION(0x5c8, 0x63c)] = 1;
                 g_keyManager.CancelCurrentKeyRepeat();
@@ -122,12 +122,12 @@ extern "C" ARM void func_ov013_0218683c(void* obj) {
                     int one = 1;
                     if (o[LOW_REGION(0x5c8, 0x63c)] == 4) {
                         o[LOW_REGION(0x5c8, 0x63c)] = 5;
-                        ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
+                        Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
                         o[LOW_REGION(0x5ec, 0x664)] = 0;
                     } else {
                         o[LOW_REGION(0x5ec, 0x664)] = one;
                         o[LOW_REGION(0x5c8, 0x63c)] = 5;
-                        ResetEntryList0205d6a0((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
+                        Window_ClosePane((struct Entry_0205d6a0*)(o + LOW_REGION(0x34, 0x38)), one);
                         o[LOW_REGION(0x5ca, 0x63e)] = 0;
                     }
                 }

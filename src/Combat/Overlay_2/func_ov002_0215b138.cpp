@@ -10,10 +10,10 @@ struct Struct_0205def8;
 struct Struct_0205d81c;
 struct Struct_0205d0e0;
 
-extern "C" void func_0205def8(struct Struct_0205def8* arg0, int arg1, int arg2);
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" int func_0204c7cc(unsigned char* arg0);
-extern "C" void func_ov002_02154bcc(int arg0, int arg1, void* arg2, int arg3, unsigned char arg4, unsigned char arg5);
+void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8* s, int clear, int key);
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+int WindowPane_IsReady(unsigned char* obj);
+void SetEntryFields02154bcc(int a, int b, void* obj, int idx, unsigned char arg5, unsigned char arg6);
 
 // USA: func_ov002_0215b138
 // KEEP-NAME
@@ -31,7 +31,7 @@ extern "C" ARM void func_ov002_0215b138(unsigned char* arg0) {
     if (var0 == 0) {
         return;
     }
-    if (!func_0204c7cc((unsigned char*)var0)) {
+    if (!WindowPane_IsReady((unsigned char*)elem)) {
         return;
     }
 

@@ -153,18 +153,18 @@ extern "C" void func_0202aec0(Struct_0202aec0_2*);
 extern "C" void* func_0202ae24();
 extern "C" void func_0205e22c(void*);
 extern "C" void VectorizedMemset(void*, int, unsigned int);
-extern "C" void* func_02052a10(char*);
-extern "C" short* func_02052e2c(Struct_02052e2c*);
-extern "C" int func_020ac0b4(void*);
-extern "C" int func_020ac4f8(int);
-extern "C" int func_020a0870(Struct_02061c04*);
-extern "C" int func_020a08a4(Struct_02061c04*);
-extern "C" int func_020a08d8(Struct_02061c04*);
-extern "C" int func_020a090c(Struct_02061c04*);
-extern "C" Struct_ov003_02170d88_7* func_02053c6c(unsigned char*);
-extern "C" unsigned char func_0200fb08(Struct_02000c9c_8*);
-extern "C" unsigned char func_020119f8(char*, void*);
-extern "C" void func_ov003_02171f80(Struct_ov003_02170d88_13*);
+void* ResetBuffer02052a10(char*);
+short* GetField150Ptr0x488_02052e2c(Field150Holder02052e2c*);
+int CopyOutBattleField0x7ac0_020ac0b4(void*);
+int UpdatePlayClocks020ac4f8(int);
+int GetFieldPercentOver307_020a0870(BattleRecordSnapshot*);
+int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot*);
+int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot*);
+int GetFieldPercentOver448_020a090c(BattleRecordSnapshot*);
+ProfileCharacterData02170d88* GetFieldAt0x150_02053c6c(unsigned char*);
+unsigned char GameState_GetLanguage(Struct0200fb08*);
+unsigned char CopyToRegion0x6482IfDst_020119f8(char*, void*);
+void ClearUnmatchedKeys_02171f80(KeyArrayObj_02171f80*);
 extern "C" void func_ov017_021b1d44(void*, int, int);
 extern const char* data_ov003_021805e4[5];
 extern const char* data_ov003_021805d0[5];
@@ -245,13 +245,13 @@ extern "C" ARM void func_ov003_02170d88(Struct_ov003_02170d88_4* arg0) {
     Struct_ov003_02170d88_5 var15 = var6->unknown_74fe_;
     arg0->unknown_1c0_.unknown_e_ = var15;
 #if !defined(jpn)
-    unsigned char var16 = func_0200fb08((Struct_02000c9c_8*)var3);
-    int var17 = 0;
-    switch (var16) {
-    case 2: var17 = 1; break;
-    case 3: var17 = 2; break;
-    case 4: var17 = 3; break;
-    case 5: var17 = 4; break;
+    unsigned char platformLanguage = GameState_GetLanguage((Struct0200fb08*)state);
+    int language = 0;
+    switch (platformLanguage) {
+    case 2: language = 1; break;
+    case 3: language = 2; break;
+    case 4: language = 3; break;
+    case 5: language = 4; break;
     }
     arg0->unknown_380_.unknown_0_ = arg0->unknown_1c0_.unknown_0_;
     arg0->unknown_380_.unknown_b_ = arg0->unknown_1c0_.unknown_b_;
@@ -305,11 +305,11 @@ extern "C" ARM void func_ov003_02170d88(Struct_ov003_02170d88_4* arg0) {
         memcpy(var22->ClearedBy, var23, 10);
     }
 #endif
-    func_ov003_02171f80((Struct_ov003_02170d88_13*)arg0);
-    arg0->unknown_718_ = 0;
-    arg0->unknown_738_ = 0;
-    arg0->unknown_72c_ = 0;
-    arg0->unknown_730_ = 3;
-    ((Struct_ov003_02170d88_12*)GetGameResources())->unknown_4494_ = 1;
-    func_ov017_021b1d44(GetGameResources()->unknown_ptr_array_3afc[19], 0x20, 1);
+    ClearUnmatchedKeys_02171f80((KeyArrayObj_02171f80*)self);
+    self->active = 0;
+    self->unknown738 = 0;
+    self->progress = 0;
+    self->flags = 3;
+    ((ProfileResourceState02170d88*)GetGameResources())->profileActive = 1;
+    func_ov017_021b1d44(GetGameResources()->fieldTasks_[19], 0x20, 1);
 }

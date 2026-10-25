@@ -109,10 +109,10 @@ extern "C" void func_ov012_0218bba0(Struct_ov012_02187608* arg0, int arg1, int a
 #else
 extern "C" void func_ov012_0218adac(Struct_ov012_02187608* arg0, int arg1, int arg2, int arg3);
 #endif
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c* arg0);
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
-extern "C" void func_ov023_021e6e60(Struct_ov012_02187608* arg0);
-extern "C" void func_ov012_0218943c(Struct_ov012_02187608* arg0);
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
+void Window_ClosePane(Entry_0205d6a0* window, int a);
+extern "C" void func_ov023_021e6e60(ProfileEditor02187608* self);
+extern "C" void func_ov012_0218943c(ProfileEditor02187608* self);
 
 extern "C" char g_sePlayer[];
 
@@ -127,8 +127,8 @@ extern "C" ARM void func_ov012_02187608(Struct_ov012_02187608* arg0)
 #if defined(jpn)
     if (arg0->unknown_1370_ == 0)
     {
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        arg0->unknown_1370_++;
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        self->step_++;
     }
     else if (arg0->unknown_1370_ == 1)
         arg0->unknown_1370_++;
@@ -271,8 +271,8 @@ extern "C" ARM void func_ov012_02187608(Struct_ov012_02187608* arg0)
         }
         if (!var4)
             return;
-        func_0205d6a0((Struct_0205d6a0*)arg0->unknown_ac_, 1);
-        arg0->unknown_1370_++;
+        Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
+        self->step_++;
         return;
     }
     else if (arg0->unknown_1370_ == 5)

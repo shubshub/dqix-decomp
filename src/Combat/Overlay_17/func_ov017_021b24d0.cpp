@@ -16,16 +16,16 @@ enum { Enum_ov017_021b24d0_261 = 0x105, Enum_ov017_021b24d0_716 = 0x2cc };
 #endif
 
 extern "C" void func_020c9be0(void);
-extern "C" void* func_02012fe4(void);
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_020a1ef0(int arg0);
-extern "C" void func_020a1df8(int arg0);
-extern "C" void func_ov011_0218438c(char* arg0);
-extern "C" void func_ov011_02184550(char* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
-extern "C" void func_ov011_021845c8(char* arg0, void* arg1, unsigned int arg2);
-extern "C" void func_ov011_02184640(char* arg0, char* arg1);
-extern "C" void func_ov011_02184694(char* arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_020a1940(unsigned int id);
+void PushInputLogB_020a1ef0(int value);
+void PushInputLogA_020a1df8(int value);
+extern "C" void func_ov011_0218438c(char* obj);
+extern "C" void func_ov011_02184550(char* obj, SafeAllocator* allocator, void* data, unsigned int length);
+void InitAndCreateTypeB021845c8(char* obj, void* buffer, unsigned int size);
+void InitEntry02184640(char* obj, char* entry);
+extern "C" void func_ov011_02184694(char* obj);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
 
 struct Struct_ov017_021b24d0 {
     char unknown_0_[Enum_ov017_021b24d0_261];
@@ -69,9 +69,9 @@ extern "C" ARM int func_ov017_021b24d0(Struct_ov017_021b24d0_3* arg0) {
     if (var1->GetDetailedTaskStatus(arg0->unknown_c_) != 2) {
         func_020c9be0();
     }
-    Struct_ov017_021b24d0* var2 = (Struct_ov017_021b24d0*)func_02012fe4();
-    if (var2 != NULL) {
-        var2->unknown_105_ |= 1;
+    Flags021b24d0* flags = (Flags021b24d0*)Zone3D_GetInstance();
+    if (flags != NULL) {
+        flags->flags |= 1;
     }
     unsigned int var3;
     void* var4;

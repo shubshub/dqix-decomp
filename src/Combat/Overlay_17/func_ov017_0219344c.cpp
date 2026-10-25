@@ -4,13 +4,13 @@
 #include "Input/Input.h"
 #include "Resource/Brightness.h"
 
-struct Struct_02015438;
-struct Struct_02033f2c;
-struct Struct_02033f44;
-struct Struct_02010604;
-struct Struct_02018300_3;
-struct Struct_02017098;
-struct Struct_ov009_0218aa28;
+struct HeadNode02046b24;
+struct ByteFlags02033f2c;
+struct BitFlag02033f44;
+struct Bytes02033b88;
+struct Obj020397cc;
+class Zone3D;
+struct Vec3;
 
 class Struct_ov017_0219344c_2 : public Object3D {
 public:
@@ -48,30 +48,24 @@ struct Struct_ov017_0219344c_5 {
     unsigned char unknown_0_[0x980];
 };
 
-struct Struct_ov017_0219344c {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-};
-
-extern "C" void* func_02012fe4(void);
-extern "C" int func_02046b24(Struct_02015438** arg0);
-extern "C" void func_02033f2c(Struct_02033f2c* arg0);
-extern "C" int func_ov017_0218df50(void* arg0, void* arg1);
-extern "C" int func_ov017_0218dfd8(Struct_ov017_0219344c_2* arg0);
-extern "C" int func_02033f44(Struct_02033f44* arg0);
-extern "C" int func_02039dcc(unsigned char* arg0);
-extern "C" int func_ov017_02193290(Struct_ov017_0219344c_4* arg0, Struct_ov017_0219344c_2* arg1, Vector3i* arg2, Vector3i* arg3, int* arg4, int* arg5, int arg6);
-extern "C" int func_02017d90(Struct_ov017_0219344c_3* arg0, int arg1, Struct_ov017_0219344c_5* arg2, Struct_ov017_0219344c_4 arg3, Struct_ov017_0219344c_2* arg4);
-extern "C" int func_ov017_02192b48(Struct_ov017_0219344c_5* arg0, Struct_ov017_0219344c_4* arg1, int arg2, Struct_ov017_0219344c_2* arg3, int arg4, Vector3i* arg5, Vector3i* arg6, int* arg7, int* arg8, int arg9, int* arg10, int arg11, int arg12, int arg13);
-extern "C" unsigned char func_020100b0(GameState* arg0);
-extern "C" void func_020397c0(void* arg0);
-extern "C" int func_02033b88(Struct_02010604* arg0, int arg1);
-extern "C" void func_020397cc(Struct_02018300_3* arg0, int arg1);
-extern "C" void func_020531f0(GameObject* arg0);
-extern "C" unsigned char* func_020177a8(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_0218daa8(void* arg0, Struct_ov009_0218aa28* arg1, int arg2, int arg3, unsigned char arg4);
-extern "C" unsigned char* func_0201777c(Struct_02017098* arg0, int arg1);
+extern "C" void* Zone3D_GetInstance(void);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24** head);
+void ClearFlags0x40And0x80At0xe0(ByteFlags02033f2c* p);
+int NotifyEntriesFlag256_0218df50(void* a, void* b);
+extern "C" int func_ov017_0218dfd8(Actor0219344c* self);
+int GetField0xe4IfFlag0x40(BitFlag02033f44* p);
+int IsFlag0x1ceBit0x8Set_02039dcc(unsigned char* p);
+extern "C" int func_ov017_02193290(Probe0219344c* probe, Actor0219344c* self, Vector3i* dest, Vector3i* pos, int* y, int* yLow, int hidden);
+extern "C" int Zone3D_CollectTerrainPolygons(Zone0219344c* zone, int index, Grid0219344c* grid, Probe0219344c probe, Actor0219344c* self);
+extern "C" int func_ov017_02192b48(Grid0219344c* grid, Probe0219344c* probe, int count, Actor0219344c* self, int arg, Vector3i* dest, Vector3i* pos, int* y, int* yLow, int enable, int* reset, int inCell, int index, int hidden);
+unsigned char GameState_GetLeaderIndex(GameState* gs);
+void GameObject_EnableControl(void* obj);
+int SetByte0xbeShiftPrev(Bytes02033b88* p, int val);
+void GameObject_DisableControl(Obj020397cc* obj, int val);
+extern "C" void func_020531f0(GameObject* obj);
+unsigned char* Zone3D_GetChest(unsigned char* p, int i);
+void GetDeltaAndForward_0218daa8(void* res, Vec3* pos, int speed, int a, unsigned char b);
+unsigned char* Zone3D_GetLootable(Zone3D* zone, int index);
 
 #define SETUP_PROBE()                                          \
     do {                                                       \
@@ -107,19 +101,19 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
     int var17;
     int var18;
 
-    var4 = GameState::GetInstance();
-    GameResources* var19 = GetGameResources();
-    var5 = (Struct_ov017_0219344c_3*)func_02012fe4();
-    var6 = 0;
-    Struct_02015438** var20 = (Struct_02015438**)var19->unknown_ptr_array_36fc[0];
-    var17 = var5->unknown_0_;
-    Vector3i var21 = arg0->position_;
-    var18 = arg0->unknown_ac_;
-    var7 = arg0->GetFlags() & 0x4000000;
-    arg0->DisableFlag(0x4000000);
-    var8 = 1;
-    if (TestFlags00(var19, 0x400) != 0 && g_keyManager.TestKeysHeld(1) != 0) {
-        var8 = 0;
+    gs = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    zone = (Zone0219344c*)Zone3D_GetInstance();
+    total = 0;
+    HeadNode02046b24** head = (HeadNode02046b24**)res->fieldTaskQueue_;
+    zoneId = zone->id;
+    Vector3i startPos = self->position_;
+    oldAC = self->fieldAC;
+    hidden = self->GetFlags() & 0x4000000;
+    self->DisableFlag(0x4000000);
+    enable = 1;
+    if (TestFlags00(res, 0x400) != 0 && g_keyManager.TestKeysHeld(1) != 0) {
+        enable = 0;
     }
     if ((arg0->unknown_0_ & 0x100) && (arg0->unknown_18c_ & 1)) {
         var8 = 0;
@@ -222,15 +216,15 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
                     continue;
                 }
             }
-            int var32 = func_02017d90(var5, var31, &var0, var22, arg0);
-            if (var32 > 0) {
-                var6 += var32;
-                var14 += func_ov017_02192b48(&var0, &var22, var32, arg0, arg1, var27, &var23, &var3, &var2, var8, &var1, var10, var31, var7);
+            int count = Zone3D_CollectTerrainPolygons(zone, j, &grid, probe, self);
+            if (count > 0) {
+                total += count;
+                pathHits += func_ov017_02192b48(&grid, &probe, count, self, arg, dest, &pos, &y, &yLow, enable, &reset, inCell, j, hidden);
             }
         }
-        if (var27 != NULL && var14 != 0) {
-            short var33 = arg0->unknown_4_;
-            if (var33 != func_020100b0(var4)) {
+        if (dest != NULL && pathHits != 0) {
+            short id = self->actorIndex_;
+            if (id != GameState_GetLeaderIndex(gs)) {
                 continue;
             }
             var13 = func_ov017_02193290(&var22, arg0, var27, &var23, &var3, &var2, var7);
@@ -250,35 +244,35 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
     if (var17 == 10000) {
         var1 = 1;
     }
-    if (var1 != 0) {
-        if (var18 != 0 && var34->obj3D_.unknown_4_ == arg0->unknown_4_) {
-            func_020397c0(var34);
+    if (reset != 0) {
+        if (oldAC != 0 && player->obj3D_.actorIndex_ == self->actorIndex_) {
+            GameObject_EnableControl(player);
         }
-        arg0->unknown_ac_ = 0;
-    } else if (var18 == 0) {
-        func_02033b88((Struct_02010604*)arg0, 0);
-        if (var34->obj3D_.unknown_4_ == arg0->unknown_4_) {
-            func_020397cc((Struct_02018300_3*)var34, 1);
-            if (!var34->obj3D_.GetFlag(0x1000)) {
-                func_020531f0(var34);
+        self->fieldAC = 0;
+    } else if (oldAC == 0) {
+        SetByte0xbeShiftPrev((Bytes02033b88*)self, 0);
+        if (player->obj3D_.actorIndex_ == self->actorIndex_) {
+            GameObject_DisableControl((Obj020397cc*)player, 1);
+            if (!player->obj3D_.GetFlag(0x1000)) {
+                func_020531f0(player);
             }
         }
     }
 
-    GameResources* var35 = GetGameResources();
-    unsigned char* var36 = (unsigned char*)func_02012fe4();
-    Vector3i var37 = arg0->position_;
-    Struct_ov017_0219344c* var38 = (Struct_ov017_0219344c*)var35->unknown_36b4_;
-    if (var38 != NULL && !(var21.x == var37.x && var21.y == var37.y && var21.z == var37.z)) {
-        if (var38->unknown_0_ == 2) {
-            unsigned char* var39 = func_020177a8(var36, var38->unknown_2_);
-            if (var39 != NULL) {
-                func_ov017_0218daa8(var35, (Struct_ov009_0218aa28*)var39, 0xccc, 0, 0);
+    GameResources* res2 = GetGameResources();
+    unsigned char* zone2 = (unsigned char*)Zone3D_GetInstance();
+    Vector3i endPos = self->position_;
+    InteractionSelection* link = &res2->interactionSelection;
+    if (link != NULL && !(startPos.x == endPos.x && startPos.y == endPos.y && startPos.z == endPos.z)) {
+        if (link->kind == 2) {
+            unsigned char* elem = Zone3D_GetChest(zone2, link->targetIndex);
+            if (elem != NULL) {
+                GetDeltaAndForward_0218daa8(res2, (Vec3*)elem, 0xccc, 0, 0);
             }
-        } else if (var12 == 0 && var13 == 0 && var38->unknown_0_ == 5) {
-            unsigned char* var40 = func_0201777c((Struct_02017098*)var36, var38->unknown_2_);
-            if (var40 != NULL) {
-                func_ov017_0218daa8(var35, (Struct_ov009_0218aa28*)(var40 + 0x24), 0xc51, 0, 0);
+        } else if (hits == 0 && found == 0 && link->kind == 5) {
+            unsigned char* actor = Zone3D_GetLootable((Zone3D*)zone2, link->targetIndex);
+            if (actor != NULL) {
+                GetDeltaAndForward_0218daa8(res2, (Vec3*)(actor + 0x24), 0xc51, 0, 0);
             }
         }
     }

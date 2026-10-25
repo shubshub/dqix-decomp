@@ -19,7 +19,7 @@ struct Struct0205a198;
 void Sprite_Init(Struct0205a198*);
 struct ClearTarget0205a234;
 void ClearField0And40205a234(ClearTarget0205a234*);
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 
 struct Struct_ov003_021680d4 {
     SafeAllocator unknown_0_;
@@ -63,5 +63,5 @@ extern "C" ARM void func_ov003_021680d4(struct Struct_ov003_021680d4* arg0, Safe
     arg0->unknown_4d8_ = var7;
     func_0205a234((Struct_02043368*)var7);
 
-    arg0->unknown_7c_ = *(int*)(func_020421a0() + Enum_ov003_021680d4_92);
+    obj->field7c = *(int*)(MessageSystem_GetInstance() + kRegionValue5C_28);
 }

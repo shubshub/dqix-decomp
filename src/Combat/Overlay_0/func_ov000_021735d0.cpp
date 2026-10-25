@@ -20,14 +20,14 @@ struct Struct_ov000_021682ec_5 {
 };
 struct GameFlags {char pad[gameFlagsOffset]; signed int bit0:1,bit1:1,rest:30;};
 struct TableEntry0217f8c0 {char p[0x10];signed char commands[8];signed char index;char q[0x24-0x19];unsigned char flags;};
-struct Struct0217f8c0;struct Obj0204b5e8;struct Struct021754fc;struct S02180b50;
-int Background_SetScroll(Obj0204b5e8*,int,int);
+struct Struct0217f8c0; struct BackgroundGraphics; struct Struct021754fc; struct S02180b50;
+int Background_SetScroll(BackgroundGraphics*,int,int);
 TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(Struct0217f8c0*);
 void UpdateLastEntryField02175440(void*);
 void UpdateFieldromTable_02174fc0_02174fc0(void*);
 void NotifyEachViaLookup021754fc(Struct021754fc*,int);
 void TickCounter02180b50(S02180b50*);
-int GetField0x3acValue_020100a8(GameState*);
+int GameState_GetProtagonistIndex(GameState*);
 int CheckField0NonZero_0202b7d8(int*);
 extern "C" {
 int* func_0202ae18(); void func_020dc7e8(int,int); int Window_Update(void*,int);
@@ -45,9 +45,9 @@ extern int data_ov000_02183ff0;extern int data_ov000_02184288[];
 extern "C" ARM void func_ov000_021735d0(Struct_ov000_021682ec_5* arg0,int arg1)
 {
     self->delta=delta;
-    Background_SetScroll((Obj0204b5e8*)self->dispatchA,-self->x,-self->y);
-    Background_SetScroll((Obj0204b5e8*)self->dispatchB,0,0);
-    Background_SetScroll((Obj0204b5e8*)self->dispatchC,0,0);
+    Background_SetScroll((BackgroundGraphics*)self->dispatchA,-self->x,-self->y);
+    Background_SetScroll((BackgroundGraphics*)self->dispatchB,0,0);
+    Background_SetScroll((BackgroundGraphics*)self->dispatchC,0,0);
     GameState* gs=GameState::GetInstance();func_0202ae18();
     if(((GameFlags*)gs)->bit1)func_020dc7e8(0,-1);
     if(!delta)delta=1;
@@ -63,19 +63,19 @@ extern "C" ARM void func_ov000_021735d0(Struct_ov000_021682ec_5* arg0,int arg1)
         self->result=Window_Update(self->updateState,delta);
         if(clear){if(a)self->flagA=true;if(b)self->flagB=true;}
     }
-    func_ov000_02175fc8(arg0);func_ov000_02174d08(arg0);func_ov000_02174fc0(arg0);
-    func_ov000_02175024(arg0,arg1);func_ov000_021754fc((Struct_ov000_021735d0_4*)arg0,arg1);
-    if(arg0->unknown_1d72_&0x200){
-        void* var6=func_ov000_02161318(arg0,(signed char)func_020100a8(GameState::GetInstance()));
-        func_ov000_0217f304(arg0,data_ov000_02183ff0,data_ov000_02184288[1],var6);
-        func_ov000_0217c908(arg0,data_ov000_02183ff0,data_ov000_02184288[1]);
-        func_ov000_02180b50((Struct_ov000_021735d0_5*)arg0);
-        int var7=arg0->unknown_1d60_[arg0->unknown_1d68_]==100;
-        if(var7 & func_0202b7d8(func_0202ae18())){
-            if(arg0->unknown_1d81_==1){
-                for(int var8=0;var8<2;var8++)func_ov000_02176e3c(arg0,var6,23,data_ov000_02183ff0,data_ov000_02184288[1],0);
-                arg0->unknown_1d81_=2;
-            }else if(arg0->unknown_1d81_==0)arg0->unknown_1d81_=1;
+    func_ov000_02175fc8(self);func_ov000_02174d08(self);UpdateFieldromTable_02174fc0_02174fc0(self);
+    func_ov000_02175024(self,delta);NotifyEachViaLookup021754fc((Struct021754fc*)self,delta);
+    if(self->flags&0x200){
+        void* unit=func_ov000_02161318(self,(signed char)GameState_GetProtagonistIndex(GameState::GetInstance()));
+        func_ov000_0217f304(self,data_ov000_02183ff0,data_ov000_02184288[1],unit);
+        func_ov000_0217c908(self,data_ov000_02183ff0,data_ov000_02184288[1]);
+        TickCounter02180b50((S02180b50*)self);
+        int special=self->commands[self->commandIndex]==100;
+        if(special & CheckField0NonZero_0202b7d8(func_0202ae18())){
+            if(self->phase==1){
+                for(int i=0;i<2;i++)func_ov000_02176e3c(self,unit,23,data_ov000_02183ff0,data_ov000_02184288[1],0);
+                self->phase=2;
+            }else if(self->phase==0)self->phase=1;
         }
     }
     if(arg0->unknown_1d72_&0x400)func_ov000_02180b50((Struct_ov000_021735d0_5*)arg0);

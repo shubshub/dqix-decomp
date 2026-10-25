@@ -11,14 +11,14 @@ extern "C" void func_ov017_021c95ec(int arg0, int arg1, int arg2, int arg3, int 
                                     Vector3fix arg5, int arg6, int arg7, int arg8);
 
 // USA: func_020794f8
-extern "C" ARM void func_020794f8(struct Struct_020794f8* arg0, int arg1, int arg2) {
-    int var0 = arg0->unknown_0_.GetField06();
-    int var1 = arg0->unknown_0_.unknown_4_ - 0x70;
-    int var2 = arg0->unknown_0_.unknown_2_;
-    Vector3fix var3 = arg0->unknown_0_.position_;
-    short var4 = arg0->unknown_ae_;
-    var1 %= 12;
-    if (var1 < 0 || var1 >= 12) {
+extern "C" ARM void func_020794f8(struct Obj020794f8* self, int flag6, int flag7) {
+    int id = self->obj3D_.GetField06();
+    int rem = self->obj3D_.actorIndex_ - 0x70;
+    int v2 = self->obj3D_.unknown_2_;
+    Vector3fix v = self->obj3D_.position_;
+    short field8 = self->field_ae;
+    rem %= 12;
+    if (rem < 0 || rem >= 12) {
         return;
     }
     func_ov017_021c95ec(var0, var1, var2, 1, -1, var3, var4, arg1, arg2);

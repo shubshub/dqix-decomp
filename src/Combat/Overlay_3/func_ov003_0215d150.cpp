@@ -59,9 +59,9 @@ struct Struct_ov003_0215d150 {
 static inline Struct_01ff91ac_29 *inline_ov003_0215d150(Struct_ov003_0215d150 *arg0) { return &arg0->unknown_1840_; }
 static inline int inline_ov003_0215d150_2(Struct_01ff91ac_29 *arg0) { return arg0->unknown_b3c_; }
 
-extern "C" Struct_ov003_0215d150_2 *func_020421a0();
+Ctl *MessageSystem_GetInstance();
 extern "C" int *func_0202ae18();
-extern "C" Zone *func_02012fe4();
+extern "C" Zone *Zone3D_GetInstance();
 extern "C" void func_02046380(void *obj);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
@@ -70,20 +70,20 @@ int CheckField0NonZero_0202b7d8(int *p);
 extern "C" int func_0202c540(int *p);
 extern "C" int func_0202c508(int *p);
 struct Obj02046574;
-void SetIndexedName02046574(Obj02046574*, int, char*);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 const char * KeyTable_Get(Container020e0310*, int);
-int AppendString02042058(char *dst, const char *src);
+int Text_Append(char *dst, const char *src);
 extern "C" void func_ov003_0215cab0(char *obj, void *flag);
 extern "C" void func_ov003_0215ddc0(char *base);
 extern "C" void func_ov003_0215df1c(void *self);
 extern "C" void func_ov003_0215dd3c(char *obj);
 struct Struct_0205d81c;
-void SetElementFieldC2_0205deb4(Struct_0205d81c*, int, int);
+void Window_SetPanePalette(Struct_0205d81c*, int, int);
 void SetChannelAFlag0205cef8(void *obj);
 void SetChannelBFlag0205cf04(void *obj);
 int Window_GetSelectedIndex(Struct_0205c570 *);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 void SePlayer_Play(SePlayer *, int, int);
 void ClearChannelAFlag0205cf10(void *p);
 void ClearFlagByte0205cf1c(Struct0205cf1c *);
@@ -93,11 +93,11 @@ ARM int IsFlagStateOrField98Eq2_0215dd00(char *self);
 extern int g_sePlayer;
 
 // USA: func_ov003_0215d150
-extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
-    GameState *var0 = GameState::GetInstance();
-    Struct_ov003_0215d150_2 *var1       = func_020421a0();
-    int *var2       = func_0202ae18();
-    Struct_ov003_0215d150 *var3      = func_02012fe4();
+extern "C" ARM void func_ov003_0215d150(Scene *self) {
+    GameState *gs = GameState::GetInstance();
+    Ctl *g       = MessageSystem_GetInstance();
+    int *a       = func_0202ae18();
+    Zone *b      = Zone3D_GetInstance();
 
     if (var1->unknown_9a0_ == 3) {
         *(unsigned char *) ((char *) var1 + 0x1000 + 0x9ae + Enum_ov003_0215d150_0_4) = 0;
@@ -122,9 +122,9 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
         }
         var1->unknown_998_ = 1;
 
-        char *var7 = var1->unknown_5c_;
-        if (arg0->unknown_3f0_ != 0) {
-            func_02046574((Struct_02046574_2*)var1, 0, (char*)(*(void **) ((char *) var0->GetPartyMemberByIndex(0) + 0x134)));
+        char *buf = g->strings;
+        if (self->b3f0 != 0) {
+            MessageSystem_SetStringArgument((Obj02046574*)g, 0, (char*)(*(void **) ((char *) gs->GetPartyMemberByIndex(0) + 0x134)));
 
             int var8 = 0;
             if (func_0202c508(var2) != 0) {
@@ -132,7 +132,7 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
             }
 
             if (flag != 0) {
-                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)0x64));
+                Text_Append(buf, KeyTable_Get(&self->cont64, (short)0x64));
             }
 
             if (inline_ov003_0215d150_2(inline_ov003_0215d150(var3)) == 6) {
@@ -142,18 +142,18 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
             } else {
                 var5 = 0x68;
             }
-            AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k1));
+            Text_Append(buf, KeyTable_Get(&self->cont64, (short)k1));
 
             if (flag == 0) {
-                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)0x6f));
+                Text_Append(buf, KeyTable_Get(&self->cont64, (short)0x6f));
             } else {
                 int k2;
                 k2 = (self->w3d0 != 0) ? 0x66 : 0x69;
-                AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k2));
+                Text_Append(buf, KeyTable_Get(&self->cont64, (short)k2));
             }
         } else {
             int k0 = sb + 0x3e8;
-            AppendString02042058(buf, KeyTable_Get(&self->cont64, (short)k0));
+            Text_Append(buf, KeyTable_Get(&self->cont64, (short)k0));
         }
 
         func_ov003_0215cab0((char *) arg0, var7);
@@ -175,9 +175,9 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
         if (arg0->unknown_3f2_ == 0) {
             func_ov003_0215ddc0((char *) arg0);
         }
-        func_ov003_0215df1c(arg0);
-        func_0205deb4((Struct_0205d81c*)arg0->unknown_98_, 0, 0);
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        func_ov003_0215df1c(self);
+        Window_SetPanePalette((Struct_0205d81c*)self->list98, 0, 0);
+        self->state = self->state + 1;
     }
     if (var4 == 3) {
         arg0->unknown_3c1_ = 0;
@@ -191,7 +191,7 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
         self->b3c1 = Window_GetSelectedIndex((Struct_0205c570 *) self->list98);
         if (func_ov003_0215dcb8((char *) self) != 0) {
             self->b3c2 = 0;
-            ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
+            Window_ClosePane((Entry_0205d6a0*)self->list98, 0);
             SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
             ClearChannelAFlag0205cf10(self->list98);
             ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
@@ -202,13 +202,13 @@ extern "C" ARM void func_ov003_0215d150(Struct_ov003_02154af4_3 *arg0) {
             }
             arg0->unknown_3b8_ = 0;
         } else {
-            if (func_ov003_0215dd00((char *) arg0) != 0) {
-                arg0->unknown_3c2_ = 0;
-                func_0205d6a0((Struct_0205d6a0*)arg0->unknown_98_, 0);
-                func_0205cf10(arg0->unknown_98_);
-                func_0205cf1c((Struct_0205cf1c *) arg0->unknown_98_);
-                arg0->unknown_3bc_ = 4;
-                arg0->unknown_3b8_ = 0;
+            if (IsFlagStateOrField98Eq2_0215dd00((char *) self) != 0) {
+                self->b3c2 = 0;
+                Window_ClosePane((Entry_0205d6a0*)self->list98, 0);
+                ClearChannelAFlag0205cf10(self->list98);
+                ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
+                self->b3bc = 4;
+                self->state = 0;
             }
         }
     }

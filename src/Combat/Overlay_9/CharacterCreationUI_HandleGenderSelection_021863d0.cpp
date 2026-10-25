@@ -4,11 +4,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-struct Struct_ov009_021863d0 {
-    char unknown_0_[0xc12];
-    unsigned char unknown_c12_;
-};
-
 extern "C" void CharacterCreationUI_SetupSlotNavigation(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_LoadSlotLayout(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, int choice);
@@ -70,14 +65,14 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
         int result = CharacterCreationUI_HandleInput(self);
         if (result != self->state)
         {
-            Struct_ov009_021863d0* var3 = (Struct_ov009_021863d0*)arg0->unknown_7fc_;
-            if (var3->unknown_c12_ == 0)
+            CharacterModel* next = self->nextCharacter;
+            if (next->loading_ == 0)
             {
 #if defined(jpn)
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Body);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Face);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_Hair);
-                CharacterModel_InvalidatePart((CharacterModel*)self->nextCharacter, CharacterModelPart_HairTexture);
+                CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Body);
+                CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Face);
+                CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_Hair);
+                CharacterModel_InvalidatePart(self->nextCharacter, CharacterModelPart_HairTexture);
 #else
                 CharacterModel_InvalidatePart(next, CharacterModelPart_Body);
                 CharacterModel_InvalidatePart(next, CharacterModelPart_Face);

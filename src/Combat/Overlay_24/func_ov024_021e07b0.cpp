@@ -41,11 +41,11 @@ extern "C" ARM void* func_ov024_021e07b0(struct Struct_ov024_021e07b0_3* arg0, u
         if (!var4) {
             func_020488cc((unsigned char*)var0, 1);
         }
-        func_02088e64((unsigned char*)var0->currentStats_);
-        func_ov000_0215a88c(arg0->unknown_10_, var2, 0x164);
-        var3 = 1;
-        if (func_02086ef0((struct Struct_02048150*)func_02010828(GameState::GetInstance()), arg1) && arg3->unknown_4_0_ == 0xc6) {
-            func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, var3);
+        ClearFlag0x1000AndBytes7eA1_02088e64((unsigned char*)c->currentStats_);
+        AddEntryAndIncrementCount0215a88c(obj->field0x10, entry, 0x164);
+        added = 1;
+        if (ArrayContainsByte_02086ef0((struct ArrayContainsByteStruct*)GameState_GetParty(GameState::GetInstance()), slot) && move->id == 0xc6) {
+            IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)obj->field0x10, added);
         }
     }
     if (var1 != 0) {

@@ -66,11 +66,11 @@ extern "C" ARM int func_ov001_0215bb3c(char* arg0, int arg1) {
         var15 = var14->animationType;
     }
 
-    var1.allocator = var6;
-    var1.fileData = var2;
-    var1.unk_8 = var3;
-    var1.unk_10 = 1;
-    var1.packageID = var7;
+    loadInfo.allocator = allocator;
+    loadInfo.fileData = fileData;
+    loadInfo.fileSize = fileSize;
+    loadInfo.unk_10 = 1;
+    loadInfo.packageID = packageID;
 
     if (var15 == 0) {
         var12->obj3D_.LoadFromCHRArchive(&var1);
@@ -81,6 +81,6 @@ extern "C" ARM int func_ov001_0215bb3c(char* arg0, int arg1) {
     if (var13) {
         BackgroundLoader::RemoveLockGlobal();
     }
-    var12->obj3D_.MaybeSetBCFGAnimation(0, 0);
+    obj->obj3D_.SetAnimationByIndex(0, 0);
     return 1;
 }

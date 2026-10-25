@@ -52,11 +52,11 @@ union Struct_02065990_7 {
 };
 
 struct Container0205a3d0;
-void SetEntryByte14ByKey0205a42c(Container0205a3d0*, int, int);
+void SpriteEntryList_SetFirstObject(Container0205a3d0*, int, int);
 struct Container0205a330;
-void IterateEntries0205a330(Container0205a330*, int);
+void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
 extern "C" void func_0206b104(void* obj);
-void ReinitController02043204(char*);
+void MessageSystem_Reset(char*);
 struct Struct02065758;
 int UpdateCounterAndFlag02065758(Struct02065758*, int);
 void UpdateTimedState0202f380(void* obj, int step);
@@ -73,7 +73,7 @@ struct Battle020456d0;
 void StepCounter020456d0(Battle020456d0*);
 void ResetOrConsumeCounter02065920(unsigned char*, unsigned int);
 extern "C" void func_020676e0(void* obj, int step);
-extern "C" void func_02043124(void* obj);
+extern "C" void MessageSystem_Stop(void* obj);
 void SetName56AndFlag_0218d7b0(unsigned char* owner, char* name);
 struct SePlayer;
 void SePlayer_Play(SePlayer*, int, int);
@@ -90,7 +90,7 @@ void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
 extern "C" int fix32_Atan2(int x, int z);
 int fix32ReduceAngle0To2Pi(int angle);
 extern "C" void func_02065418(int a);
-int CallFunc020e0434With02153694_020e51cc(int a);
+int StandardStrings_Get(int a);
 void InitCombatPairState020652d0(char* obj, int a, int b, int c);
 struct Obj0208bf28;
 void SetFieldD20208bf28(Obj0208bf28*, int, unsigned char);
@@ -105,7 +105,7 @@ void ClearField0xd0AndSetFlag0x1IfByte0xd4Not2_0208be94(unsigned char*);
 void SetFlag0x2IfByte0xd4Not3_0208beb4(unsigned char*);
 extern "C" void func_0205e944(void* p, int v);
 
-extern unsigned char data_02109bf4;
+extern unsigned char g_bgmPlayer;
 extern unsigned char g_sePlayer;
 
 // USA: func_02065990
@@ -124,18 +124,18 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
 
     if (*(void**)(var0 + REGION_VALUE(0x230, 0x2e0)) != 0 && var0[REGION_VALUE(0x236, 0x2e6)] != 0 && arg0->unknown_9a0_ == 6) {
         if ((*(unsigned short*)0x4000304 & 0x8000) >> 15 == 1) {
-            func_0205a42c((Struct_0205a254*)(*(void**)(var0 + REGION_VALUE(0x230, 0x2e0))), 0, 0x1e);
+            SpriteEntryList_SetFirstObject((Container0205a3d0*)(*(void**)(self + REGION_VALUE(0x230, 0x2e0))), 0, 0x1e);
         }
-        func_0205a330((Struct_0205a330*)(*(void**)(var0 + REGION_VALUE(0x230, 0x2e0))), var9);
+        SpriteEntryList_AdvanceAnimations((Container0205a330*)(*(void**)(self + REGION_VALUE(0x230, 0x2e0))), step);
     }
 
     if (arg0->unknown_998_ == 0) return;
 
-    if (REGION_FLAG(unknown_0_3_, unknown_19d1_) != 0) {
-        arg0->unknown_1958_ = *(signed char*)(var0 + REGION_VALUE(0x1786, 0x1958)) - var9;
-        if (*(signed char*)(var0 + REGION_VALUE(0x1786, 0x1958)) >= 0) return;
-        func_0206b104(var0);
-        func_02043204((char*)var0);
+    if (REGION_FLAG(flag3, b19d1) != 0) {
+        message->b1958 = *(signed char*)(self + REGION_VALUE(0x1786, 0x1958)) - step;
+        if (*(signed char*)(self + REGION_VALUE(0x1786, 0x1958)) >= 0) return;
+        func_0206b104(self);
+        MessageSystem_Reset((char*)self);
         return;
     }
 
@@ -173,17 +173,17 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
     if (func_020657c8(var0, var9) != 0) return;
     func_020658ac((unsigned char*)var0, var9);
 
-    if ((arg0->unknown_195b_ & 1) != 0) {
-        if (func_0209ca2c(&data_02109bf4) == 0) {
-            arg0->unknown_195b_ = arg0->unknown_195b_ & ~1;
+    if ((message->b195b & 1) != 0) {
+        if (IsAnimationActive0209ca2c(&g_bgmPlayer) == 0) {
+            message->b195b = message->b195b & ~1;
         }
     } else {
         if (arg0->unknown_8c_ != 0 && (arg0->unknown_8c_)[0xd4] == 2) return;
 
-        if (arg0->unknown_19c9_ != 0) {
-            if (func_0209ca2c(&data_02109bf4) != 0) return;
-            *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
-            arg0->unknown_19c9_ = 0;
+        if (message->b19c9 != 0) {
+            if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) return;
+            *(int*)(self + REGION_VALUE(0x44, 0x78)) = *(int*)(self + REGION_VALUE(0x44, 0x78)) + 1;
+            message->b19c9 = 0;
             return;
         }
 
@@ -262,11 +262,11 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 arg0->unknown_9a0_ = 0;
                 arg0->func_02045688();
                 return;
-            } else if (var1 == 0xff03) {
-                arg0->unknown_9a0_ = 0;
-                arg0->func_02045688();
-                func_02043204((char*)var0);
-                func_02043124(var0);
+            } else if (tok == 0xff03) {
+                message->mode = 0;
+                message->ProcessPendingFlag02045688();
+                MessageSystem_Reset((char*)self);
+                MessageSystem_Stop(self);
                 return;
             } else if (var1 == 0xff0b) {
                 arg0->unknown_9a0_ = 4;
@@ -438,9 +438,9 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
 #if defined(jpn)
                 func_020665bc((char*)(var0 + REGION_VALUE(0x50, 0x90)), var25, data_020f07b4, data_020f07b9);
 #else
-                int var26 = func_020e51cc(0x1b);
-                int var27 = func_020e51cc(0x1c);
-                func_020652d0((char*)(var0 + REGION_VALUE(0x50, 0x90)), var25, var26, var27);
+                int a = StandardStrings_Get(0x1b);
+                int b = StandardStrings_Get(0x1c);
+                InitCombatPairState020652d0((char*)(self + REGION_VALUE(0x50, 0x90)), first, a, b);
 #endif
                 message->w94c[2] = first;
                 (self + 0x1000)[REGION_VALUE(0x7ea, 0x9ba)] = 1;
@@ -463,9 +463,9 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
 #if defined(jpn)
                 func_020665bc((char*)(var0 + REGION_VALUE(0x50, 0x90)), 0, data_020f07c0, data_020f07c7);
 #else
-                int var34 = func_020e51cc(0x1d);
-                int var35 = func_020e51cc(0x1e);
-                func_020652d0((char*)(var0 + REGION_VALUE(0x50, 0x90)), 0, var34, var35);
+                int a = StandardStrings_Get(0x1d);
+                int b = StandardStrings_Get(0x1e);
+                InitCombatPairState020652d0((char*)(self + REGION_VALUE(0x50, 0x90)), 0, a, b);
 #endif
                 message->w94c[2] = 0;
                 (self + 0x1000)[REGION_VALUE(0x7ea, 0x9ba)] = 1;
@@ -483,25 +483,25 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
 #else
                 if (var37 != 0) {
 #endif
-                    *(unsigned short*)(var37 + 0xda) = *(unsigned short*)(var37 + 0xda) | 0x40;
-                    func_0208bf28((Struct_02065990_2*)(arg0->unknown_8c_), *(short*)(var0 + REGION_VALUE(0x1776, 0x1948)), 0);
-                    *&arg0->unknown_195b_ |= 1;
-                    unsigned char* var38 = func_02094d6c();
-                    int var39 = func_020965ac((Struct_02065990_3*)var38, (unsigned char)*(short*)(var0 + REGION_VALUE(0x1776, 0x1948)));
-                    func_020cf0fc((int)&var6);
-                    func_020cf1a8((int)&var7);
-                    var3.unknown1_0_.unknown_0_0_ = var6.unknown_0_;
-                    var3.unknown1_0_.unknown_0_7_ = var6.unknown_4_;
-                    var3.unknown1_0_.unknown_1_3_ = var6.unknown_8_;
-                    var3.unknown1_0_.unknown_2_0_ = var7.unknown_0_;
-                    var3.unknown1_0_.unknown_2_5_ = var7.unknown_4_;
-                    *(unsigned int*)(var38 + var39 * 4 + 0x178) = var3.unknown_0_;
-                    func_0209c830((Struct_02109bf4_2*)&data_02109bf4, 0x32);
+                    *(unsigned short*)(ent + 0xda) = *(unsigned short*)(ent + 0xda) | 0x40;
+                    SetFieldD20208bf28((Obj0208bf28*)(message->child), *(short*)(self + REGION_VALUE(0x1776, 0x1948)), 0);
+                    *&message->b195b |= 1;
+                    unsigned char* g = GetGlobal02109418_02094d6c();
+                    int idx = GetTableByteOrFF_020965ac((GetTableByteOrFFData*)g, (unsigned char)*(short*)(self + REGION_VALUE(0x1776, 0x1948)));
+                    RegisterSlotA020cf0fc((int)&sa);
+                    RegisterSlotB020cf1a8((int)&sb);
+                    packed.b.a = sa.f0;
+                    packed.b.b = sa.f4;
+                    packed.b.c = sa.f8;
+                    packed.b.d = sb.f0;
+                    packed.b.e = sb.f4;
+                    *(unsigned int*)(g + idx * 4 + 0x178) = packed.w;
+                    SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x32);
                 }
-            } else if (var1 > REGION_VALUE(0xff39, 0xff34) && var1 < REGION_VALUE(0xff4e, 0xff49)) {
-                arg0->func_02045688();
-                func_0209c830((Struct_02109bf4_2*)&data_02109bf4, var1 - REGION_VALUE(0xff08, 0xff03));
-                arg0->unknown_19c9_ = 1;
+            } else if (tok > REGION_VALUE(0xff39, 0xff34) && tok < REGION_VALUE(0xff4e, 0xff49)) {
+                message->ProcessPendingFlag02045688();
+                SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, tok - REGION_VALUE(0xff08, 0xff03));
+                message->b19c9 = 1;
                 return;
             } else if (tok >= REGION_VALUE(0xff4f, 0xff4a) && tok <= REGION_VALUE(0xff51, 0xff4c)) {
                 int arg = -1;
@@ -509,24 +509,24 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 if (arg >= 0) {
                     SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                 }
-            } else if (var1 == 0xff10) {
-                unsigned char* var41 = arg0->unknown_8c_;
-                if (var41 != 0) *(short*)(var41 + 0xd2) = *(short*)(var0 + REGION_VALUE(0x1776, 0x1948));
-            } else if (var1 == 0xff11) {
-                unsigned char* var42 = arg0->unknown_8c_;
-                if (var42 != 0) {
-                    *(unsigned short*)(var42 + 0xda) = *(unsigned short*)(var42 + 0xda) | 0x200;
-                    func_0208be94((unsigned char*)(arg0->unknown_8c_));
-                    *&arg0->unknown_195b_ |= 1;
-                    func_0209c830((Struct_02109bf4_2*)&data_02109bf4, 0x33);
+            } else if (tok == 0xff10) {
+                unsigned char* ent = message->child;
+                if (ent != 0) *(short*)(ent + 0xd2) = *(short*)(self + REGION_VALUE(0x1776, 0x1948));
+            } else if (tok == 0xff11) {
+                unsigned char* ent = message->child;
+                if (ent != 0) {
+                    *(unsigned short*)(ent + 0xda) = *(unsigned short*)(ent + 0xda) | 0x200;
+                    ClearField0xd0AndSetFlag0x1IfByte0xd4Not2_0208be94((unsigned char*)(message->child));
+                    *&message->b195b |= 1;
+                    SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x33);
                 }
-            } else if (var1 == 0xff13) {
-                unsigned char* var43 = arg0->unknown_8c_;
-                if (var43 != 0) {
-                    *(unsigned short*)(var43 + 0xda) = *(unsigned short*)(var43 + 0xda) | 0x300;
-                    func_0208be94((unsigned char*)(arg0->unknown_8c_));
-                    *&arg0->unknown_195b_ |= 1;
-                    func_0209c830((Struct_02109bf4_2*)&data_02109bf4, 0x44);
+            } else if (tok == 0xff13) {
+                unsigned char* ent = message->child;
+                if (ent != 0) {
+                    *(unsigned short*)(ent + 0xda) = *(unsigned short*)(ent + 0xda) | 0x300;
+                    ClearField0xd0AndSetFlag0x1IfByte0xd4Not2_0208be94((unsigned char*)(message->child));
+                    *&message->b195b |= 1;
+                    SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x44);
                 }
             } else if (var1 == 0xff12) {
                 if (arg0->unknown_8c_ != 0) {

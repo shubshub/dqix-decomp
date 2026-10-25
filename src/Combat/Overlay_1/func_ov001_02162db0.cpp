@@ -43,14 +43,14 @@ struct Struct_ov001_02164d14_3 {
     int unknown_34_[8];
 };
 
-extern "C" int func_ov017_021d60f4(void* arg0);
-struct Struct_02052e2c;
-extern "C" short* func_02052e2c(Struct_02052e2c*);
-struct Struct_02052df8;
-extern "C" int func_02052df8(Struct_02052df8*, int);
-extern "C" void func_02052d7c(Struct_ov001_02162db0_2* arg0, int arg1, short arg2);
-extern "C" void* func_02010828(GameState* arg0);
-extern "C" void func_ov017_0218f5a4(GameResources* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" int func_ov017_021d60f4(void* args);
+struct Field150Holder02052e2c;
+short* GetField150Ptr0x488_02052e2c(Field150Holder02052e2c*);
+struct Field150Holder02052df8;
+int GetHalfwordEntryFromField150(Field150Holder02052df8*, int);
+extern "C" void func_02052d7c(Combatant02162db0* combatant, int index, short value);
+void* GameState_GetParty(GameState* gameState);
+extern "C" void func_ov017_0218f5a4(GameResources* resources, int combatantId, int a, int b, int c);
 
 extern Struct_ov001_02165880_51 data_ov001_02165880;
 extern Struct_ov001_02164d14_3 data_ov001_02164d14;
@@ -102,10 +102,10 @@ extern "C" ARM int func_ov001_02162db0(void* arg0, int arg1) {
         return 0;
     }
 
-    var3 = GetGameResources();
-    var4 = (Struct_ov001_02162db0_3*)var3->unknown_ptr_array_371c[6];
-    func_02010828(var0);
-    var0->GetGameObjectByIndex(data_ov001_02164d44[var6]);
+    resources = GetGameResources();
+    saved = (SavedSlot02162db0*)resources->unknown_ptr_array_371c[6];
+    GameState_GetParty(gameState);
+    gameState->GetGameObjectByIndex(data_ov001_02164d44[slot]);
 
     if (var2 == 0) {
         var4->unknown_182_ = -1;

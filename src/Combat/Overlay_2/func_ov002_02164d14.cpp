@@ -20,15 +20,15 @@ GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combata
 int CheckField0x56bLowNibble(struct Obj02061bd8 *obj);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
-int GetDataPtr02114e04_020d6c00(void);
-void OrBitsIntoField0_020466e4(unsigned int *p, unsigned int bits);
+int GlobalFlags_GetInstance(void);
+void FlagWord_SetBits(unsigned int *p, unsigned int bits);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 extern "C" void func_ov002_0215b814(char *base);
 extern "C" void func_ov002_02161cf0(char *base);
 extern "C" void func_ov002_0215e1d0(char *base);
 extern "C" void func_ov002_02156e90(char *base);
 extern "C" void func_020d79e0(char *base, int id);
-extern "C" void func_02012fe4(void);
+extern "C" void Zone3D_GetInstance(void);
 extern "C" void func_02017c58(void);
 extern "C" char g_sePlayer[];
 extern "C" unsigned short data_ov002_0216cca4[];
@@ -120,10 +120,10 @@ extern "C" ARM void func_ov002_02164d14(char *arg0) {
                 }
                 return;
             }
-            if (var3[*(short *) (arg0 + OFF_SEL_02164d14)] < 0) return;
-            func_020466e4((unsigned int *) func_020d6c00(), 1);
-            if (func_02061bd8(
-                    (struct Struct_0205faf4_11 *) func_0200ff1c(var1, var3[*(short *) (arg0 + OFF_SEL_02164d14)])))
+            if (ids[*(short *) (base + OFF_SEL_02164d14)] < 0) return;
+            FlagWord_SetBits((unsigned int *) GlobalFlags_GetInstance(), 1);
+            if (CheckField0x56bLowNibble(
+                    (struct Obj02061bd8 *) GetCombatantWithFlag0x100_0200ff1c(gs, ids[*(short *) (base + OFF_SEL_02164d14)])))
             {
                 for (int var14 = 0; var14 < 4; var14++) {
                     short *var15 = (short *) (arg0 + OFF_SEL_02164d14);
@@ -133,10 +133,10 @@ extern "C" ARM void func_ov002_02164d14(char *arg0) {
                     if (var16 != NULL && !func_02061bd8((struct Struct_0205faf4_11 *) var16)) break;
                 }
             }
-            func_020d79e0(arg0, var3[*(short *) (arg0 + OFF_SEL_02164d14)]);
-            *(int *) (arg0 + OFF_NEXT_02164d14) = K_2B_02164d14;
-            *(int *) (arg0 + OFF_STATE_02164d14) = 0;
-            func_02012fe4();
+            func_020d79e0(base, ids[*(short *) (base + OFF_SEL_02164d14)]);
+            *(int *) (base + OFF_NEXT_02164d14) = K_2B_02164d14;
+            *(int *) (base + OFF_STATE_02164d14) = 0;
+            Zone3D_GetInstance();
             func_02017c58();
         } else if (func_ov002_02161b48(arg0, 1)) {
             *(short *) (arg0 + OFF_SEL_02164d14) = -1;

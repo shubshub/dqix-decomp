@@ -31,7 +31,7 @@ extern "C" ARM void func_ov005_0215bed4(Struct_ov005_02153954* arg0)
         func_ov005_021562b8(arg0);
         var0 = 1;
     }
-    if (!var0)
-        func_ov005_0215730c(arg0);
-    func_ov005_021551fc((char*)arg0, func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3])->unknown_4fc_, 0);
+    if (!touchHandled)
+        func_ov005_0215730c(self);
+    DispatchByIdxAndCond021551fc((char*)self, GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member_, 0);
 }

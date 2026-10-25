@@ -65,14 +65,14 @@ struct Struct_0208a03c {
     unsigned char unknown_8e49_;
 };
 
-extern "C" struct Struct_0208a03c_6* func_0200fea4(GameState*, int);
-extern "C" void* func_020797dc(void);
-extern "C" int func_020117f0(GameState*);
-extern "C" char* func_02012fe4(void);
-extern "C" struct Struct_0208a03c_7* func_02079e2c(char* arg0, int arg1);
-extern "C" int func_ov000_02159d94(void* arg0, int arg1);
-extern "C" void func_ov024_021f66c0(int* arg0);
-extern "C" int func_ov024_021f66cc(int* arg0, struct Struct_0208a03c* arg1, int arg2, int arg3, int* arg4, int arg5);
+struct Combatant0208a03c* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+void* GetData02108e10_020797dc(void);
+int IsGlobalU16InRange_020117f0(GameState*);
+extern "C" char* Zone3D_GetInstance(void);
+struct Move0208a03c* SearchBothTables02079e2c(char* table, int key);
+int GetCombatantField0x148Bits3To4_ov000_02159d94(void* unused, int id);
+void ClearFirstField_021f66c0(int* p);
+extern "C" int func_ov024_021f66cc(int* obj, struct Battle0208a03c* battle, int moveId, int id, int* out, int arg);
 
 #if defined(jpn)
 enum { Enum_0208a03c_9196 = 0x240c };
@@ -96,13 +96,13 @@ extern "C" ARM int func_0208a03c(Struct_0208a03c_3* arg0, unsigned char arg1, un
             return 0;
         }
     }
-    char* var6 = func_02012fe4();
-    if (func_020117f0(var0) && arg0->unknown_0_->unknown_8e18_->unknown_25_ != 0) {
-        char* var7 = (char*)((ActiveGrottoClass*)(var6 + Enum_0208a03c_9196))->GetDetailedData();
-        short var8 = var1->unknown_2_;
-        unsigned short var9 = ((DetailedTreasureMapData::LegacyBossMapData*)(var7 + 0x4c))->MaybeGetCurrentAlternateID();
-        if (var9 == var8) {
-            if (!((DetailedTreasureMapData::LegacyBossMapData*)(var7 + 0x4c))->CanUseLevelUpMove(var3->unknown_18_[arg1])) {
+    char* zone = Zone3D_GetInstance();
+    if (IsGlobalU16InRange_020117f0(gs) && ctx->battle->party->f25 != 0) {
+        char* detail = (char*)((ActiveGrottoClass*)(zone + regionalOffset))->GetDetailedData();
+        short kindId = c->kindId;
+        unsigned short alt = ((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->MaybeGetCurrentAlternateID();
+        if (alt == kindId) {
+            if (!((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->CanUseLevelUpMove(set->moves[index])) {
                 return 0;
             }
         }

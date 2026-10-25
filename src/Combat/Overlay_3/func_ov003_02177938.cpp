@@ -40,44 +40,44 @@ enum {
 #endif
 #include "GameState/GameState.h"
 
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" int func_ov003_02179e44(void *arg0);
-struct Struct_0207fdcc_2;
-extern "C" void func_02080c20(struct Struct_0207fdcc_2 *arg0, int arg1);
-extern "C" void func_02080c68(void *arg0, int arg1, int arg2);
-extern "C" void func_02080b54(void *arg0, int arg1);
-extern "C" void func_02080608(void *arg0, int arg1);
-extern "C" unsigned char func_0207ca94(int arg0);
-extern "C" int func_0207c638(void *arg0, unsigned int arg1);
-extern "C" int func_0207c6b8(unsigned char *arg0, unsigned int arg1, int arg2);
-extern "C" int func_02080b40(void *arg0, int arg1);
-extern "C" int func_02081010(void *arg0, int arg1);
-struct Struct_02080f8c;
-extern "C" void func_02080f8c(struct Struct_02080f8c *arg0, int arg1, int arg2);
-struct Struct_02080cc0;
-extern "C" void func_02080cc0(struct Struct_02080cc0 *arg0, int arg1, int arg2);
-extern "C" unsigned char *func_02053c6c(unsigned char *arg0);
-struct Struct_0207d300;
-extern "C" int func_02083960(struct Struct_0207d300 *arg0);
-extern "C" int func_020dcc98(int arg0);
-struct Struct_020a0b8c;
-extern "C" int func_020a0b8c(struct Struct_020a0b8c *arg0);
-struct Struct_02080fa8;
-extern "C" void func_02080fa8(struct Struct_02080fa8 *arg0, int arg1, int arg2);
-struct Struct_0201099c_10;
-struct Struct_0201099c_9 {
-    char unknown_0_[4];
-    int unknown_4_;
-    char unknown_8_[0x1a - 8];
-    unsigned short unknown_1a_;
+extern "C" void *memset(void *dst, int value, unsigned int length);
+extern "C" int func_ov003_02179e44(void *obj);
+struct Obj2081;
+void ClearElementFlag0x20_02080c20(struct Obj2081 *obj, int key);
+void SetEntryLowNibbleAndElement02080c68(void *obj, int id, int value);
+void SetSublistEntriesFlag1_02080b54(void *obj, int id);
+void SetSublistEntriesFlag2_02080608(void *obj, int id);
+unsigned char GetTableByte0207ca94(int index);
+int CountPositiveEntries0207c638(void *base, unsigned int index);
+int FindNthPositiveShort0207c6b8(unsigned char *obj, unsigned int index, int target);
+int SetEntryFlagById02080b40(void *obj, int id);
+int LookupValueByEntryKey02081010(void *obj, int key);
+struct Container02080f8c;
+void SetEntryFirstField02080f8c(struct Container02080f8c *obj, int id, int value);
+struct Container02080cc0;
+void SetEntryHighNibble0x13(struct Container02080cc0 *obj, int id, int value);
+unsigned char *GetFieldAt0x150_02053c6c(unsigned char *obj);
+struct Slots02083960;
+int CountPositiveSlots02083960(struct Slots02083960 *slots);
+extern "C" int func_020dcc98(int combatantId);
+struct S_a0b8c;
+int CountNonZeroValues020a0b8c(struct S_a0b8c *p);
+struct Container02080fa8;
+void SetEntryFirstField02080fa8(struct Container02080fa8 *obj, int id, int value);
+struct ItemTable;
+struct Element020de650 {
+    char pad0[4];
+    int value;
+    char pad8[0x1a - 8];
+    unsigned short count;
 };
-extern "C" struct Struct_0201099c_9 *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" void func_020805f4(void *arg0, int arg1);
-extern "C" void func_020806c4(void *arg0, int arg1);
-extern "C" void func_ov003_0217818c(void *arg0, struct Struct_0201099c_9 *arg1, int arg2, int arg3);
-extern "C" void func_0208103c(void *arg0, int arg1, int arg2);
-extern "C" void func_0208108c(void *arg0, int arg1);
-extern "C" void func_020813ec(void *arg0, int arg1);
+struct Element020de650 *ItemTable_Find(struct ItemTable *c, int key);
+void Forward0207f7acObjPlus4Size0x40_020805f4(void *obj, int value);
+void ClearSublistEntryFlag2_020806c4(void *obj, int id);
+extern "C" void func_ov003_0217818c(void *self, struct Element020de650 *elem, int id, int value);
+void SetEntryHalfword0xe_0208103c(void *obj, int id, int value);
+void DispatchEntryOp0x8_0208108c(void *obj, int id);
+extern "C" void func_020813ec(void *obj, int key);
 
 struct Struct_ov003_02177938 {
     unsigned char unknown_0_[Enum_ov003_02177938_2204];
@@ -94,18 +94,18 @@ struct Struct_ov003_02177938 {
 };
 
 // USA: func_ov003_02177938
-extern "C" ARM void func_ov003_02177938(Struct_ov003_02177938 *arg0) {
-    func_ov003_02179e44(arg0);
-    GameState *var0       = GameState::GetInstance();
-    unsigned char *var1     = (unsigned char *) func_02010828(var0);
-    struct Struct_0207fdcc_2 *var2 = arg0->unknown_89c_;
-    int var3              = 1;
-    short var4               = 0x8b;
-    short var5               = 0x93;
-    short var6               = 0x9b;
-    short var7               = 0x3c;
-    int var8;
-    short var9[8];
+extern "C" ARM void func_ov003_02177938(ListMenu_02177938 *self) {
+    func_ov003_02179e44(self);
+    GameState *battle       = GameState::GetInstance();
+    unsigned char *list     = (unsigned char *) GameState_GetParty(battle);
+    struct Obj2081 *elemObj = self->elemObj;
+    int hasAny              = 1;
+    short idA               = 0x8b;
+    short idB               = 0x93;
+    short idC               = 0x9b;
+    short msg               = 0x3c;
+    int showPages;
+    short ids[8];
 
     func_02080c20(var2, 0x15);
     func_02080c68(var2, 0x15, 0);
@@ -180,14 +180,14 @@ extern "C" ARM void func_ov003_02177938(Struct_ov003_02177938 *arg0) {
         func_02080b40(var2, 0xa5);
     }
 
-    for (unsigned char var21 = 0; var21 < 8; var21++) {
-        int var22 = 0;
-        int var23 = 0;
-        if (var9[var21] > 0) {
-            struct Struct_0201099c_9 *var24 = func_020dedd0((struct Struct_0201099c_10 *) ((unsigned char *) arg0 + Enum_ov003_02177938_2048 + 0x74), var9[var21]);
-            if (var24 != NULL) {
-                var23 = var24->unknown_1a_;
-                var22 = var24->unknown_4_;
+    for (unsigned char i = 0; i < 8; i++) {
+        int value = 0;
+        int count = 0;
+        if (ids[i] > 0) {
+            struct Element020de650 *elem = ItemTable_Find((struct ItemTable *) ((unsigned char *) self + kRegion800 + 0x74), ids[i]);
+            if (elem != NULL) {
+                count = elem->count;
+                value = elem->value;
             }
 #if !defined(jpn)
             func_020805f4(var2, var4);

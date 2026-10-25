@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
-extern "C" int func_02005a94(void* arg0);
+int STD_GetStringLength(const char* s);
+extern "C" int memcmp(void* a, void* b, int n);
+extern "C" int func_02005a94(void* p);
 
 extern char* data_020f0afc[];
 
@@ -22,22 +22,22 @@ extern "C" ARM int func_0206f550(struct Struct_0206f550* arg0, char* arg1, char*
     unsigned char var5;
     char** var6;
 
-    if (arg1 == 0) return 0;
-    if (arg2 == 0) return 0;
-    arg0->unknown_4_ = 0;
-    while ((var5 = *var0) != 0) {
-        if (var5 == '<') {
-            var1 = 0;
-            if (arg0->unknown_4_ < 4) {
-                var4 = 1;
-                var6 = data_020f0afc;
-                while (var4 < 13) {
-                    var2 = var6[var4];
-                    var3 = func_020d2ff0(var2);
-                    if (func_02001aec(var0, var2, var3) == 0) {
-                        if (var4 == 4 || (unsigned char)(var4 + 0xff) <= 1) {
-                            var0 += var3;
-                            arg0->unknown_8_[arg0->unknown_4_] = (short)func_02005a94(var0);
+    if (in == 0) return 0;
+    if (out == 0) return 0;
+    s->count = 0;
+    while ((c = *p) != 0) {
+        if (c == '<') {
+            found = 0;
+            if (s->count < 4) {
+                i = 1;
+                tab = data_020f0afc;
+                while (i < 13) {
+                    tag = tab[i];
+                    len = STD_GetStringLength(tag);
+                    if (memcmp(p, tag, len) == 0) {
+                        if (i == 4 || (unsigned char)(i + 0xff) <= 1) {
+                            p += len;
+                            s->vals[s->count] = (short)func_02005a94(p);
                         }
                         var1 = 1;
                         arg0->unknown_0_[arg0->unknown_4_] = var4;

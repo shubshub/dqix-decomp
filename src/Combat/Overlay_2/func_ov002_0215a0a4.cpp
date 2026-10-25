@@ -75,80 +75,72 @@ struct Struct_ov002_0215a0a4_4 {
 
 void* GetData02153637_020e2ff8();
 void Dispatch020e3428(void*, int);
-Obj02046574* GetGlobalField0x1c020421a0();
+Obj02046574* MessageSystem_GetInstance();
 CommandEntry0215a0a4* SearchBothTables02079e2c(char*, int);
 void* Clear12Bytes020e46c4(void*);
-void SetIndexedName02046574(Obj02046574*, int, char*);
-void InitObjFromCombatantId020e4bf4(void*, int);
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+void NameText_InitFromPartyMember(void*, int);
 int ConsumeCounter02048350(Obj02048350*, int);
 int CheckField0NonZero_0202b7d8(int*);
 int KeyTable_Get(Container020e0310*, int);
-int AppendString02042058(char*, const char*);
+int Text_Append(char*, const char*);
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
 extern "C" int* func_0202ae18();
 extern "C" void func_02046380(void*);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
-#if defined(jpn)
-extern "C" void func_020474a8(void*, int, int, void*);
-#else
-extern "C" void func_02046608(void*, int, int, void*, int, int, int);
-#endif
+extern "C" void MessageSystem_FormatText(void*, int, int, void*, int, int, int);
 
-static inline char* inline_ov002_0215a0a4(GameObject* arg0) { SDK_NULL_ASSERT(arg0); return arg0->baseStats_->unk; }
+static inline char* CombatantName0215a0a4(GameObject* target) { SDK_NULL_ASSERT(target); return target->baseStats_->name; }
 
 // USA: func_ov002_0215a0a4
-extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov002_0215a0a4_3* arg1, int arg2) {
-    GameObject* var0;
-    int var1;
-    int* var2;
-    GameObject* var3;
-    Struct_ov002_0215a0a4_2* var4;
-    char* var5;
-    signed char* var6;
-    GameState* var7;
-    Struct_ov002_02157d40_6* var8;
-    Struct_ov002_0215a0a4_5* var9;
-    int var10;
-    func_020e3428(func_020e2ff8(), 1);
-    var7 = GameState::GetInstance();
-    var8 = func_020421a0();
-    var2 = func_0202ae18();
-    var9 = func_02079e2c((char*)func_020797dc(), arg0->unknown_1c26_);
-    if (!var9) return;
-    memset(arg0->unknown_1000_.unknown_bd0_, 0, Enum_ov002_0215a0a4_2400);
-    memset(arg0->unknown_1000_.unknown_bd4_, 0, Enum_ov002_0215a0a4_2400);
-    func_02046380(var8);
-    var5 = arg0->unknown_1000_.unknown_bd0_;
-#if !defined(jpn)
-    func_020e46c4(arg0->unknown_8_);
-    func_020e46c4(arg0->unknown_14_);
-#endif
-    var3 = func_0200ff1c(var7, arg1->unknown_2_);
-    if (var3) {
-        func_02046574(var8, 0, var3->baseStats_->unk);
-#if !defined(jpn)
-        func_020e4bf4(arg0->unknown_8_, arg1->unknown_2_);
-        var8->unknown_0_ = arg0->unknown_8_;
-#endif
+extern "C" ARM void func_ov002_0215a0a4(BattleMessage0215a0a4* self, BattleEvent0215a0a4* event, int any) {
+    GameObject* target;
+    int rejectedKey;
+    int* state;
+    GameObject* actor;
+    ActionResult0215a0a4* results;
+    char* buffer;
+    signed char* targetIds;
+    GameState* gs;
+    Obj02046574* message;
+    CommandEntry0215a0a4* entry;
+    int index;
+    Dispatch020e3428(GetData02153637_020e2ff8(), 1);
+    gs = GameState::GetInstance();
+    message = MessageSystem_GetInstance();
+    state = func_0202ae18();
+    entry = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), self->command);
+    if (!entry) return;
+    memset(self->textState.text, 0, 0x960);
+    memset(self->textState.textCopy, 0, 0x960);
+    func_02046380(message);
+    buffer = self->textState.text;
+    Clear12Bytes020e46c4(self->actorName);
+    Clear12Bytes020e46c4(self->targetName);
+    actor = GetCombatantWithFlag0x100_0200ff1c(gs, event->actor);
+    if (actor) {
+        MessageSystem_SetStringArgument(message, 0, actor->baseStats_->name);
+        NameText_InitFromPartyMember(self->actorName, event->actor);
+        message->actor = self->actorName;
     }
-    func_02046574(var8, 1, var9->unknown_0_);
-    if (arg0->unknown_1c26_ == 0x1e || arg0->unknown_1c26_ == 0x1f || arg0->unknown_1c26_ == 0x20 ||
-        arg0->unknown_1c26_ == 0x21 || arg0->unknown_1c26_ == 0x23 || arg0->unknown_1c26_ == 0x26 || arg0->unknown_1c26_ == 0x27) {
-        arg0->unknown_248a_ = 1;
-        arg0->unknown_1c28_ = 0x232d;
-        arg0->unknown_1c2a_ = -1;
-        GameObject* var11 = var7->GetPartyMemberByIndex(arg0->unknown_1c21_);
-        int var12 = 0;
-        if (arg2 && var11) {
-            if (arg0->unknown_1c26_ == 0x1e || arg0->unknown_1c26_ == 0x1f || arg0->unknown_1c26_ == 0x20 || arg0->unknown_1c26_ == 0x21) {
-                arg0->unknown_2488_ = 0x232c;
-                var12 = 1;
-            } else if (arg0->unknown_1c26_ == 0x23) {
-                arg0->unknown_2488_ = 0x794b;
-                var12 = 1;
-            } else if (arg0->unknown_1c26_ == 0x27 || arg0->unknown_1c26_ == 0x26) {
-                arg0->unknown_2488_ = 0x2336;
-                var12 = 1;
+    MessageSystem_SetStringArgument(message, 1, entry->name);
+    if (self->command == 0x1e || self->command == 0x1f || self->command == 0x20 ||
+        self->command == 0x21 || self->command == 0x23 || self->command == 0x26 || self->command == 0x27) {
+        self->active = 1;
+        self->messageKey = 0x232d;
+        self->alternateKey = -1;
+        GameObject* party = gs->GetPartyMemberByIndex(self->partyIndex);
+        int consumed = 0;
+        if (any && party) {
+            if (self->command == 0x1e || self->command == 0x1f || self->command == 0x20 || self->command == 0x21) {
+                self->secondaryKey = 0x232c;
+                consumed = 1;
+            } else if (self->command == 0x23) {
+                self->secondaryKey = 0x794b;
+                consumed = 1;
+            } else if (self->command == 0x27 || self->command == 0x26) {
+                self->secondaryKey = 0x2336;
+                consumed = 1;
             }
         } else if (!var11) {
             arg0->unknown_1c28_ = 0x232d;
@@ -178,8 +170,8 @@ extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov00
     }
     if (self->command != 0x22 && self->command != 0x310) return;
     if (any) {
-        func_02046608(message, 0xc, KeyTable_Get(&self->texts, 0x232d), buffer + 0x860, 0xe3, 0, 1);
-        AppendString02042058(self->textState.text, buffer + 0x860);
+        MessageSystem_FormatText(message, 0xc, KeyTable_Get(&self->texts, 0x232d), buffer + 0x860, 0xe3, 0, 1);
+        Text_Append(self->textState.text, buffer + 0x860);
         results = event->results;
         rejectedKey = 0x232c;
         index = 0;
@@ -190,13 +182,13 @@ extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov00
                 target = GetCombatantWithFlag0x100_0200ff1c(gs, targetIds[index]);
                 if (target) {
                     func_02046380(message);
-                    SetIndexedName02046574(message, 2, CombatantName0215a0a4(target));
-                    InitObjFromCombatantId020e4bf4(self->targetName, targetIds[index]);
+                    MessageSystem_SetStringArgument(message, 2, CombatantName0215a0a4(target));
+                    NameText_InitFromPartyMember(self->targetName, targetIds[index]);
                     message->target = self->targetName;
-                    StoreInArray0x8b0_020465c0((StoreStruct*)message, 9, target->obj3D_.unknown_4_);
-                    func_02046608(message, 0xc, KeyTable_Get(&self->texts, key), buffer + 0x860, 0xe3, 0, 1);
-                    AppendString02042058(self->textState.text, (const char*)KeyTable_Get(&self->texts, 8));
-                    AppendString02042058(self->textState.text, buffer + 0x860);
+                    StoreInArray0x8b0_020465c0((StoreStruct*)message, 9, target->obj3D_.actorIndex_);
+                    MessageSystem_FormatText(message, 0xc, KeyTable_Get(&self->texts, key), buffer + 0x860, 0xe3, 0, 1);
+                    Text_Append(self->textState.text, (const char*)KeyTable_Get(&self->texts, 8));
+                    Text_Append(self->textState.text, buffer + 0x860);
                 }
             }
             var10++;
@@ -204,21 +196,19 @@ extern "C" ARM void func_ov002_0215a0a4(Struct_ov002_0215a0a4* arg0, Struct_ov00
         func_02048350((Struct_ov002_02157d40_8*)var3, var9->unknown_8_0_);
         if (func_0202b7d8(var2)) func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
     } else {
-        var0 = var7->GetUnknownGameObject();
-        if (var0) {
-            func_02046574(var8, 2, inline_ov002_0215a0a4(var0));
-#if !defined(jpn)
-            func_020e4bf4(arg0->unknown_14_, var0->obj3D_.unknown_4_);
-            var8->unknown_10_ = arg0->unknown_14_;
-#endif
+        target = gs->GetUnknownGameObject();
+        if (target) {
+            MessageSystem_SetStringArgument(message, 2, CombatantName0215a0a4(target));
+            NameText_InitFromPartyMember(self->targetName, target->obj3D_.actorIndex_);
+            message->target = self->targetName;
         }
-        AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2333));
-        AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 8));
+        Text_Append(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2333));
+        Text_Append(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 8));
         if (GetByteField0x5721_02011538(gs) == 1)
-            AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2334));
+            Text_Append(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2334));
         else
-            AppendString02042058(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2335));
-        func_02046608(message, 0xc, (int)(buffer + 0x860), self->textState.text, 0xe3, 0, 1);
+            Text_Append(buffer + 0x860, (const char*)KeyTable_Get(&self->texts, 0x2335));
+        MessageSystem_FormatText(message, 0xc, (int)(buffer + 0x860), self->textState.text, 0xe3, 0, 1);
     }
     arg0->unknown_1c31_ = 1;
     memcpy(arg0->unknown_1000_.unknown_bd4_, arg0->unknown_1000_.unknown_bd0_, Enum_ov002_0215a0a4_2400);

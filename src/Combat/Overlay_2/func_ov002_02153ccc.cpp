@@ -41,16 +41,16 @@ extern "C" unsigned short func_ov002_021548c4(void *arg0, int arg1, int arg2, St
 extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
 
 // USA: func_ov002_02153ccc
-extern "C" ARM int func_ov002_02153ccc(void **arg0, Struct_ov002_02153ccc_2 *arg1, Struct_ov002_02153ccc_3 *arg2, int arg3) {
-    if (arg1 == 0) return 0;
-    if (arg2 == 0) return 0;
-    Struct_02048150 *var0 = (Struct_02048150 *)func_02010828(GameState::GetInstance());
-    int *var1                         = func_0202ae18();
-    Struct_ov002_02153ccc *var2         = arg1->unknown_8_;
-    int var3                    = 0;
-    if (arg3) var2 = arg1->unknown_20_;
-    for (int var4 = 0; var4 < 4; var4++) {
-        func_ov002_02153e90(&var2[var4]);
+extern "C" ARM int func_ov002_02153ccc(void **self, Info02153ccc *info, Action02153ccc *action, int alt) {
+    if (info == 0) return 0;
+    if (action == 0) return 0;
+    ArrayContainsByteStruct *party = (ArrayContainsByteStruct *)GameState_GetParty(GameState::GetInstance());
+    int *g                         = func_0202ae18();
+    Entry02153ccc *entries         = info->entries;
+    int changed                    = 0;
+    if (alt) entries = info->altEntries;
+    for (int i = 0; i < 4; i++) {
+        func_ov002_02153e90(&entries[i]);
     }
     for (int var5 = 0; var5 < arg1->unknown_3_; var5++) {
         Struct_ov002_02153ccc *var6 = &var2[var5];

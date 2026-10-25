@@ -10,14 +10,12 @@ enum { Enum_ov003_021696f4_1276 = 0x4fc };
 enum { Enum_ov003_021696f4_1271 = 0x4f7 };
 #endif
 
-struct Struct_0205bef8;
-void GridCursor_Init(struct Struct_0205bef8* s);
+struct GridCursor;
+void GridCursor_Init(struct GridCursor* s);
 
-struct Struct_0205ba68;
-void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode);
+void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Node0205bacc;
-void GridCursor_SetCount(struct Node0205bacc* s, int val);
+void GridCursor_SetCount(struct GridCursor* s, int val);
 
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
@@ -53,17 +51,17 @@ extern "C" ARM void func_ov003_021696f4(struct Struct_ov003_021696f4_2* arg0, in
     }
     if (arg1 <= var3) var1 = 0;
 
-    GridCursor_Init((struct Struct_0205bef8*)&self->table);
+    GridCursor_Init((struct GridCursor*)&self->table);
     if (isLast) {
         int limit = self->limits[index];
-        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, limit + 1, 0);
+        GridCursor_SetDimensions((struct GridCursor*)&self->table, 1, limit + 1, 0);
         self->table.field4 = 1;
-        GridCursor_SetCount((struct Node0205bacc*)&self->table, limit + 1);
+        GridCursor_SetCount((struct GridCursor*)&self->table, limit + 1);
         GridCursor_SetSelectedIndex(&self->table, limit - base);
     } else {
-        GridCursor_SetDimensions((struct Struct_0205ba68*)&self->table, 1, 10, 0);
+        GridCursor_SetDimensions((struct GridCursor*)&self->table, 1, 10, 0);
         self->table.field4 = 1;
-        GridCursor_SetCount((struct Node0205bacc*)&self->table, 10);
+        GridCursor_SetCount((struct GridCursor*)&self->table, 10);
         GridCursor_SetSelectedIndex(&self->table, 9 - base);
     }
 }

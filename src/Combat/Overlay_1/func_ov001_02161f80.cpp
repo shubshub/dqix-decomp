@@ -3,10 +3,10 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" void func_02012fe4(void);
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" float func_ov017_021d6110(void* arg0);
+void* GetField0x3f8Address_0200fd0c(GameState*);
+extern "C" void Zone3D_GetInstance(void);
+extern "C" int func_ov017_021d60f4(void* obj);
+extern "C" float func_ov017_021d6110(void* obj);
 struct Vector3i;
 extern "C" void func_02070378(char*);
 
@@ -26,21 +26,21 @@ struct Struct_ov001_02161f80 {
 };
 
 // USA: func_ov001_02161f80
-extern "C" ARM int func_ov001_02161f80(void* arg0, int arg1) {
-    int var0[3];
-    void* var1 = GameState::GetInstance();
-    struct Struct_ov001_02161f80* var2 = (struct Struct_ov001_02161f80*)func_0200fd0c((GameState*)var1);
-    func_02012fe4();
-    int var3 = -1;
-    int var4;
-    int var5 = func_ov017_021d60f4(arg0);
-    var0[0] = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x8));
-    var0[1] = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x10));
-    var0[2] = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x18));
-    var4 = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x20));
-    int var6 = arg1;
-    if (var6 > 5) {
-        var3 = func_ov017_021d60f4((char*)arg0 + 0x28);
+extern "C" ARM int func_ov001_02161f80(void* target, int count) {
+    int tmpArr[3];
+    void* battle = GameState::GetInstance();
+    struct S3f8_02161f80* obj = (struct S3f8_02161f80*)GetField0x3f8Address_0200fd0c((GameState*)battle);
+    Zone3D_GetInstance();
+    int flag2 = -1;
+    int fixedD;
+    int flag = func_ov017_021d60f4(target);
+    tmpArr[0] = (int)(4096.0f * func_ov017_021d6110((char*)target + 0x8));
+    tmpArr[1] = (int)(4096.0f * func_ov017_021d6110((char*)target + 0x10));
+    tmpArr[2] = (int)(4096.0f * func_ov017_021d6110((char*)target + 0x18));
+    fixedD = (int)(4096.0f * func_ov017_021d6110((char*)target + 0x20));
+    int cnt = count;
+    if (cnt > 5) {
+        flag2 = func_ov017_021d60f4((char*)target + 0x28);
     }
     func_02070378((char*)var2);
     var2->unknown_2_ = 1;

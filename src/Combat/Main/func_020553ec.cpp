@@ -42,15 +42,15 @@ extern "C" ARM int func_020553ec(void* arg0, int arg1, void* arg2, void* arg3, u
         var0->unknown_4_ = (int)arg2;
     }
 
-    var1.unk_0 = 0;
-    var1.unk_10 = 0;
-    var1.unk_14 = 0;
-    var1.unk_18 = 0;
-    var1.packageID = 0;
-    var1.fileData = arg3;
-    var1.unk_8 = (int)arg4;
-    var1.allocator = (SafeAllocator*)arg2;
-    var0->unknown_14_.LoadFromCHRArchive(&var1);
+    li.unk_0 = 0;
+    li.unk_10 = 0;
+    li.unk_14 = 0;
+    li.unk_18 = 0;
+    li.packageID = 0;
+    li.fileData = fileData;
+    li.fileSize = (int)fileSize;
+    li.allocator = (SafeAllocator*)alloc;
+    obj->object3d.LoadFromCHRArchive(&li);
 
     LockResourceMutex();
     if (var2.Initialize(data_020f04b4, (const unsigned char*)arg3)) {
@@ -72,8 +72,8 @@ extern "C" ARM int func_020553ec(void* arg0, int arg1, void* arg2, void* arg3, u
         var2.Destroy();
     }
     UnlockResourceMutex();
-    if (var0->unknown_1e8_ == 0) {
-        var0->unknown_14_.MaybeSetBCFGAnimation(0, 0);
+    if (obj->field1e8 == 0) {
+        obj->object3d.SetAnimationByIndex(0, 0);
     }
     return 1;
 }

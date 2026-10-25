@@ -1,0 +1,74 @@
+#if defined(jpn)
+#define R(j,u) (j)
+#define func_ov013_021846a0 func_ov013_021856dc
+#define func_ov013_02184d80 func_ov013_02185db4
+#define func_ov013_02186160 func_ov013_02187178
+#define func_ov013_021864f0 func_ov013_02187820
+#define func_ov013_02186590 func_ov013_021878c0
+#define func_ov013_0218678c func_ov013_02187ab8
+#define func_ov013_0218683c func_ov013_02187b68
+#else
+#define R(j,u) (u)
+#endif
+#include <globaldefs.h>
+#include "GameState/GameState.h"
+#include "Filesystem/BackgroundLoader.h"
+#include "Resource/Brightness.h"
+
+struct Entry_0205d6a0;
+void Window_ClosePane(Entry_0205d6a0*, int);
+void* GlobalFlags_GetInstance();
+struct FlagWord020466f4;
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
+
+struct Manager0218b240 {
+    char pad0[R(0xe95,0xe99)];
+    unsigned char e99;
+    unsigned char e9a;
+    unsigned char e9b;
+    unsigned char e9c;
+    char pad1[0xea0 - 0xe9d];
+    int ea0;
+    int ea4;
+    int ea8;
+    char pad2[R(4,0xeb4 - 0xeac)];
+    int eb4;
+    char pad3[0xec0 - 0xeb8];
+    unsigned char bit0 : 1;
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+    unsigned char rest : 4;
+};
+
+// USA: func_ov008_0218b240  (semantic: ResetLoaderState_0218b240)
+extern "C" ARM void func_ov008_0218b240(Manager0218b240* obj) {
+    if (obj->bit3) return;
+
+    GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+
+    obj->bit0 = 0;
+    Window_ClosePane((Entry_0205d6a0*)((char*)obj + 0x18), 1);
+
+    obj->e99 = 2;
+    obj->e9a = 0;
+    obj->e9b = 2;
+    obj->e9c = 0;
+
+    void* ptr = GlobalFlags_GetInstance();
+    FlagWord_ClearBits((FlagWord020466f4*)ptr, 0x2f);
+    ClearFlags00(GetGameResources(), 0x10);
+
+    loader->RemoveTask(obj->ea0);
+    loader->RemoveTask(obj->eb4);
+    loader->RemoveTask(obj->ea4);
+    loader->RemoveTask(obj->ea8);
+
+    obj->ea0 = -1;
+    obj->eb4 = -1;
+    obj->ea4 = -1;
+    obj->ea8 = -1;
+
+    obj->bit3 = 1;
+}

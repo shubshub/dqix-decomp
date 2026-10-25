@@ -37,15 +37,15 @@ struct Vector3i;
 void DelayThenSyncBit0_020c9820();
 void ResetObjectState02079a3c(void*);
 struct Foo0207df50;
-void CopyInternalFields0207df50(Foo0207df50*);
+void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
-struct Container020dedd0;
-void* FindElementByKey020dedd0(Container020dedd0*, int);
+struct ItemTable;
+void* ItemTable_Find(ItemTable*, int);
 extern "C" int func_ov015_0218c03c(void* self, char* buf, int i, int one);
 extern "C" void func_ov015_0218c3a4(void* self, int v);
 extern "C" void func_ov015_0218c920(void* self, int zero);
-void* GetVariantShortTable02109928_02099cac();
+void* CharacterColors_GetInstance();
 void LockStagedTextureVRAMCopying();
 void UnlockStagedTextureVRAMCopying();
 extern "C" void MemoryMapTexturePalette();
@@ -59,7 +59,7 @@ struct Struct_ov015_0218d50c {
     int unknown_148_;
 };
 
-extern int data_0211e33c __attribute__((aligned(4)));
+extern int g_fileLoadBuffer __attribute__((aligned(4)));
 extern char data_ov015_02194094;
 extern int data_ov015_02193d64[];
 extern char data_ov015_021940f0;
@@ -92,35 +92,35 @@ extern "C" ARM int func_ov015_0218d50c(Struct_ov015_0218d50c_3* arg0) {
         var4 = true;
     }
 
-    unsigned int var6 = 0;
-    char* var7 = (char*)&data_0211e33c;
-    unsigned int var8 = 0x30000;
-    GPCReadPair var9;
-    char var10[0x80];
-    func_02079a3c(&var9);
-    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var9.pGPCFile, var9.machine, &data_ov015_02194094,
-                                                   var7, var6, var8, false, 0)) {
-        var7 += var6;
-        var8 -= var6;
-        for (int var11 = 0; var11 < 10; var11++) {
-            if (arg0->unknown_2c_ != 2 && arg0->unknown_20_[var11] == (var5 = arg0->unknown_24_[var11].unknown_2_)) {
+    unsigned int size = 0;
+    char* buf = (char*)&g_fileLoadBuffer;
+    unsigned int room = 0x30000;
+    GPCReadPair pair;
+    char name[0x80];
+    ResetObjectState02079a3c(&pair);
+    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine, &data_ov015_02194094,
+                                                   buf, size, room, false, 0)) {
+        buf += size;
+        room -= size;
+        for (int i = 0; i < 10; i++) {
+            if (self->state != 2 && self->ids[i] == (id = self->ents[i].unknown_2_)) {
                 continue;
             }
-            var1 = (char*)*arg0->unknown_4_;
-            var0 = var11 * 0x70;
-            var3 = arg0->unknown_8_;
-            var2 = var11 * 0x14;
-            ((SafeAllocator*)((char*)var3 + var2))->Reset();
-            func_0207df50((Struct_0203d028*)(var1 + var0));
-            Vector3fix var12 = arg0->inline_ov015_0218d50c(var11)->position_;
-            arg0->unknown_24_[var11].Initialize();
-            arg0->unknown_24_[var11].position_ = var12;
-            arg0->unknown_24_[var11].unknown_2_ = arg0->unknown_20_[var11];
-            if (arg0->unknown_20_[var11] < 0) {
+            pairs = (char*)*self->pairsRoot;
+            off70 = i * 0x70;
+            alloc = self->allocs;
+            off14 = i * 0x14;
+            ((SafeAllocator*)((char*)alloc + off14))->Reset();
+            VramState_Rewind((Foo0207df50*)(pairs + off70));
+            Vector3fix savedPos = self->GetEnt(i)->position_;
+            self->ents[i].Initialize();
+            self->ents[i].position_ = savedPos;
+            self->ents[i].unknown_2_ = self->ids[i];
+            if (self->ids[i] < 0) {
                 continue;
             }
-            Struct_ov015_0218d50c_2* var13 = (Struct_ov015_0218d50c_2*)func_020dedd0((Struct_0201099c_10*)((char*)arg0->unknown_0_ + 0x4c), (short)arg0->unknown_20_[var11]);
-            if (var13 == 0) {
+            Elem0218d50c* elem = (Elem0218d50c*)ItemTable_Find((ItemTable*)((char*)self->container + 0x4c), (short)self->ids[i]);
+            if (elem == 0) {
                 continue;
             }
             if (func_ov015_0218c03c(arg0, var10, var11, 0) == 0) {
@@ -171,14 +171,14 @@ extern "C" ARM int func_ov015_0218d50c(Struct_ov015_0218d50c_3* arg0) {
         }
         var9.Reset();
     }
-    char* var23 = (char*)func_02099cac();
-    unsigned int var24 = ((Struct_ov015_0218d50c*)*arg0->unknown_4_)->unknown_148_;
-    unsigned int var25 = (var24 << 16) >> 13;
-    if (var25 != 0) {
-        CleanInvalidateCacheRange(var23 + arg0->unknown_3c_ * 4, 4);
-        CleanInvalidateCacheRange(var23 + 0x108 + arg0->unknown_3d_ * 4, 4);
-        CleanInvalidateCacheRange(var23 + 0x88 + arg0->unknown_3e_ * 16, 0x10);
-        func_020c9820();
+    char* tbl = (char*)CharacterColors_GetInstance();
+    unsigned int n = ((Pal0218d50c*)*self->pairsRoot)->count;
+    unsigned int cnt = (n << 16) >> 13;
+    if (cnt != 0) {
+        CleanInvalidateCacheRange(tbl + self->c3c * 4, 4);
+        CleanInvalidateCacheRange(tbl + 0x108 + self->c3d * 4, 4);
+        CleanInvalidateCacheRange(tbl + 0x88 + self->c3e * 16, 0x10);
+        DelayThenSyncBit0_020c9820();
         LockStagedTextureVRAMCopying();
         MemoryMapTexturePalette();
         LoadToTexturePalette(var23 + arg0->unknown_3c_ * 4, (char*)var25 + 0x24, 4);

@@ -179,22 +179,22 @@ extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
 extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
 extern "C" void __clear(void* arg0, int arg1);
 extern "C" double func_02008f5c(double);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_ov000_02159cb4(int arg0, int arg1);
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f08(void* arg0);
-extern "C" void* func_ov024_021f69b4(char* arg0, int arg1);
-extern "C" int func_ov000_021719c0(struct Struct_ov000_02171968* arg0);
-extern "C" void func_ov000_0217c32c(void* arg0);
-extern "C" int func_ov000_0217c4e8(void* arg0, int arg1);
-extern "C" struct Struct_ov024_021f7478* func_ov000_0217199c(void* arg0, int arg1);
-extern "C" int func_ov000_02171698(struct Struct_ov000_02171640* arg0);
-extern "C" struct Struct_ov024_021f7478* func_ov000_02171674(void* arg0, int arg1);
-extern "C" int func_ov000_02171bc0(void* arg0);
-extern "C" struct Struct_ov024_021f7478_2* func_ov000_02171b9c(void* arg0, int arg1);
-extern "C" struct Struct_ov024_021f7478* func_02079e2c(char* arg0, int arg1);
-extern "C" int func_02085748(unsigned char* arg0);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int func_ov000_02159cb4(int a, int id);
+void* GetActiveCombatWork_ov000_02160130(void);
+void* GetOffsetPtr02160f08(void* obj);
+void* FindByKeyIndexed_021f69b4(char* base, int key);
+int CountNonZero021719c0(struct S021719c0* p);
+extern "C" void func_ov000_0217c32c(void* p);
+int IsBitFlagSet0217c4e8(void* p, int i);
+struct MoveData_021f7478* GetBoundedField420_0217199c(void* p, int i);
+int CountNonZero02171698(struct S02171698* p);
+struct MoveData_021f7478* GetBoundedField156_02171674(void* p, int i);
+extern "C" int func_ov000_02171bc0(void* p);
+struct LearnedMove_021f7478* GetPointerField_02171b9c_02171b9c(void* p, int i);
+struct MoveData_021f7478* SearchBothTables02079e2c(char* p, int key);
+int GetBits23To25At0x2f4_02085748(unsigned char* obj);
 float NextRandomFloat01(struct Random* rng);
 int NextRandomMax(struct Random* rng, int max);
 int NextRandomBetween(struct Random* rng, int lo, int hi);
@@ -341,15 +341,15 @@ extern "C" ARM void func_ov024_021f7478(struct Struct_ov024_021f7478_7* arg0) {
     }
     arg0->unknown_c_ = var28;
 
-    func_02053c6c((unsigned char*)var23);
-    arg0->unknown_174_ = 0;
-    struct Struct_ov024_021f7478_6* var31 = arg0->unknown_178_;
-    func_02012fe4();
-    struct Struct_ov024_021f7478_6* var32 = &var31[arg0->unknown_174_];
-    var32->unknown_0_ = 1;
-    var32->unknown_2_ = -1;
-    var32->unknown_3_ = 0;
-    arg0->unknown_174_++;
+    GetFieldAt0x150_02053c6c((unsigned char*)self);
+    obj->numEntries = 0;
+    struct Entry_021f7478* entries = obj->entries;
+    Zone3D_GetInstance();
+    struct Entry_021f7478* e = &entries[obj->numEntries];
+    e->id = 1;
+    e->slot = -1;
+    e->flag = 0;
+    obj->numEntries++;
 
     if (((struct Struct_ov024_021f7478_8*)var23->unknown_138_)->unknown_3b_3_) {
         int var33 = func_ov000_02159cb4((int)arg0->unknown_0_, var23->unknown_4_);
@@ -436,22 +436,22 @@ extern "C" ARM void func_ov024_021f7478(struct Struct_ov024_021f7478_7* arg0) {
         arg0->unknown_13c_[var52] = 0;
     }
 
-    Struct_02108e10* var53 = func_020797dc();
-    for (int var54 = 0; var54 < arg0->unknown_9c_; var54++) {
-        struct Struct_ov024_021f7478_10* var55 = arg0->unknown_7c_[var54];
-        int var56 = var55->unknown_17c_;
-        if (var56 < 0) continue;
-        if (var56 >= 3) continue;
-        if (var55->unknown_148_ == 0) continue;
-        struct Struct_ov024_021f7478_9* var57 = var55->unknown_148_;
-        for (int var58 = 0; var58 < 6; var58++) {
-            unsigned short var59 = var57->unknown_18_[var58];
-            if (func_020117f0(var10) && ((struct Struct_ov024_021f7478_4*)((struct Struct_ov024_021f7478_5*)arg0->unknown_0_)->unknown_8e18_)->unknown_25_ != 0) {
-                char* var60 = (char*)((ActiveGrottoClass*)((char*)func_02012fe4() + Enum_ov024_021f7478_9196))->GetDetailedData();
-                short var61 = var55->unknown_2_;
-                unsigned short var62 = ((DetailedTreasureMapData::LegacyBossMapData*)(var60 + 0x4c))->MaybeGetCurrentAlternateID();
-                if (var62 == var61) {
-                    if (!((DetailedTreasureMapData::LegacyBossMapData*)(var60 + 0x4c))->CanUseLevelUpMove(var59)) continue;
+    ActionDataTables* moveTable2 = GetData02108e10_020797dc();
+    for (int i = 0; i < obj->count; i++) {
+        struct Combatant_021f7478* c = obj->list[i];
+        int side = c->side;
+        if (side < 0) continue;
+        if (side >= 3) continue;
+        if (c->moveSet == 0) continue;
+        struct MoveSet_021f7478* set = c->moveSet;
+        for (int j = 0; j < 6; j++) {
+            unsigned short moveId = set->moves[j];
+            if (IsGlobalU16InRange_020117f0(gs) && ((struct PartyWork_021f7478*)((struct Battle_021f7478*)obj->battle)->partyWork)->f25 != 0) {
+                char* detail = (char*)((ActiveGrottoClass*)((char*)Zone3D_GetInstance() + regionalGrottoOffset))->GetDetailedData();
+                short kindId = c->kindId;
+                unsigned short alt = ((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->MaybeGetCurrentAlternateID();
+                if (alt == kindId) {
+                    if (!((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->CanUseLevelUpMove(moveId)) continue;
                 }
             }
             struct Struct_ov024_021f7478* var63 = func_02079e2c((char*)var53, (short)var59);

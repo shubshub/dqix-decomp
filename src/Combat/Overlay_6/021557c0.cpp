@@ -128,8 +128,8 @@ struct Struct_ov006_021557c0 {
     unsigned char unknown_f7c_;
 };
 
-struct Struct_0201099c_3;
-struct Struct_0201099c_10;
+struct Container020e0310;
+struct ItemTable;
 
 extern "C" void __clear(void* dst, int size);
 int KeyTable_Get(Container020e0310* texts, int id);
@@ -139,14 +139,14 @@ extern "C" int func_020e12ec(char* arg0, const char* arg1);
 #endif
 void ItemTable_Init(void* obj);
 int BuildDescriptorFlag1_020de980(void* obj, void* alloc, void* data, int size, int id);
-void* FindElementByKey020dedd0(Container020dedd0* c, int key);
+void* ItemTable_Find(ItemTable* c, int key);
 extern "C" void func_ov023_021dcd90(ItemInfoWindow* window, unsigned char inMenu);
 extern "C" void func_ov023_021dcae0(ItemInfoWindow* window, int item);
 extern "C" void func_ov023_021dced4(ItemInfoWindow* window, unsigned char multiplier);
 const char** CallFunc020e52a0_020e5294(void* names, int item);
 extern "C" void func_020e4864(const char* src, char* dst, int a, int b, int c, int d);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
-void* GetPtrField0x2a04_02010828(GameState* gameState);
+void* GameState_GetParty(GameState* gameState);
 void SetFields_021dceac(char* window, int index, int name, unsigned char count, unsigned char maximum, unsigned char unk);
 
 extern unsigned char data_ov006_0215ff5c[8];
@@ -187,7 +187,7 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
             self->window_.partNames_ = self->partNames_;
             func_ov023_021dcd90(&self->window_, 1);
             loader->RemoveTask(self->task_);
-            self->nextItem_ = FindElementByKey020dedd0((Container020dedd0*)self->partNames_, id);
+            self->nextItem_ = ItemTable_Find((ItemTable*)self->partNames_, id);
             self->flags_ &= ~2;
             self->flags_ |= 0x40;
             func_ov023_021dcae0(&self->window_, self->itemId_);
@@ -230,7 +230,7 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
             self->nextItemAllocator_->Reset();
             ItemTable_Init(self->partNames_);
             BuildDescriptorFlag1_020de980(self->partNames_, self->nextItemAllocator_, data, size, self->nextRecipe_->item_);
-            self->nextItem_ = FindElementByKey020dedd0((Container020dedd0*)self->partNames_, self->nextRecipe_->item_);
+            self->nextItem_ = ItemTable_Find((ItemTable*)self->partNames_, self->nextRecipe_->item_);
         }
         var0->RemoveTask(arg0->unknown_ad4_);
         arg0->unknown_ad4_ = -1;
@@ -267,14 +267,14 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
             }
 #endif
         }
-        unsigned char var23[3] = {0};
-        GameState* var24 = GameState::GetInstance();
-        Struct_ov006_021557c0* var25 = (Struct_ov006_021557c0*)func_02010828(var24);
-        for (int var26 = 0; var26 < var25->unknown_f7c_; var26++) {
-            char* var27 = (char*)func_0200ff1c(var24, var25->unknown_f78_[var26]);
-            if (var27 != 0) {
-                for (int var28 = 0; var28 < 8; var28++) {
-                    Struct_ov000_02171c04_2* var29 = *(Struct_ov000_02171c04_2**)(var27
+        unsigned char counts[3] = {0};
+        GameState* gs = GameState::GetInstance();
+        Party021557c0* party = (Party021557c0*)GameState_GetParty(gs);
+        for (int i = 0; i < party->count; i++) {
+            char* actor = (char*)GetCombatantWithFlag0x100_0200ff1c(gs, party->ids[i]);
+            if (actor != 0) {
+                for (int j = 0; j < 8; j++) {
+                    BattleEquipmentView* equipment = *(BattleEquipmentView**)(actor
 #if defined(jpn)
                         + 0x144
 #else

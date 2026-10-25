@@ -87,19 +87,19 @@ extern "C" void func_020e4ce8(Struct_ov026_021db090_3*, GameObject*, int);
 extern "C" Struct_ov026_021d8ba0_8* func_ov017_021b8478(void*);
 extern "C" void* func_ov017_021b8468(void*);
 extern "C" void func_020dd0b0(int, char*);
-extern "C" void func_0204500c(Struct_ov023_021f4c04*, char*, int, int);
-extern "C" void func_02042b98(Struct_ov023_021f4c04*, int, int, int, int);
-extern "C" Struct_ov023_021f4c04* func_020421a0();
-extern "C" GameObject* func_0200fea4(GameState*, int);
-extern "C" int func_02010088(Struct_02010088*);
-extern "C" int func_ov026_021dd3c4(Struct_ov026_021d8ba0_10*);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
-extern "C" unsigned char func_020114ec(char*, void*);
-extern "C" void* func_ov000_02160130();
-extern "C" void* func_ov000_02160f08(void*);
-extern "C" void* func_ov026_021dae60(Struct_ov026_021d8ba0_4*, int);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" char* func_ov026_021d8a78(void*);
+extern "C" void func_0204500c(MessageWork*, char*, int, int);
+extern "C" void func_02042b98(MessageWork*, int, int, int, int);
+MessageWork* MessageSystem_GetInstance();
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+int IsFlag10088Set_02010088(S_10088*);
+int IsFlagBit8192Set_021dd3c4(FlagObj_021dd3c4*);
+void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+unsigned char CopyOutRegion0x571d_020114ec(char*, void*);
+void* GetActiveCombatWork_ov000_02160130();
+void* GetOffsetPtr02160f08(void*);
+void* FindSlotById_021dae60(Container_021dae60*, int);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+char* InitAndClearBuffer_021d8a78(void*);
 
 extern signed char data_ov026_021de6a6[];
 extern signed char data_ov026_021de6a8[];
@@ -138,9 +138,9 @@ extern "C" ARM void func_ov026_021dd8a8(Struct_ov000_02161e30* arg0, Struct_ov00
     int var25;
     int var26;
 
-    var6 = GameState::GetInstance();
-    var8 = func_020421a0();
-    if (arg0->unknown_8e24_ != 0) {
+    gs = GameState::GetInstance();
+    win = MessageSystem_GetInstance();
+    if (battle->busy != 0) {
         return;
     }
     func_02046380(var8);
@@ -249,30 +249,30 @@ extern "C" ARM void func_ov026_021dd8a8(Struct_ov000_02161e30* arg0, Struct_ov00
         break;
     }
 
-    var24 = func_020421a0()->unknown_5c_;
-    memset(var24, 0, 0x960);
-    func_020dd0b0(var26, var24);
-    strcpy(var0, var24);
-    if (arg0->unknown_8e49_ == 1) {
-        Struct_ov026_021dd8a8* var32 = (Struct_ov026_021dd8a8*)func_ov000_02160f08(func_ov017_021b8468(var7));
-        unsigned char var33 = arg1->unknown_8_ % 2;
-        if (var32 != NULL) {
-            var32->unknown_955_ = var33;
+    text = MessageSystem_GetInstance()->text;
+    memset(text, 0, 0x960);
+    func_020dd0b0(msgId, text);
+    strcpy(message, text);
+    if (battle->kind == 1) {
+        SideInfo* info = (SideInfo*)GetOffsetPtr02160f08(func_ov017_021b8468(zone));
+        unsigned char side = party->netId % 2;
+        if (info != NULL) {
+            info->side = side;
         }
         var26 = data_ov026_021de6a6[var33];
         if (var13) {
             var26 = data_ov026_021de6a8[var33];
             var8->unknown_19d7_ = 1;
         }
-        var24 = func_020421a0()->unknown_5c_;
-        memset(var24, 0, 0x960);
-        func_020dd0b0(var26, var24);
-        strcat(var0, var24);
-    } else if (arg0->unknown_8e49_ == 2) {
-        strcat(var0, data_ov026_021deebd);
-        strcat(var0, func_ov026_021d8a78((void*)data_ov026_021de6a2[arg1->unknown_8_ % 2]));
-        if (var13) {
-            var8->unknown_19d7_ = 1;
+        text = MessageSystem_GetInstance()->text;
+        memset(text, 0, 0x960);
+        func_020dd0b0(msgId, text);
+        strcat(message, text);
+    } else if (battle->kind == 2) {
+        strcat(message, data_ov026_021deebd);
+        strcat(message, InitAndClearBuffer_021d8a78((void*)data_ov026_021de6a2[party->netId % 2]));
+        if (extra) {
+            win->b19d7 = 1;
         }
     }
     if (arg0->unknown_8e49_ != 0) {

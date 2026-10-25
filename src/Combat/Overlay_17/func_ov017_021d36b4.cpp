@@ -17,14 +17,14 @@ struct Struct_ov017_021d36b4_2 {
     Vector3s unknown_2_;
 };
 
-extern "C" void* func_020120a0(char* arg0, unsigned int arg1);
-extern "C" int func_0202c508(struct Struct_0202c1a4* arg0);
-extern "C" void func_ov017_021d360c(int arg0, unsigned char arg1, int arg2, Vector3s arg3);
-extern "C" GameObject* func_0200ffe0(GameState* arg0, int arg1);
-extern "C" void func_02034044(unsigned char* arg0, int arg1);
-extern "C" void func_020397c0(void* arg0);
-extern "C" unsigned char func_02039d7c(char* arg0);
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+void* GetField0x74deForValidIndex_020120a0(char* base, unsigned int index);
+extern "C" int func_0202c508(struct SearchStruct0202c1a4* search);
+extern "C" void func_ov017_021d360c(int a, unsigned char b, int c, Vector3s d);
+GameObject* FindCombatantByField0x16a_0200ffe0(GameState* battleStruct, int id);
+void SetField0xc4Low15Bits_02034044(unsigned char* obj, int val);
+void GameObject_EnableControl(void* obj);
+unsigned char GetByte0x26c_02039d7c(char* obj);
+signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
 
 // USA: func_ov017_021d36b4
 extern "C" ARM void func_ov017_021d36b4(int arg0, struct Struct_ov017_021d36b4* arg1, GameState* arg2, int arg3,
@@ -41,40 +41,40 @@ extern "C" ARM void func_ov017_021d36b4(int arg0, struct Struct_ov017_021d36b4* 
             var0->unknown_0_ = arg1->unknown_6_;
             Vector3fix16Copy(&var0->unknown_2_, &arg1->unknown_8_);
         }
-    } else if (arg1->unknown_4_ == 1) {
-        int var1 = arg1->unknown_6_ <= 3;
-        if (!var1) {
-            GameObject* var2 = func_0200ffe0(arg2, arg1->unknown_6_ - 4);
-            if (var2 == 0) return;
-            arg1->unknown_6_ = var2->obj3D_.unknown_4_;
+    } else if (evt->mode == 1) {
+        int isParty = evt->id <= 3;
+        if (!isParty) {
+            GameObject* combatant = FindCombatantByField0x16a_0200ffe0(bs, evt->id - 4);
+            if (combatant == 0) return;
+            evt->id = combatant->obj3D_.actorIndex_;
         }
         GameObject* var3 = arg2->GetMaybeWanderingMonsterByIndex(arg1->unknown_6_);
         GameObject* var4 = arg2->GetPartyMemberByIndex(arg1->unknown_6_);
         if (var3 == 0) return;
 
-        if (func_0202c508(arg4)) {
-            if (var0->unknown_0_ == 0) return;
-            int var5 = 0;
-            if (var3->obj3D_.unknown_4_ >= 0 && var3->obj3D_.unknown_4_ <= 3) var5 = 1;
-            if (!var5) {
-                func_02034044((unsigned char*)var3, 5000);
-                if (var4 != 0) func_020397c0(var4);
+        if (func_0202c508(search)) {
+            if (slot->id == 0) return;
+            int inParty = 0;
+            if (monster->obj3D_.actorIndex_ >= 0 && monster->obj3D_.actorIndex_ <= 3) inParty = 1;
+            if (!inParty) {
+                SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                if (member != 0) GameObject_EnableControl(member);
             }
-            var0->unknown_0_ = 0;
-            func_ov017_021d360c(arg1->unknown_4_, arg1->unknown_5_, arg1->unknown_6_, arg1->unknown_8_);
-        } else if (arg0 == 0) {
-            short var6;
-            int var7 = 0;
-            var6 = var3->obj3D_.unknown_4_;
-            if (var6 >= 0 && var6 <= 3) var7 = 1;
-            if (var7) {
-                if (var6 == func_0202c1a4(arg4) && var4 != 0 && func_02039d7c((char*)var4) == 0) {
-                    func_02034044((unsigned char*)var3, 5000);
-                    if (var4 != 0) func_020397c0(var4);
+            slot->id = 0;
+            func_ov017_021d360c(evt->mode, evt->slotIndex, evt->id, evt->pos);
+        } else if (remote == 0) {
+            short index;
+            int inParty = 0;
+            index = monster->obj3D_.actorIndex_;
+            if (index >= 0 && index <= 3) inParty = 1;
+            if (inParty) {
+                if (index == GetSearchStructCurrentArrEntry(search) && member != 0 && GetByte0x26c_02039d7c((char*)member) == 0) {
+                    SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                    if (member != 0) GameObject_EnableControl(member);
                 }
             } else {
-                func_02034044((unsigned char*)var3, 5000);
-                if (var4 != 0) func_020397c0(var4);
+                SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                if (member != 0) GameObject_EnableControl(member);
             }
             var0->unknown_0_ = 0;
         }

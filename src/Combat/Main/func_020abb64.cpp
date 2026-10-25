@@ -18,31 +18,31 @@ extern "C" int func_020abae8(int);
 extern "C" void func_0208660c(char*);
 // USA: func_020abb64
 extern "C" ARM int func_020abb64() {
-    GameState* var0 = GameState::GetInstance();
-    for (int var1 = 0;var1 < 4;var1++) { char* var2 = func_020108d8((char*)var0, var1); if (var2) func_02082828(var2); }
-    if (!func_020aba5c(0)) return 0;
-    if (!func_020aba5c(1)) return 0;
-    if (!func_020abae8(0)) return 0;
-    if (!func_020abae8(1)) return 0;
-    Struct_020abb64_4* var3 = (Struct_020abb64_4*)var0;
-    var3->unknown_569c_.unknown_0_.unknown_0_0_ = 2000;
-    var3->unknown_569c_.unknown_0_.unknown_1_4_ = 1;
-    var3->unknown_569c_.unknown_0_.unknown_2_0_ = 1;
-    var3->unknown_569c_.unknown_0_.unknown_3_4_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_2_5_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_3_3_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_3_1_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_3_2_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_3_5_ = 0;
-    var3->unknown_569c_.unknown_0_.unknown_3_6_ = 1;
-    var3->unknown_569c_.unknown_0_.unknown_3_7_ = 0;
-    Struct_020abb64_3* var4 = &var3->unknown_569c_;
-    var4->unknown_4_.unknown_0_0_ = 511;
-    var4->unknown_4_.unknown_3_6_ = 0;
-    var4->unknown_4_.unknown_1_1_ = 300;
-    var4->unknown_4_.unknown_2_3_ = 706;
-    var4->unknown_8_ = 0;
-    func_0208660c((char*)func_02010828(var0));
-    VectorizedMemset(var3->unknown_6380_, 0, 0x54);
+    GameState* state = GameState::GetInstance();
+    for (int i = 0;i < 4;i++) { char* entry = GetSlotEntry020108d8((char*)state, i); if (entry) func_02082828(entry); }
+    if (!SendShortBufferOrReturnZero020aba5c(0)) return 0;
+    if (!SendShortBufferOrReturnZero020aba5c(1)) return 0;
+    if (!SendBufferOrReturnZero_020abae8(0)) return 0;
+    if (!SendBufferOrReturnZero_020abae8(1)) return 0;
+    State020abb64* storage = (State020abb64*)state;
+    storage->config.flags.value = 2000;
+    storage->config.flags.mode = 1;
+    storage->config.flags.index = 1;
+    storage->config.flags.bit28 = 0;
+    storage->config.flags.field_0x0_21 = 0;
+    storage->config.flags.bit27 = 0;
+    storage->config.flags.bit25 = 0;
+    storage->config.flags.bit26 = 0;
+    storage->config.flags.bit29 = 0;
+    storage->config.flags.bit30 = 1;
+    storage->config.flags.bit31 = 0;
+    Config020abb64* config = &storage->config;
+    config->fields.low = 511;
+    config->fields.bit30 = 0;
+    config->fields.middle = 300;
+    config->fields.high = 706;
+    config->statusByte = 0;
+    InitBigManagerStruct0208660c((char*)GameState_GetParty(state));
+    VectorizedMemset(storage->buffer, 0, 0x54);
     return 1;
 }

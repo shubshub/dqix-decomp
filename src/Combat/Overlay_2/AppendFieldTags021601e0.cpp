@@ -8,7 +8,7 @@ int AppendDotLeaderLabel02042084(char* buffer, char* label, int width, int extra
 #if defined(jpn)
 #define AppendLineTag02041cc0 func_0204234c
 extern "C" int func_0204234c(char* dst, int a1);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 #else
 int AppendLineTag02041cc0(char* dst, int a1);
 #endif
@@ -24,7 +24,7 @@ ARM void AppendFieldTags021601e0(char* obj, char* dst, int) {
 
     c = (struct Container020e0310*)(obj + 0x8);
     field = KeyTable_Get(c, 0x1130);
-    AppendString02042058(dst, (const char*)field);
+    Text_Append(dst, (const char*)field);
 
     AppendLineTag02041cc0(dst, 0x10);
     AppendXYTag_02041a90(dst, 0, 0x3a);

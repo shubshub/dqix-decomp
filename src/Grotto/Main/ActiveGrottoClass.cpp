@@ -16,7 +16,7 @@ extern "C"
     int func_020323c4(int minimum, int maximum);
 
     // Returns the 'zone struct' (still need to figure out what this contains)
-    void* func_02012fe4();
+    void* Zone3D_GetInstance();
 
     // Returns true if the value is between 40001 and 41505, respectively.
     // Most likely these are the zone IDs corresponding to grottos.
@@ -154,8 +154,8 @@ int ActiveGrottoClass::GetActiveGrottoEnviron() const
 int ActiveGrottoClass::GetFloorCount() const
 {
     GrottoStruct* grotto = GameState::GetInstance()->GetGrottoStruct();
-    void* zone = func_02012fe4();
-    if (!func_0201b588(*(unsigned short*)zone))
+    void* zone = Zone3D_GetInstance();
+    if (!_Z17IsInRange0201b588i(*(unsigned short*)zone))
         return 0;
 
     if (grotto->activeMapData.GetMapType() == TreasureMapType_Legacy)

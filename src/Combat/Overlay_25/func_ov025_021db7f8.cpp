@@ -7,12 +7,12 @@ enum {Enum_ov025_021db7f8_668=0x29c, Enum_ov025_021db7f8_672=0x2a0, Enum_ov025_0
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" int func_ov000_0215e9fc(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215ec1c(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" void func_0204a00c(unsigned char* arg0, int arg1);
-extern "C" void func_ov000_02182498(void* arg0, int arg1);
-extern "C" void func_ov017_02195530(unsigned char* arg0);
-extern "C" unsigned char* func_020421a0();
+extern "C" int func_ov000_0215e9fc(void* party, short* buf, int max, int start);
+extern "C" int func_ov000_0215ec1c(void* party, short* buf, int max, int start);
+void SetSubstructWord0x68_0204a00c(unsigned char* obj, int value);
+void SetOrInitField_02182498(void* obj, int flag);
+void SetFlag320_02195530(unsigned char* obj);
+unsigned char* MessageSystem_GetInstance();
 
 struct Struct_ov025_021db7f8 {
     unsigned char unknown_0_0_ : 4;
@@ -48,9 +48,9 @@ extern "C" ARM void func_ov025_021db7f8(Struct_ov025_021db7f8_2* arg0) {
             func_0204a00c((unsigned char*)var5, 0);
         }
     }
-    func_ov000_02182498(arg0->unknown_6ffc_, 1);
-    func_ov017_02195530((unsigned char*)GetGameResources());
-    func_020421a0()[Enum_ov025_021db7f8_6590] = 0;
-    arg0->unknown_e90_ = 0;
-    arg0->unknown_e94_ = 0;
+    SetOrInitField_02182498(obj->field6ffc, 1);
+    SetFlag320_02195530((unsigned char*)GetGameResources());
+    MessageSystem_GetInstance()[regionalOffset5] = 0;
+    obj->fieldE90 = 0;
+    obj->fieldE94 = 0;
 }

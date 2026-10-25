@@ -5,18 +5,15 @@
 #include "Combat/NodeLookup.h"
 #include "Memory/SafeAllocator.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-struct Struct_0205faf4_3;
-struct Struct_0205faf4_4;
-struct Struct_0205faf4_13;
-extern "C" int func_0206e120(Struct_0205faf4_3*, int);
-extern "C" int func_0206e260(Struct_0205faf4_4*, int);
-extern "C" int func_0206e2dc(Struct_0205faf4_13*, int);
-extern "C" Struct_0205faf4_3* func_0205ec34();
-static inline int inline_0206cf58(Struct_0205faf4_3* arg0, int arg1, int arg2)
+struct PackedNibbleArray0206e120;
+struct PackedNibbleArray0206e260;
+struct PackedNibbleArray0206e2dc;
+int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
+int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
+int GetPackedNibbleFlag0x8(PackedNibbleArray0206e2dc*, int);
+extern "C" PackedNibbleArray0206e120* Scenario_GetInstance();
+static inline int NibbleIs0206cf58(PackedNibbleArray0206e120* table, int slot, int value)
 {
     return func_0206e120(arg0, arg1) == arg2;
 }
@@ -60,8 +57,8 @@ extern "C" ARM int func_0206cf58(Script::Parameter* arg0, int arg1)
         data_02108cec.unknown_8_ = -1;
         data_02108cec.unknown_4_ = -1;
     }
-    var0 = func_0205ec34();
-    if (data_02108cec.unknown_4_ != var2 && data_02108cec.unknown_4_ > -1)
+    table = Scenario_GetInstance();
+    if (data_02108cec.slot != slot && data_02108cec.slot > -1)
     {
         if (inline_0206cf58(var0, var2, 1) || inline_0206cf58(var0, var2, 2))
         {

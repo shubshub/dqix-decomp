@@ -19,7 +19,7 @@ extern "C" ARM void* func_ov011_021849c8(void* ctx);
 extern "C" ARM int func_ov004_02167820(void* self, void* param1, int param2, int param3);
 void* ResetAndReturnSelf020dfc2c(void* p);
 void SpriteContext_Init(char* obj);
-void EmptyDestructor0205a494(void* obj);
+void SpriteContext_Destroy(void* obj);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
@@ -56,13 +56,13 @@ extern "C" ARM int func_ov011_02187e20(struct Struct_ov011_02187e20* arg0) {
     SpriteContext_Init(base + 0x60);
     memcpy(block, &local, sizeof(Buf02187e20));
 
-    if (func_ov004_02167820(var4, var2, var0, var1) == 0) {
-        func_0205a494(var5.unknown_94_);
+    if (func_ov004_02167820(block, ctx, tag0, tag8) == 0) {
+        SpriteContext_Destroy(local.sub);
         return 0;
     }
 
-    void* var7 = func_ov011_021849c8(var2);
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)var7, (struct Struct_ov004_0215c30c_2*)var4);
-    func_0205a494(var5.unknown_94_);
+    void* list = func_ov011_021849c8(ctx);
+    AppendNodeToList_021f67ac((struct ListHead_021f67ac*)list, (struct ListNode_021f67ac*)block);
+    SpriteContext_Destroy(local.sub);
     return 1;
 }

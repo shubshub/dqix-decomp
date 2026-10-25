@@ -23,18 +23,18 @@ struct Struct_0207fcb8;
 struct Struct_0207fd44_2;
 struct Struct_0207fd88;
 
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_02074bd0(struct Struct_02074bd0* arg0);
-extern "C" void func_0207fcb8(struct Struct_0207fcb8* arg0);
-extern "C" void func_0207fd44(struct Struct_0207fd44_2* arg0);
-extern "C" void func_0207fd88(struct Struct_0207fd88* arg0);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
+void* GlobalFlags_GetInstance(void);
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
+void ClearAllBuffers0207fcb8(struct Obj0207fcb8* obj);
+void CallFunc0204b04cOverList0x2c(struct Cont0207fd44* obj);
+void CallFunc0204b088OverList0x2c(struct Cont0207fd88* obj);
+extern "C" void* memset(void* dst, int val, unsigned int len);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" int LoadToMainBG1CharacterData(int arg0, int arg1, unsigned int arg2);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043204(char* arg0);
-extern "C" void func_02043124(char* arg0);
+int MessageSystem_GetInstance(void);
+void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_Stop(char* obj);
 
 struct Struct_ov003_0215fb94 {
     unsigned char unknown_0_[Enum_ov003_0215fb94_552];
@@ -59,12 +59,12 @@ struct Struct_ov003_0215fb94 {
 };
 
 // USA: func_ov003_0215fb94
-extern "C" ARM void func_ov003_0215fb94(Struct_ov003_0215fb94* arg0) {
-    func_020466f4((struct Struct_02038598_4*)func_020d6c00(), 0x80000);
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_46c_ >= 0) {
-        var0->RemoveTask(arg0->unknown_46c_);
-        arg0->unknown_46c_ = -1;
+extern "C" ARM void func_ov003_0215fb94(BattleView0215fb94* view) {
+    FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0x80000);
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (view->loadTaskId >= 0) {
+        loader->RemoveTask(view->loadTaskId);
+        view->loadTaskId = -1;
     }
 
     GameResources* var1 = GetGameResources();
@@ -91,10 +91,10 @@ extern "C" ARM void func_ov003_0215fb94(Struct_ov003_0215fb94* arg0) {
     }
     arg0->unknown_398_ = NULL;
 
-    char* var4 = (char*)func_020421a0();
-    if (*(int*)(var4 + Enum_ov003_0215fb94_2456) != 0) {
-        func_02043204(var4);
-        func_02043124(var4);
+    char* controller = (char*)MessageSystem_GetInstance();
+    if (*(int*)(controller + kRegion998) != 0) {
+        MessageSystem_Reset(controller);
+        MessageSystem_Stop(controller);
     }
     *(int*)(var4 + Enum_ov003_0215fb94_728) = 0;
     var4[Enum_ov003_0215fb94_742] = 1;

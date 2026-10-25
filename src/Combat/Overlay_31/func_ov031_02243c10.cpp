@@ -6,9 +6,9 @@ struct Struct_02245528;
 extern "C" void func_ov031_02245528(struct Struct_02245528* arg0, int arg1);
 extern "C" int func_ov031_02212cbc(void* arg0);
 extern "C" void func_ov031_022434b4(void);
-extern "C" void func_ov031_022434e8(void* arg0, void* arg1);
-extern "C" void func_ov031_02211b40(void* arg0, void* arg1);
-extern int data_0211e33c;
+void FreeIfNonNull_022434e8(void* a, void* b);
+void SetGlobalFields_02211b40(void* a, void* b);
+extern int g_fileLoadBuffer;
 
 struct Struct_ov031_02243c10 {
 	unsigned char unknown_0_[0x35];
@@ -37,8 +37,8 @@ extern "C" ARM void func_ov031_02243c10(Struct_ov031_02243c10* arg0) {
 				func_ov031_02245528((struct Struct_02245528*)arg0, 0);
 				return;
 			}
-			arg0->unknown_37c_ = &data_0211e33c;
-			arg0->unknown_380_ = 0x30000;
+			obj->ptr37c = &g_fileLoadBuffer;
+			obj->size380 = 0x30000;
 		}
 		memset(arg0->unknown_37c_, 0, arg0->unknown_380_);
 		arg0->unknown_48_ = arg0->unknown_37c_;

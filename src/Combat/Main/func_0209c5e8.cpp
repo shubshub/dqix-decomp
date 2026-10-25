@@ -22,16 +22,16 @@ struct Struct_0209c5e8 {
 struct Struct_02109bf4_4;
 struct Struct_0203aba8;
 
-extern "C" int func_0209c140();
-extern "C" void func_0209c678(struct Struct_02109bf4_4* arg0, int arg1);
-extern "C" void func_0203ac10(void* arg0, void* arg1, int arg2);
-extern "C" int func_0203aba8(struct Struct_0203aba8* arg0, void* arg1, void* arg2);
+int IsBattleActiveAndCombatantsBit0Set_0209c140();
+void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
+void SetContextAndDispatch0203ac10(void* obj, void* a, int b);
+int TryDispatchOrFallback0203aba8(struct Obj0203aba8* obj, void* key, void* target);
 
 // USA: func_0209c5e8
-extern "C" ARM void func_0209c5e8(struct Struct_0209c5e8* arg0) {
-    if (arg0->unknown_c8_.unknown_0_2_) return;
-    if (func_0209c140() != 0) {
-        func_0209c678((struct Struct_02109bf4_4*)arg0, 0);
+extern "C" ARM void func_0209c5e8(struct Actor0209c5e8* actor) {
+    if (actor->field_c8.bit2) return;
+    if (IsBattleActiveAndCombatantsBit0Set_0209c140() != 0) {
+        BgmPlayer_FadeOut((struct Actor0209c678*)actor, 0);
         return;
     }
     if (arg0->unknown_b0_ == 1) {

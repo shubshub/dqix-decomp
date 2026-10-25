@@ -1,12 +1,14 @@
 #include <globaldefs.h>
+#include "Graphics/CharacterModel.h"
 
-struct Words021e60c4 { unsigned int a, b, c; };
-void SetWords_021e60c4_021e60c4(void* obj, struct Words021e60c4* src);
+struct Words021e60c4 { unsigned int x, y, z; };
+void Object3D_SetRotation(void* part, struct Words021e60c4* rotation);
 
 // Overlay 23, originally SetFourWordBlocks_021e6088 (USA/EUR 0x021e6088, JPN 0x021e626c)
-ARM void CharacterModel_SetRotation(void* obj, struct Words021e60c4* src) {
-    SetWords_021e60c4_021e60c4(obj, src);
-    SetWords_021e60c4_021e60c4((char*)obj + 0x408, src);
-    SetWords_021e60c4_021e60c4((char*)obj + 0xac, src);
-    SetWords_021e60c4_021e60c4((char*)obj + 0x35c, src);
+ARM void CharacterModel_SetRotation(void* model, struct Words021e60c4* rotation) {
+    CharacterModel* self = (CharacterModel*)model;
+    Object3D_SetRotation(&self->parts_[CharacterModelPart_Body], rotation);
+    Object3D_SetRotation(&self->parts_[CharacterModelPart_Feet], rotation);
+    Object3D_SetRotation(&self->parts_[CharacterModelPart_Legs], rotation);
+    Object3D_SetRotation(&self->parts_[CharacterModelPart_Arms], rotation);
 }

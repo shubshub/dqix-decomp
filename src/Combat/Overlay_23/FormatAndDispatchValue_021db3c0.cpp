@@ -1,0 +1,57 @@
+#include <globaldefs.h>
+
+extern "C" void __clear(void* buf, int n);
+#if defined(jpn)
+extern "C" int sprintf(void*, const void*, ...);
+#else
+extern "C" int sprintf(void* dst, const void* fmt, ...);
+#endif
+extern "C" int Font_GetTextWidth(void* builder, int obj);
+extern "C" void func_0204f41c(void* a, short b, short c, void* buf, int d, int e, void* f, void* g, int h);
+extern char data_ov023_021fdb28;
+#if defined(jpn)
+extern const char data_ov023_021fcdec[];
+extern "C" void func_02050678(void*, int, short, void*, int, int, void*, void*);
+#endif
+
+// USA: func_ov023_021db3c0
+ARM void FormatAndDispatchValue_021db3c0(void* param0, int param1, short param2, float param3, unsigned char param4) {
+#if defined(jpn)
+    int integer;
+    int color = param4;
+    int scaled = (int)(10.0f * param3);
+    integer = scaled;
+    scaled %= 10;
+    integer /= 10;
+    char fraction[3];
+    __clear(fraction, 3);
+    sprintf(fraction, (void*)data_ov023_021fcdec, scaled);
+    short outA;
+    short outB;
+    func_02050678(param0, param1, param2, fraction, 8, color, &outA, &outB);
+    param1 = (short)(param1 - 2);
+    fraction[0] = '.';
+    func_02050678(param0, param1, param2, fraction, 8, color, &outA, &outB);
+    param1 = (short)(param1 - 7);
+    do {
+        int digit = integer % 10;
+        integer /= 10;
+        char buf[2];
+        __clear(buf, 2);
+        sprintf(buf, (void*)data_ov023_021fcdec, digit);
+        func_02050678(param0, param1, param2, buf, 8, color, &outA, &outB);
+        param1 = (short)(param1 - 6);
+    } while (integer != 0);
+
+#else
+    char buf[0x40];
+    __clear(buf, 0x40);
+    sprintf(buf, &data_ov023_021fdb28, (double)param3);
+    int r1val = Font_GetTextWidth(buf, 0);
+    short sum = (short)(param1 - r1val);
+    short outA;
+    short outB;
+    func_0204f41c(param0, sum, param2, buf, 8, param4, &outA, &outB, 0);
+
+#endif
+}

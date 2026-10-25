@@ -19,14 +19,14 @@ struct Struct_ov017_021c48f0_2 { char unknown_0_[0x34c0]; unsigned char* unknown
 #else
 struct Struct_ov017_021c48f0_2 { char unknown_0_[0x36d0]; unsigned char* unknown_36d0_; char unknown_36d4_[0x3734-0x36d4]; Struct_ov017_021c48f0_8* unknown_3734_; };
 #endif
-extern "C" int func_02039888(void*); extern "C" void func_02039d58(unsigned char*);
-extern "C" GameObject* func_0200ff58(GameState*,int); extern "C" int func_020546a8(void*);
-extern "C" unsigned short* func_02012fe4(); extern "C" void func_02039d24(unsigned char*);
-extern "C" void func_020407b4(Struct_02040774_2*,int,int,int); extern "C" void func_02033874(Struct_02033834*,int); extern "C" void func_02033b88(Struct_02010604*,int);
-extern "C" void func_ov017_02193428(void*,void*); extern "C" void func_02026bc8(unsigned char*,int);
-extern "C" int func_0202c1a4(Struct_0202c1a4*);
+int GetSignedByte0x1ca_02039888(void*); void ClearFlag0x1ceBit0x4_02039d58(unsigned char*);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*,int); int GetSignedByte0x2d0_020546a8(void*);
+extern "C" unsigned short* Zone3D_GetInstance(); void ClearBytesAndZeroBlock02039d24(unsigned char*);
+void SetFields0x44(Fields020407b4*,int,int,int); void SetVecYFromValue02033874(Obj02033874*,int); void SetByte0xbeShiftPrev(Bytes02033b88*,int);
+void DispatchWithZeroExtras_02193428(void*,void*); void SetBit02026bc8(unsigned char*,int);
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
 extern "C" void func_ov017_0219dc90(GameResources*,int,int,int,int);
-extern "C" Struct_020fdd44* func_02027ca4(); extern "C" Struct_020fdd44* func_02028bd0(Struct_020fdd44*,int);
+Entry_02028bd0* ZoneRecords_GetInstance(); Entry_02028bd0* FindInlineEntryById(Entry_02028bd0*,int);
 extern "C" void func_ov017_021c8f3c(int,int); extern "C" void __clear(void*,int);
 extern "C" void func_ov017_021c95ec(int,int,int,int,int,Struct_ov017_021c48f0_3,int,int,int);
 extern "C" void func_ov017_021c9168(int,int,int,int,Struct_ov017_021c48f0_3,Struct_ov017_021c48f0_3,int);
@@ -35,77 +35,77 @@ extern "C" int func_0202c508(void*); extern "C" void func_ov017_021ce400(int,int
 extern "C" int func_02039790(void*,int); extern "C" void func_ov017_021bd4d0(void*,int,int,int); extern "C" void func_ov017_021c3e18(unsigned char);
 
 // USA: func_ov017_021c48f0
-extern "C" ARM void func_ov017_021c48f0(int arg0,Struct_ov017_021c48f0_5* arg1,GameState* arg2,GameResources* arg3,Struct_0202c1a4* arg4) {
-    int var0;
-    Struct_020fdd44* var1;
-    Struct_ov017_021c48f0_8* var2;
-    var2=((Struct_ov017_021c48f0_2*)arg3)->unknown_3734_;
-    int var3=arg1->unknown_4_;
-    Vector3i var4;
-    var4.x=arg1->unknown_a_<<5; var4.y=arg1->unknown_c_<<5; var4.z=arg1->unknown_e_<<5;
-    if(var3==10000) var3=0x170c; else if(var3==10100) var3=0x1901;
-    int var5=0; var0=0;
-    GameObject* var6[4]; var6[var5++]=arg2->GetPartyMemberByIndex(arg0);
-    if(var6[0]!=NULL) {
-        GameObject* var7=var6[0];
-        if(*((Struct_ov017_021c48f0_7*)var7)->unknown_130_&1) { var0=func_02039888(var7); GameObject* var8=arg2->GetPartyMemberByIndex(var0); if(var8!=NULL) func_02039d58((unsigned char*)var8); }
-        else { func_02039d58((unsigned char*)var7); var0=arg0; }
-        for(int var9=0;var9<4;var9++) { GameObject* var10=func_0200ff58(arg2,var9); if(var10!=NULL && arg0==func_020546a8(var10)) var6[var5++]=var10; }
-        int var11=(var2->unknown_3_==0 || var2->unknown_101_==0)?1:0;
-        for(int var12=0;var12<var5;var12++) {
-            GameObject* var13=var6[var12];
-            if(var13==NULL) continue;
-            if(!var13->obj3D_.IsVisible() && var11) {
-                if(arg1->unknown_7_==0 || var3!=*func_02012fe4()) var13->obj3D_.MakeVisible();
-                func_02039d24((unsigned char*)var13);
-                if(arg1->unknown_4_==10000 && func_02039888(var13)!=-1) func_020407b4((Struct_02040774_2*)var13,0xff000,0,0xff000);
-                else var13->obj3D_.position_=var4;
-                func_02033874((Struct_02033834*)var13,arg1->unknown_10_);
-                if(var12!=0) func_02033b88((Struct_02010604*)var13,0);
-                ((Struct_ov017_021c48f0_6*)var6[var12])->unknown_d4_=var4;
-                ((Struct_ov017_021c48f0_6*)var6[var12])->unknown_e0_|=0x20;
+extern "C" ARM void func_ov017_021c48f0(int memberId,Event48f0* event,GameState* game,GameResources* resources,SearchStruct0202c1a4* search) {
+    int leader;
+    Entry_02028bd0* entry;
+    Work48f0* work;
+    work=((Resource48f0*)resources)->work;
+    int zone=event->zone;
+    Vector3i position;
+    position.x=event->x<<5; position.y=event->y<<5; position.z=event->z<<5;
+    if(zone==10000) zone=0x170c; else if(zone==10100) zone=0x1901;
+    int count=0; leader=0;
+    GameObject* actors[4]; actors[count++]=game->GetPartyMemberByIndex(memberId);
+    if(actors[0]!=NULL) {
+        GameObject* first=actors[0];
+        if(*((ActorHead48f0*)first)->stats&1) { leader=GetSignedByte0x1ca_02039888(first); GameObject* actor=game->GetPartyMemberByIndex(leader); if(actor!=NULL) ClearFlag0x1ceBit0x4_02039d58((unsigned char*)actor); }
+        else { ClearFlag0x1ceBit0x4_02039d58((unsigned char*)first); leader=memberId; }
+        for(int i=0;i<4;i++) { GameObject* actor=GetCombatantWithFlag0x1000_0200ff58(game,i); if(actor!=NULL && memberId==GetSignedByte0x2d0_020546a8(actor)) actors[count++]=actor; }
+        int reveal=(work->active==0 || work->ready==0)?1:0;
+        for(int i=0;i<count;i++) {
+            GameObject* actor=actors[i];
+            if(actor==NULL) continue;
+            if(!actor->obj3D_.IsVisible() && reveal) {
+                if(event->byte7==0 || zone!=*Zone3D_GetInstance()) actor->obj3D_.MakeVisible();
+                ClearBytesAndZeroBlock02039d24((unsigned char*)actor);
+                if(event->zone==10000 && GetSignedByte0x1ca_02039888(actor)!=-1) SetFields0x44((Fields020407b4*)actor,0xff000,0,0xff000);
+                else actor->obj3D_.position_=position;
+                SetVecYFromValue02033874((Obj02033874*)actor,event->angle);
+                if(i!=0) SetByte0xbeShiftPrev((Bytes02033b88*)actor,0);
+                ((Actor48f0*)actors[i])->previous=position;
+                ((Actor48f0*)actors[i])->flags|=0x20;
             }
-            if(arg1->unknown_4_==10000 && var0==var13->obj3D_.unknown_4_ && var11) {
-                func_020407b4((Struct_02040774_2*)var6[var12],0x5f0a,0x3614,0x570);
-                func_02033874((Struct_02033834*)var6[var12],0x4b66);
+            if(event->zone==10000 && leader==actor->obj3D_.actorIndex_ && reveal) {
+                SetFields0x44((Fields020407b4*)actors[i],0x5f0a,0x3614,0x570);
+                SetVecYFromValue02033874((Obj02033874*)actors[i],0x4b66);
             }
-            var13->obj3D_.EnableFlag(0x4000000);
-            if(var2->unknown_3_==0) func_ov017_02193428(var13,0);
-            func_02026bc8(((Struct_ov017_021c48f0_2*)arg3)->unknown_36d0_,var13->obj3D_.unknown_4_);
+            actor->obj3D_.EnableFlag(0x4000000);
+            if(work->active==0) DispatchWithZeroExtras_02193428(actor,0);
+            SetBit02026bc8(((Resource48f0*)resources)->bits,actor->obj3D_.actorIndex_);
         }
     }
-    if(func_0202c1a4(arg4)==0) {
-        func_ov017_0219dc90(arg3,arg0,arg1->unknown_4_,arg1->unknown_6_,arg1->unknown_8_);
-        var1=func_02028bd0(func_02027ca4(),var3);
-        if(var1!=NULL) {
-            int var14;
-            Struct_ov017_021c48f0_4 var15,var16,var17;
-            Struct_ov017_021c48f0_3 var18,var19,var20;
-            for(int var21=0;var21<12;var21++) {
-                int var22=var1->unknown_2_0_*12+0x70;
-                GameObject* var23=arg2->GetMaybeFieldMonsterByIndex(var21+var22);
-                if(var23==NULL || var23->obj3D_.unknown_2_<0) continue;
-                int var24;
-                int var25=var23->obj3D_.unknown_2_;
-                var15=*(Struct_ov017_021c48f0_4*)&var23->obj3D_.position_;
-                var16=*(Struct_ov017_021c48f0_4*)&var23->obj3D_.rotation_;
-                var24=((Struct_ov017_021c48f0_6*)var23)->unknown_166_;
-                func_ov017_021c8f3c(var21+var22,arg0);
-                switch(((Struct_ov017_021c48f0_6*)var23)->unknown_130_) {
-                case 1: __clear(&var18,12); func_ov017_021c95ec(var3,var21,var25,1,-1,var18,0,0,0); break;
-                case 2: func_ov017_021c9168(var3,var21,var25,((Struct_ov017_021c48f0_6*)var23)->unknown_164_,var15.unknown_0_,var16.unknown_0_,arg0); break;
-                case 3: var17.unknown1_0_=((Struct_ov017_021c48f0_6*)var23)->unknown_158_; func_ov017_021c927c(var3,var21,var25,var17.unknown_0_,var14,3,-1); break;
-                case 4: __clear(&var19,12); func_ov017_021c95ec(var3,var21,var25,4,var24,var19,0,0,0); break;
-                case 5: var14=((Struct_ov017_021c48f0_6*)var23)->unknown_ae_; var17.unknown1_0_=((Struct_ov017_021c48f0_6*)var23)->unknown_158_; func_ov017_021c927c(var3,var21,var25,var17.unknown_0_,var14,5,var24); break;
-                case 6: var14=((Struct_ov017_021c48f0_6*)var23)->unknown_ae_; var17.unknown1_0_=((Struct_ov017_021c48f0_6*)var23)->unknown_158_; func_ov017_021c927c(var3,var21,var25,var17.unknown_0_,var14,6,var24); break;
-                case 7: var14=((Struct_ov017_021c48f0_6*)var23)->unknown_ae_; var17.unknown1_0_=((Struct_ov017_021c48f0_6*)var23)->unknown_158_; func_ov017_021c927c(var3,var21,var25,var17.unknown_0_,var14,7,var24); break;
-                case 9: __clear(&var20,12); func_ov017_021c95ec(var3,var21,var25,9,arg0,var20,0,0,0); break;
+    if(GetSearchStructCurrentArrEntry(search)==0) {
+        func_ov017_0219dc90(resources,memberId,event->zone,event->byte6,event->field8);
+        entry=FindInlineEntryById(ZoneRecords_GetInstance(),zone);
+        if(entry!=NULL) {
+            int height;
+            Position48f0 actorPosition,rotation,target;
+            Vec48f0 zero1,zero4,zero9;
+            for(int i=0;i<12;i++) {
+                int base=entry->group*12+0x70;
+                GameObject* monster=game->GetMaybeFieldMonsterByIndex(i+base);
+                if(monster==NULL || monster->obj3D_.unknown_2_<0) continue;
+                int slot;
+                int kind=monster->obj3D_.unknown_2_;
+                actorPosition=*(Position48f0*)&monster->obj3D_.position_;
+                rotation=*(Position48f0*)&monster->obj3D_.rotation_;
+                slot=((Actor48f0*)monster)->slot;
+                func_ov017_021c8f3c(i+base,memberId);
+                switch(((Actor48f0*)monster)->state) {
+                case 1: __clear(&zero1,12); func_ov017_021c95ec(zone,i,kind,1,-1,zero1,0,0,0); break;
+                case 2: func_ov017_021c9168(zone,i,kind,((Actor48f0*)monster)->field164,actorPosition.plain,rotation.plain,memberId); break;
+                case 3: target.vector=((Actor48f0*)monster)->target; func_ov017_021c927c(zone,i,kind,target.plain,height,3,-1); break;
+                case 4: __clear(&zero4,12); func_ov017_021c95ec(zone,i,kind,4,slot,zero4,0,0,0); break;
+                case 5: height=((Actor48f0*)monster)->height; target.vector=((Actor48f0*)monster)->target; func_ov017_021c927c(zone,i,kind,target.plain,height,5,slot); break;
+                case 6: height=((Actor48f0*)monster)->height; target.vector=((Actor48f0*)monster)->target; func_ov017_021c927c(zone,i,kind,target.plain,height,6,slot); break;
+                case 7: height=((Actor48f0*)monster)->height; target.vector=((Actor48f0*)monster)->target; func_ov017_021c927c(zone,i,kind,target.plain,height,7,slot); break;
+                case 9: __clear(&zero9,12); func_ov017_021c95ec(zone,i,kind,9,memberId,zero9,0,0,0); break;
                 }
             }
         }
     }
-    Struct_ov017_021c48f0* var26=(Struct_ov017_021c48f0*)func_02010828(arg2);
-    if(func_0202c508(arg4) && var26->unknown_f7d_!=0) func_ov017_021ce400(var26->unknown_f7d_,*func_02012fe4());
-    if(arg2->GetPartyMemberByIndex(var0)!=NULL && func_02039790(arg2->GetPartyMemberByIndex(var0),0x20)) func_ov017_021bd4d0(var2,(unsigned char)var0,0,1);
-    if(var3==*func_02012fe4()) func_ov017_021c3e18(0);
+    Party48f0* party=(Party48f0*)GameState_GetParty(game);
+    if(func_0202c508(search) && party->flag!=0) func_ov017_021ce400(party->flag,*Zone3D_GetInstance());
+    if(game->GetPartyMemberByIndex(leader)!=NULL && GetByteFieldMasked0x1ce_02039790(game->GetPartyMemberByIndex(leader),0x20)) func_ov017_021bd4d0(work,(unsigned char)leader,0,1);
+    if(zone==*Zone3D_GetInstance()) func_ov017_021c3e18(0);
 }

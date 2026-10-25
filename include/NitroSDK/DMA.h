@@ -15,8 +15,6 @@ struct DMARegisterSet
     } controlAndSize;
 };
 
-#if defined(jpn)
-#endif
 
 // DMA channel for general use
 extern int data_020f2270;

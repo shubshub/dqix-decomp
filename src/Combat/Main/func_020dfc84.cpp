@@ -1,30 +1,22 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 
-struct Struct_020dfc40;
-struct Struct_0201099c_14 {
-    unsigned char unknown_0_[0xc];
-    short unknown_c_;
-    short unknown_e_;
-    int unknown_10_;
-    void* unknown_14_;
-};
-
-int ResetHandleState020dfe88(struct Obj020dfe88* obj);
+int KeyTable_EndLoad(struct Struct020dfc40* table);
 void KeyTable_Reset(struct Struct020dfc40* p);
 int ReplaceBinExtensionWithNat020e05f8(char*, char const*, short);
 extern "C" int func_020dfd40(void* self, char* a, char* b);
 
 // USA: func_020dfc84
-extern "C" ARM int func_020dfc84(void* arg0, void* arg1, char* arg2, char* arg3, short arg4, short arg5) {
-    char var0[0x60];
-    struct Struct_0201099c_14* var1;
+extern "C" ARM int func_020dfc84(void* self, void* allocator, char* fmt, char* ext, short n, short singleKey) {
+    char buf[0x60];
+    struct Struct020dfc40* p;
 
     p = (struct Struct020dfc40*)self;
-    ResetHandleState020dfe88((struct Obj020dfe88*)self);
+    KeyTable_EndLoad((struct Struct020dfc40*)self);
     KeyTable_Reset(p);
-    p->field_14 = field_14;
-    p->field_c = field_c;
-    p->field_e = 1;
+    p->allocator = allocator;
+    p->singleKey = singleKey;
+    p->loadStep = KeyTableLoadStep_Queue;
 
     if (arg4 >= 0) {
         func_020e05f8(var0 + 0x20, arg2, arg4);

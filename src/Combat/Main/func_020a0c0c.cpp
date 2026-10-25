@@ -2,14 +2,14 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-struct Struct_02114e20;
-extern "C" unsigned int func_02012dd0(struct Struct_02114e20* arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+struct Struct02012dd0;
+unsigned int GetMaxAlloc02012dd0(struct Struct02012dd0* self);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 unsigned int LoadROMFilesystemFileTables(void* where, unsigned int capacity);
 void CacheMainFileAccessors();
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern void* data_02109d90;
 
 // USA: func_020a0c0c
@@ -22,18 +22,18 @@ extern "C" ARM void func_020a0c0c() {
     if (data_02109d90 != NULL)
         return;
 
-    var3 = LoadROMFilesystemFileTables(NULL, 0);
-    var0 = func_02012dd0((Struct_02114e20*)&data_02114e20);
-    if (var3 + 0x10 > var0)
+    size = LoadROMFilesystemFileTables(NULL, 0);
+    max = GetMaxAlloc02012dd0((Struct02012dd0*)&g_mainAllocator);
+    if (size + 0x10 > max)
         return;
 
     var2 = BackgroundLoader::GetInstance();
     if (var2 != NULL)
         var2->AddLock();
 
-    var1 = func_02012d88(&data_02114e20, var0 - (var3 + 0x10));
-    data_02109d90 = func_02012d88(&data_02114e20, var3);
-    func_02012da4(&data_02114e20, var1);
+    tmp = AllocatorUnion_AllocateRounded(&g_mainAllocator, max - (size + 0x10));
+    data_02109d90 = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
+    AllocatorUnion_Free(&g_mainAllocator, tmp);
 
     if (data_02109d90 != NULL)
         LoadROMFilesystemFileTables(data_02109d90, var3);

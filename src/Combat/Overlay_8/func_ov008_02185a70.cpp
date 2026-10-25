@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "Resource/FontBankLoader.h"
 #if defined(jpn)
 #define func_ov008_02188d74 func_ov008_02189a9c
@@ -23,9 +24,6 @@ struct Struct_01ff8b48_13 {
     int unknown_0_[0x18 / 4];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -107,8 +105,8 @@ struct Struct_0205d6a0;
 struct Struct_ov008_02184a4c_13;
 struct Struct_0205d81c;
 
-extern "C" Struct_02021b84* func_020421a0();
-extern "C" void func_0205d6a0(Struct_0205d6a0* arg0, int arg1);
+MessageSystem* MessageSystem_GetInstance();
+void Window_ClosePane(Entry_0205d6a0* window, int value);
 void SetMainBrightness(GameResources* resources, int screen, int brightness);
 extern "C" void func_ov008_02187664(Struct_ov008_02184a4c_13* arg0, int arg1);
 extern "C" Struct_ov006_02158478* func_0205d81c(Struct_0205d81c* arg0, int arg1);
@@ -131,14 +129,14 @@ void func_ov008_02186cec(Struct_ov008_021842a0_2* arg0);
 // USA: func_ov008_02185a70
 extern "C" ARM void func_ov008_02185a70(Struct_ov008_021842a0_2* arg0, unsigned int arg1)
 {
-    Struct_02021b84* var0 = func_020421a0();
-    GameResources* var1 = GetGameResources();
+    MessageSystem* messages = MessageSystem_GetInstance();
+    GameResources* resources = GetGameResources();
     BackgroundLoader::GetInstance();
-    Struct_0208cb08* var2 = func_02094a00();
-    unsigned char var3 = arg0->unknown_b11_;
-    if (var3 >= 2)
-        var0->unknown_19ae_ = 0;
-    if (var3 == 0)
+    FontBankLoader* music = FontBankLoader_GetInstance();
+    unsigned char step = self->step_;
+    if (step >= 2)
+        messages->b19ae = 0;
+    if (step == 0)
     {
         if (var0->unknown_9a0_ != 3)
             return;
@@ -188,10 +186,10 @@ extern "C" ARM void func_ov008_02185a70(Struct_ov008_021842a0_2* arg0, unsigned 
     }
     if (var3 == 5)
     {
-        func_0205d6a0((Struct_0205d6a0*)&arg0->unknown_130_, 1);
-        func_02094b40(var2);
-        func_02094b34(var2, 0x6b, 0x1fc, 0, 0);
-        arg0->unknown_b11_++;
+        Window_ClosePane((Entry_0205d6a0*)&self->window_, 1);
+        BlankFunction02094b40(music);
+        BlankFunction02094b34(music, 0x6b, 0x1fc, 0, 0);
+        self->step_++;
     }
     if (var3 == 6)
     {

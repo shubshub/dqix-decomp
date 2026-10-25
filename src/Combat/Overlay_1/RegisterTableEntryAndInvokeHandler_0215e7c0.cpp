@@ -1,20 +1,20 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Combat/MapDisplay.h"
 
-void Background_Init(struct List0204af64* obj);
+void Background_Init(struct BackgroundGraphics* obj);
 void Background_SetMapSize(unsigned char* obj, int value);
 
 extern "C" void Background_SetPriority(void*, int);
 
-struct Obj0204b5e8 { char pad[0x1c]; unsigned char lo : 4; unsigned char hi : 4; };
-int Background_SetScroll(struct Obj0204b5e8* obj, int a, int b);
+int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
-extern "C" void func_0204c684(void*);
+extern "C" void WindowPane_Init(void*);
 
 struct Obj0204fbf8 {
     char pad0[0x4];
-    struct List0204af64* field4;
+    struct BackgroundGraphics* field4;
     void* field8;
     char pad1[0xa0 - 0xc];
     int fieldA0;
@@ -31,7 +31,7 @@ struct Obj0204fbf8 {
 };
 void InvokeHandlerAfterCacheFlush0204fbf8(struct Obj0204fbf8* obj);
 
-extern int data_0211e33c;
+extern int g_fileLoadBuffer;
 
 extern "C" int func_ov017_021d60f4(void*);
 
@@ -53,18 +53,18 @@ extern "C" ARM int func_ov001_0215e7c0(void* combatant) {
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
 
-    struct List0204af64 list;
+    struct BackgroundGraphics list;
     Background_Init(&list);
-    list.b1c_lo = 1;
-    list.b1c_hi = 0;
+    list.subScreen_ = 1;
+    list.bgNumber_ = 0;
     Background_SetMapSize((unsigned char*)&list, 0);
     Background_SetPriority(&list, 0);
-    Background_SetScroll((struct Obj0204b5e8*)&list, 0, 0);
+    Background_SetScroll((struct BackgroundGraphics*)&list, 0, 0);
 
     struct Obj0204fbf8 obj;
-    func_0204c684(&obj);
+    WindowPane_Init(&obj);
     obj.field4 = &list;
-    obj.field8 = &data_0211e33c;
+    obj.field8 = &g_fileLoadBuffer;
     obj.fieldA8 = 0x20;
     obj.fieldAA = 0x18;
     obj.fieldA4 = 0x6000;

@@ -2,15 +2,15 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" GameObject* func_ov000_021536f8(int arg0, int arg1);
-extern "C" int func_02088dd8(unsigned char* arg0);
-extern "C" void func_02088e48(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020488ac(unsigned char* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020ac4c0(void* arg0);
-struct Struct_020a056c;
-extern "C" void func_020a056c(struct Struct_020a056c* arg0, unsigned int arg1);
-extern "C" int func_020ac494(void* arg0);
+GameObject* GetCombatantWithFlag0x400ByID_ov000_021536f8(int unused, int id);
+int IsValidAndFlag0x1000Clear02088dd8(unsigned char* obj);
+void SetByte0x7eSetFlag0x1000_02088e48(unsigned char* obj, unsigned char val);
+void SetBool0x17fClear0x180_020488ac(unsigned char* obj, int value);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+int LoadBattleBlock020ac4c0(void* dst);
+struct S_a056c;
+void AddClamped16BitHighAt0x1c_020a056c(struct S_a056c* p, unsigned int amount);
+int CopyInBattleField0x7540_020ac494(void* src);
 
 struct Struct_ov024_021eb08c { char unknown_0_[0x10]; struct Random* unknown_10_; };
 struct Struct_ov024_021eb08c_2 {
@@ -56,11 +56,11 @@ extern "C" ARM int func_ov024_021eb08c(struct Struct_ov024_021eb08c* arg0, int a
 			*(short*)((char*)var1->currentStats_ + 0x2e) = arg1;
 		}
 	}
-	if (var5 && arg1 == func_020100a8(GameState::GetInstance())) {
-		char var6[0xb0];
-		func_020ac4c0(var6);
-		func_020a056c((struct Struct_020a056c*)var6, 1);
-		func_020ac494(var6);
+	if (result && slot == GameState_GetProtagonistIndex(GameState::GetInstance())) {
+		char block[0xb0];
+		LoadBattleBlock020ac4c0(block);
+		AddClamped16BitHighAt0x1c_020a056c((struct S_a056c*)block, 1);
+		CopyInBattleField0x7540_020ac494(block);
 	}
 	return var5;
 }

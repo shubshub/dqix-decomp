@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include <Memory/SafeAllocator.h>
 #include <World/Object3D.h>
 #include <GameState/GameState.h>
@@ -13,9 +14,6 @@ struct Struct_01ff8b48_13 {
     int unknown_0_[0x18 / 4];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];

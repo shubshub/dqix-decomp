@@ -2,10 +2,10 @@
 #include "NitroSDK/Memory.h"
 #include "std_library_functions.h"
 
-extern "C" int func_02001aec(const void*, const void*, unsigned int);
-extern "C" int func_ov031_02207dd4(unsigned char**);
-extern "C" void func_ov031_02207e24(char*, const char*, int);
-extern "C" int func_ov031_02207e90(unsigned char*, int);
+extern "C" int memcmp(const void*, const void*, unsigned int);
+int ReadVarLenValue_02207dd4(unsigned char**);
+void AppendCsv_02207e24(char*, const char*, int);
+int ParseEncodedDate_02207e90(unsigned char*, int);
 
 extern const char* data_ov031_02249704[];
 
@@ -110,9 +110,9 @@ extern "C" ARM int func_ov031_02207f10(Struct_ov031_02207f10* arg0, unsigned cha
         unsigned char* var5 = var1;
         var4 = 0;
         do {
-            const char* var6 = data_ov031_02249704[var4];
-            if (func_02001aec(var5, var6, strlen(var6)) == 0) {
-                switch (var4) {
+            const char* s = data_ov031_02249704[i];
+            if (memcmp(q, s, strlen(s)) == 0) {
+                switch (i) {
                 case 1:
                 case 2:
                     if (arg4 == 0) {

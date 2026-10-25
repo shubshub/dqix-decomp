@@ -33,12 +33,11 @@ struct Struct_020adaac {
     char unknown_19d_[3];
     unsigned char unknown_1a0_;
 };
-extern "C" void* func_020100bc(GameState*);
-extern "C" void func_02012fe4();
-extern "C" void func_020407b4(Struct_02040774_2*, int, int, int);
-extern "C" void* func_ov017_0218d268(void*);
-extern "C" int func_0202e7f0(void*);
-extern "C" int func_020968c4(Struct_02038138*);
+extern "C" void Zone3D_GetInstance();
+void SetFields0x44(Fields020407b4*, int, int, int);
+void* GetField4328_0218d268(void*);
+int GetField0x70_0202e7f0(void*);
+int GetShortAt0x22e(ShortField0x22e_020968c4*);
 int fix32ReduceAngle0To2Pi(int);
 int fix32SignedAngleDistance(int, int);
 extern "C" int func_020968d0(Struct_020968d0*, int*);
@@ -46,19 +45,19 @@ extern "C" void func_02033874(Struct_02033834*, int);
 extern const int data_020e9118[8];
 
 // USA: func_020adaac
-extern "C" ARM void func_020adaac(Struct_020adaac* arg0) {
-    void* var0 = func_020100bc(GameState::GetInstance());
-    void* var1 = GetGameResources();
-    int var2;
-    func_02012fe4();
-    func_020407b4((Struct_02040774_2*)arg0, arg0->unknown_44_.x, 0xa000, arg0->unknown_44_.z);
-    Vector3i var3 = arg0->unknown_164_;
-    var3.y = 0xa000;
-    arg0->unknown_164_ = var3;
-    Vector3i var4 = arg0->unknown_174_;
-    var4.y = 0xa000;
-    arg0->unknown_174_ = var4;
-    arg0->unknown_134_ = 0;
+extern "C" ARM void func_020adaac(SteeringObject* self) {
+    void* camera = GameState::GetInstance()->GetCamera();
+    void* manager = GetGameResources();
+    int targetHeading;
+    Zone3D_GetInstance();
+    SetFields0x44((Fields020407b4*)self, self->position.x, 0xa000, self->position.z);
+    Vector3i first = self->vector164;
+    first.y = 0xa000;
+    self->vector164 = first;
+    Vector3i second = self->vector174;
+    second.y = 0xa000;
+    self->vector174 = second;
+    self->mode = 0;
     if (g_keyManager.IsUpHeld() && g_keyManager.IsLeftHeld()) {
         arg0->unknown_134_ = 1;
         arg0->unknown_1a0_ = 12;

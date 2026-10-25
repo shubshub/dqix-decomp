@@ -24,13 +24,13 @@ struct Vector3i;
 extern "C" void* func_ov000_02160130(void);
 
 // USA: func_ov025_021e5a6c
-extern "C" ARM int func_ov025_021e5a6c(struct Struct_ov025_021e5a6c* arg0, struct Struct_ov000_0215440c* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_020100bc(var0);
-    unsigned char var2 = arg0->unknown_14_;
-    if (var2 == 0) {
-        if (var1 != 0) {
-            *(Vector3i*)((int*)((char*)var1 + 0x10)) = *(Vector3i const*)((int*)&arg0->unknown_8_);
+extern "C" ARM int func_ov025_021e5a6c(struct Obj021e5a6c* obj, struct List021600f8* list) {
+    GameState* bs = GameState::GetInstance();
+    void* f = bs->GetCamera();
+    unsigned char mode = obj->mode;
+    if (mode == 0) {
+        if (f != 0) {
+            *(Vector3i*)((int*)((char*)f + 0x10)) = *(Vector3i const*)((int*)&obj->pos);
         }
     } else if (var2 == 2) {
         int var3 = 1;

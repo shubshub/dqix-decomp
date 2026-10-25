@@ -6,12 +6,12 @@ enum { kRegion1324 = 0x11b4 };
 enum { kRegion1324 = 0x1324 };
 #endif
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 extern "C" void func_02046380(void);
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 struct Obj02046574;
-void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
 
@@ -21,14 +21,14 @@ extern "C" ARM void func_ov003_0216d8d4(char* obj, int keyA) {
 #else
 extern "C" ARM void func_ov003_0216d8d4(char* obj, int keyA, int p3, int p4, int p5) {
 #endif
-    MessageSystem* window = (MessageSystem*)GetGlobalField0x1c020421a0();
+    MessageSystem* window = (MessageSystem*)MessageSystem_GetInstance();
 #if !defined(jpn)
     func_02046380();
 
     if (p3 >= 0) {
         struct Container020e0310* c = (struct Container020e0310*)(obj + kRegion1324);
         int name = KeyTable_Get(c, (short)p3);
-        SetIndexedName02046574((struct Obj02046574*)window, 5, (char*)name);
+        MessageSystem_SetStringArgument((struct Obj02046574*)window, 5, (char*)name);
     }
     if (p4 >= 0) {
         StoreInArray0x8b0_020465c0((struct StoreStruct*)window, 1, p4);

@@ -7,14 +7,14 @@ enum { Enum_ov017_021cbcc0_1816 = 0x718 };
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_ov017_021b8468(void* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" void func_ov000_0216872c(void* arg0, int arg1, int arg2);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_ov017_021b848c(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" void* func_ov017_021b8468(void* obj);
+void* GetField6b0_021b8470(void* obj);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+void SetByteFields0x77d3And0x77d4_ov000_0216872c(void* obj, int a, int b);
+extern "C" void __clear(void* buf, int len);
+extern "C" void func_ov017_021b848c(void* h, void* buf, int a, int b, int c, int d, int e, int f);
 
 struct Struct_ov017_021cbcc0 {
     unsigned char unknown_0_[8];
@@ -60,9 +60,9 @@ extern "C" ARM void func_ov017_021cbcc0(int arg0, Struct_ov017_021cbcc0_2* arg1,
     var4 = arg1->unknown_f_;
     if (var0 != var1) return;
 
-    func_ov000_02160fa8(var7, 0x80000000);
-    int var9 = func_020100a8(arg2);
-    if (!(arg1->unknown_c_ & (1 << var9))) return;
+    SetCombatWorkFlags0x55f4_ov000_02160fa8(field6ac, 0x80000000);
+    int idx = GameState_GetProtagonistIndex(battleStruct);
+    if (!(evt->field0xc & (1 << idx))) return;
 
     *(unsigned char*)((char*)var6 + 0x8e48) = (unsigned char)var2;
     func_ov000_0216872c(var7, var3, var4);

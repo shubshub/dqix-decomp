@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-int GetGlobalField0x1c020421a0(void);
+int MessageSystem_GetInstance(void);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern struct SePlayer g_sePlayer;
@@ -33,8 +33,8 @@ struct Struct_ov004_02171034_3 {
 extern struct Struct_ov004_02171034_3 data_ov004_02171034;
 
 // USA: func_ov004_0216d004
-extern "C" ARM int func_ov004_0216d004(void* arg0) {
-    char* var0 = (char*)func_020421a0();
+extern "C" ARM int func_ov004_0216d004(void* a) {
+    char* g = (char*)MessageSystem_GetInstance();
 #if defined(jpn)
     var0[0x1000 + 0x7fb] = 0;
 #else

@@ -18,12 +18,11 @@ struct Struct_0205d0e0 {
 struct Struct_0205d81c;
 extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
 
-struct Struct_0205c4a8;
-extern "C" void func_0205c4a8(struct Struct_0205c4a8* arg0, int arg1);
-struct Struct_0205bb84;
-int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
+struct GridCursor;
+void GridCursor_TurnPage(struct GridCursor* s, int delta);
+int GridCursor_GetSelectedIndex(struct GridCursor* s);
 struct Struct_0205bcdc;
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int value);
 
 struct Struct_ov003_0217e1e4 {
@@ -49,24 +48,24 @@ extern "C" ARM int func_ov003_0217e1e4(struct Struct_ov003_0217e1e4_2* arg0) {
     if (var2 == NULL) {
         goto fail;
     }
-    short var3 = var2->unknown_ac_;
-    short var4 = var2->unknown_ae_;
-    short var5 = var2->unknown_aa_;
-    var3 += var2->unknown_a8_;
-    var4 += var5;
-    var4 <<= 3;
-    if (var4 - 16 <= var1 && var1 < var4) {
-        struct Struct_ov003_0217e1e4* var6 = arg0->unknown_90_;
-        short var7 = var2->unknown_ac_ << 3;
-        if (var0 >= var7 && var0 < var7 + 16) {
-            func_0205c4a8((struct Struct_0205c4a8*)var6->unknown_54_, -1);
+    short right = e->x;
+    short bottom = e->y;
+    short height = e->height;
+    right += e->width;
+    bottom += height;
+    bottom <<= 3;
+    if (bottom - 16 <= y && y < bottom) {
+        struct ScrollList* list = self->list;
+        short left = e->x << 3;
+        if (x >= left && x < left + 16) {
+            GridCursor_TurnPage((struct GridCursor*)list->scrollState, -1);
         }
-        var3 <<= 3;
-        if (var3 - 16 <= var0 && var0 < var3) {
-            func_0205c4a8((struct Struct_0205c4a8*)var6->unknown_54_, 1);
+        right <<= 3;
+        if (right - 16 <= x && x < right) {
+            GridCursor_TurnPage((struct GridCursor*)list->scrollState, 1);
         }
-        int index = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)list->scrollState);
-        SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)list->indexState, index);
+        int index = GridCursor_GetSelectedIndex((struct GridCursor*)list->scrollState);
+        GridCursor_SelectIfValid((struct Struct_0205bcdc*)list->indexState, index);
         GridCursor_SetSelectedIndex(list->scrollState, index);
     }
     return 1;

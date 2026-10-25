@@ -88,21 +88,21 @@ extern Struct_ov025_021ef020 data_ov025_021ef040;
 extern Struct_ov025_021ef020 data_ov025_021ef060;
 extern Struct_ov025_021ef020 data_ov025_021ef020;
 
-extern "C" int func_ov025_021ed2f4(void* arg0);
-extern "C" void* func_020421a0(void);
-extern "C" void func_02046380(void* arg0);
-extern "C" ARM void* __clear(void* arg0, int arg1);
-extern "C" void func_ov025_021ed1f0(void* arg0);
-extern "C" Struct_ov000_0215440c_4* func_ov000_02160094(Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" Struct_ov000_0215440c_5* func_ov000_021600f8(Struct_ov000_0215440c* arg0, int arg1);
-extern "C" void func_ov025_021ed2a0(char* arg0);
-extern "C" void* func_ov000_0215fff4(void* arg0, int arg1, int arg2);
-extern "C" short func_ov000_0215ffa0(void* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" int func_ov000_02159f7c(void* arg0, Struct_ov000_02159f7c* arg1);
-extern "C" int func_ov000_0215fd90(void* arg0, int arg1);
-extern "C" void func_020465c0(Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
+int Check021ed2f4(void* obj);
+void* MessageSystem_GetInstance(void);
+extern "C" void func_02046380(void* obj);
+extern "C" ARM void* __clear(void* dst, int count);
+extern "C" void func_ov025_021ed1f0(void* self);
+Node02160094* GetNodeAtIndex02160094(List02160094* list, int index);
+Node021600f8* GetNodeAtIndex021600f8(List021600f8* list, int index);
+void ShiftArrayDown_021ed2a0(char* self);
+void* FindNodeAtDepth0215fff4(void* obj, int limit, int idx);
+extern "C" short func_ov000_0215ffa0(void* obj);
+void* GetField6b0_021b8470(void* obj);
+int CheckAnyBitOrFlag_02159f7c(void* obj, Bits64_02159f7c* bits);
+extern "C" int func_ov000_0215fd90(void* obj, int flag);
+void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
+void NameText_InitFromPartyMember(void* obj, int id);
 class GameObject;
 extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
 extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
@@ -137,10 +137,10 @@ extern "C" void func_02042b98(void* arg0, int arg1, int arg2, int arg3, int arg4
 extern "C" void func_020464e8(char*, char*);
 extern "C" void func_02047410(void*, int);
 extern "C" int func_ov025_021ed5a4(int, char*);
-extern "C" void* func_ov000_02171674(void*, int);
-extern "C" void* func_ov000_0217199c(void*, int);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+void* GetBoundedField156_02171674(void*, int);
+void* GetBoundedField420_0217199c(void*, int);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" void func_020474a8(void*, int, char*, char*);
 extern "C" void func_0204500c(void*, char*, int);
 extern "C" void func_02043270(void*, int, int, int, int);
@@ -162,11 +162,11 @@ static inline int inline_ov025_021ed634_2(short arg0) { return arg0 >= 0 && arg0
 static inline int inline_ov025_021ed634_3(unsigned short arg0) { return arg0 >= 0 && arg0 <= 3; }
 
 // USA: func_ov025_021ed634
-extern "C" ARM void func_ov025_021ed634(Struct_ov025_021e9fc4* arg0) {
-    if (func_ov025_021ed2f4(arg0) != 0) return;
-    if (arg0->unknown_164_ == 0) return;
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = (char*)func_020421a0();
+extern "C" ARM void func_ov025_021ed634(Self021ed634* self) {
+    if (Check021ed2f4(self) != 0) return;
+    if (self->list == 0) return;
+    GameState* gs = GameState::GetInstance();
+    char* g = (char*)MessageSystem_GetInstance();
 #if defined(jpn)
 
 #else
@@ -343,8 +343,8 @@ func_020465c0((Struct_020465c0*)var1, 0, var28);
         }
 
 #else
-            if (inline_ov025_021ed634(var20)) {
-                func_020e4bf4(var10, var20);
+            if (IsValidId(v20)) {
+                NameText_InitFromPartyMember(objA, v20);
             } else {
                 GameObject* var59 = func_0200fea4(var0, var20);
                 if (var59 != 0) {
@@ -371,12 +371,12 @@ func_020465c0((Struct_020465c0*)var1, 0, var28);
         }
 
 #else
-        if (var25 < 0) {
-            if (var26 != 0) var25 = var26->unknown_20_;
-            int var60 = inline_ov025_021ed634(var25) ? 1 : 0;
-            if (var60 != 0) {
-                func_020e4bf4(var9, var25);
-                ((Struct_ov025_021ed634_2*)var1)->unknown_0_ = (int)var9;
+        if (v40 < 0) {
+            if (node != 0) v40 = node->s20;
+            int b = IsValidId(v40) ? 1 : 0;
+            if (b != 0) {
+                NameText_InitFromPartyMember(objB, v40);
+                ((Cur*)g)->f0 = (int)objB;
             } else {
                 GameObject* var61 = func_0200fea4(var0, var25);
                 if (var61 != 0) {
@@ -385,12 +385,12 @@ func_020465c0((Struct_020465c0*)var1, 0, var28);
                 }
             }
         }
-        if (var25 >= 0) {
-            func_020464dc(var1, (signed char)var25);
-            int var62 = inline_ov025_021ed634(var25) ? 1 : 0;
-            if (var62 != 0) {
-                func_020e4bf4(var9, var25);
-                ((Struct_ov025_021ed634_2*)var1)->unknown_0_ = (int)var9;
+        if (v40 >= 0) {
+            SetByte0x1880_020464dc(g, (signed char)v40);
+            int b = IsValidId(v40) ? 1 : 0;
+            if (b != 0) {
+                NameText_InitFromPartyMember(objB, v40);
+                ((Cur*)g)->f0 = (int)objB;
             } else {
                 GameObject* var63 = func_0200fea4(var0, var25);
                 if (var63 != 0) {
@@ -425,8 +425,8 @@ func_020465c0((Struct_020465c0*)var1, 0, var28);
         }
 
 #else
-            if (inline_ov025_021ed634(var20)) {
-                func_020e4bf4(var10, var20);
+            if (IsValidId(v20)) {
+                NameText_InitFromPartyMember(objA, v20);
             } else {
                 GameObject* var66 = func_0200fea4(var0, var20);
                 func_020e4ce8(var10, var66, 1);
@@ -482,15 +482,15 @@ func_020465c0((Struct_020465c0*)var1, 0, var28);
             }
             var73 = 0;
 found_entry:
-            if (var73 != 0) {
-                void* var75 = func_ov000_02171674(var73, *(signed char*)(var73 + 0x20));
-                void* var76 = func_ov000_0217199c(var73, *(short*)(var73 + 0x1e));
-                if (*(signed char*)arg0->unknown_16c_ != 0) {
-                    func_02046504(var1, arg0->unknown_16c_);
-                    if (*(short*)((char*)arg0->unknown_164_ + 4) != 0)
-                        func_02046574((Struct_02046574_2*)var1, 0, arg0->unknown_16c_);
-                } else if (var75 != 0) func_02046504(var1, *(char**)var75);
-                else if (var76 != 0) func_02046504(var1, *(char**)var76);
+            if (entry != 0) {
+                void* a = GetBoundedField156_02171674(entry, *(signed char*)(entry + 0x20));
+                void* b = GetBoundedField420_0217199c(entry, *(short*)(entry + 0x1e));
+                if (*(signed char*)self->pad16c != 0) {
+                    CopyStringToField0x3ac_02046504(g, self->pad16c);
+                    if (*(short*)((char*)self->list + 4) != 0)
+                        MessageSystem_SetStringArgument((Obj02046574*)g, 0, self->pad16c);
+                } else if (a != 0) CopyStringToField0x3ac_02046504(g, *(char**)a);
+                else if (b != 0) CopyStringToField0x3ac_02046504(g, *(char**)b);
             }
         }
 

@@ -10,16 +10,25 @@ extern "C" void func_0205de24(struct Struct_ov002_0215624c_11 *arg0, unsigned ch
 extern "C" void func_0205deb4(struct Struct_ov002_02155960_2 *arg0, int arg1, int arg2);
 extern "C" void func_ov002_0215ee04(char *arg0);
 
-extern "C" void func_ov002_0215ef60(void *arg0);
-extern "C" void func_ov002_02157030(void *arg0, int arg1, short *arg2, short *arg3, short *arg4, short *arg5);
-extern "C" void func_ov002_0215be00(void *arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov002_0215ec4c(void *arg0, void *arg1, int arg2);
+struct Struct_0205d81c;
+struct Elem_0205d81c;
+struct Elem_0205d81c *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+struct Struct0205de24;
+void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+                                                                        unsigned char keyHigh);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int key, int value);
+void InitBattleTag0215ee04(char *base);
+
+extern "C" void func_ov002_0215ef60(void *base);
+extern "C" void func_ov002_02157030(void *base, int type, short *a, short *b, short *c, short *d);
+extern "C" void func_ov002_0215be00(void *base, int a, int b, int c);
+extern "C" void func_ov002_0215ec4c(void *base, void *dst, int flag);
 #if defined(jpn)
 #define RG(u, j) (j)
-extern "C" void func_0205d304(void *arg0, void *arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6);
 #else
 #define RG(u, j) (u)
-extern "C" void func_0205d304(void *arg0, void *arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
 struct Struct_ov002_0215eadc {
@@ -56,13 +65,13 @@ extern "C" ARM void func_ov002_0215eadc(char *arg0, int arg1) {
         memset(((struct Struct_ov002_0215eadc *) (arg0 + 0x1000))->unknown_bd0_, 0, RG(0x960, 0x800));
         func_ov002_0215ec4c(arg0, ((struct Struct_ov002_0215eadc *) (arg0 + 0x1000))->unknown_bd0_, 0);
 #if defined(jpn)
-        func_0205d304(arg0 + 0xe20, ((struct Struct_ov002_0215eadc *) (arg0 + 0x1000))->unknown_bd0_, 0, 0, var1, 1, 0);
+        Window_OpenPane(base + 0xe20, ((struct BufOv0215eadc *) (base + 0x1000))->buf, 0, 0, many, 1, 0);
 #else
-        func_0205d304(arg0 + 0xec8, ((struct Struct_ov002_0215eadc *) (arg0 + 0x1000))->unknown_bd0_, 0, 0, var1, 1, 0, 0);
+        Window_OpenPane(base + 0xec8, ((struct BufOv0215eadc *) (base + 0x1000))->buf, 0, 0, many, 1, 0, 0);
 #endif
     }
-    if (arg1 == 0) {
-        func_0205deb4((struct Struct_ov002_02155960_2 *) (arg0 + RG(0xec8, 0xe20)), RG(0x12, 0x13), 0);
-        func_0205deb4((struct Struct_ov002_02155960_2 *) (arg0 + RG(0xec8, 0xe20)), RG(0x13, 0x14), 0);
+    if (refresh == 0) {
+        Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), RG(0x12, 0x13), 0);
+        Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), RG(0x13, 0x14), 0);
     }
 }

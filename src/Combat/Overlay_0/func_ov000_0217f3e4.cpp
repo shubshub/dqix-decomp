@@ -10,14 +10,13 @@
 #define REGION_OFFSET_2 0x1d69
 #endif
 
-struct Struct_0205dd08;
-extern "C" int func_0205dd08(struct Struct_0205dd08* arg0);
-struct Struct_0205c4a8;
-extern "C" void func_0205c4a8(struct Struct_0205c4a8* arg0, int arg1);
-struct Struct_0205bb84;
-int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
+struct Obj_0205dd08;
+extern "C" int func_0205dd08(struct Obj_0205dd08* obj);
+struct GridCursor;
+void GridCursor_TurnPage(struct GridCursor* s, int delta);
+int GridCursor_GetSelectedIndex(struct GridCursor* s);
 struct Struct_0205bcdc;
-extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 
 struct Struct_ov000_0217f3e4_2 {
     char unknown_0_[0x50];
@@ -54,9 +53,9 @@ extern "C" ARM int func_ov000_0217f3e4(struct Struct_ov000_0217f3e4_3* arg0) {
     }
     Channel0217f3e4* accumulator = ((MenuChannels0217f3e4*)menu)->GetChannel(2);
     Channel0217f3e4* cursor = ((MenuChannels0217f3e4*)menu)->GetChannel(1);
-    AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8*)accumulator, delta);
-    int value = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)accumulator);
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor, value);
+    GridCursor_TurnPage((struct GridCursor*)accumulator, delta);
+    int value = GridCursor_GetSelectedIndex((struct GridCursor*)accumulator);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)cursor, value);
     switch (menu->kinds[menu->kindIndex]) {
     case 6:
         arg0->unknown_1d6e_ = var3;

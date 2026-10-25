@@ -5,15 +5,15 @@
 #include "Resource/GameResources.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_ov017_0218d75c(void* arg0);
-extern "C" int func_02039820(void* arg0);
-extern "C" void func_020397c0(void* arg0);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a27ac(void* arg0);
-extern "C" int func_020421a0(void);
+int GameResources_IsSpecialItemEffectPlaying(void* obj);
+int GetByteField0x252_02039820(void* obj);
+void GameObject_EnableControl(void* obj);
+int GetFieldIfFlag4_020100f8(char* obj);
+void SetField0x23cTrue_020a27ac(void* obj);
+int MessageSystem_GetInstance(void);
 
-struct Struct_02015ef4 { unsigned int unknown_0_[3]; };
-extern "C" int func_0202ec84(void* arg0, struct Struct_02015ef4* arg1, int* arg2, int* arg3);
+struct Vec3copy0202ec84 { unsigned int v[3]; };
+int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
 
 struct Struct_02015ef4_2;
 extern "C" void func_020473c8(struct Struct_02015ef4_2* arg0, int arg1);
@@ -38,14 +38,14 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
     int var1 = var0->GetTickCount();
     GameResources* var2 = GetGameResources();
 
-    if (arg0->unknown_48_ != 0) {
-        GameResources* var3 = GetGameResources();
-        if (func_ov017_0218d75c(var3) != 0) {
+    if (self->skip != 0) {
+        GameResources* res2 = GetGameResources();
+        if (GameResources_IsSpecialItemEffectPlaying(res2) != 0) {
             return 4;
         }
-        GameObject* var4 = var0->GetUnknownGameObject();
-        if (var4 != NULL && func_02039820(var4) == 0) {
-            func_020397c0(var4);
+        GameObject* combatant = battle->GetUnknownGameObject();
+        if (combatant != NULL && GetByteField0x252_02039820(combatant) == 0) {
+            GameObject_EnableControl(combatant);
         }
         int var5 = func_020100f8((char*)var0);
         if (var5 != 0) {
@@ -59,9 +59,9 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
         return 6;
     }
 
-    GameState* var6 = GameState::GetInstance();
-    void* var7 = func_020100bc(var6);
-    struct Struct_02015ef4 var8 = arg0->unknown_28_;
+    GameState* state = GameState::GetInstance();
+    void* ptr3b0 = state->GetCamera();
+    struct Vec3copy0202ec84 vecBuf = self->pos;
 
     if (arg0->unknown_18_ < 0x191e) {
         arg0->unknown_18_ += var6->GetTickCount() * 0x199;
@@ -69,10 +69,10 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
 
     var8.unknown_0_[1] += fix32sin(arg0->unknown_18_);
 
-    int var9;
-    int var10;
-    if (var7 != NULL) {
-        func_0202ec84(var7, &var8, &var10, &var9);
+    int screenY;
+    int screenX;
+    if (ptr3b0 != NULL) {
+        Camera_WorldToScreen(ptr3b0, &vecBuf, &screenX, &screenY);
     }
 
     int var11 = (var10 - 0xc) << 0xc;
@@ -96,10 +96,10 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
         arg0->unknown_8_ = 0;
     }
 
-    if (arg0->unknown_8_ == 0) {
-        GameObject* var16 = var0->GetUnknownGameObject();
-        if (var16 != NULL && func_02039820(var16) == 0) {
-            func_020397c0(var16);
+    if (self->timer == 0) {
+        GameObject* combatant = battle->GetUnknownGameObject();
+        if (combatant != NULL && GetByteField0x252_02039820(combatant) == 0) {
+            GameObject_EnableControl(combatant);
         }
         int var17 = func_020100f8((char*)var0);
         if (var17 != 0) {
@@ -110,9 +110,9 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
         }
     }
 
-    func_020421a0();
-    if (var1 < arg0->unknown_16_) {
-        arg0->unknown_16_ -= var1;
+    MessageSystem_GetInstance();
+    if (ticks < self->countdown) {
+        self->countdown -= ticks;
     } else {
         arg0->unknown_16_ = 0;
         arg0->unknown_8_ = 0x12c;

@@ -90,8 +90,8 @@ extern "C" ARM void func_ov002_0215b9a4(Struct_ov002_0215b9a4 *arg0, unsigned ch
     if (data_ov002_0216cfac[arg1] == 0) {
         return;
     }
-    (arg0->*data_ov002_0216cfac[arg1])(arg0->unknown_1bd0_, var1);
-    func_0205d5d0(((Struct_0205d5d0*)(&arg0->unknown_ec8_)), arg1, ((int)(arg0->unknown_1bd0_)),
+    (self->*data_ov002_0216cfac[key])(self->text, hl);
+    Window_SetPaneText(((StructA0205d5d0*)(&self->window)), key, ((int)(self->text)),
 #if defined(jpn)
                              1);
 #else
@@ -107,8 +107,8 @@ extern "C" ARM void func_ov002_0215b9a4(Struct_ov002_0215b9a4 *arg0, unsigned ch
             if (data_ov002_0216cfac[var4] == 0) {
                 break;
             }
-            (arg0->*data_ov002_0216cfac[var4])(arg0->unknown_1bd0_, var1);
-            func_0205d5d0(((Struct_0205d5d0*)(&arg0->unknown_ec8_)), static_cast<unsigned char>(var4), ((int)(arg0->unknown_1bd0_)),
+            (self->*data_ov002_0216cfac[page])(self->text, hl);
+            Window_SetPaneText(((StructA0205d5d0*)(&self->window)), static_cast<unsigned char>(page), ((int)(self->text)),
 #if defined(jpn)
                                      1);
 #else

@@ -52,7 +52,7 @@ struct SkillPointMenu {
     void* canvasPixels;
 };
 
-MenuManager* GetGlobalField0x1c020421a0(void);
+MenuManager* MessageSystem_GetInstance(void);
 
 struct Struct02074bf4;
 void ClearFlag0x11IfSet(struct Struct02074bf4*);
@@ -60,14 +60,14 @@ struct Struct02074bd0;
 void ClearFlag0x10IfSet(struct Struct02074bd0*);
 
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0*, int);
+void Window_ClosePane(struct Entry_0205d6a0*, int);
 struct Cont0205d1e0;
 void Window_ClearLayers(struct Cont0205d1e0*);
 struct Cont0205d274;
 void Window_FlushLayers(struct Cont0205d274*);
 struct Obj0205d2bc;
 void Window_TransferLayers(struct Obj0205d2bc*);
-extern "C" void func_0205d048(void*);
+extern "C" void Window_Destroy(void*);
 
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" int LoadToMainBG1CharacterData(const void*, int, unsigned int);
@@ -80,11 +80,11 @@ extern "C" ARM void func_ov013_021846a0(SkillPointMenu* menu) {
         menu->task = -1;
     }
 
-    GetGlobalField0x1c020421a0()->menuActive = 0;
+    MessageSystem_GetInstance()->menuActive = 0;
 
     if (menu->subScreen) {
         ClearFlag0x11IfSet((struct Struct02074bf4*)menu->resetState);
-        ResetEntryList0205d6a0((struct Entry_0205d6a0*)menu->window, 1);
+        Window_ClosePane((struct Entry_0205d6a0*)menu->window, 1);
         Window_ClearLayers((struct Cont0205d1e0*)menu->window);
         Window_FlushLayers((struct Cont0205d274*)menu->window);
         Window_TransferLayers((struct Obj0205d2bc*)menu->window);
@@ -93,7 +93,7 @@ extern "C" ARM void func_ov013_021846a0(SkillPointMenu* menu) {
         Window_ClearLayers((struct Cont0205d1e0*)menu->window);
         Window_FlushLayers((struct Cont0205d274*)menu->window);
         Window_TransferLayers((struct Obj0205d2bc*)menu->window);
-        func_0205d048(menu->window);
+        Window_Destroy(menu->window);
 
         if (menu->canvasPixels) {
             memset(menu->canvasPixels, 0, 0x20);

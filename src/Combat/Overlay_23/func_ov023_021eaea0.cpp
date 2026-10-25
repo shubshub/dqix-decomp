@@ -2,9 +2,9 @@
 #include "Grotto/Main/ActiveGrottoClass.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_02012fe4(void);
-extern "C" void func_ov017_021d6134(void* arg0, int arg1);
+extern "C" void* func_ov017_021b8478(void* table);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_ov017_021d6134(void* obj, int flag);
 
 struct Struct_02046b38;
 struct Struct_02046b38_2;
@@ -31,10 +31,10 @@ extern "C" ARM int func_ov023_021eaea0(void* arg0) {
     struct Struct_02046b38_2* var3 = *(struct Struct_02046b38_2**)(var1 + Enum_ov023_021eaea0_1816);
     void* var4 = func_ov017_021b8478(var3);
 
-    if (func_02046b38(var2, var3) != 0) {
-        void* var5 = func_02012fe4();
-        ActiveGrottoClass* var6 = (ActiveGrottoClass*)((char*)var5 + Enum_ov023_021eaea0_9196);
-        DetailedTreasureMapData* var7 = var6->GetDetailedData();
+    if (ListContainsNode(list, node) != 0) {
+        void* zone = Zone3D_GetInstance();
+        ActiveGrottoClass* grotto = (ActiveGrottoClass*)((char*)zone + regionalOffset2);
+        DetailedTreasureMapData* detail = grotto->GetDetailedData();
 
         if (*((unsigned char*)var4 + 0x24) != 0) {
             if (func_0201b588(*(unsigned short*)var5) != 0 && var7 != NULL) {

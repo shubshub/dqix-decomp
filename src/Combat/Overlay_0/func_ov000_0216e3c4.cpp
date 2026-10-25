@@ -25,7 +25,7 @@ extern "C" void func_ov000_0216d370(Struct_020a212c_2*, int, int, int);
 extern "C" int func_ov000_0215e9fc(Random*, short*, int, int);
 extern "C" void func_0202e5d8(BattleCamera*, int, int, int);
 CameraCombatant* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
-void Camera_SetTarget(unsigned char*, int, int, int);
+void Camera_SetTarget(struct Camera*, int, int, int);
 void StoreVec3Words0216d368(Vec3Ints0216d368*, int, int, int);
 void ApplyField0x70Tail(GlobalObj0202e6a8*, int);
 
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
         if (var15) var13 = var15->obj3D_.rotation_.y;
     }
     angle = fix32ReduceAngle0To2Pi(angle - 0x648);
-    Camera_SetTarget((unsigned char*)camera, center.x, 0x800, center.z);
+    Camera_SetTarget((struct Camera*)camera, center.x, 0x800, center.z);
     func_0202e5d8(camera, angle, 0x1000, distance);
     int combatants = 0;
     camera->mode = 14;

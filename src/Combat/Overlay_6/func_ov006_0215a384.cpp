@@ -52,29 +52,29 @@ struct Struct_ov006_02157a60 {
     short unknown_378_[3];
 };
 
-extern "C" void func_ov006_02157c78(Struct_ov006_02157a60_2* arg0);
-extern "C" void func_020836e4(Struct_0208358c_2* arg0, Struct_0208358c_2* arg1);
-extern "C" Struct_ov006_021537d0* func_02071d60(Struct_02071d60* arg0, int arg1);
-extern "C" void func_020deef4(int arg0, int arg1, int arg2, short* arg3, short arg4);
-extern "C" void func_ov006_02156f04(Struct_ov006_02154614* arg0, Struct_ov006_02156f04* arg1);
+void InitObj_02157c78(Obj02157c78* ingredient);
+void ItemRecord_Copy(Record020836e4* destination, Record020836e4* source);
+Recipe* FindEntryByKey02071d60(List02071d60* table, int id);
+void InitAndDispatch020deef4(int items, int file, int size, short* ids, short count);
+extern "C" void func_ov006_02156f04(AlchemyPot* pot, PotIngredient* ingredients);
 
 extern "C" const Struct_ov006_0215ffda data_ov006_0215ffda;
 
 // USA: func_ov006_0215a384
-extern "C" ARM unsigned char func_ov006_0215a384(Struct_ov006_02157a60* arg0, int arg1) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (var0->GetTaskStatus(arg0->unknown_354_)) {
-        void* var1;
-        unsigned int var2;
-        var0->GetLoadedFileByID(arg0->unknown_354_, &var1, &var2);
-        if (var1 != 0) {
-            arg0->unknown_c_[8].Reset();
-            Struct_ov006_0215ffda var3 = data_ov006_0215ffda;
-            Struct_0208358c_2 var4[4];
-            unsigned char var5;
-            for (var5 = 0; var5 < 4; var5++) {
-                func_ov006_02157c78((Struct_ov006_02157a60_2*)&arg0->unknown_17c_[var5]);
-                func_020836e4(&var4[var5], &arg0->unknown_17c_[var5].unknown_0_);
+extern "C" ARM unsigned char func_ov006_0215a384(AlchemyMenu* self, int great) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (loader->GetTaskStatus(self->task_)) {
+        void* data;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->task_, &data, &size);
+        if (data != 0) {
+            self->allocators_[8].Reset();
+            ResultItems ids = data_ov006_0215ffda;
+            Record020836e4 copies[4];
+            unsigned char i;
+            for (i = 0; i < 4; i++) {
+                InitObj_02157c78((Obj02157c78*)&self->results_[i]);
+                ItemRecord_Copy(&copies[i], &self->results_[i].entry_);
             }
             Struct_ov006_021537d0* var6 = arg0->unknown_34_;
             if (var6 != 0) {
@@ -110,16 +110,16 @@ extern "C" ARM unsigned char func_ov006_0215a384(Struct_ov006_02157a60* arg0, in
                     var3.unknown_0_[3] = var13;
                 }
             }
-            func_020deef4((int)var4, (int)var1, var2, var3.unknown_0_, 4);
-            if (var3.unknown_0_[1] == var3.unknown_0_[2] && var3.unknown_0_[2] > 0)
-                func_020836e4(&var4[2], &var4[1]);
-            if (var3.unknown_0_[1] == var3.unknown_0_[3] && var3.unknown_0_[3] > 0)
-                func_020836e4(&var4[3], &var4[1]);
-            if (var3.unknown_0_[2] == var3.unknown_0_[3] && var3.unknown_0_[3] > 0)
-                func_020836e4(&var4[3], &var4[2]);
-            for (var5 = 0; var5 < 4; var5++)
-                func_020836e4(&arg0->unknown_17c_[var5].unknown_0_, &var4[var5]);
-            func_ov006_02156f04(arg0->unknown_10_, arg0->unknown_17c_);
+            InitAndDispatch020deef4((int)copies, (int)data, size, ids.items_, 4);
+            if (ids.items_[1] == ids.items_[2] && ids.items_[2] > 0)
+                ItemRecord_Copy(&copies[2], &copies[1]);
+            if (ids.items_[1] == ids.items_[3] && ids.items_[3] > 0)
+                ItemRecord_Copy(&copies[3], &copies[1]);
+            if (ids.items_[2] == ids.items_[3] && ids.items_[3] > 0)
+                ItemRecord_Copy(&copies[3], &copies[2]);
+            for (i = 0; i < 4; i++)
+                ItemRecord_Copy(&self->results_[i].entry_, &copies[i]);
+            func_ov006_02156f04(self->pot_, self->results_);
         }
         var0->RemoveTask(arg0->unknown_354_);
         arg0->unknown_354_ = -1;

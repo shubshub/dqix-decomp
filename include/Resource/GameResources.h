@@ -3,7 +3,23 @@
 #include "Memory/SafeAllocator.h"
 #include "World/ZoneLootableRecord.h"
 
-struct Struct_02020554;
+struct MapDisplay;
+struct FieldTaskQueue;
+
+// What the player is facing that the A button acts on (GameResources::interactionSelection; InitObj0219a674 resets it).
+struct InteractionSelection {
+    unsigned char kind;          // 0 an NPC, 2 a chest, 5 a pot (lootable), 9 a field monster, 10 and 13 a party member
+                                 // (func_ov017_0219aa7c, func_ov017_0219344c); reset to 0xf
+    unsigned char spriteIndex;   // which field button sprite (substruct_array_2b90) marks it; 0x12: none
+    unsigned short targetIndex;  // which one, in its kind's list: Zone3D_GetChest, Zone3D_GetLootable, GetPartyMemberByIndex
+    unsigned char unknown_4;     // reset to 0
+    char unknown_5[3];
+    void* targetRecord;          // the chest's ZoneChestRenderRecord (GameResources_StartOpenChest), the pot's record
+                                 // (GameResources_StartSearchPot reads its id)
+    char unknown_c[4];
+    short unknown_10;            // reset to 0x3244 (180 degrees)
+    short targetAngle;           // the angle from the target to the player (GameResources_StartOpenChest)
+};
 
 // sizeof == 0x44c8, or 0x4218 in JPN version.
 // Referenced in a huge number of places, seems to be responsible for all
@@ -38,11 +54,13 @@ struct GameResources
     SafeAllocator lootableContainerAllocator_18c_;
 #if defined(usa)
     SafeAllocator allocator_array_1a0[15];
-    char unknown_2cc_[0xe70];
+    char vramStates_[33 * 0x70];
 #elif defined(jpn)
     SafeAllocator allocator_array_1a0[11];
-    char unknown_2cc_[0xcb0];
+    char vramStates_[29 * 0x70];
 #endif
+    // 0x70-byte VramStates, used by index: VramState_Save, _Restore and _Rewind on [0], VramState_CopyCurrentTo from
+    // [5] (SearchPotTask_WaitSprite), GameResources_ReleaseSpecialItemEffect rewinds [21] and [28]
 
     SafeAllocator allocator_113c; // jpn: offset f2c
     char unknown_1150_[0x70];
@@ -69,19 +87,21 @@ struct GameResources
     Struct_02012fa4 substruct_array_2b90[0x12]; // jpn: offset2980
     Struct_02012fa4 unknown_3520; // jpn: offset 3310
     char unknown_35a8[0x8c]; // jpn: offset 3398
-    unsigned char unknown_3634_[18];
-    unsigned char unknown_3646_[18];
-    unsigned char unknown_3658_[18];
-    char unknown_366a_[0x4a];
-    unsigned char unknown_36b4_[0x14];
+    unsigned char fieldButtonX[18];
+    unsigned char fieldButtonY[18];
+    unsigned char fieldButtonState[18];
+    char unknown_366a[0x4a];
+    InteractionSelection interactionSelection;
 
     void* unknown_ptr_36c8; // jpn: offset 34b8
     void* unknown_ptr_36cc; // jpn: offset 34bc
     Struct_02020554* unknown_ptr_36d0; // jpn: offset 34c0
     char unknown_36d4_[4]; // jpn: offset 34c4
     void* unknown_ptr_36d8; // jpn: offset 34c8
-    char unknown_36dc_[0x20]; // jpn: offset 34cc
-    void* unknown_ptr_array_36fc[7]; // jpn: offset 34ec
+    char unknown_36dc[0x20]; // jpn: offset 34cc
+    FieldTaskQueue* fieldTaskQueue_; // jpn: offset 34ec. FieldTaskQueue_Update runs it; GameResources_StartOpenChest and
+                                     // GameResources_StartSearchPot queue onto it
+    void* unknown_ptr_array_3700[6];
     void* unknown_ptr_3718;
     void* unknown_ptr_array_371c[8];
     struct Substruct_373c // jpn: offset 352c
@@ -96,7 +116,8 @@ struct GameResources
         char unknown1_0_[0x14];
 #endif
     } substruct_array_3a9c[4];
-    void* unknown_ptr_array_3afc[0x33]; // jpn: offset 38dc
+    void* fieldTasks_[0x33]; // jpn: offset 38dc. Preallocated field tasks, each set up by its kind's init in
+                             // func_ov030_021d9340 ([0] SearchPot, [10] OpenChest, [0x1b] AcquireTreasureMap, [0x2c] Whistle)
     struct Substruct_3bc8 // jpn: offset 39a8
     {
         char unknown_0_[0x14];

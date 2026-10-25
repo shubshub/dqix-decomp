@@ -20,7 +20,7 @@ void Dispatch0203a974With0x57000_0209c290(void* obj);
 void InitDisplayState0205e88c(Obj_0205e88c* obj);
 void SetupContextForMode0205ea20(void* obj, int mode);
 extern char g_sePlayer;
-extern char data_02109bf4;
+extern char g_bgmPlayer;
 
 struct Struct_ov004_0216f634_2 {
     char unknown_0_[0x30];
@@ -50,7 +50,7 @@ extern "C" ARM int func_ov004_0216f634(void* arg0) {
     } else {
         GameState* gs = GameState::GetInstance();
         ResetObjectState0205e8d4(&g_sePlayer);
-        FreeAndReinit0203a950(&data_02109bf4);
+        FreeAndReinit0203a950(&g_bgmPlayer);
         func_020a1940(OVERLAY_ID(31));
         SafeAllocator* var1 = func_ov011_021845f8(arg0, 0);
         if (var1 == NULL) {
@@ -66,8 +66,8 @@ extern "C" ARM int func_ov004_0216f634(void* arg0) {
         data_ov004_02171048.unknown_4_->unknown_32_ = func_ov031_0221156c(var2) != 0;
         data_ov004_02171048.unknown_4_->unknown_33_ = func_ov031_02211608(var2) != 0;
         func_020a1940(OVERLAY_ID(32));
-        ResetActor0209c174((Actor0209c174*)&data_02109bf4);
-        Dispatch0203a974With0x57000_0209c290(&data_02109bf4);
+        ResetActor0209c174((Actor0209c174*)&g_bgmPlayer);
+        Dispatch0203a974With0x57000_0209c290(&g_bgmPlayer);
         InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
         SetupContextForMode0205ea20(&g_sePlayer, 100);
         if (data_ov004_02171048.flags->b34 == 3) {

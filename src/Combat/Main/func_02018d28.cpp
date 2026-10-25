@@ -18,9 +18,9 @@ extern char data_020ef242[];
 extern char data_020ef251[];
 extern char data_020ef260[];
 
-extern "C" void func_020bb700(int*);
-extern "C" void func_020bb740(int*);
-extern "C" void __clear(void* arg0, int arg1);
+void NNS_GfdGetFrmTexVramState(int*);
+void NNS_GfdSetFrmTexVramState(int*);
+extern "C" void __clear(void* buf, int len);
 extern "C" void* _ZN7Model3DC1Ev(void*);
 extern "C" void* _ZN7Model3DD1Ev(void*);
 extern "C" void func_02018f30(unsigned char*);
@@ -40,12 +40,12 @@ extern "C" ARM void func_02018d28(Zone3D* arg0, SafeAllocator* arg1, void* arg2,
     int* var10;
     Model3D** var11;
 
-    func_020bb700(var1);
-    _ZN7Model3DC1Ev(&var5);
-    var5.Clear();
-    sprintf(var4, data_020ef22c, data_020ef233);
-    if ((var7 = LoadFileIntoNewAllocation(var4, *arg1, &var0)) != 0) {
-        var5.SetAndProcessRawFile(var7, var0, Model3D::TextureStagingMode_Normal);
+    NNS_GfdGetFrmTexVramState(backup);
+    _ZN7Model3DC1Ev(&localB);
+    localB.Clear();
+    sprintf(path, data_020ef22c, data_020ef233);
+    if ((data = LoadFileIntoNewAllocation(path, *alloc, &size)) != 0) {
+        localB.SetAndProcessRawFile(data, size, Model3D::TextureStagingMode_Normal);
     }
     _ZN7Model3DC1Ev(&var6);
     var6.Clear();
@@ -68,11 +68,11 @@ extern "C" ARM void func_02018d28(Zone3D* arg0, SafeAllocator* arg1, void* arg2,
         var8++;
     }
 
-    arg1->Reset();
-    func_020bb740(var1);
-    sprintf(var4, data_020ef22c, data_020ef251);
-    if ((var7 = LoadFileIntoNewAllocation(var4, *arg1, &var0)) != 0) {
-        arg0->models_498_[0].SetAndProcessRawFile(var7, var0, Model3D::TextureStagingMode_Normal);
+    alloc->Reset();
+    NNS_GfdSetFrmTexVramState(backup);
+    sprintf(path, data_020ef22c, data_020ef251);
+    if ((data = LoadFileIntoNewAllocation(path, *alloc, &size)) != 0) {
+        self->models_498_[0].SetAndProcessRawFile(data, size, Model3D::TextureStagingMode_Normal);
     }
     sprintf(var4, data_020ef22c, data_020ef260);
     if ((var7 = LoadFileIntoNewAllocation(var4, *arg1, &var0)) != 0) {

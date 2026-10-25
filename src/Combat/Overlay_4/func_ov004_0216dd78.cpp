@@ -7,14 +7,14 @@ extern "C" void* func_ov011_021849c8(void*);
 extern "C" void* func_ov023_021f6880(void*, int);
 extern "C" unsigned short func_ov023_021f6f10(void*);
 extern "C" void* func_ov023_021fa598(void*);
-extern "C" int func_020421a0(void);
-extern "C" void* func_020d6c00(void);
-extern "C" int func_020ab7a8(void* arg0, int arg1);
-struct Struct_02038598_4;
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_02012028(void* arg0, unsigned char arg1);
+int MessageSystem_GetInstance(void);
+void* GlobalFlags_GetInstance(void);
+extern "C" int func_020ab7a8(void* obj, int flag);
+struct FlagWord020466f4;
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" void func_ov011_021848a0(void* obj, int val);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+void SetByte0x7f70_02012028(void* obj, unsigned char value);
 
 struct Struct_ov004_02171034_3 {
     #if defined(jpn)
@@ -33,10 +33,10 @@ extern "C" ARM int func_ov004_0216dd78(void* arg0) {
     if (!var1) return 0;
     if (func_ov023_021f6f10(var1) != 4) return 0;
 
-    void* var2 = func_ov023_021fa598(var1);
-    void* var3 = GameState::GetInstance();
-    Struct_02021b84* var4 = (Struct_02021b84*)func_020421a0();
-    struct Struct_02038598_4* var5 = (struct Struct_02038598_4*)func_020d6c00();
+    void* table = func_ov023_021fa598(node1);
+    void* battle = GameState::GetInstance();
+    MessageSystem* message = (MessageSystem*)MessageSystem_GetInstance();
+    struct FlagWord020466f4* flagWord = (struct FlagWord020466f4*)GlobalFlags_GetInstance();
     BackgroundLoader::AddLockGlobal();
     BackgroundLoader::FreeAllocationsGlobal();
 
@@ -49,39 +49,39 @@ extern "C" ARM int func_ov004_0216dd78(void* arg0) {
     var4->unknown_19ca_ = 0;
     var4->unknown_19af_ = 0;
 
-    int var8 = func_020ab7a8((void*)data_ov004_02171034.unknown_10_, var6);
-    if (var8 == 5) {
-        func_020466f4(var5, 0x80);
-        data_ov004_02171034.unknown_10_[1] = 0;
-        func_ov011_021848a0(arg0, 0x194);
-        var6 = 0;
-    } else if (var8 == 1) {
-        func_020466f4(var5, 0x80);
-        data_ov004_02171034.unknown_10_[1] = 0;
-        void* var9 = func_02072a68((struct Struct_02072a68_2*)var2, 0x5dc);
+    int state = func_020ab7a8((void*)data_ov004_02171034.ptr10, ret);
+    if (state == 5) {
+        FlagWord_ClearBits(flagWord, 0x80);
+        data_ov004_02171034.ptr10[1] = 0;
+        func_ov011_021848a0(a, 0x194);
+        ret = 0;
+    } else if (state == 1) {
+        FlagWord_ClearBits(flagWord, 0x80);
+        data_ov004_02171034.ptr10[1] = 0;
+        void* entry = FindEntryByKey_02072a68((struct TableA68*)table, 0x5dc);
 #if defined(jpn)
         func_0204500c(var4, (const char*)var9, 0);
 #else
         func_0204500c(var4, (const char*)var9, 0, 0xe3);
 #endif
-        func_02012028(var3, 0);
-        var6 = 0;
-    } else if (var8 == 2) {
-        func_020466f4(var5, 0x80);
-        data_ov004_02171034.unknown_10_[1] = 0;
-        void* var10 = func_02072a68((struct Struct_02072a68_2*)var2, 0x5dd);
+        SetByte0x7f70_02012028(battle, 0);
+        ret = 0;
+    } else if (state == 2) {
+        FlagWord_ClearBits(flagWord, 0x80);
+        data_ov004_02171034.ptr10[1] = 0;
+        void* entry = FindEntryByKey_02072a68((struct TableA68*)table, 0x5dd);
 #if defined(jpn)
         func_0204500c(var4, (const char*)var10, 0);
 #else
         func_0204500c(var4, (const char*)var10, 0, 0xe3);
 #endif
-        func_02012028(var3, 0);
-        var6 = 0;
-    } else if (var8 == 3) {
-        func_020466f4(var5, 0x80);
-        data_ov004_02171034.unknown_10_[1] = 0;
-        func_ov011_021848a0(arg0, 0x195);
-        var6 = 0;
+        SetByte0x7f70_02012028(battle, 0);
+        ret = 0;
+    } else if (state == 3) {
+        FlagWord_ClearBits(flagWord, 0x80);
+        data_ov004_02171034.ptr10[1] = 0;
+        func_ov011_021848a0(a, 0x195);
+        ret = 0;
     }
 
     if (var6 == 0) {

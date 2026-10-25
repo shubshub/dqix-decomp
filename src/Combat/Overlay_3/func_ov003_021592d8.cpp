@@ -49,20 +49,20 @@ struct Struct_ov003_021592d8_6 {
     char unknown_64_[0x18];
 };
 
-struct MessageWork021592d8* GetGlobalField0x1c020421a0();
+struct MessageWork021592d8* MessageSystem_GetInstance();
 struct VocationData021592d8* GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void func_02046380(void* obj);
-void InitObjFromCombatantId020e4bf4(void* obj, int combatantId);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
 int KeyTable_Get(struct Container020e0310* c, int key);
-void SetIndexedName02046574(struct Obj02046574* obj, int index, char* str);
-void* Clear0x54Bytes0208247c(void* obj);
-extern "C" int func_02082490(void* output, void* resource, unsigned int size, int selection, int extra);
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
+void* ResourceScriptEntry_Init(void* obj);
+extern "C" int ResourceScriptEntry_LoadLevel(void* output, void* resource, unsigned int size, int selection, int extra);
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
 void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
-extern "C" void func_02046608(void* messages, int a, const char* input, char* output, int b, int c, int d);
+extern "C" void MessageSystem_FormatText(void* messages, int a, const char* input, char* output, int b, int c, int d);
 
 extern char data_ov003_0217fe18[];
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 
 // USA: func_ov003_021592d8
 extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, struct Struct_ov003_021592d8_2* arg1,
@@ -70,20 +70,20 @@ extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, st
     if (arg2 == NULL || arg1 == NULL) {
         return;
     }
-    struct Struct_ov003_021592d8_3* var0 = func_020421a0();
-    struct Struct_ov003_021592d8* var1 = func_02053c6c((unsigned char*)arg1);
-    int var2 = var1->unknown_950_;
-    func_02046380(var0);
+    struct MessageWork021592d8* work = MessageSystem_GetInstance();
+    struct VocationData021592d8* data = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+    int vocation = data->vocation;
+    func_02046380(work);
 #if defined(jpn)
-    func_02046574((struct Struct_02046574_2*)var0, 0, arg1->unknown_134_);
+    MessageSystem_SetStringArgument((struct Obj02046574*)work, 0, combatant->name);
 #else
-    struct Struct_ov003_021592d8_5 var3;
-    func_020e4bf4(&var3, arg1->unknown_4_);
-    var0->unknown_10_ = &var3;
+    struct UnitObj021592d8 unit;
+    NameText_InitFromPartyMember(&unit, combatant->id);
+    work->subject = &unit;
 #endif
     int key;
     if (data->levels[vocation] == 99) {
-        SetIndexedName02046574((struct Obj02046574*)work, 1,
+        MessageSystem_SetStringArgument((struct Obj02046574*)work, 1,
                                (char*)KeyTable_Get((struct Container020e0310*)self->messages,
                                                             (short)(data->vocation + 0x1e)));
         key = 0x3fe;
@@ -92,11 +92,11 @@ extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, st
         unsigned int var6;
         sprintf(var5, data_ov003_0217fe18, var1->unknown_950_);
         BackgroundLoader::AddLockGlobal();
-        void* var7 = LoadFileIntoMemory(var5, data_0211e33c, &var6);
-        struct Struct_ov003_021592d8_4 var8;
-        func_0208247c(&var8);
-        if (var7 != NULL) {
-            func_02082490(&var8, var7, var6, var1->unknown_16c_[var2] + 1, 0);
+        void* file = LoadFileIntoMemory(path, g_fileLoadBuffer, &size);
+        struct LevelEntry021592d8 next;
+        ResourceScriptEntry_Init(&next);
+        if (file != NULL) {
+            ResourceScriptEntry_LoadLevel(&next, file, size, data->levels[vocation] + 1, 0);
         }
         struct Struct_ov003_021592d8_4* var9 = &var8;
         int var10 = 0;
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov003_021592d8(struct Struct_ov003_021592d8_6* arg0, st
 #if defined(jpn)
     func_020474a8(work, 0xc, (const char*)KeyTable_Get((struct Container020e0310*)self->messages, key), out);
 #else
-    func_02046608(work, 0xc, (const char*)KeyTable_Get((struct Container020e0310*)self->messages, key), out,
+    MessageSystem_FormatText(work, 0xc, (const char*)KeyTable_Get((struct Container020e0310*)self->messages, key), out,
                   0xe3, 0, 1);
 #endif
 }

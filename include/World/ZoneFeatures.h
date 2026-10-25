@@ -28,7 +28,16 @@ struct Struct_0201d044
     Struct_0201d044& func_0201d474(const Struct_0201d044& arg0);
 };
 
-class Struct_020134e0
+// ZoneFeatures::Opcode6aEntry type2 (a door) flags. 0x4, 0x8, 0x80 and 0x100 are not named yet.
+enum DoorFlag {
+    DoorFlag_Open = 0x1,            // Zone3D_OpenDoor sets it on the door and every entry with its node and element
+    DoorFlag_TurnBackward = 0x2,    // it turns to angle - turn instead of angle + turn (opening and closing)
+    DoorFlag_Slides = 0x20,         // it slides by slideDistance instead of turning
+    DoorFlag_QuarterTurn = 0x40,    // it turns a quarter turn (FIX_2PI / 4) instead of FIX_2PI / 5
+    DoorFlag_NotSaved = 0x200,      // Zone3D_OpenDoor skips ZoneRecord_SetDoorOpened
+};
+
+class ZoneFeatures
 {
 public:
     struct Struct_020146fc
@@ -67,33 +76,34 @@ public:
     // Used by opcodes 6a, 6b, 73, 74
     struct Struct_02018300
     {
-        unsigned short unknown_0_;
-        int unknown_4_;
-        Struct_02014900 unknown_8_;
-        Struct_02014900 unknown_14_;
-        short unknown_20_;
-        short unknown_22_;
-        int unknown_24_;
-        int unknown_28_;
+        unsigned short unk_0;
+        int maybeType;
+        WrappedVector3fix unk_8;
+        WrappedVector3fix unk_14;
+        short angle;                // a door's angle (Zone3D_OpenDoor), a chest's angleY (func_0201afd0), a path
+                                    // node's heading (func_020399b0)
+        short unk_22;
+        int unk_24;
+        int unk_28;
         union
         {
             struct {
                 unsigned char unknown_0_;
             } unknown_0_;
             struct {
-                unsigned char unknown_0_;
-                unsigned char unknown_1_;
-                unsigned short unknown_2_0_ : 4;
-                unsigned short unknown_2_4_ : 12;
-                unsigned short unknown_4_;
-                unsigned short unknown_6_;
-                unsigned short unknown_8_;
-                char unknown_a_[2];
-                Vector3fix unknown_c_[4];
-                fix16_t unknown_3c_;
-                fix16_t unknown_3e_;
-                fix32_t unknown_40_;
-            } unknown1_0_;
+                unsigned char nodeId;       // the BMDJ script node holding the door (Zone3D_FindDoorElement)
+                unsigned char elementId;    // the door's scene element in that node
+                unsigned short soundIndex : 4;  // which Zone3D_doorSounds entry opening it plays
+                unsigned short flags : 12;      // DoorFlag
+                unsigned short maybeZone;
+                unsigned short unk_6;
+                unsigned short unk_8;
+                char padding_a[2];
+                Vector3fix vectors_c[4];
+                fix16_t unk_3c;
+                fix16_t unk_3e;
+                fix32_t slideDistance;      // how far a DoorFlag_Slides door moves (Zone3D_OpenDoor, func_02018918)
+            } type2;
             struct {
                 unsigned char unknown_0_;
             } unknown2_0_;
@@ -109,10 +119,11 @@ public:
                 Vector3fix unknown_30_;
             } unknown3_0_;
             struct {
-                unsigned short unknown_0_;
-                unsigned short unknown_2_;
-                unsigned short unknown_4_;
-            } unknown4_0_;
+                unsigned short unk_0;
+                unsigned short unk_2;
+                unsigned short cupboardContainerId; // the uniqueID of the cupboard container placed at this
+                                                    // feature (Zone3D_SetUpContainers)
+            } type5;
             struct {
                 unsigned short unknown_0_;
                 unsigned short unknown_2_;
@@ -246,6 +257,7 @@ public:
     void func_0201e88c(const Struct_0201dfcc& arg0);
 };
 
-extern "C" Struct_020134e0::Struct_02018300* func_0201e6d4(Struct_020134e0* arg0, int arg1);
-extern "C" Struct_020134e0::Struct_02018300* func_0201e664(Struct_020134e0* arg0, int arg1);
-extern "C" void* func_0201e548(Struct_020134e0* arg0, int arg1);
+ZoneFeatures::Opcode6aEntry* ZoneFeatures_FindEntry(void* features, int type, int id);
+ZoneFeatures::Opcode6aEntry* FindNodeKind9ById_0201e6d4(ZoneFeatures* features, int id);
+ZoneFeatures::Opcode6aEntry* GetElementStride0x74_0201e664(ZoneFeatures* features, int index);
+void* GetElementStride0x70_0201e548(ZoneFeatures* features, int index);

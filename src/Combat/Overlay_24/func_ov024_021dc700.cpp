@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
-extern "C" void* func_02010828(GameState*);
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov000_0215a8d4(unsigned char*, int);
-extern "C" short func_ov000_0215a16c(void*,int,int,short*);
+void* GameState_GetParty(GameState*);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char*, int);
+short ApplyHPDelta0215a16c(void*,int,int,short*);
 extern "C" void* func_ov000_0215e958(void*);
 extern "C" void func_ov000_0215a004(void*,int,int,int,void*,void*,int,int);
 extern "C" void func_ov000_02159eac(void*,void*,int);
@@ -19,23 +19,23 @@ struct Struct_ov024_021dc700 {unsigned int unknown_0_0_:12;unsigned int unknown_
 struct Struct_ov024_021dc700_2 {char unknown_0_[4];Struct_ov024_021dc700 unknown_4_;char unknown_8_[0x18];Struct_ov024_021dc700_5 unknown_20_;Struct_ov024_021dc700_5 unknown_24_;};
 static inline unsigned short inline_ov024_021dc700(GameObject* arg0){ return arg0->currentStats_->primaryStats.maxHP; }
 // USA: func_ov024_021dc700
-extern "C" ARM void* func_ov024_021dc700(Struct_ov024_021dc700_4* arg0,int arg1,int arg2,Struct_ov024_021dc700_2* arg3,int arg4,int arg5,unsigned char arg6){
-    GameObject* var0=GetCombatantByID((int)arg0->unknown_10_,arg1);
-    if(!var0)return 0;
-    GameObject* var1=GetCombatantByID((int)arg0->unknown_10_,arg2);
-    if(!var1)return 0;
-    unsigned short var2=inline_ov024_021dc700(var1);
-    if(var1->currentStats_->primaryStats.currHP>=var2)arg4=0;
-    unsigned short var3=var0->currentStats_->primaryStats.currHP;
-    if(var3<=1)arg4=0;
-    if(arg2==arg1)arg4=0;
-    if(arg4>var3)arg4=var3-1;
-    unsigned short var4;
-    if(arg6 && arg4>0){
-        var4=func_ov024_021da644(arg2,arg3->unknown_20_.unknown_2_4_,arg3->unknown_24_.unknown_0_0_);
-        void* var5=func_02010828(GameState::GetInstance());
-        if(func_02086ef0((Struct_02048150*)var5, arg1) && var1->currentStats_->primaryStats.currHP==1 && arg3->unknown_4_.unknown_0_0_==0xb7)
-            func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 2);
+extern "C" ARM void* func_ov024_021dc700(Obj021dc700* obj,int sourceID,int id,Params021dc700* params,int amount,int unused,unsigned char enabled){
+    GameObject* source=GetCombatantByID((int)obj->context,sourceID);
+    if(!source)return 0;
+    GameObject* target=GetCombatantByID((int)obj->context,id);
+    if(!target)return 0;
+    unsigned short maxHP=GetMaxHP(target);
+    if(target->currentStats_->primaryStats.currHP>=maxHP)amount=0;
+    unsigned short sourceHP=source->currentStats_->primaryStats.currHP;
+    if(sourceHP<=1)amount=0;
+    if(id==sourceID)amount=0;
+    if(amount>sourceHP)amount=sourceHP-1;
+    unsigned short selection;
+    if(enabled && amount>0){
+        selection=SelectByIndexRange0to3_021da644(id,params->field20.c,params->field24.a);
+        void* list=GameState_GetParty(GameState::GetInstance());
+        if(ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)list, sourceID) && target->currentStats_->primaryStats.currHP==1 && params->code.value==0xb7)
+            IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)obj->context, 2);
     }else{
         arg4=0;
         var4=func_ov024_021da644(arg2,arg3->unknown_24_.unknown_1_2_,arg3->unknown_24_.unknown_2_4_);

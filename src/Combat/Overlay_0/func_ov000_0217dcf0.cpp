@@ -15,7 +15,7 @@ struct SePlayer;
 
 int Window_GetSelectedIndex(struct Struct_0205c570* s);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* obj);
 extern "C" int func_ov000_0217c594(void* obj, int limit);
 extern "C" void func_ov000_02176e3c(void* obj, int zero, int val, int arg1, int arg2, int one);
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov000_0217dcf0(char* obj, int arg1, int arg2) {
     if (func_ov000_0217c594(obj, 0)) {
         SePlayer_Play((struct SePlayer*)g_sePlayer, 1, 0);
         GameState* gs = GameState::GetInstance();
-        unsigned char* field2a04 = (unsigned char*)GetPtrField0x2a04_02010828(gs);
+        unsigned char* field2a04 = (unsigned char*)GameState_GetParty(gs);
         signed char cursor = *(signed char*)(obj + ActiveSelectionOffset0217dcf0);
         if (cursor < field2a04[0xf7c]) {
             struct Entry0217dcf0* entry = &((struct Entry0217dcf0*)(obj + 0x958))[*(signed char*)(obj + cursor + 0x70)];
@@ -63,10 +63,10 @@ extern "C" ARM void func_ov000_0217dcf0(char* obj, int arg1, int arg2) {
                 func_ov017_021c847c();
             }
         }
-    } else if (func_ov000_0217c5f4(arg0)) {
-        func_0205d6a0((struct Struct_0205d6a0*)(arg0 + 0x188), 0);
-        *(unsigned char*)(arg0 + *(signed char*)(arg0 + Enum_ov000_0217dcf0_7528) + Enum_ov000_0217dcf0_7520) = 0;
-        *(signed char*)(arg0 + Enum_ov000_0217dcf0_7528) = *(signed char*)(arg0 + Enum_ov000_0217dcf0_7528) - 1;
-        func_ov000_0217c638(arg0, arg1, arg2);
+    } else if (CheckFlagsOrField_0217c5f4_0217c5f4(obj)) {
+        Window_ClosePane((struct Entry_0205d6a0*)(obj + 0x188), 0);
+        *(unsigned char*)(obj + *(signed char*)(obj + CommandDepthOffset0217dcf0) + CommandStackOffset0217dcf0) = 0;
+        *(signed char*)(obj + CommandDepthOffset0217dcf0) = *(signed char*)(obj + CommandDepthOffset0217dcf0) - 1;
+        func_ov000_0217c638(obj, arg1, arg2);
     }
 }

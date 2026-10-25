@@ -6,8 +6,7 @@
 #include <globaldefs.h>
 
 struct Struct_0205c53c;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 struct Struct_0205bcdc;
 
 struct Struct_ov005_021571d0 {
@@ -62,16 +61,16 @@ struct Struct_ov005_02153954 {
 };
 
 void InitChannelPair0205c53c(Struct_0205c53c* s);
-void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int count, int mode);
-void GridCursor_SetCount(Node0205bacc* s, int val);
-void SetIndexIfValid0205bcdc(Struct_0205bcdc* s, int index);
+void GridCursor_SetDimensions(GridCursor* s, int a, int count, int mode);
+void GridCursor_SetCount(GridCursor* s, int val);
+void GridCursor_SelectIfValid(Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 extern "C" void* memset(void* dst, int c, unsigned int n);
 extern "C" void func_ov005_02159a30(EquipmentMenu* self, char* buffer, int arg);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov005_02159904
@@ -80,38 +79,38 @@ extern "C" ARM void func_ov005_02159904(Struct_ov005_02153954* arg0) {
     func_0205c53c((Struct_0205c53c*)var0);
 #if defined(jpn)
     if (self->slot_ >= 0 && self->slot_ < 8) {
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, 3, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, 3, 0);
-    GridCursor_SetCount((Node0205bacc*)&window->listA_, 3);
-    GridCursor_SetCount((Node0205bacc*)&window->listB_, 3);
+    GridCursor_SetDimensions((GridCursor*)&window->listA_, 1, 3, 0);
+    GridCursor_SetDimensions((GridCursor*)&window->listB_, 1, 3, 0);
+    GridCursor_SetCount((GridCursor*)&window->listA_, 3);
+    GridCursor_SetCount((GridCursor*)&window->listB_, 3);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
-    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
+    GridCursor_SelectIfValid((Struct_0205bcdc*)&window->listA_, choice);
     GridCursor_SetSelectedIndex(&window->listB_, choice);
     } else {
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, 4, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, 4, 0);
-    GridCursor_SetCount((Node0205bacc*)&window->listA_, 4);
-    GridCursor_SetCount((Node0205bacc*)&window->listB_, 4);
+    GridCursor_SetDimensions((GridCursor*)&window->listA_, 1, 4, 0);
+    GridCursor_SetDimensions((GridCursor*)&window->listB_, 1, 4, 0);
+    GridCursor_SetCount((GridCursor*)&window->listA_, 4);
+    GridCursor_SetCount((GridCursor*)&window->listB_, 4);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
-    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
+    GridCursor_SelectIfValid((Struct_0205bcdc*)&window->listA_, choice);
     GridCursor_SetSelectedIndex(&window->listB_, choice);
     }
 #else
     int count = 4;
     if (self->slot_ >= 0 && self->slot_ < 8)
         count = 3;
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listA_, 1, count, 0);
-    GridCursor_SetDimensions((Struct_0205ba68*)&window->listB_, 1, count, 0);
-    GridCursor_SetCount((Node0205bacc*)&window->listA_, count);
-    GridCursor_SetCount((Node0205bacc*)&window->listB_, count);
+    GridCursor_SetDimensions((GridCursor*)&window->listA_, 1, count, 0);
+    GridCursor_SetDimensions((GridCursor*)&window->listB_, 1, count, 0);
+    GridCursor_SetCount((GridCursor*)&window->listA_, count);
+    GridCursor_SetCount((GridCursor*)&window->listB_, count);
     window->listA_.active_ = 1;
     window->listB_.active_ = 1;
     int choice = self->menuChoice_;
-    SetIndexIfValid0205bcdc((Struct_0205bcdc*)&window->listA_, choice);
+    GridCursor_SelectIfValid((Struct_0205bcdc*)&window->listA_, choice);
     GridCursor_SetSelectedIndex(&window->listB_, choice);
 #endif
 #if defined(jpn)
@@ -141,8 +140,8 @@ extern "C" ARM void func_ov005_02159904(Struct_ov005_02153954* arg0) {
     memset(arg0->unknown_e10_, 0, LOW_REGION(0x800, 0x960));
     func_ov005_02159a30(arg0, arg0->unknown_e10_, 0);
 #if defined(jpn)
-    func_0205d304(arg0->inline_ov005_02158e04(), arg0->unknown_e10_, 0, 1, 0, 0, 0);
+    Window_OpenPane(self->GetWindow(), self->textBuffer_, 0, 1, 0, 0, 0);
 #else
-    func_0205d304(var0, arg0->unknown_e10_, 0, 1, 0, 0, 0, 0);
+    Window_OpenPane(window, self->textBuffer_, 0, 1, 0, 0, 0, 0);
 #endif
 }

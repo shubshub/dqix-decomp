@@ -5,9 +5,7 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_0205bef8;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct GridCursor;
 
 struct Struct_ov005_021571d0 {
     int unknown_0_;
@@ -27,9 +25,9 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3dbc_;
 };
 
-void GridCursor_Init(Struct_0205bef8* s);
-void GridCursor_SetDimensions(Struct_0205ba68* s, int a, int count, int mode);
-void GridCursor_SetCount(Node0205bacc* s, int val);
+void GridCursor_Init(GridCursor* s);
+void GridCursor_SetDimensions(GridCursor* s, int a, int count, int mode);
+void GridCursor_SetCount(GridCursor* s, int val);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 
 // USA: func_ov005_021571d0
@@ -85,9 +83,9 @@ extern "C" ARM void func_ov005_021571d0(Struct_ov005_02153954* arg0) {
         var7 = 0;
         break;
     }
-    GridCursor_Init((Struct_0205bef8*)&self->cursor_);
-    GridCursor_SetDimensions((Struct_0205ba68*)&self->cursor_, cols, rows, mode);
-    GridCursor_SetCount((Node0205bacc*)&self->cursor_, count);
+    GridCursor_Init((GridCursor*)&self->cursor_);
+    GridCursor_SetDimensions((GridCursor*)&self->cursor_, cols, rows, mode);
+    GridCursor_SetCount((GridCursor*)&self->cursor_, count);
     self->cursor_.active_ = active;
     GridCursor_SetSelectedIndex(&self->cursor_, index);
     self->cursor_.unk_3c = flagA;

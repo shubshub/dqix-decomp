@@ -1,21 +1,28 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
 extern "C" void Background_FlushMap(void* p, int flag);
 
-struct Elem0205d274 { char b[0x20]; };
 
+// The header's CreationWindow, up to layerCount.
 struct Cont0205d274 {
-    char pad0[0x98];
-    Elem0205d274* list98;
-    char pad9c[0x16];
-    unsigned char countB2;
+    unsigned char unknown[4];
+    int frame[20];
+    int cursor[16];
+    unsigned char unknown94[4];
+    BackgroundGraphics* layers;
+    void* panes;
+    short layout[8];
+    unsigned char activeWindow;
+    unsigned char nextWindow;
+    unsigned char layerCount;
 };
 
 // Main, originally CallFunc0204b04cOverList0x98 (USA 0x0205d274, EUR 0x0205d284, JPN 0x0205e5a4)
-ARM void Window_FlushLayers(Cont0205d274* obj) {
+ARM void Window_FlushLayers(Cont0205d274* window) {
     unsigned char i;
-    if (obj->list98 == NULL) return;
-    for (i = 0; i < obj->countB2; i++) {
-        Background_FlushMap(&obj->list98[i], 0);
+    if (window->layers == NULL) return;
+    for (i = 0; i < window->layerCount; i++) {
+        Background_FlushMap(&window->layers[i], 0);
     }
 }

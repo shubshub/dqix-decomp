@@ -5,9 +5,6 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct FifoCommandInfo
 {
@@ -61,19 +58,18 @@ static LightingManager s_lightingManager;
 
 extern "C"
 {
-    void* func_020100bc(GameState*);
 
-    void func_0202ec84(void*, const Vector3fix*, int*, int*);
+    void _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(void*, const Vector3fix*, int*, int*);
 
-    bool func_0206dfb0(void*, void*, int);
+    bool _Z17Scenario_TestFlagiPhi(void*, void*, int);
 
-    char* func_0205ec34();
+    char* Scenario_GetInstance();
 
     void func_0207ba28(LightingInfo*, int, float*, float*, float*);
 
-    void func_020c54a4(int, int, int, int);
-    void func_020c555c(unsigned short*);
-    void func_020c5574(void*);
+    void _Z20SetFogState_020c54a4ijjt(int, int, int, int);
+    void _Z21G3X_SetEdgeColorTablei(unsigned short*);
+    void _Z28CallWithAddr4000360_020c5574i(void*);
 
     extern "C" int func_ov000_02160fd4(void*, int);
 
@@ -634,13 +630,13 @@ void LightingManager::ModelTransformTintBrightnessContrast(NSBXXInternalModel *m
     int totalNumOperands;
     readPos = (uintptr_t)lightingInfo;
 
-    char* struct0205ec34 = func_0205ec34();
+    char* struct0205ec34 = Scenario_GetInstance();
 
     if (((LightingInfo*)readPos)->maybeMode_ != 1)
         return;
 
     int index;
-    if (zone->currentZoneID_ == 6401 && func_0206dfb0(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
+    if (zone->currentZoneID_ == 6401 && _Z17Scenario_TestFlagiPhi(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
         index = 4;
     else
     {
@@ -744,7 +740,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
     LightingInfo* info = &zone->lighting_;
     gameState = GameState::GetInstance();
     GetGameResources();
-    char* struct0205ec34 = func_0205ec34();
+    char* struct0205ec34 = Scenario_GetInstance();
 
     if (info->maybeMode_ == 2)
     {
@@ -758,7 +754,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
     {
         info->basic_.FillMissingEntries();
 
-        if (zone->currentZoneID_ == 6401 && func_0206dfb0(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
+        if (zone->currentZoneID_ == 6401 && _Z17Scenario_TestFlagiPhi(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
         {
             index = 4;
         }
@@ -799,7 +795,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        func_020c555c(edgeColors);
+        _Z21G3X_SetEdgeColorTablei(edgeColors);
         RenderConfig::SetDiffuseAmbientColors(modelDiffuseColor_, 0, false);
         func_ov017_021901ac(GetGameResources());
         tint_4a_ = modelDiffuseColor_;
@@ -815,7 +811,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        func_020c555c(edgeColors);
+        _Z21G3X_SetEdgeColorTablei(edgeColors);
         RenderConfig::SetDiffuseAmbientColors(modelDiffuseColor_, 0, false);
         func_ov017_021901ac(GetGameResources());
         tint_4a_ = modelDiffuseColor_;
@@ -960,7 +956,7 @@ void LightingManager::SubmitToRenderConfig()
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        func_020c555c(edgeColors);
+        _Z21G3X_SetEdgeColorTablei(edgeColors);
     }
 }
 
@@ -971,7 +967,7 @@ void LightingManager::ApplyAmbientColorToModel(NSBXXInternalModel* model)
 
 void LightingManager::MaybeComputeHorizonPosition()
 {
-    void* maybeCameraData = func_020100bc(GameState::GetInstance());
+    void* maybeCameraData = GameState::GetInstance()->GetCamera();
     Vector3fix* maybeCameraTarget = (Vector3fix*)((char*)maybeCameraData + 0x12c);
     Vector3fix* maybeCameraEye = (Vector3fix*)((char*)maybeCameraData + 0x120);
 
@@ -982,7 +978,7 @@ void LightingManager::MaybeComputeHorizonPosition()
     Vector3fix_Normalize(&cameraRay, &cameraRay);
     Vector3fixMultiplyScalar(&cameraRay, 2048 << 12, &cameraRay);
     int pixelX, pixelY;
-    func_0202ec84(maybeCameraData, &cameraRay, &pixelX, &pixelY);
+    _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(maybeCameraData, &cameraRay, &pixelX, &pixelY);
     if (pixelY < 192 && pixelY > 0)
     {
         gradientCenterNorm_ = fix32_Divide(pixelY << 12, 191 << 12);

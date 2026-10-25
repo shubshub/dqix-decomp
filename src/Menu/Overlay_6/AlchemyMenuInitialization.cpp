@@ -74,8 +74,8 @@ extern unsigned int data_ov006_02160054[];
 void* memcpy(void*, const void*, unsigned int);
 void* memset(void*, int, unsigned int);
 void _Z24InitEntryManager020e2490P20EntryManager020e2490iiPvP13SafeAllocatorih(void*, int, int, void*, SafeAllocator*, int, int);
-void _Z15Background_InitP12List0204af64(void*);
-void func_0204c684(void*);
+void _Z15Background_InitP18BackgroundGraphics(void*);
+void WindowPane_Init(void*);
 void _Z11Sprite_InitP14Struct0205a198(void*);
 void func_ov006_02154614(void*);
 void func_ov006_02154348(AlchemyBufferInitializationView*, SafeAllocator*, void*);
@@ -117,8 +117,8 @@ extern "C" ARM void func_ov006_021576a0(AlchemyMenuInitializationView* state, Sa
         state->allocators[index].Reset();
     }
     func_0207f84c(state->extraBuffer);
-    for (unsigned char index = 0; index < 2; index++) _Z15Background_InitP12List0204af64(state->pairBuffer[index]);
-    for (unsigned char index = 0; index < 7; index++) func_0204c684(state->sevenBuffer[index]);
+    for (unsigned char index = 0; index < 2; index++) _Z15Background_InitP18BackgroundGraphics(state->pairBuffer[index]);
+    for (unsigned char index = 0; index < 7; index++) WindowPane_Init(state->sevenBuffer[index]);
     for (unsigned char index = 0; index < 29; index++) _Z11Sprite_InitP14Struct0205a198(state->entryBuffer[index]);
     for (unsigned short index = 0; index < 471; index++) {
         AlchemyRecipeStatusView* record = &state->recipeStatus[index];

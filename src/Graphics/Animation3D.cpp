@@ -32,7 +32,7 @@ bool Animation3D::CreateData(Model3D *attachedModel, SafeAllocator *alloc, Model
     if (alloc == NULL)
         return false;
 
-    Model3D* modelIfValid = (attachedModel->unknown_flags_a8_0_) ? attachedModel : NULL;
+    Model3D* modelIfValid = (attachedModel->loaded_) ? attachedModel : NULL;
     NSBXXTex* tex0;
     NSBXXInternalModel* internalModel = attachedModel->rawInternalModel_;
 

@@ -6,11 +6,11 @@ struct Struct_ov009_0218aa28 { int unknown_0_; int unknown_4_; int unknown_8_; }
 extern "C" struct Struct_ov009_0218aa28 func_020341e0(void* arg0);
 extern "C" struct Struct_ov009_0218aa28 func_02034104(void* arg0);
 
-struct Struct_02033834_2;
-extern "C" void func_02033834(struct Struct_02033834_2* arg0, int arg1);
+struct Obj02033834;
+void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
-struct Struct_02033b68;
-extern "C" void func_02033b68(struct Struct_02033b68* arg0, int arg1);
+struct Obj02033b68;
+void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
 struct Struct_02039df4;
 
@@ -43,16 +43,16 @@ extern "C" ARM int func_020776a0(struct Struct_020776a0* arg0) {
 #else
     struct Struct_ov009_0218aa28 var2 = func_020341e0(var1);
 #endif
-    struct Struct_ov009_0218aa28 var3;
-    Vector3fix_Subtract((const Vector3fix*)&var2, (const Vector3fix*)&arg0->unknown_44_, (Vector3fix*)&var3);
-    Vector3fix_Normalize((const Vector3fix*)&var3, (Vector3fix*)&var3);
-    int var4 = fix32_Atan2(var3.unknown_0_, var3.unknown_8_);
-    func_02033834((struct Struct_02033834_2*)arg0, var4);
+    struct Vec3 delta;
+    Vector3fix_Subtract((const Vector3fix*)&posCopy, (const Vector3fix*)&self->f44, (Vector3fix*)&delta);
+    Vector3fix_Normalize((const Vector3fix*)&delta, (Vector3fix*)&delta);
+    int angle = fix32_Atan2(delta.x, delta.z);
+    GameObject_SetFacing((struct Obj02033834*)self, angle);
 
-    arg0->unknown_b0_ = 0x97;
-    arg0->unknown_b4_ = 0x1c2;
-    arg0->unknown_b2_ = 0x1c2;
-    func_02033b68((struct Struct_02033b68*)arg0, 1);
+    self->fb0 = 0x97;
+    self->fb4 = 0x1c2;
+    self->fb2 = 0x1c2;
+    GameObject_SetMotionState((struct Obj02033b68*)self, 1);
 
     GameObject* var5 = var0->GetProtagonist();
     unsigned short var6 = ((Object3D*)((struct Struct_02039df4*)var5))->GetField06();

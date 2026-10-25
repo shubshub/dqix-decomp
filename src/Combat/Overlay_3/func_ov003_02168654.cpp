@@ -22,16 +22,16 @@ extern "C" {
 void KeyTable_Load(void*,SafeAllocator*,void*,unsigned int);
 void _Z21Background_SetMapSizePhi(void*,int);
 void Background_SetPriority(void*,int);
-void _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(void*,SafeAllocator*);
-void _Z20Background_SetScrollP11Obj0204b5e8ii(void*,int,int);
+void _Z22Background_AllocateMapP18BackgroundGraphicsP13SafeAllocator(void*,SafeAllocator*);
+void _Z20Background_SetScrollP18BackgroundGraphicsii(void*,int,int);
 void ColorEffect_ConfigureAlphaBlend(unsigned int*,unsigned char,unsigned char,unsigned char,int);
-int _Z14Pac_CountFilesP19ActiveEntry02046900(void*);
-void* _Z11Pac_GetFileP11Rec020467f0iPPvPi(void*,int,void**,int*);
+int _Z14Pac_CountFilesP9PacRecord(void*);
+void* _Z11Pac_GetFileP9PacRecordiPPvPi(void*,int,void**,int*);
 void Background_LoadFile(void*,void*,SafeAllocator*,int);
 void Background_FillRect(void*,int,int,int,int,int,int);
-void _Z20Background_UploadMapP12List0204b0e8Pv(void*,void*);
-void _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(void*,SafeAllocator*,void*,unsigned int);
-void _Z15Window_SetPanesP15Struct_0205cf78P13Elem_0205cf78h(void*,void*,unsigned char);
+void _Z20Background_UploadMapP18BackgroundGraphicsPv(void*,void*);
+void _Z25WindowPane_AllocateBufferP10WindowPaneP13SafeAllocatorij(void*,SafeAllocator*,void*,unsigned int);
+void _Z15Window_SetPanesP15Struct_0205cf78P10WindowPaneh(void*,void*,unsigned char);
 void SpriteContext_LoadFile(void*,void*,int,SafeAllocator*);
 }
 extern char data_ov003_021800e0[];
@@ -78,8 +78,8 @@ extern "C" ARM void func_ov003_02168654(Struct_ov003_02168654_5* arg0) {
                 list->lo=0;
                 list->hi=h;
                 Background_SetPriority(list,m);
-                _Z22Background_AllocateMapP19AllocTarget0204b12cP13SafeAllocator(list,self->alloc+1);
-                _Z20Background_SetScrollP11Obj0204b5e8ii(list,0,0);
+                _Z22Background_AllocateMapP18BackgroundGraphicsP13SafeAllocator(list,self->alloc+1);
+                _Z20Background_SetScrollP18BackgroundGraphicsii(list,0,0);
             }
             *(volatile unsigned short*)0x400000a=(*(volatile unsigned short*)0x400000a&0x43)|0x1d00;
             *(volatile unsigned short*)0x400000c=(*(volatile unsigned short*)0x400000c&0x43)|0x1e00;
@@ -92,8 +92,8 @@ extern "C" ARM void func_ov003_02168654(Struct_ov003_02168654_5* arg0) {
         if (loader->GetTaskStatus(self->task)!=0) {
             void* out; void* data; unsigned int size; void* records[2]; int values[2];
             loader->GetLoadedFileByID(self->task,&data,&size);
-            int count=_Z14Pac_CountFilesP19ActiveEntry02046900(data);
-            for (int i=0;i<count;i++) records[i]=_Z11Pac_GetFileP11Rec020467f0iPPvPi(data,i,&out,values+i);
+            int count=_Z14Pac_CountFilesP9PacRecord(data);
+            for (int i=0;i<count;i++) records[i]=_Z11Pac_GetFileP9PacRecordiPPvPi(data,i,&out,values+i);
             for (int i=0;i<count;i++) {
                 if (records[i]) {
                     Background_LoadFile(self->lists+1,records[i],self->alloc+1,values[i]);
@@ -106,19 +106,19 @@ extern "C" ARM void func_ov003_02168654(Struct_ov003_02168654_5* arg0) {
             for (int i=0;i<2;i++) {
                 list=self->lists+i;
                 Background_FillRect(list,0,0,0,0x20,0x19,0);
-                _Z20Background_UploadMapP12List0204b0e8Pv(list,0);
+                _Z20Background_UploadMapP18BackgroundGraphicsPv(list,0);
             }
             self->alloc[2].Reset();
             self->buffer=self->alloc[2].Allocate(0x4000);
             Obj68654* obj;
             for (int i=0;i<3;i++) {
                 obj=self->objects+i;
-                _Z25WindowPane_AllocateBufferP11Obj0204c7a8P13SafeAllocatorij(obj,self->alloc+1,self->buffer,0x400);
+                _Z25WindowPane_AllocateBufferP10WindowPaneP13SafeAllocatorij(obj,self->alloc+1,self->buffer,0x400);
                 obj->list=self->lists+1;
             }
             self->entries.list=self->lists;
             self->entries.count=2;
-            _Z15Window_SetPanesP15Struct_0205cf78P13Elem_0205cf78h(&self->entries,self->objects,3);
+            _Z15Window_SetPanesP15Struct_0205cf78P10WindowPaneh(&self->entries,self->objects,3);
             self->stage++;
         }
     } else if (self->stage==3) {
@@ -133,10 +133,10 @@ extern "C" ARM void func_ov003_02168654(Struct_ov003_02168654_5* arg0) {
         if (loader->GetTaskStatus(self->task)!=0) {
             void* out; void* data; unsigned int size; int value;
             loader->GetLoadedFileByID(self->task,&data,&size);
-            int count=_Z14Pac_CountFilesP19ActiveEntry02046900(data);
+            int count=_Z14Pac_CountFilesP9PacRecord(data);
             self->alloc[3].Reset();
             for (int i=0;i<count;i++) {
-                void* record=_Z11Pac_GetFileP11Rec020467f0iPPvPi(data,i,&out,&value);
+                void* record=_Z11Pac_GetFileP9PacRecordiPPvPi(data,i,&out,&value);
                 SpriteContext_LoadFile(self->records,record,value,self->alloc+3);
             }
             var21->RemoveTask(arg0->unknown_4e0_);

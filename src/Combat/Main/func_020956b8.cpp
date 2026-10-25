@@ -18,13 +18,13 @@ extern "C" ARM void func_020956b8(struct Struct_020956b8* arg0, SafeAllocator* a
     }
 
     BackgroundLoader::AddLockGlobal();
-    void* var1 = LoadFileIntoMemory(data_020f1474, data_0211e33c, &var0);
-    if (var1 != 0) {
-        data_02109404.unknown_8_ = 0;
-        data_02109404.unknown_3_ = 0;
-        data_02109404.unknown_4_ = 0;
-        data_02109404.unknown_c_ = arg1;
-        data_02109404.unknown_2_ = 0;
+    void* file = LoadFileIntoMemory(data_020f1474, g_fileLoadBuffer, &fileSize);
+    if (file != 0) {
+        data_02109404.f8 = 0;
+        data_02109404.f3 = 0;
+        data_02109404.f4 = 0;
+        data_02109404.allocator = allocator;
+        data_02109404.selected = 0;
 #if defined(jpn)
         *(short*)0x020f1524 = -1;
 #else

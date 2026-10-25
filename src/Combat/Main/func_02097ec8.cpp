@@ -17,7 +17,7 @@ struct Struct_02097ec8_2 {
     Struct_02097ec8* unknown_1b5c_;
     unsigned char unknown_1b60_;
 };
-extern "C" Struct_0208fa8c* func_02012fe4();
+extern "C" ZoneState* Zone3D_GetInstance();
 extern "C" void* func_0202ae18();
 extern "C" void func_0201bd3c(Struct_0208fa8c*, int, int);
 extern "C" void func_02082828(Struct_02097ec8*);
@@ -31,19 +31,19 @@ static inline SafeAllocator& inline_02021578(GameResources* arg0, int arg1) {
     return arg0->allocator_array_1a0[arg1];
 }
 
-static inline char& inline_0203d028_5(GameResources* arg0, int arg1) {
-    return arg0->unknown_2cc_[arg1];
+static inline char& GetResourceBuffer(GameResources* resources, int offset) {
+    return resources->vramStates_[offset];
 }
 
 // USA: func_02097ec8
-extern "C" ARM void func_02097ec8(Struct_02097ec8_2* arg0) {
-    Struct_0208fa8c* var0 = func_02012fe4();
-    int var1 = var0->unknown_0_;
-    int var2 = var0->unknown_2_;
-    if (!func_020981e4((int)arg0, var1) &&
-        !func_020981e4((int)arg0, var2)) return;
-    if (var1 != 0xc3b5 && var1 != 0xc419 && var1 != 0xc47d && var1 != 0xc4e1)
-        arg0->unknown_1b60_ = 1;
+extern "C" ARM void func_02097ec8(ZoneResourceState* state) {
+    ZoneState* zone = Zone3D_GetInstance();
+    int zoneId = zone->zoneId;
+    int previousZoneId = zone->previousZoneId;
+    if (!IsIdInRange020981e4((int)state, zoneId) &&
+        !IsIdInRange020981e4((int)state, previousZoneId)) return;
+    if (zoneId != 0xc3b5 && zoneId != 0xc419 && zoneId != 0xc47d && zoneId != 0xc4e1)
+        state->entered = 1;
     func_0202ae18();
     if (var1 == 0xc3b5 && arg0->unknown_1b3c_ >= 2) {
         func_0201bd3c(var0, 9, 0);

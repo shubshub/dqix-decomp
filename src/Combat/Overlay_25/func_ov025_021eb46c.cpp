@@ -104,31 +104,31 @@ extern "C" ARM int func_ov025_021eb46c(Struct_ov025_021e9778* arg0) {
                 arg0->unknown_1c4_ &= ~2;
                 return 0;
             }
-            arg0->unknown_1c8_++;
-        } else if (var5->GetTaskStatus(arg0->unknown_1cc_) != 0) {
-            var5->GetLoadedFileByID(arg0->unknown_1cc_, &var3, &var4);
-            if (var3 != NULL) {
-                void* var13 = func_ov000_02160f20(func_ov000_02160130());
-                if (func_ov000_02160094((Struct_ov000_0215440c_2*)var13, 0) != NULL) {
-                    var6 = func_ov000_02160094((Struct_ov000_0215440c_2*)var13, 0)->unknown_20_;
-                    GameObject* var14 = func_0200ff1c(GameState::GetInstance(), var6);
-                    if (var14 != NULL) {
-                        Struct_ov025_021eb46c_5* var15 = (Struct_ov025_021eb46c_5*)var7->Allocate(sizeof(Struct_ov025_021eb46c_5));
-                        if (var15 != NULL) {
-                            var2.unk_0 = 0;
-                            var2.fileData = var3;
-                            var2.unk_8 = var4;
-                            var2.unk_10 = 0;
-                            var2.unk_14 = 0;
-                            var2.unk_18 = 0;
-                            var2.packageID = 0;
-                            var2.allocator = var7;
-                            var2.packageID = data_ov025_021ef994->unknown_30_ + 4;
-                            var14->obj3D_.LoadFromCCHROrCMOTArchive(&var2, NULL);
-                            var15->unknown_0_ = 0;
-                            var15->unknown_2_ = var6;
-                            var15->unknown_4_ = var2.packageID;
-                            func_ov025_021e8bac((Struct_ov025_021e267c_2*)arg0, (Struct_ov025_021e267c_3*)var15);
+            ctx->state++;
+        } else if (loader->GetTaskStatus(ctx->taskID) != 0) {
+            loader->GetLoadedFileByID(ctx->taskID, &fileData, &fileLength);
+            if (fileData != NULL) {
+                void* slot = GetSlotPtr02160f20(GetActiveCombatWork_ov000_02160130());
+                if (GetNodeAtIndex02160094((List02160094*)slot, 0) != NULL) {
+                    loadedId = GetNodeAtIndex02160094((List02160094*)slot, 0)->combatantId;
+                    GameObject* c = GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), loadedId);
+                    if (c != NULL) {
+                        LogNode021eb46c* node = (LogNode021eb46c*)alloc->Allocate(sizeof(LogNode021eb46c));
+                        if (node != NULL) {
+                            info.unk_0 = 0;
+                            info.fileData = fileData;
+                            info.fileSize = fileLength;
+                            info.unk_10 = 0;
+                            info.unk_14 = 0;
+                            info.unk_18 = 0;
+                            info.packageID = 0;
+                            info.allocator = alloc;
+                            info.packageID = data_ov025_021ef994->allocatorIndex + 4;
+                            c->obj3D_.LoadFromCCHROrCMOTArchive(&info, NULL);
+                            node->type = 0;
+                            node->combatantId = loadedId;
+                            node->packageID = info.packageID;
+                            PushLogNode021e8bac((Obj021e8bac*)ctx, (Node021e8bac*)node);
                         }
                     }
                 }

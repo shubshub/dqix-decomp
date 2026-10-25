@@ -8,14 +8,14 @@
 #include "NitroSDK/Memory.h"
 #include "std_library_functions.h"
 
-struct Struct_0201afd0 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_0_ : 2;
-    unsigned short unknown_4_2_ : 2;
-    unsigned short unknown_4_4_ : 3;
-    short unknown_6_;
-    Vector3i unknown_8_;
+struct ChestLoot0201afd0 {
+    unsigned short uniqueID;
+    unsigned short itemIDOrRank;
+    unsigned short lock : 2;
+    unsigned short lootType : 2;
+    unsigned short containerType : 3;
+    short angleOrCupboardNode;
+    Vector3i position;
 };
 
 struct Struct_0201afd0_2;
@@ -79,14 +79,14 @@ static inline int inline_0201afd0_4(const ActiveGrottoClass* arg0, int arg1) {
 }
 
 // USA: func_0201afd0
-extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int arg2, int arg3) {
-    Struct_020134e0* var0 = &arg0->substruct_6c_;
-    GameState* var1 = GameState::GetInstance();
-    ActiveGrottoClass* var2 = &arg0->grotto_;
-    int var3;
-    FloorMap* var4 = &var2->floorMap_;
-    void* var5 = func_0202ae18();
-    Struct_0201afd0_2* var6 = (Struct_0201afd0_2*)(arg0->unknown_struct_2724_);
+extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsigned int sourceSize, int unused) {
+    ZoneFeatures* features = &zone->substruct_6c_;
+    GameState* gs = GameState::GetInstance();
+    ActiveGrottoClass* grotto = &zone->grotto_;
+    int i;
+    FloorMap* map = &grotto->floorMap_;
+    void* search = func_0202ae18();
+    ChestLootList0201afd0* lootList = (ChestLootList0201afd0*)(zone->grottoChestList_);
 
     arg0->numChests_ = var4->chestCount;
     if (arg0->numChests_ == 0) {
@@ -97,9 +97,9 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
         return 0;
     }
 
-    arg0->unknown_47c_ = (Struct_020133fc*)arg0->pAllocator_68_->Allocate(arg0->numChests_ * sizeof(Struct_020133fc));
-    var0->func_0201e634(arg0->numChests_, arg0->pAllocator_68_);
-    srand(inline_0201afd0_4(var2, arg0->currentGrottoFloor_23ba_));
+    zone->chests_ = (ZoneChestRenderRecord*)zone->pAllocator_68_->Allocate(zone->numChests_ * sizeof(ZoneChestRenderRecord));
+    features->AllocateOpcode6aEntries_0201e634(zone->numChests_, zone->pAllocator_68_);
+    srand(GetFloorSeed0201afd0(grotto, zone->currentGrottoFloor_23ba_));
 
     for (var3 = 0; var3 < arg0->numChests_; var3++) {
         Struct_020134e0::Struct_02018300 var8;
@@ -108,15 +108,15 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
         int var11;
         int var12;
 
-        VectorizedMemset(&var8, 0, sizeof(var8));
-        var8.unknown_20_ = 0;
-        var8.unknown_22_ = 0;
-        var8.unknown_24_ = 0;
-        var8.unknown_8_.unknown1_0_.x = 0;
-        var8.unknown_8_.unknown1_0_.y = 0;
-        var8.unknown_8_.unknown1_0_.z = 0;
-        var8.unknown_28_ = 0;
-        var8.unknown_70_ = NULL;
+        VectorizedMemset(&entry, 0, sizeof(entry));
+        entry.angle = 0;
+        entry.unk_22 = 0;
+        entry.unk_24 = 0;
+        entry.unk_8.vec.x = 0;
+        entry.unk_8.vec.y = 0;
+        entry.unk_8.vec.z = 0;
+        entry.unk_28 = 0;
+        entry.pNext = NULL;
 
         var8.unknown_0_ = var3;
         var8.unknown_14_.unknown1_0_.z = 0x1000;
@@ -143,16 +143,16 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
 
         switch (var11) {
         case 0:
-            var8.unknown_20_ = var8.unknown_22_ = 0x3244;
+            entry.angle = entry.unk_22 = 0x3244;
             break;
         case 1:
-            var8.unknown_20_ = var8.unknown_22_ = 0x1922;
+            entry.angle = entry.unk_22 = 0x1922;
             break;
         case 2:
-            var8.unknown_20_ = var8.unknown_22_ = 0;
+            entry.angle = entry.unk_22 = 0;
             break;
         case 3:
-            var8.unknown_20_ = var8.unknown_22_ = 0x4b66;
+            entry.angle = entry.unk_22 = 0x4b66;
             break;
         }
 
@@ -206,23 +206,23 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
             Struct_020134e0::Struct_02018300* var30 = (Struct_020134e0::Struct_02018300*)(func_0201e690((Struct_0201afd0_4*)(var0), var29));
             const LootDistribution::Outcome* var31 = var20.Sample(var24[var29]);
 
-            if (var31 != NULL) {
-                Struct_020133fc* var32 = &arg0->unknown_47c_[var29];
-                Struct_0201afd0 var33;
+            if (outcome != NULL) {
+                ZoneChestRenderRecord* record = &zone->chests_[index];
+                ChestLoot0201afd0 loot;
 
-                func_020133fc(var32);
-                var32->unknown_0_ = var30->unknown_8_.unknown1_0_;
-                var32->unknown_c_ = var30->unknown_20_;
-                var32->unknown_10_ = 0;
-                var32->unknown_1a_ = var29;
-                var32->unknown_1c_ = var29;
-                var32->unknown_17_ = 2;
-                if (func_02011430((Struct_02011430*)(var1), arg0->currentGrottoFloor_23ba_, var29)) {
-                    var32->unknown_16_ = 8;
-                    var32->unknown_e_ = 0x4000;
+                ZoneChest_Init(record);
+                record->position = entry->unk_8.vec;
+                record->angleY = entry->angle;
+                record->counter = 0;
+                record->recordIndex = index;
+                record->uniqueID = index;
+                record->kind = ZoneChestKind_Grotto;
+                if (GetBit5cd0((S_02011430*)(gs), zone->currentGrottoFloor_23ba_, index)) {
+                    record->state = ZoneChestState_Open;
+                    record->lidAngle = ZoneChestLid_Open;
                 } else {
-                    var32->unknown_16_ = 1;
-                    var32->unknown_e_ = 0x647a;
+                    record->state = ZoneChestState_Closed;
+                    record->lidAngle = ZoneChestLid_Closed;
                 }
                 if (func_0202b7d8((int*)(var5))) {
                     var32->unknown_18_ = 1;
@@ -231,27 +231,27 @@ extern "C" ARM int func_0201afd0(Zone3D* arg0, const void* arg1, unsigned int ar
                     var25[var27++] = var31->itemID;
                 }
 
-                var33.unknown_0_ = 0;
-                var33.unknown_2_ = var31->itemID;
-                var33.unknown_4_0_ = 0;
-                var33.unknown_4_2_ = var31->lootType;
-                var33.unknown_4_4_ = 4;
-                var33.unknown_8_ = var30->unknown_8_.unknown1_0_;
-                func_02094d14((Struct_0201afd0_6*)(var6), (Struct_0201afd0_7*)(&var33), var32->unknown_1c_);
+                loot.uniqueID = 0;
+                loot.itemIDOrRank = outcome->itemID;
+                loot.lock = 0;
+                loot.lootType = outcome->lootType;
+                loot.containerType = 4;
+                loot.position = entry->unk_8.vec;
+                CopyElemToIndex((Container02094d14*)(lootList), (Elem02094d14*)(&loot), record->uniqueID);
             }
         }
 
-        ItemTable_Init(zone->unknown_struct_2754_);
+        ItemTable_Init(zone->containerItems_);
         if (itemCount > 0) {
 #if defined(jpn)
-            func_020e0484(zone->unknown_struct_2754_, zone->pAllocator_68_, g_itemDataArchive, itemIDs, itemCount, true);
+            func_020e0484(zone->containerItems_, zone->pAllocator_68_, g_itemDataArchive, itemIDs, itemCount, true);
 #else
             BackgroundLoader::AddLockGlobal();
             unsigned int size = 0;
             void* data = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &size);
 
             if (data != NULL) {
-                ItemTable_LoadIds(zone->unknown_struct_2754_, zone->pAllocator_68_, data, size, itemIDs, itemCount);
+                ItemTable_LoadIds(zone->containerItems_, zone->pAllocator_68_, data, size, itemIDs, itemCount);
             }
             BackgroundLoader::RemoveLockGlobal();
 #endif

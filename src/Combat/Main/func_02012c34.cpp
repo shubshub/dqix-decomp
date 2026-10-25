@@ -28,7 +28,7 @@ extern "C" {
 
 extern int data_020f2270;
 extern unsigned char data_02114e00;
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern int data_02114e50;
 
 // USA: func_02012c34
@@ -47,11 +47,11 @@ extern "C" ARM void func_02012c34(void) {
     _Z19SetInterruptHandlerjPKv(1, (const void*)func_02012bd8);
     _Z24EnableSpecificInterruptsj(1);
     _Z24EnableSpecificInterruptsj(0xf08);
-    volatile unsigned short* var0 = (volatile unsigned short*)0x04000208;
-    *var0;
-    *var0 = 1;
-    func_020c3864(1);
-    func_02012d18(&data_02114e20);
+    volatile unsigned short* ime = (volatile unsigned short*)0x04000208;
+    *ime;
+    *ime = 1;
+    _Z27SetVBlankIrqEnable_020c3864i(1);
+    _Z25InitMainAllocator02012d18P14AllocatorUnion(&g_mainAllocator);
     _Z24EnableSpecificInterruptsj(0x40000);
     _Z23InitializeROMFilesystemi(2);
     _Z23ChangeROMLoadDMAChannelj(2);

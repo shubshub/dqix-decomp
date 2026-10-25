@@ -24,9 +24,9 @@ extern "C"
 
     void Font_EncodeText(void*, char* buffer, int);
 
-    const char* func_020e51cc(int);
+    const char* _Z19StandardStrings_Geti(int);
 
-    int func_0200fb08(GameState*);
+    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
 }
 
 #define BINARY_READ_AND_ADVANCE(buffer, offset, dst, len) \

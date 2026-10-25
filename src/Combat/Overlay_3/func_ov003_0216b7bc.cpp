@@ -38,10 +38,10 @@ struct Struct_ov003_0216b7bc_3 {
     char unknown_1324_[4];
 };
 
-extern "C" struct Struct_ov003_0216b7bc* func_020421a0();
-extern "C" void* func_02012fe4(void);
+struct MsgCtl0216b7bc* MessageSystem_GetInstance();
+extern "C" void* Zone3D_GetInstance(void);
 const char* KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 extern "C" void func_02046380(struct MsgCtl0216b7bc* ctl);
 #if !defined(jpn)
 extern "C" void func_0204500c(struct Struct_ov003_0216b7bc* arg0, char* arg1, int arg2, int arg3);
@@ -57,8 +57,8 @@ extern char data_ov003_021801b2[];
 extern char data_ov003_021801c2[];
 
 // USA: func_ov003_0216b7bc
-extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* arg0) {
-    struct Struct_ov003_0216b7bc* var0 = func_020421a0();
+extern "C" ARM void func_ov003_0216b7bc(struct Msg0216b7bc* obj) {
+    struct MsgCtl0216b7bc* ctl = MessageSystem_GetInstance();
     GameState::GetInstance();
     if (arg0->unknown_a_ == 3) {
         arg0->unknown_6_ = 2;
@@ -66,36 +66,36 @@ extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* arg0) {
     }
     if (arg0->unknown_6_ == 0) {
 #if defined(jpn)
-        char* var2;
-        struct Struct_ov003_0216b7bc_2* var1 = (struct Struct_ov003_0216b7bc_2*)((char*)func_02012fe4() + REGION_LAYOUT(0x860, 0x840));
-        var2 = var0->unknown_5c_;
+        char* buf;
+        struct Progress840* progress = (struct Progress840*)((char*)Zone3D_GetInstance() + REGION_LAYOUT(0x860, 0x840));
+        buf = ctl->textBuf;
 #else
-        struct Struct_ov003_0216b7bc_2* var1 = (struct Struct_ov003_0216b7bc_2*)((char*)func_02012fe4() + REGION_LAYOUT(0x860, 0x840));
-        char* var2 = var0->unknown_5c_;
+        struct Progress840* progress = (struct Progress840*)((char*)Zone3D_GetInstance() + REGION_LAYOUT(0x860, 0x840));
+        char* buf = ctl->textBuf;
 #endif
         memset(buf, 0, REGION_LAYOUT(0x800, 0x960));
-        AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 0));
+        Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 0));
         if (progress->rewardFlags == 0) {
-            AppendString02042058(buf, data_ov003_021801b2);
+            Text_Append(buf, data_ov003_021801b2);
         } else {
-            func_02042058(var2, data_ov003_021801c2);
+            Text_Append(buf, data_ov003_021801c2);
         }
         unsigned char var3 = var1->unknown_1b42_;
 #if defined(jpn)
         if (flags & 0x1) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 1));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 1));
         }
         else if (flags & 0x2) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 2));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 2));
         }
         else if (flags & 0x4) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 3));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 3));
         }
         else if (flags & 0x8) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 4));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 4));
         }
         else if (flags & 0x10) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, 5));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 5));
         }
 #else
         int var4 = -1;
@@ -111,7 +111,7 @@ extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* arg0) {
             var4 = 5;
         }
         if (idx >= 0) {
-            AppendString02042058(buf, KeyTable_Get((struct Container020e0310*)obj->names, idx));
+            Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, idx));
         }
 #endif
         var1->unknown_1b42_ &= ~0xff;

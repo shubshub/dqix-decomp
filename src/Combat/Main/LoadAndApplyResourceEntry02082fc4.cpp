@@ -11,13 +11,13 @@ enum { LevelOffset = 0x950 };
 #include "std_library_functions.h"
 #include "Filesystem/FileIO.h"
 
-void* Clear0x54Bytes0208247c(void* obj);
+void* ResourceScriptEntry_Init(void* obj);
 
 extern "C" void PartyMember_ApplyLevelStats(void* a, void* obj, void* tail);
-extern "C" void func_02083e28(void* a, int arg2);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 
 extern char data_020f1019[];
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 struct Block5Words0208 { unsigned int w[5]; };
 struct TailBytes0208 { unsigned char b[0x18]; };
 struct Combined0208 {
@@ -33,14 +33,14 @@ ARM void LoadAndApplyResourceEntry02082fc4(void* a, void* b) {
     sprintf(path, data_020f1019, *(int*)((char*)a + LevelOffset));
     BackgroundLoader::AddLockGlobal();
     unsigned int size;
-    void* addr = LoadFileIntoMemory(path, &data_0211e33c, &size);
+    void* addr = LoadFileIntoMemory(path, &g_fileLoadBuffer, &size);
     if (addr != NULL) {
         Combined0208 local;
-        Clear0x54Bytes0208247c(&local);
+        ResourceScriptEntry_Init(&local);
         unsigned short val = *(unsigned short*)((char*)a + *(int*)((char*)a + LevelOffset) * 2 + 0x16c);
-        func_02082490(&local, addr, size, val, 0);
+        ResourceScriptEntry_LoadLevel(&local, addr, size, val, 0);
         PartyMember_ApplyLevelStats(a, &local, &local.tail);
-        func_02083e28(a, 0);
+        PartyMember_RecalculateStats(a, 0);
         if (b != NULL) {
             Combined0208* dst = (Combined0208*)b;
             dst->block0 = local.block0;

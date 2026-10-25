@@ -9,7 +9,7 @@
 #include "Resource/GameResources.h"
 
 struct SePlayer;
-struct Struct_0205bb84;
+struct GridCursor;
 
 struct Struct_ov005_02153ba4_2 {
     char unknown_0_[R(0x4f8, 0x4fc)];
@@ -55,7 +55,7 @@ MemberScreen* GetField1c_021a193c(int* p);
 void SePlayer_Play(SePlayer* obj, int a, int b);
 int CheckFlag30Or401_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int GridCursor_GetSelectedIndex(Struct_0205bb84* s);
+int GridCursor_GetSelectedIndex(GridCursor* s);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
         up = 1;
     if (up) {
         func_ov005_0215792c(self, 2);
-        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_));
+        func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((GridCursor*)self->cursor_));
         return;
     }
     int var1 = 0;
@@ -76,8 +76,8 @@ extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
         var1 = 1;
     if (!var0) {
         GameState::GetInstance();
-        Struct_ov005_02153ba4_2* var2 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3]);
-        if (!func_ov005_02157ae8(arg0, var2->unknown_4fc_))
+        MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+        if (!func_ov005_02157ae8(self, screen->member_))
             return;
         if (func_ov005_02157190(arg0)) {
             if (arg0->unknown_2d90_[arg0->unknown_3dbc_].unknown_0_ < 0) {
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov005_0215751c(Struct_ov005_02153954* arg0) {
         func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
-    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((Struct_0205bb84*)self->cursor_), 0))
+    if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((GridCursor*)self->cursor_), 0))
         return;
     arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
     arg0->unknown_3dcc_ |= 0x100;

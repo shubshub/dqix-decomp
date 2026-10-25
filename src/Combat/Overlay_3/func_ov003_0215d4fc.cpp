@@ -51,23 +51,23 @@ struct Struct_ov003_0215d4fc {
     int unknown_12c_;
 };
 
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 extern int g_sePlayer;
 
 extern "C" int *func_0202ae18();
-Ctl *GetGlobalField0x1c020421a0();
+Ctl *MessageSystem_GetInstance();
 void *GetGlobalPtr021075f4_0203cf4c();
 unsigned char *GetData02153637_020e2ff8();
 extern "C" int func_0202c508(int *);
-void ReinitController02043204(char*);
+void MessageSystem_Reset(char*);
 struct Container020e0310;
 void * KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_0215cab0(Scene *, void *);
 void *FindEntryPointerByKey0203df78(void *, int);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(Entry_0205d6a0*, int);
+void Window_ClosePane(Entry_0205d6a0*, int);
 struct Actor0209c678;
-void DispatchContextByState0209c678(Actor0209c678*, int);
+void BgmPlayer_FadeOut(Actor0209c678*, int);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 extern "C" void func_0205e944(void *, int);
@@ -84,21 +84,21 @@ extern "C" void func_020e3428(void *, int);
 struct Struct_0208ab34_2;
 extern "C" void func_020e3468(Struct_0208ab34_2*, int);
 extern "C" void func_ov017_021a2fa0(void *);
-extern "C" void func_02012fe4();
+extern "C" void Zone3D_GetInstance();
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
 extern "C" void func_ov017_021921fc(void *, int, int);
-extern "C" int func_0209ca2c(void *);
-extern "C" void func_0209c7fc(void *);
-struct Struct_0203e2c4_2;
-extern "C" void func_02040b2c(Struct_0203e2c4_2*, int);
-struct Struct_02046574_2;
-extern "C" void func_02046574(Struct_02046574_2*, int, char*);
+int IsAnimationActive0209ca2c(void *);
+void StopAndReset0209c7fc(void *);
+struct Obj02040b2c;
+void PropagateValueToActiveSlot02040b2c(Obj02040b2c*, int);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 
 // USA: func_ov003_0215d4fc
 extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
     GameState *gs    = GameState::GetInstance();
     void *res        = (void*)gs->GetResources();
-    Ctl *ctl         = GetGlobalField0x1c020421a0();
+    Ctl *ctl         = MessageSystem_GetInstance();
     int *a           = func_0202ae18();
     void *b          = GetGlobalPtr021075f4_0203cf4c();
     GameObject *c    = gs->GetUnknownGameObject();
@@ -114,19 +114,19 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
     }
     var7 = arg0->unknown_3b8_;
 
-    if (var7 == 0) {
-        if (arg0->unknown_3f3_ != 0) {
-            func_02043204((char*)var2);
-            arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+    if (state == 0) {
+        if (self->b3f3 != 0) {
+            MessageSystem_Reset((char*)ctl);
+            self->state = self->state + 1;
             return;
         }
-        int var10 = 0x3f2;
-        if (arg0->unknown_3cc_ > *(unsigned int *) ((unsigned char *)func_02010828(var0) + 0xf6c)) {
-            var10 = 0x3fc;
-            if (arg0->unknown_3f0_ != 0) {
-                if (var9 != 0) {
-                    var10        = 0x6c;
-                    arg0->unknown_3f1_ = 1;
+        int key = 0x3f2;
+        if (self->w3cc > *(unsigned int *) ((unsigned char *)GameState_GetParty(gs) + 0xf6c)) {
+            key = 0x3fc;
+            if (self->b3f0 != 0) {
+                if (sb != 0) {
+                    key        = 0x6c;
+                    self->b3f1 = 1;
                 } else {
                     var10 = 0x72;
                 }
@@ -150,8 +150,8 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         if (var2->unknown_998_ != 0) {
             return;
         }
-        ResetEntryList0205d6a0((Entry_0205d6a0*)self->list98, 0);
-        DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0x10);
+        Window_ClosePane((Entry_0205d6a0*)self->list98, 0);
+        BgmPlayer_FadeOut((Actor0209c678*)&g_bgmPlayer, 0x10);
         SetBrightness((GameResources*)res, -16, 0x3c);
         func_0205e944(&g_sePlayer, 0);
         self->b3f5  = 1;
@@ -161,26 +161,26 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
         if (IsBrightnessTransitionActive((GameResources*)var1) != 0) {
             return;
         }
-        func_0209c20c((Struct_02109bf4_3*)&data_02109bf4);
-        func_0209c6d8(&data_02109bf4, 0x37);
-        arg0->unknown_3e8_  = 0xb4;
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        InitActorContext0209c20c((Actor0209c20c*)&g_bgmPlayer);
+        ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x37);
+        self->w3e8  = 0xb4;
+        self->state = self->state + 1;
     }
     if (var7 == 3) {
         func_020e3368(var6, 1);
         arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
     }
-    if (var7 == 4) {
-        int var12 = func_020e34bc((Struct_0208ab34*)var6, 1);
-        if (var12 == 1 || arg0->unknown_3f4_ != 0) {
-            unsigned char *var13              = (unsigned char *)func_02010828(var0);
-            *(unsigned int *) (var13 + 0xf6c) = *(unsigned int *) (var13 + 0xf6c) - arg0->unknown_3cc_;
-            for (var8 = 0; var8 < 4; var8++) {
-                if (arg0->unknown_3c4_[var8] != 0xff) {
-                    char *var14                                          = func_0200ff94(var0, arg0->unknown_3c4_[var8]);
-                    *(unsigned short *) (*(char **) (var14 + 0x130) + 4) = *(unsigned short *) (*(char **) (var14 + 0x134) + 0x30);
-                    *(unsigned short *) (*(char **) (var14 + 0x130) + 6) = *(unsigned short *) (*(char **) (var14 + 0x134) + 0x32);
-                    func_ov017_021c9e00(arg0->unknown_3c4_[var8], 0, 0, 1);
+    if (state == 4) {
+        int status = GetEntryStatusForKey020e34bc((Container020e34bc*)d, 1);
+        if (status == 1 || self->b3f4 != 0) {
+            unsigned char *p              = (unsigned char *)GameState_GetParty(gs);
+            *(unsigned int *) (p + 0xf6c) = *(unsigned int *) (p + 0xf6c) - self->w3cc;
+            for (i = 0; i < 4; i++) {
+                if (self->ids[i] != 0xff) {
+                    char *m                                          = GetCombatantChecked_0200ff94(gs, self->ids[i]);
+                    *(unsigned short *) (*(char **) (m + 0x130) + 4) = *(unsigned short *) (*(char **) (m + 0x134) + 0x30);
+                    *(unsigned short *) (*(char **) (m + 0x130) + 6) = *(unsigned short *) (*(char **) (m + 0x134) + 0x32);
+                    func_ov017_021c9e00(self->ids[i], 0, 0, 1);
                 }
             }
             if (func_0202c508(var3) != 0) {
@@ -199,17 +199,17 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
     if (var7 == 5) {
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() <= 0) {
             func_ov017_021a2fa0((void *) GetGameResources());
-            func_02012fe4();
+            Zone3D_GetInstance();
             func_ov017_0219bd1c(1, 0, 0, 0);
             func_ov017_021921fc((char *) var5 + 0x44, *(short *) ((char *) var5 + 0xae), 1);
             arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
         }
     }
-    if (var7 == 6) {
-        if (func_0209ca2c(&data_02109bf4) != 0) {
+    if (state == 6) {
+        if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) {
             return;
         }
-        StopAndReset0209c7fc(&data_02109bf4);
+        StopAndReset0209c7fc(&g_bgmPlayer);
         SetBrightness((GameResources*)res, 0, 0x3c);
         func_0205e944(&g_sePlayer, 0x7f);
         self->b3ec = 1;
@@ -234,14 +234,14 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
             arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
             return;
         }
-        var2->unknown_998_ = 1;
-        func_02046574((Struct_02046574_2*)var2, 0, (char*)(*(void **) ((char *) var0->GetUnknownGameObject() + 0x134)));
-        int var16 = 0x3f3;
-        if (arg0->unknown_3f0_ != 0) {
-            if (var9 == 0) {
-                var16 = 0x71;
-            } else if (arg0->unknown_3bc_ == 2) {
-                var16 = 0x6b;
+        ctl->w998 = 1;
+        MessageSystem_SetStringArgument((Obj02046574*)ctl, 0, (char*)(*(void **) ((char *) gs->GetUnknownGameObject() + 0x134)));
+        int key = 0x3f3;
+        if (self->b3f0 != 0) {
+            if (sb == 0) {
+                key = 0x71;
+            } else if (self->b3bc == 2) {
+                key = 0x6b;
             } else {
                 var16 = 0x6d;
             }

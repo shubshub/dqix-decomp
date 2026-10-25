@@ -17,22 +17,22 @@ struct Struct_ov001_02160070 { int unknown_0_; char unknown_4_[8]; void* unknown
 struct Struct_ov001_02160070_2 { char unknown_0_[0x14]; void* unknown_14_; };
 
 // USA: func_ov001_02160070
-extern "C" ARM int func_ov001_02160070(char* arg0) {
-    int var0 = func_ov017_021d60f4(arg0);
-    float var1 = func_ov017_021d6110(arg0 + 8);
-    Struct_ov001_02160070* var2 = (Struct_ov001_02160070*)data_ov001_02165880.unknown_4_;
-    int var3 = var2[var0].unknown_0_;
-    if (var3 == 2 || var3 == 6) {
-        Struct_ov001_02160070_2* var4 = 0;
-        if (var2) var4 = (Struct_ov001_02160070_2*)var2[var0].unknown_c_;
-        if (var4 == NULL) return 0;
-        if (var4->unknown_14_ != NULL) func_0203cec4((struct Struct_0203cec4*)var4->unknown_14_, 1);
-        if (var4->unknown_14_ != NULL) func_0203fc5c((struct Struct_0203fc5c*)var4->unknown_14_, var1);
-    } else if (var3 == 1 || var3 == 0 || var3 == 4 || var3 == 5) {
-        void* var5 = 0;
-        if (var2) var5 = var2[var0].unknown_c_;
-        if (var5 == NULL) return 0;
-        ((Object3D*)var5)->MaybeSetRegularAnimation((char const*)&data_ov001_021657db, 0);
+extern "C" ARM int func_ov001_02160070(char* obj) {
+    int idx = func_ov017_021d60f4(obj);
+    float f = func_ov017_021d6110(obj + 8);
+    Entry02160070* table = (Entry02160070*)data_ov001_02165880.base;
+    int type = table[idx].word0;
+    if (type == 2 || type == 6) {
+        Member02160070* member = 0;
+        if (table) member = (Member02160070*)table[idx].fieldC;
+        if (member == NULL) return 0;
+        if (member->field14 != NULL) SetOrClearFlag0x8_0203cec4((struct Struct_203cec4*)member->field14, 1);
+        if (member->field14 != NULL) SetField40IfPositive((struct Struct_0203fc5c*)member->field14, f);
+    } else if (type == 1 || type == 0 || type == 4 || type == 5) {
+        void* member2 = 0;
+        if (table) member2 = table[idx].fieldC;
+        if (member2 == NULL) return 0;
+        ((Object3D*)member2)->SetAnimationByName((char const*)&data_ov001_021657db, 0);
     }
     return 1;
 }

@@ -16,14 +16,14 @@ struct Struct_02015ef4_5;
 
 extern "C" void* func_02057924(void);
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" int func_02057e6c(void* arg0, int arg1, SafeAllocator* arg2, int arg3, int arg4, Struct_02015ef4_5* arg5);
-extern "C" unsigned int func_02012dd0(Struct_02114e20*);
-extern "C" void* func_02012d88(AllocatorUnion*, unsigned int);
-extern "C" void func_0207dfc8(Struct_02015ef4_5*, Struct_02015ef4_5*);
-extern "C" void func_02057fb4(void*, int, void*);
-extern "C" void func_ov017_021d24a8(int);
+extern "C" int func_02057e6c(void* list, int p1, SafeAllocator* alloc, int p2, int p3, State0207dfc8* p4);
+unsigned int GetMaxAlloc02012dd0(Struct02012dd0*);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
+void FindNodeAndProcess02057fb4(void*, int, void*);
+void EnqueueEventTag30_021d24a8(int);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 extern char data_ov017_021d7f6c[];
 
 struct Struct_ov017_021c2b6c_2 {
@@ -61,26 +61,26 @@ struct Struct_ov017_021c2b6c {
 };
 
 // USA: func_ov017_021c2b6c
-extern "C" ARM void func_ov017_021c2b6c(Struct_ov017_021c2b6c* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    void* var2 = func_02057924();
-    Struct_ov017_021c2b6c_2 var3[4];
-    unsigned int var4;
-    if (arg0->unknown_8d_ == 0) {
-        if (func_02012dd0((Struct_02114e20*)&data_02114e20) < 0x8000) {
+extern "C" ARM void func_ov017_021c2b6c(Obj021c2b6c* self) {
+    GameState* game = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    void* list = func_02057924();
+    PartyEntry021c2b6c entries[4];
+    unsigned int len;
+    if (self->step == 0) {
+        if (GetMaxAlloc02012dd0((Struct02012dd0*)&g_mainAllocator) < 0x8000) {
             func_020a0cc4(0x8000);
             arg0->unknown_96_ = 1;
         }
-        void* var5 = func_02012d88(&data_02114e20, 0x8000);
-        arg0->unknown_8_.CreateTypeA(var5, 0x8000);
-        arg0->unknown_8_.Reset();
-        char* var6 = var1->unknown_2cc_;
-        func_0207dfc8((Struct_02015ef4_5*)(var6 + 0xc40), (Struct_02015ef4_5*)arg0->unknown_1c_);
-        var4 = 0;
-        void* var7 = LoadFileIntoNewAllocation(data_ov017_021d7f6c, arg0->unknown_8_, &var4);
-        if (var7 == 0) {
-            arg0->unknown_8c_ = 3;
+        void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x8000);
+        self->alloc.CreateTypeA(buf, 0x8000);
+        self->alloc.Reset();
+        char* pool = res->vramStates_;
+        VramState_CopyCurrentTo((State0207dfc8*)(pool + 0xc40), (State0207dfc8*)self->state);
+        len = 0;
+        void* data = LoadFileIntoNewAllocation(data_ov017_021d7f6c, self->alloc, &len);
+        if (data == 0) {
+            self->mode = 3;
             return;
         }
         func_02057e6c(var2, 0x11, &arg0->unknown_8_, (int)var7, var4, (Struct_02015ef4_5*)arg0->unknown_1c_);

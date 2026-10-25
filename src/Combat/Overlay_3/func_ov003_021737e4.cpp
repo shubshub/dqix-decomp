@@ -13,8 +13,7 @@ struct Struct_02072a68_2 {
     struct Struct_02072a68* unknown_0_;
     short unknown_4_;
 };
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct PacRecord;
 
 struct Struct_ov003_021737e4 {
     void* unknown_0_;
@@ -50,10 +49,10 @@ struct Struct_ov003_021737e4_2 {
 };
 
 extern "C" void func_020a620c(void* obj);
-int Pac_CountFiles(ActiveEntry02046900* pac);
-void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
-extern "C" void func_0204c684(void* canvas);
-extern "C" void* func_02012fe4(void);
+int Pac_CountFiles(PacRecord* pac);
+void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
+extern "C" void WindowPane_Init(void* canvas);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void func_02041f50(char*, char*);
 extern "C" int func_02042798(const char*, int, int);
@@ -85,45 +84,45 @@ extern "C" ARM void func_ov003_021737e4(Struct_ov003_021737e4_2* arg0) {
         void* records[3];
         int sizes[3];
         loader->GetLoadedFileByID(self->task_, &file, &size);
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int count = Pac_CountFiles((PacRecord*)file);
         for (int i = 0; i < count; i++) {
-            records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &sizes[i]);
+            records[i] = Pac_GetFile((PacRecord*)file, i, &name, &sizes[i]);
         }
-        void* var8 = arg0->unknown_1_ ? var4[1] : var4[0];
-        Struct_ov003_021737e4 var9;
-        func_0204c684(&var9);
-        var9.unknown_8_ = (char*)var8 + 0x10;
-        var9.unknown_a8_ = 0x20;
-        var9.unknown_aa_ = 8;
-        var9.unknown_b4_ = 0xc;
-        var9.unknown_b6_ = 0xc;
-        func_02012fe4();
-        char var10[0x100];
-        char var11[0x100];
-        char var12[0x100];
-        short var13;
-        short var14;
-        int var15;
-        __clear(var10, sizeof(var10));
-        __clear(var11, sizeof(var11));
-        __clear(var12, sizeof(var12));
-        if (arg0->unknown_1_ != 0) {
-            sprintf(var12, data_ov003_0217ec90, arg0->unknown_2_);
-            int var16 = 4;
-            if (strstr(arg0->unknown_2_, data_ov003_0217ec99)) {
-                sprintf(var10, data_ov003_0217eca2);
-                func_02041f50(var10, var11);
-                var15 = func_02042798(var10, 0x100, 0xc);
-                func_02050678(&var9, var15 + 1, 0x16, var11, 0xc, 0xe, &var13, &var14);
-                func_02050678(&var9, var15, 0x16, var10, 0xc, 0xf, &var13, &var14);
-                var16 = 0xf;
-            } else if (strstr(arg0->unknown_2_, data_ov003_0217ecbc)) {
-                sprintf(var10, data_ov003_0217ecc3);
-                func_02041f50(var10, var11);
-                var15 = func_02042798(var10, 0x100, 0xc);
-                func_02050678(&var9, var15 + 1, 0x16, var11, 0xc, 0xe, &var13, &var14);
-                func_02050678(&var9, var15, 0x16, var10, 0xc, 0xf, &var13, &var14);
-                var16 = 0xf;
+        void* tiles = self->twoLines_ ? records[1] : records[0];
+        Canvas021737e4 canvas;
+        WindowPane_Init(&canvas);
+        canvas.pixels_ = (char*)tiles + 0x10;
+        canvas.width_ = 0x20;
+        canvas.height_ = 8;
+        canvas.unk_b4 = 0xc;
+        canvas.unk_b6 = 0xc;
+        Zone3D_GetInstance();
+        char title[0x100];
+        char shadow[0x100];
+        char line[0x100];
+        short width;
+        short height;
+        int x;
+        __clear(title, sizeof(title));
+        __clear(shadow, sizeof(shadow));
+        __clear(line, sizeof(line));
+        if (self->twoLines_ != 0) {
+            sprintf(line, data_ov003_0217ec90, self->label_);
+            int y = 4;
+            if (strstr(self->label_, data_ov003_0217ec99)) {
+                sprintf(title, data_ov003_0217eca2);
+                func_02041f50(title, shadow);
+                x = func_02042798(title, 0x100, 0xc);
+                func_02050678(&canvas, x + 1, 0x16, shadow, 0xc, 0xe, &width, &height);
+                func_02050678(&canvas, x, 0x16, title, 0xc, 0xf, &width, &height);
+                y = 0xf;
+            } else if (strstr(self->label_, data_ov003_0217ecbc)) {
+                sprintf(title, data_ov003_0217ecc3);
+                func_02041f50(title, shadow);
+                x = func_02042798(title, 0x100, 0xc);
+                func_02050678(&canvas, x + 1, 0x16, shadow, 0xc, 0xe, &width, &height);
+                func_02050678(&canvas, x, 0x16, title, 0xc, 0xf, &width, &height);
+                y = 0xf;
             }
             var15 = func_02042798(var12, 0x100, 0xd);
             func_02050678(&var9, var15 + 1, var16 + 0x16, var12, 0xc, 0xe, &var13, &var14);
@@ -197,12 +196,12 @@ struct Struct_ov003_021737e4_2 {
 };
 
 extern "C" void func_020a620c(void* obj);
-int Pac_CountFiles(ActiveEntry02046900* pac);
-void* Pac_GetFile(Rec020467f0* pac, int index, void** outName, int* outSize);
-extern "C" void func_0204c684(void* canvas);
-extern "C" void* func_02012fe4(void);
-extern "C" char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_ov003_02172618(void* arg0, int arg1, char** arg2);
+int Pac_CountFiles(PacRecord* pac);
+void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
+extern "C" void WindowPane_Init(void* canvas);
+extern "C" void* Zone3D_GetInstance(void);
+char* FindEntryByKey_02072a68(TableA68* table, int key);
+extern "C" void func_ov003_02172618(void* canvas, int y, char** labels);
 
 extern char data_ov003_02180a76[];
 
@@ -224,29 +223,29 @@ extern "C" ARM void func_ov003_021737e4(Struct_ov003_021737e4_2* arg0) {
         void* records[3];
         int sizes[3];
         loader->GetLoadedFileByID(self->task_, &file, &size);
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int count = Pac_CountFiles((PacRecord*)file);
         for (int i = 0; i < count; i++) {
-            records[i] = Pac_GetFile((Rec020467f0*)file, i, &name, &sizes[i]);
+            records[i] = Pac_GetFile((PacRecord*)file, i, &name, &sizes[i]);
         }
-        void* var29 = arg0->unknown_1_ ? var25[1] : var25[0];
-        Struct_ov003_021737e4 var30;
-        func_0204c684(&var30);
-        var30.unknown_8_ = (char*)var29 + 0x10;
-        var30.unknown_a8_ = 0x20;
-        var30.unknown_aa_ = 8;
-        var30.unknown_b4_ = 0xc;
-        var30.unknown_b6_ = 0xc;
-        func_02012fe4();
-        if (arg0->unknown_1_ != 0) {
-            char* var31[2] = {0};
-            var31[1] = arg0->unknown_4_;
-            int var32 = 4;
-            if (arg0->unknown_2_ == 1) {
-                var31[0] = func_02072a68(&arg0->unknown_1d8_, 0xc8);
-                var32 = 0xf;
-            } else if (arg0->unknown_2_ == 2) {
-                var31[0] = func_02072a68(&arg0->unknown_1d8_, 0xc9);
-                var32 = 0xf;
+        void* tiles = self->twoLines_ ? records[1] : records[0];
+        Canvas021737e4 canvas;
+        WindowPane_Init(&canvas);
+        canvas.pixels_ = (char*)tiles + 0x10;
+        canvas.width_ = 0x20;
+        canvas.height_ = 8;
+        canvas.unk_b4 = 0xc;
+        canvas.unk_b6 = 0xc;
+        Zone3D_GetInstance();
+        if (self->twoLines_ != 0) {
+            char* labels[2] = {0};
+            labels[1] = self->label_;
+            int y = 4;
+            if (self->labelKind_ == 1) {
+                labels[0] = FindEntryByKey_02072a68(&self->text_, 0xc8);
+                y = 0xf;
+            } else if (self->labelKind_ == 2) {
+                labels[0] = FindEntryByKey_02072a68(&self->text_, 0xc9);
+                y = 0xf;
             }
             func_ov003_02172618(&var30, var32, var31);
         } else {

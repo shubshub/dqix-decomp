@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void func_02042764(char* arg0, void* arg1, int arg2);
-extern "C" void func_ov017_0219558c(unsigned char* arg0, int arg1);
+extern "C" void __clear(void* buf, int size);
+extern "C" void Font_DecodeText(char* name, void* buf, int flag);
+extern "C" void func_ov017_0219558c(unsigned char* obj, int value);
 
 struct Struct_0202c1a4;
 extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
@@ -52,10 +52,10 @@ extern "C" ARM void func_ov017_021d0bd4(int arg0, Struct_ov017_021d0bd4_2* arg1,
 #if defined(jpn)
         strcpy((char*)var2, arg1->unknown_8_);
 #else
-        char var3[Enum_ov017_021d0bd4_48];
-        __clear(var3, Enum_ov017_021d0bd4_48);
-        func_02042764(arg1->unknown_8_, var3, 1);
-        strcpy((char*)var2, var3);
+        char nameBuf[regionalOffset2];
+        __clear(nameBuf, regionalOffset2);
+        Font_DecodeText(evt->name, nameBuf, 1);
+        strcpy((char*)entry, nameBuf);
 #endif
 
         break;

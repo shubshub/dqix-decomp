@@ -3,10 +3,10 @@
 struct Struct_0201099c_3;
 
 int IsField0x118Equal2_ov000_0217542c(void* obj);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
 int KeyTable_Get(struct Container020e0310* c, int key);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 int FormatCombatLogSuffix02041dd0(char* buf, int index);
 #if defined(jpn)
 extern "C" void func_0203bdf4(char* arg0, int arg1);
@@ -14,8 +14,8 @@ extern "C" void func_0203bdf4(char* arg0, int arg1);
 #else
 extern "C" void func_0203c248(char* arg0, int arg1);
 #endif
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void __clear(void* arg0, int arg1);
+int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" void __clear(void* buf, int n);
 
 struct Struct_ov000_02179a70_3 {
     char unknown_0_[0x4c];
@@ -52,17 +52,17 @@ extern "C" ARM void func_ov000_02179a70(struct Struct_ov000_02179a70* arg0, stru
     signed char var0 = arg1->unknown_21_;
     int var1 = 0;
 
-    if (func_ov000_0217542c(arg0)) {
-        func_02041c08(arg3, var0, 8, 5, 5, 5);
+    if (IsField0x118Equal2_ov000_0217542c(party)) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg3, var0);
+    Text_AppendCursorTag(dst, cursor);
 
     struct Member02179a70* m;
     for (int i = 0; i < party->count; i++) {
         m = &party->members[party->order[i]];
         if (m->field_0x4c >= 0) {
             if (n != 0) {
-                AppendString02042058(dst, (const char*)KeyTable_Get((struct Container020e0310*)party->strings, 0));
+                Text_Append(dst, (const char*)KeyTable_Get((struct Container020e0310*)party->strings, 0));
             }
             func_02041dd0(arg3, func_ov000_02170c7c(var2));
 #if defined(jpn)
@@ -70,10 +70,10 @@ extern "C" ARM void func_ov000_02179a70(struct Struct_ov000_02179a70* arg0, stru
 #else
             char var4[0x80];
 #endif
-            __clear(var4, sizeof(var4));
-            func_0203c248(var2->unknown_68_, (int)var4);
-            func_02041b70(arg3, var1, var4);
-            var1++;
+            __clear(name, sizeof(name));
+            InvokeGlobalEntry0203c248(m->name, (int)name);
+            Text_AppendNTag(dst, n, name);
+            n++;
         }
     }
 }

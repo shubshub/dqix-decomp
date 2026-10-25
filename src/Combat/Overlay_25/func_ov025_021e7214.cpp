@@ -20,8 +20,8 @@ extern "C" ARM int func_ov025_021e7214(struct Struct_ov025_021e7214* arg0) {
     if (var0 != 0) {
         *(unsigned char*)((char*)var0 + Enum_ov025_021e7214_24576 + Enum_ov025_021e7214_4053) = 1;
     }
-    GameState* var1 = GameState::GetInstance();
-    unsigned char* var2 = (unsigned char*)func_020100bc(var1);
-    func_0202e874(var2, arg0->unknown_8_);
+    GameState* bs = GameState::GetInstance();
+    unsigned char* f = (unsigned char*)bs->GetCamera();
+    _Z42SetField0x7cClearFields0x1ec0x1ee_0202e874Pht(f, p->field8);
     return 1;
 }

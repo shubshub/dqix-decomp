@@ -23,13 +23,14 @@ extern "C" signed char func_ov000_02159e60(void* arg0, int arg1);
 struct Struct_ov024_021e67c8* GetCombatantByID(int, int);
 extern "C" float func_02074938(int arg0);
 struct GameObject;
-extern "C" int func_ov024_021e67b0(GameObject*);
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov000_0215a8d4(unsigned char*, int);
-extern "C" int func_ov000_02156068(void* arg0, int arg1, int arg2, int arg3);
-struct Struct_ov024_021dd028_5;
-extern "C" int func_ov024_021dd260(Struct_ov024_021dd028_5*);
+int IsCombatantFlag2Mask32_021e67b0(GameObject*);
+void* GameState_GetParty(void* gs);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void IncrementByteCounterCapped0x63_0215a8d4(unsigned char*, int);
+extern "C" int func_ov000_02156068(void* battle, int id, int kind, int mode);
+struct FlagObj_021dd260;
+int IsFlagBit24Set_021dd260(FlagObj_021dd260*);
 
 // USA: func_ov024_021e67c8
 extern "C" ARM int func_ov024_021e67c8(struct Struct_ov024_021e67c8_2* arg0, int arg1, int arg2) {
@@ -50,9 +51,9 @@ extern "C" ARM int func_ov024_021e67c8(struct Struct_ov024_021e67c8_2* arg0, int
         if (func_ov024_021e67b0((GameObject*)var3)) {
             var2 = var2 * func_02074938(1);
         }
-        if (func_02086ef0((Struct_02048150*)(func_02010828(GameState::GetInstance())), arg2) &&
-            var3 && var3->unknown_138_->unknown_21_ == 1) {
-            func_ov000_0215a8d4((unsigned char*)arg0->unknown_10_, 0);
+        if (ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)(GameState_GetParty(GameState::GetInstance())), targetId) &&
+            target && target->stats->rank21 == 1) {
+            IncrementByteCounterCapped0x63_0215a8d4((unsigned char*)ctx->battle, 0);
         }
     }
     if (func_ov000_02156068(arg0->unknown_10_, arg2, 0, 1)) {

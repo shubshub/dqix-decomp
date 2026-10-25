@@ -9,28 +9,28 @@ extern "C" void func_020474a8(void *arg0, int arg1, const char *arg2, char *arg3
 #define REGION_LAYOUT(j,u) u
 #endif
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_3;
-struct Struct_02046574_2;
-struct Struct_020465c0;
-extern "C" void *func_020e2ff8(void);
-extern "C" void func_020e3428(void *arg0, int arg1);
-extern "C" int func_020421a0(void);
-extern "C" char *func_020dedd0(struct Struct_0201099c_10 *arg0, int arg1);
-extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
-extern "C" void func_02046380(void *arg0);
-extern "C" void *func_020e46c4(void *arg0);
-extern "C" void func_02046574(struct Struct_02046574_2 *arg0, int arg1, char *arg2);
-extern "C" void func_020e4bf4(void *arg0, int arg1);
-extern "C" void __clear(void *arg0, int arg1);
+struct ItemTable;
+struct Container020e0310;
+struct Obj02046574;
+struct StoreStruct;
+void *GetData02153637_020e2ff8(void);
+void Dispatch020e3428(void *a, int b);
+int MessageSystem_GetInstance(void);
+char *ItemTable_Find(struct ItemTable *c, int key);
+extern "C" void *memset(void *dst, int value, unsigned int length);
+extern "C" void func_02046380(void *g);
+void *Clear12Bytes020e46c4(void *p);
+void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
+void NameText_InitFromPartyMember(void *obj, int combatantId);
+extern "C" void __clear(void *buf, int n);
 #if !defined(jpn)
 extern "C" void func_020dcf7c(int arg0, void *arg1);
 #endif
 void SetByteInRange_020465f0(unsigned char *base, int index, unsigned char value);
 void StoreInArray0x8b0_020465c0(struct StoreStruct *base, int index, int value);
 int KeyTable_Get(struct Container020e0310 *c, int key);
-int AppendString02042058(char *dst, const char *src);
-extern "C" void func_02046608(void *a, int b, int c, void *d, int e, int f, int g);
+int Text_Append(char *dst, const char *src);
+extern "C" void MessageSystem_FormatText(void *a, int b, int c, void *d, int e, int f, int g);
 extern "C" void func_ov016_0218b5c0(int a, int b);
 
 struct Struct_ov002_02159900 {
@@ -43,64 +43,64 @@ struct Struct_ov002_02159900 {
 #define BD0 (*(char **) (base + REGION_LAYOUT(0x1a98, 0x1000 + 0xbd0)))
 
 // USA: func_ov002_02159900
-extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
-    func_020e3428(func_020e2ff8(), 1);
-    GameState *var0      = GameState::GetInstance();
-    char *var1            = (char *) func_020421a0();
-    unsigned char *var2 = (unsigned char *) (arg1 + 8);
-    char *var3            = func_020dedd0((struct Struct_0201099c_10 *) (arg0 + REGION_LAYOUT(0x750, 0x3ec + 0x400)),
-                                                                           *(short *) (arg0 + REGION_LAYOUT(0x1aea, 0x1c00 + 0x22)));
-    if (var3 == NULL) return;
+extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
+    Dispatch020e3428(GetData02153637_020e2ff8(), 1);
+    GameState *gs      = GameState::GetInstance();
+    char *g            = (char *) MessageSystem_GetInstance();
+    unsigned char *ent = (unsigned char *) (arr + 8);
+    char *e            = ItemTable_Find((struct ItemTable *) (base + REGION_LAYOUT(0x750, 0x3ec + 0x400)),
+                                                                           *(short *) (base + REGION_LAYOUT(0x1aea, 0x1c00 + 0x22)));
+    if (e == NULL) return;
 #if defined(jpn)
-    memset(*(void **) (arg0 + 0x1a98), 0, 0x800);
-    memset(*(void **) (arg0 + 0x1a9c), 0, 0x800);
-    func_02046380(var1);
-    char *var4 = *(char **) (arg0 + 0x1a98);
-    char *var5   = (char *)func_0200ff1c(var0, *(signed char *) (arg1 + 2));
-    if (var5 != NULL) {
-        func_02046574((struct Struct_02046574_2 *) var1, 0, *(char **) (var5 + 0x134));
+    memset(*(void **) (base + 0x1a98), 0, 0x800);
+    memset(*(void **) (base + 0x1a9c), 0, 0x800);
+    func_02046380(g);
+    char *out = *(char **) (base + 0x1a98);
+    char *m   = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 2));
+    if (m != NULL) {
+        MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) (m + 0x134));
     }
-    char var6[0x40];
-    __clear(var6, 0x40);
-    func_020dcf7c(*(short *) (var3 + 0x18), var6);
-    func_02046574((struct Struct_02046574_2 *) var1, 1, var6);
-    char *var7 = (char *)func_0200ff1c(var0, *(signed char *) (arg1 + 4));
-    if (var7 != NULL) {
-        func_02046574((struct Struct_02046574_2 *) var1, 2, *(char **) (var7 + 0x134));
-        func_020465f0((unsigned char *) var1, 9, 0);
-        func_020465c0((struct Struct_020465c0 *) var1, 9, *(short *) (var7 + 4));
+    char names[0x40];
+    __clear(names, 0x40);
+    DispatchIfCountPositive020dcf7c(*(short *) (e + 0x18), names);
+    MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, names);
+    char *m2 = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 4));
+    if (m2 != NULL) {
+        MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (m2 + 0x134));
+        SetByteInRange_020465f0((unsigned char *) g, 9, 0);
+        StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
     }
 #else
-    memset(*(void **) (arg0 + 0x1000 + 0xbd0), 0, 0x960);
-    memset(*(void **) (arg0 + 0x1000 + 0xbd4), 0, 0x960);
-    func_02046380(var1);
-    func_020e46c4(arg0 + 8);
-    func_020e46c4(arg0 + 0x14);
-    char *var8 = *(char **) (arg0 + 0x1000 + 0xbd0);
-    char *var9   = (char *)func_0200ff1c(var0, *(signed char *) (arg1 + 2));
-    if (var9 != NULL) {
-        func_02046574((struct Struct_02046574_2 *) var1, 0, *(char **) (var9 + 0x134));
-        func_020e4bf4(arg0 + 8, *(signed char *) (arg1 + 2));
-        *(char **) var1 = arg0 + 8;
+    memset(*(void **) (base + 0x1000 + 0xbd0), 0, 0x960);
+    memset(*(void **) (base + 0x1000 + 0xbd4), 0, 0x960);
+    func_02046380(g);
+    Clear12Bytes020e46c4(base + 8);
+    Clear12Bytes020e46c4(base + 0x14);
+    char *out = *(char **) (base + 0x1000 + 0xbd0);
+    char *m   = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 2));
+    if (m != NULL) {
+        MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) (m + 0x134));
+        NameText_InitFromPartyMember(base + 8, *(signed char *) (arr + 2));
+        *(char **) g = base + 8;
     }
-    struct Struct_ov002_02159900 var10;
-    char var11[0x80];
-    char var12[0x80];
-    func_020e46c4(&var10);
-    __clear(var11, 0x80);
-    __clear(var12, 0x80);
-    var10.unknown_0_ = var11;
-    var10.unknown_4_ = var12;
-    func_020dcf7c(*(short *) (var3 + 0x18), &var10);
-    *(struct Struct_ov002_02159900 **) (var1 + 0x18) = &var10;
-    func_02046574((struct Struct_02046574_2 *) var1, 1, var10.unknown_0_);
-    char *var13 = (char *)func_0200ff1c(var0, *(signed char *) (arg1 + 4));
-    if (var13 != NULL) {
-        func_02046574((struct Struct_02046574_2 *) var1, 2, *(char **) (var13 + 0x134));
-        func_020e4bf4(arg0 + 0x14, *(signed char *) (arg1 + 4));
-        *(char **) (var1 + 0x10) = arg0 + 0x14;
-        func_020465f0((unsigned char *) var1, 9, 0);
-        func_020465c0((struct Struct_020465c0 *) var1, 9, *(short *) (var13 + 4));
+    struct Names9900 nm;
+    char buf1[0x80];
+    char buf2[0x80];
+    Clear12Bytes020e46c4(&nm);
+    __clear(buf1, 0x80);
+    __clear(buf2, 0x80);
+    nm.a = buf1;
+    nm.b = buf2;
+    DispatchIfCountPositive020dcf7c(*(short *) (e + 0x18), &nm);
+    *(struct Names9900 **) (g + 0x18) = &nm;
+    MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, nm.a);
+    char *m2 = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 4));
+    if (m2 != NULL) {
+        MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (m2 + 0x134));
+        NameText_InitFromPartyMember(base + 0x14, *(signed char *) (arr + 4));
+        *(char **) (g + 0x10) = base + 0x14;
+        SetByteInRange_020465f0((unsigned char *) g, 9, 0);
+        StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
     }
 #endif
     int var14              = 0x7918;
@@ -128,16 +128,16 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
             }
             break;
         case 5:
-            if (arg2) {
-                var16 = 1;
-                func_02042058(BD0, (const char *) TXT(0x792c));
-                if (var2[0] == 3) {
-                    func_02042058(BD0, (const char *) TXT(8));
-                    func_02042058(BD0, (const char *) TXT(0x7941));
+            if (any) {
+                done = 1;
+                Text_Append(BD0, (const char *) TXT(0x792c));
+                if (ent[0] == 3) {
+                    Text_Append(BD0, (const char *) TXT(8));
+                    Text_Append(BD0, (const char *) TXT(0x7941));
                 }
-                if (*(unsigned char *) (arg1 + 0x20) == 3) {
-                    func_02042058(BD0, (const char *) TXT(8));
-                    func_02042058(BD0, (const char *) TXT(0x794b));
+                if (*(unsigned char *) (arr + 0x20) == 3) {
+                    Text_Append(BD0, (const char *) TXT(8));
+                    Text_Append(BD0, (const char *) TXT(0x794b));
                 }
             } else {
                 var14 = 0x7936;
@@ -158,11 +158,11 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
             if (arg2) {
                 var16 = 1;
 #if defined(jpn)
-                func_020474a8(var1, 0xc, (const char *) TXT(0x792c), var4 + 0x700);
-                func_02042058(BD0, var4 + 0x700);
+                func_020474a8(g, 0xc, (const char *) TXT(0x792c), out + 0x700);
+                Text_Append(BD0, out + 0x700);
 #else
-                func_02046608(var1, 0xc, TXT(0x792c), var8 + 0x860, 0xe3, 0, 1);
-                func_02042058(BD0, var8 + 0x860);
+                MessageSystem_FormatText(g, 0xc, TXT(0x792c), out + 0x860, 0xe3, 0, 1);
+                Text_Append(BD0, out + 0x860);
 #endif
                 int var17;
                 for (var17 = 0; var17 < *(unsigned char *) (arg1 + 3); var17++) {
@@ -177,19 +177,19 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
                         if (var19 != NULL) {
                             func_02046380(var1);
 #if defined(jpn)
-                            func_02046574((struct Struct_02046574_2 *) var1, 2, *(char **) (var19 + 0x134));
-                            func_020465c0((struct Struct_020465c0 *) var1, 9, var18);
-                            func_020474a8(var1, 0xc, (const char *) TXT(var15), var4 + 0x700);
-                            func_02042058(BD0, (const char *) TXT(8));
-                            func_02042058(BD0, var4 + 0x700);
+                            MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (c + 0x134));
+                            StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, cid);
+                            func_020474a8(g, 0xc, (const char *) TXT(b), out + 0x700);
+                            Text_Append(BD0, (const char *) TXT(8));
+                            Text_Append(BD0, out + 0x700);
 #else
-                            func_02046574((struct Struct_02046574_2 *) var1, 2, *(char **) (var19 + 0x134));
-                            func_020e4bf4(arg0 + 0x14, var18);
-                            *(char **) (var1 + 0x10) = arg0 + 0x14;
-                            func_020465c0((struct Struct_020465c0 *) var1, 9, var18);
-                            func_02046608(var1, 0xc, TXT(var15), var8 + 0x860, 0xe3, 0, 1);
-                            func_02042058(BD0, (const char *) TXT(8));
-                            func_02042058(BD0, var8 + 0x860);
+                            MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (c + 0x134));
+                            NameText_InitFromPartyMember(base + 0x14, cid);
+                            *(char **) (g + 0x10) = base + 0x14;
+                            StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, cid);
+                            MessageSystem_FormatText(g, 0xc, TXT(b), out + 0x860, 0xe3, 0, 1);
+                            Text_Append(BD0, (const char *) TXT(8));
+                            Text_Append(BD0, out + 0x860);
 #endif
                         }
                     }
@@ -234,9 +234,9 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
                     case 0x5624: var20 = 0x7999; break;
                     case 0x5619: var20 = 0x7997; break;
                 }
-                func_02046574((struct Struct_02046574_2 *) var1, 5, (char *) TXT(var20));
-                var14 = 0x792c;
-                var15 = 0x7990;
+                MessageSystem_SetStringArgument((struct Obj02046574 *) g, 5, (char *) TXT(k));
+                a = 0x792c;
+                b = 0x7990;
             } else {
                 var14 = 0x7936;
             }
@@ -280,10 +280,10 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
             var15 = 0x79e1;
             break;
     }
-    if (!var16) {
-        func_02042058(BD0, (const char *) TXT(var14));
-        func_02042058(BD0, (const char *) TXT(8));
-        func_02042058(BD0, (const char *) TXT(var15));
+    if (!done) {
+        Text_Append(BD0, (const char *) TXT(a));
+        Text_Append(BD0, (const char *) TXT(8));
+        Text_Append(BD0, (const char *) TXT(b));
     }
 #if defined(jpn)
     func_020474a8(var1, 0xc, *(const char **) (arg0 + 0x1a98), *(char **) (arg0 + 0x1a9c));
@@ -291,9 +291,9 @@ extern "C" ARM void func_ov002_02159900(char *arg0, char *arg1, int arg2) {
     *(short *) (arg0 + 0x22b8)          = -1;
     *(unsigned char *) (arg0 + 0x22ba) = 0;
 #else
-    func_02046608(var1, 0xc, *(int *) (arg0 + 0x1000 + 0xbd0), *(void **) (arg0 + 0x1000 + 0xbd4), 0xe3, 0, 1);
-    *(unsigned char *) (arg0 + 0x1000 + 0xc31) = 1;
-    *(short *) (arg0 + 0x2400 + 0x88)          = -1;
-    *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 0;
+    MessageSystem_FormatText(g, 0xc, *(int *) (base + 0x1000 + 0xbd0), *(void **) (base + 0x1000 + 0xbd4), 0xe3, 0, 1);
+    *(unsigned char *) (base + 0x1000 + 0xc31) = 1;
+    *(short *) (base + 0x2400 + 0x88)          = -1;
+    *(unsigned char *) (base + 0x2000 + 0x48a) = 0;
 #endif
 }

@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern AllocatorUnion data_02114e20;
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+extern AllocatorUnion g_mainAllocator;
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 struct Struct_ov015_0218eef0;
 extern "C" void func_ov015_0218eef0(struct Struct_ov015_0218eef0* arg0);
@@ -24,34 +24,34 @@ struct Struct_ov015_021919e4_2 {
 };
 
 // USA: func_ov015_021919e4
-extern "C" ARM void* func_ov015_021919e4(struct Struct_ov015_021919e4_2* arg0, void* arg1) {
-    struct Struct_ov015_021919e4* var0 = (struct Struct_ov015_021919e4*)func_02012d88(&data_02114e20, 8);
-    if (var0 == 0) {
+extern "C" ARM void* func_ov015_021919e4(struct Obj021919e4* obj, void* p1) {
+    struct ListNode021919e4* node = (struct ListNode021919e4*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 8);
+    if (node == 0) {
         return 0;
     }
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = func_02012d88(&data_02114e20, 0x5c);
-    if (var0->unknown_0_ == 0) {
-        func_02012da4(&data_02114e20, var0);
+    node->payload = 0;
+    node->next = 0;
+    node->payload = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x5c);
+    if (node->payload == 0) {
+        AllocatorUnion_Free(&g_mainAllocator, node);
         return 0;
     }
     void* var1 = var0->unknown_0_;
 
-    func_ov015_0218eef0((struct Struct_ov015_0218eef0*)var1);
-    int var2 = func_ov015_0218ef7c((struct Struct_ov015_0218ef7c_2*)var1, (struct Struct_ov015_0218ef7c_3*)arg0, (struct Struct_ov015_0218ef7c*)arg1);
-    if (var2 == 0) {
-        func_02012da4(&data_02114e20, var0->unknown_0_);
-        var0->unknown_0_ = 0;
-        func_02012da4(&data_02114e20, var0);
+    InitCombatFieldStruct0218eef0((struct ResetStruct0218eef0*)payload);
+    int status = func_ov015_0218ef7c((struct Obj0218ef7c*)payload, (struct SrcState0218ef7c*)obj, (struct P0218ef7c*)p1);
+    if (status == 0) {
+        AllocatorUnion_Free(&g_mainAllocator, node->payload);
+        node->payload = 0;
+        AllocatorUnion_Free(&g_mainAllocator, node);
         return 0;
     }
 
-    if (!func_ov015_0218f27c(var1, arg1)) {
-        func_ov015_0218f0c4(var0->unknown_0_);
-        func_02012da4(&data_02114e20, var0->unknown_0_);
-        var0->unknown_0_ = 0;
-        func_02012da4(&data_02114e20, var0);
+    if (!func_ov015_0218f27c(payload, p1)) {
+        func_ov015_0218f0c4(node->payload);
+        AllocatorUnion_Free(&g_mainAllocator, node->payload);
+        node->payload = 0;
+        AllocatorUnion_Free(&g_mainAllocator, node);
         return 0;
     }
 

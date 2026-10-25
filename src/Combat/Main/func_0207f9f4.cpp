@@ -2,16 +2,15 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_02013fb4;
-struct Struct_020727d8;
-struct Struct_02020cb8_4;
+struct StreamHeader;
+struct List020727d8;
+struct PacRecord;
 
 void ResetListHeader020727d8(List020727d8* list);
 extern "C" void func_020728ac(void* list, void* alloc, void* buffer, int length, int a, int b, int c);
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
-char* GetGlobalField0x1c020421a0();
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
+char* MessageSystem_GetInstance();
 void InitStreamAndRun0207f524(void* a, void* b, StreamHeader* c, int d);
 struct EntryArray0207efdc;
 void LoadEntryArrayFromStream0207ef74(EntryArray0207efdc*, SafeAllocator*, StreamHeader*, int);
@@ -75,9 +74,9 @@ extern "C" ARM int func_0207f9f4(Struct_0207f9f4* arg0) {
                 var0++;
             }
     #ifdef jpn
-        arg0->field18 = *(int*)(func_020421a0() + 0x28);
+        self->field18 = *(int*)(MessageSystem_GetInstance() + 0x28);
 #else
-        arg0->unknown_18_ = *(int*)(func_020421a0() + 0x5c);
+        self->field18 = *(int*)(MessageSystem_GetInstance() + 0x5c);
 #endif
             return 0;
         }
@@ -91,11 +90,11 @@ extern "C" ARM int func_0207f9f4(Struct_0207f9f4* arg0) {
         void* file;
         unsigned int size;
         loader->GetLoadedFileByID(self->field1c, &file, &size);
-        int n = Pac_CountFiles((ActiveEntry02046900*)file);
+        int n = Pac_CountFiles((PacRecord*)file);
         void* recs[3];
         int outs[3];
         for (int i = 0; i < n; i++) {
-            recs[i] = Pac_GetFile((Rec020467f0*)file, i, &out, &outs[i]);
+            recs[i] = Pac_GetFile((PacRecord*)file, i, &out, &outs[i]);
         }
         arg0->unknown_0_ = arg0->unknown_14_->Allocate(8);
         func_020727d8((Struct_020727d8*)arg0->unknown_0_);
@@ -105,9 +104,9 @@ extern "C" ARM int func_0207f9f4(Struct_0207f9f4* arg0) {
         var7->RemoveTask(arg0->unknown_1c_);
         arg0->unknown_1c_ = -1;
 #ifdef jpn
-        arg0->unknown_18_ = *(int*)(func_020421a0() + 0x28);
+        self->field18 = *(int*)(MessageSystem_GetInstance() + 0x28);
 #else
-        arg0->unknown_18_ = *(int*)(func_020421a0() + 0x5c);
+        self->field18 = *(int*)(MessageSystem_GetInstance() + 0x5c);
 #endif
         return 0;
     }

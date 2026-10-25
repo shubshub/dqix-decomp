@@ -125,15 +125,15 @@ extern "C" ARM int func_ov025_021e66cc(void* arg0, struct Struct_ov025_021e66cc_
         var9->unknown_4_ = 0;
         func_ov025_021e8bac((struct Struct_ov025_021e267c_2*)data_ov025_021ef988.unknown_c_, var9);
 
-        ObjectArchiveLoadInfo var10;
-        func_0203dafc((struct Struct_0203d028_11*)&var10);
-        var10.fileData = var6;
-        var10.unk_8 = var5;
-        var10.unk_10 = 1;
-        var10.allocator = var8;
-        var7->obj3D_.LoadFromCCHROrCMOTArchive(&var10, NULL);
-        var1->RemoveTask(var4);
-        func_ov025_021e3158(&data_ov025_021ef9a8);
+        ObjectArchiveLoadInfo info;
+        ClearEightWords_0203dafc((struct Struct_203dafc*)&info);
+        info.fileData = fileData;
+        info.fileSize = length;
+        info.unk_10 = 1;
+        info.allocator = allocator;
+        holder->obj3D_.LoadFromCCHROrCMOTArchive(&info, NULL);
+        loader->RemoveTask(taskId);
+        ResetStruct_021e3158(&data_ov025_021ef9a8);
         return 1;
     }
 

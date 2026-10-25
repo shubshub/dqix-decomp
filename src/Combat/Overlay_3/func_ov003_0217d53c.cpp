@@ -15,16 +15,16 @@ enum { Enum_ov003_0217d53c_14092 = 0x370c };
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" char* func_020421a0(void);
-extern "C" char* func_02012fe4(void);
-extern "C" int func_020457e0(char* arg0);
-extern "C" void func_ov017_021baedc(void* arg0, int arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" void func_02070378(char* arg0);
+char* MessageSystem_GetInstance(void);
+extern "C" char* Zone3D_GetInstance(void);
+extern "C" int func_020457e0(char* obj);
+extern "C" void func_ov017_021baedc(void* self, int flag);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+void InitAndResetHeader_0219e310(unsigned char* obj, int arg);
+void* GetField0x3f8Address_0200fd0c(GameState* state);
+void InitStruct02070378(char* obj);
 
 struct Struct_ov003_0217d53c_4 {
 #if defined(jpn)
@@ -66,15 +66,15 @@ struct Struct_ov003_0217d53c_3 {
 };
 
 // USA: func_ov003_0217d53c
-extern "C" ARM void func_ov003_0217d53c(Struct_ov003_0217d53c_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = func_020421a0();
-    char* var2 = (char*)GetGameResources();
-    struct Struct_0201bdac_2* var3 = *(struct Struct_0201bdac_2**)(var2 + Enum_ov003_0217d53c_14076);
+extern "C" ARM void func_ov003_0217d53c(State_0217d53c* self) {
+    GameState* gs = GameState::GetInstance();
+    char* global = MessageSystem_GetInstance();
+    char* res = (char*)GetGameResources();
+    struct TailList020469b4* list = *(struct TailList020469b4**)(res + kRegion36fc);
 #if defined(jpn)
-    Struct_ov003_0217d53c_4* var4 = (Struct_ov003_0217d53c_4*)(func_02012fe4() + 0x860);
+    Progress02012fe4* current = (Progress02012fe4*)(Zone3D_GetInstance() + 0x860);
 #else
-    char* var5 = func_02012fe4();
+    char* current = Zone3D_GetInstance();
 #endif
     if (arg0->unknown_5_ != 0 || *(int*)(var1 + Enum_ov003_0217d53c_2464) != 0) return;
     if (func_020457e0(var1) == 0) {

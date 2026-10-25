@@ -90,17 +90,16 @@ struct Struct_ov014_02185c90 {
     char unknown_b8_[0x28];
 };
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900*);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0*, int, void**, int*);
-extern "C" void func_0204c684(void*);
-struct Struct_02097054_5;
-extern "C" int func_02097224(Struct_02097054_5*, int);
+struct PacRecord;
+int Pac_CountFiles(PacRecord*);
+void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" void WindowPane_Init(void*);
+struct BinarySearch020971a8Container;
+int BinarySearchByField4_02097224(BinarySearch020971a8Container*, int);
 extern "C" void __clear(void*, int);
-extern "C" void func_0206819c(const char*, char*, int);
-extern "C" void* func_020421a0();
-extern "C" void func_02046608(void*, int, char*, char*, int, int, int);
+void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
+void* MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(void*, int, char*, char*, int, int, int);
 void SetPackedFields_021e24b0(void*, int, int, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
 void SetEntryFields_021e23d0(void*, int, int, unsigned char, unsigned char);
 struct Container020e0310;
@@ -111,16 +110,14 @@ void* FindOrGetDefaultElement_021893c4(IndexedArrayStruct021893c4*, int);
 extern "C" struct Slot* func_ov014_0218940c(void*, int, void*);
 extern "C" int* func_ov014_02189430(void*, int, void*);
 extern "C" void func_ov023_021e257c(void*);
-struct List0204af64;
-void Background_Init(List0204af64*);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void*, int);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
+void Background_SetScroll(BackgroundGraphics*, int, int);
 extern "C" void func_0204b4c0(void*, void*);
 void Background_FlushFile(void*, char*);
-struct SelfTag0204b3a0;
-void Background_UploadFile(SelfTag0204b3a0*, char*);
+void Background_UploadFile(BackgroundGraphics*, char*);
 
 #define FLAGOP(e, id, stmt) do { struct Struct_ov003_0215d4fc* p = func_ov014_021842a0(e, id); if (p) { stmt; } } while (0)
 #define SetBit4(e, id) FLAGOP(e, id, p->unknown_16_ |= 0x10)
@@ -144,11 +141,11 @@ extern "C" ARM void func_ov014_02185c90(struct Panel* self) {
         struct ListObj list;
         int count;
         loader->GetLoadedFileByID(self->s8c, &file, &size);
-        count = Pac_CountFiles((ActiveEntry02046900*)file);
+        count = Pac_CountFiles((PacRecord*)file);
         if (count != 0) {
-            char* rec = (char*)Pac_GetFile((Rec020467f0*)file, 0, &rp, &rs);
+            char* rec = (char*)Pac_GetFile((PacRecord*)file, 0, &rp, &rs);
             if (rec != 0) {
-                func_0204c684(&draw);
+                WindowPane_Init(&draw);
                 draw.s28 = 0x20;
                 draw.s2a = 0x18;
                 draw.s34 = 0xa;
@@ -165,10 +162,10 @@ extern "C" ARM void func_ov014_02185c90(struct Panel* self) {
                 char* n1 = bufc8;
                 char* n2 = buf80;
                 char* n3 = buf110;
-                void* g = GetGlobalField0x1c020421a0();
-                func_02046608(g, 0xa, buf358, n1, 0x400, 0, 0);
-                func_02046608(g, 0xa, buf310, n2, 0x400, 0, 0);
-                func_02046608(g, 0xa, (char*)self->p68, n3, 0x8c, 0, 0);
+                void* g = MessageSystem_GetInstance();
+                MessageSystem_FormatText(g, 0xa, buf358, n1, 0x400, 0, 0);
+                MessageSystem_FormatText(g, 0xa, buf310, n2, 0x400, 0, 0);
+                MessageSystem_FormatText(g, 0xa, (char*)self->p68, n3, 0x8c, 0, 0);
                 void* ents;
                 void* cont;
                 struct Pk* pk;
@@ -282,14 +279,14 @@ extern "C" ARM void func_ov014_02185c90(struct Panel* self) {
                 e->p4 = &draw;
                 e->s12 = 1;
                 func_ov023_021e257c(self->ents);
-                Background_Init((List0204af64*)&list);
+                Background_Init((BackgroundGraphics*)&list);
                 Background_SetMapSize((unsigned char*)&list, 0);
                 list.lo = 0;
                 list.hi = 1;
                 Background_SetPriority(&list, 1);
-                Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+                Background_SetScroll((BackgroundGraphics*)&list, 0, 0);
                 for (int i = 0; i < count; i++) {
-                    void* r2 = Pac_GetFile((Rec020467f0*)file, i, &rp, &rs);
+                    void* r2 = Pac_GetFile((PacRecord*)file, i, &rp, &rs);
                     if (r2) {
                         memcpy(self->bufs[i], r2, rs);
                         func_0204b4c0(&list, self->bufs[i]);
@@ -309,18 +306,18 @@ extern "C" ARM void func_ov014_02185c90(struct Panel* self) {
         int rs;
         struct ListObj list;
         loader->GetLoadedFileByID(self->id70, &file, &size);
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
-        Background_Init((List0204af64*)&list);
+        int count = Pac_CountFiles((PacRecord*)file);
+        Background_Init((BackgroundGraphics*)&list);
         Background_SetMapSize((unsigned char*)&list, 0);
         list.lo = 0;
         list.hi = 1;
         Background_SetPriority(&list, 1);
-        Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+        Background_SetScroll((BackgroundGraphics*)&list, 0, 0);
         for (int i = 0; i < count; i++) {
-            void* rec = Pac_GetFile((Rec020467f0*)file, i, &rp, &rs);
+            void* rec = Pac_GetFile((PacRecord*)file, i, &rp, &rs);
             if (rec) {
                 Background_FlushFile(&list, (char*)rec);
-                Background_UploadFile((SelfTag0204b3a0*)&list, (char*)rec);
+                Background_UploadFile((BackgroundGraphics*)&list, (char*)rec);
             }
         }
         var0->RemoveTask(arg0->unknown_70_);

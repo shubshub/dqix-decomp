@@ -1,5 +1,5 @@
 #include <globaldefs.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "Memory/SafeAllocator.h"
 #include "Resource/GameResources.h"
 #include "Combat/Main/BattleList.h"
@@ -69,8 +69,8 @@ struct Struct_0203d028_8 {
     struct Struct_0203d028_7 unknown_1840_;
     struct Struct_0203d028_7* inline_0203d028_2() { return &unknown_1840_; }
 };
-extern "C" struct Struct_0203d028_8* func_02012fe4(void);
-extern "C" unsigned int* func_020d6c00(void);
+extern "C" struct Global02012fe4* Zone3D_GetInstance(void);
+unsigned int* GlobalFlags_GetInstance(void);
 
 extern "C" int func_020981e4(int arg0, int arg1);
 extern "C" int func_02098210(int arg0, int arg1);
@@ -140,9 +140,9 @@ extern "C" int func_020db2d4(void* arg0);
 extern "C" void func_020daf9c(int arg0, int arg1, int arg2, int arg3);
 
 void SetMainBrightness(GameResources*, int, int);
-extern "C" void func_020466e4(unsigned int* arg0, unsigned int arg1);
-extern "C" int func_020cede0(void);
-extern "C" int func_020cedc0(int arg0);
+void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+int IsPowcntBit0Set_020cede0(void);
+int DispatchIfEquals1_020cedc0(int a);
 
 extern "C" void func_ov017_0218f064(void* arg0, int arg1, int arg2, int arg3, int arg4);
 
@@ -153,8 +153,8 @@ extern "C" void _ZN8Object3D10SetField06Et(struct Struct_0203d028_13* arg0, int 
 
 extern "C" int* func_ov017_021a4658(void* arg0, int arg1);
 
-struct Struct_0203d028_4;
-extern "C" void func_ov017_021a3498(struct Struct_0203d028_4* arg0);
+struct FieldTaskQueue;
+void FieldTaskQueue_Update(struct FieldTaskQueue* ctx);
 
 struct Struct_02015438 { signed char unknown_0_; };
 extern "C" int func_02046b24(struct Struct_02015438** arg0);
@@ -169,14 +169,14 @@ extern "C" void func_0203f138(void* arg0, int arg1);
 
 extern "C" void func_0203e8f8(void* arg0, void* arg1, void* arg2);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
+struct Foo0207df50;
+void VramState_Rewind(struct Foo0207df50* p);
 
 struct GameState;
 extern "C" void func_0200fd48(GameState*, int);
 
-struct Struct_02038598_4 { unsigned int unknown_0_; };
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
+struct FlagWord020466f4 { unsigned int flags; };
+void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 
 struct Struct_02040774 { char unknown_0_[4]; int unknown_4_; int unknown_8_; int unknown_c_; };
 struct Struct_0203d028_15 {
@@ -246,7 +246,7 @@ extern "C" void func_02041628(void* arg0, int arg1, int arg2);
 extern "C" void func_02041640(void* arg0, int arg1, int arg2);
 struct Vector3i;
 
-extern "C" int func_02018fbc(void* arg0, int* arg1);
+extern "C" int Zone3D_GetGroundHeight(void* globalStruct, int* vec3);
 
 struct Struct_02040bfc { char unknown_0_[0x8c]; int unknown_8c_; };
 struct Struct_02040bfc_2 { char unknown_0_[0xc8]; int unknown_c8_; };
@@ -311,8 +311,8 @@ static inline SafeAllocator& inline_02021578(GameResources* arg0, int arg1) {
     return arg0->allocator_array_1a0[arg1];
 }
 
-static inline char& inline_0203d028_5(GameResources* arg0, int arg1) {
-    return arg0->unknown_2cc_[arg1];
+static inline char& GetResourceBuffer(GameResources* resources, int offset) {
+    return resources->vramStates_[offset];
 }
 
 static inline void inline_0203d028_6(void* arg0, int arg1)
@@ -332,22 +332,22 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
         return;
     }
 
-    struct Struct_0203d028_2* var0 = (Struct_0203d028_2*)GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    struct Struct_0203d028_23* var2 = (struct Struct_0203d028_23*)func_020652c8(&arg0->unknown_90_);
-    struct Struct_0203d028_8* var3 = func_02012fe4();
+    struct BattleStruct* battleStruct = (BattleStruct*)GameState::GetInstance();
+    GameResources* mgr = GetGameResources();
+    struct RegNode0203d028* entry = (struct RegNode0203d028*)GetFieldAt0x0020652c8(&self->listHead);
+    struct Global02012fe4* globalStruct = Zone3D_GetInstance();
 #if defined(jpn)
     char* var4 = (char*)var3 + 0x860;
 #define GLOBAL_SUB var4
 #else
 #define GLOBAL_SUB ((char*)var3 + 0x840)
 #endif
-    unsigned int* var5 = func_020d6c00();
-    unsigned int var6 = *(unsigned short*)var3;
-    void* var7 = 0;
-    unsigned int var8 = 0;
-    int var9 = 0;
-    func_020401fc(&arg0->unknown_0_, 0xc, arg2);
+    unsigned int* dataFlags = GlobalFlags_GetInstance();
+    unsigned int idVal = *(unsigned short*)globalStruct;
+    void* childModelPtr = 0;
+    unsigned int loopIndex = 0;
+    int assignedFlag = 0;
+    InitPool020401fc(&self->pool, 0xc, sb);
 
     if (func_020981e4((int)GLOBAL_SUB, var6) &&
         func_02098210((int)GLOBAL_SUB, var6) == 0) {
@@ -415,9 +415,9 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
                         func_020daf9c(1, 0, 1, 0);
                         SetMainBrightness(var1, ~0xf, 0);
                     }
-                    func_020466e4(var5, 0x400000);
-                    if (!func_020cede0()) {
-                        while (func_020cedc0(1) == 0) {
+                    FlagWord_SetBits(dataFlags, 0x400000);
+                    if (!IsPowcntBit0Set_020cede0()) {
+                        while (DispatchIfEquals1_020cedc0(1) == 0) {
                         }
                         SleepCurrentContext(1);
                     }
@@ -443,11 +443,11 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
 #endif
                     BackgroundLoader* var34 = BackgroundLoader::GetInstance();
 
-                    while (func_02046b24((struct Struct_02015438**)var32) == 0x13) {
-                        var34->RemoveAllLocks();
-                        func_ov017_021a3498((struct Struct_0203d028_4*)var32);
-                        if (func_02046b24((struct Struct_02015438**)var33) == 0x14) {
-                            func_ov017_021a3498((struct Struct_0203d028_4*)var33);
+                    while (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)ctxA) == 0x13) {
+                        instance->RemoveAllLocks();
+                        FieldTaskQueue_Update((struct FieldTaskQueue*)ctxA);
+                        if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)ctxB) == 0x14) {
+                            FieldTaskQueue_Update((struct FieldTaskQueue*)ctxB);
                         }
                     }
 
@@ -471,14 +471,14 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
                     var36->Reset();
                     func_0203e8f8(arg0, var10, var36);
 
-                    var10->unknown_1c_ = 0;
-                    SafeAllocator* var37 = &inline_02021578(var1, 3);
-                    char* var38 = &inline_0203d028_5(var1, 0x930);
-                    var2->unknown_2_ = 0;
-                    var37->Reset();
-                    func_0207df50((struct Struct_0203d028*)var38);
-                    func_0200fd48((GameState*)var0, 5);
-                    func_020466f4((struct Struct_02038598_4*)var5, 0x400000);
+                    node->combatant = 0;
+                    SafeAllocator* alloc3 = &GetResourceAllocator(mgr, 3);
+                    char* buf930 = &GetResourceBuffer(mgr, 0x930);
+                    entry->type = 0;
+                    alloc3->Reset();
+                    VramState_Rewind((struct Foo0207df50*)buf930);
+                    ClearCombatantSlot_0200fd48((GameState*)battleStruct, 5);
+                    FlagWord_ClearBits((struct FlagWord020466f4*)dataFlags, 0x400000);
                 }
             }
         }
@@ -501,17 +501,17 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
             char var41[16];
             sprintf(var41, &data_020efde9, var2->unknown1_4_);
 
-            if (!LoadAndDecompressGPCHeaderAndInnerFileInfo(&PAIR.pGPCFile, var39.machine,
-                    &data_020efdf0, data_0211e33c, var14, 0x30000, false, NULL))
+            if (!LoadAndDecompressGPCHeaderAndInnerFileInfo(&PAIR.pGPCFile, pair.machine,
+                    &data_020efdf0, g_fileLoadBuffer, length2, 0x30000, false, NULL))
             {
                 PAIR.Reset();
                 ZeroDestroyGPCPointer(&PAIR.pGPCFile);
                 goto abort_unlock;
             }
 
-            unsigned char* var42 = data_0211e33c + var14;
-            if (!DecompressFileFromGPCByName(var39.pGPCFile, var39.machine,
-                    var42, var15, 0x30000 - var14, var41))
+            unsigned char* dst = g_fileLoadBuffer + length2;
+            if (!DecompressFileFromGPCByName(pair.pGPCFile, pair.machine,
+                    dst, gpcLen, 0x30000 - length2, innerName))
             {
                 var39.Reset();
                 var39.Reset();
@@ -670,10 +670,10 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
                 if (var11->unknown_58_ != 0) {
                     func_02041640(var10->unknown_1c_, var11->unknown_58_, 0);
                 }
-                int var53[3];
-                *(Vector3i*)var53 = *(Vector3i const*)((int*)((char*)var10->unknown_1c_ + 0x44));
-                var53[1] = func_02018fbc(var3, var53);
-                *(Vector3i*)((int*)((char*)var10->unknown_1c_ + 0x44)) = *(Vector3i const*)var53;
+                int localVec3[3];
+                *(Vector3i*)localVec3 = *(Vector3i const*)((int*)((char*)node->combatant + 0x44));
+                localVec3[1] = Zone3D_GetGroundHeight(globalStruct, localVec3);
+                *(Vector3i*)((int*)((char*)node->combatant + 0x44)) = *(Vector3i const*)localVec3;
             }
             func_02040bfc((struct Struct_0203d028_22*)var10, var11->unknown_38_);
 

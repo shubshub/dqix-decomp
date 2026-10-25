@@ -1,21 +1,28 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
-struct Entry0205d2bc { unsigned char b[0x20]; };
 
+// The header's CreationWindow, up to layerCount.
 struct Obj0205d2bc {
-    char pad0[0x98];
-    struct Entry0205d2bc* field98;   // 0x98
-    char pad1[0xb2 - 0x9c];
-    unsigned char fieldB2;           // 0xb2
+    unsigned char unknown[4];
+    int frame[20];
+    int cursor[16];
+    unsigned char unknown94[4];
+    BackgroundGraphics* layers;
+    void* panes;
+    short layout[8];
+    unsigned char activeWindow;
+    unsigned char nextWindow;
+    unsigned char layerCount;
 };
 
-extern "C" void Background_TransferMap(struct Entry0205d2bc*, int);
+extern "C" void Background_TransferMap(BackgroundGraphics*, int);
 
 // Main, originally InitEntries0205d2bc (USA 0x0205d2bc, EUR 0x0205d2cc, JPN 0x0205e5ec)
-ARM void Window_TransferLayers(struct Obj0205d2bc* obj) {
+ARM void Window_TransferLayers(struct Obj0205d2bc* window) {
     unsigned char i;
-    if (obj->field98 == 0) return;
-    for (i = 0; i < obj->fieldB2; i++) {
-        Background_TransferMap(&obj->field98[i], 0);
+    if (window->layers == 0) return;
+    for (i = 0; i < window->layerCount; i++) {
+        Background_TransferMap(&window->layers[i], 0);
     }
 }

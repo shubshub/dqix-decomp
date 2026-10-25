@@ -35,7 +35,7 @@ struct FoundReward { char pad0[0x10]; unsigned short id_; };
 struct TextBuffers { char* first_; char* second_; int field8_; };
 extern "C" RewardGlobal _ZZ17GetGlobal021ffefcvE1s;
 extern SePlayer g_sePlayer;
-TextRenderer* GetGlobalField0x1c020421a0();
+TextRenderer* MessageSystem_GetInstance();
 extern "C" void func_02046380(TextRenderer*);
 void CopyOutRegion0x571d_020114ec(char*, void*);
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
@@ -45,7 +45,7 @@ extern "C" Words021edf38 func_ov023_021ed804(Words021edf38, FoundReward*);
 void SetWords_021edf38_021edf38(void*, Words021edf38*);
 void DispatchIfCountPositive020dcf7c(int, void*);
 const char* FindEntryByKey_02072a68(TableA68*, int);
-void InitObjFromCombatantId020e4bf4(void*, int);
+void NameText_InitFromPartyMember(void*, int);
 void InitObjFromCombatant020e4c74(void*, GameObject*);
 void SePlayer_Play(SePlayer*, int, int);
 extern "C" void func_0204500c(TextRenderer*, const char*, int, int);
@@ -55,53 +55,53 @@ extern "C" void func_020abe84(void*, short*, Flags_021ed7e0*, int);
 extern "C" int func_ov023_021f4fc8();
 
 // USA: func_ov023_021f2a48
-extern "C" ARM int func_ov023_021f2a48(Struct_ov023_021f2a48_6* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov023_021f2a48_7* var1 = _ZZ21inline_ov023_021f4c04vE1s.unknown_0_;
-    Struct_02081870* var2 = func_020421a0();
-    func_02046380(var2);
-    if (var1->unknown_0_ == 0) {
-        ++var1->unknown_e4_;
-        if (arg0->unknown_5900_ <= var1->unknown_e4_) return 14;
-        Struct_ov023_021f2a48_5* var3 = &arg0->unknown_58d0_[var1->unknown_e4_];
-        unsigned short var4 = var3->unknown_2_0_;
-        int var5 = var3->unknown_0_;
-        int var6 = var3->unknown_3_7_;
-        signed char var7 = var3->unknown_5_;
-        unsigned char var8[4];
-        func_020114ec((char*)var0, var8);
-        GameObject* var9 = 0;
-        for (int var10 = 0; var10 < 4; ++var10) {
-            GameObject* var11 = var0->GetCombatantByIndex(var8[var10]);
-            if (!var11) continue;
-            if (!func_020a35e0((unsigned char*)arg0->unknown_2a0_, var8[var10])) continue;
-            if (((Struct_ov023_021f2a48_2*)var11)->unknown_130_->unknown_0_ & 1) continue;
-            var9 = var0->GetPartyMemberByIndex(var8[var10]);
+extern "C" ARM int func_ov023_021f2a48(RewardScreen* self) {
+    GameState* state = GameState::GetInstance();
+    RewardState* work = _ZZ17GetGlobal021ffefcvE1s.state_;
+    TextRenderer* renderer = MessageSystem_GetInstance();
+    func_02046380(renderer);
+    if (work->state_ == 0) {
+        ++work->index_;
+        if (self->count_ <= work->index_) return 14;
+        RewardEntry* reward = &self->entries_[work->index_];
+        unsigned short key = reward->key_;
+        int text = reward->text_;
+        int plural = reward->plural_;
+        signed char combatant = reward->combatant_;
+        unsigned char order[4];
+        CopyOutRegion0x571d_020114ec((char*)state, order);
+        GameObject* recipient = 0;
+        for (int i = 0; i < 4; ++i) {
+            GameObject* actor = state->GetCombatantByIndex(order[i]);
+            if (!actor) continue;
+            if (!TestBitAt0x34_020a35e0((unsigned char*)self->battle_, order[i])) continue;
+            if (((ActorView*)actor)->status_->flags_ & 1) continue;
+            recipient = state->GetPartyMemberByIndex(order[i]);
             break;
         }
-        if (!var9) return arg0->unknown_eac_;
-        Struct_ov023_021f2a48_3* var12 = func_0206f4f0(&arg0->unknown_2a0_->unknown_678_, (short)var4);
-        if (!var12) return arg0->unknown_eac_;
-        Struct_ov023_021edc08_5 var13;
-        Struct_ov023_021f2a48_4 var14;
-        Struct_ov023_021edc08_5 var15;
-        func_020e46c4(&var13);
-        const Struct_ov023_021edc08_5& var16 = func_ov023_021ed804(var13, var12);
-        func_ov023_021edf38(&var13, const_cast<Struct_ov023_021edc08_5*>(&var16));
-        var2->unknown_20_ = &var13;
-        char var17[128] = {0};
-        char var18[128] = {0};
-        func_020e46c4(&var14);
-        var14.unknown_0_ = var17;
-        var14.unknown_4_ = var18;
-        func_020dcf7c((short)var5, &var14);
-        var2->unknown_18_ = &var14;
-        char var19[512] = {0};
-        if (var7 >= 0) {
-            func_0200ff1c(var0, var7);
-            sprintf(var19, func_02072a68(&arg0->unknown_5904_, 0x25));
-            func_020e4bf4(&var15, var7);
-            var2->unknown_0_ = &var15;
+        if (!recipient) return self->state_;
+        FoundReward* found = SearchWithComparator0206f4f0(&self->battle_->rewards_, (short)key);
+        if (!found) return self->state_;
+        Words021edf38 words;
+        TextBuffers description;
+        Words021edf38 actorText;
+        Clear12Bytes020e46c4(&words);
+        const Words021edf38& copy = func_ov023_021ed804(words, found);
+        SetWords_021edf38_021edf38(&words, const_cast<Words021edf38*>(&copy));
+        renderer->reward_ = &words;
+        char first[128] = {0};
+        char second[128] = {0};
+        Clear12Bytes020e46c4(&description);
+        description.first_ = first;
+        description.second_ = second;
+        DispatchIfCountPositive020dcf7c((short)text, &description);
+        renderer->description_ = &description;
+        char message[512] = {0};
+        if (combatant >= 0) {
+            GetCombatantWithFlag0x100_0200ff1c(state, combatant);
+            sprintf(message, FindEntryByKey_02072a68(&self->texts_, 0x25));
+            NameText_InitFromPartyMember(&actorText, combatant);
+            renderer->actor_ = &actorText;
         } else {
             char var20[0x164] = {0};
             sprintf(var19, func_02072a68(&arg0->unknown_5904_, 0x11));

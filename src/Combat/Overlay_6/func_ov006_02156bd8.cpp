@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
 #if defined(jpn)
 enum { Enum_ov006_02156bd8_1908 = 0x6f0 };
@@ -99,29 +100,19 @@ struct Struct_ov006_02154614 {
     unsigned char unknown_12bd_;
 };
 
-struct Struct_02020cb8_4;
-struct Struct_02020cb8;
-struct Struct_02020cb8_5;
-struct Struct_02020aec;
-struct Struct_02020cb8_6;
+struct PacRecord;
+struct BackgroundGraphics;
 
-struct Struct_ov003_021594c4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
-};
 
 extern "C" void func_ov023_021dcd90(ItemInfoWindow* window, unsigned char inMenu);
-int Pac_CountFiles(ActiveEntry02046900* pac);
-void Background_Init(List0204af64* background);
+int Pac_CountFiles(PacRecord* pac);
+void Background_Init(BackgroundGraphics* background);
 void Background_SetMapSize(unsigned char* background, int a);
 extern "C" void Background_SetPriority(void* background, int a);
-void Background_SetScroll(Obj0204b5e8* background, int a, int b);
-void* Pac_GetFile(Rec020467f0* pac, int index, void** name, int* size);
+void Background_SetScroll(BackgroundGraphics* background, int a, int b);
+void* Pac_GetFile(PacRecord* pac, int index, void** name, int* size);
 void Background_FlushFile(void* background, char* file);
-void Background_UploadFile(SelfTag0204b3a0* background, char* file);
+void Background_UploadFile(BackgroundGraphics* background, char* file);
 
 extern char data_ov006_021601b6[];
 extern char data_ov006_021601cc[];
@@ -144,20 +135,20 @@ extern "C" ARM void func_ov006_02156bd8(Struct_ov006_02154614* arg0) {
             void* pac;
             unsigned int pacSize;
             loader->GetLoadedFileByID(self->backgroundTask_, &pac, &pacSize);
-            int count = Pac_CountFiles((ActiveEntry02046900*)pac);
+            int count = Pac_CountFiles((PacRecord*)pac);
             BackgroundGraphics background;
-            Background_Init((List0204af64*)&background);
+            Background_Init((BackgroundGraphics*)&background);
             Background_SetMapSize((unsigned char*)&background, 0);
-            background.unk_1c_0_ = 0;
-            background.unk_1c_4_ = 3;
+            background.subScreen_ = 0;
+            background.bgNumber_ = 3;
             Background_SetPriority(&background, 3);
-            Background_SetScroll((Obj0204b5e8*)&background, 0, 0);
+            Background_SetScroll((BackgroundGraphics*)&background, 0, 0);
             for (int i = 0; i < count; i++) {
                 int size;
-                void* file = Pac_GetFile((Rec020467f0*)pac, i, &name, &size);
+                void* file = Pac_GetFile((PacRecord*)pac, i, &name, &size);
                 if (file != 0) {
                     Background_FlushFile(&background, (char*)file);
-                    Background_UploadFile((SelfTag0204b3a0*)&background, (char*)file);
+                    Background_UploadFile((BackgroundGraphics*)&background, (char*)file);
                 }
             }
             var0->RemoveTask(arg0->unknown_ad8_);

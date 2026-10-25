@@ -2,14 +2,11 @@
 #include "Memory/SafeAllocator.h"
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-struct Struct_0201099c_14;
-struct Struct_0205cfd4;
-struct Struct_02020cb8;
-struct Struct_020a9ea4;
+struct Struct020dfc40;
+struct InitTarget0205cfd4;
+struct BackgroundGraphics;
+struct Struct020a9ea4;
 
 struct Struct_ov002_0215505c {
     unsigned char unknown_0_0_ : 1;
@@ -21,18 +18,18 @@ struct Obj021e1318;
 void ClearObj_021e1318(Obj021e1318*);
 void KeyTable_Reset(struct Struct020dfc40 *s);
 extern "C" void func_02074af4(void *state);
-void InitStruct0205cfd4(struct InitTarget0205cfd4 *t);
-void Background_Init(struct List0204af64 *l);
-extern "C" void func_0204c684(void *p);
+void Window_Init(struct InitTarget0205cfd4 *t);
+void Background_Init(struct BackgroundGraphics *l);
+extern "C" void WindowPane_Init(void *p);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 int CopyOutRegion0x5718_02011494(char *obj, void *dst);
-extern "C" char *func_0205ec34(void);
-extern "C" unsigned short func_0206e384(unsigned char *arg0);
-extern "C" short func_0206e3d4(int arg0, int arg1);
-extern "C" void func_ov002_0215b234(char *arg0);
-extern "C" void func_020a9ea4(struct Struct_020a9ea4 *arg0);
-extern "C" void func_ov016_0218b5c0(int arg0, int arg1);
-extern "C" void func_ov002_0215b814(char *arg0);
+extern "C" char *Scenario_GetInstance(void);
+unsigned short BuildBitmask0206e384(unsigned char *obj);
+short GetShortFromTable0206e3d4(int unused, int index);
+extern "C" void func_ov002_0215b234(char *self);
+void ClearStruct020a9ea4(struct Struct020a9ea4 *s);
+extern "C" void func_ov016_0218b5c0(int a, int b);
+extern "C" void func_ov002_0215b814(char *base);
 
 extern "C" unsigned char data_ov002_0216d3ac;
 
@@ -64,12 +61,12 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     for (int var1 = 0; var1 < 5; var1++) {
         *(int *) (arg0 + var1 * 4 + 0x1a6c) = -1;
     }
-    InitStruct0205cfd4((struct InitTarget0205cfd4 *) (self + 0xe20));
+    Window_Init((struct InitTarget0205cfd4 *) (self + 0xe20));
     for (int i = 0; i < 3; i++) {
-        Background_Init((struct List0204af64 *) (self + 0xedc + i * 0x20));
+        Background_Init((struct BackgroundGraphics *) (self + 0xedc + i * 0x20));
     }
-    for (int var3 = 0; var3 < 12; var3++) {
-        func_0204c684(arg0 + 0xf3c + var3 * 0xe0);
+    for (int i = 0; i < 12; i++) {
+        WindowPane_Init(self + 0xf3c + i * 0xe0);
     }
     S32(0x19bc) = 0;
     S32(0x19c0) = 0;
@@ -194,8 +191,8 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     U8(0x1b87)        = 0;
     U8(0x22a8)        = 0;
     U8(0x22aa)        = 0;
-    char *var13           = func_0205ec34();
-    unsigned int var14 = (func_0206e384((unsigned char *) var13) << 16) | 0xffff;
+    char *x           = Scenario_GetInstance();
+    unsigned int bits = (BuildBitmask0206e384((unsigned char *) x) << 16) | 0xffff;
     S32(0x22b0)       = 0;
     for (int var15 = 0; var15 < 0x20; var15++) {
         if (var14 & 1) {
@@ -262,12 +259,12 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     for (int var19 = 0; var19 < 5; var19++) {
         *(int *) (arg0 + var19 * 4 + 0x1ba4) = -1;
     }
-    InitStruct0205cfd4((struct InitTarget0205cfd4 *) (self + 0x2c8 + 0xc00));
+    Window_Init((struct InitTarget0205cfd4 *) (self + 0x2c8 + 0xc00));
     for (int i = 0; i < 3; i++) {
-        Background_Init((struct List0204af64 *) (self + 0x384 + 0xc00 + i * 0x20));
+        Background_Init((struct BackgroundGraphics *) (self + 0x384 + 0xc00 + i * 0x20));
     }
-    for (int var21 = 0; var21 < 12; var21++) {
-        func_0204c684(arg0 + 0x3e4 + 0xc00 + var21 * 0xe0);
+    for (int i = 0; i < 12; i++) {
+        WindowPane_Init(self + 0x3e4 + 0xc00 + i * 0xe0);
     }
     S32(0x1a64) = 0;
     S32(0x1a68) = 0;
@@ -395,8 +392,8 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     U8(0x1cc3)        = 0;
     U8(0x2478)        = 0;
     U8(0x247a)        = 0;
-    char *var31           = func_0205ec34();
-    unsigned int var32 = (func_0206e384((unsigned char *) var31) << 16) | 0xffff;
+    char *x           = Scenario_GetInstance();
+    unsigned int bits = (BuildBitmask0206e384((unsigned char *) x) << 16) | 0xffff;
     S32(0x2480)       = 0;
     for (int var33 = 0; var33 < 0x20; var33++) {
         if (var32 & 1) {

@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern "C" void func_ov001_0215aa5c(void);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern int data_02114e20;
+void DestroyActiveAllocators_0215aa5c(void);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern int g_mainAllocator;
 
 // USA: func_ov017_021bb108
 extern "C" ARM void func_ov017_021bb108(char* arg0) {
@@ -21,14 +21,14 @@ extern "C" ARM void func_ov017_021bb108(char* arg0) {
 			((SafeAllocator*)(arg0 + Enum_ov017_021bb108_292))->Destroy();
 			((SafeAllocator*)(arg0 + Enum_ov017_021bb108_124))->Free(var1);
 		}
-		void* var2 = ((SafeAllocator*)(arg0 + Enum_ov017_021bb108_124))->GetSignedAllocator();
-		((SafeAllocator*)(arg0 + Enum_ov017_021bb108_124))->Destroy();
-		func_02012da4((AllocatorUnion*)&data_02114e20, var2);
+		void* p3 = ((SafeAllocator*)(self + regionalOffset0))->GetSignedAllocator();
+		((SafeAllocator*)(self + regionalOffset0))->Destroy();
+		AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p3);
 	}
-	if (*(SafeAllocator**)(arg0 + Enum_ov017_021bb108_312) == NULL) return;
-	void* var3 = (*(SafeAllocator**)(arg0 + Enum_ov017_021bb108_312))->GetSignedAllocator();
-	if (var3 == NULL) return;
-	(*(SafeAllocator**)(arg0 + Enum_ov017_021bb108_312))->Destroy();
-	func_02012da4((AllocatorUnion*)&data_02114e20, var3);
-	*(SafeAllocator**)(arg0 + Enum_ov017_021bb108_312) = NULL;
+	if (*(SafeAllocator**)(self + regionalOffset2) == NULL) return;
+	void* p4 = (*(SafeAllocator**)(self + regionalOffset2))->GetSignedAllocator();
+	if (p4 == NULL) return;
+	(*(SafeAllocator**)(self + regionalOffset2))->Destroy();
+	AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p4);
+	*(SafeAllocator**)(self + regionalOffset2) = NULL;
 }

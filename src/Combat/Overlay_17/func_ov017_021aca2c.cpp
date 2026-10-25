@@ -2,18 +2,18 @@
 #include "Resource/Script.h"
 #include "Memory/SafeAllocator.h"
 
-extern "C" int func_020d2ff0(const char*);
-struct Struct_ov017_021aca2c {
-    char* unknown_0_;
-    char* unknown_4_;
-    char* unknown_8_;
-    short* unknown_c_;
-    unsigned short unknown_10_;
-    short unknown_12_;
-    unsigned char unknown_14_;
-    unsigned char unknown_15_;
-    unsigned char unknown_16_;
-    unsigned char unknown_17_;
+int STD_GetStringLength(const char*);
+struct ScriptRecord021aca2c {
+    char* first;
+    char* second;
+    char* third;
+    short* values;
+    unsigned short id;
+    short index;
+    unsigned char field_14;
+    unsigned char field_15;
+    unsigned char count;
+    unsigned char loaded;
 };
 struct Struct_ov017_021d83cc {
     SafeAllocator* unknown_0_;
@@ -22,44 +22,44 @@ struct Struct_ov017_021d83cc {
 extern Struct_ov017_021d83cc data_ov017_021d83cc;
 
 // USA: func_ov017_021aca2c
-extern "C" ARM int func_ov017_021aca2c(Script::Parameter* arg0, int arg1) {
-    int var0 = arg0[0].ToInt();
-    if (data_ov017_021d83cc.unknown_4_->unknown_10_ != var0) return 1;
-    int var1 = arg0[1].ToInt();
-    if (data_ov017_021d83cc.unknown_4_->unknown_12_ != var1) return 1;
-    if (var1 < 0) return 1;
-    data_ov017_021d83cc.unknown_4_->unknown_14_ = arg0[2].ToInt();
-    data_ov017_021d83cc.unknown_4_->unknown_15_ = arg0[3].ToInt();
-    const char* var2 = arg0[4].ToString();
-    if (var2) {
-        int var3 = func_020d2ff0(var2);
-        if (var3) {
-            data_ov017_021d83cc.unknown_4_->unknown_0_ = (char*)data_ov017_021d83cc.unknown_0_->Allocate(var3 + 1);
-            memset(data_ov017_021d83cc.unknown_4_->unknown_0_, 0, var3 + 1);
-            memcpy(data_ov017_021d83cc.unknown_4_->unknown_0_, var2, var3);
-            data_ov017_021d83cc.unknown_4_->unknown_0_[var3] = 0;
+extern "C" ARM int func_ov017_021aca2c(Script::Parameter* params, int count) {
+    int id = params[0].ToInt();
+    if (data_ov017_021d83cc.record->id != id) return 1;
+    int index = params[1].ToInt();
+    if (data_ov017_021d83cc.record->index != index) return 1;
+    if (index < 0) return 1;
+    data_ov017_021d83cc.record->field_14 = params[2].ToInt();
+    data_ov017_021d83cc.record->field_15 = params[3].ToInt();
+    const char* text = params[4].ToString();
+    if (text) {
+        int length = STD_GetStringLength(text);
+        if (length) {
+            data_ov017_021d83cc.record->first = (char*)data_ov017_021d83cc.allocator->Allocate(length + 1);
+            memset(data_ov017_021d83cc.record->first, 0, length + 1);
+            memcpy(data_ov017_021d83cc.record->first, text, length);
+            data_ov017_021d83cc.record->first[length] = 0;
         }
     }
-    var2 = arg0[5].ToString();
-    if (var2) {
-        int var4 = func_020d2ff0(var2);
-        if (var4) {
-            data_ov017_021d83cc.unknown_4_->unknown_4_ = (char*)data_ov017_021d83cc.unknown_0_->Allocate(var4 + 1);
-            memset(data_ov017_021d83cc.unknown_4_->unknown_4_, 0, var4 + 1);
-            memcpy(data_ov017_021d83cc.unknown_4_->unknown_4_, var2, var4);
-            data_ov017_021d83cc.unknown_4_->unknown_4_[var4] = 0;
+    text = params[5].ToString();
+    if (text) {
+        int length = STD_GetStringLength(text);
+        if (length) {
+            data_ov017_021d83cc.record->second = (char*)data_ov017_021d83cc.allocator->Allocate(length + 1);
+            memset(data_ov017_021d83cc.record->second, 0, length + 1);
+            memcpy(data_ov017_021d83cc.record->second, text, length);
+            data_ov017_021d83cc.record->second[length] = 0;
         }
     }
-    Script::Parameter* var5 = arg0 + 6;
-    arg0 += 7;
-    var2 = var5->ToString();
-    if (var2) {
-        int var6 = func_020d2ff0(var2);
-        if (var6) {
-            data_ov017_021d83cc.unknown_4_->unknown_8_ = (char*)data_ov017_021d83cc.unknown_0_->Allocate(var6 + 1);
-            memset(data_ov017_021d83cc.unknown_4_->unknown_8_, 0, var6 + 1);
-            memcpy(data_ov017_021d83cc.unknown_4_->unknown_8_, var2, var6);
-            data_ov017_021d83cc.unknown_4_->unknown_8_[var6] = 0;
+    Script::Parameter* lastText = params + 6;
+    params += 7;
+    text = lastText->ToString();
+    if (text) {
+        int length = STD_GetStringLength(text);
+        if (length) {
+            data_ov017_021d83cc.record->third = (char*)data_ov017_021d83cc.allocator->Allocate(length + 1);
+            memset(data_ov017_021d83cc.record->third, 0, length + 1);
+            memcpy(data_ov017_021d83cc.record->third, text, length);
+            data_ov017_021d83cc.record->third[length] = 0;
         }
     }
     if (arg1 - 7) {

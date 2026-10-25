@@ -36,26 +36,26 @@ struct Struct_ov003_0216af14 { unsigned int unknown_0_; unsigned int unknown_4_;
 struct Struct_ov003_0217f578 { struct Struct_ov003_0216af14 unknown_0_[8]; };
 extern struct Struct_ov003_0217f578 data_ov003_0217f578;
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 extern "C" int func_ov003_0215c924(void* p, int scale);
 extern "C" void func_ov003_0215c800(void* p);
-void TailForward02012da4(AllocatorUnion* alloc, void* data);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void ResetGlobalsAndReinit_0216d818(char* obj);
 extern "C" void func_ov003_0216d84c(void* p);
 extern "C" int Window_Update(void* p, unsigned int tick);
 
 // USA: func_ov003_0216af14
-extern "C" ARM int func_ov003_0216af14(Struct_ov003_0216af14_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    if (arg0->unknown_13ec_ & 2) {
-        if (arg0->unknown_4_ == 3) {
-            if (func_ov003_0215c924(arg0->unknown_14_, 1) != 1) return 1;
-            func_ov003_0215c800(arg0->unknown_14_);
-            void* var1 = arg0->unknown_12d4_.GetSignedAllocator();
-            if (var1 != 0) {
-                arg0->unknown_12d4_.Destroy();
-                func_02012da4(&data_02114e20, var1);
+extern "C" ARM int func_ov003_0216af14(Scene_0216af14* scene) {
+    GameState* gs = GameState::GetInstance();
+    if (scene->flags & 2) {
+        if (scene->state == 3) {
+            if (func_ov003_0215c924(scene->field_0x14, 1) != 1) return 1;
+            func_ov003_0215c800(scene->field_0x14);
+            void* p = scene->allocator.GetSignedAllocator();
+            if (p != 0) {
+                scene->allocator.Destroy();
+                AllocatorUnion_Free(&g_mainAllocator, p);
             }
         }
         func_ov003_0216d818((char*)arg0);

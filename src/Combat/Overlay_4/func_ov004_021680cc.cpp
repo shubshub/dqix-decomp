@@ -8,9 +8,9 @@ struct Struct_ov004_021680cc { Struct_ov004_021680cc_2* unknown_0_; };
 #endif
 #include "GameState/GameState.h"
 
-struct Struct_02053f7c;
-extern "C" short func_02086aec(struct Struct_02053f7c* arg0, int arg1);
-extern "C" void func_ov023_021f64a8(void* arg0, int arg1, int arg2, int arg3);
+struct Obj02086aec;
+short Party_CountItem(struct Obj02086aec* obj, int key);
+extern "C" void func_ov023_021f64a8(void* obj, int id, int argE0, int argD8);
 extern "C" void* func_ov011_021849c8(void*);
 extern "C" void* func_ov023_021f6880(void*, int);
 #if defined(jpn)
@@ -19,18 +19,18 @@ extern "C" int func_ov023_021f6f10(void* arg0);
 #else
 extern "C" int func_ov024_021f6f10(void* arg0);
 #endif
-extern "C" int func_ov004_02167908(void* arg0, int arg1);
-struct Struct_0201099c_10;
-struct Struct_0201099c_9 { char unknown_0_[4]; int unknown_4_; };
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
+extern "C" int func_ov004_02167908(void* a, int key);
+struct ItemTable;
+struct Element020de650 { char pad[4]; int field4; };
+struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
+extern "C" void func_ov023_021f809c(void* obj, void* param2);
 
 extern short data_ov004_0216fffa;
 extern short data_ov004_0216fff8;
 
 // USA: func_ov004_021680cc
-extern "C" ARM int func_ov004_021680cc(void* arg0) {
-    short var0 = func_02086aec((struct Struct_02053f7c*)func_02010828(GameState::GetInstance()), 0x5617);
+extern "C" ARM int func_ov004_021680cc(void* a) {
+    short matches = Party_CountItem((struct Obj02086aec*)GameState_GetParty(GameState::GetInstance()), 0x5617);
 #if defined(jpn)
     {
         Struct_ov004_021680cc* var1 = (Struct_ov004_021680cc*)func_ov023_021f6880(func_ov011_021849c8(arg0), 0x2b);
@@ -66,8 +66,8 @@ extern "C" ARM int func_ov004_021680cc(void* arg0) {
         *(int*)(var6 + 0x20) = 0;
         var6[0xc] |= 8;
 
-        struct Struct_0201099c_9* var10 = func_020dedd0((struct Struct_0201099c_10*)var9, var7);
-        if (!var10) continue;
+        struct Element020de650* elem = ItemTable_Find((struct ItemTable*)container, valA);
+        if (!elem) continue;
 
         *(int*)(var6 + 0x20) = var10->unknown_4_;
         var6[0xc] &= ~8;

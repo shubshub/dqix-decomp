@@ -13,7 +13,7 @@ extern "C" void func_0204f138(unsigned char* arg0, unsigned char** arg1, unsigne
                               unsigned char** arg4);
 
 extern "C" void* func_0202ae18(void);
-extern "C" void func_0205ac40(void* arg0, void* arg1);
+extern "C" void SpriteContext_DrawSprite(void* list, void* entry);
 
 struct Struct_ov003_0216d990 {
     unsigned char unknown_0_[0x14];
@@ -61,5 +61,5 @@ extern "C" ARM void func_ov003_0216d990(char* arg0) {
     var1->unknown_14_ = (var10 + 2) << 12;
     var1->unknown_18_ = (var11 - 2) << 12;
 #endif
-    func_0205ac40(arg0 + Enum_ov003_0216d990_4716, var1);
+    SpriteContext_DrawSprite(obj + listOffset, tag);
 }

@@ -5,19 +5,17 @@
 
 struct Struct_020534ac;
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
 
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-struct List0204af64;
-void Background_Init(struct List0204af64* obj);
+struct BackgroundGraphics;
+void Background_Init(struct BackgroundGraphics* obj);
 
 void Background_FlushFile(void* obj, char* str);
 
-struct SelfTag0204b3a0;
-void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
+void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
 
 struct Struct_ov004_02163144 {
@@ -54,15 +52,15 @@ extern "C" ARM int func_ov004_02163144() {
             Struct_ov004_02163144 var6;
 
             ((BackgroundLoader*)((struct List0202fec8*)data4))->GetLoadedFileByID((int)(data_ov004_021707e8.handle), (void**)(&recListHead), (unsigned int*)(&val2Ignored));
-            int count = Pac_CountFiles((struct ActiveEntry02046900*)recListHead);
-            Background_Init((struct List0204af64*)&s);
+            int count = Pac_CountFiles((struct PacRecord*)recListHead);
+            Background_Init((struct BackgroundGraphics*)&s);
             s.lo = 1;
             s.hi = 1;
             for (int i = 0; i < count; i++) {
-                void* rec = Pac_GetFile((struct Rec020467f0*)recListHead, i, &dummyPtr, &dummyOut44);
+                void* rec = Pac_GetFile((struct PacRecord*)recListHead, i, &dummyPtr, &dummyOut44);
                 if (rec) {
                     Background_FlushFile(&s, (char*)rec);
-                    Background_UploadFile((struct SelfTag0204b3a0*)&s, (char*)rec);
+                    Background_UploadFile((struct BackgroundGraphics*)&s, (char*)rec);
                 }
             }
             ((BackgroundLoader*)(var1))->RemoveTask((int)(data_ov004_021707e8.unknown_20_));

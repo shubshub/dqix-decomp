@@ -1,34 +1,20 @@
 #include <globaldefs.h>
-
-struct Struct_0205ba68 {
-    int field0;
-    int field4;
-    int field8;
-    int fieldC;
-    unsigned char field10;
-    int field14;
-    int field18;
-    int field1C;
-    int* field20;
-    int* field24;
-    int* field28;
-    int* field2C;
-};
+#include "Resource/GridCursor.h"
 
 // Main, originally SetupPointerTable0205ba68 (USA 0x0205ba68, EUR 0x0205ba78, JPN 0x0205cdc8)
-ARM void GridCursor_SetDimensions(struct Struct_0205ba68* s, int a, int b, int mode) {
-    s->field8 = a;
-    s->fieldC = b;
-    s->field10 = mode;
-    if (mode == 0) {
-        s->field20 = &s->field8;
-        s->field24 = &s->fieldC;
-        s->field28 = &s->field18;
-        s->field2C = &s->field1C;
-    } else if (mode == 1) {
-        s->field20 = &s->fieldC;
-        s->field24 = &s->field8;
-        s->field28 = &s->field1C;
-        s->field2C = &s->field18;
+ARM void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order) {
+    cursor->columns = columns;
+    cursor->rows = rows;
+    cursor->order = order;
+    if (order == GridCursorOrder_ColumnMajor) {
+        cursor->primaryDimension = &cursor->columns;
+        cursor->secondaryDimension = &cursor->rows;
+        cursor->primaryCursor = &cursor->column;
+        cursor->secondaryCursor = &cursor->row;
+    } else if (order == GridCursorOrder_RowMajor) {
+        cursor->primaryDimension = &cursor->rows;
+        cursor->secondaryDimension = &cursor->columns;
+        cursor->primaryCursor = &cursor->row;
+        cursor->secondaryCursor = &cursor->column;
     }
 }

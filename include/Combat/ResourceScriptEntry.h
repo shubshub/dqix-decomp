@@ -28,4 +28,4 @@ struct Struct_0201099c_2 {
 
 extern Script::OpcodeLookupEntry data_020f0ff8[];
 
-extern "C" int func_02082490(void *arg0, void *arg1, unsigned int arg2, int arg3, int arg4);
+extern "C" int ResourceScriptEntry_LoadLevel(void *output, void *resource, unsigned int size, int selection, int extra);

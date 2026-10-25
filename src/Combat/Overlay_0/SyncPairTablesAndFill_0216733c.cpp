@@ -18,7 +18,7 @@
 
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
-extern "C" int func_020bb7cc(int a, int b, int c);
+extern "C" int NNS_GfdAllocFrmPlttVram(int a, int b, int c);
 
 struct PairBlock0216733c { unsigned int v[2]; };
 struct Foo0216733c {
@@ -47,7 +47,7 @@ extern "C" ARM void func_ov000_0216733c(char* arg0) {
 
     int i;
     for (i = 0; i < *(unsigned char*)(arg0 + 0x5000 + REGION_OFFSET_2); i++) {
-        *(int*)(arg0 + i * 4 + 0x5000 + REGION_OFFSET_3) = func_020bb7cc(mult, 0, 0);
+        *(int*)(arg0 + i * 4 + 0x5000 + REGION_OFFSET_3) = NNS_GfdAllocFrmPlttVram(mult, 0, 0);
     }
 
     VramState_Save(arg0 + REGION_OFFSET_0);

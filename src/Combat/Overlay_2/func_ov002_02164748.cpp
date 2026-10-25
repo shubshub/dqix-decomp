@@ -17,12 +17,12 @@ int Window_GetSelectedIndex(struct Struct_0205c570 *s);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c *s, int a, int b);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
 int GetCountByType02157108(void *base, int id);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
-void *GetPtrField0x2a04_02010828(GameState *gameState);
+void *GameState_GetParty(GameState *gameState);
 void InsertIntoEmptySlot02083834(struct Slots02083834 *s, int v);
 int CountMatchingUntilNegative02083994(struct Slots02083994 *s, int v);
 void AddKeyValueClamped020a095c(struct KeyMap020a095c *m, int key, int val);
@@ -48,8 +48,8 @@ extern "C" ARM void func_ov002_02164748(char *base) {
     if (state == 0) {
         *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)) = GetCountByType02157108(base, *(signed char *) (base + RG(0x1c00 + 0x21, 0x1ae9))) & 7;
         FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + RG(0x2c8 + 0xc00, 0xe20)), 0, 3);
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 1);
-        SetElementFieldC2_0205deb4((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(0xd, 0xe), 0);
+        Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 1);
+        Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(0xd, 0xe), 0);
         func_ov002_02161cf0(base);
         *(int *) (base + RG(0x1000 + 0xbc8, 0x1a90)) = 1;
         func_ov002_0215bba8(base);
@@ -100,17 +100,17 @@ extern "C" ARM void func_ov002_02164748(char *base) {
                         *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x235b;
                     var8 = 1;
                 }
-            } else if (var9 > 0) {
-                var8 = 1;
-                if (*(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)) == 4) {
-                    void *var11 = func_02010828(var4);
-                    func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8)), *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)),
-                                        *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1ab0)), 0);
-                    func_020a095c((struct Struct_ov002_02164748_5 *) var11,
-                                                                      *(short *) (arg0 + RG(0x1c00 + 0x24, 0x1aec)), var8);
-                    SLOT(var6, *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc))) = *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea));
-                    if (FLAG(var5))
-                        *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x236d;
+            } else if (v > 0) {
+                done = 1;
+                if (*(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)) == 4) {
+                    void *party = GameState_GetParty(gs);
+                    func_ov002_0215a7b4(base, *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8)), *(short *) (base + RG(0x1c00 + 0x22, 0x1aea)),
+                                        *(short *) (base + RG(0x1b00 + 0xe8, 0x1ab0)), 0);
+                    AddKeyValueClamped020a095c((struct KeyMap020a095c *) party,
+                                                                      *(short *) (base + RG(0x1c00 + 0x24, 0x1aec)), done);
+                    SLOT(fa, *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc))) = *(short *) (base + RG(0x1c00 + 0x22, 0x1aea));
+                    if (FLAG(a))
+                        *(short *) (base + RG(0x1c00 + 0x28, 0x1af0)) = 0x236d;
                     else
                         *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1af0)) = 0x236c;
                 } else {
@@ -131,44 +131,44 @@ extern "C" ARM void func_ov002_02164748(char *base) {
                     }
                 }
             }
-            if (var8) {
-                int var14 = 0;
-                int var15  = *(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1ae8));
-                if (var15 != *(signed char *) (arg0 + RG(0x1c00 + 0x21, 0x1ae9)) &&
-                    *(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)) == *(short *) (arg0 + RG(0x1c00 + 0x24, 0x1aec)))
-                    var14 = 1;
-                if (*(short *) (arg0 + RG(0x1c00 + 0x22, 0x1aea)) == 0x570a && var15 != 4) {
-                    short var16 = func_02083994(
-                        (struct Struct_ov002_02164748_4 *) func_02053c6c((unsigned char *) var7), 0x570a);
-                    if (var16 == 0 || (var16 == 1 && var14)) {
-                        *(unsigned char *) (*(char **) ((char *) var7 + 0x130) + 8) = 0;
-                        func_ov017_021c9e00(var7->obj3D_.unknown_4_, 0, 0, 1);
+            if (done) {
+                int same = 0;
+                int t20  = *(signed char *) (base + RG(0x1c00 + 0x20, 0x1ae8));
+                if (t20 != *(signed char *) (base + RG(0x1c00 + 0x21, 0x1ae9)) &&
+                    *(short *) (base + RG(0x1c00 + 0x22, 0x1aea)) == *(short *) (base + RG(0x1c00 + 0x24, 0x1aec)))
+                    same = 1;
+                if (*(short *) (base + RG(0x1c00 + 0x22, 0x1aea)) == 0x570a && t20 != 4) {
+                    short cnt = CountMatchingUntilNegative02083994(
+                        (struct Slots02083994 *) GetFieldAt0x150_02053c6c((unsigned char *) b), 0x570a);
+                    if (cnt == 0 || (cnt == 1 && same)) {
+                        *(unsigned char *) (*(char **) ((char *) b + 0x130) + 8) = 0;
+                        func_ov017_021c9e00(b->obj3D_.actorIndex_, 0, 0, 1);
                     }
                 }
-                if (*(short *) (arg0 + RG(0x1c00 + 0x24, 0x1aec)) == 0x570a) {
-                    short var17 = func_02083994((struct Struct_ov002_02164748_4 *) var6, 0x570a);
-                    if (var17 == 0 || (var17 == 1 && var14)) {
-                        *(unsigned char *) (*(char **) ((char *) var5 + 0x130) + 8) = 0;
-                        func_ov017_021c9e00(var5->obj3D_.unknown_4_, 0, 0, 1);
+                if (*(short *) (base + RG(0x1c00 + 0x24, 0x1aec)) == 0x570a) {
+                    short cnt = CountMatchingUntilNegative02083994((struct Slots02083994 *) fa, 0x570a);
+                    if (cnt == 0 || (cnt == 1 && same)) {
+                        *(unsigned char *) (*(char **) ((char *) a + 0x130) + 8) = 0;
+                        func_ov017_021c9e00(a->obj3D_.actorIndex_, 0, 0, 1);
                     }
                 }
             }
-            *(unsigned int *) (arg0 + RG(0x2000 + 0x47c, 0x22ac)) &= ~4;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80)) & 0xff, 1);
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1af2))          = -1;
-            *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80))           = RG(0x26, 0x29);
-            *(int *) (arg0 + RG(0x1000 + 0xbbc, 0x1a84))           = 5;
-            *(int *) (arg0 + RG(0x1000 + 0xbc0, 0x1a88))           = 0;
-            *(unsigned char *) (arg0 + RG(0x2000 + 0x478, 0x22a8)) = 1;
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + RG(0x1b00 + 0xf4, 0x1abc)) = -1;
-            *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80))  = RG(9, 0xa);
-            func_ov002_02161cf0(arg0);
-            func_0205deb4((struct Struct_ov002_02155960_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 0);
-            func_0205dee8((struct Struct_ov002_02164748_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa));
-            *(int *) (arg0 + RG(0x1000 + 0xbc8, 0x1a90)) = 1;
-            *(int *) (arg0 + RG(0x1000 + 0xbcc, 0x1a94)) = 1;
-            func_ov002_0215b9a4(arg0, *(int *) (arg0 + RG(0x1000 + 0xbb8, 0x1a80)) & 0xff, 0);
+            *(unsigned int *) (base + RG(0x2000 + 0x47c, 0x22ac)) &= ~4;
+            func_ov002_0215b9a4(base, *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80)) & 0xff, 1);
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1af2))          = -1;
+            *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80))           = RG(0x26, 0x29);
+            *(int *) (base + RG(0x1000 + 0xbbc, 0x1a84))           = 5;
+            *(int *) (base + RG(0x1000 + 0xbc0, 0x1a88))           = 0;
+            *(unsigned char *) (base + RG(0x2000 + 0x478, 0x22a8)) = 1;
+        } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
+            *(short *) (base + RG(0x1b00 + 0xf4, 0x1abc)) = -1;
+            *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80))  = RG(9, 0xa);
+            func_ov002_02161cf0(base);
+            Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa), 0);
+            SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + RG(0x2c8 + 0xc00, 0xe20)), RG(9, 0xa));
+            *(int *) (base + RG(0x1000 + 0xbc8, 0x1a90)) = 1;
+            *(int *) (base + RG(0x1000 + 0xbcc, 0x1a94)) = 1;
+            func_ov002_0215b9a4(base, *(int *) (base + RG(0x1000 + 0xbb8, 0x1a80)) & 0xff, 0);
         }
     }
 }

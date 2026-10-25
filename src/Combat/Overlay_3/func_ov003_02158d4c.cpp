@@ -3,8 +3,8 @@
 #include "NitroSDK/Cache.h"
 #include "std_library_functions.h"
 
-extern "C" int func_02094a00(void);
-extern "C" void func_02094ab0(void);
+int FontBankLoader_GetInstance(void);
+extern "C" void FontBankLoader_CancelLoads(void);
 struct Outer020e28dc;
 int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
 struct Obj020e25e8;
@@ -17,13 +17,13 @@ struct Cont0205d274;
 void Window_FlushLayers(struct Cont0205d274* obj);
 struct Obj0205d2bc;
 void Window_TransferLayers(struct Obj0205d2bc* obj);
-extern "C" void func_0205d048(void* obj);
+extern "C" void Window_Destroy(void* obj);
 extern "C" int LoadToMainBG1CharacterData(int src, int offset, unsigned int size);
 extern "C" int LoadToMainBG1ScreenData(int src, int offset, unsigned int size);
-extern "C" int func_020421a0(void);
-extern "C" void func_02043124(void* arg0);
-extern "C" void func_02043204(char* arg0);
-extern "C" void* __clear(void* arg0, int arg1);
+int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Stop(void* self);
+void MessageSystem_Reset(char* obj);
+extern "C" void* __clear(void* dst, int count);
 
 struct Struct_ov003_02158d4c {
     SafeAllocator unknown_0_;
@@ -40,9 +40,9 @@ struct Struct_ov003_02158d4c {
 };
 
 // USA: func_ov003_02158d4c
-extern "C" ARM void func_ov003_02158d4c(Struct_ov003_02158d4c* arg0) {
-    func_02094a00();
-    func_02094ab0();
+extern "C" ARM void func_ov003_02158d4c(Screen02158d4c* self) {
+    FontBankLoader_GetInstance();
+    FontBankLoader_CancelLoads();
 
     if (arg0->unknown_570_ != NULL && func_020e28dc((struct Struct_020e28dc*)arg0->unknown_570_)) {
         func_020e25e8(arg0->unknown_570_);
@@ -56,7 +56,7 @@ extern "C" ARM void func_ov003_02158d4c(Struct_ov003_02158d4c* arg0) {
     Window_ClearLayers((struct Cont0205d1e0*)self->list0f4);
     Window_FlushLayers((struct Cont0205d274*)self->list0f4);
     Window_TransferLayers((struct Obj0205d2bc*)self->list0f4);
-    func_0205d048(self->list0f4);
+    Window_Destroy(self->list0f4);
 
     arg0->unknown_28_.Reset();
     void* var1 = arg0->unknown_28_.Allocate(0x800);
@@ -65,9 +65,9 @@ extern "C" ARM void func_ov003_02158d4c(Struct_ov003_02158d4c* arg0) {
     LoadToMainBG1CharacterData((int)var1, 0, 0x20);
     LoadToMainBG1ScreenData((int)var1, 0, 0x800);
 
-    void* var2 = (void*)func_020421a0();
-    func_02043124(var2);
-    func_02043204((char*)var2);
+    void* g = (void*)MessageSystem_GetInstance();
+    MessageSystem_Stop(g);
+    MessageSystem_Reset((char*)g);
 
     arg0->unknown_7c_ = 0;
     arg0->unknown_57c_ = 0;

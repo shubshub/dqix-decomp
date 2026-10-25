@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 extern "C" long long func_0200cf24(long long a, long long b);
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" int func_02001aec(const void* arg0, const void* arg1, int arg2);
-extern "C" int func_ov031_0222157c(unsigned int* arg0, const unsigned char* arg1, int arg2);
-extern "C" void func_ov031_0222127c(const unsigned char* arg0, const unsigned char* arg1, unsigned char* arg2);
-extern "C" void func_ov031_02221ac8(const unsigned int* arg0, int arg1, const unsigned char* arg2, unsigned char* arg3);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int length);
+extern "C" int memcmp(const void* a, const void* b, int n);
+extern "C" int func_ov031_0222157c(unsigned int* rk, const unsigned char* cipherKey, int keyBits);
+extern "C" void func_ov031_0222127c(const unsigned char* a, const unsigned char* b, unsigned char* out);
+extern "C" void func_ov031_02221ac8(const unsigned int* rk, int Nr, const unsigned char* ct, unsigned char* pt);
 
 #define BSWAP64(x) \
     ((((x) & 0x00000000000000ffULL) << 56) | \
@@ -75,9 +75,9 @@ extern "C" THUMB int func_ov031_022210c4(Struct_ov031_02220f0c* arg0, const unsi
                 *var9 = var1[1];
             } while (--var5 > 0);
         }
-    } while (--var6 >= 0);
-    if (func_02001aec(var3, var1, 8) != 0) {
-        var8 = 0;
+    } while (--j >= 0);
+    if (memcmp(iv, b, 8) != 0) {
+        ret = 0;
     }
     return var8;
 }

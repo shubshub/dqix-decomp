@@ -7,14 +7,13 @@ struct Struct_ov000_0215440c_2;
 struct Struct_ov000_0215440c;
 struct Struct_02033834;
 struct Vector3i;
-extern "C" struct Struct_ov000_0215440c_2* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" struct Struct_ov000_0215440c* func_ov000_021600f8(struct Struct_ov000_0215440c* arg0, int arg1);
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_020100bc(GameState* arg0);
-extern "C" int func_0202e7f0(void* arg0);
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
-extern "C" void func_0203db34(unsigned char* arg0, int arg1, int arg2, int arg3);
-extern "C" void* __clear(void* arg0, int arg1);
+struct List02160094* GetNodeAtIndex02160094(struct List02160094* list, int idx);
+struct List021600f8* GetNodeAtIndex021600f8(struct List021600f8* list, int idx);
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+int GetField0x70_0202e7f0(void* obj);
+void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+void StoreVec3AtField0x50_0203db34(unsigned char* obj, int x, int y, int z);
+extern "C" void* __clear(void* dst, int count);
 
 static inline fix32_t inline_02061c04_5(fix32_t arg0, fix32_t arg1) {
     return (int)(((long long)arg0 * arg1 + 0x800) >> 12);
@@ -97,10 +96,10 @@ extern "C" ARM int func_ov025_021e514c(struct Struct_ov025_021e514c_2* arg0, str
         if (var9) var7 = 2; else var7 = 1;
         break;
     case 3: {
-        void* var14 = func_020100bc(var0);
-        if (var14) {
-            Matrix4x3 var15 = RotationMatrixY(func_0202e7f0(var14));
-            Mat4x3_ApplyToVector(&arg0->unknown_14_, &var15, &var5);
+        void* target = bs->GetCamera();
+        if (target) {
+            Matrix4x3 m = RotationMatrixY(GetField0x70_0202e7f0(target));
+            Mat4x3_ApplyToVector(&self->vec, &m, &result);
         }
         break;
     }
@@ -159,25 +158,25 @@ extern "C" ARM int func_ov025_021e514c(struct Struct_ov025_021e514c_2* arg0, str
         break;
     }
     case 8: {
-        int* var29 = (int*)func_020100bc(var0);
-        if (!var29) return 1;
-        Struct_ov025_021e514c_4 var30;
-        *(Vector3i*)((int*)&var30.unknown_24_) = *(Vector3i const*)(var29 + 4);
-        *(Vector3i*)((int*)&var30.unknown_18_) = *(Vector3i const*)(var29 + 1);
-        Vector3fix_Subtract(&var30.unknown_18_, &var30.unknown_24_, &var30.unknown_c_);
-        unsigned char var31 = arg0->unknown_a_;
-        if (var31 != 0 && var31 < 4) {
-            unsigned char var32 = var31 - 1;
-            var30.unknown_0_.x = arg0->unknown_14_.x;
-            var30.unknown_0_.y = arg0->unknown_14_.y;
-            var30.unknown_0_.z = arg0->unknown_14_.z;
-            fix32_t* var33 = (fix32_t*)&var30.unknown_0_;
-            var33[var32] = inline_02061c04_5(var33[var32], -0x1000);
-            Vector3fix_Normalize(&var30.unknown_c_, &var30.unknown_c_);
-            Vector3fixMultiplyScalar(&var30.unknown_c_, var33[var32], &var30.unknown_c_);
-            var5.x = var30.unknown_18_.x + var30.unknown_c_.x;
-            var5.y = var30.unknown_18_.y + var30.unknown_c_.y;
-            var5.z = var30.unknown_18_.z + var30.unknown_c_.z;
+        int* tgt = (int*)bs->GetCamera();
+        if (!tgt) return 1;
+        Case8Local021e514c L;
+        *(Vector3i*)((int*)&L.b) = *(Vector3i const*)(tgt + 4);
+        *(Vector3i*)((int*)&L.a) = *(Vector3i const*)(tgt + 1);
+        Vector3fix_Subtract(&L.a, &L.b, &L.diff);
+        unsigned char axis = self->idxB;
+        if (axis != 0 && axis < 4) {
+            unsigned char k = axis - 1;
+            L.tmp.x = self->vec.x;
+            L.tmp.y = self->vec.y;
+            L.tmp.z = self->vec.z;
+            fix32_t* arr = (fix32_t*)&L.tmp;
+            arr[k] = FxMul(arr[k], -0x1000);
+            Vector3fix_Normalize(&L.diff, &L.diff);
+            Vector3fixMultiplyScalar(&L.diff, arr[k], &L.diff);
+            result.x = L.a.x + L.diff.x;
+            result.y = L.a.y + L.diff.y;
+            result.z = L.a.z + L.diff.z;
         } else {
             var5.x = var30.unknown_24_.x + inline_02061c04_5(var30.unknown_c_.x, arg0->unknown_14_.x);
             var5.y = var30.unknown_24_.y + inline_02061c04_5(var30.unknown_c_.y, arg0->unknown_14_.y);

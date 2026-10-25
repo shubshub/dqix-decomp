@@ -2,9 +2,6 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0201c1c8 {
     int unknown_0_;
@@ -14,7 +11,7 @@ struct Struct_0201c1c8 {
     } unknown_4_;
 };
 
-extern "C" void* func_0205ec34(void);
+extern "C" void* Scenario_GetInstance(void);
 
 struct Struct_0205faf4_3 {
     unsigned char unknown_0_[0x2CC];
@@ -48,18 +45,18 @@ extern Struct_02109404_2 data_02109404;
 extern Struct_02109418 data_02109418;
 
 // USA: func_02094fe4
-extern "C" ARM int func_02094fe4(struct Struct_0201c1c8* arg0, int arg1) {
-    int var0 = ((Script::Parameter*)&arg0[0])->ToInt();
-    int var1 = ((Script::Parameter*)&arg0[1])->ToInt();
-    int var2 = ((Script::Parameter*)&arg0[2])->ToInt();
-    int var3 = ((Script::Parameter*)&arg0[3])->ToInt();
-    int var4 = ((Script::Parameter*)&arg0[4])->ToInt();
-    int var5 = ((Script::Parameter*)&arg0[5])->ToInt();
-    void* var6 = func_0205ec34();
-    int var7 = ((Script::Parameter*)&arg0[6])->ToInt();
-    if (var7 >= 0) {
-        int var8 = (func_0206e120((struct Struct_0205faf4_3*)var6, var7) == 3);
-        if (var8 == 0) {
+extern "C" ARM int func_02094fe4(struct Variant02030b0c* arr, int b) {
+    int p0 = ((Script::Parameter*)&arr[0])->ToInt();
+    int p1 = ((Script::Parameter*)&arr[1])->ToInt();
+    int p2 = ((Script::Parameter*)&arr[2])->ToInt();
+    int p3 = ((Script::Parameter*)&arr[3])->ToInt();
+    int p4 = ((Script::Parameter*)&arr[4])->ToInt();
+    int p5 = ((Script::Parameter*)&arr[5])->ToInt();
+    void* nibbles = Scenario_GetInstance();
+    int p6 = ((Script::Parameter*)&arr[6])->ToInt();
+    if (p6 >= 0) {
+        int ok = (GetPackedNibbleField((struct PackedNibbleArray0206e120*)nibbles, p6) == 3);
+        if (ok == 0) {
             return 0;
         }
     }

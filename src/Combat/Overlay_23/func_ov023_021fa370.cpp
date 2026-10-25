@@ -9,7 +9,7 @@ struct Struct_021f6bb8 { int unknown_0_; int unknown_4_; };
 extern "C" int func_ov023_021f6bb8(struct Struct_021f6bb8* arg0);
 extern "C" void func_ov023_021f6bb0(void* arg0, int arg1);
 
-extern "C" int func_020100a8(GameState* arg0);
+extern int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 extern "C" void* __clear(void* arg0, int arg1);
 
@@ -62,14 +62,14 @@ extern "C" ARM int func_ov023_021fa370(struct Struct_ov023_021fa370_2* arg0, voi
     var1 = func_ov023_021f6bb8((struct Struct_021f6bb8*)var0);
     if (var1 >= 0) goto earlyOut;
 
-    var2 = (int)BackgroundLoader::GetInstance();
-    var3 = 0;
-    if (arg0->unknown1_2c_ == 1) {
-        GameState* var6 = GameState::GetInstance();
-        int var7 = func_020100a8(var6);
-        struct Struct_ov023_021fa370_4* var8 = (struct Struct_ov023_021fa370_4*)var6->GetPartyMemberByIndex(var7);
-        if (var8 != 0) {
-            var3 = var8->unknown_150_->unknown_49c_0_;
+    handle = (int)BackgroundLoader::GetInstance();
+    zeroPad = 0;
+    if (obj->kind == 1) {
+        GameState* bs = GameState::GetInstance();
+        int id = GameState_GetProtagonistIndex(bs);
+        struct Combatant021fa370* combatant = (struct Combatant021fa370*)bs->GetPartyMemberByIndex(id);
+        if (combatant != 0) {
+            zeroPad = combatant->inner->flagBit;
         }
     } else if (arg0->unknown1_2c_ == 2) {
     } else if (arg0->unknown1_2c_ == 3) {

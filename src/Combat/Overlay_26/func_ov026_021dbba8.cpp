@@ -38,11 +38,11 @@ struct Struct_ov000_02160da0 {
     SafeAllocator unknown_774c_;
 };
 
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" int func_02033b88(Struct_02010604* arg0, int arg1);
-extern "C" void func_020100c4(GameState* arg0, int arg1);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" void func_0202e694(void* arg0, int* arg1);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+int SetByte0xbeShiftPrev(Bytes02033b88* p, int val);
+void GameState_SetCamera(GameState* gs, int value);
+void ClearCombatantSlot_0200fd48(GameState* gs, int id);
+void ApplyVec3Tail_0202e694(void* obj, int* vec);
 
 extern "C" {
 void* func_02057924();
@@ -70,15 +70,15 @@ extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* arg0) {
         }
     }
 
-    Struct_020a212c_2* var4 = (Struct_020a212c_2*)func_020100bc(var0);
-    Struct_020a212c_2* var5 = func_ov000_02160f14(arg0);
-    Vector3i var6 = var4->unknown_70_;
-    func_ov000_0216d370(var5, 1, 1, 1);
-    var5->unknown_10_ = var4->unknown_10_;
-    func_0202e694(var5, &var6.x);
-    var5->unknown_4_ = var4->unknown_4_;
-    func_020100c4(var0, (int)func_ov000_02160f14(arg0));
-    func_0200fd48(var0, 0xcf);
+    BattleCamera* saved = (BattleCamera*)gs->GetCamera();
+    BattleCamera* cam = func_ov000_02160f14(self);
+    Vector3i offset = saved->offset;
+    func_ov000_0216d370(cam, 1, 1, 1);
+    cam->target = saved->target;
+    ApplyVec3Tail_0202e694(cam, &offset.x);
+    cam->eye = saved->eye;
+    GameState_SetCamera(gs, (int)func_ov000_02160f14(self));
+    ClearCombatantSlot_0200fd48(gs, 0xcf);
 
     var1->RemoveTask(arg0->unknown_7714_);
     var1->RemoveTask(arg0->unknown_771e_);

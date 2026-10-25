@@ -40,35 +40,35 @@ struct Struct_ov017_021d82fc_5 {
 struct Struct_02015ef4 {
     unsigned int unknown_0_[3];
 };
-struct Struct_020ad61c;
-struct Struct_020ad61c_2;
-extern "C" Zone3D* func_02012fe4(void);
-extern "C" void func_020332ac(Struct_020ad61c_3*);
-extern "C" void func_020adda4(Struct_020ad61c_3*);
-extern "C" void func_020adaac(Struct_020ad61c_3*);
-extern "C" void func_020ae398(Struct_020ad61c*);
-extern "C" void func_020ae3f4(Struct_020ad61c_2*);
-extern "C" int func_02046b24(Struct_02015438**);
-extern "C" void func_020397c0(void*);
-extern "C" int func_0202ec84(void*, Struct_02015ef4*, int*, int*);
-extern "C" int func_02018fbc(Zone3D*, Struct_02015ef4*);
-extern "C" int func_02046b08(void**);
+struct Entity020AE398;
+struct Obj020ae3f4;
+extern "C" Zone3D* Zone3D_GetInstance(void);
+extern "C" void func_020332ac(Trajectory020ad61c*);
+extern "C" void func_020adda4(Trajectory020ad61c*);
+extern "C" void func_020adaac(Trajectory020ad61c*);
+void SubtractHeightOffset020ae398(Entity020AE398*);
+void UpdateFallMotion020ae3f4(Obj020ae3f4*);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+void GameObject_EnableControl(void*);
+int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" int Zone3D_GetGroundHeight(Zone3D*, Vec3copy0202ec84*);
+int IsField0Null_02046b08(void**);
 extern "C" void func_ov017_021a72f4(GameResources*, int);
 extern short data_020e9450[];
 extern Struct_ov017_021d82fc_5 data_ov017_021d82fc;
 
 // USA: func_020ad61c
-extern "C" ARM void func_020ad61c(Struct_020ad61c_3* arg0) {
-    Zone3D* var0;
-    int var1;
-    int var2;
-    GameState* var3 = GameState::GetInstance();
-    var0 = func_02012fe4();
-    int var4 = arg0->unknown_144_;
-    int var5 = arg0->unknown_148_;
-    func_020332ac(arg0);
-    func_020adda4(arg0);
-    switch (arg0->unknown_13c_) {
+extern "C" ARM void func_020ad61c(Trajectory020ad61c* object) {
+    Zone3D* world;
+    int touchX;
+    int touchY;
+    GameState* game = GameState::GetInstance();
+    world = Zone3D_GetInstance();
+    int saved144 = object->saved144;
+    int saved148 = object->saved148;
+    func_020332ac(object);
+    func_020adda4(object);
+    switch (object->state) {
     case 0:
         func_020adaac(arg0);
         *(Vector3i*)((char*)var0 + Enum_020ad61c_10168) = arg0->unknown_0_.position_;
@@ -112,26 +112,26 @@ extern "C" ARM void func_020ad61c(Struct_020ad61c_3* arg0) {
         arg0->unknown_164_.z += 0xe0000;
         arg0->unknown_174_.z += 0xe0000;
     }
-    arg0->unknown_0_.position_ = var6;
-    GameResources* var7 = GetGameResources();
-    void* var8;
-    int var9;
-    Struct_02015438** var10 = (Struct_02015438**)var7->unknown_ptr_array_36fc[0];
-    GameObject* var11 = var3->GetUnknownGameObject();
-    if (var11 && func_02046b24(var10) != 3) {
-        var11->obj3D_.position_ = arg0->unknown_0_.position_;
-        func_020397c0(var11);
+    object->object.position_ = position;
+    GameResources* scene = GetGameResources();
+    void* camera;
+    int groundedHit;
+    HeadNode02046b24** head = (HeadNode02046b24**)scene->fieldTaskQueue_;
+    GameObject* actor = game->GetUnknownGameObject();
+    if (actor && GetHeadNodeIdOrMinusOne(head) != 3) {
+        actor->obj3D_.position_ = object->object.position_;
+        GameObject_EnableControl(actor);
     }
-    var8 = func_020100bc(var3);
-    int var12 = 0;
-    var9 = 0;
-    int var13[3];
-    int var14[3];
-    Struct_02015ef4 var15[3] = {};
-    var15[0] = *(Struct_02015ef4*)&arg0->unknown_0_.position_;
-    var15[1] = *(Struct_02015ef4*)&arg0->unknown_164_;
-    var15[2] = *(Struct_02015ef4*)&arg0->unknown_174_;
-    for (int var16 = 0; var16 < 3; var16++) func_0202ec84(var8, &var15[var16], &var13[var16], &var14[var16]);
+    camera = game->GetCamera();
+    int directHit = 0;
+    groundedHit = 0;
+    int screenX[3];
+    int screenY[3];
+    Vec3copy0202ec84 points[3] = {};
+    points[0] = *(Vec3copy0202ec84*)&object->object.position_;
+    points[1] = *(Vec3copy0202ec84*)&object->firstPosition;
+    points[2] = *(Vec3copy0202ec84*)&object->secondPosition;
+    for (int i = 0; i < 3; i++) Camera_WorldToScreen(camera, &points[i], &screenX[i], &screenY[i]);
     if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 10) {
         var1 = g_touchInput.prevX_;
         var2 = g_touchInput.prevY_;
@@ -143,13 +143,13 @@ extern "C" ARM void func_020ad61c(Struct_020ad61c_3* arg0) {
             break;
         }
     }
-    if (!var12) {
-        for (int var18 = 0; var18 < 3; var18++) {
-            var15[var18].unknown_0_[1] = func_02018fbc(var0, &var15[var18]);
-            func_0202ec84(var8, &var15[var18], &var13[var18], &var14[var18]);
-            if (var13[var18] - 16 < var1 && var1 < var13[var18] + 16 &&
-                var14[var18] - 24 < var2 && var2 < var14[var18] + 8) {
-                var9 = 1;
+    if (!directHit) {
+        for (int i = 0; i < 3; i++) {
+            points[i].v[1] = Zone3D_GetGroundHeight(world, &points[i]);
+            Camera_WorldToScreen(camera, &points[i], &screenX[i], &screenY[i]);
+            if (screenX[i] - 16 < touchX && touchX < screenX[i] + 16 &&
+                screenY[i] - 24 < touchY && touchY < screenY[i] + 8) {
+                groundedHit = 1;
                 break;
             }
         }

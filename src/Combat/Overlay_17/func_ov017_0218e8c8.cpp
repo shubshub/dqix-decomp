@@ -25,16 +25,16 @@ struct Struct_ov017_0218e8c8_2 {
     Struct_ov017_0218e8c8* unknown_3b30_;
 };
 
-extern "C" char* func_02012fe4(void);
-extern "C" int func_020981e4(int, int);
-extern "C" unsigned short func_ov017_021b8480(void* arg0);
-extern "C" unsigned char* func_ov017_021b8478(void* arg0);
-extern "C" int func_ov017_02191b58(void*, int);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_ov017_0218eafc(Struct_ov017_0218e8c8_2* arg0, int arg1);
-extern "C" int func_02039d68(unsigned char* arg0);
-extern "C" int func_02032fdc(void* arg0, int arg1, int arg2);
-extern "C" void func_ov017_0218dba0(int arg0);
+extern "C" char* Zone3D_GetInstance(void);
+int IsIdInRange020981e4(int, int);
+unsigned short GetField6b4_021b8480(void* obj);
+extern "C" unsigned char* func_ov017_021b8478(void* obj);
+int GetByteAtPtrOrZero_02191b58(void*, int);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+extern "C" void func_ov017_0218eafc(OvCtx0218e8c8* ov, int idx);
+int CheckFlag0x1ceBit2Set_02039d68(unsigned char* obj);
+extern "C" int func_02032fdc(void* obj, int a, int b);
+extern "C" void func_ov017_0218dba0(int id);
 
 // USA: func_ov017_0218e8c8
 extern "C" ARM void func_ov017_0218e8c8(Struct_ov017_0218e8c8_2* arg0, int arg1, int arg2) {
@@ -43,11 +43,11 @@ extern "C" ARM void func_ov017_0218e8c8(Struct_ov017_0218e8c8_2* arg0, int arg1,
 #else
  enum {Enum_ov017_0218e8c8_2112=0x840};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = func_02012fe4();
-    int var2 = 0;
-    if (func_020981e4((int)(var1 + Enum_ov017_0218e8c8_2112), arg1)) {
-        var2 = 1;
+    GameState* gs = GameState::GetInstance();
+    char* base = Zone3D_GetInstance();
+    int inRange = 0;
+    if (IsIdInRange020981e4((int)(base + regionalOffset0), id)) {
+        inRange = 1;
     }
 
     unsigned char* var3 = NULL;

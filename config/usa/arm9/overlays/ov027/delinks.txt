@@ -24,7 +24,7 @@ src/NitroSDK/Overlay_27/func_ov027_021d96c4.cpp:
     complete
     .text start:0x021d96c4 end:0x021d9704
 
-src/NitroSDK/Overlay_27/func_ov027_021d8a40.cpp:
+src/Combat/Overlay_28/Trans_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a68
 
@@ -192,7 +192,7 @@ src/NitroSDK/Overlay_27/func_ov027_021d9e04.cpp:
     complete
     .text start:0x021d9e04 end:0x021d9e1c
 
-src/NitroSDK/Overlay_27/func_ov027_021db3c0.cpp:
+src/Combat/Overlay_23/FormatAndDispatchValue_021db3c0.cpp:
     complete
     .text start:0x021db3c0 end:0x021db430
 

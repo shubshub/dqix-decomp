@@ -8,20 +8,20 @@ extern "C" void func_0205de24(struct Struct_0205de24_2* arg0, unsigned char arg1
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_020421a0(void);
-extern "C" void func_020e4bf4(void* arg0, int arg1);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+int MessageSystem_GetInstance(void);
+void NameText_InitFromPartyMember(void* obj, int combatantId);
 
-struct Struct_02046574_2;
-extern "C" void func_02046574(struct Struct_02046574_2* arg0, int arg1, char* arg2);
+struct Obj02046574;
+void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* str);
 
-extern "C" void func_02046380(void* arg0);
-extern "C" void func_02046608(int arg0, int arg1, void* arg2, void* arg3, int arg4, int arg5, int arg6);
+extern "C" void func_02046380(void* global);
+extern "C" void MessageSystem_FormatText(int a, int b, void* c, void* d, int e, int f, int g);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
-extern "C" void func_02042058(char*, const char*);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
+void Text_Append(char*, const char*);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 struct Struct_ov023_021ed4b8 { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; };
@@ -73,39 +73,39 @@ extern "C" ARM void func_ov023_021ed4b8(char* arg0) {
 
 #if defined(jpn)
     int key = KeyTable_Get((struct Container020e0310*)(obj + 4), 0x64);
-    AppendString02042058(*(char**)(obj + 0x1c), (char*)key);
+    Text_Append(*(char**)(obj + 0x1c), (char*)key);
     GameState* bs = GameState::GetInstance();
 #else
     GameState* var6 = GameState::GetInstance();
 #endif
 
-    int var7 = func_020100a8(var6);
-    GameObject* var8 = func_0200ff1c(var6, var7);
-    if (var8 == NULL) return;
+    int id = GameState_GetProtagonistIndex(bs);
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(bs, id);
+    if (combatant == NULL) return;
 
-    int var9 = func_020421a0();
-    func_02046380((void*)var9);
+    int g = MessageSystem_GetInstance();
+    func_02046380((void*)g);
 
 #if defined(jpn)
-    func_02046574((struct Struct_02046574_2*)var9, 0, *(char**)((char*)var8 + 0x134));
-    func_02046574((struct Struct_02046574_2*)var9, 1, var4 + 0xc);
+    MessageSystem_SetStringArgument((struct Obj02046574*)g, 0, *(char**)((char*)combatant + 0x134));
+    MessageSystem_SetStringArgument((struct Obj02046574*)g, 1, elem + 0xc);
 
 #else
-    char var10[0xc];
-    int var11 = var8->obj3D_.unknown_4_;
-    func_020e4bf4(var10, var11);
+    char localbuf[0xc];
+    int combatantId = combatant->obj3D_.actorIndex_;
+    NameText_InitFromPartyMember(localbuf, combatantId);
 
-    *(void**)((char*)var9 + 0x0) = var10;
-    func_02046574((struct Struct_02046574_2*)var9, 1, var4 + 0xc);
+    *(void**)((char*)g + 0x0) = localbuf;
+    MessageSystem_SetStringArgument((struct Obj02046574*)g, 1, elem + 0xc);
 
     int key = KeyTable_Get((struct Container020e0310*)(obj + 0x4), 0x64);
-    func_02046608(g, 1, (void*)(long)key, *(void**)(obj + 0x1c), 0xe3, 0, 1);
+    MessageSystem_FormatText(g, 1, (void*)(long)key, *(void**)(obj + 0x1c), 0xe3, 0, 1);
 
 #endif
 #if defined(jpn)
-    func_0205d304(arg0 + 0xc4, *(void**)(arg0 + 0x1c), 0, 0, 0, 0, 0);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0);
 #else
-    func_0205d304(arg0 + 0xc4, *(void**)(arg0 + 0x1c), 0, 0, 0, 0, 0, 1);
+    Window_OpenPane(obj + 0xc4, *(void**)(obj + 0x1c), 0, 0, 0, 0, 0, 1);
 #endif
 
 }

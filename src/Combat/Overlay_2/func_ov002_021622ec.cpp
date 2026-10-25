@@ -5,7 +5,6 @@
 
 #if defined(jpn)
 #define RG(u, j) (j)
-#define func_0205ec34 func_0205ff20
 #else
 #define RG(u, j) (u)
 #endif
@@ -21,15 +20,15 @@ int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 void SePlayer_Play(struct SePlayer *o, int a, int b);
 int CheckFlagOrThreshold_02161b48(char *base, int a);
 void InitBattleTag0215bf34(char *base);
-int GetField0x3acValue_020100a8(GameState *gs);
-int TestBitInByteArray_0206dfb0(int unused, unsigned char *arr, int index);
-extern "C" char *func_0205ec34(void);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_0215c0f8(void *arg0);
-extern "C" void func_ov002_02161a8c(int arg0);
-extern "C" void func_ov017_021c05f4(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov023_021dca88(void *arg0);
-extern "C" void func_02012fe4(void);
+int GameState_GetProtagonistIndex(GameState *gs);
+int Scenario_TestFlag(int unused, unsigned char *arr, int index);
+extern "C" char *Scenario_GetInstance(void);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_0215c0f8(void *base);
+extern "C" void func_ov002_02161a8c(int w);
+extern "C" void func_ov017_021c05f4(int a, int b, int c, int d);
+extern "C" void func_ov023_021dca88(void *p);
+extern "C" void Zone3D_GetInstance(void);
 extern "C" void func_02017c58(void);
 extern "C" char g_sePlayer[];
 
@@ -69,10 +68,10 @@ extern "C" ARM void func_ov002_021622ec(char *base) {
                         *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) = 2;
                         *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) = 0;
                     } else {
-                        func_ov017_021a120c((GameResources*)var3, 3, func_020100a8(var2));
-                        *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
-                        *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) = 0;
-                        func_02012fe4();
+                        SetNodeFieldsAndInsert_021a120c((GameResources*)w, 3, GameState_GetProtagonistIndex(gs));
+                        *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
+                        *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
+                        Zone3D_GetInstance();
                         func_02017c58();
                     }
                     break;
@@ -87,11 +86,11 @@ extern "C" ARM void func_ov002_021622ec(char *base) {
                     *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) = 0;
                     break;
                 case 4: {
-                    char *var4 = func_0205ec34();
-                    if (!func_0206dfb0((int) var4, (unsigned char *) var4 + 0x8c, 0x119a)) return;
-                    func_ov017_021c05f4(var3, 1, 0, 0);
-                    *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
-                    *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) = 0;
+                    char *save = Scenario_GetInstance();
+                    if (!Scenario_TestFlag((int) save, (unsigned char *) save + 0x8c, 0x119a)) return;
+                    func_ov017_021c05f4(w, 1, 0, 0);
+                    *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
+                    *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
                     break;
                 }
                 case 5:

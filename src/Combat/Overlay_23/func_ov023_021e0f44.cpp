@@ -68,7 +68,7 @@ struct Struct_ov023_021ff9e0_15 {
 extern "C" Struct_ov023_021ff9e0_15 data_ov023_021ff9e0;
 extern "C" const short data_ov023_021fd5a8[2] __attribute__((aligned(4)));
 
-extern "C" void func_0204c684(Canvas_021e0f44* canvas);
+extern "C" void WindowPane_Init(Canvas_021e0f44* canvas);
 int InitBufferFromDataField4_021ddc34(void* canvas, short x, short y, short width, short height);
 extern "C" void __clear(void* buffer, unsigned long size);
 const char* KeyTable_Get(struct Container020e0310* c, int key);
@@ -97,9 +97,9 @@ extern "C" unsigned int func_ov023_021ddc98(Canvas_021e0f44* canvas, unsigned in
 // USA: func_ov023_021e0f44
 extern "C" ARM void func_ov023_021e0f44(Struct_ov023_021e0f44_3* arg0)
 {
-    Struct_ov023_021e0f44_2 var0;
-    func_0204c684(&var0);
-    if (!func_ov023_021ddc34(&var0, 0, 0, 0x1c, 3))
+    Canvas_021e0f44 canvas;
+    WindowPane_Init(&canvas);
+    if (!InitBufferFromDataField4_021ddc34(&canvas, 0, 0, 0x1c, 3))
         return;
     if (!(arg0->unknown_774_ & 0x400))
     {

@@ -13,7 +13,7 @@ void* GetData02153637_020e2ff8(void);
 extern "C" void func_0205e944(void* data, int flag);
 extern "C" void func_ov003_0215c800(void* self);
 
-extern int data_02109bf4;
+extern int g_bgmPlayer;
 extern int g_sePlayer;
 
 struct Self0215e3fc {
@@ -28,7 +28,7 @@ struct Self0215e3fc {
 
 // USA: func_ov003_0215e3fc
 ARM void ResetAnimStateIfIdle_0215e3fc(struct Self0215e3fc* self) {
-    if (IsAnimationActive0209ca2c(&data_02109bf4) != 0) {
+    if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) {
         return;
     }
     if (self->f3ec != 0) {

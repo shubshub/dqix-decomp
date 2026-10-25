@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Graphics.h"
@@ -26,11 +27,8 @@ enum { Enum_ov003_0216d63c_5128 = 0x1408 };
 enum { Enum_ov003_0216d63c_5119 = 0x13ff };
 #endif
 
-struct Struct_0201099c_14 {
-	char unknown_0_[0x18];
-};
-struct Struct_020a9ea4 {
-	char unknown_0_[8];
+struct Struct020a9ea4 {
+	char data[8];
 };
 
 void SpriteContext_Init(char* obj);

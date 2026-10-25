@@ -24,7 +24,7 @@ extern "C" int func_0202b7d8(int *arg0);
 extern "C" void func_ov017_021d0dbc();
 extern "C" void func_ov002_02156e90(char *arg0);
 struct Struct_0205d81c;
-extern "C" void func_0205deb4(Struct_0205d81c*, int, int);
+void Window_SetPanePalette(Struct_0205d81c*, int, int);
 
 extern SePlayer g_sePlayer;
 
@@ -68,17 +68,17 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
             if (var8 != 0 && func_0202b7d8(var8)) {
                 func_ov017_021d0dbc();
             }
-            func_ov002_02156e90(arg0);
-            func_ov002_02156e90(arg0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x19, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x1b, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x1c, 0);
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            func_ov002_02156e90(arg0);
-            func_ov002_02156e90(arg0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x19, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x1b, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xe20), 0x1c, 0);
+            func_ov002_02156e90(self);
+            func_ov002_02156e90(self);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x19, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x1b, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x1c, 0);
+        } else if (CheckFlagOrThreshold_02161b48(self, 1)) {
+            func_ov002_02156e90(self);
+            func_ov002_02156e90(self);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x19, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x1b, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xe20), 0x1c, 0);
         }
     }
 }
@@ -121,17 +121,17 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
             if (var17 != 0 && func_0202b7d8(var17)) {
                 func_ov017_021d0dbc();
             }
-            func_ov002_02156e90(arg0);
-            func_ov002_02156e90(arg0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x18, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x1a, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x1b, 0);
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            func_ov002_02156e90(arg0);
-            func_ov002_02156e90(arg0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x18, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x1a, 0);
-            func_0205deb4((Struct_0205d81c*)(arg0 + 0xec8), 0x1b, 0);
+            func_ov002_02156e90(self);
+            func_ov002_02156e90(self);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x18, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x1a, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x1b, 0);
+        } else if (CheckFlagOrThreshold_02161b48(self, 1)) {
+            func_ov002_02156e90(self);
+            func_ov002_02156e90(self);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x18, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x1a, 0);
+            Window_SetPanePalette((Struct_0205d81c*)(self + 0xec8), 0x1b, 0);
         }
     }
 }

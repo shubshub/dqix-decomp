@@ -45,7 +45,7 @@ struct ObjectArchiveLoadInfo
 {
     int unk_0;
     const void* fileData;
-    int unk_8;
+    int fileSize;                   // fileData's size; every loader sets it next to fileData
     SafeAllocator* allocator;
     int unk_10;
     int unk_14;
@@ -62,7 +62,8 @@ class Object3D
 public:
     unsigned short unknown_0_;
     short unknown_2_;
-    short unknown_4_;
+    short actorIndex_;              // the actor's index in its list: a party member's (GetPartyMemberByIndex), a field
+                                    // monster's slot (GetMaybeFieldMonsterByIndex); -1 after Initialize
     unsigned short unknown_6_;
     Model3D* pModel_;
     AnimationPackage* loadedAnimationPackageList_;
@@ -252,8 +253,8 @@ public:
     void ShallowCloneTo(Object3D* out);
     void ShallowCloneModelAndAnimationsTo(Object3D* out);
 
-    bool MaybeSetRegularAnimation(const char* animName, int flags);
-    bool MaybeSetBCFGAnimation(int index, int flags);
+    bool SetAnimationByName(const char* animName, int flags);
+    bool SetAnimationByIndex(int index, int flags);
     void StopCurrentAnimation();
 
     // offset 40 bit 0, is set the frame that an animation goes from

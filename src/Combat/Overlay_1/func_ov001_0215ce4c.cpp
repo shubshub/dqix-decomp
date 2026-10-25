@@ -49,22 +49,22 @@ extern "C" ARM int func_ov001_0215ce4c(char* arg0, int arg1) {
         }
     }
 
-    var9 = (Object3D*)var7->Allocate(0xac);
-    var9->Initialize();
-    var1.allocator = var7;
-    var1.fileData = var2;
-    var1.unk_8 = var3;
-    var1.unk_10 = 1;
-    var9->LoadFromCHRArchive(&var1);
-    if (var8 != 0) {
+    obj = (Object3D*)allocator->Allocate(0xac);
+    obj->Initialize();
+    loadInfo.allocator = allocator;
+    loadInfo.fileData = fileData;
+    loadInfo.fileSize = fileSize;
+    loadInfo.unk_10 = 1;
+    obj->LoadFromCHRArchive(&loadInfo);
+    if (locked != 0) {
         BackgroundLoader::RemoveLockGlobal();
     }
-    NSBXX_Model_SetPolygonID(var9->pModel_->rawInternalModel_, 0x3d);
-    var9->position_.x = 0;
-    var9->position_.y = -0xa000;
-    var9->position_.z = 0x1000;
-    var9->MaybeSetBCFGAnimation(0, 0);
-    var9->MakeHidden();
-    func_0200fd38(var5, var10, (GameObject*)var9);
+    NSBXX_Model_SetPolygonID(obj->pModel_->rawInternalModel_, 0x3d);
+    obj->position_.x = 0;
+    obj->position_.y = -0xa000;
+    obj->position_.z = 0x1000;
+    obj->SetAnimationByIndex(0, 0);
+    obj->MakeHidden();
+    RegisterCombatantSlot_0200fd38(bs, id, (GameObject*)obj);
     return 1;
 }

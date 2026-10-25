@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Graphics.h"
@@ -9,14 +10,11 @@ enum { Enum_ov003_0215f9c0_550 = 0x10e };
 enum { Enum_ov003_0215f9c0_550 = 0x226 };
 #endif
 
-struct Struct_0201099c_14 {
-    char unknown_0_[0x18];
-};
-struct Struct_02074af4 {
-    unsigned short unknown_0_[8];
-    unsigned char unknown_10_;
-    unsigned char unknown_11_;
-    char unknown_12_[2];
+struct MainBgControlBackup02074af4 {
+    unsigned short savedBgCnt[8];
+    unsigned char initialized;
+    unsigned char unk_11;
+    char unk_12[2];
 };
 struct Struct_02081ee4 {
     char unknown_0_[0xc];

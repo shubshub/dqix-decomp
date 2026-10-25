@@ -361,29 +361,29 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
     *(volatile unsigned int*)0x04000448 = 1;
 }
 #else
-struct Struct_0205ce28_2;
-extern "C" void func_0206b804(char* arg0, int* arg1, int* arg2);
-extern "C" int func_0205ce28(struct Struct_0205ce28_2* arg0);
-struct Struct_0202f6a4;
-extern "C" void func_0202f6a4(struct Struct_0202f6a4* arg0);
-extern "C" void func_0202f380(void* arg0, int arg1);
-struct Struct_02066a6c_2;
-extern "C" void func_02066cc0(struct Struct_02066a6c_2* arg0, short* arg1, short* arg2);
-struct Struct_02042b98_3;
-extern "C" void func_02042c24(struct Struct_02042b98_3* arg0, int arg1, int arg2);
-extern "C" void func_0202f404(void* arg0, int arg1, int arg2);
-extern "C" bool func_02067a9c(void* arg0, void* arg1);
-extern "C" void func_0206b6b8(unsigned char* arg0);
-extern "C" int func_02042648(int arg0);
-extern "C" bool func_02044494(void* arg0, void* arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" int func_020421a0();
-struct Struct_020416cc_2;
-extern "C" int func_020416cc(struct Struct_020416cc_2* arg0);
-extern "C" void func_020e2310(char* arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5, unsigned char arg6);
-struct Struct_02066a6c_4;
-extern "C" void func_02066ce0(struct Struct_02066a6c_4* arg0, int arg1, int arg2, short arg3);
-extern "C" void func_02044530(char* arg0, int arg1);
+struct CE28Obj;
+void LoadStateBytePair0206b804(char* obj, int* out1, int* out2);
+int IsField440Empty_0205ce28(struct CE28Obj* obj);
+struct Field440Obj0202f6a4;
+void SetupField440Type1(struct Field440Obj0202f6a4* obj);
+void UpdateTimedState0202f380(void* obj, int amount);
+struct Field440XYObj;
+void GetField440XY_02066cc0(struct Field440XYObj* obj, short* outX, short* outY);
+struct Holder02042c24;
+void SetSubstructXY02042c24(struct Holder02042c24* holder, int x, int y);
+void EmitScaledField0x440_0202f404(void* obj, int a, int b);
+bool IsCommandInRange02067a9c(void* obj, void* src);
+void MeasureTextWidth0206b6b8(unsigned char* obj);
+int GetWordFromTable02042648(int idx);
+bool IsHighByteFF02044494(void* obj, void* src);
+int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int MessageSystem_GetInstance();
+struct Holder020416cc;
+int GetField0OfSubstructAt0x18(struct Holder020416cc* holder);
+void UpdateObj020e15f8Entry_020e2310(char* obj, int idx, int a2, int a3, int a4, unsigned char a5, unsigned char a6);
+struct SetIntIntShortAt0xcStruct;
+void SetIntIntShortAt0xc_02066ce0(struct SetIntIntShortAt0xcStruct* s, int a, int b, short c);
+void CallFunc0205c96cIfMode6AndFlag_02044530(char* obj, int flag);
 
 extern "C" void func_02044830(void*, int*, int*);
 
@@ -616,12 +616,12 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
                     unsigned char var62 = arg0->unknown_19dc_;
                     Struct_02066cf0* var63 = var36->unknown_18_;
 
-                    if (var63) {
-                        unsigned char var64 = ((Struct_02066cf0_4*)func_020421a0())->unknown_195b_;
-                        if (var64 & 0x80) {
-                            for (var60 = 0; var60 < 4; var60++) {
-                                func_02045864(data_020e7e54[var60] + (short)var37, data_020e7e3c[var60] + (short)(var38 - 0x74),
-                                              var63, var59, 0x100, 0x60, 0xf, var62);
+                    if (metrics) {
+                        unsigned char effects = ((GlobalFlags02066cf0*)MessageSystem_GetInstance())->effects;
+                        if (effects & 0x80) {
+                            for (j = 0; j < 4; j++) {
+                                func_02045864(data_020e7e54[j] + (short)x, data_020e7e3c[j] + (short)(y - 0x74),
+                                              metrics, staging, 0x100, 0x60, 0xf, table);
                             }
                             func_02045864((short)var37 + 1, (short)(var38 - 0x74) + 1, var63, var59, 0x100, 0x60, 0xf, var62);
                         } else if (var64 & 2) {

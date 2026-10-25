@@ -9,9 +9,9 @@
 #endif
 #include <globaldefs.h>
 
-extern "C" int func_020421a0();
-extern "C" int func_020457e0(char* arg0);
-extern "C" void* func_ov011_02184a40(void* arg0, unsigned int arg1);
+int MessageSystem_GetInstance();
+extern "C" int func_020457e0(char* obj);
+extern "C" void* func_ov011_02184a40(void* obj, unsigned int idx);
 
 struct Struct_ov011_02184ae4 {
     char unknown_0_[0xc0];
@@ -27,8 +27,8 @@ struct Struct_ov011_02184ae4 {
 extern "C" ARM void func_ov011_02184ae4(void* arg0) {
     if (SUB(arg0)->unknown_c4_ == 0 && SUB(arg0)->unknown_c6_ == 0 && SUB(arg0)->unknown_c0_ == 0 && SUB(arg0)->unknown_c2_ == 0) return;
 
-    char* var0 = (char*)func_020421a0();
-    if (*(int*)(var0 + R(0x868, 0x998)) != 0) return;
+    char* g = (char*)MessageSystem_GetInstance();
+    if (*(int*)(g + R(0x868, 0x998)) != 0) return;
 
     int var1 = func_020457e0(var0);
     switch (var1) {

@@ -12,9 +12,6 @@
 #endif
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_ov004_02153e20 {
     char unknown_0_[0x20];
@@ -65,16 +62,16 @@ public:
 	virtual Struct_ov004_0215534c_3** inline_ov004_0215534c_60();
 };
 
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" void* func_0205ec34(void);
-extern "C" void func_ov023_021f9d14(Struct_ov004_02153e20* arg0, void* arg1);
-extern "C" int func_ov023_021f9b30(Struct_ov004_02153e20* arg0, unsigned short arg1, unsigned int arg2, unsigned int arg3);
-extern "C" void func_ov023_021f9da0(void* arg0, unsigned char arg1);
-extern "C" void func_ov023_021f6630(int arg0, int arg1, short arg2, short arg3);
-extern "C" int func_ov004_021552b8(void* arg0);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+extern "C" void* func_ov011_021849c8(void* ctx);
+extern "C" void* func_ov023_021f6880(void* list, int id);
+extern "C" int func_ov023_021f6f10(void* obj);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" void func_ov023_021f9d14(Grid021f9b30* grid, void* ctx);
+extern "C" int _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(Grid021f9b30* self, unsigned short val, unsigned int x, unsigned int y);
+void SetByteAtOffset60_021f9da0(void* self, unsigned char val);
+void DispatchNode_021f6630(int ctx, int kind, short x, short y);
+int CheckType16ThenTestBit_021552b8(void* ctx);
+extern int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 // USA: func_ov004_0215534c
 extern "C" ARM int func_ov004_0215534c(void* arg0) {
@@ -91,20 +88,20 @@ extern "C" ARM int func_ov004_0215534c(void* arg0) {
     int var10;
     Struct_ov004_0215534c_4* var11;
 
-    var0 = func_ov011_021849c8(arg0);
-    var2 = (Struct_ov004_02153e20*)func_ov023_021f6880(var0, 0x2c);
-    if (!var2) return 0;
-    if (func_ov023_021f6f10(var2) != 7) return 0;
-    var1 = var2->unknown_5c_;
-    var3 = var2->unknown_5e_;
-    var4 = (Struct_ov004_0215534c*)func_ov023_021f6880(var0, 0x39);
-    if (!var4) return 0;
-    if (func_ov023_021f6f10(var4) != 0x12) return 0;
-    var5 = var4->inline_ov004_0215534c_60();
-    if (!var5) return 0;
-    var6 = *var5;
-    if (!var6) return 0;
-    var7 = (unsigned char*)func_0205ec34();
+    list = func_ov011_021849c8(ctx);
+    grid = (Grid021f9b30*)func_ov023_021f6880(list, 0x2c);
+    if (!grid) return 0;
+    if (func_ov023_021f6f10(grid) != 7) return 0;
+    x = grid->x;
+    y = grid->y;
+    obj = (VObj0215534c*)func_ov023_021f6880(list, 0x39);
+    if (!obj) return 0;
+    if (func_ov023_021f6f10(obj) != 0x12) return 0;
+    head = obj->GetList();
+    if (!head) return 0;
+    node = *head;
+    if (!node) return 0;
+    flags = (unsigned char*)Scenario_GetInstance();
 
     short var12 = var1 * 16;
     var8 = 0;
@@ -124,13 +121,13 @@ extern "C" ARM int func_ov004_0215534c(void* arg0) {
                 func_ov023_021f9b30(var2, 0, (unsigned short)(var9 >> 1), (unsigned short)(var9 & 1));
                 var11->unknown_c_ |= 8;
             } else {
-                func_ov023_021f9b30(var2, (unsigned short)var10, (unsigned short)(var9 >> 1), (unsigned short)(var9 & 1));
-                Struct_ov004_0215534c_2* var13 = var6->unknown_4_;
-                if (var13) {
-                    int var14 = (unsigned short)((var13->unknown_c_ << 9) >> 21);
-                    if (var14 > 0) {
-                        if (func_0206dfb0((int)var7, var7 + 0x8c, var14 + 0x76 + 0xc00)) {
-                            var11->unknown_20_ = var13->unknown_4_;
+                _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj(grid, (unsigned short)id, (unsigned short)(j >> 1), (unsigned short)(j & 1));
+                Entry0215534c* entry = node->entry;
+                if (entry) {
+                    int bits = (unsigned short)((entry->flags << 9) >> 21);
+                    if (bits > 0) {
+                        if (Scenario_TestFlag((int)flags, flags + 0x8c, bits + 0x76 + 0xc00)) {
+                            slot->value = entry->value;
                         }
                     }
                 }

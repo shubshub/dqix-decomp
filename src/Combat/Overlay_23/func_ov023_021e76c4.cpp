@@ -10,12 +10,12 @@
 #define REG_BG1OFS_SUB (*(volatile unsigned int*)0x04001014)
 #define REG_BLDCNT_SUB (*(volatile unsigned short*)0x04001050)
 
-struct Struct_ov023_021e76c4_4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    char unknown_1e_[2];
+struct BackgroundGraphics_021e76c4 {
+    char unk_0[0x1c];
+    unsigned char subScreen_ : 4;
+    unsigned char bgNumber_ : 4;
+    unsigned char screenCount_;
+    char unk_1e[2];
 };
 
 struct Struct_ov023_021e76c4_5 {
@@ -68,28 +68,23 @@ struct Struct_ov023_021e76c4_3 {
     int unknown_5e4_;
 };
 
-struct Struct_0204b12c;
-struct Struct_02020cb8_5;
-struct Struct_0204af38;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
-struct Struct_02020cb8_2;
-struct Struct_0204af14;
-struct Struct_0204c7a8;
+struct BackgroundGraphics;
+struct PacRecord;
+struct WindowPane;
 struct Struct_0205cf78;
-struct Struct_0205cf78_2;
+struct WindowPane;
 
-MessageSystem_021e76c4* GetGlobalField0x1c020421a0();
+MessageSystem_021e76c4* MessageSystem_GetInstance();
 void Background_SetMapSize(unsigned char* obj, int value);
-void Background_AllocateMap(AllocTarget0204b12c* obj, SafeAllocator* alloc);
-int Background_SetScroll(Obj0204b5e8* obj, int a, int b);
-void Background_AllocateScreens(Foo0204af38* obj, int count, SafeAllocator* alloc);
-int Pac_CountFiles(ActiveEntry02046900* entry);
-void* Pac_GetFile(Rec020467f0* rec, int index, void** out, int* out44);
-void Background_UploadMap(List0204b0e8* obj, void* buf);
-ScreenData_021e76c4* Background_GetScreen(EntryList0204af14* list, unsigned int index);
-void WindowPane_AllocateBuffer(Obj0204c7a8* obj, SafeAllocator* alloc, int val, unsigned int len);
-void Window_SetPanes(Struct_0205cf78* s, Elem_0205cf78* arr, unsigned char count);
+void Background_AllocateMap(BackgroundGraphics* obj, SafeAllocator* alloc);
+int Background_SetScroll(BackgroundGraphics* obj, int a, int b);
+void Background_AllocateScreens(BackgroundGraphics* obj, int count, SafeAllocator* alloc);
+int Pac_CountFiles(PacRecord* entry);
+void* Pac_GetFile(PacRecord* rec, int index, void** out, int* out44);
+void Background_UploadMap(BackgroundGraphics* obj, void* buf);
+ScreenData_021e76c4* Background_GetScreen(BackgroundGraphics* list, unsigned int index);
+void WindowPane_AllocateBuffer(WindowPane* obj, SafeAllocator* alloc, int val, unsigned int len);
+void Window_SetPanes(Struct_0205cf78* s, WindowPane* arr, unsigned char count);
 
 extern "C" {
 void __clear(void* buffer, unsigned long size);
@@ -154,22 +149,22 @@ extern "C" ARM int func_ov023_021e76c4(Struct_ov023_021e76c4_3* arg0)
     }
     else if (arg0->unknown_5e0_ == 2)
     {
-        arg0->unknown_0_[0].Reset();
-        arg0->unknown_5d8_ = (char*)func_020421a0()->unknown_5c_;
-        __clear(var4, sizeof(var4));
-        Struct_ov023_021e76c4_4* var10;
-        int var11;
-        for (var11 = 0; var11 < 2; var11++)
+        self->allocators_[0].Reset();
+        self->text_ = (char*)MessageSystem_GetInstance()->unk_5c;
+        __clear(screens, sizeof(screens));
+        BackgroundGraphics_021e76c4* background;
+        int i;
+        for (i = 0; i < 2; i++)
         {
             background = &self->backgrounds_[i];
             Background_SetMapSize((unsigned char*)background, screens[i]);
-            background->unk_1c_0_ = 1;
-            background->unk_1c_4_ = i;
+            background->subScreen_ = 1;
+            background->bgNumber_ = i;
             Background_SetPriority(background, i);
-            Background_AllocateMap((AllocTarget0204b12c*)background, &self->allocators_[1]);
-            Background_SetScroll((Obj0204b5e8*)background, 0, 0);
+            Background_AllocateMap((BackgroundGraphics*)background, &self->allocators_[1]);
+            Background_SetScroll((BackgroundGraphics*)background, 0, 0);
         }
-        Background_AllocateScreens((Foo0204af38*)&self->backgrounds_[1], 1, &self->allocators_[1]);
+        Background_AllocateScreens((BackgroundGraphics*)&self->backgrounds_[1], 1, &self->allocators_[1]);
         DisableSubBGVRAMBanks();
         MapVRAMBanksToSubBG(0x80);
         REG_BG0CNT_SUB = (REG_BG0CNT_SUB & 0x43) | 0xe00;
@@ -185,9 +180,9 @@ extern "C" ARM int func_ov023_021e76c4(Struct_ov023_021e76c4_3* arg0)
         if (var9->GetTaskStatus(arg0->unknown_5e4_))
         {
             loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
-            int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+            int count = Pac_CountFiles((PacRecord*)archive);
             for (int i = 0; i < count; i++)
-                files[i] = Pac_GetFile((Rec020467f0*)archive, i, (void**)name, (int*)&sizes[i]);
+                files[i] = Pac_GetFile((PacRecord*)archive, i, (void**)name, (int*)&sizes[i]);
             BackgroundGraphics_021e76c4* background = &self->backgrounds_[0];
             for (int i = 0; i < count; i++)
             {
@@ -198,8 +193,8 @@ extern "C" ARM int func_ov023_021e76c4(Struct_ov023_021e76c4_3* arg0)
             loader->RemoveTask(self->task_);
             self->task_ = -1;
             Background_FillRect(&self->backgrounds_[0], 0, 0, 0, 0x20, 0x19, 0);
-            Background_UploadMap((List0204b0e8*)&self->backgrounds_[0], 0);
-            ScreenData_021e76c4* screen = Background_GetScreen((EntryList0204af14*)&self->backgrounds_[1], 0);
+            Background_UploadMap((BackgroundGraphics*)&self->backgrounds_[0], 0);
+            ScreenData_021e76c4* screen = Background_GetScreen((BackgroundGraphics*)&self->backgrounds_[1], 0);
             if (screen != NULL)
             {
                 void* var17;
@@ -215,15 +210,15 @@ extern "C" ARM int func_ov023_021e76c4(Struct_ov023_021e76c4_3* arg0)
             for (var20 = 0; var20 < 4; var20++)
             {
                 canvas = &self->canvases_[j];
-                WindowPane_AllocateBuffer((Obj0204c7a8*)canvas, &self->allocators_[1], (int)self->pixels_, 0x600);
+                WindowPane_AllocateBuffer((WindowPane*)canvas, &self->allocators_[1], (int)self->pixels_, 0x600);
                 canvas->background_ = &self->backgrounds_[0];
             }
             canvas = &self->canvases_[4];
-            WindowPane_AllocateBuffer((Obj0204c7a8*)canvas, &self->allocators_[1], (int)self->pixels_, 0x40);
+            WindowPane_AllocateBuffer((WindowPane*)canvas, &self->allocators_[1], (int)self->pixels_, 0x40);
             canvas->background_ = &self->backgrounds_[0];
             self->window_.background_ = &self->backgrounds_[0];
             self->window_.unk_b2 = 1;
-            Window_SetPanes((Struct_0205cf78*)&self->window_, (Elem_0205cf78*)self->canvases_, 5);
+            Window_SetPanes((Struct_0205cf78*)&self->window_, (WindowPane*)self->canvases_, 5);
             self->step_++;
         }
         var8 = 0;

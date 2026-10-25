@@ -3,8 +3,8 @@
 
 extern "C" void* func_ov017_021b8478(void*);
 extern "C" void* func_ov017_021b8468(void*);
-extern "C" void* func_ov017_021b8470(void*);
-extern "C" int func_020100a8(GameState*);
+void* GetField6b0_021b8470(void*);
+int GameState_GetProtagonistIndex(GameState*);
 
 struct Struct_ov017_021c787c {
     unsigned char unknown_0_[8];
@@ -33,21 +33,21 @@ struct Struct_ov017_021c787c_4 {
 };
 
 // USA: func_ov017_021c787c
-extern "C" ARM void func_ov017_021c787c(int arg0, Struct_ov017_021c787c_3* arg1, GameState* arg2, GameResources* arg3) {
-    void* var0 = arg3->unknown_ptr_3718;
-    Struct_ov017_021c787c* var1 = (Struct_ov017_021c787c*)func_ov017_021b8478(var0);
-    if (!var1) return;
-    if (!func_ov017_021b8468(var0)) return;
-    if (!func_ov017_021b8470(var0)) return;
-    int var2 = func_020100a8(arg2);
-    if (var1->unknown_2a_ == var2) return;
-    if (var1->unknown_8_ != arg1->unknown_4_) return;
-    GameObject* var3 = arg2->GetCombatantByIndex(arg1->unknown_6_);
-    if (!var3) return;
-    Struct_ov017_021c787c_2* var4 = (Struct_ov017_021c787c_2*)&arg1->unknown_8_;
-    Struct_ov017_021c787c_2* var5 = (Struct_ov017_021c787c_2*)&arg1->unknown_c_;
-    Struct_ov017_021c787c_4* var6 = (Struct_ov017_021c787c_4*)var3->currentStats_;
-    switch (arg1->unknown_12_) {
+extern "C" ARM void func_ov017_021c787c(int unused, StatPacket021c787c* packet, GameState* game, GameResources* resources) {
+    void* handle = resources->unknown_ptr_3718;
+    EventInfo021c787c* event = (EventInfo021c787c*)func_ov017_021b8478(handle);
+    if (!event) return;
+    if (!func_ov017_021b8468(handle)) return;
+    if (!GetField6b0_021b8470(handle)) return;
+    int index = GameState_GetProtagonistIndex(game);
+    if (event->combatantIndex == index) return;
+    if (event->eventId != packet->eventId) return;
+    GameObject* combatant = game->GetCombatantByIndex(packet->combatantId);
+    if (!combatant) return;
+    StatLevels021c787c* low = (StatLevels021c787c*)&packet->lowLevels;
+    StatLevels021c787c* high = (StatLevels021c787c*)&packet->highLevels;
+    StatDisplay021c787c* stats = (StatDisplay021c787c*)combatant->currentStats_;
+    switch (packet->selector) {
     case 1: {
         var6->unknown_5c_[0] = var4->unknown_0_0_;
         var6->unknown_5c_[1] = var4->unknown_0_3_;

@@ -24,13 +24,13 @@ struct Struct_ov031_02210bec {
 
 extern Struct_ov031_02210bec* data_ov031_0224e588;
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int size);
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_020d2f28(char* arg0, const char* arg1, int arg2);
-extern "C" int func_ov031_0221042c(unsigned char* arg0);
-extern "C" int func_ov031_022104e4(unsigned char* arg0);
-extern "C" void func_ov031_02210358(int arg0, int arg1);
-extern "C" void func_ov031_022103f8(void* arg0);
-extern "C" void func_ov031_022103dc(void* arg0);
+int STD_GetStringLength(const char* s);
+int CopyStringBounded020d2f28(char* dst, const char* src, int n);
+extern "C" int func_ov031_0221042c(unsigned char* buf);
+extern "C" int func_ov031_022104e4(unsigned char* buf);
+extern "C" void func_ov031_02210358(int a, int b);
+void ResetFieldAndUnblock_022103f8(void* value);
+void SetGlobal0224e588Deref_022103dc(void* value);
 
 // USA: func_ov031_02210bec
 extern "C" ARM void func_ov031_02210bec(void) {
@@ -44,19 +44,19 @@ extern "C" ARM void func_ov031_02210bec(void) {
         func_ov031_022103f8((void*)5);
         return;
     }
-    data_ov031_0224e588->unknown_1b5_ = 0;
-    var0 = func_020d2ff0(data_ov031_0224e588->unknown_89_);
-    var1 = var0 + 0x19;
-    VectorizedMemset(var2, 0, sizeof(var2));
-    var3->unknown_0_ = var1;
-    var3->unknown_4_ = 0x44535359;
-    var3->unknown_8_ = 0xd3;
-    var3->unknown_c_ = 0;
-    var3->unknown_10_ = data_ov031_0224e588->unknown_28_;
-    var3->unknown_14_ = data_ov031_0224e588->unknown_2c_;
-    func_020d2f28(var3->unknown_18_, data_ov031_0224e588->unknown_89_, var0 + 1);
-    if (func_ov031_0221042c(var2) != var1) {
-        func_ov031_022103f8((void*)5);
+    data_ov031_0224e588->flag_1b5 = 0;
+    len = STD_GetStringLength(data_ov031_0224e588->name);
+    length = len + 0x19;
+    VectorizedMemset(buffer, 0, sizeof(buffer));
+    msg->length = length;
+    msg->magic = 0x44535359;
+    msg->command = 0xd3;
+    msg->code = 0;
+    msg->unknown_10 = data_ov031_0224e588->unknown_28;
+    msg->unknown_14 = data_ov031_0224e588->unknown_2c;
+    CopyStringBounded020d2f28(msg->name, data_ov031_0224e588->name, len + 1);
+    if (func_ov031_0221042c(buffer) != length) {
+        ResetFieldAndUnblock_022103f8((void*)5);
         return;
     }
     var4 = func_ov031_022104e4(var2);

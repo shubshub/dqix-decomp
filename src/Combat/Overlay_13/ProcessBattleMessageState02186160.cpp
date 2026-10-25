@@ -66,14 +66,14 @@ extern int g_sePlayer;
 void SetupBattleMessage02185774(void* obj);
 void InitTag02185828(unsigned char* obj);
 struct Entry_0205d6a0;
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov013_02186c64(void* obj, int a, int b);
 extern "C" void func_ov013_02186bd4(void* obj);
 
 #if defined(jpn)
 inline void SkillPointMenu::ResetPromptWindow() {
     SetFieldB0AndUpdate0205dee8((Obj0205dee8*)window, 4);
-    ResetEntryList0205d6a0((Entry_0205d6a0*)window, 0);
+    Window_ClosePane((Entry_0205d6a0*)window, 0);
 }
 #endif
 
@@ -316,7 +316,7 @@ extern "C" ARM void func_ov013_02186160(SkillPointMenu* menu) {
         if (menu->subScreen == 0) {
             SePlayer_Play((struct SePlayer*)&g_sePlayer, transitioned, 0);
             SetFieldB0AndUpdate0205dee8((struct Obj0205dee8*)menu->window, 4);
-            ResetEntryList0205d6a0((struct Entry_0205d6a0*)menu->window, 0);
+            Window_ClosePane((struct Entry_0205d6a0*)menu->window, 0);
         } else {
             SePlayer_Play((struct SePlayer*)&g_sePlayer, 5, 0);
         }

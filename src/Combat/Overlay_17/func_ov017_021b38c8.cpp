@@ -45,30 +45,30 @@ extern char data_ov017_021d7ace[], data_ov017_021d7ad6[];
 static inline int inline_ov017_021b38c8(int arg0, int arg1) { return (int)(((long long)arg0 * arg1 + 0x800) >> 12); }
 
 // USA: func_ov017_021b38c8
-extern "C" ARM int func_ov017_021b38c8(Struct_ov017_021b38c8* arg0) {
-    SafeAllocator* var0;
-    Struct_0206f81c_8* var1;
-    GameState* var2 = GameState::GetInstance();
-    BackgroundLoader* var3 = BackgroundLoader::GetInstance();
-    GameObject* var4 = func_0200ff1c(var2, arg0->unknown_8_);
-    if (!var4) return 0;
-    Struct_ov017_021b38c8_4* var5 = ((Struct_ov017_021b38c8_5*)var4)->inline_ov017_021b38c8_2();
-    if (!var5) return 0;
-    Struct_0206f81c* var6 = func_02053c6c((unsigned char*)var4);
-    if (!var6) return 0;
-    Struct_ov017_021b38c8_6* var7 = func_02052e2c((Struct_02052e2c*)var4);
-    if (!var7) return 0;
-    if (!var4->obj3D_.pModel_) {
-        GameResources* var8 = GetGameResources();
-        int var9 = 0;
-        if (arg0->unknown_8_ >= 0 && arg0->unknown_8_ <= 3) var9 = 1;
-        char* var10;
-        if (!var9) {
-            Struct_ov017_021b38c8_3* var11 = (Struct_ov017_021b38c8_3*)var8->unknown_2cc_;
-            var10 = var11->unknown_930_.unknown_0_;
+extern "C" ARM int func_ov017_021b38c8(Reload021b38c8* self) {
+    SafeAllocator* allocators;
+    Entry02083554* entries;
+    GameState* game = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(game, self->combatant);
+    if (!combatant) return 0;
+    BattleAssets021b38c8* assets = ((Combatant021b38c8*)combatant)->GetAssets();
+    if (!assets) return 0;
+    Container02083554* data = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+    if (!data) return 0;
+    Scale021b38c8* scale = GetField150Ptr0x488_02052e2c((Field150Holder02052e2c*)combatant);
+    if (!scale) return 0;
+    if (!combatant->obj3D_.pModel_) {
+        GameResources* resources = GetGameResources();
+        int partyMember = 0;
+        if (self->combatant >= 0 && self->combatant <= 3) partyMember = 1;
+        char* slot;
+        if (!partyMember) {
+            ResourceSlots021b38c8* table = (ResourceSlots021b38c8*)resources->vramStates_;
+            slot = table->fallback.storage;
         } else {
-            Struct_ov017_021b38c8_3* var12 = (Struct_ov017_021b38c8_3*)var8->unknown_2cc_;
-            var10 = var12->unknown_0_[var5->unknown_2_ + 1].unknown_0_;
+            ResourceSlots021b38c8* table = (ResourceSlots021b38c8*)resources->vramStates_;
+            slot = table->party[assets->slot + 1].storage;
         }
         func_020543ec((char*)var5, var10);
     }

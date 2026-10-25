@@ -1,9 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0205cf1c;
-struct Struct_0205ba68;
-struct Struct_0205bacc;
+struct Struct0205cf1c;
+struct GridCursor;
 struct Struct_0205bcdc {
     int unknown_0_; int unknown_4_; char unknown_8_[0x40 - 8];
     unsigned char unknown_40_; unsigned char unknown_41_; char unknown_42_[0x50 - 0x42];
@@ -51,9 +50,9 @@ struct Struct_ov023_021e6e60 {
 void ClearChannelAFlag0205cf10(void*);
 void ClearFlagByte0205cf1c(Struct0205cf1c*);
 void InitChannelPair0205c53c(Struct_0205c53c*);
-void GridCursor_SetDimensions(Struct_0205ba68*, int, int, int);
-void GridCursor_SetCount(Node0205bacc*, int);
-void SetIndexIfValid0205bcdc(Struct_0205bcdc*, int);
+void GridCursor_SetDimensions(GridCursor*, int, int, int);
+void GridCursor_SetCount(GridCursor*, int);
+void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(Struct_0205bcdc*, int);
 
 // USA: func_ov023_021e6e60
@@ -96,13 +95,13 @@ extern "C" ARM void func_ov023_021e6e60(Struct_ov023_021e6e60* arg0) {
         return;
     }
     InitChannelPair0205c53c(&self->channels_);
-    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.selection_, columns, rows, wrap);
-    GridCursor_SetDimensions((Struct_0205ba68*)&self->channels_.scrolling_, columns, rows, wrap);
-    GridCursor_SetCount((Node0205bacc*)&self->channels_.selection_, count);
-    GridCursor_SetCount((Node0205bacc*)&self->channels_.scrolling_, count);
+    GridCursor_SetDimensions((GridCursor*)&self->channels_.selection_, columns, rows, wrap);
+    GridCursor_SetDimensions((GridCursor*)&self->channels_.scrolling_, columns, rows, wrap);
+    GridCursor_SetCount((GridCursor*)&self->channels_.selection_, count);
+    GridCursor_SetCount((GridCursor*)&self->channels_.scrolling_, count);
     self->channels_.selection_.pages_ = pages;
     self->channels_.scrolling_.pages_ = pages;
-    SetIndexIfValid0205bcdc(&self->channels_.selection_, selected);
+    GridCursor_SelectIfValid(&self->channels_.selection_, selected);
     GridCursor_SetSelectedIndex(&self->channels_.scrolling_, selected);
     self->channels_.scrolling_.firstFlag_ = 1;
     self->channels_.scrolling_.secondFlag_ = 1;

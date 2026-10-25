@@ -3,27 +3,24 @@
 #include <std_library_functions.h>
 #include "GameState/GameState.h"
 #include "Filesystem/BackgroundLoader.h"
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_0201099c_3;
 struct Struct_02021b84;
 struct Struct_020465c0;
 
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
-extern "C" const char* func_020e046c(char* arg0, void* arg1, unsigned int arg2, short arg3);
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" char* func_0205ec34();
-extern "C" void func_02046380(Struct_02021b84* arg0);
+extern "C" void __clear(void* buffer, unsigned long size);
+extern "C" void* ExtractFileFromGP2(const char* gp2, const char* inner, unsigned int* size);
+extern "C" const char* func_020e046c(char* output, void* file, unsigned int size, short id);
+extern "C" int Font_GetTextWidth(const char* text, int large);
+extern "C" char* Scenario_GetInstance();
+extern "C" void func_02046380(MessageSystem* messages);
 
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 void AppendXYTag_02041a90(char* text, int x, int y);
 void AppendYTag_02041a5c(char* text, int y);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 void AppendFormatted0204201c(char* text, int append, int);
-int TestBitInByteArray_0206dfb0(int, unsigned char*, int);
+int Scenario_TestFlag(int, unsigned char*, int);
 const char* KeyTable_Get(Container020e0310* texts, int id);
 int GetFieldPercentOver307_020a0870(BattleRecordSnapshot* records);
 int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot* records);
@@ -35,9 +32,9 @@ void StoreInArray0x8b0_020465c0(StoreStruct* messages, int index, int value);
 extern char data_ov008_0218c0d5[];
 extern "C" int func_020e2168(char*, const char*, int, int, bool);
 extern "C" void func_02041f50(char*, char*);
-extern "C" int func_020d2ff0(const char*);
-extern "C" void func_020465f0(unsigned char*, int, unsigned char);
-extern "C" void func_020465d8(unsigned char*, int, unsigned char);
+int STD_GetStringLength(const char*);
+void SetByteInRange_020465f0(unsigned char*, int, unsigned char);
+void SetByteAtIndex_020465d8(unsigned char*, int, unsigned char);
 #endif
 extern char data_ov008_0218b465[];
 extern char data_ov008_0218b47c[];
@@ -113,22 +110,22 @@ extern "C" ARM void func_ov008_02188408(Struct_ov008_021842a0_2* arg0, char* arg
 {
     if (arg1 == NULL)
         return;
-    Struct_02021b84* var0 = func_020421a0();
-    if (arg3 != NULL)
+    MessageSystem* messages = MessageSystem_GetInstance();
+    if (records != NULL)
     {
         Struct_ov008_02187f6c_3* var1 = (Struct_ov008_02187f6c_3*)GameState::GetInstance()->GetProtagonist();
 #if defined(jpn)
-        char* var2 = arg0->unknown_b8_ + 0x780;
-        func_020e2168(var2, data_ov008_0218c0d5, arg3->unknown_12_7_, var1->unknown_150_->unknown_49c_.unknown_0_0_, 1);
-        char var3[0x80];
-        __clear(var3, sizeof(var3));
-        func_02041f50(var2, var3);
-        int var4 = func_020d2ff0(var3);
-        int var5 = (0x80 - (var4 / 2) * 12) / 2;
-        int var6 = 6;
-        if (var4 != func_020d2ff0(var2)) var6 = 8;
-        func_02041a90(arg1, var5, var6);
-        func_02042058(arg1, var2);
+        char* name = self->text_ + 0x780;
+        func_020e2168(name, data_ov008_0218c0d5, records->title_, hero->partyData_->appearance_.female_, 1);
+        char plainName[0x80];
+        __clear(plainName, sizeof(plainName));
+        func_02041f50(name, plainName);
+        int length = STD_GetStringLength(plainName);
+        int x = (0x80 - (length / 2) * 12) / 2;
+        int y = 6;
+        if (length != STD_GetStringLength(name)) y = 8;
+        AppendXYTag_02041a90(text, x, y);
+        Text_Append(text, name);
 #else
         char* var7 = arg0->unknown_b8_ + 0x8e0;
         BackgroundLoader::AddLockGlobal();
@@ -143,25 +140,25 @@ extern "C" ARM void func_ov008_02188408(Struct_ov008_021842a0_2* arg0, char* arg
         if (var11 != NULL)
             func_020e046c(var7, var11, var8, (short)arg3->unknown_12_7_);
         BackgroundLoader::RemoveLockGlobal();
-        int var12 = (0xa0 - func_020420e8(var7, 1)) / 2;
-        if (var12 < 0)
-            var12 = 0;
-        func_02041a90(arg1, var12, 6);
-        if (var7 != NULL)
-            func_02042058(arg1, var7);
+        int x = (0xa0 - Font_GetTextWidth(name, 1)) / 2;
+        if (x < 0)
+            x = 0;
+        AppendXYTag_02041a90(text, x, 6);
+        if (name != NULL)
+            Text_Append(text, name);
 #endif
         return;
     }
-    int var13 = 3;
-    char* var14 = func_0205ec34();
-    if (func_0206dfb0((int)var14, (unsigned char*)var14 + 0x8c, 0x1198))
-        var13 = 4;
-    if (arg2 == 0)
+    int count = 3;
+    char* store = Scenario_GetInstance();
+    if (Scenario_TestFlag((int)store, (unsigned char*)store + 0x8c, 0x1198))
+        count = 4;
+    if (kind == 0)
     {
         for (int var15 = 0; var15 < var13; var15++)
         {
             AppendXYTag_02041a90(text, 4, i * 15 + 4);
-            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x82)));
+            Text_Append(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x82)));
         }
     }
     else if (arg2 == 1)
@@ -223,7 +220,7 @@ extern "C" ARM void func_ov008_02188408(Struct_ov008_021842a0_2* arg0, char* arg
         for (int var26 = 0; var26 < var13; var26++)
         {
 #if defined(jpn)
-            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x8c)));
+            Text_Append(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x8c)));
 #else
             AppendYTag_02041a5c(text, i * 15 + 4);
             AppendFormatted0204201c(text, (int)KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x8c)), 0x18);

@@ -42,13 +42,13 @@ struct SkillPointMenu {
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 extern "C" void* __clear(void* dst, int count);
-extern "C" int func_020420e8(char* str, int id);
+extern "C" int Font_GetTextWidth(char* str, int id);
 int AppendXTag_02041a28(char* dst, int x);
-int AppendString02042058(char* dst, const char* src);
+int Text_Append(char* dst, const char* src);
 int AppendFormatted02041fac(char* buf, int a, int b);
-int AppendFrameTag02041c08(char* dst, int a1, int a2, int a3, int a4, int a5);
-int AppendCursorTag_02041ea4(char* dst, int cursor);
-int AppendPaletteTag_02041e70(char* dst, int palette);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+int Text_AppendPaletteTag(char* dst, int palette);
 int AppendYTag_02041a5c(char* dst, int y);
 int AppendLineTag02041cc0(char* dst, int a1);
 int AppendLineYTag02041d48(char* dst, int a1, int a2, int a3, int a4);
@@ -64,41 +64,41 @@ extern "C" ARM void func_ov013_02185424(SkillPointMenu* menu, char* out) {
     int x = 0x78 - (int)(((float)length / 4.0f) * 12.0f);
     int heading = KeyTable_Get((Container020e0310*)menu->texts, 0x2718);
     sprintf(buf, (const char*)heading, x);
-    AppendString02042058(out, buf);
+    Text_Append(out, buf);
 #else
     char* str = (char*)KeyTable_Get((struct Container020e0310*)menu->texts, 0x2718);
-    int len = func_020420e8(str, 0);
+    int len = Font_GetTextWidth(str, 0);
     AppendXTag_02041a28(buf, (0xf0 - len) >> 1);
-    AppendString02042058(buf, str);
+    Text_Append(buf, str);
     AppendFormatted02041fac(out, (int)buf, 0x10);
 
 #endif
 
     if (menu->windowInput == 2) {
-        AppendFrameTag02041c08(out, menu->selectedSkill, 8, 3, 6, 2);
+        Text_AppendFrameTag(out, menu->selectedSkill, 8, 3, 6, 2);
     }
-    AppendCursorTag_02041ea4(out, menu->selectedSkill);
+    Text_AppendCursorTag(out, menu->selectedSkill);
 
     for (unsigned char id = 0; id < 5; id++) {
         if (menu->lockedSkills[id] == 0) {
-            AppendPaletteTag_02041e70(out, 0xf);
+            Text_AppendPaletteTag(out, 0xf);
         } else {
-            AppendPaletteTag_02041e70(out, 3);
+            Text_AppendPaletteTag(out, 3);
         }
         int key = (short)(menu->skillIds[id] + 0x64);
         int v1 = KeyTable_Get((struct Container020e0310*)menu->texts, key);
         int fmt = KeyTable_Get((struct Container020e0310*)menu->texts, 0x2711);
         sprintf(buf, (const char*)fmt, id, v1);
-        AppendString02042058(out, buf);
+        Text_Append(out, buf);
         if (id != 4) {
             int v3 = KeyTable_Get((struct Container020e0310*)menu->texts, 0);
             sprintf(buf, (const char*)v3);
         }
-        AppendString02042058(out, buf);
+        Text_Append(out, buf);
     }
 
 #if defined(jpn)
-    func_020420e8(out, 0x15);
+    Font_GetTextWidth(out, 0x15);
 #else
     AppendYTag_02041a5c(out, 0x15);
 #endif
@@ -144,10 +144,10 @@ extern "C" ARM void func_ov013_02185424(SkillPointMenu* menu, char* out) {
                 sprintf(buf, (const char*)fmt, i * 0xd + 0x16, menu->allocatedPoints[i], menu->skillPoints[i]);
             }
         }
-        AppendString02042058(out, buf);
+        Text_Append(out, buf);
         if (i != 4) {
             int v0 = KeyTable_Get((Container020e0310*)menu->texts, 0);
-            AppendString02042058(out, (const char*)v0);
+            Text_Append(out, (const char*)v0);
         }
     }
 
@@ -178,10 +178,10 @@ extern "C" ARM void func_ov013_02185424(SkillPointMenu* menu, char* out) {
                 sprintf(buf, (const char*)fmt, n + 0x16, v688, v674, v674 + v688);
             }
         }
-        AppendString02042058(out, buf);
+        Text_Append(out, buf);
         if (i != 4) {
             int v0 = KeyTable_Get((struct Container020e0310*)menu->texts, 0);
-            AppendString02042058(out, (const char*)v0);
+            Text_Append(out, (const char*)v0);
         }
     }
 
@@ -196,5 +196,5 @@ extern "C" ARM void func_ov013_02185424(SkillPointMenu* menu, char* out) {
 
     int fmtEnd = KeyTable_Get((struct Container020e0310*)menu->texts, 0x2717);
     sprintf(buf, (const char*)fmtEnd, menu->remainingPoints);
-    AppendString02042058(out, buf);
+    Text_Append(out, buf);
 }

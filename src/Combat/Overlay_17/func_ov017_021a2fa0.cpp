@@ -27,17 +27,17 @@ struct Struct_ov017_021a2fa0_3 {
     unsigned char unknown_f7d_;
 };
 
-extern "C" Struct_ov017_021a2fa0_2* func_02012fe4(void);
-extern "C" void func_ov017_021a316c(unsigned char* arg0);
-extern "C" void func_ov017_021a2c14(unsigned char* arg0, int arg1, void* arg2);
-extern "C" void func_020a6728(unsigned char* arg0, unsigned short arg1);
-extern "C" void func_020aca88(unsigned char* arg0, unsigned short arg1);
-extern "C" void func_0207dfc8(struct Struct_02015ef4_5* arg0, struct Struct_02015ef4_5* arg1);
-extern "C" int func_0208f588(Struct_ov017_021a2fa0* arg0, void* arg1, char* arg2);
-extern "C" int func_0208f748(Struct_ov017_021a2fa0* arg0, int arg1);
-extern "C" void func_ov017_021a28a8(unsigned char* arg0);
-extern "C" void func_ov017_021913d0(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_021ce494(void);
+extern "C" ZoneInfo_021a2fa0* Zone3D_GetInstance(void);
+extern "C" void func_ov017_021a316c(unsigned char* obj);
+extern "C" void func_ov017_021a2c14(unsigned char* obj, int a, void* b);
+extern "C" void func_020a6728(unsigned char* obj, unsigned short zoneId);
+extern "C" void func_020aca88(unsigned char* obj, unsigned short zoneId);
+void VramState_CopyCurrentTo(struct State0207dfc8* src, struct State0207dfc8* dst);
+extern "C" int func_0208f588(Archive_021a2fa0* self, void* allocator, char* pairObj);
+extern "C" int func_0208f748(Archive_021a2fa0* obj, int a1);
+extern "C" void func_ov017_021a28a8(unsigned char* obj);
+extern "C" void func_ov017_021913d0(unsigned char* obj, int count);
+void EnqueueEventTag40IfNotBusy_021ce494(void);
 
 // USA: func_ov017_021a2fa0
 extern "C" ARM void func_ov017_021a2fa0(unsigned char* arg0) {
@@ -46,17 +46,17 @@ extern "C" ARM void func_ov017_021a2fa0(unsigned char* arg0) {
 #else
  enum {Enum_ov017_021a2fa0_4676=0x1244, Enum_ov017_021a2fa0_1500=0x5dc, Enum_ov017_021a2fa0_4696=0x1258, Enum_ov017_021a2fa0_4412=0x113c, Enum_ov017_021a2fa0_4432=0x1150, Enum_ov017_021a2fa0_4544=0x11c0, Enum_ov017_021a2fa0_4564=0x11d4};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov017_021a2fa0_2* var1 = func_02012fe4();
-    func_ov017_021a316c(arg0);
-    func_ov017_021a2c14(arg0, var1->unknown_8_, var1->unknown_c_);
-    func_020a6728(arg0, var1->unknown_0_);
-    func_020aca88(arg0, var1->unknown_0_);
+    GameState* gs = GameState::GetInstance();
+    ZoneInfo_021a2fa0* zone = Zone3D_GetInstance();
+    func_ov017_021a316c(obj);
+    func_ov017_021a2c14(obj, zone->field8, zone->fieldC);
+    func_020a6728(obj, zone->zoneId);
+    func_020aca88(obj, zone->zoneId);
 
-    unsigned int var2 = ((SafeAllocator*)(arg0 + 0xc4))->GetMaxPossibleAllocation();
-    void* var3 = ((SafeAllocator*)(arg0 + 0xc4))->Allocate(var2);
-    ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4676))->CreateTypeA(var3, var2);
-    func_0207dfc8((struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_1500), (struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_4696));
+    unsigned int size = ((SafeAllocator*)(obj + 0xc4))->GetMaxPossibleAllocation();
+    void* buf = ((SafeAllocator*)(obj + 0xc4))->Allocate(size);
+    ((SafeAllocator*)(obj + regionalOffset0))->CreateTypeA(buf, size);
+    VramState_CopyCurrentTo((struct State0207dfc8*)(obj + regionalOffset1), (struct State0207dfc8*)(obj + regionalOffset2));
 
     Struct_ov017_021a2fa0* var4 = &var1->unknown_2664_;
     func_0208f588(var4, arg0 + Enum_ov017_021a2fa0_4676, (char*)(arg0 + Enum_ov017_021a2fa0_4696));
@@ -72,20 +72,20 @@ extern "C" ARM void func_ov017_021a2fa0(unsigned char* arg0) {
         var4->unknown_b6_ = 0;
     }
 
-    var2 = ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4676))->GetMaxPossibleAllocation();
-    var3 = ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4676))->Allocate(var2);
-    ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4412))->CreateTypeA(var3, var2);
-    func_0207dfc8((struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_4696), (struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_4432));
-    func_ov017_021a28a8(arg0);
+    size = ((SafeAllocator*)(obj + regionalOffset0))->GetMaxPossibleAllocation();
+    buf = ((SafeAllocator*)(obj + regionalOffset0))->Allocate(size);
+    ((SafeAllocator*)(obj + regionalOffset3))->CreateTypeA(buf, size);
+    VramState_CopyCurrentTo((struct State0207dfc8*)(obj + regionalOffset2), (struct State0207dfc8*)(obj + regionalOffset4));
+    func_ov017_021a28a8(obj);
 
-    var2 = ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4412))->GetMaxPossibleAllocation();
-    var3 = ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4412))->Allocate(var2);
-    ((SafeAllocator*)(arg0 + Enum_ov017_021a2fa0_4544))->CreateTypeA(var3, var2);
-    func_0207dfc8((struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_4432), (struct Struct_02015ef4_5*)(arg0 + Enum_ov017_021a2fa0_4564));
+    size = ((SafeAllocator*)(obj + regionalOffset3))->GetMaxPossibleAllocation();
+    buf = ((SafeAllocator*)(obj + regionalOffset3))->Allocate(size);
+    ((SafeAllocator*)(obj + regionalOffset5))->CreateTypeA(buf, size);
+    VramState_CopyCurrentTo((struct State0207dfc8*)(obj + regionalOffset4), (struct State0207dfc8*)(obj + regionalOffset6));
 
-    Struct_ov017_021a2fa0_3* var6 = (Struct_ov017_021a2fa0_3*)func_02010828(var0);
-    if (var6->unknown_f7d_ != 0) {
-        func_ov017_021913d0(arg0, var6->unknown_f7d_);
+    PartyInfo_021a2fa0* party = (PartyInfo_021a2fa0*)GameState_GetParty(gs);
+    if (party->pendingCount != 0) {
+        func_ov017_021913d0(obj, party->pendingCount);
     } else {
         func_ov017_021ce494();
     }

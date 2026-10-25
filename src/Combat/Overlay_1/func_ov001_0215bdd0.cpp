@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" int func_ov001_0215ad2c(int arg0);
-extern "C" void func_ov001_0215acb4(void* arg0);
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" int func_ov001_02164214(void* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_ov001_02164248(void* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" int func_ov017_021d60f4(void* p);
+extern int AbsPlus159IfNegative0215ad2c(int x);
+extern "C" void func_ov001_0215acb4(void* entry);
+int GameState_GetProtagonistIndex(GameState* gs);
+int SetQueueEntryChecked_02164214(void* arr, int idx, int type, int val, int flag);
+int SetQueueEntryChecked_02164248(void* arr, int idx, int type, int val, int flag);
 
 #include "Combat/EntryGetterTypes.h"
 struct Struct_0203dce4_2;
@@ -27,16 +27,16 @@ extern "C" ARM int func_ov001_0215bdd0(char* arg0) {
 
     func_ov001_0215acb4(data_ov001_02165880.unknown_4_ + (var2 << 4));
 
-    if (var3 == 0 || var3 == 1 || (unsigned)(var3 - 4) <= 1) {
-        GameObject* var4 = NULL;
-        if (var3 == 0) {
-            var4 = var0->GetGameObjectByIndex(func_020100a8(var0));
-        } else if (var3 == 1) {
-            var4 = var0->GetGameObjectByIndex(var1);
-        } else if (var3 == 4) {
-            var4 = var0->GetGameObjectByIndex(0);
-        } else if (var3 == 5) {
-            var4 = var0->GetGameObjectByIndex(var1);
+    if (type == 0 || type == 1 || (unsigned)(type - 4) <= 1) {
+        GameObject* obj = NULL;
+        if (type == 0) {
+            obj = gs->GetGameObjectByIndex(GameState_GetProtagonistIndex(gs));
+        } else if (type == 1) {
+            obj = gs->GetGameObjectByIndex(id);
+        } else if (type == 4) {
+            obj = gs->GetGameObjectByIndex(0);
+        } else if (type == 5) {
+            obj = gs->GetGameObjectByIndex(id);
         }
         if (var4 == NULL) return 0;
         return func_ov001_02164214(data_ov001_02165880.unknown_4_, var2, var3, var1, (int)var4);

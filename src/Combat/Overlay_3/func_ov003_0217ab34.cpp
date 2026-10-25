@@ -6,7 +6,7 @@ struct Obj2081;
 struct Cont0207fdf0;
 struct SePlayer;
 struct Obj0208203c;
-struct Container020dedd0;
+struct ItemTable;
 struct Obj021dcae0;
 struct Obj02179e18;
 
@@ -57,13 +57,13 @@ struct Struct_ov003_0217ab34_2 {
     unsigned char unknown_104c_;
 };
 
-void* GetPtrField0x2a04_02010828(GameState* gs);
+void* GameState_GetParty(GameState* gs);
 short FindMappedMemberId02080468(void* obj, int id);
 void SetElementFlag0x40_02081ea4(struct Obj2081* obj, int id, int value);
 void SetEntryLowNibbleAndElement02080c68(void* obj, int id, int value);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
-struct Obj02179e18* FindElementByKey020dedd0(struct Container020dedd0* c, int key);
+struct Obj02179e18* ItemTable_Find(struct ItemTable* c, int key);
 void CallFunc0204c804OnNonMatchingKey(struct Cont0207fdf0* obj, int key);
 void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
 unsigned short GetInnerShort_0217b200(void** obj);
@@ -91,9 +91,9 @@ extern "C" void func_ov003_02175df4(void* arg0);
 extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0217ab34
-extern "C" ARM void func_ov003_0217ab34(struct Struct_ov003_0217ab34_2* arg0) {
-    char* var0 = (char*)func_02010828(GameState::GetInstance());
-    struct Struct_0207fdcc_2* var1 = arg0->unknown_89c_;
+extern "C" ARM void func_ov003_0217ab34(struct Menu_0217ab34* self) {
+    char* data = (char*)GameState_GetParty(GameState::GetInstance());
+    struct Obj2081* menu = self->menu;
 
     if (arg0->unknown_103f_ == 0) {
         int var2 = func_ov003_02179f34(arg0);
@@ -129,7 +129,7 @@ extern "C" ARM void func_ov003_0217ab34(struct Struct_ov003_0217ab34_2* arg0) {
             SePlayer_Play(&g_sePlayer, 1, 0);
             ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
             self->cursor = 0;
-            self->elem = FindElementByKey020dedd0((struct Container020dedd0*)self->container, self->sel);
+            self->elem = ItemTable_Find((struct ItemTable*)self->container, self->sel);
             if (self->elem == 0) {
                 return;
             }

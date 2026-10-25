@@ -56,11 +56,11 @@ src/Combat/Overlay_13/func_ov013_02185e40.cpp:
     complete
     .text start:0x02185e40 end:0x02186160
 
-src/Combat/Overlay_13/func_ov013_02186bd4.cpp:
+src/Combat/Overlay_13/ApplyElemFieldsSlot0_02186bd4.cpp:
     complete
     .text start:0x02186bd4 end:0x02186c1c
 
-src/Combat/Overlay_13/func_ov013_02186c1c.cpp:
+src/Combat/Overlay_13/ApplyElemFieldsSlot3_02186c1c.cpp:
     complete
     .text start:0x02186c1c end:0x02186c64
 
@@ -68,7 +68,7 @@ src/Combat/Overlay_13/func_ov013_02187784.cpp:
     complete
     .text start:0x02187784 end:0x0218782c
 
-src/Combat/Overlay_13/func_ov013_021842a0.cpp:
+src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x02184338
 

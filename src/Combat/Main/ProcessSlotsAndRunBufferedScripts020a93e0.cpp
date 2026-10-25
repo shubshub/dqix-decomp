@@ -30,9 +30,9 @@ struct Entry02089fb0* FindEntryBySignedId02089fb0(struct EntryArray02089fb0* arr
 
 extern "C" int Font_EncodeText(char* str, unsigned char* out, int id);
 
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
-void TailForward02012da4(AllocatorUnion* alloc, void* data);
-extern AllocatorUnion data_02114e20;
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern AllocatorUnion g_mainAllocator;
 
 struct FlagByte020a93e0 {
     unsigned char pad[0x13f];
@@ -51,7 +51,7 @@ extern "C" ARM void func_020a93e0(char* param0) {
             SafeAllocator localAlloc;
             localAlloc.ResetAllocatorPointer();
             localAlloc.ResetAllocatorPointer();
-            void* mem = AllocateAligned4_02012d88(&data_02114e20, 0x800);
+            void* mem = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800);
             localAlloc.CreateTypeA(mem, 0x800);
             ResetStructFields_02089db4(&fields);
             SetupHeaderAndRunBufferedScript02089de8(&fields, &localAlloc, 0);
@@ -69,7 +69,7 @@ extern "C" ARM void func_020a93e0(char* param0) {
             SignedAllocatorHeader* sig = localAlloc.GetSignedAllocator();
             ForwardResetStructFields02089ddc(&fields);
             localAlloc.Destroy();
-            TailForward02012da4(&data_02114e20, sig);
+            AllocatorUnion_Free(&g_mainAllocator, sig);
             return;
         }
     }

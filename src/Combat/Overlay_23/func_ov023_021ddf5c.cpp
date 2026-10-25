@@ -6,7 +6,7 @@ struct Struct_ov023_021dbb34;
 struct Struct_ov023_021dbc58_2;
 struct Struct_ov023_021e257c;
 
-extern "C" void func_0204c684(void* buf);
+extern "C" void WindowPane_Init(void* buf);
 int InitBufferFromDataField4_021ddc34(void* obj, short a, short b, short c, short d);
 void UpdateEntryAndReset_021db45c(void* obj, struct StructAcAe021db45c* p1, int p2, short* p3, short* p4);
 extern "C" void* func_ov023_021db4e4(void* obj, int key);
@@ -124,11 +124,11 @@ struct Struct_ov023_021ddf5c_4 {
 #define FlushList(obj, buf) do {     if (data_ov023_021ff9e0.unknown1_4_) {         (obj)->unknown_d0_ = (buf);         (obj)->unknown_de_ = 1;         func_ov023_021e257c((obj)->unknown_cc_);     } } while (0)
 
 // USA: func_ov023_021ddf5c
-extern "C" ARM void func_ov023_021ddf5c(struct Struct_ov023_021ddf5c_4* arg0) {
-    char var0[0xe0];
-    unsigned char var1;
-    func_0204c684(var0);
-    if (!func_ov023_021ddc34(var0, 0, 0, 0x14, 9)) return;
+extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
+    char buf[0xe0];
+    unsigned char i;
+    WindowPane_Init(buf);
+    if (!InitBufferFromDataField4_021ddc34(buf, 0, 0, 0x14, 9)) return;
 
     if (arg0->unknown_77a_ < 0) {
         short var2;

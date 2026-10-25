@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov000_0217ff34_2;
-extern "C" Struct_ov000_0217ff34_2* func_0200fea4(GameState*,int);
-extern "C" int func_020421a0();
+struct Unit0217ff34;
+Unit0217ff34* GetCombatantWithFlag0x400_0200fea4(GameState*,int);
+int MessageSystem_GetInstance();
 struct Random;
 Random* GetBTRandom();
 int NextRandomMax(Random*,int);
@@ -16,15 +16,15 @@ struct Struct_ov000_0217ff34 {
 };
 struct Struct_ov000_0217ff34_2 { char unknown_0_[0x138]; Struct_ov000_0217ff34* unknown_138_; };
 // USA: func_ov000_0217ff34
-extern "C" ARM int func_ov000_0217ff34(void* arg0,int arg1,int* arg2) {
-    int var0 = -1;
-    GameState* var1 = GameState::GetInstance();
-    func_020421a0();
-    Struct_ov000_0217ff34_2* var2 = func_0200fea4(var1,arg1);
-    if (!var2) return var0;
-    int var3 = 0;
-    if (var2) {
-        var3 = (var2->unknown_138_->unknown_18_ & 0x1000) != 0;
+extern "C" ARM int func_ov000_0217ff34(void* self,int id,int* amount) {
+    int result = -1;
+    GameState* gs = GameState::GetInstance();
+    MessageSystem_GetInstance();
+    Unit0217ff34* unit = GetCombatantWithFlag0x400_0200fea4(gs,id);
+    if (!unit) return result;
+    int special = 0;
+    if (unit) {
+        special = (unit->details->flags18 & 0x1000) != 0;
     }
     unsigned int var4 = var2->unknown_138_->unknown_14_;
     unsigned char var5 = var2->unknown_138_->unknown_24_;

@@ -47,27 +47,27 @@ struct Struct_02052bfc_2 {
     Struct_02052bfc* unknown_150_;
 };
 
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void* func_02010828(GameState*);
-extern "C" void* func_02012fe4(void);
-extern "C" long long _ll_udiv(long long arg0, long long arg1);
-extern "C" int func_02046b08(void** arg0);
-extern "C" int func_0201bc94(Struct_0201bc94* arg0);
-extern "C" int func_020e51cc(int arg0);
-extern "C" void* func_020d7a50(void);
-extern "C" void func_ov017_02191aac(char* arg0, int arg1, int arg2, unsigned char arg3);
-extern "C" void func_ov017_021ce014(int arg0, unsigned short arg1, unsigned short arg2, unsigned short arg3);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void* GameState_GetParty(GameState*);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" long long _ll_udiv(long long a, long long b);
+int IsField0Null_02046b08(void** obj);
+int IsEntryEligibleAndFlagged(Struct0201bc94* obj);
+int StandardStrings_Get(int value);
+void* TextQueue_GetInstance(void);
+extern "C" void func_ov017_02191aac(char* obj, int mode, int idx, unsigned char mask);
+void EnqueueEventTag17_021ce014(int a, unsigned short b, unsigned short c, unsigned short d);
 
 // USA: func_02052bfc
 extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* arg0) {
     if (arg0->unknown_150_ == NULL) return;
 
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    void* var2 = *(void**)((char*)var1 + 0x3000 + Enum_02052bfc_1788);
-    Struct_02048150* var3 = (Struct_02048150*)func_02010828(var0);
-    Struct_0201bc94* var4 = (Struct_0201bc94*)func_02012fe4();
-    unsigned char var5 = arg0->unknown_4_ & 0xff;
+    GameState* gs = GameState::GetInstance();
+    GameResources* ov = GetGameResources();
+    void* list = *(void**)((char*)ov + 0x3000 + kResourceWord);
+    ArrayContainsByteStruct* arr = (ArrayContainsByteStruct*)GameState_GetParty(gs);
+    Struct0201bc94* entry = (Struct0201bc94*)Zone3D_GetInstance();
+    unsigned char idx = obj->field4 & 0xff;
 
     if (!func_02086ef0(var3, var5)) return;
     if (arg0->unknown_150_->unknown_56c_ == 0) return;
@@ -85,20 +85,20 @@ extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* arg0) {
             #if defined(jpn)
             strcpy(var8, (char*)data_020f0420[1]);
 #else
-            strcpy(var8, (char*)func_020e51cc(0x33));
+            strcpy(buf, (char*)StandardStrings_Get(0x33));
 #endif
         }
         else {
             #if defined(jpn)
             strcpy(var8, (char*)data_020f0420[5]);
 #else
-            strcpy(var8, (char*)func_020e51cc(0x32));
+            strcpy(buf, (char*)StandardStrings_Get(0x32));
 #endif
         }
         #if defined(jpn)
-        func_020d7e10(func_020d7a50(), var8, 0, 0, 1);
+        TextQueue_Push(TextQueue_GetInstance(), buf, 0, 0, 1);
 #else
-        func_020d7e10(func_020d7a50(), var8, 0, 0, 1, 1);
+        TextQueue_Push(TextQueue_GetInstance(), buf, 0, 0, 1, 1);
 #endif
     }
     func_ov017_02191aac((char*)var1, 0, var5, 2);

@@ -15,9 +15,9 @@ struct Struct_02013fb4;
 extern "C" ARM void func_0209562c(struct Struct_02095578* arg0, int arg1,
     struct Struct_02013fb4* arg2, int arg3, unsigned short arg4, int arg5, int arg6);
 
-extern "C" void* func_02012fe4();
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
+extern "C" void* Zone3D_GetInstance();
+int GetField5cb0Value_0201079c(char* obj);
+int GetField5cb4Value_020107d0(char* obj);
 extern int data_020f1474;
 extern char data_02109418[] __attribute__((aligned(4)));
 
@@ -41,20 +41,20 @@ extern "C" ARM int func_02095578(void) {
     int var9;
     void* var10;
 
-    var2 = GameState::GetInstance();
-    var3 = func_02012fe4();
-    var4 = (struct Struct_02095578*)&data_02109418;
-    var5 = GetGameResources();
+    bs = GameState::GetInstance();
+    move = Zone3D_GetInstance();
+    header = (struct HeaderStruct0209562c*)&data_02109418;
+    res = GetGameResources();
     (int)BackgroundLoader::GetInstance();
     var6 = ((Struct_02095578_2*)var5)->inline_02095578(1);
     var7 = *(unsigned short*)var3;
     var8 = func_0201079c((char*)var2);
     var9 = func_020107d0((char*)var2);
     BackgroundLoader::AddLockGlobal();
-    sprintf(var0, (const char*)&data_020f1474);
-    var10 = LoadFileIntoMemory(var0, data_0211e33c, &var1);
-    if (var10 != NULL) {
-        func_0209562c(var4, (int)var6, (struct Struct_02013fb4*)var10, var1, var7, var8, var9);
+    sprintf(path, (const char*)&data_020f1474);
+    file = LoadFileIntoMemory(path, g_fileLoadBuffer, &len);
+    if (file != NULL) {
+        SetupHeaderAndRunBufferedScript0209562c(header, (int)type, (struct StreamHeader*)file, len, id, cb0, cb4);
     }
     BackgroundLoader::RemoveLockGlobal();
     return var10 == NULL ? 0 : 1;

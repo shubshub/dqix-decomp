@@ -12,97 +12,97 @@ struct Struct_020ef0dc {
     int unknown_c_;
     float unknown_10_;
 };
-extern Struct_020ef0dc data_020ef0dc;
-extern "C" void func_0201730c(Struct_02016874_3*);
-extern "C" void func_02017540(Zone3D*);
-extern "C" int func_0201b5b0(int);
-extern "C" void func_02016d8c(void*);
-extern "C" void func_02016db4(void*, void*);
+extern RenderFlags02016874 data_020ef0dc;
+extern "C" void func_0201730c(CombatEntryList*);
+extern "C" void Zone3D_DrawChests(Zone3D*);
+int IsInRange0201b5b0(int);
+void RenderConfig_SetObjectRotation(void*);
+void PushMatrixAndRender02016db4(void*, void*);
 extern "C" void func_020ca528(const void*, void*);
 
 // USA: func_02016874
-extern "C" ARM void func_02016874(Zone3D* arg0) {
-    if (arg0->unknown_424_ != 0) return;
-    func_0201730c((Struct_02016874_3*)arg0);
-    func_02017540(arg0);
-    arg0->unk_276c[0xb0] = 0;
-    data_020ef0dc.unknown_c_ = 1;
-    if (func_0201b5b0(arg0->currentZoneID_)) {
-        if (((unsigned char*)arg0->unk_23bc)[0] == 0) return;
-        func_0201aedc(arg0);
-        int var0;
-        int var1;
-        int var2;
-        Struct_02013490* var3;
-        int var4;
-        var0 = arg0->grotto_.GetActiveGrottoEnviron();
-        var4 = arg0->grotto_.floorWidth_;
-        GameObject* var5 = GameState::GetInstance()->GetUnknownGameObject();
-        int var6 = (int)(((float)(var5->obj3D_.position_.x + 0x4000) / 4096.0f) / 8.0f);
-        int var7 = (int)(((float)(var5->obj3D_.position_.z + 0x4000) / 4096.0f) / 8.0f);
-        int var8;
-        int var9, var10;
-        int var11 = 1;
-        var11 += var7;
-        if (var0 == 5) {
-            var1 = var6 - 4;
-            var9 = var6 + 4;
-            var10 = var7 - 4;
+extern "C" ARM void func_02016874(Zone3D* self) {
+    if (self->unknown_424_ != 0) return;
+    func_0201730c((CombatEntryList*)self);
+    Zone3D_DrawChests(self);
+    self->unk_276c[0xb0] = 0;
+    data_020ef0dc.normalPending = 1;
+    if (IsInRange0201b5b0(self->currentZoneID_)) {
+        if (((unsigned char*)self->unk_23bc)[0] == 0) return;
+        ProcessNode0201aedc(self);
+        int environment;
+        int minX;
+        int z;
+        GrottoTileMapRecord* tile;
+        int mapWidth;
+        environment = self->grotto_.GetActiveGrottoEnviron();
+        mapWidth = self->grotto_.floorWidth_;
+        GameObject* player = GameState::GetInstance()->GetUnknownGameObject();
+        int playerX = (int)(((float)(player->obj3D_.position_.x + 0x4000) / 4096.0f) / 8.0f);
+        int playerZ = (int)(((float)(player->obj3D_.position_.z + 0x4000) / 4096.0f) / 8.0f);
+        int x;
+        int maxX, minZ;
+        int maxZ = 1;
+        maxZ += playerZ;
+        if (environment == 5) {
+            minX = playerX - 4;
+            maxX = playerX + 4;
+            minZ = playerZ - 4;
         } else {
             var1 = var6 - 2;
             var9 = var6 + 2;
             var10 = var7 - 2;
         }
-        if (var1 < 0) var1 = 0;
-        if (var10 < 0) var10 = 0;
-        var9++;
-        if (var9 > 16) var9 = 16;
-        var11++;
-        if (var11 > 16) var11 = 16;
-        var2 = var10;
-        for (; var2 < var11; var2++) {
-            for (var8 = var1; var8 < var9; var8++) {
-                var3 = &arg0->grottoTileMapData_420_[var2 * 16];
-                var3 = &var3[var8];
-                if (var3->unknown_0_ == 0) continue;
-                Struct_02016874_2* var12 = var3->unknown_0_->unknown_44_;
-                if (var12->unknown_2_ & 4) continue;
-                Model3D* var13;
-                var13 = var12->unknown_24_->unknown1_4_;
-                if (var13 == 0 || var13->rawInternalModel_ == 0) continue;
-                LightingManager* var14 = LightingManager::GetInstance();
-                var14->ApplyAmbientColorToModel(var13->rawInternalModel_);
-                func_020ca528(&var3->unknown_14_, &data_0210a010.objectRotationPosition);
+        if (minX < 0) minX = 0;
+        if (minZ < 0) minZ = 0;
+        maxX++;
+        if (maxX > 16) maxX = 16;
+        maxZ++;
+        if (maxZ > 16) maxZ = 16;
+        z = minZ;
+        for (; z < maxZ; z++) {
+            for (x = minX; x < maxX; x++) {
+                tile = &self->grottoTileMapData_420_[z * 16];
+                tile = &tile[x];
+                if (tile->node == 0) continue;
+                BmdjSceneElement* render = tile->node->elements;
+                if (render->flags & BmdjElementFlag_Hidden) continue;
+                Model3D* model;
+                model = render->resource->model;
+                if (model == 0 || model->rawInternalModel_ == 0) continue;
+                LightingManager* manager = LightingManager::GetInstance();
+                manager->ApplyAmbientColorToModel(model->rawInternalModel_);
+                func_020ca528(&tile->rotation, &data_0210a010.objectRotationPosition);
                 data_0210a010.flags &= ~0xa4;
                 RenderConfig::SetObjectPosition(&var3->unknown_3c_);
                 RenderConfig::SubmitToFifo();
-                var13->Draw(true);
-                if (var0 == 4) {
-                    var13 = func_020196fc(arg0, 11)->unknown_44_->unknown_24_->unknown1_4_;
-                    NSBXXInternalModel* var15 = var13->rawInternalModel_;
-                    if (var13 != 0 && var15 != 0) {
-                        Matrix3x3 var16;
-                        Mat3x3_WriteIdentity(&var16);
-                        func_02016d8c(&var16);
+                model->Draw(true);
+                if (environment == 4) {
+                    model = Zone3D_GetScriptNode(self, 11)->elements->resource->model;
+                    NSBXXInternalModel* internal = model->rawInternalModel_;
+                    if (model != 0 && internal != 0) {
+                        Matrix3x3 identity;
+                        Mat3x3_WriteIdentity(&identity);
+                        RenderConfig_SetObjectRotation(&identity);
                         RenderConfig::SubmitToFifo();
                         var13->Draw(true);
                     }
                 }
             }
         }
-        if (var0 != 5) return;
-        Model3D* var17 = func_020196fc(arg0, 12)->unknown_44_->unknown_24_->unknown1_4_;
-        LightingManager* var18 = LightingManager::GetInstance();
-        var18->ApplyAmbientColorToModel(var17->rawInternalModel_);
-        if (var7 < 4) {
-            for (int var19 = var7 - 4; var19 < var7; var19++) {
-                if (var19 < 0) {
-                    for (int var20 = var6 - 4; var20 < var6 + 5; var20++) {
-                        Vector3i var21;
-                        var21.x = (int)(4096.0f * (8.0f * (float)var20));
-                        var21.y = 0;
-                        var21.z = (int)(4096.0f * (8.0f * (float)var19));
-                        RenderConfig::SetObjectPosition(&var21);
+        if (environment != 5) return;
+        Model3D* model = Zone3D_GetScriptNode(self, 12)->elements->resource->model;
+        LightingManager* manager = LightingManager::GetInstance();
+        manager->ApplyAmbientColorToModel(model->rawInternalModel_);
+        if (playerZ < 4) {
+            for (int z = playerZ - 4; z < playerZ; z++) {
+                if (z < 0) {
+                    for (int x = playerX - 4; x < playerX + 5; x++) {
+                        Vector3i position;
+                        position.x = (int)(4096.0f * (8.0f * (float)x));
+                        position.y = 0;
+                        position.z = (int)(4096.0f * (8.0f * (float)z));
+                        RenderConfig::SetObjectPosition(&position);
                         RenderConfig::SubmitToFifo();
                         var17->Draw(true);
                     }

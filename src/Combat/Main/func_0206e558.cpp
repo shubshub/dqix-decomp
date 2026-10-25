@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" int func_02001aec(void* arg0, void* arg1, int arg2);
+extern "C" int memcmp(void* a, void* b, int n);
 
 struct Struct_0206e558 {
     unsigned char unknown_0_[3];
@@ -41,8 +41,8 @@ extern "C" ARM int func_0206e558(struct Struct_0206e558_2* arg0) {
             if (var4 > var5) {
                 continue;
             }
-            if (var0 == 0 && func_02001aec(var2, var3, sizeof(struct Struct_0206e558)) != 0) {
-                var0 = 1;
+            if (flag == 0 && memcmp(ea, eb, sizeof(struct Elem0206e558)) != 0) {
+                flag = 1;
             }
             var2->unknown_0_[0] = var3->unknown_0_[0];
             var2->unknown_0_[1] = var3->unknown_0_[1];
@@ -73,16 +73,16 @@ extern "C" ARM int func_0206e558(struct Struct_0206e558_2* arg0) {
             }
         }
 
-        if (var0 == 0) {
-            if (func_02001aec(arg0->unknown_8c_, arg0->unknown_3c0_, 0x42) != 0) {
-                var0 = arg0->unknown_404_;
+        if (flag == 0) {
+            if (memcmp(s->name1, s->name3, 0x42) != 0) {
+                flag = s->f404;
             }
         }
         memcpy(arg0->unknown_8c_, arg0->unknown_3c0_, 0x42);
 
-        if (var0 == 0) {
-            if (func_02001aec(arg0->unknown_323_, arg0->unknown_40c_, 0xf) != 0) {
-                var0 = 1;
+        if (flag == 0) {
+            if (memcmp(s->name2, s->name4, 0xf) != 0) {
+                flag = 1;
             }
         }
         memcpy(arg0->unknown_323_, arg0->unknown_40c_, 0xf);

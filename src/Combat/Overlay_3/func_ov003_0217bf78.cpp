@@ -35,20 +35,20 @@ struct Struct_ov003_0217bf78_2 {
     int unknown_160_;
 };
 
-extern "C" void func_020a27a0(void *arg0);
-extern "C" void func_020a27ac(void *arg0);
-extern "C" int func_0202e7f0(void *arg0);
-extern "C" int func_020421a0();
-extern "C" void func_02043204(char *arg0);
-extern "C" void func_ov003_0217c974(Struct_ov003_0217bf78_2 *arg0);
-extern "C" void func_0202e694(void *arg0, int *arg1);
-extern "C" void func_0200fd38(GameState *arg0, int arg1, GameObject *arg2);
-extern "C" void func_ov003_0217ca84(Struct_ov003_0217bf78_2 *arg0, unsigned short arg1);
-extern "C" void func_020a64e8(void);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_ov003_0217c2a0(int arg0);
-extern "C" void func_ov003_0217cb3c(Struct_ov003_0217bf78_2 *arg0, int arg1, int arg2);
-extern "C" void func_0205ebc0(void *arg0, int arg1, int arg2);
+void FollowCamera_DisableFollow(void *obj);
+void SetField0x23cTrue_020a27ac(void *obj);
+int GetField0x70_0202e7f0(void *obj);
+int MessageSystem_GetInstance();
+void MessageSystem_Reset(char *obj);
+extern "C" void func_ov003_0217c974(Scene0217bf78 *self);
+void ApplyVec3Tail_0202e694(void *obj, int *vec);
+void RegisterCombatantSlot_0200fd38(GameState *battleStruct, int id, GameObject *combatant);
+extern "C" void func_ov003_0217ca84(Scene0217bf78 *self, unsigned short fillValue);
+void ResetSubBg1AndClearCache020a64e8(void);
+void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+int SetPowCnt1Bit15_0217c2a0(int enable);
+extern "C" void func_ov003_0217cb3c(Scene0217bf78 *self, int mainScreen, int alternate);
+void SePlayer_LoadExtraArchiveB(void *sound, int a, int b);
 
 extern char data_ov003_02180bef[];
 extern char data_ov003_02180cf8[];
@@ -63,43 +63,43 @@ extern "C" ARM void func_ov003_0217bf78(Struct_ov003_0217bf78_2 *arg0) {
     BackgroundLoader *var0 = BackgroundLoader::GetInstance();
     GameResources *var1 = GetGameResources();
 
-    if (arg0->unknown_141_ == 0) {
-        GameState *var2          = GameState::GetInstance();
-        arg0->unknown_130_            = var0->QueueLoadFileInGP2(data_ov003_02180bef, data_ov003_02180cf8, 0);
-        arg0->unknown_138_            = var0->QueueLoadFile(data_ov003_02180d08, 0);
-        arg0->unknown_134_            = var0->QueueLoadFile(data_ov003_02180c07, 0);
-        Struct_ov003_0217bf78 *var3 = (Struct_ov003_0217bf78*)func_020100bc(var2);
-        func_020a27a0(var3);
-        func_020a27ac(var3);
-        var3->unknown_21e_ = func_0202e7f0(var3);
-        var0->RemoveTask(arg0->unknown_13c_);
-        arg0->unknown_13c_ = -1;
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 1) {
-        if (!var0->GetTaskStatus(arg0->unknown_130_)) return;
-        if (IsBrightnessTransitionActive(var1)) return;
-        if (var0->GetDetailedTaskStatus(arg0->unknown_130_) != 2) {
-            var0->RemoveTask(arg0->unknown_130_);
-            arg0->unknown_140_  = 4;
-            arg0->unknown_141_ = 0;
+    if (self->state == 0) {
+        GameState *gs          = GameState::GetInstance();
+        self->taskA            = loader->QueueLoadFileInGP2(data_ov003_02180bef, data_ov003_02180cf8, 0);
+        self->taskC            = loader->QueueLoadFile(data_ov003_02180d08, 0);
+        self->taskB            = loader->QueueLoadFile(data_ov003_02180c07, 0);
+        Camera0217bf78 *camera = (Camera0217bf78*)gs->GetCamera();
+        FollowCamera_DisableFollow(camera);
+        SetField0x23cTrue_020a27ac(camera);
+        camera->field_21e = GetField0x70_0202e7f0(camera);
+        loader->RemoveTask(self->taskD);
+        self->taskD = -1;
+        self->state++;
+    } else if (self->state == 1) {
+        if (!loader->GetTaskStatus(self->taskA)) return;
+        if (IsBrightnessTransitionActive(resources)) return;
+        if (loader->GetDetailedTaskStatus(self->taskA) != 2) {
+            loader->RemoveTask(self->taskA);
+            self->mode  = 4;
+            self->state = 0;
         }
-        GameState *var4 = GameState::GetInstance();
-        func_02043204((char *) func_020421a0());
-        func_ov003_0217c974(arg0);
-        Struct_ov003_0217bf78 *var5 = (Struct_ov003_0217bf78*)func_020100bc(var4);
-        arg0->unknown_144_   = var5->unknown_10_;
-        arg0->unknown_150_       = var5->unknown_70_;
-        var5->unknown_10_       = data_ov003_02180ce0;
-        func_0202e694(var5, data_ov003_02180cec);
-        func_0200fd38(var4, 0xa0, (GameObject *) arg0->unknown_80_);
-        func_ov003_0217ca84(arg0, 0);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 2) {
-        if (!var0->GetTaskStatus(arg0->unknown_134_)) return;
-        if (var0->GetDetailedTaskStatus(arg0->unknown_134_) != 2) {
-            var0->RemoveTask(arg0->unknown_134_);
-            arg0->unknown_140_  = 4;
-            arg0->unknown_141_ = 0;
+        GameState *gs = GameState::GetInstance();
+        MessageSystem_Reset((char *) MessageSystem_GetInstance());
+        func_ov003_0217c974(self);
+        Camera0217bf78 *camera = (Camera0217bf78*)gs->GetCamera();
+        self->cameraPosition   = camera->position;
+        self->cameraTail       = camera->tail;
+        camera->position       = data_ov003_02180ce0;
+        ApplyVec3Tail_0202e694(camera, data_ov003_02180cec);
+        RegisterCombatantSlot_0200fd38(gs, 0xa0, (GameObject *) self->object);
+        func_ov003_0217ca84(self, 0);
+        self->state++;
+    } else if (self->state == 2) {
+        if (!loader->GetTaskStatus(self->taskB)) return;
+        if (loader->GetDetailedTaskStatus(self->taskB) != 2) {
+            loader->RemoveTask(self->taskB);
+            self->mode  = 4;
+            self->state = 0;
         }
         if (arg0->unknown_160_ != 0) func_020a64e8();
         ((Object3D*)arg0->unknown_80_)->MakeHidden();
@@ -121,6 +121,6 @@ extern "C" ARM void func_ov003_0217bf78(Struct_ov003_0217bf78_2 *arg0) {
         *(volatile unsigned int *) 0x4001000 &= ~0x1f00;
         self->mode  = 2;
         self->state = 0;
-        SetForwardAndStore0205ebc0(&g_sePlayer, 0x8b, 0x8b);
+        SePlayer_LoadExtraArchiveB(&g_sePlayer, 0x8b, 0x8b);
     }
 }

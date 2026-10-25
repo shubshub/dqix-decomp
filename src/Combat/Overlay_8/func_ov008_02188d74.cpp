@@ -12,10 +12,9 @@
 #include "Memory/SafeAllocator.h"
 #include "Filesystem/BackgroundLoader.h"
 
-struct Struct_0201099c_3;
-struct Struct_02043368_2;
-struct Struct_02020cb8_4;
-struct Struct_02020aec;
+struct Container020e0310;
+struct Struct0205a198;
+struct PacRecord;
 
 struct Struct_ov006_021580b8
 {
@@ -44,8 +43,8 @@ struct Struct_ov008_02188d74
 const char* KeyTable_Get(Container020e0310* texts, int id);
 void SpriteContext_Init(char* renderer);
 void Sprite_Init(Struct0205a198* sprite);
-int Pac_CountFiles(ActiveEntry02046900* archive);
-void* Pac_GetFile(Rec020467f0* archive, int index, void** name, int* size);
+int Pac_CountFiles(PacRecord* archive);
+void* Pac_GetFile(PacRecord* archive, int index, void** name, int* size);
 extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
 
 struct Struct_ov008_021842a0_2
@@ -90,11 +89,11 @@ extern "C" ARM int func_ov008_02188d74(Struct_ov008_021842a0_2* arg0)
         void* archive;
         unsigned int archiveSize;
         loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
-        int count = Pac_CountFiles((ActiveEntry02046900*)archive);
+        int count = Pac_CountFiles((PacRecord*)archive);
         for (int i = 0; i < count; i++)
         {
             unsigned int size;
-            void* file = Pac_GetFile((Rec020467f0*)archive, i, (void**)name, (int*)&size);
+            void* file = Pac_GetFile((PacRecord*)archive, i, (void**)name, (int*)&size);
             if (file != NULL)
                 SpriteContext_LoadFile(self->iconRenderer_, file, size, &self->iconAllocator_);
         }

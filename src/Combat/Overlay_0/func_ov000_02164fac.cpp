@@ -1,5 +1,5 @@
 #include <globaldefs.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "std_library_functions.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/FileIO.h"
@@ -23,7 +23,7 @@ void BlankFunction020d84f4(void);
 void* ResetObjectState02079a3c(void* obj);
 int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
 int CheckField0x56bLowNibble(Obj02061bd8* obj);
-void CopyInternalFields0207df50(Foo0207df50* p);
+void VramState_Rewind(Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 void FormatEffectStats02072c9c(int combatantId, char* buf);
@@ -36,8 +36,8 @@ extern "C" void func_ov000_02166a94(void* work);
 #if defined(jpn)
 extern "C" void func_0207ab68(Struct_02108e10* arg0, SafeAllocator* arg1);
 #endif
-extern "C" int func_ov017_0219e008(void* arg0);
-extern "C" void func_0207dfc8(Struct_02015ef4_5* arg0, Struct_02015ef4_5* arg1);
+int GetFieldB08_0219e008(void* ov);
+void VramState_CopyCurrentTo(State0207dfc8* src, State0207dfc8* dst);
 
 extern const char data_ov000_02183960[];
 extern const char data_ov000_02183976[];
@@ -132,13 +132,13 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
     int var10;
     Struct_ov000_02164fac_2* var11;
 
-    GameState* var12 = GameState::GetInstance();
-    GameResources* var13 = GetGameResources();
-    int* var14 = (int*)func_0202ae18();
-    SafeAllocator* var15 = inline_ov000_02164fac(var13, 7);
-    var11 = (Struct_ov000_02164fac_2*)var13->unknown_2cc_;
-    var15->Reset();
-    func_0207df50((Struct_0203d028*)&var11[7]);
+    GameState* game = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    int* search = (int*)func_0202ae18();
+    SafeAllocator* allocator = GetAllocator38(res, 7);
+    blocks = (Slot70*)res->vramStates_;
+    allocator->Reset();
+    VramState_Rewind((Foo0207df50*)&blocks[7]);
     BackgroundLoader::AddLockGlobal();
     func_02012de8();
     Struct_02108e10* var16 = func_020797dc();
@@ -150,9 +150,9 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
 #endif
     func_02012de8();
 
-    if (LoadFileIntoMemory(data_ov000_02183960, data_0211e33c, &var4)) {
-        GetFileInNarc(data_0211e33c, data_ov000_02183976, &var5, &var6, 0);
-        if (var5 != NULL) {
+    if (LoadFileIntoMemory(data_ov000_02183960, g_fileLoadBuffer, &size)) {
+        GetFileInNarc(g_fileLoadBuffer, data_ov000_02183976, &script, &scriptSize, 0);
+        if (script != NULL) {
             func_02012de8();
             func_ov000_0216d1c4(arg0->unknown_4_, (Struct_02013fb4*)var5, var6, &arg0->unknown_5724_);
         }
@@ -161,14 +161,14 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
         func_020d84f4();
     }
 
-    unsigned char* var17 = data_0211e33c;
-    int var18 = 0x30000;
-    func_02079a3c(&var0);
-    const char* var19 = data_ov000_02183983;
-    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var0.pGPCFile, var0.machine,
-            var19, var17, var4, var18, false, 0)) {
-        var17 += var4;
-        var18 -= var4;
+    unsigned char* buf = g_fileLoadBuffer;
+    int capacity = 0x30000;
+    ResetObjectState02079a3c(&pair);
+    const char* path = data_ov000_02183983;
+    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine,
+            path, buf, size, capacity, false, 0)) {
+        buf += size;
+        capacity -= size;
 
         for (int var20 = 0; var20 < 4; var20++) {
             if (!func_020a35e0(arg0->unknown_2a0_, var20)) {
@@ -189,10 +189,10 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 }
                 alloc = (SafeAllocator*)(model + 4);
                 alloc->Reset();
-                CopyInternalFields0207df50((Foo0207df50*)(model + 0xcc));
+                VramState_Rewind((Foo0207df50*)(model + 0xcc));
                 VramState_Restore((char*)(model + 0xcc));
-                LoadFileIntoMemory(name, data_0211e33c, &size);
-                buf = data_0211e33c;
+                LoadFileIntoMemory(name, g_fileLoadBuffer, &size);
+                buf = g_fileLoadBuffer;
             } else {
                 func_02072c9c(var20, var7);
                 if (var21->unknown_150_->unknown_49c_.unknown_0_0_ == 1) {
@@ -203,16 +203,16 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 DecompressFileFromGPCByName(var0.pGPCFile, var0.machine, var17, var4, var18, var1);
             }
 
-            if (var4 != 0) {
-                var21->unknown_0_.RemoveAllAnimationPackages();
-                ((SafeAllocator*)(var22 + 0x52c))->Reset();
-                func_0203dafc((Struct_0203d028_11*)&var2);
-                var2.allocator = var23;
-                var2.unk_10 = 1;
-                var2.packageID = 0;
-                var2.unk_8 = var4;
-                var2.fileData = var17;
-                var21->unknown_0_.LoadFromCCHROrCMOTArchive(&var2, NULL);
+            if (size != 0) {
+                c->object.RemoveAllAnimationPackages();
+                ((SafeAllocator*)(model + 0x52c))->Reset();
+                ClearEightWords_0203dafc((Struct_203dafc*)&info);
+                info.allocator = alloc;
+                info.unk_10 = 1;
+                info.packageID = 0;
+                info.fileSize = size;
+                info.fileData = buf;
+                c->object.LoadFromCCHROrCMOTArchive(&info, NULL);
             }
 
             func_02049c88(var21, &arg0->unknown_5c3c_[var20]);
@@ -222,36 +222,36 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 if (c->info != NULL) {
                     sprintf(name, data_ov000_021839c0, c->info[INFO_NAME_ID]);
                 }
-                LoadFileIntoMemory(var1, data_0211e33c, &var4);
-                var17 = data_0211e33c;
+                LoadFileIntoMemory(name, g_fileLoadBuffer, &size);
+                buf = g_fileLoadBuffer;
             } else {
                 var7[0] = 'm';
                 sprintf(var1, data_ov000_021839da, var7);
                 DecompressFileFromGPCByName(var0.pGPCFile, var0.machine, var17, var4, var18, var1);
             }
 
-            if (var4 != 0) {
-                var21->unknown_0_.RemoveAnimationPackageByID(1);
-                ((SafeAllocator*)(var22 + 0x540))->Reset();
-                func_0203dafc((Struct_0203d028_11*)&var3);
-                var3.unk_10 = 1;
-                var3.packageID = 1;
-                var3.allocator = (SafeAllocator*)(var22 + 0x540);
-                var3.unk_8 = var4;
-                var3.fileData = var17;
-                var21->unknown_0_.LoadFromCCHROrCMOTArchive(&var3, NULL);
-                if (FindFilesInNarcBySubstring(var17, data_ov000_021839e2, &var8, &var9, 1)) {
-                    func_ov000_0216d1c4((int)(var22 + 0x540), (Struct_02013fb4*)var8, var9, &var10);
-                    func_ov000_02165480(var21, var10);
+            if (size != 0) {
+                c->object.RemoveAnimationPackageByID(1);
+                ((SafeAllocator*)(model + 0x540))->Reset();
+                ClearEightWords_0203dafc((Struct_203dafc*)&info2);
+                info2.unk_10 = 1;
+                info2.packageID = 1;
+                info2.allocator = (SafeAllocator*)(model + 0x540);
+                info2.fileSize = size;
+                info2.fileData = buf;
+                c->object.LoadFromCCHROrCMOTArchive(&info2, NULL);
+                if (FindFilesInNarcBySubstring(buf, data_ov000_021839e2, &script2, &scriptSize2, 1)) {
+                    RunOverlayScript0216d1c4((int)(model + 0x540), (StreamHeader*)script2, scriptSize2, &scriptState);
+                    SetPtrFieldIfNonNull0x13c_ov000_02165480(c, scriptState);
                 }
             }
 
-            var21->unknown_c2_ |= 0x20;
-            var21->unknown_0_.MaybeSetRegularAnimation(data_ov000_021839e8, 0);
-            if (func_02061bd8((Struct_0205faf4_11*)var21)) {
-                Struct_ov000_02164fac* var24 = func_02053c6c((unsigned char*)var21);
-                if (var24 != NULL) {
-                    var24->unknown_94c_ = 0;
+            c->flags |= 0x20;
+            c->object.SetAnimationByName(data_ov000_021839e8, 0);
+            if (CheckField0x56bLowNibble((Obj02061bd8*)c)) {
+                CombatantData02164fac* data = GetFieldAt0x150_02053c6c((unsigned char*)c);
+                if (data != NULL) {
+                    data->phase = 0;
                 }
             }
             if (func_0202b7d8(var14)) {
@@ -272,10 +272,10 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
     if (var26 != NULL) {
         arg0->unknown_44_.CreateTypeA(var26, var25);
     }
-    if (func_ov017_0219e008(var13) == 0) {
-        func_0207dfc8((Struct_02015ef4_5*)var13->unknown_2cc_, (Struct_02015ef4_5*)arg0->unknown_1bc_);
+    if (GetFieldB08_0219e008(res) == 0) {
+        VramState_CopyCurrentTo((State0207dfc8*)res->vramStates_, (State0207dfc8*)work->state);
     } else {
-        func_0207dfc8((Struct_02015ef4_5*)&var11[7], (Struct_02015ef4_5*)arg0->unknown_1bc_);
+        VramState_CopyCurrentTo((State0207dfc8*)&blocks[7], (State0207dfc8*)work->state);
     }
     var0.Reset();
     ZeroDestroyGPCPointer(&var0.pGPCFile);

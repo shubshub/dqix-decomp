@@ -63,11 +63,11 @@ extern "C" int func_ov000_02171a74(struct Struct_ov000_02170db0_3* arg0);
 #else
 extern "C" int func_ov000_02171a74(struct Struct_ov000_02170db0_3* arg0, char* arg1);
 #endif
-extern "C" void func_020e4864(void* arg0, char* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" int func_020421a0(void);
-extern "C" void func_02046608(int arg0, int arg1, char* arg2, char* arg3, int arg4, int arg5, int arg6);
-extern "C" void func_ov000_0217616c(struct Struct_ov000_02170db0_3* arg0);
+extern "C" void func_020e4864(void* src, char* dst, int a, int b, int c, int d);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_FormatText(int messages, int mode, char* input, char* output, int size, int a, int b);
+extern "C" void func_ov000_0217616c(struct Obj02170db0* obj);
 
 extern char data_ov000_02183ff4[];
 
@@ -118,14 +118,14 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
 #if defined(jpn)
             func_0203c108(&arg0->unknown_50_, (char*)var1->unknown_4_);
 #else
-            char var9[0x80];
-            char var10[0x80];
-            __clear(var9, sizeof(var9));
-            __clear(var10, sizeof(var10));
-            func_020e4864(var1->unknown_4_, var9, 1, 0, 0, 0);
-            func_0206819c(var9, var10, 0);
-            func_02046608(func_020421a0(), 10, var10, var9, 0x100, 0, 0);
-            func_0203c108(&arg0->unknown_50_, var9);
+            char raw[0x80];
+            char name[0x80];
+            __clear(raw, sizeof(raw));
+            __clear(name, sizeof(name));
+            func_020e4864(equip->text, raw, 1, 0, 0, 0);
+            CopyTextAndUppercaseIfFlagged0206819c(raw, name, 0);
+            MessageSystem_FormatText(MessageSystem_GetInstance(), 10, name, raw, 0x100, 0, 0);
+            SwapGlobalEntry0203c108(&obj->label, raw);
 #endif
         }
     } else if (obj->kind == 6) {

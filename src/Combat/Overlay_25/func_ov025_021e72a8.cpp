@@ -25,8 +25,8 @@ extern "C" ARM int func_ov025_021e72a8(struct Struct_ov025_021e72a8* arg0) {
     if (var0 != 0) {
         *(unsigned char*)((char*)var0 + Enum_ov025_021e72a8_24576 + Enum_ov025_021e72a8_4053) = 1;
     }
-    GameState* var1 = GameState::GetInstance();
-    char* var2 = (char*)func_020100bc(var1);
-    func_0202ed7c(var2, (int)((char*)arg0 + 8), arg0->unknown_14_, arg0->unknown_18_, arg0->unknown_1c_);
+    GameState* bs = GameState::GetInstance();
+    char* field = (char*)bs->GetCamera();
+    CallFunc020a0d6cAtField0x16c_0202ed7c(field, (int)((char*)p + 8), p->f14, p->f18, p->f1c);
     return 1;
 }

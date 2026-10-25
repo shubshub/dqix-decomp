@@ -1,0 +1,45 @@
+#include <globaldefs.h>
+#include "Combat/Main/CopyRecord0200fbb4.h"
+#include "GameState/GameState.h"
+
+void* GetField0x3f8Address_0200fd0c(GameState*);
+extern "C" void* Zone3D_GetInstance(void);
+struct Vector3i;
+void InitStruct02070378(char*);
+
+#if defined(jpn)
+enum { kMapIndex = 0x23db, kPosition = 0x23e0, kAngle = 0x23ec };
+#else
+enum { kMapIndex = 0x23bb, kPosition = 0x23c0, kAngle = 0x23cc };
+#endif
+
+struct S3f8 {
+    short field0;
+    char field2;
+    char pad1[4];
+    char field7;
+    char pad2[8];
+    int vec10[3];
+    short field1c;
+    char pad3[0x68 - 0x1e];
+    char field68;
+};
+
+// USA: func_ov001_021620bc  (semantic: InitField3f8FromLoadedData_021620bc)
+extern "C" ARM int func_ov001_021620bc(void) {
+    int tmpVec[3];
+    void* battle = GameState::GetInstance();
+    struct S3f8* obj = (struct S3f8*)GetField0x3f8Address_0200fd0c((GameState*)battle);
+    char* data = (char*)Zone3D_GetInstance();
+    *(Vector3i*)tmpVec = *(Vector3i const*)((int*)(data + kPosition));
+    short shortCc = *(short*)(data + kAngle);
+    InitStruct02070378((char*)obj);
+    obj->field2 = 1;
+    obj->field7 = 1;
+    obj->field0 = (short)(*(signed char*)(data + kMapIndex) + 0x1c40 + 0x8000);
+    *(Vector3i*)obj->vec10 = *(Vector3i const*)tmpVec;
+    obj->field1c = shortCc;
+    obj->field68 = 1;
+    CallFunc0200fbb4AtField0x3f8_0200fcfc(battle, obj);
+    return 1;
+}

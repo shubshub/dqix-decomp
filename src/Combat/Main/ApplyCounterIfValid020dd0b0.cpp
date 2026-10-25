@@ -1,9 +1,5 @@
 #include <globaldefs.h>
-
-struct Struct020dfc40 {
-    unsigned char pad[0x14];
-    int field_14;
-};
+#include "Resource/KeyTable.h"
 
 void* ResetAndReturnSelf020dfc2c(void* p);
 void KeyTable_Reset(struct Struct020dfc40* p);

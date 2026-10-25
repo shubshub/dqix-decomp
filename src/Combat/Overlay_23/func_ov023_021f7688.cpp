@@ -12,10 +12,10 @@ struct Struct_020534ac_2;
 
 struct Struct_020534ac;
 
-struct Struct_ov023_021f7688;
-struct Struct_02020aec;
-extern "C" void func_ov023_021f7aac(struct Struct_ov023_021f7688* arg0, void* arg1, struct Struct_02020aec* arg2, unsigned int arg3);
-extern "C" void func_ov023_021f7b98(struct Struct_ov023_021f7688* arg0, void* arg1, int arg2, struct Struct_02020aec* arg3, unsigned int arg4);
+struct Obj021f7aac;
+struct PacRecord;
+extern "C" void func_ov023_021f7aac(struct Obj021f7aac* obj, void* keyObj, struct PacRecord* entry, unsigned int entryLength);
+extern "C" void func_ov023_021f7b98(struct Obj021f7aac* obj, void* keyObj, int flag, struct PacRecord* entry, unsigned int entryLength);
 
 struct Struct_ov023_021f7688_2 {
     char unknown_0_[0xc];
@@ -33,19 +33,19 @@ extern "C" ARM int func_ov023_021f7688(struct Struct_ov023_021f7688_2* arg0, voi
         return 2;
     }
 
-    void* var0 = func_ov011_021849c8(arg1);
-    int var1 = (int)BackgroundLoader::GetInstance();
-    int var2 = func_ov023_021f6bb8(var0);
-    int var3;
-    if (((BackgroundLoader*)(var1))->GetTaskStatus((int)(var2))) {
-        if (((BackgroundLoader*)((struct Struct_020534ac_2*)var1))->GetDetailedTaskStatus((int)(var2)) == 2) {
-            int var4, var5;
-            ((BackgroundLoader*)((struct Struct_020534ac*)var1))->GetLoadedFileByID((int)(var2), (void**)(&var4), (unsigned int*)(&var5));
-            if (var4 != 0 && var5 != 0) {
-                if (arg0->unknown_c_ & 0x2) {
-                    func_ov023_021f7b98((struct Struct_ov023_021f7688*)arg0, arg1, 1, (struct Struct_02020aec*)var4, var5);
+    void* node = func_ov011_021849c8(keyObj);
+    int listPtr = (int)BackgroundLoader::GetInstance();
+    int key = func_ov023_021f6bb8(node);
+    int result;
+    if (((BackgroundLoader*)(listPtr))->GetTaskStatus((int)(key))) {
+        if (((BackgroundLoader*)((struct List0202fe68*)listPtr))->GetDetailedTaskStatus((int)(key)) == 2) {
+            int v1, v2;
+            ((BackgroundLoader*)((struct List0202fec8*)listPtr))->GetLoadedFileByID((int)(key), (void**)(&v1), (unsigned int*)(&v2));
+            if (v1 != 0 && v2 != 0) {
+                if (obj->fieldC & 0x2) {
+                    func_ov023_021f7b98((struct Obj021f7aac*)obj, keyObj, 1, (struct PacRecord*)v1, v2);
                 } else {
-                    func_ov023_021f7aac((struct Struct_ov023_021f7688*)arg0, arg1, (struct Struct_02020aec*)var4, var5);
+                    func_ov023_021f7aac((struct Obj021f7aac*)obj, keyObj, (struct PacRecord*)v1, v2);
                 }
             }
         }

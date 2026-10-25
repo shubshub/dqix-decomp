@@ -2,19 +2,19 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150* arg0, int arg1);
-extern "C" void* func_020421a0(void);
-extern "C" void* func_ov017_021b8478(void* arg0);
-struct Struct_02038598_5;
-extern "C" int func_02046b60(Struct_02038598_5* arg0, int arg1);
-extern "C" int func_02046b08(void** arg0);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" int func_02039820(void* arg0);
-extern "C" int func_02039d7c(char* arg0);
-extern "C" void func_ov017_021cf4b0(int arg0, int arg1);
-extern "C" void func_0200fb40(void* arg0);
-extern "C" int* func_020936f8(void);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* s, int val);
+void* MessageSystem_GetInstance(void);
+extern "C" void* func_ov017_021b8478(void* obj);
+struct ListHead02046b60;
+int ListContainsId(ListHead02046b60* list, int id);
+int IsField0Null_02046b08(void** p);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
+int GetByteField0x252_02039820(void* obj);
+int GetByte0x26c_02039d7c(char* p);
+void EnqueueEventTag57WithAB_021cf4b0(int a, int b);
+void ClearSubstructBytes_0200fb40(void* obj);
+int* GetGlobal02109030_020936f8(void);
 extern "C" void func_02094030(int*, short, short, int);
 struct Struct_ov017_021c0124;
 extern "C" void func_ov017_021c0124(Struct_ov017_021c0124* arg0, unsigned char arg1);
@@ -46,17 +46,17 @@ extern "C" ARM void func_ov017_021bff8c(Struct_ov017_021bff8c* arg0, unsigned ch
 #else
  enum {Enum_ov017_021bff8c_434=0x1b2,Enum_ov017_021bff8c_2456=0x998};
 #endif
-    if (func_02086ef0((Struct_02048150*)func_02010828(GameState::GetInstance()), 0) == 0) {
-        int var0 = 0;
-        int var1 = 0;
-        GameState* var2 = GameState::GetInstance();
-        GameObject* var3 = var2->GetPartyMemberByIndex(0);
-        GameObject* var4 = var2->GetProtagonist();
-        char* var5 = (char*)func_020421a0();
-        Struct_ov017_021bff8c* var6 = (Struct_ov017_021bff8c*)GetGameResources();
-        void* var7 = NULL;
-        if (var6 != NULL) {
-            var7 = var6->unknown_3718_;
+    if (ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)GameState_GetParty(GameState::GetInstance()), 0) == 0) {
+        int match = 0;
+        int blocked = 0;
+        GameState* gs = GameState::GetInstance();
+        GameObject* leader = gs->GetPartyMemberByIndex(0);
+        GameObject* hero = gs->GetProtagonist();
+        char* g = (char*)MessageSystem_GetInstance();
+        Ctx021bff8c* base = (Ctx021bff8c*)GetGameResources();
+        void* table = NULL;
+        if (base != NULL) {
+            table = base->table;
         }
         if (var7 != NULL) {
             func_ov017_021b8478(var7);
@@ -82,10 +82,10 @@ extern "C" ARM void func_ov017_021bff8c(Struct_ov017_021bff8c* arg0, unsigned ch
         } else if (func_02039d7c((char*)var4) != 0) {
             var1 = 1;
         }
-        unsigned char var9 = var4->obj3D_.unknown_4_;
-        if (var0) {
-            func_ov017_021cf4b0(var9, 5);
-            func_0200fb40(var2);
+        unsigned char heroIndex = hero->obj3D_.actorIndex_;
+        if (match) {
+            EnqueueEventTag57WithAB_021cf4b0(heroIndex, 5);
+            ClearSubstructBytes_0200fb40(gs);
             return;
         }
         if (var1) {

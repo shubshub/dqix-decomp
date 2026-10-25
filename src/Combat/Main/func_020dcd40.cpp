@@ -9,7 +9,7 @@ struct Struct_02087574;
 struct Struct_0201099c_16;
 struct Struct_020dcd40 { unsigned char unknown_0_[0x30]; };
 
-extern "C" unsigned short* func_02012fe4(void* p);
+extern "C" unsigned short* Zone3D_GetInstance(void* p);
 int GetFirstFlaggedValue02086e9c(FlaggedEntryContainer02086e9c* p);
 FindEntryContainer02086e50* FindEntryBySignedId02086e50(FindEntryContainer02086e50* p, int idx);
 void* FindRecordByShortField020108f0(void* state, int slot);
@@ -19,13 +19,13 @@ extern "C" void func_02082d6c(void* rec, void* entry);
 extern "C" void func_ov017_0218f064(void* v, int slot, int flags, int a, int b);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* state, int id);
 void ArchiveEntryToCombatantField0x150_020875c4(EntryTable02087574* p, int idx, int slot);
-unsigned char GetField0x3acValue_020100a8(GameState* state);
+unsigned char GameState_GetProtagonistIndex(GameState* state);
 void SetField0x2d0_020546a0(void* obj, int value);
 int GetSignedByte0x2d0_020546a8(void* obj);
 void SetField0x2d1_020546b4(void*, int);
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void __clear(void* p, int size);
-extern "C" void func_02042764(void* dst, void* src, int n);
+extern "C" void Font_DecodeText(void* dst, void* src, int n);
 int GetFieldAt0x50(Struct020865b0* entry);
 void PartyMember_SetVocation(unsigned char* p, int idx);
 extern "C" void func_ov017_02191108(void* v, int a, int b, int c, int d);
@@ -33,11 +33,11 @@ void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04* p, int idx);
 
 // USA: func_020dcd40
 extern "C" ARM int func_020dcd40() {
-    int var0 = 0;
-    GameResources* var1 = GetGameResources();
-    GameState* var2 = GameState::GetInstance();
-    void* var3 = func_02010828(var2);
-    unsigned short* var4 = func_02012fe4(var3);
+    int count = 0;
+    GameResources* v14 = GetGameResources();
+    GameState* battle = GameState::GetInstance();
+    void* p10 = GameState_GetParty(battle);
+    unsigned short* v0c = Zone3D_GetInstance(p10);
     while (true) {
         int var5 = func_02086e9c((Struct_02086e9c*)var3);
         if (var5 < 0) {
@@ -69,29 +69,29 @@ extern "C" ARM int func_020dcd40() {
         if (var10 == NULL) {
             break;
         }
-        void* var11 = func_02010828(var2);
-        func_020875c4((Struct_02087574*)var11, var5, (signed char)var7);
-        var10->obj3D_.SetField06(*var4);
-        var2->GetProtagonist();
-        unsigned char var12 = func_020100a8(var2);
-        func_020546a0(var10, var12);
-        int var13 = 0;
-        for (int var14 = 0; var14 < 4; var14++) {
-            GameObject* var15 = func_0200ff58(var2, var14);
-            if (var15 != NULL && var14 != var7 && var12 == func_020546a8(var15)) {
-                var13++;
+        void* p8 = GameState_GetParty(battle);
+        ArchiveEntryToCombatantField0x150_020875c4((EntryTable02087574*)p8, idx, (signed char)slot);
+        c->obj3D_.SetField06(*v0c);
+        battle->GetProtagonist();
+        unsigned char v4 = GameState_GetProtagonistIndex(battle);
+        SetField0x2d0_020546a0(c, v4);
+        int n = 0;
+        for (int j = 0; j < 4; j++) {
+            GameObject* other = GetCombatantWithFlag0x1000_0200ff58(battle, j);
+            if (other != NULL && j != slot && v4 == GetSignedByte0x2d0_020546a8(other)) {
+                n++;
             }
         }
-        func_020546b4(var10, var13);
-        func_02010828(var2);
-        unsigned char* var16 = func_02053c6c((unsigned char*)var10);
+        SetField0x2d1_020546b4(c, n);
+        GameState_GetParty(battle);
+        unsigned char* v7 = GetFieldAt0x150_02053c6c((unsigned char*)c);
 #if defined(jpn)
         strcpy((char*)var10->baseStats_, (const char*)var6 + 0x140);
 #else
-        Struct_020dcd40 var17;
-        __clear(&var17, 0x30);
-        func_02042764((char*)var6 + 0x140, &var17, 1);
-        strcpy((char*)var10->baseStats_, (const char*)&var17);
+        LocalBuf020dcd40 local;
+        __clear(&local, 0x30);
+        Font_DecodeText((char*)entry + 0x140, &local, 1);
+        strcpy((char*)c->baseStats_, (const char*)&local);
 #endif
         int a = GetFieldAt0x50((Struct020865b0*)entry);
         unsigned char* p = (unsigned char*)entry + GetFieldAt0x50((Struct020865b0*)entry);

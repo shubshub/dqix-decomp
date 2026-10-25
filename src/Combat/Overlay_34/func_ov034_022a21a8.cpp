@@ -15,8 +15,8 @@ extern "C"
 }
 
 struct AllocatorUnion;
-extern "C" void* func_02012d88(struct AllocatorUnion* arg0, unsigned int arg1);
-extern AllocatorUnion data_02114e20;
+void* AllocatorUnion_AllocateRounded(struct AllocatorUnion* a, unsigned int n);
+extern AllocatorUnion g_mainAllocator;
 
 extern "C" void _ZN16BackgroundLoader4TaskaSERKS0_(BackgroundLoader::Task* arg0,
                                                    const BackgroundLoader::Task* arg1);
@@ -283,7 +283,7 @@ int Struct_ov034_022a2a6c::Process()
             int z = b ^ ((b >> 6) ^ (b >> 4) ^ (b >> 2));
             if ((unsigned char)(z & 3) == 0)
 #endif
-                func_02012d88(&data_02114e20, 8);
+                AllocatorUnion_AllocateRounded(&g_mainAllocator, 8);
         }
 
         LockResourceMutex();

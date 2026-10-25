@@ -4,8 +4,8 @@
 #include "NitroSDK/Cache.h"
 #include "NitroSDK/LoadToVRAM.h"
 
-struct Struct_0201099c_10;
-struct Struct_020730e0_2;
+struct ItemTable;
+struct Obj020de2a4;
 
 struct Struct_ov005_021556e4
 {
@@ -56,37 +56,37 @@ struct Struct_ov015_0218c03c_2
     unsigned char unknown_3e_;
 };
 
-extern "C" Struct_ov005_021556e4* func_020dedd0(Struct_0201099c_10* arg0, int arg1);
-extern "C" int func_020de2a4(Struct_020730e0_2* arg0, int arg1, int arg2);
-extern "C" Struct_02099d34* func_02099cac();
-extern "C" void func_02099d34(void* arg0, int arg1, int arg2, int arg3);
+PartEntry* ItemTable_Find(ItemTable* c, int key);
+int ItemRecord_GetPaletteSize(Obj020de2a4* obj, int a, int b);
+CharacterColors* CharacterColors_GetInstance();
+extern "C" void func_02099d34(void* obj, int a, int b, int c);
 
 // USA: func_ov015_0218c3a4
 extern "C" ARM void func_ov015_0218c3a4(Struct_ov015_0218c03c_2* arg0, int arg1)
 {
-    Struct_ov005_021556e4* var0 = func_020dedd0((Struct_0201099c_10*)&arg0->unknown_0_->unknown_4c_, (short)arg0->unknown_20_[arg1]);
-    if (var0 == NULL || var0->unknown_0_ == NULL)
+    PartEntry* entry = ItemTable_Find((ItemTable*)&self->viewer_->parts_, (short)self->parts_[part]);
+    if (entry == NULL || entry->model_ == NULL)
         return;
     Struct_ov005_02155d6c* var1 = &arg0->unknown_4_->unknown_0_[arg1];
     if (arg0->unknown_1c_ == 1)
     {
-        int var2 = func_020de2a4((Struct_020730e0_2*)var0, 0, arg0->unknown_3b_);
-        if (var2 == 0)
+        int count = ItemRecord_GetPaletteSize((Obj020de2a4*)entry, 0, self->female_);
+        if (count == 0)
             return;
         var2 *= 2;
         NSBXXTex* var3 = arg0->unknown_24_[arg1].pModel_->GetTEX0();
         if (var3 == NULL)
             return;
-        int var4 = 0x30;
-        unsigned short var5 = ((unsigned short)(var3->block4NumEightBytes_ << 3) + 0x1f) & ~0x1f;
-        int var6 = 0x20;
-        if (arg1 == 0)
-            var6 = 0x200;
-        var4 -= var5 - var6;
-        Struct_02099d34* var7 = func_02099cac();
-        const void* var8 = NULL;
-        int var9 = var2 * 2;
-        switch (var2)
+        int position = 0x30;
+        unsigned short size = ((unsigned short)(texture->block4NumEightBytes_ << 3) + 0x1f) & ~0x1f;
+        int start = 0x20;
+        if (part == 0)
+            start = 0x200;
+        position -= size - start;
+        CharacterColors* colors = CharacterColors_GetInstance();
+        const void* source = NULL;
+        int length = count * 2;
+        switch (count)
         {
         case 2:
             var8 = var7->unknown_28_[arg0->unknown_3e_];
@@ -111,11 +111,11 @@ extern "C" ARM void func_ov015_0218c3a4(Struct_ov015_0218c03c_2* arg0, int arg1)
         }
         return;
     }
-    int var11 = func_020de2a4((Struct_020730e0_2*)var0, 1, arg0->unknown_3b_);
-    Model3D* var12 = arg0->unknown_24_[arg1].pModel_;
-    unsigned char var13 = arg0->unknown_3e_;
-    if (arg1 == 4)
-        func_02099d34(var12, var11, var13, 0x10);
+    int colors = ItemRecord_GetPaletteSize((Obj020de2a4*)entry, 1, self->female_);
+    Model3D* model = self->objects_[part].pModel_;
+    unsigned char color = self->eyeColor_;
+    if (part == 4)
+        func_02099d34(model, colors, color, 0x10);
     else
         func_02099d34(var12, var11, var13, 4);
 }

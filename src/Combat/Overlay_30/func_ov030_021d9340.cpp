@@ -10,14 +10,14 @@ extern "C" void func_ov015_0218b5a0(void);
 struct GameResources;
 void InitializeBrightnessState(GameResources*);
 unsigned int EnableSpecificInterrupts(unsigned int mask);
-struct Struct_02054280;
-extern "C" void func_02054280(Struct_02054280*);
-extern "C" void func_0204719c(void* arg0);
-extern "C" void func_ov017_0219a674(unsigned char*);
-extern "C" void func_02020554(void* arg0);
+struct T02054280;
+void ResetAllocators02054280(T02054280*);
+extern "C" void SprSprite_Init(void* obj);
+void InitObj0219a674(unsigned char*);
+extern "C" void func_02020554(void* obj);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int length);
-struct List0204af64;
-void Background_Init(List0204af64*);
+struct BackgroundGraphics;
+void Background_Init(BackgroundGraphics*);
 void ResetFieldGroup4444_0218b664(char* base);
 struct List02046958;
 void ClearListHeadTail(List02046958*);
@@ -39,7 +39,7 @@ extern "C" void func_ov017_021b2c4c(void* obj);
 void Init021b2f64(unsigned char*);
 struct Struct021b46d8;
 void InitStruct_021b46d8(Struct021b46d8*);
-extern "C" void func_ov017_021b57fc(void* obj);
+extern "C" void FieldTask_InitSearchPot(void* obj);
 struct Struct021aa3f4;
 void InitState25_021aa3f4(Struct021aa3f4*);
 struct Obj021aa50c;
@@ -53,7 +53,8 @@ void InitState30_021ac2ec(Obj021ac2ec*);
 struct Obj021c0124;
 void InitState32_021c0124(Obj021c0124*, unsigned char);
 extern "C" void func_ov017_021acd7c(void* obj);
-void InitObj_021adc58(unsigned char*);
+struct OpenChestTask;
+void FieldTask_InitOpenChest(OpenChestTask*);
 struct Obj021ae800;
 void ResetHeaderAndAllocator_021ae800(Obj021ae800*);
 struct Struct021aeedc;
@@ -76,7 +77,7 @@ struct Struct021b61e4;
 void InitBattleObj_021b61e4(Struct021b61e4*);
 void InitObj021bdbf0(unsigned char*);
 void InitByteHeader_021be0a0(unsigned char*);
-extern "C" void func_ov017_021a9bc4(void* obj, int flag);
+extern "C" void FieldTask_InitAcquireTreasureMap(void* obj, int flag);
 void InitObj021beba4(char*);
 struct Obj021befe4;
 void InitState53_021befe4(Obj021befe4*);
@@ -85,8 +86,8 @@ void InitState60_021aa16c(Obj021aa16c*);
 struct Struct021c1e40;
 void InitState66_021c1e40(Struct021c1e40*);
 void InitByteHeader_021c2688(unsigned char*);
-struct Obj021c2744;
-void InitState69_021c2744(Obj021c2744*);
+struct WhistleTask;
+void FieldTask_InitWhistle(WhistleTask*);
 void InitObj021c2b28(void* obj, unsigned char a, unsigned char b);
 struct Struct021c316c;
 void InitState71WithFlag_021c316c(Struct021c316c*, int);
@@ -150,11 +151,11 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
     *(int*)(var0 + R(0x28f8, (0x2000 + 0xb08))) = -1;
     ((SafeAllocator*)(var0 + R(0x28fc, (0x2000 + 0xb0c))))->ResetAllocatorPointer();
 
-    for (int var8 = 0; var8 < 0x12; var8++) {
-        func_0204719c(var0 + R(0x2980, (0x2000 + 0xb90)) + var8 * 0x88);
+    for (int i = 0; i < 0x12; i++) {
+        SprSprite_Init(self + R(0x2980, (0x2000 + 0xb90)) + i * 0x88);
     }
-    func_0204719c(var0 + R(0x3310, (0x3000 + 0x520)));
-    func_0204719c(var0 + R(0x3398, (0x3400 + 0x1a8)));
+    SprSprite_Init(self + R(0x3310, (0x3000 + 0x520)));
+    SprSprite_Init(self + R(0x3398, (0x3400 + 0x1a8)));
 
     *(int*)(var0 + R(0x3420, (0x3000 + 0x630))) = 0;
     for (int var9 = 0; var9 < 0x12; var9++) {
@@ -179,7 +180,7 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
 
     VectorizedMemset(self + R(0x34cc, (0x3400 + 0x2dc)), 0, 5);
     VectorizedMemset(self + R(0x34d1, (0x3600 + 0xe1)), 0, 9);
-    Background_Init((List0204af64*)(*(void**)(self + R(0x34c8, (0x3000 + 0x6d8)))));
+    Background_Init((BackgroundGraphics*)(*(void**)(self + R(0x34c8, (0x3000 + 0x6d8)))));
 
     *(int*)(var0 + R(0x34dc, (0x3000 + 0x6ec))) = -1;
     *(int*)(var0 + R(0x34e0, (0x3000 + 0x6f0))) = 0;
@@ -230,7 +231,7 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
         func_ov017_021b46d8((Struct_ov017_0219dc90_3*)(var0 + R(0x388c, (0x3800 + 0x29c)) + var15 * R(0x14, 0x18)));
     }
 
-    func_ov017_021b57fc(*(void**)(var0 + R(0x38dc, (0x3000 + 0xafc))));
+    FieldTask_InitSearchPot(*(void**)(self + R(0x38dc, (0x3000 + 0xafc))));
 
     func_0204693c((Struct_0204693c*)(*(void**)(var0 + R(0x38e0, (0x3000 + 0xb00)))));
     **(unsigned char**)(var0 + R(0x38e0, (0x3000 + 0xb00))) = 0x17;
@@ -254,20 +255,20 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
     *(int*)(*(unsigned char**)(var0 + R(0x38e4, (0x3000 + 0xb04))) + 0xac) = 0;
     *(int*)(*(unsigned char**)(var0 + R(0x38e4, (0x3000 + 0xb04))) + 0xb0) = 0;
 
-    func_ov017_021aa3f4((Struct_ov017_021aa3f4*)(*(void**)(var0 + R(0x38e8, (0x3000 + 0xb08)))));
-    func_ov017_021aa50c((Struct_ov017_021aa4cc*)(*(void**)(var0 + R(0x38ec, (0x3000 + 0xb0c)))));
-    func_ov017_021ab250((Struct_ov017_021ab250*)(*(void**)(var0 + R(0x38f0, (0x3000 + 0xb10)))));
-    func_ov017_021abb68((Struct_ov017_021ab860*)(*(void**)(var0 + R(0x38f4, (0x3000 + 0xb14)))), 0);
-    func_ov017_021ac2ec((Struct_ov017_0219931c*)(*(void**)(var0 + R(0x38f8, (0x3000 + 0xb18)))));
-    func_ov017_021c0124((Struct_ov017_021c0124*)(*(void**)(var0 + R(0x38fc, (0x3000 + 0xb1c)))), 0);
-    func_ov017_021acd7c(*(void**)(var0 + R(0x3900, (0x3000 + 0xb20))));
-    func_ov017_021adc58((unsigned char*)(*(void**)(var0 + R(0x3904, (0x3000 + 0xb24)))));
-    func_ov017_021ae800((Struct_ov017_021986fc*)(*(void**)(var0 + R(0x3908, (0x3000 + 0xb28)))));
-    func_ov017_021aeedc((Struct_ov003_02164400*)(*(void**)(var0 + R(0x390c, (0x3000 + 0xb2c)))));
-    func_ov017_021af59c(*(void**)(var0 + R(0x3910, (0x3000 + 0xb30))));
-    func_ov017_021b11b0((Struct_ov003_021638e4_2*)(*(void**)(var0 + R(0x3914, (0x3000 + 0xb34)))));
-    func_ov017_021c0334((Struct_ov017_021c0334*)(*(void**)(var0 + R(0x3918, (0x3000 + 0xb38)))));
-    func_ov017_021c0760((unsigned char*)(*(void**)(var0 + R(0x391c, (0x3000 + 0xb3c)))), 1);
+    InitState25_021aa3f4((Struct021aa3f4*)(*(void**)(self + R(0x38e8, (0x3000 + 0xb08)))));
+    InitState25_021aa50c((Obj021aa50c*)(*(void**)(self + R(0x38ec, (0x3000 + 0xb0c)))));
+    InitState6_021ab250((Struct021ab250*)(*(void**)(self + R(0x38f0, (0x3000 + 0xb10)))));
+    InitState28_021abb68((Obj021abb68*)(*(void**)(self + R(0x38f4, (0x3000 + 0xb14)))), 0);
+    InitState30_021ac2ec((Obj021ac2ec*)(*(void**)(self + R(0x38f8, (0x3000 + 0xb18)))));
+    InitState32_021c0124((Obj021c0124*)(*(void**)(self + R(0x38fc, (0x3000 + 0xb1c)))), 0);
+    func_ov017_021acd7c(*(void**)(self + R(0x3900, (0x3000 + 0xb20))));
+    FieldTask_InitOpenChest((OpenChestTask*)(*(void**)(self + R(0x3904, (0x3000 + 0xb24)))));
+    ResetHeaderAndAllocator_021ae800((Obj021ae800*)(*(void**)(self + R(0x3908, (0x3000 + 0xb28)))));
+    InitState37_021aeedc((Struct021aeedc*)(*(void**)(self + R(0x390c, (0x3000 + 0xb2c)))));
+    func_ov017_021af59c(*(void**)(self + R(0x3910, (0x3000 + 0xb30))));
+    InitState39_021b11b0((Struct021b11b0*)(*(void**)(self + R(0x3914, (0x3000 + 0xb34)))));
+    InitState40_021c0334((Obj021c0334*)(*(void**)(self + R(0x3918, (0x3000 + 0xb38)))));
+    InitObjWithFlag_021c0760((unsigned char*)(*(void**)(self + R(0x391c, (0x3000 + 0xb3c)))), 1);
 
     func_0204693c((Struct_0204693c*)(*(void**)(var0 + R(0x3920, (0x3000 + 0xb40)))));
     **(unsigned char**)(var0 + R(0x3920, (0x3000 + 0xb40))) = 0x2a;
@@ -278,19 +279,19 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
     var16[0x3b] = 0;
     *(*(unsigned char**)(var0 + R(0x3920, (0x3000 + 0xb40))) + 0x28) = 0xff;
 
-    func_ov017_021b14a0((Struct_ov017_021b146c*)(*(void**)(var0 + R(0x3924, (0x3000 + 0xb44)))));
-    func_ov017_021b1d44(*(void**)(var0 + R(0x3928, (0x3000 + 0xb48))), 0x40, 1);
-    *(*(unsigned char**)(var0 + R(0x3928, (0x3000 + 0xb48))) + 0x33) = R(5, 8);
-    func_ov017_021b2174((unsigned char*)(*(void**)(var0 + R(0x392c, (0x3000 + 0xb4c)))));
-    func_ov017_021c1350((Struct_ov017_021c12fc*)(*(void**)(var0 + R(0x3930, (0x3000 + 0xb50)))), 0, 0);
-    func_ov017_021c17cc(*(void**)(var0 + R(0x3934, (0x3000 + 0xb54))));
-    func_ov017_021c16a8((unsigned char*)(*(void**)(var0 + R(0x3938, (0x3000 + 0xb58)))));
-    func_ov017_021b61e4((Struct_ov017_021b61e4*)(*(void**)(var0 + R(0x393c, (0x3000 + 0xb5c)))));
-    func_ov017_021bdbf0((unsigned char*)(*(void**)(var0 + R(0x3940, (0x3000 + 0xb60)))));
-    func_ov017_021be0a0((unsigned char*)(*(void**)(var0 + R(0x3944, (0x3000 + 0xb64)))));
-    func_ov017_021a9bc4(*(void**)(var0 + R(0x3948, (0x3000 + 0xb68))), 0);
-    func_ov017_021beba4((char*)(*(void**)(var0 + R(0x394c, (0x3000 + 0xb6c)))));
-    func_ov017_021befe4((Struct_ov017_021befe4*)(*(void**)(var0 + R(0x3950, (0x3000 + 0xb70)))));
+    InitState37_021b14a0((Obj021b14a0*)(*(void**)(self + R(0x3924, (0x3000 + 0xb44)))));
+    func_ov017_021b1d44(*(void**)(self + R(0x3928, (0x3000 + 0xb48))), 0x40, 1);
+    *(*(unsigned char**)(self + R(0x3928, (0x3000 + 0xb48))) + 0x33) = R(5, 8);
+    InitObjState_021b2174((unsigned char*)(*(void**)(self + R(0x392c, (0x3000 + 0xb4c)))));
+    InitObj021c1350((Obj021c1350*)(*(void**)(self + R(0x3930, (0x3000 + 0xb50)))), 0, 0);
+    func_ov017_021c17cc(*(void**)(self + R(0x3934, (0x3000 + 0xb54))));
+    InitByteHeader_021c16a8((unsigned char*)(*(void**)(self + R(0x3938, (0x3000 + 0xb58)))));
+    InitBattleObj_021b61e4((Struct021b61e4*)(*(void**)(self + R(0x393c, (0x3000 + 0xb5c)))));
+    InitObj021bdbf0((unsigned char*)(*(void**)(self + R(0x3940, (0x3000 + 0xb60)))));
+    InitByteHeader_021be0a0((unsigned char*)(*(void**)(self + R(0x3944, (0x3000 + 0xb64)))));
+    FieldTask_InitAcquireTreasureMap(*(void**)(self + R(0x3948, (0x3000 + 0xb68))), 0);
+    InitObj021beba4((char*)(*(void**)(self + R(0x394c, (0x3000 + 0xb6c)))));
+    InitState53_021befe4((Obj021befe4*)(*(void**)(self + R(0x3950, (0x3000 + 0xb70)))));
 
     func_0204693c((Struct_0204693c*)(*(void**)(var0 + R(0x3954, (0x3000 + 0xb74)))));
     **(unsigned char**)(var0 + R(0x3954, (0x3000 + 0xb74))) = 0x36;
@@ -300,17 +301,17 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
     *(*(unsigned char**)(var0 + R(0x3954, (0x3000 + 0xb74))) + 0xe) = 0;
     *(*(unsigned char**)(var0 + R(0x3954, (0x3000 + 0xb74))) + 0xf) = 0;
 
-    func_ov017_021aa16c((Struct_02061c04_8*)(*(void**)(var0 + R(0x3968, (0x3000 + 0xb88)))));
-    func_ov017_021c1e40((Struct_ov017_021913d0*)(*(void**)(var0 + R(0x3980, (0x3000 + 0xba0)))));
-    func_ov017_021c2688((unsigned char*)(*(void**)(var0 + R(0x3988, (0x3000 + 0xba8)))));
-    func_ov017_021c2744((Struct_ov017_021adcb0*)(*(void**)(var0 + R(0x398c, (0x3000 + 0xbac)))));
-    func_ov017_021c2b28(*(void**)(var0 + R(0x3990, (0x3000 + 0xbb0))), 0, 0);
-    func_ov017_021c316c((Struct_ov017_02192700_2*)(*(void**)(var0 + R(0x3994, (0x3000 + 0xbb4)))), 0);
-    func_ov017_021a967c(*(void**)(var0 + R(0x3964, (0x3000 + 0xb84))), 0);
-    func_020d9dec((Struct_02061c04_15*)(*(void**)(var0 + R(0x399c, (0x3000 + 0xbbc)))), 1);
-    func_020dac68((Struct_020dac40_2*)(*(void**)(var0 + R(0x39a4, (0x3000 + 0xbc4)))));
-    func_020d9850((Struct_0201bdac_3*)(*(void**)(var0 + R(0x3998, (0x3000 + 0xbb8)))));
-    func_020d8080((Struct_020d8080*)(*(void**)(var0 + R(0x3984, (0x3000 + 0xba4)))));
+    InitState60_021aa16c((Obj021aa16c*)(*(void**)(self + R(0x3968, (0x3000 + 0xb88)))));
+    InitState66_021c1e40((Struct021c1e40*)(*(void**)(self + R(0x3980, (0x3000 + 0xba0)))));
+    InitByteHeader_021c2688((unsigned char*)(*(void**)(self + R(0x3988, (0x3000 + 0xba8)))));
+    FieldTask_InitWhistle((WhistleTask*)(*(void**)(self + R(0x398c, (0x3000 + 0xbac)))));
+    InitObj021c2b28(*(void**)(self + R(0x3990, (0x3000 + 0xbb0))), 0, 0);
+    InitState71WithFlag_021c316c((Struct021c316c*)(*(void**)(self + R(0x3994, (0x3000 + 0xbb4)))), 0);
+    func_ov017_021a967c(*(void**)(self + R(0x3964, (0x3000 + 0xb84))), 0);
+    Init020d9dec((Struct020d9dec*)(*(void**)(self + R(0x399c, (0x3000 + 0xbbc)))), 1);
+    Init020dac68((Struct020dac68*)(*(void**)(self + R(0x39a4, (0x3000 + 0xbc4)))));
+    Init020d9850((Struct020d9850*)(*(void**)(self + R(0x3998, (0x3000 + 0xbb8)))));
+    InitObject020d8080((Obj020d8080*)(*(void**)(self + R(0x3984, (0x3000 + 0xba4)))));
 
     for (int var17 = 0; var17 < 3; var17++) {
         func_020dbc9c((Struct_020dbc5c*)(var0 + R(0x39a8, (0x3800 + 0x3c8)) + var17 * 0x14));

@@ -20,9 +20,6 @@ enum { Enum_ov021_0218b5fc_1288 = 0x508, Enum_ov021_0218b5fc_7720 = 0x1e28, Enum
 #define func_020c51dc func_020c6ca8
 #endif
 
-#if defined(jpn)
-#define func_020c39a0 func_020c546c
-#endif
 
 struct AllocatorUnion;
 struct Struct_0203d028;
@@ -33,11 +30,11 @@ struct Struct_0209c3b4_2;
 struct Struct_02109bf4_4;
 struct Struct_02109bf4_3;
 
-extern "C" void func_020a1df8(int arg0);
-extern "C" void func_020a1e54(int arg0);
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_0200fb84(int* arg0, int arg1);
-extern "C" void func_020c39a0(short* arg0, int arg1);
+void PushInputLogA_020a1df8(int value);
+void PopStack0AndTrigger_020a1e54(int value);
+extern "C" void func_020a1940(unsigned int id);
+void SetWord0x0_0200fb84(int* obj, int value);
+extern "C" void GXx_SetMasterBrightness_(short* reg, int value);
 extern "C" void* func_0203bd08(void);
 extern "C" void func_0203bd24(char* arg0);
 extern "C" int* func_0203bd14();
@@ -63,19 +60,19 @@ extern "C" void MapVRAMBanksToSubObj(int value);
 void SetDispcntModeAndFlags020c391c(int mode, int a, int b);
 void SetSubBgMode_020c3984(unsigned int mode);
 void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
-void CallWithAddr4000330_020c555c(int table);
+void G3X_SetEdgeColorTable(int table);
 extern "C" void VramState_Reserve(void* p, int a, int b);
-void* GetGlobalField0x1c020421a0();
+void* MessageSystem_GetInstance();
 extern "C" void func_02042c68(void* controller);
-extern "C" void func_02043124(void* obj);
+extern "C" void MessageSystem_Stop(void* obj);
 void TailForward020440a4(void* controller);
-void CopyInternalFields0207df50(Foo0207df50* obj);
+void VramState_Rewind(Foo0207df50* obj);
 void VramState_Restore(char* obj);
 extern "C" void func_020432c4(void* controller);
 void VramState_Save(char* obj);
 void SetField0x3acValue_020100a0(GameState* gs, int value);
-int GetField0x3acValue_020100a8(GameState* gs);
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+int GameState_GetProtagonistIndex(GameState* gs);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern "C" void CharacterCreationUI_Init(void* scene, int a, int b);
 void* FindSlotWithNegShort02010954(char* gs);
 extern "C" void CharacterCreationUI_Allocate(void* scene, SafeAllocator* allocator);
@@ -91,13 +88,13 @@ extern "C" void CharacterCreationUI_UpdateVBlank(void* scene);
 void SyncMainSubOam0203bdb0(Obj0203bdb0* obj);
 void UpdateAndApplyBrightness(GameResources* resources);
 extern "C" void CharacterCreationUI_Destroy(void* scene);
-void DispatchContextByState0209c678(Actor0209c678* actor, int state);
+void BgmPlayer_FadeOut(Actor0209c678* actor, int state);
 void ScaleAndNotify0203ad88(void* a, void* b, int c);
 void ResetXYField0203aa08(void* obj);
 void InitActorContext0209c20c(Actor0209c20c* actor);
 void InitControllerObject_02043000(char* controller);
-extern char data_02114e20;
-extern char data_02109bf4;
+extern char g_mainAllocator;
+extern char g_bgmPlayer;
 extern int data_02114e50;
 
 struct Struct_ov021_0218bbc4 {
@@ -127,10 +124,10 @@ extern "C" ARM void func_ov021_0218b5fc(Struct_ov021_0218b5fc* arg0) {
 #endif
     func_020a1940(OVERLAY_ID(9));
     func_020a1940(OVERLAY_ID(23));
-    GameState* var0 = GameState::GetInstance();
-    func_0200fb84((int*)var0, (int)arg0);
-    func_020c39a0((short*)0x400006c, -16);
-    func_020c39a0((short*)0x400106c, -16);
+    GameState* gs = GameState::GetInstance();
+    SetWord0x0_0200fb84((int*)gs, (int)self);
+    GXx_SetMasterBrightness_((short*)0x400006c, -16);
+    GXx_SetMasterBrightness_((short*)0x400106c, -16);
     BackgroundLoader::GetInstance()->MaybeReset();
     void* var1 = func_0203bd08();
     func_0203bd24((char*)var1);
@@ -191,27 +188,27 @@ extern "C" ARM void func_ov021_0218b5fc(Struct_ov021_0218b5fc* arg0) {
     func_020c5588(0, 0, 0x7fff, 0, 0);
 
     EdgeColors0218b5fc edges = data_ov021_0218bbc4;
-    CallWithAddr4000330_020c555c((int)&edges);
+    G3X_SetEdgeColorTable((int)&edges);
     VramState_Reserve(self->state44, 0x4000, 0x40);
-    void* controller = GetGlobalField0x1c020421a0();
+    void* controller = MessageSystem_GetInstance();
     func_02042c68(controller);
-    func_02043124(controller);
+    MessageSystem_Stop(controller);
     TailForward020440a4(controller);
     *(char**)((char*)controller + kControllerBackupOffset) = self->state44;
-    CopyInternalFields0207df50((Foo0207df50*)self->state44);
+    VramState_Rewind((Foo0207df50*)self->state44);
     VramState_Restore(self->state44);
     func_020432c4(controller);
     VramState_Save(self->state44);
     SetField0x3acValue_020100a0(gs, 0);
-    self->allocator.CreateTypeA(AllocateAligned4_02012d88((AllocatorUnion*)&data_02114e20, kSceneAllocatorSize), kSceneAllocatorSize);
+    self->allocator.CreateTypeA(AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, kSceneAllocatorSize), kSceneAllocatorSize);
     self->allocator.Reset();
     self->scene = self->allocator.Allocate(kSceneSize);
     CharacterCreationUI_Init(self->scene, 0, CreationMode_NewGame);
     self->slot = (char*)FindSlotWithNegShort02010954((char*)gs);
-    *(short*)(self->slot + 0x568) = GetField0x3acValue_020100a8(gs);
+    *(short*)(self->slot + 0x568) = GameState_GetProtagonistIndex(gs);
     *(char**)((char*)self->scene + kSceneSlotOffset) = self->slot;
     CharacterCreationUI_Allocate(self->scene, &self->allocator);
-    SetStateAndDispatch0209c3b4((Actor0209c3b4*)&data_02109bf4, 2);
+    SetStateAndDispatch0209c3b4((Actor0209c3b4*)&g_bgmPlayer, 2);
     DelayThenSyncBit0_020c9820();
     RestoreDisplayMode_020c38d4();
     DISPCNTSUB |= 0x10000;
@@ -235,12 +232,12 @@ extern "C" ARM void func_ov021_0218b5fc(Struct_ov021_0218b5fc* arg0) {
     }
 
     CharacterCreationUI_Destroy(self->scene);
-    DispatchContextByState0209c678((Actor0209c678*)&data_02109bf4, 0);
-    ScaleAndNotify0203ad88(&data_02109bf4, 0, 0);
-    ResetXYField0203aa08(&data_02109bf4);
-    InitActorContext0209c20c((Actor0209c20c*)&data_02109bf4);
+    BgmPlayer_FadeOut((Actor0209c678*)&g_bgmPlayer, 0);
+    ScaleAndNotify0203ad88(&g_bgmPlayer, 0, 0);
+    ResetXYField0203aa08(&g_bgmPlayer);
+    InitActorContext0209c20c((Actor0209c20c*)&g_bgmPlayer);
     InitControllerObject_02043000((char*)controller);
-    CopyInternalFields0207df50((Foo0207df50*)self->state44);
+    VramState_Rewind((Foo0207df50*)self->state44);
     SetWord0x0_0200fb84((int*)gs, 0);
 #if !defined(jpn)
     func_020a1e54(1);

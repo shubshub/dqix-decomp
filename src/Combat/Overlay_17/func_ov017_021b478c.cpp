@@ -6,17 +6,17 @@
 #include "std_library_functions.h"
 #include "World/GrottoTileGraph.h"
 
-extern "C" Zone3D* func_02012fe4(void);
-extern "C" void* func_02011584(void* arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_0209bffc(void* arg0);
-extern "C" void func_0209bc84(void* arg0);
-struct Struct_020287b4_2;
-extern "C" void func_0209af34(struct Struct_020287b4_2* arg0);
-extern "C" void func_0206efc4(void* arg0);
-struct Struct_020287b4_4;
-extern "C" void func_0206ee60(struct Struct_020287b4_4* arg0);
-extern "C" void func_020a8e88(void* arg0);
+extern "C" Zone3D* Zone3D_GetInstance(void);
+void* GetPtrField0x468_02011584(void* obj);
+int IsInRange0201b5b0(int id);
+void ClearHalfword0x18_0209bffc(void* obj);
+void ClearBuffer0209bc84(void* obj);
+struct ResetObject0209af34Struct;
+void ResetObject0209af34(struct ResetObject0209af34Struct* obj);
+void Clear12Bytes0206efc4(void* obj);
+struct ZeroWordAndByte0206ee60Struct;
+void ZeroWordAndByte0206ee60(struct ZeroWordAndByte0206ee60Struct* obj);
+void Clear12Bytes020a8e88(void* obj);
 
 extern const char data_ov017_021d7afc[];
 extern const char data_ov017_021d7b06[];
@@ -58,13 +58,13 @@ extern "C" ARM void func_ov017_021b478c(Struct_ov017_021b478c* arg0) {
     char* var6;
     ActiveGrottoClass* var7;
 
-    var0 = GameState::GetInstance();
-    var1 = BackgroundLoader::GetInstance();
-    var2 = (struct Struct_02095924_2*)func_02011584(var0);
-    var3 = func_02012fe4();
-    var7 = &var3->grotto_;
-    var4 = arg0->unknown_8_->unknown_0_;
-    var5 = func_02099950(var2, var4);
+    battle = GameState::GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    table = (struct SearchTable*)GetPtrField0x468_02011584(battle);
+    zone = Zone3D_GetInstance();
+    grotto = &zone->grotto_;
+    id = request->monster->zoneId;
+    entry = FindEntryByHalfwordKey_02099950(table, id);
 
     var6 = (char*)arg0->unknown_8_;
     func_0209bffc(var6 + Enum_ov017_021b478c_68);

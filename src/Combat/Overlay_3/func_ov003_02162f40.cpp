@@ -73,8 +73,8 @@ struct Struct_ov003_02154af4_3 {
     unsigned char unknown_4a4_;
 };
 
-static inline Struct_ov003_02162f40 *inline_ov003_02162f40() {
-    return (Struct_ov003_02162f40 *) func_02010828(GameState::GetInstance());
+static inline BattleInfo *GetBattleInfo() {
+    return (BattleInfo *) GameState_GetParty(GameState::GetInstance());
 }
 
 struct Struct_ov003_02162f40_2 {
@@ -101,7 +101,7 @@ extern "C" void func_ov003_021612c0(Scene *);
 extern "C" int func_ov003_02161344(Scene *);
 void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04 *, int);
 extern "C" int func_ov003_02166a90(Scene *, int);
-void CancelPendingAction020397cc(Obj020397cc *, int);
+void GameObject_DisableControl(Obj020397cc *, int);
 
 extern int g_sePlayer;
 
@@ -246,9 +246,9 @@ extern "C" ARM void func_ov003_02162f40(Struct_ov003_02154af4_3 *arg0) {
         if (func_ov003_02166a90(arg0, arg0->unknown_480_) == 0) {
             return;
         }
-        GameObject *var16 = GameState::GetInstance()->GetProtagonist();
-        if (var16 != NULL) {
-            func_020397cc((Struct_02018300_3 *) var16, 1);
+        GameObject *hero = GameState::GetInstance()->GetProtagonist();
+        if (hero != NULL) {
+            GameObject_DisableControl((Obj020397cc *) hero, 1);
         }
         arg0->unknown_4a4_ = 7;
     } else if (var0 == 100) {

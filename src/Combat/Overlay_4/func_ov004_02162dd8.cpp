@@ -38,7 +38,7 @@ struct Struct_ov004_021707e8_8 {
 extern Struct_ov004_021707e8_8 data_ov004_021707e8;
 extern int data_ov004_02170854[];
 extern char data_ov004_0217052d[];
-extern unsigned char data_0211e33c[0x30000];
+extern unsigned char g_fileLoadBuffer[0x30000];
 
 extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
 extern "C" Struct_ov004_02162dd8* func_ov011_021845f8(void*, int);
@@ -79,27 +79,27 @@ extern "C" ARM int func_ov004_02162dd8(void* arg0) {
         for (int var3 = 0; var3 < var2; var3++) {
             for (int var4 = 1; var4 < 13; var4++) {
                 {
-                    char var5[0x20] = {0};
-                    unsigned int var6;
-                    Struct_0201099c_2 var7;
-                    sprintf(var5, data_ov004_0217052d, data_ov004_02170854[var4]);
-                    if (LoadFileIntoMemory(var5, &data_0211e33c, &var6) != 0) {
-                        GameObject* var8 = func_0200ff1c(var0, var1[var3]);
-                        if (var8 != 0) {
-                            unsigned char* var9 = (unsigned char*)func_02053c6c((unsigned char*)var8);
-                            if (var9 != 0) {
-                                func_0208274c(&var7, (Struct_02013fb4*)&data_0211e33c, var6, *(unsigned short*)(var9 + data_ov004_02170854[var4] * 2 + 0x16c));
-                                Struct_ov004_02162dd8_2* var10 = inline_ov000_0217fa60_2(data_ov004_02170854[var4], data_ov004_021707e8.unknown_14_, var1[var3]);
-                                var10->unknown_0_[0].unknown_0_0_ = inline_ov004_02162dd8(&var7.unknown_0_.unknown_8_);
-                                var10->unknown_0_[0].unknown_1_2_ = inline_ov004_02162dd8_2(&var7.unknown_0_.unknown_8_) & 0x3ff;
-                                var10->unknown_0_[0].unknown_2_4_ = inline_ov004_02162dd8_3(&var7.unknown_0_.unknown_8_) & 0x3ff;
-                                var10->unknown_0_[1].unknown_0_0_ = inline_ov004_02162dd8(&var7.unknown_0_.unknown_c_);
-                                var10->unknown_0_[1].unknown_1_2_ = inline_ov004_02162dd8_2(&var7.unknown_0_.unknown_c_) & 0x3ff;
-                                var10->unknown_0_[1].unknown_2_4_ = inline_ov004_02162dd8_3(&var7.unknown_0_.unknown_c_) & 0x3ff;
-                                var10->unknown_0_[2].unknown_0_0_ = inline_ov004_02162dd8(&var7.unknown_0_.unknown_10_);
-                                var10->unknown_0_[2].unknown_1_2_ = inline_ov004_02162dd8_2(&var7.unknown_0_.unknown_10_) & 0x3ff;
-                                var10->unknown_0_[2].unknown_2_4_ = inline_ov004_02162dd8_3(&var7.unknown_0_.unknown_10_) & 0x3ff;
-                                var10->unknown_0_[3].unknown_0_0_ = inline_ov004_02162dd8_2(&var7.unknown_0_.unknown_c_);
+                    char path[0x20] = {0};
+                    unsigned int size;
+                    ResourceScriptEntry script;
+                    sprintf(path, data_ov004_0217052d, data_ov004_02170854[j]);
+                    if (LoadFileIntoMemory(path, &g_fileLoadBuffer, &size) != 0) {
+                        GameObject* c = GetCombatantWithFlag0x100_0200ff1c(gs, ids[i]);
+                        if (c != 0) {
+                            unsigned char* f = (unsigned char*)GetFieldAt0x150_02053c6c((unsigned char*)c);
+                            if (f != 0) {
+                                InitAndRunScript0208274c(&script, (StreamHeader*)&g_fileLoadBuffer, size, *(unsigned short*)(f + data_ov004_02170854[j] * 2 + 0x16c));
+                                Slot02162dd8* slot = GetSlot(data_ov004_02170854[j], data_ov004_021707e8.entries, ids[i]);
+                                slot->t[0].low = GetLow(&script.initial.value8);
+                                slot->t[0].middle = GetMiddle(&script.initial.value8) & 0x3ff;
+                                slot->t[0].high = GetHigh(&script.initial.value8) & 0x3ff;
+                                slot->t[1].low = GetLow(&script.initial.valueC);
+                                slot->t[1].middle = GetMiddle(&script.initial.valueC) & 0x3ff;
+                                slot->t[1].high = GetHigh(&script.initial.valueC) & 0x3ff;
+                                slot->t[2].low = GetLow(&script.initial.value10);
+                                slot->t[2].middle = GetMiddle(&script.initial.value10) & 0x3ff;
+                                slot->t[2].high = GetHigh(&script.initial.value10) & 0x3ff;
+                                slot->t[3].low = GetMiddle(&script.initial.valueC);
                             }
                         }
                     }

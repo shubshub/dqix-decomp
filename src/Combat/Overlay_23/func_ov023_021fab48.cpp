@@ -4,11 +4,11 @@
 extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
 extern "C" void* func_ov011_021849c8(void*);
 
-struct Struct_0205af18;
-extern "C" int func_0205af18(int arg0, struct Struct_0205af18* arg1);
-extern "C" void* func_ov023_021fa854(char* arg0, unsigned int arg1);
-extern "C" void func_ov023_021f6e10(void* arg0, int arg1, unsigned int arg2);
-extern "C" int func_020421a0();
+struct B190Outer;
+int GetBits12To15Clamped_0205af18(int unused, struct B190Outer* obj);
+void* GetEntryPtr_021fa854(char* obj, unsigned int idx);
+void SetBit_021f6e10(void* obj, int idx, unsigned int bit);
+int MessageSystem_GetInstance();
 
 int FindFileOrRecord_021fad20(const void* narcBuffer, const char* name, const void** outData, unsigned int* outSize);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
@@ -74,10 +74,10 @@ extern "C" ARM void func_ov023_021fab48(void* arg0, void* arg1, const void* arg2
         }
     }
 
-    char* var10 = (char*)func_020421a0();
-    *(void**)(var10 + Enum_ov023_021fab48_728) = (char*)arg0 + Enum_ov023_021fab48_36;
-    *(int*)(var10 + Enum_ov023_021fab48_732) = *(int*)((char*)arg0 + Enum_ov023_021fab48_100);
-    *(short*)(var10 + Enum_ov023_021fab48_740) = 0;
-    *(int*)(var10 + Enum_ov023_021fab48_736) = *(int*)((char*)arg0 + Enum_ov023_021fab48_96);
-    *(unsigned char*)(var10 + Enum_ov023_021fab48_742) = 1;
+    char* global = (char*)MessageSystem_GetInstance();
+    *(void**)(global + regionalOffset7) = (char*)obj + regionalOffset0;
+    *(int*)(global + regionalOffset9) = *(int*)((char*)obj + regionalOffset8);
+    *(short*)(global + regionalOffset10) = 0;
+    *(int*)(global + regionalOffset11) = *(int*)((char*)obj + regionalOffset1);
+    *(unsigned char*)(global + regionalOffset12) = 1;
 }

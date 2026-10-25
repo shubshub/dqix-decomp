@@ -36,8 +36,8 @@ extern unsigned int data_ov006_0215ff7c[];
 void func_ov023_021dbfd0(void*, SafeAllocator*);
 void _Z23SetFlagAndData_021dbfa8P11Obj021dbfa8i(void*, void*);
 void _Z20ClearFields_021e20c0Pv(void*);
-void _Z15Background_InitP12List0204af64(void*);
-void func_0204c684(void*);
+void _Z15Background_InitP18BackgroundGraphics(void*);
+void WindowPane_Init(void*);
 void _Z11Sprite_InitP14Struct0205a198(void*);
 }
 // USA: func_ov006_02154348
@@ -75,8 +75,8 @@ extern "C" ARM void func_ov006_02154348(AlchemyBufferInitializationView* state, 
     }
     state->byteBuffer[0] = 0;
     _Z20ClearFields_021e20c0Pv(state->menuBuffer);
-    for (unsigned char index = 0; index < 2; index++) _Z15Background_InitP12List0204af64(state->pairBuffer[index]);
-    for (unsigned char index = 0; index < 1; index++) func_0204c684(state->singleBuffer[index]);
+    for (unsigned char index = 0; index < 2; index++) _Z15Background_InitP18BackgroundGraphics(state->pairBuffer[index]);
+    for (unsigned char index = 0; index < 1; index++) WindowPane_Init(state->singleBuffer[index]);
     func_0207f84c(state->extraBuffer);
     for (unsigned char index = 0; index < 17; index++) _Z11Sprite_InitP14Struct0205a198(state->entryBuffer[index]);
 }

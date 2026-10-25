@@ -13,7 +13,7 @@ struct Struct_0201c3a4 {
     void* unknown_4_;
 };
 
-extern "C" int func_020d2ff0(const char* arg0);
+int STD_GetStringLength(const char* s);
 
 struct Struct_ov003_0215e498 {
     short unknown_0_;
@@ -59,7 +59,7 @@ struct Struct_ov003_02180cb8 {
     void* unknown_0_;
     struct Struct_ov003_0215e790* unknown_4_;
 };
-extern struct Struct_ov003_02180cb8 data_ov003_02180cb8;
+extern struct Globals02180cb8 KeyboardLayout_scriptContext;
 
 // USA: func_ov003_0215e510
 extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* arg0) {
@@ -70,23 +70,23 @@ extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* arg0) {
     var0.unknown_0_ = (short)((Script::Parameter*)&arg0->unknown_8_)->ToInt();
     var0.unknown_2_ = (short)((Script::Parameter*)&arg0->unknown_10_)->ToInt();
 
-    char* var1 = (char*)(void*)((Script::Parameter*)&arg0->unknown_18_)->ToString();
-    if (var1 != NULL) {
-        int var2 = func_020d2ff0(var1);
-        if (var2 != 0) {
-            char* var3 = (char*)((SafeAllocator*)data_ov003_02180cb8.unknown_0_)->Allocate(var2 + 1);
-            var0.unknown_4_ = (int)var3;
-            sprintf(var3, var1);
+    char* text1 = (char*)(void*)((Script::Parameter*)&obj->v3)->ToString();
+    if (text1 != NULL) {
+        int len1 = STD_GetStringLength(text1);
+        if (len1 != 0) {
+            char* buf1 = (char*)((SafeAllocator*)KeyboardLayout_scriptContext.allocator)->Allocate(len1 + 1);
+            local.f4 = (int)buf1;
+            sprintf(buf1, text1);
         }
     }
 
-    char* var4 = (char*)(void*)((Script::Parameter*)&arg0->unknown_20_)->ToString();
-    if (var4 != NULL) {
-        int var5 = func_020d2ff0(var4);
-        if (var5 != 0) {
-            char* var6 = (char*)((SafeAllocator*)data_ov003_02180cb8.unknown_0_)->Allocate(var5 + 1);
-            var0.unknown_8_ = (int)var6;
-            sprintf(var6, var4);
+    char* text2 = (char*)(void*)((Script::Parameter*)&obj->v4)->ToString();
+    if (text2 != NULL) {
+        int len2 = STD_GetStringLength(text2);
+        if (len2 != 0) {
+            char* buf2 = (char*)((SafeAllocator*)KeyboardLayout_scriptContext.allocator)->Allocate(len2 + 1);
+            local.f8 = (int)buf2;
+            sprintf(buf2, text2);
         }
     }
 
@@ -94,6 +94,6 @@ extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* arg0) {
     var0.unknown_d_ = (unsigned char)((Script::Parameter*)&arg0->unknown_30_)->ToInt();
     var0.unknown_e_ = (unsigned char)((Script::Parameter*)&arg0->unknown_38_)->ToInt();
 
-    func_ov003_0215e790(data_ov003_02180cb8.unknown_4_, &var0);
+    AppendEntryToArray_0215e790(KeyboardLayout_scriptContext.target, &local);
     return 1;
 }

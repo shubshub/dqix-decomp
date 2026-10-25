@@ -31,11 +31,11 @@ struct Struct_ov012_0218a9ec {
     unsigned int unknown_3_7_ : 1;
 };
 
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+int Text_AppendCursorTag(char* dst, int cursor);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+int Text_AppendNTag(char* dst, int n, const char* name);
+int Text_Append(char* dst, const char* src);
 
 // USA: func_ov012_0218a9ec
 extern "C" ARM void func_ov012_0218a9ec(unsigned char* arg0, char* arg1, int arg2) {
@@ -45,18 +45,18 @@ extern "C" ARM void func_ov012_0218a9ec(unsigned char* arg0, char* arg1, int arg
     Struct_ov012_0218a9ec* var1 =
         (Struct_ov012_0218a9ec*)((char*)GameState::GetInstance() + Enum_ov012_0218a9ec_22172);
 
-    if (arg2 != 0) {
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
+    if (c != 0) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
+    Text_AppendCursorTag(dst, cursor);
 
-    int var2;
-    for (var2 = 0; var2 < 8; var2++) {
-        if (var2 != 0) {
-            func_02042058(arg1, *(char**)(arg0 + Enum_ov012_0218a9ec_4984));
+    int i;
+    for (i = 0; i < 8; i++) {
+        if (i != 0) {
+            Text_Append(dst, *(char**)(self + kSeparatorOffset));
         }
-        void* var3 = func_02072a68((struct Struct_02072a68_2*)(arg0 + Enum_ov012_0218a9ec_4924),
-                                    (short)(((short)var1->unknown_3_1_) + var2 * 2 + 0x7530));
-        func_02041b70(arg1, var2, (const char*)var3);
+        void* name = FindEntryByKey_02072a68((struct TableA68*)(self + kStringsOffset),
+                                    (short)(((short)profile->female) + i * 2 + 0x7530));
+        Text_AppendNTag(dst, i, (const char*)name);
     }
 }

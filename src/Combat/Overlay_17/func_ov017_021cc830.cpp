@@ -3,7 +3,7 @@
 
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 void PartyMember_SetVocation(unsigned char* obj, int index);
-int GetField0x3acValue_020100a8(GameState* battle);
+int GameState_GetProtagonistIndex(GameState* battle);
 extern "C" void func_020897b4(int a, int b, int c, int d, int e, int f, int g, int h, int i);
 void InitAndRequeueEntry020e3b8c(char* mgr, int index, int p3, int p4, int p5, int p6, int p7, unsigned char p8);
 
@@ -33,12 +33,12 @@ extern "C" ARM void func_ov017_021cc830(void* arg0, struct Struct_ov017_021cc830
     *(unsigned short*)(work + slot * 2 + 0x16c) = evt->value;
     *(work + slot + 0x186) = evt->fieldc;
 
-    if (arg1->unknown_5_7_) {
-        if (arg1->unknown_d_ != 0) {
-            unsigned short var3 = *(unsigned short*)(var1 + 0x564);
-            func_020897b4(arg1->unknown_4_0_, arg1->unknown_4_3_, var2, 0, arg1->unknown_e_, 0, 0, 0, 0);
-            if (func_020100a8(arg2) == arg1->unknown_4_0_) {
-                *(unsigned short*)(var1 + 0x564) = var3;
+    if (evt->flagBit) {
+        if (evt->fieldd != 0) {
+            unsigned short saved = *(unsigned short*)(work + 0x564);
+            func_020897b4(evt->id, evt->value, slot, 0, evt->fielde, 0, 0, 0, 0);
+            if (GameState_GetProtagonistIndex(battle) == evt->id) {
+                *(unsigned short*)(work + 0x564) = saved;
             }
         } else {
             int var4 = 0;

@@ -23,9 +23,9 @@ struct Struct_ov000_021836d0 {
     unsigned char unknown_0_[5];
 };
 
-extern "C" int func_0200fb08(Struct_02000c9c_8* arg0);
-extern "C" void func_0203a46c(Struct_0203a46c* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02047554(Struct_ov000_0218251c* arg0, int arg1, int arg2);
+int GameState_GetLanguage(Struct0200fb08* gs);
+void SetVec3At0x1c(Vec3Target0203a46c* obj, int x, int y, int z);
+extern "C" void func_02047554(GaugeSprite0218251c* obj, int idx, int something);
 
 extern const Struct_ov000_021836d0 data_ov000_021836d0;
 extern const signed char data_ov000_021836d5[][2];
@@ -157,9 +157,9 @@ extern "C" ARM void func_ov000_0218251c(Struct_ov000_0218251c_2* arg0) {
     if (var23 <= 0) {
         return;
     }
-    int var25 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance()) - 1;
-    Struct_ov000_021836d0 var26 = data_ov000_021836d0;
-    int var27 = 30 - arg0->unknown_6ea_;
+    int phase = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance()) - 1;
+    GaugeOrder0218251c order = data_ov000_021836d0;
+    int t = 30 - self->timer;
 
     if (var23 > 1 || var27 >= 0) {
         int var28 = 0;

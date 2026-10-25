@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Graphics/LightingManager.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_0201f170 {
     short unknown_0_;
@@ -65,17 +65,17 @@ struct Struct_ov001_021601f8_2 {
 };
 
 // USA: func_ov001_021601f8
-extern "C" ARM void func_ov001_021601f8(struct Struct_ov001_021601f8* arg0, struct Struct_0201f2cc* arg1) {
-    func_02012fe4();
-    LightingManager* var0 = LightingManager::GetInstance();
-    struct Struct_ov001_021601f8_5* var1 = arg0->unknown_24_;
-    int var2 = ((struct Struct_ov001_021601f8_2*)var0)->unknown_98_;
-    struct Struct_0201f2cc_2* var3 = func_0201f2cc(arg1, arg0->unknown_0_);
-    struct Struct_0201f170* var4 = func_0201f170(&arg1->unknown_0_, var3->unknown_2_);
-    struct Struct_0201f170* var5 = var4->unknown_8_;
-    while (var5 != NULL) {
-        if (var5->unknown_0_ == var2) {
-            var4 = var5;
+extern "C" ARM void func_ov001_021601f8(struct SceneNode_021601f8* node, struct Manager_1f2cc* manager) {
+    Zone3D_GetInstance();
+    LightingManager* lighting = LightingManager::GetInstance();
+    struct RenderObj_021601f8* obj = node->obj;
+    int timeOfDay = ((struct LightingView_021601f8*)lighting)->timeOfDay;
+    struct Element_1f2cc* element = FindElementByHalfwordKey_0201f2cc(manager, node->key);
+    struct Entry_1f170* entry = FindEntryBySignedId_0201f170(&manager->entryList, element->entryId);
+    struct Entry_1f170* variant = entry->next;
+    while (variant != NULL) {
+        if (variant->id == timeOfDay) {
+            entry = variant;
             break;
         }
         var5 = var5->unknown_8_;

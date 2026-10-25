@@ -1,8 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_0205bcdc;
-struct Struct_0205c4a8;
-struct Struct_0205bb84;
+struct GridCursor;
 
 struct Struct_ov000_0217c158 {
     char unknown_0_[4];
@@ -39,9 +38,9 @@ struct Struct_ov000_0217c158_3 {
 };
 
 extern "C" int func_0205dd08(Cursor0217c158* cursor);
-void AdvanceWrappedAccumulator0205c4a8(struct Struct_0205c4a8* s, int delta);
-int GridCursor_GetSelectedIndex(struct Struct_0205bb84* s);
-void SetIndexIfValid0205bcdc(struct Struct_0205bcdc* s, int index);
+void GridCursor_TurnPage(struct GridCursor* s, int delta);
+int GridCursor_GetSelectedIndex(struct GridCursor* s);
+void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 extern "C" int abs(int);
 
@@ -59,9 +58,9 @@ extern "C" ARM int func_ov000_0217c158(Struct_ov000_0217c158_3* arg0) {
         return 0;
     }
     cursor = menu->cursor;
-    AdvanceWrappedAccumulator0205c4a8((struct Struct_0205c4a8*)&cursor->unk_54, delta);
-    index = GridCursor_GetSelectedIndex((struct Struct_0205bb84*)&cursor->unk_54);
-    SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor->selection, index);
+    GridCursor_TurnPage((struct GridCursor*)&cursor->unk_54, delta);
+    index = GridCursor_GetSelectedIndex((struct GridCursor*)&cursor->unk_54);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)cursor->selection, index);
     switch (menu->modes[menu->depth]) {
     case 0xf:
         arg0->unknown_20_ = var1;
@@ -89,7 +88,7 @@ extern "C" ARM int func_ov000_0217c158(Struct_ov000_0217c158_3* arg0) {
             var1--;
         }
         if (prev != index) {
-            SetIndexIfValid0205bcdc((struct Struct_0205bcdc*)cursor->selection, index);
+            GridCursor_SelectIfValid((struct Struct_0205bcdc*)cursor->selection, index);
             GridCursor_SetSelectedIndex(&cursor->unk_54, index);
         }
         arg0->unknown_22_ = var1;

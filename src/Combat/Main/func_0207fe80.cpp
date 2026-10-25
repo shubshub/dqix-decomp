@@ -36,7 +36,7 @@ struct Struct_0207fe80_3 {
     unsigned char unknown_39_;
 };
 
-int CheckField0x9cSetWhenField0xd4Present_0204c7e0(unsigned char*);
+int WindowPane_IsOpen(unsigned char*);
 extern "C" void Background_FillRect(struct Sub0207fe80* s, int mode, short ac, short ae, short a8, short c0, int flag);
 extern "C" int func_0204fd00(struct Elem0207fe80* e, int mask);
 
@@ -75,7 +75,7 @@ extern "C" ARM void func_0207fe80(struct Struct_0207fe80_3* arg0, int arg1, int 
     c &= 0x3ff;
     for (j = 0; j < obj->count39; j++) {
         e = &obj->elems[j];
-        if (CheckField0x9cSetWhenField0xd4Present_0204c7e0((unsigned char*)e) && e->key != 0xff) {
+        if (WindowPane_IsOpen((unsigned char*)e) && e->key != 0xff) {
             if (!(e->flags & 0x20) && !(e->flags & 0x80) && sb == e->f4) {
                 ae = e->fae;
                 ac = e->fac;

@@ -17,9 +17,9 @@ struct Struct_ov017_021cc388 {
 	unsigned char unknown_9_[3];
 };
 
-extern "C" int func_020100a8(GameState* arg0);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" GameObject* func_0200fee0(GameState* arg0, int arg1);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+GameObject* GetCombatantWithFlag0x200_0200fee0(GameState* battleStruct, int combatantId);
 
 extern "C" void func_ov017_02190264(unsigned char* arg0, int arg1);
 extern "C" void func_ov017_021905b8(unsigned char* arg0, int arg1, int arg2);
@@ -30,11 +30,11 @@ extern "C" ARM void func_020263b0(unsigned char* arg0, unsigned int arg1);
 
 extern "C" void func_0202c288(struct Struct_0202b2f0* arg0);
 
-// USA: func_ov017_021cc388
-extern "C" ARM void func_ov017_021cc388(int arg0, Struct_ov017_021cc388* arg1, GameState* arg2,
-                                        unsigned char* arg3, struct Struct_0202b2f0* arg4) {
-	if (arg1->unknown_4_ >= 0) {
-		if (arg1->unknown_4_ != func_020100a8(arg2)) return;
+// USA: func_ov017_021cc388  (semantic: EnqueueGroupEventsAndSetBits_021cc388)
+extern "C" ARM void func_ov017_021cc388(int tag, Group021cc388* group, GameState* battleStruct,
+                                        unsigned char* ov, struct SearchStruct* search) {
+	if (group->ownerId >= 0) {
+		if (group->ownerId != GameState_GetProtagonistIndex(battleStruct)) return;
 	}
 
 	unsigned char* var0 = *(unsigned char**)(arg3 + 0x3000 + Enum_ov017_021cc388_1744);

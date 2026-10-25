@@ -1,18 +1,5 @@
 #include <globaldefs.h>
-
-struct Struct_ov009_02189a4c_3 {
-    const char* unknown_0_[5];
-    signed char unknown_14_[5];
-    unsigned char unknown_19_[5];
-    unsigned char unknown_1e_;
-    char unknown_1f_;
-};
-
-struct Struct_ov009_02189a4c_2 {
-    unsigned int unknown_0_;
-    Struct_ov009_02189a4c_3* unknown_4_;
-    char* unknown_8_;
-};
+#include "Resource/NameFilter.h"
 
 // Overlay 9, originally func_ov009_0218a420 (USA/EUR 0x0218a420; JPN not identified)
 extern "C" ARM int ForbiddenWordFile_RelocatePattern(ForbiddenWordFile* file, ForbiddenWordPattern* pattern)

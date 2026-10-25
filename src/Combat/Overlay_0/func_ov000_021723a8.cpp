@@ -3,10 +3,10 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 #include "Combat/MapDisplay.h"
+#include "Resource/GridCursor.h"
 
-struct Struct_0205cfd4 { char unknown_0_[0xbc]; };
-struct Struct_0205bef8 { char unknown_0_[0x40]; };
-struct Struct_02092aa4 { char unknown_0_[0x3c]; };
+struct InitTarget0205cfd4 { char pad[0xbc]; };
+struct Obj02092aa4 { char pad[0x3c]; };
 #if defined(jpn)
 struct Struct_0203c0cc { char unknown_0_[0x38]; };
 enum { Enum_ov000_021723a8_1096 = 0x488, Enum_ov000_021723a8_9 = 5 };
@@ -16,14 +16,14 @@ enum { Enum_ov000_021723a8_1096 = 0x448, Enum_ov000_021723a8_9 = 9 };
 #endif
 
 void ItemTable_Init(void* obj);
-void Background_Init(struct List0204af64* obj);
-void InitStruct0205cfd4(struct InitTarget0205cfd4* obj);
-void GridCursor_Init(struct Struct_0205bef8* obj);
-extern "C" void func_0204c684(void* obj);
+void Background_Init(struct BackgroundGraphics* obj);
+void Window_Init(struct InitTarget0205cfd4* obj);
+void GridCursor_Init(struct GridCursor* obj);
+extern "C" void WindowPane_Init(void* obj);
 void InitObj02092aa4(Obj02092aa4* obj, int mode);
 void SpriteContext_Init(char* obj);
 extern "C" void* func_0202ae18(GameState* gs);
-int GetField0x3acValue_020100a8(GameState* gs);
+int GameState_GetProtagonistIndex(GameState* gs);
 void InitFields0x0_0203c0cc(struct State0xc0cc* obj);
 
 struct Struct_ov000_021723a8;
@@ -43,64 +43,64 @@ struct Struct_ov000_021723a8_2 {
     char unknown_4c_[Enum_ov000_021723a8_1096 - 0x4c];
 };
 
-struct Struct_ov000_021723a8 {
-    char unknown_0_[0x20];
-    int unknown_20_;
-    char unknown_24_[0x68 - 0x24];
-    int unknown_68_;
-    signed char unknown_6c_[4];
-    char unknown_70_[0x7c - 0x70];
-    struct Struct_02092aa4 unknown_7c_;
-    char unknown_b8_[0xd0 - 0xb8];
-    char unknown_d0_[0xe8 - 0xd0];
-    char unknown_e8_[0x11c - 0xe8];
-    char unknown_11c_[0x170 - 0x11c];
-    int unknown_170_;
-    int unknown_174_;
-    int unknown_178_;
-    int unknown_17c_;
-    volatile unsigned short unknown_180_;
-    volatile unsigned short unknown_182_;
-    int unknown_184_;
-    struct Struct_0205cfd4 unknown_188_;
-    char unknown_244_[0x244 - 0x188 - sizeof(struct Struct_0205cfd4)];
-    struct Struct_0205bef8 unknown1_244_;
-    char unknown_284_[0x284 - 0x244 - sizeof(struct Struct_0205bef8)];
-    char unknown1_284_[7][0xe0];
-    struct Struct_02020cb8 unknown_8a4_[3];
-    char unknown_904_[4];
-    int unknown_908_;
-    int unknown_90c_;
-    int unknown_910_;
-    int unknown_914_;
-    int unknown_918_;
-    int unknown_91c_;
-    int unknown_920_;
-    int unknown_924_;
-    int unknown_928_;
-    int unknown_92c_;
-    char unknown_930_[4];
-    int unknown_934_;
-    char unknown_938_[4];
-    int unknown_93c_;
-    int unknown_940_;
-    int unknown_944_;
-    char unknown_948_[0x950 - 0x948];
-    int unknown_950_;
-    unsigned char unknown_954_;
-    unsigned char unknown_955_;
-    unsigned char unknown_956_;
-    char unknown_957_;
-    struct Struct_ov000_021723a8_2 unknown_958_[4];
-    SafeAllocator unknown_1a78_;
-    SafeAllocator unknown_1a8c_;
-    SafeAllocator unknown_1aa0_;
-    SafeAllocator unknown_1ab4_;
-    SafeAllocator unknown_1ac8_;
-    SafeAllocator unknown_1adc_;
-    int unknown_1af0_;
-    char unknown_1af4_[4];
-    SafeAllocator unknown_1af8_;
+struct Battle021723a8 {
+    char pad0[0x20];
+    int f20;
+    char pad24[0x68 - 0x24];
+    int f68;
+    signed char order[4];
+    char pad70[0x7c - 0x70];
+    struct Obj02092aa4 obj7c;
+    char padb8[0xd0 - 0xb8];
+    char listD0[0xe8 - 0xd0];
+    char listE8[0x11c - 0xe8];
+    char obj11c[0x170 - 0x11c];
+    int f170;
+    int f174;
+    int f178;
+    int f17c;
+    volatile unsigned short savedBg0Cnt;
+    volatile unsigned short savedBg1Cnt;
+    int f184;
+    struct InitTarget0205cfd4 obj188;
+    char pad244[0x244 - 0x188 - sizeof(struct InitTarget0205cfd4)];
+    struct GridCursor obj244;
+    char pad284[0x284 - 0x244 - sizeof(struct GridCursor)];
+    char slots284[7][0xe0];
+    struct BackgroundGraphics lists[3];
+    char pad904[4];
+    int f908;
+    int f90c;
+    int f910;
+    int f914;
+    int f918;
+    int f91c;
+    int f920;
+    int f924;
+    int f928;
+    int f92c;
+    char pad930[4];
+    int f934;
+    char pad938[4];
+    int f93c;
+    int f940;
+    int f944;
+    char pad948[0x950 - 0x948];
+    int f950;
+    unsigned char f954;
+    unsigned char f955;
+    unsigned char f956;
+    char pad957;
+    struct Entry021723a8 entries[4];
+    SafeAllocator alloc1a78;
+    SafeAllocator alloc1a8c;
+    SafeAllocator alloc1aa0;
+    SafeAllocator alloc1ab4;
+    SafeAllocator alloc1ac8;
+    SafeAllocator alloc1adc;
+    int f1af0;
+    char pad1af4[4];
+    SafeAllocator alloc1af8;
 #if !defined(jpn)
     struct Struct_0203c0cc unknown_1b0c_[3];
 #endif
@@ -179,10 +179,10 @@ extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
     Background_Init(&self->lists[0]);
     Background_Init(&self->lists[1]);
     Background_Init(&self->lists[2]);
-    InitStruct0205cfd4(&self->obj188);
+    Window_Init(&self->obj188);
     GridCursor_Init(&self->obj244);
     for (int i = 0; i < 7; i++) {
-        func_0204c684(self->slots284[i]);
+        WindowPane_Init(self->slots284[i]);
     }
     self->f1af0 = arg;
     InitObj02092aa4(&self->obj7c, 0);
@@ -220,7 +220,7 @@ extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
     self->f1d7a = 0;
     GameState* gs = GameState::GetInstance();
     func_0202ae18(gs);
-    int id = GetField0x3acValue_020100a8(gs);
+    int id = GameState_GetProtagonistIndex(gs);
     if (id < 0) {
         id = 0;
     }
@@ -249,13 +249,13 @@ extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
         var11->unknown_4_ = arg0->unknown_b8_;
         var11->unknown_0_ = arg0->unknown_d0_;
     }
-    func_ov000_0217feb0(arg0, 0, -1);
-    func_ov000_0217feb0(arg0, 1, func_020100a8(var6));
-    func_ov000_02174b14(arg0);
-    arg0->unknown_1d7c_ = 0;
-    arg0->unknown_1d78_ = 0;
-    arg0->unknown_950_ = 0;
-    arg0->unknown_954_ = 0;
-    arg0->unknown_955_ = 0;
-    arg0->unknown_956_ = 0;
+    func_ov000_0217feb0(self, 0, -1);
+    func_ov000_0217feb0(self, 1, GameState_GetProtagonistIndex(gs));
+    func_ov000_02174b14(self);
+    self->f1d7c = 0;
+    self->f1d78 = 0;
+    self->f950 = 0;
+    self->f954 = 0;
+    self->f955 = 0;
+    self->f956 = 0;
 }

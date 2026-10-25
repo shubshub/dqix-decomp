@@ -20,14 +20,14 @@ struct Struct_ov012_02189af4_2 {
     Struct_ov012_02189af4* inline_ov012_02189af4_3() { return &unknown_54_; }
 };
 
-extern "C" void func_02041c08(char*, int, int, int, int, int);
-extern "C" int func_02041ea4(char*, int);
-extern "C" void* func_020421a0();
-extern "C" void func_0205c508(Struct_0205c508*, int*, int*);
-extern "C" int func_02042058(char*, const char*);
-extern "C" const char* func_02072a68(Struct_02072a68_2*, int);
-extern "C" int func_02041b70(char*, int, const char*);
-extern "C" int func_02041a28(char*, int);
+void Text_AppendFrameTag(char*, int, int, int, int, int);
+int Text_AppendCursorTag(char*, int);
+void* MessageSystem_GetInstance();
+void ComputeProductSums0205c508(UnkStruct0205c508*, int*, int*);
+int Text_Append(char*, const char*);
+const char* FindEntryByKey_02072a68(TableA68*, int);
+int Text_AppendNTag(char*, int, const char*);
+int AppendXTag_02041a28(char*, int);
 extern "C" void func_02046380(void*);
 extern "C" void func_020465c0(Struct_020465c0*, int, int);
 extern "C" void func_020465f0(unsigned char*, int, unsigned char);
@@ -35,41 +35,41 @@ extern "C" void func_020465d8(unsigned char*, int, unsigned char);
 extern "C" void func_02042428(char*, int);
 extern "C" void func_0202ae18();
 
-extern "C" ARM void func_ov012_0218a5f0(char* arg0, char* arg1, int arg2) {
-    if (!arg1) return;
-    int var0 = *(int*)(arg0 + 0x1444) % 10;
-    if (arg2)
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
-    func_02041ea4(arg1, var0);
-    void* var1 = func_020421a0();
-    int var2;
-    Struct_ov012_02189af4* var3 = ((Struct_ov012_02189af4_2*)(arg0 + 0x90))->inline_ov012_02189af4_3();
-    int var4 = var3->unknown_14_;
-    int var5 = var3->unknown_4_;
-    int var6, var7;
-    func_0205c508((Struct_0205c508*)var3, &var6, &var7);
+extern "C" ARM void func_ov012_0218a5f0(char* editor, char* text, int hidden) {
+    if (!text) return;
+    int selection = *(int*)(editor + 0x1444) % 10;
+    if (hidden)
+        Text_AppendFrameTag(text, selection, 8, 5, 5, 5);
+    Text_AppendCursorTag(text, selection);
+    void* messages = MessageSystem_GetInstance();
+    int i;
+    ProfileNavigation* navigation = ((ProfileWindowNavigation*)(editor + 0x90))->GetNavigation();
+    int page = navigation->page;
+    int pages = navigation->pages;
+    int first, last;
+    ComputeProductSums0205c508((UnkStruct0205c508*)navigation, &first, &last);
     func_0202ae18();
     GameState::GetInstance();
-    for (var2 = var6; var2 < var7; ++var2) {
-        if (var2 != var6)
-            func_02042058(arg1, *(const char**)(arg0 + 0x1348));
-        if (var2 == 0) {
-            const char* var8 = func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), 0x50dc);
-            func_02041b70(arg1, var2 % 10, var8);
+    for (i = first; i < last; ++i) {
+        if (i != first)
+            Text_Append(text, *(const char**)(editor + 0x1348));
+        if (i == 0) {
+            const char* name = FindEntryByKey_02072a68((TableA68*)(editor + 0x1314), 0x50dc);
+            Text_AppendNTag(text, i % 10, name);
         } else {
-            const char* var9 = func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), (short)(0x5140 + var2 - 1));
-            func_02041b70(arg1, var2 % 10, var9);
+            const char* name = FindEntryByKey_02072a68((TableA68*)(editor + 0x1314), (short)(0x5140 + i - 1));
+            Text_AppendNTag(text, i % 10, name);
         }
     }
-    func_02046380(var1);
-    func_020465c0((Struct_020465c0*)var1, 0, var4 + 1);
-    func_020465c0((Struct_020465c0*)var1, 1, var5);
-    func_020465f0((unsigned char*)var1, 0, 2);
-    func_020465f0((unsigned char*)var1, 1, 2);
-    func_020465d8((unsigned char*)var1, 0, 1);
-    func_020465d8((unsigned char*)var1, 1, 0);
-    func_02042428(arg1, 8);
-    func_02042058(arg1, func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), 0x6b));
+    func_02046380(messages);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, page + 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, pages);
+    SetByteInRange_020465f0((unsigned char*)messages, 0, 2);
+    SetByteInRange_020465f0((unsigned char*)messages, 1, 2);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
+    SetByteAtIndex_020465d8((unsigned char*)messages, 1, 0);
+    func_02042428(text, 8);
+    Text_Append(text, FindEntryByKey_02072a68((TableA68*)(editor + 0x1314), 0x6b));
 }
 
 #else
@@ -119,17 +119,17 @@ struct Struct_ov012_0218a5f0_4
     Struct_01ff91ac_16* inline_ov012_0218a5f0_2() { return &unknown_ac_; }
 };
 
-extern "C" void func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_02041ea4(char* arg0, int arg1);
-extern "C" void* func_020421a0();
-extern "C" void func_0205c508(Struct_0205c508* arg0, int* arg1, int* arg2);
+void Text_AppendFrameTag(char* text, int a, int b, int c, int d, int e);
+void Text_AppendCursorTag(char* text, int a);
+void* MessageSystem_GetInstance();
+void ComputeProductSums0205c508(UnkStruct0205c508* cursor, int* first, int* last);
 extern "C" void func_0202ae18();
-extern "C" void func_02042058(char* arg0, const char* arg1);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
-extern "C" void func_ov012_021842a0(Struct_ov012_0218a5f0_4* arg0, int arg1, int arg2, int arg3);
+void Text_Append(char* text, const char* append);
+const char* FindEntryByKey_02072a68(TableA68* texts, int id);
+void Text_AppendNTag(char* text, int item, const char* itemText);
+extern "C" void __clear(void* buffer, unsigned long size);
+void CopyTextAndUppercaseIfFlagged0206819c(const char* text, char* output, int a);
+extern "C" void func_ov012_021842a0(ProfileEditor0218a5f0* self, int canvas, int color, int shadow);
 
 // USA: func_ov012_0218a5f0
 extern "C" ARM void func_ov012_0218a5f0(Struct_ov012_0218a5f0_4* arg0, char* arg1, int arg2)
@@ -137,44 +137,44 @@ extern "C" ARM void func_ov012_0218a5f0(Struct_ov012_0218a5f0_4* arg0, char* arg
     if (arg1 == 0)
         return;
 
-    int var10 = arg0->unknown_13d8_[5] % 10;
-    if (arg2)
-        func_02041c08(arg1, var10, 8, 5, 5, 5);
-    func_02041ea4(arg1, var10);
-    func_020421a0();
-    Struct_ov012_0218a5f0_3* var11;
-    int var12;
-    Struct_ov012_0218a5f0* var13 = arg0->inline_ov012_0218a5f0_2()->inline_ov012_0218a5f0();
-    int var14 = var13->unknown_8_[3];
-    int var15 = var13->unknown_4_;
-    int var16;
-    int var17;
-    func_0205c508((Struct_0205c508*)var13, &var16, &var17);
+    int selection = self->selections_[5] % 10;
+    if (hidden)
+        Text_AppendFrameTag(text, selection, 8, 5, 5, 5);
+    Text_AppendCursorTag(text, selection);
+    MessageSystem_GetInstance();
+    Protagonist0218a5f0* protagonist;
+    int i;
+    Cursor0218a5f0* cursor = self->GetWindow()->GetCursor();
+    int shadow = cursor->words_[3];
+    int color = cursor->unk_4;
+    int first;
+    int last;
+    ComputeProductSums0205c508((UnkStruct0205c508*)cursor, &first, &last);
     func_0202ae18();
     var11 = (Struct_ov012_0218a5f0_3*)GameState::GetInstance()->GetProtagonist();
     int var18 = 0x50dc;
     for (var12 = var16; var12 < var17; var12++)
     {
-        if (var12 != var16)
-            func_02042058(arg1, arg0->unknown_1378_);
-        if (var12 == 0)
+        if (i != first)
+            Text_Append(text, self->unk_1378);
+        if (i == 0)
         {
-            int var19 = var18;
-            if (var11->unknown_150_->unknown_49c_0_ == 1)
-                var19 = 0x510e;
-            const char* var20 = func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, (short)var19);
-            func_02041b70(arg1, var12 % 10, var20);
+            int id = base;
+            if (protagonist->partyData_->female_ == 1)
+                id = 0x510e;
+            const char* name = FindEntryByKey_02072a68((TableA68*)self->strings_, (short)id);
+            Text_AppendNTag(text, i % 10, name);
         }
         else
         {
-            int var21 = 0x5140;
-            if (var11->unknown_150_->unknown_49c_0_ == 1)
-                var21 = 0x51a4;
-            const char* var22 = func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, (short)(var21 + var12 - 1));
-            char var23[0x80];
-            __clear(var23, sizeof(var23));
-            func_0206819c(var22, var23, 0);
-            func_02041b70(arg1, var12 % 10, var23);
+            int id = 0x5140;
+            if (protagonist->partyData_->female_ == 1)
+                id = 0x51a4;
+            const char* name = FindEntryByKey_02072a68((TableA68*)self->strings_, (short)(id + i - 1));
+            char converted[0x80];
+            __clear(converted, sizeof(converted));
+            CopyTextAndUppercaseIfFlagged0206819c(name, converted, 0);
+            Text_AppendNTag(text, i % 10, converted);
         }
     }
     func_ov012_021842a0(arg0, 11, var14, var15);

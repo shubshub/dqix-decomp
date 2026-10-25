@@ -17,7 +17,7 @@ src/Combat/Overlay_4/func_ov004_0216312c.cpp:
     complete
     .text start:0x021637c8 end:0x021637e0
 
-src/Combat/Overlay_4/func_ov004_0216351c.cpp:
+src/Combat/Overlay_1/SetStateFromGlobalKey_02163aec.cpp:
     complete
     .text start:0x02163aec end:0x02163b00
 
@@ -345,7 +345,7 @@ src/Combat/Overlay_4/func_ov004_02155bbc.cpp:
     complete
     .text start:0x0215713c end:0x021572d4
 
-src/Combat/Overlay_4/func_ov004_0216d1c4.cpp:
+src/Combat/Overlay_3/DestroyOverlayAllocatorsAndSetDispcnt_0216d77c.cpp:
     complete
     .text start:0x0216d77c end:0x0216d910
 
@@ -489,7 +489,7 @@ src/Combat/Overlay_4/func_ov004_0216d920.cpp:
     complete
     .text start:0x0216dfe8 end:0x0216e120
 
-src/Combat/Overlay_4/func_ov004_0216fa48.cpp:
+src/Combat/Overlay_4/FieldTask_EndGrottoBossIntro_0216fa48.cpp:
     complete
     .text start:0x021701d8 end:0x02170204
 
@@ -813,7 +813,7 @@ src/Combat/Overlay_4/func_ov004_021694e8.cpp:
 src/Combat/Overlay_4/func_ov004_0216e3fc.cpp:
     .text start:0x0216ea9c end:0x0216eab4
 
-src/Combat/Overlay_4/func_ov004_0216dd34.cpp:
+src/Combat/Overlay_4/OrBattleFlagFrom02114e04_0216e3fc.cpp:
     .text start:0x0216e3fc end:0x0216e414
 
 src/Combat/Overlay_4/func_ov004_021685f8.cpp:
@@ -832,7 +832,7 @@ src/Combat/Overlay_4/func_ov004_0216dc8c.cpp:
     complete
     .text start:0x0216e354 end:0x0216e368
 
-src/Combat/Overlay_4/func_ov004_0216dd4c.cpp:
+src/Combat/Overlay_4/SendOrReinitAndNotify_0216e414.cpp:
     complete
     .text start:0x0216e414 end:0x0216e428
 
@@ -1156,7 +1156,7 @@ src/Combat/Overlay_4/func_ov004_0216aa70.cpp:
     complete
     .text start:0x0216ace4 end:0x0216ad60
 
-src/Combat/Overlay_4/func_ov004_0216fa3c.cpp:
+src/Combat/Overlay_4/FieldTask_GrottoBossIntro_0216fa3c.cpp:
     complete
     .text start:0x021701cc end:0x021701d8
 
@@ -1184,7 +1184,7 @@ src/Combat/Overlay_4/02168760.cpp:
     complete
     .text start:0x02168bd4 end:0x02168cf8
 
-src/Combat/Overlay_4/func_ov004_02167b78.cpp:
+src/Combat/Overlay_4/DispatchTauntState_02168074.cpp:
     complete
     .text start:0x02168074 end:0x021681a4
 

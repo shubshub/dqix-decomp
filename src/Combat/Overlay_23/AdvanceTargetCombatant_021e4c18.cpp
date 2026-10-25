@@ -4,8 +4,8 @@
 
 extern "C" int func_ov023_021e29d0(char* obj);
 extern "C" void func_ov023_021e2ce8(int combatantId, void* p1);
-struct EntryList0204af14;
-void* Background_GetScreen(struct EntryList0204af14* list, unsigned int index);
+struct BackgroundGraphics;
+void* Background_GetScreen(struct BackgroundGraphics* list, unsigned int index);
 extern "C" void func_020dc7e8(int a, int b);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -89,7 +89,7 @@ extern "C" ARM void func_ov023_021e4c18(struct Obj021e4c18* obj) {
     if (obj->f0 != 0) {
         int rawId = obj->arr4ec[index];
         signed char sid = (signed char)rawId;
-        struct EntryList0204af14* list = (struct EntryList0204af14*)((char*)obj->f0 + regionalOffset0);
+        struct BackgroundGraphics* list = (struct BackgroundGraphics*)((char*)obj->f0 + regionalOffset0);
         if (list != 0) {
             if (Background_GetScreen(list, 1) != 0) {
                 func_020dc7e8(5, sid);

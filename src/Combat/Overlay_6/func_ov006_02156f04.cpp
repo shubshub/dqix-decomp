@@ -22,7 +22,7 @@ struct Struct_02015ef4_4 {
     char unknown_1a_[0x20 - 0x1a];
 };
 
-extern "C" unsigned short func_020de234(Struct_02015ef4_4* arg0, int arg1);
+unsigned short ItemRecord_GetFileNumber(StructDE234_020de234* p, int preferMid);
 
 extern const char data_ov006_021601e5[];
 
@@ -52,22 +52,22 @@ struct Struct_ov006_02154614 {
 extern "C" void func_ov006_02156e54(Struct_ov006_02154614* arg0);
 
 // USA: func_ov006_02156f04
-extern "C" ARM void func_ov006_02156f04(Struct_ov006_02154614* arg0, Struct_ov006_02156f04* arg1) {
-    func_ov006_02156e54(arg0);
-    Struct_ov006_02156e54* var0 = arg0->unknown_894_;
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    arg0->unknown_12bb_ = 0;
-    for (unsigned char var2 = 0; var2 < 4; var2++) {
-        short var3 = arg1->unknown_70_;
-        var0->unknown_74_ = var3;
-        if (var3 > 0) {
-            var0->unknown_7a_ = 1;
-            int var4 = func_020de234(&arg1->unknown_0_, 0);
-            char var5[0x40] = {0};
-            sprintf(var5, data_ov006_021601e5, arg1->unknown_0_.unknown_12_4_, var4);
-            var0->unknown_70_ = var1->QueueLoadFile(var5, 0);
-            if (var2 != 0)
-                arg0->unknown_12bb_++;
+extern "C" ARM void func_ov006_02156f04(AlchemyPot* self, PotIngredient* ingredients) {
+    func_ov006_02156e54(self);
+    IngredientSprite* ingredient = self->ingredients_;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    self->numIngredients_ = 0;
+    for (unsigned char i = 0; i < 4; i++) {
+        short item = ingredients->item_;
+        ingredient->item_ = item;
+        if (item > 0) {
+            ingredient->loading_ = 1;
+            int number = ItemRecord_GetFileNumber(&ingredients->entry_, 0);
+            char path[0x40] = {0};
+            sprintf(path, data_ov006_021601e5, ingredients->entry_.letter_, number);
+            ingredient->task_ = loader->QueueLoadFile(path, 0);
+            if (i != 0)
+                self->numIngredients_++;
         }
         arg1++;
         var0++;

@@ -2,9 +2,9 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
 extern "C" void VramState_Reserve(void* dst, int a, int b);
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 struct RowEntry02192600 { int f0; int f1; int f2; int f3; };
 struct RowTable02192600 { struct RowEntry02192600 rows[10]; };
@@ -24,9 +24,9 @@ ARM void Init02192600(struct Obj02192600* obj) {
     struct RowTable02192600 local = data_ov015_02193e48;
     int k;
     for (k = 0; k < 4; k++) {
-        obj->arrC4[k].p = AllocateAligned4_02012d88(&data_02114e20, 0x460);
-        obj->arrE4[k].p = AllocateAligned4_02012d88(&data_02114e20, 0x460);
-        obj->arr104[k].p = AllocateAligned4_02012d88(&data_02114e20, 0x70);
+        obj->arrC4[k].p = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x460);
+        obj->arrE4[k].p = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x460);
+        obj->arr104[k].p = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x70);
         int j;
         for (j = 0; j < 10; j++) {
             VramState_Reserve((char*)obj->arrC4[k].p + j * 0x70, local.rows[j].f0, local.rows[j].f1);

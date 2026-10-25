@@ -6,9 +6,6 @@
 #include "NitroSDK/Graphics.h"
 #include "World/ZoneLootableRecord.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 #if defined(jpn)
 enum { Enum_ov000_0216873c_5 = 4 };
@@ -28,18 +25,18 @@ struct Struct_020d6d18_2;
 extern "C" void func_020d6f0c(struct Struct_020d6f0c* arg0);
 extern "C" void func_020d6d18(struct Struct_020d6d18_2* arg0);
 extern "C" void* func_02057924(void);
-extern "C" void func_02057f00(void* arg0, int arg1);
-extern "C" void func_ov017_021a05a8(GameResources* arg0);
-extern "C" void func_ov017_0219b624(GameResources* arg0);
-extern "C" void func_ov017_0219ba0c(GameResources* arg0, int arg1);
-extern "C" void* func_0205ec34(void);
-extern "C" unsigned short* func_02012fe4(void);
-struct Struct_02095924_2;
-struct Struct_02099950;
-extern "C" struct Struct_02095924_2* func_02011584(void* arg0);
-extern "C" struct Struct_02099950* func_02099950(struct Struct_02095924_2* arg0, int arg1);
-extern "C" void func_0206461c(void* arg0, struct Struct_02099950* arg1);
-extern "C" void func_ov000_02160d80(void* arg0, int arg1);
+extern "C" void func_02057f00(void* self, int code);
+extern "C" void func_ov017_021a05a8(GameResources* res);
+extern "C" void func_ov017_0219b624(GameResources* res);
+extern "C" void func_ov017_0219ba0c(GameResources* res, int v);
+extern "C" void* Scenario_GetInstance(void);
+extern "C" unsigned short* Zone3D_GetInstance(void);
+struct SearchTable;
+struct SearchEntry;
+struct SearchTable* GetPtrField0x468_02011584(void* obj);
+struct SearchEntry* FindEntryByHalfwordKey_02099950(struct SearchTable* table, int key);
+extern "C" void Scenario_LoadZoneTriggers(void* a, struct SearchEntry* b);
+void SetFieldsAndSignalData02184220_ov000_02160d80(void* p, int val);
 
 extern int data_ov000_0218321c[];
 
@@ -92,17 +89,17 @@ extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
     if (IsBrightnessTransitionActive(var1)) {
         return;
     }
-    func_ov000_02160fbc(arg0, 0x200);
-    func_02013750(arg0->unknown_ec8_, 1);
-    func_ov000_02172720(arg0->unknown_3760_);
-    func_ov000_02160fa8(arg0, 0x800);
-    func_02079f9c((char*)func_020797dc());
-    func_02047230(&arg0->unknown_5600_);
-    func_02047230(&arg0->unknown_5688_);
-    if (arg0->unknown_ea4_ != 0) {
-        func_020d6f0c((struct Struct_020d6f0c*)arg0->unknown_ea4_);
-        func_020d6d18(arg0->unknown_ea4_);
-        arg0->unknown_ea4_ = 0;
+    ClearCombatWorkFlags0x55f4_ov000_02160fbc(scene, 0x200);
+    ResetBigStruct02013750(scene->bigStruct, 1);
+    func_ov000_02172720(scene->field_0x3760);
+    SetCombatWorkFlags0x55f4_ov000_02160fa8(scene, 0x800);
+    ClearTwoRegions02079f9c((char*)GetData02108e10_020797dc());
+    SprSprite_Unload(&scene->model0);
+    SprSprite_Unload(&scene->model1);
+    if (scene->entryManager != 0) {
+        DestroyAllocatorAt0xa28((struct Obj020d6f0c*)scene->entryManager);
+        ConstructEntryManager020d6d18(scene->entryManager);
+        scene->entryManager = 0;
     }
     void* var2 = func_02057924();
     for (int* var3 = data_ov000_0218321c; *var3 >= 0; var3++) {
@@ -119,11 +116,11 @@ extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
 #if !defined(jpn)
     func_ov017_0219ba0c(var1, 0);
 #endif
-    void* var5 = func_0205ec34();
-    unsigned short* var6 = func_02012fe4();
-    func_0206461c(var5, func_02099950(func_02011584(var0), *var6));
-    if (arg0->unknown_0_ != 0) {
-        DISPCNT = (DISPCNT & ~0x1f00) | (arg0->unknown_0_ << 8);
+    void* target = Scenario_GetInstance();
+    unsigned short* key = Zone3D_GetInstance();
+    Scenario_LoadZoneTriggers(target, FindEntryByHalfwordKey_02099950(GetPtrField0x468_02011584(gs), *key));
+    if (scene->bgLayers != 0) {
+        DISPCNT = (DISPCNT & ~0x1f00) | (scene->bgLayers << 8);
     }
     func_ov000_02160d80(arg0, 6);
 }

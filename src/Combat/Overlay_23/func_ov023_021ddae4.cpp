@@ -20,10 +20,9 @@ struct Struct_ov023_021ddae4 {
     int unknown_780_;
 };
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(ActiveEntry02046900* entry);
-struct Rec020467f0;
-void* Pac_GetFile(Rec020467f0* rec, int index, void** out, int* out44);
+struct PacRecord;
+int Pac_CountFiles(PacRecord* entry);
+void* Pac_GetFile(PacRecord* rec, int index, void** out, int* out44);
 extern "C" int SpriteContext_LoadFile(void* renderer, void* data, int kind, int allocator);
 
 // USA: func_ov023_021ddae4
@@ -42,9 +41,9 @@ extern "C" ARM void func_ov023_021ddae4(void* arg0) {
     if (var3 != 0 && var4 != 0)
 #endif
     {
-        int count = Pac_CountFiles((ActiveEntry02046900*)file);
+        int count = Pac_CountFiles((PacRecord*)file);
         for (int i = 0; i < count; i++) {
-            void* data = Pac_GetFile((Rec020467f0*)file, i, &record, &kind);
+            void* data = Pac_GetFile((PacRecord*)file, i, &record, &kind);
             SpriteContext_LoadFile(&view->renderer, data, kind, (int)view->allocator);
         }
     }

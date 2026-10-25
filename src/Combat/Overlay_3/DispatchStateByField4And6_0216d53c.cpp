@@ -10,7 +10,7 @@ enum { kRegionf1c = 0xf1c };
 #endif
 
 
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 void Forward0204359c(void* obj, int count);
 extern "C" void func_020439b0(void* obj, int flag);
 
@@ -31,7 +31,7 @@ struct S0216d53c {
 
 // USA: func_ov003_0216d53c  (semantic: DispatchStateByField4And6_0216d53c)
 extern "C" ARM void func_ov003_0216d53c(S0216d53c* obj) {
-    int g = GetGlobalField0x1c020421a0();
+    int g = MessageSystem_GetInstance();
     Forward0204359c((void*)g, 2);
     func_020439b0((void*)g, 0);
 

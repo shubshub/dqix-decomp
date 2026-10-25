@@ -16,19 +16,19 @@ struct Struct_ov003_02173f70 {
 #else
     unsigned char unknown1_3c_[0x814 - 0x3c];
 #endif
-    Struct_02043368* unknown_814_;
-    Struct_02043368_2* unknown_818_;
-    unsigned char unknown_81c_[8];
-    unsigned short unknown_824_;
-    unsigned char unknown_826_[2];
-    unsigned char unknown_828_;
-    unsigned char unknown_829_[3];
-    Struct_02043368* unknown_82c_;
-    Struct_02043368_2* unknown_830_;
-    unsigned char unknown_834_[0x89c - 0x834];
-    Struct_0207f7f0* unknown_89c_;
-    Struct_02020cb8 unknown_8a0_[2];
-    Struct_0207f7f0_2 unknown_8e0_[8];
+    ClearTarget0205a234* list;
+    Struct0205a198* records;
+    unsigned char unknown81c[8];
+    unsigned short count;
+    unsigned char unknown826[2];
+    unsigned char active;
+    unsigned char unknown829[3];
+    ClearTarget0205a234* allocatedList;
+    Struct0205a198* allocatedRecords;
+    unsigned char unknown834[0x89c - 0x834];
+    Manager0207f7f0* menu;
+    BackgroundGraphics entries[2];
+    Node0207f7f0 nodes[8];
 };
 
 extern "C" void func_ov003_02173f70(Struct_ov003_02173f70*, SafeAllocator*);

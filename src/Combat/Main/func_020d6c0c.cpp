@@ -2,8 +2,8 @@
 #include "Filesystem/Overlay_33/Ov33BackgroundLoader.h"
 #include "NitroSDK/OverlayId.h"
 
-extern "C" void func_020a1940(unsigned int arg0);
-extern char data_0211e33c;
+extern "C" void func_020a1940(unsigned int id);
+extern char g_fileLoadBuffer;
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.
 #if defined(jpn)
@@ -14,5 +14,5 @@ extern "C" ARM void func_020d6c0c(void);
 // USA: func_020d6c0c
 extern "C" ARM void func_020d6c0c() {
     func_020a1940(OVERLAY_ID(34));
-    PopulateOv33BackgroundLoader(&data_0211e33c, 0x30000, 0x14);
+    PopulateOv33BackgroundLoader(&g_fileLoadBuffer, 0x30000, 0x14);
 }

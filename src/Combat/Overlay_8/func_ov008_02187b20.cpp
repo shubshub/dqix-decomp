@@ -5,6 +5,7 @@
 #define LOW_REGION(j, u) (u)
 #endif
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
 #if defined(jpn)
 #define func_ov008_02187b20 func_ov008_021888fc
@@ -13,9 +14,6 @@
 #include <World/Object3D.h>
 #include <GameState/GameState.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_01ff8b48_26 {
     unsigned short unknown_0_;
@@ -95,9 +93,6 @@ struct Struct_01ff8b48_13 {
     int unknown_0_[0x18 / 4];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -170,21 +165,21 @@ struct Struct_0201099c_3;
 extern char data_ov008_0218b4c3[];
 #endif
 
-unsigned char* GetGlobalField0x1c020421a0();
+unsigned char* MessageSystem_GetInstance();
 void CopyOutBattleField0x7ac0_020ac0b4(void* count);
 void StoreInArray0x8b0_020465c0(StoreStruct* messages, int index, int value);
 void SetByteInRange_020465f0(unsigned char* messages, int index, unsigned char digits);
 void SetByteAtIndex_020465d8(unsigned char* messages, int index, unsigned char value);
-void AppendPaletteTag_02041e70(char* text, int color);
-int TestBitInByteArray_0206dfb0(int store, unsigned char* bits, int flag);
+void Text_AppendPaletteTag(char* text, int color);
+int Scenario_TestFlag(int store, unsigned char* bits, int flag);
 void AppendXYTag_02041a90(char* text, int x, int y);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 
 extern "C" {
-void __clear(void* arg0, unsigned long arg1);
-void func_02046380(unsigned char* arg0);
-char* func_0205ec34();
+void __clear(void* buffer, unsigned long size);
+void func_02046380(unsigned char* messages);
+char* Scenario_GetInstance();
 }
 
 // USA: func_ov008_02187b20
@@ -194,18 +189,18 @@ extern "C" ARM void func_ov008_02187b20(Struct_ov008_021842a0_2* arg0, char* arg
     int var1;
     if (arg1 == NULL)
         return;
-    unsigned char* var2 = func_020421a0();
-    int var3;
-    unsigned int var4;
-    unsigned char var5;
-    var4 = 0;
-    var0 = (Struct_ov008_021843f8*)((char*)GameState::GetInstance() + LOW_REGION(0x2c4 + 0x7000, 0x104 + 0x7400));
-    int var6;
-    Struct_ov008_02187278* var7 = arg0->unknown_b34_;
-    int var8;
-    int var9;
-    int var10;
-    if (var7 != NULL)
+    unsigned char* messages = MessageSystem_GetInstance();
+    int count1;
+    unsigned int count2;
+    unsigned char shown;
+    count2 = 0;
+    saved = (SavedRecords*)((char*)GameState::GetInstance() + LOW_REGION(0x2c4 + 0x7000, 0x104 + 0x7400));
+    int count3;
+    GuestRecords* guest = self->guestRecords_;
+    int count4;
+    int count5;
+    int count6;
+    if (guest != NULL)
     {
         var3 = var7->unknown_5_6_;
         var4 = var7->unknown_1_6_;
@@ -232,60 +227,60 @@ extern "C" ARM void func_ov008_02187b20(Struct_ov008_021842a0_2* arg0, char* arg
         var9 = var0->unknown_3c_.unknown_d_6_;
         var10 = var0->unknown_3c_.unknown_11_1_;
     }
-    if (arg0->unknown_b0c_ != NULL)
-        var6--;
-    if (var3 > 99999)
-        var3 = 99999;
-    if ((int)var4 > 99999)
-        var4 = 99999;
-    if (var6 > 999)
-        var6 = 999;
-    if (var8 > 999)
-        var8 = 999;
-    if (var9 > 9999)
-        var9 = 9999;
-    if (var10 > 9999)
-        var10 = 9999;
-    func_02046380(var2);
-    func_020465c0((Struct_020465c0*)var2, 0, var3);
-    func_020465f0(var2, 0, 5);
-    func_020465d8(var2, 0, 1);
-    func_020465c0((Struct_020465c0*)var2, 1, var4);
-    func_020465f0(var2, 1, 5);
-    func_020465d8(var2, 1, 1);
-    func_020465c0((Struct_020465c0*)var2, 2, var6);
-    func_020465f0(var2, 2, LOW_REGION(3, 5));
-    char* var11;
-    func_020465d8(var2, 2, 1);
-    func_020465c0((Struct_020465c0*)var2, 3, var8);
-    func_020465f0(var2, 3, LOW_REGION(3, 5));
-    func_020465d8(var2, 3, 1);
-    func_020465c0((Struct_020465c0*)var2, 4, var9);
-    func_020465f0(var2, 4, LOW_REGION(4, 5));
-    func_020465d8(var2, 4, 1);
-    func_020465c0((Struct_020465c0*)var2, 5, var10);
-    func_020465f0(var2, 5, LOW_REGION(4, 5));
-    func_020465d8(var2, 5, 1);
-    func_02041e70(arg1, 0xe);
-    var11 = func_0205ec34();
-    var5 = 0;
-    if (arg2 != NULL)
+    if (self->page_ != NULL)
+        count3--;
+    if (count1 > 99999)
+        count1 = 99999;
+    if ((int)count2 > 99999)
+        count2 = 99999;
+    if (count3 > 999)
+        count3 = 999;
+    if (count4 > 999)
+        count4 = 999;
+    if (count5 > 9999)
+        count5 = 9999;
+    if (count6 > 9999)
+        count6 = 9999;
+    func_02046380(messages);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, count1);
+    SetByteInRange_020465f0(messages, 0, 5);
+    SetByteAtIndex_020465d8(messages, 0, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, count2);
+    SetByteInRange_020465f0(messages, 1, 5);
+    SetByteAtIndex_020465d8(messages, 1, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 2, count3);
+    SetByteInRange_020465f0(messages, 2, LOW_REGION(3, 5));
+    char* store;
+    SetByteAtIndex_020465d8(messages, 2, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 3, count4);
+    SetByteInRange_020465f0(messages, 3, LOW_REGION(3, 5));
+    SetByteAtIndex_020465d8(messages, 3, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 4, count5);
+    SetByteInRange_020465f0(messages, 4, LOW_REGION(4, 5));
+    SetByteAtIndex_020465d8(messages, 4, 1);
+    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 5, count6);
+    SetByteInRange_020465f0(messages, 5, LOW_REGION(4, 5));
+    SetByteAtIndex_020465d8(messages, 5, 1);
+    Text_AppendPaletteTag(text, 0xe);
+    store = Scenario_GetInstance();
+    shown = 0;
+    if (records != NULL)
     {
         for (int var12 = 0; var12 < 6; var12++)
             var5 += 1 << var12;
     }
     else
     {
-        var5 += 1;
-        if (func_0206dfb0((int)var11, (unsigned char*)(var11 + 0x8c), 0x1198))
-            var5 += 2;
-        var5 += 4;
-        if (var0->unknown_3c_.unknown_b_0_ != 0)
-            var5 += 8;
-        if (var0->unknown_3c_.unknown_d_6_ != 0)
-            var5 += 0x10;
-        if (func_0206dfb0((int)var11, (unsigned char*)(var11 + 0x8c), 0x1199))
-            var5 += 0x20;
+        shown += 1;
+        if (Scenario_TestFlag((int)store, (unsigned char*)(store + 0x8c), 0x1198))
+            shown += 2;
+        shown += 4;
+        if (saved->records_.unk_8_24 != 0)
+            shown += 8;
+        if (saved->records_.unk_c_14 != 0)
+            shown += 0x10;
+        if (Scenario_TestFlag((int)store, (unsigned char*)(store + 0x8c), 0x1199))
+            shown += 0x20;
     }
     int var13 = 0;
     for (int var14 = 0; var14 < 6; var14++)
@@ -294,7 +289,7 @@ extern "C" ARM void func_ov008_02187b20(Struct_ov008_021842a0_2* arg0, char* arg
         {
 #if defined(jpn)
             AppendXYTag_02041a90(text, 2, line * 15 + 1);
-            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x78)));
+            Text_Append(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 0x78)));
 #else
             char label[0x40];
             y = line * 14;
@@ -305,9 +300,9 @@ extern "C" ARM void func_ov008_02187b20(Struct_ov008_021842a0_2* arg0, char* arg
             char* value = strstr(label, data_ov008_0218b4c3);
             if (value != NULL)
                 *value = 0;
-            AppendString02042058(text, label);
+            Text_Append(text, label);
             AppendXYTag_02041a90(text, 0x62, y + 7);
-            AppendString02042058(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 500)));
+            Text_Append(text, KeyTable_Get((Container020e0310*)&self->texts_, (short)(i + 500)));
 #endif
             var13++;
         }

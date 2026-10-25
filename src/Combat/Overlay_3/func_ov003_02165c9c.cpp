@@ -15,7 +15,7 @@ struct Struct_ov003_02165c9c_5;
 int SetSublistEntriesFlag1_02080b54(void* obj, int id);
 int CompareThreshold_021614e8(int);
 void SetOrClearFlags464_02166164(Outer02166164*, int, int);
-extern "C" void func_02042764(void* src, void* dst, int flag);
+extern "C" void Font_DecodeText(void* src, void* dst, int flag);
 int GetFieldAt0x50(Struct020865b0*);
 int ClassifyRatio_0215f56c(S0215f56c*);
 int SetEntryFlagById02080b40(void* obj, int id);
@@ -55,10 +55,10 @@ struct Struct_ov003_02165c9c_2 {
     unsigned char unknown1_2c8c_;
 };
 
-extern "C" void* func_02010828(GameState*);
+void* GameState_GetParty(GameState*);
 
-static inline Struct_ov003_02165c9c_2* inline_ov003_02165c9c() {
-    return (Struct_ov003_02165c9c_2*)func_02010828(GameState::GetInstance());
+static inline Party02165c9c* GetParty() {
+    return (Party02165c9c*)GameState_GetParty(GameState::GetInstance());
 }
 
 struct Struct_ov003_02165c9c_3 {
@@ -172,9 +172,9 @@ extern "C" ARM void func_ov003_02165c9c(Struct_ov003_02165c9c_4* arg0) {
 #if defined(jpn)
         func_02080f8c((struct Struct_02080f8c*)var0, var12, (int)var3->unknown_140_);
 #else
-        var16 = var15 * 0x30;
-        func_02042764(var3->unknown_140_, (char*)arg0->unknown_39c_ + var16, 1);
-        func_02080f8c((struct Struct_02080f8c*)var0, var12, (int)&arg0->unknown_39c_[0][var16]);
+        off = i * 0x30;
+        Font_DecodeText(entry->name, (char*)self->names + off, 1);
+        SetEntryFirstField02080f8c((struct Container02080f8c*)elementObj, idA, (int)&self->names[0][off]);
 #endif
         if (func_020865b0((Struct_0201099c_16*)var3) != 0) {
             var6 = (short)(func_020865b0((Struct_0201099c_16*)var3) + 0x11);

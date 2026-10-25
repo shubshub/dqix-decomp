@@ -11,24 +11,24 @@ extern "C" void* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
 struct Struct_ov000_0215440c;
 extern "C" void* func_ov000_021600f8(Struct_ov000_0215440c*, int);
 struct GameState;
-extern "C" void* func_0200fea4(GameState*, int);
-extern "C" void func_0205ebc0(void* arg0, int arg1, int arg2);
-extern "C" void func_0205eabc(void* arg0, void* arg1, int arg2);
-extern "C" void* func_02079e2c(char*, int);
-extern "C" int func_ov025_021eb42c(void* arg0, short arg1, short arg2);
-extern "C" int func_ov025_021eb148(void*, short, int, unsigned char);
-extern "C" void* func_ov000_0215ffa0(void* arg0);
-extern "C" void* func_ov000_0215fff4(void* arg0, int arg1, int arg2);
-extern "C" int func_ov000_0215fd90(void* arg0, int arg1);
-extern "C" void func_ov025_021ed124(unsigned char* arg0);
-extern "C" void func_ov025_021ebab4(char* arg0);
-extern "C" void func_ov025_021ed31c(char*, int);
-extern "C" void func_ov025_021ed324(void* arg0, const char* arg1);
-extern "C" void func_ov025_021ed314(char*, int);
-struct Struct_ov000_0216fe48;
-extern "C" void func_ov000_0216fe48(Struct_ov000_0216fe48*);
-struct Struct_ov000_0216fd0c;
-extern "C" void func_ov000_0216fd0c(Struct_ov000_0216fd0c*);
+void* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+void SePlayer_LoadExtraArchiveB(void* obj, int a, int b);
+void ForwardToTargetOrDefault0205eabc(void* obj, void* target, int arg);
+void* SearchBothTables02079e2c(char*, int);
+int SetSlotEntryNoFlag_021eb42c(void* self, short b, short c);
+int SetSlotEntry_021eb148(void*, short, int, unsigned char);
+extern "C" void* func_ov000_0215ffa0(void* node);
+void* FindNodeAtDepth0215fff4(void* node, int limit, int idx);
+extern "C" int func_ov000_0215fd90(void* obj, int flag);
+void InitQueueStruct_021ed124(unsigned char* obj);
+void InitContainer_021ebab4(char* obj);
+void SetIntField360_021ed31c(char*, int);
+void SetName021ed324(void* obj, const char* name);
+void SetIntField356_021ed314(char*, int);
+struct Struct0216fe48;
+void ResetStruct0216fe48(Struct0216fe48*);
+struct Struct0216fd0c;
+void SetField0FromCallFunc0202fa38(Struct0216fd0c*);
 #if defined(jpn)
 struct SafeAllocator;
 extern int data_ov025_021efb88;
@@ -141,7 +141,7 @@ extern "C" ARM void func_ov025_021e8d20(char* arg0, char* arg1) {
             if (obj != 0) {
                 int a = ((Object3D*)obj)->GetField78();
                 int b = ((Object3D*)obj)->GetField7a();
-                SetForwardAndStore0205ebc0(&g_sePlayer, a, b);
+                SePlayer_LoadExtraArchiveB(&g_sePlayer, a, b);
             }
         }
     }

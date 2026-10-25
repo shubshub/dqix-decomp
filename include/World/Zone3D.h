@@ -22,23 +22,52 @@ struct Zone3D_StructPtr_8
     unsigned char unknown_c_high_ : 1;
 };
 
-struct Struct_020133fc
+// ZoneChestRenderRecord::state. A chest opens through Opening .. SettlingLid (ZoneChest_UpdateOpening, every frame
+// from Zone3D_UpdateChests), seen in-game in that order opening the Angel Falls well's blue chest.
+enum ZoneChestState {
+    ZoneChestState_Gone = 0,        // not drawn: a mimic took its place (FieldTask_OpenChest's Ambush step)
+    ZoneChestState_Closed = 1,      // can be opened (only these: the interaction finder, GameResources_StartOpenChest)
+    ZoneChestState_Opening = 2,     // ZoneChest_StartOpening: next, queue the contents' icon (gold or the item's)
+    ZoneChestState_LoadingIcon = 4, // waiting for the icon file
+    ZoneChestState_LiftingLid = 5,  // ZoneChest_LiftLid until it's done
+    ZoneChestState_ShowingIcon = 6, // the icon above the chest, 500 ms
+    ZoneChestState_SettlingLid = 7, // ZoneChest_SettleLid until it's done
+    ZoneChestState_Open = 8,        // its container's opened flag is set (Zone3D_SetUpContainers), or it just opened
+};
+
+// ZoneChestRenderRecord::kind. Zone3D_DrawChests draws Red in its first pass, the others in the second.
+enum ZoneChestKind {
+    ZoneChestKind_Red = 0,      // a LootableContainerType_RedChest container (Zone3D_SetUpContainers)
+    ZoneChestKind_Blue = 1,     // a LootableContainerType_BlueChest container
+    ZoneChestKind_Grotto = 2,   // a grotto floor's chest (func_0201afd0); its contents are in grottoChestList_
+};
+
+// ZoneChestRenderRecord::lidAngle values (Zone3D_DrawChests turns the lid about x by it)
+enum ZoneChestLid {
+    ZoneChestLid_Closed = 0x647a,
+    ZoneChestLid_Lifted = 0x4800,   // ZoneChest_LiftLid ends here; ZoneChest_SettleLid goes on to Open
+    ZoneChestLid_Open = 0x4000,
+};
+
+struct ZoneChestRenderRecord
 {
-    Vector3i unknown_0_;
-    short unknown_c_;
-    short unknown_e_;
-    unsigned short unknown_10_;
-    short unknown_12_;
-    signed char unknown_14_;
-    unsigned char unknown_15_;
-    unsigned char unknown_16_;
-    unsigned char unknown_17_;
-    unsigned char unknown_18_;
-    unsigned char unknown_19_;
-    short unknown_1a_;
-    unsigned short unknown_1c_;
-    unsigned char unknown_1e_[2];
-    Struct_02012fa4* unknown_20_;
+    Vector3i position;
+    short angleY;                   // which way it faces (its container's angle)
+    short lidAngle;                 // ZoneChestLid
+    unsigned short counter;         // into the current step: frames (the lid), milliseconds (the icon)
+    short iconTask;                 // the background load of the contents' icon file (-1: none)
+    signed char opener;             // the actor opening it (ZoneChest_StartOpening; -1: none); only the
+                                    // player's own opening shows the icon
+    unsigned char pad15;            // nothing reads or writes it (the sources; live, opening a chest)
+    unsigned char state;            // ZoneChestState
+    unsigned char kind;             // ZoneChestKind
+    unsigned char special;          // 1: closes again once opened (ZoneChest_SettleLid); Zone3D_SetUpContainers sets it on
+                                    // blue chests while func_0202ae18's flag is set
+    unsigned char iconRise;         // pixels the contents' icon has risen above the chest (up to 10)
+    short recordIndex;
+    unsigned short uniqueID;
+    unsigned char pad1e[2];         // nothing reads or writes it (the sources; live, opening a chest)
+    Foo02048004* icon;              // the contents' icon sprite while it shows (ZoneChest_UpdateOpening)
 };
 
 struct Struct_020236dc_3
@@ -89,7 +118,8 @@ public:
         int unknown_3c_;
     } substruct_c_;
     SafeAllocator* pAllocator_4c_;
-    void* unknown_ptr_50_; // referenced in the nsbtx processor, so something graphical
+    void* vramState_;               // the zone's VramState: VramState_Rewind on zone change (Zone3D.cpp), the state an icon
+                                    // is loaded against (ZoneChest_UpdateOpening); the nsbtx processor reads it
     SafeAllocator internalAllocator_;
     SafeAllocator* pAllocator_68_;
 
@@ -117,20 +147,23 @@ public:
     char unk_444[0x474 - 0x444];
 
     short unknown_474_;
-    unsigned char unknown_476_;
+    unsigned char numLootables_;
     // this seems to include blue and red chests
     unsigned char numChests_;
-    Struct_020133cc* unknown_478_;
-    Struct_020133fc* unknown_47c_;
+    ZoneLootableRecord* lootables_;
+    ZoneChestRenderRecord* chests_;
 
     Struct_02012fa4* unknown_480_[6];
     Model3D models_498_[2];
-    int unknown_5f0_[4];
-    char unknown_600_[0x824 - 0x600];
-    Struct_02016874_2** unknown_824_;
+    int chestPaletteOffsets_5f0_[4];
+    Foo02048004 lootIcons_[4];      // the icon of what a player found, by the player's index: a chest's contents
+                                    // (ZoneChest_UpdateOpening, by opener), a pot's item (SearchPotTask_WaitSprite)
+    int lootIconAlpha_;             // 0x1f when a chest's icon loads, counted down while its lid settles, written to
+                                    // the icon's alpha (ZoneChest_UpdateOpening); Zone3D_ClearChestIconsByOpener zeroes it
+    BmdjSceneElement** terrainElements_;
     int unknown_828_;
 
-    int unknown_82c_;
+    int terrainElementCount_;
 
     char unk_830[4];
     char unknown_834_;
@@ -156,11 +189,12 @@ public:
     char unk_23ce[0x23ec - 0x23ce];
     ActiveGrottoClass grotto_; // offset 23ec in USA. this is 0x20 bytes larger in JPN
     char unk_2664[0x2724 - 0x2664];
-    char unknown_struct_2724_[0xc];
+    char grottoChestList_[0xc];     // a grotto floor's chest contents (func_0201afd0), read by GrottoChestList_Get
     char unk_2730[0x274c - 0x2730];
-    int unknown_274c_;
-    char unknown_2750_[0x2754 - 0x2750];
-    char unknown_struct_2754_[0x18];
+    int chestRenderingEnabled_274c_;
+    char unk_2750[0x2754 - 0x2750];
+    char containerItems_[0x18];     // item data for every item the zone's containers can give (Zone3D_SetUpContainers
+                                    // loads it on entry; the pot search reads an item's name from it)
     union {
         char unk_276c[0x2820 - 0x276c];
         struct {
@@ -199,5 +233,17 @@ public:
 };
 
 #if defined(jpn)
+typedef char ZoneSavedActorStateSizeCheck[sizeof(ZoneSavedActorState) == 0x18 ? 1 : -1];
+typedef char Zone3DSavedActorOffsetCheck[offsetof(Zone3D, savedActor_) == 0x27b4 ? 1 : -1];
+typedef char Zone3DNodeHeadOffsetCheck[offsetof(Zone3D, firstBMDJStruct_41c_) == 0x43c ? 1 : -1];
+typedef char Zone3DTerrainArrayOffsetCheck[offsetof(Zone3D, terrainElements_) == 0x844 ? 1 : -1];
+typedef char Zone3DLootIconsOffsetCheck[offsetof(Zone3D, lootIcons_) == 0x620 ? 1 : -1];
+typedef char Zone3DStorageSizeCheck[sizeof(Zone3D) == 0x2864 ? 1 : -1];
 #else
+typedef char ZoneSavedActorStateSizeCheck[sizeof(ZoneSavedActorState) == 0x18 ? 1 : -1];
+typedef char Zone3DSavedActorOffsetCheck[offsetof(Zone3D, savedActor_) == 0x2774 ? 1 : -1];
+typedef char Zone3DNodeHeadOffsetCheck[offsetof(Zone3D, firstBMDJStruct_41c_) == 0x41c ? 1 : -1];
+typedef char Zone3DTerrainArrayOffsetCheck[offsetof(Zone3D, terrainElements_) == 0x824 ? 1 : -1];
+typedef char Zone3DLootIconsOffsetCheck[offsetof(Zone3D, lootIcons_) == 0x600 ? 1 : -1];
+typedef char Zone3DStorageSizeCheck[sizeof(Zone3D) == 0x2824 ? 1 : -1];
 #endif

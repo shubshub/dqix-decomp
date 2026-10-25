@@ -3,7 +3,7 @@
     .ctor       start:0x0218bbd4 end:0x0218bbd8 kind:rodata align:4
     .bss        start:0x0218bbe0 end:0x0218bbe0 kind:bss align:32
 
-src/Combat/Overlay_21/func_ov021_0218b5c4.cpp:
+src/Combat/Overlay_21/ResetAllocatorAndClearField40_0218b5c4.cpp:
     complete
     .text start:0x0218b5c4 end:0x0218b5fc
 
@@ -11,7 +11,7 @@ src/Combat/Overlay_21/Trans_0218bb30.cpp:
     complete
     .text start:0x0218bb30 end:0x0218bbc4
 
-src/Combat/Overlay_21/func_ov021_0218b5a0.cpp:
+src/Combat/Overlay_20/InitDisplayAndAllocators_0218b5a0.cpp:
     complete
     .text start:0x0218b5a0 end:0x0218b5c4
 

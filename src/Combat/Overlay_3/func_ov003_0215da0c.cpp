@@ -18,10 +18,10 @@ enum { Enum_ov003_0215da0c_2456 = 0x998 };
 struct Struct_0201099c_3;
 struct Struct_0205d6a0;
 
-char* GetGlobalField0x1c020421a0();
-void ReinitController02043204(char* ctrl);
+char* MessageSystem_GetInstance();
+void MessageSystem_Reset(char* ctrl);
 int KeyTable_Get(struct Container020e0310* c, int key);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* list, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* list, int flag);
 extern "C" void* func_0202ae18(void);
 extern "C" int func_0202c508(void* arg0);
 extern "C" void func_ov003_0215cab0(void* arg0, int arg1);
@@ -49,24 +49,24 @@ extern "C" ARM void func_ov003_0215da0c(struct Struct_ov003_0215da0c* arg0) {
     int var4;
     int var5;
 
-    var1 = GameState::GetInstance();
-    var0 = func_020421a0();
-    var2 = func_0202ae18();
+    gs = GameState::GetInstance();
+    global = MessageSystem_GetInstance();
+    ctx = func_0202ae18();
 
-    var4 = 0;
-    if (func_0202c508(var2) && var1->GetUnknownGameObject()->obj3D_.unknown_4_ == 0) {
-        var4 = 1;
+    zero = 0;
+    if (func_0202c508(ctx) && gs->GetUnknownGameObject()->obj3D_.actorIndex_ == 0) {
+        zero = 1;
     }
-    var5 = 0;
-    if (func_0202c508(var2) && var1->GetUnknownGameObject()->obj3D_.unknown_4_ != 0) {
-        var5 = 1;
+    nonZero = 0;
+    if (func_0202c508(ctx) && gs->GetUnknownGameObject()->obj3D_.actorIndex_ != 0) {
+        nonZero = 1;
     }
 
-    var3 = arg0->unknown_3b8_;
-    if (var3 == 0) {
-        if (arg0->unknown_3f3_) {
-            func_02043204(var0);
-            arg0->unknown_3b8_++;
+    step = self->step;
+    if (step == 0) {
+        if (self->skipMessage) {
+            MessageSystem_Reset(global);
+            self->step++;
             return;
         }
         int var6 = 0x442;
@@ -83,9 +83,9 @@ extern "C" ARM void func_ov003_0215da0c(struct Struct_ov003_0215da0c* arg0) {
         func_ov003_0215cab0(self, KeyTable_Get((struct Container020e0310*)self->messages, key));
         self->step++;
     }
-    if (var3 == 1 && *(int*)(var0 + Enum_ov003_0215da0c_2456) == 0) {
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_98_, 1);
-        arg0->unknown_3bc_ = 5;
-        arg0->unknown_3b8_ = 0;
+    if (step == 1 && *(int*)(global + kRegionValue998_868) == 0) {
+        Window_ClosePane((struct Entry_0205d6a0*)self->entries, 1);
+        self->mode = 5;
+        self->step = 0;
     }
 }

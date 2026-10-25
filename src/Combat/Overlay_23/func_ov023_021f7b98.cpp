@@ -1,36 +1,23 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 
-struct Struct_02020cb8 {
-    char unknown_0_[0xc];
-    unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned short unknown_e_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_;
-    unsigned char unknown_1e_;
-    unsigned char unknown_1f_;
+void Background_Init(struct BackgroundGraphics* obj);
 
-    unsigned char inline_ov023_021f7b98() { return unknown_1c_0_; }
-    unsigned char inline_ov023_021f7b98_2() { return unknown_1c_4_; }
-    void inline_ov023_021f7b98_3(unsigned char arg0) { unknown_1c_0_ = arg0; }
-    void inline_ov023_021f7b98_4(unsigned char arg0) { unknown_1c_4_ = arg0; }
-};
-void Background_Init(struct List0204af64* obj);
+struct PacRecord;
+int Pac_CountFiles(struct PacRecord* entry);
 
-struct ActiveEntry02046900;
-int Pac_CountFiles(struct ActiveEntry02046900* entry);
-
-struct Rec020467f0;
-void* Pac_GetFile(struct Rec020467f0* rec, int index, void** out, int* out44);
+void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
 void Background_FlushFile(void* obj, char* str);
 
-struct SelfTag0204b3a0;
-void Background_UploadFile(struct SelfTag0204b3a0* self, char* str);
+void Background_UploadFile(struct BackgroundGraphics* self, char* str);
+
+// The copy goes through byte-returning accessors (as the original's member functions did); direct field copies
+// compile differently.
+static inline unsigned char GetSubScreen(struct BackgroundGraphics* layer) { return layer->subScreen_; }
+static inline unsigned char GetBgNumber(struct BackgroundGraphics* layer) { return layer->bgNumber_; }
+static inline void SetSubScreen(struct BackgroundGraphics* layer, unsigned char value) { layer->subScreen_ = value; }
+static inline void SetBgNumber(struct BackgroundGraphics* layer, unsigned char value) { layer->bgNumber_ = value; }
 
 struct Struct_ov023_021f7b98 {
 #if defined(jpn)
@@ -38,29 +25,29 @@ struct Struct_ov023_021f7b98 {
 #else
     char unknown_0_[0x28];
 #endif
-    struct Struct_02020cb8 unknown_28_;
+    struct BackgroundGraphics list;
 };
 
 // USA: func_ov023_021f7b98
-extern "C" ARM void func_ov023_021f7b98(struct Struct_ov023_021f7b98* arg0, void* arg1, int arg2, struct Struct_02020aec* arg3, unsigned int arg4) {
-    int var0;
-    void* var1;
-    struct Struct_02020cb8 var2;
+extern "C" ARM void func_ov023_021f7b98(struct Obj021f7b98* self, void* keyObj, int useTag, struct PacRecord* entry, unsigned int entryLength) {
+    int size;
+    void* rp;
+    struct BackgroundGraphics list;
 
     if (arg3 == 0 || arg4 == 0) {
         return;
     }
-    int count = Pac_CountFiles((struct ActiveEntry02046900*)entry);
+    int count = Pac_CountFiles((struct PacRecord*)entry);
     for (int i = 0; i < count; i++) {
         char* rec = (char*)Pac_GetFile(entry, i, &rp, &size);
         if (rec) {
             Background_Init(&list);
-            list.SetLo(self->list.GetLo());
-            list.SetHi(self->list.GetHi());
+            SetSubScreen(&list, GetSubScreen(&self->list));
+            SetBgNumber(&list, GetBgNumber(&self->list));
             if (useTag) {
                 Background_FlushFile(&list, rec);
             } else {
-                Background_UploadFile((struct SelfTag0204b3a0*)&list, rec);
+                Background_UploadFile(&list, rec);
             }
         }
     }

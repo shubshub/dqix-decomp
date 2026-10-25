@@ -6,7 +6,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Container020e0310;
 char* KeyTable_Get(struct Container020e0310* c, int key);
@@ -61,8 +61,8 @@ struct Struct_ov000_02171458_2 {
 };
 
 // USA: func_ov000_02171458
-extern "C" ARM void func_ov000_02171458(struct Struct_ov000_02171458_2* arg0) {
-    func_02012fe4();
+extern "C" ARM void func_ov000_02171458(struct Menu02171458* menu) {
+    Zone3D_GetInstance();
     struct MenuState02171458* state = &menu->state;
     int cursor = state->cursor;
     if (menu->entries[cursor] == NULL) {

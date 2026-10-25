@@ -12,22 +12,22 @@ enum { kRegionValue9A0_870 = 0x9a0 };
 enum { kRegionValue9AE_7DE = 0x9ae };
 #endif
 
-void* GetGlobalField0x1c020421a0(void);
+void* MessageSystem_GetInstance(void);
 struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_02159250(void*, void*);
-extern "C" void func_02043124(void*);
+extern "C" void MessageSystem_Stop(void*);
 struct Struct0209c830;
 void SetValueAndActivate0209c830(Struct0209c830*, int);
 int IsAnimationActive0209ca2c(void*);
 
-extern unsigned char data_02109bf4;
+extern unsigned char g_bgmPlayer;
 
 // USA: func_ov003_0215b0e8
 ARM void UpdateChatResponseState_0215b0e8(void* self) {
     unsigned char* s = (unsigned char*)self;
     GameState::GetInstance();
-    unsigned char* g = (unsigned char*)GetGlobalField0x1c020421a0();
+    unsigned char* g = (unsigned char*)MessageSystem_GetInstance();
     unsigned char state = *(unsigned char*)(s + 0x580);
 
     if (state == 0) {
@@ -39,14 +39,14 @@ ARM void UpdateChatResponseState_0215b0e8(void* self) {
             void* val1 = KeyTable_Get((Container020e0310*)(s + 0x64), 0x44c);
             func_ov003_02159250(self, val1);
         } else {
-            func_02043124(g);
+            MessageSystem_Stop(g);
         }
         *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
     }
 
     if (state == 1) {
         if (*(int*)(g + kRegionValue998_868) != 0) return;
-        SetValueAndActivate0209c830((Struct0209c830*)&data_02109bf4, 0x3b);
+        SetValueAndActivate0209c830((Struct0209c830*)&g_bgmPlayer, 0x3b);
         *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
     }
 
@@ -55,7 +55,7 @@ ARM void UpdateChatResponseState_0215b0e8(void* self) {
     if (*(int*)(g + kRegionValue9A0_870) == 3) {
         *(unsigned char*)(g + 0x1000 + kRegionValue9AE_7DE) = 0;
     }
-    if (IsAnimationActive0209ca2c(&data_02109bf4) == 0) {
+    if (IsAnimationActive0209ca2c(&g_bgmPlayer) == 0) {
         *(unsigned char*)(s + 0x588) = 1;
         *(unsigned char*)(s + 0x580) = 0;
     }

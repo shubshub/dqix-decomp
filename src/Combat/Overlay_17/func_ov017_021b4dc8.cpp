@@ -9,13 +9,13 @@ struct Struct_0209c08c {
     unsigned short unknown_18_;
 };
 
-extern "C" char* func_02012fe4(void);
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_0209c008(void* arg0, struct Struct_02013fb4* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0209bffc(void* arg0);
-extern "C" void func_0209c08c(Struct_0209c08c* arg0, unsigned short arg1);
+extern "C" char* Zone3D_GetInstance(void);
+int GetField5cb0Value_0201079c(char* battleStruct);
+int GetField5cb4Value_020107d0(char* battleStruct);
+int IsInRange0201b5b0(int monsterId);
+extern "C" void func_0209c008(void* obj, struct StreamHeader* buffer, int length, int idFlag, int mulVal, int addVal);
+void ClearHalfword0x18_0209bffc(void* obj);
+void AppendHalfwordCapped_0209c08c(BoundedArray* arr, unsigned short value);
 
 extern const char data_ov017_021d7b5d;
 
@@ -46,11 +46,11 @@ extern "C" ARM void func_ov017_021b4dc8(struct Struct_ov017_021b4dc8_2* arg0) {
 #else
  enum {Enum_ov017_021b4dc8_9196=0x23ec};
 #endif
-    Struct_ov017_021b4dc8* var0;
-    GameState* var1 = GameState::GetInstance();
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    ActiveGrottoClass* var3 = (ActiveGrottoClass*)((char*)func_02012fe4() + Enum_ov017_021b4dc8_9196);
-    int var4 = arg0->unknown_8_->unknown_0_;
+    ScriptSource_021b4dc8* source;
+    GameState* battle = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    ActiveGrottoClass* grotto = (ActiveGrottoClass*)((char*)Zone3D_GetInstance() + regionalOffset0);
+    int monsterId = request->source->monsterId;
 
     if (var2->GetTaskStatus(arg0->unknown_c_) == 0) {
         return;

@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int func_02012fe4(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_ov017_021d0490(int arg0);
-extern "C" void func_ov017_021c3e18(int arg0);
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" void func_ov017_021bd2f0(void* arg0, void* arg1);
+extern "C" int Zone3D_GetInstance(void);
+extern "C" int func_0202c508(void* state);
+extern "C" void func_ov017_021d0490(int a);
+extern "C" void func_ov017_021c3e18(int a);
+struct SearchStruct0202c1a4;
+signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+extern "C" void func_ov017_021bd2f0(void* table, void* localBuf);
 
 struct Struct_ov017_021d069c {
     unsigned char unknown_0_[4];
@@ -48,10 +48,10 @@ extern "C" ARM void func_ov017_021d069c(int arg0, struct Struct_ov017_021d069c* 
 #else
  enum {Enum_ov017_021d069c_1844=0x734};
 #endif
-    func_02012fe4();
-    unsigned char* var0 = *(unsigned char**)((char*)arg3 + 0x3000 + Enum_ov017_021d069c_1844);
-    if (func_0202c508(arg4)) {
-        func_ov017_021d0490(arg0);
+    Zone3D_GetInstance();
+    unsigned char* table = *(unsigned char**)((char*)a3 + 0x3000 + regionalOffset);
+    if (func_0202c508(a4)) {
+        func_ov017_021d0490(a0);
         func_ov017_021c3e18(1);
         return;
     }

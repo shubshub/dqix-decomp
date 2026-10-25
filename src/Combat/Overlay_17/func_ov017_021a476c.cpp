@@ -1,6 +1,3 @@
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 #include "GameState/Field3b0.h"
@@ -108,44 +105,44 @@ signed char data_ov017_021d76d8 = -1;
 short data_ov017_021d76da = -1;
 unsigned short data_ov017_021d83a8;
 
-extern "C" void* func_0203cf4c(void);
-extern "C" int func_020421a0(void);
-extern "C" Struct_ov017_021a476c_2* func_02012fe4(void);
+void* GetGlobalPtr021075f4_0203cf4c(void);
+int MessageSystem_GetInstance(void);
+extern "C" Work021a476c* Zone3D_GetInstance(void);
 extern "C" void* func_0202ae18(void);
-extern "C" int func_02046b08(void** arg0);
-extern "C" int func_ov017_021a4e88(int arg0, unsigned short* arg1);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" Struct_ov017_021a476c_3* func_0203dce4(Struct_0203dce4_2* arg0, int arg1);
-extern "C" Struct_ov017_021a476c_4* func_02040528(int* arg0);
-extern "C" Struct_ov017_021a476c_5* func_02040538(Struct_0203e0a0* arg0);
-extern "C" unsigned char func_02039d7c(char* arg0);
-extern "C" int func_020535c8(signed char* arg0);
-extern "C" int func_0203402c(Struct_0203402c* arg0);
-extern "C" void func_ov017_0219a674(unsigned char* arg0);
-extern "C" void func_020406f8(Struct_0203de84* arg0, Struct_0203de84_2* arg1);
-extern "C" short func_ov017_021a4700(Struct_ov009_0218aa28* arg0, int arg1, Struct_ov009_0218aa28* arg2);
-extern "C" int func_ov017_0218daa8(void* arg0, Struct_ov009_0218aa28* arg1, int arg2, int arg3, unsigned char arg4);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_ov017_0219b33c(Struct_ov017_021a476c_9* arg0, Struct_ov017_021a476c_6* arg1);
-extern "C" int func_02039860(void* arg0);
-extern "C" unsigned int func_02039de8(unsigned char* arg0);
-extern "C" Struct_ov017_021a476c_7* func_0205ec34(void);
-extern "C" int func_ov017_0218d4ec(void* arg0, int arg1);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+int IsField0Null_02046b08(void** obj);
+extern "C" int func_ov017_021a4e88(int checkKind, unsigned short* outId);
+int CheckField0NonZero_0202b7d8(int* obj);
+Entry021a476c* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4* list, int id);
+Data021a476c* GetField0x8_02040528(int* obj);
+Info021a476c* GetField0xc02040538(S02040538* p);
+unsigned char GetByte0x26c_02039d7c(char* obj);
+int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int CheckField0xc4Low15BitsNonZero(BitField0203402c* p);
+void InitObj0219a674(unsigned char* self);
+void SelectVec3FromSources020406f8(Vec3_020406f8* out, Node020406f8* n);
+short GetAngleDeltaBetween_021a4700(Vec3* p0, int baseAngle, Vec3* p2);
+int GetDeltaAndForward_0218daa8(void* obj, Vec3* otherVec, int c, int d, unsigned char e);
+extern "C" int func_0202c508(void* obj);
+extern "C" void func_ov017_0219b33c(Ctx021a476c* self, Msg021a476c* msg);
+int GetSignedByte0x1c8_02039860(void* obj);
+unsigned int IsFlag0x1ceBit0x10Set_02039de8(unsigned char* obj);
+extern "C" Save021a476c* Scenario_GetInstance(void);
+int HasFlagBit_0218d4ec(void* obj, int bit);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 // USA: func_ov017_021a476c
-extern "C" ARM void func_ov017_021a476c(Struct_ov017_021a476c_9* arg0) {
-    Struct_ov017_021a476c_6 var0;
-    Struct_ov017_021a476c_6 var1;
-    Vector3fix var2;
-    GameState* var3 = GameState::GetInstance();
-    void* var4 = func_0203cf4c();
-    func_020100bc(var3);
-    func_020421a0();
-    Struct_ov017_021a476c_10* var5 = (Struct_ov017_021a476c_10*)var3->GetUnknownGameObject();
-    GameResources* var6 = GetGameResources();
-    Struct_ov017_021a476c_2* var7 = func_02012fe4();
-    void* var8 = func_0202ae18();
+extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
+    Msg021a476c msg;
+    Msg021a476c near;
+    Vector3fix pos;
+    GameState* game = GameState::GetInstance();
+    void* list = GetGlobalPtr021075f4_0203cf4c();
+    game->GetCamera();
+    MessageSystem_GetInstance();
+    Actor021a476c* player = (Actor021a476c*)game->GetUnknownGameObject();
+    GameResources* res = GetGameResources();
+    Work021a476c* work = Zone3D_GetInstance();
+    void* session = func_0202ae18();
 
     data_ov017_021d76da = -1;
     data_ov017_021d83a8 = 0;
@@ -245,11 +242,11 @@ extern "C" ARM void func_ov017_021a476c(Struct_ov017_021a476c_9* arg0) {
         if (!func_0202b7d8((int*)func_0202ae18())) {
             goto none;
         }
-        var33 = GetGameResources();
-        var32 = var33->unknown_ptr_array_36fc[0];
-        var31 = func_02012fe4();
-        if (IsBrightnessOutsideValidRange(var33, false)) {
-            var28 = -1;
+        res2 = GetGameResources();
+        list2 = res2->fieldTaskQueue_;
+        work2 = Zone3D_GetInstance();
+        if (IsBrightnessOutsideValidRange(res2, false)) {
+            found = -1;
             goto done;
         }
         if (var31->unknown_8_->unknown_c_4_) {
@@ -290,20 +287,20 @@ extern "C" ARM void func_ov017_021a476c(Struct_ov017_021a476c_9* arg0) {
             if (!var22->unknown_0_.IsVisible()) {
                 continue;
             }
-            Struct_02014900 var34;
-            Struct_02014900 var35;
-            var35 = *(Struct_02014900*)&var29->unknown_0_.position_;
-            var34 = *(Struct_02014900*)&var22->unknown_0_.position_;
-            var21 = fix32abs(var35.unknown1_0_.x - var34.unknown1_0_.x);
-            var20 = fix32abs(var35.unknown1_0_.z - var34.unknown1_0_.z);
-            var19 = fix32abs(var35.unknown1_0_.y - var34.unknown1_0_.y);
-            var18 = var21 + var20;
-            if (var27 == -1 || var18 < var27) {
-                var28 = var22->unknown_0_.unknown_4_;
-                var27 = var18;
-                var26 = var21;
-                var25 = var20;
-                var24 = var19;
+            WrappedVector3fix memberPos;
+            WrappedVector3fix leaderPos;
+            leaderPos = *(WrappedVector3fix*)&leader->obj3D.position_;
+            memberPos = *(WrappedVector3fix*)&member->obj3D.position_;
+            ax = fix32abs(leaderPos.vec.x - memberPos.vec.x);
+            az = fix32abs(leaderPos.vec.z - memberPos.vec.z);
+            ay = fix32abs(leaderPos.vec.y - memberPos.vec.y);
+            sum = ax + az;
+            if (best == -1 || sum < best) {
+                found = member->obj3D.actorIndex_;
+                best = sum;
+                dx = ax;
+                dz = az;
+                dy = ay;
             }
         }
         if (var26 < 0x1800 && var25 < 0x1800 && var24 < 0xb33) {
@@ -314,17 +311,17 @@ extern "C" ARM void func_ov017_021a476c(Struct_ov017_021a476c_9* arg0) {
     done:
         data_ov017_021d76d8 = var28;
         if (data_ov017_021d76d8 >= 0) {
-            var16 = (Struct_ov017_021a476c_10*)var3->GetPartyMemberByIndex(data_ov017_021d76d8);
-            var17 = func_0205ec34();
-            if (var16->unknown_1b2_ == 0) {
-                if (!func_ov017_0218d4ec(arg0, data_ov017_021d76d8) ||
-                    !func_0206dfb0((int)var17, var17->unknown_8c_, 0x799)) {
-                    func_ov017_0219a674((unsigned char*)&var1);
-                    var1.unknown_0_ = 0xa;
-                    var1.unknown_10_ = fix32abs(func_ov017_021a4700((Struct_ov009_0218aa28*)&var5->unknown_0_.position_, (short)var5->unknown_0_.rotation_.y, (Struct_ov009_0218aa28*)&var16->unknown_0_.position_));
-                    if (var1.unknown_10_ < 0x1922) {
-                        var1.unknown_2_ = data_ov017_021d76d8;
-                        func_ov017_0219b33c(arg0, &var1);
+            mem = (Actor021a476c*)game->GetPartyMemberByIndex(data_ov017_021d76d8);
+            save = Scenario_GetInstance();
+            if (mem->field1b2 == 0) {
+                if (!HasFlagBit_0218d4ec(self, data_ov017_021d76d8) ||
+                    !Scenario_TestFlag((int)save, save->flags, 0x799)) {
+                    InitObj0219a674((unsigned char*)&near);
+                    near.kind = 0xa;
+                    near.angle = fix32abs(GetAngleDeltaBetween_021a4700((Vec3*)&player->obj3D.position_, (short)player->obj3D.rotation_.y, (Vec3*)&mem->obj3D.position_));
+                    if (near.angle < 0x1922) {
+                        near.field2 = data_ov017_021d76d8;
+                        func_ov017_0219b33c(self, &near);
                     }
                 }
             }

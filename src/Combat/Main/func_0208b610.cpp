@@ -6,7 +6,7 @@
 #define func_0208b610 func_0208bf04
 #endif
 
-extern "C" void func_02016d8c(void* arg0);
+void RenderConfig_SetObjectRotation(void* rotation);
 fix32_t fix32cos(int x);
 fix32_t fix32sin(int x);
 extern "C" void func_0208b548(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, unsigned int arg7);
@@ -14,18 +14,18 @@ extern "C" ARM void func_0208b588(unsigned int arg0, unsigned int arg1, unsigned
                                   unsigned int arg3, unsigned int arg4, unsigned int arg5);
 
 // USA: func_0208b610
-extern "C" ARM void func_0208b610(Vector3fix arg0, unsigned short arg1, int arg2, int arg3, int arg4, short arg5) {
-    RenderConfig::SetObjectPosition(&arg0);
-    fix32_t var0 = fix32cos(arg5);
-    fix32_t var1 = fix32sin(arg5);
-    Matrix3x3 var2;
-    Mat3x3_WriteRotationY(&var2, var1, var0);
-    func_02016d8c(&var2);
-    Vector3fix var3;
-    var3.x = arg2;
-    var3.y = arg3;
-    var3.z = arg4;
-    RenderConfig::SetObjectScale(&var3);
+extern "C" ARM void func_0208b610(Vector3fix v, unsigned short p, int a, int b, int c, short d) {
+    RenderConfig::SetObjectPosition(&v);
+    fix32_t cosine = fix32cos(d);
+    fix32_t sine = fix32sin(d);
+    Matrix3x3 rot;
+    Mat3x3_WriteRotationY(&rot, sine, cosine);
+    RenderConfig_SetObjectRotation(&rot);
+    Vector3fix scale;
+    scale.x = a;
+    scale.y = b;
+    scale.z = c;
+    RenderConfig::SetObjectScale(&scale);
     RenderConfig::SubmitToFifo();
     func_0208b548(0, 0, 1, 1, 0, 0, 0, 0);
     func_0208b588(0, 0, 3, 0, 0, 0);

@@ -7,9 +7,9 @@
 #if defined(jpn)
 struct GameState { static GameState* GetInstance(); };
 struct GameObject { char unknown0[0x134]; const char* name; };
-int GetField0x3acValue_020100a8(GameState*);
+int GameState_GetProtagonistIndex(GameState*);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
-int StringLength_020d2ff0(const char*);
+int STD_GetStringLength(const char*);
 #endif
 
 #if defined(jpn)
@@ -50,10 +50,10 @@ struct Overlay8SpriteView {
 extern "C" {
     void* func_0202ae18();
     bool func_0202c540(void*);
-    int _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(void*);
+    int _Z27GridCursor_GetSelectedIndexP10GridCursor(void*);
     void _Z19SetBitfield0205afb0iPvi(void*, void*, int);
     void _Z19SetBitfield0205af84iPvi(void*, void*, int);
-    void func_0205ac40(void*, void*);
+    void SpriteContext_DrawSprite(void*, void*);
 
     void func_ov008_02188730(Overlay8SpriteView* menu) {
         if (menu->flags & 0x80000) {
@@ -65,7 +65,7 @@ extern "C" {
                 Overlay8SpriteEntry* sprite = &menu->spriteEntries[entry];
                 sprite->x = 0x10000;
                 sprite->y = ((drawn % 6) << 16) + 0x8000;
-                int selected = _Z27GridCursor_GetSelectedIndexP15Struct_0205bb84(menu->cursor) - menu->page;
+                int selected = _Z27GridCursor_GetSelectedIndexP10GridCursor(menu->cursor) - menu->page;
                 int style = 1;
                 if (selected == i)
                     style = 2;
@@ -75,7 +75,7 @@ extern "C" {
                     style = 3;
                 _Z19SetBitfield0205afb0iPvi(menu->renderer, &menu->spriteEntries[entry], style);
                 _Z19SetBitfield0205af84iPvi(menu->renderer, &menu->spriteEntries[entry], 1);
-                func_0205ac40(menu->renderer, &menu->spriteEntries[entry]);
+                SpriteContext_DrawSprite(menu->renderer, &menu->spriteEntries[entry]);
                 ++drawn;
             }
         }
@@ -83,8 +83,8 @@ extern "C" {
             Overlay8SpriteEntry* entry = menu->extraEntry;
 #if defined(jpn)
             GameState* game = GameState::GetInstance();
-            GameObject* hero = GetCombatantWithFlag0x100_0200ff1c(game, GetField0x3acValue_020100a8(game));
-            entry->x = ((StringLength_020d2ff0(hero->name) >> 1) * 10 + 0x74) << 12;
+            GameObject* hero = GetCombatantWithFlag0x100_0200ff1c(game, GameState_GetProtagonistIndex(game));
+            entry->x = ((STD_GetStringLength(hero->name) >> 1) * 10 + 0x74) << 12;
             entry->y = 0;
 #else
             entry->x = menu->extraX;
@@ -93,7 +93,7 @@ extern "C" {
             entry->priority = 1;
             entry->palette = 0;
             entry->alpha = 0x7f;
-            func_0205ac40(menu->extraRenderer, entry);
+            SpriteContext_DrawSprite(menu->extraRenderer, entry);
         }
     }
 }

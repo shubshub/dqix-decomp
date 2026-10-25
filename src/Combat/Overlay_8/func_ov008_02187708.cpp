@@ -1,4 +1,5 @@
 #include <globaldefs.h>
+#include "Graphics/Background.h"
 #include <Memory/SafeAllocator.h>
 #include <World/Object3D.h>
 #include <Filesystem/BackgroundLoader.h>
@@ -46,9 +47,6 @@ struct Struct_ov008_02185dc0 {
     int unknown_0_[2];
 };
 
-struct Struct_ov003_021594c4 {
-    int unknown_0_[0x20 / 4];
-};
 
 struct Struct_02081870_2 {
     int unknown_0_[0xbc / 4];
@@ -161,29 +159,29 @@ extern char data_ov008_0218b49b[];
 extern char data_ov008_0218b4b0[];
 extern char data_ov008_0218b4c1[];
 
-MessageSystem* GetGlobalField0x1c020421a0();
+MessageSystem* MessageSystem_GetInstance();
 void Clear12Bytes020e46c4(void* name);
 void InitObjFromCombatant020e4c74(void* name, GameObject* object);
 void ResetListHeader020727d8(List020727d8* list);
 const char* KeyTable_Get(Container020e0310* texts, int id);
 const char* FindEntryByKey_02072a68(TableA68* texts, int id);
 void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
-void SetIndexedName02046574(Obj02046574* messages, int index, char* text);
+void MessageSystem_SetStringArgument(Obj02046574* messages, int index, char* text);
 char* FindSubstring_020d2f88(char* text, char* search);
 void AppendYTag_02041a5c(char* text, int y);
-void AppendString02042058(char* text, const char* append);
+void Text_Append(char* text, const char* append);
 
 extern "C" {
-void __clear(void* arg0, unsigned long arg1);
-int sprintf(char* arg0, const char* arg1, ...);
-void* ExtractFileFromGP2(char* arg0, char* arg1, unsigned int* arg2);
-void func_02046380(Struct_02021b84* arg0);
-void func_02042764(const void* arg0, char* arg1, int arg2);
-void func_020e4b34(Struct_ov008_02187708_2* arg0, char* arg1, char* arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8,
-                   int arg9, int arg10, int arg11);
-const char* func_020e046c(char* arg0, void* arg1, unsigned int arg2, short arg3);
-void func_02046608(Struct_02021b84* arg0, int arg1, const char* arg2, char* arg3, int arg4, int arg5, int arg6);
-int func_020420e8(const char* arg0, int arg1);
+void __clear(void* buffer, unsigned long size);
+int sprintf(char* buffer, const char* format, ...);
+void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
+void func_02046380(MessageSystem* messages);
+void Font_DecodeText(const void* codes, char* text, int value);
+void func_020e4b34(MessageName* name, char* text, char* text2, int a, int b, int c, int d, int female, int e,
+                   int f, int g, int h);
+const char* func_020e046c(char* output, void* file, unsigned int size, short id);
+void MessageSystem_FormatText(MessageSystem* messages, int value, const char* format, char* output, int size, int a, int b);
+int Font_GetTextWidth(const char* text, int large);
 }
 
 // USA: func_ov008_02187708
@@ -193,18 +191,18 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
         return;
     GameState* var0 = GameState::GetInstance();
     BackgroundLoader::GetInstance();
-    Struct_02021b84* var1 = func_020421a0();
-    char var2[0x30];
-    __clear(var2, sizeof(var2));
-    short var3 = 0;
-    char var4[0x40];
-    __clear(var4, sizeof(var4));
-    unsigned int var5 = 0;
-    func_02046380(var1);
-    Struct_ov008_02187708_2 var6;
-    Struct_ov008_02187708_2 var7;
-    const void* var8 = arg0->unknown_b30_;
-    if (var8 == NULL)
+    MessageSystem* messages = MessageSystem_GetInstance();
+    char name[0x30];
+    __clear(name, sizeof(name));
+    short title = 0;
+    char buffer[0x40];
+    __clear(buffer, sizeof(buffer));
+    unsigned int female = 0;
+    func_02046380(messages);
+    MessageName heroName;
+    MessageName guestName;
+    const void* codes = self->guest_;
+    if (codes == NULL)
     {
         char* var9 = inline_ov008_02187708(var0);
         var3 = ((Struct_ov008_02187708*)(var9 + 4))->unknown_2_3_;
@@ -227,14 +225,14 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
     }
     else
     {
-        Struct_ov008_02187278* var13 = arg0->unknown_b34_;
-        if (var13 != NULL)
-            var3 = var13->unknown_14_;
-        var5 = var13->unknown_16_0_;
-        func_02042764(var8, var2, 1);
-        func_020e46c4(&var7);
-        func_020e4b34(&var7, var2, var2, 0, 0, 0, 0, var5, 0, 1, 0, 1);
-        var1->unknown_10_ = &var7;
+        GuestRecords* guest = self->guestRecords_;
+        if (guest != NULL)
+            title = guest->title_;
+        female = guest->female_;
+        Font_DecodeText(codes, name, 1);
+        Clear12Bytes020e46c4(&guestName);
+        func_020e4b34(&guestName, name, name, 0, 0, 0, 0, female, 0, 1, 0, 1);
+        messages->unk_10 = &guestName;
     }
     if (var3 > 0)
     {
@@ -282,7 +280,7 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
                 BackgroundLoader::RemoveLockGlobal();
             }
         }
-        func_02046574((Struct_02046574_2*)var1, 0, (char*)var15);
+        MessageSystem_SetStringArgument((Obj02046574*)messages, 0, (char*)titleText);
     }
     char* var22 = arg0->unknown_b8_;
     int var23 = 100;
@@ -292,16 +290,16 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
         var23 = 101;
         var24 = 0xdf;
     }
-    func_02046608(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, format), output + 0x760, width, 1, 0);
+    MessageSystem_FormatText(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, format), output + 0x760, width, 1, 0);
     int color = 7;
     if (FindSubstring_020d2f88(output + 0x760, data_ov008_0218b4c1) != NULL)
         color = 2;
     if (records != NULL)
     {
-        arg0->unknown_b2c_ = (func_020420e8(var22 + 0x760, 0) + 0x10) << 12;
-        if (var25 == 2)
-            arg0->unknown_b2c_ = 0xe0000;
+        self->titleX_ = (Font_GetTextWidth(output + 0x760, 0) + 0x10) << 12;
+        if (color == 2)
+            self->titleX_ = 0xe0000;
     }
-    func_02041a5c(arg1, var25);
-    func_02042058(arg1, var22 + 0x760);
+    AppendYTag_02041a5c(text, color);
+    Text_Append(text, output + 0x760);
 }

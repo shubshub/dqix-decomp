@@ -24,16 +24,16 @@ struct Struct_0208cb08 {
     unsigned char unknown_64_;
 };
 
-extern "C" Struct_0208cb08* func_02094a00(void);
-extern "C" void func_02094ab0(Struct_0208cb08* arg0);
-extern "C" void func_02094b2c(Struct_0208cb08* arg0, int arg1, const char* arg2, unsigned char arg3,
-                           unsigned char arg4);
-extern "C" void func_02094b30(Struct_0208cb08* arg0, int arg1, int arg2);
-extern "C" void func_02094b34(Struct_0208cb08* arg0, int arg1, int arg2, unsigned char arg3,
-                           unsigned char arg4);
-extern "C" void func_02094b38(Struct_0208cb08* arg0, int arg1);
-extern "C" void func_02094b3c(Struct_0208cb08* arg0, int arg1);
-extern "C" void func_02094b40(Struct_0208cb08* arg0);
-extern "C" void* func_02094b44(Struct_0208cb08* arg0, int arg1);
-extern "C" int func_02094b4c(Struct_0208cb08* arg0);
-extern "C" int func_02094b54(Struct_0208cb08* arg0, int arg1, char* arg2, int arg3);
+FontBankLoader* FontBankLoader_GetInstance(void);
+extern "C" void FontBankLoader_CancelLoads(FontBankLoader* loader);
+void BlankFunction02094b2c(FontBankLoader* loader, int index, const char* text, unsigned char primaryMode,
+                           unsigned char supplementalMode);
+void BlankFunction02094b30(FontBankLoader* loader, int fontBankId, int useBaseArchive);
+void BlankFunction02094b34(FontBankLoader* loader, int first, int second, unsigned char primaryMode,
+                           unsigned char supplementalMode);
+void BlankFunction02094b38(FontBankLoader* loader, int fontBankId);
+void BlankFunction02094b3c(FontBankLoader* loader, int event);
+void BlankFunction02094b40(FontBankLoader* loader);
+void* AlwaysFalse02094b44(FontBankLoader* loader, int event);
+int AlwaysTrue02094b4c(FontBankLoader* loader);
+int AlwaysFalse02094b54(FontBankLoader* loader, int event, char* data, int size);

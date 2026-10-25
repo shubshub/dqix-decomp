@@ -7,10 +7,10 @@ void func_020813ec(void*, int);
 void func_0208203c(void*);
 int func_ov003_021550dc(void*);
 void _Z13SePlayer_PlayP8SePlayerii(void*, int, int);
-int _Z27GetField0x3acValue_020100a8P9GameState(void*);
+int _Z29GameState_GetProtagonistIndexP9GameState(void*);
 int _Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(void*, int);
 void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void*);
-void* _Z26GetPtrField0x2a04_02010828P9GameState(void*);
+void* _Z18GameState_GetPartyP9GameState(void*);
 void* _ZN9GameState21GetPartyMemberByIndexEi(void*, int);
 int func_0202053c(void*);
 int func_ov003_02155208(void*);
@@ -94,13 +94,13 @@ extern "C" ARM void func_ov003_02156ad4(struct Struct_ov003_02156ad4_4* arg0) {
         void* gs = _ZN9GameState11GetInstanceEv();
         switch (self->f1e0) {
         case 8:
-            if (arg0->unknown_1fb_ == 0) {
-                arg0->unknown_1f7_ = func_020100a8(var3);
-                arg0->unknown_1f9_ = 0;
-                if (func_ov003_02155f88(arg0, arg0->unknown_1f7_)) {
-                    var1->unknown_0_ = 8;
-                    arg0->unknown_1f8_ = 7;
-                    func_0207fe44(var0);
+            if (self->f1fb == 0) {
+                self->f1f7 = _Z29GameState_GetProtagonistIndexP9GameState(gs);
+                self->state = 0;
+                if (_Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(self, self->f1f7)) {
+                    modeArgs->cmd = 8;
+                    self->mode = 7;
+                    _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(p);
                     return;
                 }
                 arg0->unknown_1fc_ = arg0->unknown_1fc_ | 2;
@@ -115,29 +115,29 @@ extern "C" ARM void func_ov003_02156ad4(struct Struct_ov003_02156ad4_4* arg0) {
             }
             break;
         case 9: {
-            unsigned char var4;
-            if (arg0->unknown_1fb_ == 0) {
-                arg0->unknown_1f7_ = func_020100a8(var3);
-                var1->unknown_0_ = 0xe;
-                arg0->unknown_1f8_ = 4;
-                var4 = 2;
+            unsigned char st;
+            if (self->f1fb == 0) {
+                self->f1f7 = _Z29GameState_GetProtagonistIndexP9GameState(gs);
+                modeArgs->cmd = 0xe;
+                self->mode = 4;
+                st = 2;
             } else {
                 var1->unknown_0_ = 0xe;
                 var1->unknown_2_ = 0xf;
                 arg0->unknown_1f8_ = 4;
                 var4 = 0;
             }
-            arg0->unknown_1f9_ = var4;
-            unsigned char var5;
-            struct Struct_ov003_02156ad4_2* var6;
-            void* var7 = _ZN9GameState11GetInstanceEv();
-            var6 = (struct Struct_ov003_02156ad4_2*)func_02010828(var7);
-            var5 = var6->unknown_f7c_;
-            int var8;
-            for (var2 = 0; var2 < var5; var2++) {
-                void* var9 = _ZN9GameState21GetPartyMemberByIndexEi(var7, var6->unknown_f78_[var2]);
-                if (var9 != 0 && func_0202053c(var9) == 0x63) {
-                    var8 = 1;
+            self->state = st;
+            unsigned char count;
+            struct Q02156ad4* q;
+            void* gs2 = _ZN9GameState11GetInstanceEv();
+            q = (struct Q02156ad4*)_Z18GameState_GetPartyP9GameState(gs2);
+            count = q->f7c;
+            int found;
+            for (i = 0; i < count; i++) {
+                void* m = _ZN9GameState21GetPartyMemberByIndexEi(gs2, q->f78[i]);
+                if (m != 0 && _Z22GetTableValue_0202053cPv(m) == 0x63) {
+                    found = 1;
                     goto found_done;
                 }
             }

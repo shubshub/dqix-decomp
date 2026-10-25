@@ -49,9 +49,9 @@ struct Struct_02040c2c {
     struct Vector3i unknown_48_;
 };
 
-struct Struct_0203c818_2;
-extern "C" void func_0203c818(Struct_0203c818_2*, void*, int, int);
-extern "C" void func_02040f48(struct Struct_0203dd20* arg0, void* arg1);
+struct Obj0203c818;
+extern "C" void func_0203c818(Obj0203c818*, void*, int, int);
+extern "C" void Npc_PickWanderStep(struct Obj02040c2c* self, void* vec);
 extern "C" int rand(void);
 extern "C" int func_0202e800(void* arg0);
 extern "C" void* func_0202ed6c(void* arg0);
@@ -76,16 +76,16 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
         if (var5 != 0) {
             arg0->unknown_14_->unknown_2a_ = var5->spriteDiffuseColor_;
         }
-        if (func_02046b24((Struct_02015438**)GetGameResources()->unknown_ptr_array_36fc[0]) != 4) {
-            if (!(arg0->unknown_0_ & 1) && !(arg0->unknown_0_ & 0x20000)) {
-                if (arg0->unknown_c_ != 0 && arg0->unknown_c_->unknown_1f_ != 0) {
-                    Struct_02040c2c_2* var6 = arg0->unknown_14_;
-                    if (!(var6->unknown_5c_ & 1) && arg0->unknown_4_ < arg0->unknown_14_->inline_02040c2c()) {
-                        var0 = var6->unknown_4_;
-                        switch (arg0->unknown_c_->unknown_1f_) {
+        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
+            if (!(self->flags & 1) && !(self->flags & 0x20000)) {
+                if (self->settings != 0 && self->settings->mode != 0) {
+                    SpriteMotion02040c2c* a = self->spriteMotion;
+                    if (!(a->flags & 1) && self->idleDelay < self->spriteMotion->GetIdleTicks()) {
+                        motionPosition = a->position;
+                        switch (self->settings->mode) {
                         case 7:
                         case 8:
-                            func_02040f48(arg0, &var0);
+                            Npc_PickWanderStep(self, &motionPosition);
                             break;
                         case 9:
                         case 10:
@@ -108,16 +108,16 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
                 arg0->unknown_18_->unknown_0_.SetDiffuseColor(LightingManager::GetInstance()->modelDiffuseColor_);
             }
         }
-        if (func_02046b24((Struct_02015438**)GetGameResources()->unknown_ptr_array_36fc[0]) != 4) {
-            if (!(arg0->unknown_0_ & 1) && !(arg0->unknown_0_ & 0x20000)) {
-                if (arg0->unknown_c_ != 0 && arg0->unknown_c_->unknown_1f_ != 0) {
-                    Struct_02040c2c_3* var7 = arg0->unknown_18_;
-                    if (!(var7->unknown_ac_ & 1)) {
-                        if (arg0->unknown_4_ < arg0->unknown_18_->inline_02040c2c_2()) {
-                            switch (arg0->unknown_c_->unknown_1f_) {
+        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
+            if (!(self->flags & 1) && !(self->flags & 0x20000)) {
+                if (self->settings != 0 && self->settings->mode != 0) {
+                    ModelEffect02040c2c* b = self->modelMotion;
+                    if (!(b->flags_ac & 1)) {
+                        if (self->idleDelay < self->modelMotion->GetIdleTicks()) {
+                            switch (self->settings->mode) {
                             case 7:
                             case 8:
-                                func_02040f48(arg0, &var7->unknown_0_.position_);
+                                Npc_PickWanderStep(self, &b->object.position_);
                                 break;
                             case 9:
                             case 10:
@@ -136,21 +136,21 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
         }
     }
 
-    if (arg0->unknown_10_ != 0) {
-        func_020406f8(&var4, (struct Struct_0203de84_2*)arg0);
-        var1 = var4;
-        func_020407c4(&var2, (struct Struct_020407c4_2*)arg0);
-        struct Vector3i* var8 = (struct Vector3i*)&var2;
-        var1.unknown_0_[1] += 0x1000;
-        if (arg0->unknown_14_ != 0) {
-            unsigned char* var9 = (unsigned char*)func_020100bc(GameState::GetInstance());
-            func_0202ed6c(var9);
-            float var10 = (float)func_0202e800(var9);
-            var10 *= 3.0f;
-            int var11 = (int)var10;
-            Vector3fix_Subtract(reinterpret_cast<Vector3i*>(var9 + 0x10), reinterpret_cast<Vector3i*>(&var1), &var3);
-            Vector3fixDivideScalar(&var3, var11, &var3);
-            Vector3fix_Add(reinterpret_cast<Vector3i*>(&var1), &var3, reinterpret_cast<Vector3i*>(&var1));
+    if (self->attachment != 0) {
+        SelectVec3FromSources020406f8(&sourcePosition, (struct Node020406f8*)self);
+        attachmentPosition = sourcePosition;
+        FillVec3Default020407c4(&attachmentRotation, (struct Self020407c4*)self);
+        struct Vector3i* pB = (struct Vector3i*)&attachmentRotation;
+        attachmentPosition.v[1] += 0x1000;
+        if (self->spriteMotion != 0) {
+            unsigned char* camera = (unsigned char*)GameState::GetInstance()->GetCamera();
+            GetPtrField0x58_0202ed6c(camera);
+            float fx = (float)GetField0x78_0202e800(camera);
+            fx *= 3.0f;
+            int divisor = (int)fx;
+            Vector3fix_Subtract(reinterpret_cast<Vector3i*>(camera + 0x10), reinterpret_cast<Vector3i*>(&attachmentPosition), &cameraOffset);
+            Vector3fixDivideScalar(&cameraOffset, divisor, &cameraOffset);
+            Vector3fix_Add(reinterpret_cast<Vector3i*>(&attachmentPosition), &cameraOffset, reinterpret_cast<Vector3i*>(&attachmentPosition));
         }
         Vector3fix_Add(reinterpret_cast<Vector3i*>(&var1), &arg0->unknown_c_->unknown_48_, reinterpret_cast<Vector3i*>(&var1));
         arg0->unknown_10_->position_ = *(struct Vector3i*)&var1;

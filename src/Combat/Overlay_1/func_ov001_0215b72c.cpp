@@ -58,22 +58,22 @@ extern "C" ARM int func_ov001_0215b72c(Struct_ov001_0215b72c* arg0, int arg1) {
         if (var2) BackgroundLoader::RemoveLockGlobal();
         return 0;
     }
-    var3->Initialize();
-    if (strstr(var8, data_ov001_0216574d)) {
-        int var12 = 0;
-        if (strstr(var8, data_ov001_02165752) || strstr(var8, data_ov001_02165758)) var12 = 1;
-        ObjectArchiveLoadInfo var13;
-        var13.allocator = var1;
-        var13.fileData = var10;
-        var13.unk_8 = var11;
-        var13.unk_10 = 1;
-        if (var12 == 0) var3->LoadFromCHRArchive(&var13);
-        else if (var12 == 1) var3->LoadFromCCHROrCMOTArchive(&var13, 0);
-        var3->MaybeSetBCFGAnimation(0, 0);
-    } else if (strstr(var8, data_ov001_02165762)) {
-        void* var14 = var1->Allocate(var11);
-        memcpy(var14, var10, var11);
-        var3->SetModelFromFile(var1, var14, var11, Model3D::TextureStagingMode_Normal);
+    object->Initialize();
+    if (strstr(filename, data_ov001_0216574d)) {
+        int compressed = 0;
+        if (strstr(filename, data_ov001_02165752) || strstr(filename, data_ov001_02165758)) compressed = 1;
+        ObjectArchiveLoadInfo info;
+        info.allocator = allocator;
+        info.fileData = data;
+        info.fileSize = size;
+        info.unk_10 = 1;
+        if (compressed == 0) object->LoadFromCHRArchive(&info);
+        else if (compressed == 1) object->LoadFromCCHROrCMOTArchive(&info, 0);
+        object->SetAnimationByIndex(0, 0);
+    } else if (strstr(filename, data_ov001_02165762)) {
+        void* model = allocator->Allocate(size);
+        memcpy(model, data, size);
+        object->SetModelFromFile(allocator, model, size, Model3D::TextureStagingMode_Normal);
     } else {
         if (var2) BackgroundLoader::RemoveLockGlobal();
         return 0;

@@ -10,13 +10,13 @@
 
 #include "std_library_functions.h"
 
-extern "C" void func_ov000_0217ab8c(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02179a70(void* arg0, void* arg1, int arg2, void* arg3);
-extern "C" int func_020421a0(void);
+extern "C" void func_ov000_0217ab8c(void* obj, int a, int b);
+extern "C" void func_ov000_02179a70(void* obj, void* ptr, int val2, void* buf);
+int MessageSystem_GetInstance(void);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 // USA: func_ov000_0217992c
@@ -56,13 +56,13 @@ extern "C" ARM void func_ov000_0217992c(char* arg0, void* arg1, int arg2, int ar
     *(short*)(var3 + 0xae) = 0xb;
     *(unsigned char*)(var3 + 0xb1) = 0x12;
 
-    int var4 = func_020421a0();
-    void* var5 = *(void**)((char*)var4 + REGION_OFFSET_0);
-    memset(var5, 0, REGION_OFFSET_1);
-    func_ov000_02179a70(arg0, arg1, arg2, var5);
+    int g = MessageSystem_GetInstance();
+    void* buf = *(void**)((char*)g + REGION_OFFSET_0);
+    memset(buf, 0, REGION_OFFSET_1);
+    func_ov000_02179a70(obj, ptr, val2, buf);
 #if defined(jpn)
-    func_0205d304(var3, var5, 0, 1, 0, 1, 0);
+    Window_OpenPane(base, buf, 0, 1, 0, 1, 0);
 #else
-    func_0205d304(var3, var5, 0, 1, 0, 1, 0, 0);
+    Window_OpenPane(base, buf, 0, 1, 0, 1, 0, 0);
 #endif
 }

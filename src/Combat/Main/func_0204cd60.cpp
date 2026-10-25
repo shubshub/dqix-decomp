@@ -2,37 +2,37 @@
 #include <std_library_functions.h>
 #include <NitroSDK/BGBases.h>
 
-struct Struct_0204cd60 {
-    char unknown_0_[8];
-    unsigned char* unknown_8_;
-    short unknown_c_[18];
-    short unknown_30_[18];
-    short unknown_54_[18];
-    short unknown_78_[18];
-    char unknown_9c_[4];
-    int unknown_a0_;
-    int unknown_a4_;
-    short unknown_a8_;
-    short unknown_aa_;
-    char unknown_ac_[4];
-    short unknown_b0_;
-    short unknown_b2_;
-    char unknown_b4_[2];
-    short unknown_b6_;
-    char unknown_b8_[2];
-    short unknown_ba_;
-    short unknown_bc_;
-    short unknown_be_;
-    char unknown_c0_[5];
-    unsigned char unknown_c5_;
-    unsigned char unknown_c6_;
-    unsigned char unknown_c7_;
-    char unknown_c8_[0x10];
-    unsigned char unknown_d8_0_ : 2;
-    unsigned char unknown_d8_2_ : 1;
-    unsigned char unknown_d8_3_ : 5;
-    char unknown_d9_[2];
-    signed char unknown_db_[4];
+struct Wnd0204cd60 {
+    char pad0[8];
+    unsigned char* buf;
+    short arrA[18];
+    short arrB[18];
+    short arrC[18];
+    short arrD[18];
+    char pad9C[4];
+    int fA0;
+    int fA4;
+    short fA8;
+    short fAA;
+    char padAC[4];
+    short fB0;
+    short fB2;
+    char padB4[2];
+    short fB6;
+    char padB8[2];
+    short sizeTagLineHeight_;
+    short fBC;
+    short fBE;
+    char padC0[5];
+    unsigned char flags;
+    unsigned char fC6;
+    unsigned char fC7;
+    char padC8[0x10];
+    unsigned char bit0 : 2;
+    unsigned char useBg : 1;
+    unsigned char bit3 : 5;
+    char padD9[2];
+    signed char margins[4];
 };
 
 struct Struct_0204cd60_2 {
@@ -44,7 +44,7 @@ struct Struct_0204cd60_2 {
 };
 
 extern "C" void* __clear(void* dst, int count);
-extern "C" int func_020420e8(char* str, int id);
+extern "C" int Font_GetTextWidth(char* str, int id);
 int Font_FindCharacterIndex(int key, int tableIdx);
 Glyph0204cd60* Font_GetCharacter(int idx, int tableIdx);
 int LookupKeyValue020425e4(int a, int b, int tableIdx);
@@ -237,61 +237,61 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
                     var35 = arg0->unknown_b6_;
                     break;
                 }
-                if (arg0->unknown_ba_ != 0) var35 = arg0->unknown_ba_;
-            } else if (func_0204fc40(arg0, &var0, data_020f024e, var1, 1)) {
-                var4 = var1[0];
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f0251, var1, 1)) {
-                var5 = var1[0];
-                var6 = var8 + var7 * var5;
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f0254, var1, 2)) {
-                var5 = var1[1];
-                var4 = var1[0];
-                var6 = var8 + var7 * var5;
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f0258, var1, 1)) {
-                var4 += var1[0];
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f025b, var1, 1)) {
-                var6 += var7 * var1[0];
-                var5 += var1[0];
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f025e, var1, 2)) {
-                var4 += var1[0];
-                var5 += var1[1];
-                var6 += var7 * var1[1];
-                var11 = 0xff;
-            } else if (func_0204fc40(arg0, &var0, data_020f0262, var1, 1)) {
-                func_0204f3bc(arg0, var1[0]);
-            } else if (func_0204fc40(arg0, &var0, data_020f0268, var1, 4)) {
-                func_0204cc68(arg0, (unsigned char)var1[0], var1[1], var1[3], var1[2], var1[3] + 1);
-            } else if (func_0204fc40(arg0, &var0, data_020f026f, var1, 4)) {
-                func_0204cc68(arg0, (unsigned char)var1[0], var1[1], var1[2], var1[1] + 1, var1[3]);
-            } else if (func_0204fc40(arg0, &var0, data_020f0276, var1, 0)) {
-                var37 = 0xf0;
-                var38 = 0xf;
-            } else if (func_0204fc40(arg0, &var0, data_020f027c, var1, 0)) {
-                var37 = 0xd0;
-                var38 = 0xd;
-            } else if (func_0204fc40(arg0, &var0, data_020f0283, var1, 0)) {
-                var37 = 0xb0;
-                var38 = 0xb;
-            } else if (func_0204fc40(arg0, &var0, data_020f0288, var1, 0)) {
-                var37 = 0x90;
-                var38 = 0x9;
-            } else if (func_0204fc40(arg0, &var0, data_020f028c, var1, 1)) {
-                var1[0] &= 0xf;
-                var37 = (unsigned char)(var1[0] << 4);
-                var38 = (unsigned char)var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f0292, var1, 5)) {
-                func_0204cc68(arg0, (unsigned char)var1[0], var1[1], var1[2], var1[1] + var1[3], var1[2] + var1[4]);
-            } else if (func_0204fc40(arg0, &var0, data_020f0298, var1, 1)) {
-            } else if (func_0204fc40(arg0, &var0, data_020f029d, var1, 1)) {
-                var3 = var1[0];
-                if (var3 >= 0 && var3 < 18) {
-                    arg0->unknown_c_[var3] = var4;
-                    arg0->unknown_30_[var3] = var5;
+                if (wnd->sizeTagLineHeight_ != 0) lineH = wnd->sizeTagLineHeight_;
+            } else if (func_0204fc40(wnd, &p, data_020f024e, out, 1)) {
+                x = out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0251, out, 1)) {
+                y = out[0];
+                dst = buf + pitch * y;
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0254, out, 2)) {
+                y = out[1];
+                x = out[0];
+                dst = buf + pitch * y;
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0258, out, 1)) {
+                x += out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f025b, out, 1)) {
+                dst += pitch * out[0];
+                y += out[0];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f025e, out, 2)) {
+                x += out[0];
+                y += out[1];
+                dst += pitch * out[1];
+                prev = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f0262, out, 1)) {
+                func_0204f3bc(wnd, out[0]);
+            } else if (func_0204fc40(wnd, &p, data_020f0268, out, 4)) {
+                func_0204cc68(wnd, (unsigned char)out[0], out[1], out[3], out[2], out[3] + 1);
+            } else if (func_0204fc40(wnd, &p, data_020f026f, out, 4)) {
+                func_0204cc68(wnd, (unsigned char)out[0], out[1], out[2], out[1] + 1, out[3]);
+            } else if (func_0204fc40(wnd, &p, data_020f0276, out, 0)) {
+                color = 0xf0;
+                colorIdx = 0xf;
+            } else if (func_0204fc40(wnd, &p, data_020f027c, out, 0)) {
+                color = 0xd0;
+                colorIdx = 0xd;
+            } else if (func_0204fc40(wnd, &p, data_020f0283, out, 0)) {
+                color = 0xb0;
+                colorIdx = 0xb;
+            } else if (func_0204fc40(wnd, &p, data_020f0288, out, 0)) {
+                color = 0x90;
+                colorIdx = 0x9;
+            } else if (func_0204fc40(wnd, &p, data_020f028c, out, 1)) {
+                out[0] &= 0xf;
+                color = (unsigned char)(out[0] << 4);
+                colorIdx = (unsigned char)out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f0292, out, 5)) {
+                func_0204cc68(wnd, (unsigned char)out[0], out[1], out[2], out[1] + out[3], out[2] + out[4]);
+            } else if (func_0204fc40(wnd, &p, data_020f0298, out, 1)) {
+            } else if (func_0204fc40(wnd, &p, data_020f029d, out, 1)) {
+                sel = out[0];
+                if (sel >= 0 && sel < 18) {
+                    wnd->arrA[sel] = x;
+                    wnd->arrB[sel] = y;
                 }
                 if (var3 >= 0 && var3 == var13) {
                     var39 = var37;
@@ -381,20 +381,20 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
                     var6 = var8 + var5 * var7;
                     var14 = 0;
                 }
-            } else if (func_0204fc40(arg0, &var0, data_020f02e2, var1, 1)) {
-                var13 = var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02e7, var1, 1)) {
-                var4 = var1[0];
-                var11 = 0xff;
-                var34 = var4;
-                __clear(var2, 0x100);
-                char* var60 = var0;
-                char* var61 = strstr(var60, data_020f02eb);
-                if (var61 != 0) {
-                    int var62 = var61 - var60;
-                    if (var62 < 0x100) {
-                        memcpy(var2, var60, var62);
-                        var4 -= func_020420e8(var2, arg3);
+            } else if (func_0204fc40(wnd, &p, data_020f02e2, out, 1)) {
+                hilite = out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02e7, out, 1)) {
+                x = out[0];
+                prev = 0xff;
+                savedX = x;
+                __clear(tmp, 0x100);
+                char* start = p;
+                char* end = strstr(start, data_020f02eb);
+                if (end != 0) {
+                    int len = end - start;
+                    if (len < 0x100) {
+                        memcpy(tmp, start, len);
+                        x -= Font_GetTextWidth(tmp, font);
                     }
                 }
             } else if (func_0204fc40(arg0, &var0, data_020f02f1, var1, 0)) {

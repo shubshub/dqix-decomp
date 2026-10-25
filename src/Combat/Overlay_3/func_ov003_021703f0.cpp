@@ -7,8 +7,8 @@ struct Struct_0205d0e0 {
 };
 
 struct Struct_0205d81c;
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" int func_0204c7e0(unsigned char* arg0);
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+int WindowPane_IsOpen(unsigned char* obj);
 
 struct Struct_0204c610;
 extern "C" void func_0204c610(struct Struct_0204c610* arg0, int arg1, short* arg2, short* arg3, short* arg4, short* arg5);
@@ -27,9 +27,9 @@ struct Struct_ov003_021703f0 {
 };
 
 // USA: func_ov003_021703f0
-extern "C" ARM void func_ov003_021703f0(struct Struct_ov003_021703f0* arg0, short* arg1, short* arg2) {
-    if (arg0->unknown_1_ == 5) {
-        if (arg0->unknown_44_ != 0 && func_0204c7e0(arg0->unknown_44_) != 0) {
+extern "C" ARM void func_ov003_021703f0(struct Obj_021703f0* obj, short* outX, short* outY) {
+    if (obj->state == 5) {
+        if (obj->owner != 0 && WindowPane_IsOpen(obj->owner) != 0) {
 #if defined(jpn)
             *arg1 = 0x2c;
             *arg2 = arg0->unknown_8_ * 17 + 0x3a;

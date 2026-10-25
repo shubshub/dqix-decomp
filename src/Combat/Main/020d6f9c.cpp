@@ -137,25 +137,25 @@ extern "C" ARM void func_020d6f9c(void* arg0, int arg1, int arg2) {
         if (arg2 == var0->unknown_0_) break;
         var0 = var0->unknown_1ec_;
     }
-    if (var0 == NULL) return;
-    if (var0->unknown_1e8_ == 0) {
-        Struct_020d6f9c_2* var4 = &var1->unknown_0_[arg1];
-        var4->unknown_0_.unknown_0_.Initialize();
-        var4->unknown_0_.unknown_0_.SetFlag16();
-        var4->unknown_d0_ = var0->unknown_0_;
-        var4->unknown_ac_ = var0->unknown_1e8_;
-        var0->unknown_14_.ShallowCloneTo(&var4->unknown_0_.unknown_0_);
-        var4->unknown_0_.unknown_0_.position_ = var2.unknown_2c_;
-        var4->unknown_0_.unknown_0_.SetScale(&var2.unknown_44_);
-        int var5 = var2.unknown_38_.y;
-        int var6 = var2.unknown_38_.x;
-        var4->unknown_0_.unknown_0_.rotation_.x = var6;
-        var4->unknown_0_.unknown_0_.rotation_.y = var5;
-        var4->unknown_0_.unknown_0_.rotation_.z = 0x3244;
-        if (var2.unknown_0_[0] == 0) {
-            var4->unknown_0_.unknown_0_.MaybeSetBCFGAnimation(0, var2.unknown_10_);
+    if (node == NULL) return;
+    if (node->type == 0) {
+        ReactionSlot020d6f9c* slot = &manager->slots[combatantId];
+        slot->payload.object.Initialize();
+        slot->payload.object.SetFlag16();
+        slot->reason = node->reason;
+        slot->type = node->type;
+        node->model.ShallowCloneTo(&slot->payload.object);
+        slot->payload.object.position_ = config.position;
+        slot->payload.object.SetScale(&config.scale);
+        int rotationY = config.rotation.y;
+        int rotationX = config.rotation.x;
+        slot->payload.object.rotation_.x = rotationX;
+        slot->payload.object.rotation_.y = rotationY;
+        slot->payload.object.rotation_.z = 0x3244;
+        if (config.animationName[0] == 0) {
+            slot->payload.object.SetAnimationByIndex(0, config.animationFlags);
         } else {
-            var4->unknown_0_.unknown_0_.MaybeSetRegularAnimation(var2.unknown_0_, var2.unknown_10_);
+            slot->payload.object.SetAnimationByName(config.animationName, config.animationFlags);
         }
         var4->unknown_b0_ = var2.unknown_12_;
         var4->unknown_b2_ = var2.unknown_14_;

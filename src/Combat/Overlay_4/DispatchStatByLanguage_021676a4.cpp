@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 struct Struct0200fb08;
-unsigned char NormalizeField5_0200fb08(struct Struct0200fb08* obj);
+unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
 
 extern "C" void* func_ov011_021849c8(void* a);
 
@@ -14,14 +14,13 @@ void* GetFieldPtrAt_021f79e4_021f79e4(void* obj);
 
 struct Obj0204b988;
 void DispatchIndexedEntry0204b988(struct Obj0204b988* obj, unsigned int index, int a3, int a4, unsigned short a5);
-struct Obj0204b8d0;
-void Background_DrawScreen(struct Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
-struct List0204b0e8;
-void Background_UploadMap(struct List0204b0e8* obj, void* buf);
+struct BackgroundGraphics;
+void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
 // USA: func_ov004_021676a4  (semantic: DispatchStatByLanguage_021676a4)
 extern "C" ARM int func_ov004_021676a4(void* a) {
-    int lang = NormalizeField5_0200fb08((struct Struct0200fb08*)GameState::GetInstance());
+    int lang = GameState_GetLanguage((struct Struct0200fb08*)GameState::GetInstance());
     unsigned int v = 1;
     switch (lang) {
     case 2:
@@ -48,8 +47,8 @@ extern "C" ARM int func_ov004_021676a4(void* a) {
     DispatchIndexedEntry0204b988((struct Obj0204b988*)field, 1, 0, 0, 0xffff);
 
     if (v > 1) {
-        Background_DrawScreen((struct Obj0204b8d0*)field, v, 0, 0, 0x16, 2, 9, 2, 0xffff);
+        Background_DrawScreen((struct BackgroundGraphics*)field, v, 0, 0, 0x16, 2, 9, 2, 0xffff);
     }
-    Background_UploadMap((struct List0204b0e8*)field, 0);
+    Background_UploadMap((struct BackgroundGraphics*)field, 0);
     return 0;
 }

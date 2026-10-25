@@ -38,38 +38,38 @@ struct Struct_ov017_021cf86c_2 { char unknown_0_[0x26a4]; char unknown_2664_[4];
 #else
 struct Struct_ov017_021cf86c_2 { char unknown_0_[0x2664]; char unknown_2664_[4]; };
 #endif
-struct Struct_ov017_021cf86c_3 { char unknown_0_[0xc]; int unknown_c_; };
-extern "C" int func_0202c1a4(Struct_0202c1a4*);
-extern "C" Struct_ov017_021cf86c_2* func_02012fe4();
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" int func_02046b60(Struct_02038598_5*, int);
-extern "C" int func_02046b24(Struct_02015438**);
+struct GrottoZoneStorage { char pad0[0xc]; int zone_; };
+int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+extern "C" WorldSettings* Zone3D_GetInstance();
+void* GetField0x3f8Address_0200fd0c(GameState*);
+int ListContainsId(ListHead02046b60*, int);
+int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
 extern "C" void func_0208f748(void*, int);
 extern "C" void func_020113e0(Struct_020113e0*);
 extern "C" int func_0201b588(int);
 
 // USA: func_ov017_021cf86c
-extern "C" ARM void func_ov017_021cf86c(void*, Struct_ov017_021cf730_2* arg1, GameState* arg2, Struct_ov017_021cf86c* arg3, Struct_0202c1a4* arg4) {
-    if (arg1->unknown_7_.unknown1_0_.unknown_0_3_ >= 0 && func_0202c1a4(arg4) != arg1->unknown_7_.unknown1_0_.unknown_0_3_) return;
-    Struct_ov017_021cf86c_2* var0 = func_02012fe4();
-    GrottoStruct* var1;
-    Struct_02038598_5* var2 = arg3->unknown_36fc_;
-    func_0200fd0c(arg2);
-    var1 = arg2->GetGrottoStruct();
-    if (func_02046b60(var2, 0x4e)) {
-        Struct_ov017_021cf86c_4* var3 = arg3->unknown_3ca4_;
-        var3->unknown_3a_ = arg1->unknown_4_;
-        var3->unknown_3c_ = arg1->unknown_6_;
-        var3->unknown_3d_ = arg1->unknown_7_.unknown_0_;
-        var3->unknown_3e_ = arg1->unknown_8_;
-        var3->unknown_3f_ = arg1->unknown_9_;
-        var3->unknown_40_ = arg1->unknown_a_;
-        var3->unknown_42_ = arg1->unknown_c_;
-        var3->unknown_44_ = arg1->unknown_e_;
-        var3->unknown_46_ = arg1->unknown_10_;
-        var3->unknown_48_ = arg1->unknown_12_;
-        var3->unknown_49_ = arg1->unknown_13_.unknown_0_;
-        var3->unknown_39_ = 1;
+extern "C" ARM void func_ov017_021cf86c(void*, GrottoPacket* packet, GameState* state, GrottoOverlay* overlay, SearchStruct0202c1a4* search) {
+    if (packet->control_.bits_.player_ >= 0 && GetSearchStructCurrentArrEntry(search) != packet->control_.bits_.player_) return;
+    WorldSettings* settings = Zone3D_GetInstance();
+    GrottoStruct* grotto;
+    ListHead02046b60* list = overlay->list_;
+    GetField0x3f8Address_0200fd0c(state);
+    grotto = state->GetGrottoStruct();
+    if (ListContainsId(list, 0x4e)) {
+        PendingGrotto* pending = overlay->pending_;
+        pending->zone_ = packet->zone_;
+        pending->mapState_ = packet->mapState_;
+        pending->flags_ = packet->control_.flags_;
+        pending->quality_ = packet->quality_;
+        pending->level_ = packet->level_;
+        pending->seed_ = packet->seed_;
+        pending->x_ = packet->x_;
+        pending->y_ = packet->y_;
+        pending->z_ = packet->z_;
+        pending->field48_ = packet->field12_;
+        pending->ranks_ = packet->ranks_.raw_;
+        pending->pending_ = 1;
     } else {
         ((Struct_ov017_021cf86c_3*)var1)->unknown_c_ = arg1->unknown_4_;
         var1->activeMapData.DiscoveryStateAndMapTypeAndUnknown = arg1->unknown_6_;

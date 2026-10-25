@@ -8,22 +8,20 @@
 #define LOW_REGION(j,u) (u)
 #endif
 
-struct Struct_0207fdcc_2;
-struct Struct_ov006_02158054;
-struct Struct_0204b010;
-struct Struct_0204af14;
-struct Struct_02000c9c_8;
-struct Struct_0204b8d0;
-struct Struct_0207fcb8;
-struct Struct_0207fd00;
-struct Struct_0207fd44_2;
-struct Struct_0205a254;
-struct Struct_0205a330;
-struct Struct_020e28dc;
-struct Struct_020e2794_2;
-struct Struct_02075db0;
-struct Struct_ov006_02154614;
-struct Struct_ov006_02157a60;
+struct Obj2081;
+struct SetFieldsAndCall02158054Struct;
+struct BackgroundGraphics;
+struct Struct0200fb08;
+struct Obj0207fcb8;
+struct Obj0207fd00;
+struct Cont0207fd44;
+struct Container0205a3d0;
+struct Container0205a330;
+struct Outer020e28dc;
+struct Struct020e2794;
+struct Struct02075db0;
+struct AlchemyPot;
+struct AlchemyMenu;
 
 struct Struct_ov006_021580b8 {
     char unknown_0_[0x14];
@@ -58,28 +56,28 @@ struct Struct_ov006_02156e54_2 {
 int CheckElementFlag_02158080_02158080(Obj2081*, int);
 void SetFieldsAndCall02158054(void*, SetFieldsAndCall02158054Struct*, int, int, unsigned char, unsigned char);
 extern "C" void func_ov006_02154a60(AlchemyPot*);
-void Background_ClearMap(Obj0204b010*, void*);
-void* Background_GetScreen(EntryList0204af14*, unsigned int);
+void Background_ClearMap(BackgroundGraphics*, void*);
+void* Background_GetScreen(BackgroundGraphics*, unsigned int);
 void CallFunc0204b620IfField0x14_0204b938(void*, void*, int, int, unsigned short);
-int NormalizeField5_0200fb08(Struct0200fb08*);
-void Background_DrawScreen(Obj0204b8d0*, unsigned int, int, int, short, short, short, short, unsigned short);
+int GameState_GetLanguage(Struct0200fb08*);
+void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 void ClearAllBuffers0207fcb8(Obj0207fcb8*);
 void CallFunc0204c8f0OverEntries0207fd00(Obj0207fd00*);
 extern "C" void func_0207fe80(void*, int, int, int);
 extern "C" void Background_FlushMap(void*, int);
 void CallFunc0204b04cOverList0x2c(Cont0207fd44*);
-void SetEntryFlag2ByKey0205a370(Container0205a3d0*, int);
-SpriteAnimation* FindEntryByHalfword0205a3d0(Container0205a3d0*, int);
-void IterateEntries0205a330(Container0205a330*, int);
-extern "C" void func_0205ae8c(void*);
-extern "C" int func_020e28dc(Struct_020e28dc*);
-extern "C" void func_020e2794(Struct_020e2794_2*, void*);
-extern "C" void func_ov006_021585c4(Struct_ov006_02157a60*);
-extern "C" void func_ov006_0215868c(Struct_ov006_02157a60*);
-extern "C" void func_ov006_021587d0(Struct_ov006_02157a60*);
-extern "C" void func_ov006_02158914(Struct_ov006_02157a60*);
-extern "C" void func_020807c4(void*, int, short*, short*);
-extern "C" void func_0205ac40(void*, Struct_ov006_021580b8*);
+void SpriteEntryList_PlayAnimation(Container0205a3d0*, int);
+SpriteAnimation* SpriteEntryList_Find(Container0205a3d0*, int);
+void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
+extern "C" void SpriteContext_DrawEntries(void*);
+int GetInnerFlagBit0020e28dc(Outer020e28dc*);
+void UpdateEntryIfActive020e2794(Struct020e2794*, void*);
+extern "C" void func_ov006_021585c4(AlchemyMenu*);
+extern "C" void func_ov006_0215868c(AlchemyMenu*);
+extern "C" void func_ov006_021587d0(AlchemyMenu*);
+extern "C" void func_ov006_02158914(AlchemyMenu*);
+void GetSublistEntryScaledXY_020807c4(void*, int, short*, short*);
+extern "C" void SpriteContext_DrawSprite(void*, Sprite*);
 extern "C" void* func_0203bd08();
 extern "C" unsigned int func_0203be4c(void*);
 extern "C" void func_02076988(int*, int, int);
@@ -195,16 +193,16 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
             arg0->unknown_42c_ = 0;
         }
         func_ov006_02154a60(self->pot_);
-        Background_ClearMap((Obj0204b010*)self->subBackground_, 0);
-        void* layer = Background_GetScreen((EntryList0204af14*)self->subBackground_, self->background_);
+        Background_ClearMap((BackgroundGraphics*)self->subBackground_, 0);
+        void* layer = Background_GetScreen((BackgroundGraphics*)self->subBackground_, self->background_);
         if (layer != 0)
             CallFunc0204b620IfField0x14_0204b938(self->subBackground_, layer, 0, 0, 0xffff);
 #if !defined(jpn)
         if (arg0->unknown_397_ == 1)
         {
-            unsigned int var1 = func_0200fb08((Struct_02000c9c_8*)GameState::GetInstance());
-            unsigned char var2 = 1;
-            switch (var1)
+            unsigned int kind = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
+            unsigned char tiles = 1;
+            switch (kind)
             {
             case 2:
                 var2 = 3;
@@ -220,7 +218,7 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
                 break;
             }
             if (tiles > 1)
-                Background_DrawScreen((Obj0204b8d0*)self->subBackground_, tiles, 0, 0, 0x16, 2, 9, 2, 0xffff);
+                Background_DrawScreen((BackgroundGraphics*)self->subBackground_, tiles, 0, 0, 0x16, 2, 9, 2, 0xffff);
         }
 #endif
         void* menu = self->menu_;
@@ -231,28 +229,28 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
         CallFunc0204b04cOverList0x2c((Cont0207fd44*)menu);
         if (self->flags_ & 0x200)
         {
-            arg0->unknown_42c_ = 0;
-            func_0205a370((Struct_0205a254*)arg0->unknown_28_, 1);
-            Struct_ov006_021580b8_2* var4 = func_0205a3d0((Struct_0205a254*)arg0->unknown_28_, 0);
-            if (var4 != 0)
-                var4->unknown_15_ &= ~8;
-            var4 = func_0205a3d0((Struct_0205a254*)arg0->unknown_28_, 1);
-            if (var4 != 0)
-                var4->unknown_15_ |= 8;
-            func_0205a330((Struct_0205a330*)arg0->unknown_28_, arg0->unknown_34c_);
-            var4 = func_0205a3d0((Struct_0205a254*)arg0->unknown_28_, 1);
-            if (var4 != 0)
+            self->arrowTimer_ = 0;
+            SpriteEntryList_PlayAnimation((Container0205a3d0*)self->animations_, 1);
+            SpriteAnimation* animation = SpriteEntryList_Find((Container0205a3d0*)self->animations_, 0);
+            if (animation != 0)
+                animation->flags_ &= ~8;
+            animation = SpriteEntryList_Find((Container0205a3d0*)self->animations_, 1);
+            if (animation != 0)
+                animation->flags_ |= 8;
+            SpriteEntryList_AdvanceAnimations((Container0205a330*)self->animations_, self->ticks_);
+            animation = SpriteEntryList_Find((Container0205a3d0*)self->animations_, 1);
+            if (animation != 0)
             {
                 var4->unknown_4_ = 0xd7;
                 var4->unknown_6_ = 0x96;
             }
-            func_0205ae8c(arg0->unknown_ac_);
+            SpriteContext_DrawEntries(self->renderer_);
         }
         else
         {
-            Struct_ov006_021580b8_2* var5 = func_0205a3d0((Struct_0205a254*)arg0->unknown_28_, 1);
-            if (var5 != 0)
-                var5->unknown_15_ &= ~8;
+            SpriteAnimation* animation = SpriteEntryList_Find((Container0205a3d0*)self->animations_, 1);
+            if (animation != 0)
+                animation->flags_ &= ~8;
         }
         if (arg0->unknown_37e_ < 0)
         {
@@ -278,11 +276,11 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
         Struct_ov006_021580b8* var9 = &arg0->unknown_24_[17];
         if (var9 != 0)
         {
-            var9->unknown_14_ = (var7 + 4) << 12;
-            var9->unknown_18_ = (var8 + 4) << 12;
-            var9->unknown_22_ = 0x32;
-            var9->unknown_26_ = 1;
-            func_0205ac40(arg0->unknown_ac_, var9);
+            sprite->x_ = (x + 4) << 12;
+            sprite->y_ = (y + 4) << 12;
+            sprite->unk_22 = 0x32;
+            sprite->unk_26 = 1;
+            SpriteContext_DrawSprite(self->renderer_, sprite);
         }
         unsigned int var10 = func_0203be4c(func_0203bd08());
         arg0->unknown_3b8_.unknown_4c_ = 0;

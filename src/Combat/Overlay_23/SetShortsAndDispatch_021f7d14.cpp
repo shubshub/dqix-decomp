@@ -7,8 +7,8 @@ enum { X_OFFSET = 0x4c, Y_OFFSET = 0x4e, BUFFER_OFFSET = 0x24 };
 enum { X_OFFSET = 0x50, Y_OFFSET = 0x52, BUFFER_OFFSET = 0x28 };
 #endif
 
-struct Obj0204b5e8;
-int Background_SetScroll(struct Obj0204b5e8*, int, int);
+struct BackgroundGraphics;
+int Background_SetScroll(struct BackgroundGraphics*, int, int);
 
 struct SrcPair_021f7d14 { fix32_t x; fix32_t y; };
 
@@ -24,5 +24,5 @@ ARM int SetShortsAndDispatch_021f7d14(char* element, struct SrcPair_021f7d14* po
     PositionedElement_021f7d14* display = (PositionedElement_021f7d14*)element;
     display->x = (short)(position->x >> 12);
     display->y = (short)(position->y >> 12);
-    return Background_SetScroll((Obj0204b5e8*)display->displayState, display->x, display->y);
+    return Background_SetScroll((BackgroundGraphics*)display->displayState, display->x, display->y);
 }

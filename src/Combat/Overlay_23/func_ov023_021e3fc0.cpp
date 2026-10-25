@@ -91,27 +91,27 @@ struct Struct_ov003_02165888 {
     unsigned char unknown_630_[0x10];
     char* unknown_640_[2];
 };
-struct Struct_02000c9c_8;
-extern "C" void* func_020421a0();
+struct Struct0200fb08;
+void* MessageSystem_GetInstance();
 extern "C" void func_02045f3c(void*, void*, int, int, int, int, int, int, int, int);
 #if defined(jpn)
 extern "C" void func_02046c78(void*, void*, int, int, int, int, int, int);
 #endif
-extern "C" int func_020420e8(const char*, int);
-extern "C" void func_0205ac40(void*, void*);
-extern "C" unsigned char func_ov023_021e4250(char*);
-extern "C" char* func_020e51cc(int);
-extern "C" unsigned char func_0200fb08(Struct_02000c9c_8*);
+extern "C" int Font_GetTextWidth(const char*, int);
+extern "C" void SpriteContext_DrawSprite(void*, void*);
+unsigned char GetByteViaFieldIndirectOffset_021e4250_021e4250(char*);
+char* StandardStrings_Get(int);
+unsigned char GameState_GetLanguage(Struct0200fb08*);
 extern "C" void func_ov005_02155258(void*, int, int, int, int);
 
 // USA: func_ov023_021e3fc0
-extern "C" ARM void func_ov023_021e3fc0(Struct_ov003_02165888* arg0) {
-    int var0;
-    GameState* var1 = GameState::GetInstance();
-    void* var2 = func_020421a0();
-    int var3 = 0x7fff;
-    Struct_ov023_021e3fc0_4* var4 = (Struct_ov023_021e3fc0_4*)func_0200ff1c(var1, arg0->unknown_4fc_);
-    if (var4->inline_ov023_021e3fc0_2() <= 0) var3 = 0x1f;
+extern "C" ARM void func_ov023_021e3fc0(StatusPanel* panel) {
+    int textColor;
+    GameState* game = GameState::GetInstance();
+    void* renderer = MessageSystem_GetInstance();
+    int drawValue = 0x7fff;
+    StatusCombatant* combatant = (StatusCombatant*)GetCombatantWithFlag0x100_0200ff1c(game, panel->selected);
+    if (combatant->GetHP() <= 0) drawValue = 0x1f;
     REG_MATRIX_PUSH = 0;
     REG_POLYGON_ATTR = 1;
     REG_MATRIX_SCALE = 0;
@@ -147,31 +147,31 @@ extern "C" ARM void func_ov023_021e3fc0(Struct_ov003_02165888* arg0) {
     }
 
 #else
-    func_02045f3c(var2, &arg0->unknown_500_[arg0->unknown_4fc_], arg0->unknown_580_[arg0->unknown_4fc_], 0xa1, var3, 10, 0, 0, 0, 0x11);
-    if (var4->inline_ov023_021e3fc0_2() <= 0) {
-        short var9 = func_020420e8(arg0->unknown_640_[var4->unknown_150_->unknown_49c_0_], 0);
-        short var10 = ((0x3b - var9) >> 1) + 0x40;
-        func_02045f3c(var2, &arg0->unknown_590_[arg0->unknown_4fc_], var10, 0xa1, var3, 10, 0, 0, 0, 0x11);
+    func_02045f3c(renderer, &panel->names[panel->selected], panel->positions[panel->selected], 0xa1, drawValue, 10, 0, 0, 0, 0x11);
+    if (combatant->GetHP() <= 0) {
+        short width = Font_GetTextWidth(panel->conditionNames[combatant->character->gender], 0);
+        short x = ((0x3b - width) >> 1) + 0x40;
+        func_02045f3c(renderer, &panel->conditions[panel->selected], x, 0xa1, drawValue, 10, 0, 0, 0, 0x11);
     } else {
-        Struct_ov023_021e3fc0_2* var11 = arg0->unknown_cc_;
-        var11->unknown_258_.unknown_14_ = 0x44000;
-        var11->unknown_258_.unknown_18_ = 0xa2000;
-        var11->unknown_258_.unknown_22_ = 0x70;
-        var11->unknown_258_.unknown_26_ = 2;
-        func_0205ac40(arg0->unknown_c8_, &var11->unknown_258_);
-        if (func_ov023_021e4250((char*)var4)) {
-            unsigned short var12 = 0xf0a;
-            if (func_ov023_021e4250((char*)var4) >= 10)
-                var12 = 0x31f;
-            func_02045f3c(var2, &arg0->unknown_5f0_[arg0->unknown_4fc_], 0x50, 0xa1, var12, 10, 0, 0, 0, 0x11);
+        StatusSprites* sprites = panel->sprites;
+        sprites->marker.x = 0x44000;
+        sprites->marker.y = 0xa2000;
+        sprites->marker.depth = 0x70;
+        sprites->marker.mode = 2;
+        SpriteContext_DrawSprite(panel->renderer, &sprites->marker);
+        if (GetByteViaFieldIndirectOffset_021e4250_021e4250((char*)combatant)) {
+            unsigned short valueColor = 0xf0a;
+            if (GetByteViaFieldIndirectOffset_021e4250_021e4250((char*)combatant) >= 10)
+                valueColor = 0x31f;
+            func_02045f3c(renderer, &panel->values[panel->selected], 0x50, 0xa1, valueColor, 10, 0, 0, 0, 0x11);
         }
-        func_02045f3c(var2, arg0->unknown_5e0_, 0x5c, 0xa1, var3, 10, 0, 0, 0, 0x11);
-        short var13 = func_020420e8(func_020e51cc(0x3f3), 0) + 0x5e;
-        if (func_0200fb08((Struct_02000c9c_8*)var1) == 1) var13 += 2;
-        Struct_ov023_021e3fc0_3* var14 = var4->inline_ov023_021e3fc0();
-        var0 = var3;
-        var3 = var14->unknown_16c_[var14->unknown_950_];
-        func_ov005_02155258(arg0->unknown_0_, var3, var13, 0xa1, var0);
+        func_02045f3c(renderer, panel->label, 0x5c, 0xa1, drawValue, 10, 0, 0, 0, 0x11);
+        short x = Font_GetTextWidth(StandardStrings_Get(0x3f3), 0) + 0x5e;
+        if (GameState_GetLanguage((Struct0200fb08*)game) == 1) x += 2;
+        StatusCharacter* character = combatant->GetCharacter();
+        textColor = drawValue;
+        drawValue = character->values[character->index];
+        func_ov005_02155258(panel->context, drawValue, x, 0xa1, textColor);
     }
 
 #endif

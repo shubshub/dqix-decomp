@@ -11,7 +11,7 @@ void VramState_Save(char*);
 ARM bool Zone3D::ProcessNSBTXFile_0201445c(const void* pFile, unsigned int fileSize, const char* pName)
 {
     SafeAllocator* pAlloc = pAllocator_68_;
-    char* pGraph = (char*)unknown_ptr_50_;
+    char* pGraph = (char*)vramState_;
     unsigned int nSize;
     void* pRaw;
     Zone3D::Model3DListNode* pNode =

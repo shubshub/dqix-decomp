@@ -25,7 +25,7 @@ extern "C" ARM void func_ov023_021e456c(void* objRaw) {
     if (*(unsigned short*)(obj + regionalOffset0) & 0x10) flag = 1;
     char* six4 = (char*)CharacterModel_GetBody(*(int*)(obj + regionalOffset2));
     char* five = (char*)CharacterModel_GetBody(*(int*)(obj + regionalOffset3));
-    ((Object3D*)five)->MaybeSetRegularAnimation((char const*)(*(int*)(six4 + 0x14)), 0);
+    ((Object3D*)five)->SetAnimationByName((char const*)(*(int*)(six4 + 0x14)), 0);
     ((Object3D*)((struct S1a0*)five))->SetCurrentAnimationTime(*(unsigned int*)(six4 + 0x1c));
     int fieldVal = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
     CharacterModel_Load(*(int*)(obj + regionalOffset3), fieldVal, *(int*)(obj + regionalOffset1), flag, 1);

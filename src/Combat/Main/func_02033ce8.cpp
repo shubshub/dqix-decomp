@@ -18,8 +18,8 @@ struct Struct_02033b68 {
 };
 
 extern "C" void func_02057924(void);
-extern "C" void func_02033dd4(unsigned char* arg0);
-extern "C" void func_02033b68(struct Struct_02033b68* arg0, int arg1);
+void ApplyStateTableValue02033dd4(unsigned char* obj);
+void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
 // USA: func_02033ce8
 extern "C" ARM void func_02033ce8(struct Struct_02033b68* arg0) {
@@ -27,11 +27,11 @@ extern "C" ARM void func_02033ce8(struct Struct_02033b68* arg0) {
     func_02057924();
     func_02033dd4((unsigned char*)arg0);
 
-    if (arg0->unknown_be_ == 3 || arg0->unknown_be_ == 4) {
-        if (arg0->unknown_c0_ == 7 || arg0->unknown_c0_ == 8) {
-            if (arg0->unknown_c0_ != 7) return;
-            if (arg0->unknown_c1_4_ == 0) return;
-            func_02033b68(arg0, 0);
+    if (p->fbe == 3 || p->fbe == 4) {
+        if (p->fc0 == 7 || p->fc0 == 8) {
+            if (p->fc0 != 7) return;
+            if (p->fc1h == 0) return;
+            GameObject_SetMotionState(p, 0);
         }
         return;
     }

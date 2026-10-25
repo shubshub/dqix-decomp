@@ -73,90 +73,90 @@ struct Struct_02038598_3 {
     unsigned char unknown_222_;
     unsigned char unknown_223_;
 };
-struct Struct_02038500;
-struct Struct_02033834_2;
-struct Struct_02033834;
-struct Struct_02018300_3;
-struct Struct_02010604;
-struct Struct_02033b58;
-struct Struct_02033ec8;
-struct Struct_02038598_4 { unsigned int unknown_0_; };
-struct Struct_02038598_5;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" Zone3D* func_02012fe4();
+struct Vec3038500;
+struct Obj02033834;
+struct Obj02033874;
+struct Obj020397cc;
+struct Bytes02033b88;
+struct Foo02033b58;
+struct ShortField02033ec8;
+struct FlagWord020466f4 { unsigned int flags; };
+struct ListHead02046b60;
+struct TailList020469b4;
+struct TailNode020469b4;
+extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void func_ov017_02191108(void*, int, int, int, int);
-extern "C" void* func_020d6c00();
-extern "C" void func_02033834(Struct_02033834_2*, int);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_020397cc(Struct_02018300_3*, int);
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" void func_02033b58(Struct_02033b58*, unsigned char);
-extern "C" int func_02033ec8(Struct_02033ec8*);
-extern "C" void func_02038500(Struct_02038500*, int, int, int);
-extern "C" void func_02033e18(void*, int*, short);
-extern "C" int func_ov017_0218d268(void*);
-extern "C" int func_020100a8(GameState*);
-extern "C" int func_02046b60(Struct_02038598_5*, int);
-extern "C" void func_020466f4(Struct_02038598_4*, unsigned int);
-extern "C" void func_020466e4(unsigned int*, unsigned int);
-extern "C" void func_ov017_0219e310(unsigned char*, int);
-extern "C" void func_020469b4(Struct_0201bdac_2*, Struct_0201bdac*);
+void* GlobalFlags_GetInstance();
+void GameObject_SetFacing(Obj02033834*, int);
+void SetVecYFromValue02033874(Obj02033874*, int);
+void GameObject_DisableControl(Obj020397cc*, int);
+int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+int CheckField0xc6Zero(ShortField02033ec8*);
+void SetVec3038500_02038500(Vec3038500*, int, int, int);
+void SetHalf0xc6AndCopyVec3_02033e18(void*, int*, short);
+int GetField4328_0218d268(void*);
+int GameState_GetProtagonistIndex(GameState*);
+int ListContainsId(ListHead02046b60*, int);
+void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
+void FlagWord_SetBits(unsigned int*, unsigned int);
+void InitAndResetHeader_0219e310(unsigned char*, int);
+void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 extern const char data_020efb44[];
 extern const char data_020efb4e[];
 extern const char data_020efb5a[];
 
 // USA: func_02038598
-extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
-    GameResources* var0;
-    Zone3D* var1;
-    Struct_02038598_7* var2;
-    struct Struct_02037d10* var3;
-    unsigned int* var4;
-    unsigned char var5;
-    Struct_02038598_5* var6;
-    var0 = GetGameResources();
-    var6 = (Struct_02038598_5*)var0->unknown_ptr_array_36fc[0];
-    var1 = func_02012fe4();
-    var2 = (Struct_02038598_7*)arg0->unknown_0_.unk_ac;
-    var3 = &arg0->unknown_26c_;
-    var4 = (unsigned int*)func_020d6c00();
+extern "C" ARM void func_02038598(ActorMotion02038598* self) {
+    GameResources* resources;
+    Zone3D* zone;
+    ActorFields02038598* fields;
+    struct SubBlock02038508* action;
+    unsigned int* inputFlags;
+    unsigned char side;
+    ListHead02046b60* list;
+    resources = GetGameResources();
+    list = (ListHead02046b60*)resources->fieldTaskQueue_;
+    zone = Zone3D_GetInstance();
+    fields = (ActorFields02038598*)self->resources.unk_ac;
+    action = &self->action;
+    inputFlags = (unsigned int*)GlobalFlags_GetInstance();
 
-    if (arg0->unknown_0_.obj3D_.unknown_4_ != arg0->unknown_1ca_) return;
-    if (var3->unknown_0_ == 0) return;
+    if (self->resources.obj3D_.actorIndex_ != self->actorId) return;
+    if (action->active == 0) return;
 
     unsigned char var7 = var3->unknown_1_;
 
-    if (var7 == 0) {
-        Struct_020134e0::Struct_02018300* var8 = (var3->unknown_3_ == 0) ? var3->unknown_58_ : var3->unknown_5c_;
-        Vector3fix var9;
-        Vector3fix_Subtract(&var8->unknown_8_.unknown1_0_, &arg0->unknown_0_.obj3D_.position_, &var9);
-        Vector3fix_Normalize(&var9, &var9);
-        int var10 = fix32ReduceAngle0To2Pi(fix32_Atan2(var9.x, var9.z));
-        func_02033834((struct Struct_02033834_2*)arg0, var10);
-        func_020397cc((struct Struct_02018300_3*)arg0, 1);
-        var2->unknown_34_.unknown_0_0_ = 1;
-        arg0->unknown_0_.obj3D_.EnableFlag(0x180);
-        func_02033b88((struct Struct_02010604*)arg0, 0);
-        var3->unknown_4c_ = var3->unknown_58_->unknown_8_.unknown1_0_.y;
-        var3->unknown_50_ = var1->substruct_c_.unknown_30_;
-        if (fix32abs(var2->unknown_2_) - var10 >= 0x333) goto Exit;
-        func_ov017_021d3f00(var3, 0, 0);
-        var3->unknown_1_ = 1;
-        var3->unknown_24_.unknown1_0_ = arg0->unknown_0_.obj3D_.position_;
-        if (var3->unknown_3_ == 0) {
-            arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb44, 1);
+    if (state == 0) {
+        ZoneFeatures::Opcode6aEntry* post = (action->reversed == 0) ? action->startNode : action->endNode;
+        Vector3fix direction;
+        Vector3fix_Subtract(&post->unk_8.vec, &self->resources.obj3D_.position_, &direction);
+        Vector3fix_Normalize(&direction, &direction);
+        int angle = fix32ReduceAngle0To2Pi(fix32_Atan2(direction.x, direction.z));
+        GameObject_SetFacing((struct Obj02033834*)self, angle);
+        GameObject_DisableControl((struct Obj020397cc*)self, 1);
+        fields->flags.active = 1;
+        self->resources.obj3D_.EnableFlag(0x180);
+        SetByte0xbeShiftPrev((struct Bytes02033b88*)self, 0);
+        action->unknown4c = action->startNode->unk_8.vec.y;
+        action->unknown50 = zone->substruct_c_.unknown_30_;
+        if (fix32abs(fields->heading) - angle >= 0x333) goto Exit;
+        func_ov017_021d3f00(action, 0, 0);
+        action->command = 1;
+        action->unknown24.vec = self->resources.obj3D_.position_;
+        if (action->reversed == 0) {
+            self->resources.obj3D_.SetAnimationByName(data_020efb44, 1);
             goto Exit;
         }
-        if (var3->unknown_3_ != 1) goto Exit;
-        arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb44, 1);
+        if (action->reversed != 1) goto Exit;
+        self->resources.obj3D_.SetAnimationByName(data_020efb44, 1);
         goto Exit;
     }
 
-    if (var7 == 1) {
-        func_02033834((struct Struct_02033834_2*)arg0, var3->unknown_6_);
-        func_020397cc((struct Struct_02018300_3*)arg0, 1);
-        int var11 = arg0->unknown_0_.obj3D_.normalizedAnimationTime_;
+    if (state == 1) {
+        GameObject_SetFacing((struct Obj02033834*)self, action->heading);
+        GameObject_DisableControl((struct Obj020397cc*)self, 1);
+        int animationProgress = self->resources.obj3D_.normalizedAnimationTime_;
 
         if (var3->unknown_3_ == 0) {
             if (!arg0->unknown_0_.obj3D_.HasAnimationStopped()) {
@@ -193,11 +193,11 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
             arg0->unknown_0_.obj3D_.position_ = var14;
         }
 
-        if (arg0->unknown_0_.obj3D_.HasAnimationStopped()) {
-            func_02038500((Struct_02038500*)&var14, var15.x, var15.y, var15.z);
-            arg0->unknown_0_.obj3D_.position_ = var14;
-            var3->unknown_1_ = 2;
-            arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb4e, 0);
+        if (self->resources.obj3D_.HasAnimationStopped()) {
+            SetVec3038500_02038500((Vec3038500*)&nextPosition, targetPosition.x, targetPosition.y, targetPosition.z);
+            self->resources.obj3D_.position_ = nextPosition;
+            action->command = 2;
+            self->resources.obj3D_.SetAnimationByName(data_020efb4e, 0);
             goto Exit;
         }
 
@@ -205,10 +205,10 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
         goto Exit;
     }
 
-    if (var7 == 2) {
-        func_020466f4((struct Struct_02038598_4*)var4, 0x400);
-        func_02033874((struct Struct_02033834*)arg0, var3->unknown_6_);
-        func_020397cc((struct Struct_02018300_3*)arg0, 1);
+    if (state == 2) {
+        FlagWord_ClearBits((struct FlagWord020466f4*)inputFlags, 0x400);
+        SetVecYFromValue02033874((struct Obj02033874*)self, action->heading);
+        GameObject_DisableControl((struct Obj020397cc*)self, 1);
 
         Vector3fix var22 = arg0->unknown_0_.obj3D_.position_;
         Vector3fix var23, var24;
@@ -283,23 +283,23 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
 
         var3->unknown_4_ = (unsigned short)(var3->unknown_4_ + GameState::GetInstance()->GetTickCount());
 
-        if (var5 == 1) {
-            arg0->unknown_0_.obj3D_.DisableFlag(0x1000);
-            arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb4e, 0);
-            if (var3->unknown_54_ != var5 || var3->unknown_4_ > 6) {
-                func_ov017_021d3f00(var3, var5, 0);
-                var3->unknown_4_ = 0;
+        if (side == 1) {
+            self->resources.obj3D_.DisableFlag(0x1000);
+            self->resources.obj3D_.SetAnimationByName(data_020efb4e, 0);
+            if (action->unknown54 != side || action->unknown4 > 6) {
+                func_ov017_021d3f00(action, side, 0);
+                action->unknown4 = 0;
             }
             if (var3->unknown_48_ != 0) {
                 arg0->unknown_0_.obj3D_.SetCurrentAnimationTime(var3->unknown_48_);
                 var3->unknown_48_ = 0;
             }
-        } else if (var5 == 2) {
-            arg0->unknown_0_.obj3D_.DisableFlag(0x1000);
-            arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb4e, 4);
-            if (var3->unknown_54_ != var5 || var3->unknown_4_ > 6) {
-                func_ov017_021d3f00(var3, var5, 0);
-                var3->unknown_4_ = 0;
+        } else if (side == 2) {
+            self->resources.obj3D_.DisableFlag(0x1000);
+            self->resources.obj3D_.SetAnimationByName(data_020efb4e, 4);
+            if (action->unknown54 != side || action->unknown4 > 6) {
+                func_ov017_021d3f00(action, side, 0);
+                action->unknown4 = 0;
             }
             if (var3->unknown_48_ != 0) {
                 arg0->unknown_0_.obj3D_.SetCurrentAnimationTime(var3->unknown_48_);
@@ -317,50 +317,50 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
 
         if (var31 != 0) goto Exit;
 
-        if (var22.y < var3->unknown_c_.unknown_0_[1]) {
-            func_020466e4(var4, 0x400);
-            Struct_020134e0::Struct_02018300* var37 = var3->unknown_58_;
-            if (var37->unknown_2c_.unknown5_0_.unknown_5_ & 2) {
-                var3->unknown_60_ = var37;
-                var3->unknown_1_ = 6;
+        if (posCopy.y < action->start.entries[1]) {
+            FlagWord_SetBits(inputFlags, 0x400);
+            ZoneFeatures::Opcode6aEntry* post = action->startNode;
+            if (post->unk_2c.type9.unk_5 & 2) {
+                action->unknown60 = post;
+                action->command = 6;
                 goto Exit;
             }
-            var3->unknown_1_ = 5;
-            var3->unknown_24_.unknown1_0_ = var3->unknown_30_.unknown1_0_;
-            func_02033e18(arg0, var3->unknown_30_.unknown_0_, var2->unknown_8_);
-            func_02033b88((struct Struct_02010604*)arg0, 1);
-            func_02033834((struct Struct_02033834_2*)arg0, var3->unknown_8_);
-            func_ov017_021d3f00(var3, 0, 0);
+            action->command = 5;
+            action->unknown24.vec = action->startControl.vec;
+            SetHalf0xc6AndCopyVec3_02033e18(self, action->startControl.entries, fields->destinationHeading);
+            SetByte0xbeShiftPrev((struct Bytes02033b88*)self, 1);
+            GameObject_SetFacing((struct Obj02033834*)self, action->startHeading);
+            func_ov017_021d3f00(action, 0, 0);
             goto Exit;
         }
 
         if (var22.y <= var3->unknown_18_.unknown_0_[1]) goto Exit;
 
-        func_020466e4(var4, 0x400);
-        Struct_020134e0::Struct_02018300* var38 = var3->unknown_5c_;
-        if (var38->unknown_2c_.unknown5_0_.unknown_5_ & 2) {
-            var3->unknown_60_ = var38;
-            var3->unknown_1_ = 6;
+        FlagWord_SetBits(inputFlags, 0x400);
+        ZoneFeatures::Opcode6aEntry* post2 = action->endNode;
+        if (post2->unk_2c.type9.unk_5 & 2) {
+            action->unknown60 = post2;
+            action->command = 6;
             goto Exit;
         }
-        var22.y = var3->unknown_18_.unknown_0_[1];
-        arg0->unknown_0_.obj3D_.position_ = var22;
-        var3->unknown_24_.unknown1_0_ = var22;
-        arg0->unknown_0_.obj3D_.MaybeSetRegularAnimation(data_020efb5a, 1);
-        var3->unknown_1_ = 4;
-        func_ov017_021d3f00(var3, 0, 0);
+        posCopy.y = action->end.entries[1];
+        self->resources.obj3D_.position_ = posCopy;
+        action->unknown24.vec = posCopy;
+        self->resources.obj3D_.SetAnimationByName(data_020efb5a, 1);
+        action->command = 4;
+        func_ov017_021d3f00(action, 0, 0);
         goto Exit;
     }
 
-    if (var7 == 4) {
-        func_020397cc((struct Struct_02018300_3*)arg0, 1);
-        int var39 = arg0->unknown_0_.obj3D_.normalizedAnimationTime_;
-        if (var39 != 0) {
-            Vector3fix var40;
-            var40 = arg0->unknown_0_.obj3D_.position_;
-            var40.y = var3->unknown_24_.unknown_0_[1] + inline_02038598(var3->unknown_3c_.unknown_0_[1] - var3->unknown_24_.unknown_0_[1], 0x199);
-            arg0->unknown_0_.obj3D_.position_ = var40;
-            var3->unknown_24_.unknown1_0_ = var40;
+    if (state == 4) {
+        GameObject_DisableControl((struct Obj020397cc*)self, 1);
+        int animationProgress = self->resources.obj3D_.normalizedAnimationTime_;
+        if (animationProgress != 0) {
+            Vector3fix fallPosition;
+            fallPosition = self->resources.obj3D_.position_;
+            fallPosition.y = action->unknown24.entries[1] + FX_MulInline(action->endControl.entries[1] - action->unknown24.entries[1], 0x199);
+            self->resources.obj3D_.position_ = fallPosition;
+            action->unknown24.vec = fallPosition;
 
             int var41 = var1->substruct_c_.unknown_30_;
             var3->unknown_50_ = (int)((float)(unsigned int)var41 *
@@ -368,32 +368,32 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
             if (var3->unknown_50_ < 0) var3->unknown_50_ = 0;
         }
 
-        if (arg0->unknown_0_.obj3D_.HasAnimationStopped()) {
-            var3->unknown_1_ = 5;
-            var3->unknown_24_.unknown1_0_ = var3->unknown_3c_.unknown1_0_;
-            func_02033e18(arg0, var3->unknown_3c_.unknown_0_, var2->unknown_8_);
-            func_02033b88((struct Struct_02010604*)arg0, 1);
-            func_02033834((struct Struct_02033834_2*)arg0, var3->unknown_a_);
-            func_ov017_021d3f00(var3, 0, 0);
-            func_020466f4((struct Struct_02038598_4*)var4, 0x400);
+        if (self->resources.obj3D_.HasAnimationStopped()) {
+            action->command = 5;
+            action->unknown24.vec = action->endControl.vec;
+            SetHalf0xc6AndCopyVec3_02033e18(self, action->endControl.entries, fields->destinationHeading);
+            SetByte0xbeShiftPrev((struct Bytes02033b88*)self, 1);
+            GameObject_SetFacing((struct Obj02033834*)self, action->endHeading);
+            func_ov017_021d3f00(action, 0, 0);
+            FlagWord_ClearBits((struct FlagWord020466f4*)inputFlags, 0x400);
         }
         goto Exit;
     }
 
-    if (var7 == 5) {
-        func_020397cc((struct Struct_02018300_3*)arg0, 1);
-        arg0->unknown_0_.obj3D_.EnableFlag(0x80);
-        func_02033b58((struct Struct_02033b58*)arg0, 1);
-        if (!func_02033ec8((struct Struct_02033ec8*)arg0)) goto Exit;
-        unsigned char var42 = var3->unknown_52_;
+    if (state == 5) {
+        GameObject_DisableControl((struct Obj020397cc*)self, 1);
+        self->resources.obj3D_.EnableFlag(0x80);
+        SetByteSavingPrevious((struct Foo02033b58*)self, 1);
+        if (!CheckField0xc6Zero((struct ShortField02033ec8*)self)) goto Exit;
+        unsigned char dispatchOnCompletion = action->unknown52;
 
-        func_02038508(var3);
-        arg0->unknown_253_ = 1;
-        var2->unknown_34_.unknown_0_0_ = 0;
-        arg0->unknown_0_.obj3D_.DisableFlag(0x1180);
-        func_ov017_021d3f00(var3, 0, 1);
-        func_020466f4((struct Struct_02038598_4*)var4, 0x400);
-        if (var42 == 0) goto Exit;
+        InitBlock02038508(action);
+        self->updated = 1;
+        fields->flags.active = 0;
+        self->resources.obj3D_.DisableFlag(0x1180);
+        func_ov017_021d3f00(action, 0, 1);
+        FlagWord_ClearBits((struct FlagWord020466f4*)inputFlags, 0x400);
+        if (dispatchOnCompletion == 0) goto Exit;
 
         arg0->unknown_252_ = 1;
         func_ov017_02191108(var0, 1, 1, 1, 1);
@@ -403,23 +403,23 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
         goto Exit;
     }
 
-    if (var7 == 6) {
-        GameState* var44 = GameState::GetInstance();
-        Struct_02038598_2* var45 = (Struct_02038598_2*)func_0200fd0c(var44);
-        GameResources* var46 = GetGameResources();
-        func_020100a8(var44);
-        VectorizedMemset(var45, 0, 0x70);
-        var45->unknown_4_ = 1;
-        var45->unknown_8_ = 1;
-        var45->unknown_9_ = 1;
-        var45->unknown_b_ = -1;
-        var45->unknown_20_[0] = -1;
-        var45->unknown_20_[1] = -1;
-        var45->unknown_20_[2] = -1;
-        var45->unknown_20_[3] = -1;
-        var45->unknown_1e_ = -1;
-        var45->unknown_c_ = 0;
-        var45->unknown_6c_ = -1;
+    if (state == 6) {
+        GameState* bs = GameState::GetInstance();
+        ActorActionEvent02038598* event = (ActorActionEvent02038598*)GetField0x3f8Address_0200fd0c(bs);
+        GameResources* transitionResources = GetGameResources();
+        GameState_GetProtagonistIndex(bs);
+        VectorizedMemset(event, 0, 0x70);
+        event->active = 1;
+        event->flag8 = 1;
+        event->flag9 = 1;
+        event->kind = -1;
+        event->ids[0] = -1;
+        event->ids[1] = -1;
+        event->ids[2] = -1;
+        event->ids[3] = -1;
+        event->index = -1;
+        event->hasTransform = 0;
+        event->duration = -1;
 
         var45->unknown_0_ = var3->unknown_60_->unknown_2c_.unknown5_0_.unknown_6_;
         var45->unknown_10_ = var3->unknown_60_->unknown_2c_.unknown5_0_.unknown_c_;
@@ -441,10 +441,10 @@ extern "C" ARM void func_02038598(Struct_02038598_6* arg0) {
         var45->unknown_7_ = 1;
         func_0200fcfc(var44, var45);
 
-        func_ov017_0219e310((unsigned char*)var46->unknown_ptr_array_36fc[4], 0);
-        func_020469b4((struct Struct_0201bdac_2*)var46->unknown_ptr_array_36fc[0],
-            (struct Struct_0201bdac*)var46->unknown_ptr_array_36fc[4]);
-        func_020466f4((struct Struct_02038598_4*)var4, 0x400);
+        InitAndResetHeader_0219e310((unsigned char*)transitionResources->unknown_ptr_array_3700[3], 0);
+        AppendNodeToTail((struct TailList020469b4*)transitionResources->fieldTaskQueue_,
+            (struct TailNode020469b4*)transitionResources->unknown_ptr_array_3700[3]);
+        FlagWord_ClearBits((struct FlagWord020466f4*)inputFlags, 0x400);
 
         func_02038508(var3);
         arg0->unknown_253_ = 1;

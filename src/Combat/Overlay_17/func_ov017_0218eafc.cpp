@@ -19,37 +19,37 @@ struct Struct_ov017_0218eafc {
 };
 
 extern "C" void* func_02057924(void);
-extern "C" void func_02057ab8(void* arg0, int arg1);
-extern "C" int func_ov017_021922ac(void* arg0, unsigned int arg1);
-extern "C" int func_02039d68(unsigned char* arg0);
-extern "C" int func_02053cdc(int* arg0);
-extern "C" int func_02053cd4(unsigned char* arg0);
-extern "C" int func_02032fdc(void* arg0, int arg1, Vector3i* arg2);
-extern "C" int func_02061bd8(Struct_0205faf4_11* arg0);
-extern "C" unsigned char func_02053eb4(void* arg0, int arg1);
-extern "C" void func_02031234(int arg0);
-extern "C" Object3D* func_ov017_021bdbcc(void* arg0);
-extern "C" Object3D* func_ov017_021bdbc0(unsigned char* arg0);
-extern "C" void func_ov017_0218dba0(int arg0);
+extern "C" void func_02057ab8(void* list, int id);
+int CheckByteFlagsAt4488_021922ac(void* self, unsigned int idx);
+int CheckFlag0x1ceBit2Set_02039d68(unsigned char* obj);
+int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
+int GetFieldAt0x1b8_02053cd4(unsigned char* obj);
+extern "C" int func_02032fdc(void* obj, int clip, Vector3i* out);
+int CheckField0x56bLowNibble(Obj02061bd8* obj);
+unsigned char GetByteFieldAt0x1a0_02053eb4(void* obj, int extra);
+extern "C" void G3_RotateY(int angle);
+extern "C" Object3D* func_ov017_021bdbcc(void* obj);
+Object3D* GetField4334_021bdbc0(unsigned char* ov);
+extern "C" void func_ov017_0218dba0(int id);
 
 // USA: func_ov017_0218eafc
-extern "C" ARM void func_ov017_0218eafc(Struct_ov017_0218eafc* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_02057924();
-    int var2 = func_ov017_021922ac(arg0, (unsigned char)arg1);
-    if (var2) func_02057ab8(var1, arg1);
-    if (func_020100bc(var0) == 0) return;
+extern "C" ARM void func_ov017_0218eafc(Battle0218eafc* battle, int idx) {
+    GameState* gs = GameState::GetInstance();
+    void* list = func_02057924();
+    int flagged = CheckByteFlagsAt4488_021922ac(battle, (unsigned char)idx);
+    if (flagged) func_02057ab8(list, idx);
+    if (gs->GetCamera() == 0) return;
 
-    Struct_020236dc_2* var3 = (Struct_020236dc_2*)var0->GetPartyMemberByIndex(arg1);
-    int var4 = arg1 * 12 + 0x13;
-    Object3D* var5 = (Object3D*)var0->GetGameObjectByIndex(var4);
-    if (var3->obj3D_.GetFlag(0x200)) return;
-    if (func_02039d68((unsigned char*)var3)) return;
-    if (var3->obj3D_.IsChild()) return;
-    Model3D* var6 = var3->obj3D_.pModel_;
-    if (var6 == NULL) return;
-    ModelRenderContext* var7 = var6->unknown_flags_a8_0_ ? &var6->renderContext_ : NULL;
-    if (var7 == NULL) return;
+    CombatantRecovery* member = (CombatantRecovery*)gs->GetPartyMemberByIndex(idx);
+    int shadowId = idx * 12 + 0x13;
+    Object3D* shadow = (Object3D*)gs->GetGameObjectByIndex(shadowId);
+    if (member->obj3D_.GetFlag(0x200)) return;
+    if (CheckFlag0x1ceBit2Set_02039d68((unsigned char*)member)) return;
+    if (member->obj3D_.IsChild()) return;
+    Model3D* model = member->obj3D_.pModel_;
+    if (model == NULL) return;
+    ModelRenderContext* context = model->loaded_ ? &model->renderContext_ : NULL;
+    if (context == NULL) return;
 
     bool var8 = true;
     if (TestFlags04((GameResources*)arg0, 0x1000)) var8 = false;
@@ -122,13 +122,13 @@ extern "C" ARM void func_ov017_0218eafc(Struct_ov017_0218eafc* arg0, int arg1) {
                 var23->EnableFlag(0x8000);
                 var23->Draw(false);
             }
-            if (var3->unknown_18c_ & 0x20) {
-                var23 = (Object3D*)var0->GetGameObjectByIndex(var17);
-                if (var23) {
-                    var23->EnableFlag(0x8000);
-                    func_02031234(0x3244);
-                    var23->Draw(false);
-                    var23->DisableFlag(0x8000);
+            if (member->recoveryFlags & 0x20) {
+                part = (Object3D*)gs->GetGameObjectByIndex(accessoryId);
+                if (part) {
+                    part->EnableFlag(0x8000);
+                    G3_RotateY(0x3244);
+                    part->Draw(false);
+                    part->DisableFlag(0x8000);
                 }
             }
             if (arg1 == 0) {

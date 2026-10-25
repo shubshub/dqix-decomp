@@ -3,8 +3,8 @@
 extern "C" void func_ov017_021bff2c(void*);
 extern "C" void func_ov017_021bf490(void*);
 
-// USA: func_ov017_021bf5dc
-extern "C" ARM void func_ov017_021bf5dc(void* arg0) {
-    func_ov017_021bff2c(arg0);
-    func_ov017_021bf490(arg0);
+// Overlay 17, originally CallTwoHelpersWithSelf_021bf5dc (USA/EUR 0x021bf5dc, JPN 0x021bfb88)
+ARM void FieldTask_EndOpenCupboard(void* obj) {
+    func_ov017_021bff2c(obj);
+    func_ov017_021bf490(obj);
 }

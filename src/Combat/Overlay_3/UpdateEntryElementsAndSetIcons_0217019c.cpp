@@ -18,7 +18,7 @@ void MaybeSetElem_021702e4(struct S021702e4* self);
 #endif
 extern "C" void func_ov003_021704e8(char* obj);
 struct S021702e4;
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 struct Obj0216dee4;
 void SetElemFields0216dee4(struct Obj0216dee4* obj, int idx, int v14, int v18, int v22, int v25, int v26);
 
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov003_0217019c(struct Ctx0217019c* self) {
         case 1:
             return;
     }
-    func_02012fe4();
+    Zone3D_GetInstance();
 
     int v14 = 0x51;
     int v18 = 0x2e;

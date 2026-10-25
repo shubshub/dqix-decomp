@@ -14,7 +14,7 @@ struct Struct_ov031_0221fd18 {
     Struct_ov031_0221fd18_2 unknown_4_[1];
 };
 
-extern "C" int func_02001aec(const void* arg0, const void* arg1, unsigned int arg2);
+extern "C" int memcmp(const void* first, const void* second, unsigned int size);
 extern char data_ov031_0224b180[];
 
 // USA: func_ov031_0221fd18
@@ -44,10 +44,10 @@ extern "C" THUMB int func_ov031_0221fd18(Struct_ov031_0221fd18* arg0, Struct_ov0
                 if (var10 == 1 && (var7->unknown_4_[0] == 0 || var7->unknown_4_[0] == ' ')) {
                     break;
                 }
-                if (func_02001aec(var9, var8->unknown_4_, strlen(var9)) == 0 &&
-                    func_02001aec(var7->unknown_28_, var8->unknown_28_, 6) == 0 &&
-                    var7->unknown_2e_ != var8->unknown_2e_ && var7->unknown_2e_ == 0) {
-                    var0 = 1;
+                if (memcmp(name, other->ssid, strlen(name)) == 0 &&
+                    memcmp(entry->bssid, other->bssid, 6) == 0 &&
+                    entry->security != other->security && entry->security == 0) {
+                    found = 1;
                     break;
                 }
                 var8++;
@@ -59,29 +59,29 @@ extern "C" THUMB int func_ov031_0221fd18(Struct_ov031_0221fd18* arg0, Struct_ov0
         var7++;
         var8 = arg1->unknown_4_;
     }
-    if (!var0) {
-        char var11[0x22] = {0};
-        var2 = 0;
-        var3 = 0;
-        var7 = arg0->unknown_4_;
-        var8 = arg1->unknown_4_;
-        for (var6 = 0; var6 < arg1->unknown_0_; var6++) {
-            memcpy(var11, var8->unknown_4_, 0x20);
-            var11[var8->unknown_0_] = 0;
-            if (func_02001aec(var11, data_ov031_0224b180, strlen(data_ov031_0224b180)) == 0 &&
-                var8->unknown_2e_ == 0) {
-                var3 = 1;
+    if (!found) {
+        char name[0x22] = {0};
+        savedDefault = 0;
+        scannedDefault = 0;
+        entry = saved->entries;
+        other = scanned->entries;
+        for (j = 0; j < scanned->count; j++) {
+            memcpy(name, other->ssid, 0x20);
+            name[other->ssidLength] = 0;
+            if (memcmp(name, data_ov031_0224b180, strlen(data_ov031_0224b180)) == 0 &&
+                other->security == 0) {
+                scannedDefault = 1;
                 break;
             }
             var8++;
         }
-        for (var5 = 0; var5 < arg0->unknown_0_; var5++) {
-            memcpy(var11, var7->unknown_4_, 0x20);
-            var11[var7->unknown_0_] = 0;
-            if (strlen(var11) == strlen(data_ov031_0224b180) &&
-                func_02001aec(var11, data_ov031_0224b180, strlen(data_ov031_0224b180)) == 0 &&
-                var7->unknown_2e_ == 0) {
-                var2 = 1;
+        for (i = 0; i < saved->count; i++) {
+            memcpy(name, entry->ssid, 0x20);
+            name[entry->ssidLength] = 0;
+            if (strlen(name) == strlen(data_ov031_0224b180) &&
+                memcmp(name, data_ov031_0224b180, strlen(data_ov031_0224b180)) == 0 &&
+                entry->security == 0) {
+                savedDefault = 1;
                 break;
             }
             var7++;

@@ -17,8 +17,8 @@ int Font_FindCharacterIndex(int key, int tableIdx);
 struct Glyph0218e240* Font_GetCharacter(int idx, int tableIdx);
 int LookupKeyValue020425e4(int a, int b, int tableIdx);
 extern "C" void* __clear(void* dst, int count);
-extern "C" int func_020420e8(char* str, int id);
-extern "C" int func_02001aec(unsigned char* a, unsigned char* b, int n);
+extern "C" int Font_GetTextWidth(char* str, int id);
+extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
 extern "C" void func_ov016_0218e17c(unsigned short* dst, int x, int y, void* glyph, int color, int fontId);
 
 // USA: func_ov016_0218e240
@@ -43,17 +43,17 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsign
             var10 = strstr(arg1, data_ov016_0219d06f);
             var9 = 2;
         }
-        if (var10 != 0) {
-                        int var11 = var10 - arg1;
-            char var12[0x200];
-            __clear(var12, 0x200);
-            sprintf(var12, arg1);
-            memset(var12 + var11, 0, var9);
-            var8[0] = (0x100 - func_020420e8(var12, 1)) >> 1;
-            var8[1] = (0x100 - func_020420e8(var12 + (var11 + var9), 1)) >> 1;
-            var4 -= 0xe;
+        if (hit != 0) {
+                        int off = hit - text;
+            char buf[0x200];
+            __clear(buf, 0x200);
+            sprintf(buf, text);
+            memset(buf + off, 0, len);
+            xs[0] = (0x100 - Font_GetTextWidth(buf, 1)) >> 1;
+            xs[1] = (0x100 - Font_GetTextWidth(buf + (off + len), 1)) >> 1;
+            y -= 0xe;
         } else {
-            var8[0] = (0x100 - func_020420e8(arg1, 1)) >> 1;
+            xs[0] = (0x100 - Font_GetTextWidth(text, 1)) >> 1;
         }
     }
 
@@ -62,13 +62,13 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsign
     var3++;
 
     for (;;) {
-        if (arg7 <= var0) break;
-        if (arg1[0] == 0) break;
-        int var13 = 1;
-                int var14 = (arg1[0] == '\n') ? var13 : 0;
-        if (func_02001aec((unsigned char*)arg1, (unsigned char*)data_ov016_0219d06f, 2) == 0) {
-                        var14 = 1; 1;
-            var13 = 2;
+        if (count <= i) break;
+        if (text[0] == 0) break;
+        int step = 1;
+                int ctrl = (text[0] == '\n') ? step : 0;
+        if (memcmp((unsigned char*)text, (unsigned char*)data_ov016_0219d06f, 2) == 0) {
+                        ctrl = 1; 1;
+            step = 2;
         }
         if (var14 != 0) {
             var1 = var8[var3];

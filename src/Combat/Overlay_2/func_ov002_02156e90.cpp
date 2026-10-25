@@ -15,25 +15,25 @@ struct Struct_ov002_02156e90 {
     char unknown_0_[0xc4];
     unsigned char unknown_c4_;
 };
-extern "C" struct Struct_ov002_02156e90 *func_0205d888(struct Struct_0205d0e0_2 *arg0);
-extern "C" void *func_0205d81c(struct Struct_0205d81c *arg0, int arg1);
-extern "C" void func_0205d6a0(struct Struct_0205d6a0 *arg0, int arg1);
-extern "C" void func_0205deb4(struct Struct_0205d81c *arg0, int arg1, int arg2);
-extern "C" void func_ov002_02161cf0(void *arg0);
-extern "C" void func_ov002_0215b9a4(void *arg0, int arg1, int arg2);
+struct Elem0205d888 *Window_GetTopPane(struct Struct0205d888 *s);
+void *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
+void Window_ClosePane(struct Entry_0205d6a0 *e, int a);
+void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
+extern "C" void func_ov002_02161cf0(void *base);
+extern "C" void func_ov002_0215b9a4(void *base, int a, int b);
 extern "C" const unsigned char data_ov002_0216c99d[];
 extern "C" const unsigned char data_ov002_0216c99e[];
 
 // USA: func_ov002_02156e90
-extern "C" ARM void func_ov002_02156e90(char *arg0) {
-    int var0              = 1;
-    struct Struct_ov002_02156e90 *var1 = func_0205d888((struct Struct_0205d0e0_2 *) (arg0 + RG(0xec8, 0xe20)));
-    if (var1 != NULL) {
-        for (int var2 = 0; var2 < 8; var2++) {
-            unsigned char var3 = var1->unknown_c4_;
-            unsigned char var4 = data_ov002_0216c99d[var2 * 2];
-            if (var4 == var3) {
-                var0 = 2;
+extern "C" ARM void func_ov002_02156e90(char *base) {
+    int count              = 1;
+    struct Elem0205d888 *e = Window_GetTopPane((struct Struct0205d888 *) (base + RG(0xec8, 0xe20)));
+    if (e != NULL) {
+        for (int i = 0; i < 8; i++) {
+            unsigned char k = e->key;
+            unsigned char t = data_ov002_0216c99d[i * 2];
+            if (t == k) {
+                count = 2;
                 break;
             }
             if (var3 >= RG(0x2c, 0x2f) && var3 <= RG(0x2f, 0x32)) {
@@ -47,19 +47,19 @@ extern "C" ARM void func_ov002_02156e90(char *arg0) {
             }
         }
     }
-    for (int var6 = 0; var6 < var0; var6++) {
-        func_0205d6a0((struct Struct_0205d6a0 *) (arg0 + RG(0xec8, 0xe20)), 0);
+    for (int i = 0; i < count; i++) {
+        Window_ClosePane((struct Entry_0205d6a0 *) (base + RG(0xec8, 0xe20)), 0);
     }
-    var1 = func_0205d888((struct Struct_0205d0e0_2 *) (arg0 + RG(0xec8, 0xe20)));
-    if (var1 == NULL) return;
-    *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) = var1->unknown_c4_;
-    func_ov002_02161cf0(arg0);
-    for (int var7 = 0; var7 < 8; var7++) {
-        unsigned char var8 = data_ov002_0216c99d[var7 * 2];
-        if (var8 == var1->unknown_c4_) {
-            unsigned char var9 = data_ov002_0216c99e[var7 * 2];
-            func_0205d81c((struct Struct_0205d81c *) (arg0 + RG(0xec8, 0xe20)), var9);
-            func_0205deb4((struct Struct_0205d81c *) (arg0 + RG(0xec8, 0xe20)), var9, 0);
+    e = Window_GetTopPane((struct Struct0205d888 *) (base + RG(0xec8, 0xe20)));
+    if (e == NULL) return;
+    *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = e->key;
+    func_ov002_02161cf0(base);
+    for (int i = 0; i < 8; i++) {
+        unsigned char t = data_ov002_0216c99d[i * 2];
+        if (t == e->key) {
+            unsigned char k = data_ov002_0216c99e[i * 2];
+            FindElementByC40205d81c((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), k);
+            Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), k, 0);
             break;
         }
     }

@@ -10,7 +10,7 @@ struct Entry_0205d6a0;
 struct SePlayer;
 struct TableEntry0217f8c0;
 struct Struct0217f8c0;
-void SetElementFieldC2_0205deb4(struct Struct_0205d81c* s, int key, int value);
+void Window_SetPanePalette(struct Struct_0205d81c* s, int key, int value);
 int Window_GetSelectedIndex(struct Struct_0205c570* s);
 extern "C" int func_ov000_0217c594(void* obj, int limit);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -20,7 +20,7 @@ extern "C" int func_020dd4c4(int id, void* node);
 struct TableEntry0217f8c0* FindMatchingTableEntry0217f8c0(struct Struct0217f8c0* s);
 extern "C" void func_ov000_02176634(void* obj, struct TableEntry0217f8c0* entry, int val, int arg1, int arg2);
 int CheckFlagsOrField_0217c5f4_0217c5f4(void* obj);
-void ResetEntryList0205d6a0(struct Entry_0205d6a0* a, int flag);
+void Window_ClosePane(struct Entry_0205d6a0* a, int flag);
 extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
 extern "C" void func_ov000_02176e3c(void* obj, struct TableEntry0217f8c0* entry, int val, int arg1, int arg2, int one);
 
@@ -48,7 +48,7 @@ struct Struct_ov000_0217db4c {
 // USA: func_ov000_0217db4c
 extern "C" ARM void func_ov000_0217db4c(struct Menu0217db4c* menu, int arg1, int arg2) {
     menu->flags |= 0x100;
-    SetElementFieldC2_0205deb4((struct Struct_0205d81c*)menu->list, 0x21, 0);
+    Window_SetPanePalette((struct Struct_0205d81c*)menu->list, 0x21, 0);
     signed char prev = menu->activeSum;
     int sum = Window_GetSelectedIndex((struct Struct_0205c570*)menu->list);
     menu->activeSum = sum;
@@ -76,16 +76,16 @@ extern "C" ARM void func_ov000_0217db4c(struct Menu0217db4c* menu, int arg1, int
 #else
         func_020dd4c4(func_ov000_021815c8(arg0), var2);
 #endif
-        arg0->unknown_1d68_++;
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0x20;
-        func_ov000_02176634(arg0, func_ov000_0217f8c0((struct Struct_ov000_021735d0_3*)arg0), arg0->unknown_1d60_[arg0->unknown_1d68_], arg1, arg2);
-    } else if (func_ov000_0217c5f4(arg0)) {
-        arg0->unknown_956_ = 0;
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_188_, 0);
-        func_0205d6a0((struct Struct_0205d6a0*)arg0->unknown_188_, 0);
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
-        arg0->unknown_1d68_--;
-        func_ov000_0217c638(arg0, arg1, arg2);
-        func_ov000_02176e3c(arg0, func_ov000_0217f8c0((struct Struct_ov000_021735d0_3*)arg0), arg0->unknown_1d60_[arg0->unknown_1d68_], arg1, arg2, 0);
+        menu->depth++;
+        menu->stack[menu->depth] = 0x20;
+        func_ov000_02176634(menu, FindMatchingTableEntry0217f8c0((struct Struct0217f8c0*)menu), menu->stack[menu->depth], arg1, arg2);
+    } else if (CheckFlagsOrField_0217c5f4_0217c5f4(menu)) {
+        menu->field_0x956 = 0;
+        Window_ClosePane((struct Entry_0205d6a0*)menu->list, 0);
+        Window_ClosePane((struct Entry_0205d6a0*)menu->list, 0);
+        menu->stack[menu->depth] = 0;
+        menu->depth--;
+        func_ov000_0217c638(menu, arg1, arg2);
+        func_ov000_02176e3c(menu, FindMatchingTableEntry0217f8c0((struct Struct0217f8c0*)menu), menu->stack[menu->depth], arg1, arg2, 0);
     }
 }

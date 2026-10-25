@@ -39,12 +39,12 @@ int IsBrightnessTransitionActive(GameResources* resources);
 int fix32SignedAngleDistance(int a, int b);
 int fix32abs(int x);
 int fix32ReduceAngle0To2Pi(int angle);
-extern "C" void func_0202e6a8(struct Struct_0202e6a8* arg0, int arg1);
-extern "C" void func_0202e6c0(struct Struct_0202e6c0* arg0, int arg1);
-extern "C" void func_0202e71c(struct Struct_0202e71c* arg0, int arg1);
-extern "C" int func_020a10a8(int* arg0);
-extern "C" void func_020a0dec(struct Struct_0202ef14_2* arg0);
-extern "C" void func_0202ec5c(char* arg0, int* arg1);
+void ApplyField0x70Tail(struct GlobalObj0202e6a8* obj, int value);
+void ClampField74BySign(struct CamState0202e6c0* obj, int value);
+void SetField78Clamped0202e71c(struct Obj0202e71c* obj, int value);
+int Vec3Ease_IsRunning(int* obj);
+void DispatchMemberFn020a0dec(struct DispatchObj020a0dec* obj);
+void CopyVec3ToField0x10AndCall0202e5d8_0202ec5c(char* obj, int* vec);
 void Vector3fixMultiplyScalar(const Vector3i* in, int scale, Vector3i* out);
 extern "C" void __clear(void* arg0, int arg1);
 extern "C" void Vector3fix_Add(const Vector3i* arg0, const Vector3i* arg1, Vector3i* arg2);
@@ -136,18 +136,18 @@ extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
         arg0->unknown_220_.x = var3;
     }
 
-    Vector3i var11;
-    int var12 = 0;
-    __clear(&var11, 0xc);
-    if (var1) {
-        var11 = var1->obj3D_.position_;
-        var11.y += var1->obj3D_.GetHeight() / 2;
-        Vector3fix_Add(&var11, &arg0->unknown_22c_, &var11);
-        Vector3i var13 = var11;
-        if (func_020a10a8(&arg0->unknown_248_.unknown_0_)) {
-            arg0->unknown_248_.unknown_10_ = var13;
-            func_020a0dec((struct Struct_0202ef14_2*)&arg0->unknown_248_);
-            var13 = arg0->unknown_248_.unknown_4_;
+    Vector3i pos;
+    int blended = 0;
+    __clear(&pos, 0xc);
+    if (target) {
+        pos = target->obj3D_.position_;
+        pos.y += target->obj3D_.GetHeight() / 2;
+        Vector3fix_Add(&pos, &self->offset, &pos);
+        Vector3i eye = pos;
+        if (Vec3Ease_IsRunning(&self->dispatch.active)) {
+            self->dispatch.source = eye;
+            DispatchMemberFn020a0dec((struct DispatchObj020a0dec*)&self->dispatch);
+            eye = self->dispatch.result;
         }
         func_0202ec5c((char*)arg0, (int*)&var13);
         var12 = func_020a299c(arg0, &var11, &var1->obj3D_);

@@ -25,9 +25,9 @@
 
 #include "Memory/SafeAllocator.h"
 
-extern "C" void func_0205eb80(void* arg0);
-extern "C" void func_02013750(void* arg0, int arg1);
-extern "C" void func_ov000_02172720(void* arg0);
+void SePlayer_UnloadExtraArchiveA(void* obj);
+void ResetBigStruct02013750(void* obj, int flag);
+extern "C" void func_ov000_02172720(void* obj);
 
 extern "C" void func_02079f9c(char* arg0);
 extern "C" void* func_02057924(void);
@@ -53,7 +53,7 @@ struct Struct_ov000_021604f0 {
 // USA: func_ov000_021604f0
 extern "C" ARM void func_ov000_021604f0(struct CombatWork_021604f0* work) {
     if (work->displayActive) {
-        ForwardField0xc0_0205eb80(g_sePlayer);
+        SePlayer_UnloadExtraArchiveA(g_sePlayer);
         work->displayActive = 0;
     }
     func_02013750(arg0->unknown_ec8_, 1);

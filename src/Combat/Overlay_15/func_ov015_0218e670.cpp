@@ -27,10 +27,10 @@ struct Struct_ov015_02194564_2
     Matrix4x3* unknown_8_;
 };
 
-extern Struct_ov015_02194564_2 data_ov015_02194564;
-extern "C" Struct_ov015_0218e670_2* func_020100cc(char*);
-extern "C" void func_020c5414();
-extern "C" void func_0202eab8(Struct_ov015_0218e670_2*);
+extern CameraOutputs0218e670 data_ov015_02194564;
+ViewerCamera0218e670* GetFieldIfFlag2_020100cc(char*);
+extern "C" void G3X_ResetMtxStack();
+extern "C" void func_0202eab8(ViewerCamera0218e670*);
 
 // USA: func_ov015_0218e670
 extern "C" ARM void func_ov015_0218e670(Struct_ov015_0218e670* arg0)
@@ -54,10 +54,10 @@ extern "C" ARM void func_ov015_0218e670(Struct_ov015_0218e670* arg0)
         var5 = true;
     if (!var5)
         return;
-    data_ov015_02194564.unknown_8_ = &var0;
-    data_ov015_02194564.unknown_0_ = &var1;
-    data_ov015_02194564.unknown_4_ = &var2;
-    func_020c5414();
+    data_ov015_02194564.eye = &eyeMatrix;
+    data_ov015_02194564.target = &targetMatrix;
+    data_ov015_02194564.position = &positionMatrix;
+    G3X_ResetMtxStack();
     RenderConfig::SubmitToFifo();
     arg0->unknown_24_->MaybeUpdateBonePositions();
     data_ov015_02194564.unknown_8_ = NULL;

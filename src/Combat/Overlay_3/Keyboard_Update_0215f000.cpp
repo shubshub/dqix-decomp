@@ -1,174 +1,185 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
+#include "Resource/Keyboard.h"
 
-struct Struct_ov003_0215f000_2 {
-    short unknown_0_;
-    short unknown_2_;
-    char unknown_4_[0xc - 4];
-    unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    char unknown_f_;
-    short unknown_10_;
-    char unknown_12_[0x14 - 0x12];
+// One key, with Keyboard_FindKeyByText's field names.
+struct KeyboardKey {
+    short x;
+    short y;
+    const char* text;
+    const char* shiftedText;
+    unsigned char pages;            // the KeyboardPage bits it shows on
+    unsigned char action;
+    unsigned char sizeClass;        // Keyboard_GetKeySize
+    unsigned char disabled;
+    short id;                       // what the page grids list
+    char unk_12[0x14 - 0x12];
 };
 
-struct Struct_ov003_0215f000 {
-    struct Struct_ov003_0215f000_2* unknown_0_;
-    char unknown_4_[2];
-    short unknown_6_;
+// The key list: the keys and their capacity and count (KeyboardLayout_Init's names).
+struct KeyboardLayout {
+    struct KeyboardKey* keys;
+    short keyCapacity;
+    short count;
 };
 
-struct Self0215e8f4 {
-    struct MenuCell0215f000* cell;
-    struct CellList0215f000* list;
-    char pad8[0x18 - 8];
+// The keyboard, with CharacterCreationUI_HandleNameEntry's field names.
+struct Keyboard {
+    struct KeyboardKey* key;
+    struct KeyboardLayout* layout;
+    char* text;
+    int widthLimit;
+    int textSize;
+    int maxLength;
     int repeatTimer;
     unsigned short repeatDir;
-    unsigned char mask;
-    char pad1f[0x22 - 0x1f];
+    unsigned char page;
+    unsigned char font;
+    unsigned char shift;
+    unsigned char wrap;
     unsigned char allowAlt;
     unsigned char allowCancel;
     unsigned char autoRepeat;
 };
 
-struct Struct_ov003_0215e930;
+// A page's key grid (8 bytes: pages mask, columns, rows, cell count, key ids), built by the layout script.
+struct KeyboardPageGrid;
 
-struct LookupTable0215e930* FindEntryByMask_0215e8f4(struct Self0215e8f4* self);
-extern "C" int func_ov003_0215e930(struct LookupTable0215e930* table, short id, signed char* col, signed char* row);
-extern "C" void func_ov003_0215e9ec(struct Self0215e8f4* self, int dx, int dy);
-extern "C" int Keyboard_HandleKey(struct Self0215e8f4* self);
-extern "C" int func_ov003_0215eeb8(struct Self0215e8f4* self);
+struct KeyboardPageGrid* Keyboard_GetPageGrid(struct Keyboard* self);
+extern "C" int KeyboardPageGrid_FindKeyCell(struct KeyboardPageGrid* table, short id, signed char* col, signed char* row);
+extern "C" void Keyboard_MoveCursor(struct Keyboard* self, int dx, int dy);
+extern "C" int Keyboard_HandleKey(struct Keyboard* self);
+extern "C" int Keyboard_DeleteCharacter(struct Keyboard* self);
 extern "C" void Keyboard_GetKeySize(int shape, short* w, short* h);
 
 // Overlay 3, originally func_ov003_0215f000 (USA/EUR 0x0215f000; JPN not identified)
-extern "C" ARM int Keyboard_Update(struct Self0215e8f4* self, int elapsed) {
-    struct MenuCell0215f000* prev = self->cell;
+extern "C" ARM int Keyboard_Update(struct Keyboard* keyboard, int elapsed) {
+    struct KeyboardKey* previousKey = keyboard->key;
     int i;
     short count;
-    struct MenuCell0215f000* hit;
-    unsigned char mask;
+    struct KeyboardKey* touchedKey;
+    unsigned char page;
     int result;
 
-    if (arg0->unknown_0_ == 0) {
-        var5 = 0;
-        arg0->unknown_18_ = 0;
-        arg0->unknown_1c_ = 0;
+    if (keyboard->key == 0) {
+        result = KeyboardResult_None;
+        keyboard->repeatTimer = 0;
+        keyboard->repeatDir = 0;
     } else {
-        if (g_keyManager.TestKeysPressed(0x40)) {
-            func_ov003_0215e9ec(arg0, 0, -1);
-            arg0->unknown_18_ = 0x14;
-            arg0->unknown_1c_ = 0x40;
-        } else if (g_keyManager.TestKeysPressed(0x80)) {
-            func_ov003_0215e9ec(arg0, 0, 1);
-            arg0->unknown_18_ = 0x14;
-            arg0->unknown_1c_ = 0x80;
-        } else if (g_keyManager.TestKeysPressed(0x20)) {
-            func_ov003_0215e9ec(arg0, -1, 0);
-            arg0->unknown_18_ = 0x14;
-            arg0->unknown_1c_ = 0x20;
-        } else if (g_keyManager.TestKeysPressed(0x10)) {
-            func_ov003_0215e9ec(arg0, 1, 0);
-            arg0->unknown_18_ = 0x14;
-            arg0->unknown_1c_ = 0x10;
+        if (g_keyManager.TestKeysPressed(KEY_UP)) {
+            Keyboard_MoveCursor(keyboard, 0, -1);
+            keyboard->repeatTimer = KeyboardRepeat_InitialDelay;
+            keyboard->repeatDir = KEY_UP;
+        } else if (g_keyManager.TestKeysPressed(KEY_DOWN)) {
+            Keyboard_MoveCursor(keyboard, 0, 1);
+            keyboard->repeatTimer = KeyboardRepeat_InitialDelay;
+            keyboard->repeatDir = KEY_DOWN;
+        } else if (g_keyManager.TestKeysPressed(KEY_LEFT)) {
+            Keyboard_MoveCursor(keyboard, -1, 0);
+            keyboard->repeatTimer = KeyboardRepeat_InitialDelay;
+            keyboard->repeatDir = KEY_LEFT;
+        } else if (g_keyManager.TestKeysPressed(KEY_RIGHT)) {
+            Keyboard_MoveCursor(keyboard, 1, 0);
+            keyboard->repeatTimer = KeyboardRepeat_InitialDelay;
+            keyboard->repeatDir = KEY_RIGHT;
         }
 
-        if (self->autoRepeat) {
-            unsigned short dir = self->repeatDir;
-            if (dir != 0 && g_keyManager.TestKeysHeld(0xf0)) {
-                int timer = self->repeatTimer - elapsed;
+        if (keyboard->autoRepeat) {
+            unsigned short dir = keyboard->repeatDir;
+            if (dir != 0 && g_keyManager.TestKeysHeld(KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT)) {
+                int timer = keyboard->repeatTimer - elapsed;
                 if (timer <= 0) {
-                    timer = 10;
+                    timer = KeyboardRepeat_Delay;
                     switch (dir) {
-                    case 0x40:
-                        func_ov003_0215e9ec(arg0, 0, -1);
+                    case KEY_UP:
+                        Keyboard_MoveCursor(keyboard, 0, -1);
                         break;
-                    case 0x80:
-                        func_ov003_0215e9ec(arg0, 0, 1);
+                    case KEY_DOWN:
+                        Keyboard_MoveCursor(keyboard, 0, 1);
                         break;
-                    case 0x20:
-                        func_ov003_0215e9ec(arg0, -1, 0);
+                    case KEY_LEFT:
+                        Keyboard_MoveCursor(keyboard, -1, 0);
                         break;
-                    case 0x10:
-                        func_ov003_0215e9ec(arg0, 1, 0);
+                    case KEY_RIGHT:
+                        Keyboard_MoveCursor(keyboard, 1, 0);
                         break;
                     }
-                    if (self->autoRepeat) {
+                    if (keyboard->autoRepeat) {
                         signed char curRow;
                         signed char curCol;
                         signed char prevRow;
                         signed char prevCol;
-                        struct LookupTable0215e930* table = FindEntryByMask_0215e8f4(self);
-                        struct MenuCell0215f000* cur = self->cell;
-                        if (func_ov003_0215e930(table, prev->id, &prevCol, &prevRow) == 0
-                            && func_ov003_0215e930(table, cur->id, &curCol, &curRow) == 0) {
+                        struct KeyboardPageGrid* grid = Keyboard_GetPageGrid(keyboard);
+                        struct KeyboardKey* currentKey = keyboard->key;
+                        if (KeyboardPageGrid_FindKeyCell(grid, previousKey->id, &prevCol, &prevRow) == 0
+                            && KeyboardPageGrid_FindKeyCell(grid, currentKey->id, &curCol, &curRow) == 0) {
                             switch (dir) {
-                            case 0x40:
-                                if (var10 < var8) arg0->unknown_0_ = var0;
+                            case KEY_UP:
+                                if (prevRow < curRow) keyboard->key = previousKey;
                                 break;
-                            case 0x80:
-                                if (var10 > var8) arg0->unknown_0_ = var0;
+                            case KEY_DOWN:
+                                if (prevRow > curRow) keyboard->key = previousKey;
                                 break;
-                            case 0x20:
-                                if (var11 < var9) arg0->unknown_0_ = var0;
+                            case KEY_LEFT:
+                                if (prevCol < curCol) keyboard->key = previousKey;
                                 break;
-                            case 0x10:
-                                if (var11 > var9) arg0->unknown_0_ = var0;
+                            case KEY_RIGHT:
+                                if (prevCol > curCol) keyboard->key = previousKey;
                                 break;
                             }
                         }
                     }
                 }
-                arg0->unknown_18_ = var7;
+                keyboard->repeatTimer = timer;
             } else {
-                arg0->unknown_18_ = 0;
-                arg0->unknown_1c_ = 0;
+                keyboard->repeatTimer = 0;
+                keyboard->repeatDir = 0;
             }
         }
-        if (var0 == arg0->unknown_0_) {
-            var5 = 0;
+        if (previousKey == keyboard->key) {
+            result = KeyboardResult_None;
         } else {
-            var5 = 1;
+            result = KeyboardResult_CursorMoved;
         }
     }
 
-    if (var5 == 0) {
-        unsigned char var14 = arg0->unknown_22_;
-        unsigned char var15 = arg0->unknown_23_;
-        if (g_keyManager.TestKeysPressed(1)
-            || (allowAlt && g_keyManager.TestKeysPressed(0x200))) {
-            result = Keyboard_HandleKey(self);
-        } else if (allowCancel && g_keyManager.TestKeysPressed(2)) {
-            result = func_ov003_0215eeb8(self);
+    if (result == KeyboardResult_None) {
+        unsigned char allowAlt = keyboard->allowAlt;
+        unsigned char allowCancel = keyboard->allowCancel;
+        if (g_keyManager.TestKeysPressed(KEY_A)
+            || (allowAlt && g_keyManager.TestKeysPressed(KEY_L))) {
+            result = Keyboard_HandleKey(keyboard);
+        } else if (allowCancel && g_keyManager.TestKeysPressed(KEY_B)) {
+            result = Keyboard_DeleteCharacter(keyboard);
         } else {
-            var5 = 0;
+            result = KeyboardResult_None;
         }
 
-        if (var5 == 0) {
-            var4 = arg0->unknown_1e_;
+        if (result == KeyboardResult_None) {
+            page = keyboard->page;
             if (g_touchInput.pressed_) {
-                int ty;
-                int tx;
-                g_touchInput.GetTouchPoint(&tx, &ty);
-                struct CellList0215f000* list = self->list;
-                hit = list->cells;
-                count = list->count;
-                for (i = 0; i < count; i++, hit++) {
-                    if (hit->mask & mask) {
-                        short h;
-                        short w;
-                        Keyboard_GetKeySize(hit->shape, &w, &h);
-                        if (hit->y <= ty && ty < hit->y + h && hit->x <= tx && tx < hit->x + w) {
+                int touchY;
+                int touchX;
+                g_touchInput.GetTouchPoint(&touchX, &touchY);
+                struct KeyboardLayout* layout = keyboard->layout;
+                touchedKey = layout->keys;
+                count = layout->count;
+                for (i = 0; i < count; i++, touchedKey++) {
+                    if (touchedKey->pages & page) {
+                        short height;
+                        short width;
+                        Keyboard_GetKeySize(touchedKey->sizeClass, &width, &height);
+                        if (touchedKey->y <= touchY && touchY < touchedKey->y + height && touchedKey->x <= touchX && touchX < touchedKey->x + width) {
                             goto found;
                         }
                     }
                 }
             }
-            var3 = 0;
+            touchedKey = 0;
         found:
-            if (hit != 0) {
-                self->cell = hit;
-                result = Keyboard_HandleKey(self);
+            if (touchedKey != 0) {
+                keyboard->key = touchedKey;
+                result = Keyboard_HandleKey(keyboard);
             }
         }
     }

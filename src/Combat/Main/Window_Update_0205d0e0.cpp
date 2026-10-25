@@ -1,74 +1,72 @@
 #include <globaldefs.h>
+#include "Graphics/Window.h"
 
-struct Struct_0205d0e0 {
-    char unknown_0_[0xc4];
-    unsigned char unknown_c4_;
-    char unknown_c5_[0xd8 - 0xc5];
-    unsigned char unknown_d8_0_ : 1;
-    unsigned char unknown_d8_1_ : 7;
-    unsigned char unknown_d9_;
-    unsigned char unknown_da_;
-    char unknown_db_[0xe0 - 0xdb];
-};
-
+// The header's CreationWindow, up to pendingClose (read here as a byte).
 struct Struct_0205d81c {
-    char unknown_0_[0x98];
-    int unknown_98_;
-    struct Struct_0205d0e0* unknown_9c_;
-    char unknown_a0_[0xb0 - 0xa0];
-    unsigned char unknown_b0_;
-    char unknown_b1_[0xb3 - 0xb1];
-    unsigned char unknown_b3_;
-    char unknown_b4_[0xb8 - 0xb4];
-    unsigned char unknown_b8_;
+    unsigned char unknown[4];
+    int frame[20];
+    int cursor[16];
+    unsigned char unknown94[4];
+    int layers;
+    struct WindowPane* panes;
+    short layout[8];
+    unsigned char activeWindow;
+    unsigned char nextWindow;
+    unsigned char layerCount;
+    unsigned char paneCount;
+    unsigned char count;
+    unsigned char flags;
+    unsigned char noHorizontalInset;
+    unsigned char fontHeight;
+    unsigned char pendingClose;
 };
 
-struct Struct_0205d0e0_2;
-extern "C" void* func_0205d888(struct Struct_0205d0e0_2* arg0);
+struct Struct0205d888;
+void* Window_GetTopPane(struct Struct0205d888* p);
 
-extern "C" int func_0205c5b0(void* arg0, int arg1);
-extern "C" unsigned int func_0205c710(unsigned char* arg0);
-extern "C" void func_0205042c(unsigned char* arg0, unsigned char arg1);
-extern "C" unsigned int func_0205c6e4(unsigned char* arg0);
-extern "C" void func_02050440(unsigned char* arg0, int arg1);
-extern "C" void func_0204c87c(void* arg0, int arg1);
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-struct Struct_0204ffc0_2;
-extern "C" void func_0204ffc0(struct Struct_0204ffc0_2* arg0, int arg1);
+extern "C" int Window_HandleInput(void* selfPtr, int p1);
+unsigned int Window_GetPage(unsigned char* obj);
+void WindowPane_SetIndicatorPage(unsigned char* obj, unsigned char value);
+unsigned int Window_GetPageCount(unsigned char* obj);
+void WindowPane_SetIndicatorPageCount(unsigned char* obj, int val);
+extern "C" void WindowPane_Update(void* entry, int arg);
+struct WindowPane* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+struct Obj0204ffc0;
+void ProcessRefAndDispatch0204ffc0(struct Obj0204ffc0* a, int b);
 
 // Main, originally func_0205d0e0 (USA 0x0205d0e0, EUR 0x0205d0f0, JPN 0x0205e410)
-extern "C" ARM int Window_Update(void* objPtr, int val) {
-    struct Struct_0205d81c* obj = (struct Struct_0205d81c*)objPtr;
-    int ret;
-    struct Elem_0205d81c* entry;
+extern "C" ARM int Window_Update(void* windowPtr, int ticks) {
+    struct Struct_0205d81c* window = (struct Struct_0205d81c*)windowPtr;
+    int input;
+    struct WindowPane* pane;
     unsigned char i;
 
-    if (var0->unknown_98_ == 0) return 0;
-    if (var0->unknown_9c_ == 0) return 0;
+    if (window->layers == 0) return 0;
+    if (window->panes == 0) return 0;
 
-    var1 = 0;
-    var2 = (struct Struct_0205d0e0*)func_0205d888((struct Struct_0205d0e0_2*)arg0);
-    if (var2 != 0) {
-        var1 = func_0205c5b0(arg0, arg1);
-        if (var0->unknown_b0_ == var2->unknown_c4_) {
-            if (var2->unknown_d8_0_) {
-                func_0205042c((unsigned char*)var2, func_0205c710((unsigned char*)arg0));
-                func_02050440((unsigned char*)var2, (unsigned char)func_0205c6e4((unsigned char*)arg0));
+    input = 0;
+    pane = (struct WindowPane*)Window_GetTopPane((struct Struct0205d888*)windowPtr);
+    if (pane != 0) {
+        input = Window_HandleInput(windowPtr, ticks);
+        if (window->activeWindow == pane->id_) {
+            if (pane->indicatorEnabled_) {
+                WindowPane_SetIndicatorPage((unsigned char*)pane, Window_GetPage((unsigned char*)windowPtr));
+                WindowPane_SetIndicatorPageCount((unsigned char*)pane, (unsigned char)Window_GetPageCount((unsigned char*)windowPtr));
             }
         }
     }
 
-    for (var3 = 0; var3 < var0->unknown_b3_; var3++) {
-        func_0204c87c((void*)&var0->unknown_9c_[var3], arg1);
+    for (i = 0; i < window->paneCount; i++) {
+        WindowPane_Update((void*)&window->panes[i], ticks);
     }
 
-    if (var0->unknown_b8_ != 0xff) {
-        var2 = func_0205d81c(var0, var0->unknown_b8_);
-        if (var2 != 0) {
-            func_0204ffc0((struct Struct_0204ffc0_2*)var2, -1);
+    if (window->pendingClose != 0xff) {
+        pane = FindElementByC40205d81c(window, window->pendingClose);
+        if (pane != 0) {
+            ProcessRefAndDispatch0204ffc0((struct Obj0204ffc0*)pane, -1);
         }
-        var0->unknown_b8_ = 0xff;
+        window->pendingClose = 0xff;
     }
 
-    return var1;
+    return input;
 }

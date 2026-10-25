@@ -11,11 +11,10 @@ struct Struct_0203a46c {
     int unknown_24_;
 };
 
-extern "C" int func_020100bc(GameState*);
-extern "C" void func_0202ec84(void*, struct Struct_02015ef4*, int*, int*);
-extern "C" void func_0203a46c(struct Struct_0203a46c*, int, int, int);
-extern "C" void func_0203a47c(unsigned int*, unsigned int, unsigned int, unsigned int);
-extern "C" void func_02047554(void* arg0, int arg1, int arg2);
+void Camera_WorldToScreen(void*, struct Vec3copy0202ec84*, int*, int*);
+void SetVec3At0x1c(struct Vec3Target0203a46c*, int, int, int);
+void StoreVec3At0x34_0203a47c(unsigned int*, unsigned int, unsigned int, unsigned int);
+extern "C" void func_02047554(void* sprite, int digit, int flag);
 
 extern const int data_020e7830[5];
 
@@ -47,52 +46,52 @@ struct Struct_0203a0b4 {
 };
 
 // USA: func_0203a0b4
-extern "C" ARM void func_0203a0b4(struct Struct_0203a0b4* arg0) {
-    int var0;
-    int var1;
-    int var2;
-    struct Struct_0203a0b4_3* var3;
-    int var4;
-    int var5;
-    int var6;
-    void* var7 = (void*)func_020100bc(GameState::GetInstance());
-    if (var7 == 0) return;
-    var2 = arg0->unknown_6d0_;
-    while (var2 != arg0->unknown_6d4_) {
-        var3 = &arg0->unknown_550_[var2];
-        var1 = var3->unknown_5_ - 5;
-        var1 = var1 <= 4 ? var1 * 7 : 31;
-        if (var3->unknown_5_ < 35 && var1 > 0) {
-            int var8 = var3->unknown_7_;
-            int var9 = var3->unknown_0_;
-            var5 = 1;
-            int var10, var11;
-            func_0202ec84(var7, &var3->unknown_c_, &var10, &var11);
-            var10 += var3->unknown_4_;
-            var11 = var11 + var3->unknown_2_ - 20;
-            if (var10 < 16) var10 = 16;
-            if (var10 > 240) var10 = 240;
-            var4 = var10;
-            if (var11 < 16) var11 = 16;
-            if (var11 > 176) var11 = 176;
-            int var12 = var11;
-            var0 = var4 + (var3->unknown_6_ * 8 / 2 - 8);
-            var10 = var0;
-            var6 = var3->unknown_6_ - 1;
-            while (var9 > 0) {
-                bool var13 = true;
-                int var14 = 0, var15 = 0, var16 = 0;
-                int var17 = 0x1000;
-                int var18 = 34 - var3->unknown_5_ - var6 * 3;
-                if (var18 < 0) {
-                    var18 = 0;
-                    var13 = false;
-                } else if (var18 < 5) {
-                    int var19 = data_020e7830[var18];
-                    var17 = var19 + 0x1000;
-                    var14 = (int)(((long long)var19 * -0x4000 + 0x800) >> 12);
-                    var15 = (int)(((long long)var19 * -0x8000 + 0x800) >> 12);
-                    var16 = (int)(((long long)var19 * 0x5000 + 0x800) >> 12);
+extern "C" ARM void func_0203a0b4(struct Obj0203a0b4* obj) {
+    int px;
+    int n;
+    int i;
+    struct Slot0203a0b4* slot;
+    int baseX;
+    int digit;
+    int left;
+    void* camera = (void*)GameState::GetInstance()->GetCamera();
+    if (camera == 0) return;
+    i = obj->cursor;
+    while (i != obj->limit) {
+        slot = &obj->slots[i];
+        n = slot->timer - 5;
+        n = n <= 4 ? n * 7 : 31;
+        if (slot->timer < 35 && n > 0) {
+            int spriteIndex = slot->spriteIndex;
+            int value = slot->value;
+            digit = 1;
+            int x, y;
+            Camera_WorldToScreen(camera, &slot->anchor, &x, &y);
+            x += slot->offsetX;
+            y = y + slot->offsetY - 20;
+            if (x < 16) x = 16;
+            if (x > 240) x = 240;
+            baseX = x;
+            if (y < 16) y = 16;
+            if (y > 176) y = 176;
+            int baseY = y;
+            px = baseX + (slot->digits * 8 / 2 - 8);
+            x = px;
+            left = slot->digits - 1;
+            while (value > 0) {
+                bool show = true;
+                int dx = 0, dy = 0, dz = 0;
+                int scale = 0x1000;
+                int k = 34 - slot->timer - left * 3;
+                if (k < 0) {
+                    k = 0;
+                    show = false;
+                } else if (k < 5) {
+                    int t = data_020e7830[k];
+                    scale = t + 0x1000;
+                    dx = (int)(((long long)t * -0x4000 + 0x800) >> 12);
+                    dy = (int)(((long long)t * -0x8000 + 0x800) >> 12);
+                    dz = (int)(((long long)t * 0x5000 + 0x800) >> 12);
                 }
                 if (var13) {
                     func_0203a46c(&arg0->unknown_0_[var8].unknown_0_, var14 + (var0 << 12), var15 + ((var11 - 8) << 12), var16 + (var5 << 12));

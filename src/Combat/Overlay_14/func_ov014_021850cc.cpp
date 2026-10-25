@@ -138,7 +138,7 @@ extern "C" void func_020e4864(const char* input, char* output, int, int, int, in
 void* ResetAndReturnSelf020dfc2c(void* text);
 void KeyTable_Reset(Struct020dfc40* text);
 extern "C" void func_020e046c(char* output, void* file, unsigned int size, short infoID);
-void CopyInternalFields0207df50(Foo0207df50* p);
+void VramState_Rewind(Foo0207df50* p);
 void VramState_Restore(char* p);
 void VramState_Save(char* p);
 void ClearEightWords_0203dafc(Struct_203dafc* info);
@@ -315,25 +315,25 @@ extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* arg0) {
                             self->model_->Initialize();
                             self->model_->unknown_2_ = self->monster_->monsterID_;
                             self->model_->EnableFlag(4);
-                            CopyInternalFields0207df50((Foo0207df50*)resources->unknown_2cc);
-                            VramState_Restore(resources->unknown_2cc);
+                            VramState_Rewind((Foo0207df50*)resources->vramStates_);
+                            VramState_Restore(resources->vramStates_);
                             ObjectArchiveLoadInfo loadInfo;
                             ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
                             loadInfo.fileData = character;
                             loadInfo.allocator = allocator;
-                            loadInfo.unk_8 = characterSize;
+                            loadInfo.fileSize = characterSize;
                             self->model_->LoadFromCCHROrCMOTArchive(&loadInfo, NULL);
-                            VramState_Save(resources->unknown_2cc);
+                            VramState_Save(resources->vramStates_);
                             ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
                             loadInfo.allocator = allocator;
                             loadInfo.fileData = motion;
-                            loadInfo.unk_8 = motionSize;
+                            loadInfo.fileSize = motionSize;
                             self->model_->LoadFromCCHROrCMOTArchive(&loadInfo, NULL);
                             ComputeAndStoreVecs02184c08((unsigned char*)self);
                             self->animationIndex_ = 0;
                             MonsterInfo* info = BinarySearchByField4_02097224((BinarySearch020971a8Container*)&self->infos_, self->monster_->monsterID_);
                             if (info != NULL)
-                                self->model_->MaybeSetRegularAnimation(info->animations_[0], 0);
+                                self->model_->SetAnimationByName(info->animations_[0], 0);
                             self->flags_ |= 4;
                         }
                     }

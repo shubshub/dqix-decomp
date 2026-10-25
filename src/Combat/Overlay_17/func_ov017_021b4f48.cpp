@@ -11,13 +11,13 @@ enum { Enum_ov017_021b4f48_9196 = 0x23ec, Enum_ov017_021b4f48_96 = 0x60 };
 
 struct Struct_02013fb4;
 
-extern "C" char* func_02012fe4(void);
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_0209bc98(
-    void* arg0, struct Struct_02013fb4* arg1, int arg2, int arg3,
-    int arg4, int arg5, int arg6);
+extern "C" char* Zone3D_GetInstance(void);
+int GetField5cb0Value_0201079c(char* battleStruct);
+int GetField5cb4Value_020107d0(char* battleStruct);
+int IsInRange0201b5b0(int monsterId);
+void SetupAndRunBufferedScript0209bc98(
+    void* dest, struct StreamHeader* data, int size, int param,
+    int monsterId, int field5cb0, int field5cb4);
 
 extern const char data_ov017_021d7b71;
 
@@ -35,10 +35,10 @@ struct Struct_ov017_021b4f48_2 {
 };
 
 // USA: func_ov017_021b4f48
-extern "C" ARM void func_ov017_021b4f48(struct Struct_ov017_021b4f48_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    ActiveGrottoClass* var2 = (ActiveGrottoClass*)((char*)func_02012fe4() + Enum_ov017_021b4f48_9196);
+extern "C" ARM void func_ov017_021b4f48(struct ScriptRequest_021b4f48* request) {
+    GameState* battle = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    ActiveGrottoClass* grotto = (ActiveGrottoClass*)((char*)Zone3D_GetInstance() + RegionOffset23ec);
 
     if (var1->GetTaskStatus(arg0->unknown_c_) == 0) {
         return;

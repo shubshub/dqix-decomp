@@ -19,7 +19,7 @@ void Window_DrawPanes(Cont0205d228*);
 struct Cont0205d274;
 void Window_FlushLayers(Cont0205d274*);
 
-extern "C" int func_0205ac40(void*, void*);
+extern "C" int SpriteContext_DrawSprite(void*, void*);
 
 #if defined(jpn)
 #define InitBuffersAndConfigureEntry_021e761c func_ov023_021e7868
@@ -58,7 +58,7 @@ ARM void InitBuffersAndConfigureEntry_021e761c(void *obj) {
 	*(int*)(p + 0x14) = 0xd0000;
 	*(int*)(p + 0x18) = 0x10000;
 
-	func_0205ac40(*(void**)(base + 0x604), p);
+	SpriteContext_DrawSprite(*(void**)(base + 0x604), p);
 #endif
 }
 

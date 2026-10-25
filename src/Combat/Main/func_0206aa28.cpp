@@ -17,9 +17,9 @@ enum { Enum_0206aa28_72 = 0x48, Enum_0206aa28_80 = 0x50, Enum_0206aa28_84 = 0x54
        Enum_0206aa28_112 = 0x70, Enum_0206aa28_116 = 0x74, Enum_0206aa28_120 = 0x78 };
 #endif
 
-struct Struct_02043124;
-extern "C" void func_02043204(char*);
-extern "C" void func_02043124(Struct_02043124*);
+struct Object02043124;
+void MessageSystem_Reset(char*);
+extern "C" void MessageSystem_Stop(Object02043124*);
 
 #if defined(jpn)
 extern "C" int func_02069430(void*, unsigned short);
@@ -75,15 +75,15 @@ extern "C" ARM void func_0206aa28(char* arg0) {
                 *(Type_0206aa28**)(arg0 + Enum_0206aa28_36) = var0;
                 break;
             }
-            unsigned short var3 = *var0;
-            if ((var3 & 0xffe0) == 0xffe0) {
-                var3 = (unsigned short)(var3 ^ 0xffe0) + 0xffd0;
-                var0 = func_0206c730(arg0, var3, *(Type_0206aa28**)(arg0 + Enum_0206aa28_20));
-                if (!var0) {
-                    unsigned char var4 = *(unsigned char*)(arg0 + 0x17fd);
-                    func_02043204(arg0);
-                    func_02043124((Struct_02043124*)(arg0));
-                    arg0[0x17fd] = var4;
+            unsigned short command = *cursor;
+            if ((command & 0xffe0) == 0xffe0) {
+                command = (unsigned short)(command ^ 0xffe0) + 0xffd0;
+                cursor = func_0206c730(context, command, *(MessageCharacter**)(context + SourceField));
+                if (!cursor) {
+                    unsigned char saved = *(unsigned char*)(context + 0x17fd);
+                    MessageSystem_Reset(context);
+                    MessageSystem_Stop((Object02043124*)(context));
+                    context[0x17fd] = saved;
                     break;
                 }
             }
@@ -114,23 +114,23 @@ extern "C" ARM void func_0206aa28(char* arg0) {
                     *(Type_0206aa28**)(arg0 + Enum_0206aa28_88) = var0;
                     break;
                 }
-                unsigned char var7 = *(unsigned char*)(arg0 + 0x19cc);
-                func_02043204(arg0);
-                func_02043124((Struct_02043124*)(arg0));
-                arg0[0x19cc] = var7;
+                unsigned char saved = *(unsigned char*)(context + 0x19cc);
+                MessageSystem_Reset(context);
+                MessageSystem_Stop((Object02043124*)(context));
+                context[0x19cc] = saved;
                 break;
             }
-            unsigned short var8;
-            memcpy(&var8, var0, 2);
-            var0 += var5;
-            if ((var8 & 0xffe0) == 0xffe0) {
-                var8 = (unsigned short)(var8 ^ 0xffe0) + 0xffd0;
-                var0 = func_0206ac94(arg0, var8, *(Type_0206aa28**)(arg0 + Enum_0206aa28_72));
-                if (!var0) {
-                    unsigned char var9 = *(unsigned char*)(arg0 + 0x19cc);
-                    func_02043204(arg0);
-                    func_02043124((Struct_02043124*)(arg0));
-                    arg0[0x19cc] = var9;
+            unsigned short command;
+            memcpy(&command, cursor, 2);
+            cursor += commandBytes;
+            if ((command & 0xffe0) == 0xffe0) {
+                command = (unsigned short)(command ^ 0xffe0) + 0xffd0;
+                cursor = func_0206ac94(context, command, *(MessageCharacter**)(context + SourceField));
+                if (!cursor) {
+                    unsigned char saved = *(unsigned char*)(context + 0x19cc);
+                    MessageSystem_Reset(context);
+                    MessageSystem_Stop((Object02043124*)(context));
+                    context[0x19cc] = saved;
                     break;
                 }
             }

@@ -2,13 +2,13 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Memory/SafeAllocator.h"
 
-void* AllocateAligned4_02012d88(AllocatorUnion* alloc, unsigned int size);
-void RestorePairTableFromBuffer_020bb740(int* out);
-void WriteGlobalPair020bb92c(int* src);
-extern "C" int func_020bb588(unsigned int size, int a, int b);
+void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+void NNS_GfdSetFrmTexVramState(int* out);
+void NNS_GfdSetFrmPlttVramState(int* src);
+extern "C" int NNS_GfdAllocFrmTexVram(unsigned int size, int a, int b);
 extern "C" void VramState_Reserve(void* p, int a, int b);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 struct IndexEntry021d6710 { int index; int pad4; };
 struct SizeEntry021d6714 { int size; int pad4; };
@@ -34,15 +34,15 @@ extern "C" ARM void func_ov017_021a07f4(char* self) {
     int i;
     int size;
     for (i = 0; (size = data_ov017_021d6714[i].size) != 0; i++) {
-        void* p = AllocateAligned4_02012d88(&data_02114e20, size);
+        void* p = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
         int idx = data_ov017_021d6710[i].index;
         SafeAllocator* alloc = (SafeAllocator*)(self + 0x38 + idx * 0x14);
         alloc->CreateTypeA(p, size);
     }
 
-    RestorePairTableFromBuffer_020bb740((int*)(self + PairBufferOffset));
-    WriteGlobalPair020bb92c((int*)(self + GlobalPairOffset));
-    func_020bb588(0x20000, 0, 0);
+    NNS_GfdSetFrmTexVramState((int*)(self + PairBufferOffset));
+    NNS_GfdSetFrmPlttVramState((int*)(self + GlobalPairOffset));
+    NNS_GfdAllocFrmTexVram(0x20000, 0, 0);
 
     int cond;
     for (i = 0; (cond = data_ov017_021d67bc[i].v) != 0; i++) {
@@ -51,7 +51,7 @@ extern "C" ARM void func_ov017_021a07f4(char* self) {
         VramState_Reserve((self + EntryBaseOffset) + a * 0x70, cond, b);
     }
 
-    RestorePairTableFromBuffer_020bb740((int*)(self + SecondPairBufferOffset));
+    NNS_GfdSetFrmTexVramState((int*)(self + SecondPairBufferOffset));
 
     for (i = 0; (cond = data_ov017_021d6774[i].v) != 0; i++) {
         int a = data_ov017_021d6770[i].v;

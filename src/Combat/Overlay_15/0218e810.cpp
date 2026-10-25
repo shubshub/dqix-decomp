@@ -5,7 +5,7 @@
 #include "NitroSDK/Graphics.h"
 
 ModelRenderContext* GetModel3DContext(Model3D* model);
-extern "C" void func_02031234(int arg0);
+extern "C" void G3_RotateY(int angle);
 
 struct Struct_ov015_0218e810
 {
@@ -114,9 +114,9 @@ extern "C" ARM void func_ov015_0218e810(void* arg0)
         {
             GetModelBonePositionAndDirectionMatrices(var1, NULL, NULL, var2);
             GXFIFO_MATRIX_PUSH = 0;
-            func_02031234(0x3244);
-            var11->DrawSimple2(false);
-            if (var11->pModel_ != NULL && var11->pModel_->rawInternalModel_ != NULL)
+            G3_RotateY(0x3244);
+            part->DrawSimple2(false);
+            if (part->pModel_ != NULL && part->pModel_->rawInternalModel_ != NULL)
             {
                 var6->unknown_34_ += var11->pModel_->rawInternalModel_->numTriangles_;
                 var6->unknown_36_ += var11->pModel_->rawInternalModel_->numQuads_;

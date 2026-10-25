@@ -93,7 +93,7 @@ src/Combat/Overlay_14/func_ov014_02188bfc.cpp:
     complete
     .text start:0x02188bfc end:0x02188c34
 
-src/Combat/Overlay_14/func_ov014_021842a0.cpp:
+src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x02184300
 
@@ -141,7 +141,7 @@ src/Combat/Overlay_14/func_ov014_02188b20.cpp:
     complete
     .text start:0x02188b20 end:0x02188ba0
 
-src/Combat/Overlay_14/func_ov014_02186b30.cpp:
+src/Combat/Overlay_14/ResetLoaderAndAllocators_02186b30.cpp:
     complete
     .text start:0x02186b30 end:0x02186bc8
 

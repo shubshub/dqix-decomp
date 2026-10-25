@@ -28,13 +28,13 @@ struct Struct_ov006_02156e54_2 {
 
 struct Struct_ov006_02158478;
 
-extern "C" Struct_ov006_02158478* func_02081da8(Struct_0207fdcc_2*, int);
-extern "C" int func_0204c7e0(unsigned char*);
-extern "C" int func_020e28dc(Struct_020e28dc*);
-extern "C" void func_020809c4(void*, int, int, short*, short*);
-extern "C" void func_020e263c(Struct_020e263c_2*, int);
-extern "C" void func_020e28f0(Struct_020e28f0*, short, short);
-extern "C" void func_0205ae8c(void*);
+Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
+int WindowPane_IsOpen(unsigned char*);
+int GetInnerFlagBit0020e28dc(Outer020e28dc*);
+void GetLookAndTurnOffsets020809c4(void*, int, int, short*, short*);
+void UpdateEntryStateAndPosition(Ctx020e263c*, int);
+void SetEntryPositionFromObject(WinObj020e28f0*, short, short);
+extern "C" void SpriteContext_DrawEntries(void*);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
@@ -141,16 +141,16 @@ extern "C" ARM void func_ov006_021585c4(Struct_ov006_02157a60* arg0)
     Struct_ov006_02158478* var0 = func_02081da8((Struct_0207fdcc_2*)arg0->unknown_14_, arg0->unknown_36e_);
     if (var0 == 0)
         return;
-    if (!func_0204c7e0((unsigned char*)var0) || arg0->unknown_18_ == 0)
+    if (!WindowPane_IsOpen((unsigned char*)canvas) || self->choice_ == 0)
         return;
     if (func_020e28dc((Struct_020e28dc*)arg0->unknown_18_))
         return;
-    short var1;
-    short var2;
-    func_020809c4(arg0->unknown_14_, arg0->unknown_36e_, *arg0->unknown_44_, &var1, &var2);
-    func_020e263c((Struct_020e263c_2*)arg0->unknown_18_, arg0->unknown_34c_);
-    var1 -= 0x10;
-    var2 -= 3;
-    func_020e28f0((Struct_020e28f0*)arg0->unknown_18_, var1, var2);
-    func_0205ae8c(arg0->unknown_ac_);
+    short x;
+    short y;
+    GetLookAndTurnOffsets020809c4(self->menu_, self->group_, *self->cursor_, &x, &y);
+    UpdateEntryStateAndPosition((Ctx020e263c*)self->choice_, self->ticks_);
+    x -= 0x10;
+    y -= 3;
+    SetEntryPositionFromObject((WinObj020e28f0*)self->choice_, x, y);
+    SpriteContext_DrawEntries(self->renderer_);
 }

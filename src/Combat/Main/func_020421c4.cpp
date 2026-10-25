@@ -1,5 +1,5 @@
 #include <globaldefs.h>
-extern unsigned char data_0211e33c[0x30000] __attribute__((aligned(4)));
+extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "Memory/SafeAllocator.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Filesystem/GPC.h"
@@ -64,13 +64,13 @@ extern char data_020f000b;
 extern char data_020f0023;
 extern char data_020f003f;
 
-extern "C" void func_02042944(void*);
-extern "C" void func_0204a82c(struct Struct_020421c4*);
-extern "C" int func_0204aa48(struct Struct_020421c4_2*);
-extern "C" void func_02094a24(struct Struct_020421c4_4*);
-extern "C" void func_02094a20(void*, SafeAllocator*);
-extern "C" void func_02094a10(int);
-extern "C" void func_02042998(struct Struct_020421c4_3*);
+void RegisterFieldTableEntries02042944(void*);
+void TileHeader_Clear(struct Struct0204a82c*);
+int GetScaledElementOffset(struct ScaledElementList0204aa48*);
+void InitStruct02094a24(struct Struct02094a24*);
+void BlankFunction02094a20(void*, SafeAllocator*);
+void StoreGlobal02109400_02094a10(int);
+void RebaseOffsets_02042998(struct RebaseStruct*);
 
 // USA: func_020421c4
 extern "C" ARM void func_020421c4(SafeAllocator* arg0) {
@@ -102,34 +102,34 @@ extern "C" ARM void func_020421c4(SafeAllocator* arg0) {
     func_02042944(arg0);
     BackgroundLoader::AddLockGlobal();
 
-    var0 = 0;
-    var7 = LoadFileIntoMemory(&data_020f000b, data_0211e33c, &var0);
-    func_0204a82c(&var1);
-    if (var7 != 0) {
-        memcpy(&var1, var7, 0xc);
+    fileLen = 0;
+    buf = LoadFileIntoMemory(&data_020f000b, g_fileLoadBuffer, &fileLen);
+    TileHeader_Clear(&entry);
+    if (buf != 0) {
+        memcpy(&entry, buf, 0xc);
     }
-    var6 = func_0204aa48((struct Struct_020421c4_2*)&var1);
-    var8 = arg0->Allocate(var6);
-    data_02107800.unknown_4_ = var8;
-    memcpy(var8, (void*)((int)data_0211e33c + 0x10), var6);
+    size = GetScaledElementOffset((struct ScaledElementList0204aa48*)&entry);
+    p = alloc->Allocate(size);
+    data_02107800.f4 = p;
+    memcpy(p, (void*)((int)g_fileLoadBuffer + 0x10), size);
 
-    GPCReadPair* var13 = &var2;
-    var10 = 0;
-    var3 = var10;
-    var11 = data_0211e33c;
-    var12 = 0x30000;
-    ZeroInitGPCPointer(&var13->pGPCFile);
-    var13->ZeroInitializeMachine();
-    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&var2.pGPCFile, var2.machine, &data_020f0023,
-            var11, var3, var12, 0, 0)) {
-        var5 = var3;
-        DecompressFileFromGPCByName(var2.pGPCFile, var2.machine, var11 + var5, var3,
-            var12 - var5, &data_020f003f);
-        var12 = (var3 + 3) & ~3;
-        var2.Reset();
-        var12 = var10 + (var10 + (var10 + var12));
-        var3 = var12;
-        memcpy((void*)0x01ff9740, var11 + var5, var12);
+    GPCReadPair* rp = &pair;
+    off = 0;
+    decLen = off;
+    base = g_fileLoadBuffer;
+    cap = 0x30000;
+    ZeroInitGPCPointer(&rp->pGPCFile);
+    rp->ZeroInitializeMachine();
+    if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine, &data_020f0023,
+            base, decLen, cap, 0, 0)) {
+        old = decLen;
+        DecompressFileFromGPCByName(pair.pGPCFile, pair.machine, base + old, decLen,
+            cap - old, &data_020f003f);
+        cap = (decLen + 3) & ~3;
+        pair.Reset();
+        cap = off + (off + (off + cap));
+        decLen = cap;
+        memcpy((void*)0x01ff9740, base + old, cap);
     }
 
     BackgroundLoader::RemoveLockGlobal();

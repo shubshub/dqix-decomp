@@ -61,8 +61,8 @@ extern "C" int func_0202e7f0(void*);
 extern "C" void func_020c51c0(int);
 extern "C" void func_020ca528(const void*, void*);
 extern "C" void func_02031278(void*);
-extern "C" void func_02031234(int);
-extern "C" void func_0203f98c(Struct_0203f53c*, Struct_0203f53c_4*, int, unsigned int,
+extern "C" void G3_RotateY(int);
+extern "C" void func_0203f98c(Object_0203f53c*, Record_0203f53c*, int, unsigned int,
     unsigned short, unsigned short, unsigned short);
 extern Matrix3x3 data_020e79e8, data_0210a0cc;
 extern Vector3i data_020e79c0;
@@ -137,8 +137,8 @@ extern "C" ARM int func_0203f53c(Struct_0203f53c* arg0, void* arg1, int arg2) {
         REG_TRANSLATE_0203f53c = 0;
         REG_TRANSLATE_0203f53c = -var20;
         REG_TRANSLATE_0203f53c = 0;
-        if (!(arg0->unknown_50_ & 0x10)) func_020c51c0((int)var3);
-        else func_02031234(func_0202e7f0(arg1));
+        if (!(object->flags & 0x10)) func_020c51c0((int)view);
+        else G3_RotateY(GetField0x70_0202e7f0(camera));
         REG_TRANSLATE_0203f53c = 0;
         REG_TRANSLATE_0203f53c = var20;
         REG_TRANSLATE_0203f53c = 0;

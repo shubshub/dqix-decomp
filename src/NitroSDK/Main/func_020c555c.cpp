@@ -6,7 +6,7 @@
 
 extern "C" int func_020ca3b8(int, int, int);
 
-// USA: func_020c555c
-extern "C" ARM int func_020c555c(int arg0) {
-    return func_020ca3b8(arg0, 0x4000330, 0x10);
+// Main, originally CallWithAddr4000330_020c555c (USA 0x020c555c, EUR 0x020c556c, JPN 0x020c7028)
+ARM int G3X_SetEdgeColorTable(int a) {
+    return func_020ca3b8(a, 0x4000330, 0x10);
 }

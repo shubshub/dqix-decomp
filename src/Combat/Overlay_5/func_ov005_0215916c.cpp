@@ -1,5 +1,4 @@
 #if defined(jpn)
-#define func_ov005_02157b74 func_ov005_0215916c
 #define LOW_REGION(j, u) (j)
 #else
 #define LOW_REGION(j, u) (u)
@@ -23,7 +22,7 @@ struct Struct_ov005_02153954 {
     unsigned char unknown_3ddf_;
 };
 
-extern "C" void func_ov005_02157b74(Struct_ov005_02153954* arg0, int arg1, int arg2);
+extern "C" void EquipMenu_EquipItem(EquipmentMenu* self, int item, int keep);
 
 // USA: func_ov005_0215916c
 extern "C" ARM void
@@ -32,15 +31,15 @@ func_ov005_0215a688
 #else
 func_ov005_0215916c
 #endif
-(Struct_ov005_02153954* arg0) {
-    if (arg0->unknown_3ddc_ == 0) {
-        if (arg0->unknown_3dbb_ >= 0 && arg0->unknown_3dbb_ < 8)
-            func_ov005_02157b74(arg0, 0xffff, 0);
-        else if (arg0->unknown_3dbb_ >= 8 && arg0->unknown_3dbb_ < 24)
-            func_ov005_02157b74(arg0, arg0->unknown_2d90_[arg0->unknown_3dbb_].unknown_0_, 0);
-        arg0->unknown_3ddc_++;
-    } else if (arg0->unknown_3ddc_ == 1) {
-        arg0->unknown_3ddf_ = 4;
-        arg0->unknown_3ddc_ = 0;
+(EquipmentMenu* self) {
+    if (self->menuStep_ == 0) {
+        if (self->slot_ >= 0 && self->slot_ < 8)
+            EquipMenu_EquipItem(self, 0xffff, 0);
+        else if (self->slot_ >= 8 && self->slot_ < 24)
+            EquipMenu_EquipItem(self, self->slots_[self->slot_].item_, 0);
+        self->menuStep_++;
+    } else if (self->menuStep_ == 1) {
+        self->menuState_ = 4;
+        self->menuStep_ = 0;
     }
 }

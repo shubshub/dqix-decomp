@@ -25,11 +25,11 @@ struct PartyResourceCounter {
 }
 
 struct StoreStruct;
-int GetGlobalField0x1c020421a0();
+int MessageSystem_GetInstance();
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
 void SetByteAtIndex_020465d8(unsigned char*, int, unsigned char);
 void SetByteInRange_020465f0(unsigned char*, int, unsigned char);
-int CallFunc020e0434With02153694_020e51cc(int);
+int StandardStrings_Get(int);
 extern "C" void func_ov002_0215be00(void*, int, short, short);
 extern "C" void func_02046380(void*);
 extern "C" void Window_Update(void*, int);
@@ -37,9 +37,9 @@ extern "C" void Window_Update(void*, int);
 extern const char data_ov002_0216d908[];
 extern "C" void func_020474a8(void*, unsigned char, const char*, char*);
 #else
-extern "C" void func_02046608(void*, int, int, int, int, int, int);
+extern "C" void MessageSystem_FormatText(void*, int, int, int, int, int, int);
 #endif
-extern "C" void func_0205d304(void*, const char*, int, unsigned char, unsigned char, unsigned char, void*
+extern "C" void Window_OpenPane(void*, const char*, int, unsigned char, unsigned char, unsigned char, void*
 #if !defined(jpn)
                             , unsigned char
 #endif
@@ -51,8 +51,8 @@ ARM void InitBattleTag0215bf34(char* base) {
     BattleTagInitState* state = ((BattleTagInitState*)(base));
     func_ov002_0215be00(state, LayoutPreset, 0x15, 0x15);
 
-    PartyResourceCounter* party = static_cast<PartyResourceCounter*>(GetPtrField0x2a04_02010828(GameState::GetInstance()));
-    StoreStruct* messages = ((StoreStruct*)(GetGlobalField0x1c020421a0()));
+    PartyResourceCounter* party = static_cast<PartyResourceCounter*>(GameState_GetParty(GameState::GetInstance()));
+    StoreStruct* messages = ((StoreStruct*)(MessageSystem_GetInstance()));
     func_02046380(messages);
     StoreInArray0x8b0_020465c0(messages, 0, party->value);
     unsigned char* messageBytes = ((unsigned char*)(messages));
@@ -62,10 +62,10 @@ ARM void InitBattleTag0215bf34(char* base) {
 #if defined(jpn)
     func_020474a8(messages, 8, data_ov002_0216d908, state->text);
 #else
-    int format = CallFunc020e0434With02153694_020e51cc(0x3f1);
-    func_02046608(messages, 8, format, ((int)(state->text)), 0x100, 0, 0);
+    int format = StandardStrings_Get(0x3f1);
+    MessageSystem_FormatText(messages, 8, format, ((int)(state->text)), 0x100, 0, 0);
 #endif
-    func_0205d304(&state->window, state->text, 0, 0, 0,
+    Window_OpenPane(&state->window, state->text, 0, 0, 0,
 #if defined(jpn)
                  1, 0);
 #else

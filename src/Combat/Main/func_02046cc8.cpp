@@ -13,7 +13,7 @@ enum { Enum_02046cc8_716 = 0x2cc };
 extern "C" void NSBXX_Model_SetPolygonID(void* obj, unsigned int value);
 
 struct Foo0207df50;
-void CopyInternalFields0207df50(struct Foo0207df50* p);
+void VramState_Rewind(struct Foo0207df50* p);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 struct Fields020407b4;
@@ -47,22 +47,22 @@ extern "C" ARM int func_02046cc8(void* arg0) {
     if (loader->GetTaskStatus(*(int*)((char*)self + 0xec)) != 0) {
         pool = (char*)base + PoolOffset;
         if (*(unsigned char*)((char*)self + 0x1d) != 0) {
-            CopyInternalFields0207df50((struct Foo0207df50*)(pool + 0xc40));
+            VramState_Rewind((struct Foo0207df50*)(pool + 0xc40));
             VramState_Restore(pool + 0xc40);
 
-            var2->GetLoadedFileByID(*(int*)((char*)arg0 + 0xec), &var4, &var5);
-            if (var4 != NULL && var3->GetSignedAllocator() != NULL) {
-                Object3D* var7 = (Object3D*)((char*)arg0 + 0x3c);
-                var7->Initialize();
-                var6.fileData = var4;
-                var6.unk_8 = var5;
-                var6.allocator = var3;
-                var6.unk_10 = 1;
-                var7->LoadFromCHRArchive(&var6);
-                void* var8 = *(void**)((char*)arg0 + 0x44);
-                NSBXX_Model_SetPolygonID(*(void**)((char*)var8 + 0x54), 0x3d);
-                func_020407b4((struct Struct_02040774_2*)var7, 0, -0xa000, 0x1000);
-                var7->MaybeSetBCFGAnimation(0, 0);
+            loader->GetLoadedFileByID(*(int*)((char*)self + 0xec), &fileData, &fileSize);
+            if (fileData != NULL && allocator->GetSignedAllocator() != NULL) {
+                Object3D* obj = (Object3D*)((char*)self + 0x3c);
+                obj->Initialize();
+                info.fileData = fileData;
+                info.fileSize = fileSize;
+                info.allocator = allocator;
+                info.unk_10 = 1;
+                obj->LoadFromCHRArchive(&info);
+                void* mdl = *(void**)((char*)self + 0x44);
+                NSBXX_Model_SetPolygonID(*(void**)((char*)mdl + 0x54), 0x3d);
+                SetFields0x44((struct Fields020407b4*)obj, 0, -0xa000, 0x1000);
+                obj->SetAnimationByIndex(0, 0);
             }
             VramState_Save(pool + 0xc40);
         }

@@ -8,7 +8,7 @@ enum {Enum_ov017_021b7104_744=0x2e8, Enum_ov017_021b7104_17408=0x4400, Enum_ov01
 #include "Resource/GameResources.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_020100a8(GameState* arg0);
+int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov017_021b7104 {
     unsigned char unknown_0_;
@@ -61,7 +61,7 @@ extern "C" ARM void func_ov017_021b7104(Struct_ov017_021b7104_2* arg0, Struct_ov
     if (arg1->unknown_0_ == 0) {
         var2 = -1;
     } else {
-        var2 = func_020100a8(var0);
+        val = GameState_GetProtagonistIndex(battle);
     }
     arg0->unknown_46_ = (unsigned char)var2;
     arg0->unknown_28_ = arg1->unknown_8_;

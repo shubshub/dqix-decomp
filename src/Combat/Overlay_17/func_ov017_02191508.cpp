@@ -50,7 +50,7 @@ struct Struct_ov017_02191508_6 {
 
 Member02191508* GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
-extern "C" void func_02083e28(void* a, int arg2);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
 void PartyMember_SetVocation(unsigned char* obj, int bit);
 void ClearTwoRegions02083c18(char* obj);
 void PartyMember_LearnSpell(unsigned char* obj, int index);
@@ -95,7 +95,7 @@ extern "C" ARM void func_ov017_02191508(int arg0, Struct_ov017_02191508_2* arg1)
     packed.triples[2].fieldC = tmpl->triples[2].fieldC;
     member->state = 0xb;
     PartyMember_ApplyLevelStats(member, &packed, NULL);
-    func_02083e28(member, 0);
+    PartyMember_RecalculateStats(member, 0);
 
     if (var2 > -1) {
         var0->unknown_130_->unknown_4_ = var2;

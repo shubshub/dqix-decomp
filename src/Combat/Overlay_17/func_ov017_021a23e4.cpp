@@ -2,9 +2,6 @@
 #include "GameState/GameState.h"
 #include "Graphics/Vector.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
 struct Struct_020fdd44;
 struct Struct_0206f01c_2;
@@ -47,42 +44,42 @@ struct Struct_ov017_021a23e4_4 {
 };
 
 extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_ov017_021a26e8(GameResources* arg0, int arg1);
-extern "C" void* func_0205ec34(void);
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
-extern "C" Struct_020fdd44* func_02027ca4();
-extern "C" Struct_ov017_021a23e4_2* func_02028bd0(Struct_020fdd44*, int);
-extern "C" Struct_02073ec4_3* func_02073ec4(int arg0, void* arg1);
-extern "C" int func_02073fdc(void* arg0);
-extern "C" Struct_ov017_021a23e4* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" int func_ov017_021a20c0(int arg0, int arg1, int arg2);
-extern "C" int func_020795cc(unsigned char* arg0);
-extern "C" int func_02032370(int arg0);
-extern "C" void func_02076a8c(void* arg0);
-extern "C" int func_ov017_021a2128(void* arg0, int arg1, int arg2, int arg3, const Vector3fix* arg4, int arg5, int arg6, int arg7);
+extern "C" int func_0202c540(void* p);
+int GetBitflagForCombatantColor_021a26e8(GameResources* unused0, int combatantId);
+extern "C" void* Scenario_GetInstance(void);
+int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+Entry_02028bd0* ZoneRecords_GetInstance();
+AreaEntry021a23e4* FindInlineEntryById(Entry_02028bd0*, int);
+Entry0209bd94* FindMatchingEntryByMask02073ec4(int mask, void* list);
+int SelectWeightedEntry02073fdc(void* p);
+MonsterInfo021a23e4* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+int FindCombatantWithNegativeField2_021a20c0(int unused, int mult, int limit);
+int GetField0x17dBits4To5IfFlag8_020795cc(unsigned char* obj);
+extern "C" int func_02032370(int upperBound);
+extern "C" void func_02076a8c(void* obj);
+extern "C" int func_ov017_021a2128(void* arena, int areaId, int monsterId, int variant, const Vector3fix* position, int y, int entryId, int flags);
 
 // USA: func_ov017_021a23e4
 extern "C" ARM int func_ov017_021a23e4(GameResources* arg0, int arg1, int arg2, int arg3) {
     GameState* var0 = GameState::GetInstance();
     if (func_0202c540(func_0202ae18())) return 0;
-    GameObject* var1 = func_0200ff1c(var0, arg1);
-    if (!var1) return 0;
-    if (arg2 == 0) arg2 = func_ov017_021a26e8(arg0, arg1);
-    int var2 = var1->obj3D_.GetField06();
-    void* var3 = func_0205ec34();
-    if (func_0206dfb0((int)var3, (unsigned char*)var3 + 0x8c, 0x79a) != 0 &&
-        arg3 != 0x26 && arg3 != 0x27 && arg3 != 0x28 &&
-        var2 >= 0x190 && var2 <= 0x199) {
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(state, combatantId);
+    if (!combatant) return 0;
+    if (mask == 0) mask = GetBitflagForCombatantColor_021a26e8(arena, combatantId);
+    int areaId = combatant->obj3D_.GetField06();
+    void* dataBase = Scenario_GetInstance();
+    if (Scenario_TestFlag((int)dataBase, (unsigned char*)dataBase + 0x8c, 0x79a) != 0 &&
+        monsterId != 0x26 && monsterId != 0x27 && monsterId != 0x28 &&
+        areaId >= 0x190 && areaId <= 0x199) {
         return 0;
     }
-    Struct_ov017_021a23e4_2* var4 = func_02028bd0(func_02027ca4(), var2);
-    if (!var4) return 0;
-    Struct_02073ec4_3* var5 = func_02073ec4(arg2, var4->unknown_60_);
-    if (!var5) return 0;
-    if (arg3 < 0) {
-        arg3 = func_02073fdc(var5);
-        if (arg3 < 0) return 0;
+    AreaEntry021a23e4* area = FindInlineEntryById(ZoneRecords_GetInstance(), areaId);
+    if (!area) return 0;
+    Entry0209bd94* entry = FindMatchingEntryByMask02073ec4(mask, area->subentries);
+    if (!entry) return 0;
+    if (monsterId < 0) {
+        monsterId = SelectWeightedEntry02073fdc(entry);
+        if (monsterId < 0) return 0;
     }
     Struct_ov017_021a23e4* var6 = func_0206f4f0((Struct_0206f01c_2*)var4->unknown_2f8_, (short)arg3);
     if (!var6) return 0;

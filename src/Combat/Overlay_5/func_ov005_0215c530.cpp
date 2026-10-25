@@ -64,12 +64,12 @@ struct Struct_ov005_0215c530_2
     char unknown_2_[0x1c - 2];
 };
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
-struct Struct_ov003_02178910 {
-    char unknown_0_[0x48];
-    Struct_0201099c_10* unknown_48_;
-    Struct_0201099c_9* unknown_4c_;
+struct ItemTable;
+struct Element020de650;
+struct Obj021dcae0 {
+    char pad0[0x48];
+    ItemTable* field48;
+    Element020de650* field4c;
 #if defined(jpn)
     char unknown_50_[0x680];
 #else
@@ -138,14 +138,14 @@ struct Struct_ov005_0215c530_5
 struct StructDE1D4;
 struct SePlayer;
 
-extern "C" short* func_0207c5f8(unsigned char*, unsigned int);
-extern "C" signed char* func_0207c60c(void*, unsigned int);
-extern "C" void func_0207c51c(unsigned char*, int);
-extern "C" void func_ov023_021e1518(void*);
-extern "C" void func_ov023_021e1b5c(void*, int, int, int);
-extern "C" void func_ov023_021e1b0c(void*, int, int, int);
-extern "C" Struct_ov005_0215c530_5* func_ov017_021a193c(int*);
-extern "C" void func_020de1d4(Struct_02083508_2*);
+short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
+signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
+void Compact0207c51c(unsigned char*, int);
+void ClearElements_021e1518(void*);
+void BuildChain_021e1b5c(void*, int, int, int);
+void BuildChain_021e1b0c(void*, int, int, int);
+Member0215c530* GetField1c_021a193c(int*);
+void ItemRecord_Clear(StructDE1D4*);
 extern "C" void* memset(void*, int, unsigned int);
 extern "C" void* memcpy(void*, const void*, unsigned int);
 Entry0215c530* FindEntryById_021db08c(void*, int);
@@ -168,11 +168,11 @@ extern char g_sePlayer[];
 // USA: func_ov005_0215c530
 extern "C" ARM void func_ov005_0215c530(Struct_ov005_0215c530_3* arg0)
 {
-    unsigned char* var0 = (unsigned char*)func_02010828(GameState::GetInstance());
-    int var1 = arg0->unknown_3d98_[arg0->unknown_3dbc_];
-    short* var2 = func_0207c5f8(var0 + 0x1d4, data_ov005_0215cd08[arg0->unknown_3dbc_]);
-    signed char* var3 = func_0207c60c(var0 + 0x1d4, data_ov005_0215cd08[arg0->unknown_3dbc_]);
-    func_0207c51c(var0 + 0x1d4, data_ov005_0215cd00[arg0->unknown_3dbc_]);
+    unsigned char* bag = (unsigned char*)GameState_GetParty(GameState::GetInstance());
+    int count = self->counts[self->tab];
+    short* ids = GetPointerFromArray0xbd0_0207c5f8(bag + 0x1d4, data_ov005_0215cd08[self->tab]);
+    signed char* amounts = GetPointerAt0xbf0_0207c60c(bag + 0x1d4, data_ov005_0215cd08[self->tab]);
+    Compact0207c51c(bag + 0x1d4, data_ov005_0215cd00[self->tab]);
 
     int var4 = 0;
     int var5 = 0;
@@ -227,25 +227,25 @@ extern "C" ARM void func_ov005_0215c530(Struct_ov005_0215c530_3* arg0)
         }
         else
         {
-            signed char var13 = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_36fc[3])->unknown_4fc_;
-            Struct_ov005_0215c530_6 var14;
-            Struct_ov005_0215c530_4 var15;
-            func_020de1d4((Struct_02083508_2*)&var14);
-            memset(&var15, 0, 0x20);
-            var14.unknown_0_ = &var15;
-            int var16 = 0;
-            int var17 = 0;
-            for (int var18 = 0; var18 < var1; var18++)
+            signed char member = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member;
+            Item0215c530 item;
+            ItemDef0215c530 def;
+            ItemRecord_Clear((StructDE1D4*)&item);
+            memset(&def, 0, 0x20);
+            item.def = &def;
+            int n = 0;
+            int rejected = 0;
+            for (int i = 0; i < count; i++)
             {
                 short var19 = var2[var18];
                 if (var19 > 0)
                 {
-                    func_020de1d4((Struct_02083508_2*)&var14);
-                    memset(&var15, 0, 0x20);
-                    Struct_ov005_0215c530_7* var20;
-                    var14.unknown_0_ = &var15;
-                    var20 = func_ov023_021db08c(&arg0->unknown_19ec_, var19);
-                    if (var20)
+                    ItemRecord_Clear((StructDE1D4*)&item);
+                    memset(&def, 0, 0x20);
+                    Entry0215c530* entry;
+                    item.def = &def;
+                    entry = FindEntryById_021db08c(&self->entryList, id);
+                    if (entry)
                     {
                         var14.unknown_18_ = var20->unknown_0_;
                         var14.unknown_8_0_ = var20->unknown_2_0_;

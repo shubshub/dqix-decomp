@@ -27,8 +27,8 @@ struct Struct_ov006_02154614 {
     unsigned short unknown_1258_;
 };
 
-extern "C" void func_ov023_021e2bdc(void*, int, short*, short*);
-extern "C" void func_0205ac40(void*, Struct_ov006_021580b8*);
+void ComputeShortPair_021e2bdc(void*, int, short*, short*);
+extern "C" void SpriteContext_DrawSprite(void*, Sprite*);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
@@ -130,32 +130,32 @@ extern "C" ARM void func_ov006_0215868c(Struct_ov006_02157a60* arg0)
 {
     if (!(arg0->unknown_394_ & 0x10))
         return;
-    short var0;
-    short var1;
-    func_ov023_021e2bdc(arg0->unknown_100_, 0x78, &var0, &var1);
-    Struct_ov006_021580b8* var2 = &arg0->unknown_24_[10];
-    var2->unknown_14_ = var0 << 12;
-    var2->unknown_18_ = var1 << 12;
-    var2->unknown_22_ = 0xc;
-    var2->unknown_25_ = 9;
-    var2->unknown_26_ = 2;
-    if (arg0->unknown_38c_[0] > 1 || arg0->unknown_38c_[1] >= 1)
-        var2->unknown_25_ = 8;
-    func_0205ac40(arg0->unknown_ac_, var2);
-    func_ov023_021e2bdc(arg0->unknown_100_, 0x10, &var0, &var1);
-    var2 = &arg0->unknown_24_[9];
-    var2->unknown_14_ = var0 << 12;
-    var2->unknown_18_ = var1 << 12;
-    var2->unknown_22_ = 0xe;
-    var2->unknown_26_ = 2;
-    func_0205ac40(arg0->unknown_ac_, var2);
-    func_ov023_021e2bdc(arg0->unknown_100_, 0x25, &var0, &var1);
-    var2 = &arg0->unknown_24_[15];
-    if (!(arg0->unknown_10_->unknown_1258_ & 0x800))
-        var2 = &arg0->unknown_24_[16];
-    var2->unknown_14_ = var0 << 12;
-    var2->unknown_18_ = var1 << 12;
-    var2->unknown_22_ = 0x10;
-    var2->unknown_26_ = 2;
-    func_0205ac40(arg0->unknown_ac_, var2);
+    short x;
+    short y;
+    ComputeShortPair_021e2bdc(self->layout_, 0x78, &x, &y);
+    Sprite* sprite = &self->sprites_[10];
+    sprite->x_ = x << 12;
+    sprite->y_ = y << 12;
+    sprite->unk_22 = 0xc;
+    sprite->unk_25 = 9;
+    sprite->unk_26 = 2;
+    if (self->chosenCounts_[0] > 1 || self->chosenCounts_[1] >= 1)
+        sprite->unk_25 = 8;
+    SpriteContext_DrawSprite(self->renderer_, sprite);
+    ComputeShortPair_021e2bdc(self->layout_, 0x10, &x, &y);
+    sprite = &self->sprites_[9];
+    sprite->x_ = x << 12;
+    sprite->y_ = y << 12;
+    sprite->unk_22 = 0xe;
+    sprite->unk_26 = 2;
+    SpriteContext_DrawSprite(self->renderer_, sprite);
+    ComputeShortPair_021e2bdc(self->layout_, 0x25, &x, &y);
+    sprite = &self->sprites_[15];
+    if (!(self->pot_->windowFlags_ & 0x800))
+        sprite = &self->sprites_[16];
+    sprite->x_ = x << 12;
+    sprite->y_ = y << 12;
+    sprite->unk_22 = 0x10;
+    sprite->unk_26 = 2;
+    SpriteContext_DrawSprite(self->renderer_, sprite);
 }

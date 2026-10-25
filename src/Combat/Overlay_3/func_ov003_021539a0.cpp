@@ -75,36 +75,35 @@ struct Struct_ov003_021539a0 {
 
 struct SafeAllocator;
 extern "C" void __clear(void*, int);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
-extern "C" void* func_0208247c(void*);
-extern "C" unsigned char* func_02053c6c(unsigned char*);
-extern "C" int func_02082490(void*, void*, unsigned int, int, int);
-struct Rec020467f0;
-char* Pac_GetFile(Rec020467f0*, int, void**, int*);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
+void* ResourceScriptEntry_Init(void*);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" int ResourceScriptEntry_LoadLevel(void*, void*, unsigned int, int, int);
+struct PacRecord;
+char* Pac_GetFile(PacRecord*, int, void**, int*);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void*, int);
-struct Obj0204b5e8;
-void Background_SetScroll(Obj0204b5e8*, int, int);
-extern "C" void func_0204c684(void*);
+struct BackgroundGraphics;
+void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void WindowPane_Init(void*);
 struct Obj0204b988;
 void DispatchIndexedEntry0204b988(Obj0204b988*, unsigned int, int, int, unsigned short);
-struct List0204b0e8;
-void Background_UploadMap(List0204b0e8*, void*);
+void Background_UploadMap(BackgroundGraphics*, void*);
 struct Container020e0310;
 char* KeyTable_Get(Container020e0310*, int);
-void* GetGlobalField0x1c020421a0();
-extern "C" void func_02046608(void*, int, char*, char*, int, int, int);
-extern "C" void func_ov023_021e23d0(void*, int, int, unsigned char, unsigned char);
-extern "C" int func_02085fb4(unsigned char*);
-extern "C" int func_02086020(unsigned char*);
-extern "C" int func_0208608c(unsigned char*);
-extern "C" int func_020860f8(unsigned char*);
-extern "C" int func_02086164(unsigned char*);
-extern "C" int func_020861d0(unsigned char*);
-extern "C" int func_0208623c(unsigned char*);
-extern "C" int func_020862a8(unsigned char*);
-extern "C" int func_02086314(unsigned char*);
-extern "C" void func_ov023_021e24b0(void*, int, int, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
+void* MessageSystem_GetInstance();
+extern "C" void MessageSystem_FormatText(void*, int, char*, char*, int, int, int);
+void SetEntryFields_021e23d0(void*, int, int, unsigned char, unsigned char);
+int AccumulateFlaggedSlotBits02085fb4(unsigned char*);
+int AccumulateFlaggedSlotBits02086020(unsigned char*);
+int AccumulateFlaggedSlotBits0208608c(unsigned char*);
+int AccumulateFlaggedSlotBits020860f8(unsigned char*);
+int AccumulateFlaggedSlotBits02086164(unsigned char*);
+int AccumulateFlaggedSlotBits020861d0(unsigned char*);
+int AccumulateFlaggedSlotBits0208623c(unsigned char*);
+int AccumulateSlotBitsFromTable020862a8(unsigned char*);
+int AccumulateSlotBitsFromTable02086314(unsigned char*);
+void SetPackedFields_021e24b0(void*, int, int, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char);
 extern "C" void func_ov023_021e257c(void*);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToSubBG0CharacterData(int, int, unsigned int);
@@ -129,49 +128,49 @@ extern short data_ov003_0217df8c[];
 
 // USA: func_ov003_021539a0
 #if defined(jpn)
-extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
-    if (arg0->unknown_59_ < 0) return;
-    if (!(arg0->unknown_5d_ & 1)) return;
-    struct Struct_ov003_021539a0_2* var0 = (Struct_ov003_021539a0_2*)BackgroundLoader::GetInstance();
-    if (arg0->unknown_5c_ == 0) {
-        char var1[0x18];
-        __clear(var1, 0x18);
-        sprintf(var1, data_ov003_0217fca0, arg0->unknown_14_);
-        arg0->unknown_50_ = ((BackgroundLoader*)var0)->QueueLoadFile(var1, (SafeAllocator*)0);
-        arg0->unknown_54_ = ((BackgroundLoader*)var0)->QueueLoadFile(data_ov003_0217fcb5, (SafeAllocator*)0);
-        arg0->unknown_5c_++;
-    } else if (arg0->unknown_5c_ == 1) {
-        if (((BackgroundLoader*)var0)->GetTaskStatus(arg0->unknown_50_) == 0) return;
-        if (((BackgroundLoader*)var0)->GetTaskStatus(arg0->unknown_54_) == 0) return;
-        struct Struct_ov003_021539a0_8 var2;
-        struct Struct_ov003_021539a0_7 var3;
-        int var4[9];
-        void* var5;
-        unsigned int var6;
-        void* var7;
-        int var8;
-        ((BackgroundLoader*)var0)->GetLoadedFileByID(arg0->unknown_50_, &var5, &var6);
-        void* var9 = GameState::GetInstance();
-        unsigned char* var10 = (unsigned char*)((GameState*)var9)->GetPartyMemberByIndex(arg0->unknown_59_);
-        func_0208247c(arg0->unknown_8_);
-        unsigned char* var11 = 0;
-        unsigned char* var12;
-        if (var10 != 0 && var5 != 0) {
-            var11 = func_02053c6c(var10);
-            func_02082490(arg0->unknown_8_, var5, var6, *(unsigned short*)(var11 + 0x100 + arg0->unknown_14_ * 2 + 0x6c), 0);
+extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
+    if (self->member < 0) return;
+    if (!(self->flags & 1)) return;
+    struct Loader* loader = (Loader*)BackgroundLoader::GetInstance();
+    if (self->state == 0) {
+        char path[0x18];
+        __clear(path, 0x18);
+        sprintf(path, data_ov003_0217fca0, self->idx);
+        self->task50 = ((BackgroundLoader*)loader)->QueueLoadFile(path, (SafeAllocator*)0);
+        self->task54 = ((BackgroundLoader*)loader)->QueueLoadFile(data_ov003_0217fcb5, (SafeAllocator*)0);
+        self->state++;
+    } else if (self->state == 1) {
+        if (((BackgroundLoader*)loader)->GetTaskStatus(self->task50) == 0) return;
+        if (((BackgroundLoader*)loader)->GetTaskStatus(self->task54) == 0) return;
+        struct Draw_021539a0 draw;
+        struct ListObj_021539a0 list;
+        int vals[9];
+        void* file;
+        unsigned int size;
+        void* rp;
+        int rs;
+        ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task50, &file, &size);
+        void* gs = GameState::GetInstance();
+        unsigned char* obj = (unsigned char*)((GameState*)gs)->GetPartyMemberByIndex(self->member);
+        ResourceScriptEntry_Init(self->stats);
+        unsigned char* base = 0;
+        unsigned char* gfx;
+        if (obj != 0 && file != 0) {
+            base = GetFieldAt0x150_02053c6c(obj);
+            ResourceScriptEntry_LoadLevel(self->stats, file, size, *(unsigned short*)(base + 0x100 + self->idx * 2 + 0x6c), 0);
         }
         ((BackgroundLoader*)loader)->RemoveTask(self->task50);
         self->task50 = -1;
         ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task54, &file, &size);
-        obj = (unsigned char*)Pac_GetFile((Rec020467f0*)file, 0, &rp, &rs);
+        obj = (unsigned char*)Pac_GetFile((PacRecord*)file, 0, &rp, &rs);
         if (obj != 0) {
             list.lo = 1;
             list.hi = 0;
             Background_SetMapSize((unsigned char*)&list, 0);
             Background_SetPriority(&list, 0);
-            Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+            Background_SetScroll((BackgroundGraphics*)&list, 0, 0);
             gfx = obj + 0x10;
-            func_0204c684(&draw);
+            WindowPane_Init(&draw);
             draw.s28 = 0x20;
             draw.s2a = 0x18;
             draw.s34 = 0xc;
@@ -213,7 +212,7 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
                     var17->unknown_16_ &= ~1;
                 }
                 DispatchIndexedEntry0204b988((Obj0204b988*)self->list, (unsigned char)(idx + 1) & 0xff, 3, 2, 0xffff);
-                Background_UploadMap((List0204b0e8*)self->list, 0);
+                Background_UploadMap((BackgroundGraphics*)self->list, 0);
                 unsigned char cls = idx - 1;
                 draw.s38 = 0xa;
                 draw.s3a = 0x10;
@@ -261,51 +260,51 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
-    if (arg0->unknown_59_ < 0) return;
-    if (!(arg0->unknown_5d_ & 1)) return;
-    struct Struct_ov003_021539a0_2* var29 = (Struct_ov003_021539a0_2*)BackgroundLoader::GetInstance();
-    if (arg0->unknown_5c_ == 0) {
-        char var30[0x18];
-        __clear(var30, 0x18);
-        sprintf(var30, data_ov003_0217fca0, arg0->unknown_14_);
-        arg0->unknown_50_ = ((BackgroundLoader*)var29)->QueueLoadFile(var30, (SafeAllocator*)0);
-        arg0->unknown_54_ = ((BackgroundLoader*)var29)->QueueLoadFileInGP2(data_ov003_0217fcb5, data_ov003_0217fcc7, (SafeAllocator*)0);
-        arg0->unknown_5c_++;
-    } else if (arg0->unknown_5c_ == 1) {
-        if (((BackgroundLoader*)var29)->GetTaskStatus(arg0->unknown_50_) == 0) return;
-        if (((BackgroundLoader*)var29)->GetTaskStatus(arg0->unknown_54_) == 0) return;
-        struct Struct_ov003_021539a0_8 var31;
-        char var32[0x400];
-        char var33[0x400];
-        struct Struct_ov003_021539a0_7 var34;
-        int var35[9];
-        void* var36;
-        unsigned int var37;
-        void* var38;
-        int var39;
-        ((BackgroundLoader*)var29)->GetLoadedFileByID(arg0->unknown_50_, &var36, &var37);
-        void* var40 = GameState::GetInstance();
-        unsigned char* var41 = (unsigned char*)((GameState*)var40)->GetPartyMemberByIndex(arg0->unknown_59_);
-        func_0208247c(arg0->unknown_8_);
-        unsigned char* var42 = 0;
-        unsigned char* var43;
-        if (var41 != 0 && var36 != 0) {
-            var42 = func_02053c6c(var41);
-            func_02082490(arg0->unknown_8_, var36, var37, *(unsigned short*)(var42 + 0x100 + arg0->unknown_14_ * 2 + 0x6c), 0);
+extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
+    if (self->member < 0) return;
+    if (!(self->flags & 1)) return;
+    struct Loader* loader = (Loader*)BackgroundLoader::GetInstance();
+    if (self->state == 0) {
+        char path[0x18];
+        __clear(path, 0x18);
+        sprintf(path, data_ov003_0217fca0, self->idx);
+        self->task50 = ((BackgroundLoader*)loader)->QueueLoadFile(path, (SafeAllocator*)0);
+        self->task54 = ((BackgroundLoader*)loader)->QueueLoadFileInGP2(data_ov003_0217fcb5, data_ov003_0217fcc7, (SafeAllocator*)0);
+        self->state++;
+    } else if (self->state == 1) {
+        if (((BackgroundLoader*)loader)->GetTaskStatus(self->task50) == 0) return;
+        if (((BackgroundLoader*)loader)->GetTaskStatus(self->task54) == 0) return;
+        struct Draw_021539a0 draw;
+        char text[0x400];
+        char fmt[0x400];
+        struct ListObj_021539a0 list;
+        int vals[9];
+        void* file;
+        unsigned int size;
+        void* rp;
+        int rs;
+        ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task50, &file, &size);
+        void* gs = GameState::GetInstance();
+        unsigned char* obj = (unsigned char*)((GameState*)gs)->GetPartyMemberByIndex(self->member);
+        ResourceScriptEntry_Init(self->stats);
+        unsigned char* base = 0;
+        unsigned char* gfx;
+        if (obj != 0 && file != 0) {
+            base = GetFieldAt0x150_02053c6c(obj);
+            ResourceScriptEntry_LoadLevel(self->stats, file, size, *(unsigned short*)(base + 0x100 + self->idx * 2 + 0x6c), 0);
         }
         ((BackgroundLoader*)loader)->RemoveTask(self->task50);
         self->task50 = -1;
         ((BackgroundLoader*)loader)->GetLoadedFileByID(self->task54, &file, &size);
-        obj = (unsigned char*)Pac_GetFile((Rec020467f0*)file, 0, &rp, &rs);
+        obj = (unsigned char*)Pac_GetFile((PacRecord*)file, 0, &rp, &rs);
         if (obj != 0) {
             list.lo = 1;
             list.hi = 0;
             Background_SetMapSize((unsigned char*)&list, 0);
             Background_SetPriority(&list, 0);
-            Background_SetScroll((Obj0204b5e8*)&list, 0, 0);
+            Background_SetScroll((BackgroundGraphics*)&list, 0, 0);
             gfx = obj + 0x10;
-            func_0204c684(&draw);
+            WindowPane_Init(&draw);
             draw.s28 = 0x20;
             draw.s2a = 0x18;
             draw.s34 = 0xc;
@@ -347,7 +346,7 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
                     var48->unknown_16_ &= ~1;
                 }
                 DispatchIndexedEntry0204b988((Obj0204b988*)self->list, (unsigned char)(idx + 1) & 0xff, 3, 2, 0xffff);
-                Background_UploadMap((List0204b0e8*)self->list, 0);
+                Background_UploadMap((BackgroundGraphics*)self->list, 0);
                 unsigned char cls = idx - 1;
                 draw.s38 = 0xa;
                 draw.s3a = 0x10;
@@ -358,7 +357,7 @@ extern "C" ARM void func_ov003_021539a0(struct Struct_ov003_021539a0* arg0) {
                 char* s1 = KeyTable_Get((Container020e0310*)cont, (short)(key + 1));
                 char* s0 = KeyTable_Get((Container020e0310*)cont, (short)key);
                 sprintf(fmt, data_ov003_0217fcd5, s0, s1, s2);
-                func_02046608(GetGlobalField0x1c020421a0(), 0xc, fmt, text, 0xdc, 0, 1);
+                MessageSystem_FormatText(MessageSystem_GetInstance(), 0xc, fmt, text, 0xdc, 0, 1);
                 SetEntryFields_021e23d0(ents, 7, (int)text, 0xc, 0xf);
                 SetEntryFields_021e23d0(ents, 8, (int)data_ov003_0217fcde, 0xc, 0xf);
                 SetEntryFields_021e23d0(ents, 9, (int)data_ov003_0217fcde, 0xc, 0xf);
