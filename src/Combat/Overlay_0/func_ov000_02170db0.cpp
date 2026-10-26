@@ -26,7 +26,7 @@ struct Struct_0203c108_3 {
     int unknown_10_;
     short unknown_14_;
 };
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 extern "C" void __clear(void* arg0, int arg1);
 
@@ -85,38 +85,38 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
 #if defined(jpn)
         char* text = (char*)KeyTable_Get(obj->container, func_ov000_02171a74(obj));
         if (text != NULL) {
-            SwapGlobalEntry0203c108(&obj->label, text);
+            CachedTextLabel_SetText(&obj->label, text);
         }
 #else
-        char var5[0x80];
-        __clear(var5, sizeof(var5));
-        if (func_ov000_02171a74(arg0, var5) >= 0) {
-            func_0203c108(&arg0->unknown_50_, var5);
+        char buf[0x80];
+        __clear(buf, sizeof(buf));
+        if (func_ov000_02171a74(obj, buf) >= 0) {
+            CachedTextLabel_SetText(&obj->label, buf);
         }
 #endif
     } else if (ext != NULL && (signed char)ext->field94c != 5 && obj->kind != 6) {
         char* text = (char*)KeyTable_Get(obj->container, (short)((signed char)ext->field94c + 0x753e));
         if (text != NULL) {
-            SwapGlobalEntry0203c108(&obj->label, text);
+            CachedTextLabel_SetText(&obj->label, text);
         } else {
-            func_0203c108(&arg0->unknown_50_, data_ov000_02183ff4);
+            CachedTextLabel_SetText(&obj->label, data_ov000_02183ff4);
         }
     } else if (var0 != NULL) {
 #if defined(jpn)
-        func_0203c108(&arg0->unknown_50_, (char*)var0->unknown_0_);
+        CachedTextLabel_SetText(&obj->label, (char*)entry->text);
 #else
-        char var7[0x80];
-        char var8[0x80];
-        __clear(var7, sizeof(var7));
-        __clear(var8, sizeof(var8));
-        func_020e4864(var0->unknown_0_, var7, 1, 0, 0, 0);
-        func_0206819c(var7, var8, 0);
-        func_0203c108(&arg0->unknown_50_, var8);
+        char raw[0x80];
+        char name[0x80];
+        __clear(raw, sizeof(raw));
+        __clear(name, sizeof(name));
+        func_020e4864(entry->text, raw, 1, 0, 0, 0);
+        CopyTextAndUppercaseIfFlagged0206819c(raw, name, 0);
+        CachedTextLabel_SetText(&obj->label, name);
 #endif
     } else if (var1 != NULL) {
         if (var1->unknown_18_ > 0) {
 #if defined(jpn)
-            func_0203c108(&arg0->unknown_50_, (char*)var1->unknown_4_);
+            CachedTextLabel_SetText(&obj->label, (char*)equip->text);
 #else
             char raw[0x80];
             char name[0x80];
@@ -125,13 +125,13 @@ extern "C" ARM void func_ov000_02170db0(struct Struct_ov000_02170db0_3* arg0) {
             func_020e4864(equip->text, raw, 1, 0, 0, 0);
             CopyTextAndUppercaseIfFlagged0206819c(raw, name, 0);
             MessageSystem_FormatText(MessageSystem_GetInstance(), 10, name, raw, 0x100, 0, 0);
-            SwapGlobalEntry0203c108(&obj->label, raw);
+            CachedTextLabel_SetText(&obj->label, raw);
 #endif
         }
     } else if (obj->kind == 6) {
-        SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(obj->container, 0x7531));
+        CachedTextLabel_SetText(&obj->label, (char*)KeyTable_Get(obj->container, 0x7531));
     } else {
-        func_0203c108(&arg0->unknown_50_, data_ov000_02183ff4);
+        CachedTextLabel_SetText(&obj->label, data_ov000_02183ff4);
     }
     func_ov000_0217616c(arg0);
 }

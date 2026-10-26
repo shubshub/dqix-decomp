@@ -4,7 +4,7 @@
 
 extern "C" void __clear(char* buf, int len);
 extern "C" int Font_EncodeText(int value, char* buf, int flag);
-void CollectValidCombatants02010890(GameState* bs, int* outList, int* outCount);
+void GameState_CollectPartyObjectIndices(GameState* bs, int* outList, int* outCount);
 
 #if defined(jpn)
 typedef const char* NameValue0202c360;
@@ -27,6 +27,6 @@ extern "C" ARM void func_0202c360(void* self, NameValue0202c360 value) {
     *lenField = strlen(buf);
     memcpy((char*)self + 0x1014, buf, *lenField + 1);
 #endif
-    CollectValidCombatants02010890(bs, list, &count);
+    GameState_CollectPartyObjectIndices(bs, list, &count);
     *((unsigned char*)self + 0x1027) = (unsigned char)count;
 }

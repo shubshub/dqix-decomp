@@ -2,7 +2,7 @@
 
 struct Struct020dfc40;
 void KeyTable_Reset(Struct020dfc40* p);
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 #if defined(jpn)
 extern "C" int func_020e2168(char* destination, const char* tablePath,
     int index, int variant, bool lock);
@@ -30,7 +30,7 @@ ARM void NotifyLocalizedResourceLoad020dcfc8(int len, char* buf) {
         v1 = data_020f2a3c;
         v2 = data_020f2a24;
 #endif
-        ResetAndReturnSelf020dfc2c(&local);
+        KeyTable_Construct(&local);
         KeyTable_Reset((Struct020dfc40*)&local);
 #if defined(jpn)
         func_020e2168(buf, tablePath, len, 0, true);

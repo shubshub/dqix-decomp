@@ -3,7 +3,7 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void AllocatorUnion_Free(AllocatorUnion*, void*);
 extern AllocatorUnion g_mainAllocator;
 
@@ -30,6 +30,6 @@ extern "C" ARM void func_ov017_021a79f0(struct Obj021a79f0* self) {
         AllocatorUnion_Free(&g_mainAllocator, handle);
     }
 
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
     *(volatile unsigned int*)0x4000000 = (*(volatile unsigned int*)0x4000000 & ~0x1f00) | (self->field1c << 8);
 }

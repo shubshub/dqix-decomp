@@ -12,20 +12,17 @@
 #include <globaldefs.h>
 #include "NitroSDK/Interrupts.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern char* data_ov027_021e33ec;
 
-extern "C" ARM void func_ov027_021d9d5c(int arg0);
-extern "C" ARM int func_ov027_021da8d4(void* arg0, void* arg1, unsigned int arg2, void* arg3);
-extern "C" void* func_ov027_021dd638(void* arg0, void* arg1);
-extern "C" ARM int func_ov027_021dd180(void* arg0, unsigned int arg1, void* arg2, unsigned int arg3);
-extern "C" ARM int func_ov027_021dd3e0(void* arg0);
-extern "C" ARM void func_ov027_021dd3f8(void* arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3);
-extern "C" ARM void func_020c9be0(void);
-extern "C" int func_ov027_021dab00(int arg0, int arg1, void* arg2);
+extern "C" ARM void func_ov027_021d9d5c(int index);
+extern "C" ARM int func_ov027_021da8d4(void* out, void* table, unsigned int key, void* rawElems);
+extern "C" void* func_ov027_021dd638(void* in, void* out);
+extern "C" ARM int func_ov027_021dd180(void* obj, unsigned int addr, void* buf, unsigned int size);
+extern "C" ARM int func_ov027_021dd3e0(void* p);
+extern "C" ARM void func_ov027_021dd3f8(void* a0, unsigned int a1, unsigned int a2, unsigned int a3);
+extern "C" ARM void HaltSystem(void);
+extern "C" int func_ov027_021dab00(int a, int b, void* c);
 
 struct Struct_ov027_021d989c;
 extern "C" ARM void func_ov027_021d989c(Struct_ov027_021d989c* arg0);
@@ -120,11 +117,11 @@ extern "C" ARM int func_ov027_021d9940(void) {
                     var22 = var24;
                 }
             }
-            var24++;
-            var23++;
-        } while (var23 < 4);
-        if (var22 == 0) {
-            func_020c9be0();
+            p++;
+            i++;
+        } while (i < 4);
+        if (best == 0) {
+            HaltSystem();
         }
         *(int*)var19 = 2;
         var22->unknown_c_ = 1;

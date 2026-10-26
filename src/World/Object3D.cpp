@@ -12,9 +12,6 @@
 #include "Resource/ResourceMutex.h"
 #include "Graphics/VRAMStaging.h"
 
-#if defined(jpn)
-#define func_020d8524 func_020d9e88
-#endif
 
 ModelRenderContext* GetModel3DContext(Model3D* model);
 void AnimationPackageListInsert(AnimationPackage** pListStart, AnimationPackage* entry);
@@ -27,50 +24,50 @@ extern "C"
 {
     void _Z30RenderConfig_SetObjectRotationPv(void* rotation);
 
-    const Matrix3x3* func_0202ed74(void*);
+    const Matrix3x3* _Z25Camera_GetInverseRotationPv(void*);
 
-    void func_020311f0(fix32_t);
+    void G3_RotateX(fix32_t);
     void G3_RotateY(fix32_t);
-    void func_02031278(fix32_t);
+    void G3_RotateZ(fix32_t);
 
-    void SePlayer_PlayArchiveEntry(void*, int, int, int);
+    void SoundPlayer_PlayArchiveEntry(void*, int, int, int);
 
-    void func_020ca528(const void*, void*);
+    void MI_Copy36B(const void*, void*);
 
-    void func_020d1d1c(unsigned short* out, const void* data, unsigned int length);
+    void MATH_Checksum16Update(unsigned short* out, const void* data, unsigned int length);
 
 }
 
 #define OBJECT3D_FLAG_HIDDEN 0
 #define OBJECT3D_FLAG_UNUSED_1 1
 #define OBJECT3D_FLAG_HAS_SHADOW 2
-#define OBJECT3D_FLAG_3 3
+#define OBJECT3D_FLAG_TEXTURE_TIMER 3           // noTextureTimer_ counts down; textures stay off until it is 0
 #define OBJECT3D_FLAG_4 4
-#define OBJECT3D_FLAG_5 5
-#define OBJECT3D_FLAG_6 6
+#define OBJECT3D_FLAG_SKIP_EFFECTS 5            // AdvanceEffects does nothing (UpdateTrackedBones advances it)
+#define OBJECT3D_FLAG_MUTE_ANIMATION_SOUNDS 6   // the animation's sound triggers don't play
 #define OBJECT3D_FLAG_UNUSED_7 7
 #define OBJECT3D_FLAG_UNUSED_8 8
 #define OBJECT3D_FLAG_UNUSED_9 9
 #define OBJECT3D_FLAG_UNUSED_10 10
 #define OBJECT3D_FLAG_NEVER_CLIP 11
-#define OBJECT3D_FLAG_12 12
-#define OBJECT3D_FLAG_13 13
+#define OBJECT3D_FLAG_PAUSE_ANIMATION 12        // the animation clock stops (GameObject_UpdateLadderClimb while nothing is held on a ladder)
+#define OBJECT3D_FLAG_DRAW_FIRST_MESH 13        // Draw: no animations, only mesh 0 with material 0
 #define OBJECT3D_FLAG_COMPOSE_TRANSFORM 14
 #define OBJECT3D_FLAG_DONT_UPDATE_TRANSFORM 15
 #define OBJECT3D_FLAG_16 16
 #define OBJECT3D_FLAG_HIDE_CHILDREN 17
-#define OBJECT3D_FLAG_18 18
-#define OBJECT3D_FLAG_19 19
+#define OBJECT3D_FLAG_FREEZE_ANIMATION 18       // the clock stops except in "damage"; starting an animation clears it
+#define OBJECT3D_FLAG_BILLBOARD 19              // rotation is the camera's inverse rotation: it always faces the camera
 #define OBJECT3D_FLAG_FLICKER 20
 #define OBJECT3D_FLAG_FLICKER_PARITY 21
-#define OBJECT3D_FLAG_22 22
+#define OBJECT3D_FLAG_LOCK_ANIMATION 22         // SetAnimationByName refuses to change it
 #define OBJECT3D_FLAG_UNUSED_23 23
 #define OBJECT3D_FLAG_UNUSED_24 24
 #define OBJECT3D_FLAG_REVERSE_ROTATION_ORDER 25
 #define OBJECT3D_FLAG_UNUSED_26 26
 #define OBJECT3D_FLAG_UNUSED_27 27
-#define OBJECT3D_FLAG_28 28
-#define OBJECT3D_FLAG_29 29
+#define OBJECT3D_FLAG_DRAWN 28                  // the last Draw drew the model
+#define OBJECT3D_FLAG_KEEP_MODEL_ALPHA 29       // Draw and SetInheritedAlpha leave the model's alpha alone
 
 struct Object3DStaticData
 {
@@ -96,7 +93,8 @@ struct Object3DStaticData
       object3DsData.paletteAnimExtension, object3DsData.textureAnimExtension }
 };
 
-struct Struct_02104b18
+// What BoneTrackingRenderCommandHook works on: the tracked bones of the object UpdateTrackedBones is drawing
+struct BoneTrackingState
 {
     float unknown_0[5];
     Object3D::TrackedBoneMatrix* boneMatrixList;
@@ -170,7 +168,7 @@ void Object3D::AnimationBlend::Clear()
 
 void Object3D::AdvanceEffects()
 {
-    if (flags_ & (1 << OBJECT3D_FLAG_5))
+    if (flags_ & (1 << OBJECT3D_FLAG_SKIP_EFFECTS))
         return;
 
     int deltaTimeTicks = GameState::GetInstance()->GetEffectiveDeltaTime();
@@ -181,7 +179,7 @@ void Object3D::AdvanceEffects()
         inheritedAlpha_ = (char)alphaTransition_.Advance(deltaTimeTicks);
     }
 
-    if (flags_ & (1 << OBJECT3D_FLAG_3))
+    if (flags_ & (1 << OBJECT3D_FLAG_TEXTURE_TIMER))
     {
         if (deltaTimeTicks < noTextureTimer_)
             noTextureTimer_ -= deltaTimeTicks;
@@ -221,7 +219,7 @@ void Object3D::AdvanceAnimations_v0()
 {
     fix16_t deltaTime = GameState::GetInstance()->GetAnimationDeltaTime();
     BCFG* activeBCFG = &activeAnimationPackage_->bcfgData;
-    if (activeBCFG == NULL || activeAnimationIndex_ < 0 || (flags_ & (1 << OBJECT3D_FLAG_12)))
+    if (activeBCFG == NULL || activeAnimationIndex_ < 0 || (flags_ & (1 << OBJECT3D_FLAG_PAUSE_ANIMATION)))
         return;
 
     animationEnded_ = false;
@@ -230,7 +228,7 @@ void Object3D::AdvanceAnimations_v0()
     if (record == NULL)
         return;
     bool shouldAdvanceTimer = true;
-    if ((flags_ & (1 << OBJECT3D_FLAG_18)) && (activeAnimationRecord_ == NULL ||
+    if ((flags_ & (1 << OBJECT3D_FLAG_FREEZE_ANIMATION)) && (activeAnimationRecord_ == NULL ||
         strcmp(activeAnimationRecord_->name, "damage") != 0))
         shouldAdvanceTimer = false;
 
@@ -290,7 +288,7 @@ void Object3D::AdvanceAnimations_v0()
     else
         unknown_40_bit_1_ = false;
 
-    if ((flags_ & (1 << OBJECT3D_FLAG_6)) || unknown_78_ == 0xffff)
+    if ((flags_ & (1 << OBJECT3D_FLAG_MUTE_ANIMATION_SOUNDS)) || unknown_78_ == 0xffff)
         return;
 
     for (BCFG::AltSizeCEntry* loopEntry = record->firstAlt; loopEntry != NULL; loopEntry = loopEntry->pNext)
@@ -298,15 +296,15 @@ void Object3D::AdvanceAnimations_v0()
         if (loopEntry->triggerTime == 0)
         {
             if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (loopEntry->triggerTime == 1.0)
         {
             if (animationEnded_)
-                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
         else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-            SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+            SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
     }
 }
 
@@ -318,7 +316,7 @@ void Object3D::AdvanceAnimations_v1()
         || activeAnimationPackage_->pAnim3Ds[activeAnimationIndex_].data == NULL)
         return;
     Animation3D* anim3D = activeAnimationPackage_->pAnim3Ds[activeAnimationIndex_].data;
-    if (anim3D->GetBasicAnimationData() == NULL || (flags_ & (1 << OBJECT3D_FLAG_12)))
+    if (anim3D->GetBasicAnimationData() == NULL || (flags_ & (1 << OBJECT3D_FLAG_PAUSE_ANIMATION)))
         return;
 
     BCFG::AnimationRecord* record = activeAnimationPackage_->bcfgData.GetAnimationRecord(activeAnimationIndex_);
@@ -350,7 +348,7 @@ void Object3D::AdvanceAnimations_v1()
         animationReachedEnd_ = false;
         fix32_t timer = animationTime_;
         bool shouldAdvanceTimer = true;
-        if ((flags_ & (1 << OBJECT3D_FLAG_18)) && (activeAnimationRecord_ == NULL ||
+        if ((flags_ & (1 << OBJECT3D_FLAG_FREEZE_ANIMATION)) && (activeAnimationRecord_ == NULL ||
             strcmp(activeAnimationRecord_->name, "damage") != 0))
             shouldAdvanceTimer = false;
         prevFrameAnimationTime_ = timer;
@@ -402,7 +400,7 @@ void Object3D::AdvanceAnimations_v1()
         else
             unknown_40_bit_1_ = false;
 
-        if ((flags_ & (1 << OBJECT3D_FLAG_6)) || unknown_78_ == 0xffff)
+        if ((flags_ & (1 << OBJECT3D_FLAG_MUTE_ANIMATION_SOUNDS)) || unknown_78_ == 0xffff)
             return;
 
         for (BCFG::AltSizeCEntry* loopEntry = record->firstAlt; loopEntry != NULL; loopEntry = loopEntry->pNext)
@@ -410,15 +408,15 @@ void Object3D::AdvanceAnimations_v1()
             if (loopEntry->triggerTime == 0)
             {
                 if (unknown_40_bit_1_ || (animationReachedEnd_ && !(animationFlags_ & OBJECT_ANIMATION_DONT_LOOP)))
-                    SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (loopEntry->triggerTime == 1.0)
             {
                 if (animationEnded_)
-                    SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                    SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
             }
             else if (prevFrameNormalizedAnimationTime_ < loopEntry->triggerTime && loopEntry->triggerTime <= normalizedAnimationTime_)
-                SePlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
+                SoundPlayer_PlayArchiveEntry(g_sePlayer, unknown_7a_, loopEntry->maybeSoundEffect, 0);
         }
     }
 }
@@ -477,7 +475,7 @@ void Object3D::ApplyAnimations(Object3D* otherObj)
 
 void Object3D::ApplyTextures()
 {
-    if ((flags_ & (1 << OBJECT3D_FLAG_3)) && pModel_ != NULL)
+    if ((flags_ & (1 << OBJECT3D_FLAG_TEXTURE_TIMER)) && pModel_ != NULL)
     {
         if (noTextureTimer_ == 0)
             pModel_->ApplyTexturesFromModel(pModel_);
@@ -506,7 +504,7 @@ void Object3D::PopulateRenderConfigWorld()
     if (pPrevChild_ ? 1 : 0)
     {
         Matrix3x3 worldRotation;
-        func_020ca528(&data_0210a010.objectRotationPosition, &worldRotation);
+        MI_Copy36B(&data_0210a010.objectRotationPosition, &worldRotation);
         Matrix3x3 axisRotation;
         fix32_t rotationComponents[3];
         rotationComponents[0] = rotation_.z;
@@ -515,9 +513,9 @@ void Object3D::PopulateRenderConfigWorld()
         if (flags_ & (1 << OBJECT3D_FLAG_REVERSE_ROTATION_ORDER))
         {
             object3DsData.rotationFunctionsRelative[0] = &CreateRotationX;
-            fix32_t foo = rotationComponents[0];
+            fix32_t swap = rotationComponents[0];
             rotationComponents[0] = rotationComponents[2];
-            rotationComponents[2] = foo;
+            rotationComponents[2] = swap;
             object3DsData.rotationFunctionsRelative[2] = &CreateRotationZ;
         }
         for (int i = 0; i < 3; i++)
@@ -547,10 +545,10 @@ void Object3D::PopulateRenderConfigWorld()
     else
     {
         RenderConfig::SetObjectPosition(&position_);
-        if (flags_ & (1 << OBJECT3D_FLAG_19))
+        if (flags_ & (1 << OBJECT3D_FLAG_BILLBOARD))
         {
-            const Matrix3x3* rotation = _Z25GetPtrField0x144_0202ed74Pv(GameState::GetInstance()->GetCamera());
-            func_020ca528(rotation, &data_0210a010.objectRotationPosition.rotation);
+            const Matrix3x3* rotation = _Z25Camera_GetInverseRotationPv(GameState::GetInstance()->GetCamera());
+            MI_Copy36B(rotation, &data_0210a010.objectRotationPosition.rotation);
             data_0210a010.flags &= ~((1 << RENDER_CONFIG_FLAG_WORLDVIEW_CACHE_VALID) | (1 << RENDER_CONFIG_FLAG_5) | (1 << RENDER_CONFIG_FLAG_2));
         }
         else
@@ -565,9 +563,9 @@ void Object3D::PopulateRenderConfigWorld()
             if (flags_ & (1 << OBJECT3D_FLAG_REVERSE_ROTATION_ORDER))
             {
                 object3DsData.rotationFunctionsAbsolute[0] = &CreateRotationX;
-                fix32_t foo = rotationComponents[0];
+                fix32_t swap = rotationComponents[0];
                 rotationComponents[0] = rotationComponents[2];
-                rotationComponents[2] = foo;
+                rotationComponents[2] = swap;
                 object3DsData.rotationFunctionsAbsolute[2] = &CreateRotationZ;
             }
             for (int i = 0; i < 3; i++)
@@ -619,7 +617,7 @@ bool Object3D::IsVisibleAndAdjustFlags()
 bool Object3D::Draw(bool applyClipping)
 {
     drawSuccessful_ = false;
-    flags_ &= ~(1 << OBJECT3D_FLAG_28);
+    flags_ &= ~(1 << OBJECT3D_FLAG_DRAWN);
 
     if (!IsVisibleAndAdjustFlags())
         return false;
@@ -627,12 +625,12 @@ bool Object3D::Draw(bool applyClipping)
     if (flags_ & (1 << OBJECT3D_FLAG_NEVER_CLIP))
         applyClipping = false;
 
-    if (!(flags_ & (1 << OBJECT3D_FLAG_13)))
+    if (!(flags_ & (1 << OBJECT3D_FLAG_DRAW_FIRST_MESH)))
         ApplyAnimations(NULL);
 
-    int prior = GetCombinedAlpha();
-    int blendedAlpha = (alphaScaleFactor_ / 4096.0f) * prior;
-    if (blendedAlpha != pModel_->GetAlpha() && !(flags_ & (1 << OBJECT3D_FLAG_29)))
+    int combinedAlpha = GetCombinedAlpha();
+    int blendedAlpha = (alphaScaleFactor_ / 4096.0f) * combinedAlpha;
+    if (blendedAlpha != pModel_->GetAlpha() && !(flags_ & (1 << OBJECT3D_FLAG_KEEP_MODEL_ALPHA)))
         pModel_->SetAlpha(blendedAlpha);
 
     ApplyTextures();
@@ -663,7 +661,7 @@ bool Object3D::Draw(bool applyClipping)
     }
 
     bool success;
-    if (flags_ & (1 << OBJECT3D_FLAG_13))
+    if (flags_ & (1 << OBJECT3D_FLAG_DRAW_FIRST_MESH))
         success = pModel_->DrawMeshWithMaterial(applyClipping, 0, 0, true);
     else
         success = pModel_->Draw(applyClipping);
@@ -675,7 +673,7 @@ bool Object3D::Draw(bool applyClipping)
             ComputeShadowPosition();
         if (!(flags_ & (1 << OBJECT3D_FLAG_HIDE_CHILDREN)) && IsParent())
             DrawChildren(this);
-        flags_ |= (1 << OBJECT3D_FLAG_28);
+        flags_ |= (1 << OBJECT3D_FLAG_DRAWN);
     }
     else
     {
@@ -688,7 +686,8 @@ bool Object3D::Draw(bool applyClipping)
     return success;
 }
 
-bool Object3D::DrawSimple(bool applyClipping)
+// Main, originally Object3D::DrawSimple (USA 0x02035c40, EUR 0x02035c50, JPN 0x0203569c)
+bool Object3D::DrawWithCurrentRenderConfig(bool applyClipping)
 {
     drawSuccessful_ = false;
 
@@ -724,7 +723,8 @@ bool Object3D::DrawSimple(bool applyClipping)
     return success;
 }
 
-bool Object3D::DrawSimple2(bool applyClipping)
+// Main, originally Object3D::DrawSimple2 (USA 0x02035d44, EUR 0x02035d54, JPN 0x020357a0)
+bool Object3D::DrawInCurrentMatrix(bool applyClipping)
 {
     if (!IsVisibleAndAdjustFlags())
         return false;
@@ -755,7 +755,8 @@ bool Object3D::DrawMeshWithMaterial(bool applyClipping, int material, int mesh, 
     return pModel_->DrawMeshWithMaterial(applyClipping, material, mesh, bind);
 }
 
-bool Object3D::DrawMeshWithMaterialSimple(bool applyClipping, int material, int mesh, int bind)
+// Main, originally Object3D::DrawMeshWithMaterialSimple (USA 0x02035e1c, EUR 0x02035e2c, JPN 0x02035878)
+bool Object3D::DrawMeshWithMaterialInCurrentMatrix(bool applyClipping, int material, int mesh, int bind)
 {
     if (!IsVisibleAndAdjustFlags())
         return false;
@@ -767,7 +768,8 @@ bool Object3D::DrawMeshWithMaterialSimple(bool applyClipping, int material, int 
     return pModel_->DrawMeshWithMaterial(applyClipping, material, mesh, bind);
 }
 
-bool Object3D::DrawSimple3(bool applyClipping)
+// Main, originally Object3D::DrawSimple3 (USA 0x02035e74, EUR 0x02035e84, JPN 0x020358d0)
+bool Object3D::DrawWithComposedTransform(bool applyClipping)
 {
     if (pModel_ == NULL)
         return false;
@@ -792,13 +794,14 @@ bool Object3D::DrawSimple3(bool applyClipping)
     return pModel_->Draw(applyClipping);
 }
 
-void Object3D::MaybeUpdateBonePositions()
+// Main, originally Object3D::MaybeUpdateBonePositions (USA 0x02035f10, EUR 0x02035f20, JPN 0x0203596c)
+void Object3D::UpdateTrackedBones()
 {
     if (pModel_ == NULL)
         return;
-    flags_ &= ~(1 << OBJECT3D_FLAG_5);
+    flags_ &= ~(1 << OBJECT3D_FLAG_SKIP_EFFECTS);
     AdvanceEffects();
-    flags_ |= (1 << OBJECT3D_FLAG_5);
+    flags_ |= (1 << OBJECT3D_FLAG_SKIP_EFFECTS);
     ApplyAnimations(NULL);
     Vector3fix position = { 0 };
     RenderConfig::SetObjectPosition(&position);
@@ -837,11 +840,11 @@ void Object3D::SendTranslationToFifo()
 void Object3D::SendRotationToFifo()
 {
     if (rotation_.z != 0)
-        func_02031278(rotation_.z);
+        G3_RotateZ(rotation_.z);
     if (rotation_.y != 0)
         G3_RotateY(rotation_.y);
     if (rotation_.x != 0)
-        func_020311f0(rotation_.x);
+        G3_RotateX(rotation_.x);
 }
 
 void Object3D::SendScalingToFifo()
@@ -1020,7 +1023,7 @@ bool Object3D::InternalLoadFromCHRArchive(ObjectArchiveLoadInfo* loadInfo)
                     narc.Destroy();
                     return false;
                 }
-                func_020d8524(allocation, fileBytes, allocSize);
+                CopyAndFlushCache(allocation, fileBytes, allocSize);
                 fileBytes = allocation;
             }
             if (!SetModelFromFile(allocator, const_cast<void*>(fileBytes), fileLength, Model3D::TextureStagingMode_Normal))
@@ -1074,7 +1077,7 @@ bool Object3D::InternalLoadFromCHRArchive(ObjectArchiveLoadInfo* loadInfo)
                     narc.Destroy();
                     return false;
                 }
-                func_020d8524(allocation, fileBytes, fileLength);
+                CopyAndFlushCache(allocation, fileBytes, fileLength);
                 fileBytes = allocation;
             }
             Animation3D* anim3D = &animPackage->pAnim3Ds->data[fileType];
@@ -1185,7 +1188,7 @@ bool Object3D::LoadFromCCHROrCMOTArchive(ObjectArchiveLoadInfo *loadInfo, int (*
             int reducedNameLength = strlen(filename) - 5;
             entry->length = reducedNameLength;
             unsigned short invChecksum = 0;
-            func_020d1d1c(&invChecksum, filename + 5, reducedNameLength);
+            MATH_Checksum16Update(&invChecksum, filename + 5, reducedNameLength);
             entry->checksum = ~invChecksum;
             NitroVM_FinishRead(&machine);
         }
@@ -1230,7 +1233,7 @@ bool Object3D::LoadFromCCHROrCMOTArchive(ObjectArchiveLoadInfo *loadInfo, int (*
                 {
                     nameLength = strlen(candidateName);
                     unsigned short invChecksum = 0;
-                    func_020d1d1c(&invChecksum, candidateName, nameLength);
+                    MATH_Checksum16Update(&invChecksum, candidateName, nameLength);
                     unsigned int checksum = ~invChecksum;
                     foundInLookup_inner = false;
                     for (int k = 0; k < lookup.numEntries; k++)
@@ -1333,7 +1336,7 @@ void Object3D::ShallowCloneModelAndAnimationsTo(Object3D *out)
 
 bool Object3D::SetAnimationByName(const char *animName, int flags)
 {
-    if (pModel_ == NULL || animName == NULL || (flags_ & (1 << OBJECT3D_FLAG_22)) || animName[0] == '\0')
+    if (pModel_ == NULL || animName == NULL || (flags_ & (1 << OBJECT3D_FLAG_LOCK_ANIMATION)) || animName[0] == '\0')
         return false;
 
     AnimationPackage* package;
@@ -1426,7 +1429,7 @@ bool Object3D::SetAnimationByName(const char *animName, int flags)
             priorAnimationBlend_.Clear();
     }
 
-    flags_ &= ~(1 << OBJECT3D_FLAG_18);
+    flags_ &= ~(1 << OBJECT3D_FLAG_FREEZE_ANIMATION);
     return true;
 }
 
@@ -1456,7 +1459,7 @@ bool Object3D::SetAnimationByIndex(int index, int flags)
     unknown_40_bit_1_ = true;
     activeAnimationRecord_ = record;
     activeAnimationPackage_ = loadedAnimationPackageList_;
-    flags_ &= ~(1 << OBJECT3D_FLAG_18);
+    flags_ &= ~(1 << OBJECT3D_FLAG_FREEZE_ANIMATION);
 
     return true;
 }
@@ -1474,7 +1477,8 @@ void Object3D::StopCurrentAnimation()
 
 int Object3D::HasAnimationStopped() const { return animationEnded_; }
 int Object3D::HasAnimationReachedEnd() const { return animationReachedEnd_; }
-int Object3D::GetOffset40Bit1() const { return unknown_40_bit_1_; }
+// Main, originally Object3D::GetOffset40Bit1 (USA 0x02037190, EUR 0x020371a0, JPN 0x02036bec)
+int Object3D::HasAnimationJustStarted() const { return unknown_40_bit_1_; }
 
 void Object3D::SetCurrentAnimationTime(fix32_t time)
 {
@@ -1522,9 +1526,9 @@ void Object3D::SetNormalizedAnimationTime(fix32_t normTime)
                 Animation3D* anim3D = animSet[activeAnimationIndex_].data;
                 if (anim3D->GetBasicAnimationData() != NULL)
                 {
-                    fix32_t number24 = normalizedAnimationTime_;
+                    fix32_t normalizedTime = normalizedAnimationTime_;
                     fix32_t endFrame = GetAnimationFrameCountFix32(anim3D->GetBasicAnimationData()) - 0x1000;
-                    SetCurrentAnimationTime(FIX32_MULTIPLY(endFrame, number24));
+                    SetCurrentAnimationTime(FIX32_MULTIPLY(endFrame, normalizedTime));
                 }
             }
         }
@@ -1597,7 +1601,7 @@ void Object3D::MakeHidden()
 void Object3D::SetInheritedAlpha(int alpha)
 {
     inheritedAlpha_ = alpha;
-    if (pModel_ != NULL && !(flags_ & (1 << OBJECT3D_FLAG_29)))
+    if (pModel_ != NULL && !(flags_ & (1 << OBJECT3D_FLAG_KEEP_MODEL_ALPHA)))
     {
         unsigned char combined = GetCombinedAlpha();
         pModel_->SetAlpha(combined);
@@ -1692,10 +1696,14 @@ AnimationPackage* Object3D::GetAnimationPackageByIndex(int idx)
 
 void Object3D::SetField06(unsigned short value) { unknown_6_ = value; }
 unsigned short Object3D::GetField06() const { return unknown_6_; }
-void Object3D::SetField78(unsigned short value) { unknown_78_ = value; }
-unsigned short Object3D::GetField78() const { return unknown_78_; }
-void Object3D::SetField7a(unsigned short value) { unknown_7a_ = value; }
-unsigned short Object3D::GetField7a() const { return unknown_7a_; }
+// Main, originally Object3D::SetField78 (USA 0x02037600, EUR 0x02037610, JPN 0x0203705c)
+void Object3D::SetSoundGroup(unsigned short value) { unknown_78_ = value; }
+// Main, originally Object3D::GetField78 (USA 0x02037608, EUR 0x02037618, JPN 0x02037064)
+unsigned short Object3D::GetSoundGroup() const { return unknown_78_; }
+// Main, originally Object3D::SetField7a (USA 0x02037610, EUR 0x02037620, JPN 0x0203706c)
+void Object3D::SetSoundArchive(unsigned short value) { unknown_7a_ = value; }
+// Main, originally Object3D::GetField7a (USA 0x02037618, EUR 0x02037628, JPN 0x02037074)
+unsigned short Object3D::GetSoundArchive() const { return unknown_7a_; }
 
 void Object3D::SetAnimationPlaybackSpeed(fix16_t speed, int transitionTime)
 {
@@ -1738,9 +1746,9 @@ void Object3D::ComputeShadowPosition()
     {
         for (package = loadedAnimationPackageList_; package != NULL; package = package->pNext)
         {
-            if (package->bcfgData.MaybeGetRootBoneName() == NULL)
+            if (package->bcfgData.GetShadowBoneName() == NULL)
                 continue;
-            shadowBoneIndex_ = model->GetBoneIndex(package->bcfgData.MaybeGetRootBoneName());
+            shadowBoneIndex_ = model->GetBoneIndex(package->bcfgData.GetShadowBoneName());
             if (shadowBoneIndex_ >= 0)
                 return ComputeShadowPosition();
         }

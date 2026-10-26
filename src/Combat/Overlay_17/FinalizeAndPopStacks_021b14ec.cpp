@@ -8,7 +8,7 @@ void InitStructWithZeroId020979f4(struct Obj020979c0* p);
 void PopStack0AndTrigger_020a1e54(int flag);
 void PopStack1AndTrigger_020a1f4c(int flag);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 
 extern int g_mainAllocator;
@@ -33,6 +33,6 @@ extern "C" ARM void func_ov017_021b14ec(struct Obj021b14ec* self) {
 
     PopStack0AndTrigger_020a1e54(1);
     PopStack1AndTrigger_020a1f4c(1);
-    int field = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
+    int field = GameState_GetFollowCamera((char*)GameState::GetInstance());
     if (field != 0) SetField0x23cTrue_020a27ac((void*)field);
 }

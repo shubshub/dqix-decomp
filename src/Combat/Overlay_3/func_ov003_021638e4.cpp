@@ -55,17 +55,17 @@ int IsBrightnessTransitionActive(GameResources*);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *, int);
 int GameState_GetProtagonistIndex(GameState *);
 struct Obj02033874;
-void SetVecYFromValue02033874(Obj02033874*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
 extern "C" void func_ov017_021af59c(Node *);
 struct HeadList020469f8;
 struct HeadNode020469f8;
 void PrependNodeToHead(HeadList020469f8*, HeadNode020469f8*);
 struct Struct021b11b0;
 void InitState39_021b11b0(Struct021b11b0*);
-extern "C" int *func_0202ae18();
-extern "C" int func_0202b7d8(int *);
-extern "C" void func_ov017_021d1810(int, int, signed char);
-extern "C" void *func_020936f8();
+extern "C" int *LinkSession_GetInstance();
+int LinkSession_IsActive(int *);
+void EnqueueEventTag173_021d1810(int, int, signed char);
+void *GetGlobal02109030_020936f8();
 extern "C" void func_02094030(void *, int, int, int);
 unsigned int *GlobalFlags_GetInstance();
 struct FlagWord020466f4;
@@ -82,7 +82,7 @@ int ListContainsId(ListHead02046b60*, int);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
-int *GetField0x3f8Address_0200fd0c(GameState *);
+int *GameState_GetZoneTransition(GameState *);
 char *MessageSystem_GetInstance();
 void MessageSystem_Reset(char *);
 extern "C" void MessageSystem_Stop(char *);
@@ -146,7 +146,7 @@ extern "C" ARM void func_ov003_021638e4(Scene *self) {
                     v->x        = 0x5800;
                     v->y        = 0x199;
                     v->z        = -0x785;
-                    SetVecYFromValue02033874((Obj02033874*)c, 0);
+                    GameObject_SnapFacing((Obj02033874*)c, 0);
                 }
                 Struct_ov000_0215b278 *var10 = *(Struct_ov000_0215b278 **) (var0 + 0x3000 + RES_NODE_A_021638e4);
                 func_ov017_021af59c(var10);
@@ -169,7 +169,7 @@ extern "C" ARM void func_ov003_021638e4(Scene *self) {
                     var14->obj3D_.MakeVisible();
                 }
             }
-            if (CheckField0NonZero_0202b7d8(func_0202ae18()) != 0) {
+            if (LinkSession_IsActive(LinkSession_GetInstance()) != 0) {
                 EnqueueEventTag173_021d1810(0, -1, (signed char) GameState_GetProtagonistIndex(gs));
                 func_02094030(GetGlobal02109030_020936f8(), 1, -1, 0);
             }
@@ -203,7 +203,7 @@ extern "C" ARM void func_ov003_021638e4(Scene *self) {
             n->bce = f->b14;
             if (self->flags & 0x40) {
                 self->flags &= ~0x40;
-                if (CheckField0NonZero_0202b7d8(func_0202ae18()) != 0) {
+                if (LinkSession_IsActive(LinkSession_GetInstance()) != 0) {
                     n->bcf = 2;
                     AppendNodeToTail((TailList020469b4*)list, (TailNode020469b4*)n);
                 }
@@ -214,13 +214,13 @@ extern "C" ARM void func_ov003_021638e4(Scene *self) {
                 var20->unknown_cf_ = 3;
                 func_020469f8((Struct_020469f8*)var3, (Struct_020469f8_2*)var20);
                 func_ov017_0219bd1c(1, 0, 0, 1);
-                int *var22                         = func_0200fd0c(var1);
-                var22[4]                           = 0x48cc;
-                var22[5]                           = 0x199;
-                var22[6]                           = -0x733;
-                *(short *) ((char *) var22 + 0x1c) = 0;
-                *((unsigned char *) var22 + 0x6e)  = 0x40;
-                *((unsigned char *) var22 + 0xa)   = 0;
+                int *p                         = GameState_GetZoneTransition(gs);
+                p[4]                           = 0x48cc;
+                p[5]                           = 0x199;
+                p[6]                           = -0x733;
+                *(short *) ((char *) p + 0x1c) = 0;
+                *((unsigned char *) p + 0x6e)  = 0x40;
+                *((unsigned char *) p + 0xa)   = 0;
             }
             char *ctl = MessageSystem_GetInstance();
             MessageSystem_Reset(ctl);

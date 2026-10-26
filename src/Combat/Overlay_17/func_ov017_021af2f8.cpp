@@ -13,21 +13,21 @@ struct Struct_0202c1a4;
 struct Struct_02038598_4;
 struct Struct_0205e854;
 
-extern "C" SearchStruct* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
-int TestFlagBitAt0xe_0202c578(SearchStruct* obj, int value);
-int GetGlobalField0x10_0202d6a8(void);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
+int LinkSession_IsSlotLost(SearchStruct* obj, int value);
+int WH_GetSystemState(void);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int mask);
 int* GetGlobal02109030_020936f8(void);
 void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
 extern "C" void func_02094030(int*, short, short, signed char);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" int func_0202bd34(Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202b0f4(void* arg0);
-extern "C" void func_ov017_02195748(unsigned char* arg0);
-extern "C" void func_ov017_02192594(unsigned char* arg0);
-extern "C" void* func_0205e854(Struct_0205e854* arg0);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+int LinkSession_IsSlotConnected(SearchStruct* obj, int value);
+extern "C" void LinkSession_End(void* obj);
+void ClearTwoBytesAtField_02195748(unsigned char* base);
+void SetFlag1ForFlagombatants_02192594_02192594(unsigned char* base);
+void* FillBitArray0x1524WithFF(BitArrayObj0205e854* obj);
 
 struct Struct_ov017_021af2f8 {
     unsigned char unknown_0_;
@@ -42,12 +42,12 @@ struct Struct_ov017_021af2f8 {
 // USA: func_ov017_021af2f8
 extern "C" ARM unsigned char func_ov017_021af2f8(Struct_ov017_021af2f8* arg0) {
     GameState::GetInstance();
-    unsigned int* var0 = (unsigned int*)GetGameResources();
-    Struct_0202b2f0* var1 = func_0202ae18();
-    func_0202c178(var1, 0);
-    Struct_0205e854* var2 = (Struct_0205e854*)func_0202ae24();
+    unsigned int* flags = (unsigned int*)GetGameResources();
+    SearchStruct* search = LinkSession_GetInstance();
+    LinkSession_GetReceivedRecord(search, 0);
+    BitArrayObj0205e854* bits = (BitArrayObj0205e854*)LinkMessageQueue_GetInstance();
 
-    if (TestFlagBitAt0xe_0202c578(search, 0) != 0 || GetGlobalField0x10_0202d6a8() == 8) {
+    if (LinkSession_IsSlotLost(search, 0) != 0 || WH_GetSystemState() == 8) {
         FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x8020);
         int* g = GetGlobal02109030_020936f8();
         ResetAndSetFlag0x3c9Bit0_020939dc(g);
@@ -55,19 +55,19 @@ extern "C" ARM unsigned char func_ov017_021af2f8(Struct_ov017_021af2f8* arg0) {
         return 3;
     }
 
-    int var4 = 0;
-    if (func_0202c1a4((Struct_0202c1a4*)var1) == 0) {
-        var4 = 1;
+    int done = 0;
+    if (LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) == 0) {
+        done = 1;
     } else {
-        for (int var5 = 0; var5 < 4; var5++) {
-            if (var5 == func_0202c1a4((Struct_0202c1a4*)var1)) {
+        for (int i = 0; i < 4; i++) {
+            if (i == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
                 continue;
             }
-            if (func_0202bd34(var1, var5) == 0) {
+            if (LinkSession_IsSlotConnected(search, i) == 0) {
                 continue;
             }
-            Struct_0202b2f0_2* var6 = func_0202c178(var1, var5);
-            if (var6 == 0) {
+            SearchEntry0202c178* entry = LinkSession_GetReceivedRecord(search, i);
+            if (entry == 0) {
                 continue;
             }
             if (var6->unknown_2_0_ == 0) {
@@ -75,34 +75,34 @@ extern "C" ARM unsigned char func_ov017_021af2f8(Struct_ov017_021af2f8* arg0) {
                 break;
             }
         }
-        if (arg0->unknown_10_ != func_0202c1a4((Struct_0202c1a4*)var1)) {
-            arg0->unknown_f_ = 0;
+        if (obj->field10 != LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
+            obj->fieldF = 0;
         }
     }
 
     if (arg0->unknown_f_ == -1 || var4) {
         if (g_keyManager.TestKeysPressed(2)) {
-            arg0->unknown_f_ = -1;
-            SetFlags00((GameResources*)var0, 2);
-            func_0202b0f4(var1);
-            func_ov017_02195748((unsigned char*)var0);
-            func_ov017_02192594((unsigned char*)var0);
-            func_0205e854(var2);
-            ClearFlags00((GameResources*)var0, 0x40);
-            arg0->unknown_1_ = 1;
+            obj->fieldF = -1;
+            SetFlags00((GameResources*)flags, 2);
+            LinkSession_End(search);
+            ClearTwoBytesAtField_02195748((unsigned char*)flags);
+            SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)flags);
+            FillBitArray0x1524WithFF(bits);
+            ClearFlags00((GameResources*)flags, 0x40);
+            obj->field1 = 1;
         }
     } else if (arg0->unknown_f_ == 1) {
         if (var1->unknown_fc0_ == 0) {
             arg0->unknown_1_ = 1;
         }
     } else {
-        SetFlags00((GameResources*)var0, 2);
-        func_0202b0f4(var1);
-        func_ov017_02195748((unsigned char*)var0);
-        func_ov017_02192594((unsigned char*)var0);
-        func_0205e854(var2);
-        ClearFlags00((GameResources*)var0, 0x40);
-        arg0->unknown_1_ = 1;
+        SetFlags00((GameResources*)flags, 2);
+        LinkSession_End(search);
+        ClearTwoBytesAtField_02195748((unsigned char*)flags);
+        SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)flags);
+        FillBitArray0x1524WithFF(bits);
+        ClearFlags00((GameResources*)flags, 0x40);
+        obj->field1 = 1;
     }
     return arg0->unknown_8_;
 }

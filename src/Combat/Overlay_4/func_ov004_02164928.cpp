@@ -28,11 +28,11 @@ extern "C" void func_0201165c(char*, const void*, int, Struct_0201165c);
 typedef void (*Type_ov004_02164928)(char*, const void*, int, Struct_ov004_02164928_2, unsigned int, unsigned int);
 extern "C" unsigned char func_02090294(ActiveGrottoClass*);
 extern "C" void func_0208f748(char*, int*);
-extern "C" void func_ov017_021cfcec(unsigned char);
-extern "C" void func_02011408(void*);
-extern "C" int* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_0202c508(int*);
+void EnqueueEventTag163_021cfcec(unsigned char);
+void ClearBitArray_02011408(void*);
+extern "C" int* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsHostOrSolo(int*);
 extern "C" void func_ov017_021cfabc();
 extern "C" void func_ov017_021cf730(int, int);
 extern "C" void func_ov017_021d3ec8();
@@ -107,11 +107,11 @@ extern "C" ARM int func_ov004_02164928(void* self) {
             func_0208f748(var17, &var16->entranceX);
         }
     }
-    var16->unknown_0[3] = 0;
-    func_ov017_021cfcec(1);
-    func_02011408(var0);
-    int* var18 = func_0202ae18();
-    if (func_0202b7d8(var18) && func_0202c508(var18)) {
+    active->unknown_0[3] = 0;
+    EnqueueEventTag163_021cfcec(1);
+    ClearBitArray_02011408(state);
+    int* context = LinkSession_GetInstance();
+    if (LinkSession_IsActive(context) && LinkSession_IsHostOrSolo(context)) {
         func_ov017_021cfabc();
         func_ov017_021cf730(-1, 0);
         func_ov017_021d3ec8();

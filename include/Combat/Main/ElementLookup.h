@@ -17,5 +17,5 @@ struct Struct_0201cb60_2 {
     int unknown_8_;
 };
 
-extern "C" void *func_02011584(void *arg0);
-extern "C" Struct_0201cb60 *func_0209998c(Struct_0201cb60_2 *arg0, const char *arg1);
+void *GameState_GetZoneTable(void *obj);
+Elem0209998c *ZoneTable_FindEntryByMapCode(List0209998c *list, const char *name);

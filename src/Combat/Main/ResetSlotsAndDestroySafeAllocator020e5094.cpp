@@ -2,7 +2,7 @@
 #include "Resource/KeyTable.h"
 #include "Memory/SafeAllocator.h"
 
-void ResetAndDetach020dfc6c(Struct020dfc40* p);
+void KeyTable_Destroy(Struct020dfc40* p);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 struct Slot020e5058 {
@@ -17,7 +17,7 @@ extern int g_mainAllocator;
 ARM void ResetSlotsAndDestroySafeAllocator020e5094(void) {
     int i;
     for (i = 0; i < 2; i++) {
-        ResetAndDetach020dfc6c(&data_02153694[i].inner);
+        KeyTable_Destroy(&data_02153694[i].inner);
     }
     void* p = data_02153680.GetSignedAllocator();
     if (p != NULL) {

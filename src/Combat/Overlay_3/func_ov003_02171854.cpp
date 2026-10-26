@@ -16,41 +16,41 @@ enum { Enum_ov003_02171854_1824 = 0x720 };
 enum { Enum_ov003_02171854_1828 = 0x724 };
 #endif
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b000(void* arg0);
-extern "C" void func_0202b0f4(void* arg0);
-extern "C" int func_0202b800(int* arg0);
-extern "C" void func_0202c360(void* arg0, int arg1);
-extern "C" void func_0202b2f0(void* arg0);
-extern "C" void func_0202c410(void* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int func_0202b000(void* obj);
+extern "C" void LinkSession_End(void* p);
+extern int SetStateToThreeAndDispatch0202b800(int* p);
+extern "C" void func_0202c360(void* self, int value);
+extern "C" void LinkSession_Update(void* obj);
+void CopyBattleTailToObjField0x102c_0202c410(void* obj);
 
-struct Struct_0202b2f0;
-extern "C" void func_0202c21c(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c288(void* arg0);
-extern "C" unsigned int _u32_div_f(unsigned int arg0, unsigned int arg1);
+struct SearchStruct;
+extern void LinkSession_RemoveMember(struct SearchStruct* obj, int value);
+extern "C" void LinkSession_UpdateMemberCount(void* obj);
+extern "C" unsigned int _u32_div_f(unsigned int a, unsigned int b);
 
 // USA: func_ov003_02171854
-extern "C" ARM void func_ov003_02171854(char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    GameObject* var2 = var0->GetProtagonist();
+extern "C" ARM void func_ov003_02171854(char* self) {
+    GameState* battle = GameState::GetInstance();
+    void* search = LinkSession_GetInstance();
+    GameObject* combatant = battle->GetProtagonist();
 
     int var3 = func_0202b000(var1);
     if (var3 != 0) {
         if (var3 == 3) {
             return;
         }
-        func_0202b0f4(var1);
-        arg0[0] = 0xa;
+        LinkSession_End(search);
+        self[0] = 0xa;
         return;
     }
 
-    func_0202b800((int*)var1);
-    func_0202c360(var1, *(int*)((char*)var2 + 0x134));
-    func_0202b2f0(var1);
-    func_0202c410(var1);
-    func_0202c21c((struct Struct_0202b2f0*)var1, 0xf);
-    func_0202c288(var1);
+    SetStateToThreeAndDispatch0202b800((int*)search);
+    func_0202c360(search, *(int*)((char*)combatant + 0x134));
+    LinkSession_Update(search);
+    CopyBattleTailToObjField0x102c_0202c410(search);
+    LinkSession_RemoveMember((struct SearchStruct*)search, 0xf);
+    LinkSession_UpdateMemberCount(search);
 
     int var4 = (rand() % 4 + 2) * 500;
     *(int*)(arg0 + 4) = var4;

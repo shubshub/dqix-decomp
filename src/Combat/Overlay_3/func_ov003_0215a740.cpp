@@ -48,15 +48,15 @@ void TryClearFlags0x130_02048418(unsigned char*, unsigned short);
 void* GameState_GetParty(GameState*);
 extern "C" void func_0207c378(void*, short, int, int);
 extern "C" void func_02052d7c(void*, signed char, int);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int*);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int*);
 extern "C" void func_ov017_021c3fb4(int, int);
 extern "C" void func_ov017_021c4418(int, int);
 extern "C" void func_ov017_0218f5a4(void*, int, int, int, int);
 struct FieldTaskQueue;
 void FieldTaskQueue_Update(FieldTaskQueue*);
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 extern "C" void func_ov017_0218b5f8(int);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
 
@@ -253,20 +253,20 @@ extern "C" ARM void func_ov003_0215a740(void* self, int p1, int p2) {
                 func_02052d7c(combatant, data_ov003_0217f39c[i], -1);
                 flag = 1;
             }
-            if (var18 != 0) {
-                if (func_0202b7d8((int*)func_0202ae18()) != 0) {
-                    func_ov017_021c3fb4(var14, 1);
-                    func_ov017_021c4418(var14, -1);
+            if (flag != 0) {
+                if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
+                    func_ov017_021c3fb4(cid, 1);
+                    func_ov017_021c4418(cid, -1);
                 }
                 void* bg = (void*)GetGameResources();
                 void* ctxA = *(void**)((char*)bg + kRegion3700);
                 void* ctxB = *(void**)((char*)bg + kRegion3700 + 4);
                 void* loader = BackgroundLoader::GetInstance();
                 func_ov017_0218f5a4(bg, cid, 1, 0, 0);
-                while (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)ctxA) == 0x13) {
+                while (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)ctxA) == 0x13) {
                     ((BackgroundLoader*)loader)->RemoveAllLocks();
                     FieldTaskQueue_Update((FieldTaskQueue*)ctxA);
-                    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)ctxB) == 0x14) {
+                    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)ctxB) == 0x14) {
                         FieldTaskQueue_Update((FieldTaskQueue*)ctxB);
                     }
                 }

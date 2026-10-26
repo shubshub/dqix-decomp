@@ -53,9 +53,9 @@ extern Actor0209c73c g_bgmPlayer;
 int IsAnimationActive0209ca2c(void*);
 void DispatchActorState0209c73c(Actor0209c73c*);
 extern "C" int func_0205d97c(void*);
-extern "C" int func_ov000_021815c8(void*);
-extern "C" int* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
+int GetAdjustedByteField0x1d6b_ov000_021815c8(void*);
+extern "C" int* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
 extern "C" void func_ov017_021c3fb4(int, int);
 extern "C" void func_ov017_0218f5a4(GameResources*, int, int, int, int);
 extern "C" BattleCommand* func_ov000_02161318(BattleMenuState*, int);
@@ -82,10 +82,10 @@ extern "C" ARM void func_ov000_0217eb28(BattleMenuState* state, int first, int s
             arg0->unknown_1d60_[arg0->unknown_1d68_] = 0;
             arg0->unknown_1d68_--;
         }
-        int var1 = func_ov000_021815c8(arg0);
-        if (func_0202b7d8(func_0202ae18()))
-            func_ov017_021c3fb4(var1, 1);
-        GameResources* var2 = GetGameResources();
+        int character = GetAdjustedByteField0x1d6b_ov000_021815c8(state);
+        if (LinkSession_IsActive(LinkSession_GetInstance()))
+            func_ov017_021c3fb4(character, 1);
+        GameResources* resources = GetGameResources();
         BackgroundLoader::GetInstance();
         func_ov017_0218f5a4(var2, var1, 1, 0, 0);
         Struct_ov000_0217e870* var3 = func_ov000_02161318(arg0, var1);

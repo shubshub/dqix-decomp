@@ -13,18 +13,18 @@ struct Struct_02033834;
 struct Struct_02053f7c_3;
 struct Struct_02083508_2 { char unknown_0_[0x20]; };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void func_0202c288(void*);
-extern "C" void func_02039880(unsigned char*, int);
-extern "C" int func_0202c1c0(Struct_0202b2f0* arg0, int arg1);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
-extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
+extern "C" void LinkSession_UpdateMemberCount(void*);
+void GameObject_SetLineLeader(unsigned char*, int);
+int LinkSession_IsSlotMember(SearchStruct* obj, int value);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+extern "C" void Party_ReformLine(GameResources*, int, int, int, int);
 void CallHelperWithBuf_021907dc(int, int, int, int, int);
-signed char GetSignedByte0x1ca_02039888(void*);
-void SetVecYFromValue02033874(Obj02033874*, int);
+signed char GameObject_GetLineLeader(void*);
+void GameObject_SnapFacing(Obj02033874*, int);
 void SetByte0x5cdaAndClearField0xa_020120d4(unsigned char*, unsigned char);
-void* GetField0x74deForValidIndex_020120a0(char* p, unsigned int index);
+void* GameState_GetPlayerLocation(char* p, unsigned int index);
 void SetWord0x71f8_0201206c(void*, int);
 void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c*, unsigned short, int);
 extern "C" void* Scenario_GetInstance(void);
@@ -33,7 +33,7 @@ void CopyRegionsAndClearField0206e70c(char*);
 void ApplySlotBytesToBattleStruct_0206df14(unsigned char*);
 float GetActiveBitIndex_020103e8(GameState*);
 void InitFieldsFromCombatant_0219bcac(unsigned char);
-unsigned char* GetField0x3f8Address_0200fd0c(GameState*);
+unsigned char* GameState_GetZoneTransition(GameState*);
 void* GetGlobal02109418_02094d6c();
 void* CallFunc0205ec34_020965f8();
 void* ItemTable_Construct(void*);
@@ -148,12 +148,12 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
 
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    SearchStruct* search = (SearchStruct*)func_0202ae18();
+    SearchStruct* search = (SearchStruct*)LinkSession_GetInstance();
     Zone021b0bc0* zone = (Zone021b0bc0*)Zone3D_GetInstance();
 #if defined(jpn)
     Struct_ov017_021b0bc0* var9 = inline_ov017_021b0bc0(var8);
 #endif
-    func_0202c288(var7);
+    LinkSession_UpdateMemberCount(search);
 
     int var10 = 1;
     if (arg0->unknown_4_ != NULL && *arg0->unknown_4_ == 10) {
@@ -161,7 +161,7 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
     }
     GameObject* leader = gs->GetPartyMemberByIndex(self->leader);
     if (leader != NULL) {
-        SetByte0x1ca_02039880((unsigned char*)leader, leader->obj3D_.actorIndex_);
+        GameObject_SetLineLeader((unsigned char*)leader, leader->obj3D_.actorIndex_);
     }
     short* var12 = var3;
     for (int var13 = 0; var13 < 4; var13++, var12++) {
@@ -171,15 +171,15 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
         }
     }
 
-    for (int var15 = 0; var15 < 4; var15++) {
-        if (func_0202c1c0(var7, var15) == 0) {
+    for (int i = 0; i < 4; i++) {
+        if (LinkSession_IsSlotMember(search, i) == 0) {
             continue;
         }
-        if (var15 == func_0202c1a4((Struct_0202c1a4*)var7)) {
-            if (arg0->unknown_284_ == 0) {
-                var10 = 0;
+        if (i == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
+            if (self->f284 == 0) {
+                show = 0;
             }
-            func_ov017_02191108(var6, 1, var10, 1, 1);
+            Party_ReformLine(res, 1, show, 1, 1);
         } else {
             func_ov017_021907dc((int)var6, var15, 1, var10, 1);
         }
@@ -192,13 +192,13 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
             if (var17 == NULL) {
                 continue;
             }
-            if (var16 == func_02039888(var17)) {
+            if (i == GameObject_GetLineLeader(member)) {
                 continue;
             }
             if (var16 != 0 && !(var17->obj3D_.unknown_0_ & 0x1000)) {
                 continue;
             }
-            func_02033874((Struct_02033834*)var17, *var12);
+            GameObject_SnapFacing((Obj02033874*)member, *y);
         }
         ClearFlags00(var6, 0x40);
 
@@ -211,8 +211,8 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
         memcpy((char*)var5 + 0x5cdc, var18->unknown_4_, sizeof(var18->unknown_4_));
         memcpy((char*)var5 + 0x5e6c, var18->unknown_194_, sizeof(var18->unknown_194_));
 #endif
-        memcpy(func_020120a0((char*)var5, 0), var18->unknown_2a4_, sizeof(var18->unknown_2a4_));
-        func_0201206c(var5, var18->unknown_2c4_);
+        memcpy(GameState_GetPlayerLocation((char*)gs, 0), snap->block2a4, sizeof(snap->block2a4));
+        SetWord0x71f8_0201206c(gs, snap->f2c4);
 #if defined(jpn)
         inline_ov017_021b0bc0_2(var9, var18->unknown_2c8_);
         inline_ov017_021b0bc0_5(var9, var18->unknown_2cc_);
@@ -245,7 +245,7 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
         lighting->dayNightTimer_ = gs->GetDayTimer();
         lighting->timeOfDayIndex_ = gs->GetTimeOfDay();
         InitFieldsFromCombatant_0219bcac(1);
-        GetField0x3f8Address_0200fd0c(gs)[0xa] = 0;
+        GameState_GetZoneTransition(gs)[0xa] = 0;
         GetGlobal02109418_02094d6c();
         CallFunc0205ec34_020965f8();
 

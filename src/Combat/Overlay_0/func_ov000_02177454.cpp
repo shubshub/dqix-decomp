@@ -10,8 +10,8 @@ extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, in
 #else
 extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov000_02177454 {
@@ -38,7 +38,7 @@ extern "C" ARM void func_ov000_02177454(void* arg0, struct Struct_ov000_02177454
     *(short*)(s + 0xaa) = 7;
     *(short*)(s + 0xac) = 0xa;
     *(short*)(s + 0xae) = 0xd;
-    if (CheckField0NonZero_0202b7d8((int*)func_0202ae18())) {
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
         if (GameState_GetProtagonistIndex(GameState::GetInstance()) == 0) {
             *(short*)(s + 0xa8) = 0xc;
             *(short*)(s + 0xaa) = 4;

@@ -84,7 +84,7 @@ struct Struct_ov003_0217e6b0_2 {
 };
 
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 void SetBrightness(GameResources* resources, int brightness, int duration);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsBrightnessTransitionActive(GameResources* resources);
@@ -97,7 +97,7 @@ extern "C" void* Zone3D_GetInstance(void);
 unsigned short GetFieldAt0x7e_0201e830(S_e830* obj);
 void ResetOverlayAndAllocator_0219bf74(void);
 void VramState_Rewind(Foo0207df50* p);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void PushInputLogB_020a1ef0(int id);
 extern "C" void CharacterCreationUI_Init(void* scene, int a, int b);
 extern "C" void func_ov008_021842a0(void* scene, SafeAllocator* alloc);
@@ -107,16 +107,16 @@ void SetPowCnt1Bit15_0217eea8(int enable);
 void LockStagedTextureVRAMCopying(void);
 void UnlockStagedTextureVRAMCopying(void);
 void UpdateVRAMStagingVRAMBanks(void);
-extern "C" void func_020bb48c(unsigned int arg0, int arg1);
-extern "C" void func_020c391c(int arg0, int arg1, int arg2);
-extern "C" void func_020c3984(unsigned int arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_020c54a4(int arg0, unsigned int arg1, unsigned int arg2, unsigned short arg3);
-extern "C" void* func_0203bd08(void);
-void InitBattleContext0203bd24(char* ctx);
-int* GetGlobalPtr02105244_0203bd14(void);
-extern "C" int func_0203be4c(void* ctx);
-extern "C" void func_0203c35c(int* ptr);
+void ConfigurePairMode020bb48c(unsigned int mode, int flag);
+void GX_SetGraphicsMode(int a, int b, int c);
+void GXS_SetGraphicsMode(unsigned int mode);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fog);
+void SetFogState_020c54a4(int enable, unsigned int mode, unsigned int shift, unsigned short offset);
+extern "C" void* OamManager_GetInstance(void);
+void OamManager_Init(char* ctx);
+int* CachedTextTable_GetInstance(void);
+extern "C" int OamManager_GetSubOamBuffer(void* ctx);
+extern "C" void CachedTextTable_LoadPalettes(int* ptr);
 extern "C" int CharacterCreationUI_Update(void* scene);
 void ClearFlag0x10IfSet(Struct02074bd0* obj);
 void ClearFlag0x11IfSet(Struct02074bf4* obj);
@@ -159,11 +159,11 @@ static inline Struct_ov003_0217e6b0 inline_ov003_0217e6b0(void) {
 extern "C" ARM void FieldTask_CreatePartyMember(SceneSwap0217e6b0* self) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     GameObject_DisableControl((Obj020397cc*)leader, 1);
 
     if (self->state == 0) {
-        if (!IsField0Null_02046b08((void**)res->unknown_ptr_array_3700[0])) {
+        if (!FieldTaskQueue_IsEmpty((void**)res->unknown_ptr_array_3700[0])) {
             return;
         }
         SetFlags00(var1, 0x10);
@@ -207,7 +207,7 @@ extern "C" ARM void FieldTask_CreatePartyMember(SceneSwap0217e6b0* self) {
         self->allocator.CreateTypeA(res->allocator_array_38[0].Allocate(kRegionValue3A39C_37EDC), kRegionValue3A39C_37EDC);
         self->allocator.Reset();
         self->scene = self->allocator.Allocate(kRegionValueDB8_D90);
-        func_020a1940(OVERLAY_ID(9));
+        Overlay_Load(OVERLAY_ID(9));
         PushInputLogB_020a1ef0(1);
         CharacterCreationUI_Init(self->scene, self->sceneArg, CreationMode_PartyMemberCreation);
         func_ov008_021842a0(self->scene, &self->allocator);
@@ -235,7 +235,7 @@ extern "C" ARM void FieldTask_CreatePartyMember(SceneSwap0217e6b0* self) {
         UpdateVRAMStagingVRAMBanks();
         UnlockStagedTextureVRAMCopying();
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1f00;
-        func_020c391c(1, 0, 1);
+        GX_SetGraphicsMode(1, 0, 1);
         BG1CNT = (BG1CNT & 0x43) | 0x1d00;
         BG2CNT = (BG2CNT & 0x43) | 0x1e08;
         BG3CNT = (BG3CNT & 0x43) | 0x1f0c;
@@ -244,21 +244,21 @@ extern "C" ARM void FieldTask_CreatePartyMember(SceneSwap0217e6b0* self) {
         BG2CNT = (BG2CNT & ~3) | 1;
         BG3CNT = BG3CNT & ~3;
         DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | 0x1700;
-        func_020c3984(0);
+        GXS_SetGraphicsMode(0);
         BG0CNTSUB = (BG0CNTSUB & 0x43) | 0x1d00;
         BG1CNTSUB = (BG1CNTSUB & 0x43) | 0x1e10;
         BG2CNTSUB = (BG2CNTSUB & 0x43) | 0x1f18;
         BG0CNTSUB = (BG0CNTSUB & ~3) | 2;
         BG1CNTSUB = (BG1CNTSUB & ~3) | 1;
         BG2CNTSUB = BG2CNTSUB & ~3;
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         SetFogState_020c54a4(0, 0, 0, 0);
-        char* context = (char*)func_0203bd08();
-        InitBattleContext0203bd24(context);
+        char* context = (char*)OamManager_GetInstance();
+        OamManager_Init(context);
         *(int*)context = 0;
-        int* global = GetGlobalPtr02105244_0203bd14();
-        *global = func_0203be4c(context) + 0x200;
-        func_0203c35c(global);
+        int* global = CachedTextTable_GetInstance();
+        *global = OamManager_GetSubOamBuffer(context) + 0x200;
+        CachedTextTable_LoadPalettes(global);
         global[kRegionValue508_608 / 4] = 0x7000;
         self->state++;
     } else if (self->state == 3) {
@@ -283,7 +283,7 @@ extern "C" ARM void FieldTask_CreatePartyMember(SceneSwap0217e6b0* self) {
         DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | (self->subVisiblePlanes << 8);
         ClearFlag0x10IfSet((Struct02074bd0*)self->controlBackup);
         ClearFlag0x11IfSet((Struct02074bf4*)self->controlBackup);
-        Set3DClearColor_020c5588(self->clearColor, 0x10, 0x7fff, 0, 0);
+        Set3DClearColor(self->clearColor, 0x10, 0x7fff, 0, 0);
         char blank[0x20];
         memset(blank, 0, 0x20);
         CleanInvalidateCacheRange(blank, 0x20);

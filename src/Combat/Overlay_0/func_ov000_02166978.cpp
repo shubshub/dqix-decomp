@@ -9,11 +9,11 @@ enum { Enum_ov000_02166978_22289 = 0x5711, Enum_ov000_02166978_14176 = 0x3760, E
 #include "NitroSDK/Graphics.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_02012de8(void);
-extern "C" void func_ov000_021723a8(void* arg0, void* arg1);
-extern "C" void func_ov000_02172128(void* arg0, void* arg1);
-extern "C" int func_ov000_021729ac(void* arg0);
-extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
+extern "C" void Main_HandleLid(void);
+extern "C" void func_ov000_021723a8(void* obj, void* src);
+extern "C" void func_ov000_02172128(void* obj, void* src);
+extern "C" int func_ov000_021729ac(void* obj);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
 
 // USA: func_ov000_02166978
 extern "C" ARM void func_ov000_02166978(unsigned char* arg0) {
@@ -33,15 +33,15 @@ extern "C" ARM void func_ov000_02166978(unsigned char* arg0) {
                 break;
             }
         }
-        var1->RemoveAllLocks();
-        func_02012de8();
+        loader->RemoveAllLocks();
+        Main_HandleLid();
     }
-    func_ov000_021723a8(arg0 + Enum_ov000_02166978_14176, var0 + 0x128);
-    func_ov000_02172128(arg0 + Enum_ov000_02166978_14176, arg0 + 0x1c);
-    *(unsigned char**)(arg0 + Enum_ov000_02166978_21076) = arg0 + 0x30;
-    while (func_ov000_021729ac(arg0 + Enum_ov000_02166978_14176) == 0) {
-        var1->RemoveAllLocks();
-        func_02012de8();
+    func_ov000_021723a8(obj + workOffset, res + 0x128);
+    func_ov000_02172128(obj + workOffset, obj + 0x1c);
+    *(unsigned char**)(obj + pointerOffset) = obj + 0x30;
+    while (func_ov000_021729ac(obj + workOffset) == 0) {
+        loader->RemoveAllLocks();
+        Main_HandleLid();
     }
     DISPCNT = (DISPCNT & ~0x1f00) | 0x1100;
     *(int*)(arg0 + Enum_ov000_02166978_22008) = 1;

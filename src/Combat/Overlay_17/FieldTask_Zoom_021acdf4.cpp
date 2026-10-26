@@ -91,31 +91,31 @@ struct Struct_ov017_021acdf4 {
     unsigned char unknown_282_;
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* func_02057924(void);
 void SetupAndDispatch0205c904(unsigned char* obj, int value);
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
 StateFlags3c9* GetGlobal02109030_020936f8(void);
 int CheckFlag0x3c9Bit0OrByteNonPositive_0209494c(StateFlags3c9* g);
 extern "C" void func_020a0cc4(unsigned int size);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void InitCombatPairAndResetGlobal_021adb50(char* self);
-unsigned char* GetField0x3f8Address_0200fd0c(GameState* gs);
+unsigned char* GameState_GetZoneTransition(GameState* gs);
 void InitStruct02070378(char* obj);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void VramState_Rewind(Foo0207df50* p);
 void ResetGlobalObjAndInitSelfPointer0205ce94(unsigned char* obj);
 extern "C" int func_02057e6c(void* mgr, int id, SafeAllocator* alloc, void* data, unsigned int length, Foo0207df50* fields);
-void CopyCountedBytesToIntArray02010834(Base02010834* base, int index, int* out, int* outCount);
-extern "C" int func_0202c508(void* p);
+void GameState_GetPartyMemberIds(Base02010834* base, int index, int* out, int* outCount);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 void FindNodeAndProcess02057fb4(void* list, int id, void* params);
-int CheckField0NonZero_0202b7d8(int* p);
+int LinkSession_IsActive(int* p);
 void EnqueueEventTag17_021ce014(int id, unsigned short a, unsigned short b, unsigned short c);
 void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
 void SePlayer_PlayExtra(void* obj, int a, int b);
 void SetBrightness(GameResources* resources, int brightness, int duration);
 void InitAndAppendState61_021a65c4(void* obj, unsigned char mode, int arg);
-void InitAndResetHeader_0219e310(unsigned char* obj, int arg);
+void FieldTask_InitEnterZone(unsigned char* obj, int arg);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void ClearSubstructBytes_0200fb40(void* obj);
 int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
@@ -133,7 +133,7 @@ extern "C" void func_02057f00(void* mgr, int id);
 void SePlayer_UnloadExtraArchiveB(void* obj);
 void CallListIfFlagsSet_02197528(void);
 void GameObject_EnableControl(void* obj);
-void ClearFlag0x1ceBit0x4_02039d58(unsigned char* obj);
+void GameObject_ClearHidden(unsigned char* obj);
 extern "C" void func_ov017_021c37a4(void);
 void InitState39_021b11b0(Struct021b11b0* obj);
 void PrependNodeToHead(HeadList020469f8* list, HeadNode020469f8* node);
@@ -143,12 +143,12 @@ int StandardStrings_Get(int value);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, int arg1, int arg2, int arg3);
 #endif
-int GetFieldIfFlag4_020100f8(char* gs);
-void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char* obj, int a, int b);
+int GameState_GetFollowCamera(char* gs);
+void Camera_Shake(unsigned char* obj, int a, int b);
 int GetField0x21c020a277c(void* obj);
 void SetField0x21c_020a2770(void* obj, short v);
 void Forward0205ec20(void* obj, void* a, int b);
-extern "C" void func_ov017_02191108(GameResources* res, int a, int b, int c, int d);
+extern "C" void Party_ReformLine(GameResources* res, int a, int b, int c, int d);
 void MessageSystem_Reset(char* obj);
 extern "C" void func_ov017_021adb1c(Battle021acdf4* self);
 
@@ -172,7 +172,7 @@ static inline BattleHud021acdf4* GetBattleHud(GameResources* res) {
 extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     void* mgr = func_02057924();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
@@ -193,18 +193,18 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
         if (arg0->unknown_282_) {
             func_ov017_021adb50((char*)arg0);
         }
-        if (arg0->unknown_281_) {
-            unsigned char* var6 = func_0200fd0c(var0);
-            func_02070378((char*)var6);
-            var6[2] = 1;
-            *(unsigned short*)var6 = 0xc3b5;
-            var6[7] = 1;
-            *(short*)(var6 + 0x1c) = 0;
-            *(int*)(var6 + 0x10) = 0x48cc;
-            *(int*)(var6 + 0x14) = 0x199;
-            *(int*)(var6 + 0x18) = -0x733;
-            var6[0x66] = 1;
-            var6[0x65] = 1;
+        if (self->initCtx) {
+            unsigned char* ctx = GameState_GetZoneTransition(gs);
+            InitStruct02070378((char*)ctx);
+            ctx[2] = 1;
+            *(unsigned short*)ctx = 0xc3b5;
+            ctx[7] = 1;
+            *(short*)(ctx + 0x1c) = 0;
+            *(int*)(ctx + 0x10) = 0x48cc;
+            *(int*)(ctx + 0x14) = 0x199;
+            *(int*)(ctx + 0x18) = -0x733;
+            ctx[0x66] = 1;
+            ctx[0x65] = 1;
         }
         self->allocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x7000), 0x7000);
         self->allocator.Reset();
@@ -231,35 +231,35 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
         if (data == NULL) {
             loader->RemoveTask(self->task);
             func_ov017_021adb1c(self);
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
         if (arg0->unknown_280_ && !arg0->unknown_27f_) {
             func_0205ce94(arg0->unknown_44_);
         }
-        func_02057e6c(var3, 8, &arg0->unknown_8_, var9, var8, var7);
-        var4->RemoveTask(arg0->unknown_40_);
-        arg0->unknown1_1c_ = 1;
-    } else if (arg0->unknown1_1c_ == 1) {
-        int var10 = 0;
-        int var11[5];
-        Struct_ov017_021abba8_2 var12[5];
-        Vector3i var13;
-        void* var14 = func_0202ae18();
-        func_02010834((Struct_02010834*)var0, *(short*)((char*)var2 + 4), var11, &var10);
-        for (int var15 = 0; var15 < var10; var15++) {
-            arg0->unknown_1e_ |= 1 << var11[var15];
+        func_02057e6c(mgr, 8, &self->allocator, data, length, fields);
+        loader->RemoveTask(self->task);
+        self->state = 1;
+    } else if (self->state == 1) {
+        int count = 0;
+        int ids[5];
+        ObjParams02078484 params[5];
+        Vector3i scale;
+        void* search = LinkSession_GetInstance();
+        GameState_GetPartyMemberIds((Base02010834*)gs, *(short*)((char*)leader + 4), ids, &count);
+        for (int i = 0; i < count; i++) {
+            self->members |= 1 << ids[i];
         }
-        if (var0->GetGameObjectByIndex(0xce) && func_0202c508(var14)) {
-            var11[var10] = 0xce;
-            arg0->unknown_1e_ |= 0x10;
-            var10++;
+        if (gs->GetGameObjectByIndex(0xce) && LinkSession_IsHostOrSolo(search)) {
+            ids[count] = 0xce;
+            self->members |= 0x10;
+            count++;
         }
-        GameObject* var16 = var0->GetUnknownGameObject();
-        int var17 = -1;
-        if (var16) {
-            var17 = *(short*)((char*)var16 + 4);
+        GameObject* unk = gs->GetLeader();
+        int leaderId = -1;
+        if (unk) {
+            leaderId = *(short*)((char*)unk + 4);
         }
         for (int var18 = 0; var18 < var10; var18++) {
             GameObject* var19 = var0->GetGameObjectByIndex(var11[var18]);
@@ -299,11 +299,11 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
                 }
             }
         }
-        int var20;
-        unsigned char var21;
-        if (func_0202b7d8((int*)func_0202ae18()) && (var21 = arg0->unknown_1e_) != 0) {
-            var20 = *(short*)((char*)var2 + 4);
-            func_ov017_021ce014(var20, 3, (int)((Object3D*)var2)->GetField06(), var21);
+        int id;
+        unsigned char members;
+        if (LinkSession_IsActive((int*)LinkSession_GetInstance()) && (members = self->members) != 0) {
+            id = *(short*)((char*)leader + 4);
+            EnqueueEventTag17_021ce014(id, 3, (int)((Object3D*)leader)->GetField06(), members);
         }
         if (self->special) {
             SePlayer_LoadExtraArchiveB(&g_sePlayer, 0xa3, 0xa3);
@@ -368,7 +368,7 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
                 GameState* gs2;
                 Battle021acdf4* other;
                 gs2 = GameState::GetInstance();
-                ctx = GetField0x3f8Address_0200fd0c(gs2);
+                ctx = GameState_GetZoneTransition(gs2);
                 res2 = GetGameResources();
                 other = (Battle021acdf4*)res2->fieldTasks_[9];
                 InitStruct02070378((char*)ctx);
@@ -388,7 +388,7 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
                         ctx[0x64] = 1;
                     }
                 }
-                InitAndResetHeader_0219e310((unsigned char*)res2->unknown_ptr_array_3700[3], 0);
+                FieldTask_InitEnterZone((unsigned char*)res2->unknown_ptr_array_3700[3], 0);
                 AppendNodeToTail((TailList020469b4*)res2->fieldTaskQueue_, (TailNode020469b4*)res2->unknown_ptr_array_3700[3]);
                 ClearSubstructBytes_0200fb40(gs2);
                 InitAndAppendState61_021a65c4(res, 0, self->mode);
@@ -404,7 +404,7 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
                 SetBit3_021b2bdc((S021b2bdc*)node, 0);
                 AppendNodeToTail(tail, (TailNode020469b4*)node);
             }
-            if (func_0202c508(func_0202ae18())) {
+            if (LinkSession_IsHostOrSolo(LinkSession_GetInstance())) {
                 unsigned char* flags = (unsigned char*)Scenario_GetInstance();
                 Scenario_SetFlag(flags, flags + 0x8c, 0x113d, 1);
             }
@@ -424,10 +424,10 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
         self->done = 1;
         GameObject_EnableControl(leader);
         ((Object3D*)leader)->SetInheritedAlpha(0x1f);
-        ClearFlag0x1ceBit0x4_02039d58((unsigned char*)leader);
+        GameObject_ClearHidden((unsigned char*)leader);
         func_ov017_021adb1c(self);
-        func_020a0c0c();
-        if (arg0->unknown_280_) {
+        ROMFilesystem_InitFileTables();
+        if (self->special) {
             func_ov017_021c37a4();
         }
         *(short*)((char*)var1 + Enum_ov017_021acdf4_17582) = 0;
@@ -456,18 +456,18 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
             }
             char* g = (char*)MessageSystem_GetInstance();
 #if defined(jpn)
-            MessageSystem_SetStringArgument((Obj02046574*)g, 0, *(char**)((char*)gs->GetUnknownGameObject() + 0x134));
+            MessageSystem_SetStringArgument((Obj02046574*)g, 0, *(char**)((char*)gs->GetLeader() + 0x134));
             func_0204500c(g, &data_ov017_021d7f3b, 0);
 #else
             char combatant[0xc];
-            InitObjFromCombatant020e4c74(combatant, gs->GetUnknownGameObject());
+            InitObjFromCombatant020e4c74(combatant, gs->GetLeader());
             *(char**)g = combatant;
             func_0204500c(g, StandardStrings_Get(0x39), 0, 0xe3);
 #endif
             g[MessageDone] = 0;
             *(int*)(g + MessageActive) = 1;
-            unsigned char* obj = (unsigned char*)GetFieldIfFlag4_020100f8((char*)gs);
-            StoreFields0x1e4And0x1e8IfNonZero_0202ea10(obj, 0xcc, 0x3e8);
+            unsigned char* obj = (unsigned char*)GameState_GetFollowCamera((char*)gs);
+            Camera_Shake(obj, 0xcc, 0x3e8);
             self->savedPos = *(Vector3i*)(obj + 0x10);
             self->savedField = GetField0x21c020a277c(obj);
             SetField0x21c_020a2770(obj, -1);
@@ -476,14 +476,14 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
             SePlayer_PlayExtra(&g_sePlayer, 1, 0);
             self->state++;
         }
-    } else if (arg0->unknown1_1c_ == 0xb) {
-        *(Vector3i*)((char*)func_020100f8((char*)var0) + 0x10) = arg0->unknown_20_;
-        int var40 = 1;
-        for (int var41 = 0; var41 < 5; var41++) {
-            if (arg0->unknown_1e_ & (1 << var41)) {
-                char* var42 = (char*)var0->GetPartyMemberByIndex(var41 != 4 ? var41 : 0xce);
-                if (var42 && *(int*)(var42 + 0x124)) {
-                    var40 = 0;
+    } else if (self->state == 0xb) {
+        *(Vector3i*)((char*)GameState_GetFollowCamera((char*)gs) + 0x10) = self->savedPos;
+        int settled = 1;
+        for (int i = 0; i < 5; i++) {
+            if (self->members & (1 << i)) {
+                char* member = (char*)gs->GetPartyMemberByIndex(i != 4 ? i : 0xce);
+                if (member && *(int*)(member + 0x124)) {
+                    settled = 0;
                 }
             }
         }
@@ -499,7 +499,7 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
         }
     } else if (self->state == 0xd) {
         char* g = (char*)MessageSystem_GetInstance();
-        SetField0x21c_020a2770((void*)GetFieldIfFlag4_020100f8((char*)gs), self->savedField);
+        SetField0x21c_020a2770((void*)GameState_GetFollowCamera((char*)gs), self->savedField);
         func_02057f00(mgr, 8);
         SePlayer_UnloadExtraArchiveB(&g_sePlayer);
         for (int i = 0; i < 5; i++) {
@@ -511,10 +511,10 @@ extern "C" ARM void FieldTask_Zoom(Battle021acdf4* self, HeadList020469f8* list)
             }
         }
         self->done = 1;
-        func_ov017_02191108(res, 1, 1, 1, 1);
+        Party_ReformLine(res, 1, 1, 1, 1);
         GameObject_EnableControl(leader);
         MessageSystem_Reset(g);
         func_ov017_021adb1c(self);
-        func_020a0c0c();
+        ROMFilesystem_InitFileTables();
     }
 }

@@ -27,7 +27,7 @@ extern "C" void __clear(void* buffer, unsigned long size);
 PartEntry* ItemTable_Find(ItemTable* items, int id);
 int ItemRecord_GetFileNumber(StructDE234_020de234* item, int a);
 const char* KeyTable_Get(Container020e0310* texts, int id);
-void SetVec3At0x1c(Vec3Target0203a46c* model, int x, int y, int z);
+void SprSprite_SetPosition(Vec3Target0203a46c* model, int x, int y, int z);
 void RunTwoCallbacksAndReset02155d38(Obj02155d38* slot);
 
 struct Struct_ov005_02153ba4 {
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov005_021556e4(EquipmentMenu* self) {
                 int x;
                 int y;
                 func_ov005_021553b4(self, self->dragged_, &x, &y);
-                SetVec3At0x1c((Vec3Target0203a46c*)self->dragModel_, x << 12, y << 12, 0x2000);
+                SprSprite_SetPosition((Vec3Target0203a46c*)self->dragModel_, x << 12, y << 12, 0x2000);
                 self->dragStep_++;
                 self->loading_++;
             }

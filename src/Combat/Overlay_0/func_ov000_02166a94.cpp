@@ -4,9 +4,6 @@
 #include <Resource/GameResources.h>
 #include <World/Object3D.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_ov000_02166a94_2 { int unknown_0_; char unknown_4_[0x84]; };
 struct Struct_ov000_02166a94_3 {
@@ -35,15 +32,15 @@ struct Struct_ov000_02166a94_4 {
     char unknown_0_[0x230];
     char unknown_230_[4];
 };
-struct Struct_02057de0_2;
-struct Struct_0203d028_11 { int unknown_0_[8]; };
-union Struct_ov000_02166a94 { Struct_0203d028_11 unknown_0_; ObjectArchiveLoadInfo unknown1_0_; };
-struct Struct_020d6d18_2;
-struct Struct_020d6d90_3;
-struct Struct_020d76fc;
-struct Struct_020d6ec8;
-extern "C" Struct_02057de0_2* func_02057924();
-extern "C" void func_020c9be0();
+struct NodeList02057de0;
+struct Struct_203dafc { int words[8]; };
+union BattleModelLoadInfo02166a94 { Struct_203dafc words; ObjectArchiveLoadInfo archive; };
+struct Container020d6d18;
+struct Obj020d6d90;
+struct MergeLowNibbleField020d76fc;
+struct Container020d6f44;
+extern "C" NodeList02057de0* func_02057924();
+extern "C" void HaltSystem();
 void VramState_Restore(char*);
 void VramState_Save(char*);
 void CreateAndRegisterNode02057de0(NodeList02057de0*, int, SafeAllocator*, int, int);
@@ -51,15 +48,15 @@ void ClearEightWords_0203dafc(Struct_203dafc*);
 void SprSprite_LoadFile(void*, int, int, int);
 void ResetArrayAndEntry02182114(char*);
 extern "C" void func_ov000_0218214c(void*, SafeAllocator*, const void*);
-extern "C" char* func_02039e70();
-extern "C" void func_02039e7c(void*);
-extern "C" void func_02039f04(char*, int, const void*);
-extern "C" void func_020d6d18(Struct_020d6d18_2*);
-extern "C" void func_020d6d90(Struct_020d6d90_3*, const void*, SafeAllocator*, char*);
-extern "C" void func_020d76fc(Struct_020d76fc*);
-extern "C" void func_020d771c(unsigned char*);
-extern "C" void func_020d6ec8(Struct_020d6ec8*, SafeAllocator*);
-extern "C" void func_ov000_02160fa8(void*, int);
+char* NumberPopups_GetInstance();
+void NumberPopups_Init(void*);
+void NumberPopups_LoadSprites(char*, int, const void*);
+void ConstructEntryManager020d6d18(Container020d6d18*);
+void LoadFilesAndBuildNodeList020d6d90(Obj020d6d90*, const void*, SafeAllocator*, char*);
+void MergeLowNibbleField(MergeLowNibbleField020d76fc*);
+void OrMaskedField24IntoField26_020d771c(unsigned char*);
+void InitEntryManagerAllocator020d6ec8(Container020d6f44*, SafeAllocator*);
+void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
 extern const char data_ov000_02183a5a[], data_ov000_02183a6f[], data_ov000_02183a7a[], data_ov000_02183a85[], data_ov000_02183a93[];
 extern const char data_ov000_02183910[][16];
 struct Struct_ov000_02183028 {
@@ -83,7 +80,7 @@ extern "C" ARM void func_ov000_02166a94(BattleWork02166a94* self) {
     unsigned int size;
     const void* data;
     BackgroundLoader::AddLockGlobal();
-    if (!LoadFileIntoMemory(data_ov000_02183a5a, g_fileLoadBuffer, &size)) func_020c9be0();
+    if (!LoadFileIntoMemory(data_ov000_02183a5a, g_fileLoadBuffer, &size)) HaltSystem();
     VramState_Restore(pairTables->tables);
     if (GetFileInNarc(g_fileLoadBuffer, data_ov000_02183a6f, &data, &size, 0)) {
         void* buffer = sourceAllocator->Allocate(size);
@@ -150,9 +147,9 @@ extern "C" ARM void func_ov000_02166a94(BattleWork02166a94* self) {
     char* battleResources = self->battleResources;
     ResetArrayAndEntry02182114(battleResources);
     func_ov000_0218214c(battleResources, destinationAllocator, g_fileLoadBuffer);
-    char* objectResources = GetData02104b6c_02039e70();
-    ResetBattleArrays02039e7c(objectResources);
-    LoadObjectResourceFiles02039f04(objectResources, (int)destinationAllocator, g_fileLoadBuffer);
+    char* objectResources = NumberPopups_GetInstance();
+    NumberPopups_Init(objectResources);
+    NumberPopups_LoadSprites(objectResources, (int)destinationAllocator, g_fileLoadBuffer);
     VramState_Save(pairTables->tables);
     self->entryManager = destinationAllocator->Allocate(0xa48);
     ConstructEntryManager020d6d18((Container020d6d18*)self->entryManager);

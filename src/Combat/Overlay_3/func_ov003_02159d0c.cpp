@@ -19,13 +19,13 @@ enum { Enum_ov003_02159d0c_13504 = 0x34c0 };
 
 void* MessageSystem_GetInstance(void);
 void* GlobalFlags_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-extern "C" void func_ov003_02159290(void*, unsigned short, int);
+extern "C" void* LinkSession_GetInstance(void);
+void AppendFieldTwice_02159290(void*, unsigned short, int);
 extern "C" void func_ov003_02159250(void*, void*);
 struct Struct_0205d81c;
 void Window_SetPanePalette(Struct_0205d81c*, int, int);
-int CheckField0NonZero_0202b7d8(int*);
-extern "C" int func_0202c540(void*);
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsGuest(void*);
 struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
 extern "C" int func_ov003_0215bf18(void*, int);
@@ -61,7 +61,7 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
     unsigned char* s = (unsigned char*)self;
     unsigned char* g = (unsigned char*)MessageSystem_GetInstance();
     void* dp = GlobalFlags_GetInstance();
-    void* f = func_0202ae18();
+    void* f = LinkSession_GetInstance();
     char buf[0x34];
 
     if (*(int*)(var1 + Enum_ov003_02159d0c_2464) == 3) {
@@ -84,7 +84,7 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
         Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 1, 1);
         Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 2, 1);
         int key = 0x3f2;
-        if (CheckField0NonZero_0202b7d8((int*)f) && func_0202c540(f)) {
+        if (LinkSession_IsActive((int*)f) && LinkSession_IsGuest(f)) {
             key += 8;
         }
         func_ov003_02159250(self, KeyTable_Get((Container020e0310*)(s + 0x64), key));
@@ -134,20 +134,20 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
         }
         FlagWord_SetBits((unsigned int*)dp, 0x80);
         *(int*)(s + 0x598) = 0xf;
-        if (CheckField0NonZero_0202b7d8((int*)f)) {
+        if (LinkSession_IsActive((int*)f)) {
             func_ov017_021d1118(-1, 1, 1, 2);
             func_ov017_021d1014(-1, 1, 0);
         }
         *(unsigned char*)(var0 + 0x580) = 0x64;
     }
 
-    if (var5 == 0x64) {
-        if (func_0202b7d8((int*)var3)) {
-            signed char* var12 = (signed char*)GameState::GetInstance() + 0x4000 + Enum_ov003_02159d0c_13504;
-            for (int var13 = 0; var13 < 3; var13++, var12 += 10) {
-                if (var12[6] >= 4) {
-                    if (((unsigned char*)var12)[7] != 0 || ((unsigned char*)var12)[8] != 0) return;
-                    if (var12[9] >= 0) return;
+    if (state == 0x64) {
+        if (LinkSession_IsActive((int*)f)) {
+            signed char* p = (signed char*)GameState::GetInstance() + 0x4000 + kRegionValue34C0_3280;
+            for (int i = 0; i < 3; i++, p += 10) {
+                if (p[6] >= 4) {
+                    if (((unsigned char*)p)[7] != 0 || ((unsigned char*)p)[8] != 0) return;
+                    if (p[9] >= 0) return;
                 }
             }
         }
@@ -169,9 +169,9 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
         *(unsigned char*)(var0 + 0x580) = 0x66;
     }
 
-    if (var5 == 0x66) {
-        int var14 = 1;
-        if (func_0202c540(var3)) var14 |= 0x14;
+    if (state == 0x66) {
+        int flags = 1;
+        if (LinkSession_IsGuest(f)) flags |= 0x14;
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
         if (func_020aad1c(s + 0x1b8 + 0x400, &g_fileLoadBuffer, flags, 0) == 1) {
@@ -189,7 +189,7 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
         *(unsigned char*)(s + 0x59f) = *(unsigned char*)(s + 0x59f) & ~2;
         memset(*(void**)(s + 0x7c), 0, kRegionValue960_800);
         if (*(unsigned char*)(s + 0x5b4) != 0) {
-            unsigned char* obj = (unsigned char*)GameState::GetInstance()->GetUnknownGameObject();
+            unsigned char* obj = (unsigned char*)GameState::GetInstance()->GetLeader();
             func_02046380(g);
             MessageSystem_SetStringArgument((Obj02046574*)g, 0, (char*)(*(void**)(obj + 0x134)));
             Text_Append((char*)(*(void**)(s + 0x7c)), (char const*)KeyTable_Get((Container020e0310*)(s + 0x64), 0x3f3));
@@ -219,7 +219,7 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
                 *(unsigned char*)(s + 0x580) = *(unsigned char*)(s + 0x580) + 1;
                 return;
             }
-            if (CheckField0NonZero_0202b7d8((int*)f)) {
+            if (LinkSession_IsActive((int*)f)) {
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 0, 1);
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 1, 1);
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 2, 1);
@@ -252,7 +252,7 @@ extern "C" ARM void func_ov003_02159d0c(void* self) {
             *(unsigned char*)(s + 0x580) = 1;
             return;
         } else if (r == 0) {
-            if (CheckField0NonZero_0202b7d8((int*)f)) {
+            if (LinkSession_IsActive((int*)f)) {
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 0, 1);
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 1, 1);
                 Window_SetPanePalette((Struct_0205d81c*)(s + 0xf4), 2, 1);

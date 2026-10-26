@@ -28,8 +28,8 @@ struct Struct_0201f2cc {
     int unknown_10_;
 };
 
-extern "C" struct Struct_0201f2cc_2* func_0201f2cc(struct Struct_0201f2cc* arg0, int arg1);
-extern "C" struct Struct_0201f170* func_0201f170(struct Struct_0201ec00* arg0, int arg1);
+struct Element_1f2cc* BmdjScriptState_FindElementRecord(struct Manager_1f2cc* manager, int key);
+struct Entry_1f170* BmdjScriptState_FindResource(struct EntryList_1f170* list, int id);
 
 struct Struct_ov001_021601f8_3 {
     char unknown_0_[0x54];
@@ -70,8 +70,8 @@ extern "C" ARM void func_ov001_021601f8(struct SceneNode_021601f8* node, struct 
     LightingManager* lighting = LightingManager::GetInstance();
     struct RenderObj_021601f8* obj = node->obj;
     int timeOfDay = ((struct LightingView_021601f8*)lighting)->timeOfDay;
-    struct Element_1f2cc* element = FindElementByHalfwordKey_0201f2cc(manager, node->key);
-    struct Entry_1f170* entry = FindEntryBySignedId_0201f170(&manager->entryList, element->entryId);
+    struct Element_1f2cc* element = BmdjScriptState_FindElementRecord(manager, node->key);
+    struct Entry_1f170* entry = BmdjScriptState_FindResource(&manager->entryList, element->entryId);
     struct Entry_1f170* variant = entry->next;
     while (variant != NULL) {
         if (variant->id == timeOfDay) {

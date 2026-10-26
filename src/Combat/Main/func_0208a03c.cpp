@@ -67,7 +67,7 @@ struct Struct_0208a03c {
 
 struct Combatant0208a03c* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 void* GetData02108e10_020797dc(void);
-int IsGlobalU16InRange_020117f0(GameState*);
+int GameState_IsInGrotto(GameState*);
 extern "C" char* Zone3D_GetInstance(void);
 struct Move0208a03c* SearchBothTables02079e2c(char* table, int key);
 int GetCombatantField0x148Bits3To4_ov000_02159d94(void* unused, int id);
@@ -97,7 +97,7 @@ extern "C" ARM int func_0208a03c(Struct_0208a03c_3* arg0, unsigned char arg1, un
         }
     }
     char* zone = Zone3D_GetInstance();
-    if (IsGlobalU16InRange_020117f0(gs) && ctx->battle->party->f25 != 0) {
+    if (GameState_IsInGrotto(gs) && ctx->battle->party->f25 != 0) {
         char* detail = (char*)((ActiveGrottoClass*)(zone + regionalOffset))->GetDetailedData();
         short kindId = c->kindId;
         unsigned short alt = ((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->MaybeGetCurrentAlternateID();

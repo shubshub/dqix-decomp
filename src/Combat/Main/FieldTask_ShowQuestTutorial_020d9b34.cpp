@@ -21,7 +21,7 @@ extern const char data_020f2810[];
 extern const char data_020f2826[];
 
 struct Struct02012dd0;
-unsigned int GetMaxAlloc02012dd0(Struct02012dd0* self);
+unsigned int AllocatorUnion_GetMaxPossibleAllocation(Struct02012dd0* self);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_SetBits(unsigned int* obj, unsigned int mask);
@@ -60,11 +60,11 @@ struct Struct_020d9b34_2 {
 // Main, originally func_020d9b34 (USA 0x020d9b34, EUR 0x020d9b44, JPN 0x020db538)
 extern "C" ARM void FieldTask_ShowQuestTutorial(struct Obj020d9b34* self) {
     if (self->state == 0) {
-        if (GetMaxAlloc02012dd0((Struct02012dd0*)&g_mainAllocator) < 0x400) {
+        if (AllocatorUnion_GetMaxPossibleAllocation((Struct02012dd0*)&g_mainAllocator) < 0x400) {
             self->field1 = 1;
             return;
         }
-        GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetLeader(), 1);
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xe);
         self->allocator.ResetAllocatorPointer();
         self->allocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x400), 0x400);

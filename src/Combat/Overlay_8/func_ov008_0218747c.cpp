@@ -20,42 +20,42 @@ struct Struct_ov008_0218747c_2 {
     char unknown_b38_[8];
     Struct_020ac4f8 unknown_b40_[2];
 };
-struct Struct_ov008_0218747c_3 { char unknown_0_[0x100d]; unsigned char unknown_100d_; };
-struct Struct_020103f0;
-struct Struct_020104cc;
-extern "C" void func_020103f0(Struct_020103f0*, unsigned short*, unsigned char*, unsigned char*);
-extern "C" Struct_ov008_0218747c_3* func_0202ae18();
-extern "C" int func_0202ba00(int*);
-extern "C" void func_020104cc(Struct_020104cc*, unsigned short*, unsigned char*, unsigned char*);
-extern "C" void func_020ac614(Struct_020ac4f8*, int);
-extern "C" void func_020ac644(Struct_020ac4f8*, int);
-static inline Struct_ov008_0218747c* inline_ov008_0218747c(GameState* arg0) { return &((Struct_01ff91ac_37*)arg0)->unknown_7504_; }
+struct SearchClock { char pad[0x100d]; unsigned char count; };
+struct TimeStamp020103f0;
+struct TimeStamp020104cc;
+void GameState_GetTimeSinceMainTimestamp(TimeStamp020103f0*, unsigned short*, unsigned char*, unsigned char*);
+extern "C" SearchClock* LinkSession_GetInstance();
+int LinkSession_GetState(int*);
+void ComputeElapsedPlayTimeHMS020104cc(TimeStamp020104cc*, unsigned short*, unsigned char*, unsigned char*);
+void AddPlayClockHours020ac614(BattleRecordPlayClock*, int);
+void AddPlayClockMinutes020ac644(BattleRecordPlayClock*, int);
+static inline ClockTotals* GetTotals(GameState* game) { return &((GameClockTotals*)game)->totals; }
 
 // USA: func_ov008_0218747c
-extern "C" ARM void func_ov008_0218747c(Struct_ov008_0218747c_2* arg0, int arg1) {
-    if (arg0->unknown_b34_) return;
-    if (arg0->unknown_b10_ == 12 && arg0->unknown_b11_ < 6) return;
-    GameState* var0 = GameState::GetInstance();
-    Struct_020ac4f8* var1 = 0;
-    Struct_ov008_0218747c* var2 = inline_ov008_0218747c(var0);
-    Struct_020ac4f8* var3 = 0;
-    unsigned short var4 = 0;
-    unsigned char var5 = 0;
-    unsigned char var6 = 0;
-    Struct_020ac4f8* var7 = &var2->unknown_3c_[0];
-    Struct_020ac4f8* var8 = var7 + 1;
-    if (arg1 == 0) {
-        var1 = &arg0->unknown_b40_[0];
-        var3 = var7;
-        func_020103f0((Struct_020103f0*)var0, &var4, &var5, &var6);
-    } else if (arg1 == 1) {
-        var1 = &arg0->unknown_b40_[1];
-        var3 = var8;
-        Struct_ov008_0218747c_3* var9 = func_0202ae18();
-        int var10 = func_0202ba00((int*)var9);
-        int var11 = var9->unknown_100d_;
-        if ((var10 == 5 && var11 > 1) || var10 == 6) {
-            func_020104cc((Struct_020104cc*)var0, &var4, &var5, &var6);
+extern "C" ARM void func_ov008_0218747c(PlayTimeDisplay* display, int mode) {
+    if (display->disabled) return;
+    if (display->state == 12 && display->phase < 6) return;
+    GameState* game = GameState::GetInstance();
+    BattleRecordPlayClock* output = 0;
+    ClockTotals* totals = GetTotals(game);
+    BattleRecordPlayClock* saved = 0;
+    unsigned short hours = 0;
+    unsigned char minutes = 0;
+    unsigned char seconds = 0;
+    BattleRecordPlayClock* singlePlayerSaved = &totals->clocks[0];
+    BattleRecordPlayClock* multiplayerSaved = singlePlayerSaved + 1;
+    if (mode == 0) {
+        output = &display->clocks[0];
+        saved = singlePlayerSaved;
+        GameState_GetTimeSinceMainTimestamp((TimeStamp020103f0*)game, &hours, &minutes, &seconds);
+    } else if (mode == 1) {
+        output = &display->clocks[1];
+        saved = multiplayerSaved;
+        SearchClock* search = LinkSession_GetInstance();
+        int state = LinkSession_GetState((int*)search);
+        int count = search->count;
+        if ((state == 5 && count > 1) || state == 6) {
+            ComputeElapsedPlayTimeHMS020104cc((TimeStamp020104cc*)game, &hours, &minutes, &seconds);
         } else {
             var4 = 0;
             var5 = 0;

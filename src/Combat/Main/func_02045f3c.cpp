@@ -3,9 +3,9 @@
 
 #if !defined(jpn)
 
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
-extern "C" void func_020654b8(void* arg0, void* arg1, Struct_0204166c* arg2, short arg3, short arg4, int arg5);
-extern "C" void func_020417b0(Struct_0204166c* arg0, int arg1, void* arg2, int arg3);
+int Font_GetKerning(int a, int b, int fontIndex);
+extern "C" void func_020654b8(void* obj, void* context, MessageGlyphSlot* glyph, short x, short y, int mode);
+extern "C" void func_020417b0(MessageGlyphSlot* glyph, int color, void* palette, int alpha);
 
 extern const int data_020e7a94[];
 
@@ -69,16 +69,16 @@ extern "C" ARM void func_02045f3c(Struct_02045f3c* arg0, unsigned short* arg1, i
         if (var3->unknown_8_ < 0) {
             break;
         }
-        unsigned char var9 = var3->unknown_17_;
-        var5 += func_020425e4(var8, var9, arg8);
-        var8 = var9;
-        var3->unknown_c_ = var5;
-        var3->unknown_10_ = arg3;
-        var3->unknown_14_ = 0;
-        if (arg7) {
-            int var10 = 15;
-            if (arg4 != 0x7fff) {
-                var10 = 5;
+        unsigned char characterIndex = glyph->characterIndex;
+        cx += Font_GetKerning(previousCharacter, characterIndex, fontIndex);
+        previousCharacter = characterIndex;
+        glyph->x = cx;
+        glyph->y = y;
+        glyph->depth = 0;
+        if (absolute) {
+            int mode = 15;
+            if (color != 0x7fff) {
+                mode = 5;
             }
             func_020654b8(arg0, arg0->unknown_34_, var3, var5, arg3, var10);
         } else {

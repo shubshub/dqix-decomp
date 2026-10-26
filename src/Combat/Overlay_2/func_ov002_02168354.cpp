@@ -13,8 +13,8 @@ int GetField110ArrayValue021574d4(void *self, int index);
 extern "C" void func_ov013_02184c8c(void *menu, void *member);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" unsigned char func_0209a678(char *table, void *member, unsigned short *skills);
-extern "C" void *func_0202ae18();
-int CheckField0NonZero_0202b7d8(int *p);
+extern "C" void *LinkSession_GetInstance();
+int LinkSession_IsActive(int *p);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 extern "C" void func_ov017_021ccc34(int id);
 extern "C" void func_ov017_021cd0d8(int id, unsigned short *skills, int count);
@@ -45,17 +45,17 @@ extern "C" ARM void func_ov002_02168354(char *arg0) {
         if (member != 0) {
             func_ov013_02184c8c(self + 0xd70 + 0x1000, member);
         }
-        if (var2 != 0) {
-            ((SafeAllocator *) (arg0 + 0x64 + 0x800))->Reset();
-            *(void **) (arg0 + 0x2450) = ((SafeAllocator *) (arg0 + 0x64 + 0x800))->Allocate(0x6e);
-            memset(*(void **) (arg0 + 0x2450), 0, 0x6e);
-            *(unsigned char *) (arg0 + 0x2455) =
-                func_0209a678(arg0 + 0x3c + 0x2400, var2, *(unsigned short **) (arg0 + 0x2450));
-            if (func_0202b7d8((int *) func_0202ae18())) {
-                int var3 = func_ov002_021574d4(arg0, *(short *) (arg0 + 0x1c08));
-                func_ov017_021c9e00(var3, 0, 0, 0);
-                func_ov017_021ccc34(var3);
-                func_ov017_021cd0d8(var3, *(unsigned short **) (arg0 + 0x2450), *(unsigned char *) (arg0 + 0x2455));
+        if (member != 0) {
+            ((SafeAllocator *) (self + 0x64 + 0x800))->Reset();
+            *(void **) (self + 0x2450) = ((SafeAllocator *) (self + 0x64 + 0x800))->Allocate(0x6e);
+            memset(*(void **) (self + 0x2450), 0, 0x6e);
+            *(unsigned char *) (self + 0x2455) =
+                func_0209a678(self + 0x3c + 0x2400, member, *(unsigned short **) (self + 0x2450));
+            if (LinkSession_IsActive((int *) LinkSession_GetInstance())) {
+                int id = GetField110ArrayValue021574d4(self, *(short *) (self + 0x1c08));
+                func_ov017_021c9e00(id, 0, 0, 0);
+                func_ov017_021ccc34(id);
+                func_ov017_021cd0d8(id, *(unsigned short **) (self + 0x2450), *(unsigned char *) (self + 0x2455));
             }
             if (*(unsigned char *) (arg0 + 0x2455) == 0) {
                 *(int *) (arg0 + 0x1bc0) += 1;

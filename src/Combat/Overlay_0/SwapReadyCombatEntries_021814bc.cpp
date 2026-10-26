@@ -12,7 +12,7 @@ extern "C" int func_ov000_02171a74(void* entry, char* buf);
 #endif
 
 struct Obj0203c108;
-void SwapGlobalEntry0203c108(struct Obj0203c108* obj, char* fmt);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 struct Entry021814bc {
     char pad0[0x28];
@@ -49,6 +49,6 @@ extern "C" ARM void func_ov000_021814bc(char* obj) {
         __clear(buf, 0x80);
         if (func_ov000_02171a74(entry, buf) < 0) continue;
 #endif
-        SwapGlobalEntry0203c108((struct Obj0203c108*)((char*)entry + 0x50), buf);
+        CachedTextLabel_SetText((struct Obj0203c108*)((char*)entry + 0x50), buf);
     }
 }

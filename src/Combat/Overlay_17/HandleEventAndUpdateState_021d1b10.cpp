@@ -8,7 +8,7 @@ enum { RegionOffset70c = 0x70c, RegionOffset734 = 0x734, RegionOffset2774 = 0x27
 #include <NitroSDK/Matrix.h>
 
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void func_020a72ac(void* base, int val);
 
@@ -54,7 +54,7 @@ struct LiveState_021d1b10 {
 
 // USA: func_ov017_021d1b10  (semantic: HandleEventAndUpdateState_021d1b10)
 extern "C" ARM void func_ov017_021d1b10(int unused0, Src021d1b10* b, int unused2, unsigned char* ov, struct SearchStruct0202c1a4* search) {
-    if (GetSearchStructCurrentArrEntry(search) == 0) return;
+    if (LinkSession_GetOwnSlot(search) == 0) return;
 
     LiveState_021d1b10* live = (LiveState_021d1b10*)Zone3D_GetInstance();
     PendingEvent021d1b10* obj1 = *(PendingEvent021d1b10**)(ov + 0x3000 + RegionOffset70c);

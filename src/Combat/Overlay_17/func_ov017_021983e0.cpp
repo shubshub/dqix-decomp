@@ -8,9 +8,9 @@ enum { Enum_ov017_021983e0_14076 = 0x36fc, Enum_ov017_021983e0_108 = 0x6c };
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 extern "C" void* Zone3D_GetInstance(void);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GameObject_IsGesturing(signed char* obj);
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
 extern "C" int func_02094b9c(void* a, void* b);
 int fix32ReduceAngle0To2Pi(int angle);
@@ -45,12 +45,12 @@ struct Struct_ov017_021983e0 {
 
 // USA: func_ov017_021983e0  (semantic: FindFirstTargetAndForward_021983e0)
 extern "C" ARM void func_ov017_021983e0(unsigned char* obj) {
-    if (IsField0Null_02046b08(*(void***)(obj + RegionOffset36fc))) {
+    if (FieldTaskQueue_IsEmpty(*(void***)(obj + RegionOffset36fc))) {
         GameState* bs = GameState::GetInstance();
         void* cache = Zone3D_GetInstance();
         bs->GetCamera();
-        GameObject* c = bs->GetUnknownGameObject();
-        if (CheckSubstructByte0x7cPositive_020535c8((signed char*)c) == 0) {
+        GameObject* c = bs->GetLeader();
+        if (GameObject_IsGesturing((signed char*)c) == 0) {
             struct FilterData021983e0 filter = *(struct FilterData021983e0*)((char*)c + 0x44);
             struct TargetNode021983e0* node = (struct TargetNode021983e0*)ZoneFeatures_GetFirstOfType((unsigned char*)cache + RegionOffset6c, 5);
             while (node != NULL) {

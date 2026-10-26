@@ -16,7 +16,7 @@ ARM void RestartTaskWithDebugLog020dc3d4(void) {
     char buf[0x18];
     GameResources* resources = GetGameResources();
     MapDisplay* display = resources->unknown_ptr_36d0;
-    func_02020720(display);
+    MapDisplay_ResetMap(display);
     sprintf(buf, data_020f2948, Zone3D_GetInstance() + 0x26);
     RestartTaskHandle020e063c((Obj020e063c*)display, (int)data_020f294f, (int)buf);
 }

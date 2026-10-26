@@ -36,7 +36,7 @@ extern "C" void func_0208bf78(ShakeState0208ca00*);
 extern "C" void func_0208b788(int, float, SrcStruct0208baec*, int);
 int SetupDstFromSrcAndScale0208baec(int, DstStruct0208baec*, SrcStruct0208baec*, int, float, int, unsigned char);
 unsigned char GameState_GetLanguage(Struct0200fb08*);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 int* GetGlobal02109418_02094d6c();
 unsigned char GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
 int TestBitInByteArrayAt0x84_02096088(void*, int);
@@ -93,19 +93,19 @@ extern "C" ARM int func_0208bb78(Struct_0208bb78* arg0, int arg1) {
             func_0208baec((int)&arg0->unknown_60_, &arg0->unknown_b4_[(unsigned char)(var5 + 1)], &var9, 0x30, var4, var0, 1);
 #endif
         } else {
-            int var10 = 1;
-            if (func_02046b24(var6) == 0x2d) var5 = var10;
-            else if (arg0->unknown_d8_ == 1) var10 = 0;
-            if (var10) func_0208baec((int)&arg0->unknown_60_, &arg0->unknown_b4_[var5], &var8, 0x40, var4, var0, 1);
+            int draw = 1;
+            if (FieldTaskQueue_GetCurrentKind(head) == 0x2d) slot = draw;
+            else if (self->kind == 1) draw = 0;
+            if (draw) SetupDstFromSrcAndScale0208baec((int)&self->destination, &self->entries[slot], &values, 0x40, scale, pivot, 1);
         }
     }
-    if (arg0->unknown_d2_ != 9999 && arg0->unknown_d2_ >= 0 && arg0->unknown_d4_ != 0 && arg0->unknown_d4_ != 3 && func_02046b24(var6) != 0x2d) {
-        int* var11 = func_02094d6c();
-        int var12 = func_020965ac((Struct_02065990_3*)var11, (unsigned char)arg0->unknown_d2_);
-        if (func_02096088(var11, var12)) {
-            Struct_0208baec var13;
-            func_0208b788(1, 1.0f, &var13, 0);
-            func_0208baec((int)&arg0->unknown_60_, &arg0->unknown_b4_[1], &var13, 0x20, var13.unknown_8_, var0, 2);
+    if (self->id != 9999 && self->id >= 0 && self->action != 0 && self->action != 3 && FieldTaskQueue_GetCurrentKind(head) != 0x2d) {
+        int* global = GetGlobal02109418_02094d6c();
+        int value = GetTableByteOrFF_020965ac((GetTableByteOrFFData*)global, (unsigned char)self->id);
+        if (TestBitInByteArrayAt0x84_02096088(global, value)) {
+            SrcStruct0208baec values;
+            func_0208b788(1, 1.0f, &values, 0);
+            SetupDstFromSrcAndScale0208baec((int)&self->destination, &self->entries[1], &values, 0x20, values.scale, pivot, 2);
         }
     }
     return 0;

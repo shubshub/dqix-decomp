@@ -34,7 +34,7 @@ struct Struct_02037d10 {
     Struct_020134e0::Struct_02018300* unknown_60_;
 };
 
-extern "C" void func_02038508(Struct_02037d10* arg0);
-extern "C" Struct_02037d10* func_020399a8(void* arg0);
-extern "C" void func_020398b4(GameObject* arg0, Struct_02037d10* arg1);
-extern "C" void func_ov017_021d3f00(Struct_02037d10* arg0, unsigned char arg1, unsigned char arg2);
+void LadderClimb_Reset(SubBlock02038508* block);
+SubBlock02038508* GameObject_GetLadderClimb(void* object);
+void GameObject_SetLadderClimb(GameObject* object, SubBlock02038508* source);
+extern "C" void LinkMessageQueue_SendLadderClimb(SubBlock02038508* block, unsigned char first, unsigned char second);

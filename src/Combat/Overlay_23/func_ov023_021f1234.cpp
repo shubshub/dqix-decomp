@@ -137,11 +137,11 @@ const char* FindEntryByKey_02072a68(TableA68* texts, int id);
 void MessageSystem_Reset(char* messages);
 void SetMainBrightness(GameResources* resources, int brightness, int duration);
 int IsMainBrightnessTransitionActive(GameResources* resources);
-extern "C" void func_020de868(void* arg0);
-extern "C" void func_ov013_02186e74(Struct_ov002_021682c0* arg0, SafeAllocator* arg1);
-extern "C" void func_0205ea20(void* arg0, int arg1);
-extern "C" unsigned char* func_02053c6c(unsigned char* arg0);
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2* arg0);
+void ZeroInit020de868(void* icons);
+void InitAllocatorArray02186e74(Container02186e74* abilities, SafeAllocator* allocator);
+void SePlayer_LoadArchive(void* sound, int mode);
+unsigned char* GetFieldAt0x150_02053c6c(unsigned char* member);
+void ResetFields_021eefac(Reset_021eefac* end);
 
 extern "C" {
 void* Scenario_GetInstance();
@@ -282,7 +282,7 @@ extern "C" ARM int func_ov023_021f1234(Struct_ov023_021f1234_3* arg0)
         {
             if (!IsMainBrightnessTransitionActive(var2))
             {
-                SetupContextForMode0205ea20(g_sePlayer, 100);
+                SePlayer_LoadArchive(g_sePlayer, 100);
                 end->step_++;
             }
         }
@@ -325,7 +325,7 @@ extern "C" ARM int func_ov023_021f1234(Struct_ov023_021f1234_3* arg0)
         {
             if (!IsMainBrightnessTransitionActive(var2))
             {
-                SetupContextForMode0205ea20(g_sePlayer, 0x65);
+                SePlayer_LoadArchive(g_sePlayer, 0x65);
                 GetCombatantWithFlag0x100_0200ff1c(gameState, id);
                 GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, id);
                 if (member != NULL)

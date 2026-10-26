@@ -3,12 +3,12 @@
 
 struct Struct_02048150;
 
-extern "C" int *func_0202ae18(void);
-extern "C" int func_02086ef0(Struct_02048150 *arg0, int arg1);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" int func_ov002_02154a34(void *arg0, int arg1);
-extern "C" int func_ov002_02154b94(void *arg0, int arg1);
-extern "C" void *func_02079ee0(void *arg0, int arg1);
+extern "C" int *LinkSession_GetInstance(void);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct *arr, int value);
+int LinkSession_IsActive(int *p);
+int HasPositiveField304Short4_02154a34(void *self, int id);
+int HasPositiveField256Short178_02154b94(void *self, int id);
+void *LookupElementByKey02079ee0(void *table, int key);
 
 struct Struct_ov002_02153ccc {
     unsigned char unknown_0_;
@@ -45,7 +45,7 @@ extern "C" ARM int func_ov002_02153ccc(void **self, Info02153ccc *info, Action02
     if (info == 0) return 0;
     if (action == 0) return 0;
     ArrayContainsByteStruct *party = (ArrayContainsByteStruct *)GameState_GetParty(GameState::GetInstance());
-    int *g                         = func_0202ae18();
+    int *g                         = LinkSession_GetInstance();
     Entry02153ccc *entries         = info->entries;
     int changed                    = 0;
     if (alt) entries = info->altEntries;
@@ -79,9 +79,9 @@ extern "C" ARM int func_ov002_02153ccc(void **self, Info02153ccc *info, Action02
         } else {
             var6->unknown_2_ = func_ov002_021548c4(arg0, var7, var8, var6);
         }
-        if (var6->unknown_0_ == 0) continue;
-        if (func_0202b7d8(var1) && func_02086ef0(var0, var7)) {
-            func_ov017_021c9e00(var7, 0, 0, 1);
+        if (e->state == 0) continue;
+        if (LinkSession_IsActive(g) && ArrayContainsByte_02086ef0(party, id)) {
+            func_ov017_021c9e00(id, 0, 0, 1);
         }
         var3 = 1;
     }

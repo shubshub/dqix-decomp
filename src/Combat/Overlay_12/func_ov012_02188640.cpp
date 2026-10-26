@@ -33,9 +33,9 @@ int Window_GetSelectedIndex(Struct_0205c570*);
 extern "C" int func_ov023_021e6448(void*);
 extern "C" int func_ov023_021e7148(void*);
 void SePlayer_Play(SePlayer*, int, int);
-extern "C" void func_0202ae18();
-extern "C" int func_0201079c(char*);
-extern "C" const char* func_02072a68(Struct_02072a68_2*, int);
+extern "C" void LinkSession_GetInstance();
+int GameState_GetStoryChapter(char*);
+const char* FindEntryByKey_02072a68(TableA68*, int);
 extern "C" void func_ov012_0218bba0(void*, int, int);
 extern "C" void func_ov012_02189be8(void*, int);
 int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20*);
@@ -70,14 +70,14 @@ extern "C" ARM void func_ov012_02188640(char* arg0) {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             ProfileAccolade* profile = GetProfileAccolade(GameState::GetInstance());
             GameState* state = GameState::GetInstance();
-            func_0202ae18();
-            if (*(int*)(arg0 + 0x1444) == 0) {
-                char* var5 = *(char**)((char*)var4->GetProtagonist() + 0x144);
-                int var6 = *(int*)(var5 + 0x8b8);
-                var3->unknown_3_6_ = 1;
-                var3->unknown_6_3_ = var6 + 700;
-                if (func_0201079c((char*)var4) == 1)
-                    var3->unknown_6_3_ = 713;
+            LinkSession_GetInstance();
+            if (*(int*)(editor + 0x1444) == 0) {
+                char* character = *(char**)((char*)state->GetProtagonist() + 0x144);
+                int vocation = *(int*)(character + 0x8b8);
+                profile->vocationAccolade = 1;
+                profile->accolade = vocation + 700;
+                if (GameState_GetStoryChapter((char*)state) == 1)
+                    profile->accolade = 713;
             } else {
                 var3->unknown_6_3_ = *(int*)(arg0 + 0x1444) + 799;
                 var3->unknown_3_6_ = 0;
@@ -172,12 +172,12 @@ int Window_GetSelectedIndex(Struct_0205c570* window);
 extern "C" int func_ov023_021e6448(ProfileEditor02188640* self);
 extern "C" int func_ov023_021e6de4(ProfileEditor02188640* self);
 void SePlayer_Play(SePlayer* sound, int effect, int a);
-extern "C" void func_0202ae18();
-extern "C" int func_0201079c(char* arg0);
-extern "C" const char* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_ov012_0218adac(Struct_ov012_02188640_6* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov012_0218930c(Struct_ov012_02188640_6* arg0, int arg1);
-extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c* arg0);
+extern "C" void LinkSession_GetInstance();
+int GameState_GetStoryChapter(char* gameState);
+const char* FindEntryByKey_02072a68(TableA68* table, int key);
+extern "C" void func_ov012_0218adac(ProfileEditor02188640* self, int animate, int design, int keepPage);
+extern "C" void func_ov012_0218930c(ProfileEditor02188640* self, int cancel);
+int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
 
 extern "C" char g_sePlayer[];
 
@@ -228,19 +228,19 @@ extern "C" ARM void func_ov012_02188640(Struct_ov012_02188640_6* arg0)
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             Profile02188640* profile = GetProfile02188640(GameState::GetInstance());
             GameState* gameState = GameState::GetInstance();
-            func_0202ae18();
-            Struct_ov012_02188640_5* var13 = (Struct_ov012_02188640_5*)var12->GetProtagonist();
-            if (arg0->unknown_13d8_[5] == 0)
+            LinkSession_GetInstance();
+            Member02188640* protagonist = (Member02188640*)gameState->GetProtagonist();
+            if (self->selections_[5] == 0)
             {
-                Struct_ov012_02188640_4* var14 = var13->unknown_150_;
-                int var15 = 0x50dc;
-                if (var14->unknown_488_.unknown_14_0_ == 1)
-                    var15 = 0x510e;
-                int var16 = var14->unknown_950_;
-                var11->unknown_3_6_ = 1;
-                var11->unknown_6_3_ = var15 + var16 - 0x4e20;
-                if (func_0201079c((char*)var12) == 1)
-                    var11->unknown_6_3_ = var15 + 13 - 0x4e20;
+                Party02188640* data = protagonist->partyData_;
+                int accolade = 0x50dc;
+                if (data->appearance_.female_ == 1)
+                    accolade = 0x510e;
+                int vocation = data->vocation_;
+                profile->vocationAccolade_ = 1;
+                profile->accolade_ = accolade + vocation - 0x4e20;
+                if (GameState_GetStoryChapter((char*)gameState) == 1)
+                    profile->accolade_ = accolade + 13 - 0x4e20;
             }
             else
             {

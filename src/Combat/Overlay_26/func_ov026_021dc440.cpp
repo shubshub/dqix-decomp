@@ -39,10 +39,10 @@ struct GameResources;
 void SetBrightness(struct GameResources*, int, int);
 void SetMainBrightness(struct GameResources*, int, int);
 extern "C" {
-void func_ov000_021626a0(Struct_ov000_02160da0*, int, int);
-void func_ov000_021637fc(Struct_ov000_02160da0*, int);
-void func_ov000_02167e6c(Struct_ov000_02160da0*);
-int func_02032370(int);
+void func_ov000_021626a0(BattleWork*, int, int);
+void func_ov000_021637fc(BattleWork*, int);
+void _Z38RunFlaglearAndSetMode02167e6c_02167e6cPh(BattleWork*);
+int RandomIntBelow(int);
 }
 
 #if defined(jpn)
@@ -129,7 +129,7 @@ extern "C" ARM void func_ov026_021dc440(SafeAllocator* arg0, Struct_ov000_02160d
                     labels.letters[0] = data_ov026_021de6a0.b0;
                     labels.letters[1] = data_ov026_021de6a0.b1;
                     if (!animName) {
-                        labels.letters[0] += func_02032370(3);
+                        labels.letters[0] += RandomIntBelow(3);
                         animName = (const char*)labels.letters;
                     }
                     obj->SetAnimationByName(animName, 1);

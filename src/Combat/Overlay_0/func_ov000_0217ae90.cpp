@@ -37,7 +37,7 @@ int GetFieldAt0x150_02053c6c(unsigned char*);
 int Window_GetSelectedIndex(Struct_0205c570*);
 void SePlayer_Play(SePlayer*,int,int);
 int KeyTable_Get(Container020e0310*,int);
-void SwapGlobalEntry0203c108(Obj0203c108*,char*);
+void CachedTextLabel_SetText(Obj0203c108*,char*);
 int CheckFlagsOrField_0217ab48_0217ab48(void*);
 void Window_ClosePane(Entry_0205d6a0*,int);
 int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
@@ -72,7 +72,7 @@ extern "C" ARM int func_ov000_0217ae90(Struct_ov000_021682ec_5* arg0)
             command->count=0;command->value19=-1;command->value26=-1;command->kind=1;
             if(func_ov000_0217c2a0(self)){
                 command->commands[command->index]=100;
-                SwapGlobalEntry0203c108((Obj0203c108*)self->entry,(char*)KeyTable_Get(self->container,0x7534));
+                CachedTextLabel_SetText((Obj0203c108*)self->entry,(char*)KeyTable_Get(self->container,0x7534));
             }
             return var2->unknown_8_[var2->unknown_10_];
         case 1:
@@ -90,7 +90,7 @@ extern "C" ARM int func_ov000_0217ae90(Struct_ov000_021682ec_5* arg0)
         case 2:
             self->saved=self->command.commands[self->command.index];command->kind=3;
             SePlayer_Play(&g_sePlayer,1,0);
-            SwapGlobalEntry0203c108((Obj0203c108*)self->entry,(char*)KeyTable_Get(self->container,0x7536));
+            CachedTextLabel_SetText((Obj0203c108*)self->entry,(char*)KeyTable_Get(self->container,0x7536));
             command->index++;command->commands[command->index]=100;
             return command->commands[command->index];
         case 3:

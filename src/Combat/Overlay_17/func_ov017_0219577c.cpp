@@ -9,13 +9,13 @@ struct TailList020469b4;
 struct TailNode020469b4;
 void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 struct Field3f8Struct;
-Field3f8Struct* GetField0x3f8Address_0200fd0c(GameState* bs);
+Field3f8Struct* GameState_GetZoneTransition(GameState* bs);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int length);
-struct Struct_02038598_5;
-extern "C" int func_02046b60(struct Struct_02038598_5* arg0, int arg1);
-extern "C" void func_02046a8c(void* arg0, void* arg1);
-extern "C" int func_020ac4f8(int arg0);
-extern "C" void func_ov017_021d1118(int arg0, int arg1, int arg2, int arg3);
+struct ListHead02046b60;
+int ListContainsId(struct ListHead02046b60* list, int id);
+extern "C" void func_02046a8c(void* list, void* node);
+int GameState_UpdatePlayClocks(int commit);
+extern "C" void func_ov017_021d1118(int a, int b, int c, int d);
 
 struct Struct_ov017_0219577c_2 {
     unsigned short unknown_0_;
@@ -82,29 +82,29 @@ extern "C" ARM void func_ov017_0219577c(unsigned char arg0, int arg1, int arg2) 
     }
     func_020469b4((struct Struct_0201bdac_2*)var2, (struct Struct_0201bdac*)var3);
 
-    if (arg1) {
-        Struct_ov017_0219577c_2* var4 = (Struct_ov017_0219577c_2*)func_0200fd0c(var0);
-        VectorizedMemset(var4, 0, 0x70);
-        var4->unknown_4_ = 1;
-        var4->unknown_8_ = 1;
-        var4->unknown_9_ = 1;
-        var4->unknown_b_ = -1;
-        var4->unknown_20_ = -1;
-        var4->unknown_24_ = -1;
-        var4->unknown_28_ = -1;
-        var4->unknown_2c_ = -1;
-        var4->unknown_1e_ = -1;
-        var4->unknown_c_ = 0;
-        var4->unknown_6c_ = -1;
-        var4->unknown_2_ = 1;
-        var4->unknown_0_ = 0xc3b5;
-        var4->unknown_7_ = 1;
-        var4->unknown_1c_ = 0;
-        var4->unknown_10_.x = 0x48cc;
-        var4->unknown_10_.y = 0x199;
-        var4->unknown_10_.z = -0x733;
-        var4->unknown_66_ = 1;
-        var4->unknown_65_ = 1;
+    if (resetField) {
+        Field3f8Struct0219577c* field = (Field3f8Struct0219577c*)GameState_GetZoneTransition(gs);
+        VectorizedMemset(field, 0, 0x70);
+        field->field_4 = 1;
+        field->field_8 = 1;
+        field->field_9 = 1;
+        field->field_b = -1;
+        field->field_20 = -1;
+        field->field_24 = -1;
+        field->field_28 = -1;
+        field->field_2c = -1;
+        field->field_1e = -1;
+        field->field_c = 0;
+        field->field_6c = -1;
+        field->field_2 = 1;
+        field->field_0 = 0xc3b5;
+        field->active = 1;
+        field->angle = 0;
+        field->pos.x = 0x48cc;
+        field->pos.y = 0x199;
+        field->pos.z = -0x733;
+        field->field_66 = 1;
+        field->field_65 = 1;
 
         if (func_02046b60((struct Struct_02038598_5*)var2, 0x4e)) {
             func_02046a8c(var2, *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_3236));
@@ -116,8 +116,8 @@ extern "C" ARM void func_ov017_0219577c(unsigned char arg0, int arg1, int arg2) 
     if (func_02046b60((struct Struct_02038598_5*)var2, 0x40)) {
         func_02046a8c(var2, *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_2968));
     }
-    func_020ac4f8(1);
-    if (arg0) {
+    GameState_UpdatePlayClocks(1);
+    if (mode) {
         func_ov017_021d1118(-1, 1, 1, 2);
     }
 }

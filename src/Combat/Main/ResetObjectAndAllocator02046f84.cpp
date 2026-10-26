@@ -3,10 +3,10 @@
 #include "GameState/GameState.h"
 #include "Memory/SafeAllocator.h"
 
-void SetField0x7cClearFields0x1ec0x1ee_0202e874(unsigned char* obj, unsigned short val);
+void Camera_SetRoll(unsigned char* obj, unsigned short val);
 struct AngleTrig0202e9a4;
-void SetAngleAndTrigTable0202e9a4(struct AngleTrig0202e9a4* objParam, int angle);
-extern "C" void func_0202eab8(void* obj);
+void Camera_SetFieldOfView(struct AngleTrig0202e9a4* objParam, int angle);
+extern "C" void Camera_SetOrbitFromPosition(void* obj);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 extern int g_mainAllocator;
@@ -24,9 +24,9 @@ ARM void ResetObjectAndAllocator02046f84(struct Struct02046f84* s) {
     GameState* battleStruct = GameState::GetInstance();
     battleStruct->GetResources();
     void* obj = battleStruct->GetCamera();
-    SetField0x7cClearFields0x1ec0x1ee_0202e874((unsigned char*)obj, 0);
-    SetAngleAndTrigTable0202e9a4((struct AngleTrig0202e9a4*)obj, 0xf000);
-    func_0202eab8(obj);
+    Camera_SetRoll((unsigned char*)obj, 0);
+    Camera_SetFieldOfView((struct AngleTrig0202e9a4*)obj, 0xf000);
+    Camera_SetOrbitFromPosition(obj);
 
     if (s->field38 == 0) {
         void* p = s->allocator.GetSignedAllocator();

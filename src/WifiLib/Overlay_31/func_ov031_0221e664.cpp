@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov031_0221e52c(void* arg0, int arg1, int arg2);
-extern "C" int func_020cf1a8(int arg0);
+extern "C" void func_ov031_0221e52c(void* destination, int value, int length);
+int RTC_GetTime(int output);
 
 struct Struct_ov031_0224e6e0_10 {
     char unknown_0_[8];
@@ -16,14 +16,14 @@ extern Struct_ov031_0224e6e0_10 data_ov031_0224e6e0;
 
 // USA: func_ov031_0221e664
 extern "C" THUMB unsigned short func_ov031_0221e664() {
-    if (data_ov031_0224e6e0.unknown_8_ == 0) {
-        int var0 = 0;
-        int var1[3];
-        func_ov031_0221e52c(var1, 0, 12);
-        if (func_020cf1a8((int)var1) == 0) {
-            var0 += var1[0] << 10;
-            var0 += var1[1] << 3;
-            var0 += var1[2];
+    if (data_ov031_0224e6e0.initialized == 0) {
+        int seed = 0;
+        int time[3];
+        func_ov031_0221e52c(time, 0, 12);
+        if (RTC_GetTime((int)time) == 0) {
+            seed += time[0] << 10;
+            seed += time[1] << 3;
+            seed += time[2];
         }
         data_ov031_0224e6e0.unknown_18_ = var0;
         data_ov031_0224e6e0.unknown_1c_ = 0x5d588b65;

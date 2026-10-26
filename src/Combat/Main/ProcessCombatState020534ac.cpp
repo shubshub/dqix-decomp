@@ -10,7 +10,7 @@
 
 struct FlagWord02046708;
 void* GlobalFlags_GetInstance(void);
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
 struct List0202fe68;
 
@@ -22,7 +22,7 @@ void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
 
 extern "C" void SprSprite_Init(void);
-extern "C" void func_02047b40(void* a, int b, void* c);
+extern "C" void SprSprite_Parse(void* a, int b, void* c);
 extern "C" void func_0205308c(void* ctx, int val);
 
 // USA: func_020534ac
@@ -35,7 +35,7 @@ ARM void ProcessCombatState020534ac(char* ctx) {
     int out1;
     int out2;
 
-    if (TestFlags02046708((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) {
+    if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) {
         return;
     }
     if (*(unsigned char*)(ctx + (IS_JPN ? 0x179 : 0x185)) == 0) {
@@ -57,7 +57,7 @@ ARM void ProcessCombatState020534ac(char* ctx) {
             if (allocated != NULL) {
                 SprSprite_Init();
                 *(unsigned char*)((char*)(*(void**)(ctx + (IS_JPN ? 0x184 : 0x190))) + 0x84) |= 4;
-                func_02047b40(*(void**)(ctx + (IS_JPN ? 0x184 : 0x190)), out1, blockB + 0x400);
+                SprSprite_Parse(*(void**)(ctx + (IS_JPN ? 0x184 : 0x190)), out1, blockB + 0x400);
             }
             VramState_Save(blockA + 0x400);
         }

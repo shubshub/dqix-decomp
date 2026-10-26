@@ -11,7 +11,7 @@ extern "C" void func_02042638(char *arg0, int arg1, int arg2);
 
 struct Struct_0201099c_3;
 
-extern "C" void *func_0202ae18(void);
+extern "C" void *LinkSession_GetInstance(void);
 extern "C" int func_ov002_02159774(void *self, int idx, int a, int b, int c);
 void Text_AppendFrameTag(char *buf, int x, int a, int b, int c, int d);
 void Text_AppendCursorTag(char *buf, int x);
@@ -22,9 +22,9 @@ void Text_AppendNTag(char *buf, int i, const char *str);
 void Text_Append(char *buf, const char *str);
 
 // USA: func_ov002_0215c72c
-extern "C" ARM void func_ov002_0215c72c(char *arg0, char *arg1, int arg2) {
-    if (arg1 == 0) return;
-    func_0202ae18();
+extern "C" ARM void func_ov002_0215c72c(char *self, char *buf, int frame) {
+    if (buf == 0) return;
+    LinkSession_GetInstance();
     void *gs = GameState::GetInstance();
     short x  = *(short *) (self + RG(0x1be6, 0x1aae));
     int n    = 0;

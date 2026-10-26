@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_02000b9c(int);
+extern "C" void OSi_ReferSymbol(int);
 extern "C" void func_ov031_02204e38(void);
 extern "C" int func_ov031_02204df8(void);
 extern void* data_ov031_022496a4;
 
-// USA: func_ov031_02204dbc
-extern "C" ARM int func_ov031_02204dbc(void* arg0) {
-	func_02000b9c(0x2000c1c);
+// USA: func_ov031_02204dbc  (semantic: InitAndSetContext_02204dbc)
+extern "C" ARM int func_ov031_02204dbc(void* a) {
+	OSi_ReferSymbol(0x2000c1c);
 	if (data_ov031_022496a4 != NULL) {
 		return 0;
 	}

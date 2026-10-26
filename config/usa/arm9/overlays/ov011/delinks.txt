@@ -576,7 +576,7 @@ src/Combat/Overlay_11/func_ov011_021870a4.cpp:
     complete
     .text start:0x021870a4 end:0x02187154
 
-src/Combat/Overlay_11/func_ov011_02184550.cpp:
+src/Combat/Overlay_11/AllocateBuffersAndInitFields_02184550.cpp:
     complete
     .text start:0x02184550 end:0x021845c8
 
@@ -596,7 +596,7 @@ src/Combat/Overlay_11/func_ov011_0218554c.cpp:
     complete
     .text start:0x0218554c end:0x021855cc
 
-src/Combat/Overlay_11/func_ov011_02184694.cpp:
+src/Combat/Overlay_11/InitOrRefreshNodeState_02184694.cpp:
     complete
     .text start:0x02184694 end:0x02184740
 

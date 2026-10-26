@@ -26,7 +26,7 @@ struct Struct_ov002_02168d54_8;
 struct Struct_ov002_02168d54_9;
 struct Struct_ov002_0215624c_11;
 
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 extern "C" void func_ov002_021682c0(char* self);
 void SetSubBrightness(GameResources* resources, int brightness, int duration);
 void* GlobalFlags_GetInstance(void);
@@ -85,12 +85,12 @@ extern "C" ARM void func_ov002_02168d54(char* arg0) {
     GameResources* res = gs->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    if (*(int*)(arg0 + REGION_VALUE(0x1a88, 0x1bc0)) == 0) {
-        arg0[REGION_VALUE(0x228a, 0x2456)] = 1;
-        func_020a1940(OVERLAY_ID(13));
-        func_ov002_021682c0(arg0);
-        SetSubBrightness(var1, -0x10, 0xf);
-        *(int*)(arg0 + REGION_VALUE(0x228c, 0x2458)) = var2->QueueLoadFile(&data_ov002_0216d350, NULL);
+    if (*(int*)(self + REGION_VALUE(0x1a88, 0x1bc0)) == 0) {
+        self[REGION_VALUE(0x228a, 0x2456)] = 1;
+        Overlay_Load(OVERLAY_ID(13));
+        func_ov002_021682c0(self);
+        SetSubBrightness(res, -0x10, 0xf);
+        *(int*)(self + REGION_VALUE(0x228c, 0x2458)) = loader->QueueLoadFile(&data_ov002_0216d350, NULL);
 #if !defined(jpn)
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
         OrGlobalFlag0x40_020dc2bc();

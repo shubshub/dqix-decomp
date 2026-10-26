@@ -446,7 +446,7 @@ extern "C" ARM void func_ov024_021f7478(struct Struct_ov024_021f7478_7* arg0) {
         struct MoveSet_021f7478* set = c->moveSet;
         for (int j = 0; j < 6; j++) {
             unsigned short moveId = set->moves[j];
-            if (IsGlobalU16InRange_020117f0(gs) && ((struct PartyWork_021f7478*)((struct Battle_021f7478*)obj->battle)->partyWork)->f25 != 0) {
+            if (GameState_IsInGrotto(gs) && ((struct PartyWork_021f7478*)((struct Battle_021f7478*)obj->battle)->partyWork)->f25 != 0) {
                 char* detail = (char*)((ActiveGrottoClass*)((char*)Zone3D_GetInstance() + regionalGrottoOffset))->GetDetailedData();
                 short kindId = c->kindId;
                 unsigned short alt = ((DetailedTreasureMapData::LegacyBossMapData*)(detail + 0x4c))->MaybeGetCurrentAlternateID();

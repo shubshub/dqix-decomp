@@ -187,12 +187,12 @@ struct Struct_ov008_02184a4c_12 {
     int inline_ov008_02184a4c_12(unsigned int arg0) volatile { return (unknown_b18_ & arg0) != 0; }
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" char* Scenario_GetInstance(void);
 extern "C" int _Z17Scenario_TestFlagiPhi(char* unused, char* arr, int index);
 int LoadBattleBlock020ac4c0(void* dst);
-extern "C" int func_0202c508(void* obj);
-extern "C" int func_0202c540(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int LinkSession_IsGuest(void* obj);
 struct List020727d8;
 void ResetListHeader020727d8(List020727d8*);
 void SubmitScriptFromFile020727f8(void* list, const char* path, int id, void* out, unsigned char mode);
@@ -250,7 +250,7 @@ MessageSrc02184a4c* FindElementByField020a15bc(Array020a15bc*, int);
 extern "C" void func_020e046c(char* buf, void* b, unsigned int c, int idx);
 int GetField5cbcValue_0201081c(char*);
 int STD_CompareString(const char* a, const char* b);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 extern "C" void func_ov008_0218712c(Obj02184a4c* obj, int a);
 struct Manager02187664;
 void InitConfig02187664(Manager02187664*, int);
@@ -291,8 +291,8 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
     GameState* var0 = GameState::GetInstance();
     Struct_ov008_02184a4c_2* var1 = (Struct_ov008_02184a4c_2*)GetGameResources();
 #endif
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    void* var3 = func_0202ae18();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    void* scene = LinkSession_GetInstance();
 
     unsigned char state = obj->b11;
     if (state == 0) {
@@ -309,7 +309,7 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
         unsigned int scriptId = pb->GetTail()->GetScriptId();
         if (scriptId == 0) {
             if (_Z17Scenario_TestFlagiPhi(save, save + 0x8c, 0x796) != 0) {
-                if (func_0202c508(scene) != 0) {
+                if (LinkSession_IsHostOrSolo(scene) != 0) {
                     obj->flags |= 2;
                 }
             }
@@ -588,11 +588,11 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
                 arg0->unknown_78_.Reset();
                 arg0->unknown_b04_ = NULL;
             }
-            if (arg0->unknown_b14_ <= 0) {
-                int var55 = func_0201081c((char*)var0);
-                if (func_0202c540(var3) != 0) {
-                    arg0->unknown_b18_ |= 0x100;
-                    var55 = 0x3eb;
+            if (obj->b14 <= 0) {
+                int id = GetField5cbcValue_0201081c((char*)gs);
+                if (LinkSession_IsGuest(scene) != 0) {
+                    obj->flags |= 0x100;
+                    id = 0x3eb;
                 }
                 memset(obj->pathBuf, 0, REGION_VALUE(0x800, 0x960));
                 List02184a4c list;
@@ -625,15 +625,15 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
             arg0->unknown_b20_ = -1;
             arg0->unknown_b11_++;
         }
-    } else if (var4 == 11) {
-        if (arg0->unknown_b04_->unknown_68_ > 0) {
-            arg0->unknown_b14_ = arg0->unknown_b04_->unknown_6a_[0];
-            arg0->unknown_b16_ = func_0201081c((char*)var0);
-            if (arg0->inline_ov008_02184a4c_12(0x100)) {
-                arg0->unknown_b18_ &= ~0x100;
-                arg0->unknown_b16_ = 0x3ea;
-                if (func_0202c540(var3) != 0) {
-                    arg0->unknown_b16_ = 0x3eb;
+    } else if (state == 11) {
+        if (obj->poller->count > 0) {
+            obj->b14 = obj->poller->ids[0];
+            obj->b16 = GetField5cbcValue_0201081c((char*)gs);
+            if (obj->HasFlag(0x100)) {
+                obj->flags &= ~0x100;
+                obj->b16 = 0x3ea;
+                if (LinkSession_IsGuest(scene) != 0) {
+                    obj->b16 = 0x3eb;
                 }
             }
             arg0->unknown_78_.Reset();
@@ -643,11 +643,11 @@ extern "C" ARM void func_ov008_02184a4c(Struct_ov008_02184a4c_12* arg0) {
             arg0->unknown_b18_ &= ~0x100;
             arg0->unknown_b11_ = 0xff;
         } else {
-            void* var59 = func_0202ae18();
-            int var60 = 0x3ea;
-            if (func_0202b7d8((int*)var59) != 0) {
-                if (func_0202c540(var59) != 0) {
-                    var60++;
+            void* scene2 = LinkSession_GetInstance();
+            int id = 0x3ea;
+            if (LinkSession_IsActive((int*)scene2) != 0) {
+                if (LinkSession_IsGuest(scene2) != 0) {
+                    id++;
                 }
             }
             memset(arg0->unknown_b8_, 0, REGION_VALUE(0x800, 0x960));

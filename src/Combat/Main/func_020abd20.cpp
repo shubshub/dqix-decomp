@@ -16,7 +16,7 @@ void CopyBlobIntoBattleStruct020a9ba4(void* blob);
 void LoadBattleRegion0x5cdc_020a9af8(unsigned char* p);
 extern "C" void func_020a9b2c(void* p);
 void ClearAllTreasureMapUnknownBits_020116c8(void* p);
-void* GetField0x74deForValidIndex_020120a0(char* p, unsigned int index);
+void* GameState_GetPlayerLocation(char* p, unsigned int index);
 
 struct Struct_02011544;
 extern "C" void func_02011544(struct Struct_02011544* arg0);
@@ -54,7 +54,7 @@ extern "C" ARM int func_020abd20() {
         *(unsigned int*)(z1840 + 0xb48) = *(unsigned int*)(sub + 0x2c80);
         *(unsigned int*)(z1840 + 0xb4c) = *(unsigned int*)(sub + 0x2c84);
         ClearAllTreasureMapUnknownBits_020116c8(gs);
-        memcpy(GetField0x74deForValidIndex_020120a0((char*)gs, 0), base + 0x2c54, 8);
+        memcpy(GameState_GetPlayerLocation((char*)gs, 0), base + 0x2c54, 8);
         BackgroundLoader::RemoveLockGlobal();
         return 1;
     }

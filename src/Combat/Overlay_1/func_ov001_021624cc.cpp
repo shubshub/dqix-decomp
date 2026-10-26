@@ -24,7 +24,7 @@ extern "C" void Background_SetPriority(void*, int);
 
 int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
-extern "C" void func_020c9820();
+void OS_WaitVBlankIntr();
 
 void Background_FlushFile(void* obj, char* str);
 
@@ -79,7 +79,7 @@ extern "C" ARM int func_ov001_021624cc(void* arg0) {
     Background_SetPriority(&s, 0);
     Background_SetMapSize((unsigned char*)&s, 0);
     Background_SetScroll((struct BackgroundGraphics*)&s, 0, 0);
-    DelayThenSyncBit0_020c9820();
+    OS_WaitVBlankIntr();
     for (int i = 0; i < count; i++) {
         char* record = records[i];
         Background_FlushFile(&s, record);

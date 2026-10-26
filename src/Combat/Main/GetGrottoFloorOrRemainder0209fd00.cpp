@@ -8,7 +8,7 @@ enum { kGrottoOffset = 0x23ec };
 #include "Grotto/Main/ActiveGrottoClass.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 
 struct S0209fd00 {
     char pad0[4];
@@ -27,7 +27,7 @@ extern "C" ARM int func_0209fd00(struct S0209fd00* self) {
     ActiveGrottoClass* grotto = (ActiveGrottoClass*)((char*)Zone3D_GetInstance() + kGrottoOffset);
     if (grotto == 0) {
         result = 0;
-    } else if (IsValueInRange0201b5d8(rec->h0)) {
+    } else if (ZoneId_IsGrottoBossFloor(rec->h0)) {
         result = grotto->GetFloorCount() + 1;
     }
     return result;

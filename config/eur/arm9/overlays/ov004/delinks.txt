@@ -137,11 +137,11 @@ src/Combat/Overlay_4/func_ov004_0215e300.cpp:
     complete
     .text start:0x0215e300 end:0x0215e32c
 
-src/Combat/Overlay_4/func_ov004_02163408.cpp:
+src/Combat/Overlay_4/DoInitResetOrder_02163408.cpp:
     complete
     .text start:0x02163408 end:0x0216342c
 
-src/Combat/Overlay_4/func_ov004_021633e4.cpp:
+src/Combat/Overlay_4/DoResetInitOrder_021633e4.cpp:
     complete
     .text start:0x021633e4 end:0x02163408
 
@@ -589,7 +589,7 @@ src/Combat/Overlay_4/func_ov004_0216ace8.cpp:
     complete
     .text start:0x0216ace8 end:0x0216acf0
 
-src/Combat/Overlay_3/UpdateEntryPosition_0216acf0.cpp:
+src/Combat/Overlay_2/func_ov002_0216acf0.cpp:
     complete
     .text start:0x0216acf0 end:0x0216acf8
 
@@ -885,7 +885,7 @@ src/Combat/Overlay_4/ResetAllocatorsAndSyncGlobals_02166ac4.cpp:
     complete
     .text start:0x02166ac4 end:0x02166b40
 
-src/Combat/Overlay_4/func_ov004_0216d7f8.cpp:
+src/Combat/Overlay_4/ResetClearColor_0216d7f8.cpp:
     complete
     .text start:0x0216d7f8 end:0x0216d820
 
@@ -1129,7 +1129,7 @@ src/Combat/Overlay_4/DispatchAreaAlertState_02168318.cpp:
     complete
     .text start:0x02168318 end:0x021683cc
 
-src/Combat/Overlay_4/func_ov004_02162b84.cpp:
+src/Combat/Overlay_4/DispatchNodeIfEligible_02162b84.cpp:
     complete
     .text start:0x02162b84 end:0x02162c30
 
@@ -1325,7 +1325,7 @@ src/Combat/Overlay_4/ClearAndSetOv017FieldsThenSync_0216ecd0.cpp:
     complete
     .text start:0x0216ecd0 end:0x0216ed9c
 
-src/Combat/Overlay_4/func_ov004_02167d90.cpp:
+src/Combat/Overlay_4/CheckOutcomeAndNotify_02167d90.cpp:
     complete
     .text start:0x02167d90 end:0x02167e28
 

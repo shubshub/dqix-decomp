@@ -63,21 +63,21 @@ struct Struct_ov017_021afe00_2 {
     unsigned char unknown_0_;
 };
 
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 extern "C" void* Zone3D_GetInstance();
 extern "C" void func_020531f0(void* p);
 extern "C" void func_ov017_021cff8c(int a, int b);
 extern "C" void func_ov017_021d0b30(int a, int b, int c);
 
-int TestBitBySignedByteIndex_0202c1c0(SearchStruct* obj, int index);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+int LinkSession_IsSlotMember(SearchStruct* obj, int index);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 unsigned short GetFieldAt0x7e_0201e830(S_e830* obj);
-void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+void Set3DClearColor(int a, int b, int c, int d, int e);
+int GameObject_IsGesturing(signed char* obj);
 int GetField1c_021a193c(int* obj);
 int GameState_GetProtagonistIndex(GameState* gs);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+void* GameState_GetPlayerLocation(char* gs, unsigned int idx);
 unsigned int GetWord0x71f8_02012078(void* gs);
 void ClearAllTreasureMapUnknownBits_020116c8(void* gs);
 void SetCombatModeFromCase020dc2d0(int v);
@@ -85,18 +85,18 @@ void SetCombatModeFromCase020dc2d0(int v);
 extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov017_021afe00
-extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_0202b2f0* var1 = (Struct_0202b2f0*)func_0202ae18();
-    for (int var2 = 0; var2 < 4; var2++) {
-        if (func_0202c1c0(var1, var2) == 0) {
+extern "C" ARM int func_ov017_021afe00(Step021afe00* self) {
+    GameState* gs = GameState::GetInstance();
+    SearchStruct* search = (SearchStruct*)LinkSession_GetInstance();
+    for (int i = 0; i < 4; i++) {
+        if (LinkSession_IsSlotMember(search, i) == 0) {
             continue;
         }
-        if (var2 == func_0202c1a4((Struct_0202c1a4*)var1)) {
+        if (i == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
             continue;
         }
-        Struct_0202b2f0_2* var3 = func_0202c178(var1, var2);
-        if (var3 == 0) {
+        SearchEntry0202c178* e = LinkSession_GetReceivedRecord(search, i);
+        if (e == 0) {
             continue;
         }
         if (var3->unknown_2_0_ == 0) {
@@ -111,9 +111,9 @@ extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
         if (IsBrightnessTransitionActive(res) != 0) {
             return 1;
         }
-        arg0->unknown_3c_ = GetBrightness((GameResources*)var6, false);
-        if (IsBrightnessOutsideValidRange((GameResources*)var6, false) != 0) {
-            arg0->unknown_42_ = 1;
+        self->axis = GetBrightness((GameResources*)res, false);
+        if (IsScreenFullyFaded((GameResources*)res, false) != 0) {
+            self->restoreDisplay = 1;
             DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
             char* info = (char*)Zone3D_GetInstance();
             if (info != 0) {
@@ -126,17 +126,17 @@ extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
             if (arg0->unknown_3c_ == 0x10) {
                 var9 = 0x7fff;
             }
-            func_020c5588(var9, 0x1f, 0x7fff, 0, 0);
-            arg0->unknown_38_ = GetFlags04(var6);
-            ClearFlags04(var6, 0xffffffff);
-            SetFlags04(var6, 0x8de);
-            SetMainBrightness(var6, 0, 2);
+            Set3DClearColor(clear, 0x1f, 0x7fff, 0, 0);
+            self->field4Bits = GetFlags04(res);
+            ClearFlags04(res, 0xffffffff);
+            SetFlags04(res, 0x8de);
+            SetMainBrightness(res, 0, 2);
         }
-        for (int var10 = 0; var10 < 4; var10++) {
-            GameObject* var11 = var0->GetPartyMemberByIndex(var10);
-            if (var11 != 0) {
-                if (func_020535c8((signed char*)var11) != 0) {
-                    func_020531f0(var11);
+        for (int i = 0; i < 4; i++) {
+            GameObject* m = gs->GetPartyMemberByIndex(i);
+            if (m != 0) {
+                if (GameObject_IsGesturing((signed char*)m) != 0) {
+                    func_020531f0(m);
                 }
             }
         }
@@ -158,24 +158,24 @@ extern "C" ARM int func_ov017_021afe00(Struct_ov017_021afe00_5* arg0) {
     if (self->state == 2 || self->state == 0) {
         self->alloc = (Alloc021afe00*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x2e0);
     }
-    if (arg0->unknown_9_ == 0) {
-        Struct_ov017_021afe00_4* var12 = arg0->unknown_288_;
-        if (arg0->unknown_288_ != 0) {
-            var12->unknown_0_ = *(unsigned char*)((char*)var0 + 0x5cda);
-            memcpy(var12->unknown_4_, (char*)var0 + 0x5cdc, 0x190);
-            memcpy(var12->unknown_194_, (char*)var0 + 0x5e6c, 0x110);
-            memcpy(var12->unknown_2a4_, func_020120a0((char*)var0, 0), 0x20);
-            var12->unknown_2c4_ = func_02012078(var0);
-            var12->unknown_2c8_ = var5->unknown_1b34_;
-            var12->unknown_2d0_ = var5->unknown_1b38_;
-            var12->unknown_2d2_ = var5->unknown_1b3c_;
-            var12->unknown_2cc_ = var5->unknown_1b48_;
-            var12->unknown_2d4_ = *(unsigned short*)(var4 + 0x27b4);
-            var12->unknown_2d5_ = *(unsigned short*)(var4 + 0x27b6);
-            for (int var13 = 0; var13 < 4; var13++) {
-                Struct_ov017_021afe00_3* var14 = (Struct_ov017_021afe00_3*)var0->GetPartyMemberByIndex(var13);
-                if (var14 != 0) {
-                    var12->unknown_2d6_[var13] = var14->unknown_1b2_;
+    if (self->state == 0) {
+        Alloc021afe00* a = self->alloc;
+        if (self->alloc != 0) {
+            a->b0 = *(unsigned char*)((char*)gs + 0x5cda);
+            memcpy(a->a4, (char*)gs + 0x5cdc, 0x190);
+            memcpy(a->a194, (char*)gs + 0x5e6c, 0x110);
+            memcpy(a->a2a4, GameState_GetPlayerLocation((char*)gs, 0), 0x20);
+            a->w2c4 = GetWord0x71f8_02012078(gs);
+            a->w2c8 = sub->w34;
+            a->h2d0 = sub->w38;
+            a->h2d2 = sub->w3c;
+            a->w2cc = sub->w48;
+            a->b2d4 = *(unsigned short*)(g + 0x27b4);
+            a->b2d5 = *(unsigned short*)(g + 0x27b6);
+            for (int i = 0; i < 4; i++) {
+                PartyView021afe00* m = (PartyView021afe00*)gs->GetPartyMemberByIndex(i);
+                if (m != 0) {
+                    a->h2d6[i] = m->f1b2;
                 } else {
                     var12->unknown_2d6_[var13] = 0;
                 }

@@ -12,9 +12,9 @@ struct Struct_ov017_0218db14 {
 };
 
 // USA: func_ov017_0218db14
-extern "C" ARM int func_ov017_0218db14(struct Struct_ov017_0218db14* arg0, const Vector3fix* arg1, int arg2, int arg3, unsigned char arg4) {
-    GameObject* var0 = GameState::GetInstance()->GetUnknownGameObject();
-    if (var0 == NULL) {
+extern "C" ARM int func_ov017_0218db14(struct Battle0218db14* battle, const Vector3fix* dir, int scale, int threshold, unsigned char force) {
+    GameObject* obj = GameState::GetInstance()->GetLeader();
+    if (obj == NULL) {
         return 0;
     }
     short* var1 = (short*)((char*)var0 + 0xb2);

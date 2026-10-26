@@ -2,8 +2,8 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_0201079c(char* arg0);
-extern "C" void* func_0202ae18(void);
+int GameState_GetStoryChapter(char* game);
+extern "C" void* LinkSession_GetInstance(void);
 
 struct Struct_02072a68_2 { struct Struct_02072a68* unknown_0_; short unknown_4_; };
 extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
@@ -67,16 +67,16 @@ extern "C" ARM void func_ov023_021e66ac(void* arg0) {
     GameState* var1 = GameState::GetInstance();
     Struct_ov023_021e66ac_3* var2 = &((Struct_ov023_021e66ac_4*)var1)->unknown_569c_;
 
-    if (!var2->unknown_3_5_) {
-        memset(var0->unknown_1400_, 0, sizeof(var0->unknown_1400_));
-        void* var3 = func_02072a68(&var0->unknown_133c_, 0x6d);
-        memcpy(var0->unknown_1400_, var3, 7);
-    } else if (var2->unknown_3_6_) {
-        func_0202ae18();
-        Struct_ov023_021e66ac_2* var4 = (Struct_ov023_021e66ac_2*)var1->GetProtagonist();
-        int var5 = var4->unknown_150_->unknown_950_;
-        if (func_0201079c((char*)var1) == 1) {
-            var5 = 13;
+    if (!profile->accoladeChosen) {
+        memset(self->accoladeText, 0, sizeof(self->accoladeText));
+        void* entry = FindEntryByKey_02072a68(&self->strings, 0x6d);
+        memcpy(self->accoladeText, entry, 7);
+    } else if (profile->vocationAccolade) {
+        LinkSession_GetInstance();
+        ProfileProtagonist* protagonist = (ProfileProtagonist*)game->GetProtagonist();
+        int vocation = protagonist->partyData->vocation;
+        if (GameState_GetStoryChapter((char*)game) == 1) {
+            vocation = 13;
         }
         int var6 = 0x50dc;
 #if !defined(jpn)

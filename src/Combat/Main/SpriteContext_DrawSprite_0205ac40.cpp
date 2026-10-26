@@ -8,10 +8,10 @@ struct Struct_0205ac40_4 {
     short unknown_6_;
 };
 
-extern "C" void* func_0203bd08();
-extern "C" Struct_0205ac40_4* func_0203be4c(void*);
-extern "C" Struct_0205ac40_4* func_0203be40(void*);
-extern "C" void func_020b0a1c(Struct_0205ac40_4*, unsigned short, Struct_0205ac40_2*, Struct_0205ac40_3*, int*, unsigned short, int);
+extern "C" void* OamManager_GetInstance();
+extern "C" OAM0205ac40* OamManager_GetSubOamBuffer(void*);
+extern "C" OAM0205ac40* OamManager_GetMainOamBuffer(void*);
+extern "C" void func_020b0a1c(OAM0205ac40*, unsigned short, B174Outer*, Matrix2x2*, int*, unsigned short, int);
 
 // Main, originally func_0205ac40 (USA 0x0205ac40, EUR 0x0205ac50, JPN 0x0205bfdc)
 extern "C" ARM void SpriteContext_DrawSprite(SpriteContext0205ac40* context, B174Outer* sprite) {
@@ -27,10 +27,10 @@ extern "C" ARM void SpriteContext_DrawSprite(SpriteContext0205ac40* context, B17
     Matrix2x2 affine;
     int position[2];
     if (sprite != NULL) {
-        manager = func_0203bd08();
+        manager = OamManager_GetInstance();
         matrix = NULL;
-        objects = func_0203be4c(manager);
-        if (context->subScreen == 0) objects = func_0203be40(manager);
+        objects = OamManager_GetSubOamBuffer(manager);
+        if (context->subScreen == 0) objects = OamManager_GetMainOamBuffer(manager);
         doubleSize = false;
         if (sprite->transformed) {
             func_0205b0d8(context, &transform, &affine, sprite);

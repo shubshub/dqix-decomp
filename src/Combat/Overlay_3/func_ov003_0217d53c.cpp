@@ -22,8 +22,8 @@ extern "C" void func_ov017_021baedc(void* self, int flag);
 struct TailList020469b4;
 struct TailNode020469b4;
 void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
-void InitAndResetHeader_0219e310(unsigned char* obj, int arg);
-void* GetField0x3f8Address_0200fd0c(GameState* state);
+void FieldTask_InitEnterZone(unsigned char* obj, int arg);
+void* GameState_GetZoneTransition(GameState* state);
 void InitStruct02070378(char* obj);
 
 struct Struct_ov003_0217d53c_4 {
@@ -104,19 +104,19 @@ extern "C" ARM void func_ov003_0217d53c(State_0217d53c* self) {
                 var6->unknown_8_ = 0xd06a;
                 break;
         }
-        func_020469b4(var3, (struct Struct_0201bdac*)var6);
-        unsigned char* var7 = *(unsigned char**)(var2 + Enum_ov003_0217d53c_14092);
-        func_ov017_0219e310(var7, 0);
-        Struct_ov003_0217d53c_2* var8 = (Struct_ov003_0217d53c_2*)func_0200fd0c(var0);
-        func_02070378((char*)var8);
-        var8->unknown_0_ = 0xc3bc;
-        var8->unknown_7_ = 1;
-        var8->unknown_14_ = 0x266;
-        var8->unknown_18_ = -0x7b33;
-        var8->unknown_c_ = 1;
-        func_020469b4(var3, (struct Struct_0201bdac*)var7);
-        arg0->unknown_4_ = 4;
-        arg0->unknown_5_ = 0;
+        AppendNodeToTail(list, (struct TailNode020469b4*)event);
+        unsigned char* header = *(unsigned char**)(res + kRegion370c);
+        FieldTask_InitEnterZone(header, 0);
+        EventRecord_0217d53c* record = (EventRecord_0217d53c*)GameState_GetZoneTransition(gs);
+        InitStruct02070378((char*)record);
+        record->id = 0xc3bc;
+        record->field_0x7 = 1;
+        record->field_0x14 = 0x266;
+        record->field_0x18 = -0x7b33;
+        record->field_0xc = 1;
+        AppendNodeToTail(list, (struct TailNode020469b4*)header);
+        self->state = 4;
+        self->busy = 0;
     } else {
         arg0->unknown_4_ = 4;
         arg0->unknown_5_ = 0;

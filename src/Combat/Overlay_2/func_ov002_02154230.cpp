@@ -3,18 +3,18 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-struct Struct_02048150;
-extern "C" int func_02086ef0(Struct_02048150 *arg0, int arg1);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" int func_ov002_02154b94(void *arg0, int arg1);
-extern "C" int func_ov002_02154a34(void *arg0, int arg1);
-extern "C" int *func_0202ae18(void);
-extern "C" void func_ov002_02153e90(char *arg0);
-extern "C" int func_ov002_02154a6c(char *arg0, int arg1, int arg2);
-extern "C" int func_ov002_02153be0(char *arg0, int arg1, int arg2);
-extern "C" void func_02048150(GameObject *arg0, int arg1, int arg2);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_02191108(GameResources *arg0, int arg1, int arg2, int arg3, int arg4);
+struct ArrayContainsByteStruct;
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct *arr, int value);
+int LinkSession_IsActive(int *p);
+int HasPositiveField256Short178_02154b94(void *self, int id);
+int HasPositiveField304Short4_02154a34(void *self, int id);
+extern "C" int *LinkSession_GetInstance(void);
+extern "C" void func_ov002_02153e90(char *entry);
+extern "C" int func_ov002_02154a6c(char *self, int id, int arg);
+extern "C" int func_ov002_02153be0(char *self, int target, int arg);
+extern "C" void func_02048150(GameObject *m, int amount, int flag);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
+extern "C" void Party_ReformLine(GameResources *r, int a, int b, int c, int d);
 
 struct Struct_ov002_02154230 {
     short unknown_0_;
@@ -38,7 +38,7 @@ extern "C" ARM int func_ov002_02154230(char *base, struct Act02154230 *act, int 
     GameState *gs                  = GameState::GetInstance();
     GameResources *res             = GetGameResources();
     ArrayContainsByteStruct *party = (ArrayContainsByteStruct *) GameState_GetParty(gs);
-    int *ctx                       = func_0202ae18();
+    int *ctx                       = LinkSession_GetInstance();
     struct Rec02154230 *recs       = (struct Rec02154230 *) ((char *) act + 8);
     unsigned char any              = 0;
     if (alt) recs = (struct Rec02154230 *) ((char *) act + 0x20);
@@ -87,11 +87,11 @@ extern "C" ARM int func_ov002_02154230(char *base, struct Act02154230 *act, int 
         } else {
             func_02048150(var12, var10, 1);
         }
-        if (func_0202b7d8(var3) && func_02086ef0(var2, var9)) {
-            func_ov017_021c9e00(var9, 1, 0, 1);
+        if (LinkSession_IsActive(ctx) && ArrayContainsByte_02086ef0(party, id)) {
+            func_ov017_021c9e00(id, 1, 0, 1);
         }
-        if (func_02086ef0(var2, var9)) {
-            func_ov017_02191108(var1, 1, 1, 1, 1);
+        if (ArrayContainsByte_02086ef0(party, id)) {
+            Party_ReformLine(res, 1, 1, 1, 1);
         }
         var5 = 1;
     }

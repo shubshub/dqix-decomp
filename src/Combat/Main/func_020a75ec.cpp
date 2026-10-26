@@ -30,15 +30,15 @@ struct Struct_02010604;
 struct Struct_02015ef4;
 extern short data_020e9450[];
 extern "C" Zone3D* Zone3D_GetInstance();
-extern "C" void func_020332ac(WrappedActor020a75ec*);
+extern "C" void GameObject_Update(WrappedActor020a75ec*);
 extern "C" void func_020a78dc(WrappedActor020a75ec*);
 int ListContainsId(ListHead02046b60*, int);
 void* GameState_GetParty(GameState*);
 int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 extern "C" void* Scenario_GetInstance();
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 int Scenario_TestFlag(int, unsigned char*, int);
-int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+int GameObject_ForceMotionState(Bytes02033b88*, int);
 extern "C" void func_ov017_021a93f0(GameResources*, int, int);
 
 #if defined(jpn)
@@ -52,7 +52,7 @@ extern "C" ARM void func_020a75ec(WrappedActor020a75ec* actor) {
     GameState* state = GameState::GetInstance();
     Zone3D* zone = Zone3D_GetInstance();
     short field = actor->field_b4;
-    func_020332ac(actor);
+    GameObject_Update(actor);
     actor->field_b4 = field;
     func_020a78dc(actor);
     actor->phase += state->GetTickCount() * 364;
@@ -114,16 +114,16 @@ extern "C" ARM void func_020a75ec(WrappedActor020a75ec* actor) {
 #if !defined(jpn)
     unsigned char* flags = (unsigned char*)Scenario_GetInstance();
 #endif
-    if (g_keyManager.TestKeysPressed(2) || var13) {
-        if (func_02046b08((void**)var6)
+    if (g_keyManager.TestKeysPressed(2) || hit) {
+        if (FieldTaskQueue_IsEmpty((void**)head)
 #if !defined(jpn)
             && Scenario_TestFlag((int)flags, flags + 0x8c, 43)
 #endif
         ) {
-            arg0->unknown_15a_ = 0;
-            arg0->unknown_154_ = 0;
-            func_02033b88((Struct_02010604*)arg0, 0);
-            func_ov017_021a93f0(var5, 0, 1);
+            actor->field_15a = 0;
+            actor->active = 0;
+            GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
+            func_ov017_021a93f0(scene, 0, 1);
         }
     }
 }

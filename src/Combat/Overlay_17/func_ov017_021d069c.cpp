@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 extern "C" int Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* state);
+extern "C" int LinkSession_IsHostOrSolo(void* state);
 extern "C" void func_ov017_021d0490(int a);
 extern "C" void func_ov017_021c3e18(int a);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" void func_ov017_021bd2f0(void* table, void* localBuf);
 
 struct Struct_ov017_021d069c {
@@ -50,7 +50,7 @@ extern "C" ARM void func_ov017_021d069c(int arg0, struct Struct_ov017_021d069c* 
 #endif
     Zone3D_GetInstance();
     unsigned char* table = *(unsigned char**)((char*)a3 + 0x3000 + regionalOffset);
-    if (func_0202c508(a4)) {
+    if (LinkSession_IsHostOrSolo(a4)) {
         func_ov017_021d0490(a0);
         func_ov017_021c3e18(1);
         return;
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov017_021d069c(int arg0, struct Struct_ov017_021d069c* 
     if (arg0 != 0) {
         return;
     }
-    if (func_0202c1a4(arg4) != arg1->unknown_7_0_) {
+    if (LinkSession_GetOwnSlot(a4) != a1->fieldA) {
         return;
     }
 

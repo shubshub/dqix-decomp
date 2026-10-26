@@ -21,8 +21,8 @@ struct Struct_02014d80 {
     int unknown_20_;
 };
 
-void *GetField0x3f8Address_0200fd0c(GameState *state);
-void FormatFilenameAndSetExtension02014d18(int id, char *extension, char *buffer);
+void *GameState_GetZoneTransition(GameState *state);
+void Zone3D_FormatElementFilePath(int id, char *extension, char *buffer);
 void VramState_Restore(char *tables);
 void VramState_Save(char *tables);
 extern char data_020ef1e8[];

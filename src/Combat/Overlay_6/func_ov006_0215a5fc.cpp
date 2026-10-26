@@ -39,7 +39,7 @@ extern char data_ov006_02160359[];
 struct Actor0209c3b4;
 int SetStateAndDispatch0209c3b4(Actor0209c3b4*, int);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
-void Set3DClearColor_020c5588(int, int, int, int, int);
+void Set3DClearColor(int, int, int, int, int);
 struct Struct020dfc40;
 void KeyTable_Reset(Struct020dfc40*);
 extern "C" void KeyTable_Load(void*, void*, void*, unsigned int);
@@ -198,7 +198,7 @@ extern "C" ARM void func_ov006_0215a5fc(Scene* obj) {
             SetStateAndDispatch0209c3b4((Actor0209c3b4*)&g_bgmPlayer, 8);
         }
         SetFogState_020c54a4(0, 0, 0, 0);
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         FontBankLoader* g = FontBankLoader_GetInstance();
         BlankFunction02094b40(g);
         BlankFunction02094b34(g, 0x6c, 0x1fd, 0, 0);

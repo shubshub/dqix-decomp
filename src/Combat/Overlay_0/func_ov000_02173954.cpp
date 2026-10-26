@@ -18,8 +18,8 @@ void CallFunc0204b620IfField0x14_0204b878(struct Obj0204b878*, int, int, int, sh
 void SetFieldRange0217f5e4(struct Struct0217f5e4*, int);
 
 extern "C" void Background_FlushMap(void*, int);
-extern "C" void* func_0202ae18(void*);
-extern "C" void func_0203bd08(void*);
+extern "C" void* LinkSession_GetInstance(void*);
+extern "C" void OamManager_GetInstance(void*);
 extern "C" void func_ov000_0217a8f4(void*);
 extern "C" void func_ov000_021750e4(void*);
 extern "C" void func_ov000_02175544(void*);
@@ -109,8 +109,8 @@ extern "C" ARM void func_ov000_02173954(char* arg0) {
         func_ov000_02180bac(obj);
         return;
     }
-    func_0203bd08(func_0202ae18(GameState::GetInstance()));
-    signed char* var0;
+    OamManager_GetInstance(LinkSession_GetInstance(GameState::GetInstance()));
+    signed char* ids;
 #if defined(jpn)
     int var10, var11;
 #endif

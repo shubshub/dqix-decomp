@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 union Struct_ov017_021c9168 {
     struct { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; } unknown_0_;
@@ -21,9 +21,9 @@ struct Struct_ov017_021c9168_2 {
 };
 
 // USA: func_ov017_021c9168
-extern "C" ARM void func_ov017_021c9168(int arg0, int arg1, int arg2, int arg3,
-        int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
-    void* var0 = func_0202ae24();
+extern "C" ARM void func_ov017_021c9168(int p0, int p1, int p2, int p3,
+        int p4, int p5, int p6, int p7, int p8, int p9, int p10) {
+    void* d = LinkMessageQueue_GetInstance();
 
     struct Struct_ov017_021c9168_2 var1;
     var1.unknown_0_ = 0x84;

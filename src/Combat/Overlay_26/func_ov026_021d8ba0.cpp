@@ -80,7 +80,7 @@ struct Struct_ov000_0215440c_6 {
 int GameState_GetProtagonistIndex(GameState*);
 SlotWork* FindSlotById_021dae60(Container_021dae60*, int);
 MessageWork* MessageSystem_GetInstance();
-void* GetData02100044_0202ae24();
+void* LinkMessageQueue_GetInstance();
 void* GlobalFlags_GetInstance();
 unsigned char* GetData02153634_020e3580();
 int ClassifyField0x81fe_ov000_0215fc60(char*);
@@ -90,7 +90,7 @@ void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void*, int);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void*, int);
 void MarkSlots0218173c(void*);
 int GetByte0x63d5_02012060(void*);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 int MatchesActiveIndex020a36a8(Combatant020A36A8*);
 void InitOverlay17Sub0215e8e8(void*);
 void ClearFirstTwoWords0209a338(Pair0209a338*);
@@ -117,12 +117,12 @@ GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 char* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
 int IsFlag10088Set_02010088(S_10088*);
 int IsFlagBit8192Set_021dd3c4(FlagObj_021dd3c4*);
-void SwapGlobalEntry0203c108(Obj0203c108*, char*);
+void CachedTextLabel_SetText(Obj0203c108*, char*);
 void SetStoredWorkPtr_ov000_021744f4(int, void*);
 void ClearFlag0x43e02176054(void*);
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
 void* GetField0x19cOrNull(S02053dc0*);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 void Process02181364(void*);
 void ClearFlag_021816e8_021816e8(void*, int);
 void SetFlag_02181694_02181694(void*, int);
@@ -134,12 +134,12 @@ int IsEntryCompleteOrMissing020e3ad0(TagValueEntry020e385c*, int, int);
 unsigned char* FindEntryByTagAndValue(TagValueEntry020e385c*, int, int);
 void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
 void SetBrightness(GameResources*, int, int);
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 void UpdateFieldIfDiffers_02174514_02174514(void*);
 void ClearFlag0x1000AndBytes7eA1_02088e64(unsigned char*);
 void* KeyTable_Get(Container020e0310*, int);
 void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
-int TestFlags02046708(FlagWord02046708*, unsigned int);
+int FlagWord_TestBits(FlagWord02046708*, unsigned int);
 void FlagWord_SetBits(unsigned int*, unsigned int);
 void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 int GetByte2IfGlobalFlagSet_020e37e8(unsigned char*);
@@ -147,7 +147,7 @@ void ClearBitOrNotifyOverlay020e3798(unsigned char*);
 void SetBitOrNotifyOverlay020e36f0(unsigned char*);
 int CountUnder100Flags0217fb98(void*);
 void SetBoundedArrayField0x4f4_ov000_02162c90(char*, int, int);
-int TestBitBySignedByteIndex_0202c1c0(SearchStruct*, int);
+int LinkSession_IsSlotMember(SearchStruct*, int);
 int GetByteField_02168720_02168720(char*);
 void ClearSlotBitndSetByte_021813d4(void*);
 void SePlayer_LoadExtraArchiveA(void*, int, int);
@@ -159,8 +159,8 @@ void IncrementCounterUnlessFlagged_02053dd0(IncObj*);
 void ResetTwoFields021637c8(void*);
 
 extern "C" {
-int* func_0202ae18();
-void func_ov026_021d8aac( Struct_ov000_02160da0*, int arg1, int arg2);
+int* LinkSession_GetInstance();
+void func_ov026_021d8aac( BattleWork*, int mode, int kind);
 void func_ov000_02181608(void*);
 void func_ov000_0218048c(void*);
 void func_ov000_02162cbc( BattleWork*);
@@ -185,9 +185,9 @@ void func_ov000_021814bc(void*);
 void func_ov026_021dc8fc( Struct_ov000_02160da0*, Struct_ov000_02161e30*, Struct_ov000_0217e870_2*, void*, void*, void*, int);
 void* memset(void*, int, unsigned int);
 void func_ov000_0217fcc4(void*, int);
-int func_0202c540(int*);
-void func_ov017_021c6814(unsigned short, unsigned short, Struct_ov026_021d8ba0*, unsigned char, int, int);
-int func_ov026_021ddd84(GameResources*, Struct_ov000_02160da0*, Struct_ov000_02161e30*, Struct_ov000_0217e870_2*, void*, void*, int);
+int LinkSession_IsGuest(int*);
+void func_ov017_021c6814(unsigned short, unsigned short, Cmd*, unsigned char, int, int);
+int func_ov026_021ddd84(GameResources*, BattleWork*, BattleState*, PartyState*, void*, void*, int);
 void func_ov017_021c847c();
 void func_020dd0b0(int, void*);
 void func_0204500c(Struct_ov023_021f4c04*, void*, int, int);
@@ -197,9 +197,9 @@ void func_ov026_021dd8a8(Struct_ov000_02161e30*, Struct_ov000_0217e870_2*);
 void func_ov000_0217fbf4(void*, int);
 void func_02046380(Struct_ov023_021f4c04*);
 void func_020e4ce8(void*, char*, int);
-void func_ov000_0216258c( Struct_ov000_02160da0*);
-void func_ov026_021db3d8( Struct_ov000_02160da0*);
-int func_0202c508(int*);
+void func_ov000_0216258c( BattleWork*);
+void func_ov026_021db3d8( BattleWork*);
+int LinkSession_IsHostOrSolo(int*);
 void func_ov000_02175be4(void*);
 void func_ov026_021db5a4( Struct_ov000_02160da0*);
 void func_ov026_021dbba8( Struct_ov000_02160da0*);
@@ -448,12 +448,12 @@ extern "C" ARM void func_ov026_021d8ba0(Struct_ov000_02160da0* arg0) {
 
     gs = GameState::GetInstance();
     res = GetGameResources();
-    link = func_0202ae18();
+    link = LinkSession_GetInstance();
     battle = self->battle;
     slot = FindSlotById_021dae60((Container_021dae60*)self->list, GameState_GetProtagonistIndex(gs));
     ctrl = MessageSystem_GetInstance();
     loader = BackgroundLoader::GetInstance();
-    slots = GetData02100044_0202ae24();
+    slots = LinkMessageQueue_GetInstance();
     flagWord = GlobalFlags_GetInstance();
     field3704 = (void**)res->unknown_ptr_array_3700[1];
     notify = GetData02153634_020e3580();
@@ -485,11 +485,11 @@ extern "C" ARM void func_ov026_021d8ba0(Struct_ov000_02160da0* arg0) {
                 goto state1;
             }
         }
-        ((SafeAllocator*)(arg0->unknown_30_))->Reset();
-        inline_ov026_021d8ba0_2().unknown_18_ = var23->QueueLoadFile(data_ov026_021dedbc, 0);
-        arg0->unknown_eac_ = 1;
-        if (func_0202b7d8(var22) && func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_)) {
-            func_ov000_0215e8e8(arg0->unknown_29c_);
+        ((SafeAllocator*)(self->alloc))->Reset();
+        GetRowLabels().loadTask = loader->QueueLoadFile(data_ov026_021dedbc, 0);
+        self->state = 1;
+        if (LinkSession_IsActive(link) && MatchesActiveIndex020a36a8((Combatant020A36A8*)self->party)) {
+            InitOverlay17Sub0215e8e8(self->battle);
         }
     }
 state1:
@@ -669,7 +669,7 @@ state1:
                         func_020e4864((char*)c + 0x14c, fmt.s + 5, 1, 0, 0, 0);
                         __clear(text, sizeof(text));
                         MessageSystem_FormatText(ctrl2, 0xa, fmt.s, text, 0x100, 0, 0);
-                        SwapGlobalEntry0203c108((Obj0203c108*)(memberNames + count * 0x18), text);
+                        CachedTextLabel_SetText((Obj0203c108*)(memberNames + count * 0x18), text);
                     }
                     self->memberRanks[count] = *((unsigned char*)c + 0x17c);
                     self->memberIds[count] = groups[g].ids[j] + 0xc0;
@@ -679,7 +679,7 @@ state1:
                         func_020e4864(owner->name, fmt2.s + 5, 1, 0, 0, 0);
                         __clear(text2, sizeof(text2));
                         MessageSystem_FormatText(ctrl2, 0xa, fmt2.s, text2, 0x100, 0, 0);
-                        SwapGlobalEntry0203c108((Obj0203c108*)(ownerNames + ownerCount * 0x18), text2);
+                        CachedTextLabel_SetText((Obj0203c108*)(ownerNames + ownerCount * 0x18), text2);
                         ownerCount++;
                     }
                     var74++;
@@ -729,22 +729,22 @@ state1:
             if (var78 != 0) {
                 memset(var78, 0, 6);
             }
-            arg0->unknown_54f0_ = arg0->unknown_38dc_;
-            if (func_02010088((Struct_02010088*)var27)) continue;
-            func_02033b88((Struct_02010604*)var27, 0);
+            self->curSlot = self->activeSlot;
+            if (IsFlag10088Set_02010088((S_10088*)member)) continue;
+            GameObject_ForceMotionState((Bytes02033b88*)member, 0);
         }
         if (var19->unknown_8e20_ == 0 && arg0->unknown_29c_->unknown_8e49_ == 2) {
             func_ov000_02181364(arg0->unknown_3760_);
             func_ov000_0217fcc4(arg0->unknown_3760_, -1);
             arg0->unknown_772f_ = 0;
         }
-        if (func_ov000_0215fc60((char*)var19) != 0) {
-            if (func_0202c540(var22) != 0) {
-                func_ov000_02181364(arg0->unknown_3760_);
-                func_ov000_0217fcc4(arg0->unknown_3760_, -1);
-                func_ov000_021816e8(arg0->unknown_3760_, -1);
-                func_ov000_02181694(arg0->unknown_3760_, 0);
-                arg0->unknown_772f_ = 0;
+        if (ClassifyField0x81fe_ov000_0215fc60((char*)battle) != 0) {
+            if (LinkSession_IsGuest(link) != 0) {
+                Process02181364(self->list);
+                func_ov000_0217fcc4(self->list, -1);
+                ClearFlag_021816e8_021816e8(self->list, -1);
+                SetFlag_02181694_02181694(self->list, 0);
+                self->inputOn = 0;
             } else {
                 for (var56 = 1; var56 < 4; var56++) {
                     Struct_ov026_021d8ba0_6* var79 = func_ov026_021dae60((Struct_ov026_021d8ba0_4*)arg0->unknown_3760_, var56);
@@ -823,7 +823,7 @@ state1:
                 return;
             }
         }
-        if (((POWCNT & 0x8000) >> 15) == 1 && (IsBrightnessOutsideValidRange((GameResources*)res, false) || IsBrightnessOutsideValidRange((GameResources*)res, true)) && self->phase == 0) {
+        if (((POWCNT & 0x8000) >> 15) == 1 && (IsScreenFullyFaded((GameResources*)res, false) || IsScreenFullyFaded((GameResources*)res, true)) && self->phase == 0) {
             SetBrightness(res, 0, 0xf);
             if (ctrl->busy == 0) {
                 void* work = MessageSystem_GetInstance()->scriptWork;
@@ -836,20 +836,20 @@ state1:
         if (func_ov026_021ddd84(var18, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, &arg0->unknown_7748_, 1) != 0) {
             return;
         }
-        if (func_ov026_021d8a40() && func_02046b08(var47) && func_020a35e0((unsigned char*)arg0->unknown_2a0_, arg0->unknown_2a0_->unknown_2a_)) {
-            func_ov026_021dce34(-1, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, arg0->unknown_ec8_, arg0->unknown_5c3c_, arg0->unknown_5728_, arg0->unknown_e98_, arg0->unknown_ea0_, arg0->unknown_5910_, arg0->unknown_c18_);
+        if (func_ov026_021d8a40() && FieldTaskQueue_IsEmpty(field3704) && TestBitAt0x34_020a35e0((unsigned char*)self->party, self->party->myIndex)) {
+            func_ov026_021dce34(-1, self, self->battle, self->party, self->list, self->ctxEc8, self->ctx5c3c, self->ctx5728, self->scriptA, self->scriptB, self->ctx5910, self->view);
         }
     }
-    if (arg0->unknown_eac_ == 4) {
-        int var91;
-        int var92;
-        if (((POWCNT & 0x8000) >> 15) == 1 && (IsBrightnessOutsideValidRange((GameResources*)var18, false) || IsBrightnessOutsideValidRange((GameResources*)var18, true)) && arg0->unknown_7712_ == 0) {
-            SetBrightness(var18, 0, 0xf);
-            func_ov026_021dd8a8(var19, arg0->unknown_2a0_);
-            arg0->unknown_eb5_ = 0;
-        } else if (arg0->unknown_eb5_ != 0) {
-            func_ov026_021dd8a8(var19, arg0->unknown_2a0_);
-            arg0->unknown_eb5_ = 0;
+    if (self->state == 4) {
+        int revived;
+        int i;
+        if (((POWCNT & 0x8000) >> 15) == 1 && (IsScreenFullyFaded((GameResources*)res, false) || IsScreenFullyFaded((GameResources*)res, true)) && self->phase == 0) {
+            SetBrightness(res, 0, 0xf);
+            func_ov026_021dd8a8(battle, self->party);
+            self->revivePending = 0;
+        } else if (self->revivePending != 0) {
+            func_ov026_021dd8a8(battle, self->party);
+            self->revivePending = 0;
         }
         if (arg0->unknown_772f_ & (var21->unknown_998_ == 0)) {
             func_ov000_0217fbf4(arg0->unknown_3760_, -1);
@@ -899,16 +899,16 @@ state1:
                 return;
             }
         }
-        if (func_ov026_021d8a40() && func_02046b08(var47) && func_020a35e0((unsigned char*)arg0->unknown_2a0_, arg0->unknown_2a0_->unknown_2a_)) {
-            func_ov026_021dce34(-1, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, arg0->unknown_ec8_, arg0->unknown_5c3c_, arg0->unknown_5728_, arg0->unknown_e98_, arg0->unknown_ea0_, arg0->unknown_5910_, arg0->unknown_c18_);
+        if (func_ov026_021d8a40() && FieldTaskQueue_IsEmpty(field3704) && TestBitAt0x34_020a35e0((unsigned char*)self->party, self->party->myIndex)) {
+            func_ov026_021dce34(-1, self, self->battle, self->party, self->list, self->ctxEc8, self->ctx5c3c, self->ctx5728, self->scriptA, self->scriptB, self->ctx5910, self->view);
         }
-        if (var19->unknown_8e47_ == 0) {
-            if (func_02046708((Struct_02012de8*)var25, 0x200) == 0) {
-                int var103 = var19->unknown_8e20_;
-                int var104 = var19->unknown_8e49_;
-                int var105 = 1;
-                if (var103 == 0 && var104 == 2) {
-                    var105 = 0;
+        if (battle->field8e47 == 0) {
+            if (FlagWord_TestBits((FlagWord02046708*)flagWord, 0x200) == 0) {
+                int turns = battle->turns;
+                int kind = battle->kind;
+                int set = 1;
+                if (turns == 0 && kind == 2) {
+                    set = 0;
                 }
                 if (set) {
                     FlagWord_SetBits((unsigned int*)flagWord, 0x200);
@@ -924,7 +924,7 @@ state1:
             int redo = 0;
             int changed = redo;
             int locked = redo;
-            if (CheckField0NonZero_0202b7d8(link) && battle->turns == 0 && self->battle->kind == 2) {
+            if (LinkSession_IsActive(link) && battle->turns == 0 && self->battle->kind == 2) {
                 if (ctrl->busy != 0) {
                     locked = 1;
                 }
@@ -935,15 +935,15 @@ state1:
                 }
                 func_ov000_02162c90((char*)arg0, var106, func_ov000_0217fb98(arg0->unknown_3760_) == 0);
             }
-            func_ov026_021db3d8(arg0);
-            if (func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_)) {
-                var45 = arg0->unknown_2a0_;
-                var107 = 1;
-                var46 = func_0202ae18();
-                if (func_0202b7d8(var46)) {
-                    for (var92 = 0; var92 < 4; var92++) {
-                        if (func_020a35e0((unsigned char*)var45, var92) && func_0202c1c0((Struct_0202b2f0*)var46, var92)) {
-                            var107 = (var107 & arg0->unknown_54f4_[var92]) ? 1 : 0;
+            func_ov026_021db3d8(self);
+            if (MatchesActiveIndex020a36a8((Combatant020A36A8*)self->party)) {
+                party = self->party;
+                redo = 1;
+                lnk = LinkSession_GetInstance();
+                if (LinkSession_IsActive(lnk)) {
+                    for (i = 0; i < 4; i++) {
+                        if (TestBitAt0x34_020a35e0((unsigned char*)party, i) && LinkSession_IsSlotMember((SearchStruct*)lnk, i)) {
+                            redo = (redo & self->slotDone[i]) ? 1 : 0;
                         }
                     }
                 } else if (arg0->unknown_54f4_[0] == 0) {
@@ -958,17 +958,17 @@ state1:
             if (func_ov000_02168720((char*)arg0) > 0 || var21->unknown_998_ != 0) {
                 var107 = 0;
             }
-            if (var107 && func_0202b7d8(var22) && func_020a36a8((Struct_020a36a8*)arg0->unknown_2a0_)) {
+            if (redo && LinkSession_IsActive(link) && MatchesActiveIndex020a36a8((Combatant020A36A8*)self->party)) {
                 if (func_ov026_021d8a40() == 0) {
                     var107 = 0;
                 }
             }
-            if (func_0202b7d8(var22)) {
-                int var110 = arg0->unknown_54f0_;
-                int var111 = 0;
-                int var112;
-                if (var110 >= 0) {
-                    var111 = var110 <= 3;
+            if (LinkSession_IsActive(link)) {
+                int cur = self->curSlot;
+                int valid = 0;
+                int sel;
+                if (cur >= 0) {
+                    valid = cur <= 3;
                 }
                 if (valid) {
                     int differs;
@@ -984,7 +984,7 @@ state1:
                         self->cmd.c = cmdB.c;
                         self->cmd.d = cmdB.d;
                         self->cmd.e = cmdB.e;
-                        if (func_0202c508(link) != 0 && ((cmdB.b[0] == 100 && cmdB.b[1] == 6) || cmdB.b[0] == 0xd)) {
+                        if (LinkSession_IsHostOrSolo(link) != 0 && ((cmdB.b[0] == 100 && cmdB.b[1] == 6) || cmdB.b[0] == 0xd)) {
                             Roster* roster = (Roster*)GameState_GetParty(gs);
                             int m;
                             for (m = 0; m < roster->count; m++) {
@@ -1046,14 +1046,14 @@ state1:
                         }
                     }
                 }
-                func_ov000_02160fbc(arg0, 0x40000000);
-                if (!func_0202b7d8(var22)) {
-                    Random* var118;
-                    arg0->unknown_5950_ = func_ov026_021dd3dc(arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_);
-                    var118 = &arg0->unknown_29c_->unknown_0_;
-                    arg0->unknown_6e3c_ = GetRandomStateHi(var118);
-                    arg0->unknown_6e40_ = GetRandomStateLo(var118);
-                    arg0->unknown_eac_ = 5;
+                ClearCombatWorkFlags0x55f4_ov000_02160fbc(self, 0x40000000);
+                if (!LinkSession_IsActive(link)) {
+                    Random* rnd;
+                    self->resultKind = func_ov026_021dd3dc(self->battle, self->party, self->list);
+                    rnd = &self->battle->rng;
+                    self->randHi = GetRandomStateHi(rnd);
+                    self->randLo = GetRandomStateLo(rnd);
+                    self->state = 5;
                 } else {
                     int var119;
                     int var120;
@@ -1066,8 +1066,8 @@ state1:
                         func_ov017_021cefe0(arg0->unknown_2a0_->unknown_8_, arg0->unknown_5950_, arg0->unknown_7748_);
                         func_ov000_02160fa8(arg0, 0x800000);
                     }
-                    if (func_02046708((Struct_02012de8*)var25, 0x200)) {
-                        func_020e36f0(var26);
+                    if (FlagWord_TestBits((FlagWord02046708*)flagWord, 0x200)) {
+                        SetBitOrNotifyOverlay020e36f0(notify);
                     }
                     arg0->unknown_eac_ = 0x12;
                     func_ov017_021c894c(arg0->unknown_2a0_->unknown_8_);
@@ -1094,7 +1094,7 @@ state1:
         if (func_ov026_021ddd84(var18, arg0, arg0->unknown_29c_, arg0->unknown_2a0_, arg0->unknown_3760_, &arg0->unknown_7748_, 0) != 0) {
             return;
         }
-        if (GetByte2IfGlobalFlagSet_020e37e8(notify) != 0 || TestFlags02046708((FlagWord02046708*)flagWord, 0x200) == 0) {
+        if (GetByte2IfGlobalFlagSet_020e37e8(notify) != 0 || FlagWord_TestBits((FlagWord02046708*)flagWord, 0x200) == 0) {
             FlagWord_ClearBits((FlagWord020466f4*)flagWord, 0x200);
             if (MatchesActiveIndex020a36a8((Combatant020A36A8*)self->party)) {
                 self->state = 8;
@@ -1141,9 +1141,9 @@ state1:
         if (func_ov000_02160fd4(arg0, 0x20000)) {
             arg0->unknown_eac_ = 5;
         }
-    } else if (arg0->unknown_eac_ == 5) {
-        int var124;
-        if (func_0202b7d8(var22) && var22[0xfc0 / 4] != 0) {
+    } else if (self->state == 5) {
+        int i;
+        if (LinkSession_IsActive(link) && link[0xfc0 / 4] != 0) {
             return;
         }
         if (arg0->unknown_7711_ != 0 && arg0->unknown_7710_ != 0) {
@@ -1172,7 +1172,7 @@ state1:
         ((SafeAllocator*)arg0->unknown_774c_)->Destroy();
         arg0->unknown_7749_ = 0;
         func_02057f00(func_02057924(), 0x13);
-        if (IsField0Null_02046b08((void**)res->unknown_ptr_array_3700[0]) == 0) {
+        if (FieldTaskQueue_IsEmpty((void**)res->unknown_ptr_array_3700[0]) == 0) {
             return;
         }
         SetFlags00(var18, 0x10);
@@ -1217,13 +1217,13 @@ state1:
                 }
             }
         }
-        func_ov000_02168144(arg0);
-        func_0209a338((Struct_0200f3a4_8*)(arg0->unknown_e98_));
-        ((SafeAllocator*)(arg0->unknown_30_))->Reset();
-        arg0->unknown_55d8_ = 0;
-        func_ov000_0215d588(var19);
-        if (func_0202b7d8(var22) && func_020e37e8(var26)) {
-            func_020e3798(var26);
+        func_ov000_02168144(self);
+        ClearFirstTwoWords0209a338((Pair0209a338*)(self->scriptA));
+        ((SafeAllocator*)(self->alloc))->Reset();
+        self->field55d8 = 0;
+        func_ov000_0215d588(battle);
+        if (LinkSession_IsActive(link) && GetByte2IfGlobalFlagSet_020e37e8(notify)) {
+            ClearBitOrNotifyOverlay020e3798(notify);
         }
         if (arg0->unknown_5950_ == 1) {
             func_ov000_02160da0(arg0);

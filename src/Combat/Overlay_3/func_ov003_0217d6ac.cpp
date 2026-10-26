@@ -25,8 +25,8 @@ extern "C" void func_ov017_021baedc(void *self, int flag);
 struct TailList020469b4;
 struct TailNode020469b4;
 void AppendNodeToTail(struct TailList020469b4 *list, struct TailNode020469b4 *node);
-void InitAndResetHeader_0219e310(unsigned char *obj, int arg);
-void *GetField0x3f8Address_0200fd0c(GameState *state);
+void FieldTask_InitEnterZone(unsigned char *obj, int arg);
+void *GameState_GetZoneTransition(GameState *state);
 void InitStruct02070378(char *obj);
 
 struct Struct_ov003_0217d6ac_2;
@@ -165,28 +165,28 @@ extern "C" ARM void func_ov003_0217d6ac(Struct_ov003_0217d6ac_2 *arg0) {
         case 5: var9->unknown_8_ = 0xd069; break;
         case 6: var9->unknown_8_ = 0xd06a; break;
     }
-    func_020469b4(var5, (struct Struct_0201bdac *) var9);
-    if (var4 != 0) {
-        unsigned char *var10 = *(unsigned char **) (var1 + RG(0x370c, 0x34fc));
-        func_ov017_0219e310(var10, 0);
-        Struct_ov003_0217d6ac_4 *var11 = (Struct_ov003_0217d6ac_4 *) func_0200fd0c(var0);
-        func_02070378((char *) var11);
-        var11->unknown_0_         = arg0->unknown_18_[var4] + 0xc544;
-        var11->unknown_7_  = 1;
-        var11->unknown_14_ = 0x2b8;
-        var11->unknown_18_ = -0x7b33;
-        var11->unknown_c_  = 1;
-        func_020469b4(var5, (struct Struct_0201bdac *) var10);
+    AppendNodeToTail(list, (struct TailNode020469b4 *) event);
+    if (sel != 0) {
+        unsigned char *header = *(unsigned char **) (res + RG(0x370c, 0x34fc));
+        FieldTask_InitEnterZone(header, 0);
+        EventRecord_0217d6ac *record = (EventRecord_0217d6ac *) GameState_GetZoneTransition(gs);
+        InitStruct02070378((char *) record);
+        record->id         = self->ids[sel] + 0xc544;
+        record->field_0x7  = 1;
+        record->field_0x14 = 0x2b8;
+        record->field_0x18 = -0x7b33;
+        record->field_0xc  = 1;
+        AppendNodeToTail(list, (struct TailNode020469b4 *) header);
     } else {
-        unsigned char *var12 = *(unsigned char **) (var1 + RG(0x370c, 0x34fc));
-        func_ov017_0219e310(var12, 0);
-        Struct_ov003_0217d6ac_4 *var13 = (Struct_ov003_0217d6ac_4 *) func_0200fd0c(var0);
-        func_02070378((char *) var13);
-        var13->unknown_0_         = 0xc3bc;
-        var13->unknown_7_  = 1;
-        var13->unknown_14_ = 0x266;
-        var13->unknown_18_ = -0x7b33;
-        var13->unknown_c_  = 1;
-        func_020469b4(var5, (struct Struct_0201bdac *) var12);
+        unsigned char *header = *(unsigned char **) (res + RG(0x370c, 0x34fc));
+        FieldTask_InitEnterZone(header, 0);
+        EventRecord_0217d6ac *record = (EventRecord_0217d6ac *) GameState_GetZoneTransition(gs);
+        InitStruct02070378((char *) record);
+        record->id         = 0xc3bc;
+        record->field_0x7  = 1;
+        record->field_0x14 = 0x266;
+        record->field_0x18 = -0x7b33;
+        record->field_0xc  = 1;
+        AppendNodeToTail(list, (struct TailNode020469b4 *) header);
     }
 }

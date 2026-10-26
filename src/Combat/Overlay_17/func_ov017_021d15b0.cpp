@@ -43,15 +43,15 @@ struct Struct_ov017_021d1118 {
     unsigned char unknown_13_6_ : 1;
     unsigned char unknown_13_7_ : 1;
 };
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 extern "C" void func_ov017_021a99dc(void*, void*, int, int, int);
 
 // USA: func_ov017_021d15b0
-extern "C" ARM void func_ov017_021d15b0(int arg0, Struct_ov017_021d1118* arg1, Struct_ov017_021d15b0_3* arg2, Struct_ov017_021d15b0_4* arg3, Struct_0202c1a4* arg4) {
-    void* var0 = arg3->unknown_3b84_;
-    int var1 = func_0202c1a4(arg4);
-    if (!arg1->unknown_13_7_) {
-        if (var1 == arg1->unknown_12_0_) func_ov017_021a99dc(var0, arg1->unknown_4_, arg1->unknown_13_0_, arg1->unknown_13_2_, arg1->unknown_13_6_);
+extern "C" ARM void func_ov017_021d15b0(int sender, Packet* packet, PacketStore* store, PacketContext* context, SearchStruct0202c1a4* search) {
+    void* handler = context->handler;
+    int recipient = LinkSession_GetOwnSlot(search);
+    if (!packet->segmented) {
+        if (recipient == packet->recipient) func_ov017_021a99dc(handler, packet->payload, packet->type, packet->length, packet->final);
         return;
     }
     if (arg1->unknown_13_0_ == 2) {

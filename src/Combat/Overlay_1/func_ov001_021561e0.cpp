@@ -35,13 +35,13 @@ struct Struct_ov001_021561e0_4 {
     int unknown_15c_;
     void* unknown_160_;
 };
-struct Struct_ov001_021561e0 { char unknown_0_[RG(0x5cac, 0x5a4c)]; unsigned char unknown_5cac_; };
-struct Struct_ov001_021561e0_2 { Object3D unknown_0_; char unknown_ac_[RG(0xe0, 0xd4)]; unsigned int unknown_18c_; };
-struct Struct_ov001_021561e0_3 { char unknown_0_[0x8c]; unsigned char unknown_8c_[1]; };
-struct Struct_020fdd44;
-struct Struct_02018300_2;
-extern "C" int func_ov001_02153994();
-extern "C" int* func_0202ae18();
+struct GameFlag021561e0 { char field_0[RG(0x5cac, 0x5a4c)]; unsigned char active; };
+struct CombatantFlags021561e0 { Object3D object; char field_ac[RG(0xe0, 0xd4)]; unsigned int flags; };
+struct EventFlags021561e0 { char field_0[0x8c]; unsigned char flags[1]; };
+struct Entry_02028bd0;
+struct Obj02028c64;
+int InitAndCheckField3c_02153994();
+extern "C" int* LinkSession_GetInstance();
 extern "C" void func_ov001_0215aac8();
 extern "C" void func_ov027_021d8c20(void*);
 extern "C" void func_ov001_0215aaa8(int, int);
@@ -51,12 +51,12 @@ void DestroyActiveAllocators_0215aa5c();
 extern "C" void* Zone3D_GetInstance();
 void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
 Entry_02028bd0* ZoneRecords_GetInstance();
-Obj02028c64* FindInlineEntryById(Entry_02028bd0*, int);
+Obj02028c64* ZoneRecords_Find(Entry_02028bd0*, int);
 void ZoneRecord_SetDoorOpened(Obj02028c64*, int);
 extern "C" EventFlags021561e0* Scenario_GetInstance();
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
-int CheckField0NonZero_0202b7d8(int*);
-extern "C" int func_0202c508(void*);
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsHostOrSolo(void*);
 extern "C" void func_ov017_021d0490(int);
 extern AllocatorUnion g_mainAllocator;
 
@@ -67,7 +67,7 @@ extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
     if (!AlwaysTrue02094b4c(FontBankLoader_GetInstance())) return 11;
     GameResources* resources = GetGameResources();
     GameState* game = GameState::GetInstance();
-    int* manager = func_0202ae18();
+    int* manager = LinkSession_GetInstance();
     if (state->resetGameFlag) ((GameFlag021561e0*)game)->active = 0;
     func_ov001_0215aac8();
     if (arg0->unknown_160_) {
@@ -104,7 +104,7 @@ extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
     while (node) {
         if (node->unk_2c.type2.flags & 0x200) {
             int index = Zone3D_GetDoorIndex(area, node);
-            Obj02028c64* entry = FindInlineEntryById(ZoneRecords_GetInstance(), area->currentZoneID_);
+            Obj02028c64* entry = ZoneRecords_Find(ZoneRecords_GetInstance(), area->currentZoneID_);
             if (entry) ZoneRecord_SetDoorOpened(entry, index);
             node->unk_2c.type2.flags &= ~0x200;
         }
@@ -121,7 +121,7 @@ extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
             var12->unknown_18c_ &= ~2;
         }
     }
-    if (!func_0202b7d8(var2) || func_0202c508(var2)) return 10;
+    if (!LinkSession_IsActive(manager) || LinkSession_IsHostOrSolo(manager)) return 10;
     func_ov017_021d0490(0);
     arg0->unknown_fc_ = 0;
     arg0->unknown_103_ = 0;

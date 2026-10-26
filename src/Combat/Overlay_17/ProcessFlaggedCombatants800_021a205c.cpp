@@ -3,7 +3,7 @@
 #include "GameState/GameState.h"
 
 struct Element0x318_02028bac { unsigned char data[0x318]; };
-struct Element0x318_02028bac* GetElementStride0x318(struct Element0x318_02028bac* base, int index);
+struct Element0x318_02028bac* ZoneRecords_GetAt(struct Element0x318_02028bac* base, int index);
 struct Entry_02028bd0;
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
 extern "C" void func_020733d8(void* elem, int mode);
@@ -17,7 +17,7 @@ ARM void ProcessFlaggedCombatants800_021a205c(GameResources*) {
 	(int)BackgroundLoader::GetInstance();
 	for (int i = 0; i < 4; i++) {
 		battleStruct->GetPartyMemberByIndex(i);
-		struct Element0x318_02028bac* elem = GetElementStride0x318(table, i);
+		struct Element0x318_02028bac* elem = ZoneRecords_GetAt(table, i);
 		struct EntryFlags_021a205c* flags = (struct EntryFlags_021a205c*)((unsigned char*)elem + 2);
 		if (flags->flag3) {
 			func_020733d8(elem, 0);

@@ -48,14 +48,14 @@ extern char data_ov025_021ef7d9[];
 extern char data_ov025_021ef7df[];
 extern char data_ov025_021ef7e6[];
 extern SePlayer g_sePlayer;
-int GetFlags_0202e09c(int);
+int Camera_GetKindFlags(int);
 Object3D* GetField0x21c(S0204a438*);
-void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4*, int);
+void Camera_SetFieldOfView(AngleTrig0202e9a4*, int);
 extern "C" void func_0204a170(int);
 int DispatchByIndex021820bc(void*, int, int, int);
 void ResetInnerState02048c90(Obj02048c90*);
 void ClearSubstructFlag0x4_02049ae4(unsigned char*);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 AnimationWork* GetActiveCombatWork_ov000_02160130();
 void SePlayer_Play(SePlayer*, int, int);
 
@@ -64,28 +64,28 @@ extern "C" ARM int func_ov025_021e2980(AnimationCommand* command, AnimationTarge
     GameState* game = GameState::GetInstance();
     if (command->target == 0x19) {
         void* camera = game->GetCamera();
-        if (GetFlags_0202e09c((int)camera) & 0x10) {
+        if (Camera_GetKindFlags((int)camera) & 0x10) {
             Object3D* object = GetField0x21c((S0204a438*)camera);
             if (object) {
-                SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)camera, 0xf000);
+                Camera_SetFieldOfView((AngleTrig0202e9a4*)camera, 0xf000);
                 object->SetAnimationByName(command->animation, command->animationFlags);
                 func_0204a170((int)camera);
                 data_ov025_021ef988.flags |= 8;
             }
         }
     } else {
-        int var3[8];
-        int var4 = func_ov000_021820bc(arg3, (int)arg1, arg0->unknown_e_, (int)var3);
-        if (!var4) return 1;
-        for (int var5 = 0; var5 < var4; var5++) {
-            Struct_ov025_021e2980_3* var6 = (Struct_ov025_021e2980_3*)var0->GetGameObjectByIndex(var3[var5]);
-            if (!var6) continue;
-            if (var6->unknown_0_.unknown_0_ & 0x80) {
-                func_02048c90((Struct_02048c90*)var6);
-                func_02049ae4((unsigned char*)var6);
-                int var7 = var6->unknown_be_;
-                if (var7 != 0 && var7 != 4 && var7 != 6)
-                    func_02033b88((Struct_02010604*)var6, 0);
+        int ids[8];
+        int count = DispatchByIndex021820bc(context, (int)targets, command->target, (int)ids);
+        if (!count) return 1;
+        for (int i = 0; i < count; i++) {
+            AnimationCombatant* combatant = (AnimationCombatant*)game->GetGameObjectByIndex(ids[i]);
+            if (!combatant) continue;
+            if (combatant->object.unknown_0_ & 0x80) {
+                ResetInnerState02048c90((Obj02048c90*)combatant);
+                ClearSubstructFlag0x4_02049ae4((unsigned char*)combatant);
+                int state = combatant->state;
+                if (state != 0 && state != 4 && state != 6)
+                    GameObject_ForceMotionState((Bytes02033b88*)combatant, 0);
             }
             combatant->object.SetAnimationPlaybackSpeed(0x1000, 0);
             combatant->object.SkipAnimationTransition();

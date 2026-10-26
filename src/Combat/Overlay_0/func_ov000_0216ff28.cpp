@@ -25,7 +25,7 @@ struct Struct_0203c0cc {
 #endif
 };
 
-extern "C" void func_0203c0cc(struct Struct_0203c0cc* arg0);
+void CachedTextLabel_Init(struct State0xc0cc* obj);
 
 struct Struct_020200c0 {
     char unknown_0_[0x1c];
@@ -76,41 +76,41 @@ struct Struct_ov000_0215ab88 {
 };
 
 // USA: func_ov000_0216ff28
-extern "C" ARM void func_ov000_0216ff28(struct Struct_ov000_0215ab88* arg0) {
-    int var0;
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    func_ov000_0216fe9c(&arg0->unknown_8_);
-    arg0->unknown_87_ = 0;
-    arg0->unknown_30_ = 0;
-    arg0->unknown_38_ = 0;
-    arg0->unknown_3c_ = 0;
-    arg0->unknown_40_ = 0;
-    arg0->unknown_48_ = 0;
-    arg0->unknown_44_ = 0;
-    arg0->unknown_4c_ = -1;
-    arg0->unknown_82_ = 0;
-    arg0->unknown_86_ = 0;
-    arg0->unknown_80_ = 0x7fff;
-    arg0->unknown_438_ = 0;
-    arg0->unknown_43c_ = 0;
-    arg0->unknown_430_ = 0x7fff;
-    arg0->unknown_432_ = 0x7fff;
-    arg0->unknown_434_ = 0;
-    arg0->unknown_43d_ = -1;
-    arg0->unknown_43e_ = 0;
-    arg0->unknown_440_ = 0;
-    arg0->unknown_43f_ = 0;
-    arg0->unknown_441_ = 0;
-    arg0->unknown_442_ = -1;
-    arg0->unknown_443_ = 5;
-    arg0->unknown_444_ = 0;
-    arg0->unknown_445_ = 1;
-    func_0203c0cc(&arg0->unknown_68_);
-    func_0203c0cc(&arg0->unknown_50_);
-    memset(arg0->unknown_88_, 0, sizeof(arg0->unknown_88_));
-    for (var0 = 0; var0 < 0x42; var0++) {
-        arg0->unknown_9c_[var0] = 0;
+extern "C" ARM void func_ov000_0216ff28(struct Combatant* obj) {
+    int i;
+    obj->unk0 = 0;
+    obj->unk4 = 0;
+    func_ov000_0216fe9c(&obj->status);
+    obj->unk87 = 0;
+    obj->unk30 = 0;
+    obj->unk38 = 0;
+    obj->unk3c = 0;
+    obj->unk40 = 0;
+    obj->unk48 = 0;
+    obj->unk44 = 0;
+    obj->unk4c = -1;
+    obj->unk82 = 0;
+    obj->unk86 = 0;
+    obj->unk80 = 0x7fff;
+    obj->unk438 = 0;
+    obj->unk43c = 0;
+    obj->unk430 = 0x7fff;
+    obj->unk432 = 0x7fff;
+    obj->unk434 = 0;
+    obj->unk43d = -1;
+    obj->unk43e = 0;
+    obj->unk440 = 0;
+    obj->unk43f = 0;
+    obj->unk441 = 0;
+    obj->unk442 = -1;
+    obj->unk443 = 5;
+    obj->unk444 = 0;
+    obj->unk445 = 1;
+    CachedTextLabel_Init(&obj->unk68);
+    CachedTextLabel_Init(&obj->unk50);
+    memset(obj->unk88, 0, sizeof(obj->unk88));
+    for (i = 0; i < 0x42; i++) {
+        obj->unk9c[i] = 0;
     }
     for (var0 = 0; var0 < 0x93; var0++) {
         arg0->unknown_1a4_[var0] = 0;

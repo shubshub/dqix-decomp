@@ -21,19 +21,19 @@ extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* memset(void* dst, int val, unsigned int size);
 extern "C" unsigned char* Scenario_GetInstance(void);
 int Scenario_TestFlag(int obj, unsigned char* bits, int index);
-int IsGlobalU16InRange_020117f0(GameState* gameState);
+int GameState_IsInGrotto(GameState* gameState);
 struct Obj021abb68;
 void InitState28_021abb68(struct Obj021abb68* obj, unsigned char arg);
 struct List02046a3c;
 struct Node02046a3c;
 void InsertNodeAfterHead(struct List02046a3c* list, struct Node02046a3c* node);
 extern "C" int func_ov017_0219ff58(GameResources* res, int a, int b, int c);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 extern "C" void VectorizedMemset(void* dst, int val, int size);
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+void FieldTask_InitEnterZone(unsigned char* obj, int flag);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 struct Struct_ov017_021ab860_2 {
     unsigned short unknown_0_;
@@ -98,7 +98,7 @@ extern "C" ARM int func_ov017_021ab860(int arg0, unsigned char arg1) {
     if (Scenario_TestFlag((int)save, save + 0x8c, 0x113a) != 0) {
         return 1;
     }
-    if (IsGlobalU16InRange_020117f0(gs) != 0) {
+    if (GameState_IsInGrotto(gs) != 0) {
         int status;
         GameState* state = GameState::GetInstance();
         Active021ab860* active = (Active021ab860*)Zone3D_GetInstance();
@@ -118,13 +118,13 @@ extern "C" ARM int func_ov017_021ab860(int arg0, unsigned char arg1) {
             return 0;
         }
     } else {
-        int var6;
-        int var7;
-        BackgroundLoader* var8 = BackgroundLoader::GetInstance();
-        var8->MaybeFreeAllocations();
-        var7 = var8->QueueLoadFile(data_ov017_021d78c4, NULL);
-        if (var7 < 0) {
-            var6 = 0;
+        int status;
+        int task;
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        loader->FreeAllocations();
+        task = loader->QueueLoadFile(data_ov017_021d78c4, NULL);
+        if (task < 0) {
+            status = 0;
         } else {
             while (var8->GetTaskStatus(var7) == 0) {
                 var8->RemoveAllLocks();
@@ -158,30 +158,30 @@ extern "C" ARM int func_ov017_021ab860(int arg0, unsigned char arg1) {
         if (busy != 0) {
             return 3;
         }
-        if (var13 == 0) {
-            Struct_ov017_021ab860_4* var14 = (Struct_ov017_021ab860_4*)func_0200fd0c(var0);
-            VectorizedMemset(var14, 0, sizeof(Struct_ov017_021ab860_4));
-            var14->unknown_4_ = 1;
-            var14->unknown_8_ = 1;
-            var14->unknown_9_ = 1;
-            var14->unknown_b_ = -1;
-            var14->unknown_20_ = -1;
-            var14->unknown_24_ = -1;
-            var14->unknown_28_ = -1;
-            var14->unknown_2c_ = -1;
-            var14->unknown_1e_ = -1;
-            var14->unknown_c_ = 0;
-            var14->unknown_6c_ = -1;
-            var14->unknown_0_ = data_ov017_021d83b0.unknown_8_;
-            var14->unknown_10_ = data_ov017_021d83bc;
-            var14->unknown_1c_ = data_ov017_021d83b0.unknown_18_;
-            var14->unknown_7_ = 1;
-            func_0200fcfc(var0, var14);
+        if (busy == 0) {
+            Entry3f8_021ab860* e = (Entry3f8_021ab860*)GameState_GetZoneTransition(gs);
+            VectorizedMemset(e, 0, sizeof(Entry3f8_021ab860));
+            e->b4 = 1;
+            e->b8 = 1;
+            e->b9 = 1;
+            e->bb = -1;
+            e->w20 = -1;
+            e->w24 = -1;
+            e->w28 = -1;
+            e->w2c = -1;
+            e->h1e = -1;
+            e->bc = 0;
+            e->h6c = -1;
+            e->entryId = data_ov017_021d83b0.entryId;
+            e->vec = data_ov017_021d83bc;
+            e->h1c = data_ov017_021d83b0.field_0x18;
+            e->b7 = 1;
+            GameState_SetZoneTransition(gs, e);
         }
         struct TailList020469b4* tail;
         unsigned char* header = (unsigned char*)res->unknown_ptr_array_3700[3];
         tail = (struct TailList020469b4*)res->fieldTaskQueue_;
-        InitAndResetHeader_0219e310(header, 0);
+        FieldTask_InitEnterZone(header, 0);
         AppendNodeToTail(tail, (struct TailNode020469b4*)header);
         *(short*)((unsigned char*)res + kTargetIdOffset) = 0;
         *(short*)((unsigned char*)res + kTargetArgOffset) = 0;

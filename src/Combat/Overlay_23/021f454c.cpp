@@ -3,20 +3,20 @@
 #include "Grotto/Main/ActiveGrottoClass.h"
 #include "Util/Random.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_02032370(int span);
+extern "C" int RandomIntBelow(int span);
 
 struct Struct_02010088;
 struct Struct_02053dfc;
 struct Struct_02070b6c_3;
 
-extern "C" int func_02011518(void* arg0, unsigned int arg1);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" int func_02053dfc(struct Struct_02053dfc* arg0);
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
-extern "C" unsigned short func_0202053c(void* arg0);
+int GameState_GetPartyOrderEntry(void* obj, unsigned int idx);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+int IsFlag10088Set_02010088(struct S_10088* obj);
+int GetField8FromField19c_02053dfc(struct Obj53dfc* obj);
+int TestBitInArray0x8ec_02083b00(unsigned char* obj, int index);
+unsigned short GameObject_GetPartyMemberLevel(void* obj);
 
 struct Struct_ov023_021f454c_7 {
     unsigned short unknown_0_;
@@ -135,9 +135,9 @@ extern "C" ARM void func_ov023_021f454c(struct Struct_ov023_021f454c_6* arg0) {
     struct Struct_ov023_021f454c_2* var16;
     struct Struct_ov023_021f454c_5* var17;
 
-    var1 = GameState::GetInstance();
-    var12 = (struct Struct_02070b6c_3*)((char*)arg0->unknown_2a0_ + 0x684);
-    func_0202ae18();
+    gs = GameState::GetInstance();
+    table = (struct Container02070e60*)((char*)self->info + 0x684);
+    LinkSession_GetInstance();
     detail = ((ActiveGrottoClass*)((char*)Zone3D_GetInstance() + regionalOffset0))->GetDetailedData();
     altId = 0;
     if (IsSpecial(self->info)) {
@@ -148,24 +148,24 @@ extern "C" ARM void func_ov023_021f454c(struct Struct_ov023_021f454c_6* arg0) {
         }
     }
 
-    arg0->unknown_5900_ = 0;
-    arg0->unknown_5901_ = 0;
-    var3 = arg0->unknown_29c_->unknown_8e30_;
-    var9 = arg0->unknown_29c_->unknown_8d66_;
-    var17 = arg0->unknown_58d0_;
-    var4 = (float)arg0->unknown_58cc_;
-    for (var14 = 0; var14 < 5; var14++) {
-        var5 = 100;
-        if (var14 > 0) {
-            int var18 = func_02011518(var1, (unsigned char)(var14 - 1));
-            struct Struct_ov023_021f454c* var19 = (struct Struct_ov023_021f454c*)func_0200ff1c(var1, var18);
-            if (var19 == 0) continue;
-            if (!func_020a35e0((unsigned char*)arg0->unknown_2a0_, var18)) continue;
-            if (func_02010088((struct Struct_02010088*)var19)) continue;
-            if ((float)(unsigned int)func_02053dfc((struct Struct_02053dfc*)var19) / var4 < 0.5f) continue;
-            if (!func_02083b00(var19->unknown_150_, 0xa4)) continue;
-            var5 = func_0202053c(var19);
-            var17->unknown_5_ = var18;
+    self->dropCount = 0;
+    self->memberMask = 0;
+    count = self->world->rewardCount;
+    rewards = self->world->rewards;
+    cur = self->drops;
+    scaledF = (float)self->scaled;
+    for (round = 0; round < 5; round++) {
+        rate = 100;
+        if (round > 0) {
+            int member = GameState_GetPartyOrderEntry(gs, (unsigned char)(round - 1));
+            struct Combatant_021f454c* c = (struct Combatant_021f454c*)GetCombatantWithFlag0x100_0200ff1c(gs, member);
+            if (c == 0) continue;
+            if (!TestBitAt0x34_020a35e0((unsigned char*)self->info, member)) continue;
+            if (IsFlag10088Set_02010088((struct S_10088*)c)) continue;
+            if ((float)(unsigned int)GetField8FromField19c_02053dfc((struct Obj53dfc*)c) / scaledF < 0.5f) continue;
+            if (!TestBitInArray0x8ec_02083b00(c->status, 0xa4)) continue;
+            rate = GameObject_GetPartyMemberLevel(c);
+            cur->member = member;
         } else {
             var17->unknown_5_ = -1;
         }
@@ -240,15 +240,15 @@ extern "C" ARM void func_ov023_021f454c(struct Struct_ov023_021f454c_6* arg0) {
                 } else if (var16->unknown_1_6_) {
                     var27 = 1;
                 }
-                if (var27 > 0 && func_02032370(var27) == 0) {
-                    var17->unknown_0_ = var26->unknown_6_;
-                    var17->unknown_2_0_ = var8;
-                    var17->unknown_4_ = 2;
-                    arg0->unknown_5900_++;
-                    if (arg0->unknown_5900_ >= 8) break;
-                    signed char var29 = var17->unknown_5_;
-                    var17++;
-                    var17->unknown_5_ = var29;
+                if (chanceA > 0 && RandomIntBelow(chanceA) == 0) {
+                    cur->id = e->item6;
+                    cur->key = key;
+                    cur->kind = 2;
+                    self->dropCount++;
+                    if (self->dropCount >= 8) break;
+                    signed char m = cur->member;
+                    cur++;
+                    cur->member = m;
                     continue;
                 }
             }
@@ -263,16 +263,16 @@ extern "C" ARM void func_ov023_021f454c(struct Struct_ov023_021f454c_6* arg0) {
             } else if (var16->unknown_1_7_) {
                 var30 = 1;
             }
-            if (var30 <= 0) continue;
-            if (func_02032370(var30) != 0) continue;
-            var17->unknown_0_ = var26->unknown_4_;
-            var17->unknown_2_0_ = var8;
-            var17->unknown_4_ = 1;
-            arg0->unknown_5900_++;
-            if (arg0->unknown_5900_ >= 8) break;
-            signed char var32 = var17->unknown_5_;
-            var17++;
-            var17->unknown_5_ = var32;
+            if (chanceB <= 0) continue;
+            if (RandomIntBelow(chanceB) != 0) continue;
+            cur->id = e->item4;
+            cur->key = key;
+            cur->kind = 1;
+            self->dropCount++;
+            if (self->dropCount >= 8) break;
+            signed char m = cur->member;
+            cur++;
+            cur->member = m;
         }
 
         if (arg0->unknown_5900_ >= 8) break;

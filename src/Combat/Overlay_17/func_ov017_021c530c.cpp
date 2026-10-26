@@ -2,12 +2,12 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_02010038(GameState* arg0, unsigned char* arg1);
-struct Struct_02053f7c_3;
-extern "C" void func_02053f7c(Struct_02053f7c_3*, unsigned short, int);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* search);
+extern "C" void __clear(void* buf, int size);
+int CollectCombatantsWithFlag0x1000_02010038(GameState* battleStruct, unsigned char* out);
+struct Obj02053f7c;
+void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c*, unsigned short, int);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* search);
 void EnqueueEventTag147_021cdaa0(void);
 int CheckByteAtIndex_021c5bf8(int index, int key);
 void MaybeResetEntry_021c5e28(int, int);
@@ -23,7 +23,7 @@ GameObject* FindCombatantByField16a_021a278c(void* base, int val);
 void TrySetMode02076ccc(void* obj, int mode);
 struct Event021c530c;
 extern "C" Event021c530c* func_ov017_021b8478(void* node);
-int IsField0Null_02046b08(void** list);
+int FieldTaskQueue_IsEmpty(void** list);
 struct Src021c5f00 { unsigned short w0; unsigned short w2; unsigned char b4; unsigned char b5; unsigned char b6; };
 void EnqueueEventTag63_021c5f00(Src021c5f00* src);
 struct ListHead02046b38;
@@ -190,19 +190,19 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
         }
     }
 
-    if (func_0202c508(arg4)) {
-        func_ov017_021cdaa0();
-        if (!inline_ov017_021c530c(arg1->unknown_4_)) {
-            if (arg1->unknown_9_ != 0) {
-                if (func_ov017_021c5bf8(arg0, arg1->unknown_4_) == 0) {
-                    func_ov017_021c5e28(arg0, arg1->unknown_4_);
+    if (LinkSession_IsHostOrSolo(search)) {
+        EnqueueEventTag147_021cdaa0();
+        if (!IsSpecialId(cmd->id)) {
+            if (cmd->field9 != 0) {
+                if (CheckByteAtIndex_021c5bf8(index, cmd->id) == 0) {
+                    MaybeResetEntry_021c5e28(index, cmd->id);
                 } else {
                     func_ov017_021c5a8c(arg0, arg1->unknown_4_);
                 }
-            } else if (func_ov017_021c5a1c(arg1->unknown_4_)) {
-                if (func_ov017_021c5bf8(arg0, arg1->unknown_4_) == 0) {
-                    if (!func_0202c508(func_0202ae18())) {
-                        var2 = false;
+            } else if (IsValidCombatantValue_021c5a1c(cmd->id)) {
+                if (CheckByteAtIndex_021c5bf8(index, cmd->id) == 0) {
+                    if (!LinkSession_IsHostOrSolo(LinkSession_GetInstance())) {
+                        ok = false;
                     } else {
                         var26 = func_0207d78c();
                         func_0207d7f4(var26, arg1->unknown_4_, arg0, 1, arg0, arg1->unknown_6_, arg1->unknown_c_);
@@ -233,13 +233,13 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
         return;
     }
 
-    var4 = arg1->unknown_4_;
-    if (!inline_ov017_021c530c(arg1->unknown_4_)) {
-        if (arg1->unknown_9_ != 0) {
-            Struct_ov017_021c530c_8 var37;
-            var5 = (Struct_ov017_021c530c_5*)GameState::GetInstance()->GetUnknownGameObject();
-            if (var5 == NULL) {
-                var27 = 0;
+    id = cmd->id;
+    if (!IsSpecialId(cmd->id)) {
+        if (cmd->field9 != 0) {
+            Desc021c530c event;
+            leader = (Leader021c530c*)GameState::GetInstance()->GetLeader();
+            if (leader == NULL) {
+                state = 0;
             } else {
                 var7 = (Struct_ov017_021c530c_7*)GetGameResources();
                 var8 = var7->unknown_3718_;
@@ -248,13 +248,13 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
                 if (var8->unknown_2_ != 0 && (var6 = func_ov017_021b8478(var8), var6->unknown_8_ == var4)) {
                     var27 = 1;
                 } else {
-                    var10 = var5->unknown_0_.GetField06();
-                    if (var10 != 0x170c && var10 != 0x170d && var10 != 0x170e && var10 != 0x170f) {
-                        var27 = 0;
-                    } else if ((int)var5->unknown_c3_ > 0) {
-                        var27 = 0;
-                    } else if (func_02046b08((void**)var9) == 0) {
-                        var27 = 2;
+                    zone = leader->obj3D.GetField06();
+                    if (zone != 0x170c && zone != 0x170d && zone != 0x170e && zone != 0x170f) {
+                        state = 0;
+                    } else if ((int)leader->fieldC3 > 0) {
+                        state = 0;
+                    } else if (FieldTaskQueue_IsEmpty((void**)list1) == 0) {
+                        state = 2;
                     } else {
                         var27 = 1;
                     }
@@ -299,9 +299,9 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
                     func_ov017_021b7104(var36, &var39);
                     func_020469b4((Struct_0201bdac_2*)var35, (Struct_0201bdac*)var36);
                 }
-                var12 = (Struct_ov017_021c530c_5*)arg2->GetUnknownGameObject();
-                if (var12 != NULL) {
-                    var12->unknown_b2_ = 0;
+                leader2 = (Leader021c530c*)gs->GetLeader();
+                if (leader2 != NULL) {
+                    leader2->fieldB2 = 0;
                 }
             } else if (var27 == 2 || var27 == 0) {
                 func_ov017_02196c08((unsigned char*)&var37);
@@ -379,19 +379,19 @@ extern "C" ARM void func_ov017_021c530c(int arg0, Struct_ov017_021c530c_3* arg1,
         if (index != 0) {
             return;
         }
-        if (var19 != NULL) {
-            if (func_02046b08((void**)var17) && var19->obj3D_.GetField06() == inline_ov004_02163304(var20)) {
-                func_ov017_021c5b44(arg1->unknown_8_, arg1->unknown_4_, func_ov017_021bb9fc(var29), arg1->unknown_c_, arg1->unknown_10_);
-                var18 = 1;
-            } else if (var19->obj3D_.GetField06() == inline_ov004_02163304(var20)) {
-                var9 = var16->unknown_3b14_;
-                void* var42 = var16->unknown_3b90_;
-                var21 = func_02046b38((Struct_02046b38*)var17, (Struct_02046b38_2*)var9);
-                var22 = func_02046b38((Struct_02046b38*)var17, (Struct_02046b38_2*)var42);
-                if (!(var21 | var22)) {
-                    var23 = &var16->unknown_44ae_;
-                    var23->unknown_0_ = arg1->unknown_4_;
-                    var23->unknown_2_ = arg1->unknown_e_;
+        if (combatant != NULL) {
+            if (FieldTaskQueue_IsEmpty((void**)list3) && combatant->obj3D_.GetField06() == GetZoneId(zoneInfo)) {
+                func_ov017_021c5b44(cmd->field8, cmd->id, GetField14e_021bb9fc(fieldObj), cmd->fieldc, cmd->field10);
+                found = 1;
+            } else if (combatant->obj3D_.GetField06() == GetZoneId(zoneInfo)) {
+                list1 = ctx3->nodeB14;
+                void* nodeB90 = ctx3->nodeB90;
+                inB14 = ListContainsNode((ListHead02046b38*)list3, (ListNode02046b38*)list1);
+                inB90 = ListContainsNode((ListHead02046b38*)list3, (ListNode02046b38*)nodeB90);
+                if (!(inB14 | inB90)) {
+                    pending = &ctx3->pending;
+                    pending->id = cmd->id;
+                    pending->value = cmd->fielde;
                 }
             }
         }

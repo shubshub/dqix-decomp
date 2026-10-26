@@ -69,9 +69,9 @@ public:
     void AllocateSizeCEntries(SafeAllocator* alloc, int count);
     void InsertSizeCEntry(const SizeCEntry* entry);
 
-    void AllocateAltSizeCEntries(SafeAllocator* alloc, int count);
-    void InsertAltSizeCEntry(const AltSizeCEntry* entry);
+    void AllocateSoundTriggers(SafeAllocator* alloc, int count);
+    void InsertSoundTrigger(const AltSizeCEntry* entry);
 
-    void MaybeSetRootBoneName(SafeAllocator* alloc, const char* name);
-    const char* MaybeGetRootBoneName();
+    void SetShadowBoneName(SafeAllocator* alloc, const char* name);
+    const char* GetShadowBoneName();
 };

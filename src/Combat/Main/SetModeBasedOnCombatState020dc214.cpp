@@ -10,8 +10,8 @@ enum { kObjectOffset = 0x6d0 };
 
 extern "C" void* Zone3D_GetInstance(void);
 struct Obj02022d78;
-void SetActiveModeSavingPrevious02022d78(struct Obj02022d78*, int);
-int IsInRange0201b588(int);
+void MapDisplay_SetMode(struct Obj02022d78*, int);
+int ZoneId_IsGrotto(int);
 
 // USA: func_020dc214
 ARM void SetModeBasedOnCombatState020dc214(int mode) {
@@ -20,23 +20,23 @@ ARM void SetModeBasedOnCombatState020dc214(int mode) {
     unsigned short id = *(unsigned short*)Zone3D_GetInstance();
     struct Obj02022d78* obj = (struct Obj02022d78*)raw;
     if (mode == 1) {
-        SetActiveModeSavingPrevious02022d78(obj, 1);
+        MapDisplay_SetMode(obj, 1);
         return;
     }
     if (mode == 2) {
-        SetActiveModeSavingPrevious02022d78(obj, 4);
+        MapDisplay_SetMode(obj, 4);
         return;
     }
     if (mode != 0) {
         return;
     }
-    if (IsInRange0201b588(id)) {
-        SetActiveModeSavingPrevious02022d78(obj, 3);
+    if (ZoneId_IsGrotto(id)) {
+        MapDisplay_SetMode(obj, 3);
         return;
     }
     if (id == 0x2710 || id == 0x2774) {
-        SetActiveModeSavingPrevious02022d78(obj, 4);
+        MapDisplay_SetMode(obj, 4);
     } else {
-        SetActiveModeSavingPrevious02022d78(obj, 0);
+        MapDisplay_SetMode(obj, 0);
     }
 }

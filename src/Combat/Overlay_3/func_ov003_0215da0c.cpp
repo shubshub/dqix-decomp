@@ -22,9 +22,9 @@ char* MessageSystem_GetInstance();
 void MessageSystem_Reset(char* ctrl);
 int KeyTable_Get(struct Container020e0310* c, int key);
 void Window_ClosePane(struct Entry_0205d6a0* list, int flag);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* arg0);
-extern "C" void func_ov003_0215cab0(void* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" void func_ov003_0215cab0(void* self, int msg);
 
 struct Struct_ov003_0215da0c {
     char unknown_0_[0x64];
@@ -51,14 +51,14 @@ extern "C" ARM void func_ov003_0215da0c(struct Struct_ov003_0215da0c* arg0) {
 
     gs = GameState::GetInstance();
     global = MessageSystem_GetInstance();
-    ctx = func_0202ae18();
+    ctx = LinkSession_GetInstance();
 
     zero = 0;
-    if (func_0202c508(ctx) && gs->GetUnknownGameObject()->obj3D_.actorIndex_ == 0) {
+    if (LinkSession_IsHostOrSolo(ctx) && gs->GetLeader()->obj3D_.actorIndex_ == 0) {
         zero = 1;
     }
     nonZero = 0;
-    if (func_0202c508(ctx) && gs->GetUnknownGameObject()->obj3D_.actorIndex_ != 0) {
+    if (LinkSession_IsHostOrSolo(ctx) && gs->GetLeader()->obj3D_.actorIndex_ != 0) {
         nonZero = 1;
     }
 

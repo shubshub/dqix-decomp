@@ -10,7 +10,7 @@ void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4;
 void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 void InitContext020e1154(void* obj);
 
@@ -31,7 +31,7 @@ ARM void ProcessBattleTick020e455c(struct MainStruct020e455c* obj) {
     GameState* battleStruct = GameState::GetInstance();
     FontBankLoader_GetInstance();
     FontBankLoader_CancelLoads();
-    GameObject* c = battleStruct->GetUnknownGameObject();
+    GameObject* c = battleStruct->GetLeader();
     if (c != 0) {
         GameObject_EnableControl(c);
     }
@@ -53,7 +53,7 @@ ARM void ProcessBattleTick020e455c(struct MainStruct020e455c* obj) {
         obj->fc = -1;
     }
 
-    SetField0x23cTrue_020a27ac((void*)GetFieldIfFlag4_020100f8((char*)battleStruct));
+    SetField0x23cTrue_020a27ac((void*)GameState_GetFollowCamera((char*)battleStruct));
     InitContext020e1154((void*)0x3e8);
     obj->f1 = 1;
 }

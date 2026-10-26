@@ -21,10 +21,10 @@ extern "C" ARM void func_020a8c4c(struct Obj020a8c4c* obj, unsigned char axis) {
     }
     GameState* battle = GameState::GetInstance();
     GameResources* ov = GetGameResources();
-    GameObject* c397c = battle->GetUnknownGameObject();
+    GameObject* c397c = battle->GetLeader();
     GameObject* c800 = battle->GetPartyMemberByIndex(axis);
     GameState_GetParty(battle);
-    if (IsBrightnessWithinValidRange(ov, false) == 0) {
+    if (IsScreenNotFullyFaded(ov, false) == 0) {
         GameObject_DisableControl((struct Obj020397cc*)c800, 1);
         *(short*)((char*)c800 + 0xac) = 0;
         if (axis == c397c->obj3D_.actorIndex_) {

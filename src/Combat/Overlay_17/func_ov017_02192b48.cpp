@@ -106,9 +106,9 @@ extern "C" long long fix32_SinFx64c(int);
 extern "C" float _ll_sto_f(long long);
 extern "C" int ZoneTerrain_FindFloorHit(GeometryTriangle* triangles, int count, Vector3fix* start, Vector3fix* end, Vector3fix* point);
 extern "C" int ZoneTerrain_PushOutOfWalls(GeometryTriangle* triangles, int count, Vector3fix* originalPosition, fix32_t radius, Vector3fix* position, Vector3i* backupPosition);
-void CopyFourHalfwordsToField0x114_02033f6c(void* obj, FourHalfwords02033f7c* src);
-void SetFlag0x80AndCopyToField0x11c_02033fa8(void* obj, FourHalfwords02033f7c* src);
-void CopyBlocksSetFlag0x40(CopyDst02033edc* dst, CopySrc02033edc* src);
+void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
+void GameObject_SetWallAttribute(void* obj, FourHalfwords02033f7c* src);
+void GameObject_SetWallHit(CopyDst02033edc* dst, CopySrc02033edc* src);
 
 // USA: func_ov017_02192b48
 extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192b48_3* arg1, int arg2, Struct_ov017_02192b48_4* arg3, unsigned char arg4, Vector3i* arg5, Vector3i* arg6, int* arg7, int* arg8, int arg9, int* arg10, unsigned char arg11, int arg12, int arg13) {
@@ -181,12 +181,12 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
                             } else {
                                 var16 = var2->unknown_420_[arg12].unknown_0_->unknown_44_->unknown_2c_;
                             }
-                            Struct_ov017_02192b48_7* var17;
-                            Struct_ov017_02192b48_6* var18;
-                            if (var16 != NULL && (var17 = var16->unknown_24_) != NULL && (var18 = var17->unknown_4_) != NULL) {
-                                if (var18->unknown_0_->unknown_0_ == 3) {
-                                    Struct_02033f6c var19 = var18->unknown_14_[arg0->unknown_920_[var14]];
-                                    func_02033f6c(arg3, &var19);
+                            GeometryData* geometry;
+                            PolygonData* polygons;
+                            if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
+                                if (polygons->header->type == 3) {
+                                    FourHalfwords02033f7c material = polygons->materials[grid->materialIndex[idx]];
+                                    GameObject_SetFloorAttribute(self, &material);
                                 }
                             }
                         }
@@ -242,7 +242,7 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
             Vector3fix_Add(&samples[idx].vertices[1], &grid->position, &triangle.vertices[1]);
             Vector3fix_Add(&samples[idx].vertices[2], &grid->position, &triangle.vertices[2]);
             triangle.normal = samples[idx].normal;
-            CopyBlocksSetFlag0x40((CopyDst02033edc*)self, &triangle);
+            GameObject_SetWallHit((CopyDst02033edc*)self, &triangle);
             if (applyMaterial && inCell) {
                 TerrainNode* node;
                 if (zone->useScenes == 0) {
@@ -250,12 +250,12 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
                 } else {
                     var32 = var2->unknown_420_[arg12].unknown_0_->unknown_44_->unknown_2c_;
                 }
-                Struct_ov017_02192b48_7* var33;
-                Struct_ov017_02192b48_6* var34;
-                if (var32 != NULL && (var33 = var32->unknown_24_) != NULL && (var34 = var33->unknown_4_) != NULL) {
-                    if (var34->unknown_0_->unknown_0_ == 3) {
-                        Struct_02033f6c var35 = var34->unknown_14_[arg0->unknown_920_[var30]];
-                        func_02033fa8(arg3, &var35);
+                GeometryData* geometry;
+                PolygonData* polygons;
+                if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
+                    if (polygons->header->type == 3) {
+                        FourHalfwords02033f7c material = polygons->materials[grid->materialIndex[idx]];
+                        GameObject_SetWallAttribute(self, &material);
                     }
                 }
             }

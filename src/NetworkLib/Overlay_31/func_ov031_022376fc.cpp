@@ -1,8 +1,5 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_ov031_022376fc_2 {
     unsigned short unknown_0_;
@@ -20,7 +17,7 @@ extern Struct_ov031_022376fc* data_ov031_02290d0c;
 extern "C" void func_ov031_022378e4(Struct_ov031_022376fc_2*);
 extern "C" void func_ov031_0223778c(Struct_ov031_022376fc_2*);
 extern "C" int func_ov031_022375cc();
-extern "C" void func_020c9be0(Struct_ov031_022376fc_2*);
+extern "C" void HaltSystem(Command022376fc*);
 
 // USA: func_ov031_022376fc
 extern "C" ARM void func_ov031_022376fc(Struct_ov031_022376fc_2* arg0) {
@@ -41,7 +38,7 @@ extern "C" ARM void func_ov031_022376fc(Struct_ov031_022376fc_2* arg0) {
         func_ov031_022375cc();
         break;
     default:
-        func_020c9be0(arg0);
+        HaltSystem(command);
         break;
     }
 }

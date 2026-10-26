@@ -8,7 +8,7 @@ enum { RegionOffset = 0x7e78 };
 #include "GameState/GameState.h"
 #include "NitroSDK/Matrix.h"
 
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 extern "C" void* Zone3D_GetInstance();
 struct S_bc7c;
 void SetField0x27d8_0201bc7c(struct S_bc7c* obj, unsigned short val);
@@ -62,7 +62,7 @@ struct GamePendingEntryPosition {
 ARM int CopyBlobIntoBattleStruct020a9d78(void* srcRaw) {
     SavedLocation* saved = static_cast<SavedLocation*>(srcRaw);
     GameState* battleStruct = GameState::GetInstance();
-    PendingLocation* destination = static_cast<PendingLocation*>(GetField0x3f8Address_0200fd0c(battleStruct));
+    PendingLocation* destination = static_cast<PendingLocation*>(GameState_GetZoneTransition(battleStruct));
 
     destination->zoneId = saved->zoneId;
     destination->position = saved->position;

@@ -21,10 +21,10 @@ struct Struct_ov017_0218eafc {
 extern "C" void* func_02057924(void);
 extern "C" void func_02057ab8(void* list, int id);
 int CheckByteFlagsAt4488_021922ac(void* self, unsigned int idx);
-int CheckFlag0x1ceBit2Set_02039d68(unsigned char* obj);
+int GameObject_IsHidden(unsigned char* obj);
 int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
 int GetFieldAt0x1b8_02053cd4(unsigned char* obj);
-extern "C" int func_02032fdc(void* obj, int clip, Vector3i* out);
+extern "C" int GameObject_Draw(void* obj, int clip, Vector3i* out);
 int CheckField0x56bLowNibble(Obj02061bd8* obj);
 unsigned char GetByteFieldAt0x1a0_02053eb4(void* obj, int extra);
 extern "C" void G3_RotateY(int angle);
@@ -44,7 +44,7 @@ extern "C" ARM void func_ov017_0218eafc(Battle0218eafc* battle, int idx) {
     int shadowId = idx * 12 + 0x13;
     Object3D* shadow = (Object3D*)gs->GetGameObjectByIndex(shadowId);
     if (member->obj3D_.GetFlag(0x200)) return;
-    if (CheckFlag0x1ceBit2Set_02039d68((unsigned char*)member)) return;
+    if (GameObject_IsHidden((unsigned char*)member)) return;
     if (member->obj3D_.IsChild()) return;
     Model3D* model = member->obj3D_.pModel_;
     if (model == NULL) return;
@@ -74,17 +74,17 @@ extern "C" ARM void func_ov017_0218eafc(Battle0218eafc* battle, int idx) {
         return;
     }
 
-    var3->obj3D_.EnableFlag(0x20000);
-    Vector3i var13;
-    if (func_02032fdc(var3, var8, &var13)) {
-        int var14 = arg1 * 12 + 0x14;
-        int var15 = arg1 * 12 + 0x15;
-        int var16 = arg1 * 12 + 0x1b;
-        int var17 = arg1 * 12 + 0x1c;
-        int var18 = arg1 * 12 + 0x1d;
-        unsigned char var19[6] = {
-            (unsigned char)(arg1 * 12 + 0x13), (unsigned char)var14, (unsigned char)var15,
-            (unsigned char)var16, (unsigned char)var17, (unsigned char)var18
+    member->obj3D_.EnableFlag(0x20000);
+    Vector3i shadowPos;
+    if (GameObject_Draw(member, clip, &shadowPos)) {
+        int weaponId = idx * 12 + 0x14;
+        int shieldId = idx * 12 + 0x15;
+        int headId = idx * 12 + 0x1b;
+        int accessoryId = idx * 12 + 0x1c;
+        int extraId = idx * 12 + 0x1d;
+        unsigned char ids[6] = {
+            (unsigned char)(idx * 12 + 0x13), (unsigned char)weaponId, (unsigned char)shieldId,
+            (unsigned char)headId, (unsigned char)accessoryId, (unsigned char)extraId
         };
         for (unsigned int var20 = 0; var20 < 6; var20++) {
             Object3D* var21 = (Object3D*)var0->GetGameObjectByIndex(var19[var20]);

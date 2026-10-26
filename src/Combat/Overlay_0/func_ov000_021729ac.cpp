@@ -4,10 +4,10 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0203bd08(void);
+extern "C" void* OamManager_GetInstance(void);
 extern "C" unsigned short GetSubBGVRAMBanks(void);
 extern "C" void MapVRAMBanksToSubBG(int banks);
-char* GetGlobalPtr02105244_0203bd14();
+char* CachedTextTable_GetInstance();
 struct Struct020dfc40;
 void KeyTable_Reset(Struct020dfc40*);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
@@ -23,9 +23,9 @@ extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned i
 struct Container020e0310;
 char* KeyTable_Get(Container020e0310*, int);
 struct Obj0203c108;
-void SwapGlobalEntry0203c108(Obj0203c108*, char*);
+void CachedTextLabel_SetText(Obj0203c108*, char*);
 void* MessageSystem_GetInstance();
-void Clear12Bytes020e46c4(void* buf);
+void NameText_Clear(void* buf);
 extern "C" void func_02046380(void* g);
 extern "C" void MessageSystem_FormatText(void* a, int b, char* c, void* d, int e, int f, int g);
 struct PacRecord;
@@ -34,10 +34,10 @@ void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
 void SetBitfieldStoreBytes0205af38(int, char*, int, int);
-int* GetData02105254_0203b628();
-void SetupBankModeAndTransfer_0203b678(int* obj, int a, int b);
-void TailForward0203b66c(char*);
-void ClearThreeRegions0203b634(char*);
+int* BgVram_GetInstance();
+void BgVram_ResetWithBlankTile(int* obj, int a, int b);
+void BgVram_Reset(char*);
+void BgVram_Clear(char*);
 void ConfigureSubBg0Control_02172944(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
 void ConfigureSubBg1Control_02172978(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
 void Background_SetMapSize(unsigned char*, int);
@@ -219,19 +219,19 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
     short var17;
 
     GameState::GetInstance();
-    BackgroundLoader* var18 = BackgroundLoader::GetInstance();
-    func_0203bd08();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    OamManager_GetInstance();
 
     if (arg0->unknown_908_ == 0) {
         arg0->unknown_904_ = (*(volatile unsigned int*)0x4001000 & 0x1f00) >> 8;
         arg0->unknown_184_ = GetSubBGVRAMBanks();
         MapVRAMBanksToSubBG(0x180);
-        *(int*)func_0203bd08() = 0;
+        *(int*)OamManager_GetInstance() = 0;
 
 #if defined(jpn)
-        *(int*)(func_0203bd14() + 0x608) = 0x1d000;
+        *(int*)(CachedTextTable_GetInstance() + 0x608) = 0x1d000;
 #else
-        *(int*)(func_0203bd14() + 0x508) = 0x18000;
+        *(int*)(CachedTextTable_GetInstance() + 0x508) = 0x18000;
 #endif
 
 #if defined(jpn)
@@ -295,18 +295,18 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
             }
             loader->RemoveTask(self->handle);
             self->handle = -1;
-            SwapGlobalEntry0203c108((Obj0203c108*)self->entries[0], KeyTable_Get((Container020e0310*)self->container, 0x754e));
-            SwapGlobalEntry0203c108((Obj0203c108*)self->entries[1], KeyTable_Get((Container020e0310*)self->container, 0x7550));
+            CachedTextLabel_SetText((Obj0203c108*)self->entries[0], KeyTable_Get((Container020e0310*)self->container, 0x754e));
+            CachedTextLabel_SetText((Obj0203c108*)self->entries[1], KeyTable_Get((Container020e0310*)self->container, 0x7550));
 
 #if defined(jpn)
             for (int i = 0; i < 5; i++) {
-                SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], KeyTable_Get((Container020e0310*)self->container, data_ov000_02183418[i]));
+                CachedTextLabel_SetText((Obj0203c108*)self->labels[i], KeyTable_Get((Container020e0310*)self->container, data_ov000_02183418[i]));
             }
 #else
             void* g = MessageSystem_GetInstance();
             for (int i = 0; i < 9; i++) {
                 __clear(text, sizeof(text));
-                Clear12Bytes020e46c4(&param);
+                NameText_Clear(&param);
                 if (i >= 5) {
                     param.mode = 1;
                 }
@@ -314,7 +314,7 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
                 int key = data_ov000_02183418[i];
                 *(void**)g = &param;
                 MessageSystem_FormatText(g, 0xa, KeyTable_Get((Container020e0310*)self->container, key), text, 0x100, 0, 0);
-                SwapGlobalEntry0203c108((Obj0203c108*)self->labels[i], text);
+                CachedTextLabel_SetText((Obj0203c108*)self->labels[i], text);
             }
 
 #endif
@@ -372,14 +372,14 @@ extern "C" ARM int func_ov000_021729ac(Struct_ov000_021729ac_8* arg0) {
             arg0->unknown_90c_ = -1;
             arg0->unknown_908_++;
         }
-    } else if (arg0->unknown_908_ == 5) {
-        int* var31 = func_0203b628();
-        func_0203b678(var31, 1, 0);
-        func_0203b678(var31, 1, 1);
-        func_0203b66c((char*)var31);
-        func_0203b634((char*)var31);
-        func_ov000_02172944(0, arg0->unknown_180_.unknown_0_7_, 5, arg0->unknown_180_.unknown_0_2_, arg0->unknown_182_.unknown_1_5_);
-        func_ov000_02172978(0, arg0->unknown_182_.unknown_0_7_, 6, arg0->unknown_182_.unknown_0_2_, arg0->unknown_182_.unknown_1_5_);
+    } else if (self->state == 5) {
+        int* bank = BgVram_GetInstance();
+        BgVram_ResetWithBlankTile(bank, 1, 0);
+        BgVram_ResetWithBlankTile(bank, 1, 1);
+        BgVram_Reset((char*)bank);
+        BgVram_Clear((char*)bank);
+        ConfigureSubBg0Control_02172944(0, self->bg0.colorMode, 5, self->bg0.charBase, self->bg1.bit13);
+        ConfigureSubBg1Control_02172978(0, self->bg1.colorMode, 6, self->bg1.charBase, self->bg1.bit13);
         *(volatile unsigned short*)0x400100c = (*(volatile unsigned short*)0x400100c & 0x43) | 0x704;
         arg0->unknown_1a78_[3].Reset();
 

@@ -72,8 +72,8 @@ extern "C" void* memset(void* dst, int c, unsigned int n);
 int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* s, int val);
 int ListContainsId(ListHead02046b60* list, int id);
 void* TextQueue_GetInstance(void);
-int IsField0Null_02046b08(void** obj);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int FieldTaskQueue_IsEmpty(void** obj);
+int GameObject_IsGesturing(signed char* obj);
 int MessageSystem_GetInstance(void);
 int GetByte0x150Bit6(BitFlags020d805c* obj);
 int TestFlagBit55dIfActive_0218b628(signed char);
@@ -85,7 +85,7 @@ extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 extern "C" void __clear(void* dst, unsigned int size);
 int ComputeAndApplyWithCounter020e04f4(int p0, void* p1, int p2, int p3, unsigned char p4, int p5);
 extern "C" void func_02046380(void* g);
-void Clear12Bytes020e46c4(void* p);
+void NameText_Clear(void* p);
 void NameText_InitFromPartyMember(void* obj, int combatantId);
 void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
 void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
@@ -156,10 +156,10 @@ extern "C" ARM void func_ov017_021d2d64(void* unused, Msg021d2d64* msg, GameStat
         if (ok) {
             reset = (Reset021d2d64*)TextQueue_GetInstance();
             ok = 1;
-            if (IsField0Null_02046b08((void**)list) == 0) ok = 0;
+            if (FieldTaskQueue_IsEmpty((void**)list) == 0) ok = 0;
             if (ListContainsId(list, 0x1a)) ok = 1;
-            GameObject* leader = gs->GetUnknownGameObject();
-            if (leader != 0 && CheckSubstructByte0x7cPositive_020535c8((signed char*)leader)) ok = 0;
+            GameObject* leader = gs->GetLeader();
+            if (leader != 0 && GameObject_IsGesturing((signed char*)leader)) ok = 0;
             if (*(int*)(MessageSystem_GetInstance() + 0x998) != 0 && GetByte0x150Bit6((BitFlags020d805c*)reset) == 0) ok = 0;
 
             for (int var21 = 0; var21 < var8.unknown_7_; var21++) {
@@ -212,10 +212,10 @@ extern "C" ARM void func_ov017_021d2d64(void* unused, Msg021d2d64* msg, GameStat
                     if ((int)var24->unknown_ac_.unknown_84_->unknown_4_ > 0 || var25->unknown_0_0_ == 0 || var35 == 0) {
                         var25->unknown_0_0_ = 0;
                     } else {
-                        Struct_ov017_021d2d64_6* var36 = (Struct_ov017_021d2d64_6*)arg2->GetUnknownGameObject();
-                        if (var36 != 0 && (var36->unknown_ac_ != 0 || var36->unknown_0_.GetFlag(0x8000000) != 0)) {
-                            func_ov017_02191ba0((char*)arg3, var22, var25->unknown_0_0_);
-                            var26 = 0;
+                        Leader021d2d64* l = (Leader021d2d64*)gs->GetLeader();
+                        if (l != 0 && (l->fac != 0 || l->obj.GetFlag(0x8000000) != 0)) {
+                            SetIndexedFieldsIfValid_02191ba0((char*)res, id, v->lo);
+                            shown = 0;
                         } else {
                             func_02053fe4(var24, var25->unknown_0_0_, 1);
                             if (var24->baseStats_->primaryStats.maxHP < var25->unknown_0_0_) {
@@ -260,7 +260,7 @@ extern "C" ARM void func_ov017_021d2d64(void* unused, Msg021d2d64* msg, GameStat
                         ComputeAndApplyWithCounter020e04f4((int)text, data_ov017_021d8288, msgId, 0, 1, (int)data_ov017_021d8298);
                         func_02046380(g);
                         char who[0xc];
-                        Clear12Bytes020e46c4(who);
+                        NameText_Clear(who);
                         NameText_InitFromPartyMember(who, unit->obj3D_.actorIndex_);
                         *(char**)((char*)g + 0x10) = who;
                         SetByteInRange_020465f0((unsigned char*)g, 0, 0);

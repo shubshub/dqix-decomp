@@ -4,17 +4,17 @@
 #include "GameState/BattleRecordSnapshot.h"
 #include "NitroSDK/Memory.h"
 
-extern "C" void* func_0202ae24();
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202ba00(int* arg0);
-extern "C" int func_020ac4f8(int arg0);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" int func_020ac0b4(void* arg0);
-extern "C" int func_020a0870(Struct_02061c04* arg0);
-extern "C" int func_020a08a4(Struct_02061c04* arg0);
-extern "C" int func_020a08d8(Struct_02061c04* arg0);
-extern "C" int func_020a090c(Struct_02061c04* arg0);
+void* LinkMessageQueue_GetInstance();
+extern "C" void func_0205e330(void* dispatcher, void* packet, int flag);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_GetState(int* obj);
+int GameState_UpdatePlayClocks(int commit);
+int LoadBattleBlock020ac4c0(void* dst);
+int CopyOutBattleField0x7ac0_020ac0b4(void* dst);
+int GetFieldPercentOver307_020a0870(BattleRecordSnapshot* record);
+int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot* record);
+int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot* record);
+int GetFieldPercentOver448_020a090c(BattleRecordSnapshot* record);
 
 struct Struct_ov017_021d1118_8 { unsigned char unknown_0_[6]; };
 
@@ -109,56 +109,56 @@ struct Struct_ov017_021d1118_7 {
 };
 
 // USA: func_ov017_021d1118
-extern "C" ARM void func_ov017_021d1118(int arg0, int arg1, bool arg2, unsigned char arg3) {
-    GameState* var0;
-    void* var1;
-    Struct_ov017_021d1118_9* var2;
-    unsigned char* var3;
-    Struct_ov017_021d1118_7* var4;
-    int var5;
-    int var6;
-    int var7;
-    int var8;
-    int var9;
-    Struct_ov017_021d1118_6* var10;
-    Struct_ov017_021d1118_5* var11;
-    int var12;
-    int var13;
-    Struct_ov017_021d1118_3* var14;
-    var0 = GameState::GetInstance();
-    var1 = func_0202ae24();
-    Struct_ov017_021d1118 var15;
-    var2 = &var15.unknown_4_;
-    var15.unknown_0_ = 0x1a;
-    var2->unknown_e_2_ = arg3;
-    var2->unknown_f_7_ = arg2;
-    var2->unknown_e_0_ = arg0;
-    var14 = &((Struct_ov017_021d1118_4*)var0)->unknown_569c_;
-    if (arg1 & 4) {
-        var2->unknown_f_0_ = 2;
-        var2->unknown_f_2_ = 6;
-        Struct_ov017_021d1118_8 var16 = ((Struct_ov017_021d1118_4*)var0)->inline_ov017_021d1118();
-        memcpy(var2->unknown_0_, &var16, var2->unknown_f_2_);
-        func_0205e330(var1, &var15, 0);
+extern "C" ARM void func_ov017_021d1118(int recipient, int flags, bool segmented, unsigned char mode) {
+    GameState* gs;
+    void* dispatcher;
+    PacketBody* body;
+    unsigned char* src;
+    Session* session;
+    int kind;
+    int depth;
+    int commit;
+    int flag;
+    int value;
+    ProtagonistObject* protagonist;
+    ProtagonistData* data;
+    int recordLeft;
+    int blockLeft;
+    LinkBlock* block;
+    gs = GameState::GetInstance();
+    dispatcher = LinkMessageQueue_GetInstance();
+    Packet packet;
+    body = &packet.body;
+    packet.tag = 0x1a;
+    body->mode = mode;
+    body->segmented = segmented;
+    body->recipient = recipient;
+    block = &((LinkState*)gs)->block;
+    if (flags & 4) {
+        body->type = 2;
+        body->length = 6;
+        PacketIdentifier identifier = ((LinkState*)gs)->GetIdentifier();
+        memcpy(body->payload, &identifier, body->length);
+        func_0205e330(dispatcher, &packet, 0);
     }
-    if (arg1 & 1) {
-        var4 = (Struct_ov017_021d1118_7*)func_0202ae18();
-        var5 = func_0202ba00((int*)var4);
-        var6 = var4->unknown_100d_;
-        var7 = 0;
-        if ((var5 == 5 && var6 > 1) || var5 == 6) var7 = 1;
-        func_020ac4f8(var7);
-        Struct_02061c04 var17;
-        func_020ac4c0(&var17);
-        unsigned int var18 = 0;
-        func_020ac0b4(&var18);
-        var8 = 0;
-        var9 = 0;
-        var10 = (Struct_ov017_021d1118_6*)var0->GetProtagonist();
-        if (var10) {
-            var11 = var10->unknown_150_;
-            var8 = var11->unknown_49c_0_;
-            var9 = var11->unknown_186_[var11->unknown_950_];
+    if (flags & 1) {
+        session = (Session*)LinkSession_GetInstance();
+        kind = LinkSession_GetState((int*)session);
+        depth = session->depth;
+        commit = 0;
+        if ((kind == 5 && depth > 1) || kind == 6) commit = 1;
+        GameState_UpdatePlayClocks(commit);
+        BattleRecordSnapshot blk;
+        LoadBattleBlock020ac4c0(&blk);
+        unsigned int score = 0;
+        CopyOutBattleField0x7ac0_020ac0b4(&score);
+        flag = 0;
+        value = 0;
+        protagonist = (ProtagonistObject*)gs->GetProtagonist();
+        if (protagonist) {
+            data = protagonist->data;
+            flag = data->flag;
+            value = data->values[data->index];
         }
         Struct_ov017_021d1118_2 var19;
         VectorizedMemset(&var19, 0, sizeof(var19));

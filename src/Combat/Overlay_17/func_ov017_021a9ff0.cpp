@@ -17,8 +17,8 @@ void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
 void PrependNodeToHead(HeadList020469f8* list, HeadNode020469f8* node);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void SetBrightness(GameResources* resources, int brightness, int frames);
-extern "C" void func_020213fc(Struct_020213fc* arg0, int arg1);
-extern "C" void func_ov004_02165df4(SafeAllocator* arg0, void* arg1);
+void MapDisplay_SetHoldSubScreenDark(SetFlagStruct* obj, int value);
+void CopyGlobalBlockAndDispatch_02165df4(SafeAllocator* allocator, void* arg);
 extern char data_ov017_021d7831;
 
 // USA: func_ov017_021a9ff0
@@ -47,6 +47,6 @@ extern "C" ARM void func_ov017_021a9ff0(int arg0) {
     } else {
         func_020469b4((Struct_0201bdac_2*)var2, (Struct_0201bdac*)var3);
     }
-    SetBrightness(var0, -16, 0x19);
-    func_020213fc(var1, 1);
+    SetBrightness(res, -16, 0x19);
+    MapDisplay_SetHoldSubScreenDark(flags, 1);
 }

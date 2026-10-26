@@ -7,8 +7,8 @@
 #include "World/GrottoTileGraph.h"
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
-void* GetPtrField0x468_02011584(void* obj);
-int IsInRange0201b5b0(int id);
+void* GameState_GetZoneTable(void* obj);
+int ZoneId_IsMainGrottoFloor(int id);
 void ClearHalfword0x18_0209bffc(void* obj);
 void ClearBuffer0209bc84(void* obj);
 struct ResetObject0209af34Struct;
@@ -30,8 +30,8 @@ struct Struct_ov017_021b478c_2 {
     char unknown_5_[1];
 };
 
-struct Struct_02095924_2;
-extern "C" Struct_ov017_021b478c_2* func_02099950(struct Struct_02095924_2* arg0, int arg1);
+struct SearchTable;
+MonsterEntry021b478c* ZoneTable_FindEntry(struct SearchTable* table, int key);
 
 struct Struct_ov017_021b478c {
     unsigned char unknown_0_;
@@ -60,11 +60,11 @@ extern "C" ARM void func_ov017_021b478c(Struct_ov017_021b478c* arg0) {
 
     battle = GameState::GetInstance();
     loader = BackgroundLoader::GetInstance();
-    table = (struct SearchTable*)GetPtrField0x468_02011584(battle);
+    table = (struct SearchTable*)GameState_GetZoneTable(battle);
     zone = Zone3D_GetInstance();
     grotto = &zone->grotto_;
     id = request->monster->zoneId;
-    entry = FindEntryByHalfwordKey_02099950(table, id);
+    entry = ZoneTable_FindEntry(table, id);
 
     var6 = (char*)arg0->unknown_8_;
     func_0209bffc(var6 + Enum_ov017_021b478c_68);
@@ -79,11 +79,11 @@ extern "C" ARM void func_ov017_021b478c(Struct_ov017_021b478c* arg0) {
         return;
     }
 
-    if (!func_0201b5b0(var4)) {
-        char var8[0x14];
-        char var9[0x50];
-        if (strlen(var5->unknown_5_) < 6) {
-            sprintf(var8, data_ov017_021d7afc, var5->unknown_5_);
+    if (!ZoneId_IsMainGrottoFloor(id)) {
+        char name[0x14];
+        char path[0x50];
+        if (strlen(entry->name) < 6) {
+            sprintf(name, data_ov017_021d7afc, entry->name);
         } else {
             sprintf(var8, data_ov017_021d7b06, var5->unknown_5_);
         }
@@ -102,9 +102,9 @@ extern "C" ARM void func_ov017_021b478c(Struct_ov017_021b478c* arg0) {
         return;
     }
 
-    if (func_0201b5b0(var4)) {
-        int var11 = var4 % 20;
-        if (var7->floorMap_.pMapData == NULL || var3->unknown_424_ != 0) {
+    if (ZoneId_IsMainGrottoFloor(id)) {
+        int floor = id % 20;
+        if (grotto->floorMap_.pMapData == NULL || zone->unknown_424_ != 0) {
             return;
         }
         func_0201a300(var3, var11, arg0->unknown_8_, 0, 0);

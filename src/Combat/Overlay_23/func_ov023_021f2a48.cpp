@@ -37,10 +37,10 @@ extern "C" RewardGlobal _ZZ17GetGlobal021ffefcvE1s;
 extern SePlayer g_sePlayer;
 TextRenderer* MessageSystem_GetInstance();
 extern "C" void func_02046380(TextRenderer*);
-void CopyOutRegion0x571d_020114ec(char*, void*);
+void GameState_GetPartyOrder(char*, void*);
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
 FoundReward* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
-void Clear12Bytes020e46c4(void*);
+void NameText_Clear(void*);
 extern "C" Words021edf38 func_ov023_021ed804(Words021edf38, FoundReward*);
 void SetWords_021edf38_021edf38(void*, Words021edf38*);
 void DispatchIfCountPositive020dcf7c(int, void*);
@@ -69,7 +69,7 @@ extern "C" ARM int func_ov023_021f2a48(RewardScreen* self) {
         int plural = reward->plural_;
         signed char combatant = reward->combatant_;
         unsigned char order[4];
-        CopyOutRegion0x571d_020114ec((char*)state, order);
+        GameState_GetPartyOrder((char*)state, order);
         GameObject* recipient = 0;
         for (int i = 0; i < 4; ++i) {
             GameObject* actor = state->GetCombatantByIndex(order[i]);
@@ -85,13 +85,13 @@ extern "C" ARM int func_ov023_021f2a48(RewardScreen* self) {
         Words021edf38 words;
         TextBuffers description;
         Words021edf38 actorText;
-        Clear12Bytes020e46c4(&words);
+        NameText_Clear(&words);
         const Words021edf38& copy = func_ov023_021ed804(words, found);
         SetWords_021edf38_021edf38(&words, const_cast<Words021edf38*>(&copy));
         renderer->reward_ = &words;
         char first[128] = {0};
         char second[128] = {0};
-        Clear12Bytes020e46c4(&description);
+        NameText_Clear(&description);
         description.first_ = first;
         description.second_ = second;
         DispatchIfCountPositive020dcf7c((short)text, &description);

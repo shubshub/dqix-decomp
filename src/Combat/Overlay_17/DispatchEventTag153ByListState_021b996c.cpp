@@ -8,9 +8,9 @@ enum { RegionOffset5724 = 0x5724, RegionOffset6fc = 0x6fc, RegionOffset998 = 0x9
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0202ae18(void* ctx);
+extern "C" void* LinkSession_GetInstance(void* ctx);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 struct U16Field0x6_020375f8;
 struct ListHead02046b60;
 int ListContainsId(struct ListHead02046b60* list, int id);
@@ -21,13 +21,13 @@ struct Obj021b996c { char pad[0x12c]; int field12c; };
 
 // USA: func_ov017_021b996c  (semantic: DispatchEventTag153ByListState_021b996c)
 extern "C" ARM void func_ov017_021b996c(struct Obj021b996c* self, int combatantId, int checkVal, unsigned char tag, unsigned short arg5) {
-    void* search = func_0202ae18(self);
-    signed char cur = GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)search);
+    void* search = LinkSession_GetInstance(self);
+    signed char cur = LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)search);
     if (checkVal != cur && checkVal != 4) return;
 
     GameState* battle = GameState::GetInstance();
     GameObject* combatant = battle->GetGameObjectByIndex(combatantId);
-    GameObject* combatant2 = battle->GetUnknownGameObject();
+    GameObject* combatant2 = battle->GetLeader();
     unsigned short u1 = ((Object3D*)((struct U16Field0x6_020375f8*)combatant))->GetField06();
     unsigned short u2 = ((Object3D*)((struct U16Field0x6_020375f8*)combatant2))->GetField06();
     if (u1 != u2) {
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov017_021b996c(struct Obj021b996c* self, int combatantI
         return;
     }
 
-    unsigned char cur2 = (unsigned char)GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)search);
+    unsigned char cur2 = (unsigned char)LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)search);
     if (tag < cur2) {
         EnqueueEventTag153_021d079c(tag, 1, 1);
     } else {

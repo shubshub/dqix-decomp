@@ -10,7 +10,7 @@ enum { kOffset97c = 0x97c, kOffset18c = 0x18c, kOffset980 = 0x980, kOffset970 = 
 
 
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_ov017_021d2400(void);
 extern "C" void func_02048150(void* combatant, int a, int b);
@@ -18,13 +18,13 @@ extern "C" void func_ov017_021cedf4(int a, int b, int c);
 extern "C" void func_ov017_021c9e00(int a, int b, int c, int d);
 extern "C" void func_ov017_0219bfb4(int a, int b);
 
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 
 struct Combatant020482bc;
 int RestoreMaxMpToFull(struct Combatant020482bc* c);
 
 struct Bytes02033b88;
-int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 
@@ -39,11 +39,11 @@ struct CombatantView02010604 {
 
 // USA: func_02010604
 ARM void ResetMpForFlaggedCombatants02010604(GameState* obj, int arg1, int arg2, int arg3) {
-    void* g = func_0202ae18();
+    void* g = LinkSession_GetInstance();
     int i;
 
     if (arg1 != 0) {
-        if (CheckField0NonZero_0202b7d8((int*)g)) {
+        if (LinkSession_IsActive((int*)g)) {
             func_ov017_021d2400();
         }
     }
@@ -58,8 +58,8 @@ ARM void ResetMpForFlaggedCombatants02010604(GameState* obj, int arg1, int arg2,
         func_02048150(combatant, 0, 1);
         RestoreMaxMpToFull((struct Combatant020482bc*)combatant);
         view->field18c &= ~1;
-        SetByte0xbeShiftPrev((struct Bytes02033b88*)combatant, 0);
-        if (CheckField0NonZero_0202b7d8((int*)g)) {
+        GameObject_ForceMotionState((struct Bytes02033b88*)combatant, 0);
+        if (LinkSession_IsActive((int*)g)) {
             func_ov017_021cedf4(id, 1, 0);
             func_ov017_021c9e00(id, 0, 0, 1);
         }

@@ -89,14 +89,14 @@ struct Struct_02092e0c {
 struct ActorFlags { char pad0[0xc1]; unsigned char fieldc1; unsigned char low : 4; unsigned char visible : 1; unsigned char high : 3; };
 extern "C" Reset_021eefac* _ZZ17GetGlobal021ffefcvE1s;
 MessageController* MessageSystem_GetInstance();
-extern "C" void* func_0202ae18();
-extern "C" int func_02086ef0(Struct_02048150*, int);
-extern "C" void func_ov023_021ed988(char*, int);
-extern "C" void func_ov000_02163b90(Struct_ov000_02160da0*, int);
-extern "C" void func_ov000_021626a0(Struct_ov000_02160da0*, int, int);
-extern "C" void func_ov000_02163a7c(Struct_ov000_02163a7c*);
-extern "C" void func_ov000_021639b4(Struct_ov000_02160da0*);
-extern "C" void func_ov000_02167dd8(unsigned char*);
+extern "C" void* LinkSession_GetInstance();
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
+void ScaleOrResetCombatants_021ed988(char*, int);
+extern "C" void func_ov000_02163b90(BattleWork*, int);
+extern "C" void func_ov000_021626a0(BattleWork*, int, int);
+void ApplyField41ToGatheredCombatants02163a7c(GatherObj02163a7c*);
+extern "C" void func_ov000_021639b4(BattleWork*);
+void RunFlagPassAndSetMode02167dd8_02167dd8(unsigned char*);
 extern "C" int func_ov000_02153e40(void*, short*, int, int);
 extern "C" void func_02048cf0(GameObject*, int);
 extern "C" void func_ov000_0216e3c4(void*);
@@ -104,8 +104,8 @@ unsigned char* GetField02163524(void*);
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
 void ResetCombatantSlot020d7334(unsigned char*, int);
 int IsFlag10088Set_02010088(S_10088*);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
-void ClearStateFlags0203400c(ObjectStatePrefix*);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
+void GameObject_UnfreezeAnimation(ObjectStatePrefix*);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
@@ -116,7 +116,7 @@ void CopyEntryFields_021d8cb4(void*, void*);
 void CopyAndStoreLen_021d9988(Obj021d9988*, void*, unsigned int);
 extern "C" void func_02046380(MessageController*);
 extern "C" void func_ov023_021d8ddc(BattleEntry*, int*);
-int GetCheckedSignedByte_02011518(void*, unsigned int);
+int GameState_GetPartyOrderEntry(void*, unsigned int);
 void NameText_InitFromPartyMember(void*, int);
 char* FindEntryByKey_02072a68(TableA68*, int);
 #if !defined(jpn)
@@ -146,7 +146,7 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
     GameState* game = GameState::GetInstance();
     Reset_021eefac* state = _ZZ17GetGlobal021ffefcvE1s;
     MessageController* messages = MessageSystem_GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)GameState_GetParty(game), state->actorId);
@@ -166,19 +166,19 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
             GameObject* actor = combatGame->GetCombatantByIndex(ids[i]);
             if (actor) func_02048cf0(actor, 0);
         }
-        func_ov000_0216e3c4(arg0->unknown_c18_);
-        unsigned char* var14 = func_ov000_02163524(arg0);
-        GameState* var15 = GameState::GetInstance();
-        for (int var16 = 0; var16 < 4; var16++) {
-            if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var16)) {
-                if (var14) func_020d7334(var14, var16);
-                GameObject* var17 = var15->GetCombatantByIndex(var16);
-                if (var17 && !func_02010088((Struct_02010088*)var17)) {
-                    ((Struct_020391ac*)var17)->unknown_c1_ &= ~0xf0;
-                    func_02033b88((Struct_02010604*)var17, 0);
-                    var17->obj3D_.SkipAnimationTransition();
-                    func_0203400c((Struct_02032e58*)var17);
-                    var17->obj3D_.MakeVisible();
+        func_ov000_0216e3c4(work->cameraTask);
+        unsigned char* field = GetField02163524(work);
+        GameState* partyGame = GameState::GetInstance();
+        for (int i = 0; i < 4; i++) {
+            if (TestBitAt0x34_020a35e0((unsigned char*)work->info, i)) {
+                if (field) ResetCombatantSlot020d7334(field, i);
+                GameObject* actor = partyGame->GetCombatantByIndex(i);
+                if (actor && !IsFlag10088Set_02010088((S_10088*)actor)) {
+                    ((ActorFlags*)actor)->fieldc1 &= ~0xf0;
+                    GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
+                    actor->obj3D_.SkipAnimationTransition();
+                    GameObject_UnfreezeAnimation((ObjectStatePrefix*)actor);
+                    actor->obj3D_.MakeVisible();
                 }
             }
         }
@@ -207,13 +207,13 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
         func_02046380(var7);
 #endif
 
-        func_ov023_021d8ddc(arg0->unknown_5588_, arg0->unknown_5758_);
-        BaseCombatStats* var23 = 0;
-        if (arg0->unknown_2a0_->unknown_25_) {
-            for (int var24 = 0; var24 < 4 && !var23; var24++) {
-                int var25 = func_02011518(var5, (unsigned char)var24);
-                if (arg0->unknown_5758_[var25]) {
-                    GameObject* var26 = func_0200ff1c(var5, var25);
+        func_ov023_021d8ddc(work->result, work->experience);
+        BaseCombatStats* stats = 0;
+        if (work->info->legacyBoss) {
+            for (int i = 0; i < 4 && !stats; i++) {
+                int id = GameState_GetPartyOrderEntry(game, (unsigned char)i);
+                if (work->experience[id]) {
+                    GameObject* actor = GetCombatantWithFlag0x100_0200ff1c(game, id);
 #if defined(jpn)
 
 #else
@@ -229,10 +229,10 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
                 }
             }
         } else {
-            for (int var27 = 0; var27 < 4; var27++) {
-                int var28 = func_02011518(var5, (unsigned char)var27);
-                GameObject* var29 = func_0200ff1c(var5, var28);
-                if (var29 && func_020a35e0((unsigned char*)arg0->unknown_2a0_, var28) && !func_02010088((Struct_02010088*)var29)) {
+            for (int i = 0; i < 4; i++) {
+                int id = GameState_GetPartyOrderEntry(game, (unsigned char)i);
+                GameObject* actor = GetCombatantWithFlag0x100_0200ff1c(game, id);
+                if (actor && TestBitAt0x34_020a35e0((unsigned char*)work->info, id) && !IsFlag10088Set_02010088((S_10088*)actor)) {
 #if defined(jpn)
 
 #else

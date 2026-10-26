@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
-extern "C" void func_0202c288(void* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" void LinkSession_UpdateMemberCount(void* obj);
 extern "C" void* Scenario_GetInstance(void);
 int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
@@ -30,14 +30,14 @@ struct Struct_02061c04_11 {
 struct Struct_ov017_021b9a98 { char unknown_0_[0x34]; };
 
 // USA: func_ov017_021b9a98
-extern "C" ARM void func_ov017_021b9a98(Struct_02061c04_11* arg0, int arg1, unsigned char arg2, unsigned char arg3, unsigned short arg4) {
-    Struct_0202c1a4* var0 = (Struct_0202c1a4*)func_0202ae18();
-    signed char var1 = func_0202c1a4(var0);
-    if (arg2 != var1 && arg2 != 4) return;
+extern "C" ARM void func_ov017_021b9a98(Obj_021b994c* obj, int unused1, unsigned char matchType, unsigned char unused2, unsigned short flag) {
+    SearchStruct0202c1a4* search = (SearchStruct0202c1a4*)LinkSession_GetInstance();
+    signed char arrEntry = LinkSession_GetOwnSlot(search);
+    if (matchType != arrEntry && matchType != 4) return;
 
     if (arg0->unknown_130_ == 0) return;
 
-    func_0202c288(var0);
+    LinkSession_UpdateMemberCount(search);
 
     int var2 = arg0->unknown_131_ + 1;
     arg0->unknown_131_ = (unsigned char)var2;

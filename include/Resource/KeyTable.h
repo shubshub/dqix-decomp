@@ -13,7 +13,7 @@ enum KeyTableLoadStep
 };
 
 // The table (KeyTable_Load: the count/textSize/relocated header, the {key, text} entries, the texts), then its load
-// state. The tag stays because KeyTable_Reset's, KeyTable_EndLoad's and ResetAndDetach020dfc6c's C++ symbols are
+// state. The tag stays because KeyTable_Reset's, KeyTable_EndLoad's and KeyTable_Destroy's C++ symbols are
 // mangled with it.
 struct Struct020dfc40 {
     unsigned int count : 12;

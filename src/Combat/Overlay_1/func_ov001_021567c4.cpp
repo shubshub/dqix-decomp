@@ -3,7 +3,7 @@
 #include "Resource/GameResources.h"
 #include "Resource/Brightness.h"
 
-char* GetFieldIfFlag4_020100f8(char* gameState);
+char* GameState_GetFollowCamera(char* gameState);
 void FollowCamera_EnableFollow(void* obj);
 void ApplyVecFromField0x246_020a2718(char* actor);
 extern "C" void func_0209c2e0(void* obj, int a, int b);
@@ -29,12 +29,12 @@ struct Struct_ov001_021567c4 {
 static inline unsigned char* inline_ov001_021567c4(GameResources* arg0) { SDK_NULL_ASSERT(arg0); return (unsigned char*)arg0->unknown_ptr_3718; }
 
 // USA: func_ov001_021567c4
-extern "C" ARM unsigned short func_ov001_021567c4(Struct_ov001_021567c4* arg0) {
-	GameState* var0 = GameState::GetInstance();
-	GameResources* var1 = GetGameResources();
-	var0->GetUnknownGameObject();
-	char* var2 = func_020100f8((char*)var0);
-	inline_ov001_021567c4(var1)[1] = 1;
+extern "C" ARM unsigned short func_ov001_021567c4(State_021567c4* self) {
+	GameState* gameState = GameState::GetInstance();
+	GameResources* resources = GetGameResources();
+	gameState->GetLeader();
+	char* camera = GameState_GetFollowCamera((char*)gameState);
+	GetPtr3718(resources)[1] = 1;
 	func_ov001_02154da0();
 	SetBrightness(resources, 0, 0x1e);
 	FollowCamera_EnableFollow(camera);

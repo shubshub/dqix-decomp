@@ -6,8 +6,8 @@ struct Container020e0310;
 int IsField0x118Equal2_ov000_0217542c(void* obj);
 int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
 int Text_AppendCursorTag(char* dst, int cursor);
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 int KeyTable_Get(struct Container020e0310* c, int key);
 int Text_AppendNTag(char* dst, int n, const char* name);
@@ -31,9 +31,9 @@ extern "C" ARM void func_ov000_021775a4(void* base, char* dst) {
     }
     Text_AppendCursorTag(dst, cursor);
 
-    void* p = func_0202ae18();
+    void* p = LinkSession_GetInstance();
     int count = 3;
-    if (CheckField0NonZero_0202b7d8((int*)p)) {
+    if (LinkSession_IsActive((int*)p)) {
         if (GameState_GetProtagonistIndex(GameState::GetInstance()) == 0) count = 4;
     }
 

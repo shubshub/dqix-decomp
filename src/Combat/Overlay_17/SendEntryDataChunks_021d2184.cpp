@@ -2,9 +2,9 @@
 #include "std_library_functions.h"
 
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* obj);
-void* GetData02100044_0202ae24(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
@@ -23,9 +23,9 @@ struct BufSend021d2184 {
 
 // USA: func_ov017_021d2184  (semantic: SendEntryDataChunks_021d2184)
 extern "C" ARM void func_ov017_021d2184(unsigned short id) {
-    if (func_0202c508(func_0202ae18())) {
+    if (LinkSession_IsHostOrSolo(LinkSession_GetInstance())) {
         struct BufSend021d2184 buf;
-        void* p = GetData02100044_0202ae24();
+        void* p = LinkMessageQueue_GetInstance();
         struct Tail021d2184* t = &buf.tail;
         buf.tag = 0x9c;
         t->id = id;

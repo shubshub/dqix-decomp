@@ -170,8 +170,8 @@ struct Bytes02033b88;
 struct Obj02176134;
 struct Obj02176150;
 
-extern "C" void* func_0202ae18(void);
-struct Obj0203a588* GetData02104b6c_02039e70(void);
+extern "C" void* LinkSession_GetInstance(void);
+struct Obj0203a588* NumberPopups_GetInstance(void);
 int GetField02163524(void* obj);
 void* SearchBothTables02079e2c(char* p, int key);
 unsigned char GetByte_021dcc64_021dcc64(void* obj);
@@ -190,7 +190,7 @@ extern "C" void func_ov000_02162dc4(unsigned char* sl, GameObject* lead, GameObj
                                     int b1d, int b1e, unsigned long long mask, int zero);
 void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
 void SetPosAndFields0216f1e4(void* obj, int* srcVec3, int a, int b);
-void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char* obj, int a, int b);
+void Camera_Shake(unsigned char* obj, int a, int b);
 void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
 void Forward0205ec20(void* obj, void* target, int arg);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -203,18 +203,18 @@ void FindNodeAndProcess02057fb4(void* list, int id, void* config);
 int TestBit0At0x2f4_02085078(unsigned char* obj);
 int TestBit1At0x2f4_020850a4(unsigned char* obj);
 extern "C" int func_ov000_0215fd90(void* entry, int effect);
-void SetFields0xbaAnd0xbc_02032fd0(ShortPair0xba0xbc* obj, short a, unsigned short b);
+void GameObject_Shake(ShortPair0xba0xbc* obj, short a, unsigned short b);
 void* GetActiveCombatWork_ov000_02160130(void);
 void* GetOffsetPtr02160f08(void* obj);
 void* FindEntryById_021dafd0(char* obj, int id);
 extern "C" void func_ov000_0217616c(void* p);
 void SetSubstructWord0x68_0204a00c(unsigned char* obj, int value);
-void QueuePopupEntry0203a48c(Obj0203a48c*, int, Vec3Int0203a48c*, int, int, int);
+void NumberPopups_Add(Obj0203a48c*, int, Vec3Int0203a48c*, int, int, int);
 void SetSubstructByte0x56_02049f28(unsigned char* obj);
 void CopyObjectFields02048588(unsigned char* self, unsigned char* dst);
 void AllocateSlotAndConfigureField02166784(struct Struct5e00* obj1, unsigned char* obj2, unsigned char* obj3);
 extern "C" void func_ov000_021677fc(void* p);
-int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 int GetSubstructByte0x56_02049ee8(unsigned char* obj);
 void ResetCombatantSlot020d7334(unsigned char* base, int index);
 void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
@@ -323,11 +323,11 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
     unsigned char var46;
     bool var47;
 
-    var1 = GameState::GetInstance();
-    var2 = (char*)GetGameResources();
-    func_0202ae18();
+    battle = GameState::GetInstance();
+    ov17 = (char*)GetGameResources();
+    LinkSession_GetInstance();
     camera = (unsigned char*)battle->GetCamera();
-    popups = (struct Obj0203a48c*)GetData02104b6c_02039e70();
+    popups = (struct Obj0203a48c*)NumberPopups_GetInstance();
     slotBase = GetField02163524(sl);
     entry = (struct TableEntry_021d8c30*)SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), *(short*)sb);
     entryIsKind2 = 0;
@@ -481,15 +481,15 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
             var25 = var1->GetCombatantByIndex(var60);
             if (var25 == 0) continue;
 
-            if (var50->unknown_14_[var44] == 3 && arg2 == 2) {
-                Vector3fix var61 = *(Vector3fix*)(arg0 + Enum_ov025_021d8c30_3208);
-                fix32_t var62 = fix32_Divide(0x6000, var61.z);
-                var61.y = FIX32_MULTIPLY(var61.y, var62);
-                var61.z = 0x7000;
-                func_ov000_0216f1e4(arg0 + Enum_ov025_021d8c30_3096, &var61.x, 0xb33, 0);
-                func_0202ea10(arg0 + Enum_ov025_021d8c30_3096, 0xcc, 0x3e8);
-                if (arg2 != 2) {
-                    func_ov000_02163440(arg0, 0x199, 0x258, 0x32);
+            if (row->codes[i] == 3 && kind == 2) {
+                Vector3fix pos = *(Vector3fix*)(sl + CameraPosition);
+                fix32_t q = fix32_Divide(0x6000, pos.z);
+                pos.y = FIX32_MULTIPLY(pos.y, q);
+                pos.z = 0x7000;
+                SetPosAndFields0216f1e4(sl + CameraBase, &pos.x, 0xb33, 0);
+                Camera_Shake(sl + CameraBase, 0xcc, 0x3e8);
+                if (kind != 2) {
+                    SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x258, 0x32);
                 }
                 if (sl[Field6fd8]) {
                     Forward0205ec20(&g_sePlayer, 0, 0);
@@ -699,8 +699,8 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                 }
                 var81 = var81->unknown_20_;
             }
-            if (var80 == 0) {
-                func_02032fd0((struct Struct_02032fd0*)var59, 0x800, 0x1f4);
+            if (total == 0) {
+                GameObject_Shake((struct ShortPair0xba0xbc*)actor, 0x800, 0x1f4);
             }
         }
         SePlayer_Play(&g_sePlayer, 0x3a, 0);
@@ -725,7 +725,7 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                     actor->obj3D_.SetAnimationByName(data_ov025_021ef3d0, 1);
                 }
             } else {
-                func_02032fd0((struct Struct_02032fd0*)var59, 0xcc, 0x12c);
+                GameObject_Shake((struct ShortPair0xba0xbc*)actor, 0xcc, 0x12c);
             }
         }
     }
@@ -760,9 +760,9 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         } else if (var49->unknown_c_ == 3) {
             var89 = 0x32;
         }
-        Vector3fix var90 = var59->obj3D_.position_;
-        var90.y += var59->obj3D_.GetHeight();
-        func_0203a48c(var4, var89, (Struct_0203a48c_2*)&var90, 4, 0, 0);
+        Vector3fix pos = actor->obj3D_.position_;
+        pos.y += actor->obj3D_.GetHeight();
+        NumberPopups_Add(popups, popupId, (Vec3Int0203a48c*)&pos, 4, 0, 0);
     }
 
     if (func_ov000_0215fd90(var49, 3)) {
@@ -788,11 +788,11 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
                 func_ov000_021677fc(arg0);
             }
         }
-        func_02033b88((struct Struct_02010604*)var59, 0);
-        var59->obj3D_.SkipAnimationTransition();
-    } else if (func_ov000_0215fd90(var49, 0xd)) {
-        if (func_02049ee8((unsigned char*)var59)) {
-            func_02033b88((struct Struct_02010604*)var59, 4);
+        GameObject_ForceMotionState((struct Bytes02033b88*)actor, 0);
+        actor->obj3D_.SkipAnimationTransition();
+    } else if (func_ov000_0215fd90(target, 0xd)) {
+        if (GetSubstructByte0x56_02049ee8((unsigned char*)actor)) {
+            GameObject_ForceMotionState((struct Bytes02033b88*)actor, 4);
         }
         func_020d7334((unsigned char*)var5, var48);
         func_02049f3c((unsigned char*)var59);
@@ -819,10 +819,10 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         if (!var21 && (*(int*)(arg0 + Enum_ov025_021d8c30_3752) != 8 || *(int*)(arg0 + Enum_ov025_021d8c30_1232) == 0) &&
             (arg1->unknown_0_ == 1 || arg1->unknown_0_ == 2)) {
             LightingManager::GetInstance()->BeginFade(0x800, 0x12c);
-            Vector3fix var94 = *(Vector3fix*)(arg0 + Enum_ov025_021d8c30_3208);
-            var94.z = FIX32_MULTIPLY(var94.z, 0xe66);
-            func_ov000_0216f1e4(arg0 + Enum_ov025_021d8c30_3096, &var94.x, 0xccc, 0);
-            func_0202ea10(arg0 + Enum_ov025_021d8c30_3096, 0xcc, 0x3e8);
+            Vector3fix pos = *(Vector3fix*)(sl + CameraPosition);
+            pos.z = FIX32_MULTIPLY(pos.z, 0xe66);
+            SetPosAndFields0216f1e4(sl + CameraBase, &pos.x, 0xccc, 0);
+            Camera_Shake(sl + CameraBase, 0xcc, 0x3e8);
         }
         if (!((unsigned char*)battle->GetCamera() == sl + CameraBase && sl[ModeByte] == 2) &&
             *(int*)(sl + Field4d0) == 0) {
@@ -850,16 +850,16 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         var52 = 1;
     }
 
-    if (func_ov000_0215fd90(var49, 1) && !func_ov000_0215fd90(var49, 0x29)) {
-        var29 = var49->unknown_c_;
-        if (func_ov000_0215fd90(var49, 2)) {
-            func_02033b88((struct Struct_02010604*)var59, 4);
-            func_020d7334((unsigned char*)var5, var48);
-            func_02049f3c((unsigned char*)var59);
-            func_ov000_02167434(arg0, var59->obj3D_.GetTexturePaletteOffset());
-            func_ov017_02191aac(var2, 0, var48, 2);
-            func_ov017_02191aac(var2, 0, var48, 4);
-            var20 = 1;
+    if (func_ov000_0215fd90(target, 1) && !func_ov000_0215fd90(target, 0x29)) {
+        amount = target->amount;
+        if (func_ov000_0215fd90(target, 2)) {
+            GameObject_ForceMotionState((struct Bytes02033b88*)actor, 4);
+            ResetCombatantSlot020d7334((unsigned char*)slotBase, id);
+            ClearSubstructByte0x56_02049f3c((unsigned char*)actor);
+            ClearBitIfValueFound02167434(sl, actor->obj3D_.GetTexturePaletteOffset());
+            func_ov017_02191aac(ov17, 0, id, 2);
+            func_ov017_02191aac(ov17, 0, id, 4);
+            cleared = 1;
         } else {
             GameState* gs = GameState::GetInstance();
             if (actor->obj3D_.unknown_0_ & 0x400) {
@@ -947,21 +947,21 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         } else if (*(short*)(sl + Field4ca) >= 0 && !keepDefault) {
             SePlayer_PlayExtra(&g_sePlayer, *(short*)(sl + Field4ca), 0);
         }
-        if (var42->unknown_0_) {
-            if (!var52) {
-                func_0202ea10(var3, var42->unknown_2_, var42->unknown_0_);
+        if (msg->duration) {
+            if (!quiet) {
+                Camera_Shake(camera, msg->strength, msg->duration);
             }
-        } else if (var49->unknown_1c_) {
-            func_0202ea10(var3, 0x333, 0x1f4);
+        } else if (target->show) {
+            Camera_Shake(camera, 0x333, 0x1f4);
         }
-        Vector3fix var104 = var59->obj3D_.position_;
-        var104.y += var59->obj3D_.GetHeight();
-        int var105 = 0;
-        if (func_ov000_0215fd90(var49, 0x2a)) var105 = 1;
-        func_0203a48c(var4, var29, (Struct_0203a48c_2*)&var104, var105, inline_ov025_021d8c30(arg5), inline_ov025_021d8c30_2(arg5));
-        if (!arg1->unknown_b_4_ && arg0[Enum_ov025_021d8c30_28238] != 4) {
-            func_ov000_021823dc(arg0 + Enum_ov025_021d8c30_28668, arg1->unknown_b_5_);
-            arg1->unknown_b_4_ = 1;
+        Vector3fix pos = actor->obj3D_.position_;
+        pos.y += actor->obj3D_.GetHeight();
+        int big = 0;
+        if (func_ov000_0215fd90(target, 0x2a)) big = 1;
+        NumberPopups_Add(popups, amount, (Vec3Int0203a48c*)&pos, big, PopupDelay(inner), PopupColor(inner));
+        if (!sb->queued && sl[Field6e4e] != 4) {
+            func_ov000_021823dc(sl + PendingState, sb->group);
+            sb->queued = 1;
         }
         var15 = 1;
     }
@@ -974,8 +974,8 @@ extern "C" ARM int func_ov025_021d8c30(unsigned char* arg0, struct Struct_ov025_
         if (kind == 0) {
             SePlayer_Play(&g_sePlayer, 0x65, 0);
         }
-        var107.y += var59->obj3D_.GetHeight();
-        func_0203a48c(var4, var35, (Struct_0203a48c_2*)&var107, var106, 0, 0);
+        pos.y += actor->obj3D_.GetHeight();
+        NumberPopups_Add(popups, negAmount, (Vec3Int0203a48c*)&pos, style, 0, 0);
     }
 
     if (var15 && var13 && var16 > 0) {

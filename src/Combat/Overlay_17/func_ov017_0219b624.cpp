@@ -33,9 +33,9 @@ void* GetData02109020_0208e9e8();
 void InitFourNamedSubStructs_02096604(char*, int);
 extern "C" {
 Zone3D* Zone3D_GetInstance();
-void func_02018d28(Zone3D*, SafeAllocator*, void*, unsigned int);
+void Zone3D_LoadChestModels(Zone3D*, SafeAllocator*, void*, unsigned int);
 void SprSprite_Init(void*);
-void func_02047b40(Foo02048004*, const void*, SafeAllocator*);
+void SprSprite_Parse(Foo02048004*, const void*, SafeAllocator*);
 void func_02057924();
 void func_0208f36c(void*, Object3D*);
 void Zone3D_SetUpLootableModels(Zone3D*);
@@ -70,7 +70,7 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    func_02018d28(globals, allocator, &g_fileLoadBuffer, length);
+    Zone3D_LoadChestModels(globals, allocator, &g_fileLoadBuffer, length);
     char name[0x50];
     int i = 0;
     for (; data_ov017_021d656c[i].index >= 0; i++) {
@@ -79,7 +79,7 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
         sprintf(name, data_ov017_021d751f, data_ov017_021d656c[i].name);
         SprSprite_Init(&sprites[index]);
         const void* file = GetFileFromNARCInMemory(name);
-        if (file != 0) func_02047b40(&sprites[index], file, allocator);
+        if (file != 0) SprSprite_Parse(&sprites[index], file, allocator);
     }
 #if !defined(jpn)
     sprintf(name, data_ov017_021d751f, data_ov017_021d7526);
@@ -89,20 +89,20 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
     }
     SprSprite_Init(&self->substruct_array_2b90[0]);
     {
-        const void* var12 = GetFileFromNARCInMemory(var8);
-        if (var12 != 0) func_02047b40(&arg0->substruct_array_2b90[0], var12, var2);
+        const void* file = GetFileFromNARCInMemory(name);
+        if (file != 0) SprSprite_Parse(&self->substruct_array_2b90[0], file, allocator);
     }
 #endif
     const void* file;
     file = GetFileFromNARCInMemory(data_ov017_021d7544);
     if (file != 0) {
         SprSprite_Init(&self->unknown_3520);
-        func_02047b40(&self->unknown_3520, file, allocator);
+        SprSprite_Parse(&self->unknown_3520, file, allocator);
     }
     file = GetFileFromNARCInMemory(data_ov017_021d7555);
     if (file != 0) {
         SprSprite_Init(&(*reinterpret_cast<Foo02048004*>(self->unknown_35a8)));
-        func_02047b40(&(*reinterpret_cast<Foo02048004*>(self->unknown_35a8)), file, allocator);
+        SprSprite_Parse(&(*reinterpret_cast<Foo02048004*>(self->unknown_35a8)), file, allocator);
     }
     var7.Destroy();
     func_02057924();

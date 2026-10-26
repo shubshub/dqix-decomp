@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 struct Vec3 {
     int x;
@@ -61,8 +61,8 @@ ARM int RepelFromFlag0x800Target020781e8(struct Entity020781e8* e) {
     }
 
     int scale = 0;
-    void* g = func_0202ae18();
-    if (!CheckField0NonZero_0202b7d8((int*)g) || GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)g) == 0) {
+    void* g = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)g) || LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
         struct Vec3 posCopy = func_02034104(combatant);
         struct Vec3 delta;
         Vector3fix_Subtract((const Vector3fix*)&posCopy, (const Vector3fix*)&e->f44, (Vector3fix*)&delta);
@@ -83,7 +83,7 @@ ARM int RepelFromFlag0x800Target020781e8(struct Entity020781e8* e) {
     ((Object3D*)((unsigned char*)e))->DisableFlag(0x80);
     e->f17a = 0;
 
-    if (CheckField0NonZero_0202b7d8((int*)g) && GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)g) == 0) {
+    if (LinkSession_IsActive((int*)g) && LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
         int c1 = ((Object3D*)((struct U16Field0x6_020375f8*)e))->GetField06();
         int f2val = e->f2;
         struct Vec3* vp = &e->f158;

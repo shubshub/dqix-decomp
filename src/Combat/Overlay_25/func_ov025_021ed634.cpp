@@ -104,30 +104,30 @@ extern "C" int func_ov000_0215fd90(void* obj, int flag);
 void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
 void NameText_InitFromPartyMember(void* obj, int id);
 class GameObject;
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void func_020e4ce8(void* arg0, void* arg1, int arg2);
-extern "C" void func_02046504(char* arg0, char* arg1);
-extern "C" void func_020464dc(void*, signed char);
-extern "C" void func_0204653c(void* arg0, char* arg1);
-extern "C" int func_ov000_0215fb9c(int arg0, unsigned short arg1);
-extern "C" void func_020488ec(char* arg0);
-extern "C" void func_02046558(void* arg0, char* arg1);
-extern "C" Struct_ov025_021ebb90* func_02079e2c(char* arg0, int arg1);
-extern "C" void func_020e4e38(void* arg0, Struct_020e4e38* arg1);
-extern "C" void func_02046520(char* arg0, char* arg1);
-extern "C" void* func_ov000_02160130(void);
-extern "C" char* func_ov000_02160f08(void* arg0);
-extern "C" void* func_ov025_021dafd0(char* arg0, int arg1);
-extern "C" Struct_ov025_021ed634_7* func_02054000(Struct_02054000* arg0);
-extern "C" void func_020e46c4(void* arg0);
-extern "C" void func_020dcf7c(int arg0, void* arg1);
-extern "C" unsigned char func_020114ec(char*, void*);
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" char* func_ov000_0216fcfc(void* arg0, int arg1);
-extern "C" unsigned int strlen(const char* arg0);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int id);
+extern "C" void func_020e4ce8(void* dst, void* src, int flag);
+void CopyStringToField0x3ac_02046504(char* g, char* s);
+void SetByte0x1880_020464dc(void*, signed char);
+void CopyStringToField042c_0204653c(void* g, char* s);
+extern "C" int _Z22CheckKeyMatch_0215fb9cis(int obj, unsigned short id);
+void BuildName020488ec(char* s);
+void CopyStringToField046c_02046558(void* g, char* s);
+Row02079e2c* SearchBothTables02079e2c(char* table, int key);
+void InitObjFromPackedFields020e4e38(void* obj, Src020e4e38* src);
+void CopyStringToField0x3ec_02046520(char* g, char* s);
+void* GetActiveCombatWork_ov000_02160130(void);
+char* GetOffsetPtr02160f08(void* w);
+void* FindEntryById_021dafd0(char* obj, int id);
+Sub18* GetActiveSub_02054000(Outer_02054000* o);
+void NameText_Clear(void* p);
+void DispatchIfCountPositive020dcf7c(int count, void* buf);
+unsigned char GameState_GetPartyOrder(char*, void*);
+extern "C" void* func_ov017_021b8478(void* obj);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+char* GetFieldByKeyFromWork0x88_ov000_0216fcfc(void* work, int key);
+extern "C" unsigned int strlen(const char* s);
+extern "C" int sprintf(char* buf, const char* fmt, ...);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2, int arg3);
 #endif
@@ -508,14 +508,14 @@ found_entry:
                         if (var81 != 0) var79 = var81->unknown_18_;
                     }
                 }
-                if (var79 > 0) {
-                    func_020e46c4(&var12);
-                    __clear(var6, 0x80);
-                    __clear(var7, 0x80);
-                    var12.unknown_0_ = var6;
-                    var12.unknown_4_ = var7;
-                    func_020dcf7c(var79, &var12);
-                    ((Struct_ov025_021ed634_2*)var1)->unknown_18_ = (int)&var12;
+                if (cnt > 0) {
+                    NameText_Clear(&objD);
+                    __clear(bufE, 0x80);
+                    __clear(bufF, 0x80);
+                    objD.a = bufE;
+                    objD.b = bufF;
+                    DispatchIfCountPositive020dcf7c(cnt, &objD);
+                    ((Cur*)g)->f18 = (int)&objD;
                 }
             }
         }
@@ -537,16 +537,16 @@ found_entry:
             || (var70 != 0 && var70->unknown_18_5_ == 1 && var19 == 0x26d && var35 >= var37)) {
             *(var1 + 0x1000 + 0x9d7) = 1;
         }
-        int var82 = func_020114ec((char*)var0, var16);
-        unsigned char var83 = 0;
-        unsigned char var84 = 0;
-        unsigned char* var85 = (unsigned char*)func_ov017_021b8478(GetGameResources()->unknown_ptr_3718);
-        char* var86 = func_ov000_02160f08(func_ov000_02160130());
-        for (int var87 = 0; var87 < var82; var87++) {
-            Struct_ov025_021ed634_5* var88 = (Struct_ov025_021ed634_5*)func_ov025_021dafd0(var86, (unsigned char)var16[var87]);
-            if (var88 != 0 && func_020a35e0(var85, var16[var87]) != 0) {
-                ++var84;
-                if (var88->unknown_c_ > 0) ++var83;
+        int n5 = GameState_GetPartyOrder((char*)gs, out);
+        unsigned char positiveFlaggedEntries = 0;
+        unsigned char flaggedEntries = 0;
+        unsigned char* tb = (unsigned char*)func_ov017_021b8478(GetGameResources()->unknown_ptr_3718);
+        char* ew = GetOffsetPtr02160f08(GetActiveCombatWork_ov000_02160130());
+        for (int q = 0; q < n5; q++) {
+            Entry021dafd0* e = (Entry021dafd0*)FindEntryById_021dafd0(ew, (unsigned char)out[q]);
+            if (e != 0 && TestBitAt0x34_020a35e0(tb, out[q]) != 0) {
+                ++flaggedEntries;
+                if (e->v > 0) ++positiveFlaggedEntries;
             }
         }
         ((Struct_ov025_021ed634_4*)var1)->unknown_30_ = var84;

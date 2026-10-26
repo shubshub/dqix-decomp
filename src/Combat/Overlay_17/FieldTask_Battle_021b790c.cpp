@@ -146,7 +146,7 @@ static inline Struct_01ff87a4_2* inline_ov017_021b790c_2(GameResources* arg0) {
 
 extern char g_bgmPlayer[];
 
-extern "C" Search021b790c* func_0202ae18(void);
+extern "C" Search021b790c* LinkSession_GetInstance(void);
 Controller021b790c* MessageSystem_GetInstance(void);
 unsigned int* GlobalFlags_GetInstance(void);
 void PushInputLogA_020a1df8(int id);
@@ -182,18 +182,18 @@ extern "C" void func_0209c530(void* p);
 int ListContainsId(ListHead02046b60* list, int id);
 void InitActorContext0209c20c(Actor0209c20c* actor);
 void BgmPlayer_FadeOut(Actor0209c678* actor, int arg);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void func_02048150(GameObject* m, int a, int b);
-int SetByte0xbeShiftPrev(Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(Bytes02033b88* p, int val);
 int GameState_GetProtagonistIndex(GameState* gs);
 extern "C" void func_ov017_021cedf4(int id, int a, int b);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
-extern "C" void func_ov017_02191108(void* self, int a, int b, int c, int d);
+extern "C" void Party_ReformLine(void* self, int a, int b, int c, int d);
 void GameObject_EnableControl(void* obj);
-extern "C" void func_02015438(void* zone);
+extern "C" void Zone3D_Update(void* zone);
 extern "C" MainBlock0205859c* func_02057924(void);
 void ResetBattleEncounterState0205859c(MainBlock0205859c* p);
-int GetFieldIfFlag4_020100f8(char* gs);
+int GameState_GetFollowCamera(char* gs);
 void SetVec3ComponentsAndApply020a27cc(Struct020a27cc* s);
 void ConfigureVec3AndApply020a2800(Struct020A2800* s);
 void InitVec3ParamsVariant8b33_020a2830(void* s);
@@ -232,15 +232,15 @@ void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(void* obj);
 int GameState_GetLeaderIndex(GameState* gs);
 void NameText_InitFromPartyMember(void* obj, int combatantId);
-int GetSignedByte0x1ca_02039888(void* obj);
+int GameObject_GetLineLeader(void* obj);
 
 // Overlay 17, originally func_ov017_021b790c (USA/EUR 0x021b790c, JPN 0x021b7ebc)
 extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60* list) {
     GameState* gs = GameState::GetInstance();
     char* res = (char*)GetGameResources();
-    GameObject* obj = gs->GetUnknownGameObject();
+    GameObject* obj = gs->GetLeader();
     Controller021b790c* ctrl = MessageSystem_GetInstance();
-    Search021b790c* search = func_0202ae18();
+    Search021b790c* search = LinkSession_GetInstance();
     unsigned int* flagWord = GlobalFlags_GetInstance();
 
     if (!(arg0->unknown_6b6_ & 0x100)) {
@@ -264,7 +264,7 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
     } else if (state == 0) {
         func_ov000_02160620(self->field_6ac);
         if (IsCombatWorkFlag0x400Set_ov000_02161264(self->field_6ac) == 0) return;
-        void* search2 = func_0202ae18();
+        void* search2 = LinkSession_GetInstance();
         self->flags |= 0x1000;
         *(unsigned short*)(res + SCENE_ID_BASE_021b790c + SCENE_ID_OFFSET_021b790c) = self->id;
         Party021b790c* party = (Party021b790c*)GameState_GetParty(gs);
@@ -346,36 +346,36 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
             self->flags &= ~0x1000;
             GetHud((GameResources*)res)->SetActive(1);
             BgmPlayer_FadeOut((Actor0209c678*)g_bgmPlayer, 0);
-            if (allOk && self->field_28 >= 0 && func_0202c540(search2) != 0) {
+            if (allOk && self->field_28 >= 0 && LinkSession_IsGuest(search2) != 0) {
                 GameObject* hero = gs->GetProtagonist();
                 if (hero != NULL && (**(int**)((char*)hero + 0x130) & 1)) {
                     func_02048150(hero, 0, 1);
                     *(unsigned short*)(*(char**)((char*)hero + 0x130) + 4) = 1;
                     *(unsigned int*)((char*)hero + SCENE_COMBATANT_FLAGS_021b790c) &= ~1;
-                    SetByte0xbeShiftPrev((Bytes02033b88*)hero, 0);
+                    GameObject_ForceMotionState((Bytes02033b88*)hero, 0);
                 }
                 unsigned char id = GameState_GetProtagonistIndex(gs);
                 func_ov017_021cedf4(id, 1, 0);
                 func_ov017_021c9e00(id, 0, 0, 1);
             }
         }
-        func_ov017_02191108(res, 1, 1, 1, 1);
+        Party_ReformLine(res, 1, 1, 1, 1);
         if (obj != NULL) {
             GameObject_EnableControl(obj);
         }
         unsigned char* zone = Zone3D_GetInstance();
         if (self->flags & 0x400) {
             BackgroundLoader* loader = BackgroundLoader::GetInstance();
-            ((Zone3D*)zone)->SwitchZone_0201383c(*(unsigned short*)zone, 0);
+            ((Zone3D*)zone)->SwitchZone(*(unsigned short*)zone, 0);
             while (*(int*)(zone + SCENE_ZONE_LOCKS_021b790c) != 0) {
                 loader->RemoveAllLocks();
-                func_02015438(zone);
+                Zone3D_Update(zone);
             }
         }
-        func_0205859c(func_02057924());
-        var27[SCENE_ZONE_FLAG_021b790c] &= ~1;
-        int var29 = func_020100f8((char*)var0);
-        switch ((*(Struct_ov017_021b790c_7**)(var27 + 8))->unknown_c_5_) {
+        ResetBattleEncounterState0205859c(func_02057924());
+        zone[SCENE_ZONE_FLAG_021b790c] &= ~1;
+        int flagObj = GameState_GetFollowCamera((char*)gs);
+        switch ((*(ZoneInfo021b790c**)(zone + 8))->mode) {
         case 0:
             func_020a27cc((Struct_020a27cc*)var29);
             break;
@@ -401,16 +401,16 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
                 SetMainBrightness((GameResources*)var1, 0, 0x1e);
             }
         }
-        func_ov017_021c98f4(*(unsigned short*)((char*)var0->GetUnknownGameObject() + SCENE_COMBATANT_ID_021b790c), 0);
-        func_ov017_021b6f9c(arg0);
-        arg0->unknown_1_ = 1;
-    } else if (var6 == 2) {
-        unsigned short var31 = arg0->unknown_6b8_;
-        if (arg0->unknown_6b8_ < 500) {
-            arg0->unknown_6b8_ += var0->GetEffectiveDeltaTime();
+        SetFieldForMatchingCombatant_021c98f4(*(unsigned short*)((char*)gs->GetLeader() + SCENE_COMBATANT_ID_021b790c), 0);
+        func_ov017_021b6f9c(self);
+        self->done = 1;
+    } else if (state == 2) {
+        unsigned short prev = self->timer;
+        if (self->timer < 500) {
+            self->timer += gs->GetEffectiveDeltaTime();
         }
         if (prev < 500 && self->timer >= 500) {
-            GameObject* unk = gs->GetUnknownGameObject();
+            GameObject* unk = gs->GetLeader();
             void* reset = TextQueue_GetInstance();
 #if defined(jpn)
             char var34[0x64];
@@ -426,7 +426,7 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
             __clear(name, sizeof(name));
             if (unk != NULL) {
                 Obj021b790c who;
-                InitObjFromCombatant020e4c74(&who, gs->GetUnknownGameObject());
+                InitObjFromCombatant020e4c74(&who, gs->GetLeader());
                 ctrl->obj = &who;
                 sprintf(name, (const char*)StandardStrings_Get(0x20));
                 MessageSystem_FormatText(ctrl, 0xc, name, text, 0xe3, 0, 1);
@@ -515,11 +515,11 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
                     sprintf(text, data_ov017_021d8395, *(char**)((char*)m + 0x134));
                 }
             } else {
-                GameObject* var47 = var0->GetPartyMemberByIndex(var43);
-                if (var47 != NULL) {
-                    GameObject* var48 = var0->GetPartyMemberByIndex(func_02039888(var47));
-                    if (var48 != NULL) {
-                        sprintf(var45, data_ov017_021d83c0, *(char**)((char*)var48 + 0x134));
+                GameObject* m = gs->GetPartyMemberByIndex(member);
+                if (m != NULL) {
+                    GameObject* m2 = gs->GetPartyMemberByIndex(GameObject_GetLineLeader(m));
+                    if (m2 != NULL) {
+                        sprintf(text, data_ov017_021d83c0, *(char**)((char*)m2 + 0x134));
                     }
                 }
             }
@@ -537,7 +537,7 @@ extern "C" ARM void FieldTask_Battle(BattleScene021b790c* self, ListHead02046b60
             } else {
                 GameObject* m = gs->GetPartyMemberByIndex(member);
                 if (m != NULL) {
-                    GameObject* m2 = gs->GetPartyMemberByIndex(GetSignedByte0x1ca_02039888(m));
+                    GameObject* m2 = gs->GetPartyMemberByIndex(GameObject_GetLineLeader(m));
                     if (m2 != NULL) {
                         NameText_InitFromPartyMember(&who, m2->obj3D_.actorIndex_);
                         c->obj = &who;

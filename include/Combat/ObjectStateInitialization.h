@@ -54,5 +54,5 @@ struct Struct_02032e58 {
 };
 
 
-extern "C" void func_02032fb8(Struct_02032fb8 *arg0);
-extern "C" void func_02032e58(void *arg0);
+void ClearFourHalfwords(Struct02032fb8 *value);
+extern "C" void GameObject_Initialize(void *receiver);

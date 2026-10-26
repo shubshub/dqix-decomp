@@ -21,11 +21,11 @@ extern "C" void PartyMember_WriteRecord(void* field150, void* b);
 extern "C" void func_02082828(void* field150);
 void InvalidateField0_020545ac(short* obj);
 extern "C" void func_ov017_02190264(int val, int a);
-extern "C" void func_ov017_02191108(int, int, int, int, int);
+extern "C" void Party_ReformLine(int, int, int, int, int);
 extern "C" void func_ov017_02191234(int a);
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
-extern "C" int func_0202c508(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 void EnqueueEventTag9_021cc68c(int a);
 
 // USA: func_ov017_021b6d60  (semantic: ProcessCombatantFieldChain_021b6d60)
@@ -52,14 +52,14 @@ extern "C" ARM int func_ov017_021b6d60(int a, void* b) {
         InvalidateField0_020545ac(f154);
     }
     func_ov017_02190264(val, a);
-    func_ov017_02191108(val, 1, 1, 1, 1);
+    Party_ReformLine(val, 1, 1, 1, 1);
     func_ov017_02191234(val);
     struct Entry021b6d60* arr = (struct Entry021b6d60*)(((char*)val + RegionOffset35c) + 0x4000);
     arr += a;
     arr->b0 = 0;
-    void* search = func_0202ae18();
-    if (CheckField0NonZero_0202b7d8((int*)search)) {
-        if (func_0202c508(search)) {
+    void* search = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)search)) {
+        if (LinkSession_IsHostOrSolo(search)) {
             EnqueueEventTag9_021cc68c(a);
         }
     }

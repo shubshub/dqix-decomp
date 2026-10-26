@@ -56,7 +56,7 @@ struct Struct_ov017_021a9bf8 {
     char unknown_26f_;
     unsigned short unknown_270_;
 };
-extern "C" unsigned char* func_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 extern "C" int func_ov017_021959b4();
 void Something_021a9f58(int);
 void ClearIntAt0x23c_020a27b8(unsigned char*);
@@ -89,12 +89,12 @@ extern const char data_ov017_021d782b[];
 // Overlay 17, originally func_ov017_021a9bf8 (USA/EUR 0x021a9bf8, JPN 0x021aa43c)
 extern "C" ARM void FieldTask_AcquireTreasureMap(MapTask021a9bf8* self) {
     GameState* state = GameState::GetInstance();
-    unsigned char* field = GetFieldIfFlag4_020100f8((char*)state);
+    unsigned char* field = GameState_GetFollowCamera((char*)state);
     MapHistory021a9bf8 history;
     Src02011818 names;
     unsigned char nodes[0x34];
     if (func_ov017_021959b4()) { Something_021a9f58((int)self); return; }
-    GameObject* object = state->GetUnknownGameObject();
+    GameObject* object = state->GetLeader();
     if (!object) { self->complete = 1; return; }
     if (self->stage == 0) {
         FontBankLoader* global = FontBankLoader_GetInstance();
@@ -110,7 +110,7 @@ extern "C" ARM void FieldTask_AcquireTreasureMap(MapTask021a9bf8* self) {
         char* window = MessageSystem_GetInstance();
         char* text = (*reinterpret_cast<char**>(window + TextOffset));
 #if defined(jpn)
-        char* protagonistName = state->GetUnknownGameObject()->baseStats_->name;
+        char* protagonistName = state->GetLeader()->baseStats_->name;
         sprintf(text, data_ov017_021d7c96, protagonistName, self->description);
 #else
         MessageSystem_SetStringArgument((Obj02046574*)window, 1, self->description);
@@ -149,7 +149,7 @@ extern "C" ARM void FieldTask_AcquireTreasureMap(MapTask021a9bf8* self) {
         if ((*reinterpret_cast<int*>(window + BusyOffset))) return;
         char* text = (*reinterpret_cast<char**>(window + TextOffset));
 #if defined(jpn)
-        char* protagonistName = state->GetUnknownGameObject()->baseStats_->name;
+        char* protagonistName = state->GetLeader()->baseStats_->name;
         sprintf(text, data_ov017_021d7cd1, self->description, protagonistName, self->description);
 #else
         MessageSystem_SetStringArgument((Obj02046574*)window, 0, self->description);
@@ -201,7 +201,7 @@ extern "C" ARM void FieldTask_AcquireTreasureMap(MapTask021a9bf8* self) {
         self->stage = 5;
     }
     if (self->stage == 5) {
-        GameObject_EnableControl(state->GetUnknownGameObject());
+        GameObject_EnableControl(state->GetLeader());
         FieldTask_EndAcquireTreasureMap(self);
     }
 }

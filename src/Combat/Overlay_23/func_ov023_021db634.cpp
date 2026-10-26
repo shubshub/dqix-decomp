@@ -102,7 +102,7 @@ int BuildBitmask0206e384(unsigned char* flags);
 int GetShortFromTable0206e3d4(int flags, int index);
 unsigned int ParseCodeLetter_021db564(char* text);
 void CopyIntAndByte_021dbb20(struct IntBytePair021dbb20* dst, struct IntBytePair021dbb20* src);
-int GetField5cb0Value_0201079c(char* gameState);
+int GameState_GetStoryChapter(char* gameState);
 void UpdateEntryAndReset_021db45c(void* layout, struct StructAcAe021db45c* canvas, int id, short* x, short* y);
 extern "C" void func_ov023_021e257c(Layout_021db634* layout);
 void CreateAndSetFields8A_021db544(void* layout, void* id, int x, int y);
@@ -235,14 +235,14 @@ extern "C" ARM void func_ov023_021db634(Struct_ov023_021db634_3* arg0, Struct_ov
                 break;
         }
     }
-    if (func_0201079c((char*)GameState::GetInstance()) == 1)
-        var13 = 0;
-    var8 = var13;
-    if (var13 == 4)
-        var8 = 3;
-    var9 = var8;
-    var9 -= 1;
-    for (var10 = 0; var10 < var9; var10++)
+    if (GameState_GetStoryChapter((char*)GameState::GetInstance()) == 1)
+        count = 0;
+    shown = count;
+    if (count == 4)
+        shown = 3;
+    last = shown;
+    last -= 1;
+    for (i2 = 0; i2 < last; i2++)
     {
         for (var11 = 0; var11 < var9 - var10; var11++)
         {

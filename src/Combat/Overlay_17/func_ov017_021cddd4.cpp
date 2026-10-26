@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" void* func_ov017_021b8478(void* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" void* func_ov017_021b8478(void* obj);
 
 struct Struct_ov017_021bd35c { unsigned short unknown_0_, unknown_2_, unknown_4_, unknown_6_, unknown_8_; };
 struct Struct_ov017_021bd35c_2 {
@@ -51,31 +51,31 @@ struct Struct_ov017_021cddd4_2 {
 };
 
 // USA: func_ov017_021cddd4
-extern "C" ARM void func_ov017_021cddd4(int arg0, Struct_ov017_021cddd4_3* arg1, int arg2, Struct_ov017_021cddd4_2* arg3, Struct_0202c1a4* arg4) {
-    Struct_ov017_021cddd4* var0 = (Struct_ov017_021cddd4*)func_ov017_021b8478(arg3->unknown_3718_);
-    Struct_ov017_021bd35c_2* var1 = arg3->unknown_3734_;
-    if (arg0 == 0) {
-        if (arg1->unknown_10_ == func_0202c1a4(arg4)) {
-            Struct_ov017_021bd35c var2;
-            var2.unknown_0_ = arg1->unknown_4_;
-            var2.unknown_2_ = arg1->unknown_8_;
-            var2.unknown_4_ = arg1->unknown_a_;
-            var2.unknown_8_ = arg1->unknown_c_;
-            var2.unknown_6_ = arg1->unknown_e_;
-            func_ov017_021bd35c(var1, &var2);
-            Struct_ov017_021d6ce8 var3 = data_ov017_021d6ce8;
-            func_ov017_021bb9ec(var1, var3.unknown_0_[arg1->unknown_6_]);
+extern "C" ARM void func_ov017_021cddd4(int p0, Evt021cddd4* evt, int unused, Base021cddd4* base, SearchStruct0202c1a4* search) {
+    Entry021cddd4* entry = (Entry021cddd4*)func_ov017_021b8478(base->table);
+    S021bd35c* obj = base->obj;
+    if (p0 == 0) {
+        if (evt->field_0x10 == LinkSession_GetOwnSlot(search)) {
+            Src021bd35c src;
+            src.h0 = evt->field_0x4;
+            src.h2 = evt->field_0x8;
+            src.h4 = evt->field_0xa;
+            src.h8 = evt->field_0xc;
+            src.h6 = evt->field_0xe;
+            CopyFiveHalfwords_021bd35c(obj, &src);
+            ByteTable3 tbl = data_ov017_021d6ce8;
+            SetFieldA_021bb9ec(obj, tbl.v[evt->field_0x6]);
         }
-    } else if (func_0202c1a4(arg4) == 0) {
-        int var4 = var0->unknown_c_;
-        Struct_ov017_021bd35c_2* var5 = arg3->unknown_3734_;
-        if (var4 == arg1->unknown_4_) {
-            func_ov017_021cdd70(arg1->unknown_4_, 0, 0, 0, 0, 0, arg0);
-        } else if (var4 == 0x13) {
-            func_ov017_021cdd70(arg1->unknown_4_, 1, 0x71e8, 0xffff, 0x199, 0x71e8, arg0);
-        } else if (func_ov017_021bd3a4((Struct_ov017_0218e674*)var5)) {
-            Struct_ov017_021bd35c_2* var6 = arg3->unknown_3734_;
-            func_ov017_021cdd70(arg1->unknown_4_, 1, var6->unknown_16_, var6->unknown_52_, var6->unknown_1a_, var6->unknown_18_, arg0);
+    } else if (LinkSession_GetOwnSlot(search) == 0) {
+        int kind = entry->field_0xc;
+        S021bd35c* cur = base->obj;
+        if (kind == evt->field_0x4) {
+            EnqueueEventTag107_021cdd70(evt->field_0x4, 0, 0, 0, 0, 0, p0);
+        } else if (kind == 0x13) {
+            EnqueueEventTag107_021cdd70(evt->field_0x4, 1, 0x71e8, 0xffff, 0x199, 0x71e8, p0);
+        } else if (HasFlag3orFlag2And9a_021bd3a4((Obj_021bd3a4*)cur)) {
+            S021bd35c* o = base->obj;
+            EnqueueEventTag107_021cdd70(evt->field_0x4, 1, o->field_0x16, o->field_0x52, o->field_0x1a, o->field_0x18, p0);
         } else {
             func_ov017_021cdd70(arg1->unknown_4_, 2, 0, 0, 0, 0, arg0);
         }

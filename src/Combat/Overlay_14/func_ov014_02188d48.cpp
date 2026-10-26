@@ -47,7 +47,7 @@ extern "C" char* Scenario_GetInstance();
 bool Scenario_TestFlag(int, unsigned char*, int flag);
 extern "C" void* Zone3D_GetInstance();
 char* AllocateStringCopy020da150(SafeAllocator* allocator, const char* string);
-bool IsInRange0201b588(int zoneID);
+bool ZoneId_IsGrotto(int zoneID);
 bool LookupBitFromValueRange0201bb78(Obj_0201bb78* zoneStruct, unsigned int zoneID);
 
 // USA: func_ov014_02188d48
@@ -153,11 +153,11 @@ extern "C" ARM bool func_ov014_02188d48(Struct_ov014_02188bfc* arg0, SafeAllocat
                     var20->unknown_2_1_ = var21;
                     *var25 = func_020da150(arg1, func_ov014_02188ba0(&var2, *var25, NULL));
 
-                    var28 = var22 == 0;
-                    var24 = var19;
-                    for (int var29 = 0; var29 < var22; var29++, var24++) {
-                        var28 = (func_0201b588(*var24) && var6) || func_0201bb78((Struct_0201bb78*)var7, *var24);
-                        if (var28)
+                    known = count == 0;
+                    zoneID = newIndices;
+                    for (int j = 0; j < count; j++, zoneID++) {
+                        known = (ZoneId_IsGrotto(*zoneID) && grottosKnown) || LookupBitFromValueRange0201bb78((Obj_0201bb78*)zoneStruct, *zoneID);
+                        if (known)
                             break;
                     }
                     var20->unknown_2_0_ = var28;

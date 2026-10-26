@@ -2,4 +2,4 @@
 
 class GameState;
 
-extern "C" int func_020117f0(GameState *arg0);
+int GameState_IsInGrotto(GameState *gameState);

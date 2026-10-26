@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Combat/Overlay_1/EventArgs.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c9400 {
     unsigned char unknown_0_;
@@ -18,16 +18,16 @@ struct Struct_ov017_021c9400 {
 };
 
 // USA: func_ov017_021c9400
-extern "C" ARM void func_ov017_021c9400(int arg0, int arg1, int arg2, Struct_ov001_02158efc arg3, Struct_ov001_02158efc arg4, int arg5) {
-    void* var0 = func_0202ae24();
-    Struct_ov017_021c9400 var1;
-    var1.unknown_0_ = 0x85;
-    var1.unknown_4_ = arg0;
-    var1.unknown_7_0_ = (unsigned char)arg1;
-    var1.unknown_7_4_ = (signed char)arg5;
-    var1.unknown_c_ = arg3.unknown_0_;
-    var1.unknown_a_ = arg3.unknown_4_ >> 4;
-    var1.unknown_10_ = arg3.unknown_8_;
-    var1.unknown_8_ = arg4.unknown_4_;
-    func_0205e330(var0, &var1, 0);
+extern "C" ARM void func_ov017_021c9400(int id, int nibble, int unused, EventVec3 pos, EventVec3 rot, int mode) {
+    void* p = LinkMessageQueue_GetInstance();
+    LocalEvt021c9400 evt;
+    evt.tag = 0x85;
+    evt.field4 = id;
+    evt.field7lo = (unsigned char)nibble;
+    evt.field7 = (signed char)mode;
+    evt.fieldC = pos.a;
+    evt.fieldA = pos.b >> 4;
+    evt.field10 = pos.c;
+    evt.field8 = rot.b;
+    func_0205e330(p, &evt, 0);
 }

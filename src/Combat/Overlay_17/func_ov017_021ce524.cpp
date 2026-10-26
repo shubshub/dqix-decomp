@@ -2,8 +2,8 @@
 #include "GameState/GameState.h"
 #include "Combat/Main/BattleList.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021ce524_2 {
     char unknown_0_[9];
@@ -60,12 +60,12 @@ struct Struct_ov017_021ce524 {
 };
 
 // USA: func_ov017_021ce524
-extern "C" ARM void func_ov017_021ce524(short arg0) {
-    Struct_ov017_021ce524 var0;
-    void* var1 = func_0202ae24();
-    var0.unknown_0_ = 0x29;
-    Struct_ov017_021ce524_6* var2 = &var0.unknown_4_;
-    var2->unknown_0_ = arg0;
+extern "C" ARM void func_ov017_021ce524(short combatantId) {
+    LocalEvt021ce524 buf;
+    void* p = LinkMessageQueue_GetInstance();
+    buf.tag = 0x29;
+    Sub021ce524* s = &buf.sub;
+    s->combatantId = combatantId;
 
     GameObject* var3 = func_0200ff1c(GameState::GetInstance(), arg0);
     if (var3 == NULL) return;

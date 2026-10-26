@@ -80,8 +80,8 @@ struct Struct_ov017_021bbfc4_3 { char unknown_0_[0x5a4c]; unsigned char unknown_
 struct Struct_ov017_021bbfc4_3 { char unknown_0_[0x5cac]; unsigned char unknown_5cac_; char unknown_5cad_[0x1547]; int unknown_71f4_; };
 #endif
 int IsSubBrightnessTransitionActive(GameResources*);
-extern "C" int* func_0202ae18();
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+extern "C" int* LinkSession_GetInstance();
+unsigned char* GameState_GetFollowCamera(char*);
 extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void func_020531f0(GameObject*);
 extern "C" void func_ov017_021bb27c(Struct_ov017_021bbfc4_5*);
@@ -89,8 +89,8 @@ extern "C" void* GetMainBG1CharacterBase();
 extern "C" void* GetMainBG1ScreenBase();
 extern "C" int func_0208dc00(Struct_02013fb4*, int, int);
 void SetBrightness(GameResources*, int, int);
-Ticket021bbfc4* GetField0x3f8Address_0200fd0c(GameState*);
-void SetFlag0x9c6_020213fc(SetFlagStruct*, int);
+Ticket021bbfc4* GameState_GetZoneTransition(GameState*);
+void MapDisplay_SetHoldSubScreenDark(SetFlagStruct*, int);
 void InitStruct02070378(char*);
 int RunScriptAndAdjustObj02071488(StreamHeader*, int, int, Obj02071488*);
 unsigned int* GlobalFlags_GetInstance();
@@ -98,18 +98,18 @@ void FlagWord_SetBits(unsigned int*, unsigned int);
 extern "C" void* Scenario_GetInstance();
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 int Scenario_TestFlag(int, unsigned char*, int);
-ColorHolder0204bd7c* GetPtrField0x114_02033fa0(void*);
+ColorHolder0204bd7c* GameObject_GetFloorAttribute(void*);
 int ConvertColorToDecimalOffset30000(ColorHolder0204bd7c*);
-extern "C" int func_0202c540(int*);
-extern "C" int func_0201079c(char*);
-extern "C" int func_020107d0(char*);
-extern "C" int func_02010804(char*);
+extern "C" int LinkSession_IsGuest(int*);
+int GameState_GetStoryChapter(char*);
+int GameState_GetStoryPart(char*);
+int GameState_GetStoryStep(char*);
 TimeOfDay ConvertToTimeOfDay(float);
-extern "C" void func_02010774(char*, int);
-extern "C" void func_020107a8(char*, int);
-extern "C" void func_020107dc(char*, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_0202c508(int*);
+void GameState_SetStoryChapter(char*, int);
+void GameState_SetStoryPart(char*, int);
+void GameState_SetStoryStep(char*, int);
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsHostOrSolo(int*);
 extern "C" void func_ov017_021d0924(int, int, int, unsigned short);
 extern "C" void func_ov017_021bc6e0(Struct_ov017_021bbfc4_5*, int, int);
 extern "C" int func_0209c3ac(char*);
@@ -122,9 +122,9 @@ extern "C" ARM int func_ov017_021bbfc4(LoadEvent021bbfc4* self) {
     GameState* game = GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GameResources* resources = GetGameResources();
-    int* search = func_0202ae18();
-    GameObject* original = game->GetUnknownGameObject();
-    GetFieldIfFlag4_020100f8((char*)game);
+    int* search = LinkSession_GetInstance();
+    GameObject* original = game->GetLeader();
+    GameState_GetFollowCamera((char*)game);
     Zone3D* zone = Zone3D_GetInstance();
     if (IsSubBrightnessTransitionActive(resources)) return self->next;
     for (int i = 0; i < 4; ++i) {
@@ -157,19 +157,19 @@ extern "C" ARM int func_ov017_021bbfc4(LoadEvent021bbfc4* self) {
             arg0->unknown_1_ = 1;
             return arg0->unknown_a_;
         }
-        memcpy(&arg0->unknown_54_, &arg0->unknown_a0_.unknown_1c_, 12);
-        arg0->unknown_60_ = arg0->unknown_a0_.unknown_28_;
-        arg0->unknown_c_.unknown_5_ = 1;
-        if (arg0->unknown_a0_.unknown_2a_ != var5->currentZoneID_) {
-            var1->RemoveTask(arg0->unknown_74_);
-            Struct_ov017_021bbfc4_2* var14 = func_0200fd0c(var0);
-            func_020213fc((Struct_020213fc*)var2->unknown_ptr_36d0, 1);
-            func_02070378((char*)var14);
-            var14->unknown_0_ = arg0->unknown_a0_.unknown_2a_;
-            var14->unknown_2_ = 1;
-            func_ov017_021bb27c(arg0);
-            arg0->unknown_1_ = 1;
-            return arg0->unknown_a_;
+        memcpy(&self->position, &self->source.position, 12);
+        self->rotation = self->source.rotation;
+        self->script.moved = 1;
+        if (self->source.zone != zone->currentZoneID_) {
+            loader->RemoveTask(self->task);
+            Ticket021bbfc4* ticket = GameState_GetZoneTransition(game);
+            MapDisplay_SetHoldSubScreenDark((SetFlagStruct*)resources->unknown_ptr_36d0, 1);
+            InitStruct02070378((char*)ticket);
+            ticket->zone = self->source.zone;
+            ticket->pending = 1;
+            func_ov017_021bb27c(self);
+            self->inactive = 1;
+            return self->next;
         }
     } else if (!func_02071488((Struct_02013fb4*)var12, var13, arg0->unknown_8_, &arg0->unknown_c_)) {
         SetBrightness(var2, 0, 0x28);
@@ -194,70 +194,70 @@ extern "C" ARM int func_ov017_021bbfc4(LoadEvent021bbfc4* self) {
         ((GameView021bbfc4*)game)->pending = 0;
         func_ov017_021bb27c(self);
         self->inactive = 1;
-        SetFlag0x9c6_020213fc((SetFlagStruct*)resources->unknown_ptr_36d0, 0);
+        MapDisplay_SetHoldSubScreenDark((SetFlagStruct*)resources->unknown_ptr_36d0, 0);
         return self->next;
     }
-    var15 = 0;
-    var16 = 0;
-    var17 = 0;
-    if (arg0->unknown_98_) var15 = 1;
-    if (arg0->unknown_50_ & 0x80) arg0->unknown_c_.unknown_e_ = func_0204bd7c(func_02033fa0(var4));
-    if (arg0->unknown_c_.unknown_e_ != var5->currentZoneID_) var15 = 1;
-    if (func_0202c540(var3) && arg0->unknown_178_0_) {
-        if (arg0->unknown_179_ != func_0201079c((char*)var0) || arg0->unknown_17a_ != func_020107d0((char*)var0) || arg0->unknown_17b_ != func_02010804((char*)var0) || ConvertToTimeOfDay(arg0->unknown_17c_) != var0->GetTimeOfDay()) {
-            func_02010774((char*)var0, arg0->unknown_179_);
-            func_020107a8((char*)var0, arg0->unknown_17a_);
-            func_020107dc((char*)var0, arg0->unknown_17b_);
-            var0->SetDayTimer(arg0->unknown_17c_);
-            LightingManager* var20 = LightingManager::GetInstance();
-            var20->dayNightTimer_ = var0->GetDayTimer();
-            var20->timeOfDayIndex_ = var0->GetTimeOfDay();
-            if (!var15) var17 = 1;
-            var15 = 1;
-            var16 = 1;
+    transition = 0;
+    restart = 0;
+    reposition = 0;
+    if (self->reset) transition = 1;
+    if (self->flags & 0x80) self->script.zone = ConvertColorToDecimalOffset30000(GameObject_GetFloorAttribute(original));
+    if (self->script.zone != zone->currentZoneID_) transition = 1;
+    if (LinkSession_IsGuest(search) && self->hasTime) {
+        if (self->chapter != GameState_GetStoryChapter((char*)game) || self->entry != GameState_GetStoryPart((char*)game) || self->slot != GameState_GetStoryStep((char*)game) || ConvertToTimeOfDay(self->dayTimer) != game->GetTimeOfDay()) {
+            GameState_SetStoryChapter((char*)game, self->chapter);
+            GameState_SetStoryPart((char*)game, self->entry);
+            GameState_SetStoryStep((char*)game, self->slot);
+            game->SetDayTimer(self->dayTimer);
+            LightingManager* lighting = LightingManager::GetInstance();
+            lighting->dayNightTimer_ = game->GetDayTimer();
+            lighting->timeOfDayIndex_ = game->GetTimeOfDay();
+            if (!transition) reposition = 1;
+            transition = 1;
+            restart = 1;
         }
     }
-    int var21 = func_020107d0((char*)var0);
-    int var22 = func_0201079c((char*)var0);
-    int var23 = var22 * 1000 + var21;
-    unsigned int var24 = arg0->unknown_c_.unknown_0_;
-    unsigned int var25 = arg0->unknown_c_.unknown_1_;
-    int var26 = var24 * 1000 + var25;
-    if (!var15 && !arg0->unknown_c_.unknown_8_ && var24 <= 19 && (var24 && var25) && var23 < var26) {
-        func_02010774((char*)var0, var24);
-        func_020107a8((char*)var0, arg0->unknown_c_.unknown_1_);
-        if (func_0202b7d8(var3)) {
-            if (func_0202c540(var3)) { var17 = var16 = 1; }
+    int entry = GameState_GetStoryPart((char*)game);
+    int chapter = GameState_GetStoryChapter((char*)game);
+    int current = chapter * 1000 + entry;
+    unsigned int nextChapter = self->script.chapter;
+    unsigned int nextEntry = self->script.entry;
+    int next = nextChapter * 1000 + nextEntry;
+    if (!transition && !self->script.skip && nextChapter <= 19 && (nextChapter && nextEntry) && current < next) {
+        GameState_SetStoryChapter((char*)game, nextChapter);
+        GameState_SetStoryPart((char*)game, self->script.entry);
+        if (LinkSession_IsActive(search)) {
+            if (LinkSession_IsGuest(search)) { reposition = restart = 1; }
         }
-        if (func_0202c508(var3)) {
-            int var27 = func_0201079c((char*)var0);
-            int var28 = func_020107d0((char*)var0);
-            int var29 = func_02010804((char*)var0);
-            func_ov017_021d0924(2, var19->unknown_332_, 0, (unsigned short)((var27 << 10) | (var28 << 5) | var29));
+        if (LinkSession_IsHostOrSolo(search)) {
+            int chapter = GameState_GetStoryChapter((char*)game);
+            int entry = GameState_GetStoryPart((char*)game);
+            int slot = GameState_GetStoryStep((char*)game);
+            func_ov017_021d0924(2, flags->index, 0, (unsigned short)((chapter << 10) | (entry << 5) | slot));
         }
         var15 = 1;
     }
-    if (arg0->unknown_fd_ || ((Struct_ov017_021bbfc4_3*)var0)->unknown_5cac_) var16 = 1;
-    if (var15) {
-        Struct_ov017_021bbfc4_2* var30 = func_0200fd0c(var0);
-        func_02070378((char*)var30);
-        var30->unknown_0_ = arg0->unknown_c_.unknown_e_;
-        var30->unknown_20_ = arg0->unknown_8_;
-        var30->unknown_2_ = 1;
-        if (var17) {
-            GameObject* var31 = var0->GetUnknownGameObject();
-            var30->unknown_10_ = var31->obj3D_.position_;
-            var30->unknown_1c_ = var31->obj3D_.rotation_.y;
-            var30->unknown_7_ = 1;
+    if (self->restart || ((GameView021bbfc4*)game)->restart) restart = 1;
+    if (transition) {
+        Ticket021bbfc4* ticket = GameState_GetZoneTransition(game);
+        InitStruct02070378((char*)ticket);
+        ticket->zone = self->script.zone;
+        ticket->parameter = self->parameter;
+        ticket->pending = 1;
+        if (reposition) {
+            GameObject* player = game->GetLeader();
+            ticket->position = player->obj3D_.position_;
+            ticket->rotation = player->obj3D_.rotation_.y;
+            ticket->positioned = 1;
         }
-        if (TestFlags00(var2, 0x1000)) var30->unknown_6e_ |= 9;
-        var30->unknown_60_ = var16;
-        func_020213fc((Struct_020213fc*)var2->unknown_ptr_36d0, 1);
-        func_ov017_021bb27c(arg0);
-        arg0->unknown_1_ = 1;
-        return arg0->unknown_a_;
+        if (TestFlags00(resources, 0x1000)) ticket->flags |= 9;
+        ticket->restart = restart;
+        MapDisplay_SetHoldSubScreenDark((SetFlagStruct*)resources->unknown_ptr_36d0, 1);
+        func_ov017_021bb27c(self);
+        self->inactive = 1;
+        return self->next;
     }
-    if (CheckField0NonZero_0202b7d8(search) && self->script.request && self->searchIndex < 0 && func_0202c508(search)) func_ov017_021bc6e0(self, -1, self->flags);
+    if (LinkSession_IsActive(search) && self->script.request && self->searchIndex < 0 && LinkSession_IsHostOrSolo(search)) func_ov017_021bc6e0(self, -1, self->flags);
     self->status = GetField0xcd0209c3ac(g_bgmPlayer);
     if (self->script.kind == 3) func_0209c2e0(g_bgmPlayer, 0, 0);
     if (((self->flags & 1) || (self->flags & 4)) && !self->restart) {

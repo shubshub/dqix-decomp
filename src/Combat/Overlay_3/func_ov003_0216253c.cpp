@@ -73,16 +73,16 @@ void SePlayer_Play(SePlayer *, int, int);
 struct Cont0207fe44;
 void CallFunc0204c804OverAllElems(Cont0207fe44*);
 Elem * GetElementAtIndex_02160bd0_02160bd0(void*, int);
-extern "C" int *func_0202ae18();
-extern "C" int func_0202b7d8(int *);
-extern "C" int func_0202c508(int *);
-extern "C" void func_ov017_02195540(unsigned char *);
-extern "C" int func_ov003_02160b84(void *);
-extern "C" int func_ov003_02160a68(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_021612c0(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_02161344(Struct_ov003_02154af4_3 *);
-extern "C" void func_ov003_02161480(Struct_ov003_02154af4_3 *);
-extern "C" int func_ov003_021669f0(Struct_ov003_02154af4_3 *);
+extern "C" int *LinkSession_GetInstance();
+int LinkSession_IsActive(int *);
+extern "C" int LinkSession_IsHostOrSolo(int *);
+void ClearFlag320_02195540(unsigned char *);
+int CountValidCombatantsMinusField_02160b84(void *);
+extern "C" int func_ov003_02160a68(Scene *);
+extern "C" void func_ov003_021612c0(Scene *);
+extern "C" int func_ov003_02161344(Scene *);
+extern "C" void func_ov003_02161480(Scene *);
+extern "C" int func_ov003_021669f0(Scene *);
 
 // USA: func_ov003_0216253c
 extern "C" ARM void func_ov003_0216253c(Scene *self) {
@@ -174,8 +174,8 @@ extern "C" ARM void func_ov003_0216253c(Scene *self) {
             self->flags |= 0x80000;
             self->flags |= 8;
             unsigned char *g = (unsigned char *) GetGameResources();
-            int *p           = func_0202ae18();
-            if (CheckField0NonZero_0202b7d8(p) != 0 && func_0202c508(p) != 0) {
+            int *p           = LinkSession_GetInstance();
+            if (LinkSession_IsActive(p) != 0 && LinkSession_IsHostOrSolo(p) != 0) {
                 ClearFlag320_02195540(g);
             }
             int a = *((unsigned char *)GameState_GetParty(GameState::GetInstance()) + 0xf7c);

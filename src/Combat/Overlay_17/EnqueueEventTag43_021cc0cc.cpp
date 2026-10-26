@@ -2,11 +2,11 @@
 #include "GameState/GameState.h"
 #include "std_library_functions.h"
 
-extern "C" void* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
+extern "C" void* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
 
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 void* ResetBuffer02052a10(char* obj);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
@@ -23,14 +23,14 @@ struct LocalEvt021cc0cc {
 // USA: func_ov017_021cc0cc
 ARM void EnqueueEventTag43_021cc0cc(void) {
 	GameState* bs = GameState::GetInstance();
-	void* search = func_0202ae18();
-	void* p = GetData02100044_0202ae24();
+	void* search = LinkSession_GetInstance();
+	void* p = LinkMessageQueue_GetInstance();
 	GameObject* c = bs->GetProtagonist();
 	if (!c) return;
 
 	LocalEvt021cc0cc buf;
 	buf.tag = 0x2b;
-	buf.partySlot = GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)search);
+	buf.partySlot = LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)search);
 	buf.active = 1;
 	#if defined(jpn)
     const char* name = c->baseStats_->name;

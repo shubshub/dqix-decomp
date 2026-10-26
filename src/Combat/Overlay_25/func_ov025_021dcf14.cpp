@@ -86,28 +86,28 @@ struct Struct_02078398_2 {
 
 struct SePlayer;
 
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_0216df00(void* arg0, int arg1, int arg2, int arg3, float arg4);
-struct Struct_ov000_02163a7c;
-extern "C" void func_ov000_02163a7c(Struct_ov000_02163a7c*);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" void func_0202e694(void*, int*);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
+extern "C" void* __clear(void* dst, int count);
+extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
+extern "C" void func_ov000_0216df00(void* obj, int id, int b, int c, float scale);
+struct GatherObj02163a7c;
+void ApplyField41ToGatheredCombatants02163a7c(GatherObj02163a7c*);
+void* GetSlotPtr02160f20(void* obj);
+void Camera_SetOrbitVector(void*, int*);
+extern "C" void func_ov000_021626a0(void* obj, int a, int b);
 struct Vector3i;
 extern "C" void func_ov000_02167f10(void* obj);
 struct Obj02033874;
-void SetVecYFromValue02033874(Obj02033874*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
 void ResetFields_021de110(void* obj);
 struct Obj021eee48;
 struct Rec021eee48;
 void PushNodeFromFreeList_021eee48(Obj021eee48*, Rec021eee48*);
 struct Flags02033fcc;
-void SetFlag0x4At0xe0(Flags02033fcc*);
+void GameObject_PauseMovement(Flags02033fcc*);
 struct Flags02033fdc;
-void ClearFlag0x4At0xe0(Flags02033fdc*);
+void GameObject_ResumeMovement(Flags02033fdc*);
 struct Bytes02033b88;
-int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+int GameObject_ForceMotionState(Bytes02033b88*, int);
 struct TableEntry021dcf14* SearchBothTables02079e2c(char*, int);
 struct List021600f8;
 struct Node021dcf14* GetNodeAtIndex021600f8(List021600f8*, int);
@@ -116,7 +116,7 @@ struct First021dcf14* GetNodeAtIndex02160094(List02160094*, int);
 struct PackedFields_021d8bfc;
 void ForwardPackedFields_021d8bfc(void*, PackedFields_021d8bfc*);
 extern "C" int func_ov025_021ed444(void* obj, int id, int val2, int type, int val3, short val4, unsigned short val5);
-void StoreFields0x1e4And0x1e8IfNonZero_0202ea10(unsigned char*, int, int);
+void Camera_Shake(unsigned char*, int, int);
 void SetShortTriple0x6e44_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 void* FindNodeAtDepth0215fff4(void*, int, int);
@@ -194,15 +194,15 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
         return 0;
     }
 
-    if (arg0[Enum_ov025_021dcf14_28235] == 1) {
-        func_ov000_0216d370(arg0 + Enum_ov025_021dcf14_3096, 1, 1, 1);
-        func_ov000_0216df00(arg0 + Enum_ov025_021dcf14_3096, var1->unknown_1a_, 0, 0, 1.8f);
-        func_ov000_02163a7c((Struct_ov000_02163a7c*)arg0);
-        void* var6 = func_ov000_02160f20(arg0);
-        if (*(unsigned short*)var6 == 0x11b || *(unsigned short*)var6 == 0x116) {
-            Vector3fix var7 = *(Vector3fix*)(arg0 + Enum_ov025_021dcf14_3208);
-            var7.z = 0x847a;
-            func_0202e694(arg0 + Enum_ov025_021dcf14_3096, (int*)&var7);
+    if (sl[Field6e4b] == 1) {
+        func_ov000_0216d370(sl + CameraBase, 1, 1, 1);
+        func_ov000_0216df00(sl + CameraBase, cur->targetId, 0, 0, 1.8f);
+        ApplyField41ToGatheredCombatants02163a7c((GatherObj02163a7c*)sl);
+        void* slot = GetSlotPtr02160f20(sl);
+        if (*(unsigned short*)slot == 0x11b || *(unsigned short*)slot == 0x116) {
+            Vector3fix cam = *(Vector3fix*)(sl + CameraPosition);
+            cam.z = 0x847a;
+            Camera_SetOrbitVector(sl + CameraBase, (int*)&cam);
         }
         func_ov000_021626a0(arg0, 4, 0);
         for (int var8 = 0; var8 < *(short*)(arg0 + Enum_ov025_021dcf14_28410); var8++) {
@@ -276,7 +276,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                 Vector3fix_Normalize(&dir, &dir);
                 int angle = fix32_Atan2(dir.x, dir.z);
                 objs[i]->obj3D_.position_ = look;
-                SetVecYFromValue02033874((Obj02033874*)objs[i], angle);
+                GameObject_SnapFacing((Obj02033874*)objs[i], angle);
                 struct Rec021dcf14 rec;
                 ResetFields_021de110(&rec);
                 rec.f0 = 0;
@@ -285,7 +285,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                 rec.pos = dst;
                 PushNodeFromFreeList_021eee48((Obj021eee48*)(sl + PendingList), (Rec021eee48*)&rec);
                 objs[i]->obj3D_.SetAnimationByName(data_ov025_021ef460, 0);
-                SetFlag0x4At0xe0((Flags02033fcc*)objs[i]);
+                GameObject_PauseMovement((Flags02033fcc*)objs[i]);
             }
         }
 
@@ -301,9 +301,9 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
             if (var30 >= 1.8f) {
                 var30 = 1.8f;
             }
-            Vector3fix var31 = *(Vector3fix*)(arg0 + Enum_ov025_021dcf14_3208);
-            var31.z = (int)(4096.0f * (var31.z / 4096.0f * var30));
-            func_0202e694(arg0 + Enum_ov025_021dcf14_3096, (int*)&var31);
+            Vector3fix cam = *(Vector3fix*)(sl + CameraPosition);
+            cam.z = (int)(4096.0f * (cam.z / 4096.0f * scale));
+            Camera_SetOrbitVector(sl + CameraBase, (int*)&cam);
         }
         inline_ov025_021dcf14_2(arg0, 2, 0x9b);
     } else if (arg0[Enum_ov025_021dcf14_28235] == 2) {
@@ -328,9 +328,9 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                 if (var35 % 2 != 0) {
                     var36 = -0x1922;
                 }
-                int var37 = var2[var35]->obj3D_.rotation_.y;
-                func_02033874((Struct_02033834*)var2[var35], fix32ReduceAngle0To2Pi(var37 + var36));
-                func_02033b88((Struct_02010604*)var2[var35], 0);
+                int rot = objs[j]->obj3D_.rotation_.y;
+                GameObject_SnapFacing((Obj02033874*)objs[j], fix32ReduceAngle0To2Pi(rot + turn));
+                GameObject_ForceMotionState((Bytes02033b88*)objs[j], 0);
             }
             float var38 = 1.0f;
             if (var34 >= 0x1800) {
@@ -377,9 +377,9 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
         if (var44 < TIMER) {
             TIMER -= var44;
         } else {
-            GameObject* var45 = var0->GetCombatantByIndex(var1->unknown_18_);
-            if (var45) {
-                func_02033fdc((Struct_02033fdc*)var45);
+            GameObject* actor = battle->GetCombatantByIndex(cur->actorId);
+            if (actor) {
+                GameObject_ResumeMovement((Flags02033fdc*)actor);
             }
             void* var46 = func_ov000_02160f20(arg0);
             struct Struct_ov025_021dcf14_2* var47 = func_ov000_02160094((Struct_ov000_0215440c_2*)var46, 0);
@@ -424,7 +424,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                 arg0[Enum_ov025_021dcf14_30534] = var48->unknown_e_[0];
             }
             if (miss || crit) {
-                StoreFields0x1e4And0x1e8IfNonZero_0202ea10((unsigned char*)(sl + CameraBase), 0xcc, 0x1f4);
+                Camera_Shake((unsigned char*)(sl + CameraBase), 0xcc, 0x1f4);
                 SetShortTriple0x6e44_ov000_02163440(sl, 0x199, 0x1f4, 0x64);
                 if (crit) {
                     SePlayer_Play(&g_sePlayer, 0x43, 0);
@@ -561,7 +561,7 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
                         rec.pos = dst;
                         PushNodeFromFreeList_021eee48((Obj021eee48*)(sl + PendingList), (Rec021eee48*)&rec);
                         objs[i]->obj3D_.SetAnimationByName(data_ov025_021ef460, 0);
-                        SetFlag0x4At0xe0((Flags02033fcc*)objs[i]);
+                        GameObject_PauseMovement((Flags02033fcc*)objs[i]);
                     }
                 }
                 arg0[Enum_ov025_021dcf14_28238] = 0;
@@ -637,10 +637,10 @@ extern "C" ARM int func_ov025_021dcf14(unsigned char* arg0) {
             TIMER -= var89;
         } else {
             TIMER = 0;
-            for (int var90 = 0; var90 < arg0[Enum_ov025_021dcf14_28237]; var90++) {
-                GameObject* var91 = var0->GetCombatantByIndex(((struct Struct_ov025_021dcf14*)(arg0 + Enum_ov025_021dcf14_28240))[var90].unknown_18_);
-                if (var91) {
-                    func_02033fdc((Struct_02033fdc*)var91);
+            for (int i = 0; i < sl[Field6e4d]; i++) {
+                GameObject* c = battle->GetCombatantByIndex(((struct Entry021dcf14*)(sl + Field6e50))[i].actorId);
+                if (c) {
+                    GameObject_ResumeMovement((Flags02033fdc*)c);
                 }
                 ((struct Struct_ov025_021dcf14*)(arg0 + Enum_ov025_021dcf14_28240))[var90].unknown_18_ = -1;
                 ((struct Struct_ov025_021dcf14*)(arg0 + Enum_ov025_021dcf14_28240))[var90].unknown_1a_ = -1;
@@ -1048,16 +1048,16 @@ extern "C" ARM int func_ov025_021de124(unsigned char* arg0) {
             TIMER -= var61;
         } else {
             TIMER = 0;
-            for (int var62 = 0; var62 < 4; var62++) {
-                GameObject* var63 = var0->GetCombatantByIndex(((short*)(arg0 + Enum_ov025_021dcf14_28602))[var62]);
-                if (var63) {
-                    func_02033fdc((Struct_02033fdc*)var63);
+            for (int i = 0; i < 4; i++) {
+                GameObject* obj = battle->GetCombatantByIndex(((short*)(sl + Field6fba))[i]);
+                if (obj) {
+                    GameObject_ResumeMovement((Flags02033fdc*)obj);
                 }
                 ((short*)(arg0 + Enum_ov025_021dcf14_28602))[var62] = -1;
             }
-            GameObject* var64 = var0->GetCombatantByIndex(*(short*)(arg0 + Enum_ov025_021dcf14_28412));
-            if (var64) {
-                func_02033fdc((Struct_02033fdc*)var64);
+            GameObject* obj = battle->GetCombatantByIndex(*(short*)(sl + Field6efc));
+            if (obj) {
+                GameObject_ResumeMovement((Flags02033fdc*)obj);
             }
             arg0[Enum_ov025_021dcf14_28417] = 0;
             arg0[Enum_ov025_021dcf14_28415] = 0;

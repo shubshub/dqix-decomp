@@ -14,11 +14,11 @@ struct Struct_0205faf4_11;
 struct Struct_0203d028_11;
 struct Struct_02015ef4_5;
 
-extern "C" void* func_0202ae18(void);
-extern "C" void func_02012de8(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void Main_HandleLid(void);
 
 void RunOverlayScript0216d1c4(int, StreamHeader*, int, int*);
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 void BlankFunction020d84f4(void);
 void* ResetObjectState02079a3c(void* obj);
 int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
@@ -134,31 +134,31 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
 
     GameState* game = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    int* search = (int*)func_0202ae18();
+    int* search = (int*)LinkSession_GetInstance();
     SafeAllocator* allocator = GetAllocator38(res, 7);
     blocks = (Slot70*)res->vramStates_;
     allocator->Reset();
     VramState_Rewind((Foo0207df50*)&blocks[7]);
     BackgroundLoader::AddLockGlobal();
-    func_02012de8();
-    Struct_02108e10* var16 = func_020797dc();
+    Main_HandleLid();
+    ActionDataTables* table = GetData02108e10_020797dc();
 #if defined(jpn)
     func_0207ab68(var16, var15);
 #else
     arg0->unknown_58_.Reset();
     func_02079cf8(var16, var15, &arg0->unknown_58_);
 #endif
-    func_02012de8();
+    Main_HandleLid();
 
     if (LoadFileIntoMemory(data_ov000_02183960, g_fileLoadBuffer, &size)) {
         GetFileInNarc(g_fileLoadBuffer, data_ov000_02183976, &script, &scriptSize, 0);
         if (script != NULL) {
-            func_02012de8();
-            func_ov000_0216d1c4(arg0->unknown_4_, (Struct_02013fb4*)var5, var6, &arg0->unknown_5724_);
+            Main_HandleLid();
+            RunOverlayScript0216d1c4(work->scriptOwner, (StreamHeader*)script, scriptSize, &work->scriptState);
         }
     }
-    if (func_0202b7d8(var14)) {
-        func_020d84f4();
+    if (LinkSession_IsActive(search)) {
+        BlankFunction020d84f4();
     }
 
     unsigned char* buf = g_fileLoadBuffer;
@@ -180,12 +180,12 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 continue;
             }
 
-            SafeAllocator* var23;
-            func_02012de8();
-            if (func_02061bd8((Struct_0205faf4_11*)var21)) {
-                var21->unknown_0_.Destroy();
-                if (var21->unknown_1c4_ != NULL) {
-                    sprintf(var1, data_ov000_0218399e, var21->unknown_1c4_[INFO_NAME_ID]);
+            SafeAllocator* alloc;
+            Main_HandleLid();
+            if (CheckField0x56bLowNibble((Obj02061bd8*)c)) {
+                c->object.Destroy();
+                if (c->info != NULL) {
+                    sprintf(name, data_ov000_0218399e, c->info[INFO_NAME_ID]);
                 }
                 alloc = (SafeAllocator*)(model + 4);
                 alloc->Reset();
@@ -215,8 +215,8 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                 c->object.LoadFromCCHROrCMOTArchive(&info, NULL);
             }
 
-            func_02049c88(var21, &arg0->unknown_5c3c_[var20]);
-            func_02012de8();
+            func_02049c88(c, &work->models[i]);
+            Main_HandleLid();
             if (CheckField0x56bLowNibble((Obj02061bd8*)c)) {
                 VramState_Save((char*)(model + 0xcc));
                 if (c->info != NULL) {
@@ -254,15 +254,15 @@ extern "C" ARM void func_ov000_02164fac(Struct_ov000_02164fac_3* arg0) {
                     data->phase = 0;
                 }
             }
-            if (func_0202b7d8(var14)) {
-                func_020d84f4();
+            if (LinkSession_IsActive(search)) {
+                BlankFunction020d84f4();
             }
         }
     }
 
     BackgroundLoader::RemoveLockGlobal();
-    func_02012de8();
-    func_ov000_02166a94(arg0);
+    Main_HandleLid();
+    func_ov000_02166a94(work);
 #if defined(jpn)
     unsigned int var25 = var15->GetMaxPossibleAllocation();
 #else

@@ -81,42 +81,42 @@ enum {
 
 struct Struct_ov000_02183218 { unsigned char unknown_0_[4]; };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" unsigned short* Zone3D_GetInstance(void);
-extern "C" void* func_0203bd08(void);
-extern "C" void func_02082828(int arg0);
-extern "C" void func_020542b4(void* arg0, void* arg1, void* arg2);
-extern "C" void func_02048b0c(void* arg0, int arg1);
-extern "C" void func_02049c88(void* arg0, void* arg1);
-extern "C" void func_02046a8c(void* arg0, void* arg1);
-extern "C" void func_02076a8c(void* arg0);
-extern "C" int func_ov000_02163c80(void* arg0, int arg1);
-extern "C" void func_ov000_02168284(void* arg0);
-extern "C" void func_02048150(void* arg0, int arg1, int arg2);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void func_ov017_021917f0(int arg0, int arg1);
-extern "C" void func_ov017_02191234(int arg0);
-extern "C" void func_ov017_021baedc(void* arg0, int arg1);
-extern "C" void func_ov017_02191108(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov017_02191aac(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_0219bd1c(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
+extern "C" void* OamManager_GetInstance(void);
+extern "C" void func_02082828(int field150);
+extern "C" void func_020542b4(void* a, void* b, void* c);
+extern "C" void func_02048b0c(void* obj, int flag);
+extern "C" void func_02049c88(void* obj, void* state);
+extern "C" void func_02046a8c(void* list, void* node);
+extern "C" void FieldMonsterState_Init(void* obj);
+extern "C" int func_ov000_02163c80(void* work, int flag);
+extern "C" void func_ov000_02168284(void* work);
+extern "C" void func_02048150(void* combatant, int a, int b);
+extern "C" int LinkSession_IsGuest(void* p);
+extern "C" void func_ov017_021917f0(int id, int flag);
+extern "C" void func_ov017_02191234(int a);
+extern "C" void func_ov017_021baedc(void* node, int flag);
+extern "C" void Party_ReformLine(int ovBase, int c, int d, int e, int flag);
+extern "C" void func_ov017_02191aac(int ovBase, int mode, int idx, int mask);
+extern "C" void func_ov017_021c9e00(int a, int b, int c, int d);
+extern "C" void func_ov017_0219bd1c(int a, int b, int c, int d);
+extern "C" void func_ov000_021626a0(void* work, int a, int b);
 
 extern "C" void func_ov017_0218d274(void* arg0);
 extern "C" void func_ov017_021901ac(int arg0);
 
 int GameState_GetProtagonistIndex(GameState* state);
-void* GetField0x3f8Address_0200fd0c(GameState* state);
+void* GameState_GetZoneTransition(GameState* state);
 void ClearCombatantSlot_0200fd48(GameState* state, int id);
 void GameState_SetCamera(GameState* state, int value);
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" void func_0208902c(unsigned char* arg0, int arg1);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_020a3634(unsigned char* arg0, short* arg1);
+struct S_10088;
+int IsFlag10088Set_02010088(struct S_10088* obj);
+void ResetFields14And18KeepFlag0x4_0208902c(unsigned char* obj, int val);
+int LinkSession_IsActive(int* obj);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+int CollectSetBitIndicesAt0x34_020a3634(unsigned char* obj, short* outArray);
 
 struct Struct_02048150 {
     char unknown_0_[0xf78];
@@ -132,38 +132,38 @@ extern "C" void func_ov000_02160fa8(void* arg0, int arg1);
 extern "C" int func_02053c6c(unsigned char* arg0);
 
 struct Entry_02028bd0;
-struct Entry_02028bd0* FindEntryByCurrentId02027cb0(void);
+struct Entry_02028bd0* ZoneRecords_FindCurrent(void);
 int MessageSystem_GetInstance(void);
 void* GetData02108ea8_0207d78c(void);
 void* GlobalFlags_GetInstance(void);
 
 void GameObject_EnableControl(void* obj);
 
-struct Struct_02053f7c_3;
-extern "C" void func_02053f7c(Struct_02053f7c_3* arg0, unsigned short arg1, int arg2);
-struct Struct_02049f50;
-extern "C" void func_02049f50(struct Struct_02049f50* arg0, int arg1, int arg2);
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
-extern "C" void func_0203400c(Struct_02032e58* arg0);
-extern "C" void func_02039d48(unsigned char* arg0);
-extern "C" void func_02039d58(unsigned char* arg0);
-extern "C" void func_020398a4(unsigned char* arg0);
-struct Struct_02033834;
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
-extern "C" int func_ov017_0218fcf8(int arg0, int arg1, int arg2);
-extern "C" void func_02039d24(unsigned char* arg0);
-extern "C" void func_02039758(void* arg0, int arg1);
+struct Obj02053f7c;
+void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c* obj, unsigned short a, int b);
+struct Obj02049f50;
+void SetField41AndScaleSub02049f50(struct Obj02049f50* obj, int val, int count);
+int TestBitInArray0x8ec_02083b00(unsigned char* obj, int index);
+void GameObject_UnfreezeAnimation(ObjectStatePrefix* obj);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char* obj);
+void GameObject_ClearHidden(unsigned char* obj);
+void GameObject_ResumeFollowing(unsigned char* obj);
+struct Obj02033874;
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
+int CallHelperIfCheckPasses_0218fcf8(int a, int b, int c);
+void GameObject_ResetTrail(unsigned char* obj);
+void SetIntField0x264_02039758(void* obj, int val);
 
-struct Struct_0202b2f0;
-struct Struct_0202c1a4;
-extern "C" int func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_ov017_021cc4b8(int arg0, int arg1, int arg2);
-extern "C" void func_02053ec8(void* arg0, int arg1);
+struct SearchStruct;
+struct SearchStruct0202c1a4;
+int LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+extern "C" void _Z25EnqueueEventTag8_021cc4b8hhi(int a, int b, int c);
+void SetField0x158_02053ec8(void* obj, int value);
 
-struct Struct_02010604;
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" GameObject* func_ov017_021a278c(void* arg0, int arg1);
+struct Bytes02033b88;
+int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
+GameObject* FindCombatantByField16a_021a278c(void* unused, int val);
 
 struct Foo0207df50;
 void FormatAndAppendCombatMessage02072d58(int combatantId, char* statsBuf, char* outBuf);
@@ -176,7 +176,7 @@ void VramState_Save(char* obj);
 struct Struct_0203d028_11;
 extern "C" void func_0203dafc(struct Struct_0203d028_11* arg0);
 
-extern "C" void func_0205ea20(void* arg0, int arg1);
+void SePlayer_LoadArchive(void* objRaw, int mode);
 
 struct Struct_0201bdac_2;
 struct Struct_0201bdac;
@@ -210,7 +210,7 @@ extern const char data_ov000_02183b3b[];
 extern const char data_ov000_02183b55[];
 extern int g_sePlayer;
 
-void CopyInRegion0x571d_020114c0(char* obj, int len, void* src);
+void GameState_SetPartyOrder(char* obj, int len, void* src);
 struct Slot70 { char data[0x70]; };
 static inline SafeAllocator* GetAllocator38(GameResources* res, int i) { return &res->allocator_array_38[i]; }
 static inline Slot70* GetSlot2cc(GameResources* res, int i) { return &((Slot70*)res->vramStates_)[i]; }
@@ -239,14 +239,14 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
 
     GameState* battle = GameState::GetInstance();
     int ovBase = (int)GetGameResources();
-    struct SearchStruct* search = (struct SearchStruct*)func_0202ae18();
+    struct SearchStruct* search = (struct SearchStruct*)LinkSession_GetInstance();
     unsigned short* p30 = Zone3D_GetInstance();
-    func_0203bd08();
+    OamManager_GetInstance();
 
     void* p29c = *(void**)(work + kWorkData);
     struct ArrayContainsByteStruct* arrStruct = (struct ArrayContainsByteStruct*)GameState_GetParty(battle);
     GameObject* prot = battle->GetProtagonist();
-    struct Entry_02028bd0* entry = FindEntryByCurrentId02027cb0();
+    struct Entry_02028bd0* entry = ZoneRecords_FindCurrent();
     int globalBase = MessageSystem_GetInstance();
     void* dataPtr20 = GetData02108ea8_0207d78c();
     void* p1c = *(void**)(ovBase + kResourceNode);
@@ -257,21 +257,21 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         GameObject* c = battle->GetPartyMemberByIndex(GameState_GetProtagonistIndex(battle));
         if (c != NULL && IsFlag10088Set_02010088((struct S_10088*)c)) {
             ResetFields14And18KeepFlag0x4_0208902c(*(unsigned char**)((char*)c + 0x138), 1);
-            func_ov017_02191108(ovBase, 1, 1, 1, 1);
+            Party_ReformLine(ovBase, 1, 1, 1, 1);
         }
     }
 
-    GameObject* var22 = var9->GetUnknownGameObject();
+    GameObject* c397c = battle->GetLeader();
 
-    if (func_0202b7d8((int*)var11)) {
-        int var23 = 1;
-        int var24;
-        for (var24 = 0; var24 < 4; var24++) {
-            if (func_020a35e0(*(unsigned char**)(arg0 + Enum_ov000_021688dc_672), var24)) {
-                GameObject* var25 = func_0200ff1c(var9, var24);
-                if (var25 != NULL) {
-                    if (!func_02010088((struct Struct_02010088*)var25)) {
-                        var23 = 0;
+    if (LinkSession_IsActive((int*)search)) {
+        int allFlagged = 1;
+        int k;
+        for (k = 0; k < 4; k++) {
+            if (TestBitAt0x34_020a35e0(*(unsigned char**)(work + kWorkConfig), k)) {
+                GameObject* c = GetCombatantWithFlag0x100_0200ff1c(battle, k);
+                if (c != NULL) {
+                    if (!IsFlag10088Set_02010088((struct S_10088*)c)) {
+                        allFlagged = 0;
                         break;
                     }
                 }
@@ -299,9 +299,9 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         func_0200fd48(var9, 1);
         var9->SetTimeOfDay((TimeOfDay)2);
 
-        int var28 = 1;
-        var6 = data_ov000_02183218;
-        func_020114c0((char*)var9, var28, &var6);
+        int regionCount = 1;
+        region = data_ov000_02183218;
+        GameState_SetPartyOrder((char*)battle, regionCount, &region);
 
         SafeAllocator* var29 = inline_ov000_02164fac((GameResources*)var10, 3);
         Struct_ov000_02164fac_2* var30 = inline_ov000_021688dc((GameResources*)var10, 3);
@@ -341,43 +341,43 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                 func_ov017_02191aac(var10, 0, var35, 2);
                 func_ov017_02191aac(var10, 0, var35, 4);
 
-                if (func_ov000_02160fd4(arg0, 1) && arg0[Enum_ov000_021688dc_30674] != 0) {
-                    func_02048b0c(var36, func_02083b00(*(unsigned char**)((char*)var36 + Enum_ov000_021688dc_336), 0x99) ? 1 : 0);
-                    func_0203400c((Struct_02032e58*)var36);
+                if (GetCombatWorkFlags0x55f4_ov000_02160fd4(work, 1) && work[kWorkPlacementFlag] != 0) {
+                    func_02048b0c(c, TestBitInArray0x8ec_02083b00(*(unsigned char**)((char*)c + kCombatantRecord), 0x99) ? 1 : 0);
+                    GameObject_UnfreezeAnimation((ObjectStatePrefix*)c);
                 }
 
                 if (ArrayContainsByte_02086ef0(arrStruct, GetObjectId(c))) {
                     if (leadId != c->obj3D_.actorIndex_) {
                         SetFlag0x1ceBit0x4_02039d48((unsigned char*)c);
                     }
-                    if (func_ov000_02160fd4(arg0, 1)) {
-                        var36->obj3D_.position_ = *(Vector3i*)(arg0 + Enum_ov000_021688dc_22800 + var32 * 16);
-                        func_02033874((struct Struct_02033834*)var36, *(short*)(arg0 + var32 * 16 + Enum_ov000_021688dc_22784 + Enum_ov000_021688dc_28));
+                    if (GetCombatWorkFlags0x55f4_ov000_02160fd4(work, 1)) {
+                        c->obj3D_.position_ = *(Vector3i*)(work + kWorkPositions + leadId * 16);
+                        GameObject_SnapFacing((struct Obj02033874*)c, *(short*)(work + leadId * 16 + kWorkHeightBase + kWorkHeightOffset));
                     }
                 } else {
-                    if (func_ov000_02160fd4(arg0, 1)) {
-                        var36->obj3D_.position_ = *(Vector3i*)(arg0 + Enum_ov000_021688dc_22800 + var35 * 16);
-                        func_02033874((struct Struct_02033834*)var36, *(short*)(arg0 + var35 * 16 + Enum_ov000_021688dc_22784 + Enum_ov000_021688dc_28));
+                    if (GetCombatWorkFlags0x55f4_ov000_02160fd4(work, 1)) {
+                        c->obj3D_.position_ = *(Vector3i*)(work + kWorkPositions + i * 16);
+                        GameObject_SnapFacing((struct Obj02033874*)c, *(short*)(work + i * 16 + kWorkHeightBase + kWorkHeightOffset));
                     }
-                    if (*(unsigned short*)((char*)var36 + Enum_ov000_021688dc_434) != 0) {
-                        func_02039d58((unsigned char*)var36);
+                    if (*(unsigned short*)((char*)c + kCombatantHeightFlag) != 0) {
+                        GameObject_ClearHidden((unsigned char*)c);
                     }
                 }
 
-                var36->obj3D_.unknown_9c_ = 0;
-                var36->obj3D_.SetField9e(0);
-                func_ov017_0218fcf8(var10, var35, 0);
-                func_02039d24((unsigned char*)var36);
-                func_020398a4((unsigned char*)var36);
-                func_02039758(var36, 0);
+                c->obj3D_.unknown_9c_ = 0;
+                c->obj3D_.SetField9e(0);
+                CallHelperIfCheckPasses_0218fcf8(ovBase, i, 0);
+                GameObject_ResetTrail((unsigned char*)c);
+                GameObject_ResumeFollowing((unsigned char*)c);
+                SetIntField0x264_02039758(c, 0);
 
-                if (func_0202b7d8((int*)var11)) {
-                    int var37 = func_0202c1a4((struct Struct_0202c1a4*)var11);
-                    if (var37 == var35) {
+                if (LinkSession_IsActive((int*)search)) {
+                    int cur = LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)search);
+                    if (cur == i) {
                         continue;
                     }
-                    if (!func_0202c1c0(var11, var35)) {
-                        func_ov017_021cc4b8(var35, 0, 8);
+                    if (!LinkSession_IsSlotMember(search, i)) {
+                        _Z25EnqueueEventTag8_021cc4b8hhi(i, 0, 8);
                         continue;
                     }
                     func_ov017_021cc4b8(var35, var35, 8);
@@ -399,17 +399,17 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         GameState_SetCamera(battle, *(int*)(work + kWorkState));
     }
 
-    int var40 = 0;
-    if (!func_0202b7d8((int*)var11) ||
-        func_0202c1a4((struct Struct_0202c1a4*)var11) == 0) {
-        GameObject* var41 = func_ov017_021a278c((void*)var10,
-            *(unsigned short*)(*(unsigned char**)(arg0 + Enum_ov000_021688dc_672) + 8));
-        if (var41 != NULL) {
-            if (func_ov000_02163c80(arg0, 0) != 0) {
-                var40 = 1;
+    int sp14 = 0;
+    if (!LinkSession_IsActive((int*)search) ||
+        LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)search) == 0) {
+        GameObject* c6 = FindCombatantByField16a_021a278c((void*)ovBase,
+            *(unsigned short*)(*(unsigned char**)(work + kWorkConfig) + 8));
+        if (c6 != NULL) {
+            if (func_ov000_02163c80(work, 0) != 0) {
+                sp14 = 1;
             } else {
-                func_02076a8c(var41);
-                var41->obj3D_.MakeHidden();
+                FieldMonsterState_Init(c6);
+                c6->obj3D_.MakeHidden();
             }
         }
         if (var16 != NULL) {
@@ -456,22 +456,22 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         }
     }
 
-    if (!func_0202b7d8((int*)var11)) {
-        if (*(signed char*)(*(unsigned char**)(arg0 + Enum_ov000_021688dc_668) + 0x8e14) != 2) {
-            for (int var45 = 0; var45 < var31; var45++) {
-                GameObject* var46 = func_0200ff1c(var9, var7[var45]);
-                if (var46 != NULL && inline_ov000_021688dc_3(var46)) {
-                    *(int*)((char*)var46 + Enum_ov000_021688dc_396) |= 1;
-                    func_02033b88((struct Struct_02010604*)var46, 0);
+    if (!LinkSession_IsActive((int*)search)) {
+        if (*(signed char*)(*(unsigned char**)(work + kWorkData) + 0x8e14) != 2) {
+            for (int n = 0; n < count; n++) {
+                GameObject* c = GetCombatantWithFlag0x100_0200ff1c(battle, ids[n]);
+                if (c != NULL && IsFlag130Bit0(c)) {
+                    *(int*)((char*)c + kCombatantFlags) |= 1;
+                    GameObject_ForceMotionState((struct Bytes02033b88*)c, 0);
                 }
             }
         }
     } else {
-        for (int var47 = 0; var47 < var31; var47++) {
-            GameObject* var48 = func_0200ff1c(var9, var7[var47]);
-            if (var48 != NULL && inline_ov000_021688dc_3(var48)) {
-                *(int*)((char*)var48 + Enum_ov000_021688dc_396) |= 1;
-                func_02033b88((struct Struct_02010604*)var48, 0);
+        for (int n = 0; n < count; n++) {
+            GameObject* c = GetCombatantWithFlag0x100_0200ff1c(battle, ids[n]);
+            if (c != NULL && IsFlag130Bit0(c)) {
+                *(int*)((char*)c + kCombatantFlags) |= 1;
+                GameObject_ForceMotionState((struct Bytes02033b88*)c, 0);
             }
         }
     }
@@ -548,7 +548,7 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
                             }
                         }
 
-                        func_02033b88((struct Struct_02010604*)var53, 0);
+                        GameObject_ForceMotionState((struct Bytes02033b88*)c, 0);
                     }
                 }
             }
@@ -557,8 +557,8 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
         var0.Reset();
     }
 
-    if (func_0202b7d8((int*)var11)) {
-        func_ov017_021c8c04(*(unsigned short*)(*(unsigned char**)(arg0 + Enum_ov000_021688dc_672) + 8), var40, *var12);
+    if (LinkSession_IsActive((int*)search)) {
+        EnqueueEventTag83_021c8c04(*(unsigned short*)(*(unsigned char**)(work + kWorkConfig) + 8), sp14, *p30);
     }
 
     func_ov000_02168284(arg0);
@@ -573,7 +573,7 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
 
     battle->SetGameSpeed(0x1000);
     SetCombatWorkFlags0x55f4_ov000_02160fa8(work, 0x400);
-    SetupContextForMode0205ea20(&g_sePlayer, 0x64);
+    SePlayer_LoadArchive(&g_sePlayer, 0x64);
 
     unsigned char var59;
     *(int*)((char*)var9 + Enum_ov000_021688dc_29172) = 0;
@@ -636,16 +636,16 @@ extern "C" ARM void func_ov000_021688dc(unsigned char* arg0) {
     }
     ClearFlags04((GameResources*)var10, 0x400);
 
-    if (func_0202c540(var11)) {
-        func_ov017_021907dc(var10, 0, 1, 1, 1);
-        func_ov017_02191234(var10);
+    if (LinkSession_IsGuest(search)) {
+        CallHelperWithBuf_021907dc(ovBase, 0, 1, 1, 1);
+        func_ov017_02191234(ovBase);
     }
-    *(unsigned short*)((char*)func_0200fd0c(var9) + 0x1e) = *(int*)(*(unsigned char**)(arg0 + Enum_ov000_021688dc_672) + 0xc);
+    *(unsigned short*)((char*)GameState_GetZoneTransition(battle) + 0x1e) = *(int*)(*(unsigned char**)(work + kWorkConfig) + 0xc);
 
-    if (func_0202b7d8((int*)var11)) {
-        unsigned char* var67 = (unsigned char*)func_020e3580();
-        if (func_020e37e8(var67)) {
-            func_020e3798(var67);
+    if (LinkSession_IsActive((int*)search)) {
+        unsigned char* p4 = (unsigned char*)GetData02153634_020e3580();
+        if (GetByte2IfGlobalFlagSet_020e37e8(p4)) {
+            ClearBitOrNotifyOverlay020e3798(p4);
         }
     }
 

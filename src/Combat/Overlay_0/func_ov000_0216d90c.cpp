@@ -4,7 +4,7 @@
 
 extern "C" void func_ov000_0216d370(void* obj, int a, int b, int c);
 void Camera_SetTarget(struct Camera* obj, int x, int y, int z);
-void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void Camera_SetOrbitVector(void* obj, int* vec);
 void SetFlagOrState0216d530(void* obj, int val);
 
 extern int data_ov000_021832a4[8];
@@ -42,11 +42,11 @@ extern "C" ARM void func_ov000_0216d90c(unsigned char* arg0, int arg1) {
             r = 0;
         }
     }
-    int var7[3];
-    var7[0] = data_ov000_021832a4[var6];
-    var7[1] = 0x3000;
-    var7[2] = 0x8000;
-    func_0202e694(arg0, var7);
-    func_ov000_0216d530(arg0, arg1);
-    *(int*)(arg0 + 0x23c) = -20;
+    int vec[3];
+    vec[0] = data_ov000_021832a4[r];
+    vec[1] = 0x3000;
+    vec[2] = 0x8000;
+    Camera_SetOrbitVector(obj, vec);
+    SetFlagOrState0216d530(obj, index);
+    *(int*)(obj + 0x23c) = -20;
 }

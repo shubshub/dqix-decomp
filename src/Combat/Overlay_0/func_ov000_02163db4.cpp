@@ -3,12 +3,12 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Resource/Brightness.h"
 
-struct Struct_020708c8;
-struct Struct_020d7aa0_2;
-extern "C" void* func_0202ae18();
-extern "C" Struct_020708c8* func_020704fc();
-extern "C" void* func_0202ae24();
-extern "C" void func_020708c8(Struct_020708c8*, unsigned int);
+struct EffectParam020708c8;
+struct Obj020d7aa0;
+extern "C" void* LinkSession_GetInstance();
+extern "C" EffectParam020708c8* func_020704fc();
+void* LinkMessageQueue_GetInstance();
+void SetScaledEffectParam020708c8(EffectParam020708c8*, unsigned int);
 extern "C" int func_ov017_021959b4();
 extern "C" void func_020531f0(GameObject*);
 extern "C" void func_ov000_02160fa8(void*, int);
@@ -18,7 +18,7 @@ int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
 void EnqueueEventTag122_021c8b78(unsigned short);
 void ClearBitAt0x34_020a367c(unsigned char*, int);
 int GameState_GetProtagonistIndex(GameState*);
-int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+int GameObject_IsGesturing(signed char*);
 #if defined(jpn)
 #define func_ov000_02165490 func_ov000_02166bdc
 #endif
@@ -26,11 +26,11 @@ int IsField0x180NonNegative_020535e0(int*);
 Obj020d7aa0* TextQueue_GetInstance();
 void TextQueue_Reset(Obj020d7aa0*);
 extern "C" void func_ov017_021bd5d0(int);
-extern "C" int func_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 extern "C" void func_ov017_02191234(GameResources*);
 unsigned int* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int*, unsigned int);
-extern "C" void func_02012de8();
+extern "C" void Main_HandleLid();
 extern "C" void func_ov000_02164280(void*);
 extern "C" void func_ov000_02166e5c(void*);
 extern "C" void func_ov000_021643d4(void*);
@@ -38,7 +38,7 @@ extern "C" void func_ov000_02164fac(void*);
 extern "C" void func_ov000_02165490(void*);
 extern "C" void func_ov000_02166880(unsigned char*);
 extern "C" void func_ov000_02166978(void*);
-extern "C" void func_0205ea20(void*, int);
+void SePlayer_LoadArchive(void*, int);
 extern "C" void func_ov017_021c812c(int, int);
 void EmptyStub_ov017_021c8398(int, int);
 void NoOp_021c839c(int, int);
@@ -65,15 +65,15 @@ static inline void inline_ov000_02163db4(unsigned char* arg0, unsigned char arg1
 }
 
 // USA: func_ov000_02163db4
-extern "C" ARM void func_ov000_02163db4(Struct_ov000_02163db4_2* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-    func_0202ae18();
-    Struct_020708c8* var3 = func_020704fc();
-    func_0202ae24();
-    SetBrightness(var1, -16, 0);
-    func_020708c8(var3, 0);
+extern "C" ARM void func_ov000_02163db4(BattleScene02163db4* scene) {
+    GameState* state = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    LinkSession_GetInstance();
+    EffectParam020708c8* effect = func_020704fc();
+    LinkMessageQueue_GetInstance();
+    SetBrightness(resources, -16, 0);
+    SetScaledEffectParam020708c8(effect, 0);
     if (func_ov017_021959b4()) {
         for (int var4 = 0; var4 < 4; var4++) {
             GameObject* var5 = func_0200ff1c(var0, var4);
@@ -95,7 +95,7 @@ extern "C" ARM void func_ov000_02163db4(Struct_ov000_02163db4_2* arg0) {
         GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(state, i);
         if (!combatant) continue;
         if (TestBitAt0x34_020a35e0((unsigned char*)scene->config, i & 0xff)) {
-            if (CheckSubstructByte0x7cPositive_020535c8((signed char*)combatant)) func_020531f0(combatant);
+            if (GameObject_IsGesturing((signed char*)combatant)) func_020531f0(combatant);
         } else {
             if (func_020535e0((int*)var9)) func_020531f0(var9);
         }
@@ -103,28 +103,28 @@ extern "C" ARM void func_ov000_02163db4(Struct_ov000_02163db4_2* arg0) {
     TextQueue_Reset(TextQueue_GetInstance());
     if (scene->config->mode >= 0) func_ov017_021bd5d0(scene->config->mode);
     if (loader->GetNumQueuedTasks() > 0) return;
-    if (!IsField0Null_02046b08((void**)resources->unknown_ptr_array_3700[0])) return;
+    if (!FieldTaskQueue_IsEmpty((void**)resources->unknown_ptr_array_3700[0])) return;
     func_ov017_02191234(resources);
     SetFlags00(resources, 0x10);
     unsigned int* data = GlobalFlags_GetInstance();
     FlagWord_SetBits(data, 1);
     FlagWord_SetBits(data, 2);
     FlagWord_SetBits(data, 0x2000);
-    func_02012de8();
-    func_ov000_02164280(arg0);
-    if (arg0->unknown_2a0_->unknown_c_ == 0x1a && !var0->GetGameObjectByIndex(1)) func_ov000_02166e5c(arg0);
-    func_02012de8();
-    func_ov000_021643d4(arg0);
-    func_02012de8();
-    func_ov000_02164fac(arg0);
-    func_02012de8();
-    func_ov000_02165490(arg0);
-    func_02012de8();
-    func_ov000_02166880((unsigned char*)arg0);
-    func_02012de8();
-    func_ov000_02166978(arg0);
-    func_02012de8();
-    SetupContextForMode0205ea20(&g_sePlayer, 0x65);
+    Main_HandleLid();
+    func_ov000_02164280(scene);
+    if (scene->config->mode == 0x1a && !state->GetGameObjectByIndex(1)) func_ov000_02166e5c(scene);
+    Main_HandleLid();
+    func_ov000_021643d4(scene);
+    Main_HandleLid();
+    func_ov000_02164fac(scene);
+    Main_HandleLid();
+    func_ov000_02165490(scene);
+    Main_HandleLid();
+    InitAndProcessCombat02166880((unsigned char*)scene);
+    Main_HandleLid();
+    func_ov000_02166978(scene);
+    Main_HandleLid();
+    SePlayer_LoadArchive(&g_sePlayer, 0x65);
     REG_DISPLAY_CONTROL = (REG_DISPLAY_CONTROL & ~0x1f00) | 0x1100;
     REG_BLEND_CONTROL = 0;
     if (arg0->unknown_2a0_->unknown_2c_) {

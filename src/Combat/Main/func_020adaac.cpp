@@ -35,13 +35,13 @@ struct Struct_020adaac {
 };
 extern "C" void Zone3D_GetInstance();
 void SetFields0x44(Fields020407b4*, int, int, int);
-void* GetField4328_0218d268(void*);
-int GetField0x70_0202e7f0(void*);
-int GetShortAt0x22e(ShortField0x22e_020968c4*);
+void* GameResources_GetTouchWalk(void*);
+int Camera_GetOrbitYaw(void*);
+int TouchWalk_GetHeading(ShortField0x22e_020968c4*);
 int fix32ReduceAngle0To2Pi(int);
 int fix32SignedAngleDistance(int, int);
-extern "C" int func_020968d0(Struct_020968d0*, int*);
-extern "C" void func_02033874(Struct_02033834*, int);
+int CheckAndComputeDistance020968d0(Obj020968d0*, int*);
+void GameObject_SnapFacing(Obj02033874*, int);
 extern const int data_020e9118[8];
 
 // USA: func_020adaac
@@ -88,13 +88,13 @@ extern "C" ARM void func_020adaac(SteeringObject* self) {
         arg0->unknown_134_ = 0;
         return;
     }
-    if (arg0->unknown_134_ == 1 || arg0->unknown_134_ == 2) {
-        Struct_020968d0* var5 = (Struct_020968d0*)func_ov017_0218d268(var1);
-        if (arg0->unknown_134_ == 1) {
-            int var6 = data_020e9118[arg0->unknown_1a0_ - 8];
-            var2 = var6 + func_0202e7f0(var0);
-        } else if (var5->unknown_224_) {
-            var2 = func_020968c4((Struct_02038138*)var5);
+    if (self->mode == 1 || self->mode == 2) {
+        Obj020968d0* target = (Obj020968d0*)GameResources_GetTouchWalk(manager);
+        if (self->mode == 1) {
+            int offset = data_020e9118[self->direction - 8];
+            targetHeading = offset + Camera_GetOrbitYaw(camera);
+        } else if (target->active) {
+            targetHeading = TouchWalk_GetHeading((ShortField0x22e_020968c4*)target);
         }
         int var7 = arg0->unknown_54_;
         var2 = fix32ReduceAngle0To2Pi(var2);
@@ -108,9 +108,9 @@ extern "C" ARM void func_020adaac(SteeringObject* self) {
             if (-var9 < var8) var7 = var2;
             else var7 -= var8;
         }
-        var7 = fix32ReduceAngle0To2Pi(var7);
-        if (func_020968d0(var5, 0) || !var5->unknown_224_)
-            func_02033874((Struct_02033834*)arg0, var7);
+        heading = fix32ReduceAngle0To2Pi(heading);
+        if (CheckAndComputeDistance020968d0(target, 0) || !target->active)
+            GameObject_SnapFacing((Obj02033874*)self, heading);
     }
     arg0->unknown_b2_ = arg0->unknown_144_;
     arg0->unknown_b4_ = arg0->unknown_144_;

@@ -266,15 +266,15 @@ struct Struct_ov024_021fe8f0 {
 };
 extern "C" struct Struct_ov024_021fe8f0 data_ov024_021fe8f0;
 
-extern "C" struct Struct_ov024_021eaa50_2* func_02079e2c(char*, int);
-extern "C" void* func_02079ee0(void* arg0, int arg1);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" int func_ov000_021540c8(void*, void*, int);
-extern "C" int func_ov000_0215440c(void* arg0, void* arg1, void* arg2);
-extern "C" int func_ov024_021eaa50(struct Struct_ov024_021ea4d0* arg0, struct Struct_ov024_021eaa50* arg1, struct Struct_ov024_021eaa50_2* arg2, int arg3);
-extern "C" short func_ov000_0215cda0(void* arg0);
-extern "C" int func_ov024_021e8dc0(struct Struct_ov024_021ea4d0* arg0, int arg1, struct Struct_ov024_021eaa50_2* arg2, short* arg3, int arg4);
-extern "C" int func_0202053c(void* arg0);
+struct Rec_021eb5d0* SearchBothTables02079e2c(char*, int);
+void* LookupElementByKey02079ee0(void* table, int key);
+extern "C" void* memset(void* dst, int value, unsigned int length);
+int DispatchWithFieldLookup021540c8(void*, void*, int);
+extern "C" int func_ov000_0215440c(void* world, void* src, void* out);
+extern "C" int func_ov024_021eaa50(struct Act_021eb5d0* self, struct Src_021eb5d0* src, struct Rec_021eb5d0* rec, int noCost);
+extern "C" short func_ov000_0215cda0(void* world);
+extern "C" int func_ov024_021e8dc0(struct Act_021eb5d0* self, int id, struct Rec_021eb5d0* rec, short* list, int count);
+int GameObject_GetPartyMemberLevel(void* p);
 struct Random;
 float NextRandomFloatScaled(Random*, float, float, int);
 int NextRandomMax(Random*, int);
@@ -488,12 +488,12 @@ extern "C" ARM void func_ov024_021eb5d0(struct Act_021eb5d0* self, struct World_
         struct Struct_ov024_021eb5d0_12* var23 = (struct Struct_ov024_021eb5d0_12*)(void*)func_0200ff1c((GameState*)var13, var18);
         switch (var15->unknown_4_.unknown_0_0_) {
         case 0x200:
-            if (var23 != 0) {
-                int var24 = func_0202053c(var23);
-                float var25 = 1.0f + 0.01f * (11.0f + (float)(unsigned int)var24);
-                if (var25 > 2.0f) var25 = 2.0f;
-                arg0->unknown_10_->unknown_8e3c_ = NextRandomFloatScaled((Random*)var17, 1.1f, var25, 1);
-                arg0->unknown_4_->unknown_10_->unknown_18_ = arg0->unknown_10_->unknown_8e3c_;
+            if (pc != 0) {
+                int lvl = GameObject_GetPartyMemberLevel(pc);
+                float scale = 1.0f + 0.01f * (11.0f + (float)(unsigned int)lvl);
+                if (scale > 2.0f) scale = 2.0f;
+                self->f10->fe3c = NextRandomFloatScaled((Random*)w, 1.1f, scale, 1);
+                self->f4->f10->f18 = self->f10->fe3c;
             }
             break;
         case 0x20c:

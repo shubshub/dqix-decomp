@@ -75,7 +75,7 @@ struct Struct_ov001_021552a8_2 {
     unsigned char unknown_45b_[0x20];
 };
 
-char* GetFieldIfFlag4_020100f8(char* obj);
+char* GameState_GetFollowCamera(char* obj);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 extern "C" void func_0209c2e0(void* obj, int a, int b);
 extern "C" void func_ov017_021bb27c(void* obj);
@@ -102,14 +102,14 @@ int StoreArgIfMatched_02153948(unsigned short arg);
 extern "C" Events021552a8* Scenario_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 void* GameState_GetParty(GameState* gs);
 void* GlobalFlags_GetInstance(void);
-void ProcessBattlerEffects02019568(void* area, int arg);
+void Zone3D_SaveAndOverrideElementVisibility(void* area, int arg);
 Object3D* GetField4334_021bdbc0(unsigned char* base);
 void FollowCamera_DisableFollow(void* obj);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
-void SetFlag0x9c6_020213fc(SetFlagStruct* p, int value);
+void MapDisplay_SetHoldSubScreenDark(SetFlagStruct* p, int value);
 
 extern AllocatorUnion g_mainAllocator;
 extern char g_bgmPlayer;
@@ -129,8 +129,8 @@ extern "C" ARM int func_ov001_021552a8(Self021552a8* self) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    char* hud = GetFieldIfFlag4_020100f8((char*)gs);
-    GameObject* leader = gs->GetUnknownGameObject();
+    char* hud = GameState_GetFollowCamera((char*)gs);
+    GameObject* leader = gs->GetLeader();
     sub = res->vramStates_;
 
     if (var3->GetTaskStatus(arg0->unknown_74_) == 0) {
@@ -291,11 +291,11 @@ extern "C" ARM int func_ov001_021552a8(Self021552a8* self) {
     GameState* state = GameState::GetInstance();
     GameResources* resources = GetGameResources();
     void* area = (Zone3D*)Zone3D_GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     GameState_GetParty(state);
     GlobalFlags_GetInstance();
     if (!(params.flags & 0x400)) {
-        ProcessBattlerEffects02019568(area, arg);
+        Zone3D_SaveAndOverrideElementVisibility(area, arg);
     }
     *((char*)Scenario_GetInstance() + 0x490) = -1;
     if (params.hide != 0) {
@@ -308,6 +308,6 @@ extern "C" ARM int func_ov001_021552a8(Self021552a8* self) {
     FollowCamera_DisableFollow(hud);
     ClearIntAt0x23c_020a27b8((unsigned char*)hud);
     *(short*)((char*)leader + 0xb2) = 0;
-    SetFlag0x9c6_020213fc((SetFlagStruct*)res->unknown_ptr_36d0, 0);
+    MapDisplay_SetHoldSubScreenDark((SetFlagStruct*)res->unknown_ptr_36d0, 0);
     return 3;
 }

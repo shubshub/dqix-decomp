@@ -21,7 +21,7 @@
 
 extern "C"
 {
-    bool _Z17TestFlags02046708P16FlagWord02046708j(void*, unsigned int);
+    bool _Z17FlagWord_TestBitsP16FlagWord02046708j(void*, unsigned int);
     void* _Z23GlobalFlags_GetInstancev();
 
     int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);

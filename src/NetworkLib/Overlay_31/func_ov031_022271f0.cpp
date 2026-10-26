@@ -16,10 +16,10 @@
 #define REG_BG3_SCROLL_SUB (*(volatile unsigned int*)0x0400101c)
 #define REG_POWER_CONTROL (*(volatile unsigned short*)0x04000304)
 
-void SetVBlankIrqEnable_020c3864(int);
-void SetDispcntModeAndFlags020c391c(int, int, int);
+void SetVBlankIrqEnable(int);
+void GX_SetGraphicsMode(int, int, int);
 extern "C" void GXx_SetMasterBrightness_(short*, int);
-void SetSubBgMode_020c3984(unsigned int);
+void GXS_SetGraphicsMode(unsigned int);
 void RestoreDisplayMode_020c38d4();
 extern "C" void func_ov031_0223c308();
 extern "C" void func_ov031_0223d928();
@@ -32,10 +32,10 @@ static inline unsigned int inline_ov031_022271f0(unsigned int arg0) {
 
 // USA: func_ov031_022271f0
 extern "C" ARM void func_ov031_022271f0() {
-    func_020c3864(0);
+    SetVBlankIrqEnable(0);
     MapVRAMBanksToMainBG(1);
     MapVRAMBanksToMainObj(2);
-    func_020c391c(1, 0, 0);
+    GX_SetGraphicsMode(1, 0, 0);
     DISPCNT &= ~0x1f00;
     DISPCNT &= ~0xe000;
     GXx_SetMasterBrightness_((short*)&REG_MASTER_BRIGHTNESS, 0);
@@ -51,7 +51,7 @@ extern "C" ARM void func_ov031_022271f0() {
     ColorEffect_ConfigureBrightnessAdjust(0x04000050, 0x3f, 0x10);
     MapVRAMBanksToSubBG(0x80);
     MapVRAMBanksToSubObj(0x100);
-    SetSubBgMode_020c3984(0);
+    GXS_SetGraphicsMode(0);
     DISPCNTSUB = SubDisplayWithClearedLayers(0x1f00);
     DISPCNTSUB = SubDisplayWithClearedLayers(0xe000);
     GXx_SetMasterBrightness_((short*)&REG_MASTER_BRIGHTNESS_SUB, 0);
@@ -82,5 +82,5 @@ extern "C" ARM void func_ov031_022271f0() {
     func_ov031_0223b79c();
     func_020c38d4();
     DISPCNTSUB |= 0x10000;
-    func_020c3864(1);
+    SetVBlankIrqEnable(1);
 }

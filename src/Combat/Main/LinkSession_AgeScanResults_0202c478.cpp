@@ -1,0 +1,28 @@
+#include <globaldefs.h>
+#include "Combat/SearchEntry.h"
+
+ARM void VCountIrq_PushDisable(void);
+extern "C" void VCountIrq_PopDisable(void);
+
+struct Record0202ba08;
+ARM struct Record0202ba08* CopyRecord0202ba08(struct Record0202ba08* dst, struct Record0202ba08* src);
+
+// Main, originally ShiftRecords0202c478 (USA 0x0202c478, EUR 0x0202c488, JPN 0x0202c004)
+ARM void LinkSession_AgeScanResults(SearchStruct* obj) {
+    VCountIrq_PushDisable();
+    char* base = (char*)obj;
+    int i;
+    for (i = 0; i < *(int*)(base + 0xc); i++) {
+        ((int*)(base + 0x790))[i] -= 0x10;
+        if (((int*)(base + 0x790))[i] > 0) {
+            continue;
+        }
+        int j;
+        for (j = i; j < *(int*)(base + 0xc) - 1; j++) {
+            CopyRecord0202ba08((struct Record0202ba08*)(base + 0x10 + j * 0xc0),
+                                (struct Record0202ba08*)(base + 0x10 + (j + 1) * 0xc0));
+        }
+        (*(int*)(base + 0xc))--;
+    }
+    VCountIrq_PopDisable();
+}

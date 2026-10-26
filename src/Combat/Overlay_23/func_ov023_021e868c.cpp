@@ -62,9 +62,9 @@ static inline Struct_ov023_021e868c* inline_ov003_02172e84(GameState* arg0)
 }
 
 int MessageSystem_GetInstance();
-int CheckField0NonZero_0202b7d8(int* unknown);
+int LinkSession_IsActive(int* unknown);
 PartyMemberData_021e868c* GetFieldAt0x150_02053c6c(unsigned char* member);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* unknown);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4* unknown);
 void AppendXTag_02041a28(char* text, int x);
 #if defined(jpn)
 extern "C" int Font_GetTextWidth(char* text, int y);
@@ -87,7 +87,7 @@ void SetByteAtIndex_020465d8(unsigned char* messages, int index, unsigned char v
 void SetByteInRange_020465f0(unsigned char* messages, int index, unsigned char digits);
 
 extern "C" {
-void* func_0202ae18();
+void* LinkSession_GetInstance();
 #if defined(jpn)
 void func_020474a8(Struct_02021b84* arg0, unsigned char arg1, const char* arg2, char* arg3);
 #else
@@ -105,9 +105,9 @@ extern "C" ARM void func_ov023_021e868c(Struct_ov023_021e868c_3* arg0)
 {
     GameState* gameState = GameState::GetInstance();
     MessageSystem* messages = (MessageSystem*)MessageSystem_GetInstance();
-    void* unknown = func_0202ae18();
+    void* unknown = LinkSession_GetInstance();
     PartyMemberData_021e868c* data = NULL;
-    if (CheckField0NonZero_0202b7d8((int*)unknown) == 0)
+    if (LinkSession_IsActive((int*)unknown) == 0)
     {
         void* var4 = func_0200ff1c(var0, 0);
         if (var4 != NULL)
@@ -115,9 +115,9 @@ extern "C" ARM void func_ov023_021e868c(Struct_ov023_021e868c_3* arg0)
     }
     else
     {
-        void* var5 = func_0200ff1c(var0, func_0202c1a4((Struct_0202c1a4*)var2));
-        if (var5 != NULL)
-            var3 = func_02053c6c((unsigned char*)var5);
+        void* member = GetCombatantWithFlag0x100_0200ff1c(gameState, LinkSession_GetOwnSlot((SearchStruct0202c1a4*)unknown));
+        if (member != NULL)
+            data = GetFieldAt0x150_02053c6c((unsigned char*)member);
     }
     if (var3 == NULL)
         return;

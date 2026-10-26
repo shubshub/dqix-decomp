@@ -7,7 +7,7 @@
 extern "C"
 {
     // rng value between 0 and max-1 from A-table
-    int func_02032370(int max);
+    int RandomIntBelow(int max);
 }
 
 // What the treasure scripts' opcodes work on while LoadZoneContainers or LoadFromScript runs one.
@@ -323,7 +323,7 @@ const LootDistribution::Outcome* LootDistribution::Sample(int rank)
     if (numOutcomes == 0)
         return NULL;
 
-    int rng = func_02032370(100);
+    int rng = RandomIntBelow(100);
     for (int i = 0; i < numOutcomes; i++)
     {
         rng -= outcomes[i]->percentage;

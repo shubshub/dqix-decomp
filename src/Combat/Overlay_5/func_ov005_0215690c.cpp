@@ -4,9 +4,6 @@
 #include <Graphics/Vector.h>
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_0200b454 func_0200b318
-#endif
 
 struct SePlayer;
 struct Vec3copy0202ec84;
@@ -95,7 +92,7 @@ Body* RunIfPtr_021e4e20(Obj021e4e20*);
 extern "C" int func_ov005_02155670(EquipmentMenu* self, int x, int y);
 int Camera_WorldToScreen(void* obj, Vec3copy0202ec84* src, int* out1, int* out2);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int id);
-extern "C" double func_0200b454(double x);
+extern "C" double sqrt(double x);
 short GetHalfwordEntryFromField150(Field150Holder02052df8* obj, int index);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
@@ -134,16 +131,16 @@ extern "C" ARM void func_ov005_0215690c(EquipmentMenu* self, int x, int y) {
             Mat4x3_ApplyToVector(&data_ov005_0215cc84[i], &matrix, &positions[i]);
             Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&positions[i], &screenX[i], &screenY[i]);
         }
-        GameObject* var15 = func_0200ff1c(var0, var4);
-        var11 = 0;
-        float var16[8];
-        int var17[8];
-        for (int var18 = 0; var18 < 8; var18++) {
-            var16[var18] = 20.0f;
-            int var19 = arg2 - var10[var18];
-            int var20 = arg1 - var7[var18];
-            if ((float)func_0200b454(var20 * var20 + var19 * var19) < var16[var18])
-                var17[var11++] = var18;
+        GameObject* partyMember = GetCombatantWithFlag0x100_0200ff1c(gameState, member);
+        count = 0;
+        float radii[8];
+        int touched[8];
+        for (int i = 0; i < 8; i++) {
+            radii[i] = 20.0f;
+            int dy = y - screenY[i];
+            int dx = x - screenX[i];
+            if ((float)sqrt(dx * dx + dy * dy) < radii[i])
+                touched[count++] = i;
         }
         if (var11 > 0) {
             int var21 = 0;

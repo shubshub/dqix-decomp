@@ -37,15 +37,15 @@ struct Struct_0208f3b4;
 struct Struct_0202c1a4;
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
-extern "C" Obj0208e7d0* func_0208e0a8(void);
+extern "C" Obj0208e7d0* LootPointList_GetInstance(void);
 int LootPointList_AppliesToMap(void*, char*);
-int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+int GameObject_IsGesturing(signed char*);
 Cont0208f3b4* GetData02109020_0208e9e8(void);
 void InitObj0219a674(unsigned char*);
 extern "C" void func_ov017_0219b33c(void*, Event021986fc*);
 int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-extern "C" SearchStruct0202c1a4* func_0202ae18(void);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+extern "C" SearchStruct0202c1a4* LinkSession_GetInstance(void);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 void RemoveNodeByKey0208f3b4(Cont0208f3b4*, int);
@@ -56,11 +56,11 @@ void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 extern "C" ARM void func_ov017_021986fc(GameResources* self) {
     Zone3D* zone = Zone3D_GetInstance();
     Zone3D_StructPtr_8* info = zone->pUnknownStruct_8_;
-    Obj0208e7d0* list = func_0208e0a8();
+    Obj0208e7d0* list = LootPointList_GetInstance();
     if (!LootPointList_AppliesToMap(list, info->mapShortName_)) return;
     GameState* gs = GameState::GetInstance();
-    GameObject* actor = gs->GetUnknownGameObject();
-    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)actor)) return;
+    GameObject* actor = gs->GetLeader();
+    if (GameObject_IsGesturing((signed char*)actor)) return;
     GetData02109020_0208e9e8();
     Node021986fc* node = list->head;
     void* camera = gs->GetCamera();
@@ -103,7 +103,7 @@ extern "C" ARM void func_ov017_021986fc(GameResources* self) {
     else if (screenX - 12 < cursorX && cursorX < screenX + 12 && screenY - 12 < cursorY && cursorY < screenY + 12) proceed = 1;
     if (!proceed) return;
 
-    EnqueueEventTag183_021d38f8(1, GetSearchStructCurrentArrEntry(func_0202ae18()), mask, node->id, node->entry);
+    EnqueueEventTag183_021d38f8(1, LinkSession_GetOwnSlot(LinkSession_GetInstance()), mask, node->id, node->entry);
     node->entry->fields.flags = ~mask & node->entry->fields.flags;
     node->mask = ~mask & node->mask;
     node->entry->fields.timer = node->entry->fields.count * 30;

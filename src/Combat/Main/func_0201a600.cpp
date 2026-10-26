@@ -99,21 +99,21 @@ struct Struct_0201a600_5 {
 
 extern "C" {
 GameState* _ZN9GameState11GetInstanceEv();
-Struct_0201a600_10* _ZN9GameState15GetGrottoStructEv(GameState* arg0);
-int _ZNK19TreasureMapMetadata10GetMapTypeEv(void* arg0);
-void* _ZN9GameState20GetUnknownGameObjectEv(GameState* arg0);
-void _ZN15Struct_020134e013func_0201e518EiP13SafeAllocator(void* arg0, int arg1, SafeAllocator* arg2);
-void _ZN15Struct_020134e013func_0201e574ERKNS_17Struct_0201cb60_3E(void* arg0, const Struct_0201a600* arg1);
-int func_0201b5d8(int arg0);
-int func_0201b588(int arg0);
-unsigned short _ZNK17ActiveGrottoClass19GetActiveGrottoSeedEv(const Struct_0201a600_9* arg0);
-int _ZNK17ActiveGrottoClass22GetActiveGrottoEnvironEv(const Struct_0201a600_9* arg0);
-int _ZNK17ActiveGrottoClass13GetFloorCountEv(const Struct_0201a600_9* arg0);
+GrottoStruct0201a600* _ZN9GameState15GetGrottoStructEv(GameState* gs);
+int _ZNK19TreasureMapMetadata10GetMapTypeEv(void* metadata);
+void* _ZN9GameState9GetLeaderEv(GameState* gs);
+void _ZN12ZoneFeatures13AllocateExitsEiP13SafeAllocator(void* features, int count, SafeAllocator* alloc);
+void _ZN12ZoneFeatures10CreateExitERKNS_13Opcode68EntryE(void* features, const Opcode68Entry0201a600* entry);
+int _Z24ZoneId_IsGrottoBossFloori(int zoneId);
+int _Z15ZoneId_IsGrottoi(int zoneId);
+unsigned short _ZNK17ActiveGrottoClass19GetActiveGrottoSeedEv(const ActiveGrotto0201a600* grotto);
+int _ZNK17ActiveGrottoClass22GetActiveGrottoEnvironEv(const ActiveGrotto0201a600* grotto);
+int _ZNK17ActiveGrottoClass13GetFloorCountEv(const ActiveGrotto0201a600* grotto);
 int _Z39GenerateGrottoObjectPositionOrientationPviiPiS0_PK24TileFeaturePlacementDatab(
     void* zone, int tileX, int tileY, int* outX, int* outZ, const void* tileData, bool preferFaceDown);
 int _ZNK8FloorMap16GetAdjacencyBitsEii(const FloorMap0201a600* map, int x, int y);
 Struct0201ae8c* _Z18CopyStruct0201ae8cP14Struct0201ae8cS0_(Struct0201ae8c* dst, Struct0201ae8c* src);
-Field3f8_0201a600* _Z29GetField0x3f8Address_0200fd0cP9GameState(GameState* gs);
+Field3f8_0201a600* _Z27GameState_GetZoneTransitionP9GameState(GameState* gs);
 int Zone3D_GetGroundHeight(Zone0201a600* zone, Vector3i* pos);
 void __clear(void* buf, int size);
 void func_02024d94(void* obj, unsigned short zoneId, Vector3i* pos);
@@ -140,34 +140,34 @@ static inline int inline_0201a600_3(int arg0) {
 }
 
 // USA: func_0201a600
-extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
-    GameState* var0 = _ZN9GameState11GetInstanceEv();
-    Struct_0201a600_4* var1 = (Struct_0201a600_4*)GetGameResources();
-    Struct_0201a600_9* var2 = &arg0->unknown_23ec_;
-    void* var3 = inline_0201a600_2(var1);
-    Struct_0201a600_10* var4 = _ZN9GameState15GetGrottoStructEv(var0);
-    SafeAllocator* var5 = arg0->unknown_68_;
-    unsigned char var6 = _ZNK19TreasureMapMetadata10GetMapTypeEv(var4->unknown_6c_);
-    _ZN9GameState20GetUnknownGameObjectEv(var0);
-    int var7 = arg0->unknown_8_->unknown_0_;
-    int var8 = arg0->unknown_0_ % 20;
-    Struct_0201a600 var9;
-    int var10;
-    int var11;
-    int var12;
-    int var13;
-    int var14;
-    int var15;
-    unsigned char var16;
-    unsigned char var17;
-    int var18;
-    int var19;
-    Struct_0201a600_7 var20;
-    Struct_0201a600_7* var21 = &var20;
-    unsigned char var22;
-    int var23;
+extern "C" ARM int func_0201a600(Zone0201a600* self) {
+    GameState* gs = _ZN9GameState11GetInstanceEv();
+    Resources0201a600* res = (Resources0201a600*)GetGameResources();
+    ActiveGrotto0201a600* grotto = &self->grotto;
+    void* spawner = GetSpawner0201a600(res);
+    GrottoStruct0201a600* grottoData = _ZN9GameState15GetGrottoStructEv(gs);
+    SafeAllocator* alloc = self->allocator;
+    unsigned char mapType = _ZNK19TreasureMapMetadata10GetMapTypeEv(grottoData->activeMapData);
+    _ZN9GameState9GetLeaderEv(gs);
+    int zoneId = self->info->id;
+    int floor = self->currentZoneID % 20;
+    Opcode68Entry0201a600 entry;
+    int y;
+    int halfX;
+    int halfY;
+    int halfZ;
+    int x;
+    int z;
+    unsigned char tileX;
+    unsigned char tileY;
+    int outX;
+    int outZ;
+    AdjacencyBits0201a600 adjacency;
+    AdjacencyBits0201a600* adjacencyPtr = &adjacency;
+    unsigned char key;
+    int found;
 
-    _ZN15Struct_020134e013func_0201e518EiP13SafeAllocator(arg0->unknown_6c_, 2, var5);
+    _ZN12ZoneFeatures13AllocateExitsEiP13SafeAllocator(self->features, 2, alloc);
 
     var9.unknown_0_ = 0;
     var9.unknown_1c_ = -1;
@@ -193,10 +193,10 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
     var9.unknown_20_[3].z = 0;
     var9.unknown_6c_ = -1;
 
-    if (func_0201b5d8(var7)) {
-        var11 = 0x2000;
-        var12 = 0x2000;
-        var13 = 0x2000;
+    if (_Z24ZoneId_IsGrottoBossFloori(zoneId)) {
+        halfX = 0x2000;
+        halfY = 0x2000;
+        halfZ = 0x2000;
     } else {
         var11 = 0x800;
         var12 = 0x1800;
@@ -209,11 +209,11 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
         var9.unknown_54_ = var25 + var24;
     }
 
-    var23 = 0;
-    if (func_0201b5d8(var7)) {
-        var14 = 0;
-        var10 = 0x1000;
-        var15 = 0x11000;
+    found = 0;
+    if (_Z24ZoneId_IsGrottoBossFloori(zoneId)) {
+        x = 0;
+        y = 0x1000;
+        z = 0x11000;
     } else {
         Struct_0201a600_6 var26;
 
@@ -276,25 +276,25 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
         var9.unknown_4_[5] = var33;
     }
 
-    if (func_0201b5d8(var7) && var6 != 2) {
-        var9.unknown_1c_ = _ZNK17ActiveGrottoClass13GetFloorCountEv(var2) + 40000 + var4->unknown_8_ * 20;
-    } else if (var8 == 1 || var6 == 2) {
-        var9.unknown_1c_ = var4->unknown_c_;
-        Vector3i var34 = var4->unknown_10_;
-        var34.z += 0x2000;
-        var9.unknown_20_[0] = var9.unknown_20_[1] = var9.unknown_20_[2] = var9.unknown_20_[3] = var34;
+    if (_Z24ZoneId_IsGrottoBossFloori(zoneId) && mapType != 2) {
+        entry.targetZone = _ZNK17ActiveGrottoClass13GetFloorCountEv(grotto) + 40000 + grottoData->unknown_8 * 20;
+    } else if (floor == 1 || mapType == 2) {
+        entry.targetZone = grottoData->entranceZoneId;
+        Vector3i exitPos = grottoData->entrance;
+        exitPos.z += 0x2000;
+        entry.targetPos[0] = entry.targetPos[1] = entry.targetPos[2] = entry.targetPos[3] = exitPos;
     } else {
         var9.unknown_1c_ = var7 - 1;
     }
 
     {
-        Struct_0201a600_5* var35 = func_0200fd0c(var0);
+        Field3f8_0201a600* request = _Z27GameState_GetZoneTransitionP9GameState(gs);
 
-        if ((zoneId > self->previousZoneID || !_Z17IsInRange0201b588i(self->previousZoneID))
+        if ((zoneId > self->previousZoneID || !_Z15ZoneId_IsGrottoi(self->previousZoneID))
             && request->unk_62 == 0 && request->unk_63 == 0
             && self->previousZoneID != 0 && request->unk_68 == 0) {
             request->active = 1;
-            if (_Z22IsValueInRange0201b5d8i(zoneId)) {
+            if (_Z24ZoneId_IsGrottoBossFloori(zoneId)) {
                 request->pos.x = 0;
                 request->pos.y = 0;
                 request->pos.z = 0xc000;
@@ -327,11 +327,11 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
             }
         }
     }
-    _ZN15Struct_020134e013func_0201e574ERKNS_17Struct_0201cb60_3E(arg0->unknown_6c_, &var9);
+    _ZN12ZoneFeatures10CreateExitERKNS_13Opcode68EntryE(self->features, &entry);
 
-    if (!func_0201b5d8(var7)) {
-        Struct_0201a600_6 var38;
-        Struct_0201a600_5* var39;
+    if (!_Z24ZoneId_IsGrottoBossFloori(zoneId)) {
+        Struct0201ae8c placement;
+        Field3f8_0201a600* request;
 
         var16 = var2->unknown_1c8_.unknown_12_;
         var17 = var2->unknown_1c8_.unknown_13_;
@@ -397,11 +397,11 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
             var9.unknown_1c_ = var7 + 1;
         }
 
-        var39 = func_0200fd0c(var0);
-        if (var7 < arg0->unknown_2_ && var39->unknown_62_ == 0 && var39->unknown_63_ == 0
-            && arg0->unknown_2_ != 0 && var39->unknown_68_ == 0) {
-            Vector3i var41;
-            short var42;
+        request = _Z27GameState_GetZoneTransitionP9GameState(gs);
+        if (zoneId < self->previousZoneID && request->unk_62 == 0 && request->unk_63 == 0
+            && self->previousZoneID != 0 && request->unk_68 == 0) {
+            Vector3i pos;
+            short angle;
 
             __clear(&var41, sizeof(var41));
             var41.x = var14;
@@ -425,7 +425,7 @@ extern "C" ARM int func_0201a600(Struct_0201a600_3* arg0) {
             request->pos = pos;
             request->active = 1;
         }
-        _ZN15Struct_020134e013func_0201e574ERKNS_17Struct_0201cb60_3E(arg0->unknown_6c_, &var9);
+        _ZN12ZoneFeatures10CreateExitERKNS_13Opcode68EntryE(self->features, &entry);
     }
     return 1;
 }

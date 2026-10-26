@@ -4,7 +4,7 @@
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" int func_ov017_021d60f4(void* a);
 extern "C" void func_ov001_021601f8(void* a, void* b);
-extern "C" void func_02016874(void* big);
+extern "C" void Zone3D_Draw(void* big);
 
 struct Struct_ov001_021603d8 { char unknown_0_[0x44]; int unknown_44_; char unknown_48_[0x54 - 0x48]; struct Struct_ov001_021603d8* unknown_54_; };
 struct Struct_ov001_021603d8_2 {
@@ -91,8 +91,8 @@ extern "C" ARM int func_ov001_021603d8(void* obj) {
         ((LightingManager*)var1)->RecomputeAdvancedLighting();
     }
 
-    var0->unknown_832_ = 1;
-    var0->unknown_833_ = 1;
-    func_02016874(var0);
+    big->field832 = 1;
+    big->field833 = 1;
+    Zone3D_Draw(big);
     return 1;
 }

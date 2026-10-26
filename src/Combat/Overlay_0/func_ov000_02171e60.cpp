@@ -15,7 +15,7 @@ struct Struct_0203c108_3 {
     short unknown_14_;
     short unknown_16_;
 };
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 extern "C" void* func_02079e2c(char* arg0, int arg1);
 extern "C" int func_ov000_02171210(void* arg0, void* arg1);
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
         self->stackTop++;
         self->stack[self->stackTop] = 0xe;
         self->result = 0;
-        SwapGlobalEntry0203c108(&self->message, KeyTable_Get(self->texts, 5));
+        CachedTextLabel_SetText(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
     void* rec = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), entry->recordId);
@@ -75,7 +75,7 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
         self->stackTop++;
         self->stack[self->stackTop] = 0xe;
         self->result = 0;
-        SwapGlobalEntry0203c108(&self->message, KeyTable_Get(self->texts, 5));
+        CachedTextLabel_SetText(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
     self->stackTop++;
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
         }
     }
 #if defined(jpn)
-    func_0203c108(&arg0->unknown_50_, (char*)var0->unknown_4_);
+    CachedTextLabel_SetText(&self->message, (char*)entry->name);
 #else
     char text[0x80];
     __clear(text, 0x80);
@@ -97,6 +97,6 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
     func_020e4864(entry->name, text, 1, 0, 0, 0);
     CopyTextAndUppercaseIfFlagged0206819c(text, format, 0);
     MessageSystem_FormatText(MessageSystem_GetInstance(), 10, format, text, 0x100, 0, 0);
-    SwapGlobalEntry0203c108(&self->message, text);
+    CachedTextLabel_SetText(&self->message, text);
 #endif
 }

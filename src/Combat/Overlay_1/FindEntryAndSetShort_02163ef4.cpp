@@ -8,7 +8,7 @@ extern "C" float func_ov017_021d6110(TaggedValue_02163ef4* a);
 extern "C" void* Zone3D_GetInstance(void);
 struct Entry02019508;
 struct Base02019508;
-ARM struct Entry02019508* FindEntryByKeys02019508(struct Base02019508* base, int key1, int key2);
+ARM struct Entry02019508* Zone3D_FindSceneElement(struct Base02019508* base, int key1, int key2);
 
 // USA: func_ov001_02163ef4  (semantic: FindEntryAndSetShort_02163ef4)
 extern "C" ARM int func_ov001_02163ef4(TaggedValue_02163ef4* obj) {
@@ -18,7 +18,7 @@ extern "C" ARM int func_ov001_02163ef4(TaggedValue_02163ef4* obj) {
     if (!g) {
         return 0;
     }
-    struct Entry02019508* e = FindEntryByKeys02019508((struct Base02019508*)g, key1, key2);
+    struct Entry02019508* e = Zone3D_FindSceneElement((struct Base02019508*)g, key1, key2);
     if (!e) {
         return 0;
     }

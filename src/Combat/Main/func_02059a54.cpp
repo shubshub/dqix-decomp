@@ -26,8 +26,8 @@ struct Struct_02059a54_2 {
 };
 int CheckByte0xcZeroAndField8LeField4(State02059a2c*);
 EffectModelInfo02059a54* GetSubField0x14_02055108(S02055080*);
-void* GetPtrField0x144_0202ed74(void*);
-extern "C" void func_020ca528(void*, const void*);
+void* Camera_GetInverseRotation(void*);
+extern "C" void MI_Copy36B(void*, const void*);
 extern "C" void NSBXX_Model_SetPolygonID(void*, int);
 extern int data_0210a0cc;
 extern Vector3fix data_020e7da4;
@@ -58,15 +58,15 @@ extern "C" ARM void func_02059a54(Effect02059a54* self) {
             RenderConfig::SetObjectPosition(&position);
             void* camera = GameState::GetInstance()->GetCamera();
             if (camera) {
-                func_020ca528(GetPtrField0x144_0202ed74(camera), &data_0210a0cc);
+                MI_Copy36B(Camera_GetInverseRotation(camera), &data_0210a0cc);
                 data_0210a010.flags &= ~0xa4;
             }
-            Vector3fix var11 = data_020e7da4;
-            var11.x = (int)((float)(int)(4096.0f * arg0->unknown_13c_) * arg0->unknown_50_);
-            var11.y = (int)((float)(int)(4096.0f * arg0->unknown_140_) * arg0->unknown_54_);
-            RenderConfig::SetObjectScale(&var11);
-            arg0->unknown_7c_.SetInheritedAlpha((int)arg0->unknown_138_);
-            arg0->unknown_7c_.DrawSimple(true);
+            Vector3fix scale = data_020e7da4;
+            scale.x = (int)((float)(int)(4096.0f * self->width) * self->scaleX);
+            scale.y = (int)((float)(int)(4096.0f * self->height) * self->scaleY);
+            RenderConfig::SetObjectScale(&scale);
+            self->object.SetInheritedAlpha((int)self->alpha);
+            self->object.DrawWithCurrentRenderConfig(true);
         } else {
             arg0->unknown_7c_.Draw(true);
         }

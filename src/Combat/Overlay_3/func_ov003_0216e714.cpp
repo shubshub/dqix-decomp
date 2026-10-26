@@ -381,14 +381,14 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                 sprintf(text, data_ov003_021802b6, rec->year + 2000);
                 func_0204f41c(&canvas, 0xf4 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
             }
-            if (inline_ov003_0216e714(inline_ov003_0216e714_2(var25)) > 8) {
-                char *var47 = func_02042a50(8, data_ov003_021802b9);
-                if (var47 != 0) {
-                    func_0204e038(&var27, var47, 0xc, 0xb2, 8, 8, 0xf0, 0xf);
+            if (GetCount(GetProgress(run)) > 8) {
+                char *str = Font_FindGlyph(8, data_ov003_021802b9);
+                if (str != 0) {
+                    func_0204e038(&canvas, str, 0xc, 0xb2, 8, 8, 0xf0, 0xf);
                 }
-                var47 = func_02042a50(8, data_ov003_021802bc);
-                if (var47 != 0) {
-                    func_0204e038(&var27, var47, 0xee, 0xb2, 8, 8, 0xf0, 0xf);
+                str = Font_FindGlyph(8, data_ov003_021802bc);
+                if (str != 0) {
+                    func_0204e038(&canvas, str, 0xee, 0xb2, 8, 8, 0xf0, 0xf);
                 }
                 func_0204f41c(&canvas, 0x7e, 0xaf, data_ov003_0217f5bc, 8, 15, &outA, &outB, 0);
                 sprintf(text, data_ov003_021802b6, self->page);

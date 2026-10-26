@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" unsigned char func_02011494(char* arg0, void* arg1);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
-extern "C" int func_ov000_0217f5dc(void* arg0);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
+unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
+extern "C" void __clear(void* dst, int count);
+extern "C" void* func_ov000_02161318(void* obj, int index);
+extern "C" int func_ov000_0217f5dc(void* entry);
 
 struct Struct_ov000_0217228c {
     unsigned char unknown_0_[0x6c];
@@ -16,15 +16,15 @@ struct Struct_ov000_0217228c {
 };
 
 // USA: func_ov000_0217228c
-extern "C" ARM void func_ov000_0217228c(struct Struct_ov000_0217228c* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned char var1[4];
-    int var2 = func_020114ec((char*)var0, var1);
-    unsigned char var3[4];
-    __clear(var3, 4);
-    for (int var4 = 0; var4 < var2; var4++) {
-        arg0->unknown_6c_[var4] = var1[var4];
-        var3[var1[var4]] = 1;
+extern "C" ARM void func_ov000_0217228c(struct Party0217228c* self) {
+    GameState* state = GameState::GetInstance();
+    unsigned char orderBuf[4];
+    int count = GameState_GetPartyOrder((char*)state, orderBuf);
+    unsigned char used[4];
+    __clear(used, 4);
+    for (int i = 0; i < count; i++) {
+        self->order[i] = orderBuf[i];
+        used[orderBuf[i]] = 1;
     }
     for (; var2 < 4; var2++) {
         for (int var5 = 0; var5 < 4; var5++) {
@@ -40,9 +40,9 @@ extern "C" ARM void func_ov000_0217228c(struct Struct_ov000_0217228c* arg0) {
 #else
     unsigned char var6[4];
 #endif
-    unsigned char var7 = 0;
-    int var8 = func_02011494((char*)var0, var6);
-    for (int var9 = 0; var9 < 4; var9++) {
+    unsigned char active = 0;
+    int numMembers = GameState_GetOwnPartyOrder((char*)state, memberBuf);
+    for (int k = 0; k < 4; k++) {
 #if defined(jpn)
         if (var9 < var8) {
             arg0->unknown_70_[var9] = var6[var9];

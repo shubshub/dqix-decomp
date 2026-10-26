@@ -55,9 +55,9 @@ struct Struct_ov000_02174738_7 {
 };
 
 int GameState_GetProtagonistIndex(GameState* battleStruct);
-void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
-void SetField0_0205b220(void* obj, int value);
-void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
+void GlyphDestination_Clear(struct S_b20c* obj);
+void GlyphDestination_SetPixels(void* obj, int value);
+void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
 void* GetTableEntry020421b0(int idx);
 void SetOrClearFlag0x4At0x24_ov000_02174a38(void* obj, int cond);
 
@@ -66,7 +66,7 @@ extern "C" void func_ov000_02171138(void* arg0);
 extern "C" void func_ov000_02174b14(struct Struct_ov000_02174738_5* arg0);
 extern "C" int func_ov017_021bdbcc();
 extern "C" int Font_GetTextWidth(char* label, int extra);
-extern "C" void func_0205b234(struct S_b20c* a, short b, int c, void* buf, unsigned char d, unsigned char e);
+extern "C" void GlyphDestination_DrawText(struct S_b20c* a, short b, int c, void* buf, unsigned char d, unsigned char e);
 
 extern char data_ov000_0218405b;
 extern int data_ov000_02183ff0;
@@ -137,9 +137,9 @@ checkvalid:
                 text.c = 0;
                 text.d = 0x10;
                 text.e = 0x10;
-                ClearTwoWordsAndByte_0205b20c(&local);
-                SetField0_0205b220(&local, (int)vram);
-                SetFieldsAt0x4And0x8_0205b228(&local, (int)&text, 1);
+                GlyphDestination_Clear(&local);
+                GlyphDestination_SetPixels(&local, (int)vram);
+                GlyphDestination_SetRects(&local, (int)&text, 1);
                 char* field150 = *(char**)((char*)c + 0x150);
                 int idx = *(int*)(field150 + 0x950);
                 char* p = field150 + idx * 2 + 0x100;
@@ -147,7 +147,7 @@ checkvalid:
                 char label[8];
                 sprintf(label, &data_ov000_0218405b, val);
                 short posX = (short)(0x10 - Font_GetTextWidth(label, 0));
-                func_0205b234(&local, posX, 0, label, 0xf, 0);
+                GlyphDestination_DrawText(&local, posX, 0, label, 0xf, 0);
 
                 unsigned short tm2 = *(unsigned short*)(info2 + 4) & 0x3ff;
                 unsigned int off2 = tm2 << 7;

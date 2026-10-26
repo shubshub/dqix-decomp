@@ -25,7 +25,7 @@ extern "C" int Font_GetTextWidth(char* str, int id);
 int Font_FindCharacterIndex(int key, int tableIdx);
 char* FindUnescapedAngleBracket_020424ac(char* str);
 Glyph0204e3e0* Font_GetCharacter(int idx, int tableIdx);
-int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int Font_GetKerning(int a, int b, int tableIdx);
 extern "C" int func_0204fc40(void* unused0, char** cursor, char* tag, short* out, int max);
 extern const unsigned char data_020e7bd6[];
 extern char data_020f0248[];
@@ -160,7 +160,7 @@ extern "C" ARM short func_0204e3e0(Struct_0204e3e0_2* arg0, char* arg1, int arg2
         if (idx >= 0) {
             code = idx & 0xff;
             glyph = Font_GetCharacter(idx, font);
-            int kern = LookupKeyValue020425e4(prev, code, font);
+            int kern = Font_GetKerning(prev, code, font);
             prev = code;
             adv = glyph->width + 1 + kern;
             cursor += glyph->skip;

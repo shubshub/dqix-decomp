@@ -68,8 +68,8 @@ struct Struct_ov003_0217599c_2 {
     signed char character;
 };
 
-extern "C" int *func_0202ae18();
-int CheckField0NonZero_0202b7d8(int *);
+extern "C" int *LinkSession_GetInstance();
+int LinkSession_IsActive(int *);
 short *GetField150Ptr0x488_02052e2c(Field150Holder02052e2c *);
 EquipEntry *ItemTable_Find(ItemTable *, int);
 void *ItemTable_Construct(void *);
@@ -102,7 +102,7 @@ extern Struct_ov003_0217e33c data_ov003_0217faac;
 // USA: func_ov003_0217599c
 extern "C" ARM int func_ov003_0217599c(MenuB *menu) {
     GameState *gs        = GameState::GetInstance();
-    int *search          = func_0202ae18();
+    int *search          = LinkSession_GetInstance();
     Combatant0217599c *c = (Combatant0217599c *) GetCombatantWithFlag0x100_0200ff1c(gs, menu->character);
     if (!c) return 0;
     if (!GetField150Ptr0x488_02052e2c((Field150Holder02052e2c *) c)) return 0;
@@ -164,9 +164,9 @@ extern "C" ARM int func_ov003_0217599c(MenuB *menu) {
             func_0207c378(var7 + 0x1d4, var14->unknown_18_, 1, var14->unknown_8_0_);
         }
     }
-    if (func_0202b7d8(var1)) {
-        func_ov017_021c3fb4(arg0->unknown_1043_, 1);
-        func_ov017_021c4418(arg0->unknown_1043_, -1);
+    if (LinkSession_IsActive(search)) {
+        func_ov017_021c3fb4(menu->character, 1);
+        func_ov017_021c4418(menu->character, -1);
     }
     GameResources *var16 = GetGameResources();
     BackgroundLoader::GetInstance();

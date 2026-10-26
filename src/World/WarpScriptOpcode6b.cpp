@@ -87,7 +87,7 @@ ARM int WarpScript_Opcode_6b_0201d044(Script::Parameter* params, int numParams)
             vecC.z = 4096.0f * (params++)->ToFloat();
             Vector3fix vecD;
             params = params->ToVec3fix(&vecD);
-            entry.unk_2c.type4.vector_4.CopyFrom_0201d474(difference);
+            entry.unk_2c.type4.vector_4.CopyFrom(difference);
             entry.unk_2c.type4.distance_14 = distance;
             entry.unk_2c.type4.vector_18 = vecC;
             entry.unk_2c.type4.vector_24 = vecD;
@@ -112,6 +112,6 @@ ARM int WarpScript_Opcode_6b_0201d044(Script::Parameter* params, int numParams)
 
     ZoneFeatures* instance = data_020fdc20.warp;
     entry.pNext = NULL;
-    instance->CreateOpcode6aEntry_0201e710(entry);
+    instance->CreateOpcode6aEntry(entry);
     return 1;
 }

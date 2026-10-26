@@ -111,8 +111,8 @@ struct BackgroundLoader
     void InitializeOrReset();
     // usa: _ZN16BackgroundLoader8PopulateEPvji
     void Populate(void* scratchSpace, unsigned int scratchSize, int relativePrio);
-    // usa: _ZN16BackgroundLoader13MaybeWaitIdleEv
-    void MaybeWaitIdle();
+    // usa: _ZN16BackgroundLoader7SuspendEv
+    void Suspend();
     // usa: _ZN16BackgroundLoader7AddLockEv
     void AddLock();
     // usa: _ZN16BackgroundLoader10RemoveLockEv
@@ -141,8 +141,8 @@ struct BackgroundLoader
     // usa: _ZN16BackgroundLoader13GetTaskStatusEi
     // -1 = failed, 0 = underway/queued maybe?, 1 = successfully completed
     int GetTaskStatus(int taskID);
-    // usa: _ZN16BackgroundLoader8GetFlag0Ev
-    int GetFlag0();
+    // usa: _ZN16BackgroundLoader6IsIdleEv
+    int IsIdle();
     // usa: _ZN16BackgroundLoader21GetDetailedTaskStatusEi
     int GetDetailedTaskStatus(int taskID);
 
@@ -155,10 +155,10 @@ struct BackgroundLoader
     // returns the ID of the task that loaded this file, or -1 if not loaded.
     int GetLoadedFileInArchive(const char* archive, const char* innerFile, void** outPtr, unsigned int* outLength);
 
-    // usa: _ZN16BackgroundLoader10MaybeResetEv
-    void MaybeReset();
-    // usa: _ZN16BackgroundLoader20MaybeFreeAllocationsEv
-    void MaybeFreeAllocations();
+    // usa: _ZN16BackgroundLoader10ClearQueueEv
+    void ClearQueue();
+    // usa: _ZN16BackgroundLoader15FreeAllocationsEv
+    void FreeAllocations();
     // usa: _ZN16BackgroundLoader10RemoveTaskEi
     void RemoveTask(int taskID);
 

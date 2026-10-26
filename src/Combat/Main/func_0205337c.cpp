@@ -3,7 +3,7 @@
 #include "GameState/GameState.h"
 
 void* GlobalFlags_GetInstance(void);
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
 struct Vec3copy0202ec84 { int x; int y; int z; };
 ARM int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
@@ -42,7 +42,7 @@ struct Struct_0205337c_2 {
 
 // USA: func_0205337c
 extern "C" ARM void func_0205337c(struct Obj0205337c* obj) {
-    if (TestFlags02046708((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) return;
+    if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) return;
     if (obj->node == NULL) return;
 
     void* target = GameState::GetInstance()->GetCamera();

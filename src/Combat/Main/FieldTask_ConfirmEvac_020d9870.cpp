@@ -10,12 +10,12 @@ extern char data_020f29cc;
 
 extern "C" int func_ov017_021959b4(void);
 void* MessageSystem_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-char* GetFieldIfFlag4_020100f8(char*);
+extern "C" void* LinkSession_GetInstance(void);
+char* GameState_GetFollowCamera(char*);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 void InitBattleIfListHasId0x1c_020d9a58(void* self);
-int CheckField0NonZero_0202b7d8(int* p);
-extern "C" int func_0202c508(void* obj);
+int LinkSession_IsActive(int* p);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void func_ov017_021cf730(int a, int b);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
 extern "C" void func_020531f0(void* obj);
@@ -33,7 +33,7 @@ void InitContext020e1154(void* obj);
 void MessageSystem_Reset(char* obj);
 void GameObject_EnableControl(void* obj);
 void InitBattleAndControllerState_020d9ab0(void* self);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 
 struct Struct_020d9870 {
     unsigned char unknown_0_;
@@ -51,11 +51,11 @@ extern "C" ARM void FieldTask_ConfirmEvac(struct Obj020d9870* self) {
 #endif
     GameState* var0 = GameState::GetInstance();
     GetGameResources();
-    void* unkObj = gs->GetUnknownGameObject();
+    void* unkObj = gs->GetLeader();
     void* g1c = MessageSystem_GetInstance();
     FontBankLoader* g = FontBankLoader_GetInstance();
-    void* t = func_0202ae18();
-    char* f4 = GetFieldIfFlag4_020100f8((char*)gs);
+    void* t = LinkSession_GetInstance();
+    char* f4 = GameState_GetFollowCamera((char*)gs);
     unsigned short* p = Zone3D_GetInstance();
 
     if (func_ov017_021959b4() != 0) {
@@ -63,8 +63,8 @@ extern "C" ARM void FieldTask_ConfirmEvac(struct Obj020d9870* self) {
         return;
     }
 
-    if (arg0->unknown_8_ == 0) {
-        if (func_0202b7d8((int*)var4) != 0 && func_0202c508(var4) != 0) {
+    if (self->state == 0) {
+        if (LinkSession_IsActive((int*)t) != 0 && LinkSession_IsHostOrSolo(t) != 0) {
             func_ov017_021cf730(-1, 0);
         }
         func_020a27b8((unsigned char*)var5);
@@ -105,7 +105,7 @@ extern "C" ARM void FieldTask_ConfirmEvac(struct Obj020d9870* self) {
         InitBattleAndControllerState_020d9ab0(self);
     }
 
-    if (func_0201b5d8(*var6) != 0) {
+    if (ZoneId_IsGrottoBossFloor(*p) != 0) {
         return;
     }
     func_020d9ab0(arg0);

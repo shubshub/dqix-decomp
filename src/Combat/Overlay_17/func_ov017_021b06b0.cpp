@@ -18,12 +18,12 @@ struct Struct_ov031_0224e1d0 { char unknown_0_[0x2784]; short unknown_2784_; sho
 #endif
 struct PlayerLocation { unsigned short zone_; Vector3fix16 position_; };
 extern "C" TransferSettings* Zone3D_GetInstance();
-void* GetData02100044_0202ae24();
+void* LinkMessageQueue_GetInstance();
 void EnqueueEventTag147_021cdaa0();
 extern "C" void func_ov017_021cf730(int, int);
 extern "C" void func_ov017_021cfc74(unsigned char);
 extern "C" void func_ov017_021d2184(unsigned char);
-extern "C" Struct_ov017_021b06b0_2* func_020120a0(char*, unsigned int);
+PlayerLocation* GameState_GetPlayerLocation(char*, unsigned int);
 extern "C" void func_ov017_021d360c(int, unsigned char, unsigned short, Vector3fix16);
 extern "C" void func_ov017_021d1a18(int, int, int, int);
 extern "C" int func_0205e488(void*);
@@ -41,14 +41,14 @@ extern "C" ARM unsigned char func_ov017_021b06b0(TransferState* self) {
     GameState* state = GameState::GetInstance();
     TransferSettings* settings = Zone3D_GetInstance();
     GrottoStruct* grotto = state->GetGrottoStruct();
-    void* queue = GetData02100044_0202ae24();
+    void* queue = LinkMessageQueue_GetInstance();
     if (self->phase_ == 0) {
         EnqueueEventTag147_021cdaa0();
         func_ov017_021cf730(self->player_, 1);
         EnqueueEventTag162_021cfc74(grotto->unknown_0[3]);
         func_ov017_021d2184(self->player_);
         for (int i = 0; i < 4; ++i) {
-            PlayerLocation* location = GetField0x74deForValidIndex_020120a0((char*)state, i);
+            PlayerLocation* location = GameState_GetPlayerLocation((char*)state, i);
             if (location) func_ov017_021d360c(0, i, location->zone_, location->position_);
         }
         if (var1->unknown_2788_) func_ov017_021d1a18(1, -1, 1, 0);

@@ -3,13 +3,13 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215eb1c(int arg0, short* arg1, int arg2, int arg3);
-extern "C" unsigned short func_0202053c(void* arg0);
-extern "C" void func_ov000_021620f0(void* arg0, int arg1, int arg2);
-extern "C" void* func_ov000_0215e958(void* arg0);
-extern "C" void func_ov000_0215cd44(void* arg0, void* arg1, void* arg2, int arg3, int arg4, int arg5, int arg6);
+void* GetActiveCombatWork_ov000_02160130(void);
+extern "C" int func_ov000_0215e9fc(int battle, short* ids, int max, int flags);
+extern "C" int func_ov000_0215eb1c(int battle, short* ids, int count, int flag);
+unsigned short GameObject_GetPartyMemberLevel(void* obj);
+extern "C" void func_ov000_021620f0(void* work, int tier, int flag);
+extern "C" void* func_ov000_0215e958(void* a0);
+extern "C" void func_ov000_0215cd44(void* a, void* b, void* c, int d, int e, int f, int g);
 
 struct Struct_ov024_021fe728 { short unknown_0_[8]; };
 extern struct Struct_ov024_021fe728 data_ov024_021fe728;
@@ -36,19 +36,19 @@ struct Struct_ov024_021e20c0_3 {
 };
 
 // USA: func_ov024_021e20c0
-extern "C" ARM void* func_ov024_021e20c0(struct Struct_ov024_021e20c0_3* arg0, int arg1, int arg2) {
-    GameObject* var0 = GetCombatantByID((int)arg0->unknown_10_, arg2);
-    if (!var0) return 0;
-    void* var1 = func_ov000_02160130();
-    struct Struct_ov024_021fe728 var2 = data_ov024_021fe728;
-    int var3 = func_ov000_0215e9fc((int)arg0->unknown_10_, var2.unknown_0_, 4, 0);
-    if (var3 <= 0) return 0;
-    GameState* var4 = GameState::GetInstance();
-    unsigned short var5 = 0;
-    for (int var6 = 0; var6 < var3; var6++) {
-        GameObject* var7 = func_0200ff1c(var4, var2.unknown_0_[var6]);
-        if (var7) {
-            var5 += func_0202053c(var7);
+extern "C" ARM void* func_ov024_021e20c0(struct Obj_021e20c0* obj, int unused, int id) {
+    GameObject* c = GetCombatantByID((int)obj->field0x10, id);
+    if (!c) return 0;
+    void* work = GetActiveCombatWork_ov000_02160130();
+    struct Buf8_021e20c0 buf = data_ov024_021fe728;
+    int count = func_ov000_0215e9fc((int)obj->field0x10, buf.v, 4, 0);
+    if (count <= 0) return 0;
+    GameState* gs = GameState::GetInstance();
+    unsigned short total = 0;
+    for (int i = 0; i < count; i++) {
+        GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gs, buf.v[i]);
+        if (member) {
+            total += GameObject_GetPartyMemberLevel(member);
         }
     }
     int var8 = 0;

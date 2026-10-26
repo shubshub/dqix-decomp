@@ -75,7 +75,7 @@ extern "C" ARM void func_ov020_0218cf8c(struct SetupContext0218cf8c* self) {
 
     int taskId;
     void* loader = BackgroundLoader::GetInstance();
-    ((BackgroundLoader*)loader)->MaybeReset();
+    ((BackgroundLoader*)loader)->ClearQueue();
     taskId = ((BackgroundLoader*)loader)->QueueLoadFile(&data_ov020_0218dcca, (SafeAllocator*)0);
 
   retryLoop:

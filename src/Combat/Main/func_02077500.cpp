@@ -39,11 +39,11 @@ struct Struct_02077500_3 {
 };
 
 extern Entry_02028bd0* ZoneRecords_GetInstance();
-extern Entry_02028bd0* FindInlineEntryById(Entry_02028bd0* table, int id);
+extern Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0* table, int id);
 extern TableEntry_02077500* FindListEntryById(List_020283c0* list, int id);
-extern "C" void func_0202ae18();
-extern "C" int func_0202c508();
-extern "C" void func_ov017_021c927c(int arg0, int arg1, int arg2, Struct_02077500 arg3, int arg4, int arg5, int arg6);
+extern "C" void LinkSession_GetInstance();
+extern "C" int LinkSession_IsHostOrSolo();
+extern "C" void func_ov017_021c927c(int a, int b, int c, Vec3_02077500 pos, int d, int e, int f);
 
 // USA: func_02077500
 extern "C" ARM int func_02077500(Actor_02077500* obj) {
@@ -51,21 +51,21 @@ extern "C" ARM int func_02077500(Actor_02077500* obj) {
     if (table == 0) {
         return 0;
     }
-    Struct_020fdd44* var1 = func_02028bd0(var0, ((Object3D*)((Struct_02039df4*)arg0))->GetField06());
-    if (var1 == 0) {
+    Entry_02028bd0* entry = ZoneRecords_Find(table, ((Object3D*)((U16Field0x6_020375f8*)obj))->GetField06());
+    if (entry == 0) {
         return 0;
     }
     Struct_0201a300_11* var2 = (Struct_0201a300_11*)((char*)var1 + Enum_02077500_24);
     if (var2 == 0) {
         return 0;
     }
-    arg0->unknown_b2_ = 0;
-    ((Object3D*)((Struct_02037d88_9*)arg0))->TransitionInheritedAlpha(0, 0xfa);
-    ((Object3D*)((unsigned char*)arg0))->EnableFlag(0x80);
-    func_0202ae18();
-    if (func_0202c508() != 0) {
-        Struct_02077500_2* var3 = func_020283c0(var2, arg0->unknown_164_);
-        if (var3 == 0) {
+    obj->fb2 = 0;
+    ((Object3D*)((Struct020372b8*)obj))->TransitionInheritedAlpha(0, 0xfa);
+    ((Object3D*)((unsigned char*)obj))->EnableFlag(0x80);
+    LinkSession_GetInstance();
+    if (LinkSession_IsHostOrSolo() != 0) {
+        TableEntry_02077500* row = FindListEntryById(list, obj->entryId);
+        if (row == 0) {
             return 0;
         }
         arg0->unknown_158_.unknown_0_ = var3->unknown_4_ << 0xc;

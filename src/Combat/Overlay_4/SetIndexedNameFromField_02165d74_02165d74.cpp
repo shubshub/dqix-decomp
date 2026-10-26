@@ -15,7 +15,7 @@ ARM int SetIndexedNameFromField_02165d74_02165d74(void* a) {
     int g = MessageSystem_GetInstance();
     func_02046380((void*)g);
     GameState* bs = GameState::GetInstance();
-    GameObject* combatant = bs->GetUnknownGameObject();
+    GameObject* combatant = bs->GetLeader();
     char buf[0x40];
     VectorizedMemset(buf, 0, 0x40);
     strcpy(buf, (char*)GetField0x649eForValidIndex_02011aa0((char*)bs, 0));

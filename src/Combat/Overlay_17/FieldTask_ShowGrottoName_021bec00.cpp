@@ -64,7 +64,7 @@ struct Struct_ov017_021bec00_2 {
     SafeAllocator unknown_44_;
     char unknown_58_[0xa4];
 };
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 extern "C" ZoneState021bec00* Zone3D_GetInstance();
 extern "C" void VectorizedMemset(void*, int, unsigned int);
 extern "C" int sprintf(char*, const char*, ...);
@@ -83,8 +83,8 @@ extern "C" void func_ov017_021bef84(PopupState021bec00*);
 PopupController021bec00* MessageSystem_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-GrottoTransitionData* GetField0x3f8Address_0200fd0c(GameState*);
-void InitAndResetHeader_0219e310(unsigned char*, int);
+GrottoTransitionData* GameState_GetZoneTransition(GameState*);
+void FieldTask_InitEnterZone(unsigned char*, int);
 void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 void MessageSystem_Reset(char*);
 void GameObject_EnableControl(void*);
@@ -97,7 +97,7 @@ extern char data_ov017_021d7e98[], data_ov017_021d7eb2[];
 // Overlay 17, originally func_ov017_021bec00 (USA/EUR 0x021bec00, JPN 0x021bf1c0)
 extern "C" ARM void FieldTask_ShowGrottoName(PopupState021bec00* self) {
     GameState* game = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
     PopupController021bec00* controller = MessageSystem_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
@@ -106,7 +106,7 @@ extern "C" ARM void FieldTask_ShowGrottoName(PopupState021bec00* self) {
     char text[0x100] = {};
     controller->flag19ae = 0;
     if (self->state == 0) {
-        GameObject_DisableControl((Obj020397cc*)game->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((Obj020397cc*)game->GetLeader(), 1);
         SetFlags04(resources, 0xc0);
         FontBankLoader* music = FontBankLoader_GetInstance();
         BlankFunction02094b30(music, 0x203, 0);
@@ -133,7 +133,7 @@ extern "C" ARM void FieldTask_ShowGrottoName(PopupState021bec00* self) {
     } else if (self->state == 2) {
         if (!IsBrightnessTransitionActive(resources)) {
             if ((unsigned char&)grotto->unknown_260_[2]) {
-                GrottoTransitionData* transition = GetField0x3f8Address_0200fd0c(game);
+                GrottoTransitionData* transition = GameState_GetZoneTransition(game);
                 VectorizedMemset(transition, 0, 0x70);
                 transition->flag4 = 1;
                 transition->flag8 = 1;
@@ -156,7 +156,7 @@ extern "C" ARM void FieldTask_ShowGrottoName(PopupState021bec00* self) {
                 TailList020469b4* list;
                 unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
                 list = (TailList020469b4*)resources->fieldTaskQueue_;
-                InitAndResetHeader_0219e310(node, 0);
+                FieldTask_InitEnterZone(node, 0);
                 AppendNodeToTail(list, (TailNode020469b4*)node);
                 grotto->unknown_260_[2] = 0;
                 func_ov017_021bef84(self);
@@ -188,7 +188,7 @@ extern "C" ARM void FieldTask_ShowGrottoName(PopupState021bec00* self) {
         }
     } else if (self->state == 3 && controller->field9a0 == 0) {
         MessageSystem_Reset((char*)controller);
-        GameObject_EnableControl(game->GetUnknownGameObject());
+        GameObject_EnableControl(game->GetLeader());
         FontBankLoader* music = FontBankLoader_GetInstance();
         BlankFunction02094b38(music, 0x1f9);
         FontBankLoader_CancelLoads(music);

@@ -130,7 +130,7 @@ extern "C" void func_ov000_0217a514(Menu02176634*, Entry02176634*, int, int);
 Formatter02176634* MessageSystem_GetInstance();
 extern "C" void func_02046380(Formatter02176634*);
 extern "C" void __clear(void*, int);
-extern "C" void func_020e46c4(void*);
+void NameText_Clear(void*);
 extern "C" void* memset(void*, int, unsigned int);
 void NameText_InitFromPartyMember(void*, int);
 char* KeyTable_Get(Container020e0310*, int);
@@ -425,7 +425,7 @@ extern "C" ARM void func_ov000_02176634(Struct_ov000_02176634_11* arg0, Struct_o
     __clear(plural, 0x80);
     NameParts02176634 targetName;
     NameParts02176634 itemName;
-    Clear12Bytes020e46c4(&itemName);
+    NameText_Clear(&itemName);
     itemName.singular = singular;
     itemName.plural = plural;
     int kind;

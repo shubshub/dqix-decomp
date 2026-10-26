@@ -21,13 +21,13 @@
 #include <globaldefs.h>
 
 // USA: func_0200fb40
-extern "C" ARM void func_0200fb40(void* arg0) {
-    char* var0 = (char*)arg0;
-    unsigned char var1;
-    var0[SUBSTRUCT_BYTE0_OFFSET] = 0;
-    var0[SUBSTRUCT_BYTE1_OFFSET] = 0;
-    for (var1 = 0; var1 < 4; var1++) {
-        (var0 + var1)[SUBSTRUCT_ARRAY_OFFSET] = 0;
+ARM void ClearSubstructBytes_0200fb40(void* gameState) {
+    char* base = (char*)gameState;
+    unsigned char i;
+    base[SUBSTRUCT_BYTE0_OFFSET] = 0;
+    base[SUBSTRUCT_BYTE1_OFFSET] = 0;
+    for (i = 0; i < 4; i++) {
+        (base + i)[SUBSTRUCT_ARRAY_OFFSET] = 0;
     }
     var0[SUBSTRUCT_LAST_BYTE_OFFSET] = 0;
 }

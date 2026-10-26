@@ -18,7 +18,7 @@ struct Struct_02016874 {
 };
 
 // BmdjSceneElement::flags bits. Zone3D_CollectTerrainPolygons skips an element with Hidden set on it or on any
-// parent, and (outside grotto floors) one with Open set; the renderers (func_02016874, ProcessNode0201aedc) skip
+// parent, and (outside grotto floors) one with Open set; the renderers (Zone3D_Draw, ProcessNode0201aedc) skip
 // Hidden ones too.
 enum BmdjElementFlag {
     BmdjElementFlag_Open = 0x1,     // an open door: Zone3D_OpenDoor sets it on the door and its collision element
@@ -80,9 +80,9 @@ struct Struct_02013490 {
 };
 
 BmdjScriptNode* Zone3D_GetScriptNode(Zone3D* zone, int depth);
-void Reset02013490(GrottoTileMapRecord* record);
-void InitStruct02013454(BmdjScriptNode* node);
-void ResetTrackerState_0201f01c(BmdjScriptState* state);
+void GrottoTileMapRecord_Reset(GrottoTileMapRecord* record);
+void BmdjScriptNode_Init(BmdjScriptNode* node);
+void BmdjScriptState_Reset(BmdjScriptState* state);
 void ProcessNode0201aedc(Zone3D* zone);
 TileFeaturePlacementData* FindEntryByNameSubstr0201e434(ZoneFeatures* features, const char* name);
 TileFeaturePlacementData* CopyStruct02019f24(TileFeaturePlacementData* destination, const TileFeaturePlacementData* source);

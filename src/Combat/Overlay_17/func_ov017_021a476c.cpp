@@ -108,21 +108,21 @@ unsigned short data_ov017_021d83a8;
 void* GetGlobalPtr021075f4_0203cf4c(void);
 int MessageSystem_GetInstance(void);
 extern "C" Work021a476c* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-int IsField0Null_02046b08(void** obj);
+extern "C" void* LinkSession_GetInstance(void);
+int FieldTaskQueue_IsEmpty(void** obj);
 extern "C" int func_ov017_021a4e88(int checkKind, unsigned short* outId);
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 Entry021a476c* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4* list, int id);
 Data021a476c* GetField0x8_02040528(int* obj);
 Info021a476c* GetField0xc02040538(S02040538* p);
-unsigned char GetByte0x26c_02039d7c(char* obj);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
-int CheckField0xc4Low15BitsNonZero(BitField0203402c* p);
+unsigned char GameObject_IsClimbingLadder(char* obj);
+int GameObject_IsGesturing(signed char* obj);
+int GameObject_IsSinking(BitField0203402c* p);
 void InitObj0219a674(unsigned char* self);
 void SelectVec3FromSources020406f8(Vec3_020406f8* out, Node020406f8* n);
 short GetAngleDeltaBetween_021a4700(Vec3* p0, int baseAngle, Vec3* p2);
 int GetDeltaAndForward_0218daa8(void* obj, Vec3* otherVec, int c, int d, unsigned char e);
-extern "C" int func_0202c508(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void func_ov017_0219b33c(Ctx021a476c* self, Msg021a476c* msg);
 int GetSignedByte0x1c8_02039860(void* obj);
 unsigned int IsFlag0x1ceBit0x10Set_02039de8(unsigned char* obj);
@@ -139,21 +139,21 @@ extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
     void* list = GetGlobalPtr021075f4_0203cf4c();
     game->GetCamera();
     MessageSystem_GetInstance();
-    Actor021a476c* player = (Actor021a476c*)game->GetUnknownGameObject();
+    Actor021a476c* player = (Actor021a476c*)game->GetLeader();
     GameResources* res = GetGameResources();
     Work021a476c* work = Zone3D_GetInstance();
-    void* session = func_0202ae18();
+    void* session = LinkSession_GetInstance();
 
     data_ov017_021d76da = -1;
     data_ov017_021d83a8 = 0;
     data_ov017_021d76d8 = -1;
     *(int*)((char*)var3 + Enum_ov017_021a476c_22308) = -1;
 
-    if (arg0->unknown_4491_ == 0 && !func_02046b08((void**)arg0->unknown_36fc_)) {
+    if (self->active == 0 && !FieldTaskQueue_IsEmpty((void**)self->list)) {
         func_ov017_021a4e88(0, &data_ov017_021d83a8);
         return;
     }
-    if (func_0202b7d8((int*)var8) && arg0->unknown_441c_->unknown_0_ != 0) {
+    if (LinkSession_IsActive((int*)session) && self->holder->busy != 0) {
         return;
     }
     data_ov017_021d76da = func_ov017_021a4e88(1, &data_ov017_021d83a8);
@@ -165,16 +165,16 @@ extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
             if (var9->unknown_0_ & 0x200) {
                 return;
             }
-            if (func_02039d7c((char*)var5) != 0 || var6->unknown_4080_ != 0) {
+            if (GameObject_IsClimbingLadder((char*)player) != 0 || res->unknown_4080 != 0) {
                 return;
             }
-            if (IsBrightnessOutsideValidRange(var6, false)) {
+            if (IsScreenFullyFaded(res, false)) {
                 return;
             }
-            if (func_020535c8((signed char*)var5)) {
+            if (GameObject_IsGesturing((signed char*)player)) {
                 return;
             }
-            if (func_0203402c((Struct_0203402c*)var5)) {
+            if (GameObject_IsSinking((BitField0203402c*)player)) {
                 return;
             }
             if (var10 != NULL && var11 != NULL) {
@@ -196,15 +196,15 @@ extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
                             var0.unknown_1_ = 3;
                             var13 = 1;
                         }
-                    } else if (var15 == 1) {
-                        var0.unknown_1_ = 3;
-                        var13 = 1;
-                    } else if (var15 == 2) {
-                        var0.unknown_1_ = 4;
-                        var13 = 1;
-                    } else if (var15 == 3) {
-                        if (func_0202c508(func_0202ae18())) {
-                            var0.unknown_1_ = 0xf;
+                    } else if (mode == 1) {
+                        msg.field1 = 3;
+                        set = 1;
+                    } else if (mode == 2) {
+                        msg.field1 = 4;
+                        set = 1;
+                    } else if (mode == 3) {
+                        if (LinkSession_IsHostOrSolo(LinkSession_GetInstance())) {
+                            msg.field1 = 0xf;
                         } else {
                             var0.unknown_1_ = 2;
                         }
@@ -221,31 +221,31 @@ extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
             }
         }
     } else {
-        Struct_ov017_021a476c_10* var16;
-        Struct_ov017_021a476c_7* var17;
-        int var18;
-        int var19;
-        int var20;
-        int var21;
-        Struct_ov017_021a476c_10* var22;
-        int var23;
-        int var24;
-        int var25;
-        int var26;
-        int var27;
-        int var28;
-        Struct_ov017_021a476c_10* var29;
-        GameState* var30;
-        Struct_ov017_021a476c_2* var31;
-        void* var32;
-        GameResources* var33;
-        if (!func_0202b7d8((int*)func_0202ae18())) {
+        Actor021a476c* mem;
+        Save021a476c* save;
+        int sum;
+        int ay;
+        int az;
+        int ax;
+        Actor021a476c* member;
+        int i;
+        int dy;
+        int dz;
+        int dx;
+        int best;
+        int found;
+        Actor021a476c* leader;
+        GameState* game2;
+        Work021a476c* work2;
+        void* list2;
+        GameResources* res2;
+        if (!LinkSession_IsActive((int*)LinkSession_GetInstance())) {
             goto none;
         }
         res2 = GetGameResources();
         list2 = res2->fieldTaskQueue_;
         work2 = Zone3D_GetInstance();
-        if (IsBrightnessOutsideValidRange(res2, false)) {
+        if (IsScreenFullyFaded(res2, false)) {
             found = -1;
             goto done;
         }
@@ -253,20 +253,20 @@ extern "C" ARM void func_ov017_021a476c(Ctx021a476c* self) {
             var28 = -1;
             goto done;
         }
-        if (func_02046b08((void**)var32) == 0) {
-            var28 = -1;
+        if (FieldTaskQueue_IsEmpty((void**)list2) == 0) {
+            found = -1;
             goto done;
         }
-        var30 = GameState::GetInstance();
-        var29 = (Struct_ov017_021a476c_10*)var30->GetUnknownGameObject();
-        var28 = -1;
-        var27 = -1;
-        var26 = 0;
-        var25 = 0;
-        var24 = 0;
-        for (var23 = 0; var23 <= 3; var23++) {
-            var22 = (Struct_ov017_021a476c_10*)var30->GetPartyMemberByIndex(var23);
-            if (var22 == NULL || var22 == var29) {
+        game2 = GameState::GetInstance();
+        leader = (Actor021a476c*)game2->GetLeader();
+        found = -1;
+        best = -1;
+        dx = 0;
+        dz = 0;
+        dy = 0;
+        for (i = 0; i <= 3; i++) {
+            member = (Actor021a476c*)game2->GetPartyMemberByIndex(i);
+            if (member == NULL || member == leader) {
                 continue;
             }
             if (var29->unknown_0_.GetField06() != var22->unknown_0_.GetField06()) {

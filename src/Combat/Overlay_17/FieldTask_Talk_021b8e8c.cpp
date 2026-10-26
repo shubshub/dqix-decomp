@@ -91,7 +91,7 @@ extern "C" unsigned short* Zone3D_GetInstance(void);
 char* MessageSystem_GetInstance(void);
 void* GetGlobalPtr021075f4_0203cf4c(void);
 extern "C" void* Scenario_GetInstance(void);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
@@ -109,8 +109,8 @@ int FindEntryByKey0203dfdc(void* base, int key);
 int GetFieldFromActiveChild(struct Owner02040a90* obj);
 int GetField0x8_02040528(int* obj);
 void SetCombatFlags0x5c(struct Struct0203cedc* obj, int b, int c);
-int GetField5cb0Value_0201079c(char* obj);
-int GetField5cb4Value_020107d0(char* obj);
+int GameState_GetStoryChapter(char* obj);
+int GameState_GetStoryPart(char* obj);
 Entry0209854c* FindEntryByFieldC0209854c(struct Entry0209854c* list, int target);
 extern "C" void func_ov017_021a967c(TailNode020469b4* node, int id);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
@@ -162,11 +162,11 @@ extern "C" ARM void FieldTask_Talk(Self021b8e8c* self, ListHead02046b60* list) {
     unsigned short* area = Zone3D_GetInstance();
     char* msg = MessageSystem_GetInstance();
     void* table = GetGlobalPtr021075f4_0203cf4c();
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     void* events = Scenario_GetInstance();
     void* hud;
     unsigned short areaId = *area;
-    hud = (void*)GetFieldIfFlag4_020100f8((char*)gs);
+    hud = (void*)GameState_GetFollowCamera((char*)gs);
     unsigned char* nibbles = (unsigned char*)res->unknown_ptr_44c4;
 
     if (func_ov017_021959b4() != 0) {
@@ -212,7 +212,7 @@ extern "C" ARM void FieldTask_Talk(Self021b8e8c* self, ListHead02046b60* list) {
             entry->combat != NULL) {
             SetCombatFlags0x5c(entry->combat, 1, 0);
         }
-        int tableId = GetField5cb0Value_0201079c((char*)gs);
+        int tableId = GameState_GetStoryChapter((char*)gs);
         char prefix[0xc];
         strcpy(prefix, *(char**)((char*)area + 8) + 5);
         prefix[3] = 0;
@@ -266,7 +266,7 @@ extern "C" ARM void FieldTask_Talk(Self021b8e8c* self, ListHead02046b60* list) {
         void* data;
         unsigned int length;
         loader->GetLoadedFileByID(self->task, &data, &length);
-        int arg = GetField5cb4Value_020107d0((char*)gs);
+        int arg = GameState_GetStoryPart((char*)gs);
         unsigned short id = self->rec->id;
         int lo = GetNibble0206ec1c((int)nibbles, id, nibbles, 0x80);
         int hi = GetNibble0206ec1c((int)nibbles, id, nibbles + 0x80, 0x80);

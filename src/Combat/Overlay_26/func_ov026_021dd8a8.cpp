@@ -94,7 +94,7 @@ GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 int IsFlag10088Set_02010088(S_10088*);
 int IsFlagBit8192Set_021dd3c4(FlagObj_021dd3c4*);
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
-unsigned char CopyOutRegion0x571d_020114ec(char*, void*);
+unsigned char GameState_GetPartyOrder(char*, void*);
 void* GetActiveCombatWork_ov000_02160130();
 void* GetOffsetPtr02160f08(void*);
 void* FindSlotById_021dae60(Container_021dae60*, int);
@@ -203,14 +203,14 @@ extern "C" ARM void func_ov026_021dd8a8(Struct_ov000_02161e30* arg0, Struct_ov00
         func_020465c0((Struct_020465c0*)var8, 0, 1);
     }
 
-    var20 = func_020114ec((char*)var6, var5);
-    var16 = 0;
-    var19 = 0;
-    var21 = func_ov000_02160f08(func_ov000_02160130());
-    for (var18 = 0; var18 < var20; var18++) {
-        GameObject* var30 = var6->GetCombatantByIndex(var5[var18]);
-        func_ov026_021dae60((Struct_ov026_021d8ba0_4*)var21, var5[var18]);
-        if (var30 == NULL) {
+    count = GameState_GetPartyOrder((char*)gs, ids);
+    idle = 0;
+    present = 0;
+    slots = GetOffsetPtr02160f08(GetActiveCombatWork_ov000_02160130());
+    for (i = 0; i < count; i++) {
+        GameObject* c = gs->GetCombatantByIndex(ids[i]);
+        FindSlotById_021dae60((Container_021dae60*)slots, ids[i]);
+        if (c == NULL) {
             continue;
         }
         if (!func_020a35e0((unsigned char*)arg1, var5[var18])) {

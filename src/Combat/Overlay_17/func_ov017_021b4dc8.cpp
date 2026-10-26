@@ -10,9 +10,9 @@ struct Struct_0209c08c {
 };
 
 extern "C" char* Zone3D_GetInstance(void);
-int GetField5cb0Value_0201079c(char* battleStruct);
-int GetField5cb4Value_020107d0(char* battleStruct);
-int IsInRange0201b5b0(int monsterId);
+int GameState_GetStoryChapter(char* battleStruct);
+int GameState_GetStoryPart(char* battleStruct);
+int ZoneId_IsMainGrottoFloor(int monsterId);
 extern "C" void func_0209c008(void* obj, struct StreamHeader* buffer, int length, int idFlag, int mulVal, int addVal);
 void ClearHalfword0x18_0209bffc(void* obj);
 void AppendHalfwordCapped_0209c08c(BoundedArray* arr, unsigned short value);
@@ -56,20 +56,20 @@ extern "C" ARM void func_ov017_021b4dc8(struct Struct_ov017_021b4dc8_2* arg0) {
         return;
     }
 
-    var0 = arg0->unknown_8_;
-    func_0209bffc(&var0->unknown_44_);
-    if (var2->GetDetailedTaskStatus(arg0->unknown_c_) == BackgroundLoader::TaskStatus_Complete) {
-        unsigned int var5;
-        void* var6;
-        var2->GetLoadedFileByID(arg0->unknown_c_, &var6, &var5);
-        if (var6 != 0) {
-            int var7 = func_0201079c((char*)var1);
-            int var8 = func_020107d0((char*)var1);
-            int var9 = var4;
-            if (func_0201b5b0(var4)) {
-                int var10 = var3->GetFloorMonsterRank(var4 % 20);
-                int var11 = var3->GetActiveGrottoEnviron();
-                var9 = var10 + (var11 * 100 + 0x9c40);
+    source = request->source;
+    ClearHalfword0x18_0209bffc(&source->entries);
+    if (loader->GetDetailedTaskStatus(request->taskId) == BackgroundLoader::TaskStatus_Complete) {
+        unsigned int size;
+        void* data;
+        loader->GetLoadedFileByID(request->taskId, &data, &size);
+        if (data != 0) {
+            int field5cb0 = GameState_GetStoryChapter((char*)battle);
+            int field5cb4 = GameState_GetStoryPart((char*)battle);
+            int scriptId = monsterId;
+            if (ZoneId_IsMainGrottoFloor(monsterId)) {
+                int rank = grotto->GetFloorMonsterRank(monsterId % 20);
+                int environ = grotto->GetActiveGrottoEnviron();
+                scriptId = rank + (environ * 100 + 0x9c40);
             }
             func_0209c008(&var0->unknown_44_, (struct Struct_02013fb4*)var6, var5, var9, var7, var8);
         }
@@ -78,10 +78,10 @@ extern "C" ARM void func_ov017_021b4dc8(struct Struct_ov017_021b4dc8_2* arg0) {
     if (arg0->unknown_12_ != 0) {
         func_0209c08c(&var0->unknown_44_, arg0->unknown_12_);
     }
-    if (func_0201b5b0(var4)) {
-        func_0209c08c(&var0->unknown_44_, 0x26);
-        func_0209c08c(&var0->unknown_44_, 0x27);
-        func_0209c08c(&var0->unknown_44_, 0x28);
+    if (ZoneId_IsMainGrottoFloor(monsterId)) {
+        AppendHalfwordCapped_0209c08c(&source->entries, 0x26);
+        AppendHalfwordCapped_0209c08c(&source->entries, 0x27);
+        AppendHalfwordCapped_0209c08c(&source->entries, 0x28);
     }
 
     var2->RemoveTask(arg0->unknown_c_);

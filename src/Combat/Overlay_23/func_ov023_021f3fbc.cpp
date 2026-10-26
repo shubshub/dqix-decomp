@@ -6,10 +6,10 @@ enum {Enum_ov023_021f3fbc_3756=0xeac, Enum_ov023_021f3fbc_21896=0x5588};
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_0209ca2c(void* arg0);
-extern "C" void func_ov023_021d8af8(void* arg0);
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+int IsAnimationActive0209ca2c(void* obj);
+extern "C" void func_ov023_021d8af8(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 void* GameState_GetParty(GameState*);
 extern "C" void func_ov017_021cc730(int id, unsigned char arg1, unsigned char arg2, unsigned char arg3);
 int MessageSystem_GetInstance(void);
@@ -36,7 +36,7 @@ extern "C" ARM int func_ov023_021f3fbc(char* obj) {
         *(void**)(arg0 + Enum_ov023_021f3fbc_21896) = 0;
     }
 
-    if (CheckField0NonZero_0202b7d8((int*)func_0202ae18())) {
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
         GameState* battleStruct = GameState::GetInstance();
         unsigned char* list = (unsigned char*)GameState_GetParty(battleStruct);
         for (int i = 0; i < list[0xf7c]; i++) {

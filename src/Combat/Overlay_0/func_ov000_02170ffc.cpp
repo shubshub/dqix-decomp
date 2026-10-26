@@ -18,7 +18,7 @@ struct Struct_0203c108_3 {
     char unknown_0_[0x14];
     short unknown_14_;
 };
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 extern "C" void __clear(void* arg0, int arg1);
 
@@ -61,13 +61,13 @@ extern "C" ARM void func_ov000_02170ffc(struct Struct_ov000_02170ffc* arg0) {
         int key = func_ov000_02171a74(obj);
         struct Container020e0310* container = obj->container;
         if (container != NULL && key >= 0) {
-            SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(container, key));
+            CachedTextLabel_SetText(&obj->label, (char*)KeyTable_Get(container, key));
             return;
         }
 #else
-        __clear(var0, sizeof(var0));
-        if (func_ov000_02171a74(arg0, var0) >= 0) {
-            func_0203c108(&arg0->unknown_50_, var0);
+        __clear(buf, sizeof(buf));
+        if (func_ov000_02171a74(obj, buf) >= 0) {
+            CachedTextLabel_SetText(&obj->label, buf);
             return;
         }
 #endif
@@ -79,5 +79,5 @@ extern "C" ARM void func_ov000_02170ffc(struct Struct_ov000_02170ffc* arg0) {
     }
     struct CombatantExt02170ffc* ext = GetFieldAt0x150_02053c6c((unsigned char*)member);
     key += (signed char)ext->field94c;
-    SwapGlobalEntry0203c108(&obj->label, (char*)KeyTable_Get(obj->container, key));
+    CachedTextLabel_SetText(&obj->label, (char*)KeyTable_Get(obj->container, key));
 }

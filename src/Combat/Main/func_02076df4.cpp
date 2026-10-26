@@ -5,12 +5,12 @@ struct Struct_02039df4 { char unknown_0_[0x6]; unsigned short unknown_6_; };
 
 struct Entry_02028bd0;
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
-struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
+struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 
-struct Struct_0202c508 { int unknown_0_; };
-extern "C" int func_0202c508(struct Struct_0202c508* arg0);
+struct CheckField0AndGlobalHalfStruct0202c508 { int field0; };
+extern "C" int LinkSession_IsHostOrSolo(struct CheckField0AndGlobalHalfStruct0202c508* obj);
 
 struct Struct_02076df4;
 extern "C" unsigned short func_02079040(struct Struct_02076df4* arg0, unsigned char* arg1);
@@ -37,15 +37,15 @@ struct Struct_02076df4_2 {
 // USA: func_02076df4
 extern "C" ARM void func_02076df4(struct Actor02076df4* obj) {
     GameState* battleStruct = GameState::GetInstance();
-    void* g = func_0202ae18();
+    void* g = LinkSession_GetInstance();
     struct Entry_02028bd0* table = ZoneRecords_GetInstance();
     GameObject* combatant = battleStruct->GetPartyMemberByIndex(obj->field166);
     int key = ((Object3D*)((struct U16Field0x6_020375f8*)obj))->GetField06();
-    struct Entry_02028bd0* entry = FindInlineEntryById(table, key);
+    struct Entry_02028bd0* entry = ZoneRecords_Find(table, key);
     if (entry == 0) {
         return;
     }
-    if (func_0202c508((struct Struct_0202c508*)var1) == 0) {
+    if (LinkSession_IsHostOrSolo((struct CheckField0AndGlobalHalfStruct0202c508*)g) == 0) {
         return;
     }
     if (arg0->unknown_17c_ != 0) {

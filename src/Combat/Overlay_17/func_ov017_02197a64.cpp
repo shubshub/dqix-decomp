@@ -63,7 +63,7 @@ struct Struct_ov017_02197a64 {
 
 extern "C" void* Zone3D_GetInstance(void);
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
-Obj020968d0* GetField4328_0218d268(void* res);
+Obj020968d0* GameResources_GetTouchWalk(void* res);
 void InitObj0219a674(unsigned char* self);
 extern "C" int func_02094b9c(void* a, void* b);
 int BuildAndForwardVec_0218da48(void* obj, int angle, int c, int d, unsigned char e);
@@ -81,10 +81,10 @@ extern "C" ARM void func_ov017_02197a64(Self02197a64* self) {
     GameState* gs = GameState::GetInstance();
     Resources02197a64* res = (Resources02197a64*)GetGameResources();
     void* cache = Zone3D_GetInstance();
-    Leader02197a64* leader = (Leader02197a64*)gs->GetUnknownGameObject();
+    Leader02197a64* leader = (Leader02197a64*)gs->GetLeader();
     Vector3fix filter = leader->position;
     GroupNode02197a64* node = (GroupNode02197a64*)ZoneFeatures_GetFirstOfType((unsigned char*)cache + RegionOffset6c, 2);
-    Obj020968d0* field = GetField4328_0218d268(res);
+    Obj020968d0* field = GameResources_GetTouchWalk(res);
     int notify = 0;
     GroupEvent02197a64 event;
     InitObj0219a674((unsigned char*)&event);

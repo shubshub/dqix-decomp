@@ -5,7 +5,7 @@
 void InitRegionArray02087628(char* p);
 #define InitRegionArray02087628 InitRegionArray02087628
 
-unsigned char CopyOutRegion0x5718_02011494(char* src, void* dst);
+unsigned char GameState_GetOwnPartyOrder(char* src, void* dst);
 
 int GameState_GetProtagonistIndex(GameState* b);
 
@@ -38,7 +38,7 @@ extern "C" ARM void func_ov017_021b6c78(void) {
 
     char buf1[4];
     char buf2[0x10];
-    unsigned char count = CopyOutRegion0x5718_02011494((char*)battle, buf1);
+    unsigned char count = GameState_GetOwnPartyOrder((char*)battle, buf1);
 
     for (unsigned char idx = 0; idx < count; idx = (unsigned char)(idx + 1)) {
         char id = buf1[idx];

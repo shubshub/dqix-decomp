@@ -11,10 +11,10 @@ extern "C" float _fdiv(float arg0, float arg1);
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float v);
 
-extern "C" void func_0202e874(unsigned char* arg0, short arg1);
+extern "C" void _Z14Camera_SetRollPht(unsigned char* obj, short val);
 
-struct Struct_0202df68;
-extern "C" void func_0202e9a4(struct Struct_0202df68* arg0, int arg1);
+struct AngleTrig0202e9a4;
+void Camera_SetFieldOfView(struct AngleTrig0202e9a4* obj, int angle);
 
 // USA: func_0204700c
 extern "C" ARM int func_0204700c(char* arg0) {
@@ -36,8 +36,8 @@ extern "C" ARM int func_0204700c(char* arg0) {
 
     void* obj = gs->GetCamera();
     short ang16 = fix32ReduceAngle0To2Pi(_ffix(_fmul(4096.0f, ang)));
-    _Z42SetField0x7cClearFields0x1ec0x1ee_0202e874Pht((unsigned char*)obj, ang16);
-    SetAngleAndTrigTable0202e9a4((struct AngleTrig0202e9a4*)obj,
+    _Z14Camera_SetRollPht((unsigned char*)obj, ang16);
+    Camera_SetFieldOfView((struct AngleTrig0202e9a4*)obj,
                                  _ffix(_fmul(4096.0f, *(float*)(self + 0xc))));
 
     Object3D* var6 = *(Object3D**)(arg0 + 0xe8);

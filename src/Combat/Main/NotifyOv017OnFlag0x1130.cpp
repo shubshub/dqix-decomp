@@ -9,7 +9,7 @@ ARM void NotifyOv017OnFlag0x1130_020a8740(void) {
     Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
     int i = 0;
     for (;;) {
-        ZoneFeatures::Opcode6aEntry* entry = GetElementStride0x74_0201e664(&zone->substruct_6c_, i);
+        ZoneFeatures::Opcode6aEntry* entry = ZoneFeatures_GetEntry(&zone->substruct_6c_, i);
         i++;
         if (!entry) return;
         if (entry->maybeType != 0xc) continue;

@@ -24,11 +24,11 @@ struct Struct_02095924 {
 struct SearchTable { char padding0[0xa0]; SearchNode* first; };
 struct SearchArguments { char padding0[0xc]; int category; char padding10[0x24]; };
 extern "C" PackedNibbleArray0206e120* Scenario_GetInstance();
-extern "C" SearchStruct0202c1a4* func_0202ae18();
+extern "C" SearchStruct0202c1a4* LinkSession_GetInstance();
 extern "C" unsigned short* Zone3D_GetInstance();
 int GetPackedNibbleFlag0x8(PackedNibbleArray0206e2dc*, int);
-int CheckField0NonZero_0202b7d8(int*);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+int LinkSession_IsActive(int*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 int ForEachNodeUntilFalse02064704(void*, Node02064704*, void*);
 int GetPackedNibbleField(PackedNibbleArray0206e120*, int);
 int IsNibbleFieldZeroOrOne_02095ae0(PackedNibbleArray0206e120*, int);
@@ -43,12 +43,12 @@ static inline int inline_02095924(Struct_0205faf4_3* arg0, int arg1, int arg2) {
 extern "C" ARM void func_02095b30(Struct_02095924_2* arg0, int arg1) {
     GameState::GetInstance();
     PackedNibbleArray0206e120* values = Scenario_GetInstance();
-    SearchStruct0202c1a4* search = func_0202ae18();
+    SearchStruct0202c1a4* search = LinkSession_GetInstance();
     unsigned char components[3];
     SearchArguments arguments;
     for (SearchNode* node = table->first; node; node = node->next) {
         if (node->enabled && !GetPackedNibbleFlag0x8((PackedNibbleArray0206e2dc*)values, node->index)) continue;
-        if (CheckField0NonZero_0202b7d8((int*)search) && GetSearchStructCurrentArrEntry(search) && !node->allowDuringSearch) continue;
+        if (LinkSession_IsActive((int*)search) && LinkSession_GetOwnSlot(search) && !node->allowDuringSearch) continue;
         if (checkThreshold) {
             GetEntry3Bytes_0206dee8((EntryDEE8*)values, 0, &components[2], &components[1], &components[0]);
             if (!node->enabled) continue;

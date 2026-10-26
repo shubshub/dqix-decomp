@@ -95,17 +95,17 @@ public:
     // in the same cases as 0x20, but replacing this function to always return null
     // only disables wandering monsters, while keeping whistle spawns and grotto
     // bosses in tact
-    GameObject* GetMaybeWanderingMonsterByIndex(int idx);
+    GameObject* GetWanderingMonsterByIndex(int idx);
     GameObject* GetProtagonist();
     // Seems to also be the protagonist, checks the bit at 0x397c
-    GameObject* GetUnknownGameObject();
+    GameObject* GetLeader();
     // Like GetCombatantByIndex() but checks for bitmask 0x800 instead.
     GameObject* GetPartyMemberByIndex(int idx);
     // Like GetCombatantByIndex() but checks for bitmask 0x20 instead. In practice
     // this bit is set for monsters out of battle, and replacing this function to
     // always return null disables monster spawns, including through whistle, and
     // removes grotto bosses.
-    GameObject* GetMaybeFieldMonsterByIndex(int idx);
+    GameObject* GetFieldMonsterByIndex(int idx);
     // Index into the object array, but only return it if its obj3D.unk_0
     // has bit 0x80 set. In practice this seems to be for enemies in battle
     // and party members universally. In a fight with multiple enemies, you can

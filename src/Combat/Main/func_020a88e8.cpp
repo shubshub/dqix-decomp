@@ -11,13 +11,13 @@ struct Base02019508;
 struct Trigger020a88e8 { char pad[3]; unsigned char instant; };
 struct Manager020a88e8 { char pad[kManagerPrefix]; Trigger020a88e8* trigger; };
 extern "C" Base02019508* Zone3D_GetInstance();
-Entry02019508* FindEntryByKeys02019508(Base02019508*, int, int);
+Entry02019508* Zone3D_FindSceneElement(Base02019508*, int, int);
 void SetFlag0x80_020133b4(void*, int);
 // USA: func_020a88e8
 extern "C" ARM void func_020a88e8(Obj020a88e8* self) {
     Base02019508* base = Zone3D_GetInstance();
-    Entry02019508* first = FindEntryByKeys02019508(base, self->key1, self->key2);
-    Entry02019508* second = FindEntryByKeys02019508(base, self->key3, self->key4);
+    Entry02019508* first = Zone3D_FindSceneElement(base, self->key1, self->key2);
+    Entry02019508* second = Zone3D_FindSceneElement(base, self->key3, self->key4);
     if (!first || !second) return;
     SetFlag0x80_020133b4(first, 1);
     Trigger020a88e8* trigger = ((Manager020a88e8*)GetGameResources())->trigger;

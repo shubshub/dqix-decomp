@@ -54,7 +54,7 @@ void GameObject_DisableControl(Obj020397cc*, int);
 extern "C" int func_ov017_021959b4();
 void MessageSystem_Reset(char*);
 extern "C" void func_ov017_021ac32c(Event021ac3b0*);
-int GetFieldIfFlag4_020100f8(char*);
+int GameState_GetFollowCamera(char*);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
 void SePlayer_Play(SePlayer*, int, int);
 void* TextQueue_GetInstance();
@@ -67,7 +67,7 @@ extern "C" void func_0204500c(void*, const char*, int, int);
 #endif
 extern "C" void func_020a0cc4(unsigned int);
 void GameObject_SetFacing(Obj02033834*, int);
-extern "C" void func_020a0c0c();
+extern "C" void ROMFilesystem_InitFileTables();
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
 void InitAndRunScript_021acc8c(void*, StreamHeader*, int, int);
 extern "C" Flags021ac3b0* Scenario_GetInstance();
@@ -96,7 +96,7 @@ extern AllocatorUnion g_mainAllocator;
 extern "C" ARM void FieldTask_ReadBookshelf(Event021ac3b0* self) {
     GameState* game = GameState::GetInstance();
     GetGameResources();
-    GameObject* leader = game->GetUnknownGameObject();
+    GameObject* leader = game->GetLeader();
     Zone021ac3b0* zone = Zone3D_GetInstance();
     Controller021ac3b0* controller = MessageSystem_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
@@ -107,7 +107,7 @@ extern "C" ARM void FieldTask_ReadBookshelf(Event021ac3b0* self) {
         func_ov017_021ac32c(self); self->done = 1; return;
     }
     if (self->stage == 0) {
-        int actor = GetFieldIfFlag4_020100f8((char*)game);
+        int actor = GameState_GetFollowCamera((char*)game);
         if (actor) SetFlagsAt0x244_020a28a0((unsigned char*)actor, 3);
         SePlayer_Play(&g_sePlayer, 1, 0);
         void* reset = TextQueue_GetInstance();
@@ -138,12 +138,12 @@ extern "C" ARM void FieldTask_ReadBookshelf(Event021ac3b0* self) {
         sprintf(var10, data_ov017_021d7949, var8->unknown_5_);
         arg0->unknown_24_ = var4->QueueLoadFileInGP2(var9, var10, 0);
 #endif
-        arg0->unknown_28_++;
-    } else if (arg0->unknown_28_ == 3) {
-        if (!var4->GetTaskStatus(arg0->unknown_24_)) return;
-        if (var4->GetDetailedTaskStatus(arg0->unknown_24_) != 2) {
-            var4->RemoveTask(arg0->unknown_24_); arg0->unknown_24_ = -1; arg0->unknown_1_ = 1;
-            func_ov017_021ac32c(arg0); func_020a0c0c(); return;
+        self->stage++;
+    } else if (self->stage == 3) {
+        if (!loader->GetTaskStatus(self->task)) return;
+        if (loader->GetDetailedTaskStatus(self->task) != 2) {
+            loader->RemoveTask(self->task); self->task = -1; self->done = 1;
+            func_ov017_021ac32c(self); ROMFilesystem_InitFileTables(); return;
         }
         void* file; unsigned int length;
         loader->GetLoadedFileByID(self->task, &file, &length);

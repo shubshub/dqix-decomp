@@ -124,9 +124,9 @@ struct Struct_02086f24_6 { void* unknown_0_; };
 struct Struct_02086f24_7;
 struct Struct_02013fb4;
 
-void ResetStructFields_02089db4(ResetFieldsStruct* s);
-void ForwardResetStructFields02089ddc(ResetFieldsStruct* s);
-void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
+void PresetTable_Reset(ResetFieldsStruct* s);
+void PresetTable_Destroy(ResetFieldsStruct* s);
+void PresetTable_Load(void* param0, void* param1, const char* param2);
 RecruitTemplate02086f24* FindEntryBySignedId02089fb0(EntryArray02089fb0* arr, int id);
 extern "C" void PartyMemberRecord_Init(CombatSelection* selection);
 extern "C" void __clear(void* dst, unsigned int size);
@@ -200,8 +200,8 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
     scriptAlloc.ResetAllocatorPointer();
     scriptAlloc.CreateTypeA(heap->Allocate(HEAP_SIZE_02086f24), HEAP_SIZE_02086f24);
     scriptAlloc.Reset();
-    ResetStructFields_02089db4(&templates);
-    SetupHeaderAndRunBufferedScript02089de8(&templates, &scriptAlloc, NULL);
+    PresetTable_Reset(&templates);
+    PresetTable_Load(&templates, &scriptAlloc, NULL);
     RecruitTemplate02086f24* t = FindEntryBySignedId02089fb0((EntryArray02089fb0*)&templates, (short)(id + 7));
     PartyMemberRecord_Init(&sel);
     int vocation = 0;
@@ -270,7 +270,7 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
     } else {
         var13 = 0;
     }
-    ForwardResetStructFields02089ddc(&templates);
+    PresetTable_Destroy(&templates);
     scriptAlloc.Reset();
     if (ok) {
         void* data = LoadFileIntoMemory(data_020f102e, g_fileLoadBuffer, &size);

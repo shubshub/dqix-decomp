@@ -59,44 +59,44 @@ extern "C" ARM void CharacterModel_Draw(CharacterModel* model, CharacterModelAtt
         if (boneIndex > -1) {
             GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
             if (attachments != 0 && attachments->headAttachment != 0) {
-                attachments->headAttachment->DrawSimple2(false);
+                attachments->headAttachment->DrawInCurrentMatrix(false);
             }
             model->parts_[CharacterModelPart_Face].SendTransformToFifo();
-            model->parts_[CharacterModelPart_Face].DrawSimple2(false);
-            model->parts_[CharacterModelPart_Hair].DrawSimple2(false);
-            model->parts_[CharacterModelPart_Headgear].DrawSimple2(false);
+            model->parts_[CharacterModelPart_Face].DrawInCurrentMatrix(false);
+            model->parts_[CharacterModelPart_Hair].DrawInCurrentMatrix(false);
+            model->parts_[CharacterModelPart_Headgear].DrawInCurrentMatrix(false);
 
             if (model->holdsWithArms_ != 0) {
                 boneIndex = bodyBones->GetBoneIndex(&CharacterModel_arm2RBone);
                 if (boneIndex > -1 && model->parts_[CharacterModelPart_Weapon].unknown_2_ > -1) {
                     GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
-                    model->parts_[CharacterModelPart_Weapon].DrawSimple2(false);
+                    model->parts_[CharacterModelPart_Weapon].DrawInCurrentMatrix(false);
                 }
                 boneIndex = bodyBones->GetBoneIndex(&CharacterModel_arm2LBone);
                 if (boneIndex > -1 && model->parts_[CharacterModelPart_Weapon].unknown_2_ > -1) {
                     GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
                     G3_RotateY(FIX_2PI / 2);
-                    model->parts_[CharacterModelPart_Weapon].DrawSimple2(false);
+                    model->parts_[CharacterModelPart_Weapon].DrawInCurrentMatrix(false);
                 }
             } else {
                 boneIndex = bodyBones->GetBoneIndex(&CharacterModel_weaponRBone);
                 if (boneIndex > -1 && model->parts_[CharacterModelPart_Weapon].unknown_2_ > -1) {
                     GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
-                    model->parts_[CharacterModelPart_Weapon].DrawSimple2(false);
+                    model->parts_[CharacterModelPart_Weapon].DrawInCurrentMatrix(false);
                 }
             }
 
             boneIndex = bodyBones->GetBoneIndex(&CharacterModel_weaponLBone);
             if (boneIndex > -1 && model->parts_[9].unknown_2_ > -1) {
                 GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
-                model->parts_[9].DrawSimple2(false);
+                model->parts_[9].DrawInCurrentMatrix(false);
             }
 
             if (attachments != 0 && attachments->chestAttachment != 0) {
                 boneIndex = bodyBones->GetBoneIndex(&CharacterModel_chestBone);
                 if (boneIndex > -1) {
                     GetModelBonePositionAndDirectionMatrices(&bodyModel->renderContext_, 0, 0, boneIndex);
-                    attachments->chestAttachment->DrawSimple2(false);
+                    attachments->chestAttachment->DrawInCurrentMatrix(false);
                 }
             }
         }

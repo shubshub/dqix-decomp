@@ -50,17 +50,17 @@ struct Struct_02040c2c {
 };
 
 struct Obj0203c818;
-extern "C" void func_0203c818(Obj0203c818*, void*, int, int);
+extern "C" void NpcWalker_Update(Obj0203c818*, void*, int, int);
 extern "C" void Npc_PickWanderStep(struct Obj02040c2c* self, void* vec);
 extern "C" int rand(void);
-extern "C" int func_0202e800(void* arg0);
-extern "C" void* func_0202ed6c(void* arg0);
+int Camera_GetOrbitDistance(void* p);
+void* Camera_GetPerspective(void* p);
 
-extern "C" int func_02046b24(struct Struct_02015438** arg0);
-extern "C" void func_0204117c(struct Struct_02040c2c_5* arg0, struct Struct_02028460_3* arg1);
-extern "C" void func_02041298(struct Struct_02040c2c_4* arg0, int arg1);
-extern "C" void func_020406f8(struct Struct_0203de84* arg0, struct Struct_0203de84_2* arg1);
-extern "C" void func_020407c4(struct Struct_020407c4* arg0, struct Struct_020407c4_2* arg1);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** head);
+void DispatchNearestActiveNode0204117c(struct Obj0204117c* obj, struct Vec3s32_020c3030* refPoint);
+void AdvanceAndAccumulate02041298(struct Obj02041298* obj, int value);
+void SelectVec3FromSources020406f8(struct Vec3_020406f8* out, struct Node020406f8* node);
+void FillVec3Default020407c4(struct Vec3_020407c4* out, struct Self020407c4* self);
 
 // USA: func_02040c2c
 extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int arg2, int arg3) {
@@ -70,13 +70,13 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
     struct Vector3i var3;
     struct Struct_0203de84 var4;
 
-    if (arg0->unknown_14_ != 0) {
-        func_0203c818(reinterpret_cast<Struct_0203c818_2*>(arg0->unknown_14_), arg1, arg2, arg3);
-        struct LightingManager* var5 = LightingManager::GetInstance();
-        if (var5 != 0) {
-            arg0->unknown_14_->unknown_2a_ = var5->spriteDiffuseColor_;
+    if (self->spriteMotion != 0) {
+        NpcWalker_Update(reinterpret_cast<Obj0203c818*>(self->spriteMotion), context, elapsedTicks, movementTicks);
+        struct LightingManager* lm = LightingManager::GetInstance();
+        if (lm != 0) {
+            self->spriteMotion->diffuseColor = lm->spriteDiffuseColor_;
         }
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
+        if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
             if (!(self->flags & 1) && !(self->flags & 0x20000)) {
                 if (self->settings != 0 && self->settings->mode != 0) {
                     SpriteMotion02040c2c* a = self->spriteMotion;
@@ -108,7 +108,7 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
                 arg0->unknown_18_->unknown_0_.SetDiffuseColor(LightingManager::GetInstance()->modelDiffuseColor_);
             }
         }
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
+        if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
             if (!(self->flags & 1) && !(self->flags & 0x20000)) {
                 if (self->settings != 0 && self->settings->mode != 0) {
                     ModelEffect02040c2c* b = self->modelMotion;
@@ -144,8 +144,8 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
         attachmentPosition.v[1] += 0x1000;
         if (self->spriteMotion != 0) {
             unsigned char* camera = (unsigned char*)GameState::GetInstance()->GetCamera();
-            GetPtrField0x58_0202ed6c(camera);
-            float fx = (float)GetField0x78_0202e800(camera);
+            Camera_GetPerspective(camera);
+            float fx = (float)Camera_GetOrbitDistance(camera);
             fx *= 3.0f;
             int divisor = (int)fx;
             Vector3fix_Subtract(reinterpret_cast<Vector3i*>(camera + 0x10), reinterpret_cast<Vector3i*>(&attachmentPosition), &cameraOffset);

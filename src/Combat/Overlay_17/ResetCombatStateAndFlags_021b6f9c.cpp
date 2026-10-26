@@ -18,7 +18,7 @@ void GameObject_EnableControl(void* obj);
 struct Obj02053f7c;
 void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c* obj, unsigned short a, int b);
 ARM void EnqueueEventTag127ForParty_021c3f70(unsigned short tag);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 struct ListHead02046b60;
 int ListContainsId(ListHead02046b60* list, int id);
 extern "C" void* Zone3D_GetInstance(void);
@@ -61,7 +61,7 @@ extern "C" ARM void func_ov017_021b6f9c(char* self) {
         PopStack1AndTrigger_020a1f4c(1);
     }
 
-    GameObject* combatant = GameState::GetInstance()->GetUnknownGameObject();
+    GameObject* combatant = GameState::GetInstance()->GetLeader();
     GameObject_EnableControl(combatant);
     SetField0x1b2IfMatchOrFlag02053f7c((Obj02053f7c*)combatant, 0, 0);
     EnqueueEventTag127ForParty_021c3f70(0);
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov017_021b6f9c(char* self) {
     *(int*)(self + 0x6b8) = 0;
 
     ClearFlags00((GameResources*)ov, 0x800);
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
 
     int* p36fc = *(int**)(ov + 0x3000 + RegionOffset6fc);
     char* p3b5c = *(char**)(ov + 0x3000 + RegionOffsetb5c);

@@ -9,12 +9,12 @@ struct Struct_020130b0;
 struct Struct_020130e0;
 struct Struct_020177d4_3;
 
-extern "C" void func_02013018(Struct_02013018 *arg0);
-extern "C" void func_020130b0(Struct_020130b0 *arg0, Struct_020130b0 *arg1);
-extern "C" void func_020130e0(Struct_020130e0 *arg0, Struct_020130e0 *arg1);
-extern "C" int func_0201f1b0(Struct_020177d4_3 *arg0, int arg1);
-extern "C" void func_0201310c(void *arg0);
-extern "C" int func_ov017_021b8b54(void *arg0);
+void BmdjSceneElement_Init(InitTarget02013018 *self);
+void BmdjSceneElement_AddChild(ListNode *parent, ListNode *child);
+void BmdjSceneElement_AppendSibling(Node020130e0 *list, Node020130e0 *node);
+int BmdjScriptState_FindResourceIndex(Table_1f1b0 *table, int key);
+void BmdjSceneElement_ComputeTreeTransforms(void *node);
+int IsField600B4Zero_021b8b54(void *object);
 
 struct Struct_020177d4_4 {
     short unknown_0_;

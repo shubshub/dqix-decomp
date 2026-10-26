@@ -23,28 +23,28 @@ struct Struct_ov005_02153954 {
     short unknown_3d78_;
 };
 
-extern "C" void func_0203a46c(Struct_0203a46c* arg0, int arg1, int arg2, int arg3);
+void SprSprite_SetPosition(Vec3Target0203a46c* obj, int x, int y, int z);
 
 // USA: func_ov005_02156e1c
 extern "C" ARM void func_ov005_02156e1c(Struct_ov005_02153954* arg0, int arg1, int arg2) {
     if (arg0->unknown_3d78_ < 0)
         return;
-    Vector3fix var0 = arg0->unknown_3cf0_.unknown_1c_;
-    int var1 = var0.x >> 12;
-    int var2 = var0.y >> 12;
-    int var3 = arg1 - 12;
-    if (var3 < 1)
-        var3 = 1;
-    if (var3 > 0xe7)
-        var3 = 0xe7;
-    int var4 = arg2 - 12;
-    if (var4 < 1)
-        var4 = 1;
-    if (var4 > 0xa7)
-        var4 = 0xa7;
-    if (abs(var1 - var3) < 3)
-        var3 = var1;
-    if (abs(var2 - var4) < 3)
-        var4 = var2;
-    func_0203a46c((Struct_0203a46c*)&arg0->unknown_3cf0_, var3 << 12, var4 << 12, 0x2000);
+    Vector3fix position = self->dragModel_.position_;
+    int curX = position.x >> 12;
+    int curY = position.y >> 12;
+    int newX = x - 12;
+    if (newX < 1)
+        newX = 1;
+    if (newX > 0xe7)
+        newX = 0xe7;
+    int newY = y - 12;
+    if (newY < 1)
+        newY = 1;
+    if (newY > 0xa7)
+        newY = 0xa7;
+    if (abs(curX - newX) < 3)
+        newX = curX;
+    if (abs(curY - newY) < 3)
+        newY = curY;
+    SprSprite_SetPosition((Vec3Target0203a46c*)&self->dragModel_, newX << 12, newY << 12, 0x2000);
 }

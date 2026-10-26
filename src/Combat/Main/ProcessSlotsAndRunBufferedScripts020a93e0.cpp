@@ -14,9 +14,9 @@ struct ResetFieldsStruct {
     int f14;
     short f18;
 };
-void ResetStructFields_02089db4(struct ResetFieldsStruct* s);
-void ForwardResetStructFields02089ddc(struct ResetFieldsStruct* s);
-void SetupHeaderAndRunBufferedScript02089de8(void* param0, void* param1, const char* param2);
+void PresetTable_Reset(struct ResetFieldsStruct* s);
+void PresetTable_Destroy(struct ResetFieldsStruct* s);
+void PresetTable_Load(void* param0, void* param1, const char* param2);
 
 struct Entry02089fb0 {
     signed char id;
@@ -53,8 +53,8 @@ extern "C" ARM void func_020a93e0(char* param0) {
             localAlloc.ResetAllocatorPointer();
             void* mem = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800);
             localAlloc.CreateTypeA(mem, 0x800);
-            ResetStructFields_02089db4(&fields);
-            SetupHeaderAndRunBufferedScript02089de8(&fields, &localAlloc, 0);
+            PresetTable_Reset(&fields);
+            PresetTable_Load(&fields, &localAlloc, 0);
             end = *(unsigned char*)(param0 + 0x1d11) + *(unsigned char*)(param0 + 0x1d0c);
             for (; i < end; i++) {
                 elem2 = param0 + i * 0x23c;
@@ -67,7 +67,7 @@ extern "C" ARM void func_020a93e0(char* param0) {
                 }
             }
             SignedAllocatorHeader* sig = localAlloc.GetSignedAllocator();
-            ForwardResetStructFields02089ddc(&fields);
+            PresetTable_Destroy(&fields);
             localAlloc.Destroy();
             AllocatorUnion_Free(&g_mainAllocator, sig);
             return;

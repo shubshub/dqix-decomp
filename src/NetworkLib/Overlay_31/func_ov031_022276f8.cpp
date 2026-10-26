@@ -1,8 +1,5 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern "C" void* func_ov031_0223cf4c(unsigned int arg0, unsigned int arg1);
 
@@ -13,8 +10,8 @@ extern "C" int func_ov031_022275a0(void);
 struct Struct_ov031_022276f8;
 extern "C" void func_ov031_0223a4cc(void* arg0, Struct_ov031_022276f8* arg1);
 extern "C" int func_ov031_0223a718(void);
-extern "C" void func_020c9be0(void);
-extern "C" void* func_ov031_0223e218(void* arg0, void* arg1, void* arg2, int arg3);
+extern "C" void HaltSystem(void);
+void* CallWithZeroExtra_0223e218(void* a, void* b, void* c, int d);
 
 extern void* data_ov031_02290c44;
 extern Struct_ov031_022276b4* data_ov031_02290c4c;
@@ -40,7 +37,7 @@ extern "C" ARM void func_ov031_022276f8(int arg0) {
 	func_ov031_0223a4cc(data_ov031_02290c44, (Struct_ov031_022276f8*)&var1);
 
 	if (func_ov031_0223a718() == 0) {
-		func_020c9be0();
+		HaltSystem();
 	}
 
 	void* var2 = func_ov031_0223e218(0, (void*)func_ov031_02227898, 0, 0x78);

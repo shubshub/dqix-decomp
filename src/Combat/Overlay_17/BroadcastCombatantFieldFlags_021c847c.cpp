@@ -7,10 +7,10 @@ enum { RegionOffset94c = 0x94c };
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
+extern "C" void* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
 struct CheckField0AndGlobalHalfStruct0202c508;
-extern "C" int func_0202c508(struct CheckField0AndGlobalHalfStruct0202c508* obj);
+extern "C" int LinkSession_IsHostOrSolo(struct CheckField0AndGlobalHalfStruct0202c508* obj);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void func_0205e330(void* a, void* b, int c);
@@ -31,8 +31,8 @@ struct Msg021c847c {
 // USA: func_ov017_021c847c  (semantic: BroadcastCombatantFieldFlags_021c847c)
 extern "C" ARM void func_ov017_021c847c(void) {
     GameState* battleStruct = GameState::GetInstance();
-    void* search = func_0202ae18();
-    void* data = GetData02100044_0202ae24();
+    void* search = LinkSession_GetInstance();
+    void* data = LinkMessageQueue_GetInstance();
 
     struct Msg021c847c msg;
     msg.tag = 0x76;
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov017_021c847c(void) {
         *(base + i + 4) = -1;
     }
 
-    if (func_0202c508((struct CheckField0AndGlobalHalfStruct0202c508*)search)) {
+    if (LinkSession_IsHostOrSolo((struct CheckField0AndGlobalHalfStruct0202c508*)search)) {
         int j;
         for (j = 0; j < 4; j++) {
             GameObject* c = GetCombatantWithFlag0x1000_0200ff58(battleStruct, j);

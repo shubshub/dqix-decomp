@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0203bd08(void);
-extern "C" void* func_0203be40(void* arg0);
-extern "C" void* func_0203be4c(void* arg0);
-extern "C" unsigned int func_020937f0(int arg0);
-extern "C" int func_0209378c(int arg0);
+extern "C" void* OamManager_GetInstance(void);
+extern "C" void* OamManager_GetMainOamBuffer(void* base);
+extern "C" void* OamManager_GetSubOamBuffer(void* base);
+extern "C" unsigned int func_020937f0(int engine);
+int GetDisplayModeCode0209378c(int engine);
 
 struct Struct_020e1780_2 {
     unsigned int unknown_0_;
@@ -68,16 +68,16 @@ extern "C" ARM void func_020e1780(struct Struct_020e1780* arg0) {
     if (arg0->unknown_4_ == 0) return;
     if (!arg0->unknown_4_->unknown_3f_0_ || (var8 = arg0->unknown_4_->unknown_8_) == 0) return;
 
-    var14 = func_0203bd08();
-    func_0203be40(var14);
-    var1 = arg0->unknown_4_->unknown_3e_;
-    var0 = arg0->unknown_4_->unknown_38_;
-    var4 = arg0->unknown_4_->unknown_39_;
-    func_020937f0(var1);
-    var6 = func_0209378c(var1);
-    var3 = (struct Struct_020e1780_2*)func_0203be40(var14);
-    if (var1 != 0) {
-        var3 = (struct Struct_020e1780_2*)func_0203be4c(var14);
+    base = OamManager_GetInstance();
+    OamManager_GetMainOamBuffer(base);
+    display = obj->panel->display;
+    x = obj->panel->x;
+    y = obj->panel->y;
+    func_020937f0(display);
+    shift = GetDisplayModeCode0209378c(display);
+    pack = (struct Pack020e197c*)OamManager_GetMainOamBuffer(base);
+    if (display != 0) {
+        pack = (struct Pack020e197c*)OamManager_GetSubOamBuffer(base);
     }
 
     var3 += arg0->unknown_4_->unknown_3d_;

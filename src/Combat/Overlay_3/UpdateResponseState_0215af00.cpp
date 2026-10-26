@@ -14,7 +14,7 @@ struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_02159250(void*, void*);
 extern "C" void func_ov017_021d243c(int);
-extern "C" void func_ov017_02191108(int, int, int, int, int);
+extern "C" void Party_ReformLine(int, int, int, int, int);
 
 // USA: func_ov003_0215af00
 ARM void UpdateResponseState_0215af00(void* self) {
@@ -33,7 +33,7 @@ ARM void UpdateResponseState_0215af00(void* self) {
 
     func_ov017_021d243c(0);
     int r = (int)GetGameResources();
-    func_ov017_02191108(r, 1, 1, 1, 1);
+    Party_ReformLine(r, 1, 1, 1, 1);
 
     *(unsigned char*)(s + 0x588) = 0xb;
     *(unsigned char*)(s + 0x580) = 0;

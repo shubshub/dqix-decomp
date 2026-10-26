@@ -36,8 +36,8 @@ extern "C" Reset_021eefac* _ZZ17GetGlobal021ffefcvE1s;
 extern char g_bgmPlayer[] __attribute__((aligned(4)));
 extern char data_ov023_021fe258[];
 StoreStruct* MessageSystem_GetInstance();
-int CheckField0NonZero_0202b7d8(int*);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+int LinkSession_IsActive(int*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 void ZeroFieldAndShortTriple0x6e2e_ov000_02163b60(void*);
 void ResetFields_021eefac(Reset_021eefac*);
 BattleActor* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
@@ -56,7 +56,7 @@ void ScaleOrResetCombatants_021ed988(char*, int);
 MoveName* SearchBothTables02079e2c(char*, int);
 void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 extern "C" {
-void* func_0202ae18();
+void* LinkSession_GetInstance();
 GrottoZone* Zone3D_GetInstance();
 void __clear(void*, unsigned int);
 void func_020e4ce8(void*, Struct_ov000_0217964c_2*, int);
@@ -73,13 +73,13 @@ extern "C" ARM int func_ov023_021ef6f4(BattleBossScene* self) {
     GameState* game = GameState::GetInstance();
     Reset_021eefac* state = _ZZ17GetGlobal021ffefcvE1s;
     StoreStruct* messages = MessageSystem_GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     DetailedTreasureMapData* map = Zone3D_GetInstance()->grotto_.GetDetailedData();
     char message[0x300];
     __clear(message, sizeof(message));
     int actorContext[3];
     if (state->phase_ == 0) {
-        if (!CheckField0NonZero_0202b7d8((int*)search) || self->info_->leader_ == GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search)) {
+        if (!LinkSession_IsActive((int*)search) || self->info_->leader_ == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
             ZeroFieldAndShortTriple0x6e2e_ov000_02163b60(self);
             state->phase_ = 1;
         } else { ResetFields_021eefac(state); return 5; }

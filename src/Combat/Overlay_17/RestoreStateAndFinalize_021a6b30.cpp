@@ -7,7 +7,7 @@ extern "C" void func_02057f00(void* obj, int index);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void NNS_GfdSetFrmTexVramState(int* out);
 void NNS_GfdSetFrmPlttVramState(int* src);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 extern int g_mainAllocator;
 
@@ -28,5 +28,5 @@ extern "C" ARM void func_ov017_021a6b30(struct Obj021a6b30* self) {
 
     NNS_GfdSetFrmTexVramState((int*)((char*)self + 0x24));
     NNS_GfdSetFrmPlttVramState((int*)((char*)self + 0x4c));
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
 }

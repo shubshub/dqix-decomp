@@ -110,9 +110,9 @@ int GetHPCategory02174e34(int, int);
 Struct0203c1c8* GetSlotSubField0x68_ov000_02174e1c(void*, int);
 extern "C" int func_ov000_02171ffc(Action02180ca8*);
 #if defined(jpn)
-extern "C" void func_0203c1c8(Struct_0203c1c8*, int);
+void CachedTextLabel_Draw(Struct0203c1c8*, int);
 #else
-extern "C" void func_0203c1c8(Struct_0203c1c8*);
+void CachedTextLabel_Draw(Struct0203c1c8*);
 #endif
 void* Background_GetScreen(BackgroundGraphics*, unsigned int);
 void CallFunc0204b620IfField0x14_0204b878(Obj0204b878*, int, int, int, short, short, short, short, unsigned short);
@@ -250,9 +250,9 @@ extern "C" ARM void func_ov000_02180ca8(Struct_ov000_02180ca8_3* arg0, Struct_ov
             var13->unknown1_0_ = var28;
             var13->unknown_4_ = var23[var26];
 #if defined(jpn)
-            func_0203c1c8(var13, 0xa);
+            CachedTextLabel_Draw(entry, 0xa);
 #else
-            func_0203c1c8(var13);
+            CachedTextLabel_Draw(entry);
 #endif
             var13->unknown_10_ = 1;
         }
@@ -302,9 +302,9 @@ extern "C" ARM void func_ov000_02180ca8(Struct_ov000_02180ca8_3* arg0, Struct_ov
             var30->unknown1_0_ = var35[var37];
             var30->unknown_4_ = var34[var37];
 #if defined(jpn)
-            func_0203c1c8(var30, 0xa);
+            CachedTextLabel_Draw(entry, 0xa);
 #else
-            func_0203c1c8(var30);
+            CachedTextLabel_Draw(entry);
 #endif
             var30->unknown_8_ = var36[var37];
             var30->unknown_10_ = 1;

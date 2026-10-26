@@ -24,8 +24,8 @@
 
 extern "C" int func_02053c6c(unsigned char* arg0);
 
-struct Struct_0203c108_3;
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+struct Obj0203c108;
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 extern "C" void func_ov000_0216fe9c(void* arg0);
 
@@ -48,15 +48,15 @@ extern "C" ARM void func_ov000_02171138(void* arg0) {
     if (!var4) {
         return;
     }
-    int var5 = *(int*)((char*)var3 + 0x134);
-    func_0203c108((struct Struct_0203c108_3*)(var0 + REGION_OFFSET_0), (char*)var5);
-    *(int*)(var0 + REGION_OFFSET_1) = 2;
-    int var6 = *(int*)(var4 + REGION_OFFSET_2);
-    *(unsigned char*)(var0 + REGION_OFFSET_3) = (unsigned char)var6;
-    var6 = *(int*)(var4 + REGION_OFFSET_2);
-    char* var7 = var4 + var6 * 2 + 0x100;
-    unsigned short var8 = *(unsigned short*)(var7 + 0x6c);
-    *(unsigned char*)(var0 + REGION_OFFSET_4) = (unsigned char)var8;
+    int off134 = *(int*)((char*)c + 0x134);
+    CachedTextLabel_SetText((struct Obj0203c108*)(obj + REGION_OFFSET_0), (char*)off134);
+    *(int*)(obj + REGION_OFFSET_1) = 2;
+    int idx950 = *(int*)(field150 + REGION_OFFSET_2);
+    *(unsigned char*)(obj + REGION_OFFSET_3) = (unsigned char)idx950;
+    idx950 = *(int*)(field150 + REGION_OFFSET_2);
+    char* p = field150 + idx950 * 2 + 0x100;
+    unsigned short val = *(unsigned short*)(p + 0x6c);
+    *(unsigned char*)(obj + REGION_OFFSET_4) = (unsigned char)val;
 
     short var9 = *(short*)(var0 + 0xc);
     short var10 = *(short*)(var0 + 0x8);

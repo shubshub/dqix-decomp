@@ -5,7 +5,7 @@
 #include "Resource/Brightness.h"
 
 void ProcessCombatState020534ac(char* combatant);
-int GetIntField0x260_02039750(void* obj);
+int GameObject_GetGestureSlot(void* obj);
 int GameState_GetProtagonistIndex(GameState* gameState);
 int GetIndexedEntryField0x178_02053604(signed char* obj);
 
@@ -57,8 +57,8 @@ extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
         return;
     }
 
-    GameState* var2 = GameState::GetInstance();
-    if (func_02039750(var2->GetUnknownGameObject()) != -1) {
+    GameState* gs = GameState::GetInstance();
+    if (GameObject_GetGestureSlot(gs->GetLeader()) != -1) {
         return;
     }
 
@@ -71,7 +71,7 @@ extern "C" ARM void func_ov017_0219a18c(unsigned char* arg0) {
     GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(gs, GameState_GetProtagonistIndex(gs));
     int found = 0;
     int key;
-    int mode = GetIntField0x260_02039750(protagonist);
+    int mode = GameObject_GetGestureSlot(protagonist);
     int entry = GetIndexedEntryField0x178_02053604((signed char*)combatant);
     switch (mode) {
     case -1:

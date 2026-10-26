@@ -13,7 +13,7 @@ void EnqueueEventTag35_021d2ad0(short a, int b, int c, int d, unsigned char e);
 void EnqueueEventTag36_021d2c34(unsigned char a, unsigned char b, unsigned char c);
 void* GlobalFlags_GetInstance();
 void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
-void SetVecYFromValue02033874(struct Obj02033874* obj, int value);
+void GameObject_SnapFacing(struct Obj02033874* obj, int value);
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 
 struct Struct_020a8d08 {
@@ -39,7 +39,7 @@ struct Struct_020a8d08_2 {
 extern "C" ARM void func_020a8d08(struct Obj020a8d08* obj, unsigned char index) {
     GameState* state = GameState::GetInstance();
     Combatant020a8d08* actor = (Combatant020a8d08*)state->GetPartyMemberByIndex(index);
-    Object3D* other = &state->GetUnknownGameObject()->obj3D_;
+    Object3D* other = &state->GetLeader()->obj3D_;
     GameState_GetParty(state);
     state->GetPartyMemberByIndex(GetSignedByte0x1c8_02039860(actor));
     if ((obj->f4 & (1 << index)) == 0) {
@@ -65,7 +65,7 @@ extern "C" ARM void func_020a8d08(struct Obj020a8d08* obj, unsigned char index) 
         EnqueueEventTag36_021d2c34(index, 0x1f, 0);
         FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0x402);
     } else {
-        SetVecYFromValue02033874((struct Obj02033874*)actor, actor->y + obj->offsetY);
+        GameObject_SnapFacing((struct Obj02033874*)actor, actor->y + obj->offsetY);
         if (actor->obj.actorIndex_ == other->actorIndex_) {
             obj->offsetY -= 40;
         }

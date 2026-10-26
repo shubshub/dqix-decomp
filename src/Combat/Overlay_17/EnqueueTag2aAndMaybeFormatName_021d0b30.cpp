@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 #include "Resource/GameResources.h"
 
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 extern "C" void __clear(void* buf, int size);
 extern "C" void Font_DecodeText(char* name, void* buf, int flag);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov017_021d0b30(unsigned short a, unsigned short b, char
 #else
  enum {regionalOffset0=0x35c, regionalOffset1=0x30};
 #endif
-    void* data = GetData02100044_0202ae24();
+    void* data = LinkMessageQueue_GetInstance();
     struct LocalEvt021d0b30 buf;
     struct Sub021d0b30* s = &buf.sub;
 

@@ -30,16 +30,16 @@ struct Struct_ov017_021a5600_2 {
 extern "C" void func_0202738c(unsigned char*, int, int, int);
 extern "C" void func_02027304(unsigned char*, int);
 extern "C" void func_020a0cc4(int);
-extern "C" void func_020a0c0c();
+extern "C" void ROMFilesystem_InitFileTables();
 extern "C" void func_ov002_0215505c(char*);
 extern "C" void func_ov002_02154d40(char*, SafeAllocator*);
 extern "C" int func_ov002_02155960(char*, int);
 extern "C" void func_ov002_021556fc(char*);
-extern "C" void func_ov017_021a55b0(Struct_ov017_021a5600_2*);
-extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
+extern "C" void func_ov017_021a55b0(BattleState021a5600*);
+extern "C" void Party_ReformLine(GameResources*, int, int, int, int);
 FlagWord02046708* GlobalFlags_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
 void ClearFlagBits_020a28b0(unsigned char*, int);
 void ResetOrFindStopwatch_02027288(unsigned char*, int);
@@ -49,10 +49,10 @@ void PushInputLogB_020a1ef0(int);
 extern "C" void _Z26SetBytes485And486_021556ecPvii(void*, int, int);
 int ListContainsId(ListHead02046b60*, int);
 void GameObject_EnableControl(void*);
-void InitPaletteTables0202ac74();
-int TestFlags02046708(FlagWord02046708*, unsigned int);
+void DebugConsole_Init();
+int FlagWord_TestBits(FlagWord02046708*, unsigned int);
 void SetByteIfDataAndCheckClear_021a01bc(unsigned char*);
-void CopyByteField0x253To0x252_02039830(void*);
+void GameObject_ApplyPendingControl(void*);
 void CheckStackAndFinalize_021a5974(char*);
 extern AllocatorUnion g_mainAllocator;
 extern char* data_ov017_021d83ac;
@@ -60,12 +60,12 @@ extern char* data_ov017_021d83ac;
 extern "C" ARM void FieldTask_OpenMenu(BattleState021a5600* self) {
     GameState* game = GameState::GetInstance();
     GameResources* resources = GetGameResources();
-    Obj020397cc* actor = (Obj020397cc*)game->GetUnknownGameObject();
+    Obj020397cc* actor = (Obj020397cc*)game->GetLeader();
     FlagWord02046708* flags = GlobalFlags_GetInstance();
     GameObject_DisableControl(actor, 1);
     actor->field_b2 = 0;
     SetFlags04(resources, 0xc0);
-    unsigned char* action = GetFieldIfFlag4_020100f8((char*)game);
+    unsigned char* action = GameState_GetFollowCamera((char*)game);
     SetFlagsAt0x244_020a28a0(action, 3);
     int ticks = game->GetTickCount();
     if (ticks < 0) ticks = 1;
@@ -76,8 +76,8 @@ extern "C" ARM void FieldTask_OpenMenu(BattleState021a5600* self) {
         func_020a0cc4(SceneReservationSize);
         void* memory = AllocatorUnion_AllocateRounded(&g_mainAllocator, SceneHeapSize);
         if (!memory) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->complete = 1;
         } else {
             arg0->unknown_c_.CreateTypeA(var7, Enum_ov017_021a5600_173456);
             arg0->unknown_c_.Reset();
@@ -116,17 +116,17 @@ extern "C" ARM void FieldTask_OpenMenu(BattleState021a5600* self) {
             ClearFlags04(resources, 0xc0);
             GameObject_EnableControl(actor);
         }
-        func_ov017_02191108(var1, 1, 1, 0, 1);
-        func_0202ac74();
-        func_020a0c0c();
-        if (!func_02046708(var3, 0x100000)) {
-            unsigned char* var14 = (unsigned char*)var1->unknown_ptr_36d0;
-            func_0202738c(var14, 0, 2, -1);
-            func_02027304(var14, -1);
+        Party_ReformLine(resources, 1, 1, 0, 1);
+        DebugConsole_Init();
+        ROMFilesystem_InitFileTables();
+        if (!FlagWord_TestBits(flags, 0x100000)) {
+            unsigned char* stopwatch = (unsigned char*)resources->unknown_ptr_36d0;
+            func_0202738c(stopwatch, 0, 2, -1);
+            func_02027304(stopwatch, -1);
         }
         SetByteIfDataAndCheckClear_021a01bc((unsigned char*)resources);
         GameObject_EnableControl(actor);
-        CopyByteField0x253To0x252_02039830(actor);
+        GameObject_ApplyPendingControl(actor);
         self->complete = 1;
         CheckStackAndFinalize_021a5974((char*)self);
     }

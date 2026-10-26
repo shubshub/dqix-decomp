@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021cd218 {
     unsigned char unknown_0_;
@@ -17,8 +17,8 @@ struct Struct_ov017_021cd218 {
 };
 
 // USA: func_ov017_021cd218
-extern "C" ARM void func_ov017_021cd218(unsigned short arg0, unsigned short arg1, unsigned short arg2, unsigned short arg3, unsigned short arg4, unsigned short arg5) {
-    void* var0 = func_0202ae24();
+extern "C" ARM void func_ov017_021cd218(unsigned short a, unsigned short b, unsigned short c, unsigned short d, unsigned short e, unsigned short f) {
+    void* data = LinkMessageQueue_GetInstance();
 
     struct Struct_ov017_021cd218 var1;
     var1.unknown_0_ = 0x66;

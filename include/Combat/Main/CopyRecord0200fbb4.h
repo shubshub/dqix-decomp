@@ -2,10 +2,10 @@
 
 struct Struct_0200fba4;
 
-extern "C" Struct_0200fba4* func_0200fbb4(
-    Struct_0200fba4* arg0, const Struct_0200fba4* arg1);
+extern "C" CopyRecord0200fbb4* ZoneTransitionSettings_Copy(
+    CopyRecord0200fbb4* dst, const CopyRecord0200fbb4* src);
 
-extern "C" void* func_0200fba4(
-    void* arg0, const void* arg1);
-extern "C" void* func_0200fcfc(
-    void* arg0, const void* arg1);
+extern "C" void* _Z37CallFunc0200fbb4AtField0x3f8_0200fba4Pv(
+    void* obj, const void* src);
+void* GameState_SetZoneTransition(
+    void* obj, const void* src);

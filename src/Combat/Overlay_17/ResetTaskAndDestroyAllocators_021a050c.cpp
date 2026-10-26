@@ -14,7 +14,7 @@ extern int data_ov017_021d669c[];
 // USA: func_ov017_021a050c
 ARM void ResetTaskAndDestroyAllocators_021a050c(GameResources* self) {
     MapDisplay* display = self->unknown_ptr_36d0;
-    func_02020720(display);
+    MapDisplay_ResetMap(display);
 
     for (int i = 0; data_ov017_021d669c[i] >= 0; i++) {
         int index = data_ov017_021d669c[i];

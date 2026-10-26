@@ -16,13 +16,13 @@ struct Struct_020e0a78 {
 };
 
 void *GlobalFlags_GetInstance();
-int TestFlags02046708(FlagWord02046708 *flags, unsigned int mask);
+int FlagWord_TestBits(FlagWord02046708 *flags, unsigned int mask);
 extern "C" void VectorizedInvertedMemcpy(void *dst, void *src, unsigned int size);
-extern "C" void func_020e0df8(void*, int, int, int);
-extern "C" void func_020e0cfc(void*, int, int, int);
-extern "C" void func_020e0b4c(void *arg0, void *arg1, int arg2, int arg3);
-extern "C" void func_020e0ec4(void *arg0, void *arg1, int arg2, int arg3);
-extern "C" void func_020c9820();
+void SetupWeightedEntriesAndSubmit_020e0df8(void*, int, int, int);
+void SetupWeightedEntriesAndSubmitPair020e0cfc(void*, int, int, int);
+extern "C" void func_020e0b4c(void *obj, void *buf, int offset, int dead_r3);
+extern "C" void func_020e0ec4(void *obj, void *buf, int offset, int dead_r3);
+void OS_WaitVBlankIntr();
 void CleanInvalidateCacheRange(const void *addr, unsigned int size);
 extern "C" int LoadToSubObjVRAM(void *dst, int mode, unsigned int size);
 
@@ -34,7 +34,7 @@ extern "C" ARM int func_020e0a78(void *arg0) {
     if (var0->unknown_76c_ == 0) {
         return 0;
     }
-    if (TestFlags02046708(static_cast<FlagWord02046708 *>(GlobalFlags_GetInstance()), 0x41)) {
+    if (FlagWord_TestBits(static_cast<FlagWord02046708 *>(GlobalFlags_GetInstance()), 0x41)) {
         return 0;
     }
 
@@ -51,10 +51,10 @@ extern "C" ARM int func_020e0a78(void *arg0) {
     func_020e0ec4(arg0, var1, 0x16c0, 0x9c0);
     func_020e0cfc(arg0, (int)var1, 0x2080, 0xd00);
 #endif
-    func_020c9820();
-    CleanInvalidateCacheRange(var1, var0->unknown_774_);
-    LoadToSubObjVRAM(var1, 0, var0->unknown_774_);
-    var0->unknown_76c_->Free(var1);
+    OS_WaitVBlankIntr();
+    CleanInvalidateCacheRange(buf, state->size);
+    LoadToSubObjVRAM(buf, 0, state->size);
+    state->allocator->Free(buf);
 
     return 1;
 }

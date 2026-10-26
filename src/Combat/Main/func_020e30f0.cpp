@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4*);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4*);
 
 struct Struct_0208ab34_2 {
     unsigned char unknown_0_;
@@ -21,9 +21,9 @@ extern "C" void func_020e3428(void* arg0, int arg1);
 extern "C" void func_020e3328(void* arg0, int arg1);
 
 // USA: func_020e30f0
-extern "C" ARM void func_020e30f0(Struct_0208ab34_2* arg0) {
-    void* var0 = func_0202ae18();
-    if (!func_0202b7d8((int*)var0)) return;
+extern "C" ARM void func_020e30f0(Entry020e3054* list) {
+    void* ctx = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)ctx)) return;
 
     Struct_0208ab34_2* var1 = arg0;
     int var2;
@@ -42,20 +42,20 @@ extern "C" ARM void func_020e30f0(Struct_0208ab34_2* arg0) {
         }
     }
 
-    unsigned char* var5 = (unsigned char*)arg0 + 0x20;
-    int var6;
-    for (var6 = 0; var6 < 8; var6++, var5++) {
-        int var7 = *var5;
-        if (var7 == 0) continue;
-        Struct_0208ab34_2* var8 = func_020e3054(arg0, var7);
-        if (var8 != NULL) {
-            unsigned char var9 = var8->unknown_2_;
-            int var10 = func_0202c1a4((struct Struct_0202c1a4*)var0);
-            if (var8->unknown_0_ != var10 && var9 == 1) var9 = 3;
-            if (var9 == 1 || var9 == 4 || var9 == 5) {
-                *var5 = 0;
-            } else if (var9 != 2) {
-                func_020e3328(arg0, var7);
+    unsigned char* ids = (unsigned char*)list + 0x20;
+    int j;
+    for (j = 0; j < 8; j++, ids++) {
+        int id = *ids;
+        if (id == 0) continue;
+        Entry020e3054* found = FindEntryByField1(list, id);
+        if (found != NULL) {
+            unsigned char state = found->f2;
+            int cur = LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)ctx);
+            if (found->f0 != cur && state == 1) state = 3;
+            if (state == 1 || state == 4 || state == 5) {
+                *ids = 0;
+            } else if (state != 2) {
+                Dispatch020e3328(list, id);
             }
         } else {
             func_020e3328(arg0, var7);

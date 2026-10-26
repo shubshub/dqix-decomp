@@ -6,9 +6,9 @@
 #include "Resource/Brightness.h"
 
 int GameResources_IsSpecialItemEffectPlaying(void* obj);
-int GetByteField0x252_02039820(void* obj);
+int GameObject_IsControlEnabled(void* obj);
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 int MessageSystem_GetInstance(void);
 
@@ -43,13 +43,13 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
         if (GameResources_IsSpecialItemEffectPlaying(res2) != 0) {
             return 4;
         }
-        GameObject* combatant = battle->GetUnknownGameObject();
-        if (combatant != NULL && GetByteField0x252_02039820(combatant) == 0) {
+        GameObject* combatant = battle->GetLeader();
+        if (combatant != NULL && GameObject_IsControlEnabled(combatant) == 0) {
             GameObject_EnableControl(combatant);
         }
-        int var5 = func_020100f8((char*)var0);
-        if (var5 != 0) {
-            func_020a27ac((void*)var5);
+        int flag = GameState_GetFollowCamera((char*)battle);
+        if (flag != 0) {
+            SetField0x23cTrue_020a27ac((void*)flag);
         }
         if (var3 != NULL) {
             ClearFlags04(var3, 0x80);
@@ -97,13 +97,13 @@ extern "C" ARM int func_ov017_021bfc40(struct Struct_ov017_021bfc40* arg0) {
     }
 
     if (self->timer == 0) {
-        GameObject* combatant = battle->GetUnknownGameObject();
-        if (combatant != NULL && GetByteField0x252_02039820(combatant) == 0) {
+        GameObject* combatant = battle->GetLeader();
+        if (combatant != NULL && GameObject_IsControlEnabled(combatant) == 0) {
             GameObject_EnableControl(combatant);
         }
-        int var17 = func_020100f8((char*)var0);
-        if (var17 != 0) {
-            func_020a27ac((void*)var17);
+        int flag = GameState_GetFollowCamera((char*)battle);
+        if (flag != 0) {
+            SetField0x23cTrue_020a27ac((void*)flag);
         }
         if (var2 != NULL) {
             ClearFlags04(var2, 0x80);

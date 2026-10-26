@@ -19,7 +19,7 @@ void InsertNodeAfterHead(List02046a3c*, Node02046a3c*);
 
 // USA: func_ov017_021a5530
 ARM void CancelActionAndInsertNode_021a5530(char* self) {
-	GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetUnknownGameObject(), 1);
+	GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetLeader(), 1);
 	func_ov017_021a5568(*(void**)(self + 0x3000 + REGION_FIELD_1));
 	void* list = *(void**)(self + 0x3000 + REGION_FIELD_0);
 	InsertNodeAfterHead((List02046a3c*)list, (Node02046a3c*)(*(void**)(self + 0x3000 + REGION_FIELD_1)));

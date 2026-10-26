@@ -9,11 +9,11 @@ enum { Field18 = 0x14, Field23ec = 0x240c };
 enum { Field18 = 0x18, Field23ec = 0x23ec };
 #endif
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
 struct U16Field0x6_020375f8;
-extern "C" unsigned short func_02028460(void* a, void* b);
-extern "C" int func_0202c508(void* obj);
+extern "C" unsigned short NodeGraph_FindClosestNode(void* a, void* b);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" int func_ov017_021a2128(void* a, int b, int c, int d, void* e, int f, int g, int h);
 
@@ -23,7 +23,7 @@ extern struct Buf3_021b5648 data_ov017_021d6bcc;
 // USA: func_ov017_021b5648  (semantic: RefreshCombatantSyncAndDispatch_021b5648)
 extern "C" ARM void func_ov017_021b5648(char* self) {
     GameState* bs = GameState::GetInstance();
-    void* ctx = func_0202ae18();
+    void* ctx = LinkSession_GetInstance();
 
     int i;
     for (i = 0; i < 4; i++) {
@@ -32,12 +32,12 @@ extern "C" ARM void func_ov017_021b5648(char* self) {
         void* p8 = *(void**)(self + 0x8);
         if (*(unsigned short*)p8 != ((Object3D*)((struct U16Field0x6_020375f8*)c))->GetField06()) continue;
 
-        unsigned short v = func_02028460((char*)p8 + Field18, (char*)c + 0x44);
+        unsigned short v = NodeGraph_FindClosestNode((char*)p8 + Field18, (char*)c + 0x44);
         *(unsigned short*)((char*)c + 0xb8) = v;
         ((unsigned char*)c)[0xc2] |= 0x40;
     }
 
-    if (func_0202c508(ctx) != 0 && *(unsigned short*)(self + 0x12) != 0) {
+    if (LinkSession_IsHostOrSolo(ctx) != 0 && *(unsigned short*)(self + 0x12) != 0) {
         GameState* bs2 = GameState::GetInstance();
         void* obj5 = GetGameResources();
         bs2->GetGrottoStruct();

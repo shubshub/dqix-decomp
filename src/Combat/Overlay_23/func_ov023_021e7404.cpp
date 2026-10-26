@@ -4,7 +4,7 @@
 
 extern "C" void Window_Update(void* obj, int val);
 struct TimeStamp020103f0;
-void ComputeElapsedPlayTimeHMS020103f0(struct TimeStamp020103f0* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds);
+void GameState_GetTimeSinceMainTimestamp(struct TimeStamp020103f0* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds);
 void AddPlayClockHours020ac614(struct BattleRecordPlayClock* clock, int amount);
 void AddPlayClockMinutes020ac644(struct BattleRecordPlayClock* clock, int amount);
 struct ShortBytePair021e71a0;
@@ -46,8 +46,8 @@ extern "C" ARM void func_ov023_021e7404(char* arg0, int arg1) {
             var3 = 1;
         }
 
-        var1 = GameState::GetInstance();
-        func_020103f0((struct Struct_020103f0*)var1, &var5, &var7, &var6);
+        battleStruct = GameState::GetInstance();
+        GameState_GetTimeSinceMainTimestamp((struct TimeStamp020103f0*)battleStruct, &hoursOut, &minutesOut, &secondsOut);
 
         func_ov023_021e71a0((struct Struct_ov023_021e71a0*)(arg0 + Enum_ov023_021e7404_1550));
 

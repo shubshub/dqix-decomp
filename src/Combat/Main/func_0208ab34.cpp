@@ -21,29 +21,29 @@ public:
     unsigned char unknown_7_[17];
     unsigned char unknown_18_[17];
 };
-extern "C" int* func_0202ae18();
-extern "C" Struct_0208ab34* func_020e2ff8();
-extern "C" int func_020e34bc(Struct_0208ab34*, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" void func_020e3368(unsigned char*, unsigned char);
-extern "C" void func_020e3468(Struct_0208ab34_2*, int);
-extern "C" void func_0208ad1c(void*);
-extern "C" void func_020e3428(void*, int);
+extern "C" int* LinkSession_GetInstance();
+Container020e34bc* GetData02153637_020e2ff8();
+int GetEntryStatusForKey020e34bc(Container020e34bc*, int);
+int LinkSession_IsActive(int*);
+void StoreInFirstEmptySlot_020e3368(unsigned char*, unsigned char);
+void ClearEntryIfCurrentArrMatches020e3468(Entry020e3054*, int);
+void InitFieldsIfHandleValid0208ad1c(void*);
+void Dispatch020e3428(void*, int);
 extern unsigned char data_020e8cc6[];
 extern unsigned char data_020e8cc5[];
 
 // USA: func_0208ab34
 extern "C" ARM void func_0208ab34(TimedPartyEntries* entries, void* context) {
     PartyRoster* roster = (PartyRoster*)GameState_GetParty(GameState::GetInstance());
-    int* session = func_0202ae18();
+    int* session = LinkSession_GetInstance();
     int activated = 0;
     int dispatched = 0;
     Container020e34bc* requests = GetData02153637_020e2ff8();
     for (int i = 0; i < roster->count; ++i) {
         int status = GetEntryStatusForKey020e34bc(requests, 1);
         int id = roster->ids[i];
-        if ((!CheckField0NonZero_0202b7d8(session) ||
-             (CheckField0NonZero_0202b7d8(session) && status != 1)) &&
+        if ((!LinkSession_IsActive(session) ||
+             (LinkSession_IsActive(session) && status != 1)) &&
             !entries->Test(id, context)) {
             for (int j = 0; j < 3; ++j) {
                 if (entries->counters[id] == data_020e8cc5[j * 2])

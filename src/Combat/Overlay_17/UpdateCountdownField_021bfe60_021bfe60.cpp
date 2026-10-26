@@ -3,7 +3,7 @@
 #include "Resource/Brightness.h"
 
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 
 // USA: func_ov017_021bfe60
@@ -17,12 +17,12 @@ ARM int UpdateCountdownField_021bfe60_021bfe60(unsigned char* self) {
     }
 
     *field8 = 0;
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     if (combatant != NULL) {
         GameObject_EnableControl(combatant);
     }
     void* ov = GetGameResources();
-    int flag = GetFieldIfFlag4_020100f8((char*)battle);
+    int flag = GameState_GetFollowCamera((char*)battle);
     if (flag != 0) {
         SetField0x23cTrue_020a27ac((void*)flag);
     }

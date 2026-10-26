@@ -6,9 +6,9 @@ int* GetGlobal02109030_020936f8(void);
 struct StateFlags3c9;
 int CheckFlag0x3c9Bit0OrByteNonPositive_0209494c(struct StateFlags3c9* obj);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-extern "C" void* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
-extern "C" void func_0202b0f4(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void LinkSession_End(void* obj);
 void ClearTwoBytesAtField_02195748(unsigned char* base);
 void SetFlag1ForFlagombatants_02192594_02192594(unsigned char* base);
 void ClearFlag0x3c9Bit0AndCleanup_020939fc(unsigned char* obj);
@@ -36,11 +36,11 @@ extern "C" ARM unsigned char func_ov017_021af4ec(ObjResetCombatState_021af4ec* o
 	if (CheckFlag0x3c9Bit0OrByteNonPositive_0209494c(g)) {
 		FlagWord_SetBits(p, 0x20);
 		int f = (int)GetGameResources();
-		void* a = func_0202ae18();
-		struct BitArrayObj0205e854* d = (struct BitArrayObj0205e854*)GetData02100044_0202ae24();
+		void* a = LinkSession_GetInstance();
+		struct BitArrayObj0205e854* d = (struct BitArrayObj0205e854*)LinkMessageQueue_GetInstance();
 		obj->field15 = 0;
 		SetFlags00((GameResources*)f, 2);
-		func_0202b0f4(a);
+		LinkSession_End(a);
 		ClearTwoBytesAtField_02195748((unsigned char*)f);
 		SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)f);
 		ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)g);

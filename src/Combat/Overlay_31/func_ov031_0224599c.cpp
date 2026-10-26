@@ -11,9 +11,9 @@ extern "C" int func_ov031_02245c68(int arg0);
 extern "C" void func_ov031_0220eadc(void);
 extern "C" int func_ov031_0220eb88(int arg0);
 extern "C" int func_ov031_0220eb30(void);
-extern "C" int func_020c7ea0(void* arg0, int* arg1, int arg2);
-extern "C" void func_020ca458(unsigned int arg0, void* arg1, int arg2);
-extern "C" void func_020ca4b4(const void* arg0, void* arg1, int arg2);
+extern "C" int func_020c7ea0(void* queue, int* msg, int flags);
+extern "C" void MIi_CpuClearFast(unsigned int value, void* dest, int count);
+extern "C" void func_020ca4b4(const void* src, void* dest, int count);
 
 struct Struct_ov031_0224599c {
 	int unknown_0_;
@@ -42,8 +42,8 @@ extern struct Struct_ov031_02291f24_3 data_ov031_02291f24;
 extern struct Struct_ov031_02292040 data_ov031_02292040;
 extern int data_ov031_02291f60;
 
-static inline void inline_ov031_0224599c(void* arg0, int arg1) {
-	func_020ca458(0, arg0, arg1);
+static inline void CpuClear8(void* dest, int count) {
+	MIi_CpuClearFast(0, dest, count);
 }
 
 static inline void inline_ov031_0224599c_2(const void* arg0, void* arg1, int arg2) {

@@ -3,7 +3,7 @@
 struct Entry_02028bd0;
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
 struct Element0x318_02028bac;
-struct Element0x318_02028bac* GetElementStride0x318(struct Element0x318_02028bac* base, int index);
+struct Element0x318_02028bac* ZoneRecords_GetAt(struct Element0x318_02028bac* base, int index);
 
 struct Obj02090294 {
 #if defined(jpn)
@@ -24,7 +24,7 @@ retry:
         obj->field276 = 0;
     }
     for (j = i; j < 4; j++) {
-        struct Element0x318_02028bac* entry = GetElementStride0x318(table, j);
+        struct Element0x318_02028bac* entry = ZoneRecords_GetAt(table, j);
         if (entry != 0) {
             if (*((signed char*)entry + 0xd) == obj->field276) {
                 obj->field276++;
@@ -34,7 +34,7 @@ retry:
     }
     int k;
     for (k = 0; k < 4; k++) {
-        GetElementStride0x318(table, k);
+        ZoneRecords_GetAt(table, k);
     }
     signed char old = obj->field276;
     obj->field276 = old + 1;

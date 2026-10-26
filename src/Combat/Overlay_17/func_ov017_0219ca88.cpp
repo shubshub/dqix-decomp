@@ -34,22 +34,22 @@ struct Struct_ov017_0219ca88_3 { unsigned char unknown_0_, unknown_1_; unsigned 
 struct Struct_ov017_0219ca88 { unsigned int unknown_0_, unknown_4_, unknown_8_, unknown_c_; unsigned char unknown_10_[0x24]; };
 
 extern "C" Zone3D* Zone3D_GetInstance();
-void* GetField0x3f8Address_0200fd0c(GameState*);
+void* GameState_GetZoneTransition(GameState*);
 extern "C" void* Scenario_GetInstance(void*);
 int ListContainsNode(ListHead02046b38*, ListNode02046b38*);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+int FieldTaskQueue_IsEmpty(void**);
 void SetObjFieldIfFound_0219bed0(void*);
 unsigned char GetByte0x4_0200fb9c(char*);
 int GetWord0x7f6c_0201201c(void*);
 int GameState_GetProtagonistIndex(GameState*);
-extern "C" int func_020321e0(const Vector3fix*, Bounds*, int, const Vector3fix*, int);
+extern "C" int Bounds3D_ContainsPointRotated(const Vector3fix*, Bounds*, int, const Vector3fix*, int);
 extern "C" void* func_ov017_0219c6f4(void*);
-unsigned char GetByteField0x252_02039820(void*);
+unsigned char GameObject_IsControlEnabled(void*);
 void InitObj0219a674(unsigned char*);
 short GetAbsAngleDeltaBetween_021a4754(Vector3fix*, int, Vector3fix*);
 extern "C" void func_ov017_0219b33c(GameResources*, Event0219ca88*);
-void InitAndResetHeader_0219e310(unsigned char*, int);
+void FieldTask_InitEnterZone(unsigned char*, int);
 void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 int Scenario_RunTrigger(void*, int, void*);
 extern "C" void EventQuery_RunQueuedCommands(void*);
@@ -57,23 +57,23 @@ extern "C" void EventQuery_RunQueuedCommands(void*);
 // USA: func_ov017_0219ca88
 extern "C" ARM void func_ov017_0219ca88(GameResources* resources) {
     GameState* game = GameState::GetInstance();
-    GameObject* actor = game->GetUnknownGameObject();
+    GameObject* actor = game->GetLeader();
     Zone3D* container = Zone3D_GetInstance();
-    unsigned char* state = static_cast<unsigned char*>(GetField0x3f8Address_0200fd0c(game));
+    unsigned char* state = static_cast<unsigned char*>(GameState_GetZoneTransition(game));
     BackgroundLoader::GetInstance();
     Vector3fix* actorPosition;
     int handled = 0;
     void* lookup = Scenario_GetInstance(game->GetCamera());
     if (ListContainsNode((ListHead02046b38*)resources->fieldTaskQueue_, (ListNode02046b38*)resources->unknown_ptr_array_3700[3])) return;
-    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 4) return;
-    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 10) return;
+    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)resources->fieldTaskQueue_) == 4) return;
+    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)resources->fieldTaskQueue_) == 10) return;
     if (TestFlags08(resources, 8)) {
         if (static_cast<unsigned char*>(resources->unknown_ptr_array_3700[4])[3]) return;
         if (IsMainBrightnessTransitionActive(resources)) return;
         ClearFlags08(resources, 8);
     }
     if (ListContainsNode((ListHead02046b38*)resources->fieldTaskQueue_, (ListNode02046b38*)resources->unknown_ptr_array_371c[0])) return;
-    if (IsField0Null_02046b08((void**)resources->fieldTaskQueue_) && !IsBrightnessTransitionActive(resources) && ((unsigned char*)resources->unknown_42e3)[6]) {
+    if (FieldTaskQueue_IsEmpty((void**)resources->fieldTaskQueue_) && !IsBrightnessTransitionActive(resources) && ((unsigned char*)resources->unknown_42e3)[6]) {
         if (state[2]) state[0xa] = 0;
         else SetObjFieldIfFound_0219bed0((void*)1);
         resources->unknown_42e3[6] = 0;
@@ -87,20 +87,20 @@ extern "C" ARM void func_ov017_0219ca88(GameResources* resources) {
             Vector3fix position = *actorPosition;
             for (int entryIndex = 0; entryIndex < container->substruct_6c_.arraySize68_; ++entryIndex) {
                 GameState_GetProtagonistIndex(game);
-                Entry0219ca88* entry = (Entry0219ca88*)GetElementStride0x70_0201e548(&container->substruct_6c_, entryIndex);
-                if (func_020321e0(&position, &entry->bounds, entry->boundsAngle, &entry->pivot, entry->radiusSquared)) {
+                Entry0219ca88* entry = (Entry0219ca88*)ZoneFeatures_GetExit(&container->substruct_6c_, entryIndex);
+                if (Bounds3D_ContainsPointRotated(&position, &entry->bounds, entry->boundsAngle, &entry->pivot, entry->radiusSquared)) {
                     func_ov017_0219c6f4(entry);
                     handled = 1;
                 }
-                if (var5 && var10->unknown_0_ == 1) {
-                    var5 = 0;
-                    if (!func_02039820(var1)) continue;
-                    Struct_ov017_0219ca88_3 var11;
-                    func_ov017_0219a674((unsigned char*)&var11);
-                    var11.unknown_0_ = 8;
-                    var11.unknown_8_ = var10;
-                    var11.unknown_10_ = func_ov017_021a4754(var4, (short)var1->obj3D_.rotation_.y, &var10->unknown_58_);
-                    func_ov017_0219b33c(arg0, &var11);
+                if (handled && entry->kind == 1) {
+                    handled = 0;
+                    if (!GameObject_IsControlEnabled(actor)) continue;
+                    Event0219ca88 event;
+                    InitObj0219a674((unsigned char*)&event);
+                    event.kind = 8;
+                    event.entry = entry;
+                    event.angle = GetAbsAngleDeltaBetween_021a4754(actorPosition, (short)actor->obj3D_.rotation_.y, &entry->pivot);
+                    func_ov017_0219b33c(resources, &event);
                 }
                 if (handled) {
                     if (!static_cast<unsigned char*>(resources->unknown_ptr_array_3700[4])[3]) break;
@@ -115,8 +115,8 @@ extern "C" ARM void func_ov017_0219ca88(GameResources* resources) {
         var5 = 1;
     }
     if (!handled) return;
-    CallFunc0200fbb4AtField0x3f8_0200fcfc(game, state);
-    InitAndResetHeader_0219e310((unsigned char*)resources->unknown_ptr_array_3700[3], 0);
+    GameState_SetZoneTransition(game, state);
+    FieldTask_InitEnterZone((unsigned char*)resources->unknown_ptr_array_3700[3], 0);
     AppendNodeToTail((TailList020469b4*)resources->fieldTaskQueue_, (TailNode020469b4*)resources->unknown_ptr_array_3700[3]);
     if (!state[0xa]) {
         Header0219ca88 header;

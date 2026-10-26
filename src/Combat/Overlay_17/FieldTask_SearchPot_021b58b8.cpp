@@ -13,7 +13,7 @@ enum { kResourceNodeOffset = 0x70c };
 
 struct Obj020397cc;
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void FollowCamera_DisableFollow(void* obj);
 void FollowCamera_EnableFollow(void* obj);
 void GameObject_EnableControl(void* obj);
@@ -55,14 +55,14 @@ struct SearchPotTask021b58b8 : FieldTask {
 extern "C" ARM void FieldTask_SearchPot(SearchPotTask021b58b8* self, ListNode02046b38* queue) {
     if (self->holdTimer != 0) {
         GameState* gs = GameState::GetInstance();
-        GameObject* leader = gs->GetUnknownGameObject();
+        GameObject* leader = gs->GetLeader();
         if (leader != 0) {
             unsigned int elapsed = (unsigned int)gs->GetEffectiveDeltaTime();
             if (elapsed < self->holdTimer) {
                 GameObject_DisableControl((Obj020397cc*)leader, 1);
                 *(unsigned short*)((char*)leader + 0xb2) = 0;
                 self->holdTimer = self->holdTimer - elapsed;
-                int camera = GetFieldIfFlag4_020100f8((char*)gs);
+                int camera = GameState_GetFollowCamera((char*)gs);
                 if (camera != 0) {
                     FollowCamera_DisableFollow((void*)camera);
                 }
@@ -73,7 +73,7 @@ extern "C" ARM void FieldTask_SearchPot(SearchPotTask021b58b8* self, ListNode020
             } else if (self->special == 0) {
                 GameObject_EnableControl((void*)leader);
                 self->holdTimer = 0;
-                int camera = GetFieldIfFlag4_020100f8((char*)gs);
+                int camera = GameState_GetFollowCamera((char*)gs);
                 if (camera != 0) {
                     FollowCamera_EnableFollow((void*)camera);
                 }

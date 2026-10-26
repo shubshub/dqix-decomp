@@ -24,22 +24,22 @@ struct Struct_020a6728 {
     Vector3i unknown_144_;
     char unknown_150_[0x20];
 };
-struct Struct_02095924_2;
-struct Struct_020a6728_2;
-struct Struct_0200ffc0;
-struct Struct_02033834;
-struct Struct_02033fdc;
-struct Struct_ov017_021d82fc { SafeAllocator* unknown_0_; char* unknown_4_; };
-extern "C" Struct_02095924_2* func_02011584(void*);
-extern "C" Struct_020a6728_2* func_02099950(Struct_02095924_2*, int);
-extern "C" void* func_0200ffc0(Struct_0200ffc0*);
+struct SearchTable;
+struct SearchEntry020a6728;
+struct PointerField32c_ffc0;
+struct Obj02033874;
+struct Flags02033fdc;
+struct ActorAllocation020a6728 { SafeAllocator* allocator; char* tables; };
+SearchTable* GameState_GetZoneTable(void*);
+SearchEntry020a6728* ZoneTable_FindEntry(SearchTable*, int);
+void* GameState_GetShip(PointerField32c_ffc0*);
 void* LoadFileIntoNewAllocation(const char*, SafeAllocator&, unsigned int*);
 void InitActor020a75a0(char*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
 extern "C" Zone3D* Zone3D_GetInstance();
-void SetVecYFromValue02033874(Obj02033874*, int);
-void ClearFlag0x4At0xe0(Flags02033fdc*);
+void GameObject_SnapFacing(Obj02033874*, int);
+void GameObject_ResumeMovement(Flags02033fdc*);
 void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
 void ResetContainerAndHandleFields020da1ac(void*);
 extern "C" void func_020a72ac(Zone3D*, int);
@@ -50,19 +50,19 @@ extern Struct_ov017_021d82fc data_ov017_021d82fc;
 // USA: func_020a6728
 // JPN: func_020a84cc
 // KEEP-NAME
-extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_020a6728_2* var1 = func_02099950(func_02011584(var0), arg1);
-    const char* var2 = 0;
-    if (var1 != 0) var2 = (const char*)var1 + 5;
-    if (arg1 != 10000 && arg1 != 10100) {
-        if (arg1 < 20000 || arg1 > 29999 || var2 == 0 || strstr(var2, data_020f1b50) != 0)
+extern "C" ARM void func_020a6728(GameResources* self, int id) {
+    GameState* state = GameState::GetInstance();
+    SearchEntry020a6728* entry = ZoneTable_FindEntry(GameState_GetZoneTable(state), id);
+    const char* name = 0;
+    if (entry != 0) name = (const char*)entry + 5;
+    if (id != 10000 && id != 10100) {
+        if (id < 20000 || id > 29999 || name == 0 || strstr(name, data_020f1b50) != 0)
             return;
     }
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     SafeAllocator* allocator = &self->allocator_array_38[7];
     char* tables = (char*)&self->vramStates_ + 0x310;
-    GetPointerAt0x32c_0200ffc0((PointerField32c_ffc0*)state);
+    GameState_GetShip((PointerField32c_ffc0*)state);
     if (loader->GetNumQueuedTasks() > 0) return;
     unsigned int length;
     void* file = LoadFileIntoNewAllocation(data_020f1b52, *allocator, &length);
@@ -86,18 +86,18 @@ extern "C" ARM void func_020a6728(GameResources* arg0, int arg1) {
     actor->object.LoadFromCHRArchive(&loadInfo);
     VramState_Save(tables);
     Zone3D* zone = Zone3D_GetInstance();
-    state->GetUnknownGameObject();
+    state->GetLeader();
     ZoneSavedActorState* saved = zone->GetSavedActorState();
     actor->object.position_ = saved->position;
     saved = zone->GetSavedActorState();
     actor->homePosition = saved->position;
     actor->object.SetScale(0xa0, 0xa0, 0xa0);
-    SetVecYFromValue02033874((Obj02033874*)actor, zone->savedActor_.rotationY);
+    GameObject_SnapFacing((Obj02033874*)actor, zone->savedActor_.rotationY);
     actor->slot = 0xc9;
     actor->field_b4 = 0x106;
     actor->field_b6 = 10;
     actor->object.MakeVisible();
-    ClearFlag0x4At0xe0((Flags02033fdc*)actor);
+    GameObject_ResumeMovement((Flags02033fdc*)actor);
     actor->flags &= ~1;
     actor->object.DisableFlag(0x180);
     actor->object.EnableFlag(0x400000);

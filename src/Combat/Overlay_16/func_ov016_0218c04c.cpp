@@ -3,12 +3,12 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-extern "C" unsigned int func_020c8534(int arg0);
-extern "C" unsigned int func_020c8520(int arg0);
-extern "C" unsigned int func_ov016_0218fc78(void);
-extern "C" unsigned int func_ov016_0218fc84(void);
-extern "C" void func_ov016_0218fc8c(void*, unsigned int);
-extern "C" void func_ov016_0218fcac(void*, int);
+unsigned int GetArenaLow(int i);
+unsigned int GetArenaHigh(int i);
+unsigned int GetConst25980_0218fc78(void);
+unsigned int GetConst9600_0218fc84(void);
+void SetData_0218fc8c(void*, unsigned int);
+void SetupHandle_0218fcac(void*, int);
 struct NitroVM;
 void NitroVM_Initialize(NitroVM*);
 int NitroVM_PrepareReadFileByPath(NitroVM*, char const*);
@@ -31,10 +31,10 @@ extern "C" void func_020d1fd0(int arg0, int arg1);
 extern "C" void func_020d24c4(int arg0);
 extern "C" void func_020c9778(int arg0, int arg1);
 extern "C" void func_020bbd9c(void);
-extern "C" int func_020ce89c(int arg0, int arg1, int arg2);
-extern "C" unsigned short func_ov016_0218ca70(void);
-extern "C" int func_020c7dcc(void);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
+extern "C" int EnterSleepMode(int a, int b, int c);
+unsigned short XorMaskKeyInput_0218ca70(void);
+int SetData020f2284_020c7dcc(void);
+extern "C" void* memset(void* p, int c, unsigned int n);
 void CleanDataCache(void);
 void CleanCacheRange(const void* p, unsigned int n);
 struct Alarm;
@@ -45,10 +45,10 @@ void SetInterval(Alarm*, unsigned long long, unsigned long long, void (*)(Proces
 void CancelAlarm(Alarm*);
 void SetKeyAndApplyRecord0203ad14(void*, int, void*, int);
 struct Obj0203aba8;
-void TryDispatchOrFallback0203aba8(Obj0203aba8*, void*, void*);
+void SoundPlayer_StartSeq(Obj0203aba8*, void*, void*);
 void UpdateScaleOrApplyRecord0203ae4c(void* a, int b, void* c);
-void ScaleAndNotify0203ad88(void* a, void* b, int c);
-void SetContextAndDispatch0203ac10(void* a, void* b, int c);
+void SoundPlayer_StopStream(void* a, void* b, int c);
+void SoundPlayer_StopSeqOnHandle(void* a, void* b, int c);
 struct Struct0200fb08;
 int GameState_GetLanguage(Struct0200fb08*);
 void SetFlagAndMaybeIncrement_0218c024(void);
@@ -109,22 +109,22 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 	unsigned int var16;
 	unsigned int var17;
 
-	var12 = 0;
-	var3 = 0;
-	var4 = false;
-	var16 = func_020c8534(3);
-	var14 = func_020c8520(3) - var16;
-	if (var14 >= func_ov016_0218fc78()) {
-		var14 = func_ov016_0218fc78();
+	state = 0;
+	prevKeys = 0;
+	quit = false;
+	base3 = GetArenaLow(3);
+	sz3 = GetArenaHigh(3) - base3;
+	if (sz3 >= GetConst25980_0218fc78()) {
+		sz3 = GetConst25980_0218fc78();
 	}
-	var17 = func_020c8534(4);
-	var15 = func_020c8520(4) - var17;
-	if (var15 >= func_ov016_0218fc84()) {
-		var15 = func_ov016_0218fc84();
+	base4 = GetArenaLow(4);
+	sz4 = GetArenaHigh(4) - base4;
+	if (sz4 >= GetConst9600_0218fc84()) {
+		sz4 = GetConst9600_0218fc84();
 	}
-	func_ov016_0218fc8c((void*)func_020c8534(3), var14);
-	func_ov016_0218fcac((void*)func_020c8534(4), var15);
-	NitroVM_Initialize((NitroVM*)var0);
+	SetData_0218fc8c((void*)GetArenaLow(3), sz3);
+	SetupHandle_0218fcac((void*)GetArenaLow(4), sz4);
+	NitroVM_Initialize((NitroVM*)vm);
 
 	if (NitroVM_PrepareReadFileByPath((NitroVM*)var0, arg0)) {
 	var11 = func_ov016_0218e558(var0, 6);
@@ -170,7 +170,7 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 					if (p->isSet != 0) {
 						SetKeyAndApplyRecord0203ad14(&g_bgmPlayer, p->id, 0, 0);
 					} else {
-						TryDispatchOrFallback0203aba8((Obj0203aba8*)&g_bgmPlayer, (void*)p->id, &data_ov016_0219d0cc);
+						SoundPlayer_StartSeq((Obj0203aba8*)&g_bgmPlayer, (void*)p->id, &data_ov016_0219d0cc);
 					}
 					func_020bbd9c();
 					data_ov016_0219d0c0.unknown_10_ = 1;
@@ -181,12 +181,12 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 				data_ov016_0219d0c0.busy = 1;
 				if (data_ov016_0219d0c0.info->isSet != 0) {
 					UpdateScaleOrApplyRecord0203ae4c(&g_bgmPlayer, 1, 0);
-					func_020ce89c(0xc, 0, 0);
+					EnterSleepMode(0xc, 0, 0);
 					*(unsigned int*)(&g_bgmPlayer + 0xa8) =
 						(unsigned int)(1000.0f * ((float)(frame - lastFrame) / scale));
 					UpdateScaleOrApplyRecord0203ae4c(&g_bgmPlayer, 0, 0);
 				} else {
-					func_020ce89c(0xc, 0, 0);
+					EnterSleepMode(0xc, 0, 0);
 				}
 				data_ov016_0219d0c0.unknown_38_ = 0;
 			}
@@ -340,9 +340,9 @@ extern "C" ARM void func_ov016_0218c04c(const char* arg0, int arg1) {
 		NitroVM_FinishRead((NitroVM*)vm);
 		if (data_ov016_0219d0c0.info->id > -1) {
 			if (data_ov016_0219d0c0.info->isSet != 0) {
-				ScaleAndNotify0203ad88(&g_bgmPlayer, 0, 0);
+				SoundPlayer_StopStream(&g_bgmPlayer, 0, 0);
 			} else {
-				SetContextAndDispatch0203ac10(&g_bgmPlayer, &data_ov016_0219d0cc, 0);
+				SoundPlayer_StopSeqOnHandle(&g_bgmPlayer, &data_ov016_0219d0cc, 0);
 			}
 			func_020bbd9c();
 		}

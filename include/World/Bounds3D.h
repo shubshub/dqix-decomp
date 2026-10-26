@@ -8,6 +8,6 @@ struct Struct_02018fbc {
 };
 
 
-extern "C" int func_02031118(const Vector3fix* arg0, const Struct_02018fbc* arg1);
-extern "C" int func_020321e0(const Vector3fix* arg0, const Struct_02018fbc* arg1,
-                            int arg2, const Vector3fix* arg3, int arg4);
+extern "C" int Bounds3D_ContainsPoint(const Vector3fix* point, const Bounds3D* bounds);
+extern "C" int Bounds3D_ContainsPointRotated(const Vector3fix* point, const Bounds3D* bounds,
+                            int angle, const Vector3fix* pivot, int radiusSquared);

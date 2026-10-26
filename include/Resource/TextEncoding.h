@@ -5,5 +5,5 @@ struct Struct_020e743c {
     unsigned short unknown_2_;
 };
 
-extern "C" unsigned short func_02032e24(unsigned short arg0, Struct_020e743c *arg1, int arg2);
-extern "C" void func_020328bc(unsigned char *arg0, unsigned short *arg1, unsigned short arg2);
+unsigned short ShiftJis_LookupUtf16(unsigned short key, KeyValue02032e24 *entries, int count);
+extern "C" void Text_Utf16ToShiftJis(unsigned char *destination, unsigned short *source, unsigned short count);

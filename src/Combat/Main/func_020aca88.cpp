@@ -31,14 +31,14 @@ struct Struct_0200ffd0;
 struct Struct_02033834;
 struct Struct_02033fdc;
 
-void* GetPointerAt0x330_0200ffd0(struct PointerField330_ffd0* obj);
+void* GameState_GetStarflight(struct PointerField330_ffd0* obj);
 void InitObj020ad59c(void* obj);
 void ClearEightWords_0203dafc(struct Struct_203dafc* obj);
 void VramState_Restore(char* tables);
 void VramState_Save(char* tables);
 extern "C" void Zone3D_GetInstance();
-void SetVecYFromValue02033874(struct Obj02033874* obj, int value);
-void ClearFlag0x4At0xe0(struct Flags02033fdc* obj);
+void GameObject_SnapFacing(struct Obj02033874* obj, int value);
+void GameObject_ResumeMovement(struct Flags02033fdc* obj);
 void RegisterCombatantSlot_0200fd38(GameState* state, int slot, GameObject* obj);
 extern "C" void func_020adfa8(struct Prop020aca88* prop);
 void ResetContainerAndHandleFields020da1ac(void* container);
@@ -58,7 +58,7 @@ extern "C" ARM void func_020aca88(GameResources* res, int message) {
         BackgroundLoader* loader = BackgroundLoader::GetInstance();
         SafeAllocator* alloc = &res->allocator_array_38[7];
         char* tables = ((PairTable020aca88*)res->vramStates_)[7];
-        GetPointerAt0x330_0200ffd0((struct PointerField330_ffd0*)state);
+        GameState_GetStarflight((struct PointerField330_ffd0*)state);
         if (loader->GetNumQueuedTasks() > 0) {
             return;
         }
@@ -83,23 +83,23 @@ extern "C" ARM void func_020aca88(GameResources* res, int message) {
         VramState_Save(tables);
         Zone3D_GetInstance();
 
-        GameObject* var8 = var0->GetUnknownGameObject();
-        Vector3i var9 = var8->obj3D_.position_;
-        var9.y += 0xa000;
-        Vector3i var10 = data_020e910c;
-        Vector3i var11 = data_020e9100;
-        var7->unknown_0_.rotation_ = var11;
-        var7->unknown_0_.position_ = var9;
-        var7->unknown_154_ = var9;
-        var7->unknown_0_.SetScale(&var10);
-        func_02033874((struct Struct_02033834*)var7, 0x3244);
-        var7->unknown_b0_ = 0xc9;
-        var7->unknown_0_.MakeVisible();
-        func_02033fdc((struct Struct_02033fdc*)var7);
-        var7->unknown_e0_0_ = 0;
-        var7->unknown_0_.EnableFlag(0x80);
-        func_0200fd38(var0, 0xca, (GameObject*)var7);
-        var0->GetGameObjectByIndex(0xcb);
+        GameObject* hero = state->GetLeader();
+        Vector3i pos = hero->obj3D_.position_;
+        pos.y += 0xa000;
+        Vector3i scale = data_020e910c;
+        Vector3i rot = data_020e9100;
+        prop->obj3D.rotation_ = rot;
+        prop->obj3D.position_ = pos;
+        prop->homePosition_154 = pos;
+        prop->obj3D.SetScale(&scale);
+        GameObject_SnapFacing((struct Obj02033874*)prop, 0x3244);
+        prop->kind_b0 = 0xc9;
+        prop->obj3D.MakeVisible();
+        GameObject_ResumeMovement((struct Flags02033fdc*)prop);
+        prop->hidden_e0 = 0;
+        prop->obj3D.EnableFlag(0x80);
+        RegisterCombatantSlot_0200fd38(state, 0xca, (GameObject*)prop);
+        state->GetGameObjectByIndex(0xcb);
 
         var6 = LoadFileIntoNewAllocation(data_020f1c20, *var2, &var4);
         if (var6 == NULL) {

@@ -71,7 +71,7 @@ extern "C" ARM void func_ov013_021878b0(Struct_ov013_021878b0* arg0) {
         }
         arg0->unknown_6a_ = -1;
 #endif
-        loader->MaybeFreeAllocations();
+        loader->FreeAllocations();
         window->loadTask = loader->QueueLoadFile(data_ov013_02187eaf, NULL);
         window->loadState++;
     } else if (loadState == 1) {

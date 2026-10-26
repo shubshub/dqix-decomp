@@ -125,10 +125,10 @@ extern "C" short func_ov000_0215ffa0(void* obj);
 extern "C" int func_ov025_021d8c30(void* sl_, void* sb_, int kind, int category, int idx, int inner, int flag);
 void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
 int GetSubstructByte0x56_02049ee8(unsigned char* obj);
-int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 void* MessageSystem_GetInstance(void);
 extern "C" void MessageSystem_Stop(void* self);
-struct Obj0203a588* GetData02104b6c_02039e70(void);
+struct Obj0203a588* NumberPopups_GetInstance(void);
 void ResetLowFlagEntries0203a588(struct Obj0203a588* obj);
 void ZeroFieldsAt0x6e8_ov000_02182a44(void* obj);
 struct GameResources;
@@ -314,19 +314,19 @@ extern "C" ARM void func_ov025_021ebb90(struct Struct_ov025_021e9778_4* arg0) {
                         struct Struct_ov000_02160094* var43 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)arg0->unknown_0_[var17].unknown_0_, var39);
                         if (var43 != 0) var41 = var43->unknown_20_;
                     }
-                    if (var41 >= 0) {
-                        func_ov000_0216df00(func_ov000_02160f14(var12), var41, 0, 0, 1.8f);
-                        func_ov000_021626a0(var12, 4, 0);
-                        GameObject* var44 = var11->GetCombatantByIndex(var41);
-                        if (var44 != 0) {
-                            ((Object3D*)((unsigned char*)var44))->MakeVisible();
-                            func_02049ae4((unsigned char*)var44);
-                            if (func_02049ee8((unsigned char*)var44) != 0) {
-                                func_02033b88((struct Struct_02010604*)var44, 0);
+                    if (targetId2 >= 0) {
+                        func_ov000_0216df00(func_ov000_02160f14(cw), targetId2, 0, 0, 1.8f);
+                        func_ov000_021626a0(cw, 4, 0);
+                        GameObject* c2 = battle->GetCombatantByIndex(targetId2);
+                        if (c2 != 0) {
+                            ((Object3D*)((unsigned char*)c2))->MakeVisible();
+                            ClearSubstructFlag0x4_02049ae4((unsigned char*)c2);
+                            if (GetSubstructByte0x56_02049ee8((unsigned char*)c2) != 0) {
+                                GameObject_ForceMotionState((struct Bytes02033b88*)c2, 0);
                             }
                         }
                         MessageSystem_Stop(MessageSystem_GetInstance());
-                        ResetLowFlagEntries0203a588(GetData02104b6c_02039e70());
+                        ResetLowFlagEntries0203a588(NumberPopups_GetInstance());
                         ZeroFieldsAt0x6e8_ov000_02182a44(cw + Field6ffc);
                     }
                 }

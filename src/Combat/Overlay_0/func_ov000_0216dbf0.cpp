@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_ov000_0216d370(char* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov000_0216d530(void*, int);
-extern "C" void func_0202e694(void* arg0, int* arg1);
+extern "C" void func_ov000_0216d370(char* obj, int flagA, int flagB, int flagC);
+void SetFlagOrState0216d530(void*, int);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 extern Vector3i data_ov000_02183280;
 
@@ -72,8 +72,8 @@ extern "C" ARM void func_ov000_0216dbf0(char* arg0, int* arg1, int arg2, short a
         }
     }
 
-    *(Vector3i*)(arg0 + 0x10) = var0;
-    func_0202e694(arg0, (int*)&var1);
-    *(int*)(arg0 + 0x238) = 0x1c;
-    *(int*)(arg0 + 0x23c) = 0x14;
+    *(Vector3i*)(self + 0x10) = c;
+    Camera_SetOrbitVector(self, (int*)&v);
+    *(int*)(self + 0x238) = 0x1c;
+    *(int*)(self + 0x23c) = 0x14;
 }

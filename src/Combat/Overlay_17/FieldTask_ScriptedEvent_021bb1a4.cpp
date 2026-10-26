@@ -25,9 +25,9 @@ extern Type_02000c9c_19 data_ov017_021d7ccc[20];
 extern unsigned int data_ov017_021d845c;
 extern StateFn021bb1a4 __ptmf_null;
 
-extern "C" void func_0208bb78(void* arg0, unsigned int arg1);
-extern "C" int func_020a1e54(int arg0);
-extern "C" void func_020a0c0c(void);
+extern "C" void func_0208bb78(void* timer, unsigned int ticks);
+int PopStack0AndTrigger_020a1e54(int flag);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 // Overlay 17, originally func_ov017_021bb1a4 (USA/EUR 0x021bb1a4, JPN 0x021bb79c)
 extern "C" ARM void FieldTask_ScriptedEvent(StateMachine021bb1a4* self, int arg) {
@@ -46,8 +46,8 @@ extern "C" ARM void FieldTask_ScriptedEvent(StateMachine021bb1a4* self, int arg)
 
     if (arg0->unknown_ff_ != 0) {
         if (TestFlags00(GetGameResources(), 0x1000) == 0) {
-            func_020a1e54(1);
-            func_020a0c0c();
+            PopStack0AndTrigger_020a1e54(1);
+            ROMFilesystem_InitFileTables();
         }
     }
 }

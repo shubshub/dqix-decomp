@@ -3,16 +3,16 @@
 #include "Graphics/Vector.h"
 #include "GameState/GameState.h"
 
-extern "C" void func_020a2d14(void* arg0);
-extern "C" void func_0204a4ac(void* arg0);
-extern "C" void func_0202eab8(void* arg0);
+extern "C" void func_020a2d14(void* actor);
+extern "C" void func_0204a4ac(void* self);
+extern "C" void Camera_SetOrbitFromPosition(void* obj);
 int fix32ReduceAngle0To2Pi(int angle);
 
 struct Struct_0204a170;
 extern "C" int func_020a3570(struct Struct_0204a170* arg0);
 
-struct Struct_02033834;
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
+struct Obj02033874;
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 extern Matrix4x3 data_02107874;
 extern Matrix4x3 data_021078ac;
@@ -59,8 +59,8 @@ extern "C" ARM void func_0204a170(struct Struct_0204a170_3* arg0) {
     if (func_020a3570((struct Struct_0204a170*)arg0) != 0) return;
     func_0204a4ac(arg0);
 
-    const Vector3fix& var5 = ((Object3D*)arg0->unknown_21c_)->GetScale();
-    ((Object3D*)arg0->unknown_21c_)->MaybeUpdateBonePositions();
+    const Vector3fix& scale = ((Object3D*)self->f21c)->GetScale();
+    ((Object3D*)self->f21c)->UpdateTrackedBones();
 
     var0 = data_02107874;
     var1 = data_021078ac;
@@ -83,9 +83,9 @@ extern "C" ARM void func_0204a170(struct Struct_0204a170_3* arg0) {
     Vector3fix_Add(&var7, &var9->unknown_44_, &var7);
     Vector3fix_Add(&var8, &var9->unknown_44_, &var8);
 
-    *(Vector3i*)((int*)&arg0->unknown_10_) = *(Vector3i const*)((int*)&var7);
-    *(Vector3i*)((int*)&arg0->unknown_4_) = *(Vector3i const*)((int*)&var6);
-    func_0202eab8(arg0);
+    *(Vector3i*)((int*)&self->f10) = *(Vector3i const*)((int*)&v2);
+    *(Vector3i*)((int*)&self->f04) = *(Vector3i const*)((int*)&v1);
+    Camera_SetOrbitFromPosition(self);
 
 struct Struct_0204a170_2* var10 = arg0->unknown_220_;
     if (var10 == NULL) return;
@@ -97,12 +97,12 @@ struct Struct_0204a170_2* var10 = arg0->unknown_220_;
 
     if (arg0->unknown_265_ != 0) return;
 
-    arg0->unknown_264_++;
-    if (arg0->unknown_264_ >= 3) {
-        func_02033874((struct Struct_02033834*)var12,
-            FIX32_MULTIPLY(var10->unknown_50_.y + var11, 0x800));
-        arg0->unknown_264_ = 0;
+    self->f264++;
+    if (self->f264 >= 3) {
+        GameObject_SnapFacing((struct Obj02033874*)u,
+            FIX32_MULTIPLY(t->rot.y + angle, 0x800));
+        self->f264 = 0;
     } else {
-        func_02033874((struct Struct_02033834*)var12, var10->unknown_50_.y);
+        GameObject_SnapFacing((struct Obj02033874*)u, t->rot.y);
     }
 }

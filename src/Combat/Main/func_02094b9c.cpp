@@ -22,8 +22,8 @@ struct Struct_02032148 {
     int unknown_10_;
 };
 
-extern "C" ARM int func_020321e0(void* arg0, struct Struct_02094b9c* arg1, short arg2, int* arg3, int arg4);
-extern "C" ARM int func_02032148(void* arg0, struct Struct_02032148* arg1, int arg2);
+extern "C" ARM int Bounds3D_ContainsPointRotated(void* anchor, struct Bounds02094b9c* b, short d, int* pos, int e);
+extern "C" ARM int func_02032148(void* anchor, struct Shape02094b9c* s, int e);
 
 // USA: func_02094b9c
 extern "C" ARM int func_02094b9c(struct Struct_02094b9c_2* arg0, void* arg1) {
@@ -44,11 +44,11 @@ extern "C" ARM int func_02094b9c(struct Struct_02094b9c_2* arg0, void* arg1) {
 
     var0 = var2;
 
-    int var3 = 0;
-    int var4;
-    int var5 = arg0->unknown_14_[2] > 0;
-    if (var5) {
-        var4 = func_020321e0(arg1, &var0, arg0->unknown_22_, &arg0->unknown_8_[0], arg0->unknown_24_);
+    int result = 0;
+    int ret;
+    int hasSize = p->size[2] > 0;
+    if (hasSize) {
+        ret = Bounds3D_ContainsPointRotated(anchor, &b, p->f22, &p->pos[0], p->f24);
     } else {
         var1.unknown_0_ = arg0->unknown_8_[0];
         var1.unknown_4_ = arg0->unknown_8_[1];

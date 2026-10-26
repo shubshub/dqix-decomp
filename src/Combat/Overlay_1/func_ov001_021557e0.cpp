@@ -5,19 +5,19 @@
 
 // USA: func_ov001_021557e0
 
-extern "C" int func_ov001_02153994(void);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* obj);
-extern "C" int func_0202c508(void* obj);
+int InitAndCheckField3c_02153994(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 void* GetData02153637_020e2ff8(void);
 struct Flags02033fcc;
-void SetFlag0x4At0xe0(struct Flags02033fcc* obj);
-unsigned char GetByte0x26c_02039d7c(char* obj);
-void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
+void GameObject_PauseMovement(struct Flags02033fcc* obj);
+unsigned char GameObject_IsClimbingLadder(char* obj);
+void GameObject_ResetTrail(unsigned char* obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 struct Base02010834;
-void CopyCountedBytesToIntArray02010834(struct Base02010834* base, int index, int* out, int* outCount);
-void ClearFlag0x1ceBit0x4_02039d58(unsigned char* obj);
+void GameState_GetPartyMemberIds(struct Base02010834* base, int index, int* out, int* outCount);
+void GameObject_ClearHidden(unsigned char* obj);
 void* GlobalFlags_GetInstance(void);
 void* GameState_GetParty(GameState* battleStruct);
 struct ArrayContainsByteStruct;
@@ -27,7 +27,7 @@ void MaybeCall0205420c(struct T0205420c* obj, int a, int b);
 void DispatchOrSetupCombatant_02191f4c(int a, int b);
 extern "C" void func_ov017_02192400(int a, int b);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 extern "C" void func_ov017_021917f0(int a, int b);
 void StoreInFirstEmptySlot_020e3368(unsigned char* base, unsigned char val);
@@ -76,23 +76,23 @@ struct Struct_ov001_021557e0_2 {
     signed char unknown_116_;
 };
 
-extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
-    GameResources* var0 = GetGameResources();
-    if (IsBrightnessOutsideValidRange((GameResources*)var0, false) != 0) {
-        arg0->unknown_101_ = 1;
+extern "C" ARM int func_ov001_021557e0(struct Self021557e0* self) {
+    GameResources* res = GetGameResources();
+    if (IsScreenFullyFaded((GameResources*)res, false) != 0) {
+        self->f101 = 1;
     }
     if (func_ov001_02153994() != 1) {
         return arg0->unknown_a_;
     }
 
-    void* var1 = func_0202ae18();
-    GameState* var2 = GameState::GetInstance();
+    void* search = LinkSession_GetInstance();
+    GameState* bs = GameState::GetInstance();
 
-    if (arg0->unknown_12_ != 0 && func_0202c540(var1) != 0) {
-        arg0->unknown_103_ = 1;
-        if (arg0->unknown_f8_0_ & 0x10) {
-            GameObject* var3 = func_0200ff1c(var2, 0);
-            ((unsigned int*)((char*)var3 + COMBATANT_FLAGS_021557e0))[0] |= 2;
+    if (self->f12 != 0 && LinkSession_IsGuest(search) != 0) {
+        self->f103 = 1;
+        if (self->flag_f8 & 0x10) {
+            GameObject* g = GetCombatantWithFlag0x100_0200ff1c(bs, 0);
+            ((unsigned int*)((char*)g + COMBATANT_FLAGS_021557e0))[0] |= 2;
         }
     }
 
@@ -102,24 +102,24 @@ extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
             if (var5 == 0) {
                 continue;
             }
-            SetFlag0x4At0xe0((struct Flags02033fcc*)m);
-            if (GetByte0x26c_02039d7c((char*)m) == 0 || GetFieldPtrAt0x26c_020399a8(m)->command != 2) {
+            GameObject_PauseMovement((struct Flags02033fcc*)m);
+            if (GameObject_IsClimbingLadder((char*)m) == 0 || GameObject_GetLadderClimb(m)->command != 2) {
                 m->obj3D_.SetAnimationByName(data_ov001_02164bd1, 0x10);
             }
-            func_02039d24((unsigned char*)var5);
-            var5->obj3D_.EnableFlag(0x800000);
+            GameObject_ResetTrail((unsigned char*)m);
+            m->obj3D_.EnableFlag(0x800000);
         }
 
         int list[4];
         int count;
-        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex(bs), list, &count);
+        GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex(bs), list, &count);
         for (int j = 0; j < count; j++) {
             GameObject* m = bs->GetPartyMemberByIndex(list[j]);
             if (m == 0) {
                 continue;
             }
-            var9->obj3D_.SetInheritedAlpha(0x1f);
-            func_02039d58((unsigned char*)var9);
+            m->obj3D_.SetInheritedAlpha(0x1f);
+            GameObject_ClearHidden((unsigned char*)m);
         }
 
         unsigned int* data = (unsigned int*)GlobalFlags_GetInstance();
@@ -138,7 +138,7 @@ extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
         FlagWord_SetBits(data, 0x20000);
     }
 
-    if (CheckField0NonZero_0202b7d8((int*)search) != 0 && self->f12 != 0 && self->f116 < 0) {
+    if (LinkSession_IsActive((int*)search) != 0 && self->f12 != 0 && self->f116 < 0) {
         if (self->f101 != 0) {
             int limit = GameState_GetLeaderIndex(bs);
             for (int n = 0; n < 4; n++) {
@@ -174,8 +174,8 @@ extern "C" ARM int func_ov001_021557e0(struct Struct_ov001_021557e0_2* arg0) {
         *var18 = (*var18 & ~0x1f00) | 0x1100;
     }
 
-    if ((arg0->unknown_f8_0_ & 0x10) && func_0202c508(var1) != 0) {
-        func_020e3368((unsigned char*)func_020e2ff8(), 1);
+    if ((self->flag_f8 & 0x10) && LinkSession_IsHostOrSolo(search) != 0) {
+        StoreInFirstEmptySlot_020e3368((unsigned char*)GetData02153637_020e2ff8(), 1);
         return 0x12;
     }
     return func_ov001_02154de4((struct Struct_ov001_02154de4*)arg0);

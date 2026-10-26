@@ -8,8 +8,8 @@ int NextRandomMax(Random*, int);
 float NextRandomFloat01(Random*);
 int fix32ReduceAngle0To2Pi(int);
 void Vector3fixMultiplyScalar(const Vector3i*, int, Vector3i*);
-extern "C" int func_ov000_0216f728(unsigned short*);
-extern "C" void func_0202e694(void*, int*);
+int IsValueInRange0216f728(unsigned short*);
+void Camera_SetOrbitVector(void*, int*);
 extern "C" {
 void Vector3fix_Subtract(const Vector3i*, const Vector3i*, Vector3i*);
 int Vector3fix_Length(const Vector3i*);
@@ -81,10 +81,10 @@ extern "C" ARM void func_ov000_0216e678(Struct_ov000_0216e678* arg0, int arg1, i
             if (!var13) data_ov000_02184270.unknown_c_ = (int)(4096.0f * (1.0995574f - 0.7f * (3.1415927f * NextRandomFloat01(var14))));
             if (var16.z < 0x8000) var16.z = 0x8000;
         }
-        func_0202e694(arg0, &var16.x);
-        arg0->unknown_25c_ = 0;
-        data_ov000_02184270.unknown_2_ = 5;
-        int var17;
-        arg0->unknown_258_ = func_ov000_0216f210(arg0, &var17);
-    } else arg0->unknown_25c_++;
+        Camera_SetOrbitVector(obj, &selected.x);
+        obj->count = 0;
+        data_ov000_02184270.kind = 5;
+        int out;
+        obj->value258 = func_ov000_0216f210(obj, &out);
+    } else obj->count++;
 }

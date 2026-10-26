@@ -7,8 +7,8 @@ struct Struct_0205cf1c;
 
 void* GameState_GetParty(GameState*);
 void CopyStaticData02174da4(int, void*);
-extern "C" void* func_0202ae18();
-int CheckField0NonZero_0202b7d8(int*);
+extern "C" void* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
 int GameState_GetProtagonistIndex(GameState*);
 int CountSetBitsLow12_0x68_ov000_0218155c(void*);
 extern "C" void* func_ov000_02161318(void*, int);
@@ -102,9 +102,9 @@ extern "C" ARM void func_ov000_0217c638(Struct_ov000_0217c638_3* arg0, int arg1,
         break;
     }
     case 2: {
-        void* state = func_0202ae18();
+        void* state = LinkSession_GetInstance();
         rows = 3;
-        if (CheckField0NonZero_0202b7d8((int*)state)) {
+        if (LinkSession_IsActive((int*)state)) {
             if (GameState_GetProtagonistIndex(gs) == 0) rows = 4;
         }
         var1 = var2;

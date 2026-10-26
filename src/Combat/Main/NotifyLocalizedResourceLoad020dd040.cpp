@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/KeyTable.h"
 
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 void KeyTable_Reset(struct Struct020dfc40* p);
 
 #if defined(jpn)
@@ -31,7 +31,7 @@ ARM void NotifyLocalizedResourceLoad020dd040(int len, char* buf) {
         innerFile = data_020f29a8;
 #endif
         buf[0] = 0;
-        ResetAndReturnSelf020dfc2c(&s);
+        KeyTable_Construct(&s);
         KeyTable_Reset(&s);
     } else {
         return;

@@ -135,7 +135,7 @@ void Zero4Bytes_020e526c(void* reader);
 void TryInvoke020e53bc_020e56fc(void* reader, int file, int size);
 const char** CallFunc020e52a0_020e5294(void* reader, int id);
 extern "C" void func_020e4864(const char* input, char* output, int, int, int, int);
-void* ResetAndReturnSelf020dfc2c(void* text);
+void* KeyTable_Construct(void* text);
 void KeyTable_Reset(Struct020dfc40* text);
 extern "C" void func_020e046c(char* output, void* file, unsigned int size, short infoID);
 void VramState_Rewind(Foo0207df50* p);
@@ -233,7 +233,7 @@ extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* arg0) {
             if (var12 != NULL) {
 #if defined(jpn)
                 char reader[0x18];
-                ResetAndReturnSelf020dfc2c(reader);
+                KeyTable_Construct(reader);
                 KeyTable_Reset((Struct020dfc40*)reader);
                 KeyTable_LoadInPlace(reader, file, size);
                 func_020e207c(reader, self->dropNames_[0], info->dropItemIDs_[0]);
@@ -266,7 +266,7 @@ extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* arg0) {
         loader->GetLoadedFileByID(self->taskIDs_[2], &file, &size);
         if (file != NULL) {
             char text[0x18];
-            ResetAndReturnSelf020dfc2c(text);
+            KeyTable_Construct(text);
             KeyTable_Reset((Struct020dfc40*)text);
             func_020e046c(self->description_, file, size, self->monster_->number_);
         }

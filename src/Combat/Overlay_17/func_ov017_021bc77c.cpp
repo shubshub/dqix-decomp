@@ -18,15 +18,15 @@ enum { Enum_ov017_021bc77c_m1 = -1 };
 
 struct AllocatorUnion;
 
-extern "C" void* func_0202ae18();
-void* GetFieldIfFlag4_020100f8(char*);
+extern "C" void* LinkSession_GetInstance();
+void* GameState_GetFollowCamera(char*);
 extern "C" unsigned short* Zone3D_GetInstance();
 extern "C" unsigned char* Scenario_GetInstance();
 unsigned int* GlobalFlags_GetInstance();
-extern "C" void func_02019678(unsigned short* p, int v);
+extern "C" void Zone3D_RestoreElementVisibility(unsigned short* p, int v);
 void ClearCombatantSlot_0200fd48(GameState* gs, int idx);
 Object3D* GetField4334_021bdbc0(unsigned char*);
-int TestFlagBitAt0x2744_0201bfc0(unsigned char*, int);
+int Zone3D_IsFieldTaskPending(unsigned char*, int);
 void InitContext020e1154(void*);
 void FollowCamera_EnableFollow(void* p);
 void ApplyVecFromField0x21e_020a2744(char*);
@@ -35,21 +35,21 @@ extern "C" void func_ov017_0219b624(void* res);
 void AllocatorUnion_Free(AllocatorUnion* a, void* p);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* a, unsigned int size);
 extern "C" void func_ov017_021a2fa0(void* res);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 struct FieldBlock63d6_11590;
-int IsByte0x63d6Set_02011590(FieldBlock63d6_11590*);
+int GameState_HasMovieId(FieldBlock63d6_11590*);
 void SetHalfword0x63d8_020115f4(void*, unsigned short);
 extern "C" void func_ov017_021bb27c(void* self);
 void ClearFields_021bb0c4(unsigned char*);
 int Scenario_RunTrigger(void*, int, void*);
 extern "C" void EventQuery_RunQueuedCommands(void* node);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 int Scenario_TestFlag(int, unsigned char*, int);
 extern "C" unsigned char* func_ov017_021b8478(unsigned char* p);
 extern "C" void func_02046a8c(void* a, unsigned char* b);
 int GetState0209ca68(char*);
 extern "C" void func_0209c530(void* p);
-unsigned char* GetField0x3f8Address_0200fd0c(GameState* gs);
+unsigned char* GameState_GetZoneTransition(GameState* gs);
 void* GetData02153660_020e3808();
 int GameState_GetProtagonistIndex(GameState* gs);
 struct TagValueEntry020e385c;
@@ -58,7 +58,7 @@ void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
 struct Fields020407b4;
 void SetFields0x44(Fields020407b4*, int, int, int);
 struct Obj02033874;
-void SetVecYFromValue02033874(Obj02033874*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
 void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
 void SetBrightness(GameResources*, int, int);
 extern "C" int func_0209cd50(unsigned short arg0);
@@ -69,7 +69,7 @@ void SetMainBrightness(GameResources*, int, int);
 void EnqueueEventTag107_021cdd70(unsigned short a, unsigned short b, unsigned short c, unsigned short d, unsigned short e, unsigned short f, unsigned char g);
 extern "C" void func_ov017_021b6728(void* res, int a, int b);
 void GameObject_EnableControl(void*);
-void CopyByteField0x253To0x252_02039830(void*);
+void GameObject_ApplyPendingControl(void*);
 extern "C" int func_ov017_0219bddc(unsigned char* p);
 extern "C" void func_ov017_0219bf04(int a, int b);
 void SetByte1True_021c178c(unsigned char* p);
@@ -209,10 +209,10 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
     }
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    void* x34 = func_0202ae18();
-    GameObject* unk = gs->GetUnknownGameObject();
+    void* x34 = LinkSession_GetInstance();
+    GameObject* unk = gs->GetLeader();
     GameObject* party0 = gs->GetPartyMemberByIndex(0);
-    void* f28 = GetFieldIfFlag4_020100f8((char*)gs);
+    void* f28 = GameState_GetFollowCamera((char*)gs);
     unsigned short* p2;
     GameState* gs2;
     GameResources* res3;
@@ -231,9 +231,9 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         gs2 = GameState::GetInstance();
         GameResources* res2 = GetGameResources();
         p2 = Zone3D_GetInstance();
-        func_0202ae18();
-        if (!(var15.unknown_44_ & 0x400)) {
-            func_02019678(var6, var16);
+        LinkSession_GetInstance();
+        if (!(blk.flags & 0x400)) {
+            Zone3D_RestoreElementVisibility(p2, b9c);
         }
         for (int var18 = 0; var18 < 0x20; var18++) {
             GameObject* var19 = var7->GetGameObjectByIndex(var18 + 0xa0);
@@ -247,8 +247,8 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         if (var20 != 0) {
             var20->MakeVisible();
         }
-        if (func_0201bfc0((unsigned char*)var6, 1) || func_0201bfc0((unsigned char*)var6, 0)) {
-            func_020e1154((void*)0x1388);
+        if (Zone3D_IsFieldTaskPending((unsigned char*)p2, 1) || Zone3D_IsFieldTaskPending((unsigned char*)p2, 0)) {
+            InitContext020e1154((void*)0x1388);
         }
     }
     FollowCamera_EnableFollow(f28);
@@ -281,9 +281,9 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
             func_ov017_021a2fa0(res);
         }
     }
-    if (!func_0202b7d8((int*)var2) && func_02011590((Struct_02011590*)var0)) {
-        if (arg0->unknown_11a_) {
-            func_020115f4(var0, arg0->unknown_11a_);
+    if (!LinkSession_IsActive((int*)x34) && GameState_HasMovieId((FieldBlock63d6_11590*)gs)) {
+        if (self->u11a) {
+            SetHalfword0x63d8_020115f4(gs, self->u11a);
         }
         func_ov017_021bb27c(arg0);
         arg0->unknown_1_ = 1;
@@ -301,7 +301,7 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         if (Scenario_RunTrigger(bits, 0xb, &node)) {
             EventQuery_RunQueuedCommands(&node);
         }
-        if (func_0202c540(x34)) {
+        if (LinkSession_IsGuest(x34)) {
             int flag = 0;
             if (self->b13c == 2) {
                 if (r8[2]) flag = 1;
@@ -334,22 +334,22 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
     } else {
         arg0->unknown_13c_ = 2;
     }
-    unsigned char* f = GetField0x3f8Address_0200fd0c(gs);
+    unsigned char* f = GameState_GetZoneTransition(gs);
     void* tags = GetData02153660_020e3808();
     if (r8[2]) {
         SetOrClearEntryBitAndNotify020e3a50((TagValueEntry020e385c*)tags, GameState_GetProtagonistIndex(gs), 1, *(unsigned short*)((unsigned char*)self + 0x18));
     } else if (*(int*)(f + 0x20) <= 0 || f[2] == 0) {
         ResetTaggedEntryAndNotifyOverlay020e3994((TagValueEntry020e385c*)tags, 1, *(unsigned short*)((unsigned char*)self + 0x18));
     }
-    if (arg0->unknown_cc_ && arg0->unknown_cf_ == 3) {
-        func_020407b4((Struct_02040774_2*)var3, 0x48cc, 0x199, -0x733);
-        func_02033874((Struct_02033834*)var3, 0);
-        for (int var29 = 1; var29 < 4; var29++) {
-            GameObject* var30 = var0->GetPartyMemberByIndex(var29);
-            if (var30) {
-                func_020407b4((Struct_02040774_2*)var30, 0x48cc, 0x199, -0x733);
-                func_02033874((Struct_02033834*)var30, 0x3244);
-                func_02039d48((unsigned char*)var30);
+    if (self->bcc && self->bcf == 3) {
+        SetFields0x44((Fields020407b4*)unk, 0x48cc, 0x199, -0x733);
+        GameObject_SnapFacing((Obj02033874*)unk, 0);
+        for (int i = 1; i < 4; i++) {
+            GameObject* m = gs->GetPartyMemberByIndex(i);
+            if (m) {
+                SetFields0x44((Fields020407b4*)m, 0x48cc, 0x199, -0x733);
+                GameObject_SnapFacing((Obj02033874*)m, 0x3244);
+                SetFlag0x1ceBit0x4_02039d48((unsigned char*)m);
             }
         }
     }
@@ -362,7 +362,7 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
     } else if (r8[2]) {
         SetBrightness(res, -16, 0);
         *(unsigned short*)(r8 + 0x6c4) = self->u184;
-        if (func_0202c540(x34)) {
+        if (LinkSession_IsGuest(x34)) {
             self->u14e = *(int*)(func_ov017_021b8478(*(unsigned char**)((unsigned char*)res + kResourceNodeOffset)) + 0xc);
             EnqueueEventTag107_021cdd70(self->u14e, 0, 0, 0, 0, 0, 0);
             unsigned char* q = RES_PTR(res, 70c);
@@ -377,7 +377,7 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         }
         if (self->bcf == 2) {
             GameObject_EnableControl(unk);
-            CopyByteField0x253To0x252_02039830(unk);
+            GameObject_ApplyPendingControl(unk);
         }
         SetMainBrightness(var1, 0, 0x28);
         func_ov017_021bb27c(arg0);
@@ -389,14 +389,14 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         {
             unsigned short* p3;
             unsigned short id = self->f8;
-            void* x = func_0202ae18();
+            void* x = LinkSession_GetInstance();
             p3 = Zone3D_GetInstance();
             bits3 = Scenario_GetInstance();
             res3 = GetGameResources();
             unsigned char* o = RES_PTR(res3, 734);
             unsigned char buf = 0;
             unsigned short cur = *p3;
-            if (!func_0202c540(x)) { ok = 0; goto checked; }
+            if (!LinkSession_IsGuest(x)) { ok = 0; goto checked; }
             if (self->b13c != 1) { ok = 0; goto checked; }
             if (self->u140 != cur && self->u142 != cur) { ok = 0; goto checked; }
             if (!self->b144) { ok = 0; goto checked; }
@@ -444,7 +444,7 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
         }
         func_ov017_021bb0c4((unsigned char*)arg0);
         return 0;
-    } else if (CheckField0NonZero_0202b7d8((int*)x34) && func_0202c540(x34) && party0 && (mapId = *p, mapId == party0->obj3D_.GetField06()) &&
+    } else if (LinkSession_IsActive((int*)x34) && LinkSession_IsGuest(x34) && party0 && (mapId = *p, mapId == party0->obj3D_.GetField06()) &&
                self->b13c == 0 && (short)self->u146 >= 0) {
         func_ov017_021b8bb0((short)self->u146);
     } else if (self->b9c && self->ua2 != *p) {
@@ -482,7 +482,7 @@ extern "C" ARM int func_ov017_021bc77c(Struct_ov017_021bc77c_3* arg0, void* arg1
             SetMainBrightness(res, 0, 0x28);
         }
         GameObject_EnableControl(unk);
-        CopyByteField0x253To0x252_02039830(unk);
+        GameObject_ApplyPendingControl(unk);
         func_0209c2e0(g_bgmPlayer, 0x7f, 0);
         if (self->u114) {
             *(unsigned short*)((unsigned char*)res + kResourceHalfwordOffset) = self->u114;

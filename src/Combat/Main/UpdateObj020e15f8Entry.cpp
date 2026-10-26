@@ -6,9 +6,9 @@ void StoreFourShorts(struct FourShorts020e12a8* dst, short a, short b, short c, 
 
 extern "C" int Font_GetTextWidth(int, unsigned char);
 #if defined(jpn)
-extern "C" void func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" void GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 #else
-extern "C" int func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" int GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 #endif
 
 // USA: func_020e2310
@@ -30,5 +30,5 @@ ARM void UpdateObj020e15f8Entry_020e2310(char* obj, int idx, int a2, int a3, int
         obj[8] = idx + 1;
     }
     void **p = *(void***)(obj + 4);
-    func_0205b234(p[1], a2, a3, a4, a5, a6);
+    GlyphDestination_DrawText(p[1], a2, a3, a4, a5, a6);
 }

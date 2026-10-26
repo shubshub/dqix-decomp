@@ -95,11 +95,11 @@ struct Struct_0206a3c0_2
 // USA: func_0206a3c0
 extern "C" ARM const char* func_0206a3c0(Struct_0206a3c0_2* arg0, const char* arg1)
 {
-    unsigned char var0 = 1;
-    arg0->unknown_1000_.unknown_9b6_ = (unsigned char)var0;
-    GameObject* var1 = GameState::GetInstance()->GetUnknownGameObject();
-    Struct_0203dce4* var2 = func_0203dce4(func_0203cf4c(), arg0->unknown_1000_.unknown_838_);
-    if (var1 != NULL && var2 != NULL)
+    unsigned char scanning = 1;
+    self->state.active = (unsigned char)scanning;
+    GameObject* object = GameState::GetInstance()->GetLeader();
+    Entry_203dce4* entry = GetEntryUnlessFlag0x8000_0203dce4(GetGlobalPtr021075f4_0203cf4c(), self->state.entryId);
+    if (object != NULL && entry != NULL)
     {
         Struct_0203de84 var3;
         Struct_0203de84 var4;

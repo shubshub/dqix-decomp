@@ -90,9 +90,9 @@ struct Struct_ov024_021df924_6 {
 
 extern float data_ov024_021fe860[];
 
-extern "C" GameObject* func_ov000_021536f8(int arg0, int arg1);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* obj);
+GameObject* GetCombatantWithFlag0x400ByID_ov000_021536f8(int unused, int id);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 int IsIdOrEffectMatchTarget0215fd24(int world, int id);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 static inline int GetActionID() { return *Zone3D_GetInstance(); }
@@ -117,39 +117,39 @@ void AddEntryAndIncrementCount0215a88c(void* world, void* entry, int value);
 extern "C" void func_ov000_0215cd44(void* world, void* entry, GameObject* target, int a, int b, int c, int d);
 
 // USA: func_ov024_021df924
-extern "C" ARM void* func_ov024_021df924(Struct_ov024_021df924_2* arg0, short arg1, int arg2, Struct_ov024_021df924_4* arg3) {
-    Struct_ov024_021df924_11* var0 = (Struct_ov024_021df924_11*)func_0200ff1c(GameState::GetInstance(), arg1);
-    if (!var0) return 0;
-    Struct_ov024_021df924_11* var1 = (Struct_ov024_021df924_11*)func_ov000_021536f8((int)arg0->unknown_10_, arg2);
-    if (!var1) return 0;
-    Struct_ov024_021df924_9* var2 = var1->unknown_148_;
-    if (!var2) return 0;
-    int var3 = 0;
-    unsigned char* var4;
-    unsigned short* var5;
-    var4 = var2->unknown_2_;
-    var5 = var2->unknown_4_;
-    short var6 = (unsigned short)var0->unknown_150_->unknown_4_0_;
-    Random* var7 = (Random*)arg0->unknown_10_;
-    float var8[2];
-    var8[0] = NextRandomFloatBetween(var7, 0.0f, 100.0f);
-    var8[1] = NextRandomFloatBetween(var7, 0.0f, 100.0f);
-    int var9 = 0;
-    unsigned short var10;
-    unsigned short var11;
-    unsigned short var12;
-    Struct_ov024_021df924_5 var13;
-    Struct_ov024_021df924_6 var14;
-    int var15;
-    for (var15 = 0; var15 < 2; var15++, var4++, var5++) {
-        if (*var4 == 0) continue;
-        var10 = 0;
-        var11 = 0;
-        var12 = 0;
-        int var16 = 0;
-        void* var17 = func_0202ae18();
-        if (arg0->unknown_10_->unknown_8e4a_ == 0 && func_0202c508(var17) && func_ov000_0215fd24((int)arg0->unknown_10_, arg1)) {
-            var16 = func_ov024_021df71c(var1, inline_ov024_021df924(), var15 != 0, &var10, &var12, &var11);
+extern "C" ARM void* func_ov024_021df924(Action021df924* self, short id, int targetId, ActionData021df924* data) {
+    Fighter021df924* actor = (Fighter021df924*)GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), id);
+    if (!actor) return 0;
+    Fighter021df924* target = (Fighter021df924*)GetCombatantWithFlag0x400ByID_ov000_021536f8((int)self->world, targetId);
+    if (!target) return 0;
+    Odds021df924* odds = target->odds;
+    if (!odds) return 0;
+    int stolen = 0;
+    unsigned char* rate;
+    unsigned short* msg;
+    rate = odds->rate;
+    msg = odds->message;
+    short level = (unsigned short)actor->info->level;
+    Random* rng = (Random*)self->world;
+    float rolls[2];
+    rolls[0] = NextRandomFloatBetween(rng, 0.0f, 100.0f);
+    rolls[1] = NextRandomFloatBetween(rng, 0.0f, 100.0f);
+    int anyRate = 0;
+    unsigned short resultID;
+    unsigned short entryID;
+    unsigned short combatantKey;
+    Counts021df924 counts;
+    Loader021df924 loader;
+    int i;
+    for (i = 0; i < 2; i++, rate++, msg++) {
+        if (*rate == 0) continue;
+        resultID = 0;
+        entryID = 0;
+        combatantKey = 0;
+        int found = 0;
+        void* scene = LinkSession_GetInstance();
+        if (self->world->pending == 0 && LinkSession_IsHostOrSolo(scene) && IsIdOrEffectMatchTarget0215fd24((int)self->world, id)) {
+            found = func_ov024_021df71c(target, GetActionID(), i != 0, &resultID, &combatantKey, &entryID);
         }
         if (((Struct_ov024_021df924_7*)var1->currentStats_)->unknown_3d_ != 0 && !var16) continue;
         if (data_ov024_021fe860[*var4] > 0.0f) var9 = 1;

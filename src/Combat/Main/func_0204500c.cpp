@@ -30,7 +30,7 @@ extern int g_sePlayer;
 extern "C" void __clear(void* dst, int size);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int size);
 extern "C" void* memset(void* dst, int value, unsigned int size);
-void* Clear12Bytes020e46c4(void*);
+void* NameText_Clear(void*);
 void DispatchIfCountPositive020dcf7c(int, void*);
 int STD_GetStringLength(const char*);
 extern "C" void func_02044f3c(struct MessageSystem* window, const char* text, int mode);
@@ -203,16 +203,16 @@ extern "C" ARM void func_0204500c(Struct_02021b84* arg0, const char* arg1, int a
 extern "C" ARM void func_0204500c(struct Struct_02021b84* arg0, const char* arg1, int arg2, int arg3) {
     GameState* var8 = GameState::GetInstance();
 
-    short var9 = var8->unknown_7f58_;
-    Struct_0204500c_2 var10;
-    func_020e46c4(&var10);
-    if (var9 > 0) {
-        char var11[0x80] = {};
-        char var12[0x80] = {};
-        var10.unknown_0_ = var11;
-        var10.unknown_4_ = var12;
-        func_020dcf7c(var9, &var10);
-        arg0->unknown_18_ = &var10;
+    short itemId = gs->unk_7f58;
+    ItemNameText itemName;
+    NameText_Clear(&itemName);
+    if (itemId > 0) {
+        char first[0x80] = {};
+        char second[0x80] = {};
+        itemName.first = first;
+        itemName.second = second;
+        DispatchIfCountPositive020dcf7c(itemId, &itemName);
+        window->itemName = &itemName;
     }
     arg0->unknown_19dc_ = 1;
     if (arg1 == 0) {

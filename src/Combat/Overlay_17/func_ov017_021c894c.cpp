@@ -2,13 +2,13 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void* func_ov017_021b8470(void* arg0);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" int func_ov000_0215e9fc(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215eb1c(void* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_020493a4(unsigned char* arg0);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+void* GetField6b0_021b8470(void* obj);
+extern "C" void* memset(void* dst, int c, unsigned int n);
+extern "C" int func_ov000_0215e9fc(void* obj, short* buf, int max, int flag);
+extern "C" int func_ov000_0215eb1c(void* obj, short* buf, int max, int flag);
+int GetSubstructByte0x1c_020493a4(unsigned char* obj);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c894c {
     unsigned char unknown_0_[4];
@@ -24,12 +24,12 @@ struct Struct_ov017_021c894c_2 {
 };
 
 // USA: func_ov017_021c894c
-extern "C" ARM void func_ov017_021c894c(unsigned short arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    void* var2 = func_0202ae24();
-    void* var3 = func_ov017_021b8470(var1->unknown_ptr_3718);
-    if (var3 == NULL) {
+extern "C" ARM void func_ov017_021c894c(unsigned short value) {
+    GameState* battleStruct = GameState::GetInstance();
+    GameResources* res = GetGameResources();
+    void* data = LinkMessageQueue_GetInstance();
+    void* field = GetField6b0_021b8470(res->unknown_ptr_3718);
+    if (field == NULL) {
         return;
     }
 

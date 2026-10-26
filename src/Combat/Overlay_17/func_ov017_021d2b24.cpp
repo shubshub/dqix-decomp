@@ -12,11 +12,11 @@ struct Struct_ov017_021c3e18 {
     int unknown_4_;
     int unknown_8_;
 };
-extern "C" void func_ov017_021c3f68(struct Struct_ov017_021c3e18* arg0, int arg1, int arg2, int arg3);
-extern "C" unsigned short func_ov017_021b8480(void* arg0);
-extern "C" void func_02039d24(unsigned char* arg0);
-struct Struct_02040774_2;
-extern "C" void func_020407b4(struct Struct_02040774_2* arg0, int arg1, int arg2, int arg3);
+void SetVec3_021c3f68(struct Vec3_021c3f68* obj, int x, int y, int z);
+unsigned short GetField6b4_021b8480(void* obj);
+void GameObject_ResetTrail(unsigned char* obj);
+struct Fields020407b4;
+void SetFields0x44(struct Fields020407b4* dst, int a, int b, int c);
 struct Vector3i;
 
 struct Struct_ov017_021d2b24 {
@@ -60,8 +60,8 @@ extern "C" ARM void func_ov017_021d2b24(void* arg0, struct Struct_ov017_021d2b24
         return;
     }
 
-    func_02039d24((unsigned char*)var2);
-    func_020407b4((struct Struct_02040774_2*)var2, arg1->unknown_8_, arg1->unknown_c_, arg1->unknown_10_);
+    GameObject_ResetTrail((unsigned char*)combatant);
+    SetFields0x44((struct Fields020407b4*)combatant, evt->field8, evt->fieldc, evt->field10);
 
     if (arg1->unknown_5_ != 0) {
         struct Struct_ov017_021c3e18 var5;

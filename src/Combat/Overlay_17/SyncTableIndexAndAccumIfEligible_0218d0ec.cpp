@@ -11,13 +11,13 @@ enum { RegionOffset6fc = 0x6fc, RegionOffset718 = 0x718 };
 
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 unsigned char GetByte0x4_0200fb9c(char* obj);
 int GetWord0x7f6c_0201201c(void* obj);
 
@@ -35,9 +35,9 @@ struct NibbleByte0218d0ec { unsigned char lowNibble : 4; unsigned char highNibbl
 extern "C" ARM void func_ov017_0218d0ec(unsigned char* ov) {
     GameState* bs = GameState::GetInstance();
     Struct020fb3f0* p1 = (Struct020fb3f0*)Zone3D_GetInstance();
-    void* p2 = func_0202ae18();
+    void* p2 = LinkSession_GetInstance();
 
-    if (GetHeadNodeIdOrMinusOne(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 3) return;
+    if (FieldTaskQueue_GetCurrentKind(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 3) return;
     if (GetByte0x4_0200fb9c((char*)bs) == 6) return;
     if (GetWord0x7f6c_0201201c(bs) == 5) return;
 
@@ -52,15 +52,15 @@ extern "C" ARM void func_ov017_0218d0ec(unsigned char* ov) {
     }
 
     int idx2 = bs->GetTimeOfDay();
-    if (func_0202c508(p2) != 0 && idx1 != idx2) {
+    if (LinkSession_IsHostOrSolo(p2) != 0 && idx1 != idx2) {
         EnqueueEventTag147_021cdaa0();
     }
 
-    if (GetHeadNodeIdOrMinusOne(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 0xa) {
+    if (FieldTaskQueue_GetCurrentKind(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 0xa) {
         if (IsField600B4Zero_021b8b54(*(void**)(ov + 0x3000 + RegionOffset718)) != 0) return;
     }
-    if (GetHeadNodeIdOrMinusOne(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 4) return;
-    if (GetHeadNodeIdOrMinusOne(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 0x16) return;
+    if (FieldTaskQueue_GetCurrentKind(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 4) return;
+    if (FieldTaskQueue_GetCurrentKind(*(struct HeadNode02046b24***)(ov + 0x3000 + RegionOffset6fc)) == 0x16) return;
 
     Data02107930* d = (Data02107930*)LightingManager::GetInstance();
     int prevIdx = d->tableIndex;

@@ -11,7 +11,7 @@ struct Struct_020a2908;
 struct Struct_020a28e0;
 
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 int CheckField0x245Bit0x2Set_020a2cc4(unsigned char* obj);
 void SetOrClearField0x245Bit0x2_020a2cd8(unsigned char* obj, int flag);
 void CopySubstateAndSetFlag4_020a2908(unsigned char* obj, struct Struct020a2928* src);
@@ -44,14 +44,14 @@ extern "C" void func_020a28dc(void* arg0, int arg1, void* arg2, void* arg3);
 extern "C" ARM void func_ov017_021982ac(void) {
     GameState* battle = GameState::GetInstance();
     void* ctx = Zone3D_GetInstance();
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     struct Anchor_021982ac anchor = *(struct Anchor_021982ac*)((char*)combatant + 0x44);
     struct PendingNode_021982ac* node;
     unsigned char* state;
     int applied;
 
     node = (struct PendingNode_021982ac*)ZoneFeatures_GetFirstOfType((unsigned char*)ctx + kRegionalFieldOffset, 4);
-    state = (unsigned char*)GetFieldIfFlag4_020100f8((char*)battle);
+    state = (unsigned char*)GameState_GetFollowCamera((char*)battle);
     if (state == 0) {
         return;
     }

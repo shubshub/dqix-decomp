@@ -19,8 +19,8 @@ extern "C" int fix32_Atan2(int, int);
 struct Obj02033834;
 void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
-extern "C" int func_0202ae18(void);
-extern "C" int func_0202c508(void);
+extern "C" int LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void);
 
 extern "C" int func_02011b50(void* arg0, int arg1);
 extern "C" void func_02011b3c(void* arg0, unsigned char arg1);
@@ -35,7 +35,7 @@ extern "C" ARM int func_ov004_021688d4(void) {
     void* ptr = GetGlobalPtr021075f4_0203cf4c();
     void* node = FindEntryPointerByKey0203df78(ptr, 6);
     if (node) {
-        GameObject* combatant = GameState::GetInstance()->GetUnknownGameObject();
+        GameObject* combatant = GameState::GetInstance()->GetLeader();
         struct Vec3Local_021688d4 v1;
         struct Vec3Local_021688d4 v2;
         struct Vec3Local_021688d4 tmp;
@@ -64,8 +64,8 @@ extern "C" ARM int func_ov004_021688d4(void) {
         GameObject_SetFacing((struct Obj02033834*)combatant, angle);
     }
 
-    func_0202ae18();
-    if (func_0202c508()) {
+    LinkSession_GetInstance();
+    if (LinkSession_IsHostOrSolo()) {
         GameState* bs = GameState::GetInstance();
         if (CheckBitsInField0x63dc_02011b50(bs, 0x10)) {
             SePlayer_Play(&g_sePlayer, 1, 0);

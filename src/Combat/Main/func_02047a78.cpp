@@ -4,7 +4,7 @@
 
 extern "C" void SprSprite_Init(void* obj, int flag);
 extern "C" void* __clear(void* dst, int count);
-extern "C" void func_02047b40(void* obj, void* handle, void* extra);
+extern "C" void SprSprite_Parse(void* obj, void* handle, void* extra);
 
 extern "C" int func_020429d4(void);
 void* LoadFileIntoMemory(const char* path, void* dst, unsigned int* outCount);
@@ -40,8 +40,8 @@ extern "C" ARM void func_02047a78(struct Struct_02047a78* arg0, const char* arg1
     sprintf(var0, (const char*)&data_020f0118, arg1);
     var2 = (void*)func_020429d4();
     BackgroundLoader::AddLockGlobal();
-    if (LoadFileIntoMemory(var0, var2, 0) != 0) {
-        func_02047b40(arg0, var2, arg2);
+    if (LoadFileIntoMemory(buf, handle, 0) != 0) {
+        SprSprite_Parse(obj, handle, extra);
     }
     BackgroundLoader::RemoveLockGlobal();
 }

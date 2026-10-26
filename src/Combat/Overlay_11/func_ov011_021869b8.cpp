@@ -48,7 +48,7 @@ extern "C" ARM struct Struct_ov011_021869b8_2* func_ov023_021f6880(void* arg0, i
 extern "C" ARM int func_ov023_021fbd00(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5,
                                        unsigned char arg6);
 
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 void* ZeroInitReturn020df80c(void* p);
 void SpriteContext_Init(char* obj);
 void SpriteContext_Destroy(void* obj);
@@ -120,11 +120,11 @@ extern "C" ARM int func_ov011_021869b8(struct Struct_ov011_021869b8_5* arg0, int
     sub->a0.ResetAllocatorPointer();
     sub->a1.ResetAllocatorPointer();
     sub->a2.ResetAllocatorPointer();
-    ResetAndReturnSelf020dfc2c(sub->m54);
+    KeyTable_Construct(sub->m54);
     ZeroInitReturn020df80c(sub->m6c);
     ZeroInitReturn020df80c(sub->m7c);
-    ResetAndReturnSelf020dfc2c(sub->m8c);
-    ResetAndReturnSelf020dfc2c(sub->ma4);
+    KeyTable_Construct(sub->m8c);
+    KeyTable_Construct(sub->ma4);
     SpriteContext_Init(sub->m12c);
     memcpy(block, &local, sizeof(Buf021869b8));
 

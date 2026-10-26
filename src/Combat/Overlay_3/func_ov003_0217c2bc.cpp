@@ -18,7 +18,7 @@ struct Struct_ov003_0217c2bc {
 
 void SePlayer_PlayExtra(void *obj, int a, int b);
 extern "C" void func_ov003_0217cb3c(Scene0217c2bc *self, int mainScreen, int alternate);
-void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+void Set3DClearColor(int a, int b, int c, int d, int e);
 extern "C" void func_ov003_0217c974(Scene0217c2bc *self);
 void SetValueAndActivate0209c830(Struct0209c830*, int);
 
@@ -37,34 +37,34 @@ extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
         SePlayer_PlayExtra(&g_sePlayer, 0, 0);
         func_ov003_0217cb3c(self, 1, 0);
         ((Object3D*)self->object)->MakeVisible();
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         *(volatile unsigned int *) 0x4000000 = (*(volatile unsigned int *) 0x4000000 & ~0x1f00) | 0x300;
-        SetBrightness(var0, 0x10, 0xa);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 2) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, 7, 0x14);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 3) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, 0x10, 0xf);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 4) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, -16, 0x46);
-        arg0->unknown_142_ = 0x3c;
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 5) {
-        if (--arg0->unknown_142_ != 0) return;
-        SetBrightness(var0, 0x10, 7);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 6) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        SetBrightness(var0, -16, 0x1e);
-        arg0->unknown_141_++;
-    } else if (arg0->unknown_141_ == 7) {
-        if (IsBrightnessTransitionActive(var0)) return;
-        func_020c5588(0, 0x1f, 0x7fff, 0, 0);
+        SetBrightness(resources, 0x10, 0xa);
+        self->state++;
+    } else if (self->state == 2) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, 7, 0x14);
+        self->state++;
+    } else if (self->state == 3) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, 0x10, 0xf);
+        self->state++;
+    } else if (self->state == 4) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, -16, 0x46);
+        self->timer = 0x3c;
+        self->state++;
+    } else if (self->state == 5) {
+        if (--self->timer != 0) return;
+        SetBrightness(resources, 0x10, 7);
+        self->state++;
+    } else if (self->state == 6) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        SetBrightness(resources, -16, 0x1e);
+        self->state++;
+    } else if (self->state == 7) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        Set3DClearColor(0, 0x1f, 0x7fff, 0, 0);
         *(volatile unsigned int *) 0x4000000 = (*(volatile unsigned int *) 0x4000000 & ~0x1f00) | 0x100;
         self->allocA.Reset();
         ((Object3D*)self->object)->Initialize();

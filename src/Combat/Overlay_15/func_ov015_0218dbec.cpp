@@ -21,7 +21,7 @@ void VramState_Rewind(Foo0207df50*);
 void VramState_Restore(char*);
 void VramState_Save(char*);
 void ResetObjectState02079a3c(void*);
-extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
+extern "C" void _ZN8Object3D15SetSoundArchiveEt(Object3D*, unsigned int);
 void SePlayer_LoadExtraArchiveB(void*, int, int);
 
 struct Struct_ov015_0218dbec_4 {
@@ -150,8 +150,8 @@ extern "C" ARM int func_ov015_0218dbec(Struct_ov015_0218dbec_3* arg0, Struct_ov0
     } else {
         Record0218dbec* rec = (Record0218dbec*)SearchWithLow15Comparator02070fd0((Container02070e60*)(self->tables->search70), (unsigned short)entry->key);
         if (rec != 0) {
-            self->object->SetField78(rec->packed & 0xffff);
-            _ZN8Object3D10SetField7aEt(self->object, rec->packed >> 16);
+            self->object->SetSoundGroup(rec->packed & 0xffff);
+            _ZN8Object3D15SetSoundArchiveEt(self->object, rec->packed >> 16);
             SePlayer_LoadExtraArchiveB(&g_sePlayer, rec->packed & 0xffff, rec->packed >> 16);
         }
         arg0->unknown_c_ = arg0->unknown_10_->unknown_0_;

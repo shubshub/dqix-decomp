@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" void func_020489e8(void* arg0);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
+extern "C" void func_020489e8(void* obj);
+struct Bytes02033b88;
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 extern "C" void* func_02057924(void);
 extern "C" void func_02057fb4(void*, int, void*);
 
@@ -50,10 +50,10 @@ extern "C" ARM void func_02048690(void* arg0) {
 
     func_020489e8(var0);
 
-    if (var0->unknown_183_ != 0) {
-        var0->unknown_183_--;
-        if (var0->unknown_183_ == 0) {
-            func_02033b88((Struct_02010604*)var0, 5);
+    if (self->countdown != 0) {
+        self->countdown--;
+        if (self->countdown == 0) {
+            GameObject_ForceMotionState((Bytes02033b88*)self, 5);
         }
     }
 

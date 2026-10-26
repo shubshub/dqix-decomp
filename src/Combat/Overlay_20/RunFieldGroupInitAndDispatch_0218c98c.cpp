@@ -91,7 +91,7 @@ extern "C" ARM void func_ov020_0218c98c(void* self) {
 
     int handle;
     BackgroundLoader* data4 = BackgroundLoader::GetInstance();
-    data4->MaybeReset();
+    data4->ClearQueue();
     handle = data4->QueueLoadFile((char const*)((int)&data_ov020_0218dc9d), (SafeAllocator*)0);
 
     for (;;) {

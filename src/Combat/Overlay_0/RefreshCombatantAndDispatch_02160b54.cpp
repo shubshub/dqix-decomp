@@ -9,7 +9,7 @@ enum { flagsOffset = 0x55f4, workOffset = 0xec8, combatantOffset = 0x6fd6, state
 #include "NitroSDK/NSBXX/RenderConfig.h"
 #include "Resource/Brightness.h"
 
-extern "C" void func_02016874(void* big);
+extern "C" void Zone3D_Draw(void* big);
 extern "C" void func_ov000_02161020(void* obj);
 struct Vector3i;
 int PeekInputLogB_020a1fa8(void);
@@ -24,7 +24,7 @@ extern "C" ARM void func_ov000_02160b54(unsigned char* obj) {
         return;
     }
     if (TestFlags04((GameResources*)v, 0x100000) == 0) {
-        func_02016874(obj + workOffset);
+        Zone3D_Draw(obj + workOffset);
     }
     func_ov000_02161020(obj);
     if (TestFlags04((GameResources*)v, 4) == 0) {

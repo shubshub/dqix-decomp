@@ -115,11 +115,11 @@ void CharacterModel_SetItemTable(void* model, int value);
 void CharacterModel_SetForceStandAnimation(void* model, unsigned char value);
 void CharacterModel_SetAngle(void* model, unsigned int value);
 extern "C" void func_ov023_021fc71c(void* obj, int id, int flagArg);
-char* GetFieldIfFlag4_020100f8(char* gameState);
+char* GameState_GetFollowCamera(char* gameState);
 void Camera_SetPosition(Camera* camera, int x, int y, int z);
 void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
 int GetField0x58_0202e9ec(void* camera);
-void SetAngleAndTrigTable0202e9a4(AngleTrig0202e9a4* camera, int angle);
+void Camera_SetFieldOfView(AngleTrig0202e9a4* camera, int angle);
 void FollowCamera_DisableFollow(void* camera);
 
 // USA: func_ov023_021fc518
@@ -163,11 +163,11 @@ extern "C" ARM int func_ov023_021fc518(Struct_ov023_021fc518* arg0, void* arg1, 
     if (character >= 0)
         func_ov023_021fc71c(self, character, 0);
 
-    char* camera = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
+    char* camera = GameState_GetFollowCamera((char*)GameState::GetInstance());
     Camera_SetPosition((Camera*)camera, 0xb666, 0xb800, 0x42ccc);
     Camera_SetTarget((struct Camera*)camera, 0xb666, 0xb800, 0);
     self->perspective_ = GetField0x58_0202e9ec(camera);
-    SetAngleAndTrigTable0202e9a4((AngleTrig0202e9a4*)camera, 0xf000);
+    Camera_SetFieldOfView((AngleTrig0202e9a4*)camera, 0xf000);
     FollowCamera_DisableFollow(camera);
     return 1;
 }

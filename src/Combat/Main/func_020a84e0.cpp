@@ -11,7 +11,7 @@ void* GlobalFlags_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 void* GameState_GetParty(GameState* battleStruct);
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 int ForwardCombatantField0x44_02094b5c(void* self, int combatantId);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 void SetByteFlagBitAndCombatantField0x6c_020a8ac8(unsigned char* obj, int bit);
@@ -44,9 +44,9 @@ extern "C" ARM void func_020a84e0() {
     GameObject* po;
     int i = 0;
     for (;;) {
-        Struct_020134e0::Struct_02018300* var8 = func_0201e664(&var2->substruct_6c_, var7);
-        var7++;
-        if (!var8) {
+        ZoneFeatures::Opcode6aEntry* entry = ZoneFeatures_GetEntry(&zone->substruct_6c_, i);
+        i++;
+        if (!entry) {
             break;
         }
         if (var8->unknown_4_ != 0xc) {
@@ -58,7 +58,7 @@ extern "C" ARM void func_020a84e0() {
         while (j < *(unsigned char*)(list + 0xf7c)) {
             po = gs->GetPartyMemberByIndex(*(unsigned char*)(list + 0xf78 + j));
             if (po) {
-                if (!TestFlags02046708(fw, 0x200000) &&
+                if (!FlagWord_TestBits(fw, 0x200000) &&
                     ForwardCombatantField0x44_02094b5c(entry, po->obj3D_.actorIndex_) != 0) {
                     switch (sub[0]) {
                     case 2:
@@ -80,7 +80,7 @@ extern "C" ARM void func_020a84e0() {
             }
             var5++;
         }
-        if (!TestFlags02046708(fw, 0x200000) &&
+        if (!FlagWord_TestBits(fw, 0x200000) &&
             ForwardCombatantField0x44_02094b5c(entry, GameState_GetLeaderIndex(gs)) != 0) {
             if (sub[0] == 1) {
                 func_020a87d0(sub);

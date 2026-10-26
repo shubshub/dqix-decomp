@@ -31,7 +31,7 @@ struct SePlayer;
 
 void* GlobalFlags_GetInstance(void);
 int* GetGlobal02109030_020936f8(void);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 
 extern "C" void func_ov003_021612c0(void* arg0);
 extern "C" int func_ov003_02161344(void* arg0);
@@ -59,7 +59,7 @@ void DispatchEntryOp0x8_0208108c(void* obj, int id);
 extern "C" void func_020813ec(void* obj, int key);
 void ResetWithSub0208203c(struct Obj0208203c* obj);
 void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
-extern "C" void func_0202b0f4(int* obj);
+extern "C" void LinkSession_End(int* obj);
 void* MessageSystem_GetInstance(void);
 extern "C" int func_020aad1c(int a, int b, int c, int d);
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -112,7 +112,7 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
     int work;
     flagWord = GlobalFlags_GetInstance();
     globalPtr = GetGlobal02109030_020936f8();
-    r8val = func_0202ae18();
+    r8val = LinkSession_GetInstance();
     state = self[HI(0x4a4)];
     elementObj = *(struct Obj2081**)(self + LO(0x324));
     msg484 = (short*)(self + HI(0x484));
@@ -204,12 +204,12 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
             func_0208108c(var4, 0x43);
             func_0208108c(var4, 0x44);
 #endif
-            func_020813ec(var4, 0xf);
-            func_0208203c((struct Struct_02081f20_2*)(arg0 + LO(0x308)));
-            *(void**)(arg0 + HI(0x470)) = 0;
-            arg0[HI(0x4a4)] = 6;
-            func_0202b0f4((int*)var3);
-            func_020939fc((unsigned char*)var2);
+            func_020813ec(elementObj, 0xf);
+            ResetWithSub0208203c((struct Obj0208203c*)(self + LO(0x308)));
+            *(void**)(self + HI(0x470)) = 0;
+            self[HI(0x4a4)] = 6;
+            LinkSession_End((int*)r8val);
+            ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
             func_ov017_021c36a0();
             *(short*)(self + HI(0x476)) = 0;
             *(short*)(self + HI(0x478)) = 0;
@@ -231,19 +231,19 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
                 return;
             }
         } else {
-            *(short*)(arg0 + HI(0x476)) = 0;
-            *(unsigned short*)(arg0 + HI(0x478)) = *(unsigned short*)(arg0 + HI(0x478)) + *(int*)(arg0 + HI(0x460));
-            if (*(unsigned short*)(arg0 + HI(0x478)) > 0x12c) {
-                func_02080cec(var4, 0xf, 2);
-                func_020813ec(var4, 0xf);
-                func_0207fe44((struct Struct_0207fe44*)var4);
-                *(unsigned int*)(arg0 + HI(0x464)) |= 0x80000;
-                var5[0] = 7;
-                var5[1] = 1;
-                arg0[HI(0x4a3)] = 0xa;
-                arg0[HI(0x4a4)] = 0;
-                func_0202b0f4((int*)var3);
-                func_020939fc((unsigned char*)var2);
+            *(short*)(self + HI(0x476)) = 0;
+            *(unsigned short*)(self + HI(0x478)) = *(unsigned short*)(self + HI(0x478)) + *(int*)(self + HI(0x460));
+            if (*(unsigned short*)(self + HI(0x478)) > 0x12c) {
+                UpdateEntryFlagsNibble02080cec(elementObj, 0xf, 2);
+                func_020813ec(elementObj, 0xf);
+                CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
+                *(unsigned int*)(self + HI(0x464)) |= 0x80000;
+                msg484[0] = 7;
+                msg484[1] = 1;
+                self[HI(0x4a3)] = 0xa;
+                self[HI(0x4a4)] = 0;
+                LinkSession_End((int*)r8val);
+                ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
                 return;
             }
         }
@@ -251,14 +251,14 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
         {
             ((struct GlobalBig1000*)((char*)MessageSystem_GetInstance() + 0x1000))->flag9ca = 1;
         }
-        func_0207fe44((struct Struct_0207fe44*)var4);
-        *(unsigned int*)(arg0 + HI(0x464)) |= 0x80000;
-        var5[0] = 9;
-        var5[1] = 1;
-        arg0[HI(0x4a3)] = 0xa;
-        arg0[HI(0x4a4)] = 0;
-        func_0202b0f4((int*)var3);
-        func_020939fc((unsigned char*)var2);
+        CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
+        *(unsigned int*)(self + HI(0x464)) |= 0x80000;
+        msg484[0] = 9;
+        msg484[1] = 1;
+        self[HI(0x4a3)] = 0xa;
+        self[HI(0x4a4)] = 0;
+        LinkSession_End((int*)r8val);
+        ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
         return;
     }
     if (var6 == 7) {
@@ -366,14 +366,14 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
                 return;
             }
         }
-        if (func_ov003_02160a68(arg0) == 0) return;
-        func_0207fe44((struct Struct_0207fe44*)var4);
-        var5[0] = 1;
-        arg0[HI(0x4a3)] = 0xa;
-        arg0[HI(0x4a4)] = 0;
-        *(unsigned int*)(arg0 + HI(0x464)) = (*(unsigned int*)(arg0 + HI(0x464)) | 0x80000) & ~0xf00000u;
-        func_0202b0f4((int*)var3);
-        func_020939fc((unsigned char*)var2);
+        if (func_ov003_02160a68(self) == 0) return;
+        CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
+        msg484[0] = 1;
+        self[HI(0x4a3)] = 0xa;
+        self[HI(0x4a4)] = 0;
+        *(unsigned int*)(self + HI(0x464)) = (*(unsigned int*)(self + HI(0x464)) | 0x80000) & ~0xf00000u;
+        LinkSession_End((int*)r8val);
+        ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
         return;
     }
     if (var6 == 9) {
@@ -435,7 +435,7 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
         int idx;
         int count;
         cur = self + (*(short*)(self + HI(0x498))) * kRec37;
-        arr = func_0202ae18();
+        arr = LinkSession_GetInstance();
         count = GetField0xc_0202bae4(arr);
         for (idx = 0; idx < count; idx++) {
             struct Element0202bad4* elem = GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)arr, idx);

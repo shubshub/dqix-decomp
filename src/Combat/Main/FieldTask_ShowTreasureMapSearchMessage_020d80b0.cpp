@@ -25,11 +25,11 @@ extern SePlayer g_sePlayer;
 extern AllocatorUnion g_mainAllocator;
 extern char data_020f235c[];
 extern char data_020f2371[];
-extern "C" void func_0202ae18(GameState*);
+extern "C" void LinkSession_GetInstance(GameState*);
 extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void* Scenario_GetInstance();
 int MessageSystem_GetInstance();
-int GetFieldIfFlag4_020100f8(char*);
+int GameState_GetFollowCamera(char*);
 void ShutdownObject020d8484(Obj020d8484*);
 void GameObject_DisableControl(Obj020397cc*, int);
 void ClearIntAt0x23c_020a27b8(unsigned char*);
@@ -71,16 +71,16 @@ struct Struct_020d80b0_2 { unsigned char unknown_0_[0x8c]; unsigned char unknown
 // Main, originally func_020d80b0 (USA 0x020d80b0, EUR 0x020d80c0, JPN 0x020d9a24)
 extern "C" ARM void FieldTask_ShowTreasureMapSearchMessage(Obj020d8484* self) {
     GameState* state = GameState::GetInstance();
-    func_0202ae18(state);
+    LinkSession_GetInstance(state);
     GameResources* resources = GetGameResources();
     Dialog020d80b0* dialog = (Dialog020d80b0*)MessageSystem_GetInstance();
     GameObject* object;
     Bits020d80b0* bits;
     Zone3D_StructPtr_8* zone = Zone3D_GetInstance()->pUnknownStruct_8_;
     GrottoStruct* grotto = state->GetGrottoStruct();
-    object = state->GetUnknownGameObject();
+    object = state->GetLeader();
     bits = (Bits020d80b0*)Scenario_GetInstance();
-    unsigned char* field = (unsigned char*)GetFieldIfFlag4_020100f8((char*)state);
+    unsigned char* field = (unsigned char*)GameState_GetFollowCamera((char*)state);
     if (grotto->activeMapData.GetDiscoveryState() != 1) {
         self->state = 7;
         ShutdownObject020d8484(self);

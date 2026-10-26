@@ -13,8 +13,8 @@ struct BitField0203402c {
     unsigned short bit15 : 1;
 };
 
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
-int CheckField0xc4Low15BitsNonZero(struct BitField0203402c* p);
+int GameObject_IsGesturing(signed char* obj);
+int GameObject_IsSinking(struct BitField0203402c* p);
 extern "C" void* Zone3D_GetInstance(void);
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
 extern "C" int func_02094b9c(void* self, void* data);
@@ -38,10 +38,10 @@ struct LocalBuf021986 {
 // USA: func_ov017_02198618  (semantic: SomeFunc_02198618)
 extern "C" ARM void func_ov017_02198618(void* p0) {
     GameState* battle = GameState::GetInstance();
-    GameObject* c = battle->GetUnknownGameObject();
+    GameObject* c = battle->GetLeader();
     if (c == NULL) return;
-    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)c) != 0) return;
-    if (CheckField0xc4Low15BitsNonZero((struct BitField0203402c*)c) != 0) return;
+    if (GameObject_IsGesturing((signed char*)c) != 0) return;
+    if (GameObject_IsSinking((struct BitField0203402c*)c) != 0) return;
 
     unsigned char* misc = (unsigned char*)Zone3D_GetInstance();
     battle->GetCamera();

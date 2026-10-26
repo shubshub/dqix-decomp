@@ -77,15 +77,15 @@ void* GetData02153637_020e2ff8();
 void Dispatch020e3428(void*, int);
 Obj02046574* MessageSystem_GetInstance();
 CommandEntry0215a0a4* SearchBothTables02079e2c(char*, int);
-void* Clear12Bytes020e46c4(void*);
+void* NameText_Clear(void*);
 void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 void NameText_InitFromPartyMember(void*, int);
 int ConsumeCounter02048350(Obj02048350*, int);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 int KeyTable_Get(Container020e0310*, int);
 int Text_Append(char*, const char*);
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
-extern "C" int* func_0202ae18();
+extern "C" int* LinkSession_GetInstance();
 extern "C" void func_02046380(void*);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
 extern "C" void MessageSystem_FormatText(void*, int, int, void*, int, int, int);
@@ -108,15 +108,15 @@ extern "C" ARM void func_ov002_0215a0a4(BattleMessage0215a0a4* self, BattleEvent
     Dispatch020e3428(GetData02153637_020e2ff8(), 1);
     gs = GameState::GetInstance();
     message = MessageSystem_GetInstance();
-    state = func_0202ae18();
+    state = LinkSession_GetInstance();
     entry = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), self->command);
     if (!entry) return;
     memset(self->textState.text, 0, 0x960);
     memset(self->textState.textCopy, 0, 0x960);
     func_02046380(message);
     buffer = self->textState.text;
-    Clear12Bytes020e46c4(self->actorName);
-    Clear12Bytes020e46c4(self->targetName);
+    NameText_Clear(self->actorName);
+    NameText_Clear(self->targetName);
     actor = GetCombatantWithFlag0x100_0200ff1c(gs, event->actor);
     if (actor) {
         MessageSystem_SetStringArgument(message, 0, actor->baseStats_->name);
@@ -159,12 +159,12 @@ extern "C" ARM void func_ov002_0215a0a4(BattleMessage0215a0a4* self, BattleEvent
             arg0->unknown_1c28_ = 0x2333;
             arg0->unknown_2488_ = 0x2334;
         }
-        arg0->unknown_1000_.unknown_bb8_ = Enum_ov002_0215a0a4_38;
-        arg0->unknown_1000_.unknown_bbc_ = Enum_ov002_0215a0a4_17;
-        arg0->unknown_1000_.unknown_bc0_ = 0;
-        if (var12) {
-            func_02048350((Struct_ov002_02157d40_8*)var3, var9->unknown_8_0_);
-            if (func_0202b7d8(var2)) func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
+        self->textState.state = 0x26;
+        self->textState.nextState = 0x11;
+        self->textState.timer = 0;
+        if (consumed) {
+            ConsumeCounter02048350((Obj02048350*)actor, entry->counter);
+            if (LinkSession_IsActive(state)) func_ov017_021c9e00(self->actorId, 0, 0, 1);
         }
         return;
     }
@@ -193,10 +193,10 @@ extern "C" ARM void func_ov002_0215a0a4(BattleMessage0215a0a4* self, BattleEvent
             }
             var10++;
         }
-        func_02048350((Struct_ov002_02157d40_8*)var3, var9->unknown_8_0_);
-        if (func_0202b7d8(var2)) func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
+        ConsumeCounter02048350((Obj02048350*)actor, entry->counter);
+        if (LinkSession_IsActive(state)) func_ov017_021c9e00(self->actorId, 0, 0, 1);
     } else {
-        target = gs->GetUnknownGameObject();
+        target = gs->GetLeader();
         if (target) {
             MessageSystem_SetStringArgument(message, 2, CombatantName0215a0a4(target));
             NameText_InitFromPartyMember(self->targetName, target->obj3D_.actorIndex_);

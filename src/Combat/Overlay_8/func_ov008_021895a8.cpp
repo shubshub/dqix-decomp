@@ -116,7 +116,7 @@ extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, 
 extern "C" void func_ov008_0218b240(void* arg0);
 extern "C" void func_ov008_0218aa24(void* arg0);
 
-int IsField0Null_02046b08(void** field);
+int FieldTaskQueue_IsEmpty(void** field);
 unsigned int* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int* field, unsigned int bits);
 MessageSystem* MessageSystem_GetInstance();
@@ -212,7 +212,7 @@ extern "C" ARM void func_ov008_021895a8(Struct_ov008_02188f5c_3* arg0)
     signed char step = self->step_;
     if (step == 0)
     {
-        if (!func_02046b08(*(void***)(var1
+        if (!FieldTaskQueue_IsEmpty(*(void***)(resources
 #if defined(jpn)
             + 0x34f0)))
 #else

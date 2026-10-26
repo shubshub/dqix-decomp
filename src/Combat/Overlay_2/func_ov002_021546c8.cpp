@@ -1,14 +1,14 @@
 #include "GameState/GameState.h"
 #include <globaldefs.h>
 
-extern "C" void *func_0202ae18(void);
+extern "C" void *LinkSession_GetInstance(void);
 extern "C" void func_ov002_02153e90(void *entry);
 extern "C" int func_ov002_02154a6c(void *self, int idA, int idB);
 int HasPositiveField256Short178_02154b94(void *self, int id);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
 extern "C" short func_02084a64(void *a, int b);
 extern "C" void PartyMember_RecalculateStats(void *a, int arg2);
-int CheckField0NonZero_0202b7d8(int *p);
+int LinkSession_IsActive(int *p);
 extern "C" void func_ov017_021cf078(int id, unsigned char b, int c);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 
@@ -38,11 +38,11 @@ extern "C" ARM int func_ov002_021546c8(void *arg0, struct Struct_ov002_021546c8_
     if (arg1 == NULL) return 0;
     if (arg2 == NULL) return 0;
 
-    GameState *var0              = GameState::GetInstance();
-    void *var1                    = func_0202ae18();
-    int var2                    = 0;
-    struct Struct_ov002_021546c8 *var3 = arg1->unknown_8_;
-    if (arg3) var3 = arg1->unknown_20_;
+    GameState *gs              = GameState::GetInstance();
+    void *w                    = LinkSession_GetInstance();
+    int ret                    = 0;
+    struct Entry021546c8 *ents = req->entries;
+    if (useAlt) ents = req->alt;
 
     int var4;
     for (var4 = 0; var4 < 4; var4++) {
@@ -66,7 +66,7 @@ extern "C" ARM int func_ov002_021546c8(void *arg0, struct Struct_ov002_021546c8_
         if (e->val <= 0) continue;
         e->kind = 3;
         PartyMember_RecalculateStats(*(void **) ((char *) m + regionalOffset0), 0);
-        if (CheckField0NonZero_0202b7d8((int *) w)) {
+        if (LinkSession_IsActive((int *) w)) {
             func_ov017_021cf078(id, *(int *) (*(char **) ((char *) m + regionalOffset0) + regionalOffset1) & 0xff, 1);
             func_ov017_021c9e00(id, 0, 0, 1);
         }

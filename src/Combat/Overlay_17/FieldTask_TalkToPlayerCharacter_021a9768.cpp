@@ -12,20 +12,20 @@ struct Struct_0202b2f0;
 struct Struct_ov008_02189284;
 struct Struct_ov008_0218936c;
 
-extern "C" SearchStruct* func_0202ae18(void);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
 void GameObject_DisableControl(Obj020397cc* obj, int flag);
 extern "C" void func_020a0cc4(unsigned int size);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 Obj020d7aa0* TextQueue_GetInstance();
 void TextQueue_Reset(Obj020d7aa0* obj);
 void PushInputLogB_020a1ef0(int value);
 void PopStack1AndTrigger_020a1f4c(int value);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 extern "C" void func_ov008_02188f5c(void* scene, int index, int arg);
 void SetupAllocators_02189284(Layout02189284* layout, SafeAllocator* allocator);
 unsigned char Dispatch0218936c(Manager0218936c* manager, unsigned int ticks);
-int TestFlagBitAt0xe_0202c578(SearchStruct* search, int index);
+int LinkSession_IsSlotLost(SearchStruct* search, int index);
 extern "C" void func_ov008_0218b240(void* scene);
 extern "C" void func_ov008_021894b8(void* scene);
 void GameObject_EnableControl(void* obj);
@@ -55,8 +55,8 @@ extern "C" void func_ov017_021a9714(Struct_ov017_021a9768_2* arg0);
 extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* unknown = gs->GetUnknownGameObject();
-    SearchStruct* search = func_0202ae18();
+    GameObject* unknown = gs->GetLeader();
+    SearchStruct* search = LinkSession_GetInstance();
     GameObject_DisableControl((Obj020397cc*)unknown, 1);
     SetFlags04((GameResources*)res, 0xc0);
     if (task->step == 0) {
@@ -67,9 +67,9 @@ extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
         func_020a0cc4(0x1c70c);
         void* buffer = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, 0x1c70c);
 #endif
-        if (var4 == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        if (buffer == NULL) {
+            ROMFilesystem_InitFileTables();
+            task->failed = 1;
             return;
         }
         TextQueue_Reset(TextQueue_GetInstance());
@@ -78,9 +78,9 @@ extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
 #else
         arg0->unknown_c_.CreateTypeA(var4, 0x1c70c);
 #endif
-        arg0->unknown_c_.Reset();
-        func_020a1ef0(1);
-        func_020a1940(OVERLAY_ID(8));
+        task->allocator.Reset();
+        PushInputLogB_020a1ef0(1);
+        Overlay_Load(OVERLAY_ID(8));
 #if defined(jpn)
         arg0->unknown_20_ = (Struct_ov017_021a9768*)arg0->unknown_c_.Allocate(0xec4);
 #else
@@ -99,8 +99,8 @@ extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
         if (func_ov008_0218936c((Struct_ov008_0218936c*)arg0->unknown_20_, var0->GetTickCount())) {
             arg0->unknown_8_++;
         }
-        if (func_0202c578(var3, 0)) {
-            func_ov008_0218b240(arg0->unknown_20_);
+        if (LinkSession_IsSlotLost(search, 0)) {
+            func_ov008_0218b240(task->scene);
         }
         int var5 = 0;
         if (arg0->unknown_24_ >= 0 && arg0->unknown_24_ <= 3) {
@@ -109,7 +109,7 @@ extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
         if (!var5) {
             return;
         }
-        if (var0->GetGameObjectByIndex(arg0->unknown_24_) != NULL && !func_0202c578(var3, arg0->unknown_24_)) {
+        if (gs->GetGameObjectByIndex(task->index) != NULL && !LinkSession_IsSlotLost(search, task->index)) {
             return;
         }
         func_ov008_0218b240(arg0->unknown_20_);
@@ -123,12 +123,12 @@ extern "C" ARM void FieldTask_TalkToPlayerCharacter(Task021a9768* task) {
     if (arg0->unknown_8_ != 3) {
         return;
     }
-    GameObject_EnableControl(GameState::GetInstance()->GetUnknownGameObject());
+    GameObject_EnableControl(GameState::GetInstance()->GetLeader());
     *(volatile unsigned int*)0x4000000 = (task->scene->planes << 8) | (*(volatile unsigned int*)0x4000000 & ~0x1f00);
     task->scene = NULL;
     PopStack1AndTrigger_020a1f4c(1);
     func_ov017_021a9714(task);
-    func_020a0c0c();
-    ClearFlags04((GameResources*)var1, 0x80);
-    arg0->unknown_1_ = 1;
+    ROMFilesystem_InitFileTables();
+    ClearFlags04((GameResources*)res, 0x80);
+    task->failed = 1;
 }

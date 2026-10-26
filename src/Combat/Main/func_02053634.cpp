@@ -8,7 +8,7 @@
 
 int MessageSystem_GetInstance(void);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
-int GetSignedByte0x1c9_02039874(void* obj);
+int GameObject_GetLinePosition(void* obj);
 int GetIndexedEntryField0x178_02053604(signed char* obj);
 
 extern "C" void func_020531f0(void* arg0);
@@ -21,12 +21,12 @@ extern "C" void EventQuery_RunQueuedCommands(void* p);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-extern "C" void func_0205eabc(void* arg0, void* arg1, int arg2);
-extern "C" int func_02064a9c(void* arg0, void* arg1);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_ov017_021cc2f0(int);
-extern "C" void func_020a28a0(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
+void ForwardToTargetOrDefault0205eabc(void* obj, void* target, int arg);
+int SetTargetFieldAndForEach02064a9c(void* param0, void* param1);
+int GameState_GetFollowCamera(char* obj);
+void EnqueueEventTag6_021cc2f0(int);
+void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
+void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 
 struct Struct_02053634 {
     int unknown_0_;
@@ -72,11 +72,11 @@ extern "C" ARM void func_02053634(void* arg0) {
         }
     }
 
-    GameObject* var5 = var1->GetPartyMemberByIndex(*(short*)(var0 + 4));
-    int var6 = var0[OBJECT_OFFSET(0x17c)] > 0 ? 1 : 0;
-    if (var6 != 0) {
-        if (func_02039874(var5) > 0) {
-            func_020531f0(var0);
+    GameObject* combatant = bs->GetPartyMemberByIndex(*(short*)(ctx + 4));
+    int hasEntries = ctx[OBJECT_OFFSET(0x17c)] > 0 ? 1 : 0;
+    if (hasEntries != 0) {
+        if (GameObject_GetLinePosition(combatant) > 0) {
+            func_020531f0(ctx);
             return;
         }
     }
@@ -219,13 +219,13 @@ extern "C" ARM void func_02053634(void* arg0) {
                 func_020531f0(var0);
                 return;
             }
-        } else if (var7 == 2) {
-            var1 = GameState::GetInstance();
-            int var26 = func_020100f8((char*)var1);
-            int var27 = 0;
-            if (var0[OBJECT_OFFSET(0x17c)] > 1) {
-                if (((Object3D*)var0)->HasAnimationStopped() != 0) {
-                    var27 = 1;
+        } else if (state == 2) {
+            bs = GameState::GetInstance();
+            int target = GameState_GetFollowCamera((char*)bs);
+            int flag = 0;
+            if (ctx[OBJECT_OFFSET(0x17c)] > 1) {
+                if (((Object3D*)ctx)->HasAnimationStopped() != 0) {
+                    flag = 1;
                 }
             } else {
                 short cid = *(short*)(ctx + 4);

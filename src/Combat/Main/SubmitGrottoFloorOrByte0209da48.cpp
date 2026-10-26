@@ -8,7 +8,7 @@ enum { floorByteOffset = 0xba, activeGrottoOffset = 0x23ec };
 #include "Grotto/Main/ActiveGrottoClass.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 extern "C" int func_ov017_021d6134(void*, int);
 
 // USA: func_0209da48
@@ -19,7 +19,7 @@ ARM int SubmitGrottoFloorOrByte0209da48(void* self) {
         r4 = 0;
         goto end;
     }
-    if (IsValueInRange0201b5d8(*(unsigned short*)Zone3D_GetInstance()) == 0) {
+    if (ZoneId_IsGrottoBossFloor(*(unsigned short*)Zone3D_GetInstance()) == 0) {
         goto end;
     }
     r4 = grotto->GetFloorCount() + 1;

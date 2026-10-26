@@ -35,22 +35,22 @@ struct Struct_0208e7a4 {
 
 struct Struct_0208f3b4;
 
-extern "C" Struct_0208e7a4* func_0208e0a8(void);
-extern "C" Struct_ov017_021d3950* func_020120b8(char* arg0, int arg1);
-extern "C" Struct_ov017_021d3950_2* func_0208e7a4(Struct_0208e7a4* arg0, unsigned int arg1);
-extern "C" Struct_0208f3b4* func_0208e9e8(void);
-extern "C" void func_0208f3b4(Struct_0208f3b4* arg0, int arg1);
+extern "C" Head0208e7a4* LootPointList_GetInstance(void);
+Entry021d3950* GetNegativeEntry_020120b8(char* obj, int index);
+Node021d3950* FindNodeByPackedId0208e7a4(Head0208e7a4* owner, unsigned int key);
+Cont0208f3b4* GetData02109020_0208e9e8(void);
+void RemoveNodeByKey0208f3b4(Cont0208f3b4* c, int key);
 
 // USA: func_ov017_021d3950
-extern "C" ARM int func_ov017_021d3950(Struct_ov017_021d3950_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_0208e7a4* var1 = func_0208e0a8();
-    Struct_ov017_021d3950* var2 = func_020120b8((char*)var0, arg0->unknown_3_);
-    if (var2 != NULL && (arg0->unknown_2_ & var2->unknown_2_1_) != 0) {
-        var2->unknown_2_1_ = ~arg0->unknown_2_ & var2->unknown_2_1_;
-        var2->unknown_0_0_ = var2->unknown_3_1_ * 30;
-        Struct_ov017_021d3950_2* var3 = func_0208e7a4(var1, arg0->unknown_3_);
-        if (var3 == NULL) {
+extern "C" ARM int func_ov017_021d3950(Request021d3950* req) {
+    GameState* gs = GameState::GetInstance();
+    Head0208e7a4* list = LootPointList_GetInstance();
+    Entry021d3950* entry = GetNegativeEntry_020120b8((char*)gs, req->id);
+    if (entry != NULL && (req->mask & entry->flags) != 0) {
+        entry->flags = ~req->mask & entry->flags;
+        entry->timer = entry->count * 30;
+        Node021d3950* node = FindNodeByPackedId0208e7a4(list, req->id);
+        if (node == NULL) {
             return 1;
         }
         var3->unknown_6_5_ = ~arg0->unknown_2_ & var3->unknown_6_5_;

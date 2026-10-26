@@ -3,7 +3,7 @@
 
 struct FlagWord02046708;
 FlagWord02046708* GlobalFlags_GetInstance();
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 int GetByteAtPtrOrZero_02191b58(void*, int);
 void SetupAndDispatchCombatant_02191e5c(int, int, short, unsigned char, unsigned short);
 void DispatchOrSetupCombatant_02191f4c(int, int);
@@ -19,7 +19,7 @@ extern "C" ARM void func_ov017_02191cc0(unsigned char* arg0) {
 #else
  enum {Enum_ov017_02191cc0_15184=0x3b50};
 #endif
-    if (TestFlags02046708(GlobalFlags_GetInstance(), 0x20000)) return;
+    if (FlagWord_TestBits(GlobalFlags_GetInstance(), 0x20000)) return;
     GameState* battle = GameState::GetInstance();
     GameObject* protagonist = battle->GetProtagonist();
     if (protagonist == 0) return;

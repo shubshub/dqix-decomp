@@ -7,13 +7,13 @@
 
 struct Struct_ov017_021b1e24;
 
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 extern "C" void func_ov031_02243518(void* state, int mode);
 void RunStateTableEntry_02243690(Obj_02243690* obj);
 void ShutdownAndReinit0205e92c(void* obj);
 void ResetAndReinit0209c278(void* obj);
-void Dispatch0203a974With0x57000_0209c290(void* obj);
-void SetupContextForMode0205ea20(void* obj, int mode);
+void BgmPlayer_LoadArchive(void* obj);
+void SePlayer_LoadArchive(void* obj, int mode);
 extern char g_sePlayer;
 extern char g_bgmPlayer;
 
@@ -68,12 +68,12 @@ extern "C" ARM void FieldTask_ConnectWifi(Task021b1e24* task) {
         task->allocator.Reset();
         ShutdownAndReinit0205e92c(&g_sePlayer);
         ResetAndReinit0209c278(&g_bgmPlayer);
-        func_020a1940(OVERLAY_ID(31));
-        func_ov031_02243518(arg0->unknown_24_, arg0->unknown_21_);
-        arg0->unknown_24_->unknown_28_ = &arg0->unknown_c_;
-        inline_ov017_021b1e24(arg0->unknown_24_, arg0->unknown_34_, arg0->unknown_38_);
-        func_ov031_02243690((Struct_ov017_021b1e24*)arg0->unknown_24_);
-        arg0->unknown_20_++;
+        Overlay_Load(OVERLAY_ID(31));
+        func_ov031_02243518(task->state, task->mode);
+        task->state->allocator = &task->allocator;
+        SetPair(task->state, task->f34, task->f38);
+        RunStateTableEntry_02243690((Obj_02243690*)task->state);
+        task->step++;
         return;
     }
     if (arg0->unknown_20_ != 1) {
@@ -83,11 +83,11 @@ extern "C" ARM void FieldTask_ConnectWifi(Task021b1e24* task) {
     if (arg0->unknown_24_->unknown_30_ == 0) {
         return;
     }
-    func_020a1940(OVERLAY_ID(32));
+    Overlay_Load(OVERLAY_ID(32));
     ResetAndReinit0209c278(&g_bgmPlayer);
-    Dispatch0203a974With0x57000_0209c290(&g_bgmPlayer);
+    BgmPlayer_LoadArchive(&g_bgmPlayer);
     ShutdownAndReinit0205e92c(&g_sePlayer);
-    SetupContextForMode0205ea20(&g_sePlayer, 100);
+    SePlayer_LoadArchive(&g_sePlayer, 100);
     SignedAllocatorHeader* block = task->allocator.GetSignedAllocator();
     if (block != NULL) {
         task->allocator.Destroy();

@@ -9,7 +9,7 @@ enum { Enum_02017c58_1052 = 0x41c };
 #endif
 
 extern "C" void* Scenario_GetInstance(void);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 void CallLoop0206eb20(void* a, void* b, int c, int limit);
 extern "C" void func_0206ea8c(void* obj, unsigned char a, short b, int flag);
 
@@ -35,8 +35,8 @@ extern "C" ARM void func_02017c58(void* arg0) {
     if (var0 == NULL) {
         return;
     }
-    char* var1 = (char*)func_0200fd0c(var0);
-    if (var1 == NULL) {
+    char* f3f8 = (char*)GameState_GetZoneTransition(gs);
+    if (f3f8 == NULL) {
         return;
     }
     void* ctx = Scenario_GetInstance();

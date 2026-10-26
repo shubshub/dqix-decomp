@@ -15,13 +15,13 @@ struct Party020874bc;
 struct Manager020a8b0c { char pad[kManagerPrefix]; HeadNode02046b24** head; };
 struct Obj020397cc;
 struct Obj02033874;
-Field020a8b0c* GetField0x3f8Address_0200fd0c(GameState*);
+Field020a8b0c* GameState_GetZoneTransition(GameState*);
 void GameObject_DisableControl(Obj020397cc*, int);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 void SePlayer_UnloadExtraArchiveA(void*);
 void SePlayer_LoadExtraArchiveA(void*, int, int);
 void DispatchIfField0xc4NonNeg_0205eb90(void*, int, int);
-void SetVecYFromValue02033874(Obj02033874*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
 void ApplyToListedCombatants020874bc(Party020874bc*, int);
 int fix32abs(int);
 extern char g_sePlayer;
@@ -30,7 +30,7 @@ extern "C" ARM void func_020a8b0c(Obj020a8b0c* self, int index) {
     if (!(self->mask & (1<<index))) return;
     GameState* state = GameState::GetInstance();
     Actor020a8b0c* actor = (Actor020a8b0c*)state->GetPartyMemberByIndex(index);
-    Field020a8b0c* field = GetField0x3f8Address_0200fd0c(state);
+    Field020a8b0c* field = GameState_GetZoneTransition(state);
     Party020874bc* party;
     HeadNode02046b24** head = ((Manager020a8b0c*)GetGameResources())->head;
     party = (Party020874bc*)GameState_GetParty(state);
@@ -40,7 +40,7 @@ extern "C" ARM void func_020a8b0c(Obj020a8b0c* self, int index) {
     self->progress+=self->step;
     if (self->limit < self->progress) self->progress = self->limit;
     int difference;
-    if (GetHeadNodeIdOrMinusOne(head) == 3) { difference = -3686; actor->obj.DisableFlag(0x8000100); }
+    if (FieldTaskQueue_GetCurrentKind(head) == 3) { difference = -3686; actor->obj.DisableFlag(0x8000100); }
     else {
         difference = height-self->progress;
         if (fix32abs(difference) < 40) {
@@ -49,13 +49,13 @@ extern "C" ARM void func_020a8b0c(Obj020a8b0c* self, int index) {
             DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 3, 0);
         }
     }
-    var1->unknown_ac_ = var6;
-    if (var6 < 0) {
-        int var7 = var1->unknown_ae_;
-        func_02033874((Struct_02033834*)var1, var7+labs(var6));
-        func_020874bc(var3, arg0->unknown_14_);
-        int var8 = arg0->unknown_14_;
-        if (var8 > 0) var8--;
-        arg0->unknown_14_ = var8;
+    actor->height = difference;
+    if (difference < 0) {
+        int y = actor->y;
+        GameObject_SnapFacing((Obj02033874*)actor, y+labs(difference));
+        ApplyToListedCombatants020874bc(party, self->count);
+        int count = self->count;
+        if (count > 0) count--;
+        self->count = count;
     }
 }

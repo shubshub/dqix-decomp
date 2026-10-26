@@ -8,8 +8,8 @@ void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 struct Struct02074bd0;
 void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
 extern "C" int GetMainBGAssignedVRAMSize(void);
-extern "C" void func_020ca458(int a, int b, int c);
-extern "C" void func_020a0c0c(void);
+extern "C" void MIi_CpuClearFast(int a, int b, int c);
+extern "C" void ROMFilesystem_InitFileTables(void);
 extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov003_0217f118  (semantic: FinalizeAndCleanup_0217f118)
@@ -27,7 +27,7 @@ extern "C" ARM void func_ov003_0217f118(char* self) {
     }
     ClearFlag0x10IfSet((struct Struct02074bd0*)(self + 0x2a));
     int size = GetMainBGAssignedVRAMSize();
-    func_020ca458(0, 0x6000000, size);
-    func_020a0c0c();
+    MIi_CpuClearFast(0, 0x6000000, size);
+    ROMFilesystem_InitFileTables();
     self[1] = 1;
 }

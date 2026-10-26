@@ -3,7 +3,7 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 struct ResetObj020d7a5c;
 struct ResetObj020d7a5c* TextQueue_GetInstance();
 struct Obj020d7aa0;
@@ -23,7 +23,7 @@ extern "C" ARM void func_ov017_021a55b0(struct Obj021a55b0* self) {
     if (p != NULL) {
         self->allocator.Destroy();
         AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
-        func_020a0c0c();
+        ROMFilesystem_InitFileTables();
     }
     TextQueue_Reset((struct Obj020d7aa0*)TextQueue_GetInstance());
     self->allocator.ResetAllocatorPointer();

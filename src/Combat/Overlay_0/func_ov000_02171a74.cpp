@@ -2,7 +2,7 @@
 
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
-void Clear12Bytes020e46c4(void* buf);
+void NameText_Clear(void* buf);
 void NameText_InitFromPartyMember(void* obj, int combatantId);
 void* MessageSystem_GetInstance(void);
 extern "C" void func_02046380(void* g);
@@ -49,7 +49,7 @@ extern "C" ARM int func_ov000_02171a74(struct Struct_ov000_02171a74* arg0
             goto end;
         }
         char buf[0xc];
-        Clear12Bytes020e46c4(buf);
+        NameText_Clear(buf);
         NameText_InitFromPartyMember(buf, obj->field4c);
         void* g = MessageSystem_GetInstance();
         func_02046380(g);

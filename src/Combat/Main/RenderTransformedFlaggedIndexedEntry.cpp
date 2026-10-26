@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" void func_02031278(void*);
+extern "C" void G3_RotateZ(void*);
 extern "C" void G3_RotateY(int);
-extern "C" void func_020311f0(int);
+extern "C" void G3_RotateX(int);
 extern "C" void func_02047448(void* obj, int val, int param1);
 
 struct Block020472e4 {
@@ -64,9 +64,9 @@ ARM void RenderTransformedFlaggedIndexedEntry(struct StructAt020472e4* obj, int 
         *(volatile int*)0x400046c = sy;
         *(volatile int*)0x400046c = sz;
     }
-    if (obj->transformSrc != NULL) func_02031278(obj->transformSrc);
+    if (obj->transformSrc != NULL) G3_RotateZ(obj->transformSrc);
     if (obj->rotY != NULL) G3_RotateY((int)obj->rotY);
-    if (obj->rotX != NULL) func_020311f0((int)obj->rotX);
+    if (obj->rotX != NULL) G3_RotateX((int)obj->rotX);
     func_02047448(obj, block->val, param1);
     *(volatile int*)0x4000448 = 1;
 }

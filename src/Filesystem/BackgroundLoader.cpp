@@ -4,9 +4,6 @@
 #include "Filesystem/FileIO.h"
 #include "Resource/ResourceMutex.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 #pragma dont_inline on
 
@@ -16,10 +13,11 @@
 #define data_020ef90f data_020ef7ff
 #endif
 
-struct Struct_02104304
+// The loader's statics: the next task id, the instance (GetInstance), and its thread's stack (Populate).
+struct BackgroundLoaderStatics
 {
     unsigned short taskCounter_;
-    BackgroundLoader* globalInstace_;
+    BackgroundLoader* globalInstance_;
     char contextStackSpace_[0x800];
 } static s_loaderInstanceData;
 
@@ -27,12 +25,12 @@ extern "C"
 {
     int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
 
-    void func_020c9be0();
+    void HaltSystem();
 
-    char* data_020ef8a4[];
+    char* data_020ef8a4[]; // the subdirectories of data/ a task's file can be in ("ani/", "bin/", ...), NULL-ended
 
-    char data_020ef908[];
-    char data_020ef90f[];
+    char data_020ef908[]; // "%s%s%s"
+    char data_020ef90f[]; // "data/"
 }
 
 void BackgroundLoader::Task::ZeroInitialize()
@@ -68,31 +66,31 @@ bool BackgroundLoader::Task::GetFullFilename(char *outBuffer)
 
 BackgroundLoader* BackgroundLoader::GetInstance()
 {
-    return s_loaderInstanceData.globalInstace_;
+    return s_loaderInstanceData.globalInstance_;
 }
 
 void BackgroundLoader::FreeAllocationsGlobal()
 {
-    if (s_loaderInstanceData.globalInstace_)
-        s_loaderInstanceData.globalInstace_->MaybeFreeAllocations();
+    if (s_loaderInstanceData.globalInstance_)
+        s_loaderInstanceData.globalInstance_->FreeAllocations();
 }
 
 void BackgroundLoader::AddLockGlobal()
 {
-    if (s_loaderInstanceData.globalInstace_)
-        s_loaderInstanceData.globalInstace_->AddLock();
+    if (s_loaderInstanceData.globalInstance_)
+        s_loaderInstanceData.globalInstance_->AddLock();
 }
 
 void BackgroundLoader::RemoveLockGlobal()
 {
-    if (s_loaderInstanceData.globalInstace_)
-        s_loaderInstanceData.globalInstace_->RemoveLock();
+    if (s_loaderInstanceData.globalInstance_)
+        s_loaderInstanceData.globalInstance_->RemoveLock();
 }
 
 void BackgroundLoader::InitializeOrReset()
 {
     reader_.ZeroInitialize();
-    s_loaderInstanceData.globalInstace_ = this;
+    s_loaderInstanceData.globalInstance_ = this;
 
     scratchSpace_ = 0;
     scratchSpaceSize_ = 0;
@@ -123,15 +121,16 @@ void BackgroundLoader::Populate(void* fileLoadSpace, unsigned int spaceCapacity,
     flags_78c_0_ = true;
     flags_78c_2_ = true;
 
-    func_020d97a8(&context_, s_loaderInstanceData.contextStackSpace_,
+    ProcessorContext_Create(&context_, s_loaderInstanceData.contextStackSpace_,
         sizeof(s_loaderInstanceData.contextStackSpace_), relativePrio,
         &BackgroundLoaderThreadFunction, (int)this);
-    func_020d9828(&context_);
+    ProcessorContext_Start(&context_);
 }
 
-void BackgroundLoader::MaybeWaitIdle()
+// Main, originally BackgroundLoader::MaybeWaitIdle (USA 0x0202f920, EUR 0x0202f930, JPN 0x0202f490)
+void BackgroundLoader::Suspend()
 {
-    MaybeFreeAllocations();
+    FreeAllocations();
     AddLock();
     while (true)
     {
@@ -194,7 +193,7 @@ int BackgroundLoader::QueueFileTask(const char* filename, int type, const char* 
     if (filename != NULL)
     {
         if (numPendingTasks_ >= 24)
-            func_020c9be0();
+            HaltSystem();
         else
         {
             BackgroundLoader::Task* entry = &queuedTasks_[numPendingTasks_];
@@ -239,7 +238,7 @@ int BackgroundLoader::QueueFileTask(const char* filename, int type, const char* 
                         unsigned int subdirLength = strlen(candidateSubdir);
                         unsigned int filenameLength = strlen(innerDirPtr + subdirLength);
                         if (filenameLength + 1 > 0x18)
-                            func_020c9be0();
+                            HaltSystem();
                         entry->containerDirectoryIndex_ = subdirIdx;
                         strcpy(entry->outerFilename_, innerDirPtr + subdirLength);
                         success = true;
@@ -267,7 +266,7 @@ int BackgroundLoader::QueueOverlayTask(unsigned int id, bool load)
     int newID = -1;
     LockResourceMutex();
     if (numPendingTasks_ >= 24)
-        func_020c9be0();
+        HaltSystem();
     else
     {
         BackgroundLoader::Task* entry = &queuedTasks_[numPendingTasks_];
@@ -311,7 +310,7 @@ void BackgroundLoader::AddFence()
     if (numPendingTasks_ > 0)
     {
         if (numPendingTasks_ >= 24)
-            func_020c9be0();
+            HaltSystem();
         else
         {
             BackgroundLoader::Task* task = &queuedTasks_[numPendingTasks_];
@@ -351,7 +350,8 @@ int BackgroundLoader::GetTaskStatus(int taskID)
     return status;
 }
 
-int BackgroundLoader::GetFlag0()
+// Main, originally BackgroundLoader::GetFlag0 (USA 0x0202fe58, EUR 0x0202fe68, JPN 0x0202f990)
+int BackgroundLoader::IsIdle()
 {
     return flags_78c_0_;
 }
@@ -450,7 +450,8 @@ int BackgroundLoader::GetLoadedFileInArchive(const char *outerFile, const char* 
     return taskID;
 }
 
-void BackgroundLoader::MaybeReset()
+// Main, originally BackgroundLoader::MaybeReset (USA 0x02030090, EUR 0x020300a0, JPN 0x0202fbc8)
+void BackgroundLoader::ClearQueue()
 {
     LockResourceMutex();
     BackgroundLoader::Task* pTask = &queuedTasks_[0];
@@ -470,7 +471,8 @@ void BackgroundLoader::MaybeReset()
     UnlockResourceMutex();
 }
 
-void BackgroundLoader::MaybeFreeAllocations()
+// Main, originally BackgroundLoader::MaybeFreeAllocations (USA 0x02030110, EUR 0x02030120, JPN 0x0202fc48)
+void BackgroundLoader::FreeAllocations()
 {
     if (numPendingTasks_ == 0)
         return;
@@ -685,12 +687,12 @@ void BackgroundLoader::RefreshCounters()
         if (pTask->scratchAlloc_.numWords_ == 0)
             continue;
         unsigned int sectionEndWord = pTask->scratchAlloc_.firstWord_ + pTask->scratchAlloc_.numWords_;
-        int newVal = rightmostAllocationByte_;
-        if (newVal <= sectionEndWord * 4)
-            newVal = sectionEndWord * 4;
-        rightmostAllocationByte_ = newVal;
+        int rightmostByte = rightmostAllocationByte_;
+        if (rightmostByte <= sectionEndWord * 4)
+            rightmostByte = sectionEndWord * 4;
+        rightmostAllocationByte_ = rightmostByte;
     }
-    unsigned int unk = rightmostAllocationByte_ + scratchRightArenaUsage_;
-    if (unk > unknown_120_)
-        unknown_120_ = unk;
+    unsigned int totalUsage = rightmostAllocationByte_ + scratchRightArenaUsage_;
+    if (totalUsage > unknown_120_)
+        unknown_120_ = totalUsage;
 }

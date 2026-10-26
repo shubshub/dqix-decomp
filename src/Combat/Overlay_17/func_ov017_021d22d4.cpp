@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021d22d4 {
     unsigned short unknown_0_0_ : 2;
@@ -10,13 +10,13 @@ struct Struct_ov017_021d22d4 {
 };
 
 // USA: func_ov017_021d22d4
-extern "C" ARM void func_ov017_021d22d4(unsigned short arg0, unsigned short arg1, void* arg2) {
-    void* var0 = func_0202ae24();
-    unsigned char var1[0x14];
-    Struct_ov017_021d22d4* var2 = (Struct_ov017_021d22d4*)(var1 + 4);
-    var1[0] = 0x9d;
-    var2->unknown_0_0_ = arg0;
-    var2->unknown_0_2_ = arg1;
+extern "C" ARM void func_ov017_021d22d4(unsigned short a0, unsigned short a1, void* a2) {
+    void* p = LinkMessageQueue_GetInstance();
+    unsigned char buf[0x14];
+    Bits021d22d4* bits = (Bits021d22d4*)(buf + 4);
+    buf[0] = 0x9d;
+    bits->lo2 = a0;
+    bits->hi14 = a1;
 
     int var3 = 0xe;
     if ((unsigned int)(arg1 + 0xe) > 0x2e0) {

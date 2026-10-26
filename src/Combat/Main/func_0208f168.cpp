@@ -3,7 +3,7 @@
 #include "NitroSDK/Matrix.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0208e0a8(void);
+extern "C" void* LootPointList_GetInstance(void);
 extern "C" void* func_02057924(void);
 extern "C" int rand(void);
 extern "C" int _s32_div_f(int a, int b);
@@ -60,7 +60,7 @@ extern "C" ARM void func_0208f168(struct Struct_0208f168* arg0, void* arg1) {
 
     void* g = Zone3D_GetInstance();
     char* name = *(char**)((char*)g + 8);
-    struct Head0208f168* h = (struct Head0208f168*)func_0208e0a8();
+    struct Head0208f168* h = (struct Head0208f168*)LootPointList_GetInstance();
 
     if (var1 == 0) {
         return;

@@ -2,24 +2,29 @@
 
 struct Obj02033874;
 
+struct GameObjectTimerBits {
+    unsigned short sinkTimer : 15;
+    unsigned short turningInPlace : 1;
+};
+
 struct Obj02033834 {
     char pad0[0xae];
-    short fae;
+    short facing;
     char pad1[0x0e];
-    unsigned char mode;
+    unsigned char motionState;
     char pad2[0x05];
-    unsigned short fc4;
+    struct GameObjectTimerBits timerBits;
 };
 
 short fix32ReduceAngle0To2Pi(int);
-void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 // Main, originally SetVecYByMode02033834 (USA 0x02033834, EUR 0x02033844, JPN 0x0203336c)
-ARM void GameObject_SetFacing(struct Obj02033834* obj, int arg) {
-    if (obj->mode == 4 || obj->mode == 3) {
-        SetVecYFromValue02033874((struct Obj02033874*)obj, arg);
+ARM void GameObject_SetFacing(struct Obj02033834* self, int angle) {
+    if (self->motionState == 4 || self->motionState == 3) {
+        GameObject_SnapFacing((struct Obj02033874*)self, angle);
     } else {
-        obj->fae = fix32ReduceAngle0To2Pi(arg);
+        self->facing = fix32ReduceAngle0To2Pi(angle);
     }
-    obj->fc4 &= ~0x8000;
+    self->timerBits.turningInPlace = 0;
 }

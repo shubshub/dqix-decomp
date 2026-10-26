@@ -43,11 +43,11 @@ struct Struct_02114330
     unsigned short unknown_42_;
 };
 
-extern "C" void func_020c99ac(void* arg0);
-extern "C" int func_020d41e8();
-extern "C" Struct_020d424c_2* func_020d41d8();
-extern "C" unsigned short func_020d46fc();
-extern "C" unsigned short func_020d46cc();
+extern "C" void OS_GetMacAddress(void* mac);
+int GetBattleStateCode_020d41e8();
+WMArm9Buf* GetBattleContext_020d41d8();
+unsigned short GetBattleContextField0x14cLow16_020d46fc();
+unsigned short GetBattleContextField0x150_020d46cc();
 
 // USA: func_020d4770
 extern "C" ARM int func_020d4770(unsigned short arg0, Type_020d42e0 arg1, void* arg2)
@@ -57,18 +57,18 @@ extern "C" ARM int func_020d4770(unsigned short arg0, Type_020d42e0 arg1, void* 
     Struct_02114330 var2;
     if (arg1 != NULL)
     {
-        VectorizedMemset(&var2, 0, sizeof(Struct_02114330));
-        var2.unknown_0_ = 0x82;
-        var2.unknown_2_ = 0;
-        var2.unknown_4_ = 25;
-        var2.unknown_6_ = arg0;
-        var2.unknown_8_ = NULL;
-        var2.unknown_c_ = NULL;
-        var2.unknown_10_ = 0;
-        var2.unknown_1a_ = 0xffff;
-        var2.unknown_1c_ = arg2;
-        var2.unknown_12_ = 0;
-        func_020c99ac(var2.unknown_14_);
+        VectorizedMemset(&cb, 0, sizeof(WMPortRecvCallback));
+        cb.apiid = 0x82;
+        cb.errcode = 0;
+        cb.state = 25;
+        cb.port = port;
+        cb.recvBuf = NULL;
+        cb.data = NULL;
+        cb.length = 0;
+        cb.seqNo = 0xffff;
+        cb.arg = arg;
+        cb.aid = 0;
+        OS_GetMacAddress(cb.macAddress);
     }
     var1 = DisableIRQInterrupts();
     var0 = func_020d41e8();

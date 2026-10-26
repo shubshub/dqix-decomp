@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void* func_020e3808(void);
-extern "C" int func_0202c508(void*);
+void* GetData02153660_020e3808(void);
+extern "C" int LinkSession_IsHostOrSolo(void*);
 extern "C" void func_ov017_021cebcc(int, int, int);
 
 struct Struct_020e385c;
@@ -28,10 +28,10 @@ struct Struct_ov017_021cec70 {
 };
 
 // USA: func_ov017_021cec70
-extern "C" ARM void func_ov017_021cec70(int arg0, struct Struct_ov017_021cec70* arg1, int arg2, int arg3, void* arg4) {
-    struct Struct_020e385c* var0 = (struct Struct_020e385c*)func_020e3808();
-    int var1 = func_0202c508(arg4);
-    int var2 = arg1->unknown_4_;
+extern "C" ARM void func_ov017_021cec70(int bit, struct Obj021cec70* obj, int unused2, int unused3, void* arg4) {
+    struct TagValueEntry020e385c* table = (struct TagValueEntry020e385c*)GetData02153660_020e3808();
+    int inBattle = LinkSession_IsHostOrSolo(arg4);
+    int caseSel = obj->caseSel;
 
     if (var1 != 0) {
         switch (var2) {

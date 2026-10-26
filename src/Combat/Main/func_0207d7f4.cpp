@@ -13,14 +13,14 @@ struct Struct_0207d7f4 {
     signed char unknown_8_[4];
 };
 
-extern "C" void* func_0207d9f4(unsigned char* arg0, int arg1);
-extern "C" void func_0207d7c0(struct Struct_0207d798* arg0);
-extern "C" struct Struct_0207d7f4* func_0207d9bc(struct Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" int func_0207d978(struct Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
+void* FindEntryByFlagByte_0207d9f4(unsigned char* arr, int offset);
+void InitStruct0207d7c0(struct Init0207d7c0* o);
+struct Entry0207d9bc* FindEntryByHalfword(struct Entry0207d9bc* arr, unsigned short key);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+int CheckEntryBytes0207d978(struct Entry0207d9bc* arr, unsigned short key);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
 
 // USA: func_0207d7f4
 extern "C" ARM int func_0207d7f4(struct Struct_0207d7f4* arg0, unsigned short arg1, int arg2, int arg3,
@@ -38,16 +38,16 @@ extern "C" ARM int func_0207d7f4(struct Struct_0207d7f4* arg0, unsigned short ar
             func_0207d7c0((struct Struct_0207d798*)var2);
         }
     }
-    var2 = func_0207d9bc(arg0, arg1);
-    if (var2 == NULL) {
-        var2 = func_0207d9bc(arg0, 0);
-        if (var2 == NULL) return 0;
-        func_0207d7c0((struct Struct_0207d798*)var2);
-        var2->unknown_0_ = arg1;
-        var3 = (struct Struct_0202b2f0*)func_0202ae18();
-        for (var5 = 0; var5 < 4; var5++) {
-            if (!func_0202c1c0(var3, var5) || var1->GetPartyMemberByIndex(var5) == NULL)
-                var2->unknown_8_[var5] = 0;
+    entry = FindEntryByHalfword(entries, id);
+    if (entry == NULL) {
+        entry = FindEntryByHalfword(entries, 0);
+        if (entry == NULL) return 0;
+        InitStruct0207d7c0((struct Init0207d7c0*)entry);
+        entry->id = id;
+        search = (struct SearchStruct*)LinkSession_GetInstance();
+        for (i = 0; i < 4; i++) {
+            if (!LinkSession_IsSlotMember(search, i) || game->GetPartyMemberByIndex(i) == NULL)
+                entry->bytes[i] = 0;
         }
     } else if (var1->GetGameObjectByIndex(arg2) == NULL) {
         var2->unknown_8_[arg2] = 0;

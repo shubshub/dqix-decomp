@@ -39,10 +39,10 @@ struct Struct_ov000_02160da0 {
 };
 
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
-int SetByte0xbeShiftPrev(Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(Bytes02033b88* p, int val);
 void GameState_SetCamera(GameState* gs, int value);
 void ClearCombatantSlot_0200fd48(GameState* gs, int id);
-void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 extern "C" {
 void* func_02057924();
@@ -60,12 +60,12 @@ extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* arg0) {
     func_02057f00(func_02057924(), 0x1d);
     func_02057f00(func_02057924(), 0x1e);
 
-    for (int var2 = 0; var2 < 4; var2++) {
-        if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var2)) {
-            GameObject* var3 = func_0200ff1c(var0, var2);
-            if (var3 != NULL) {
-                var3->obj3D_.RemoveAnimationPackageByID(3);
-                func_02033b88((Struct_02010604*)var3, 0);
+    for (int i = 0; i < 4; i++) {
+        if (TestBitAt0x34_020a35e0((unsigned char*)self->party, i)) {
+            GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gs, i);
+            if (member != NULL) {
+                member->obj3D_.RemoveAnimationPackageByID(3);
+                GameObject_ForceMotionState((Bytes02033b88*)member, 0);
             }
         }
     }
@@ -75,7 +75,7 @@ extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* arg0) {
     Vector3i offset = saved->offset;
     func_ov000_0216d370(cam, 1, 1, 1);
     cam->target = saved->target;
-    ApplyVec3Tail_0202e694(cam, &offset.x);
+    Camera_SetOrbitVector(cam, &offset.x);
     cam->eye = saved->eye;
     GameState_SetCamera(gs, (int)func_ov000_02160f14(self));
     ClearCombatantSlot_0200fd48(gs, 0xcf);

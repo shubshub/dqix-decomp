@@ -16,14 +16,14 @@ extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" Container02057a10* func_02057924();
 void* GetFieldPtrAt0x5ca4_02010768(void* obj);
 void ForwardObjAndField0_021a3dcc(int obj);
-extern "C" void func_02016874(Zone3D* self);
+extern "C" void Zone3D_Draw(Zone3D* self);
 unsigned char GetByte0x4_0200fb9c(char* obj);
 int GetWord0x7f6c_0201201c(void* gs);
-extern "C" void func_0202343c(void* obj);
+extern "C" void MapDisplay_Draw(void* obj);
 Obj0203dde0* GetGlobalPtr021075f4_0203cf4c();
 extern "C" void func_0203de84(void* self);
 void UpdateEntrySubObjects0203dde0(Obj0203dde0* obj);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" int NSBXX_Model_GetMaterialPolygonID(NSBXXInternalModel* model, unsigned int materialIndex);
 extern "C" void func_0208f87c(const void* arg0, int arg1, int arg2, int arg3, int arg4);
 extern "C" void func_02057a10(Struct_02057a10* arg0);
@@ -86,16 +86,16 @@ extern "C" ARM void func_ov017_02195bbc(Struct_ov017_02195bbc* arg0) {
     entries = func_02057924();
     field5ca4 = (Zone3D**)GetFieldPtrAt0x5ca4_02010768(gs);
 
-    if (IsBrightnessWithinValidRange((GameResources*)arg0, false)) {
-        func_ov017_021a3dcc(arg0->unknown_36fc_);
-        if (TestFlags04((GameResources*)(arg0->unknown_0_), 2) == 0) {
-            func_02016874(var1);
+    if (IsScreenNotFullyFaded((GameResources*)self, false)) {
+        ForwardObjAndField0_021a3dcc(self->nodeList);
+        if (TestFlags04((GameResources*)(self->flags), 2) == 0) {
+            Zone3D_Draw(zone);
         }
     }
-    if (func_0200fb9c((char*)var3) != 6 && func_0201201c(var3) != 5) {
-        func_0202343c(arg0->unknown_36d0_);
+    if (GetByte0x4_0200fb9c((char*)gs) != 6 && GetWord0x7f6c_0201201c(gs) != 5) {
+        MapDisplay_Draw(self->f36d0);
     }
-    if (IsBrightnessOutsideValidRange((GameResources*)arg0, false) != 0) {
+    if (IsScreenFullyFaded((GameResources*)self, false) != 0) {
         return;
     }
 
@@ -112,17 +112,17 @@ extern "C" ARM void func_ov017_02195bbc(Struct_ov017_02195bbc* arg0) {
         return;
     }
 
-    if (*var4 != NULL) {
-        func_02016874(*var4);
+    if (*field5ca4 != NULL) {
+        Zone3D_Draw(*field5ca4);
     }
 
-    if (TestFlags04((GameResources*)(arg0->unknown_0_), 0x100) == 0) {
-        var10 = GameState::GetInstance();
-        func_0202ae18();
+    if (TestFlags04((GameResources*)(self->flags), 0x100) == 0) {
+        state = GameState::GetInstance();
+        LinkSession_GetInstance();
         ctx = Zone3D_GetInstance();
         color = ctx->substruct_c_.unknown_2c_;
         for (i = 0xa0; i <= 0xbf; i++) {
-            monster = state->GetMaybeWanderingMonsterByIndex(i);
+            monster = state->GetWanderingMonsterByIndex(i);
             if (monster == NULL) continue;
             if (!monster->obj3D_.IsVisible()) continue;
             if (monster->obj3D_.GetFlag(0x10) != 0) continue;

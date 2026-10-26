@@ -12,13 +12,13 @@ struct Struct_ov025_021def64_2 {
     GameObject* unknown_c_;
 };
 
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" Vector3fix func_02049c08(struct Struct_02049c08_2* arg0);
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
-extern "C" void func_ov025_021df554(void* arg0);
-extern "C" struct Struct_ov025_021def64_2* func_ov025_021df568(struct Struct_ov025_021def64_2* arg0, struct Struct_ov025_021def64_2* arg1);
-extern "C" struct Struct_ov025_021def64* func_ov025_021df5cc(struct Struct_ov025_021def64* arg0);
-extern "C" fix32_t fix32_Divide(fix32_t arg0, fix32_t arg1);
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+Vector3fix GetSubTriple02049c08(struct Obj02049c08* obj);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
+void ResetFields_021df554(void* obj);
+struct Node021df568* InsertSorted_021df568(struct Node021df568* head, struct Node021df568* newNode);
+struct Node021df5cc* FindLastNode021df5cc(struct Node021df5cc* node);
+extern "C" fix32_t fix32_Divide(fix32_t a, fix32_t b);
 
 static inline int inline_02061c04_5(int arg0, int arg1) { return (int)(((long long)arg0 * arg1 + 0x800) >> 12); }
 
@@ -41,15 +41,15 @@ extern "C" ARM void func_ov025_021def64(struct Struct_ov025_021def64_3* arg0, in
     int var5 = func_ov000_021820bc(arg0->unknown_29c_, arg1, arg2, (int)var2);
     if (var5 == 0) return;
 
-    int var6 = 0;
-    int var7;
-    for (var7 = 0; var7 < var5; var7++) {
-        var3[var6] = var4->GetCombatantByIndex(var2[var7]);
-        if (var3[var6] == NULL) continue;
-        GameObject* var8 = var3[var7];
-        var8->obj3D_.position_ = func_02049c08((struct Struct_02049c08_2*)var8);
-        func_02033874((struct Struct_02033834*)var8, 0);
-        var6++;
+    int n = 0;
+    int i;
+    for (i = 0; i < count; i++) {
+        objs[n] = gs->GetCombatantByIndex(ids[i]);
+        if (objs[n] == NULL) continue;
+        GameObject* o = objs[i];
+        o->obj3D_.position_ = GetSubTriple02049c08((struct Obj02049c08*)o);
+        GameObject_SnapFacing((struct Obj02033874*)o, 0);
+        n++;
     }
     var5 = var6;
 

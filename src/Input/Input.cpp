@@ -6,9 +6,6 @@
 unsigned short ComputeCurrentKeys();
 
 #if defined(jpn)
-#define func_0200b454 func_0200b318
-#define func_020c39c8 func_020c5494
-#define func_020c9be0 func_020cb6ac
 
 #define data_020fb3cc data_020fb0f8
 #endif
@@ -17,19 +14,44 @@ extern "C"
 {
     // calculates a square root, but not sure if this is libc sqrt?
     // could it be a compiler intrinsic (it's between other compiler intrinsics)?
-    double func_0200b454(double);
+    double sqrt(double);
 
     void* Scenario_GetInstance();
     // set flag in some big flag mask
     void Scenario_SetFlag(void*, void*, int, bool);
     // get signed brightness
-    int func_020c39c8(volatile unsigned short*);
+    int GXx_GetMasterBrightness_(volatile unsigned short*);
 
     // abort() or similar
-    void func_020c9be0();
+    void HaltSystem();
 }
 
 extern TouchInput* data_020fb3cc;
+
+// Every key bit the game reads: KEY_A..KEY_Y (REG_KEYINPUT's ten, ARM7_KEYINDATA's X and Y) and ARM7_KEYINDATA's 0x2000
+// (EXTKEYIN bit 3 shifted up 10, set while idle like X and Y: 0x2c00). The hardware bits are active low.
+#define ALL_KEYS_MASK (KEY_A | KEY_B | KEY_SELECT | KEY_START | KEY_DPAD | KEY_R | KEY_L | KEY_X | KEY_Y | 0x2000)
+
+// |main| + |sub| master brightness reaches this only when both screens are fully faded (Brightness_White or
+// Brightness_Black each); input is ignored and the touch screen paused while it is
+enum { kBothScreensFadedBrightness = 2 * Brightness_White };
+
+enum {
+    kKeyRepeatDelay = 8,        // frames from a key press to its first repeat (KeyManager::TestKeyRepeat); then every frame
+    kTouchRepeatDelay = 12,     // frames from a touch to its first repeat (TouchInput::TestTouchRepeat)
+    kTouchRepeatInterval = 2,   // frames between the touch repeats after that
+};
+
+// The touch screen commands the ARM7 reports back on (TouchScreenIPCCommandReceiveProc passes them to the callback;
+// an operation in progress is bit 1 << command of WaitForTouchScreenOperations' mask)
+enum {
+    TouchCommand_Enable = 1,        // EnableTouchScreen: auto-sampling on
+    TouchCommand_Disable = 2,       // DisableTouchScreen: auto-sampling off
+    TouchCommand_AutoSample = 16,   // a new auto-sample landed in the sample buffer
+};
+
+// IsTouchPointAtEdge: within this many pixels of the 256x192 screen's border
+enum { kScreenWidth = 256, kScreenHeight = 192, kTouchEdgeMargin = 2 };
 
 void KeyManager::Initialize()
 {
@@ -58,9 +80,9 @@ void KeyManager::RefreshKeys()
     if (!receivingInput_ || IsLidDown())
         goto do_ignore;
 
-    subBrightness = func_020c39c8(&REG_MASTER_BRIGHT_SUB);
-    mainBrightness = func_020c39c8(&REG_MASTER_BRIGHT);
-    if (abs(mainBrightness) + abs(subBrightness) < 0x20)
+    subBrightness = GXx_GetMasterBrightness_(&REG_MASTER_BRIGHT_SUB);
+    mainBrightness = GXx_GetMasterBrightness_(&REG_MASTER_BRIGHT);
+    if (abs(mainBrightness) + abs(subBrightness) < kBothScreensFadedBrightness)
         goto dont_ignore;
 
 do_ignore:
@@ -85,7 +107,7 @@ dont_ignore:
 
 unsigned short ComputeCurrentKeys()
 {
-    return ((REG_KEYINPUT | ARM7_KEYINDATA) ^ 0x2fff) & 0x2fff;
+    return ((REG_KEYINPUT | ARM7_KEYINDATA) ^ ALL_KEYS_MASK) & ALL_KEYS_MASK;
 }
 
 KeyManager::~KeyManager()
@@ -162,7 +184,7 @@ bool KeyManager::TestKeyRepeat(unsigned short mask)
         {
             if (TestKeysPressed(mask))
             {
-                keyRepeatCountdown_ = 8;
+                keyRepeatCountdown_ = kKeyRepeatDelay;
                 return true;
             }
             else
@@ -195,7 +217,7 @@ void KeyManager::SetInputEnabled(bool enabled)
     receivingInput_ = enabled;
 }
 
-void TouchInputMessageHandler(int type, unsigned char, unsigned char);
+void TouchInputMessageHandler(int command, unsigned char result, unsigned char sampleIndex);
 
 TouchInput::TouchInput()
 {
@@ -213,10 +235,10 @@ bool TouchInput::RefreshState()
         return false;
     }
 
-    int subBrightness = func_020c39c8(&REG_MASTER_BRIGHT_SUB);
-    int mainBrightness = func_020c39c8(&REG_MASTER_BRIGHT);
+    int subBrightness = GXx_GetMasterBrightness_(&REG_MASTER_BRIGHT_SUB);
+    int mainBrightness = GXx_GetMasterBrightness_(&REG_MASTER_BRIGHT);
 
-    if (abs(mainBrightness) + abs(subBrightness) >= 0x20)
+    if (abs(mainBrightness) + abs(subBrightness) >= kBothScreensFadedBrightness)
         Pause();
     else if (paused_)
         Unpause();
@@ -322,7 +344,7 @@ int TouchInput::GetMovementLength() const
 {
     int dx = prevX_ - currentReading_.x;
     int dy = prevY_ - currentReading_.y;
-    return func_0200b454(dx * dx + dy * dy);
+    return sqrt(dx * dx + dy * dy);
 }
 
 void TouchInput::ComputeMoveFlags() 
@@ -345,7 +367,7 @@ void TouchInput::Initialize()
     enabled_ = true;
     InitializeTouchSystem();
     if (!GetTouchScreenCalibration(&calibration_))
-        func_020c9be0();
+        HaltSystem();
 
     SaveTouchScreenCalibration(&calibration_);
     Unpause();
@@ -380,8 +402,8 @@ void TouchInput::Pause()
     if (pressY_ >= 0)
         savedPressY_ = pressY_;
     DisableTouchScreen();
-    WaitForTouchScreenOperations(4);
-    (void)GetTouchScreenErrors(4);
+    WaitForTouchScreenOperations(1 << TouchCommand_Disable);
+    (void)GetTouchScreenErrors(1 << TouchCommand_Disable);
     SetTouchScreenCallback(NULL);
     InternalClearCurrentInput();
     paused_ = true;
@@ -392,9 +414,9 @@ void TouchInput::Unpause()
     SetTouchScreenCallback(&TouchInputMessageHandler);
     isSavedPressPointValid_ = true;
     InternalClearCurrentInput();
-    EnableTouchScreen(0, 1, sampleBuffer_, 4);
-    WaitForTouchScreenOperations(2);
-    (void)GetTouchScreenErrors(2);
+    EnableTouchScreen(0, 1, sampleBuffer_, sizeof(sampleBuffer_) / sizeof(sampleBuffer_[0]));
+    WaitForTouchScreenOperations(1 << TouchCommand_Enable);
+    (void)GetTouchScreenErrors(1 << TouchCommand_Enable);
     paused_ = false;
     isRepeatValid_ = savedIsRepeatValid_;
     timeHeld_ = savedTimeHeld_;
@@ -469,12 +491,12 @@ bool TouchInput::TestTouchRepeat()
         {
             if (IsPressed())
             {
-                repeatTimer_ = 12;
+                repeatTimer_ = kTouchRepeatDelay;
                 return true;
             }
             else
             {
-                repeatTimer_ = 2;
+                repeatTimer_ = kTouchRepeatInterval;
                 return true;
             }
         }
@@ -490,13 +512,13 @@ bool TouchInput::IsTouchPointAtEdge() const
 {
     int x, y;
     GetTouchPoint(&x, &y);
-    if (x < 2)
+    if (x < kTouchEdgeMargin)
         return true;
-    if (x > 253)
+    if (x > kScreenWidth - 1 - kTouchEdgeMargin)
         return true;
-    if (y < 2)
+    if (y < kTouchEdgeMargin)
         return true;
-    if (y > 189)
+    if (y > kScreenHeight - 1 - kTouchEdgeMargin)
         return true;
     return false;
 }
@@ -511,9 +533,9 @@ void TouchInput::ClearCurrentInput()
     InternalClearCurrentInput();
 }
 
-void TouchInputMessageHandler(int type, unsigned char, unsigned char)
+void TouchInputMessageHandler(int command, unsigned char result, unsigned char sampleIndex)
 {
-    if (type == 16)
+    if (command == TouchCommand_AutoSample)
     {
         data_020fb3cc->isSavedPressPointValid_ = false;
     }

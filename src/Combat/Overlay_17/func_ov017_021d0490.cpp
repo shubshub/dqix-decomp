@@ -3,14 +3,14 @@
 #include "Resource/GameResources.h"
 #include "World/ZoneResourceTree.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* p);
-void* GetData02100044_0202ae24(void);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
-int GetField5cb0Value_0201079c(char* obj);
-int GetField5cb4Value_020107d0(char* obj);
-int GetField5cb8Value_02010804(char* obj);
+int GameState_GetStoryChapter(char* obj);
+int GameState_GetStoryPart(char* obj);
+int GameState_GetStoryStep(char* obj);
 struct Battle021d0490;
 Battle021d0490* GetField6b0_021b8470(void* obj);
 
@@ -90,24 +90,24 @@ static inline Zone021d0490* GetOther(GameResources* r) { return (Zone021d0490*)r
 // USA: func_ov017_021d0490
 extern "C" ARM void func_ov017_021d0490(int mode) {
     GameState* battle = GameState::GetInstance();
-    void* link = func_0202ae18();
+    void* link = LinkSession_GetInstance();
     unsigned short* data = (unsigned short*)Zone3D_GetInstance();
     GameResources* res = GetGameResources();
     Actor021d0490* actor = GetActor(res);
     Zone021d0490* zone = GetZone(res);
     Zone021d0490* other = GetOther(res);
-    void* queue = GetData02100044_0202ae24();
+    void* queue = LinkMessageQueue_GetInstance();
     Packet021d0490 packet;
     packet.tag = 0x97;
     Payload021d0490* p = &packet.payload;
 
-    if (func_0202c508(var1) != 0) {
-        var9->unknown_3_0_ = arg0;
-        var9->unknown_0_ = func_0201079c((char*)var0);
-        var9->unknown_1_ = func_020107d0((char*)var0);
-        var9->unknown_2_ = func_02010804((char*)var0);
-        var9->unknown_4_ = *var2;
-        Struct_ov017_021d0490_4* var10 = func_ov017_021b8470(var5);
+    if (LinkSession_IsHostOrSolo(link) != 0) {
+        p->mode = mode;
+        p->field_0x0 = GameState_GetStoryChapter((char*)battle);
+        p->field_0x1 = GameState_GetStoryPart((char*)battle);
+        p->field_0x2 = GameState_GetStoryStep((char*)battle);
+        p->field_0x4 = *data;
+        Battle021d0490* field = GetField6b0_021b8470(zone);
 
         if (func_ov017_021bd3a4((Struct_ov017_0218e674*)var4) && var4->unknown_16_ != 0 && var4->unknown_9c_ == 0) {
             var9->unknown_3_3_ = 1;

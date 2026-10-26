@@ -3,27 +3,27 @@
 #include "Resource/Brightness.h"
 
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 
-struct Struct_02033e2c;
-extern "C" void func_02033e2c(struct Struct_02033e2c* arg0);
-struct Struct_02033b58;
-extern "C" void func_02033b58(struct Struct_02033b58* arg0, unsigned char arg1);
+struct ShortField02033e2c;
+void ClearField0xc602033e2c(struct ShortField02033e2c* obj);
+struct Foo02033b58;
+void GameObject_StoreMotionState(struct Foo02033b58* p, unsigned char v);
 
 // USA: func_ov017_021bff2c
 extern "C" ARM void func_ov017_021bff2c(void) {
 	GameState* battle = GameState::GetInstance();
-	GameObject* c = battle->GetUnknownGameObject();
+	GameObject* c = battle->GetLeader();
 	GameObject_EnableControl(c);
 	ClearField0xc602033e2c((struct ShortField02033e2c*)c);
-	SetByteSavingPrevious((struct Foo02033b58*)c, 0);
+	GameObject_StoreMotionState((struct Foo02033b58*)c, 0);
 
 	void* var2 = GetGameResources();
 
-	int var3 = func_020100f8((char*)var0);
-	if (var3 != 0) {
-		func_020a27ac((void*)var3);
+	int flagResult = GameState_GetFollowCamera((char*)battle);
+	if (flagResult != 0) {
+		SetField0x23cTrue_020a27ac((void*)flagResult);
 	}
 
 	if (var2 != NULL) {

@@ -28,8 +28,8 @@ void ClearFields_021e20c0(void*);
 void ItemTable_Init(void*);
 unsigned int GameState_GetProtagonistIndex(GameState*);
 extern "C" void* memset(void*,int,unsigned int);
-extern "C" unsigned int func_020114ec(char*, void*);
-extern "C" void func_ov003_0215873c(void*);
+unsigned int GameState_GetPartyOrder(char*, void*);
+void ResetFields_0215873c(void*);
 // USA: func_ov003_02154720
 extern "C" ARM void func_ov003_02154720(void* arg0,unsigned char arg1) {
  unsigned char var0=arg1;
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov003_02154720(void* arg0,unsigned char arg1) {
  self->state=0;self->flag1f9=0;self->flag1fa=0;self->multiplayer=0;self->flags=0;self->field200=0;self->skip=0;
  self->field330=0;self->field334=0;self->blocked=0;self->reset=0;self->started=0;
  for(init=0;init<4;init++) { self->ids[init]=0;memset(&self->cache[init],0,4); }
- self->count=CopyOutRegion0x571d_020114ec((char*)gs, self->ids);
+ self->count=GameState_GetPartyOrder((char*)gs, self->ids);
  Party02154720* currentParty=(Party02154720*)GameState_GetParty(gs);
  count=self->count;
  for(int i=0;i<count;i++) {

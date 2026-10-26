@@ -9,7 +9,7 @@ struct Struct_0208e7d0 {
 };
 
 extern "C" void* Scenario_GetInstance(void);
-int GetField5cb0Value_0201079c(char* obj);
+int GameState_GetStoryChapter(char* obj);
 
 // USA: func_0208e7d0
 extern "C" ARM int func_0208e7d0(struct Struct_0208e7d0* arg0) {
@@ -19,7 +19,7 @@ extern "C" ARM int func_0208e7d0(struct Struct_0208e7d0* arg0) {
     int count = 8;
     GameState* bs = GameState::GetInstance();
     Scenario_GetInstance();
-    if (GetField5cb0Value_0201079c((char*)bs) >= 0x13) {
+    if (GameState_GetStoryChapter((char*)bs) >= 0x13) {
         count = 0x10;
     }
     struct Random* var2 = GetBTRandom();

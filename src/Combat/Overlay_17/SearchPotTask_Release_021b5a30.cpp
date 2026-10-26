@@ -8,7 +8,7 @@
 void GameResources_ReleaseSpecialItemEffect(unsigned char* obj);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void FollowCamera_EnableFollow(void* obj);
 
 extern int g_mainAllocator;
@@ -60,12 +60,12 @@ extern "C" ARM void SearchPotTask_Release(struct SearchPotTask021b5a30* self) {
 	}
 
 	GameState* gs = GameState::GetInstance();
-	GameObject* leader = gs->GetUnknownGameObject();
+	GameObject* leader = gs->GetLeader();
 	if (leader != NULL) {
 		GameObject_EnableControl(leader);
 	}
 
-	int camera = GetFieldIfFlag4_020100f8((char*)gs);
+	int camera = GameState_GetFollowCamera((char*)gs);
 	if (camera != 0) {
 		FollowCamera_EnableFollow((void*)camera);
 	}

@@ -105,8 +105,8 @@ unsigned int* GlobalFlags_GetInstance(void);
 void FlagWord_SetBits(unsigned int* p, unsigned int bits);
 struct Struct020a9ea4;
 void ClearStruct020a9ea4(Struct020a9ea4*);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* p);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" int func_020aad1c(void* loader, void* name, int a, int b);
 struct FlagWord020466f4;
 void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
@@ -273,9 +273,9 @@ extern "C" ARM void func_ov006_0215e69c(Struct_ov006_0215e69c_3* arg0) {
         int var6;
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
-        var6 = 8;
-        if (func_0202c540(func_0202ae18())) {
-            var6 = 0x14;
+        size = 8;
+        if (LinkSession_IsGuest(LinkSession_GetInstance())) {
+            size = 0x14;
         }
         if (func_020aad1c(self->loader, &g_fileLoadBuffer, size, 0) == 1) {
             FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x80);

@@ -9,16 +9,16 @@ struct Struct_02000c9c_17;
 
 extern "C" void func_ov011_021848a0(void* self, int state);
 extern "C" SafeAllocator* func_ov011_021845f8(void* self, int index);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 extern "C" int func_ov031_0221156c(void* data);
-void ResetObjectState0205e8d4(void* obj);
-void FreeAndReinit0203a950(void* obj);
+void SePlayer_Reset(void* obj);
+void SoundPlayer_Reset(void* obj);
 int ProcessAndClassify_02212cbc(void* data);
 int CompareField10PairOrZero_02211608(void* data);
-void ResetActor0209c174(Actor0209c174* actor);
-void Dispatch0203a974With0x57000_0209c290(void* obj);
-void InitDisplayState0205e88c(Obj_0205e88c* obj);
-void SetupContextForMode0205ea20(void* obj, int mode);
+void BgmPlayer_Init(Actor0209c174* actor);
+void BgmPlayer_LoadArchive(void* obj);
+void SePlayer_Init(Obj_0205e88c* obj);
+void SePlayer_LoadArchive(void* obj, int mode);
 extern char g_sePlayer;
 extern char g_bgmPlayer;
 
@@ -49,11 +49,11 @@ extern "C" ARM int func_ov004_0216f634(void* arg0) {
         func_ov011_021848a0(arg0, 0xd3);
     } else {
         GameState* gs = GameState::GetInstance();
-        ResetObjectState0205e8d4(&g_sePlayer);
-        FreeAndReinit0203a950(&g_bgmPlayer);
-        func_020a1940(OVERLAY_ID(31));
-        SafeAllocator* var1 = func_ov011_021845f8(arg0, 0);
-        if (var1 == NULL) {
+        SePlayer_Reset(&g_sePlayer);
+        SoundPlayer_Reset(&g_bgmPlayer);
+        Overlay_Load(OVERLAY_ID(31));
+        SafeAllocator* allocator = func_ov011_021845f8(self, 0);
+        if (allocator == NULL) {
             return 0;
         }
         data_ov004_02171048.unknown_4_->unknown_34_ = func_ov031_02212cbc(((SafeAllocator*)((char*)var1 + 4))->Allocate(0x700));
@@ -63,13 +63,13 @@ extern "C" ARM int func_ov004_0216f634(void* arg0) {
 #else
         memcpy(var2, &((Struct_ov004_0216f634*)((char*)var0 + 0x6380))->unknown_4_, 0x40);
 #endif
-        data_ov004_02171048.unknown_4_->unknown_32_ = func_ov031_0221156c(var2) != 0;
-        data_ov004_02171048.unknown_4_->unknown_33_ = func_ov031_02211608(var2) != 0;
-        func_020a1940(OVERLAY_ID(32));
-        ResetActor0209c174((Actor0209c174*)&g_bgmPlayer);
-        Dispatch0203a974With0x57000_0209c290(&g_bgmPlayer);
-        InitDisplayState0205e88c((Obj_0205e88c*)&g_sePlayer);
-        SetupContextForMode0205ea20(&g_sePlayer, 100);
+        data_ov004_02171048.flags->b32 = func_ov031_0221156c(buf) != 0;
+        data_ov004_02171048.flags->b33 = CompareField10PairOrZero_02211608(buf) != 0;
+        Overlay_Load(OVERLAY_ID(32));
+        BgmPlayer_Init((Actor0209c174*)&g_bgmPlayer);
+        BgmPlayer_LoadArchive(&g_bgmPlayer);
+        SePlayer_Init((Obj_0205e88c*)&g_sePlayer);
+        SePlayer_LoadArchive(&g_sePlayer, 100);
         if (data_ov004_02171048.flags->b34 == 3) {
             func_ov011_021848a0(self, 0xd4);
             return 0;

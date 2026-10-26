@@ -18,6 +18,6 @@ ARM void Something_021a9f58(int selfParam) {
     FontBankLoader_GetInstance();
     FontBankLoader_CancelLoads();
     SetMainBrightness(GetGameResources(), 0, 0x14);
-    GameObject_EnableControl(battle->GetUnknownGameObject());
+    GameObject_EnableControl(battle->GetLeader());
     FieldTask_EndAcquireTreasureMap(selfParam);
 }

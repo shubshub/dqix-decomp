@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include "NitroSDK/OverlayId.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct AllocatorUnion;
 
@@ -12,9 +9,9 @@ struct AllocatorUnion;
 #endif
 extern "C" int func_ov010_02184354(void* obj);
 void ForwardAndClearField8_021c2710(unsigned char* self);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020c9be0(void);
+extern "C" void HaltSystem(void);
 extern "C" void func_ov008_021842a0(void* obj);
 extern char g_mainAllocator;
 
@@ -27,10 +24,10 @@ extern "C" ARM void FieldTask_DigPitfall(unsigned char* self) {
         func_ov017_021c2710(arg0);
         return;
     }
-    func_020a1940(OVERLAY_ID(10));
+    Overlay_Load(OVERLAY_ID(10));
     *(void**)(self + 8) = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, 0x28);
     if (*(void**)(self + 8) == NULL) {
-        func_020c9be0();
+        HaltSystem();
     }
     func_ov008_021842a0(*(void**)(arg0 + 8));
 }

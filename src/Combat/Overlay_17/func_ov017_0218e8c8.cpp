@@ -32,8 +32,8 @@ extern "C" unsigned char* func_ov017_021b8478(void* obj);
 int GetByteAtPtrOrZero_02191b58(void*, int);
 int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
 extern "C" void func_ov017_0218eafc(OvCtx0218e8c8* ov, int idx);
-int CheckFlag0x1ceBit2Set_02039d68(unsigned char* obj);
-extern "C" int func_02032fdc(void* obj, int a, int b);
+int GameObject_IsHidden(unsigned char* obj);
+extern "C" int GameObject_Draw(void* obj, int a, int b);
 extern "C" void func_ov017_0218dba0(int id);
 
 // USA: func_ov017_0218e8c8
@@ -88,8 +88,8 @@ extern "C" ARM void func_ov017_0218e8c8(Struct_ov017_0218e8c8_2* arg0, int arg1,
         func_ov017_0218eafc(arg0, var4);
     }
 
-    GameObject* var9 = var0->GetPartyMemberByIndex(0xce);
-    if (var9 != NULL && !func_02039d68((unsigned char*)var9) && func_02032fdc(var9, 1, 0)) {
+    GameObject* member = gs->GetPartyMemberByIndex(0xce);
+    if (member != NULL && !GameObject_IsHidden((unsigned char*)member) && GameObject_Draw(member, 1, 0)) {
         func_ov017_0218dba0(0xce);
     }
 }

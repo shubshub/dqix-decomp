@@ -7,14 +7,14 @@ enum { kSaveHalfwordOffset = 0x27b4, kSaveSecondHalfwordOffset = 0x27b6 };
 #endif
 
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" void* Zone3D_GetInstance(void);
 
 struct Obj_021d1c84 { unsigned char pad[4]; unsigned char field4; unsigned char field5; };
 
 // USA: func_ov017_021d1c84
 ARM void SetHalfFields__021d1c84_021d1c84(int unused0, Obj_021d1c84* obj, int unused1, int unused2, struct SearchStruct0202c1a4* search) {
-	if (GetSearchStructCurrentArrEntry(search) == 0) return;
+	if (LinkSession_GetOwnSlot(search) == 0) return;
 	unsigned char* base = (unsigned char*)Zone3D_GetInstance();
 	*(unsigned short*)(base + kSaveHalfwordOffset) = obj->field4;
 	*(unsigned short*)(base + kSaveSecondHalfwordOffset) = obj->field5;

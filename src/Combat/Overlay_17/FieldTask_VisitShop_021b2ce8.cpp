@@ -11,7 +11,7 @@ struct Struct_02018300_3;
 struct Struct_ov017_021b2c88;
 
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
@@ -19,11 +19,11 @@ void PushInputLogA_020a1df8(int id);
 void PushInputLogB_020a1ef0(int id);
 void GameObject_EnableControl(void* obj);
 extern "C" void func_020a0cc4(unsigned int size, int ticks);
-extern "C" void func_020a0c0c(void);
-extern "C" void func_ov003_02174114(void* arg0);
-extern "C" int func_ov003_021745fc(void* arg0);
-extern "C" void func_ov003_02174454(void* arg0);
-extern "C" void func_ov017_021b2c88(Struct_ov017_021b2c88* arg0);
+extern "C" void ROMFilesystem_InitFileTables(void);
+extern "C" void func_ov003_02174114(void* obj);
+extern "C" int func_ov003_021745fc(void* obj);
+extern "C" void func_ov003_02174454(void* obj);
+extern "C" void func_ov017_021b2c88(Obj021b2c88* self);
 
 struct Struct_ov017_021b2ce8 {
     unsigned char unknown_0_;
@@ -45,9 +45,9 @@ extern "C" ARM void FieldTask_VisitShop(Task_021b2ce8* self) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = gs->GetResources();
     SetFlags04(res, 0xc0);
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     GameObject_DisableControl((Obj020397cc*)leader, 1);
-    unsigned char* camera = (unsigned char*)GetFieldIfFlag4_020100f8((char*)gs);
+    unsigned char* camera = (unsigned char*)GameState_GetFollowCamera((char*)gs);
     SetFlagsAt0x244_020a28a0(camera, 3);
     int ticks = gs->GetTickCount();
     if (ticks < 0) {
@@ -58,16 +58,16 @@ extern "C" ARM void FieldTask_VisitShop(Task_021b2ce8* self) {
         func_020a0cc4(0x33820, ticks);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x32000);
         if (buffer == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
         arg0->unknown_c_.CreateTypeA(var5, 0x32000);
         arg0->unknown_c_.Reset();
         data_ov017_021d840c = static_cast<Struct_ov003_02173f70*>(arg0->unknown_c_.Allocate(Enum_ov017_021b2ce8_4176));
         if (data_ov017_021d840c == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
         func_020a1df8(3);
@@ -90,11 +90,11 @@ extern "C" ARM void FieldTask_VisitShop(Task_021b2ce8* self) {
             arg0->unknown_8_++;
         }
     } else {
-        ClearFlags04(var1, 0xc0);
-        DISPCNT = (data_ov017_021d840c->unknown_38_ << 8) | (DISPCNT & ~0x1f00);
-        func_020a28b0(var3, 3);
-        func_ov017_021b2c88((Struct_ov017_021b2c88*)arg0);
-        func_020a0c0c();
+        ClearFlags04(res, 0xc0);
+        DISPCNT = (data_ov017_021d840c->bgMode << 8) | (DISPCNT & ~0x1f00);
+        ClearFlagBits_020a28b0(camera, 3);
+        func_ov017_021b2c88((Obj021b2c88*)self);
+        ROMFilesystem_InitFileTables();
         self->done = 1;
         ClearFlags00(res, 0x6000);
         GameObject_EnableControl(leader);

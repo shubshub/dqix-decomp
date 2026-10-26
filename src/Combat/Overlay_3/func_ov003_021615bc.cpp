@@ -29,7 +29,7 @@ extern "C" void func_ov003_021602bc(void* self);
 extern "C" void func_ov003_021672e4(void* a, int b, int c);
 struct Struct205563c;
 void ClearSevenWords_0205563c(Struct205563c*);
-extern "C" void func_02032e58(void* a);
+extern "C" void GameObject_Initialize(void* a);
 extern "C" void WindowPane_Init(void* a);
 extern "C" void KeyTable_Load(void* a, void* b, void* c, unsigned int d);
 extern "C" void Background_SetPriority(void* a, int b);
@@ -169,7 +169,7 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         func_ov003_021602bc(self);
         func_ov003_021672e4(self->p318, 0, -1);
         ClearSevenWords_0205563c((Struct205563c*)self->p31c);
-        func_02032e58(self->p320);
+        GameObject_Initialize(self->p320);
         func_0207f84c(self->p324);
         for (int i = 0; i < 3; i++) {
             Background_Init((BackgroundGraphics*)(self->p328 + i));

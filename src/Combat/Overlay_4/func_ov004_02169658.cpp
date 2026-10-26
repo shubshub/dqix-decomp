@@ -88,20 +88,20 @@ extern struct Struct_ov004_021700e0 data_ov004_021700e0;
 extern struct Struct_ov004_02169658* data_ov004_02171030;
 
 // USA: func_ov004_02169658
-extern "C" ARM int func_ov004_02169658(struct Struct_ov004_02169658_2* arg0) {
-    unsigned char* var0 = func_02053c6c((unsigned char*)GameState::GetInstance()->GetUnknownGameObject()) + 0x3c;
-    Struct_ov004_02169658_3* var1 = func_ov023_021f6524(arg0, 0x64);
-    int var2;
-    for (var2 = 0; var2 < 8; var2++) {
-        Struct_ov004_02169658_3* var3 = func_ov004_02168a6c(arg0, var2 + 0xc8);
-        Struct_ov004_02169658_3* var4 = func_ov004_02168a6c(arg0, var2 + 0xd8);
-        Struct_ov004_02169658_3* var5 = func_ov004_02168a38(arg0, var2 + 0xd0);
-        Struct_ov004_02169658_3* var6 = func_ov004_02168a38(arg0, var2 + 0xe0);
-        if (var2 == 0) {
-            var3->unknown_20_ = var0;
-            var3->unknown_c_ &= ~8;
-            func_ov023_021f9b30((struct Struct_ov004_02153e20*)var1, (unsigned short)(var2 + 0xc8), (unsigned short)var2, 0);
-            var3->inline_ov004_02169658_31(0);
+extern "C" ARM int func_ov004_02169658(struct Scene02169658* scene) {
+    unsigned char* base = GetFieldAt0x150_02053c6c((unsigned char*)GameState::GetInstance()->GetLeader()) + 0x3c;
+    Node02169658* grid = func_ov023_021f6524(scene, 0x64);
+    int i;
+    for (i = 0; i < 8; i++) {
+        Node02169658* a = GetNodeIfType8_02168a6c(scene, i + 0xc8);
+        Node02169658* b = GetNodeIfType8_02168a6c(scene, i + 0xd8);
+        Node02169658* c = GetNodeIfType15_02168a38(scene, i + 0xd0);
+        Node02169658* d = GetNodeIfType15_02168a38(scene, i + 0xe0);
+        if (i == 0) {
+            a->f20 = base;
+            a->flags &= ~8;
+            _Z26SetCellIfInBounds_021f9b30P12Grid021f9b30sjj((struct Grid021f9b30*)grid, (unsigned short)(i + 0xc8), (unsigned short)i, 0);
+            a->SetVisible(0);
         } else {
             var3->unknown_c_ |= 8;
             func_ov023_021f9b30((struct Struct_ov004_02153e20*)var1, 0, (unsigned short)var2, 0);

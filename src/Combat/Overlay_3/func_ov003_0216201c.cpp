@@ -59,7 +59,7 @@ extern "C" void func_ov003_02160c58(Scene *, short *, short *);
 void SetEntryLowNibbleAndElement02080c68(void *, int, int);
 extern "C" void *Scenario_GetInstance();
 unsigned char *GetFieldAt0x150_02053c6c(unsigned char *);
-int CopyOutRegion0x5718_02011494(char*, void*);
+int GameState_GetOwnPartyOrder(char*, void*);
 extern "C" void Scenario_SetFlag(void *, unsigned char *, int, int);
 int Scenario_TestFlag(int, unsigned char *, int);
 int TestBitInArray0x8ec_02083b00(unsigned char *, int);
@@ -117,15 +117,15 @@ extern "C" ARM void func_ov003_0216201c(Scene *self) {
                     }
                     break;
                 case 0xb8: {
-                    int var7           = func_02011494((char*)GameState::GetInstance(), &arg0->unknown_4a9_);
-                    arg0->unknown_4ad_       = var7;
-                    unsigned char var8 = arg0->unknown_4ad_;
-                    unsigned char var9;
-                    unsigned char *var10 = arg0->unknown_4a9_;
-                    for (var9 = 0; var9 < var8 - 1; var9++) {
-                        if (*var10 == 0) {
-                            *var10   = var10[1];
-                            var10[1] = 0;
+                    int n           = GameState_GetOwnPartyOrder((char*)GameState::GetInstance(), &self->list);
+                    self->cnt       = n;
+                    unsigned char m = self->cnt;
+                    unsigned char i;
+                    unsigned char *p = self->list;
+                    for (i = 0; i < m - 1; i++) {
+                        if (*p == 0) {
+                            *p   = p[1];
+                            p[1] = 0;
                         }
                         var10++;
                     }

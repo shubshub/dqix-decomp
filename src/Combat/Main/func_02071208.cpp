@@ -4,8 +4,8 @@
 
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float value);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
 
 struct Struct_02071208 {
     unsigned char unknown_0_;
@@ -104,9 +104,9 @@ extern "C" ARM int func_02071208(Script::Parameter* arg0) {
             data_02108d70.unknown_20_->unknown_56_[0xf] = 0;
         }
 
-        data_02108d70.unknown_20_->unknown_44_ = arg0[6].ToInt();
-        if (func_0202c540(func_0202ae18())) {
-            data_02108d70.unknown_20_->unknown_44_ = data_02108d70.unknown_20_->unknown_44_ & ~8;
+        data_02108d70.w0x20->f44 = params[6].ToInt();
+        if (LinkSession_IsGuest(LinkSession_GetInstance())) {
+            data_02108d70.w0x20->f44 = data_02108d70.w0x20->f44 & ~8;
         }
 
         data_02108d70.unknown_20_->unknown_10_ = arg0[7].ToInt();

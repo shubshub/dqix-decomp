@@ -144,19 +144,19 @@ struct Struct_ov003_02170d88_12 {
 #endif
     int unknown_4494_;
 };
-struct Struct_02052e2c;
-struct Struct_02000c9c_8;
-struct Struct_ov003_02170d88_13;
-extern "C" void* func_0202ae18();
-struct Struct_0202aec0_2;
-extern "C" void func_0202aec0(Struct_0202aec0_2*);
-extern "C" void* func_0202ae24();
-extern "C" void func_0205e22c(void*);
+struct Field150Holder02052e2c;
+struct Struct0200fb08;
+struct KeyArrayObj_02171f80;
+extern "C" void* LinkSession_GetInstance();
+struct Obj_0202aec0;
+extern "C" void LinkSession_Reset(Obj_0202aec0*);
+void* LinkMessageQueue_GetInstance();
+extern "C" void LinkMessageQueue_Reset(void*);
 extern "C" void VectorizedMemset(void*, int, unsigned int);
 void* ResetBuffer02052a10(char*);
 short* GetField150Ptr0x488_02052e2c(Field150Holder02052e2c*);
 int CopyOutBattleField0x7ac0_020ac0b4(void*);
-int UpdatePlayClocks020ac4f8(int);
+int GameState_UpdatePlayClocks(int);
 int GetFieldPercentOver307_020a0870(BattleRecordSnapshot*);
 int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot*);
 int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot*);
@@ -175,20 +175,20 @@ static inline Struct_ov003_02170d88_8* inline_ov003_02170d88(Struct_ov003_02170d
 
 // USA: func_ov003_02170d88
 // EUR: func_ov003_02170d88
-extern "C" ARM void func_ov003_02170d88(Struct_ov003_02170d88_4* arg0) {
-    Struct_ov003_02170d88_10* var0;
-    arg0->unknown_0_ = 8;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_71c_ = 0;
-    arg0->unknown_720_ = 0;
-    arg0->unknown_724_ = 0;
-    Struct_0202aec0_2* var1 = static_cast<Struct_0202aec0_2*>(func_0202ae18());
-    func_0202aec0(var1);
-    void* var2 = func_0202ae24();
-    func_0205e22c(var2);
-    GameState* var3 = GameState::GetInstance();
-    GameObject* var4 = var3->GetProtagonist();
-    Struct_ov003_02170d88_9* var5 = static_cast<Struct_ov003_02170d88_9*>(var4);
+extern "C" ARM void func_ov003_02170d88(ProfileState02170d88* self) {
+    ProfileRecordRegion02170d88* region;
+    self->state = 8;
+    self->timer = 0;
+    self->pending = 0;
+    self->accepted = 0;
+    self->result = 0;
+    Obj_0202aec0* searchState = static_cast<Obj_0202aec0*>(LinkSession_GetInstance());
+    LinkSession_Reset(searchState);
+    void* searchData = LinkMessageQueue_GetInstance();
+    LinkMessageQueue_Reset(searchData);
+    GameState* state = GameState::GetInstance();
+    GameObject* actorObject = state->GetProtagonist();
+    ProfileActor02170d88* actor = static_cast<ProfileActor02170d88*>(actorObject);
 #if defined(jpn)
     strcpy(arg0->unknown_1c0_.unknown_0_.unknown_0_, (const char*)var5->baseStats_);
 #else
@@ -213,7 +213,7 @@ extern "C" ARM void func_ov003_02170d88(Struct_ov003_02170d88_4* arg0) {
         var9 = var12->unknown_150_->unknown_49c_0_;
         var10 = var12->unknown_150_->unknown_186_[var13];
     }
-    func_020ac4f8(0);
+    GameState_UpdatePlayClocks(0);
 #if defined(jpn)
     Struct_ov003_02170d88_8* var14 = inline_ov003_02170d88(var6);
 #else

@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct LocalEvt021cc1f8 {
@@ -19,7 +19,7 @@ struct LocalEvt021cc1f8 {
 extern "C" ARM void func_ov017_021cc1f8(int id, const char* src, int len, int extra) {
 	GameState* bs = GameState::GetInstance();
 	if (id == GameState_GetLeaderIndex(bs)) {
-		void* p = GetData02100044_0202ae24();
+		void* p = LinkMessageQueue_GetInstance();
 		struct LocalEvt021cc1f8 buf;
 		buf.tag = 5;
 		buf.id = (unsigned char)id;

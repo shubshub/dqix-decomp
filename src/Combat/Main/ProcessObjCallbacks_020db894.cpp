@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-void PushInterruptDisableState_020d8654();
+void VCountIrq_PushDisable();
 
 struct Obj020db964;
 void RefreshSlots0x5cFromCallbacks(Obj020db964* obj);
@@ -19,7 +19,7 @@ void InitStruct020db0c4(Struct020db0c4* p);
 
 void InitFlag0x28FromOverlay_020db814(void* obj);
 
-extern "C" void func_020d8694();
+extern "C" void VCountIrq_PopDisable();
 
 typedef void (*FnVoidInt)(int);
 typedef int (*FnIntVoid)(void);
@@ -47,7 +47,7 @@ extern "C" ARM void func_020db894(Obj020db894* obj) {
     if (!obj->b51) {
         return;
     }
-    PushInterruptDisableState_020d8654();
+    VCountIrq_PushDisable();
     RefreshSlots0x5cFromCallbacks((Obj020db964*)obj);
     if (obj->b53) {
         RunFlaggedCallback020db844((Actor020db844*)obj, obj->b3c, obj->sh6a, 0);
@@ -62,5 +62,5 @@ extern "C" ARM void func_020db894(Obj020db894* obj) {
     FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x8000);
     InitStruct020db0c4((Struct020db0c4*)obj);
     InitFlag0x28FromOverlay_020db814(obj);
-    func_020d8694();
+    VCountIrq_PopDisable();
 }

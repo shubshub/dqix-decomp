@@ -50,16 +50,16 @@ struct Struct_ov023_021e6b8c_7 {
     unsigned char unknown_1372_[10];
     void* unknown_137c_;
 };
-extern "C" void func_0205b20c(Struct_020200c0_4*);
-extern "C" void func_0205b220(void*, int);
-extern "C" void func_0205b228(void*, int, unsigned char);
+void GlyphDestination_Clear(S_b20c*);
+void GlyphDestination_SetPixels(void*, int);
+void GlyphDestination_SetRects(void*, int, unsigned char);
 extern "C" {
 void Keyboard_GetKeySize(int, short*, short*);
-void func_0205b890(WeightedEntry021e6b8c*, int, SpriteEntry021e6b8c*);
+void CanvasRect_InitFromSprite(WeightedEntry021e6b8c*, int, SpriteEntry021e6b8c*);
 void* memcpy(void*, const void*, unsigned int);
 int Font_GetTextWidth(const char*, int);
-void func_0205b734(void*, short, short, short, short, short);
-int func_0205b234(void*, short, short, const char*, unsigned char, unsigned char);
+void Canvas_FillRect(void*, short, short, short, short, short);
+int GlyphDestination_DrawText(void*, short, short, const char*, unsigned char, unsigned char);
 void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 }
 
@@ -80,13 +80,13 @@ extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short
         entries[i].width = 0;
         entries[i].height = 0;
     }
-    func_0205b890(var3, 3, var0);
-    int var5 = 0;
-    arg3 = 0;
-    for (int var6 = 0; var6 < 3; var6++) {
-        var3[var6].unknown_4_ = var5;
-        var5 += var3[var6].unknown_8_;
-        arg3 += (var3[var6].unknown_8_ * var3[var6].unknown_a_) >> 1;
+    CanvasRect_InitFromSprite(entries, 3, sprite);
+    int offset = 0;
+    size = 0;
+    for (int i = 0; i < 3; i++) {
+        entries[i].offset = offset;
+        offset += entries[i].width;
+        size += (entries[i].width * entries[i].height) >> 1;
     }
     SpriteHeader021e6b8c copy = *sprite;
     address = (unsigned short)(copy.flags->flags & 0x3ff) << 5;
@@ -97,11 +97,11 @@ extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short
     if (label->mode == 0 && (mode != 0 || (flags & 2) != 0)) text = label->alternate;
     int center = (x - Font_GetTextWidth(text, 1)) >> 1;
     S_b20c destination;
-    ClearTwoWordsAndByte_0205b20c(&destination);
-    SetField0_0205b220(&destination, (int)self->buffer);
-    SetFieldsAt0x4And0x8_0205b228(&destination, (int)entries, 3);
-    func_0205b734(&destination, 9, 9, (short)(x + 7), (short)(y + 7), 9);
-    func_0205b234(&destination, (short)(center + 8), 10, text, 2, 1);
+    GlyphDestination_Clear(&destination);
+    GlyphDestination_SetPixels(&destination, (int)self->buffer);
+    GlyphDestination_SetRects(&destination, (int)entries, 3);
+    Canvas_FillRect(&destination, 9, 9, (short)(x + 7), (short)(y + 7), 9);
+    GlyphDestination_DrawText(&destination, (short)(center + 8), 10, text, 2, 1);
     CleanInvalidateCacheRange(self->buffer, size);
     LoadToMainObjVRAM(self->buffer, address, size);
     CleanCacheRange(self->buffer, size);

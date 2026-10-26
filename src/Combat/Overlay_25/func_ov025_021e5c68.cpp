@@ -18,10 +18,10 @@ struct Struct_ov025_021e5c68_3 {
     short unknown_e_;
 };
 
-extern "C" void func_0202e694(void* arg0, int* arg1);
-struct Struct_ov000_0215440c;
-extern "C" Struct_ov025_021e5c68_3* func_ov000_021600f8(Struct_ov000_0215440c*, int);
-extern "C" char* func_ov000_02160130();
+void Camera_SetOrbitVector(void* obj, int* vec);
+struct List021600f8;
+Node021e5c68* GetNodeAtIndex021600f8(List021600f8*, int);
+char* GetActiveCombatWork_ov000_02160130();
 
 // USA: func_ov025_021e5c68
 extern "C" ARM int func_ov025_021e5c68(Struct_ov025_021e5c68_2* arg0, void* arg1) {
@@ -33,7 +33,7 @@ extern "C" ARM int func_ov025_021e5c68(Struct_ov025_021e5c68_2* arg0, void* arg1
     GameState* gs = GameState::GetInstance();
     Camera021e5c68* cam = (Camera021e5c68*)gs->GetCamera();
     if (step->mode == 0) {
-        if (cam != 0) ApplyVec3Tail_0202e694(cam, (int*)&step->offset);
+        if (cam != 0) Camera_SetOrbitVector(cam, (int*)&step->offset);
     } else if (step->mode == 2) {
         fix32_t height = 1;
         Node021e5c68* node = GetNodeAtIndex021600f8((List021600f8*)list, 0);
@@ -46,16 +46,16 @@ extern "C" ARM int func_ov025_021e5c68(Struct_ov025_021e5c68_2* arg0, void* arg1
             var5 = 1.0f + ((var2 / 4096.0f - 2.3f) * 0.6f) / 1.7f;
             if (var5 >= 1.6f) var5 = 1.6f;
         }
-        arg0->unknown_8_.z = (int)(4096.0f * ((arg0->unknown_8_.z / 4096.0f) * var5));
-        if (var1 != 0) func_0202e694(var1, (int*)&arg0->unknown_8_);
+        step->offset.z = (int)(4096.0f * ((step->offset.z / 4096.0f) * scale));
+        if (cam != 0) Camera_SetOrbitVector(cam, (int*)&step->offset);
     } else {
-        if (var1 != 0) {
-            Vector3fix var6 = var1->unknown_70_;
-            Vector3fix var7 = arg0->unknown_8_;
-            var6.x = var6.x + var7.x;
-            var6.y = var6.y + var7.y;
-            var6.z = var6.z + var7.z;
-            func_0202e694(var1, (int*)&var6);
+        if (cam != 0) {
+            Vector3fix pos = cam->position;
+            Vector3fix off = step->offset;
+            pos.x = pos.x + off.x;
+            pos.y = pos.y + off.y;
+            pos.z = pos.z + off.z;
+            Camera_SetOrbitVector(cam, (int*)&pos);
         }
     }
     char* var8 = func_ov000_02160130();

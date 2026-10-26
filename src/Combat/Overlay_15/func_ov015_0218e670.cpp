@@ -30,7 +30,7 @@ struct Struct_ov015_02194564_2
 extern CameraOutputs0218e670 data_ov015_02194564;
 ViewerCamera0218e670* GetFieldIfFlag2_020100cc(char*);
 extern "C" void G3X_ResetMtxStack();
-extern "C" void func_0202eab8(ViewerCamera0218e670*);
+extern "C" void Camera_SetOrbitFromPosition(ViewerCamera0218e670*);
 
 // USA: func_ov015_0218e670
 extern "C" ARM void func_ov015_0218e670(Struct_ov015_0218e670* arg0)
@@ -59,30 +59,30 @@ extern "C" ARM void func_ov015_0218e670(Struct_ov015_0218e670* arg0)
     data_ov015_02194564.position = &positionMatrix;
     G3X_ResetMtxStack();
     RenderConfig::SubmitToFifo();
-    arg0->unknown_24_->MaybeUpdateBonePositions();
-    data_ov015_02194564.unknown_8_ = NULL;
-    data_ov015_02194564.unknown_0_ = NULL;
-    data_ov015_02194564.unknown_4_ = NULL;
-    Vector3i var6;
-    Vector3i var7;
-    Vector3i var8;
-    var6.x = var0.translation.x;
-    var6.y = var0.translation.y;
-    var6.z = var0.translation.z;
-    var7.x = var1.translation.x;
-    var7.y = var1.translation.y;
-    var7.z = var1.translation.z;
-    var8.x = var2.translation.x;
-    var8.y = var2.translation.y;
-    var8.z = var2.translation.z;
-    Vector3i var9 = arg0->unknown_24_->GetScale();
-    Vector3fixMultiply(&var6, &var9, &var6);
-    Vector3fixMultiply(&var7, &var9, &var7);
-    Vector3fixMultiply(&var8, &var9, &var8);
-    Vector3i var10 = arg0->unknown_24_->position_;
-    Vector3fix_Add(&var6, &var10, &var6);
-    Vector3fix_Add(&var7, &var10, &var7);
-    Vector3fix_Add(&var8, &var10, &var8);
-    (var4->unknown_10_ = var7, var4->unknown_4_) = var6;
-    func_0202eab8(var4);
+    self->object->UpdateTrackedBones();
+    data_ov015_02194564.eye = NULL;
+    data_ov015_02194564.target = NULL;
+    data_ov015_02194564.position = NULL;
+    Vector3i eye;
+    Vector3i target;
+    Vector3i position;
+    eye.x = eyeMatrix.translation.x;
+    eye.y = eyeMatrix.translation.y;
+    eye.z = eyeMatrix.translation.z;
+    target.x = targetMatrix.translation.x;
+    target.y = targetMatrix.translation.y;
+    target.z = targetMatrix.translation.z;
+    position.x = positionMatrix.translation.x;
+    position.y = positionMatrix.translation.y;
+    position.z = positionMatrix.translation.z;
+    Vector3i scale = self->object->GetScale();
+    Vector3fixMultiply(&eye, &scale, &eye);
+    Vector3fixMultiply(&target, &scale, &target);
+    Vector3fixMultiply(&position, &scale, &position);
+    Vector3i translation = self->object->position_;
+    Vector3fix_Add(&eye, &translation, &eye);
+    Vector3fix_Add(&target, &translation, &target);
+    Vector3fix_Add(&position, &translation, &position);
+    (camera->target = target, camera->eye) = eye;
+    Camera_SetOrbitFromPosition(camera);
 }

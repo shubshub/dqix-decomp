@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 
 struct Struct_0205faf4_11;
 extern "C" int func_02061bd8(struct Struct_0205faf4_11* arg0);
@@ -15,12 +15,12 @@ extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
 struct Struct_02053dfc;
 extern "C" int func_02053dfc(struct Struct_02053dfc* arg0);
 
-extern "C" unsigned short func_0202053c(void* arg0);
+unsigned short GameObject_GetPartyMemberLevel(void* obj);
 
-extern "C" int func_0202b7d8(int* arg0);
+int LinkSession_IsActive(int* obj);
 
-struct Struct_0202b2f0;
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
+struct SearchStruct;
+int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
 
 extern "C" int func_ov023_021f5578(void* arg0, void* arg1, int arg2);
 
@@ -36,10 +36,10 @@ extern "C" ARM int func_ov023_021f4098(void* arg0, int arg1, int arg2) {
 #else
  enum {Enum_ov023_021f4098_2240=0x8c0, Enum_ov023_021f4098_22528=0x5800, Enum_ov023_021f4098_204=0xcc, Enum_ov023_021f4098_672=0x2a0, Enum_ov023_021f4098_336=0x150};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_0202b2f0* var1 = (struct Struct_0202b2f0*)func_0202ae18();
-    GameObject* var2 = func_0200ff1c(var0, arg1);
-    if (var2 == 0 || func_02061bd8((struct Struct_0205faf4_11*)var2) != 0) {
+    GameState* battleStruct = GameState::GetInstance();
+    struct SearchStruct* p = (struct SearchStruct*)LinkSession_GetInstance();
+    GameObject* c9 = GetCombatantWithFlag0x100_0200ff1c(battleStruct, id);
+    if (c9 == 0 || CheckField0x56bLowNibble((struct Obj02061bd8*)c9) != 0) {
         return 0;
     }
     if (func_02053c6c((unsigned char*)var2) == 0) {
@@ -53,23 +53,23 @@ extern "C" ARM int func_ov023_021f4098(void* arg0, int arg1, int arg2) {
     __clear(var5, 0x10);
     __clear(var6, 0x10);
 
-    int var7;
-    for (var7 = 0; var7 < 4; var7++) {
-        if (func_020a35e0(*(unsigned char**)((char*)arg0 + Enum_ov023_021f4098_672), var7)) {
-            GameObject* var8 = func_0200ff1c(var0, var7);
-            if (var8 != 0 && func_02061bd8((struct Struct_0205faf4_11*)var8) == 0) {
-                var6[var7] = (float)(unsigned int)func_02053dfc((struct Struct_02053dfc*)var8);
-                var5[var7] = (float)(unsigned int)func_0202053c(var8);
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (TestBitAt0x34_020a35e0(*(unsigned char**)((char*)obj + regionalOffset3), i)) {
+            GameObject* ci = GetCombatantWithFlag0x100_0200ff1c(battleStruct, i);
+            if (ci != 0 && CheckField0x56bLowNibble((struct Obj02061bd8*)ci) == 0) {
+                arrC[i] = (float)(unsigned int)GetField8FromField19c_02053dfc((struct Obj53dfc*)ci);
+                arrB[i] = (float)(unsigned int)GameObject_GetPartyMemberLevel(ci);
             }
         }
     }
 
-    float var9 = 1.0f;
-    if (func_0202b7d8((int*)var1)) {
-        var9 = 0.0f;
-        for (var7 = 0; var7 < 4; var7++) {
-            if (func_020a35e0(*(unsigned char**)((char*)arg0 + Enum_ov023_021f4098_672), var7) && func_0202c1c0(var1, var7)) {
-                var9 += 1.0f;
+    float countF = 1.0f;
+    if (LinkSession_IsActive((int*)p)) {
+        countF = 0.0f;
+        for (i = 0; i < 4; i++) {
+            if (TestBitAt0x34_020a35e0(*(unsigned char**)((char*)obj + regionalOffset3), i) && LinkSession_IsSlotMember(p, i)) {
+                countF += 1.0f;
             }
         }
     }

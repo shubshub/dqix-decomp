@@ -102,24 +102,24 @@ struct Container020e0310;
 
 struct Display020e3f1c* MessageSystem_GetInstance();
 extern "C" struct Zone02012fe4* Zone3D_GetInstance();
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 extern "C" int func_ov017_021959b4();
 void StartBattleTimerSequence020e4524(char* obj);
 extern "C" void FieldTask_EndGrottoBossIntro(void* obj);
 void TickActorAndDispatchPhase02076b58(struct Obj02076b58* actor);
 void* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int* word, unsigned int mask);
-void SetByte0xbeShiftPrev(struct Bytes02033b88* obj, int value);
-extern "C" void func_02037d88(GameObject* obj);
+void GameObject_ForceMotionState(struct Bytes02033b88* obj, int value);
+extern "C" void GameObject_UpdatePartyMember(GameObject* obj);
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg);
 extern "C" void func_020531f0(GameObject* obj);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
-int GetSignedByte0x1c9_02039874(void* obj);
+int GameObject_GetLinePosition(void* obj);
 void AimAndSetVecY020338d4(struct Struct020338d4* self, struct Vec3* target);
-void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
+void GameObject_ResetTrail(unsigned char* obj);
 void ComputeAndDispatch020338b0(unsigned char* obj, int target);
-void ApplyField0x70Tail(struct GlobalObj0202e6a8* obj, int value);
-int GetField0x78_0202e800(void* obj);
+void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* obj, int value);
+int Camera_GetOrbitDistance(void* obj);
 void Camera_SetPosition(struct Camera* obj, int x, int y, int z);
 void ComputeAngleHeightDistance0202ea4c(struct Obj0202ea4c* obj);
 extern "C" void Camera_Update(struct Camera020e3f1c* camera);
@@ -128,7 +128,7 @@ void TextQueue_Reset(struct Obj020d7aa0* obj);
 extern "C" void func_ov017_021c3e18(int arg);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 void KeyTable_Reset(struct Struct020dfc40* p);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
 int KeyTable_Get(struct Container020e0310* c, int key);
@@ -172,8 +172,8 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
     struct Display020e3f1c* display = MessageSystem_GetInstance();
     FontBankLoader* mgr = FontBankLoader_GetInstance();
     ActiveGrottoClass* grotto = &Zone3D_GetInstance()->activeGrotto;
-    struct Camera020e3f1c* camera = (struct Camera020e3f1c*)GetFieldIfFlag4_020100f8((char*)gs);
-    struct Actor020e3f1c* leader = (struct Actor020e3f1c*)gs->GetUnknownGameObject();
+    struct Camera020e3f1c* camera = (struct Camera020e3f1c*)GameState_GetFollowCamera((char*)gs);
+    struct Actor020e3f1c* leader = (struct Actor020e3f1c*)gs->GetLeader();
     GameResources* res = GetGameResources();
 
     if (func_ov017_021959b4()) {
@@ -193,7 +193,7 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         }
     }
 
-    struct Actor020e3f1c* monster = (struct Actor020e3f1c*)gs->GetMaybeFieldMonsterByIndex(intro->monsterIndex);
+    struct Actor020e3f1c* monster = (struct Actor020e3f1c*)gs->GetFieldMonsterByIndex(intro->monsterIndex);
     if (monster == NULL) {
         FieldTask_EndGrottoBossIntro(intro);
         return;
@@ -201,19 +201,19 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
     TickActorAndDispatchPhase02076b58((struct Obj02076b58*)monster);
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 2);
 
-    int var11;
-    for (var11 = 0; var11 < 4; var11++) {
-        GameObject* var12 = var1->GetPartyMemberByIndex(var11);
-        if (var12 != NULL) {
-            var12->obj3D_.EnableFlag(0x1000000);
-            var12->obj3D_.DisableFlag(0x1020);
-            ((struct Struct_020e3f1c_8*)var12)->unknown_c1_.unknown_0_0_ |= 2;
-            if (((struct Struct_020e3f1c_8*)var12)->unknown_b2_ > 0) {
-                func_02033b88((struct Struct_02010604*)var12, 1);
+    int i;
+    for (i = 0; i < 4; i++) {
+        GameObject* member = gs->GetPartyMemberByIndex(i);
+        if (member != NULL) {
+            member->obj3D_.EnableFlag(0x1000000);
+            member->obj3D_.DisableFlag(0x1020);
+            ((struct Actor020e3f1c*)member)->flagsC1.mode |= 2;
+            if (((struct Actor020e3f1c*)member)->fb2 > 0) {
+                GameObject_ForceMotionState((struct Bytes02033b88*)member, 1);
             } else {
-                func_02033b88((struct Struct_02010604*)var12, 0);
+                GameObject_ForceMotionState((struct Bytes02033b88*)member, 0);
             }
-            func_02037d88(var12);
+            GameObject_UpdatePartyMember(member);
         }
     }
 
@@ -249,19 +249,19 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         for (int k = 0; k < party->count; k++) {
             struct Actor020e3f1c* member = (struct Actor020e3f1c*)gs->GetPartyMemberByIndex(party->order[k]);
             if (member != NULL) {
-                if (GetSignedByte0x1c9_02039874(member) > 0) {
+                if (GameObject_GetLinePosition(member) > 0) {
                     ((GameObject*)member)->obj3D_.SetInheritedAlpha(0);
                 }
-                var18->unknown_44_.unknown_0_ = var15.unknown_0_;
-                var18->unknown_44_.unknown_4_ = var15.unknown_4_;
-                var18->unknown_44_.unknown_8_ = var15.unknown_8_ + 0x3000;
-                func_020338d4((struct Struct_020338d4*)var18, &var10->unknown_44_);
-                func_02039d24((unsigned char*)var18);
+                member->position.x = pos.x;
+                member->position.y = pos.y;
+                member->position.z = pos.z + 0x3000;
+                AimAndSetVecY020338d4((struct Struct020338d4*)member, &monster->position);
+                GameObject_ResetTrail((unsigned char*)member);
             }
         }
         ComputeAndDispatch020338b0((unsigned char*)monster, (int)&leader->position);
-        ApplyField0x70Tail((struct GlobalObj0202e6a8*)camera, 0);
-        int dist = GetField0x78_0202e800(camera);
+        Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)camera, 0);
+        int dist = Camera_GetOrbitDistance(camera);
         struct Vec3 target = camera->target;
         if (intro->cameraMode == 1) {
             int dz = FxMul(dist, 0xddb);
@@ -342,7 +342,7 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         alloc.ResetAllocatorPointer();
         alloc.CreateTypeA(buf, 0x500);
         struct Struct020dfc40 table;
-        ResetAndReturnSelf020dfc2c(&table);
+        KeyTable_Construct(&table);
         KeyTable_Reset(&table);
         KeyTable_Load(&table, &alloc, fileData, size);
         loader->RemoveTask(intro->taskId);

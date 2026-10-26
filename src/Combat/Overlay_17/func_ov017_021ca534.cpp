@@ -2,9 +2,9 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+extern "C" void* func_ov017_021b8478(void* obj);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021ca534_4 {
     unsigned char unknown_0_[4];
@@ -79,10 +79,10 @@ extern "C" ARM void func_ov017_021ca534(Struct_ov017_021ca534* arg0) {
  enum { Enum_ov017_021ca534_1816 = 0x718 };
 #endif
     GameState::GetInstance();
-    unsigned char* var0 = (unsigned char*)GetGameResources();
-    void* var1 = *(void**)(var0 + 0x3000 + Enum_ov017_021ca534_1816);
-    Struct_ov017_021ca534_5* var2 = (Struct_ov017_021ca534_5*)func_ov017_021b8478(var1);
-    void* var3 = func_0202ae24();
+    unsigned char* ov = (unsigned char*)GetGameResources();
+    void* h = *(void**)(ov + 0x3000 + regionalOffset);
+    Combatants021ca534* c = (Combatants021ca534*)func_ov017_021b8478(h);
+    void* p = LinkMessageQueue_GetInstance();
 
     for (int var4 = 0; var4 < arg0->unknown_1_4_; var4++) {
         Struct_ov017_021ca534_6* var5 = &arg0->unknown_4_[var4];

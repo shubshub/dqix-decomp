@@ -25,17 +25,17 @@ struct Struct_ov017_021d1e50_3 : Struct_0201bdac {
     unsigned char unknown_105_;
 };
 struct SearchStruct0202c1a4;
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
-int IsField0Null_02046b08(void**);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+int FieldTaskQueue_IsEmpty(void**);
 extern "C" TransitionZone* Zone3D_GetInstance();
 extern "C" void func_ov017_021baedc(TransitionNode*, int);
 void SetField11c_021bbbf8(void*, unsigned short);
-int GetField5cb0Value_0201079c(char*);
+int GameState_GetStoryChapter(char*);
 void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
-void* GetField0x3f8Address_0200fd0c(GameState*);
+void* GameState_GetZoneTransition(GameState*);
 void InitStruct02070378(char*);
-void CallFunc0200fbb4AtField0x3f8_0200fcfc(void*, const void*);
-void InitAndResetHeader_0219e310(unsigned char*, int);
+void GameState_SetZoneTransition(void*, const void*);
+void FieldTask_InitEnterZone(unsigned char*, int);
 void InitAndAppendState61_021a65c4(void*, unsigned char, int);
 
 // USA: func_ov017_021d1e50
@@ -46,9 +46,9 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
     int first;
     TailList020469b4* list;
     TransitionNode* node;
-    if (!GetSearchStructCurrentArrEntry(search)) return;
+    if (!LinkSession_GetOwnSlot(search)) return;
     list = (TailList020469b4*)resources->fieldTaskQueue_;
-    if (!IsField0Null_02046b08((void**)list)) return;
+    if (!FieldTaskQueue_IsEmpty((void**)list)) return;
     TransitionZone* zone = Zone3D_GetInstance();
     id = zone->id;
     if (id != 0x1901 && id != 0x1902 && id != 0x1903 && id != 0x1904) return;
@@ -60,15 +60,15 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
         if (!first) { first = second; second = 0; }
         node->first = first;
         SetField11c_021bbbf8(node, second);
-        if (GetField5cb0Value_0201079c((char*)game) >= 0x13 && first == 0x7345 && (unsigned int)(id - 0x1901) <= 3) node->special = 1;
+        if (GameState_GetStoryChapter((char*)game) >= 0x13 && first == 0x7345 && (unsigned int)(id - 0x1901) <= 3) node->special = 1;
         AppendNodeToTail(list, node);
     } else {
-        var0 = (Struct_ov017_021d1e50*)func_0200fd0c(arg2);
-        func_02070378((char*)var0);
-        var1 = 1;
-        var0->unknown_7_ = 1;
-        if (arg1->unknown_4_) {
-            switch (arg1->unknown_4_) {
+        header = (TransitionHeader*)GameState_GetZoneTransition(game);
+        InitStruct02070378((char*)header);
+        follow = 1;
+        header->active = 1;
+        if (event->type) {
+            switch (event->type) {
             case 1:
                 var0->unknown_0_ = 0x1198;
                 var1 = 0;
@@ -108,9 +108,9 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
                 var0->unknown_10_.z = 0x1000;
                 break;
             }
-            CallFunc0200fbb4AtField0x3f8_0200fcfc(game, header);
+            GameState_SetZoneTransition(game, header);
             unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
-            InitAndResetHeader_0219e310(node, 0);
+            FieldTask_InitEnterZone(node, 0);
             AppendNodeToTail(list, (TailNode020469b4*)node);
             if (follow) InitAndAppendState61_021a65c4(resources, 1, 0);
         } else if (event->target) {
@@ -125,9 +125,9 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
             position.y = event->y << 7;
             position.z = event->z << 7;
             zone->position = position;
-            CallFunc0200fbb4AtField0x3f8_0200fcfc(game, header);
+            GameState_SetZoneTransition(game, header);
             unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
-            InitAndResetHeader_0219e310(node, 0);
+            FieldTask_InitEnterZone(node, 0);
             AppendNodeToTail(list, (TailNode020469b4*)node);
             InitAndAppendState61_021a65c4(resources, follow, 0);
         }

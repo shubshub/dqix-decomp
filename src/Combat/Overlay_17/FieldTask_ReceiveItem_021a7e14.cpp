@@ -90,12 +90,12 @@ struct Obj021a7e14 {
 };
 
 StoreStruct* MessageSystem_GetInstance();
-extern "C" SearchStruct* func_0202ae18();
+extern "C" SearchStruct* LinkSession_GetInstance();
 int GameState_GetProtagonistIndex(GameState* gs);
 void GameObject_DisableControl(Obj020397cc* obj, int arg);
 extern "C" void func_020a0cc4(unsigned int size);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020a0c0c();
+extern "C" void ROMFilesystem_InitFileTables();
 #if defined(jpn)
 #define func_ov017_021a7dd8 func_ov017_021a8754
 #endif
@@ -105,7 +105,7 @@ extern "C" void KeyTable_Load(void* dest, SafeAllocator* alloc, void* data, unsi
 extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
 void ItemTable_Init(void* p);
 void BuildDescriptorFlag1_020de980(void* dest, void* alloc, void* data, int size, int key);
-void Clear12Bytes020e46c4(void* p);
+void NameText_Clear(void* p);
 extern "C" void* memset(void* dst, int c, unsigned int n);
 void DispatchIfCountPositive020dcf7c(int key, void* p);
 Element021a7e14* ItemTable_Find(ItemTable* c, int key);
@@ -120,7 +120,7 @@ char* KeyTable_Get(Container020e0310* c, int key);
 void Text_Append(char* dst, const char* src);
 int SumKeyedLookups02086bf4(char* p, int key);
 extern "C" int func_020457e0(StoreStruct* g);
-int TestFlagBitAt0xe_0202c578(SearchStruct* s, int id);
+int LinkSession_IsSlotLost(SearchStruct* s, int id);
 int DecrementField38Clamped_021a85e8(unsigned char* obj, int amount);
 void* ItemTable_Construct(void* p);
 void InitStruct0207cbe8(char* p);
@@ -152,8 +152,8 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
     StoreStruct* g = MessageSystem_GetInstance();
     FontBankLoader* bank = FontBankLoader_GetInstance();
     GetGameResources();
-    SearchStruct* search = func_0202ae18();
-    Obj020397cc* obj = (Obj020397cc*)gs->GetUnknownGameObject();
+    SearchStruct* search = LinkSession_GetInstance();
+    Obj020397cc* obj = (Obj020397cc*)gs->GetLeader();
     int val = GameState_GetProtagonistIndex(gs);
     GameObject_DisableControl(obj, 1);
     int done = 0;
@@ -163,17 +163,17 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
         func_020a0cc4(0x2000);
         void* heap = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x2000);
         if (heap == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->finished = 1;
             return;
         }
-        arg0->unknown_8_.CreateTypeA(var8, 0x2000);
-        arg0->unknown_8_.Reset();
-        arg0->unknown_1c_ = (Struct_0201099c_3*)arg0->unknown_8_.Allocate(0x18);
-        if (arg0->unknown_1c_ == NULL) {
-            func_ov017_021a7dd8(arg0);
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        self->alloc.CreateTypeA(heap, 0x2000);
+        self->alloc.Reset();
+        self->strings = (Container020e0310*)self->alloc.Allocate(0x18);
+        if (self->strings == NULL) {
+            func_ov017_021a7dd8(self);
+            ROMFilesystem_InitFileTables();
+            self->finished = 1;
             return;
         }
 #if defined(jpn)
@@ -220,16 +220,16 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
         __clear(var11, sizeof(var11));
         func_020de968(arg0->unknown_30_, var11);
 #else
-        arg0->unknown_3c_ = (Struct_ov017_021a7e14_2*)arg0->unknown_8_.Allocate(0xc);
-        arg0->unknown_48_ = (char*)arg0->unknown_8_.Allocate(0x40);
-        arg0->unknown_4c_ = (char*)arg0->unknown_8_.Allocate(0x40);
-        if (arg0->unknown_3c_ != NULL && arg0->unknown_48_ != NULL && arg0->unknown_4c_ != NULL) {
-            func_020e46c4(arg0->unknown_3c_);
-            memset(arg0->unknown_48_, 0, 0x40);
-            memset(arg0->unknown_4c_, 0, 0x40);
-            arg0->unknown_3c_->unknown_0_ = arg0->unknown_48_;
-            arg0->unknown_3c_->unknown_4_ = arg0->unknown_4c_;
-            func_020dcf7c(arg0->unknown_30_, arg0->unknown_3c_);
+        self->buffers = (MessageBuffers021a7e14*)self->alloc.Allocate(0xc);
+        self->firstBuffer = (char*)self->alloc.Allocate(0x40);
+        self->secondBuffer = (char*)self->alloc.Allocate(0x40);
+        if (self->buffers != NULL && self->firstBuffer != NULL && self->secondBuffer != NULL) {
+            NameText_Clear(self->buffers);
+            memset(self->firstBuffer, 0, 0x40);
+            memset(self->secondBuffer, 0, 0x40);
+            self->buffers->first = self->firstBuffer;
+            self->buffers->second = self->secondBuffer;
+            DispatchIfCountPositive020dcf7c(self->key, self->buffers);
         }
 #endif
         BackgroundLoader::RemoveLockGlobal();
@@ -253,9 +253,9 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
         MessageSystem_SetStringArgument((Obj02046574*)g, 0, ((GameObject*)combatant)->baseStats_->name);
         MessageSystem_SetStringArgument((Obj02046574*)g, 1, itemName);
 #else
-        Clear12Bytes020e46c4(self->actorText);
+        NameText_Clear(self->actorText);
         NameText_InitFromPartyMember(self->actorText, self->combatantId);
-        Clear12Bytes020e46c4(self->listText);
+        NameText_Clear(self->listText);
         char* name = StandardStrings_Get((short)combatant->params->nameId);
         func_020e4b34(self->listText, name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         func_02046380(g);
@@ -305,10 +305,10 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
                 arg0->unknown_24_ = 7;
             }
         }
-    } else if (arg0->unknown_24_ == 4) {
-        var2->unknown_19ae_ = 0;
-        if (func_0202c578(var4, 0) || func_0202c578(var4, arg0->unknown_34_)) {
-            var7 = 1;
+    } else if (self->state == 4) {
+        g->pending = 0;
+        if (LinkSession_IsSlotLost(search, 0) || LinkSession_IsSlotLost(search, self->combatantId)) {
+            done = 1;
         }
         int var18 = var0->GetTickCount();
         if (var18 == 0) {
@@ -331,8 +331,8 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
         if (var19 == 0) {
             var19 = 1;
         }
-        if (func_ov017_021a85e8((unsigned char*)arg0, var19) == 0 && var2->unknown_9a0_ == 3) {
-            if (func_0202c578(var4, 0) || func_0202c578(var4, arg0->unknown_34_)) {
+        if (DecrementField38Clamped_021a85e8((unsigned char*)self, ticks) == 0 && g->windowState == 3) {
+            if (LinkSession_IsSlotLost(search, 0) || LinkSession_IsSlotLost(search, self->combatantId)) {
 #if defined(jpn)
                 func_0204500c((MessageSystem*)g, (char*)KeyTable_Get(self->strings, 0x71), 0);
 #else
@@ -383,8 +383,8 @@ extern "C" ARM void FieldTask_ReceiveItem(Obj021a7e14* self) {
             MessageSystem_Reset((char*)g);
             GameObject_EnableControl(obj);
             func_ov017_021a7dd8(self);
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->finished = 1;
         }
     }
 }

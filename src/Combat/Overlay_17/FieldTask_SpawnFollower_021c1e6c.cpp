@@ -56,30 +56,30 @@ void ResetStruct020d3c08(char*);
 void InitHandlerArrayAndRunScript020d3c84(HandlerSlotArray020d3c84*, StreamHeader*, int);
 Entry021c1e6c* FindEntryByKind(FindEntryByKindContainer020d3d90*, int);
 extern "C" void func_ov017_0218f064(GameResources*, int, int, int, int);
-extern "C" unsigned char func_ov017_02191764(int, int);
-extern "C" void* func_0202ae18();
-extern "C" int func_0202c508(void*);
+unsigned char FindUnusedSlot_02191764(int, int);
+extern "C" void* LinkSession_GetInstance();
+extern "C" int LinkSession_IsHostOrSolo(void*);
 void VramState_Rewind(Foo0207df50*);
 extern "C" void func_02082828(void*);
-extern "C" void func_02054664(Struct_02054664*);
-extern "C" void func_02053c4c(char*, char*);
-extern "C" void func_0200fd38(GameState*, int, GameObject*);
-extern "C" GameObject* func_0200ff58(GameState*, int);
-extern "C" void func_020546a0(void*, int);
-extern "C" void func_020546b4(void*, int);
-extern "C" void func_02059f38(Struct_02059cfc_2*, Struct_02059cfc_3*);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" void func_ov017_02191508(int, Struct_ov017_021c1e6c_7*);
-extern "C" void func_02039830(void*);
-extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
+void ResetSelectionState02054664(Obj02054664*);
+void SetPointerFields02053c4c(char*, char*);
+void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
+void SetField0x2d0_020546a0(void*, int);
+void SetField0x2d1_020546b4(void*, int);
+void CopyVec3ToField0x44(Target02059f38*, Vec3_02059f38*);
+void GameObject_SnapFacing(Obj02033874*, int);
+extern "C" void func_ov017_02191508(int, Entry021c1e6c*);
+void GameObject_ApplyPendingControl(void*);
+extern "C" void Party_ReformLine(GameResources*, int, int, int, int);
 extern "C" void func_ov017_02191234(GameResources*);
-extern "C" int func_0202c540(void*);
+extern "C" int LinkSession_IsGuest(void*);
 void CallHelperWithBuf_021907dc(int, int, int, int, int);
 void VramState_Restore(char*);
 void VramState_Save(char*);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
-void ClearFlag0x1ceBit0x4_02039d58(unsigned char*);
-int CheckFlag0x1ceBit2Set_02039d68(unsigned char*);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
+void GameObject_ClearHidden(unsigned char*);
+int GameObject_IsHidden(unsigned char*);
 void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
 #if defined(jpn)
 extern char data_ov017_021d87c4[], data_ov017_021d87d8[];
@@ -126,7 +126,7 @@ extern "C" ARM void FieldTask_SpawnFollower(Summon021c1e6c* self) {
             var9 = func_ov017_02191764(var8, 0);
             arg0->unknown_1_ = 1;
         } else {
-            if (func_0202c508(func_0202ae18())) ((Global021c1e6c*)GameState_GetParty(game))->selection = self->kind;
+            if (LinkSession_IsHostOrSolo(LinkSession_GetInstance())) ((Global021c1e6c*)GameState_GetParty(game))->selection = self->kind;
             combatantId = 0xce;
             slot = 4;
             PairBank021c1e6c* initialBank = ((ResourceBanks021c1e6c*)resources)->GetBank(1);
@@ -164,21 +164,21 @@ extern "C" ARM void FieldTask_SpawnFollower(Summon021c1e6c* self) {
             arg0->unknown_a_ = 2;
         }
 configureCombatant:
-        GameObject* var17 = func_0200ff58(var0, var8);
-        if (var17) {
-            func_020546a0(var17, 0);
-            func_020546b4(var17, var9);
-            var17->obj3D_.SetField06(*var3);
-            if (var0->GetUnknownGameObject()) {
-                func_02059f38((Struct_02059cfc_2*)var17, (Struct_02059cfc_3*)&((Struct_ov017_021c1e6c_3*)var0)->unknown_7f60_);
-                func_02033874((Struct_02033834*)var17, ((Struct_ov017_021c1e6c_3*)var0)->unknown_7f5c_);
+        GameObject* combatant = GetCombatantWithFlag0x1000_0200ff58(game, combatantId);
+        if (combatant) {
+            SetField0x2d0_020546a0(combatant, 0);
+            SetField0x2d1_020546b4(combatant, slot);
+            combatant->obj3D_.SetField06(*data);
+            if (game->GetLeader()) {
+                CopyVec3ToField0x44((Target02059f38*)combatant, (Vec3_02059f38*)&((GamePosition021c1e6c*)game)->position);
+                GameObject_SnapFacing((Obj02033874*)combatant, ((GamePosition021c1e6c*)game)->height);
             }
             if (entry->special) func_ov017_02191508(combatantId, entry);
-            GameObject* leader = game->GetUnknownGameObject();
-            if (leader) CopyByteField0x253To0x252_02039830(leader);
-            func_ov017_02191108(resources, 1, 1, 1, 1);
+            GameObject* leader = game->GetLeader();
+            if (leader) GameObject_ApplyPendingControl(leader);
+            Party_ReformLine(resources, 1, 1, 1, 1);
             func_ov017_02191234(resources);
-            if (func_0202c540(func_0202ae18())) CallHelperWithBuf_021907dc((int)resources, 0, 1, 1, 1);
+            if (LinkSession_IsGuest(LinkSession_GetInstance())) CallHelperWithBuf_021907dc((int)resources, 0, 1, 1, 1);
         } else self->done = 1;
     } else if (self->state == 2) {
         if (!loader->GetTaskStatus(self->task)) return;
@@ -201,17 +201,17 @@ configureCombatant:
                     VramState_Save(pairTables);
                     combatant->obj3D_.SetScale(0x10a, 0x10a, 0x10a);
                     SetField0x2d0_020546a0(combatant, 0);
-                    SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
-                    ClearFlag0x1ceBit0x4_02039d58((unsigned char*)combatant);
+                    GameObject_ForceMotionState((Bytes02033b88*)combatant, 0);
+                    GameObject_ClearHidden((unsigned char*)combatant);
                     for (int i = 0; i < 4; i++) {
                         GameObject* member = GetCombatantWithFlag0x1000_0200ff58(game, i);
-                        if (member && CheckFlag0x1ceBit2Set_02039d68((unsigned char*)member)) SetFlag0x1ceBit0x4_02039d48((unsigned char*)combatant);
+                        if (member && GameObject_IsHidden((unsigned char*)member)) SetFlag0x1ceBit0x4_02039d48((unsigned char*)combatant);
                     }
-                    GameObject* var26 = var0->GetGameObjectByIndex(0);
-                    if (var26) {
-                        func_02059f38((Struct_02059cfc_2*)var23, (Struct_02059cfc_3*)&((Struct_ov017_021c1e6c_3*)var0)->unknown_7f60_);
-                        func_02033874((Struct_02033834*)var23, ((Struct_ov017_021c1e6c_3*)var0)->unknown_7f5c_);
-                        var23->obj3D_.SetField06(var26->obj3D_.GetField06());
+                    GameObject* leader = game->GetGameObjectByIndex(0);
+                    if (leader) {
+                        CopyVec3ToField0x44((Target02059f38*)combatant, (Vec3_02059f38*)&((GamePosition021c1e6c*)game)->position);
+                        GameObject_SnapFacing((Obj02033874*)combatant, ((GamePosition021c1e6c*)game)->height);
+                        combatant->obj3D_.SetField06(leader->obj3D_.GetField06());
                     }
                 }
             }

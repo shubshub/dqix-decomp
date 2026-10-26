@@ -4,11 +4,11 @@
 #include "Resource/Brightness.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-void* GetFieldIfFlag4_020100f8(char* obj);
+extern "C" void* LinkSession_GetInstance(void);
+void* GameState_GetFollowCamera(char* obj);
 struct PointerField330_ffd0;
-void* GetPointerAt0x330_0200ffd0(struct PointerField330_ffd0* obj);
-void* GetField0x3f8Address_0200fd0c(GameState*);
+void* GameState_GetStarflight(struct PointerField330_ffd0* obj);
+void* GameState_GetZoneTransition(GameState*);
 extern "C" void func_020da77c(void* target, int type, void* msg);
 void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
 void SetField0x21c_020a2770(void* obj, short value);
@@ -17,7 +17,7 @@ int IsIdInSpecialSet0201b868(void* obj, int id);
 struct Vec3Target020ad1f0;
 void SetVec3At0x0020ad1f0(struct Vec3Target020ad1f0* obj, int x, int y, int z);
 struct Obj02033874;
-void SetVecYFromValue02033874(struct Obj02033874* obj, int value);
+void GameObject_SnapFacing(struct Obj02033874* obj, int value);
 extern "C" void func_020da244(void* sb);
 void SePlayer_UnloadExtraArchiveB(void* obj);
 unsigned char GameState_GetProtagonistIndex(GameState*);
@@ -91,13 +91,13 @@ extern "C" ARM void func_020acecc(unsigned int* arg0, int arg1, int arg2)
 {
     GameState* state = GameState::GetInstance();
     Zone020acecc* zone = (Zone020acecc*)Zone3D_GetInstance();
-    func_0202ae18();
-    void* var2 = func_020100f8((char*)var0);
-    Struct_020acecc_5* var3 = (Struct_020acecc_5*)func_0200ffd0((struct Struct_0200ffd0*)var0);
-    Struct_020acecc_4* var4 = (Struct_020acecc_4*)func_0200fd0c(var0);
-    GameObject* var5 = var0->GetUnknownGameObject();
-    var0->GetPartyMemberByIndex(0);
-    func_020ad1f8(var1, arg1, arg2);
+    LinkSession_GetInstance();
+    void* controller = GameState_GetFollowCamera((char*)state);
+    Prop020acecc* prop = (Prop020acecc*)GameState_GetStarflight((struct PointerField330_ffd0*)state);
+    Movement020acecc* movement = (Movement020acecc*)GameState_GetZoneTransition(state);
+    GameObject* unknown = state->GetLeader();
+    state->GetPartyMemberByIndex(0);
+    func_020ad1f8(zone, eventCode, previousCode);
 
     if (movement->active != 0) {
         Node020acecc* node = func_0201b78c(zone, &zone->saved.position);
@@ -130,19 +130,19 @@ extern "C" ARM void func_020acecc(unsigned int* arg0, int arg1, int arg2)
                 position.y = fix32_Divide(position.y, 0x6000);
                 position.z = fix32_Divide(position.z, 0x6000);
             }
-            var3->unknown_0_.position_ = var9;
-            func_02033874((struct Struct_02033834*)var3, 0x3244);
-            func_020adfa8(var3);
+            prop->obj3D.position_ = position;
+            GameObject_SnapFacing((struct Obj02033874*)prop, 0x3244);
+            func_020adfa8(prop);
         } else {
-            var3->unknown_0_.position_ = var1->unknown_27b4_.unknown_4_;
-            func_02033874((struct Struct_02033834*)var3, var1->unknown_27b4_.unknown_10_);
-            func_020adfa8(var3);
+            prop->obj3D.position_ = zone->saved.position;
+            GameObject_SnapFacing((struct Obj02033874*)prop, zone->saved.rotationY);
+            func_020adfa8(prop);
         }
         SetFlags04((GameResources*)obj, 0x10044);
         ClearFlags04((GameResources*)obj, 0x40000);
     } else if (eventCode >= 0x4e20 && eventCode <= 0x752f && previousCode == 0x2774) {
         SetHalfFieldsAndEnqueueIfActive_021d1c2c(zone->saved.state, (unsigned char)zone->saved.sub);
-        short actorId = state->GetUnknownGameObject()->obj3D_.actorIndex_;
+        short actorId = state->GetLeader()->obj3D_.actorIndex_;
         SetField0x21c_020a2770(controller, actorId);
         ClearFlags04((GameResources*)obj, 0x10044);
         SetFlags04((GameResources*)obj, 0x40000);

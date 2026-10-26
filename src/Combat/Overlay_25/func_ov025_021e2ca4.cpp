@@ -20,7 +20,7 @@ extern "C" Struct_ov000_021600f8* func_ov000_021600f8(Struct_ov000_0215440c*, in
 extern "C" void func_ov025_021de110(void*);
 extern "C" void func_ov025_021eee48(Struct_ov025_021dcf14_7*, Struct_ov025_021dcf14_8*);
 extern "C" int func_ov025_021df9f4(GameObject*);
-extern "C" void func_02033920(GameObject*, int, int);
+extern "C" void GameObject_FaceGameObject(GameObject*, int, int);
 
 // USA: func_ov025_021e2ca4
 extern "C" ARM int func_ov025_021e2ca4(Struct_ov025_021e2ca4* arg0, Struct_ov000_0215440c_2* arg1, Struct_ov025_021dcf14_7* arg2) {
@@ -45,41 +45,41 @@ extern "C" ARM int func_ov025_021e2ca4(Struct_ov025_021e2ca4* arg0, Struct_ov000
         if (var3->obj3D_.normalizedAnimationTime_ < var10) {
             var12 = (int)(((long long)var9 * (var10 - var3->obj3D_.normalizedAnimationTime_) + 0x800) >> 12);
         }
-        Vector3fix var13 = var8->obj3D_.position_;
-        Vector3fix var14 = var3->obj3D_.position_;
-        int var15 = var3->obj3D_.GetRadius() / 2;
-        int var16 = var8->obj3D_.GetRadius() / 2;
-        int var17 = Vector3fix_Distance(&var14, &var13) - var15 - var16 - arg0->unknown_c_;
-        Vector3fix var18;
-        Vector3fix_Subtract(&var13, &var14, &var18);
-        Vector3fix_Normalize(&var18, &var18);
-        Vector3fix var19;
-        Vector3fixMultiplyScalar(&var18, var17, &var19);
-        Vector3fix var20;
-        Vector3fix_Add(&var14, &var19, &var20);
-        Struct_ov025_021dcf14_8 var21;
-        func_ov025_021de110(&var21);
-        var21.unknown_0_ = 0;
-        var21.unknown_4_ = var12;
-        var21.unknown_8_ = var0->unknown_20_;
-        var21.unknown_a_ = var11;
-        var21.unknown_c_.unknown_0_ = var20;
-        func_ov025_021eee48(arg2, &var21);
-        int var22 = fix32_Atan2(var18.x, var18.z);
-        int var23 = 250;
-        if (var11 < var23) var23 = var11;
-        var21.unknown_0_ = 1;
-        var21.unknown_a_ = var23;
-        var21.unknown_c_.unknown1_0_ = var22;
-        if (arg1->unknown_10_) var21.unknown_8_ = arg1->unknown_10_->unknown_20_;
-        else var21.unknown_8_ = 0;
-        func_ov025_021eee48(arg2, &var21);
-        var21.unknown_0_ = 1;
-        var21.unknown_8_ = var0->unknown_20_;
-        var21.unknown_a_ = var11;
-        var21.unknown_c_.unknown1_0_ = fix32_Atan2(var18.x, var18.z);
-        func_ov025_021eee48(arg2, &var21);
-        if (func_ov025_021df9f4(var8)) func_02033920(var8, var0->unknown_20_, 1);
+        Vector3fix targetPosition = other->obj3D_.position_;
+        Vector3fix actorPosition = actor->obj3D_.position_;
+        int actorRadius = actor->obj3D_.GetRadius() / 2;
+        int targetRadius = other->obj3D_.GetRadius() / 2;
+        int distance = Vector3fix_Distance(&actorPosition, &targetPosition) - actorRadius - targetRadius - command->margin;
+        Vector3fix direction;
+        Vector3fix_Subtract(&targetPosition, &actorPosition, &direction);
+        Vector3fix_Normalize(&direction, &direction);
+        Vector3fix movement;
+        Vector3fixMultiplyScalar(&direction, distance, &movement);
+        Vector3fix destination;
+        Vector3fix_Add(&actorPosition, &movement, &destination);
+        Rec021eee48 entry;
+        ResetFields_021de110(&entry);
+        entry.type = 0;
+        entry.delay = delay;
+        entry.id = node->id;
+        entry.duration = duration;
+        entry.target.position = destination;
+        PushNodeFromFreeList_021eee48(queue, &entry);
+        int angle = fix32_Atan2(direction.x, direction.z);
+        int turnDuration = 250;
+        if (duration < turnDuration) turnDuration = duration;
+        entry.type = 1;
+        entry.duration = turnDuration;
+        entry.target.angle = angle;
+        if (list->head) entry.id = list->head->id;
+        else entry.id = 0;
+        PushNodeFromFreeList_021eee48(queue, &entry);
+        entry.type = 1;
+        entry.id = node->id;
+        entry.duration = duration;
+        entry.target.angle = fix32_Atan2(direction.x, direction.z);
+        PushNodeFromFreeList_021eee48(queue, &entry);
+        if (func_ov025_021df9f4(other)) GameObject_FaceGameObject(other, node->id, 1);
     }
     return 1;
 }

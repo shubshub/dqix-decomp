@@ -33,7 +33,7 @@ extern "C" void func_020465c0(Struct_020465c0*, int, int);
 extern "C" void func_020465f0(unsigned char*, int, unsigned char);
 extern "C" void func_020465d8(unsigned char*, int, unsigned char);
 extern "C" void func_02042428(char*, int);
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 
 extern "C" ARM void func_ov012_02189af4(char* editor, char* text, int hidden) {
     if (!text) return;

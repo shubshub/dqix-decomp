@@ -10,7 +10,7 @@ struct Struct_0205c570;
 int MessageSystem_GetInstance(void);
 int GetActiveScaledSum0205c570(struct Struct_0205c570* s);
 void SetField0x1e20_02042b10(void* obj, void* value);
-void EmitScaledField0x440_0202f404(void* obj, int a, int b);
+void WindowFrame_Draw(void* obj, int a, int b);
 void InitSelfPointer_02042b1c(unsigned char* base);
 int CheckGlobalObjState2AndInit0205cde8(unsigned char* p);
 #if defined(jpn)
@@ -65,11 +65,11 @@ extern "C" ARM void func_0205c96c(unsigned char* arg0, int arg1) {
         color = 0x3def;
     }
 
-    if (arg1 == 0) {
-        *(short*)(arg0 + 0xcc) = var4;
-        func_02042b10(var0, arg0 + 0xb4);
-        func_0202f404(var0 + RG(0x19e0, 0x1804), 1, 1);
-        func_02042b1c(var0);
+    if (flag == 0) {
+        *(short*)(obj + 0xcc) = color;
+        SetField0x1e20_02042b10(ctx, obj + 0xb4);
+        WindowFrame_Draw(ctx + RG(0x19e0, 0x1804), 1, 1);
+        InitSelfPointer_02042b1c(ctx);
     }
 
     if (func_0205cde8(arg0) == 0) {

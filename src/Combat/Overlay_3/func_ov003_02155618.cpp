@@ -10,11 +10,11 @@ enum { Enum_ov003_02155618_490 = 0x1ea };
 enum { Enum_ov003_02155618_486 = 0x1e6 };
 #endif
 
-struct Struct_020676e0;
-extern "C" int func_020100f8(char* arg0);
-extern "C" int func_020a27c4(struct Struct_020676e0* arg0);
-extern "C" int func_ov003_021550dc(void* arg0);
-extern "C" int func_ov003_02155208(void* arg0);
+struct IntField0x23c_020a27c4;
+int GameState_GetFollowCamera(char* obj);
+int GetIntAt0x23c(struct IntField0x23c_020a27c4* obj);
+extern "C" int func_ov003_021550dc(void* obj);
+extern "C" int func_ov003_02155208(void* self);
 
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
@@ -36,10 +36,10 @@ extern "C" ARM int func_ov003_02155618(char* arg0) {
     int var0 = 0;
     int var1 = var0;
 
-    GameState* var2 = GameState::GetInstance();
-    struct Struct_020676e0* var3 = (struct Struct_020676e0*)func_020100f8((char*)var2);
-    if (var3 != 0 && ((*((unsigned char*)var3 + 0x244) & 2) != 0 || func_020a27c4(var3) == 0)) {
-        var1 = (g_keyManager.TestKeysPressed(0x200) != 0) ? 1 : 0;
+    GameState* battle = GameState::GetInstance();
+    struct IntField0x23c_020a27c4* p = (struct IntField0x23c_020a27c4*)GameState_GetFollowCamera((char*)battle);
+    if (p != 0 && ((*((unsigned char*)p + 0x244) & 2) != 0 || GetIntAt0x23c(p) == 0)) {
+        flagB = (g_keyManager.TestKeysPressed(0x200) != 0) ? 1 : 0;
     }
 
     if (func_ov003_021550dc(obj) != 0 || flagB != 0) {

@@ -32,7 +32,7 @@ ARM void ResetStateAndCleanup021842d8(struct Struct021842d8* obj) {
         ((BackgroundLoader*)(x))->RemoveTask((int)(obj->field4));
         obj->field4 = -1;
     }
-    GameObject* c = GameState::GetInstance()->GetUnknownGameObject();
+    GameObject* c = GameState::GetInstance()->GetLeader();
     if (c != NULL) {
         GameObject_EnableControl(c);
     }

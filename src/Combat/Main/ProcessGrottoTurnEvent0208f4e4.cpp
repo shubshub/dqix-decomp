@@ -11,7 +11,7 @@ enum { kMetadataOffset = 0x6c };
 #include "Resource/GameResources.h"
 
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void func_0208f68c(void* obj);
@@ -27,7 +27,7 @@ ARM void ProcessGrottoTurnEvent0208f4e4(unsigned char* obj) {
     if (obj[0xb5]) {
         func_0208f68c(obj);
     }
-    if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)headList) == 10) return;
+    if (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)headList) == 10) return;
     GrottoStruct* grotto = battle->GetGrottoStruct();
     TreasureMapMetadata* meta = (TreasureMapMetadata*)((char*)grotto + kMetadataOffset);
     unsigned short zoneId = *(unsigned short*)miscPtr;

@@ -31,18 +31,19 @@ struct Struct_ov017_021d6d18 {
 
 extern const Struct_ov017_021d6d18 data_ov017_021d6d18;
 
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_020546a8(void* arg0);
-extern "C" void func_0202738c(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02027304(void* arg0, int arg1);
-extern "C" void func_ov017_021b86f8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_0202c508(void* arg0);
-extern "C" Struct_0207d7f4* func_0207d78c(void);
-extern "C" void func_0207da7c(Struct_0207d7f4* arg0, unsigned short arg1);
-extern "C" void func_ov017_021a33e0(void* arg0, int arg1);
-extern "C" void func_02053f7c(Struct_02053f7c_3* arg0, unsigned short arg1, int arg2);
-extern "C" void func_ov017_021907dc(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov017_02197324(unsigned char* arg0, unsigned short arg1);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* gameState, int combatantId);
+int GetSignedByte0x2d0_020546a8(void* obj);
+extern "C" void func_0202738c(void* a, int b, int c, int d);
+extern "C" void func_02027304(void* obj, int id);
+extern "C" void func_ov017_021b86f8(void* obj, int key, int a, int flag);
+extern "C" int LinkSession_IsHostOrSolo(void* search);
+Entry0207d9bc* GetData02108ea8_0207d78c(void);
+void ResetEntryByKey0207da7c(Entry0207d9bc* arr, unsigned short key);
+void EnqueueEventForFlaggedCombatants_021a33e0(void* ctx, int key);
+void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c* obj, unsigned short a, int b);
+#define SetField0x1b2IfMatchOrFlag02053f7c SetField0x1b2IfMatchOrFlag02053f7c
+void CallHelperWithBuf_021907dc(int a, int b, int c, int d, int e);
+void ClearMatchingHalfword_02197324(unsigned char* obj, unsigned short key);
 
 // USA: func_ov017_021c8c44
 extern "C" ARM void func_ov017_021c8c44(int arg0, Struct_ov017_021c8c44* arg1, GameState* arg2, unsigned char* arg3, void* arg4) {
@@ -76,17 +77,17 @@ extern "C" ARM void func_ov017_021c8c44(int arg0, Struct_ov017_021c8c44* arg1, G
     func_ov017_021b86f8(*(void**)(arg3 + 0x3718), var1, 1, var2);
 #endif
 
-    if (func_0202c508(arg4)) {
-        func_0207da7c(func_0207d78c(), var1);
-        if (var3 != -1) {
-            Struct_ov017_021d6d18 var8 = data_ov017_021d6d18;
-            int var9 = 0;
-            for (var6 = 0; var6 < 4; var6++) {
-                Struct_ov017_021c8c44_2* var10 = (Struct_ov017_021c8c44_2*)arg2->GetPartyMemberByIndex(var6);
-                if (var10 != NULL) {
-                    if (var3 == var10->unknown_0_.GetField06() || var3 == var10->unknown_15c_) {
-                        var8.unknown_0_[var9] = var6;
-                        var9++;
+    if (LinkSession_IsHostOrSolo(search)) {
+        ResetEntryByKey0207da7c(GetData02108ea8_0207d78c(), key);
+        if (target != -1) {
+            IndexList021c8c44 list = data_ov017_021d6d18;
+            int n = 0;
+            for (i = 0; i < 4; i++) {
+                Combatant021c8c44* m = (Combatant021c8c44*)gs->GetPartyMemberByIndex(i);
+                if (m != NULL) {
+                    if (target == m->obj3D.GetField06() || target == m->field_15c) {
+                        list.idx[n] = i;
+                        n++;
                     }
                 }
             }

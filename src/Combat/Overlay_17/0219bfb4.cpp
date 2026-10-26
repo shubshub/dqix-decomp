@@ -35,14 +35,14 @@ struct Struct_020a83fc_2 {
     int unknown_24_;
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 void* GameState_GetParty(GameState* gameState);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
-extern "C" int func_0202c540(void* p);
+void* GameState_GetZoneTransition(GameState* battleStruct);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" int func_0206e558(void* obj);
-extern "C" int func_0202c508(void* p);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 extern "C" void __clear(void* dst, unsigned int size);
 void ClearStruct020a8170(Struct020a8170* s);
@@ -52,10 +52,10 @@ Entry020a83fc* FindEntryById020a83fc(Container020a83fc* cont, int id);
 extern "C" void func_ov017_021d1a18(short a, short b, int c, int d);
 void SetHalfFieldsAndEnqueueIfActive_021d1c2c(unsigned char a, unsigned short b);
 void InitStruct02070378(char* obj);
-void InitAndResetHeader_0219e310(unsigned char* node, int v);
+void FieldTask_InitEnterZone(unsigned char* node, int v);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void ClearFlagBytes02017d7c(void* obj);
-void ClearFlag0x1ceBit0x4_02039d58(unsigned char* obj);
+void GameObject_ClearHidden(unsigned char* obj);
 void SetFlag0x1ceBit0x4_02039d48(unsigned char* obj);
 int MessageSystem_GetInstance(void);
 void MessageSystem_Reset(char* obj);
@@ -68,7 +68,7 @@ void SetBit5_021b2c0c(S021b2c0c* obj, unsigned int v);
 void SetBit3_021b2bdc(S021b2bdc* obj, unsigned int v);
 int LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
 void ResetListHeader020727d8(List020727d8* list);
-int GetField5cb0Value_0201079c(char* obj);
+int GameState_GetStoryChapter(char* obj);
 void SubmitAndRunScript02072928(void* list, StreamHeader* header, int length, int id, void* out, unsigned char index);
 int STD_CompareString(const char* a, const char* b);
 extern "C" int func_02005a94(signed char* s);
@@ -89,28 +89,28 @@ extern "C" ARM void func_ov017_0219bfb4(int mode, unsigned short id) {
     GameResources* res = GetGameResources();
     GameState* gs = GameState::GetInstance();
     char* party = (char*)GameState_GetParty(gs);
-    char* record = (char*)GetField0x3f8Address_0200fd0c(gs);
-    void* search = func_0202ae18();
+    char* record = (char*)GameState_GetZoneTransition(gs);
+    void* search = LinkSession_GetInstance();
     char* field = (char*)Zone3D_GetInstance();
     unsigned char* flags = (unsigned char*)Scenario_GetInstance();
     char* status = field + kStatusOffset;
     TailList020469b4* list = (TailList020469b4*)res->fieldTaskQueue_;
     unsigned char* node = (unsigned char*)res->unknown_ptr_array_3700[3];
     unsigned char* marker = (unsigned char*)res->unknown_ptr_array_371c[4];
-    BackgroundLoader::GetInstance()->MaybeFreeAllocations();
+    BackgroundLoader::GetInstance()->FreeAllocations();
 
     unsigned short var11 = arg1;
     if (arg1 == 0) {
         var11 = *(int*)(var2 + 0x2c94);
     }
 
-    if (func_0202c540(var4)) {
-        func_0206e558(var6);
+    if (LinkSession_IsGuest(search)) {
+        func_0206e558(flags);
     }
     if (arg0 == 2) {
         var7[Enum_ov017_0219bfb4_610] = 0;
     }
-    if (mode == 2 && func_0202c508(search)) {
+    if (mode == 2 && LinkSession_IsHostOrSolo(search)) {
         if (Scenario_TestFlag((int)flags, flags + 0x8c, 0x2b)) {
             char buf[0x533];
             __clear(buf, 0x533);
@@ -142,26 +142,26 @@ extern "C" ARM void func_ov017_0219bfb4(int mode, unsigned short id) {
         }
     }
 
-    if (var9[2] == 0) {
-        func_02070378(var3);
-        *(unsigned short*)var3 = var11;
-        var3[0xc] = 0;
-        func_ov017_0219e310(var9, 0);
-        func_020469b4(var8, (Struct_0201bdac*)var9);
-    } else if (var9[3] == 0) {
-        func_02070378(var3);
-        *(unsigned short*)var3 = var11;
-        var3[0xc] = 0;
+    if (node[2] == 0) {
+        InitStruct02070378(record);
+        *(unsigned short*)record = sceneId;
+        record[0xc] = 0;
+        FieldTask_InitEnterZone(node, 0);
+        AppendNodeToTail(list, (TailNode020469b4*)node);
+    } else if (node[3] == 0) {
+        InitStruct02070378(record);
+        *(unsigned short*)record = sceneId;
+        record[0xc] = 0;
     }
 
-    func_02017d7c(var5);
-    ((unsigned char*)var3)[0x6e] |= 0x20;
-    for (int var17 = 0; var17 < *(unsigned char*)(var2 + 0xf7c); var17++) {
-        GameObject* var18 = var1->GetPartyMemberByIndex(*(unsigned char*)(var2 + var17 + 0xf78));
-        if (var18) {
-            if (var17 == 0) {
-                func_02039d58((unsigned char*)var18);
-                var18->obj3D_.SetInheritedAlpha(0x1f);
+    ClearFlagBytes02017d7c(field);
+    ((unsigned char*)record)[0x6e] |= 0x20;
+    for (int i = 0; i < *(unsigned char*)(party + 0xf7c); i++) {
+        GameObject* member = gs->GetPartyMemberByIndex(*(unsigned char*)(party + i + 0xf78));
+        if (member) {
+            if (i == 0) {
+                GameObject_ClearHidden((unsigned char*)member);
+                member->obj3D_.SetInheritedAlpha(0x1f);
             } else {
                 func_02039d48((unsigned char*)var18);
                 var18->obj3D_.SetInheritedAlpha(0);
@@ -204,7 +204,7 @@ extern "C" ARM void func_ov017_0219bfb4(int mode, unsigned short id) {
     if (arg1 != 0) {
         var24 = arg1;
     }
-    int now = GetField5cb0Value_0201079c((char*)gs);
+    int now = GameState_GetStoryChapter((char*)gs);
     for (int j = 0; j < 3; j++) {
         unsigned char fromIndex = GetScriptIndex(j, 0);
         unsigned char toIndex = GetScriptIndex(j, 1);

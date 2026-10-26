@@ -245,7 +245,7 @@ src/Combat/Overlay_3/func_ov003_0215dd00.cpp:
     complete
     .text start:0x0215dd00 end:0x0215dd3c
 
-src/Combat/Overlay_3/func_ov003_02155ffc.cpp:
+src/Combat/Overlay_3/IsTableValueNot99_02155ffc.cpp:
     complete
     .text start:0x02155ffc end:0x02156034
 
@@ -485,7 +485,7 @@ src/Combat/Overlay_3/UpdateEntryAndScale_0215e2a8.cpp:
     complete
     .text start:0x0215e2a8 end:0x0215e3fc
 
-src/Combat/Overlay_3/UpdateEntryPosition_0216acf0.cpp:
+src/Combat/Overlay_2/func_ov002_0216acf0.cpp:
     complete
     .text start:0x0216acf0 end:0x0216adbc
 
@@ -613,7 +613,7 @@ src/Combat/Overlay_1/SetScaledVec3FieldsAlt_02163f60.cpp:
     complete
     .text start:0x02163f60 end:0x02163fd4
 
-src/Combat/Overlay_3/func_ov003_021716f8.cpp:
+src/Combat/Overlay_3/AdvanceTimerAndMaybeLoop_021716f8.cpp:
     complete
     .text start:0x021716f8 end:0x02171764
 
@@ -1033,7 +1033,7 @@ src/Combat/Overlay_3/UpdateScaleAndInit_02170280.cpp:
     complete
     .text start:0x02170280 end:0x021702e4
 
-src/Combat/Overlay_3/func_ov003_02171af0.cpp:
+src/Combat/Overlay_3/UpdateSearchAndDispatch_02171af0.cpp:
     complete
     .text start:0x02171af0 end:0x02171ba0
 

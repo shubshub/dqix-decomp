@@ -66,7 +66,7 @@ extern const SoundIds data_ov023_021fd870;
 extern const char data_ov023_021fd45c[];
 extern "C" void func_0204500c(Struct_02081870*, const char*, int);
 #endif
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 TextRenderer* MessageSystem_GetInstance();
 unsigned int* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int*, unsigned int);
@@ -76,21 +76,21 @@ void BgmPlayer_FadeOut(Actor0209c678*, int);
 extern "C" void func_ov000_0216d370(void*, int, int, int);
 extern "C" void* func_02057924();
 extern "C" void func_02057f00(void*, int);
-extern "C" void func_020d6f0c(Struct_020d6f0c*);
-extern "C" void func_020d6d18(Struct_020d6d18_2*);
-extern "C" void func_ov000_021823a4(char*);
-extern "C" Struct_0203a54c* func_02039e70();
-extern "C" void func_0203a54c(Struct_0203a54c*);
-extern "C" void func_0209a338(Struct_0200f3a4_8*);
-extern "C" void func_0209a804(int*);
-extern "C" void func_ov023_021f52a0(void*);
-extern "C" void func_0206efc4(void*);
-extern "C" void func_020a1ef0(int);
-extern "C" void func_ov023_021f52f8(void*, void*);
-extern "C" int func_0202c540(void*);
+void DestroyAllocatorAt0xa28(Obj020d6f0c*);
+void ConstructEntryManager020d6d18(Container020d6d18*);
+void ResetArrayAndEntry021823a4(char*);
+Container0203a54c* NumberPopups_GetInstance();
+void NumberPopups_UnloadSprites(Container0203a54c*);
+void ClearFirstTwoWords0209a338(Pair0209a338*);
+void ClearField00209a804(int*);
+void ResetAndInit_021f52a0(void*);
+void Clear12Bytes0206efc4(void*);
+void PushInputLogB_020a1ef0(int);
+void InitAndDispatch_021f52f8(void*, void*);
+extern "C" int LinkSession_IsGuest(void*);
 extern "C" void func_02046380(TextRenderer*);
 extern "C" ZoneData* Zone3D_GetInstance();
-void Clear12Bytes020e46c4(void*);
+void NameText_Clear(void*);
 void* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
 extern "C" Words021edf38 func_ov023_021ed804(Words021edf38, void*);
 void SetWords_021edf38_021edf38(void*, Words021edf38*);
@@ -98,12 +98,12 @@ const char* StandardStrings_Get(int);
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_02081870*, const char*, int, int);
 #endif
-extern "C" void func_0209c6d8(void*, int);
-extern "C" int func_0202c508(void*);
-extern "C" Struct_020e385c* func_020e3808();
-extern "C" void func_020e3994(Struct_020e385c*, int, int);
-extern "C" void func_020e392c(Struct_020e385c*, int, int);
-extern "C" void func_020e39d4(Struct_020e385c*, int, int, int);
+void ResetAndDispatchActorContext0209c6d8(void*, int);
+extern "C" int LinkSession_IsHostOrSolo(void*);
+TagValueEntry020e385c* GetData02153660_020e3808();
+void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
+void RegisterTaggedEntryAndNotifyOverlay020e392c(TagValueEntry020e385c*, int, int);
+void SetEntryBitUnlessMatching020e39d4(TagValueEntry020e385c*, int, int, int);
 
 static inline SafeAllocator* inline_ov000_02166804(GameResources* arg0, int arg1) {
     return &arg0->allocator_array_38[arg1];
@@ -118,7 +118,7 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
 #endif
 
     GameResources* resources = GetGameResources();
-    void* mode = func_0202ae18();
+    void* mode = LinkSession_GetInstance();
     TextRenderer* renderer = MessageSystem_GetInstance();
     FlagWord_SetBits(GlobalFlags_GetInstance(), 0x20000);
     EnqueueEventTag86_021c9ad4(self->battle_->event_);
@@ -133,35 +133,35 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
         ConstructEntryManager020d6d18((Container020d6d18*)self->manager_);
         self->manager_ = 0;
     }
-    func_ov000_021823a4(arg0->unknown_6ffc_);
-    func_0203a54c(func_02039e70());
-    SafeAllocator* const var7 = inline_ov000_02166804(var1, 5);
-    var7->Reset();
-    Struct_ov023_021edc08* var8 = (Struct_ov023_021edc08*)var7->Allocate(sizeof(Struct_ov023_021edc08));
-    _ZZ21inline_ov023_021f4c04vE1s.unknown_0_ = var8;
-    var8->unknown_0_ = 0;
-    var8->unknown_4_[0] = -1;
-    var8->unknown_4_[1] = -1;
-    var8->unknown_4_[2] = -1;
-    var8->unknown_10_ = 0;
-    var8->unknown_18_ = -1;
-    var8->unknown_70_ = 0;
-    var8->unknown_e2_ = 0;
-    var8->unknown_e4_ = -1;
-    var8->unknown_11_ = 0;
-    for (int var9 = 0; var9 < 4; ++var9) var8->unknown_12_[var9] = 0;
-    var8->unknown_e5_ = -1;
-    memset(var8->unknown_1c_, 0, sizeof(var8->unknown_1c_));
-    memset(&var8->unknown_6c_, 0, 4);
-    memset(var8->unknown_118_, 0, sizeof(var8->unknown_118_));
-    var8->unknown_2788_ = 0;
-    func_0209a338(&var8->unknown_e8_);
-    func_0209a804(&var8->unknown_f0_);
-    func_ov023_021f52a0(var8->unknown_f4_);
-    func_0206efc4(&var8->unknown_10c_);
-    func_020a1ef0(1);
-    func_ov023_021f52f8(_ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_f4_, var7);
-    if (func_0202c540(var2) && arg0->unknown_2a0_->unknown_25_) {
+    ResetArrayAndEntry021823a4(self->entries_);
+    NumberPopups_UnloadSprites(NumberPopups_GetInstance());
+    SafeAllocator* const allocator = GetAllocator(resources, 5);
+    allocator->Reset();
+    CombatWork* work = (CombatWork*)allocator->Allocate(sizeof(CombatWork));
+    _ZZ17GetGlobal021ffefcvE1s.work_ = work;
+    work->state_ = 0;
+    work->tasks_[0] = -1;
+    work->tasks_[1] = -1;
+    work->tasks_[2] = -1;
+    work->field10_ = 0;
+    work->field18_ = -1;
+    work->field70_ = 0;
+    work->fieldE2_ = 0;
+    work->rewardIndex_ = -1;
+    work->field11_ = 0;
+    for (int i = 0; i < 4; ++i) work->flags_[i] = 0;
+    work->fieldE5_ = -1;
+    memset(work->buffer_, 0, sizeof(work->buffer_));
+    memset(&work->field6C_, 0, 4);
+    memset(work->data_, 0, sizeof(work->data_));
+    work->field2788_ = 0;
+    ClearFirstTwoWords0209a338(&work->pair_);
+    ClearField00209a804(&work->fieldF0_);
+    ResetAndInit_021f52a0(work->dispatch_);
+    Clear12Bytes0206efc4(&work->words_);
+    PushInputLogB_020a1ef0(1);
+    InitAndDispatch_021f52f8(_ZZ17GetGlobal021ffefcvE1s.work_->dispatch_, allocator);
+    if (LinkSession_IsGuest(mode) && self->battle_->special_) {
 #if defined(jpn)
         GameObject* member = game->GetPartyMemberByIndex(0);
         DetailedTreasureMapData* detail = Zone3D_GetInstance()->grotto_.GetDetailedData();
@@ -172,7 +172,7 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
         func_02046380(renderer);
         GrottoRewardView* rewards = (GrottoRewardView*)&Zone3D_GetInstance()->grotto_.GetDetailedData()->regular_;
         Words021edf38 words;
-        Clear12Bytes020e46c4(&words);
+        NameText_Clear(&words);
         BattleInfo* battle = self->battle_;
         for (int i = 0; i < 3; ++i) {
             void* found = SearchWithComparator0206f4f0(&battle->rewards_, rewards->ids_[i]);
@@ -191,11 +191,11 @@ extern "C" ARM int func_ov023_021edc08(Struct_ov023_021edc08_6* arg0) {
         renderer->active_ = 1;
         ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x36);
     }
-    if (func_0202c508(var2) && arg0->unknown_2a0_->unknown_c_ == 19) {
-        Struct_020e385c* var20 = func_020e3808();
-        func_020e3994(var20, 1, -1);
-        func_020e392c(var20, 1, 0x71e8);
-        func_020e39d4(var20, 0, 1, 0x71e8);
+    if (LinkSession_IsHostOrSolo(mode) && self->battle_->type_ == 19) {
+        TagValueEntry020e385c* tags = GetData02153660_020e3808();
+        ResetTaggedEntryAndNotifyOverlay020e3994(tags, 1, -1);
+        RegisterTaggedEntryAndNotifyOverlay020e392c(tags, 1, 0x71e8);
+        SetEntryBitUnlessMatching020e39d4(tags, 0, 1, 0x71e8);
     }
     return 1;
 }

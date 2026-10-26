@@ -26,7 +26,7 @@ extern "C" ARM void FieldTask_OpenCupboard(struct Obj_021bf534* obj) {
  enum {regionalOffset0=0x2d8};
 #endif
     GameState* battleStruct = GameState::GetInstance();
-    GameObject* combatant = battleStruct->GetUnknownGameObject();
+    GameObject* combatant = battleStruct->GetLeader();
     GameResources* ov = GetGameResources();
     if (ov) {
         GameResources_UpdateSpecialItemEffect(ov);

@@ -51,8 +51,8 @@ struct Struct_ov023_021f00fc_4 {
 extern "C" Struct_ov023_021f00fc_3* _ZZ21inline_ov023_021f4c04vE1s;
 
 void MessageSystem_GetInstance();
-int CheckField0NonZero_0202b7d8(int* unknown);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* unknown);
+int LinkSession_IsActive(int* unknown);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4* unknown);
 int CollectCombatantsWithFlag0x1000_02010038(GameState* gameState, unsigned char* members);
 int TestBitAt0x34_020a35e0(unsigned char* info, unsigned char member);
 BattleResultMember_021f00fc* FindByByteAt118_021f0360(void* end, int member);
@@ -62,11 +62,11 @@ void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* scene, int flag);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* scene, int flag);
 
 extern "C" {
-void __clear(void* arg0, unsigned long arg1);
-void* func_0202ae18();
-void func_ov017_021cd590(unsigned short arg0, int* arg1, unsigned char arg2, int arg3);
-void func_ov017_021cd35c(unsigned short arg0, void* arg1, unsigned char arg2, signed char arg3);
-int func_ov023_021f5150(Struct_ov023_021f00fc_4* arg0, Struct_ov023_021f00fc* arg1, int* arg2, int* arg3, int arg4);
+void __clear(void* buffer, unsigned long size);
+void* LinkSession_GetInstance();
+void func_ov017_021cd590(unsigned short a, int* experience, unsigned char b, int c);
+void func_ov017_021cd35c(unsigned short a, void* drops, unsigned char count, signed char mask);
+int func_ov023_021f5150(BattleScene_021f00fc* self, BattleInfo_021f00fc* info, int* experience, int* gold, int legacy);
 }
 
 // USA: func_ov023_021f00fc
@@ -74,9 +74,9 @@ extern "C" ARM int func_ov023_021f00fc(Struct_ov023_021f00fc_4* arg0)
 {
     GameState* gameState = GameState::GetInstance();
     MessageSystem_GetInstance();
-    void* unk = func_0202ae18();
+    void* unk = LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
-    if (!CheckField0NonZero_0202b7d8((int*)unk) || self->info_->leader_ == GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)unk))
+    if (!LinkSession_IsActive((int*)unk) || self->info_->leader_ == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)unk))
     {
         unsigned char var3[4];
         __clear(var3, sizeof(var3));

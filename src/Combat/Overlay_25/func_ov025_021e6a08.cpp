@@ -1,79 +1,79 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov000_0215440c_2;
-struct Struct_ov000_0215440c;
-struct Struct_ov000_02160094 { char unknown_0_[0x20]; unsigned short unknown_20_; };
-struct Struct_ov000_021600f8 { char unknown_0_[0xe]; short unknown_e_; };
-struct Struct_ov025_021ef9a8 { int unknown_0_[6]; };
-struct Struct_ov025_021ef988_24 { char unknown_0_[0x20]; int unknown_20_; };
-struct Struct_ov025_021e6a08 { int unknown_0_, unknown_4_, unknown_8_; };
-struct Struct_02048c90;
-struct Struct_02010604 { Object3D unknown_0_; char unknown_ac_[0x14]; unsigned char unknown_c0_; };
-struct Struct_ov023_021f2a48 { char unknown_0_[0x14]; unsigned int unknown_14_; };
-extern "C" Struct_ov000_02160094* func_ov000_02160094(Struct_ov000_0215440c_2*, int);
-extern "C" Struct_ov000_021600f8* func_ov000_021600f8(Struct_ov000_0215440c*, int);
-extern "C" void func_ov025_021e3158(Struct_ov025_021ef9a8*);
-extern "C" void func_02049ae4(unsigned char*);
-extern "C" int func_02048c10(unsigned char*);
-extern "C" int func_020882f8(unsigned char*);
-extern "C" void func_02033920(GameObject*, int, int);
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" void func_02048c90(Struct_02048c90*);
-extern Struct_ov025_021ef9a8 data_ov025_021ef9a8;
-extern Struct_ov025_021ef988_24 data_ov025_021ef988;
+struct List02160094;
+struct List021600f8;
+struct ListNode02160094 { char pad0[0x20]; unsigned short id; };
+struct ListNode021600f8 { char pad0[0xe]; short id; };
+struct Reset021e3158 { int fields[6]; };
+struct MovementState { char pad0[0x20]; int state; };
+struct ApproachCommand { int field0, field4, distance; };
+struct Obj02048c90;
+struct Bytes02033b88 { Object3D object; char padAc[0x14]; unsigned char animation; };
+struct CombatStatus { char pad0[0x14]; unsigned int flags; };
+ListNode02160094* GetNodeAtIndex02160094(List02160094*, int);
+ListNode021600f8* GetNodeAtIndex021600f8(List021600f8*, int);
+void ResetStruct_021e3158(Reset021e3158*);
+void ClearSubstructFlag0x4_02049ae4(unsigned char*);
+int CheckSubstructFlag0x200_02048c10(unsigned char*);
+int CheckFlag0x14Bit0x10Set_020882f8(unsigned char*);
+extern "C" void GameObject_FaceGameObject(GameObject*, int, int);
+int GameObject_ForceMotionState(Bytes02033b88*, int);
+void ResetInnerState02048c90(Obj02048c90*);
+extern Reset021e3158 data_ov025_021ef9a8;
+extern MovementState data_ov025_021ef988;
 
 // USA: func_ov025_021e6a08
-extern "C" ARM int func_ov025_021e6a08(Struct_ov025_021e6a08* arg0, Struct_ov000_0215440c_2* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov000_02160094* var1 = func_ov000_02160094(arg1, 0);
-    Struct_ov000_021600f8* var2 = func_ov000_021600f8((Struct_ov000_0215440c*)arg1, 0);
-    if (!var1 || !var2) { func_ov025_021e3158(&data_ov025_021ef9a8); return 1; }
-    GameObject* var3 = var0->GetCombatantByIndex(var1->unknown_20_);
-    GameObject* var4 = var0->GetCombatantByIndex(var2->unknown_e_);
-    if (!var3 || !var4) { func_ov025_021e3158(&data_ov025_021ef9a8); return 1; }
-    int var5 = 0;
-    if (data_ov025_021ef988.unknown_20_ == 0) {
-        func_02049ae4((unsigned char*)var3);
-        var5 = 1;
-        if (!func_02048c10((unsigned char*)var4) && !(((Struct_ov023_021f2a48*)var4->currentStats_)->unknown_14_ & 8) && !func_020882f8((unsigned char*)var4->currentStats_)) {
-            func_02033920(var4, var1->unknown_20_, var5);
+extern "C" ARM int func_ov025_021e6a08(ApproachCommand* command, List02160094* list) {
+    GameState* game = GameState::GetInstance();
+    ListNode02160094* actorNode = GetNodeAtIndex02160094(list, 0);
+    ListNode021600f8* targetNode = GetNodeAtIndex021600f8((List021600f8*)list, 0);
+    if (!actorNode || !targetNode) { ResetStruct_021e3158(&data_ov025_021ef9a8); return 1; }
+    GameObject* actor = game->GetCombatantByIndex(actorNode->id);
+    GameObject* target = game->GetCombatantByIndex(targetNode->id);
+    if (!actor || !target) { ResetStruct_021e3158(&data_ov025_021ef9a8); return 1; }
+    int started = 0;
+    if (data_ov025_021ef988.state == 0) {
+        ClearSubstructFlag0x4_02049ae4((unsigned char*)actor);
+        started = 1;
+        if (!CheckSubstructFlag0x200_02048c10((unsigned char*)target) && !(((CombatStatus*)target->currentStats_)->flags & 8) && !CheckFlag0x14Bit0x10Set_020882f8((unsigned char*)target->currentStats_)) {
+            GameObject_FaceGameObject(target, actorNode->id, started);
         }
         data_ov025_021ef988.unknown_20_ = 1;
     }
-    if (data_ov025_021ef988.unknown_20_ == 1) {
-        Vector3i var6 = var3->obj3D_.position_;
-        Vector3i var7 = var4->obj3D_.position_;
-        int var8 = var3->obj3D_.GetRadius() + var4->obj3D_.GetRadius();
-        int var9 = arg0->unknown_8_ + var8 / 2;
-        int var10 = Vector3fix_Distance(&var6, &var7);
-        if (!var10) { func_ov025_021e3158(&data_ov025_021ef9a8); return 1; }
-        if (var10 < var9) { func_ov025_021e3158(&data_ov025_021ef9a8); return 1; }
-        Vector3i var11;
-        Vector3fix_Subtract(&var7, &var6, &var11);
-        var9 = var10 - var9;
-        Vector3i var12;
-        Vector3fixMultiplyScalar(&var11, fix32_Divide(var9, var10), &var12);
-        Vector3i var13;
-        Vector3fix_Add(&var6, &var12, &var13);
-        Vector3i var14;
-        Vector3fix_Subtract(&var13, &var6, &var14);
-        Vector3fixMultiplyScalar(&var14, fix32_Divide(0x1000, 0x4000), &var14);
-        int var15 = Vector3fix_Length(&var14);
-        if (var15 > 0x333) Vector3fixMultiplyScalar(&var14, fix32_Divide(0x333, var15), &var14);
-        else if (((Struct_02010604*)var3)->unknown_c0_ != 6) func_02033b88((Struct_02010604*)var3, 0);
-        Vector3i var16;
-        Vector3fix_Add(&var6, &var14, &var16);
-        var3->obj3D_.position_ = var16;
-        if (var9 < 0x28 || (!var5 && ((Struct_02010604*)var3)->unknown_c0_ == 0)) {
-            func_02033b88((Struct_02010604*)var3, 0);
-            func_ov025_021e3158(&data_ov025_021ef9a8);
+    if (data_ov025_021ef988.state == 1) {
+        Vector3i position = actor->obj3D_.position_;
+        Vector3i targetPosition = target->obj3D_.position_;
+        int radii = actor->obj3D_.GetRadius() + target->obj3D_.GetRadius();
+        int desiredDistance = command->distance + radii / 2;
+        int distance = Vector3fix_Distance(&position, &targetPosition);
+        if (!distance) { ResetStruct_021e3158(&data_ov025_021ef9a8); return 1; }
+        if (distance < desiredDistance) { ResetStruct_021e3158(&data_ov025_021ef9a8); return 1; }
+        Vector3i delta;
+        Vector3fix_Subtract(&targetPosition, &position, &delta);
+        desiredDistance = distance - desiredDistance;
+        Vector3i offset;
+        Vector3fixMultiplyScalar(&delta, fix32_Divide(desiredDistance, distance), &offset);
+        Vector3i destination;
+        Vector3fix_Add(&position, &offset, &destination);
+        Vector3i step;
+        Vector3fix_Subtract(&destination, &position, &step);
+        Vector3fixMultiplyScalar(&step, fix32_Divide(0x1000, 0x4000), &step);
+        int length = Vector3fix_Length(&step);
+        if (length > 0x333) Vector3fixMultiplyScalar(&step, fix32_Divide(0x333, length), &step);
+        else if (((Bytes02033b88*)actor)->animation != 6) GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
+        Vector3i nextPosition;
+        Vector3fix_Add(&position, &step, &nextPosition);
+        actor->obj3D_.position_ = nextPosition;
+        if (desiredDistance < 0x28 || (!started && ((Bytes02033b88*)actor)->animation == 0)) {
+            GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
+            ResetStruct_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
     }
-    if (var5) {
-        func_02048c90((Struct_02048c90*)var3);
-        if (((Struct_02010604*)var3)->unknown_c0_ != 6) func_02033b88((Struct_02010604*)var3, 1);
+    if (started) {
+        ResetInnerState02048c90((Obj02048c90*)actor);
+        if (((Bytes02033b88*)actor)->animation != 6) GameObject_ForceMotionState((Bytes02033b88*)actor, 1);
     }
     return 0;
 }

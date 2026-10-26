@@ -64,15 +64,15 @@ struct Struct_ov025_021e9d14_3 {
     unsigned short unknown_e_;
 };
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" int func_ov025_021def24(void* arg0);
-extern "C" void* func_ov000_02160f08(void* arg0);
-extern "C" void* func_ov000_0215feb4(char* arg0, int arg1, int arg2);
-extern "C" struct Struct_ov025_021e9d14_3* func_ov025_021dafd0(char* arg0, int arg1);
-extern "C" struct Struct_0203a588_2* func_02039e70(void);
-struct Struct_0203a48c_2;
-extern "C" void func_0203a48c(Struct_0203a48c_3*, int, Struct_0203a48c_2*, int, int, int);
+void* GetActiveCombatWork_ov000_02160130(void);
+void* GetSlotPtr02160f20(void* work);
+int GetWord_021def24(void* work);
+void* GetOffsetPtr02160f08(void* work);
+void* GetNodeAtIndex0215feb4(char* base, int threshold, int slot);
+struct Entry021e9d14* FindEntryById_021dafd0(char* obj, int id);
+struct Obj0203a588* NumberPopups_GetInstance(void);
+struct Vec3Int0203a48c;
+void NumberPopups_Add(Obj0203a48c*, int, Vec3Int0203a48c*, int, int, int);
 extern "C" void* func_02057924(void);
 void InitStruct02078484(struct InitStruct02078484Struct* p);
 void FindNodeAndProcess02057fb4(void* list, int id, void* config);
@@ -105,10 +105,10 @@ extern "C" ARM void func_ov025_021e9d14(void) {
         if (node->damage != NULL) {
             int amount = -node->damage->amount;
             if (amount > 0) {
-                struct Obj0203a48c* popups = (struct Obj0203a48c*)GetData02104b6c_02039e70();
+                struct Obj0203a48c* popups = (struct Obj0203a48c*)NumberPopups_GetInstance();
                 Vector3fix pos = actor->obj3D_.position_;
                 pos.y += actor->obj3D_.GetHeight();
-                QueuePopupEntry0203a48c(popups, amount, (Vec3Int0203a48c*)&pos, 3, 0, 0);
+                NumberPopups_Add(popups, amount, (Vec3Int0203a48c*)&pos, 3, 0, 0);
                 void* list = func_02057924();
                 struct InitStruct02078484Struct req;
                 InitStruct02078484(&req);

@@ -19,8 +19,8 @@ extern struct SePlayer g_sePlayer;
 extern "C" void func_ov011_02184a40(void* arg0, int arg1);
 
 #if defined(jpn)
-extern "C" void* func_0203bd08(void);
-extern "C" void* func_0203be40(void);
+extern "C" void* OamManager_GetInstance(void);
+extern "C" void* OamManager_GetMainOamBuffer(void);
 #endif
 
 struct Struct_ov023_021faed0 {
@@ -111,13 +111,13 @@ extern "C" ARM void func_ov023_021faed0(struct Obj021faed0* obj, void* arg1) {
                 int cond = *(int*)((char*)state + 0x10c) >= 2;
                 if (cond) selected = obj->f46;
             }
-            if (var10 >= 0) {
-                func_0203bd08();
-                struct Struct_ov000_021700dc { unsigned int unknown_0_; unsigned int unknown_4_; };
-                Struct_ov000_021700dc* var12 = (Struct_ov000_021700dc*)func_0203be40();
-                unsigned int var13 = var12[arg0->unknown_24_].unknown_0_ & 0x3fff3fff;
-                var13 |= var10;
-                var12[arg0->unknown_24_].unknown_0_ = var13;
+            if (selected >= 0) {
+                OamManager_GetInstance();
+                struct Slot { unsigned int word; unsigned int next; };
+                Slot* table = (Slot*)OamManager_GetMainOamBuffer();
+                unsigned int word = table[obj->f24].word & 0x3fff3fff;
+                word |= selected;
+                table[obj->f24].word = word;
             }
 
 #else

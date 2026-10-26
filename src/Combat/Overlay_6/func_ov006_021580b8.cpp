@@ -78,10 +78,10 @@ extern "C" void func_ov006_021587d0(AlchemyMenu*);
 extern "C" void func_ov006_02158914(AlchemyMenu*);
 void GetSublistEntryScaledXY_020807c4(void*, int, short*, short*);
 extern "C" void SpriteContext_DrawSprite(void*, Sprite*);
-extern "C" void* func_0203bd08();
-extern "C" unsigned int func_0203be4c(void*);
-extern "C" void func_02076988(int*, int, int);
-extern "C" void func_02075db0(Struct_02075db0*, int, int);
+extern "C" void* OamManager_GetInstance();
+extern "C" unsigned int OamManager_GetSubOamBuffer(void*);
+void SetFieldsAt0x28And0x2c02076988(int*, int, int);
+void ForwardTableValue02075db0(Struct02075db0*, int, int);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
@@ -282,11 +282,11 @@ extern "C" ARM void func_ov006_021580b8(Struct_ov006_02157a60* arg0)
             sprite->unk_26 = 1;
             SpriteContext_DrawSprite(self->renderer_, sprite);
         }
-        unsigned int var10 = func_0203be4c(func_0203bd08());
-        arg0->unknown_3b8_.unknown_4c_ = 0;
-        arg0->unknown_3b8_.unknown_14_ = var10 + 0x1b8;
-        arg0->unknown_3b8_.unknown_44_ = 0x37;
-        func_02076988((int*)&arg0->unknown_3b8_, 0x1000, 0x1000);
-        func_02075db0((Struct_02075db0*)&arg0->unknown_3b8_, var7 + 8, var8 + 8);
+        unsigned int vram = OamManager_GetSubOamBuffer(OamManager_GetInstance());
+        self->resultSprite_.unk_4c = 0;
+        self->resultSprite_.unk_14 = vram + 0x1b8;
+        self->resultSprite_.unk_44 = 0x37;
+        SetFieldsAt0x28And0x2c02076988((int*)&self->resultSprite_, 0x1000, 0x1000);
+        ForwardTableValue02075db0((Struct02075db0*)&self->resultSprite_, x + 8, y + 8);
     }
 }

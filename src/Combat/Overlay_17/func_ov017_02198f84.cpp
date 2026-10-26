@@ -52,7 +52,7 @@ extern "C" void* Scenario_GetInstance(void);
 int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
 void InitState6_021ab250(struct Struct021ab250* p);
-Pending02198f84* GetField0x3f8Address_0200fd0c(GameState* state);
+Pending02198f84* GameState_GetZoneTransition(GameState* state);
 void SetIntField_021ab698_021ab698(char* p, int v);
 struct TailNode020469b4;
 void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
@@ -78,7 +78,7 @@ extern "C" ARM void func_ov017_02198f84(Self02198f84* self) {
             Zone3D_OpenDoor(ctx, node, 1, 1, 1);
             if ((node->unk_2c.type2.flags & 8) && node->unk_2c.type2.maybeZone != 0) {
                 InitState6_021ab250(self->state6);
-                Pending02198f84* pending = GetField0x3f8Address_0200fd0c(GameState::GetInstance());
+                Pending02198f84* pending = GameState_GetZoneTransition(GameState::GetInstance());
                 if (pending->pending != 0) {
                     node->unk_2c.type2.maybeZone = pending->id;
                     node->unk_2c.type2.vectors_c[0] = pending->pos;

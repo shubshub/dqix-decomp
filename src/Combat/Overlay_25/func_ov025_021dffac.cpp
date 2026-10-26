@@ -34,8 +34,8 @@ extern "C" void func_ov025_021e110c(unsigned char*, Struct_ov025_021dffac_7*, in
 extern "C" int func_02048bd0(unsigned char*);
 extern "C" Struct_ov025_021dffac_8 func_ov000_0216f74c(int*);
 extern "C" void __clear(void*, int);
-extern "C" int func_02031468(const Vector3fix*, const Vector3fix*, const Vector3fix*, Vector3fix*);
-extern "C" void func_ov025_021e1ff4(unsigned char*, unsigned char, unsigned char*, GameObject*, GameObject*, Struct_ov025_021dffac_7*, int);
+extern "C" int Vector3fix_DistanceToSegment(const Vector3fix*, const Vector3fix*, const Vector3fix*, Vector3fix*);
+extern "C" void func_ov025_021e1ff4(unsigned char*, unsigned char, unsigned char*, GameObject*, GameObject*, Entry021dffac*, int);
 extern "C" int func_ov025_021e1f40(GameObject*, int);
 extern "C" void func_ov025_021e16c8(Struct_ov025_021dffac_7*, Struct_ov025_021dffac_7*, unsigned char*, Struct_ov025_021dffac_3*, void*, Struct_ov025_021dffac_7*, int);
 extern "C" void func_ov025_021e1d54(Struct_ov025_021dffac_7*, unsigned char*);
@@ -114,23 +114,23 @@ extern "C" ARM int func_ov025_021dffac(Struct_ov025_021dffac_5* arg0) {
             if (var20[var33]) continue;
             var20[var33] = 1;
         }
-        GameObject* var34 = var0->GetCombatantByIndex(var32);
-        if (!var34) continue;
-        if (var10 == var31) {
-            GameObject* var35 = var0->GetCombatantByIndex(var16);
-            unsigned short var36 = var26->unknown_0_;
-            if (var34 && var35 && func_02048bd0((unsigned char*)var34) && (unsigned int)(var36 - 9) <= 2) {
-                COPY_ARRAY(var25.unknown1_0_, ((const Struct_ov025_021dffac_6*)&var34->obj3D_.position_)->unknown1_0_);
-                COPY_ARRAY(var24.unknown1_0_, ((const Struct_ov025_021dffac_6*)&var35->obj3D_.position_)->unknown1_0_);
-                int var37 = 0;
-                for (int var38 = 0; var38 < 81; ++var38) {
-                    if (var38 % 18 == 17) continue;
-                    Struct_ov025_021dffac_8 var39 = func_ov000_0216f74c(&var38);
-                    __clear(&var22, 12);
-                    var22.unknown_0_.x = var39.unknown_0_;
-                    var22.unknown_0_.z = var39.unknown_4_;
-                    if (func_02031468(&var25.unknown_0_, &var24.unknown_0_, &var22.unknown_0_, &var23.unknown_0_) < 0x1800)
-                        var19[var37++] = var38;
+        GameObject* actor = game->GetCombatantByIndex(actorIndex);
+        if (!actor) continue;
+        if (selectedIndex == i) {
+            GameObject* target = game->GetCombatantByIndex(targetIndex);
+            unsigned short actionID = action->id;
+            if (actor && target && CheckSubstructFlag0x80_02048bd0((unsigned char*)actor) && (unsigned int)(actionID - 9) <= 2) {
+                COPY_ARRAY(sourcePosition.coordinates, ((const Position021dffac*)&actor->obj3D_.position_)->coordinates);
+                COPY_ARRAY(targetPosition.coordinates, ((const Position021dffac*)&target->obj3D_.position_)->coordinates);
+                int candidateCount = 0;
+                for (int cellIndex = 0; cellIndex < 81; ++cellIndex) {
+                    if (cellIndex % 18 == 17) continue;
+                    Cell021dffac cell = func_ov000_0216f74c(&cellIndex);
+                    __clear(&position, 12);
+                    position.vector.x = cell.x;
+                    position.vector.z = cell.z;
+                    if (Vector3fix_DistanceToSegment(&sourcePosition.vector, &targetPosition.vector, &position.vector, &projected.vector) < 0x1800)
+                        candidates[candidateCount++] = cellIndex;
                 }
                 func_ov025_021e1ff4(var19, (unsigned char)var37, var18, var34, var35, var6, var7);
             }

@@ -25,9 +25,9 @@
 
 extern "C"
 {
-    void* func_0202ae18();
-    void* func_0202ae24();
-    void func_0202b2f0(void*);
+    void* LinkSession_GetInstance();
+    void* _Z28LinkMessageQueue_GetInstancev();
+    void LinkSession_Update(void*);
     void func_0205e57c(void*);
 
     int func_020d8704();
@@ -648,9 +648,9 @@ void VRAMStagingManager::SendReadyDataToVRAM()
             queueFront_ = 0;
     }
 
-    void* unknownPtr1 = func_0202ae18();
-    void* unknownPtr2 = func_0202ae24();
-    func_0202b2f0(unknownPtr1);
+    void* unknownPtr1 = LinkSession_GetInstance();
+    void* unknownPtr2 = _Z28LinkMessageQueue_GetInstancev();
+    LinkSession_Update(unknownPtr1);
     func_0205e57c(unknownPtr2);
 
     SetResourceMutexOperational(mutexState);

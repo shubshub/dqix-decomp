@@ -9,8 +9,8 @@ struct Struct_020dc920 {
     unsigned char unknown_0_6_ : 2;
 };
 
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 int GameState_GetProtagonistIndex(GameState* gameState);
 int IsEntryFlagBit11Set_0202be08(struct SearchStruct* search, int id);
 int IsEntryFlagBit13Set_0202be70(struct SearchStruct* search, int id);
@@ -22,11 +22,11 @@ int GetSignedByte0x2d0_020546a8(void* obj);
 extern "C" ARM int func_020dc920(int a, int b, int c, int d) {
     GameState* battle = GameState::GetInstance();
     GameObject* protagonist = battle->GetProtagonist();
-    struct SearchStruct* search = (struct SearchStruct*)func_0202ae18();
+    struct SearchStruct* search = (struct SearchStruct*)LinkSession_GetInstance();
     if (protagonist != NULL) {
         GameObject* party = battle->GetPartyMemberByIndex(a);
         if (party != NULL) {
-            if (CheckField0NonZero_0202b7d8((int*)search) && d) {
+            if (LinkSession_IsActive((int*)search) && d) {
                 int id = a;
                 if (party->obj3D_.unknown_0_ & 0x1000)
                     id = 0;

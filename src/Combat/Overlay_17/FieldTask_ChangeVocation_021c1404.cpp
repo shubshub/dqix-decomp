@@ -12,7 +12,7 @@ enum { Enum_ov017_021c1404_147456 = 0x24000, Enum_ov017_021c1404_828 = 0x33c, En
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Resource/Brightness.h"
 
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void GameObject_EnableControl(void* obj);
@@ -25,7 +25,7 @@ void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern AllocatorUnion g_mainAllocator;
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 extern "C" void func_ov003_02154720(void* arg0, unsigned char arg1);
 extern "C" void func_ov003_021544ec(void* arg0, SafeAllocator* arg1);
@@ -51,8 +51,8 @@ struct Struct_ov017_021c1404 {
 extern "C" ARM void FieldTask_ChangeVocation(struct Obj021c1404* obj) {
 	GameState* battle = GameState::GetInstance();
 	int* word0 = (int*)battle->GetResources();
-	GameObject* combatant = battle->GetUnknownGameObject();
-	int fieldVal = GetFieldIfFlag4_020100f8((char*)battle);
+	GameObject* combatant = battle->GetLeader();
+	int fieldVal = GameState_GetFollowCamera((char*)battle);
 	SetFlags04((GameResources*)word0, 0xc0);
 	if (combatant) {
 		GameObject_DisableControl((struct Obj020397cc*)combatant, 1);
@@ -64,17 +64,17 @@ extern "C" ARM void FieldTask_ChangeVocation(struct Obj021c1404* obj) {
 		func_020a0cc4(kSceneHeapSize);
 		void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, kSceneHeapSize);
 		if (!buf) {
-			func_020a0c0c();
-			arg0->unknown_1_ = 1;
+			ROMFilesystem_InitFileTables();
+			obj->flag1 = 1;
 			return;
 		}
-		arg0->unknown_8_.CreateTypeA(var5, Enum_ov017_021c1404_147456);
-		arg0->unknown_8_.Reset();
-		void* var6 = arg0->unknown_8_.Allocate(Enum_ov017_021c1404_828);
-		data_ov017_021d8478 = (int)var6;
-		if (!var6) {
-			func_020a0c0c();
-			arg0->unknown_1_ = 1;
+		obj->allocator.CreateTypeA(buf, kSceneHeapSize);
+		obj->allocator.Reset();
+		void* mem = obj->allocator.Allocate(kSceneObjectSize);
+		data_ov017_021d8478 = (int)mem;
+		if (!mem) {
+			ROMFilesystem_InitFileTables();
+			obj->flag1 = 1;
 			return;
 		}
 		func_020a1df8(3);
@@ -110,7 +110,7 @@ extern "C" ARM void FieldTask_ChangeVocation(struct Obj021c1404* obj) {
 	GameObject_EnableControl(combatant);
 	ClearFlagBits_020a28b0((unsigned char*)fieldVal, 3);
 	func_ov017_021c1394(obj);
-	func_020a0c0c();
-	arg0->unknown_1_ = 1;
+	ROMFilesystem_InitFileTables();
+	obj->flag1 = 1;
 	func_ov017_021c1264();
 }

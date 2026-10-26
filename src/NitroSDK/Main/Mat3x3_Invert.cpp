@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include <NitroSDK/Matrix.h>
 
-extern "C" void func_020ca528(const void* pSrc, void* pDest);
+extern "C" void MI_Copy36B(const void* pSrc, void* pDest);
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.
 // USA: func_020c12b4
@@ -58,7 +58,7 @@ extern "C" ARM int Mat3x3_Invert(const Matrix3x3* arg0, Matrix3x3* arg1)
 
     if (var1 == &var0)
     {
-        func_020ca528(&var0, arg1);
+        MI_Copy36B(&tmp, out);
     }
 
     return 0;

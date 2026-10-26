@@ -18,7 +18,7 @@ void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
 void Background_SetScroll(BackgroundGraphics*, int, int);
 extern "C" int DisableSubObjVRAMBanks();
 extern "C" int DisableSubBGVRAMBanks();
-extern "C" void func_020c3984(unsigned int);
+void GXS_SetGraphicsMode(unsigned int);
 extern "C" void MapVRAMBanksToSubObj(unsigned short value);
 extern "C" void MapVRAMBanksToSubBG(int);
 extern "C" void func_ov020_0218cd64(int, int, int, int, int);
@@ -85,7 +85,7 @@ extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* arg0, in
 
     DisableSubObjVRAMBanks();
     DisableSubBGVRAMBanks();
-    func_020c3984(0);
+    GXS_SetGraphicsMode(0);
 
     volatile unsigned int* var7 = (volatile unsigned int*)0x4001000;
     *var7 = (*var7 & ~0x1f00) | 0x100;

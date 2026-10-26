@@ -19,7 +19,7 @@ int MessageSystem_GetInstance(void);
 char *ItemTable_Find(struct ItemTable *c, int key);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" void func_02046380(void *g);
-void *Clear12Bytes020e46c4(void *p);
+void *NameText_Clear(void *p);
 void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
 void NameText_InitFromPartyMember(void *obj, int combatantId);
 extern "C" void __clear(void *buf, int n);
@@ -74,8 +74,8 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
     memset(*(void **) (base + 0x1000 + 0xbd0), 0, 0x960);
     memset(*(void **) (base + 0x1000 + 0xbd4), 0, 0x960);
     func_02046380(g);
-    Clear12Bytes020e46c4(base + 8);
-    Clear12Bytes020e46c4(base + 0x14);
+    NameText_Clear(base + 8);
+    NameText_Clear(base + 0x14);
     char *out = *(char **) (base + 0x1000 + 0xbd0);
     char *m   = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 2));
     if (m != NULL) {
@@ -86,7 +86,7 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
     struct Names9900 nm;
     char buf1[0x80];
     char buf2[0x80];
-    Clear12Bytes020e46c4(&nm);
+    NameText_Clear(&nm);
     __clear(buf1, 0x80);
     __clear(buf2, 0x80);
     nm.a = buf1;

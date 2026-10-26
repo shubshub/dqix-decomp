@@ -12,8 +12,8 @@ struct TailList020469b4 { TailNode020469b4* head; TailNode020469b4* tail; };
 struct Obj021a7d78 { char pad[0x30]; short f30; short pad30; int f34; };
 
 int MessageSystem_GetInstance(void);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
-int IsField0Null_02046b08(void** obj);
+int GameObject_IsGesturing(signed char* obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 void EnqueueEventTag170_021d0198(int a, int b, int c, int d);
@@ -24,11 +24,11 @@ extern "C" int func_020dc920(int, int, int, int);
 extern "C" ARM void func_ov017_021a7c94(unsigned char* obj, int id, int arg2) {
     GameState* bs = GameState::GetInstance();
     int g = MessageSystem_GetInstance();
-    GameObject* combatant = bs->GetUnknownGameObject();
+    GameObject* combatant = bs->GetLeader();
     int ok = 1;
     if (*(int*)(g + RegionOffset998) != 0) ok = 0;
-    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)combatant) != 0) ok = 0;
-    if (IsField0Null_02046b08((void**)*(struct TailList020469b4**)(obj + 0x3000 + RegionOffset6fc)) == 0) ok = 0;
+    if (GameObject_IsGesturing((signed char*)combatant) != 0) ok = 0;
+    if (FieldTaskQueue_IsEmpty((void**)*(struct TailList020469b4**)(obj + 0x3000 + RegionOffset6fc)) == 0) ok = 0;
     if (func_020dc920(id & 0xff, 1, 1, 0) == 0) ok = 0;
     int val = GameState_GetProtagonistIndex(bs);
     if (ok) {

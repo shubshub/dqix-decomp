@@ -54,28 +54,28 @@ void Foo0216377c(Struct0216377c* obj, unsigned char val);
 void EnqueueEventTag130_021cc050(unsigned short tag);
 
 extern "C" {
-int func_020a35e0(Struct_ov000_0217e870_2* arg0, unsigned char arg1);
-void func_020a367c(Struct_ov000_0217e870_2* arg0, unsigned char arg1);
-void func_0207da94(void* arg0, unsigned char arg1);
-void func_ov017_02191b40(GameResources* arg0, int arg1);
-int* func_0202ae18();
-int func_0202c508(int*);
-void func_ov000_02174a50(Struct_ov026_021d8ba0_4*, int);
+int _Z22TestBitAt0x34_020a35e0Phh(PartyState* party, unsigned char bit);
+void _Z23ClearBitAt0x34_020a367cPhi(PartyState* party, unsigned char bit);
+void _Z22ProcessEntries0207da94P13Entry0207da94i(void* entries, unsigned char member);
+void _Z23ClearByteAtPtr_02191b40v(GameResources* res, int member);
+int* LinkSession_GetInstance();
+int LinkSession_IsHostOrSolo(int*);
+void func_ov000_02174a50(Container_021dae60*, int);
 void func_ov017_021c9b90(unsigned short, int);
 void func_ov000_0215fb04(Struct_ov000_02161e30*, int);
 void func_ov026_021dbf04(Struct_ov000_02160da0*);
 }
 
 // USA: func_ov026_021dbd1c
-extern "C" ARM void func_ov026_021dbd1c(Struct_ov000_02160da0* arg0, int arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov000_0217e870_2* var1 = arg0->unknown_2a0_;
-    Struct_ov026_021d8ba0_4* var2 = &arg0->unknown_3760_;
-    Struct_ov000_02161e30* var3 = arg0->unknown_29c_;
-    void* var4 = func_0207d78c();
-    int* var5 = func_0202ae18();
-    GameResources* var6 = GetGameResources();
-    int var7 = 0;
+extern "C" ARM void func_ov026_021dbd1c(BattleWork* self, int member, int notify) {
+    GameState* gs = GameState::GetInstance();
+    PartyState* party = self->party;
+    Container_021dae60* list = &self->list;
+    BattleState* battle = self->battle;
+    void* entries = GetData02108ea8_0207d78c();
+    int* link = LinkSession_GetInstance();
+    GameResources* res = GetGameResources();
+    int wasMember = 0;
 
     if (func_020a35e0(var1, arg1)) {
         var7 = 1;
@@ -87,7 +87,7 @@ extern "C" ARM void func_ov026_021dbd1c(Struct_ov000_02160da0* arg0, int arg1, i
     func_ov017_02191b40(var6, arg1);
 
     if (member == party->myIndex) {
-        if (func_0202c508(link)) {
+        if (LinkSession_IsHostOrSolo(link)) {
             Foo0216377c((Struct0216377c*)self, AssignEntrySlot0207db58((Entry0207d9bc*)entries, party->netId, GameState_GetProtagonistIndex(gs)));
         } else {
             func_ov017_021c9b90(var1->unknown_8_, arg1);

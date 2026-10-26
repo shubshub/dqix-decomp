@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021cff8c {
     int unknown_0_;
@@ -20,7 +20,7 @@ struct Struct_ov017_021cff8c_2 {
 
 // USA: func_ov017_021cff8c
 extern "C" ARM void func_ov017_021cff8c(int id, int skipCheck) {
-    void* mgr = GetData02100044_0202ae24();
+    void* mgr = LinkMessageQueue_GetInstance();
     GameState* battle = GameState::GetInstance();
     unsigned char* list = (unsigned char*)GameState_GetParty(battle);
 

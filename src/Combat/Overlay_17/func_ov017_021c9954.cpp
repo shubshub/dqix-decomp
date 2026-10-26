@@ -56,18 +56,18 @@ struct Struct_ov017_021c9954_7 {
     Struct_ov017_021c9954_6 unknown_44ae_;
 };
 
-extern "C" void func_ov017_021b86f8(Struct_ov017_021c9954_2* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02076a8c(void* arg0);
-extern "C" Struct_ov017_021c9954_3* func_ov017_021b8478(Struct_ov017_021c9954_2* arg0);
-extern "C" Struct_ov017_021c9954_3* func_ov017_021b8468(Struct_ov017_021c9954_2* arg0);
-extern "C" void func_ov000_02163778(void* arg0);
-extern "C" void func_020dc548(signed char arg0, signed char* arg1, signed char* arg2);
-extern "C" void func_ov017_021917f0(int arg0, int arg1);
-extern "C" Struct_ov017_021c9954* func_ov017_021a278c(void* arg0, int arg1);
-extern "C" void func_ov017_021c98f4(int arg0, int arg1);
-extern "C" void func_02076ccc(void* arg0, int arg1);
-extern "C" Struct_ov017_021c9954_4* func_ov017_021a7c8c(void* arg0);
-extern "C" void func_ov017_021a7c1c(unsigned char* arg0);
+extern "C" void func_ov017_021b86f8(Party021c9954* party, int id, int flag, int keep);
+extern "C" void FieldMonsterState_Init(void* obj);
+extern "C" Leader021c9954* func_ov017_021b8478(Party021c9954* party);
+extern "C" Leader021c9954* func_ov017_021b8468(Party021c9954* party);
+void NoOp02163778(void* current);
+extern "C" void func_020dc548(signed char id, signed char* out, signed char* count);
+extern "C" void func_ov017_021917f0(int id, int flag);
+Combatant021c9954* FindCombatantByField16a_021a278c(void* unused, int val);
+void SetFieldForMatchingCombatant_021c98f4(int id, int value);
+void TrySetMode02076ccc(void* obj, int mode);
+Slot021c9954* GetPtrPlusOffsetC_021a7c8c(void* obj);
+void SetByteAtOffset1_021a7c1c(unsigned char* obj);
 
 // USA: func_ov017_021c9954
 extern "C" ARM void func_ov017_021c9954(int arg0, int arg1, int arg2, int arg3) {
@@ -77,10 +77,10 @@ extern "C" ARM void func_ov017_021c9954(int arg0, int arg1, int arg2, int arg3) 
     Struct_ov017_021c9954_2* var2 = var0->unknown_3718_;
     func_ov017_021b86f8(var2, arg0, 1, arg2);
 
-    var1 = func_ov017_021a278c(var0, arg0);
-    if (var1 != 0 && arg2 == 0) {
-        func_02076a8c(var1);
-        var1->unknown_0_.MakeHidden();
+    combatant = FindCombatantByField16a_021a278c(battle, id);
+    if (combatant != 0 && keep == 0) {
+        FieldMonsterState_Init(combatant);
+        combatant->obj3D.MakeHidden();
     }
     func_ov017_021c98f4(arg0, 0);
 

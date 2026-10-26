@@ -5,7 +5,7 @@ struct TaggedValue_021638cc { int type; Value_021638cc value; };
 
 extern "C" int func_ov017_021d60f4(TaggedValue_021638cc* a);
 void ForwardToTargetOrDefault0205ebb4(void* obj, void* target, int arg);
-void ClearField0x0_020bc078(int* field);
+void NNS_SndHandleInit(int* field);
 
 extern int data_ov001_02165958[16];
 extern int g_sePlayer;
@@ -25,6 +25,6 @@ extern "C" ARM int func_ov001_021638cc(TaggedValue_021638cc* obj, int mode) {
         arg = func_ov017_021d60f4((TaggedValue_021638cc*)((char*)obj + 8));
     }
     ForwardToTargetOrDefault0205ebb4(&g_sePlayer, slot, arg);
-    ClearField0x0_020bc078(slot);
+    NNS_SndHandleInit(slot);
     return 1;
 }

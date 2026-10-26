@@ -22,7 +22,7 @@ void ExecuteRenderCommands(RenderCommandHandler* handler)
 
 void SetUpRenderCommandHandler(RenderCommandHandler* handler, ModelRenderContext* modelData)
 {
-    func_020ca458(0, handler, sizeof(RenderCommandHandler));
+    MIi_CpuClearFast(0, handler, sizeof(RenderCommandHandler));
     handler->boneMatrixBitfield_[0] = 1;
     handler->flags_ = 1;
 
@@ -953,7 +953,7 @@ void RenderCommand_9(RenderCommandHandler* handler, int modifier)
     uint8_t* instructionPtr = handler->instructionPointer_ + 3;
     
     NSBXXInvBindMatrix localCopy;
-    func_020ca458(0, &localCopy, sizeof(NSBXXInvBindMatrix));
+    MIi_CpuClearFast(0, &localCopy, sizeof(NSBXXInvBindMatrix));
     SendQueuedDataToGeometryFifo();
 
     GXFIFO_MATRIX_MODE = 0; // projection
@@ -976,7 +976,7 @@ void RenderCommand_9(RenderCommandHandler* handler, int modifier)
             // retrieve the local-to-world matrix from the stack
             GXFIFO_MATRIX_GET = instructionPtr[0];
             GXFIFO_MATRIX_MODE = 1; // position
-            func_020c51a4(invBindMatrices[inverseBindIndex].mat4x3.entries);
+            G3_MultMtx43(invBindMatrices[inverseBindIndex].mat4x3.entries);
         }
 
         if (termCounter != 0)

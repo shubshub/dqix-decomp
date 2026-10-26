@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/Brightness.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" int func_0202b900(void* arr, void* buf);
 struct ElementArray0202bad4;
 struct Element0202bad4;
@@ -20,7 +20,7 @@ void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 // USA: func_ov017_021aef80  (semantic: DispatchStateInit0_021aef80)
 extern "C" ARM unsigned char func_ov017_021aef80(void* self) {
     GameResources* flags = GetGameResources();
-    void* arr = func_0202ae18();
+    void* arr = LinkSession_GetInstance();
     int status = func_0202b900(arr, (char*)self + 9);
     int i;
     for (i = 0; i < 6; i++);

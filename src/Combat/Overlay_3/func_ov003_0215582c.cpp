@@ -133,8 +133,8 @@ short* GetField150Ptr0x488_02052e2c(struct Field150Holder02052e2c* obj);
 extern "C" void func_02083738(void* o, int a1);
 extern "C" void PartyMember_ApplyLevelStats(void* a, void* obj, void* tail);
 void PartyMember_LearnSpell(unsigned char* obj, int index);
-extern "C" void* func_0202ae18(void);
-extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void func_ov017_0218f5a4(void* self, int combatantId, int flag2, int flag3, int flag4);
 
 extern const unsigned char data_ov003_0217f2c4[];
 extern const unsigned char data_ov003_0217f2b4[];
@@ -305,9 +305,9 @@ extern "C" ARM void func_ov003_0215582c(struct Self0215582c* self) {
         break;
     }
 
-    if (var19 == 0) {
-        GameResources* var31 = GetGameResources();
-        func_0202ae18();
-        func_ov017_0218f5a4(var31, arg0->unknown_1f7_, 1, 0, 0);
+    if (unchanged == 0) {
+        GameResources* ui = GetGameResources();
+        LinkSession_GetInstance();
+        func_ov017_0218f5a4(ui, self->combatantId, 1, 0, 0);
     }
 }

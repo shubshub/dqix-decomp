@@ -2,16 +2,16 @@
 #include "GameState/GameState.h"
 #include "Graphics/Vector.h"
 
-struct Struct_02033834_2;
-struct Struct_02033f44;
-struct Struct_ov017_0218e210 { char unknown_0_[0x24]; Vector3fix unknown_24_; };
-struct Struct_ov017_0218e210_2 { char unknown_0_[0xae]; short unknown_ae_; };
-extern "C" void func_02037d88(GameObject*);
+struct Obj02033834;
+struct BitFlag02033f44;
+struct CollisionNode0218e210 { char pad[0x24]; Vector3fix direction; };
+struct Facing0218e210 { char pad[0xae]; short yaw; };
+extern "C" void GameObject_UpdatePartyMember(GameObject*);
 int GameState_GetLeaderIndex(GameState*);
 int NotifyEntriesFlag256_0218df50(void*, void*);
 extern "C" int func_ov017_0218dfd8(GameObject*);
 extern "C" void func_ov017_0219344c(GameObject*, int, const Vector3fix*, int, int*, int*);
-CollisionNode0218e210* GetField0xe4IfFlag0x40(BitFlag02033f44*);
+CollisionNode0218e210* GameObject_GetWallHit(BitFlag02033f44*);
 int IsFlag0x1ceBit0x8Set_02039dcc(unsigned char*);
 void ClearFlag0x1ceBit0x8_02039dbc(unsigned char*);
 void GameObject_SetFacing(Obj02033834*, int);
@@ -22,7 +22,7 @@ extern "C" ARM void func_ov017_0218e210(int index, int enabled) {
     GameObject* object = game->GetGameObjectByIndex(index);
     if (!object || object->obj3D_.GetFlag(0x200)) return;
     Vector3fix original = object->obj3D_.position_;
-    func_02037d88(object);
+    GameObject_UpdatePartyMember(object);
     if (!enabled) return;
     Vector3fix current = object->obj3D_.position_;
     int distance = Vector3fix_Distance(&original, &current);
@@ -36,24 +36,24 @@ extern "C" ARM void func_ov017_0218e210(int index, int enabled) {
         combined |= notified;
         combined |= func_ov017_0218dfd8(object);
     }
-    func_ov017_0219344c(var1, 1, &var2, var6, &var7, &var8);
-    Struct_ov017_0218e210* var9 = func_02033f44((Struct_02033f44*)var1);
-    int var10 = 0;
-    int var11 = 0;
-    if (var8 && var9) {
-        if (!func_02039dcc((unsigned char*)var1)) {
-            int var12 = 0;
-            var11 |= func_ov017_0218df50(var1, 0);
-            var12 |= var11;
-            var12 |= func_ov017_0218dfd8(var1);
-            var1->obj3D_.position_ = var1->obj3D_.position_;
-            if (var12) var10 = 1;
-            if (var10) {
-                var1->obj3D_.position_ = var2;
-                if (var10 && var7 && var11) {
-                    int var13 = func_ov017_0218df50(var1, 0);
-                    var1->obj3D_.position_ = var2;
-                    if (var13) func_ov017_0218df50(var1, (void*)1);
+    func_ov017_0219344c(object, 1, &original, mode, &notified, &combined);
+    CollisionNode0218e210* node = GameObject_GetWallHit((BitFlag02033f44*)object);
+    int restored = 0;
+    int secondNotification = 0;
+    if (combined && node) {
+        if (!IsFlag0x1ceBit0x8Set_02039dcc((unsigned char*)object)) {
+            int handled = 0;
+            secondNotification |= NotifyEntriesFlag256_0218df50(object, 0);
+            handled |= secondNotification;
+            handled |= func_ov017_0218dfd8(object);
+            object->obj3D_.position_ = object->obj3D_.position_;
+            if (handled) restored = 1;
+            if (restored) {
+                object->obj3D_.position_ = original;
+                if (restored && notified && secondNotification) {
+                    int changed = NotifyEntriesFlag256_0218df50(object, 0);
+                    object->obj3D_.position_ = original;
+                    if (changed) NotifyEntriesFlag256_0218df50(object, (void*)1);
                 }
             }
         }

@@ -60,15 +60,15 @@ static inline Struct_01ff91ac_29 *inline_ov003_0215d150(Struct_ov003_0215d150 *a
 static inline int inline_ov003_0215d150_2(Struct_01ff91ac_29 *arg0) { return arg0->unknown_b3c_; }
 
 Ctl *MessageSystem_GetInstance();
-extern "C" int *func_0202ae18();
+extern "C" int *LinkSession_GetInstance();
 extern "C" Zone *Zone3D_GetInstance();
 extern "C" void func_02046380(void *obj);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
 void SetByteInRange_020465f0(unsigned char *, int, unsigned char);
-int CheckField0NonZero_0202b7d8(int *p);
-extern "C" int func_0202c540(int *p);
-extern "C" int func_0202c508(int *p);
+int LinkSession_IsActive(int *p);
+extern "C" int LinkSession_IsGuest(int *p);
+extern "C" int LinkSession_IsHostOrSolo(int *p);
 struct Obj02046574;
 void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 const char * KeyTable_Get(Container020e0310*, int);
@@ -96,7 +96,7 @@ extern int g_sePlayer;
 extern "C" ARM void func_ov003_0215d150(Scene *self) {
     GameState *gs = GameState::GetInstance();
     Ctl *g       = MessageSystem_GetInstance();
-    int *a       = func_0202ae18();
+    int *a       = LinkSession_GetInstance();
     Zone *b      = Zone3D_GetInstance();
 
     if (var1->unknown_9a0_ == 3) {
@@ -113,11 +113,11 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
         func_020465c0((Struct_020465c0*)var1, 1, arg0->unknown_3cc_);
         func_020465f0((unsigned char *) var1, 1, 0);
 
-        int var6;
-        var6 = (arg0->unknown_3d0_ == 0) ? 1 : 0;
-        if (func_0202b7d8(var2) != 0) {
-            if (func_0202c540(var2) != 0) {
-                var6 = 2;
+        int sb;
+        sb = (self->w3d0 == 0) ? 1 : 0;
+        if (LinkSession_IsActive(a) != 0) {
+            if (LinkSession_IsGuest(a) != 0) {
+                sb = 2;
             }
         }
         var1->unknown_998_ = 1;
@@ -126,9 +126,9 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
         if (self->b3f0 != 0) {
             MessageSystem_SetStringArgument((Obj02046574*)g, 0, (char*)(*(void **) ((char *) gs->GetPartyMemberByIndex(0) + 0x134)));
 
-            int var8 = 0;
-            if (func_0202c508(var2) != 0) {
-                var8 = (*(short *) ((char *) var0->GetUnknownGameObject() + 4) == 0) ? 1 : 0;
+            int flag = 0;
+            if (LinkSession_IsHostOrSolo(a) != 0) {
+                flag = (*(short *) ((char *) gs->GetLeader() + 4) == 0) ? 1 : 0;
             }
 
             if (flag != 0) {

@@ -17,19 +17,19 @@ int GetFieldPercentOver232_020a08a4(BattleRecordSnapshot* p);
 int GetFieldPercentOver944_020a08d8(BattleRecordSnapshot* p);
 int GetFieldPercentOver448_020a090c(BattleRecordSnapshot* p);
 int GetFieldAt0x7e_0201e830(struct S_e830* p);
-int GetFieldAt0x0_0202ba00(int* obj);
-int UpdatePlayClocks020ac4f8(int commit);
+int LinkSession_GetState(int* obj);
+int GameState_UpdatePlayClocks(int commit);
 int LoadBattleBlock020ac4c0(void* dst);
 int CopyOutBattleField0x7ac0_020ac0b4(void* dst);
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 int MessageSystem_GetInstance(void);
 void MessageSystem_Reset(char* obj);
 void SetFieldsAt0x4And0x8_020e2d24(int* obj, int a, int b);
 void* GetNodeIfType11_02168ad4(void* a, int id);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
+extern "C" void func_ov011_021848a0(void* obj, int val);
 #if defined(jpn)
 extern "C" void* func_ov004_02168f08(void* arg0, int arg1);
 #define NODE_LOOKUP_CALL func_ov004_02168f08
@@ -106,22 +106,22 @@ public:
 extern struct Struct_ov004_02168b44_3* data_ov004_02171030;
 extern struct Struct_ov004_021700d4 data_ov004_021700d4;
 
-// USA: func_ov004_02168b44
-extern "C" ARM int func_ov004_02168b44(void* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    struct Struct_ov004_02168b44* var2 = (struct Struct_ov004_02168b44*)((char*)var0 + Enum_ov004_02168b44_29888);
-    int var3;
-    for (var3 = 0; var3 < 3; var3++, var2++) {
-        if (var2->unknown_6_ >= 4) {
-            if (var2->unknown_7_ != 0 || var2->unknown_8_ != 0 || var2->unknown_9_ >= 0) return 1;
+// USA: func_ov004_02168b44  (semantic: InitBattleSceneContext_02168b44)
+extern "C" ARM int func_ov004_02168b44(void* a) {
+    GameState* bs = GameState::GetInstance();
+    void* obj = LinkSession_GetInstance();
+    struct Slot3_02168b44* slot = (struct Slot3_02168b44*)((char*)bs + slotsOffset);
+    int i;
+    for (i = 0; i < 3; i++, slot++) {
+        if (slot->state >= 4) {
+            if (slot->f7 != 0 || slot->f8 != 0 || slot->f9 >= 0) return 1;
         }
     }
-    int var4 = func_0202ba00((int*)var1);
-    int var5 = *((unsigned char*)var1 + 0x100d);
-    int var6 = 0;
-    if ((var4 == 5 && var5 > 1) || var4 == 6) var6 = 1;
-    func_020ac4f8(var6);
+    int kind = LinkSession_GetState((int*)obj);
+    int depth = *((unsigned char*)obj + 0x100d);
+    int commit = 0;
+    if ((kind == 5 && depth > 1) || kind == 6) commit = 1;
+    GameState_UpdatePlayClocks(commit);
 
     data_ov004_02171030 = 0;
     void* var7 = func_ov011_021845f8(arg0, 0);
@@ -187,13 +187,13 @@ extern "C" ARM int func_ov004_02168b44(void* arg0) {
     if (!rec) return 0;
     data_ov004_02171030->f18c = GetFieldAt0x7e_0201e830(rec);
 
-    unsigned int* var17 = (unsigned int*)GetGameResources();
-    data_ov004_02171030->unknown_180_ = GetFlags00((GameResources*)var17);
-    data_ov004_02171030->unknown_184_ = GetFlags04((GameResources*)var17);
-    data_ov004_02171030->unknown_188_ = GetFlags08((GameResources*)var17);
-    SetFlags00((GameResources*)var17, 4);
-    SetFlags04((GameResources*)var17, 0x8de);
-    func_020c5588(0, 0, 0x7fff, 0, 0);
+    unsigned int* w = (unsigned int*)GetGameResources();
+    data_ov004_02171030->f180 = GetFlags00((GameResources*)w);
+    data_ov004_02171030->f184 = GetFlags04((GameResources*)w);
+    data_ov004_02171030->f188 = GetFlags08((GameResources*)w);
+    SetFlags00((GameResources*)w, 4);
+    SetFlags04((GameResources*)w, 0x8de);
+    Set3DClearColor(0, 0, 0x7fff, 0, 0);
 
     struct Struct_ov004_02168b44_7* var18 = (struct Struct_ov004_02168b44_7*)NODE_LOOKUP_CALL(arg0, 0x64);
     if (data_ov004_02171030->unknown_190_[0] <= 8) {

@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-void SetContextAndDispatch0203ac10(void*, void*, int);
+void SoundPlayer_StopSeqOnHandle(void*, void*, int);
 
 struct Actor0209c678 {
     unsigned char pad0[0xb0];
@@ -18,8 +18,8 @@ struct Actor0209c678 {
 ARM void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg) {
     if (actor->f2) return;
     if (actor->state == 1) {
-        SetContextAndDispatch0203ac10(actor, &actor->fieldBC, arg);
+        SoundPlayer_StopSeqOnHandle(actor, &actor->fieldBC, arg);
     } else if (actor->state == 2) {
-        SetContextAndDispatch0203ac10(actor, &actor->fieldC0, arg);
+        SoundPlayer_StopSeqOnHandle(actor, &actor->fieldC0, arg);
     }
 }

@@ -46,16 +46,16 @@ extern "C" unsigned char* Zone3D_GetInstance(void);
 void* TextQueue_GetInstance(void);
 extern "C" void FieldTask_EndOpenChest(OpenChestTask* self);
 void GameResources_UpdateSpecialItemEffect(void* res);
-void* GetFieldIfFlag4_020100f8(char* gs);
+void* GameState_GetFollowCamera(char* gs);
 void FollowCamera_DisableFollow(void* obj);
 void FollowCamera_EnableFollow(void* obj);
 void GameObject_SetFacing(Obj02033834* obj, int arg);
-extern "C" int* func_0202ae18(void);
+extern "C" int* LinkSession_GetInstance(void);
 unsigned char* Zone3D_GetChest(unsigned char* p, int i);
 Container* GrottoChestList_Get(GetElement02094d5cList* list, int id);
 void* GameState_GetParty(GameState* gs);
-int CheckField0NonZero_0202b7d8(int* p);
-extern "C" int func_0202c540(void* p);
+int LinkSession_IsActive(int* p);
+extern "C" int LinkSession_IsGuest(void* p);
 void NameText_InitFromPartyMember(void* obj, int combatantId);
 int StandardStrings_Get(int key);
 extern "C" void MessageSystem_FormatText(void* messages, int mode, int fmt, char* out, int size, int a, int b);
@@ -119,7 +119,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
 
     if (self->step == OpenChestStep_Start) {
         GameState* gs2 = GameState::GetInstance();
-        void* camera = GetFieldIfFlag4_020100f8((char*)gs2);
+        void* camera = GameState_GetFollowCamera((char*)gs2);
         if (camera) {
             FollowCamera_DisableFollow(camera);
         }
@@ -128,7 +128,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
         }
         *(unsigned short*)((char*)opener + 0xb2) = 0;
         GameObject_SetFacing((Obj02033834*)opener, self->facing);
-        int* search = func_0202ae18();
+        int* search = LinkSession_GetInstance();
         ZoneChestRenderRecord* elem = (ZoneChestRenderRecord*)Zone3D_GetChest(zone, self->chestIndex);
         Container* container = NULL;
         if (elem) {
@@ -139,7 +139,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
             }
         }
         Obj02086aec* party = (Obj02086aec*)GameState_GetParty(gs2);
-        if (CheckField0NonZero_0202b7d8(search) && func_0202c540(search) && container && container->containerType == 0) {
+        if (LinkSession_IsActive(search) && LinkSession_IsGuest(search) && container && container->containerType == 0) {
 #if !defined(jpn)
             char who[0xc];
 #endif
@@ -229,7 +229,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
     } else if (self->step == OpenChestStep_Locked) {
         self->timer += gs->GetEffectiveDeltaTime();
         if (self->timer > 0x2ee) {
-            GameObject* leader = gs->GetUnknownGameObject();
+            GameObject* leader = gs->GetLeader();
             if (leader) {
                 GameObject_EnableControl(leader);
             }
@@ -260,11 +260,11 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
                 return;
             }
             if (!self->ambush && !self->special) {
-                GameObject* leader = gs->GetUnknownGameObject();
+                GameObject* leader = gs->GetLeader();
                 if (leader) {
                     GameObject_EnableControl(leader);
                 }
-                void* camera = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
+                void* camera = GameState_GetFollowCamera((char*)GameState::GetInstance());
                 if (camera) {
                     FollowCamera_EnableFollow(camera);
                 }
@@ -374,7 +374,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
     } else if (self->step == OpenChestStep_Finish) {
         if (self->special) {
             if (!GameResources_IsSpecialItemEffectPlaying(GetGameResources())) {
-                GameObject* leader = gs->GetUnknownGameObject();
+                GameObject* leader = gs->GetLeader();
                 if (leader) {
                     GameObject_EnableControl(leader);
                 }

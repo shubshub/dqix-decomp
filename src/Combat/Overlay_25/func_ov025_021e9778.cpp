@@ -57,15 +57,15 @@ struct Struct_ov025_021e9778_6 {
 
 typedef int (*Type_02000c9c_17)(struct Struct_ov025_021e9778_7*, struct Struct_ov025_021e9778_8*, void*, int);
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f00(void* arg0);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" Struct_ov000_02160094* func_ov000_02160094(Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" void func_02078484(Struct_02078398_2* arg0);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" void func_0202ea10(unsigned char* arg0, int arg1, int arg2);
-extern "C" short func_ov000_0216352c(int arg0, float arg1, float arg2);
-extern "C" void func_02057fb4(void* arg0, int arg1, void* arg2);
+void* GetActiveCombatWork_ov000_02160130(void);
+void* GetOffsetPtr02160f00(void* obj);
+void* GetSlotPtr02160f20(void* obj);
+ListNode02160094* GetNodeAtIndex02160094(List02160094* list, int index);
+void InitStruct02078484(InitStruct02078484Struct* p);
+extern "C" void* func_ov000_02160f14(void* obj);
+void Camera_Shake(unsigned char* obj, int a, int b);
+short ClampScaledStat_0216352c(int id, float a, float b);
+void FindNodeAndProcess02057fb4(void* list, int id, void* argument);
 extern "C" void* func_02057924(void);
 extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
 extern "C" void func_ov025_021eb6fc(Struct_ov025_021e9778_9* arg0, int arg1);
@@ -156,15 +156,15 @@ extern "C" ARM void func_ov025_021e9778(void* arg0) {
                 }
             }
         }
-        if (var8 == 0 && (data_ov025_021ef9a4 & 0x200) && !(data_ov025_021ef9a4 & 0x400)) {
-            void* var13 = func_02057924();
-            struct Struct_02078398_2 var14;
-            func_02078484(&var14);
-            var14.unknown_14_ = *(unsigned short*)((char*)func_ov000_02160094((Struct_ov000_0215440c_2*)var4, 0) + 0x20);
-            if (var4->unknown_a_ & 1) {
-                strcpy((char*)&var14, data_ov025_021ef8de);
-                unsigned char* var15 = (unsigned char*)func_ov000_02160f14(var2);
-                func_0202ea10(var15, 0x199, 0x3e8);
+        if (flag == 0 && (data_ov025_021ef9a4 & 0x200) && !(data_ov025_021ef9a4 & 0x400)) {
+            void* list = func_02057924();
+            struct InitStruct02078484Struct s;
+            InitStruct02078484(&s);
+            s.f14 = *(unsigned short*)((char*)GetNodeAtIndex02160094((List02160094*)slot, 0) + 0x20);
+            if (slot->kind & 1) {
+                strcpy((char*)&s, data_ov025_021ef8de);
+                unsigned char* p = (unsigned char*)func_ov000_02160f14(work);
+                Camera_Shake(p, 0x199, 0x3e8);
             }
             int var16 = (var7 >= 0xc0 && var7 <= 0xc7);
             if (var16 != 0) {

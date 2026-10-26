@@ -10,8 +10,8 @@ struct Vector3i;
 struct List02160094* GetNodeAtIndex02160094(struct List02160094* list, int idx);
 struct List021600f8* GetNodeAtIndex021600f8(struct List021600f8* list, int idx);
 int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
-int GetField0x70_0202e7f0(void* obj);
-void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+int Camera_GetOrbitYaw(void* obj);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 void StoreVec3AtField0x50_0203db34(unsigned char* obj, int x, int y, int z);
 extern "C" void* __clear(void* dst, int count);
 
@@ -98,7 +98,7 @@ extern "C" ARM int func_ov025_021e514c(struct Struct_ov025_021e514c_2* arg0, str
     case 3: {
         void* target = bs->GetCamera();
         if (target) {
-            Matrix4x3 m = RotationMatrixY(GetField0x70_0202e7f0(target));
+            Matrix4x3 m = RotationMatrixY(Camera_GetOrbitYaw(target));
             Mat4x3_ApplyToVector(&self->vec, &m, &result);
         }
         break;
@@ -119,18 +119,18 @@ extern "C" ARM int func_ov025_021e514c(struct Struct_ov025_021e514c_2* arg0, str
             if (arg0->unknown_c_ < arg0->unknown_14_.y) arg0->unknown_14_.y = arg0->unknown_c_;
             else if (arg0->unknown_14_.y < arg0->unknown_10_) arg0->unknown_14_.y = arg0->unknown_10_;
         }
-        Matrix4x3 var21 = RotationMatrixY(var19);
-        Vector3fix var22;
-        Mat4x3_ApplyToVector(&arg0->unknown_14_, &var21, &var22);
-        Vector3fix var23 = var17->unknown_44_;
-        Vector3fix_Add(&var22, &var23, &var22);
-        int var24 = fix32ReduceAngle0To2Pi(var19 + 0x3244);
-        for (var11 = 0, var10 = var3; var11 < var4; var11++, var10++) {
-            GameObject* var25 = var0->GetGameObjectByIndex(*var10);
-            if (var25) {
-                *(Vector3i*)(&var25->obj3D_.position_.x) = *(Vector3i const*)((int*)&var22);
-                if (((Struct_ov025_021e514c_3*)var25)->unknown_0_ & 2) {
-                    func_02033874((struct Struct_02033834*)var25, var24);
+        Matrix4x3 m = RotationMatrixY(rotY);
+        Vector3fix off;
+        Mat4x3_ApplyToVector(&self->vec, &m, &off);
+        Vector3fix pos = o->position;
+        Vector3fix_Add(&off, &pos, &off);
+        int angle = fix32ReduceAngle0To2Pi(rotY + 0x3244);
+        for (i = 0, idp = ids; i < count; i++, idp++) {
+            GameObject* t = bs->GetGameObjectByIndex(*idp);
+            if (t) {
+                *(Vector3i*)(&t->obj3D_.position_.x) = *(Vector3i const*)((int*)&off);
+                if (((Obj021e514c*)t)->flags & 2) {
+                    GameObject_SnapFacing((struct Obj02033874*)t, angle);
                 } else {
                     func_0203db34((unsigned char*)var25, 0, var24, 0);
                 }
@@ -204,12 +204,12 @@ extern "C" ARM int func_ov025_021e514c(struct Struct_ov025_021e514c_2* arg0, str
             break;
         }
     }
-    for (var11 = 0, var10 = var3; var11 < var4; var11++, var10++) {
-        GameObject* var34 = var0->GetGameObjectByIndex(*var10);
-        if (var34) {
-            *(Vector3i*)(&var34->obj3D_.position_.x) = *(Vector3i const*)((int*)&var5);
-            if (((Struct_ov025_021e514c_3*)var34)->unknown_0_ & 2) {
-                func_02033874((struct Struct_02033834*)var34, var6);
+    for (i = 0, idp = ids; i < count; i++, idp++) {
+        GameObject* t = bs->GetGameObjectByIndex(*idp);
+        if (t) {
+            *(Vector3i*)(&t->obj3D_.position_.x) = *(Vector3i const*)((int*)&result);
+            if (((Obj021e514c*)t)->flags & 2) {
+                GameObject_SnapFacing((struct Obj02033874*)t, yaw);
             } else {
                 func_0203db34((unsigned char*)var34, 0, var6, 0);
             }

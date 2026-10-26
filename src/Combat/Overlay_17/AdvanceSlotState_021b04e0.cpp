@@ -20,7 +20,7 @@ extern "C" void* func_ov017_021b0fe0(int a, int b);
 extern "C" void func_ov017_021d1118(int a, int b, int c, int d);
 extern "C" void func_ov017_021d1014(int a, int b, int c);
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 int CheckSlotsAllFree0205e488(void* obj);
 
 // USA: func_ov017_021b04e0
@@ -47,7 +47,7 @@ ARM unsigned char AdvanceSlotState_021b04e0(struct Ctx021b04e0* self) {
         func_ov017_021d1014(-1, 1, 1);
         self->state21 = self->state21 + 1;
     } else if (state == 1) {
-        void* data = GetData02100044_0202ae24();
+        void* data = LinkMessageQueue_GetInstance();
         if (CheckSlotsAllFree0205e488(data) != 0) {
             self->state21 = 0;
         }

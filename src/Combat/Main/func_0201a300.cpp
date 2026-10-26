@@ -3,21 +3,21 @@
 #include "World/GrottoTileGraph.h"
 #include "std_library_functions.h"
 
-struct Struct_0201a300_5;
-struct Struct_0201a300_6;
-struct Struct_0201a300_7;
-struct Struct_0201a300_8;
-struct Struct_0201a300_9;
-struct Struct_0201a300_10;
-struct Struct_0201a300_11;
-struct Struct_0201a300_12;
-struct Struct_020105a8;
-extern "C" void func_020280f8(Struct_0201a300_5*);
-extern "C" void func_020280b0(Struct_0201a300_5*);
-extern "C" void func_020286fc(Struct_0201a300_6*, SafeAllocator*, int);
-extern "C" void func_02028754(Struct_0201a300_7*, SafeAllocator*, int);
-extern "C" void func_0202834c(Struct_0201a300_8*, SafeAllocator*, int);
-extern "C" void func_02028378(Struct_0201a300_9*, Struct_0201a300_2*);
+struct InitStruct;
+struct Array020286fc;
+struct Array02028754;
+struct Array0202834c;
+struct BoundedHalfwordPairList;
+struct Container02028170;
+struct List_020283c0;
+struct AppendPairList;
+struct TimeStamp020105a8;
+void InitializeStruct020280f8(InitStruct*);
+void NodeGraph_Reset(InitStruct*);
+void AllocateAndClearHeaderArray020286fc(Array020286fc*, SafeAllocator*, int);
+void AllocateClearArray02028754(Array02028754*, SafeAllocator*, int);
+void AllocateArray0202834c(Array0202834c*, SafeAllocator*, int);
+void AppendHalfwordPairCapped_02028378(BoundedHalfwordPairList*, HalfwordPair*);
 int GenerateGrottoObjectPositionOrientation(void*, int, int, int*, int*, const TileFeaturePlacementData*, bool);
 extern "C" void func_02028170(Struct_0201a300_10*, Struct_0201a300_3*);
 extern "C" Struct_0201a300_3* func_020283c0(Struct_0201a300_11*, int);
@@ -56,51 +56,51 @@ extern "C" ARM int func_0201a300(Zone3D* arg0, int arg1, Struct_0201a300_4* arg2
             if (var10 != 1 && var10 != 3) var4++;
         }
     }
-    int var11 = 0x1020 - ((var3 << 4) + (var4 << 3));
-    if (var11 < 0) var4 -= abs(var11 / 8) + 1;
-    func_020280f8((Struct_0201a300_5*)&arg2->unknown_18_);
-    func_020280b0((Struct_0201a300_5*)&arg2->unknown_18_);
-    func_020286fc((Struct_0201a300_6*)&arg2->unknown_18_, arg2->unknown_10_, var3);
-    func_02028754((Struct_0201a300_7*)&arg2->unknown_18_, arg2->unknown_10_, var4);
-    func_0202834c((Struct_0201a300_8*)&arg2->unknown_18_, arg2->unknown_10_, 1);
-    Struct_0201a300_2 var12;
-    var12.unknown_0_ = 0;
-    var12.unknown_2_ = 0;
-    func_02028378((Struct_0201a300_9*)&arg2->unknown_18_, &var12);
-    for (int var13 = 1; var13 < 15; var13++) {
-        int var14;
-        int var15 = 1;
-        for (; var15 < 15; var15++) {
-            var14 = var13 - 1;
-            int var16 = var1[var15 + (var13 << 4)];
-            int var17 = var15 + (var13 << 4);
-            if (var16 == 1 || var16 == 3) continue;
-            Struct_0201a300 var18;
-            Struct_0201a300_3 var19;
-            int var20;
-            int var21;
-            var19.unknown_0_ = 0;
-            var19.unknown_1_ = 0;
-            var19.unknown_2_ = 0;
-            var19.unknown_c_ = 0;
-            var19.unknown_3_ = 0;
-            GenerateGrottoObjectPositionOrientation(arg0, var15, var13, &var20, &var21, arg3, false);
-            var19.unknown_6_ = 0;
-            var19.unknown_4_ = var20 >> 12;
-            var19.unknown_8_ = var21 >> 12;
-            if (var16 == 4) var19.unknown_3_ |= 2;
-            var19.unknown_0_ = var17;
-            func_02028170((Struct_0201a300_10*)&arg2->unknown_18_, &var19);
-            int var22 = var15 - 1 + (var13 << 4);
-            int var23 = var1[var22];
-            int var24 = var15 + (var14 << 4);
-            int var25 = var1[var24];
-            if (var23 != 1 && var23 != 3) {
-                var18.unknown_4_ = 0;
-                var18.unknown_0_ = 0;
-                var18.unknown_0_ = func_020283c0((Struct_0201a300_11*)&arg2->unknown_18_, inline_0201a300(var15, var13));
-                var18.unknown_4_ = func_020283c0((Struct_0201a300_11*)&arg2->unknown_18_, var22);
-                func_020281d8((Struct_0201a300_12*)&arg2->unknown_18_, &var18);
+    int remaining = 0x1020 - ((count << 4) + (neighbors << 3));
+    if (remaining < 0) neighbors -= abs(remaining / 8) + 1;
+    InitializeStruct020280f8((InitStruct*)&owner->lists);
+    NodeGraph_Reset((InitStruct*)&owner->lists);
+    AllocateAndClearHeaderArray020286fc((Array020286fc*)&owner->lists, owner->allocator, count);
+    AllocateClearArray02028754((Array02028754*)&owner->lists, owner->allocator, neighbors);
+    AllocateArray0202834c((Array0202834c*)&owner->lists, owner->allocator, 1);
+    HalfwordPair origin;
+    origin.first = 0;
+    origin.second = 0;
+    AppendHalfwordPairCapped_02028378((BoundedHalfwordPairList*)&owner->lists, &origin);
+    for (int y = 1; y < 15; y++) {
+        int previousY;
+        int x = 1;
+        for (; x < 15; x++) {
+            previousY = y - 1;
+            int value = tiles[x + (y << 4)];
+            int id = x + (y << 4);
+            if (value == 1 || value == 3) continue;
+            AppendEntry pair;
+            Elem02028170 feature;
+            int tileX;
+            int tileZ;
+            feature.id = 0;
+            feature.field_1 = 0;
+            feature.field_2 = 0;
+            feature.field_c = 0;
+            feature.flags = 0;
+            GenerateGrottoObjectPositionOrientation(zone, x, y, &tileX, &tileZ, placements, false);
+            feature.field_6 = 0;
+            feature.x = tileX >> 12;
+            feature.z = tileZ >> 12;
+            if (value == 4) feature.flags |= 2;
+            feature.id = id;
+            AppendCappedElement02028170((Container02028170*)&owner->lists, &feature);
+            int leftId = x - 1 + (y << 4);
+            int left = tiles[leftId];
+            int aboveId = x + (previousY << 4);
+            int above = tiles[aboveId];
+            if (left != 1 && left != 3) {
+                pair.second = 0;
+                pair.first = 0;
+                pair.first = FindListEntryById((List_020283c0*)&owner->lists, GrottoTileId0201a300(x, y));
+                pair.second = FindListEntryById((List_020283c0*)&owner->lists, leftId);
+                AppendPairToBoundedList_020281d8((AppendPairList*)&owner->lists, &pair);
             }
             if (var25 != 1 && var25 != 3) {
                 var18.unknown_4_ = 0;

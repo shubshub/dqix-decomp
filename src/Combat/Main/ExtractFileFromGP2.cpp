@@ -9,7 +9,7 @@ struct Struct0200fb08;
 struct FlagWord02046708;
 int GameState_GetLanguage(Struct0200fb08*);
 FlagWord02046708* GlobalFlags_GetInstance();
-int TestFlags02046708(FlagWord02046708*, unsigned int);
+int FlagWord_TestBits(FlagWord02046708*, unsigned int);
 extern "C" void __clear(void*, unsigned int);
 
 struct Struct_0207568c : GPCReadPair {
@@ -34,7 +34,7 @@ extern "C" ARM void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsi
     unsigned int headerLength = 0;
     unsigned char* buffer = g_fileLoadBuffer;
     unsigned int capacity = 0x30000;
-    if (TestFlags02046708(GlobalFlags_GetInstance(), 0x02000000)) capacity -= 0x8000;
+    if (FlagWord_TestBits(GlobalFlags_GetInstance(), 0x02000000)) capacity -= 0x8000;
     ScopedGPCReader pair;
     if (LoadAndDecompressGPCHeaderAndInnerFileInfo(&pair.pGPCFile, pair.machine, archive, buffer, headerLength, capacity, false, NULL)) {
         offset = headerLength;

@@ -32,7 +32,7 @@ struct Struct_ov000_02161020_3 {
 extern "C" void* func_02057924(void);
 extern "C" RenderCtx02161020* Zone3D_GetInstance(void);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
-extern "C" int func_02032fdc(GameObject* obj, int a1, int a2);
+extern "C" int GameObject_Draw(GameObject* obj, int a1, int a2);
 extern "C" void func_02057ab8(void* g, int id);
 void SyncBattleState0208f87c(const void* pos, int color, int scale, int alpha, int polygonId);
 void SetRemappedBitAt0xa26_020d76b8(RemapFlagOwner* obj, int index);
@@ -54,9 +54,9 @@ extern "C" ARM void func_ov000_02161020(BattleWork02161020* work) {
         if (!var7->obj3D_.IsVisible()) {
             continue;
         }
-        int var8 = 0;
-        if (TestFlags04(var1, 0x200) == 0) {
-            var8 = func_02032fdc(var7, 1, var8);
+        int drawn = 0;
+        if (TestFlags04(res, 0x200) == 0) {
+            drawn = GameObject_Draw(c, 1, drawn);
         }
         if (var8 != 0) {
             func_02057ab8(var2, var6 + 0xc0);

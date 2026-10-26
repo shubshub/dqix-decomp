@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_02033834;
-extern "C" void _ZN8Vector3iaSERKS_(int* arg0, int* arg1);
-extern "C" void func_02048cf0(void* arg0, int arg1);
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
+struct Obj02033874;
+extern "C" void _ZN8Vector3iaSERKS_(int* dst, int* src);
+extern "C" void func_02048cf0(void* obj, int flag);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 struct Struct_020e7b18 { unsigned int unknown_0_[3]; };
 extern "C" const struct Struct_020e7b18 data_020e7b18;
@@ -22,16 +22,16 @@ struct Struct_02049d6c_2 {
 };
 
 // USA: func_02049d6c
-extern "C" ARM void func_02049d6c(struct Struct_02049d6c_2* arg0) {
-    if (arg0->unknown_13c_ == NULL) return;
-    func_02048cf0(arg0, 0);
-    arg0->unknown_13c_->unknown_20_ &= ~0x21;
-    struct Struct_02049d6c* var0 = arg0->unknown_13c_;
-    var0->unknown_20_ |= 2;
-    struct Struct_020e7b18 var1 = data_020e7b18;
-    var1.unknown_0_[0] = arg0->unknown_13c_->unknown_4_;
-    var1.unknown_0_[2] = arg0->unknown_13c_->unknown_c_;
-    unsigned int var2 = arg0->unknown_13c_->unknown_8_;
-    _ZN8Vector3iaSERKS_((int*)arg0->unknown_44_, (int*)&var1);
-    func_02033874((struct Struct_02033834*)arg0, var2);
+extern "C" ARM void func_02049d6c(struct Obj02049d6c* self) {
+    if (self->sub == NULL) return;
+    func_02048cf0(self, 0);
+    self->sub->flags &= ~0x21;
+    struct Sub02049d6c* p = self->sub;
+    p->flags |= 2;
+    struct Triple02049d6c t = data_020e7b18;
+    t.v[0] = self->sub->f4;
+    t.v[2] = self->sub->fc;
+    unsigned int y = self->sub->f8;
+    _ZN8Vector3iaSERKS_((int*)self->vec44, (int*)&t);
+    GameObject_SnapFacing((struct Obj02033874*)self, y);
 }

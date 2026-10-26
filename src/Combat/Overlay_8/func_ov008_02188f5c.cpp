@@ -54,8 +54,8 @@ struct Struct_ov008_02188f5c_2
     Struct_ov008_02188f5c unknown_6c_;
 };
 
-extern "C" void __clear(void* arg0, unsigned long arg1);
-extern "C" void* func_0202ae18();
+extern "C" void __clear(void* buffer, unsigned long size);
+extern "C" void* LinkSession_GetInstance();
 extern "C" void func_02074af4(void* state);
 extern "C" void WindowPane_Init(void* canvas);
 extern "C" void Font_EncodeText(const char* name, char* codes, int);
@@ -68,7 +68,7 @@ void ResetListHeader020727d8(List020727d8* texts);
 void KeyTable_Reset(Struct020dfc40* texts);
 void ResetSubStruct02189228(void* entry);
 PartyMemberData* GetFieldAt0x150_02053c6c(unsigned char* member);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 
 struct Struct_ov008_02188f5c_3
 {
@@ -132,12 +132,12 @@ struct Struct_ov008_02188f5c_3
 // USA: func_ov008_02188f5c
 extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* arg0, signed char arg1, Struct_ov008_02188f5c_2* arg2)
 {
-    GameState* var0 = GameState::GetInstance();
-    func_0202ae18();
-    arg0->unknown_10_ = 0;
-    arg0->unknown_11_ = 0;
-    func_02074af4(arg0);
-    arg0->unknown_14_ = (REG_DISPCNT & 0x1f00) >> 8;
+    GameState* gameState = GameState::GetInstance();
+    LinkSession_GetInstance();
+    self->unk_10 = 0;
+    self->unk_11 = 0;
+    func_02074af4(self);
+    self->layers_ = (REG_DISPCNT & 0x1f00) >> 8;
     REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | 0x100;
     Window_Init((InitTarget0205cfd4*)&self->window_);
     Background_Init((BackgroundGraphics*)&self->backgrounds_[0]);
@@ -222,8 +222,8 @@ extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* arg0, signed ch
                 Font_EncodeText(data->name_, name, 1);
                 memcpy(self->entry_.name_, name, sizeof(self->entry_.name_));
 #endif
-                arg0->unknown_df0_.unknown_13_6_ = 1;
-                if (func_0202b7d8((int*)func_0202ae18()))
+                self->entry_.used_ = 1;
+                if (LinkSession_IsActive((int*)LinkSession_GetInstance()))
                 {
                     func_ov017_021d1014(arg1, 0, 0);
                     func_ov017_021d1118(arg1, 1, 1, 0);

@@ -6,7 +6,7 @@ struct Struct_0209c3b4_2;
 void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
 int IsMissingFromTable0209c0f4(int value, int type);
 void SetStateAndDispatch0209c3b4(struct Actor0209c3b4* actor, int val);
-void Forward0203aa80(void* obj, int arg2);
+void SoundPlayer_RestoreHeapState(void* obj, int arg2);
 int SetContextAndQuery0203ab6c(void*, void*);
 int IsBattleActiveAndCombatantsBit0Set_0209c140();
 void* CallFunc020bc594OnField0_020bc068(void* obj, int unused);
@@ -42,8 +42,8 @@ extern "C" ARM void func_0209c530(struct Struct_0209c530* arg0) {
         arg0->unknown_b8_ = -1;
         func_0209c3b4((struct Struct_0209c3b4_2*)arg0, var0);
     } else {
-        if (arg0->unknown_b4_ > 0) {
-            func_0203aa80(arg0, arg0->unknown_b4_);
+        if (a->field_b4 > 0) {
+            SoundPlayer_RestoreHeapState(a, a->field_b4);
         }
         SetContextAndQuery0203ab6c(a, (void*)a->field_b8);
         if (IsBattleActiveAndCombatantsBit0Set_0209c140() != 0) {

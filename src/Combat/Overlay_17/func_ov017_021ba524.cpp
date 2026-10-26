@@ -10,8 +10,8 @@ extern "C" int func_0206e120(Struct_0205faf4_3* arg0, int arg1);
 extern "C" int func_0206e260(Struct_0205faf4_4* arg0, int arg1);
 extern "C" int func_0206e2dc(Struct_0205faf4_13* arg0, int arg1);
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* p);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" int func_ov017_021b9bcc(int id, const char* name);
 
@@ -45,8 +45,8 @@ extern struct Struct_ov017_021d7c54_5 data_ov017_021d7c54;
 extern "C" ARM int func_ov017_021ba524(Script::Parameter* arg0, int arg1) {
     if (data_ov017_021d8438.unknown_10_ != 0) return 1;
 
-    GameState* var0 = GameState::GetInstance();
-    if (func_0202c540(func_0202ae18()) != 0) return 1;
+    GameState* battle = GameState::GetInstance();
+    if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0) return 1;
 
     GameObject* var1 = var0->GetGameObjectByIndex(0);
     struct Struct_ov017_021ba524* var2 = *(struct Struct_ov017_021ba524**)((char*)var1 + 0x130);

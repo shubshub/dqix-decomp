@@ -87,15 +87,15 @@ int Pac_CountFiles(PacRecord* pac);
 void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
 extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
 void ComputeShortPair_021e2bdc(void* layout, int id, short* x, short* y);
-void* GetFieldIfFlag4_020100f8(char* gameState);
+void* GameState_GetFollowCamera(char* gameState);
 void InitCombatController020a2010(void* camera);
 void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
-extern "C" void func_0202e5d8(void* camera, int x, int y, int z);
+extern "C" void Camera_SetOrbit(void* camera, int x, int y, int z);
 extern "C" void Camera_Update(void* camera);
 void FollowCamera_DisableFollow(void* camera);
 void GameState_SetCamera(GameState* gameState, int camera);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
-void Set3DClearColor_020c5588(int, int, int, int, int);
+void Set3DClearColor(int, int, int, int, int);
 
 #define HIDE_ELEMENT(layout, id)                                        \
     {                                                                   \
@@ -184,10 +184,10 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         BG3CNT = (BG3CNT & ~BGCNT_MASK_PRIORITY) | 3;
         DISPCNT = (DISPCNT & ~0x1f00) | (0x13 << 8);
         GameState* gameState = GameState::GetInstance();
-        data_ov014_02189800.previousCamera = GetFieldIfFlag4_020100f8((char*)gameState);
+        data_ov014_02189800.previousCamera = GameState_GetFollowCamera((char*)gameState);
         InitCombatController020a2010(self->camera_);
         Camera_SetTarget((struct Camera*)self->camera_, 0, 0, 0);
-        func_0202e5d8(self->camera_, 0, 0, 0xa000);
+        Camera_SetOrbit(self->camera_, 0, 0, 0xa000);
         Camera_Update(self->camera_);
         FollowCamera_DisableFollow(self->camera_);
         GameState_SetCamera(gameState, (int)self->camera_);
@@ -195,7 +195,7 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         SetFlags04(resources, 0x6093e);
         ClearFlags04(resources, 0x20);
         SetFogState_020c54a4(0, 0, 0, 0);
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         LightingManager::GetInstance()->fogEnabled_ = false;
         arg0->unknown_7c_ = 1;
         arg0->unknown_7d_ = 0;

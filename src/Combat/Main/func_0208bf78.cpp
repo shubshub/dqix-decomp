@@ -110,7 +110,7 @@ unsigned char GetEntryField0209618c(FindEntryById02096134Table*, int);
 int LookupArrayFieldByCase0208da18(List0208d994*, int, int);
 int GetElementField0x10ByKey_0208dac4(List0208d994*, int);
 int GetElementField8ByKey0208da00(List0208d994*, int);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 int GetElementField0x14ByKey_0208dadc(List0208d994*, int);
 int GetPackedNibbleFlag0x4(PackedNibbleArray0206e260*, int);
 StoreStruct* MessageSystem_GetInstance();
@@ -258,7 +258,7 @@ extern "C" ARM void func_0208bf78(Struct_0208bf78_4* arg0) {
                             text = KeyTable_Get(&view->strings, 4);
                         } else if (HasStatus0208bf78(GetMonsterIndex0208bf78(table, target), 1)) {
                             GameResources* resources = GameState::GetInstance()->GetResources();
-                            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
+                            if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
                                 text = GetElementField0x14ByKey_0208dadc((List0208d994*)&view->elements, target);
                             }
                         }

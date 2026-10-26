@@ -33,9 +33,9 @@ void SetBoolFlagAt558_02026f08(unsigned char*, int, int);
 void SetArrayEntryFlag02026f20(int, int);
 int GetSignedByte0x2d0_020546a8(void*);
 int GameState_GetLeaderIndex(GameState*);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 void CallHelperWithBuf_021907dc(int, int, int, int, int);
-extern "C" void func_ov017_02191108(void*, int, int, int, int);
+extern "C" void Party_ReformLine(void*, int, int, int, int);
 
 // USA: func_ov017_021c9f18
 extern "C" ARM void func_ov017_021c9f18(void* unused, const PartyStatsEvent* event, GameState* game, GameResources* controller, SearchStruct0202c1a4* search) {
@@ -84,6 +84,6 @@ extern "C" ARM void func_ov017_021c9f18(void* unused, const PartyStatsEvent* eve
     memberIndex = index;
     if ((member->obj3D_.unknown_0_ & 0x1000) != 0) memberIndex = GetSignedByte0x2d0_020546a8(member);
     GameState_GetLeaderIndex(game);
-    if (memberIndex != GetSearchStructCurrentArrEntry(search)) CallHelperWithBuf_021907dc((int)controller, memberIndex, 1, 1, 1);
-    else func_ov017_02191108(controller, 1, 1, 1, 1);
+    if (memberIndex != LinkSession_GetOwnSlot(search)) CallHelperWithBuf_021907dc((int)controller, memberIndex, 1, 1, 1);
+    else Party_ReformLine(controller, 1, 1, 1, 1);
 }

@@ -71,8 +71,8 @@ ModelNames* SearchWithLow15Comparator02070fd0(struct Container02070e60*, int);
 void RunOverlayScript0216d1c4(int, struct StreamHeader*, int, int*);
 void InitObjectFields020484f8(Object3D*, Input020484f8*);
 void VramState_Rewind(struct Foo0207df50*);
-extern "C" void _ZN8Object3D10SetField78Et(Object3D*, unsigned int);
-extern "C" void _ZN8Object3D10SetField7aEt(Object3D*, unsigned int);
+extern "C" void _ZN8Object3D13SetSoundGroupEt(Object3D*, unsigned int);
+extern "C" void _ZN8Object3D15SetSoundArchiveEt(Object3D*, unsigned int);
 extern "C" void VramState_Reserve(char*, int, int);
 
 // USA: func_ov000_02166070
@@ -146,8 +146,8 @@ extern "C" ARM void func_ov000_02166070(Scene02166070* self, GPCReadPair* pair, 
     InitObjectFields020484f8(obj, &input);
     unsigned int low = (unsigned short)input.names->words;
     unsigned int high;
-    _ZN8Object3D10SetField78Et(obj, (high = input.names->words >> 16, low));
-    _ZN8Object3D10SetField7aEt(obj, high);
+    _ZN8Object3D13SetSoundGroupEt(obj, (high = input.names->words >> 16, low));
+    _ZN8Object3D15SetSoundArchiveEt(obj, high);
     self->models[slot] = obj;
     if (id == 0x13f || id == 0x13d || id == 0x321) {
         VramState_Rewind((struct Foo0207df50*)self->tables14c);

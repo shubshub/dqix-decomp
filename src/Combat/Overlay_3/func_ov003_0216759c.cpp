@@ -83,7 +83,7 @@ extern "C" ARM int func_ov003_0216759c(Struct_ov003_0216759c* arg0) {
         *(volatile unsigned short*)0x4001008 = (*(volatile unsigned short*)0x4001008 & 0x43) | 0xe00;
         *(volatile unsigned short*)0x400100a = (*(volatile unsigned short*)0x400100a & 0x43) | 0xf00;
         *(volatile unsigned short*)0x4001050 = 0;
-        loader->MaybeFreeAllocations();
+        loader->FreeAllocations();
         self->task = loader->QueueLoadFile(data_ov003_021800a4,0);
         self->stage++;
         result=0;

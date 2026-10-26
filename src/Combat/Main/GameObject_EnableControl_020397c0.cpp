@@ -1,10 +1,13 @@
 #include <globaldefs.h>
 
-// Main, originally SetByteField0x253_020397c0 (USA 0x020397c0, EUR 0x020397d0, JPN 0x02039218)
-ARM void GameObject_EnableControl(void* obj) {
+// The pending control-enable byte: CopyByteField0x253To0x252 copies it to the control-enabled byte (+0x252)
 #if defined(jpn)
-    *(unsigned char*)((char*)obj + 0x247) = 1;
+enum { PartyMember_controlPending = 0x247 };
 #else
-    *(unsigned char*)((char*)obj + 0x253) = 1;
+enum { PartyMember_controlPending = 0x253 };
 #endif
+
+// Main, originally SetByteField0x253_020397c0 (USA 0x020397c0, EUR 0x020397d0, JPN 0x02039218)
+ARM void GameObject_EnableControl(void* partyMember) {
+    *(unsigned char*)((char*)partyMember + PartyMember_controlPending) = 1;
 }

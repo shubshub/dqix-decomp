@@ -46,19 +46,19 @@ extern "C" struct Node0216aaec* func_ov023_021f6880(void* list, int id);
 extern "C" int func_ov023_021f6f10(void* obj);
 extern "C" struct TableA68* func_ov023_021fa598(void* obj);
 struct StoreStruct* MessageSystem_GetInstance(void);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void func_02046380(struct Struct_020465c0* arg0);
-extern "C" void func_020465c0(struct Struct_020465c0* arg0, int arg1, int arg2);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* obj);
+extern "C" void func_02046380(struct StoreStruct* g);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* s, int index, int value);
+void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 #if defined(jpn)
 extern "C" void MessageSystem_FormatText(struct StoreStruct* a, int b, void* c, void* d);
 #else
 extern "C" void MessageSystem_FormatText(struct StoreStruct* a, int b, void* c, void* d, int e, int f, int g);
 #endif
-extern "C" void func_ov023_021f8960(char* arg0, short arg1, unsigned short arg2);
-extern "C" void func_02021410(struct Struct_02021410* arg0, int arg1, int arg2);
-extern "C" void func_020213fc(struct Struct_020213fc* arg0, int arg1);
+void SetOffset100Fields_021f8960(char* base, short a, unsigned short b);
+void SetToggleState_02021410(struct ToggleState* s, int a, int b);
+void MapDisplay_SetHoldSubScreenDark(struct SetFlagStruct* p, int value);
 
 extern struct Struct_ov004_02170138 data_ov004_02170138;
 
@@ -97,8 +97,8 @@ extern "C" ARM int func_ov004_0216aaec(void* a) {
 #if !defined(jpn)
     void* var10 = var6->unknown_4_.Allocate(4);
 #endif
-    if (func_0202c540(func_0202ae18()) != 0) {
-        var5 = 1000;
+    if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0) {
+        key = 1000;
     }
     memset(var10, 0, Enum_ov004_0216aaec_2400);
     func_02046380(var9);
@@ -119,8 +119,8 @@ extern "C" ARM int func_ov004_0216aaec(void* a) {
         func_ov023_021f8960((char*)var12, 0, Enum_ov004_0216aaec_4);
     }
 
-    struct Struct_02021410* var13 = (struct Struct_02021410*)GetGameResources()->unknown_ptr_36d0;
-    func_02021410(var13, 1, 0);
-    func_020213fc((struct Struct_020213fc*)var13, 0);
+    struct ToggleState* toggle = (struct ToggleState*)GetGameResources()->unknown_ptr_36d0;
+    SetToggleState_02021410(toggle, 1, 0);
+    MapDisplay_SetHoldSubScreenDark((struct SetFlagStruct*)toggle, 0);
     return 0;
 }

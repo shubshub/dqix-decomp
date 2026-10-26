@@ -45,25 +45,25 @@ struct Struct_ov000_02164280 {
     char unknown_36f0_[0x800];
 };
 
-extern "C" char* func_0203bd08(void);
-extern "C" int* func_0203bd14();
+extern "C" char* OamManager_GetInstance(void);
+int* CachedTextTable_GetInstance();
 extern "C" void MapVRAMBanksToTextureImage(int handle);
 extern "C" void func_020bb48c(unsigned int arg0, int arg1);
 extern "C" void MapVRAMBanksToSubObj(int value);
 extern "C" void MapVRAMBanksToSubBG(int value);
 void VramState_Rewind(struct Foo0207df50* p);
-void InitBattleContext0203bd24(char* context);
-extern "C" void func_0203c35c(int* ptr);
+void OamManager_Init(char* context);
+extern "C" void CachedTextTable_LoadPalettes(int* ptr);
 void ClearFlag320_02195540(unsigned char* obj);
 void VramState_Restore(char* obj);
 extern "C" void VramState_Reserve(void* p, int a, int b);
 void VramState_Save(char* obj);
 
 // USA: func_ov000_02164280
-extern "C" ARM void func_ov000_02164280(Struct_ov000_02164280* arg0) {
-    Struct_ov000_02161e30_6* var0 = (Struct_ov000_02161e30_6*)GetGameResources();
-    char* var1 = func_0203bd08();
-    int* var2 = func_0203bd14();
+extern "C" ARM void func_ov000_02164280(BattleScreen* screen) {
+    BattleResources* res = (BattleResources*)GetGameResources();
+    char* context = OamManager_GetInstance();
+    int* global = CachedTextTable_GetInstance();
     LockStagedTextureVRAMCopying();
     MapVRAMBanksToTextureImage(7);
     func_020bb48c(3, 1);
@@ -81,8 +81,8 @@ extern "C" ARM void func_ov000_02164280(Struct_ov000_02164280* arg0) {
     screen->pairTables.f = res->pairTables[27].f;
     VramState_Rewind(&screen->pairTables);
 
-    InitBattleContext0203bd24(context);
-    func_0203c35c(global);
+    OamManager_Init(context);
+    CachedTextTable_LoadPalettes(global);
     ClearFlag320_02195540((unsigned char*)res);
     VramState_Rewind(res->pairTables);
     VramState_Restore((char*)res->pairTables);

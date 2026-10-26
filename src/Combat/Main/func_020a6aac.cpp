@@ -10,18 +10,18 @@
 #endif
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
-void* GetFieldIfFlag4_020100f8(char* obj);
+void* GameState_GetFollowCamera(char* obj);
 
 struct Struct_0200ffc0
 {
     char unknown_0_[0x32c];
     void* unknown_32c_;
 };
-extern "C" void* func_0200ffc0(struct Struct_0200ffc0* arg0);
+void* GameState_GetShip(struct PointerField32c_ffc0* obj);
 
-extern "C" void* func_0200fd0c(GameState*);
+void* GameState_GetZoneTransition(GameState*);
 
 extern "C" void func_020da77c(void* arg0, int arg1, void* arg2);
 
@@ -29,13 +29,13 @@ extern "C" void func_020a2770(void* arg0, short arg1);
 
 extern "C" void func_0203db34(unsigned char* arg0, int arg1, int arg2, int arg3);
 
-extern "C" int func_0202c508(void* arg0);
-extern "C" int func_0202c540(void* arg0);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int LinkSession_IsGuest(void* obj);
 
 extern "C" void func_ov017_021d1a18(int arg0, short arg1, short arg2, unsigned char arg3);
 
-struct Struct_02033834;
-extern "C" void func_02033874(struct Struct_02033834* arg0, int arg1);
+struct Obj02033874;
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 extern "C" void* func_0201b678(void* savedEvent, void* ptr);
 struct TerrainCtx02018fbc;
@@ -45,12 +45,12 @@ extern "C" void func_ov017_0219c598(int* srcVec3, short* srcAngle, int forceFlag
 extern "C" void* func_0201b754(void* arg0, int arg1);
 extern "C" void func_0200fd48(GameState*, int);
 
-struct Struct_02017a94;
-struct Struct_0201b600;
-struct Struct_02013380;
-extern "C" struct Struct_0201b600* func_0201b600(Struct_02017a94*, int, unsigned short);
-extern "C" void func_02013380(struct Struct_02013380* arg0, int arg1, int arg2);
-extern "C" void func_0201b8c8(struct Struct_02017a94* arg0, int arg1, int arg2, int arg3);
+struct Obj0201b600;
+struct Elem0201b600;
+struct Struct02013380;
+struct Elem0201b600* FindElemByKeys(Obj0201b600*, int, unsigned short);
+void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
+void ApplyElementFlags0201b8c8(struct Obj0201b600* obj, int a1, int a2, int a3);
 
 extern "C" void func_020da244(void* arg0);
 
@@ -115,12 +115,12 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
     GameState* state = GameState::GetInstance();
     Zone3D* savedEvent = (Zone3D*)Zone3D_GetInstance();
     LightingManager::GetInstance();
-    void* events = func_0202ae18();
+    void* events = LinkSession_GetInstance();
     Scenario_GetInstance();
-    EventController020a6aac* controller = (EventController020a6aac*)GetFieldIfFlag4_020100f8((char*)state);
-    ActorView020a6aac* actor = (ActorView020a6aac*)GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)state);
-    GameObject* unknown = state->GetUnknownGameObject();
-    MovementView020a6aac* movement = (MovementView020a6aac*)GetField0x3f8Address_0200fd0c(state);
+    EventController020a6aac* controller = (EventController020a6aac*)GameState_GetFollowCamera((char*)state);
+    ActorView020a6aac* actor = (ActorView020a6aac*)GameState_GetShip((struct PointerField32c_ffc0*)state);
+    GameObject* unknown = state->GetLeader();
+    MovementView020a6aac* movement = (MovementView020a6aac*)GameState_GetZoneTransition(state);
 
     if ((unsigned int)(arg1 - 0x170c) <= 3) {
         var3->unknown_1f8_ = 1;
@@ -130,10 +130,10 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
         var3->unknown_1f8_ = 0;
     }
 
-    if (arg1 == 0x2710) {
-        Struct_020a6aac_4* var7 = (Struct_020a6aac_4*)func_0200fd0c(var0);
-        int var8 = 0;
-        if (var7->unknown_20_ == 0x25f1)
+    if (eventCode == 0x2710) {
+        MovementView020a6aac* movementState = (MovementView020a6aac*)GameState_GetZoneTransition(state);
+        int flagMatch = 0;
+        if (movementState->eventId == 0x25f1)
         {
             var8 = 1;
         }
@@ -147,27 +147,27 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
             var9.unknown_0_ = 0xc9;
             func_020da77c(&data_ov017_021d82fc, 1, &var9);
         }
-        func_020a2770(var3, 0xc9);
-        var4->unknown_0_.DisableFlag(0x100);
-        var4->unknown_0_.MakeVisible();
-        var4->unknown_154_ = 1;
-        var4->unknown_0_.SetScale(0xa0, 0xa0, 0xa0);
-        SetFlags04((GameResources*)arg0, 0x10004);
-        Struct_020236dc_3* var10 = var1->inline_020a6728();
-        var4->unknown_0_.position_ = var10->unknown_0_;
-        var10 = var1->inline_020a6728();
-        var4->unknown_144_ = var10->unknown_0_;
-        int var11 = var1->unknown_2774_.unknown_c_;
-        func_0203db34((unsigned char*)var4, 0, var11, 0);
-        if (func_0202c508(var2) != 0 && var8 == 0) {
-            var1->unknown_2774_.unknown_14_ = 1;
+        SetField0x21c_020a2770(controller, 0xc9);
+        actor->object.DisableFlag(0x100);
+        actor->object.MakeVisible();
+        actor->scripted = 1;
+        actor->object.SetScale(0xa0, 0xa0, 0xa0);
+        SetFlags04((GameResources*)obj, 0x10004);
+        ZoneSavedActorState* saved = savedEvent->GetSavedActorState();
+        actor->object.position_ = saved->position;
+        saved = savedEvent->GetSavedActorState();
+        actor->secondaryPosition = saved->position;
+        int savedRotationY = savedEvent->savedActor_.rotationY;
+        StoreVec3AtField0x50_0203db34((unsigned char*)actor, 0, savedRotationY, 0);
+        if (LinkSession_IsHostOrSolo(events) != 0 && flagMatch == 0) {
+            savedEvent->savedActor_.active = 1;
             func_ov017_021d1a18(1, -1, 1, 0);
         }
-        if (func_0202c540(var2) != 0) {
-            var4->unknown_0_.position_.x = 0x19000;
-            var4->unknown_0_.position_.y = 0x199;
-            var4->unknown_0_.position_.z = 0x38ccc;
-            func_02033874((struct Struct_02033834*)var4, 0);
+        if (LinkSession_IsGuest(events) != 0) {
+            actor->object.position_.x = 0x19000;
+            actor->object.position_.y = 0x199;
+            actor->object.position_.z = 0x38ccc;
+            GameObject_SnapFacing((struct Obj02033874*)actor, 0);
         }
     } else if (arg1 == 0x2774) {
         var4->unknown_154_ = 0;
@@ -213,17 +213,17 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
                 SetField0x21c_020a2770(controller, unknown->obj3D_.actorIndex_);
                 ClearFlags04((GameResources*)obj, 0x10004);
             }
-            unsigned short var19 = var1->unknown_2774_.unknown_12_;
-            if (arg1 == var19) {
-                short var20 = var1->unknown_2774_.unknown_10_;
-                Struct_020a6aac_5* var21 = (Struct_020a6aac_5*)func_0201b754(var1, var20);
-                if (var21 != 0) {
-                    var4->unknown_0_.EnableFlag(0x100);
-                    var4->unknown_0_.position_ = var21->unknown_8_;
-                    var4->unknown_144_ = var21->unknown_8_;
-                    func_02033874((struct Struct_02033834*)var4, var21->unknown_20_);
-                    Vector3i var22 = var21->unknown_40_;
-                    var1->unknown_2774_.unknown_0_ = var22;
+            unsigned short savedEventId = savedEvent->savedActor_.zoneId;
+            if (eventCode == savedEventId) {
+                short savedNodeId = savedEvent->savedActor_.nodeId;
+                EventNode020a6aac* node3 = (EventNode020a6aac*)FindNodeByField0x2c0201b754(savedEvent, savedNodeId);
+                if (node3 != 0) {
+                    actor->object.EnableFlag(0x100);
+                    actor->object.position_ = node3->position;
+                    actor->secondaryPosition = node3->position;
+                    GameObject_SnapFacing((struct Obj02033874*)actor, node3->angle);
+                    Vector3i savedPosition = node3->savedPosition;
+                    savedEvent->savedActor_.position = savedPosition;
                 }
                 var4->unknown_0_.MakeVisible();
             } else {
@@ -232,11 +232,11 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
         }
     } else if (eventCode == 0x170c) {
         if (previousCode == 0x2710) {
-            GameObject* currentObject = state->GetUnknownGameObject();
+            GameObject* currentObject = state->GetLeader();
             SetField0x21c_020a2770(controller, currentObject->obj3D_.actorIndex_);
             ClearFlags04((GameResources*)obj, 0x10004);
             ClearCombatantSlot_0200fd48(state, 0xc9);
-            if (func_0202c540(events) != 0) {
+            if (LinkSession_IsGuest(events) != 0) {
                 if (savedEvent->savedActor_.active == 0) {
                     ApplyElementFlags0201b8c8((struct Obj0201b600*)savedEvent, 0, 1, 0);
                 } else {
@@ -261,28 +261,28 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
     } else if (eventCode == 0x76c) {
         Zone3D* savedState = (Zone3D*)Zone3D_GetInstance();
         if (previousCode == 0x2710) {
-            GameObject* currentObject = state->GetUnknownGameObject();
+            GameObject* currentObject = state->GetLeader();
             Vector3i homePosition = data_020e909c;
             short angle570 = 0x570;
             currentObject->obj3D_.position_ = homePosition;
-            SetVecYFromValue02033874((struct Obj02033874*)currentObject, angle570);
+            GameObject_SnapFacing((struct Obj02033874*)currentObject, angle570);
             func_ov017_0219c598(&homePosition.x, &angle570, 0);
             savedState->savedActor_.active = 0;
             func_ov017_021d1a18((short)eventCode, -1, 0, 0);
             savedState->savedActor_.nodeId = 0;
             savedState->savedActor_.zoneId = (unsigned short)eventCode;
-            short objectId = state->GetUnknownGameObject()->obj3D_.actorIndex_;
+            short objectId = state->GetLeader()->obj3D_.actorIndex_;
             SetField0x21c_020a2770(controller, objectId);
             ClearFlags04((GameResources*)obj, 0x10004);
             struct Elem0201b600* firstSlot = FindElemByKeys((struct Obj0201b600*)savedState, 0, 4);
             if (firstSlot != 0)
             {
-                func_02013380((struct Struct_02013380*)var31, 0, 1);
+                BmdjSceneElement_SetShown((struct Struct02013380*)firstSlot, 0, 1);
             }
             struct Struct_0201b600* var32 = func_0201b600((struct Struct_02017a94*)var26, 0, 0x28);
             if (var32 != 0)
             {
-                func_02013380((struct Struct_02013380*)var32, 0, 1);
+                BmdjSceneElement_SetShown((struct Struct02013380*)secondSlot, 0, 1);
             }
         } else {
             unsigned short var33 = var26->unknown_2774_.unknown_12_;
@@ -290,23 +290,23 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
                 struct Struct_0201b600* var34 = func_0201b600((struct Struct_02017a94*)var26, 0, 4);
                 if (var34 != 0)
                 {
-                    func_02013380((struct Struct_02013380*)var34, 0, 1);
+                    BmdjSceneElement_SetShown((struct Struct02013380*)firstSlot, 0, 1);
                 }
                 struct Struct_0201b600* var35 = func_0201b600((struct Struct_02017a94*)var26, 0, 0x28);
                 if (var35 != 0)
                 {
-                    func_02013380((struct Struct_02013380*)var35, 0, 1);
+                    BmdjSceneElement_SetShown((struct Struct02013380*)secondSlot, 0, 1);
                 }
             } else {
                 struct Struct_0201b600* var36 = func_0201b600((struct Struct_02017a94*)var26, 0, 4);
                 if (var36 != 0)
                 {
-                    func_02013380((struct Struct_02013380*)var36, 0, 0);
+                    BmdjSceneElement_SetShown((struct Struct02013380*)firstSlot, 0, 0);
                 }
                 struct Struct_0201b600* var37 = func_0201b600((struct Struct_02017a94*)var26, 0, 0x28);
                 if (var37 != 0)
                 {
-                    func_02013380((struct Struct_02013380*)var37, 0, 0);
+                    BmdjSceneElement_SetShown((struct Struct02013380*)secondSlot, 0, 0);
                 }
             }
         }
@@ -315,7 +315,7 @@ extern "C" ARM void func_020a6aac(unsigned int* arg0, int arg1, int arg2)
         if (previousCode == 0x2710) {
             ClearFlags04((GameResources*)obj, 0x10004);
             ClearCombatantSlot_0200fd48(state, 0xc9);
-            short actorId = state->GetUnknownGameObject()->obj3D_.actorIndex_;
+            short actorId = state->GetLeader()->obj3D_.actorIndex_;
             SetField0x21c_020a2770(controller, actorId);
             short savedEventId = (short)savedEvent->savedActor_.zoneId;
             short savedNodeId = savedEvent->savedActor_.nodeId;

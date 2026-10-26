@@ -246,7 +246,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
         self->task54 = -1;
         self->f10 = self->idx;
         void* axis = (void*)((GameState*)gs)->GetResources();
-        if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
+        if ((self->flags & 2) || !IsScreenNotFullyFaded((GameResources*)axis, true)) {
             self->flags &= ~2;
             self->state++;
         } else {
@@ -388,7 +388,7 @@ extern "C" ARM void func_ov003_021539a0(struct Self_021539a0* self) {
         self->task54 = -1;
         self->f10 = self->idx;
         void* axis = (void*)((GameState*)gs)->GetResources();
-        if ((self->flags & 2) || !IsBrightnessWithinValidRange((GameResources*)axis, true)) {
+        if ((self->flags & 2) || !IsScreenNotFullyFaded((GameResources*)axis, true)) {
             self->flags &= ~2;
             self->state++;
         } else {

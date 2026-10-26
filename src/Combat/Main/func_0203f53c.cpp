@@ -52,15 +52,15 @@ union Struct_020e79cc {
     struct { short unknown_0_, unknown_2_, unknown_4_, unknown_6_, unknown_8_, unknown_a_; } unknown_0_;
     unsigned int unknown1_0_[3];
 };
-extern "C" Struct_0203f53c_2* func_02040468(Struct_02040468*, int);
-extern "C" void* func_0203f1c8(unsigned char*, unsigned int);
-extern "C" Struct_0203f53c_5* func_0203f354(Struct_0203f2b0_2*, unsigned int);
-extern "C" void* func_0202ed74(void*);
-extern "C" int func_020c56b0(int*);
-extern "C" int func_0202e7f0(void*);
+Element_0203f53c* GetValidElement02040468(List02040468*, int);
+void* GetElementStride0x14_0203f1c8(unsigned char*, unsigned int);
+Entry_0203f53c* GetListElementByIndex(List_0203f354*, unsigned int);
+void* Camera_GetInverseRotation(void*);
+int GetBoxTestResult_020c56b0(int*);
+int Camera_GetOrbitYaw(void*);
 extern "C" void func_020c51c0(int);
-extern "C" void func_020ca528(const void*, void*);
-extern "C" void func_02031278(void*);
+extern "C" void MI_Copy36B(const void*, void*);
+extern "C" void G3_RotateZ(void*);
 extern "C" void G3_RotateY(int);
 extern "C" void func_0203f98c(Object_0203f53c*, Record_0203f53c*, int, unsigned int,
     unsigned short, unsigned short, unsigned short);
@@ -71,28 +71,28 @@ extern Struct_020e79cc data_020e79cc;
 static inline int inline_0203f53c(int arg0, int arg1) { return FIX32_MULTIPLY(arg0, arg1); }
 
 // USA: func_0203f53c
-extern "C" ARM int func_0203f53c(Struct_0203f53c* arg0, void* arg1, int arg2) {
-    if (arg0->unknown_50_ & 1) return 0;
-    if (arg0->unknown_28_ < 0) return 0;
-    Struct_0203f53c_2* var0 = func_02040468(arg0->unknown_0_, arg0->unknown_28_);
-    if (!var0) return 0;
-    Struct_0203f53c_3* var1 = (Struct_0203f53c_3*)func_0203f1c8((unsigned char*)&var0->unknown_10_, arg0->unknown_44_);
-    if (!var1) return 0;
-    Struct_0203f53c_5* var2 = func_0203f354(&var0->unknown_10_, var1->unknown_10_[arg0->unknown_48_]);
-    if (!var2) return 0;
-    if (!var2->unknown_8_) return 0;
-    Matrix3x3* var3 = (Matrix3x3*)func_0202ed74(arg1);
-    int var4 = inline_0203f53c(arg0->unknown_1c_.x, arg2);
-    int var5 = inline_0203f53c(arg0->unknown_1c_.y, arg2);
-    int var6 = inline_0203f53c(arg0->unknown_1c_.z, arg2);
-    int var7 = var2->unknown_2_ * var5;
-    Vector3i var8;
-    var8.x = arg0->unknown_4_.x;
-    var8.y = arg0->unknown_4_.y + var7;
-    var8.z = arg0->unknown_4_.z;
-    RenderConfig::SetObjectPosition(&var8);
-    Matrix3x3 var9 = data_020e79e8;
-    func_020ca528(&var9, &data_0210a0cc);
+extern "C" ARM int func_0203f53c(Object_0203f53c* object, void* camera, int scale) {
+    if (object->flags & 1) return 0;
+    if (object->elementIndex < 0) return 0;
+    Element_0203f53c* element = GetValidElement02040468(object->list, object->elementIndex);
+    if (!element) return 0;
+    Stride_0203f53c* stride = (Stride_0203f53c*)GetElementStride0x14_0203f1c8((unsigned char*)&element->list, object->row);
+    if (!stride) return 0;
+    Entry_0203f53c* entry = GetListElementByIndex(&element->list, stride->indices[object->column]);
+    if (!entry) return 0;
+    if (!entry->records) return 0;
+    Matrix3x3* view = (Matrix3x3*)Camera_GetInverseRotation(camera);
+    int scaleX = MultiplyFix32_0203f53c(object->scale.x, scale);
+    int scaleY = MultiplyFix32_0203f53c(object->scale.y, scale);
+    int scaleZ = MultiplyFix32_0203f53c(object->scale.z, scale);
+    int height = entry->height * scaleY;
+    Vector3i position;
+    position.x = object->position.x;
+    position.y = object->position.y + height;
+    position.z = object->position.z;
+    RenderConfig::SetObjectPosition(&position);
+    Matrix3x3 identity = data_020e79e8;
+    MI_Copy36B(&identity, &data_0210a0cc);
     data_0210a010.flags &= ~0xa4;
     Vector3i var10 = data_020e79c0;
     RenderConfig::SetObjectScale(&var10);
@@ -127,8 +127,8 @@ extern "C" ARM int func_0203f53c(Struct_0203f53c* arg0, void* arg1, int arg2) {
         REG_TRANSLATE_0203f53c = 0;
         REG_TRANSLATE_0203f53c = -var19;
         REG_TRANSLATE_0203f53c = 0;
-        func_020c51c0((int)&var18);
-        func_02031278((void*)var13);
+        func_020c51c0((int)&transformed);
+        G3_RotateZ((void*)angle);
         REG_TRANSLATE_0203f53c = 0;
         REG_TRANSLATE_0203f53c = var19;
         REG_TRANSLATE_0203f53c = 0;
@@ -138,7 +138,7 @@ extern "C" ARM int func_0203f53c(Struct_0203f53c* arg0, void* arg1, int arg2) {
         REG_TRANSLATE_0203f53c = -var20;
         REG_TRANSLATE_0203f53c = 0;
         if (!(object->flags & 0x10)) func_020c51c0((int)view);
-        else G3_RotateY(GetField0x70_0202e7f0(camera));
+        else G3_RotateY(Camera_GetOrbitYaw(camera));
         REG_TRANSLATE_0203f53c = 0;
         REG_TRANSLATE_0203f53c = var20;
         REG_TRANSLATE_0203f53c = 0;

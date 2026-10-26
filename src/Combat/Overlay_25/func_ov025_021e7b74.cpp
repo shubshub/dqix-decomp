@@ -21,12 +21,12 @@ extern "C" void func_ov025_021e771c(short*, int, short*, int);
 extern "C" void func_ov000_02161c0c(void*, int);
 extern "C" void func_0200fd48(GameState*, int);
 extern "C" void func_ov000_021677fc(void*);
-extern "C" void func_ov000_02167e6c(unsigned char*);
-extern "C" Struct_ov001_02158ae4_3* func_ov000_02160f14(void*);
-extern "C" void func_02033874(Struct_02033834*, int);
-extern "C" unsigned char* func_ov000_02163524(void*);
-extern "C" GameObject* func_0200fea4(GameState*, int);
-extern "C" int func_020493a4(unsigned char*);
+void RunFlaglearAndSetMode02167e6c_02167e6c(unsigned char*);
+extern "C" CameraState* func_ov000_02160f14(void*);
+void GameObject_SnapFacing(Obj02033874*, int);
+unsigned char* GetField02163524(void*);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+int GetSubstructByte0x1c_020493a4(unsigned char*);
 extern "C" void func_ov000_02167fb0(void*, GameObject*);
 extern "C" void func_020d7334(unsigned char*, int);
 
@@ -69,22 +69,22 @@ extern "C" ARM int func_ov025_021e7b74(void*, void*, void*, void* arg3) {
     for (short var21 = 0xc0; var21 <= 0xc7; ++var21, ++var20) {
         if (!*var20) func_0200fd48(var3, var21);
     }
-    func_ov000_021677fc(var5);
-    func_ov000_02167e6c((unsigned char*)var5);
-    Vector3i var22 = func_ov000_02160f14(var5)->unknown_240_;
-    int var23 = var22.z;
-    for (int var24 = 0xc0; var24 < 0xc8; ++var24) {
-        GameObject* var25 = var3->GetCombatantByIndex(var24);
-        if (!var25) continue;
-        Vector3i var26 = {};
-        var26.z = var23;
-        Vector3i var27 = var25->obj3D_.position_;
-        var27.y = 0;
-        Vector3i var28;
-        Vector3fix_Subtract(&var26, &var27, &var28);
-        var28.y = 0;
-        Vector3fix_Normalize(&var28, &var28);
-        func_02033874((Struct_02033834*)var25, fix32_Atan2(var28.x, var28.z));
+    func_ov000_021677fc(work);
+    RunFlaglearAndSetMode02167e6c_02167e6c((unsigned char*)work);
+    Vector3i cameraPosition = func_ov000_02160f14(work)->position;
+    int cameraZ = cameraPosition.z;
+    for (int id = 0xc0; id < 0xc8; ++id) {
+        GameObject* actor = game->GetCombatantByIndex(id);
+        if (!actor) continue;
+        Vector3i target = {};
+        target.z = cameraZ;
+        Vector3i position = actor->obj3D_.position_;
+        position.y = 0;
+        Vector3i direction;
+        Vector3fix_Subtract(&target, &position, &direction);
+        direction.y = 0;
+        Vector3fix_Normalize(&direction, &direction);
+        GameObject_SnapFacing((Obj02033874*)actor, fix32_Atan2(direction.x, direction.z));
     }
     unsigned char* var29 = func_ov000_02163524(var5);
     short* var30 = var6;

@@ -13,7 +13,7 @@ struct Struct_02086f24_6;
 struct Struct_02013fb4;
 struct Struct_ov023_021eeaac_2;
 
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void ResetListHeader020727d8(List020727d8* list);
 extern "C" void func_020728ac(void* a, void* b, int c, int d, int e, int f, int g);
 void CopyShortTriple0x8e4a_ov000_0215fa84(void* obj, short* a, short* b, short* c);
@@ -26,8 +26,8 @@ extern "C" int func_0207d300(void* buf, int a, int b, int c);
 extern "C" int func_0207ccf0(void* buf, int a, int b, int c, int d, int e, int f);
 
 int GameState_GetProtagonistIndex(GameState* gs);
-extern "C" SearchStruct* func_0202ae18(void);
-int TestBitBySignedByteIndex_0202c1c0(SearchStruct* search, int index);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
+int LinkSession_IsSlotMember(SearchStruct* search, int index);
 void ClearFirstTwoWords0209a338(Pair0209a338* pair);
 void SetupAndRunBufferedScript0209a470(Ctx0209a470* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
 void ClearField00209a804(int* field);
@@ -63,12 +63,12 @@ extern "C" ARM int func_ov023_021eeaac(char* arg0) {
 #else
  enum {Enum_ov023_021eeaac_3756=0xeac, Enum_ov023_021eeaac_22788=0x5904, Enum_ov023_021eeaac_22784=0x5900, Enum_ov023_021eeaac_22736=0x58d0, Enum_ov023_021eeaac_668=0x29c, Enum_ov023_021eeaac_22796=0x590c, Enum_ov023_021eeaac_22785=0x5901};
 #endif
-    GameResources* var0 = GetGameResources();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    int* var2 = _ZZ21inline_ov023_021f4c04vE1s;
-    SafeAllocator* var3 = inline_ov000_02166804(var0, 5);
-    if (var2[0] == 0) {
-        func_020a1940(OVERLAY_ID(13));
+    GameResources* res = GetGameResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    int* g = _ZZ17GetGlobal021ffefcvE1s;
+    SafeAllocator* alloc = GetAllocator(res, 5);
+    if (g[0] == 0) {
+        Overlay_Load(OVERLAY_ID(13));
 #if defined(jpn)
         var2[1] = var1->QueueLoadFile(data_ov023_021fd49e, NULL);
 #else
@@ -177,9 +177,9 @@ extern "C" ARM int func_ov023_021eeaac(char* arg0) {
                 if (slot < 0) {
                     result = func_0207d300(obj, entry->id, 1, 1);
                 } else {
-                    if (var28 != var6 && (func_0202c1c0(func_0202ae18(), var6) != 0 || var28 != 0)) {
-                        if (var21 & (1 << var28)) {
-                            var6 = var28;
+                    if (current != slot && (LinkSession_IsSlotMember(LinkSession_GetInstance(), slot) != 0 || current != 0)) {
+                        if (present & (1 << current)) {
+                            slot = current;
                         }
                     }
                     var26 = func_0207ccf0(var25, var20->unknown_0_, 1, var6, 1, 0, 1);

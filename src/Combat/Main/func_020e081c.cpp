@@ -5,9 +5,6 @@
 #include "NitroSDK/Memory.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 #if defined(jpn)
 enum { Enum_020e081c_1900 = 0x6c0, Enum_020e081c_1904 = 0x6c4, Enum_020e081c_1908 = 0x6c8,
@@ -38,27 +35,27 @@ struct Script020e081c {
 };
 
 extern "C" void* Zone3D_GetInstance();
-extern "C" char* func_0203bd08();
-extern "C" char* func_0203b628();
-extern "C" void func_020213fc(Struct_020213fc*, int);
-extern "C" void func_02021428(void*, int);
+extern "C" char* OamManager_GetInstance();
+char* BgVram_GetInstance();
+void MapDisplay_SetHoldSubScreenDark(SetFlagStruct*, int);
+extern "C" void MapDisplay_FadeOutSubScreen(void*, int);
 void InitSubScreenDisplay_020209d0(void* context);
-void TailForward0203b66c(char*);
-void InitBattleContext0203bd24(char*);
+void BgVram_Reset(char*);
+void OamManager_Init(char*);
 void Sprite_Init(Struct0205a198*);
 void SpriteContext_Init(char*);
-int ProcessRecords0205a498(void*, PacRecord*, int, void*);
-void* GetGlobalPtr02105244_0203bd14();
-extern "C" void* func_0203be4c(char*);
-extern "C" void func_020c9be0();
-extern "C" void func_020c9820();
+int SpriteContext_LoadArchive(void*, PacRecord*, int, void*);
+void* CachedTextTable_GetInstance();
+extern "C" void* OamManager_GetSubOamBuffer(char*);
+extern "C" void HaltSystem();
+void OS_WaitVBlankIntr();
 #if defined(jpn)
 extern "C" void func_02020cb8(void*, int);
 #else
 extern "C" void func_02020cb8(void*, int*);
 #endif
-extern "C" void func_02022b90(void*, int*);
-extern "C" void func_02021410(Struct_02021410*, int, int);
+void MapDisplay_RemoveTask(void*, int*);
+void SetToggleState_02021410(ToggleState*, int, int);
 extern const char data_020f2b78[];
 
 static inline SafeAllocator* inline_02021578(GameResources* arg0, int arg1) {
@@ -72,16 +69,16 @@ extern "C" ARM void func_020e081c(char* arg0) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     Zone3D_GetInstance();
     GameResources* resources = GetGameResources();
-    char* battle = func_0203bd08();
-    char* table = GetData02105254_0203b628();
+    char* battle = OamManager_GetInstance();
+    char* table = BgVram_GetInstance();
     SafeAllocator* allocator = GetResourceAllocator(resources, 12);
     if (*(signed char*)(self + kStage) == 0) {
-        SetFlag0x9c6_020213fc((SetFlagStruct*)self, 0);
-        func_02021428(self, 0x19);
+        MapDisplay_SetHoldSubScreenDark((SetFlagStruct*)self, 0);
+        MapDisplay_FadeOutSubScreen(self, 0x19);
         InitSubScreenDisplay_020209d0(self);
         allocator->Reset();
-        TailForward0203b66c(table);
-        InitBattleContext0203bd24(battle);
+        BgVram_Reset(table);
+        OamManager_Init(battle);
         for (int i = 0; i < 28; ++i)
             Sprite_Init(&((Struct0205a198*)(self + 0xe8))[i]);
         SpriteContext_Init(self + 0x94);
@@ -100,30 +97,30 @@ extern "C" ARM void func_020e081c(char* arg0) {
     } else if (*(signed char*)(self + kStage) == 1) {
         if (!loader->GetTaskStatus(*(int*)(self + kBaseTask))) return;
         if (!loader->GetTaskStatus(*(int*)(self + kObjectTask))) return;
-        func_02021428(self, 0x19);
-        if (IsBrightnessWithinValidRange((GameResources*)resources, true)) return;
+        MapDisplay_FadeOutSubScreen(self, 0x19);
+        if (IsScreenNotFullyFaded((GameResources*)resources, true)) return;
         void* file = 0;
         unsigned int length = 0;
         loader->GetLoadedFileByID(*(int*)(self + kObjectTask), &file, &length);
-        ProcessRecords0205a498(self + 0x94, (PacRecord*)file, length, allocator);
-        *(int*)((char*)GetGlobalPtr02105244_0203bd14() + kDisplayWidth) = 0x2800;
-        void* display = (char*)func_0203be4c(func_0203bd08()) + kDisplay;
-        *(void**)GetGlobalPtr02105244_0203bd14() = display;
-        if (!*(SafeAllocator**)(self + kBackupAllocator)) func_020c9be0();
+        SpriteContext_LoadArchive(self + 0x94, (PacRecord*)file, length, allocator);
+        *(int*)((char*)CachedTextTable_GetInstance() + kDisplayWidth) = 0x2800;
+        void* display = (char*)OamManager_GetSubOamBuffer(OamManager_GetInstance()) + kDisplay;
+        *(void**)CachedTextTable_GetInstance() = display;
+        if (!*(SafeAllocator**)(self + kBackupAllocator)) HaltSystem();
         if (*(SafeAllocator**)(self + kBackupAllocator) && *(void**)(self + kBackupBuffer))
             (*(SafeAllocator**)(self + kBackupAllocator))->Free(*(void**)(self + kBackupBuffer));
         *(unsigned int*)(self + kBackupSize) = kBackupBytes;
         *(void**)(self + kBackupBuffer) = (*(SafeAllocator**)(self + kBackupAllocator))->Allocate(*(unsigned int*)(self + kBackupSize));
         VectorizedInvertedMemcpy((const void*)0x06600000, *(void**)(self + kBackupBuffer), *(unsigned int*)(self + kBackupSize));
-        DelayThenSyncBit0_020c9820();
+        OS_WaitVBlankIntr();
 #if defined(jpn)
         func_02020cb8(arg0, *(int*)(arg0 + Enum_020e081c_2556));
 #else
         func_02020cb8(arg0, (int*)(arg0 + Enum_020e081c_2556));
 #endif
-        func_02022b90(arg0, (int*)(arg0 + Enum_020e081c_2568));
-        func_02021410((Struct_02021410*)arg0, 1, 3);
-        *(unsigned char*)(arg0 + Enum_020e081c_2499) = 0;
-        ++*(signed char*)(arg0 + Enum_020e081c_2498);
+        MapDisplay_RemoveTask(self, (int*)(self + kObjectTask));
+        SetToggleState_02021410((ToggleState*)self, 1, 3);
+        *(unsigned char*)(self + kActive) = 0;
+        ++*(signed char*)(self + kStage);
     }
 }

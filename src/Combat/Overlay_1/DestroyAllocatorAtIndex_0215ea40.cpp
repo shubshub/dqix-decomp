@@ -5,7 +5,7 @@ extern "C" int func_ov017_021d60f4(void*);
 struct AllocatorUnion;
 void AllocatorUnion_Free(struct AllocatorUnion*, void*);
 struct Struct02012dd0;
-unsigned int GetMaxAlloc02012dd0(struct Struct02012dd0*);
+unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0*);
 
 extern SafeAllocator* data_ov001_021658b8[8];
 extern struct AllocatorUnion g_mainAllocator;
@@ -21,6 +21,6 @@ ARM int DestroyAllocatorAtIndex_0215ea40(void* self) {
         alloc->Destroy();
         AllocatorUnion_Free(&g_mainAllocator, signedAlloc);
     }
-    GetMaxAlloc02012dd0((struct Struct02012dd0*)&g_mainAllocator);
+    AllocatorUnion_GetMaxPossibleAllocation((struct Struct02012dd0*)&g_mainAllocator);
     return 1;
 }

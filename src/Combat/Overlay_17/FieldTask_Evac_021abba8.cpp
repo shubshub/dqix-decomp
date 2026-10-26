@@ -70,21 +70,21 @@ struct Struct_ov017_021abba8 {
     int unknown_24_;
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* func_02057924(void);
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
 int ListContainsId(ListHead02046b60* list, int id);
 extern "C" void func_ov017_021ac2a8(void* obj);
 extern "C" void func_02046a8c(void* list, void* node);
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 int FontBankLoader_GetInstance(void);
 extern "C" void FontBankLoader_CancelLoads(int g);
 extern "C" void func_020a0cc4(unsigned int size);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void VramState_Rewind(Foo0207df50* p);
 extern "C" int func_02057e6c(void* mgr, int id, SafeAllocator* alloc, void* data, unsigned int length, Foo0207df50* fields);
-void CopyCountedBytesToIntArray02010834(Base02010834* base, int index, int* out, int* outCount);
-extern "C" int func_0202c508(void* p);
+void GameState_GetPartyMemberIds(Base02010834* base, int index, int* out, int* outCount);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 void FindNodeAndProcess02057fb4(void* list, int id, void* params);
 void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
 void SePlayer_PlayExtra(void* obj, int a, int b);
@@ -113,9 +113,9 @@ extern AllocatorUnion g_mainAllocator;
 // Overlay 17, originally func_ov017_021abba8 (USA/EUR 0x021abba8, JPN 0x021ac40c)
 extern "C" ARM void FieldTask_Evac(Loader021abba8* self, ListHead02046b60* list) {
     GameState* gs = GameState::GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     void* mgr = func_02057924();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     int delta = gs->GetTickCount();
@@ -128,7 +128,7 @@ extern "C" ARM void FieldTask_Evac(Loader021abba8* self, ListHead02046b60* list)
             if (ListContainsId(list, 3)) {
                 func_02046a8c(list, res->unknown_ptr_array_3700[3]);
             }
-        } else if (IsField0Null_02046b08((void**)res->unknown_ptr_array_3700[0])) {
+        } else if (FieldTaskQueue_IsEmpty((void**)res->unknown_ptr_array_3700[0])) {
             SetFlags00(res, 0x10);
             FontBankLoader_CancelLoads(FontBankLoader_GetInstance());
             func_020a0cc4(0x2800);
@@ -146,7 +146,7 @@ extern "C" ARM void FieldTask_Evac(Loader021abba8* self, ListHead02046b60* list)
             loader->GetLoadedFileByID(self->task, &data, &length);
             self->allocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x2800), 0x2800);
             self->allocator.Reset();
-            Foo0207df50* fields = (Foo0207df50*)(*(char**)((char*)gs->GetUnknownGameObject() + kContextPointerOffset) + 0x568);
+            Foo0207df50* fields = (Foo0207df50*)(*(char**)((char*)gs->GetLeader() + kContextPointerOffset) + 0x568);
             VramState_Rewind(fields);
             void* copy = self->allocator.Allocate(length);
             memcpy(copy, data, length);
@@ -159,14 +159,14 @@ extern "C" ARM void FieldTask_Evac(Loader021abba8* self, ListHead02046b60* list)
         int ids[5];
         ObjParams02078484 params[5];
         if (self->active != 0) {
-            CopyCountedBytesToIntArray02010834((Base02010834*)gs, leader->obj3D_.actorIndex_, ids, &count);
+            GameState_GetPartyMemberIds((Base02010834*)gs, leader->obj3D_.actorIndex_, ids, &count);
             for (int i = 0; i < count; i++) {
                 self->members |= 1 << ids[i];
             }
-            if (var0->GetGameObjectByIndex(0xce) && func_0202c508(var1)) {
-                var12[var11] = 0xce;
-                arg0->unknown_d_ |= 0x10;
-                var11++;
+            if (gs->GetGameObjectByIndex(0xce) && LinkSession_IsHostOrSolo(search)) {
+                ids[count] = 0xce;
+                self->members |= 0x10;
+                count++;
             }
         } else {
             for (int var15 = 0; var15 < 5; var15++) {
@@ -260,7 +260,7 @@ extern "C" ARM void FieldTask_Evac(Loader021abba8* self, ListHead02046b60* list)
             GameObject_EnableControl(leader);
             func_ov017_021ac2a8(self);
             SePlayer_UnloadExtraArchiveB(&g_sePlayer);
-            if (func_0202c508(search)) {
+            if (LinkSession_IsHostOrSolo(search)) {
                 unsigned char* flags = (unsigned char*)Scenario_GetInstance();
                 Scenario_SetFlag(flags, flags + 0x8c, 0x113d, 1);
             }

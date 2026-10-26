@@ -28,7 +28,7 @@ struct Struct_ov017_021a6648_3 {
 extern "C" void* func_02057924();
 unsigned int* GlobalFlags_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 void FlagWord_SetBits(unsigned int*, unsigned int);
 extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
@@ -61,7 +61,7 @@ extern unsigned char data_ov017_021d6aa9[9], data_ov017_021d6aaa[9];
 // Overlay 17, originally func_ov017_021a6648 (USA/EUR 0x021a6648, JPN 0x021a6fec)
 extern "C" ARM void FieldTask_WarpArrival(Transition021a6648* self, ListHead02046b60* list) {
     GameState* game = GameState::GetInstance();
-    GameObject* leader = game->GetUnknownGameObject();
+    GameObject* leader = game->GetLeader();
     GameResources* resources = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     void* manager = func_02057924();
@@ -69,7 +69,7 @@ extern "C" ARM void FieldTask_WarpArrival(Transition021a6648* self, ListHead0204
     if (self->state == 0) {
         leader->obj3D_.MakeHidden();
         GameObject_DisableControl((Obj020397cc*)leader, 1);
-        if (!IsField0Null_02046b08((void**)resources->unknown_ptr_array_3700[0])) return;
+        if (!FieldTaskQueue_IsEmpty((void**)resources->unknown_ptr_array_3700[0])) return;
         SetFlags00(resources, 0x10);
         FlagWord_SetBits(flags, 1);
         func_020a0cc4(0x7000);

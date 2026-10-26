@@ -56,13 +56,13 @@ extern Vector3i data_ov003_0217f4b8[3];
 
 extern "C" SelectedEntry02166a90* func_ov003_02160bf8(SelectionPage02166a90*, int);
 extern "C" void* Zone3D_GetInstance(void);
-void* FindRecordByShortField020108f0(void*, int);
-void* FindSlotWithNegShort02010954(char*);
+void* GameState_FindPartyMemberData(void*, int);
+void* GameState_FindFreePartyMemberData(char*);
 void ResetShortFields02086380(unsigned char*);
 extern "C" void func_02082d6c(SlotState02082d6c*, SlotRecord02082d6c*);
 extern "C" void func_ov017_0218f064(GameResources*, int, int, int, int);
-extern "C" GameObject* func_0200ff58(GameState*, int);
-extern "C" void func_02033874(Struct_02033834*, int);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
 extern "C" unsigned char* func_ov017_021a4658(unsigned char*, int);
 int GameState_GetProtagonistIndex(GameState*);
 void SetField0x2d0_020546a0(void*, int);
@@ -71,14 +71,14 @@ void SetField0x2d1_020546b4(void*, int);
 typedef void (*ByteSetterWithIntArgument02166a90)(void*, int);
 int GetFieldAt0x150_02053c6c(unsigned char*);
 extern "C" void Font_DecodeText(unsigned char*, char*, int);
-int GetFieldAt0x50(Struct020865b0*);
+int PartyMemberRecord_GetVocation(Struct020865b0*);
 void PartyMember_SetVocation(unsigned char*, int);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_SetBits(unsigned int*, unsigned int);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int*);
-extern "C" void func_ov017_021cc340(int, int, int);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int*);
+void EnqueueEventTag7_021cc340(int, int, int);
 extern "C" void func_ov017_021cf078(int, unsigned short, unsigned char);
 extern "C" void func_ov017_021cc97c(int);
 extern "C" void func_ov017_021cca5c(int, int);
@@ -88,8 +88,8 @@ extern "C" void func_0206e424(void*, int);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 extern "C" void func_ov017_02191234(unsigned char*);
-extern "C" void func_020dc2d0(int);
-extern "C" void func_ov017_02191108(void*, int, int, int, int);
+void SetCombatModeFromCase020dc2d0(int);
+extern "C" void Party_ReformLine(void*, int, int, int, int);
 extern "C" void func_020dc7e8(int, int);
 extern "C" void func_ov017_021d0dbc(void);
 extern "C" void func_ov017_021cee78(int, unsigned char);
@@ -128,9 +128,9 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         if (IsSubBrightnessTransitionActive(var3) != 0) {
             return 0;
         }
-        Struct_ov003_02166a90_7* var7 = (Struct_ov003_02166a90_7*)func_020108f0(var2, arg0->unknown_4a2_);
-        if (var7 == 0) {
-            var7 = (Struct_ov003_02166a90_7*)func_02010954((char*)var2);
+        PartyRecord02166a90* record = (PartyRecord02166a90*)GameState_FindPartyMemberData(state, self->slot);
+        if (record == 0) {
+            record = (PartyRecord02166a90*)GameState_FindFreePartyMemberData((char*)state);
         }
         var7->unknown_568_ = arg0->unknown_4a2_;
         func_02086380((unsigned char*)var7);
@@ -140,13 +140,13 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         if (var8 == 0) {
             return 0;
         }
-        var8->obj3D_.SetField06(*var4);
-        var2->GetProtagonist();
-        var8->obj3D_.position_ = data_ov003_0217f4b8[arg0->unknown_4a2_ - 1];
-        func_02033874((Struct_02033834*)var8, 0x323d);
-        Struct_ov003_02166a90_3* var9 = (Struct_ov003_02166a90_3*)func_ov017_021a4658((unsigned char*)var3, arg0->unknown_4a2_);
-        if (var1 == 0) {
-            var9->unknown_b_ |= 8;
+        member->obj3D_.SetField06(*field06);
+        state->GetProtagonist();
+        member->obj3D_.position_ = data_ov003_0217f4b8[self->slot - 1];
+        GameObject_SnapFacing((Obj02033874*)member, 0x323d);
+        EventState02166a90* event = (EventState02166a90*)func_ov017_021a4658((unsigned char*)resources, self->slot);
+        if (special == 0) {
+            event->flags |= 8;
         }
         int group = GameState_GetProtagonistIndex(state);
         ((ByteSetterWithIntArgument02166a90)SetField0x2d0_020546a0)(member, group);
@@ -169,23 +169,23 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         Font_DecodeText(entry->name, name, 1);
         strcpy(((Combatant02166a90*)member)->name, name);
 #endif
-        int index = GetFieldAt0x50((Struct020865b0*)entry);
-        appearance->values[index] = entry->metadataValues[GetFieldAt0x50((Struct020865b0*)entry)];
-        PartyMember_SetVocation((unsigned char*)appearance, GetFieldAt0x50((Struct020865b0*)entry));
+        int index = PartyMemberRecord_GetVocation((Struct020865b0*)entry);
+        appearance->values[index] = entry->metadataValues[PartyMemberRecord_GetVocation((Struct020865b0*)entry)];
+        PartyMember_SetVocation((unsigned char*)appearance, PartyMemberRecord_GetVocation((Struct020865b0*)entry));
         self->step++;
     }
     if (self->step == 2) {
         HeadNode02046b24** head = (HeadNode02046b24**)resources->unknown_ptr_array_3700[0];
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x41);
-        if (GetHeadNodeIdOrMinusOne(head) != 0x13) {
+        if (FieldTaskQueue_GetCurrentKind(head) != 0x13) {
             self->step++;
         }
     }
-    if (arg0->unknown_4bc_ == 3) {
-        if (func_0202b7d8((int*)func_0202ae18()) != 0) {
-            func_ov017_021cc340(arg0->unknown_4a2_, 1, -1);
-            for (int var18 = 0; var18 < 13; var18++) {
-                func_ov017_021cf078(arg0->unknown_4a2_, (unsigned char)var18, 0);
+    if (self->step == 3) {
+        if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
+            EnqueueEventTag7_021cc340(self->slot, 1, -1);
+            for (int i = 0; i < 13; i++) {
+                func_ov017_021cf078(self->slot, (unsigned char)i, 0);
             }
             func_ov017_021cc97c(arg0->unknown_4a2_);
             func_ov017_021cca5c(arg0->unknown_4a2_, 0);
@@ -205,15 +205,15 @@ extern "C" ARM int func_ov003_02166a90(Struct_ov003_02166a90_5* arg0, int arg1) 
         if (special != 0) {
             SetCombatModeFromCase020dc2d0(0);
         }
-        func_ov017_02191108(var3, 1, 1, 1, 1);
+        Party_ReformLine(resources, 1, 1, 1, 1);
         func_020dc7e8(6, -1);
         func_020dc7e8(7, -1);
-        int* var20 = (int*)func_0202ae18();
-        if (var20 != 0 && func_0202b7d8(var20) != 0) {
-            func_ov017_021d0dbc();
+        int* eventStatus = (int*)LinkSession_GetInstance();
+        if (eventStatus != 0 && LinkSession_IsActive(eventStatus) != 0) {
+            ForEachEntry_021d0dbc();
         }
-        if (func_0202b7d8((int*)func_0202ae18()) != 0) {
-            func_ov017_021cee78(arg0->unknown_4a2_, 1);
+        if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
+            EnqueueEventTag20_021cee78(self->slot, 1);
         }
         return 1;
     }

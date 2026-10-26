@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
@@ -19,7 +19,7 @@ struct LocalEvt021d24a8 {
 
 // USA: func_ov017_021d24a8
 ARM void EnqueueEventTag30_021d24a8(int a) {
-	void* p = GetData02100044_0202ae24();
+	void* p = LinkMessageQueue_GetInstance();
 
 	LocalEvt021d24a8 buf;
 	Payload021d24a8* q2 = &buf.payload;

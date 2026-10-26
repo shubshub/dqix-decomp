@@ -54,7 +54,7 @@ extern "C" ARM void FieldTask_EnterBattle(BattleLoad021b6290* self) {
     GameState* game = GameState::GetInstance();
     GameResources* resources = GetGameResources();
     Zone3D_GetInstance();
-    Obj020397cc* actor = (Obj020397cc*)game->GetUnknownGameObject();
+    Obj020397cc* actor = (Obj020397cc*)game->GetLeader();
     unsigned char* timing = func_020704fc();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     void* streamOwner = resources->unknown_ptr_3718;

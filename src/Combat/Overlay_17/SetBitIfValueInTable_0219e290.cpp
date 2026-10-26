@@ -4,8 +4,8 @@
 
 extern "C" int Scenario_GetInstance(int obj);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void func_ov017_021d0924(int, int, unsigned short, int);
 extern unsigned short data_ov017_021d6638[18];
 
@@ -18,6 +18,6 @@ ARM void SetBitIfValueInTable_0219e290(void* obj, unsigned short val) {
     }
     if (idx < 0) return;
     Scenario_SetFlag((void*)base, (unsigned char*)base + 0x8c, idx + 0x200, 1);
-    if (func_0202c508(func_0202ae18()) == 0) return;
+    if (LinkSession_IsHostOrSolo(LinkSession_GetInstance()) == 0) return;
     func_ov017_021d0924(1, 0, (unsigned short)idx, 1);
 }

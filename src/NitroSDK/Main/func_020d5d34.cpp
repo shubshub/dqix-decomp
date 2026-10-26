@@ -27,18 +27,18 @@ struct Struct_020d5d34
     unsigned short unknown_81e_[1];
 };
 
-extern "C" int func_020d424c(int arg0, ...);
-extern "C" void func_020ca458(unsigned long value, void* dst, unsigned long size);
-extern "C" int func_020d4770(unsigned short arg0, Type_020d42e0 arg1, void* arg2);
-extern "C" int func_020d59bc(Type_020d42e0 arg0, void* arg1, const unsigned short* arg2,
-                             unsigned short arg3, unsigned short arg4, unsigned short arg5,
-                             unsigned short arg6);
-extern "C" void func_020d6318(void* arg0);
-extern "C" void func_020d63f0(void* arg0);
-extern "C" void func_020d651c(void* arg0);
-extern "C" unsigned short func_020d46cc();
-extern "C" unsigned short func_020d46fc();
-extern "C" unsigned char func_020d1ae4(unsigned int arg0);
+extern "C" int func_020d424c(int paramNum, ...);
+extern "C" void MIi_CpuClearFast(unsigned long value, void* dst, unsigned long size);
+extern "C" int func_020d4770(unsigned short port, WMCallbackFunc callback, void* arg);
+extern "C" int func_020d59bc(WMCallbackFunc callback, void* arg, const unsigned short* sendData,
+                             unsigned short sendDataSize, unsigned short destBitmap, unsigned short port,
+                             unsigned short prio);
+extern "C" void func_020d6318(void* callback);
+extern "C" void func_020d63f0(void* callback);
+extern "C" void func_020d651c(void* callback);
+unsigned short GetBattleContextField0x150_020d46cc();
+unsigned short GetBattleContextField0x14cLow16_020d46fc();
+unsigned char PopCount32_020d1ae4(unsigned int x);
 
 // USA: func_020d5d34
 extern "C" ARM int func_020d5d34(Struct_020d5d34* arg0, unsigned short arg1, unsigned short arg2,
@@ -56,19 +56,19 @@ extern "C" ARM int func_020d5d34(Struct_020d5d34* arg0, unsigned short arg1, uns
         return 6;
     if (arg2 == 0)
         return 6;
-    var1 = func_020d46cc();
-    if (var1 == 0)
-        var2 = func_020d46fc();
-    func_020ca458(0, arg0, sizeof(Struct_020d5d34));
-    arg0->unknown_808_ = 0;
-    arg0->unknown_80a_ = 0;
-    arg0->unknown_80c_ = 0;
-    arg0->unknown_810_ = arg3;
-    arg0->unknown_816_ = arg1;
-    arg0->unknown_80e_ = 0;
-    arg0->unknown_818_ = arg4 ? true : false;
-    arg2 |= 1 << var1;
-    arg0->unknown_80e_ = arg2;
+    aid = GetBattleContextField0x150_020d46cc();
+    if (aid == 0)
+        connectedAIDs = GetBattleContextField0x14cLow16_020d46fc();
+    MIi_CpuClearFast(0, dsInfo, sizeof(WMDataSharingInfo));
+    dsInfo->writeIndex = 0;
+    dsInfo->sendIndex = 0;
+    dsInfo->readIndex = 0;
+    dsInfo->dataLength = dataLength;
+    dsInfo->port = port;
+    dsInfo->aidBitmap = 0;
+    dsInfo->doubleMode = doubleMode ? true : false;
+    aidBitmap |= 1 << aid;
+    dsInfo->aidBitmap = aidBitmap;
     {
         const unsigned char var3 = func_020d1ae4(arg2);
         arg0->unknown_812_ = var3;

@@ -13,9 +13,9 @@ struct Struct_020abb64_3 { Struct_020abb64 unknown_0_; Struct_020abb64_2 unknown
 struct Struct_020abb64_4 { char unknown_0_[IS_JPN ? 0x543c : 0x569c]; Struct_020abb64_3 unknown_569c_; char unknown_56a8_[0xcd8]; char unknown_6380_[0x54]; };
 extern "C" char* func_020108d8(char*, int);
 extern "C" void func_02082828(char*);
-extern "C" int func_020aba5c(int);
-extern "C" int func_020abae8(int);
-extern "C" void func_0208660c(char*);
+int SendShortBufferOrReturnZero020aba5c(int);
+int SendBufferOrReturnZero_020abae8(int);
+void Party_Init(char*);
 // USA: func_020abb64
 extern "C" ARM int func_020abb64() {
     GameState* state = GameState::GetInstance();
@@ -42,7 +42,7 @@ extern "C" ARM int func_020abb64() {
     config->fields.middle = 300;
     config->fields.high = 706;
     config->statusByte = 0;
-    InitBigManagerStruct0208660c((char*)GameState_GetParty(state));
+    Party_Init((char*)GameState_GetParty(state));
     VectorizedMemset(storage->buffer, 0, 0x54);
     return 1;
 }

@@ -8,9 +8,9 @@ struct Struct_01ff91ac_7;
 struct Struct_0204a054;
 struct Struct_0204a054_2;
 
-extern "C" void func_0208e0a8(void);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* obj);
+extern "C" void LootPointList_GetInstance(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* obj);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0208f048(unsigned char* p0);
 extern "C" int rand(void);
@@ -30,17 +30,17 @@ struct Struct_0208ec78_3 {
 };
 
 // USA: func_0208ec78
-extern "C" ARM void func_0208ec78(struct Struct_0208ec78_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    func_0208e0a8();
-    void* var1;
-    char* var2;
+extern "C" ARM void func_0208ec78(struct Param0208ec78* p0) {
+    GameState* bs = GameState::GetInstance();
+    LootPointList_GetInstance();
+    void* g;
+    char* r;
 #if defined(jpn)
     Struct_0208ec78* var3 = (Struct_0208ec78*)((char*)var0 + 0x5a7c);
 #else
     Struct_0208ec78* var3 = (Struct_0208ec78*)((char*)var0 + 0x5cdc);
 #endif
-    var1 = func_0202ae18();
+    g = LinkSession_GetInstance();
 
     if (arg0->unknown_8_ != 0) {
         void* var4 = ((Object3D*)arg0->unknown_8_)->GetCurrentAnimationConfig();
@@ -63,7 +63,7 @@ extern "C" ARM void func_0208ec78(struct Struct_0208ec78_3* arg0) {
         }
     }
 
-    if (func_0202c540(var1) != 0) {
+    if (LinkSession_IsGuest(g) != 0) {
         return;
     }
 

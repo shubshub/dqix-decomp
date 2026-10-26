@@ -24,8 +24,8 @@ struct Struct_0203aba8;
 
 int IsBattleActiveAndCombatantsBit0Set_0209c140();
 void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
-void SetContextAndDispatch0203ac10(void* obj, void* a, int b);
-int TryDispatchOrFallback0203aba8(struct Obj0203aba8* obj, void* key, void* target);
+void SoundPlayer_StopSeqOnHandle(void* obj, void* a, int b);
+int SoundPlayer_StartSeq(struct Obj0203aba8* obj, void* key, void* target);
 
 // USA: func_0209c5e8
 extern "C" ARM void func_0209c5e8(struct Actor0209c5e8* actor) {
@@ -34,12 +34,12 @@ extern "C" ARM void func_0209c5e8(struct Actor0209c5e8* actor) {
         BgmPlayer_FadeOut((struct Actor0209c678*)actor, 0);
         return;
     }
-    if (arg0->unknown_b0_ == 1) {
-        func_0203ac10(arg0, &arg0->unknown_bc_, 0);
-        func_0203aba8((struct Struct_0203aba8*)arg0, (void*)(int)arg0->unknown_b8_, &arg0->unknown_bc_);
+    if (actor->state == 1) {
+        SoundPlayer_StopSeqOnHandle(actor, &actor->fieldBC, 0);
+        SoundPlayer_StartSeq((struct Obj0203aba8*)actor, (void*)(int)actor->field_b8, &actor->fieldBC);
         return;
     }
-    if (arg0->unknown_b0_ != 2) return;
-    func_0203ac10(arg0, &arg0->unknown_c0_, 0);
-    func_0203aba8((struct Struct_0203aba8*)arg0, (void*)(int)arg0->unknown_ba_, &arg0->unknown_c0_);
+    if (actor->state != 2) return;
+    SoundPlayer_StopSeqOnHandle(actor, &actor->fieldC0, 0);
+    SoundPlayer_StartSeq((struct Obj0203aba8*)actor, (void*)(int)actor->field_ba, &actor->fieldC0);
 }

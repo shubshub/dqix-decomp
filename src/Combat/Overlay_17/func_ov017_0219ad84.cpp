@@ -37,20 +37,20 @@ struct Struct_ov017_0219ad84_4 {
 
 extern "C" Zone0219ad84* Zone3D_GetInstance();
 Controller0219ad84* MessageSystem_GetInstance();
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 void AdvanceStreamRecord0204724c(Obj0204724C*);
 void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
-unsigned char GetByte0x26c_02039d7c(char*);
-int CheckField0xc4Low15BitsNonZero(BitField0203402c*);
-void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
+unsigned char GameObject_IsClimbingLadder(char*);
+int GameObject_IsSinking(BitField0203402c*);
+void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
 void RecomputeField0x7c(Struct020478bc*, int);
-extern "C" void func_02047554(Foo02048004*, int, int);
-int CheckSubstructByte0x7cPositive_020535c8(signed char*);
-int IsField0Null_02046b08(void**);
-extern "C" SearchStruct0202c1a4* func_0202ae18();
-int CheckField0NonZero_0202b7d8(int*);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
-void* GetField0x3f8Address_0200fd0c(GameState*);
+extern "C" void SprSprite_DrawGroup(Foo02048004*, int, int);
+int GameObject_IsGesturing(signed char*);
+int FieldTaskQueue_IsEmpty(void**);
+extern "C" SearchStruct0202c1a4* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+void* GameState_GetZoneTransition(GameState*);
 void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 int HasFlagBit_0218d4ec(void*, int);
 
@@ -69,11 +69,11 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
     Zone0219ad84* zone = Zone3D_GetInstance();
     void* camera = game->GetCamera();
     Controller0219ad84* controller = MessageSystem_GetInstance();
-    Window0219ad84* field = (Window0219ad84*)GetField0x3f8Address_0200fd0c(game);
-    GameObject* actor = game->GetUnknownGameObject();
+    Window0219ad84* field = (Window0219ad84*)GameState_GetZoneTransition(game);
+    GameObject* actor = game->GetLeader();
     if (!actor) return;
 
-    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) == 4) {
+    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) == 4) {
         if (CurrentSprite(self) == NULL || !CurrentSprite(self)->bit0) return;
         GXFIFO_MATRIX_PUSH = 0;
         if (inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[12] &&
@@ -109,19 +109,19 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
     busy |= WindowOpen(self->fieldTasks_[30]);
     busy |= WindowOpen(self->fieldTasks_[21]);
     busy |= WindowOpen(self->fieldTasks_[43]);
-    busy |= GetByte0x26c_02039d7c((char*)actor);
-    int check = CheckField0xc4Low15BitsNonZero((BitField0203402c*)actor);
+    busy |= GameObject_IsClimbingLadder((char*)actor);
+    int check = GameObject_IsSinking((BitField0203402c*)actor);
     if (busy | check | WindowOpen(field)) idle = 0;
     if (idle) {
-        SetVec3At0x1c((Vec3Target0203a46c*)&self->substruct_array_2b90[0], self->fieldButtonX[0] << 12, self->fieldButtonY[0] << 12, -0x1000);
+        SprSprite_SetPosition((Vec3Target0203a46c*)&self->substruct_array_2b90[0], self->fieldButtonX[0] << 12, self->fieldButtonY[0] << 12, -0x1000);
         RecomputeField0x7c((Struct020478bc*)&self->substruct_array_2b90[0], 1);
         GXFIFO_MATRIX_PUSH = 0;
-        func_02047554(&arg0->substruct_array_2b90[0], 0, 1);
+        SprSprite_DrawGroup(&self->substruct_array_2b90[0], 0, 1);
         GXFIFO_MATRIX_POP = 1;
     }
 
-    if (self->interactionSelection.spriteIndex != 0x12 && !CheckSubstructByte0x7cPositive_020535c8((signed char*)actor) &&
-        IsField0Null_02046b08((void**)self->fieldTaskQueue_)) {
+    if (self->interactionSelection.spriteIndex != 0x12 && !GameObject_IsGesturing((signed char*)actor) &&
+        FieldTaskQueue_IsEmpty((void**)self->fieldTaskQueue_)) {
         int show = 1;
         if (TestFlags04(self, 8) && self->interactionSelection.kind == 0) show = 0;
         if (self->interactionSelection.spriteIndex == 0x11) show = 0;
@@ -135,10 +135,10 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
         }
     }
 
-    SearchStruct0202c1a4* search = func_0202ae18();
-    if (!CheckField0NonZero_0202b7d8((int*)search) || !camera) return;
-    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)actor)) return;
-    int current = GetSearchStructCurrentArrEntry(search);
+    SearchStruct0202c1a4* search = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)search) || !camera) return;
+    if (GameObject_IsGesturing((signed char*)actor)) return;
+    int current = LinkSession_GetOwnSlot(search);
     int drawn = 0;
     for (int i = 0; i < 4; i++) {
         if (i == current) continue;
@@ -159,17 +159,17 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
         y -= 24;
         if (member->obj3D.GetFlag(0x400)) {
             Foo02048004* marker = &self->unknown_3520;
-            SetVec3At0x1c((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
+            SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             RecomputeField0x7c((Struct020478bc*)marker, 1);
             AdvanceStreamRecord0204724c((Obj0204724C*)marker);
             GXFIFO_MATRIX_PUSH = 0;
             func_020473c8((Struct_02015ef4_2*)var23, 1);
             var14++;
             GXFIFO_MATRIX_POP = 1;
-            if (var14 >= 3) break;
-        } else if (var16->unknown_1b2_) {
-            Struct_02012fa4* var24 = (Struct_02012fa4*)arg0->unknown_35a8;
-            func_0203a46c((Struct_0203a46c*)var24, var21 << 12, var22 << 12, -0xa000);
+            if (drawn >= 3) break;
+        } else if (member->field1b2) {
+            Foo02048004* marker = (Foo02048004*)self->unknown_35a8;
+            SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             GXFIFO_MATRIX_PUSH = 0;
             func_0204724c((Struct_0201730c*)var24);
             func_020473c8((Struct_02015ef4_2*)var24, 1);
@@ -178,7 +178,7 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
             if (drawn >= 3) break;
         } else if (HasFlagBit_0218d4ec(self, member->obj3D.actorIndex_)) {
             Foo02048004* marker = &self->substruct_array_2b90[17];
-            SetVec3At0x1c((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
+            SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             GXFIFO_MATRIX_PUSH = 0;
             func_0204724c((Struct_0201730c*)var25);
             func_020473c8((Struct_02015ef4_2*)var25, 1);

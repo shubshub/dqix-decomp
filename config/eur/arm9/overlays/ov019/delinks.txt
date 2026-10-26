@@ -8,7 +8,7 @@ src/Combat/Overlay_19/TriggerDispatchIfFlagOrByte_0218c240.cpp:
     complete
     .text start:0x0218c240 end:0x0218c290
 
-src/Combat/Overlay_20/InitDisplayAndAllocators_0218b5a0.cpp:
+src/Combat/Overlay_16/Trans_0218b5a0.cpp:
     complete
     .text start:0x0218b5a0 end:0x0218b5a4
 

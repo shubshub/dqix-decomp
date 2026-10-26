@@ -135,15 +135,15 @@ struct Struct_0207d7f4 {
 };
 
 extern "C" Holder021b7284* Zone3D_GetInstance(void);
-BattleTable021b7284* FindEntryByCurrentId02027cb0(void);
+BattleTable021b7284* ZoneRecords_FindCurrent(void);
 Combatant021b7284* FindCombatantByField16a_021a278c(void* unused, int val);
 int PickWeightedSubEntry_021b8a34(FindRowByIdRow* table, int id, int key12);
 int DecodeEntry_021b8abc(int id, Out021b8abc* out);
 void ClearSixHalfwords_021b8b34(Halfwords6_021b8b34* obj);
 extern "C" void func_0209b448(FindRowByIdRow* table, int group, Halfwords6_021b8b34* out, BattleTable021b7284* entry);
-ColorHolder0204bd7c* GetPtrField0x114_02033fa0(void* obj);
+ColorHolder0204bd7c* GameObject_GetFloorAttribute(void* obj);
 unsigned short ConvertColorToDecimalOffset30000(ColorHolder0204bd7c* obj);
-SearchList02099a68* GetPtrField0x468_02011584(void* obj);
+SearchList02099a68* GameState_GetZoneTable(void* obj);
 int FindKeyGetBitflag02099a68(SearchList02099a68* list, unsigned short key);
 ActiveEntry021b7284* FindActiveEntry0209bdc8(Container0209bdc8* c, int flag, unsigned int mask);
 extern "C" void func_0209afd4(FindRowByIdRow* table, short key, short value, short group, Halfwords6_021b8b34* out, BattleTable021b7284* entry);
@@ -153,19 +153,19 @@ void ClearFlag320_02195540(unsigned char* obj);
 void SetParamsAndRandomState021605d0(unsigned char* obj, Params021605d0* params);
 extern "C" MainBlock0205859c* func_02057924(void);
 void ResetBattleEncounterState0205859c(MainBlock0205859c* p);
-extern "C" SearchStruct0202c1a4* func_0202ae18(void);
+extern "C" SearchStruct0202c1a4* LinkSession_GetInstance(void);
 struct PointerField32c_ffc0;
-void* GetPointerAt0x32c_0200ffc0(PointerField32c_ffc0* obj);
+void* GameState_GetShip(PointerField32c_ffc0* obj);
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
 void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c* obj, unsigned short a, int b);
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 extern "C" void __clear(void* buf, int n);
 int GameState_GetProtagonistIndex(GameState* gs);
 extern "C" void func_ov017_021b848c(BattleScene021b7284* self, signed char* flags, signed char idx, int val, unsigned short color, signed char arg5, int arg6, int encounter);
 Entry0207d9bc* GetData02108ea8_0207d78c(void);
 int CheckEntryBytes0207d978(Entry0207d9bc* arr, unsigned short key);
 int HasActiveEntryForId_0207da30(unsigned char* arr, int id, int offset);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 extern "C" void func_0207d7f4(Entry0207d9bc* arr, unsigned short key, int a, int flag, signed char b, unsigned short color, unsigned char c);
 Entry0207d9bc* FindEntryByHalfword(Entry0207d9bc* arr, unsigned short key);
 void EnqueueEventTag90_021ca2a0(int a, int b);
@@ -218,10 +218,10 @@ extern "C" ARM void func_ov017_021b7284(BattleScene021b7284* self) {
             var11.unknown_8_[var0] = var18->unknown_8_[var0];
         }
     } else {
-        var1 = -1;
-        if (var14 != 0) {
-            Struct_ov017_021b7284_6* var19 = func_02027cb0();
-            if (var19 == NULL) {
+        sub = -1;
+        if (useAlt != 0) {
+            BattleTable021b7284* table = ZoneRecords_FindCurrent();
+            if (table == NULL) {
                 goto done;
             }
             Struct_ov017_021b7284_7* var20 = func_ov017_021a278c(var17, var15);
@@ -239,21 +239,21 @@ extern "C" ARM void func_ov017_021b7284(BattleScene021b7284* self) {
                 var11.unknown_8_[var21] = var10.unknown_6_[var21];
             }
         } else {
-            Struct_ov017_021b7284_7* var22;
-            LightingManager* var23 = LightingManager::GetInstance();
-            Struct_ov017_021b7284_6* var24 = func_02027cb0();
-            var22 = func_ov017_021a278c(var17, var15);
-            void* var25 = var16->GetUnknownGameObject();
-            if (var24 == NULL || var22 == NULL) {
+            Combatant021b7284* comb;
+            LightingManager* lighting = LightingManager::GetInstance();
+            BattleTable021b7284* table = ZoneRecords_FindCurrent();
+            comb = FindCombatantByField16a_021a278c(res, id);
+            void* obj = state->GetLeader();
+            if (table == NULL || comb == NULL) {
                 goto done;
             }
-            int var26 = var22->unknown_2_;
-            unsigned short var27 = func_0204bd7c(func_02033fa0(var25));
-            int var28 = func_02099a68(func_02011584(var16), var27);
-            Struct_ov017_021b7284_5* var29 = func_0209bdc8((Struct_0209bdc8*)var24->unknown_60_, var23->timeOfDayIndex_, var28);
-            unsigned short var30;
-            if (var29 != NULL) {
-                var30 = var29->unknown_0_;
+            int key = comb->key;
+            unsigned short color = ConvertColorToDecimalOffset30000(GameObject_GetFloorAttribute(obj));
+            int bit = FindKeyGetBitflag02099a68(GameState_GetZoneTable(state), color);
+            ActiveEntry021b7284* active = FindActiveEntry0209bdc8((Container0209bdc8*)table->active, lighting->timeOfDayIndex_, bit);
+            unsigned short value;
+            if (active != NULL) {
+                value = active->value;
             } else {
                 var30 = var22->unknown_168_;
             }
@@ -286,35 +286,35 @@ done:
 #else
     arg0->unknown_6ac_ = arg0->unknown_8_.Allocate(0x780c);
 #endif
-    func_ov000_02160140(arg0->unknown_6ac_);
-    func_ov017_02195540((unsigned char*)GetGameResources());
-    var6.unknown_0_ = arg0->unknown_6b0_;
-    var6.unknown_8_ = &arg0->unknown_8_;
-    var6.unknown_4_ = &arg0->unknown1_1c_;
-    func_ov000_021605d0((unsigned char*)arg0->unknown_6ac_, &var6);
-    var4->unknown_105_ |= 1;
-    func_0205859c(func_02057924());
-    Struct_0202c1a4* var32 = func_0202ae18();
+    func_ov000_02160140(self->field_6ac);
+    ClearFlag320_02195540((unsigned char*)GetGameResources());
+    params.context = self->context;
+    params.allocator = &self->allocator;
+    params.info = &self->info;
+    SetParamsAndRandomState021605d0((unsigned char*)self->field_6ac, &params);
+    holder->flags |= 1;
+    ResetBattleEncounterState0205859c(func_02057924());
+    SearchStruct0202c1a4* search = LinkSession_GetInstance();
 
     if (self->hasParty != 0) {
-        Obj020397cc* leader = (Obj020397cc*)gs->GetUnknownGameObject();
-        void* other = GetPointerAt0x32c_0200ffc0((PointerField32c_ffc0*)gs);
+        Obj020397cc* leader = (Obj020397cc*)gs->GetLeader();
+        void* other = GameState_GetShip((PointerField32c_ffc0*)gs);
         Party021b7284* party = (Party021b7284*)GameState_GetParty(gs);
         GameObject_DisableControl(leader, 1);
         leader->fieldB2 = 0;
         ColorHolder0204bd7c* colorHolder;
         if (self->useAlt != 0 && other != NULL) {
-            colorHolder = GetPtrField0x114_02033fa0(other);
+            colorHolder = GameObject_GetFloorAttribute(other);
         } else {
-            var36 = func_02033fa0(var33);
+            colorHolder = GameObject_GetFloorAttribute(leader);
         }
         for (int var37 = 0; var37 < var35->unknown_f7c_; var37++) {
             func_02053f7c((Struct_02053f7c_3*)var3->GetPartyMemberByIndex(var35->unknown_f78_[var37]), arg0->unknown_24_, 1);
         }
-        if (func_0202b7d8(&var32->unknown_0_) == 0) {
-            __clear(var12, sizeof(var12));
-            for (int var38 = 0; var38 < var35->unknown_f7c_; var38++) {
-                var12[var35->unknown_f78_[var38]] = 1;
+        if (LinkSession_IsActive(&search->active) == 0) {
+            __clear(present, sizeof(present));
+            for (int i = 0; i < party->count; i++) {
+                present[party->ids[i]] = 1;
             }
             int idx = GameState_GetProtagonistIndex(gs);
             func_ov017_021b848c(self, present, idx, 0, ConvertColorToDecimalOffset30000(colorHolder), self->field_51, 1, self->encounter);
@@ -324,7 +324,7 @@ done:
             if (HasActiveEntryForId_0207da30((unsigned char*)entries, self->id, GameState_GetProtagonistIndex(gs))) {
                 found = 0;
             }
-            if (GetSearchStructCurrentArrEntry(search) == 0) {
+            if (LinkSession_GetOwnSlot(search) == 0) {
                 int a = GameState_GetProtagonistIndex(gs);
                 int b = GameState_GetProtagonistIndex(gs);
                 func_0207d7f4(entries, self->id, a, 1, b, ConvertColorToDecimalOffset30000(colorHolder), self->field_51);
@@ -335,12 +335,12 @@ done:
                     }
                 }
             }
-            int var45 = var32->unknown_100d_;
-            if (var45 > 1) {
-                if (func_0202c1a4(var32) == 0 && var41 != 0) {
-                    func_ov017_021ca2a0(0, arg0->unknown_24_);
-                    arg0->unknown_4c_ = 1;
-                    arg0->unknown_6b4_ = 2;
+            int depth = search->depth;
+            if (depth > 1) {
+                if (LinkSession_GetOwnSlot(search) == 0 && found != 0) {
+                    EnqueueEventTag90_021ca2a0(0, self->id);
+                    self->field_4c = 1;
+                    self->state = 2;
                 } else {
                     var7.unknown_4_ = arg0->unknown_22_;
                     var7.unknown_0_ = arg0->unknown_24_;
@@ -361,7 +361,7 @@ done:
         }
     }
 
-    if (CheckField0NonZero_0202b7d8(&search->active)) {
+    if (LinkSession_IsActive(&search->active)) {
         Party021b7284* party = (Party021b7284*)GameState_GetParty(gs);
         for (int i = 0; i < party->count; i++) {
             func_ov017_021cff8c(party->ids[i], 0);

@@ -3,12 +3,12 @@
 #include "Combat/FieldActorState.h"
 #include "Graphics/Vector.h"
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void*);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void*);
+int LinkSession_IsActive(int* obj);
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 extern "C" Vector3fix func_02034104(void* combatant);
 struct Obj02033834;
@@ -28,8 +28,8 @@ extern "C" ARM int func_02077e80(Struct_02076a8c* arg0) {
 
     self->flags |= 0x40;
     int angle = 0;
-    void* g = func_0202ae18();
-    if (func_0202c508(g)) {
+    void* g = LinkSession_GetInstance();
+    if (LinkSession_IsHostOrSolo(g)) {
         Vector3fix posCopy = func_02034104(combatant);
         Vector3fix delta;
         Vector3fix_Subtract(&posCopy, &self->actor.base.object.position_, &delta);
@@ -56,8 +56,8 @@ extern "C" ARM int func_02077e80(Struct_02076a8c* arg0) {
     }
     arg0->unknown_17a_ = 0;
 
-    if (CheckField0NonZero_0202b7d8((int*)g)) {
-        if (GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)g) == 0) {
+    if (LinkSession_IsActive((int*)g)) {
+        if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
             int cid = self->actor.base.object.GetField06();
             int f2val = self->actor.base.object.unknown_2_;
             Vector3fix* vp = &self->targetPosition;

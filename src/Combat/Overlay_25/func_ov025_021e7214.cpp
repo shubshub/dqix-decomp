@@ -9,8 +9,8 @@ enum { Enum_ov025_021e7214_24576 = 0x6000, Enum_ov025_021e7214_4053 = 0xfd5 };
 #include "GameState/GameState.h"
 #include "GameState/Field3b0.h"
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" void func_0202e874(unsigned char* arg0, short arg1);
+void* GetActiveCombatWork_ov000_02160130(void);
+extern "C" void _Z14Camera_SetRollPht(unsigned char* obj, short val);
 
 struct Struct_ov025_021e7214 { char unknown_0_[8]; short unknown_8_; };
 
@@ -22,6 +22,6 @@ extern "C" ARM int func_ov025_021e7214(struct Struct_ov025_021e7214* arg0) {
     }
     GameState* bs = GameState::GetInstance();
     unsigned char* f = (unsigned char*)bs->GetCamera();
-    _Z42SetField0x7cClearFields0x1ec0x1ee_0202e874Pht(f, p->field8);
+    _Z14Camera_SetRollPht(f, p->field8);
     return 1;
 }

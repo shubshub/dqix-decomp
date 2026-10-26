@@ -16,7 +16,7 @@ extern "C" void MessageSystem_FormatText(StoreStruct*, int, const char*, char*, 
 StoreStruct* MessageSystem_GetInstance();
 unsigned char GameState_GetLeaderIndex(GameState*);
 void NameText_InitFromPartyMember(void*, int);
-void* Clear12Bytes020e46c4(void*);
+void* NameText_Clear(void*);
 void DispatchIfCountPositive020dcf7c(int, void*);
 char* StandardStrings_Get(int);
 void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
@@ -67,7 +67,7 @@ extern "C" ARM int func_0207d538(void* arg0, int arg1, int arg2, char* arg3) {
             char first[0x80] = {};
             char second[0x80] = {};
             NumberText number;
-            Clear12Bytes020e46c4(&number);
+            NameText_Clear(&number);
             number.first = first;
             number.second = second;
             DispatchIfCountPositive020dcf7c(amount, &number);

@@ -12,29 +12,29 @@ struct Struct_ov016_0218e240 {
 extern "C" char data_ov016_0219d06d[];
 extern "C" char data_ov016_0219d06f[];
 
-int GetWordFromTable02042648(int idx);
+int Font_GetFallbackWidth(int idx);
 int Font_FindCharacterIndex(int key, int tableIdx);
 struct Glyph0218e240* Font_GetCharacter(int idx, int tableIdx);
-int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int Font_GetKerning(int a, int b, int tableIdx);
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_GetTextWidth(char* str, int id);
 extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
 extern "C" void func_ov016_0218e17c(unsigned short* dst, int x, int y, void* glyph, int color, int fontId);
 
 // USA: func_ov016_0218e240
-extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsigned short arg2, int arg3, int arg4, unsigned char arg5, unsigned short arg6, int arg7) {
-    int var0 = 0;
-    int var1 = arg3;
-    struct Struct_ov016_0218e240* var2;
-    int var3;
-    int var4 = arg4;
-    short var5 = 0xff;
-    int var6 = func_02042648(1) & 0xff;
-    int var7;
-    int var8[3];
-    var8[0] = var1;
-    var8[1] = var1;
-    var8[2] = var1;
+extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigned short color, int x0, int y0, unsigned char center, unsigned short outline, int count) {
+    int i = 0;
+    int x = x0;
+    struct Glyph0218e240* glyph;
+    int line;
+    int y = y0;
+    short prev = 0xff;
+    int font = Font_GetFallbackWidth(1) & 0xff;
+    int adv;
+    int xs[3];
+    xs[0] = x;
+    xs[1] = x;
+    xs[2] = x;
 
     if (arg5 != 0) {
         int var9 = 1;
@@ -90,11 +90,11 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* arg0, char* arg1, unsign
                 func_ov016_0218e17c(dst, x, y - 1, glyph, 0, 1);
                 func_ov016_0218e17c(dst, x, y + 1, glyph, 0, 1);
             }
-            var1 += func_020425e4(var5, var16, 1);
-            func_ov016_0218e17c(arg0, var1, var4, var2, arg2, 1);
-            var5 = var16;
-                        var15 = var2->unknown_4_ + 1;
-            var7 = var2->unknown_5_0_;
+            x += Font_GetKerning(prev, code, 1);
+            func_ov016_0218e17c(dst, x, y, glyph, color, 1);
+            prev = code;
+                        wide = glyph->width + 1;
+            adv = glyph->skip;
         } else {
             var5 = 0xff;
         }

@@ -8,7 +8,7 @@ enum { RegionOffset6fc = 0x6fc, RegionOffset160 = 0x160, RegionOffset16c = 0x16c
 #include "GameState/GameState.h"
 
 struct HeadNode02046b24 { signed char id; };
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
 struct ArrayContainsByteStruct;
 int ArrayContainsByte_02086ef0(struct ArrayContainsByteStruct* s, int val);
@@ -20,7 +20,7 @@ struct Vector3i;
 struct Obj02033834;
 struct Obj02033874;
 void GameObject_SetFacing(struct Obj02033834* obj, int arg);
-void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 extern "C" void __clear(void* buf, int n);
 
@@ -36,14 +36,14 @@ struct Info021ceee0 {
 extern "C" ARM void func_ov017_021ceee0(void* unused0, struct Info021ceee0* info, GameState* battle, char* obj) {
     GameObject* held;
     struct HeadNode02046b24** list = *(struct HeadNode02046b24***)(obj + 0x3000 + RegionOffset6fc);
-    held = battle->GetMaybeWanderingMonsterByIndex(info->field12);
+    held = battle->GetWanderingMonsterByIndex(info->field12);
     if (ArrayContainsByte_02086ef0((struct ArrayContainsByteStruct*)GameState_GetParty(battle), info->field12)) {
         return;
     }
     if (!held) {
         return;
     }
-    if (GetHeadNodeIdOrMinusOne(list) == 0xa) {
+    if (FieldTaskQueue_GetCurrentKind(list) == 0xa) {
         int withinRange = info->field12 <= 3;
         if (!withinRange) {
             return;
@@ -62,13 +62,13 @@ extern "C" ARM void func_ov017_021ceee0(void* unused0, struct Info021ceee0* info
         *(Vector3i*)((int*)((char*)target + RegionOffset16c)) = *(Vector3i const*)buf;
         return;
     }
-    if (GetHeadNodeIdOrMinusOne(list) == 4) {
+    if (FieldTaskQueue_GetCurrentKind(list) == 4) {
         return;
     }
     *(Vector3i*)(&held->obj3D_.position_.x) = *(Vector3i const*)info->vec;
     if (info->field13 == 0) {
         GameObject_SetFacing((struct Obj02033834*)held, info->field10);
     } else {
-        SetVecYFromValue02033874((struct Obj02033874*)held, info->field10);
+        GameObject_SnapFacing((struct Obj02033874*)held, info->field10);
     }
 }

@@ -15,7 +15,7 @@ extern "C" void Font_DecodeText(char* name, void* buf, int flag);
 extern "C" void func_ov017_0218b5c0(int set, int bit);
 void DispatchWithGlobalContext020daf9c(int a, int b, int c, int d);
 void ClearFlag658_0219aa5c(unsigned char* obj);
-int GetField4328_0218d268(void* obj);
+int GameResources_GetTouchWalk(void* obj);
 struct ThreeByteStruct;
 void ClearThreeBytes_020966cc(struct ThreeByteStruct* s);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
@@ -36,7 +36,7 @@ extern "C" ARM int func_ov017_021afcec(unsigned char* arg0) {
         func_ov017_021b6c78();
     }
     if (obj[regionalOffset0] != 0) {
-        GameObject* c = bs->GetUnknownGameObject();
+        GameObject* c = bs->GetLeader();
         if (c != NULL) {
             GameObject_DisableControl((struct Obj020397cc*)c, 0);
         }
@@ -65,7 +65,7 @@ extern "C" ARM int func_ov017_021afcec(unsigned char* arg0) {
 #endif
 
     ClearFlag658_0219aa5c((unsigned char*)ov);
-    ClearThreeBytes_020966cc((struct ThreeByteStruct*)GetField4328_0218d268(ov));
+    ClearThreeBytes_020966cc((struct ThreeByteStruct*)GameResources_GetTouchWalk(ov));
     FlagWord_SetBits(dataPtr, 0x40000);
     return 1;
 }

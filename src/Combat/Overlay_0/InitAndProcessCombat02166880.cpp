@@ -20,17 +20,17 @@
 #include "World/Zone3D.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_0202ae18(void);
-void InitStruct02013718(char* obj, int a, int b);
+extern "C" void LinkSession_GetInstance(void);
+void Zone3D_Init(char* obj, int a, int b);
 extern "C" void Zone3D_GetInstance(void);
 int IsField0xcNonNegative_020a3694(int* obj);
-void* GetPtrField0x468_02011584(void* obj);
+void* GameState_GetZoneTable(void* obj);
 struct SearchEntry;
 struct SearchTable;
-struct SearchEntry* FindEntryByHalfwordKey_02099950(struct SearchTable* table, int key);
-extern "C" void func_02012de8(void);
+struct SearchEntry* ZoneTable_FindEntry(struct SearchTable* table, int key);
+extern "C" void Main_HandleLid(void);
 struct Obj0202fa00;
-extern "C" void func_02015438(void* p);
+extern "C" void Zone3D_Update(void* p);
 void BlankFunction020d84f4(void);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
 
@@ -40,8 +40,8 @@ ARM void InitAndProcessCombat02166880(unsigned char* obj) {
     GameState* battle = GameState::GetInstance();
     struct Obj0202fa00* fieldObj = (struct Obj0202fa00*)(int)BackgroundLoader::GetInstance();
     battle->GetProtagonist();
-    func_0202ae18();
-    InitStruct02013718((char*)(obj + REGION_OFFSET_0 + 0xc00), (int)(obj + 8), (int)(obj + REGION_OFFSET_1 + REGION_OFFSET_2));
+    LinkSession_GetInstance();
+    Zone3D_Init((char*)(obj + REGION_OFFSET_0 + 0xc00), (int)(obj + 8), (int)(obj + REGION_OFFSET_1 + REGION_OFFSET_2));
     Zone3D_GetInstance();
 
     if (IsField0xcNonNegative_020a3694(*(int**)(obj + REGION_OFFSET_3))) {
@@ -49,19 +49,19 @@ ARM void InitAndProcessCombat02166880(unsigned char* obj) {
         if (v != 0) *(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2) = v;
     }
 
-    void* table = GetPtrField0x468_02011584(battle);
-    struct SearchEntry* entry = FindEntryByHalfwordKey_02099950((struct SearchTable*)table,
+    void* table = GameState_GetZoneTable(battle);
+    struct SearchEntry* entry = ZoneTable_FindEntry((struct SearchTable*)table,
         *(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2));
     if (entry == NULL || *(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2) == 30000) {
         *(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2) = 0x75a4;
     }
-    ((Zone3D*)(obj + REGION_OFFSET_0 + 0xc00))->SwitchZone_0201383c(*(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2), 0);
+    ((Zone3D*)(obj + REGION_OFFSET_0 + 0xc00))->SwitchZone(*(unsigned short*)((char*)*(int**)(obj + REGION_OFFSET_3) + 2), 0);
 
     GetCurrentTimestamp();
     for (;;) {
-        func_02012de8();
+        Main_HandleLid();
         ((BackgroundLoader*)(fieldObj))->RemoveAllLocks();
-        func_02015438(obj + REGION_OFFSET_0 + 0xc00);
+        Zone3D_Update(obj + REGION_OFFSET_0 + 0xc00);
         if (*(int*)(obj + 0x1000 + REGION_OFFSET_4) == 0) break;
         BlankFunction020d84f4();
     }

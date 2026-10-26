@@ -9,7 +9,7 @@ struct Vec3s32_020c3030 { int x; int y; int z; };
 // USA: func_ov017_021bf6fc  (semantic: AdvanceProximityCountdown_021bf6fc)
 extern "C" ARM int func_ov017_021bf6fc(unsigned char* obj) {
 	GameState* battle = GameState::GetInstance();
-	GameObject* combatant = battle->GetUnknownGameObject();
+	GameObject* combatant = battle->GetLeader();
 	unsigned char* target = *(unsigned char**)(obj + 0xc);
 	struct Vec3s32_020c3030 pos = *(struct Vec3s32_020c3030*)((char*)combatant + 0x44);
 	struct Vec3s32_020c3030 refPos;

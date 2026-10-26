@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_020bc0a4(int arg0);
-struct Struct_0209c2e0_2;
-extern "C" void func_020bc180(struct Struct_0209c2e0_2* arg0, int arg1, int arg2);
-extern "C" void* func_020bc068(void* arg0, int arg1);
-extern "C" void func_0203aa80(void* arg0, int arg1);
-extern "C" int func_0203aaf8(void* arg0, void* arg1, int* arg2);
-struct Struct_0203aba8;
-extern "C" int func_0203aba8(struct Struct_0203aba8* arg0, void* arg1, void* arg2);
-extern "C" void func_0209c2e0(void* arg0, int arg1, int arg2);
+int CountEntriesType1WithId_020bc0a4(int id);
+struct Obj020bc180;
+void CallFunc020c0204OnActiveNode(struct Obj020bc180* obj, int value, int arg);
+void* CallFunc020bc594OnField0_020bc068(void* obj, int unused);
+void SoundPlayer_RestoreHeapState(void* obj, int arg2);
+int SoundPlayer_LoadSeq(void* obj, void* arg1, int* out);
+struct Obj0203aba8;
+int SoundPlayer_StartSeq(struct Obj0203aba8* obj, void* key, void* target);
+extern "C" void func_0209c2e0(void* obj, int a, int b);
 extern "C" void func_020bbd9c(void);
-extern "C" void func_0203ac10(void* arg0, void* arg1, int arg2);
-extern "C" int func_0203ab6c(void* arg0, void* arg1);
+void SoundPlayer_StopSeqOnHandle(void* obj, void* a, int b);
+int SetContextAndQuery0203ab6c(void* obj, void* arg1);
 
 struct Struct_0209c840 {
     char unknown_0_[0xb0];
@@ -59,13 +59,13 @@ extern "C" ARM void func_0209c840(struct Struct_0209c840* arg0) {
             arg0->unknown_ca_ = arg0->unknown_ca_ - var2;
             return;
         }
-        func_020bc068(&arg0->unknown_bc_, 1);
-        if (arg0->unknown_b4_ > 0) {
-            func_0203aa80(arg0, arg0->unknown_b4_);
+        CallFunc020bc594OnField0_020bc068(&actor->fieldBC, 1);
+        if (actor->field_b4 > 0) {
+            SoundPlayer_RestoreHeapState(actor, actor->field_b4);
         }
-        func_0203aaf8(arg0, (void*)(int)arg0->unknown_ce_, 0);
-        func_0203aba8((struct Struct_0203aba8*)arg0, (void*)(int)arg0->unknown_ce_, &arg0->unknown_c4_);
-        func_0209c2e0(arg0, arg0->unknown_cd_, 0);
+        SoundPlayer_LoadSeq(actor, (void*)(int)actor->field_ce, 0);
+        SoundPlayer_StartSeq((struct Obj0203aba8*)actor, (void*)(int)actor->field_ce, &actor->fieldC4);
+        func_0209c2e0(actor, actor->field_cd, 0);
         func_020bbd9c();
         arg0->unknown_ca_ = 0x1f4;
         arg0->unknown_c9_ = 3;
@@ -88,11 +88,11 @@ extern "C" ARM void func_0209c840(struct Struct_0209c840* arg0) {
         }
     }
 
-    func_0203ac10(arg0, &arg0->unknown_c4_, 0);
-    arg0->unknown_ce_ = -1;
-    if (arg0->unknown_b0_ == 1) {
-        if (arg0->unknown_b4_ > 0) {
-            func_0203aa80(arg0, arg0->unknown_b4_);
+    SoundPlayer_StopSeqOnHandle(actor, &actor->fieldC4, 0);
+    actor->field_ce = -1;
+    if (actor->state == 1) {
+        if (actor->field_b4 > 0) {
+            SoundPlayer_RestoreHeapState(actor, actor->field_b4);
         }
         func_0203ab6c(arg0, (void*)(int)arg0->unknown_b8_);
         if (arg0->unknown_c8_0_) {

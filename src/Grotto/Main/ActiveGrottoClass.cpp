@@ -20,7 +20,7 @@ extern "C"
 
     // Returns true if the value is between 40001 and 41505, respectively.
     // Most likely these are the zone IDs corresponding to grottos.
-    extern "C" bool func_0201b588(unsigned short zoneID);
+    extern "C" bool _Z15ZoneId_IsGrottoi(unsigned short zoneID);
 
     // Not sure exactly what these do but it involves loading/unloading
     // data/tmap/tdata.gp2
@@ -155,7 +155,7 @@ int ActiveGrottoClass::GetFloorCount() const
 {
     GrottoStruct* grotto = GameState::GetInstance()->GetGrottoStruct();
     void* zone = Zone3D_GetInstance();
-    if (!_Z17IsInRange0201b588i(*(unsigned short*)zone))
+    if (!_Z15ZoneId_IsGrottoi(*(unsigned short*)zone))
         return 0;
 
     if (grotto->activeMapData.GetMapType() == TreasureMapType_Legacy)

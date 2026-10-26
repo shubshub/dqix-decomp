@@ -246,7 +246,7 @@ extern "C" void func_020474a8(Struct_ov008_02189c70_12*, int, char*, char*);
 extern "C" void func_0204500c(Struct_ov008_02189c70_12*, char*, int);
 #endif
 void* MessageSystem_GetInstance();
-extern "C" int func_0202ae18();
+extern "C" int LinkSession_GetInstance();
 extern "C" void func_020728ac(void* table, SafeAllocator* alloc, void* data, unsigned int size, int a, int b, int c);
 void* GlobalFlags_GetInstance();
 struct FlagWord020466f4;
@@ -269,7 +269,7 @@ extern "C" void MessageSystem_FormatText(Window02189c70* w, int a, char* str, ch
 #if !defined(jpn)
 extern "C" void func_0204500c(Struct_ov008_02189c70_12* arg0, char* arg1, int arg2, int arg3);
 #endif
-extern "C" int func_0202c508(int v);
+extern "C" int LinkSession_IsHostOrSolo(int v);
 extern "C" int func_020457e0(Window02189c70* w);
 void AllocateFreeSlot0218b1e0(void* obj);
 struct Entry_0205d6a0;
@@ -289,7 +289,7 @@ void SetNameEntries02011818(void*, Src02011818*);
 void ClearRegion0x649e_02011ab8(char*);
 void CopyStringToField0x649e_02011a74(char*, unsigned int, char const*);
 extern "C" void func_ov017_021a9ff0(int v);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 struct Obj020397cc;
 void GameObject_DisableControl(Obj020397cc*, int);
 struct Obj02046574;
@@ -318,7 +318,7 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
     Window02189c70* win = (Window02189c70*)MessageSystem_GetInstance();
     Res02189c70* res = (Res02189c70*)GetGameResources();
     Sub3b84* sub = res->f3b84;
-    int token = func_0202ae18();
+    int token = LinkSession_GetInstance();
 
     if (arg0->unknown_e9a_ == 0) {
 #if defined(jpn)
@@ -512,9 +512,9 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
 #if !defined(jpn)
         arg0->unknown_eb0_ = -1;
 #endif
-        if (arg0->unknown_ebc_ != 0) {
-            if (arg0->unknown_ebc_->unknown_b_7_ && func_0202c508(var14)) {
-                arg0->unknown_e9a_ = 3;
+        if (self->ebc != 0) {
+            if (self->ebc->active && LinkSession_IsHostOrSolo(token)) {
+                self->state = 3;
             } else {
                 arg0->unknown_e9a_ = 2;
             }
@@ -600,7 +600,7 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
 #endif
 #if defined(jpn)
         MessageSystem_SetStringArgument((Obj02046574*)win, 0, (char*)self->ebc);
-        MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetUnknownGameObject() + 0x134));
+        MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetLeader() + 0x134));
 #else
         char clr3[0x30];
         __clear(clr3, 0x30);
@@ -630,11 +630,11 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
         if (var11->unknown_998_ != 0) return;
         if (func_02011804(var9) >= 0x63) {
 #if defined(jpn)
-            char* var54 = var11->unknown_2c_;
-            char* var55 = *(char**)((char*)var9->GetUnknownGameObject() + 0x134);
-            sprintf(var54, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xcb), var55);
-            var11->unknown_2c8_ = 1;
-            func_0204500c(var11, var54, 0);
+            char* text = win->text;
+            char* name = *(char**)((char*)gs->GetLeader() + 0x134);
+            sprintf(text, FindEntryByKey_02072a68((TableA68*)((char*)self + 0x278), 0xcb), name);
+            win->f2c8 = 1;
+            func_0204500c(win, text, 0);
 #else
             NameText_InitFromPartyMember(obj150, GameState_GetLeaderIndex(gs));
             win->f0 = obj150;
@@ -724,11 +724,11 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
         self->state = 2;
     } else if (self->state == 6) {
         if (res->f3b4c->f2 != 0) return;
-        func_020a1940(OVERLAY_ID(8));
+        Overlay_Load(OVERLAY_ID(8));
         self->ec0_b0 = 0;
         self->state = 7;
     } else if (self->state == 7) {
-        void* obj = gs->GetUnknownGameObject();
+        void* obj = gs->GetLeader();
         if (obj != 0) GameObject_DisableControl((Obj020397cc*)obj, 1);
         if (*((unsigned char*)gs + LOW_REGION(0x6000 + 0x1ee,0x6000 + 0x46e)) != 0) {
             MapMeta02189c70 meta7 = self->ebc->meta;
@@ -763,7 +763,7 @@ extern "C" ARM void func_ov008_02189c70(Struct_ov008_02189c70_16* arg0) {
             Font_DecodeText(self->ebc, clr7, 1);
             MessageSystem_SetStringArgument((Obj02046574*)win, 0, clr7);
 #endif
-            MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetUnknownGameObject() + 0x134));
+            MessageSystem_SetStringArgument((Obj02046574*)win, 1, *(char**)((char*)gs->GetLeader() + 0x134));
 #if defined(jpn)
             func_0204500c(var11, func_02072a68((Struct_02072a68_2*)((char*)arg0 + 0x278), 0xca), 0);
 #else

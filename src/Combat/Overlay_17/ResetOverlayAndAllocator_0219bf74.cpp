@@ -3,12 +3,12 @@
 #include "Resource/Brightness.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-void ResetBigStruct02013750(void* obj, int flag);
+void Zone3D_Unload(void* obj, int flag);
 
 // USA: func_ov017_0219bf74
 ARM void* ResetOverlayAndAllocator_0219bf74(void) {
 	unsigned char* self = (unsigned char*)GetGameResources();
-	ResetBigStruct02013750(Zone3D_GetInstance(), 1);
+	Zone3D_Unload(Zone3D_GetInstance(), 1);
 	((SafeAllocator*)(self + 0x38))->Reset();
 	SetFlags04((GameResources*)self, 2);
 	SetFlags00((GameResources*)self, 4);

@@ -9,7 +9,7 @@
 
 extern "C" void* func_02057924(void* obj);
 extern "C" void func_02057f00(void* obj, int index);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void GameObject_EnableControl(void* obj);
 void SePlayer_UnloadExtraArchiveB(void* obj);
@@ -26,7 +26,7 @@ struct Obj021a7280 {
 extern "C" ARM void func_ov017_021a7280(struct Obj021a7280* self) {
 	func_02057f00(func_02057924(self), 0xd);
 
-	GameObject_EnableControl(GameState::GetInstance()->GetUnknownGameObject());
+	GameObject_EnableControl(GameState::GetInstance()->GetLeader());
 
 	SePlayer_UnloadExtraArchiveB(&g_sePlayer);
 
@@ -36,5 +36,5 @@ extern "C" ARM void func_ov017_021a7280(struct Obj021a7280* self) {
 		AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
 	}
 
-	func_020a0c0c();
+	ROMFilesystem_InitFileTables();
 }

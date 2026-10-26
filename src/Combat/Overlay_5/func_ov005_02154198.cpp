@@ -14,7 +14,7 @@ struct Struct02074bd0;
 struct BackgroundGraphics;
 
 extern "C" void func_ov023_021dc354(void* window);
-void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
+void Set3DClearColor(int a, int b, int c, int d, int e);
 void Window_ClosePane(Entry_0205d6a0* window, int a);
 extern "C" void Window_Destroy(void* window);
 void ClearFlag0x10IfSet(Struct02074bd0* state);
@@ -70,7 +70,7 @@ extern "C" ARM void func_ov005_02154198(Struct_ov005_02153954* arg0) {
         arg0->unknown_3dc8_ = -1;
     }
     func_ov023_021dc354(self->infoWindow_);
-    Set3DClearColor_020c5588(self->unk_3dc2, 0x10, 0x7fff, 0, 0);
+    Set3DClearColor(self->unk_3dc2, 0x10, 0x7fff, 0, 0);
     GameState* gameState = GameState::GetInstance();
     ClearFlags04(gameState->GetResources(), 0x800);
     REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | (self->layers_ << 8);

@@ -150,7 +150,7 @@ MessageSystem_021eefd0* MessageSystem_GetInstance();
 void Clear12Bytes0206efc4(void* monsters);
 void WrapCall0206f230With1000_0206f200(int monsters, int allocator, int file, int size, int monster);
 void* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct* monsters, int id);
-void Clear12Bytes020e46c4(void* name);
+void NameText_Clear(void* name);
 const char* FindEntryByKey_02072a68(TableA68* texts, int id);
 void LoadBattleBlock020ac4c0(void* records);
 void AddClamped24BitFieldAt0x8_020a0330(S_a0330* records, unsigned int value);
@@ -160,7 +160,7 @@ void CopyInBattleField0x7540_020ac494(void* records);
 void ResetAndDispatchActorContext0209c6d8(void* obj, int value);
 void EnqueueEventTag162_021cfc74(unsigned char value);
 void ResetFields_021eefac(Reset_021eefac* end);
-int IsInRange0201b588(int zone);
+int ZoneId_IsGrotto(int zone);
 void DispatchAndSetTreasureMapUnknownBit_020117cc(char* gameState, DetailedTreasureMapData* map);
 
 extern "C" {
@@ -170,9 +170,9 @@ Struct_ov023_021eefd0_8 func_ov023_021ed804(Struct_ov023_021eefd0_8 arg0, void* 
 #if !defined(jpn)
 void func_0204500c(Struct_ov023_021eefd0_9* arg0, const char* arg1, int arg2, int arg3);
 #endif
-void* func_0202ae18();
-int func_0202c508(void* arg0);
-int func_0202c540(void* arg0);
+void* LinkSession_GetInstance();
+int LinkSession_IsHostOrSolo(void* unk);
+int LinkSession_IsGuest(void* unk);
 int func_ov023_021f4fc8();
 ZoneData_021eefd0* Zone3D_GetInstance();
 void Font_EncodeText(void* name, char* buffer, int a);
@@ -316,14 +316,14 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
         }
 
 #else
-        Struct_ov023_021eefd0_8 var18;
-        if (var9 != NULL)
-            var10 = var9->unknown_c_;
-        func_020e46c4(&var18);
-        void* var19 = func_0206f4f0((Struct_0206f01c_2*)var1, (short)arg0->unknown_58ca_);
-        if (var10 == 0x36 || var10 == 0x43 || var10 == 0x50)
-            var19 = func_0206f4f0((Struct_0206f01c_2*)var1, 0x1fc);
-        if (var19 != NULL)
+        MessageName_021eefd0 name;
+        if (unk2 != NULL)
+            kind = unk2->unk_c;
+        NameText_Clear(&name);
+        void* monster = SearchWithComparator0206f4f0((BinarySearchByComparatorStruct*)monsters, (short)self->victoryMonster_);
+        if (kind == 0x36 || kind == 0x43 || kind == 0x50)
+            monster = SearchWithComparator0206f4f0((BinarySearchByComparatorStruct*)monsters, 0x1fc);
+        if (monster != NULL)
         {
             var18 = func_ov023_021ed804(var18, var19);
             var2->unknown_20_ = &var18;
@@ -388,7 +388,7 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
             func_020a0110((Struct_020a0110*)var21.unknown_68_, 1);
             func_020ac494(&var21);
         }
-        if (!func_0202c540(func_0202ae18()) || self->info_->legacyBoss_ == 0)
+        if (!LinkSession_IsGuest(LinkSession_GetInstance()) || self->info_->legacyBoss_ == 0)
             ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x36);
         end->step_++;
         if (self->info_->grotto_ != 0 || self->info_->legacyBoss_ != 0)
@@ -417,12 +417,12 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
     else if (var0->unknown_0_ == 2)
     {
         ResetFields_021eefac((Reset_021eefac*)end);
-        void* unk = func_0202ae18();
+        void* unk = LinkSession_GetInstance();
         ZoneData_021eefd0* zone = Zone3D_GetInstance();
         DetailedTreasureMapData* map = zone->grotto_.GetDetailedData();
         if (self->info_->legacyBoss_ != 0)
         {
-            if (func_0201b588(var24->unknown_0_))
+            if (ZoneId_IsGrotto(zone->id_))
             {
                 Struct_ov023_021eefd0 var26;
                 func_020ac4c0(&var26);
@@ -437,7 +437,7 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
         {
             DetailedTreasureMapData* map2 = Zone3D_GetInstance()->grotto_.GetDetailedData();
             GameState* gameState = GameState::GetInstance();
-            if (func_0202c508(unk))
+            if (LinkSession_IsHostOrSolo(unk))
             {
                 void* var29 = var28->GetProtagonist()->baseStats_;
 #if defined(jpn)
@@ -459,7 +459,7 @@ extern "C" ARM int func_ov023_021eefd0(Struct_ov023_021eefd0_7* arg0)
                 func_020117cc((char*)var28, var27);
                 func_02011744(var28);
             }
-            if (func_0201b588(var24->unknown_0_))
+            if (ZoneId_IsGrotto(zone->id_))
             {
                 Struct_ov023_021eefd0 var31;
                 func_020ac4c0(&var31);

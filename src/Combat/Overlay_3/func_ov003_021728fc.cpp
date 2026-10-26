@@ -17,10 +17,10 @@ enum { Enum_ov003_021728fc_969 = 0x3c9 };
 
 int MessageSystem_GetInstance();
 
-int UpdatePlayClocks020ac4f8(int commit);
+int GameState_UpdatePlayClocks(int commit);
 struct MainBgControlBackup02074af4;
 extern "C" ARM void func_02074af4(struct MainBgControlBackup02074af4* obj);
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 int* GetGlobal02109030_020936f8(void);
 void ReleaseHandleAndClearFlags(struct Obj020941b0* p);
 void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* arg0) {
     GameResources* var0 = GetGameResources();
     if (arg0->unknown_ee_ != 0) return;
 
-    func_020ac4f8(0);
+    GameState_UpdatePlayClocks(0);
 #if defined(jpn)
     *(int*)((char*)obj + 0xf0) = *(int*)(MessageSystem_GetInstance() + 0x28);
 #endif
@@ -63,7 +63,7 @@ extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* arg0) {
     SetFlags00(var0, var3);
     SetFlags04(var0, 0x8de);
 
-    func_020c5588(0, 0, 0x7fff, 0, 0);
+    Set3DClearColor(0, 0, 0x7fff, 0, 0);
 
     int* var5 = func_020936f8();
     func_020941b0((struct Struct_02093b90_2*)var5);

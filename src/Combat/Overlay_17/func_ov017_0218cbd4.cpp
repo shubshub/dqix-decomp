@@ -14,10 +14,10 @@ struct Obj0203dd20;
 struct Foo020579b4;
 struct ResetObj020d7a5c;
 struct Event020da2fc { char pad_00[0xe]; unsigned char active; };
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" Foo020579b4* func_02057924();
-void* GetData02104b6c_02039e70();
+void* NumberPopups_GetInstance();
 void* GetGlobalPtr021075f4_0203cf4c();
 void* GetFieldPtrAt0x5ca4_02010768(void*);
 int MessageSystem_GetInstance();
@@ -28,27 +28,27 @@ extern "C" unsigned char func_0200fb9c(char*);
 extern "C" int func_0201201c(void*);
 void Stub(GameResources*);
 extern "C" void func_ov017_021941fc(GameResources*);
-extern "C" void func_02039830(void*);
-extern "C" void func_ov017_0219a674(unsigned char*);
-extern "C" void func_02015438(void*);
-extern "C" void func_020d9834(int);
-extern "C" void func_02022dc8(void*);
+void GameObject_ApplyPendingControl(void*);
+void InitObj0219a674(unsigned char*);
+extern "C" void Zone3D_Update(void*);
+void DispatchByFlag020d9834(int);
+extern "C" void MapDisplay_Update(void*);
 extern "C" void func_ov017_021a624c(GameResources*);
-extern "C" int func_02046b24(Struct_02015438**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 extern "C" void func_ov017_0219a6b8(GameResources*);
 extern "C" void func_020966e0(void*);
 void FieldTaskQueue_Update(FieldTaskQueue*);
 extern "C" void func_020a654c(GameResources*);
 extern "C" void func_020ac9ac(GameResources*);
 extern "C" void func_02011b68(GameState*);
-int GetFlags_0202e09c(int);
+int Camera_GetKindFlags(int);
 void FollowCamera_Update(void*);
 extern "C" void func_ov000_0216d464(void*);
 extern "C" void func_0204a170(void*);
 extern "C" void func_ov017_0218d0ec(GameResources*);
-extern "C" int func_0202b7d8(int*);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" void func_ov017_021a205c(GameResources*);
+int LinkSession_IsActive(int*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+void ProcessFlaggedCombatants800_021a205c(GameResources*);
 extern "C" int func_ov017_02196430(GameResources*);
 extern "C" int func_ov017_02196c4c(GameResources*);
 extern "C" void func_ov017_021c25ac(GameResources*);
@@ -83,11 +83,11 @@ extern Struct_ov017_021d82fc_6 data_ov017_021d82fc;
 // USA: func_ov017_0218cbd4
 extern "C" ARM void func_ov017_0218cbd4(GameResources* self) {
     GameState* state = GameState::GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     Zone3D* world = Zone3D_GetInstance();
     Foo020579b4* array = func_02057924();
-    GetData02104b6c_02039e70();
-    GameObject* actor = state->GetUnknownGameObject();
+    NumberPopups_GetInstance();
+    GameObject* actor = state->GetLeader();
     unsigned int ticks = state->GetTickCount();
     Obj0203dd20* scales = (Obj0203dd20*)GetGlobalPtr021075f4_0203cf4c();
     void** field = (void**)GetFieldPtrAt0x5ca4_02010768(state);
@@ -102,18 +102,18 @@ extern "C" ARM void func_ov017_0218cbd4(GameResources* self) {
     Stub(self);
     func_ov017_021941fc(self);
     if (!paused) {
-        CopyByteField0x253To0x252_02039830(actor);
+        GameObject_ApplyPendingControl(actor);
         (*(Vector3i*)(self->unknown_432c + 0x1c)) = actor->obj3D_.position_;
     }
     InitObj0219a674((unsigned char*)&self->interactionSelection);
     if (!TestFlags00(self, 4)) {
-        func_02015438(world);
+        Zone3D_Update(world);
         if (dispatch) DispatchByFlag020d9834(1);
     }
-    if (!paused && *field) func_02015438(*field);
-    func_02022dc8(self->unknown_ptr_36d0);
+    if (!paused && *field) Zone3D_Update(*field);
+    MapDisplay_Update(self->unknown_ptr_36d0);
     func_ov017_021a624c(self);
-    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) != 3)
+    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) != 3)
         func_ov017_0219a6b8(self);
     if (message->active && !((unsigned char*)self->fieldTasks_[13])[2]) {
         message->Forward020444d4(ticks);
@@ -125,13 +125,13 @@ extern "C" ARM void func_ov017_0218cbd4(GameResources* self) {
     func_02011b68(state);
     void* animation = state->GetCamera();
     if (animation) {
-        if (GetFlags_0202e09c((int)animation) & 4) FollowCamera_Update(animation);
-        else if (GetFlags_0202e09c((int)animation) & 8) func_ov000_0216d464(animation);
-        else if (GetFlags_0202e09c((int)animation) & 16) func_0204a170(animation);
+        if (Camera_GetKindFlags((int)animation) & 4) FollowCamera_Update(animation);
+        else if (Camera_GetKindFlags((int)animation) & 8) func_ov000_0216d464(animation);
+        else if (Camera_GetKindFlags((int)animation) & 16) func_0204a170(animation);
     }
     func_ov017_0218d0ec(self);
-    if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) != 3) {
-        if (!CheckField0NonZero_0202b7d8((int*)search) || GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) == 0)
+    if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) != 3) {
+        if (!LinkSession_IsActive((int*)search) || LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) == 0)
             ProcessFlaggedCombatants800_021a205c(self);
     }
     int stateA = func_ov017_02196430(self);
@@ -139,14 +139,14 @@ extern "C" ARM void func_ov017_0218cbd4(GameResources* self) {
     if (stateA == 2 || stateB == 2) self->unknown_42e3[5] = 0;
     if (!paused) {
         func_ov017_021c25ac(self);
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) != 3 &&
-            GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) != 2 && !self->fieldButtonState[0]) {
+        if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) != 3 &&
+            FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) != 2 && !self->fieldButtonState[0]) {
             func_ov017_021a476c(self);
             RunCombatantUpdatePipeline_0219755c((unsigned char*)self);
             func_ov017_021a51a4(self);
             func_ov017_021c05f4(self, 1, 0, 1);
         }
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)self->fieldTaskQueue_) != 3) {
+        if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) != 3) {
             func_0208ec78(GetData02109020_0208e9e8());
             ProcessGrottoTurnEvent0208f4e4((unsigned char*)world->unk_2664);
         }

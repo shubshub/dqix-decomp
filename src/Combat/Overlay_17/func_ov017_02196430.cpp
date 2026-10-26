@@ -112,13 +112,13 @@ struct Struct_ov017_021d6438 {
     unsigned char unknown_0_[3];
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" Work02196430* Zone3D_GetInstance(void);
-void* GetField0x3f8Address_0200fd0c(GameState* state);
-int IsField0Null_02046b08(void** obj);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24** obj);
+void* GameState_GetZoneTransition(GameState* state);
+int FieldTaskQueue_IsEmpty(void** obj);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** obj);
 int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
-int GetByte0x26c_02039d7c(char* obj);
+int GameObject_IsClimbingLadder(char* obj);
 int GetIntField0x264_02039760(void* obj);
 int GetField0x8OrDefault02077a20(Outer02077a20* p);
 void InitObj0219a674(unsigned char* self);
@@ -128,12 +128,12 @@ int HasMatchingHalfword_0219735c(unsigned char* obj, unsigned short key);
 int GetField0x17dBits4To5IfFlag8_020795cc(unsigned char* obj);
 int ArrayContainsByte_02086ef0(ArrayContainsByteStruct* arr, int value);
 int CheckProximity_02196fc8(GameObject* self, GameObject* other, int extra);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GameObject_IsGesturing(signed char* obj);
 int GameState_GetProtagonistIndex(GameState* state);
 void TrySetMode02076ccc(void* obj, int mode);
 extern "C" unsigned short func_ov017_021971c4(Ctx02196430* self);
-extern "C" int func_0202c508(void* obj);
-extern "C" int func_0202c540(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int LinkSession_IsGuest(void* obj);
 struct Entry0207d9bc;
 Entry0207d9bc* GetData02108ea8_0207d78c();
 EventEntry02196430* FindEntryByHalfword(Entry0207d9bc* table, unsigned short id);
@@ -151,9 +151,9 @@ extern Struct_ov017_021d6438 data_ov017_021d6438;
 extern "C" ARM int func_ov017_02196430(GameResources* resources) {
     Ctx02196430* self = (Ctx02196430*)resources;
     GameState* game = GameState::GetInstance();
-    void* session = func_0202ae18();
+    void* session = LinkSession_GetInstance();
     Entry02196430* entry = self->entry;
-    Actor02196430* player = (Actor02196430*)game->GetUnknownGameObject();
+    Actor02196430* player = (Actor02196430*)game->GetLeader();
     Ctx02196430* res = (Ctx02196430*)GetGameResources();
     Work02196430* work = Zone3D_GetInstance();
     LightingManager* lighting = LightingManager::GetInstance();
@@ -176,8 +176,8 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
     if (var0->unknown_42e2_ != 0) {
         return 2;
     }
-    if (func_02046b08((void**)var0->unknown_36fc_) == 0) {
-        return func_02046b24((Struct_02015438**)var0->unknown_36fc_) == 0x45 ? 0 : 2;
+    if (FieldTaskQueue_IsEmpty((void**)self->list) == 0) {
+        return FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->list) == 0x45 ? 0 : 2;
     }
     if (var3 == NULL) {
         return 2;
@@ -188,7 +188,7 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
     if (var4->unknown_18c_ & 1) {
         return 2;
     }
-    if (func_02039d7c((char*)var4) != 0) {
+    if (GameObject_IsClimbingLadder((char*)player) != 0) {
         return 2;
     }
     if (TestFlags04((GameResources*)var0, 0x10)) {
@@ -197,7 +197,7 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
     if (var5->unknown_42e7_ != 0) {
         return 2;
     }
-    if (((Struct_ov017_02196430_2*)func_0200fd0c(var1))->unknown_2_ != 0) {
+    if (((Zone02196430*)GameState_GetZoneTransition(game))->busy != 0) {
         return 2;
     }
     if (func_02039760(var4) != 0 && var14 == 0) {
@@ -213,14 +213,14 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
     if (var4->inline_ov017_02196430() > 0 && var14 == 0) {
         var24 = 1;
     }
-    unsigned short var26 = 0;
-    var12 = -1;
-    if (var24 == 0) {
-        for (var13 = 0; var13 < 12; var13++) {
-            var25 = 0;
-            var12 = var13 + (var3->unknown_2_0_ * 12 + 0x70);
-            Struct_ov017_02196430* var27 = (Struct_ov017_02196430*)var1->GetMaybeFieldMonsterByIndex(var12);
-            if (var27 == NULL) {
+    unsigned short id = 0;
+    index = -1;
+    if (skip == 0) {
+        for (i = 0; i < 12; i++) {
+            direct = 0;
+            index = i + (entry->group * 12 + 0x70);
+            Actor02196430* other = (Actor02196430*)game->GetFieldMonsterByIndex(index);
+            if (other == NULL) {
                 continue;
             }
             if (var27->unknown_be_ != 2 && ((var27->unknown_17d_ & 2) || (var27->unknown_17d_ & 4))) {
@@ -244,7 +244,7 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
                     }
                     var28 = var32 < var31 + 0x1000;
                 }
-                if (touching && func_0202c508(session)) {
+                if (touching && LinkSession_IsHostOrSolo(session)) {
                     InitObj0219a674((unsigned char*)&approachMsg);
                     approachMsg.kind = 9;
                     approachMsg.field2 = other->obj3D.actorIndex_;
@@ -286,7 +286,7 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
                 if (g_keyManager.TestKeysPressed(1) == 0 && var0->unknown_42e6_ == 0) {
                     continue;
                 }
-                if (func_020535c8((signed char*)var4)) {
+                if (GameObject_IsGesturing((signed char*)player)) {
                     continue;
                 }
                 var25 = 1;
@@ -334,13 +334,13 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
         var17.unknown_0_ = 0xe;
         func_ov017_0219b33c(var0, &var17);
     }
-    if (!func_020535c8((signed char*)var4) &&
-        (g_keyManager.TestKeysPressed(1) != 0 || var0->unknown_42e6_ != 0) && var33 != 0) {
-        var23 = 1;
-        var25 = 1;
-        var26 = var33;
-        if ((unsigned int)(var6->unknown_0_ - 0x170c) <= 3) {
-            var10 = 1;
+    if (!GameObject_IsGesturing((signed char*)player) &&
+        (g_keyManager.TestKeysPressed(1) != 0 || self->forceEvent != 0) && nearbyId != 0) {
+        doEvent = 1;
+        direct = 1;
+        id = nearbyId;
+        if ((unsigned int)(work->mapId - 0x170c) <= 3) {
+            special = 1;
         }
     }
     if (var23) {
@@ -348,19 +348,19 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
             var23 = 0;
         }
     }
-    if (var23 && var25 && func_0202c508(var2)) {
-        Struct_ov017_02196430_6* var34 = func_0207d9bc(func_0207d78c(), var26);
-        if (var34 != NULL && var34->unknown_4_ < 0) {
-            var23 = 0;
+    if (doEvent && direct && LinkSession_IsHostOrSolo(session)) {
+        EventEntry02196430* found = FindEntryByHalfword(GetData02108ea8_0207d78c(), id);
+        if (found != NULL && found->field4 < 0) {
+            doEvent = 0;
         }
     }
-    if (func_0202c540(var2) && func_02046b08((void**)var0->unknown_36fc_) && var0->unknown_44ae_ != 0) {
-        var26 = var0->unknown_44ae_;
-        var0->unknown_44ae_ = 0;
-        var0->unknown_44b0_ = 0;
-        var23 = 1;
-        var25 = 1;
-        var12 = -1;
+    if (LinkSession_IsGuest(session) && FieldTaskQueue_IsEmpty((void**)self->list) && self->pendingId != 0) {
+        id = self->pendingId;
+        self->pendingId = 0;
+        self->pendingArg = 0;
+        doEvent = 1;
+        direct = 1;
+        index = -1;
     }
     if (var23) {
         func_ov017_021b6f18(var0->unknown_3718_);
@@ -378,13 +378,13 @@ extern "C" ARM int func_ov017_02196430(GameResources* resources) {
         } else {
             var18.unknown_f_ = func_ov017_021970a0(var11);
         }
-        GameObject* var35 = var1->GetMaybeFieldMonsterByIndex(var12);
-        if (var35 != NULL) {
-            var22 = data_ov017_021d6438;
-            unsigned char* var36 = var22.unknown_0_;
-            for (int var37 = 0; var37 < 3; var37++, var36++) {
-                if (*var36 == var35->obj3D_.unknown_2_) {
-                    var18.unknown_f_ = 0;
+        GameObject* target = game->GetFieldMonsterByIndex(index);
+        if (target != NULL) {
+            kinds = data_ov017_021d6438;
+            unsigned char* kind = kinds.v;
+            for (int k = 0; k < 3; k++, kind++) {
+                if (*kind == target->obj3D_.unknown_2_) {
+                    evt.field_0xf = 0;
                     break;
                 }
             }

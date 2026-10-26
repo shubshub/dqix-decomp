@@ -6,14 +6,14 @@
 #include "Resource/Brightness.h"
 
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" unsigned char* Zone3D_GetInstance(void);
 struct PointerField32c_ffc0;
-void* GetPointerAt0x32c_0200ffc0(struct PointerField32c_ffc0* obj);
+void* GameState_GetShip(struct PointerField32c_ffc0* obj);
 extern "C" unsigned char* Scenario_GetInstance(void);
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 int IsField0x1b4Or0x1b8Positive_02053cdc(int* obj);
 int GetIntField0x264_02039760(void* obj);
 int Scenario_TestFlag(int unused, unsigned char* arr, int index);
@@ -22,15 +22,15 @@ extern "C" void func_ov017_021b6f18(void* node);
 void InitStruct_02196c08(unsigned char* obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" unsigned short func_ov017_021a1a20(void);
-extern "C" void* func_02033fa0(void* arg0);
-struct Struct_0204be3c;
-extern "C" unsigned short func_0204be3c(struct Struct_0204be3c* arg0);
-extern "C" int func_ov017_021970a0(int arg0);
-extern "C" void func_ov017_021b6e70(void* arg0, unsigned short arg1);
-extern "C" void func_ov017_021b7104(void* arg0, void* arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+void* GameObject_GetFloorAttribute(void* obj);
+struct ColorHolder;
+unsigned short ConvertColorToDecimal_0204be3c(struct ColorHolder* obj);
+extern "C" int func_ov017_021970a0(int mode);
+extern "C" void func_ov017_021b6e70(void* evt, unsigned short tag);
+extern "C" void func_ov017_021b7104(void* node, void* src);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 struct Struct_ov017_02196c4c {
 #if defined(jpn)
@@ -73,19 +73,19 @@ extern "C" ARM int func_ov017_02196c4c(Struct_ov017_02196c4c* arg0) {
 #else
  enum {Enum_ov017_02196c4c_396=0x18c, Enum_ov017_02196c4c_10132=0x2794};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    func_0202ae18();
+    GameState* battle = GameState::GetInstance();
+    LinkSession_GetInstance();
     unsigned char* work = Zone3D_GetInstance();
     unsigned short* entry = self->entry;
-    GameObject* combatant = battle->GetUnknownGameObject();
-    void* field32c = GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battle);
+    GameObject* combatant = battle->GetLeader();
+    void* field32c = GameState_GetShip((struct PointerField32c_ffc0*)battle);
     LightingManager* lighting;
     Actor02196c4c* actor = (Actor02196c4c*)GetGameResources()->unknown_ptr_array_371c[6];
     unsigned char* flags = Scenario_GetInstance();
     lighting = LightingManager::GetInstance();
 
-    if (func_02046b08((void**)arg0->unknown_36fc_) == 0) {
-        return func_02046b24((struct Struct_02015438**)arg0->unknown_36fc_) == 0x45 ? 0 : 2;
+    if (FieldTaskQueue_IsEmpty((void**)self->list) == 0) {
+        return FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)self->list) == 0x45 ? 0 : 2;
     }
     if (var2 == NULL) {
         return 2;
@@ -129,7 +129,7 @@ extern "C" ARM int func_ov017_02196c4c(Struct_ov017_02196c4c* arg0) {
     evt.id = func_ov017_021a1a20();
     evt.tag = 0xffff;
     evt.field_0xe = 1;
-    evt.color = ConvertColorToDecimal_0204be3c((struct ColorHolder*)GetPtrField0x114_02033fa0(field32c));
+    evt.color = ConvertColorToDecimal_0204be3c((struct ColorHolder*)GameObject_GetFloorAttribute(field32c));
     evt.field_0xf = func_ov017_021970a0(0);
     func_ov017_021b6e70(&evt, evt.tag);
     evt.timeOfDay = lighting->timeOfDayIndex_;

@@ -100,6 +100,6 @@ unsigned int TestFlags08(GameResources* resources, unsigned int mask);
 
 void WriteBrightnessToHardware(GameResources* gameResources);
 int GetBrightness(GameResources* gameResources, bool useSubScreen);
-bool IsBrightnessWithinValidRange(GameResources* gameResources, bool useSubScreen);
-bool IsBrightnessOutsideValidRange(GameResources* gameResources, bool useSubScreen);
+bool IsScreenNotFullyFaded(GameResources* gameResources, bool useSubScreen);
+bool IsScreenFullyFaded(GameResources* gameResources, bool useSubScreen);
 bool IsBrightnessZero(GameResources* gameResources, bool useSubScreen);

@@ -8,9 +8,9 @@ enum { Enum_ov017_021bbae4_204 = 0xcc };
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_0201079c(char* arg0);
-extern "C" int func_020107d0(char* arg0);
-extern "C" void func_ov017_021baedc(void* arg0, int arg1);
+int GameState_GetStoryChapter(char* obj);
+int GameState_GetStoryPart(char* obj);
+extern "C" void func_ov017_021baedc(void* self, int flag);
 
 extern char data_ov017_021d7d8a[0xc];
 extern char data_ov017_021d7d96[7];
@@ -55,12 +55,12 @@ extern "C" ARM void func_ov017_021bbae4(struct Struct_ov017_021bbae4* arg0, unsi
     func_ov017_021baedc(arg0, 1);
     arg0->unknown_cc_ = arg2;
 
-    GameState* var0 = GameState::GetInstance();
-    char* var1 = (char*)var0;
-    arg0->unknown_c_ = (unsigned char)func_0201079c(var1);
-    arg0->unknown_e_ = (unsigned char)func_0201079c(var1);
-    arg0->unknown_d_ = (unsigned char)func_020107d0(var1);
-    arg0->unknown_f_ = (unsigned char)func_020107d0(var1);
+    GameState* bs = GameState::GetInstance();
+    char* b = (char*)bs;
+    self->f0xc = (unsigned char)GameState_GetStoryChapter(b);
+    self->f0xe = (unsigned char)GameState_GetStoryChapter(b);
+    self->f0xd = (unsigned char)GameState_GetStoryPart(b);
+    self->f0xf = (unsigned char)GameState_GetStoryPart(b);
 
     arg0->unknown_16_ = 1;
     arg0->unknown_10_ = 1;

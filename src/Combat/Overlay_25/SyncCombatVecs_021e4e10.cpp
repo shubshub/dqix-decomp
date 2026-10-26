@@ -7,7 +7,7 @@ extern "C" void func_ov000_0216d370(int a, int b, int c, int d);
 void* GetActiveCombatWork_ov000_02160130(void);
 void GameState_SetCamera(GameState* battleStruct, int value);
 struct Vector3i;
-void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 struct Inner021e4e10 {
     unsigned int v[3];
@@ -32,6 +32,6 @@ ARM int SyncCombatVecs_021e4e10(void) {
     func_ov000_0216d370(val, 1, 1, 1);
     struct WorkStruct021e4e10* p2 = (struct WorkStruct021e4e10*)bs->GetCamera();
     *(Vector3i*)((int*)&p2->vecA) = *(Vector3i const*)((int*)&vecA);
-    ApplyVec3Tail_0202e694(p2, (int*)&vecB);
+    Camera_SetOrbitVector(p2, (int*)&vecB);
     return 1;
 }

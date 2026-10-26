@@ -28,7 +28,7 @@ extern "C" void func_ov017_0218f064(unsigned char* arg0, int arg1, int arg2, int
 extern "C" void func_ov017_021cc4b8(unsigned char arg0, int arg1, int arg2);
 extern "C" ARM void func_020263b0(unsigned char* arg0, unsigned int arg1);
 
-extern "C" void func_0202c288(struct Struct_0202b2f0* arg0);
+extern "C" void LinkSession_UpdateMemberCount(struct SearchStruct* search);
 
 // USA: func_ov017_021cc388  (semantic: EnqueueGroupEventsAndSetBits_021cc388)
 extern "C" ARM void func_ov017_021cc388(int tag, Group021cc388* group, GameState* battleStruct,
@@ -61,5 +61,5 @@ extern "C" ARM void func_ov017_021cc388(int tag, Group021cc388* group, GameState
 		func_ov017_021cc4b8(var6, arg0, var4);
 		func_020263b0(var0, var7);
 	}
-	func_0202c288(arg4);
+	LinkSession_UpdateMemberCount(search);
 }

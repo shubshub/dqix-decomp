@@ -21,13 +21,13 @@ struct Struct_02059720_4 {
     char unknown_128_[4];
     float unknown_12c_, unknown_130_, unknown_134_, unknown_138_, unknown_13c_, unknown_140_, unknown_144_;
 };
-extern "C" int func_02059a2c(Struct_02059720*);
-extern "C" void* func_02055108(Struct_020546c8*);
-extern "C" void* func_0200ffc0(Struct_0200ffc0*);
-extern "C" void* func_0200ffd0(Struct_0200ffd0*);
-extern "C" void func_02058750(Struct_02059720_4*);
-extern "C" void func_020589b8(Struct_02059720_4*);
-extern "C" void func_02058b3c(Struct_02059720_4*);
+int CheckByte0xcZeroAndField8LeField4(State02059a2c*);
+void* GetSubField0x14_02055108(S02055080*);
+void* GameState_GetShip(PointerField32c_ffc0*);
+void* GameState_GetStarflight(PointerField330_ffd0*);
+extern "C" void func_02058750(Animation02059720*);
+extern "C" void func_020589b8(Animation02059720*);
+extern "C" void func_02058b3c(Animation02059720*);
 
 // USA: func_02059720
 extern "C" ARM void func_02059720(Struct_02059720_4* arg0) {
@@ -48,33 +48,33 @@ extern "C" ARM void func_02059720(Struct_02059720_4* arg0) {
         arg0->unknown_2c_ = 0;
         return;
     }
-    arg0->unknown_12c_ += arg0->unknown_34_ * (float)var2;
-    arg0->unknown_130_ += arg0->unknown_38_ * (float)var2;
-    arg0->unknown_134_ += arg0->unknown_3c_ * (float)var2;
-    arg0->unknown_138_ += arg0->unknown_40_ * (float)var2;
-    if (arg0->unknown_12c_ < 0.0f) arg0->unknown_12c_ = 0.0f;
-    if (arg0->unknown_130_ < 0.0f) arg0->unknown_130_ = 0.0f;
-    if (arg0->unknown_134_ < 0.0f) arg0->unknown_134_ = 0.0f;
-    if (arg0->unknown_138_ < 0.0f) arg0->unknown_138_ = 0.0f;
-    if (arg0->unknown_12c_ > 31.0f) arg0->unknown_12c_ = 31.0f;
-    if (arg0->unknown_130_ > 31.0f) arg0->unknown_130_ = 31.0f;
-    if (arg0->unknown_134_ > 31.0f) arg0->unknown_134_ = 31.0f;
-    if (arg0->unknown_138_ > 31.0f) arg0->unknown_138_ = 31.0f;
-    arg0->unknown_13c_ += arg0->unknown_44_ * (float)var2;
-    arg0->unknown_140_ += arg0->unknown_48_ * (float)var2;
-    arg0->unknown_144_ += arg0->unknown_4c_ * (float)var2;
-    if (arg0->unknown_144_ < 0.0f) arg0->unknown_144_ = 360.0f;
-    if (arg0->unknown_144_ > 360.0f) arg0->unknown_144_ = 0.0f;
-    func_02058750(arg0);
-    func_020589b8(arg0);
-    func_02058b3c(arg0);
-    unsigned int var3 = 0;
-    if (arg0->unknown_2d_) {
-        Struct_02059720_3* var4 = (Struct_02059720_3*)func_0200ffc0((Struct_0200ffc0*)var1);
-        if (var4) var3 = var4->unknown_130_;
-    } else if (arg0->unknown_2e_) {
-        Struct_02059720_3* var5 = (Struct_02059720_3*)func_0200ffd0((Struct_0200ffd0*)var1);
-        if (var5) var3 = var5->unknown_130_;
+    self->red += self->redRate * (float)elapsed;
+    self->green += self->greenRate * (float)elapsed;
+    self->blue += self->blueRate * (float)elapsed;
+    self->alpha += self->alphaRate * (float)elapsed;
+    if (self->red < 0.0f) self->red = 0.0f;
+    if (self->green < 0.0f) self->green = 0.0f;
+    if (self->blue < 0.0f) self->blue = 0.0f;
+    if (self->alpha < 0.0f) self->alpha = 0.0f;
+    if (self->red > 31.0f) self->red = 31.0f;
+    if (self->green > 31.0f) self->green = 31.0f;
+    if (self->blue > 31.0f) self->blue = 31.0f;
+    if (self->alpha > 31.0f) self->alpha = 31.0f;
+    self->offsetX += self->xRate * (float)elapsed;
+    self->offsetY += self->yRate * (float)elapsed;
+    self->angle += self->angleRate * (float)elapsed;
+    if (self->angle < 0.0f) self->angle = 360.0f;
+    if (self->angle > 360.0f) self->angle = 0.0f;
+    func_02058750(self);
+    func_020589b8(self);
+    func_02058b3c(self);
+    unsigned int flags = 0;
+    if (self->followFirst) {
+        Follow02059720* follow = (Follow02059720*)GameState_GetShip((PointerField32c_ffc0*)game);
+        if (follow) flags = follow->flags;
+    } else if (self->followSecond) {
+        Follow02059720* follow = (Follow02059720*)GameState_GetStarflight((PointerField330_ffd0*)game);
+        if (follow) flags = follow->flags;
     }
     if (arg0->unknown_2d_ || arg0->unknown_2e_) {
         if (var3 & 1) arg0->unknown_10_ -= 0x120000;

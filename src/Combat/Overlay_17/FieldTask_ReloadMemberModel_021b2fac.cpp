@@ -64,7 +64,7 @@ void ClearEightWords_0203dafc(Struct_203dafc*);
 void VramState_Restore(char* p);
 void VramState_Save(char* p);
 struct Bytes02033b88;
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
 extern "C" void func_ov017_02191fec(void* p, int v);
 
@@ -219,16 +219,16 @@ extern "C" ARM void FieldTask_ReloadMemberModel(struct Task021b2fac* task) {
                     VramState_Save(a5->tables);
                 }
             }
-            ((Object3D*)var9)->SetScale(0x10a, 0x10a, 0x10a);
-            func_02033b88((Struct_02010604*)var9, 0);
-            ((Object3D*)var9)->DisableFlag(0x200);
-            ((Object3D*)var9)->SetInheritedAlpha(0);
-            func_02039d48((unsigned char*)var9);
-            func_ov017_02191fec(var8, var9->unknown_4_);
-            var3->RemoveTask(arg0->unknown_10_);
-            arg0->unknown_10_ = -1;
-            arg0->unknown_8_ = -1;
-            arg0->unknown_1_ = 1;
+            ((Object3D*)c)->SetScale(0x10a, 0x10a, 0x10a);
+            GameObject_ForceMotionState((Bytes02033b88*)c, 0);
+            ((Object3D*)c)->DisableFlag(0x200);
+            ((Object3D*)c)->SetInheritedAlpha(0);
+            SetFlag0x1ceBit0x4_02039d48((unsigned char*)c);
+            func_ov017_02191fec(mgr, c->field4);
+            loader->RemoveTask(task->taskId);
+            task->taskId = -1;
+            task->combatantId = -1;
+            task->done = 1;
         }
     }
 }

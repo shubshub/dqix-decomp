@@ -163,7 +163,7 @@ extern "C" ARM void func_ov003_0217cf10(Self0217cf10 *self) {
     int step = self->step_;
 
     if (step == 0) {
-        GameObject_DisableControl((Obj020397cc *)gs->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((Obj020397cc *)gs->GetLeader(), 1);
         msg->busy_ = 1;
         SePlayer_Play(&g_sePlayer, 1, 0);
         if (IsSeen(&save->progress_, 0xffffffff)) {
@@ -285,7 +285,7 @@ extern "C" ARM void func_ov003_0217cf10(Self0217cf10 *self) {
 
     if (step == 0) {
         Save0217cf10 *save = &zone->save_;
-        GameObject_DisableControl((Obj020397cc *)gs->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((Obj020397cc *)gs->GetLeader(), 1);
         msg->busy_ = 1;
         SePlayer_Play(&g_sePlayer, 1, 0);
         if (IsSeen(&save->progress_, 0xffffffff)) {

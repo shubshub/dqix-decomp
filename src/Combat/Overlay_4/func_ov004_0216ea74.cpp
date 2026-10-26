@@ -35,10 +35,10 @@ extern "C" void* func_ov011_021845f8(void* ctx, int v);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" int func_ov017_021b2090(PackedField017 a, PackedField017 b);
 int GetFieldAt0x7e_0201e830(struct S_e830* p);
-void Set3DClearColor_020c5588(int, int, int, int, int);
+void Set3DClearColor(int, int, int, int, int);
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 int RegisterSlotA020cf0fc(int);
-int RegisterSlotB020cf1a8(int);
+int RTC_GetTime(int);
 
 struct Struct_ov004_0216ea74 {
     unsigned char unknown_0_[4];
@@ -104,13 +104,13 @@ extern "C" ARM int func_ov004_0216ea74(SafeAllocator* arg0) {
     SetFlags00(var6, 4);
     SetFlags04(var6, 0x8de);
 
-    func_020c5588(0, 0x1f, 0x7fff, 0, 0);
-    func_020c54a4(0, 0, 0, 0);
+    Set3DClearColor(0, 0x1f, 0x7fff, 0, 0);
+    SetFogState_020c54a4(0, 0, 0, 0);
 
-    int var7[4];
-    int var8[3];
-    func_020cf0fc((int)var7);
-    func_020cf1a8((int)var8);
+    int slotA[4];
+    int slotB[3];
+    RegisterSlotA020cf0fc((int)slotA);
+    RTC_GetTime((int)slotB);
 
     data_ov004_02171048.unknown_4_->unknown_38_.unknown_0_0_ = var7[0] + 0x7d0;
     data_ov004_02171048.unknown_4_->unknown_38_.unknown_1_4_ = var7[1];

@@ -26,7 +26,7 @@ char *KeyTable_Get(struct Container020e0310 *c, int key);
 char *MessageSystem_GetInstance();
 extern "C" void func_02046380(void *messages);
 void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
-void *Clear12Bytes020e46c4(void *p);
+void *NameText_Clear(void *p);
 extern "C" void *__clear(void *dst, int count);
 void NameText_InitFromPartyMember(void *obj, int combatantId);
 void StoreInArray0x8b0_020465c0(StoreStruct *messages, int index, int value);
@@ -75,14 +75,14 @@ extern "C" ARM void func_ov002_02161234(char *arg0, char *arg1) {
     short sel;
     short key = *(short *) (self + 0x1c28);
     int sub;
-    GameObject *u = gs->GetUnknownGameObject();
+    GameObject *u = gs->GetLeader();
     if (u != 0) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) msgs, 4, *(char **) ((char *) u + 0x134));
     }
     sel = *(signed char *) (self + 0x1c20);
     sub = *(signed char *) (self + 0x1c21);
-    Clear12Bytes020e46c4(&pa);
-    Clear12Bytes020e46c4(&pb);
+    NameText_Clear(&pa);
+    NameText_Clear(&pb);
     __clear(buf1, 0x80);
     __clear(buf2, 0x80);
     __clear(buf3, 0x80);

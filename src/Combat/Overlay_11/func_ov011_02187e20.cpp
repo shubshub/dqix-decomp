@@ -17,7 +17,7 @@ extern "C" ARM void* func_ov017_021b2164(void);
 extern "C" ARM void* func_ov011_021845f8(void* ctx, int v);
 extern "C" ARM void* func_ov011_021849c8(void* ctx);
 extern "C" ARM int func_ov004_02167820(void* self, void* param1, int param2, int param3);
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 void SpriteContext_Init(char* obj);
 void SpriteContext_Destroy(void* obj);
 
@@ -52,7 +52,7 @@ extern "C" ARM int func_ov011_02187e20(struct Struct_ov011_02187e20* arg0) {
     local.vtable = &data_ov004_021705f8;
     local.alloc.ResetAllocatorPointer();
     char* base = local.state;
-    ResetAndReturnSelf020dfc2c(base + 4);
+    KeyTable_Construct(base + 4);
     SpriteContext_Init(base + 0x60);
     memcpy(block, &local, sizeof(Buf02187e20));
 

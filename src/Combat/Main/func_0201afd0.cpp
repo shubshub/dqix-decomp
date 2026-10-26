@@ -28,22 +28,22 @@ struct Struct_020e6df0 {
     char unknown_0_[11];
 };
 
-struct Struct_020105a8;
-struct Struct_0201afd0_4;
-struct Struct_0201e690;
-struct Struct_020134e0_2;
-struct Struct_0201afd0_5;
-struct Struct_02011430;
-struct Struct_0201afd0_6;
-struct Struct_0201afd0_7;
-extern "C" void* func_0202ae18();
-extern "C" void func_020105a8(Struct_020105a8*, int*);
+struct TimeStamp020105a8;
+struct EntryList_1e690;
+struct Entry_1e690;
+struct ClearThreeWords02094d00Struct;
+struct AllocDest02094cdc;
+struct S_02011430;
+struct Container02094d14;
+struct Elem02094d14;
+extern "C" void* LinkSession_GetInstance();
+void ComputeElapsedTime020105a8(TimeStamp020105a8*, int*);
 int GenerateGrottoObjectPositionOrientation(void*, int, int, int*, int*, const TileFeaturePlacementData*, bool);
 Entry_1e690* FindEntryById_0201e690(EntryList_1e690*, int);
-void ClearThreeWords02094d00(ClearThreeWords02094d00Struct*);
+void GrottoChestList_Clear(ClearThreeWords02094d00Struct*);
 void AllocateArray02094cdc(AllocDest02094cdc*, int, SafeAllocator*);
 int GetBit5cd0(S_02011430*, int, int);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 void CopyElemToIndex(Container02094d14*, Elem02094d14*, int);
 void ItemTable_Init(void*);
 extern "C" int ItemTable_LoadIds(void*, SafeAllocator*, void*, unsigned int, unsigned short*, unsigned short);
@@ -85,7 +85,7 @@ extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsi
     ActiveGrottoClass* grotto = &zone->grotto_;
     int i;
     FloorMap* map = &grotto->floorMap_;
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     ChestLootList0201afd0* lootList = (ChestLootList0201afd0*)(zone->grottoChestList_);
 
     arg0->numChests_ = var4->chestCount;
@@ -98,7 +98,7 @@ extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsi
     }
 
     zone->chests_ = (ZoneChestRenderRecord*)zone->pAllocator_68_->Allocate(zone->numChests_ * sizeof(ZoneChestRenderRecord));
-    features->AllocateOpcode6aEntries_0201e634(zone->numChests_, zone->pAllocator_68_);
+    features->AllocateOpcode6aEntries(zone->numChests_, zone->pAllocator_68_);
     srand(GetFloorSeed0201afd0(grotto, zone->currentGrottoFloor_23ba_));
 
     for (var3 = 0; var3 < arg0->numChests_; var3++) {
@@ -164,8 +164,8 @@ extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsi
 
             var8.unknown_24_ = var17 + var16;
         }
-        var8.unknown_70_ = NULL;
-        var0->func_0201e710(var8);
+        entry.pNext = NULL;
+        features->CreateOpcode6aEntry(entry);
     }
 
     {
@@ -190,11 +190,11 @@ extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsi
             var20.LoadFromScript(&var18, var22, var23);
         }
 
-        func_02094d00((Struct_020134e0_2*)(var6));
-        func_02094cdc((Struct_0201afd0_5*)(var6), arg0->numChests_, arg0->pAllocator_68_);
-        memset(var24, 1, sizeof(var24));
-        for (var28 = 0; var28 < arg0->numChests_; var28++) {
-            var24[var28] = var2->RandomizeChestRank(arg0->currentGrottoFloor_23ba_);
+        GrottoChestList_Clear((ClearThreeWords02094d00Struct*)(lootList));
+        AllocateArray02094cdc((AllocDest02094cdc*)(lootList), zone->numChests_, zone->pAllocator_68_);
+        memset(ranks, 1, sizeof(ranks));
+        for (chest = 0; chest < zone->numChests_; chest++) {
+            ranks[chest] = grotto->RandomizeChestRank(zone->currentGrottoFloor_23ba_);
         }
 
         func_020105a8((Struct_020105a8*)(var1), &var26);
@@ -224,8 +224,8 @@ extern "C" ARM int func_0201afd0(Zone3D* zone, const void* treasureArchive, unsi
                     record->state = ZoneChestState_Closed;
                     record->lidAngle = ZoneChestLid_Closed;
                 }
-                if (func_0202b7d8((int*)(var5))) {
-                    var32->unknown_18_ = 1;
+                if (LinkSession_IsActive((int*)(search))) {
+                    record->special = 1;
                 }
                 if (var31->lootType == 2) {
                     var25[var27++] = var31->itemID;

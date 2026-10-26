@@ -3,9 +3,6 @@
 #include "NitroSDK/ProcessorContext.h"
 #include "std_library_functions.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_ov031_0221a518 {
     void* unknown_0_;
@@ -30,8 +27,8 @@ extern const char data_ov031_0224a264[];
 extern const char data_ov031_0224a284[];
 extern const char data_ov031_0224a28c[];
 extern const char data_ov031_0224a294[];
-extern "C" void func_020c9be0();
-extern "C" int func_ov031_02217c00(void*, Struct_ov031_0221a518_2*);
+extern "C" void HaltSystem();
+extern "C" int func_ov031_02217c00(void*, ServiceOptionsA518*);
 extern "C" int func_ov031_022178b4(void*, void*, int);
 extern "C" void func_ov031_022183b4(void*);
 extern "C" int func_ov031_02218604(void*, const char*, const void*, int);
@@ -42,22 +39,22 @@ bool IsContextInactive(ProcessorContext*);
 extern "C" void func_ov031_02211b08(int, int);
 
 // USA: func_ov031_0221a518
-extern "C" ARM int func_ov031_0221a518(const void* arg0, void* arg1) {
-    data_ov031_0224e69c->unknown_1c24_ = arg1;
-    VectorizedMemset(arg1, 0, 0x174);
-    if (data_ov031_0224e69c->unknown_1b40_.uniqueID && !IsContextInactive(&data_ov031_0224e69c->unknown_1b40_)) func_020c9be0();
-    Struct_ov031_0221a518_2 var0;
-    Struct_ov031_0221a518* var1 = data_ov031_0224e69c;
-    var0.unknown_0_ = data_ov031_02249b54;
-    var0.unknown_4_ = 0;
-    var0.unknown_8_ = 0x1000;
-    var0.unknown_c_ = var1->unknown_0_;
-    var0.unknown_10_ = var1->unknown_4_;
-    if (strcmp(var0.unknown_0_, data_ov031_0224a264) != 0) var0.unknown_14_ = 1;
-    else var0.unknown_14_ = 0;
-    var0.unknown_18_ = 20000;
-    if (func_ov031_02217c00(var1->unknown_8_, &var0)) {
-        func_ov031_02211b08(9, -24100);
+extern "C" ARM int func_ov031_0221a518(const void* value, void* work) {
+    data_ov031_0224e69c->work = work;
+    VectorizedMemset(work, 0, 0x174);
+    if (data_ov031_0224e69c->context.uniqueID && !IsContextInactive(&data_ov031_0224e69c->context)) HaltSystem();
+    ServiceOptionsA518 options;
+    RuntimeA518* runtime = data_ov031_0224e69c;
+    options.name = data_ov031_02249b54;
+    options.field4 = 0;
+    options.bufferSize = 0x1000;
+    options.allocator = runtime->allocator;
+    options.allocatorContext = runtime->allocatorContext;
+    if (strcmp(options.name, data_ov031_0224a264) != 0) options.differentName = 1;
+    else options.differentName = 0;
+    options.timeout = 20000;
+    if (func_ov031_02217c00(runtime->service, &options)) {
+        SetGlobal0224e5a4IfNotNine_ov031_02211b08(9, -24100);
         return 0;
     }
     unsigned char var2[0x94];

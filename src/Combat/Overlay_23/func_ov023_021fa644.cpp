@@ -6,7 +6,7 @@ extern "C" void* func_ov011_0218466c(void* arg0, unsigned short arg1);
 
 struct EncodedSize020e03b8;
 int IsEncodedSizeEqual(int unused, struct EncodedSize020e03b8* obj, int val);
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 struct Struct020dfc40;
 void KeyTable_Reset(struct Struct020dfc40* p);
 extern "C" void KeyTable_Load(void*, void*, void*, unsigned int);
@@ -57,7 +57,7 @@ extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* arg0, void* arg
     }
 
     char local[0x18];
-    ResetAndReturnSelf020dfc2c(local);
+    KeyTable_Construct(local);
     if (IsEncodedSizeEqual((int)local, p2, p3)) {
         KeyTable_Reset((Struct020dfc40*)local);
         KeyTable_Load(local, (char*)allocBase + 4, p2, (unsigned int)p3);

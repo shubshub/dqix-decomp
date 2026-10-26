@@ -2,14 +2,11 @@
 #include "NitroSDK/Interrupts.h"
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern "C"
 {
     // abort() or similar
-    void func_020c9be0();
+    void HaltSystem();
 }
 
 void VerifyDMASource(int channel, unsigned int source, unsigned int length, unsigned int sourceCtrlFlags);
@@ -272,7 +269,7 @@ void VerifyDMATimingChangePermitted_020c9fd0(int channel, unsigned int newTiming
             continue;
         
         
-        func_020c9be0();
+        HaltSystem();
     } while (loopChannel++, pControl += 3, loopChannel < 3);
 }
 
@@ -301,5 +298,5 @@ void VerifyDMASource(int channel, unsigned int source, unsigned int length, unsi
 
     if (startPtrSection == 0x04000000 || startPtrSection >= 0x08000000 ||
         endPtrSection == 0x04000000 || endPtrSection >= 0x08000000)
-        func_020c9be0();
+        HaltSystem();
 }

@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 #include "Combat/Main/BattleList.h"
 
-unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
 int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
 unsigned short GetFlagBitFromField150_0215eb20(void* obj, int bit);
 struct SePlayer;
@@ -111,25 +111,25 @@ extern unsigned char data_ov004_02170b90[];
 
 // JPN: func_ov004_0215fdfc (02160780)
 // USA: func_ov004_0215fdfc
-extern "C" ARM int func_ov004_0215fdfc(void* arg0) {
-    if (data_ov004_021707e8.unknown_0_ == 1) return 0;
-    data_ov004_021707e8.unknown_0_ = 1;
-    GameState* var0;
-    GameObject* var1;
-    unsigned char var2;
-    int var3;
-    int var4;
-    int var5;
-    unsigned char var6[4];
-    var0 = GameState::GetInstance();
-    var5 = func_020114ec((char*)var0, var6);
-    var4 = data_ov004_021707e8.unknown_1c_;
-    var3 = 0;
-    var2 = data_ov004_021707e8.unknown1_a_;
-    if (func_0200ff1c(var0, var4) == NULL) var3 = 1;
-    if (!var3) {
-        data_ov004_021707e8.unknown1_a_ = data_ov004_021707e8.unknown1_a_ + 1;
-        data_ov004_021707e8.unknown1_a_ = (unsigned)data_ov004_021707e8.unknown1_a_ % var5;
+extern "C" ARM int func_ov004_0215fdfc(void* a) {
+    if (data_ov004_021707e8.busy == 1) return 0;
+    data_ov004_021707e8.busy = 1;
+    GameState* gs;
+    GameObject* c;
+    unsigned char saved;
+    int none;
+    int target;
+    int n;
+    unsigned char order[4];
+    gs = GameState::GetInstance();
+    n = GameState_GetPartyOrder((char*)gs, order);
+    target = data_ov004_021707e8.combatant;
+    none = 0;
+    saved = data_ov004_021707e8.index;
+    if (GetCombatantWithFlag0x100_0200ff1c(gs, target) == NULL) none = 1;
+    if (!none) {
+        data_ov004_021707e8.index = data_ov004_021707e8.index + 1;
+        data_ov004_021707e8.index = (unsigned)data_ov004_021707e8.index % n;
     }
     data_ov004_021707e8.unknown_1c_ = var6[data_ov004_021707e8.unknown1_a_];
     var1 = func_0200ff1c(var0, data_ov004_021707e8.unknown_1c_);

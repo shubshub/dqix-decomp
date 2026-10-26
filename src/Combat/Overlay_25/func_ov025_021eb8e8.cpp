@@ -22,22 +22,22 @@ struct Struct_ov025_021eb8e8_2 {
     int unknown_c_;
 };
 
-extern "C" void* func_ov000_02160130(void);
-extern "C" char* func_ov000_02160f08(void* arg0);
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov000_0215ec1c(int arg0, short* arg1, int arg2, int arg3);
-extern "C" Struct_ov025_021eb8e8_3* func_0204a01c(unsigned char* arg0);
-extern "C" void func_ov000_02162dc4(void* arg0, GameObject* arg1, GameObject* arg2, unsigned int arg3,
-                                    int arg4, int arg5, unsigned long long arg6, int arg7);
-extern "C" Struct_ov025_021eb8e8* func_ov025_021dafd0(char* arg0, int arg1);
-extern "C" void func_ov000_0217616c(Struct_ov025_021eb8e8* arg0);
-extern "C" void func_ov000_0216ff20(char*, unsigned char);
-extern "C" void func_0204a00c(unsigned char* arg0, int arg1);
-extern "C" int func_0204a0f8(unsigned char* arg0);
-extern "C" void func_0204a0e0(unsigned char* arg0);
-extern "C" int func_0204a040(unsigned char* arg0);
-extern "C" void func_0204a030(unsigned char* arg0, int arg1);
-extern "C" void func_02033920(GameObject* arg0, int arg1, int arg2);
+void* GetActiveCombatWork_ov000_02160130(void);
+char* GetOffsetPtr02160f08(void* obj);
+extern "C" int func_ov000_0215e9fc(int a, short* buf, int max, int start);
+extern "C" int func_ov000_0215ec1c(int a, short* buf, int max, int start);
+HitEntry_021eb8e8* GetSubstructField0x68_0204a01c(unsigned char* obj);
+extern "C" void func_ov000_02162dc4(void* work, GameObject* lead, GameObject* actor, unsigned int flags,
+                                    int b1d, int b1e, unsigned long long mask, int flag);
+HudEntry_021eb8e8* FindEntryById_021dafd0(char* obj, int id);
+extern "C" void func_ov000_0217616c(HudEntry_021eb8e8* p);
+void SetByteField37_0216ff20(char*, unsigned char);
+void SetSubstructWord0x68_0204a00c(unsigned char* obj, int value);
+int CheckSubstructFlag0x400_0204a0f8(unsigned char* obj);
+void ClearSubstructFlag0x400_0204a0e0(unsigned char* obj);
+int GetSubstructByte0x6c_0204a040(unsigned char* obj);
+void SetSubstructByte0x6c_0204a030(unsigned char* obj, int value);
+extern "C" void GameObject_FaceGameObject(GameObject* obj, int id, int flag);
 
 // USA: func_ov025_021eb8e8
 extern "C" ARM void func_ov025_021eb8e8(Struct_ov025_021eb8e8_2* arg0) {
@@ -71,9 +71,9 @@ extern "C" ARM void func_ov025_021eb8e8(Struct_ov025_021eb8e8_2* arg0) {
             var7->obj3D_.SetInheritedAlpha(0x1f);
             func_0204a0e0((unsigned char*)var7);
         }
-        if (func_0204a040((unsigned char*)var7) != 0xff) {
-            func_02033920(var7, func_0204a040((unsigned char*)var7), 1);
-            func_0204a030((unsigned char*)var7, 0xff);
+        if (GetSubstructByte0x6c_0204a040((unsigned char*)c) != 0xff) {
+            GameObject_FaceGameObject(c, GetSubstructByte0x6c_0204a040((unsigned char*)c), 1);
+            SetSubstructByte0x6c_0204a030((unsigned char*)c, 0xff);
         }
     }
 }

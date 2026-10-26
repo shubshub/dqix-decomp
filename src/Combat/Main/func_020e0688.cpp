@@ -17,10 +17,10 @@ struct Struct_020e0688_2 {
 };
 
 struct FlagWord02046708;
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 void* GlobalFlags_GetInstance(void);
-void ReleaseHandle02022b90(void* owner, int* handle);
-void DelayThenSyncBit0_020c9820(void);
+void MapDisplay_RemoveTask(void* owner, int* handle);
+void OS_WaitVBlankIntr(void);
 
 struct PacRecord;
 int Pac_CountFiles(struct PacRecord* entry);
@@ -57,7 +57,7 @@ extern "C" ARM void func_020e0688(struct Struct_020e0688_2* arg0) {
         return;
     }
 
-    if (TestFlags02046708((struct FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) {
+    if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) {
         return;
     }
 
@@ -84,7 +84,7 @@ extern "C" ARM void func_020e0688(struct Struct_020e0688_2* arg0) {
             arrayC[i] = Pac_GetFile((struct PacRecord*)recListHead, i, &dummyPtr, &arrayB[i]);
         }
 
-        DelayThenSyncBit0_020c9820();
+        OS_WaitVBlankIntr();
         Background_Init((struct BackgroundGraphics*)&s);
         s.lo = 1;
         s.hi = 0;
@@ -101,7 +101,7 @@ extern "C" ARM void func_020e0688(struct Struct_020e0688_2* arg0) {
         Background_Destroy((struct BackgroundGraphics*)&s);
     }
 
-    func_02022b90(arg0, &arg0->unknown_a0c_);
-    arg0->unknown_55c_ = 1;
-    arg0->unknown_9c5_ = 0;
+    MapDisplay_RemoveTask(self, &self->handle_a0c);
+    self->flag_55c = 1;
+    self->flag_9c5 = 0;
 }

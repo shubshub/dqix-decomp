@@ -52,13 +52,13 @@ void InitBuffersIfFlag431_021eb4b8(void* obj);
 void DispatchAndFlush02175480(void* obj);
 void ResetCombatEntry02184a58(void* obj);
 void CallIfFieldNot0Or3_021d8c60(struct Obj021d8c60* obj);
-struct Obj0203a588* GetData02104b6c_02039e70(void);
+struct Obj0203a588* NumberPopups_GetInstance(void);
 int PeekInputLogB_020a1fa8(void);
 struct Obj020444e0* MessageSystem_GetInstance();
 void ReleaseField0x38IfValid020444e0(struct Obj020444e0* obj);
 extern "C" void func_ov013_02187784(void* obj);
 extern "C" void func_ov000_02173954(char* obj);
-extern "C" void func_0203a0b4(struct Obj0203a588* data);
+extern "C" void NumberPopups_Draw(struct Obj0203a588* data);
 extern "C" void func_ov000_0218251c(void* obj);
 extern "C" void func_ov026_021dddcc(struct CombatWork02160c84* self);
 
@@ -82,10 +82,10 @@ extern "C" ARM void func_ov000_02160c84(struct Struct_ov000_02160c84* arg0) {
         } else if (!(arg0->unknown_55f4_ & 0x40000)) {
             func_ov000_02173954(arg0->unknown_3760_);
         }
-        func_0203a0b4(func_02039e70());
-        func_ov000_0218251c(arg0->unknown_6ffc_);
-        if (arg0->unknown_ea8_ == 7 && func_020a1fa8() == 3) {
-            func_ov026_021dddcc(arg0);
+        NumberPopups_Draw(NumberPopups_GetInstance());
+        func_ov000_0218251c(work->field6FFC);
+        if (work->phase == 7 && PeekInputLogB_020a1fa8() == 3) {
+            func_ov026_021dddcc(work);
         }
     }
     GameState::GetInstance()->GetTickCount();

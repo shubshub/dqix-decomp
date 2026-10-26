@@ -4,8 +4,8 @@
 #include "Resource/GameResources.h"
 
 extern "C" {
-    void* func_0202ae18(GrottoStruct* grotto);
-    int func_0202c508(void* something);
+    void* LinkSession_GetInstance(GrottoStruct* grotto);
+    int LinkSession_IsHostOrSolo(void* something);
     void* Zone3D_GetInstance(void);
 }
 
@@ -36,7 +36,7 @@ enum { CombatModeListOffset = 0x6fc };
 ARM void SetCombatModeFromCase020dc2d0(int mode) {
     GameState* battle = GameState::GetInstance();
     GrottoStruct* grotto = battle->GetGrottoStruct();
-    void* something = func_0202ae18(grotto);
+    void* something = LinkSession_GetInstance(grotto);
     void* ptr = Zone3D_GetInstance();
     int flag1;
     int flag2;
@@ -53,7 +53,7 @@ ARM void SetCombatModeFromCase020dc2d0(int mode) {
     }
 
     if (grotto->unknown_0[0] != 0 && grotto->unknown_0[1] != 0) {
-        if (func_0202c508(something) != 0 && field8 != NULL) {
+        if (LinkSession_IsHostOrSolo(something) != 0 && field8 != NULL) {
             if (field8->nibbleLo == 0) {
                 flag1 = 1;
             }

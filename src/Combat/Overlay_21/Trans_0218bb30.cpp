@@ -21,8 +21,8 @@ extern "C" void G3X_ResetMtxStack();
 extern "C" void Camera_Update(void* camera);
 extern "C" void CharacterCreationUI_Draw3D(void* obj);
 extern "C" void CharacterCreationUI_Draw2D(void* obj);
-extern "C" void* func_0203bd08();
-void CleanInvalidateOamBuffers0203bd88(void* oam);
+extern "C" void* OamManager_GetInstance();
+void OamManager_FlushBuffers(void* oam);
 void WriteControlAndToggle020d86d0(int a, int b);
 
 // USA: func_ov021_0218bb30  (semantic: Trans_0218bb30)
@@ -41,6 +41,6 @@ extern "C" ARM void func_ov021_0218bb30(Trans0218bb30* self)
     SendQueuedDataToGeometryFifo();
     CharacterCreationUI_Draw3D(self->f40);
     CharacterCreationUI_Draw2D(self->f40);
-    CleanInvalidateOamBuffers0203bd88(func_0203bd08());
+    OamManager_FlushBuffers(OamManager_GetInstance());
     WriteControlAndToggle020d86d0(1, 0);
 }

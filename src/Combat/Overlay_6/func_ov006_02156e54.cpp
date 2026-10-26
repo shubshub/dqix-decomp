@@ -7,8 +7,8 @@
 #endif
 #include "Filesystem/BackgroundLoader.h"
 
-extern "C" void* func_0203bd08();
-extern "C" unsigned int func_0203be40(void* arg0);
+extern "C" void* OamManager_GetInstance();
+extern "C" unsigned int OamManager_GetMainOamBuffer(void* vram);
 
 struct Struct_ov006_02156e54_2 {
     char unknown_0_[0x14];
@@ -42,21 +42,21 @@ struct Struct_ov006_02154614 {
 };
 
 // USA: func_ov006_02156e54
-extern "C" ARM void func_ov006_02156e54(Struct_ov006_02154614* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    Struct_ov006_02156e54* var1 = arg0->unknown_894_;
-    for (unsigned char var2 = 0; var2 < 4; var2++) {
-        if (var1->unknown_70_ > 0)
-            var0->RemoveTask(var1->unknown_70_);
-        var1->unknown_70_ = -1;
-        func_ov006_0215479c(var1);
-        var1->unknown_0_.unknown_5e_ = 0;
-        var1->unknown_0_.unknown_14_ = func_0203be40(func_0203bd08()) + (var2 << 6) + 0x100;
-        var1->unknown_0_.unknown_38_ = var2 * 0x120 + 0x240;
-        var1->unknown_0_.unknown_3c_ = (var2 + LOW_REGION(8, 10)) & 0xf;
-        var1->unknown_0_.unknown_40_ = 0;
-        var1->unknown_76_ = (var2 << 5) + 0x20;
-        var1->unknown_78_ = 0x80;
-        var1++;
+extern "C" ARM void func_ov006_02156e54(AlchemyPot* self) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    IngredientSprite* ingredient = self->ingredients_;
+    for (unsigned char i = 0; i < 4; i++) {
+        if (ingredient->task_ > 0)
+            loader->RemoveTask(ingredient->task_);
+        ingredient->task_ = -1;
+        func_ov006_0215479c(ingredient);
+        ingredient->graphics_.unk_5e = 0;
+        ingredient->graphics_.unk_14 = OamManager_GetMainOamBuffer(OamManager_GetInstance()) + (i << 6) + 0x100;
+        ingredient->graphics_.unk_38 = i * 0x120 + 0x240;
+        ingredient->graphics_.unk_3c = (i + LOW_REGION(8, 10)) & 0xf;
+        ingredient->graphics_.unk_40 = 0;
+        ingredient->x_ = (i << 5) + 0x20;
+        ingredient->y_ = 0x80;
+        ingredient++;
     }
 }

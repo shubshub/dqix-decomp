@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c9e00 {
     unsigned char unknown_0_0_ : 3;
@@ -24,10 +24,10 @@ struct Struct_ov017_021c9e00_2 {
     struct Struct_ov017_021c9e00 unknown_4_;
 };
 
-// USA: func_ov017_021c9e00
-extern "C" ARM void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3) {
-    void* var0 = func_0202ae24();
-    GameState* var1 = GameState::GetInstance();
+// USA: func_ov017_021c9e00  (semantic: EnqueueCombatantStatsEvent_021c9e00)
+extern "C" ARM void func_ov017_021c9e00(int id, int flagA, int flagB, int flagC) {
+    void* data = LinkMessageQueue_GetInstance();
+    GameState* battle = GameState::GetInstance();
 
     int var2 = (arg0 >= 0) && (arg0 <= 3);
     if (!var2) {

@@ -13,9 +13,9 @@ enum { Enum_0208ea10_23770 = 0x5cda, Enum_0208ea10_23772 = 0x5cdc };
 struct Struct_0208e9f4;
 extern "C" void func_0208e9f4(struct Struct_0208e9f4*);
 
-extern "C" void func_020120d4(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_0208ec04(struct Struct_0208e9f4*);
-extern "C" void* func_0208e0a8(void);
+void SetByte0x5cdaAndClearField0xa_020120d4(unsigned char* obj, unsigned char value);
+extern "C" void func_0208ec04(struct Struct0208e9f4*);
+extern "C" void* LootPointList_GetInstance(void);
 extern "C" int rand(void);
 
 struct Struct_0208ea10_2;
@@ -74,7 +74,7 @@ extern "C" ARM void func_0208ea10(void* arg0, int arg1) {
             ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
             ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Load(ptr, size);
             ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Execute();
-            ((unsigned char*)func_0208e0a8())[0xa] = 1;
+            ((unsigned char*)LootPointList_GetInstance())[0xa] = 1;
         }
 
         int i;

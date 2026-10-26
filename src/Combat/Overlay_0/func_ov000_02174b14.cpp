@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_ov000_0217228c(void* arg0);
-extern "C" void* func_0202ae18(GameState* arg0);
+extern "C" void func_ov000_0217228c(void* obj);
+extern "C" void* LinkSession_GetInstance(GameState* gs);
 
 struct Struct_ov000_02174b14 {
     char unknown_0_[0x24];
@@ -26,13 +26,13 @@ struct Struct_ov000_02174b14_2 {
 };
 
 // USA: func_ov000_02174b14
-extern "C" ARM void func_ov000_02174b14(struct Struct_ov000_02174b14_2* arg0) {
-    func_ov000_0217228c(arg0);
-    func_0202ae18(GameState::GetInstance());
-    int var0 = 0;
-    for (int var1 = 0; var1 < 4; var1++) {
-        struct Struct_ov000_02174b14* var2 = &arg0->unknown_958_[arg0->unknown_6c_[var1]];
-        if (var2->unknown_4c_ < 0) {
+extern "C" ARM void func_ov000_02174b14(struct Obj02174b14* obj) {
+    func_ov000_0217228c(obj);
+    LinkSession_GetInstance(GameState::GetInstance());
+    int any = 0;
+    for (int i = 0; i < 4; i++) {
+        struct Entry02174b14* entry = &obj->entries[obj->order[i]];
+        if (entry->combatantId < 0) {
             continue;
         }
         int var3 = (var2->unknown_24_ & 4) ? 1 : 0;

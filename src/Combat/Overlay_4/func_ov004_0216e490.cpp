@@ -3,7 +3,7 @@
 
 extern "C" int func_020aaf84(void* ptr, int a, int b, int c);
 struct StateBits5ccc_1155c;
-void ClearFlag0x5cccBit0_0201155c(struct StateBits5ccc_1155c* state);
+void GameState_ClearErrorScreenRequest(struct StateBits5ccc_1155c* state);
 unsigned char GetField0xcc0209ca98(char* obj);
 unsigned char GetByteFieldAt0xcc_0205ea18(unsigned char* obj);
 void SetModeClamped0209ca70(void* obj, int val);
@@ -33,8 +33,8 @@ extern "C" ARM int func_ov004_0216e490(void* arg0) {
     data_ov004_02171034[5] = 0;
     int var1 = func_020aaf84(*(void**)&data_ov004_02171034[0x10], 0, 1, 0);
 #endif
-    if (var1 == 0) {
-        func_0201155c((struct Struct_02000c9c_11*)var0);
+    if (res == 0) {
+        GameState_ClearErrorScreenRequest((struct StateBits5ccc_1155c*)bs);
 #if defined(jpn)
         data_ov004_02171034[3] = 1;
 #else

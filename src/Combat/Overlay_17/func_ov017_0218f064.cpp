@@ -2,9 +2,6 @@
 #include <GameState/GameState.h>
 #include <World/Zone3D.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_0203d028;
 struct Struct_ov017_0218f064_6;
@@ -55,27 +52,27 @@ enum { Enum_ov017_0218f064_720 = 0x2c4, Enum_ov017_0218f064_724 = 0x2c8, Enum_ov
 #else
 enum { Enum_ov017_0218f064_720 = 0x2d0, Enum_ov017_0218f064_724 = 0x2d4, Enum_ov017_0218f064_760 = 0x2f8 };
 #endif
-void* GetField0x3f8Address_0200fd0c(GameState*);
+void* GameState_GetZoneTransition(GameState*);
 extern "C" Zone3D* Zone3D_GetInstance();
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 void VramState_Rewind(Foo0207df50*);
 void DestroyAllocators020545b8(T020545b8*);
 extern "C" void func_020542b4(T020545b8*, SafeAllocator*, InternalBlock0218f064*);
 extern "C" int func_ov017_021925e0();
-extern "C" void* func_ov017_021a11b4(Struct_ov017_0218f064_6*);
-extern "C" void func_02054464(Struct_020545b8*, SafeAllocator*, Struct_ov017_0218f064_8*);
-extern "C" void func_02037d10(Struct_ov017_0218f064_5*);
-extern "C" void func_02048104(Struct_02048104*);
-extern "C" void func_02054664(Struct_02054664*);
-extern "C" int func_ov017_02192548();
-extern "C" void func_020415d8(Struct_020415d8*);
-extern "C" void func_020c9be0();
-extern "C" void func_0200fd38(GameState*, int, GameObject*);
-extern "C" void func_0203db34(unsigned char*, int, int, int);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_02053c4c(char*, char*);
-extern "C" void func_02053c74(char*, int);
-extern "C" void func_ov017_0218f57c(void*, int);
+void* FindNegativeEntry_021a11b4(S021a11b4*);
+extern "C" void func_02054464(T020545b8*, SafeAllocator*, InternalBlock0218f064*);
+extern "C" void GameObject_InitPartyMember(Combatant0218f064*);
+void SetFlag0x20002048104(Obj02048104*);
+void ResetSelectionState02054664(Obj02054664*);
+int GetMaxFieldPlus1_02192548_02192548();
+void ResetState020415d8(State020415d8*);
+extern "C" void HaltSystem();
+void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+void StoreVec3AtField0x50_0203db34(unsigned char*, int, int, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
+void SetPointerFields02053c4c(char*, char*);
+void RegisterOrAllocateCombatant02053c74(char*, int);
+void SetLowNibble56b_0218f57c(void*, int);
 extern "C" int func_ov017_0218f5a4(GameResources*, int, int, int, int);
 #if defined(jpn)
 #define data_ov017_021d73a4 data_ov017_021d7804
@@ -91,17 +88,17 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
 #if !defined(jpn)
     Zone3D* var1;
 #endif
-    Struct_ov017_0218f064_4* var2 = (Struct_ov017_0218f064_4*)func_0200fd0c(var0);
+    Ticket0218f064* ticket = (Ticket0218f064*)GameState_GetZoneTransition(game);
 #if defined(jpn)
     ZoneEntryContext0218f064* entries = ((ZoneOwner0218f064*)Zone3D_GetInstance())->GetEntries();
 #else
     zone = Zone3D_GetInstance();
 #endif
-    func_0202ae18();
-    int var4 = 1;
-    SafeAllocator* var5;
-    Struct_020545b8* var6;
-    if (arg2 == 0x4000) {
+    LinkSession_GetInstance();
+    int initialize = 1;
+    SafeAllocator* allocator;
+    T020545b8* entry;
+    if (kind == 0x4000) {
 #if defined(jpn)
         var6 = var3->unknown_1b58_;
 #else
@@ -133,40 +130,40 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
         if (arg2 == 4) func_02054464(var6, var13, var14);
         else func_020542b4(var6, var13, var14);
     }
-    Struct_ov017_0218f064* var15 = (Struct_ov017_0218f064*)arg0;
-    if (var15->unknown_4334_) { var15->unknown_4334_->Destroy(); var15->unknown_4334_ = 0; }
-    if (var15->unknown_4338_) { var15->unknown_4338_->Destroy(); var15->unknown_4338_ = 0; }
-    if (var15->unknown_433c_) { var15->unknown_433c_->Destroy(); var15->unknown_433c_ = 0; }
-    if (var15->unknown_4340_) { var15->unknown_4340_->Destroy(); var15->unknown_4340_ = 0; }
-    var5->Reset();
-    Struct_ov017_0218f064_5* var16 = 0;
-    if (arg2 == 0x800) {
-        var16 = (Struct_ov017_0218f064_5*)var5->Allocate(Enum_ov017_0218f064_720);
-        func_02037d10(var16);
-    } else if (arg2 == 0x200) {
-        var16 = (Struct_ov017_0218f064_5*)var5->Allocate(Enum_ov017_0218f064_720);
-        func_02048104((Struct_02048104*)var16);
-    } else if (arg2 == 0x1000) {
-        var16 = (Struct_ov017_0218f064_5*)var5->Allocate(Enum_ov017_0218f064_724);
-        func_02054664((Struct_02054664*)var16);
-        if (var16) var16->unknown_2d2_ = func_ov017_02192548();
-    } else if (arg2 == 0x4000) {
-        var16 = (Struct_ov017_0218f064_5*)var5->Allocate(Enum_ov017_0218f064_760);
-        func_020415d8((Struct_020415d8*)var16);
-    } else if (arg2 == 4) {
-        var16 = (Struct_ov017_0218f064_5*)var5->Allocate(Enum_ov017_0218f064_724);
-        func_02054664((Struct_02054664*)var16);
-        if (var16) var16->unknown_2d2_ = func_ov017_02192548();
-        var4 = 0;
+    DisposableOwner0218f064* disposable = (DisposableOwner0218f064*)resources;
+    if (disposable->first) { disposable->first->Destroy(); disposable->first = 0; }
+    if (disposable->second) { disposable->second->Destroy(); disposable->second = 0; }
+    if (disposable->third) { disposable->third->Destroy(); disposable->third = 0; }
+    if (disposable->fourth) { disposable->fourth->Destroy(); disposable->fourth = 0; }
+    allocator->Reset();
+    Combatant0218f064* combatant = 0;
+    if (kind == 0x800) {
+        combatant = (Combatant0218f064*)allocator->Allocate(ActorBaseSize);
+        GameObject_InitPartyMember(combatant);
+    } else if (kind == 0x200) {
+        combatant = (Combatant0218f064*)allocator->Allocate(ActorBaseSize);
+        SetFlag0x20002048104((Obj02048104*)combatant);
+    } else if (kind == 0x1000) {
+        combatant = (Combatant0218f064*)allocator->Allocate(ActorExtendedSize);
+        ResetSelectionState02054664((Obj02054664*)combatant);
+        if (combatant) combatant->sequence = GetMaxFieldPlus1_02192548_02192548();
+    } else if (kind == 0x4000) {
+        combatant = (Combatant0218f064*)allocator->Allocate(ActorSpecialSize);
+        ResetState020415d8((State020415d8*)combatant);
+    } else if (kind == 4) {
+        combatant = (Combatant0218f064*)allocator->Allocate(ActorExtendedSize);
+        ResetSelectionState02054664((Obj02054664*)combatant);
+        if (combatant) combatant->sequence = GetMaxFieldPlus1_02192548_02192548();
+        initialize = 0;
     }
-    if (!combatant) func_020c9be0();
+    if (!combatant) HaltSystem();
     combatant->object.actorIndex_ = (short)id;
     combatant->entry = entry;
     entry->id = (short)id;
     RegisterCombatantSlot_0200fd38(game, id, (GameObject*)combatant);
     if (initialize) {
         Components0218f064* components = (Components0218f064*)allocator->Allocate(0x764);
-        if (!components) func_020c9be0();
+        if (!components) HaltSystem();
         components->objects[0].Initialize();
         components->objects[2].Initialize();
         components->objects[1].Initialize();
@@ -202,7 +199,7 @@ extern "C" ARM void func_ov017_0218f064(GameResources* arg0, int arg1, int arg2,
     combatant->object.SetAnimationByName(data_ov017_021d73a4, 0);
     combatant->object.position_ = ticket->position;
     StoreVec3AtField0x50_0203db34((unsigned char*)combatant, combatant->object.rotation_.x, ticket->rotation, combatant->object.rotation_.z);
-    SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
+    GameObject_ForceMotionState((Bytes02033b88*)combatant, 0);
     if (kind == 0x4000) {
 #if defined(jpn)
         char* var23 = var3->unknown_1b5c_;

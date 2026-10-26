@@ -29,5 +29,5 @@ struct Struct_0202b2f0_2 {
     short unknown_e_;
 };
 
-extern "C" Struct_0202b2f0_2* func_0202c178(Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c478(Struct_0202b2f0* arg0);
+SearchEntry0202c178* LinkSession_GetReceivedRecord(SearchStruct* object, int value);
+void LinkSession_AgeScanResults(SearchStruct* object);

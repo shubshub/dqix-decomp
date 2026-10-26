@@ -11,7 +11,7 @@ int MessageSystem_GetInstance(void);
 extern "C" void func_ov003_02170898(void* obj);
 extern "C" void func_ov003_02170688(void* obj);
 extern "C" void func_02074af4(void* p);
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 
 // USA: func_ov003_0216e200  (semantic: InitFieldsAndPriority_0216e200)
 extern "C" ARM void func_ov003_0216e200(char* obj) {
@@ -28,7 +28,7 @@ extern "C" ARM void func_ov003_0216e200(char* obj) {
 	*dispcnt = (*dispcnt & ~0x1f00) | 0x700;
 
 	*(int*)(obj + 0x174) = GetFlags04(GetGameResources());
-	Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+	Set3DClearColor(0, 0, 0x7fff, 0, 0);
 	*(unsigned char*)(obj + 0x1) = 1;
 	*(unsigned char*)(obj + 0x2) = 0;
 	*(int*)(obj + 0x16c) = 0;

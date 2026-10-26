@@ -84,7 +84,7 @@ bool Script::Load(const void *code, unsigned int length)
     pCode_ = code;
     codeLength_ = length;
     pHeader_ = (const FileHeader*)pCode_;
-    maybeInstructionStart_ = (const InstructionPrefix*)((intptr_t)pCode_ + 0x10);
+    maybeInstructionStart_ = (const InstructionPrefix*)((intptr_t)pCode_ + sizeof(FileHeader));
     dataSection_ = (uint8_t*)pCode_ + pHeader_->dataOffset;
     altDataSection_ = 0;
     return true;
@@ -102,7 +102,7 @@ bool Script::Execute()
     return false;
 }
 
-const Script::InstructionPrefix* Script::ExecuteSingleInstruction(bool arg)
+const Script::InstructionPrefix* Script::ExecuteSingleInstruction(bool dispatch)
 {
     if (pCode_ == NULL || codeLength_ <= 0 || pHeader_ == NULL)
         return NULL;
@@ -122,7 +122,7 @@ const Script::InstructionPrefix* Script::ExecuteSingleInstruction(bool arg)
         );
     }
 
-    if (nextInstruction_ != NULL && arg)
+    if (nextInstruction_ != NULL && dispatch)
     {
         int opcode = nextInstruction_->opcode;
         int numArgs = nextInstruction_->numParams;

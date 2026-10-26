@@ -14,8 +14,8 @@ enum { kRegionValue950_8B8 = 0x950 };
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void PartyMember_ApplyLevelStats(void* a, void* obj, void* tail);
 extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 
 extern "C" void func_ov017_021cc730(int id, unsigned char arg1, unsigned char arg2, unsigned char arg3);
 extern "C" void func_ov017_021cf078(int combatantId, unsigned short slot, unsigned char flag);
@@ -46,7 +46,7 @@ extern "C" ARM void func_ov003_02155e38(void* p) {
     PartyMember_RecalculateStats(arr, 0);
     *(unsigned short*)(*(char**)((char*)c + 0x130) + 4) = *(unsigned short*)(*(char**)((char*)c + 0x134) + 0x30);
     *(unsigned short*)(*(char**)((char*)c + 0x130) + 6) = *(unsigned short*)(*(char**)((char*)c + 0x134) + 0x32);
-    if (CheckField0NonZero_0202b7d8((int*)func_0202ae18()) == 0) {
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance()) == 0) {
         return;
     }
     signed char id2 = *(signed char*)(obj + kRegionValue1F7_1F3);

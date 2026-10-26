@@ -4,7 +4,7 @@
 
 extern "C" void* func_02057924(void* obj);
 extern "C" void func_02057f00(void* obj, int index);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 extern int g_mainAllocator;
@@ -24,5 +24,5 @@ extern "C" ARM void func_ov017_021beb48(struct Obj021beb48* self) {
 		AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
 	}
 
-	func_020a0c0c();
+	ROMFilesystem_InitFileTables();
 }

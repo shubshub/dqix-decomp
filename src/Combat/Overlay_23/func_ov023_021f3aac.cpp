@@ -128,7 +128,7 @@ void PollOv017Task0209ff6c(TaskState0209ff6c* titles);
 int AreFields60And64AllOnes_021f21f4(Fields60_021f21f4* titles);
 void ClearStruct020a13c4(S020a13c4* table);
 void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int a, unsigned short b, unsigned char c);
-void* ResetAndReturnSelf020dfc2c(void* texts);
+void* KeyTable_Construct(void* texts);
 void KeyTable_Reset(Struct020dfc40* texts);
 void* FindElementByField020a15bc(Array020a15bc* table, int id);
 const char* KeyTable_Get(Container020e0310* texts, int id);
@@ -221,7 +221,7 @@ extern "C" ARM int func_ov023_021f3aac(Struct_ov023_021f3aac_4* arg0)
             self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
             GameObject_021f3aac* hero = GameState::GetInstance()->GetProtagonist();
             TextTable_021f3aac names;
-            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Construct(&names);
             KeyTable_Reset((Struct020dfc40*)&names);
 #if defined(jpn)
             func_020e1fc4(&var14, &arg0->unknown_30_, data_ov023_021fd533, var7, (unsigned short)var10, var13->unknown_150_->unknown_49c_.unknown_0_0_, 1);

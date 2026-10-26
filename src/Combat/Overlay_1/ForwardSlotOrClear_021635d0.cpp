@@ -2,7 +2,7 @@
 
 extern "C" int func_ov017_021d60f4(void* a);
 void ForwardToTargetOrDefault0205eabc(void* obj, void* target, int arg);
-void ClearField0x0_020bc078(int* field);
+void NNS_SndHandleInit(int* field);
 extern int data_ov001_02165958[16];
 extern int g_sePlayer;
 
@@ -21,6 +21,6 @@ ARM int ForwardSlotOrClear_021635d0(void* param, int mode) {
 		val = func_ov017_021d60f4((char*)param + 8);
 	}
 	ForwardToTargetOrDefault0205eabc(&g_sePlayer, slot, val);
-	ClearField0x0_020bc078(slot);
+	NNS_SndHandleInit(slot);
 	return 1;
 }

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Combat/Overlay_1/EventArgs.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 union Struct_ov017_021c927c {
     struct { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; } unknown_0_;
@@ -23,8 +23,8 @@ struct Struct_ov017_021c927c_2 {
 };
 
 // USA: func_ov017_021c927c
-extern "C" ARM void func_ov017_021c927c(int arg0, int arg1, int arg2, Struct_ov001_02158efc arg3, int arg4, unsigned short arg5, int arg6) {
-    void* var0 = func_0202ae24();
+extern "C" ARM void func_ov017_021c927c(int id, int slot, int heading, EventVec3 pos, int height, unsigned short mode, int dir) {
+    void* d = LinkMessageQueue_GetInstance();
 
     struct Struct_ov017_021c927c_2 var1;
     var1.unknown_0_ = 0x88;

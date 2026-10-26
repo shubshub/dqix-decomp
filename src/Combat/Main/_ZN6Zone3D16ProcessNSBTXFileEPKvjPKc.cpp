@@ -8,11 +8,12 @@ void VramState_Restore(char*);
 void VramState_Save(char*);
 
 // USA: func_0201445c
-ARM bool Zone3D::ProcessNSBTXFile_0201445c(const void* pFile, unsigned int fileSize, const char* pName)
+// Main, originally Zone3D::ProcessNSBTXFile_0201445c (USA 0x0201445c, EUR 0x0201446c, JPN 0x02014228)
+ARM bool Zone3D::ProcessNSBTXFile(const void* pFile, unsigned int fileSize, const char* pName)
 {
     SafeAllocator* pAlloc = pAllocator_68_;
-    char* pGraph = (char*)vramState_;
-    unsigned int nSize;
+    char* vramState = (char*)vramState_;
+    unsigned int rawLength;
     void* pRaw;
     Zone3D::Model3DListNode* pNode =
         (Zone3D::Model3DListNode*)pAlloc->Allocate(sizeof(Zone3D::Model3DListNode));
@@ -28,13 +29,13 @@ ARM bool Zone3D::ProcessNSBTXFile_0201445c(const void* pFile, unsigned int fileS
             strcpy((char*)pNode->filename_, pName);
             pNode->pNext_ = firstModel_418_;
             firstModel_418_ = pNode;
-            pRaw = DecompressLZ77FileIntoScratchSpace(*pAlloc, pFile, nSize);
+            pRaw = DecompressLZ77FileIntoScratchSpace(*pAlloc, pFile, rawLength);
             if (pRaw) {
-                VramState_Restore(pGraph);
-                pModel->SetRawFile(pRaw, nSize);
+                VramState_Restore(vramState);
+                pModel->SetRawFile(pRaw, rawLength);
                 pModel->ClearRawFileCache();
                 pModel->ProcessRawFile(Model3D::TextureStagingMode_Immediate);
-                VramState_Save(pGraph);
+                VramState_Save(vramState);
 
                 NSBXXTex* pTex = pModel->GetTEX0();
                 if (pTex) {
@@ -43,10 +44,11 @@ ARM bool Zone3D::ProcessNSBTXFile_0201445c(const void* pFile, unsigned int fileS
                 }
                 bool bCopied = false;
                 if (pTex) {
-                    unsigned int nTexSize = pTex->block1Offset_;
-                    void* pCopy = pAlloc->Allocate(nTexSize);
+                    // keep the TEX0 block up to its first data block (the textures are in VRAM now)
+                    unsigned int nTexHeaderSize = pTex->block1Offset_;
+                    void* pCopy = pAlloc->Allocate(nTexHeaderSize);
                     if (pCopy) {
-                        memcpy(pCopy, pTex, nTexSize);
+                        memcpy(pCopy, pTex, nTexHeaderSize);
                         pModel->SetTEX0((NSBXXTex*)pCopy);
                         bCopied = true;
                     }

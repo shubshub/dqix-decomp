@@ -33,7 +33,7 @@ extern "C" void func_020465c0(Struct_020465c0*, int, int);
 extern "C" void func_020465f0(unsigned char*, int, unsigned char);
 extern "C" void func_020465d8(unsigned char*, int, unsigned char);
 extern "C" void func_02042428(char*, int);
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 
 extern "C" ARM void func_ov012_0218a5f0(char* editor, char* text, int hidden) {
     if (!text) return;
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov012_0218a5f0(char* editor, char* text, int hidden) {
     int pages = navigation->pages;
     int first, last;
     ComputeProductSums0205c508((UnkStruct0205c508*)navigation, &first, &last);
-    func_0202ae18();
+    LinkSession_GetInstance();
     GameState::GetInstance();
     for (i = first; i < last; ++i) {
         if (i != first)
@@ -123,7 +123,7 @@ void Text_AppendFrameTag(char* text, int a, int b, int c, int d, int e);
 void Text_AppendCursorTag(char* text, int a);
 void* MessageSystem_GetInstance();
 void ComputeProductSums0205c508(UnkStruct0205c508* cursor, int* first, int* last);
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 void Text_Append(char* text, const char* append);
 const char* FindEntryByKey_02072a68(TableA68* texts, int id);
 void Text_AppendNTag(char* text, int item, const char* itemText);
@@ -150,10 +150,10 @@ extern "C" ARM void func_ov012_0218a5f0(Struct_ov012_0218a5f0_4* arg0, char* arg
     int first;
     int last;
     ComputeProductSums0205c508((UnkStruct0205c508*)cursor, &first, &last);
-    func_0202ae18();
-    var11 = (Struct_ov012_0218a5f0_3*)GameState::GetInstance()->GetProtagonist();
-    int var18 = 0x50dc;
-    for (var12 = var16; var12 < var17; var12++)
+    LinkSession_GetInstance();
+    protagonist = (Protagonist0218a5f0*)GameState::GetInstance()->GetProtagonist();
+    int base = 0x50dc;
+    for (i = first; i < last; i++)
     {
         if (i != first)
             Text_Append(text, self->unk_1378);

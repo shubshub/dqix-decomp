@@ -49,7 +49,7 @@ struct Struct_ov017_021a6c2c_2 {
     unsigned char unknown_10_; char unknown_11_[0x1f]; SafeAllocator unknown_30_; int unknown_44_;
 };
 extern "C" void* func_02057924();
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 void* MessageSystem_GetInstance();
 extern "C" Zone021a6c2c* Zone3D_GetInstance();
 extern "C" void func_020a0cc4(unsigned int);
@@ -60,12 +60,12 @@ void VramState_Rewind(Foo0207df50*);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void func_02057e6c(void*, int, SafeAllocator*, void*, unsigned int, Foo0207df50*);
 void SePlayer_UnloadExtraArchiveB(void*);
-void CopyCountedBytesToIntArray02010834(Base02010834*, int, int*, int*);
+void GameState_GetPartyMemberIds(Base02010834*, int, int*, int*);
 void FindNodeAndProcess02057fb4(void*, int, void*);
 void SePlayer_LoadExtraArchiveB(void*, int, int);
 void SePlayer_PlayExtra(void*, int, int);
-int GetByte0x26c_02039d7c(char*);
-void* GetField0x3f8Address_0200fd0c(GameState*);
+int GameObject_IsClimbingLadder(char*);
+void* GameState_GetZoneTransition(GameState*);
 #if defined(jpn)
 #define func_ov017_021a7280 func_ov017_021a7c28
 #define data_ov017_021d777c data_ov017_021d7bb8
@@ -81,16 +81,16 @@ static inline ResourceState021a6c2c* ResourceStateBuffer021a6c2c(GameResources* 
 // Overlay 17, originally func_ov017_021a6c2c (USA/EUR 0x021a6c2c, JPN 0x021a75d4)
 extern "C" ARM void FieldTask_WarpToStarflight(Event021a6c2c* self) {
     GameState* game = GameState::GetInstance();
-    GameObject* leader = game->GetUnknownGameObject();
+    GameObject* leader = game->GetLeader();
     GameResources* resources = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     void* manager = func_02057924();
-    func_0202ae18();
+    LinkSession_GetInstance();
     MessageSystem_GetInstance();
     Zone021a6c2c* zone = Zone3D_GetInstance();
     if (self->stage == 0) {
         if (self->special) {
-            Vector3fix position = game->GetUnknownGameObject()->obj3D_.position_;
+            Vector3fix position = game->GetLeader()->obj3D_.position_;
             int id = zone->id;
             if (id >= 0x4e20 && id <= 0x752f) {
                 zone->encounterX = position.x + zone->originX;
@@ -129,7 +129,7 @@ extern "C" ARM void FieldTask_WarpToStarflight(Event021a6c2c* self) {
         if (self->timer <= 50) return;
         SePlayer_UnloadExtraArchiveB(&g_sePlayer);
         int ids[4], count;
-        CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
+        GameState_GetPartyMemberIds((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
         Entry021a6c2c entries[4];
         for (int i = 0; i < count; i++) {
             GameObject* actor = game->GetGameObjectByIndex(ids[i]);
@@ -156,41 +156,41 @@ extern "C" ARM void FieldTask_WarpToStarflight(Event021a6c2c* self) {
         self->timer += game->GetTickCount();
         if (self->timer < 38) return;
         int ids[4], count;
-        CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
+        GameState_GetPartyMemberIds((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
         for (int i = 0; i < count; i++) {
             GameObject* actor = game->GetGameObjectByIndex(ids[i]);
             if (actor) actor->obj3D_.MakeHidden();
         }
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 5) {
-        arg0->unknown_c_ += var0->GetTickCount();
-        if (arg0->unknown_c_ < 80) return;
-        SetBrightness(var2, -16, 30);
-        arg0->unknown_8_++;
-    } else if (arg0->unknown_8_ == 6) {
-        if (IsBrightnessTransitionActive(var2)) return;
-        if (func_02039d7c((char*)var1)) {
-            Struct_02037d10* var23 = func_020399a8(var1);
-            func_02038508(var23);
-            ((Struct_ov017_021a6c2c_5*)var1)->unknown_e0_ &= ~1;
-            var1->obj3D_.DisableFlag(0x1180);
-            func_ov017_021d3f00(var23, 0, 1);
+        self->stage++;
+    } else if (self->stage == 5) {
+        self->timer += game->GetTickCount();
+        if (self->timer < 80) return;
+        SetBrightness(resources, -16, 30);
+        self->stage++;
+    } else if (self->stage == 6) {
+        if (IsBrightnessTransitionActive(resources)) return;
+        if (GameObject_IsClimbingLadder((char*)leader)) {
+            SubBlock02038508* block = GameObject_GetLadderClimb(leader);
+            LadderClimb_Reset(block);
+            ((Actor021a6c2c*)leader)->flags &= ~1;
+            leader->obj3D_.DisableFlag(0x1180);
+            LinkMessageQueue_SendLadderClimb(block, 0, 1);
         }
-        Struct_ov017_021a6c2c_6* var24 = (Struct_ov017_021a6c2c_6*)func_0200fd0c(var0);
-        VectorizedMemset(var24, 0, 0x70);
-        var24->unknown_4_ = 1; var24->unknown_8_ = 1; var24->unknown_9_ = 1;
-        var24->unknown_b_ = -1;
-        var24->unknown_20_[0] = -1; var24->unknown_20_[1] = -1;
-        var24->unknown_20_[2] = -1; var24->unknown_20_[3] = -1;
-        var24->unknown_1e_ = -1; var24->unknown_c_ = 0; var24->unknown_6c_ = -1;
-        var24->unknown_2_ = 1; var24->unknown_7_ = 1; var24->unknown_5_ = 1;
-        if (arg0->unknown_10_) var24->unknown_0_ = 0x2774;
+        Encounter021a6c2c* encounter = (Encounter021a6c2c*)GameState_GetZoneTransition(game);
+        VectorizedMemset(encounter, 0, 0x70);
+        encounter->field4 = 1; encounter->field8 = 1; encounter->field9 = 1;
+        encounter->fieldb = -1;
+        encounter->fields20[0] = -1; encounter->fields20[1] = -1;
+        encounter->fields20[2] = -1; encounter->fields20[3] = -1;
+        encounter->field1e = -1; encounter->fieldc = 0; encounter->field6c = -1;
+        encounter->active = 1; encounter->field7 = 1; encounter->field5 = 1;
+        if (self->special) encounter->id = 0x2774;
         else {
             var24->unknown_0_ = 0x1901; var24->unknown_10_ = 0x14cc;
             var24->unknown_14_ = 0x199; var24->unknown_18_ = -0x1000;
         }
         int ids[4], count;
-        CopyCountedBytesToIntArray02010834((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
+        GameState_GetPartyMemberIds((Base02010834*)game, leader->obj3D_.actorIndex_, ids, &count);
         for (int i = 0; i < count; i++) {
             GameObject* actor = game->GetGameObjectByIndex(ids[i]);
             if (actor) actor->obj3D_.MakeVisible();

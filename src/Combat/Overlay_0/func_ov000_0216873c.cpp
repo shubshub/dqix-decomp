@@ -16,7 +16,7 @@ enum { Enum_ov000_0216873c_5 = 5 };
 void ClearCombatWorkFlags0x55f4_ov000_02160fbc(void* work, int mask);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* work, int mask);
-void ResetBigStruct02013750(void* obj, int flag);
+void Zone3D_Unload(void* obj, int flag);
 extern "C" void func_ov000_02172720(void* obj);
 
 extern "C" void func_02079f9c(char* arg0);
@@ -33,8 +33,8 @@ extern "C" void* Scenario_GetInstance(void);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 struct SearchTable;
 struct SearchEntry;
-struct SearchTable* GetPtrField0x468_02011584(void* obj);
-struct SearchEntry* FindEntryByHalfwordKey_02099950(struct SearchTable* table, int key);
+struct SearchTable* GameState_GetZoneTable(void* obj);
+struct SearchEntry* ZoneTable_FindEntry(struct SearchTable* table, int key);
 extern "C" void Scenario_LoadZoneTriggers(void* a, struct SearchEntry* b);
 void SetFieldsAndSignalData02184220_ov000_02160d80(void* p, int val);
 
@@ -90,7 +90,7 @@ extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
         return;
     }
     ClearCombatWorkFlags0x55f4_ov000_02160fbc(scene, 0x200);
-    ResetBigStruct02013750(scene->bigStruct, 1);
+    Zone3D_Unload(scene->bigStruct, 1);
     func_ov000_02172720(scene->field_0x3760);
     SetCombatWorkFlags0x55f4_ov000_02160fa8(scene, 0x800);
     ClearTwoRegions02079f9c((char*)GetData02108e10_020797dc());
@@ -118,7 +118,7 @@ extern "C" ARM void func_ov000_0216873c(struct BattleScene0216873c* scene) {
 #endif
     void* target = Scenario_GetInstance();
     unsigned short* key = Zone3D_GetInstance();
-    Scenario_LoadZoneTriggers(target, FindEntryByHalfwordKey_02099950(GetPtrField0x468_02011584(gs), *key));
+    Scenario_LoadZoneTriggers(target, ZoneTable_FindEntry(GameState_GetZoneTable(gs), *key));
     if (scene->bgLayers != 0) {
         DISPCNT = (DISPCNT & ~0x1f00) | (scene->bgLayers << 8);
     }

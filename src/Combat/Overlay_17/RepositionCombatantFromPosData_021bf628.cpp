@@ -4,11 +4,11 @@
 
 struct Obj020397cc;
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
 struct Obj02033834;
 void GameObject_SetFacing(struct Obj02033834* obj, int arg);
-void SetHalf0xc6AndCopyVec3_02033e18(void* obj, int* src, short val);
+void GameObject_StartGlide(void* obj, int* src, short val);
 struct Obj02033b68;
 void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
@@ -34,14 +34,14 @@ struct Obj_021bf628 {
 // USA: func_ov017_021bf628  (semantic: RepositionCombatantFromPosData_021bf628)
 extern "C" ARM int func_ov017_021bf628(struct Obj_021bf628* obj) {
     GameState* battle = GameState::GetInstance();
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     struct PosData_021bf628* pos = obj->pos;
     obj->x28 = pos->x;
     obj->x2c = pos->y;
     obj->x30 = pos->z;
     GameObject_DisableControl((struct Obj020397cc*)combatant, 1);
     void* flagPtr = GetGameResources();
-    int flagResult = GetFieldIfFlag4_020100f8((char*)battle);
+    int flagResult = GameState_GetFollowCamera((char*)battle);
     if (flagResult != 0) {
         ClearIntAt0x23c_020a27b8((unsigned char*)flagResult);
     }
@@ -53,7 +53,7 @@ extern "C" ARM int func_ov017_021bf628(struct Obj_021bf628* obj) {
     int* vecPtr = (int*)&vec;
     vec.x = pos->x;
     vec.z = pos->z;
-    SetHalf0xc6AndCopyVec3_02033e18(combatant, vecPtr, 0xcc);
+    GameObject_StartGlide(combatant, vecPtr, 0xcc);
     GameObject_SetMotionState((struct Obj02033b68*)combatant, 1);
     obj->field14 = 5;
     return 1;

@@ -17,11 +17,11 @@ extern "C" void func_ov005_021571d0(void* self);
 extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
 char* MessageSystem_GetInstance();
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fog);
-int* GetData02105254_0203b628();
-void SetupBankModeAndTransfer_0203b678(int* obj, int a, int b);
-void TailForward0203b66c(char*);
-void ClearThreeRegions0203b634(char*);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fog);
+int* BgVram_GetInstance();
+void BgVram_ResetWithBlankTile(int* obj, int a, int b);
+void BgVram_Reset(char*);
+void BgVram_Clear(char*);
 void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void* obj, int value);
 struct BackgroundGraphics;
@@ -196,12 +196,12 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         BackgroundLoader::RemoveLockGlobal();
         self->fe10 = *(int*)(MessageSystem_GetInstance() + 0x5c);
 #endif
-        func_020c5588(0, 0, 0x7fff, 0, 0);
-        SetFlags04((GameResources*)var12, 0x800);
-        int* var16 = func_0203b628();
-        func_0203b678(var16, 0, 1);
-        func_0203b66c((char*)var16);
-        func_0203b634((char*)var16);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
+        SetFlags04((GameResources*)word, 0x800);
+        int* bank = BgVram_GetInstance();
+        BgVram_ResetWithBlankTile(bank, 0, 1);
+        BgVram_Reset((char*)bank);
+        BgVram_Clear((char*)bank);
 
         Background_SetMapSize((unsigned char*)&self->lists[0], 0);
         self->lists[0].lo = 0;

@@ -115,7 +115,7 @@ extern "C" ARM void func_ov004_0215eb40(void* self) {
         return;
     }
     loader = BackgroundLoader::GetInstance();
-    loader->MaybeWaitIdle();
+    loader->Suspend();
     char* script = data_0212633c;
     ClearFirstTwoWords0209a338((struct Pair0209a338*)&ctx);
     SetupAndRunBufferedScript0209a348(&ctx, script);

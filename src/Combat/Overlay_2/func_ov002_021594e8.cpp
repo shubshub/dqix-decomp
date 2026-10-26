@@ -12,11 +12,11 @@ struct SePlayer;
 struct Obj02048350;
 void *SearchBothTables02079e2c(char *p, int key);
 GameObject *GetCombatantChecked_0200ff94(GameState *gs, int id);
-extern "C" int *func_0202ae18(void);
+extern "C" int *LinkSession_GetInstance(void);
 extern "C" void *__clear(void *dst, int count);
-int CopyOutRegion0x571d_020114ec(char *dst, void *src);
+int GameState_GetPartyOrder(char *dst, void *src);
 void ConsumeCounter02048350(struct Obj02048350 *p, int a);
-int CheckField0NonZero_0202b7d8(int *p);
+int LinkSession_IsActive(int *p);
 void SePlayer_Play(struct SePlayer *p, int a, int b);
 void InitStateArray02157ce0(char *p);
 extern "C" void func_ov002_021536e0(void *p);
@@ -72,30 +72,30 @@ extern "C" ARM void func_ov002_021594e8(struct Struct_ov002_021594e8_2 *arg0, sh
     void *var3;
     void *var4;
 
-    arg0->unknown_1c26_                        = arg1;
-    GameState *var5                     = GameState::GetInstance();
-    Struct_02108e10* var6                         = func_020797dc();
-    struct Struct_ov002_021594e8_3 *var7 = (struct Struct_ov002_021594e8_3 *) func_02079e2c((char*)var6, arg0->unknown_1c26_);
-    GameObject *var8                  = func_0200ff94(var5, arg2);
-    int *var9                     = func_0202ae18();
-    int var10                         = 0;
-    if (arg0->unknown_1bb8_ == RG(0x17, 0x18)) {
-        arg0->unknown_1c28_  = 0x232d;
-        arg0->unknown_1c2a_ = 0x232b;
-        int var11   = 0;
-        if (arg0->unknown_1c26_ == 0x22) {
-            func_ov002_02157ce0((char *) &var0);
-            func_ov002_02157ce0((char *) &var0);
-            struct Struct_ov002_021594e8_3 *var12 = (struct Struct_ov002_021594e8_3 *) func_02079e2c((char*)var6, arg0->unknown_1c26_);
-            if (var12 != NULL) {
-                __clear(var2, 4);
-                int var13 = func_020114ec((char *) var5, var2);
-                if (var12->unknown_9_2_ & 1) {
-                    var0.unknown_0_    = arg0->unknown_1c26_;
-                    var0.unknown_2_ = arg2;
-                    var0.unknown_3_ = var13;
-                    for (int var14 = 0; var14 < var13; var14++) {
-                        var0.unknown_4_[var14] = var2[var14];
+    p->command                        = cmd;
+    GameState *gs                     = GameState::GetInstance();
+    ActionDataTables* tbl                         = GetData02108e10_020797dc();
+    struct TableEntry021594e8 *entryA = (struct TableEntry021594e8 *) SearchBothTables02079e2c((char*)tbl, p->command);
+    GameObject *comb                  = GetCombatantChecked_0200ff94(gs, actor);
+    int *checkPtr                     = LinkSession_GetInstance();
+    int flagA                         = 0;
+    if (p->state == RG(0x17, 0x18)) {
+        p->msgId  = 0x232d;
+        p->msgId2 = 0x232b;
+        int res   = 0;
+        if (p->command == 0x22) {
+            InitStateArray02157ce0((char *) &st);
+            InitStateArray02157ce0((char *) &st);
+            struct TableEntry021594e8 *entry = (struct TableEntry021594e8 *) SearchBothTables02079e2c((char*)tbl, p->command);
+            if (entry != NULL) {
+                __clear(buf, 4);
+                int n = GameState_GetPartyOrder((char *) gs, buf);
+                if (entry->b10 & 1) {
+                    st.id    = p->command;
+                    st.actor = actor;
+                    st.count = n;
+                    for (int i = 0; i < n; i++) {
+                        st.ids[i] = buf[i];
                     }
                     func_ov002_021536e0(&var3);
                     var3 = var6;
@@ -133,10 +133,10 @@ extern "C" ARM void func_ov002_021594e8(struct Struct_ov002_021594e8_2 *arg0, sh
         p->state     = RG(0x26, 0x29);
         p->nextState = RG(0x17, 0x18);
     }
-    if (var10 != 0) {
-        func_02048350((struct Struct_02048350_2 *) var8, var7->unknown_8_0_);
-        if (func_0202b7d8(var9) != 0) {
-            func_ov017_021c9e00(arg2, 0, 0, 1);
+    if (flagA != 0) {
+        ConsumeCounter02048350((struct Obj02048350 *) comb, entryA->lo8);
+        if (LinkSession_IsActive(checkPtr) != 0) {
+            func_ov017_021c9e00(actor, 0, 0, 1);
         }
     }
 }

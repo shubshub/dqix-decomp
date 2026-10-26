@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02052e14;
-extern "C" short* func_02052e14(struct Struct_02052e14* arg0);
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+struct Field150Holder02052e14;
+short* GetField150Ptr0x488(struct Field150Holder02052e14* obj);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c3fb4 {
     unsigned char unknown_0_;
@@ -24,7 +24,7 @@ extern "C" ARM void func_ov017_021c3fb4(int arg0, int arg1) {
     short* var2 = func_02052e14((struct Struct_02052e14*)var1);
     if (var2 == NULL) return;
 
-    void* var3 = func_0202ae24();
+    void* data = LinkMessageQueue_GetInstance();
 
     struct Struct_ov017_021c3fb4 var4;
     var4.unknown_0_ = 2;

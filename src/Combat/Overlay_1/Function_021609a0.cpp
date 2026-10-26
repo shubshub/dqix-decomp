@@ -10,7 +10,7 @@ void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 ARM int Function_021609a0(void) {
 	func_ov017_021bd5d0();
 	GameState* bs = GameState::GetInstance();
-	struct Obj020397cc* obj = (struct Obj020397cc*)bs->GetUnknownGameObject();
+	struct Obj020397cc* obj = (struct Obj020397cc*)bs->GetLeader();
 	GameObject_DisableControl(obj, 1);
 	return 1;
 }

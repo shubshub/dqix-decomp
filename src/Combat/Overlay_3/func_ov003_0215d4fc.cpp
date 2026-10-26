@@ -54,11 +54,11 @@ struct Struct_ov003_0215d4fc {
 extern int g_bgmPlayer;
 extern int g_sePlayer;
 
-extern "C" int *func_0202ae18();
+extern "C" int *LinkSession_GetInstance();
 Ctl *MessageSystem_GetInstance();
 void *GetGlobalPtr021075f4_0203cf4c();
 unsigned char *GetData02153637_020e2ff8();
-extern "C" int func_0202c508(int *);
+extern "C" int LinkSession_IsHostOrSolo(int *);
 void MessageSystem_Reset(char*);
 struct Container020e0310;
 void * KeyTable_Get(Container020e0310*, int);
@@ -99,16 +99,16 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
     GameState *gs    = GameState::GetInstance();
     void *res        = (void*)gs->GetResources();
     Ctl *ctl         = MessageSystem_GetInstance();
-    int *a           = func_0202ae18();
+    int *a           = LinkSession_GetInstance();
     void *b          = GetGlobalPtr021075f4_0203cf4c();
-    GameObject *c    = gs->GetUnknownGameObject();
+    GameObject *c    = gs->GetLeader();
     unsigned char *d = GetData02153637_020e2ff8();
     unsigned char state;
     int i;
     int sb;
     sb = 0;
-    if (func_0202c508(a) != 0) {
-        if (*(short *) ((char *) gs->GetUnknownGameObject() + 4) == 0) {
+    if (LinkSession_IsHostOrSolo(a) != 0) {
+        if (*(short *) ((char *) gs->GetLeader() + 4) == 0) {
             sb = 1;
         }
     }
@@ -183,10 +183,10 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
                     func_ov017_021c9e00(self->ids[i], 0, 0, 1);
                 }
             }
-            if (func_0202c508(var3) != 0) {
-                switch (arg0->unknown_3bc_) {
-                    case 2: var0->SetDayTimer(arg0->unknown_3d8_); break;
-                    case 3: var0->SetDayTimer(arg0->unknown_3e0_); break;
+            if (LinkSession_IsHostOrSolo(a) != 0) {
+                switch (self->b3bc) {
+                    case 2: gs->SetDayTimer(self->f3d8); break;
+                    case 3: gs->SetDayTimer(self->f3e0); break;
                 }
             }
             func_020e3428(var6, 1);
@@ -235,7 +235,7 @@ extern "C" ARM void func_ov003_0215d4fc(Scene *self) {
             return;
         }
         ctl->w998 = 1;
-        MessageSystem_SetStringArgument((Obj02046574*)ctl, 0, (char*)(*(void **) ((char *) gs->GetUnknownGameObject() + 0x134)));
+        MessageSystem_SetStringArgument((Obj02046574*)ctl, 0, (char*)(*(void **) ((char *) gs->GetLeader() + 0x134)));
         int key = 0x3f3;
         if (self->b3f0 != 0) {
             if (sb == 0) {

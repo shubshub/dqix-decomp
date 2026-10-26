@@ -35,8 +35,8 @@ struct Struct_ov003_021666c4_2 {
     Type_020b1300 unknown_4bd_;
 };
 
-extern "C" void func_02080b54(void*, int);
-extern "C" void func_0202ae18();
+void SetSublistEntriesFlag1_02080b54(void*, int);
+extern "C" void LinkSession_GetInstance();
 void SetEntryHighNibble0x13(Container02080cc0*, int, int);
 void SetEntryFlagById02080b40(void*, int);
 void SetEntryFirstField02080f8c(Container02080f8c*, int, int);
@@ -48,25 +48,25 @@ extern "C" void func_020813ec(void*, int);
 extern "C" void func_ov003_02160794(Struct_ov003_021666c4_2*);
 
 // USA: func_ov003_021666c4
-extern "C" ARM void func_ov003_021666c4(Struct_ov003_021666c4_2* arg0) {
-    Struct_02080cc0* var0 = arg0->unknown_324_;
-    func_02080b54(var0, 16);
-    int var1 = 69;
-    func_0202ae18();
-    arg0->unknown_4bd_ = var1;
-    int var2 = arg0->unknown_4a0_ * 4;
-    int var3 = var2 + 4;
-    for (; var2 < var3; var1 = (Type_ov003_021666c4)(var1 + 1), var2++) {
-        int var4 = 15;
-        if (var1 == var0->unknown_36_) var4 = 10;
-        func_02080cc0(var0, var1, var4);
-        Struct_ov003_021666c4* var5 = &arg0->unknown_0_[var2];
-        if (var5->unknown_0_7_ && var2 < arg0->unknown_226_) {
-            char* var6;
-            int var7;
-            if (var5->unknown_0_0_) {
-                var6 = var5->unknown_1_;
-                var7 = 4 - var5->unknown_0_1_;
+extern "C" ARM void func_ov003_021666c4(CombatMenu021666c4* self) {
+    Container02080cc0* menu = self->menu;
+    SetSublistEntriesFlag1_02080b54(menu, 16);
+    int id = 69;
+    LinkSession_GetInstance();
+    self->selection = id;
+    int index = self->page * 4;
+    int end = index + 4;
+    for (; index < end; id = (s16)(id + 1), index++) {
+        int color = 15;
+        if (id == menu->selected) color = 10;
+        SetEntryHighNibble0x13(menu, id, color);
+        CombatMenuEntry021666c4* entry = &self->entries[index];
+        if (entry->active && index < self->entry_count) {
+            char* text;
+            int count;
+            if (entry->enabled) {
+                text = entry->text;
+                count = 4 - entry->count;
             } else {
                 if (var1 == var0->unknown_36_) func_02080cc0(var0, var1, 8);
                 else func_02080cc0(var0, var1, 4);

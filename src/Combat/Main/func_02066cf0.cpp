@@ -67,19 +67,19 @@ struct Struct_02066cf0_3 {
     void* unknown_1c4c_;
 };
 
-struct Struct_0205ce28_2;
-extern "C" void func_0206b804(char* arg0, int* arg1, int* arg2);
-extern "C" int func_0205ce28(struct Struct_0205ce28_2* arg0);
-struct Struct_0202f6a4;
-extern "C" void func_0202f6a4(struct Struct_0202f6a4* arg0);
-extern "C" void func_0202f380(void* arg0, int arg1);
-struct Struct_02066a6c_2;
-extern "C" void func_02066cc0(struct Struct_02066a6c_2* arg0, short* arg1, short* arg2);
-struct Struct_02042b98_3;
-extern "C" void func_02042c24(struct Struct_02042b98_3* arg0, int arg1, int arg2);
-extern "C" void func_0202f404(void* arg0, int arg1, int arg2);
-extern "C" void func_020e2310(char* arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5, unsigned char arg6);
-extern "C" void func_02044530(char* arg0, int arg1);
+struct CE28Obj;
+void LoadStateBytePair0206b804(char* obj, int* out1, int* out2);
+int IsField440Empty_0205ce28(struct CE28Obj* obj);
+struct Field440Obj0202f6a4;
+void WindowFrame_Open(struct Field440Obj0202f6a4* obj);
+void WindowFrame_Update(void* obj, int amount);
+struct Field440XYObj;
+void GetField440XY_02066cc0(struct Field440XYObj* obj, short* outX, short* outY);
+struct Holder02042c24;
+void SetSubstructXY02042c24(struct Holder02042c24* holder, int x, int y);
+void WindowFrame_Draw(void* obj, int a, int b);
+void UpdateObj020e15f8Entry_020e2310(char* obj, int idx, int a2, int a3, int a4, unsigned char a5, unsigned char a6);
+void CallFunc0205c96cIfMode6AndFlag_02044530(char* obj, int flag);
 
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, int c, int d);
 extern "C" void* __clear(void* arg0, int arg1);
@@ -110,11 +110,11 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
     int var5, var6;
     func_0206b804((char*)arg0, &var5, &var6);
 
-    if ((arg0->unknown_868_ && arg0->unknown_17e1_) || arg0->unknown_17fc_) {
-        if (arg0->unknown_17fc_) {
-            if (func_0205ce28((Struct_0205ce28_2*)arg0->unknown_1804_)) {
-                func_0202f6a4((Struct_0202f6a4*)arg0->unknown_1804_);
-                func_0202f380(arg0->unknown_1804_, 1);
+    if ((obj->active && obj->showName) || obj->refreshHolder) {
+        if (obj->refreshHolder) {
+            if (IsField440Empty_0205ce28((CE28Obj*)obj->holder)) {
+                WindowFrame_Open((Field440Obj0202f6a4*)obj->holder);
+                WindowFrame_Update(obj->holder, 1);
             }
         }
 
@@ -130,7 +130,7 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
             if (arg0->unknown_4_) {
                 func_020e2110(arg0->unknown_4_);
             } else {
-                func_0202f404(arg0->unknown_1804_, 1, 1);
+                WindowFrame_Draw(obj->holder, 1, 1);
             }
         }
 
@@ -365,18 +365,18 @@ struct CE28Obj;
 void LoadStateBytePair0206b804(char* obj, int* out1, int* out2);
 int IsField440Empty_0205ce28(struct CE28Obj* obj);
 struct Field440Obj0202f6a4;
-void SetupField440Type1(struct Field440Obj0202f6a4* obj);
-void UpdateTimedState0202f380(void* obj, int amount);
+void WindowFrame_Open(struct Field440Obj0202f6a4* obj);
+void WindowFrame_Update(void* obj, int amount);
 struct Field440XYObj;
 void GetField440XY_02066cc0(struct Field440XYObj* obj, short* outX, short* outY);
 struct Holder02042c24;
 void SetSubstructXY02042c24(struct Holder02042c24* holder, int x, int y);
-void EmitScaledField0x440_0202f404(void* obj, int a, int b);
+void WindowFrame_Draw(void* obj, int a, int b);
 bool IsCommandInRange02067a9c(void* obj, void* src);
 void MeasureTextWidth0206b6b8(unsigned char* obj);
-int GetWordFromTable02042648(int idx);
+int Font_GetFallbackWidth(int idx);
 bool IsHighByteFF02044494(void* obj, void* src);
-int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int Font_GetKerning(int a, int b, int tableIdx);
 int MessageSystem_GetInstance();
 struct Holder020416cc;
 int GetField0OfSubstructAt0x18(struct Holder020416cc* holder);
@@ -486,11 +486,11 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
     int var41, var42;
     func_0206b804((char*)arg0, &var41, &var42);
 
-    if ((arg0->unknown_998_ && arg0->unknown_19b1_) || arg0->unknown_19cb_) {
-        if (arg0->unknown_19cb_) {
-            if (func_0205ce28((Struct_0205ce28_2*)arg0->unknown_19e0_)) {
-                func_0202f6a4((Struct_0202f6a4*)arg0->unknown_19e0_);
-                func_0202f380(arg0->unknown_19e0_, 1);
+    if ((obj->active && obj->showName) || obj->refreshHolder) {
+        if (obj->refreshHolder) {
+            if (IsField440Empty_0205ce28((CE28Obj*)obj->holder)) {
+                WindowFrame_Open((Field440Obj0202f6a4*)obj->holder);
+                WindowFrame_Update(obj->holder, 1);
             }
         }
 
@@ -506,7 +506,7 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
             if (arg0->unknown_38_) {
                 func_020e2110(arg0->unknown_38_);
             } else {
-                func_0202f404(arg0->unknown_19e0_, 1, 1);
+                WindowFrame_Draw(obj->holder, 1, 1);
             }
         }
 
@@ -574,9 +574,9 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
     var54 = 0xff;
     if (var39 < var56) var39 = var56;
 
-    unsigned char var57 = func_02042648(arg0->unknown_19dc_);
-    var38 = var47[0] - arg0->unknown_1868_;
-    var37 = var46[0];
+    unsigned char spacing = Font_GetFallbackWidth(obj->table);
+    y = lineY[0] - obj->yOffset;
+    x = lineX[0];
 
     for (; var39 < var55; var39++) {
         var51 = arg0->unknown_4c_[var39];
@@ -598,10 +598,10 @@ extern "C" ARM void func_02066cf0(Struct_02066cf0_3* arg0, int arg1) {
             continue;
         }
 
-        var36 = &arg0->unknown_9b8_[var51];
-        var40 = var36->unknown_17_;
-        var37 += func_020425e4(var54, var40, arg0->unknown_19dc_);
-        var54 = var40;
+        glyph = &obj->glyphs[ch];
+        width = glyph->width;
+        x += Font_GetKerning(prevWidth, width, obj->table);
+        prevWidth = width;
 
         if (arg1 != 0) {
             if (arg0->unknown_40_ <= var39) {

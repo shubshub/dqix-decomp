@@ -17,7 +17,7 @@ struct Struct_02015ef4_5;
 extern "C" void* func_02057924(void);
 extern "C" void func_020a0cc4(unsigned int);
 extern "C" int func_02057e6c(void* list, int p1, SafeAllocator* alloc, int p2, int p3, State0207dfc8* p4);
-unsigned int GetMaxAlloc02012dd0(Struct02012dd0*);
+unsigned int AllocatorUnion_GetMaxPossibleAllocation(Struct02012dd0*);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
 void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
 void FindNodeAndProcess02057fb4(void*, int, void*);
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov017_021c2b6c(Obj021c2b6c* self) {
     PartyEntry021c2b6c entries[4];
     unsigned int len;
     if (self->step == 0) {
-        if (GetMaxAlloc02012dd0((Struct02012dd0*)&g_mainAllocator) < 0x8000) {
+        if (AllocatorUnion_GetMaxPossibleAllocation((Struct02012dd0*)&g_mainAllocator) < 0x8000) {
             func_020a0cc4(0x8000);
             arg0->unknown_96_ = 1;
         }

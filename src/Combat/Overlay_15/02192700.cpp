@@ -127,13 +127,13 @@ void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 struct Callback_0202a91c;
 void SetState0x6cAndInvoke(Callback_0202a91c*);
-extern "C" void func_02029568(struct MenuList02192700* menu);
-extern "C" void func_020294cc(void* self, const char* src);
-void Init0202949c(char*);
+extern "C" void DebugMenu_Init(struct MenuList02192700* menu);
+extern "C" void DebugMenuItem_SetText(void* self, const char* src);
+void DebugMenuItem_Init(char*);
 const char* StandardStrings_Get(int id);
 struct ListHead0202a944;
 struct ListNode0202a944;
-void AppendNodeToList0202a944(ListHead0202a944*, ListNode0202a944*);
+void DebugMenu_AddItem(ListHead0202a944*, ListNode0202a944*);
 struct Entry8_0218bb14* GetEntry8_0218bb14(struct List8_0218bb14* list, int idx);
 extern "C" struct MenuEntry02192700* func_ov015_02193160(struct Obj02192700* obj, int state, int* pIdx);
 struct BinarySearchByComparatorStruct;
@@ -145,8 +145,8 @@ struct Struct0219313c;
 void SetShortFields0219313c(Struct0219313c*, int, int);
 struct Struct02193150;
 void AddToShortField02193150(Struct02193150*, int);
-extern "C" void func_0202a6c4(struct MenuList02192700* menu);
-void Deactivate0202a8cc(char*, int);
+extern "C" void DebugMenu_UpdateLayout(struct MenuList02192700* menu);
+void DebugMenu_Open(char*, int);
 extern "C" struct HolderNode02192700* func_ov015_0218f344(void* obj);
 
 extern AllocatorUnion g_mainAllocator;
@@ -209,141 +209,141 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
         AllocatorUnion_Free(&g_mainAllocator, obj->items);
         obj->items = 0;
     }
-    arg0->unknown_354_ = arg1;
-    __clear(var0, 0x80);
-    func_0202a91c((Struct_02029634_3*)&arg0->unknown_2c4_);
-    func_02029568(&arg0->unknown_2c4_);
-    arg0->unknown_2c4_.unknown_6d_ |= 6;
+    obj->field354 = a1;
+    __clear(title, 0x80);
+    SetState0x6cAndInvoke((Callback_0202a91c*)&obj->menu);
+    DebugMenu_Init(&obj->menu);
+    obj->menu.flags |= 6;
 
     if (arg0->unknown_194_ == 0 || arg0->unknown_194_ == 2) {
         switch (arg0->unknown_1a4_) {
         case 0:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943a5);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943a5);
             break;
         case 1:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943b0);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943b0);
             break;
         case 2:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943b7);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943b7);
             break;
         case 3:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021942a2);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021942a2);
             break;
         case 4:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943bd);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943bd);
             break;
         case 6:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943c6);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943c6);
             break;
         case 7:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943d0);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943d0);
             break;
         case 5:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943d9);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943d9);
             break;
         case 8:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943df);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943df);
             break;
         case 15:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943ef);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943ef);
             break;
         case 17:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943f8);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943f8);
             break;
         case 18:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021943ff);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021943ff);
             break;
         case 19:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219440c);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219440c);
             break;
         case 20:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219441a);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219441a);
             break;
         case 21:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194426);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194426);
             break;
         case 23:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194434);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194434);
             break;
         case 24:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219443d);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219443d);
             break;
         case 25:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194442);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194442);
             break;
         case 26:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219444b);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219444b);
             break;
         case 27:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194452);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194452);
             break;
         case 28:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194459);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194459);
             break;
         case 22:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219445e);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219445e);
             break;
         case 29:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194463);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194463);
             break;
         case 30:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194470);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194470);
             break;
         case 31:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219447f);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219447f);
             break;
         case 16:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219448e);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219448e);
             break;
         case 11:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_02194496);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_02194496);
             break;
         case 12:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_0219449e);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_0219449e);
             break;
         case 33:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944a9);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944a9);
             break;
         case 32:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944b6);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944b6);
             break;
         case 13:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944c5);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944c5);
             break;
         case 14:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944d4);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944d4);
             break;
         case 34:
 #if defined(jpn)
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021950a5);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021950a5);
 #else
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021942a2);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021942a2);
 #endif
             break;
         case 35:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944e3);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944e3);
             break;
         case 36:
 #if defined(jpn)
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021950c3);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021950c3);
 #else
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021942a2);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021942a2);
 #endif
             break;
         case 38:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944ec);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944ec);
             break;
         case 39:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944f3);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944f3);
             break;
         case 40:
-            func_020294cc(&arg0->unknown_2c4_, data_ov015_021944fa);
+            DebugMenuItem_SetText(&obj->menu, data_ov015_021944fa);
             break;
         case 37:
             if (arg0->unknown_34_ != 0) {
                 sprintf(var0, data_ov015_02194503, arg0->unknown_34_->unknown_c_);
             }
-            func_020294cc(&arg0->unknown_2c4_, var0);
+            DebugMenuItem_SetText(&obj->menu, title);
             break;
         }
 
@@ -358,31 +358,31 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
             } else {
                 obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, count * sizeof(struct MenuItem02192700));
             }
-            if (var4 == 0) {
-                func_0202949c((char*)arg0->unknown_344_);
+            if (count == 0) {
+                DebugMenuItem_Init((char*)obj->items);
 #if defined(jpn)
-                func_020294cc(arg0->unknown_344_, data_ov015_021950f0);
+                DebugMenuItem_SetText(obj->items, data_ov015_021950f0);
 #else
-                func_020294cc(obj->items, StandardStrings_Get(1000));
+                DebugMenuItem_SetText(obj->items, StandardStrings_Get(1000));
 #endif
-                func_0202a944((Struct_0202a944_2*)&arg0->unknown_2c4_, (Struct_0202a944*)arg0->unknown_344_);
-                var4 = 1;
+                DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)obj->items);
+                count = 1;
             } else {
-                struct Struct_ov015_02192700_4* var6 = arg0->unknown_2c_;
-                for (var4 = 0; var6 != 0; var4++) {
-                    func_0202949c((char*)&arg0->unknown_344_[var4]);
-                    func_020294cc(&arg0->unknown_344_[var4], inline_ov015_02192700(var6->unknown_0_));
-                    func_0202a944((Struct_0202a944_2*)&arg0->unknown_2c4_, (Struct_0202a944*)&arg0->unknown_344_[var4]);
-                    var6 = var6->unknown_4_;
+                struct ListNode02192700* node = obj->list;
+                for (count = 0; node != 0; count++) {
+                    DebugMenuItem_Init((char*)&obj->items[count]);
+                    DebugMenuItem_SetText(&obj->items[count], GetName(node->value));
+                    DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[count]);
+                    node = node->next;
                 }
             }
         } else if (obj->state == 40) {
             obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, obj->entries.count * sizeof(struct MenuItem02192700));
             for (; count < obj->entries.count; count++) {
                 struct Entry8_0218bb14* entry = GetEntry8_0218bb14(&obj->entries, count);
-                Init0202949c((char*)&obj->items[count]);
-                func_020294cc(&obj->items[count], entry->name);
-                AppendNodeToList0202a944((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[count]);
+                DebugMenuItem_Init((char*)&obj->items[count]);
+                DebugMenuItem_SetText(&obj->items[count], entry->name);
+                DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[count]);
             }
         } else {
             struct Struct_ov015_02192700_5* var8;
@@ -399,28 +399,28 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
             idx = 0;
             entry = func_ov015_02193160(obj, obj->state, &idx);
             while (entry != 0) {
-                Init0202949c((char*)&obj->items[count]);
+                DebugMenuItem_Init((char*)&obj->items[count]);
                 if (obj->state == 6) {
                     struct SearchResult02192700* found = SearchWithComparator0206f4f0((BinarySearchByComparatorStruct*)obj->search, entry->key);
                     if (found != 0) {
                         __clear(line, 0x100);
                         sprintf(line, data_ov015_02194508, found->f4 + 1, found->f0);
-                        func_020294cc(&obj->items[count], line);
+                        DebugMenuItem_SetText(&obj->items[count], line);
                     } else if ((unsigned short)entry->key == 0) {
-                        func_020294cc(&obj->items[count], entry->name);
+                        DebugMenuItem_SetText(&obj->items[count], entry->name);
                     } else {
-                        func_020294cc(&arg0->unknown_344_[var4], data_ov015_0219450f);
+                        DebugMenuItem_SetText(&obj->items[count], data_ov015_0219450f);
                     }
                 } else if (func_ov015_02190d08(obj) != 0) {
                     struct Element020dedd0* elem = ItemTable_Find((ItemTable*)obj->container, entry->key);
                     if (elem != 0) {
                         if (elem->name != 0) {
-                            func_020294cc(&obj->items[count], elem->name);
+                            DebugMenuItem_SetText(&obj->items[count], elem->name);
                         } else {
-                            func_020294cc(&arg0->unknown_344_[var4], var8->unknown_0_);
+                            DebugMenuItem_SetText(&obj->items[count], entry->name);
                         }
                     } else {
-                        func_020294cc(&arg0->unknown_344_[var4], var8->unknown_0_);
+                        DebugMenuItem_SetText(&obj->items[count], entry->name);
                     }
                 } else if (arg0->unknown_1a4_ == 38) {
                     unsigned char var11;
@@ -449,31 +449,31 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                     } else {
                         sprintf(var2, data_ov015_0219451b);
                     }
-                    strcat(var2, var8->unknown_0_);
-                    func_020294cc(&arg0->unknown_344_[var4], var2);
+                    strcat(marked, entry->name);
+                    DebugMenuItem_SetText(&obj->items[count], marked);
                 } else {
-                    func_020294cc(&arg0->unknown_344_[var4], var8->unknown_0_);
+                    DebugMenuItem_SetText(&obj->items[count], entry->name);
                 }
-                func_0202a944((Struct_0202a944_2*)&arg0->unknown_2c4_, (Struct_0202a944*)&arg0->unknown_344_[var4]);
-                var4++;
-                var3++;
-                var8 = func_ov015_02193160(arg0, arg0->unknown_1a4_, &var3);
+                DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[count]);
+                count++;
+                idx++;
+                entry = func_ov015_02193160(obj, obj->state, &idx);
             }
         }
-        func_ov015_0219313c((Struct_ov015_02192700_9*)&arg0->unknown_2c4_, 0, var4 - 1);
-        func_ov015_02193150((Struct_ov015_02192700_10*)&arg0->unknown_2c4_, arg0->unknown_268_[arg0->unknown_1a4_]);
-        func_0202a6c4(&arg0->unknown_2c4_);
-        func_0202a8cc((char*)&arg0->unknown_2c4_, 1);
+        SetShortFields0219313c((Struct0219313c*)&obj->menu, 0, count - 1);
+        AddToShortField02193150((Struct02193150*)&obj->menu, obj->cursors[obj->state]);
+        DebugMenu_UpdateLayout(&obj->menu);
+        DebugMenu_Open((char*)&obj->menu, 1);
     } else {
         struct Struct_ov015_02192700_7* var12;
         struct Struct_ov015_02192700_7* var13;
 
-        func_020294cc(&arg0->unknown_2c4_, data_ov015_0219451f);
-        var4 = 0;
-        for (var12 = func_ov015_0218f344(arg0->unknown_30_); var12 != 0; var12 = var12->unknown_28_) {
-            struct BCFG* var14 = (struct BCFG*)var12->unknown_4_;
-            if (var14 != 0) {
-                var4 += var14->GetNumAnimations();
+        DebugMenuItem_SetText(&obj->menu, data_ov015_0219451f);
+        count = 0;
+        for (it = func_ov015_0218f344(obj->field30); it != 0; it = it->next) {
+            struct BCFG* bcfg = (struct BCFG*)it->bcfg;
+            if (bcfg != 0) {
+                count += bcfg->GetNumAnimations();
             }
         }
         obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, count * sizeof(struct MenuItem02192700));
@@ -486,17 +486,17 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                 for (int i = 0; i < num; i++) {
                     const char* name = (const char*)bcfg->GetAnimationRecord(i);
                     if (name != 0) {
-                        Init0202949c((char*)&obj->items[idx]);
-                        func_020294cc(&obj->items[idx], name);
-                        AppendNodeToList0202a944((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[idx++]);
+                        DebugMenuItem_Init((char*)&obj->items[idx]);
+                        DebugMenuItem_SetText(&obj->items[idx], name);
+                        DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[idx++]);
                     }
                 }
             }
         }
-        func_ov015_0219313c((Struct_ov015_02192700_9*)&arg0->unknown_2c4_, 0, var4 - 1);
-        func_ov015_02193150((Struct_ov015_02192700_10*)&arg0->unknown_2c4_, 0);
-        func_0202a6c4(&arg0->unknown_2c4_);
-        func_0202a8cc((char*)&arg0->unknown_2c4_, 1);
+        SetShortFields0219313c((Struct0219313c*)&obj->menu, 0, count - 1);
+        AddToShortField02193150((Struct02193150*)&obj->menu, 0);
+        DebugMenu_UpdateLayout(&obj->menu);
+        DebugMenu_Open((char*)&obj->menu, 1);
     }
 
     int var19 = arg0->unknown_2c4_.unknown_62_;

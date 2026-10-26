@@ -37,9 +37,9 @@ struct Struct_ov023_021dc520 {
 extern Struct_ov023_021ff9e0_6 data_ov023_021ff9e0;
 extern Struct_ov023_021ffa0c data_ov023_021ffa0c[3];
 extern unsigned char data_ov023_021fd565[2][2];
-extern "C" void* func_0203bd08();
-extern "C" ObjectBuffer021dc520* func_0203be40(void*);
-extern "C" ObjectBuffer021dc520* func_0203be4c(void*);
+extern "C" void* OamManager_GetInstance();
+extern "C" ObjectBuffer021dc520* OamManager_GetMainOamBuffer(void*);
+extern "C" ObjectBuffer021dc520* OamManager_GetSubOamBuffer(void*);
 extern "C" void SpriteContext_DrawSprite(SpriteContext0205ac40*, B174Outer*);
 short LookupValueFromField8(Obj020dee58*);
 int ForwardTableValue02075db0(Struct02075db0*, int, int);
@@ -53,15 +53,15 @@ extern "C" ARM void func_ov023_021dc520(Struct_ov023_021dc520* arg0) {
     if (arg0->unknown_77b_ == 1) {
         if (!arg0->unknown_79b_1_ || !(arg0->unknown_774_ & 0x2000)) return;
     }
-    if (!(arg0->unknown_774_ & 2) || !arg0->unknown_4c_) return;
-    Struct_0205ac40_2* var0;
-    Struct_ov023_021dc520_3* var1;
-    if (arg0->unknown_77c_ == 0) {
-        Struct_ov023_021dc520_3* var2 = func_0203be40(func_0203bd08());
-        var1 = var2;
+    if (!(view->flags & 2) || !view->selection) return;
+    B174Outer* sprite;
+    ObjectBuffer021dc520* objects;
+    if (view->subScreen == 0) {
+        ObjectBuffer021dc520* screenObjects = OamManager_GetMainOamBuffer(OamManager_GetInstance());
+        objects = screenObjects;
     } else {
-        Struct_ov023_021dc520_3* var3 = func_0203be4c(func_0203bd08());
-        var1 = var3;
+        ObjectBuffer021dc520* screenObjects = OamManager_GetSubOamBuffer(OamManager_GetInstance());
+        objects = screenObjects;
     }
     if (data_ov023_021ff9e0.unknown_50_) {
         for (int var4 = 0; var4 < 3; ++var4) {
@@ -152,10 +152,10 @@ extern "C" ARM void func_ov023_021dc520(Struct_ov023_021dc520* arg0) {
             sprite->firstObject = 0x53;
             SpriteContext_DrawSprite(&view->renderer, sprite);
         }
-        if (!(arg0->unknown_774_ & 8)) {
-            func_0203bd08();
-            arg0->unknown_c4_->unknown_14_ = var1->unknown_2a0_;
-            func_02075db0(arg0->unknown_c4_, 0x1c, 0x34);
+        if (!(view->flags & 8)) {
+            OamManager_GetInstance();
+            view->table->objects = objects->reservedObjects;
+            ForwardTableValue02075db0(view->table, 0x1c, 0x34);
         }
     } else {
         if (!(arg0->unknown_774_ & 8)) {

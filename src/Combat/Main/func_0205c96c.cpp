@@ -4,7 +4,7 @@ struct Struct_0205c570;
 int MessageSystem_GetInstance(void);
 int GetActiveScaledSum0205c570(struct Struct_0205c570* s);
 void SetField0x1e20_02042b10(void* obj, void* value);
-void EmitScaledField0x440_0202f404(void* obj, int a, int b);
+void WindowFrame_Draw(void* obj, int a, int b);
 void InitSelfPointer_02042b1c(unsigned char* base);
 int CheckGlobalObjState2AndInit0205cde8(unsigned char* p);
 extern "C" void func_02045f3c(void* ctx, void* ptr, int a, int b, int c, int d, int e, int flag, int g, int h);
@@ -42,12 +42,12 @@ extern "C" ARM void func_0205c96c(unsigned char* obj, int flag) {
         int poolVal = 0x7fff;
         if (obj[0x234] == 0) poolVal = 0x3def;
 
-        if (arg1 == 0) {
-            struct Struct_02042c68* var4 = (struct Struct_02042c68*)(arg0 + 0xb4);
-            var4->unknown_18_ = var3;
-            func_02042b10((void*)var0, (void*)var4);
-            func_0202f404((void*)(var0 + 0x19e0), 1, 1);
-            func_02042b1c(var0);
+        if (flag == 0) {
+            struct Foo02042fcc* foo = (struct Foo02042fcc*)(obj + 0xb4);
+            foo->a18 = poolVal;
+            SetField0x1e20_02042b10((void*)ctx, (void*)foo);
+            WindowFrame_Draw((void*)(ctx + 0x19e0), 1, 1);
+            InitSelfPointer_02042b1c(ctx);
         }
 
         if (func_0205cde8(arg0) != 0) {

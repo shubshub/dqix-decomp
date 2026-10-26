@@ -6,7 +6,7 @@
 
 void GameResources_ReleaseSpecialItemEffect(unsigned char* obj);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 extern AllocatorUnion g_mainAllocator;
 
@@ -35,7 +35,7 @@ extern "C" ARM void func_ov017_021bf490(void* objRaw) {
         AllocatorUnion_Free(&g_mainAllocator, h2);
     }
 
-    int flagResult = GetFieldIfFlag4_020100f8((char*)GameState::GetInstance());
+    int flagResult = GameState_GetFollowCamera((char*)GameState::GetInstance());
     if (flagResult != 0) {
         SetField0x23cTrue_020a27ac((void*)flagResult);
     }

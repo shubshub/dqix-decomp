@@ -5,7 +5,7 @@
 
 extern "C" void* Zone3D_GetInstance(void* unused);
 struct Vector3i;
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern int data_020e8d48;
 
 struct Vec3Local_0208f748 { int x, y, z; };
@@ -19,7 +19,7 @@ extern "C" ARM int func_0208f748(unsigned char* obj) {
     GameState* battle = GameState::GetInstance();
     battle->GetProtagonist();
     ((int)GetGameResources());
-    func_0202ae18();
+    LinkSession_GetInstance();
     GrottoStruct* grotto = battle->GetGrottoStruct();
     Vec3Local_0208f748 tmp1;
     *(Vector3i*)((int*)&tmp1) = *(Vector3i const*)(&grotto->entranceX);

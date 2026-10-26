@@ -3,15 +3,15 @@
 
 struct Struct_0202b2f0;
 
-extern "C" SearchStruct* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
-int TestBitBySignedByteIndex_0202c1c0(SearchStruct* search, int index);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+int LinkSession_IsSlotMember(SearchStruct* search, int index);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 unsigned char* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
 int GetSignedByte0x2d0_020546a8(void* obj);
-void StoreByteList02026348(char* obj, unsigned char* src, int count);
-void CopyInRegion0x571d_020114c0(char* obj, int len, void* src);
-void WriteBlockWithSize02011468(void* obj, int size, void* src);
+void MapDisplay_SetPartyOrder(char* obj, unsigned char* src, int count);
+void GameState_SetPartyOrder(char* obj, int len, void* src);
+void GameState_SetOwnPartyOrder(void* obj, int size, void* src);
 
 // USA: func_ov017_02191234
 extern "C" ARM void func_ov017_02191234(unsigned char* arg0) {
@@ -20,16 +20,16 @@ extern "C" ARM void func_ov017_02191234(unsigned char* arg0) {
 #else
  enum {Enum_ov017_02191234_722=0x2d2, Enum_ov017_02191234_14032=0x36d0};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    Struct_0202b2f0* var1 = func_0202ae18();
-    unsigned char var2 = 0;
-    unsigned char var3 = 0;
-    unsigned char var4[4];
-    unsigned char var5[4];
+    GameState* battle = GameState::GetInstance();
+    SearchStruct* search = LinkSession_GetInstance();
+    unsigned char count = 0;
+    unsigned char subCount = 0;
+    unsigned char list[4];
+    unsigned char subList[4];
 
-    if (CheckField0NonZero_0202b7d8((int*)search)) {
+    if (LinkSession_IsActive((int*)search)) {
         for (int group = 0; group < 4; group++) {
-            if (!TestBitBySignedByteIndex_0202c1c0(search, group)) continue;
+            if (!LinkSession_IsSlotMember(search, group)) continue;
             list[count++] = group;
             int isCurrent = 0;
             if (group == GameState_GetProtagonistIndex(battle)) {
@@ -61,7 +61,7 @@ extern "C" ARM void func_ov017_02191234(unsigned char* arg0) {
             }
         }
     }
-    func_02026348(*(char**)(arg0 + Enum_ov017_02191234_14032), var4, var2);
-    func_020114c0((char*)var0, var2, var4);
-    func_02011468(var0, var3, var5);
+    MapDisplay_SetPartyOrder(*(char**)(obj + regionalOffset1), list, count);
+    GameState_SetPartyOrder((char*)battle, count, list);
+    GameState_SetOwnPartyOrder(battle, subCount, subList);
 }

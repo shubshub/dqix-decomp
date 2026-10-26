@@ -26,7 +26,7 @@ extern "C" void func_ov023_021eb26c(char *);
 extern "C" void func_ov013_02186fa0(char *);
 extern "C" void func_ov013_021846a0(char *);
 void *GlobalFlags_GetInstance();
-int TestFlags02046708(struct FlagWord02046708 *, unsigned int);
+int FlagWord_TestBits(struct FlagWord02046708 *, unsigned int);
 void FlagWord_ClearBits(struct FlagWord020466f4 *, unsigned int);
 void PopStack1AndTrigger_020a1f4c(int);
 
@@ -103,7 +103,7 @@ extern "C" ARM void func_ov002_0216c654(char *self) {
         S32(0x1bc0 + regionalState) = 7;
     } else if (state == 7) {
         void *flags = GlobalFlags_GetInstance();
-        if (TestFlags02046708((struct FlagWord02046708 *) flags, 1) ||
+        if (FlagWord_TestBits((struct FlagWord02046708 *) flags, 1) ||
             !IsSubBrightnessTransitionActive(res))
         {
             FlagWord_ClearBits((struct FlagWord020466f4 *) flags, 1);

@@ -41,7 +41,7 @@ struct Cont0207fe44;
 struct FlagWord020466f4;
 struct ListHead02046b60;
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 void* GlobalFlags_GetInstance(void);
 int MessageSystem_GetInstance(void);
@@ -54,7 +54,7 @@ int CountListNodes_02046c78(struct CountHead* head);
 void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
 extern "C" void func_020a0cc4(unsigned int size);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void InitWithSub02081ee4(struct Obj02081ee4* obj, struct Sub02081ee4* sub);
 void Background_Init(struct BackgroundGraphics* obj);
 void Background_SetMapSize(unsigned char* obj, int value);
@@ -161,7 +161,7 @@ extern "C" ARM void FieldTask_WipeoutPrompt(Self021aa59c* self, ListHead02046b60
     GameResources* res;
     Scene021aa59c* scene;
     GameState* gs = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     res = GetGameResources();
     MessageSystem_GetInstance();
     CountHead* nodes = (CountHead*)res->fieldTaskQueue_;
@@ -190,9 +190,9 @@ extern "C" ARM void FieldTask_WipeoutPrompt(Self021aa59c* self, ListHead02046b60
         func_020a0cc4(0x7800);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x7800);
         if (buffer == NULL) {
-            func_020a0c0c();
-            func_ov017_021aaf08(arg0);
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            func_ov017_021aaf08(self);
+            self->done = 1;
             return;
         }
         self->alloc.CreateTypeA(buffer, 0x7800);
@@ -364,10 +364,10 @@ extern "C" ARM void FieldTask_WipeoutPrompt(Self021aa59c* self, ListHead02046b60
             if (ListContainsId(list, 0x40) != 0) {
                 func_02046a8c(list, res->fieldTasks_[39]);
             }
-            func_02010604(var2, 0, func_02010750((char*)var2), 0);
-            func_0201075c((char*)var2, 0);
-            DISPCNT = (DISPCNT & ~0x1f00) | (arg0->unknown_c_ << 8);
-            func_020a0c0c();
+            ResetMpForFlaggedCombatants02010604(gs, 0, GetField0x5729Value_02010750((char*)gs), 0);
+            SetField0x5729Value_0201075c((char*)gs, 0);
+            DISPCNT = (DISPCNT & ~0x1f00) | (self->savedBgMode << 8);
+            ROMFilesystem_InitFileTables();
             InitActorContext0209c20c((Actor0209c20c*)&g_bgmPlayer);
             func_ov017_021aaf08(self);
             self->done = 1;

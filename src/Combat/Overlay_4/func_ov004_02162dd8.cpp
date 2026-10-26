@@ -40,10 +40,10 @@ extern int data_ov004_02170854[];
 extern char data_ov004_0217052d[];
 extern unsigned char g_fileLoadBuffer[0x30000];
 
-extern "C" unsigned char func_020114ec(char* arg0, void* arg1);
-extern "C" Struct_ov004_02162dd8* func_ov011_021845f8(void*, int);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" int func_0208274c(void* arg0, Struct_02013fb4* arg1, int arg2, int arg3);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
+extern "C" MapAllocatorNode* func_ov011_021845f8(void*, int);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+int InitAndRunScript0208274c(void* ctx, StreamHeader* script, int size, int arg3);
 
 static inline Struct_ov004_02162dd8_2* inline_ov000_0217fa60_2(int arg0, Struct_ov004_02162dd8_2* arg1, int arg2) {
     int var0 = arg2 * 12;
@@ -67,14 +67,14 @@ extern "C" ARM int func_ov004_02162dd8(void* arg0) {
     if (data_ov004_021707e8.unknown_4_ == 0) {
         return 0;
     }
-    data_ov004_021707e8.unknown1_0_ = 1;
-    GameState* var0 = GameState::GetInstance();
-    unsigned char var1[4];
-    int var2 = func_020114ec((char*)var0, var1);
-    data_ov004_021707e8.unknown_14_ = 0;
-    data_ov004_021707e8.unknown_14_ = (Struct_ov004_02162dd8_2*)func_ov011_021845f8(arg0, 4)->unknown_4_.Allocate(0x480);
-    if (data_ov004_021707e8.unknown_14_ != 0) {
-        memset(data_ov004_021707e8.unknown_14_, 0, 0x480);
+    data_ov004_021707e8.running = 1;
+    GameState* gs = GameState::GetInstance();
+    unsigned char ids[4];
+    int count = GameState_GetPartyOrder((char*)gs, ids);
+    data_ov004_021707e8.entries = 0;
+    data_ov004_021707e8.entries = (Slot02162dd8*)func_ov011_021845f8(param, 4)->allocator.Allocate(0x480);
+    if (data_ov004_021707e8.entries != 0) {
+        memset(data_ov004_021707e8.entries, 0, 0x480);
         BackgroundLoader::AddLockGlobal();
         for (int var3 = 0; var3 < var2; var3++) {
             for (int var4 = 1; var4 < 13; var4++) {

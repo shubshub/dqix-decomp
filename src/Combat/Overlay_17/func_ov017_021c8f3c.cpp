@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c8f3c_2 {
     unsigned short unknown_0_;
@@ -61,8 +61,8 @@ extern "C" ARM void func_ov017_021c8f3c(int arg0, int arg1) {
     Struct_ov017_021c8f3c_3 var1;
     struct Struct_ov017_021c8f3c var2;
 
-    struct Struct_ov017_021a1d98_3* var3 = (struct Struct_ov017_021a1d98_3*)GameState::GetInstance()->GetMaybeFieldMonsterByIndex(arg0);
-    if (var3 == NULL) {
+    struct FieldMonster* m = (struct FieldMonster*)GameState::GetInstance()->GetFieldMonsterByIndex(index);
+    if (m == NULL) {
         return;
     }
     var0.unknown_0_ = var3->unknown_16a_;
@@ -84,11 +84,11 @@ extern "C" ARM void func_ov017_021c8f3c(int arg0, int arg1) {
     var1.unknown_2_ = var3->unknown_0_.rotation_.y;
     var1.unknown_a_ = var3->unknown_130_;
 
-    void* var5 = func_0202ae24();
-    var2.unknown_0_ = 0x83;
-    var2.unknown_4_0_ = 0;
-    func_ov017_021c90b4(&var2.unknown_6_.unknown_0_, &var0);
-    func_0205e330(var5, &var2, 0);
+    void* data = LinkMessageQueue_GetInstance();
+    msg.tag = 0x83;
+    msg.kind = 0;
+    CopyStruct021c90b4(&msg.payload.info, &info);
+    func_0205e330(data, &msg, 0);
 
     var2.unknown_0_ = 0x83;
     var2.unknown_4_0_ = 1;

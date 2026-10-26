@@ -13,11 +13,11 @@ enum { Enum_ov003_0216052c_1124 = 0x464 };
 
 struct Struct_0207fdcc_2;
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_020811d0(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_02080a6c(void* arg0, int arg1, short arg2, short* arg3, short* arg4, short* arg5, short* arg6);
-extern "C" void func_ov003_021604f4(char* arg0, int arg1, int arg2, short arg3, unsigned char arg4);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+int HasElementByByte0xc4_020811d0(struct Obj2081* obj, int key);
+void UpdateOffsetsFromEntry02080a6c(void* param0, int id, short param2, short* param3, short* param4, short* param5, short* param6);
+void SetEntryFields_021604f4(char* obj, int valA, int valB, short index, unsigned char flag);
 
 struct Struct_ov003_0216052c {
     short unknown_0_[3];
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov003_0216052c(struct Struct_ov003_0216052c_2* arg0) {
     if (arg0->unknown_324_ == NULL) {
         return;
     }
-    if (func_0202b7d8((int*)func_0202ae18()) != 0) {
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
         return;
     }
     struct Struct_0207fdcc_2* var0 = arg0->unknown_324_;

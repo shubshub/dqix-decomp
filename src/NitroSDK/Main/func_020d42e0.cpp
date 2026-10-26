@@ -10,11 +10,8 @@
 #define func_020ca3b8 func_020cbe84
 #endif
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
-extern "C" void func_020c9be0();
+extern "C" void HaltSystem();
 extern "C" void func_020ca390(unsigned short value, void* dst, unsigned long size);
 extern "C" void func_020ca3b8(const void* src, void* dst, unsigned long size);
 extern "C" int func_020d3fdc();
@@ -167,10 +164,10 @@ extern "C" ARM void func_020d42e0(unsigned int arg0, unsigned int arg1, unsigned
     {
         if (var0->unknown_0_ == 0x80)
         {
-            if (var0->unknown_2_ == 19)
-                func_020c9be0();
-            if (var1->unknown_c8_ != NULL)
-                var1->unknown_c8_(var0);
+            if (callback->errcode == 19)
+                HaltSystem();
+            if (w9b->indCallback != NULL)
+                w9b->indCallback(callback);
         }
         else if (var0->unknown_0_ == 0x82)
         {

@@ -31,9 +31,9 @@ struct Struct_ov003_0217ef58_2 {
     char unknown_2a_[0x10];
 };
 
-extern "C" void func_02074af4(void* arg0);
-extern "C" void func_020a0cc4(unsigned int arg0);
-extern "C" void func_020a0c0c(void);
+extern "C" void func_02074af4(void* obj);
+extern "C" void func_020a0cc4(unsigned int size);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern "C" void VectorizedMemset(void* dst, int val, unsigned int len);
 void PushInputLogA_020a1df8(int id);
@@ -41,7 +41,7 @@ extern "C" void func_ov003_0216d63c(Scene0217ef58* scene);
 extern "C" void func_ov003_0216ae0c(Scene0217ef58* scene, SafeAllocator* allocator);
 extern "C" int func_ov003_0216af14(Scene0217ef58* scene);
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
 extern "C" int func_ov017_021959b4(void);
 extern "C" void func_ov003_0217f194(Obj0217ef58* obj);
@@ -62,25 +62,25 @@ extern "C" ARM void FieldTask_TalkToErinn(Obj0217ef58* self) {
         func_020a0cc4(0x1e800);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0xb000);
         if (buffer == 0) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
-        VectorizedMemset(var1, 0, 0xb000);
-        arg0->unknown_14_.CreateTypeA(var1, 0xb000);
-        arg0->unknown_14_.Reset();
-        arg0->unknown_c_ = (Struct_ov003_0217ef58*)arg0->unknown_14_.Allocate(Enum_ov003_0217ef58_5140);
-        if (arg0->unknown_c_ == 0) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        VectorizedMemset(buffer, 0, 0xb000);
+        self->allocator.CreateTypeA(buffer, 0xb000);
+        self->allocator.Reset();
+        self->scene = (Scene0217ef58*)self->allocator.Allocate(kRegion1414);
+        if (self->scene == 0) {
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
         PushInputLogA_020a1df8(3);
         func_ov003_0216d63c(self->scene);
         func_ov003_0216ae0c(self->scene, &self->allocator);
         self->scene->id = self->id;
-        GameObject_DisableControl((Obj020397cc*)gs->GetUnknownGameObject(), 1);
-        ClearIntAt0x23c_020a27b8((unsigned char*)GetFieldIfFlag4_020100f8((char*)gs));
+        GameObject_DisableControl((Obj020397cc*)gs->GetLeader(), 1);
+        ClearIntAt0x23c_020a27b8((unsigned char*)GameState_GetFollowCamera((char*)gs));
         self->state = 1;
     } else if (self->state == 1) {
         if (func_ov003_0216af14(self->scene) == 0) {
@@ -93,8 +93,8 @@ extern "C" ARM void FieldTask_TalkToErinn(Obj0217ef58* self) {
         }
     } else if (self->state == 2) {
         func_ov003_0217f118(self);
-        GameObject_EnableControl(gs->GetUnknownGameObject());
-        int flags = GetFieldIfFlag4_020100f8((char*)gs);
+        GameObject_EnableControl(gs->GetLeader());
+        int flags = GameState_GetFollowCamera((char*)gs);
         SetField0x23cTrue_020a27ac((void*)flags);
         ClearFlagBits_020a28b0((unsigned char*)flags, 2);
         ClearFlags04(GetGameResources(), 0xc0);

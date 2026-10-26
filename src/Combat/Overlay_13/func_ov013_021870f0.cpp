@@ -193,7 +193,7 @@ extern "C" ARM bool func_ov013_021870f0(Struct_ov013_021870f0_6* arg0) {
     }
     else if (arg0->unknown_66_ == 2)
     {
-        var2->MaybeFreeAllocations();
+        loader->FreeAllocations();
 #if defined(jpn)
         arg0->unknown_5c_ = var2->QueueLoadFile(data_ov013_02188de0, NULL);
 #else
@@ -220,8 +220,8 @@ extern "C" ARM bool func_ov013_021870f0(Struct_ov013_021870f0_6* arg0) {
     }
     else if (arg0->unknown_66_ == 4)
     {
-        func_0208df10((Struct_0208df10*)arg0->unknown_c_);
-        var2->MaybeFreeAllocations();
+        ClearList0208df10((List0208df10*)self->abilities_);
+        loader->FreeAllocations();
 #if defined(jpn)
         arg0->unknown_5c_ = var2->QueueLoadFile(data_ov013_02188dfa, NULL);
 #else
@@ -291,10 +291,10 @@ extern "C" ARM bool func_ov013_021870f0(Struct_ov013_021870f0_6* arg0) {
     }
     else if (arg0->unknown_66_ == 7)
     {
-        var2->MaybeFreeAllocations();
-        arg0->unknown_5c_ = var2->QueueLoadFile(data_ov013_02187eaf, NULL);
-        var1 = false;
-        arg0->unknown_66_++;
+        loader->FreeAllocations();
+        self->task_ = loader->QueueLoadFile(data_ov013_02187eaf, NULL);
+        result = false;
+        self->step_++;
     }
     else if (arg0->unknown_66_ == 8)
     {

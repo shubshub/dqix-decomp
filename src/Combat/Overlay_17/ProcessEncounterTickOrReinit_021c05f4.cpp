@@ -9,23 +9,20 @@ enum { RegionOffset6fc = 0x6fc, RegionOffset18c = 0x18c, RegionOffset998 = 0x998
 #include "Input/Input.h"
 
 
-#if defined(jpn)
-#define func_020c39c8 func_020c5494
-#endif
 
 void* MessageSystem_GetInstance(void);
 void* GlobalFlags_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 int Scenario_TestFlag(int a, unsigned char* p, int bit);
-int IsField0Null_02046b08(void** p);
-int GetByteField0x252_02039820(void* obj);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
+int FieldTaskQueue_IsEmpty(void** p);
+int GameObject_IsControlEnabled(void* obj);
+int GameObject_IsGesturing(signed char* p);
 struct BitField0203402c;
-int CheckField0xc4Low15BitsNonZero(BitField0203402c* p);
+int GameObject_IsSinking(BitField0203402c* p);
 struct FlagWord02046708;
-int TestFlags02046708(FlagWord02046708* w, unsigned int mask);
-int GetByte0x26c_02039d7c(char* p);
-extern "C" int func_020c39c8(volatile unsigned short* p);
+int FlagWord_TestBits(FlagWord02046708* w, unsigned int mask);
+int GameObject_IsClimbingLadder(char* p);
+extern "C" int GXx_GetMasterBrightness_(volatile unsigned short* p);
 struct SePlayer;
 int SePlayer_Play(SePlayer* obj, int a, int b);
 void MessageSystem_Reset(char* p);
@@ -45,20 +42,20 @@ extern SePlayer g_sePlayer;
 extern "C" ARM void func_ov017_021c05f4(void* p9, unsigned char p8, unsigned char p7, int p6) {
     void* g = MessageSystem_GetInstance();
     if (p6 != 0) {
-        GameObject* combatant = GameState::GetInstance()->GetUnknownGameObject();
+        GameObject* combatant = GameState::GetInstance()->GetLeader();
         void* d = GlobalFlags_GetInstance();
         void* f = Scenario_GetInstance();
         if (Scenario_TestFlag((int)f, (unsigned char*)f + 0x8c, 0x119a) == 0) return;
-        if (IsField0Null_02046b08((void**)*(void**)((char*)p9 + 0x3000 + RegionOffset6fc)) == 0) return;
-        if (GetByteField0x252_02039820(combatant) == 0) return;
-        if (CheckSubstructByte0x7cPositive_020535c8((signed char*)combatant) != 0) return;
+        if (FieldTaskQueue_IsEmpty((void**)*(void**)((char*)p9 + 0x3000 + RegionOffset6fc)) == 0) return;
+        if (GameObject_IsControlEnabled(combatant) == 0) return;
+        if (GameObject_IsGesturing((signed char*)combatant) != 0) return;
         if (*(int*)((char*)combatant + RegionOffset18c) & 1) return;
-        if (CheckField0xc4Low15BitsNonZero((BitField0203402c*)combatant) != 0 ||
+        if (GameObject_IsSinking((BitField0203402c*)combatant) != 0 ||
             *(short*)((char*)combatant + 0xac) != 0 ||
             *(int*)((char*)g + RegionOffset998) != 0) return;
-        if (TestFlags02046708((FlagWord02046708*)d, 0x800) != 0) return;
-        if (GetByte0x26c_02039d7c((char*)combatant) != 0) return;
-        if (func_020c39c8((volatile unsigned short*)0x400006c) != 0) return;
+        if (FlagWord_TestBits((FlagWord02046708*)d, 0x800) != 0) return;
+        if (GameObject_IsClimbingLadder((char*)combatant) != 0) return;
+        if (GXx_GetMasterBrightness_((volatile unsigned short*)0x400006c) != 0) return;
         if (g_keyManager.TestKeysPressed(4) == 0) return;
         *(unsigned short*)((char*)combatant + 0xb2) = 0;
         SePlayer_Play(&g_sePlayer, 1, 0);

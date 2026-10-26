@@ -1,8 +1,5 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 typedef unsigned char Type_020b1300;
 typedef unsigned short Type_020b0a1c;
@@ -49,10 +46,10 @@ struct Struct_020b27c8 {
     Struct_020b27c8_2* unknown_8_;
 };
 
-struct Struct_0205ab78;
-extern "C" void func_020c9be0(void);
-extern "C" void func_020b291c(void* arg0);
-extern "C" Struct_020b27c8_4* func_020b0288(struct Struct_0205ab78* arg0, unsigned int arg1);
+struct Hdr02b0288;
+extern "C" void HaltSystem(void);
+void PatchFontResourceBlocks_020b291c(void* base);
+NNSG2dBinaryBlockHeader* FindChunkById_020b0288(struct Hdr02b0288* h, unsigned int kind);
 
 static inline Type_020b0a1c_2 inline_020b27c8(const Struct_020b27c8_3* arg0, Type_020b11c8 arg1) {
     if (arg0 != NULL) {
@@ -83,9 +80,9 @@ static inline Type_020b0a1c_2 inline_020b27c8_3(const Struct_020b27c8_3* arg0, T
 extern "C" ARM Type_020b0a1c_2 func_020b27c8(void* arg0, Struct_020b27c8** arg1) {
     Type_020b0a1c_2 var0 = FALSE;
 
-    if (!inline_020b27c8_3((Struct_020b27c8_3*)arg0, NNS_G2D_BINFILE_SIG_FONTDATA, NNS_G2D_NFTR_VER)) {
-        if (!inline_020b27c8_3((Struct_020b27c8_3*)arg0, NNS_G2D_BINFILE_SIG_FONTDATA, NNS_G2D_NFTR_PREV_VER)) {
-            func_020c9be0();
+    if (!NNS_G2dIsBinFileValid((NNSG2dBinaryFileHeader*)pNftrFile, NNS_G2D_BINFILE_SIG_FONTDATA, NNS_G2D_NFTR_VER)) {
+        if (!NNS_G2dIsBinFileValid((NNSG2dBinaryFileHeader*)pNftrFile, NNS_G2D_BINFILE_SIG_FONTDATA, NNS_G2D_NFTR_PREV_VER)) {
+            HaltSystem();
         }
         var0 = TRUE;
     }

@@ -13,12 +13,12 @@ struct SearchStruct0202c1a4 {
     signed char arr[16];
 };
 
-extern "C" int* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+extern "C" int* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 extern "C" void* Zone3D_GetInstance(void* unused);
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Vec3i021d1a18 { int x, y, z; };
@@ -46,13 +46,13 @@ struct LocalEvt021d1a18 {
 
 // USA: func_ov017_021d1a18  (semantic: EnqueueVec3EventBits14_021d1a18)
 extern "C" ARM void func_ov017_021d1a18(int a, short b, short c, unsigned char d) {
-    if (!CheckField0NonZero_0202b7d8(func_0202ae18())) return;
-    if (GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)func_0202ae18()) != 0) return;
+    if (!LinkSession_IsActive(LinkSession_GetInstance())) return;
+    if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)LinkSession_GetInstance()) != 0) return;
 
     ((int)GetGameResources());
     GameState* bs = GameState::GetInstance();
-    void* base = Zone3D_GetInstance(GetField0x3f8Address_0200fd0c(bs));
-    void* p = GetData02100044_0202ae24();
+    void* base = Zone3D_GetInstance(GameState_GetZoneTransition(bs));
+    void* p = LinkMessageQueue_GetInstance();
 
     struct LocalEvt021d1a18 buf;
     buf.tag = 0xb2;

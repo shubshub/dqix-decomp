@@ -15,14 +15,14 @@ struct Struct_02066a6c_5 {
     char unknown_1774_[0x80]; unsigned char unknown_17f4_; unsigned char unknown_17f5_;
     char unknown_17f6_[0xe]; Struct_02066a6c unknown_1804_;
 };
-extern "C" void func_0206b804(char*, int*, int*);
-extern "C" void func_02066cc0(Struct_02066a6c_2*, short*, short*);
-struct Struct_02042b98_3;
-extern "C" void func_02042c24(Struct_02042b98_3*, int, int);
-extern "C" void func_0202f404(void*, int, int);
-extern "C" void func_020681b4(Struct_02066a6c_8*, int, int, short);
-extern "C" void func_020417b0(Struct_02066a6c_8*, int, int, int);
-extern "C" void func_02066934(Struct_02066a6c_5*, void*, Struct_02066a6c_8*, int, int, int);
+void LoadStateBytePair0206b804(char*, int*, int*);
+void GetField440XY_02066cc0(Field440XYObj*, short*, short*);
+struct Holder02042c24;
+void SetSubstructXY02042c24(Holder02042c24*, int, int);
+void WindowFrame_Draw(void*, int, int);
+extern "C" void func_020681b4(GlyphJpn02066a6c*, int, int, short);
+extern "C" void func_020417b0(GlyphJpn02066a6c*, int, int, int);
+extern "C" void func_02066934(DisplayJpn02066a6c*, void*, GlyphJpn02066a6c*, int, int, int);
 
 extern "C" ARM void func_02066a6c(Struct_02066a6c_5* arg0, int arg1) {
     if (!arg0->unknown_17f5_) return;
@@ -50,8 +50,8 @@ extern "C" ARM void func_02066a6c(Struct_02066a6c_5* arg0, int arg1) {
         if (var0->unknown_440_) var0->unknown_440_->unknown_8_ = 2;
         if (arg1) func_02042c24((Struct_02042b98_3*)var0, var6, var7);
         else {
-            func_02042c24((Struct_02042b98_3*)var0, (short)(var6 + var4), (short)(var7 + var5));
-            func_0202f404(var0, 1, 0);
+            SetSubstructXY02042c24((Holder02042c24*)holder, (short)(x + offsetX), (short)(y + offsetY));
+            WindowFrame_Draw(holder, 1, 0);
         }
         short var8 = 8 - ((var1 * 10) & 7);
         var6 += (var8 + 18) >> 1;
@@ -95,14 +95,14 @@ struct Struct_02066a6c_7 {
     char unknown_19c5_[0x17]; unsigned char unknown_19dc_;
     char unknown_19dd_[3]; Struct_02042b98_3 unknown_19e0_;
 };
-extern "C" void func_0206b804(char*, int*, int*);
-extern "C" void func_02066cc0(Struct_02066a6c_2*, short*, short*);
-extern "C" void func_02042c24(Struct_02042b98_3*, int, int);
-extern "C" void func_0202f404(void*, int, int);
-extern "C" int func_02042648(int);
-extern "C" void func_02066ce0(Struct_02066a6c_4*, int, int, short);
-extern "C" void func_020417b0(Struct_02066a6c_4*, int, int, int);
-extern "C" void func_020654b8(Struct_02066a6c_7*, void*, Struct_02066a6c_4*, int, int, int);
+void LoadStateBytePair0206b804(char*, int*, int*);
+void GetField440XY_02066cc0(Field440XYObj*, short*, short*);
+void SetSubstructXY02042c24(Holder02042c24*, int, int);
+void WindowFrame_Draw(void*, int, int);
+int Font_GetFallbackWidth(int);
+void SetIntIntShortAt0xc_02066ce0(SetIntIntShortAt0xcStruct*, int, int, short);
+extern "C" void func_020417b0(SetIntIntShortAt0xcStruct*, int, int, int);
+extern "C" void func_020654b8(Display02066a6c*, void*, SetIntIntShortAt0xcStruct*, int, int, int);
 
 // USA: func_02066a6c
 extern "C" ARM void func_02066a6c(Struct_02066a6c_7* arg0, int arg1) {
@@ -133,19 +133,19 @@ extern "C" ARM void func_02066a6c(Struct_02066a6c_7* arg0, int arg1) {
         if (var11->unknown_440_) var11->unknown_440_->unknown_8_ = 2;
         if (arg1) func_02042c24(var11, var19, var20);
         else {
-            func_02042c24(var11, (short)(var19 + var17), (short)(var20 + var18));
-            func_0202f404(var11, 1, 0);
+            SetSubstructXY02042c24(holder, (short)(x + offsetX), (short)(y + offsetY));
+            WindowFrame_Draw(holder, 1, 0);
         }
-        short var21 = 8 - (arg0->unknown_1944_ & 7);
-        var19 += (var21 + 18) >> 1;
-        var20 += 5;
-        unsigned char var22 = func_02042648(arg0->unknown_19dc_);
-        for (var15 = 0; var15 < var12; var15++) {
-            var16 = var22 + 1;
-            unsigned short var23 = var13[var15];
-            if ((var23 & 0xff00) == 0xff00) {
-                if (var23 == 0xff01) break;
-                if (var23 == 0xff19) { var19 += var16; continue; }
+        short remainder = 8 - (obj->width & 7);
+        x += (remainder + 18) >> 1;
+        y += 5;
+        unsigned char fontWidth = Font_GetFallbackWidth(obj->table);
+        for (i = 0; i < count; i++) {
+            spacing = fontWidth + 1;
+            unsigned short code = text[i];
+            if ((code & 0xff00) == 0xff00) {
+                if (code == 0xff01) break;
+                if (code == 0xff19) { x += spacing; continue; }
             }
             var14 = &arg0->unknown_9b8_[var23];
             if (arg1) func_020654b8(arg0, arg0->unknown_34_, var14, var19, var20, 15);

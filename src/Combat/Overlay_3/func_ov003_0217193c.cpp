@@ -13,12 +13,12 @@ enum { Enum_ov003_0217193c_1848 = 0x738 };
 struct Struct_0202bad4;
 struct Struct_0202bad4_2;
 
-extern "C" void* func_0202ae18(void);
-extern "C" void func_0202b0f4(void* arg0);
-extern "C" int func_ov003_02171d78(void* arg0, unsigned char* arg1);
-extern "C" int func_0202bae4(void* arg0);
-extern "C" struct Struct_0202bad4* func_0202bad4(struct Struct_0202bad4_2* arg0, int arg1);
-extern "C" int func_0202b840(int* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void LinkSession_End(void* ptr);
+extern "C" int func_ov003_02171d78(void* list, unsigned char* key);
+int GetField0xc_0202bae4(void* obj);
+struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
+int StartBattleTransition0202b840(int* state, int id);
 
 struct Struct_ov003_0217193c_2 { unsigned char unknown_0_[0x14]; };
 struct Struct_ov003_0217193c_3 { unsigned char unknown_0_[6]; };
@@ -74,9 +74,9 @@ extern "C" ARM void func_ov003_0217193c(struct Struct_ov003_0217193c* arg0) {
     int var5;
     unsigned int var6;
 
-    var1 = GameState::GetInstance();
-    var2 = func_0202ae18();
-    var3 = var1->GetEffectiveDeltaTime();
+    battle = GameState::GetInstance();
+    search = LinkSession_GetInstance();
+    dt = battle->GetEffectiveDeltaTime();
 
     if (var3 < arg0->unknown_4_ && arg0->unknown_732_ > 0) {
         arg0->unknown_4_ -= var3;
@@ -109,11 +109,11 @@ extern "C" ARM void func_ov003_0217193c(struct Struct_ov003_0217193c* arg0) {
         arg0->unknown_4_ = 0;
         arg0->unknown_732_ = arg0->unknown_732_ - 1;
     } else {
-        arg0->unknown_4_ = 0;
-        func_0202b0f4(var2);
-        arg0->unknown_731_--;
-        if (arg0->unknown_731_ > 0) {
-            arg0->unknown_0_ = 0;
+        obj->timer = 0;
+        LinkSession_End(search);
+        obj->retries--;
+        if (obj->retries > 0) {
+            obj->state = 0;
         } else {
             arg0->unknown_0_ = 8;
         }

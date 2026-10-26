@@ -98,9 +98,9 @@ struct Struct_ov017_021c0850_2 {
 
 void GameObject_DisableControl(Obj020397cc* obj, int arg1);
 extern "C" void func_020a0cc4(unsigned int size);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void PushInputLogB_020a1ef0(int id);
 extern "C" void func_ov008_021843f8(void* scene);
 extern "C" void func_ov008_021842a0(void* scene, SafeAllocator* alloc);
@@ -124,16 +124,16 @@ void GameState_SetCamera(GameState* gs, int v);
 void LockStagedTextureVRAMCopying(void);
 void UnlockStagedTextureVRAMCopying(void);
 void UpdateVRAMStagingVRAMBanks(void);
-extern "C" void func_020bb48c(unsigned int arg0, int arg1);
-extern "C" void func_020c391c(int arg0, int arg1, int arg2);
-extern "C" void func_020c3984(unsigned int arg0);
-extern "C" void func_020c5588(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_020c54a4(int arg0, unsigned int arg1, unsigned int arg2, unsigned short arg3);
-extern "C" void* func_0203bd08(void);
-extern "C" void func_0203bd24(char* arg0);
-extern "C" int* func_0203bd14(void);
-extern "C" int func_0203be4c(void* arg0);
-extern "C" void func_0203c35c(int* arg0);
+void ConfigurePairMode020bb48c(unsigned int mode, int flag);
+void GX_SetGraphicsMode(int a, int b, int c);
+void GXS_SetGraphicsMode(unsigned int mode);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fog);
+void SetFogState_020c54a4(int enable, unsigned int mode, unsigned int shift, unsigned short offset);
+extern "C" void* OamManager_GetInstance(void);
+void OamManager_Init(char* ctx);
+int* CachedTextTable_GetInstance(void);
+extern "C" int OamManager_GetSubOamBuffer(void* ctx);
+extern "C" void CachedTextTable_LoadPalettes(int* ptr);
 extern "C" int func_ov017_021959b4(void);
 void SetFlagBit_02184a2c_02184a2c(char*);
 extern "C" int func_ov008_02184754(void* obj);
@@ -198,36 +198,36 @@ static inline Struct_ov003_0217e6b0 inline_ov003_0217e6b0(void) {
 extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* leader = gs->GetUnknownGameObject();
+    GameObject* leader = gs->GetLeader();
     GameObject_DisableControl((Obj020397cc*)leader, 1);
 
     if (self->state == 0) {
         func_020a0cc4(kSceneHeapSize);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, kSceneHeapSize);
         if (buffer == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
-        arg0->unknown_8_.CreateTypeA(var3, Enum_ov017_021c0850_123784);
-        arg0->unknown_8_.Reset();
-        arg0->unknown_1c_ = (Struct_ov017_021c0850*)arg0->unknown_8_.Allocate(Enum_ov017_021c0850_2888);
-        if (arg0->unknown_1c_ == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        self->allocator.CreateTypeA(buffer, kSceneHeapSize);
+        self->allocator.Reset();
+        self->scene = (Scene021c0850*)self->allocator.Allocate(kSceneObjectSize);
+        if (self->scene == NULL) {
+            ROMFilesystem_InitFileTables();
+            self->done = 1;
             return;
         }
-        func_020a1940(OVERLAY_ID(8));
-        func_020a1ef0(1);
-        func_ov008_021843f8(arg0->unknown_1c_);
-        func_ov008_021842a0(arg0->unknown_1c_, &arg0->unknown_8_);
-        arg0->unknown_1c_->unknown_b28_ = arg0->unknown_24_;
-        arg0->unknown_1c_->unknown_b29_ = arg0->unknown_25_;
-        arg0->unknown_1c_->unknown_b14_ = arg0->unknown_28_;
-        arg0->unknown_1c_->unknown_b16_ = arg0->unknown_2a_;
-        Struct_ov017_021c0850* var4 = arg0->unknown_1c_;
-        if (arg0->unknown_26_) {
-            var4->unknown_b18_ |= 0x40000;
+        Overlay_Load(OVERLAY_ID(8));
+        PushInputLogB_020a1ef0(1);
+        func_ov008_021843f8(self->scene);
+        func_ov008_021842a0(self->scene, &self->allocator);
+        self->scene->b28 = self->b24;
+        self->scene->b29 = self->b25;
+        self->scene->x = self->x;
+        self->scene->y = self->y;
+        Scene021c0850* scene = self->scene;
+        if (self->b26) {
+            scene->flags |= 0x40000;
         } else {
             var4->unknown_b18_ &= ~0x40000;
         }
@@ -290,34 +290,34 @@ extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
         UpdateVRAMStagingVRAMBanks();
         UnlockStagedTextureVRAMCopying();
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1300;
-        func_020c391c(1, 0, 1);
+        GX_SetGraphicsMode(1, 0, 1);
         BG1CNT = (BG1CNT & 0x43) | 0x1e00;
         BG0CNT = (BG0CNT & ~3) | 1;
         BG1CNT = (BG1CNT & ~3) | 2;
         BG2CNT = (BG2CNT & ~3) | 3;
         inline_ov017_021c0850_2(0);
         ColorEffect_ConfigureAlphaBlend(0x04000050, 1, 2, 0xf, 0x1f);
-        inline_ov017_021c0850_3(0x13);
-        func_020c3984(0);
+        GXS_SetVisiblePlane(0x13);
+        GXS_SetGraphicsMode(0);
         BG0CNTSUB = (BG0CNTSUB & 0x43) | 0xe00;
         BG1CNTSUB = (BG1CNTSUB & 0x43) | 0xf08;
         BG0CNTSUB = (BG0CNTSUB & ~3) | 1;
         BG1CNTSUB = BG1CNTSUB & ~3;
         BG2CNTSUB = (BG2CNTSUB & ~3) | 2;
         BG3CNTSUB = (BG3CNTSUB & ~3) | 3;
-        SetFlags00(var1, 4);
-        SetFlags04(var1, 0x8de);
-        func_020c5588(0, 0, 0x7fff, 0, 0);
-        func_020c54a4(0, 0, 0, 0);
-        char* var7 = (char*)func_0203bd08();
-        func_0203bd24(var7);
-        *(int*)var7 = 0;
-        int* var8 = func_0203bd14();
-        *var8 = func_0203be4c(var7) + 0x200;
-        func_0203c35c(var8);
-        var8[Enum_ov017_021c0850_1288 / 4] = 0x7000;
-        arg0->unknown_20_++;
-    } else if (arg0->unknown_20_ == 3) {
+        SetFlags00(res, 4);
+        SetFlags04(res, 0x8de);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
+        SetFogState_020c54a4(0, 0, 0, 0);
+        char* context = (char*)OamManager_GetInstance();
+        OamManager_Init(context);
+        *(int*)context = 0;
+        int* global = CachedTextTable_GetInstance();
+        *global = OamManager_GetSubOamBuffer(context) + 0x200;
+        CachedTextTable_LoadPalettes(global);
+        global[kGlobalWordOffset / 4] = 0x7000;
+        self->state++;
+    } else if (self->state == 3) {
         if (func_ov017_021959b4()) {
             func_ov008_02184a2c((char*)arg0->unknown_1c_);
         }
@@ -338,7 +338,7 @@ extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
         DISPCNTSUB = (DISPCNTSUB & ~0x1f00) | (self->subVisiblePlanes << 8);
         ClearFlag0x10IfSet((Struct02074bd0*)self->controlBackup);
         ClearFlag0x11IfSet((Struct02074bf4*)self->controlBackup);
-        Set3DClearColor_020c5588(self->clearColor, 0x10, 0x7fff, 0, 0);
+        Set3DClearColor(self->clearColor, 0x10, 0x7fff, 0, 0);
         func_ov008_021845ac(self->scene);
         char blank[0x20];
         memset(blank, 0, 0x20);
@@ -355,7 +355,7 @@ extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
         GameState* state = GameState::GetInstance();
         int index = 0x70;
         for (int i = 0; i < 0x30; i++) {
-            GameObject* monster = state->GetMaybeFieldMonsterByIndex(index);
+            GameObject* monster = state->GetFieldMonsterByIndex(index);
             if (monster) {
                 monster->obj3D_.StageTextureData();
             }
@@ -434,8 +434,8 @@ extern "C" ARM void func_ov017_021c0850(SceneSwap021c0850* self) {
         } else {
             GameObject_DisableControl((Obj020397cc*)leader, 1);
         }
-        func_ov017_021c07d0(arg0);
-        func_020a0c0c();
-        arg0->unknown_1_ = 1;
+        func_ov017_021c07d0(self);
+        ROMFilesystem_InitFileTables();
+        self->done = 1;
     }
 }

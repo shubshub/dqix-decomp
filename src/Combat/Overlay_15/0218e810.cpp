@@ -98,8 +98,8 @@ extern "C" ARM void func_ov015_0218e810(void* arg0)
         {
             GetModelBonePositionAndDirectionMatrices(var1, NULL, NULL, var10);
             GXFIFO_MATRIX_PUSH = 0;
-            var9->DrawSimple3(false);
-            if (var9->pModel_ != NULL && var9->pModel_->rawInternalModel_ != NULL)
+            part->DrawWithComposedTransform(false);
+            if (part->pModel_ != NULL && part->pModel_->rawInternalModel_ != NULL)
             {
                 var6->unknown_34_ += var9->pModel_->rawInternalModel_->numTriangles_;
                 var6->unknown_36_ += var9->pModel_->rawInternalModel_->numQuads_;
@@ -115,7 +115,7 @@ extern "C" ARM void func_ov015_0218e810(void* arg0)
             GetModelBonePositionAndDirectionMatrices(var1, NULL, NULL, var2);
             GXFIFO_MATRIX_PUSH = 0;
             G3_RotateY(0x3244);
-            part->DrawSimple2(false);
+            part->DrawInCurrentMatrix(false);
             if (part->pModel_ != NULL && part->pModel_->rawInternalModel_ != NULL)
             {
                 var6->unknown_34_ += var11->pModel_->rawInternalModel_->numTriangles_;

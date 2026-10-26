@@ -6,11 +6,11 @@
 extern "C" void func_ov000_0216d370(void* arg0, int arg1, int arg2, int arg3);
 extern "C" void func_ov000_0216d234(void* arg0, void* arg1, void* arg2);
 
-struct Struct_0202ecc8 { unsigned int unknown_0_[12]; };
-struct Struct_0202ecc8_2;
-extern "C" void func_0202ecc8(struct Struct_0202ecc8_2* arg0, struct Struct_0202ecc8* arg1);
-extern "C" void func_0202ecec(unsigned char* arg0);
-extern "C" void func_0202e694(void* arg0, int* arg1);
+struct Block0202ecc8 { unsigned int v[12]; };
+struct Dst0202ecc8;
+void CopyBlockToField0xf0(struct Dst0202ecc8* dst, struct Block0202ecc8* src);
+void SetFlag0x1At0x168_0202ecec(unsigned char* obj);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 extern Vector3i data_ov000_02183274;
 
@@ -66,11 +66,11 @@ extern "C" ARM void func_ov000_0216da34(struct Struct_ov000_0216da34* arg0, int 
     } else {
         var13 = fix32ReduceAngle0To2Pi(var11 - 0x4cc);
     }
-    int var14[3];
-    var14[0] = var13;
-    var14[1] = 0x1000;
-    var14[2] = 0x8000;
-    arg0->unknown_10_ = var10;
-    func_0202e694(arg0, var14);
-    arg0->unknown_23c_ = -20;
+    int tail[3];
+    tail[0] = angle;
+    tail[1] = 0x1000;
+    tail[2] = 0x8000;
+    obj->field10 = v;
+    Camera_SetOrbitVector(obj, tail);
+    obj->field23c = -20;
 }

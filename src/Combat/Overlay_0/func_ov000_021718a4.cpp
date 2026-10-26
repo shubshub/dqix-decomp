@@ -6,8 +6,8 @@ extern "C" void* __clear(void* arg0, int arg1);
 extern "C" void func_020e4864(int arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
 extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
 
-struct Struct_0203c108_3;
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+struct Obj0203c108;
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 // USA: func_ov000_021718a4
 extern "C" ARM void func_ov000_021718a4(void* arg0) {
@@ -27,7 +27,7 @@ extern "C" ARM void func_ov000_021718a4(void* arg0) {
     var6[8] = (unsigned char)var4;
 
 #if defined(jpn)
-    func_0203c108((struct Struct_0203c108_3*)((char*)arg0 + 0x50), *(char**)var2);
+    CachedTextLabel_SetText((struct Obj0203c108*)((char*)self + 0x50), *(char**)entry);
 #else
     char var7[0x80];
     __clear(var7, 0x80);
@@ -36,7 +36,7 @@ extern "C" ARM void func_ov000_021718a4(void* arg0) {
 
     func_020e4864(*(int*)var2, var7, 1, 0, 0, 0);
 
-    func_0206819c(var7, var8, 0);
-    func_0203c108((struct Struct_0203c108_3*)((char*)arg0 + 0x50), var8);
+    CopyTextAndUppercaseIfFlagged0206819c(buf1, buf2, 0);
+    CachedTextLabel_SetText((struct Obj0203c108*)((char*)self + 0x50), buf2);
 #endif
 }

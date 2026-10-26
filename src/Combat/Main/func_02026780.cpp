@@ -5,12 +5,12 @@
 #include "NitroSDK/Matrix.h"
 struct Struct_02020554;
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* p);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void* Zone3D_GetInstance(void);
 
-extern "C" void func_02026644(char* arg0);
-extern "C" void func_020269e4(char* arg0, const void* arg1);
+void MapDisplay_ClearRedChests(char* obj);
+void AppendRecord020269e4(char* obj, const void* src);
 
 struct Cont02026780 {
     unsigned short uniqueID;
@@ -84,8 +84,8 @@ extern "C" ARM int func_02026780(Struct_02020554* arg0, void* arg1, unsigned int
         return 0;
     }
 
-    if (func_0202c540(func_0202ae18()) != 0) {
-        func_02026644((char*)var0);
+    if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0) {
+        MapDisplay_ClearRedChests((char*)self);
         return 0;
     }
 

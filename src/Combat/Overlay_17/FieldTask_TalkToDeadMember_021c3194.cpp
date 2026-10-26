@@ -49,7 +49,7 @@ struct CombatantMessageRequest {
 extern "C" ARM void FieldTask_TalkToDeadMember(CombatantMessageRequest* request) {
     GameState* battleStruct = GameState::GetInstance();
     GetGameResources();
-    GameObject* unknownActor = battleStruct->GetUnknownGameObject();
+    GameObject* unknownActor = battleStruct->GetLeader();
     GameObject* partyMember = battleStruct->GetPartyMemberByIndex(request->partyMemberId);
     CombatantMessageController* controller = MessageSystem_GetInstance();
 

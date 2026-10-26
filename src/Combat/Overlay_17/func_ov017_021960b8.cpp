@@ -45,13 +45,13 @@ void G3i_LookAt_(int, int, int, int, void*);
 void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
 void ForwardObjAndField0_021a3b30(int);
 void UpdateInterpTimer020707c8(Timer020707c8*);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 void ReleaseField0x38IfValid020444e0(Obj020444e0*);
 extern "C" void func_ov017_0219ad84(Battle021960b8*);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
 extern "C" void func_0205337c(GameObject*);
-unsigned char GetByteField0x252_02039820(void*);
-int GetByte0x26c_02039d7c(char*);
+unsigned char GameObject_IsControlEnabled(void*);
+int GameObject_IsClimbingLadder(char*);
 void MaybeDispatchPendingAction02096824(unsigned char*);
 int* GetGlobal02109030_020936f8();
 void UpdateChannelStateIfEligible02093f68(char*);
@@ -72,7 +72,7 @@ extern "C" ARM void func_ov017_021960b8(Battle021960b8* self) {
     GameState* game = GameState::GetInstance();
     Global020421a0* global = MessageSystem_GetInstance();
     Timer020707c8* timer = (Timer020707c8*)func_020704fc();
-    GameObject* leader = game->GetUnknownGameObject();
+    GameObject* leader = game->GetLeader();
     game->GetTickCount();
 
     Vector3fix var4 = data_ov017_021d6408;
@@ -92,12 +92,12 @@ extern "C" ARM void func_ov017_021960b8(Battle021960b8* self) {
         func_020707c8(var2);
     }
 
-    if (func_02046b24(arg0->unknown_36fc_) != 2 &&
-        func_02046b24(arg0->unknown_36fc_) != 3 &&
-        func_02046b24(arg0->unknown_36fc_) != 10) {
-        if ((var1->unknown_998_ != 0 || var1->unknown_19cb_ != 0) &&
-            TestFlags04((GameResources*)(arg0->unknown_0_), 0x8000) == 0) {
-            func_020444e0((Struct_020444e0*)var1);
+    if (FieldTaskQueue_GetCurrentKind(self->nodeList) != 2 &&
+        FieldTaskQueue_GetCurrentKind(self->nodeList) != 3 &&
+        FieldTaskQueue_GetCurrentKind(self->nodeList) != 10) {
+        if ((global->field998 != 0 || global->field19cb != 0) &&
+            TestFlags04((GameResources*)(self->flags), 0x8000) == 0) {
+            ReleaseField0x38IfValid020444e0((Obj020444e0*)global);
         }
         func_ov017_0219ad84(arg0);
         if (TestFlags04((GameResources*)(arg0->unknown_0_), 4) == 0) {
@@ -114,8 +114,8 @@ extern "C" ARM void func_ov017_021960b8(Battle021960b8* self) {
         LightingManager::GetInstance()->DrawBackgroundGradient();
     }
 
-    if (TestFlags04((GameResources*)(arg0->unknown_0_), 0x80) == 0 && arg0->unknown_3658_ == 0 && var3 != NULL &&
-        (func_02039820(var3) != 0 || func_02039d7c((char*)var3) != 0)) {
+    if (TestFlags04((GameResources*)(self->flags), 0x80) == 0 && self->field3658 == 0 && leader != NULL &&
+        (GameObject_IsControlEnabled(leader) != 0 || GameObject_IsClimbingLadder((char*)leader) != 0)) {
         if (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) {
             if (data_ov017_021d8340 == 0) {
                 data_ov017_021d8340 = 1;

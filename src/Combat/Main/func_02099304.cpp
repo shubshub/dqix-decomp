@@ -34,8 +34,8 @@ struct Struct_021098e8_2 {
 extern Struct_021098e8_2 data_021098e8;
 extern Script::OpcodeLookupEntry data_020f1504[];
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* gs);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* gs);
 extern "C" void func_02046380(StoreStruct* store);
 extern "C" void* memset(void* dst, int value, unsigned int length);
 void RegisterSlotA020cf0fc(int out);
@@ -45,10 +45,10 @@ int CalculateAge_02098f20(int a, int b, int c);
 void MessageSystem_SetStringArgument(Obj02046574* obj, int index, char* name);
 
 // USA: func_02099304
-extern "C" ARM int func_02099304(Struct_02099304* arg0, char* arg1, const void* arg2, unsigned int arg3, void* arg4, int arg5, unsigned char arg6, char* arg7, char* arg8) {
-    void* var0 = func_0202ae18();
-    int var1[4];
-    Script var2;
+extern "C" ARM int func_02099304(ScriptRequest* request, char* name, const void* data, unsigned int size, void* buffer, int bufferSize, unsigned char flags, char* nameA, char* nameB) {
+    void* gs = LinkSession_GetInstance();
+    int slot[4];
+    Script script;
 
     if (arg0 == 0 || arg1 == 0) {
         return 0;
@@ -63,11 +63,11 @@ extern "C" ARM int func_02099304(Struct_02099304* arg0, char* arg1, const void* 
     if (arg6 == 0) {
         data_021098e8.unknown_0_ |= 0x10;
     } else {
-        if (arg6 & 2) {
-            if (func_0202c508(var0)) {
-                func_020cf0fc((int)var1);
-                if (var1[1] == arg0->unknown_1_4_ && var1[2] == arg0->unknown_2_0_) {
-                    data_021098e8.unknown_0_ |= 1;
+        if (flags & 2) {
+            if (LinkSession_IsHostOrSolo(gs)) {
+                RegisterSlotA020cf0fc((int)slot);
+                if (slot[1] == request->mid && slot[2] == request->hi) {
+                    data_021098e8.flags |= 1;
                 }
                 if (var1[1] == 1 && var1[2] == 1) {
                     data_021098e8.unknown_0_ |= 2;

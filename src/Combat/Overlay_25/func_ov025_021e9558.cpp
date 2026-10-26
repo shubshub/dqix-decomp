@@ -5,7 +5,7 @@
 #include "World/Object3D.h"
 
 struct Flags02033fdc;
-void ClearFlag0x4At0xe0(struct Flags02033fdc* p);
+void GameObject_ResumeMovement(struct Flags02033fdc* p);
 void ClearCombatantSlot_0200fd48(GameState* battleStruct, int id);
 void* GetActiveCombatWork_ov000_02160130(void);
 void SePlayer_UnloadExtraArchiveB(void* obj);
@@ -87,11 +87,11 @@ extern "C" ARM void func_ov025_021e9558(struct Struct_ov025_021e9558_4* arg0) {
     func_02057f00(var3, 0x24);
     data_ov025_021ef990 = 0;
 
-    for (Struct_ov025_021e9558* var7 = var2->unknown_10_; var7 != NULL; var7 = var7->unknown_30_) {
-        GameObject* var8 = var0->GetCombatantByIndex(var7->unknown_20_);
-        if (var8 != NULL) {
-            var8->obj3D_.DisableFlag(0x800);
-            func_02033fdc((struct Struct_02033fdc*)var8);
+    for (CombatNode021e9558* node = slot->head; node != NULL; node = node->next) {
+        GameObject* c = gs->GetCombatantByIndex(node->id);
+        if (c != NULL) {
+            c->obj3D_.DisableFlag(0x800);
+            GameObject_ResumeMovement((struct Flags02033fdc*)c);
         }
     }
 

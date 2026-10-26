@@ -17,14 +17,11 @@
 
 #define INTERRUPT_REQUEST_FLAGS (*(volatile unsigned int*)0x04000214)
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern "C"
 {
     // something like abort() (never returns)
-    void func_020c9be0();
+    void HaltSystem();
 }
 
 void MarkAlarmInitializationFlagBit(int bit)
@@ -191,7 +188,7 @@ void SetTimeout(Alarm* alarm, uint64_t numTicks,
     Alarm::PFNCompletion callback, ProcessorContext** ppContext)
 {
     if (alarm == NULL || alarm->completionProc != NULL)
-        func_020c9be0();
+        HaltSystem();
 
     int priorState = DisableIRQInterrupts();
     alarm->alarmIntervalLength = 0;
@@ -207,7 +204,7 @@ void SetInterval(Alarm *alarm, uint64_t residue, uint64_t interval,
     Alarm::PFNCompletion callback, ProcessorContext **ppContext)
 {
     if (alarm == NULL || alarm->completionProc != NULL)
-        func_020c9be0();
+        HaltSystem();
 
     int priorState = DisableIRQInterrupts();
     alarm->alarmIntervalLength = interval;

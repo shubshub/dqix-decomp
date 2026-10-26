@@ -112,7 +112,7 @@ extern Struct_0210a010_3 data_0210a010;
 
 void InitCombatController020a2010(void* camera);
 void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
-extern "C" void func_0202e5d8(void* camera, int x, int y, int z);
+extern "C" void Camera_SetOrbit(void* camera, int x, int y, int z);
 extern "C" void Camera_Update(void* camera);
 void FollowCamera_DisableFollow(void* camera);
 void InitCombatEntry021542f4(void* camera);
@@ -137,7 +137,7 @@ extern "C" ARM void func_ov006_02154e58(Struct_ov006_02154614* arg0) {
         if (camera != 0) {
             InitCombatController020a2010(camera);
             Camera_SetTarget((struct Camera*)self->camera_, 0, -0x1e8f, 0);
-            func_0202e5d8(self->camera_, 0, 0x2bae, 0x9199);
+            Camera_SetOrbit(self->camera_, 0, 0x2bae, 0x9199);
             Camera_Update(self->camera_);
             FollowCamera_DisableFollow(self->camera_);
         }

@@ -5,14 +5,14 @@
 struct Struct_0202c1a4;
 extern "C" int rand();
 extern "C" void* __clear(void*, int);
-struct Struct_02076ccc;
-extern "C" void* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" int func_02053c6c(unsigned char*);
-extern "C" bool func_02076ccc(void*, int);
-struct Struct_ov017_021c95ec { int unknown_0_, unknown_4_, unknown_8_; };
-extern "C" void func_ov017_021c95ec(int, int, int, int, int, Struct_ov017_021c95ec, int, unsigned char, unsigned char);
+struct Actor02076ccc;
+extern "C" void* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+bool TrySetMode02076ccc(void*, int);
+struct Vec3i021c95ec { int x, y, z; };
+extern "C" void func_ov017_021c95ec(int, int, int, int, int, Vec3i021c95ec, int, unsigned char, unsigned char);
 
 struct Struct_02078998 {
     char unknown_0_[0xa];
@@ -58,20 +58,20 @@ extern "C" ARM void func_02078998(Struct_02078998_2* arg0) {
         arg0->unknown_170_ = var0.y;
         arg0->unknown_17a_ = 1;
     }
-    if (arg0->unknown_14c_ <= 225) return;
-    arg0->unknown_17a_ = 0;
-    int* var3 = (int*)func_0202ae18();
-    if (func_0202b7d8(var3) && func_0202c1a4((Struct_0202c1a4*)var3)) return;
-    GameObject* var4 = func_0200ff1c(GameState::GetInstance(), arg0->unknown_166_);
-    if (var4 == NULL) return;
-    func_02053c6c((unsigned char*)var4);
-    int var5 = 0;
-    int var6 = 0;
-    int var7 = var4->baseStats_->primaryStats.attack;
-    int var8 = var4->baseStats_->primaryStats.defense;
-    if (arg0->unknown_184_ != NULL) {
-        var5 = arg0->unknown_184_->unknown_a_;
-        var6 = arg0->unknown_184_->unknown_c_;
+    if (self->counter <= 225) return;
+    self->rising = 0;
+    int* search = (int*)LinkSession_GetInstance();
+    if (LinkSession_IsActive(search) && LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) return;
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), self->combatantId);
+    if (combatant == NULL) return;
+    GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+    int extraAttack = 0;
+    int extraDefense = 0;
+    int attack = combatant->baseStats_->primaryStats.attack;
+    int defense = combatant->baseStats_->primaryStats.defense;
+    if (self->attributes != NULL) {
+        extraAttack = self->attributes->attack;
+        extraDefense = self->attributes->defense;
     }
     int var9;
     if ((var7 + var8 > (var5 + var6) * 3 || arg0->unknown_140_ == -99) && arg0->unknown_140_ != 99) {
@@ -119,7 +119,7 @@ extern "C" ARM void func_02078998(Struct_02078998_2* arg0) {
             break;
         }
     }
-    if (!CheckField0NonZero_0202b7d8(search) || GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search)) return;
+    if (!LinkSession_IsActive(search) || LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) return;
     unsigned short id = self->obj.GetField06();
     int unused = self->obj.unknown_2_;
     int nibble = (self->obj.actorIndex_ - 112) % 12;

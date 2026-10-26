@@ -6,8 +6,8 @@ enum {regionalOffset0=0xba0, regionalOffset1=0xf60, regionalOffset2=0x7000, regi
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_0202ae18(void);
-extern "C" int func_0202c508(void);
+extern "C" void LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void);
 extern "C" void* Zone3D_GetInstance(void);
 void StoreThreeWords_0218f574(int* p, int a, int b, int c);
 struct Struct021c1e40;
@@ -36,8 +36,8 @@ extern "C" ARM void func_ov017_021913d0(unsigned char* obj, int count) {
             struct TailList020469b4* list = *(struct TailList020469b4**)(obj + 0x3000 + regionalOffset3);
             AppendNodeToTail(list, (struct TailNode020469b4*)r4);
         }
-        func_0202ae18();
-        if (func_0202c508()) {
+        LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo()) {
             unsigned short* entry = (unsigned short*)Zone3D_GetInstance();
             func_ov017_021ce400(count, (unsigned short)*entry);
         }

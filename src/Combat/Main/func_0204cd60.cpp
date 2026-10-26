@@ -47,7 +47,7 @@ extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_GetTextWidth(char* str, int id);
 int Font_FindCharacterIndex(int key, int tableIdx);
 Glyph0204cd60* Font_GetCharacter(int idx, int tableIdx);
-int LookupKeyValue020425e4(int a, int b, int tableIdx);
+int Font_GetKerning(int a, int b, int tableIdx);
 extern "C" void func_0204cc68(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
 extern "C" void func_0204f914(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
 extern "C" void func_0204ea5c(Wnd0204cd60* wnd);
@@ -413,7 +413,7 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
         if (idx >= 0) {
             code = idx & 0xff;
             glyph = Font_GetCharacter(idx, font);
-            x += LookupKeyValue020425e4(prev, code, font);
+            x += Font_GetKerning(prev, code, font);
             func_0204df9c(wnd, glyph, x, y, colorIdx, font);
             prev = code;
             adv = (unsigned char)(glyph->width + 1);

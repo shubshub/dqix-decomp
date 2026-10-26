@@ -11,7 +11,7 @@ struct Field440Obj0202f6a4;
 
 void SetField0x1e20_02042b10(void*, void*);
 void InitSelfPointer_02042b1c(unsigned char*);
-void SetupField440Type1(Field440Obj0202f6a4*);
+void WindowFrame_Open(Field440Obj0202f6a4*);
 int CheckField0x440State2_0205cd6c(unsigned char*);
 unsigned char* MessageSystem_GetInstance();
 
@@ -21,7 +21,7 @@ ARM void SetupGlobalObjType1AndInitSelfPointer_0205cd28(unsigned char* self) {
     unsigned char* global = MessageSystem_GetInstance();
     SetField0x1e20_02042b10(global, self + 0xb4);
     if (CheckField0x440State2_0205cd6c(global + CONTROLLER_OFFSET_LO + CONTROLLER_OFFSET_HI) == 0) {
-        SetupField440Type1((Field440Obj0202f6a4*)(global + CONTROLLER_OFFSET_LO + CONTROLLER_OFFSET_HI));
+        WindowFrame_Open((Field440Obj0202f6a4*)(global + CONTROLLER_OFFSET_LO + CONTROLLER_OFFSET_HI));
     }
     InitSelfPointer_02042b1c(global);
 }

@@ -72,14 +72,14 @@ struct Struct_02029634;
 struct Struct_02029634_3;
 struct Struct_02029988;
 
-extern "C" void func_02029634(Struct_02029988_2* arg0, int arg1);
-extern "C" Struct_02029988_3* func_0202a9ac(Struct_02029634*, int);
-extern "C" void func_0202a91c(Struct_02029634_3*);
-extern "C" void func_0202a8cc(char*, int);
-extern "C" void func_0202ad98(int arg0, int arg1, int arg2, const char* arg3, ...);
-extern "C" void func_020290e8(int arg0, int arg1, const char* arg2, ...);
-extern "C" void func_0202a678(Struct_02029988*, int);
-extern "C" void func_0202a6c4(Struct_02029988_2* arg0);
+extern "C" void func_02029634(DebugMenu* menu, int ticks);
+DebugMenuItem* DebugMenu_GetItem(IndexList_0202a9ac*, int);
+void SetState0x6cAndInvoke(Callback_0202a91c*);
+void DebugMenu_Open(char*, int);
+void FormatAndDispatch0202ad98(int a, int b, int c, const char* fmt, ...);
+void FormatAndDispatch020290e8(int a, int b, const char* fmt, ...);
+void AdjustValueWrapOrClamp(WrapField_0202a678*, int);
+extern "C" void DebugMenu_UpdateLayout(DebugMenu* menu);
 extern "C" void* __clear(void*, int);
 extern "C" int func_02029384(int, int, int, int);
 extern "C" void func_02029470(int, int, int, int, int, int);
@@ -99,8 +99,8 @@ extern const char data_020ef778[];
 extern const char data_020ef77d[];
 extern const char data_020ef782[];
 
-static inline Struct_02029988_3* inline_02029988(Struct_02029988_2* arg0, int arg1) {
-    return func_0202a9ac((Struct_02029634*)arg0, arg1);
+static inline DebugMenuItem* GetItem(DebugMenu* menu, int index) {
+    return DebugMenu_GetItem((IndexList_0202a9ac*)menu, index);
 }
 
 // USA: func_02029988
@@ -185,9 +185,9 @@ extern "C" ARM void func_02029988(Struct_02029988_2* arg0, int arg1) {
                                 arg0->unknown_6e_ = 1;
                                 return;
                             }
-                            if (var3->unknown_0_ != 1) return;
-                            func_0202a8cc((char*)var3, 1);
-                            arg0->unknown_6c_ = 4;
+                            if (cur->type != 1) return;
+                            DebugMenu_Open((char*)cur, 1);
+                            menu->state = 4;
                             return;
                         }
                     }
@@ -315,15 +315,15 @@ extern "C" ARM void func_02029988(Struct_02029988_2* arg0, int arg1) {
                                 func_0202a678((Struct_02029988*)var7, var36 * -10);
                                 var32 = 1;
                             }
-                            if (var32) {
-                                var33 = arg0->unknown_64_;
-                                var34 = arg0->unknown_66_;
-                                func_0202a6c4(arg0);
-                                arg0->unknown_64_ = var33;
-                                arg0->unknown_66_ = var34;
-                                var7->unknown_4c_ |= 2;
-                                if (var35 < var7->unknown_40_) var7->unknown_4c_ |= 4;
-                                if (var35 > var7->unknown_40_) var7->unknown_4c_ |= 8;
+                            if (adjusted) {
+                                savedFirst = menu->visibleFirst;
+                                savedLast = menu->visibleLast;
+                                DebugMenu_UpdateLayout(menu);
+                                menu->visibleFirst = savedFirst;
+                                menu->visibleLast = savedLast;
+                                item->flags |= 2;
+                                if (old < item->value) item->flags |= 4;
+                                if (old > item->value) item->flags |= 8;
                             }
                         }
                         if (!(var7->unknown_4c_ & 0x40)) {
@@ -371,12 +371,12 @@ extern "C" ARM void func_02029988(Struct_02029988_2* arg0, int arg1) {
         }
     }
 
-    if (arg0->unknown_6c_ == 4) {
-        var3 = (Struct_02029988_2*)inline_02029988(arg0, arg0->unknown_60_);
-        if (var3 != NULL && var3->unknown_0_ == 1) {
-            func_02029988(var3, arg1);
-            if (var3->unknown_6c_ == 1 ? 1 : 0) {
-                func_0202a8cc((char*)arg0, 0);
+    if (menu->state == 4) {
+        cur = (DebugMenu*)GetItem(menu, menu->selected);
+        if (cur != NULL && cur->type == 1) {
+            func_02029988(cur, ticks);
+            if (cur->state == 1 ? 1 : 0) {
+                DebugMenu_Open((char*)menu, 0);
             }
         }
     }

@@ -23,15 +23,15 @@ struct Struct_02076fdc {
 };
 
 extern struct Entry_02028bd0* ZoneRecords_GetInstance();
-extern struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* table, int key);
+extern struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* table, int key);
 extern struct Row02076fdc* FindListEntryById(struct List_020283c0* list, int key);
 
 extern "C" int fix32_Atan2(int x, int z);
 void GameObject_SetFacing(struct Obj02033834* obj, int angle);
 void GameObject_SetMotionState(struct Obj02033b68* obj, int value);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" int _s32_div_f(int a, int b);
 extern "C" void func_ov017_021c9168(int arg0, int arg1, int arg2, int arg3,
         Vector3fix arg4, Vector3fix arg5, int arg6);
@@ -40,7 +40,7 @@ extern "C" void func_ov017_021c9168(int arg0, int arg1, int arg2, int arg3,
 extern "C" ARM int func_02076fdc(FieldMonsterState* self) {
     struct Entry_02028bd0* table = ZoneRecords_GetInstance();
     struct Entry_02028bd0* entry =
-        FindInlineEntryById(table, self->actor.base.object.GetField06());
+        ZoneRecords_Find(table, self->actor.base.object.GetField06());
     if (entry == 0) {
         return 0;
     }
@@ -87,9 +87,9 @@ extern "C" ARM int func_02076fdc(FieldMonsterState* self) {
     } else {
         arg0->unknown_0_.unknown_0_.unknown_0_.EnableFlag(0x80);
     }
-    void* g = func_0202ae18();
-    if (CheckField0NonZero_0202b7d8((int*)g)) {
-        if (GetSearchStructCurrentArrEntry((struct SearchStruct0202c1a4*)g) == 0) {
+    void* g = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)g)) {
+        if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
             int id = self->actor.base.object.GetField06();
             int wanted = self->actor.base.object.actorIndex_;
             wanted -= 0x70;

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int _ZN7Model3D7GetTEX0Ev(void* arg0);
-extern "C" void func_020c9820(void);
+extern "C" int _ZN7Model3D7GetTEX0Ev(void* obj);
+void OS_WaitVBlankIntr(void);
 void StageTexFilePaletteData(NSBXXTex volatile*, bool);
 struct NSBXXTex;
 void StageTexFileImageData(NSBXXTex volatile*, bool);
@@ -13,10 +13,10 @@ struct Struct_ov017_021d61fc {
 extern struct Struct_ov017_021d61fc data_ov017_021d61fc;
 
 // USA: func_ov017_0218f80c
-extern "C" ARM void func_ov017_0218f80c(void* arg0, int arg1) {
-    volatile unsigned short* var0 = (volatile unsigned short*)0x4000004;
-    if ((*var0 & 1) == 0) {
-        func_020c9820();
+extern "C" ARM void func_ov017_0218f80c(void* obj, int idx) {
+    volatile unsigned short* dispstat = (volatile unsigned short*)0x4000004;
+    if ((*dispstat & 1) == 0) {
+        OS_WaitVBlankIntr();
     }
 
     GameState* var1 = GameState::GetInstance();

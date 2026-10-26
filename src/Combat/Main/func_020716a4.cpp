@@ -16,9 +16,9 @@ void ClearRegions0206e080(char* obj, int slot);
 void ClearIndexedEntryFields0206e0d0(char* obj, int slot);
 extern "C" void Scenario_SetFlag(void* obj, unsigned char* arr, int idx, int flag);
 
-extern "C" void func_02010774(char* arg0, int arg1);
-extern "C" void func_020107a8(char* arg0, int arg1);
-extern "C" void func_020107dc(char* arg0, int arg1);
+void GameState_SetStoryChapter(char* obj, int v);
+void GameState_SetStoryPart(char* obj, int v);
+void GameState_SetStoryStep(char* base, int val);
 
 struct Struct_02108d70_5 {
     unsigned char unknown_0_;
@@ -58,10 +58,10 @@ extern "C" ARM int func_020716a4(struct Struct_0201c1c8* arg0, int arg1) {
         var3 = ((Script::Parameter*)var8)->ToInt();
     }
 
-    var7 = GameState::GetInstance();
-    func_02010774((char*)var7, var1);
-    func_020107a8((char*)var7, var2);
-    func_020107dc((char*)var7, var3);
+    bs = GameState::GetInstance();
+    GameState_SetStoryChapter((char*)bs, a);
+    GameState_SetStoryPart((char*)bs, b);
+    GameState_SetStoryStep((char*)bs, c);
 
     entry = Scenario_GetInstance();
     ClearRegions0206e080((char*)entry, *(unsigned char*)((char*)entry + 0x332));

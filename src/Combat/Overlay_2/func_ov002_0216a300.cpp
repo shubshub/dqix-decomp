@@ -32,7 +32,7 @@ void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int k
 char *GetField4Ptr020e1b24(void *p);
 void ResetAndReposition020e280c(struct Obj020e280c *self, void *b);
 int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-char *GetFieldIfFlag4_020100f8(char *obj);
+char *GameState_GetFollowCamera(char *obj);
 int GetIntAt0x23c(struct IntField0x23c_020a27c4 *obj);
 int GetField0x15UnlessInactive_020e2918(signed char *param);
 int GetSignedByteAt0x14_020e2910(signed char *p);
@@ -138,7 +138,7 @@ extern "C" ARM void func_ov002_0216a300(char *base) {
         *(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda)) =
             Window_GetSelectedIndex((struct Struct_0205c570 *) LST(base));
         int ok  = 0;
-        char *f = GetFieldIfFlag4_020100f8((char *) GameState::GetInstance());
+        char *f = GameState_GetFollowCamera((char *) GameState::GetInstance());
         if (f != NULL && ((*(unsigned char *) (f + 0x244) & 2) || GetIntAt0x23c((struct IntField0x23c_020a27c4 *) f) == 0)) {
             if (g_keyManager.TestKeysPressed(0x200)) {
                 var3 = 1;

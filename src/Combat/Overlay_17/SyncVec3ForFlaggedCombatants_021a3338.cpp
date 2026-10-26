@@ -5,7 +5,7 @@
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" int Zone3D_GetGroundHeight(int seed, EventVec3* v);
 struct Entry_02028bd0;
-struct Entry_02028bd0* FindEntryByCurrentId02027cb0(void);
+struct Entry_02028bd0* ZoneRecords_FindCurrent(void);
 struct Vector3i;
 
 struct U16Field0x6_020375f8;
@@ -18,14 +18,14 @@ ARM void SyncVec3ForFlaggedCombatants_021a3338(void*) {
     GameState* battleStruct = GameState::GetInstance();
     struct PtrWithU16_021a3338* ptr = (struct PtrWithU16_021a3338*)Zone3D_GetInstance();
     unsigned short value = ptr->field0;
-    struct Entry_02028bd0* entry = FindEntryByCurrentId02027cb0();
+    struct Entry_02028bd0* entry = ZoneRecords_FindCurrent();
     if (entry == NULL) return;
 
     int i;
     for (i = 0; i < 0xc; i++) {
         int idx = ((struct EntryField2_021a3338*)entry)->field2;
         int base = idx * 0xc + 0x70;
-        GameObject* combatant = battleStruct->GetMaybeFieldMonsterByIndex(i + base);
+        GameObject* combatant = battleStruct->GetFieldMonsterByIndex(i + base);
         if (combatant) {
             if (value == ((Object3D*)((struct U16Field0x6_020375f8*)combatant))->GetField06()) {
                 EventVec3 v = *(EventVec3*)((char*)combatant + 0x44);

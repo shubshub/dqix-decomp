@@ -30,10 +30,10 @@ void _Z19MessageSystem_ResetPc(void *);
 void _Z25SetFlag_02158a50_02158a50Ph(void *);
 void _Z27SetValueAndActivate0209c830P14Struct0209c830i(void *, int);
 void func_ov003_0215582c(void *);
-int func_02046b24(void *);
+int _Z29FieldTaskQueue_GetCurrentKindPP16HeadNode02046b24(void *);
 int _ZNK8Object3D19HasAnimationStoppedEv(void *);
-int func_0202ae18(void);
-int func_0202b7d8(int);
+int LinkSession_GetInstance(void);
+int _Z20LinkSession_IsActivePi(int);
 void func_ov017_021c3fb4(int, int);
 void func_ov017_021c4418(int, int);
 void func_ov017_021cf078(int, int, int);
@@ -153,7 +153,7 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
             var4 = 0;
         }
         void *res = GameState::GetInstance()->GetResources();
-        if (IsBrightnessWithinValidRange((GameResources*)res, true) == 0) {
+        if (IsScreenNotFullyFaded((GameResources*)res, true) == 0) {
             ok = 0;
         }
         if (_Z31IsSubBrightnessTransitionActiveP13GameResources(var5) != 0) {
@@ -241,9 +241,9 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
             func_ov003_0215582c(self);
             self->state = self->state + 1;
         }
-    } else if (var1 == 8) {
-        char *var14 = (char *) GetGameResources();
-        if (func_02046b24(*(void **) (var14 + 0x3000 + JPN_OFS(0x4f0, 0x700))) == 0x13) {
+    } else if (state == 8) {
+        char *x = (char *) GetGameResources();
+        if (_Z29FieldTaskQueue_GetCurrentKindPP16HeadNode02046b24(*(void **) (x + 0x3000 + JPN_OFS(0x4f0, 0x700))) == 0x13) {
             return;
         }
         arg0->unknown_1f9_ = arg0->unknown_1f9_ + 1;
@@ -251,13 +251,13 @@ extern "C" ARM void func_ov003_0215704c(struct Struct_ov003_0215704c_5 *arg0) {
         if (_ZNK8Object3D19HasAnimationStoppedEv(arg0->unknown_280_) == 0) {
             return;
         }
-        arg0->unknown_32c_ = 0;
-        if (func_0202b7d8(func_0202ae18()) != 0) {
-            func_ov017_021c3fb4(arg0->unknown_1f7_, 0);
-            func_ov017_021c4418(arg0->unknown_1f7_, -1);
-            func_ov017_021cf078(arg0->unknown_1f7_, (unsigned char) func_ov003_02156034(arg0), 0);
-            func_ov017_021ccc34(arg0->unknown_1f7_);
-            func_ov017_021cc730(arg0->unknown_1f7_, 1, 0, 0);
+        self->f32c = 0;
+        if (_Z20LinkSession_IsActivePi(LinkSession_GetInstance()) != 0) {
+            func_ov017_021c3fb4(self->f1f7, 0);
+            func_ov017_021c4418(self->f1f7, -1);
+            func_ov017_021cf078(self->f1f7, (unsigned char) _Z29GetArrayEntryByIndex_02156034Pv(self), 0);
+            func_ov017_021ccc34(self->f1f7);
+            func_ov017_021cc730(self->f1f7, 1, 0, 0);
         }
         void *c2 = _Z34GetCombatantWithFlag0x100_0200ff1cP9GameStatei(gs, self->f1f7);
         if (c2 != 0) {

@@ -11,8 +11,8 @@ extern "C" int rand(void);
 extern "C" Struct_02055f5c_2* func_02055ed0(Struct_02055f5c_3*);
 extern "C" void func_02058d40(Struct_02055f5c_2*, void*, Object3D*, int);
 extern "C" void* __clear(void*, unsigned);
-extern "C" void func_020ca528(const void*, Matrix3x3*);
-extern "C" void func_02059720(Struct_02055f5c_2*);
+extern "C" void MI_Copy36B(const void*, Matrix3x3*);
+extern "C" void func_02059720(Particle02055f5c*);
 
 struct Struct_020546c8 {
     unsigned char unknown_0_[0x11c];
@@ -250,10 +250,10 @@ extern "C" ARM void func_02055f5c(struct Struct_02055f5c_3* arg0, int arg1, int 
 
             Mat4x3_ApplyToVector(&var67, &var60, &var67);
 
-            Matrix3x3 var68;
-            Mat3x3_WriteIdentity(&var68);
-            func_020ca528(arg0->unknown_e8_, &var68);
-            Mat3x3_ApplyToVector(&var67, &var68, &var67);
+            Matrix3x3 orientMtx;
+            Mat3x3_WriteIdentity(&orientMtx);
+            MI_Copy36B(self->fieldE8, &orientMtx);
+            Mat3x3_ApplyToVector(&velVec, &orientMtx, &velVec);
 
             Matrix3x3 var69;
             Mat3x3_WriteIdentity(&var69);

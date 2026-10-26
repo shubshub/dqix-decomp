@@ -54,11 +54,11 @@ struct Struct_ov017_02196e58 {
 };
 
 // USA: func_ov017_02196e58
-extern "C" ARM void func_ov017_02196e58(struct Struct_ov017_02196e58* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    LightingManager* var1 = LightingManager::GetInstance();
-    GameObject* var2 = var0->GetMaybeFieldMonsterByIndex(arg0->unknown_36b6_);
-    if (var2 == NULL) {
+extern "C" ARM void func_ov017_02196e58(struct Work02196e58* work) {
+    GameState* bs = GameState::GetInstance();
+    LightingManager* lighting = LightingManager::GetInstance();
+    GameObject* monster = bs->GetFieldMonsterByIndex(work->monsterIndex);
+    if (monster == NULL) {
         return;
     }
     func_020a1df8(4);

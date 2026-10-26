@@ -7,7 +7,7 @@ extern "C" void* Scenario_GetInstance(void);
 extern "C" void Zone3D_BreakLootable(void* obj, int index);
 struct Entry_02028bd0;
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
-struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
+struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 struct Obj02028c14;
 void ZoneRecord_SetLootableSearched(struct Obj02028c14* obj, int index);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
@@ -20,7 +20,7 @@ extern "C" ARM void Zone3D_MarkLootableSearched(int zoneId, int lootableIndex, i
 	if (zoneId == currentZoneId) {
 		Zone3D_BreakLootable(zone, lootableIndex);
 	}
-	struct Entry_02028bd0* entry = FindInlineEntryById(ZoneRecords_GetInstance(), zoneId);
+	struct Entry_02028bd0* entry = ZoneRecords_Find(ZoneRecords_GetInstance(), zoneId);
 	if (entry != NULL) {
 		ZoneRecord_SetLootableSearched((struct Obj02028c14*)entry, lootableIndex);
 	}

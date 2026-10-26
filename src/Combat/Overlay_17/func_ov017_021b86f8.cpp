@@ -36,7 +36,7 @@ float GetIntAt0xc_020709ac(unsigned char* obj);
 void SetScaledEffectParam020708c8(EffectParam020708c8* obj, unsigned int value);
 extern "C" int abs(int x);
 void SetMainBrightness(GameResources* res, int level, int b);
-int TestFlags02046708(FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(FlagWord02046708* word, unsigned int mask);
 struct FlagWord020466f4;
 void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int bits);
 void SetCombatModeFromCase020dc2d0(int mode);
@@ -77,7 +77,7 @@ extern "C" ARM void func_ov017_021b86f8(BattleScene021b86f8* self, int combatant
     if (abs(GetBrightness((GameResources*)var2, false)) == 0x10) {
         SetMainBrightness(var2, 0, 0x1e);
     }
-    if (TestFlags02046708(flagWord, 1)) {
+    if (FlagWord_TestBits(flagWord, 1)) {
         FlagWord_ClearBits((FlagWord020466f4*)flagWord, 1);
         SetCombatModeFromCase020dc2d0(0);
     }

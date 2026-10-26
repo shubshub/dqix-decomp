@@ -12,18 +12,15 @@
 #define GLOB1C_FLAG_021a624c 0x998
 #endif
 
-#if defined(jpn)
-#define func_020daf90 func_020dc998
-#endif
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" Zone3D* Zone3D_GetInstance(void);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 
-int GetIntField0x260_02039750(void* obj);
+int GameObject_GetGestureSlot(void* obj);
 int MessageSystem_GetInstance();
-extern "C" void* func_020daf90(void);
-extern "C" int func_02046b08(void** arg0);
+extern "C" void* ObjLoading_GetInstance(void);
+int FieldTaskQueue_IsEmpty(void** obj);
 
 struct Struct_02015a2c_2;
 extern "C" int func_02015a2c(struct Struct_02015a2c_2* arg0);
@@ -57,26 +54,26 @@ static inline Struct_ov017_021a624c inline_ov017_021a624c_2() {
 }
 
 // USA: func_ov017_021a624c
-extern "C" ARM void func_ov017_021a624c(GameResources* arg0) {
-    void* var0 = func_0202ae18();
-    GameState* var1 = GameState::GetInstance();
-    GameObject* var2 = var1->GetProtagonist();
-    if (var2 == 0) return;
+extern "C" ARM void func_ov017_021a624c(GameResources* self) {
+    void* searchObj = LinkSession_GetInstance();
+    GameState* gs = GameState::GetInstance();
+    GameObject* protagonist = gs->GetProtagonist();
+    if (protagonist == 0) return;
 
-    int f260 = GetIntField0x260_02039750(protagonist);
+    int f260 = GameObject_GetGestureSlot(protagonist);
     int glob1c = MessageSystem_GetInstance();
     GrottoStruct* grotto;
     Zone3D_StructPtr_8* info;
     Zone3D* zone = Zone3D_GetInstance();
     info = zone->pUnknownStruct_8_;
     grotto = gs->GetGrottoStruct();
-    void* ctx = func_020daf90();
+    void* ctx = ObjLoading_GetInstance();
 
     if (gs->GetGrottoStruct()->unknown_0[0] == 0 ||
         self->unknown_4080 != 0 || f260 != -1 ||
-        !IsField0Null_02046b08((void**)self->fieldTaskQueue_) ||
-        func_0202c540(searchObj) ||
-        IsGlobalU16InRange_020117f0(GameState::GetInstance()) != 0 ||
+        !FieldTaskQueue_IsEmpty((void**)self->fieldTaskQueue_) ||
+        LinkSession_IsGuest(searchObj) ||
+        GameState_IsInGrotto(GameState::GetInstance()) != 0 ||
         *(int*)((char*)glob1c + GLOB1C_FLAG_021a624c) != 0 ||
         CheckSlotsForFlagState02015a2c((struct Something02015a2c*)zone) ||
         info == 0 || info->unknown_c_low_ != 0 ||

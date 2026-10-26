@@ -4,7 +4,7 @@
 
 extern "C" int func_ov017_021d60f4(void*);
 struct Struct02012dd0;
-unsigned int GetMaxAlloc02012dd0(struct Struct02012dd0*);
+unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0*);
 
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 
@@ -17,7 +17,7 @@ ARM int AllocateAndCreateAllocator_0215e9b0(void* self) {
     if (idx < 0 || idx >= 8) {
         return 0;
     }
-    unsigned int maxAlloc = GetMaxAlloc02012dd0((struct Struct02012dd0*)&g_mainAllocator);
+    unsigned int maxAlloc = AllocatorUnion_GetMaxPossibleAllocation((struct Struct02012dd0*)&g_mainAllocator);
     if (data_ov001_021658b8[0] != NULL) {
         if (data_ov001_021658b8[0]->GetMaxPossibleAllocation() <= 0x14) {
             return 0;

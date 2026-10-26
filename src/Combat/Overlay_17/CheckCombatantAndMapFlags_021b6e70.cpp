@@ -4,7 +4,7 @@
 #include "Grotto/Main/TreasureMapMetadata.h"
 
 extern "C" void* Zone3D_GetInstance(void);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 
 struct Obj_021b6e70 {
     unsigned char pad0[0xc];
@@ -15,7 +15,7 @@ struct Obj_021b6e70 {
 // USA: func_ov017_021b6e70  (semantic: CheckCombatantAndMapFlags_021b6e70)
 extern "C" ARM bool func_ov017_021b6e70(struct Obj_021b6e70* obj, int combatantId) {
     GameState* battleStruct = GameState::GetInstance();
-    GameObject* combatant = battleStruct->GetMaybeFieldMonsterByIndex(combatantId);
+    GameObject* combatant = battleStruct->GetFieldMonsterByIndex(combatantId);
     if (combatant) {
         unsigned char flags = *((unsigned char*)combatant + 0x17d);
         if (flags & 0x2) {
@@ -34,7 +34,7 @@ extern "C" ARM bool func_ov017_021b6e70(struct Obj_021b6e70* obj, int combatantI
 #endif
     int val = *(unsigned short*)misc;
 
-    if (IsValueInRange0201b5d8(val)) {
+    if (ZoneId_IsGrottoBossFloor(val)) {
         if (mapType == 1) {
             obj->field0xc = 1;
         } else if (mapType == 2) {

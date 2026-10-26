@@ -100,7 +100,7 @@ void InitObj02174408(InitStruct02174408 *);
 void InitWithSub02081ee4(Obj02081ee4 *, Sub02081ee4 *);
 void Background_Init(BackgroundGraphics *);
 extern "C" void WindowPane_Init(void *);
-unsigned char CopyOutRegion0x5718_02011494(char *, void *);
+unsigned char GameState_GetOwnPartyOrder(char *, void *);
 GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *, int);
 
 #if defined(jpn)
@@ -192,12 +192,12 @@ extern "C" ARM void func_ov003_02174114(Battle02174114 *self) {
     arg0->unknown_104e_    = 0;
     arg0->unknown_104f_    = 0;
 
-    GameState *var7 = GameState::GetInstance();
-    unsigned char var8[8];
-    int var9 = func_02011494((char *) var7, var8);
-    for (int var10 = 0; var10 < var9; var10++)
-        arg0->unknown_101c_[var10] = var8[var10];
-    arg0->unknown_1030_ = var9;
+    GameState *gs = GameState::GetInstance();
+    unsigned char buf[8];
+    int n = GameState_GetOwnPartyOrder((char *) gs, buf);
+    for (int m = 0; m < n; m++)
+        self->ids_[m] = buf[m];
+    self->count_ = n;
 
     int var11 = 0;
     while (var11 < arg0->unknown_1030_) {

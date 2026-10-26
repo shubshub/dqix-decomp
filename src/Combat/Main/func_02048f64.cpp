@@ -32,7 +32,7 @@ int GetSubstructByte0x56_02049ee8(unsigned char*);
 struct Obj020494c0;
 void DispatchTargetByte020494c0(Obj020494c0*);
 struct Foo02033b58;
-void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
 struct Obj02033b68;
 void GameObject_SetMotionState(Obj02033b68*, int);
 struct Obj02049520;
@@ -43,7 +43,7 @@ struct Obj02048c90;
 void ResetInnerState02048c90(Obj02048c90*);
 void SetSubstructByte0x1c_02049390(unsigned char*, unsigned char);
 struct Bytes02033b88;
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 struct Obj02033834;
 void GameObject_SetFacing(Obj02033834*, int);
 extern "C" Vector3i func_ov025_021ee488(Vector3i* points, int count, int progress);
@@ -121,8 +121,8 @@ extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
             if (arg0->unknown_be_ != 0) {
                 func_020494c0((Struct_02048f64_2*)arg0);
             }
-            func_02033b58((Struct_02033b58*)arg0, 0);
-            var22 = 0;
+            GameObject_StoreMotionState((Foo02033b58*)actor, 0);
+            keepFacing = 0;
         }
     } else if (GetSubstructByte0x56_02049ee8((unsigned char*)actor)) {
         GameObject_SetMotionState((Obj02033b68*)actor, 1);
@@ -146,11 +146,11 @@ extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
             func_02049520((Struct_02048f64_3*)arg0);
             func_02049a74((Struct_02048f64*)arg0);
         }
-        func_02048c90((Struct_02048c90*)arg0);
-        ((Object3D*)arg0)->SetAnimationPlaybackSpeed(0x1000, 500);
-        func_02049390((unsigned char*)arg0, var2->unknown_1d_);
-        if (func_02049ee8((unsigned char*)arg0) && arg0->unknown_be_ == 1) {
-            func_02033b88((Struct_02010604*)arg0, 0);
+        ResetInnerState02048c90((Obj02048c90*)actor);
+        ((Object3D*)actor)->SetAnimationPlaybackSpeed(0x1000, 500);
+        SetSubstructByte0x1c_02049390((unsigned char*)actor, path->cell1d);
+        if (GetSubstructByte0x56_02049ee8((unsigned char*)actor) && actor->unknownBe == 1) {
+            GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
         }
         func_020494c0((Struct_02048f64_2*)arg0);
         var22 = 0;

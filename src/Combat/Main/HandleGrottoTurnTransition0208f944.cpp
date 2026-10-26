@@ -9,10 +9,10 @@
 #include "Grotto/Main/GrottoStruct.h"
 #include "Grotto/Main/DetailedTreasureMapData.h"
 
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 extern "C" void* Zone3D_GetInstance(void);
-int IsInRange0201b588(int id);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrotto(int id);
+int ZoneId_IsGrottoBossFloor(int x);
 
 struct Obj0208f944 {
     char _pad0[IS_JPN ? 0x280 : 0x260];
@@ -42,7 +42,7 @@ struct State0208f944 {
 // USA: func_0208f944
 ARM void HandleGrottoTurnTransition0208f944(struct Obj0208f944* obj) {
     GameState* battle = GameState::GetInstance();
-    struct State0208f944* state = (struct State0208f944*)GetField0x3f8Address_0200fd0c(battle);
+    struct State0208f944* state = (struct State0208f944*)GameState_GetZoneTransition(battle);
     struct GrottoStruct* grotto = battle->GetGrottoStruct();
     void* misc = Zone3D_GetInstance();
     int a = state->h0;
@@ -61,18 +61,18 @@ ARM void HandleGrottoTurnTransition0208f944(struct Obj0208f944* obj) {
 
     obj->f262 = 0;
 
-    if (!IsInRange0201b588(a)) {
-        if (IsInRange0201b588(b)) {
+    if (!ZoneId_IsGrotto(a)) {
+        if (ZoneId_IsGrotto(b)) {
             if (a < 0x7530 || a > 0x9c3f) {
                 ((DetailedTreasureMapData*)obj)->Clear();
             }
         }
     }
 
-    if (IsInRange0201b588(a) && !IsInRange0201b588(b)) {
+    if (ZoneId_IsGrotto(a) && !ZoneId_IsGrotto(b)) {
         signed char g8 = grotto->unknown_8;
         if (g8 != -1) {
-            if (!IsValueInRange0201b5d8(a)) {
+            if (!ZoneId_IsGrottoBossFloor(a)) {
                 int rem = a % 20;
                 state->h0 = (unsigned short)((rem + 0x1c40 + 0x8000) + g8 * 20);
             }

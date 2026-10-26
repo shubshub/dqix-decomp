@@ -41,25 +41,25 @@ extern Struct_ov025_021ef988_15 data_ov025_021ef988;
 extern Struct_ov025_021ef9a8 data_ov025_021ef9a8;
 
 // USA: func_ov025_021e58f0
-extern "C" ARM int func_ov025_021e58f0(Struct_ov025_021e58f0_3* arg0) {
-    Struct_ov025_021e58f0* var0 = func_ov000_02160130();
-    Zone3D* var1 = &var0->unknown_ec8_;
-    Struct_ov025_021e58f0_2* var2 = func_ov017_021b8478(GetGameResources()->unknown_ptr_3718);
-    if (data_ov025_021ef988.unknown_20_ == 0) {
-        unsigned short var3 = var2->unknown_2_;
-        if (arg0->unknown_8_ != 0) {
-            Struct_0201cb60_2* var4 = (Struct_0201cb60_2*)func_02011584(GameState::GetInstance());
-            Struct_0201cb60* var5 = func_0209998c(var4, arg0->unknown_8_);
-            if (var5 == 0) {
+extern "C" ARM int func_ov025_021e58f0(Args_021e58f0* args) {
+    CombatWork_021e58f0* work = GetActiveCombatWork_ov000_02160130();
+    Zone3D* zone = &work->zone;
+    ZoneInfo_021e58f0* info = func_ov017_021b8478(GetGameResources()->unknown_ptr_3718);
+    if (data_ov025_021ef988.phase == 0) {
+        unsigned short id = info->zoneId;
+        if (args->zoneName != 0) {
+            List0209998c* list = (List0209998c*)GameState_GetZoneTable(GameState::GetInstance());
+            Elem0209998c* elem = ZoneTable_FindEntryByMapCode(list, args->zoneName);
+            if (elem == 0) {
                 return 1;
             }
             var3 = var5->unknown_0_;
         }
-        var1->SwitchZone(var3, 0);
-        data_ov025_021ef988.unknown_20_ = 1;
-    } else if (data_ov025_021ef988.unknown_20_ == 1 && var1->unknown_424_ == 0) {
-        func_02018f6c((Struct_02018f6c_2*)var1, var0->unknown_36ec_);
-        func_ov025_021e3158(&data_ov025_021ef9a8);
+        zone->SwitchZone(id, 0);
+        data_ov025_021ef988.phase = 1;
+    } else if (data_ov025_021ef988.phase == 1 && zone->unknown_424_ == 0) {
+        StoreAndMaybeCopy02018f6c((Obj02018f6c*)zone, work->zoneAngle);
+        ResetStruct_021e3158(&data_ov025_021ef9a8);
         return 1;
     }
     return 0;

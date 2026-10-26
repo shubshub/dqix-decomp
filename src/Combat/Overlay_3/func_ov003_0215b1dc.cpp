@@ -43,8 +43,8 @@ extern "C" void func_ov003_0215c270(BattleMessageScene*, unsigned int, unsigned 
 struct Container020e0310;
 void* KeyTable_Get(Container020e0310*, int);
 extern "C" void func_ov003_02159250(BattleMessageScene*, void*);
-extern "C" int* func_0202ae18(void);
-extern "C" int func_0202b7d8(int*);
+extern "C" int* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int*);
 extern "C" void func_ov017_021c37a4(void);
 
 extern unsigned char g_bgmPlayer;
@@ -81,7 +81,7 @@ extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) return;
         g->messageActive = 1;
         func_ov003_02159250(self, KeyTable_Get((Container020e0310*)self->messages, 0x6e));
-        if (CheckField0NonZero_0202b7d8(func_0202ae18())) {
+        if (LinkSession_IsActive(LinkSession_GetInstance())) {
             func_ov017_021c37a4();
         }
         arg0->unknown_580_++;

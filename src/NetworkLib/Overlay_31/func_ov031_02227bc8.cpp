@@ -1,13 +1,10 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern int* data_ov031_02290c48;
 
-extern "C" int func_ov031_02222adc(void* arg0);
-extern "C" void func_020c9be0(void);
+extern "C" int func_ov031_02222adc(void* buf);
+extern "C" void HaltSystem(void);
 
 // USA: func_ov031_02227bc8
 extern "C" ARM int func_ov031_02227bc8(void) {
@@ -24,9 +21,9 @@ extern "C" ARM int func_ov031_02227bc8(void) {
 		case 4:
 			return 2;
 		case 6: {
-			int var2 = func_ov031_02222adc(var0);
-			if (var2 != 1) {
-				func_020c9be0();
+			int r = func_ov031_02222adc(buf);
+			if (r != 1) {
+				HaltSystem();
 			}
 			int var3 = *(int*)(var0 + 0x20);
 			if (var3 >= 0 && var3 <= 3) {

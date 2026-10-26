@@ -46,8 +46,8 @@ struct Struct_ov001_02154f24_2
 };
 void* GetGlobalPtr021075f4_0203cf4c();
 extern "C" LoadArguments02154f24* Zone3D_GetInstance();
-extern "C" void* func_0202ae18();
-extern "C" void func_02012de4(AllocatorUnion*);
+extern "C" void* LinkSession_GetInstance();
+void EmptyStub02012de4(AllocatorUnion*);
 extern "C" void func_020a0cc4(int);
 extern "C" void func_0203e0a0(void*, int);
 extern "C" void func_ov017_021a316c(GameResources*);
@@ -60,7 +60,7 @@ int Scenario_RunTrigger(void*, int, void*);
 extern "C" void EventQuery_RunQueuedCommands(void*);
 TagValueEntry020e385c* GetData02153660_020e3808();
 void* FindEntryByTagAndValue(TagValueEntry020e385c*, int, int);
-extern "C" int func_0202c508(void*);
+extern "C" int LinkSession_IsHostOrSolo(void*);
 void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
 void RegisterTaggedEntryAndNotifyOverlay020e392c(TagValueEntry020e385c*, int, int);
 int GameState_GetProtagonistIndex(GameState*);
@@ -91,7 +91,7 @@ extern "C" ARM int func_ov001_02154f24(Struct_ov001_02154f24_3* arg0)
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     void* list = GetGlobalPtr021075f4_0203cf4c();
     LoadArguments02154f24* arguments = Zone3D_GetInstance();
-    void* other = func_0202ae18();
+    void* other = LinkSession_GetInstance();
     if (!TestFlags00(resources, 0x1000))
     {
         if (!AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
@@ -186,9 +186,9 @@ extern "C" ARM int func_ov001_02154f24(Struct_ov001_02154f24_3* arg0)
     {
         EventQuery_RunQueuedCommands(&record);
     }
-    Struct_020e385c* var17 = func_020e3808();
-    void* var18 = func_020e385c(var17, 1, 0x71e8);
-    if (func_0202c508(var5) && !var18 && !func_020e385c(var17, 1, arg0->unknown_18_))
+    TagValueEntry020e385c* table = GetData02153660_020e3808();
+    void* found = FindEntryByTagAndValue(table, 1, 0x71e8);
+    if (LinkSession_IsHostOrSolo(other) && !found && !FindEntryByTagAndValue(table, 1, self->tag))
     {
         func_020e3994(var17, 1, -1);
         func_020e392c(var17, 1, arg0->unknown_18_);

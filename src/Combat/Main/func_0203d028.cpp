@@ -14,7 +14,6 @@ extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 #include "GameState/GameState.h"
 
 #if defined(jpn)
-#define func_020daf90 func_020dc998
 #define func_0203e8f8 func_0203edf4
 #define data_020efdc4 data_020efcdc
 #define data_020efdda data_020efcf2
@@ -135,14 +134,14 @@ void VramState_Save(char* obj);
 struct Struct_0203d028_12;
 extern "C" struct Struct_0203d028_12* func_0209854c(struct Struct_0203d028_12* arg0, int arg1);
 
-extern "C" void* func_020daf90(void);
-extern "C" int func_020db2d4(void* arg0);
-extern "C" void func_020daf9c(int arg0, int arg1, int arg2, int arg3);
+extern "C" void* ObjLoading_GetInstance(void);
+int GetField0x50_020db2d4(void* obj);
+void DispatchWithGlobalContext020daf9c(int a, int b, int c, int d);
 
 void SetMainBrightness(GameResources*, int, int);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-int IsPowcntBit0Set_020cede0(void);
-int DispatchIfEquals1_020cedc0(int a);
+int IsLcdPowerOn(void);
+int SetLcdPower(int a);
 
 extern "C" void func_ov017_0218f064(void* arg0, int arg1, int arg2, int arg3, int arg4);
 
@@ -156,11 +155,11 @@ extern "C" int* func_ov017_021a4658(void* arg0, int arg1);
 struct FieldTaskQueue;
 void FieldTaskQueue_Update(struct FieldTaskQueue* ctx);
 
-struct Struct_02015438 { signed char unknown_0_; };
-extern "C" int func_02046b24(struct Struct_02015438** arg0);
+struct HeadNode02046b24 { signed char id; };
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
-extern "C" void func_0203c794(void* arg0);
-extern "C" void func_0203db24(unsigned char* arg0, int arg1);
+void NpcWalker_Init(void* obj);
+void StoreValueViaField0x14_0203db24(unsigned char* obj, int val);
 
 struct Struct_0203d028_14;
 extern "C" void func_0203f02c(struct Struct_0203d028_14* arg0, int arg1, int arg2, char* arg3, int arg4, int arg5);
@@ -411,13 +410,13 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
             struct Struct_0203d028_12* var29 = func_0209854c((struct Struct_0203d028_12*)GLOBAL_SUB, var2->unknown_0_);
             if (var29 != 0) {
                 {
-                    if (func_020db2d4(func_020daf90()) == 0) {
-                        func_020daf9c(1, 0, 1, 0);
-                        SetMainBrightness(var1, ~0xf, 0);
+                    if (GetField0x50_020db2d4(ObjLoading_GetInstance()) == 0) {
+                        DispatchWithGlobalContext020daf9c(1, 0, 1, 0);
+                        SetMainBrightness(mgr, ~0xf, 0);
                     }
                     FlagWord_SetBits(dataFlags, 0x400000);
-                    if (!IsPowcntBit0Set_020cede0()) {
-                        while (DispatchIfEquals1_020cedc0(1) == 0) {
+                    if (!IsLcdPowerOn()) {
+                        while (SetLcdPower(1) == 0) {
                         }
                         SleepCurrentContext(1);
                     }
@@ -443,18 +442,18 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
 #endif
                     BackgroundLoader* var34 = BackgroundLoader::GetInstance();
 
-                    while (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)ctxA) == 0x13) {
+                    while (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)ctxA) == 0x13) {
                         instance->RemoveAllLocks();
                         FieldTaskQueue_Update((struct FieldTaskQueue*)ctxA);
-                        if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)ctxB) == 0x14) {
+                        if (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)ctxB) == 0x14) {
                             FieldTaskQueue_Update((struct FieldTaskQueue*)ctxB);
                         }
                     }
 
-                    var10->unknown_14_ = arg2->Allocate(0x9c);
-                    if (var10->unknown_14_ == 0) goto abort_unlock;
-                    func_0203c794(var10->unknown_14_);
-                    func_0203db24((unsigned char*)var10, (int)arg0);
+                    node->stateB = sb->Allocate(0x9c);
+                    if (node->stateB == 0) goto abort_unlock;
+                    NpcWalker_Init(node->stateB);
+                    StoreValueViaField0x14_0203db24((unsigned char*)node, (int)self);
 
                     const char* var35 = &data_020efdda;
                     if (var10->unknown_14_ != 0) {
@@ -543,10 +542,10 @@ extern "C" ARM void func_0203d028(struct Struct_0203d028_25* arg0, void* arg1, S
             ZeroDestroyGPCPointer(&var39.pGPCFile);
         }
         else {
-            var10->unknown_14_ = arg2->Allocate(0x9c);
-            if (var10->unknown_14_ == 0) goto abort_unlock;
-            func_0203c794(var10->unknown_14_);
-            func_0203db24((unsigned char*)var10, (int)arg0);
+            node->stateB = sb->Allocate(0x9c);
+            if (node->stateB == 0) goto abort_unlock;
+            NpcWalker_Init(node->stateB);
+            StoreValueViaField0x14_0203db24((unsigned char*)node, (int)self);
 
             if (var2->unknown1_4_[0] != 0 && var2->unknown_2_ == 0) {
                 int var44 = 0;

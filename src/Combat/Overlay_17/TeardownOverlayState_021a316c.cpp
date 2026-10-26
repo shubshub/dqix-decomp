@@ -22,9 +22,9 @@ struct InitState0208f7ecStruct;
 void InitState0208f7ec(struct InitState0208f7ecStruct* s);
 
 struct PointerField32c_ffc0;
-void* GetPointerAt0x32c_0200ffc0(struct PointerField32c_ffc0* obj);
+void* GameState_GetShip(struct PointerField32c_ffc0* obj);
 struct PointerField330_ffd0;
-void* GetPointerAt0x330_0200ffd0(struct PointerField330_ffd0* obj);
+void* GameState_GetStarflight(struct PointerField330_ffd0* obj);
 
 void ClearCombatantSlot_0200fd48(GameState* battleStruct, int id);
 
@@ -63,7 +63,7 @@ extern "C" ARM void func_ov017_021a316c(unsigned char* obj) {
     ClearSlotsAndProcess_021a27e8(obj);
 
     for (i = 0; i < 0x30; i++) {
-        GameObject* c = battleStruct->GetMaybeFieldMonsterByIndex(i + 0x70);
+        GameObject* c = battleStruct->GetFieldMonsterByIndex(i + 0x70);
         if (c) {
             ((Object3D*)((unsigned char*)c))->Destroy();
         }
@@ -73,7 +73,7 @@ extern "C" ARM void func_ov017_021a316c(unsigned char* obj) {
     VramState_Rewind((struct Foo0207df50*)(obj + Field5dc));
 
     for (j = 0; j < 0x30; j++) {
-        GameObject* c = battleStruct->GetMaybeFieldMonsterByIndex(j + 0x70);
+        GameObject* c = battleStruct->GetFieldMonsterByIndex(j + 0x70);
         if (c) {
             ((Object3D*)((unsigned char*)c))->Destroy();
         }
@@ -82,10 +82,10 @@ extern "C" ARM void func_ov017_021a316c(unsigned char* obj) {
     Init0203cfb4((struct Struct_0203cfb4*)GetGlobalPtr021075f4_0203cf4c());
     InitState0208f7ec((struct InitState0208f7ecStruct*)(globalPtr + Field2664));
 
-    if (GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battleStruct)) {
+    if (GameState_GetShip((struct PointerField32c_ffc0*)battleStruct)) {
         ClearCombatantSlot_0200fd48(battleStruct, 0xc9);
     }
-    if (GetPointerAt0x330_0200ffd0((struct PointerField330_ffd0*)battleStruct)) {
+    if (GameState_GetStarflight((struct PointerField330_ffd0*)battleStruct)) {
         ClearCombatantSlot_0200fd48(battleStruct, 0xca);
     }
 

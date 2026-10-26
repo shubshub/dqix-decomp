@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02033f5c(unsigned char* arg0);
-extern "C" void* func_02033fc4(void* arg0);
-extern "C" int func_0204be78(unsigned short* arg0);
-struct Struct_02033f44;
-extern "C" void* func_02033f44(Struct_02033f44*);
-extern "C" int func_0204bea0(unsigned short* arg0);
-extern "C" int func_0204be90(unsigned short* arg0);
+int GetBit6At0xe0_02033f5c(unsigned char* p);
+void* GetFieldPtrAt0x11c_02033fc4(void* obj);
+int CheckBits5To9NonZero_0204be78(unsigned short* obj);
+struct BitFlag02033f44;
+void* GameObject_GetWallHit(BitFlag02033f44*);
+int PackColorChannelsToDecimal_0204bea0(unsigned short* obj);
+int GetBits10To14_0204be90(unsigned short* obj);
 
 struct Struct_020a7d74 {
     char unknown_0_[0x24];
@@ -54,13 +54,13 @@ extern "C" ARM int func_020a7d74(struct Struct_020a7d74_2* arg0, int* arg1, int*
     var3.z = var7;
     Vector3fix_Normalize(&var3, &var3);
 
-    struct Struct_020a7d74* var8 = (struct Struct_020a7d74*)func_02033f44((Struct_02033f44*)arg0);
-    int var9 = var8->unknown_24_.z;
-    int var10 = var8->unknown_24_.x;
-    var4.y = 0;
-    var4.x = var10;
-    var4.z = var9;
-    Vector3fix_Normalize(&var4, &var4);
+    struct F02033f44* f = (struct F02033f44*)GameObject_GetWallHit((BitFlag02033f44*)self);
+    int tz = f->f24.z;
+    int tx = f->f24.x;
+    t.y = 0;
+    t.x = tx;
+    t.z = tz;
+    Vector3fix_Normalize(&t, &t);
 
     int var11 = Vector3fix_InnerProduct(&var4, &var3);
     if (var11 >= -0xc00) {

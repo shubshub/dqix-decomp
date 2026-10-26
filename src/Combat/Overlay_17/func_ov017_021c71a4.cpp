@@ -25,16 +25,16 @@ struct Struct_ov017_021c71a4_2 {
     unsigned char unknown_f_0_ : 7;
     unsigned char unknown_f_7_ : 1;
 };
-struct Struct_ov017_021c71a4_3 { unsigned char unknown_0_; char unknown_1_[3]; unsigned int unknown_4_[4]; };
-struct Struct_ov017_021c71a4_4 { char unknown_0_[8]; unsigned short unknown_8_; };
-static inline unsigned int inline_ov017_021c71a4_2(Struct_ov017_021c71a4* arg0) { return arg0->unknown_3b_.unknown_0_0_; }
-static inline unsigned int inline_ov017_021c71a4_3(Struct_ov017_021c71a4* arg0) { return arg0->unknown_3b_.unknown_0_1_; }
-static inline unsigned int inline_ov017_021c71a4_4(Struct_ov017_021c71a4* arg0) { return arg0->unknown_3b_.unknown_0_2_; }
-static inline unsigned int inline_ov017_021c71a4(Struct_ov017_021c71a4* arg0) { return arg0->unknown_3b_.unknown_0_3_; }
-static inline unsigned int inline_ov003_0216e714(Struct_ov017_021c71a4* arg0) { return arg0->unknown_3b_.unknown_0_4_; }
-extern "C" Struct_ov017_021c71a4_4* func_ov017_021b8478(void*);
-extern "C" void* func_0202ae24();
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
+struct StatusMessage { unsigned char type; char pad1[3]; unsigned int payload[4]; };
+struct StatusSelection { char pad0[8]; unsigned short event; };
+static inline unsigned int GetBit0(StatusStats* stats) { return stats->status.bit0; }
+static inline unsigned int GetBit1(StatusStats* stats) { return stats->status.bit1; }
+static inline unsigned int GetBit2(StatusStats* stats) { return stats->status.bit2; }
+static inline unsigned int GetBit3(StatusStats* stats) { return stats->status.bit3; }
+static inline unsigned int GetCount(StatusStats* stats) { return stats->status.count; }
+extern "C" StatusSelection* func_ov017_021b8478(void*);
+void* LinkMessageQueue_GetInstance();
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
 extern "C" void func_0205e330(void*, void*, int);
 
 // USA: func_ov017_021c71a4
@@ -45,22 +45,22 @@ extern "C" ARM void func_ov017_021c71a4() {
 #else
     Struct_ov017_021c71a4_4* var1 = func_ov017_021b8478(GetGameResources()->unknown_ptr_3718);
 #endif
-    void* var2 = func_0202ae24();
-    Struct_ov017_021c71a4_3 var3;
-    var3.unknown_0_ = 0x71;
-    Struct_ov017_021c71a4_2* var4 = (Struct_ov017_021c71a4_2*)var3.unknown_4_;
-    for (int var5 = 0; var5 < 4; ++var5) {
-        if (!func_020a35e0((unsigned char*)var1, var5)) continue;
-        GameObject* var6 = var0->GetCombatantByIndex(var5);
-        if (!var6 || !((Struct_ov017_021c71a4*)var6->currentStats_)->unknown_26_) continue;
-        var4->unknown_0_ = var1->unknown_8_;
-        var4->unknown_2_ = var5;
-        var4->unknown_d_.unknown_0_0_ = (unsigned char)inline_ov017_021c71a4_2((Struct_ov017_021c71a4*)var6->currentStats_);
-        var4->unknown_d_.unknown_0_1_ = (unsigned char)inline_ov017_021c71a4_3((Struct_ov017_021c71a4*)var6->currentStats_);
-        var4->unknown_d_.unknown_0_2_ = (unsigned char)inline_ov017_021c71a4_4((Struct_ov017_021c71a4*)var6->currentStats_);
-        var4->unknown_d_.unknown_0_3_ = (unsigned char)inline_ov017_021c71a4((Struct_ov017_021c71a4*)var6->currentStats_);
-        var4->unknown_d_.unknown_0_4_ = (unsigned char)inline_ov003_0216e714((Struct_ov017_021c71a4*)var6->currentStats_);
-        var4->unknown_f_7_ = ((Struct_ov017_021c71a4*)var6->currentStats_)->unknown_3a_;
-        func_0205e330(var2, &var3, 0);
+    void* context = LinkMessageQueue_GetInstance();
+    StatusMessage message;
+    message.type = 0x71;
+    StatusPayload* payload = (StatusPayload*)message.payload;
+    for (int i = 0; i < 4; ++i) {
+        if (!TestBitAt0x34_020a35e0((unsigned char*)selection, i)) continue;
+        GameObject* combatant = game->GetCombatantByIndex(i);
+        if (!combatant || !((StatusStats*)combatant->currentStats_)->active) continue;
+        payload->event = selection->event;
+        payload->index = i;
+        payload->status.bit0 = (unsigned char)GetBit0((StatusStats*)combatant->currentStats_);
+        payload->status.bit1 = (unsigned char)GetBit1((StatusStats*)combatant->currentStats_);
+        payload->status.bit2 = (unsigned char)GetBit2((StatusStats*)combatant->currentStats_);
+        payload->status.bit3 = (unsigned char)GetBit3((StatusStats*)combatant->currentStats_);
+        payload->status.count = (unsigned char)GetCount((StatusStats*)combatant->currentStats_);
+        payload->flag = ((StatusStats*)combatant->currentStats_)->flag;
+        func_0205e330(context, &message, 0);
     }
 }

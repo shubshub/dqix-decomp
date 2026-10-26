@@ -22,21 +22,21 @@ struct Struct_020a654c_3 {
 };
 
 extern "C" void* Zone3D_GetInstance();
-extern "C" void func_0202ae18();
-struct Struct_0200ffc0;
-extern "C" void* func_0200ffc0(Struct_0200ffc0*);
-struct Struct_02015438;
-extern "C" int func_02046b24(Struct_02015438**);
-struct Struct_02046b1c;
-extern "C" void* func_02046b1c(Struct_02046b1c*);
+extern "C" void LinkSession_GetInstance();
+struct PointerField32c_ffc0;
+void* GameState_GetShip(PointerField32c_ffc0*);
+struct HeadNode02046b24;
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+struct S02046b1c;
+void* GetField0x0List02046b1c(S02046b1c*);
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
-extern "C" void func_020a75ec(void* arg0);
-extern "C" void func_ov017_02193428(void*, void*);
-extern "C" void func_020a7ce0(void* arg0);
-extern "C" int func_020a7d74(void* arg0, int* arg1, int* arg2);
-extern "C" int func_02046b08(void**);
-extern "C" int func_ov017_021a93f0(void* arg0, int arg1, int arg2);
+extern "C" void func_020a75ec(void* p);
+void DispatchWithZeroExtras_02193428(void*, void*);
+extern "C" void func_020a7ce0(void* p);
+extern "C" int func_020a7d74(void* p, int* out1, int* out2);
+int FieldTaskQueue_IsEmpty(void**);
+extern "C" int func_ov017_021a93f0(void* res, int a, int b);
 
 // USA: func_020a654c
 extern "C" ARM void func_020a654c(struct Res020a654c* self) {
@@ -44,12 +44,12 @@ extern "C" ARM void func_020a654c(struct Res020a654c* self) {
     unsigned short* p;
     void* nodeList = self->nodeList;
     p = (unsigned short*)Zone3D_GetInstance();
-    func_0202ae18();
-    void* var3 = func_0200ffc0((Struct_0200ffc0*)var0);
-    ((GameState*)var0)->GetUnknownGameObject();
-    int var4 = func_02046b24((Struct_02015438**)var2);
-    void* var5 = func_02046b1c((Struct_02046b1c*)var2);
-    if (var3 == 0) {
+    LinkSession_GetInstance();
+    void* obj = GameState_GetShip((PointerField32c_ffc0*)gs);
+    ((GameState*)gs)->GetLeader();
+    int id = FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)nodeList);
+    void* lst = GetField0x0List02046b1c((S02046b1c*)nodeList);
+    if (obj == 0) {
         return;
     }
     if (var4 == 10 && ((struct Struct_020a654c_2*)var5)->unknown_3_ != 0) {
@@ -82,7 +82,7 @@ extern "C" ARM void func_020a654c(struct Res020a654c* self) {
     if (var6.unknown_4_ == 0) {
         return;
     }
-    if (func_02046b08((void**)arg0->unknown_36fc_) == 0) {
+    if (FieldTaskQueue_IsEmpty((void**)self->nodeList) == 0) {
         return;
     }
     func_ov017_021a93f0(arg0, var6.unknown_4_, 0);

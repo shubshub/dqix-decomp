@@ -3,7 +3,7 @@
 #include "Resource/GameResources.h"
 
 struct Foo02033b58;
-void SetByteSavingPrevious(struct Foo02033b58* p, unsigned char v);
+void GameObject_StoreMotionState(struct Foo02033b58* p, unsigned char v);
 void ClearFlag320_02195540(unsigned char* obj);
 int MessageSystem_GetInstance(void);
 void InitQueueStruct_021ed124(unsigned char* obj);
@@ -49,7 +49,7 @@ extern "C" ARM void func_ov025_021db6dc(void* arg) {
         if (c != 0) {
             int f = *(int*)((char*)c->currentStats_ + 0x14);
             if (!(f & 1)) {
-                SetByteSavingPrevious((struct Foo02033b58*)c, 0);
+                GameObject_StoreMotionState((struct Foo02033b58*)c, 0);
             }
         }
     }

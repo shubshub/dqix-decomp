@@ -31,13 +31,13 @@ enum { Enum_ov017_021c1af0_92 = 0x5c, Enum_ov017_021c1af0_2456 = 0x998, Enum_ov0
 struct Obj020397cc;
 struct SearchStruct0202c1a4;
 extern "C" Zone3D* Zone3D_GetInstance();
-extern "C" int* func_0202ae18();
+extern "C" int* LinkSession_GetInstance();
 Obj02046574* MessageSystem_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
-int CheckField0NonZero_0202b7d8(int*);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4*);
+int LinkSession_IsActive(int*);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 extern "C" int func_ov017_0219ff58(GameResources*, int, int, int);
-Action021c1af0* GetField0x3f8Address_0200fd0c(GameState*);
+Action021c1af0* GameState_GetZoneTransition(GameState*);
 void InitStruct02070378(char*);
 extern "C" void func_ov017_021baedc(TailNode020469b4*, int);
 void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
@@ -66,8 +66,8 @@ extern "C" ARM void FieldTask_BoardVehicle(State021c1af0* state) {
         if (AlwaysTrue02094b4c(global)) state->step = 1;
     } else if (state->step == 1) {
         Obj02046574* controller = MessageSystem_GetInstance();
-        int* search = func_0202ae18();
-        if (!CheckField0NonZero_0202b7d8(search) || (CheckField0NonZero_0202b7d8(search) && GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) == 0)) {
+        int* search = LinkSession_GetInstance();
+        if (!LinkSession_IsActive(search) || (LinkSession_IsActive(search) && LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) == 0)) {
             GameResources* resources = GetGameResources();
             TailList020469b4* list = (TailList020469b4*)resources->fieldTaskQueue_;
             TailNode020469b4* node = static_cast<TailNode020469b4*>(resources->unknown_ptr_array_371c[6]);
@@ -75,23 +75,23 @@ extern "C" ARM void FieldTask_BoardVehicle(State021c1af0* state) {
                 state->step = 2;
                 return;
             }
-            var0->GetProtagonist();
-            Struct_ov017_021c1af0_2* var8 = func_0200fd0c(var0);
-            if (arg0->unknown_c_ == 0) {
-                func_02070378((char*)var8);
-                var8->unknown_2_ = 1;
-                var8->unknown_7_ = 1;
-                var8->unknown_0_ = 0x2710;
-                var8->unknown_10_ = (*reinterpret_cast<Vector3i*>(var1->unk_276c + 0x8));
-                var8->unknown_1c_ = (*reinterpret_cast<int*>(var1->unk_276c + 0x14));
-            } else if ((*reinterpret_cast<unsigned short*>(var1->unk_276c + 0x48)) == 3) {
-                func_ov017_021baedc(var7, 1);
-                var7->unknown_8_ = 0x7345;
-                (*reinterpret_cast<unsigned char*>(var1->unk_276c + 0xb3)) = 1;
-                func_020469b4(var6, var7);
-                func_ov017_021d1c2c(0, 1);
-                int var9[3];
-                func_ov017_021d1dc0(0, 0, var9, 0x7345, 0);
+            game->GetProtagonist();
+            Action021c1af0* action = GameState_GetZoneTransition(game);
+            if (state->alternate == 0) {
+                InitStruct02070378((char*)action);
+                action->field_2 = 1;
+                action->field_7 = 1;
+                action->kind = 0x2710;
+                action->position = (*reinterpret_cast<Vector3i*>(context->unk_276c + 0x8));
+                action->field_1c = (*reinterpret_cast<int*>(context->unk_276c + 0x14));
+            } else if ((*reinterpret_cast<unsigned short*>(context->unk_276c + 0x48)) == 3) {
+                func_ov017_021baedc(node, 1);
+                node->kind = 0x7345;
+                (*reinterpret_cast<unsigned char*>(context->unk_276c + 0xb3)) = 1;
+                AppendNodeToTail(list, node);
+                SetHalfFieldsAndEnqueueIfActive_021d1c2c(0, 1);
+                int position[3];
+                EnqueueEventTagB5_021d1dc0(0, 0, position, 0x7345, 0);
             } else {
                 func_02070378((char*)var8);
                 var8->unknown_2_ = 1;
@@ -104,13 +104,13 @@ extern "C" ARM void FieldTask_BoardVehicle(State021c1af0* state) {
         } else {
             char* var10 = (*reinterpret_cast<char**>(reinterpret_cast<char*>(var3) + Enum_ov017_021c1af0_92));
 #if defined(jpn)
-            if (state->alternate == 0) sprintf(buffer, data_ov017_021d8730, game->GetUnknownGameObject()->baseStats_->name);
-            else sprintf(buffer, data_ov017_021d876c, game->GetUnknownGameObject()->baseStats_->name);
+            if (state->alternate == 0) sprintf(buffer, data_ov017_021d8730, game->GetLeader()->baseStats_->name);
+            else sprintf(buffer, data_ov017_021d876c, game->GetLeader()->baseStats_->name);
             func_0204500c(controller, buffer, 0);
 #else
             if (state->alternate == 0) sprintf(buffer, StandardStrings_Get(0x3c));
             else sprintf(buffer, StandardStrings_Get(0x3d));
-            MessageSystem_SetStringArgument(controller, 0, (char*)game->GetUnknownGameObject()->baseStats_);
+            MessageSystem_SetStringArgument(controller, 0, (char*)game->GetLeader()->baseStats_);
             func_0204500c(controller, buffer, 0, 0xe3);
 #endif
             (*reinterpret_cast<unsigned char*>(reinterpret_cast<char*>(var3) + Enum_ov017_021c1af0_6578)) = 0;

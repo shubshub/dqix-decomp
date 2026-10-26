@@ -3,8 +3,8 @@
 
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
 unsigned long long GetCurrentTimestamp(void);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* p);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void func_ov017_02191aac(char* obj, int mode, int idx, unsigned char mask);
 
 struct Src021ce054 {
@@ -21,12 +21,12 @@ extern "C" ARM void func_ov017_021ce054(int checkVal, struct Src021ce054* src, G
     GameObject* c = GetCombatantWithFlag0x100_0200ff1c(battleStruct, src->field8);
     if (!c) return;
     unsigned char* p = (unsigned char*)GetFieldAt0x150_02053c6c((unsigned char*)c);
-    void* g = func_0202ae18();
+    void* g = LinkSession_GetInstance();
     if (src->field4 != 1) return;
     if (src->field6 > 0) {
         func_ov017_02191aac(obj, 1, c->obj3D_.actorIndex_, 2);
         p[0x56c] = 1;
-        if (func_0202c540(g)) return;
+        if (LinkSession_IsGuest(g)) return;
         unsigned long long ts = GetCurrentTimestamp();
         *(unsigned int*)(p + 0x480) = (unsigned int)ts;
         *(unsigned int*)(p + 0x484) = (unsigned int)(ts >> 32);

@@ -3,7 +3,7 @@
 
 #pragma define_section initcode ".init" RX
 
-extern "C" void func_0200ee94(void* arg0, int arg1, int arg2, void* arg3, void* arg4);
+extern "C" void __cxa_vec_ctor(void* obj, int count, int size, void* cb1, void* cb2);
 
 extern "C" VRAMStagingManager::Task* _ZN18VRAMStagingManager4TaskC1Ev(VRAMStagingManager::Task* arg0);
 extern "C" VRAMStagingManager::StagingSpaceAllocation* _ZN18VRAMStagingManager22StagingSpaceAllocationC1Ev(
@@ -45,8 +45,8 @@ extern int data_0214e5b0;
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.
 // USA: func_020e6790
 extern "C" __declspec(initcode) ARM void __sinit_020e6790(void) {
-    func_0200ee94(g_vramStagingTaskQueue, 0x100, 0x10, (void*)_ZN18VRAMStagingManager4TaskC1Ev, 0);
-    func_0200ee94(g_vramStagingAllocations, 0x80, 6,
+    __cxa_vec_ctor(g_vramStagingTaskQueue, 0x100, 0x10, (void*)_ZN18VRAMStagingManager4TaskC1Ev, 0);
+    __cxa_vec_ctor(g_vramStagingAllocations, 0x80, 6,
         (void*)_ZN18VRAMStagingManager22StagingSpaceAllocationC1Ev, 0);
 
     _ZN18VRAMStagingManager23CommonVRAMRegionTaskSetC1EPht(g_vramStagingRegionalTaskSets,

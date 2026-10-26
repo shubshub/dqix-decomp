@@ -28,7 +28,7 @@ unsigned char GetAndConsumeNameEntries02011930(void* obj, struct Info02011930* i
 extern "C" void* Scenario_GetInstance(void);
 int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 void InitContext020e1154(void* obj);
 void ResetState_020118fc(void* obj);
 void ClearByte0x6480_020119e8(void* obj);
@@ -83,8 +83,8 @@ extern "C" ARM int func_ov004_02164738(void* arg0) {
                 EventQuery_RunQueuedCommands(request);
             }
         }
-        if (func_0201b5d8(*(unsigned short*)var4)) {
-            func_020e1154((void*)0x7d0);
+        if (ZoneId_IsGrottoBossFloor(*(unsigned short*)zone)) {
+            InitContext020e1154((void*)0x7d0);
         }
     }
 

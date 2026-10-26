@@ -34,7 +34,6 @@
 #define func_020c2eb8 func_020c4984
 #define func_020c2f18 func_020c49e4
 #define func_020c5188 func_020c6c54
-#define func_020c51a4 func_020c6c70
 #define func_020c51c0 func_020c6c8c
 #define func_020c54fc func_020c6fc8
 #define func_020c552c func_020c6ff8
@@ -158,7 +157,7 @@ extern "C"
     void func_020c5188(const fix32_t*);
     // multiply the current matrix by the specified one (3x4), i.e carry
     // out GXFIFO operation 0x19
-    void func_020c51a4(const fix32_t*);
+    void G3_MultMtx43(const fix32_t*);
     // multiply by the specified 3x3 matrix (instruction 0x1a)
     void func_020c51c0(const fix32_t*);
     // try to get the clip matrix into the pointer specified (4x4 fix32_t matrix)
@@ -174,7 +173,7 @@ extern "C"
     // repeatedly write u32s to dst (useful for hardware registers)
     void func_020ca430(const void* src, volatile void* dst, unsigned int numBytes);
     // aligned 32-byte-looped memset
-    void func_020ca458(int value, void* dst, unsigned int len);
+    void MIi_CpuClearFast(int value, void* dst, unsigned int len);
     // zero-initialize matrix
     void func_020ca7d0(void*);
 }

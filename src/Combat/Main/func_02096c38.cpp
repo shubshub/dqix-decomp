@@ -3,9 +3,6 @@
 #include <Graphics/Vector.h>
 #include <NitroSDK/Graphics.h>
 
-#if defined(jpn)
-#define func_020c51a4 func_020c6c70
-#endif
 
 struct Struct_02015ef4_2 { char unknown_0_[0x88]; };
 struct Struct_0201730c_2 { char unknown_0_[0x88]; };
@@ -17,11 +14,11 @@ struct Struct_020968d0 {
     Struct_02096c38 unknown_0_[4];
     unsigned char unknown_220_, unknown_221_, unknown_222_, unknown_223_, unknown_224_;
 };
-struct Struct_02096c38_2 { char unknown_0_[0xae]; short unknown_ae_; };
-extern "C" int func_020968d0(Struct_020968d0*, int*);
-extern "C" void func_020473c8(Struct_02015ef4_2*, int);
-extern "C" void func_020472e4(Struct_0201730c_2*, int);
-extern "C" void func_020c51a4(int);
+struct Facing02096c38 { char pad_0[0xae]; short angle; };
+int CheckAndComputeDistance020968d0(Obj020968d0*, int*);
+void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+void RenderTransformedFlaggedIndexedEntry(StructAt020472e4*, int);
+extern "C" void G3_MultMtx43(int);
 extern "C" void __clear(void*, int);
 
 // USA: func_02096c38
@@ -88,9 +85,9 @@ extern "C" ARM void func_02096c38(Struct_020968d0* arg0, int arg1, int arg2, int
     func_020473c8(&arg0->unknown_0_[0].unknown_0_, 1);
     GXFIFO_MATRIX_POP = 1;
     GXFIFO_MATRIX_PUSH = 0;
-    short var16 = fix32ReduceAngle0To2Pi(-fix32_Atan2(var9.x, var9.y));
-    var8 = RotationMatrixZ(var16);
-    func_020c51a4((int)&var8);
+    short angle = fix32ReduceAngle0To2Pi(-fix32_Atan2(direction.x, direction.y));
+    rotation = RotationMatrixZ(angle);
+    G3_MultMtx43((int)&rotation);
     GXFIFO_MATRIX_PUSH = 0;
     GXFIFO_MATRIX_TRANSLATE = 0;
     GXFIFO_MATRIX_TRANSLATE = 0;

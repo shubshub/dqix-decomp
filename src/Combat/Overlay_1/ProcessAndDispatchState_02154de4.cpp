@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 void EnqueueEventTag150_021d035c(unsigned char a, unsigned char b, unsigned char c);
 extern "C" int func_ov001_02154c64(void* a);
@@ -22,7 +22,7 @@ struct Self02154de4 {
 
 // USA: func_ov001_02154de4
 ARM int ProcessAndDispatchState_02154de4(struct Self02154de4* self) {
-	if (CheckField0NonZero_0202b7d8((int*)func_0202ae18()) != 0) {
+	if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
 		GameState* bs = GameState::GetInstance();
 		unsigned char v = GameState_GetLeaderIndex(bs);
 		EnqueueEventTag150_021d035c(1, v & 0xff, self->f108);

@@ -15,8 +15,8 @@ struct Actor0209c678;
 char *MessageSystem_GetInstance();
 void *GlobalFlags_GetInstance();
 void Window_SetPanePalette(struct Struct_0205d81c *s, int key, int value);
-extern "C" void *func_0202ae18();
-int CheckField0NonZero_0202b7d8(int *p);
+extern "C" void *LinkSession_GetInstance();
+int LinkSession_IsActive(int *p);
 void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8 *s, int clear, int key);
 void FlagWord_SetBits(unsigned int *p, unsigned int mask);
 struct Struct0205a198;
@@ -69,7 +69,7 @@ extern "C" ARM void func_ov002_02169efc(char *self) {
         *(unsigned char *) (self + 0x1c2e) = 1;
         Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x15, 1);
         Window_SetPanePalette((struct Struct_0205d81c *) OBJ, 0x16, 1);
-        if (CheckField0NonZero_0202b7d8((int *) func_0202ae18())) {
+        if (LinkSession_IsActive((int *) LinkSession_GetInstance())) {
             *(short *) (self + 0x1c28)         = 0x125f;
             *(int *) (self + 0x1bbc)           = 0x15;
             *(unsigned char *) (self + 0x1c2e) = 0;

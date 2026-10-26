@@ -62,17 +62,17 @@ void* GetGlobalPtr021075f4_0203cf4c();
 extern "C" const char* func_ov017_021d612c(void*);
 extern "C" int func_0203e03c(Struct_0203e03c*);
 extern "C" void func_ov017_021d6134(void*, int);
-extern "C" unsigned int func_ov001_0215a750(const char*, void**);
-extern "C" int func_ov017_021d60f4(Struct_ov001_0215f3fc_3*);
-extern "C" void func_020404c0(int*);
-extern "C" void func_0203c794(void*);
-extern "C" void* func_0203d004(void*);
-extern "C" void func_02040530(int*, int);
-extern "C" void func_02040520(int*, int);
-extern "C" void func_0203f02c(Struct_0203d028_14*, int, int, char*, int, int);
-extern "C" void func_0203f138(Struct_0203d028_14*, int);
-extern "C" void func_020408c8(Struct_0203d028_19*, short, short, short);
-extern "C" void func_0203dd10(Struct_0203dd10*, unsigned int, int);
+unsigned int LoadResourceIntoGlobalBuffer_0215a750(const char*, void**);
+extern "C" int func_ov017_021d60f4(TaggedValue0215f3fc*);
+void Init020404c0(int*);
+void NpcWalker_Init(void*);
+void* EmptyStub0203d004(void*);
+void SetField0xc_02040530(int*, int);
+void SetField0x8_02040520(int*, int);
+void UpdateElementStream0203f02c(Obj0203f02c*, int, int, char*, int, int);
+extern "C" void func_0203f138(Obj0203f02c*, int);
+void SetActiveChildShorts020408c8(Node020408c8*, short, short, short);
+void SetSlotIfIndexBelow32(SlotArray0203dd10*, unsigned int, int);
 extern const char data_ov001_021657ad[];
 extern const char data_ov001_021657b2[];
 extern const char data_ov001_021657be[];
@@ -180,9 +180,9 @@ extern "C" ARM int func_ov001_0215f3fc(Struct_ov001_0215f3fc_3* arg0, int arg1)
         }
         return 0;
     }
-    func_0203c794(var13->unknown_14_);
-    void* var16 = func_0203d004(var1);
-    if (var13->unknown_14_)
+    NpcWalker_Init(entry->motion);
+    void* context = EmptyStub0203d004(list);
+    if (entry->motion)
     {
         var13->unknown_14_->unknown_0_ = var16;
     }

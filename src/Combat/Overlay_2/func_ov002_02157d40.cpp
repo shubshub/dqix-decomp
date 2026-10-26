@@ -62,24 +62,24 @@ extern "C" void* __clear(void* dst, int count);
 extern "C" void* Zone3D_GetInstance(void);
 void* GetData02153637_020e2ff8(void);
 void* SearchBothTables02079e2c(char* p, int key);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202053c(void* arg0);
-extern "C" void func_020465f0(unsigned char* arg0, int arg1, unsigned char arg2);
-extern "C" void func_ov017_021c2b28(void* arg0, unsigned char arg1, unsigned char arg2);
-extern "C" void func_020e3428(void* arg0, int arg1);
-extern "C" int func_0201b588(int arg0);
-extern "C" int func_0201b5b0(int arg0);
-extern "C" void func_020541a4(struct Struct_ov002_02157d40_5* arg0, unsigned char arg1);
-extern "C" void func_020465c0(struct Struct_ov002_02157d40_2* arg0, int arg1, int arg2);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+int GameObject_GetPartyMemberLevel(void* p);
+void SetByteInRange_020465f0(unsigned char* p, int a, unsigned char b);
+void InitObj021c2b28(void* p, unsigned char a, unsigned char b);
+void Dispatch020e3428(void* p, int flag);
+int ZoneId_IsGrotto(int v);
+int ZoneId_IsMainGrottoFloor(int v);
+void NotifySub020541a4(struct Obj020541a4* p, unsigned char b);
+void StoreInArray0x8b0_020465c0(struct StoreStruct* p, int a, int b);
+int LinkSession_IsActive(int* p);
 void* LoadFileIntoMemory(const char* path, void* buf, unsigned int* outSize);
 void TryClearFlags0x130_02048418(unsigned char* p, unsigned short mask);
 void ClearStruct020a8170(struct Struct020a8170* p);
-int CopyOutRegion0x571d_020114ec(char* dst, void* src);
+int GameState_GetPartyOrder(char* dst, void* src);
 int GetByteFieldAt0x9ba_0202663c(unsigned char* p);
 void InsertNodeAfterHead(struct List02046a3c* list, struct Node02046a3c* node);
 void Text_Append(char* dst, const char* src);
-void ClearRecords02026644(char* p);
+void MapDisplay_ClearRedChests(char* p);
 void FieldTask_InitWhistle(struct WhistleTask* p);
 int KeyTable_Get(struct Container020e0310* c, int key);
 void ResourceScriptEntry_Init(void* p);
@@ -107,7 +107,7 @@ extern "C" int sprintf(char* arg0, const char* arg1, ...);
 
 
 extern "C" int func_02026780(void* list, void* buf, unsigned int size);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void func_02046380(void* obj);
 extern "C" void MessageSystem_FormatText(void* obj, int a, int b, char* buf, int c, int d, int e);
 extern "C" void func_02052d7c(void* obj, signed char idx, int flag);
@@ -299,10 +299,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
 #else
     struct Struct_ov002_02157d40_17* var7 = (struct Struct_ov002_02157d40_17*)(Struct_ov002_02157d40*)func_0200ff1c((GameState*)var2, arg0->unknown_1c20_);
 #endif
-    int* var8 = (int*)func_0202ae18();
-    int var9 = 0;
-    int var10;
-    bool var11;
+    int* checkPtr = (int*)LinkSession_GetInstance();
+    int flagA = 0;
+    int flagB;
+    bool flag1c;
 
     if (arg0->unknown_1bb8_ == ST(0x11)) {
 
@@ -361,18 +361,18 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 var9 = 1;
                 arg0->unknown_2488_ = -1;
             }
-        } else if (arg0->unknown_1c26_ == 0x1e || arg0->unknown_1c26_ == 0x1f || arg0->unknown_1c26_ == 0x20 || arg0->unknown_1c26_ == 0x21 || arg0->unknown_1c26_ == 0x23 || arg0->unknown_1c26_ == 0x26 || arg0->unknown_1c26_ == 0x27) {
-            arg0->unknown_1bb8_ = ST(7);
-            var11 = 1;
-        } else if (arg0->unknown_1c26_ == 0x22 || arg0->unknown_1c26_ == 0x310) {
-            func_ov002_02157ce0((char*)&var0.unknown_c8_);
-            func_ov002_02157ce0((char*)&var0.unknown_c8_);
-            int var16 = 0;
-            struct Struct_ov002_02157634_8* var17 = (struct Struct_ov002_02157634_8*)func_02079e2c(var1, arg0->unknown_1c26_);
-            if (var17 != 0) {
-                __clear(var0.unknown_18_, 4);
-                int var18 = func_020114ec((char*)var2, var0.unknown_18_);
-                if (var17->unknown_9_2_ & 1) {
+        } else if (p->command == 0x1e || p->command == 0x1f || p->command == 0x20 || p->command == 0x21 || p->command == 0x23 || p->command == 0x26 || p->command == 0x27) {
+            p->state = ST(7);
+            flag1c = 1;
+        } else if (p->command == 0x22 || p->command == 0x310) {
+            InitStateArray02157ce0((char*)&f.st10c);
+            InitStateArray02157ce0((char*)&f.st10c);
+            int res = 0;
+            struct TableEntry* entry = (struct TableEntry*)SearchBothTables02079e2c(tbl, p->command);
+            if (entry != 0) {
+                __clear(f.ids5c, 4);
+                int n = GameState_GetPartyOrder((char*)gs, f.ids5c);
+                if (entry->b10 & 1) {
                     func_ov016_0218b5c0(0, -1);
                     var0.unknown_c8_.unknown_0_ = arg0->unknown_1c26_;
                     var0.unknown_c8_.unknown_2_ = arg0->unknown_1c20_;
@@ -455,17 +455,17 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                         Text_Append(p->text, (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 8));
                         Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
                     }
-                    func_02048350((struct Struct_ov002_02157d40_8*)var7, var17->unknown_8_0_);
-                    if (func_0202b7d8(var8) != 0) {
-                        func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
+                    ConsumeCounter02048350((struct Obj02048350*)comb, entry->lo8);
+                    if (LinkSession_IsActive(checkPtr) != 0) {
+                        func_ov017_021c9e00(p->actor, 0, 0, 1);
                     }
                 } else {
-                    struct CombatantStruct* unknown = (CombatantStruct*)((GameState*)gs)->GetUnknownGameObject();
+                    struct CombatantStruct* unknown = (CombatantStruct*)((GameState*)gs)->GetLeader();
                     if (unknown != 0) {
                         MessageSystem_SetStringArgument((struct Obj02046574*)msg, 2, ((struct Unit*)unknown)->name);
 #if !defined(jpn)
-                        func_020e4c74(arg0->unknown_14_, (GameObject*)(Struct_ov002_02157d40*)((GameState*)var2)->GetUnknownGameObject());
-                        *(void**)(var26 + 0x10) = arg0->unknown_14_;
+                        InitObjFromCombatant020e4c74(p->obj14, (GameObject*)(CombatantStruct*)((GameState*)gs)->GetLeader());
+                        *(void**)(msg + 0x10) = p->obj14;
 #endif
                     }
                     Text_Append((char*)(tbl + RG(0x860, 0x700)), (const char*)KeyTable_Get((struct Container020e0310*)(p->container20), 0x2333));
@@ -532,13 +532,13 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 FMT(msg, 0xc, KeyTable_Get((struct Container020e0310*)(p->container20), 0x7537), (char*)(tbl + RG(0x860, 0x700)));
                 Text_Append(p->text, (const char*)(tbl + RG(0x860, 0x700)));
             }
-            __clear(var0.unknown_10_, 4);
-            int var37 = func_020114ec((char*)var2, var0.unknown_10_);
-            int* var38 = var0.unknown_104_;
-            int var39;
-            for (var39 = 0; var39 < var37; var39++) {
-                struct Struct_ov002_02157d40_17* var40 = (struct Struct_ov002_02157d40_17*)(Struct_ov002_02157d40*)func_0200ff1c((GameState*)var2, var0.unknown_10_[var39]);
-                if (var40 == 0) {
+            __clear(f.ids54, 4);
+            int cnt = GameState_GetPartyOrder((char*)gs, f.ids54);
+            int* total = f.obj148;
+            int k;
+            for (k = 0; k < cnt; k++) {
+                struct Unit* member = (struct Unit*)(CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)gs, f.ids54[k]);
+                if (member == 0) {
                     continue;
                 }
                 struct Struct_ov002_02157d40_16* var41 = var40->unknown_150_;
@@ -557,9 +557,9 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 NameText_InitFromPartyMember(p->obj8, f.ids54[k]);
                 *(void**)msg = p->obj8;
 #endif
-                int var43;
-                if (func_0202053c((void*)var40) == 0x63) {
-                    var43 = 0x7539;
+                int key;
+                if (GameObject_GetPartyMemberLevel((void*)member) == 0x63) {
+                    key = 0x7539;
                 } else {
                     BackgroundLoader::AddLockGlobal();
                     ext = member->ext;
@@ -567,7 +567,7 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     void* loaded = LoadFileIntoMemory(f.path, &g_fileLoadBuffer, &f.size50);
                     ResourceScriptEntry_Init(f.obj148);
                     if (loaded != 0) {
-                        ResourceScriptEntry_LoadLevel(f.obj148, loaded, f.size50, GetTableValue_0202053c((void*)member) + 1, 0);
+                        ResourceScriptEntry_LoadLevel(f.obj148, loaded, f.size50, GameObject_GetPartyMemberLevel((void*)member) + 1, 0);
                     }
                     BackgroundLoader::RemoveLockGlobal();
                     int var45 = *var38 - inline_ov002_02157d40_3(var40->unknown_150_);
@@ -603,15 +603,15 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
             arg0->unknown_1bb8_ = ST(0x2b);
             arg0->unknown_1bbc_ = ST(0x2b);
             return;
-        } else if (arg0->unknown_1c26_ == 0xd5) {
-            unsigned char* var48 = *(unsigned char**)((unsigned char*)GetGameResources() + RG(0x36d0, 0x34c0));
-            arg0->unknown_1c28_ = 0x7543;
-            var9 = 1;
-            if (func_0202c540(var8) != 0 && func_0201b588(*var4) == 0) {
-                arg0->unknown_248a_ = 1;
-                arg0->unknown_2488_ = 0x7548;
-                var9 = 0;
-            } else if (func_0202663c(var48) == 0) {
+        } else if (p->command == 0xd5) {
+            unsigned char* rec = *(unsigned char**)((unsigned char*)GetGameResources() + RG(0x36d0, 0x34c0));
+            p->msgId = 0x7543;
+            flagA = 1;
+            if (LinkSession_IsGuest(checkPtr) != 0 && ZoneId_IsGrotto(*obj) == 0) {
+                p->showPrompt = 1;
+                p->prompt = 0x7548;
+                flagA = 0;
+            } else if (GetByteFieldAt0x9ba_0202663c(rec) == 0) {
                 func_ov016_0218b5c0(0, -1);
                 arg0->unknown_1c21_ = arg0->unknown_1c20_;
                 func_02026678((char*)var48);
@@ -622,26 +622,26 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                 arg0->unknown_1bbc_ = ST(0x11);
                 var9 = 0;
             }
-            var10 = 1;
-        } else if (arg0->unknown_1c26_ == 0xd3) {
-            int var49 = 1;
-            unsigned char* var50 = *(unsigned char**)((unsigned char*)GetGameResources() + RG(0x36d0, 0x34c0));
-            arg0->unknown_2490_ = 0;
-            arg0->unknown_2494_ = 0;
-            var9 = var49;
-            arg0->unknown_248a_ = var9;
-            arg0->unknown_1c28_ = 0x7544;
-            if (func_0202c540(var8) != 0) {
-                arg0->unknown_2488_ = 0x7549;
-                var9 = 0;
+            flagB = 1;
+        } else if (p->command == 0xd3) {
+            int ok = 1;
+            unsigned char* rec = *(unsigned char**)((unsigned char*)GetGameResources() + RG(0x36d0, 0x34c0));
+            p->countA = 0;
+            p->countB = 0;
+            flagA = ok;
+            p->showPrompt = flagA;
+            p->msgId = 0x7544;
+            if (LinkSession_IsGuest(checkPtr) != 0) {
+                p->prompt = 0x7549;
+                flagA = 0;
             } else {
-                if (func_0201b5b0(*var4) != 0) {
-                    var49 = 0;
-                } else if (func_0202663c(var50) != 0) {
-                    arg0->unknown_2490_ = func_02026a28((struct Struct_ov002_02157d40_11*)var50);
-                    arg0->unknown_2494_ = func_02026abc((struct Struct_ov002_02157d40_12*)var50);
+                if (ZoneId_IsMainGrottoFloor(*obj) != 0) {
+                    ok = 0;
+                } else if (GetByteFieldAt0x9ba_0202663c(rec) != 0) {
+                    p->countA = CountEntriesByField0x8c((struct List02026a28*)rec);
+                    p->countB = CountEntriesByField0x8e((struct List02026abc*)rec);
                 } else {
-                    func_02026644((char*)var50);
+                    MapDisplay_ClearRedChests((char*)rec);
                     BackgroundLoader::AddLockGlobal();
                     f.size4c = 0;
                     void* data = LoadFileIntoMemory((const char*)&data_ov002_0216cf66, &g_fileLoadBuffer, &f.size4c);
@@ -715,9 +715,9 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     arg0->unknown_2488_ = 0x232c;
                     arg0->unknown_248c_ = 1;
                 }
-                func_02048350((struct Struct_ov002_02157d40_8*)var7, var56->unknown_8_0_);
-                if (func_0202b7d8(var8) != 0) {
-                    func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
+                ConsumeCounter02048350((struct Obj02048350*)comb, entry->lo8);
+                if (LinkSession_IsActive(checkPtr) != 0) {
+                    func_ov017_021c9e00(p->actor, 0, 0, 1);
                 }
             } else {
                 arg0->unknown_248a_ = 1;
@@ -793,13 +793,13 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
             arg0->unknown_1bc0_ = 0;
             return;
         }
-        if (arg0->unknown_1c26_ == 0xd1) {
-            if (func_0202b7d8((int*)func_0202ae18()) != 0) {
-                int var65 = 1;
-                int var66;
-                for (var66 = 0; var66 < arg0->unknown_1c38_; var66++) {
-                    if (arg0->unknown_1c21_ == arg0->unknown_1c3c_[var66]) {
-                        var65 = 0;
+        if (p->command == 0xd1) {
+            if (LinkSession_IsActive((int*)LinkSession_GetInstance()) != 0) {
+                int ok = 1;
+                int j;
+                for (j = 0; j < p->excludeCount; j++) {
+                    if (p->target == p->exclude[j]) {
+                        ok = 0;
                     }
                 }
                 if (var65) {
@@ -827,11 +827,11 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
             if (var68 != 0 && (*var68->unknown_130_ & 4)) {
                 var67 = 1;
             }
-            if (var67) {
-                int* var69 = (int*)func_0202ae18();
-                func_02048418((unsigned char*)var68, 4);
-                if (func_0202b7d8(var69) != 0) {
-                    func_ov017_021c9e00(arg0->unknown_1c21_, 0, 0, 1);
+            if (cured) {
+                int* cp = (int*)LinkSession_GetInstance();
+                TryClearFlags0x130_02048418((unsigned char*)target, 4);
+                if (LinkSession_IsActive(cp) != 0) {
+                    func_ov017_021c9e00(p->target, 0, 0, 1);
                 }
                 unsigned char* party = (unsigned char*)GameState_GetParty((GameState*)gs);
                 f.tab = *(struct Table11*)&data_ov002_0216c992;
@@ -852,10 +852,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
                     func_02052d7c((void*)var68, var0.unknown_1c_.unknown_0_[var72], -1);
                     var71 = 1;
                 }
-                if (var71) {
-                    if (func_0202b7d8(var69) != 0) {
-                        func_ov017_021c3fb4(arg0->unknown_1c21_, 1);
-                        func_ov017_021c4418(arg0->unknown_1c21_, -1);
+                if (any) {
+                    if (LinkSession_IsActive(cp) != 0) {
+                        func_ov017_021c3fb4(p->target, 1);
+                        func_ov017_021c4418(p->target, -1);
                     }
                     void* var74 = GetGameResources();
                     BackgroundLoader::GetInstance();
@@ -902,10 +902,10 @@ extern "C" ARM void func_ov002_02157d40(struct BattleMenu* p) {
         p->nextState = ST(0x11);
         p->timer = 0;
     }
-    if (var9 != 0) {
-        func_02048350((struct Struct_ov002_02157d40_8*)var7, var6->unknown_8_0_);
-        if (func_0202b7d8(var8) != 0) {
-            func_ov017_021c9e00(arg0->unknown_1c20_, 0, 0, 1);
+    if (flagA != 0) {
+        ConsumeCounter02048350((struct Obj02048350*)comb, entryA->lo8);
+        if (LinkSession_IsActive(checkPtr) != 0) {
+            func_ov017_021c9e00(p->actor, 0, 0, 1);
         }
     }
 }

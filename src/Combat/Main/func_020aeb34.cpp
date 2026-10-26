@@ -22,11 +22,11 @@ extern "C" long long fix32_SinFx64c(int phase);
 extern "C" long long fix32_CosFx64c(int phase);
 extern "C" float _ll_sto_f(long long);
 struct EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24**);
 struct Obj0201b600* FindElemByKeys(Obj0201b600*, int, unsigned short);
 struct Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(struct EntryList_203dce4*, int);
 void ClearFlag0x1_02040648(unsigned int*);
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 int IsMainBrightnessTransitionActive(struct GameResources*);
 int GetMainBrightnessTransitionState(struct GameResources*);
 void SetActiveChildFields02040774(struct Node02040774*, int, int, int);
@@ -49,7 +49,7 @@ extern "C" ARM void func_020aeb34(void) {
     list = GetGlobalPtr021075f4_0203cf4c();
     base = GetGameResources();
     head = (HeadNode02046b24**)base->fieldTaskQueue_;
-    GetHeadNodeIdOrMinusOne(head);
+    FieldTaskQueue_GetCurrentKind(head);
     elem = FindElemByKeys(elem, 0, 0x2a);
 
     if (var3 == NULL) return;
@@ -60,14 +60,14 @@ extern "C" ARM void func_020aeb34(void) {
         func_02040648((unsigned int*)var1[var4]);
     }
 
-    if (func_02046b08((void**)var5) == 0 && IsMainBrightnessTransitionActive(var2) == 0 &&
-        (GetMainBrightnessTransitionState(var2) == 2 ||
-         GetMainBrightnessTransitionState(var2) == 3)) {
-        if (var3->unknown_6_ != 0) return;
-        for (int var6 = 0; var6 < 4; var6++) {
-            Struct_020aeb34* var7 = (Struct_020aeb34*)func_02040538((Struct_0203e0a0*)var1[var6]);
-            func_02040774((struct Struct_0203d028_15*)var1[var6], var7->unknown_10_, var7->unknown_14_, var7->unknown_18_);
-            func_02040b2c((struct Struct_0203e2c4_2*)var1[var6], var7->unknown_1c_);
+    if (FieldTaskQueue_IsEmpty((void**)head) == 0 && IsMainBrightnessTransitionActive(base) == 0 &&
+        (GetMainBrightnessTransitionState(base) == 2 ||
+         GetMainBrightnessTransitionState(base) == 3)) {
+        if (elem->angle != 0) return;
+        for (int j = 0; j < 4; j++) {
+            EntryPositionState* s = (EntryPositionState*)GetField0xc02040538((S02040538*)arr[j]);
+            SetActiveChildFields02040774((struct Node02040774*)arr[j], s->x, s->y, s->z);
+            PropagateValueToActiveSlot02040b2c((struct Obj02040b2c*)arr[j], s->value);
         }
         return;
     }

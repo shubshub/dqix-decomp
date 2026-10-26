@@ -127,9 +127,9 @@ int IsPrimaryContextSetUp();
 void PopulateContext(ProcessorContext* context, unsigned int startAddress, unsigned int userdata,
     unsigned int stackBottom, unsigned int stackSize, unsigned int priority);
 
-extern "C" int func_020d97a8(ProcessorContext* arg0, void* arg1, unsigned int arg2,
-                         int arg3, const void* arg4, int arg5);
-extern "C" void func_020d9828(ProcessorContext* arg0);
+int ProcessorContext_Create(ProcessorContext* context, void* stackSpace, unsigned int stackSize,
+                         int relativePriority, const void* entry, int userdata);
+void ProcessorContext_Start(ProcessorContext* context);
 
 void ContextExecutionReturnProc();
 void ExitContext(ProcessorContext* context, int exitCode);

@@ -44,8 +44,8 @@ void Background_ClearMap(BackgroundGraphics* obj, void* buf);
 extern "C" void Background_FlushMap(void* obj, int flag);
 extern "C" void Background_TransferMap(void* obj, int flag);
 void Background_Destroy(BackgroundGraphics* list);
-void Set3DClearColor_020c5588(int a, int b, int c, int d, int e);
-void ApplyVec3Tail_0202e694(void* obj, int* vec);
+void Set3DClearColor(int a, int b, int c, int d, int e);
+void Camera_SetOrbitVector(void* obj, int* vec);
 void FollowCamera_EnableFollow(void* obj);
 void ApplyVecFromField0x21e_020a2744(char* obj);
 int SetPowCnt1Bit15_0217c2a0(int enable);
@@ -104,10 +104,10 @@ extern "C" ARM void func_ov003_0217c7a0(Struct_ov003_0217c7a0_2* arg0)
         Background_TransferMap(&self->listB, 0);
         Background_Destroy((BackgroundGraphics*)&self->listB);
 
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         Camera0217c7a0* camera = (Camera0217c7a0*)gs->GetCamera();
         camera->position = self->cameraPosition;
-        ApplyVec3Tail_0202e694(camera, self->cameraTail);
+        Camera_SetOrbitVector(camera, self->cameraTail);
         FollowCamera_EnableFollow(camera);
         ApplyVecFromField0x21e_020a2744((char*)camera);
         SetPowCnt1Bit15_0217c2a0(0);

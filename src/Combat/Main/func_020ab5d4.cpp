@@ -13,8 +13,8 @@ extern "C" int func_020a9a50(void* ctx, char* dst, int flag);
 extern "C" void Font_DecodeText(unsigned char* src, char* dst, int n);
 extern "C" void __clear(void* buf, int n);
 
-struct Struct_0201099c_16;
-extern "C" int func_020865b0(struct Struct_0201099c_16* arg0);
+struct Struct020865b0;
+int PartyMemberRecord_GetVocation(struct Struct020865b0* p);
 
 void* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int* word, unsigned int bits);
@@ -78,7 +78,7 @@ extern "C" ARM int func_020ab5d4(void* arg0, int arg1, int arg2, void* arg3) {
         unsigned char* e = arr + (arr[0x1d0c] + i) * 0x23c;
         if (e != 0) {
             struct ElemJ020ab5d4* el = &loc.elems[i];
-            int v = GetFieldAt0x50((struct Struct020865b0*)e);
+            int v = PartyMemberRecord_GetVocation((struct Struct020865b0*)e);
             el->f0c = v;
             unsigned char* p = e + v;
             el->f0d = p[0xf];
@@ -123,7 +123,7 @@ extern "C" ARM int func_020ab5d4(void* arg0, int arg1, int arg2, void* arg3) {
         unsigned char* e = arr + (arr[0x1d0c] + i) * 0x23c;
         if (e != 0) {
             struct Elem020ab5d4* el = &loc.elems[i];
-            int v = GetFieldAt0x50((struct Struct020865b0*)e);
+            int v = PartyMemberRecord_GetVocation((struct Struct020865b0*)e);
             el->f30 = v;
             unsigned char* p = e + v;
             el->f31 = p[0xf];

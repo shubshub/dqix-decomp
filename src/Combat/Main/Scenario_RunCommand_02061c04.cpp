@@ -6,13 +6,13 @@
 #include "Resource/GameResources.h"
 
 extern "C" void Scenario_SetFlag(void *obj, unsigned char *arr, int idx, int flag);
-extern "C" void *func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int *ctx);
+extern "C" void *LinkSession_GetInstance(void);
+int LinkSession_IsActive(int *ctx);
 struct SearchStruct0202c1a4;
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4 *ctx);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4 *ctx);
 extern "C" void func_ov017_021d0924(int a, int b, int p1, int flag);
 void ClearNibble0206ece8(int a, int b, unsigned char *c, unsigned d);
-extern "C" int func_0202c508(void *ctx);
+extern "C" int LinkSession_IsHostOrSolo(void *ctx);
 extern "C" void *Zone3D_GetInstance(void);
 void *ZoneFeatures_GetFirstOfType(unsigned char *arr, unsigned idx);
 struct AppendNode;
@@ -65,13 +65,13 @@ struct Struct_02061c04_10 {
     signed char unknown_c_;
     float unknown_10_;
 };
-extern "C" void func_ov017_021cd6d8(Struct_02061c04_10 *arg0);
-extern "C" void func_0202ea10(unsigned char*, int, int);
-extern "C" void func_0202ea3c(unsigned char*);
-struct Struct_0202ea20;
-extern "C" void func_0202ea20(Struct_0202ea20*);
-extern "C" void *func_0208a9b4();
-extern "C" void func_0202c288(void);
+void EnqueueEventTag142_021cd6d8(Src021cd6d8 *ev);
+void Camera_Shake(unsigned char*, int, int);
+void SetFlag0x4At0x168_0202ea3c(unsigned char*);
+struct FlagsAndWords0202ea20;
+void ClearTwoWordsAndFlag0x4(FlagsAndWords0202ea20*);
+void *GetData02108f0c_0208a9b4();
+extern "C" void LinkSession_UpdateMemberCount(void);
 struct Obj_021b994c;
 void ResetFieldsToDefault_021b994c(Obj_021b994c*);
 void EnqueueEventTag153_021d079c(unsigned char, unsigned char, unsigned short);
@@ -99,9 +99,9 @@ void Init020d9dec(Struct020d9dec*, int);
 struct S020d9fb4;
 void SetFlagBit020d9fb4(S020d9fb4*, int);
 void * GameState_GetParty(GameState*);
-int GetField5cb0Value_0201079c(char*);
-int GetField5cb4Value_020107d0(char*);
-int GetField5cb8Value_02010804(char*);
+int GameState_GetStoryChapter(char*);
+int GameState_GetStoryPart(char*);
+int GameState_GetStoryStep(char*);
 void ClearRegions0206e080(char*, int);
 void ClearIndexedEntryFields0206e0d0(char*, int);
 void SetKeyedArrayBit0206e348(unsigned char*, int, int);
@@ -137,9 +137,9 @@ struct KeyMap020a0a08;
 void DecrementKeyValue020a0a08(KeyMap020a0a08*, int, int);
 void SyncEightElementFlags_020ae9f0(void);
 void RegisterSlotA020cf0fc(int p);
-void RegisterSlotB020cf1a8(int p);
+void RTC_GetTime(int p);
 void ApplySlotConfig02095cfc(int, int);
-extern "C" int func_0202c540(void *ctx);
+extern "C" int LinkSession_IsGuest(void *ctx);
 void CopyOutBattleField0x7ac0_020ac0b4(void *dst);
 struct SmallRecord020643e0;
 void CopyHalfwordAndTwoBytes(SmallRecord020643e0*, SmallRecord020643e0*);
@@ -183,10 +183,10 @@ extern char g_fileLoadBuffer;
 void * InitObj021bdbf0(unsigned char*);
 void * InitObj021beba4(char*);
 struct Base02019508;
-void * FindEntryByKeys02019508(Base02019508*, int, int);
+void * Zone3D_FindSceneElement(Base02019508*, int, int);
 extern "C" void func_0206ea8c(void *obj, unsigned char a, short b, int flag);
 struct Struct02013380;
-void SetFlag0x40AndToggle0x4(Struct02013380*, int, int);
+void BmdjSceneElement_SetShown(Struct02013380*, int, int);
 void InitContext020e1154(void *p);
 extern "C" void FieldTask_InitAcquireTreasureMap(void *node, unsigned char b);
 extern "C" void AcquireTreasureMapTask_CreateMap(void *node, unsigned char a, unsigned char b, unsigned short c, unsigned char d);
@@ -199,16 +199,16 @@ void AppendNodeToField494_02064af8(Obj64af8*, Node64af8*);
 struct Obj02061bd8;
 int CheckField0x56bLowNibble(Obj02061bd8*);
 void TryClearFlags0x130_02048418(unsigned char*, unsigned short);
-extern "C" void func_ov017_02191108(void *base, int a, int b, int c, int d);
+extern "C" void Party_ReformLine(void *base, int a, int b, int c, int d);
 struct Foo02033b58;
-void SetByteSavingPrevious(Foo02033b58*, unsigned char);
+void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
 void *ZoneRecords_GetInstance(void);
 struct Element0x318_02028bac;
-void * GetElementStride0x318(Element0x318_02028bac*, int);
+void * ZoneRecords_GetAt(Element0x318_02028bac*, int);
 extern "C" void func_ov017_021a23b0(void *base, unsigned short v);
 void EnqueueEventTag134_021c9544(int a, int b, int c, int d);
-int GetFieldAt0x0_0202ba00(int *ctx);
-void UpdatePlayClocks020ac4f8(int flag);
+int LinkSession_GetState(int *ctx);
+void GameState_UpdatePlayClocks(int flag);
 void SetField5cbcValue_02010810(char*, int);
 int GetField5cbcValue_0201081c(char*);
 
@@ -264,47 +264,47 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
     switch (msg->cmd) {
     case 0x64: {
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1, 1);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(0, 0, msg->p1, 1);
         return 1;
     }
     case 0x65: {
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1, 0);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(0, 0, msg->p1, 0);
         return 1;
     }
     case 0x66: {
         unsigned char slot = *((unsigned char *)obj + 0x332);
         Scenario_SetFlag(obj, (unsigned char *)obj + slot * 0x1c + 3, msg->p1, 1);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(3, *((unsigned char *)obj + 0x332), msg->p1, 1);
         return 1;
     }
     case 0x67: {
         unsigned char slot = *((unsigned char *)obj + 0x332);
         Scenario_SetFlag(obj, (unsigned char *)obj + slot * 0x1c + 3, msg->p1, 0);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(3, *((unsigned char *)obj + 0x332), msg->p1, 0);
         return 1;
     }
     case 0x68: {
         unsigned char slot = *((unsigned char *)obj + 0x332);
         Scenario_SetFlag(obj, (unsigned char *)obj + slot * 0x1c + 0x10, msg->p1, 1);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(5, *((unsigned char *)obj + 0x332), msg->p1, 1);
         return 1;
     }
     case 0x69: {
         unsigned char slot = *((unsigned char *)obj + 0x332);
         Scenario_SetFlag(obj, (unsigned char *)obj + slot * 0x1c + 0x10, msg->p1, 0);
-        void *ctx = func_0202ae18();
-        if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
             func_ov017_021d0924(5, *((unsigned char *)obj + 0x332), msg->p1, 0);
         return 1;
     }
@@ -316,8 +316,8 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x6b: {
-        void *ctx = func_0202ae18();
-        if (func_0202c508(ctx))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo(ctx))
             Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, 0x113a, ((unsigned char *)msg)[2] == 0);
         return 1;
     }
@@ -366,14 +366,14 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x6e: {
-        GameState *var38 = GameState::GetInstance();
-        var38->SetTimeOfDay((TimeOfDay)arg1->unknown_2_);
-        LightingManager *var39 = LightingManager::GetInstance();
-        var39->dayNightTimer_ = var38->GetDayTimer();
-        var39->timeOfDayIndex_ = var38->GetTimeOfDay();
-        void *var40 = func_0202ae18();
-        if (func_0202c508(var40))
-            func_ov017_021cdaa0();
+        GameState *battle = GameState::GetInstance();
+        battle->SetTimeOfDay((TimeOfDay)msg->p1);
+        LightingManager *d = LightingManager::GetInstance();
+        d->dayNightTimer_ = battle->GetDayTimer();
+        d->timeOfDayIndex_ = battle->GetTimeOfDay();
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo(ctx))
+            EnqueueEventTag147_021cdaa0();
         return 1;
     }
     case 0x72:
@@ -439,16 +439,16 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x7f: {
-        func_020cf0fc((int)&var1);
-        func_020cf1a8((int)&var2);
-        var17.unknown_24_.unknown_0_0_ = var1.unknown_0_;
-        var17.unknown_24_.unknown_0_7_ = var1.unknown_4_;
-        var17.unknown_24_.unknown_1_3_ = var1.unknown_8_;
-        var17.unknown_24_.unknown_2_0_ = var2.unknown_0_;
-        var17.unknown_24_.unknown_2_5_ = var2.unknown_4_;
-        void *var48 = func_02094d6c();
-        *(unsigned int *)((char *)var48 + arg1->unknown_2_ * 4 + 0x178) = *(unsigned int *)&var17.unknown_24_;
-        func_02095cfc((int)var48, arg1->unknown_2_);
+        RegisterSlotA020cf0fc((int)&sa);
+        RTC_GetTime((int)&sb);
+        lr.packed.f0 = sa.a0;
+        lr.packed.f1 = sa.a1;
+        lr.packed.f2 = sa.a2;
+        lr.packed.f3 = sb.b0;
+        lr.packed.f4 = sb.b1;
+        void *g = GetGlobal02109418_02094d6c();
+        *(unsigned int *)((char *)g + msg->p1 * 4 + 0x178) = *(unsigned int *)&lr.packed;
+        ApplySlotConfig02095cfc((int)g, msg->p1);
         return 1;
     }
     case 0x80:
@@ -458,13 +458,13 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         func_0206e164(arg0, arg1->unknown_2_, 1);
         return 1;
     case 0x82: {
-        void *var49 = func_0202ae18();
-        if (func_0202b7d8((int *)var49)) {
-            func_02096134((Struct_0205faf4_7 *)func_02094d6c(), arg1->unknown_2_);
-            if (!func_0202c1a4((Struct_0202c1a4 *)var49)) {
-                if (arg1->unknown_4_ < 0x400)
-                    func_ov017_021d0924(0, 0, arg1->unknown_4_, 1);
-                func_0206eb64((unsigned char *)arg0, arg1->unknown_4_, 1);
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx)) {
+            FindEntryById02096134((FindEntryById02096134Table *)GetGlobal02109418_02094d6c(), msg->p1);
+            if (!LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx)) {
+                if (msg->p2 < 0x400)
+                    func_ov017_021d0924(0, 0, msg->p2, 1);
+                SetBitWithOffset0206eb64((unsigned char *)obj, msg->p2, 1);
             } else {
                 func_0206eb64((unsigned char *)arg0, arg1->unknown_4_, 1);
             }
@@ -474,14 +474,14 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x83: {
-        void *var50 = func_0202ae18();
-        if (func_0202b7d8((int *)var50)) {
-            void *var51 = func_02096134((Struct_0205faf4_7 *)func_02094d6c(), arg1->unknown_2_);
-            if (!func_0202c1a4((Struct_0202c1a4 *)var50)) {
-                if (!(var51 != 0 && ((struct Struct_02061c04_32 *)var51)->unknown_1_2_ == 1) &&
-                    arg1->unknown_4_ < 0x400)
-                    func_ov017_021d0924(0, 0, arg1->unknown_4_, 0);
-                func_0206eb64((unsigned char *)arg0, arg1->unknown_4_, 0);
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx)) {
+            void *entry = FindEntryById02096134((FindEntryById02096134Table *)GetGlobal02109418_02094d6c(), msg->p1);
+            if (!LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx)) {
+                if (!(entry != 0 && ((struct EntryFlags *)entry)->bit10 == 1) &&
+                    msg->p2 < 0x400)
+                    func_ov017_021d0924(0, 0, msg->p2, 0);
+                SetBitWithOffset0206eb64((unsigned char *)obj, msg->p2, 0);
             } else {
                 if (var51 != 0 && ((struct Struct_02061c04_32 *)var51)->unknown_1_2_ == 1)
                     func_0206eb64((unsigned char *)arg0, arg1->unknown_4_, 0);
@@ -492,35 +492,35 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x84: {
-        GameState *var52 = GameState::GetInstance();
-        var17.unknown_14_.unknown_a_ = func_0201079c((char*)var52);
-        var17.unknown_14_.unknown_c_ = func_020107d0((char*)var52);
-        var17.unknown_14_.unknown_e_ = func_02010804((char*)var52);
-        func_0206445c((int)arg0, (Struct_02061c04_25 *)arg1, (Struct_02061c04_26 *)arg2);
-        if (var17.unknown_14_.unknown_a_ != arg1->unknown_4_)
-            func_0206e080((char*)arg0, *((unsigned char *)arg0 + 0x332));
-        if (var17.unknown_14_.unknown_c_ != arg1->unknown_6_)
-            func_0206e0d0((char*)arg0, *((unsigned char *)arg0 + 0x332));
+        GameState *battle = GameState::GetInstance();
+        lr.fb.ha = GameState_GetStoryChapter((char*)battle);
+        lr.fb.hc = GameState_GetStoryPart((char*)battle);
+        lr.fb.he = GameState_GetStoryStep((char*)battle);
+        AppendNodeToListField30_0206445c((int)obj, (AppendNode *)msg, (AppendList *)param3);
+        if (lr.fb.ha != msg->p2)
+            ClearRegions0206e080((char*)obj, *((unsigned char *)obj + 0x332));
+        if (lr.fb.hc != msg->p3)
+            ClearIndexedEntryFields0206e0d0((char*)obj, *((unsigned char *)obj + 0x332));
         return 1;
     }
     case 0x85: case 0x8a: case 0xe2:
         func_0206445c((int)arg0, (Struct_02061c04_25 *)arg1, (Struct_02061c04_26 *)arg2);
         return 1;
     case 0x86: {
-        void *var53 = func_0202ae18();
-        if (func_0202b7d8((int *)var53))
-            func_ov017_021ce110((unsigned char)arg1->unknown_4_, 1, arg1->unknown_2_, 1);
-        switch (arg1->unknown_4_) {
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx))
+            EnqueueEventTag141_021ce110((unsigned char)msg->p2, 1, msg->p1, 1);
+        switch (msg->p2) {
         case 3:
             Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1, 1);
             func_ov017_021d0924(0, 0, msg->p1, 1);
-            if (func_0202c540(ctx))
+            if (LinkSession_IsGuest(ctx))
                 func_0206e748(obj, 0, 0, msg->p1, 1);
             break;
         case 4: {
             Scenario_SetFlag(obj, (unsigned char *)obj + *((unsigned char *)obj + 0x332) * 0x1c + 3, msg->p1, 1);
             func_ov017_021d0924(3, *((unsigned char *)obj + 0x332), msg->p1, 1);
-            if (func_0202c540(ctx)) {
+            if (LinkSession_IsGuest(ctx)) {
                 int slot1 = GetSlot332(obj);
                 func_0206e748(obj, 3, slot1, msg->p1, 1);
             }
@@ -529,7 +529,7 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         case 5: {
             Scenario_SetFlag(obj, (unsigned char *)obj + *((unsigned char *)obj + 0x332) * 0x1c + 0x10, msg->p1, 1);
             func_ov017_021d0924(5, *((unsigned char *)obj + 0x332), msg->p1, 1);
-            if (func_0202c540(ctx)) {
+            if (LinkSession_IsGuest(ctx)) {
                 int slot2 = GetSlot332(obj);
                 func_0206e748(obj, 5, slot2, msg->p1, 1);
             }
@@ -541,20 +541,20 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x87: {
-        void *var56 = func_0202ae18();
-        if (func_0202b7d8((int *)var56))
-            func_ov017_021ce110((unsigned char)arg1->unknown_4_, 0, arg1->unknown_2_, 1);
-        switch (arg1->unknown_4_) {
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsActive((int *)ctx))
+            EnqueueEventTag141_021ce110((unsigned char)msg->p2, 0, msg->p1, 1);
+        switch (msg->p2) {
         case 3:
             Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1, 0);
             func_ov017_021d0924(0, 0, msg->p1, 0);
-            if (func_0202c540(ctx))
+            if (LinkSession_IsGuest(ctx))
                 func_0206e748(obj, 0, 0, msg->p1, 0);
             break;
         case 4: {
             Scenario_SetFlag(obj, (unsigned char *)obj + *((unsigned char *)obj + 0x332) * 0x1c + 3, msg->p1, 0);
             func_ov017_021d0924(3, *((unsigned char *)obj + 0x332), msg->p1, 0);
-            if (func_0202c540(ctx)) {
+            if (LinkSession_IsGuest(ctx)) {
                 int slot3 = GetSlot332(obj);
                 func_0206e748(obj, 3, slot3, msg->p1, 0);
             }
@@ -563,7 +563,7 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         case 5: {
             Scenario_SetFlag(obj, (unsigned char *)obj + *((unsigned char *)obj + 0x332) * 0x1c + 0x10, msg->p1, 0);
             func_ov017_021d0924(5, *((unsigned char *)obj + 0x332), msg->p1, 0);
-            if (func_0202c540(ctx)) {
+            if (LinkSession_IsGuest(ctx)) {
                 int slot4 = GetSlot332(obj);
                 func_0206e748(obj, 5, slot4, msg->p1, 0);
             }
@@ -661,8 +661,8 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0x90: {
-        void *var80 = func_0202ae18();
-        if (func_0202c540(var80))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsGuest(ctx))
             return 1;
         int var81 = func_0206e120((Struct_0205faf4_3*)arg0, arg1->unknown_2_) == 2;
         if (!var81)
@@ -688,38 +688,38 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1 + 0x776, 0);
         return 1;
     case 0x94: {
-        GameState *var84 = GameState::GetInstance();
-        var17.unknown_14_.unknown_4_ = func_0201079c((char*)var84);
-        var17.unknown_14_.unknown_6_ = func_020107d0((char*)var84);
-        var17.unknown_14_.unknown_8_ = func_02010804((char*)var84);
-        arg1->unknown_2_ = 5;
-        func_0206445c((int)arg0, (Struct_02061c04_25 *)arg1, (Struct_02061c04_26 *)arg2);
+        GameState *battle = GameState::GetInstance();
+        lr.fb.h4 = GameState_GetStoryChapter((char*)battle);
+        lr.fb.h6 = GameState_GetStoryPart((char*)battle);
+        lr.fb.h8 = GameState_GetStoryStep((char*)battle);
+        msg->p1 = 5;
+        AppendNodeToListField30_0206445c((int)obj, (AppendNode *)msg, (AppendList *)param3);
         return 1;
     }
     case 0x95: {
         void *p0 = Zone3D_GetInstance();
         if (!p0)
             return 0;
-        void *var86 = func_02019508((Struct_02019508_3*)var85, arg1->unknown_2_, arg1->unknown_4_);
-        if (!var86) {
-            func_0206ea8c(arg0, (unsigned char)arg1->unknown_2_, (short)(arg1->unknown_4_ + 0x80), 1);
-            func_0206ea8c(arg0, (unsigned char)arg1->unknown_2_, (short)arg1->unknown_4_, 0);
+        void *entry = Zone3D_FindSceneElement((Base02019508*)p0, msg->p1, msg->p2);
+        if (!entry) {
+            func_0206ea8c(obj, (unsigned char)msg->p1, (short)(msg->p2 + 0x80), 1);
+            func_0206ea8c(obj, (unsigned char)msg->p1, (short)msg->p2, 0);
             return 1;
         }
-        func_02013380((Struct_02013380*)var86, arg1->unknown_2_, 0);
+        BmdjSceneElement_SetShown((Struct02013380*)entry, msg->p1, 0);
         return 1;
     }
     case 0x96: {
         void *p0 = Zone3D_GetInstance();
         if (!p0)
             return 0;
-        void *var88 = func_02019508((Struct_02019508_3*)var87, arg1->unknown_2_, arg1->unknown_4_);
-        if (!var88) {
-            func_0206ea8c(arg0, (unsigned char)arg1->unknown_2_, (short)(arg1->unknown_4_ + 0x80), 0);
-            func_0206ea8c(arg0, (unsigned char)arg1->unknown_2_, (short)arg1->unknown_4_, 1);
+        void *entry = Zone3D_FindSceneElement((Base02019508*)p0, msg->p1, msg->p2);
+        if (!entry) {
+            func_0206ea8c(obj, (unsigned char)msg->p1, (short)(msg->p2 + 0x80), 0);
+            func_0206ea8c(obj, (unsigned char)msg->p1, (short)msg->p2, 1);
             return 1;
         }
-        func_02013380((Struct_02013380*)var88, arg1->unknown_2_, 1);
+        BmdjSceneElement_SetShown((Struct02013380*)entry, msg->p1, 1);
         return 1;
     }
     case 0x97: {
@@ -793,22 +793,22 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
     case 0xc0: {
         GameState *battle = GameState::GetInstance();
         void *p0 = Zone3D_GetInstance();
-        func_0202ae18();
-        var9.unknown_0_ = 0;
-        var9.unknown_2_ = 0;
-        var9.unknown_4_ = 0;
-        var9.unknown_6_ = 0;
-        var9.unknown_8_ = 0;
-        var9.unknown_a_ = 0;
-        var9.unknown_10_ = 0;
-        var9.unknown_c_ = -1;
-        var9.unknown_0_ = *(unsigned short *)var93;
-        var9.unknown_2_ = arg1->unknown_2_;
-        var9.unknown_4_ = 0;
-        var9.unknown_8_ = 1;
-        var9.unknown_6_ = -1;
-        var9.unknown_10_ = var92->GetDayTimer();
-        func_ov017_021cd6d8(&var9);
+        LinkSession_GetInstance();
+        c0Local.f0 = 0;
+        c0Local.f1 = 0;
+        c0Local.f2 = 0;
+        c0Local.f3 = 0;
+        c0Local.f4 = 0;
+        c0Local.f5 = 0;
+        c0Local.f7 = 0;
+        c0Local.f6 = -1;
+        c0Local.f0 = *(unsigned short *)p0;
+        c0Local.f1 = msg->p1;
+        c0Local.f2 = 0;
+        c0Local.f4 = 1;
+        c0Local.f3 = -1;
+        c0Local.f7 = battle->GetDayTimer();
+        EnqueueEventTag142_021cd6d8(&c0Local);
         return 1;
     }
     case 0xa4: {
@@ -892,8 +892,8 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         } else {
             Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, 0x113c, 0);
             *(unsigned int *)((char *)p + 0x2c94) = *(unsigned int *)((char *)battle + REGION_VALUE(0x7c34, 0x7e74));
-            void *ctx = func_0202ae18();
-            if (CheckField0NonZero_0202b7d8((int *)ctx) && !GetSearchStructCurrentArrEntry((SearchStruct0202c1a4 *)ctx))
+            void *ctx = LinkSession_GetInstance();
+            if (LinkSession_IsActive((int *)ctx) && !LinkSession_GetOwnSlot((SearchStruct0202c1a4 *)ctx))
                 EnqueueEventTag23Field_021d0d58();
         }
         return 1;
@@ -1012,7 +1012,7 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         GameState *battle = GameState::GetInstance();
         void *rec = battle->GetCamera();
         if (msg->p1 != 0) {
-            StoreFields0x1e4And0x1e8IfNonZero_0202ea10((unsigned char*)rec, 0x333, 1);
+            Camera_Shake((unsigned char*)rec, 0x333, 1);
             SetFlag0x4At0x168_0202ea3c((unsigned char*)rec);
         } else {
             func_0202ea20((Struct_0202ea20*)var133);
@@ -1030,69 +1030,69 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
     case 0xc4:
         return 1;
     case 0xc5: {
-        GameState *var135 = GameState::GetInstance();
-        void *var136 = func_0202ae18();
-        int var137 = func_0202ba00((int *)var136);
-        int var138 = *((unsigned char *)var136 + 0x1000 + 0xd);
-        int var139 = 0;
-        if ((var137 == 5 && var138 > 1) || var137 == 6)
-            var139 = 1;
-        func_020ac4f8(var139);
-        int var140 = func_0201081c((char*)var135);
-        int var141 = arg1->unknown_2_;
-        int var142 = var140;
-        if (var140 >= 0xd && var140 <= 0xd) var142 = var140;
-        else if (var140 >= 0xe && var140 <= 0xf) var142 = var140;
-        else if (var140 >= 0x10 && var140 <= 0x11) var142 = var140;
-        else if (var140 >= 0x12 && var140 <= 0x18) var142 = var140;
-        else if (var140 >= 0x19 && var140 <= 0x1b) var142 = var140;
-        else if (var140 >= 0x1c && var140 <= 0x21) var142 = var140;
-        else if (var140 >= 0x22 && var140 <= 0x26) var142 = var140;
-        else if (var140 >= 0x28 && var140 <= 0x5c) var142 = var140;
-        else if (var140 >= 0x5d && var140 <= 0x5d) var142 = var140;
-        else if (var140 >= 0x5e && var140 <= 0x64) var142 = var140;
-        else if (var140 >= 0x65 && var140 <= 0x68) var142 = var140;
-        else if (var140 >= 0x69 && var140 <= 0x6b) var142 = var140;
-        else if (var140 >= 0x6c && var140 <= 0x71) var142 = var140;
-        else if (var140 >= 0x7b && var140 <= 0x7c) var142 = var140;
-        else if (var140 >= 0x7d && var140 <= 0x80) var142 = var140;
-        else if (var140 >= 0x81 && var140 <= 0x85) var142 = var140;
-        else if (var140 >= 0x86 && var140 <= 0x89) var142 = var140;
-        else if (var140 >= 0x8a && var140 <= 0x8c) var142 = var140;
-        else if (var140 >= 0x8d && var140 <= 0x92) var142 = var140;
-        else if (var140 >= 0x94 && var140 <= 0x94) var142 = var140;
-        int var143 = var141;
-        if (var141 >= 0xd && var141 <= 0xd) var143 = var141;
-        else if (var141 >= 0xe && var141 <= 0xf) var143 = var141;
-        else if (var141 >= 0x10 && var141 <= 0x11) var143 = var141;
-        else if (var141 >= 0x12 && var141 <= 0x18) var143 = var141;
-        else if (var141 >= 0x19 && var141 <= 0x1b) var143 = var141;
-        else if (var141 >= 0x1c && var141 <= 0x21) var143 = var141;
-        else if (var141 >= 0x22 && var141 <= 0x26) var143 = var141;
-        else if (var141 >= 0x28 && var141 <= 0x5c) var143 = var141;
-        else if (var141 >= 0x5d && var141 <= 0x5d) var143 = var141;
-        else if (var141 >= 0x5e && var141 <= 0x64) var143 = var141;
-        else if (var141 >= 0x65 && var141 <= 0x68) var143 = var141;
-        else if (var141 >= 0x69 && var141 <= 0x6b) var143 = var141;
-        else if (var141 >= 0x6c && var141 <= 0x71) var143 = var141;
-        else if (var141 >= 0x7b && var141 <= 0x7c) var143 = var141;
-        else if (var141 >= 0x7d && var141 <= 0x80) var143 = var141;
-        else if (var141 >= 0x81 && var141 <= 0x85) var143 = var141;
-        else if (var141 >= 0x86 && var141 <= 0x89) var143 = var141;
-        else if (var141 >= 0x8a && var141 <= 0x8c) var143 = var141;
-        else if (var141 >= 0x8d && var141 <= 0x92) var143 = var141;
-        else if (var141 >= 0x94 && var141 <= 0x94) var143 = var141;
-        if (var142 != var143) {
-            memset(inline_02061c04_2(inline_02061c04(var135)) + 0xa4, 0, 0x28);
+        GameState *battle = GameState::GetInstance();
+        void *ctx = LinkSession_GetInstance();
+        int v = LinkSession_GetState((int *)ctx);
+        int byte = *((unsigned char *)ctx + 0x1000 + 0xd);
+        int flag = 0;
+        if ((v == 5 && byte > 1) || v == 6)
+            flag = 1;
+        GameState_UpdatePlayClocks(flag);
+        int cur = GetField5cbcValue_0201081c((char*)battle);
+        int newVal = msg->p1;
+        int a = cur;
+        if (cur >= 0xd && cur <= 0xd) a = cur;
+        else if (cur >= 0xe && cur <= 0xf) a = cur;
+        else if (cur >= 0x10 && cur <= 0x11) a = cur;
+        else if (cur >= 0x12 && cur <= 0x18) a = cur;
+        else if (cur >= 0x19 && cur <= 0x1b) a = cur;
+        else if (cur >= 0x1c && cur <= 0x21) a = cur;
+        else if (cur >= 0x22 && cur <= 0x26) a = cur;
+        else if (cur >= 0x28 && cur <= 0x5c) a = cur;
+        else if (cur >= 0x5d && cur <= 0x5d) a = cur;
+        else if (cur >= 0x5e && cur <= 0x64) a = cur;
+        else if (cur >= 0x65 && cur <= 0x68) a = cur;
+        else if (cur >= 0x69 && cur <= 0x6b) a = cur;
+        else if (cur >= 0x6c && cur <= 0x71) a = cur;
+        else if (cur >= 0x7b && cur <= 0x7c) a = cur;
+        else if (cur >= 0x7d && cur <= 0x80) a = cur;
+        else if (cur >= 0x81 && cur <= 0x85) a = cur;
+        else if (cur >= 0x86 && cur <= 0x89) a = cur;
+        else if (cur >= 0x8a && cur <= 0x8c) a = cur;
+        else if (cur >= 0x8d && cur <= 0x92) a = cur;
+        else if (cur >= 0x94 && cur <= 0x94) a = cur;
+        int b = newVal;
+        if (newVal >= 0xd && newVal <= 0xd) b = newVal;
+        else if (newVal >= 0xe && newVal <= 0xf) b = newVal;
+        else if (newVal >= 0x10 && newVal <= 0x11) b = newVal;
+        else if (newVal >= 0x12 && newVal <= 0x18) b = newVal;
+        else if (newVal >= 0x19 && newVal <= 0x1b) b = newVal;
+        else if (newVal >= 0x1c && newVal <= 0x21) b = newVal;
+        else if (newVal >= 0x22 && newVal <= 0x26) b = newVal;
+        else if (newVal >= 0x28 && newVal <= 0x5c) b = newVal;
+        else if (newVal >= 0x5d && newVal <= 0x5d) b = newVal;
+        else if (newVal >= 0x5e && newVal <= 0x64) b = newVal;
+        else if (newVal >= 0x65 && newVal <= 0x68) b = newVal;
+        else if (newVal >= 0x69 && newVal <= 0x6b) b = newVal;
+        else if (newVal >= 0x6c && newVal <= 0x71) b = newVal;
+        else if (newVal >= 0x7b && newVal <= 0x7c) b = newVal;
+        else if (newVal >= 0x7d && newVal <= 0x80) b = newVal;
+        else if (newVal >= 0x81 && newVal <= 0x85) b = newVal;
+        else if (newVal >= 0x86 && newVal <= 0x89) b = newVal;
+        else if (newVal >= 0x8a && newVal <= 0x8c) b = newVal;
+        else if (newVal >= 0x8d && newVal <= 0x92) b = newVal;
+        else if (newVal >= 0x94 && newVal <= 0x94) b = newVal;
+        if (a != b) {
+            memset(SubB(SubA(battle)) + 0xa4, 0, 0x28);
         }
         func_02010810((char*)var135, arg1->unknown_2_);
         return 1;
     }
     case 0xc6: {
-        void *var144 = func_0202ae18();
-        func_0202c288();
-        int var145 = *((unsigned char *)var144 + 0x100d);
-        if (var145 <= 1)
+        void *ctx = LinkSession_GetInstance();
+        LinkSession_UpdateMemberCount();
+        int lvl = *((unsigned char *)ctx + 0x100d);
+        if (lvl <= 1)
             return 0;
         void *var146 = GetGameResources();
         void *var147 = *(void **)((char *)var146 + 0x3000 + REGION_VALUE(0x500, 0x710));
@@ -1139,10 +1139,10 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
             } else {
                 func_02053fe4(var154, 1, 1);
             }
-            func_02048418((unsigned char*)var154, 1);
-            func_ov017_02191108(var152, 1, 1, 1, 1);
-            func_02033b58((Struct_02033b58*)var154, 0);
-            *(short *)((char *)var154 + 0xb2) = 0;
+            TryClearFlags0x130_02048418((unsigned char*)combatant, 1);
+            Party_ReformLine(base, 1, 1, 1, 1);
+            GameObject_StoreMotionState((Foo02033b58*)combatant, 0);
+            *(short *)((char *)combatant + 0xb2) = 0;
         }
         return 1;
     }
@@ -1162,23 +1162,23 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
     }
     case 0xce: {
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, 0x79a, 1);
-        void *ctx = func_0202ae18();
-        if (func_0202c508(ctx)) {
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo(ctx)) {
             int rowBase;
             GameState *battle = GameState::GetInstance();
             void *base = GetGameResources();
             void *table = ZoneRecords_GetInstance();
             for (int a = 0; a < 4; a++) {
-                void *elem = GetElementStride0x318((Element0x318_02028bac*)table, a);
+                void *elem = ZoneRecords_GetAt((Element0x318_02028bac*)table, a);
                 if (!((struct Elem2Flags *)((char *)elem + 2))->bit2)
                     continue;
                 unsigned short var168 = *(unsigned short *)var167;
                 if ((var168 / 100) * 100 != 400)
                     continue;
-                var162 = var166 * 0xc + 0x70;
-                for (int var169 = 0; var169 < 0xc; var169++) {
-                    void *var170 = var163->GetMaybeFieldMonsterByIndex(var169 + var162);
-                    if (!var170)
+                rowBase = a * 0xc + 0x70;
+                for (int b = 0; b < 0xc; b++) {
+                    void *c2 = battle->GetFieldMonsterByIndex(b + rowBase);
+                    if (!c2)
                         continue;
                     unsigned short var171 = *(unsigned short *)((char *)var170 + 0x100 + 0x6a);
                     func_ov017_021a23b0(var164, var171);
@@ -1201,8 +1201,8 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0xd0: {
-        void *ctx = func_0202ae18();
-        if (func_0202c508(ctx)) {
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo(ctx)) {
             GameState *battle = GameState::GetInstance();
             void *p = GameState_GetParty((GameState*)battle);
             *(unsigned int *)((char *)p + 0x2c94) = msg->p1;
@@ -1212,11 +1212,11 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0xd1: {
-        void *var180 = GetGameResources();
-        void *var181 = func_0202ae18();
-        func_0202c288();
-        int var182 = *((unsigned char *)var181 + 0x100d);
-        if (var182 <= 1)
+        void *base = GetGameResources();
+        void *ctx = LinkSession_GetInstance();
+        LinkSession_UpdateMemberCount();
+        int lvl = *((unsigned char *)ctx + 0x100d);
+        if (lvl <= 1)
             return 1;
         func_ov017_0218b664((char*)var180);
         GameState::GetInstance();
@@ -1269,11 +1269,11 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         return 1;
     }
     case 0xd6: {
-        GameState *var187 = GameState::GetInstance();
-        var17.unknown_8_ = func_0201079c((char*)var187);
-        var17.unknown_a_ = func_020107d0((char*)var187);
-        var17.unknown_c_ = func_02010804((char*)var187);
-        func_0206445c((int)arg0, (Struct_02061c04_25 *)arg1, (Struct_02061c04_26 *)arg2);
+        GameState *battle = GameState::GetInstance();
+        lr.fh4 = GameState_GetStoryChapter((char*)battle);
+        lr.fh6 = GameState_GetStoryPart((char*)battle);
+        lr.fh8 = GameState_GetStoryStep((char*)battle);
+        AppendNodeToListField30_0206445c((int)obj, (AppendNode *)msg, (AppendList *)param3);
         return 1;
     }
     case 0xd7: {
@@ -1283,11 +1283,11 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
     }
     case 0xd8: {
         int p1 = *(short *)((char *)msg + 2);
-        void *ctx = func_0202ae18();
-        if (func_0202c508(ctx)) {
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo(ctx)) {
             void *p0 = Zone3D_GetInstance();
             *(short *)((char *)p0 + 0x2700 + REGION_VALUE(0xf4, 0xb4)) = p1;
-            if (CheckField0NonZero_0202b7d8((int *)ctx)) {
+            if (LinkSession_IsActive((int *)ctx)) {
                 SetHalfFieldsAndEnqueueIfActive_021d1c2c(p1, 0);
                 EnqueueEventTagB5_021d1dc0((unsigned short)p1, 0, (int *)&d8Local, 0, 0);
             }
@@ -1378,8 +1378,8 @@ extern "C" ARM int Scenario_RunCommand(void *obj, CmdMsg64 *msg, void *param3) {
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, msg->p1 + 0xbea, msg->p2);
         return 1;
     case 0xe7: {
-        void *var210 = func_0202ae18();
-        if (func_0202c540(var210))
+        void *ctx = LinkSession_GetInstance();
+        if (LinkSession_IsGuest(ctx))
             return 1;
         Scenario_SetFlag(obj, (unsigned char *)obj + 0x8c, 0x796, msg->p1);
         char *battle = (char*)GameState::GetInstance();

@@ -60,14 +60,14 @@ struct Struct_ov000_02164d74_5 {
 
 struct Struct_02010604;
 
-extern "C" void func_ov000_02163524(void*);
-extern "C" void func_ov000_0217feb0(void* arg0, unsigned char arg1, int arg2);
-extern "C" int func_020a35e0(unsigned char*, unsigned char);
-extern "C" void func_ov000_02174a50(void* arg0, int arg1);
-extern "C" struct Struct_ov000_02164d74_4* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void func_02033b88(Struct_02010604*, int);
-extern "C" void func_02089560(char* arg0, char* arg1, char* arg2);
-extern "C" void func_0208936c(char* arg0, char* arg1, char* arg2);
+void GetField02163524(void*);
+extern "C" void func_ov000_0217feb0(void* obj, unsigned char value, int id);
+int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
+extern "C" void func_ov000_02174a50(void* obj, int combatantId);
+struct Combatant02164d74* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
+void InitPackedFields02089560(char* dst, char* buf, char* src);
+void CopyCombatantStats0208936c(char* dst, char* src1, char* src2);
 void ApplyCombatantBuffs(int unused, int combatantId);
 extern "C" void func_ov000_02174738(void* arg0, int arg1);
 extern "C" void func_ov017_021917f0(int arg0, int arg1);
@@ -102,20 +102,20 @@ extern "C" ARM void func_ov000_02164d74(struct Battle02164d74* battle) {
         if (var4 == NULL) {
             continue;
         }
-        var4->unknown_0_.MakeVisible();
-        var4->unknown_c1_0_ |= 3;
-        func_02033b88((Struct_02010604*)var4, 0);
-        var4->unknown_0_.SetField06(arg0->unknown_ec8_);
-        if (arg0->unknown_2a0_->unknown_30_ != 0) {
-            func_02089560((char*)var4->unknown_138_, var4->unknown_130_, var4->unknown_134_);
-            ApplyCombatantBuffs(arg0->unknown_29c_, (short)var3);
+        c->obj3D.MakeVisible();
+        c->visFlags |= 3;
+        GameObject_ForceMotionState((Bytes02033b88*)c, 0);
+        c->obj3D.SetField06(battle->fieldEc8);
+        if (battle->info->field30 != 0) {
+            InitPackedFields02089560((char*)c->stats, c->field130, c->field134);
+            ApplyCombatantBuffs(battle->field29c, (short)i);
         } else {
             func_0208936c((char*)var4->unknown_138_, var4->unknown_130_, var4->unknown_134_);
         }
         if (!(var4->unknown_138_->unknown_14_ & 1)) {
             var4->unknown_18c_ &= ~1;
         } else {
-            func_02033b88((Struct_02010604*)var4, 4);
+            GameObject_ForceMotionState((Bytes02033b88*)c, 4);
         }
         func_ov000_02174738(arg0->unknown_3760_, var3);
         func_ov017_021917f0(var3, 1);

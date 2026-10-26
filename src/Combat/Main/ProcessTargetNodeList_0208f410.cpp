@@ -9,10 +9,10 @@ enum { kListOffset = 0x6fc };
 #endif
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void* func_0208e0a8(void);
+extern "C" void* LootPointList_GetInstance(void);
 
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** obj);
 int LootPointList_AppliesToMap(void* unused, char* str);
 struct S1a0;
 struct Vector3i;
@@ -36,12 +36,12 @@ extern "C" ARM void func_0208f410(Obj0208f410* obj) {
 
     int ov = (int)GetGameResources();
     HeadNode02046b24** headList = *(HeadNode02046b24***)(ov + 0x3000 + kListOffset);
-    if (GetHeadNodeIdOrMinusOne(headList) == 0xa) return;
+    if (FieldTaskQueue_GetCurrentKind(headList) == 0xa) return;
     if (TestFlags04((GameResources*)ov, 2) != 0) return;
 
     void* g = Zone3D_GetInstance();
     char* s = *(char**)((char*)g + 8);
-    void* dataPtr = func_0208e0a8();
+    void* dataPtr = LootPointList_GetInstance();
     if (s == 0) return;
     if (LootPointList_AppliesToMap(dataPtr, s + 5) == 0) return;
 

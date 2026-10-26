@@ -102,10 +102,10 @@ struct Struct_ov017_021a7378_3 {
     char unknown_270_[0x10];
 };
 
-unsigned char* GetFieldIfFlag4_020100f8(char* obj);
+unsigned char* GameState_GetFollowCamera(char* obj);
 MessageWindow* MessageSystem_GetInstance();
 extern "C" FieldGlobals* Zone3D_GetInstance(void);
-CameraState* GetPointerAt0x330_0200ffd0(PointerField330_ffd0* obj);
+CameraState* GameState_GetStarflight(PointerField330_ffd0* obj);
 void SetupAndDispatch0205c904(unsigned char* obj, int value);
 void* TextQueue_GetInstance(void);
 void TextQueue_Reset(Obj020d7aa0* obj);
@@ -118,12 +118,12 @@ int KeyTable_Get(Container020e0310* c, int key);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 extern "C" int func_020457e0(MessageWindow* window);
-CameraParams* GetField0x3f8Address_0200fd0c(GameState* gs);
+CameraParams* GameState_GetZoneTransition(GameState* gs);
 void InitStruct02070378(char* obj);
-void* GetPtrField0x114_02033fa0(void* obj);
+void* GameObject_GetFloorAttribute(void* obj);
 int CheckBits5To9NonZero0204bedc(unsigned short* obj);
 int ConvertColorToDecimalOffset20000(ColorHolder0204bef4* obj);
-void InitAndResetHeader_0219e310(unsigned char* obj, int flag);
+void FieldTask_InitEnterZone(unsigned char* obj, int flag);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void InitAndAppendState61_021a65c4(void* scene, unsigned char kind, int arg);
 extern "C" void func_ov017_021baedc(TailNode020469b4* node, int flag);
@@ -148,10 +148,10 @@ extern const char data_ov017_021d77b2[];
 // Overlay 17, originally func_ov017_021a7378 (USA/EUR 0x021a7378, JPN 0x021a7d20)
 extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
     GameState* gs = GameState::GetInstance();
-    unsigned char* flags = GetFieldIfFlag4_020100f8((char*)gs);
+    unsigned char* flags = GameState_GetFollowCamera((char*)gs);
     MessageWindow* window = MessageSystem_GetInstance();
     FieldGlobals* globals = Zone3D_GetInstance();
-    CameraState* camera = GetPointerAt0x330_0200ffd0((PointerField330_ffd0*)gs);
+    CameraState* camera = GameState_GetStarflight((PointerField330_ffd0*)gs);
     SetupAndDispatch0205c904(self->controls, gs->GetTickCount());
 
     if (self->state == 0) {
@@ -159,7 +159,7 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
         self->savedLayers = (DISPCNT & 0x1f00) >> 8;
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1100;
         func_020a0cc4(IntroResourceSize);
-        ClearByteFlagAt0x19c_020ae38c((unsigned char*)GetPointerAt0x330_0200ffd0((PointerField330_ffd0*)gs));
+        ClearByteFlagAt0x19c_020ae38c((unsigned char*)GameState_GetStarflight((PointerField330_ffd0*)gs));
         FontBankLoader* g = FontBankLoader_GetInstance();
         BlankFunction02094b30(g, 0x205, 0);
         if (AlwaysTrue02094b4c(g)) {
@@ -204,7 +204,7 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
         if (window->busy == 0) {
             ClearFlagBits_020a28b0(flags, 2);
             if (func_020457e0(window) == 0) {
-                CameraParams* params = GetField0x3f8Address_0200fd0c(gs);
+                CameraParams* params = GameState_GetZoneTransition(gs);
                 InitStruct02070378((char*)params);
                 params->flag2 = 1;
                 params->flag7 = 1;
@@ -225,7 +225,7 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
         if (window->busy == 0) {
             ClearFlagBits_020a28b0(flags, 2);
             if (func_020457e0(window) == 0) {
-                void* color = GetPtrField0x114_02033fa0(camera);
+                void* color = GameObject_GetFloorAttribute(camera);
                 if (color != NULL && CheckBits5To9NonZero0204bedc((unsigned short*)color)) {
                     self->kind = 0;
                     self->state = 0x62;
@@ -273,10 +273,10 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
         CameraParams* params;
         TailList020469b4* list = (TailList020469b4*)res->fieldTaskQueue_;
         TailNode020469b4* resultNode = (TailNode020469b4*)res->unknown_ptr_array_371c[6];
-        params = GetField0x3f8Address_0200fd0c(gs);
+        params = GameState_GetZoneTransition(gs);
         InitStruct02070378((char*)params);
         params->flag7 = 1;
-        void* color = GetPtrField0x114_02033fa0(camera);
+        void* color = GameObject_GetFloorAttribute(camera);
         switch (self->kind) {
         case 0: {
             params->flag61 = 1;
@@ -286,9 +286,9 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
             params->height = 0;
             params->offset = 0x100000;
             globals->cameraTarget = camera->position;
-            CallFunc0200fbb4AtField0x3f8_0200fcfc(gs, params);
+            GameState_SetZoneTransition(gs, params);
             TailNode020469b4* node = (TailNode020469b4*)res->unknown_ptr_array_3700[3];
-            InitAndResetHeader_0219e310((unsigned char*)node, 0);
+            FieldTask_InitEnterZone((unsigned char*)node, 0);
             AppendNodeToTail(list, node);
             InitAndAppendState61_021a65c4(res, 1, 0);
             break;
@@ -323,7 +323,7 @@ extern "C" ARM void FieldTask_StarflightPrompt(BattleIntro* self, int arg) {
         if (window->busy == 0) {
             MessageSystem_Reset((char*)window);
             SetupGlobalObjType3AndInitSelfPointer_0205ce50(self->controls);
-            SetByteFlagAt0x19c_020ae380((unsigned char*)GetPointerAt0x330_0200ffd0((PointerField330_ffd0*)gs));
+            SetByteFlagAt0x19c_020ae380((unsigned char*)GameState_GetStarflight((PointerField330_ffd0*)gs));
             func_ov017_021a79f0(self);
             self->done = 1;
         }

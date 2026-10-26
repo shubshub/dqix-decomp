@@ -31,9 +31,9 @@ struct Struct_ov012_02184654_9 {
     short unknown_0_[10];
     Struct_ov012_02184654_8 unknown_14_;
 };
-struct Struct_02072a68_2;
-struct Struct_0201099c_3;
-extern "C" void* func_0202ae18();
+struct TableA68;
+struct Container020e0310;
+extern "C" void* LinkSession_GetInstance();
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char*);
 int CalculateAge_02098f20(int, int, int);
 void* FindEntryByKey_02072a68(TableA68*, int);
@@ -45,18 +45,18 @@ static inline Struct_ov012_02184654* inline_ov012_02184654(GameState* arg0) {
 }
 
 // USA: func_ov012_02184654
-extern "C" ARM void func_ov012_02184654(char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov012_02184654* var1 = inline_ov012_02184654(var0);
-    signed char var2[3];
-    memcpy(var2, func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), 113), 3);
-    func_0202ae18();
-    unsigned char* var3 = 0;
-    GameObject* var4 = var0->GetProtagonist();
-    if (var4)
-        var3 = func_02053c6c((unsigned char*)var4);
-    if (!var3) return;
-    *(void**)(arg0 + 0x1408) = var3 + 0x3c;
+extern "C" ARM void func_ov012_02184654(char* editor) {
+    GameState* gameState = GameState::GetInstance();
+    ProfileHeader02184654* profile = GetProfile02184654(gameState);
+    signed char padding[3];
+    memcpy(padding, FindEntryByKey_02072a68((TableA68*)(editor + 0x1314), 113), 3);
+    LinkSession_GetInstance();
+    unsigned char* characterData = 0;
+    GameObject* protagonist = gameState->GetProtagonist();
+    if (protagonist)
+        characterData = GetFieldAt0x150_02053c6c((unsigned char*)protagonist);
+    if (!characterData) return;
+    *(void**)(editor + 0x1408) = characterData + 0x3c;
 
     if (!var1->unknown_3_2_) {
         var1->unknown_0_0_ = 2000;
@@ -171,7 +171,7 @@ struct Struct_ov012_02184654_7
     char unknown_1440_[0x40];
 };
 
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
 int CalculateAge_02098f20(int year, int month, int day);
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
@@ -191,14 +191,14 @@ static inline Struct_ov012_02184654_3* inline_ov012_02184654_2(Struct_ov012_0218
 // USA: func_ov012_02184654
 extern "C" ARM void func_ov012_02184654(Struct_ov012_02184654_7* arg0)
 {
-    GameState* var11 = GameState::GetInstance();
-    Struct_ov012_02184654_2* var12 = inline_ov012_02184654(var11);
-    func_0202ae18();
-    Struct_ov012_02184654_4* var13 = 0;
-    Struct_ov012_02184654_6* var14 = (Struct_ov012_02184654_6*)var11->GetProtagonist();
-    if (var14 != 0)
-        var13 = (Struct_ov012_02184654_4*)func_02053c6c((unsigned char*)var14);
-    if (var13 == 0)
+    GameState* gameState = GameState::GetInstance();
+    Profile02184654* profile = GetProfile02184654(gameState);
+    LinkSession_GetInstance();
+    Field02184654* field = 0;
+    Member02184654* protagonist = (Member02184654*)gameState->GetProtagonist();
+    if (protagonist != 0)
+        field = (Field02184654*)GetFieldAt0x150_02053c6c((unsigned char*)protagonist);
+    if (field == 0)
         return;
 
     arg0->unknown_13b0_ = (char*)var13 + 0x3c;

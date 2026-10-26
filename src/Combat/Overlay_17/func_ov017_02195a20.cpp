@@ -10,17 +10,17 @@ struct Struct_02015438;
 
 unsigned long long GetCurrentTimestamp(void);
 FlagWord02046708* GlobalFlags_GetInstance();
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
-extern "C" void* func_0202ae18(void);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" void* LinkSession_GetInstance(void);
 void G3X_Reset();
 extern "C" void G3X_ResetMtxStack();
 extern "C" void func_ov017_02195ecc(unsigned char* obj, int mode);
 void MaybeUpdateOrDispatchEntry_021959ec(void* obj);
 void SetActiveDmaChannel020c3a0c(int ch);
 extern "C" void func_ov017_02195bbc(unsigned char* obj);
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
-extern "C" int func_0202c508(void* obj);
-extern "C" int func_0202c540(void* obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int LinkSession_IsGuest(void* obj);
 void DispatchByFlag020d9834(int flag);
 extern "C" void func_ov017_021960b8(unsigned char* obj);
 
@@ -33,7 +33,7 @@ extern "C" ARM void func_ov017_02195a20(unsigned char* arg0) {
 #endif
     GetCurrentTimestamp();
     FlagWord02046708* flags = GlobalFlags_GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     G3X_Reset();
     G3X_ResetMtxStack();
     RenderConfig::Reset();
@@ -52,23 +52,23 @@ extern "C" ARM void func_ov017_02195a20(unsigned char* arg0) {
     SendQueuedDataToGeometryFifo();
     LightingManager::GetInstance()->SubmitToRenderConfig();
 
-    int var2 = func_02046708(var0, 0x800000);
-    if (var2) {
-        func_020c3a0c(-1);
+    int useDma = FlagWord_TestBits(flags, 0x800000);
+    if (useDma) {
+        SetActiveDmaChannel020c3a0c(-1);
     }
     func_ov017_02195bbc(arg0);
     if (var2) {
         func_020c3a0c(0);
     }
-    if (func_02046b24(*(Struct_02015438***)(arg0 + Enum_ov017_02195a20_14076)) == 0x16) {
-        func_ov017_02195ecc(arg0, 2);
+    if (FieldTaskQueue_GetCurrentKind(*(HeadNode02046b24***)(obj + regionalList)) == 0x16) {
+        func_ov017_02195ecc(obj, 2);
     }
     if (var2) {
         while (1) {
-            int var3 = VCOUNT;
-            if (func_0202c508(var1) && var3 < 0xd2) break;
-            if (func_0202c540(var1) && (var3 < 0xbe || var3 > 0xf0)) break;
-            func_020d9834(0);
+            int line = VCOUNT;
+            if (LinkSession_IsHostOrSolo(search) && line < 0xd2) break;
+            if (LinkSession_IsGuest(search) && (line < 0xbe || line > 0xf0)) break;
+            DispatchByFlag020d9834(0);
         }
     }
     func_ov017_021960b8(arg0);

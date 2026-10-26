@@ -9,9 +9,9 @@ enum { Enum_ov017_021ca9bc_1816 = 0x508 };
 enum { Enum_ov017_021ca9bc_1816 = 0x718 };
 #endif
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+extern "C" void* func_ov017_021b8478(void* obj);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021ca9bc_5 {
     char unknown_0_[2];
@@ -94,9 +94,9 @@ struct Struct_ov017_021ca9bc_4 {
 // USA: func_ov017_021ca9bc
 extern "C" ARM void func_ov017_021ca9bc(struct Struct_ov017_021ca9bc_6* arg0) {
     GameState::GetInstance();
-    unsigned char* var0 = *(unsigned char**)((char*)GetGameResources() + 0x3000 + Enum_ov017_021ca9bc_1816);
-    struct Struct_ov017_021ca9bc_4* var1 = (struct Struct_ov017_021ca9bc_4*)func_ov017_021b8478(var0);
-    void* var2 = func_0202ae24();
+    unsigned char* table = *(unsigned char**)((char*)GetGameResources() + 0x3000 + RegionOffset718);
+    struct Obj021ca9bc* obj = (struct Obj021ca9bc*)func_ov017_021b8478(table);
+    void* data = LinkMessageQueue_GetInstance();
 
     for (int var3 = 0; var3 < arg0->unknown_1_4_; var3++) {
         struct Struct_ov017_021ca9bc_5* var4 = &arg0->unknown_4_[var3];

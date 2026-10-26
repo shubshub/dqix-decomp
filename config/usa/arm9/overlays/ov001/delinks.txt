@@ -417,7 +417,7 @@ src/Combat/Overlay_1/func_ov001_02163284.cpp:
     complete
     .text start:0x02163284 end:0x021632a8
 
-src/Combat/Overlay_1/func_ov001_02161d8c.cpp:
+src/Combat/Overlay_1/SetFieldFromGlobalCheck_02161d8c.cpp:
     complete
     .text start:0x02161d8c end:0x02161db0
 
@@ -509,7 +509,7 @@ src/Combat/Overlay_1/func_ov001_02161900.cpp:
     complete
     .text start:0x02161900 end:0x02161930
 
-src/Combat/Overlay_1/func_ov001_021618d0.cpp:
+src/Combat/Overlay_1/SetByteFieldFromBattle_021618d0.cpp:
     complete
     .text start:0x021618d0 end:0x02161900
 
@@ -745,7 +745,7 @@ src/Combat/Overlay_1/func_ov001_02161d54.cpp:
     complete
     .text start:0x02161d54 end:0x02161d8c
 
-src/Combat/Overlay_1/func_ov001_02160a00.cpp:
+src/Combat/Overlay_1/SetFlagFromSearchState_02160a00.cpp:
     complete
     .text start:0x02160a00 end:0x02160a48
 
@@ -865,7 +865,7 @@ src/Combat/Overlay_1/func_ov001_0215a608.cpp:
     complete
     .text start:0x0215a608 end:0x0215a654
 
-src/Combat/Overlay_1/func_ov001_0215a79c.cpp:
+src/Combat/Overlay_1/ResetGlobalStateArrays_0215a79c.cpp:
     complete
     .text start:0x0215a79c end:0x0215a818
 
@@ -969,7 +969,7 @@ src/Combat/Overlay_1/NotifyBitTestResult_021632e4.cpp:
     complete
     .text start:0x021632e4 end:0x02163334
 
-src/Combat/Overlay_1/func_ov001_02162f8c.cpp:
+src/Combat/Overlay_1/NotifyOrSetHeadMatchBit_02162f8c.cpp:
     complete
     .text start:0x02162f8c end:0x02163008
 
@@ -1201,7 +1201,7 @@ src/Combat/Overlay_1/func_ov001_0215d768.cpp:
     complete
     .text start:0x0215d768 end:0x0215d784
 
-src/Combat/Overlay_1/func_ov001_0215e14c.cpp:
+src/Combat/Overlay_1/CaptureVecsAndDispatchEvent_0215e14c.cpp:
     complete
     .text start:0x0215e14c end:0x0215e1cc
 
@@ -1333,7 +1333,7 @@ src/Combat/Overlay_1/func_ov001_0215a9b4.cpp:
     complete
     .text start:0x0215a9b4 end:0x0215aa14
 
-src/Combat/Overlay_1/func_ov001_0215af8c.cpp:
+src/Combat/Overlay_1/Func_0215af8c.cpp:
     complete
     .text start:0x0215af8c end:0x0215afec
 
@@ -1349,7 +1349,7 @@ src/Combat/Overlay_1/Func_02163dec.cpp:
     complete
     .text start:0x02163dec end:0x02163e50
 
-src/Combat/Overlay_1/func_ov001_021640b4.cpp:
+src/Combat/Overlay_1/Func_021640b4.cpp:
     complete
     .text start:0x021640b4 end:0x02164114
 
@@ -1497,7 +1497,7 @@ src/Combat/Overlay_1/func_ov001_0215d168.cpp:
     complete
     .text start:0x0215d168 end:0x0215d19c
 
-src/Combat/Overlay_1/func_ov001_02162d3c.cpp:
+src/Combat/Overlay_1/SetFlagFromField5cb0Threshold_02162d3c.cpp:
     complete
     .text start:0x02162d3c end:0x02162d68
 

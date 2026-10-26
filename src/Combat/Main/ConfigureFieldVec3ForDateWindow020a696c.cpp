@@ -7,14 +7,14 @@ enum { kCodeOffset = 0x2786, kXTarget = 0x278c, kYTarget = 0x2790, kXSource = 0x
 #include "GameState/GameState.h"
 
 extern "C" void* Zone3D_GetInstance(GameState* battleStruct);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 void SetVec3At0x0020a6aa4(Vector3i* obj, int x, int y, int z);
 
 // USA: func_020a696c
 ARM void ConfigureFieldVec3ForDateWindow_020a696c(void* unused0, int value1, int value2) {
     GameState* battleStruct = GameState::GetInstance();
     void* base = Zone3D_GetInstance(battleStruct);
-    void* fieldPtr = GetField0x3f8Address_0200fd0c(battleStruct);
+    void* fieldPtr = GameState_GetZoneTransition(battleStruct);
 
     if (value2 == 0x170c) {
         if ((value1 >= 0x4e20 && value1 <= 0x752f) || value1 == 0x76c) {

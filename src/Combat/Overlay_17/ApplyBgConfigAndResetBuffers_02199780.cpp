@@ -5,7 +5,7 @@
 
 
 struct Struct020dfc40;
-void ResetAndDetach020dfc6c(struct Struct020dfc40* p);
+void KeyTable_Destroy(struct Struct020dfc40* p);
 
 struct Entry_02199684 { unsigned char pad[0x14]; int val; unsigned char pad2[0x20 - 0x18]; };
 void FillEntriesEncoded_02199684(Entry_02199684* arr, int count, int value);
@@ -90,11 +90,11 @@ extern "C" ARM void func_ov017_02199780(unsigned char* self) {
 
 #if defined(jpn)
 		if (*(int*)(self + 0x3000 + 0xe64) != 0) {
-			ResetAndDetach020dfc6c((Struct020dfc40*)*(int*)(self + 0x3000 + 0xe64));
+			KeyTable_Destroy((Struct020dfc40*)*(int*)(self + 0x3000 + 0xe64));
 			*(int*)(self + 0x3000 + 0xe64) = 0;
 #else
 		if (*(int*)(self + 0x4000 + 0x84) != 0) {
-			ResetAndDetach020dfc6c((Struct020dfc40*)*(int*)(self + 0x4000 + 0x84));
+			KeyTable_Destroy((Struct020dfc40*)*(int*)(self + 0x4000 + 0x84));
 			*(int*)(self + 0x4000 + 0x84) = 0;
 #endif
 		}

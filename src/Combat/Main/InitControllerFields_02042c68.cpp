@@ -12,7 +12,7 @@ void Init020e2bd8(struct Struct_020e2bd8* obj, int arg1, int arg2);
 struct Foo02042fcc;
 void ResetFoo02042fcc(struct Foo02042fcc* p);
 
-void InitEightSubStructs_0202f1a4(char* obj);
+void WindowFrame_Init(char* obj);
 
 struct Holder02042c24;
 void SetSubstructXY02042c24(struct Holder02042c24* holder, int x, int y);
@@ -28,7 +28,7 @@ void SetRingBufferSlot02045824(struct RingBuffer02045824* rb, int value, int ind
 struct Rect02042c54;
 void SetRect02042c54(struct Rect02042c54* rect, int left, int top, int right, int bottom);
 
-void ClearField0x0_020bc078(int* field);
+void NNS_SndHandleInit(int* field);
 
 extern int data_02107820;
 
@@ -82,7 +82,7 @@ extern "C" ARM void func_02042c68(char* self) {
 
     ResetFoo02042fcc((struct Foo02042fcc*)(self + REGION_OFFSET(0x7e4, 0x914)));
     ResetFoo02042fcc((struct Foo02042fcc*)(self + REGION_OFFSET(0x800, 0x930)));
-    InitEightSubStructs_0202f1a4(self + REGION_OFFSET(0x1804, 0x19e0));
+    WindowFrame_Init(self + REGION_OFFSET(0x1804, 0x19e0));
 
     *(void**)(self + REGION_OFFSET(0x1c44, 0x1e20)) = (void*)(self + REGION_OFFSET(0x7e4, 0x914));
     SetSubstructXY02042c24((struct Holder02042c24*)(self + REGION_OFFSET(0x1804, 0x19e0)), 0, 0x80);
@@ -171,7 +171,7 @@ extern "C" ARM void func_02042c68(char* self) {
 #else
     *(unsigned char*)(self + 0x19ce) = 0;
 #endif
-    ClearField0x0_020bc078(&data_02107820);
+    NNS_SndHandleInit(&data_02107820);
 
 #if defined(jpn)
     *(unsigned char*)(self + 0x17ff) &= ~4;

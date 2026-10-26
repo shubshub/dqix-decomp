@@ -14,7 +14,7 @@ extern int data_ov017_021d83f0;
 
 // Overlay 17, originally func_ov017_021b228c (USA/EUR 0x021b228c, JPN 0x021b29a4)
 extern "C" ARM void FieldTask_RunMenuScreen(unsigned char* self) {
-    GameObject* combatant = GameState::GetInstance()->GetUnknownGameObject();
+    GameObject* combatant = GameState::GetInstance()->GetLeader();
     if (combatant != NULL) {
         GameObject_DisableControl((struct Obj020397cc*)combatant, 1);
     }

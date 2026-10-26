@@ -59,11 +59,11 @@ extern "C" void func_0206b104(void* obj);
 void MessageSystem_Reset(char*);
 struct Struct02065758;
 int UpdateCounterAndFlag02065758(Struct02065758*, int);
-void UpdateTimedState0202f380(void* obj, int step);
+void WindowFrame_Update(void* obj, int step);
 struct CE28Obj;
 int IsField440Empty_0205ce28(CE28Obj*);
 struct Field440Obj0202f6a4;
-void SetupField440Type1(Field440Obj0202f6a4*);
+void WindowFrame_Open(Field440Obj0202f6a4*);
 struct Ctx0206b61c;
 void ProcessTextTokens0206b61c(Ctx0206b61c*);
 extern "C" int func_020657c8(void* obj, int step);
@@ -98,7 +98,7 @@ unsigned char* GetGlobal02109418_02094d6c();
 struct GetTableByteOrFFData;
 int GetTableByteOrFF_020965ac(GetTableByteOrFFData*, unsigned char);
 void RegisterSlotA020cf0fc(int);
-void RegisterSlotB020cf1a8(int);
+void RTC_GetTime(int);
 struct Struct0209c830;
 void SetValueAndActivate0209c830(Struct0209c830*, int);
 void ClearField0xd0AndSetFlag0x1IfByte0xd4Not2_0208be94(unsigned char*);
@@ -142,10 +142,10 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
     arg0->func_020656e4(var9);
     if (func_02065758((Struct_02065758*)var0, var9) != 0) return;
 
-    if (arg0->unknown_19b1_ != 0) {
-        func_0202f380(var0 + REGION_VALUE(0x1804, 0x19e0), var9);
-        if (func_0205ce28((Struct_0205ce28_2*)(var0 + REGION_VALUE(0x1804, 0x19e0))) != 0) {
-            func_0202f6a4((Struct_0202f6a4*)(var0 + REGION_VALUE(0x1804, 0x19e0)));
+    if (message->b19b1 != 0) {
+        WindowFrame_Update(self + REGION_VALUE(0x1804, 0x19e0), step);
+        if (IsField440Empty_0205ce28((CE28Obj*)(self + REGION_VALUE(0x1804, 0x19e0))) != 0) {
+            WindowFrame_Open((Field440Obj0202f6a4*)(self + REGION_VALUE(0x1804, 0x19e0)));
         }
         unsigned char* var10 = *(unsigned char**)(var0 + REGION_VALUE(0x1c44, 0x1e20));
         int var11;
@@ -399,16 +399,16 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                 *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
                 arg0->func_02045688();
                 return;
-            } else if (var1 == REGION_VALUE(0xff2f, 0xff2d)) {
-                unsigned char* var23 = (unsigned char*)GameState::GetInstance()->GetUnknownGameObject();
-                void* var24 = func_0203dce4((Struct_0203dce4_2*)func_0203cf4c(), arg0->unknown_1838_);
-                if (var23 != 0 && var24 != 0) {
-                    var4 = *(struct Struct_0203de84*)(var23 + 0x44);
-                    func_020406f8(&var8, (Struct_0203de84_2*)var24);
-                    var5 = var8;
-                    arg0->unknown_1844_ = fix32ReduceAngle0To2Pi(fix32_Atan2(var4.unknown_0_[0] - var5.unknown_0_[0], var4.unknown_0_[2] - var5.unknown_0_[2]));
-                    arg0->unknown_19b6_ = 1;
-                    arg0->func_02045688();
+            } else if (tok == REGION_VALUE(0xff2f, 0xff2d)) {
+                unsigned char* who = (unsigned char*)GameState::GetInstance()->GetLeader();
+                void* node = GetEntryUnlessFlag0x8000_0203dce4((EntryList_203dce4*)GetGlobalPtr021075f4_0203cf4c(), message->selectedEntry);
+                if (who != 0 && node != 0) {
+                    here = *(struct Vec3_020406f8*)(who + 0x44);
+                    SelectVec3FromSources020406f8(&src, (Node020406f8*)node);
+                    dst = src;
+                    message->pendingValue = fix32ReduceAngle0To2Pi(fix32_Atan2(here.v[0] - dst.v[0], here.v[2] - dst.v[2]));
+                    message->pendingValueActive = 1;
+                    message->ProcessPendingFlag02045688();
                 }
                 *(int*)(var0 + REGION_VALUE(0x44, 0x78)) = *(int*)(var0 + REGION_VALUE(0x44, 0x78)) + 1;
                 return;
@@ -489,7 +489,7 @@ extern "C" ARM void func_02065990(Struct_02021b84* arg0, int arg1) {
                     unsigned char* g = GetGlobal02109418_02094d6c();
                     int idx = GetTableByteOrFF_020965ac((GetTableByteOrFFData*)g, (unsigned char)*(short*)(self + REGION_VALUE(0x1776, 0x1948)));
                     RegisterSlotA020cf0fc((int)&sa);
-                    RegisterSlotB020cf1a8((int)&sb);
+                    RTC_GetTime((int)&sb);
                     packed.b.a = sa.f0;
                     packed.b.b = sa.f4;
                     packed.b.c = sa.f8;

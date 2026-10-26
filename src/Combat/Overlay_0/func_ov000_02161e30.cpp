@@ -68,50 +68,50 @@ struct Struct_ov000_0215ab88 {
     unsigned short unknown_188_, unknown_18a_;
     unsigned char unknown_18c_, unknown_18d_;
 };
-extern "C" int* func_0202ae18();
-extern "C" Struct_02048934* func_02070fd0(Struct_02070b6c_3*, int);
-extern "C" Struct_02048850_2* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" Struct_ov000_0215ab88* func_0200fea4(GameState*, int);
-extern "C" void func_ov000_021620d8(Struct_ov000_02161e30_3*);
-extern "C" void func_ov000_02167c28(unsigned char*, int);
-extern "C" void func_020891cc(Struct_ov000_02161e30_2*);
-extern "C" void func_02089630(Struct_ov000_02161e30_2*, void*, int);
-extern "C" void func_02048850(Struct_02048850*, Struct_02048850_2*);
-extern "C" void func_02048934(void*, Struct_02048934*, Random*);
-extern "C" int func_ov000_02161bb8(Struct_ov000_02161e30_3*);
-extern "C" void func_ov000_02161bec(unsigned char*);
-static inline void* inline_ov000_02161e30(Struct_02048934* arg0) { return arg0->unknown_2c_; }
-static inline int inline_ov000_02161e30_2(Struct_0208ab34_3* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_1_6_; }
+extern "C" int* LinkSession_GetInstance();
+FieldStruct02048934* SearchWithLow15Comparator02070fd0(Container02070e60*, int);
+Param02048850* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+Combatant* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
+void ZeroStruct021620d8(ZeroableStruct021620d8*);
+void FindOrAssignSlot02167c28(unsigned char*, int);
+extern "C" void func_020891cc(CombatBlob*);
+extern "C" void func_02089630(CombatBlob*, void*, int);
+void SetupFieldsFromParam02048850(Obj02048850*, Param02048850*);
+void SetRandomizedShort0x18802048934(void*, FieldStruct02048934*, Random*);
+extern "C" int func_ov000_02161bb8(ZeroableStruct021620d8*);
+void IncrementByteCounterWrapAt0x12_ov000_02161bec(unsigned char*);
+static inline void* GetEntryPayload(FieldStruct02048934* entry) { return entry->payload; }
+static inline int GetGroupCount(PartyRoster* roster) { SDK_NULL_ASSERT(roster); return roster->groupCount; }
 
 static inline unsigned char inline_ov000_02161e30_3(Struct_ov000_0215ab88* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_138_->unknown_25_; }
 
 // USA: func_ov000_02161e30
-extern "C" ARM void func_ov000_02161e30(Struct_ov000_02161e30* arg0, int arg1, int arg2) {
-    Struct_02048934* var0;
-    Struct_ov000_0215ab88* var1;
-    Struct_0208ab34_3* const var2 = &arg0->unknown_29c_->unknown_81b0_;
-    GameState* var3 = GameState::GetInstance();
-    func_0202ae18();
-    Struct_ov000_02161e30_6* var4 = arg0->unknown_2a0_;
-    Struct_0206f01c_2* var5 = (Struct_0206f01c_2*)arg0->unknown_2a0_->unknown_678_;
-    var0 = func_02070fd0((Struct_02070b6c_3*)var4->unknown_684_, arg2);
-    Struct_02048850_2* var6 = func_0206f4f0(var5, (short)arg2);
-    if (!var0 || !var6) return;
-    var1 = func_0200fea4(var3, arg1);
-    int var7 = var1->unknown_17c_;
-    var2->unknown_0_ -= var2->unknown_4_[var7].unknown_a_0_ - 1;
-    var2->unknown_1_0_ -= var2->unknown_4_[var7].unknown_a_4_ - 1;
-    memset(&var2->unknown_4_[var7], 0, sizeof(Struct_ov000_02161e30_4));
-    var2->unknown_4_[var7].unknown_a_4_ = 1;
-    var2->unknown_4_[var7].unknown_a_0_ = 1;
-    var2->unknown_4_[var7].unknown_0_ = arg2;
-    var2->unknown_4_[var7].unknown_2_ = arg1 - 0xc0;
-    int var8 = 0;
-    int var9 = 0;
-    for (int var10 = 0; var10 < var2->unknown_1_6_; var10++) {
-        if (arg2 == var2->unknown_4c_[var10].unknown_2_) {
-            var9 = var10;
-            var8 = 1;
+extern "C" ARM void func_ov000_02161e30(BattleState* state, int id, int key) {
+    FieldStruct02048934* entry;
+    Combatant* actor;
+    PartyRoster* const roster = &state->mirror->roster;
+    GameState* game = GameState::GetInstance();
+    LinkSession_GetInstance();
+    BattleResources* resources = state->resources;
+    BinarySearchByComparatorStruct* params = (BinarySearchByComparatorStruct*)state->resources->params;
+    entry = SearchWithLow15Comparator02070fd0((Container02070e60*)resources->entries, key);
+    Param02048850* param = SearchWithComparator0206f4f0(params, (short)key);
+    if (!entry || !param) return;
+    actor = GetCombatantWithFlag0x400_0200fea4(game, id);
+    int group = actor->group;
+    roster->count -= roster->slots[group].count - 1;
+    roster->memberCount -= roster->slots[group].mode - 1;
+    memset(&roster->slots[group], 0, sizeof(PartySlot));
+    roster->slots[group].mode = 1;
+    roster->slots[group].count = 1;
+    roster->slots[group].key = key;
+    roster->slots[group].combatant = id - 0xc0;
+    int found = 0;
+    int index = 0;
+    for (int i = 0; i < roster->groupCount; i++) {
+        if (key == roster->groups[i].key) {
+            index = i;
+            found = 1;
             break;
         }
     }

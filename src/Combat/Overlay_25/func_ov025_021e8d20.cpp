@@ -139,8 +139,8 @@ extern "C" ARM void func_ov025_021e8d20(char* arg0, char* arg1) {
             flag = 1;
             void* obj = ((GameState*)gs)->GetGameObjectByIndex(first->id);
             if (obj != 0) {
-                int a = ((Object3D*)obj)->GetField78();
-                int b = ((Object3D*)obj)->GetField7a();
+                int a = ((Object3D*)obj)->GetSoundGroup();
+                int b = ((Object3D*)obj)->GetSoundArchive();
                 SePlayer_LoadExtraArchiveB(&g_sePlayer, a, b);
             }
         }

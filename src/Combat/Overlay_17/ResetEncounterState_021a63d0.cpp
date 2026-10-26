@@ -4,19 +4,16 @@
 #include "GameState/GameState.h"
 #include "Grotto/Main/GrottoStruct.h"
 
-#if defined(jpn)
-#define func_020daf90 func_020dc998
-#endif
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void SpriteContext_DrawSprite(void* a, void* b);
 
-int GetIntField0x260_02039750(void* obj);
+int GameObject_GetGestureSlot(void* obj);
 int MessageSystem_GetInstance();
-extern "C" void* func_020daf90(void);
-int IsField0Null_02046b08(void** obj);
+extern "C" void* ObjLoading_GetInstance(void);
+int FieldTaskQueue_IsEmpty(void** obj);
 
 struct Something02015a2c;
 int CheckSlotsForFlagState02015a2c(struct Something02015a2c* obj);
@@ -73,11 +70,11 @@ extern "C" ARM void func_ov017_021a63d0(unsigned char* base) {
     if (*(int*)(base + OFF_41c0) == 0) return;
     if (*(int*)(base + OFF_41b4) == 0) return;
 
-    void* searchObj = func_0202ae18();
-    int f260 = GetIntField0x260_02039750(GameState::GetInstance()->GetProtagonist());
+    void* searchObj = LinkSession_GetInstance();
+    int f260 = GameObject_GetGestureSlot(GameState::GetInstance()->GetProtagonist());
     int glob1c = MessageSystem_GetInstance();
     void* g = Zone3D_GetInstance();
-    void* ctx = func_020daf90();
+    void* ctx = ObjLoading_GetInstance();
 
     if (GameState::GetInstance()->GetGrottoStruct()->unknown_0[0] == 0) return;
 
@@ -85,10 +82,10 @@ extern "C" ARM void func_ov017_021a63d0(unsigned char* base) {
     if (f4080 != 0) return;
     if (f260 != -1) return;
 
-    if (!IsField0Null_02046b08(*(void***)(base + OFF_36fc))) return;
-    if (func_0202c540(searchObj)) return;
+    if (!FieldTaskQueue_IsEmpty(*(void***)(base + OFF_36fc))) return;
+    if (LinkSession_IsGuest(searchObj)) return;
 
-    if (IsGlobalU16InRange_020117f0(GameState::GetInstance()) != 0) return;
+    if (GameState_IsInGrotto(GameState::GetInstance()) != 0) return;
     if (*(int*)((char*)glob1c + OFF_998) != 0) return;
     if (CheckSlotsForFlagState02015a2c((struct Something02015a2c*)g)) return;
     if (GetField0x50_020db2d4(ctx)) return;

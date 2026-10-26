@@ -25,7 +25,7 @@ src/Combat/Overlay_26/func_ov026_021d8b98.cpp:
     .text start:0x021d8b98 end:0x021d8ba0
 
 
-src/Combat/Overlay_28/Trans_021d8a40.cpp:
+src/Combat/Overlay_30/func_ov030_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a78
 

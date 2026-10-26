@@ -15,8 +15,8 @@ enum { ResourceFlag = 0x42e8, GrottoReset = 0x2794 };
 #endif
 
 struct SearchStruct;
-extern "C" struct SearchStruct* func_0202ae18(void);
-extern "C" int func_0202c508(struct SearchStruct* obj);
+extern "C" struct SearchStruct* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(struct SearchStruct* obj);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 extern "C" int func_ov017_021959b4(void);
@@ -48,7 +48,7 @@ extern int g_sePlayer;
 extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
     GameState* battleStruct = GameState::GetInstance();
     GameResources* ov = GetGameResources();
-    struct SearchStruct* search = func_0202ae18();
+    struct SearchStruct* search = LinkSession_GetInstance();
     void* reset = TextQueue_GetInstance();
 
     GameObject* a = battleStruct->GetPartyMemberByIndex(obj->partyMember);
@@ -104,7 +104,7 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
             obj->step = 5;
             return;
         }
-        if (func_0202c508(search)) {
+        if (LinkSession_IsHostOrSolo(search)) {
             int fv2 = GameState_GetLeaderIndex(battleStruct);
             int ret = func_ov017_021a23e4((char*)ov, fv2, 0, obj->monsterId);
             obj->summonedId = (unsigned short)ret;
@@ -143,7 +143,7 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
             obj->timer -= v;
             return;
         }
-        GameObject* combatant = battleStruct->GetMaybeFieldMonsterByIndex(obj->summonedIndex);
+        GameObject* combatant = battleStruct->GetFieldMonsterByIndex(obj->summonedIndex);
         if (obj->summonedIndex > 0 && combatant != NULL) {
             if (((Object3D*)((struct BitFlags02037170*)combatant))->HasAnimationStopped() == 0) {
                 if (((Object3D*)((struct BitFlags02037180*)combatant))->HasAnimationReachedEnd() == 0) {

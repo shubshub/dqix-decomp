@@ -7,7 +7,6 @@
 
 #if defined(jpn)
 #define func_020d84f8 func_020d9e5c
-#define func_020d8524 func_020d9e88
 
 #define func_020ca95c func_020cc428
 
@@ -33,7 +32,7 @@ extern "C"
     // Zero memory and flush cache
     void func_020d84f8(void*, unsigned);
     // another memcpy-style function, cleans/invalidates the cache in destination after
-    unsigned int func_020d8524(void*, const void*, unsigned);
+    unsigned int CopyAndFlushCache(void*, const void*, unsigned);
 
     void DecompressA(Decompressor*, const void*, unsigned);
     void DecompressB(Decompressor*, const void*, unsigned);
@@ -127,7 +126,7 @@ bool Decompressor::ProcessBytes(const void* input, unsigned int inputLength)
         default:
             if (inputLength >= remainingOutputBytes)
                 inputLength = remainingOutputBytes;
-            remainingOutputBytes -= func_020d8524(writeStart + probablyDecompressedSize - remainingOutputBytes, input, inputLength);
+            remainingOutputBytes -= CopyAndFlushCache(writeStart + probablyDecompressedSize - remainingOutputBytes, input, inputLength);
             break;
         }
         CleanInvalidateCacheRange(writeStart, writeOutputPtr - writeStart);

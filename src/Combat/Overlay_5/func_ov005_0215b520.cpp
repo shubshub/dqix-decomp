@@ -4,9 +4,6 @@
 #include "Graphics/Vector.h"
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_020c51a4 func_020c6c70
-#endif
 
 #if defined(jpn)
 #define REGION(j,u) (j)
@@ -21,14 +18,14 @@ struct Struct_ov005_02153ba4_2 {
     int unknown_4fc_;
 };
 
-extern "C" void func_020c51a4(int arg0);
+extern "C" void G3_MultMtx43(int cmd);
 
 struct BackgroundResourceEntry;
 void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 struct BackgroundGraphics;
 void Background_ClearMap(struct BackgroundGraphics* obj, void* p);
 extern "C" void Background_FlushMap(void* p, int flag);
-extern "C" void func_02047554(void* obj, int val, int param1);
+extern "C" void SprSprite_DrawGroup(void* obj, int val, int param1);
 extern "C" void func_ov005_0215792c(void* obj, unsigned char mode);
 extern "C" void func_ov005_021579ec(void* obj, unsigned int a, unsigned char b);
 extern "C" void func_ov005_02154d34(void* obj, int a, int b);
@@ -131,16 +128,16 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_TRANS = (arg0->unknown_3de2_ + 0x7f) << 12;
                 G3_MTX_TRANS = var8;
                 G3_MTX_TRANS = -0x200000;
-                func_02047554(&arg0->unknown_1a70_[var7 + 4], 0, 1);
+                SprSprite_DrawGroup(&self->models[k + 4], 0, 1);
                 G3_MTX_POP = 1;
                 G3_MTX_PUSH = 0;
                 G3_MTX_TRANS = (arg0->unknown_3de2_ + 0x100) << 12;
                 G3_MTX_TRANS = var8;
                 G3_MTX_TRANS = -0x200000;
-                Matrix4x3 var9;
-                var9 = RotationMatrixY(0x3244);
-                func_020c51a4((int)&var9);
-                func_02047554(&arg0->unknown_1a70_[var7 + 4], 0, 1);
+                Matrix4x3 rot;
+                rot = RotationMatrixY(0x3244);
+                G3_MultMtx43((int)&rot);
+                SprSprite_DrawGroup(&self->models[k + 4], 0, 1);
                 G3_MTX_POP = 1;
                 G3_MTX_PUSH = 0;
                 G3_MTX_TRANS = (arg0->unknown_3de2_ + 0x70) << 12;
@@ -149,7 +146,7 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_SCALE = 0x14000;
                 G3_MTX_SCALE = 0x1000;
                 G3_MTX_SCALE = 0x1000;
-                func_02047554(&arg0->unknown_1a70_[var7 + 5], 0, 1);
+                SprSprite_DrawGroup(&self->models[k + 5], 0, 1);
                 G3_MTX_POP = 1;
                 Struct_ov005_0215b520* var10 = &arg0->unknown_1a70_[var7 + 7 + var5];
                 if (var4[data_ov005_0215cbec[var5]] > 0) {
@@ -159,7 +156,7 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_TRANS = (arg0->unknown_3de2_ + 0x85) << 12;
                 G3_MTX_TRANS = var8;
                 G3_MTX_TRANS = -0x1ff000;
-                func_02047554(var10, 0, 1);
+                SprSprite_DrawGroup(e, 0, 1);
                 G3_MTX_POP = 1;
             }
         }
@@ -246,16 +243,16 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_TRANS = (0xfa - arg0->unknown_3de2_) << 12;
                 G3_MTX_TRANS = var22;
                 G3_MTX_TRANS = -0x200000;
-                func_02047554(&arg0->unknown_1a70_[var21 + 4], 0, 1);
+                SprSprite_DrawGroup(&self->models[k + 4], 0, 1);
                 G3_MTX_POP = 1;
                 G3_MTX_PUSH = 0;
                 G3_MTX_TRANS = (0x17b - arg0->unknown_3de2_) << 12;
                 G3_MTX_TRANS = var22;
                 G3_MTX_TRANS = -0x200000;
-                Matrix4x3 var23;
-                var23 = RotationMatrixY(0x3244);
-                func_020c51a4((int)&var23);
-                func_02047554(&arg0->unknown_1a70_[var21 + 4], 0, 1);
+                Matrix4x3 rot;
+                rot = RotationMatrixY(0x3244);
+                G3_MultMtx43((int)&rot);
+                SprSprite_DrawGroup(&self->models[k + 4], 0, 1);
                 G3_MTX_POP = 1;
                 G3_MTX_PUSH = 0;
                 G3_MTX_TRANS = (0xeb - arg0->unknown_3de2_) << 12;
@@ -264,7 +261,7 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_SCALE = 0x14000;
                 G3_MTX_SCALE = 0x1000;
                 G3_MTX_SCALE = 0x1000;
-                func_02047554(&arg0->unknown_1a70_[var21 + 5], 0, 1);
+                SprSprite_DrawGroup(&self->models[k + 5], 0, 1);
                 G3_MTX_POP = 1;
                 Struct_ov005_0215b520* var24 = &arg0->unknown_1a70_[var21 + 7 + var19];
                 if (var18[data_ov005_0215cbdc[var19]] > 0) {
@@ -274,7 +271,7 @@ extern "C" ARM void func_ov005_0215b520(Scene0215b520* self) {
                 G3_MTX_TRANS = (0x100 - arg0->unknown_3de2_) << 12;
                 G3_MTX_TRANS = var22;
                 G3_MTX_TRANS = -0x1ff000;
-                func_02047554(var24, 0, 1);
+                SprSprite_DrawGroup(e, 0, 1);
                 G3_MTX_POP = 1;
             }
         }

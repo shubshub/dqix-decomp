@@ -16,8 +16,8 @@ extern "C" ARM void func_0209562c(struct Struct_02095578* arg0, int arg1,
     struct Struct_02013fb4* arg2, int arg3, unsigned short arg4, int arg5, int arg6);
 
 extern "C" void* Zone3D_GetInstance();
-int GetField5cb0Value_0201079c(char* obj);
-int GetField5cb4Value_020107d0(char* obj);
+int GameState_GetStoryChapter(char* obj);
+int GameState_GetStoryPart(char* obj);
 extern int data_020f1474;
 extern char data_02109418[] __attribute__((aligned(4)));
 
@@ -46,10 +46,10 @@ extern "C" ARM int func_02095578(void) {
     header = (struct HeaderStruct0209562c*)&data_02109418;
     res = GetGameResources();
     (int)BackgroundLoader::GetInstance();
-    var6 = ((Struct_02095578_2*)var5)->inline_02095578(1);
-    var7 = *(unsigned short*)var3;
-    var8 = func_0201079c((char*)var2);
-    var9 = func_020107d0((char*)var2);
+    type = ((Holder02095578*)res)->GetAt(1);
+    id = *(unsigned short*)move;
+    cb0 = GameState_GetStoryChapter((char*)bs);
+    cb4 = GameState_GetStoryPart((char*)bs);
     BackgroundLoader::AddLockGlobal();
     sprintf(path, (const char*)&data_020f1474);
     file = LoadFileIntoMemory(path, g_fileLoadBuffer, &len);

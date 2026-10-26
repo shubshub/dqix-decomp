@@ -139,8 +139,8 @@ extern char data_ov001_02164bcb[];
 extern "C" {
 struct Struct_ov001_021539d8_5* func_0203cf4c(void);
 
-void* func_0202ae18(void);
-int func_0202c508(void* obj);
+void* LinkSession_GetInstance(void);
+int LinkSession_IsHostOrSolo(void* obj);
 unsigned char _Z24GameState_GetLeaderIndexP9GameState(GameState* gs);
 int _Z29GameState_GetProtagonistIndexP9GameState(GameState* gs);
 void _Z16VramState_RewindP11Foo0207df50(struct PairTables021539d8* p);
@@ -163,7 +163,7 @@ void _ZN8Object3D16SetModelFromFileEP13SafeAllocatorPvjN7Model3D18TextureStaging
 void Zone3D_GetInstance(void);
 void _Z12Init020404c0Pi(struct Emitter021539d8* emitter);
 void _Z23ClearWorkRecord0206bf2cP11Rec0206bf2c(void* record);
-void _Z30InitializeRandomMotion0203c794Pv(struct Stream021539d8* stream);
+void _Z14NpcWalker_InitPv(struct Stream021539d8* stream);
 char* strstr(const char* text, const char* needle);
 void* memcpy(void* dst, const void* src, unsigned int size);
 int sprintf(char* dst, const char* format, ...);
@@ -196,33 +196,33 @@ static inline void inline_ov001_021539d8_2(struct Struct_ov001_021539d8* arg0, i
 }
 
 // USA: func_ov001_021539d8
-extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    struct Struct_ov001_021539d8_5* var2 = func_0203cf4c();
-    char* var3 = (char*)GetGameResources();
-    void* var4 = func_0202ae18();
-    struct Struct_ov001_021539d8_3* var5;
-    struct Struct_ov001_021539d8_4* var6;
-    bool var7;
-    LightingManager* var8;
-    unsigned int var9;
-    unsigned char* var10;
-    unsigned char var11;
-    unsigned char var12;
-    unsigned char var13;
-    SafeAllocator* var14;
-    void* var15;
-    unsigned char var16;
-    NSBXXMesh* var17;
-    NSBXXInternalModel* var18;
-    struct Struct_ov001_021539d8* var19;
-    struct Struct_ov001_021539d8_2* var20;
-    struct Struct_ov001_021539d8_7* var21;
+extern "C" ARM void func_ov001_021539d8(struct Self021539d8* self) {
+    GameState* gs = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    struct Global021539d8* global = _Z29GetGlobalPtr021075f4_0203cf4cv();
+    char* base = (char*)GetGameResources();
+    void* search = LinkSession_GetInstance();
+    struct LoadNode021539d8* node;
+    struct MotionNode021539d8* motion;
+    bool copied;
+    LightingManager* lighting;
+    unsigned int meshIndex;
+    unsigned char* fifoBlob;
+    unsigned char opcode1;
+    unsigned char opcode2;
+    unsigned char opcode3;
+    SafeAllocator* pool;
+    void* record;
+    unsigned char length;
+    NSBXXMesh* mesh;
+    NSBXXInternalModel* model;
+    struct Emitter021539d8* emitter;
+    struct Label021539d8* label;
+    struct PairTables021539d8* pair;
 
     for (node = self->loads; node != 0; node = node->next) {
         if (node->type == 1) {
-            if (func_0202c508(search) == 0 || !(self->mode & 0x10)) {
+            if (LinkSession_IsHostOrSolo(search) == 0 || !(self->mode & 0x10)) {
                 int current = _Z24GameState_GetLeaderIndexP9GameState(gs);
                 if (current != 0) {
                     struct LoadNode021539d8* other;
@@ -267,7 +267,7 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
             }
             if ((self->mode & 0x10) || !(*obj->status & 1)) {
                 func_ov001_0215ab54(4, 0, node->index);
-            } else if (func_0202c508(search) != 0) {
+            } else if (LinkSession_IsHostOrSolo(search) != 0) {
                 func_ov001_0215ab54(5, _Z24GameState_GetLeaderIndexP9GameState(gs), node->index);
             } else {
                 int current = _Z29GameState_GetProtagonistIndexP9GameState(gs);
@@ -438,15 +438,15 @@ extern "C" ARM void func_ov001_021539d8(struct Struct_ov001_021539d8_6* arg0) {
                 var1->RemoveTask(var5->unknown_2c_);
                 break;
             }
-            func_020404c0(var19);
-            func_0206bf2c(var15);
-            func_0203c794(var46);
-            var20->unknown_2_ = 3;
-            if (strstr(var5->unknown1_8_, data_ov001_02164bc0) != 0) {
-                var16 = 5;
-                if (strstr(var5->unknown1_8_, data_ov001_02164bc5) != 0) {
-                    var16 = 7;
-                    var46->unknown_50_ |= 8;
+            _Z12Init020404c0Pi(emitter);
+            _Z23ClearWorkRecord0206bf2cP11Rec0206bf2c(record);
+            _Z14NpcWalker_InitPv(stream);
+            label->kind = 3;
+            if (strstr(node->name, data_ov001_02164bc0) != 0) {
+                length = 5;
+                if (strstr(node->name, data_ov001_02164bc5) != 0) {
+                    length = 7;
+                    stream->flags |= 8;
                 }
                 memcpy(var20->unknown_4_, var5->unknown1_8_ + 9, var16);
                 if (var16 < 7u) {

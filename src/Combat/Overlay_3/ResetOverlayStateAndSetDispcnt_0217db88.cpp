@@ -31,7 +31,7 @@ struct ClearTarget0205a244;
 void ClearField0And40205a244(struct ClearTarget0205a244* target);
 void SpriteContext_Destroy(void* obj);
 struct Struct020dfc40;
-void ResetAndDetach020dfc6c(struct Struct020dfc40* p);
+void KeyTable_Destroy(struct Struct020dfc40* p);
 
 // USA: func_ov003_0217db88  (semantic: ResetOverlayStateAndSetDispcnt_0217db88)
 extern "C" ARM void func_ov003_0217db88(void* obj) {
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov003_0217db88(void* obj) {
         ((SafeAllocator*)(o + kRegionValueB8_B4))->Destroy();
     }
     SpriteContext_Destroy(o + kRegionValue3C_38);
-    ResetAndDetach020dfc6c((struct Struct020dfc40*)(o + kRegionValueCC_C8));
+    KeyTable_Destroy((struct Struct020dfc40*)(o + kRegionValueCC_C8));
 
     volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
     *dispcnt = (*dispcnt & ~0x1f00) | ((unsigned int)*(int*)o << 8);

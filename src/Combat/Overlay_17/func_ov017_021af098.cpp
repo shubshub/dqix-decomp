@@ -11,21 +11,21 @@ struct Struct_02038598_4;
 struct Struct_0205e854;
 struct Struct_0205e870;
 
-extern "C" SearchStruct* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
-extern "C" void func_0202b0f4(void* obj);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+extern "C" void LinkSession_End(void* obj);
 void ClearTwoBytesAtField_02195748(unsigned char* base);
 void SetFlag1ForFlagombatants_02192594_02192594(unsigned char* base);
 void* FillBitArray0x1524WithFF(BitArrayObj0205e854* obj);
-int TestFlagBitAt0xe_0202c578(SearchStruct* obj, int value);
-int GetGlobalField0x10_0202d6a8(void);
+int LinkSession_IsSlotLost(SearchStruct* obj, int value);
+int WH_GetSystemState(void);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_ClearBits(FlagWord020466f4* word, unsigned int mask);
 int* GetGlobal02109030_020936f8(void);
 void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
 extern "C" void func_02094030(int* obj, short a, short b, signed char c);
-void SetSearchFlagBitAt0xc_0202c1e8(SearchStruct* obj, int value);
+void LinkSession_AddMember(SearchStruct* obj, int value);
 void* FillBitArray0x1524WithZero(BitArrayObj0205e870* obj);
 void SetBitInArray0x1524_0205e7dc(unsigned char* obj, int index);
 void EnqueueEventTag43_021cc0cc(void);
@@ -43,68 +43,68 @@ struct Struct_ov017_021af098 {
 };
 
 // USA: func_ov017_021af098
-extern "C" ARM unsigned char func_ov017_021af098(Struct_ov017_021af098* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned int* var1 = (unsigned int*)GetGameResources();
-    Struct_0202b2f0* var2 = func_0202ae18();
-    Struct_0205e854* var3 = (Struct_0205e854*)func_0202ae24();
+extern "C" ARM unsigned char func_ov017_021af098(Obj021af098* obj) {
+    GameState* gs = GameState::GetInstance();
+    unsigned int* flags = (unsigned int*)GetGameResources();
+    SearchStruct* search = LinkSession_GetInstance();
+    BitArrayObj0205e854* bits = (BitArrayObj0205e854*)LinkMessageQueue_GetInstance();
 
-    if (func_0202c1a4((Struct_0202c1a4*)var2) == 0) {
-        func_0202c178(var2, 0);
+    if (LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) == 0) {
+        LinkSession_GetReceivedRecord(search, 0);
         if (g_keyManager.TestKeysPressed(2)) {
             obj->fieldF = -1;
             SetFlags00((GameResources*)flags, 2);
-            func_0202b0f4(search);
+            LinkSession_End(search);
             ClearTwoBytesAtField_02195748((unsigned char*)flags);
             SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)flags);
             FillBitArray0x1524WithFF(bits);
             ClearFlags00((GameResources*)flags, 0x40);
             obj->complete = 1;
-        } else if (TestFlagBitAt0xe_0202c578(search, 0) != 0 || GetGlobalField0x10_0202d6a8() == 8) {
+        } else if (LinkSession_IsSlotLost(search, 0) != 0 || WH_GetSystemState() == 8) {
             FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x8020);
             int* g = GetGlobal02109030_020936f8();
             ResetAndSetFlag0x3c9Bit0_020939dc(g);
             func_02094030(g, 4, -1, 0);
             return 3;
         } else {
-            arg0->unknown_12_ = arg0->unknown_12_ + var0->GetEffectiveDeltaTime();
-            if (arg0->unknown_12_ > 5000) {
-                arg0->unknown_f_ = 0;
-                SetFlags00((GameResources*)var1, 2);
-                func_0202b0f4(var2);
-                func_ov017_02195748((unsigned char*)var1);
-                func_ov017_02192594((unsigned char*)var1);
-                func_0205e854(var3);
-                ClearFlags00((GameResources*)var1, 0x40);
-                arg0->unknown_1_ = 1;
-                return arg0->unknown_8_;
+            obj->elapsedMilliseconds = obj->elapsedMilliseconds + gs->GetEffectiveDeltaTime();
+            if (obj->elapsedMilliseconds > 5000) {
+                obj->fieldF = 0;
+                SetFlags00((GameResources*)flags, 2);
+                LinkSession_End(search);
+                ClearTwoBytesAtField_02195748((unsigned char*)flags);
+                SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)flags);
+                FillBitArray0x1524WithFF(bits);
+                ClearFlags00((GameResources*)flags, 0x40);
+                obj->complete = 1;
+                return obj->state;
             }
         }
         return arg0->unknown_8_;
     }
 
-    if (func_0202c1a4((Struct_0202c1a4*)var2) >= 4) {
-        arg0->unknown_f_ = 0;
-        SetFlags00((GameResources*)var1, 2);
-        func_0202b0f4(var2);
-        func_ov017_02195748((unsigned char*)var1);
-        func_ov017_02192594((unsigned char*)var1);
-        func_0205e854(var3);
-        ClearFlags00((GameResources*)var1, 0x40);
-        arg0->unknown_1_ = 1;
-        return arg0->unknown_8_;
+    if (LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) >= 4) {
+        obj->fieldF = 0;
+        SetFlags00((GameResources*)flags, 2);
+        LinkSession_End(search);
+        ClearTwoBytesAtField_02195748((unsigned char*)flags);
+        SetFlag1ForFlagombatants_02192594_02192594((unsigned char*)flags);
+        FillBitArray0x1524WithFF(bits);
+        ClearFlags00((GameResources*)flags, 0x40);
+        obj->complete = 1;
+        return obj->state;
     }
 
-    arg0->unknown_10_ = func_0202c1a4((Struct_0202c1a4*)var2);
-    func_0202c1e8(var2, func_0202c1a4((Struct_0202c1a4*)var2));
-    ClearFlags00((GameResources*)var1, 2);
-    func_0205e870((Struct_0205e870*)var3);
-    func_0205e7dc((unsigned char*)var3, 0x2c);
-    func_0205e7dc((unsigned char*)var3, 0x2a);
-    func_0205e7dc((unsigned char*)var3, 0x2e);
-    func_0205e7dc((unsigned char*)var3, 0x3d);
-    func_0205e7dc((unsigned char*)var3, 0x33);
-    func_ov017_021cc0cc();
-    arg0->unknown_12_ = 0;
+    obj->previousSlot = LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search);
+    LinkSession_AddMember(search, LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search));
+    ClearFlags00((GameResources*)flags, 2);
+    FillBitArray0x1524WithZero((BitArrayObj0205e870*)bits);
+    SetBitInArray0x1524_0205e7dc((unsigned char*)bits, 0x2c);
+    SetBitInArray0x1524_0205e7dc((unsigned char*)bits, 0x2a);
+    SetBitInArray0x1524_0205e7dc((unsigned char*)bits, 0x2e);
+    SetBitInArray0x1524_0205e7dc((unsigned char*)bits, 0x3d);
+    SetBitInArray0x1524_0205e7dc((unsigned char*)bits, 0x33);
+    EnqueueEventTag43_021cc0cc();
+    obj->elapsedMilliseconds = 0;
     return 2;
 }

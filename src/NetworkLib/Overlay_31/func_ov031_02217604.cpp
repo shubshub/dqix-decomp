@@ -1,8 +1,5 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 #include "NitroSDK/BiosData.h"
 #include "NitroSDK/Memory.h"
 #include "NitroSDK/Interrupts.h"
@@ -53,12 +50,12 @@ struct Struct_ov031_02217604_5 {
     char unknown_6f_[14];
     unsigned short unknown_7e_[11];
 };
-extern "C" int func_020c7170(char*, unsigned long, const char*, ...);
-extern "C" int func_020c7130(char*, const char*, ...);
-extern "C" void func_020c9be0(void);
-extern "C" void func_020c99ac(unsigned char*);
-extern "C" void func_020c99c8(void*);
-extern "C" int func_020cf25c(void*, void*);
+int VariadicForward020c7170(char*, unsigned long, const char*, ...);
+int VariadicForward020c7130(char*, const char*, ...);
+extern "C" void HaltSystem(void);
+extern "C" void OS_GetMacAddress(unsigned char*);
+extern "C" void OS_GetOwnerInfo(void*);
+int GetOrInitStoredValueAt0x2c_020cf25c(void*, void*);
 extern "C" unsigned char* func_ov031_0220f040(void);
 extern "C" unsigned char* func_ov031_0220f084(unsigned short*);
 extern "C" unsigned char func_ov031_02213024(void);
@@ -83,31 +80,31 @@ extern "C" ARM int func_ov031_02217604(Struct_ov031_02217604_5* arg0, const Stru
     } else {
         func_020c7170(arg0->unknown_0_, 14, data_ov031_02249c84, arg1->unknown_8_);
     }
-    func_020c7170(arg0->unknown_e_, 7, data_ov031_02249c8c, arg1->unknown_10_);
-    const unsigned char* var5 = (const unsigned char*)((const CartridgeHeader*)BIOS_ADDR_CARTRIDGE_HEADER)->gameCode;
-    const unsigned char* var6 = (const unsigned char*)((const CartridgeHeader*)BIOS_ADDR_CARTRIDGE_HEADER)->makerCode;
-    if (var5[0] == 0) {
-        func_020c9be0();
+    VariadicForward020c7170(report->token, 7, data_ov031_02249c8c, ids->token);
+    const unsigned char* gameCode = (const unsigned char*)((const CartridgeHeader*)BIOS_ADDR_CARTRIDGE_HEADER)->gameCode;
+    const unsigned char* makerCode = (const unsigned char*)((const CartridgeHeader*)BIOS_ADDR_CARTRIDGE_HEADER)->makerCode;
+    if (gameCode[0] == 0) {
+        HaltSystem();
     }
-    VectorizedInvertedMemcpy(var5, arg0->unknown_15_, 4);
-    if (var6[0] == 0) {
-        func_020c9be0();
+    VectorizedInvertedMemcpy(gameCode, report->gameCode, 4);
+    if (makerCode[0] == 0) {
+        HaltSystem();
     }
-    VectorizedInvertedMemcpy(var6, arg0->unknown_1a_, 2);
-    arg0->unknown_1d_ = '0';
-    func_020c99ac(var3);
-    signed long var7 = 0;
-    unsigned char* var8 = var3;
-    char* var9 = arg0->unknown_1f_;
+    VectorizedInvertedMemcpy(makerCode, report->makerCode, 2);
+    report->connectionType = '0';
+    OS_GetMacAddress(mac);
+    signed long macIndex = 0;
+    unsigned char* macByte = mac;
+    char* macText = report->macAddress;
     do {
-        func_020c7130(var9, data_ov031_02249c94, *var8);
-        ++var8;
-        ++var7;
-        var9 += 2;
-    } while (var7 < 6);
-    func_020c99c8(&var0);
-    if (var0.unknown_0_ >= 8) {
-        var0.unknown_0_ = 1;
+        VariadicForward020c7130(macText, data_ov031_02249c94, *macByte);
+        ++macByte;
+        ++macIndex;
+        macText += 2;
+    } while (macIndex < 6);
+    OS_GetOwnerInfo(&owner);
+    if (owner.language >= 8) {
+        owner.language = 1;
     }
     func_020c7170(arg0->unknown_2c_, 3, data_ov031_02249c94, var0.unknown_0_);
     VectorizedInvertedMemcpy(var0.unknown_4_, arg0->unknown_7e_, 20);

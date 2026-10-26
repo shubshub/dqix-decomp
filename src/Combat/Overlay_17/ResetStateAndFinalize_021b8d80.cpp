@@ -20,7 +20,7 @@ struct GameResources;
 void SetSubBrightness(GameResources*, int, int);
 struct Obj_021b994c;
 void ResetFieldsToDefault_021b994c(struct Obj_021b994c* obj);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 extern int g_mainAllocator;
 
@@ -63,5 +63,5 @@ extern "C" ARM void func_ov017_021b8d80(unsigned char* self) {
     }
 
     ResetFieldsToDefault_021b994c((struct Obj_021b994c*)self);
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
 }

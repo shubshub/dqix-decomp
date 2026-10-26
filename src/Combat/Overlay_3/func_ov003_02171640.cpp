@@ -5,13 +5,13 @@ struct Struct_0202b2f0;
 struct Struct_0202bad4;
 struct Struct_0202bad4_2;
 
-extern "C" void* func_0202ae18(void);
-extern "C" void func_0202b0f4(void* arg0);
-extern "C" void func_0202c288(void* arg0);
-extern "C" unsigned short func_0202bc8c(struct Struct_0202b2f0* arg0);
-extern "C" int func_0202baec(void* arg0);
-extern "C" struct Struct_0202bad4* func_0202bad4(struct Struct_0202bad4_2* arg0, int arg1);
-extern "C" void func_0202c1e8(struct Struct_0202b2f0* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void LinkSession_End(void* ptr);
+extern "C" void LinkSession_UpdateMemberCount(void* ptr);
+unsigned short LinkSession_GetConnectedAids(struct SearchStruct* obj);
+int GetConstant10_0202baec(void* search);
+struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
+void LinkSession_AddMember(struct SearchStruct* obj, int value);
 
 struct Struct_ov003_02171640 {
     unsigned char unknown_0_;
@@ -22,28 +22,28 @@ struct Struct_ov003_02171640 {
 };
 
 // USA: func_ov003_02171640
-extern "C" ARM void func_ov003_02171640(struct Struct_ov003_02171640* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    unsigned int var2 = var0->GetEffectiveDeltaTime();
+extern "C" ARM void func_ov003_02171640(struct Obj02171640* obj) {
+    GameState* battle = GameState::GetInstance();
+    void* search = LinkSession_GetInstance();
+    unsigned int dt = battle->GetEffectiveDeltaTime();
 
-    if (var2 < arg0->unknown_4_) {
-        arg0->unknown_4_ -= var2;
-        unsigned short var3 = func_0202bc8c((struct Struct_0202b2f0*)var1);
-        int var4 = func_0202baec(var1);
-        for (int var5 = 1; var5 < var4; var5++) {
-            if (var3 & (1 << var5)) {
-                func_0202bad4((struct Struct_0202bad4_2*)var1, var5);
-                arg0->unknown_199_ = var5;
-                func_0202c1e8((struct Struct_0202b2f0*)var1, (unsigned char)var5);
-                func_0202c288(var1);
-                arg0->unknown_0_ = 2;
+    if (dt < obj->timer) {
+        obj->timer -= dt;
+        unsigned short mask = LinkSession_GetConnectedAids((struct SearchStruct*)search);
+        int count = GetConstant10_0202baec(search);
+        for (int i = 1; i < count; i++) {
+            if (mask & (1 << i)) {
+                GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)search, i);
+                obj->selected = i;
+                LinkSession_AddMember((struct SearchStruct*)search, (unsigned char)i);
+                LinkSession_UpdateMemberCount(search);
+                obj->state = 2;
                 return;
             }
         }
     } else {
-        arg0->unknown_4_ = 0;
-        func_0202b0f4(var1);
-        arg0->unknown_0_ = 4;
+        obj->timer = 0;
+        LinkSession_End(search);
+        obj->state = 4;
     }
 }

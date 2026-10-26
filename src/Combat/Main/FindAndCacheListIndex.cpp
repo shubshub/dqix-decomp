@@ -11,12 +11,12 @@ struct Entry_02028bd0* ZoneRecords_GetInstance(void);
 
 struct U16Field0x6_020375f8;
 
-struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
+struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 
 extern "C" int func_02028638(void* a, void* b);
 
 struct List_020283fc;
-int FindListIndexById(struct List_020283fc* list, int id);
+int NodeGraph_FindNodeIndexById(struct List_020283fc* list, int id);
 
 struct Obj02079040 {
     char pad0[0x44];
@@ -34,12 +34,12 @@ ARM unsigned short FindAndCacheListIndex(struct Obj02079040* obj, unsigned char*
     *outFlag = 0;
     base = ZoneRecords_GetInstance();
     key = ((Object3D*)((struct U16Field0x6_020375f8*)obj))->GetField06();
-    entry = FindInlineEntryById(base, key);
+    entry = ZoneRecords_Find(base, key);
     if (entry == NULL) {
         return 0;
     }
     id = func_02028638((char*)entry + kListOffset, (char*)obj + 0x44);
-    idx = FindListIndexById((struct List_020283fc*)((char*)entry + kListOffset), id);
+    idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + kListOffset), id);
     if (idx != -1) {
         obj->field0xb8 = idx;
     }

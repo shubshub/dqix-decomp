@@ -15,7 +15,7 @@ extern "C" void func_02046380(void* global);
 int* GetField1c_021a193c(int* p);
 void NameText_InitFromPartyMember(void* obj, int combatantId);
 extern "C" void* __clear(void* dst, int count);
-void Clear12Bytes020e46c4(void* p);
+void NameText_Clear(void* p);
 short GetTableByte0215a930(void* obj, int index);
 void DispatchIfCountPositive020dcf7c(int count, void* buf);
 char* KeyTable_Get(Container020e0310* c, int key);
@@ -111,7 +111,7 @@ extern "C" ARM int func_ov005_02158b3c(void* object, void* buffer) {
     __clear(bufs.bufB_, 0x80);
     __clear(bufs.bufA_, 0x80);
     Local12_02158b3c s;
-    Clear12Bytes020e46c4(&s);
+    NameText_Clear(&s);
     s.a_ = bufs.bufB_;
     s.b_ = bufs.bufA_;
 

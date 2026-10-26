@@ -10,7 +10,7 @@ enum { RegionOffset6c = 0x6c };
 
 extern "C" void* Zone3D_GetInstance(void);
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GameObject_IsGesturing(signed char* obj);
 extern "C" int func_02094b9c(void* a, void* b);
 int fix32ReduceAngle0To2Pi(int angle);
 int fix32SignedAngleDistance(int a, int b);
@@ -45,11 +45,11 @@ struct EventBuf021984f4 {
 // USA: func_ov017_021984f4  (semantic: FindTargetsAndForward_021984f4)
 extern "C" ARM void func_ov017_021984f4(void* obj) {
     GameState* bs = GameState::GetInstance();
-    GameObject* c = bs->GetUnknownGameObject();
+    GameObject* c = bs->GetLeader();
     if (c == NULL) {
         return;
     }
-    if (CheckSubstructByte0x7cPositive_020535c8((signed char*)c) != 0) {
+    if (GameObject_IsGesturing((signed char*)c) != 0) {
         return;
     }
 

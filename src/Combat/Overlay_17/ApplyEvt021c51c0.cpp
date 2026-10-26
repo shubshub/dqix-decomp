@@ -3,12 +3,12 @@
 #include "GameState/GameState.h"
 
 
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" void* Scenario_GetInstance(void);
 int Scenario_TestFlag(int a, unsigned char* b, int c);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void func_020103c8(int val, int arg);
 struct Data02107930;
 
@@ -32,8 +32,8 @@ extern "C" ARM void func_ov017_021c51c0(int flag, Evt021c51c0* evt, GameState* b
 #endif
 	unsigned char* base = obj + 0x3000;
 	void* h = *(void**)(base + regionalOffset);
-	void* ctx = GetField0x3f8Address_0200fd0c(battleStruct);
-	signed char cur = GetSearchStructCurrentArrEntry(search);
+	void* ctx = GameState_GetZoneTransition(battleStruct);
+	signed char cur = LinkSession_GetOwnSlot(search);
 	if (evt->field4 != cur) return;
 
 	*(unsigned char*)((char*)h + 0xb) = 1;
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov017_021c51c0(int flag, Evt021c51c0* evt, GameState* b
 		*(int*)((char*)ctx + 0x2c) = evt->field8;
 	}
 
-	if (func_0202c540(search) != 0 && flag == 0) {
+	if (LinkSession_IsGuest(search) != 0 && flag == 0) {
 		func_020103c8((int)battleStruct, evt->fieldc);
 		LightingManager::GetInstance();
 	}

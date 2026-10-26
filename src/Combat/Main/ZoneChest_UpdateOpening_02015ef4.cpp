@@ -4,6 +4,7 @@
 #include <Filesystem/BackgroundLoader.h>
 #include <Resource/GameResources.h>
 #include <World/Zone3D.h>
+#include <World/FieldTask.h>
 
 struct Foo02048004;
 struct StructAt020473c8;
@@ -66,7 +67,7 @@ void Zone3D_ClearChestIconsByOpener(Holder020159c0*, int);
 void* ItemTable_Find(ItemTable*, int);
 int ItemRecord_GetFileNumber(StructDE234_020de234*, int);
 extern "C" int sprintf(char*, const char*, ...);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 extern "C" void SprSprite_Init(void*);
 void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
 void VramState_Restore(char*);
@@ -88,7 +89,7 @@ extern "C" ARM int ZoneChest_UpdateOpening(Zone3D* self, int index) {
     LootableContainerManager* containers = LootableContainerManager::GetMainInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     int protagonistId = gameState->GetProtagonist()->obj3D_.actorIndex_;
-    int playerId = gameState->GetUnknownGameObject()->obj3D_.actorIndex_;
+    int playerId = gameState->GetLeader()->obj3D_.actorIndex_;
     int visible = 0;
     self->unk_23bc[1] = 0;
     if (chest->state == ZoneChestState_Gone || chest->state == ZoneChestState_Open) {
@@ -143,7 +144,7 @@ extern "C" ARM int ZoneChest_UpdateOpening(Zone3D* self, int index) {
         loader->GetLoadedFileByID(chest->iconTask, &file, &size);
         GameResources* resources = GetGameResources();
         HeadNode02046b24** taskQueue = (HeadNode02046b24**)resources->fieldTaskQueue_;   // the field task queue
-        if (file && GetHeadNodeIdOrMinusOne(taskQueue) != 4) {
+        if (file && FieldTaskQueue_GetCurrentKind(taskQueue) != FieldTaskKind_ScriptedEvent) {
             Foo02048004* slot = &self->lootIcons_[chest->opener];
             chest->icon = slot;
             SprSprite_Init(slot);

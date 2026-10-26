@@ -2,9 +2,6 @@
 #include "NitroSDK/Memory.h"
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020d8524 func_020d9e88
-#endif
 
 #if defined(jpn)
 #define func_020d84f8 func_020d9e5c
@@ -174,7 +171,7 @@ bool LoadAndDecompressGPCHeaderAndInnerFileInfo(GPCFile **ppGPC, ExtendedNitroVM
 
     if (rightAlignOutput)
         outputBuffer = (void*)((((int)outputBuffer + outputCapacity) & ~3) - longerLength);
-    func_020d8524(outputBuffer, &header, sizeof(GPCFile::Header));
+    CopyAndFlushCache(outputBuffer, &header, sizeof(GPCFile::Header));
     ((GPCFile::Header*)outputBuffer)->headerLength = 0;
     ((GPCFile::Header*)outputBuffer)->fileInfoLength = 0;
     unsigned int decompressProcOutputLength = 0;

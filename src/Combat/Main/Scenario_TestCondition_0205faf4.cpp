@@ -39,7 +39,7 @@ struct Struct_0205faf4_20 {
 };
 
 int Scenario_TestFlag(int unused, unsigned char* arr, int index);
-void CollectValidCombatants02010890(GameState*, int*, int*);
+void GameState_CollectPartyObjectIndices(GameState*, int*, int*);
 int MessageSystem_GetInstance(void);
 extern "C" int func_020457e0(int);
 struct Struct_0205faf4;
@@ -51,10 +51,10 @@ int GetPackedNibbleField(struct PackedNibbleArray0206e120* obj, int index);
 int CheckFlagAndThreshold0206e31c(int unused, int index);
 struct PackedNibbleArray0206e260;
 int GetPackedNibbleFlag0x4(struct PackedNibbleArray0206e260* obj, int index);
-extern "C" void* func_0202ae18(void* gs);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void* gs);
+int LinkSession_IsActive(int* obj);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 int TestBitWithBias0206eb98(unsigned char* obj, int index);
 extern "C" void __clear(void* buf, int count);
 void* GetGlobal02109418_02094d6c(void);
@@ -63,10 +63,10 @@ void* GetGlobalPtr021075f4_0203cf4c(void);
 void* FindEntryPointerByKey0203df78(void* base, int key);
 struct S02040538;
 void* GetField0xc02040538(struct S02040538* p);
-int GetField5cb8Value_02010804(char* p);
+int GameState_GetStoryStep(char* p);
 int GameState_GetProtagonistIndex(GameState*);
 struct Base02010834;
-void CopyCountedBytesToIntArray02010834(struct Base02010834* base, int index, int* out, int* outCount);
+void GameState_GetPartyMemberIds(struct Base02010834* base, int index, int* out, int* outCount);
 
 struct Struct_0205faf4_5 {
     int unknown_0_;
@@ -105,7 +105,7 @@ unsigned char ReadAndClearByte0x1b61(struct ReadClearByte02098ee8* s);
 int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
 struct PackedNibbleArray0206e2dc;
 int GetPackedNibbleFlag0x8(struct PackedNibbleArray0206e2dc* obj, int index);
-void* GetField0x3f8Address_0200fd0c(GameState*);
+void* GameState_GetZoneTransition(GameState*);
 
 extern AllocatorUnion g_mainAllocator;
 extern const char* g_itemDataArchive;
@@ -187,19 +187,19 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 12:
         return CU16(2) == EW(0x18);
     case 13: {
-        int var5[4]; int var6;
-        func_02010890((GameState*)(void*)GameState::GetInstance(), var5, &var6);
-        return CU16(2) <= var6;
+        int outList[4]; int outCount;
+        GameState_CollectPartyObjectIndices((GameState*)(void*)GameState::GetInstance(), outList, &outCount);
+        return CU16(2) <= outCount;
     }
     case 14: {
-        int var7[4]; int var8;
-        func_02010890((GameState*)(void*)GameState::GetInstance(), var7, &var8);
-        return CU16(2) >= var8;
+        int outList[4]; int outCount;
+        GameState_CollectPartyObjectIndices((GameState*)(void*)GameState::GetInstance(), outList, &outCount);
+        return CU16(2) >= outCount;
     }
     case 15: {
-        int var9[4]; int var10;
-        func_02010890((GameState*)(void*)GameState::GetInstance(), var9, &var10);
-        return CU16(2) == var10;
+        int outList[4]; int outCount;
+        GameState_CollectPartyObjectIndices((GameState*)(void*)GameState::GetInstance(), outList, &outCount);
+        return CU16(2) == outCount;
     }
     case 16:
         return CU16(2) == func_020457e0(MessageSystem_GetInstance());
@@ -237,27 +237,27 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return var14;
     }
     case 23: {
-        void* var16 = func_0202ae18((void*)GameState::GetInstance());
-        int var17 = 0;
+        void* g = LinkSession_GetInstance((void*)GameState::GetInstance());
+        int result = 0;
         switch (CU16(2)) {
         case 1:
-            if (func_0202b7d8((int*)var16)) var17 = 1;
+            if (LinkSession_IsActive((int*)g)) result = 1;
             break;
         case 0:
-            if (!func_0202b7d8((int*)var16)) var17 = 1;
+            if (!LinkSession_IsActive((int*)g)) result = 1;
             break;
         case 2:
-            if (func_0202b7d8((int*)var16)) {
-                if (func_0202c1a4((struct Struct_0202c1a4*)var16) == 0) {
-                    var17 = 1;
+            if (LinkSession_IsActive((int*)g)) {
+                if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
+                    result = 1;
                     break;
                 }
             }
-            if (func_0202b7d8((int*)var16) == 0) var17 = 1;
+            if (LinkSession_IsActive((int*)g) == 0) result = 1;
             break;
         case 3:
-            if (func_0202b7d8((int*)var16)) {
-                if (func_0202c1a4((struct Struct_0202c1a4*)var16)) var17 = 1;
+            if (LinkSession_IsActive((int*)g)) {
+                if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g)) result = 1;
             }
             break;
         }
@@ -325,7 +325,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return 0;
     }
     case 35:
-        return CU16(2) == func_02010804((char*)(void*)GameState::GetInstance());
+        return CU16(2) == GameState_GetStoryStep((char*)(void*)GameState::GetInstance());
     case 36: {
         struct Struct_0203d028_3* var31 = (Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0);
         unsigned short var32 = CU16(2);
@@ -350,16 +350,16 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 40:
         return !Scenario_TestFlag((int)obj, OBJB + 0x8c, CU16(2) + 0x776);
     case 41: {
-        struct Struct_0205faf4_2 { int unknown_0_; int unknown_4_; int unknown_8_; };
-        void* var33 = func_0203df78(func_0203cf4c(), EW(0));
-        if (!var33) return 0;
-        void* var34 = func_02040538((struct Struct_0203e0a0*)var33);
-        if (!var34) return 0;
-        struct Struct_0203d028_3* var35 = (Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetUnknownGameObject();
-        struct Struct_0205faf4_2 var36 = *(struct Struct_0205faf4_2*)((char*)var35 + 0x44);
-        int* var37;
-        for (var37 = *(int**)((char*)var34 + 0x40); var37 != NULL; var37 = (int*)var37[5]) {
-            if (var36.unknown_0_ < var37[1] && var36.unknown_8_ < var37[2] && var36.unknown_0_ > var37[3] && var36.unknown_8_ > var37[4]) return CU16(2) != 0;
+        struct Keys0205faf4 { int hi; int mid; int lo; };
+        void* e = FindEntryPointerByKey0203df78(GetGlobalPtr021075f4_0203cf4c(), EW(0));
+        if (!e) return 0;
+        void* base = GetField0xc02040538((struct S02040538*)e);
+        if (!base) return 0;
+        struct CombatantStruct* c = (CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetLeader();
+        struct Keys0205faf4 k = *(struct Keys0205faf4*)((char*)c + 0x44);
+        int* node;
+        for (node = *(int**)((char*)base + 0x40); node != NULL; node = (int*)node[5]) {
+            if (k.hi < node[1] && k.lo < node[2] && k.hi > node[3] && k.lo > node[4]) return CU16(2) != 0;
         }
         return CU16(2) == 0;
     }
@@ -375,7 +375,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
         int outList[4];
         int outCount;
-        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
+        GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
             struct CombatantStruct* c = (CombatantStruct*)((GameState*)bs)->GetGameObjectByIndex(outList[i]);
@@ -454,7 +454,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
         int outList[4];
         int outCount;
-        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
+        GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
             struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)bs, outList[i]);
@@ -701,7 +701,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
         int outList[4];
         int outCount;
-        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
+        GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
             struct CombatantStruct* c = (CombatantStruct*)((GameState*)bs)->GetPartyMemberByIndex(outList[i]);
@@ -715,9 +715,9 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return 0;
     }
     case 81: {
-        int var109 = func_0202b7d8((int*)func_0202ae18((void*)GameState::GetInstance()));
-        if (CU16(2) != 0) return var109;
-        return var109 == 0;
+        int r = LinkSession_IsActive((int*)LinkSession_GetInstance((void*)GameState::GetInstance()));
+        if (CU16(2) != 0) return r;
+        return r == 0;
     }
     case 83: {
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0xc000);
@@ -843,7 +843,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
         int outList[4];
         int outCount;
-        CopyCountedBytesToIntArray02010834((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
+        GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
             struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)bs, outList[i]);
@@ -874,7 +874,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 506:
         return func_0206e2dc((struct Struct_0205faf4_13*)arg0, CU16(2));
     case 507:
-        return CU16(2) == *(unsigned short*)func_0200fd0c((GameState*)(void*)GameState::GetInstance());
+        return CU16(2) == *(unsigned short*)GameState_GetZoneTransition((GameState*)(void*)GameState::GetInstance());
     }
     return 0;
 }

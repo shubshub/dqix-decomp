@@ -30,17 +30,17 @@ struct Struct_ov017_021b11d8_2 {
     unsigned short unknown_c_;
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void func_ov017_021c37a4(void);
 extern "C" void func_ov017_021d1118(int a, int b, int c, int d);
 extern "C" void func_ov017_021d1014(int a, int b, int c);
 extern "C" void func_ov017_021d0b30(int a, int b, int c);
 void EnqueueEventTag173_021d1810(int, int, signed char);
 int SetSearchFlagBit0202c660(SearchStruct* obj, int value);
-int TestBitBySignedByteIndex_0202c1c0(SearchStruct* obj, int index);
-int TestMaskBitBySignedByteIndex_0202bd34(SearchStruct* obj, int index);
+int LinkSession_IsSlotMember(SearchStruct* obj, int index);
+int LinkSession_IsSlotConnected(SearchStruct* obj, int index);
 int IsFieldMinusOne_0202c648(int* obj);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" int func_ov017_02195658(GameResources* res);
 
@@ -49,14 +49,14 @@ extern "C" ARM void FieldTask_LeaveMultiplayer(void* obj, void* node) {
     Node021b11d8* self = (Node021b11d8*)obj;
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    SearchStruct* search = (SearchStruct*)func_0202ae18();
+    SearchStruct* search = (SearchStruct*)LinkSession_GetInstance();
     unsigned char mode = self->mode;
     if (mode == 0) {
-        self->count = (unsigned char)GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search);
+        self->count = (unsigned char)LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search);
         self->flags = 0;
         for (int i = 0; i < 4; i++) {
             if (i != self->count) {
-                if (TestBitBySignedByteIndex_0202c1c0(search, i) != 0) {
+                if (LinkSession_IsSlotMember(search, i) != 0) {
                     self->flags |= (1 << i);
                 }
             }
@@ -105,19 +105,19 @@ extern "C" ARM void FieldTask_LeaveMultiplayer(void* obj, void* node) {
             var0->unknown_a_ &= ~(1 << var8);
         }
     }
-    if (var3->unknown_fc0_ == 0) {
-        for (int var9 = 1; var9 < 4; var9++) {
-            if ((var0->unknown_a_ & (1 << var9)) != 0) {
-                if (func_0202bd34(var3, var9) == 0) {
-                    var0->unknown_a_ &= ~(1 << var9);
+    if (search->busy == 0) {
+        for (int i = 1; i < 4; i++) {
+            if ((self->flags & (1 << i)) != 0) {
+                if (LinkSession_IsSlotConnected(search, i) == 0) {
+                    self->flags &= ~(1 << i);
                 }
             }
         }
     }
-    for (int var10 = 0; var10 < 4; var10++) {
-        if ((var0->unknown_a_ & (1 << var10)) != 0) {
-            Struct_0202b2f0_2* var11 = func_0202c178(var3, var10);
-            if (var11 == 0) {
+    for (int i = 0; i < 4; i++) {
+        if ((self->flags & (1 << i)) != 0) {
+            SearchEntry0202c178* e = LinkSession_GetReceivedRecord(search, i);
+            if (e == 0) {
                 continue;
             }
             int var12 = 1 << var0->unknown_9_;

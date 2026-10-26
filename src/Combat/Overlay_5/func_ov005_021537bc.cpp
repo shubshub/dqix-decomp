@@ -6,9 +6,9 @@
 #include <globaldefs.h>
 #include "NitroSDK/Graphics.h"
 
-extern "C" void func_02047554(void* arg0, int arg1, int arg2);
-struct Struct_02075db0;
-extern "C" int func_02075db0(Struct_02075db0* arg0, int arg1, int arg2);
+extern "C" void SprSprite_DrawGroup(void* object, int index, int mode);
+struct Struct02075db0;
+int ForwardTableValue02075db0(Struct02075db0* object, int x, int y);
 
 struct Struct_ov005_021537bc {
     unsigned char* unknown_0_;
@@ -43,12 +43,12 @@ extern "C" ARM void func_ov005_021537bc(void* arg0, int arg1, unsigned short arg
         switch (arg1) {
         case 0: {
             GXFIFO_MATRIX_PUSH = 0;
-            int var11 = var0->unknown_38_;
-            GXFIFO_MATRIX_TRANSLATE = var9;
-            GXFIFO_MATRIX_TRANSLATE = var10;
-            GXFIFO_MATRIX_TRANSLATE = var11;
-            *(unsigned short*)(var0->unknown_0_ + var8 * 0x88 + 0x80) = arg2;
-            func_02047554(var0->unknown_0_ + var8 * 0x88, 0, 1);
+            int z = self->z38;
+            GXFIFO_MATRIX_TRANSLATE = px;
+            GXFIFO_MATRIX_TRANSLATE = py;
+            GXFIFO_MATRIX_TRANSLATE = z;
+            *(unsigned short*)(self->backing + i * 0x88 + 0x80) = value;
+            SprSprite_DrawGroup(self->backing + i * 0x88, 0, 1);
             GXFIFO_MATRIX_POP = 1;
             break;
         }

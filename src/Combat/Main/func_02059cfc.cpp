@@ -24,10 +24,10 @@ extern "C" int func_02055774(int* arg0);
 struct SePlayer;
 void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-struct Struct_0200ffc0;
-extern "C" unsigned char* func_0200ffc0(Struct_0200ffc0*);
-struct Struct_0200ffd0;
-extern "C" unsigned char* func_0200ffd0(Struct_0200ffd0*);
+struct PointerField32c_ffc0;
+unsigned char* GameState_GetShip(PointerField32c_ffc0*);
+struct PointerField330_ffd0;
+unsigned char* GameState_GetStarflight(PointerField330_ffd0*);
 
 extern int g_sePlayer;
 
@@ -91,16 +91,16 @@ extern "C" ARM void func_02059cfc(unsigned char* arg0, int arg1, int arg2) {
 
         struct Struct_ov009_0218aa28 var5 = var0->unknown_44_;
 
-        int var6 = 0;
-        if (var0->unknown_cc_.unknown_0_4_) {
-            unsigned char* var7 = func_0200ffc0((Struct_0200ffc0*)var1);
-            if (var7 != 0) {
-                var6 = *(int*)(var7 + 0x130);
+        int r5 = 0;
+        if (c->flags.bit4) {
+            unsigned char* q = GameState_GetShip((PointerField32c_ffc0*)bs);
+            if (q != 0) {
+                r5 = *(int*)(q + 0x130);
             }
-        } else if (var0->unknown_cc_.unknown_0_5_) {
-            unsigned char* var8 = func_0200ffd0((Struct_0200ffd0*)var1);
-            if (var8 != 0) {
-                var6 = *(int*)(var8 + 0x130);
+        } else if (c->flags.bit5) {
+            unsigned char* q = GameState_GetStarflight((PointerField330_ffd0*)bs);
+            if (q != 0) {
+                r5 = *(int*)(q + 0x130);
             }
         }
 

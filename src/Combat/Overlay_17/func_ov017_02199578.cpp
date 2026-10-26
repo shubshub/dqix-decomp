@@ -7,10 +7,10 @@ enum { Enum_ov017_02199578_17480 = 0x4448, Enum_ov017_02199578_17476 = 0x4444, E
 #include <globaldefs.h>
 
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
-extern "C" void func_0202c288(void* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" void LinkSession_UpdateMemberCount(void* obj);
 extern "C" void* Scenario_GetInstance(void);
 int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
@@ -25,14 +25,14 @@ struct Struct_ov017_02199578 { char unknown_0_[0x34]; };
 
 // USA: func_ov017_02199578
 #pragma opt_common_subs off
-extern "C" ARM void func_ov017_02199578(void* arg0, int arg1, int arg2, int arg3, signed char arg4) {
-    struct Struct_0202c1a4* var0 = (struct Struct_0202c1a4*)func_0202ae18();
-    signed char var1 = func_0202c1a4(var0);
-    if (arg2 != var1 && arg2 != 4) return;
+extern "C" ARM void func_ov017_02199578(void* obj, int unused1, int matchType, int unused2, signed char flag) {
+    struct SearchStruct0202c1a4* search = (struct SearchStruct0202c1a4*)LinkSession_GetInstance();
+    signed char arrEntry = LinkSession_GetOwnSlot(search);
+    if (matchType != arrEntry && matchType != 4) return;
 
     if (!*((unsigned char*)arg0 + Enum_ov017_02199578_17480)) return;
 
-    func_0202c288(var0);
+    LinkSession_UpdateMemberCount(search);
 
     int var2 = *((unsigned char*)arg0 + Enum_ov017_02199578_17476) + 1;
     *((unsigned char*)arg0 + Enum_ov017_02199578_17476) = (unsigned char)var2;

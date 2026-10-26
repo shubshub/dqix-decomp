@@ -11,9 +11,6 @@
 #endif
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_ov027_021e33e0 {
     unsigned char unknown_0_[8];
@@ -52,7 +49,7 @@ extern "C" int func_ov027_021db430(void);
 extern "C" void func_ov027_021dd0cc(int arg0, int arg1);
 extern "C" void func_020d4770(int arg0, int arg1, int arg2);
 extern "C" void func_020c976c(unsigned int cycles);
-extern "C" void func_020c9be0(void);
+extern "C" void HaltSystem(void);
 
 extern "C" void func_ov027_021db490(void);
 extern "C" int func_020d507c(int arg0, Struct_0202db64* arg1);
@@ -319,7 +316,7 @@ extern "C" ARM void func_ov027_021db524(Struct_ov027_021db524* arg0) {
             break;
         }
         case 0x16:
-            func_020c9be0();
+            HaltSystem();
             break;
         case 0x17:
             break;

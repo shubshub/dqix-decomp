@@ -30,10 +30,10 @@ struct Struct_ov001_02158ae4_3 {
 };
 struct Camera { int field0; Vector3i position; Vector3i target; };
 extern "C" void func_ov001_021588e4(CameraState*);
-void ReadFields0x70To0x78_0202e7d4(unsigned char*, int*, int*, int*);
+void Camera_GetOrbit(unsigned char*, int*, int*, int*);
 extern "C" CameraCommand* func_ov001_02158e8c(CameraState*, CameraCommand*, int);
-extern "C" void func_0202e5d8(Camera*, int, int, int);
-extern "C" void func_0202eab8(Camera*);
+extern "C" void Camera_SetOrbit(Camera*, int, int, int);
+extern "C" void Camera_SetOrbitFromPosition(Camera*);
 typedef int (*CameraCommandHandler)(CameraCommand*, CameraState*);
 extern CameraCommandHandler data_ov001_02164c54[20];
 
@@ -46,7 +46,7 @@ extern "C" ARM void func_ov001_02158ae4(CameraState* state) {
     if (!camera) { func_ov001_021588e4(state); return; }
     state->position = camera->position;
     state->target = camera->target;
-    ReadFields0x70To0x78_0202e7d4((unsigned char*)camera, &state->yaw, &state->pitch, &state->roll);
+    Camera_GetOrbit((unsigned char*)camera, &state->yaw, &state->pitch, &state->roll);
     Vector3i oldPosition = state->position;
     Vector3i oldTarget = state->target;
     int oldYaw = state->yaw;
@@ -88,14 +88,14 @@ extern "C" ARM void func_ov001_02158ae4(CameraState* state) {
         *var9 = var0;
         if (!var0) *var10 = 0;
     }
-    if (var4.x != arg0->unknown_58_.x || var4.y != arg0->unknown_58_.y || var4.z != arg0->unknown_58_.z) var2->unknown_10_ = arg0->unknown_58_;
-    if (var5 != arg0->unknown_64_ || var6 != arg0->unknown_68_ || var7 != arg0->unknown_6c_) func_0202e5d8(var2, arg0->unknown_64_, arg0->unknown_68_, arg0->unknown_6c_);
-    if (var3.x != arg0->unknown_4c_.x || var3.y != arg0->unknown_4c_.y || var3.z != arg0->unknown_4c_.z) {
-        var2->unknown_4_ = arg0->unknown_4c_;
-        func_0202eab8(var2);
+    if (oldTarget.x != state->target.x || oldTarget.y != state->target.y || oldTarget.z != state->target.z) camera->target = state->target;
+    if (oldYaw != state->yaw || oldPitch != state->pitch || oldRoll != state->roll) Camera_SetOrbit(camera, state->yaw, state->pitch, state->roll);
+    if (oldPosition.x != state->position.x || oldPosition.y != state->position.y || oldPosition.z != state->position.z) {
+        camera->position = state->position;
+        Camera_SetOrbitFromPosition(camera);
     }
-    if (arg0->unknown_a24_) {
-        func_0202e5d8(var2, arg0->unknown_64_, arg0->unknown_68_, arg0->unknown_6c_);
-        arg0->unknown_a24_ = 0;
+    if (state->forceRotation) {
+        Camera_SetOrbit(camera, state->yaw, state->pitch, state->roll);
+        state->forceRotation = 0;
     }
 }

@@ -3,9 +3,9 @@
 #include "GameState/Field3b0.h"
 #include "NitroSDK/NSBXX/RenderConfig.h"
 
-extern "C" int func_02032fdc(void* obj, void* param1, int flag);
-void* GetPtrField0x144_0202ed74(void* obj);
-extern "C" void func_020ca528(void* ptr, void* addr);
+extern "C" int GameObject_Draw(void* obj, void* param1, int flag);
+void* Camera_GetInverseRotation(void* obj);
+extern "C" void MI_Copy36B(void* ptr, void* addr);
 
 extern "C" void func_02047448(int a, int b, int c);
 
@@ -19,7 +19,7 @@ ARM int TickActorFlagStateAndDispatch02076bec(GameObject* arg0, void* param1) {
         return 0;
     }
 
-    int result = func_02032fdc(obj, param1, 0);
+    int result = GameObject_Draw(obj, param1, 0);
     if (*(unsigned char*)(obj + 0x17a) == 0) {
         return result;
     }
@@ -32,8 +32,8 @@ ARM int TickActorFlagStateAndDispatch02076bec(GameObject* arg0, void* param1) {
     RenderConfig::SetObjectPosition(&localBuf);
 
     if (f3b0 != 0) {
-        void* ptr = GetPtrField0x144_0202ed74(f3b0);
-        func_020ca528(ptr, &data_0210a0cc);
+        void* ptr = Camera_GetInverseRotation(f3b0);
+        MI_Copy36B(ptr, &data_0210a0cc);
         data_0210a010.flags &= ~0xa4;
     }
 

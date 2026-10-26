@@ -5,7 +5,7 @@
 void* GameState_GetParty(GameState* battleStruct);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
 void* GetFieldAt0x150_02053c6c(unsigned char* obj);
-extern "C" int func_02032370(int max);
+extern "C" int RandomIntBelow(int max);
 
 struct RandomTargetTable021970a0 {
     char pad[0xf78];
@@ -40,7 +40,7 @@ extern "C" ARM int func_ov017_021970a0(int mode) {
         float extra = (mode == 1) ? 10.0f : 0.0f;
         float threshold = 2.0f + 0.05f * (float)maxVal + extra;
         int t = (int)threshold;
-        if (func_02032370(100) < t) return 1;
+        if (RandomIntBelow(100) < t) return 1;
     }
     if (mode == 1) goto ret0;
 
@@ -48,7 +48,7 @@ extern "C" ARM int func_ov017_021970a0(int mode) {
         float extra2 = (mode == 2) ? 10.0f : 0.0f;
         float threshold2 = 2.0f + extra2;
         int t2 = (int)threshold2;
-        if (func_02032370(100) < t2) return 2;
+        if (RandomIntBelow(100) < t2) return 2;
     }
 ret0:
     return 0;

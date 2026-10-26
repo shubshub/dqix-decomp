@@ -30,7 +30,7 @@ struct Entity02078688 {
 // USA: func_02078688  (semantic: AimAtFlagTargetAndReset02078688)
 extern "C" ARM int func_02078688(struct Entity02078688* self) {
     GameState* battleStruct = GameState::GetInstance();
-    GameObject* combatant = battleStruct->GetMaybeWanderingMonsterByIndex(self->f166);
+    GameObject* combatant = battleStruct->GetWanderingMonsterByIndex(self->f166);
     if (combatant != 0) {
         struct Vec3 posCopy = func_02034104(combatant);
         struct Vec3 delta;

@@ -13,7 +13,7 @@ struct Struct_ov002_0215505c {
     unsigned char unknown_0_1_ : 7;
 };
 
-void *Clear12Bytes020e46c4(void *p);
+void *NameText_Clear(void *p);
 struct Obj021e1318;
 void ClearObj_021e1318(Obj021e1318*);
 void KeyTable_Reset(struct Struct020dfc40 *s);
@@ -22,7 +22,7 @@ void Window_Init(struct InitTarget0205cfd4 *t);
 void Background_Init(struct BackgroundGraphics *l);
 extern "C" void WindowPane_Init(void *p);
 extern "C" void *memset(void *dst, int value, unsigned int length);
-int CopyOutRegion0x5718_02011494(char *obj, void *dst);
+int GameState_GetOwnPartyOrder(char *obj, void *dst);
 extern "C" char *Scenario_GetInstance(void);
 unsigned short BuildBitmask0206e384(unsigned char *obj);
 short GetShortFromTable0206e3d4(int unused, int index);
@@ -172,19 +172,19 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     U8(0x1b3e)                              = 0;
     U8(0x1b3f)                              = 0;
     S8(0x1b37)                              = 0;
-    GameState *var9                           = GameState::GetInstance();
-    S32(0x1afc)                             = func_02011494((char *) var9, var0);
-    for (int var10 = 0; var10 < S32(0x1afc); var10++) {
-        *(int *) (arg0 + var10 * 4 + 0x1b00) = var0[var10];
-        GameObject *var11                    = var9->GetPartyMemberByIndex(var0[var10]);
-        if (var11 != 0 && *(int *) ((char *) var11 + 0x1b8) == 0) {
-            *(unsigned char *) (arg0 + S8(0x1b37) + 0x1b32) = var0[var10];
+    GameState *gs                           = GameState::GetInstance();
+    S32(0x1afc)                             = GameState_GetOwnPartyOrder((char *) gs, buf);
+    for (int i = 0; i < S32(0x1afc); i++) {
+        *(int *) (self + i * 4 + 0x1b00) = buf[i];
+        GameObject *m                    = gs->GetPartyMemberByIndex(buf[i]);
+        if (m != 0 && *(int *) ((char *) m + 0x1b8) == 0) {
+            *(unsigned char *) (self + S8(0x1b37) + 0x1b32) = buf[i];
             S8(0x1b37)++;
         }
     }
-    S32(0x1b14) = func_02011494((char *) var9, var0);
-    for (int var12 = 0; var12 < S32(0x1b14); var12++) {
-        *(int *) (arg0 + var12 * 4 + 0x1b18) = var0[var12];
+    S32(0x1b14) = GameState_GetOwnPartyOrder((char *) gs, buf);
+    for (int i = 0; i < S32(0x1b14); i++) {
+        *(int *) (self + i * 4 + 0x1b18) = buf[i];
     }
     *(int *) (arg0 + S32(0x1b14) * 4 + 0x1b18) = 4;
     S32(0x1b14) += 1;
@@ -238,9 +238,9 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     U8(0x22bf) = 0;
     func_ov002_0215b814(arg0);
 #else
-    unsigned char var18[4];
-    func_020e46c4(arg0 + 8);
-    func_020e46c4(arg0 + 0x14);
+    unsigned char buf[4];
+    NameText_Clear(self + 8);
+    NameText_Clear(self + 0x14);
     RESET(0x88c);
     RESET(0x878);
     RESET(0x850);
@@ -373,19 +373,19 @@ extern "C" ARM void func_ov002_0215505c(char *arg0) {
     U8(0x1c7a)                              = 0;
     U8(0x1c7b)                              = 0;
     S8(0x1c73)                              = 0;
-    GameState *var27                           = GameState::GetInstance();
-    S32(0x1c38)                             = func_02011494((char *) var27, var18);
-    for (int var28 = 0; var28 < S32(0x1c38); var28++) {
-        *(int *) (arg0 + var28 * 4 + 0x1c3c) = var18[var28];
-        GameObject *var29                    = var27->GetPartyMemberByIndex(var18[var28]);
-        if (var29 != 0 && *(int *) ((char *) var29 + 0x1c4) == 0) {
-            *(unsigned char *) (arg0 + S8(0x1c73) + 0x1c6e) = var18[var28];
+    GameState *gs                           = GameState::GetInstance();
+    S32(0x1c38)                             = GameState_GetOwnPartyOrder((char *) gs, buf);
+    for (int i = 0; i < S32(0x1c38); i++) {
+        *(int *) (self + i * 4 + 0x1c3c) = buf[i];
+        GameObject *m                    = gs->GetPartyMemberByIndex(buf[i]);
+        if (m != 0 && *(int *) ((char *) m + 0x1c4) == 0) {
+            *(unsigned char *) (self + S8(0x1c73) + 0x1c6e) = buf[i];
             S8(0x1c73)++;
         }
     }
-    S32(0x1c50) = func_02011494((char *) var27, var18);
-    for (int var30 = 0; var30 < S32(0x1c50); var30++) {
-        *(int *) (arg0 + var30 * 4 + 0x1c54) = var18[var30];
+    S32(0x1c50) = GameState_GetOwnPartyOrder((char *) gs, buf);
+    for (int i = 0; i < S32(0x1c50); i++) {
+        *(int *) (self + i * 4 + 0x1c54) = buf[i];
     }
     *(int *) (arg0 + S32(0x1c50) * 4 + 0x1c54) = 4;
     S32(0x1c50) += 1;

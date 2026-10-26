@@ -5,16 +5,13 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "NitroSDK/Memory.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 char* FindEntryAndGetNext_020467c0(void* a, char* b, unsigned int* outSize);
 int GetCharBlock_020b01a4(void* file, void** out);
 struct Hdr02b0288;
 int FindPlttChunkAndRelocate_020b01f0(struct Hdr02b0288* h, void** out);
-extern "C" void func_020c9be0(void);
+extern "C" void HaltSystem(void);
 
 extern AllocatorUnion g_mainAllocator;
 extern unsigned char g_fileLoadBuffer[0x30000];
@@ -69,7 +66,7 @@ ARM void LoadObjLoadingGraphicsResources(Manager020db0f0* mgr) {
 
     charBlock = NULL;
     if (!GetCharBlock_020b01a4(ncgrEntry, (void**)&charBlock)) {
-        func_020c9be0();
+        HaltSystem();
     }
 
     mgr->charBufSize = charBlock->size;
@@ -78,7 +75,7 @@ ARM void LoadObjLoadingGraphicsResources(Manager020db0f0* mgr) {
 
     plttChunk = NULL;
     if (!FindPlttChunkAndRelocate_020b01f0(nclrEntry, (void**)&plttChunk)) {
-        func_020c9be0();
+        HaltSystem();
     }
 
     mgr->plttBufSize = 0x20;

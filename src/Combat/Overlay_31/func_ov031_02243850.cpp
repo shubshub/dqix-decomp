@@ -15,8 +15,8 @@ extern SafeAllocator data_ov031_02291e3c;
 extern char g_fileLoadBuffer;
 extern char data_ov031_0224c90c[];
 extern char data_ov031_0224c920[];
-extern "C" void* func_0202ae18();
-int CheckField0NonZero_0202b7d8(int*);
+extern "C" void* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
 void GameObject_DisableControl(Obj020397cc*, int);
 unsigned int* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int*, unsigned int);
@@ -34,11 +34,11 @@ enum Enum_ov031_02243850 {
 // USA: func_ov031_02243850
 extern "C" ARM int func_ov031_02243850(void* state) {
     GameState* game = GameState::GetInstance();
-    int* field = (int*)func_0202ae18();
+    int* field = (int*)LinkSession_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     int result = 1;
-    if (CheckField0NonZero_0202b7d8(field)) return -1;
-    GameObject* object = game->GetUnknownGameObject();
+    if (LinkSession_IsActive(field)) return -1;
+    GameObject* object = game->GetLeader();
     if (object) GameObject_DisableControl((Obj020397cc*)object, 1);
     AllocationLength02243850 length = ArenaLength02243850;
     SafeAllocator* external = *(SafeAllocator**)((char*)state + 0x28);

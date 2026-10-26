@@ -7,12 +7,12 @@ enum { RegionOffset36b8 = 0x36b8, RegionOffset36bc = 0x36bc, RegionOffset2774 = 
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* state);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+extern "C" int LinkSession_IsHostOrSolo(void* state);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 struct PointerField32c_ffc0;
-void* GetPointerAt0x32c_0200ffc0(struct PointerField32c_ffc0* obj);
+void* GameState_GetShip(struct PointerField32c_ffc0* obj);
 struct Vector3i;
 void InitStruct02070378(char* obj);
 extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
@@ -22,13 +22,13 @@ extern "C" ARM void func_ov017_02199360(void* obj) {
     if (!*(unsigned char*)((char*)obj + RegionOffset36b8)) return;
 
     GameState* battleStruct = GameState::GetInstance();
-    void* state = func_0202ae18();
+    void* state = LinkSession_GetInstance();
     void* base = Zone3D_GetInstance();
     void* src = *(void**)((char*)obj + RegionOffset36bc);
-    void* fieldPtr = GetField0x3f8Address_0200fd0c(battleStruct);
-    void* ptr32c = GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battleStruct);
+    void* fieldPtr = GameState_GetZoneTransition(battleStruct);
+    void* ptr32c = GameState_GetShip((struct PointerField32c_ffc0*)battleStruct);
 
-    if (func_0202c508(state)) {
+    if (LinkSession_IsHostOrSolo(state)) {
         *(Vector3i*)((int*)((char*)base + RegionOffset2774)) = *(Vector3i const*)((int*)((char*)src + 0x40));
         *(int*)((char*)base + RegionOffset2780) = *(short*)((char*)src + 0x4c);
         InitStruct02070378((char*)fieldPtr);

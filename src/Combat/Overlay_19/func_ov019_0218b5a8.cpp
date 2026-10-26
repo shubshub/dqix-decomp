@@ -34,10 +34,10 @@ void Sprite_Init(Struct0205a198* obj);
 void ClearField0And40205a234(ClearTarget0205a234* obj);
 extern "C" void GXx_SetMasterBrightness_(short* reg, int value);
 void SetWord0x0_0200fb84(int* obj, int value);
-char* GetData02105254_0203b628();
-void ClearThreeRegions0203b634(char* obj);
-extern "C" void* func_0203bd08(void);
-extern "C" void func_0203bd24(char* arg0);
+char* BgVram_GetInstance();
+void BgVram_Clear(char* obj);
+extern "C" void* OamManager_GetInstance(void);
+void OamManager_Init(char* ctx);
 void LockStagedTextureVRAMCopying();
 extern "C" unsigned int DisableTextureImageVRAMBanks();
 extern "C" unsigned int DisableTexturePaletteVRAMBanks();
@@ -49,14 +49,14 @@ extern "C" void MapVRAMBanksToTextureImage(int banks);
 extern "C" void func_020bb48c(unsigned int arg0, int arg1);
 extern "C" void MapVRAMBanksToTexturePalette(int banks);
 extern "C" void MapVRAMBanksToMainBG(int banks);
-extern "C" void func_020c391c(int arg0, int arg1, int arg2);
+void GX_SetGraphicsMode(int mode, int a, int b);
 extern "C" void MapVRAMBanksToMainObj(int banks);
 void UpdateVRAMStagingVRAMBanks();
 void UnlockStagedTextureVRAMCopying();
 void Finish3DRendering();
 extern "C" void func_020c51dc();
 void ResetMatrixStacks020c537c();
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
 void InitGlobalStateAndInstallHandlers020bb780(void* arg, int flag);
 extern "C" void VramState_Reserve(void* obj, int a, int b);
@@ -70,13 +70,13 @@ extern "C" void func_020432c4(MessageSystem* g);
 void VramState_Save(char* obj);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void CallFunc0202f310AtField0x19e0_020440b8(char* g, void* alloc, void* data);
-void ClearBuffer0202ad30();
-void FlushAndClearBuffer0202adf0();
+void DebugConsole_Clear();
+void DebugConsole_Upload();
 void KeyTable_Reset(Struct020dfc40* obj);
 extern "C" void KeyTable_Load(void* dest, SafeAllocator* allocator, void* fileData, unsigned int size);
 const char* KeyTable_Get(Container020e0310* texts, int id);
 void WriteControlAndToggle020d86d0(int a, int b);
-void DelayThenSyncBit0_020c9820();
+void OS_WaitVBlankIntr();
 void ProcessRingJobs020bbcb4();
 void UnlockAndSetMainBrightness(GameResources* res, int target, int frames);
 void UnlockAndSetSubBrightness(GameResources* res, int target, int frames);
@@ -84,7 +84,7 @@ void UpdateAndApplyBrightness(GameResources* res);
 extern "C" void func_020c38d4();
 extern "C" void __clear(void* arg0, int arg1);
 unsigned long long GetCurrentTimestamp();
-void InitCombatSubsystems02012efc();
+void Main_UpdateLidAndInput();
 extern "C" int func_020457e0(MessageSystem* g);
 void FlagWord_SetBits(unsigned int* field, unsigned int bits);
 void ClearStruct020a9ea4(Struct020a9ea4* obj);
@@ -103,9 +103,9 @@ extern "C" void G3X_ResetMtxStack();
 void G3i_LookAt_(int, int, int, int, void*);
 void ReleaseField0x38IfValid020444e0(Obj020444e0* obj);
 extern "C" void func_ov019_0218c178(void* scene);
-void CleanInvalidateOamBuffers0203bd88(void* oam);
+void OamManager_FlushBuffers(void* oam);
 void Forward0204359c(void* obj, int value);
-void SyncMainSubOam0203bdb0(Obj0203bdb0* obj);
+void OamManager_UploadBuffers(Obj0203bdb0* obj);
 extern "C" void func_020439b0(MessageSystem* g, int a);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 void SetByte0x4_0200fb94(char* obj, unsigned char value);
@@ -241,10 +241,10 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
     GXx_SetMasterBrightness_((short*)0x400106c, -16);
     SetWord0x0_0200fb84((int*)gs, (int)self);
-    loader->MaybeReset();
-    ClearThreeRegions0203b634(GetData02105254_0203b628());
-    void* ctx = func_0203bd08();
-    InitBattleContext0203bd24((char*)ctx);
+    loader->ClearQueue();
+    BgVram_Clear(BgVram_GetInstance());
+    void* ctx = OamManager_GetInstance();
+    OamManager_Init((char*)ctx);
     LockStagedTextureVRAMCopying();
     DisableTextureImageVRAMBanks();
     DisableTexturePaletteVRAMBanks();
@@ -259,8 +259,8 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     inline_ov016_0218b5c4(0);
     inline_ov016_0218b5c4_2(0);
     BG1CNT = (BG1CNT & 0x43) | 4;
-    inline_ov017_021a86d0_2(0x11);
-    func_020c391c(1, 0, 1);
+    GX_SetVisiblePlane(0x11);
+    GX_SetGraphicsMode(1, 0, 1);
     MapVRAMBanksToMainObj(0x20);
     inline_ov019_0218b5a8_2(0x10);
     inline_ov017_021c0850(0);
@@ -268,14 +268,14 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     UnlockStagedTextureVRAMCopying();
     Finish3DRendering();
     func_020c51dc();
-    func_020c537c();
-    inline_ov019_0218b5a8_3(0);
-    func_020c5588(0, 0x1f, 0x7fff, 0, 0);
-    inline_ov019_0218b5a8_4(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
-    inline_ov019_0218b5a8_5(0);
-    inline_ov019_0218b5a8_6(0, 0, 255, 191);
-    func_020bb48c(4, 1);
-    func_020bb780((void*)0x4000, 1);
+    ResetMatrixStacks020c537c();
+    G2_SetBG0Priority(0);
+    Set3DClearColor(0, 0x1f, 0x7fff, 0, 0);
+    G3_OrthoW(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
+    G3_StoreMtx(0);
+    G3_ViewPort(0, 0, 255, 191);
+    ConfigurePairMode020bb48c(4, 1);
+    InitGlobalStateAndInstallHandlers020bb780((void*)0x4000, 1);
 
     char tables[0x70];
     char savedTables[0x70];
@@ -307,9 +307,9 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
         VramState_Save(savedTables);
         narc.Destroy();
     }
-    func_0202ad30();
-    func_0202adf0();
-    *(int*)((char*)var7 + Enum_ov019_0218b5a8_728) = 0;
+    DebugConsole_Clear();
+    DebugConsole_Upload();
+    *(int*)((char*)g + regionalG2d8) = 0;
 #if defined(jpn)
     if (LoadFileIntoMemory(data_ov019_0218ceb8, g_fileLoadBuffer, &size) == NULL) {
         BackgroundLoader::RemoveLockGlobal();
@@ -343,15 +343,15 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
         inline_ov019_0218b5a8(var7, arg0, 8);
         var13 = 8;
     }
-    var7->unknown_998_ = 1;
-    func_020d86d0(0, 1);
-    func_020c9820();
-    func_020bbcb4();
-    UnlockAndSetMainBrightness((GameResources*)arg0, 0, 5);
-    UnlockAndSetSubBrightness((GameResources*)arg0, -16, 1);
-    UpdateAndApplyBrightness((GameResources*)arg0);
-    func_020c38d4();
-    inline_ov019_0218b5a8_7();
+    g->active = 1;
+    WriteControlAndToggle020d86d0(0, 1);
+    OS_WaitVBlankIntr();
+    ProcessRingJobs020bbcb4();
+    UnlockAndSetMainBrightness((GameResources*)self, 0, 5);
+    UnlockAndSetSubBrightness((GameResources*)self, -16, 1);
+    UpdateAndApplyBrightness((GameResources*)self);
+    RestoreDisplayMode_020c38d4();
+    GXS_DispOn();
 
     Vector3fix var15 = data_ov019_0218c294;
     Vector3fix var16;
@@ -361,8 +361,8 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     unsigned long long var19 = GetCurrentTimestamp();
 
     for (;;) {
-        func_02012efc();
-        switch (var13) {
+        Main_UpdateLidAndInput();
+        switch (state) {
         case 1:
             if (g->active == 0) {
                 if (func_020457e0(g) == 0) {
@@ -513,21 +513,21 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
         RenderConfig::Reset();
         DISP3DCNT = (DISP3DCNT & ~0x3000) | 8;
         DISP3DCNT = (DISP3DCNT & ~0x3000) | 0x10;
-        inline_ov019_0218b5a8_8(0);
-        inline_ov019_0218b5a8_9(&var16, &var17, &var15, NULL);
-        inline_ov019_0218b5a8_4(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
-        inline_ov019_0218b5a8_8(2);
-        func_020444e0((Struct_020444e0*)var7);
-        func_ov019_0218c178(arg0);
-        func_0203bd88(var4);
-        func_0204359c(var7, 0x10);
-        func_020d86d0(0, 1);
-        arg0->unknown_28_ = 1;
-        func_020c9820();
-        func_0203bdb0((Struct_0203bdb0*)var4);
-        func_020439b0(var7, 1);
-        var0->CalculateDeltaTime((GetCurrentTimestamp() - var19) * 64 * 1000 / 33514);
-        var19 = GetCurrentTimestamp();
+        G3_MtxMode(0);
+        G3_LookAt(&eye, &up, &target, NULL);
+        G3_OrthoW(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
+        G3_MtxMode(2);
+        ReleaseField0x38IfValid020444e0((Obj020444e0*)g);
+        func_ov019_0218c178(self);
+        OamManager_FlushBuffers(ctx);
+        Forward0204359c(g, 0x10);
+        WriteControlAndToggle020d86d0(0, 1);
+        self->drawn = 1;
+        OS_WaitVBlankIntr();
+        OamManager_UploadBuffers((Obj0203bdb0*)ctx);
+        func_020439b0(g, 1);
+        gs->CalculateDeltaTime((GetCurrentTimestamp() - last) * 64 * 1000 / 33514);
+        last = GetCurrentTimestamp();
     }
 
     alloc.Destroy();

@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 extern "C" void* func_02057924(void);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void func_020531f0(void* obj);
 struct Obj020397cc;
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
@@ -13,18 +13,18 @@ void InitAndDispatchCombatant_021c2ea4(unsigned char* self);
 int CountValidCombatants02058618(void* unused);
 unsigned long long GetCurrentTimestamp(void);
 extern "C" unsigned long long _ll_udiv(unsigned long long dividend, unsigned int divisor, unsigned int flag);
-int CheckField0NonZero_0202b7d8(int* obj);
+int LinkSession_IsActive(int* obj);
 void GameObject_EnableControl(void* obj);
 extern "C" void func_ov017_021c310c(void* self);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 // USA: FieldTask_CastSafePassage  (semantic: UpdateStateMachine_021c2f3c)
 #pragma optimize_for_size off
 // Overlay 17, originally func_ov017_021c2f3c (USA/EUR 0x021c2f3c, JPN 0x021c3438)
 extern "C" ARM void FieldTask_CastSafePassage(unsigned char* self) {
-    GameObject* combatant = GameState::GetInstance()->GetUnknownGameObject();
+    GameObject* combatant = GameState::GetInstance()->GetLeader();
     void* r7 = func_02057924();
-    void* r5 = func_0202ae18();
+    void* r5 = LinkSession_GetInstance();
 
     if (combatant == 0) self[0x8c] = 3;
     unsigned char state = self[0x8c];
@@ -42,7 +42,7 @@ extern "C" ARM void FieldTask_CastSafePassage(unsigned char* self) {
 
         if (self[0x94] == 0) { self[0x8c] = 1; return; }
         if (self[0x94] != 1) return;
-        if (CheckField0NonZero_0202b7d8((int*)r5) != 0) {
+        if (LinkSession_IsActive((int*)r5) != 0) {
             self[0x8c] = 2;
             return;
         }
@@ -75,6 +75,6 @@ extern "C" ARM void FieldTask_CastSafePassage(unsigned char* self) {
 
     self[0x1] = 1;
     func_ov017_021c310c(self);
-    if (self[0x96] != 0) func_020a0c0c();
+    if (self[0x96] != 0) ROMFilesystem_InitFileTables();
     if (combatant != 0) GameObject_EnableControl(combatant);
 }

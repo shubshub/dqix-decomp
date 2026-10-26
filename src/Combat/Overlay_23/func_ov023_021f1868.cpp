@@ -207,7 +207,7 @@ void StoreInArray0x8b0_020465c0(StoreStruct* base, int index, int value);
 void MessageSystem_Reset(char* messages);
 void ClearStruct020a13c4(S020a13c4* table);
 void SetupGlobalAndRunScript020a13e4(void* table, void* allocator, int ids, unsigned short count, unsigned char mode);
-void* ResetAndReturnSelf020dfc2c(void* texts);
+void* KeyTable_Construct(void* texts);
 void KeyTable_Reset(Struct020dfc40* texts);
 void* FindElementByField020a15bc(Array020a15bc* table, int id);
 const char* KeyTable_Get(Container020e0310* texts, int id);
@@ -353,7 +353,7 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
             self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
             GameObject_021f1868* hero = gameState->GetProtagonist();
             TextTable_021f1868 names;
-            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Construct(&names);
             KeyTable_Reset((Struct020dfc40*)&names);
             func_020e1fc4(&names, &self->allocator_, data_ov023_021fd533, ids, (unsigned short)count, hero->partyData_->appearance_.female_, 1);
             self->pages_ = (GuidePage_021f1868*)self->allocator_.Allocate(count * sizeof(GuidePage_021f1868));
@@ -531,7 +531,7 @@ extern "C" ARM int func_ov023_021f1868(Struct_ov023_021f1868_9* arg0)
             self->firstGuide_ = func_ov023_021ed724(self->titleTable_, ids, count) & 1 ? 1 : 0;
             GameObject_021f1868* hero = gameState->GetProtagonist();
             TextTable_021f1868 names;
-            ResetAndReturnSelf020dfc2c(&names);
+            KeyTable_Construct(&names);
             KeyTable_Reset((Struct020dfc40*)&names);
             BackgroundLoader::AddLockGlobal();
             unsigned int var44 = 0;

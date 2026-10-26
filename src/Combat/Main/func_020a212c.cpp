@@ -34,25 +34,25 @@ struct Struct_020a212c_2 {
     short unknown_2c6_;
 };
 
-int GetField0x70_0202e7f0(void* obj);
+int Camera_GetOrbitYaw(void* obj);
 int IsBrightnessTransitionActive(GameResources* resources);
 int fix32SignedAngleDistance(int a, int b);
 int fix32abs(int x);
 int fix32ReduceAngle0To2Pi(int angle);
-void ApplyField0x70Tail(struct GlobalObj0202e6a8* obj, int value);
-void ClampField74BySign(struct CamState0202e6c0* obj, int value);
-void SetField78Clamped0202e71c(struct Obj0202e71c* obj, int value);
+void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* obj, int value);
+void Camera_SetOrbitHeight(struct CamState0202e6c0* obj, int value);
+void Camera_SetOrbitDistance(struct Obj0202e71c* obj, int value);
 int Vec3Ease_IsRunning(int* obj);
-void DispatchMemberFn020a0dec(struct DispatchObj020a0dec* obj);
-void CopyVec3ToField0x10AndCall0202e5d8_0202ec5c(char* obj, int* vec);
+void Vec3Ease_Step(struct DispatchObj020a0dec* obj);
+void Camera_SetTargetKeepOrbit(char* obj, int* vec);
 void Vector3fixMultiplyScalar(const Vector3i* in, int scale, Vector3i* out);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void Vector3fix_Add(const Vector3i* arg0, const Vector3i* arg1, Vector3i* arg2);
-extern "C" void Vector3fix_Subtract(const Vector3i* arg0, const Vector3i* arg1, Vector3i* arg2);
-extern "C" int Vector3fix_Length(const Vector3i* arg0);
-extern "C" int func_020a299c(struct Struct_020a212c_2* arg0, const Vector3i* arg1, const Object3D* arg2);
-extern "C" void func_0202eab8(void* arg0);
-extern "C" void func_0202e5d8(void* arg0, int arg1, int arg2, int arg3);
+extern "C" void __clear(void* ptr, int size);
+extern "C" void Vector3fix_Add(const Vector3i* a, const Vector3i* b, Vector3i* out);
+extern "C" void Vector3fix_Subtract(const Vector3i* a, const Vector3i* b, Vector3i* out);
+extern "C" int Vector3fix_Length(const Vector3i* v);
+extern "C" int func_020a299c(struct BattleCamera* obj, const Vector3i* v, const Object3D* target);
+extern "C" void Camera_SetOrbitFromPosition(void* obj);
+extern "C" void Camera_SetOrbit(void* obj, int x, int y, int z);
 
 static inline int inline_02061c04_5(int arg0, int arg1) {
     return (int)(((long long)arg0 * arg1 + 0x800) >> 12);
@@ -63,16 +63,16 @@ extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
     GameState* gs = GameState::GetInstance();
     GameObject* target = gs->GetGameObjectByIndex(self->followIndex);
     GameResources* res = gs->GetResources();
-    int angle = GetField0x70_0202e7f0(self);
+    int angle = Camera_GetOrbitYaw(self);
     int left = 0;
     int right = 0;
     if (checkInput) {
         left = g_keyManager.TestKeysHeld(0x200);
         right = g_keyManager.TestKeysHeld(0x100);
     }
-    if (IsBrightnessTransitionActive(var2) || IsBrightnessOutsideValidRange((GameResources*)var2, false)) {
-        var4 = 0;
-        var5 = 0;
+    if (IsBrightnessTransitionActive(res) || IsScreenFullyFaded((GameResources*)res, false)) {
+        left = 0;
+        right = 0;
     }
     if (arg0->unknown_244_ & 2) {
         var4 = 0;
@@ -105,35 +105,35 @@ extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
         if (var9 > var8 >> 1) {
             var9 = var8 >> 1;
         }
-        if (var8 < 0x28) {
-            func_0202e6a8((struct Struct_0202e6a8*)arg0, arg0->unknown_246_);
-            arg0->unknown_220_.x = arg0->unknown_246_;
+        if (adist < 0x28) {
+            Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)self, self->homeAngle);
+            self->angles.x = self->homeAngle;
         } else {
             if (var7 < 0) {
                 var9 = -var9;
             }
-            int var10 = fix32ReduceAngle0To2Pi(var3 + var9);
-            func_0202e6a8((struct Struct_0202e6a8*)arg0, var10);
-            arg0->unknown_220_.x = var10;
+            int a = fix32ReduceAngle0To2Pi(angle + step);
+            Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)self, a);
+            self->angles.x = a;
         }
-    } else if (var5 && var4) {
-        arg0->unknown_245_ |= 2;
-        func_0202e6c0((struct Struct_0202e6c0*)arg0, arg0->unknown_220_.y);
-        func_0202e71c((struct Struct_0202e71c*)arg0, arg0->unknown_220_.z);
-    } else if (var4) {
-        var3 = fix32ReduceAngle0To2Pi(var3 + (int)(4096.0f * (0.0015f * (float)var6)));
-        if (var3 > 0xc91 && var3 < 0x57f7) {
-            var3 = 0xc91;
+    } else if (right && left) {
+        self->flags245 |= 2;
+        Camera_SetOrbitHeight((struct CamState0202e6c0*)self, self->angles.y);
+        Camera_SetOrbitDistance((struct Obj0202e71c*)self, self->angles.z);
+    } else if (left) {
+        angle = fix32ReduceAngle0To2Pi(angle + (int)(4096.0f * (0.0015f * (float)dt)));
+        if (angle > 0xc91 && angle < 0x57f7) {
+            angle = 0xc91;
         }
-        func_0202e6a8((struct Struct_0202e6a8*)arg0, var3);
-        arg0->unknown_220_.x = var3;
-    } else if (var5) {
-        var3 = fix32ReduceAngle0To2Pi(var3 - (int)(4096.0f * (0.0015f * (float)var6)));
-        if (var3 > 0xc91 && var3 < 0x57f7) {
-            var3 = 0x57f7;
+        Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)self, angle);
+        self->angles.x = angle;
+    } else if (right) {
+        angle = fix32ReduceAngle0To2Pi(angle - (int)(4096.0f * (0.0015f * (float)dt)));
+        if (angle > 0xc91 && angle < 0x57f7) {
+            angle = 0x57f7;
         }
-        func_0202e6a8((struct Struct_0202e6a8*)arg0, var3);
-        arg0->unknown_220_.x = var3;
+        Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)self, angle);
+        self->angles.x = angle;
     }
 
     Vector3i pos;
@@ -146,11 +146,11 @@ extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
         Vector3i eye = pos;
         if (Vec3Ease_IsRunning(&self->dispatch.active)) {
             self->dispatch.source = eye;
-            DispatchMemberFn020a0dec((struct DispatchObj020a0dec*)&self->dispatch);
+            Vec3Ease_Step((struct DispatchObj020a0dec*)&self->dispatch);
             eye = self->dispatch.result;
         }
-        func_0202ec5c((char*)arg0, (int*)&var13);
-        var12 = func_020a299c(arg0, &var11, &var1->obj3D_);
+        Camera_SetTargetKeepOrbit((char*)self, (int*)&eye);
+        blended = func_020a299c(self, &pos, &target->obj3D_);
     }
     if (arg0->unknown_245_ & 0x10) {
         Vector3fixMultiplyScalar(&arg0->unknown_22c_, 0xccc, &arg0->unknown_22c_);
@@ -168,38 +168,38 @@ extern "C" ARM void func_020a212c(BattleCamera* self, int checkInput) {
     if (var12) {
         var14 = arg0->unknown_70_;
     }
-    int var15 = 1;
-    if (arg0->unknown_2c4_ == 1) {
-        arg0->unknown_2c6_ += (0x1000 - arg0->unknown_2c6_) / 10;
-    } else if (arg0->unknown_2c4_ == 2) {
-        arg0->unknown_2c6_ += -arg0->unknown_2c6_ / 10;
-        if (arg0->unknown_2c6_ < 0x28) {
-            arg0->unknown_2c4_ = 0;
-            func_0202e71c((struct Struct_0202e71c*)arg0, var14.z);
-            func_0202e6c0((struct Struct_0202e6c0*)arg0, var14.y);
-            var15 = 0;
+    int update = 1;
+    if (self->zoomMode == 1) {
+        self->zoom += (0x1000 - self->zoom) / 10;
+    } else if (self->zoomMode == 2) {
+        self->zoom += -self->zoom / 10;
+        if (self->zoom < 0x28) {
+            self->zoomMode = 0;
+            Camera_SetOrbitDistance((struct Obj0202e71c*)self, look.z);
+            Camera_SetOrbitHeight((struct CamState0202e6c0*)self, look.y);
+            update = 0;
         }
     }
     if (var15 == 0) {
         return;
     }
-    if (var12) {
-        Vector3i var16 = arg0->unknown_10_;
-        var16.y = var11.y + inline_02061c04_5(var16.y - var11.y, 0x1000 - arg0->unknown_2c6_);
-        func_0202ec5c((char*)arg0, (int*)&var16);
-        func_0202eab8(arg0);
-        var14 = arg0->unknown_70_;
+    if (blended) {
+        Vector3i eye = self->eye;
+        eye.y = pos.y + FxMul(eye.y - pos.y, 0x1000 - self->zoom);
+        Camera_SetTargetKeepOrbit((char*)self, (int*)&eye);
+        Camera_SetOrbitFromPosition(self);
+        look = self->target;
     }
-    if (arg0->unknown_2c6_ != 0) {
-        Vector3i var17 = arg0->unknown_10_;
-        Vector3i var18 = var1->obj3D_.position_;
-        var18.y += var1->obj3D_.GetHeight() / 2;
-        Vector3i var19;
-        Vector3fix_Subtract(&var17, &var18, &var19);
-        Vector3fixMultiplyScalar(&var19, arg0->unknown_2c6_, &var19);
-        Vector3fix_Subtract(&var17, &var19, &var17);
-        func_0202ec5c((char*)arg0, (int*)&var17);
+    if (self->zoom != 0) {
+        Vector3i eye = self->eye;
+        Vector3i center = target->obj3D_.position_;
+        center.y += target->obj3D_.GetHeight() / 2;
+        Vector3i delta;
+        Vector3fix_Subtract(&eye, &center, &delta);
+        Vector3fixMultiplyScalar(&delta, self->zoom, &delta);
+        Vector3fix_Subtract(&eye, &delta, &eye);
+        Camera_SetTargetKeepOrbit((char*)self, (int*)&eye);
     }
-    int var20 = 0x1000 - arg0->unknown_2c6_;
-    func_0202e5d8(arg0, var14.x, inline_02061c04_5(var14.y - 0x34cc, var20) + 0x34cc, inline_02061c04_5(var14.z - 0x6000, var20) + 0x6000);
+    int t = 0x1000 - self->zoom;
+    Camera_SetOrbit(self, look.x, FxMul(look.y - 0x34cc, t) + 0x34cc, FxMul(look.z - 0x6000, t) + 0x6000);
 }

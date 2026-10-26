@@ -55,8 +55,8 @@ struct AlchemyProjectionLayout { unsigned char entries[4][4]; };
 extern AlchemyProjectionLayout data_ov006_0215ff6c;
 extern int data_0210a00c;
 void _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(void*, const Vector3fix*, int*, int*);
-void func_0203bd08();
-void* func_0203be40();
+void OamManager_GetInstance();
+void* OamManager_GetMainOamBuffer();
 void _Z30SetFieldsAt0x28And0x2c02076988Piii(AlchemyProjectedWidgetView*, int, int);
 void _Z25ForwardTableValue02075db0P14Struct02075db0ii(AlchemyProjectedWidgetView*, short, short);
 }
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov006_02154a60(AlchemyProjectionView* state)
     for (int index = 0; index < 3; index++) data_ov006_0216038c[index] = &matrices[index];
     G3X_ResetMtxStack();
     RenderConfig::SubmitToFifo();
-    ((Object3D*)((char*)state + R(0x368, 0x4e8)))->MaybeUpdateBonePositions();
+    ((Object3D*)((char*)state + R(0x368, 0x4e8)))->UpdateTrackedBones();
     for (int index = 0; index < 3; index++) data_ov006_0216038c[index] = NULL;
     Vector3fix positions[3] = {
         {matrices[0].translation.x, matrices[0].translation.y, matrices[0].translation.z},
@@ -107,8 +107,8 @@ extern "C" ARM void func_ov006_02154a60(AlchemyProjectionView* state)
             widget->y = y - 12;
         }
     }
-    func_0203bd08();
-    void* resource = func_0203be40();
+    OamManager_GetInstance();
+    void* resource = OamManager_GetMainOamBuffer();
     AlchemyProjectedWidgetView* widget;
     unsigned char index;
     int phase = state->phase;

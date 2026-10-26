@@ -32,8 +32,8 @@ int Font_FindCharacterIndex(int, int);
 
 char* FindUnescapedAngleBracket_020424ac(char*);
 FontIndexFile::Glyph* Font_GetCharacter(int glyph, int fontType);
-int LookupKeyValue020425e4(int leftGlyph, int rightGlyph, int fontType);
-int GetWordFromTable02042648(int fontType);
+int Font_GetKerning(int leftGlyph, int rightGlyph, int fontType);
+int Font_GetFallbackWidth(int fontType);
 int Dispatch02044420(void*, void*);
 bool IsHighByteFF02044494(void*, void*);
 int STD_GetStringLength(const char*);
@@ -85,7 +85,7 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
     bool var8 = true;
     bool var9 = 0;
 
-    unsigned char var10 = func_02042648(arg7);
+    unsigned char defaultSpacing = Font_GetFallbackWidth(fontType);
 
     while (true)
     {
@@ -237,7 +237,7 @@ extern "C" ARM void func_0206b974(Struct_0206b974* arg0, bool arg1, char *arg2, 
             FontIndexFile::Glyph* glyph = Font_GetCharacter(nextGlyphIndex, fontType);
             ioCopyLength = glyph->tagLength;
             unsigned char nextGlyphUC = nextGlyphIndex;
-            int kerning = LookupKeyValue020425e4(lastGlyphIndex, nextGlyphUC, fontType);
+            int kerning = Font_GetKerning(lastGlyphIndex, nextGlyphUC, fontType);
             lastGlyphIndex = nextGlyphUC;
             glyphSpacing = kerning + glyph->width;
 

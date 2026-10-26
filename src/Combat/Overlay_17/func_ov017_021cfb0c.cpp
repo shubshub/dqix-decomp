@@ -40,11 +40,11 @@ struct Struct_ov017_021cfb0c_3 {
     Vector3i unknown_10_;
 };
 
-extern "C" int func_0202c508(struct SearchStruct0202c1a4* search);
+extern "C" int LinkSession_IsHostOrSolo(struct SearchStruct0202c1a4* search);
 extern "C" unsigned short* Zone3D_GetInstance(void);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24** list);
-int IsInRange0201b588(int v);
+void* GameState_GetZoneTransition(GameState* battleStruct);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** list);
+int ZoneId_IsGrotto(int v);
 int ListContainsId(ListHead02046b60* list, int id);
 void InitObj021be40c(struct Obj021be40c* obj);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
@@ -59,40 +59,40 @@ extern "C" ARM void func_ov017_021cfb0c(int arg0, void* arg1, GameState* arg2, s
     unsigned short* var5;
     struct Struct_ov017_021be40c* var6;
 
-    if (func_0202c508(arg4) != 0) {
+    if (LinkSession_IsHostOrSolo(search) != 0) {
         return;
     }
 
     zone = Zone3D_GetInstance();
-    battleStruct->GetUnknownGameObject();
+    battleStruct->GetLeader();
     zoneId = *zone;
     grotto = (struct GrottoEntrance021cfb0c*)battleStruct->GetGrottoStruct();
     list = ov->list;
     flag = 0;
-    cur = (unsigned short*)GetField0x3f8Address_0200fd0c(battleStruct);
-    if (GetHeadNodeIdOrMinusOne(list) == 3) {
-        if (IsInRange0201b588(*cur)) {
+    cur = (unsigned short*)GameState_GetZoneTransition(battleStruct);
+    if (FieldTaskQueue_GetCurrentKind(list) == 3) {
+        if (ZoneId_IsGrotto(*cur)) {
             flag = 1;
         }
     }
-    if (!func_0201b588(var3) && !var0) {
+    if (!ZoneId_IsGrotto(zoneId) && !flag) {
         return;
     }
 
-    Vector3i var7 = var2->unknown_10_;
-    var7.z += 0x2000;
-    if (func_02046b60((Struct_02038598_5*)var4, 3) || func_02046b60((Struct_02038598_5*)var4, 1)) {
-        unsigned short var8 = *(unsigned short*)func_0200fd0c(arg2);
-        if (var8 == 0xc3b5) {
+    Vector3i pos = grotto->pos;
+    pos.z += 0x2000;
+    if (ListContainsId((ListHead02046b60*)list, 3) || ListContainsId((ListHead02046b60*)list, 1)) {
+        unsigned short id = *(unsigned short*)GameState_GetZoneTransition(battleStruct);
+        if (id == 0xc3b5) {
             return;
         }
-        if (!func_0201b588(var8)) {
+        if (!ZoneId_IsGrotto(id)) {
             return;
         }
     }
 
-    if (func_02046b24(var4) == 0x1a) {
-        if (arg3->unknown_3b0c_->unknown_14_ >= 6) {
+    if (FieldTaskQueue_GetCurrentKind(list) == 0x1a) {
+        if (ov->counter->count >= 6) {
             return;
         }
     }

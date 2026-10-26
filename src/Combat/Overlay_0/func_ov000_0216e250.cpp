@@ -10,9 +10,9 @@ extern "C" void Vector3fix_Add(const Vector3fix* arg0, const Vector3fix* arg1, V
 struct Struct_ov000_0216e250 {
     int unknown_0_, unknown_4_, unknown_8_;
 };
-struct Struct_02049b54_2;
-extern "C" struct Struct_ov000_0216e250 func_02049b54(struct Struct_02049b54_2* arg0);
-extern "C" void func_0202e694(void* arg0, int* arg1);
+struct Obj02049b54;
+struct Triple0216e250 GetSubTriple02049b54(struct Obj02049b54* obj);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 extern int data_ov000_0218323c[];
 extern int data_ov000_02183244[];
@@ -59,11 +59,11 @@ extern "C" ARM void func_ov000_0216e250(struct Struct_ov000_0216e250_2* arg0, in
         var6 = data_ov000_02183254[var9];
         var7 = data_ov000_0218323c[var9];
     }
-    int var10[3];
-    var10[0] = var6;
-    var10[1] = 0;
-    var10[2] = 0x9000;
-    arg0->unknown_10_ = var1;
-    func_0202e694(arg0, var10);
-    arg0->unknown_238_ = var7;
+    int vec[3];
+    vec[0] = a;
+    vec[1] = 0;
+    vec[2] = 0x9000;
+    obj->position = center;
+    Camera_SetOrbitVector(obj, vec);
+    obj->field238 = b;
 }

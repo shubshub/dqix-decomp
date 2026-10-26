@@ -49,7 +49,7 @@ struct Struct_0208cb08_5 {
 };
 unsigned int* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int*, unsigned int);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 void BackupSubBgControlRegisters(SubBgControlBackup02074b64*);
 void OrGlobalFlag0x40_020dc2bc();
 void SetSubBrightness(GameResources*, int, int);
@@ -82,7 +82,7 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
         FlagWord_SetBits(GlobalFlags_GetInstance(), 1);
         FontBankLoader* global = FontBankLoader_GetInstance();
         int notification = 0x67;
-        if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) != 0x2d) {
+        if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)resources->fieldTaskQueue_) != 0x2d) {
             if (object->target < 0) notification = 0x32;
             else {
                 int var4 = arg0->unknown_d2_ / 20;
@@ -169,7 +169,7 @@ extern "C" ARM void func_0208cb08(Object_0208cb08* object) {
             REG_SUB_BG_0208cb08.backgrounds[2] = (REG_SUB_BG_0208cb08.backgrounds[2] & ~3) | 3;
             REG_SUB_BG_0208cb08.backgrounds[3] = (REG_SUB_BG_0208cb08.backgrounds[3] & ~3) | 1;
             REG_SUB_BG_0208cb08.display = (REG_SUB_BG_0208cb08.display & ~0x1f00) | 0x1900;
-            if (GetHeadNodeIdOrMinusOne((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
+            if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)resources->fieldTaskQueue_) == 0x2d) {
                 if (!IsSubBrightnessTransitionActive(resources)) SetSubBrightness(resources, 0, 25);
             } else if (!(object->flags & 0x10)) SetSubBrightness(resources, 0, 8);
             ++object->state;

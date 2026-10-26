@@ -52,7 +52,7 @@ struct Rgb02070900 { int red; int green; int blue; };
 struct EffectParam02070900;
 struct Timer020707c8;
 struct EventFlags0215657c { char field_0[0x8c]; unsigned char flags[1]; };
-char* GetFieldIfFlag4_020100f8(char*);
+char* GameState_GetFollowCamera(char*);
 extern "C" EventFlags0215657c* Scenario_GetInstance();
 int Scenario_TestFlag(int, unsigned char*, int);
 extern "C" unsigned short* Zone3D_GetInstance();
@@ -79,17 +79,17 @@ extern "C" void func_ov017_021bb27c(void*);
 extern int g_bgmPlayer __attribute__((aligned(4)));
 
 // USA: func_ov001_0215657c
-extern "C" ARM int func_ov001_0215657c(Struct_ov001_0215657c_2* arg0, void* arg1) {
-    if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) return arg0->unknown_a_;
-    GameState* var0 = GameState::GetInstance();
-    GameResources* var1 = GetGameResources();
-    var0->GetUnknownGameObject();
-    char* var2 = func_020100f8((char*)var0);
-    int var3 = 0;
-    int var4 = 0;
-    void* var5 = var1->unknown_ptr_3718;
-    if (arg0->unknown_16_ == arg0->unknown_152_) var3 = 1;
-    else if (arg0->unknown_18_ == arg0->unknown_158_) var3 = 1;
+extern "C" ARM int func_ov001_0215657c(Transition0215657c* transition, void* list) {
+    if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) return transition->state;
+    GameState* game = GameState::GetInstance();
+    GameResources* resources = GetGameResources();
+    game->GetLeader();
+    char* field = GameState_GetFollowCamera((char*)game);
+    int blocked = 0;
+    int sameArea = 0;
+    void* node = resources->unknown_ptr_3718;
+    if (transition->currentId == transition->targetId) blocked = 1;
+    else if (transition->currentKind == transition->targetKind) blocked = 1;
     else {
         EventFlags0215657c* flags = Scenario_GetInstance();
         if (Scenario_TestFlag((int)flags, flags->flags, transition->flag + 0x38e)) blocked = 1;

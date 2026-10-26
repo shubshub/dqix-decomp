@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Graphics/Vector.h"
 
-extern "C" void func_0202e694(void* arg0, int* arg1);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 struct Struct_ov000_0216f0d0 {
     char unknown_0_[0x70];
@@ -32,5 +32,5 @@ extern "C" ARM void func_ov000_0216f0d0(Struct_ov000_0216f0d0* arg0) {
         var3 = FIX32_MULTIPLY(var3, var4);
         var0.z += var3;
     }
-    func_0202e694(arg0, (int*)&var0);
+    Camera_SetOrbitVector(obj, (int*)&rot);
 }

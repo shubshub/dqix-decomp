@@ -5,12 +5,12 @@
 struct PartySlots { char pad0[0xf78]; signed char ids[4]; unsigned char count; };
 struct BattleContext { int field0; void* controller; };
 extern BattleContext data_ov017_021d82e0;
-void CopyByteField0x253To0x252_02039830(void*);
-unsigned char GetByteField0x252_02039820(void*);
+void GameObject_ApplyPendingControl(void*);
+unsigned char GameObject_IsControlEnabled(void*);
 unsigned char GameState_GetLeaderIndex(GameState*);
 void TryClearFlags0x130_02048418(unsigned char*, unsigned short);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
-extern "C" void func_ov017_02191108(void*, int, int, int, int);
+extern "C" void Party_ReformLine(void*, int, int, int, int);
 void GameObject_EnableControl(void*);
 struct Obj020397cc;
 void GameObject_DisableControl(Obj020397cc*, int);
@@ -21,10 +21,10 @@ extern "C" ARM void func_ov017_0218d2f0(unsigned char revive, unsigned char cure
     PartySlots* party = (PartySlots*)GameState_GetParty(game);
     int active = 1;
     unsigned char count = party->count;
-    GameObject* leader = game->GetUnknownGameObject();
+    GameObject* leader = game->GetLeader();
     if (leader) {
-        CopyByteField0x253To0x252_02039830(leader);
-        active = GetByteField0x252_02039820(leader) != 0;
+        GameObject_ApplyPendingControl(leader);
+        active = GameObject_IsControlEnabled(leader) != 0;
     }
     for (unsigned char i = 0; i < count; ++i) {
         short index = party->ids[i];
@@ -47,10 +47,10 @@ extern "C" ARM void func_ov017_0218d2f0(unsigned char revive, unsigned char cure
             if (var7->baseStats_->primaryStats.maxMP < var8) var8 = var7->baseStats_->primaryStats.maxMP;
             var7->unknown_ac_.unknown_84_->unknown_6_ = var8;
         }
-        func_ov017_021c9e00(var6, 1, 0, 1);
-        func_ov017_02191108(data_ov017_021d82e0.unknown_4_, 1, 1, 1, 1);
+        func_ov017_021c9e00(index, 1, 0, 1);
+        Party_ReformLine(data_ov017_021d82e0.controller, 1, 1, 1, 1);
     }
-    leader = game->GetUnknownGameObject();
+    leader = game->GetLeader();
     if (leader) {
         if (active) GameObject_EnableControl(leader);
         else GameObject_DisableControl((Obj020397cc*)leader, 1);

@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_02018300_3;
 struct Struct_02038598_4;
@@ -46,8 +43,8 @@ void FlagWord_SetBits(unsigned int* obj, unsigned int mask);
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 void SetBitInField0x34_020a35cc(unsigned char* obj, unsigned char index);
 int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
-extern "C" void func_020c9be0(void);
-extern "C" void func_ov017_021c3f70(unsigned short arg0);
+extern "C" void HaltSystem(void);
+void EnqueueEventTag127ForParty_021c3f70(unsigned short tag);
 
 // USA: func_ov017_021b848c
 extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed char* arg1, int arg2, int arg3,
@@ -69,7 +66,7 @@ extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed ch
     void* flags = GlobalFlags_GetInstance();
     FlagWord_ClearBits((FlagWord020466f4*)flags, 0x200);
     FlagWord_SetBits((unsigned int*)flags, 0x40000);
-    GameObject* actor = battle->GetUnknownGameObject();
+    GameObject* actor = battle->GetLeader();
     if (actor != NULL) {
         GameObject_DisableControl((struct Obj020397cc*)actor, 1);
         *(unsigned short*)((char*)actor + 0xb2) = 0;
@@ -87,7 +84,7 @@ extern "C" ARM void func_ov017_021b848c(Struct_ov017_021b848c_2* arg0, signed ch
         func_020a35cc(arg0->unknown_1c_, 3);
     }
     self->member = member;
-    if (TestBitAt0x34_020a35e0(self->info, self->member) == 0) func_020c9be0();
+    if (TestBitAt0x34_020a35e0(self->info, self->member) == 0) HaltSystem();
     if (arg3 == 0) GameState_GetProtagonistIndex(battle);
     self->field_48 = arg3;
     self->field_1e = arg4;

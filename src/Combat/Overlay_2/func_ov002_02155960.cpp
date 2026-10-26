@@ -96,7 +96,7 @@ int Scenario_RunTrigger(void*, int, void*);
 extern "C" void EventQuery_RunQueuedCommands(void*);
 extern "C" void func_ov023_021dca88(void*);
 void CopyByteField0215aa14(char*);
-int GetField5cb0Value_0201079c(char*);
+int GameState_GetStoryChapter(char*);
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8*, int, int);
 void Window_SetPanePalette(Struct_0205d81c*, int, int);
 extern "C" void func_ov002_0215bba8(BattleActor*);
@@ -205,8 +205,8 @@ extern "C" ARM int func_ov002_02155960(Struct_ov002_02155960_7* arg0, int arg1) 
             }
         }
     }
-    if (func_0201079c((char*)GameState::GetInstance()) == 1 || arg0->unknown_2485_ != 0) {
-        func_0205def8((Struct_ov002_02155960_3*)&arg0->unknown_ec8_, 0, RG(0x29, 0x2c));
+    if (GameState_GetStoryChapter((char*)GameState::GetInstance()) == 1 || actor->active != 0) {
+        SetElementFlag0x20ByKey0205def8((Struct_0205def8*)&actor->elements, 0, RG(0x29, 0x2c));
     }
     Window_SetPanePalette((Struct_0205d81c*)&actor->elements, RG(0x29, 0x2c), 0);
     Window_SetPanePalette((Struct_0205d81c*)&actor->elements, RG(0x28, 0x2b), 0);

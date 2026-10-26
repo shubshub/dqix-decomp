@@ -189,7 +189,7 @@ CBool SetROMFilesystemRoot(const char* path)
 
 void OnCartridgeDataLoadCompletion(NitroHandle* handle)
 {
-    int result = func_020d1198() ? NITRO_RESULT_5 : NITRO_RESULT_SUCCESS;
+    int result = Card_IsPulledOut() ? NITRO_RESULT_5 : NITRO_RESULT_SUCCESS;
     NitroHandle_OnTaskCompletion(handle, result);
 }
 

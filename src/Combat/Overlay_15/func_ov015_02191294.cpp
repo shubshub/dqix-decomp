@@ -56,15 +56,15 @@ struct Struct_ov015_02190acc
     unsigned char unknown_350_;
 };
 
-extern "C" int func_ov015_021925a8(Struct_ov015_02190acc* arg0);
-extern "C" void func_ov015_0219011c(Struct_ov015_0219011c* arg0, int arg1);
-extern "C" int func_ov015_02191284(Struct_02029988_2* arg0);
-extern "C" void* func_0202a9ac(Struct_02029634* arg0, int arg1);
-extern "C" const char* func_02029560(void* arg0);
-extern "C" void func_ov015_0218f364(Struct_ov015_0218c03c_2* arg0, const char* arg1);
-extern "C" void func_ov015_021900dc(Struct_ov015_021900dc* arg0);
-extern "C" void func_ov015_02192700(Struct_ov015_02190acc* arg0, int arg1);
-extern "C" void func_ov015_0219015c(Struct_ov015_0219015c_2* arg0, int arg1);
+extern "C" int func_ov015_021925a8(S02190c2c* self);
+void SetField18_0219011c(Obj0219011c* object, int step);
+extern "C" int func_ov015_02191284(DebugMenu* menu);
+void* DebugMenu_GetItem(IndexList_0202a9ac* menu, int index);
+const char* GetSubstructAt0x4_02029560(void* item);
+extern "C" void func_ov015_0218f364(ViewObject* object, const char* name);
+void UpdateField4c021900dc(Obj021900dc* object);
+extern "C" void func_ov015_02192700(S02190c2c* self, int unk);
+void AdjustSubstructField_0219015c_0219015c(S0219015c* object, int step);
 
 // USA: func_ov015_02191294
 extern "C" ARM void func_ov015_02191294(Struct_ov015_02190acc* arg0)
@@ -109,10 +109,10 @@ extern "C" ARM void func_ov015_02191294(Struct_ov015_02190acc* arg0)
                 var1->unknown_44_ = 0;
             }
         }
-        func_ov015_0219011c((Struct_ov015_0219011c*)arg0->unknown_30_, arg0->unknown_30_->unknown_4c_);
-        arg0->unknown_30_->unknown_38_ = func_ov015_02191284(&arg0->unknown_2c4_);
-        void* var4 = func_0202a9ac((Struct_02029634*)&arg0->unknown_2c4_, func_ov015_02191284(&arg0->unknown_2c4_));
-        if (var4 != NULL)
+        SetField18_0219011c((Obj0219011c*)self->current_, self->current_->step_);
+        self->current_->motion_ = func_ov015_02191284(&self->menuList_);
+        void* item = DebugMenu_GetItem((IndexList_0202a9ac*)&self->menuList_, func_ov015_02191284(&self->menuList_));
+        if (item != NULL)
         {
             if (arg0->unknown_19f_)
             {

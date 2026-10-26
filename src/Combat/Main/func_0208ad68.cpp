@@ -22,9 +22,9 @@ extern "C" int func_020482e0(struct Struct_020482e0* arg0, int arg1, int arg2);
 extern "C" void func_02026f08(unsigned char* arg0, int arg1, int arg2);
 extern "C" void func_02026f20(int arg0, int arg1);
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 
 // USA: func_0208ad68
 extern "C" ARM void func_0208ad68(void* arg0, int arg1) {
@@ -40,7 +40,7 @@ extern "C" ARM void func_0208ad68(void* arg0, int arg1) {
         func_02026f08((unsigned char*)var2, arg1, 1);
         func_02026f20((int)var2, arg1);
     }
-    if (func_0202b7d8((int*)func_0202ae18())) {
-        func_ov017_021c9e00(arg1, 1, 0, 1);
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
+        func_ov017_021c9e00(id, 1, 0, 1);
     }
 }

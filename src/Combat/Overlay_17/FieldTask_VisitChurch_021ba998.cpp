@@ -12,23 +12,23 @@ struct Struct_ov017_021ba998_2 {
     Struct_ov017_021ba998* unknown_1c_;
     unsigned char unknown_20_; signed char unknown_21_; unsigned char unknown_22_;
 };
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 void GameObject_DisableControl(Obj020397cc*, int);
 void SetFlagsAt0x244_020a28a0(unsigned char*, unsigned char);
 void ClearFlagBits_020a28b0(unsigned char*, int);
 extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-extern "C" void func_020a0c0c();
-extern "C" void func_020a1df8(int);
-extern "C" Struct_0206f7f4* func_0206f504();
-extern "C" short func_0206f7f4(Struct_0206f7f4*, int);
-extern "C" void func_ov003_02158bb8(Struct_ov017_021ba998*);
-extern "C" void func_ov003_02159174(void*, unsigned char);
-extern "C" void func_ov003_02158a84(Struct_ov017_021ba998*, SafeAllocator*);
+extern "C" void ROMFilesystem_InitFileTables();
+void PushInputLogA_020a1df8(int);
+List0206f7f4* GetData02108d18_0206f504();
+short GetHalfwordChecked(List0206f7f4*, int);
+extern "C" void func_ov003_02158bb8(Dialog*);
+void SetField587_02159174(void*, unsigned char);
+extern "C" void func_ov003_02158a84(Dialog*, SafeAllocator*);
 extern "C" int func_ov017_021959b4();
-extern "C" void func_ov003_02159240(void*);
-extern "C" int func_ov003_02158e94(Struct_ov017_021ba998*, int);
-extern "C" void func_ov017_02191108(void*, int, int, int, int);
+void SetFlag8At_02159240(void*);
+extern "C" int func_ov003_02158e94(Dialog*, int);
+extern "C" void Party_ReformLine(void*, int, int, int, int);
 extern "C" void func_ov003_02158d4c(Dialog*);
 int GetField94_0215916c(void*);
 void GameObject_EnableControl(void*);
@@ -40,8 +40,8 @@ extern AllocatorUnion g_mainAllocator;
 extern "C" ARM void FieldTask_VisitChurch(DialogTask* self) {
     GameState* state = GameState::GetInstance();
     unsigned int* flags = (unsigned int*)state->GetResources();
-    GameObject* actor = state->GetUnknownGameObject();
-    unsigned char* field = GetFieldIfFlag4_020100f8((char*)state);
+    GameObject* actor = state->GetLeader();
+    unsigned char* field = GameState_GetFollowCamera((char*)state);
     SetFlags04((GameResources*)flags, 0xc0);
     GameObject_DisableControl((Obj020397cc*)actor, 1);
     SetFlagsAt0x244_020a28a0(field, 3);
@@ -51,32 +51,32 @@ extern "C" ARM void FieldTask_VisitChurch(DialogTask* self) {
         func_020a0cc4(0x16e00);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x16e00);
         if (!buffer) {
-            func_020a0c0c(); self->finished_ = 1;
+            ROMFilesystem_InitFileTables(); self->finished_ = 1;
             return;
         }
-        arg0->unknown_8_.CreateTypeA(var5, 0x16e00);
-        arg0->unknown_8_.Reset();
-        arg0->unknown_1c_ = (Struct_ov017_021ba998*)arg0->unknown_8_.Allocate(0x5c0);
-        if (!arg0->unknown_1c_) {
-            func_020a0c0c(); arg0->unknown_1_ = 1;
+        self->allocator_.CreateTypeA(buffer, 0x16e00);
+        self->allocator_.Reset();
+        self->dialog_ = (Dialog*)self->allocator_.Allocate(0x5c0);
+        if (!self->dialog_) {
+            ROMFilesystem_InitFileTables(); self->finished_ = 1;
             return;
         }
-        func_020a1df8(3);
-        short var6;
-        if (arg0->unknown_20_) var6 = arg0->unknown_21_ - 1;
-        else var6 = func_0206f7f4(func_0206f504(), 0) - 1;
-        if (var6 < 0) var6 = 0;
-        arg0->unknown_21_ = var6;
-        func_ov003_02158bb8(arg0->unknown_1c_);
-        func_ov003_02159174(arg0->unknown_1c_, arg0->unknown_20_);
-        arg0->unknown_1c_->unknown_5a0_ = arg0->unknown_21_;
-        func_ov003_02158a84(arg0->unknown_1c_, &arg0->unknown_8_);
-        ++arg0->unknown_22_;
-    } else if (arg0->unknown_22_ == 1) {
-        if (func_ov017_021959b4()) func_ov003_02159240(arg0->unknown_1c_);
-        if (func_ov003_02158e94(arg0->unknown_1c_, var4)) ++arg0->unknown_22_;
-    } else if (arg0->unknown_22_ == 2) {
-        func_ov017_02191108(GetGameResources(), 1, 1, 1, 1);
+        PushInputLogA_020a1df8(3);
+        short selected;
+        if (self->mode_) selected = self->selection_ - 1;
+        else selected = GetHalfwordChecked(GetData02108d18_0206f504(), 0) - 1;
+        if (selected < 0) selected = 0;
+        self->selection_ = selected;
+        func_ov003_02158bb8(self->dialog_);
+        SetField587_02159174(self->dialog_, self->mode_);
+        self->dialog_->selection_ = self->selection_;
+        func_ov003_02158a84(self->dialog_, &self->allocator_);
+        ++self->phase_;
+    } else if (self->phase_ == 1) {
+        if (func_ov017_021959b4()) SetFlag8At_02159240(self->dialog_);
+        if (func_ov003_02158e94(self->dialog_, ticks)) ++self->phase_;
+    } else if (self->phase_ == 2) {
+        Party_ReformLine(GetGameResources(), 1, 1, 1, 1);
         func_ov003_02158d4c(self->dialog_);
         ++self->phase_;
     } else if (self->phase_ == 3) {
@@ -86,7 +86,7 @@ extern "C" ARM void FieldTask_VisitChurch(DialogTask* self) {
         GameObject_EnableControl(actor);
         ClearFlagBits_020a28b0(field, 3);
         func_ov017_021ba94c(self);
-        func_020a0c0c();
-        arg0->unknown_1_ = 1;
+        ROMFilesystem_InitFileTables();
+        self->finished_ = 1;
     }
 }

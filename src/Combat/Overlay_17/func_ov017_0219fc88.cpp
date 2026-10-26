@@ -10,7 +10,7 @@ enum { Enum_ov017_0219fc88_1788 = 0x6fc, Enum_ov017_0219fc88_1844 = 0x734, Enum_
 
 
 extern "C" void* Zone3D_GetInstance(void);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 
 struct Struct_02071488 {
     char unknown_0_[0x46];
@@ -24,8 +24,8 @@ int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 extern "C" void func_ov017_021baedc(void* arg0, int arg1);
 
-struct Struct_020213fc;
-extern "C" void func_020213fc(struct Struct_020213fc* arg0, int arg1);
+struct SetFlagStruct;
+void MapDisplay_SetHoldSubScreenDark(struct SetFlagStruct* p, int value);
 
 struct Struct_0201bdac_2;
 struct Struct_0201bdac;
@@ -60,7 +60,7 @@ extern "C" ARM int func_ov017_0219fc88(void* unusedSelf, int scriptId) {
     int success;
     void* self = GetGameResources();
     struct TailList020469b4* list = *(struct TailList020469b4**)((char*)self + 0x3000 + RegionOffset6fc);
-    ctx = GetField0x3f8Address_0200fd0c(battle);
+    ctx = GameState_GetZoneTransition(battle);
 
     struct Struct_02071488 var6;
     var3 = 0;
@@ -70,13 +70,13 @@ extern "C" ARM int func_ov017_0219fc88(void* unusedSelf, int scriptId) {
         if (Scenario_TestFlag((int)work, (unsigned char*)work + 0x8c, objBuf.f46 + 0x38e) == 0) {
             struct Entry021baedc* entry = *(struct Entry021baedc**)((char*)self + 0x3000 + RegionOffset734);
 
-            if (var8->unknown_2_ != 0) {
-                var8->unknown_8_ = arg1;
-            } else if (var8->unknown_3_ == 0) {
-                func_ov017_021baedc(var8, 1);
-                var8->unknown_8_ = arg1;
-                func_020213fc(*(struct Struct_020213fc**)((char*)var4 + 0x3000 + Enum_ov017_0219fc88_1744), 1);
-                func_020469b4(var5, (struct Struct_0201bdac*)var8);
+            if (entry->f2 != 0) {
+                entry->f8 = scriptId;
+            } else if (entry->f3 == 0) {
+                func_ov017_021baedc(entry, 1);
+                entry->f8 = scriptId;
+                MapDisplay_SetHoldSubScreenDark(*(struct SetFlagStruct**)((char*)self + 0x3000 + RegionOffset6d0), 1);
+                AppendNodeToTail(list, (struct TailNode020469b4*)entry);
             }
 
             func_ov017_021bd398(var8);

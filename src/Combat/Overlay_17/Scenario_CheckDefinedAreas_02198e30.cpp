@@ -32,7 +32,7 @@ struct Struct_ov017_02198e30_3 {
 };
 
 extern "C" struct ZoneMgr02198e30* Scenario_GetInstance(void);
-extern "C" int func_020321e0(Vector3fix* pos, void* nodePos, int param, void* area, unsigned int flags);
+extern "C" int Bounds3D_ContainsPointRotated(Vector3fix* pos, void* nodePos, int param, void* area, unsigned int flags);
 int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
 
@@ -41,10 +41,10 @@ extern "C" ARM void Scenario_CheckDefinedAreas(unsigned char* self) {
     GameState* gs = GameState::GetInstance();
     struct ZoneMgr02198e30* mgr = Scenario_GetInstance();
     struct ZoneNode02198e30* node = mgr->head;
-    GameObject* obj = gs->GetUnknownGameObject();
+    GameObject* obj = gs->GetLeader();
 
-    for (; var2 != 0; var2 = var2->unknown_2c_) {
-        if (func_020321e0(&var3->obj3D_.position_, var2->unknown_14_, var2->unknown_2_, var2->unknown_4_, var2->unknown_10_)) {
+    for (; node != 0; node = node->next) {
+        if (Bounds3D_ContainsPointRotated(&obj->obj3D_.position_, node->pos, node->param, node->area, node->flags)) {
             break;
         }
     }

@@ -3,7 +3,7 @@
 
 
 struct SearchStruct0202c1a4;
-int GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4*);
+int LinkSession_GetOwnSlot(struct SearchStruct0202c1a4*);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
@@ -18,8 +18,8 @@ struct Struct_ov017_021cdb4c {
 };
 
 // USA: func_ov017_021cdb4c
-extern "C" ARM void func_ov017_021cdb4c(void* arg0, struct Struct_ov017_021cdb4c* arg1, int arg2, int arg3, struct Struct_0202c1a4* arg4) {
-    if (arg1->unknown_4_ >= 0 && arg1->unknown_4_ != func_0202c1a4(arg4)) {
+extern "C" ARM void func_ov017_021cdb4c(void* unused0, struct Obj021cdb4c* obj, int unused2, int unused3, struct SearchStruct0202c1a4* search) {
+    if (obj->field4 >= 0 && obj->field4 != LinkSession_GetOwnSlot(search)) {
         return;
     }
 

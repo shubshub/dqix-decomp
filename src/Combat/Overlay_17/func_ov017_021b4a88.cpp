@@ -13,8 +13,8 @@
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" void func_020a0cc4(unsigned int size);
-extern "C" void func_020a0c0c(void);
-int IsInRange0201b5b0(int id);
+extern "C" void ROMFilesystem_InitFileTables(void);
+int ZoneId_IsMainGrottoFloor(int id);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
     Zone3D* zone = Zone3D_GetInstance();
     ActiveGrottoClass* grotto = &zone->grotto_;
     ZoneFeatures features;
-    features.Reset_0201e248();
+    features.Reset();
 
     if (var0->GetTaskStatus(arg0->unknown_c_)) {
         if (var0->GetDetailedTaskStatus(arg0->unknown_c_) == BackgroundLoader::TaskStatus_Complete) {
@@ -69,13 +69,13 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
                         var10++;
                         continue;
                     }
-                    NitroVM_FinishRead(&var8);
-                    const void* var12 = var7.GetFileByIndex(var10);
-                    if (strcmp(data_ov017_021d7b57, var11) == 0) {
-                        unsigned int var13;
-                        void* var14 = DecompressLZ77FileIntoScratchSpace(var6, var12, var13);
-                        var3.func_0201e248();
-                        var3.func_0201e2b4(&var6, var14, var13);
+                    NitroVM_FinishRead(&vm);
+                    const void* file = archive.GetFileByIndex(index);
+                    if (strcmp(data_ov017_021d7b57, extension) == 0) {
+                        unsigned int scriptSize;
+                        void* script = DecompressLZ77FileIntoScratchSpace(scriptAllocator, file, scriptSize);
+                        features.Reset();
+                        features.LoadFromScript(&scriptAllocator, script, scriptSize);
                     }
                     var10++;
                 }
@@ -89,7 +89,7 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
             floorAllocator.ResetAllocatorPointer();
             floorAllocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x600), 0x600);
             floorAllocator.Reset();
-            if (IsInRange0201b5b0(id)) {
+            if (ZoneId_IsMainGrottoFloor(id)) {
                 int width = grotto->CalculateAndStoreFloorWidth(floor);
                 int height = grotto->CalculateAndStoreFloorHeight(floor);
                 ActiveGrottoClass* current = &zone->grotto_;
@@ -112,12 +112,12 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
             void* floorHeap = floorAllocator.GetSignedAllocator();
             floorAllocator.Destroy();
             AllocatorUnion_Free(&g_mainAllocator, floorHeap);
-            func_020a0c0c();
+            ROMFilesystem_InitFileTables();
         }
         var0->RemoveTask(arg0->unknown_c_);
         arg0->unknown_c_ = -1;
         arg0->unknown_c_ = var0->QueueLoadFile(data_ov017_021d7b3a, 0);
         arg0->unknown_10_ = 3;
     }
-    var3.func_0201e248();
+    features.Reset();
 }

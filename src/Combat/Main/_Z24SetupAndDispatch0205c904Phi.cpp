@@ -11,7 +11,7 @@
 
 unsigned char* MessageSystem_GetInstance(void);
 void SetField0x1e20_02042b10(void* obj, void* value);
-void UpdateTimedState0202f380(void* obj, int amount);
+void WindowFrame_Update(void* obj, int amount);
 void InitSelfPointer_02042b1c(unsigned char* base);
 int CheckGlobalObjState2AndInit0205cde8(unsigned char* p);
 extern "C" int Window_HandleInput(void* selfPtr, void* p1);
@@ -29,7 +29,7 @@ ARM void SetupAndDispatch0205c904(unsigned char* obj, int flag) {
 
     unsigned char* ctx = MessageSystem_GetInstance();
     SetField0x1e20_02042b10(ctx, obj + 0xb4);
-    UpdateTimedState0202f380(ctx + TIMED_STATE, flag);
+    WindowFrame_Update(ctx + TIMED_STATE, flag);
     InitSelfPointer_02042b1c(ctx);
 
     if (CheckGlobalObjState2AndInit0205cde8(obj) == 0) {

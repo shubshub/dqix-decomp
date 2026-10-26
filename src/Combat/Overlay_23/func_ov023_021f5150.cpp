@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void* func_0202ae18(void);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" void* LinkSession_GetInstance(void);
 void* GameState_GetParty(GameState* battleStruct);
 extern "C" int func_ov023_021f44d0(void* obj);
 
@@ -17,7 +17,7 @@ extern "C" ARM int func_ov023_021f5150(void* arg0, unsigned char* arg1, int* arg
 #endif
     GameState* bs = GameState::GetInstance();
     char* g = (char*)GameState_GetParty(bs);
-    func_0202ae18();
+    LinkSession_GetInstance();
 
     int var2 = 0;
     int var3;

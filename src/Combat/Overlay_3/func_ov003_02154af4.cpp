@@ -41,13 +41,13 @@ int GetInnerFlagBit0020e28dc(Outer020e28dc*);
 struct Obj020e25e8;
 void ResetSelectionState020e25e8(Obj020e25e8*);
 extern "C" void func_ov003_021537d4(void*,unsigned int);
-extern "C" void func_ov003_021552b8(Struct_ov003_02154af4_3*);
-struct Struct_0207fc6c;
-extern "C" void func_0207fc6c(Struct_0207fc6c*, int);
-extern "C" unsigned int func_0202053c(void*);
-struct Struct_0207fdcc_2;
-extern "C" int func_020811d0(Struct_0207fdcc_2*, int);
-extern "C" void func_ov003_02158334(Struct_ov003_02154af4_3*);
+extern "C" void func_ov003_021552b8(Scene*);
+struct Obj0207fc6c;
+void CallFunc0204c87cOverEntries0207fc6c(Obj0207fc6c*, int);
+unsigned int GameObject_GetPartyMemberLevel(void*);
+struct Obj2081;
+int HasElementByByte0xc4_020811d0(Obj2081*, int);
+extern "C" void func_ov003_02158334(Scene*);
 extern "C" void func_02081f20(void*,unsigned int);
 extern "C" int func_020800fc(Struct_ov003_02154af4_2*,short*,int,unsigned short,unsigned char,int);
 extern "C" void func_020804fc(void*, int);
@@ -84,9 +84,9 @@ extern "C" ARM int func_ov003_02154af4(Scene* self,unsigned int scale) {
     c=&self->cache[id];
     unsigned int hp=member->HP();
     unsigned int maxhp,mp,maxmp,voc,flags;
-    if(!(c->hp==hp && ((maxhp=member->MaxHP()), c->maxHP==maxhp) && ((mp=member->MP()), c->mp==mp) && ((maxmp=member->MaxMP()), c->maxMP==maxmp) && ((voc=member->Voc()), c->vocation==voc) && c->table==GetTableValue_0202053c(member) && ((flags=member->Flags()), c->flags==flags))) {
+    if(!(c->hp==hp && ((maxhp=member->MaxHP()), c->maxHP==maxhp) && ((mp=member->MP()), c->mp==mp) && ((maxmp=member->MaxMP()), c->maxMP==maxmp) && ((voc=member->Voc()), c->vocation==voc) && c->table==GameObject_GetPartyMemberLevel(member) && ((flags=member->Flags()), c->flags==flags))) {
      c->hp=member->status->hp; c->maxHP=member->profile->hp; c->mp=member->status->mp; c->maxMP=member->profile->mp;
-     c->vocation=member->vocation->value; c->table=GetTableValue_0202053c(member); changed=true; c->flags=member->status->flags;
+     c->vocation=member->vocation->value; c->table=GameObject_GetPartyMemberLevel(member); changed=true; c->flags=member->status->flags;
     }
    }
   }

@@ -3,19 +3,19 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 void CancelActionIfHeadIdMatches_02199e98(void* obj);
 void* GameState_GetParty(GameState* gs);
-int GetIntField0x260_02039750(void* obj);
-int CheckField0xc4Low15BitsNonZero(struct BitField0203402c* p);
-unsigned char GetByteField0x252_02039820(void* obj);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
+int GameObject_GetGestureSlot(void* obj);
+int GameObject_IsSinking(struct BitField0203402c* p);
+unsigned char GameObject_IsControlEnabled(void* obj);
+int GameObject_IsGesturing(signed char* obj);
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 extern "C" void func_ov017_021a5bac(unsigned char* base);
 void InitFieldArenaListsAndCounters_021996fc(unsigned char* base);
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 extern "C" void func_ov017_021999fc(unsigned char* self);
 
 struct Struct_ov017_02199684 { unsigned char unknown_0_[0x14]; int unknown_14_; unsigned char unknown_18_[0x20 - 0x18]; };
@@ -45,25 +45,25 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
     enum {Enum_ov017_02199f08_16512 = 0x4080, Enum_ov017_02199f08_16500 = 0x4074, Enum_ov017_02199f08_16504 = 0x4078, Enum_ov017_02199f08_180 = 0xb4, Enum_ov017_02199f08_15360 = 0x3c00, Enum_ov017_02199f08_3248 = 0xcb0, Enum_ov017_02199f08_1788 = 0x6fc, Enum_ov017_02199f08_396 = 0x18c, Enum_ov017_02199f08_3240 = 0xca8, Enum_ov017_02199f08_3244 = 0xcac};
 #endif
 
-    struct Struct_02015438;
-    if (func_02046b08((void**)*(struct Struct_02015438***)(arg0 + 0x3000 + Enum_ov017_02199f08_1788)) == 0) {
-        func_ov017_02199e98(arg0);
+    struct HeadNode02046b24;
+    if (FieldTaskQueue_IsEmpty((void**)*(struct HeadNode02046b24***)(self + 0x3000 + regionalOffset6)) == 0) {
+        CancelActionIfHeadIdMatches_02199e98(self);
         return;
     }
 
     GameState* gs = GameState::GetInstance();
     gs->GetProtagonist();
-    GameObject* actor = gs->GetUnknownGameObject();
+    GameObject* actor = gs->GetLeader();
     unsigned char* party = (unsigned char*)GameState_GetParty(gs);
-    int mode = GetIntField0x260_02039750(actor);
+    int mode = GameObject_GetGestureSlot(actor);
 
-    if (var3 == -1) {
-        if (func_0203402c((Struct_0203402c*)var1) == 0 &&
-            *(int*)(arg0 + Enum_ov017_02199f08_16512) == 0) {
+    if (mode == -1) {
+        if (GameObject_IsSinking((BitField0203402c*)actor) == 0 &&
+            *(int*)(self + regionalOffset0) == 0) {
             if (g_keyManager.TestKeysPressed(2) &&
-                GetByteField0x252_02039820(actor) &&
+                GameObject_IsControlEnabled(actor) &&
                 (*(int*)((char*)actor + regionalOffset7) & 1) == 0 &&
-                CheckSubstructByte0x7cPositive_020535c8((signed char*)actor) == 0 &&
+                GameObject_IsGesturing((signed char*)actor) == 0 &&
                 *(short*)((char*)actor + 0xac) == 0) {
                 GameObject_DisableControl((Obj020397cc*)actor, 1);
                 *(unsigned short*)((char*)actor + 0xb2) = 0;
@@ -93,9 +93,9 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
     }
 
     if (g_keyManager.TestKeysReleased(2) != 0 ||
-        *(short*)((char*)var1 + 0xac) != 0 ||
-        func_0203402c((Struct_0203402c*)var1) != 0) {
-        func_ov017_02199e98(arg0);
+        *(short*)((char*)actor + 0xac) != 0 ||
+        GameObject_IsSinking((BitField0203402c*)actor) != 0) {
+        CancelActionIfHeadIdMatches_02199e98(self);
         return;
     }
 
@@ -109,7 +109,7 @@ extern "C" ARM void func_ov017_02199f08(unsigned char* arg0) {
         }
     }
 
-    if (TestFlags02046708((FlagWord02046708*)GlobalFlags_GetInstance(), 4) != 0) {
+    if (FlagWord_TestBits((FlagWord02046708*)GlobalFlags_GetInstance(), 4) != 0) {
         CancelActionIfHeadIdMatches_02199e98(self);
         return;
     }

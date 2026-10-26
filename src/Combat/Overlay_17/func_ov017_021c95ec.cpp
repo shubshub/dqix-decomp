@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c95ec {
     int unknown_0_;
@@ -25,20 +25,20 @@ struct Struct_ov017_021c95ec_2 {
 };
 
 // USA: func_ov017_021c95ec
-extern "C" ARM void func_ov017_021c95ec(int arg0, int arg1, int arg2, int arg3, int arg4,
-                                        struct Struct_ov017_021c95ec arg5, int arg6, unsigned char arg7, unsigned char arg8) {
-    void* var0 = func_0202ae24();
-    struct Struct_ov017_021c95ec_2 var1;
-    var1.unknown_7_0_ = arg1;
-    var1.unknown_7_4_ = arg4;
-    var1.unknown_c_ = arg5.unknown_0_;
-    var1.unknown_6_0_ = arg3;
-    var1.unknown_6_6_ = arg7;
-    var1.unknown_6_7_ = arg8;
-    var1.unknown_4_ = arg0;
-    var1.unknown_0_ = 0x87;
-    var1.unknown_a_ = arg5.unknown_4_ >> 4;
-    var1.unknown_10_ = arg5.unknown_8_;
-    var1.unknown_8_ = arg6;
-    func_0205e330(var0, &var1, 0);
+extern "C" ARM void func_ov017_021c95ec(int id, int lowNibble, int unused, int kind, int highNibble,
+                                        struct Vec3i021c95ec v, int field8, unsigned char flag6, unsigned char flag7) {
+    void* data = LinkMessageQueue_GetInstance();
+    struct Evt021c95ec evt;
+    evt.lowNibble = lowNibble;
+    evt.highNibble = highNibble;
+    evt.field_c = v.x;
+    evt.kind = kind;
+    evt.flag6 = flag6;
+    evt.flag7 = flag7;
+    evt.id = id;
+    evt.tag = 0x87;
+    evt.field_a = v.y >> 4;
+    evt.field_10 = v.z;
+    evt.field8 = field8;
+    func_0205e330(data, &evt, 0);
 }

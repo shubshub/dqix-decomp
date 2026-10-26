@@ -3,7 +3,7 @@
 
 extern int data_02112140;
 
-// USA: func_020d1198
-ARM CBool func_020d1198() {
+// Main, originally func_020d1198 (USA 0x020d1198, EUR 0x020d11a8, JPN 0x020d2c64)
+ARM CBool Card_IsPulledOut() {
     return data_02112140;
 }

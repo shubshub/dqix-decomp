@@ -29,8 +29,8 @@ struct Struct_020a299c_2 {
     Struct_ov009_0218aa28 unknown_44_;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" int func_02032124(struct Struct_ov009_0218aa28* arg0, struct Struct_020a299c_3* arg1);
+extern "C" void __clear(void* ptr, int size);
+extern "C" int Plane_SignedDistance(struct Vec3* a, struct Sub020a299c* b);
 int fix32abs(int x);
 extern "C" int fix32_Divide(int arg0, int arg1);
 int fix32SignedAngleDistance(int a, int b);
@@ -38,8 +38,8 @@ int fix32ReduceAngle0To2Pi(int a);
 extern "C" void Vector3fix_Add(const struct Struct_ov009_0218aa28* arg0, const struct Struct_ov009_0218aa28* arg1, struct Struct_ov009_0218aa28* arg2);
 struct Vector3i;
 void Vector3fixMultiplyScalar(Vector3i const*, int, Vector3i*);
-extern "C" void func_0202ec5c(char*, int*);
-extern "C" void func_0202e694(void* arg0, int* arg1);
+void Camera_SetTargetKeepOrbit(char*, int*);
+void Camera_SetOrbitVector(void* obj, int* vec);
 
 static inline int inline_02061c04_5(int arg0, int arg1) {
     return (int)(((long long)arg0 * arg1 + 0x800) >> 12);
@@ -56,32 +56,32 @@ extern "C" ARM int func_020a299c(struct Struct_020a299c* arg0, const struct Stru
     if ((arg0->unknown_245_ & 4) == 0 && (arg0->unknown_245_ & 8) == 0) {
         return 0;
     }
-    struct Struct_ov009_0218aa28 var0 = arg2->unknown_44_;
-    struct Struct_ov009_0218aa28 var1;
-    __clear(&var1, 0xc);
-    int var2 = func_02032124(&var0, (struct Struct_020a299c_3*)&arg0->unknown_298_);
-    if (var2 > 0) {
-        int var3 = fix32_Divide(fix32abs(var2), arg0->unknown_298_.unknown_10_);
-        if (var3 > 0x1000) {
-            var3 = 0x1000;
+    struct Vec3 tv = traj->v44;
+    struct Vec3 out;
+    __clear(&out, 0xc);
+    int d = Plane_SignedDistance(&tv, (struct Sub020a299c*)&obj->sub);
+    if (d > 0) {
+        int t = fix32_Divide(fix32abs(d), obj->sub.b);
+        if (t > 0x1000) {
+            t = 0x1000;
         }
         if (arg0->unknown_245_ & 4) {
             var1.unknown_0_ = fix32ReduceAngle0To2Pi(arg0->unknown_220_.unknown_0_ + inline_02061c04_5(fix32SignedAngleDistance(arg0->unknown_220_.unknown_0_, arg0->unknown_298_.unknown_14_.unknown_0_), var3));
         } else if (arg0->unknown_245_ & 8) {
             var1.unknown_0_ = arg0->unknown_220_.unknown_0_;
         }
-        var1.unknown_4_ = inline_020a299c(arg0->unknown_298_.unknown_14_.unknown_4_, arg0->unknown_220_.unknown_4_, var3);
-        var1.unknown_8_ = inline_020a299c(arg0->unknown_298_.unknown_14_.unknown_8_, arg0->unknown_220_.unknown_8_, var3);
-        struct Struct_ov009_0218aa28 var4;
-        struct Struct_ov009_0218aa28 var5;
-        struct Struct_ov009_0218aa28 var6;
-        struct Struct_ov009_0218aa28 var7;
-        Vector3fix_Add(&arg0->unknown_10_, &arg0->unknown_298_.unknown_20_, &var6);
-        Vector3fixMultiplyScalar((Vector3i const*)arg1, (int)(0x1000u - (unsigned int)var3), (Vector3i*)&var4);
-        Vector3fixMultiplyScalar((Vector3i const*)&var6, var3, (Vector3i*)&var5);
-        Vector3fix_Add(&var4, &var5, &var7);
-        func_0202ec5c((char*)arg0, (int*)&var7);
-        func_0202e694(arg0, (int*)&var1);
+        out.y = Lerp(obj->sub.c.y, obj->v220.y, t);
+        out.z = Lerp(obj->sub.c.z, obj->v220.z, t);
+        struct Vec3 sv;
+        struct Vec3 st;
+        struct Vec3 tmp;
+        struct Vec3 res;
+        Vector3fix_Add(&obj->pos, &obj->sub.d, &tmp);
+        Vector3fixMultiplyScalar((Vector3i const*)v, (int)(0x1000u - (unsigned int)t), (Vector3i*)&sv);
+        Vector3fixMultiplyScalar((Vector3i const*)&tmp, t, (Vector3i*)&st);
+        Vector3fix_Add(&sv, &st, &res);
+        Camera_SetTargetKeepOrbit((char*)obj, (int*)&res);
+        Camera_SetOrbitVector(obj, (int*)&out);
         return 1;
     }
     return 0;

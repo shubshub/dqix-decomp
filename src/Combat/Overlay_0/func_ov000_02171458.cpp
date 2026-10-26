@@ -15,7 +15,7 @@ struct Struct_0203c108_3 {
     char unknown_0_[0x14];
     short unknown_14_;
 };
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 extern "C" int func_ov000_02153a8c(GameObject* arg0);
 extern "C" int func_020dd290(void* arg0, unsigned int arg1);
@@ -69,7 +69,7 @@ extern "C" ARM void func_ov000_02171458(struct Menu02171458* menu) {
         state->depth++;
         state->results[menu->state.depth] = 0xe;
         state->field15 = 0;
-        SwapGlobalEntry0203c108(&menu->label, KeyTable_Get(menu->container, 5));
+        CachedTextLabel_SetText(&menu->label, KeyTable_Get(menu->container, 5));
         return;
     }
     GameObject* var2 = func_0200ff1c(GameState::GetInstance(), arg0->unknown_4c_);
@@ -96,14 +96,14 @@ extern "C" ARM void func_ov000_02171458(struct Menu02171458* menu) {
         return;
     }
 #if defined(jpn)
-    func_0203c108(&arg0->unknown_50_, (char*)var4->unknown_0_);
+    CachedTextLabel_SetText(&menu->label, (char*)entry->name);
 #else
-    char var5[0x80];
-    __clear(var5, 0x80);
-    char var6[0x80];
-    __clear(var6, 0x80);
-    func_020e4864(var4->unknown_0_, var5, 1, 0, 0, 0);
-    func_0206819c(var5, var6, 0);
-    func_0203c108(&arg0->unknown_50_, var6);
+    char buf1[0x80];
+    __clear(buf1, 0x80);
+    char buf2[0x80];
+    __clear(buf2, 0x80);
+    func_020e4864(entry->name, buf1, 1, 0, 0, 0);
+    CopyTextAndUppercaseIfFlagged0206819c(buf1, buf2, 0);
+    CachedTextLabel_SetText(&menu->label, buf2);
 #endif
 }

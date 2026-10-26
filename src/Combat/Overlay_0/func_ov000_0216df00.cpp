@@ -1,43 +1,43 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
-extern "C" int func_ov000_0216352c(int,float,float);
-extern "C" void func_0202e7d4(unsigned char*,int*,int*,int*);
+int ClampScaledStat_0216352c(int,float,float);
+void Camera_GetOrbit(unsigned char*,int*,int*,int*);
 int fix32abs(int);
 int Vector3fixSquaredDistance(const Vector3i*,const Vector3i*);
 void SetFlagOrState0216d530(void*,int);
 void Camera_SetTarget(struct Camera*,int,int,int);
 void* GetActiveCombatWork_ov000_02160130();
-extern "C" { void func_ov000_0216d370(void*,int,int,int); void func_0202e5d8(void*,int,int,int); void func_ov000_02167f10(void*); }
-struct Struct_ov000_0216df00 { char unknown_0_[0x10]; Vector3i unknown_10_; char unknown_1c_[0x5c-0x1c]; int unknown_5c_,unknown_60_; char unknown_64_[0x220-0x64]; unsigned char unknown_220_; char unknown_221_[3]; int unknown_224_; char unknown_228_[0x23c-0x228]; int unknown_23c_; };
-inline int inline_ov000_021537b8(int arg0) { return arg0>=0 && arg0<=3; }
-inline int inline_ov000_0216df00(int arg0) { return arg0>=0xc0 && arg0<=0xc7; }
-inline int inline_ov000_0216df00_2(int arg0,float arg1) { return arg0-(int)(4096.0f*arg1); }
-inline int inline_ov000_0216df00_3(int arg0,int arg1) { return (int)(((long long)arg0*arg1+0x800)>>12); }
+extern "C" { void func_ov000_0216d370(void*,int,int,int); void Camera_SetOrbit(void*,int,int,int); void func_ov000_02167f10(void*); }
+struct Camera { char p0[0x10]; Vector3i position; char p1[0x5c-0x1c]; int divisor,scale; char p2[0x220-0x64]; unsigned char mode; char p3[3]; int index; char p4[0x23c-0x228]; int angle; };
+inline int IsParty(int n) { return n>=0 && n<=3; }
+inline int IsEnemy(int n) { return n>=0xc0 && n<=0xc7; }
+inline int HeightOffset(int h,float f) { return h-(int)(4096.0f*f); }
+inline int Mul(int a,int b) { return (int)(((long long)a*b+0x800)>>12); }
 // USA: func_ov000_0216df00
-extern "C" ARM void func_ov000_0216df00(Struct_ov000_0216df00* arg0,int arg1,int arg2,float arg3,float arg4) {
-    GameObject* var0=GameState::GetInstance()->GetCombatantByIndex(arg1);
-    if(!var0) return;
-    int var1=0;
-    if(arg0->unknown_224_==arg1 && arg0->unknown_220_==1 && arg2==0) var1=1;
-    int var2=0;
-    if(inline_ov000_021537b8(arg1)) var2=1;
-    int var3=var0->obj3D_.GetHeight();
-    int var4=var3/2;
-    if(var4<0x1000) var4=0x1000;
-    int var5=(var4+0x800)*arg0->unknown_60_/arg0->unknown_5c_;
-    int var6=inline_ov000_0216df00_3(var3,0x1ccc)+0x4000;
-    if(var2) var6=inline_ov000_0216df00_3(var3,(int)(4096.0f*arg4))+0x4000;
-    if(inline_ov000_0216df00(arg1)) var6+=inline_ov000_0216df00_3(func_ov000_0216352c(arg1,1.5f,0.5f),0x1000);
-    if(var6<var5) var6=var5;
-    if(var1) {
-        int var7=0,var8=0,var9=0;
-        func_0202e7d4((unsigned char*)arg0,&var7,&var8,&var9);
-        if(var7==0) {
-            int var10=inline_ov000_0216df00_3(var6,0x400);
-            if(fix32abs(var9-var6)<var10) {
-                Vector3i var11(arg0->unknown_10_), var12;
-                var12.z=0; var12.x=0; var12.y=var4;
-                if(Vector3fixSquaredDistance(&var11,&var12)<0x1000) return;
+extern "C" ARM void func_ov000_0216df00(Camera* self,int id,int force,float offset,float factor) {
+    GameObject* unit=GameState::GetInstance()->GetCombatantByIndex(id);
+    if(!unit) return;
+    int reuse=0;
+    if(self->index==id && self->mode==1 && force==0) reuse=1;
+    int party=0;
+    if(IsParty(id)) party=1;
+    int height=unit->obj3D_.GetHeight();
+    int half=height/2;
+    if(half<0x1000) half=0x1000;
+    int minimum=(half+0x800)*self->scale/self->divisor;
+    int distance=Mul(height,0x1ccc)+0x4000;
+    if(party) distance=Mul(height,(int)(4096.0f*factor))+0x4000;
+    if(IsEnemy(id)) distance+=Mul(ClampScaledStat_0216352c(id,1.5f,0.5f),0x1000);
+    if(distance<minimum) distance=minimum;
+    if(reuse) {
+        int x=0,y=0,z=0;
+        Camera_GetOrbit((unsigned char*)self,&x,&y,&z);
+        if(x==0) {
+            int tolerance=Mul(distance,0x400);
+            if(fix32abs(z-distance)<tolerance) {
+                Vector3i old(self->position), target;
+                target.z=0; target.x=0; target.y=half;
+                if(Vector3fixSquaredDistance(&old,&target)<0x1000) return;
             }
         }
     }
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov000_0216df00(Struct_ov000_0216df00* arg0,int arg1,int
     else Camera_SetTarget((struct Camera*)self,0,half,0);
     int low=half-0x1800;
     if(low<0) low=0;
-    func_0202e5d8(self,0,low,distance);
+    Camera_SetOrbit(self,0,low,distance);
     self->angle=-20;
     Vector3i pos(unit->obj3D_.position_);
     int coordinates[2]={pos.x,pos.z};

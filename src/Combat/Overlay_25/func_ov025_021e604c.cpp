@@ -13,7 +13,7 @@ int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
 void SetSubstructByte0x56_02049f28(unsigned char* obj);
 GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
 extern "C" void _Z20GetSubTriple02049b54P11Obj02049b54(struct Vec3* out, struct Obj02049b54* obj);
-void SetVecYFromValue02033874(struct Obj02033874* obj, int arg);
+void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 void SetSubstructField0x8ClearFlag0x2_02049bac(unsigned char* obj, int* src);
 extern "C" void func_ov000_02161c0c(void* work, int id);
 extern "C" void func_ov000_02167fb0(void* work, GameObject* obj);
@@ -77,7 +77,7 @@ extern "C" ARM int func_ov025_021e604c(void* arg0, int arg1, int arg2, void* arg
             dir.y = 0;
             Vector3fix_Normalize(&dir, &dir);
             int angle = fix32_Atan2(dir.x, dir.z);
-            SetVecYFromValue02033874((struct Obj02033874*)enemy, angle);
+            GameObject_SnapFacing((struct Obj02033874*)enemy, angle);
             __clear(&rot, 0xc);
             rot.y = angle;
             SetSubstructField0x8ClearFlag0x2_02049bac((unsigned char*)enemy, (int*)&rot);

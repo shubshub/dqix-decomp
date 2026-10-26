@@ -3,9 +3,6 @@
 #include "GameState/GameState.h"
 #include "Input/Input.h"
 
-#if defined(jpn)
-#define func_020c39c8 func_020c5494
-#endif
 
 struct Struct_ov023_021f8e1c {
     int unknown_0_;
@@ -93,7 +90,7 @@ struct Owner02047a3c;
 struct SePlayer;
 
 unsigned short GetShortField1b0_02184a00(struct Obj_02184a00* obj);
-extern "C" int func_020c39c8(volatile unsigned short* p);
+extern "C" int GXx_GetMasterBrightness_(volatile unsigned short* p);
 void* AddOffset20_021f7318(void* p);
 unsigned char GetEntryByteIfFlag0x84(struct Owner02047a5c* owner, int index);
 int GetElementByte1IfEnabled(struct Owner02047a3c* obj, int index);
@@ -121,8 +118,8 @@ extern struct SePlayer g_sePlayer;
 extern unsigned int data_ov023_021fff24;
 extern const unsigned short data_ov023_021fd922[];
 
-static inline int inline_ov023_021f8e1c_41() { return func_020c39c8((volatile unsigned short*)0x400006c); }
-static inline int inline_ov023_021f8e1c_42() { return func_020c39c8((volatile unsigned short*)0x400106c); }
+static inline int GetMasterBrightnessMain_021f8e1c() { return GXx_GetMasterBrightness_((volatile unsigned short*)0x400006c); }
+static inline int GetMasterBrightnessSub_021f8e1c() { return GXx_GetMasterBrightness_((volatile unsigned short*)0x400106c); }
 
 // USA: func_ov023_021f8e1c
 extern "C" ARM void func_ov023_021f8e1c(Struct_ov023_021f8e1c_2* arg0, void* arg1) {

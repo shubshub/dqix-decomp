@@ -324,42 +324,42 @@ struct Struct_020a9eb8_15 {
 
 extern "C" int func_01ff85b8(void* buf, int size);
 extern "C" FieldState* Zone3D_GetInstance(void);
-extern "C" SessionState* func_0202ae18(void);
+extern "C" SessionState* LinkSession_GetInstance(void);
 extern "C" Struct020a99d0* Scenario_GetInstance(void);
-extern "C" int func_0202c540(SessionState* session);
-extern "C" int func_0202c508(SessionState* session);
+extern "C" int LinkSession_IsGuest(SessionState* session);
+extern "C" int LinkSession_IsHostOrSolo(SessionState* session);
 extern "C" int func_02075acc(int offset, void* buf, unsigned int size, int flag);
 extern "C" void PartyMember_WriteRecord(MonsterRecord* record, BattleMemberData* dst);
-extern "C" void func_020a0c0c(void);
-extern "C" void func_020a0cc4(unsigned int arg0);
+extern "C" void ROMFilesystem_InitFileTables(void);
+extern "C" void func_020a0cc4(unsigned int size);
 
 Global02109418* GetGlobal02109418_02094d6c(void);
 int GameState_GetProtagonistIndex(GameState* gs);
-int CheckField0NonZero_0202b7d8(int* p);
-int GetFieldAt0x0_0202ba00(int* p);
+int LinkSession_IsActive(int* p);
+int LinkSession_GetState(int* p);
 int Scenario_TestFlag(int base, unsigned char* bits, int bit);
 MonsterRecord* GetFieldAt0x150_02053c6c(unsigned char* obj);
 unsigned short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* roster, unsigned int idx);
 unsigned char* GetPointerAt0xbf0_0207c60c(void* roster, unsigned int idx);
 short GetShortFromArray0xc10_0207c620(unsigned char* roster, unsigned int idx);
 unsigned char GetByteFromArray0xc28_0207c694(unsigned char* roster, unsigned int idx);
-unsigned short* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+unsigned short* GameState_GetPlayerLocation(char* gs, unsigned int idx);
 unsigned char GetField0xcc0209ca98(char* p);
 unsigned char GetByteFieldAt0xcc_0205ea18(unsigned char* p);
-int GetField5cb0Value_0201079c(char* gs);
-int GetField5cb4Value_020107d0(char* gs);
-int GetField5cb8Value_02010804(char* gs);
+int GameState_GetStoryChapter(char* gs);
+int GameState_GetStoryPart(char* gs);
+int GameState_GetStoryStep(char* gs);
 int GetField5cbcValue_0201081c(char* gs);
-void UpdatePlayClocks020ac4f8(int running);
-int IsInRange0201b588(int mapId);
+void GameState_UpdatePlayClocks(int running);
+int ZoneId_IsGrotto(int mapId);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* p);
-int CopyOutRegion0x5718_02011494(char* gs, void* out);
+int GameState_GetOwnPartyOrder(char* gs, void* out);
 void CopyStruct020a99d0(Struct020a99d0* dst, Struct020a99d0* src);
 int SendBattleSaveBufferOrSetFlag020ac7b4(int flag);
 void EnqueueEventTag23Field_021d0d58(void);
 Entry_02028bd0* ZoneRecords_GetInstance(void);
-Entry_02028bd0* FindInlineEntryById(Entry_02028bd0* base, int id);
+Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0* base, int id);
 EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c(void);
 int FindNearestEntryDistance0203e524(EntryList_203dce4* list, Vec3s32_020c3030* pos, OutVec3s16_0203e524* out);
 Entry02087574* FindEntryBySignedId02087574(EntryTable02087574* table, int id);
@@ -397,19 +397,19 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
     int idCount;
     gs = GameState::GetInstance();
     FieldState* field = Zone3D_GetInstance();
-    SessionState* session = func_0202ae18();
+    SessionState* session = LinkSession_GetInstance();
     record = Scenario_GetInstance();
     global = GetGlobal02109418_02094d6c();
     battle = static_cast<BattleData*>(GameState_GetParty(gs));
     reinterpret_cast<GameStateSaveView*>(gs)->saving = 1;
 
-    var4 = false;
-    var5 = 0;
-    if ((arg2 & 1) || (arg2 & 8)) {
-        var4 = true;
-        if (func_0202b7d8(&var17->unknown_0_)) {
-            if (func_0202c540(var17)) {
-                var4 = false;
+    useArea = false;
+    savedArea = 0;
+    if ((flags & 1) || (flags & 8)) {
+        useArea = true;
+        if (LinkSession_IsActive(&session->state)) {
+            if (LinkSession_IsGuest(session)) {
+                useArea = false;
             }
         }
         if (arg2 & 8) {
@@ -463,7 +463,7 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
         FieldState* field2;
         GameState* gs2 = GameState::GetInstance();
         BattleData* battle2 = static_cast<BattleData*>(GameState_GetParty(gs2));
-        session2 = func_0202ae18();
+        session2 = LinkSession_GetInstance();
         field2 = Zone3D_GetInstance();
         GetGameResources();
         global2 = GetGlobal02109418_02094d6c();
@@ -473,7 +473,7 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             memset(save, 0, sizeof(BattleSave));
             GameStateSaveView::Bytes6 name;
             unsigned char ids[4];
-            idCount = CopyOutRegion0x5718_02011494((char*)gs2, ids);
+            idCount = GameState_GetOwnPartyOrder((char*)gs2, ids);
             memcpy(save->members, battle2->members, battle2->memberCount * sizeof(BattleMemberData));
             for (i = 0; i < idCount; i++) {
                 slot = i + battle2->memberCount;
@@ -494,7 +494,7 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             }
             memcpy(save->ids, ids, 4);
             save->idCount = idCount;
-            if (GameState_GetProtagonistIndex(gs2) != 0 || func_0202c540(session2) != 0) {
+            if (GameState_GetProtagonistIndex(gs2) != 0 || LinkSession_IsGuest(session2) != 0) {
                 save->ids[0] = 0;
                 save->idCount = 1;
             }
@@ -509,25 +509,25 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
                 var8 += var33;
                 var22->unknown_2b00_[var7] = func_0207c694(var25->unknown_1d4_, var7);
             }
-            memcpy(var22->unknown_2b08_, var25->unknown_e04_, sizeof(var25->unknown_e04_));
-            var22->unknown_2c30_ = var25->unknown_f6c_;
-            var22->unknown_2c34_ = var25->unknown_f68_;
-            var22->unknown_2c38_ = var25->unknown_f70_;
-            var22->unknown_2c3c_ = var25->unknown_f74_;
-            var22->unknown_2c40_ = 0;
-            memcpy(var22->unknown_2c44_, var25->unknown_2c8d_, sizeof(var25->unknown_2c8d_));
-            Struct_020a9eb8_2* var34 = reinterpret_cast<Struct_020a9eb8_2*>(var24);
-            if (var4) {
-                var22->unknown_2c4c_ = var25->unknown_2c94_;
-                var34->unknown_7e74_ = var25->unknown_2c94_;
-                if (func_0202c508(var13)) {
-                    func_ov017_021d0d58();
+            memcpy(save->tactics, battle2->tactics, sizeof(battle2->tactics));
+            save->valueF6c = battle2->valueF6c;
+            save->valueF68 = battle2->valueF68;
+            save->valueF70 = battle2->valueF70;
+            save->valueF74 = battle2->valueF74;
+            save->zero = 0;
+            memcpy(save->extraIds, battle2->extraIds, sizeof(battle2->extraIds));
+            GameStateSaveView* view2 = reinterpret_cast<GameStateSaveView*>(gs2);
+            if (useArea) {
+                save->areaId = battle2->areaId;
+                view2->value7e74 = battle2->areaId;
+                if (LinkSession_IsHostOrSolo(session2)) {
+                    EnqueueEventTag23Field_021d0d58();
                 }
             } else {
                 var22->unknown_2c4c_ = var34->unknown_7e74_;
             }
             save->zero2 = 0;
-            unsigned short* words = GetField0x74deForValidIndex_020120a0((char*)gs2, GameState_GetProtagonistIndex(gs2));
+            unsigned short* words = GameState_GetPlayerLocation((char*)gs2, GameState_GetProtagonistIndex(gs2));
             save->words[0] = words[0];
             save->words[1] = words[1];
             save->words[2] = words[2];
@@ -542,7 +542,7 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
 #if defined(jpn)
             Struct_020a95a4* var37 = &var23->unknown_840_;
 #endif
-            if (func_0202c540(var13)) {
+            if (LinkSession_IsGuest(session2)) {
 #if !defined(jpn)
                 Struct_020a95a4* var37 = &var23->unknown_840_;
 #endif
@@ -591,25 +591,25 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             func_02075acc((char*)&body->battle - base, save, sizeof(BattleSave), 0);
             AllocatorUnion_Free(&g_mainAllocator, save);
         }
-        func_020a0c0c();
+        ROMFilesystem_InitFileTables();
         if (Scenario_TestFlag((int)record, record->flagBits, 0x113c)) {
             battle->areaId = savedArea;
         }
     }
 
     {
-        GameState* var38 = GameState::GetInstance();
-        func_0202ae18();
-        if (var14) {
-            func_02075acc((char*)&arg1->unknown_2cac_ - var21 + 0x1fb, var1->unknown_1eb_, sizeof(var1->unknown_1eb_), 0);
+        GameState* gs3 = GameState::GetInstance();
+        LinkSession_GetInstance();
+        if (keepTimer) {
+            func_02075acc((char*)&body->stats - base + 0x1fb, record->block, sizeof(record->block), 0);
         } else {
-            Struct_020a9eb8_6 var39;
-            var39.unknown_0_ = func_0201079c((char*)var38);
-            var39.unknown_4_ = func_020107d0((char*)var38);
-            var39.unknown_8_ = func_02010804((char*)var38);
-            var39.unknown_c_ = func_0201081c((char*)var38);
-            func_020a99d0(&var39.unknown_10_, var1);
-            func_02075acc((char*)&arg1->unknown_2cac_ - var21, &var39, sizeof(var39), 0);
+            StatsSave stats;
+            stats.value5cb0 = GameState_GetStoryChapter((char*)gs3);
+            stats.value5cb4 = GameState_GetStoryPart((char*)gs3);
+            stats.value5cb8 = GameState_GetStoryStep((char*)gs3);
+            stats.value5cbc = GetField5cbcValue_0201081c((char*)gs3);
+            CopyStruct020a99d0(&stats.record, record);
+            func_02075acc((char*)&body->stats - base, &stats, sizeof(stats), 0);
         }
     }
 
@@ -638,28 +638,28 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
             func_02075acc(offset + sizeof(sub->current), fieldSave, sizeof(FieldSave), 0);
             AllocatorUnion_Free(&g_mainAllocator, fieldSave);
         }
-        func_020a0c0c();
-        Struct_020a9eb8_2* var45 = reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance());
-        Struct_020a9eb8_9 var46;
-        var46.unknown_400_ = var45->unknown_5f7c_;
-        memcpy(var46.unknown_0_, var45->unknown_5f80_, sizeof(var46.unknown_0_));
-        memcpy(var46.unknown_200_, var45->unknown_6180_, sizeof(var46.unknown_200_));
-        func_02075acc((char*)&arg1->unknown_5a04_ - var21, &var46, sizeof(var46), 0);
-        func_02075acc((char*)arg1->unknown_6c3c_ - var21, reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance())->unknown_5e6c_, 0x110, 0);
+        ROMFilesystem_InitFileTables();
+        GameStateSaveView* view5 = reinterpret_cast<GameStateSaveView*>(GameState::GetInstance());
+        ItemSave items;
+        items.value = view5->value5f7c;
+        memcpy(items.blockA, view5->block5f80, sizeof(items.blockA));
+        memcpy(items.blockB, view5->block6180, sizeof(items.blockB));
+        func_02075acc((char*)&body->items - base, &items, sizeof(items), 0);
+        func_02075acc((char*)body->block5e6c - base, reinterpret_cast<GameStateSaveView*>(GameState::GetInstance())->block5e6c, 0x110, 0);
     }
     func_02075acc((char*)arg1->unknown_2ff0_ - var21, var2->unknown_0_, sizeof(var2->unknown_0_), 0);
     func_02075acc((char*)arg1->unknown_3090_ - var21, func_02094d6c()->unknown_178_, 0x330, 0);
     func_02075acc((char*)arg1->unknown_3554_ - var21, reinterpret_cast<Struct_020a9eb8_2*>(var0)->unknown_75f0_, 0x4d0, 0);
     func_02075acc((char*)arg1->unknown_3a24_ - var21, reinterpret_cast<Struct_020a9eb8_2*>(var0)->unknown_7ac0_, 0x3b4, 0);
 
-    Struct_ov031_0224e6e0* var47 = func_0202ae18();
-    int var48 = func_0202ba00(&var47->unknown_0_);
-    int var49 = var47->unknown_100d_;
-    int var50 = 0;
-    if ((var48 == 5 && var49 > 1) || var48 == 6) {
-        var50 = 1;
+    SessionState* session3 = LinkSession_GetInstance();
+    int state = LinkSession_GetState(&session3->state);
+    int subState = session3->subState;
+    int running = 0;
+    if ((state == 5 && subState > 1) || state == 6) {
+        running = 1;
     }
-    func_020ac4f8(var50);
+    GameState_UpdatePlayClocks(running);
 
     func_02075acc((char*)arg1->unknown_3dd8_ - var21, reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance())->unknown_7504_, 0xec, 0);
 
@@ -679,12 +679,12 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
         if (arg3) {
             var51 += 0x8000;
         }
-        VectorizedInvertedMemcpy(&reinterpret_cast<Struct_020a9eb8_2*>(var53)->unknown_64f4_, &var55, sizeof(var55));
-        if (!func_0201b588(var54->unknown_0_)) {
-            TreasureMapMetadata* var56 = var55.unknown_2_;
-            for (var52 = 0; var52 < var55.unknown_0_; var52++) {
-                var56->ClearInitialByteUnknownBit();
-                var56++;
+        VectorizedInvertedMemcpy(&reinterpret_cast<GameStateSaveView*>(gs5)->treasureMaps, &maps, sizeof(maps));
+        if (!ZoneId_IsGrotto(field5->mapId)) {
+            TreasureMapMetadata* map = maps.maps;
+            for (n = 0; n < maps.numMaps; n++) {
+                map->ClearInitialByteUnknownBit();
+                map++;
             }
         }
         func_02075acc(var51, &var55, sizeof(var55), 0);
@@ -693,16 +693,16 @@ extern "C" ARM int func_020a9eb8(Struct_020a9eb8_15* arg0, Struct_020a9eb8_13* a
     unsigned char* var57 = reinterpret_cast<Struct_020a9eb8_2*>(GameState::GetInstance())->unknown_569c_;
     func_02075acc((char*)arg1->unknown_68e0_ - var21, var57, 0x7c, 0);
 
-    if (arg3) {
-        Struct_020a9eb8_10 var58;
-        GameObject* var59 = GameState::GetInstance()->GetUnknownGameObject();
-        if (var59 != NULL) {
-            var58.unknown_0_ = var59->obj3D_.GetField06();
-            var58.unknown_4_ = var59->obj3D_.position_;
-            var58.unknown_2_ = var59->obj3D_.rotation_.y;
+    if (mode) {
+        PositionSave position;
+        GameObject* obj = GameState::GetInstance()->GetLeader();
+        if (obj != NULL) {
+            position.objectId = obj->obj3D_.GetField06();
+            position.pos = obj->obj3D_.position_;
+            position.rotation = obj->obj3D_.rotation_.y;
         }
         FieldState* field6 = Zone3D_GetInstance();
-        Entry_02028bd0* entry = FindInlineEntryById(ZoneRecords_GetInstance(), field6->mapId);
+        Entry_02028bd0* entry = ZoneRecords_Find(ZoneRecords_GetInstance(), field6->mapId);
         if (entry == NULL) {
             position.entryValue = 0;
             position.area = 0;

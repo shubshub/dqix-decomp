@@ -18,14 +18,14 @@ typedef void (GameResources::*FocusAction0219aa7c)();
 struct FocusActions0219aa7c { FocusAction0219aa7c entries[15]; };
 extern const FocusActions0219aa7c data_ov017_021d64f4;
 extern const FocusAction0219aa7c __ptmf_null;
-int CheckSubstructByte0x7cPositive_020535c8(signed char*);
+int GameObject_IsGesturing(signed char*);
 EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
 Node020406f8* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
 void SelectVec3FromSources020406f8(Vec3_020406f8*, Node020406f8*);
 void* GetField0xc02040538(S02040538*);
 void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
-int IsField0Null_02046b08(void**);
+void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
+int FieldTaskQueue_IsEmpty(void**);
 int GetChainedTableByte_020479fc(ChainRoot*);
 unsigned char GetLinkedFlagByte_020479b8(LookupBase*);
 extern "C" void __clear(void*, unsigned int);
@@ -34,8 +34,8 @@ extern "C" void __clear(void*, unsigned int);
 extern "C" ARM void func_ov017_0219aa7c(GameResources* self) {
     GameState* game = GameState::GetInstance();
     void* camera = game->GetCamera();
-    GameObject* object = game->GetUnknownGameObject();
-    if (object == 0 || CheckSubstructByte0x7cPositive_020535c8((signed char*)object) || self->interactionSelection.spriteIndex == 18) return;
+    GameObject* object = game->GetLeader();
+    if (object == 0 || GameObject_IsGesturing((signed char*)object) || self->interactionSelection.spriteIndex == 18) return;
     Foo02048004* sprite = &self->substruct_array_2b90[self->interactionSelection.spriteIndex];
     Vector3fix position;
     __clear(&position, 12);
@@ -62,7 +62,7 @@ extern "C" ARM void func_ov017_0219aa7c(GameResources* self) {
             fallback = 0;
         }
     } else if (self->interactionSelection.kind == 9) {
-        GameObject* member = game->GetMaybeFieldMonsterByIndex(self->interactionSelection.targetIndex);
+        GameObject* member = game->GetFieldMonsterByIndex(self->interactionSelection.targetIndex);
         if (member != 0) {
             position = member->obj3D_.position_;
             position.y += member->obj3D_.GetHeight();
@@ -76,8 +76,8 @@ extern "C" ARM void func_ov017_0219aa7c(GameResources* self) {
     Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
     x -= 12;
     y -= 24;
-    SetVec3At0x1c((Vec3Target0203a46c*)sprite, x << 12, y << 12, 0);
-    if (!IsField0Null_02046b08((void**)self->fieldTaskQueue_)) return;
+    SprSprite_SetPosition((Vec3Target0203a46c*)sprite, x << 12, y << 12, 0);
+    if (!FieldTaskQueue_IsEmpty((void**)self->fieldTaskQueue_)) return;
     int dispatch = 0;
     if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 10) {
         int var14 = func_020479fc((Struct_020479fc*)var3);

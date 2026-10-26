@@ -18,7 +18,7 @@ struct Struct_ov001_02155dd0 {
     unsigned short unknown_a_;
 };
 
-char* GetFieldIfFlag4_020100f8(char* obj);
+char* GameState_GetFollowCamera(char* obj);
 void* GetFieldPtrAt0x5ca4_02010768(void* obj);
 extern "C" void* Zone3D_GetInstance();
 char* MessageSystem_GetInstance();
@@ -33,22 +33,22 @@ void Reset02040504(int* p);
 void SetSlotIfIndexBelow32(SlotArray0203dd10*, unsigned int, int);
 void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(char* obj);
-int IsScaledFieldPositive0203adfc(void* a, void* b);
-void ScaleAndNotify0203ad88(void* a, void* b, int c);
-void SetField0x7cClearFields0x1ec0x1ee_0202e874(unsigned char*, unsigned short);
-void SetFields0x1f0And0x1f4_0202f0c4(void* obj, int a, int b);
+int SoundPlayer_IsStreamPlaying(void* a, void* b);
+void SoundPlayer_StopStream(void* a, void* b, int c);
+void Camera_SetRoll(unsigned char*, unsigned short);
+void Camera_EaseFieldOfViewTo(void* obj, int a, int b);
 extern "C" void* func_020704fc();
-struct Struct_020708c8;
-extern "C" void func_020708c8(Struct_020708c8*, unsigned int);
-extern "C" void func_0209c278(void* arg0);
-extern "C" void func_0209c290(void* arg0);
-extern "C" void func_0205ea20(void* arg0, int arg1);
+struct EffectParam020708c8;
+void SetScaledEffectParam020708c8(EffectParam020708c8*, unsigned int);
+void ResetAndReinit0209c278(void* obj);
+void BgmPlayer_LoadArchive(void* obj);
+void SePlayer_LoadArchive(void* obj, int mode);
 extern "C" void func_ov028_021d9714();
 void PopStack1AndTrigger_020a1f4c(int v);
 extern "C" void* Scenario_GetInstance();
 int Scenario_TestFlag(int p, unsigned char* arr, int bit);
 struct Bytes02033b88;
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 void ClearCombatantSlot_0200fd48(GameState* gs, int id);
 void GameState_SetCamera(GameState* gs, int val);
 
@@ -78,22 +78,22 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
         GameState* var11;
 
     gs = GameState::GetInstance();
-    hud = GetFieldIfFlag4_020100f8((char*)gs);
+    hud = GameState_GetFollowCamera((char*)gs);
     res2 = GetGameResources();
     area = (Zone3D*)Zone3D_GetInstance();
     globalA = MessageSystem_GetInstance();
     loader = BackgroundLoader::GetInstance();
     ptr6 = (int*)GetFieldPtrAt0x5ca4_02010768(gs);
 
-    for (var4 = 0; var4 < 4; var4++) {
-        var3 = var11->GetMaybeWanderingMonsterByIndex(var4);
-        if (var3 != 0) {
-            var3->obj3D_.RemoveAnimationPackageByID(3);
-            unsigned short var12 = var7->currentZoneID_;
-            if (var12 == var3->obj3D_.GetField06()) {
-                var3->obj3D_.MakeVisible();
+    for (i = 0; i < 4; i++) {
+        obj = gs->GetWanderingMonsterByIndex(i);
+        if (obj != 0) {
+            obj->obj3D_.RemoveAnimationPackageByID(3);
+            unsigned short af = area->currentZoneID_;
+            if (af == obj->obj3D_.GetField06()) {
+                obj->obj3D_.MakeVisible();
             }
-            func_02033b88((Struct_02010604*)var3, 0);
+            GameObject_ForceMotionState((Bytes02033b88*)obj, 0);
         }
     }
 
@@ -106,9 +106,9 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
     }
 
     if (ptr6[1] != 0) {
-        if (GetFieldIfFlag4_020100f8((char*)gs) == 0) {
+        if (GameState_GetFollowCamera((char*)gs) == 0) {
             GameState_SetCamera(gs, ptr6[1]);
-            hud = GetFieldIfFlag4_020100f8((char*)gs);
+            hud = GameState_GetFollowCamera((char*)gs);
         }
     }
 
@@ -142,21 +142,21 @@ extern "C" ARM unsigned short func_ov001_02155dd0(Struct_ov001_02155dd0* arg0) {
     MessageSystem_Reset(globalA);
     MessageSystem_Stop(globalA);
     ClearFlags04(res2, 8);
-    if (IsScaledFieldPositive0203adfc(g_sePlayer, 0) != 0) {
-        ScaleAndNotify0203ad88(g_bgmPlayer, 0, 0);
+    if (SoundPlayer_IsStreamPlaying(g_sePlayer, 0) != 0) {
+        SoundPlayer_StopStream(g_bgmPlayer, 0, 0);
     }
-    ClearFlags04(var6, 0x2000);
-    func_0202e874((unsigned char*)var10, 0);
-    func_0202f0c4(var10, 0xf000, 0);
-    func_020708c8((Struct_020708c8*)func_020704fc(), 0);
-    var1->MaybeReset();
+    ClearFlags04(res2, 0x2000);
+    Camera_SetRoll((unsigned char*)hud, 0);
+    Camera_EaseFieldOfViewTo(hud, 0xf000, 0);
+    SetScaledEffectParam020708c8((EffectParam020708c8*)func_020704fc(), 0);
+    loader->ClearQueue();
 
     REG_DISPSTAT_304 &= ~0x8000;
     if (TestFlags00(var6, 0x1000) != 0) {
 #if !defined(jpn)
         ResetAndReinit0209c278(g_bgmPlayer);
-        Dispatch0203a974With0x57000_0209c290(g_bgmPlayer);
-        SetupContextForMode0205ea20(g_sePlayer, 0x64);
+        BgmPlayer_LoadArchive(g_bgmPlayer);
+        SePlayer_LoadArchive(g_sePlayer, 0x64);
 #endif
         ClearFlags00((GameResources*)var6, 0x1000);
         func_ov028_021d9714();

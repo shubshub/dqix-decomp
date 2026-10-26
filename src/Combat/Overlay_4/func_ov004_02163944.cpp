@@ -97,7 +97,7 @@ extern "C" ARM int func_ov004_02163944(void* arg0) {
     SetFieldAt0x76c_020263dc((unsigned char*)panel, allocator);
     Notify02022d78WithCode2_020dc3b8();
     GameResources* resources = GetGameResources();
-    if (IsBrightnessWithinValidRange((GameResources*)resources, true)) SetSubBrightness(resources, -16, 0);
+    if (IsScreenNotFullyFaded((GameResources*)resources, true)) SetSubBrightness(resources, -16, 0);
     func_ov004_021636b0(obj, data_ov004_02171010.buffer->details[selection].mapImageName_);
     MapController* controller = (MapController*)MessageSystem_GetInstance();
     MessageSystem_Reset((char*)controller);

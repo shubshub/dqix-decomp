@@ -43,23 +43,23 @@ extern "C" ARM void func_020da31c(Struct_020da31c_3* arg0) {
     if (!var0 || !var1) return;
     switch (arg0->unknown_e_) {
     case 1: {
-        GameObject* var2 = var1->GetMaybeWanderingMonsterByIndex(arg0->unknown_8_);
-        if (!var2) return;
-        if (!(arg0->unknown_d_ & 8)) {
-            Struct_02078398_2 var3;
-            arg0->unknown_d_ |= 8;
-            func_02078484(&var3);
-            int var4 = arg0->unknown_8_;
-            var3.unknown_14_ = var4;
-            var3.unknown_10_ = 0;
-            sprintf(var3.unknown_0_, data_020f2884, data_020f2887);
-            var3.unknown_2c_.x = 0;
-            var3.unknown_2c_.y = 0;
-            var3.unknown_2c_.z = 0;
-            var3.unknown_44_.x = 0x1000;
-            var3.unknown_44_.y = 0x1000;
-            var3.unknown_44_.z = 0x1000;
-            func_02057fb4(var0, 0x14, &var3);
+        GameObject* actor = game->GetWanderingMonsterByIndex(event->objectIndex);
+        if (!actor) return;
+        if (!(event->flags & 8)) {
+            InitStruct02078484Struct effect;
+            event->flags |= 8;
+            InitStruct02078484(&effect);
+            int index = event->objectIndex;
+            effect.objectIndex = index;
+            effect.enabled = 0;
+            sprintf(effect.filename, data_020f2884, data_020f2887);
+            effect.position.x = 0;
+            effect.position.y = 0;
+            effect.position.z = 0;
+            effect.scale.x = 0x1000;
+            effect.scale.y = 0x1000;
+            effect.scale.z = 0x1000;
+            FindNodeAndProcess02057fb4(manager, 0x14, &effect);
         }
         int var5 = ((Struct_020da31c*)var2)->unknown_b2_;
         int var6 = fix32SignedAngleDistance(var2->obj3D_.rotation_.y, ((Struct_020da31c*)var2)->unknown_ae_);
@@ -111,23 +111,23 @@ extern "C" ARM void func_020da31c(Struct_020da31c_3* arg0) {
         break;
     }
     case 3: {
-        GameObject* var12 = var1->GetMaybeWanderingMonsterByIndex(arg0->unknown_8_);
-        if (!var12) return;
-        Struct_02078398_2 var13;
-        Struct_0205a180* var14 = (Struct_0205a180*)func_02058658(var0, 0xd0);
-        if (var14 && var14->unknown_4_) {
-            Struct_020da31c_2* var15 = var14->unknown_4_;
-            Matrix4x3 var16, var17, var18, var19;
-            Mat4x3_WriteIdentity(&var16);
-            Mat4x3_WriteIdentity(&var17);
-            Mat4x3_ApplyTranslation(&var17, &var17, var12->obj3D_.position_.x,
-                var12->obj3D_.position_.y, var12->obj3D_.position_.z);
-            Mat4x3_WriteIdentity(&var18);
-            Mat4x3_ApplyTranslation(&var18, &var18, 0, 0x3000, 0x800);
-            var19 = RotationMatrixY(((Struct_020da31c*)var12)->unknown_ae_);
-            Mat4x3_Multiply(&var18, &var19, &var16);
-            Mat4x3_Multiply(&var16, &var17, &var16);
-            var15->unknown_e8_ = var16;
+        GameObject* actor = game->GetWanderingMonsterByIndex(event->objectIndex);
+        if (!actor) return;
+        InitStruct02078484Struct effect;
+        State0205a180* record = (State0205a180*)GetInlineRecordByBattleId_02058658(manager, 0xd0);
+        if (record && record->output) {
+            MatrixTarget_020da31c* output = record->output;
+            Matrix4x3 result, world, offset, rotation;
+            Mat4x3_WriteIdentity(&result);
+            Mat4x3_WriteIdentity(&world);
+            Mat4x3_ApplyTranslation(&world, &world, actor->obj3D_.position_.x,
+                actor->obj3D_.position_.y, actor->obj3D_.position_.z);
+            Mat4x3_WriteIdentity(&offset);
+            Mat4x3_ApplyTranslation(&offset, &offset, 0, 0x3000, 0x800);
+            rotation = RotationMatrixY(((ActorView_020da31c*)actor)->direction);
+            Mat4x3_Multiply(&offset, &rotation, &result);
+            Mat4x3_Multiply(&result, &world, &result);
+            output->matrix = result;
         }
         if (!(arg0->unknown_d_ & 0x10)) {
             arg0->unknown_f_ = 0;

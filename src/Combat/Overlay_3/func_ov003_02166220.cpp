@@ -17,9 +17,9 @@ void* GameState_GetParty(GameState*);
 void SetOrClearFlags464_02166164(Outer02166164*, int, int);
 extern "C" void Font_DecodeText(void* src, void* dst, int flag);
 #if defined(jpn)
-extern "C" short func_020865b0(Struct_0201099c_16*);
+short PartyMemberRecord_GetVocation(Struct020865b0*);
 #else
-extern "C" int func_020865b0(Struct_0201099c_16*);
+int PartyMemberRecord_GetVocation(Struct020865b0*);
 #endif
 int ClassifyRatio_0215f56c(S0215f56c*);
 int SetEntryFlagById02080b40(void* obj, int id);
@@ -162,15 +162,15 @@ extern "C" ARM void func_ov003_02166220(Struct_ov003_02166220_4* arg0) {
         Font_DecodeText(entry->name, (char*)self->names + off, 1);
         SetEntryFirstField02080f8c((struct Container02080f8c*)elementObj, idA, (int)&self->names[0][off]);
 #endif
-        if (func_020865b0((Struct_0201099c_16*)var3) != 0) {
-            var5 = (short)(func_020865b0((Struct_0201099c_16*)var3) + 0x11);
+        if (PartyMemberRecord_GetVocation((Struct020865b0*)entry) != 0) {
+            v = (short)(PartyMemberRecord_GetVocation((Struct020865b0*)entry) + 0x11);
         }
-        func_02080fe0(var0, (short)(var8 + 4), var5);
-        func_02080fa8((struct Struct_02080fa8*)var0, (short)(var8 + 8),
-                                                             var3->unknown_2_[func_020865b0((Struct_0201099c_16*)var3)]);
-        var9 = func_ov003_0215f56c((Struct_ov003_0215f56c_3*)var3);
-        if (var8 == ((struct Struct_ov003_02166220_5*)var0)->unknown_36_ && var9 == 0xf) {
-            var9 = 0xa;
+        ResolveEntryValueByKey02080fe0(elementObj, (short)(idA + 4), v);
+        SetEntryFirstField02080fa8((struct Container02080fa8*)elementObj, (short)(idA + 8),
+                                                             entry->unk2[PartyMemberRecord_GetVocation((Struct020865b0*)entry)]);
+        color = ClassifyRatio_0215f56c((S0215f56c*)entry);
+        if (idA == ((struct EntryList02166220*)elementObj)->field36 && color == 0xf) {
+            color = 0xa;
         }
         if (var7 < var2) {
             for (var13 = 0; var13 < 3; var13++) {
@@ -182,13 +182,13 @@ extern "C" ARM void func_ov003_02166220(Struct_ov003_02166220_4* arg0) {
             func_02080cc0(var0, var4, var9);
             func_02080b40(var0, var4);
 #endif
-            arg0->unknown_468_[var11] = var3->unknown_174_0_ + 1;
-            var15 = var3->unknown_f_[func_020865b0((Struct_0201099c_16*)var3)];
-            func_0208103c(var0, var10, (short)(var15 + 100));
-            if (var15 != 0) {
-                var9 = 5;
-                if (var15 == 0xa) {
-                    var9 = 0xd;
+            self->counters[i] = entry->bit0 + 1;
+            kind = entry->unkF[PartyMemberRecord_GetVocation((Struct020865b0*)entry)];
+            SetEntryHalfword0xe_0208103c(elementObj, idC, (short)(kind + 100));
+            if (kind != 0) {
+                color = 5;
+                if (kind == 0xa) {
+                    color = 0xd;
                 }
                 var14 = var11 + 0x19;
                 func_02080828(var0, (short)var14, &var16, &var17);

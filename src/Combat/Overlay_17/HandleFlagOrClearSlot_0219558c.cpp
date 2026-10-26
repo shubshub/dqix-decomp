@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void func_ov017_02195398(int, int);
 extern "C" void func_ov017_02191234(int);
 extern "C" void func_ov017_021905b8(int, int, int);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov017_0219558c(unsigned char* obj, int value) {
 #endif
 	GameState* battleStruct = GameState::GetInstance();
 	int x = ((int)GetGameResources());
-	struct SearchStruct* search = (struct SearchStruct*)func_0202ae18();
+	struct SearchStruct* search = (struct SearchStruct*)LinkSession_GetInstance();
 	if (value == 0) {
 		SetFlagAndCleanup_02195618(obj);
 		return;

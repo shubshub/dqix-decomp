@@ -6,7 +6,7 @@
 
 struct List0202fec8;
 struct Struct020dfc40;
-void ResetAndDetach020dfc6c(struct Struct020dfc40* p);
+void KeyTable_Destroy(struct Struct020dfc40* p);
 void ClearStruct16_020df83c(void* p);
 void ResetIfNonNeg_021db2e4(volatile int* p);
 int InitBufferFromDataField4_021ddc34(void* obj, short a, short b, short c, short d);
@@ -69,9 +69,9 @@ extern "C" ARM int func_ov023_021e0840(void* obj_) {
     }
 #endif
 
-    ResetAndDetach020dfc6c((struct Struct020dfc40*)(obj + 0x8c));
+    KeyTable_Destroy((struct Struct020dfc40*)(obj + 0x8c));
     ClearStruct16_020df83c(obj + 0x7c);
-    ResetAndDetach020dfc6c((struct Struct020dfc40*)(obj + 0xa4));
+    KeyTable_Destroy((struct Struct020dfc40*)(obj + 0xa4));
     ((class SafeAllocator*)(obj + 0x28))->Reset();
 
     int v = *(short*)((char*)*(void**)(obj + 0x4c) + 0x18);

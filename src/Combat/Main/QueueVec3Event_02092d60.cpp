@@ -9,7 +9,7 @@
 struct Vector3i;
 
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
 void* GetActiveCombatWork_ov000_02160130(void);
 void* GetSlot021677d8(void* obj, int id);
@@ -36,13 +36,13 @@ struct Param1_02092d60 {
 // USA: func_02092d60  (semantic: QueueVec3Event_02092d60)
 extern "C" ARM void func_02092d60(struct Param1_02092d60* p1, int p2) {
     GameState* bs = GameState::GetInstance();
-    GameObject* c = bs->GetUnknownGameObject();
+    GameObject* c = bs->GetLeader();
     if (c != 0) {
         struct Vec3_02092d60 vecBuf;
         *(Vector3i*)&vecBuf.x = *(Vector3i const*)(&c->obj3D_.position_.x);
         int word0 = (int)bs->GetResources();
         struct HeadNode02046b24** listHead = *(struct HeadNode02046b24***)((char*)(int)word0 + (IS_JPN ? 0x34ec : 0x36fc));
-        int head = GetHeadNodeIdOrMinusOne(listHead);
+        int head = FieldTaskQueue_GetCurrentKind(listHead);
         if (head == 0xa) {
             void* work = GetActiveCombatWork_ov000_02160130();
             if (work != 0) {

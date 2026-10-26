@@ -38,12 +38,12 @@ int Scenario_TestFlag(int unused, unsigned char *arr, int index);
 char *FindEntryByByteId020a83b0(struct List020a83b0 *l, int id);
 char *SearchBothTables02079e2c(char *t, int id);
 void ConsumeCounter02048350(struct Obj02048350 *o, int n);
-int CheckField0NonZero_0202b7d8(int *p);
-void *GetField0x3f8Address_0200fd0c(GameState *state);
+int LinkSession_IsActive(int *p);
+void *GameState_GetZoneTransition(GameState *state);
 extern "C" void VectorizedMemset(void *dst, int value, unsigned int length);
-void *CallFunc0200fbb4AtField0x3f8_0200fcfc(void *obj, const void *src);
+void *GameState_SetZoneTransition(void *obj, const void *src);
 void InitAndInsertNode_021acd30(char *g, unsigned char a, unsigned char b, unsigned char c);
-void InitAndResetHeader_0219e310(unsigned char *p, int v);
+void FieldTask_InitEnterZone(unsigned char *p, int v);
 void AppendNodeToTail(struct TailList020469b4 *l, struct TailNode020469b4 *n);
 extern "C" void func_ov002_02161cf0(char *base);
 extern "C" void func_ov002_0215f170(char *base);
@@ -52,8 +52,8 @@ extern "C" void func_ov002_0215a7b4(char *base, int a, short b, int c, int d);
 extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 extern "C" char *Scenario_GetInstance(void);
 extern "C" char *Zone3D_GetInstance(void);
-extern "C" int *func_0202ae18(void);
-extern "C" int func_0202c508(int *p);
+extern "C" int *LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(int *p);
 extern "C" void func_ov023_021dca88(char *obj);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
@@ -98,32 +98,32 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                 char *p = *(char **) (world + 8);
                 if (p != NULL) kind = (unsigned int) (*(unsigned char *) (p + 0xe) << 30) >> 30;
             }
-            *(short *) (arg0 + 0x1af0) = 0x232d;
-            if (var8 == 2) {
-                char *var10 = func_020a83b0(*(struct Struct_020a83b0 **) (arg0 + 0x22a4),
-                                                    *(short *) (arg0 + 0x1ac4));
-                if (var10 != NULL) {
-                    int *var11                          = func_0202ae18();
-                    *(short *) (arg0 + 0x1af2) = -1;
-                    *(int *) (arg0 + 0x1a80)  = 0x29;
-                    *(int *) (arg0 + 0x1a84)  = 0x2e;
-                    if (*(short *) (arg0 + 0x1aea) == 0x5603) {
-                        *(short *) (arg0 + 0x1af0)          = 0x7972;
-                        *(short *) (arg0 + 0x1af2)          = -1;
-                        *(short *) (arg0 + 0x22b8)          = -1;
-                        *(unsigned char *) (arg0 + 0x22ba) = 0;
-                        if (*(unsigned int *) (arg0 + 0x22ac) & 1) func_ov023_021dca88(arg0 + 0x38);
-                        func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + 0x1ae8), *(short *) (arg0 + 0x1aea),
-                                            *(short *) (arg0 + 0x1ab0), 0);
+            *(short *) (base + 0x1af0) = 0x232d;
+            if (kind == 2) {
+                char *e = FindEntryByByteId020a83b0(*(struct List020a83b0 **) (base + 0x22a4),
+                                                    *(short *) (base + 0x1ac4));
+                if (e != NULL) {
+                    int *rec                          = LinkSession_GetInstance();
+                    *(short *) (base + 0x1af2) = -1;
+                    *(int *) (base + 0x1a80)  = 0x29;
+                    *(int *) (base + 0x1a84)  = 0x2e;
+                    if (*(short *) (base + 0x1aea) == 0x5603) {
+                        *(short *) (base + 0x1af0)          = 0x7972;
+                        *(short *) (base + 0x1af2)          = -1;
+                        *(short *) (base + 0x22b8)          = -1;
+                        *(unsigned char *) (base + 0x22ba) = 0;
+                        if (*(unsigned int *) (base + 0x22ac) & 1) func_ov023_021dca88(base + 0x38);
+                        func_ov002_0215a7b4(base, *(signed char *) (base + 0x1ae8), *(short *) (base + 0x1aea),
+                                            *(short *) (base + 0x1ab0), 0);
                     } else {
                         SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                         char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
                         ConsumeCounter02048350(
                             (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1ae8)),
                             ((struct TE5b44 *) t)->lo8);
-                        if (CheckField0NonZero_0202b7d8(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1ae8), 0, 0, 1);
+                        if (LinkSession_IsActive(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1ae8), 0, 0, 1);
                     }
-                    unsigned char *q = (unsigned char *) GetField0x3f8Address_0200fd0c(gs);
+                    unsigned char *q = (unsigned char *) GameState_GetZoneTransition(gs);
                     VectorizedMemset(q, 0, 0x70);
                     q[4]                       = 1;
                     q[8]                       = 1;
@@ -144,8 +144,8 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(short *) (q + 0x1c)      = *(short *) (e + 0xa);
                     q[7]                       = 1;
                     q[0x63]                    = 0;
-                    CallFunc0200fbb4AtField0x3f8_0200fcfc(gs, q);
-                    if (func_0202c508(rec) && Scenario_TestFlag(save, (unsigned char *) ((char *) save + 0x8c), 0x2b)) {
+                    GameState_SetZoneTransition(gs, q);
+                    if (LinkSession_IsHostOrSolo(rec) && Scenario_TestFlag(save, (unsigned char *) ((char *) save + 0x8c), 0x2b)) {
                         *(unsigned short *) (world + 0x27c6) = *(unsigned short *) (e + 0x1a);
                         *(unsigned short *) (world + 0x27c4) = *(unsigned short *) (e + 0x1c);
                         Vector3i *pos                               = (Vector3i *) (world + 0x27b4);
@@ -155,13 +155,13 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         *pos                                        = v;
                         func_ov017_021d1a18(*(short *) (e + 0x1a), *(short *) (e + 0x1c), 0, 0);
                     }
-                    char *var16 = (char *) GetGameResources();
-                    func_ov017_021acd30(var16, 0, 0, 0);
-                    struct Struct_0201bdac_2 *var17;
-                    unsigned char *var18 = *(unsigned char **) (var16 + 0x34fc);
-                    var17                  = *(struct Struct_0201bdac_2 **) (var16 + 0x34ec);
-                    func_ov017_0219e310(var18, 0);
-                    func_020469b4(var17, (struct Struct_0201bdac *) var18);
+                    char *g = (char *) GetGameResources();
+                    InitAndInsertNode_021acd30(g, 0, 0, 0);
+                    struct TailList020469b4 *tl;
+                    unsigned char *node = *(unsigned char **) (g + 0x34fc);
+                    tl                  = *(struct TailList020469b4 **) (g + 0x34ec);
+                    FieldTask_InitEnterZone(node, 0);
+                    AppendNodeToTail(tl, (struct TailNode020469b4 *) node);
                     return;
                 }
                 var8 = 0;
@@ -252,32 +252,32 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                 char *p = *(char **) (world + 8);
                 if (p != NULL) kind = (unsigned int) (*(unsigned char *) (p + 0xe) << 30) >> 30;
             }
-            *(short *) (arg0 + 0x1c00 + 0x28) = 0x232d;
-            if (var27 == 2) {
-                char *var29 = func_020a83b0(*(struct Struct_020a83b0 **) (arg0 + 0x2000 + 0x474),
-                                                    *(short *) (arg0 + 0x1b00 + 0xfc));
-                if (var29 != NULL) {
-                    int *var30                          = func_0202ae18();
-                    *(short *) (arg0 + 0x1c00 + 0x2a) = -1;
-                    *(int *) (arg0 + 0x1000 + 0xbb8)  = 0x26;
-                    *(int *) (arg0 + 0x1000 + 0xbbc)  = 0x2b;
-                    if (*(short *) (arg0 + 0x1c00 + 0x22) == 0x5603) {
-                        *(short *) (arg0 + 0x1c00 + 0x28)          = 0x7972;
-                        *(short *) (arg0 + 0x1c00 + 0x2a)          = -1;
-                        *(short *) (arg0 + 0x2400 + 0x88)          = -1;
-                        *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 0;
-                        if (*(unsigned int *) (arg0 + 0x2000 + 0x47c) & 1) func_ov023_021dca88(arg0 + 0x50);
-                        func_ov002_0215a7b4(arg0, *(signed char *) (arg0 + 0x1c00 + 0x20), *(short *) (arg0 + 0x1c00 + 0x22),
-                                            *(short *) (arg0 + 0x1b00 + 0xe8), 0);
+            *(short *) (base + 0x1c00 + 0x28) = 0x232d;
+            if (kind == 2) {
+                char *e = FindEntryByByteId020a83b0(*(struct List020a83b0 **) (base + 0x2000 + 0x474),
+                                                    *(short *) (base + 0x1b00 + 0xfc));
+                if (e != NULL) {
+                    int *rec                          = LinkSession_GetInstance();
+                    *(short *) (base + 0x1c00 + 0x2a) = -1;
+                    *(int *) (base + 0x1000 + 0xbb8)  = 0x26;
+                    *(int *) (base + 0x1000 + 0xbbc)  = 0x2b;
+                    if (*(short *) (base + 0x1c00 + 0x22) == 0x5603) {
+                        *(short *) (base + 0x1c00 + 0x28)          = 0x7972;
+                        *(short *) (base + 0x1c00 + 0x2a)          = -1;
+                        *(short *) (base + 0x2400 + 0x88)          = -1;
+                        *(unsigned char *) (base + 0x2000 + 0x48a) = 0;
+                        if (*(unsigned int *) (base + 0x2000 + 0x47c) & 1) func_ov023_021dca88(base + 0x50);
+                        func_ov002_0215a7b4(base, *(signed char *) (base + 0x1c00 + 0x20), *(short *) (base + 0x1c00 + 0x22),
+                                            *(short *) (base + 0x1b00 + 0xe8), 0);
                     } else {
                         SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                         char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
                         ConsumeCounter02048350(
                             (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1c00 + 0x20)),
                             ((struct TE5b44 *) t)->lo8);
-                        if (CheckField0NonZero_0202b7d8(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1c00 + 0x20), 0, 0, 1);
+                        if (LinkSession_IsActive(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1c00 + 0x20), 0, 0, 1);
                     }
-                    unsigned char *q = (unsigned char *) GetField0x3f8Address_0200fd0c(gs);
+                    unsigned char *q = (unsigned char *) GameState_GetZoneTransition(gs);
                     VectorizedMemset(q, 0, 0x70);
                     q[4]                       = 1;
                     q[8]                       = 1;
@@ -298,8 +298,8 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(short *) (q + 0x1c)      = *(short *) (e + 0xa);
                     q[7]                       = 1;
                     q[0x63]                    = 0;
-                    CallFunc0200fbb4AtField0x3f8_0200fcfc(gs, q);
-                    if (func_0202c508(rec) && Scenario_TestFlag(save, (unsigned char *) ((char *) save + 0x8c), 0x2b)) {
+                    GameState_SetZoneTransition(gs, q);
+                    if (LinkSession_IsHostOrSolo(rec) && Scenario_TestFlag(save, (unsigned char *) ((char *) save + 0x8c), 0x2b)) {
                         *(unsigned short *) (world + 0x2700 + 0x86) = *(unsigned short *) (e + 0x1a);
                         *(unsigned short *) (world + 0x2700 + 0x84) = *(unsigned short *) (e + 0x1c);
                         Vector3i *pos                               = (Vector3i *) (world + 0x374 + 0x2400);
@@ -309,13 +309,13 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         *pos                                        = v;
                         func_ov017_021d1a18(*(short *) (e + 0x1a), *(short *) (e + 0x1c), 0, 0);
                     }
-                    char *var35 = (char *) GetGameResources();
-                    func_ov017_021acd30(var35, 0, 0, 0);
-                    struct Struct_0201bdac_2 *var36;
-                    unsigned char *var37 = *(unsigned char **) (var35 + 0x3000 + 0x70c);
-                    var36                  = *(struct Struct_0201bdac_2 **) (var35 + 0x3000 + 0x6fc);
-                    func_ov017_0219e310(var37, 0);
-                    func_020469b4(var36, (struct Struct_0201bdac *) var37);
+                    char *g = (char *) GetGameResources();
+                    InitAndInsertNode_021acd30(g, 0, 0, 0);
+                    struct TailList020469b4 *tl;
+                    unsigned char *node = *(unsigned char **) (g + 0x3000 + 0x70c);
+                    tl                  = *(struct TailList020469b4 **) (g + 0x3000 + 0x6fc);
+                    FieldTask_InitEnterZone(node, 0);
+                    AppendNodeToTail(tl, (struct TailNode020469b4 *) node);
                     return;
                 }
                 var27 = 0;

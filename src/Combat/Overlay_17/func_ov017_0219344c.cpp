@@ -49,18 +49,18 @@ struct Struct_ov017_0219344c_5 {
 };
 
 extern "C" void* Zone3D_GetInstance(void);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24** head);
-void ClearFlags0x40And0x80At0xe0(ByteFlags02033f2c* p);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** head);
+void GameObject_ClearWallHit(ByteFlags02033f2c* p);
 int NotifyEntriesFlag256_0218df50(void* a, void* b);
 extern "C" int func_ov017_0218dfd8(Actor0219344c* self);
-int GetField0xe4IfFlag0x40(BitFlag02033f44* p);
+int GameObject_GetWallHit(BitFlag02033f44* p);
 int IsFlag0x1ceBit0x8Set_02039dcc(unsigned char* p);
 extern "C" int func_ov017_02193290(Probe0219344c* probe, Actor0219344c* self, Vector3i* dest, Vector3i* pos, int* y, int* yLow, int hidden);
 extern "C" int Zone3D_CollectTerrainPolygons(Zone0219344c* zone, int index, Grid0219344c* grid, Probe0219344c probe, Actor0219344c* self);
 extern "C" int func_ov017_02192b48(Grid0219344c* grid, Probe0219344c* probe, int count, Actor0219344c* self, int arg, Vector3i* dest, Vector3i* pos, int* y, int* yLow, int enable, int* reset, int inCell, int index, int hidden);
 unsigned char GameState_GetLeaderIndex(GameState* gs);
 void GameObject_EnableControl(void* obj);
-int SetByte0xbeShiftPrev(Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(Bytes02033b88* p, int val);
 void GameObject_DisableControl(Obj020397cc* obj, int val);
 extern "C" void func_020531f0(GameObject* obj);
 unsigned char* Zone3D_GetChest(unsigned char* p, int i);
@@ -123,19 +123,19 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
     Vector3i var24;
     Vector3i var25;
     SETUP_PROBE();
-    var1 = 1;
-    if (func_02046b24(var20) != 3 || arg0->unknown_c1_3_) {
-        arg0->unknown_ac_ += 0x51;
+    reset = 1;
+    if (FieldTaskQueue_GetCurrentKind(head) != 3 || self->flagC1) {
+        self->fieldAC += 0x51;
     }
     if (arg0->unknown_ac_ > 0x1000) {
         arg0->unknown_ac_ = 0x1000;
     }
-    func_02033f2c((Struct_02033f2c*)arg0);
-    var10 = 1;
-    var11 = var5->unknown_23b8_;
-    if (var11 != 0) {
-        var9 = (int)(((float)(arg0->position_.x + 0x4000) / 4096.0f) / 8.0f)
-             + ((int)(((float)(arg0->position_.z + 0x4000) / 4096.0f) / 8.0f) << 4);
+    GameObject_ClearWallHit((ByteFlags02033f2c*)self);
+    inCell = 1;
+    useCell = zone->useCell;
+    if (useCell != 0) {
+        cell = (int)(((float)(self->position_.x + 0x4000) / 4096.0f) / 8.0f)
+             + ((int)(((float)(self->position_.z + 0x4000) / 4096.0f) / 8.0f) << 4);
     }
     var2 = arg0->position_.y - 0xa000;
     var3 = arg0->position_.y;
@@ -170,33 +170,33 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
             *arg5 = var16;
             SETUP_PROBE();
         }
-        if (var28 == 1) {
-            var25 = arg0->position_;
-            var27 = &var25;
-            if (arg4 != NULL && arg5 != NULL) {
-                if (func_02033f44((Struct_02033f44*)arg0) && !func_02039dcc((unsigned char*)arg0) && var16 != 0) {
-                    arg0->position_ = *arg2;
+        if (i == 1) {
+            saved = self->position_;
+            dest = &saved;
+            if (outA != NULL && outB != NULL) {
+                if (GameObject_GetWallHit((BitFlag02033f44*)self) && !IsFlag0x1ceBit0x8Set_02039dcc((unsigned char*)self) && notifyB != 0) {
+                    self->position_ = *target;
                     break;
                 }
-                if (func_02033f44((Struct_02033f44*)arg0)) {
-                    *arg4 |= func_ov017_0218df50(arg0, 0);
-                    *arg5 |= *arg4;
-                    *arg5 |= func_ov017_0218dfd8(arg0);
-                    if (*arg5 != 0) {
-                        arg0->position_ = *arg2;
+                if (GameObject_GetWallHit((BitFlag02033f44*)self)) {
+                    *outA |= NotifyEntriesFlag256_0218df50(self, 0);
+                    *outB |= *outA;
+                    *outB |= func_ov017_0218dfd8(self);
+                    if (*outB != 0) {
+                        self->position_ = *target;
                         break;
                     }
                 }
             }
-            Vector3i var30 = arg0->position_;
-            Vector3fix_Add(&var30, &var24, &var30);
-            arg0->position_ = var30;
-            if (arg4 != NULL && arg5 != NULL) {
-                *arg4 |= func_ov017_0218df50(arg0, 0);
-                *arg5 |= *arg4;
-                *arg5 |= func_ov017_0218dfd8(arg0);
-                if (func_02033f44((Struct_02033f44*)arg0) && *arg5 != 0) {
-                    arg0->position_ = *arg2;
+            Vector3i next = self->position_;
+            Vector3fix_Add(&next, &step, &next);
+            self->position_ = next;
+            if (outA != NULL && outB != NULL) {
+                *outA |= NotifyEntriesFlag256_0218df50(self, 0);
+                *outB |= *outA;
+                *outB |= func_ov017_0218dfd8(self);
+                if (GameObject_GetWallHit((BitFlag02033f44*)self) && *outB != 0) {
+                    self->position_ = *target;
                     break;
                 }
             }
@@ -237,9 +237,9 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
         }
     }
 
-    GameObject* var34 = var4->GetUnknownGameObject();
-    if (var34->obj3D_.GetFlag(0x8000000)) {
-        var1 = 0;
+    GameObject* player = gs->GetLeader();
+    if (player->obj3D_.GetFlag(0x8000000)) {
+        reset = 0;
     }
     if (var17 == 10000) {
         var1 = 1;
@@ -250,7 +250,7 @@ extern "C" ARM int func_ov017_0219344c(Struct_ov017_0219344c_2* arg0, int arg1, 
         }
         self->fieldAC = 0;
     } else if (oldAC == 0) {
-        SetByte0xbeShiftPrev((Bytes02033b88*)self, 0);
+        GameObject_ForceMotionState((Bytes02033b88*)self, 0);
         if (player->obj3D_.actorIndex_ == self->actorIndex_) {
             GameObject_DisableControl((Obj020397cc*)player, 1);
             if (!player->obj3D_.GetFlag(0x1000)) {

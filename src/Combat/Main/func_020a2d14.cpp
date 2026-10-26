@@ -19,14 +19,14 @@ struct Struct_0202e6c0 {
     int unknown_218_;
 };
 
-extern "C" void func_0202e784(struct Struct_0202e6a8* arg0, int arg1);
-extern "C" int func_0202e800(void* arg0);
-extern "C" int func_0202e7f8(void* arg0);
-extern "C" void func_0202e6c0(struct Struct_0202e6c0* arg0, int arg1);
-extern "C" void func_0202e9f4(void* arg0, struct Struct_ov009_0218aa28* arg1);
-extern "C" void func_0202ea4c(struct Struct_0202ea4c* arg0);
-extern "C" int func_0202e858(void* arg0, int arg1);
-extern "C" void func_0202ec5c(char* arg0, int* arg1);
+void AddWrappedField0x70_0202e784(struct GlobalObj0202e6a8* obj, int val);
+int Camera_GetOrbitDistance(void* obj);
+int GetField0x74_0202e7f8(void* obj);
+void Camera_SetOrbitHeight(struct CamState0202e6c0* obj, int value);
+void SubtractVec3Fields0202e9f4(void* obj, struct Vec3* v);
+void ComputeAngleHeightDistance0202ea4c(struct Obj0202ea4c* obj);
+int AddAndClampMin0202e858(void* obj, int n);
+void Camera_SetTargetKeepOrbit(char* obj, int* src);
 
 static inline fix32_t inline_02061c04_5(fix32_t arg0, fix32_t arg1) {
     return (fix32_t)(((int64_t)arg0 * arg1 + 0x800) >> 12);
@@ -88,32 +88,32 @@ extern "C" ARM void func_020a2d14(struct Struct_0202e6c0* arg0) {
         if (var9) {
             func_0202e784((struct Struct_0202e6a8*)arg0, (int)(4096.0f * (0.05f * var11)));
         }
-        if (var6) {
-            fix32_t var16 = func_0202e800(arg0);
-            fix32_t var17 = func_0202e7f8(arg0);
-            fix32_t var18 = inline_02061c04_5(var17, var17);
-            fix32_t var19 = inline_02061c04_5(var16, var16);
-            fix32_t var20 = fix32_Sqrt(var19 - var18);
-            Vector3fix var21 = {var20, var17, 0};
-            Matrix4x3 var22 = RotationMatrixZ((int)(178.72223f * var11));
-            Mat4x3_ApplyToVector(&var21, &var22, &var21);
-            func_0202e6c0(arg0, var21.y);
+        if (pressUp) {
+            fix32_t dist = Camera_GetOrbitDistance(cam);
+            fix32_t height = GetField0x74_0202e7f8(cam);
+            fix32_t heightSq = FxMul(height, height);
+            fix32_t distSq = FxMul(dist, dist);
+            fix32_t horiz = fix32_Sqrt(distSq - heightSq);
+            Vector3fix v = {horiz, height, 0};
+            Matrix4x3 m = RotationMatrixZ((int)(178.72223f * speed));
+            Mat4x3_ApplyToVector(&v, &m, &v);
+            Camera_SetOrbitHeight(cam, v.y);
         }
-        if (var7) {
-            fix32_t var23 = func_0202e800(arg0);
-            fix32_t var24 = func_0202e7f8(arg0);
-            fix32_t var25 = inline_02061c04_5(var24, var24);
-            fix32_t var26 = inline_02061c04_5(var23, var23);
-            fix32_t var27 = fix32_Sqrt(var26 - var25);
-            Vector3fix var28 = {var27, var24, 0};
-            Matrix4x3 var29 = RotationMatrixZ(fix32ReduceAngle0To2Pi((int)(-178.72223f * var11)));
-            Mat4x3_ApplyToVector(&var28, &var29, &var28);
-            func_0202e6c0(arg0, var28.y);
+        if (pressDown) {
+            fix32_t dist = Camera_GetOrbitDistance(cam);
+            fix32_t height = GetField0x74_0202e7f8(cam);
+            fix32_t heightSq = FxMul(height, height);
+            fix32_t distSq = FxMul(dist, dist);
+            fix32_t horiz = fix32_Sqrt(distSq - heightSq);
+            Vector3fix v = {horiz, height, 0};
+            Matrix4x3 m = RotationMatrixZ(fix32ReduceAngle0To2Pi((int)(-178.72223f * speed)));
+            Mat4x3_ApplyToVector(&v, &m, &v);
+            Camera_SetOrbitHeight(cam, v.y);
         }
     }
 
-    var12 = (float)func_0202e800(arg0) / 10.0f / 4096.0f;
-    var13 = 0;
+    scale = (float)Camera_GetOrbitDistance(cam) / 10.0f / 4096.0f;
+    moved = 0;
 
     if ((arg0->unknown_218_ == 1 && var5) || (arg0->unknown_218_ == 2 && var3)) {
         Vector3fix var30;
@@ -244,5 +244,5 @@ extern "C" ARM void func_020a2d14(struct Struct_0202e6c0* arg0) {
         }
     }
 
-    func_0202ec5c((char*)arg0, (int*)&var15);
+    Camera_SetTargetKeepOrbit((char*)cam, (int*)&pos);
 }

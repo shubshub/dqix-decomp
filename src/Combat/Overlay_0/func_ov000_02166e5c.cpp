@@ -132,11 +132,11 @@ void ClearTwoRegions02083c18(char*);
 void PartyMember_LearnSpell(unsigned char*, int);
 void SetBitInField0x34_020a35cc(unsigned char*, unsigned char);
 struct Bytes02033b88;
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 struct Obj020397cc;
 void GameObject_DisableControl(Obj020397cc*, int);
 void CopyCombatantStats0208936c(char*, char*, char*);
-void CopyInRegion0x571d_020114c0(char*, int, void*);
+void GameState_SetPartyOrder(char*, int, void*);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
 extern const char data_ov000_02183aa5[], data_ov000_021839e2[], data_ov000_02183abe[];
 extern const char g_stringFormat[];
@@ -242,7 +242,7 @@ extern "C" ARM void func_ov000_02166e5c(BattleWork02166e5c* self) {
     SetBitInField0x34_020a35cc(self->roster, 1);
     PartyLog02166e5c* log = (PartyLog02166e5c*)GameState_GetParty(game);
     log->entries[log->count++] = 1;
-    SetByte0xbeShiftPrev((Bytes02033b88*)combatant, 0);
+    GameObject_ForceMotionState((Bytes02033b88*)combatant, 0);
     GameObject_DisableControl((Obj020397cc*)combatant, 1);
     CopyCombatantStats0208936c(combatant->savedStats, (char*)combatant->stats, (char*)combatant->baseStats);
     combatant->flags |= 0x20;
@@ -252,7 +252,7 @@ extern "C" ARM void func_ov000_02166e5c(BattleWork02166e5c* self) {
     if (levelData) levelData->level = (unsigned char)level;
     int codeLength = 2;
     RegionCode02166e5c code = data_ov000_02183014;
-    CopyInRegion0x571d_020114c0((char*)game, codeLength, &code);
+    GameState_SetPartyOrder((char*)game, codeLength, &code);
     SetCombatWorkFlags0x55f4_ov000_02160fa8(self, 0x400000);
     BackgroundLoader::RemoveLockGlobal();
 #undef blocks_3

@@ -28,7 +28,7 @@ extern "C" ARM void GameResources_StartSearchPot(char* self) {
  enum {searchPotTaskOffset=0xafc, targetRecordOffset=0x6bc, targetIndexBase=0x3600, targetIndexOffset=0xb6, taskQueueOffset=0x6fc};
 #endif
     GameState* gameState = GameState::GetInstance();
-    GameObject* leader = gameState->GetUnknownGameObject();
+    GameObject* leader = gameState->GetLeader();
     unsigned short* zone = (unsigned short*)Zone3D_GetInstance();   // its first field is the zone id
     // the task GameResources keeps for it (searchPotTaskOffset); an earlier one still queued: nothing to do
     if (*((unsigned char*)(*(void**)(self + 0x3000 + searchPotTaskOffset)) + 2) != 0) {

@@ -41,7 +41,7 @@ struct Struct_ov017_021be0c4_2 {
 };
 struct Obj020397cc;
 extern "C" Context021be0c4* Zone3D_GetInstance();
-extern "C" int* func_0202ae18();
+extern "C" int* LinkSession_GetInstance();
 Obj02046574* MessageSystem_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
 void SePlayer_LoadExtraArchiveB(void*, int, int);
@@ -58,8 +58,8 @@ void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 #if defined(jpn)
 extern char data_ov017_021d8658[];
 #endif
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_0202c508(int*);
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsHostOrSolo(int*);
 extern "C" void func_ov017_021cf730(int, int);
 int GameState_GetProtagonistIndex(GameState*);
 void EnqueueEventTag173_021d1810(int, int, signed char);
@@ -73,13 +73,13 @@ void GameObject_EnableControl(void*);
 // Overlay 17, originally func_ov017_021be0c4 (USA/EUR 0x021be0c4, JPN 0x021be6bc)
 extern "C" ARM void FieldTask_SpotGrotto(State021be0c4* state) {
     GameState* game = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
     Obj02046574* controller = MessageSystem_GetInstance();
     Zone3D_GetInstance();
     GrottoStruct* grotto = game->GetGrottoStruct();
     if (state->step == 0) {
-        GameObject_DisableControl((Obj020397cc*)game->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((Obj020397cc*)game->GetLeader(), 1);
         FontBankLoader* global = FontBankLoader_GetInstance();
         BlankFunction02094b30(global, 0x203, 0);
         if (AlwaysTrue02094b4c(global)) state->step = 1;
@@ -115,17 +115,17 @@ extern "C" ARM void FieldTask_SpotGrotto(State021be0c4* state) {
         if (!IsMainBrightnessTransitionActive(var1) && arg0->unknown_c_ > 30) {
             char* var6 = var2->unknown_5c_;
 #if defined(jpn)
-            sprintf(buffer, data_ov017_021d8658, game->GetUnknownGameObject()->baseStats_->name);
+            sprintf(buffer, data_ov017_021d8658, game->GetLeader()->baseStats_->name);
             func_0204500c((MessageSystem*)controller, buffer, 0);
 #else
             sprintf(buffer, StandardStrings_Get(0x3f));
-            MessageSystem_SetStringArgument(controller, 0, (char*)game->GetUnknownGameObject()->baseStats_);
+            MessageSystem_SetStringArgument(controller, 0, (char*)game->GetLeader()->baseStats_);
             func_0204500c((MessageSystem*)controller, buffer, 0, 0xe3);
 #endif
-            var2->unknown_19b2_ = 0;
-            var2->unknown_998_ = 1;
-            int* var7 = func_0202ae18();
-            if (func_0202b7d8(var7) && func_0202c508(var7)) {
+            controller->field_19b2 = 0;
+            controller->active = 1;
+            int* field = LinkSession_GetInstance();
+            if (LinkSession_IsActive(field) && LinkSession_IsHostOrSolo(field)) {
                 func_ov017_021cf730(-1, 0);
                 EnqueueEventTag173_021d1810(0x2713, -1, GameState_GetProtagonistIndex(game));
             }
@@ -137,7 +137,7 @@ extern "C" ARM void FieldTask_SpotGrotto(State021be0c4* state) {
         controller->field_19ae = 0;
         if (!controller->busy) {
             MessageSystem_Reset((char*)controller);
-            GameObject_EnableControl(game->GetUnknownGameObject());
+            GameObject_EnableControl(game->GetLeader());
             FontBankLoader* global = FontBankLoader_GetInstance();
             BlankFunction02094b38(global, 0x203);
             FontBankLoader_CancelLoads(global);

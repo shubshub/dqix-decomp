@@ -12,7 +12,7 @@ struct Vec3copy0202ec84 { unsigned int v[3]; };
 int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
 
 struct Vec3Target0203a46c;
-void SetVec3At0x1c(struct Vec3Target0203a46c* obj, int x, int y, int z);
+void SprSprite_SetPosition(struct Vec3Target0203a46c* obj, int x, int y, int z);
 
 struct Struct020478bc;
 void RecomputeField0x7c(struct Struct020478bc* o, int newIndex);
@@ -53,7 +53,7 @@ extern "C" ARM void func_ov017_0219b43c(char* obj, int mode, struct Vec3copy0202
     default: {
         int x = ((local1 - 0xc) + extra) << 0xc;
         int y = ((local0 - 0x4c) + arg5) << 0xc;
-        SetVec3At0x1c(*(struct Vec3Target0203a46c**)(obj + 0x3000 + RegionOffset630), x, y, 0);
+        SprSprite_SetPosition(*(struct Vec3Target0203a46c**)(obj + 0x3000 + RegionOffset630), x, y, 0);
         RecomputeField0x7c(*(struct Struct020478bc**)(obj + 0x3000 + RegionOffset630), 1);
         break;
     }
@@ -62,7 +62,7 @@ extern "C" ARM void func_ov017_0219b43c(char* obj, int mode, struct Vec3copy0202
     case 0xe: {
         int x = ((local1 - 6) + extra) << 0xc;
         int y = ((local0 - 0x4c) + arg5) << 0xc;
-        SetVec3At0x1c(*(struct Vec3Target0203a46c**)(obj + 0x3000 + RegionOffset630), x, y, 0);
+        SprSprite_SetPosition(*(struct Vec3Target0203a46c**)(obj + 0x3000 + RegionOffset630), x, y, 0);
         break;
     }
     }

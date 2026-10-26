@@ -24,10 +24,10 @@ struct Obj020397cc;
 extern AllocatorUnion g_mainAllocator;
 extern char data_ov017_021d7ec0[];
 extern char data_ov017_021d7ed5[];
-extern "C" void func_0202ae18();
+extern "C" void LinkSession_GetInstance();
 Obj02046574* MessageSystem_GetInstance();
 extern "C" void* Zone3D_GetInstance();
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 Obj020d7aa0* TextQueue_GetInstance();
 void TextQueue_Reset(Obj020d7aa0*);
 void GameObject_DisableControl(Obj020397cc*, int);
@@ -52,13 +52,13 @@ void FieldTask_EndPutAwayTreasureMap(char*);
 // Overlay 17, originally func_ov017_021bf014 (USA/EUR 0x021bf014, JPN 0x021bf5d0)
 extern "C" ARM void FieldTask_PutAwayTreasureMap(GrottoDialogState* self) {
     GameState* game = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     GetGameResources();
     Obj02046574* controller = MessageSystem_GetInstance();
     Zone3D_GetInstance();
     GrottoStruct* grotto = game->GetGrottoStruct();
-    GameObject* combatant = game->GetUnknownGameObject();
-    unsigned char* field = GetFieldIfFlag4_020100f8((char*)game);
+    GameObject* combatant = game->GetLeader();
+    unsigned char* field = GameState_GetFollowCamera((char*)game);
     if (self->state == 0) {
         TextQueue_Reset(TextQueue_GetInstance());
         GameObject_DisableControl((Obj020397cc*)combatant, 1);
@@ -81,7 +81,7 @@ extern "C" ARM void FieldTask_PutAwayTreasureMap(GrottoDialogState* self) {
         BackgroundLoader::GetInstance()->RemoveTask(self->task);
         self->task = -1;
         func_02046380(controller);
-        MessageSystem_SetStringArgument(controller, 0, game->GetUnknownGameObject()->baseStats_->name);
+        MessageSystem_SetStringArgument(controller, 0, game->GetLeader()->baseStats_->name);
         BlankFunction02094b30(FontBankLoader_GetInstance(), 0x203, 0);
         self->state = 2;
     }

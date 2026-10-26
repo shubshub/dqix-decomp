@@ -45,18 +45,18 @@ struct Struct_ov000_02160620 {
     int unknown_998_;
 };
 
-extern "C" Struct_0202b2f0* func_0202ae18();
-extern "C" void func_02015438(void*);
+extern "C" SearchStruct* LinkSession_GetInstance();
+extern "C" void Zone3D_Update(void*);
 extern "C" void func_ov023_021eb43c(void*);
 int MessageSystem_GetInstance();
 extern "C" void func_ov000_021735d0(void*, unsigned int);
-extern "C" Struct_02039fec_2* func_02039e70();
-extern "C" void func_02039fec(Struct_02039fec_2*);
-extern "C" void func_ov000_021824d8(void*);
-extern "C" int func_020a1fa8();
+Obj02039fec* NumberPopups_GetInstance();
+void NumberPopups_Update(Obj02039fec*);
+void DecrementFieldsAndMaybeReset021824d8(void*);
+int PeekInputLogB_020a1fa8();
 extern "C" void func_ov025_021df794(void*);
-extern "C" int func_0202c540(SearchStruct*);
-int TestFlagBitAt0xe_0202c578(SearchStruct*, int);
+extern "C" int LinkSession_IsGuest(SearchStruct*);
+int LinkSession_IsSlotLost(SearchStruct*, int);
 FlagWord020466f4* GlobalFlags_GetInstance();
 void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 void* GetGlobal02109030_020936f8();
@@ -89,23 +89,23 @@ extern unsigned char g_sePlayer[0xd0];
 // USA: func_ov000_02160620
 extern "C" ARM void func_ov000_02160620(BattleFrame* frame) {
     GameState* game = GameState::GetInstance();
-    SearchStruct* search = func_0202ae18();
+    SearchStruct* search = LinkSession_GetInstance();
     unsigned char* context = (unsigned char*)GetGameResources();
     if (frame->flags & 0x200) {
-        func_02015438(frame->elements);
+        Zone3D_Update(frame->elements);
         if (frame->optional)
             func_ov023_021eb43c(frame->optional);
         if (frame->mode == 0 && (frame->flags & 0x40000) == 0 && (frame->flags & 0x80000) != 0 &&
                 ((BattleManager*)MessageSystem_GetInstance())->blocked == 0)
             func_ov000_021735d0(frame->turnTimer, game->GetTickCount());
-        ProcessSlotDamping02039fec(GetData02104b6c_02039e70());
+        NumberPopups_Update(NumberPopups_GetInstance());
         DecrementFieldsAndMaybeReset021824d8(frame->damping);
         if (frame->state == 8 && PeekInputLogB_020a1fa8() == 4)
             func_ov025_021df794(frame->effect);
         GameObject* object = game->GetGameObjectByIndex(0xc8);
         if (object)
             object->obj3D_.AdvanceEffects();
-        if (func_0202c540(search) && TestFlagBitAt0xe_0202c578(search, 0) && frame->resetDone == 0) {
+        if (LinkSession_IsGuest(search) && LinkSession_IsSlotLost(search, 0) && frame->resetDone == 0) {
             FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x8020);
             void* state = GetGlobal02109030_020936f8();
             ResetAndSetFlag0x3c9Bit0_020939dc(state);
@@ -114,9 +114,9 @@ extern "C" ARM void func_ov000_02160620(BattleFrame* frame) {
             frame->resetDone = 1;
         }
     }
-    for (int var5 = 1; var5 < 4; ++var5) {
-        if (func_0202c578(var1, var5))
-            func_ov000_0215fb04(arg0->unknown_29c_, var5);
+    for (int i = 1; i < 4; ++i) {
+        if (LinkSession_IsSlotLost(search, i))
+            func_ov000_0215fb04(frame->random, i);
     }
     if (func_ov017_02195550(var2) == 0)
         func_ov000_021682ec(arg0);

@@ -23,12 +23,12 @@ struct Struct_ov000_0216d600 {
     int unknown_77f0_;
     Vector3i unknown_77f4_, unknown_7800_;
 };
-extern "C" void func_ov000_0216d370(Struct_0202df68*, int, int, int);
-extern "C" void func_0202e9a4(Struct_0202df68*, int);
-extern "C" void func_ov000_0216d368(Struct_ov000_0216d368*, int, int, int);
-extern "C" Struct_ov000_0216d600* func_ov000_02160130();
-extern "C" void func_0202eab8(Struct_0202df68*);
-extern "C" int func_ov000_0216f210(Struct_0202df68*, int*);
+extern "C" void func_ov000_0216d370(AngleTrig0202e9a4*, int, int, int);
+void Camera_SetFieldOfView(AngleTrig0202e9a4*, int);
+void StoreVec3Words0216d368(Vec3Ints0216d368*, int, int, int);
+CombatWorkD600* GetActiveCombatWork_ov000_02160130();
+extern "C" void Camera_SetOrbitFromPosition(AngleTrig0202e9a4*);
+extern "C" int func_ov000_0216f210(AngleTrig0202e9a4*, int*);
 
 static inline int inline_ov000_0216d600(int arg0, int arg1) { return (int)(((long long)arg0 * arg1 + 0x800) >> 12); }
 
@@ -42,9 +42,9 @@ extern "C" ARM void func_ov000_0216d600(Struct_0202df68* arg0, int arg1, int arg
     int var2, var3;
     if (arg2 == 0) { var2 = 0x424; var3 = var2 + 0xb50; }
     else {
-        func_0202e9a4(arg0, 0x16000);
-        var2 = 0x5fe;
-        var3 = 0xed6;
+        Camera_SetFieldOfView(camera, 0x16000);
+        scale = 0x5fe;
+        factor = 0xed6;
     }
     var0 = inline_ov000_0216d600(var0, var3);
     int var4 = fix32_Divide(var0, (int)(2.2f * (float)var2)) - 0x2800;
@@ -82,11 +82,11 @@ extern "C" ARM void func_ov000_0216d600(Struct_0202df68* arg0, int arg1, int arg
             func_ov000_0216d368(&var9, var11->unknown_7800_.x, var11->unknown_7800_.y, var11->unknown_7800_.z);
         }
     }
-    if (arg1 == 0) { var8.z = -var8.z; var9.z = -var9.z; }
-    arg0->unknown_4_ = var8;
-    arg0->unknown_10_ = var9;
-    func_0202eab8(arg0);
-    arg0->unknown_240_ = var8;
-    arg0->unknown_24c_ = var9;
-    arg0->unknown_258_ = func_ov000_0216f210(arg0, &var10);
+    if (side == 0) { eye.z = -eye.z; target.z = -target.z; }
+    camera->eye = eye;
+    camera->target = target;
+    Camera_SetOrbitFromPosition(camera);
+    camera->savedEye = eye;
+    camera->savedTarget = target;
+    camera->field258 = func_ov000_0216f210(camera, &result);
 }

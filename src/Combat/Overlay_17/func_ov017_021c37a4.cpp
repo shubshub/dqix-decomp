@@ -117,39 +117,39 @@ struct Struct_02109bf4_4;
 struct Struct_02109bf4_3;
 struct Struct_02038598_4;
 
-extern "C" void* func_0202ae18(void);
-void* GetData02100044_0202ae24(void);
+extern "C" void* LinkSession_GetInstance(void);
+void* LinkMessageQueue_GetInstance(void);
 void* GetData02153637_020e2ff8(void);
 void* GetData02153634_020e3580(void);
 void* GetData02153660_020e3808(void);
 void* GlobalFlags_GetInstance(void);
-extern "C" int func_0202c540(void* obj);
-int GetFieldAt0x0_0202ba00(int* obj);
-void UpdatePlayClocks020ac4f8(int arg);
+extern "C" int LinkSession_IsGuest(void* obj);
+int LinkSession_GetState(int* obj);
+void GameState_UpdatePlayClocks(int arg);
 extern "C" void __clear(void* buf, int len);
 void Clear0x20BytesAt0x74de_02012084(unsigned char* obj);
 void ClearFieldKeepBit0x10_02011af0(void* obj);
 extern "C" void func_02046a8c(void* a, void* b);
 void BlankFunction020d84e0(void);
-extern "C" void func_0202b0f4(void* obj);
-extern "C" void func_0205e22c(void* obj);
+extern "C" void LinkSession_End(void* obj);
+extern "C" void LinkMessageQueue_Reset(void* obj);
 unsigned char GameState_GetProtagonistIndex(GameState* gs);
-int GetByte0x26c_02039d7c(char* obj);
+int GameObject_IsClimbingLadder(char* obj);
 void ResetObjectState02039d84(Obj02039d84* obj);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* gs, int idx);
 int GetSignedByte0x2d0_020546a8(void* obj);
 extern "C" void func_ov017_02190264(void* obj, int idx);
 extern "C" void func_ov017_021c32b0(Swap021c37a4* swap, int count);
-extern "C" void func_0202c288(void* obj);
-void SetField0x3acValue_020100a0(GameState* gs, int value);
+extern "C" void LinkSession_UpdateMemberCount(void* obj);
+void GameState_SetProtagonistIndex(GameState* gs, int value);
 extern "C" void func_020dcd40(void);
 extern "C" void func_020dc7e8(int a, int b);
 extern "C" void func_ov017_02191234(void* obj);
-extern "C" void func_ov017_02191108(void* obj, int a, int b, int c, int d);
+extern "C" void Party_ReformLine(void* obj, int a, int b, int c, int d);
 void SetField0x2d0_020546a0(void* obj, int value);
-void SetByte0x1c8_02039858(unsigned char* obj, int value);
-void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
-void* GetFieldIfFlag4_020100f8(char* obj);
+void GameObject_SetFollowedMember(unsigned char* obj, int value);
+void GameObject_ResetTrail(unsigned char* obj);
+void* GameState_GetFollowCamera(char* obj);
 void SetField0x21c_020a2770(void* obj, short value);
 extern "C" void* Scenario_GetInstance(void);
 int GetPackedNibbleFlag0x8(PackedNibbleArray0206e2dc* arr, int idx);
@@ -187,15 +187,15 @@ extern Actor021c37a4 g_bgmPlayer;
 extern "C" ARM void func_ov017_021c37a4(void) {
     GameState* gs = GameState::GetInstance();
     Battle021c37a4* battle = (Battle021c37a4*)gs;
-    SearchState021c37a4* search = (SearchState021c37a4*)func_0202ae18();
+    SearchState021c37a4* search = (SearchState021c37a4*)LinkSession_GetInstance();
     GameResources* res = GetGameResources();
-    void* d100044 = GetData02100044_0202ae24();
+    void* d100044 = LinkMessageQueue_GetInstance();
     void* d153637 = GetData02153637_020e2ff8();
     void* d153634 = GetData02153634_020e3580();
     void* d153660 = GetData02153660_020e3808();
     void* d114e04 = GlobalFlags_GetInstance();
-    int active = func_0202c540(search);
-    int state = GetFieldAt0x0_0202ba00((int*)search);
+    int active = LinkSession_IsGuest(search);
+    int state = LinkSession_GetState((int*)search);
     int mode = search->mode;
 #if defined(jpn)
     char var12[0xb];
@@ -206,8 +206,8 @@ extern "C" ARM void func_ov017_021c37a4(void) {
     Struct_ov017_021c37a4_2 var14;
     Struct_ov017_021c37a4_2 var15;
 
-    if ((var10 == 5 && var11 > 1) || var10 == 6) {
-        func_020ac4f8(1);
+    if ((state == 5 && mode > 1) || state == 6) {
+        GameState_UpdatePlayClocks(1);
     }
 
 #if !defined(jpn)
@@ -227,10 +227,10 @@ extern "C" ARM void func_ov017_021c37a4(void) {
         func_02046a8c(res->fieldTaskQueue_, res->fieldTasks_[0x14]);
     }
 
-    SetFlags00(var3, 2);
-    func_020d84e0();
-    func_0202b0f4(var2);
-    func_0205e22c(var4);
+    SetFlags00(res, 2);
+    BlankFunction020d84e0();
+    LinkSession_End(search);
+    LinkMessageQueue_Reset(d100044);
 #if !defined(jpn)
     var2->unknown_1029_ &= ~0x10;
 #endif
@@ -238,7 +238,7 @@ extern "C" ARM void func_ov017_021c37a4(void) {
     for (int i = 0; i < 4; i++) {
         if (i == GameState_GetProtagonistIndex(gs)) {
             GameObject* member = gs->GetPartyMemberByIndex(i);
-            if (active && member && GetByte0x26c_02039d7c((char*)member)) {
+            if (active && member && GameObject_IsClimbingLadder((char*)member)) {
                 ResetObjectState02039d84((Obj02039d84*)member);
             }
         } else {
@@ -276,32 +276,32 @@ extern "C" ARM void func_ov017_021c37a4(void) {
         }
     }
 
-    func_0202c288(var2);
-    func_020100a0(var0, 0);
-    if (var9) {
+    LinkSession_UpdateMemberCount(search);
+    GameState_SetProtagonistIndex(gs, 0);
+    if (active) {
         func_020dcd40();
         func_020dc7e8(6, -1);
         func_020dc7e8(7, -1);
-        func_ov017_02191234(var3);
-        func_ov017_02191108(var3, 1, 1, 1, 1);
+        func_ov017_02191234(res);
+        Party_ReformLine(res, 1, 1, 1, 1);
     }
 
     for (int i = 0; i < 4; i++) {
         GameObject* combatant = GetCombatantWithFlag0x1000_0200ff58(gs, i);
         if (combatant) {
             SetField0x2d0_020546a0(combatant, GameState_GetProtagonistIndex(gs));
-            SetByte0x1c8_02039858((unsigned char*)combatant, GameState_GetProtagonistIndex(gs));
-            ClearBytesAndZeroBlock02039d24((unsigned char*)combatant);
+            GameObject_SetFollowedMember((unsigned char*)combatant, GameState_GetProtagonistIndex(gs));
+            GameObject_ResetTrail((unsigned char*)combatant);
         }
     }
 
-    void* var27 = func_020100f8((char*)var0);
-    if (var27) {
-        func_020a2770(var27, 0);
+    void* follower = GameState_GetFollowCamera((char*)gs);
+    if (follower) {
+        SetField0x21c_020a2770(follower, 0);
     }
-    func_ov017_02191108(var3, 1, 0, 1, 1);
-    func_ov017_02191234(var3);
-    var1->unknown_5ccc_ |= 2;
+    Party_ReformLine(res, 1, 0, 1, 1);
+    func_ov017_02191234(res);
+    battle->flags |= 2;
 
     Party021c37a4* party = (Party021c37a4*)GameState_GetParty(gs);
     if (active) {

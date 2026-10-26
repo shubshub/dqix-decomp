@@ -50,7 +50,7 @@ src/Combat/Overlay_17/func_ov017_0218d258.cpp:
     complete
     .text start:0x0218de38 end:0x0218de48
 
-src/Combat/Overlay_17/func_ov017_0218d268.cpp:
+src/Combat/Overlay_17/GameResources_GetTouchWalk_0218d268.cpp:
     complete
     .text start:0x0218de48 end:0x0218de54
 
@@ -231,7 +231,7 @@ src/Combat/Overlay_17/func_ov017_02190884.cpp:
     complete
     .text start:0x02191468 end:0x02191cec
 
-src/Combat/Overlay_17/func_ov017_02191108.cpp:
+src/Combat/Overlay_17/Party_ReformLine_02191108.cpp:
     complete
     .text start:0x02191cec end:0x02191e18
 
@@ -837,7 +837,7 @@ src/Combat/Overlay_17/func_ov017_0219e290.cpp:
     complete
     .text start:0x0219ed80 end:0x0219ee00
 
-src/Combat/Overlay_17/func_ov017_0219e310.cpp:
+src/Combat/Overlay_17/FieldTask_InitEnterZone_0219e310.cpp:
     complete
     .text start:0x0219ee00 end:0x0219ee70
 
@@ -1881,7 +1881,7 @@ src/Combat/Overlay_17/func_ov017_021b1ffc.cpp:
     complete
     .text start:0x021b2684 end:0x021b2698
 
-src/Combat/Overlay_17/func_ov017_021b2010.cpp:
+src/Combat/Overlay_17/CheckStateAndDispatchGlobal_021b2698.cpp:
     complete
     .text start:0x021b2698 end:0x021b26ac
 
@@ -3028,7 +3028,7 @@ src/Combat/Overlay_17/func_ov017_021c3fb4.cpp:
     complete
     .text start:0x021c447c end:0x021c45b4
 
-src/Combat/Overlay_17/func_ov017_021c40ec.cpp:
+src/Combat/Overlay_17/EnqueueNameTag3_021c45b4.cpp:
     complete
     .text start:0x021c45b4 end:0x021c46c4
 
@@ -4270,7 +4270,7 @@ src/Combat/Overlay_17/func_ov017_021d0aa8.cpp:
     complete
     .text start:0x021d0f58 end:0x021d0f94
 
-src/Combat/Overlay_17/func_ov017_021d0ae4.cpp:
+src/Combat/Overlay_17/AppendTagIfHeadMatch_021d0f94.cpp:
     complete
     .text start:0x021d0f94 end:0x021d0fe0
 
@@ -4556,7 +4556,7 @@ src/Combat/Overlay_17/func_ov017_021d3ef0.cpp:
     complete
     .text start:0x021d4344 end:0x021d4354
 
-src/Combat/Overlay_17/func_ov017_021d3f00.cpp:
+src/Combat/Overlay_17/LinkMessageQueue_SendLadderClimb_021d3f00.cpp:
     complete
     .text start:0x021d4354 end:0x021d43fc
 

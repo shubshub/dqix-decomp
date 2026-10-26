@@ -5,7 +5,7 @@
 
 struct S0204a438;
 void* GetField0x21c(struct S0204a438* p);
-int GetFlags_0202e09c(int obj);
+int Camera_GetKindFlags(int obj);
 int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
 struct BitFlags02037170;
 struct BitFlags02037180;
@@ -40,7 +40,7 @@ extern "C" ARM int func_ov025_021e4868(struct Param021e4868* p, int b, int unuse
     GameState* battle = GameState::GetInstance();
     if (p->field8 == 0x19) {
         void* val = battle->GetCamera();
-        if (GetFlags_0202e09c((int)val) & 0x10) {
+        if (Camera_GetKindFlags((int)val) & 0x10) {
             obj = GetField0x21c((struct S0204a438*)val);
         } else {
             return 1;

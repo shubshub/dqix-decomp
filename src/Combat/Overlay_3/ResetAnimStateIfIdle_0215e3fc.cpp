@@ -40,7 +40,7 @@ ARM void ResetAnimStateIfIdle_0215e3fc(struct Self0215e3fc* self) {
 
     if (self->f3b4 != NULL) {
         int x = (int)BackgroundLoader::GetInstance();
-        ((BackgroundLoader*)(x))->MaybeFreeAllocations();
+        ((BackgroundLoader*)(x))->FreeAllocations();
         int i;
 #if defined(jpn)
         for (i = 0; i < 4; i++) {

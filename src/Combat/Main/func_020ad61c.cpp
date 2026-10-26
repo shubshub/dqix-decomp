@@ -43,16 +43,16 @@ struct Struct_02015ef4 {
 struct Entity020AE398;
 struct Obj020ae3f4;
 extern "C" Zone3D* Zone3D_GetInstance(void);
-extern "C" void func_020332ac(Trajectory020ad61c*);
+extern "C" void GameObject_Update(Trajectory020ad61c*);
 extern "C" void func_020adda4(Trajectory020ad61c*);
 extern "C" void func_020adaac(Trajectory020ad61c*);
 void SubtractHeightOffset020ae398(Entity020AE398*);
 void UpdateFallMotion020ae3f4(Obj020ae3f4*);
-int GetHeadNodeIdOrMinusOne(HeadNode02046b24**);
+int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 void GameObject_EnableControl(void*);
 int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 extern "C" int Zone3D_GetGroundHeight(Zone3D*, Vec3copy0202ec84*);
-int IsField0Null_02046b08(void**);
+int FieldTaskQueue_IsEmpty(void**);
 extern "C" void func_ov017_021a72f4(GameResources*, int);
 extern short data_020e9450[];
 extern Struct_ov017_021d82fc_5 data_ov017_021d82fc;
@@ -66,7 +66,7 @@ extern "C" ARM void func_020ad61c(Trajectory020ad61c* object) {
     world = Zone3D_GetInstance();
     int saved144 = object->saved144;
     int saved148 = object->saved148;
-    func_020332ac(object);
+    GameObject_Update(object);
     func_020adda4(object);
     switch (object->state) {
     case 0:
@@ -117,8 +117,8 @@ extern "C" ARM void func_020ad61c(Trajectory020ad61c* object) {
     void* camera;
     int groundedHit;
     HeadNode02046b24** head = (HeadNode02046b24**)scene->fieldTaskQueue_;
-    GameObject* actor = game->GetUnknownGameObject();
-    if (actor && GetHeadNodeIdOrMinusOne(head) != 3) {
+    GameObject* actor = game->GetLeader();
+    if (actor && FieldTaskQueue_GetCurrentKind(head) != 3) {
         actor->obj3D_.position_ = object->object.position_;
         GameObject_EnableControl(actor);
     }
@@ -154,11 +154,11 @@ extern "C" ARM void func_020ad61c(Trajectory020ad61c* object) {
             }
         }
     }
-    if (func_02046b08((void**)var10) && arg0->unknown_13c_ == 0) {
-        if (g_keyManager.TestKeysPressed(1) || var9) {
-            func_ov017_021a72f4(var7, 1);
-        } else if (g_keyManager.TestKeysPressed(2) || var12) {
-            func_ov017_021a72f4(var7, 0);
+    if (FieldTaskQueue_IsEmpty((void**)head) && object->state == 0) {
+        if (g_keyManager.TestKeysPressed(1) || groundedHit) {
+            func_ov017_021a72f4(scene, 1);
+        } else if (g_keyManager.TestKeysPressed(2) || directHit) {
+            func_ov017_021a72f4(scene, 0);
         } else if (g_keyManager.TestKeysPressed(256)) {
             if (!(data_ov017_021d82fc.unknown_d_ & 16)) data_ov017_021d82fc.unknown_d_ |= 16;
         }

@@ -101,7 +101,7 @@ struct Manager0207f7f0;
 struct Node0207f7f0;
 
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
-void Set3DClearColor_020c5588(int, int, int, int, int);
+void Set3DClearColor(int, int, int, int, int);
 int GetField4Low12(Field4Low12_02097420*);
 MonsterListEntry* GetBufferField8(BufferField8_02097418*);
 void CopyTextAndUppercaseIfFlagged0206819c(const char*, char*, int);
@@ -140,7 +140,7 @@ extern "C" ARM void func_ov014_02187568(Struct_ov014_02186bc8* arg0)
     {
         SetFlags04(GetGameResources(), 0x609fe);
         SetFogState_020c54a4(0, 0, 0, 0);
-        Set3DClearColor_020c5588(0, 0, 0x7fff, 0, 0);
+        Set3DClearColor(0, 0, 0x7fff, 0, 0);
         FontBankLoader* music = FontBankLoader_GetInstance();
         FontBankLoader_CancelLoads(music);
         BlankFunction02094b40(music);

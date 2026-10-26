@@ -14,30 +14,30 @@ struct Struct_ov017_02190264 {
     char unknown_158_[0x17a];
     unsigned char unknown_2d2_;
 };
-struct Struct_ov000_02161e30_4 { char unknown_0_[2]; unsigned char unknown_2_; };
-struct Struct_ov017_021d622c { int unknown_0_[13]; };
-struct Struct_ov017_02190264_2 { int unknown_0_[4]; };
-struct Struct_02000c9c_12;
-struct Struct_0202c1a4;
-extern "C" int* func_0202ae18();
+struct PartySlot { char pad[2]; unsigned char active; };
+struct PartyIndices { int slots[13]; };
+struct PartyOutput { int fields[4]; };
+struct FieldBlock63d6_115a8;
+struct SearchStruct0202c1a4;
+extern "C" int* LinkSession_GetInstance();
 extern "C" int func_ov017_021925e0();
-extern "C" Struct_0200f3a4_7* func_02053c6c(unsigned char*);
-extern "C" void func_02082828(Struct_0200f3a4_7*);
-extern "C" void func_ov017_021bd3d4(void*, int);
-extern "C" Struct_ov000_02161e30_4* func_ov017_021a4658(GameResources*, int);
-extern "C" void func_02046a8c(void*, Struct_ov000_02161e30_4*);
-extern "C" void func_ov017_021b33d8(void*);
-extern "C" int func_0202b7d8(int*);
-extern "C" void* func_020120a0(char*, unsigned int);
-extern "C" int func_020535c8(signed char*);
+PartyExtension* GetFieldAt0x150_02053c6c(unsigned char*);
+extern "C" void func_02082828(PartyExtension*);
+void SetFlagAndSyncVec3_021bd3d4(void*, int);
+extern "C" PartySlot* func_ov017_021a4658(GameResources*, int);
+extern "C" void func_02046a8c(void*, PartySlot*);
+void ResetEntriesAndNotify_021b33d8(void*);
+int LinkSession_IsActive(int*);
+void* GameState_GetPlayerLocation(char*, unsigned int);
+int GameObject_IsGesturing(signed char*);
 extern "C" void func_020531f0(GameObject*);
-extern "C" void func_020545ac(short*);
-extern "C" int func_020115a8(Struct_02000c9c_12*);
-extern "C" void func_0200fd48(GameState*, int);
-extern "C" GameObject* func_0200ff58(GameState*, int);
-extern "C" void func_ov017_02191108(GameResources*, int, int, int, int);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4*);
-extern "C" void func_ov017_02190884(int, Struct_ov017_02190264_2*, int*, int, int, int);
+void InvalidateField0_020545ac(short*);
+int GetByteField0x63d6_020115a8(FieldBlock63d6_115a8*);
+void ClearCombatantSlot_0200fd48(GameState*, int);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
+extern "C" void Party_ReformLine(GameResources*, int, int, int, int);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+extern "C" void func_ov017_02190884(int, PartyOutput*, int*, int, int, int);
 extern "C" void func_ov017_02191234(GameResources*);
 #if defined(jpn)
 #define data_ov017_021d622c data_ov017_021d667c
@@ -46,12 +46,12 @@ extern Struct_ov017_021d622c data_ov017_021d622c;
 static inline int inline_020dc548(int arg0) { return arg0 >= 0 && arg0 <= 3; }
 
 // USA: func_ov017_02190264
-extern "C" ARM void func_ov017_02190264(GameResources* arg0, int arg1) {
-    int var0 = inline_020dc548(arg1);
-    if (!var0) return;
-    GameState* var1 = GameState::GetInstance();
-    int* var2 = func_0202ae18();
-    void* var3 = arg0->unknown_ptr_array_371c[6];
+extern "C" ARM void func_ov017_02190264(GameResources* resources, int index) {
+    int valid = ValidPartyIndex(index);
+    if (!valid) return;
+    GameState* game = GameState::GetInstance();
+    int* search = LinkSession_GetInstance();
+    void* node = resources->unknown_ptr_array_371c[6];
     if (func_ov017_021925e0()) {
         GameObject* var4 = var1->GetPartyMemberByIndex(arg1);
         if (var4 && (var4->obj3D_.unknown_0_ & 0x1000)) {
@@ -70,19 +70,19 @@ extern "C" ARM void func_ov017_02190264(GameResources* arg0, int arg1) {
         func_02046a8c(resources->unknown_ptr_array_3700[0], slot);
         ResetEntriesAndNotify_021b33d8(slot);
     }
-    GameObject* var8 = func_0200ff1c(var1, arg1);
-    if (var8) {
-        if (func_0202b7d8(var2) && (var8->obj3D_.unknown_0_ & 0x200)) {
-            short* var9 = (short*)func_020120a0((char*)var1, arg1);
-            if (var9) *var9 = 0;
+    GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(game, index);
+    if (combatant) {
+        if (LinkSession_IsActive(search) && (combatant->obj3D_.unknown_0_ & 0x200)) {
+            short* field = (short*)GameState_GetPlayerLocation((char*)game, index);
+            if (field) *field = 0;
         }
-        if (func_020535c8((signed char*)var8)) func_020531f0(var8);
-        strcpy(arg0->unknown_435c_[arg1], (char*)var8->baseStats_);
-        short* var10 = ((Struct_ov017_02190264*)var8)->unknown_154_;
-        if (var10) func_020545ac(var10);
-        if (!func_020115a8((Struct_02000c9c_12*)var1)) {
-            Struct_0200f3a4_7* var11 = func_02053c6c((unsigned char*)var8);
-            if (var11) func_02082828(var11);
+        if (GameObject_IsGesturing((signed char*)combatant)) func_020531f0(combatant);
+        strcpy(resources->partyNames[index], (char*)combatant->baseStats_);
+        short* reset = ((PartyObject*)combatant)->modelOwner;
+        if (reset) InvalidateField0_020545ac(reset);
+        if (!GetByteField0x63d6_020115a8((FieldBlock63d6_115a8*)game)) {
+            PartyExtension* extension = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+            if (extension) func_02082828(extension);
         }
     }
     Struct_ov017_021d622c var12 = data_ov017_021d622c;
@@ -106,16 +106,16 @@ extern "C" ARM void func_ov017_02190264(GameResources* arg0, int arg1) {
         Struct_ov017_02190264* var17 = (Struct_ov017_02190264*)func_0200ff58(var15, var14);
         if (var17) var16[var17->unknown_2d2_] = var17;
     }
-    int var18;
-    Struct_ov017_02190264** var19 = var16;
-    int var20 = 1;
-    for (var18 = 0; var18 < 4; var18++) { Struct_ov017_02190264* var21 = *var19; if (var21) var21->unknown_2d2_ = var20++; var19++; }
-    if (!func_0202b7d8(var2)) {
-        func_ov017_02191108(arg0, 1, 1, 1, 1);
+    int scan;
+    PartyObject** current = members;
+    int order = 1;
+    for (scan = 0; scan < 4; scan++) { PartyObject* member = *current; if (member) member->order = order++; current++; }
+    if (!LinkSession_IsActive(search)) {
+        Party_ReformLine(resources, 1, 1, 1, 1);
         return;
     }
-    for (int var22 = 0; var22 < 4; var22++) {
-        if (var22 == func_0202c1a4((Struct_0202c1a4*)var2)) func_ov017_02191108(arg0, 1, 1, 1, 1);
+    for (int i = 0; i < 4; i++) {
+        if (i == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) Party_ReformLine(resources, 1, 1, 1, 1);
         else {
             Struct_ov017_02190264_2 var23;
             int var24 = 0;

@@ -7,7 +7,6 @@
 #include "../ProcessorContext.h"
 
 #if defined(jpn)
-#define func_020d1198 func_020d2c64
 
 #define data_02111304 data_02110fa4
 
@@ -23,7 +22,7 @@
 
 extern "C"
 {
-    CBool func_020d1198();
+    CBool Card_IsPulledOut();
 }
 
 #define GET_FLAG_BIT(what, idx) (((what) & (1 << (idx))) ? 1 : 0)

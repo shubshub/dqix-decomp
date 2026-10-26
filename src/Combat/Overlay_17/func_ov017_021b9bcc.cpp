@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov017_021b9bcc;
-extern "C" int func_02010804(char* arg0);
+struct BattleStruct021b9bcc;
+int GameState_GetStoryStep(char* obj);
 
 struct Struct_ov017_021d8438 {
     unsigned char unknown_0_;
@@ -54,11 +54,11 @@ extern "C" ARM int func_ov017_021b9bcc(int arg0, void* arg1) {
         } else {
             return 0;
         }
-    } else if (var2 == 4) {
-        int var6 = func_02010804((char*)var0);
-        if (var3 <= var6 && var3 >= data_ov017_021d8438.unknown_c_) {
-            data_ov017_021d8438.unknown_14_ = arg1;
-            data_ov017_021d8438.unknown_c_ = var3;
+    } else if (day == 4) {
+        int v = GameState_GetStoryStep((char*)battleStruct);
+        if (pos <= v && pos >= data_ov017_021d8438.fieldC) {
+            data_ov017_021d8438.field14 = b;
+            data_ov017_021d8438.fieldC = pos;
         } else {
             return 0;
         }

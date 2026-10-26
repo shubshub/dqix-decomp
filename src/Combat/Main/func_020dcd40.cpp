@@ -12,8 +12,8 @@ struct Struct_020dcd40 { unsigned char unknown_0_[0x30]; };
 extern "C" unsigned short* Zone3D_GetInstance(void* p);
 int GetFirstFlaggedValue02086e9c(FlaggedEntryContainer02086e9c* p);
 FindEntryContainer02086e50* FindEntryBySignedId02086e50(FindEntryContainer02086e50* p, int idx);
-void* FindRecordByShortField020108f0(void* state, int slot);
-char* FindSlotWithNegShort02010954(char* state);
+void* GameState_FindPartyMemberData(void* state, int slot);
+char* GameState_FindFreePartyMemberData(char* state);
 void ResetShortFields02086380(unsigned char* rec);
 extern "C" void func_02082d6c(void* rec, void* entry);
 extern "C" void func_ov017_0218f064(void* v, int slot, int flags, int a, int b);
@@ -26,9 +26,9 @@ void SetField0x2d1_020546b4(void*, int);
 unsigned char* GetFieldAt0x150_02053c6c(unsigned char* obj);
 extern "C" void __clear(void* p, int size);
 extern "C" void Font_DecodeText(void* dst, void* src, int n);
-int GetFieldAt0x50(Struct020865b0* entry);
+int PartyMemberRecord_GetVocation(Struct020865b0* entry);
 void PartyMember_SetVocation(unsigned char* p, int idx);
-extern "C" void func_ov017_02191108(void* v, int a, int b, int c, int d);
+extern "C" void Party_ReformLine(void* v, int a, int b, int c, int d);
 void RemoveOrShiftMarkedEntry02086a04(FindEntryContainer02086a04* p, int idx);
 
 // USA: func_020dcd40
@@ -57,9 +57,9 @@ extern "C" ARM int func_020dcd40() {
         if (var7 < 0) {
             break;
         }
-        void* var9 = func_020108f0(var2, var7);
-        if (var9 == NULL) {
-            var9 = func_02010954((char*)var2);
+        void* rec = GameState_FindPartyMemberData(battle, slot);
+        if (rec == NULL) {
+            rec = GameState_FindFreePartyMemberData((char*)battle);
         }
         *(short*)((char*)var9 + 0x568) = var7;
         func_02086380((unsigned char*)var9);
@@ -93,11 +93,11 @@ extern "C" ARM int func_020dcd40() {
         Font_DecodeText((char*)entry + 0x140, &local, 1);
         strcpy((char*)c->baseStats_, (const char*)&local);
 #endif
-        int a = GetFieldAt0x50((Struct020865b0*)entry);
-        unsigned char* p = (unsigned char*)entry + GetFieldAt0x50((Struct020865b0*)entry);
+        int a = PartyMemberRecord_GetVocation((Struct020865b0*)entry);
+        unsigned char* p = (unsigned char*)entry + PartyMemberRecord_GetVocation((Struct020865b0*)entry);
         *(unsigned short*)(v7 + a * 2 + 0x16c) = p[2];
-        PartyMember_SetVocation(v7, GetFieldAt0x50((Struct020865b0*)entry));
-        func_ov017_02191108(v14, 1, 1, 1, 1);
+        PartyMember_SetVocation(v7, PartyMemberRecord_GetVocation((Struct020865b0*)entry));
+        Party_ReformLine(v14, 1, 1, 1, 1);
         RemoveOrShiftMarkedEntry02086a04((FindEntryContainer02086a04*)p8, idx);
         count++;
     }

@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 int GameState_GetProtagonistIndex(GameState* battleStruct);
-void ClearBytesAndZeroBlock02039d24(unsigned char* obj);
+void GameObject_ResetTrail(unsigned char* obj);
 
 struct Struct_ov003_02161480 {
     char unknown_0_[0xf78];
@@ -19,7 +19,7 @@ extern "C" ARM void func_ov003_02161480(void) {
         if (activeId != roster->memberIds[i]) {
             GameObject* c = bs->GetPartyMemberByIndex(roster->memberIds[i]);
             if (c != NULL) {
-                ClearBytesAndZeroBlock02039d24((unsigned char*)c);
+                GameObject_ResetTrail((unsigned char*)c);
             }
         }
     }

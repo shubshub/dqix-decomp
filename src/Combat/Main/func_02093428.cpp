@@ -19,7 +19,7 @@ void EnqueueEventTag173_021d1810(int, int, signed char);
 int GameState_GetProtagonistIndex(GameState* gs);
 int* GetGlobal02109030_020936f8(void);
 char* MessageSystem_GetInstance(void);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
+int GameObject_IsGesturing(signed char* p);
 
 struct Struct_02093428_6 {
     char unknown_0_[0x30];
@@ -80,7 +80,7 @@ extern "C" ARM void func_02093428(struct BattlePhaseState02093428* s) {
         unsigned char count = list->count;
         for (unsigned char i = 0; i < count; i++) {
             GameObject* c = GetCombatantWithFlag0x100_0200ff1c(bs, list->entries[i]);
-            if (c != 0 && CheckSubstructByte0x7cPositive_020535c8((signed char*)c) != 0) {
+            if (c != 0 && GameObject_IsGesturing((signed char*)c) != 0) {
                 func_020531f0(c);
             }
         }

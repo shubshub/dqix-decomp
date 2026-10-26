@@ -30,7 +30,7 @@ extern "C" ARM int func_ov000_02159dbc(char* arg0, int arg1) {
         return 1;
     }
     char* zone = Zone3D_GetInstance();
-    if (IsGlobalU16InRange_020117f0(gs) && (*(struct PartyWork_02159dbc**)(battle + 0x8e18))->field_0x25 != 0) {
+    if (GameState_IsInGrotto(gs) && (*(struct PartyWork_02159dbc**)(battle + 0x8e18))->field_0x25 != 0) {
 #if defined(jpn)
         enum { Enum_ov000_02159dbc_9196 = 0x240c };
 #else

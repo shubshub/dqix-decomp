@@ -4,18 +4,15 @@
 #define func_020ca390 func_020cbe5c
 #endif
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 void* func_ov031_0223cf4c(unsigned int arg0, int arg1);
 void func_020ca390(int val, void* dst, unsigned int size);
 void VectorizedInvertedMemcpy(const void* src, void* dst, unsigned int length);
-void func_020c99ac(void* arg0);
-int func_ov031_0221e7d0(int (*arg0)(int), int (*arg1)(void*));
-void func_020c9be0(void);
-int func_ov031_02226fc8(int arg0);
-int func_ov031_02226fd8(void* arg0);
+void OS_GetMacAddress(void* dst);
+int func_ov031_0221e7d0(int (*allocate)(int), int (*release)(void*));
+void HaltSystem(void);
+int TailCallWith32_02226fc8(int size);
+int func_ov031_02226fd8(void* p);
 
 typedef union {
     struct {
@@ -55,16 +52,16 @@ ARM void func_ov031_02226e08(void) {
     var0.unknown_2_ = 0xc;
     VectorizedInvertedMemcpy(data_ov031_02248d80, var0.unknown_4_, 0xc);
 
-    data_ov031_02250c04.unknown_4_->unknown_0_ = 3;
-    data_ov031_02250c04.unknown_4_->unknown_2_ = var0;
-    data_ov031_02250c04.unknown_4_->unknown_106_ = 1;
-    data_ov031_02250c04.unknown_4_->unknown_108_ = -1;
-    data_ov031_02250c04.unknown_4_->unknown_10a_ = 1;
-    data_ov031_02250c04.unknown_4_->unknown_10c_ = -1;
-    data_ov031_02250c04.unknown_4_->unknown_10e_ = -1;
-    func_020c99ac(data_ov031_02250c04.unknown_4_->unknown_110_);
+    data_ov031_02250c04.buf->tag = 3;
+    data_ov031_02250c04.buf->packet = packet;
+    data_ov031_02250c04.buf->f106 = 1;
+    data_ov031_02250c04.buf->f108 = -1;
+    data_ov031_02250c04.buf->f10a = 1;
+    data_ov031_02250c04.buf->f10c = -1;
+    data_ov031_02250c04.buf->f10e = -1;
+    OS_GetMacAddress(data_ov031_02250c04.buf->f110);
 
-    if (func_ov031_0221e7d0(func_ov031_02226fc8, func_ov031_02226fd8) != 0) {
-        func_020c9be0();
+    if (func_ov031_0221e7d0(TailCallWith32_02226fc8, func_ov031_02226fd8) != 0) {
+        HaltSystem();
     }
 }

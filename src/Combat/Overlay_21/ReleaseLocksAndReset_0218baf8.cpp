@@ -7,7 +7,7 @@
 #include "Filesystem/BackgroundLoader.h"
 
 extern "C" int CharacterCreationUI_Update(int handle);
-void ResetXYField0203aa08(void* p);
+void SoundPlayer_PlayPending(void* p);
 extern "C" void func_020bbd9c(void);
 extern int g_sePlayer;
 
@@ -24,6 +24,6 @@ ARM void ReleaseLocksAndReset_0218baf8(struct Obj0218baf8* obj) {
     if (CharacterCreationUI_Update(obj->field40) != 0) {
         obj->fieldb8 = 1;
     }
-    ResetXYField0203aa08(&g_sePlayer);
+    SoundPlayer_PlayPending(&g_sePlayer);
     func_020bbd9c();
 }

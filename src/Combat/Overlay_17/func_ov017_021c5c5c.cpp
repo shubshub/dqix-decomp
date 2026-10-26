@@ -63,21 +63,21 @@ struct Struct_ov017_021c5c5c_6 {
     unsigned int unknown_18c_;
 };
 
-extern "C" Struct_ov017_021c5c5c* func_ov017_021b8478(Struct_ov017_021c5c5c_2* arg0);
-extern "C" Struct_ov017_021c5c5c_6* func_ov017_021a278c(void* arg0, int arg1);
-extern "C" unsigned char func_02039d7c(char* arg0);
-extern "C" int func_02046b60(Struct_02038598_5* arg0, int arg1);
-extern "C" void func_ov017_021ab010(void* arg0, int arg1);
-extern "C" int func_02046b08(void** arg0);
+extern "C" Event_021c5c5c* func_ov017_021b8478(Node718_021c5c5c* node);
+Combatant_021c5c5c* FindCombatantByField16a_021a278c(void* base, int val);
+unsigned char GameObject_IsClimbingLadder(char* obj);
+int ListContainsId(ListHead02046b60* list, int id);
+void SetFlagAndMaybeNotify_021ab010(void* obj, int flag);
+int FieldTaskQueue_IsEmpty(void** list);
 
 // USA: func_ov017_021c5c5c
-extern "C" ARM int func_ov017_021c5c5c(int arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov017_021c5c5c_4* var1 = (Struct_ov017_021c5c5c_4*)GetGameResources();
-    Struct_ov017_021c5c5c_6* var2;
-    Struct_02038598_5* var3 = var1->unknown_36fc_;
-    var2 = (Struct_ov017_021c5c5c_6*)var0->GetUnknownGameObject();
-    if (var2 == NULL) {
+extern "C" ARM int func_ov017_021c5c5c(int unused, int id) {
+    GameState* gs = GameState::GetInstance();
+    Ctx_021c5c5c* ctx = (Ctx_021c5c5c*)GetGameResources();
+    Combatant_021c5c5c* leader;
+    ListHead02046b60* list = ctx->list;
+    leader = (Combatant_021c5c5c*)gs->GetLeader();
+    if (leader == NULL) {
         return 0;
     }
     if (var1->unknown_42e7_ != 0) {
@@ -106,7 +106,7 @@ extern "C" ARM int func_ov017_021c5c5c(int arg0, int arg1) {
     if (var2->unknown_0_.GetField06() != var5->unknown_0_.GetField06()) {
         return 0;
     }
-    if (func_02039d7c((char*)var2) != 0) {
+    if (GameObject_IsClimbingLadder((char*)leader) != 0) {
         return 0;
     }
 
@@ -123,9 +123,9 @@ extern "C" ARM int func_ov017_021c5c5c(int arg0, int arg1) {
     if (func_02046b60(var3, 0x1a) && var9->unknown_64_ != 0) {
         return 0;
     }
-    if (var9->unknown_3_ != 0 && var9->unknown_1_ == 0) {
-        func_ov017_021ab010(var9, 0);
-    } else if (!func_02046b08((void**)var3)) {
+    if (node->field3 != 0 && node->field1 == 0) {
+        SetFlagAndMaybeNotify_021ab010(node, 0);
+    } else if (!FieldTaskQueue_IsEmpty((void**)list)) {
         return 0;
     }
     return 1;

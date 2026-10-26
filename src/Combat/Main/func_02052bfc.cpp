@@ -51,7 +51,7 @@ int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
 void* GameState_GetParty(GameState*);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" long long _ll_udiv(long long a, long long b);
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 int IsEntryEligibleAndFlagged(Struct0201bc94* obj);
 int StandardStrings_Get(int value);
 void* TextQueue_GetInstance(void);
@@ -75,13 +75,13 @@ extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* arg0) {
     uint64_t var6 = GetCurrentTimestamp() - arg0->unknown_150_->unknown_480_;
     long long var7 = _ll_udiv(var6 << 6, 0x1ff6210);
 
-    if (!func_02046b08((void**)var2)) return;
-    if (var7 < 0x12c && func_0201bc94(var4)) return;
+    if (!FieldTaskQueue_IsEmpty((void**)list)) return;
+    if (elapsed < 0x12c && IsEntryEligibleAndFlagged(entry)) return;
 
-    char var8[0x80];
-    arg0->unknown_150_->unknown_56c_ = 0;
-    if (var5 == *(short*)((char*)var0->GetUnknownGameObject() + 4)) {
-        if (arg0->unknown_150_->unknown_56d_ != 0) {
+    char buf[0x80];
+    obj->field150->field56c = 0;
+    if (idx == *(short*)((char*)gs->GetLeader() + 4)) {
+        if (obj->field150->field56d != 0) {
             #if defined(jpn)
             strcpy(var8, (char*)data_020f0420[1]);
 #else

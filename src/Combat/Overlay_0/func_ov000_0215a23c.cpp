@@ -47,15 +47,15 @@ Struct_ov000_0215a23c_3* func_0200fea4(GameState* arg0, int arg1);
 Struct_ov000_0215a23c_2* func_02053c6c(Struct_ov000_0215a23c_3* arg0);
 }
 
-extern "C" int func_ov000_0215fc60(char* arg0);
-extern "C" int func_02085230(unsigned char* arg0);
-extern "C" int func_ov000_02158324(GameObject* arg0);
-extern "C" int func_ov000_0215830c(GameObject* arg0);
-extern "C" int func_0202053c(void* arg0);
-extern "C" short func_ov000_0215a16c(void* arg0, int arg1, int arg2, short* arg3);
-extern "C" short func_ov000_0215a1d4(void* arg0, int arg1, int arg2, short* arg3);
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
-extern "C" int func_02088514(Struct_02088514* arg0);
+int ClassifyField0x81fe_ov000_0215fc60(char* base);
+int HasFlaggedSlotBit12Set02085230(unsigned char* slots);
+int IsCombatantFlag0x80000000Set_ov000_02158324(GameObject* c);
+int IsCombatantFlag0x40000000Set_ov000_0215830c(GameObject* c);
+int GameObject_GetPartyMemberLevel(void* c);
+short ApplyHPDelta0215a16c(void* unused, int id, int delta, short* outApplied);
+short ApplyMPDelta0215a1d4(void* unused, int id, int delta, short* outApplied);
+int TestBitInArray0x8ec_02083b00(unsigned char* obj, int index);
+int CheckFlag0x2AndState2_02088514(S88514* obj);
 float NextRandomFloatBetween(Random* random, float minimum, float maximum);
 
 static inline Struct_ov000_0215a23c_3* inline_ov000_021537b8_2(int arg0) {
@@ -97,11 +97,11 @@ extern "C" ARM void func_ov000_0215a23c(void* arg0) {
             if (func_02085230(var14->unknown_150_)) {
                 var15 += 0x19;
             }
-            if (func_ov000_02158324((GameObject*)var14)) {
-                int var16 = 10;
-                int var17 = func_0202053c(var14) >> 1;
-                if (var17 > 10) {
-                    var16 = var17;
+            if (IsCombatantFlag0x80000000Set_ov000_02158324((GameObject*)c)) {
+                int bonus = 10;
+                int half = GameObject_GetPartyMemberLevel(c) >> 1;
+                if (half > 10) {
+                    bonus = half;
                 }
                 var15 += var16;
             }
@@ -130,16 +130,16 @@ extern "C" ARM void func_ov000_0215a23c(void* arg0) {
         if (var20 == 0) {
             continue;
         }
-        int var21 = 0;
-        if (func_ov000_0215830c((GameObject*)var19)) {
-            var21 = func_0202053c(var19) / 10;
-            if (var21 < 3) {
-                var21 = 3;
+        int amount = 0;
+        if (IsCombatantFlag0x40000000Set_ov000_0215830c((GameObject*)c)) {
+            amount = GameObject_GetPartyMemberLevel(c) / 10;
+            if (amount < 3) {
+                amount = 3;
             }
         }
-        if (func_02083b00(var19->unknown_150_, 0x3f) && var20->unknown_2ac_ > 0 && var20->unknown_29c_4_ == 3) {
-            float var22 = (float)(unsigned int)func_0202053c(var19) / 10.0f;
-            var21 += (int)(1.0f + NextRandomFloatBetween((Random*)arg0, 0.0f, var22));
+        if (TestBitInArray0x8ec_02083b00(c->f150, 0x3f) && f->f2ac > 0 && f->kind == 3) {
+            float range = (float)(unsigned int)GameObject_GetPartyMemberLevel(c) / 10.0f;
+            amount += (int)(1.0f + NextRandomFloatBetween((Random*)self, 0.0f, range));
         }
         if (var21 > 0) {
             var5[var9] = func_ov000_0215a1d4(arg0, var11[var18], var21, &var3[var9]);

@@ -2,11 +2,11 @@
 #include "GameState/Field3b0.h"
 #include "GameState/GameState.h"
 
-struct Struct_0204a5d4;
-extern "C" int func_0202e09c(int arg0);
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0204a5d4(struct Struct_0204a5d4* arg0, int arg1);
-extern "C" void func_ov000_0216d530(void* arg0, int arg1);
+struct S0204a5d4;
+int Camera_GetKindFlags(int obj);
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+void SetField0x260(struct S0204a5d4* p, int v);
+void SetFlagOrState0216d530(void* obj, int val);
 
 struct Struct_ov025_021e4f00 {
     char unknown_0_[8];
@@ -19,15 +19,15 @@ extern "C" ARM int func_ov025_021e4f00(struct Param021e4f00* p, int b, int unuse
     int cameraIds[8];
     void* obj = GameState::GetInstance()->GetCamera();
     if (obj != 0) {
-        if (GetFlags_0202e09c((int)obj) & 0x10) {
+        if (Camera_GetKindFlags((int)obj) & 0x10) {
             if (DispatchByIndex021820bc(d, b, p->targetIndex, (int)targetIds) != 1) {
                 SetField0x260((struct S0204a5d4*)obj, -1);
                 return 1;
             }
-            func_0204a5d4((struct Struct_0204a5d4*)var2, var0[0]);
-        } else if (func_0202e09c((int)var2) & 8) {
-            if (func_ov000_021820bc(arg3, arg1, arg0->unknown_8_, (int)var1) != 1) {
-                func_ov000_0216d530(var2, -1);
+            SetField0x260((struct S0204a5d4*)obj, targetIds[0]);
+        } else if (Camera_GetKindFlags((int)obj) & 8) {
+            if (DispatchByIndex021820bc(d, b, p->targetIndex, (int)cameraIds) != 1) {
+                SetFlagOrState0216d530(obj, -1);
                 return 1;
             }
             func_ov000_0216d530(var2, var1[0]);

@@ -23,11 +23,11 @@ extern "C" ARM void func_0204fae8(Struct_0204fae8* arg0) {
         var1 += 3;
         var2 = 3;
     }
-    var0 += 4;
-    var0 -= var2;
-    char* var3 = func_02042a50(8, data_020f0303);
-    if (var3) func_0204e038(arg0, var3, var0, var1, 8, 8, 0xf0, 0xf);
-    var0 = (short)((short)(arg0->unknown_a8_ << 3) - 10) + var2;
-    var3 = func_02042a50(8, data_020f0306);
-    if (var3) func_0204e038(arg0, var3, (short)(var0 - 1), var1, 8, 8, 0xf0, 0xf);
+    x += 4;
+    x -= offset;
+    char* graphic = Font_FindGlyph(8, data_020f0303);
+    if (graphic) func_0204e038(window, graphic, x, y, 8, 8, 0xf0, 0xf);
+    x = (short)((short)(window->width << 3) - 10) + offset;
+    graphic = Font_FindGlyph(8, data_020f0306);
+    if (graphic) func_0204e038(window, graphic, (short)(x - 1), y, 8, 8, 0xf0, 0xf);
 }

@@ -3,7 +3,7 @@
 
 #if defined(jpn)
 extern "C" void* _Z23GlobalFlags_GetInstancev(void);
-extern "C" int _Z17TestFlags02046708P16FlagWord02046708j(void*, unsigned int);
+extern "C" int _Z17FlagWord_TestBitsP16FlagWord02046708j(void*, unsigned int);
 extern "C" void* _ZN16BackgroundLoader11GetInstanceEv(void);
 extern "C" void _ZN16BackgroundLoader10RemoveTaskEi(void*, int);
 
@@ -18,7 +18,7 @@ extern FontBankHandler data_020f148c_dup[2];
 ARM int AlwaysTrue02094b4c(FontBankLoader* loader) {
 #if defined(jpn)
     if (loader->requestedBank < 0) return 1;
-    if (_Z17TestFlags02046708P16FlagWord02046708j(_Z23GlobalFlags_GetInstancev(), 0x10)) {
+    if (_Z17FlagWord_TestBitsP16FlagWord02046708j(_Z23GlobalFlags_GetInstancev(), 0x10)) {
         void* backgroundLoader = _ZN16BackgroundLoader11GetInstanceEv();
         for (unsigned char i = 0; i < 8; ++i) {
             if (loader->loadTasks[i] >= 0) {

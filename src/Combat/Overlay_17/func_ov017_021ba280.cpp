@@ -2,10 +2,10 @@
 #include "GameState/GameState.h"
 #include "Resource/Script.h"
 
-struct Struct_0202c1a4;
-extern "C" Struct_0202c1a4* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
+struct SearchStruct0202c1a4;
+extern "C" SearchStruct0202c1a4* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 
 extern "C" int func_ov017_021b9bcc(int arg0, const char* arg1);
 
@@ -34,9 +34,9 @@ extern "C" ARM int func_ov017_021ba280(Script::Parameter* arg0, int arg1) {
     if (data_ov017_021d7c54.unknown_1_ > -1) return 1;
 
     GameState::GetInstance();
-    Struct_0202c1a4* var0 = func_0202ae18();
-    if (!func_0202b7d8((int*)var0)) return 1;
-    if (func_0202c1a4(var0) == 0) return 1;
+    SearchStruct0202c1a4* search = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)search)) return 1;
+    if (LinkSession_GetOwnSlot(search) == 0) return 1;
 
     int var1 = arg0[0].ToInt();
     Script::Parameter* var2 = &arg0[1];

@@ -10,7 +10,8 @@ GameObject* GameState::GetGameObjectByIndex(int idx)
     return objects_[idx];
 }
 
-GameObject* GameState::GetMaybeWanderingMonsterByIndex(int idx)
+// Main, originally GameState::GetMaybeWanderingMonsterByIndex (USA 0x0200fd90, EUR 0x0200fda0, JPN 0x0200fbec)
+GameObject* GameState::GetWanderingMonsterByIndex(int idx)
 {
     if (idx < 0)
         return NULL;
@@ -28,7 +29,8 @@ GameObject* GameState::GetProtagonist()
     return GetGameObjectByIndex(protagonistObjectIndex_);
 }
 
-GameObject* GameState::GetUnknownGameObject()
+// Main, originally GameState::GetUnknownGameObject (USA 0x0200fddc, EUR 0x0200fdec, JPN 0x0200fc38)
+GameObject* GameState::GetLeader()
 {
     return GetGameObjectByIndex(unknownObjectIndex_397c_);
 }
@@ -46,7 +48,8 @@ GameObject* GameState::GetPartyMemberByIndex(int idx)
     return objects_[idx];
 }
 
-GameObject* GameState::GetMaybeFieldMonsterByIndex(int idx)
+// Main, originally GameState::GetMaybeFieldMonsterByIndex (USA 0x0200fe2c, EUR 0x0200fe3c, JPN 0x0200fc88)
+GameObject* GameState::GetFieldMonsterByIndex(int idx)
 {
     if (idx < 0)
         return NULL;

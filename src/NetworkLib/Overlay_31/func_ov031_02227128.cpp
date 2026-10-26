@@ -1,18 +1,15 @@
 #include <globaldefs.h>
 #include "NitroSDK/TouchScreen.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
-extern "C" void func_020c3898(void);
+void GX_DispOff(void);
 int Is64BitTimerInitialized();
 int IsAlarmListInitialized();
-extern "C" int func_020c3864(int arg0);
-extern "C" void func_020c36ec(void);
+int SetVBlankIrqEnable(int enable);
+void BlankFunction020c36ec(void);
 void InitializeROMFilesystem(int dmaChannel);
-extern "C" void func_020c9be0(void);
-extern "C" ARM void func_020cf020(void);
+extern "C" void HaltSystem(void);
+ARM void InitSlotSystem020cf020(void);
 
 extern "C" void func_ov031_0223dda8(void);
 extern int data_ov031_02250c0c;
@@ -28,24 +25,24 @@ extern "C" unsigned int func_ov031_0223cf70(void**);
 
 // USA: func_ov031_02227128
 extern "C" ARM void func_ov031_02227128(void) {
-    volatile unsigned short* var0 = (volatile unsigned short*)0x4000208;
-    unsigned short var1 = *var0;
-    (void)var1;
-    *var0 = 0;
-    func_020c3898();
+    volatile unsigned short* ime = (volatile unsigned short*)0x4000208;
+    unsigned short oldIme = *ime;
+    (void)oldIme;
+    *ime = 0;
+    GX_DispOff();
     *(volatile unsigned int*)0x4001000 &= ~0x10000;
     if (!Is64BitTimerInitialized()) {
-        func_020c9be0();
+        HaltSystem();
     }
     if (!IsAlarmListInitialized()) {
-        func_020c9be0();
+        HaltSystem();
     }
-    func_020c3864(0);
-    func_020c36ec();
+    SetVBlankIrqEnable(0);
+    BlankFunction020c36ec();
     InitializeROMFilesystem(-1);
     InitializeTouchSystem();
-    func_020cf020();
-    func_020c3898();
+    InitSlotSystem020cf020();
+    GX_DispOff();
     *(volatile unsigned int*)0x4001000 &= ~0x10000;
     func_ov031_0223dda8();
     func_ov031_0223ce9c(*(void**)((char*)&data_ov031_02250c0c + 0x4));

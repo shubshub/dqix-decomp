@@ -21,7 +21,7 @@ struct BattleStruct {
     struct CombatantStruct* combatantList[0xe9];
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_020703c8(int index, int hour, int minute, int second);
 extern "C" void* func_ov017_021baedc(void* self, int flag);
@@ -30,12 +30,12 @@ struct Struct_0201bdac;
 struct Struct_0201bdac_2;
 extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
 
-struct Struct_020213fc;
-extern "C" void func_020213fc(struct Struct_020213fc* arg0, int arg1);
-extern "C" void func_020e1154(void* arg0);
+struct SetFlagStruct;
+void MapDisplay_SetHoldSubScreenDark(struct SetFlagStruct* p, int value);
+void InitContext020e1154(void* obj);
 
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" void func_02070378(char* arg0);
+void* GameState_GetZoneTransition(GameState*);
+void InitStruct02070378(char* obj);
 
 extern "C" void* func_0203cf4c(void);
 extern "C" void* func_0203df78(void* arg0, int arg1);
@@ -44,15 +44,15 @@ extern "C" int func_02040528(int* arg0);
 extern "C" void func_ov017_021b8d80(void*);
 extern "C" void func_ov017_021b8d1c(void* arg0);
 
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a27b8(unsigned char* arg0);
+int GameState_GetFollowCamera(char* obj);
+void ClearIntAt0x23c_020a27b8(unsigned char* obj);
 
 struct Vector3i;
 
-extern "C" void func_ov017_021b6f18(void* arg0);
-extern "C" void func_ov017_021b6e70(void* arg0, unsigned short arg1);
-extern "C" int func_0202c540(void* arg0);
-extern "C" void func_ov017_021b7104(void* arg0, void* arg1);
+extern "C" void func_ov017_021b6f18(void* node);
+extern "C" void func_ov017_021b6e70(void* evt, unsigned short tag);
+extern "C" int LinkSession_IsGuest(void* p);
+extern "C" void func_ov017_021b7104(void* node, void* out);
 
 struct GameState;
 void* ItemTable_Construct(void* obj);
@@ -64,22 +64,22 @@ int BuildDescriptorFlag1_020de980(void* a, void* b, void* c, int d, int e);
 void InitStruct0207cbe8(char* obj);
 extern "C" void func_0207d300(void* obj, short id, int a, int b);
 
-extern "C" int func_02086d88(unsigned char* arg0, int arg1);
-extern "C" unsigned char func_02011494(char* arg0, void* arg1);
-struct Struct_0203d028_3;
-extern "C" int func_02053c6c(unsigned char* arg0);
-struct Struct_0206f81c;
-extern "C" void* func_02083554(struct Struct_0206f81c* arg0, int arg1);
-extern "C" void func_02083738(void* arg0, int arg1);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void func_ov017_021c3fb4(int arg0, int arg1);
-extern "C" void func_ov017_021c4418(int arg0, signed char arg1);
-extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, int arg4);
+int DecrementKeyEverywhere02086d88(unsigned char* self, int key);
+unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
+struct CombatantStruct;
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
+struct Container02083554;
+void* FindEntryByShortField02083554(struct Container02083554* c, int id);
+extern "C" void func_02083738(void* obj, int bits);
+int LinkSession_IsActive(int* obj);
+extern "C" void func_ov017_021c3fb4(int combatantId, int flag);
+extern "C" void func_ov017_021c4418(int combatantId, signed char flag10);
+extern "C" void func_ov017_0218f5a4(void* a, int i, int b, int c, int d);
 
 struct FieldTaskQueue;
 void FieldTaskQueue_Update(struct FieldTaskQueue* self);
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void Scenario_LoadZoneTriggers(void* a, int b);
@@ -174,7 +174,7 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
     void* g = GetGameResources();
     void* gBase = (char*)g + 0x3000;
     tailList = *(struct TailList020469b4**)((char*)gBase + REGION_VALUE(0x4ec, 0x6fc));
-    searchPtr = func_0202ae18();
+    searchPtr = LinkSession_GetInstance();
     miscCtx = Scenario_GetInstance();
     unsigned char* node = *(unsigned char**)((char*)a0 + 0x30);
     unsigned char slFlag;
@@ -209,26 +209,26 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
             }
 
             case 0x77: case 0x80: case 0x9b: {
-                struct Struct_0201bdac* var18 = *(struct Struct_0201bdac**)((char*)var12 + 0x3000 + REGION_VALUE(0x524, 0x734));
-                func_ov017_021baedc(var18, 1);
-                *(unsigned short*)((char*)var18 + 8) = *(unsigned short*)(var14 + 2);
-                func_020469b4(var9, var18);
-                func_020213fc(*(struct Struct_020213fc**)((char*)var12 + 0x3000 + REGION_VALUE(0x4c0, 0x6d0)), 1);
-                func_020e1154((void*)0x1f4);
+                struct TailNode020469b4* node7 = *(struct TailNode020469b4**)((char*)g + 0x3000 + REGION_VALUE(0x524, 0x734));
+                func_ov017_021baedc(node7, 1);
+                *(unsigned short*)((char*)node7 + 8) = *(unsigned short*)(node + 2);
+                AppendNodeToTail(tailList, node7);
+                MapDisplay_SetHoldSubScreenDark(*(struct SetFlagStruct**)((char*)g + 0x3000 + REGION_VALUE(0x4c0, 0x6d0)), 1);
+                InitContext020e1154((void*)0x1f4);
                 break;
             }
 
             case 0x85: case 0x8a: case 0xe2: {
-                unsigned char* var19 = (unsigned char*)func_0200fd0c((GameState*)var11);
-                func_02070378((char*)var19);
-                var19[2] = 1;
-                *(unsigned short*)(var19 + 0) = *(unsigned short*)(var14 + 2);
-                *(unsigned int*)(var19 + 0x20) = *(unsigned short*)(var14 + 4);
-                if (*(unsigned short*)(var14 + 0) == 0x8a) var19[6] = 1;
-                if (*(unsigned short*)(var14 + 0) == 0xe2) var19[0xc] = 1;
-                if (*((unsigned char*)var11 + 0x5000 + REGION_VALUE(0xa4c, 0xcac)) != 0) var19[0x60] = 1;
-                var15 = 1;
-                func_020213fc(*(struct Struct_020213fc**)((char*)var12 + 0x3000 + REGION_VALUE(0x4c0, 0x6d0)), var15);
+                unsigned char* f3f8 = (unsigned char*)GameState_GetZoneTransition((GameState*)battle);
+                InitStruct02070378((char*)f3f8);
+                f3f8[2] = 1;
+                *(unsigned short*)(f3f8 + 0) = *(unsigned short*)(node + 2);
+                *(unsigned int*)(f3f8 + 0x20) = *(unsigned short*)(node + 4);
+                if (*(unsigned short*)(node + 0) == 0x8a) f3f8[6] = 1;
+                if (*(unsigned short*)(node + 0) == 0xe2) f3f8[0xc] = 1;
+                if (*((unsigned char*)battle + 0x5000 + REGION_VALUE(0xa4c, 0xcac)) != 0) f3f8[0x60] = 1;
+                slFlag = 1;
+                MapDisplay_SetHoldSubScreenDark(*(struct SetFlagStruct**)((char*)g + 0x3000 + REGION_VALUE(0x4c0, 0x6d0)), slFlag);
                 break;
             }
 
@@ -245,30 +245,30 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                     if (var22 != 0) {
                         func_ov017_021b8d80(var23);
                     }
-                    unsigned char* var24 = *(unsigned char**)((char*)var12 + 0x3000 + REGION_VALUE(0x50c, 0x71c));
-                    var22 |= (*(unsigned char*)(var24 + 3) != 0 && *(unsigned char*)(var24 + 0x20) != 0);
-                    func_ov017_021b8d1c(var23);
-                    *(int*)(var23 + 0x114) = var21;
-                    *(int*)(var23 + 0x124) = *(unsigned short*)(var14 + 4);
-                    *(unsigned char*)(var23 + 0x139) = (var22 != 0) ? 1 : 0;
-                    func_020469b4(var9, (struct Struct_0201bdac*)var23);
-                    int var25 = func_020100f8((char*)var11);
-                    if (var25 != 0) {
-                        func_020a27b8((unsigned char*)var25);
+                    unsigned char* p71c = *(unsigned char**)((char*)g + 0x3000 + REGION_VALUE(0x50c, 0x71c));
+                    r7flag |= (*(unsigned char*)(p71c + 3) != 0 && *(unsigned char*)(p71c + 0x20) != 0);
+                    func_ov017_021b8d1c(r8);
+                    *(int*)(r8 + 0x114) = sb;
+                    *(int*)(r8 + 0x124) = *(unsigned short*)(node + 4);
+                    *(unsigned char*)(r8 + 0x139) = (r7flag != 0) ? 1 : 0;
+                    AppendNodeToTail(tailList, (struct TailNode020469b4*)r8);
+                    int flag4 = GameState_GetFollowCamera((char*)battle);
+                    if (flag4 != 0) {
+                        ClearIntAt0x23c_020a27b8((unsigned char*)flag4);
                     }
                 }
                 break;
             }
 
             case 0x79: case 0x89: case 0xe1: {
-                unsigned char* var26 = (unsigned char*)func_0200fd0c((GameState*)var11);
-                func_02070378((char*)var26);
-                var26[2] = 1;
-                *(unsigned short*)(var26 + 0) = *(unsigned short*)(var14 + 2);
-                var26[0xc] = 1;
-                if (*(unsigned short*)(var14 + 0) == 0x89) var26[6] = 1;
-                if (*(unsigned short*)(var14 + 0) == 0xe1) var26[0xc] = 0;
-                var15 = 1;
+                unsigned char* f3f8 = (unsigned char*)GameState_GetZoneTransition((GameState*)battle);
+                InitStruct02070378((char*)f3f8);
+                f3f8[2] = 1;
+                *(unsigned short*)(f3f8 + 0) = *(unsigned short*)(node + 2);
+                f3f8[0xc] = 1;
+                if (*(unsigned short*)(node + 0) == 0x89) f3f8[6] = 1;
+                if (*(unsigned short*)(node + 0) == 0xe1) f3f8[0xc] = 0;
+                slFlag = 1;
                 break;
             }
 
@@ -312,9 +312,9 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                 func_ov017_021b6e70(&desc, desc.f2);
                 desc.f12 = *(int*)((char*)sb + 0x98);
 
-                if (func_0202c540(var0) != 0) {
-                    if (var30.unknown_c_ == 0 && var30.unknown_d_ == 0) {
-                        var30.unknown_14_ = 1;
+                if (LinkSession_IsGuest(searchPtr) != 0) {
+                    if (desc.fc == 0 && desc.fd == 0) {
+                        desc.f14 = 1;
                     }
                 }
                 func_ov017_021b7104(var28, &var30);
@@ -369,44 +369,44 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                     for (int total = 0; total < *(unsigned short*)(node + 4); total++) {
                         if (DecrementKeyEverywhere02086d88((unsigned char*)p2a04, *(short*)(node + 2)) != 0) matchCount++;
                     }
-                    if (var39 < *(unsigned short*)(var14 + 4)) {
-                        var7 = (Struct_0203d028_2*)GameState::GetInstance();
-                        unsigned char var41[4];
-                        int var42[4];
-                        int var43 = 0;
-                        unsigned char var44 = func_02011494((char*)var7, var41);
-                        for (int var45 = 0; var45 < var44; var45++) {
-                            struct Struct_0203d028_3* var46 = (Struct_0203d028_3*)func_0200ff1c((GameState*)var7, var41[var45]);
-                            if (var46 != NULL) {
-                                int var47 = func_02053c6c((unsigned char*)var46);
-                                if (var47 != 0) {
-                                    struct Struct_0206f81c_8* var48 = (struct Struct_0206f81c_8*)func_02083554((struct Struct_0206f81c*)var47, *(unsigned short*)(var14 + 2));
-                                    if (var48 != NULL) {
-                                        func_02083738((void*)var47, var48->unknown_8_0_);
-                                        var42[var43] = var41[var45];
-                                        var43++;
-                                        var39++;
-                                        if (var39 == *(unsigned short*)(var14 + 4)) break;
+                    if (matchCount < *(unsigned short*)(node + 4)) {
+                        battle2 = (BattleStruct*)GameState::GetInstance();
+                        unsigned char buf40[4];
+                        int idArr[4];
+                        int arrCount = 0;
+                        unsigned char count = GameState_GetOwnPartyOrder((char*)battle2, buf40);
+                        for (int i = 0; i < count; i++) {
+                            struct CombatantStruct* combatant = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)battle2, buf40[i]);
+                            if (combatant != NULL) {
+                                int field150 = GetFieldAt0x150_02053c6c((unsigned char*)combatant);
+                                if (field150 != 0) {
+                                    struct Entry02083554* entry = (struct Entry02083554*)FindEntryByShortField02083554((struct Container02083554*)field150, *(unsigned short*)(node + 2));
+                                    if (entry != NULL) {
+                                        func_02083738((void*)field150, entry->kind);
+                                        idArr[arrCount] = buf40[i];
+                                        arrCount++;
+                                        matchCount++;
+                                        if (matchCount == *(unsigned short*)(node + 4)) break;
                                     }
                                 }
                             }
                         }
-                        int var49 = -1;
-                        for (int var50 = 0; var50 < var43; var50++) {
-                            if (func_0202b7d8((int*)func_0202ae18())) {
-                                int var51 = var42[var50];
-                                func_ov017_021c3fb4(var51, 1);
-                                func_ov017_021c4418(var51, var49);
+                        int flag10 = -1;
+                        for (int j = 0; j < arrCount; j++) {
+                            if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
+                                int cid = idArr[j];
+                                func_ov017_021c3fb4(cid, 1);
+                                func_ov017_021c4418(cid, flag10);
                             }
                             void* g2 = GetGameResources();
                             void* field700 = *(void**)((char*)g2 + 0x3000 + REGION_VALUE(0x4f0, 0x700));
                             void* field704 = *(void**)((char*)g2 + 0x3000 + REGION_VALUE(0x4f4, 0x704));
                             inst = BackgroundLoader::GetInstance();
                             func_ov017_0218f5a4(g2, idArr[j], 1, 0, 0);
-                            while (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)field700) == 0x13) {
+                            while (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)field700) == 0x13) {
                                 inst->RemoveAllLocks();
                                 FieldTaskQueue_Update((struct FieldTaskQueue*)field700);
-                                if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)field704) == 0x14) {
+                                if (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)field704) == 0x14) {
                                     FieldTaskQueue_Update((struct FieldTaskQueue*)field704);
                                 }
                             }
@@ -424,7 +424,7 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                     if (DecrementKeyEverywhere02086d88((unsigned char*)p2a04, *(short*)(node + 4)) != 0) found = 1;
                     if (found == 0) {
                         unsigned char buf3c[4];
-                        unsigned char count = CopyOutRegion0x5718_02011494((char*)battle, buf3c);
+                        unsigned char count = GameState_GetOwnPartyOrder((char*)battle, buf3c);
                         for (int i = 0; i < count; i++) {
                             int cid = buf3c[i];
                             struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)battle, cid);
@@ -434,7 +434,7 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                                     struct Entry02083554* entry = (struct Entry02083554*)FindEntryByShortField02083554((struct Container02083554*)field150, *(short*)(node + 4));
                                     if (entry != NULL) {
                                         func_02083738((void*)field150, entry->kind);
-                                        if (CheckField0NonZero_0202b7d8((int*)func_0202ae18())) {
+                                        if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
                                             func_ov017_021c3fb4(cid, 1);
                                             func_ov017_021c4418(cid, -1);
                                         }
@@ -443,10 +443,10 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
                                         void* field704 = *(void**)((char*)g2 + 0x3000 + REGION_VALUE(0x4f4, 0x704));
                                         BackgroundLoader* inst = BackgroundLoader::GetInstance();
                                         func_ov017_0218f5a4(g2, cid, 1, 0, 0);
-                                        while (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)field700) == 0x13) {
+                                        while (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)field700) == 0x13) {
                                             inst->RemoveAllLocks();
                                             FieldTaskQueue_Update((struct FieldTaskQueue*)field700);
-                                            if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)field704) == 0x14) {
+                                            if (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)field704) == 0x14) {
                                                 FieldTaskQueue_Update((struct FieldTaskQueue*)field704);
                                             }
                                         }
@@ -540,15 +540,15 @@ extern "C" ARM void EventQuery_RunQueuedCommands(void* a0) {
             var14 = *(unsigned char**)(var14 + 0x18);
         }
 
-        if (var4 != 0 && var15 != 0) {
-            unsigned char* var80 = (unsigned char*)func_0200fd0c((GameState*)var11);
-            var80[7] = 1;
-            *(Vector3i*)(var80 + 0x10) = *(Vector3i const*)var10;
+        if (flag18 != 0 && slFlag != 0) {
+            unsigned char* f3f8 = (unsigned char*)GameState_GetZoneTransition((GameState*)battle);
+            f3f8[7] = 1;
+            *(Vector3i*)(f3f8 + 0x10) = *(Vector3i const*)vec;
         }
-        if (var5 != 0 && var15 != 0) {
-            unsigned char* var81 = (unsigned char*)func_0200fd0c((GameState*)var11);
-            var81[7] = 1;
-            *(short*)(var81 + 0x1c) = var6;
+        if (flag14 != 0 && slFlag != 0) {
+            unsigned char* f3f8 = (unsigned char*)GameState_GetZoneTransition((GameState*)battle);
+            f3f8[7] = 1;
+            *(short*)(f3f8 + 0x1c) = val10;
         }
         BackgroundLoader* inst2 = BackgroundLoader::GetInstance();
         if (flag20 != 0 && inst2->GetNumQueuedTasks() <= 0) {

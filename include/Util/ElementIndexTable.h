@@ -10,4 +10,4 @@ struct Struct_020177d4 {
     int unknown_10_;
 };
 
-extern "C" Struct_02019568 *func_0201f2a4(Struct_020177d4 *arg0, int arg1);
+Element_1f2a4 *BmdjScriptState_GetElementRecord(Manager_1f2a4 *manager, int index);

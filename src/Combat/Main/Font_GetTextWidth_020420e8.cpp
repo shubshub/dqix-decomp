@@ -5,7 +5,7 @@
 extern int data_020e7a94[];
 int Font_FindCharacterIndex(int, int);
 FontCharacter* Font_GetCharacter(int index, int fontIndex);
-int LookupKeyValue020425e4(int previousCharacter, int characterIndex, int fontIndex);
+int Font_GetKerning(int previousCharacter, int characterIndex, int fontIndex);
 
 #if defined(jpn)
 
@@ -71,7 +71,7 @@ extern "C" ARM int Font_GetTextWidth(char* text, int fontIndex) {
         } else {
             characterIndex = index & 0xff;
             FontCharacter* entry = Font_GetCharacter(index, fontIndex);
-            int kerning = LookupKeyValue020425e4(previousCharacter, characterIndex, fontIndex);
+            int kerning = Font_GetKerning(previousCharacter, characterIndex, fontIndex);
             previousCharacter = characterIndex;
             advance = (entry->width_ + 1) + kerning;
             text = text + entry->byteLength_;

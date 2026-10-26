@@ -28,20 +28,20 @@ struct Struct_ov017_021c46ec_3 {
     struct Struct_ov017_021c46ec_2* unknown_3734_;
 };
 
-struct Struct_0202c1a4;
-extern "C" int func_0202c540(struct Struct_0202c1a4* arg0);
-extern "C" int func_0202c508(struct Struct_0202c1a4* arg0);
-extern "C" void func_020103c8(GameState* arg0, int arg1);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" signed char func_020546a8(void* arg0);
-extern "C" void func_ov017_0219dac4(struct Struct_ov017_021c46ec_3* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021c4fa0(int arg0, int arg1);
+struct SearchStruct0202c1a4;
+extern "C" int LinkSession_IsGuest(struct SearchStruct0202c1a4* search);
+extern "C" int LinkSession_IsHostOrSolo(struct SearchStruct0202c1a4* search);
+extern "C" void func_020103c8(GameState* battleStruct, int arg);
+GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
+signed char GetSignedByte0x2d0_020546a8(void* obj);
+extern "C" void func_ov017_0219dac4(struct Ov021c46ec* ov, int idx, int id);
+extern "C" void func_ov017_021c4fa0(int idx, int id);
 
 // USA: func_ov017_021c46ec
-extern "C" ARM void func_ov017_021c46ec(int arg0, struct Struct_ov017_021c46ec* arg1, GameState* arg2, struct Struct_ov017_021c46ec_3* arg3, struct Struct_0202c1a4* arg4) {
-    unsigned short var0 = arg1->unknown_4_;
-    if (func_0202c540(arg4) != 0 && arg0 == 0) {
-        func_020103c8(arg2, arg1->unknown_10_);
+extern "C" ARM void func_ov017_021c46ec(int idx, struct Evt021c46ec* evt, GameState* battleStruct, struct Ov021c46ec* ov, struct SearchStruct0202c1a4* search) {
+    unsigned short id = evt->id;
+    if (LinkSession_IsGuest(search) != 0 && idx == 0) {
+        func_020103c8(battleStruct, evt->field10);
     }
 
     int var1 = 0;
@@ -75,8 +75,8 @@ extern "C" ARM void func_ov017_021c46ec(int arg0, struct Struct_ov017_021c46ec* 
         }
     }
 
-    func_ov017_0219dac4(arg3, arg0, var0);
-    if (func_0202c508(arg4) != 0) {
-        func_ov017_021c4fa0(arg0, var0);
+    func_ov017_0219dac4(ov, idx, id);
+    if (LinkSession_IsHostOrSolo(search) != 0) {
+        func_ov017_021c4fa0(idx, id);
     }
 }

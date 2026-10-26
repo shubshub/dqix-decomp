@@ -3,12 +3,12 @@
 
 struct Entry_02028bd0;
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
-struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
+struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 
 struct Struct_02039df4;
 
-struct Struct_020283fc;
-extern "C" int func_020283fc(struct Struct_020283fc* arg0, int arg1);
+struct List_020283fc;
+int NodeGraph_FindNodeIndexById(struct List_020283fc* list, int id);
 
 extern "C" int func_02073d58(int arg0, void* arg1, int arg2);
 
@@ -37,7 +37,7 @@ struct Struct_02028430_2 {
     unsigned char unknown_3_[0xc - 3];
     struct Struct_02078e60_3** unknown_c_;
 };
-extern "C" struct Struct_02028430_2* func_02028430(struct Struct_02028430* arg0, int arg1);
+struct ListEntry_02028430* NodeGraph_GetNode(struct List_02028430* list, int index);
 
 struct Struct_02078e60 {
     char unknown_0_[2];
@@ -70,14 +70,14 @@ extern "C" ARM unsigned short func_02078e60(void* arg0, char* arg1) {
 
     *out = 0;
     table = ZoneRecords_GetInstance();
-    entry = FindInlineEntryById(table, ((Object3D*)((struct U16Field0x6_020375f8*)o))->GetField06());
+    entry = ZoneRecords_Find(table, ((Object3D*)((struct U16Field0x6_020375f8*)o))->GetField06());
     if (entry == NULL) {
         return 0;
     }
 #if defined(jpn)
-    var3 = func_02028430((struct Struct_02028430*)((char*)var2 + 0x14), var0->unknown_b8_);
+    le = NodeGraph_GetNode((struct List_02028430*)((char*)entry + 0x14), o->field0xb8);
 #else
-    var3 = func_02028430((struct Struct_02028430*)((char*)var2 + 0x18), var0->unknown_b8_);
+    le = NodeGraph_GetNode((struct List_02028430*)((char*)entry + 0x18), o->field0xb8);
 #endif
     if (var3 == NULL) {
         return 0;
@@ -116,9 +116,9 @@ extern "C" ARM unsigned short func_02078e60(void* arg0, char* arg1) {
     }
     if (var10 == 1 && var8 == 0) {
 #if defined(jpn)
-        var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x14), var3->unknown_0_);
+        idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x14), le->id);
 #else
-        var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x18), var3->unknown_0_);
+        idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x18), le->id);
 #endif
         if (var11 != -1) {
             var0->unknown_b8_ = var11;
@@ -131,9 +131,9 @@ extern "C" ARM unsigned short func_02078e60(void* arg0, char* arg1) {
     }
     if (var7 == 0) {
 #if defined(jpn)
-        var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x14), var3->unknown_0_);
+        idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x14), le->id);
 #else
-        var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x18), var3->unknown_0_);
+        idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x18), le->id);
 #endif
         if (var11 != -1) {
             var0->unknown_b8_ = var11;
@@ -141,9 +141,9 @@ extern "C" ARM unsigned short func_02078e60(void* arg0, char* arg1) {
         return var3->unknown_0_;
     }
 #if defined(jpn)
-    var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x14), var7->unknown_0_);
+    idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x14), pick->id);
 #else
-    var11 = func_020283fc((struct Struct_020283fc*)((char*)var2 + 0x18), var7->unknown_0_);
+    idx = NodeGraph_FindNodeIndexById((struct List_020283fc*)((char*)entry + 0x18), pick->id);
 #endif
     if (var11 != -1) {
         var0->unknown_b8_ = var11;

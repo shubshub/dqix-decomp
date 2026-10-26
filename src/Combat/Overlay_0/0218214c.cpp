@@ -6,7 +6,7 @@
 struct Struct0200fb08;
 int GameState_GetLanguage(Struct0200fb08*);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
-extern "C" void func_02047b40(Foo02048004* sprite, const void* file, SafeAllocator* allocator);
+extern "C" void SprSprite_Parse(Foo02048004* sprite, const void* file, SafeAllocator* allocator);
 
 extern const char data_ov000_02184184[];
 extern const char data_ov000_02184186[];
@@ -79,12 +79,12 @@ extern "C" ARM void func_ov000_0218214c(Struct_02012fa4* arg0, SafeAllocator* ar
         {data_ov000_021852ec, &arg0[11]},
         {data_ov000_021852e2, &arg0[12]}
     };
-    for (int var2 = 0; var2 < 13; ++var2) {
-        sprintf(var0, data_ov000_021852fc, var1[var2].unknown_0_);
-        unsigned int var3 = 0;
-        const void* var4 = 0;
-        GetFileInNarc(arg2, var0, &var4, &var3, 0);
-        func_02047b40(var1[var2].unknown_4_, var4, arg1);
+    for (int j = 0; j < 13; ++j) {
+        sprintf(buf, data_ov000_021852fc, bindings[j].suffix);
+        unsigned int fileSize = 0;
+        const void* fileData = 0;
+        GetFileInNarc(narc, buf, &fileData, &fileSize, 0);
+        SprSprite_Parse(bindings[j].sprite, fileData, allocator);
     }
     var1[0].unknown_4_->unknown_0_ = 0x3e;
     var1[1].unknown_4_->unknown_0_ = 0x3e;
@@ -143,12 +143,12 @@ extern "C" ARM void func_ov000_0218214c(Struct_02012fa4* arg0, SafeAllocator* ar
         var6[var7].unknown_4_ = &arg0[var7];
     }
 
-    for (var8 = 0; var8 < var11; var8++) {
-        sprintf(var5, data_ov000_0218420e, var6[var8].unknown_0_);
-        unsigned int var12 = 0;
-        const void* var13 = 0;
-        GetFileInNarc(arg2, var5, &var13, &var12, 0);
-        func_02047b40(var6[var8].unknown_4_, var13, arg1);
+    for (j = 0; j < count; j++) {
+        sprintf(buf, data_ov000_0218420e, bindings[j].suffix);
+        unsigned int fileSize = 0;
+        const void* fileData = 0;
+        GetFileInNarc(narc, buf, &fileData, &fileSize, 0);
+        SprSprite_Parse(bindings[j].sprite, fileData, allocator);
     }
 
     var6[0].unknown_4_->unknown_0_ = 0x3e;

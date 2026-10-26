@@ -221,26 +221,26 @@ struct Struct_ov023_021edf54_21 {
 extern "C" Struct_ov023_021edf54_10 _ZZ21inline_ov023_021f4c04vE1s;
 
 extern "C" {
-int func_ov023_021f5340(void* arg0);
-void* func_0202ae18();
-int func_ov000_0215e9fc(Struct_ov023_021edf54_14* arg0, short* arg1, int arg2, unsigned int arg3);
-int func_ov000_0215ec1c(Struct_ov023_021edf54_14* arg0, short* arg1, int arg2, int arg3);
-int func_ov023_021f4098(Struct_ov023_021edf54_16* arg0, int arg1, int arg2);
-void func_ov023_021f454c(Struct_ov023_021edf54_16* arg0);
-void func_ov017_021cd218(unsigned short arg0, unsigned short arg1, unsigned short arg2, unsigned short arg3, unsigned short arg4, unsigned short arg5);
-void func_ov017_021cd590(unsigned short arg0, int* arg1, int arg2, int arg3);
-void func_ov017_021cd35c(unsigned short arg0, char* arg1, unsigned char arg2, signed char arg3);
-void func_ov017_021cd4c8(unsigned short arg0, unsigned short arg1, signed char arg2);
-int func_0202c540(void* arg0);
-int func_020abe84(void* arg0, short* arg1, Struct_ov023_021ed7e0* arg2, int arg3);
-int func_ov023_021f5150(Struct_ov023_021edf54_16* arg0, Struct_ov023_021edf54_15* arg1, int* arg2, int* arg3, int arg4);
+int func_ov023_021f5340(void* dispatch);
+void* LinkSession_GetInstance();
+int func_ov000_0215e9fc(World_021edf54* world, short* out, int max, unsigned int flags);
+int func_ov000_0215ec1c(World_021edf54* world, short* out, int max, int flags);
+int func_ov023_021f4098(Scene_021edf54* self, int id, int bonus);
+void func_ov023_021f454c(Scene_021edf54* self);
+void func_ov017_021cd218(unsigned short event, unsigned short value, unsigned short scaled, unsigned short bits, unsigned short kind, unsigned short id);
+void func_ov017_021cd590(unsigned short event, int* experience, int a, int b);
+void func_ov017_021cd35c(unsigned short event, char* drops, unsigned char count, signed char mask);
+void _Z27EnqueueEventTag105_021cd4c8tta(unsigned short event, unsigned short item, signed char mask);
+int LinkSession_IsGuest(void* mode);
+int func_020abe84(void* unused, short* indices, Flags_021ed7e0* values, int count);
+int func_ov023_021f5150(Scene_021edf54* self, BattleInfo_021edf54* info, int* experience, int* gold, int legacy);
 }
 
 Renderer_021edf54* MessageSystem_GetInstance();
 void ClearSubstructFlag0x4_02049ae4(unsigned char* obj);
 void SetFieldForListedCombatants021f50fc();
-int CheckField0NonZero_0202b7d8(int* mode);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* mode);
+int LinkSession_IsActive(int* mode);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4* mode);
 int TestBitAt0x34_020a35e0(unsigned char* info, unsigned char index);
 int GameState_GetProtagonistIndex(GameState* game);
 int LoadBattleBlock020ac4c0(void* dst);
@@ -251,11 +251,11 @@ void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* self, int flag);
 int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* self, int flag);
 void ClearFlagBits10to24_021ed7e0(Flags_021ed7e0* flags);
 int CopyIndexedRegion0x75f0_020ac020(void* unused, short* indices, int* dest, int count);
-unsigned short GetTableValue_0202053c(void* obj);
+unsigned short GameObject_GetPartyMemberLevel(void* obj);
 int IsFlag10088Set_02010088(S_10088* obj);
 int GetTableEntry138_021eea98(Obj021eea98* obj);
 int GetFieldAt0x150_02053c6c(unsigned char* obj);
-unsigned char CopyOutRegion0x571d_020114ec(char* game, void* dst);
+unsigned char GameState_GetPartyOrder(char* game, void* dst);
 TagValueEntry020e385c* GetData02153660_020e3808();
 void SetEntryBitUnlessMatching020e39d4(TagValueEntry020e385c* tags, int a, int b, int c);
 
@@ -282,7 +282,7 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
 
     Resources_021edf54* resources = (Resources_021edf54*)GetGameResources();
     Renderer_021edf54* renderer = MessageSystem_GetInstance();
-    mode = func_0202ae18();
+    mode = LinkSession_GetInstance();
 
     Struct_ov023_021edf54_14* var8 = arg0->unknown_29c_;
     if (var8 != 0) {
@@ -300,7 +300,7 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
     }
     func_ov023_021f50fc();
 
-    if (!func_0202b7d8((int*)var0) || arg0->unknown_2a0_->unknown_2a_ == func_0202c1a4((Struct_0202c1a4*)var0)) {
+    if (!LinkSession_IsActive((int*)mode) || self->info_->leader_ == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)mode)) {
         {
             int var13 = arg0->unknown_29c_->inline_ov023_021edf54_2();
             float var14 = arg0->unknown_29c_->unknown_8e3c_;
@@ -404,16 +404,16 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
             }
         }
     } else {
-        if (var6->unknown_42e2_ != 0)
-            func_ov000_02160fa8(arg0, 0x2000000);
-        if (func_0202c540(var0) && arg0->unknown_2a0_->unknown_25_ != 0)
-            var7->unknown_19b2_ = 0;
-        if (!func_ov000_02160fd4(arg0, 0x2000))
-            return arg0->unknown_eac_;
-        if (!func_ov000_02160fd4(arg0, 0x4000))
-            return arg0->unknown_eac_;
-        if (!func_ov000_02160fd4(arg0, 0x8000))
-            return arg0->unknown_eac_;
+        if (resources->bossFlag_ != 0)
+            SetCombatWorkFlags0x55f4_ov000_02160fa8(self, 0x2000000);
+        if (LinkSession_IsGuest(mode) && self->info_->special_ != 0)
+            renderer->active_ = 0;
+        if (!GetCombatWorkFlags0x55f4_ov000_02160fd4(self, 0x2000))
+            return self->endState_;
+        if (!GetCombatWorkFlags0x55f4_ov000_02160fd4(self, 0x4000))
+            return self->endState_;
+        if (!GetCombatWorkFlags0x55f4_ov000_02160fd4(self, 0x8000))
+            return self->endState_;
     }
 
     Struct_ov023_021edf54_12* var36;
@@ -439,39 +439,39 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
         }
     }
 
-    Struct_ov023_021edf54_8* var44 = _ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_118_;
-    for (int var45 = 0; var45 < 4; var45++) {
-        if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var45)) {
-            Struct_ov023_021edf54_11* var46 = (Struct_ov023_021edf54_11*)func_0200ff1c(var5, var45);
-            if (var46 != 0) {
-                var44->unknown_0_ = var45;
-                var44->unknown_1_ = var46->unknown_150_->unknown_950_;
-                var44->unknown_2_ = func_0202053c(var46);
-                var44->unknown_3_ = func_02010088((Struct_02010088*)var46);
-                var44->unknown_4_ = arg0->unknown_5758_[var45] + func_ov023_021eea98((Struct_ov023_021edf54*)var46);
-                Struct_ov023_021edf54_7* var47 = (Struct_ov023_021edf54_7*)func_02053c6c((unsigned char*)var46);
-                var44->unknown_38_.unknown_0_ = var47->unknown_0_;
-                var44->unknown_38_.unknown_18_ = var47->unknown_18_;
-                var44->unknown_38_.unknown_3c_ = var47->unknown_3c_;
-                var44->unknown_38_.unknown_94_ = var47->unknown_94_;
-                var44->unknown_38_.unknown_138_ = var47->unknown_138_;
-                var44->unknown_38_.unknown_16c_ = var47->unknown_16c_;
-                var44->unknown_38_.unknown_186_ = var47->unknown_186_;
-                var44->unknown_38_.unknown_194_ = var47->unknown_194_;
-                var44->unknown_38_.unknown_2f4_ = var47->unknown_2f4_;
-                var44->unknown_38_.unknown_454_ = var47->unknown_454_;
-                var44->unknown_38_.unknown_464_ = var47->unknown_464_;
-                var44->unknown_38_.unknown_480_ = var47->unknown_480_;
-                var44->unknown_38_.unknown_488_ = var47->unknown_488_;
-                var44->unknown_38_.unknown_4a4_ = var47->unknown_4a4_;
-                var44->unknown_38_.unknown_564_ = var47->unknown_564_;
-                var44->unknown_38_.unknown_566_ = var47->unknown_566_;
-                var44->unknown_38_.unknown_568_ = var47->unknown_568_;
-                var44->unknown_38_.unknown_56a_ = var47->unknown_56a_;
-                var44->unknown_38_.unknown_56b_ = var47->unknown_56b_;
-                var44->unknown_38_.unknown_56c_ = var47->unknown_56c_;
-                var44->unknown_38_.unknown_56d_ = var47->unknown_56d_;
-                var44->unknown_38_.unknown_56e_ = var47->unknown_56e_;
+    Result_021edf54* result = _ZZ17GetGlobal021ffefcvE1s.work_->results_;
+    for (int i = 0; i < 4; i++) {
+        if (TestBitAt0x34_020a35e0((unsigned char*)self->info_, i)) {
+            Combatant_021edf54* c = (Combatant_021edf54*)GetCombatantWithFlag0x100_0200ff1c(game, i);
+            if (c != 0) {
+                result->member_ = i;
+                result->level_ = c->record_->level_;
+                result->vocation_ = GameObject_GetPartyMemberLevel(c);
+                result->flag_ = IsFlag10088Set_02010088((S_10088*)c);
+                result->exp_ = self->experience_[i] + GetTableEntry138_021eea98((Obj021eea98*)c);
+                Record_021edf54* src = (Record_021edf54*)GetFieldAt0x150_02053c6c((unsigned char*)c);
+                result->record_.m000 = src->m000;
+                result->record_.m018 = src->m018;
+                result->record_.m03c = src->m03c;
+                result->record_.m094 = src->m094;
+                result->record_.m138 = src->m138;
+                result->record_.m16c = src->m16c;
+                result->record_.m186 = src->m186;
+                result->record_.m194 = src->m194;
+                result->record_.m2f4 = src->m2f4;
+                result->record_.m454 = src->m454;
+                result->record_.m464 = src->m464;
+                result->record_.m480 = src->m480;
+                result->record_.m488 = src->m488;
+                result->record_.m4a4 = src->m4a4;
+                result->record_.m564 = src->m564;
+                result->record_.m566 = src->m566;
+                result->record_.m568 = src->m568;
+                result->record_.m56a = src->m56a;
+                result->record_.m56b = src->m56b;
+                result->record_.m56c = src->m56c;
+                result->record_.m56d = src->m56d;
+                result->record_.m56e = src->m56e;
 #if defined(jpn)
                 var44->unknown_38_.unknown_56f_ = var47->unknown_56f_;
 #else
@@ -500,12 +500,12 @@ extern "C" ARM int func_ov023_021edf54(Struct_ov023_021edf54_16* arg0) {
             }
         }
     }
-    _ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_279d_ = func_020114ec((char*)var5, _ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_2799_);
+    _ZZ17GetGlobal021ffefcvE1s.work_->regionResult_ = GameState_GetPartyOrder((char*)game, _ZZ17GetGlobal021ffefcvE1s.work_->region_);
 
     if (arg0->unknown_2a0_->unknown_25_ == 0)
         _ZZ21inline_ov023_021f4c04vE1s.unknown_0_->unknown_10_ = func_ov023_021f5150(arg0, arg0->unknown_2a0_, arg0->unknown_5758_, &arg0->unknown_5768_, 0) ? 1 : 0;
 
-    if (func_0202c540(var0) && arg0->unknown_2a0_->unknown_c_ == 0x13)
-        func_020e39d4(func_020e3808(), 0, 1, 0x71e8);
+    if (LinkSession_IsGuest(mode) && self->info_->type_ == 0x13)
+        SetEntryBitUnlessMatching020e39d4(GetData02153660_020e3808(), 0, 1, 0x71e8);
     return 2;
 }

@@ -95,12 +95,12 @@ struct Struct_ov016_0218e800_2 {
     int unknown_d4_;
 };
 
-extern "C" void* func_ov016_0218bc8c(unsigned int);
-extern "C" void* func_ov016_0218fcd4(void);
-extern "C" void* func_ov016_0218fd50(void);
-extern "C" void* func_ov016_0218fdc0(void);
-extern "C" void* func_ov016_0218fe30(void);
-extern "C" void func_020ca458(unsigned int value, void* dest, unsigned int size);
+void* SafeAllocatorAllocate_0218bc8c(unsigned int);
+void* GetOrStreamPoolBlockD_0218fcd4(void);
+void* GetOrStreamPoolBlockA_0218fd50(void);
+void* GetOrStreamPoolBlockB_0218fdc0(void);
+void* GetOrStreamPoolBlockC_0218fe30(void);
+extern "C" void MIi_CpuClearFast(unsigned int value, void* dest, unsigned int size);
 extern unsigned char data_ov016_02191d78[];
 
 // USA: func_ov016_0218e800
@@ -133,17 +133,17 @@ extern "C" ARM int func_ov016_0218e800(Struct_ov016_0218e800_2* arg0, Struct_ov0
         )
         return 0;
 
-    arg0->unknown_34_ = (Struct_ov016_0218e800_3*)func_ov016_0218bc8c(sizeof(Struct_ov016_0218e800_3));
-    func_020ca458(0, arg0->unknown_34_, sizeof(Struct_ov016_0218e800_3));
-    arg0->unknown_38_ = (int (*)(Struct_ov016_0218e800_3*))func_ov016_0218fcd4();
-    arg0->unknown_34_->unknown_3c_ = func_ov016_0218fd50();
-    arg0->unknown_34_->unknown_40_ = data_ov016_02191d78;
-    arg0->unknown_34_->unknown_44_ = (unsigned char*)func_ov016_0218fe30() + 0x40;
-    arg0->unknown_3c_.unknown_10_ = arg0->unknown_4_.unknown_c_;
-    arg0->unknown_3c_.unknown_14_ = arg0->unknown_4_.unknown_10_;
-    arg0->unknown_3c_.unknown_18_ = (const unsigned char*)func_ov016_0218fdc0();
-    arg0->unknown_34_->unknown_4_ = arg0->unknown_4_.unknown_c_;
-    arg0->unknown_34_->unknown_8_ = arg0->unknown_4_.unknown_10_;
+    self->stream = (Stream_0218e800*)SafeAllocatorAllocate_0218bc8c(sizeof(Stream_0218e800));
+    MIi_CpuClearFast(0, self->stream, sizeof(Stream_0218e800));
+    self->advance = (int (*)(Stream_0218e800*))GetOrStreamPoolBlockD_0218fcd4();
+    self->stream->lumaTable = GetOrStreamPoolBlockA_0218fd50();
+    self->stream->chromaTable = data_ov016_02191d78;
+    self->stream->rangeTable = (unsigned char*)GetOrStreamPoolBlockC_0218fe30() + 0x40;
+    self->target.width = self->header.width;
+    self->target.height = self->header.height;
+    self->target.field_18 = (const unsigned char*)GetOrStreamPoolBlockB_0218fdc0();
+    self->stream->width = self->header.width;
+    self->stream->height = self->header.height;
 
     if (arg0->unknown_4_.unknown_c_ > 0x100) return 0;
     if (arg2 < 6) return 0;
@@ -154,14 +154,14 @@ extern "C" ARM int func_ov016_0218e800(Struct_ov016_0218e800_2* arg0, Struct_ov0
     arg0->unknown_60_ = (unsigned char**)func_ov016_0218bc8c(arg0->unknown_a8_ * 4);
     if (!arg0->unknown_60_) return 0;
 
-    unsigned int var3;
-    for (var3 = 0; var3 < arg0->unknown_a8_; var3++) {
-        arg0->unknown_5c_[var3] = (unsigned char*)func_ov016_0218bc8c(arg0->unknown_4_.unknown_10_ << 8);
-        if (!arg0->unknown_5c_[var3]) return 0;
-        arg0->unknown_60_[var3] = (unsigned char*)func_ov016_0218bc8c((arg0->unknown_4_.unknown_10_ >> 1) << 8);
-        if (!arg0->unknown_60_[var3]) return 0;
-        func_020ca458(0, arg0->unknown_5c_[var3], arg0->unknown_4_.unknown_10_ << 8);
-        VectorizedMemset(arg0->unknown_60_[var3], 0x80, (arg0->unknown_4_.unknown_10_ >> 1) << 8);
+    unsigned int i;
+    for (i = 0; i < self->frameCount; i++) {
+        self->framesY[i] = (unsigned char*)SafeAllocatorAllocate_0218bc8c(self->header.height << 8);
+        if (!self->framesY[i]) return 0;
+        self->framesC[i] = (unsigned char*)SafeAllocatorAllocate_0218bc8c((self->header.height >> 1) << 8);
+        if (!self->framesC[i]) return 0;
+        MIi_CpuClearFast(0, self->framesY[i], self->header.height << 8);
+        VectorizedMemset(self->framesC[i], 0x80, (self->header.height >> 1) << 8);
     }
 
     arg0->unknown_64_ = (unsigned int*)func_ov016_0218bc8c(arg0->unknown_a8_ * 4);
@@ -181,10 +181,10 @@ extern "C" ARM int func_ov016_0218e800(Struct_ov016_0218e800_2* arg0, Struct_ov0
         if (!arg0->unknown_70_[var5]) return 0;
     }
 
-    if (arg0->unknown_4_.unknown_18_ != 0) {
-        arg0->unknown_58_ = (Struct_ov016_0218e800_4*)func_ov016_0218bc8c(arg0->unknown_4_.unknown_1a_ * sizeof(Struct_ov016_0218e800_4));
-        if (!arg0->unknown_58_) return 0;
-        func_020ca458(0, arg0->unknown_58_, arg0->unknown_4_.unknown_1a_ * sizeof(Struct_ov016_0218e800_4));
+    if (self->header.audioCodec != 0) {
+        self->audio = (AudioDecoder*)SafeAllocatorAllocate_0218bc8c(self->header.channelCount * sizeof(AudioDecoder));
+        if (!self->audio) return 0;
+        MIi_CpuClearFast(0, self->audio, self->header.channelCount * sizeof(AudioDecoder));
     }
 
     int var6 = arg0->unknown_0_->inline_ov016_0218e800_6();

@@ -4,8 +4,8 @@
 #include "Graphics/Vector.h"
 #include "Graphics/Camera.h"
 
-extern "C" void func_0202ef14(Camera*);
-extern "C" void func_0202f0e0(Camera*);
+extern "C" void Camera_UpdateAnimations(Camera*);
+extern "C" void Camera_UpdateFieldOfViewEase(Camera*);
 extern const Vector3i data_020e73c0;
 extern const short data_020e9450[];
 
@@ -20,8 +20,8 @@ static inline void inline_0202e0a4(Vector3i& arg0, Vector3i& arg1, short arg2) {
 
 // Main, originally func_0202e0a4 (USA 0x0202e0a4, EUR 0x0202e0b4, JPN 0x0202dc14)
 extern "C" ARM void Camera_Update(Camera* camera) {
-    func_0202ef14(camera);
-    func_0202f0e0(camera);
+    Camera_UpdateAnimations(camera);
+    Camera_UpdateFieldOfViewEase(camera);
     camera->effectivePosition = camera->position;
     camera->effectiveTarget = camera->target;
     if (camera->flags & 1) {

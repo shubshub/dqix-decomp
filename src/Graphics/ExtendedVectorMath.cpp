@@ -1,6 +1,6 @@
 #include "Graphics/Vector.h"
 
-extern const fix16_t data_020e9450[0x10000 * 2];
+extern const fix16_t data_020e9450[4096 * 2]; // {sin, cos} pairs for 4096 steps of a full turn
 
 fix32_t fix32sin(fix32_t x)
 {
@@ -18,22 +18,22 @@ fix32_t fix32cos(fix32_t x)
     return data_020e9450[tableIndex * 2 + 1];
 }
 
-fix32_t fix32SignedAngleDistance(fix32_t a, fix32_t b)
+fix32_t fix32SignedAngleDistance(fix32_t from, fix32_t to)
 {
-    fix32_t ret = 0;
-    if (a < b)
+    fix32_t distance = 0;
+    if (from < to)
     {
-        ret = b - a;
-        if (ret > 0x3244)
-            ret -= 0x6488;
+        distance = to - from;
+        if (distance > FIX_2PI / 2)
+            distance -= FIX_2PI;
     }
-    else if (b < a)
+    else if (to < from)
     {
-        ret = -(a - b);
-        if (ret < -0x3244)
-            ret += 0x6488;
+        distance = -(from - to);
+        if (distance < -(FIX_2PI / 2))
+            distance += FIX_2PI;
     }
-    return ret;
+    return distance;
 }
 
 fix32_t fix32abs(fix32_t x)
@@ -48,9 +48,9 @@ Matrix4x3 RotationMatrixX(fix32_t angle)
     fix32_t sine = fix32sin(angle);
     fix32_t cosine = fix32cos(angle);
 
-    Matrix4x3 ret;
-    Mat4x3_WriteRotationX(&ret, sine, cosine);
-    return ret;
+    Matrix4x3 matrix;
+    Mat4x3_WriteRotationX(&matrix, sine, cosine);
+    return matrix;
 }
 
 Matrix4x3 RotationMatrixY(fix32_t angle)
@@ -58,9 +58,9 @@ Matrix4x3 RotationMatrixY(fix32_t angle)
     fix32_t sine = fix32sin(angle);
     fix32_t cosine = fix32cos(angle);
 
-    Matrix4x3 ret;
-    Mat4x3_WriteRotationY(&ret, sine, cosine);
-    return ret;
+    Matrix4x3 matrix;
+    Mat4x3_WriteRotationY(&matrix, sine, cosine);
+    return matrix;
 }
 
 Matrix4x3 RotationMatrixZ(fix32_t angle)
@@ -68,9 +68,9 @@ Matrix4x3 RotationMatrixZ(fix32_t angle)
     fix32_t sine = fix32sin(angle);
     fix32_t cosine = fix32cos(angle);
 
-    Matrix4x3 ret;
-    Mat4x3_WriteRotationZ(&ret, sine, cosine);
-    return ret;
+    Matrix4x3 matrix;
+    Mat4x3_WriteRotationZ(&matrix, sine, cosine);
+    return matrix;
 }
 
 void Vector3fixMultiplyScalar(const Vector3fix* in, fix32_t scalar, Vector3fix* out)

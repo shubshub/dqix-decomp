@@ -5,7 +5,7 @@ extern "C" void func_ov003_0217db88(void);
 int PopStack0AndTrigger_020a1e54(int a);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 extern int g_mainAllocator;
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 struct Obj020dae08 {
     char pad0;
@@ -28,6 +28,6 @@ extern "C" ARM void func_020dae08(struct Obj020dae08* self) {
         self->allocator.Destroy();
         AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
     }
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
     self->field1 = 1;
 }

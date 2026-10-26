@@ -13,20 +13,20 @@ struct Struct_0204956c {
     unsigned short unknown_52_;
     unsigned char unknown_54_, unknown_55_, unknown_56_;
 };
-struct Struct_0204956c_2 { GameObject unknown_0_; Struct_0204956c* unknown_13c_; };
-struct Struct_02107850 { Vector3i unknown_0_, unknown_c_; int unknown_18_; unsigned char unknown_1c_; };
-struct Struct_02010088;
-struct Struct_02048f64_2;
-extern "C" int func_02048c68(unsigned char*);
-extern "C" int func_02010088(Struct_02010088*);
-extern "C" void func_02049ae4(unsigned char*);
-extern "C" int func_02049ee8(unsigned char*);
-extern "C" int func_020494a0(unsigned char*);
-extern "C" int func_020493a4(unsigned char*);
-extern "C" void func_020494c0(Struct_02048f64_2*);
-extern "C" int func_02031468(Vector3i*, Vector3i*, Vector3i*, Vector3i*);
-extern "C" Struct_02107850 data_02107850;
-namespace ClipAlias0204956c { extern "C" Struct_02107850 data_02107850; }
+struct MovementActor0204956c { GameObject base; MovementState0204956c* state; };
+struct ClipState0204956c { Vector3i start, end; int radius; unsigned char enabled; };
+struct S_10088;
+struct Obj020494c0;
+int CheckSubstructFlag0x100_02048c68(unsigned char*);
+int IsFlag10088Set_02010088(S_10088*);
+void ClearSubstructFlag0x4_02049ae4(unsigned char*);
+int GetSubstructByte0x56_02049ee8(unsigned char*);
+int GetByteWithFallback_020494a0(unsigned char*);
+int GetSubstructByte0x1c_020493a4(unsigned char*);
+void DispatchTargetByte020494c0(Obj020494c0*);
+extern "C" int Vector3fix_DistanceToSegment(Vector3i*, Vector3i*, Vector3i*, Vector3i*);
+extern "C" ClipState0204956c data_02107850;
+namespace ClipAlias0204956c { extern "C" ClipState0204956c data_02107850; }
 extern const Vector3i data_020e7b3c;
 extern const Vector3i data_020e7b30;
 struct Struct_020e7b54 { int unknown_0_[3]; };
@@ -71,7 +71,7 @@ extern "C" ARM void func_0204956c(Struct_0204956c_2* arg0) {
             Vector3i end = clip->end;
             Vector3i position = object->position_;
             Vector3i closest;
-            int distance = func_02031468(&start, &end, &position, &closest);
+            int distance = Vector3fix_DistanceToSegment(&start, &end, &position, &closest);
             if (distance < clip->radius + (object->GetRadius() >> 1) + 0x2000) {
                 ClearSubstructFlag0x4_02049ae4(bytes);
                 return;

@@ -12,7 +12,7 @@ int _Z39IsCombatantFlagit2Set_02155f88_02155f88Pvi(void*, int);
 void _Z28CallFunc0204c804OverAllElemsP12Cont0207fe44(void*);
 void* _Z18GameState_GetPartyP9GameState(void*);
 void* _ZN9GameState21GetPartyMemberByIndexEi(void*, int);
-int func_0202053c(void*);
+int _Z30GameObject_GetPartyMemberLevelPv(void*);
 int func_ov003_02155208(void*);
 }
 
@@ -136,7 +136,7 @@ extern "C" ARM void func_ov003_02156ad4(struct Struct_ov003_02156ad4_4* arg0) {
             int found;
             for (i = 0; i < count; i++) {
                 void* m = _ZN9GameState21GetPartyMemberByIndexEi(gs2, q->f78[i]);
-                if (m != 0 && _Z22GetTableValue_0202053cPv(m) == 0x63) {
+                if (m != 0 && _Z30GameObject_GetPartyMemberLevelPv(m) == 0x63) {
                     found = 1;
                     goto found_done;
                 }

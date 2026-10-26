@@ -8,115 +8,124 @@
 struct Struct_02012de8;
 
 void* GlobalFlags_GetInstance();
-int TestFlags02046708(FlagWord02046708* flags, unsigned int mask);
+int FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
 
-struct Struct_020fdc60_4 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned short unknown_4_;
-    char unknown_6_[0x14 - 6];
+struct StateObj0201fa2c {
+    unsigned char state;
+    unsigned char nextState;
+    unsigned char holdFlags;
+    unsigned char pad3;
+    unsigned short showDuration;
+    char pad6[0x14 - 6];
 };
 
-struct Struct_0201fc40 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned short unknown_4_;
-    char unknown_6_[0x14 - 6];
+struct StateObj0201fc40 {
+    unsigned char state;
+    unsigned char nextState;
+    unsigned char holdFlags;
+    unsigned char pad3;
+    unsigned short showDuration;
+    char pad6[0x14 - 6];
 };
 
-struct Struct_0201fbac {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned short unknown_4_;
-    char unknown_6_[0x14 - 6];
+struct Stopwatch0201fbac {
+    unsigned char state;
+    unsigned char nextState;
+    unsigned char holdFlags;
+    unsigned char pad3;
+    unsigned short showDuration;
+    char pad6[0x14 - 6];
 };
 
-struct Struct_020fdcb0_5 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_;
-    unsigned char unknown_1d_;
+struct MapDisplayMemberStatus {
+    char pad[0x1c];
+    unsigned char statsChanged;
+    unsigned char stateChanged;
 };
 
-struct Struct_02026f34 {
+struct MapDisplayMember {
 #if defined(jpn)
     char unknown1_0_[0x1a6];
 #else
     char unknown_0_[0x1b2];
 #endif
-    unsigned short unknown_1b2_;
+    unsigned short uniqueId;
 };
 
-extern Struct_020fdc60_4 data_020fdc60[4];
-extern Struct_020fdcb0_5 data_020fdcb0[4];
+enum {
+    PanelHold_UniqueId = 1,
+    PanelHold_All = 2,
+};
 
-extern "C" void func_0201fbac(struct Struct_0201fbac* arg0);
-extern "C" void func_0201fc40(struct Struct_0201fc40* arg0, int arg1);
-extern "C" void func_0201fa2c(Struct_020fdc60_4* arg0, unsigned int arg1);
-extern "C" void func_020200c0(int arg0, void* arg1);
+enum { kPanelShowAfterChangeMs = 2000 };
 
-typedef void (*Type_02026f34)(Struct_020fdc60_4* obj, unsigned int arg, unsigned char id);
-
+// MapDisplay::flags758, field75c, recordVisible, mask55d, field55e, records
 #if defined(jpn)
-enum { Enum_02026f34_1880 = 0x6ac, Enum_02026f34_1884 = 0x6b0 };
+enum { kMemberIdsOffset = 0x6ac, kRowCountOffset = 0x6b0 };
 #else
-enum { Enum_02026f34_1880 = 0x758, Enum_02026f34_1884 = 0x75c };
+enum { kMemberIdsOffset = 0x758, kRowCountOffset = 0x75c };
 #endif
+enum { kRecordVisibleOffset = 0x558, kUpdateMaskOffset = 0x55d, kRedrawMaskOffset = 0x55e, kSpritesOffset = 0xe8 };
+
+extern StateObj0201fa2c data_020fdc60[4];
+extern MapDisplayMemberStatus data_020fdcb0[4];
+
+void UpdateStopwatchState0201fbac(struct Stopwatch0201fbac* panel);
+void ResetStateTimer0201fc40(struct StateObj0201fc40* panel, int showDuration);
+void MapDisplayMemberPanel_Update(StateObj0201fa2c* panel, unsigned int deltaTime);
+extern "C" void MapDisplay_RefreshMemberPanel(int memberId, void* sprite);
+
+typedef void (*UpdateStateTimer0201fa2cFn)(StateObj0201fa2c* panel, unsigned int deltaTime, unsigned char memberId);
 
 // USA: func_02026f34
-extern "C" ARM void func_02026f34(void* objv) {
-    unsigned char* obj = (unsigned char*)objv;
-    if (TestFlags02046708((FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) return;
+extern "C" ARM void func_02026f34(void* displayPtr) {
+    unsigned char* display = (unsigned char*)displayPtr;
+    if (FlagWord_TestBits((FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) return;
 
-    GameState* var1 = GameState::GetInstance();
-    unsigned int var2 = var1->GetEffectiveDeltaTime();
+    GameState* gameState = GameState::GetInstance();
+    unsigned int deltaTime = gameState->GetEffectiveDeltaTime();
 
-    for (int var3 = 0; var3 < var0[Enum_02026f34_1884]; var3++) {
-        unsigned char* var4 = var0 + var3;
-        unsigned char var5 = var4[Enum_02026f34_1880];
-        Struct_020fdc60_4* var6;
-        Struct_020fdcb0_5* var7;
-        unsigned int var8 = (unsigned char)(1 << var5);
+    for (int row = 0; row < display[kRowCountOffset]; row++) {
+        unsigned char* rowIds = display + row;
+        unsigned char memberId = rowIds[kMemberIdsOffset];
+        StateObj0201fa2c* panel;
+        MapDisplayMemberStatus* status;
+        unsigned int memberBit = (unsigned char)(1 << memberId);
 
-        if (!(var0[0x55d] & var8)) continue;
+        if (!(display[kUpdateMaskOffset] & memberBit)) continue;
 
-        var6 = (Struct_020fdc60_4*)((char*)data_020fdc60 + var3 * 0x14);
-        var7 = (Struct_020fdcb0_5*)((char*)data_020fdcb0 + (var5 << 5));
-        void* var9 = var1->GetPartyMemberByIndex(var5);
-        if (var9 == NULL) continue;
+        panel = (StateObj0201fa2c*)((char*)data_020fdc60 + row * 0x14);
+        status = (MapDisplayMemberStatus*)((char*)data_020fdcb0 + (memberId << 5));
+        void* member = gameState->GetPartyMemberByIndex(memberId);
+        if (member == NULL) continue;
 
-        int var10 = 0;
-        if (var7->unknown_1c_) var10 = 0x7d0;
+        int showDuration = 0;
+        if (status->statsChanged) showDuration = kPanelShowAfterChangeMs;
 
-        if (var7->unknown_1d_ || (var0[0x55e] & var8)) {
-            func_020200c0((signed char)var5, (char*)var0 + 0xe8 + var5 * 0x28);
-            var0[0x55e] &= ~var8;
+        if (status->stateChanged || (display[kRedrawMaskOffset] & memberBit)) {
+            MapDisplay_RefreshMemberPanel((signed char)memberId, (char*)display + kSpritesOffset + memberId * 0x28);
+            display[kRedrawMaskOffset] &= ~memberBit;
         }
 
-        if (data_020fdc60[0].unknown_2_ & 2) {
-            func_0201fbac((struct Struct_0201fbac*)var6);
+        if (data_020fdc60[0].holdFlags & PanelHold_All) {
+            UpdateStopwatchState0201fbac((struct Stopwatch0201fbac*)panel);
         } else {
-            if ((var6->unknown_2_ & 1) && ((Struct_02026f34*)var9)->unknown_1b2_ == 0) {
-                var6->unknown_2_ &= ~1;
-                var6->unknown_4_ = 0x7d0;
-            } else if (((Struct_02026f34*)var9)->unknown_1b2_ != 0) {
-                func_0201fbac((struct Struct_0201fbac*)var6);
-                var6->unknown_2_ |= 1;
-            } else if (var10 > 0 && (var0 + var5)[0x558]) {
-                func_0201fc40((struct Struct_0201fc40*)var6, var10);
+            if ((panel->holdFlags & PanelHold_UniqueId) && ((MapDisplayMember*)member)->uniqueId == 0) {
+                panel->holdFlags &= ~PanelHold_UniqueId;
+                panel->showDuration = kPanelShowAfterChangeMs;
+            } else if (((MapDisplayMember*)member)->uniqueId != 0) {
+                UpdateStopwatchState0201fbac((struct Stopwatch0201fbac*)panel);
+                panel->holdFlags |= PanelHold_UniqueId;
+            } else if (showDuration > 0 && (display + memberId)[kRecordVisibleOffset]) {
+                ResetStateTimer0201fc40((struct StateObj0201fc40*)panel, showDuration);
             }
         }
-        ((Type_02026f34)func_0201fa2c)(var6, var2, var5);
+        ((UpdateStateTimer0201fa2cFn)MapDisplayMemberPanel_Update)(panel, deltaTime, memberId);
 
-        if (var7->unknown_1c_) {
-            (var0 + var5)[0x558] = 1;
+        if (status->statsChanged) {
+            (display + memberId)[kRecordVisibleOffset] = 1;
         }
-        var7->unknown_1d_ = 0;
-        var7->unknown_1c_ = 0;
+        status->stateChanged = 0;
+        status->statsChanged = 0;
     }
 }

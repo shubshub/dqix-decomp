@@ -11,12 +11,12 @@ enum { Enum_ov017_021b2758_261 = 0x105, Enum_ov017_021b2758_268 = 0x10c };
 #endif
 
 void GameState_SetCamera(GameState* battleStruct, int value);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
-int GetFieldIfFlag4_020100f8(char* obj);
+void* GameState_GetZoneTransition(GameState* battleStruct);
+int GameState_GetFollowCamera(char* obj);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void SetField0x23cTrue_020a27ac(void* obj);
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 void CallHelperFourTimesWithSelf_0218f758(void* self);
 
 struct Struct_ov011_021849bc;
@@ -26,7 +26,7 @@ struct Struct_ov017_021a3ef0_12;
 extern "C" void func_ov017_021b2200(struct Struct_ov017_021a3ef0_12* arg0);
 
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
 
 struct Struct_ov017_021d83f0_8 { unsigned int unknown_0_; int unknown_4_; };
@@ -63,12 +63,12 @@ extern "C" ARM int func_ov017_021b2758(SelfState_021b2758* self) {
     GameResources* ov = GetGameResources();
     GameState_SetCamera(battleStruct, self->field0x44);
 
-    if (data_ov017_021d83f0.unknown_4_ != 0) {
-        if (func_ov011_021849bc((struct Struct_ov011_021849bc*)data_ov017_021d83f0.unknown_4_, 1)) arg0->unknown_38_.unknown1_0_.unknown_0_0_ = 1;
-        if (func_ov011_021849bc((struct Struct_ov011_021849bc*)data_ov017_021d83f0.unknown_4_, 2)) arg0->unknown_38_.unknown_0_ |= 2;
-        if (func_ov011_021849bc((struct Struct_ov011_021849bc*)data_ov017_021d83f0.unknown_4_, 4)) arg0->unknown_38_.unknown_0_ |= 4;
-        func_ov017_021b2200((struct Struct_ov017_021a3ef0_12*)arg0);
-        func_020a0c0c();
+    if (data_ov017_021d83f0.slot != 0) {
+        if (GetField114Masked_021849bc((struct Obj_021849bc*)data_ov017_021d83f0.slot, 1)) self->field0x38.b.bit0 = 1;
+        if (GetField114Masked_021849bc((struct Obj_021849bc*)data_ov017_021d83f0.slot, 2)) self->field0x38.raw |= 2;
+        if (GetField114Masked_021849bc((struct Obj_021849bc*)data_ov017_021d83f0.slot, 4)) self->field0x38.raw |= 4;
+        ClearPendingAndDestroyAllocator_021b2200((struct Obj021b2200*)self);
+        ROMFilesystem_InitFileTables();
     }
 
     ClearFlags00(ov, 0x10);
@@ -76,16 +76,16 @@ extern "C" ARM int func_ov017_021b2758(SelfState_021b2758* self) {
         Zone3D_GetInstance();
         ClearFlags00(ov, 4);
         func_ov017_0219bd1c(1, 0, 0, 0);
-        arg0->unknown_38_.unknown_0_ &= ~2;
-        void* var2 = func_0200fd0c(var0);
-        if (arg0->unknown_48_ != 0) ((char*)var2)[0x67] = 1;
+        self->field0x38.raw &= ~2;
+        void* p = GameState_GetZoneTransition(battleStruct);
+        if (self->field0x48 != 0) ((char*)p)[0x67] = 1;
         return 5;
     }
     if (arg0->unknown_38_.unknown1_0_.unknown_0_1_) return 6;
     if (arg0->unknown_38_.unknown1_0_.unknown_0_2_) return 7;
 
-    battleStruct->GetUnknownGameObject();
-    int flagVal = GetFieldIfFlag4_020100f8((char*)battleStruct);
+    battleStruct->GetLeader();
+    int flagVal = GameState_GetFollowCamera((char*)battleStruct);
     unsigned char* ctx = (unsigned char*)Zone3D_GetInstance();
     if (flagVal != 0) {
         ClearFlagBits_020a28b0((unsigned char*)flagVal, 2);
@@ -114,7 +114,7 @@ extern "C" ARM int func_ov017_021b2758(SelfState_021b2758* self) {
     } else {
         var9 = *(unsigned short*)(var8 + var7 * 2 + 0x126);
     }
-    func_020c5588(var9, 0x10, 0x7fff, 0, 0);
-    func_ov017_0218f758(var1);
+    Set3DClearColor(color, 0x10, 0x7fff, 0, 0);
+    CallHelperFourTimesWithSelf_0218f758(ov);
     return 4;
 }

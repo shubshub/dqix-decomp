@@ -5,7 +5,7 @@ struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 
 struct Obj0203c108;
-void SwapGlobalEntry0203c108(struct Obj0203c108* obj, char* fmt);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 int HasAnyFlags_021719f8_021719f8(int* obj);
 
@@ -25,7 +25,7 @@ ARM void InitArrEntriesAndClearFlag4_0217f480(char* self) {
     *(unsigned short*)(work + 0x1e) = 0;
     if (!HasAnyFlags_021719f8_021719f8((int*)self)) {
         int fmt = KeyTable_Get(*(struct Container020e0310**)(self + 4), 0x7531);
-        SwapGlobalEntry0203c108((struct Obj0203c108*)(self + 0x50), (char*)fmt);
+        CachedTextLabel_SetText((struct Obj0203c108*)(self + 0x50), (char*)fmt);
     }
     *(unsigned char*)(self + 0x24) &= ~4;
 }

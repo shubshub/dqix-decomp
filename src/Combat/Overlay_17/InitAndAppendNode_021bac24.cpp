@@ -20,7 +20,7 @@ void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 
 // USA: func_ov017_021bac24  (semantic: InitAndAppendNode_021bac24)
 extern "C" ARM void func_ov017_021bac24(unsigned char* base) {
-    GameState::GetInstance()->GetUnknownGameObject();
+    GameState::GetInstance()->GetLeader();
     MessageSystem_GetInstance();
     func_ov017_021bac58(*(unsigned char**)(base + 0x3000 + REGION_FIELD_0));
     TailList020469b4* list = *(TailList020469b4**)(base + 0x3000 + REGION_FIELD_1);

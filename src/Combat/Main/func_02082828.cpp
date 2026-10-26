@@ -84,11 +84,11 @@ struct Struct_02082828_4 {
     unsigned short unknown_962_;
 };
 extern "C" void func_020891cc(void*);
-extern "C" void func_02082cdc(Struct_02082cdc*);
-extern "C" void func_020827c4(Struct_020827c4*);
-extern "C" void func_02082d38(Struct_02082828*, Struct_02082828*);
-extern "C" void func_02083508(Struct_02082828_2*);
-extern "C" void func_020c99ac(void*);
+void ClearPackedTriples02082cdc(Obj02082cdc*);
+void InitFlagsAndTimers020827c4(Obj020827c4*);
+void CopyStruct02082d38(Struct02082d38*, Struct02082d38*);
+void InitIndexedElements02083508(Obj02083508*);
+extern "C" void OS_GetMacAddress(void*);
 extern char data_020f1010[];
 extern char g_stringFormat[];
 
@@ -175,21 +175,21 @@ extern "C" ARM void func_02082828(Struct_02082828_4* arg0) {
     }
     unsigned char var3[6];
 #if defined(jpn)
-    char var8[11];
-    func_020c99ac(var3);
-    char var4[] = "\x82\x60";
-    char var5[] = "\x82\x60";
-    signed char var6 = (var3[0] + var3[1] + var3[2]) % 26;
-    var4[1] += var6;
-    signed char var7 = (var3[3] + var3[4] + var3[5]) % 26;
-    var5[1] += var7;
-    sprintf(var8, data_020f1130, var4, var5);
+    char suffix[11];
+    OS_GetMacAddress(hardwareAddress);
+    char firstLetter[] = "\x82\x60";
+    char secondLetter[] = "\x82\x60";
+    signed char first = (hardwareAddress[0] + hardwareAddress[1] + hardwareAddress[2]) % 26;
+    firstLetter[1] += first;
+    signed char second = (hardwareAddress[3] + hardwareAddress[4] + hardwareAddress[5]) % 26;
+    secondLetter[1] += second;
+    sprintf(suffix, data_020f1130, firstLetter, secondLetter);
 #else
-    char var8[18];
-    func_020c99ac(var3);
-    int var9 = (var3[0] + var3[2] + var3[4]) % 26;
-    int var10 = (var3[1] + var3[3] + var3[5]) % 26;
-    sprintf(var8, data_020f1010, (signed char)(var9 + 65), (signed char)(var10 + 65));
+    char suffix[18];
+    OS_GetMacAddress(hardwareAddress);
+    int first = (hardwareAddress[0] + hardwareAddress[2] + hardwareAddress[4]) % 26;
+    int second = (hardwareAddress[1] + hardwareAddress[3] + hardwareAddress[5]) % 26;
+    sprintf(suffix, data_020f1010, (signed char)(first + 65), (signed char)(second + 65));
 #endif
     sprintf(object->name, g_stringFormat, suffix);
     object->field956 = 0;

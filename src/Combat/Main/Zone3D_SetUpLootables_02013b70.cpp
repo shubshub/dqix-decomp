@@ -7,6 +7,9 @@
 void ZoneLootable_Init(ZoneLootableRecord* base);
 extern "C" void Zone3D_SetUpLootableModels(Zone3D* zone);
 
+// The scale on each axis a pot's or barrel's first sprite gets (1.0 is 0x1000)
+enum { kLootableScale = 0x80 };
+
 // Main, originally func_02013b70 (USA 0x02013b70, EUR 0x02013b80, JPN 0x0201393c)
 extern "C" ARM void Zone3D_SetUpLootables(Zone3D* zone, SafeAllocator* allocator)
 {
@@ -45,12 +48,12 @@ extern "C" ARM void Zone3D_SetUpLootables(Zone3D* zone, SafeAllocator* allocator
             record->fragments[i].color = diffuseColor;
         }
 
-        Vector3fix* pos = &record->primary[0].position;
-        *pos = container->position;
+        Vector3fix* position = &record->primary[0].position;
+        *position = container->position;
 
-        record->primary[0].scale.x = 0x80;
-        record->primary[0].scale.y = 0x80;
-        record->primary[0].scale.z = 0x80;
+        record->primary[0].scale.x = kLootableScale;
+        record->primary[0].scale.y = kLootableScale;
+        record->primary[0].scale.z = kLootableScale;
         record->id = container->uniqueID;
         record->state = ZoneLootableState_Searchable;
         zone->numLootables_ = (char)((unsigned char)zone->numLootables_ + 1);

@@ -4,10 +4,10 @@
 #define func_020c51c0 func_020c6c8c
 #endif
 
-extern "C" void func_020ca528(int cmd);
+extern "C" void MI_Copy36B(int cmd);
 
 // USA: func_020c51c0
 extern "C" ARM void func_020c51c0(int arg0) {
     *(int*)0x4000400 = 0x1a;
-    func_020ca528(arg0);
+    MI_Copy36B(cmd);
 }

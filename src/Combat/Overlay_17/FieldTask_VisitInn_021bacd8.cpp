@@ -10,7 +10,7 @@ enum { Enum_ov017_021bacd8_62524 = 0xf454, Enum_ov017_021bacd8_1020 = 0x414 };
 enum { Enum_ov017_021bacd8_62524 = 0xf43c, Enum_ov017_021bacd8_1020 = 0x3fc };
 #endif
 
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void GameObject_EnableControl(void* obj);
@@ -23,7 +23,7 @@ struct Struct_ov017_021bac8c;
 extern "C" void func_ov017_021bac8c(struct Struct_ov017_021bac8c* arg0);
 
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 extern "C" int func_ov017_021959b4(void);
 
 extern "C" void func_ov003_0215c650(void* arg0);
@@ -48,8 +48,8 @@ struct Struct_ov017_021bacd8 {
 extern "C" ARM void FieldTask_VisitInn(Obj021bacd8* self) {
     GameState* battle = GameState::GetInstance();
     unsigned int* ov = ((unsigned int*)GetGameResources());
-    GameObject* c = battle->GetUnknownGameObject();
-    int flagResult = GetFieldIfFlag4_020100f8((char*)battle);
+    GameObject* c = battle->GetLeader();
+    int flagResult = GameState_GetFollowCamera((char*)battle);
     SetFlags04((GameResources*)ov, 0xc0);
     GameObject_DisableControl((struct Obj020397cc*)c, 1);
     SetFlagsAt0x244_020a28a0((unsigned char*)flagResult, 3);
@@ -62,17 +62,17 @@ extern "C" ARM void FieldTask_VisitInn(Obj021bacd8* self) {
         func_020a0cc4(Fieldf43c);
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, Fieldf43c);
         if (buf == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            self->flag1 = 1;
             return;
         }
-        arg0->unknown_c_.CreateTypeA(var6, Enum_ov017_021bacd8_62524);
-        arg0->unknown_c_.Reset();
-        void* var7 = arg0->unknown_c_.Allocate(Enum_ov017_021bacd8_1020);
-        arg0->unknown_20_ = var7;
-        if (var7 == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        self->alloc.CreateTypeA(buf, Fieldf43c);
+        self->alloc.Reset();
+        void* mem = self->alloc.Allocate(Field3fc);
+        self->field20 = mem;
+        if (mem == NULL) {
+            ROMFilesystem_InitFileTables();
+            self->flag1 = 1;
             return;
         }
         func_020a1df8(3);
@@ -102,6 +102,6 @@ extern "C" ARM void FieldTask_VisitInn(Obj021bacd8* self) {
     ClearFlags04((GameResources*)ov, 0xc0);
     GameObject_EnableControl(c);
     ClearFlagBits_020a28b0((unsigned char*)flagResult, 3);
-    func_020a0c0c();
-    arg0->unknown_1_ = 1;
+    ROMFilesystem_InitFileTables();
+    self->flag1 = 1;
 }

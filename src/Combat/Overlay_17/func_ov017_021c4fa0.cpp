@@ -3,12 +3,12 @@
 #include "Resource/GameResources.h"
 #include "World/ZoneResourceTree.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" unsigned short* Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* search);
+extern "C" int LinkSession_IsHostOrSolo(void* search);
 extern "C" void func_0205e330(void* a, void* b, int c);
 extern "C" void* memset(void* dst, int c, unsigned int n);
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 
 struct Struct_020fdd44 {
     unsigned short unknown_0_;
@@ -17,7 +17,7 @@ struct Struct_020fdd44 {
     unsigned short unknown_4_;
 };
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
-struct Entry_02028bd0* FindInlineEntryById(struct Entry_02028bd0* base, int key);
+struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 
 struct Struct_ov017_0218e674;
 extern "C" int func_ov017_021bd3a4(Struct_ov017_0218e674* arg0);
@@ -93,12 +93,12 @@ extern "C" ARM void func_ov017_021c4fa0(int arg0, int arg1) {
     Struct_ov017_021c4fa0_5 var13;
 
     gs = GameState::GetInstance();
-    search = func_0202ae18();
+    search = LinkSession_GetInstance();
     cur = Zone3D_GetInstance();
     res = GetGameResources();
     unit = (Unit_021c4fa0*)res->unknown_ptr_array_371c[6];
     ZoneRecords_GetInstance();
-    data = GetData02100044_0202ae24();
+    data = LinkMessageQueue_GetInstance();
 
     var13.unknown_0_ = 0x8f;
     var5 = &var13.unknown_4_;
@@ -111,11 +111,11 @@ extern "C" ARM void func_ov017_021c4fa0(int arg0, int arg1) {
     var3 = (char*)func_ov017_021b8470(var9);
     var6 = (Struct_ov017_021c4fa0_2*)func_ov017_021b8478(var9);
 
-    if (func_0202c508(var8)) {
-        var10 = 1;
-        if (var7->unknown_1a_ != arg1 || (var7->unknown_50_ & 0x800)) {
-            if (var7->unknown_1c_ != arg1) {
-                var10 = 0;
+    if (LinkSession_IsHostOrSolo(search)) {
+        ok = 1;
+        if (unit->field1a != id || (unit->flags50 & 0x800)) {
+            if (unit->field1c != id) {
+                ok = 0;
             }
         }
         if (func_ov017_021bd3a4((Struct_ov017_0218e674*)var7) && var7->unknown_12_ != 0 && var7->unknown_106_ == 0 && var10) {
@@ -135,7 +135,7 @@ extern "C" ARM void func_ov017_021c4fa0(int arg0, int arg1) {
         }
 
         p->time = gs->GetDayTimer();
-        entry = FindInlineEntryById(ZoneRecords_GetInstance(), id);
+        entry = ZoneRecords_Find(ZoneRecords_GetInstance(), id);
         if (entry != NULL) {
             p->fieldC = entry->value;
             p->fieldE = entry->value2;

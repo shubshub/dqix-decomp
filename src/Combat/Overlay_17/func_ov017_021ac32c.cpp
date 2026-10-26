@@ -9,10 +9,10 @@ void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(void* self);
 int FontBankLoader_GetInstance(void);
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 
 extern int g_mainAllocator;
 
@@ -30,16 +30,16 @@ extern "C" ARM void func_ov017_021ac32c(struct Obj021ac32c* self) {
     FontBankLoader_GetInstance();
     FontBankLoader_CancelLoads();
     GameState* battle = GameState::GetInstance();
-    GameObject_EnableControl(battle->GetUnknownGameObject());
+    GameObject_EnableControl(battle->GetLeader());
 
     void* p = self->allocator.GetSignedAllocator();
     if (p != NULL) {
         self->allocator.Destroy();
         AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
-        func_020a0c0c();
+        ROMFilesystem_InitFileTables();
     }
-    arg0->unknown_c_ = 0;
-    int var3 = func_020100f8((char*)var1);
-    if (var3 == 0) return;
-    func_020a28b0((unsigned char*)var3, 3);
+    self->field0xc = 0;
+    int flag = GameState_GetFollowCamera((char*)battle);
+    if (flag == 0) return;
+    ClearFlagBits_020a28b0((unsigned char*)flag, 3);
 }

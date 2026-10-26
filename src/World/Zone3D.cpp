@@ -9,13 +9,10 @@
 #include "Resource/GameResources.h"
 #include "NitroSDK/NSBXX/NSBXX.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern "C"
 {
-    void* func_02011584(GameState*);
+    void* _Z22GameState_GetZoneTablePv(GameState*);
 
     void* func_02053c6c(void*);
     void _Z25RunBufferedStream0205e104iiP12StreamHeaderi(const char*, SafeAllocator*, const void*, unsigned int);
@@ -24,17 +21,17 @@ extern "C"
     void _Z17VramState_RestorePc(void*);
     void _Z14VramState_SavePc(void*);
 
-    void* func_0208a9b4();
-    void func_02094d00(void*);
-    Zone3D_StructPtr_8* func_02099950(void*, unsigned short id);
+    void* _Z24GetData02108f0c_0208a9b4v();
+    void _Z21GrottoChestList_ClearP29ClearThreeWords02094d00Struct(void*);
+    Zone3D_StructPtr_8* _Z19ZoneTable_FindEntryP11SearchTablei(void*, unsigned short id);
 
-    void func_020c9be0();
+    void HaltSystem();
     void _Z14ItemTable_InitPv(void*);
 
-    void func_02013750(Zone3D*, bool);
+    void _Z13Zone3D_UnloadPvi(Zone3D*, bool);
 
-    bool func_0201b5b0(int id);
-    bool func_0201b5d8(int id);
+    bool _Z24ZoneId_IsMainGrottoFloori(int id);
+    bool _Z24ZoneId_IsGrottoBossFloori(int id);
 
 }
 
@@ -72,20 +69,24 @@ extern char ZoneChest_itemIconPathFormat[];
 extern char data_020ef222[];
 extern char data_020ef22c[];
 
+// The grotto floor's tile map: GrottoTileMapRecords allocated and reset on entering a grotto floor
+enum { kGrottoTileMapSize = 256 };
+
+// Main, originally Zone3D::SwitchZone_0201383c (USA 0x0201383c, EUR 0x0201384c, JPN 0x02013604)
 void Zone3D::SwitchZone(unsigned short newID, int)
 {
     GameState* gameState = GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    void* uVar3 = func_02011584(gameState);
+    void* zoneTable = _Z22GameState_GetZoneTablePv(gameState);
     (void)GetGameResources();
-    GameObject* iVar4 = gameState->GetUnknownGameObject();
+    GameObject* player = gameState->GetLeader();
 
     pAllocator_68_ = pAllocator_4c_;
     pAllocator_68_->Reset();
 
     _Z16VramState_RewindP11Foo0207df50(vramState_);
-    _Z22ResetBigStruct02013750Pvi(this, true);
+    _Z13Zone3D_UnloadPvi(this, true);
 
     previousZoneID_ = currentZoneID_;
     currentZoneID_ = newID;
@@ -113,7 +114,7 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     unknown_834_ = 0;
     unknown_2820_ = 0;
 
-    substruct_6c_.func_0201e248();
+    substruct_6c_.Reset();
 
     substruct_c_.unknown_0_[0] = 0;
     substruct_c_.unknown_a_[0] = 0;
@@ -129,30 +130,30 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     lighting_.Reset();
     _Z14ItemTable_InitPv(&containerItems_[0]);
 
-    pUnknownStruct_8_ = func_02099950(uVar3, newID);
+    pUnknownStruct_8_ = _Z19ZoneTable_FindEntryP11SearchTablei(zoneTable, newID);
     unknown_4_ = pUnknownStruct_8_->unknown_2_;
     if (pUnknownStruct_8_->unknown_c_low_ == 0)
     {
-        GameObject* iVar5 = gameState->GetProtagonist();
-        if (iVar5 != NULL)
+        GameObject* protagonist = gameState->GetProtagonist();
+        if (protagonist != NULL)
         {
-            void* iVar6 = func_02053c6c(iVar5);
-            if (iVar6 != NULL)
-                *(unsigned short*)((int)iVar6 + 0x566) = pUnknownStruct_8_->unknown_0_;
+            void* characterData = _Z24GetFieldAt0x150_02053c6cPh(protagonist);
+            if (characterData != NULL)
+                *(unsigned short*)((int)characterData + 0x566) = pUnknownStruct_8_->unknown_0_;
         }
     }
 
     *(bool*)((int)_Z24GetData02108f0c_0208a9b4v() + 0x9c) = pUnknownStruct_8_->unknown_c_high_ != 0;
-    _Z23ClearThreeWords02094d00P29ClearThreeWords02094d00Struct(&grottoChestList_[0]);
+    _Z21GrottoChestList_ClearP29ClearThreeWords02094d00Struct(&grottoChestList_[0]);
 
     grottoTileMapData_420_ = NULL;
 
-    if (func_0201b5b0(previousZoneID_))
+    if (_Z24ZoneId_IsMainGrottoFloori(previousZoneID_))
     {
         grotto_.floorMap_.Clear();
     }
 
-    if (func_0201b5b0(newID))
+    if (_Z24ZoneId_IsMainGrottoFloori(newID))
     {
         isInMainGrottoFloor_23b8_ = true;
         currentGrottoFloor_23ba_ = newID % 20;
@@ -160,10 +161,10 @@ void Zone3D::SwitchZone(unsigned short newID, int)
         int width = grotto_.CalculateAndStoreFloorWidth(currentGrottoFloor_23ba_);
         int height = grotto_.CalculateAndStoreFloorHeight(currentGrottoFloor_23ba_);
 
-        grottoTileMapData_420_ = (Struct_02013490*)pAllocator_68_->Allocate(sizeof(Struct_02013490) * 256);
-        for (int i = 0; i < 256; i++)
+        grottoTileMapData_420_ = (GrottoTileMapRecord*)pAllocator_68_->Allocate(sizeof(GrottoTileMapRecord) * kGrottoTileMapSize);
+        for (int i = 0; i < kGrottoTileMapSize; i++)
         {
-            func_02013490(&grottoTileMapData_420_[i]);
+            GrottoTileMapRecord_Reset(&grottoTileMapData_420_[i]);
         }
         grotto_.ClearGenerator(false);
         grotto_.AllocateGenerator(pAllocator_68_, false);
@@ -174,8 +175,8 @@ void Zone3D::SwitchZone(unsigned short newID, int)
         if (currentGrottoFloor_23ba_ != -1)
         {
             copyOfCurrentGrottoFloor_23bb_ = currentGrottoFloor_23ba_;
-            position_23c0_ = iVar4->obj3D_.position_;
-            unknown_23cc_ = *(short*)((int)iVar4 + 0xae);
+            position_23c0_ = player->obj3D_.position_;
+            unknown_23cc_ = *(short*)((int)player + 0xae);
         }
         isInMainGrottoFloor_23b8_ = false;
         currentGrottoFloor_23ba_ = -1;

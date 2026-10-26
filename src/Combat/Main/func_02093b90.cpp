@@ -39,21 +39,21 @@ struct Struct_02093b90_3 {
 struct S_b20c { void* buffer; Tile02093b90* tiles; unsigned char count; };
 extern AllocatorUnion g_mainAllocator;
 extern SePlayer g_sePlayer;
-extern "C" char* func_0203bd08();
+extern "C" char* OamManager_GetInstance();
 unsigned char IsPowCnt1Bit15Clear020938cc();
-void SetByteAt0xc0203be58(char*, int, int);
+void OamManager_SetUploadEnabled(char*, int, int);
 FlagWord02046708* GlobalFlags_GetInstance();
-int TestFlags02046708(FlagWord02046708*, unsigned int);
+int FlagWord_TestBits(FlagWord02046708*, unsigned int);
 void ReleaseHandleAndClearFlags(Obj020941b0*);
 extern "C" int func_020941f8(Obj020941b0*);
 extern "C" int func_020943dc(Obj020941b0*);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
 int GetDisplayModeCode0209378c(int);
 extern "C" int func_020937f0(int);
-extern "C" void func_0205b20c(Struct_020200c0_4*);
-extern "C" void func_0205b220(void*, int);
-extern "C" void func_0205b228(void*, int, unsigned char);
-extern "C" void func_0205b234(void*, int, int, void*, int, int);
+void GlyphDestination_Clear(S_b20c*);
+void GlyphDestination_SetPixels(void*, int);
+void GlyphDestination_SetRects(void*, int, unsigned char);
+extern "C" void GlyphDestination_DrawText(void*, int, int, void*, int, int);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 extern "C" void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 extern "C" void LoadToSubObjVRAM(const void*, unsigned int, unsigned int);
@@ -65,10 +65,10 @@ static inline unsigned char* inline_02093b90(Struct_02093b90_2* arg0) { return a
 
 // USA: func_02093b90
 extern "C" ARM void func_02093b90(Obj020941b0* self, int ticks) {
-    char* context = func_0203bd08();
-    SetByteAt0xc0203be58(context, IsPowCnt1Bit15Clear020938cc(), 1);
+    char* context = OamManager_GetInstance();
+    OamManager_SetUploadEnabled(context, IsPowCnt1Bit15Clear020938cc(), 1);
     FlagWord02046708* flags = GlobalFlags_GetInstance();
-    if (TestFlags02046708(flags, 0x20)) {
+    if (FlagWord_TestBits(flags, 0x20)) {
         ReleaseHandleAndClearFlags(self);
         return;
     }
@@ -79,8 +79,8 @@ extern "C" ARM void func_02093b90(Obj020941b0* self, int ticks) {
         arg0->unknown_3c8_7_ = var2;
         return;
     }
-    if (IsBrightnessOutsideValidRange(GetGameResources(), true)) {
-        func_020941b0(arg0);
+    if (IsScreenFullyFaded(GetGameResources(), true)) {
+        ReleaseHandleAndClearFlags(self);
         return;
     }
     if (func_020941f8(self)) return;
@@ -88,7 +88,7 @@ extern "C" ARM void func_02093b90(Obj020941b0* self, int ticks) {
     if (6.28f <= self->phase) self->phase -= 6.28f;
     if (self->count <= 0) return;
     if (func_020943dc(self)) return;
-    if (TestFlags02046708(flags, 0x8000)) return;
+    if (FlagWord_TestBits(flags, 0x8000)) return;
     if (self->text[0]) {
         void* pixels = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800);
         if (!pixels) return;
@@ -124,14 +124,14 @@ extern "C" ARM void func_02093b90(Obj020941b0* self, int ticks) {
                     var12->unknown_a_=16;
                     var10+=256;
                 }
-                Struct_020200c0_4 var13;
-                func_0205b20c(&var13);
-                func_0205b220(&var13, (int)var3);
-                func_0205b228(&var13, (int)var7, 8);
-                func_0205b234(&var13, 16, 3, var5, DRAW_ARGS_02093b90);
-                CleanInvalidateCacheRange(var3, 0x800);
-                if (var4==0) LoadToMainObjVRAM(var3, var6-0x800, 0x800);
-                else LoadToSubObjVRAM(var3, var6-0x800, 0x800);
+                S_b20c descriptor;
+                GlyphDestination_Clear(&descriptor);
+                GlyphDestination_SetPixels(&descriptor, (int)pixels);
+                GlyphDestination_SetRects(&descriptor, (int)tiles, 8);
+                GlyphDestination_DrawText(&descriptor, 16, 3, text, DRAW_ARGS_02093b90);
+                CleanInvalidateCacheRange(pixels, 0x800);
+                if (display==0) LoadToMainObjVRAM(pixels, destination-0x800, 0x800);
+                else LoadToSubObjVRAM(pixels, destination-0x800, 0x800);
             }
           }
         }

@@ -35,39 +35,39 @@ struct Struct_020e1f1c_3 {
 };
 
 void* AllocateVRAMStagingMemory(unsigned int value);
-struct Struct_020e1288;
-extern "C" int func_020e1288(Struct_020e1288*);
-extern "C" void func_020e2018(void* arg0);
-extern "C" void func_02020520(Struct_020200c0_3* arg0);
-struct Struct_020200c0_4;
-extern "C" void func_0205b20c(Struct_020200c0_4*);
-extern "C" void func_0205b220(void* arg0, int arg1);
-extern "C" void func_0205b228(void* arg0, int arg1, unsigned char arg2);
+struct HasDims020e1288;
+int GetHalfProductField8(HasDims020e1288*);
+extern "C" void func_020e2018(void* owner);
+void GlyphDestinationRect_Clear(Struct02020520* s);
+struct S_b20c;
+void GlyphDestination_Clear(S_b20c*);
+void GlyphDestination_SetPixels(void* obj, int value);
+void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
 
 // USA: func_020e1f1c
-extern "C" ARM void* func_020e1f1c(Struct_020e1f1c_3* arg0) {
-    void* var0 = AllocateVRAMStagingMemory(0x4000);
-    arg0->unknown_0_ = var0;
-    if (var0 != 0) {
-        Struct_020e1f1c_2* var1 = arg0->unknown_4_;
-        int var2 = func_020e1288((Struct_020e1288*)var1);
-        memset((char*)arg0->unknown_0_ + var1->unknown_30_, 0, var1->unknown_34_ + var2);
-        func_020e2018(arg0);
-        int var3 = arg0->unknown_4_->unknown_3c_;
-        for (int var4 = 0; var4 < var3; var4++) {
-            Struct_020200c0_3* var5 = &arg0->unknown_4_->unknown_0_[var4];
-            Struct_020e1f1c* var6 = &arg0->unknown_4_->unknown_8_[var4];
-            func_02020520(var5);
-            var5->unknown_0_ = var6->unknown_4_;
-            var5->unknown_4_ = var6->unknown_8_;
-            var5->unknown_6_ = var6->unknown_9_;
-            var5->unknown_8_ = var6->unknown_a_;
-            var5->unknown_a_ = var6->unknown_b_;
+extern "C" ARM void* func_020e1f1c(Owner020e1f1c* owner) {
+    void* buffer = AllocateVRAMStagingMemory(0x4000);
+    owner->buffer = buffer;
+    if (buffer != 0) {
+        Panel020e1f1c* panel = owner->panel;
+        int half = GetHalfProductField8((HasDims020e1288*)panel);
+        memset((char*)owner->buffer + panel->offset, 0, panel->stride + half);
+        func_020e2018(owner);
+        int count = owner->panel->count;
+        for (int i = 0; i < count; i++) {
+            Struct02020520* d = &owner->panel->layouts[i];
+            ClipRec020e1f1c* s = &owner->panel->clips[i];
+            GlyphDestinationRect_Clear(d);
+            d->a = s->value;
+            d->b = s->x;
+            d->c = s->y;
+            d->d = s->w;
+            d->e = s->h;
         }
-        void* var7 = arg0->unknown_4_->unknown_4_;
-        func_0205b20c((Struct_020200c0_4*)var7);
-        func_0205b220(var7, (int)((unsigned int)arg0->unknown_0_ + arg0->unknown_4_->unknown_30_));
-        func_0205b228(var7, (int)arg0->unknown_4_->unknown_0_, var3);
+        void* obj = owner->panel->obj;
+        GlyphDestination_Clear((S_b20c*)obj);
+        GlyphDestination_SetPixels(obj, (int)((unsigned int)owner->buffer + owner->panel->offset));
+        GlyphDestination_SetRects(obj, (int)owner->panel->layouts, count);
     }
     return arg0->unknown_0_;
 }

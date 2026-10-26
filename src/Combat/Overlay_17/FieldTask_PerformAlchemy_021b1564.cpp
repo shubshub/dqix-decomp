@@ -49,7 +49,7 @@ struct ResourceBlock021b1564 { char initial[0x5b0]; char restored[1]; };
 struct EntryNode021b1564 { char pad_0[0x114]; void* entry; char pad_118[0xc]; int id; char pad_128[0x11]; unsigned char active; };
 unsigned int* GlobalFlags_GetInstance();
 Controller021b1564* MessageSystem_GetInstance();
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 void ClearIntAt0x23c_020a27b8(unsigned char*);
 void GameObject_DisableControl(Obj020397cc*, int);
 #if defined(jpn)
@@ -69,7 +69,7 @@ int IsBrightnessTransitionActive(GameResources*);
 extern "C" void func_020dc2bc();
 extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-extern "C" void func_020a0c0c();
+extern "C" void ROMFilesystem_InitFileTables();
 extern "C" void MessageSystem_Stop(void*);
 void PushInputLogA_020a1df8(int);
 void PushInputLogB_020a1ef0(int);
@@ -130,8 +130,8 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
     GameResources* resources = game->GetResources();
     unsigned int* global = GlobalFlags_GetInstance();
     Controller021b1564* controller = MessageSystem_GetInstance();
-    unsigned char* field = GetFieldIfFlag4_020100f8((char*)game);
-    GameObject* player = game->GetUnknownGameObject();
+    unsigned char* field = GameState_GetFollowCamera((char*)game);
+    GameObject* player = game->GetLeader();
     if (field) ClearIntAt0x23c_020a27b8(field);
     if (self->stage == 0) {
         self->savedFlags = GetFlags00(resources);
@@ -139,7 +139,7 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
         self->savedFlags8 = GetFlags08(resources);
         SetFlags04(resources, 0x40);
         if (!self->alternate) {
-            GameObject* current = game->GetUnknownGameObject();
+            GameObject* current = game->GetLeader();
             if (current) GameObject_DisableControl((Obj020397cc*)current, 1);
             if (*controller->action) {
 #if defined(jpn)
@@ -177,9 +177,9 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
         func_020a0cc4(TransitionAllocationSize);
         Buffer021b1564* buffer = (Buffer021b1564*)AllocatorUnion_AllocateRounded(&g_mainAllocator, TransitionAllocationSize);
         if (!buffer) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
-            if (var4) func_020a27ac(var4);
+            ROMFilesystem_InitFileTables();
+            self->inactive = 1;
+            if (field) SetField0x23cTrue_020a27ac(field);
             return;
         }
         BufferTail021b1564* tail = &buffer->tail;
@@ -191,9 +191,9 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
         self->plugin = (Obj020979c0*)self->allocator.Allocate(0x20);
         data_ov017_021d83ec = (Overlay006021b1564*)self->allocator.Allocate(0x438);
         if (!self->plugin || !data_ov017_021d83ec) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
-            if (var4) func_020a27ac(var4);
+            ROMFilesystem_InitFileTables();
+            self->inactive = 1;
+            if (field) SetField0x23cTrue_020a27ac(field);
             return;
         }
         func_020a1df8(6);
@@ -236,11 +236,11 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
     } else if (arg0->unknown_48_ == 5) {
         if (arg0->unknown_49_) {
             func_ov006_02157cc0(data_ov017_021d83ec);
-            func_02097b34(arg0->unknown_1c_);
-            func_ov017_021b14ec(arg0);
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
-            if (var4) func_020a27ac(var4);
+            func_02097b34(self->plugin);
+            func_ov017_021b14ec(self);
+            ROMFilesystem_InitFileTables();
+            self->inactive = 1;
+            if (field) SetField0x23cTrue_020a27ac(field);
             return;
         }
         SetStateAndDispatch0209c3b4((Actor0209c3b4*)g_bgmPlayer, 7);
@@ -309,9 +309,9 @@ extern "C" ARM void FieldTask_PerformAlchemy(Transition021b1564* self, TailList0
             }
         }
         if (!finished) return;
-        GameObject* current = game->GetUnknownGameObject();
+        GameObject* current = game->GetLeader();
         if (current) GameObject_EnableControl(current);
-        func_020a0c0c();
-        arg0->unknown_1_ = 1;
+        ROMFilesystem_InitFileTables();
+        self->inactive = 1;
     }
 }

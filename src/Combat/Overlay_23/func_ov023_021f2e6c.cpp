@@ -49,7 +49,7 @@ void* FindEntryById02096134(FindEntryById02096134Table*, int);
 extern "C" void func_02046380(unsigned char* st);
 struct TableA68;
 char* FindEntryByKey_02072a68(TableA68*, int);
-void Clear12Bytes020e46c4(void* p);
+void NameText_Clear(void* p);
 unsigned char* GetCombatantWithFlag0x400_0200fea4(GameState* gs, int id);
 extern "C" Triple021f2e6c func_ov023_021ed804(Triple021f2e6c t, void* p);
 extern "C" void _Z26SetWords_021edf38_021edf38PvP13Words021edf38(Triple021f2e6c* dst, const Triple021f2e6c& src);
@@ -59,14 +59,14 @@ void ResetAndDispatchActorContext0209c6d8(void* actor, int arg);
 #if !defined(jpn)
 extern "C" void func_0204500c(void* arg0, char* arg1, int arg2, int arg3);
 #endif
-extern "C" void func_ov000_0215fa70(void* arg0, short arg1, short arg2, short arg3);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_ov023_021ed92c(void);
-struct Struct_ov023_021eeaac_2;
-extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2*);
-struct Struct_020d784c;
-extern "C" void func_020d784c(Struct_020d784c*);
+void SetShortFields0x8e4aTo0x8e4e_ov000_0215fa70(void* obj, short a, short b, short c);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
+int AreAllListedCombatantsFlagged_021ed92c(void);
+struct Reset_021eefac;
+void ResetFields_021eefac(Reset_021eefac*);
+struct Buffer020d784c;
+void InitStruct020d784c(Buffer020d784c*);
 extern "C" int func_ov023_021f4fc8(void);
 struct StreamHeader;
 void RegisterCallbackObjectAndRunScript_020d7870(void*, void*, StreamHeader*, int, unsigned char);
@@ -98,13 +98,13 @@ struct Param02048850;
 void SetupFieldsFromParam02048850(Obj02048850*, Param02048850*);
 void CopyObjectFields02048588(unsigned char* src, unsigned char* dst);
 struct Bytes02033b88;
-int SetByte0xbeShiftPrev(Bytes02033b88*, int);
+int GameObject_ForceMotionState(Bytes02033b88*, int);
 void SetSubstructByte0x56_02049f28(unsigned char* obj);
 extern "C" void* func_ov000_02160f14(void* self);
 extern "C" void func_ov000_0216d370(void* cam, int a, int b, int c);
 void SetFlagOrState0216d530(void* cam, int v);
 void Camera_SetTarget(struct Camera*, int, int, int);
-extern "C" void func_0202e5d8(void* cam, int a, int b, int c);
+extern "C" void Camera_SetOrbit(void* cam, int a, int b, int c);
 extern "C" void func_ov000_02163b90(void* self, int v);
 void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
 Blk021f2e6c* GetPtrField0x4_0202ed64(void* cam);
@@ -181,31 +181,31 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                 if (var6 == 0x12) {
                     var13 = 0x2a;
                 }
-                char* var14 = func_02072a68((Struct_02072a68_2*)(arg0 + 0x5904), var13);
-                Struct_ov023_021f2e6c_7 var15;
-                func_020e46c4(&var15);
-                GameState* var16 = GameState::GetInstance();
-                for (int var17 = 0xc0; var17 <= 0xc7; var17++) {
-                    unsigned char* var18 = func_0200fea4(var16, var17);
-                    if (var18 != 0) {
-                        void* var19 = *(void**)(var18 + 0x144);
-                        if (var8 == *(short*)((char*)var19 + 8)) {
-                            func_ov023_021edf38(&var15, func_ov023_021ed804(var15, var19));
-                            *(Struct_ov023_021f2e6c_7**)(var0 + 0x20) = &var15;
+                char* msg = FindEntryByKey_02072a68((TableA68*)(self + 0x5904), key);
+                Triple021f2e6c words;
+                NameText_Clear(&words);
+                GameState* gs = GameState::GetInstance();
+                for (int i = 0xc0; i <= 0xc7; i++) {
+                    unsigned char* c = GetCombatantWithFlag0x400_0200fea4(gs, i);
+                    if (c != 0) {
+                        void* p = *(void**)(c + 0x144);
+                        if (target == *(short*)((char*)p + 8)) {
+                            _Z26SetWords_021edf38_021edf38PvP13Words021edf38(&words, func_ov023_021ed804(words, p));
+                            *(Triple021f2e6c**)(st + 0x20) = &words;
                             break;
                         }
                     }
                 }
-                char var20[0x80];
-                char var21[0x80];
-                Struct_ov023_021f2e6c_8 var22;
-                __clear(var20, 0x80);
-                __clear(var21, 0x80);
-                func_020e46c4(&var22);
-                var22.unknown_0_ = var20;
-                var22.unknown_4_ = var21;
-                func_020dcf7c(var7, &var22);
-                *(Struct_ov023_021f2e6c_8**)(var0 + 0x18) = &var22;
+                char bufA[0x80];
+                char bufB[0x80];
+                Bufs021f2e6c bufs;
+                __clear(bufA, 0x80);
+                __clear(bufB, 0x80);
+                NameText_Clear(&bufs);
+                bufs.a = bufA;
+                bufs.b = bufB;
+                DispatchIfCountPositive020dcf7c(count, &bufs);
+                *(Bufs021f2e6c**)(st + 0x18) = &bufs;
 
 #endif
                 ResetAndDispatchActorContext0209c6d8(&g_bgmPlayer, 0x3e);
@@ -222,7 +222,7 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                 return *(int*)(arg0 + Enum_ov023_021f2e6c_3756);
             }
         }
-        if (func_0202c540(func_0202ae18()) != 0) {
+        if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0) {
             return 0xf;
         }
         if (func_ov023_021ed92c() != 0 && *(short*)(*(char**)(arg0 + Enum_ov023_021f2e6c_668) + 0x8e4a) == 0) {
@@ -324,13 +324,13 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
             }
             var1[0] = 2;
         }
-    } else if (var5 == 2) {
-        var4 = var3->unknown_4_;
-        int var40 = var3->unknown_0_;
-        int var41 = 0;
-        for (short var42 = *(short*)(arg0 + Enum_ov023_021f2e6c_21900) + 1; var42 < var40; var42++) {
-            if (func_0202c540(func_0202ae18()) != 0 || func_ov023_021ed92c() != 0) {
-                if (*(short*)(*(char**)(arg0 + Enum_ov023_021f2e6c_668) + 0x8e4a) != var4[var42].unknown_0_.unknown_0_0_) {
+    } else if (state == 2) {
+        found_entries = tbl->entries;
+        int count = tbl->count;
+        int found = 0;
+        for (short i = *(short*)(self + regionalOffset4) + 1; i < count; i++) {
+            if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0 || AreAllListedCombatantsFlagged_021ed92c() != 0) {
+                if (*(short*)(*(char**)(self + regionalOffset5) + 0x8e4a) != found_entries[i].bits.id) {
                     continue;
                 }
             }
@@ -419,30 +419,30 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                                 break;
                             }
                         }
-                        unsigned char* var57 = func_0200fea4(var53, var54);
-                        int var58 = *(int*)(var57 + 0x138);
-                        if (var57 != 0 && var58 != 0) {
-                            int var59 = *(int*)(var57 + 0x13c);
-                            int var60 = *(int*)(var57 + 0x144);
-                            func_02048614(var57);
-                            *(short*)(var57 + 4) = var54;
-                            func_02049c88(var57, var59);
-                            func_02048850((Struct_02048850*)var57, (Struct_02048850_2*)var60);
-                            func_02048588(var52, var57);
-                            *(int*)(var57 + 0x138) = var58;
-                            ((Object3D*)var57)->SetField06(*(unsigned short*)(arg0 + Enum_ov023_021f2e6c_3784));
-                            func_02033b88((Struct_02010604*)var57, 0);
-                            var57[0xc2] |= 0x20;
-                            ((Object3D*)var57)->SetInheritedAlpha(0x1f);
-                            ((Object3D*)var57)->MakeVisible();
-                            func_02049f28(var57);
-                            void* var61 = func_ov000_02160f14(arg0);
-                            func_ov000_0216d370(var61, 1, 1, 1);
-                            func_ov000_0216d530(var61, var54);
-                            int var62 = ((Object3D*)var57)->GetHeight();
-                            int var63 = (int)(((long long)var62 * 0x4cc + 0x800) >> 12);
-                            if (var63 < 0) {
-                                var63 = 0;
+                        unsigned char* obj = GetCombatantWithFlag0x400_0200fea4(gs, idx);
+                        int saved = *(int*)(obj + 0x138);
+                        if (obj != 0 && saved != 0) {
+                            int p13c = *(int*)(obj + 0x13c);
+                            int p144 = *(int*)(obj + 0x144);
+                            ResetNameState02048614(obj);
+                            *(short*)(obj + 4) = idx;
+                            func_02049c88(obj, p13c);
+                            SetupFieldsFromParam02048850((Obj02048850*)obj, (Param02048850*)p144);
+                            CopyObjectFields02048588(node, obj);
+                            *(int*)(obj + 0x138) = saved;
+                            ((Object3D*)obj)->SetField06(*(unsigned short*)(self + regionalOffset11));
+                            GameObject_ForceMotionState((Bytes02033b88*)obj, 0);
+                            obj[0xc2] |= 0x20;
+                            ((Object3D*)obj)->SetInheritedAlpha(0x1f);
+                            ((Object3D*)obj)->MakeVisible();
+                            SetSubstructByte0x56_02049f28(obj);
+                            void* cam = func_ov000_02160f14(self);
+                            func_ov000_0216d370(cam, 1, 1, 1);
+                            SetFlagOrState0216d530(cam, idx);
+                            int height = ((Object3D*)obj)->GetHeight();
+                            int y = (int)(((long long)height * 0x4cc + 0x800) >> 12);
+                            if (y < 0) {
+                                y = 0;
                             }
                             Camera_SetTarget((struct Camera*)cam, 0, y, 0);
                             int z = (int)(((long long)height * 0x2333 + 0x800) >> 12);
@@ -450,9 +450,9 @@ extern "C" ARM int func_ov023_021f2e6c(char* arg0) {
                             if (y2 < 0) {
                                 y2 = 0;
                             }
-                            func_0202e5d8(var61, 0, var65, var64 + 0x4000);
-                            func_ov000_02163b90(arg0, 0);
-                            *(short*)(arg0 + Enum_ov023_021f2e6c_21946) = var54;
+                            Camera_SetOrbit(cam, 0, y2, z + 0x4000);
+                            func_ov000_02163b90(self, 0);
+                            *(short*)(self + regionalOffset12) = idx;
                         }
                     }
                 }

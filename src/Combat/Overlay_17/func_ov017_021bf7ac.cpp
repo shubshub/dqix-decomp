@@ -69,7 +69,7 @@ extern "C" ARM int func_ov017_021bf7ac(struct Struct_ov017_021bf7ac_2* arg0) {
  enum {Enum_ov017_021bf7ac_852=0x354, Enum_ov017_021bf7ac_1536=0x600};
 #endif
     GameState* gs = GameState::GetInstance();
-    gs->GetUnknownGameObject();
+    gs->GetLeader();
     unsigned short* events = (unsigned short*)Zone3D_GetInstance();
     struct Info_021bf7ac* info = obj->info;
     BackgroundLoader* loader = BackgroundLoader::GetInstance();

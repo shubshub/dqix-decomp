@@ -9,32 +9,32 @@ struct Struct_ov025_021e56e8 {
     int unknown_c_;
 };
 
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov025_021e4448(int* arg0, int arg1, int arg2, int arg3);
-extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f14(void* arg0);
-extern "C" int func_0202e800(void* arg0);
+int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
+void SetThreeWords_021e4448(int* obj, int a, int b, int c);
+void* GetActiveCombatWork_ov000_02160130(void);
+extern "C" void* func_ov000_02160f14(void* work);
+int Camera_GetOrbitDistance(void* obj);
 
 extern Vector3fix data_ov025_021eef24;
 
 // USA: func_ov025_021e56e8
-extern "C" ARM int func_ov025_021e56e8(struct Struct_ov025_021e56e8* arg0, int arg1, int arg2, void* arg3) {
-    GameState* var0 = GameState::GetInstance();
-    int var1[8];
-    int var2 = func_ov000_021820bc(arg3, arg1, arg0->unknown_8_, (int)var1);
-    Vector3fix var3 = data_ov025_021eef24;
-    if (arg0->unknown_9_ == 0) {
-        func_ov025_021e4448((int*)&var3, 0x10a, 0x10a, 0x10a);
-    } else if (arg0->unknown_9_ == 2) {
-        void* var4 = func_ov000_02160f14(func_ov000_02160130());
-        float var5 = 0.065f;
-        float var6 = 0.08f;
-        float var7 = 6.5f;
-        float var8 = 7.0f;
-        float var9 = func_0202e800(var4) / 4096.0f;
-        float var10 = var9 * ((var6 - var5) / (var8 - var7)) + (var8 * var5 - var7 * var6) / (var8 - var7);
-        if (var10 < 0.065f) {
-            var10 = 0.065f;
+extern "C" ARM int func_ov025_021e56e8(struct Param021e56e8* p, int b, int unused, void* c) {
+    GameState* gs = GameState::GetInstance();
+    int ids[8];
+    int count = DispatchByIndex021820bc(c, b, p->index, (int)ids);
+    Vector3fix scale = data_ov025_021eef24;
+    if (p->mode == 0) {
+        SetThreeWords_021e4448((int*)&scale, 0x10a, 0x10a, 0x10a);
+    } else if (p->mode == 2) {
+        void* field = func_ov000_02160f14(GetActiveCombatWork_ov000_02160130());
+        float y0 = 0.065f;
+        float y1 = 0.08f;
+        float x0 = 6.5f;
+        float x1 = 7.0f;
+        float zoom = Camera_GetOrbitDistance(field) / 4096.0f;
+        float s = zoom * ((y1 - y0) / (x1 - x0)) + (x1 * y0 - x0 * y1) / (x1 - x0);
+        if (s < 0.065f) {
+            s = 0.065f;
         }
         int var11 = 4096.0f * var10;
         func_ov025_021e4448((int*)&var3, var11, var11, var11);

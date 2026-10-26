@@ -113,46 +113,46 @@ struct Struct_ov000_021620f0_6 {
     Struct_01ff91ac_8 unknown_6aa4_[8];
 };
 
-extern "C" void* func_0202ae18(void);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-struct Struct_ov000_02161e30_3;
-extern "C" void func_ov000_021620d8(Struct_ov000_02161e30_3*);
-extern "C" Struct_02048934* func_02070fd0(Struct_02070b6c_3* arg0, int arg1);
-extern "C" Struct_02048850_2* func_0206f4f0(Struct_0206f01c_2* arg0, int arg1);
-extern "C" void func_ov000_02167c28(unsigned char* arg0, int arg1);
-extern "C" int func_ov000_02161bb8(unsigned char* arg0);
-extern "C" void func_020891cc(void* arg0);
-extern "C" void func_02089630(void* arg0, void* arg1, int arg2);
-extern "C" void func_02049c88(void* arg0, void* arg1);
-extern "C" void func_0200fd38(GameState* arg0, int arg1, GameObject* arg2);
-extern "C" void func_ov000_02161274(GameObject* arg0);
-extern "C" void func_02048934(void* arg0, Struct_02048934* arg1, Random* arg2);
-extern "C" void func_ov000_02161bec(unsigned char* arg0);
-extern "C" void func_02048614(unsigned char* arg0);
-extern "C" void func_02048850(Struct_02048850* arg0, Struct_02048850_2* arg1);
-extern "C" void func_020488ec(char* arg0);
-extern "C" void func_02049f3c(unsigned char* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
+struct ZeroableStruct021620d8;
+void ZeroStruct021620d8(ZeroableStruct021620d8*);
+FieldStruct02048934* SearchWithLow15Comparator02070fd0(Container02070e60* table, int key);
+Param02048850* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct* table, int key);
+void FindOrAssignSlot02167c28(unsigned char* obj, int id);
+extern "C" int func_ov000_02161bb8(unsigned char* obj);
+extern "C" void func_020891cc(void* obj);
+extern "C" void func_02089630(void* dst, void* src, int useExactValue);
+extern "C" void func_02049c88(void* obj, void* model);
+void RegisterCombatantSlot_0200fd38(GameState* gameState, int id, GameObject* combatant);
+void SyncNameFlag_02161274(GameObject* obj);
+void SetRandomizedShort0x18802048934(void* p, FieldStruct02048934* f, Random* r);
+void IncrementByteCounterWrapAt0x12_ov000_02161bec(unsigned char* p);
+void ResetNameState02048614(unsigned char* obj);
+void SetupFieldsFromParam02048850(Obj02048850* obj, Param02048850* param);
+void BuildName020488ec(char* obj);
+void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
 
 extern const short data_ov000_02182ff8[][3];
 extern const signed char data_ov000_02182fd4[][3];
 
 // USA: func_ov000_021620f0
-extern "C" ARM void func_ov000_021620f0(Struct_ov000_021620f0_6* arg0, int arg1) {
-    unsigned short var0;
-    int var1;
-    Struct_ov000_021620f0_8* var2;
-    Struct_ov000_021620f0_4* var3 = &arg0->unknown_29c_->unknown_81b0_;
-    GameState* var4 = GameState::GetInstance();
-    func_0202ae18();
-    Struct_02070b6c_3* var5 = (Struct_02070b6c_3*)arg0->unknown_2a0_->unknown_684_;
-    Struct_0206f01c_2* var6 = (Struct_0206f01c_2*)arg0->unknown_2a0_->unknown_678_;
-    var3->unknown_0_ = 0;
-    var3->unknown_1_0_ = 0;
-    var3->unknown_1_4_ = 0;
-    var3->unknown_1_6_ = 0;
-    var3->unknown_2_ = 0;
-    for (int var7 = 0; var7 < 3; var7++) {
-        memset(&var3->unknown_4_[var7], 0, sizeof(Struct_ov000_021620f0_2));
+extern "C" ARM void func_ov000_021620f0(Scene021620f0* scene, int formation) {
+    unsigned short kind;
+    int id;
+    Combatant021620f0* c;
+    Formation021620f0* f = &scene->data->formation;
+    GameState* game = GameState::GetInstance();
+    LinkSession_GetInstance();
+    Container02070e60* names = (Container02070e60*)scene->roster->names;
+    BinarySearchByComparatorStruct* infos = (BinarySearchByComparatorStruct*)scene->roster->infos;
+    f->total = 0;
+    f->alive = 0;
+    f->groupCount = 0;
+    f->pairCount = 0;
+    f->field_2 = 0;
+    for (int i = 0; i < 3; i++) {
+        memset(&f->groups[i], 0, sizeof(Group021620f0));
     }
     for (int var8 = 0; var8 < 4; var8++) {
         func_ov000_021620d8((Struct_ov000_02161e30_3*)&var3->unknown_4c_[var8]);

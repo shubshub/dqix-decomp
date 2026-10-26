@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" void* func_0202ae18(void);
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void __clear(void* buf, int n);
 
-extern "C" int func_0202b7d8(int* arg0);
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+int LinkSession_IsActive(int* obj);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 struct Struct_02039df4;
 
@@ -39,8 +39,8 @@ struct Struct_020790ac_2 {
 extern "C" ARM void func_020790ac(struct Struct_020790ac_2* arg0) {
     if (arg0->unknown_130_ != 1 && arg0->unknown_130_ != 2) return;
 
-    void* var0 = func_0202ae18();
-    if (func_0202b7d8((int*)var0) && func_0202c1a4((struct Struct_0202c1a4*)var0) != 0) {
+    void* g = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)g) && LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) != 0) {
         return;
     }
     if (arg0->unknown_154_ < 0x7d0) return;
@@ -59,8 +59,8 @@ extern "C" ARM void func_020790ac(struct Struct_020790ac_2* arg0) {
     arg0->unknown_166_ = var1;
     func_02076ccc(arg0, 0xa);
 
-    void* var2 = func_0202ae18();
-    if (!func_0202b7d8((int*)var2) || func_0202c1a4((struct Struct_0202c1a4*)var2) != 0) {
+    void* g2 = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)g2) || LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g2) != 0) {
         return;
     }
 

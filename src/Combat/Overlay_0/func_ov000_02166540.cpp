@@ -78,19 +78,19 @@ struct Struct_ov000_02166540_3 {
     unsigned char unknown_0_[0xc];
     short unknown_c_;
 };
-extern "C" void func_02048614(unsigned char*);
-extern "C" void func_02049c88(Struct_ov000_02166540_7*, Struct_ov000_02166540_8*);
-extern "C" void func_02048588(unsigned char*, unsigned char*);
-extern "C" void func_020488ec(char*);
-extern "C" char* func_02070fd0(Struct_02070b6c_3*, int);
-extern "C" void func_0204887c(Struct_0204887c*, char*);
-extern "C" void func_02048bb8(unsigned char*);
-extern "C" void func_02048bf8(unsigned char*);
-extern "C" Struct_ov000_02166540_3* func_0206f4f0(Struct_0206f01c_2*, int);
-extern "C" int func_02033b88(Struct_02010604*, int);
-extern "C" void func_0200fd38(GameState*, int, GameObject*);
-extern "C" void func_ov000_02166784(Struct_ov000_02161c0c_3*, unsigned char*, unsigned char*);
-extern "C" int func_ov000_02167c28(unsigned char*, int);
+void ResetNameState02048614(unsigned char*);
+extern "C" void func_02049c88(NameCombatant*, CombatantModelState*);
+void CopyObjectFields02048588(unsigned char*, unsigned char*);
+void BuildName020488ec(char*);
+char* SearchWithLow15Comparator02070fd0(Container02070e60*, int);
+void ReplaceEntryAndFormat0204887c(Obj0204887c*, char*);
+void SetSubstructFlag0x80_02048bb8(unsigned char*);
+void SetSubstructFlag0x200_02048bf8(unsigned char*);
+CombatantScaleEntry* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
+int GameObject_ForceMotionState(Bytes02033b88*, int);
+void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+void AllocateSlotAndConfigureField02166784(Struct5e00*, unsigned char*, unsigned char*);
+int FindOrAssignSlot02167c28(unsigned char*, int);
 extern "C" void func_ov017_02191aac(void*, int, int, int);
 
 // USA: func_ov000_02166540
@@ -140,13 +140,13 @@ extern "C" ARM void func_ov000_02166540(Struct_ov000_02161c0c_3* arg0, int arg1,
         else if (var12 >= 0x2000) var13 >>= 1;
         var7->unknown_b0_ = var13;
     }
-    func_02033b88((Struct_02010604*)var7, 0);
-    func_0200fd38(var0, arg1, (GameObject*)var7);
-    func_ov000_02166784(arg0, (unsigned char*)var4, (unsigned char*)var7);
-    func_ov000_02167c28((unsigned char*)arg0, arg1);
-    GameObject* var14 = var0->GetCombatantByIndex(arg1);
-    if (var14) {
-        struct Struct_ov000_02166540_6 { unsigned char unknown_0_[0x14]; unsigned int unknown_14_; };
-        if (((Struct_ov000_02166540_6*)var14->currentStats_)->unknown_14_ & 0x1000000) func_ov017_02191aac(var1, 1, arg1, 4);
+    GameObject_ForceMotionState((Bytes02033b88*)combatant, 0);
+    RegisterCombatantSlot_0200fd38(game, slot, (GameObject*)combatant);
+    AllocateSlotAndConfigureField02166784(state, (unsigned char*)source, (unsigned char*)combatant);
+    FindOrAssignSlot02167c28((unsigned char*)state, slot);
+    GameObject* registered = game->GetCombatantByIndex(slot);
+    if (registered) {
+        struct CombatFlags { unsigned char pad_00[0x14]; unsigned int flags; };
+        if (((CombatFlags*)registered->currentStats_)->flags & 0x1000000) func_ov017_02191aac(effects, 1, slot, 4);
     }
 }

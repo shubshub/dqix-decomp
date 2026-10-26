@@ -114,7 +114,7 @@ struct Struct_ov012_021863fc_2
 
 struct Struct_02072a68_2;
 
-int IsField0Null_02046b08(void** p);
+int FieldTaskQueue_IsEmpty(void** p);
 void* GlobalFlags_GetInstance();
 void FlagWord_SetBits(unsigned int* word, unsigned int bits);
 Messages021863fc* MessageSystem_GetInstance();
@@ -252,7 +252,7 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_10* arg0)
     FontBankLoader_GetInstance();
     if (self->step_ == 0)
     {
-        if (func_02046b08(*(void***)((char*)var1 + 0x34f0)))
+        if (FieldTaskQueue_IsEmpty(*(void***)((char*)resources + 0x34f0)))
         {
             SetFlags00(resources, 0x10);
             FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xf);
@@ -405,7 +405,7 @@ extern "C" ARM void func_ov012_021863fc(Struct_ov012_021863fc_2* arg0)
     FontBankLoader_GetInstance();
     if (self->step_ == 0)
     {
-        if (func_02046b08(*(void***)((char*)var16 + 0x3700)))
+        if (FieldTaskQueue_IsEmpty(*(void***)((char*)resources + 0x3700)))
         {
             SetFlags00(resources, 0x10);
             FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0xf);

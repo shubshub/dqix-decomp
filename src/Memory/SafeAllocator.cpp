@@ -188,7 +188,7 @@ unsigned int SafeAllocator::GetSize() const
 }
 
 // USA: func_020327f4
-// JPN: func_0203232c
+// JPN: IntArray_Shuffle
 unsigned int SafeAllocator::GetMaxPossibleAllocation() const
 {
     if (pSignedAlloc == NULL)

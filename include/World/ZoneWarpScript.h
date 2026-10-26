@@ -13,9 +13,9 @@ struct Struct_020fdc20 {
 
 extern Struct_020fdc20 data_020fdc20;
 
-extern "C" void func_0201e1d0(const void* arg0, unsigned int arg1, Struct_020134e0* arg2, SafeAllocator* arg3);
+void ZoneFeaturesScript_Run(const void* data, unsigned int length, ZoneFeatures* features, SafeAllocator* allocator);
 
-extern "C" bool func_0201cb60(Script::Parameter *arg0, int arg1, Struct_020134e0::Struct_0201cb60_3 &arg2);
-extern "C" int func_0201ccc8(Script::Parameter *arg0, int arg1);
-extern "C" int func_0201ce80(Script::Parameter *arg0, int arg1);
-extern "C" int func_0201c96c(Script::Parameter *arg0, int arg1);
+bool ZoneFeaturesScript_ParseExitDestination(Script::Parameter *param, int numParams, ZoneFeatures::Opcode68Entry &entry);
+int ZoneFeaturesScript_AddExit(Script::Parameter *params, int numParams);
+int ZoneFeaturesScript_AddRotatedExit(Script::Parameter *params, int numParams);
+int ZoneFeaturesScript_AddOpcode66Entry(Script::Parameter *params, int numParams);

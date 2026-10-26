@@ -2,10 +2,10 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "std_library_functions.h"
 
-struct Struct_02075cdc;
-extern "C" void func_02075cdc(struct Struct_02075cdc* arg0);
-extern "C" void* func_0203bd08(void);
-extern "C" void* func_0203be4c(void);
+struct InitStruct02075cdcStruct;
+void InitStruct02075cdc(struct InitStruct02075cdcStruct* s);
+extern "C" void* OamManager_GetInstance(void);
+extern "C" void* OamManager_GetSubOamBuffer(void);
 struct StructDE234_020de234;
 unsigned short ItemRecord_GetFileNumber(struct StructDE234_020de234* p, int preferMid);
 
@@ -23,9 +23,9 @@ extern "C" ARM void func_ov006_0215fe34(char* arg0, struct Struct_02015ef4_4* ar
     *(int*)(arg0 + 0x3f4) = 5;
     *(unsigned char*)(arg0 + 0x416) = 1;
 
-    func_0203bd08();
-    void* var1 = func_0203be4c();
-    *(char**)(arg0 + 0x3cc) = (char*)var1 + 0x1b8;
+    OamManager_GetInstance();
+    void* p = OamManager_GetSubOamBuffer();
+    *(char**)(self + 0x3cc) = (char*)p + 0x1b8;
 
     *(int*)(arg0 + 0x3f0) = 0x10000;
     *(int*)(arg0 + 0x3f8) = 0;

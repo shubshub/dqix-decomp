@@ -44,5 +44,5 @@ extern "C" ARM void func_ov017_021cf5d4(void* arg0, struct Struct_ov017_021cf5d4
     if (arg1->unknown_7_ != 0) {
         func_02011b24((struct Struct_02011b24*)arg2);
     }
-    func_0200fcfc(arg2, &var2);
+    GameState_SetZoneTransition(battle, &buf);
 }

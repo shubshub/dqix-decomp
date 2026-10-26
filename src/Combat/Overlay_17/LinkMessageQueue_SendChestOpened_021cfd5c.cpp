@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Sub021cfd5c {
@@ -19,7 +19,7 @@ struct LocalEvt021cfd5c {
 // Overlay 17, originally EnqueueEventTag164_021cfd5c (USA/EUR 0x021cfd5c, JPN 0x021d020c)
 ARM void LinkMessageQueue_SendChestOpened(unsigned char a, unsigned short b, unsigned short c) {
     LocalEvt021cfd5c buf;
-    void* p = GetData02100044_0202ae24();
+    void* p = LinkMessageQueue_GetInstance();
     buf.tag = 0xa4;
     Sub021cfd5c* s = &buf.sub;
     s->valA = a;

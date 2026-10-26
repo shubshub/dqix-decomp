@@ -170,8 +170,8 @@ typedef int Type_02020aec;
 typedef int* Type_02020aec;
 #endif
 
-extern "C" void func_02020720(Struct_02020554* arg0);
+extern "C" void MapDisplay_ResetMap(MapDisplay* self);
 // The caller supplies its display context; this global screen setup does not read it.
-extern "C" void func_02020838(Struct_02020554* arg0);
-extern "C" void func_02020aec(Struct_02020554* arg0, Type_02020aec arg1, SafeAllocator* arg2);
-extern "C" void func_02020c18(Struct_02020554* arg0, Type_02020aec arg1, SafeAllocator* arg2);
+extern "C" void MapDisplay_SetUpLocalMapScreen(MapDisplay* unusedContext);
+extern "C" void MapDisplay_LoadSpriteArchive(MapDisplay* self, MapDisplayTaskHandle handle, SafeAllocator* allocator);
+extern "C" void MapDisplay_RunMapScript(MapDisplay* self, MapDisplayTaskHandle handle, SafeAllocator* allocator);

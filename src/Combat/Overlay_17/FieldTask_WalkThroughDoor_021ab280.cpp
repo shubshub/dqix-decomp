@@ -10,7 +10,7 @@ enum { Enum_ov017_021ab280_2096 = 0x830, Enum_ov017_021ab280_1804 = 0x70c, Enum_
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 
 struct Obj020397cc;
@@ -28,21 +28,21 @@ void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 struct Obj02033b68;
 void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 struct Foo02033b58;
-void SetByteSavingPrevious(struct Foo02033b58* p, unsigned char v);
+void GameObject_StoreMotionState(struct Foo02033b58* p, unsigned char v);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 
-extern "C" unsigned char func_02011494(char* arg0, void* arg1);
+unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
 
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" void VectorizedMemset(void* dst, int val, int size);
 struct Vector3i;
-extern "C" void func_ov017_0219e310(unsigned char* arg0, int arg1);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+void FieldTask_InitEnterZone(unsigned char* obj, int flag);
+struct TailList020469b4;
+struct TailNode020469b4;
+void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 struct Struct_ov017_021ab280 {
     char unknown_0_[8];
@@ -70,9 +70,9 @@ struct Struct_ov017_021ab280_2 {
 // Overlay 17, originally func_ov017_021ab280 (USA/EUR 0x021ab280, JPN 0x021abae0)
 extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
     GameState* battle = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     unsigned char* mgr = (unsigned char*)GetGameResources();
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     void* g = Zone3D_GetInstance();
 
     int state = obj->state;
@@ -96,14 +96,14 @@ extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
         GameObject_SetMotionState((struct Obj02033b68*)combatant, 1);
         SetBrightness((GameResources*)mgr, -16, 15);
 
-        arg0->unknown_8_ = arg0->unknown_8_ + 1;
-        arg0->unknown_c_ = 0;
-    } else if (var4 == 1) {
-        int var9 = *((unsigned char*)var3 + Enum_ov017_021ab280_2096);
-        if (var9 <= 4) {
-            arg0->unknown_8_ = var4 + 1;
-            arg0->unknown_c_ = 0;
-            func_02033b58((struct Struct_02033b58*)var2, 1);
+        obj->state = obj->state + 1;
+        obj->counter = 0;
+    } else if (state == 1) {
+        int gVal = *((unsigned char*)g + kGlobalByteOffset);
+        if (gVal <= 4) {
+            obj->state = state + 1;
+            obj->counter = 0;
+            GameObject_StoreMotionState((struct Foo02033b58*)combatant, 1);
         }
     } else if (var4 == 2) {
         struct Struct_ov009_0218aa28 var10;
@@ -115,7 +115,7 @@ extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
         int var12 = fix32_Atan2(var10.unknown_0_, var10.unknown_8_);
 
         GameObject_SetFacing((struct Obj02033834*)combatant, angle2);
-        SetByteSavingPrevious((struct Foo02033b58*)combatant, 1);
+        GameObject_StoreMotionState((struct Foo02033b58*)combatant, 1);
         *(unsigned short*)((char*)combatant + 0xb2) = 0xa3;
 
         if (IsBrightnessTransitionActive((GameResources*)var1) == 0) {
@@ -130,7 +130,7 @@ extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
         int var15 = fix32_Atan2(var13.unknown_0_, var13.unknown_8_);
 
         GameObject_SetFacing((struct Obj02033834*)combatant, angle2);
-        SetByteSavingPrevious((struct Foo02033b58*)combatant, 1);
+        GameObject_StoreMotionState((struct Foo02033b58*)combatant, 1);
         *(unsigned short*)((char*)combatant + 0xb2) = 0xa3;
 
         if (IsBrightnessTransitionActive((GameResources*)var1) == 0) {
@@ -140,16 +140,16 @@ extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
     } else if (var4 == 4) {
         ((Object3D*)((unsigned char*)var2))->DisableFlag(0x01000080);
 
-        unsigned char var16[4];
-        unsigned char var17 = func_02011494((char*)var0, var16);
-        for (int var18 = 0; var18 < var17; var18++) {
-            GameObject* var19 = var0->GetGameObjectByIndex(var16[var18]);
-            if (var19 != 0) {
-                ((Object3D*)((unsigned char*)var19))->DisableFlag(0x1000000);
+        unsigned char buf[4];
+        unsigned char count = GameState_GetOwnPartyOrder((char*)battle, buf);
+        for (int i = 0; i < count; i++) {
+            GameObject* c = battle->GetGameObjectByIndex(buf[i]);
+            if (c != 0) {
+                ((Object3D*)((unsigned char*)c))->DisableFlag(0x1000000);
             }
         }
 
-        void* entryV = GetField0x3f8Address_0200fd0c(battle);
+        void* entryV = GameState_GetZoneTransition(battle);
         GameState_GetProtagonistIndex(battle);
         VectorizedMemset(entryV, 0, 0x70);
         unsigned char* e = (unsigned char*)entryV;
@@ -176,13 +176,13 @@ extern "C" ARM int FieldTask_WalkThroughDoor(struct Obj_021ab280* obj) {
         *(Vector3i*)((int*)(var21 + 0x48)) = *(Vector3i const*)((int*)&arg0->unknown_10_->unknown_38_[2]);
         *(Vector3i*)((int*)(var21 + 0x54)) = *(Vector3i const*)((int*)&arg0->unknown_10_->unknown_38_[3]);
 
-        var21[0xc] = 1;
-        var21[7] = 1;
-        func_0200fcfc(var0, var20);
+        e[0xc] = 1;
+        e[7] = 1;
+        GameState_SetZoneTransition(battle, entryV);
 
-        func_ov017_0219e310(*(unsigned char**)(var1 + 0x3000 + Enum_ov017_021ab280_1804), 0);
-        func_020469b4(*(struct Struct_0201bdac_2**)(var1 + 0x3000 + Enum_ov017_021ab280_1788),
-                          *(struct Struct_0201bdac**)(var1 + 0x3000 + Enum_ov017_021ab280_1804));
+        FieldTask_InitEnterZone(*(unsigned char**)(mgr + 0x3000 + kResourceHeaderOffset), 0);
+        AppendNodeToTail(*(struct TailList020469b4**)(mgr + 0x3000 + kResourceTailOffset),
+                          *(struct TailNode020469b4**)(mgr + 0x3000 + kResourceHeaderOffset));
 
         arg0->unknown_1_ = 1;
     }

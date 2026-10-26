@@ -16,9 +16,9 @@ enum { Enum_ov003_02155740_820 = 0x334 };
 extern "C" float _fflt(int v);
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float v);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
+extern "C" void func_ov017_021c9e00(int id, int flagA, int flagB, int flagC);
 
 // USA: func_ov003_02155740
 extern "C" ARM void func_ov003_02155740(char* arg0) {
@@ -47,8 +47,8 @@ extern "C" ARM void func_ov003_02155740(char* arg0) {
         *(unsigned short*)(*(char**)((char*)var2 + 0x130) + 6) = *(unsigned short*)(*(char**)((char*)var2 + 0x134) + 0x32);
     }
 
-    void* var8 = func_0202ae18();
-    if (func_0202b7d8((int*)var8) == 0) {
+    void* ptr = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)ptr) == 0) {
         return;
     }
     signed char var9 = *(signed char*)(arg0 + Enum_ov003_02155740_503);

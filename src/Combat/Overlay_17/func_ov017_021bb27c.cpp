@@ -54,16 +54,16 @@ struct Struct_ov017_021bb27c {
 #endif
     unsigned short unknown_44ac_;
 };
-struct Struct_ov017_021d6c20 { int unknown_0_; Vector3fix unknown_4_, unknown_10_, unknown_1c_; };
-extern "C" int func_020100f8(char*);
-extern "C" int* func_0202ae18();
+struct Bounds021bb27c { int zone; Vector3fix origin, extent, destination; };
+int GameState_GetFollowCamera(char*);
+extern "C" int* LinkSession_GetInstance();
 extern "C" Zone021bb27c* Zone3D_GetInstance();
 void DestroyActiveAllocators_0215aa5c();
-void ClearFlag0x4At0xe0(Flags02033fdc*);
-void SetByteSavingPrevious(Foo02033b58*, unsigned char);
-int GetByte0x26c_02039d7c(char*);
-void SetVecYFromValue02033874(Obj02033874*, int);
-int CheckField0NonZero_0202b7d8(int*);
+void GameObject_ResumeMovement(Flags02033fdc*);
+void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
+int GameObject_IsClimbingLadder(char*);
+void GameObject_SnapFacing(Obj02033874*, int);
+int LinkSession_IsActive(int*);
 void SetField0x158_02053ec8(void*, int);
 void ResetTransformState02053f04(void*);
 int GameState_GetLeaderIndex(GameState*);
@@ -71,9 +71,9 @@ void AllocatorUnion_Free(AllocatorUnion*, void*);
 FlagWord020466f4* GlobalFlags_GetInstance();
 void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
 extern "C" void func_ov017_02191fec(GameResources*, int);
-extern "C" void* func_0200fd0c(GameState*);
-extern "C" int func_02046b60(Struct_02038598_5*, int);
-extern "C" void func_020dc2d0(int);
+void* GameState_GetZoneTransition(GameState*);
+int ListContainsId(ListHead02046b60*, int);
+void SetCombatModeFromCase020dc2d0(int);
 extern "C" void func_ov017_02190264(GameResources*, int);
 extern "C" void func_ov017_0218f5a4(GameResources*, int, int, int, int);
 void GameObject_EnableControl(void*);
@@ -102,9 +102,9 @@ extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
     GameResources* resources = GetGameResources();
     ListHead02046b60* list = (ListHead02046b60*)resources->fieldTaskQueue_;
     Detail021bb27c* detail = GetEncounterDetail(resources);
-    GameObject* leader = game->GetUnknownGameObject();
-    void* controlled = (void*)GetFieldIfFlag4_020100f8((char*)game);
-    search = func_0202ae18();
+    GameObject* leader = game->GetLeader();
+    void* controlled = (void*)GameState_GetFollowCamera((char*)game);
+    search = LinkSession_GetInstance();
     Zone021bb27c* zone = Zone3D_GetInstance();
     if (!TestFlags00(resources, 0x1000)) {
         DestroyActiveAllocators_0215aa5c();
@@ -113,20 +113,20 @@ extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
     for (int i = 0; i < 4; i++) {
         GameObject* actor = game->GetPartyMemberByIndex(i);
         if (!actor) continue;
-        ClearFlag0x4At0xe0((Flags02033fdc*)actor);
-        SetByteSavingPrevious((Foo02033b58*)actor, 0);
-        if (!GetByte0x26c_02039d7c((char*)actor) || GetFieldPtrAt0x26c_020399a8(actor)->command != 2) {
+        GameObject_ResumeMovement((Flags02033fdc*)actor);
+        GameObject_StoreMotionState((Foo02033b58*)actor, 0);
+        if (!GameObject_IsClimbingLadder((char*)actor) || GameObject_GetLadderClimb(actor)->command != 2) {
                 actor->obj3D_.SetAnimationByName(data_ov017_021d7d6c, 0x10);
         } else if (self->resetActor) {
                 ((Actor021bb27c*)actor)->flags &= ~1;
                 actor->obj3D_.DisableFlag(0x1180);
-                InitBlock02038508(GetFieldPtrAt0x26c_020399a8(actor));
+                LadderClimb_Reset(GameObject_GetLadderClimb(actor));
                 actor->obj3D_.SetAnimationByName(data_ov017_021d7d6c, 0x10);
         } else actor->obj3D_.SetAnimationByName(data_ov017_021d7d72, 0);
-        SetVecYFromValue02033874((Obj02033874*)actor, actor->obj3D_.rotation_.y);
+        GameObject_SnapFacing((Obj02033874*)actor, actor->obj3D_.rotation_.y);
         actor->obj3D_.DisableFlag(0x10);
     }
-    if (CheckField0NonZero_0202b7d8(search)) {
+    if (LinkSession_IsActive(search)) {
         PartyState021bb27c* party = (PartyState021bb27c*)GameState_GetParty(game);
         for (int i = 0; i < party->count; i++) {
             Actor021bb27c* actor = (Actor021bb27c*)GetCombatantWithFlag0x100_0200ff1c(game, party->indices[i]);
@@ -168,7 +168,7 @@ extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
     FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x20000);
     for (int i = 0; i < 4; i++) func_ov017_02191fec(resources, i);
     FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x400f);
-    Encounter021bb27c* encounter = (Encounter021bb27c*)GetField0x3f8Address_0200fd0c(game);
+    Encounter021bb27c* encounter = (Encounter021bb27c*)GameState_GetZoneTransition(game);
     if (self->field104 && !detail->field2 && (!encounter->active || self->field10c) &&
         !ListContainsId(list, 10) && !(self->kind == 1 && self->fieldcf == 2)) {
         SetCombatModeFromCase020dc2d0(0);
@@ -183,7 +183,7 @@ extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
     const Bounds021bb27c* bounds = data_ov017_021d6c20;
     for (int i = 0; i < 3; i++, bounds++) {
         if (bounds->zone != self->zone) continue;
-        GameObject* actor = game->GetUnknownGameObject();
+        GameObject* actor = game->GetLeader();
         Vector3fix position = actor->obj3D_.position_;
         if (fix32abs(position.x - bounds->origin.x) > bounds->extent.x) break;
         if (fix32abs(position.y - bounds->origin.y) > bounds->extent.y) break;
@@ -193,9 +193,9 @@ extern "C" ARM void func_ov017_021bb27c(Event021bb27c* self) {
     self->fieldcf = 0xff; self->field9a = 0;
     ResourceKey021bb27c* resourceKey = (ResourceKey021bb27c*)resources;
     if (self->key == resourceKey->key) resourceKey->key = 0;
-    if (CheckField0NonZero_0202b7d8(search)) {
+    if (LinkSession_IsActive(search)) {
         if (self->mode <= 2 && self->fieldfd) return;
-        Encounter021bb27c* encounter = (Encounter021bb27c*)GetField0x3f8Address_0200fd0c(game);
+        Encounter021bb27c* encounter = (Encounter021bb27c*)GameState_GetZoneTransition(game);
         if (encounter->active && self->field108) encounter->fieldE = 1;
         else EnqueueEventTag150_021d035c(0, GameState_GetLeaderIndex(game), self->field108);
         for (int i = 0; i < 4; i++) {

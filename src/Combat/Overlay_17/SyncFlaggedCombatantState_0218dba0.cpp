@@ -13,12 +13,12 @@ enum { RegionOffset36fc = 0x36fc, RegionOffset38 = 0x38, RegionOffset3c = 0x3c }
 extern "C" void* Zone3D_GetInstance(void);
 
 struct BitField0203402c;
-int CheckField0xc4Low15BitsNonZero(struct BitField0203402c* p);
+int GameObject_IsSinking(struct BitField0203402c* p);
 
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 
 struct S02037484;
 
@@ -31,7 +31,7 @@ extern "C" ARM void func_ov017_0218dba0(int combatantId) {
     if (combatant == 0) {
         return;
     }
-    if (CheckField0xc4Low15BitsNonZero((struct BitField0203402c*)combatant) != 0) {
+    if (GameObject_IsSinking((struct BitField0203402c*)combatant) != 0) {
         return;
     }
 
@@ -52,9 +52,9 @@ extern "C" ARM void func_ov017_0218dba0(int combatantId) {
     int d = (int)(t * (float)mulResult);
 
     if (combatant != 0) {
-        SubBlock02038508* base = GetFieldPtrAt0x26c_020399a8(combatant);
+        SubBlock02038508* base = GameObject_GetLadderClimb(combatant);
         if (base->active != 0) {
-            base = GetFieldPtrAt0x26c_020399a8(combatant);
+            base = GameObject_GetLadderClimb(combatant);
             unsigned char mode = base->command;
             if (mode == 1 || mode == 4) {
                 d = base->unknown50;
@@ -66,8 +66,8 @@ extern "C" ARM void func_ov017_0218dba0(int combatantId) {
         }
     }
 
-    if (*(short*)((char*)GetField0x3f8Address_0200fd0c(battle) + 0x6c) == 0x270f) {
-        if (GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)headArr) == 3) {
+    if (*(short*)((char*)GameState_GetZoneTransition(battle) + 0x6c) == 0x270f) {
+        if (FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)headArr) == 3) {
             d = 0;
         }
     }

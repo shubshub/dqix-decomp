@@ -15,25 +15,25 @@ struct Struct_02048850;
 struct Struct_02048850_2;
 struct Struct_0202c1a4;
 
-extern "C" void* func_0202ae18(void);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" unsigned char* func_02070fd0(Struct_02070b6c_3* arg0, int arg1);
-extern "C" Struct_02048850_2* func_0206f4f0(Struct_0206f01c_2* arg0, int arg1);
-extern "C" int func_02010088(Struct_02010088* arg0);
-extern "C" int func_ov000_02161bb8(unsigned char* arg0);
-extern "C" void func_02048934(void* arg0, Struct_02048934* arg1, Random* arg2);
-extern "C" void func_020891cc(void* arg0);
-extern "C" void func_02089630(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov000_02161bec(unsigned char* arg0);
-extern "C" void func_02048614(unsigned char* arg0);
-extern "C" void func_02049c88(void* arg0, void* arg1);
-extern "C" void func_02048850(Struct_02048850* arg0, Struct_02048850_2* arg1);
-extern "C" void func_020488ec(char* arg0);
-extern "C" void func_02049f3c(unsigned char* arg0);
-extern "C" void func_0200fd38(GameState* arg0, int arg1, GameObject* arg2);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" void __clear(void* buf, int n);
+unsigned char* SearchWithLow15Comparator02070fd0(Container02070e60* table, int key);
+Param02048850* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct* table, int key);
+int IsFlag10088Set_02010088(S_10088* obj);
+extern "C" int func_ov000_02161bb8(unsigned char* obj);
+void SetRandomizedShort0x18802048934(void* p, FieldStruct02048934* f, Random* r);
+extern "C" void func_020891cc(void* obj);
+extern "C" void func_02089630(void* dst, void* src, int useExactValue);
+void IncrementByteCounterWrapAt0x12_ov000_02161bec(unsigned char* p);
+void ResetNameState02048614(unsigned char* obj);
+extern "C" void func_02049c88(void* obj, void* model);
+void SetupFieldsFromParam02048850(Obj02048850* obj, Param02048850* param);
+void BuildName020488ec(char* obj);
+void ClearSubstructByte0x56_02049f3c(unsigned char* obj);
+void RegisterCombatantSlot_0200fd38(GameState* battleStruct, int id, GameObject* combatant);
+int LinkSession_IsActive(int* obj);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 
 struct Struct_ov000_02161380 {
     unsigned short unknown_0_;
@@ -163,14 +163,14 @@ extern "C" ARM int func_ov000_02161380(Struct_ov000_02161380_10* arg0, int arg1,
     }
     if (!var18) return -1;
 
-    var1 = GameState::GetInstance();
-    var2 = func_0202ae18();
-    var0 = (Struct_02070b6c_3*)((unsigned char*)arg0->unknown_2a0_ + 0x684);
-    var3 = (Struct_0206f01c_2*)((unsigned char*)arg0->unknown_2a0_ + 0x678);
-    var4 = -1;
-    for (int var21 = 0; var21 < 8; var21++) {
-        if (func_0200fea4(var1, var21 + 0xc0) == 0) {
-            var4 = (short)(var21 + 0xc0);
+    game = GameState::GetInstance();
+    search = LinkSession_GetInstance();
+    names = (Container02070e60*)((unsigned char*)scene->roster + 0x684);
+    infos = (BinarySearchByComparatorStruct*)((unsigned char*)scene->roster + 0x678);
+    id = -1;
+    for (int i = 0; i < 8; i++) {
+        if (GetCombatantWithFlag0x400_0200fea4(game, i + 0xc0) == 0) {
+            id = (short)(i + 0xc0);
             break;
         }
     }
@@ -290,50 +290,50 @@ extern "C" ARM int func_ov000_02161380(Struct_ov000_02161380_10* arg0, int arg1,
         }
     }
 
-    if (var4 >= 0xc0) {
-        int var35 = var4 - 0xc0;
-        var7 = &arg0->unknown_2a0_->unknown_158_[var35];
-        var15 = &arg0->unknown_5e24_[var35];
-        func_020891cc(var7);
-        if (var15) {
-            func_02048614((unsigned char*)var15);
-            func_02049c88(var15, &arg0->unknown_6aa4_[var35]);
-            func_02089630(var7, var12 + 0x2c, 0);
-            var15->unknown_0_.SetField06(arg0->unknown_ec8_);
-            var15->unknown_138_ = var7;
-            var15->unknown_134_ = var12 + 0x2c;
-            var15->unknown_148_ = var12;
-            func_02048850((Struct_02048850*)var15, var5);
-            func_02048934(var15, (Struct_02048934*)var12, (Random*)arg0->unknown_29c_);
-            unsigned short var36 = var15->unknown_188_;
-            unsigned short var37 = var15->unknown_18a_;
-            var15->unknown_138_->unknown_0_ = var36;
-            var15->unknown_138_->unknown_4_ = var36;
-            var15->unknown_138_->unknown_2_ = var37;
-            var15->unknown_138_->unknown_6_ = var37;
-            unsigned char* var38 = (unsigned char*)&var16->unknown_4c_[var23];
-            unsigned char var39 = func_ov000_02161bb8(var38);
-            if (var39 == 1) var39 = 0;
-            var15->unknown_0_.unknown_2_ = arg1;
-            var15->unknown_17c_ = arg2;
-            var15->unknown_138_->unknown_25_ = var39;
-            func_020488ec((char*)var15);
-            var15->unknown_186_ = arg1;
-            var15->unknown_18c_ = arg2;
-            var15->unknown_18d_ = var39;
-            var15->unknown_184_ = 1;
-            var15->unknown_0_.MakeHidden();
-            func_02049f3c((unsigned char*)var15);
-            var16->unknown_4c_[var23].unknown_4_ |= 1 << var15->unknown_18d_;
-            func_ov000_02161bec(var38);
-            func_0200fd38(var1, var4, (GameObject*)var15);
-            var16->unknown_4_[arg2].unknown_2_[var16->unknown_4_[arg2].unknown_a_0_] = var35;
-            var16->unknown_4_[arg2].unknown_a_0_++;
-            var16->unknown_4_[arg2].unknown_a_4_++;
-            var16->unknown_0_++;
-            var16->unknown_1_0_++;
-            if (func_0202b7d8((int*)var2)) {
-                func_0202c1a4((Struct_0202c1a4*)var2);
+    if (id >= 0xc0) {
+        int index = id - 0xc0;
+        stats2 = &scene->roster->stats[index];
+        nc = &scene->combatants[index];
+        func_020891cc(stats2);
+        if (nc) {
+            ResetNameState02048614((unsigned char*)nc);
+            func_02049c88(nc, &scene->models[index]);
+            func_02089630(stats2, entry + 0x2c, 0);
+            nc->object.SetField06(scene->field_ec8);
+            nc->stats = stats2;
+            nc->entryData = entry + 0x2c;
+            nc->entry = entry;
+            SetupFieldsFromParam02048850((Obj02048850*)nc, info);
+            SetRandomizedShort0x18802048934(nc, (FieldStruct02048934*)entry, (Random*)scene->data);
+            unsigned short v0 = nc->field_188;
+            unsigned short v2 = nc->field_18a;
+            nc->stats->field_0 = v0;
+            nc->stats->field_4 = v0;
+            nc->stats->field_2 = v2;
+            nc->stats->field_6 = v2;
+            unsigned char* slots = (unsigned char*)&f->pairs[pair];
+            unsigned char slot = func_ov000_02161bb8(slots);
+            if (slot == 1) slot = 0;
+            nc->object.unknown_2_ = kind;
+            nc->mode = group;
+            nc->stats->slot = slot;
+            BuildName020488ec((char*)nc);
+            nc->kind = kind;
+            nc->group = group;
+            nc->slot = slot;
+            nc->active = 1;
+            nc->object.MakeHidden();
+            ClearSubstructByte0x56_02049f3c((unsigned char*)nc);
+            f->pairs[pair].slots |= 1 << nc->slot;
+            IncrementByteCounterWrapAt0x12_ov000_02161bec(slots);
+            RegisterCombatantSlot_0200fd38(game, id, (GameObject*)nc);
+            f->groups[group].ids[f->groups[group].count] = index;
+            f->groups[group].count++;
+            f->groups[group].used++;
+            f->total++;
+            f->alive++;
+            if (LinkSession_IsActive((int*)search)) {
+                LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search);
             }
             return var4;
         }

@@ -18,7 +18,7 @@ struct Src02157174;
 void CopyThreeFields02157174(Dst02157174*, Src02157174*);
 struct StructAt020473c8;
 void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
-extern "C" void func_02047554(void* obj, int val, int param1);
+extern "C" void SprSprite_DrawGroup(void* obj, int val, int param1);
 struct ItemTable;
 void* ItemTable_Find(ItemTable*, int);
 MemberScreen* GetField1c_021a193c(int* p);
@@ -132,11 +132,11 @@ extern "C" ARM void func_ov005_02159c88(Struct_ov005_02159c88_4* arg0) {
                     int var17 = var15.unknown_4_ + REGION(0x10000,0x8000);
                     int var18 = var15.unknown_8_ + 0x1000;
                     G3_MTX_PUSH = 0;
-                    G3_MTX_TRANS = var16;
-                    G3_MTX_TRANS = var17;
-                    G3_MTX_TRANS = var18;
-                    arg0->unknown_2d88_ = 0xf0a;
-                    func_02047554(arg0->unknown_2d08_, 0, 1);
+                    G3_MTX_TRANS = tx;
+                    G3_MTX_TRANS = ty;
+                    G3_MTX_TRANS = tz;
+                    self->color2d88 = 0xf0a;
+                    SprSprite_DrawGroup(self->entry2d08, 0, 1);
                     G3_MTX_POP = 1;
                 }
             }
@@ -192,11 +192,11 @@ extern "C" ARM void func_ov005_02159c88(Struct_ov005_02159c88_4* arg0) {
                             if (arg0->unknown_3da8_ == 0 && arg0->unknown_3da9_ == 0) {
                                 Struct_ov005_02159c88 var34 = var33->unknown_1c_;
                                 G3_MTX_PUSH = 0;
-                                G3_MTX_TRANS = var34.unknown_0_ + REGION(0x11000,0x8000);
-                                G3_MTX_TRANS = var34.unknown_4_ + REGION(0x10000,0x8000);
-                                G3_MTX_TRANS = var34.unknown_8_ + 0x1000;
-                                arg0->unknown_2d88_ = 0xf0a;
-                                func_02047554(arg0->unknown_2d08_, 0, 1);
+                                G3_MTX_TRANS = v.x + REGION(0x11000,0x8000);
+                                G3_MTX_TRANS = v.y + REGION(0x10000,0x8000);
+                                G3_MTX_TRANS = v.z + 0x1000;
+                                self->color2d88 = 0xf0a;
+                                SprSprite_DrawGroup(self->entry2d08, 0, 1);
                                 G3_MTX_POP = 1;
                             }
                         }
@@ -217,11 +217,11 @@ extern "C" ARM void func_ov005_02159c88(Struct_ov005_02159c88_4* arg0) {
         if (arg0->unknown_3d78_ < 8 && arg0->unknown_3dab_ == 0) {
             Struct_ov005_02159c88 var36 = arg0->unknown_3cf0_.unknown_1c_;
             G3_MTX_PUSH = 0;
-            G3_MTX_TRANS = var36.unknown_0_ + REGION(0x11000,0x8000);
-            G3_MTX_TRANS = var36.unknown_4_ + REGION(0x10000,0x8000);
-            G3_MTX_TRANS = var36.unknown_8_ + 0x1000;
-            arg0->unknown_2d88_ = 0xf0a;
-            func_02047554(arg0->unknown_2d08_, 0, 1);
+            G3_MTX_TRANS = w.x + REGION(0x11000,0x8000);
+            G3_MTX_TRANS = w.y + REGION(0x10000,0x8000);
+            G3_MTX_TRANS = w.z + 0x1000;
+            self->color2d88 = 0xf0a;
+            SprSprite_DrawGroup(self->entry2d08, 0, 1);
             G3_MTX_POP = 1;
         }
     }

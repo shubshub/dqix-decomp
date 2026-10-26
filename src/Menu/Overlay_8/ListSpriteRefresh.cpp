@@ -48,10 +48,10 @@ struct Overlay8SpriteView {
 };
 
 extern "C" {
-    void* func_0202ae18();
-    bool func_0202c540(void*);
+    void* LinkSession_GetInstance();
+    bool LinkSession_IsGuest(void*);
     int _Z27GridCursor_GetSelectedIndexP10GridCursor(void*);
-    void _Z19SetBitfield0205afb0iPvi(void*, void*, int);
+    void _Z30SpriteContext_SetSpritePaletteiPvi(void*, void*, int);
     void _Z19SetBitfield0205af84iPvi(void*, void*, int);
     void SpriteContext_DrawSprite(void*, void*);
 
@@ -71,9 +71,9 @@ extern "C" {
                     style = 2;
                 else if (menu->phase == 12)
                     style = 3;
-                if (func_0202c540(func_0202ae18()) && entry == 5)
+                if (LinkSession_IsGuest(LinkSession_GetInstance()) && entry == 5)
                     style = 3;
-                _Z19SetBitfield0205afb0iPvi(menu->renderer, &menu->spriteEntries[entry], style);
+                _Z30SpriteContext_SetSpritePaletteiPvi(menu->renderer, &menu->spriteEntries[entry], style);
                 _Z19SetBitfield0205af84iPvi(menu->renderer, &menu->spriteEntries[entry], 1);
                 SpriteContext_DrawSprite(menu->renderer, &menu->spriteEntries[entry]);
                 ++drawn;

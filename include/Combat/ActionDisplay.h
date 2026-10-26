@@ -32,10 +32,10 @@ extern int data_020e70f0[][4][2];
 extern int data_020e70f4[][4][2];
 
 extern "C" {
-int func_020236dc(Struct_020236dc *arg0, unsigned char *arg1, Vector3i *arg2);
-void func_02023b5c(void *arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5);
-void func_02023d84(void *arg0, Struct_020236dc *arg1, int arg2, int arg3, int arg4, int arg5, int arg6,
-                   int arg7);
-void func_02024e78(void *arg0);
-void func_020251bc(void *arg0);
+int MapDisplay_CollectIcons(CombatActionPosition *entries, unsigned char *groups, Vector3i *position);
+void MapDisplay_DrawRedChestMarkers(void *receiver, int tileX, int tileY, int xOffset, int yOffset, unsigned char flag);
+void MapDisplay_DrawBattleMarkers(void *receiver, CombatActionPosition *entries, int count, int tileX, int tileY, int xOffset, int yOffset,
+                   int flags);
+void func_02024e78(void *receiver);
+void func_020251bc(void *receiver);
 }

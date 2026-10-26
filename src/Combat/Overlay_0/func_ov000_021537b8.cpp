@@ -9,12 +9,12 @@ char unknown1_13c_[20];
 #endif
 unsigned char* unknown_150_;};
 class GameState {public:static GameState* GetInstance();GameObject* GetCombatantByIndex(int);};
-extern "C" GameObject* func_0200ff1c(GameState*,int);extern "C" int func_ov000_02153a8c(GameObject*);extern "C" int func_ov000_0215fc60(char*);
-struct Struct_ov000_021537b8_4 {char unknown_0_[8];unsigned int unknown_8_0_:8,unknown_9_0_:24;unsigned int unknown_c_,unknown_10_;char unknown_14_[4];unsigned int unknown_18_0_:12,unknown_19_4_:4,unknown_1a_0_:16;};
-extern "C" Struct_ov000_021537b8_4* func_02079e2c(char*,int);extern "C" int func_02083b00(unsigned char*,int);extern "C" unsigned int func_020dd290(void*,unsigned int);extern "C" void func_ov000_0215a124(void*,int,int);extern "C" void* func_ov000_02160130();extern "C" void* func_ov000_02160f08(void*);
-struct Struct_ov000_021537b8_6;extern "C" void func_ov000_02176150(Struct_ov000_021537b8_6*,unsigned short);extern "C" void func_02088db8(unsigned char*);struct Struct_02010604;extern "C" void func_02033b88(Struct_02010604*,int);
-struct Struct_ov000_021537b8 {unsigned short unknown_0_,unknown_2_;char unknown_4_[5];unsigned char unknown_9_;};
-struct Struct_ov000_021537b8_2 {char unknown_0_[0xe];short unknown_e_;char unknown_10_[0x3c];int unknown_4c_;
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*,int);int IsFlag0x18Bit0x200Set_ov000_02153a8c(GameObject*);int ClassifyField0x81fe_ov000_0215fc60(char*);
+struct Skill {char p[8];unsigned int cost:8,rest8:24;unsigned int c,flags;char q[4];unsigned int low:12,type:4,high:16;};
+Skill* SearchBothTables02079e2c(char*,int);int TestBitInArray0x8ec_02083b00(unsigned char*,int);unsigned int AdjustValueByFieldFlag_020dd290(void*,unsigned int);void ConsumeMP0215a124(void*,int,int);void* GetActiveCombatWork_ov000_02160130();void* GetOffsetPtr02160f08(void*);
+struct Obj02176150;extern "C" void _Z24SetShortField0xE02176150P11Obj02176150s(Obj02176150*,unsigned short);void SetField0x18Flag0x20_02088db8(unsigned char*);struct Bytes02033b88;void GameObject_ForceMotionState(Bytes02033b88*,int);
+struct Work {unsigned short action,previous;char p[5];unsigned char count;};
+struct HudSlot {char p[0xe];short mp;char q[0x3c];int id;
 #if defined(jpn)
 char unknown_50_[0x438];
 #else
@@ -44,8 +44,8 @@ found:
    if(var2->unknown_10_&1)var1->unknown_138_->unknown_3c_|=8;else var1->unknown_138_->unknown_3c_|=0x20;return;
   }
  }
- if(arg2->unknown_0_==0x1dc){func_02088db8((unsigned char*)var1->unknown_138_);var1->unknown_c1_4_=1;func_02033b88((Struct_02010604*)var1,0);return;}
- unsigned char var12=0;int var13=0;const Struct_ov000_02182e24* var14=data_ov000_02182e24;
- while(var14->unknown_0_!=-1){if(var14->unknown_0_==arg2->unknown_0_){var12=(unsigned char)var14->unknown_2_;var13=(unsigned char)var14->unknown_4_;break;}var14++;}
- var1->unknown_138_->unknown_21_=var12;var1->unknown_c1_4_=(unsigned char)var13;func_02033b88((Struct_02010604*)var1,0);
+ if(work->action==0x1dc){SetField0x18Flag0x20_02088db8((unsigned char*)unit->stats);unit->state=1;GameObject_ForceMotionState((Bytes02033b88*)unit,0);return;}
+ unsigned char state=0;int mode=0;const StateRow* row=data_ov000_02182e24;
+ while(row->action!=-1){if(row->action==work->action){state=(unsigned char)row->state;mode=(unsigned char)row->mode;break;}row++;}
+ unit->stats->state=state;unit->state=(unsigned char)mode;GameObject_ForceMotionState((Bytes02033b88*)unit,0);
 }

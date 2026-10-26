@@ -28,7 +28,7 @@ int AreFields60And64BothNegOne_02168c00(unsigned char *p);
 void ClearStruct020a13c4(struct S020a13c4 *s);
 void SetupGlobalAndRunScript020a13e4(void *p, void *alloc, int a, unsigned short b, unsigned char c);
 void *FindElementByField020a15bc(struct Array020a15bc *arr, int key);
-void *ResetAndReturnSelf020dfc2c(void *p);
+void *KeyTable_Construct(void *p);
 void KeyTable_Reset(struct Struct020dfc40 *s);
 void Reset02168c38(struct Foo02168c38 *f);
 void AppendFormattedValue_02168d10(unsigned char *rec, int v);
@@ -77,7 +77,7 @@ extern "C" ARM void func_ov002_021688f8(char *arg0) {
         *(unsigned char *) (base + 0x2000 + REGION_VALUE(0x2a1, 0x471)) =
             (func_ov023_021ed724(*(void **) (base + 0x2000 + REGION_VALUE(0x294, 0x464)), keys, n) & 1) ? 1 : 0;
         char *hero = (char *) gs->GetProtagonist();
-        ResetAndReturnSelf020dfc2c(ctr);
+        KeyTable_Construct(ctr);
         KeyTable_Reset((struct Struct020dfc40 *) ctr);
 #if defined(jpn)
         func_020e1fc4(var0, (SafeAllocator*)(arg0 + 0x78c), data_ov002_0216dab4, var4,

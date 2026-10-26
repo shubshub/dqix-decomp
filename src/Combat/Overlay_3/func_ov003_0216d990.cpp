@@ -7,12 +7,12 @@ struct Struct_0205d0e0 {
 };
 
 struct Struct_0205d81c;
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" void func_0204f138(unsigned char* arg0, unsigned char** arg1, unsigned char** arg2, unsigned char** arg3,
-                              unsigned char** arg4);
+struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+int LinkSession_IsActive(int* obj);
+void GetFourSubstructPointers_0204f138(unsigned char* elem, unsigned char** a, unsigned char** b, unsigned char** c,
+                              unsigned char** d);
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void SpriteContext_DrawSprite(void* list, void* entry);
 
 struct Struct_ov003_0216d990 {
@@ -22,10 +22,10 @@ struct Struct_ov003_0216d990 {
 };
 
 // USA: func_ov003_0216d990
-extern "C" ARM void func_ov003_0216d990(char* arg0) {
-    void* var0 = func_0202ae18();
-    if (*(short*)(arg0 + 4) != 2 || *(short*)(arg0 + 6) != 2) return;
-    if (func_0202b7d8((int*)var0) != 0) return;
+extern "C" ARM void func_ov003_0216d990(char* obj) {
+    void* g = LinkSession_GetInstance();
+    if (*(short*)(obj + 4) != 2 || *(short*)(obj + 6) != 2) return;
+    if (LinkSession_IsActive((int*)g) != 0) return;
 
     struct Struct_ov003_0216d990* var1 = 0;
 #if defined(jpn)

@@ -8,10 +8,10 @@ enum { Enum_ov017_021cc4f8_2384 = 0x950 };
 
 #include "GameState/GameState.h"
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_02053c6c(unsigned char* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
+int GetFieldAt0x150_02053c6c(unsigned char* obj);
 
 extern "C" void func_ov017_021c41fc(int arg0, signed char arg1);
 extern "C" ARM void func_ov017_021c4418(int arg0, signed char arg1);
@@ -38,11 +38,11 @@ struct Struct_ov017_021cc4f8 {
     unsigned int unknown_8_;
 };
 
-// USA: func_ov017_021cc4f8
-extern "C" ARM void func_ov017_021cc4f8(signed char arg0, struct Struct_ov017_021cc4f8* arg1, GameState* arg2, int arg3, struct Struct_0202c1a4* arg4) {
-    int var0 = arg1->unknown_4_;
-    signed char var1 = func_0202c1a4(arg4);
-    if (arg1->unknown_5_ != var1) return;
+// USA: func_ov017_021cc4f8  (semantic: DispatchPendingEventFlags_021cc4f8)
+extern "C" ARM void func_ov017_021cc4f8(signed char flag, struct DispatchArgs021cc4f8* args, GameState* bs, int unused, struct SearchStruct0202c1a4* search) {
+    int id = args->id;
+    signed char cur = LinkSession_GetOwnSlot(search);
+    if (args->tag != cur) return;
 
     int var2 = 0;
     unsigned int var3 = arg1->unknown_8_;

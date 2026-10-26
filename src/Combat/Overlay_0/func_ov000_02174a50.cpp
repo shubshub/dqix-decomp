@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_0203c0cc;
-extern "C" void func_0203c0f0(struct Struct_0203c0cc* arg0);
-extern "C" void func_ov000_0216fe9c(void* arg0);
-extern "C" void func_ov000_021710ac(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02174b14(void* arg0);
+struct State0xc0cc;
+void CachedTextLabel_Reset(struct State0xc0cc* obj);
+extern "C" void func_ov000_0216fe9c(void* obj);
+extern "C" void func_ov000_021710ac(void* obj, int combatantId, int flag);
+extern "C" void func_ov000_02174b14(void* obj);
 extern int data_ov000_02183ff0;
 
 struct Struct_ov000_02174a50 {
@@ -23,20 +23,20 @@ extern "C" ARM void func_ov000_02174a50(void* arg0, int arg1) {
     if (!var0) {
         return;
     }
-    struct Struct_ov000_02174a50* var1 = (struct Struct_ov000_02174a50*)((char*)arg0 + 0x958);
-    for (int var2 = 0; var2 < 4; var2++) {
-        signed char var3 = *(signed char*)((char*)arg0 + var2 + 0x6c);
-        struct Struct_ov000_02174a50* var4 = var1 + var3;
-        if (arg1 == var4->unknown_4c_) {
-            func_0203c0f0((struct Struct_0203c0cc*)((char*)var4 + 0x50));
+    struct Entry02174a50* table = (struct Entry02174a50*)((char*)obj + 0x958);
+    for (int i = 0; i < 4; i++) {
+        signed char e = *(signed char*)((char*)obj + i + 0x6c);
+        struct Entry02174a50* entry = table + e;
+        if (combatantId == entry->field4c) {
+            CachedTextLabel_Reset((struct State0xc0cc*)((char*)entry + 0x50));
 #if defined(jpn)
             enum { Enum_ov000_02174a50_104 = 0x88 };
 #else
             enum { Enum_ov000_02174a50_104 = 0x68 };
 #endif
-            func_0203c0f0((struct Struct_0203c0cc*)((char*)var4 + Enum_ov000_02174a50_104));
-            func_ov000_0216fe9c((char*)var4 + 0x8);
-            func_ov000_021710ac(var4, -1, 0);
+            CachedTextLabel_Reset((struct State0xc0cc*)((char*)entry + stateOffset));
+            func_ov000_0216fe9c((char*)entry + 0x8);
+            func_ov000_021710ac(entry, -1, 0);
             data_ov000_02183ff0 -= 1;
             func_ov000_02174b14(arg0);
             if (data_ov000_02183ff0 <= 0) {

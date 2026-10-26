@@ -26,8 +26,8 @@ extern "C" int func_ov000_021719f8(int* arg0);
 struct Container020e0310;
 int KeyTable_Get(struct Container020e0310* c, int key);
 #endif
-extern "C" void func_0203c108(struct Struct_0203c108_3* arg0, char* arg1);
-extern "C" void func_0203c198(char* arg0);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
+void CachedTextLabel_Release(char* obj);
 
 extern "C" void __clear(void* arg0, int arg1);
 
@@ -106,13 +106,13 @@ extern "C" ARM void func_ov000_02170538(struct Struct_ov000_02170538_2* arg0, in
 #if defined(jpn)
             char* str = (char*)KeyTable_Get(*(struct Container020e0310**)((char*)e + 4), func_ov000_02171a74(e));
             if (str != NULL) {
-                SwapGlobalEntry0203c108((struct Obj0203c108*)&e->label, str);
+                CachedTextLabel_SetText((struct Obj0203c108*)&e->label, str);
             }
 #else
-            char var13[0x80];
-            __clear(var13, sizeof(var13));
-            if (func_ov000_02171a74(arg0, var13) >= 0) {
-                func_0203c108((struct Struct_0203c108_3*)&arg0->unknown_50_, var13);
+            char buf[0x80];
+            __clear(buf, sizeof(buf));
+            if (func_ov000_02171a74(e, buf) >= 0) {
+                CachedTextLabel_SetText((struct Obj0203c108*)&e->label, buf);
             }
 #endif
             arg0->unknown_3c_ = arg0->unknown_28_;
@@ -120,13 +120,13 @@ extern "C" ARM void func_ov000_02170538(struct Struct_ov000_02170538_2* arg0, in
         func_ov000_021704d8(&arg0->unknown_50_, var7, var8[0], var6.unknown_0_);
         return;
     }
-    if (var10 != var11 && (arg0->unknown_3c_ & 0x80019)) {
-        func_0203c198((char*)&arg0->unknown_50_);
-        arg0->unknown_3c_ = arg0->unknown_28_;
-        arg0->unknown_1d_ = -1;
-        arg0->unknown_2c_ = -1;
-        arg0->unknown_2e_ = -1;
-        arg0->unknown_26_ = 0;
+    if (cur != want && (e->f3c & 0x80019)) {
+        CachedTextLabel_Release((char*)&e->label);
+        e->f3c = e->f28;
+        e->b1d = -1;
+        e->s2c = -1;
+        e->b2e = -1;
+        e->u26 = 0;
     }
     int var14 = 3;
     if (arg0->unknown_10_[arg0->unknown_18_] != 0x66) var14 = 0;

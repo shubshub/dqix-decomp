@@ -46,23 +46,24 @@ struct Struct_ov017_021a4e88_6 {
     int unknown_4080_;
 };
 
-extern "C" void* func_0203cf4c(void);
-extern "C" void __clear(void* arg0, int arg1);
-struct Struct_0203dce4_2;
-extern "C" Struct_ov017_021a4e88_4* func_0203dce4(Struct_0203dce4_2*, int);
-extern "C" void func_02040648(unsigned int*);
-extern "C" void func_02040658(unsigned int*);
-extern "C" void func_02040bcc(char*);
-struct Struct_0203de84;
-struct Struct_0203de84_2;
-extern "C" void func_020406f8(Struct_0203de84* arg0, Struct_0203de84_2* arg1);
-struct Struct_0203e0a0;
-extern "C" Struct_ov017_021a4e88_3* func_02040538(Struct_0203e0a0*);
-extern "C" Struct_ov017_021a4e88_4* func_0203df78(void* arg0, int arg1);
-extern "C" int func_020535c8(signed char*);
-struct Struct_ov009_0218aa28;
-extern "C" short func_ov017_021a4700(Struct_ov009_0218aa28*, int, Struct_ov009_0218aa28*);
-extern "C" unsigned char* func_02040528(int*);
+void* GetGlobalPtr021075f4_0203cf4c(void);
+extern "C" void __clear(void* p, int n);
+struct EntryList_203dce4;
+Entry021a4e88* GetEntryUnlessFlag0x8000_0203dce4(EntryList_203dce4*, int);
+void ClearFlag0x1_02040648(unsigned int*);
+void SetFlag0x1_02040658(unsigned int*);
+void ClearActiveChildState_02040bcc(char*);
+extern "C" Vec3_021a4e88 _Z29SelectVec3FromSources020406f8P13Vec3_020406f8P12Node020406f8(Entry021a4e88* e);
+struct Vec3_020406f8;
+struct Node020406f8;
+void SelectVec3FromSources020406f8(Vec3_020406f8* out, Node020406f8* n);
+struct S02040538;
+Info021a4e88* GetField0xc02040538(S02040538*);
+Entry021a4e88* FindEntryPointerByKey0203df78(void* list, int key);
+int GameObject_IsGesturing(signed char*);
+struct Vec3;
+short GetAngleDeltaBetween_021a4700(Vec3*, int, Vec3*);
+unsigned char* GetField0x8_02040528(int*);
 int fix32abs(int x);
 
 static inline short inline_ov017_021a4e88(Type_ov017_021a4e88* arg0, int arg1, Struct_ov017_021a4e88_4* arg2) {
@@ -72,12 +73,12 @@ static inline short inline_ov017_021a4e88(Type_ov017_021a4e88* arg0, int arg1, S
 }
 
 // USA: func_ov017_021a4e88
-extern "C" ARM int func_ov017_021a4e88(int arg0, unsigned short* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0203cf4c();
-    Struct_ov017_021a4e88_6* var2 = (Struct_ov017_021a4e88_6*)GetGameResources();
-    Struct_ov017_021a4e88_5* var3 = (Struct_ov017_021a4e88_5*)var0->GetUnknownGameObject();
-    if (var3 == NULL) {
+extern "C" ARM int func_ov017_021a4e88(int checkKind, unsigned short* outId) {
+    GameState* gs = GameState::GetInstance();
+    void* list = GetGlobalPtr021075f4_0203cf4c();
+    Res021a4e88* res = (Res021a4e88*)GetGameResources();
+    Obj021a4e88* obj = (Obj021a4e88*)gs->GetLeader();
+    if (obj == NULL) {
         return -1;
     }
     Type_ov017_021a4e88 var4 = var3->unknown_44_;
@@ -144,7 +145,7 @@ extern "C" ARM int func_ov017_021a4e88(int arg0, unsigned short* arg1) {
         if ((var13->unknown_0_ & 0x200) || var2->unknown_4080_ != 0) {
             continue;
         }
-        if (func_020535c8((signed char*)var3)) {
+        if (GameObject_IsGesturing((signed char*)obj)) {
             continue;
         }
         int var21 = (short)fix32abs(inline_ov017_021a4e88(&var4, (short)var5.y, var13));

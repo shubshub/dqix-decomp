@@ -898,7 +898,7 @@ src/Combat/Overlay_25/func_ov025_021e3c78.cpp:
     complete
     .text start:0x021e4168 end:0x021e4170
 
-src/Combat/Overlay_25/func_ov025_021e40d4.cpp:
+src/Combat/Overlay_25/Func_021e45c4.cpp:
     complete
     .text start:0x021e45c4 end:0x021e45cc
 

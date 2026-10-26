@@ -22,9 +22,9 @@ void GridCursor_Init(struct GridCursor* obj);
 extern "C" void WindowPane_Init(void* obj);
 void InitObj02092aa4(Obj02092aa4* obj, int mode);
 void SpriteContext_Init(char* obj);
-extern "C" void* func_0202ae18(GameState* gs);
+extern "C" void* LinkSession_GetInstance(GameState* gs);
 int GameState_GetProtagonistIndex(GameState* gs);
-void InitFields0x0_0203c0cc(struct State0xc0cc* obj);
+void CachedTextLabel_Init(struct State0xc0cc* obj);
 
 struct Struct_ov000_021723a8;
 extern "C" void func_ov000_0217228c(struct Struct_ov000_021723a8* arg0);
@@ -219,25 +219,25 @@ extern "C" ARM void func_ov000_021723a8(struct Battle021723a8* self, int arg) {
     self->f1d5c = 0;
     self->f1d7a = 0;
     GameState* gs = GameState::GetInstance();
-    func_0202ae18(gs);
+    LinkSession_GetInstance(gs);
     int id = GameState_GetProtagonistIndex(gs);
     if (id < 0) {
         id = 0;
     }
-    arg0->unknown_17c_ = var7;
-    func_ov000_0217228c(arg0);
-    func_0203c0cc(&arg0->unknown_1b54_);
-    func_0203c0cc(&arg0->unknown_1b6c_);
-    for (int var8 = 0; var8 < Enum_ov000_021723a8_9; var8++) {
-        func_0203c0cc(&arg0->unknown_1b84_[var8]);
+    self->f17c = id;
+    func_ov000_0217228c(self);
+    CachedTextLabel_Init(&self->state1b54);
+    CachedTextLabel_Init(&self->state1b6c);
+    for (int i = 0; i < regionalStates1b84; i++) {
+        CachedTextLabel_Init(&self->states1b84[i]);
     }
 #if !defined(jpn)
-    for (int var9 = 0; var9 < 3; var9++) {
-        func_0203c0cc(&arg0->unknown_1b0c_[var9]);
+    for (int i = 0; i < 3; i++) {
+        CachedTextLabel_Init(&self->states1b0c[i]);
     }
 #endif
-    for (int var10 = 0; var10 < 8; var10++) {
-        func_0203c0cc(&arg0->unknown_1c5c_[var10]);
+    for (int i = 0; i < 8; i++) {
+        CachedTextLabel_Init(&self->states1c5c[i]);
     }
     struct Struct_ov000_021723a8_2* var11;
     for (int var12 = 0; var12 < 4; var12++) {

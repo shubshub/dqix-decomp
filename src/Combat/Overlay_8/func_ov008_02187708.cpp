@@ -160,7 +160,7 @@ extern char data_ov008_0218b4b0[];
 extern char data_ov008_0218b4c1[];
 
 MessageSystem* MessageSystem_GetInstance();
-void Clear12Bytes020e46c4(void* name);
+void NameText_Clear(void* name);
 void InitObjFromCombatant020e4c74(void* name, GameObject* object);
 void ResetListHeader020727d8(List020727d8* list);
 const char* KeyTable_Get(Container020e0310* texts, int id);
@@ -217,10 +217,10 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
                     var12 = 0x510e;
                 var3 = var12 - 20000 + var11->unknown_950_;
             }
-            var5 = var10->unknown_150_->unknown_49c_0_;
-            func_020e46c4(&var6);
-            func_020e4c74(&var6, var10);
-            var1->unknown_10_ = &var6;
+            female = hero->partyData_->female_;
+            NameText_Clear(&heroName);
+            InitObjFromCombatant020e4c74(&heroName, hero);
+            messages->unk_10 = &heroName;
         }
     }
     else
@@ -230,7 +230,7 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
             title = guest->title_;
         female = guest->female_;
         Font_DecodeText(codes, name, 1);
-        Clear12Bytes020e46c4(&guestName);
+        NameText_Clear(&guestName);
         func_020e4b34(&guestName, name, name, 0, 0, 0, 0, female, 0, 1, 0, 1);
         messages->unk_10 = &guestName;
     }

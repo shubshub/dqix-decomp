@@ -3,11 +3,11 @@
 
 struct Struct_0202c1a4;
 
-extern "C" void *func_0202ae18(int arg0);
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4 *arg0);
-extern "C" void func_020962f4(void *arg0, struct Struct_020961b0 arg1);
-extern "C" void func_0209609c(int arg0, unsigned char *arg1, int arg2);
+extern "C" void *LinkSession_GetInstance(int n);
+int LinkSession_IsActive(int *obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4 *obj);
+extern "C" void func_020962f4(void *g, struct Entry020961b0 e);
+void SetBitInArrayGuarded_0209609c(int unused, unsigned char *arr, int index);
 
 struct Struct_020961b0 {
     unsigned int unknown_0_0_ : 9;
@@ -39,20 +39,20 @@ extern "C" ARM int func_020961b0(void *arg0, int arg1) {
     if (var0 >= 8) {
         return 0;
     }
-    void *var1 = func_0202ae18(var0);
-    struct Struct_020961b0_2 *var2;
-    for (var2 = (struct Struct_020961b0_2 *)*(void **)((char *)arg0 + 0xa0); var2 != 0; var2 = var2->unknown_c_) {
-        if (var2->unknown_2_0_ != arg1) {
+    void *p = LinkSession_GetInstance(n);
+    struct Node020961b0 *node;
+    for (node = (struct Node020961b0 *)*(void **)((char *)g + 0xa0); node != 0; node = node->next) {
+        if (node->id != id) {
             continue;
         }
-        struct Struct_020961b0 var3;
-        memset(&var3, 0, sizeof(var3));
-        var3.unknown_0_0_ = var2->unknown_2_0_;
-        var3.unknown_1_2_ = var2->unknown_3_1_;
-        var3.unknown_2_0_ = var2->unknown_3_5_;
-        var3.unknown_1_3_ = 1;
-        if (func_0202b7d8((int *)var1) && func_0202c1a4((struct Struct_0202c1a4 *)var1)) {
-            var3.unknown_1_1_ = 1;
+        struct Entry020961b0 e;
+        memset(&e, 0, sizeof(e));
+        e.a = node->id;
+        e.c = node->f9;
+        e.f = node->f13;
+        e.d = 1;
+        if (LinkSession_IsActive((int *)p) && LinkSession_GetOwnSlot((struct SearchStruct0202c1a4 *)p)) {
+            e.b = 1;
         } else {
             var3.unknown_1_1_ = 0;
         }

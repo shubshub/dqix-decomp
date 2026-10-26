@@ -2,9 +2,9 @@
 #include "GameState/GameState.h"
 #include "Resource/Script.h"
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* arg0);
-extern "C" int func_ov017_021b9bcc(int arg0, const char* arg1);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* p);
+extern "C" int func_ov017_021b9bcc(int a, const char* b);
 
 struct Struct_ov017_021ba3dc {
     char unknown_0_[4];
@@ -33,8 +33,8 @@ extern "C" ARM int func_ov017_021ba3dc(Script::Parameter* arg0, int arg1) {
     if (data_ov017_021d8438.unknown_10_ != 0) return 1;
     if (data_ov017_021d7c54.unknown_1_ > -1) return 1;
 
-    GameState* var0 = GameState::GetInstance();
-    if (func_0202c540(func_0202ae18()) != 0) return 1;
+    GameState* battle = GameState::GetInstance();
+    if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0) return 1;
 
     GameObject* var1 = var0->GetGameObjectByIndex(0);
     struct Struct_ov017_021ba3dc* var2 = *(struct Struct_ov017_021ba3dc**)((char*)var1 + 0x130);

@@ -9,10 +9,10 @@ enum { RegionOffset840 = 0x840 };
 #include "Resource/GameResources.h"
 
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 struct Obj020ad4c4;
 extern int CheckAndInvoke020ad4c4(struct Obj020ad4c4* obj);
 extern "C" int func_02098080(void* p);
@@ -24,13 +24,13 @@ extern "C" int func_ov017_0219c774(int a, int b, int c);
 extern "C" ARM int func_ov017_0219bddc(unsigned char* p0) {
     GetGameResources();
     GameState* bs = GameState::GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     void* obj8 = Scenario_GetInstance();
     void* obj4 = Zone3D_GetInstance();
     GameObject* c7 = bs->GetGameObjectByIndex(0);
     GameObject* c6 = bs->GetProtagonist();
 
-    if (func_0202c508(search) != 0) {
+    if (LinkSession_IsHostOrSolo(search) != 0) {
         return 0;
     }
     if (c7 == NULL) {

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/KeyTable.h"
 
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 void KeyTable_Reset(struct Struct020dfc40* p);
 
 int ComputeAndApplyWithCounter020e04f4(int p0, void* p1, int p2, int p3, unsigned char p4, int p5);
@@ -18,7 +18,7 @@ extern "C" ARM void func_020dd0b0(int len, char* buf) {
         archive = data_020f29b8;
         innerFile = data_020f29cc;
         buf[0] = 0;
-        ResetAndReturnSelf020dfc2c(&s);
+        KeyTable_Construct(&s);
         KeyTable_Reset(&s);
     } else {
         return;

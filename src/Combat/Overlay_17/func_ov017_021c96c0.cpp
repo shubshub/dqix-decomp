@@ -50,9 +50,9 @@ struct Struct_02033f44;
 
 extern "C" Player021c96c0* Zone3D_GetInstance(void);
 extern "C" int func_ov017_021d446c(void* key, Lookup021c96c0* out, int kind);
-extern "C" int func_0202c540(void* search);
+extern "C" int LinkSession_IsGuest(void* search);
 extern "C" int Zone3D_GetGroundHeight(Player021c96c0* player, Vector3i* v);
-int* GetField0xe4IfFlag0x40(BitFlag02033f44* obj);
+int* GameObject_GetWallHit(BitFlag02033f44* obj);
 struct Obj02033834;
 void GameObject_SetFacing(Obj02033834* obj, int arg);
 void TrySetMode02076ccc(void*, int);
@@ -76,10 +76,10 @@ extern "C" ARM void func_ov017_021c96c0(int unused0, Evt021c96c0* evt, int unuse
         int var4 = arg1->unknown_6_6_ ? 1 : 0;
         int var5 = arg1->unknown_6_7_ ? 1 : 0;
 
-        if (!(arg1->unknown_4_ == var0->unknown_0_ && var1.unknown_8_->unknown_130_ == 1) && !(var2.x == 0 && var2.y == 0 && var2.z == 0)) {
-            if (func_0202c540(arg4)) {
-                if (func_02033f44((Struct_02033f44*)var1.unknown_8_) == 0) {
-                    var1.unknown_8_->unknown_44_ = var2;
+        if (!(evt->id == player->id && found.actor->state == 1) && !(v.x == 0 && v.y == 0 && v.z == 0)) {
+            if (LinkSession_IsGuest(search)) {
+                if (GameObject_GetWallHit((BitFlag02033f44*)found.actor) == 0) {
+                    found.actor->pos = v;
                 } else {
                     const Vector3i& var6 = var2;
                     var1.unknown_8_->unknown_44_ = var6;
@@ -89,10 +89,10 @@ extern "C" ARM void func_ov017_021c96c0(int unused0, Evt021c96c0* evt, int unuse
             }
         }
 
-        if (arg1->unknown_4_ == var0->unknown_0_ && var0->unknown_424_ == 0 && var1.unknown_8_->unknown_130_ != 1 &&
-            !(var2.x == 0 && var2.y == 0 && var2.z == 0)) {
-            if (func_02033f44((Struct_02033f44*)var1.unknown_8_)) {
-                var2 = var1.unknown_8_->unknown_44_;
+        if (evt->id == player->id && player->field_424 == 0 && found.actor->state != 1 &&
+            !(v.x == 0 && v.y == 0 && v.z == 0)) {
+            if (GameObject_GetWallHit((BitFlag02033f44*)found.actor)) {
+                v = found.actor->pos;
             }
             v.y = Zone3D_GetGroundHeight(player, &v);
             found.actor->pos = v;

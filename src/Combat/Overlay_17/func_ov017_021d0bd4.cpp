@@ -5,17 +5,17 @@ extern "C" void __clear(void* buf, int size);
 extern "C" void Font_DecodeText(char* name, void* buf, int flag);
 extern "C" void func_ov017_0219558c(unsigned char* obj, int value);
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-extern "C" void func_ov017_021954c4(void* arg0, int arg1);
-extern "C" void func_ov017_0219541c(void* arg0, int arg1, char* arg2);
-extern "C" void func_ov017_021afae8(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_021afafc(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_021afb10(void* arg0);
-extern "C" void func_ov017_021afb1c(void* arg0);
-extern "C" void func_ov017_021afb28(void* arg0);
-extern "C" void func_ov017_021afb34(void* arg0, int arg1);
-extern "C" void func_ov017_021afb84(void* arg0, int arg1);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+void SetSearchBitAndClearFlag_021954c4(void* obj, int bitIdx);
+void SetNameSlotAndClear_0219541c(void* obj, int idx, char* namePtr);
+void SetBitField_021afae8_021afae8(unsigned char* obj, int value);
+void SetBitField_021afafc_021afafc(unsigned char* obj, int value);
+void SetIntField28_021afb10(void* obj);
+void SetIntField30_021afb1c(void* obj);
+void SetIntField34_021afb28(void* obj);
+void SetStatusBitWithPeerCheck_021afb34(void* obj, int value);
+void SetByteField2c_021afb84(void* obj, int v);
 
 struct Struct_ov017_021d0bd4_2 {
     unsigned char unknown_0_;
@@ -61,13 +61,13 @@ extern "C" ARM void func_ov017_021d0bd4(int arg0, Struct_ov017_021d0bd4_2* arg1,
         break;
     }
     case 1:
-        if (func_0202c1a4(arg4) == 0) {
-            func_ov017_021afae8(var0, (unsigned char)arg0);
+        if (LinkSession_GetOwnSlot(search) == 0) {
+            SetBitField_021afae8_021afae8(status, (unsigned char)value);
         }
         break;
     case 2:
-        if (func_0202c1a4(arg4) == 0) {
-            func_ov017_021afafc(var0, (unsigned char)arg0);
+        if (LinkSession_GetOwnSlot(search) == 0) {
+            SetBitField_021afafc_021afafc(status, (unsigned char)value);
         }
         break;
     case 3:

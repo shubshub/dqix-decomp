@@ -4,8 +4,8 @@ struct Container020e0310;
 struct Struct0205de24;
 struct BackgroundGraphics;
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c540(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsGuest(void* obj);
 int KeyTable_Get(struct Container020e0310* c, int key);
 extern "C" int Font_GetTextWidth(char* str, int id);
 void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
@@ -56,22 +56,22 @@ struct Struct_ov003_0215df1c {
 };
 
 // USA: func_ov003_0215df1c
-extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* arg0) {
-    void* var0 = func_0202ae18();
-    arg0->unknown_3c0_ = 3;
-    arg0->unknown_3bd_[0] = 0;
-    arg0->unknown_3bd_[1] = 1;
-    arg0->unknown_3bd_[2] = 2;
-    if (func_0202c540(var0)) {
-        arg0->unknown_3c0_ = 2;
-        arg0->unknown_3bd_[0] = 1;
-        arg0->unknown_3bd_[1] = 2;
-        arg0->unknown_3bd_[2] = 0xff;
-    } else if (arg0->unknown_3d0_ == 0) {
-        arg0->unknown_3c0_ = 2;
-        arg0->unknown_3bd_[0] = 0;
-        arg0->unknown_3bd_[1] = 2;
-        arg0->unknown_3bd_[2] = 0xff;
+extern "C" ARM void func_ov003_0215df1c(struct BattleMenu_0215df1c* self) {
+    void* ctx = LinkSession_GetInstance();
+    self->count = 3;
+    self->keys[0] = 0;
+    self->keys[1] = 1;
+    self->keys[2] = 2;
+    if (LinkSession_IsGuest(ctx)) {
+        self->count = 2;
+        self->keys[0] = 1;
+        self->keys[1] = 2;
+        self->keys[2] = 0xff;
+    } else if (self->field3d0 == 0) {
+        self->count = 2;
+        self->keys[0] = 0;
+        self->keys[1] = 2;
+        self->keys[2] = 0xff;
     }
 
     short var1 = (arg0->unknown_3c0_ * 14 + 0x12) / 8;

@@ -65,13 +65,13 @@ extern "C" void* func_02057924(void);
 extern "C" int func_ov000_0215e9fc(void* party, short* buf, int max, int start);
 extern "C" int func_ov000_0215ec1c(void* party, short* buf, int max, int start);
 int CountValidCombatants02058618(void* mgr);
-unsigned char* GetData02104b6c_02039e70(void);
-int CheckFields6d0And6d4Equal_0203a5d0(unsigned char* data);
+unsigned char* NumberPopups_GetInstance(void);
+int NumberPopups_IsEmpty(unsigned char* data);
 int Check021ed2f4(void* obj);
 int IsByteFieldZero_021ed0fc(void* obj);
 int IsAnimationActive0209ca2c(void* obj);
 struct Bytes02033b88;
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 extern "C" void __clear(void* dst, int size);
 Slot_021dc940* GetSlotPtr02160f20(void* obj);
 void SetFlag0x2_021754e0(int, int);
@@ -128,7 +128,7 @@ extern "C" ARM int func_ov025_021dc940(Struct_ov025_021dc940_5* arg0) {
     if (func_02058618(var2) > 0) {
         return 0;
     }
-    if (func_0203a5d0(func_02039e70()) == 0) {
+    if (NumberPopups_IsEmpty(NumberPopups_GetInstance()) == 0) {
         return 0;
     }
     if (func_ov025_021ed2f4(arg0->unknown_890_) == 0) {
@@ -147,11 +147,11 @@ extern "C" ARM int func_ov025_021dc940(Struct_ov025_021dc940_5* arg0) {
         if (var10 == NULL) {
             continue;
         }
-        var10->obj3D_.SetAnimationPlaybackSpeed(0x1000, 0);
-        if (arg0->unknown_7747_ == 0) {
-            unsigned char var11 = inline_ov025_021dc940(var10);
-            if (var11 != 4 && var11 != 6) {
-                func_02033b88((Struct_02010604*)var10, 0);
+        c->obj3D_.SetAnimationPlaybackSpeed(0x1000, 0);
+        if (obj->started == 0) {
+            unsigned char motion = GetMotion_021dc940(c);
+            if (motion != 4 && motion != 6) {
+                GameObject_ForceMotionState((Bytes02033b88*)c, 0);
             }
         }
         if (var10->obj3D_.IsVisible() && var10->obj3D_.IsTransitioningAnimations()) {

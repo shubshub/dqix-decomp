@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/MessageGlyphSlot.h"
 
-extern "C" bool func_02044494(void* arg0, void* arg1);
-extern "C" int func_020425e4(int arg0, int arg1, int arg2);
+bool IsHighByteFF02044494(void* obj, void* src);
+int Font_GetKerning(int a, int b, int fontIndex);
 
 extern int data_020e7a94[];
 
@@ -99,7 +99,7 @@ extern "C" ARM int func_02046170(struct Struct_02046170* arg0, unsigned short* a
         } else {
             MessageGlyphSlot* slot = &window->glyphs[command];
             int characterIndex = slot->characterIndex;
-            currentExtent += LookupKeyValue020425e4(previousCharacter, characterIndex, fontIndex);
+            currentExtent += Font_GetKerning(previousCharacter, characterIndex, fontIndex);
             previousCharacter = characterIndex;
             int glyphWidth = fallbackGlyphWidth;
             if (slot->character != 0) glyphWidth = slot->character->width_;

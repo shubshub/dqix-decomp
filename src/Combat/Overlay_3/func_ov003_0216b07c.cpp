@@ -97,11 +97,11 @@ const char *StandardStrings_Get(int id);
 void Background_SetMapSize(unsigned char *background, int a);
 int Pac_CountFiles(PacRecord *archive);
 void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
-int CheckField0NonZero_0202b7d8(int *p);
-extern "C" void *func_0202ae18();
-extern "C" int func_0202c508();
-extern "C" int func_0202c540(void *arg0);
-extern "C" void func_02046380(void *arg0);
+int LinkSession_IsActive(int *p);
+extern "C" void *LinkSession_GetInstance();
+extern "C" int LinkSession_IsHostOrSolo();
+extern "C" int LinkSession_IsGuest(void *p);
+extern "C" void func_02046380(void *p);
 #if defined(jpn)
 struct Obj02046574;
 void MessageSystem_SetStringArgument(Obj02046574 *obj, int index, char *name);
@@ -144,12 +144,12 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
 
     if (self->step_ == 0) {
-        GameObject_DisableControl((Obj020397cc *) state->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((Obj020397cc *) state->GetLeader(), 1);
         ColorEffect_ConfigureAlphaBlend(0x4000050, 0x10, 1, 0x1f, 0);
-        func_0202ae18();
-        if (func_0202c508() != 0 && *(short *) ((char *) var1->GetUnknownGameObject() + 4) == 0) {
-            if (arg0->unknown_a_ == 3) {
-                var0->unknown_998_ = 1;
+        LinkSession_GetInstance();
+        if (LinkSession_IsHostOrSolo() != 0 && *(short *) ((char *) state->GetLeader() + 4) == 0) {
+            if (self->mode_ == 3) {
+                global->unk_998 = 1;
 #if defined(jpn)
                 Text_Append(global->text_, data_ov003_0217e930);
                 func_0204500c(global, global->text_, 0);
@@ -383,11 +383,11 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1700;
         arg0->unknown_13ec_ |= 1;
 #if defined(jpn)
-        MessageSystem_SetStringArgument((Obj02046574 *) global, 0, *(char **) ((char *) state->GetUnknownGameObject() + 0x134));
+        MessageSystem_SetStringArgument((Obj02046574 *) global, 0, *(char **) ((char *) state->GetLeader() + 0x134));
 #endif
-        void *var49 = func_0202ae18();
-        if ((func_0202b7d8((int *) var49) != 0 && func_0202c540(var49) != 0) ||
-            *(short *) ((char *) var1->GetUnknownGameObject() + 4) != 0)
+        void *obj = LinkSession_GetInstance();
+        if ((LinkSession_IsActive((int *) obj) != 0 && LinkSession_IsGuest(obj) != 0) ||
+            *(short *) ((char *) state->GetLeader() + 4) != 0)
         {
             arg0->unknown_4_ = 3;
             arg0->unknown_6_  = 0;

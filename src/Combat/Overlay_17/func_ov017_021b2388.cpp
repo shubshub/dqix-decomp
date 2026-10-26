@@ -12,19 +12,16 @@ enum { Enum_ov017_021b2388_14080 = 0x3700 };
 #include "std_library_functions.h"
 #include "Resource/Brightness.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 struct Obj020397cc;
 void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
-int IsField0Null_02046b08(void** obj);
+int FieldTaskQueue_IsEmpty(void** obj);
 extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020c9be0(void);
+extern "C" void HaltSystem(void);
 struct GameResources;
 void SetBrightness(GameResources*, int, int);
 struct ResetObj020d7a5c;
@@ -54,17 +51,17 @@ struct Struct_ov017_021b2388_2 {
     void* unknown_44_;
 };
 
-// USA: func_ov017_021b2388
-extern "C" ARM int func_ov017_021b2388(struct Struct_ov017_021b2388_2* arg0) {
-    GameState* var0 = (GameState*)GameState::GetInstance();
-    int var1 = ((int)GetGameResources());
-    unsigned char* var2;
-    GameObject* var3 = var0->GetUnknownGameObject();
-    var2 = (unsigned char*)func_020100f8((char*)var0);
-    int var4 = (int)BackgroundLoader::GetInstance();
-    void** var5 = *(void***)((char*)var1 + Enum_ov017_021b2388_14080);
-    unsigned int var6 = GetFlags04((GameResources*)var1);
-    arg0->unknown_40_ = var6;
+// USA: func_ov017_021b2388  (semantic: InitMenuAllocatorAndLoadData_021b2388)
+extern "C" ARM int func_ov017_021b2388(struct Obj021b2388* ctx) {
+    GameState* battle = (GameState*)GameState::GetInstance();
+    int base = ((int)GetGameResources());
+    unsigned char* fieldPtr;
+    GameObject* combatant = battle->GetLeader();
+    fieldPtr = (unsigned char*)GameState_GetFollowCamera((char*)battle);
+    int loadedList = (int)BackgroundLoader::GetInstance();
+    void** entry = *(void***)((char*)base + RegionOffset3700);
+    unsigned int val40 = GetFlags04((GameResources*)base);
+    ctx->field40 = val40;
 
     if (combatant) {
         GameObject_DisableControl((struct Obj020397cc*)combatant, 1);
@@ -77,15 +74,15 @@ extern "C" ARM int func_ov017_021b2388(struct Struct_ov017_021b2388_2* arg0) {
         arg0->unknown_44_ = var2;
     }
 
-    if (!func_02046b08(var5)) {
-        return arg0->unknown_8_;
+    if (!FieldTaskQueue_IsEmpty(entry)) {
+        return ctx->field8;
     }
 
     SetFlags00((GameResources*)var1, 0x10);
     func_020a0cc4(0x2f800);
     void* buf = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, 0x2f800);
     if (!buf) {
-        func_020c9be0();
+        HaltSystem();
     }
     arg0->unknown_10_.CreateTypeA(var7, 0x2f800);
 

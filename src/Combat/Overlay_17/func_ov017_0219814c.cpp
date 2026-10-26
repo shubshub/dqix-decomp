@@ -40,7 +40,7 @@ extern "C" ARM void func_ov017_0219814c(void) {
     GameState* battle = GameState::GetInstance();
     void* ctx = Zone3D_GetInstance();
     void* events = Scenario_GetInstance();
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     struct Anchor_0219814c anchor = *(struct Anchor_0219814c*)((char*)combatant + 0x44);
     struct EventArgs_0219814c args;
     struct AreaNode_0219814c* node;

@@ -42,9 +42,9 @@ struct Struct_021118e0 {
 
 extern Struct_021118e0 data_021118e0;
 #define BACKUP_MIDDLEWARE ((const void*)0x02000bc4)
-extern "C" void func_02000b9c(const void*);
-extern "C" int func_020d06e8();
-extern "C" int func_020d0fc4(Struct_020d03fc_2*, int, int);
+extern "C" void OSi_ReferSymbol(const void*);
+int GetBattleSysInnerField1c_020d06e8();
+extern "C" int func_020d0fc4(BackupManager020d03fc*, int, int);
 extern "C" void VectorizedInvertedMemcpy(const void*, void*, unsigned int);
 
 static inline bool inline_020d03fc(const Struct_020d03fc_2* arg0) {
@@ -65,16 +65,16 @@ static inline void inline_020d03fc_2(Struct_020d03fc_2* arg0, int arg1) {
 }
 
 // USA: func_020d03fc
-extern "C" ARM void func_020d03fc(Struct_020d03fc_2* arg0) {
-    const int var0 = arg0->unknown_2c_;
-    const int var1 = arg0->unknown_34_;
-    const int var2 = arg0->unknown_30_;
-    unsigned int var3 = sizeof(arg0->unknown_12c_);
-    func_02000b9c(BACKUP_MIDDLEWARE);
-    if (var0 == 11) {
-        var3 = func_020d06e8();
-    } else if (var0 == 15) {
-        var3 = data_021118e0.unknown_0_->unknown_20_;
+extern "C" ARM void func_020d03fc(BackupManager020d03fc* manager) {
+    const int requestType = manager->requestType;
+    const int requestMode = manager->requestMode;
+    const int retryCount = manager->retryCount;
+    unsigned int size = sizeof(manager->cache);
+    OSi_ReferSymbol(BACKUP_MIDDLEWARE);
+    if (requestType == 11) {
+        size = GetBattleSysInnerField1c_020d06e8();
+    } else if (requestType == 15) {
+        size = data_021118e0.command->eraseUnitSize;
     }
     do {
         const unsigned int var4 = var3 < arg0->unknown_24_ ? var3 : arg0->unknown_24_;

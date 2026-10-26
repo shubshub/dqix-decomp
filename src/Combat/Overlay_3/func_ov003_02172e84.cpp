@@ -198,9 +198,9 @@ extern "C" void *ExtractFileFromGP2(const char *gp2Path, const char *innerFilePa
 extern "C" char *func_020e046c(char *buf, void *data, unsigned int size, int idx);
 extern "C" void func_ov003_0217bd38(void *obj, int arg);
 unsigned char GetByteField28_021b1fa8(void *obj);
-extern "C" void *func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int *obj);
-extern "C" void func_0202b0f4(void *obj);
+extern "C" void *LinkSession_GetInstance(void);
+int LinkSession_IsActive(int *obj);
+extern "C" void LinkSession_End(void *obj);
 int IsInRangePair_021734dc(int unused, int a, int b);
 void SpriteEntryList_AdvanceAnimations(Container0205a330 *c, int arg);
 extern "C" int func_020457e0(Messages02172e84 *window);
@@ -384,15 +384,15 @@ extern "C" ARM void func_ov003_02172e84(Self02172e84 *self) {
                 sprintf(arg0->unknown_44_, data_ov003_02180a49,
                         func_02072a68(&arg0->unknown_1d0_, (short) (var24->unknown_6c_.unknown_6_3_ + 20000)));
             }
-            arg0->unknown_ee_ = 99;
-        } else if (arg0->unknown_344_ != 0 && !((*(unsigned short *) 0x27fffa8 & 0x8000) >> 15)) {
-            arg0->unknown_340_ = arg0->unknown_d8_;
-            func_ov003_0217bd38(arg0->unknown_1e0_, arg0->unknown_1c0_);
-            arg0->unknown_30d_ = func_ov017_021b1fa8(var18);
-            arg0->unknown_d0_->unknown_0_ = 10;
-            void *var30 = func_0202ae18();
-            if (func_0202b7d8((int *) var30)) {
-                func_0202b0f4(var30);
+            self->step_ = 99;
+        } else if (self->pending_ != 0 && !((*(unsigned short *) 0x27fffa8 & 0x8000) >> 15)) {
+            self->field340_ = self->fieldd8_;
+            func_ov003_0217bd38(self->field1e0_, self->field1c0_);
+            self->field30d_ = GetByteField28_021b1fa8(battle);
+            self->party_->state_ = 10;
+            void *save = LinkSession_GetInstance();
+            if (LinkSession_IsActive((int *) save)) {
+                LinkSession_End(save);
             }
             arg0->unknown_ec_ = 5;
             arg0->unknown_ee_ = 0;

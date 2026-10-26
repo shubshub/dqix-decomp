@@ -8,7 +8,7 @@ int fix32sin(int);
 extern int g_sePlayer;
 
 // A chest's ZoneChestRenderRecord (this file's copy of the fields it uses)
-struct Obj02015ae4 {
+struct ChestRecord02015ae4 {
     Vector3i position;
     short angleY;
     unsigned short lidAngle;
@@ -16,21 +16,21 @@ struct Obj02015ae4 {
 };
 
 // Main, originally func_02015ae4 (USA 0x02015ae4, EUR 0x02015af4, JPN 0x020158b0)
-extern "C" ARM int ZoneChest_LiftLid(Obj02015ae4* self) {
-    unsigned short counter = self->counter;
+extern "C" ARM int ZoneChest_LiftLid(ChestRecord02015ae4* chest) {
+    unsigned short counter = chest->counter;
     int firstDuration = 0xbff4;
     if ((float)counter <= (float)firstDuration / 4096.0f) {
         if (counter == 0) SePlayer_Play((SePlayer*)&g_sePlayer, 13, 0);
         else if (counter == 16) SePlayer_Play((SePlayer*)&g_sePlayer, 14, 0);
-        unsigned int currentCounter = self->counter;
-        int square = (self->counter * currentCounter) << 12;
+        unsigned int currentCounter = chest->counter;
+        int square = (chest->counter * currentCounter) << 12;
         int coefficient = fix32_Divide(-7290, 0x8fee0);
-        self->lidAngle = FIX32_MULTIPLY(coefficient, square) + ZoneChestLid_Closed;
-        self->counter = self->counter + 1;
+        chest->lidAngle = FIX32_MULTIPLY(coefficient, square) + ZoneChestLid_Closed;
+        chest->counter = chest->counter + 1;
     } else {
-        unsigned int elapsedCounter = self->counter;
+        unsigned int elapsedCounter = chest->counter;
         int firstDuration = 0xbff4;
-        int elapsed = (int)(4096.0f * ((float)self->counter - (float)firstDuration / 4096.0f));
+        int elapsed = (int)(4096.0f * ((float)chest->counter - (float)firstDuration / 4096.0f));
         int totalDuration = 0x17fe8;
         if ((float)elapsedCounter <= (float)totalDuration / 4096.0f) {
             int remaining = 0x1000 - fix32_Divide(elapsed, 0x17fe8);
@@ -38,10 +38,10 @@ extern "C" ARM int ZoneChest_LiftLid(Obj02015ae4* self) {
             int angle = FIX32_MULTIPLY(coefficient, elapsed);
             if (angle > 0x647a) angle = 0x647a;
             int correction = FIX32_MULTIPLY(fix32sin(angle), -0x101);
-            self->lidAngle = FIX32_MULTIPLY(correction, remaining) + ZoneChestLid_Lifted;
-            self->counter = self->counter + 1;
+            chest->lidAngle = FIX32_MULTIPLY(correction, remaining) + ZoneChestLid_Lifted;
+            chest->counter = chest->counter + 1;
         } else {
-            self->lidAngle = ZoneChestLid_Lifted;
+            chest->lidAngle = ZoneChestLid_Lifted;
             return 1;
         }
     }

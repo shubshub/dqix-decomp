@@ -12,8 +12,8 @@ ARM void SetElemFlag8IfOverlayActive020ae730(int a) {
         return;
     }
     Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
-    ZoneFeatures::Opcode6aEntry* p = GetElementStride0x74_0201e664(&zone->substruct_6c_, 3);
-    ZoneFeatures::Opcode6aEntry* q = GetElementStride0x74_0201e664(&zone->substruct_6c_, 4);
+    ZoneFeatures::Opcode6aEntry* p = ZoneFeatures_GetEntry(&zone->substruct_6c_, 3);
+    ZoneFeatures::Opcode6aEntry* q = ZoneFeatures_GetEntry(&zone->substruct_6c_, 4);
     if (p == NULL || q == NULL) {
         return;
     }

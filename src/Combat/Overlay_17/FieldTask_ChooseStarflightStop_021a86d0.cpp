@@ -95,20 +95,20 @@ void MessageSystem_Reset(char* obj);
 void SetupGlobalObjType3AndInitSelfPointer_0205ce50(unsigned char* obj);
 extern "C" int func_020457e0(char* obj);
 extern "C" unsigned char* Scenario_GetInstance(void);
-unsigned char* GetField0x3f8Address_0200fd0c(GameState*);
+unsigned char* GameState_GetZoneTransition(GameState*);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int size);
 void InitContext020e1154(void* p);
 void SetHalfFieldsAndEnqueueIfActive_021d1c2c(unsigned char, unsigned short);
 void EnqueueEventTagB5_021d1dc0(unsigned short, int, int*, int, int);
-void InitAndResetHeader_0219e310(unsigned char* obj, int arg);
+void FieldTask_InitEnterZone(unsigned char* obj, int arg);
 struct TailList020469b4;
 struct TailNode020469b4;
 void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
 void InitAndAppendState61_021a65c4(void* obj, unsigned char mode, int arg);
 extern "C" void func_ov017_021baedc(unsigned char* node, int arg);
-int GetField5cb0Value_0201079c(char*);
-int GetField5cb4Value_020107d0(char*);
-int GetField5cb8Value_02010804(char*);
+int GameState_GetStoryChapter(char*);
+int GameState_GetStoryPart(char*);
+int GameState_GetStoryStep(char*);
 int Scenario_TestFlag(int, unsigned char*, int);
 int ReturnZero_021a01b4(char* res, int value);
 void SetField11c_021bbbf8(void*, unsigned short);
@@ -150,15 +150,15 @@ extern "C" ARM void FieldTask_ChooseStarflightStop(Self021a86d0* self, void* lis
         } else if (arg0->unknown_14_ == 1) {
             var5 = func_0203df78(var4, 0xcb);
         }
-        if (var5 != NULL) {
-            GameObject* var6 = var0->GetUnknownGameObject();
-            Vector3fix var7 = func_020406f8(var5);
-            Vector3fix var8;
-            Vector3fix_Subtract(&var6->obj3D_.position_, &var7, &var8);
-            Vector3fix_Normalize(&var8, &var8);
-            int var9 = fix32_Atan2(var8.x, var8.z);
-            if (var9 < 0) {
-                var9 += 0x6488;
+        if (node != NULL) {
+            GameObject* unk = gs->GetLeader();
+            Vector3fix target = _Z29SelectVec3FromSources020406f8P13Vec3_020406f8P12Node020406f8(node);
+            Vector3fix diff;
+            Vector3fix_Subtract(&unk->obj3D_.position_, &target, &diff);
+            Vector3fix_Normalize(&diff, &diff);
+            int angle = fix32_Atan2(diff.x, diff.z);
+            if (angle < 0) {
+                angle += 0x6488;
             }
             func_02040af0((Struct_0203dce4*)var5, var9);
         }
@@ -304,7 +304,7 @@ extern "C" ARM void FieldTask_ChooseStarflightStop(Self021a86d0* self, void* lis
         unsigned char* bits = Scenario_GetInstance();
         char* res = (char*)GetGameResources();
         void* tail = *(void**)(res + ResourceTail);
-        unsigned char* ctx = GetField0x3f8Address_0200fd0c(gs);
+        unsigned char* ctx = GameState_GetZoneTransition(gs);
         VectorizedMemset(ctx, 0, 0x70);
         ctx[4] = 1;
         ctx[8] = 1;
@@ -363,15 +363,15 @@ extern "C" ARM void FieldTask_ChooseStarflightStop(Self021a86d0* self, void* lis
                 *(int*)(var32 + 0x18) = 0x1000;
                 break;
             }
-            int var34[3];
-            func_ov017_021d1c2c(arg0->unknown_10_, 0);
-            func_ov017_021d1dc0(arg0->unknown_10_, 0, var34, 0, 0);
-            func_0200fcfc(var0, var32);
-            unsigned char* var35 = *(unsigned char**)(var30 + Enum_ov017_021a86d0_14092);
-            func_ov017_0219e310(var35, 0);
-            func_020469b4((Struct_0201bdac_2*)var31, (Struct_0201bdac*)var35);
-            if (var33) {
-                func_ov017_021a65c4(var30, 1, 0);
+            int buf[3];
+            SetHalfFieldsAndEnqueueIfActive_021d1c2c(self->choice, 0);
+            EnqueueEventTagB5_021d1dc0(self->choice, 0, buf, 0, 0);
+            GameState_SetZoneTransition(gs, ctx);
+            unsigned char* header = *(unsigned char**)(res + ResourceNode);
+            FieldTask_InitEnterZone(header, 0);
+            AppendNodeToTail((TailList020469b4*)tail, (TailNode020469b4*)header);
+            if (intro) {
+                InitAndAppendState61_021a65c4(res, 1, 0);
             }
         } else {
             unsigned char* var36 = *(unsigned char**)(var30 + Enum_ov017_021a86d0_14132);
@@ -427,9 +427,9 @@ extern "C" ARM void FieldTask_ChooseStarflightStop(Self021a86d0* self, void* lis
                 var38 = 0x7349;
                 break;
             }
-            chapter = GetField5cb0Value_0201079c((char*)gs);
-            part = GetField5cb4Value_020107d0((char*)gs);
-            int step = GetField5cb8Value_02010804((char*)gs);
+            chapter = GameState_GetStoryChapter((char*)gs);
+            part = GameState_GetStoryPart((char*)gs);
+            int step = GameState_GetStoryStep((char*)gs);
             if (chapter == 10 && part == 8 && step == 1) {
                 if (self->mode == 0 && self->choice == 1 &&
                     Scenario_TestFlag((int)bits, bits + 0x8c, 4) &&

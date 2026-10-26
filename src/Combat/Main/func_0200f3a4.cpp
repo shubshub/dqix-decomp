@@ -5,31 +5,36 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-extern "C" void func_020c99c8(void* out);
-void InitBigManagerStruct0208660c(char* base);
+extern "C" void OS_GetOwnerInfo(void* out);
+void Party_Init(char* base);
 struct PartyExtension;
 extern "C" void func_02082828(PartyExtension* ext);
 void ClearSubstructBytes_0200fb40(void* obj);
 struct Pair0209a338;
 void ClearFirstTwoWords0209a338(Pair0209a338* p);
 struct S_02010124;
-void InitFields02010124(S_02010124* obj);
+void GameState_ResetTiming(S_02010124* obj);
 void ResetState_020118fc(void* obj);
 void* GlobalFlags_GetInstance();
 struct S02046730;
-void ClearField0x0_02046730(S02046730* p);
+void FlagWord_Clear(S02046730* p);
 struct State0200fad4;
 void ClearFlagsAndValue0200fad4(State0200fad4* s);
 
-struct Struct_020f33b4 {
-    unsigned char unknown_0_;
-    float unknown_4_;
-    float unknown_8_;
-    float unknown_c_;
-    float unknown_10_;
-    float unknown_14_;
+struct DayCycleTimes {
+    unsigned char initialized;
+#if defined(jpn)
+    float eveningStart;
+    float dayLength;
+#else
+    float dayLength;
+    float eveningStart;
+#endif
+    float dayStart;
+    float morningStart;
+    float nightStart;
 };
-extern Struct_020f33b4 data_020f33b4;
+extern DayCycleTimes data_020f33b4;
 
 struct Struct_0200f3a4_12 {
     unsigned int unknown_0_0_ : 12;
@@ -58,18 +63,14 @@ struct Struct_0200f3a4_2 {
     unsigned int unknown_0_7_ : 25;
 };
 
-struct Struct_0200f3a4_3 {
-    unsigned short unknown_0_0_ : 14;
-    unsigned short unknown_1_6_ : 1;
-    unsigned short unknown_1_7_ : 1;
-};
-
-struct Struct_0200f3a4_4 {
-    char unknown_0_[6];
-    char unknown_6_[0xb];
-    unsigned char unknown_11_;
-    Struct_0200f3a4_3 unknown_12_;
-    char unknown_14_[0x18];
+struct TimedKey {
+    unsigned char key[6];
+    char unknown6[0xb];
+    unsigned char timer;
+    unsigned short count : 14;
+    unsigned short active : 1;
+    unsigned short flag : 1;
+    char unknown14[0x18];
 };
 
 struct Struct_0200f3a4_5 {
@@ -105,9 +106,9 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     unsigned char var2[0x54];
     unsigned char var3;
 
-    func_020c99c8(var2);
-    var3 = var2[0];
-    *(unsigned char*)(var1 + 5) = var3;
+    OS_GetOwnerInfo(buf);
+    v = buf[0];
+    *(unsigned char*)(base + 5) = v;
 #if defined(eur)
     if (var3 != 2 && var3 != 3 && var3 != 4 && var3 != 5) *(unsigned char*)(var1 + 5) = 1;
 #else
@@ -117,7 +118,7 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
 
     memset(var0->objects_, 0, sizeof(var0->objects_));
 
-    func_0208660c(var1 + J(0x2a04));
+    Party_Init(base + J(0x2a04));
 
     gs->camera_ = 0;
     gs->protagonistObjectIndex_ = 0;
@@ -140,18 +141,14 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(int*)(var1 + J(0x5ca4)) = 0;
     *(int*)(var1 + J(0x5ca8)) = 0;
 
-#if defined(jpn)
-    var0->dayLength_ = data_020f33b4.unknown_8_;
-#else
-    var0->dayLength_ = data_020f33b4.unknown_4_;
-#endif
-    var0->daySpeed_ = 1.0f / 60.0f;
-    var0->dayTimer_ = data_020f33b4.unknown_c_;
-    var0->timeOfDay_ = TimeOfDay_Day;
-    var0->dayTimerRunning_ = 1;
-    var0->unknown_3e0_ = 0;
-    memset(&var0->mainTimestamp_, 0, sizeof(var0->mainTimestamp_));
-    memset(&var0->altTimestamp_, 0, sizeof(var0->altTimestamp_));
+    gs->dayLength_ = data_020f33b4.dayLength;
+    gs->daySpeed_ = 1.0f / 60.0f;
+    gs->dayTimer_ = data_020f33b4.dayStart;
+    gs->timeOfDay_ = TimeOfDay_Day;
+    gs->dayTimerRunning_ = 1;
+    gs->unknown_3e0_ = 0;
+    memset(&gs->mainTimestamp_, 0, sizeof(gs->mainTimestamp_));
+    memset(&gs->altTimestamp_, 0, sizeof(gs->altTimestamp_));
 
     *(int*)(var1 + J(0x5cb0)) = 1;
     *(int*)(var1 + J(0x5cb4)) = 1;
@@ -161,9 +158,9 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(unsigned char*)(var1 + J(0x5729)) = 0;
     memset(var1 + J(0x5cc0), 0, 8);
 
-    *(unsigned char*)(var1 + J(0x63d4)) = 0;
-    *(unsigned char*)(var1 + J(0x5cda)) = 8;
-    memset(var1 + J(0x5cdc), 0, 0x190);
+    gs->characterCreated_ = 0;
+    *(unsigned char*)(base + J(0x5cda)) = 8;
+    memset(base + J(0x5cdc), 0, 0x190);
 
     {
         unsigned long long var5 = GetCurrentTimestamp();
@@ -240,7 +237,7 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(unsigned int*)(var1 + J(0x5ccc)) &= ~1u;
     *(unsigned int*)(var1 + J(0x5ccc)) |= 2u;
 
-    func_02010124((Struct_0200f3a4_9*)var1);
+    GameState_ResetTiming((S_02010124*)base);
 
     *(unsigned char*)(var1 + J(0x63d6)) = 0;
     *(short*)(var1 + J(0x63d8)) = 0;
@@ -283,13 +280,13 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(int*)(var1 + J(0x71f8)) = 0;
     *(unsigned char*)(var1 + J(0x71fc)) = 0;
 
-    for (int var9 = 0; var9 < 16; var9++) {
-        VectorizedMemset(((Struct_0200f3a4_4*)(var1 + J(0x7200) + var9 * 0x2c))->unknown_0_, 0, 6);
-        memset(((Struct_0200f3a4_4*)(var1 + J(0x7200) + var9 * 0x2c))->unknown_6_, 0, 0xb);
-        ((Struct_0200f3a4_4*)(var1 + J(0x7200) + var9 * 0x2c))->unknown_12_.unknown_0_0_ = 0;
-        *(unsigned char*)(var1 + var9 * 0x2c + J(0x7211)) = 0;
-        ((Struct_0200f3a4_4*)(var1 + J(0x7200) + var9 * 0x2c))->unknown_12_.unknown_1_6_ = 0;
-        VectorizedMemset(((Struct_0200f3a4_4*)(var1 + J(0x7200) + var9 * 0x2c))->unknown_14_, 0, 0x18);
+    for (int i = 0; i < 16; i++) {
+        VectorizedMemset(((TimedKey*)(base + J(0x7200) + i * 0x2c))->key, 0, 6);
+        memset(((TimedKey*)(base + J(0x7200) + i * 0x2c))->unknown6, 0, 0xb);
+        ((TimedKey*)(base + J(0x7200) + i * 0x2c))->count = 0;
+        *(unsigned char*)(base + i * 0x2c + J(0x7211)) = 0;
+        ((TimedKey*)(base + J(0x7200) + i * 0x2c))->active = 0;
+        VectorizedMemset(((TimedKey*)(base + J(0x7200) + i * 0x2c))->unknown14, 0, 0x18);
     }
 
     memset(var1 + J(0x74de), 0, 0x20);
@@ -299,7 +296,7 @@ extern "C" ARM void func_0200f3a4(void* arg0) {
     *(int*)(var1 + J(0x71f0)) = 0;
     *(int*)(var1 + J(0x71f4)) = 0;
 
-    ClearField0x0_02046730((S02046730*)GlobalFlags_GetInstance());
+    FlagWord_Clear((S02046730*)GlobalFlags_GetInstance());
 
     memset(var1 + J(0x7504), 0, 0xec);
     memset(var1 + J(0x75f0), 0, 0x4d0);

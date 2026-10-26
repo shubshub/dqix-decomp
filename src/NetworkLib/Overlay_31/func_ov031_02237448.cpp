@@ -37,7 +37,7 @@ extern "C" unsigned int func_ov031_0223cf70(void**);
 extern "C" void func_ov031_022376fc(void);
 extern "C" void func_ov031_022379f0(void);
 extern "C" int func_ov031_022375cc(void);
-extern "C" void func_020c99c8(void*);
+extern "C" void OS_GetOwnerInfo(void*);
 extern "C" void VectorizedInvertedMemcpy(const void*, void*, unsigned int);
 unsigned long long GetCurrentTimestamp(void);
 extern "C" int func_020d4f7c(int, int, int);
@@ -55,15 +55,15 @@ extern "C" ARM int func_ov031_02237448(int arg0) {
     if (func_020d4f7c((int)data_ov031_02290d0c, (int)func_ov031_022376fc, 3) == 2) {
         Struct_ov031_02237448* var2;
         do {
-            func_020d4848(&data_ov031_02290d0c->unknown_13b8_);
-        } while ((var2 = data_ov031_02290d0c)->unknown_13b8_ != 2);
-        var2->unknown1_1374_ = data_ov031_02249294;
-        var2->unknown_1374_.unknown_0_ = var2->unknown_f00_;
-        data_ov031_02290d0c->unknown_1374_.unknown_8_ = func_020d4be8();
-        func_020c99c8(&var0);
-        VectorizedInvertedMemcpy(data_ov031_02249288, data_ov031_02290d0c->unknown_1374_.unknown_14_, 8);
-        data_ov031_02290d0c->unknown_1374_.unknown_1d_ = 1;
-        VectorizedInvertedMemcpy(var0.unknown_4_, data_ov031_02290d0c->unknown_1374_.unknown_20_, var0.unknown_1a_ << 1);
+            CopyToBattleContextBuffer_020d4848(&data_ov031_02290d0c->status);
+        } while ((state = data_ov031_02290d0c)->status != 2);
+        state->connectionWords = data_ov031_02249294;
+        state->connection.cache = state->cache;
+        data_ov031_02290d0c->connection.fortune = GetOwnerDataFortuneValue020d4be8();
+        OS_GetOwnerInfo(&response);
+        VectorizedInvertedMemcpy(data_ov031_02249288, data_ov031_02290d0c->connection.signature, 8);
+        data_ov031_02290d0c->connection.enabled = 1;
+        VectorizedInvertedMemcpy(response.payload, data_ov031_02290d0c->connection.payload, response.count << 1);
         if (func_ov031_022375cc()) {
             data_ov031_02290d0c->unknown_1b90_ = func_ov031_0223e218(0, (void*)func_ov031_022379f0, 0, 0x78);
             return 1;

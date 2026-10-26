@@ -67,7 +67,7 @@ struct Struct_ov003_021760cc_5 {
 int Text_Append(char *, const char *);
 Messages021760cc *MessageSystem_GetInstance();
 extern "C" void __clear(void *, int);
-void Clear12Bytes020e46c4(void *);
+void NameText_Clear(void *);
 extern "C" void func_020e5334(Loaded021760cc *, void *, unsigned int, int);
 extern "C" void func_02046380(Messages021760cc *);
 void NameText_InitFromPartyMember(void *, int);
@@ -227,25 +227,25 @@ extern "C" ARM void func_ov003_021760cc(Menu021760cc *menu) {
             loader->RemoveTask(menu->task);
             menu->task = -1;
         }
-        arg0->unknown_fec_ = var14->QueueLoadFileInGP2(data_ov003_02180b9f, data_ov003_02180bb5, 0);
-        arg0->unknown_1040_++;
-    } else if (arg0->unknown_1040_ == 1) {
-        if (var14->GetTaskStatus(arg0->unknown_fec_)) {
-            char var16[0x48];
-            char var17[0x48];
-            Struct_ov003_021760cc_3 var18;
-            __clear(var16, 0x48);
-            __clear(var17, 0x48);
-            func_020e46c4(&var18);
-            var18.unknown_0_ = var16;
-            var18.unknown_4_ = var17;
-            char var19[12];
-            void *var20;
-            unsigned int var21;
-            var14->GetLoadedFileByID(arg0->unknown_fec_, &var20, &var21);
-            if (var20) {
-                if (arg0->unknown_1036_ == 0x1e && arg0->unknown_1048_ != -1) {
-                    func_020e5334(&var18, var20, var21, arg0->unknown_1048_);
+        menu->task = loader->QueueLoadFileInGP2(data_ov003_02180b9f, data_ov003_02180bb5, 0);
+        menu->step++;
+    } else if (menu->step == 1) {
+        if (loader->GetTaskStatus(menu->task)) {
+            char first[0x48];
+            char second[0x48];
+            Loaded021760cc loaded;
+            __clear(first, 0x48);
+            __clear(second, 0x48);
+            NameText_Clear(&loaded);
+            loaded.a = first;
+            loaded.b = second;
+            char name[12];
+            void *file;
+            unsigned int length;
+            loader->GetLoadedFileByID(menu->task, &file, &length);
+            if (file) {
+                if (menu->cur == 0x1e && menu->field1048 != -1) {
+                    func_020e5334(&loaded, file, length, menu->field1048);
                 } else {
                     func_020e5334(&var18, var20, var21, arg0->unknown_103a_);
                 }

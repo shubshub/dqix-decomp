@@ -4,16 +4,16 @@
 
 extern "C" void func_02046380(void);
 int MessageSystem_GetInstance(void);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
 int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
 extern "C" int func_ov023_021f4438(void* obj);
 struct TableA68;
 void* FindEntryByKey_02072a68(struct TableA68* table, int key);
 struct StoreStruct;
 void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 #if defined(jpn)
 extern "C" void func_0204500c(void* obj, char* buffer, int a);
 #else
@@ -32,7 +32,7 @@ extern "C" ARM int func_ov023_021f2638(unsigned char* obj) {
     int* g = _ZZ17GetGlobal021ffefcvE1s;
     int state = MessageSystem_GetInstance();
     unsigned char* stateObj = (unsigned char*)state;
-    func_0202ae18();
+    LinkSession_GetInstance();
     void* search = Zone3D_GetInstance();
     int counter = *g;
 
@@ -44,7 +44,7 @@ extern "C" ARM int func_ov023_021f2638(unsigned char* obj) {
             sprintf(msgBuf, e1, *(int*)(obj + 0x5958));
             int inRange = 0;
             if (*(unsigned char*)(obj + 0x5af0) == 0 && *(int*)(obj + 0x7014) != 0) {
-                if (IsValueInRange0201b5d8(*(unsigned short*)search) != 0) inRange = 1;
+                if (ZoneId_IsGrottoBossFloor(*(unsigned short*)search) != 0) inRange = 1;
             }
             if (fieldCheck != 0 && inRange == 0) {
                 char* e2 = (char*)FindEntryByKey_02072a68((struct TableA68*)(obj + 0x5af4), 0x22);
@@ -78,7 +78,7 @@ extern "C" ARM int func_ov023_021f2638(unsigned char* obj) {
     int state = MessageSystem_GetInstance();
     unsigned char* stateObj = (unsigned char*)state;
     func_02046380();
-    func_0202ae18();
+    LinkSession_GetInstance();
     void* search = Zone3D_GetInstance();
     int counter = *g;
 
@@ -87,7 +87,7 @@ extern "C" ARM int func_ov023_021f2638(unsigned char* obj) {
             char msgBuf[0x100];
             unsigned char idBuf[4];
             GameObject* combatant;
-            int n = CopyOutRegion0x571d_020114ec((char*)battleStruct, idBuf);
+            int n = GameState_GetPartyOrder((char*)battleStruct, idBuf);
             unsigned char flagged = 0;
             unsigned char total = 0;
             int i;
@@ -107,7 +107,7 @@ extern "C" ARM int func_ov023_021f2638(unsigned char* obj) {
             StoreInArray0x8b0_020465c0((struct StoreStruct*)stateObj, 0, *(int*)(obj + 0x5768));
             int inRange = 0;
             if (*(unsigned char*)(obj + 0x5900) == 0 && *(int*)(obj + 0x6e24) != 0) {
-                if (IsValueInRange0201b5d8(*(unsigned short*)search) != 0) inRange = 1;
+                if (ZoneId_IsGrottoBossFloor(*(unsigned short*)search) != 0) inRange = 1;
             }
             if (fieldCheck != 0 && inRange == 0) {
                 char* e2 = (char*)FindEntryByKey_02072a68((struct TableA68*)(obj + 0x5904), 0x22);

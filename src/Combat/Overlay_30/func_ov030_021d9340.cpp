@@ -14,7 +14,7 @@ struct T02054280;
 void ResetAllocators02054280(T02054280*);
 extern "C" void SprSprite_Init(void* obj);
 void InitObj0219a674(unsigned char*);
-extern "C" void func_02020554(void* obj);
+extern "C" void MapDisplay_Init(void* obj);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int length);
 struct BackgroundGraphics;
 void Background_Init(BackgroundGraphics*);
@@ -22,7 +22,7 @@ void ResetFieldGroup4444_0218b664(char* base);
 struct List02046958;
 void ClearListHeadTail(List02046958*);
 extern "C" void func_ov017_021a124c(void* obj);
-void InitAndResetHeader_0219e310(unsigned char*, int);
+void FieldTask_InitEnterZone(unsigned char*, int);
 extern "C" void func_ov017_021b8d1c(void* obj);
 extern "C" void func_ov017_021b6f18(void* obj);
 extern "C" void func_ov017_021a5568(void* obj);
@@ -166,11 +166,11 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
         *(int*)(var0 + R(0x345c, (0x3000 + 0x66c)) + var9 * 4) = 0;
     }
 
-    func_ov017_0219a674((unsigned char*)(var0 + R(0x34a4, (0x3400 + 0x2b4))));
-    ((Model3D*)(*(void**)(var0 + R(0x34b8, (0x3000 + 0x6c8)))))->Clear();
-    ((Object3D*)(*(void**)(var0 + R(0x34bc, (0x3000 + 0x6cc)))))->Initialize();
-    var0[R(0x4111, (0x4000 + 0x331))] = 0;
-    func_02020554(*(void**)(var0 + R(0x34c0, (0x3000 + 0x6d0))));
+    InitObj0219a674((unsigned char*)(self + R(0x34a4, (0x3400 + 0x2b4))));
+    ((Model3D*)(*(void**)(self + R(0x34b8, (0x3000 + 0x6c8)))))->Clear();
+    ((Object3D*)(*(void**)(self + R(0x34bc, (0x3000 + 0x6cc)))))->Initialize();
+    self[R(0x4111, (0x4000 + 0x331))] = 0;
+    MapDisplay_Init(*(void**)(self + R(0x34c0, (0x3000 + 0x6d0))));
 
     *(int*)(var0 + R(0x34c4, (0x3000 + 0x6d4))) = 0;
     for (int var11 = 0; var11 < 4; var11++) {
@@ -201,18 +201,18 @@ extern "C" ARM void func_ov030_021d9340(GameResources* arg0) {
     var0[R(0x41d9, (0x4000 + 0x489))] = 1;
     var0[R(0x41da, (0x4000 + 0x48a))] = 0;
 
-    func_02046958((Struct_02046958*)(*(void**)(var0 + R(0x34ec, (0x3000 + 0x6fc)))));
-    func_02046958((Struct_02046958*)(*(void**)(var0 + R(0x34f0, (0x3000 + 0x700)))));
-    func_02046958((Struct_02046958*)(*(void**)(var0 + R(0x34f4, (0x3000 + 0x704)))));
-    func_ov017_021a124c(*(void**)(var0 + R(0x34f8, (0x3000 + 0x708))));
-    func_ov017_0219e310((unsigned char*)(*(void**)(var0 + R(0x34fc, (0x3000 + 0x70c)))), 1);
-    func_ov017_021b8d1c(*(void**)(var0 + R(0x3500, (0x3000 + 0x710))));
-    func_ov017_021b6f18(*(void**)(var0 + R(0x3508, (0x3000 + 0x718))));
-    func_ov017_021a5568(*(void**)(var0 + R(0x350c, (0x3000 + 0x71c))));
-    func_ov017_021bf410(*(void**)(var0 + R(0x3510, (0x3000 + 0x720))));
-    func_ov017_021b8c70((Struct_ov017_021b8c70*)(*(void**)(var0 + R(0x3514, (0x3000 + 0x724)))));
-    func_ov017_021bac58(*(void**)(var0 + R(0x3518, (0x3000 + 0x728))));
-    func_ov017_021ba90c((Struct_ov017_0219bfb4*)(*(void**)(var0 + R(0x351c, (0x3000 + 0x72c)))));
+    ClearListHeadTail((List02046958*)(*(void**)(self + R(0x34ec, (0x3000 + 0x6fc)))));
+    ClearListHeadTail((List02046958*)(*(void**)(self + R(0x34f0, (0x3000 + 0x700)))));
+    ClearListHeadTail((List02046958*)(*(void**)(self + R(0x34f4, (0x3000 + 0x704)))));
+    func_ov017_021a124c(*(void**)(self + R(0x34f8, (0x3000 + 0x708))));
+    FieldTask_InitEnterZone((unsigned char*)(*(void**)(self + R(0x34fc, (0x3000 + 0x70c)))), 1);
+    func_ov017_021b8d1c(*(void**)(self + R(0x3500, (0x3000 + 0x710))));
+    func_ov017_021b6f18(*(void**)(self + R(0x3508, (0x3000 + 0x718))));
+    func_ov017_021a5568(*(void**)(self + R(0x350c, (0x3000 + 0x71c))));
+    func_ov017_021bf410(*(void**)(self + R(0x3510, (0x3000 + 0x720))));
+    InitState14Neg1_021b8c70((Obj_021b8c70*)(*(void**)(self + R(0x3514, (0x3000 + 0x724)))));
+    func_ov017_021bac58(*(void**)(self + R(0x3518, (0x3000 + 0x728))));
+    InitState16_021ba90c((Obj021ba90c*)(*(void**)(self + R(0x351c, (0x3000 + 0x72c)))));
 
     func_0204693c((Struct_0204693c*)(*(void**)(var0 + R(0x3520, (0x3000 + 0x730)))));
     **(unsigned char**)(var0 + R(0x3520, (0x3000 + 0x730))) = 0x11;

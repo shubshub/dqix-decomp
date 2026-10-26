@@ -52,13 +52,13 @@ struct Struct_02099950 {
     unsigned char unknown_e_6_ : 2;
     unsigned char unknown_f_;
 };
-struct Struct_02095924_2;
-extern "C" struct Struct_02099950* func_02099950(struct Struct_02095924_2* arg0, int arg1);
+struct SearchTable;
+struct SearchEntry* ZoneTable_FindEntry(struct SearchTable* table, int key);
 
-void* GetPtrField0x114_02033fa0(void* obj);
-void* GetPtrField0x468_02011584(void* obj);
+void* GameObject_GetFloorAttribute(void* obj);
+void* GameState_GetZoneTable(void* obj);
 int GameState_GetProtagonistIndex(GameState* b);
-void* GetField0x74deForValidIndex_020120a0(char* base, unsigned int index);
+void* GameState_GetPlayerLocation(char* base, unsigned int index);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 
 struct Struct_020340b4;
@@ -85,9 +85,9 @@ extern "C" void* func_02079e2c(char* arg0, int arg1);
 struct Struct_02048350_2;
 extern "C" int func_02048350(struct Struct_02048350_2* arg0, int arg1);
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c508(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 
 struct Struct_ov010_02184354 { short unknown_0_; short unknown_2_; short unknown_4_; };
 extern "C" void func_ov017_021d360c(int arg0, unsigned char arg1, int arg2, struct Struct_ov010_02184354 arg3);
@@ -170,7 +170,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
 #endif
     caster = bs->GetPartyMemberByIndex(actorInfo->combatantId);
     GameObject* active = bs->GetPartyMemberByIndex(GameState_GetLeaderIndex(bs));
-    void* scene = func_0202ae18();
+    void* scene = LinkSession_GetInstance();
     void* ov17 = GetGameResources();
     move = (struct MoveRecord02184354*)Zone3D_GetInstance();
 #if defined(jpn)
@@ -210,7 +210,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
         func_020728ac(&arg0->unknown_c_, &arg0->unknown_14_, var12, var13, 0, 0, 0);
         var0->RemoveTask(arg0->unknown_4_);
 
-        unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
+        unsigned short* slot = (unsigned short*)GameState_GetPlayerLocation((char*)bs, GameState_GetProtagonistIndex(bs));
         if (slot == NULL) {
             ResetStateAndCleanup021842d8((struct Struct021842d8*)obj);
             return 1;
@@ -221,16 +221,16 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
             return 1;
         }
 
-        unsigned char var16 = 1;
-        arg0->unknown_1_ = var16;
-        if (var15->unknown_c_0_ == 0) {
-            void* var17 = func_02033fa0(var3);
-            if (var17 != NULL) {
-                struct Struct_02095924_2* var18 = (struct Struct_02095924_2*)func_02011584(var2);
-                struct Struct_02099950* var19 = func_02099950(var18,
-                    func_0204bd7c((struct Struct_0204bd7c*)var17));
-                if (var19 != NULL) {
-                    if (var19->unknown_e_2_ != 0) arg0->unknown_1_ = 0;
+        unsigned char visible = 1;
+        obj->visible = visible;
+        if (info->category == 0) {
+            void* colour = GameObject_GetFloorAttribute(caster);
+            if (colour != NULL) {
+                struct SearchTable* table = (struct SearchTable*)GameState_GetZoneTable(bs);
+                struct SearchEntry* entry = ZoneTable_FindEntry(table,
+                    ConvertColorToDecimalOffset30000((struct ColorHolder0204bd7c*)colour));
+                if (entry != NULL) {
+                    if (entry->kind != 0) obj->visible = 0;
                 }
             }
         } else {
@@ -288,7 +288,7 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
             presenter->active = 1;
 #endif
             SePlayer_Play((struct SePlayer*)&g_sePlayer, 0x64, 0);
-            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
+            unsigned short* slot = (unsigned short*)GameState_GetPlayerLocation((char*)bs, GameState_GetProtagonistIndex(bs));
             if (slot != NULL) *slot = 0;
             obj->state = 4;
         } else {
@@ -373,8 +373,8 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
         var34.unknown_2_ = (short)(var30.unknown_4_ >> 4);
         var34.unknown_4_ = (short)(var30.unknown_8_ >> 4);
 
-        if (func_0202c508(scene) != 0) {
-            unsigned short* slot = (unsigned short*)GetField0x74deForValidIndex_020120a0((char*)bs, GameState_GetProtagonistIndex(bs));
+        if (LinkSession_IsHostOrSolo(scene) != 0) {
+            unsigned short* slot = (unsigned short*)GameState_GetPlayerLocation((char*)bs, GameState_GetProtagonistIndex(bs));
             if (slot != NULL) {
                 slot[0] = move->id;
                 slot[1] = anchor.x;
@@ -388,9 +388,9 @@ extern "C" ARM int func_ov010_02184354(struct Ctx02184354* obj) {
         if (var36 != NULL) {
             func_02048350((struct Struct_02048350_2*)var3, var36->unknown_8_0_);
         }
-        GameObject* var37 = var2->GetUnknownGameObject();
-        if (var37 != NULL) {
-            func_020340b4((struct Struct_020340b4*)var37);
+        GameObject* target = bs->GetLeader();
+        if (target != NULL) {
+            SetFlag0x80At0xc2((struct Flags020340b4*)target);
         }
         func_ov017_021d360c(0, GameState_GetProtagonistIndex(bs), move->id, anchor);
         obj->state = 3;

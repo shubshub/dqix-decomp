@@ -6,13 +6,10 @@
 #include "std_library_functions.h"
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 extern "C" void func_020a395c(void);
-extern "C" int func_020a36cc(void** arg0, unsigned int arg1);
-extern "C" void func_020c9be0(void);
+int AllocateIndexedSlot020a36cc(void** out, unsigned int idx);
+extern "C" void HaltSystem(void);
 
 #if defined(jpn)
 extern const char data_020f1bf4[];
@@ -49,10 +46,10 @@ extern "C" ARM int func_020a3720(void) {
     if (!LoadFileIntoMemory(data_020f1bf4, var2, &var3)) return 0;
 #else
     BackgroundLoader::AddLockGlobal();
-    void* var4 = ExtractFileFromGP2(data_020f1a9c, data_020f1ab0, &var3);
-    memcpy(var2, var4, var3);
-    if (var3 > 0x2000) {
-        func_020c9be0();
+    void* extracted = ExtractFileFromGP2(data_020f1a9c, data_020f1ab0, &fileSize);
+    memcpy(buf, extracted, fileSize);
+    if (fileSize > 0x2000) {
+        HaltSystem();
     }
 
 #endif

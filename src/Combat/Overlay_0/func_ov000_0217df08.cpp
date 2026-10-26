@@ -59,7 +59,7 @@ struct Struct_ov000_0217df08_9 {
 Messages0217df08* MessageSystem_GetInstance();
 extern "C" Node0217df08* func_ov000_02161318(void* obj, int id);
 int IsFlag0x28Bit0Set_ov000_02171a60(void*);
-void Clear12Bytes020e46c4(void*);
+void NameText_Clear(void*);
 struct Container020e0310;
 const char* KeyTable_Get(Container020e0310*, int);
 extern "C" void* memset(void* dst, int value, unsigned int length);
@@ -282,8 +282,8 @@ extern "C" ARM void func_ov000_0217df08(Battle0217df08* self, int arg1, int arg2
                 NameParts0217df08 names;
                 NameParts0217df08 parts;
                 NameParts0217df08 original;
-                Clear12Bytes020e46c4(&names);
-                Clear12Bytes020e46c4(&parts);
+                NameText_Clear(&names);
+                NameText_Clear(&parts);
                 const char* separator = KeyTable_Get((Container020e0310*)self->messages, 6);
                 char* work = g->work;
                 char* text = g->text;

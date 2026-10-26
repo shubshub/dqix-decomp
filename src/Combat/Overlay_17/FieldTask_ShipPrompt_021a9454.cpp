@@ -59,10 +59,10 @@ struct ZoneTransitionSettings {
 
 ZoneTransitionMessageController* MessageSystem_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 struct ResetObj020d7a5c* TextQueue_GetInstance(void);
 void TextQueue_Reset(struct Obj020d7aa0* obj);
-void* GetPointerAt0x32c_0200ffc0(struct PointerField32c_ffc0* obj);
+void* GameState_GetShip(struct PointerField32c_ffc0* obj);
 void ClearByteFlagAt0x154_020a7f40(unsigned char* obj);
 int StandardStrings_Get(int value);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
@@ -76,7 +76,7 @@ extern "C" void func_0204500c(void*, const char*, int, int);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 extern "C" int func_020457e0(void* obj);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 extern "C" void VectorizedMemset(void*, int, int);
 void MessageSystem_Reset(char* obj);
 void SetByteFlagAt0x154_020a7f34(unsigned char* obj);
@@ -86,13 +86,13 @@ extern "C" ARM void FieldTask_ShipPrompt(ZoneTransitionRequest* request) {
     GameState* battleStruct = GameState::GetInstance();
     ZoneTransitionMessageController* controller = MessageSystem_GetInstance();
     Zone3D_GetInstance();
-    int field = GetFieldIfFlag4_020100f8((char*)battleStruct);
+    int field = GameState_GetFollowCamera((char*)battleStruct);
     int status = request->state;
 
     if (status == 0) {
         struct ResetObj020d7a5c* reset = TextQueue_GetInstance();
         TextQueue_Reset((struct Obj020d7aa0*)reset);
-        void* p = GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battleStruct);
+        void* p = GameState_GetShip((struct PointerField32c_ffc0*)battleStruct);
         ClearByteFlagAt0x154_020a7f40((unsigned char*)p);
 
         int flag10 = request->alternateDestination;
@@ -127,8 +127,8 @@ extern "C" ARM void FieldTask_ShipPrompt(ZoneTransitionRequest* request) {
 
     ClearFlagBits_020a28b0((unsigned char*)field, 2);
     if (func_020457e0(controller) == 0) {
-        GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battleStruct);
-        ZoneTransitionSettings* settings = (ZoneTransitionSettings*)GetField0x3f8Address_0200fd0c(battleStruct);
+        GameState_GetShip((struct PointerField32c_ffc0*)battleStruct);
+        ZoneTransitionSettings* settings = (ZoneTransitionSettings*)GameState_GetZoneTransition(battleStruct);
         VectorizedMemset(settings, 0, sizeof(*settings));
         settings->unknown4 = 1;
         settings->unknown8 = 1;
@@ -162,7 +162,7 @@ extern "C" ARM void FieldTask_ShipPrompt(ZoneTransitionRequest* request) {
     }
 
     MessageSystem_Reset((char*)controller);
-    void* p = GetPointerAt0x32c_0200ffc0((struct PointerField32c_ffc0*)battleStruct);
+    void* p = GameState_GetShip((struct PointerField32c_ffc0*)battleStruct);
     SetByteFlagAt0x154_020a7f34((unsigned char*)p);
     request->done = 1;
 }

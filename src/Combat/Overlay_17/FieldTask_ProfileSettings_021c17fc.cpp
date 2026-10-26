@@ -15,14 +15,14 @@ struct AllocatorUnion;
 struct Struct_02018300_3;
 
 void GameObject_DisableControl(Obj020397cc* obj, int flag);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetFlagsAt0x244_020a28a0(unsigned char* obj, unsigned char mask);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 void GameObject_EnableControl(void* obj);
 extern "C" void func_020a0cc4(unsigned int size);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void PushInputLogA_020a1df8(int value);
 void PushInputLogB_020a1ef0(int value);
 extern "C" void func_ov012_021843d4(void* scene);
@@ -58,17 +58,17 @@ extern "C" void func_ov017_021c1a24(Struct_ov017_021c17fc_2* arg0);
 extern "C" ARM void FieldTask_ProfileSettings(Task021c17fc* task) {
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
-    GameObject* unknown = gs->GetUnknownGameObject();
+    GameObject* unknown = gs->GetLeader();
     GameObject_DisableControl((Obj020397cc*)unknown, 1);
     SetFlags04(res, 0xc0);
-    unsigned char* flags = (unsigned char*)GetFieldIfFlag4_020100f8((char*)gs);
+    unsigned char* flags = (unsigned char*)GameState_GetFollowCamera((char*)gs);
     SetFlagsAt0x244_020a28a0(flags, 3);
     if (task->step == 0) {
         func_020a0cc4(ArenaSize);
         void* buffer = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, ArenaSize);
         if (buffer == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            task->failed = 1;
             return;
         }
         arg0->unknown_8_.CreateTypeA(var4, Enum_ov017_021c17fc_189632);
@@ -78,12 +78,12 @@ extern "C" ARM void FieldTask_ProfileSettings(Task021c17fc* task) {
             func_020a1df8(3);
         }
 #endif
-        func_020a1940(OVERLAY_ID(12));
-        func_020a1ef0(1);
-        arg0->unknown_20_ = (Struct_ov017_021c17fc*)arg0->unknown_8_.Allocate(Enum_ov017_021c17fc_5312);
-        func_ov012_021843d4(arg0->unknown_20_);
-        func_ov012_02184884(arg0->unknown_20_, &arg0->unknown_8_);
-        arg0->unknown_1c_++;
+        Overlay_Load(OVERLAY_ID(12));
+        PushInputLogB_020a1ef0(1);
+        task->scene = (Scene021c17fc*)task->allocator.Allocate(SceneSize);
+        func_ov012_021843d4(task->scene);
+        func_ov012_02184884(task->scene, &task->allocator);
+        task->step++;
         return;
     }
     if (arg0->unknown_1c_ == 1) {
@@ -115,6 +115,6 @@ extern "C" ARM void FieldTask_ProfileSettings(Task021c17fc* task) {
     } else {
         func_ov017_0218d77c(var1, 1);
     }
-    func_020a0c0c();
-    arg0->unknown_1_ = 1;
+    ROMFilesystem_InitFileTables();
+    task->failed = 1;
 }

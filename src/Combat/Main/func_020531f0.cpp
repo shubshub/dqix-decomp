@@ -6,14 +6,14 @@
 
 int GetIndexedEntryField0x178_02053604(signed char* obj);
 void ForwardToTargetOrDefault0205eabc(void* target, void* param, int arg);
-int GetByte0x26c_02039d7c(char* obj);
+int GameObject_IsClimbingLadder(char* obj);
 int GameState_GetLeaderIndex(GameState* battleStruct);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetByte0x2c4To2IfByte0x2c5Set_020a2c8c(unsigned char* p);
 void* MessageSystem_GetInstance(void);
 
-struct Struct_02010604;
-extern "C" void func_02033b88(struct Struct_02010604* arg0, int arg1);
+struct Bytes02033b88;
+void GameObject_ForceMotionState(struct Bytes02033b88* obj, int value);
 
 extern "C" void func_ov017_021cc1f8(int arg0, const char* arg1, int arg2, int arg3);
 
@@ -90,22 +90,22 @@ extern "C" ARM void func_020531f0(struct Struct_020531f0_2* arg0) {
     arg0->unknown_185_ = 0;
     arg0->unknown_186_ = 0;
 
-    if ((arg0->unknown_0_.unknown_0_ & 0x200) != 0) {
-        if (func_02039d7c((char*)arg0) != 0) {
+    if ((obj->object.unknown_0_ & 0x200) != 0) {
+        if (GameObject_IsClimbingLadder((char*)obj) != 0) {
             return;
         }
     }
 
-    arg0->unknown_c1_.unknown_0_0_ &= ~2;
-    arg0->unknown_0_.RemoveAnimationPackageByID(2);
-    arg0->unknown_b2_ = 0;
-    func_02033b88((struct Struct_02010604*)arg0, 0);
+    obj->entryFlags.mode &= ~2;
+    obj->object.RemoveAnimationPackageByID(2);
+    obj->fieldB2 = 0;
+    GameObject_ForceMotionState((struct Bytes02033b88*)obj, 0);
 
     battleStruct = GameState::GetInstance();
     cid = obj->object.actorIndex_;
     int activeId = GameState_GetLeaderIndex(battleStruct);
     if (activeId == cid) {
-        target = GetFieldIfFlag4_020100f8((char*)battleStruct);
+        target = GameState_GetFollowCamera((char*)battleStruct);
         if (target != 0) {
             if (g_keyManager.TestKeysHeld(2) == 0
                 || ((unsigned char*)MessageSystem_GetInstance())[globalByteOffset] != 0) {

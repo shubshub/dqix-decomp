@@ -10,20 +10,20 @@ struct Struct_020e3b08;
 struct Struct_0207959c;
 struct Struct_0207958c;
 
-extern "C" Struct_0202b2f0* func_0202ae18(void);
-extern "C" void func_0207dba8(void* arg0);
-extern "C" void func_ov017_02190264(void* arg0, int arg1);
-extern "C" void func_ov000_0215fb04(void* arg0, int arg1);
-extern "C" void func_ov017_02192654(int arg0, int arg1, int arg2);
-extern "C" void* func_ov017_021b8468(void* arg0);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
+extern "C" void func_0207dba8(void* p);
+extern "C" void func_ov017_02190264(void* self, int id);
+extern "C" void func_ov000_0215fb04(void* stack, int id);
+extern "C" void func_ov017_02192654(int bit, int id, int cond);
+extern "C" void* func_ov017_021b8468(void* obj);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int size);
 
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 void ClearSearchFlagBit0202c600(SearchStruct* obj, int value);
 void ClearSearchFlagBit0202c718(SearchStruct* obj, int value);
-void RemoveSearchEntry0202c21c(SearchStruct* obj, int value);
+void LinkSession_RemoveMember(SearchStruct* obj, int value);
 Entry0207da94* GetData02108ea8_0207d78c(void);
 void ClearByteField17201_0218d500(void* obj);
 void ProcessEntries0207da94(Entry0207da94* list, int idx);
@@ -69,26 +69,26 @@ struct Struct_ov017_021905b8_5 {
 };
 
 // USA: func_ov017_021905b8
-extern "C" ARM void func_ov017_021905b8(GameResources* arg0, int arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_0202b2f0* var1 = func_0202ae18();
-    if (arg1 <= 0) {
+extern "C" ARM void func_ov017_021905b8(GameResources* self, int id, int remove) {
+    GameState* gs = GameState::GetInstance();
+    SearchStruct* search = LinkSession_GetInstance();
+    if (id <= 0) {
         return;
     }
-    if (id == GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) || id == GameState_GetLeaderIndex(gs) ||
+    if (id == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) || id == GameState_GetLeaderIndex(gs) ||
         id == GameState_GetProtagonistIndex(gs)) {
         ClearSearchFlagBit0202c600(search, id);
         ClearSearchFlagBit0202c718(search, id);
         return;
     }
 
-    Struct_0207da94* var2 = func_0207d78c();
-    func_0207dba8(var2);
-    func_ov017_0218d500(arg0);
-    func_0202c600(var1, arg1);
-    func_0202c718(var1, arg1);
-    if (arg2) {
-        func_0202c21c(var1, arg1);
+    Entry0207da94* entries = GetData02108ea8_0207d78c();
+    func_0207dba8(entries);
+    ClearByteField17201_0218d500(self);
+    ClearSearchFlagBit0202c600(search, id);
+    ClearSearchFlagBit0202c718(search, id);
+    if (remove) {
+        LinkSession_RemoveMember(search, id);
     }
     func_ov017_02190264(arg0, arg1);
     func_0207da94(var2, (unsigned char)arg1);
@@ -119,23 +119,23 @@ extern "C" ARM void func_ov017_021905b8(GameResources* arg0, int arg1, int arg2)
         }
     }
 
-    for (int var7 = 0; var7 < 0x30; var7++) {
-        Struct_ov017_021905b8_2* var8 = (Struct_ov017_021905b8_2*)var0->GetMaybeFieldMonsterByIndex(var7 + 0x70);
-        if (var8 != NULL && func_0207959c((Struct_0207959c*)var8, arg1)) {
-            int var9;
-            Struct_ov017_021905b8_3* var10 = (Struct_ov017_021905b8_3*)arg0->unknown_ptr_3718;
-            var9 = 1;
-            if (var10->unknown_2_ != 0 && func_ov017_021b8480(var10) == 0) {
-                Struct_ov017_021905b8_4* var11 = (Struct_ov017_021905b8_4*)func_ov017_021b8478(var10);
-                if (var11 != NULL && var11->unknown_8_ == var8->unknown_16a_) {
-                    Struct_ov017_021905b8_5* var12 = (Struct_ov017_021905b8_5*)func_ov017_021b8468(var10);
-                    if (var12 != NULL && var12->unknown_ea8_ == 7) {
-                        var9 = 0;
+    for (int i = 0; i < 0x30; i++) {
+        Monster_021905b8* mon = (Monster_021905b8*)gs->GetFieldMonsterByIndex(i + 0x70);
+        if (mon != NULL && CheckField0x17dBits4And5Equal0207959c((Obj0207959c*)mon, id)) {
+            int cond;
+            Zone_021905b8* z = (Zone_021905b8*)self->unknown_ptr_3718;
+            cond = 1;
+            if (z->active != 0 && GetField6b4_021b8480(z) == 0) {
+                ZoneSlot_021905b8* zs = (ZoneSlot_021905b8*)func_ov017_021b8478(z);
+                if (zs != NULL && zs->id == mon->id) {
+                    ZoneState_021905b8* st = (ZoneState_021905b8*)func_ov017_021b8468(z);
+                    if (st != NULL && st->state == 7) {
+                        cond = 0;
                     }
                 }
             }
-            func_ov017_02192654(func_0202c1a4((Struct_0202c1a4*)var1), var8->unknown_16a_, var9);
-            func_0207958c((Struct_0207958c*)var8);
+            func_ov017_02192654(LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search), mon->id, cond);
+            ClearField0x17dBits0x38_0207958c((ClearField0x17dBits0x38Struct*)mon);
         }
     }
 

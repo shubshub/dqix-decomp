@@ -6,13 +6,13 @@ enum { kFinalizeBaseOffset = 0x1860 };
 enum { kFinalizeBaseOffset = 0x1840 };
 #endif
 
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void* Zone3D_GetInstance(void);
 void SetByteIfDataAndCheckClear_021a01bc(unsigned char* self);
 
 // USA: func_ov017_021d3e7c
 ARM void StoreByteAndFinalize_021d3e7c(void* a, unsigned char* b, int c, unsigned char* d, void* e) {
-	if (func_0202c540(e) == 0) return;
+	if (LinkSession_IsGuest(e) == 0) return;
 	int p = (int)Zone3D_GetInstance();
 	unsigned char* base = (unsigned char*)(p + kFinalizeBaseOffset);
 	*(int*)(base + 0xb3c) = b[4];

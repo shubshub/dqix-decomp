@@ -20,18 +20,18 @@ struct Struct_02048cf0_3 {
     Struct_02048cf0_2* unknown_13c_;
 };
 
-extern "C" int func_020493ec(unsigned char*);
-extern "C" int func_020493c8(unsigned char*);
-extern "C" int func_020493a4(unsigned char*);
-extern "C" void func_02049390(unsigned char*, unsigned char);
-extern "C" void func_020493b8(unsigned char*, unsigned char);
-extern "C" void func_020493dc(unsigned char*, unsigned char);
-extern "C" void func_02049bd4(unsigned char*, int*);
-struct Struct_02010604;
-extern "C" void func_02033b88(Struct_02010604*, int);
-struct Struct_02048c90;
-extern "C" void func_02048c90(Struct_02048c90*);
-extern "C" struct Struct_02048cf0 func_ov000_0216f74c(int* arg0);
+int GetSubstructByte0x1e_020493ec(unsigned char*);
+int GetSubstructByte0x1d_020493c8(unsigned char*);
+int GetSubstructByte0x1c_020493a4(unsigned char*);
+void SetSubstructByte0x1c_02049390(unsigned char*, unsigned char);
+void SetSubstructByte0x1d_020493b8(unsigned char*, unsigned char);
+void SetSubstructByte0x1e_020493dc(unsigned char*, unsigned char);
+void SetSubstructFields0x10And0x18ClearFlag0x1_02049bd4(unsigned char*, int*);
+struct Bytes02033b88;
+void GameObject_ForceMotionState(Bytes02033b88*, int);
+struct Obj02048c90;
+void ResetInnerState02048c90(Obj02048c90*);
+extern "C" struct Vec2_0216f74c func_ov000_0216f74c(int* in);
 struct Vector3i;
 
 extern Struct_020e7b48 data_020e7b48;
@@ -65,9 +65,9 @@ extern "C" ARM void func_02048cf0(struct Struct_02048cf0_3* arg0, int arg1) {
     if (arg1 == 0) {
         func_020493dc((unsigned char*)arg0, 0xff);
     }
-    if (arg0->unknown_be_ == 0) {
-        func_02033b88((Struct_02010604*)arg0, 0);
-        ((Object3D*)arg0)->IsTransitioningAnimations();
+    if (obj->b_be == 0) {
+        GameObject_ForceMotionState((Bytes02033b88*)obj, 0);
+        ((Object3D*)obj)->IsTransitioningAnimations();
     }
     ((Object3D*)arg0)->SetAnimationPlaybackSpeed(0x1000, 0);
     func_02048c90((Struct_02048c90*)arg0);

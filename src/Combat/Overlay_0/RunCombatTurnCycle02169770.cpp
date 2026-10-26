@@ -22,7 +22,7 @@
 
 
 
-extern "C" void func_0202ae18(void);
+extern "C" void LinkSession_GetInstance(void);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 void SeedRandom32Wrapper_0215faa4(struct Random* random, unsigned int stateHi, unsigned int stateLo);
 extern "C" void func_ov000_02169850(void* obj);
@@ -38,7 +38,7 @@ void EnqueueEventTag23Field_021d0d58(void);
 // USA: func_ov000_02169770
 ARM void RunCombatTurnCycle02169770(unsigned char* obj) {
     GameState* battle = GameState::GetInstance();
-    func_0202ae18();
+    LinkSession_GetInstance();
     void* ptr29c = *(void**)(obj + REGION_OFFSET_0);
     GameState_GetProtagonistIndex(battle);
     SeedRandom32Wrapper_0215faa4((struct Random*)ptr29c,

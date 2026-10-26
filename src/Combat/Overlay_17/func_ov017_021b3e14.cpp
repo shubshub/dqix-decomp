@@ -29,11 +29,11 @@ extern "C" void func_02053cf8(struct Obj02053cf8* obj);
 struct Obj02053e10;
 void FillNameBytes02053e10(struct Obj02053e10* self);
 extern "C" void func_ov017_021917f0(int id, int flag);
-void SetBit02026bc8(unsigned char* obj, int index);
+void MapDisplay_RecheckMember(unsigned char* obj, int index);
 struct Bytes02033b88;
-int SetByte0xbeShiftPrev(struct Bytes02033b88* p, int val);
+int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 struct SearchStruct;
-extern "C" struct SearchStruct* func_0202ae18(void);
+extern "C" struct SearchStruct* LinkSession_GetInstance(void);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
 int GetSignedByte0x2d0_020546a8(void* obj);
 int IsEntryFlagBit11Set_0202be08(struct SearchStruct* search, int id);
@@ -278,19 +278,19 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
         if (var20) {
             var34 = 1;
         }
-        func_ov017_021917f0(arg0->unknown_8_, var34);
-        func_02026bc8((unsigned char*)var33->unknown_ptr_36d0, arg0->unknown_8_);
+        func_ov017_021917f0(self->id, f);
+        MapDisplay_RecheckMember((unsigned char*)res2->unknown_ptr_36d0, self->id);
 
         GameObject* var35 = var8->GetGameObjectByIndex(var11.unknown_0_[3]);
         GameObject* var36 = var8->GetGameObjectByIndex(var11.unknown_0_[4]);
         if (var35 != NULL && var36 != NULL && var35->obj3D_.pModel_ != NULL && var36->obj3D_.pModel_ != NULL) {
             var35->obj3D_.pModel_->ApplyTexturesFromModel(var36->obj3D_.pModel_);
         }
-        func_02033b88((struct Struct_02010604*)var10, 0);
-        var10->unknown_0_.EnableFlag(4);
+        GameObject_ForceMotionState((struct Bytes02033b88*)member, 0);
+        member->obj3D_.EnableFlag(4);
 
         if (world == 0) {
-            struct SearchStruct* search = func_0202ae18();
+            struct SearchStruct* search = LinkSession_GetInstance();
             int v = member->obj3D_.actorIndex_;
             GameObject* c = GetCombatantWithFlag0x1000_0200ff58(gs, v);
             if (c != NULL) {
@@ -304,11 +304,11 @@ extern "C" ARM int func_ov017_021b3e14(struct Struct_ov017_021b3e14* arg0) {
             }
         }
 
-        if (var20) {
-            var23->obj3D_.MakeHidden();
-            ((unsigned char*)var10)[0xc2] |= 0x20;
-            if (*(int*)((char*)var10->unknown_138_ + 0x14) & 1) {
-                func_02033b88((struct Struct_02010604*)var10, 4);
+        if (hasScript) {
+            body->obj3D_.MakeHidden();
+            ((unsigned char*)member)[0xc2] |= 0x20;
+            if (*(int*)((char*)member->currentStats138 + 0x14) & 1) {
+                GameObject_ForceMotionState((struct Bytes02033b88*)member, 4);
             } else {
                 member->obj3D_.SetAnimationByName(data_ov017_021d7ae3, 0);
             }

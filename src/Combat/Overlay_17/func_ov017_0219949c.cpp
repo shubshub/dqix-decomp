@@ -8,26 +8,26 @@ enum { Enum_ov017_0219949c_17479 = 0x4447 };
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_0202ae18(void);
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
-struct Struct_02039df4;
-extern "C" void func_ov017_021d0860(int arg0, int arg1, int arg2);
+extern "C" void* LinkSession_GetInstance(void);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+struct U16Field0x6_020375f8;
+void EnqueueEventTag154_021d0860(int a, int b, int c);
 
 // USA: func_ov017_0219949c
-extern "C" ARM void func_ov017_0219949c(void* arg0, int arg1, int arg2, unsigned char arg3, signed char arg4) {
-    struct Struct_0202c1a4* var0 = (struct Struct_0202c1a4*)func_0202ae18();
-    signed char var1 = func_0202c1a4(var0);
+extern "C" ARM void func_ov017_0219949c(void* ctx, int combatantId, int matchType, unsigned char slotId, signed char threshold) {
+    struct SearchStruct0202c1a4* search = (struct SearchStruct0202c1a4*)LinkSession_GetInstance();
+    signed char arrEntry = LinkSession_GetOwnSlot(search);
 
     if (arg2 != var1 && arg2 != 4) {
         return;
     }
 
-    GameState* var2 = GameState::GetInstance();
-    GameObject* var3 = var2->GetGameObjectByIndex(arg1);
-    GameObject* var4 = var2->GetUnknownGameObject();
-    unsigned short var5 = ((Object3D*)((struct Struct_02039df4*)var3))->GetField06();
-    unsigned short var6 = ((Object3D*)((struct Struct_02039df4*)var4))->GetField06();
+    GameState* battle = GameState::GetInstance();
+    GameObject* combatant = battle->GetGameObjectByIndex(combatantId);
+    GameObject* target = battle->GetLeader();
+    unsigned short v1 = ((Object3D*)((struct U16Field0x6_020375f8*)combatant))->GetField06();
+    unsigned short v2 = ((Object3D*)((struct U16Field0x6_020375f8*)target))->GetField06();
 
     if (var5 != var6) {
         func_ov017_021d0860(arg3, 1, 1);
@@ -40,9 +40,9 @@ extern "C" ARM void func_ov017_0219949c(void* arg0, int arg1, int arg2, unsigned
         return;
     }
 
-    unsigned char var7 = (unsigned char)func_0202c1a4(var0);
-    if (arg3 < var7) {
-        func_ov017_021d0860(arg3, 1, 1);
+    unsigned char arrEntry2 = (unsigned char)LinkSession_GetOwnSlot(search);
+    if (slotId < arrEntry2) {
+        EnqueueEventTag154_021d0860(slotId, 1, 1);
         return;
     }
     func_ov017_021d0860(arg3, 1, 0);

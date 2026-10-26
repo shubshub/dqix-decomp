@@ -10,7 +10,7 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 extern AllocatorUnion g_mainAllocator;
 
@@ -22,7 +22,7 @@ extern "C" ARM void func_020a395c(void) {
     AllocatorUnion_Free(&g_mainAllocator, *(void**)(base + 0x4000 + BUFFER_OFFSET));
     AllocatorUnion_Free(&g_mainAllocator, word);
     if (*(unsigned char*)(base + 0x4000 + OWNED_OFFSET) != 0) {
-        func_020a0c0c();
+        ROMFilesystem_InitFileTables();
         *(unsigned char*)(base + 0x4000 + OWNED_OFFSET) = 0;
     }
     battleStruct->SetTreasureMapLanguageDataPtr(0);

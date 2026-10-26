@@ -47,7 +47,7 @@ void Window_SetPanePalette(struct Struct_0205d81c* s, int key, int value);
 int KeyTable_Get(struct Container020e0310* c, int key);
 int Text_Append(char* dst, const char* src);
 extern "C" void __clear(void* buf, int n);
-unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
 extern "C" void func_ov003_021592d8(struct BattleMenu0215a5b4* self, struct Combatant0215a5b4* combatant, char* out);
 extern "C" void func_ov003_02159250(struct BattleMenu0215a5b4* self, char* text);
 extern "C" void func_ov003_0215c01c(struct BattleMenu0215a5b4* self, int mode, int flag);
@@ -67,7 +67,7 @@ extern "C" ARM void func_ov003_0215a5b4(struct BattleMenu0215a5b4* self) {
         unsigned char ids[4];
         char* line = self->text + kRegion860;
         __clear(ids, sizeof(ids));
-        int count = CopyOutRegion0x571d_020114ec((char*)game, ids);
+        int count = GameState_GetPartyOrder((char*)game, ids);
         for (int i = 0; i < count; i++) {
             struct Combatant0215a5b4* combatant =
                 (struct Combatant0215a5b4*)GetCombatantWithFlag0x100_0200ff1c(game, ids[i]);

@@ -32,7 +32,7 @@ extern "C" ARM void func_ov004_02168684(SafeAllocator* a, void* target) {
     GameState* bs = GameState::GetInstance();
     void* entry = FindEntryPointerByKey0203df78(GetGlobalPtr021075f4_0203cf4c(), 0x67);
     if (!entry) return;
-    GameObject* combatant = bs->GetUnknownGameObject();
+    GameObject* combatant = bs->GetLeader();
     if (!combatant) return;
 
     struct Vec3_020406f8 tempVec;

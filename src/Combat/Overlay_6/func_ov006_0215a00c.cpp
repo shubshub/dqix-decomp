@@ -109,7 +109,7 @@ extern "C" ARM void func_ov006_0215a00c(struct Struct_ov006_0215a00c_5* arg0) {
         func_020465c0(var4, 0, arg0->unknown_300_.unknown_87_);
         func_020465c0(var4, 1, var6);
 
-        struct CombatantObj* gobj = (struct CombatantObj*)((GameState*)((struct GameStateStub*)GameState::GetInstance()))->GetUnknownGameObject();
+        struct CombatantObj* gobj = (struct CombatantObj*)((GameState*)((struct GameStateStub*)GameState::GetInstance()))->GetLeader();
         if (gobj != 0) {
             NameText_InitFromPartyMember(&combatant, gobj->id);
             fmt->field0 = &combatant;

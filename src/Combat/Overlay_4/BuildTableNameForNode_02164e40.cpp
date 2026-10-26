@@ -38,7 +38,7 @@ extern "C" ARM int func_ov004_02164e40(void* obj) {
 
     GameState* battle = GameState::GetInstance();
     GameState_GetProtagonistIndex(battle);
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
 
     void* node = func_ov023_021f6880(func_ov011_021849c8(obj), 0xa);
     if (!node) return 0;

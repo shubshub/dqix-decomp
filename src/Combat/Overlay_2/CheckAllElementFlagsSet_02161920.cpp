@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 void* GameState_GetParty(GameState* battleStruct);
 
 // USA: func_ov002_02161920  (semantic: CheckAllElementFlagsSet_02161920)
 extern "C" ARM int func_ov002_02161920(void) {
-    if (CheckField0NonZero_0202b7d8((int*)func_0202ae18())) {
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
         GameState* bs = GameState::GetInstance();
         unsigned char* base = (unsigned char*)GameState_GetParty(bs);
         unsigned char i = 0;

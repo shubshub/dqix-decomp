@@ -8,13 +8,13 @@ enum { Enum_ov017_021b5348_68 = 0x44, Enum_ov017_021b5348_772 = 0x304, Enum_ov01
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-struct Struct_020534ac_2;
-struct Struct_020534ac;
-extern "C" void __clear(void* arg0, int arg1);
-struct Struct_0209c0c0 {
-    unsigned short unknown_0_[12];
-    unsigned short unknown_18_;
+extern "C" void* LinkSession_GetInstance(void);
+struct List0202fe68;
+struct List0202fec8;
+extern "C" void __clear(void* buf, int size);
+struct HalfwordArray {
+    unsigned short arr[12];
+    unsigned short count;
 };
 extern "C" ARM unsigned short func_0209c0c0(struct Struct_0209c0c0* arg0, struct Struct_0209c0c0* arg1);
 struct Struct_020287b4_4;
@@ -41,9 +41,9 @@ struct Struct_ov017_021b5348 {
 extern "C" ARM void func_ov017_021b5348(struct Struct_ov017_021b5348_2* arg0) {
     void* var0;
     GameState::GetInstance();
-    int var1 = (int)BackgroundLoader::GetInstance();
-    func_0202ae18();
-    if (!((BackgroundLoader*)(var1))->GetTaskStatus((int)(arg0->unknown_c_))) {
+    int list = (int)BackgroundLoader::GetInstance();
+    LinkSession_GetInstance();
+    if (!((BackgroundLoader*)(list))->GetTaskStatus((int)(obj->key))) {
         return;
     }
 

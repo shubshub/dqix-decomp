@@ -62,7 +62,7 @@ struct ZoneChestRenderRecord
     unsigned char state;            // ZoneChestState
     unsigned char kind;             // ZoneChestKind
     unsigned char special;          // 1: closes again once opened (ZoneChest_SettleLid); Zone3D_SetUpContainers sets it on
-                                    // blue chests while func_0202ae18's flag is set
+                                    // blue chests while LinkSession_GetInstance's flag is set
     unsigned char iconRise;         // pixels the contents' icon has risen above the chest (up to 10)
     short recordIndex;
     unsigned short uniqueID;
@@ -218,18 +218,18 @@ public:
 
     inline Struct_020236dc_3* inline_020a6728() { return &unknown_2774_; }
 
-    // usa: _ZN6Zone3D13func_020146fcEv
-    int func_020146fc();
+    // usa: _ZN6Zone3D13UnpackMapAMDJEv
+    int UnpackMapAMDJ();
 
-    int func_02014108();
-    int func_02014c04();
-    int func_02014390(const void* arg0, unsigned int arg1);
-    int func_020143d8(const void* arg0, unsigned int arg1);
-    int func_02014414(const void* arg0, unsigned int arg1);
-    bool func_0201445c(const void* arg0, unsigned int arg1, const char* arg2);
+    int UnpackMapAMBL();
+    int UnpackATS_AMBL();
+    int ProcessBMBLFile(const void* source, unsigned int sourceLength);
+    int ProcessBPOSFile(const void* source, unsigned int sourceLength);
+    int ProcessBATSFile(const void* source, unsigned int sourceLength);
+    bool ProcessNSBTXFile(const void* source, unsigned int sourceLength, const char* name);
 
-    void func_020145a8();
-    void func_0201403c();
+    void QueueLoadMapAMDJ();
+    void QueueLoadMapAMBL();
 };
 
 #if defined(jpn)

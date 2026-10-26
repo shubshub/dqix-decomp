@@ -11,7 +11,7 @@ enum { RegionalSize = 0xe4 };
 #include "Resource/Brightness.h"
 
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 extern "C" int func_ov003_0217ce3c(void*);
 extern "C" int func_ov017_021959b4(void);
 extern "C" int func_ov003_0217daf0(void*);
@@ -19,12 +19,12 @@ extern "C" void func_ov003_0217cd24(void*, void*);
 extern "C" void func_020dae08(void*);
 
 struct Struct02012dd0;
-unsigned int GetMaxAlloc02012dd0(struct Struct02012dd0* self);
+unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0* self);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern AllocatorUnion g_mainAllocator;
 
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void ClearIntAt0x23c_020a27b8(unsigned char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 void GameObject_EnableControl(void* obj);
@@ -50,13 +50,13 @@ ARM void UpdateEncounterState020dac94(void* objIn, void*) {
     int state = obj->state;
     if (state == 0) {
         SetFlags04(GetGameResources(), 0xc0);
-        unsigned int max = GetMaxAlloc02012dd0((struct Struct02012dd0*)&g_mainAllocator);
+        unsigned int max = AllocatorUnion_GetMaxPossibleAllocation((struct Struct02012dd0*)&g_mainAllocator);
         if (max < 0x6000) {
             func_020a0cc4(0x6000);
         }
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x6000);
         if (buf == NULL) {
-            func_020a0c0c();
+            ROMFilesystem_InitFileTables();
             obj->flag1 = 1;
             return;
         }
@@ -65,16 +65,16 @@ ARM void UpdateEncounterState020dac94(void* objIn, void*) {
         void* mem = obj->allocator.Allocate(RegionalSize);
         obj->field0xc = mem;
         if (mem == NULL) {
-            func_020a0c0c();
+            ROMFilesystem_InitFileTables();
             obj->flag1 = 1;
             return;
         }
         PushInputLogA_020a1df8(3);
         func_ov003_0217daf0(obj->field0xc);
         func_ov003_0217cd24(obj->field0xc, &obj->allocator);
-        GameObject* c = battle->GetUnknownGameObject();
+        GameObject* c = battle->GetLeader();
         GameObject_DisableControl((struct Obj020397cc*)c, 1);
-        int flagResult = GetFieldIfFlag4_020100f8((char*)battle);
+        int flagResult = GameState_GetFollowCamera((char*)battle);
         ClearIntAt0x23c_020a27b8((unsigned char*)flagResult);
         obj->state = 1;
         return;
@@ -94,9 +94,9 @@ ARM void UpdateEncounterState020dac94(void* objIn, void*) {
         return;
     }
     func_020dae08(objIn);
-    GameObject* c = battle->GetUnknownGameObject();
+    GameObject* c = battle->GetLeader();
     GameObject_EnableControl(c);
-    int flagResult = GetFieldIfFlag4_020100f8((char*)battle);
+    int flagResult = GameState_GetFollowCamera((char*)battle);
     SetField0x23cTrue_020a27ac((void*)flagResult);
     ClearFlagBits_020a28b0((unsigned char*)flagResult, 2);
     ClearFlags04(GetGameResources(), 0xc0);

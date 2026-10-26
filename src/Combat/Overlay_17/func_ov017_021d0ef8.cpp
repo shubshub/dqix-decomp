@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021d0ef8 {
     unsigned char unknown_0_;
@@ -19,8 +19,8 @@ struct Struct_ov017_021d0ef8_2 {
 };
 
 // USA: func_ov017_021d0ef8
-extern "C" ARM void func_ov017_021d0ef8(int arg0, unsigned char* arg1, int arg2, int arg3, int* arg4) {
-    void* var0 = func_0202ae24();
+extern "C" ARM void func_ov017_021d0ef8(int a1, unsigned char* a2, int a3, int a4, int* outLen) {
+    void* data = LinkMessageQueue_GetInstance();
 
     Struct_ov017_021d0ef8_2 var1;
     Struct_ov017_021d0ef8* var2 = &var1.unknown_4_;

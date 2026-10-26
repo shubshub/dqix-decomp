@@ -6,7 +6,7 @@
 #include "Resource/Brightness.h"
 
 void GameObject_EnableControl(void* obj);
-int GetFieldIfFlag4_020100f8(char* obj);
+int GameState_GetFollowCamera(char* obj);
 void SetField0x23cTrue_020a27ac(void* obj);
 void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
 
@@ -22,8 +22,8 @@ ARM void ClearCombatantEncounterState_020daeb0(void* obj) {
         func_ov003_0217dc40(field0xc);
     }
     func_020dae08(obj);
-    GameObject_EnableControl(battle->GetUnknownGameObject());
-    int flagResult = GetFieldIfFlag4_020100f8((char*)battle);
+    GameObject_EnableControl(battle->GetLeader());
+    int flagResult = GameState_GetFollowCamera((char*)battle);
     SetField0x23cTrue_020a27ac((void*)flagResult);
     ClearFlagBits_020a28b0((unsigned char*)flagResult, 2);
     ClearFlags04(ov, 0xc0);

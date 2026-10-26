@@ -35,17 +35,17 @@ struct Struct_ov017_021a1d98_4 {
 };
 
 Entry_02028bd0* ZoneRecords_GetInstance();
-Entry_02028bd0* FindInlineEntryById(Entry_02028bd0*, int);
+Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
 extern "C" SpawnParams* Zone3D_GetInstance();
 int TickActorFlagStateAndDispatch02076bec(GameObject*, void*);
 struct BitField0203402c;
-int CheckField0xc4Low15BitsNonZero(BitField0203402c*);
+int GameObject_IsSinking(BitField0203402c*);
 void SyncBattleState0208f87c(const void* self, int b, int c, int d, int polygonId);
 
 // USA: func_ov017_021a1d98
 extern "C" ARM void func_ov017_021a1d98(unsigned int* flags, int id) {
     GameState* state = GameState::GetInstance();
-    Entry_02028bd0* entry = FindInlineEntryById(ZoneRecords_GetInstance(), id);
+    Entry_02028bd0* entry = ZoneRecords_Find(ZoneRecords_GetInstance(), id);
     if (!entry) return;
     SpawnParams* params = Zone3D_GetInstance();
     unsigned short field38 = params->field_38;
@@ -57,14 +57,14 @@ extern "C" ARM void func_ov017_021a1d98(unsigned int* flags, int id) {
         GameObject* member = state->GetPartyMemberByIndex(i);
         if (member && id == member->obj3D_.GetField06()) partyCount++;
     }
-    int var9 = 7 - var6;
-    Vector3fix var10 = var0->GetUnknownGameObject()->obj3D_.position_;
-    Struct_ov017_021a1d98_4 var11[12];
-    for (int var12 = 0; var12 < 12; var12++) {
-        Struct_ov017_021a1d98_3* var13 = (Struct_ov017_021a1d98_3*)var0->GetMaybeFieldMonsterByIndex(var1->unknown_2_0_ * 12 + 0x70 + var12);
-        if (var13 && var13->obj3D_.IsVisible()) {
-            Vector3fix var14 = var13->obj3D_.position_;
-            var11[var12].unknown_0_ = Vector3fix_Distance(&var10, &var14);
+    int remaining = 7 - partyCount;
+    Vector3fix origin = state->GetLeader()->obj3D_.position_;
+    DistanceSlot slots[12];
+    for (int j = 0; j < 12; j++) {
+        FieldMonster* monster = (FieldMonster*)state->GetFieldMonsterByIndex(entry->slotGroup * 12 + 0x70 + j);
+        if (monster && monster->obj3D_.IsVisible()) {
+            Vector3fix position = monster->obj3D_.position_;
+            slots[j].distance = Vector3fix_Distance(&origin, &position);
         }
     }
     int var15, var16, var17;
@@ -79,18 +79,18 @@ extern "C" ARM void func_ov017_021a1d98(unsigned int* flags, int id) {
         }
         if (var17 != -1) var11[var17].unknown_4_ = 1;
     }
-    for (int var19 = 0; var19 < 12; var19++) {
-        if (!var11[var19].unknown_4_) continue;
-        Struct_ov017_021a1d98_3* var20 = (Struct_ov017_021a1d98_3*)var0->GetMaybeFieldMonsterByIndex(var1->unknown_2_0_ * 12 + 0x70 + var19);
-        if (var20 && var20->obj3D_.IsVisible()
-            && func_02076bec(var20, (void*)var5)
-            && !func_0203402c((Struct_0203402c*)var20)) {
-            int var21 = var20->obj3D_.GetCombinedAlpha();
-            int var22 = (int)((float)var4 / 31.0f * (float)var21);
-            int var23 = var20->unknown_180_ ? var20->unknown_180_->unknown_12_ : 0x1000;
-            fix32_t var24 = FIX32_MULTIPLY(var23, var20->obj3D_.GetScale().x * 15);
-            const Vector3fix& var25 = var20->obj3D_.MaybeGetShadowSource();
-            func_0208f87c(&var25, var3, var24, var22, 8);
+    for (int j = 0; j < 12; j++) {
+        if (!slots[j].selected) continue;
+        FieldMonster* monster = (FieldMonster*)state->GetFieldMonsterByIndex(entry->slotGroup * 12 + 0x70 + j);
+        if (monster && monster->obj3D_.IsVisible()
+            && TickActorFlagStateAndDispatch02076bec(monster, (void*)arg)
+            && !GameObject_IsSinking((BitField0203402c*)monster)) {
+            int alpha = monster->obj3D_.GetCombinedAlpha();
+            int value = (int)((float)field3c / 31.0f * (float)alpha);
+            int shadowScale = monster->shadowInfo_ ? monster->shadowInfo_->scale : 0x1000;
+            fix32_t size = FIX32_MULTIPLY(shadowScale, monster->obj3D_.GetScale().x * 15);
+            const Vector3fix& shadow = monster->obj3D_.MaybeGetShadowSource();
+            SyncBattleState0208f87c(&shadow, field38, size, value, 8);
         }
     }
 }

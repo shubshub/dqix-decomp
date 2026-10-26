@@ -8,11 +8,11 @@
 #include "NitroSDK/OverlayId.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_020a1940(unsigned int arg0);
-extern "C" void func_ov008_021843f8(void* arg0);
-extern "C" void func_ov008_021842a0(void* arg0, void* arg1);
-extern "C" void func_ov008_02184a3c(char* arg0, unsigned char arg1);
-extern "C" void func_020dc2bc();
+extern "C" void Overlay_Load(unsigned int id);
+extern "C" void func_ov008_021843f8(void* obj);
+extern "C" void func_ov008_021842a0(void* obj, void* arg);
+void SetByteB10AndClearB11_02184a3c(char* obj, unsigned char value);
+void OrGlobalFlag0x40_020dc2bc();
 
 struct Struct_ov008_0218af80 {
     char unknown_0_[0x228];
@@ -39,20 +39,20 @@ struct Struct_ov008_0218af80 {
 };
 
 // USA: func_ov008_0218af80
-extern "C" ARM void func_ov008_0218af80(Struct_ov008_0218af80* arg0) {
-    GameResources* var0 = GetGameResources();
-    if (arg0->unknown_e9c_ == 0 && arg0->unknown_ec0_1_ && !IsBrightnessTransitionActive(var0)) {
-        func_020a1940(OVERLAY_ID(8));
-        func_ov008_021843f8(arg0->unknown_2a8_);
-        arg0->unknown_dcc_ = 1;
-        func_ov008_021842a0(arg0->unknown_2a8_, arg0->unknown_228_);
-        func_ov008_02184a3c(arg0->unknown_2a8_, 1);
-        arg0->unknown_de4_ = arg0->unknown_288_;
-        char* var1 = arg0->unknown_ebc_;
-        char* var2;
-        if (var1 == NULL) {
-            var1 = arg0->unknown_df6_;
-            var2 = arg0->unknown_e04_;
+extern "C" ARM void func_ov008_0218af80(Manager0218af80* self) {
+    GameResources* res = GetGameResources();
+    if (self->e9c == 0 && self->bit1 && !IsBrightnessTransitionActive(res)) {
+        Overlay_Load(OVERLAY_ID(8));
+        func_ov008_021843f8(self->f2a8);
+        self->dcc = 1;
+        func_ov008_021842a0(self->f2a8, self->f228);
+        SetByteB10AndClearB11_02184a3c(self->f2a8, 1);
+        self->de4 = self->f288;
+        char* first = self->ebc;
+        char* second;
+        if (first == NULL) {
+            first = self->df6;
+            second = self->e04;
         } else {
             var2 = var1 + 0x38;
         }

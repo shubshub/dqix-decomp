@@ -36,7 +36,7 @@ struct Struct_ov015_0218cc24_2 {
 };
 
 struct Vector3i;
-void DelayThenSyncBit0_020c9820();
+void OS_WaitVBlankIntr();
 void ResetObjectState02079a3c(void*);
 struct Foo0207df50;
 void VramState_Rewind(Foo0207df50*);
@@ -69,11 +69,11 @@ extern "C" ARM int func_ov015_0218cc24(Struct_ov015_0218cc24_2* arg0) {
     SafeAllocator* var4;
     short var5;
 
-    func_020c9820();
-    var5 = arg0->inline_ov015_0218cc24(7)->unknown_2_;
-    if (arg0->unknown_20_[7] != var5) {
-        arg0->inline_ov015_0218cc24(3)->unknown_2_ = -1;
-        arg0->inline_ov015_0218cc24(4)->unknown_2_ = -1;
+    OS_WaitVBlankIntr();
+    id = self->GetEnt(7)->unknown_2_;
+    if (self->ids[7] != id) {
+        self->GetEnt(3)->unknown_2_ = -1;
+        self->GetEnt(4)->unknown_2_ = -1;
     }
     var5 = arg0->inline_ov015_0218cc24(1)->unknown_2_;
     if (arg0->unknown_20_[1] != var5) {

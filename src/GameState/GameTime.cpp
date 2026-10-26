@@ -1,7 +1,21 @@
 #include "GameState/GameState.h"
 
-// not correct, they're separate but we need the full TU before we can do this properly
-extern float data_020f33b4[6];
+// The day cycle's times (func_0200f3a4's copy, row DayCycleTimes in NAMING.md); __sinit_020e5920 computes them.
+// jpn swaps the first two floats.
+struct DayCycleTimes {
+    unsigned char initialized;
+#if defined(jpn)
+    float eveningStart;
+    float dayLength;
+#else
+    float dayLength;
+    float eveningStart;
+#endif
+    float dayStart;
+    float morningStart;
+    float nightStart;
+};
+extern DayCycleTimes data_020f33b4;
 
 void GameState::CalculateDeltaTime(uint64_t microseconds)
 {
@@ -47,15 +61,11 @@ void GameState::SetDayTimer(float to)
     if (dayTimer_ >= dayLength_)
         dayTimer_ -= dayLength_;
 
-#if defined(usa) // this is diabolical
-    if (dayTimer_ >= data_020f33b4[2])
-#elif defined(jpn)
-    if (dayTimer_ >= data_020f33b4[1])
-#endif
+    if (dayTimer_ >= data_020f33b4.eveningStart)
         timeOfDay_ = TimeOfDay_Evening;
-    else if (dayTimer_ >= data_020f33b4[3])
+    else if (dayTimer_ >= data_020f33b4.dayStart)
         timeOfDay_ = TimeOfDay_Day;
-    else if (dayTimer_ >= data_020f33b4[4])
+    else if (dayTimer_ >= data_020f33b4.morningStart)
         timeOfDay_ = TimeOfDay_Morning;
     else
         timeOfDay_ = TimeOfDay_Night;
@@ -70,14 +80,10 @@ void GameState::SetTimeOfDay(TimeOfDay to)
     {
         timeOfDay_ = to;
         float thresholds[4] = {
-            data_020f33b4[5],
-            data_020f33b4[4],
-            data_020f33b4[3],
-#if defined(usa)
-            data_020f33b4[2]
-#elif defined(jpn)
-            data_020f33b4[1]
-#endif
+            data_020f33b4.nightStart,
+            data_020f33b4.morningStart,
+            data_020f33b4.dayStart,
+            data_020f33b4.eveningStart
         };
         SetDayTimer(thresholds[to]);
     }

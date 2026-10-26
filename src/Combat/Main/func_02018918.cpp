@@ -9,7 +9,7 @@ struct Struct_020fdd44 {
     char unknown_6_[0x318 - 6];
 };
 Entry_02028bd0* ZoneRecords_GetInstance();
-Entry_02028bd0* FindInlineEntryById(Entry_02028bd0*, int);
+Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
 
 // USA: func_02018918
 extern "C" ARM void func_02018918(Zone3D* owner, ZoneFeatures::Opcode6aEntry* parameter) {
@@ -44,7 +44,7 @@ extern "C" ARM void func_02018918(Zone3D* owner, ZoneFeatures::Opcode6aEntry* pa
         owner->unk_830[0] = 15;
         if (!(parameter->unk_2c.type2.flags & 8)) {
             int index = Zone3D_GetDoorIndex(owner, parameter);
-            Entry_02028bd0* saved = FindInlineEntryById(ZoneRecords_GetInstance(), owner->currentZoneID_);
+            Entry_02028bd0* saved = ZoneRecords_Find(ZoneRecords_GetInstance(), owner->currentZoneID_);
             if (saved) saved->activeMask &= ~(1 << index);
         }
     }

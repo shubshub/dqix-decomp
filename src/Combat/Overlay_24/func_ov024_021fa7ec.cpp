@@ -110,15 +110,15 @@ struct Struct_ov024_021f736c {
     float unknown_24_;
 };
 
-extern "C" int func_02053c6c(unsigned char*);
-extern "C" struct Struct_ov024_021fa7ec_10* func_ov000_02153758(void*, int);
-extern "C" int func_ov024_021f736c(struct Struct_ov024_021f736c* arg0);
-struct Struct_ov024_021da670_6;
-extern "C" int func_ov024_021da998(Struct_ov024_021da670_6*);
-struct Struct_ov024_021dd028_5;
-extern "C" int func_ov024_021dd260(Struct_ov024_021dd028_5*);
-extern "C" float func_02074738(int arg0, int arg1);
-extern "C" int func_0202053c(void*);
+int GetFieldAt0x150_02053c6c(unsigned char*);
+struct Entry_021fa7ec* FindEntryForCombatant02153758(void*, int);
+int DispatchByCategory_021f736c(struct Outer_021f736c* obj);
+struct FlagObj_021da998;
+int IsFlagBit8388608Set_021da998(FlagObj_021da998*);
+struct FlagObj_021dd260;
+int IsFlagBit24Set_021dd260(FlagObj_021dd260*);
+float GetClampedRateMultiplier_02074738(int tension, int mode);
+int GameObject_GetPartyMemberLevel(void*);
 float CalculateTensionBonus(int tension, int level);
 extern "C" float func_ov024_021f875c(struct Struct_ov024_021fa7ec_3* arg0, struct Struct_ov024_021fa7ec_11* arg1, struct Struct_ov024_021fa7ec* arg2, int arg3);
 extern "C" int func_ov000_02156068(struct Struct_ov024_021fa7ec_2* arg0, int arg1, int arg2, int arg3);
@@ -213,17 +213,17 @@ extern "C" ARM void func_ov024_021fa7ec(struct Struct_ov024_021fa7ec_3* arg0, fl
     var5 = var11.unknown_20_;
     unsigned char var12 = 0;
 
-    if ((var0->unknown_10_ & 0x2000) &&
-        (func_ov024_021da998((Struct_ov024_021da670_6*)var9) ||
-         func_ov024_021dd260((Struct_ov024_021dd028_5*)var9))) {
-        float var13 = func_02074738(var9->unknown_138_->unknown_24_, 0);
-        var4 = var4 * var13;
-        var5 = var5 * var13;
-        if (arg8->unknown_144_ == 0 || !arg8->unknown_144_->unknown_b_4_) {
-            signed char var14 = func_0202053c(var9);
-            CalculateTensionBonus(var9->unknown_138_->unknown_24_, var14);
-            var4 = var4 + var14;
-            var5 = var5 + var14;
+    if ((action->flags10 & 0x2000) &&
+        (IsFlagBit8388608Set_021da998((FlagObj_021da998*)attacker) ||
+         IsFlagBit24Set_021dd260((FlagObj_021dd260*)attacker))) {
+        float mult = GetClampedRateMultiplier_02074738(attacker->stats->tension24, 0);
+        hi = hi * mult;
+        lo = lo * mult;
+        if (target->entry == 0 || !target->entry->flagBit12) {
+            signed char level = GameObject_GetPartyMemberLevel(attacker);
+            CalculateTensionBonus(attacker->stats->tension24, level);
+            hi = hi + level;
+            lo = lo + level;
         }
     }
 

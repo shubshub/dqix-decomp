@@ -3,12 +3,12 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_0202ae18();
-extern "C" void func_0201bd04(void* arg0, int arg1, int arg2);
-extern "C" void func_0201bd3c(void* arg0, int arg1, int arg2);
-extern "C" int func_0201079c(char* arg0);
-struct Struct_02040774_2;
-extern "C" void func_020407b4(struct Struct_02040774_2* arg0, int arg1, int arg2, int arg3);
+extern "C" void LinkSession_GetInstance();
+extern "C" void func_0201bd04(void* obj, int a, int b);
+extern "C" void func_0201bd3c(void* obj, int a, int b);
+int GameState_GetStoryChapter(char* obj);
+struct Fields020407b4;
+void SetFields0x44(struct Fields020407b4* obj, int a, int b, int c);
 
 struct Struct_020ad1f8 {
 #if defined(jpn)
@@ -29,10 +29,10 @@ struct Struct_020ad1f8_2 {
 extern "C" ARM void func_020ad1f8(struct Struct_020ad1f8_2* arg0) {
     GameState* var0 = GameState::GetInstance();
     GetGameResources();
-    func_0202ae18();
-    var0->GetPartyMemberByIndex(0);
-    GameObject* var1 = var0->GetUnknownGameObject();
-    Vector3i var2 = var1->obj3D_.position_;
+    LinkSession_GetInstance();
+    battle->GetPartyMemberByIndex(0);
+    GameObject* unk = battle->GetLeader();
+    Vector3i pos = unk->obj3D_.position_;
 
     if (arg0->unknown_0_ == 0x1198) {
         if (arg0->unknown_2700_.unknown_b4_ == 1) {
@@ -64,12 +64,12 @@ extern "C" ARM void func_020ad1f8(struct Struct_020ad1f8_2* arg0) {
             func_020407b4((struct Struct_02040774_2*)var1, 0, -0x5ccc, 0x2000);
         }
         return;
-    } else if (arg0->unknown_0_ == 0x1130) {
-        int var3 = func_0201079c((char*)var0);
-        if (arg0->unknown_2700_.unknown_b4_ == 5 || var3 >= 0x13) {
-            func_0201bd04(arg0, 0x17, 0);
-            func_0201bd04(arg0, 1, 0);
-            func_0201bd3c(arg0, 0x19, 0);
+    } else if (obj->field0 == 0x1130) {
+        int v = GameState_GetStoryChapter((char*)battle);
+        if (obj->sub.state == 5 || v >= 0x13) {
+            func_0201bd04(obj, 0x17, 0);
+            func_0201bd04(obj, 1, 0);
+            func_0201bd3c(obj, 0x19, 0);
             return;
         }
         func_0201bd3c(arg0, 0x17, 0);

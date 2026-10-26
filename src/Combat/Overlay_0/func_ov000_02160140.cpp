@@ -155,9 +155,9 @@ struct Struct_ov000_02160140_2 {
     unsigned char unknown_77d2_;
 };
 
-struct Struct_ov000_02184220_3 { int unknown_0_; Struct_ov000_02160140_2* unknown_4_; };
-extern Struct_ov000_02184220_3 data_ov000_02184220;
-extern "C" void func_020134e0(void*);
+struct CombatWorkHolder02160140 { int active; CombatWork02160140* work; };
+extern CombatWorkHolder02160140 data_ov000_02184220;
+extern "C" void Zone3D_Reset(void*);
 extern "C" void func_ov000_0216d2d0(void*);
 extern "C" void func_ov000_021723a8(void*, void*);
 void ResetEntries02168230(char*);
@@ -167,25 +167,25 @@ void ZeroFieldAndShortTriple0x6e2e_ov000_02163b60(void*);
 void ZeroShortTriple0x6e44_ov000_02163454(void*);
 
 // USA: func_ov000_02160140
-extern "C" ARM void func_ov000_02160140(Struct_ov000_02160140_2* arg0) {
-    arg0->unknown_2a0_ = 0;
-    arg0->unknown_55f8_ = 0;
-    arg0->unknown_55fc_ = 0;
-    data_ov000_02184220.unknown_4_ = arg0;
-    arg0->unknown_55f4_ = 0;
-    arg0->unknown_5710_ = 0;
-    arg0->unknown_5711_ = 0;
-    arg0->unknown_5724_ = 0;
-    func_020134e0(arg0->unknown_ec8_);
-    func_ov000_0216d2d0(arg0->unknown_c18_);
-    func_ov000_021723a8(arg0->unknown_3760_, 0);
-    memset(arg0->unknown_54f4_, 0, 0x10);
-    memset(arg0->unknown_5728_, 0, 0x30);
-    for (int var0 = 0; var0 < 4; ++var0) arg0->unknown_eb8_[var0] = 0;
-    func_ov000_02168230((char*)arg0);
-    arg0->unknown_ea8_ = 0;
-    arg0->unknown_eac_ = 0;
-    data_ov000_02184220.unknown_0_ = 1;
+extern "C" ARM void func_ov000_02160140(CombatWork02160140* self) {
+    self->field_2a0 = 0;
+    self->field_55f8 = 0;
+    self->field_55fc = 0;
+    data_ov000_02184220.work = self;
+    self->flags = 0;
+    self->field_5710 = 0;
+    self->field_5711 = 0;
+    self->field_5724 = 0;
+    Zone3D_Reset(self->stateEc8);
+    func_ov000_0216d2d0(self->stateC18);
+    func_ov000_021723a8(self->partyWork, 0);
+    memset(self->state54f4, 0, 0x10);
+    memset(self->state5728, 0, 0x30);
+    for (int i = 0; i < 4; ++i) self->slots[i] = 0;
+    ResetEntries02168230((char*)self);
+    self->field_ea8 = 0;
+    self->field_eac = 0;
+    data_ov000_02184220.active = 1;
 #if !defined(jpn)
     arg0->unknown_5574_ = 0;
 #endif

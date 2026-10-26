@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
@@ -41,7 +41,7 @@ struct LocalEvt021c6814 {
 
 // USA: func_ov017_021c6814  (semantic: EnqueueEventTagX_021c6814)
 extern "C" ARM void func_ov017_021c6814(unsigned short a, unsigned short b, Src021c6814* src, unsigned char flags, signed char arg5, unsigned char arg6) {
-	void* p = GetData02100044_0202ae24();
+	void* p = LinkMessageQueue_GetInstance();
 	LocalEvt021c6814 buf;
 	Body021c6814* body = &buf.body;
 	GameState* bs = GameState::GetInstance();

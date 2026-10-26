@@ -4,8 +4,8 @@ struct Obj0204bbb4;
 void CallListEntry0204bbb4(struct Obj0204bbb4* obj, unsigned int idx, int a2, int a3,
                            short a4, short a5, short a6, short a7, unsigned short a8);
 extern "C" void SpriteContext_DrawSprite(void* dst, void* src);
-extern "C" int* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" int* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 
 extern const int data_ov000_021836a0[];
 
@@ -53,12 +53,12 @@ extern "C" ARM void func_ov000_02180bac(struct Struct_ov000_02180bac_2* arg0) {
         e->field26 = 1;
         SpriteContext_DrawSprite(obj->field11c, e);
     }
-    int var1 = (arg0->unknown_1d72_ & 0x400) ? 1 : 0;
-    if (var1 & func_0202b7d8(func_0202ae18())) {
-        struct Struct_ov000_02180bac* var2 = &arg0->unknown_170_[6];
-        int var3 = arg0->unknown_1a_ - 2;
-        if (arg0->unknown_1a_ < 0) {
-            arg0->unknown_1a_ = 0;
+    int flag = (obj->flags1d72 & 0x400) ? 1 : 0;
+    if (flag & LinkSession_IsActive(LinkSession_GetInstance())) {
+        struct Entry02180bac* e = &obj->entries[6];
+        int idx = obj->field1a - 2;
+        if (obj->field1a < 0) {
+            obj->field1a = 0;
         }
         var2->unknown_14_ = 0xc8000;
         var2->unknown_18_ = data_ov000_021836a0[var3] << 12;

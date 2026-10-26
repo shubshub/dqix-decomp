@@ -117,9 +117,9 @@ extern "C" int func_ov017_021959b4();
 extern "C" void func_ov012_021845f8(void* arg0);
 extern "C" int func_ov012_02184d80(void* arg0, char* arg1);
 #if defined(jpn)
-struct Struct_0202b2f0;
-extern "C" Struct_0202b2f0* func_0202ae18();
-extern "C" int func_0202c578(Struct_0202b2f0*, int);
+struct SearchStruct;
+extern "C" SearchStruct* LinkSession_GetInstance();
+int LinkSession_IsSlotLost(SearchStruct*, int);
 #endif
 void SetElementFlag0x20ByKey0205def8(Struct_0205def8* window, int a, int b);
 void Window_ClosePane(Entry_0205d6a0* window, int a);
@@ -164,8 +164,8 @@ extern "C" ARM int func_ov012_02184acc(Struct_ov012_02184acc* arg0, int arg1)
 
 #endif
 #if defined(jpn)
-        if ((var1->unknown_998_ == 0 && g_keyManager.TestKeysPressed(0x800)) ||
-            func_0202c578(func_0202ae18(), 0))
+        if ((messages->busy_ == 0 && g_keyManager.TestKeysPressed(0x800)) ||
+            LinkSession_IsSlotLost(LinkSession_GetInstance(), 0))
 #else
         if (func_ov017_021959b4())
 #endif

@@ -10,13 +10,13 @@ struct Struct_02029634_3 {
     short unknown_68_, unknown_6a_;
     unsigned char unknown_6c_, unknown_6d_, unknown_6e_, unknown_6f_, unknown_70_;
 };
-struct Struct_02029634;
-struct Struct_02029634_2 { int unknown_0_; char unknown_4_[0x34]; int unknown_38_; };
-extern "C" int func_0202a9f4(Struct_02029634_3*);
-extern "C" int func_0202aa94(Struct_02029634_3*);
-extern "C" Struct_02029634_2* func_0202a9ac(Struct_02029634*, int);
-extern "C" void func_0202a91c(Struct_02029634_3*);
-extern "C" void func_0202a8cc(char*, int);
+struct IndexList_0202a9ac;
+struct IndexNode_0202a9ac { int kind; char padding4[0x34]; int busy; };
+extern "C" int func_0202a9f4(Callback_0202a91c*);
+extern "C" int func_0202aa94(Callback_0202a91c*);
+IndexNode_0202a9ac* DebugMenu_GetItem(IndexList_0202a9ac*, int);
+void SetState0x6cAndInvoke(Callback_0202a91c*);
+void DebugMenu_Open(char*, int);
 
 // USA: func_02029634
 extern "C" ARM void func_02029634(Struct_02029634_3* arg0, int arg1) {
@@ -74,8 +74,8 @@ extern "C" ARM void func_02029634(Struct_02029634_3* arg0, int arg1) {
             }
         }
     }
-    Struct_02029634_2* var0 = func_0202a9ac(reinterpret_cast<Struct_02029634*>(arg0), arg0->unknown_60_);
-    if (arg0->unknown_6d_ & 1) return;
+    IndexNode_0202a9ac* node = DebugMenu_GetItem(reinterpret_cast<IndexList_0202a9ac*>(menu), menu->selected);
+    if (menu->flags & 1) return;
     if (g_keyManager.TestKeysPressed(1)) {
         int var1 = arg0->unknown_6d_ & 2;
         if (!var1 && !var0) {
@@ -90,9 +90,9 @@ extern "C" ARM void func_02029634(Struct_02029634_3* arg0, int arg1) {
             arg0->unknown_6e_ = 1;
             return;
         }
-        if (var0->unknown_0_ != 1 || var0->unknown_38_ != 0) return;
-        func_0202a8cc(reinterpret_cast<char*>(var0), 1);
-        arg0->unknown_6c_ = 4;
+        if (node->kind != 1 || node->busy != 0) return;
+        DebugMenu_Open(reinterpret_cast<char*>(node), 1);
+        menu->state = 4;
         return;
     }
     if (!(arg0->unknown_6d_ & 4) && g_keyManager.TestKeysPressed(2)) {

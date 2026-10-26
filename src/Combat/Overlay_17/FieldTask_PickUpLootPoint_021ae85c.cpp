@@ -53,10 +53,10 @@ struct TextContext021ae85c {
     int field30, field34;
 };
 extern "C" Zone021ae85c* Zone3D_GetInstance();
-extern "C" void* func_0202ae18();
-extern "C" int func_0202c540(void*);
+extern "C" void* LinkSession_GetInstance();
+extern "C" int LinkSession_IsGuest(void*);
 extern "C" void func_ov017_021aeea8(Event021ae85c*);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 void GameObject_DisableControl(Obj020397cc*, int);
 void GameObject_SetMotionState(Obj02033b68*, int);
 void SePlayer_Play(SePlayer*, int, int);
@@ -76,7 +76,7 @@ void InitStruct0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
 void* TextQueue_GetInstance();
 void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-void SetVec3At0x1c(Vec3Target0203a46c*, int, int, int);
+void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
 void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
 extern SePlayer g_sePlayer;
 #if defined(jpn)
@@ -93,9 +93,9 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
     GameState* game = GameState::GetInstance();
     Zone3D_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
-    if (func_0202c540(search)) {
+    if (LinkSession_IsGuest(search)) {
         if (resources->unknown_flag_42e2) {
             func_ov017_021aeea8(self); self->done = 1; return;
         }
@@ -105,15 +105,15 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
         }
     }
     if (self->stage == 0) {
-        GameObject* actor = game->GetUnknownGameObject();
+        GameObject* actor = game->GetLeader();
         if (!actor) { func_ov017_021aeea8(self); self->done = 1; return; }
-        SetByte0xbeShiftPrev((Bytes02033b88*)actor, 0);
+        GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
         GameObject_DisableControl((Obj020397cc*)actor, 1);
         self->timer = 5; self->stage = 1;
     } else if (self->stage == 1) {
         self->timer--;
         if (self->timer) return;
-        GameObject* actor = game->GetUnknownGameObject();
+        GameObject* actor = game->GetLeader();
         if (actor) GameObject_SetMotionState((Obj02033b68*)actor, 8);
         SePlayer_Play(&g_sePlayer, 0x5b, 0);
         self->stage = 2; self->timer = 30;
@@ -130,7 +130,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
             self->task = loader->QueueLoadFile(filename, 0);
         } else {
             func_ov017_021aeea8(self); self->done = 1;
-            GameObject_EnableControl(game->GetUnknownGameObject()); return;
+            GameObject_EnableControl(game->GetLeader()); return;
         }
         self->stage = 3;
     } else if (self->stage == 3) {
@@ -150,7 +150,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
                 VramState_Save((char*)&saved);
             } else {
                 func_ov017_021aeea8(self); self->done = 1;
-                GameObject_EnableControl(game->GetUnknownGameObject());
+                GameObject_EnableControl(game->GetLeader());
                 loader->RemoveTask(self->task); return;
             }
         }
@@ -188,7 +188,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
         if (camera) {
             Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
         }
-        SetVec3At0x1c((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
+        SprSprite_SetPosition((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
         RenderFlaggedIndexedEntry((StructAt020473c8*)self->sprite, 1);
         if (!self->timer) { self->stage = 6; self->timer = 7; }
     } else if (self->stage == 6) {
@@ -202,7 +202,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
             if (camera) {
                 Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
             }
-            SetVec3At0x1c((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
+            SprSprite_SetPosition((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
             RenderFlaggedIndexedEntry((StructAt020473c8*)self->sprite, 1);
             self->fade -= tick;
             self->sprite->alpha = self->fade > 31 ? 31 : self->fade;
@@ -210,7 +210,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
         }
         if (!self->timer) { MessageSystem_GetInstance(); self->stage = 7; }
         else if (self->timer == 5) {
-            GameObject* actor = game->GetUnknownGameObject();
+            GameObject* actor = game->GetLeader();
             GameObject_EnableControl(actor); GameObject_SetMotionState((Obj02033b68*)actor, 0);
         }
     } else if (self->stage == 7) {

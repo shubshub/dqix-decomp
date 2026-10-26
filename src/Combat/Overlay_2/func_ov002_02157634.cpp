@@ -155,15 +155,15 @@ void Something_021a6b9c(void* a, int b);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 unsigned char GameState_GetLeaderIndex(GameState* gs);
 void* GameState_GetParty(GameState* gs);
-unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
 void InitStateArray02157ce0(char* p);
 void ClearStruct020a8170(struct Struct020a8170* p);
 extern "C" void* __clear(void* dst, int count);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c540(void* p);
-extern "C" int func_0202c508(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 extern "C" unsigned char* Scenario_GetInstance(void);
 extern "C" void func_020a818c(void* p, void* allocator);
 extern "C" void func_020a8304(void* p);
@@ -196,28 +196,28 @@ extern "C" ARM void func_ov002_02157634(struct BattleMenu* p) {
     int flag = 0;
     int next = regionalState26;
     if (p->state == regionalState6) {
-        void* check = func_0202ae18();
+        void* check = LinkSession_GetInstance();
         unsigned short* obj = (unsigned short*)Zone3D_GetInstance();
         unsigned short id = *obj;
         switch (e->id) {
         case 0x5612:
-            if (func_0202c540(var7) != 0) {
-                arg0->unknown_1c28_ = 0x797c;
-                arg0->unknown_1c2a_ = -1;
-                arg0->unknown_1bb8_ = Enum_ov002_02157634_38;
-                arg0->unknown_1bbc_ = 5;
-                arg0->unknown_1c2e_ = 1;
+            if (LinkSession_IsGuest(check) != 0) {
+                p->msgId = 0x797c;
+                p->msgId2 = -1;
+                p->state = regionalState26;
+                p->nextState = 5;
+                p->f1c2e = 1;
                 return;
             }
             break;
         case 0x56f0:
-            if (func_0202c508(var7) != 0) {
-                if (func_0201b868(var8, var9) != 0) {
-                    func_ov017_021a6b9c(GetGameResources(), 1);
-                    arg0->unknown_1c28_ = 0x7530;
-                    arg0->unknown_1c2a_ = -1;
-                    arg0->unknown_1bbc_ = Enum_ov002_02157634_43;
-                    var6 = Enum_ov002_02157634_38;
+            if (LinkSession_IsHostOrSolo(check) != 0) {
+                if (IsIdInSpecialSet0201b868(obj, id) != 0) {
+                    Something_021a6b9c(GetGameResources(), 1);
+                    p->msgId = 0x7530;
+                    p->msgId2 = -1;
+                    p->nextState = regionalState2b;
+                    next = regionalState26;
                 } else {
                     arg0->unknown_1c28_ = 0x7530;
                     arg0->unknown_1c2a_ = -1;
@@ -331,11 +331,11 @@ extern "C" ARM void func_ov002_02157634(struct BattleMenu* p) {
             struct Struct_ov002_02157634_8* var21 = (struct Struct_ov002_02157634_8*)func_02079e2c((char*)var19, var20);
             if (var21 != 0) {
                 func_ov016_0218b5c0(0, -1);
-                if (var21->unknown_17_4_ == 3) {
-                    __clear(var1, 4);
-                    var0.unknown_3_ = func_020114ec((char*)var4, var1);
-                    for (int var22 = 0; var22 < var0.unknown_3_; var22++) {
-                        var0.unknown_4_[var22] = var1[var22];
+                if (entry->type == 3) {
+                    __clear(buf, 4);
+                    st.count = GameState_GetPartyOrder((char*)gs, buf);
+                    for (int i = 0; i < st.count; i++) {
+                        st.ids[i] = buf[i];
                     }
                 }
                 func_ov002_021536e0(&var2);

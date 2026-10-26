@@ -25,7 +25,7 @@ extern "C" ARM unsigned short func_ov017_021971c4(unsigned char* ov) {
     if (battleStruct == NULL) {
         return 0;
     }
-    GameObject* combatant = battleStruct->GetUnknownGameObject();
+    GameObject* combatant = battleStruct->GetLeader();
     if (combatant == NULL) {
         return 0;
     }

@@ -8,20 +8,20 @@ struct Struct_02048850;
 struct Struct_02048850_2;
 struct Struct_02010604;
 
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void func_ov000_02167c28(unsigned char* arg0, int arg1);
-extern "C" unsigned char* func_02070fd0(struct Struct_02070b6c_3* arg0, int arg1);
-extern "C" struct Struct_02048850_2* func_0206f4f0(struct Struct_0206f01c_2* arg0, int arg1);
-extern "C" void func_02048614(unsigned char* arg0);
-extern "C" void func_02049c88(unsigned char* arg0, int arg1);
-extern "C" void func_02048850(struct Struct_02048850* arg0, struct Struct_02048850_2* arg1);
-extern "C" void func_02048588(unsigned char* arg0, unsigned char* arg1);
-extern "C" void func_02033b88(struct Struct_02010604* arg0, int arg1);
-extern "C" void func_ov000_02161dfc(unsigned char* arg0, unsigned char* arg1);
-extern "C" void func_020488ec(char* arg0);
-extern "C" void func_ov000_02161274(GameObject* arg0);
-extern "C" void func_ov000_02166784(struct Struct_ov000_02161c0c_3* arg0, unsigned char* arg1, unsigned char* arg2);
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
+void FindOrAssignSlot02167c28(unsigned char* obj, int id);
+unsigned char* SearchWithLow15Comparator02070fd0(struct Container02070e60* table, int key);
+struct Param02048850* SearchWithComparator0206f4f0(struct BinarySearchByComparatorStruct* table, int key);
+void ResetNameState02048614(unsigned char* obj);
+extern "C" void func_02049c88(unsigned char* obj, int v);
+void SetupFieldsFromParam02048850(struct Obj02048850* obj, struct Param02048850* param);
+void CopyObjectFields02048588(unsigned char* dst, unsigned char* src);
+void GameObject_ForceMotionState(struct Bytes02033b88* obj, int v);
+void CopyBlob_02161dfc(unsigned char* dst, unsigned char* src);
+void BuildName020488ec(char* obj);
+void SyncNameFlag_02161274(GameObject* obj);
+void AllocateSlotAndConfigureField02166784(struct Struct5e00* obj1, unsigned char* obj2, unsigned char* obj3);
+void ClearCombatantSlot_0200fd48(GameState* gameState, int id);
 
 struct Struct_ov000_02161c0c {
     char unknown_0_[2];
@@ -68,23 +68,23 @@ extern "C" ARM void func_ov000_02161c0c(unsigned char* arg0, int arg1) {
     struct Struct_02048850_2* var14 = func_0206f4f0(var4, (short)var9);
     unsigned char* var15 = *(unsigned char**)(arg0 + Enum_ov000_02161c0c_672) + 0x158 + (arg1 - 0xc0) * 0xa4;
 
-    func_02048614(var1);
-    *(short*)(var1 + 4) = arg1;
-    func_02049c88(var1, var12);
-    *(unsigned char**)(var1 + 0x148) = var13;
-    func_02048850((struct Struct_02048850*)var1, var14);
-    func_02048588((unsigned char*)var5, var1);
-    ((Object3D*)var1)->SetField06(*(unsigned short*)(arg0 + Enum_ov000_02161c0c_3784));
-    var1[0x17c] = var10;
-    func_02033b88((struct Struct_02010604*)var1, 0);
-    *(unsigned char**)(var1 + 0x138) = var15;
-    func_ov000_02161dfc(var15, var13 + 0x6c);
-    (*(unsigned char**)(var1 + 0x138))[0x25] = var11;
-    func_020488ec((char*)var1);
-    var1[0xc2] |= 0x20;
-    var1[0x18d] = var11;
-    if (var11 == 2) {
-        func_ov000_02161274((GameObject*)var1);
+    ResetNameState02048614(c);
+    *(short*)(c + 4) = id;
+    func_02049c88(c, param);
+    *(unsigned char**)(c + 0x148) = entry;
+    SetupFieldsFromParam02048850((struct Obj02048850*)c, info);
+    CopyObjectFields02048588((unsigned char*)found, c);
+    ((Object3D*)c)->SetField06(*(unsigned short*)(obj + kField06));
+    c[0x17c] = slot;
+    GameObject_ForceMotionState((struct Bytes02033b88*)c, 0);
+    *(unsigned char**)(c + 0x138) = blob;
+    CopyBlob_02161dfc(blob, entry + 0x6c);
+    (*(unsigned char**)(c + 0x138))[0x25] = mode;
+    BuildName020488ec((char*)c);
+    c[0xc2] |= 0x20;
+    c[0x18d] = mode;
+    if (mode == 2) {
+        SyncNameFlag_02161274((GameObject*)c);
     }
     func_ov000_02166784((struct Struct_ov000_02161c0c_3*)arg0, (unsigned char*)var5, var1);
 

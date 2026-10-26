@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 extern "C" void* func_ov017_021b8478(void* arg0);
 extern "C" void* func_ov017_021b8468(void* arg0);
@@ -62,9 +62,9 @@ extern "C" ARM void func_ov017_021c68e8(int arg0, Struct_ov017_021c68e8_2* arg1,
     if (!var3) return;
     if (var1->unknown_8_ != arg1->unknown_4_) return;
 
-    if (arg1->unknown_12_ > -1 && arg1->unknown_12_ != func_0202c1a4(arg4)) {
-        if (arg1->unknown_11_1_) {
-            func_ov000_02162b70(var2, (signed char)arg1->unknown_6_, 1);
+    if (evt->field12 > -1 && evt->field12 != LinkSession_GetOwnSlot(search)) {
+        if (evt->flag1) {
+            SetByteField0x43eOnEntry_ov000_02162b70(b, (signed char)evt->combatantId, 1);
         }
         return;
     }

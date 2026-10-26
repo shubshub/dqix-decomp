@@ -84,7 +84,7 @@ static inline struct Progress02012fe4* GetProgress(void* run) {
     return (struct Progress02012fe4*)((char*)run + R(0x1860,0x1840));
 }
 
-int GetFieldIfFlag4_020100f8(char* gs);
+int GameState_GetFollowCamera(char* gs);
 void GameState_SetCamera(GameState* gs, int value);
 struct Foo0207df50;
 void VramState_Rewind(struct Foo0207df50* p);
@@ -491,7 +491,7 @@ extern "C" ARM void func_ov006_02155e28(struct Struct_ov006_02155e28_4* arg0) {
         self->objs[1].SetAnimationByIndex(0, 0);
         self->objs[2].SetAnimationByIndex(0, 0);
         GameState* gs = GameState::GetInstance();
-        self->field1a0 = GetFieldIfFlag4_020100f8((char*)gs);
+        self->field1a0 = GameState_GetFollowCamera((char*)gs);
         InitCombatEntry021542f4(self->entry);
         GameState_SetCamera(gs, (int)self->entry);
         struct Manager0207f7f0* mgr = self->mgr;

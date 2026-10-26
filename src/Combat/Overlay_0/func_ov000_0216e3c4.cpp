@@ -23,11 +23,11 @@ struct Struct_ov000_0216d368 { int unknown_0_, unknown_4_, unknown_8_; };
 struct Struct_0202e6a8;
 extern "C" void func_ov000_0216d370(Struct_020a212c_2*, int, int, int);
 extern "C" int func_ov000_0215e9fc(Random*, short*, int, int);
-extern "C" void func_0202e5d8(BattleCamera*, int, int, int);
+extern "C" void Camera_SetOrbit(BattleCamera*, int, int, int);
 CameraCombatant* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
 void Camera_SetTarget(struct Camera*, int, int, int);
 void StoreVec3Words0216d368(Vec3Ints0216d368*, int, int, int);
-void ApplyField0x70Tail(GlobalObj0202e6a8*, int);
+void Camera_SetOrbitYaw(GlobalObj0202e6a8*, int);
 
 // USA: func_ov000_0216e3c4
 extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
@@ -68,7 +68,7 @@ extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
     }
     angle = fix32ReduceAngle0To2Pi(angle - 0x648);
     Camera_SetTarget((struct Camera*)camera, center.x, 0x800, center.z);
-    func_0202e5d8(camera, angle, 0x1000, distance);
+    Camera_SetOrbit(camera, angle, 0x1000, distance);
     int combatants = 0;
     camera->mode = 14;
     camera->active = 1;
@@ -83,12 +83,12 @@ extern "C" ARM void func_ov000_0216e3c4(Struct_020a212c_2* arg0) {
             combatants++;
         }
     }
-    if (var16) {
-        int var21 = fix32_Divide(0x1000, var16 << 12);
-        Vector3fixMultiplyScalar((Vector3i*)&var17, var21, (Vector3i*)&var17);
-        Vector3i var22;
-        var22 = arg0->unknown_10_;
-        int var23 = func_020c3544(var17.unknown_8_ - var22.z, var17.unknown_0_ - var22.x);
-        func_0202e6a8((Struct_0202e6a8*)arg0, -0x999 + ((var23 / 0xffff) << 12));
+    if (combatants) {
+        int scale = fix32_Divide(0x1000, combatants << 12);
+        Vector3fixMultiplyScalar((Vector3i*)&sum, scale, (Vector3i*)&sum);
+        Vector3i current;
+        current = camera->target;
+        int facing = fix32_Atan2_Rescaled_020c3544(sum.z - current.z, sum.x - current.x);
+        Camera_SetOrbitYaw((GlobalObj0202e6a8*)camera, -0x999 + ((facing / 0xffff) << 12));
     }
 }

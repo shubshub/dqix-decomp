@@ -1,21 +1,18 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 unsigned int DisableIRQInterrupts(void);
 unsigned int SetIRQInterruptState(int mask);
-extern "C" int func_020c96a8(int arg0);
-extern "C" void func_020c9be0(void);
-struct Struct_020c92d0;
-extern "C" void func_020c92d0(struct Struct_020c92d0* arg0);
+int StoreValueCountingDecreases_020c96a8(int value);
+extern "C" void HaltSystem(void);
+struct VCountAlarmNode020c92d0;
+void InsertVCountAlarmNode(struct VCountAlarmNode020c92d0* node);
 
 // USA: func_020c93d0
-extern "C" ARM void func_020c93d0(void* arg0, int arg1, int arg2, int arg3, int arg4) {
-    unsigned int var0 = DisableIRQInterrupts();
-    if (arg0 == 0 || *(int*)arg0 != 0) {
-        func_020c9be0();
+extern "C" ARM void func_020c93d0(void* node, int a1, int a2, int a3, int a4) {
+    unsigned int mask = DisableIRQInterrupts();
+    if (node == 0 || *(int*)node != 0) {
+        HaltSystem();
     }
     int var1 = *(volatile unsigned short*)0x4000006;
     int var2 = func_020c96a8(var1);

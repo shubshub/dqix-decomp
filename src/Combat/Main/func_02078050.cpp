@@ -9,14 +9,14 @@ enum { Enum_02078050_1058 = 0x422 };
 
 struct Struct_ov009_0218aa28 { int unknown_0_; int unknown_4_; int unknown_8_; };
 
-extern "C" void* func_0202ae18(void* arg0);
+extern "C" void* LinkSession_GetInstance(void* self);
 
-struct Struct_02033f44;
-extern "C" int* func_02033f44(struct Struct_02033f44* arg0);
+struct BitFlag02033f44;
+int* GameObject_GetWallHit(struct BitFlag02033f44* self);
 
 extern "C" void func_02076ccc(void* arg0, int arg1);
 
-extern "C" int func_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 
 extern "C" void func_020794f8(void* arg0, int arg1, int arg2);
 
@@ -26,7 +26,7 @@ void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 struct Obj02033834;
 void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
-extern "C" int func_0202c540(void* arg0);
+extern "C" int LinkSession_IsGuest(void* obj);
 
 extern "C" void* Zone3D_GetInstance(void);
 
@@ -36,8 +36,8 @@ extern "C" int Zone3D_GetGroundHeight(int seed, void* v);
 
 struct Vector3i;
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 struct Struct_02078050_2 {
     unsigned short unknown_0_;
@@ -57,13 +57,13 @@ struct Struct_02078050 {
 };
 
 // USA: func_02078050
-extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
-    void* var0 = func_0202ae18(arg0);
+extern "C" ARM void func_02078050(struct Entity02078050* self) {
+    void* mgr = LinkSession_GetInstance(self);
 
-    if (func_02033f44((struct Struct_02033f44*)arg0) != 0) {
-        func_02076ccc(arg0, 1);
-        arg0->unknown_154_ = 0;
-        if (func_0202b7d8((int*)var0) == 0) {
+    if (GameObject_GetWallHit((struct BitFlag02033f44*)self) != 0) {
+        TrySetMode02076ccc(self, 1);
+        self->f154 = 0;
+        if (LinkSession_IsActive((int*)mgr) == 0) {
             return;
         }
         func_020794f8(arg0, 0, 0);
@@ -86,7 +86,7 @@ extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
     Vector3fix_Normalize((const Vector3fix*)&delta, (Vector3fix*)&delta);
     GameObject_SetFacing((struct Obj02033834*)self, fix32_Atan2(delta.x, delta.z));
 
-    if (func_0202c540(var0) != 0) {
+    if (LinkSession_IsGuest(mgr) != 0) {
         return;
     }
 
@@ -103,12 +103,12 @@ extern "C" ARM void func_02078050(struct Struct_02078050* arg0) {
         *(Vector3i*)((int*)&self->f44) = *(Vector3i const*)((int*)&v);
     }
 
-    func_02076ccc(arg0, 1);
-    arg0->unknown_154_ = 0;
-    if (func_0202b7d8((int*)var0) == 0) {
+    TrySetMode02076ccc(self, 1);
+    self->f154 = 0;
+    if (LinkSession_IsActive((int*)mgr) == 0) {
         return;
     }
-    if (func_0202c1a4((struct Struct_0202c1a4*)var0) != 0) {
+    if (LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)mgr) != 0) {
         return;
     }
     func_020794f8(arg0, 0, 0);

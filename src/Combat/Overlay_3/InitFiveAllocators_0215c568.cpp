@@ -1,9 +1,6 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 #if defined(jpn)
 enum { kRegionValue4000_3000 = 0x3000 };
@@ -16,7 +13,7 @@ enum { kRegionValue5C_28 = 0x5c };
 #endif
 
 
-extern "C" void func_020c9be0(void);
+extern "C" void HaltSystem(void);
 int MessageSystem_GetInstance(void);
 
 // USA: func_ov003_0215c568
@@ -24,23 +21,23 @@ extern "C" ARM void func_ov003_0215c568(void* allocatorState, SafeAllocator* bac
     if (backingAllocator == 0) return;
 
     void* arenaBuffer = backingAllocator->Allocate(0x2000);
-    if (arenaBuffer == 0) func_020c9be0();
+    if (arenaBuffer == 0) HaltSystem();
     ((SafeAllocator*)allocatorState)->CreateTypeA(arenaBuffer, 0x2000);
 
     arenaBuffer = backingAllocator->Allocate(0x800);
-    if (arenaBuffer == 0) func_020c9be0();
+    if (arenaBuffer == 0) HaltSystem();
     ((SafeAllocator*)((char*)allocatorState + 0x14))->CreateTypeA(arenaBuffer, 0x800);
 
     arenaBuffer = backingAllocator->Allocate(kRegionValue4000_3000);
-    if (arenaBuffer == 0) func_020c9be0();
+    if (arenaBuffer == 0) HaltSystem();
     ((SafeAllocator*)((char*)allocatorState + 0x28))->CreateTypeA(arenaBuffer, kRegionValue4000_3000);
 
     arenaBuffer = backingAllocator->Allocate(0x400);
-    if (arenaBuffer == 0) func_020c9be0();
+    if (arenaBuffer == 0) HaltSystem();
     ((SafeAllocator*)((char*)allocatorState + 0x3c))->CreateTypeA(arenaBuffer, 0x400);
 
     arenaBuffer = backingAllocator->Allocate(0x2000);
-    if (arenaBuffer == 0) func_020c9be0();
+    if (arenaBuffer == 0) HaltSystem();
     ((SafeAllocator*)((char*)allocatorState + 0x50))->CreateTypeA(arenaBuffer, 0x2000);
 
     int fieldSourceAddress = MessageSystem_GetInstance();

@@ -7,7 +7,7 @@
 int GetData02107800Word0_020429d4(void);
 void* GlobalFlags_GetInstance(void);
 struct FlagWord02046708;
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 void SetMainBrightness(GameResources*, int, int);
 void SetBrightness(GameResources*, int, int);
 void GameObject_EnableControl(void* obj);
@@ -35,7 +35,7 @@ extern "C" ARM int func_ov017_021b2968(struct Obj021b2968* self) {
         StageMemoryToVRAM(VRAMSubregion_MainBG3Character, buf, 0, 0x20, true, false);
 
         struct FlagWord02046708* flagWord = (struct FlagWord02046708*)GlobalFlags_GetInstance();
-        if (!TestFlags02046708(flagWord, 1) && !TestFlags02046708(flagWord, 0x40)) {
+        if (!FlagWord_TestBits(flagWord, 1) && !FlagWord_TestBits(flagWord, 0x40)) {
             SetMainBrightness((GameResources*)oddStruct, 0, 0x28);
         } else {
             SetBrightness((GameResources*)oddStruct, 0, 0x28);
@@ -43,7 +43,7 @@ extern "C" ARM int func_ov017_021b2968(struct Obj021b2968* self) {
     }
 
     GameState* battle = GameState::GetInstance();
-    GameObject* combatant = battle->GetUnknownGameObject();
+    GameObject* combatant = battle->GetLeader();
     if (combatant) {
         GameObject_EnableControl(combatant);
     }

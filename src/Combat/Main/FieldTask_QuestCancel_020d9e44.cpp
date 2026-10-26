@@ -39,7 +39,7 @@ extern "C" ARM void FieldTask_QuestCancel(Self020d9e44* self) {
             FieldTask_EndQuestCancel((struct Struct020d9fc8*)self);
             return;
         }
-        GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetUnknownGameObject(), 1);
+        GameObject_DisableControl((struct Obj020397cc*)GameState::GetInstance()->GetLeader(), 1);
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x1e);
         if (self->flags & 1) {
             self->tasks[0] = loader->QueueLoadFile(data_020f2838, NULL);

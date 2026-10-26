@@ -32,8 +32,8 @@ struct EffectScriptData
 
 extern "C"
 {
-    void* func_02033fa0(void*);
-    bool func_0204be20(void*);
+    void* _Z28GameObject_GetFloorAttributePv(void*);
+    bool _Z28CheckBits5To9Equal2_0204be20Pt(void*);
 
     void _Z17VramState_RestorePc(void*);
     void _Z14VramState_SavePc(void*);
@@ -727,7 +727,7 @@ void AtmosphericEffectSet::DetermineVisibilityFromTimeOfDay()
 
 void AtmosphericEffectSet::DetermineVisibilityFromUnknown()
 {
-    bool inputShouldHide = func_0204be20(func_02033fa0(GameState::GetInstance()->GetUnknownGameObject()));
+    bool inputShouldHide = _Z28CheckBits5To9Equal2_0204be20Pt(_Z28GameObject_GetFloorAttributePv(GameState::GetInstance()->GetLeader()));
 
     if (inputShouldHide != unknown_14_bit_2_ || visibilityDirty_)
     {

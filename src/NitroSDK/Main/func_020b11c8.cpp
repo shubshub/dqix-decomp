@@ -3,12 +3,12 @@
 typedef unsigned int Type_020b11c8;
 typedef unsigned long long Type_020b11c8_2;
 
-extern "C" void func_020ca458(Type_020b11c8 value, void *dest, Type_020b11c8 size);
+extern "C" void MIi_CpuClearFast(u32 value, void *dest, u32 size);
 
 // USA: func_020b11c8
-extern "C" ARM void func_020b11c8(void *arg0, int arg1, int arg2, int arg3, int arg4, Type_020b11c8 arg5, int arg6) {
-    if ((arg3 == 8) && (arg4 == 8)) {
-        func_020ca458(arg5, arg0, (Type_020b11c8)(8 * arg6));
+extern "C" ARM void func_020b11c8(void *pChar, int x, int y, int w, int h, u32 cl8, int bpp) {
+    if ((w == 8) && (h == 8)) {
+        MIi_CpuClearFast(cl8, pChar, (u32)(8 * bpp));
     } else {
         if (arg6 == 4) {
             Type_020b11c8 var0;

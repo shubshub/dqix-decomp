@@ -145,11 +145,11 @@ int GridCursor_GetSelectedIndex(GridCursor* cursor);
 void SePlayer_Play(SePlayer* sound, int effect, int value);
 
 extern "C" {
-void* ExtractFileFromGP2(char* arg0, char* arg1, unsigned int* arg2);
-void func_ov008_02186964(Struct_ov008_021842a0_2* arg0);
-int func_ov008_02186a30(Struct_ov008_021842a0_2* arg0, int arg1);
-void* func_0202ae18();
-int func_0202c540(void* arg0);
+void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
+void func_ov008_02186964(BattleRecords* self);
+int func_ov008_02186a30(BattleRecords* self, int ticks);
+void* LinkSession_GetInstance();
+int LinkSession_IsGuest(void* value);
 }
 
 #if defined(jpn)
@@ -315,7 +315,7 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
         unsigned char var22 = arg0->unknown_744_[var19];
         if (g_keyManager.TestKeysPressed(0x401) || var18 == 1)
         {
-            if (!func_0202c540(func_0202ae18()) || var22 != 5)
+            if (!LinkSession_IsGuest(LinkSession_GetInstance()) || kind != 5)
             {
                 SePlayer_Play(&g_sePlayer, 1, 0);
                 self->state_ = kind + 5;

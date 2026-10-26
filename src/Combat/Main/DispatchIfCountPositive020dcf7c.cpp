@@ -3,7 +3,7 @@
 #if defined(jpn)
 struct Struct020dfc40;
 void KeyTable_Reset(Struct020dfc40* p);
-void* ResetAndReturnSelf020dfc2c(void* p);
+void* KeyTable_Construct(void* p);
 extern "C" int func_020e2168(char* destination, const char* tablePath,
     int index, int variant, bool lock);
 extern const char data_020f2b6c[];
@@ -25,7 +25,7 @@ ARM void DispatchIfCountPositive020dcf7c(int count, void* buf) {
         LocalBuf020dcf7c local;
         tablePath = data_020f2b6c;
         *(char*)buf = 0;
-        ResetAndReturnSelf020dfc2c(&local);
+        KeyTable_Construct(&local);
         KeyTable_Reset((Struct020dfc40*)&local);
     } else {
         return;

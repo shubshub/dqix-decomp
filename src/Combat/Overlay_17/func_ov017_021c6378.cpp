@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae24(void);
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov017_021c6254(char* arg0, int arg1);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void* memset(void* dst, int value, unsigned int size);
+extern "C" void func_0205e330(void* a, void* b, int c);
+extern "C" void func_ov017_021c6254(char* self, int index);
 
 struct Struct_ov017_021c6378_2 {
     unsigned char unknown_0_[8];
@@ -50,27 +50,27 @@ struct Struct_ov017_021c6378 {
 };
 
 // USA: func_ov017_021c6378
-extern "C" ARM void func_ov017_021c6378(char* arg0) {
-    void* var0 = func_0202ae24();
-    Struct_ov017_021c6378 var1;
-    var1.unknown_0_ = 0x40;
-    Struct_ov017_021c6378_6* var2 = &var1.unknown_4_;
-    memset(var2, 0, sizeof(Struct_ov017_021c6378_6));
-    var2->unknown_0_ = (*(Struct_ov017_021c6378_2**)(arg0 + 0x8e18))->unknown_8_;
-    Struct_ov017_021c6378_5* var3 = (Struct_ov017_021c6378_5*)(arg0 + 0x1b0 + 0x8000);
-    var2->unknown_e_ = var3->unknown_1_6_;
-    for (int var4 = 0; var4 < var3->unknown_1_4_; var4++) {
-        var2->unknown_2_[var4] = var3->unknown_4_[var4].unknown_0_;
-        var2->unknown_8_[var4] = var3->unknown_4_[var4].unknown_b_;
-        if (var4 == 0) {
-            var2->unknown_b_.unknown_0_0_ = var3->unknown_4_[var4].unknown_a_.unknown_0_0_;
-            var2->unknown_b_.unknown_0_4_ = var3->unknown_4_[var4].unknown_a_.unknown_0_4_;
-        } else if (var4 == 1) {
-            var2->unknown_c_.unknown_0_0_ = var3->unknown_4_[var4].unknown_a_.unknown_0_0_;
-            var2->unknown_c_.unknown_0_4_ = var3->unknown_4_[var4].unknown_a_.unknown_0_4_;
-        } else if (var4 == 2) {
-            var2->unknown_d_.unknown_0_0_ = var3->unknown_4_[var4].unknown_a_.unknown_0_0_;
-            var2->unknown_d_.unknown_0_4_ = var3->unknown_4_[var4].unknown_a_.unknown_0_4_;
+extern "C" ARM void func_ov017_021c6378(char* self) {
+    void* data = LinkMessageQueue_GetInstance();
+    Msg021c6378 msg;
+    msg.tag = 0x40;
+    Payload021c6378* p = &msg.payload;
+    memset(p, 0, sizeof(Payload021c6378));
+    p->val = (*(Sub8e18**)(self + 0x8e18))->val;
+    Party021c6378* party = (Party021c6378*)(self + 0x1b0 + 0x8000);
+    p->mode = party->mode;
+    for (int i = 0; i < party->count; i++) {
+        p->ids[i] = party->entries[i].id;
+        p->values[i] = party->entries[i].value;
+        if (i == 0) {
+            p->nibbles0.lo = party->entries[i].nibbles.lo;
+            p->nibbles0.hi = party->entries[i].nibbles.hi;
+        } else if (i == 1) {
+            p->nibbles1.lo = party->entries[i].nibbles.lo;
+            p->nibbles1.hi = party->entries[i].nibbles.hi;
+        } else if (i == 2) {
+            p->nibbles2.lo = party->entries[i].nibbles.lo;
+            p->nibbles2.hi = party->entries[i].nibbles.hi;
         }
     }
     func_0205e330(var0, &var1, 0);

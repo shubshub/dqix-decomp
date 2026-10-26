@@ -13,8 +13,8 @@ struct Struct_02038598_5;
 
 extern "C" void* Zone3D_GetInstance(void);
 unsigned int* GlobalFlags_GetInstance();
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
-int CheckField0xc4Low15BitsNonZero(BitField0203402c* obj);
+int GameObject_IsGesturing(signed char* obj);
+int GameObject_IsSinking(BitField0203402c* obj);
 int ListContainsId(ListHead02046b60* list, int id);
 void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
 extern "C" int func_02094b9c(PathNode_021975e4* node, Vector3i* point);
@@ -25,26 +25,26 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
     GameState* game = GameState::GetInstance();
     Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
     unsigned int* flags = GlobalFlags_GetInstance();
-    GameObject* player = game->GetUnknownGameObject();
+    GameObject* player = game->GetLeader();
     Vector3i anchor = player->obj3D_.position_;
-    SubBlock02038508* current = GetFieldPtrAt0x26c_020399a8(player);
+    SubBlock02038508* current = GameObject_GetLadderClimb(player);
     GameResources* res = GetGameResources();
     ListHead02046b60* list = (ListHead02046b60*)res->fieldTaskQueue_;
 
     if (g_keyManager.TestKeysHeld(0x402)) return;
-    if (func_020535c8((signed char*)var3) || var5->unknown_0_) return;
-    if (func_0203402c((Struct_0203402c*)var3)) return;
-    if (func_02046b60(var7, 0xc)) return;
-    if (func_02046b60(var7, 0x2d)) return;
-    if (func_02046b60(var7, 0x26)) return;
-    if (func_02046b60(var7, 0x35)) return;
-    int var8 = ((unsigned char*)var3)[0xbe] == 0 ? 1 : 0;
-    if (var8 == 1) return;
+    if (GameObject_IsGesturing((signed char*)player) || current->active) return;
+    if (GameObject_IsSinking((BitField0203402c*)player)) return;
+    if (ListContainsId(list, 0xc)) return;
+    if (ListContainsId(list, 0x2d)) return;
+    if (ListContainsId(list, 0x26)) return;
+    if (ListContainsId(list, 0x35)) return;
+    int idle = ((unsigned char*)player)[0xbe] == 0 ? 1 : 0;
+    if (idle == 1) return;
 
     PathNode_021975e4* node = (PathNode_021975e4*)ZoneFeatures_GetFirstOfType((unsigned char*)&zone->substruct_6c_, 9);
     while (node != 0) {
         SubBlock02038508 block;
-        InitBlock02038508(&block);
+        LadderClimb_Reset(&block);
         if (func_02094b9c(node, &anchor)) {
             Vector3i nodeDir;
             int cosine = fix32cos(node->angle);
@@ -95,8 +95,8 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
                 continue;
             }
 
-            Struct_02018300* var20 = func_0201e6d4(&var1->substruct_6c_, var9->unknown_2c_.unknown5_0_.unknown_2_);
-            if (!var20) return;
+            PathNode_021975e4* partner = ZoneFeatures_FindLadderNode(&zone->substruct_6c_, node->unk_2c.type9.unk_2);
+            if (!partner) return;
 
             block.active = 1;
             block.heading = node->angle;
@@ -135,7 +135,7 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
                 block.startHeading -= 0x3243;
                 if (block.startHeading < 0) block.startHeading += 0x6487;
             }
-            CopyBlockTo0x26c_020398b4(player, &block);
+            GameObject_SetLadderClimb(player, &block);
             FlagWord_SetBits(flags, 0x400);
         }
         var9 = var9->unknown_70_;

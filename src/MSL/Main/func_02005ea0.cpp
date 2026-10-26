@@ -1,12 +1,9 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0200b454 func_0200b318
-#endif
 
-extern "C" ARM double func_0200b454(double x);
-extern "C" ARM double func_02008f3c(double arg0);
-extern "C" ARM double func_0200aae4(double arg0, int arg1);
+extern "C" ARM double sqrt(double x);
+extern "C" ARM double func_02008f3c(double x);
+extern "C" ARM double func_0200aae4(double x, int n);
 
 extern const double data_020e6acc[];
 extern const double data_020e6abc[];
@@ -102,9 +99,9 @@ extern "C" ARM double func_02005ea0(double arg0, double arg1) {
         if (var21 == 0x40000000) {
             return arg0 * arg0;
         }
-        if (var21 == 0x3fe00000) {
-            if (var20 >= 0) {
-                return func_0200b454(arg0);
+        if (hy == 0x3fe00000) {
+            if (hx >= 0) {
+                return sqrt(x);
             }
         }
     }

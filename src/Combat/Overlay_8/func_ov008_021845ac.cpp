@@ -123,7 +123,7 @@ void MessageSystem_Stop(MessageSystem* messages);
 void Background_FlushMap(BackgroundGraphics* background, int value);
 void Background_TransferMap(BackgroundGraphics* background, int value);
 unsigned int GetMainBGAssignedVRAMSize();
-void func_020ca458(int value, void* destination, unsigned int size);
+void MIi_CpuClearFast(int value, void* destination, unsigned int size);
 void Window_Destroy(TextWindow* window);
 void* Zone3D_GetInstance();
 }
@@ -159,7 +159,7 @@ extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* arg0)
         Background_TransferMap(background, 0);
         Background_Destroy((BackgroundGraphics*)background);
     }
-    func_020ca458(0, (void*)0x06000000, GetMainBGAssignedVRAMSize());
+    MIi_CpuClearFast(0, (void*)0x06000000, GetMainBGAssignedVRAMSize());
     Window_Destroy(&self->window_);
     self->model_.Destroy();
     self->text_ = NULL;

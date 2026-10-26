@@ -9,24 +9,24 @@ extern Script::OpcodeLookupEntry data_020ef388[];
 
 extern "C"
 {
-    extern "C" void* func_02011584(GameState*);
-    void _ZN15Struct_020134e017Struct_0201cb60_313func_0201ce10Ev(void*);
+    extern "C" void* _Z22GameState_GetZoneTablePv(GameState*);
+    void _ZN12ZoneFeatures13Opcode68Entry14Reset_0201ce10Ev(void*);
 
     Matrix4x3 _Z15RotationMatrixYi(fix32_t);
 
     fix32_t _Z22fix32ReduceAngle0To2Pii(fix32_t);
 
-    extern "C" unsigned short* func_0209998c(void*, const char*);
+    extern "C" unsigned short* _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(void*, const char*);
 
 }
 
-extern "C" int func_0201c79c(Script::Parameter* arg0, int arg1)
+int WarpScript_AllocateOpcode64Entries(Script::Parameter* params, int numParams)
 {
-    data_020fdc20.unknown_8_->func_0201e25c(arg0[0].ToInt(), data_020fdc20.unknown_4_);
+    data_020fdc20.warp->AllocateOpcode64Entries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-extern "C" int func_0201c7c4(Script::Parameter* arg0, int arg1)
+int WarpScript_CreateOpcode64Entry(Script::Parameter* params, int numParams)
 {
     const char* var0;
     const char* var1;
@@ -65,7 +65,7 @@ extern "C" int func_0201c7c4(Script::Parameter* arg0, int arg1)
     else
         strcpy(var6.unknown_30_, var1);
 
-    data_020fdc20.unknown_8_->func_0201e304(var6);
+    data_020fdc20.warp->CreateOpcode64Entry(entry);
     return 1;
 }
 
@@ -88,15 +88,15 @@ extern "C" int func_0201c8d0(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-extern "C" int func_0201c944(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_AllocateOpcode66Entries(Script::Parameter* params, int numParams)
 {
-    data_020fdc20.unknown_8_->func_0201e480(arg0[0].ToInt(), data_020fdc20.unknown_4_);
+    data_020fdc20.warp->AllocateOpcode66Entries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-extern "C" int func_0201cb38(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_AllocateExits(Script::Parameter* params, int numParams)
 {
-    data_020fdc20.unknown_8_->func_0201e518(arg0[0].ToInt(), data_020fdc20.unknown_4_);
+    data_020fdc20.warp->AllocateExits(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
@@ -127,9 +127,9 @@ void Struct_020134e0::Struct_0201cb60_3::func_0201ce10()
     unknown_6c_ = -1;
 }
 
-extern "C" int func_0201d01c(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_AllocateEntries(Script::Parameter* params, int numParams)
 {
-    data_020fdc20.unknown_8_->func_0201e634(arg0[0].ToInt(), data_020fdc20.unknown_4_);
+    data_020fdc20.warp->AllocateOpcode6aEntries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
@@ -215,14 +215,14 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
             {
                 var15.x = 4096.0f * (arg0++)->ToFloat();
             }
-            var15.y = 4096.0f * (arg0++)->ToFloat();
-            var15.z = 4096.0f * (arg0++)->ToFloat();
-            Vector3fix var16;
-            arg0 = arg0->ToVec3fix(&var16);
-            var1.unknown_2c_.unknown3_0_.unknown_4_.func_0201d474(var13);
-            var1.unknown_2c_.unknown3_0_.unknown_14_ = var14;
-            var1.unknown_2c_.unknown3_0_.unknown_18_ = var15;
-            var1.unknown_2c_.unknown3_0_.unknown_24_ = var16;
+            vecC.y = 4096.0f * (params++)->ToFloat();
+            vecC.z = 4096.0f * (params++)->ToFloat();
+            Vector3fix vecD;
+            params = params->ToVec3fix(&vecD);
+            entry.unk_2c.type4.vector_4.CopyFrom(difference);
+            entry.unk_2c.type4.distance_14 = distance;
+            entry.unk_2c.type4.vector_18 = vecC;
+            entry.unk_2c.type4.vector_24 = vecD;
             break;
         }
         }
@@ -242,9 +242,9 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
         entry.unk_2c.type5.cupboardContainerId = 0;
     }
 
-    Struct_020134e0* var17 = data_020fdc20.unknown_8_;
-    var1.unknown_70_ = NULL;
-    var17->func_0201e710(var1);
+    ZoneFeatures* instance = data_020fdc20.warp;
+    entry.pNext = NULL;
+    instance->CreateOpcode6aEntry(entry);
     return 1;
 }
 
@@ -266,7 +266,7 @@ void Struct_020134e0::Struct_02018300::func_0201d424()
     pNext = NULL;
 }
 
-Struct_0201d044 &Struct_0201d044::func_0201d474(const Struct_0201d044 &arg0)
+MaybeVector4fix &MaybeVector4fix::CopyFrom(const MaybeVector4fix &other)
 {
     unknown_0_ = arg0.unknown_0_;
     fix32_t var0 = arg0.unknown_c_;
@@ -274,7 +274,7 @@ Struct_0201d044 &Struct_0201d044::func_0201d474(const Struct_0201d044 &arg0)
     return *this;
 }
 
-extern "C" int func_0201d494(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_SetDefaultPositionAndAngle(Script::Parameter* params, int numParams)
 {
     Vector3fix var0;
     arg0 = arg0->ToVec3fix(&var0);
@@ -286,7 +286,7 @@ extern "C" int func_0201d494(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-extern "C" int func_0201d4ec(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_SetClearColor(Script::Parameter* params, int numParams)
 {
     int var0 = (arg0++)->ToInt();
     int var1 = (arg0++)->ToInt();
@@ -295,7 +295,7 @@ extern "C" int func_0201d4ec(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-extern "C" int func_0201d530(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_AddEntry(Script::Parameter* params, int numParams)
 {
     Struct_020134e0::Struct_02018300 var0;
     var0.func_0201d424();
@@ -316,16 +316,16 @@ extern "C" int func_0201d530(Script::Parameter* arg0, int arg1)
     var0.unknown_24_ = var5;
     var0.unknown_24_ = var4 + var5;
 
-    data_020fdc20.unknown_0_ = data_020fdc20.unknown_8_->func_0201e710(var0);
+    data_020fdc20.currentEntry = data_020fdc20.warp->CreateOpcode6aEntry(entry);
     return 1;
 }
 
-extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
 {
     if (data_020fdc20.unknown_0_ == NULL)
         return 0;
-    void* var0 = func_02011584(GameState::GetInstance());
-    switch (data_020fdc20.unknown_0_->unknown_4_)
+    void* worldData = _Z22GameState_GetZoneTablePv(GameState::GetInstance());
+    switch (data_020fdc20.currentEntry->maybeType)
     {
     case 0:
         data_020fdc20.unknown_0_->unknown_2c_.unknown_0_.unknown_0_ = 0;
@@ -366,9 +366,9 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
             {
                 if (arg0->type == 0)
                 {
-                    const char* var2 = (arg0++)->ToString();
-                    var1++;
-                    unsigned short* var3 = func_0209998c(var0, var2);
+                    const char* zoneName = (params++)->ToString();
+                    numArgsConsumed++;
+                    unsigned short* maybeZoneData = _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(worldData, zoneName);
 
                     if (var3 == NULL)
                         return 0;
@@ -442,12 +442,12 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
             var10.y = 4096.0f * (arg0++)->ToFloat();
             var10.z = 4096.0f * (arg0++)->ToFloat();
         }
-        Vector3fix var11;
-        arg0 = arg0->ToVec3fix(&var11);
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_4_.func_0201d474(var8);
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_14_ = var9;
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_18_ = var10;
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_24_ = var11;
+        Vector3fix vecD;
+        params = params->ToVec3fix(&vecD);
+        data_020fdc20.currentEntry->unk_2c.type4.vector_4.CopyFrom(vector4);
+        data_020fdc20.currentEntry->unk_2c.type4.distance_14 = distance;
+        data_020fdc20.currentEntry->unk_2c.type4.vector_18 = vecC;
+        data_020fdc20.currentEntry->unk_2c.type4.vector_24 = vecD;
         break;
     }
     case 5:
@@ -469,8 +469,8 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
         {
             if (arg0->type == 0)
             {
-                const char* var12 = (arg0++)->ToString();
-                unsigned short* var13 = func_0209998c(var0, var12);
+                const char* zoneName = (params++)->ToString();
+                unsigned short* maybeZoneData = _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(worldData, zoneName);
 
                 if (var13 == NULL)
                     return 0;
@@ -546,14 +546,14 @@ extern "C" int func_0201d638(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-extern "C" int func_0201dfcc(Script::Parameter* arg0, int arg1)
+int ZoneFeaturesScript_AllocateHeadingLockAreas(Script::Parameter* params, int numParams)
 {
     int var0 = arg0[0].ToInt();
     Struct_020134e0::Struct_0201dfcc* var1 =
         (Struct_020134e0::Struct_0201dfcc*)data_020fdc20.unknown_4_->Allocate(var0 * sizeof(Struct_020134e0::Struct_0201dfcc));
     if (var1 == NULL)
         return 0;
-    data_020fdc20.unknown_8_->func_0201e878(var1, var0);
+    data_020fdc20.warp->SetHeadingLockAreas(alloc, count);
     return 1;
 }
 
@@ -624,7 +624,7 @@ extern "C" int func_0201e018(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-extern "C" void func_0201e1d0(const void* arg0, unsigned int arg1, Struct_020134e0* arg2, SafeAllocator* arg3)
+void ZoneFeaturesScript_Run(const void* data, unsigned int length, ZoneFeatures* warp, SafeAllocator* alloc)
 {
     if (arg1 == 0)
         return;
@@ -643,12 +643,12 @@ extern "C" void func_0201e1d0(const void* arg0, unsigned int arg1, Struct_020134
     data_020fdc20.unknown_0_ = NULL;
 }
 
-void Struct_020134e0::func_0201e248()
+void ZoneFeatures::Reset()
 {
     VectorizedMemset(this, 0, sizeof(Struct_020134e0));
 }
 
-void Struct_020134e0::func_0201e25c(int arg0, SafeAllocator *arg1)
+void ZoneFeatures::AllocateOpcode64Entries(int count, SafeAllocator *alloc)
 {
     unknown_0_ = (Struct_020146fc*)arg1->Allocate(arg0 * sizeof(Struct_020146fc));
     unknown_4_ = 0;
@@ -662,19 +662,19 @@ void Struct_020134e0::func_0201e288(int arg0, SafeAllocator* arg1)
     unknown_38_ = arg0;
 }
 
-void Struct_020134e0::func_0201e2b4(SafeAllocator* arg0, const void* arg1, unsigned int arg2)
+void ZoneFeatures::LoadFromScript(SafeAllocator* alloc, const void* script, unsigned int length)
 {
-    func_0201e1d0(arg1, arg2, this, arg0);
+    ZoneFeaturesScript_Run(script, length, this, alloc);
 }
 
-Struct_020134e0::Struct_020146fc* Struct_020134e0::func_0201e2d8(int arg0)
+ZoneFeatures::Opcode64Entry* ZoneFeatures::GetOpcode64Entry(int index)
 {
     if (arg0 < 0 || unknown_4_ <= arg0)
         return NULL;
     return &unknown_0_[arg0];
 }
 
-void Struct_020134e0::func_0201e304(const Struct_020146fc& arg0)
+void ZoneFeatures::CreateOpcode64Entry(const Opcode64Entry& source)
 {
     if (unknown_4_ >= unknown_8_)
         return;
@@ -702,14 +702,14 @@ void Struct_020134e0::func_0201e3c4(const TileFeaturePlacementData& arg0)
     unknown_34_++;
 }
 
-void Struct_020134e0::func_0201e480(int arg0, SafeAllocator *arg1)
+void ZoneFeatures::AllocateOpcode66Entries(int count, SafeAllocator *alloc)
 {
     unknown_c_ = (Struct_0201c96c*)arg1->Allocate(arg0 * sizeof(Struct_0201c96c));
     unknown_10_ = 0;
     unknown_14_ = arg0;
 }
 
-void Struct_020134e0::func_0201e4b0(const Struct_0201c96c& arg0)
+void ZoneFeatures::CreateOpcode66Entry(const Opcode66Entry& source)
 {
     if (unknown_10_ >= unknown_14_)
         return;
@@ -722,14 +722,14 @@ void Struct_020134e0::func_0201e4b0(const Struct_0201c96c& arg0)
     unknown_10_++;
 }
 
-void Struct_020134e0::func_0201e518(int arg0, SafeAllocator* arg1)
+void ZoneFeatures::AllocateExits(int count, SafeAllocator* alloc)
 {
     unknown_18_ = (Struct_0201cb60_3*)arg1->Allocate(arg0 * sizeof(Struct_0201cb60_3));
     unknown_1c_ = 0;
     unknown_20_ = arg0;
 }
 
-void Struct_020134e0::func_0201e574(const Struct_0201cb60_3& arg0)
+void ZoneFeatures::CreateExit(const Opcode68Entry& source)
 {
     if (unknown_1c_ >= unknown_20_)
         return;
@@ -749,14 +749,14 @@ void Struct_020134e0::func_0201e574(const Struct_0201cb60_3& arg0)
     unknown_1c_++;
 }
 
-void Struct_020134e0::func_0201e634(int arg0, SafeAllocator *arg1)
+void ZoneFeatures::AllocateOpcode6aEntries(int count, SafeAllocator *alloc)
 {
     unknown_24_ = (Struct_02018300*)arg1->Allocate(arg0 * sizeof(Struct_02018300));
     unknown_28_ = 0;
     unknown_2c_ = arg0;
 }
 
-void Struct_020134e0::func_0201e878(Struct_0201dfcc* arg0, unsigned short arg1)
+void ZoneFeatures::SetHeadingLockAreas(Opcode7bEntry* array, unsigned short capacity)
 {
     unknown_84_ = arg0;
     unknown_82_ = arg1;

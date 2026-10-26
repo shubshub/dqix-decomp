@@ -1349,7 +1349,7 @@ src/Combat/Overlay_0/func_ov000_02181364.cpp:
     complete
     .text start:0x02181364 end:0x021813d4
 
-src/Combat/Overlay_0/func_ov000_021636ac.cpp:
+src/Combat/Overlay_0/UpdateFlag8AndBit4_021636ac.cpp:
     complete
     .text start:0x021636ac end:0x02163710
 
@@ -1677,7 +1677,7 @@ src/Combat/Overlay_0/func_ov000_0215fc8c.cpp:
     complete
     .text start:0x0215fc8c end:0x0215fd24
 
-src/Combat/Overlay_0/func_ov000_0216118c.cpp:
+src/Combat/Overlay_0/InitCombatantPosition_0216118c.cpp:
     complete
     .text start:0x0216118c end:0x02161264
 
@@ -1829,7 +1829,7 @@ src/Combat/Overlay_0/func_ov000_021819c8.cpp:
     complete
     .text start:0x021819c8 end:0x02181a5c
 
-src/Combat/Overlay_0/func_ov000_0216d560.cpp:
+src/Combat/Overlay_0/SomeFunc_0216d560.cpp:
     complete
     .text start:0x0216d560 end:0x0216d600
 
@@ -1981,7 +1981,7 @@ src/Combat/Overlay_0/ResetOrTagLastEntry_0217629c.cpp:
     complete
     .text start:0x0217629c end:0x0217636c
 
-src/Combat/Overlay_0/func_ov000_0216d2d0.cpp:
+src/Combat/Overlay_0/ResetSlotState_0216d2d0.cpp:
     complete
     .text start:0x0216d2d0 end:0x0216d368
 
@@ -2165,7 +2165,7 @@ src/Combat/Overlay_0/RegisterCombatEvent_02175b54.cpp:
     complete
     .text start:0x02175b54 end:0x02175be4
 
-src/Combat/Overlay_0/func_ov000_02181608.cpp:
+src/Combat/Overlay_0/ReleaseAllGlobalEntries_02181608.cpp:
     complete
     .text start:0x02181608 end:0x02181694
 

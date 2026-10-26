@@ -170,10 +170,10 @@ extern "C" ARM int func_ov023_021e76c4(Struct_ov023_021e76c4_3* arg0)
         REG_BG0CNT_SUB = (REG_BG0CNT_SUB & 0x43) | 0xe00;
         REG_BG1CNT_SUB = (REG_BG1CNT_SUB & 0x43) | 0xf00;
         REG_BLDCNT_SUB = 0;
-        var9->MaybeFreeAllocations();
-        arg0->unknown_5e4_ = var9->QueueLoadFile(data_ov023_021fdd99, NULL);
-        var8 = 0;
-        arg0->unknown_5e0_++;
+        loader->FreeAllocations();
+        self->task_ = loader->QueueLoadFile(data_ov023_021fdd99, NULL);
+        result = 0;
+        self->step_++;
     }
     else if (arg0->unknown_5e0_ == 3)
     {

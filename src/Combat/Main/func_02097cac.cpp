@@ -13,11 +13,11 @@ struct Struct_02097cac_2 {
     unsigned int unknown_1b3c_;
 };
 
-extern "C" void* func_0202ae18();
+extern "C" void* LinkSession_GetInstance();
 extern "C" ZoneState* Zone3D_GetInstance();
-extern "C" int func_0202c508(void* obj);
-extern "C" int func_0202c540(void* obj);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int LinkSession_IsGuest(void* obj);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 int IsIdInRange020981e4(int a, int id);
 int IsIdInRange02098240(int a, int id);
 int IsIdInSet02098210(int a, int id);
@@ -28,9 +28,9 @@ void EnqueueEventTag186_021d3e3c(unsigned char tag);
 
 // USA: func_02097cac
 extern "C" ARM void func_02097cac(Base020989cc* state) {
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     GameState* gameState = GameState::GetInstance();
-    ZoneState02097cac* zoneState = (ZoneState02097cac*)GetField0x3f8Address_0200fd0c(gameState);
+    ZoneState02097cac* zoneState = (ZoneState02097cac*)GameState_GetZoneTransition(gameState);
     ZoneState* currentZone = Zone3D_GetInstance();
     int zoneId = zoneState->zoneId;
     GameObject* protagonist;
@@ -41,10 +41,10 @@ extern "C" ARM void func_02097cac(Base020989cc* state) {
 
     var5 = var1->GetProtagonist();
 
-    if (func_02098210((int)arg0, var4) &&
-        (!func_02098210((int)arg0, var6) || var2->unknown_65_ != 0)) {
-        if (func_0202c508(var0) != 0 && (FLAG130(var5) & 1) == 0) {
-            func_020989cc(arg0);
+    if (IsIdInSet02098210((int)state, zoneId) &&
+        (!IsIdInSet02098210((int)state, previousZoneId) || zoneState->flag65 != 0)) {
+        if (LinkSession_IsHostOrSolo(search) != 0 && (FLAG130(protagonist) & 1) == 0) {
+            UpdateRankLevel020989cc(state);
         }
         int var7 = arg0->unknown_1b3c_;
         func_ov017_021d3e3c(var7);
@@ -56,19 +56,19 @@ extern "C" ARM void func_02097cac(Base020989cc* state) {
             case 5: var2->unknown_0_ = 0xc47d; break;
             case 6: var2->unknown_0_ = 0xc4e1; break;
         }
-        func_0200fcfc(var1, var2);
+        GameState_SetZoneTransition(gameState, zoneState);
     } else {
-        if (func_0202c540(var0) == 0 || var2->unknown_65_ == 0) return;
-        int var8 = arg0->unknown_1b3c_;
-        if (!func_020981e4((int)arg0, var4)) return;
-        if (func_02098240((int)arg0, var4)) return;
-        if (var4 == 0xc3bb) return;
-        if (var4 == 0xc3bc) return;
-        if (var4 == 0xc3bd) return;
-        if (var4 == 0xc3be) return;
-        int var9 = var2->unknown_0_ % 100;
-        int var10 = var9 + 0xc350;
-        switch (var8) {
+        if (LinkSession_IsGuest(search) == 0 || zoneState->flag65 == 0) return;
+        int progress = state->progress;
+        if (!IsIdInRange020981e4((int)state, zoneId)) return;
+        if (IsIdInRange02098240((int)state, zoneId)) return;
+        if (zoneId == 0xc3bb) return;
+        if (zoneId == 0xc3bc) return;
+        if (zoneId == 0xc3bd) return;
+        if (zoneId == 0xc3be) return;
+        int rem = zoneState->zoneId % 100;
+        int base = rem + 0xc350;
+        switch (progress) {
             case 1:
             case 2: var2->unknown_0_ = (unsigned short)(var10 + 0x64); break;
             case 3:

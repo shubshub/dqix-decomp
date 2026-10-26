@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int* obj);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 void* GameState_GetParty(GameState*);
 
 struct Obj021f4438 {
@@ -33,9 +33,9 @@ extern "C" ARM int func_ov023_021f4438(Obj021f4438* obj) {
     int result = 0;
     if (obj->byte5900 != 0 || obj->f6e24 != 0) {
         GameState* battleStruct = GameState::GetInstance();
-        void* p = func_0202ae18();
+        void* p = LinkSession_GetInstance();
         result = 1;
-        if (CheckField0NonZero_0202b7d8((int*)p)) {
+        if (LinkSession_IsActive((int*)p)) {
             ElemBlock021f4438* base = (ElemBlock021f4438*)GameState_GetParty(battleStruct);
             int found = 0;
             int i;

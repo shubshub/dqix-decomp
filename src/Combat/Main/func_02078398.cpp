@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" void func_02076a8c(unsigned char* arg0);
+extern "C" void FieldMonsterState_Init(unsigned char* p);
 
 struct Struct_02033f44 {
     char unknown_0_[0xe0];
@@ -11,7 +11,7 @@ struct Struct_02033f44 {
     char unknown_e1_[3];
     int unknown_e4_;
 };
-extern "C" int* func_02033f44(struct Struct_02033f44* arg0);
+int* GameObject_GetWallHit(struct BitFlag02033f44* p);
 
 extern "C" void* func_02057924(void);
 
@@ -52,27 +52,27 @@ struct Struct_02078398 : Object3D {
 };
 
 // USA: func_02078398
-extern "C" ARM void func_02078398(struct Struct_02078398* arg0) {
-    if (arg0->GetInheritedAlpha() == 0) {
-        func_02076a8c((unsigned char*)arg0);
-        arg0->MakeHidden();
+extern "C" ARM void func_02078398(struct Actor02078398* obj) {
+    if (obj->GetInheritedAlpha() == 0) {
+        FieldMonsterState_Init((unsigned char*)obj);
+        obj->MakeHidden();
         return;
     }
 
-    if (arg0->GetInheritedAlpha() == 0x1f) {
-        int* var0 = func_02033f44((struct Struct_02033f44*)arg0);
-        Vector3fix var1 = arg0->position_;
-        var1.y = 0;
-        if (Vector3fix_Distance(&var1, &arg0->unknown_158_) < 0x2000 || var0 != 0) {
-            arg0->unknown_b2_ = 0;
-            arg0->TransitionInheritedAlpha(0, 0x7d);
-            if (arg0->unknown_178_ > 0) {
-                void* var2 = func_02057924();
-                struct Struct_02078398_2 var3;
-                func_02078484(&var3);
-                var3.unknown_2c_ = arg0->position_;
-                var3.unknown_44_ = arg0->GetScale();
-                func_02057fb4(var2, (int)arg0->unknown_178_, &var3);
+    if (obj->GetInheritedAlpha() == 0x1f) {
+        int* fp = GameObject_GetWallHit((struct BitFlag02033f44*)obj);
+        Vector3fix v = obj->position_;
+        v.y = 0;
+        if (Vector3fix_Distance(&v, &obj->f158) < 0x2000 || fp != 0) {
+            obj->fb2 = 0;
+            obj->TransitionInheritedAlpha(0, 0x7d);
+            if (obj->f178 > 0) {
+                void* list = func_02057924();
+                struct InitStruct02078484Struct s;
+                InitStruct02078484(&s);
+                s.f2c = obj->position_;
+                s.f44 = obj->GetScale();
+                FindNodeAndProcess02057fb4(list, (int)obj->f178, &s);
             }
         }
     }

@@ -75,8 +75,8 @@ extern "C" long long fix32_SinFx64c(int);
 extern "C" float _ll_sto_f(long long);
 extern "C" int ZoneTerrain_FindFloorHit(GeometryTriangle* triangles, int count, Vector3fix* start, Vector3fix* end, Vector3fix* point);
 extern "C" int Zone3D_CollectTerrainPolygons(Zone02193dc4* zone, int index, TerrainGrid02193dc4* grid, Probe02193dc4 probe, Actor02193dc4* self);
-void ClearFlags0x40And0x80At0xe0(struct ByteFlags02033f2c* p);
-void CopyFourHalfwordsToField0x114_02033f6c(void* obj, FourHalfwords02033f7c* src);
+void GameObject_ClearWallHit(struct ByteFlags02033f2c* p);
+void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
 
 // USA: func_ov017_02193dc4
 extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
@@ -100,7 +100,7 @@ extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
     probe.bottom.x -= self->GetRadius() / 2;
     probe.bottom.y -= 0x28000;
     probe.bottom.z -= self->GetRadius() / 2;
-    ClearFlags0x40And0x80At0xe0((ByteFlags02033f2c*)self);
+    GameObject_ClearWallHit((ByteFlags02033f2c*)self);
     for (i = 0; i < zone->terrainCount; i++) {
         int count = Zone3D_CollectTerrainPolygons(zone, i, &grid, probe, self);
         if (count > 0) {
@@ -136,7 +136,7 @@ extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
                 if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
                     if (polygons->header->type == 3) {
                         FourHalfwords02033f7c material = polygons->materials[grid.materialIndex[idx]];
-                        CopyFourHalfwordsToField0x114_02033f6c(self, &material);
+                        GameObject_SetFloorAttribute(self, &material);
                     }
                 }
             }

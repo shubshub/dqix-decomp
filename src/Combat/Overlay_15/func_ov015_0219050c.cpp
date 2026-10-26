@@ -66,12 +66,12 @@ extern "C" void func_02046c78(Struct_0204500c_5* arg0, unsigned short* arg1, int
 #else
 extern "C" void func_02045f3c(Struct_0204500c_5* arg0, unsigned short* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);
 #endif
-extern "C" void* func_0202a9ac(Struct_02029634* arg0, int arg1);
-extern "C" void* func_02029560(void* arg0);
-extern "C" Struct_ov015_0219050c* func_ov015_0218f39c(Struct_ov015_0218c03c_2* arg0, void* arg1);
-extern "C" float func_ov015_0218f3c4(Struct_ov015_0218f3c4_2* arg0);
-extern "C" float func_ov015_0218f408(Struct_ov015_0218f408_2* arg0);
-extern "C" void func_ov015_0218f794(Struct_ov015_0218c03c_2* arg0);
+void* DebugMenu_GetItem(IndexList_0202a9ac* list, int index);
+void* GetSubstructAt0x4_02029560(void* item);
+extern "C" AnimationRecord0219050c* func_ov015_0218f39c(ViewObject* self, void* name);
+float GetRatio0218f3c4(Obj0218f3c4* obj);
+float GetRatio0218f408(Obj0218f408* obj);
+extern "C" void func_ov015_0218f794(ViewObject* self);
 
 extern const char data_ov015_02194256[];
 extern const char data_ov015_02194261[];
@@ -139,8 +139,8 @@ extern "C" ARM void func_ov015_0219050c(Struct_ov015_0219050c_2* arg0)
 #endif
     if (arg0->unknown_194_ == 1)
     {
-        void* var5 = func_0202a9ac((Struct_02029634*)&arg0->unknown_2c4_, arg0->unknown_30_->unknown_38_);
-        if (var5 == NULL)
+        void* item = DebugMenu_GetItem((IndexList_0202a9ac*)&self->menuList_, self->current_->motion_);
+        if (item == NULL)
             return;
         Struct_ov015_0219050c* var6 = func_ov015_0218f39c(arg0->unknown_30_, func_02029560(var5));
         if (var6 == NULL)

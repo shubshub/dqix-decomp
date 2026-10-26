@@ -51,7 +51,7 @@ struct Struct_ov000_021716d0_4 {
 };
 
 int KeyTable_Get(struct Container020e0310* c, int key);
-void SwapGlobalEntry0203c108(struct Obj0203c108* obj, char* text);
+void CachedTextLabel_SetText(struct Obj0203c108* obj, char* text);
 int IsFlag0x18Bit0x200Set_ov000_02153a8c(GameObject* obj);
 int AdjustValueByFieldFlag_020dd290(void* obj, unsigned int value);
 extern "C" int func_ov000_02171210(void* a, void* b);
@@ -70,7 +70,7 @@ extern "C" ARM void func_ov000_021716d0(MenuEntry_021716d0* self) {
         state->depth++;
         state->stack[self->state.depth] = 0xe;
         state->field15 = 0;
-        SwapGlobalEntry0203c108((struct Obj0203c108*)self->message, (char*)KeyTable_Get(self->strings, 5));
+        CachedTextLabel_SetText((struct Obj0203c108*)self->message, (char*)KeyTable_Get(self->strings, 5));
         return;
     }
 
@@ -103,14 +103,14 @@ extern "C" ARM void func_ov000_021716d0(MenuEntry_021716d0* self) {
     if (var7 == NULL) return;
 
 #if defined(jpn)
-    func_0203c108((struct Struct_0203c108_3*)arg0->unknown_50_, (char*)*var7);
+    CachedTextLabel_SetText((struct Obj0203c108*)self->message, (char*)*entry);
 #else
-    char var8[0x80];
-    __clear(var8, 0x80);
-    char var9[0x80];
-    __clear(var9, 0x80);
-    func_020e4864(*var7, var8, 1, 0, 0, 0);
-    func_0206819c(var8, var9, 0);
-    func_0203c108((struct Struct_0203c108_3*)arg0->unknown_50_, var9);
+    char text[0x80];
+    __clear(text, 0x80);
+    char upper[0x80];
+    __clear(upper, 0x80);
+    func_020e4864(*entry, text, 1, 0, 0, 0);
+    CopyTextAndUppercaseIfFlagged0206819c(text, upper, 0);
+    CachedTextLabel_SetText((struct Obj0203c108*)self->message, upper);
 #endif
 }

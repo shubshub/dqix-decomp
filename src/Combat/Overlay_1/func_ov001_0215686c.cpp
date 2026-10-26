@@ -7,9 +7,6 @@
 #include "std_library_functions.h"
 #include "Combat/MapDisplay.h"
 
-#if defined(jpn)
-#define func_020c39c8 func_020c5494
-#endif
 
 struct Struct_ov001_0215686c {
     char unknown_0_[0xd2];
@@ -51,8 +48,8 @@ struct Struct_ov001_0215686c_4 {
     unsigned char* unknown_2c_;
 };
 
-extern "C" int func_020c39c8(volatile unsigned short* arg0);
-extern "C" void* func_0202ae18(void);
+extern "C" int GXx_GetMasterBrightness_(volatile unsigned short* p);
+extern "C" void* LinkSession_GetInstance(void);
 void* GlobalFlags_GetInstance(void);
 void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 void OrGlobalFlag0x40_020dc2bc();
@@ -73,10 +70,10 @@ extern "C" ARM void func_ov001_0215686c(void) {
         var3 = 0;
     }
 
-    GameResources* var4 = GetGameResources();
-    int var5 = GetBrightness((GameResources*)var4, true);
-    if (var3 == 0) {
-        var5 = func_020c39c8((volatile unsigned short*)0x0400006c);
+    GameResources* res = GetGameResources();
+    int axis = GetBrightness((GameResources*)res, true);
+    if (flag == 0) {
+        axis = GXx_GetMasterBrightness_((volatile unsigned short*)0x0400006c);
     }
 
     if (var5 != -0x10 && var5 != 0x10) {
@@ -86,9 +83,9 @@ extern "C" ARM void func_ov001_0215686c(void) {
         return;
     }
 
-    Struct_ov001_0215686c_2* var6 = ((struct Struct_ov001_0215686c_3*)((char*)var4 + 0x3000))->unknown_734_;
-    Struct_ov001_0215686c* var7 = var6->unknown_120_;
-    func_0202ae18();
+    Obj0215686c* o = ((struct Holder0215686c*)((char*)res + 0x3000))->o;
+    Q0215686c* q = o->q;
+    LinkSession_GetInstance();
 
     if (!(var6->unknown_50_ & 0x20)) {
         if (TestFlags00(var4, 0x1000) == 0) {

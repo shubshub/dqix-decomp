@@ -29,7 +29,7 @@ struct Struct_ov003_0215f698_2 {
     unsigned char unknown_31_[6];
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 int GetField0xc_0202bae4(void* obj);
 struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
 extern "C" int memcmp(void* a, void* b, int n);
@@ -49,9 +49,9 @@ struct Struct_ov003_0215f698 {
     unsigned char unknown_15_[6];
 };
 
-extern "C" ARM void func_ov003_0215f698(struct Struct_ov003_0215f698* arg0, short* arg1) {
-    void* var0 = func_0202ae18();
-    int var1 = func_0202bae4(var0);
+extern "C" ARM void func_ov003_0215f698(struct Record0215f89c* records, short* count) {
+    void* ctx = LinkSession_GetInstance();
+    int n = GetField0xc_0202bae4(ctx);
 
     struct Struct_ov003_0215f698* var2 = arg0;
     for (short var3 = 0; var3 < 10; var3++) {
@@ -86,9 +86,9 @@ extern "C" ARM void func_ov003_0215f698(struct Struct_ov003_0215f698* arg0, shor
     }
 }
 #else
-extern "C" ARM void func_ov003_0215f698(struct Struct_ov003_0215f698_2* arg0, short* arg1) {
-    void* var9 = func_0202ae18();
-    int var10 = func_0202bae4(var9);
+extern "C" ARM void func_ov003_0215f698(struct Record0215f698* records, short* count) {
+    void* ctx = LinkSession_GetInstance();
+    int n = GetField0xc_0202bae4(ctx);
 
     struct Struct_ov003_0215f698_2* var11 = arg0;
     for (short var12 = 0; var12 < 10; var12++) {

@@ -14,12 +14,12 @@ struct S_b20c {
     unsigned char field8;
 };
 
-void InitWeightedEntries02023064(struct Struct02020520* arr, unsigned int count, short* a, short* b, short* c, short* d);
-void ClearTwoWordsAndByte_0205b20c(struct S_b20c* obj);
-void SetField0_0205b220(void* obj, int value);
-void SetFieldsAt0x4And0x8_0205b228(void* obj, int value, unsigned char flag);
+void GlyphDestinationRect_InitArray(struct Struct02020520* arr, unsigned int count, short* a, short* b, short* c, short* d);
+void GlyphDestination_Clear(struct S_b20c* obj);
+void GlyphDestination_SetPixels(void* obj, int value);
+void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
 extern "C" int Font_GetTextWidth(char*, int);
-extern "C" int func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" int GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 
 #if defined(jpn)
 extern short data_020ee908[];
@@ -40,24 +40,24 @@ enum { kEntryCount = 4 };
 ARM void SetupWeightedEntriesAndSubmitPair020e0cfc(void* obj, int b, int c, int) {
     struct Struct02020520 arr[kEntryCount];
 #if defined(jpn)
-    InitWeightedEntries02023064(arr, kEntryCount, data_020ee908, data_020ee926, data_020ee90e, data_020ee932);
+    GlyphDestinationRect_InitArray(arr, kEntryCount, data_020ee908, data_020ee926, data_020ee90e, data_020ee932);
 #else
-    InitWeightedEntries02023064(arr, kEntryCount, data_020ee818, data_020ee800, data_020ee810, data_020ee808);
+    GlyphDestinationRect_InitArray(arr, kEntryCount, data_020ee818, data_020ee800, data_020ee810, data_020ee808);
 
     int len1 = Font_GetTextWidth((char*)obj + 0x2f4 + 0x400, 0);
     int len2 = Font_GetTextWidth((char*)obj + 0x324 + 0x400, 0);
 
 #endif
     struct S_b20c localObj;
-    ClearTwoWordsAndByte_0205b20c(&localObj);
-    SetField0_0205b220(&localObj, b + c);
-    SetFieldsAt0x4And0x8_0205b228(&localObj, (int)arr, kEntryCount);
+    GlyphDestination_Clear(&localObj);
+    GlyphDestination_SetPixels(&localObj, b + c);
+    GlyphDestination_SetRects(&localObj, (int)arr, kEntryCount);
 
 #if defined(jpn)
-    func_0205b234(&localObj, (short)45, (short)5, (int)((char*)obj + 0x288 + 0x400), (unsigned char)10, (unsigned char)15);
-    func_0205b234(&localObj, (short)45, (short)17, (int)((char*)obj + 0x298 + 0x400), (unsigned char)10, (unsigned char)15);
+    GlyphDestination_DrawText(&localObj, (short)45, (short)5, (int)((char*)obj + 0x288 + 0x400), (unsigned char)10, (unsigned char)15);
+    GlyphDestination_DrawText(&localObj, (short)45, (short)17, (int)((char*)obj + 0x298 + 0x400), (unsigned char)10, (unsigned char)15);
 #else
-    func_0205b234(&localObj, (short)(0x5f - len1), (short)0x14, (int)((char*)obj + 0x2f4 + 0x400), (unsigned char)0xf, (unsigned char)0);
-    func_0205b234(&localObj, (short)(0x5f - len2), (short)0x2c, (int)((char*)obj + 0x324 + 0x400), (unsigned char)0xf, (unsigned char)0);
+    GlyphDestination_DrawText(&localObj, (short)(0x5f - len1), (short)0x14, (int)((char*)obj + 0x2f4 + 0x400), (unsigned char)0xf, (unsigned char)0);
+    GlyphDestination_DrawText(&localObj, (short)(0x5f - len2), (short)0x2c, (int)((char*)obj + 0x324 + 0x400), (unsigned char)0xf, (unsigned char)0);
 #endif
 }

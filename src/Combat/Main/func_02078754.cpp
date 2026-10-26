@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+int LinkSession_IsActive(int* obj);
 
-struct Struct_0202c1a4;
-extern "C" signed char func_0202c1a4(struct Struct_0202c1a4* arg0);
+struct SearchStruct0202c1a4;
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 struct Struct_ov009_0218aa28 {
     int unknown_0_;
@@ -45,10 +45,10 @@ struct Struct_02078754 {
 };
 
 // USA: func_02078754
-extern "C" ARM int func_02078754(struct Struct_02078754* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetMaybeWanderingMonsterByIndex(arg0->unknown_166_);
-    if (var1 == 0) {
+extern "C" ARM int func_02078754(struct Entity02078754* self) {
+    GameState* battleStruct = GameState::GetInstance();
+    GameObject* combatant = battleStruct->GetWanderingMonsterByIndex(self->f166);
+    if (combatant == 0) {
         return 0;
     }
 
@@ -65,15 +65,15 @@ extern "C" ARM int func_02078754(struct Struct_02078754* arg0) {
     ((Object3D*)((struct S02037418*)self))->SetInheritedAlpha(0x1f);
     self->f17a = 0;
 
-    void* var5 = func_0202ae18();
-    if (func_0202b7d8((int*)var5) && func_0202c1a4((struct Struct_0202c1a4*)var5) == 0) {
-        int var6 = ((Object3D*)((struct Struct_02039df4*)arg0))->GetField06();
-        int var7 = arg0->unknown_2_;
-        struct Struct_ov009_0218aa28* var8 = &arg0->unknown_44_;
-        struct Struct_ov009_0218aa28* var9 = &arg0->unknown_50_;
-        int var10 = (arg0->unknown_4_ - 0x70) % 0xc;
-        if (var10 >= 0 && var10 < 0xc) {
-            func_ov017_021c9400(var6, var10, var7, *var8, *var9, -1);
+    void* g = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)g) && LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)g) == 0) {
+        int c1 = ((Object3D*)((struct U16Field0x6_020375f8*)self))->GetField06();
+        int f2val = self->f2;
+        struct Vec3* p44 = &self->f44;
+        struct Vec3* p50 = &self->f50;
+        int rem = (self->f4 - 0x70) % 0xc;
+        if (rem >= 0 && rem < 0xc) {
+            func_ov017_021c9400(c1, rem, f2val, *p44, *p50, -1);
         }
     }
     return 1;

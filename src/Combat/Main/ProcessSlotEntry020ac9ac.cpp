@@ -9,9 +9,9 @@ enum { slotFieldOffset = 0x36fc };
 
 extern "C" void* Zone3D_GetInstance(GameState* battleStruct);
 struct PointerField330_ffd0;
-void* GetPointerAt0x330_0200ffd0(struct PointerField330_ffd0* obj);
+void* GameState_GetStarflight(struct PointerField330_ffd0* obj);
 struct HeadNode02046b24;
-int GetHeadNodeIdOrMinusOne(struct HeadNode02046b24** obj);
+int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
 struct S02046b1c;
 int GetField0x0List02046b1c(struct S02046b1c* p);
 struct GameResources;
@@ -28,8 +28,8 @@ extern "C" ARM void func_020ac9ac(struct Struct020ac9ac* a0) {
     int headId;
     void* field = a0->fieldslotFieldOffset;
     Zone3D_GetInstance(battle);
-    p = GetPointerAt0x330_0200ffd0((struct PointerField330_ffd0*)battle);
-    headId = GetHeadNodeIdOrMinusOne((struct HeadNode02046b24**)field);
+    p = GameState_GetStarflight((struct PointerField330_ffd0*)battle);
+    headId = FieldTaskQueue_GetCurrentKind((struct HeadNode02046b24**)field);
     int f0 = GetField0x0List02046b1c((struct S02046b1c*)field);
     if (p == NULL) return;
     if (headId == 0xa) {

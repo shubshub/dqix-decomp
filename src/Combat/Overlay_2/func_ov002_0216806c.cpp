@@ -18,11 +18,11 @@ extern "C" void func_ov002_02160068(char *self);
 extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 extern "C" void func_ov017_0218f5a4(void *obj, int id, int b, int c, int d);
 extern "C" void func_ov002_02161a8c();
-extern "C" void func_020dc7e8(int arg0, int arg1);
-extern "C" int *func_0202ae18();
-extern "C" int func_0202b7d8(int *arg0);
-extern "C" void func_ov017_021d0dbc();
-extern "C" void func_ov002_02156e90(char *arg0);
+extern "C" void func_020dc7e8(int a, int b);
+extern "C" int *LinkSession_GetInstance();
+int LinkSession_IsActive(int *p);
+void ForEachEntry_021d0dbc();
+extern "C" void func_ov002_02156e90(char *self);
 struct Struct_0205d81c;
 void Window_SetPanePalette(Struct_0205d81c*, int, int);
 
@@ -64,9 +64,9 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
             func_020dc7e8(8, -1);
             func_020dc7e8(6, -1);
             func_020dc7e8(7, -1);
-            int *var8 = func_0202ae18();
-            if (var8 != 0 && func_0202b7d8(var8)) {
-                func_ov017_021d0dbc();
+            int *p = LinkSession_GetInstance();
+            if (p != 0 && LinkSession_IsActive(p)) {
+                ForEachEntry_021d0dbc();
             }
             func_ov002_02156e90(self);
             func_ov002_02156e90(self);
@@ -117,9 +117,9 @@ extern "C" ARM void func_ov002_0216806c(char *self) {
             func_020dc7e8(8, -1);
             func_020dc7e8(6, -1);
             func_020dc7e8(7, -1);
-            int *var17 = func_0202ae18();
-            if (var17 != 0 && func_0202b7d8(var17)) {
-                func_ov017_021d0dbc();
+            int *p = LinkSession_GetInstance();
+            if (p != 0 && LinkSession_IsActive(p)) {
+                ForEachEntry_021d0dbc();
             }
             func_ov002_02156e90(self);
             func_ov002_02156e90(self);

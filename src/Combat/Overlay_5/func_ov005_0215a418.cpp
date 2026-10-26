@@ -7,9 +7,6 @@
 #include <Graphics/Vector.h>
 #include "Resource/GameResources.h"
 
-#if defined(jpn)
-#define func_020c51a4 func_020c6c70
-#endif
 
 #if defined(jpn)
 #define LOW_REGION(j, u) (j)
@@ -17,12 +14,12 @@
 #define LOW_REGION(j, u) (u)
 #endif
 
-extern "C" void func_020c51a4(int arg0);
+extern "C" void G3_MultMtx43(int cmd);
 
-extern "C" char* func_ov017_021a193c(int*);
-struct Struct_02052e14;
-extern "C" short* func_02052e14(Struct_02052e14*);
-extern "C" void func_02047554(void* arg0, int arg1, int arg2);
+char* GetField1c_021a193c(int*);
+struct Field150Holder02052e14;
+short* GetField150Ptr0x488(Field150Holder02052e14*);
+extern "C" void SprSprite_DrawGroup(void* obj, int val, int param1);
 
 extern const unsigned char data_ov005_0215cc1c[];
 
@@ -66,15 +63,15 @@ extern "C" ARM void func_ov005_0215a418(Scene0215a418* self) {
         Struct_ov005_0215a418_2* var9 = ((Struct_ov005_0215a418_3*)((char*)arg0 + LOW_REGION(0x9e8, 0xa70)))->unknown_1000_;
         G3_MTX_TRANS = var7;
         G3_MTX_TRANS = -0x200000;
-        func_02047554((Struct_ov005_0215a418_2*)((char*)var9 + var8), 0, 1);
+        SprSprite_DrawGroup((Entry0215a418*)((char*)ents + off), 0, 1);
         G3_MTX_POP = 1;
         G3_MTX_PUSH = 0;
         G3_MTX_TRANS = 0x100000;
         G3_MTX_TRANS = var7;
         G3_MTX_TRANS = -0x200000;
-        Matrix4x3 var10 = RotationMatrixY(0x3244);
-        func_020c51a4((int)&var10);
-        func_02047554((Struct_ov005_0215a418_2*)((char*)var9 + var8), 0, 1);
+        Matrix4x3 mtxCopy = RotationMatrixY(0x3244);
+        G3_MultMtx43((int)&mtxCopy);
+        SprSprite_DrawGroup((Entry0215a418*)((char*)ents + off), 0, 1);
         G3_MTX_POP = 1;
         G3_MTX_PUSH = 0;
         G3_MTX_TRANS = 0x70000;
@@ -83,7 +80,7 @@ extern "C" ARM void func_ov005_0215a418(Scene0215a418* self) {
         G3_MTX_SCALE = 0x14000;
         G3_MTX_SCALE = 0x1000;
         G3_MTX_SCALE = 0x1000;
-        func_02047554(&arg0->unknown_1a70_[var6 + 5], 0, 1);
+        SprSprite_DrawGroup(&self->entries[k + 5], 0, 1);
         G3_MTX_POP = 1;
         Struct_ov005_0215a418_2* var11 = &arg0->unknown_1a70_[var6 + 7 + var4];
         if (var3[data_ov005_0215cc1c[var4]] > 0) {
@@ -93,7 +90,7 @@ extern "C" ARM void func_ov005_0215a418(Scene0215a418* self) {
         G3_MTX_TRANS = 0x85000;
         G3_MTX_TRANS = var7;
         G3_MTX_TRANS = -0x1ff000;
-        func_02047554(var11, 0, 1);
+        SprSprite_DrawGroup(e, 0, 1);
         G3_MTX_POP = 1;
     }
 }

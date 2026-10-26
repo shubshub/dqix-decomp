@@ -7,20 +7,20 @@ struct Struct_02011930;
 
 struct GameResources;
 int IsBrightnessTransitionActive(GameResources*);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" int func_ov023_021f6f10(void* arg0);
-extern "C" void func_ov011_021848a0(void* arg0, int arg1);
-extern "C" void func_ov004_02165a1c(void* arg0);
-extern "C" void* func_0202ae18(void);
+extern "C" void* func_ov011_021849c8(void* obj);
+extern "C" void* func_ov023_021f6880(void* list, int id);
+extern "C" int func_ov023_021f6f10(void* obj);
+extern "C" void func_ov011_021848a0(void* obj, int val);
+extern "C" void func_ov004_02165a1c(void* obj);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-extern "C" int func_0202c540(void* p);
+extern "C" int LinkSession_IsGuest(void* p);
 unsigned char GetAndConsumeNameEntries02011930(void* obj, struct Info02011930* info, void* name1, void* name2);
 int GetScaledStat_021634dc_021634dc(void* a);
 unsigned char CopyToRegion0x6482IfDst_020119f8(char* obj, void* dst);
 unsigned int GetShort28_021f9bb0(struct Obj021f9bb0* obj);
 unsigned int GetFieldShort36_021f9ba0(void* obj);
-int IsGlobalU16InRange_020117f0(GameState* state);
+int GameState_IsInGrotto(GameState* state);
 
 extern char* data_ov004_02171010;
 
@@ -70,11 +70,11 @@ extern "C" ARM int func_ov004_02165630(void* arg0) {
             func_ov004_02165a1c(arg0);
         }
     } else {
-        void* search = func_0202ae18();
+        void* search = LinkSession_GetInstance();
         Zone3D_GetInstance();
-        if (func_0202c540(search)) {
+        if (LinkSession_IsGuest(search)) {
             func_ov011_021848a0(a, 0x6e);
-        } else if (IsGlobalU16InRange_020117f0(state)) {
+        } else if (GameState_IsInGrotto(state)) {
             func_ov011_021848a0(a, 0x76);
         } else {
             short var6 = var2->unknown_5c_;

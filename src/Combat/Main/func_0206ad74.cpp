@@ -88,7 +88,7 @@ extern "C" ARM void func_0206c794(void* arg0) {
 
 struct Entry0204254c { int value; signed char width; signed char advance : 6; signed char field5 : 2; unsigned char field6[2]; };
 Entry0204254c* Font_FindCharacter(int, int);
-int GetWordFromTable02042648(int);
+int Font_GetFallbackWidth(int);
 struct CombatSlots0206b198;
 void DecrementSlotRef0206b198(CombatSlots0206b198*, unsigned short);
 extern char data_020f08dc[];
@@ -123,27 +123,27 @@ struct Struct_0206ad74 {
 };
 
 // USA: func_0206ad74
-extern "C" ARM void func_0206ad74(Struct_0206ad74* arg0) {
-    int var0;
-    int var1 = 0;
-    arg0->unknown_84_ = 0;
-    arg0->unknown_88_ = 0;
-    arg0->unknown_1944_ = 0;
-    arg0->unknown_1942_ = 0;
-    arg0->unknown_1946_ = 0;
-    unsigned char var2 = arg0->unknown_19c2_;
-    int var3 = 1;
-    int var4 = 0;
-    char var5[64];
-    __clear(var5, sizeof(var5));
-    unsigned char var6;
-    char* var7;
-    char* var8 = arg0->unknown_50_;
-    char* var9 = strstr(var8, data_020f08dc);
-    char* var10 = strstr(var8, data_020f0979);
-    char* var11 = strstr(var8, data_020f097c);
-    var6 = func_02042648(arg0->unknown_19dc_);
-    if (var9) {
+extern "C" ARM void func_0206ad74(Caption0206ad74* self) {
+    int defaultWidth;
+    int length = 0;
+    self->specialStart = 0;
+    self->specialEnd = 0;
+    self->width = 0;
+    self->count = 0;
+    self->specialLength = 0;
+    unsigned char previousStatus = self->status;
+    int changed = 1;
+    int prefixCount = 0;
+    char caption[64];
+    __clear(caption, sizeof(caption));
+    unsigned char fontWidth;
+    char* cursor;
+    char* text = self->text;
+    char* start = strstr(text, data_020f08dc);
+    char* middle = strstr(text, data_020f0979);
+    char* alternate = strstr(text, data_020f097c);
+    fontWidth = Font_GetFallbackWidth(self->font);
+    if (start) {
         for (;;) {
             if (var8 == var9) break;
             unsigned short var12;

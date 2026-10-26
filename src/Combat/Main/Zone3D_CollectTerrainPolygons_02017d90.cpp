@@ -9,6 +9,9 @@ extern "C" long long fix32_SinFx64c(int);
 extern "C" float _ll_sto_f(long long);
 extern "C" int TerrainMesh_CollectPolygons(void*, ZoneTerrainGrid*, Bounds3D);
 
+// A grotto floor's terrain elements: its 16 x 16 tiles (grottoTileMapData_420_), then the up stairs
+enum { kGrottoTileCount = 16 * 16 };
+
 // Main, originally func_02017d90 (USA 0x02017d90, EUR 0x02017da0, JPN 0x02017b30)
 extern "C" ARM int Zone3D_CollectTerrainPolygons(Zone3D* self, int index, ZoneTerrainGrid* grid, Bounds3D probe, Object3D* object) {
     if (self->isInMainGrottoFloor_23b8_) {
@@ -16,7 +19,7 @@ extern "C" ARM int Zone3D_CollectTerrainPolygons(Zone3D* self, int index, ZoneTe
         FloorMap* floor = &self->grotto_.floorMap_;
         BmdjSceneElement* node;
         int x, z, angle;
-        if (index < 256) {
+        if (index < kGrottoTileCount) {
             GrottoTileMapRecord* entry = &self->grottoTileMapData_420_[index];
             if (entry->node) node = entry->node->elements->linkedElement2c;
             else return 0;
@@ -45,9 +48,9 @@ extern "C" ARM int Zone3D_CollectTerrainPolygons(Zone3D* self, int index, ZoneTe
         Vector3i origin;
         Matrix3x3 rotation;
         localProbe.maximum = object->position_;
-        StoreThreeWordsAt0x0020130a8(&origin, x, 0, z);
+        Vector3i_Set(&origin, x, 0, z);
         Vector3fix_Subtract(&localProbe.maximum, &origin, &localProbe.maximum);
-        int rotationAngle = -(angle - 25735);
+        int rotationAngle = -(angle - (FIX_2PI - 1));
         int cosine = (int)(4096.0f * (_ll_sto_f(fix32_CosFx64c(rotationAngle)) / 4294967296.0f));
         int sine = (int)(4096.0f * (_ll_sto_f(fix32_SinFx64c(rotationAngle)) / 4294967296.0f));
         Mat3x3_WriteRotationY(&rotation, sine, cosine);

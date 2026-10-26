@@ -3,10 +3,10 @@
 #include "GameState/GameState.h"
 #include "Filesystem/BackgroundLoader.h"
 
-struct Struct_02000c9c_11;
-extern "C" void func_0201155c(struct Struct_02000c9c_11* arg0);
-extern "C" int func_02075ca0();
-extern "C" void func_02075cb8();
+struct StateBits5ccc_1155c;
+void GameState_ClearErrorScreenRequest(struct StateBits5ccc_1155c* state);
+int IsFunc020d0840NonZero_02075ca0();
+void NotifyU16AndSetFlag02075cb8();
 
 extern "C" int func_02075910(int arg0, void* arg1, unsigned int arg2, int arg3);
 extern "C" int func_02075acc(int arg0, void* arg1, unsigned int arg2, int arg3);
@@ -58,9 +58,9 @@ extern "C" ARM int func_020ab7a8(void* arg0, int arg1) {
     char var2;
     struct Struct_020a94f8_2 var3;
 
-    if (var0->unknown_1_ == 0) {
-        func_0201155c((struct Struct_02000c9c_11*)GameState::GetInstance());
-        if (func_02075910(0, &var1, 1, 0) == 0) {
+    if (task->state == 0) {
+        GameState_ClearErrorScreenRequest((struct StateBits5ccc_1155c*)GameState::GetInstance());
+        if (func_02075910(0, &local0, 1, 0) == 0) {
             return 1;
         }
         BackgroundLoader::FreeAllocationsGlobal();

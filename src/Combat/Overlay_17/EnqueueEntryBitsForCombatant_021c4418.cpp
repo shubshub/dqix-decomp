@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0202ae24(void);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-struct Struct_02052e2c;
-extern "C" short* func_02052e2c(struct Struct_02052e2c* arg0);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
+struct Field150Holder02052e2c;
+short* GetField150Ptr0x488_02052e2c(struct Field150Holder02052e2c* obj);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c4418 {
     char unknown_0_[0x14];
@@ -34,14 +34,14 @@ struct Struct_ov017_021c4418_2 {
     signed char unknown_10_;
 };
 
-// USA: func_ov017_021c4418
-extern "C" ARM void func_ov017_021c4418(int arg0, signed char arg1) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae24();
-    GameObject* var2 = func_0200ff1c(var0, arg0);
-    if (!var2) return;
-    struct Struct_ov017_021c4418* var3 = (struct Struct_ov017_021c4418*)func_02052e2c((struct Struct_02052e2c*)var2);
-    if (!var3) return;
+// USA: func_ov017_021c4418  (semantic: EnqueueEntryBitsForCombatant_021c4418)
+extern "C" ARM void func_ov017_021c4418(int combatantId, signed char flag10) {
+    GameState* battleStruct = GameState::GetInstance();
+    void* p = LinkMessageQueue_GetInstance();
+    GameObject* c = GetCombatantWithFlag0x100_0200ff1c(battleStruct, combatantId);
+    if (!c) return;
+    struct Entry150_021c4418* entry = (struct Entry150_021c4418*)GetField150Ptr0x488_02052e2c((struct Field150Holder02052e2c*)c);
+    if (!entry) return;
 
     struct Struct_ov017_021c4418_2 var4;
     var4.unknown_0_ = 1;

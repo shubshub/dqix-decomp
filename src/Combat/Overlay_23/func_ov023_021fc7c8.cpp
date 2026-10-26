@@ -34,7 +34,7 @@ struct Struct_ov009_02188454;
 void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
 extern "C" void CharacterModel_Update(CharacterModel* model);
 extern "C" Vector3i CharacterModel_GetRotation(CharacterModel* model);
-char* GetFieldIfFlag4_020100f8(char* gameState);
+char* GameState_GetFollowCamera(char* gameState);
 void SetFlagsAt0x244_020a28a0(unsigned char* camera, unsigned char flags);
 void ClearFlagBits_020a28b0(unsigned char* camera, int flags);
 void Camera_EasePositionTo(struct Camera*, int, int);
@@ -78,7 +78,7 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
     {
         const Vector3i position = data_ov023_021fda08;
         const Vector3i target = data_ov023_021fd9fc;
-        char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
+        char* camera = GameState_GetFollowCamera((char*)gameState);
         SetFlagsAt0x244_020a28a0((unsigned char*)camera, 2);
         Camera_EasePositionTo((struct Camera*)camera, (int)&position, 0xa000);
         Camera_EaseTargetTo((struct Camera*)camera, (int)&target, 0xa000);
@@ -87,7 +87,7 @@ extern "C" ARM void func_ov023_021fc7c8(Struct_ov023_021fc7c8_2* arg0, void* arg
     {
         const Vector3i position = data_ov023_021fd9f0;
         const Vector3i target = data_ov023_021fd9e4;
-        char* camera = GetFieldIfFlag4_020100f8((char*)gameState);
+        char* camera = GameState_GetFollowCamera((char*)gameState);
         ClearFlagBits_020a28b0((unsigned char*)camera, 2);
         Camera_EasePositionTo((struct Camera*)camera, (int)&position, 0xa000);
         Camera_EaseTargetTo((struct Camera*)camera, (int)&target, 0xa000);

@@ -6,10 +6,10 @@
 #include "Memory/SafeAllocator.h"
 #include "Filesystem/BackgroundLoader.h"
 #include "Input/Input.h"
+#include "NitroSDK/Interrupts.h"
+#include "NitroSDK/VRAM.h"
+#include "NitroSDK/OSLanguage.h"
 
-#if defined(jpn)
-#define func_020daf90 func_020dc998
-#endif
 
 struct Struct_02000c9c_8;
 struct Struct_02000c9c_9;
@@ -23,25 +23,25 @@ struct Struct_02000c9c_17;
 struct Struct_02000c9c_18;
 
 void* GameState_GetParty(GameState* gs);
-void SaveAndClearDisplayMode_020c3898();
-extern "C" void func_02012c34();
-extern "C" void func_020a0c0c();
-extern "C" void func_020a1838();
-extern "C" void func_020a1940(unsigned int* arg0);
-extern "C" int func_020a1bb4(unsigned int* arg0);
-extern "C" unsigned int func_ov029_021d8e1c(void* arg0, void* arg1, int arg2);
-extern "C" unsigned int func_ov029_021d8f0c(void* arg0, void* arg1, int arg2);
-extern "C" unsigned int func_ov029_021d8ffc(void* arg0, void* arg1, int arg2);
+void GX_DispOff();
+extern "C" void Main_InitializeSystems();
+extern "C" void ROMFilesystem_InitFileTables();
+void Overlay_InitSystem();
+extern "C" void Overlay_Load(unsigned int* id);
+extern "C" int Overlay_Unload(unsigned int* id);
+extern "C" unsigned int func_ov029_021d8e1c(void* start, void* end, int seed);
+extern "C" unsigned int func_ov029_021d8f0c(void* start, void* end, int seed);
+extern "C" unsigned int func_ov029_021d8ffc(void* start, void* end, int seed);
 void PopulateOv33BackgroundLoader(void* buffer, unsigned int size, int count);
-extern "C" void func_020dc034();
-extern "C" Struct_02000c9c_18* func_020daf90();
+void VRAMStagingManager_Init();
+extern "C" Manager020db0f0* ObjLoading_GetInstance();
 extern "C" void func_020dafd4();
 void LoadObjLoadingGraphicsResources(Manager020db0f0* mgr);
 void InitSubstructAndRegisterHandler0x14_020db228(void* mgr);
-void ResetActor0209c174(Actor0209c174* actor);
-void Dispatch0203a974With0x57000_0209c290(void* actor);
-void InitDisplayState0205e88c(Obj_0205e88c* obj);
-void SetupContextForMode0205ea20(void* obj, int mode);
+void BgmPlayer_Init(Actor0209c174* actor);
+void BgmPlayer_LoadArchive(void* actor);
+void SePlayer_Init(Obj_0205e88c* obj);
+void SePlayer_LoadArchive(void* obj, int mode);
 extern "C" void func_020421c4(SafeAllocator* alloc);
 void InitHalfwords02071688();
 char* CharacterColors_GetInstance();
@@ -49,33 +49,29 @@ void SetByte0x4_0200fb94(char* gs, unsigned char value);
 char GetByte0x4_0200fb9c(char* gs);
 void SetWord0x7f6c_02012010(void* gs, int value);
 int GetWord0x7f6c_0201201c(void* gs);
-void CheckAndApplyDebugCode020ac910();
-int GetFlag0x5cccBit0_02011570(StateBits5ccc_11570* gs);
-void ClearFlag0x5cccBit0_0201155c(StateBits5ccc_1155c* gs);
-void* AllocateFromAllocatorUnion_02012db0(AllocatorUnion* alloc, unsigned int size);
-void FreeIfFlag_02012dbc(AllocatorUnion* alloc, void* data, int size);
-void InitBigManagerStruct0208660c(char* p);
-void PrepareAndRunBufferedScript02099cb8(char* table);
+void SaveData_CheckOrFormat();
+int GameState_IsErrorScreenRequested(StateBits5ccc_11570* gs);
+void GameState_ClearErrorScreenRequest(StateBits5ccc_1155c* gs);
+void* AllocatorUnion_AllocateExact(AllocatorUnion* alloc, unsigned int size);
+void AllocatorUnion_FreeUnlessZero(AllocatorUnion* alloc, void* data, int size);
+void Party_Init(char* p);
+void CharacterColors_Load(char* table);
 int GetByteField0x63d6_020115a8(FieldBlock63d6_115a8* gs);
-void SetByteField0x63d6_020115b4(FieldBlock63d6_115b4* gs, unsigned char value);
-void ClearByte0x63d6_020115c0(FieldBlock63d6_115c0* gs);
-void GuardedOverlayDispatch020d6cb4();
-void ResetObjectState0205e8d4(void* obj);
-void FreeAndReinit0203a950(void* obj);
+void GameState_SetMovieId(FieldBlock63d6_115b4* gs, unsigned char value);
+void GameState_ClearMovieId(FieldBlock63d6_115c0* gs);
+void FieldScene_Run();
+void SePlayer_Reset(void* obj);
+void SoundPlayer_Reset(void* obj);
 void InitializeActiveAlarmList();
 void SetDataFromIndex_02211c50(int index);
 int GameState_GetLanguage(Struct0200fb08* gs);
 void ForwardToDataHandler_0222708c(int kind, int value);
-int EnableIMEReturnPrev_020d6c9c();
-extern "C" void func_020c983c();
-extern "C" void func_020c98f0(int arg0);
-void SetInterruptHandler(unsigned int mask, const void* handler);
-void EnableSpecificInterrupts(unsigned int mask);
-void EnableIRQInterrupts();
-extern "C" void func_020c3864(int arg0);
-extern "C" void MapVRAMBanksToMainBG(int banks);
-extern "C" void func_020c391c(int arg0, int arg1, int arg2);
-extern "C" void func_020c9820();
+int OS_EnableIrq();
+extern "C" void OS_InitReset();
+void OS_ResetSystem(int mode);
+void SetVBlankIrqEnable(int enable);
+void GX_SetGraphicsMode(int mode, int a, int b);
+void OS_WaitVBlankIntr();
 
 extern "C" void func_ov019_0218b5a0(void* arg0);
 extern "C" void func_ov019_0218b5a8(void* arg0);
@@ -94,13 +90,13 @@ extern "C" void func_ov015_02193294(void* arg0);
 extern "C" void func_ov015_021934f8(void* arg0);
 extern "C" void func_ov015_021933bc(void* arg0);
 
-extern "C" int func_020d6bac(void (*arg0)());
-extern "C" void func_020d6c0c();
-extern "C" int func_020d6bc8(void (*arg0)());
-extern "C" void func_020d6c34();
-extern "C" int func_020d6be4(void (*arg0)());
-extern "C" void func_020d6c68();
-extern "C" void func_02012bd8();
+int InvokeCallbackReturnStatus020d6bac(void (*callback)());
+void NotifyOverlay0211e33c_020d6c0c();
+int InvokeCallbackReturnStatus020d6bc8(void (*callback)());
+void GuardedNotifyOverlay0211e33c020d6c34();
+int InvokeCallbackReturnStatus020d6be4(void (*callback)());
+void GuardedNotifyOverlay0211e33c020d6c68();
+void Main_HandleVBlank();
 
 extern AllocatorUnion g_mainAllocator;
 extern char g_fileLoadBuffer[];
@@ -130,64 +126,65 @@ extern "C" void func_020d8614();
 
 #define REG_IME (*(volatile unsigned short*)0x04000208)
 #define REG_POWCNT1 (*(volatile unsigned short*)0x04000304)
+#define RESET_PARAMETER (*(int*)0x027ffc20)
 
 #define RUNTITLE() \
     do { \
-        func_020a1940(&OVERLAY_19_ID); \
-        void* scene = AllocateFromAllocatorUnion_02012db0(&g_mainAllocator, TITLE_SCENE_SIZE); \
+        Overlay_Load(&OVERLAY_19_ID); \
+        void* scene = AllocatorUnion_AllocateExact(&g_mainAllocator, TITLE_SCENE_SIZE); \
         func_ov019_0218b5a0(scene); \
         EmptyStub02012de4(&g_mainAllocator); \
         func_ov019_0218b5a8(scene); \
         func_ov019_0218b5a4(scene); \
-        FreeIfFlag_02012dbc(&g_mainAllocator, scene, TITLE_SCENE_SIZE); \
-        func_020a1bb4(&OVERLAY_19_ID); \
+        AllocatorUnion_FreeUnlessZero(&g_mainAllocator, scene, TITLE_SCENE_SIZE); \
+        Overlay_Unload(&OVERLAY_19_ID); \
     } while (0)
 
 #define RUNOV20() \
     do { \
-        func_020a1940(&OVERLAY_20_ID); \
-        void* scene = AllocateFromAllocatorUnion_02012db0(&g_mainAllocator, WORLD_SCENE_SIZE); \
+        Overlay_Load(&OVERLAY_20_ID); \
+        void* scene = AllocatorUnion_AllocateExact(&g_mainAllocator, WORLD_SCENE_SIZE); \
         func_ov020_0218b5a0(scene); \
         EmptyStub02012de4(&g_mainAllocator); \
         func_ov020_0218b710(scene); \
         func_ov020_0218b700(scene); \
-        FreeIfFlag_02012dbc(&g_mainAllocator, scene, WORLD_SCENE_SIZE); \
-        func_020a1bb4(&OVERLAY_20_ID); \
+        AllocatorUnion_FreeUnlessZero(&g_mainAllocator, scene, WORLD_SCENE_SIZE); \
+        Overlay_Unload(&OVERLAY_20_ID); \
     } while (0)
 
 #define RUNOV16(again16) \
     do { \
-        void* scene = AllocateFromAllocatorUnion_02012db0(&g_mainAllocator, 0x98); \
+        void* scene = AllocatorUnion_AllocateExact(&g_mainAllocator, 0x98); \
         func_ov016_0218b5a0(scene); \
         EmptyStub02012de4(&g_mainAllocator); \
         func_ov016_0218b5c4(scene); \
         again16 = *(int*)((char*)scene + 0x94); \
         func_ov016_0218b5c0(scene); \
-        FreeIfFlag_02012dbc(&g_mainAllocator, scene, 0x98); \
+        AllocatorUnion_FreeUnlessZero(&g_mainAllocator, scene, 0x98); \
     } while (0)
 
 #define RUNOV21() \
     do { \
-        func_020a1940(&OVERLAY_21_ID); \
-        void* scene = AllocateFromAllocatorUnion_02012db0(&g_mainAllocator, 0xbc); \
+        Overlay_Load(&OVERLAY_21_ID); \
+        void* scene = AllocatorUnion_AllocateExact(&g_mainAllocator, 0xbc); \
         func_ov021_0218b5a0(scene); \
         EmptyStub02012de4(&g_mainAllocator); \
         func_ov021_0218b5fc(scene); \
         ResetAllocatorAndClearField40_0218b5c4((Obj0218b5c4*)scene); \
-        FreeIfFlag_02012dbc(&g_mainAllocator, scene, 0xbc); \
-        func_020a1bb4(&OVERLAY_21_ID); \
+        AllocatorUnion_FreeUnlessZero(&g_mainAllocator, scene, 0xbc); \
+        Overlay_Unload(&OVERLAY_21_ID); \
     } while (0)
 
 #define RUNOV15() \
     do { \
-        func_020a1940(&OVERLAY_15_ID); \
-        void* scene = AllocateFromAllocatorUnion_02012db0(&g_mainAllocator, 0x358); \
+        Overlay_Load(&OVERLAY_15_ID); \
+        void* scene = AllocatorUnion_AllocateExact(&g_mainAllocator, 0x358); \
         func_ov015_02193294(scene); \
         EmptyStub02012de4(&g_mainAllocator); \
         func_ov015_021934f8(scene); \
         func_ov015_021933bc(scene); \
-        FreeIfFlag_02012dbc(&g_mainAllocator, scene, 0x358); \
-        func_020a1bb4(&OVERLAY_15_ID); \
+        AllocatorUnion_FreeUnlessZero(&g_mainAllocator, scene, 0x358); \
+        Overlay_Unload(&OVERLAY_15_ID); \
     } while (0)
 
 #if !defined(jpn)
@@ -213,21 +210,21 @@ inline void inline_02000c9c_4(GameState* arg0) {
 
 #define RUNOV17() \
     do { \
-        func_020a1940(&OVERLAY_17_ID); \
-        func_020d6cb4(); \
-        func_020a1bb4(&OVERLAY_17_ID); \
+        Overlay_Load(&OVERLAY_17_ID); \
+        FieldScene_Run(); \
+        Overlay_Unload(&OVERLAY_17_ID); \
     } while (0)
 
 // USA: func_02000c9c
 extern "C" ARM void main() {
     GameState* gs = GameState::GetInstance();
-    char* bigManager = (char*)GameState_GetParty(gs);
-    SaveAndClearDisplayMode_020c3898();
+    char* party = (char*)GameState_GetParty(gs);
+    GX_DispOff();
     DISPCNTSUB &= ~0x10000;
-    func_02012c34();
-    func_020a0c0c();
-    func_020a1838();
-    func_020a1940(&OVERLAY_29_ID);
+    Main_InitializeSystems();
+    ROMFilesystem_InitFileTables();
+    Overlay_InitSystem();
+    Overlay_Load(&OVERLAY_29_ID);
 #if defined(jpn)
     if (!data_ov029_021d9b60_fake((void*)func_020d8614) &&
         !data_ov029_021d9d20_fake((void*)func_020d863c) &&
@@ -236,42 +233,42 @@ extern "C" ARM void main() {
 #else
     if (!inline_02000c9c() && !inline_02000c9c_2() && !inline_02000c9c_3() && BackgroundLoader::GetInstance() == 0) {
 #endif
-        func_020a1940(&OVERLAY_33_ID);
+        Overlay_Load(&OVERLAY_33_ID);
         PopulateOv33BackgroundLoader(g_fileLoadBuffer, 0x30000, 0x14);
     }
-    func_020a1bb4(&OVERLAY_29_ID);
-    func_020a1940(&OVERLAY_32_ID);
-    func_020dc034();
-    Struct_02000c9c_18* var2 = func_020daf90();
+    Overlay_Unload(&OVERLAY_29_ID);
+    Overlay_Load(&OVERLAY_32_ID);
+    VRAMStagingManager_Init();
+    Manager020db0f0* objLoading = ObjLoading_GetInstance();
     func_020dafd4();
-    LoadObjLoadingGraphicsResources(ctx);
-    InitSubstructAndRegisterHandler0x14_020db228(ctx);
-    ResetActor0209c174((Actor0209c174*)g_bgmPlayer);
-    Dispatch0203a974With0x57000_0209c290(g_bgmPlayer);
-    InitDisplayState0205e88c((Obj_0205e88c*)g_sePlayer);
-    SetupContextForMode0205ea20(g_sePlayer, 100);
+    LoadObjLoadingGraphicsResources(objLoading);
+    InitSubstructAndRegisterHandler0x14_020db228(objLoading);
+    BgmPlayer_Init((Actor0209c174*)g_bgmPlayer);
+    BgmPlayer_LoadArchive(g_bgmPlayer);
+    SePlayer_Init((Obj_0205e88c*)g_sePlayer);
+    SePlayer_LoadArchive(g_sePlayer, 100);
     SafeAllocator allocator;
     allocator.ResetAllocatorPointer();
     allocator.CreateTypeA(data_02114ec4, STARTUP_ALLOCATOR_SIZE);
     allocator.Reset();
     func_020421c4(&allocator);
     InitHalfwords02071688();
-    char* table = CharacterColors_GetInstance();
-    if (*(int*)0x027ffc20 != 0) {
-        func_0200fb94((char*)var0, 6);
-        func_02012010(var0, 0);
+    char* characterColors = CharacterColors_GetInstance();
+    if (RESET_PARAMETER != 0) {
+        SetByte0x4_0200fb94((char*)gs, 6);
+        SetWord0x7f6c_02012010(gs, 0);
     }
-    func_020ac910();
+    SaveData_CheckOrFormat();
 
     for (;;) {
-        if (func_02011570((Struct_02000c9c_9*)var0)) {
-            func_0201155c((Struct_02000c9c_11*)var0);
+        if (GameState_IsErrorScreenRequested((StateBits5ccc_11570*)gs)) {
+            GameState_ClearErrorScreenRequest((StateBits5ccc_1155c*)gs);
             RUNTITLE();
         }
-        if (func_0201201c(var0) != 5) {
-            func_0208660c(var1);
+        if (GetWord0x7f6c_0201201c(gs) != 5) {
+            Party_Init(party);
         }
-        func_02099cb8(var4);
+        CharacterColors_Load(characterColors);
 
         bool var5 = false;
         if (func_0201201c(var0) != 5) {
@@ -281,15 +278,15 @@ extern "C" ARM void main() {
                 RUNOV20();
             } else if (func_0200fb9c((char*)var0) == 6) {
                 RUNOV20();
-                if (*(unsigned char*)&var0->unk_6fc0[SCENE_SKIP_MEMBER_INDEX] == 0) {
-                    func_020115b4((Struct_02000c9c_13*)var0, 1);
-                    func_020a1940(&OVERLAY_16_ID);
-                    int var6 = 1;
-                    while (var6) {
-                        RUNOV16(var6);
+                if (*(unsigned char*)&gs->unk_6fc0[SCENE_SKIP_MEMBER_INDEX] == 0) {
+                    GameState_SetMovieId((FieldBlock63d6_115b4*)gs, 1);
+                    Overlay_Load(&OVERLAY_16_ID);
+                    int again16 = 1;
+                    while (again16) {
+                        RUNOV16(again16);
                     }
-                    func_020a1bb4(&OVERLAY_16_ID);
-                    func_020115c0((Struct_02000c9c_14*)var0);
+                    Overlay_Unload(&OVERLAY_16_ID);
+                    GameState_ClearMovieId((FieldBlock63d6_115c0*)gs);
                 } else {
                     *(unsigned char*)&var0->unk_6fc0[SCENE_SKIP_MEMBER_INDEX] = 0;
                 }
@@ -344,23 +341,23 @@ extern "C" ARM void main() {
                 RUNOV15();
                 break;
             case 3:
-                func_020a1940(&OVERLAY_16_ID);
-                int var8 = 1;
-                while (var8) {
-                    RUNOV16(var8);
+                Overlay_Load(&OVERLAY_16_ID);
+                int more = 1;
+                while (more) {
+                    RUNOV16(more);
                 }
-                func_020a1bb4(&OVERLAY_16_ID);
-                if (func_020115a8((Struct_02000c9c_12*)var0)) {
-                    func_0200fb94((char*)var0, 0);
-                    var7 = true;
+                Overlay_Unload(&OVERLAY_16_ID);
+                if (GetByteField0x63d6_020115a8((FieldBlock63d6_115a8*)gs)) {
+                    SetByte0x4_0200fb94((char*)gs, 0);
+                    again = true;
                 }
                 break;
             case 8:
-                ResetObjectState0205e8d4(g_sePlayer);
-                FreeAndReinit0203a950(g_bgmPlayer);
+                SePlayer_Reset(g_sePlayer);
+                SoundPlayer_Reset(g_bgmPlayer);
                 g_touchInput.Pause();
-                func_020a1940(&OVERLAY_27_ID);
-                func_020a1940(&OVERLAY_31_ID);
+                Overlay_Load(&OVERLAY_27_ID);
+                Overlay_Load(&OVERLAY_31_ID);
                 REG_IME;
                 REG_IME = 0;
                 InitializeActiveAlarmList();
@@ -372,51 +369,51 @@ extern "C" ARM void main() {
                 case 1:
                     func_ov031_0222708c(1, 0);
                     break;
-                case 2:
-                    func_ov031_0222708c(2, 0);
+                case OSLanguage_French:
+                    ForwardToDataHandler_0222708c(OSLanguage_French, 0);
                     break;
-                case 3:
-                    func_ov031_0222708c(3, 0);
+                case OSLanguage_German:
+                    ForwardToDataHandler_0222708c(OSLanguage_German, 0);
                     break;
-                case 4:
-                    func_ov031_0222708c(4, 0);
+                case OSLanguage_Italian:
+                    ForwardToDataHandler_0222708c(OSLanguage_Italian, 0);
                     break;
-                case 5:
-                    func_ov031_0222708c(5, 0);
+                case OSLanguage_Spanish:
+                    ForwardToDataHandler_0222708c(OSLanguage_Spanish, 0);
                     break;
                 default:
                     func_ov031_0222708c(1, 0);
                     break;
                 }
 #endif
-                func_020d6c9c();
-                func_020c983c();
-                func_020c98f0(1);
-                func_020a1940(&OVERLAY_32_ID);
+                OS_EnableIrq();
+                OS_InitReset();
+                OS_ResetSystem(1);
+                Overlay_Load(&OVERLAY_32_ID);
                 g_touchInput.Unpause();
-                ResetActor0209c174((Actor0209c174*)g_bgmPlayer);
-                Dispatch0203a974With0x57000_0209c290(g_bgmPlayer);
-                SetInterruptHandler(1, (const void*)InitOverlay17ObjAndBumpBattleCounter02012bd8);
-                EnableSpecificInterrupts(1);
-                func_020d6c9c();
+                BgmPlayer_Init((Actor0209c174*)g_bgmPlayer);
+                BgmPlayer_LoadArchive(g_bgmPlayer);
+                SetInterruptHandler(IRQ_MASK_LCD_VBLANK, (const void*)Main_HandleVBlank);
+                EnableSpecificInterrupts(IRQ_MASK_LCD_VBLANK);
+                OS_EnableIrq();
                 EnableIRQInterrupts();
-                func_020c3864(1);
-                MapVRAMBanksToMainBG(0x60);
-                func_020c391c(1, 0, 0);
+                SetVBlankIrqEnable(1);
+                MapVRAMBanksToMainBG(VRAM_BANK_F | VRAM_BANK_G);
+                GX_SetGraphicsMode(1, 0, 0);
                 DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
-                BG0CNT = (BG0CNT & 0x43) | 4;
-                BG0CNT &= ~3;
-                BG0CNT &= ~0x40;
+                BG0CNT = (BG0CNT & (BGCNT_MASK_MOSAIC | BGCNT_MASK_PRIORITY)) | 4;
+                BG0CNT &= ~BGCNT_MASK_PRIORITY;
+                BG0CNT &= ~BGCNT_MASK_MOSAIC;
                 REG_POWCNT1 &= ~0x8000;
-                func_020c9820();
-                func_0200fb94((char*)var0, 6);
-                func_02012010(var0, 1);
-                var7 = false;
+                OS_WaitVBlankIntr();
+                SetByte0x4_0200fb94((char*)gs, 6);
+                SetWord0x7f6c_02012010(gs, 1);
+                again = false;
                 break;
             }
         }
-        if (func_02011570((Struct_02000c9c_9*)var0)) {
-            func_0201155c((Struct_02000c9c_11*)var0);
+        if (GameState_IsErrorScreenRequested((StateBits5ccc_11570*)gs)) {
+            GameState_ClearErrorScreenRequest((StateBits5ccc_1155c*)gs);
             RUNTITLE();
         }
     }

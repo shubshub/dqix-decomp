@@ -159,7 +159,7 @@ void SpriteContext_Init(char* list);
 void Sprite_Init(Struct0205a198* entry);
 int Pac_CountFiles(PacRecord* file);
 void* Pac_GetFile(PacRecord* file, int index, void** record, int* size);
-void Clear12Bytes020e46c4(void* arg);
+void NameText_Clear(void* arg);
 void NameText_InitFromPartyMember(void* arg, int combatant);
 void* KeyTable_Get(Container020e0310* container, int key);
 void ClearFields_021e20c0(void* table);
@@ -391,7 +391,7 @@ extern "C" ARM void func_ov023_021e33b4(Struct_ov023_021e33b4* arg0)
     {
 #if !defined(jpn)
         TextArg021e33b4 arg;
-        Clear12Bytes020e46c4(&arg);
+        NameText_Clear(&arg);
         NameText_InitFromPartyMember(&arg, GameState_GetProtagonistIndex(gameState));
         void* messages = MessageSystem_GetInstance();
         Container020e0310* texts = (Container020e0310*)((char*)self->battle_0 + 0xdf8);

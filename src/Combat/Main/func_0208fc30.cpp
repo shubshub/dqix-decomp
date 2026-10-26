@@ -17,9 +17,9 @@ struct Struct_0205faf4_8 { unsigned int unknown_0_0_:14, unknown_1_6_:1; };
 struct Struct_0208fc30 { char unknown_0_[8]; unsigned short unknown_8_; };
 
 extern "C" ZoneState* Zone3D_GetInstance();
-extern "C" int* func_0202ae18();
+extern "C" int* LinkSession_GetInstance();
 extern "C" unsigned char* Scenario_GetInstance();
-extern "C" int func_0202c508(void* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
 extern "C" void func_ov017_021baedc(void* obj, int flag);
 struct FindEntryById02096134Table* GetGlobal02109418_02094d6c();
 struct FindEntryById02096134Elem* FindEntryById02096134(struct FindEntryById02096134Table*, int);
@@ -27,8 +27,8 @@ void AppendNodeToTail(struct TailList020469b4*, struct TailNode020469b4*);
 int Scenario_TestFlag(int, unsigned char*, int);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 void InitObj021beba4(char*);
-int IsInRange0201b588(int);
-void* GetField0x3f8Address_0200fd0c(GameState* battleStruct);
+int ZoneId_IsGrotto(int);
+void* GameState_GetZoneTransition(GameState* battleStruct);
 
 // JPN: func_02090544
 // USA: func_0208fc30
@@ -55,28 +55,28 @@ extern "C" ARM void func_0208fc30(ActiveGrottoClass* arg0) {
     ZoneState* zone = Zone3D_GetInstance();
     zoneId = zone->zoneId;
     nextZoneId = zone->nextZoneId;
-    session = func_0202ae18();
+    session = LinkSession_GetInstance();
     state = Scenario_GetInstance();
     GameState* game = GameState::GetInstance();
-    GetField0x3f8Address_0200fd0c(game);
+    GameState_GetZoneTransition(game);
     resources = GetGameResources();
     list = (struct TailList020469b4*)resources->fieldTaskQueue_;
 #if !defined(jpn)
     var4 = var9->GetGrottoStruct();
 #endif
 
-    if (func_0201b588(var5) && !func_0201b588(var6) &&
-        (var6 < 0x7530 || var6 > 0x9c3f)) {
+    if (ZoneId_IsGrotto(zoneId) && !ZoneId_IsGrotto(nextZoneId) &&
+        (nextZoneId < 0x7530 || nextZoneId > 0x9c3f)) {
 #if defined(jpn)
         var11 = false;
 #else
         void* var10;
         bool var11 = false;
 #endif
-        if (func_0202c508(var1)) {
-            var10 = var3->unknown_ptr_array_371c[6];
-            func_ov017_021baedc(var10, 1);
-            struct Struct_0205faf4_7* var12 = func_02094d6c();
+        if (LinkSession_IsHostOrSolo(session)) {
+            node = resources->unknown_ptr_array_371c[6];
+            func_ov017_021baedc(node, 1);
+            struct FindEntryById02096134Table* table = GetGlobal02109418_02094d6c();
 #if defined(jpn)
             var0 = "\x96\xb2";
             const char* var13 = arg0->GetPopupName();

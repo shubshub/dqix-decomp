@@ -42,8 +42,8 @@ int DecrementKeyValue020a0a08(KeyMap020a0a08*, int, int);
 extern "C" int _Z26AddKeyValueClamped020a095cP14KeyMap020a095cii(struct KeyMap020a095c *map, int key, signed char amount);
 int CountMatchingUntilNegative02083994(struct Slots02083994 *s, int value);
 extern "C" int func_020dc920(int a, int b, int c, int d);
-extern "C" int *func_0202ae18(void);
-int CheckField0NonZero_0202b7d8(int *p);
+extern "C" int *LinkSession_GetInstance(void);
+int LinkSession_IsActive(int *p);
 char *ItemTable_Find(struct ItemTable *c, int key);
 int GameState_GetProtagonistIndex(GameState *gs);
 void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
@@ -191,7 +191,7 @@ extern "C" ARM void func_ov002_02163bd0(char *arg0) {
                 SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
                 *(unsigned int *) (base + 0x2000 + REGIONAL_OFFSET(0x2ac, 0x47c)) &= ~4;
                 func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xa80, 0xbb8)), 1);
-                if (CheckField0NonZero_0202b7d8(func_0202ae18())) {
+                if (LinkSession_IsActive(LinkSession_GetInstance())) {
                     int ok = 1;
                     int i  = 0;
                     for (; i < *(int *) (base + 0x1000 + REGIONAL_OFFSET(0xafc, 0xc38)); i++) {

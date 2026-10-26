@@ -13,14 +13,14 @@
 #if defined(jpn)
 #define func_02043224 func_02043998
 #endif
-void ReinitEightSubStructsAndAllocator_0202f1dc(char*);
+void WindowFrame_Unload(char*);
 
 extern "C" void func_02043224(void* self);
 extern "C" void MessageSystem_Stop(void* self);
 
 // USA: func_02043000
 ARM void InitControllerObject_02043000(char* self) {
-    ReinitEightSubStructsAndAllocator_0202f1dc((char*)(self + CONTROLLER_SUBOBJECT_OFFSET));
+    WindowFrame_Unload((char*)(self + CONTROLLER_SUBOBJECT_OFFSET));
     func_02043224(self);
     MessageSystem* window = (MessageSystem*)self;
     InitCombatSlots02043040(window);

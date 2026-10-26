@@ -2,11 +2,11 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_ov000_0216733c(struct Struct_ov000_021663a0_2* arg0);
-extern "C" void func_ov000_02166540(struct Struct_ov000_021663a0_2* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_0203232c(int* arg0, int arg1);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_02048bd0(unsigned char* arg0);
+extern "C" void func_ov000_0216733c(struct BattleScene021663a0* scene);
+extern "C" void func_ov000_02166540(struct BattleScene021663a0* scene, int id, int kind, int group);
+extern "C" void IntArray_Shuffle(int* ids, int count);
+GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* battleStruct, int combatantId);
+int CheckSubstructFlag0x80_02048bd0(unsigned char* obj);
 
 struct Struct_ov000_021663a0_3 {
     unsigned short unknown_0_;
@@ -78,12 +78,12 @@ extern "C" ARM void func_ov000_021663a0(struct Struct_ov000_021663a0_2* arg0) {
             var11++;
         }
     }
-    func_0203232c(var4, var2);
-    for (int var13 = 0; var13 < var2; var13++) {
-        GameObject* var14 = func_0200fea4(var0, var4[var13]);
-        if (var14 != 0 && arg0->unknown_2a0_->unknown_2c_ == 0 && !func_02048bd0((unsigned char*)var14)) {
-            var14->obj3D_.SetInheritedAlpha(0);
-            ((unsigned char*)var14)[0x183] = 0x10 / var2 * var13 + 5;
+    IntArray_Shuffle(ids, count);
+    for (int i = 0; i < count; i++) {
+        GameObject* c = GetCombatantWithFlag0x400_0200fea4(gs, ids[i]);
+        if (c != 0 && scene->config->field_0x2c == 0 && !CheckSubstructFlag0x80_02048bd0((unsigned char*)c)) {
+            c->obj3D_.SetInheritedAlpha(0);
+            ((unsigned char*)c)[0x183] = 0x10 / count * i + 5;
         }
     }
 }

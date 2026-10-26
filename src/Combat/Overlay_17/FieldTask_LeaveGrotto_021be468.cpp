@@ -42,25 +42,25 @@ struct Struct_ov017_021be468_4 {
 #define data_ov017_021d7e80 data_ov017_021d8693
 #endif
 extern AllocatorUnion g_mainAllocator; extern char data_ov017_021d7e80[]; extern char g_sePlayer[];
-extern "C" void func_0202ae18(); extern "C" void* func_02057924(); extern "C" unsigned char* Zone3D_GetInstance();
+extern "C" void LinkSession_GetInstance(); extern "C" void* func_02057924(); extern "C" unsigned char* Zone3D_GetInstance();
 void GameObject_DisableControl(Obj020397cc*,int); void SetOrClearBit_0201bf98(unsigned char*,int,int);
 int ListContainsId(ListHead02046b60*,int); extern "C" void func_02046b8c(void*,int); extern "C" void func_02046a8c(void*,void*);
-void EnqueueEventTag33_021d2738(unsigned char,unsigned char); int IsField0Null_02046b08(void**); 
+void EnqueueEventTag33_021d2738(unsigned char,unsigned char); int FieldTaskQueue_IsEmpty(void**); 
 void* FontBankLoader_GetInstance(); extern "C" void FontBankLoader_CancelLoads(void*); extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*,unsigned int); void VramState_Rewind(Foo0207df50*);
 extern "C" void func_02057e6c(void*,int,SafeAllocator*,void*,unsigned int,Foo0207df50*);
-int IsMainBrightnessTransitionActive(GameResources*); void CopyCountedBytesToIntArray02010834(Base02010834*,int,int*,int*);
+int IsMainBrightnessTransitionActive(GameResources*); void GameState_GetPartyMemberIds(Base02010834*,int,int*,int*);
 void FindNodeAndProcess02057fb4(void*,int,void*); void SePlayer_LoadExtraArchiveB(void*,int,int); void SePlayer_PlayExtra(void*,int,int);
 void SetBrightness(GameResources*,int,int);  void CallListIfFlagsSet_02197528();
-WorldE468* GetField0x3f8Address_0200fd0c(GameState*); extern "C" void VectorizedMemset(void*,int,int);
-void InitAndResetHeader_0219e310(unsigned char*,int); void AppendNodeToTail(TailList020469b4*,TailNode020469b4*);
+WorldE468* GameState_GetZoneTransition(GameState*); extern "C" void VectorizedMemset(void*,int,int);
+void FieldTask_InitEnterZone(unsigned char*,int); void AppendNodeToTail(TailList020469b4*,TailNode020469b4*);
 void GameObject_EnableControl(void*); extern "C" void func_ov017_021beb48(StateE468*); void SePlayer_UnloadExtraArchiveB(void*);
 
 // Overlay 17, originally func_ov017_021be468 (USA/EUR 0x021be468, JPN 0x021bea28)
 extern "C" ARM void FieldTask_LeaveGrotto(StateE468* self,ListHead02046b60* list) {
-    GameState* game=GameState::GetInstance(); func_0202ae18();
+    GameState* game=GameState::GetInstance(); LinkSession_GetInstance();
     GameResources* resources=GetGameResources();
-    GameObject* actor=game->GetUnknownGameObject();
+    GameObject* actor=game->GetLeader();
     void* battle=func_02057924(); BackgroundLoader* loader=BackgroundLoader::GetInstance(); unsigned char* zone=Zone3D_GetInstance();
     if(self->state==0) {
         GameObject_DisableControl((Obj020397cc*)actor,1); SetOrClearBit_0201bf98(zone,1,0);
@@ -68,7 +68,7 @@ extern "C" ARM void FieldTask_LeaveGrotto(StateE468* self,ListHead02046b60* list
         else {
             if(ListContainsId(list,0x34)) func_02046a8c(list,resources->fieldTasks_[28]);
             if(ListContainsId(list,0x2e)) { func_02046a8c(list,resources->fieldTasks_[21]); EnqueueEventTag33_021d2738((unsigned char)actor->obj3D_.actorIndex_,0); }
-            if(IsField0Null_02046b08((void**)resources->unknown_ptr_array_3700[0])) {
+            if(FieldTaskQueue_IsEmpty((void**)resources->unknown_ptr_array_3700[0])) {
                 SetFlags00(resources, 0x10); FontBankLoader_CancelLoads(FontBankLoader_GetInstance()); func_020a0cc4(0x2800);
                 self->task=loader->QueueLoadFile(data_ov017_021d7e80,0); self->state++;
             }
@@ -79,7 +79,7 @@ extern "C" ARM void FieldTask_LeaveGrotto(StateE468* self,ListHead02046b60* list
             {
                 unsigned int length; void* file; loader->GetLoadedFileByID(self->task,&file,&length);
                 self->allocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator,0x2800),0x2800); self->allocator.Reset();
-                Foo0207df50* source=&((ActorE468*)game->GetUnknownGameObject())->data->saved;
+                Foo0207df50* source=&((ActorE468*)game->GetLeader())->data->saved;
                 VramState_Rewind(source);
                 void* copy=self->allocator.Allocate(length); memcpy(copy,file,length);
                 func_02057e6c(battle,5,&self->allocator,copy,length,source); loader->RemoveTask(self->task); self->state++;
@@ -87,7 +87,7 @@ extern "C" ARM void FieldTask_LeaveGrotto(StateE468* self,ListHead02046b60* list
         }
     } else if(self->state==2) {
         if(!IsMainBrightnessTransitionActive(resources)) {
-            int ids[5],count=0; CopyCountedBytesToIntArray02010834((Base02010834*)game,actor->obj3D_.actorIndex_,ids,&count);
+            int ids[5],count=0; GameState_GetPartyMemberIds((Base02010834*)game,actor->obj3D_.actorIndex_,ids,&count);
             for(int i=0;i<count;i++) self->actors|=1<<ids[i];
             ParamsE468 params[5];
             for(int i=0;i<count;i++) {
@@ -118,12 +118,12 @@ extern "C" ARM void FieldTask_LeaveGrotto(StateE468* self,ListHead02046b60* list
         if(self->timer>85) {
             for(int i=0;i<5;i++) if(self->actors&(1<<i)) { GameObject* member=game->GetGameObjectByIndex(i); if(member!=NULL) member->obj3D_.DisableFlag(1); }
             ClearFlags00(resources, 0x10); CallListIfFlagsSet_02197528();
-            WorldE468* world=GetField0x3f8Address_0200fd0c(game); VectorizedMemset(world,0,0x70);
+            WorldE468* world=GameState_GetZoneTransition(game); VectorizedMemset(world,0,0x70);
             world->field4=1; world->field8=1; world->field9=1; world->fieldb=-1;
             world->field20=-1; world->field24=-1; world->field28=-1; world->field2c=-1; world->field1e=-1; world->fieldc=0; world->field6c=-1;
             world->id=self->field1c; world->field7=1; world->field1c=0x3244; world->position=self->position;
             TailList020469b4* nodes=(TailList020469b4*)resources->fieldTaskQueue_; unsigned char* node=(unsigned char*)resources->unknown_ptr_array_3700[3];
-            InitAndResetHeader_0219e310(node,0); AppendNodeToTail(nodes,(TailNode020469b4*)node);
+            FieldTask_InitEnterZone(node,0); AppendNodeToTail(nodes,(TailNode020469b4*)node);
             if(self->pending) {
                 GrottoViewE468* grotto=(GrottoViewE468*)game->GetGrottoStruct();
                 grotto->zone=self->zone; grotto->field6c=self->field3c;

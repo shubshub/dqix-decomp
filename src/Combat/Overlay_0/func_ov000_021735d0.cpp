@@ -28,9 +28,9 @@ void UpdateFieldromTable_02174fc0_02174fc0(void*);
 void NotifyEachViaLookup021754fc(Struct021754fc*,int);
 void TickCounter02180b50(S02180b50*);
 int GameState_GetProtagonistIndex(GameState*);
-int CheckField0NonZero_0202b7d8(int*);
+int LinkSession_IsActive(int*);
 extern "C" {
-int* func_0202ae18(); void func_020dc7e8(int,int); int Window_Update(void*,int);
+int* LinkSession_GetInstance(); void func_020dc7e8(int,int); int Window_Update(void*,int);
 void func_ov000_02175fc8(void*);void func_ov000_02174d08(void*);void func_ov000_02175024(void*,int);
 void* func_ov000_02161318(void*,int);
 void func_ov000_0217f304(void*,int,int,void*);void func_ov000_0217c908(void*,int,int);
@@ -48,7 +48,7 @@ extern "C" ARM void func_ov000_021735d0(Struct_ov000_021682ec_5* arg0,int arg1)
     Background_SetScroll((BackgroundGraphics*)self->dispatchA,-self->x,-self->y);
     Background_SetScroll((BackgroundGraphics*)self->dispatchB,0,0);
     Background_SetScroll((BackgroundGraphics*)self->dispatchC,0,0);
-    GameState* gs=GameState::GetInstance();func_0202ae18();
+    GameState* gs=GameState::GetInstance();LinkSession_GetInstance();
     if(((GameFlags*)gs)->bit1)func_020dc7e8(0,-1);
     if(!delta)delta=1;
     int update=1;
@@ -71,7 +71,7 @@ extern "C" ARM void func_ov000_021735d0(Struct_ov000_021682ec_5* arg0,int arg1)
         func_ov000_0217c908(self,data_ov000_02183ff0,data_ov000_02184288[1]);
         TickCounter02180b50((S02180b50*)self);
         int special=self->commands[self->commandIndex]==100;
-        if(special & CheckField0NonZero_0202b7d8(func_0202ae18())){
+        if(special & LinkSession_IsActive(LinkSession_GetInstance())){
             if(self->phase==1){
                 for(int i=0;i<2;i++)func_ov000_02176e3c(self,unit,23,data_ov000_02183ff0,data_ov000_02184288[1],0);
                 self->phase=2;

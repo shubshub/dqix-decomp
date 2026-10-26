@@ -42,7 +42,7 @@ struct Struct_0209c3b4_2;
 struct Struct_0203bdb0;
 struct Struct_ov020_0218b710_3;
 
-void DelayThenSyncBit0_020c9820();
+void OS_WaitVBlankIntr();
 extern "C" void GXx_SetMasterBrightness_(short* out, int value);
 int GetWord0x7f6c_0201201c(void* obj);
 void SetWord0x7f6c_02012010(void* obj, int value);
@@ -73,7 +73,7 @@ void Window_DrawPanes(Cont0205d228* obj);
 void Window_FlushLayers(Cont0205d274* obj);
 void Window_TransferLayers(Obj0205d2bc* obj);
 void ProcessRingJobs020bbcb4();
-void InitCombatSubsystems02012efc();
+void Main_UpdateLidAndInput();
 void LockStagedTextureVRAMCopying();
 extern "C" void func_020bb48c(unsigned int arg0, int arg1);
 extern "C" void func_020bb780(void* arg0, int arg1);
@@ -83,19 +83,19 @@ void TailForward020440a4(void* obj);
 void VramState_Rewind(Foo0207df50* obj);
 void VramState_Restore(char* obj);
 void VramState_Save(char* obj);
-void Set3DClearColor_020c5588(int color, int alpha, int depth, int polygonId, int fogEnable);
+void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
 void MessageSystem_ResetGlyphs(CombatSlots02045cac* slots);
 void InitBigStruct0205c790(char* obj);
 int CheckSaveBufferStatus_020ab9c0(int flag);
 void ProcessCombatEntry0205cb74(char* obj, int entry);
 void Forward0204359c(void* obj, int value);
 void GridCursor_SelectIfValid(Struct_0205bcdc* obj, int index);
-void InitBattleContext0203bd24(char* ctx);
+void OamManager_Init(char* ctx);
 void RefreshDisplayState0205e8ec(Obj_0205e8ec* obj);
 void SetStateAndDispatch0209c3b4(Actor0209c3b4* actor, int state);
 void G3X_Reset();
-void CleanInvalidateOamBuffers0203bd88(void* oam);
-void SyncMainSubOam0203bdb0(Obj0203bdb0* obj);
+void OamManager_FlushBuffers(void* oam);
+void OamManager_UploadBuffers(Obj0203bdb0* obj);
 void ResetAllocatorAndDispatchState_0218d8d8(AllocGroup0218d8d8* obj);
 
 extern "C" int func_ov020_0218d898(void* arg0);
@@ -129,7 +129,7 @@ extern "C" void func_0205dfa8(void* arg0);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int a);
 extern "C" void func_02043368(char* g);
 extern "C" void func_020439b0(char* g, int a);
-extern "C" char* func_0203bd08(void);
+extern "C" char* OamManager_GetInstance(void);
 extern "C" void G3X_ResetMtxStack(void);
 extern "C" void func_020bbd9c(void);
 extern "C" void MapVRAMBanksToMainBG(int);
@@ -235,24 +235,24 @@ static inline int inline_ov020_0218b710_2(Struct_ov020_0218b710_5* arg0) { retur
     for (;;) {                                   \
         if (!inline_ov020_0218b710_2(self)) break;          \
         func_ov020_0218d644(self);               \
-        func_020c9820();                     \
-        func_02012efc();          \
-        func_020d86d0(0, 1);     \
+        OS_WaitVBlankIntr();                     \
+        Main_UpdateLidAndInput();          \
+        WriteControlAndToggle020d86d0(0, 1);     \
     }
 
 #define WAIT_TIMER(self)                         \
     for (;;) {                                   \
         if (!inline_ov020_0218b710(self)) break;         \
         func_ov020_0218d854(self);               \
-        func_020c9820();                     \
-        func_02012efc();          \
-        func_020d86d0(0, 1);     \
+        OS_WaitVBlankIntr();                     \
+        Main_UpdateLidAndInput();          \
+        WriteControlAndToggle020d86d0(0, 1);     \
     }
 
 // USA: func_ov020_0218b710
 extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
     GameState* gs = GameState::GetInstance();
-    DelayThenSyncBit0_020c9820();
+    OS_WaitVBlankIntr();
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
     GXx_SetMasterBrightness_((short*)0x400106c, -16);
     if (GetWord0x7f6c_0201201c(gs) == 1) {
@@ -265,10 +265,10 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
     if (func_0201201c(var0) == 1) {
         START_FADE(arg0, -16, 2000);
         for (;;) {
-            if (!func_ov020_0218d898(arg0)) break;
-            func_ov020_0218d644(arg0);
-            func_020c9820();
-            func_020d86d0(0, 1);
+            if (!func_ov020_0218d898(self)) break;
+            func_ov020_0218d644(self);
+            OS_WaitVBlankIntr();
+            WriteControlAndToggle020d86d0(0, 1);
         }
     }
 
@@ -277,7 +277,7 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
     volatile unsigned short* bgcnt = (volatile unsigned short*)0x4000008;
     bgcnt[0] = bgcnt[0] & ~0x3;
     bgcnt[1] = (bgcnt[1] & ~0x3) | 0x1;
-    DelayThenSyncBit0_020c9820();
+    OS_WaitVBlankIntr();
     RestoreDisplayMode_020c38d4();
     *(volatile unsigned int*)0x4001000 |= 0x10000;
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
@@ -298,10 +298,10 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
         Background_AllocateMap((BackgroundGraphics*)self->list, &self->alloc);
         Background_SetScroll((BackgroundGraphics*)self->list, 0, 0);
 
-        int var2;
-        BackgroundLoader* var3 = BackgroundLoader::GetInstance();
-        var3->MaybeReset();
-        var2 = var3->QueueLoadFile(data_ov020_0218dbdc, 0);
+        int task;
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        loader->ClearQueue();
+        task = loader->QueueLoadFile(data_ov020_0218dbdc, 0);
         for (;;) {
             if (loader->GetTaskStatus(task) != 0) {
                 void* recField;
@@ -398,21 +398,21 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
         Window_FlushLayers((Cont0205d274*)self->textCont);
         Window_TransferLayers((Obj0205d2bc*)self->textCont);
         WriteControlAndToggle020d86d0(0, 1);
-        DelayThenSyncBit0_020c9820();
+        OS_WaitVBlankIntr();
         RestoreDisplayMode_020c38d4();
         volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
         *dispcnt = (*dispcnt & ~0x1f00) | 0x200;
         ProcessRingJobs020bbcb4();
         WriteControlAndToggle020d86d0(0, 1);
 
-        while (arg0->unknown_0_ != -1) {
-            func_02012efc();
+        while (self->state != -1) {
+            Main_UpdateLidAndInput();
             if (g_keyManager.TestKeysPressed(1) || g_keyManager.TestKeysPressed(2) ||
                 g_keyManager.TestKeysPressed(0x400) || g_keyManager.TestKeysPressed(0x800) ||
                 g_touchInput.pressed_ != 0) {
                 break;
             }
-            DelayThenSyncBit0_020c9820();
+            OS_WaitVBlankIntr();
             GXx_SetMasterBrightness_((short*)0x400006c, 0);
             WriteControlAndToggle020d86d0(0, 1);
         }
@@ -422,7 +422,7 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
         AllocatorUnion_Free(&g_mainAllocator, signedAlloc);
     }
 
-    DelayThenSyncBit0_020c9820();
+    OS_WaitVBlankIntr();
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
     GXx_SetMasterBrightness_((short*)0x400106c, -16);
     volatile unsigned short* mainBg = (volatile unsigned short*)0x4000008;
@@ -470,25 +470,25 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             *(volatile unsigned int*)0x4001000 |= 0x10000;
             arg0->unknown_4e4_ = 2000;
             for (;;) {
-                if (!inline_ov020_0218b710(arg0)) break;
-                func_ov020_0218d854(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                if (!IsTimerActive(self)) break;
+                func_ov020_0218d854(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
             START_FADE(arg0, 0, 1500);
             arg0->unknown_4e4_ = 7000;
             for (;;) {
-                if (!func_ov020_0218d898(arg0)) {
-                    if (!inline_ov020_0218b710(arg0)) break;
-                    func_ov020_0218d854(arg0);
-                    func_02012efc();
-                    if (arg0->unknown_4e4_ <= 2500) {
+                if (!func_ov020_0218d898(self)) {
+                    if (!IsTimerActive(self)) break;
+                    func_ov020_0218d854(self);
+                    Main_UpdateLidAndInput();
+                    if (self->timer <= 2500) {
                         if (g_keyManager.TestKeysPressed(0xc0b) || g_touchInput.pressed_ != 0) break;
                     }
                 }
-                func_ov020_0218d644(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                func_ov020_0218d644(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
             START_FADE(arg0, -16, 1000);
             WAIT_FADE(arg0)
@@ -501,24 +501,24 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             func_ov020_0218d800((Struct_ov020_0218b710_2*)(arg0), 0, 1500);
             arg0->unknown_4e4_ = 6000;
             for (;;) {
-                if (!inline_ov020_0218b710_2(arg0)) {
-                    if (!inline_ov020_0218b710(arg0)) break;
-                    func_ov020_0218d854(arg0);
-                    func_02012efc();
+                if (!IsFadeActive(self)) {
+                    if (!IsTimerActive(self)) break;
+                    func_ov020_0218d854(self);
+                    Main_UpdateLidAndInput();
                     if (g_keyManager.TestKeysPressed(0xc0b) || g_touchInput.pressed_ != 0) break;
                 }
-                func_ov020_0218d644(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                func_ov020_0218d644(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
             func_ov020_0218d800((Struct_ov020_0218b710_2*)(arg0), -16, 1000);
             WAIT_FADE(arg0)
             arg0->unknown_4e4_ = 1000;
             WAIT_TIMER(arg0)
 #else
-            func_020c5588(0x7fff, 0x1f, 0x7fff, 0, 0);
-            func_ov020_0218cd98(arg0);
-            func_020c38d4();
+            Set3DClearColor(0x7fff, 0x1f, 0x7fff, 0, 0);
+            func_ov020_0218cd98(self);
+            RestoreDisplayMode_020c38d4();
             *(volatile unsigned int*)0x4001000 |= 0x10000;
             arg0->unknown_4e4_ = 2000;
             WAIT_TIMER(arg0)
@@ -526,14 +526,14 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             START_FADE(arg0, 0, 500);
             arg0->unknown_4e4_ = 3000;
             for (;;) {
-                if (!inline_ov020_0218b710_2(arg0)) {
-                    if (!inline_ov020_0218b710(arg0)) break;
-                    func_ov020_0218d854(arg0);
-                    func_02012efc();
+                if (!IsFadeActive(self)) {
+                    if (!IsTimerActive(self)) break;
+                    func_ov020_0218d854(self);
+                    Main_UpdateLidAndInput();
                 }
-                func_ov020_0218d644(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                func_ov020_0218d644(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
             START_FADE(arg0, -16, 500);
             WAIT_FADE(arg0)
@@ -546,17 +546,17 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             START_FADE(arg0, 0, 1500);
             arg0->unknown_4e4_ = 7000;
             for (;;) {
-                if (!func_ov020_0218d898(arg0)) {
-                    if (!inline_ov020_0218b710(arg0)) break;
-                    func_ov020_0218d854(arg0);
-                    func_02012efc();
-                    if (arg0->unknown_4e4_ <= 2500) {
+                if (!func_ov020_0218d898(self)) {
+                    if (!IsTimerActive(self)) break;
+                    func_ov020_0218d854(self);
+                    Main_UpdateLidAndInput();
+                    if (self->timer <= 2500) {
                         if (g_keyManager.TestKeysPressed(0xf0b) || g_touchInput.pressed_ != 0) break;
                     }
                 }
-                func_ov020_0218d644(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                func_ov020_0218d644(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
             START_FADE(arg0, -16, 1000);
             WAIT_FADE(arg0)
@@ -569,21 +569,21 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             START_FADE(arg0, 0, 1500);
             arg0->unknown_4e4_ = 6000;
             for (;;) {
-                if (!inline_ov020_0218b710_2(arg0)) {
-                    if (!inline_ov020_0218b710(arg0)) break;
-                    func_ov020_0218d854(arg0);
-                    func_02012efc();
+                if (!IsFadeActive(self)) {
+                    if (!IsTimerActive(self)) break;
+                    func_ov020_0218d854(self);
+                    Main_UpdateLidAndInput();
                     if (g_keyManager.TestKeysPressed(0xf0b) || g_touchInput.pressed_ != 0) break;
                 }
-                func_ov020_0218d644(arg0);
-                func_020c9820();
-                func_020d86d0(0, 1);
+                func_ov020_0218d644(self);
+                OS_WaitVBlankIntr();
+                WriteControlAndToggle020d86d0(0, 1);
             }
-            START_FADE(arg0, -16, 1000);
-            WAIT_FADE(arg0)
-            arg0->unknown_4e4_ = 1000;
-            WAIT_TIMER(arg0)
-            func_020c5588(0, 0x1f, 0x7fff, 0, 0);
+            START_FADE(self, -16, 1000);
+            WAIT_FADE(self)
+            self->timer = 1000;
+            WAIT_TIMER(self)
+            Set3DClearColor(0, 0x1f, 0x7fff, 0, 0);
 #endif
         }
         func_02012010(var0, 5);
@@ -658,12 +658,12 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
             var26->RemoveAllLocks();
         }
 
-        char* ctx = func_0203bd08();
-        InitBattleContext0203bd24(ctx);
+        char* ctx = OamManager_GetInstance();
+        OamManager_Init(ctx);
         RefreshDisplayState0205e8ec((Obj_0205e8ec*)g_sePlayer);
         SetStateAndDispatch0209c3b4((Actor0209c3b4*)g_bgmPlayer, 2);
         while (self->state != -1) {
-            InitCombatSubsystems02012efc();
+            Main_UpdateLidAndInput();
             if (++self->frame >= 0xffffff) {
                 self->frame = 1;
             }
@@ -678,11 +678,11 @@ extern "C" ARM void func_ov020_0218b710(Sequence0218b710* self) {
                 arg0->unknown_0_ = -1;
                 break;
             }
-            func_020d86d0(0, 1);
-            func_0203bd88(var28);
-            func_020c9820();
-            func_0203bdb0((Struct_0203bdb0*)var28);
-            func_020bbcb4();
+            WriteControlAndToggle020d86d0(0, 1);
+            OamManager_FlushBuffers(ctx);
+            OS_WaitVBlankIntr();
+            OamManager_UploadBuffers((Obj0203bdb0*)ctx);
+            ProcessRingJobs020bbcb4();
             func_020bbd9c();
             GXx_SetMasterBrightness_((short*)0x400006c, 0);
             GXx_SetMasterBrightness_((short*)0x400106c, 0);

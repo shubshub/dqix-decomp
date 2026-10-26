@@ -139,7 +139,7 @@ struct Struct_020a95a4_6 {
 };
 
 void* GameState_GetParty(GameState* gs);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 extern "C" FieldState* Zone3D_GetInstance(void);
 Global02109418* GetGlobal02109418_02094d6c(void);
 extern "C" void func_020a93e0(char* param0);
@@ -152,7 +152,7 @@ unsigned short* GetPointerFromArray0xbd0_0207c5f8(unsigned char* roster, unsigne
 unsigned char* GetPointerAt0xbf0_0207c60c(void* roster, unsigned int idx);
 short GetShortFromArray0xc10_0207c620(unsigned char* roster, unsigned int idx);
 void SetByteInArray0xc28_0207c6a8(unsigned char* base, unsigned int index, unsigned char value);
-unsigned short* GetField0x74deForValidIndex_020120a0(char* gs, unsigned int idx);
+unsigned short* GameState_GetPlayerLocation(char* gs, unsigned int idx);
 void SetModeClamped0209ca70(void* obj, int val);
 void SetStateAndDispatch0205e9f4(struct Obj0205e9f4* obj, int state);
 
@@ -167,7 +167,7 @@ extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg
 #endif
     GameState* gs = GameState::GetInstance();
     BattleData* battle = static_cast<BattleData*>(GameState_GetParty(gs));
-    func_0202ae18();
+    LinkSession_GetInstance();
     FieldState* field = Zone3D_GetInstance();
     GetGameResources();
     Struct_020a95a4_3* var3 = func_02094d6c();
@@ -234,7 +234,7 @@ extern "C" ARM int func_020a95a4(Struct_020a95a4_6* arg0, Struct_020a95a4_5* arg
     GameStateLoadView* view = (GameStateLoadView*)gs;
     battle->areaId = save->areaId;
     view->value7e74 = save->areaId;
-    memcpy(GetField0x74deForValidIndex_020120a0((char*)gs, 0), save->words, sizeof(save->words));
+    memcpy(GameState_GetPlayerLocation((char*)gs, 0), save->words, sizeof(save->words));
     SetModeClamped0209ca70(g_bgmPlayer, save->globalByte);
     SetStateAndDispatch0205e9f4((struct Obj0205e9f4*)g_sePlayer, save->globalByte2);
     battle->byteF7d = save->byteF7d;

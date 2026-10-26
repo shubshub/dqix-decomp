@@ -23,7 +23,7 @@ struct Obj020d9d60 {
 
 // USA: func_020d9d60
 ARM void ShutdownObject020d9d60(struct Obj020d9d60* self) {
-    GameObject_EnableControl((void*)GameState::GetInstance()->GetUnknownGameObject());
+    GameObject_EnableControl((void*)GameState::GetInstance()->GetLeader());
     ClearFlags00(GetGameResources(), 0x10);
     FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0xe);
     void* p = self->allocator.GetSignedAllocator();

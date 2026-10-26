@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae24(void);
-extern "C" void func_0205e330(void* arg0, void* arg1, int arg2);
+void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c6254 {
     unsigned char unknown_0_[8];
@@ -35,17 +35,17 @@ struct Struct_ov017_021c6254_5 {
 };
 
 // USA: func_ov017_021c6254
-extern "C" ARM void func_ov017_021c6254(char* arg0, int arg1) {
-    void* var0 = func_0202ae24();
-    Struct_ov017_021c6254_5 var1;
-    Struct_ov017_021c6254_4* var2 = &var1.unknown_4_;
-    var1.unknown_0_ = 0x62;
-    var2->unknown_0_ = (*(Struct_ov017_021c6254**)(arg0 + 0x8e18))->unknown_8_;
-    Struct_ov017_021c6254_2* var3 = &((Struct_ov017_021c6254_3*)(arg0 + 0x1b0 + 0x8000))->unknown_4_[arg1];
-    var2->unknown_2_ = arg1;
-    for (int var4 = 0; var4 < var3->unknown_a_0_; var4++) {
-        var2->unknown_4_[var4] = 0;
-        var2->unknown_4_[var4] = var3->unknown_2_[var4];
+extern "C" ARM void func_ov017_021c6254(char* self, int slotIndex) {
+    void* data = LinkMessageQueue_GetInstance();
+    Evt021c6254 evt;
+    Payload021c6254* p = &evt.payload;
+    evt.tag = 0x62;
+    p->id = (*(Sub8e18_021c6254**)(self + 0x8e18))->id;
+    Slot021c6254* slot = &((Holder021c6254*)(self + 0x1b0 + 0x8000))->slots[slotIndex];
+    p->slotIndex = slotIndex;
+    for (int i = 0; i < slot->count; i++) {
+        p->values[i] = 0;
+        p->values[i] = slot->values[i];
     }
     func_0205e330(var0, &var1, 0);
 }

@@ -59,10 +59,10 @@ struct Struct_02033834;
 struct Struct_0203e2c4_2;
 struct Struct_0203d028_15;
 
-extern "C" void *func_0203df78(void *arg0, int arg1);
-extern "C" void func_02033874(struct Struct_02033834 *arg0, int arg1);
-extern "C" void func_02040b2c(struct Struct_0203e2c4_2 *arg0, int arg1);
-extern "C" void func_02040774(struct Struct_0203d028_15 *arg0, int arg1, int arg2, int arg3);
+void *FindEntryPointerByKey0203df78(void *receiver, int key);
+void GameObject_SnapFacing(struct Obj02033874 *obj, int value);
+void PropagateValueToActiveSlot02040b2c(struct Obj02040b2c *obj, int value);
+void SetActiveChildFields02040774(struct Node02040774 *node, int x, int y, int z);
 
 // USA: func_0203e2c4
 extern "C" ARM void func_0203e2c4(void *arg0, unsigned short arg1) {
@@ -81,18 +81,18 @@ extern "C" ARM void func_0203e2c4(void *arg0, unsigned short arg1) {
                 if (*var6 != var1->unknown_8_0_) {
                     continue;
                 }
-                Vector3i var8;
-                var8.x = var1->unknown_0_ << 4;
-                var8.y = var1->unknown_2_ << 4;
-                var8.z = var1->unknown_4_ << 4;
-                short var9 = var1->unknown_6_;
-                if (var5->unknown_14_ != NULL) {
-                    *(Vector3i *) ((char*)var5->unknown_14_ + 4) = var8;
-                } else if (var5->unknown_18_ != NULL) {
-                    *(Vector3i *) ((char*)var5->unknown_18_ + 0x44) = var8;
-                } else if (var5->unknown_1c_ != NULL) {
-                    *(Vector3i *) ((char*)var5->unknown_1c_ + 0x44) = var8;
-                    func_02033874((struct Struct_02033834 *) var5->unknown_1c_, var9);
+                Vector3i position;
+                position.x = snapshot->x << 4;
+                position.y = snapshot->y << 4;
+                position.z = snapshot->z << 4;
+                short value = snapshot->value;
+                if (entry->child14 != NULL) {
+                    *(Vector3i *) ((char*)entry->child14 + 4) = position;
+                } else if (entry->child18 != NULL) {
+                    *(Vector3i *) ((char*)entry->child18 + 0x44) = position;
+                } else if (entry->child1c != NULL) {
+                    *(Vector3i *) ((char*)entry->child1c + 0x44) = position;
+                    GameObject_SnapFacing((struct Obj02033874 *) entry->child1c, value);
                 }
                 func_02040b2c((struct Struct_0203e2c4_2 *) var5, var9);
                 func_02040af0(var5, var9);

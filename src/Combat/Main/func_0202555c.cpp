@@ -52,16 +52,16 @@ struct Struct_0202555c_2 {
 #endif
     unsigned char unknown_9c0_;
 };
-void* GetData02105254_0203b628();
+void* BgVram_GetInstance();
 extern "C" void* Zone3D_GetInstance();
-void SetArraySlotFlag0203b718(void*, int, int, int);
-Entry_02027878* GetEntryFromList(List_02027878*, int);
-void ForwardParamsToB8bc_0203bcb8(Bcb8Params*, int, int);
-void AccumulateBattleTimer0202441c(BattleTimer0202441c*);
-int CheckCombatantReadyForAction020243b8(void*, int);
-int CheckActionAllowed(CombatActionPosition*, int);
-void SetElementFields0202756c(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
-void SetBitfield0205afdc(int, void*, int);
+void BgVram_FillMap(void*, int, int, int);
+Entry_02027878* MapDisplay_GetMapPiece(List_02027878*, int);
+void BgImage_Place(Bcb8Params*, int, int);
+void MapDisplay_UpdateBlink(BattleTimer0202441c*);
+int MapDisplay_IsMemberVisible(void*, int);
+int MapIcon_IsShownInBlinkPhase(CombatActionPosition*, int);
+void MapDisplay_DrawSprite(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
+void SpriteContext_SetSpriteObjMode(int, void*, int);
 
 // USA: func_0202555c
 extern "C" ARM void func_0202555c(Receiver0202555c* self) {
@@ -87,14 +87,14 @@ extern "C" ARM void func_0202555c(Receiver0202555c* self) {
     int group;
     int isSpecial;
     fix32_t scale;
-    object = GameState::GetInstance()->GetUnknownGameObject();
-    displayState = GetData02105254_0203b628();
+    object = GameState::GetInstance()->GetLeader();
+    displayState = BgVram_GetInstance();
     Zone3D_GetInstance();
     Vector3i position = object->obj3D_.position_;
     CombatActionPosition entries[17];
     unsigned char groups[32];
     memset(groups, 0, sizeof(groups));
-    count = func_020236dc(entries, groups, &position);
+    count = MapDisplay_CollectIcons(entries, groups, &position);
     scale = self->scale;
     screenX = (int)((float)FIX32_MULTIPLY(position.x, scale) / 4096.0f);
     oldHeight = self->cameraHeight;
@@ -129,23 +129,23 @@ extern "C" ARM void func_0202555c(Receiver0202555c* self) {
     if (arg0->unknown_40_ != var12) {
         arg0->unknown_55c_ = 1;
     }
-    arg0->unknown_3c_ = var11;
-    arg0->unknown_40_ = var12;
-    if (arg0->unknown_55c_) {
-        arg0->unknown_55c_ = 0;
-        func_0203b718(var2, 1, 0, arg0->unknown_74_);
-        for (var13 = 0; var13 < arg0->unknown_30_; ++var13) {
-            var14 = func_02027878((Struct_02024518_2*)arg0, arg0->unknown_2c_[var13].unknown_4_);
-            if (var14) {
-                func_0203bcb8((Struct_02020fc4_3*)((char*)var14 + 8), arg0->unknown_2c_[var13].unknown_8_,
-                                    arg0->unknown_1c_ + arg0->unknown_2c_[var13].unknown_c_ - var12 + 16);
+    self->tileX = tileX;
+    self->tileY = tileY;
+    if (self->forwardingPending) {
+        self->forwardingPending = 0;
+        BgVram_FillMap(displayState, 1, 0, self->forwardingFill);
+        for (i = 0; i < self->forwardingCount; ++i) {
+            forwardEntry = MapDisplay_GetMapPiece((List_02027878*)self, self->forwarding[i].entryIndex);
+            if (forwardEntry) {
+                BgImage_Place((Bcb8Params*)((char*)forwardEntry + 8), self->forwarding[i].x,
+                                    self->forwardingY + self->forwarding[i].y - tileY + 16);
             }
         }
     }
-    func_0202441c((Struct_0202441c*)arg0);
-    for (var15 = 0; var15 < var3; ++var15) {
-        var16 = &var23[var15];
-        if (!func_020243b8(arg0, var16->unknown_14_)) {
+    MapDisplay_UpdateBlink((BattleTimer0202441c*)self);
+    for (j = 0; j < count; ++j) {
+        entry = &entries[j];
+        if (!MapDisplay_IsMemberVisible(self, entry->combatantId)) {
             continue;
         }
         var21 = arg0->unknown_38_;
@@ -156,25 +156,25 @@ extern "C" ARM void func_0202555c(Receiver0202555c* self) {
             var17 += data_020e70f0[var19][var16->unknown_f_][0];
             var18 += data_020e70f4[var19][var16->unknown_f_][0];
         }
-        var20 = var16->unknown_e_ == 0x74;
-        if (var20) {
-            func_0202756c(arg0, (var17 - 4) << 12, (var18 + 0x5c) << 12, var16->unknown_c_, var16->unknown_e_, 0,
-                                     var16->unknown_d_, 0xff, 0x1000, 0x1000);
+        isSpecial = entry->type == 0x74;
+        if (isSpecial) {
+            MapDisplay_DrawSprite(self, (x - 4) << 12, (y + 0x5c) << 12, entry->elementId, entry->type, 0,
+                                     entry->palette, 0xff, 0x1000, 0x1000);
             continue;
         }
-        if (!func_02024d48(var16, arg0->unknown_9c0_)) {
+        if (!MapIcon_IsShownInBlinkPhase(entry, self->actionState)) {
             continue;
         }
         var0 = (char*)arg0->unknown_e8_ + (short)var16->unknown_c_ * (short)40;
         if (var16->unknown_13_) {
             ColorEffect_ConfigureAlphaBlend(0x04001050, 0, 3, 8, 8);
-            func_0205afdc((int)&arg0->unknown_94_, var0, 1);
+            SpriteContext_SetSpriteObjMode((int)&self->bits94, slotData, 1);
         } else {
-            func_0205afdc((int)&arg0->unknown_94_, var0, 0);
+            SpriteContext_SetSpriteObjMode((int)&self->bits94, slotData, 0);
         }
-        func_0202756c(arg0, (var17 - 4) << 12, (var18 + 0x5c) << 12, var16->unknown_c_, var16->unknown_e_, 0,
-                                 var16->unknown_d_, 0xff, 0x1000, 0x1000);
+        MapDisplay_DrawSprite(self, (x - 4) << 12, (y + 0x5c) << 12, entry->elementId, entry->type, 0,
+                                 entry->palette, 0xff, 0x1000, 0x1000);
     }
-    func_02023b5c(arg0, arg0->unknown_18_ << 3, arg0->unknown_48_, -4, 0x5c, 0);
-    func_02023d84(arg0, var23, var3, arg0->unknown_18_ << 3, arg0->unknown_48_, -4, 0x5c, 0);
+    MapDisplay_DrawRedChestMarkers(self, self->forwardingX << 3, self->screenY, -4, 0x5c, 0);
+    MapDisplay_DrawBattleMarkers(self, entries, count, self->forwardingX << 3, self->screenY, -4, 0x5c, 0);
 }

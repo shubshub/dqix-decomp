@@ -57,15 +57,15 @@ struct AllocatorUnion;
 struct S021700bc;
 struct PacRecord;
 
-int CheckField0NonZero_0202b7d8(int *p);
+int LinkSession_IsActive(int *p);
 int Pac_CountFiles(PacRecord *archive);
 void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
 void *AllocatorUnion_AllocateRounded(AllocatorUnion *alloc, unsigned int size);
 void AllocatorUnion_Free(AllocatorUnion *alloc, void *p);
 void SpriteContext_Destroy(void *p);
 void InitField170_021700bc(S021700bc *p);
-extern "C" void *func_0202ae18();
-extern "C" void func_0202c288();
+extern "C" void *LinkSession_GetInstance();
+extern "C" void LinkSession_UpdateMemberCount();
 extern "C" void MessageSystem_Stop(void *p);
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 #if defined(jpn)
@@ -90,15 +90,15 @@ extern char data_ov003_021801c9[];
 extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
     Global0216bcfc *global   = (Global0216bcfc *) MessageSystem_GetInstance();
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
-    void *obj                = func_0202ae18();
+    void *obj                = LinkSession_GetInstance();
 
-    if (arg0->unknown_6_ == 0) {
-        func_0202c288();
-        if (func_0202b7d8((int *) var2) != 0 && (int) *((unsigned char *) var2 + 0x100d) > 1) {
-            func_ov003_0216d8d4(arg0, 0x5d, -1, -1, -1);
-            arg0->unknown_6_  = 0;
-            arg0->unknown_4_ = 2;
-            arg0->unknown_6_  = 0;
+    if (self->step_ == 0) {
+        LinkSession_UpdateMemberCount();
+        if (LinkSession_IsActive((int *) obj) != 0 && (int) *((unsigned char *) obj + 0x100d) > 1) {
+            func_ov003_0216d8d4(self, 0x5d, -1, -1, -1);
+            self->step_  = 0;
+            self->state_ = 2;
+            self->step_  = 0;
             return;
         }
         Global0216bcfc *global2 = (Global0216bcfc *) MessageSystem_GetInstance();

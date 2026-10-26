@@ -14,33 +14,33 @@ struct Struct_0204254c {
     char unknown_6_[2];
 };
 
-int GetWordFromTable02042648(int);
+int Font_GetFallbackWidth(int);
 bool IsHighByteFF02044494(void*, void*);
 int Dispatch02044420(void*, void*);
-int LookupKeyValue020425e4(int, int, int);
+int Font_GetKerning(int, int, int);
 Entry0204254c* Font_FindCharacter(int, int);
 int Font_FindCharacterIndex(int, int);
 int IsHalfwordInRange02067ad8(int, void*);
 
 // USA: func_0206b37c
-extern "C" ARM int func_0206b37c(Struct_0206b37c* arg0, char* arg1) {
-    if (!arg1) return 0;
-    unsigned char var0 = func_02042648(arg0->unknown_19dc_);
-    int var1 = 0xff;
-    unsigned char var2 = var1;
-    int var3;
-    int var4;
-    int var5 = 0;
-    unsigned short var6;
-    short var7;
-    while (!func_02067ad8((int)arg0, arg1)) {
-        memcpy(&var6, arg1, 2);
-        if (func_02044494(arg0, &var6)) {
-            var3 = func_02044420(arg0, &var6);
-            switch (var6) {
+extern "C" ARM int func_0206b37c(TextContext* context, char* text) {
+    if (!text) return 0;
+    unsigned char defaultWidth = Font_GetFallbackWidth(context->fontTable);
+    int current = 0xff;
+    unsigned char previous = current;
+    int payloadWords;
+    int step;
+    int width = 0;
+    unsigned short command;
+    short argument;
+    while (!IsHalfwordInRange02067ad8((int)context, text)) {
+        memcpy(&command, text, 2);
+        if (IsHighByteFF02044494(context, &command)) {
+            payloadWords = Dispatch02044420(context, &command);
+            switch (command) {
             case 0xff19:
-                var2 = 0xff;
-                var5 += func_020425e4(var2, var1, arg0->unknown_19dc_);
+                previous = 0xff;
+                width += Font_GetKerning(previous, current, context->fontTable);
                 break;
             case 0xff20:
                 var2 = 0xff;
@@ -60,7 +60,7 @@ extern "C" ARM int func_0206b37c(Struct_0206b37c* arg0, char* arg1) {
             Entry0204254c* entry = Font_FindCharacter((int)text, context->fontTable);
             if (entry) {
                 current = (unsigned char)Font_FindCharacterIndex((int)text, context->fontTable);
-                width += LookupKeyValue020425e4(previous, current, context->fontTable);
+                width += Font_GetKerning(previous, current, context->fontTable);
                 previous = current;
                 current = 0xff;
                 step = entry->size;

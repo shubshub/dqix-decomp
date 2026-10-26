@@ -63,7 +63,7 @@ public:
     unsigned short unknown_0_;
     short unknown_2_;
     short actorIndex_;              // the actor's index in its list: a party member's (GetPartyMemberByIndex), a field
-                                    // monster's slot (GetMaybeFieldMonsterByIndex); -1 after Initialize
+                                    // monster's slot (GetFieldMonsterByIndex); -1 after Initialize
     unsigned short unknown_6_;
     Model3D* pModel_;
     AnimationPackage* loadedAnimationPackageList_;
@@ -191,30 +191,30 @@ public:
 
     // Used for drawing the doors on cupboards etc (the animated part)
     // Similar to the main Draw function but with much less config
-    bool DrawSimple(bool applyClipping);
+    bool DrawWithCurrentRenderConfig(bool applyClipping);
 
     // Used to draw the player's head & weapon in the equipment menu,
     // and in a few instances in overlay 23.
     // This version doesn't set the success flag or submit anything
     // to the FIFO
-    bool DrawSimple2(bool applyClipping);
+    bool DrawInCurrentMatrix(bool applyClipping);
 
     // used in overlay 25
     bool DrawMeshWithMaterial(bool applyClipping, int material, int mesh, int bind);
 
     // like DrawMeshWithMaterial() but doesn't touch the RenderConfig.
     // used for drawing shadows under objects
-    bool DrawMeshWithMaterialSimple(bool applyClipping, int material, int mesh, int bind);
+    bool DrawMeshWithMaterialInCurrentMatrix(bool applyClipping, int material, int mesh, int bind);
 
     // used somewhere in overlay 15, not sure what for
-    bool DrawSimple3(bool applyClipping);
+    bool DrawWithComposedTransform(bool applyClipping);
 
     // I don't know exactly how this works, but among other things it's used
     // in overlay 6 as part of the procedure for computing where to place the
     // 2D sprite of the item that the alchemy pot spits out. It calls Model3D::Draw()
     // but there might be some trickery to ensure nothing is displayed directly 
     // as a result of this call
-    void MaybeUpdateBonePositions();
+    void UpdateTrackedBones();
 
     void SendTransformToFifo();
     void SendTranslationToFifo();
@@ -265,7 +265,7 @@ public:
     int HasAnimationReachedEnd() const;
     // offset 40 bit 1, when this bit is set the animation skips advancing for
     // one frame then this bit is cleared.
-    int GetOffset40Bit1() const;
+    int HasAnimationJustStarted() const;
 
     void SetCurrentAnimationTime(fix32_t time);
     fix32_t GetCurrentAnimationTime() const;
@@ -308,10 +308,10 @@ public:
 
     void SetField06(unsigned short value);
     unsigned short GetField06() const;
-    void SetField78(unsigned short value);
-    unsigned short GetField78() const;
-    void SetField7a(unsigned short value);
-    unsigned short GetField7a() const;
+    void SetSoundGroup(unsigned short value);
+    unsigned short GetSoundGroup() const;
+    void SetSoundArchive(unsigned short value);
+    unsigned short GetSoundArchive() const;
 
     // If transitionTime != 0 then the speed will adjust linearly towards
     // the specified value over that many frames/ticks

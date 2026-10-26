@@ -24,7 +24,7 @@ void* GlobalFlags_GetInstance(void);
 Global02109030* GetGlobal02109030_020936f8(void);
 int MessageSystem_GetInstance(void);
 void MessageSystem_Reset(char* obj);
-int TestFlags02046708(struct FlagWord02046708* word, unsigned int mask);
+int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 void ResetSelectionState020e25e8(struct Obj020e25e8* obj);
 
 struct Struct_ov003_02165730 {
@@ -67,15 +67,15 @@ extern "C" ARM void func_ov003_02165730(BattleView02165730* view) {
             }
         }
 
-        if (IsBrightnessTransitionActive(var0) != 0) return;
-        UnlockAndSetBrightness(var0, 0, 0xf);
-        arg0->unknown_4a4_ = 1;
-        if (arg0->unknown_390_ == NULL) return;
-        func_020e25e8(arg0->unknown_390_);
-    } else if (arg0->unknown_4a4_ == 1) {
-        if (IsBrightnessTransitionActive(var0) != 0) return;
-        if (func_02046708((struct Struct_02012de8*)var1, 0x41) != 0) {
-            arg0->unknown_464_ |= 0x800;
+        if (IsBrightnessTransitionActive(resources) != 0) return;
+        UnlockAndSetBrightness(resources, 0, 0xf);
+        view->step = 1;
+        if (view->selection == NULL) return;
+        ResetSelectionState020e25e8(view->selection);
+    } else if (view->step == 1) {
+        if (IsBrightnessTransitionActive(resources) != 0) return;
+        if (FlagWord_TestBits((struct FlagWord02046708*)flagData, 0x41) != 0) {
+            view->flags |= 0x800;
         }
         view->step = 2;
     } else if (view->step == 2) {

@@ -2,9 +2,6 @@
 #include "NitroSDK/Interrupts.h"
 #include "NitroSDK/Memory.h"
 
-#if defined(jpn)
-#define func_020c9be0 func_020cb6ac
-#endif
 
 struct Struct_ov031_02238de4_2 {
 	unsigned char unknown_0_;
@@ -49,15 +46,15 @@ struct Struct_ov031_02238de4 {
 	unsigned short unknown_0_;
 };
 
-extern "C" unsigned short func_ov031_0223911c(void);
-extern "C" void func_ov031_02239108(unsigned short arg0);
-extern "C" void func_ov031_02238db4(void);
-extern "C" int func_ov031_02239188(int arg0);
-extern "C" void func_ov031_022389b0(int arg0);
-extern "C" void func_ov031_02238910(int arg0);
-extern "C" void func_ov031_02238a88(int arg0);
-extern "C" void* func_ov027_021d8a68(int arg0);
-extern "C" void func_020c9be0(void);
+unsigned short GetGlobal02290d14_0223911c(void);
+void SetGlobal02290d14_02239108(unsigned short v);
+void CallOv027IfFieldsMatch_02238db4(void);
+extern "C" int func_ov031_02239188(int bitIdx);
+extern "C" void func_ov031_022389b0(int index);
+extern "C" void func_ov031_02238910(int index);
+extern "C" void func_ov031_02238a88(int index);
+extern "C" void* func_ov027_021d8a68(int index);
+extern "C" void HaltSystem(void);
 
 extern struct Struct_ov031_02238de4_5* data_ov031_02290d14;
 #define sMbpState (data_ov031_02290d14->unknown_0_)
@@ -176,6 +173,6 @@ extern "C" ARM void func_ov031_02238de4(unsigned short arg0, unsigned int arg1, 
 		}
 		break;
 	default:
-		func_020c9be0();
+		HaltSystem();
 	}
 }

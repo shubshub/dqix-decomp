@@ -37,9 +37,9 @@ extern "C" int func_ov000_02163690(int);
 extern "C" int func_ov000_0215fc60(char*);
 extern "C" void func_ov025_021df5e4(void*, int, int);
 extern "C" int func_ov025_021df9f4(GameObject*);
-extern "C" int func_0204936c(unsigned char*);
-extern "C" void func_0204a030(unsigned char*, int);
-extern "C" void func_02033920(GameObject*, int, int);
+int CheckSubstructFlag0x10_0204936c(unsigned char*);
+void SetSubstructByte0x6c_0204a030(unsigned char*, int);
+extern "C" void GameObject_FaceGameObject(GameObject*, int, int);
 extern "C" void func_ov025_021ea474(void*);
 extern "C" void func_ov025_021eb6fc(void*, int);
 
@@ -76,11 +76,11 @@ extern "C" ARM void func_ov025_021dc324(Struct_ov025_021dc324_9* arg0) {
             if (var8) {
                 func_ov025_021df5e4(arg0->unknown_5ab0_, var9, var10);
             }
-            GameObject* var11 = var0->GetCombatantByIndex(var10);
-            if (func_ov025_021df9f4(var11)) {
-                if (var7->unknown_4_0_ == 0xae && func_0204936c((unsigned char*)var11)) return;
-                if (_ZZ21inline_ov025_021dcf14vE1s.unknown_0_) func_0204a030((unsigned char*)var11, var9);
-                else func_02033920(var11, var9, 1);
+            GameObject* combatant = game->GetCombatantByIndex(target);
+            if (func_ov025_021df9f4(combatant)) {
+                if (skill->id == 0xae && CheckSubstructFlag0x10_0204936c((unsigned char*)combatant)) return;
+                if (_ZZ16GetTimer021ef974vE1s.flag) SetSubstructByte0x6c_0204a030((unsigned char*)combatant, actor);
+                else GameObject_FaceGameObject(combatant, actor, 1);
             }
         }
         if (!arg0->unknown_5c3a_) arg0->unknown_eac_ = 3;

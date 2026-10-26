@@ -59,7 +59,7 @@ void Window_SetPanes(Struct_0205cf78* s, WindowPane* arr, unsigned char count);
 extern "C" void SpriteContext_LoadFile(void* table, void* file, int size, SafeAllocator* alloc);
 int STD_CompareString(const char* a, const char* b);
 void AppendFlagEvents_0215917c(QueueStruct0215917c* obj, int flags);
-unsigned char CopyOutRegion0x5718_02011494(char* obj, void* dst);
+unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
 
 #if defined(jpn)
 #include "Filesystem/FileIO.h"
@@ -267,10 +267,10 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 flags &= ~(1 << i);
             }
         }
-        func_ov003_0215917c((Struct_ov003_0215917c*)arg0, var31);
-        arg0->unknown_590_ = func_02011494((char*)GameState::GetInstance(), arg0->unknown_591_);
-        arg0->unknown_588_ = 1;
-        arg0->unknown_580_ = 1;
+        AppendFlagEvents_0215917c((QueueStruct0215917c*)self, flags);
+        self->memberCount_ = GameState_GetOwnPartyOrder((char*)GameState::GetInstance(), self->members_);
+        self->next_ = 1;
+        self->state_ = 1;
     }
 #else
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
@@ -429,10 +429,10 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 flags &= ~(1 << i);
             }
         }
-        func_ov003_0215917c((Struct_ov003_0215917c*)arg0, var66);
-        arg0->unknown_590_ = func_02011494((char*)GameState::GetInstance(), arg0->unknown_591_);
-        arg0->unknown_588_ = 1;
-        arg0->unknown_580_ = 1;
+        AppendFlagEvents_0215917c((QueueStruct0215917c*)self, flags);
+        self->memberCount_ = GameState_GetOwnPartyOrder((char*)GameState::GetInstance(), self->members_);
+        self->next_ = 1;
+        self->state_ = 1;
     }
 #endif
 }

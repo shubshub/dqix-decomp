@@ -21,17 +21,17 @@ struct Struct_ov003_02171550 {
     unsigned char unknown_730_;
 };
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b000(void* arg0);
-extern "C" void func_0202b0f4(void* arg0);
-extern "C" int func_0202b7ec(void* arg0);
-extern "C" void func_0202c360(void* arg0, int arg1);
-extern "C" void func_0202b2f0(void* arg0);
-extern "C" void func_0202c410(void* arg0);
-extern "C" void func_0202b828(unsigned char* arg0);
-extern "C" void func_0202c21c(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c1e8(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" void func_0202c288(void* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int func_0202b000(void* ptr);
+extern "C" void LinkSession_End(void* ptr);
+int SetState2AndCall0202d6c8_0202b7ec(void* obj);
+extern "C" void func_0202c360(void* self, int value);
+extern "C" void LinkSession_Update(void* ptr);
+void CopyBattleTailToObjField0x102c_0202c410(void* obj);
+void SetField0To5AndField0x1008To1_0202b828(unsigned char* obj);
+void LinkSession_RemoveMember(struct SearchStruct* obj, int value);
+void LinkSession_AddMember(struct SearchStruct* obj, int value);
+extern "C" void LinkSession_UpdateMemberCount(void* ptr);
 
 // USA: func_ov003_02171550
 extern "C" ARM void func_ov003_02171550(struct Struct_ov003_02171550* arg0) {
@@ -40,26 +40,26 @@ extern "C" ARM void func_ov003_02171550(struct Struct_ov003_02171550* arg0) {
         return;
     }
 
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0202ae18();
-    GameObject* var2 = var0->GetProtagonist();
+    GameState* battle = GameState::GetInstance();
+    void* ptr = LinkSession_GetInstance();
+    GameObject* c = battle->GetProtagonist();
 
-    int var3 = func_0202b000(var1);
-    if (var3 != 0) {
-        if (var3 == 3) return;
-        func_0202b0f4(var1);
-        arg0->unknown_0_ = 0xa;
+    int state = func_0202b000(ptr);
+    if (state != 0) {
+        if (state == 3) return;
+        LinkSession_End(ptr);
+        obj->field0 = 0xa;
         return;
     }
 
-    func_0202b7ec(var1);
-    func_0202c360(var1, *(int*)((char*)var2 + 0x134));
-    func_0202b2f0(var1);
-    func_0202c410(var1);
-    func_0202b828((unsigned char*)var1);
-    func_0202c21c((struct Struct_0202b2f0*)var1, 0xf);
-    func_0202c1e8((struct Struct_0202b2f0*)var1, 0);
-    func_0202c288(var1);
+    SetState2AndCall0202d6c8_0202b7ec(ptr);
+    func_0202c360(ptr, *(int*)((char*)c + 0x134));
+    LinkSession_Update(ptr);
+    CopyBattleTailToObjField0x102c_0202c410(ptr);
+    SetField0To5AndField0x1008To1_0202b828((unsigned char*)ptr);
+    LinkSession_RemoveMember((struct SearchStruct*)ptr, 0xf);
+    LinkSession_AddMember((struct SearchStruct*)ptr, 0);
+    LinkSession_UpdateMemberCount(ptr);
 
     *(int*)((char*)arg0 + 4) = (rand() % 4 + 2) * 500;
 

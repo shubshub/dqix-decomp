@@ -12,6 +12,8 @@ import glob, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = re.compile(r"^// (?:Overlay \d+|Main), originally ")
 DEF = re.compile(r"\bARM\b[^(]*?([\w:]*\w)\s*\(")
+# a definition with no ARM marker: a class member (void Zone3D::SwitchZone(...)) or an asm function
+DEF_PLAIN = re.compile(r"^(?:asm\s+)?[A-Za-z_][\w\s\*&<>,]*?\b((?:\w+::)?~?\w+)\s*\((?:[^;]*$|[^;{]*\)[^;{]*\{)")
 
 named, bad = {}, []
 for path in glob.glob(os.path.join(ROOT, "src/**/*.c*"), recursive=True):
@@ -19,9 +21,17 @@ for path in glob.glob(os.path.join(ROOT, "src/**/*.c*"), recursive=True):
     for i, line in enumerate(lines):
         if not ORIGIN.match(line):
             continue
-        m = next((m for m in map(DEF.search, lines[i + 1:i + 6]) if m), None)
+        m = next((m for m in map(DEF.search, lines[i + 1:i + 6]) if m), None) or \
+            next((m for m in map(DEF_PLAIN.match, lines[i + 1:i + 4]) if m and not m.group(1).startswith("if")), None)
         if m:
-            named[m.group(1)] = os.path.relpath(path, ROOT)
+            name = m.group(1)
+            mm = re.match(r"_ZN(\d+)", name)          # a member defined under its mangled name: _ZN<n>Class<m>MethodE...
+            if mm:
+                n = int(mm[1]); cls = name[mm.end():mm.end() + n]; rest = name[mm.end() + n:]
+                ml = re.match(r"(\d+)", rest)
+                if ml:
+                    name = f"{cls}::{rest[ml.end():ml.end() + int(ml[1])]}"
+            named[name] = os.path.relpath(path, ROOT)
         else:
             bad.append(f"{os.path.relpath(path, ROOT)}:{i + 1}: origin comment not followed by a definition")
 

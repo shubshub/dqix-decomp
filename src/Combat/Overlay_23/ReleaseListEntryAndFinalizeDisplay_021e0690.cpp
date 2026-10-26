@@ -8,7 +8,7 @@ int KeyTable_Get(struct Container020e0310*, int);
 extern "C" char* func_020e046c(char* buf, void* b, void* c, int idx);
 void ClearStruct16_020df83c(void* p);
 struct Struct020dfc40;
-void ResetAndDetach020dfc6c(struct Struct020dfc40* p);
+void KeyTable_Destroy(struct Struct020dfc40* p);
 
 extern "C" {
     void func_ov023_021ddf5c(void* obj);
@@ -73,9 +73,9 @@ extern "C" ARM int func_ov023_021e0690(void* obj_) {
         }
 
         ClearStruct16_020df83c(obj + 0x6c);
-        ResetAndDetach020dfc6c((struct Struct020dfc40*)(obj + 0x8c));
+        KeyTable_Destroy((struct Struct020dfc40*)(obj + 0x8c));
         ClearStruct16_020df83c(obj + 0x7c);
-        ResetAndDetach020dfc6c((struct Struct020dfc40*)(obj + 0xa4));
+        KeyTable_Destroy((struct Struct020dfc40*)(obj + 0xa4));
 
         void* p = *(void**)(obj + 0x4c);
         if (p == NULL) {

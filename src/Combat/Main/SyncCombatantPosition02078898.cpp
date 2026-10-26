@@ -45,7 +45,7 @@ enum { PositionContextOffset = 0x734 };
 ARM int SyncCombatantPosition02078898(struct Entity02078898* p) {
     GameState* bs = GameState::GetInstance();
     unsigned short id = p->combatantIdField;
-    GameObject* combatant = bs->GetMaybeWanderingMonsterByIndex(id);
+    GameObject* combatant = bs->GetWanderingMonsterByIndex(id);
     if (combatant == 0) return 0;
 
     void* ov = GetGameResources();

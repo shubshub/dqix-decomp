@@ -32,7 +32,7 @@ void FlagWord_ClearBits(FlagWord020466f4* p, unsigned int flags);
 extern "C" ARM int func_ov031_022439d8(Struct022439d8* ctx) {
 	void* base = GetGameResources();
 	BackgroundLoader* loader = BackgroundLoader::GetInstance();
-	GameObject* obj = GameState::GetInstance()->GetUnknownGameObject();
+	GameObject* obj = GameState::GetInstance()->GetLeader();
 	if (obj != 0) {
 		GameObject_EnableControl(obj);
 	}

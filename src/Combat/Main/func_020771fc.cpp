@@ -52,26 +52,26 @@ struct Struct_020771fc_3 {
     int unknown_424_;
 };
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void* g);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void* g);
 extern "C" int func_020322c0(void* p, int* s);
 extern "C" void func_020794f8(Actor_020771fc* obj, int a, int b);
 extern "C" Probe_02012fe4* Zone3D_GetInstance(void);
 extern "C" int Zone3D_GetGroundHeight(Probe_02012fe4* p, Vector3i* d);
 extern "C" void func_ov017_021c9400(int id, int slot, int heading, Vector3i pos, Vector3i vec, int last);
-int GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* s);
-int CheckField0NonZero_0202b7d8(int* g);
+int LinkSession_GetOwnSlot(SearchStruct0202c1a4* s);
+int LinkSession_IsActive(int* g);
 Entry_02028bd0* ZoneRecords_GetInstance(void);
-Entry_02028bd0* FindInlineEntryById(Entry_02028bd0* base, int key);
+Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0* base, int key);
 TableEntry_020771fc* FindListEntryById(List_020283c0* list, int key);
 void GameObject_SetMotionState(Obj02033b68* obj, int value);
-void* GetField0xe4IfFlag0x40(BitFlag02033f44* obj);
+void* GameObject_GetWallHit(BitFlag02033f44* obj);
 void TrySetMode02076ccc(void* obj, int mode);
 void GameObject_SetFacing(Obj02033834* obj, int value);
 
 // USA: func_020771fc
 extern "C" ARM void func_020771fc(Actor_020771fc* obj) {
-    void* g = func_0202ae18();
+    void* g = LinkSession_GetInstance();
     Vector3i a = obj->pos44;
     a.y = 0;
     Vector3i b = obj->pos158;
@@ -96,21 +96,21 @@ extern "C" ARM void func_020771fc(Actor_020771fc* obj) {
         arg0->unknown_b2_ = 0x1c2;
         break;
     }
-    int var4 = 0;
-    void* var5 = func_02033f44((Struct_02033f44*)arg0);
-    int var6 = 0;
-    if (var5 != 0) {
-        int var7 = arg0->unknown_ae_;
-        if (func_020322c0(var5, &var7) < 0x199) {
-            var6 = 1;
+    int moved = 0;
+    void* p = GameObject_GetWallHit((BitFlag02033f44*)obj);
+    int found = 0;
+    if (p != 0) {
+        int s = obj->fae;
+        if (func_020322c0(p, &s) < 0x199) {
+            found = 1;
         }
     }
-    if (var6 != 0) {
-        func_02076ccc(arg0, 1);
-        arg0->unknown_154_ = 0;
-        arg0->unknown_17c_ = 1;
-        if (func_0202b7d8((int*)var0) != 0) {
-            func_020794f8(arg0, 0, 1);
+    if (found != 0) {
+        TrySetMode02076ccc(obj, 1);
+        obj->f154 = 0;
+        obj->f17c = 1;
+        if (LinkSession_IsActive((int*)g) != 0) {
+            func_020794f8(obj, 0, 1);
         }
         return;
     }
@@ -126,10 +126,10 @@ extern "C" ARM void func_020771fc(Actor_020771fc* obj) {
     }
     if (dist < 0x1000) {
         Vector3i d = obj->pos44;
-        if (func_0202c508(g) != 0) {
+        if (LinkSession_IsHostOrSolo(g) != 0) {
             Entry_02028bd0* table = ZoneRecords_GetInstance();
             int id = ((Object3D*)obj)->GetField06();
-            Entry_02028bd0* entry = FindInlineEntryById(table, id);
+            Entry_02028bd0* entry = ZoneRecords_Find(table, id);
             if (entry != 0) {
                 List_020283c0* list = (List_020283c0*)((char*)entry + EntryListOffset);
                 if (list != 0) {
@@ -153,10 +153,10 @@ extern "C" ARM void func_020771fc(Actor_020771fc* obj) {
     if (var4 == 0) {
         return;
     }
-    if (func_0202b7d8((int*)var0) == 0) {
+    if (LinkSession_IsActive((int*)g) == 0) {
         return;
     }
-    if (func_0202c1a4((Struct_0202c1a4*)var0) != 0) {
+    if (LinkSession_GetOwnSlot((SearchStruct0202c1a4*)g) != 0) {
         return;
     }
     int var17 = ((Object3D*)arg0)->GetField06();

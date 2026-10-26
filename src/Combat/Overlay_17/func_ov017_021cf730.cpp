@@ -11,36 +11,36 @@ struct Struct_ov017_021cf730_2 {
     union { unsigned char unknown_0_; struct { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; } unknown1_0_; } unknown_f_;
 };
 
-struct Struct_ov017_021cf730 { char unknown_0_[0xc]; int unknown_c_; };
-extern "C" int* func_0202ae18();
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_0202c540(int*);
-extern "C" void* func_0202ae24();
+struct ZoneWord { char pad[0xc]; int zone; };
+extern "C" int* LinkSession_GetInstance();
+int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsGuest(int*);
+void* LinkMessageQueue_GetInstance();
 extern "C" void func_0205e330(void*, void*, int);
 
 // USA: func_ov017_021cf730
-extern "C" ARM void func_ov017_021cf730(signed char arg0, unsigned char arg1) {
-    int* var0 = func_0202ae18();
-    if (!func_0202b7d8(var0) || func_0202c540(var0)) return;
-    GameState* var1 = GameState::GetInstance();
-    void* var2 = func_0202ae24();
-    unsigned char var3[0x14];
-    Struct_ov017_021cf730_2* var4 = (Struct_ov017_021cf730_2*)(var3 + 4);
-    GrottoStruct* var5 = var1->GetGrottoStruct();
-    var3[0] = 0xa0;
-    var4->unknown_0_ = ((Struct_ov017_021cf730*)var5)->unknown_c_;
-    var4->unknown_2_ = var5->activeMapData.DiscoveryStateAndMapTypeAndUnknown;
-    var4->unknown_3_.unknown1_0_.unknown_0_0_ = var5->unknown_0[0] != 0;
-    var4->unknown_3_.unknown1_0_.unknown_0_2_ = arg1;
-    var4->unknown_8_ = var5->entranceX >> 7;
-    var4->unknown_a_ = var5->entranceY >> 7;
-    var4->unknown_c_ = var5->entranceZ >> 7;
-    var4->unknown_4_ = var5->activeMapData.QualityOrLegacyBossID;
-    var4->unknown_5_ = var5->activeMapData.LegacyBossLevel;
-    var4->unknown_6_ = var5->activeMapData.SeedOrMinTurns;
-    var4->unknown_f_.unknown1_0_.unknown_0_0_ = var5->activeStartingMonsterRank;
-    var4->unknown_f_.unknown1_0_.unknown_0_4_ = var5->activeEnviron;
-    var4->unknown_e_ = *((signed char*)var5 + 8);
-    var4->unknown_3_.unknown1_0_.unknown_0_3_ = arg0;
-    func_0205e330(var2, var3, 0);
+extern "C" ARM void func_ov017_021cf730(signed char player, unsigned char refresh) {
+    int* control = LinkSession_GetInstance();
+    if (!LinkSession_IsActive(control) || LinkSession_IsGuest(control)) return;
+    GameState* state = GameState::GetInstance();
+    void* destination = LinkMessageQueue_GetInstance();
+    unsigned char buffer[0x14];
+    GrottoPacket* packet = (GrottoPacket*)(buffer + 4);
+    GrottoStruct* grotto = state->GetGrottoStruct();
+    buffer[0] = 0xa0;
+    packet->zone_ = ((ZoneWord*)grotto)->zone;
+    packet->mapState_ = grotto->activeMapData.DiscoveryStateAndMapTypeAndUnknown;
+    packet->control_.bits_.active_ = grotto->unknown_0[0] != 0;
+    packet->control_.bits_.refresh_ = refresh;
+    packet->x_ = grotto->entranceX >> 7;
+    packet->y_ = grotto->entranceY >> 7;
+    packet->z_ = grotto->entranceZ >> 7;
+    packet->quality_ = grotto->activeMapData.QualityOrLegacyBossID;
+    packet->level_ = grotto->activeMapData.LegacyBossLevel;
+    packet->seed_ = grotto->activeMapData.SeedOrMinTurns;
+    packet->ranks_.bits_.rank_ = grotto->activeStartingMonsterRank;
+    packet->ranks_.bits_.environment_ = grotto->activeEnviron;
+    packet->field12_ = *((signed char*)grotto + 8);
+    packet->control_.bits_.player_ = player;
+    func_0205e330(destination, buffer, 0);
 }

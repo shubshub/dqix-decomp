@@ -6,11 +6,11 @@
 struct AllocatorUnion;
 struct Struct_020979c0;
 
-extern "C" void func_020a0cc4(unsigned int arg0);
-extern "C" void func_020a0c0c(void);
+extern "C" void func_020a0cc4(unsigned int size);
+extern "C" void ROMFilesystem_InitFileTables(void);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void InitStruct020979c0(Obj020979c0* obj, unsigned char flag);
-extern "C" void func_020a1940(unsigned int id);
+extern "C" void Overlay_Load(unsigned int id);
 void PushInputLogB_020a1ef0(int value);
 void PopStack1AndTrigger_020a1f4c(int value);
 extern "C" void func_ov014_02186a70(void* obj);
@@ -40,25 +40,25 @@ extern "C" ARM void FieldTask_OpenMonsterList(Task021c03a4* task) {
         func_020a0cc4(0x3f000);
         void* buffer = AllocatorUnion_AllocateRounded((AllocatorUnion*)&g_mainAllocator, 0x3f000);
         if (buffer == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+            ROMFilesystem_InitFileTables();
+            task->failed = 1;
             return;
         }
-        arg0->unknown_8_.CreateTypeA(var0, 0x3f000);
-        arg0->unknown_8_.Reset();
-        arg0->unknown_1c_ = arg0->unknown_8_.Allocate(0x20);
-        arg0->unknown_20_ = arg0->unknown_8_.Allocate(0x194);
-        if (arg0->unknown_1c_ == NULL || arg0->unknown_20_ == NULL) {
-            func_020a0c0c();
-            arg0->unknown_1_ = 1;
+        task->allocator.CreateTypeA(buffer, 0x3f000);
+        task->allocator.Reset();
+        task->f1c = task->allocator.Allocate(0x20);
+        task->f20 = task->allocator.Allocate(0x194);
+        if (task->f1c == NULL || task->f20 == NULL) {
+            ROMFilesystem_InitFileTables();
+            task->failed = 1;
             return;
         }
-        func_020979c0((Struct_020979c0*)arg0->unknown_1c_, 1);
-        func_020a1940(OVERLAY_ID(14));
-        func_020a1ef0(1);
-        func_ov014_02186a70(arg0->unknown_20_);
-        func_ov014_021868b8(arg0->unknown_20_, &arg0->unknown_8_);
-        arg0->unknown_24_++;
+        InitStruct020979c0((Obj020979c0*)task->f1c, 1);
+        Overlay_Load(OVERLAY_ID(14));
+        PushInputLogB_020a1ef0(1);
+        func_ov014_02186a70(task->f20);
+        func_ov014_021868b8(task->f20, &task->allocator);
+        task->step++;
         return;
     }
     if (arg0->unknown_24_ == 1) {
@@ -76,10 +76,10 @@ extern "C" ARM void FieldTask_OpenMonsterList(Task021c03a4* task) {
     if (arg0->unknown_24_ != 3) {
         return;
     }
-    func_ov014_02186b30(arg0->unknown_20_);
-    func_02097b34(arg0->unknown_1c_);
-    func_ov017_021c0364(arg0);
-    func_020a0c0c();
-    func_020a1f4c(1);
-    arg0->unknown_1_ = 1;
+    func_ov014_02186b30(task->f20);
+    func_02097b34(task->f1c);
+    func_ov017_021c0364(task);
+    ROMFilesystem_InitFileTables();
+    PopStack1AndTrigger_020a1f4c(1);
+    task->failed = 1;
 }

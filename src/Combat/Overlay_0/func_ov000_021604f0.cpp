@@ -26,7 +26,7 @@
 #include "Memory/SafeAllocator.h"
 
 void SePlayer_UnloadExtraArchiveA(void* obj);
-void ResetBigStruct02013750(void* obj, int flag);
+void Zone3D_Unload(void* obj, int flag);
 extern "C" void func_ov000_02172720(void* obj);
 
 extern "C" void func_02079f9c(char* arg0);
@@ -56,9 +56,9 @@ extern "C" ARM void func_ov000_021604f0(struct CombatWork_021604f0* work) {
         SePlayer_UnloadExtraArchiveA(g_sePlayer);
         work->displayActive = 0;
     }
-    func_02013750(arg0->unknown_ec8_, 1);
-    if (!(arg0->unknown_55f4_ & 0x800)) {
-        func_ov000_02172720(arg0->unknown_3760_);
+    Zone3D_Unload(work->zone, 1);
+    if (!(work->flags & 0x800)) {
+        func_ov000_02172720(work->field_3760);
     }
     func_02079f9c((char*)func_020797dc());
     void* var0 = func_02057924();

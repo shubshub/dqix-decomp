@@ -13,8 +13,8 @@ struct Struct_ov000_0216f2b8 {
     unsigned char unknown_260_;
 };
 
-extern "C" fix32_t func_ov000_0216f210(struct Struct_ov000_0216f2b8* arg0, fix32_t* arg1);
-extern "C" void func_0202eab8(struct Struct_ov000_0216f2b8* arg0);
+extern "C" fix32_t func_ov000_0216f210(struct Camera0216f2b8* self, fix32_t* outLength);
+extern "C" void Camera_SetOrbitFromPosition(struct Camera0216f2b8* self);
 
 // USA: func_ov000_0216f2b8
 extern "C" ARM void func_ov000_0216f2b8(struct Struct_ov000_0216f2b8* arg0) {
@@ -46,8 +46,8 @@ extern "C" ARM void func_ov000_0216f2b8(struct Struct_ov000_0216f2b8* arg0) {
         var0.y = 0x5000;
         var2 = true;
     }
-    if (var2) {
-        arg0->unknown_4_ = var0;
-        func_0202eab8(arg0);
+    if (changed) {
+        self->pos = pos;
+        Camera_SetOrbitFromPosition(self);
     }
 }

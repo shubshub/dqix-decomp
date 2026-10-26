@@ -34,11 +34,11 @@ struct Struct_02014a24_2 {
     Struct_02012ff0 *unknown_40_;
 };
 
-extern "C" void *func_0201f144(unsigned char *arg0, int arg1);
-extern "C" void func_02012ff0(Struct_02012ff0 *arg0);
-extern "C" int func_02015134(Zone3D* arg0, Struct_02012ff0* arg1, Struct_02014a24* arg2);
-extern "C" int func_020151cc(Zone3D *arg0, Struct_02012ff0 *arg1, Struct_02014a24 *arg2);
-extern "C" int func_02014d80(Zone3D *arg0, void *arg1, Struct_02012ff0 *arg2, Struct_02014a24 *arg3);
-extern "C" void func_020177d4(Zone3D *arg0, void *arg1, SafeAllocator *arg2);
+void *BmdjScriptState_GetResourceRecord(unsigned char *obj, int index);
+void BmdjElementResource_Init(Struct02012ff0 *s);
+extern "C" int Zone3D_LoadElementTerrainMesh(Zone3D* ctx, Struct02012ff0* out, Src02015134* src);
+extern "C" int Zone3D_LoadElementObject(Zone3D *zone, Struct02012ff0 *tracker, Src02015134 *source);
+extern "C" int Zone3D_LoadElementModel(Zone3D *zone, void *node, Struct02012ff0 *tracker, Src02015134 *source);
+extern "C" void Zone3D_BuildSceneElements(Zone3D *zone, void *node, SafeAllocator *allocator);
 
-extern "C" int func_02014a24(Zone3D *arg0, void *arg1);
+extern "C" int Zone3D_SetUpScriptNode(Zone3D *zone, void *data);

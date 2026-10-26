@@ -2,7 +2,7 @@
 #include "Graphics/LightingManager.h"
 #include "World/Zone3D.h"
 
-int IsValueInRange0201b5d8(int x);
+int ZoneId_IsGrottoBossFloor(int x);
 
 struct Obj02052338;
 
@@ -19,7 +19,7 @@ enum { NodeBufferOffset = 0x25b4 };
 
 // USA: func_0201aedc
 ARM void ProcessNode0201aedc(Zone3D* p) {
-    if (IsValueInRange0201b5d8(p->currentZoneID_)) return;
+    if (ZoneId_IsGrottoBossFloor(p->currentZoneID_)) return;
 
     char* buf = (char*)p + NodeBufferOffset;
 

@@ -4,9 +4,9 @@
 
 struct Struct_0202b2f0;
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void);
-int TestFlagBitAt0xe_0202c578(struct SearchStruct* obj, int value);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void);
+int LinkSession_IsSlotLost(struct SearchStruct* obj, int value);
 extern "C" void func_0207dcf0(int a);
 extern "C" int memcmp(void* a, void* b, int c);
 extern "C" void func_ov017_021c9c64(int a, int b);
@@ -48,19 +48,19 @@ extern "C" ARM void func_0207dba8(struct Struct_0207d798* arg0) {
             var1->unknown_6_ = (unsigned short)var3;
         }
     }
-    struct Struct_0202b2f0* var9 = (struct Struct_0202b2f0*)func_0202ae18();
-    if (func_0202c508() == 0) return;
-    int var10;
-    for (var10 = var4; var10 < 4; var10++) {
-        if (!func_0202c578(var9, var10)) continue;
-        struct Struct_0207d798* var11 = arg0;
-        int var12;
-        for (var12 = var5; var12 < 4; var11++, var12++) {
-            signed char* var13 = var11->unknown_8_;
-            if (var11->unknown_0_ == 0) continue;
-            if (var13[var10] != var6) continue;
-            var13[var10] = (signed char)var5;
-            func_0207dcf0(var11->unknown_0_);
+    struct SearchStruct* search = (struct SearchStruct*)LinkSession_GetInstance();
+    if (LinkSession_IsHostOrSolo() == 0) return;
+    int j;
+    for (j = trueVal; j < 4; j++) {
+        if (!LinkSession_IsSlotLost(search, j)) continue;
+        struct Init0207d7c0* p = list;
+        int k;
+        for (k = resetVal; k < 4; p++, k++) {
+            signed char* a = p->arr8;
+            if (p->h0 == 0) continue;
+            if (a[j] != negOne) continue;
+            a[j] = (signed char)resetVal;
+            func_0207dcf0(p->h0);
         }
     }
 }

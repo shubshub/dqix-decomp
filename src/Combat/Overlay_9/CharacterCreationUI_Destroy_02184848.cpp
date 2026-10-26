@@ -12,7 +12,7 @@ void MessageSystem_ResetGlyphs(struct CombatSlots02045cac* obj);
 void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(char* obj);
 void SpriteContext_Destroy(void* obj);
-void* GetGlobalPtr02105244_0203bd14();
+void* CachedTextTable_GetInstance();
 void CachedTextTable_Reset(char* obj);
 struct BackgroundGraphics;
 void Background_ClearMap(BackgroundGraphics* obj, void* p);
@@ -39,7 +39,7 @@ extern "C" ARM void CharacterCreationUI_Destroy(CharacterCreationUI* self) {
     if (self->subSpriteContext != 0) {
         SpriteContext_Destroy(self->subSpriteContext);
     }
-    CachedTextTable_Reset((char*)GetGlobalPtr02105244_0203bd14());
+    CachedTextTable_Reset((char*)CachedTextTable_GetInstance());
     {
         void* layers[6];
         layers[0] = &self->layers[0];

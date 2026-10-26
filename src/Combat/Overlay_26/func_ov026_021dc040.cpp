@@ -28,8 +28,8 @@ struct Struct_ov026_021dc040 {
 Object3D* GetField0x21c(S0204a438*);
 int ClassifyField0x81fe_ov000_0215fc60(char*);
 int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
-void SetVecYFromValue02033874(Obj02033874*, int);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_SnapFacing(Obj02033874*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 void GameState_SetCamera(GameState*, int);
 void InitCombatantPosition_0216118c(void*, int);
 void RunFlaglearAndSetMode02167e6c_02167e6c(unsigned char*);
@@ -55,7 +55,7 @@ extern "C" ARM int func_ov026_021dc040(SafeAllocator* allocator, BattleWork* sel
     if (!animation) return 1;
     GameObject* formation = game->GetGameObjectByIndex(0xcf);
     if (!formation) return 1;
-    formation->obj3D_.MaybeUpdateBonePositions();
+    formation->obj3D_.UpdateTrackedBones();
     Model3D* model = formation->obj3D_.pModel_;
     if (model) {
         short members[4];
@@ -82,7 +82,7 @@ extern "C" ARM int func_ov026_021dc040(SafeAllocator* allocator, BattleWork* sel
                             position.z = bone->matrix.translation.z;
                             Vector3fixMultiplyScalar(&position, 266, &position);
                             member->obj3D_.position_ = position;
-                            SetVecYFromValue02033874((Obj02033874*)member, fix32_Atan2(bone->matrix.rotation.rows[2].x, bone->matrix.rotation.rows[2].z));
+                            GameObject_SnapFacing((Obj02033874*)member, fix32_Atan2(bone->matrix.rotation.rows[2].x, bone->matrix.rotation.rows[2].z));
                             Vector3fix_Add(&center, &position, &center);
                         }
                     }
@@ -103,15 +103,15 @@ extern "C" ARM int func_ov026_021dc040(SafeAllocator* allocator, BattleWork* sel
             }
         }
     }
-    if (arg1->unknown_7712_ == 0 && !var2->HasAnimationStopped()) return 0;
-    if (arg1->unknown_7712_ != 6) {
-        for (int var21 = 0; var21 < 4; ++var21) {
-            if (func_020a35e0((unsigned char*)arg3, var21)) {
-                GameObject* var22 = func_0200ff1c(var0, var21);
-                if (var22) {
-                    var22->obj3D_.RemoveAnimationPackageByID(3);
-                    func_02033b88((Struct_02010604*)var22, 0);
-                    func_02033874((Struct_02033834*)var22, 0x3244);
+    if (self->animationState == 0 && !animation->HasAnimationStopped()) return 0;
+    if (self->animationState != 6) {
+        for (int index = 0; index < 4; ++index) {
+            if (TestBitAt0x34_020a35e0((unsigned char*)party, index)) {
+                GameObject* member = GetCombatantWithFlag0x100_0200ff1c(game, index);
+                if (member) {
+                    member->obj3D_.RemoveAnimationPackageByID(3);
+                    GameObject_ForceMotionState((Bytes02033b88*)member, 0);
+                    GameObject_SnapFacing((Obj02033874*)member, 0x3244);
                 }
             }
         }

@@ -24,7 +24,7 @@ ARM void FieldTask_EndQuestCancel(struct Struct020d9fc8* p) {
             p->arr[i] = -1;
         }
     }
-    GameObject_EnableControl(GameState::GetInstance()->GetUnknownGameObject());
+    GameObject_EnableControl(GameState::GetInstance()->GetLeader());
     FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0x1e);
     *((unsigned char*)p + 1) = 1;
 }

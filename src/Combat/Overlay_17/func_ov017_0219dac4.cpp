@@ -18,8 +18,8 @@ struct Struct_ov017_0219dac4 {
     int unknown_15c_;
 };
 
-extern "C" void _ZN8Object3D10SetField06Et(Object3D* arg0, int arg1);
-extern "C" void* func_0202ae18(void);
+extern "C" void _ZN8Object3D10SetField06Et(Object3D* obj, int value);
+extern "C" void* LinkSession_GetInstance(void);
 struct Entry_02028bd0* ZoneRecords_GetInstance(void);
 extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
@@ -27,16 +27,16 @@ int GetField0x158_02053ed0(void* obj);
 GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
 int GetSignedByte0x2d0_020546a8(void* obj);
 extern "C" void func_ov017_0219cdc0(unsigned short value, int a1, signed char id);
-void ClearField0xc4KeepBit0x8000_0203409c(unsigned char* obj);
-extern "C" int func_0202c540(void* p);
-extern "C" int func_0202c508(void* p);
+void GameObject_StopSinking(unsigned char* obj);
+extern "C" int LinkSession_IsGuest(void* p);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 void SetByteIfDataAndCheckClear_021a01bc(unsigned char* self);
 void EnqueueEventTag147_021cdaa0(void);
 
 // USA: func_ov017_0219dac4
 extern "C" ARM void func_ov017_0219dac4(unsigned char* self, int id, int value) {
     GameState* gs = GameState::GetInstance();
-    void* ctx = func_0202ae18();
+    void* ctx = LinkSession_GetInstance();
     ZoneRecords_GetInstance();
     unsigned short* current = Zone3D_GetInstance();
     Member_0219dac4* member = (Member_0219dac4*)gs->GetPartyMemberByIndex(id);
@@ -62,12 +62,12 @@ extern "C" ARM void func_ov017_0219dac4(unsigned char* self, int id, int value) 
         }
     }
 
-    _ZN8Object3D10SetField06Et(&var3->unknown_0_, arg2);
-    func_ov017_0219cdc0(arg2, 0, arg1);
-    var3->unknown_0_.SetInheritedAlpha(31);
-    var3->unknown_c2_ &= ~0x40;
-    func_0203409c((unsigned char*)var3);
-    func_02038508(func_020399a8(var3));
+    _ZN8Object3D10SetField06Et(&member->obj3D, value);
+    func_ov017_0219cdc0(value, 0, id);
+    member->obj3D.SetInheritedAlpha(31);
+    member->flagsC2 &= ~0x40;
+    GameObject_StopSinking((unsigned char*)member);
+    LadderClimb_Reset(GameObject_GetLadderClimb(member));
 
     for (int var7 = 0; var7 < 4; var7++) {
         Struct_ov017_0219dac4* var8 = (Struct_ov017_0219dac4*)func_0200ff58(var0, var7);
@@ -77,10 +77,10 @@ extern "C" ARM void func_ov017_0219dac4(unsigned char* self, int id, int value) 
         }
     }
 
-    if (func_0202c540(var1) && arg1 == 0 && arg2 == *var2 && var4 != arg2) {
-        func_ov017_021a01bc(arg0);
+    if (LinkSession_IsGuest(ctx) && id == 0 && value == *current && prev != value) {
+        SetByteIfDataAndCheckClear_021a01bc(self);
     }
-    if (arg2 == *var2 && func_0202c508(var1)) {
-        func_ov017_021cdaa0();
+    if (value == *current && LinkSession_IsHostOrSolo(ctx)) {
+        EnqueueEventTag147_021cdaa0();
     }
 }

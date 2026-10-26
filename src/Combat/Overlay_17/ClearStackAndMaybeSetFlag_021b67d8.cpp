@@ -10,10 +10,10 @@ enum {regionalOffset0=0x6fc, regionalOffset1=0x734, regionalOffset2=0xcc};
 
 void PopStack0AndTrigger_020a1e54(int flag);
 void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 struct ListHead02046b60;
 int ListContainsId(struct ListHead02046b60* list, int id);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 
 extern int g_mainAllocator;
 
@@ -44,7 +44,7 @@ extern "C" ARM void func_ov017_021b67d8(struct Obj021b67d8* self) {
         AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
     }
 
-    func_020a0c0c();
+    ROMFilesystem_InitFileTables();
 
     int flag = 1;
     struct Ctx021b67d8* ctx = (struct Ctx021b67d8*)((char*)GetGameResources() + 0x3000);
@@ -63,6 +63,6 @@ extern "C" ARM void func_ov017_021b67d8(struct Obj021b67d8* self) {
         return;
     }
 
-    char* q = (char*)func_0202ae18();
+    char* q = (char*)LinkSession_GetInstance();
     q[0x1000 + 0x11] = 1;
 }

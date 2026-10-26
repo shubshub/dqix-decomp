@@ -2,10 +2,10 @@
 #include "GameState/GameState.h"
 
 struct SearchStruct0202c1a4;
-signed char GetSearchStructCurrentArrEntry(struct SearchStruct0202c1a4* obj);
+signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 extern "C" int Zone3D_GetInstance(void);
 void CopyToOffsetIfSrc02098efc(char* obj, int offset, const void* src, unsigned int length);
-void* GetData02100044_0202ae24(void);
+void* LinkMessageQueue_GetInstance(void);
 struct BitArrayObj0205e804;
 void ClearBitInArray0x1524(struct BitArrayObj0205e804* obj, int index);
 
@@ -24,7 +24,7 @@ extern "C" ARM void func_ov017_021d3dcc(int arg0, struct Struct_ov017_021d3dcc* 
 #else
  enum {Enum_ov017_021d3dcc_2112=0x840};
 #endif
-    if (func_0202c1a4(arg4) != arg1->unknown_11_4_) {
+    if (LinkSession_GetOwnSlot(search) != evt->midTag) {
         return;
     }
     char* base = (char*)Zone3D_GetInstance();
@@ -33,7 +33,7 @@ extern "C" ARM void func_ov017_021d3dcc(int arg0, struct Struct_ov017_021d3dcc* 
     if (!evt->topFlag) {
         return;
     }
-    var1[0x1000 + 0xb62] = 1;
-    struct Struct_0205e804* var2 = (struct Struct_0205e804*)func_0202ae24();
-    func_0205e804(var2, 0xb9);
+    p1[0x1000 + 0xb62] = 1;
+    struct BitArrayObj0205e804* bits = (struct BitArrayObj0205e804*)LinkMessageQueue_GetInstance();
+    ClearBitInArray0x1524(bits, 0xb9);
 }

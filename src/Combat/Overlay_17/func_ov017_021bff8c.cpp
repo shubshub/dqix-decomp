@@ -8,10 +8,10 @@ void* MessageSystem_GetInstance(void);
 extern "C" void* func_ov017_021b8478(void* obj);
 struct ListHead02046b60;
 int ListContainsId(ListHead02046b60* list, int id);
-int IsField0Null_02046b08(void** p);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* p);
-int GetByteField0x252_02039820(void* obj);
-int GetByte0x26c_02039d7c(char* p);
+int FieldTaskQueue_IsEmpty(void** p);
+int GameObject_IsGesturing(signed char* p);
+int GameObject_IsControlEnabled(void* obj);
+int GameObject_IsClimbingLadder(char* p);
 void EnqueueEventTag57WithAB_021cf4b0(int a, int b);
 void ClearSubstructBytes_0200fb40(void* obj);
 int* GetGlobal02109030_020936f8(void);
@@ -71,16 +71,16 @@ extern "C" ARM void func_ov017_021bff8c(Struct_ov017_021bff8c* arg0, unsigned ch
         } else if (func_02046b60((Struct_02038598_5*)arg0->unknown_36fc_, 3)) {
             var1 = 1;
         }
-        if (func_02046b08((void**)arg0->unknown_36fc_) == 0) {
-            var1 = 1;
-        } else if (func_020535c8((signed char*)var4) != 0) {
-            var1 = 1;
-        } else if (func_02039820(var4) == 0) {
-            var1 = 1;
-        } else if (*(int*)(var5 + Enum_ov017_021bff8c_2456) != 0) {
-            var1 = 1;
-        } else if (func_02039d7c((char*)var4) != 0) {
-            var1 = 1;
+        if (FieldTaskQueue_IsEmpty((void**)ctx->list) == 0) {
+            blocked = 1;
+        } else if (GameObject_IsGesturing((signed char*)hero) != 0) {
+            blocked = 1;
+        } else if (GameObject_IsControlEnabled(hero) == 0) {
+            blocked = 1;
+        } else if (*(int*)(g + regionalBlock) != 0) {
+            blocked = 1;
+        } else if (GameObject_IsClimbingLadder((char*)hero) != 0) {
+            blocked = 1;
         }
         unsigned char heroIndex = hero->obj3D_.actorIndex_;
         if (match) {

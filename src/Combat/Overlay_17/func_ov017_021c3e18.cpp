@@ -26,13 +26,13 @@ struct Struct_ov017_021c3e18_3 {
 };
 
 extern "C" unsigned short* Zone3D_GetInstance(void);
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 unsigned char GameState_GetLeaderIndex(GameState* gs);
 void SetVec3_021c3f68(struct Vec3_021c3f68* obj, int x, int y, int z);
 extern "C" void* func_ov017_021b8468(void* obj);
 void* GetSlot021677d8(void* work, int idx);
 void EnqueueEventTag35_021d2ad0(short, int, int, int, unsigned char);
-extern "C" int func_0202c508(void* p);
+extern "C" int LinkSession_IsHostOrSolo(void* p);
 
 // USA: func_ov017_021c3e18
 extern "C" ARM void func_ov017_021c3e18(unsigned char arg) {
@@ -41,7 +41,7 @@ extern "C" ARM void func_ov017_021c3e18(unsigned char arg) {
     GameResources* res = GetGameResources();
     Party021c3e18* party = (Party021c3e18*)GameState_GetParty(gs);
     Battle021c3e18* battle = (Battle021c3e18*)res->unknown_ptr_3718;
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     unsigned char self = GameState_GetLeaderIndex(gs);
     for (int i = 0; i < party->memberCount; i++) {
         unsigned char id = party->memberIds[i];
@@ -64,8 +64,8 @@ extern "C" ARM void func_ov017_021c3e18(unsigned char arg) {
         }
         EnqueueEventTag35_021d2ad0(member->obj3D_.actorIndex_, pos.x, pos.y, pos.z, arg);
     }
-    if (func_0202c508(var5)) {
-        Vector3i var12 = *(Vector3i*)((char*)var1 + Enum_ov017_021c3e18_32608);
-        func_ov017_021d2ad0(0xce, var12.x, var12.y, var12.z, arg0);
+    if (LinkSession_IsHostOrSolo(search)) {
+        Vector3i pos = *(Vector3i*)((char*)gs + RegionOffset7f60);
+        EnqueueEventTag35_021d2ad0(0xce, pos.x, pos.y, pos.z, arg);
     }
 }

@@ -22,48 +22,48 @@ struct Struct_ov017_021d3fa8_2 {
 struct Struct_ov017_021d6cfc { signed char unknown_0_[4]; };
 extern const Struct_ov017_021d6cfc data_ov017_021d6cfc, data_ov017_021d6d08;
 extern const char data_ov017_021d82b1[], data_ov017_021d82bb[], data_ov017_021d82c6[];
-extern "C" void func_020dc548(signed char, Struct_ov017_021d6cfc*, signed char*);
-extern "C" void func_02039d48(unsigned char*);
-extern "C" void func_02039d24(unsigned char*);
-extern "C" int func_0202c540(void*);
+extern "C" void func_020dc548(signed char, PartyOrder021d3fa8*, signed char*);
+void SetFlag0x1ceBit0x4_02039d48(unsigned char*);
+void GameObject_ResetTrail(unsigned char*);
+extern "C" int LinkSession_IsGuest(void*);
 void CallHelperWithBuf_021907dc(int, int, int, int, int);
 void GameObject_SetMotionState(Obj02033b68*, int);
-void SetByte0xbeShiftPrev(Bytes02033b88*, int);
+void GameObject_ForceMotionState(Bytes02033b88*, int);
 
 // USA: func_ov017_021d3fa8
-extern "C" ARM void func_ov017_021d3fa8(int arg0, Struct_ov017_021d3fa8* arg1, GameState* arg2, void* arg3, void* arg4) {
-    GameObject* var0 = arg2->GetUnknownGameObject();
-    GameObject* var1 = arg2->GetPartyMemberByIndex(arg1->unknown_7_);
-    Struct_02037d10* var2 = func_020399a8(var1);
-    unsigned short var3 = arg1->unknown_6_0_;
-    int var4 = arg1->unknown_6_4_;
-    int var5 = arg1->unknown_4_;
-    int var6 = arg1->unknown_8_;
-    if (var1 != 0 && var4 != 0) {
-        var1->obj3D_.DisableFlag(0x1010);
-        func_02038508(var2);
-        Struct_ov017_021d6cfc var7 = data_ov017_021d6cfc;
-        signed char var8 = 0;
-        func_020dc548((signed char)arg1->unknown_7_, &var7, &var8);
-        for (int var9 = 0; var9 < var8; var9++) {
-            if (var7.unknown_0_[var9] == arg1->unknown_7_) continue;
-            GameObject* var10 = arg2->GetPartyMemberByIndex(var7.unknown_0_[var9]);
-            if (var10 == 0) continue;
-            unsigned int var11 = ((Struct_ov017_021d3fa8_2*)var10)->unknown_c1_0_;
-            if (!(var11 & 2)) {
-                var10->obj3D_.position_ = var1->obj3D_.position_;
-                var10->obj3D_.SetInheritedAlpha(31);
-                func_02039d48((unsigned char*)var10);
+extern "C" ARM void func_ov017_021d3fa8(int unused, AnimationPacket021d3fa8* packet, GameState* game, void* globals, void* search) {
+    GameObject* protagonist = game->GetLeader();
+    GameObject* member = game->GetPartyMemberByIndex(packet->index);
+    SubBlock02038508* state = GameObject_GetLadderClimb(member);
+    unsigned short mode = packet->mode;
+    int reset = packet->reset;
+    int command = packet->command;
+    int time = packet->time;
+    if (member != 0 && reset != 0) {
+        member->obj3D_.DisableFlag(0x1010);
+        LadderClimb_Reset(state);
+        PartyOrder021d3fa8 order = data_ov017_021d6cfc;
+        signed char count = 0;
+        func_020dc548((signed char)packet->index, &order, &count);
+        for (int i = 0; i < count; i++) {
+            if (order.members[i] == packet->index) continue;
+            GameObject* other = game->GetPartyMemberByIndex(order.members[i]);
+            if (other == 0) continue;
+            unsigned int flags = ((MemberState021d3fa8*)other)->flags;
+            if (!(flags & 2)) {
+                other->obj3D_.position_ = member->obj3D_.position_;
+                other->obj3D_.SetInheritedAlpha(31);
+                SetFlag0x1ceBit0x4_02039d48((unsigned char*)other);
             }
-            func_02039d24((unsigned char*)var10);
+            GameObject_ResetTrail((unsigned char*)other);
         }
-        if (func_0202c540(arg4)) func_ov017_021907dc((int)arg3, 0, 1, 1, 1);
+        if (LinkSession_IsGuest(search)) CallHelperWithBuf_021907dc((int)globals, 0, 1, 1, 1);
     }
     if (member == 0) return;
     unsigned int member_id = member->obj3D_.GetField06();
     if (member_id != protagonist->obj3D_.GetField06()) return;
     if (reset != 0 || (((MemberState021d3fa8*)member)->flags & 2)) {
-        InitBlock02038508(state);
+        LadderClimb_Reset(state);
         if (reset != 0) {
             PartyOrder021d3fa8 order = data_ov017_021d6d08;
             signed char count = 0;
@@ -79,9 +79,9 @@ extern "C" ARM void func_ov017_021d3fa8(int arg0, Struct_ov017_021d3fa8* arg1, G
                     GameObject_SetMotionState((Obj02033b68*)other, 0);
                     SetFlag0x1ceBit0x4_02039d48((unsigned char*)other);
                 }
-                func_02039d24((unsigned char*)var16);
+                GameObject_ResetTrail((unsigned char*)other);
             }
-            if (func_0202c540(arg4)) func_ov017_021907dc((int)arg3, 0, 1, 1, 1);
+            if (LinkSession_IsGuest(search)) CallHelperWithBuf_021907dc((int)globals, 0, 1, 1, 1);
         }
     } else if (command == 0) {
         member->obj3D_.DisableFlag(0x1000);
@@ -95,7 +95,7 @@ extern "C" ARM void func_ov017_021d3fa8(int arg0, Struct_ov017_021d3fa8* arg1, G
         state->command = 1;
     } else if (command == 5) {
         member->obj3D_.DisableFlag(0x1010);
-        SetByte0xbeShiftPrev((Bytes02033b88*)member, 1);
+        GameObject_ForceMotionState((Bytes02033b88*)member, 1);
         state->active = 1;
         state->command = 5;
     } else if (command == 4) {

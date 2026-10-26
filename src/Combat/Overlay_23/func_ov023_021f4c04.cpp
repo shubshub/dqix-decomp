@@ -160,11 +160,11 @@ MessageWork* MessageSystem_GetInstance();
 extern "C" void* Zone3D_GetInstance(void);
 void* GlobalFlags_GetInstance();
 void* GameState_GetParty(GameState* gameState);
-extern "C" void* func_0202ae18(void);
-extern "C" void func_0201075c(char* arg0, unsigned char arg1);
-extern "C" unsigned char func_02010750(char* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+void SetField0x5729Value_0201075c(char* obj, unsigned char value);
+unsigned char GetField0x5729Value_02010750(char* obj);
+int TestBitAt0x34_020a35e0(unsigned char* obj, unsigned char index);
+int LinkSession_IsActive(int* obj);
 extern "C" void func_ov017_021d2400(void);
 void BgmPlayer_FadeOut(Actor0209c678* actor, int arg);
 void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
@@ -180,7 +180,7 @@ GameObject* FindCombatantByField16a_021a278c(void* unused, int val);
 void EnqueueEventTag87_021c9b20(int a, int b);
 int TrySetMode02076ccc(void* obj, int mode);
 extern "C" void func_ov017_021a23b0(void* base, int v);
-unsigned char CopyOutRegion0x571d_020114ec(char* obj, void* dst);
+unsigned char GameState_GetPartyOrder(char* obj, void* dst);
 extern "C" void func_ov000_0216d370(void* obj, int flagA, int flagB, int flagC);
 void* FindEntryByKey_02072a68(TableA68* table, int key);
 extern "C" int sprintf(char* buffer, const char* format, ...);
@@ -211,7 +211,7 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     FlagWord020466f4* flags = (FlagWord020466f4*)GlobalFlags_GetInstance();
     void* battle = GameState_GetParty(gs);
-    void* owner = func_0202ae18();
+    void* owner = LinkSession_GetInstance();
 
     inline_ov023_021f4c04().unknown_4_ += var3->GetEffectiveDeltaTime();
     int var10 = arg0->unknown_eac_;
@@ -225,7 +225,7 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
             if (func_020a35e0((unsigned char*)arg0->unknown_2a0_, var11)) continue;
             func_0201075c((char*)var3, 0);
         }
-        if (func_02010750((char*)var3) != 0 && func_0202b7d8((int*)var9) != 0) {
+        if (GetField0x5729Value_02010750((char*)gs) != 0 && LinkSession_IsActive((int*)owner) != 0) {
             func_ov017_021d2400();
         }
         BgmPlayer_FadeOut(&g_bgmPlayer, 0x1e);
@@ -263,15 +263,15 @@ extern "C" ARM void func_ov023_021f4c04(Struct_ov000_02160da0* arg0) {
             func_ov017_021a23b0((void*)var5, var14);
         }
 #if !defined(jpn)
-        unsigned char var16 = func_020114ec((char*)var3, var2);
-        unsigned char var17 = 0;
-        unsigned char var18 = 0;
-        for (int var19 = 0; var19 < var16; var19++) {
-            GameObject* var20 = var3->GetCombatantByIndex(var2[var19]);
-            if (var20 == NULL) continue;
-            if (!func_020a35e0((unsigned char*)arg0->unknown_2a0_, var2[var19])) continue;
-            var17++;
-            if ((((Struct_ov023_021f4c04_3*)var20)->unknown_130_->unknown_0_ & 1) == 0) var18++;
+        unsigned char count = GameState_GetPartyOrder((char*)gs, ids);
+        unsigned char numMembers = 0;
+        unsigned char numAlive = 0;
+        for (int j = 0; j < count; j++) {
+            GameObject* member = gs->GetCombatantByIndex(ids[j]);
+            if (member == NULL) continue;
+            if (!TestBitAt0x34_020a35e0((unsigned char*)self->party, ids[j])) continue;
+            numMembers++;
+            if ((((Combatant021f4c04*)member)->stats->flags & 1) == 0) numAlive++;
         }
         var4->unknown_30_ = var17;
         var4->unknown_31_ = var18;

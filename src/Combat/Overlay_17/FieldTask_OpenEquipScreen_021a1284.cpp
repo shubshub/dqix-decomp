@@ -70,7 +70,7 @@ struct EntryList_203dce4;
 EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
 extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" NodeList02058564* func_02057924();
-extern "C" int* func_0202ae18();
+extern "C" int* LinkSession_GetInstance();
 void* MessageSystem_GetInstance();
 void GameObject_DisableControl(Obj020397cc*, int);
 void SetBrightness(GameResources*, int, int);
@@ -84,7 +84,7 @@ void SetField0x98Bit0_0203d008(unsigned char*);
 extern "C" void func_0203e0a0(EntryList_203dce4*, unsigned short);
 extern "C" void func_020a0cc4(unsigned int);
 void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-extern "C" void func_020a0c0c();
+extern "C" void ROMFilesystem_InitFileTables();
 void ResetOverlayAndAllocator_0219bf74();
 void VramState_Rewind(Foo0207df50*);
 extern "C" void func_ov017_0219b938(GameResources*);
@@ -94,9 +94,9 @@ extern "C" void func_020a1df8(int);
 extern "C" void func_020a1ef0(int);
 extern "C" void func_ov023_021e2dd8(Struct_ov017_021a1284_8*);
 extern "C" void __clear(void*, unsigned int);
-extern "C" int func_02011494(char*, void*);
-extern "C" GameObject* func_0200ff1c(GameState*, int);
-extern "C" void func_ov023_021e31b0(Struct_ov017_021a1284_7*, unsigned char*, int);
+int GameState_GetOwnPartyOrder(char*, void*);
+GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
+void CopyBytesToInts_021e31b0(Obj021e31b0*, unsigned char*, int);
 extern "C" int func_ov017_021959b4();
 extern "C" void func_ov023_021e338c(char*);
 extern "C" void func_ov023_021e3030(Struct_ov017_021a1284_8*);
@@ -112,15 +112,15 @@ void VramState_Restore(char*);
 extern "C" void func_020432c4(void*);
 void VramState_Save(char*);
 extern "C" int func_ov017_0218f5a4(GameResources*, int, int, int, int);
-extern "C" int func_0202b7d8(int*);
-extern "C" int func_02086ef0(Struct_02048150*, int);
+int LinkSession_IsActive(int*);
+int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
 extern "C" void func_ov017_021c3fb4(int, int);
 extern "C" void func_ov017_021c4418(int, int);
 extern "C" void func_ov017_0219ba0c(GameResources*, int);
-extern "C" int func_02046b08(void**);
-extern "C" void func_020732a8();
+int FieldTaskQueue_IsEmpty(void**);
+void CallFuncForEachOfFour_020732a8();
 extern "C" void func_ov017_0219bd1c(int, int, int, int);
-unsigned char* GetFieldIfFlag4_020100f8(char*);
+unsigned char* GameState_GetFollowCamera(char*);
 void ClearFlagBits_020a28b0(unsigned char*, int);
 void GameObject_EnableControl(void*);
 extern AllocatorUnion g_mainAllocator;
@@ -132,8 +132,8 @@ extern "C" ARM void FieldTask_OpenEquipScreen(TransferEvent021a1284* self, void*
     Zone3D* zone = Zone3D_GetInstance();
     EntryList_203dce4* entries = GetGlobalPtr021075f4_0203cf4c();
     NodeList02058564* nodes = func_02057924();
-    int* search = func_0202ae18();
-    GameObject* player = game->GetUnknownGameObject();
+    int* search = LinkSession_GetInstance();
+    GameObject* player = game->GetLeader();
     GameResources* resources = game->GetResources();
     void* global = MessageSystem_GetInstance();
     GameObject_DisableControl((Obj020397cc*)player, 1);
@@ -167,8 +167,8 @@ extern "C" ARM void FieldTask_OpenEquipScreen(TransferEvent021a1284* self, void*
         func_020a0cc4(TransferBufferSize);
         void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, TransferBufferSize);
         if (!buffer) {
-            func_020a0c0c();
-            arg0->unknown_22_ = 4;
+            ROMFilesystem_InitFileTables();
+            self->stage = 4;
             return;
         }
         self->allocator.CreateTypeA(buffer, TransferBufferSize);
@@ -188,33 +188,33 @@ extern "C" ARM void FieldTask_OpenEquipScreen(TransferEvent021a1284* self, void*
             current = &resources->allocator_array_38[7];
             current->Reset();
         }
-        func_020a1df8(5);
-        func_020a1ef0(1);
-        arg0->unknown_1c_ = (Struct_ov017_021a1284_8*)var11->Allocate(Enum_ov017_021a1284_1608);
-        arg0->unknown_1c_->unknown_4e5_ = arg0->unknown_20_;
-        arg0->unknown_1c_->unknown_4fc_ = arg0->unknown_21_;
-        func_ov023_021e2dd8(arg0->unknown_1c_);
-        arg0->unknown_1c_->unknown_4_ = var12;
-        arg0->unknown_1c_->unknown_c_ = var14;
-        arg0->unknown_1c_->unknown_10_ = var11;
-        arg0->unknown_1c_->unknown_14_ = &arg0->unknown_8_;
-        arg0->unknown_1c_->unknown_8_ = var13;
-        arg0->unknown_1c_->unknown_634_ |= 0x2000;
-        if (arg0->unknown_1c_->unknown_4e5_ == 3) {
-            unsigned char var15[4];
-            __clear(var15, 4);
-            unsigned char var16[4];
-            unsigned char var17 = 0;
-            for (int var18 = 0; var18 < 4; ++var18) var16[var18] = 0xff;
-            int var19 = func_02011494((char*)var0, var15);
-            for (int var20 = 0; var20 < var19; ++var20) {
-                GameObject* var21 = func_0200ff1c(var0, var15[var20]);
-                if (!var21) continue;
-                Struct_ov017_021a1284_6* var22 = (Struct_ov017_021a1284_6*)((Struct_ov017_021a1284_5*)var21)->unknown_150_;
-                int var23;
-                if (var22) var23 = var22->unknown_56b_0_ ? 1 : 0;
-                else var23 = 0;
-                if (!var23) var16[var17++] = var15[var20];
+        PushInputLogA_020a1df8(5);
+        PushInputLogB_020a1ef0(1);
+        self->plugin = (Plugin021a1284*)current->Allocate(PluginSize);
+        self->plugin->mode = self->mode;
+        self->plugin->parameter = self->parameter;
+        func_ov023_021e2dd8(self->plugin);
+        self->plugin->primaryAllocator = primary;
+        self->plugin->secondaryAllocator = secondary;
+        self->plugin->currentAllocator = current;
+        self->plugin->eventAllocator = &self->allocator;
+        self->plugin->internal = internal;
+        self->plugin->flags |= 0x2000;
+        if (self->plugin->mode == 3) {
+            unsigned char roster[4];
+            __clear(roster, 4);
+            unsigned char selected[4];
+            unsigned char selectedCount = 0;
+            for (int i = 0; i < 4; ++i) selected[i] = 0xff;
+            int count = GameState_GetOwnPartyOrder((char*)game, roster);
+            for (int i = 0; i < count; ++i) {
+                GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(game, roster[i]);
+                if (!combatant) continue;
+                SettingsTransfer021a1284* settings = (SettingsTransfer021a1284*)((PlayerTransfer021a1284*)combatant)->settings;
+                int blocked;
+                if (settings) blocked = settings->unavailable ? 1 : 0;
+                else blocked = 0;
+                if (!blocked) selected[selectedCount++] = roster[i];
             }
             func_ov023_021e31b0((Struct_ov017_021a1284_7*)arg0->unknown_1c_, var16, var17);
         }
@@ -240,17 +240,17 @@ extern "C" ARM void FieldTask_OpenEquipScreen(TransferEvent021a1284* self, void*
         VramState_Save(((ResourceTransfer021a1284*)resources)->restored);
         ArrayContainsByteStruct* party = (ArrayContainsByteStruct*)GameState_GetParty(game);
         for (int i = 0; i < 4; ++i) {
-            if (func_ov017_0218f5a4(resources, i, 0, 0, 0) && CheckField0NonZero_0202b7d8(search) && ArrayContainsByte_02086ef0(party, i)) {
+            if (func_ov017_0218f5a4(resources, i, 0, 0, 0) && LinkSession_IsActive(search) && ArrayContainsByte_02086ef0(party, i)) {
                 func_ov017_021c3fb4(i, 1);
                 func_ov017_021c4418(i, -1);
             }
         }
-        ClearFlags00(var7, 0x10);
-        func_ov017_0219ba0c(var7, 0);
-        arg0->unknown_22_ = 5;
-    } else if (arg0->unknown_22_ == 5) {
-        if (!func_02046b08(((Struct_ov017_021a1284_3*)var7)->unknown_3700_)) return;
-        func_020732a8();
+        ClearFlags00(resources, 0x10);
+        func_ov017_0219ba0c(resources, 0);
+        self->stage = 5;
+    } else if (self->stage == 5) {
+        if (!FieldTaskQueue_IsEmpty(((ResourceTransfer021a1284*)resources)->pending)) return;
+        CallFuncForEachOfFour_020732a8();
         func_ov017_0219bd1c(1, 0, 0, 0);
         if (zone->currentZoneID_ == 0x2710 || zone->currentZoneID_ == 0x2774) {
             ClearFlags04(resources, 0x601fe);
@@ -259,7 +259,7 @@ extern "C" ARM void FieldTask_OpenEquipScreen(TransferEvent021a1284* self, void*
         self->stage = 6;
     } else if (self->stage == 6) {
         if (((ZoneTransfer021a1284*)Zone3D_GetInstance())->pending) return;
-        ClearFlagBits_020a28b0(GetFieldIfFlag4_020100f8((char*)game), 3);
+        ClearFlagBits_020a28b0(GameState_GetFollowCamera((char*)game), 3);
         self->stage = 7;
     } else if (self->stage == 7) {
         if (self->mode == 3) GameObject_EnableControl(player);

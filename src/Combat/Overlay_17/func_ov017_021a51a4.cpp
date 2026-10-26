@@ -4,9 +4,6 @@
 #include "NitroSDK/OverlayId.h"
 #include "Input/Input.h"
 
-#if defined(jpn)
-#define func_020c39c8 func_020c5494
-#endif
 
 #if defined(jpn)
 enum { Enum_ov017_021a51a4_14032 = 0x34c0, Enum_ov017_021a51a4_14036 = 0x34c4, Enum_ov017_021a51a4_14076 = 0x34ec, Enum_ov017_021a51a4_14080 = 0x34f0, Enum_ov017_021a51a4_14108 = 0x350c, Enum_ov017_021a51a4_14112 = 0x3510, Enum_ov017_021a51a4_15180 = 0x392c, Enum_ov017_021a51a4_15184 = 0x3930, Enum_ov017_021a51a4_15216 = 0x3950, Enum_ov017_021a51a4_15220 = 0x3954, Enum_ov017_021a51a4_16832 = 0x3fa0, Enum_ov017_021a51a4_16836 = 0x3fa4, Enum_ov017_021a51a4_17124 = 0x40c4, Enum_ov017_021a51a4_396 = 0x180 };
@@ -29,30 +26,30 @@ struct FlagBlob02027bac;
 struct SafeAllocator;
 
 int MessageSystem_GetInstance();
-extern "C" SearchStruct* func_0202ae18(void);
+extern "C" SearchStruct* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 FlagWord02046708* GlobalFlags_GetInstance();
-unsigned char* GetField0x3f8Address_0200fd0c(GameState* gs);
-int IsField0Null_02046b08(void** list);
-int GetByteField0x252_02039820(void* obj);
-int CheckSubstructByte0x7cPositive_020535c8(signed char* obj);
-int TestFlags02046708(FlagWord02046708* flags, unsigned int mask);
-int CheckField0xc4Low15BitsNonZero(BitField0203402c* obj);
-extern "C" int func_020c39c8(volatile unsigned short* reg);
+unsigned char* GameState_GetZoneTransition(GameState* gs);
+int FieldTaskQueue_IsEmpty(void** list);
+int GameObject_IsControlEnabled(void* obj);
+int GameObject_IsGesturing(signed char* obj);
+int FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
+int GameObject_IsSinking(BitField0203402c* obj);
+extern "C" int GXx_GetMasterBrightness_(volatile unsigned short* reg);
 int GameState_GetLanguage(Struct0200fb08* obj);
-extern "C" int func_0202c508(SearchStruct* search);
-extern "C" int func_0202c540(SearchStruct* search);
+extern "C" int LinkSession_IsHostOrSolo(SearchStruct* search);
+extern "C" int LinkSession_IsGuest(SearchStruct* search);
 void InitState53_021befe4(Obj021befe4* obj);
 void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
 void GameObject_DisableControl(Obj020397cc* obj, int flag);
 void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void func_ov017_021a5568(void* node);
-int GetByte0x26c_02039d7c(char* obj);
+int GameObject_IsClimbingLadder(char* obj);
 void InitObjState_021b2174(unsigned char* obj);
 void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
 void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
 void SetCombatModeFromCase020dc2d0(int mode);
-void SetFlag0x9c6_020213fc(SetFlagStruct* obj, int value);
+void MapDisplay_SetHoldSubScreenDark(SetFlagStruct* obj, int value);
 void SetFlagsAt0xa97(FlagBlob02027bac* obj, unsigned char value);
 void AllocateAndCopyBuf28_0216ae2c(SafeAllocator* allocator, void* arg);
 extern char g_sePlayer;
@@ -118,19 +115,19 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
     int level;
     Grotto021a51a4* grottoInfo;
     gs = GameState::GetInstance();
-    unknown = (Unknown021a51a4*)gs->GetUnknownGameObject();
+    unknown = (Unknown021a51a4*)gs->GetLeader();
     MessageSystem_GetInstance();
-    search = func_0202ae18();
+    search = LinkSession_GetInstance();
     grottoInfo = *(Grotto021a51a4**)((char*)Zone3D_GetInstance() + 8);
     flagWord = GlobalFlags_GetInstance();
-    field3f8 = GetField0x3f8Address_0200fd0c(gs);
-    if (!IsField0Null_02046b08((void**)res->list)) {
+    field3f8 = GameState_GetZoneTransition(gs);
+    if (!FieldTaskQueue_IsEmpty((void**)res->list)) {
         return;
     }
-    if (!func_02039820(var1)) {
+    if (!GameObject_IsControlEnabled(unknown)) {
         return;
     }
-    if (func_020535c8((signed char*)var1)) {
+    if (GameObject_IsGesturing((signed char*)unknown)) {
         return;
     }
     if (var1->unknown_18c_ & 1) {
@@ -142,19 +139,19 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
     if (var5[2] != 0) {
         return;
     }
-    var6 = 0;
-    if (!func_02046708(var4, 0x800)) {
-        if ((g_keyManager.TestKeysPressed(0x400) || arg0->unknown_42e4_ == 1) && var1->unknown_ac_ == 0) {
-            if (!func_0203402c((Struct_0203402c*)var1)) {
-                var6 = 1;
+    start = 0;
+    if (!FlagWord_TestBits(flagWord, 0x800)) {
+        if ((g_keyManager.TestKeysPressed(0x400) || res->pending == 1) && unknown->fac == 0) {
+            if (!GameObject_IsSinking((BitField0203402c*)unknown)) {
+                start = 1;
             }
         }
     } else {
         arg0->unknown_42e4_ = var6;
     }
-    var7 = g_touchInput.pressX_;
-    var8 = g_touchInput.pressY_;
-    if (func_020c39c8((volatile unsigned short*)0x400006c) != 0) {
+    x = g_touchInput.pressX_;
+    y = g_touchInput.pressY_;
+    if (GXx_GetMasterBrightness_((volatile unsigned short*)0x400006c) != 0) {
         return;
     }
     var9 = (unsigned char*)var0->GetGrottoStruct();
@@ -174,10 +171,10 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
     } else {
         var13 = 0;
     }
-    if (func_0202c508(var3) && var9[0] != 0 && var11->unknown_c_0_ == 0
-        && (g_keyManager.TestKeysPressed(0x800) || var13)) {
-        func_ov017_021befe4(arg0->unknown_3b70_);
-        func_020469b4(arg0->unknown_36fc_, (Struct_0201bdac*)arg0->unknown_3b70_);
+    if (LinkSession_IsHostOrSolo(search) && grotto[0] != 0 && grottoInfo->kind == 0
+        && (g_keyManager.TestKeysPressed(0x800) || touched)) {
+        InitState53_021befe4(res->state53);
+        AppendNodeToTail(res->list, (TailNode020469b4*)res->state53);
         return;
     }
     if (start) {
@@ -193,7 +190,7 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
         AppendNodeToTail(res->list, (TailNode020469b4*)res->node);
         return;
     }
-    if (var9[0] != 0 && func_0202c540(var3) == 0 && var11->unknown_c_0_ == 0) {
+    if (grotto[0] != 0 && LinkSession_IsGuest(search) == 0 && grottoInfo->kind == 0) {
         return;
     }
     if (arg0->unknown_41c0_ != 0) {
@@ -205,10 +202,10 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
     if (arg0->unknown_42e4_ != 0 || var1->unknown_ac_ != 0) {
         return;
     }
-    if (func_0203402c((Struct_0203402c*)var1)) {
+    if (GameObject_IsSinking((BitField0203402c*)unknown)) {
         return;
     }
-    if (func_02039d7c((char*)var1)) {
+    if (GameObject_IsClimbingLadder((char*)unknown)) {
         return;
     }
     GameObject_DisableControl((Obj020397cc*)unknown, 1);
@@ -219,6 +216,6 @@ extern "C" ARM void func_ov017_021a51a4(Res021a51a4* res) {
     SetFields30And34_021b2bd0(dialog, (int)AllocateAndCopyBuf28_0216ae2c, OVERLAY_ID(4));
     AppendNodeToTail(res->list, (TailNode020469b4*)dialog);
     SetCombatModeFromCase020dc2d0(3);
-    SetFlag0x9c6_020213fc(res->flags, 1);
+    MapDisplay_SetHoldSubScreenDark(res->flags, 1);
     SetFlagsAt0xa97((FlagBlob02027bac*)res->flags, 1);
 }

@@ -15,8 +15,8 @@ extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, in
 int GameState_GetProtagonistIndex(GameState*);
 void* GameState_GetParty(GameState*);
 void* MessageSystem_GetInstance();
-int CheckSubstructByte0x7cPositive_020535c8(signed char*);
-int IsField0Null_02046b08(void**);
+int GameObject_IsGesturing(signed char*);
+int FieldTaskQueue_IsEmpty(void**);
 GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
 int TryClearFlags0x130_02048418(unsigned char*, unsigned short);
 void EnqueueEventTag34_021d27a0(int, int, int);
@@ -90,8 +90,8 @@ extern "C" ARM void func_ov017_021d27e4(void* unused0, Evt021d27e4* evt, GameSta
         if (!hasSecond) return;
         int ok = 1;
         if ((*reinterpret_cast<int*>(static_cast<char*>(MessageSystem_GetInstance()) + MessageActiveOffset)) != 0) ok = 0;
-        if (CheckSubstructByte0x7cPositive_020535c8((signed char*)gs->GetUnknownGameObject()) != 0) ok = 0;
-        if (IsField0Null_02046b08((void**)ctx->fieldTaskQueue_) == 0) ok = 0;
+        if (GameObject_IsGesturing((signed char*)gs->GetLeader()) != 0) ok = 0;
+        if (FieldTaskQueue_IsEmpty((void**)ctx->fieldTaskQueue_) == 0) ok = 0;
         if (func_020dc920((unsigned char)first, 1, 1, 0) == 0) ok = 0;
         if (ok) {
             int flagged = 0;

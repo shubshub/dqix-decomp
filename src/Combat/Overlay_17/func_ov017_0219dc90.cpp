@@ -70,18 +70,18 @@ struct Struct_ov017_0219dc90 {
     Struct_ov017_0219dc90_6 unknown_44b4_;
 };
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 InlineEntry* ZoneRecords_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
-signed char GetSearchStructCurrentArrEntry(SearchStruct0202c1a4* obj);
-extern "C" void func_020288e0(InlineEntry* table);
+signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+extern "C" void ZoneRecords_ReleaseUnoccupied(InlineEntry* table);
 void SetFlagsForFlaggedCombatants_0219e0ec(void* self);
-extern "C" int func_02028a54(InlineEntry* base, int id);
+extern "C" int ZoneRecords_Add(InlineEntry* base, int id);
 extern "C" void func_ov017_0219e180(BattleOverlay0219dc90* self, int id);
 struct Entry_02028bd0;
-InlineEntry* FindInlineEntryById(Entry_02028bd0*, int);
-extern "C" unsigned short func_02028460(int* a, int* b);
-int IsInRange0201b588(int id);
+InlineEntry* ZoneRecords_Find(Entry_02028bd0*, int);
+extern "C" unsigned short NodeGraph_FindClosestNode(int* a, int* b);
+int ZoneId_IsGrotto(int id);
 struct Struct021b46d8;
 void InitStruct_021b46d8(Struct021b46d8*);
 struct TailNode020469b4;
@@ -93,22 +93,22 @@ extern "C" void func_02046a8c(TailList020469b4* list, GrottoSlot* node);
 // USA: func_ov017_0219dc90
 extern "C" ARM void func_ov017_0219dc90(BattleOverlay0219dc90* self, int combatantIdx, int id, unsigned char kind, unsigned short value) {
     GameState* gs = GameState::GetInstance();
-    void* search = func_0202ae18();
+    void* search = LinkSession_GetInstance();
     InlineEntry* table = ZoneRecords_GetInstance();
     Zone3D_GetInstance();
     Combatant0219dc90* combatant = (Combatant0219dc90*)GetCombatantWithFlag0x100_0200ff1c(gs, combatantIdx);
-    if (GetSearchStructCurrentArrEntry((SearchStruct0202c1a4*)search) != 0) return;
-    func_020288e0(table);
+    if (LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search) != 0) return;
+    ZoneRecords_ReleaseUnoccupied(table);
     SetFlagsForFlaggedCombatants_0219e0ec(self);
     if (combatant == NULL) return;
-    int found = func_02028a54(table, id);
+    int found = ZoneRecords_Add(table, id);
     func_ov017_0219e180(self, id);
-    InlineEntry* entry = FindInlineEntryById((Entry_02028bd0*)table, id);
+    InlineEntry* entry = ZoneRecords_Find((Entry_02028bd0*)table, id);
     PendingGroup* pending = &self->pending;
     if (entry != NULL) {
-        combatant->b8 = entry->f34 != 0 ? func_02028460(entry->vec18, combatant->vec44) : 0;
+        combatant->b8 = entry->f34 != 0 ? NodeGraph_FindClosestNode(entry->vec18, combatant->vec44) : 0;
         signed char* grotto = (signed char*)gs->GetGrottoStruct();
-        if (IsInRange0201b588(id) && found) {
+        if (ZoneId_IsGrotto(id) && found) {
             entry->fd = grotto[8];
         }
         var5->unknown_8_ = 0;
